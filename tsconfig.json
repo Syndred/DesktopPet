@@ -1,0 +1,23 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@qingpet/shared-types": [
+        "packages/shared-types/src/index.ts"
+      ],
+      "@qingpet/pc-app": [
+        "apps/pc-app/src/index.ts"
+      ],
+      "@qingpet/supabase-edge": [
+        "apps/supabase-edge/src/index.ts"
+      ],
+      "@qingpet/observability": [
+        "packages/observability/src/index.ts"
+      ],
+      "@qingpet/game-engine": [
+        "packages/game-engine/src/index.ts"
+      ]
+    }
+  }
+}

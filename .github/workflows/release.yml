@@ -1,0 +1,45 @@
+name: Release Pipeline
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_version:
+        description: "Release version, e.g. v1.0.0"
+        required: true
+        type: string
+      dry_run:
+        description: "Skip publish step"
+        required: true
+        type: boolean
+        default: true
+
+jobs:
+  build-sign-manifest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run verify
+      - run: npm run release:build
+      - run: npm run release:sign
+      - run: npm run release:manifest -- --version=${{ inputs.release_version }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: release-${{ inputs.release_version }}
+          path: |
+            artifacts/**
+            releases/${{ inputs.release_version }}/manifest.json
+            release-state/current.json
+
+  publish:
+    needs: [build-sign-manifest]
+    if: ${{ inputs.dry_run == false }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Publish placeholder
+        run: echo "Publish step placeholder for version ${{ inputs.release_version }}"
+

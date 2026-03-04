@@ -1,0 +1,26 @@
+{
+  "rules": [
+    {
+      "id": "api-latency-p95",
+      "metric": "api_latency_p95_ms",
+      "threshold": 100,
+      "operator": "gte",
+      "severity": "warning"
+    },
+    {
+      "id": "battle-sync-p95",
+      "metric": "battle_sync_p95_ms",
+      "threshold": 150,
+      "operator": "gte",
+      "severity": "warning"
+    },
+    {
+      "id": "crash-rate",
+      "metric": "crash_rate_percent",
+      "threshold": 0.1,
+      "operator": "gt",
+      "severity": "critical"
+    }
+  ]
+}
+

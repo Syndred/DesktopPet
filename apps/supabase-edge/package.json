@@ -1,0 +1,13 @@
+{
+  "name": "@qingpet/supabase-edge",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@qingpet/game-engine": "0.1.0",
+    "@qingpet/shared-types": "0.1.0"
+  }
+}
