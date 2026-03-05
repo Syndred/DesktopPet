@@ -403,3 +403,28 @@ Reference: `docs/project-delivery-tasks.md`
      - `npm run pc:smoke`
      - `npm run verify`
      - All passed.
+
+20. `D-023 Avatar layout + battle nameplate + idle window drag boundary fix` [DONE]
+   - Inventory avatar strip updated from fixed 6-column grid to responsive wrap layout with fixed spacing:
+     - wider panel shows more avatars per row
+     - overflow wraps naturally to next line
+     - fixed right-edge clipping on last avatar
+   - Increased top padding and badge offset for avatar level chip to avoid clipping.
+   - Battle top labels now show only pet names (removed player/enemy prefix in HUD title).
+   - Wild-pet generated names no longer append numeric suffix; uniqueness remains by `id/serial`.
+   - Window interaction updates in main process:
+     - reduced idle bounds to pet-sized compact window
+     - replaced primary-display clamp with virtual multi-display work-area clamp
+     - fixed drag-to-corners / drag-to-extended-monitor behavior
+     - removed drag-time auto-enlarge side-effect caused by oversized minimum clamp
+   - Updated tests:
+     - `tests/task-d003-desktop-stage-battle.test.ts`
+     - `tests/task-d001-pc-runnable-runtime.test.ts`
+     - `tests/task-d006-pc-wild-capture-flow.test.ts`
+   - Validation:
+     - `npm run test:unit -- tests/task-d001-pc-runnable-runtime.test.ts`
+     - `npm run test:unit -- tests/task-d003-desktop-stage-battle.test.ts`
+     - `npm run test:unit -- tests/task-d006-pc-wild-capture-flow.test.ts`
+     - `npm run pc:smoke`
+     - `npm run verify`
+     - All passed.

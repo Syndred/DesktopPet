@@ -851,22 +851,22 @@ body {
 }
 
 .pet-inventory-list {
-  display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
-  justify-items: center;
-  align-items: start;
-  gap: 10px 8px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  align-content: flex-start;
+  gap: 12px 10px;
   max-height: 180px;
   overflow-y: auto;
   overflow-x: hidden;
   width: 100%;
   min-width: 0;
-  padding: 2px 0 2px 0;
+  padding: 8px 4px 4px;
 }
 
 .pet-avatar-entry {
-  width: 100%;
-  max-width: 58px;
+  width: 42px;
+  flex: 0 0 42px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -874,7 +874,8 @@ body {
 }
 
 .pet-avatar-entry.selected {
-  max-width: 52px;
+  width: 42px;
+  flex-basis: 42px;
 }
 
 .pet-avatar-item {
@@ -922,10 +923,10 @@ body {
 
 .pet-avatar-level-chip {
   position: absolute;
-  top: -6px;
-  right: -8px;
+  top: -7px;
+  right: -7px;
   min-width: 24px;
-  height: 12px;
+  height: 13px;
   border-radius: 999px;
   border: 1px solid rgba(160, 222, 255, 0.58);
   background: rgba(17, 35, 56, 0.9);
@@ -961,6 +962,7 @@ body {
   cursor: pointer;
   padding: 0 4px;
   line-height: 1;
+  width: 100%;
 }
 
 .pet-quick-set:hover {
@@ -974,6 +976,7 @@ body {
   color: #8decb4;
   display: grid;
   place-items: center;
+  width: 100%;
 }
 
 .pet-quick-placeholder {

@@ -22,8 +22,8 @@ let runtimeDataStore = null;
 let activeBattleSession = null;
 
 const IDLE_BOUNDS = {
-  width: 300,
-  height: 340
+  width: 220,
+  height: 250
 };
 
 const BATTLE_BOUNDS = {
@@ -181,12 +181,39 @@ function getWindowConfigPath() {
 }
 
 function clampBoundsToWorkArea(bounds) {
-  const area = screen.getPrimaryDisplay().workArea;
-  const width = Math.min(Math.max(280, bounds.width), area.width);
-  const height = Math.min(Math.max(320, bounds.height), area.height);
+  const area = getVirtualWorkArea();
+  const width = Math.min(Math.max(180, bounds.width), area.width);
+  const height = Math.min(Math.max(200, bounds.height), area.height);
   const x = Math.min(Math.max(area.x, bounds.x), area.x + area.width - width);
   const y = Math.min(Math.max(area.y, bounds.y), area.y + area.height - height);
   return { x, y, width, height };
+}
+
+function getVirtualWorkArea() {
+  const displays = screen.getAllDisplays();
+  if (!Array.isArray(displays) || displays.length === 0) {
+    return screen.getPrimaryDisplay().workArea;
+  }
+
+  let minX = Number.POSITIVE_INFINITY;
+  let minY = Number.POSITIVE_INFINITY;
+  let maxRight = Number.NEGATIVE_INFINITY;
+  let maxBottom = Number.NEGATIVE_INFINITY;
+
+  for (const display of displays) {
+    const area = display.workArea;
+    minX = Math.min(minX, area.x);
+    minY = Math.min(minY, area.y);
+    maxRight = Math.max(maxRight, area.x + area.width);
+    maxBottom = Math.max(maxBottom, area.y + area.height);
+  }
+
+  return {
+    x: minX,
+    y: minY,
+    width: maxRight - minX,
+    height: maxBottom - minY
+  };
 }
 
 function registerIpcHandlers() {

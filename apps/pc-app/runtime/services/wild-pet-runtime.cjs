@@ -221,8 +221,8 @@ function createSpawnSet(providerId, hourKey) {
     const zhElement = elementToZh(element);
     const enElement = elementToEn(element);
     const name = {
-      zh: `${zhElement}${rarityToZh(rarity)}${idx + 1}`,
-      en: `${enElement}-${rarityToEn(rarity)}-${idx + 1}`
+      zh: `${zhElement}${rarityToZh(rarity)}灵宠`,
+      en: `${enElement} ${rarityToEn(rarity)} Pet`
     };
     return {
       id,

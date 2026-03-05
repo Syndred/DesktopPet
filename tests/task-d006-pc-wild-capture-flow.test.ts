@@ -119,6 +119,8 @@ describe("D-006 pc nearby wild pet and capture flow", () => {
     const first = result.pets?.[0];
     expect(typeof first?.serial).toBe("string");
     expect(first?.serial.startsWith("WP-")).toBe(true);
+    expect(first?.name.zh).not.toMatch(/[0-9]+$/);
+    expect(first?.name.en).not.toMatch(/-[0-9]+$/);
   });
 
   it("rejects capture duel preparation when target is out of 100m range", () => {

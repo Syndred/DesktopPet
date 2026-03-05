@@ -46,6 +46,8 @@ describe("D-003 desktop stage battle UX", () => {
     expect(rendererCode).toContain("updateBattleRelationTag(");
     expect(rendererCode).toContain("updateBattleCountdown(");
     expect(rendererCode).toContain("updateBattleHudBadges(");
+    expect(rendererCode).toContain("uiRefs.playerLabel.textContent = getPetDisplayName(activePet)");
+    expect(rendererCode).toContain("uiRefs.enemyLabel.textContent = getPetDisplayName(enemyPetInBattle)");
   });
 
   it("uses panel as lightweight controller while battle actions stay on stage tags", () => {
@@ -100,7 +102,7 @@ describe("D-003 desktop stage battle UX", () => {
     expect(rendererCode).toContain("wildCaptureReportLog");
     expect(rendererCode).toContain("battleReportCaptureSuccess");
 
-    expect(stylesCode).toContain("grid-template-columns: repeat(6, minmax(0, 1fr))");
+    expect(stylesCode).toContain("flex-wrap: wrap;");
     expect(stylesCode).toContain("overflow-x: hidden;");
     expect(stylesCode).toContain(".battle-settlement");
     expect(stylesCode).toContain("z-index: 40");

@@ -940,7 +940,6 @@ function renderPetDetail() {
   const isActive = pet.id === activePetId;
   const elementName = getElementText(pet.element);
   const displayName = getPetDisplayName(pet);
-  const index = getRoster().findIndex((item) => item.id === pet.id) + 1;
   const modelName = pet.model.split("/").pop();
   const statTags = renderStatTagHtml(pet.stats);
   const level = getPetLevel(pet);
@@ -955,7 +954,7 @@ function renderPetDetail() {
     <div class="pet-detail-head">
       <span class="pet-detail-name">${currentI18n().inventorySelectedDetail} · ${displayName}</span>
       <div class="pet-detail-tags">
-        <span class="pet-meta-chip serial">#${index}</span>
+        <span class="pet-meta-chip serial">${pet.id}</span>
         <span class="pet-meta-chip level">${formatLevelText(level)}</span>
         <span class="pet-meta-chip exp">EXP ${experience}/${LEVEL_UP_REQUIRED_WINS}</span>
         <span class="pet-meta-chip model">${modelName}</span>
@@ -1406,8 +1405,8 @@ function applyLanguage() {
   uiRefs.appTitle.textContent = currentI18n().appTitle;
   uiRefs.battleTitle.textContent = currentI18n().battleTitle;
   const activePet = getActivePet();
-  uiRefs.playerLabel.textContent = `${currentI18n().playerPet} · ${getPetDisplayName(activePet)}`;
-  uiRefs.enemyLabel.textContent = `${currentI18n().enemyPet} · ${getPetDisplayName(enemyPetInBattle)}`;
+  uiRefs.playerLabel.textContent = getPetDisplayName(activePet);
+  uiRefs.enemyLabel.textContent = getPetDisplayName(enemyPetInBattle);
   battleResetBtn.textContent = currentI18n().resetBattle;
   endBattleBtn.textContent = currentI18n().endBattle;
   closePanelBtn.title = currentI18n().closePanel;
@@ -1697,8 +1696,8 @@ function updateBattleBoard(state) {
   setElementTagTheme(playerElementLabel, state.player.element);
   setElementTagTheme(enemyElementLabel, state.enemy.element);
   updateBattleRelationTag(state.player.element, state.enemy.element);
-  uiRefs.playerLabel.textContent = `${currentI18n().playerPet} · ${getPetDisplayName(activePet)}`;
-  uiRefs.enemyLabel.textContent = `${currentI18n().enemyPet} · ${getPetDisplayName(enemyPetInBattle)}`;
+  uiRefs.playerLabel.textContent = getPetDisplayName(activePet);
+  uiRefs.enemyLabel.textContent = getPetDisplayName(enemyPetInBattle);
   updateBattleHudBadges(activePet, enemyPetInBattle);
 
   statusPlayerElement.textContent = formatStatuses(state.player.statuses);

@@ -44,6 +44,8 @@ describe("D-001 pc runnable runtime", () => {
     expect(mainCode).toContain("runtimeDataStore.recordBattleWin");
     expect(mainCode).toContain("captureSerial");
     expect(mainCode).toContain("mode");
+    expect(mainCode).toContain("screen.getAllDisplays()");
+    expect(mainCode).toContain("const IDLE_BOUNDS = {");
     expect(mainCode).toContain("pet-runtime-data.json");
     expect(mainCode).toContain("RuntimeDataStore");
     expect(mainCode).toContain("MapRuntimeService");
@@ -127,6 +129,8 @@ describe("D-001 pc runnable runtime", () => {
     expect(rendererCode).toContain("battleSettlementConfirmLog");
     expect(rendererCode).toContain("updateBattleRelationTag(");
     expect(rendererCode).toContain("updateBattleCountdown(");
+    expect(rendererCode).toContain("uiRefs.playerLabel.textContent = getPetDisplayName(activePet)");
+    expect(rendererCode).toContain("uiRefs.enemyLabel.textContent = getPetDisplayName(enemyPetInBattle)");
     expect(rendererCode).toContain("void setActivePet(pet.id, { closePanel: true })");
   });
 
