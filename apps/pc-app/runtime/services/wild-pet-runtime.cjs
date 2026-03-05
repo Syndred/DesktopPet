@@ -1,6 +1,4 @@
-const { randomUUID } = require("node:crypto");
-
-const PROVIDER_META = {
+﻿const PROVIDER_META = {
   tencent: {
     center: { lat: 31.2304, lng: 121.4737 },
     coordinateSystem: "gcj02"
@@ -22,6 +20,34 @@ const MODEL_BY_ELEMENT = {
   earth: "../assets/models/NeilArmstrong.glb"
 };
 
+const SPECIES_BY_ELEMENT = {
+  fire: {
+    code: "001",
+    name: { zh: "\u7130\u5c3e", en: "BlazeTail" },
+    avatar: "\u7130"
+  },
+  water: {
+    code: "002",
+    name: { zh: "\u661f\u822a", en: "Astror" },
+    avatar: "\u661f"
+  },
+  wood: {
+    code: "003",
+    name: { zh: "\u8349\u8e44", en: "Hoofleaf" },
+    avatar: "\u8349"
+  },
+  metal: {
+    code: "004",
+    name: { zh: "\u9510\u94e0", en: "IronGuard" },
+    avatar: "\u94e0"
+  },
+  earth: {
+    code: "005",
+    name: { zh: "\u6708\u58e4", en: "MoonSoil" },
+    avatar: "\u58e4"
+  }
+};
+
 const SPAWN_LAYOUT = [
   { id: "A1", dx: 35, dy: 18, landmarkType: "park", element: "wood", rarity: "common" },
   { id: "A2", dx: -48, dy: 20, landmarkType: "office", element: "metal", rarity: "common" },
@@ -36,6 +62,7 @@ const SPAWN_LAYOUT = [
 class WildPetRuntimeService {
   constructor() {
     this.providerState = new Map();
+    this.speciesSerialCounters = new Map();
   }
 
   getNearbyWildPets(input = {}) {
@@ -182,7 +209,7 @@ class WildPetRuntimeService {
       return existing;
     }
 
-    const spawns = createSpawnSet(providerId, hourKey);
+    const spawns = createSpawnSet(providerId, this.speciesSerialCounters);
     const next = {
       providerId,
       hourKey,
@@ -208,22 +235,16 @@ class WildPetRuntimeService {
   }
 }
 
-function createSpawnSet(providerId, hourKey) {
+function createSpawnSet(providerId, serialCounters) {
   const center = PROVIDER_META[providerId].center;
-  const dateTag = hourKey.replace(/[-:TZ]/g, "").slice(0, 10);
-  return SPAWN_LAYOUT.map((layout, idx) => {
+  return SPAWN_LAYOUT.map((layout) => {
     const id = `wild-${providerId}-${layout.id}`;
-    const serial = `WP-${dateTag}-${String(idx + 1).padStart(4, "0")}`;
     const position = offsetPosition(center, layout.dx, layout.dy);
     const element = layout.element;
     const rarity = layout.rarity;
-    const avatar = elementToAvatar(element);
-    const zhElement = elementToZh(element);
-    const enElement = elementToEn(element);
-    const name = {
-      zh: `${zhElement}${rarityToZh(rarity)}灵宠`,
-      en: `${enElement} ${rarityToEn(rarity)} Pet`
-    };
+    const species = resolveSpecies(element);
+    const seq = allocateSpeciesSerial(species.code, serialCounters);
+    const serial = `${species.code}${String(seq).padStart(4, "0")}`;
     return {
       id,
       serial,
@@ -234,8 +255,8 @@ function createSpawnSet(providerId, hourKey) {
       position,
       model: MODEL_BY_ELEMENT[element] || "../assets/models/RobotExpressive.glb",
       stats: rarityToStats(element, rarity),
-      avatar,
-      name,
+      avatar: species.avatar,
+      name: { ...species.name },
       status: "available",
       cooldownUntilMs: null
     };
@@ -332,18 +353,6 @@ function toRad(value) {
   return (value * Math.PI) / 180;
 }
 
-function rarityToZh(rarity) {
-  if (rarity === "epic") return "稀";
-  if (rarity === "rare") return "优";
-  return "普";
-}
-
-function rarityToEn(rarity) {
-  if (rarity === "epic") return "Epic";
-  if (rarity === "rare") return "Rare";
-  return "Common";
-}
-
 function rarityToStats(element, rarity) {
   const base = {
     fire: { hp: 118, atk: 34, def: 20, spd: 22 },
@@ -358,31 +367,16 @@ function rarityToStats(element, rarity) {
   )} / SPD${Math.round(base.spd * ratio)}`;
 }
 
-function elementToZh(element) {
-  if (element === "fire") return "火";
-  if (element === "water") return "水";
-  if (element === "wood") return "木";
-  if (element === "metal") return "金";
-  if (element === "earth") return "土";
-  return "灵";
+function resolveSpecies(element) {
+  return SPECIES_BY_ELEMENT[element] || SPECIES_BY_ELEMENT.fire;
 }
 
-function elementToEn(element) {
-  if (element === "fire") return "Fire";
-  if (element === "water") return "Water";
-  if (element === "wood") return "Wood";
-  if (element === "metal") return "Metal";
-  if (element === "earth") return "Earth";
-  return "Spirit";
-}
-
-function elementToAvatar(element) {
-  if (element === "fire") return "焰";
-  if (element === "water") return "潮";
-  if (element === "wood") return "芽";
-  if (element === "metal") return "锋";
-  if (element === "earth") return "岩";
-  return "灵";
+function allocateSpeciesSerial(speciesCode, serialCounters) {
+  const key = String(speciesCode || "999");
+  const previous = Number(serialCounters.get(key) || 0);
+  const next = previous + 1;
+  serialCounters.set(key, next);
+  return next;
 }
 
 module.exports = {

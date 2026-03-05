@@ -1,4 +1,4 @@
-import { mkdtempSync, rmSync } from "node:fs";
+﻿import { mkdtempSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { pathToFileURL } from "node:url";
@@ -106,7 +106,7 @@ describe("D-006 pc nearby wild pet and capture flow", () => {
     tempDirs = [];
   });
 
-  it("returns nearby wild pets with serial numbers", () => {
+  it("returns nearby wild pets with numeric serial numbers", () => {
     const service = new WildPetRuntimeService();
     const result = service.getNearbyWildPets({
       providerId: "tencent",
@@ -118,7 +118,11 @@ describe("D-006 pc nearby wild pet and capture flow", () => {
     expect((result.pets?.length ?? 0) > 0).toBe(true);
     const first = result.pets?.[0];
     expect(typeof first?.serial).toBe("string");
-    expect(first?.serial.startsWith("WP-")).toBe(true);
+    expect(first?.serial).toMatch(/^\d{7}$/);
+    const allowedZhNames = new Set(["焰尾", "星航", "草蹄", "锐铠", "月壤"]);
+    const allowedEnNames = new Set(["BlazeTail", "Astror", "Hoofleaf", "IronGuard", "MoonSoil"]);
+    expect(allowedZhNames.has(first?.name.zh || "")).toBe(true);
+    expect(allowedEnNames.has(first?.name.en || "")).toBe(true);
     expect(first?.name.zh).not.toMatch(/[0-9]+$/);
     expect(first?.name.en).not.toMatch(/-[0-9]+$/);
   });
@@ -155,6 +159,9 @@ describe("D-006 pc nearby wild pet and capture flow", () => {
     });
     const inRangePet = (nearby.pets ?? []).find((item) => item.inRange && item.status === "available");
     expect(Boolean(inRangePet)).toBe(true);
+    const beforeMatching = store
+      .getInventorySnapshot()
+      .pets.filter((pet) => pet.serial === inRangePet!.serial).length;
 
     const prepare = service.prepareCaptureBattle({
       providerId: "tencent",
@@ -186,25 +193,28 @@ describe("D-006 pc nearby wild pet and capture flow", () => {
 
     const pets = store.getInventorySnapshot().pets;
     const matching = pets.filter((pet) => pet.serial === inRangePet!.serial);
-    expect(matching.length).toBe(1);
+    expect(matching.length).toBe(beforeMatching + 1);
   });
 
   it("allows owning duplicate species when serial is different", () => {
     const store = new RuntimeDataStore({ filePath: createTempStoreFilePath() });
+    const baseOwnedCount = store
+      .getInventorySnapshot()
+      .pets.filter((pet) => pet.name.zh === "焰尾" && pet.element === "fire").length;
     const first = store.captureWildPet({
       wildPetId: "wild-fire-1",
-      wildSerial: "WP-2026030510-9001",
+      wildSerial: "0010009",
       rarity: "common",
       element: "fire",
-      name: { zh: "火灵", en: "Fireling" },
+      name: { zh: "焰尾", en: "BlazeTail" },
       capturedAt: "2026-03-05 10:01:00"
     });
     const second = store.captureWildPet({
       wildPetId: "wild-fire-1",
-      wildSerial: "WP-2026030510-9002",
+      wildSerial: "0010010",
       rarity: "common",
       element: "fire",
-      name: { zh: "火灵", en: "Fireling" },
+      name: { zh: "焰尾", en: "BlazeTail" },
       capturedAt: "2026-03-05 10:02:00"
     });
 
@@ -212,8 +222,8 @@ describe("D-006 pc nearby wild pet and capture flow", () => {
     expect(second.duplicate).toBe(false);
 
     const inventory = store.getInventorySnapshot().pets;
-    const owned = inventory.filter((pet) => pet.name.zh === "火灵" && pet.element === "fire");
-    expect(owned.length).toBe(2);
-    expect(new Set(owned.map((pet) => pet.serial)).size).toBe(2);
+    const owned = inventory.filter((pet) => pet.name.zh === "焰尾" && pet.element === "fire");
+    expect(owned.length).toBe(baseOwnedCount + 2);
+    expect(new Set(owned.map((pet) => pet.serial)).size).toBe(baseOwnedCount + 2);
   });
 });

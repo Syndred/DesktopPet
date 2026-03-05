@@ -20,6 +20,7 @@ const mapService = new MapRuntimeService({
 const wildPetService = new WildPetRuntimeService();
 let runtimeDataStore = null;
 let activeBattleSession = null;
+let activeLayoutMode = "idle";
 
 const IDLE_BOUNDS = {
   width: 220,
@@ -30,6 +31,20 @@ const BATTLE_BOUNDS = {
   width: 360,
   height: 420
 };
+
+const PANEL_BOUNDS = {
+  width: 520,
+  height: 700
+};
+
+const IDLE_SIZE_LIMITS = {
+  minWidth: 180,
+  maxWidth: 520,
+  minHeight: 200,
+  maxHeight: 640
+};
+
+let currentIdleBounds = { ...IDLE_BOUNDS };
 
 const DEFAULT_BOUNDS = {
   x: 40,
@@ -464,11 +479,67 @@ function registerIpcHandlers() {
   });
 
   ipcMain.handle("pet:set-layout-mode", (_event, payload) => {
-    const mode =
-      payload && typeof payload.mode === "string" && payload.mode === "battle" ? "battle" : "idle";
+    let mode = "idle";
+    if (payload && typeof payload.mode === "string") {
+      if (payload.mode === "battle") {
+        mode = "battle";
+      } else if (payload.mode === "panel") {
+        mode = "panel";
+      }
+    }
     if (!mainWindow || mainWindow.isDestroyed()) return false;
     applyLayoutMode(mode);
     return true;
+  });
+
+  ipcMain.handle("pet:set-idle-window-size", (_event, payload) => {
+    if (!mainWindow || mainWindow.isDestroyed()) {
+      return {
+        ok: false,
+        message: "window unavailable"
+      };
+    }
+
+    const width = Number(payload?.width);
+    const height = Number(payload?.height);
+    if (!Number.isFinite(width) || !Number.isFinite(height)) {
+      return {
+        ok: false,
+        message: "invalid size payload"
+      };
+    }
+
+    currentIdleBounds = {
+      width: Math.max(IDLE_SIZE_LIMITS.minWidth, Math.min(IDLE_SIZE_LIMITS.maxWidth, Math.round(width))),
+      height: Math.max(
+        IDLE_SIZE_LIMITS.minHeight,
+        Math.min(IDLE_SIZE_LIMITS.maxHeight, Math.round(height))
+      )
+    };
+
+    if (activeLayoutMode !== "idle") {
+      return {
+        ok: true,
+        mode: activeLayoutMode,
+        idleBounds: { ...currentIdleBounds }
+      };
+    }
+
+    const current = mainWindow.getBounds();
+    const next = clampBoundsToWorkArea({
+      x: current.x,
+      y: current.y,
+      width: currentIdleBounds.width,
+      height: currentIdleBounds.height
+    });
+    mainWindow.setBounds(next);
+    saveWindowBounds(next);
+    return {
+      ok: true,
+      mode: activeLayoutMode,
+      idleBounds: { ...currentIdleBounds },
+      bounds: next
+    };
   });
 }
 
@@ -518,8 +589,10 @@ function closeBattleSession(status, winner, options = {}) {
 
 function applyLayoutMode(mode) {
   if (!mainWindow || mainWindow.isDestroyed()) return;
+  activeLayoutMode = mode;
 
-  const target = mode === "battle" ? BATTLE_BOUNDS : IDLE_BOUNDS;
+  const target =
+    mode === "battle" ? BATTLE_BOUNDS : mode === "panel" ? PANEL_BOUNDS : currentIdleBounds;
   const current = mainWindow.getBounds();
   const centerX = current.x + Math.floor(current.width / 2);
   const centerY = current.y + Math.floor(current.height / 2);

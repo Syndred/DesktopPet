@@ -844,10 +844,8 @@ body {
 }
 
 .pet-inventory-layout {
-  display: grid;
-  grid-template-columns: minmax(210px, 36%) minmax(0, 1fr);
-  gap: 10px;
-  align-items: start;
+  position: relative;
+  min-height: 0;
 }
 
 .pet-inventory-list {
@@ -856,8 +854,8 @@ body {
   align-items: flex-start;
   align-content: flex-start;
   gap: 12px 10px;
-  max-height: 180px;
-  overflow-y: auto;
+  height: auto;
+  overflow-y: hidden;
   overflow-x: hidden;
   width: 100%;
   min-width: 0;
@@ -1004,6 +1002,17 @@ body {
   padding: 8px;
 }
 
+.pet-detail-popover {
+  position: absolute;
+  z-index: 16;
+  width: min(280px, calc(100% - 10px));
+  border: 1px solid rgba(170, 218, 245, 0.34);
+  border-radius: 11px;
+  background: rgba(8, 20, 33, 0.95);
+  box-shadow: 0 12px 24px rgba(3, 10, 19, 0.52);
+  padding: 8px;
+}
+
 .pet-detail-head {
   display: flex;
   align-items: center;
@@ -1111,6 +1120,7 @@ body {
   margin-top: 8px;
   display: flex;
   justify-content: flex-end;
+  gap: 6px;
 }
 
 .pet-detail-actions button {
@@ -1126,6 +1136,12 @@ body {
 .pet-detail-actions button:disabled {
   opacity: 0.5;
   cursor: default;
+}
+
+.pet-detail-actions #btn-close-pet-detail {
+  border-color: rgba(153, 201, 235, 0.5);
+  background: rgba(18, 42, 63, 0.76);
+  color: #d6ecfa;
 }
 
 .field-row {
@@ -1421,10 +1437,6 @@ body {
 }
 
 @media (max-width: 640px) {
-  .pet-inventory-layout {
-    grid-template-columns: 1fr;
-  }
-
   .field-row {
     grid-template-columns: 1fr;
   }
@@ -1441,6 +1453,39 @@ body {
   border-radius: 8px;
   background: rgba(3, 9, 17, 0.45);
   padding: 8px;
+}
+
+#panel,
+.pet-inventory-list,
+.battle-report-list,
+.wild-list {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(130, 196, 236, 0.65) rgba(255, 255, 255, 0.02);
+}
+
+#panel::-webkit-scrollbar,
+.pet-inventory-list::-webkit-scrollbar,
+.battle-report-list::-webkit-scrollbar,
+.wild-list::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+#panel::-webkit-scrollbar-track,
+.pet-inventory-list::-webkit-scrollbar-track,
+.battle-report-list::-webkit-scrollbar-track,
+.wild-list::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 999px;
+}
+
+#panel::-webkit-scrollbar-thumb,
+.pet-inventory-list::-webkit-scrollbar-thumb,
+.battle-report-list::-webkit-scrollbar-thumb,
+.wild-list::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(144, 220, 255, 0.72), rgba(110, 182, 224, 0.6));
+  border-radius: 999px;
+  border: 1px solid rgba(20, 44, 66, 0.6);
 }
 
 @keyframes actor-bounce {

@@ -94,6 +94,7 @@
               src="../assets/models/Fox.glb"
               camera-controls
               disable-pan
+              disable-zoom
               autoplay
               shadow-intensity="1"
               exposure="1"
@@ -107,6 +108,7 @@
               src="../assets/models/CesiumMan.glb"
               camera-controls
               disable-pan
+              disable-zoom
               autoplay
               shadow-intensity="1"
               exposure="1"
@@ -162,12 +164,13 @@
           <p id="inventory-tip" class="inventory-tip">
             Right-click pet on desktop to open panel; click any pet card to set as active.
           </p>
-          <div class="pet-inventory-layout">
+          <div id="pet-inventory-layout" class="pet-inventory-layout">
             <div id="pet-inventory-list" class="pet-inventory-list"></div>
-            <div id="pet-detail-placeholder" class="pet-detail-placeholder">
+            <article id="pet-detail-popover" class="pet-detail-popover hidden"></article>
+            <div id="pet-detail-placeholder" class="pet-detail-placeholder hidden">
               Select an avatar to view details.
             </div>
-            <article id="pet-detail" class="pet-detail-card hidden"></article>
+            <article id="pet-detail" class="pet-detail-card hidden" aria-hidden="true"></article>
           </div>
         </div>
 

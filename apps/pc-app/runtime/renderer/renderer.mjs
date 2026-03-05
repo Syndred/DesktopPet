@@ -10,7 +10,9 @@ const endBattleBtn = document.getElementById("btn-end-battle");
 const stageBattleActionButtons = [...document.querySelectorAll(".battle-tag")];
 const battleActionButtons = [...stageBattleActionButtons];
 const languageBtn = document.getElementById("btn-language");
+const petInventoryLayoutElement = document.getElementById("pet-inventory-layout");
 const inventoryListElement = document.getElementById("pet-inventory-list");
+const petDetailPopoverElement = document.getElementById("pet-detail-popover");
 const petDetailElement = document.getElementById("pet-detail");
 const petDetailPlaceholderElement = document.getElementById("pet-detail-placeholder");
 const battleReportListElement = document.getElementById("battle-report-list");
@@ -145,6 +147,7 @@ const i18n = {
     inventoryActive: "当前出战",
     inventorySetActive: "设为出战",
     inventorySelectedDetail: "宠物详情",
+    inventoryDetailClose: "关闭",
     battleReportTitle: "最近战报",
     battleReportEmpty: "暂无战报，先开一局对战吧。",
     battleReportFinished: "已结算",
@@ -318,6 +321,7 @@ const i18n = {
     inventoryActive: "Active",
     inventorySetActive: "Set Active",
     inventorySelectedDetail: "Pet Detail",
+    inventoryDetailClose: "Close",
     battleReportTitle: "Recent Battle Reports",
     battleReportEmpty: "No reports yet. Start a battle to generate one.",
     battleReportFinished: "Finished",
@@ -421,7 +425,7 @@ const i18n = {
 const DEFAULT_PET_ROSTER = [
   {
     id: "pet-001",
-    serial: "QP-202603-001",
+    serial: "0019001",
     name: { zh: "焰尾", en: "BlazeTail" },
     model: "../assets/models/Fox.glb",
     element: "fire",
@@ -434,7 +438,7 @@ const DEFAULT_PET_ROSTER = [
   },
   {
     id: "pet-002",
-    serial: "QP-202603-002",
+    serial: "0029001",
     name: { zh: "星航", en: "Astror" },
     model: "../assets/models/Astronaut.glb",
     element: "water",
@@ -447,7 +451,7 @@ const DEFAULT_PET_ROSTER = [
   },
   {
     id: "pet-003",
-    serial: "QP-202603-003",
+    serial: "0039001",
     name: { zh: "草蹄", en: "Hoofleaf" },
     model: "../assets/models/Horse.glb",
     element: "wood",
@@ -460,7 +464,7 @@ const DEFAULT_PET_ROSTER = [
   },
   {
     id: "pet-004",
-    serial: "QP-202603-004",
+    serial: "0049001",
     name: { zh: "锐铠", en: "IronGuard" },
     model: "../assets/models/CesiumMan.glb",
     element: "metal",
@@ -473,7 +477,7 @@ const DEFAULT_PET_ROSTER = [
   },
   {
     id: "pet-005",
-    serial: "QP-202603-005",
+    serial: "0059001",
     name: { zh: "月壤", en: "MoonSoil" },
     model: "../assets/models/NeilArmstrong.glb",
     element: "earth",
@@ -486,7 +490,7 @@ const DEFAULT_PET_ROSTER = [
   },
   {
     id: "pet-006",
-    serial: "QP-202603-006",
+    serial: "0069001",
     name: { zh: "律动", en: "Groove" },
     model: "../assets/models/RobotExpressive.glb",
     element: "fire",
@@ -557,6 +561,14 @@ let lastNearbyRefreshSeq = -1;
 
 const ACTION_COUNTDOWN_SECONDS = 5;
 const LEVEL_UP_REQUIRED_WINS = 5;
+const IDLE_WINDOW_BASE = {
+  width: 220,
+  height: 250
+};
+const IDLE_WINDOW_SCALE_STEP = 0.08;
+const IDLE_WINDOW_SCALE_MIN = 0.82;
+const IDLE_WINDOW_SCALE_MAX = 2.2;
+let idleWindowScale = 1;
 
 const ELEMENT_ADVANTAGE_CHAIN = {
   metal: "wood",
@@ -593,6 +605,28 @@ function appendLog(text) {
   logElement.textContent = `[${time}] ${text}\n${current}`.trim();
 }
 
+function clampNumber(value, min, max) {
+  return Math.max(min, Math.min(max, value));
+}
+
+function getIdleWindowSize(scaleValue) {
+  const scale = clampNumber(scaleValue, IDLE_WINDOW_SCALE_MIN, IDLE_WINDOW_SCALE_MAX);
+  return {
+    width: Math.round(IDLE_WINDOW_BASE.width * scale),
+    height: Math.round(IDLE_WINDOW_BASE.height * scale)
+  };
+}
+
+async function applyIdleWindowScale(scaleValue) {
+  idleWindowScale = clampNumber(scaleValue, IDLE_WINDOW_SCALE_MIN, IDLE_WINDOW_SCALE_MAX);
+  const size = getIdleWindowSize(idleWindowScale);
+  try {
+    await window.petApi.setIdleWindowSize(size);
+  } catch {
+    // Keep non-blocking behavior when IPC is unavailable.
+  }
+}
+
 function setPanelVisible(visible) {
   if (visible) {
     panelElement.classList.remove("hidden");
@@ -601,6 +635,7 @@ function setPanelVisible(visible) {
     panelElement.classList.add("hidden");
     battleSceneElement.classList.remove("panel-open");
   }
+  void window.petApi.setLayoutMode(visible ? "panel" : battleMode ? "battle" : "idle");
   reportHitState();
 }
 
@@ -898,6 +933,65 @@ function renderStatTagHtml(statsText) {
     .join("");
 }
 
+function getSelectedPetAvatarButton() {
+  if (!inventoryListElement || !selectedPetDetailId) return null;
+  const buttons = inventoryListElement.querySelectorAll(".pet-avatar-item");
+  for (const button of buttons) {
+    if (button.getAttribute("data-pet-id") === selectedPetDetailId) {
+      return button;
+    }
+  }
+  return null;
+}
+
+function syncInventoryListHeight() {
+  if (!inventoryListElement) return;
+  const entries = [...inventoryListElement.querySelectorAll(".pet-avatar-entry")];
+  if (entries.length === 0) {
+    inventoryListElement.style.height = "0px";
+    return;
+  }
+  const contentBottom = entries.reduce((max, entry) => {
+    return Math.max(max, entry.offsetTop + entry.offsetHeight);
+  }, 0);
+  inventoryListElement.style.height = `${Math.ceil(contentBottom + 6)}px`;
+}
+
+function hidePetDetailPopover() {
+  if (!petDetailPopoverElement) return;
+  petDetailPopoverElement.classList.add("hidden");
+  petDetailPopoverElement.innerHTML = "";
+}
+
+function positionPetDetailPopover() {
+  if (
+    !petDetailPopoverElement ||
+    petDetailPopoverElement.classList.contains("hidden") ||
+    !petInventoryLayoutElement
+  ) {
+    return;
+  }
+  const anchor = getSelectedPetAvatarButton();
+  if (!anchor) return;
+
+  const layoutRect = petInventoryLayoutElement.getBoundingClientRect();
+  const anchorRect = anchor.getBoundingClientRect();
+  const popoverRect = petDetailPopoverElement.getBoundingClientRect();
+
+  const spacing = 10;
+  let left = anchorRect.right - layoutRect.left + spacing;
+  if (left + popoverRect.width > layoutRect.width - 4) {
+    left = anchorRect.left - layoutRect.left - popoverRect.width - spacing;
+  }
+  left = Math.max(4, Math.min(left, layoutRect.width - popoverRect.width - 4));
+
+  let top = anchorRect.top - layoutRect.top - 8;
+  top = Math.max(4, Math.min(top, layoutRect.height - popoverRect.height - 4));
+
+  petDetailPopoverElement.style.left = `${Math.round(left)}px`;
+  petDetailPopoverElement.style.top = `${Math.round(top)}px`;
+}
+
 async function setActivePet(petId, options = {}) {
   const pet = getPetById(petId);
   if (pet.id === activePetId) return;
@@ -926,13 +1020,15 @@ async function setActivePet(petId, options = {}) {
 }
 
 function renderPetDetail() {
-  if (!petDetailElement) return;
+  if (!petDetailPopoverElement) return;
   if (!selectedPetDetailId) {
-    petDetailElement.classList.add("hidden");
-    petDetailElement.innerHTML = "";
+    hidePetDetailPopover();
+    if (petDetailElement) {
+      petDetailElement.classList.add("hidden");
+      petDetailElement.innerHTML = "";
+    }
     if (petDetailPlaceholderElement) {
-      petDetailPlaceholderElement.classList.remove("hidden");
-      petDetailPlaceholderElement.textContent = currentI18n().inventoryPlaceholder;
+      petDetailPlaceholderElement.classList.add("hidden");
     }
     return;
   }
@@ -946,15 +1042,12 @@ function renderPetDetail() {
   const experience = getPetExperience(pet);
   const winsTotal = getPetWinsTotal(pet);
 
-  petDetailElement.classList.remove("hidden");
-  if (petDetailPlaceholderElement) {
-    petDetailPlaceholderElement.classList.add("hidden");
-  }
-  petDetailElement.innerHTML = `
+  petDetailPopoverElement.classList.remove("hidden");
+  petDetailPopoverElement.innerHTML = `
     <div class="pet-detail-head">
       <span class="pet-detail-name">${currentI18n().inventorySelectedDetail} · ${displayName}</span>
       <div class="pet-detail-tags">
-        <span class="pet-meta-chip serial">${pet.id}</span>
+        <span class="pet-meta-chip serial">${pet.serial}</span>
         <span class="pet-meta-chip level">${formatLevelText(level)}</span>
         <span class="pet-meta-chip exp">EXP ${experience}/${LEVEL_UP_REQUIRED_WINS}</span>
         <span class="pet-meta-chip model">${modelName}</span>
@@ -971,9 +1064,19 @@ function renderPetDetail() {
       <div class="pet-stat-chip-row">${statTags}</div>
     </div>
     <div class="pet-detail-actions">
+      <button id="btn-close-pet-detail">${currentI18n().inventoryDetailClose}</button>
       <button id="btn-set-active-pet" ${isActive ? "disabled" : ""}>${currentI18n().inventorySetActive}</button>
     </div>
   `;
+
+  const closeBtn = document.getElementById("btn-close-pet-detail");
+  if (closeBtn) {
+    closeBtn.addEventListener("click", () => {
+      selectedPetDetailId = null;
+      renderPetInventory();
+      hidePetDetailPopover();
+    });
+  }
 
   const setActiveBtn = document.getElementById("btn-set-active-pet");
   if (setActiveBtn) {
@@ -981,6 +1084,10 @@ function renderPetDetail() {
       void setActivePet(pet.id);
     });
   }
+
+  requestAnimationFrame(() => {
+    positionPetDetailPopover();
+  });
 }
 
 function renderPetInventory() {
@@ -1034,6 +1141,7 @@ function renderPetInventory() {
     inventoryListElement.appendChild(entry);
   });
 
+  syncInventoryListHeight();
   renderPetDetail();
 }
 
@@ -1545,7 +1653,8 @@ function setBattleMode(active) {
   } else {
     updateBattleRelationTag(lastBattleState?.player?.element, lastBattleState?.enemy?.element);
   }
-  void window.petApi.setLayoutMode(active ? "battle" : "idle");
+  const panelVisible = !panelElement.classList.contains("hidden");
+  void window.petApi.setLayoutMode(panelVisible ? "panel" : active ? "battle" : "idle");
   syncActionButtons();
   if (active && !isPaused) {
     window.petApi.setHitRegion(true);
@@ -2259,6 +2368,24 @@ function setupMouseTracking() {
     event.preventDefault();
     setPanelVisible(true);
   });
+
+  playerCard.addEventListener(
+    "wheel",
+    (event) => {
+      const panelVisible = !panelElement.classList.contains("hidden");
+      if (battleMode || panelVisible) return;
+      event.preventDefault();
+      const delta = event.deltaY < 0 ? IDLE_WINDOW_SCALE_STEP : -IDLE_WINDOW_SCALE_STEP;
+      const nextScale = clampNumber(
+        idleWindowScale + delta,
+        IDLE_WINDOW_SCALE_MIN,
+        IDLE_WINDOW_SCALE_MAX
+      );
+      if (Math.abs(nextScale - idleWindowScale) < 0.001) return;
+      void applyIdleWindowScale(nextScale);
+    },
+    { passive: false }
+  );
 }
 
 function setupButtons() {
@@ -2440,6 +2567,24 @@ async function bootstrap() {
   setupMouseTracking();
   setupIpcEvents();
   setupModelDefaults();
+  window.addEventListener("resize", () => {
+    syncInventoryListHeight();
+    positionPetDetailPopover();
+  });
+  panelElement.addEventListener(
+    "scroll",
+    () => {
+      positionPetDetailPopover();
+    },
+    { passive: true }
+  );
+  inventoryListElement.addEventListener(
+    "scroll",
+    () => {
+      positionPetDetailPopover();
+    },
+    { passive: true }
+  );
   updatePetClass();
 
   const battleState = await window.petApi.getBattleState();

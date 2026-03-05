@@ -425,6 +425,56 @@ Reference: `docs/project-delivery-tasks.md`
      - `npm run test:unit -- tests/task-d001-pc-runnable-runtime.test.ts`
      - `npm run test:unit -- tests/task-d003-desktop-stage-battle.test.ts`
      - `npm run test:unit -- tests/task-d006-pc-wild-capture-flow.test.ts`
+   - `npm run pc:smoke`
+   - `npm run verify`
+   - All passed.
+
+21. `D-024 Panel-size decoupling + avatar-detail popover + scrollbar polish` [DONE]
+   - Window layout behavior refined to keep panel and pet window independent:
+     - panel open -> fixed `panel` layout mode
+     - panel close -> fallback to `idle/battle` layout mode
+     - idle pet viewport remains compact (pet-sized), panel no longer shrinks with pet window
+   - Inventory detail UX switched to nearby popover:
+     - click avatar -> show detail popover adjacent to selected avatar
+     - popover supports close + set-active actions
+     - reduced long scroll pressure from always-expanded detail area
+   - Scrollbar visual polish:
+     - unified thin scrollbar theme for panel/inventory/battle-report/wild-list
+     - removed rough default scrollbar look while preserving usability
+   - Added regression assertions:
+     - `tests/task-d001-pc-runnable-runtime.test.ts`
+       - verifies `PANEL_BOUNDS` and panel layout routing
+       - verifies renderer `setLayoutMode(visible ? "panel" ...)` call path
+     - `tests/task-d003-desktop-stage-battle.test.ts`
+       - verifies popover styles and custom scrollbar style hooks
+   - Validation:
+     - `npm run test:unit -- tests/task-d001-pc-runnable-runtime.test.ts tests/task-d003-desktop-stage-battle.test.ts`
+   - `npm run pc:smoke`
+   - `npm run verify`
+   - All passed.
+
+22. `D-025 Idle wheel-resize + inventory row-height auto + unified species serial` [DONE]
+   - Added idle-mode wheel scaling on desktop pet:
+     - scroll up/down on pet adjusts idle scale
+     - idle window size now updates with pet scale through new IPC `pet:set-idle-window-size`
+     - panel/battle modes keep their own fixed layout behavior
+   - Inventory avatar list height now follows actual row count:
+     - removed fixed empty area under one-row avatar list
+     - one row = one row height, two rows = two rows height
+   - Wild pet naming/serial rule normalized:
+     - same species uses same base name (no rarity suffix in name)
+     - new serial format `CCCNNNN` (e.g. `0010012`)
+     - `CCC` maps to species code, `NNNN` is species sequence
+   - Default inventory serials switched to 7-digit numeric style for consistency.
+   - Added/updated regression assertions:
+     - `tests/task-d001-pc-runnable-runtime.test.ts`
+       - checks `pet:set-idle-window-size` and renderer `setIdleWindowSize` usage
+     - `tests/task-d003-desktop-stage-battle.test.ts`
+       - checks idle wheel scale path + inventory auto-height hook
+     - `tests/task-d006-pc-wild-capture-flow.test.ts`
+       - checks 7-digit serial pattern and duplicate-species capture with different serial
+   - Validation:
+     - `npm run test:unit -- tests/task-d001-pc-runnable-runtime.test.ts tests/task-d003-desktop-stage-battle.test.ts tests/task-d006-pc-wild-capture-flow.test.ts`
      - `npm run pc:smoke`
      - `npm run verify`
      - All passed.

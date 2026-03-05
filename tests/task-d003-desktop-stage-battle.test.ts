@@ -37,7 +37,8 @@ describe("D-003 desktop stage battle UX", () => {
 
     expect(rendererCode).toContain("setBattleMode(true);");
     expect(rendererCode).toContain("setBattleMode(false);");
-    expect(rendererCode).toContain("void window.petApi.setLayoutMode(active ? \"battle\" : \"idle\")");
+    expect(rendererCode).toContain("void window.petApi.setLayoutMode(panelVisible ? \"panel\" : active ? \"battle\" : \"idle\")");
+    expect(rendererCode).toContain("void applyIdleWindowScale(nextScale)");
     expect(rendererCode).toContain("enemyCard.classList.toggle(\"hidden\", !active)");
     expect(rendererCode).toContain("enemyHudElement.classList.toggle(\"hidden\", !active)");
     expect(rendererCode).toContain("roundFeedElement.classList.toggle(\"hidden\", !active)");
@@ -72,6 +73,7 @@ describe("D-003 desktop stage battle UX", () => {
     expect(html).toContain("id=\"battle-action-tags\"");
     expect(html).toContain("class=\"battle-tag\" data-action=\"normal_attack\"");
     expect(html).toContain("id=\"pet-detail-placeholder\"");
+    expect(html).toContain("id=\"pet-detail-popover\"");
     expect(html).toContain("id=\"battle-report-list\"");
     expect(html).toContain("id=\"wild-list\"");
 
@@ -93,6 +95,7 @@ describe("D-003 desktop stage battle UX", () => {
     expect(rendererCode).toContain("startActionCountdown()");
     expect(rendererCode).toContain("void actBattle(\"normal_attack\", { auto: true });");
     expect(rendererCode).toContain("void setActivePet(pet.id, { closePanel: true })");
+    expect(rendererCode).toContain("syncInventoryListHeight()");
     expect(rendererCode).toContain("startCaptureBattle(");
     expect(rendererCode).toContain("class=\"pet-avatar-item");
     expect(rendererCode).toContain("pet-avatar-level-chip");
@@ -104,6 +107,9 @@ describe("D-003 desktop stage battle UX", () => {
 
     expect(stylesCode).toContain("flex-wrap: wrap;");
     expect(stylesCode).toContain("overflow-x: hidden;");
+    expect(stylesCode).toContain(".pet-detail-popover");
+    expect(stylesCode).toContain("#panel::-webkit-scrollbar");
+    expect(stylesCode).toContain("scrollbar-width: thin;");
     expect(stylesCode).toContain(".battle-settlement");
     expect(stylesCode).toContain("z-index: 40");
     expect(stylesCode).toContain("min-width: 42px");

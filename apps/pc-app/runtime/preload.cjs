@@ -61,6 +61,9 @@ contextBridge.exposeInMainWorld("petApi", {
   setLayoutMode(mode) {
     return ipcRenderer.invoke("pet:set-layout-mode", { mode });
   },
+  setIdleWindowSize(size) {
+    return ipcRenderer.invoke("pet:set-idle-window-size", size ?? {});
+  },
   onPauseState(listener) {
     const wrapped = (_event, state) => listener(Boolean(state));
     ipcRenderer.on("pet:pause-state", wrapped);

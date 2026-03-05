@@ -39,13 +39,17 @@ describe("D-001 pc runnable runtime", () => {
     expect(mainCode).toContain("pet:request-map-permission");
     expect(mainCode).toContain("pet:start-map-watch");
     expect(mainCode).toContain("pet:distance-to");
+    expect(mainCode).toContain("pet:set-idle-window-size");
     expect(mainCode).toContain("pet:get-nearby-wild-pets");
     expect(mainCode).toContain("pet:begin-capture-battle");
     expect(mainCode).toContain("runtimeDataStore.recordBattleWin");
     expect(mainCode).toContain("captureSerial");
     expect(mainCode).toContain("mode");
     expect(mainCode).toContain("screen.getAllDisplays()");
+    expect(mainCode).toContain("payload.mode === \"panel\"");
     expect(mainCode).toContain("const IDLE_BOUNDS = {");
+    expect(mainCode).toContain("const PANEL_BOUNDS = {");
+    expect(mainCode).toContain("mode === \"battle\" ? BATTLE_BOUNDS : mode === \"panel\" ? PANEL_BOUNDS : currentIdleBounds");
     expect(mainCode).toContain("pet-runtime-data.json");
     expect(mainCode).toContain("RuntimeDataStore");
     expect(mainCode).toContain("MapRuntimeService");
@@ -70,6 +74,7 @@ describe("D-001 pc runnable runtime", () => {
     expect(html).toContain("btn-language");
     expect(html).toContain("pet-inventory-list");
     expect(html).toContain("pet-detail-placeholder");
+    expect(html).toContain("pet-detail-popover");
     expect(html).toContain("battle-report-list");
     expect(html).toContain("battle-report-title");
     expect(html).toContain("map-title");
@@ -98,6 +103,7 @@ describe("D-001 pc runnable runtime", () => {
     expect(html).toContain("enemy-card\" class=\"battle-actor enemy hidden");
     expect(rendererCode).toContain("window.petApi.getRuntimeInfo()");
     expect(rendererCode).toContain("window.petApi.setHitRegion");
+    expect(rendererCode).toContain("window.petApi.setIdleWindowSize");
     expect(rendererCode).toContain("window.petApi.battleAct");
     expect(rendererCode).toContain("window.petApi.getPetInventory()");
     expect(rendererCode).toContain("window.petApi.setActivePet");
@@ -121,6 +127,7 @@ describe("D-001 pc runnable runtime", () => {
     expect(rendererCode).toContain("wildCaptureReportLog");
     expect(rendererCode).toContain("insideInteractiveRegion");
     expect(rendererCode).toContain("panelElement.getBoundingClientRect()");
+    expect(rendererCode).toContain("void window.petApi.setLayoutMode(visible ? \"panel\" : battleMode ? \"battle\" : \"idle\")");
     expect(rendererCode).toContain("localStorage.getItem");
     expect(rendererCode).toContain("const i18n =");
     expect(rendererCode).toContain("let selectedPetDetailId = null");

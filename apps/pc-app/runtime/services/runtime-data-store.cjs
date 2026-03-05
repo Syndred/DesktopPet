@@ -5,7 +5,7 @@ const { dirname } = require("node:path");
 const DEFAULT_PET_ROSTER = [
   {
     id: "pet-001",
-    serial: "QP-202603-001",
+    serial: "0019001",
     name: { zh: "\u7130\u5c3e", en: "BlazeTail" },
     model: "../assets/models/Fox.glb",
     element: "fire",
@@ -18,7 +18,7 @@ const DEFAULT_PET_ROSTER = [
   },
   {
     id: "pet-002",
-    serial: "QP-202603-002",
+    serial: "0029001",
     name: { zh: "\u661f\u822a", en: "Astror" },
     model: "../assets/models/Astronaut.glb",
     element: "water",
@@ -31,7 +31,7 @@ const DEFAULT_PET_ROSTER = [
   },
   {
     id: "pet-003",
-    serial: "QP-202603-003",
+    serial: "0039001",
     name: { zh: "\u8349\u8e44", en: "Hoofleaf" },
     model: "../assets/models/Horse.glb",
     element: "wood",
@@ -44,7 +44,7 @@ const DEFAULT_PET_ROSTER = [
   },
   {
     id: "pet-004",
-    serial: "QP-202603-004",
+    serial: "0049001",
     name: { zh: "\u9510\u94e0", en: "IronGuard" },
     model: "../assets/models/CesiumMan.glb",
     element: "metal",
@@ -57,7 +57,7 @@ const DEFAULT_PET_ROSTER = [
   },
   {
     id: "pet-005",
-    serial: "QP-202603-005",
+    serial: "0059001",
     name: { zh: "\u6708\u58e4", en: "MoonSoil" },
     model: "../assets/models/NeilArmstrong.glb",
     element: "earth",
@@ -70,7 +70,7 @@ const DEFAULT_PET_ROSTER = [
   },
   {
     id: "pet-006",
-    serial: "QP-202603-006",
+    serial: "0069001",
     name: { zh: "\u5f8b\u52a8", en: "Groove" },
     model: "../assets/models/RobotExpressive.glb",
     element: "fire",
@@ -100,6 +100,34 @@ const MODEL_BY_ELEMENT = {
   wood: "../assets/models/Horse.glb",
   metal: "../assets/models/CesiumMan.glb",
   earth: "../assets/models/NeilArmstrong.glb"
+};
+
+const SPECIES_META_BY_ELEMENT = {
+  fire: {
+    code: "001",
+    name: { zh: "\u7130\u5c3e", en: "BlazeTail" },
+    avatar: "\u7130"
+  },
+  water: {
+    code: "002",
+    name: { zh: "\u661f\u822a", en: "Astror" },
+    avatar: "\u661f"
+  },
+  wood: {
+    code: "003",
+    name: { zh: "\u8349\u8e44", en: "Hoofleaf" },
+    avatar: "\u8349"
+  },
+  metal: {
+    code: "004",
+    name: { zh: "\u9510\u94e0", en: "IronGuard" },
+    avatar: "\u94e0"
+  },
+  earth: {
+    code: "005",
+    name: { zh: "\u6708\u58e4", en: "MoonSoil" },
+    avatar: "\u58e4"
+  }
 };
 
 class RuntimeDataStore {
@@ -293,8 +321,9 @@ function normalizePetList(input) {
     return DEFAULT_PET_ROSTER.map(clonePet);
   }
   const unique = new Map();
+  const legacySerialCounters = new Map();
   for (const candidate of input) {
-    const pet = normalizePet(candidate);
+    const pet = normalizePet(candidate, legacySerialCounters);
     if (!pet) continue;
     if (!unique.has(pet.id)) {
       unique.set(pet.id, pet);
@@ -304,22 +333,22 @@ function normalizePetList(input) {
   return normalized.length > 0 ? normalized : DEFAULT_PET_ROSTER.map(clonePet);
 }
 
-function normalizePet(input) {
+function normalizePet(input, legacySerialCounters = new Map()) {
   if (!input || typeof input !== "object") return null;
   if (typeof input.id !== "string" || input.id.trim().length === 0) return null;
   const element = ALLOWED_ELEMENTS.has(input.element) ? input.element : "metal";
+  const speciesMeta = getSpeciesMeta(element);
   const nameZh =
     typeof input.name?.zh === "string" && input.name.zh.trim().length > 0 ? input.name.zh.trim() : null;
   const nameEn =
     typeof input.name?.en === "string" && input.name.en.trim().length > 0 ? input.name.en.trim() : null;
+  const name = normalizePetName(nameZh, nameEn, speciesMeta);
+  const serial = normalizePetSerial(input.serial, speciesMeta, legacySerialCounters);
 
   return {
     id: input.id.trim(),
-    serial: typeof input.serial === "string" && input.serial.trim().length > 0 ? input.serial.trim() : "N/A",
-    name: {
-      zh: nameZh || nameEn || "\u672a\u547d\u540d\u5ba0\u7269",
-      en: nameEn || nameZh || "Unknown Pet"
-    },
+    serial,
+    name,
     model:
       typeof input.model === "string" && input.model.trim().length > 0
         ? input.model.trim()
@@ -333,11 +362,48 @@ function normalizePet(input) {
     avatar:
       typeof input.avatar === "string" && input.avatar.trim().length > 0
         ? input.avatar.trim().slice(0, 2)
-        : "\u5ba0",
+        : speciesMeta.avatar,
     level: sanitizeLevel(input.level),
     experience: sanitizeExperience(input.experience),
     winsTotal: sanitizeWinsTotal(input.winsTotal)
   };
+}
+
+function getSpeciesMeta(element) {
+  return SPECIES_META_BY_ELEMENT[element] || SPECIES_META_BY_ELEMENT.fire;
+}
+
+function normalizePetName(nameZh, nameEn, speciesMeta) {
+  const hasLegacyZh = typeof nameZh === "string" && nameZh.includes("\u7075\u5ba0");
+  const hasLegacyEn =
+    typeof nameEn === "string" &&
+    /pet/i.test(nameEn) &&
+    /(fire|water|wood|metal|earth)/i.test(nameEn);
+
+  if (hasLegacyZh || hasLegacyEn) {
+    return {
+      zh: speciesMeta.name.zh,
+      en: speciesMeta.name.en
+    };
+  }
+
+  return {
+    zh: nameZh || nameEn || speciesMeta.name.zh,
+    en: nameEn || nameZh || speciesMeta.name.en
+  };
+}
+
+function normalizePetSerial(serialInput, speciesMeta, legacySerialCounters) {
+  const serial =
+    typeof serialInput === "string" && serialInput.trim().length > 0 ? serialInput.trim() : "";
+  if (/^\d{7}$/.test(serial)) {
+    return serial;
+  }
+
+  const previous = Number(legacySerialCounters.get(speciesMeta.code) || 9000);
+  const next = previous + 1;
+  legacySerialCounters.set(speciesMeta.code, next);
+  return `${speciesMeta.code}${String(next).padStart(4, "0")}`;
 }
 
 function sanitizeLevel(input) {
@@ -497,7 +563,7 @@ function normalizeCaptureInput(input) {
   const wildSerial =
     typeof input?.wildSerial === "string" && input.wildSerial.trim().length > 0
       ? input.wildSerial.trim()
-      : `WP-${Date.now()}`;
+      : `999${String(Date.now() % 10000).padStart(4, "0")}`;
   const element = ALLOWED_ELEMENTS.has(input?.element) ? input.element : "metal";
   const rarity =
     input?.rarity === "epic" || input?.rarity === "rare" || input?.rarity === "common"
