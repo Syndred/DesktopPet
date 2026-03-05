@@ -28,6 +28,9 @@ contextBridge.exposeInMainWorld("petApi", {
   setActivePet(petId) {
     return ipcRenderer.invoke("pet:set-active-pet", { petId });
   },
+  releasePet(petId) {
+    return ipcRenderer.invoke("pet:release-pet", { petId });
+  },
   getBattleReports(limit) {
     return ipcRenderer.invoke("pet:get-battle-reports", { limit });
   },
@@ -63,6 +66,9 @@ contextBridge.exposeInMainWorld("petApi", {
   },
   setIdleWindowSize(size) {
     return ipcRenderer.invoke("pet:set-idle-window-size", size ?? {});
+  },
+  moveWindowBy(delta) {
+    ipcRenderer.send("pet:move-window-by", delta ?? {});
   },
   onPauseState(listener) {
     const wrapped = (_event, state) => listener(Boolean(state));

@@ -166,6 +166,30 @@ class RuntimeDataStore {
     return this.getInventorySnapshot();
   }
 
+  releasePet(petId) {
+    if (typeof petId !== "string" || petId.trim().length === 0) {
+      throw new Error("invalid pet id");
+    }
+    const targetPetId = petId.trim();
+    if (this.state.pets.length <= 1) {
+      throw new Error("at least one pet must remain");
+    }
+
+    const beforeLength = this.state.pets.length;
+    this.state.pets = this.state.pets.filter((pet) => pet.id !== targetPetId);
+    if (this.state.pets.length === beforeLength) {
+      throw new Error("pet id not found");
+    }
+
+    this.state.captureRecords = this.state.captureRecords.filter((record) => record.petId !== targetPetId);
+    if (!this.state.pets.some((pet) => pet.id === this.state.activePetId)) {
+      this.state.activePetId = this.state.pets[0].id;
+    }
+    this.state.updatedAt = new Date().toISOString();
+    this.persistState();
+    return this.getInventorySnapshot();
+  }
+
   listBattleReports(limit = DEFAULT_REPORT_LIMIT) {
     const safeLimit = Math.max(1, Math.min(100, Number(limit) || DEFAULT_REPORT_LIMIT));
     return this.state.battleReports.slice(0, safeLimit).map(cloneBattleReport);
@@ -187,11 +211,17 @@ class RuntimeDataStore {
     );
     if (existingRecord) {
       const existingPet = this.state.pets.find((pet) => pet.id === existingRecord.petId) || null;
-      return {
-        duplicate: true,
-        pet: existingPet ? clonePet(existingPet) : null,
-        captureRecord: { ...existingRecord }
-      };
+      if (!existingPet) {
+        this.state.captureRecords = this.state.captureRecords.filter(
+          (record) => record.id !== existingRecord.id
+        );
+      } else {
+        return {
+          duplicate: true,
+          pet: existingPet ? clonePet(existingPet) : null,
+          captureRecord: { ...existingRecord }
+        };
+      }
     }
 
     const nextPet = createCapturedPet(captureInput, this.state.pets.length + 1);

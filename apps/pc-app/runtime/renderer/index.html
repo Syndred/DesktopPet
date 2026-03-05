@@ -10,6 +10,7 @@
     <div id="root">
       <div id="desktop-stage" class="drag-region">
         <div id="battle-scene">
+          <div id="idle-bounds-guide" class="idle-bounds-guide"></div>
           <div id="battle-round" class="round-badge">Round: 0</div>
           <div id="battle-vs" class="relation-badge hidden">克制</div>
           <div id="battle-countdown" class="countdown-orb hidden">
@@ -92,7 +93,6 @@
             <model-viewer
               id="player-model"
               src="../assets/models/Fox.glb"
-              camera-controls
               disable-pan
               disable-zoom
               autoplay
@@ -106,7 +106,6 @@
             <model-viewer
               id="enemy-model"
               src="../assets/models/CesiumMan.glb"
-              camera-controls
               disable-pan
               disable-zoom
               autoplay

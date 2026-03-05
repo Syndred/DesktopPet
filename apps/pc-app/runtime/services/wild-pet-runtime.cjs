@@ -65,6 +65,21 @@ class WildPetRuntimeService {
     this.speciesSerialCounters = new Map();
   }
 
+  seedSerialCounters(pets = []) {
+    if (!Array.isArray(pets)) return;
+    for (const pet of pets) {
+      const serial = typeof pet?.serial === "string" ? pet.serial.trim() : "";
+      if (!/^\d{7}$/.test(serial)) continue;
+      const speciesCode = serial.slice(0, 3);
+      const seq = Number(serial.slice(3));
+      if (!Number.isInteger(seq) || seq <= 0) continue;
+      const previous = Number(this.speciesSerialCounters.get(speciesCode) || 0);
+      if (seq > previous) {
+        this.speciesSerialCounters.set(speciesCode, seq);
+      }
+    }
+  }
+
   getNearbyWildPets(input = {}) {
     const providerId = resolveProviderId(input.providerId);
     const location = normalizeLocation(input.location);

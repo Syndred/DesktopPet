@@ -68,6 +68,7 @@ function createCombatant(id, element) {
     hp: 120,
     maxHp: 120,
     anger: 0,
+    freeDodgeUsed: false,
     statuses: []
   };
 }
@@ -222,9 +223,12 @@ function chooseEnemyAction(session, playerAction) {
 
 function normalizeAction(player, action, notes) {
   const normalized = normalizeActionInput(action);
-  if (normalized === "dodge" && player.anger <= 0) {
+  if (normalized === "dodge" && player.anger <= 0 && player.freeDodgeUsed) {
     notes.push(player.id + " dodge downgraded to normal_attack (anger <= 0)");
     return "normal_attack";
+  }
+  if (normalized === "dodge") {
+    player.freeDodgeUsed = true;
   }
   if (normalized === "ultimate" && player.anger < 100) {
     notes.push(player.id + " ultimate downgraded to normal_attack (anger < 100)");
@@ -332,8 +336,12 @@ function gainAngerOnHit(player, attackerElement, defenderElement) {
 }
 
 function spendDodgeAnger(player, notes) {
-  player.anger = Math.max(0, player.anger - 20);
-  notes.push(`${player.id} spends 20 anger on dodge`);
+  if (player.anger > 0) {
+    player.anger = Math.max(0, player.anger - 20);
+    notes.push(`${player.id} spends 20 anger on dodge`);
+    return;
+  }
+  notes.push(`${player.id} uses first free dodge`);
 }
 
 function refundDodgeAnger(player, notes) {

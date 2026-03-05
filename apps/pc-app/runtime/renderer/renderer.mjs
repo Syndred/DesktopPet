@@ -106,6 +106,7 @@ const i18n = {
     battleWaiting: "已选择 {playerAction}，等待对方...",
     battleAutoNormal: "5秒未选择动作，已默认普攻。",
     battleNoAngerDodge: "怒气为 0，无法闪避，已改为普攻。",
+    battleFreeDodgeUsed: "首回免费闪避已使用，后续闪避需消耗怒气。",
     battleRelationAdvantage: "克制",
     battleRelationDisadvantage: "被克",
     battleRelationEven: "均势",
@@ -125,6 +126,9 @@ const i18n = {
     battleSettlementLoseTitle: "失败",
     battleSettlementDrawTitle: "平局",
     battleSettlementConfirm: "确认",
+    battleSettlementCaptureSuccess: "收服成功：{serial}",
+    battleSettlementCaptureFail: "收服失败：{serial}",
+    battleSettlementCaptureAbandon: "已放弃收服：{serial}",
     petInteract: "宠物交互：宠物给出轻量陪伴反馈。",
     actionSent: "已提交本回合动作。",
     battleLevelUpLog: "{petName} 升级到 Lv.{level}，属性已提升。",
@@ -148,6 +152,8 @@ const i18n = {
     inventorySetActive: "设为出战",
     inventorySelectedDetail: "宠物详情",
     inventoryDetailClose: "关闭",
+    inventoryRelease: "放逐",
+    inventoryReleaseDone: "已放逐宠物：{petName}",
     battleReportTitle: "最近战报",
     battleReportEmpty: "暂无战报，先开一局对战吧。",
     battleReportFinished: "已结算",
@@ -280,6 +286,7 @@ const i18n = {
     battleWaiting: "Selected {playerAction}. Waiting for opponent...",
     battleAutoNormal: "No action selected in 5 seconds. Defaulted to Normal.",
     battleNoAngerDodge: "Anger is 0. Dodge is unavailable, switched to Normal.",
+    battleFreeDodgeUsed: "Free first dodge consumed. Dodge now requires anger.",
     battleRelationAdvantage: "Adv",
     battleRelationDisadvantage: "Weak",
     battleRelationEven: "Even",
@@ -299,6 +306,9 @@ const i18n = {
     battleSettlementLoseTitle: "Defeat",
     battleSettlementDrawTitle: "Draw",
     battleSettlementConfirm: "Confirm",
+    battleSettlementCaptureSuccess: "Capture success: {serial}",
+    battleSettlementCaptureFail: "Capture failed: {serial}",
+    battleSettlementCaptureAbandon: "Capture abandoned: {serial}",
     petInteract: "Pet interaction: companion gives a gentle response.",
     actionSent: "Battle action sent.",
     battleLevelUpLog: "{petName} reached Lv.{level}; stats upgraded.",
@@ -322,6 +332,8 @@ const i18n = {
     inventorySetActive: "Set Active",
     inventorySelectedDetail: "Pet Detail",
     inventoryDetailClose: "Close",
+    inventoryRelease: "Release",
+    inventoryReleaseDone: "Pet released: {petName}",
     battleReportTitle: "Recent Battle Reports",
     battleReportEmpty: "No reports yet. Start a battle to generate one.",
     battleReportFinished: "Finished",
@@ -565,10 +577,22 @@ const IDLE_WINDOW_BASE = {
   width: 220,
   height: 250
 };
-const IDLE_WINDOW_SCALE_STEP = 0.08;
+const IDLE_WINDOW_SCALE_STEP = 0.04;
 const IDLE_WINDOW_SCALE_MIN = 0.82;
 const IDLE_WINDOW_SCALE_MAX = 2.2;
 let idleWindowScale = 1;
+let settlementExtraMessage = "";
+let dragPointerSession = null;
+let rotatePointerSession = null;
+let idleOrbitDeg = 0;
+let idleModelBaseSize = {
+  width: 188,
+  height: 220
+};
+let freeDodgeUsedBySide = {
+  player: false,
+  enemy: false
+};
 
 const ELEMENT_ADVANTAGE_CHAIN = {
   metal: "wood",
@@ -611,9 +635,11 @@ function clampNumber(value, min, max) {
 
 function getIdleWindowSize(scaleValue) {
   const scale = clampNumber(scaleValue, IDLE_WINDOW_SCALE_MIN, IDLE_WINDOW_SCALE_MAX);
+  const baseWidth = Math.max(140, idleModelBaseSize.width);
+  const baseHeight = Math.max(170, idleModelBaseSize.height);
   return {
-    width: Math.round(IDLE_WINDOW_BASE.width * scale),
-    height: Math.round(IDLE_WINDOW_BASE.height * scale)
+    width: Math.round((baseWidth + 26) * scale),
+    height: Math.round((baseHeight + 22) * scale)
   };
 }
 
@@ -625,6 +651,64 @@ async function applyIdleWindowScale(scaleValue) {
   } catch {
     // Keep non-blocking behavior when IPC is unavailable.
   }
+}
+
+function beginWindowDrag(event) {
+  dragPointerSession = {
+    lastScreenX: event.screenX,
+    lastScreenY: event.screenY
+  };
+}
+
+function updateWindowDrag(event) {
+  if (!dragPointerSession) return;
+  const dx = event.screenX - dragPointerSession.lastScreenX;
+  const dy = event.screenY - dragPointerSession.lastScreenY;
+  dragPointerSession.lastScreenX = event.screenX;
+  dragPointerSession.lastScreenY = event.screenY;
+  if (dx === 0 && dy === 0) return;
+  window.petApi.moveWindowBy({ dx, dy });
+}
+
+function endWindowDrag() {
+  dragPointerSession = null;
+}
+
+function isInteractivePanelTarget(target) {
+  if (!(target instanceof HTMLElement)) return false;
+  return Boolean(
+    target.closest(
+      "button, input, select, textarea, label, article, model-viewer, .row, .field, .panel-section, .pet-avatar-item, .pet-quick-set, .battle-report-item, .wild-item, .pet-detail-popover, #log"
+    )
+  );
+}
+
+function measureIdleModelBase() {
+  const rect = playerModel.getBoundingClientRect();
+  if (!Number.isFinite(rect.width) || !Number.isFinite(rect.height)) return;
+  if (rect.width < 40 || rect.height < 40) return;
+  idleModelBaseSize = {
+    width: Math.round(rect.width),
+    height: Math.round(rect.height)
+  };
+}
+
+function closeTopLayerByEsc() {
+  if (battleSettlementElement && !battleSettlementElement.classList.contains("hidden")) {
+    void endBattle(false);
+    return true;
+  }
+  if (petDetailPopoverElement && !petDetailPopoverElement.classList.contains("hidden")) {
+    selectedPetDetailId = null;
+    renderPetInventory();
+    hidePetDetailPopover();
+    return true;
+  }
+  if (panelElement && !panelElement.classList.contains("hidden")) {
+    setPanelVisible(false);
+    return true;
+  }
+  return false;
 }
 
 function setPanelVisible(visible) {
@@ -656,6 +740,10 @@ function reportHitState() {
 
   const panelVisible = !panelElement.classList.contains("hidden");
   const insidePanel = panelVisible && isPointInsideRect(x, y, panelElement.getBoundingClientRect());
+  const insideIdleScene =
+    !battleMode &&
+    !panelVisible &&
+    isPointInsideRect(x, y, battleSceneElement.getBoundingClientRect());
   const settlementVisible = Boolean(
     battleSettlementElement && !battleSettlementElement.classList.contains("hidden")
   );
@@ -676,7 +764,7 @@ function reportHitState() {
   const insideControls = insidePanel || insideActionTags || insideHud || insideSettlement;
   const insideInteractiveRegion = battleMode
     ? true
-    : insideControls || (!isPaused && insideBattleActors);
+    : insideControls || insideIdleScene || (!isPaused && insideBattleActors);
 
   const now = Date.now();
   if (now - lastHitReportAt > 30) {
@@ -706,6 +794,39 @@ function formatAction(action) {
 
 function getElementText(element) {
   return currentI18n().elementNames[element] ?? element;
+}
+
+function setModelElementTint(modelElement, element) {
+  if (!modelElement) return;
+  for (const cls of [...modelElement.classList]) {
+    if (cls.startsWith("model-tint-")) {
+      modelElement.classList.remove(cls);
+    }
+  }
+  modelElement.classList.add(`model-tint-${element}`);
+}
+
+function applyIdleOrbit() {
+  const orbit = `${idleOrbitDeg}deg 74deg auto`;
+  playerModel.cameraOrbit = orbit;
+}
+
+function canUseDodge(side, anger) {
+  if (side === "player" || side === "enemy") {
+    if (!freeDodgeUsedBySide[side]) return true;
+  }
+  return anger > 0;
+}
+
+function getElementAdvantage(element) {
+  const target = ELEMENT_ADVANTAGE_CHAIN[element] || "metal";
+  const weak = Object.keys(ELEMENT_ADVANTAGE_CHAIN).find(
+    (candidate) => ELEMENT_ADVANTAGE_CHAIN[candidate] === element
+  );
+  return {
+    strongAgainst: target,
+    weakAgainst: weak || "metal"
+  };
 }
 
 function setElementTagTheme(elementNode, element) {
@@ -1008,6 +1129,8 @@ async function setActivePet(petId, options = {}) {
 
   const activePet = getActivePet();
   playerModel.src = activePet.model;
+  setModelElementTint(playerModel, activePet.element);
+  applyIdleOrbit();
   playerElementLabel.textContent = getElementText(activePet.element);
   setElementTagTheme(playerElementLabel, activePet.element);
   updateBattleHudBadges(activePet, enemyPetInBattle);
@@ -1016,6 +1139,28 @@ async function setActivePet(petId, options = {}) {
   renderPetDetail();
   if (options.closePanel) {
     setPanelVisible(false);
+  }
+}
+
+async function releasePet(petId) {
+  const pet = getPetById(petId);
+  if (!pet?.id) return;
+  try {
+    const snapshot = await window.petApi.releasePet(pet.id);
+    applyInventorySnapshot(snapshot);
+    if (selectedPetDetailId === pet.id) {
+      selectedPetDetailId = null;
+    }
+    const activePet = getActivePet();
+    playerModel.src = activePet.model;
+    setModelElementTint(playerModel, activePet.element);
+    playerElementLabel.textContent = getElementText(activePet.element);
+    setElementTagTheme(playerElementLabel, activePet.element);
+    appendLog(t("inventoryReleaseDone", { petName: getPetDisplayName(pet) }));
+    renderPetInventory();
+    renderPetDetail();
+  } catch {
+    // Keep release operation non-blocking for demo runtime.
   }
 }
 
@@ -1041,6 +1186,9 @@ function renderPetDetail() {
   const level = getPetLevel(pet);
   const experience = getPetExperience(pet);
   const winsTotal = getPetWinsTotal(pet);
+  const relation = getElementAdvantage(pet.element);
+  const strongText = getElementText(relation.strongAgainst);
+  const weakText = getElementText(relation.weakAgainst);
 
   petDetailPopoverElement.classList.remove("hidden");
   petDetailPopoverElement.innerHTML = `
@@ -1054,9 +1202,16 @@ function renderPetDetail() {
         <span class="pet-meta-chip element element-${pet.element}">${elementName}</span>
       </div>
     </div>
+    <div class="pet-detail-preview">
+      <model-viewer class="pet-detail-model model-tint-${pet.element}" src="${pet.model}" autoplay disable-pan disable-zoom interaction-prompt="none"></model-viewer>
+      <div class="pet-detail-relation">
+        <span class="pet-relation-chip strong">${currentI18n().battleRelationAdvantage}: ${strongText}</span>
+        <span class="pet-relation-chip weak">${currentI18n().battleRelationDisadvantage}: ${weakText}</span>
+      </div>
+    </div>
     <div class="pet-detail-meta">
       <span><b>${currentI18n().inventoryFieldSerial}:</b> ${pet.serial}</span>
-      <span><b>${currentI18n().inventoryFieldCapturedAt}:</b> ${pet.capturedAt}</span>
+      <span><b>${currentI18n().inventoryFieldCapturedAt}:</b> ${formatReportTime(pet.capturedAt)}</span>
       <span><b>${currentI18n().inventoryFieldLevel}:</b> ${formatLevelText(level)}</span>
       <span><b>${currentI18n().inventoryFieldExperience}:</b> ${experience}/${LEVEL_UP_REQUIRED_WINS}</span>
       <span><b>${currentI18n().inventoryFieldWins}:</b> ${winsTotal}</span>
@@ -1066,6 +1221,7 @@ function renderPetDetail() {
     <div class="pet-detail-actions">
       <button id="btn-close-pet-detail">${currentI18n().inventoryDetailClose}</button>
       <button id="btn-set-active-pet" ${isActive ? "disabled" : ""}>${currentI18n().inventorySetActive}</button>
+      <button id="btn-release-pet" ${isActive ? "disabled" : ""}>${currentI18n().inventoryRelease}</button>
     </div>
   `;
 
@@ -1082,6 +1238,13 @@ function renderPetDetail() {
   if (setActiveBtn) {
     setActiveBtn.addEventListener("click", () => {
       void setActivePet(pet.id);
+    });
+  }
+
+  const releaseBtn = document.getElementById("btn-release-pet");
+  if (releaseBtn) {
+    releaseBtn.addEventListener("click", () => {
+      void releasePet(pet.id);
     });
   }
 
@@ -1149,12 +1312,20 @@ function formatReportTime(value) {
   const parsed = Date.parse(value);
   if (Number.isNaN(parsed)) return value || "-";
   const date = new Date(parsed);
-  const yyyy = date.getFullYear();
-  const mm = String(date.getMonth() + 1).padStart(2, "0");
-  const dd = String(date.getDate()).padStart(2, "0");
-  const hh = String(date.getHours()).padStart(2, "0");
-  const mi = String(date.getMinutes()).padStart(2, "0");
-  return `${yyyy}-${mm}-${dd} ${hh}:${mi}`;
+  const locale = language === "zh" ? "zh-CN" : "en-GB";
+  const timeZone = language === "zh" ? "Asia/Shanghai" : undefined;
+  const formatter = new Intl.DateTimeFormat(locale, {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+    ...(timeZone ? { timeZone } : {})
+  });
+  const parts = formatter.formatToParts(date);
+  const get = (token) => parts.find((item) => item.type === token)?.value || "00";
+  return `${get("year")}-${get("month")}-${get("day")} ${get("hour")}:${get("minute")}`;
 }
 
 function getBattleReportWinnerText(report) {
@@ -1449,6 +1620,8 @@ async function startCaptureBattle(wildPet) {
   clearActionCountdown();
   isRoundResolving = false;
   hideBattleSettlement();
+  settlementExtraMessage = "";
+  freeDodgeUsedBySide = { player: false, enemy: false };
   setBattleMode(true);
   clearRoundFeed();
   lastRoundResultElement.textContent = "";
@@ -1472,6 +1645,7 @@ async function startCaptureBattle(wildPet) {
 
   const capture = response.capture;
   playerModel.src = activePet.model;
+  setModelElementTint(playerModel, activePet.element);
   enemyPetInBattle = {
     id: capture.id,
     serial: capture.serial,
@@ -1486,6 +1660,7 @@ async function startCaptureBattle(wildPet) {
     winsTotal: 0
   };
   enemyModel.src = capture.model;
+  setModelElementTint(enemyModel, capture.element);
   updateBattleBoard(response.state);
   setActiveActionTag("");
   startActionCountdown();
@@ -1583,24 +1758,28 @@ function renderRuntimeInfo() {
 }
 
 function getBattleSettlementCopy(winner) {
+  const decorateSubtitle = (base) => {
+    if (!settlementExtraMessage) return base;
+    return `${base}\n${settlementExtraMessage}`;
+  };
   if (winner === "player") {
     return {
       theme: "win",
       title: currentI18n().battleSettlementWinTitle,
-      subtitle: currentI18n().battleCelebrateWin
+      subtitle: decorateSubtitle(currentI18n().battleCelebrateWin)
     };
   }
   if (winner === "enemy") {
     return {
       theme: "lose",
       title: currentI18n().battleSettlementLoseTitle,
-      subtitle: currentI18n().battleCelebrateLose
+      subtitle: decorateSubtitle(currentI18n().battleCelebrateLose)
     };
   }
   return {
     theme: "draw",
     title: currentI18n().battleSettlementDrawTitle,
-    subtitle: currentI18n().battleCelebrateDraw
+    subtitle: decorateSubtitle(currentI18n().battleCelebrateDraw)
   };
 }
 
@@ -1629,6 +1808,7 @@ function showBattleSettlement(winner) {
 function hideBattleSettlement() {
   if (!battleSettlementElement) return;
   settlementWinner = null;
+  settlementExtraMessage = "";
   battleSettlementElement.classList.remove("show", "win", "lose", "draw");
   battleSettlementElement.classList.add("hidden");
 }
@@ -1756,7 +1936,9 @@ function syncActionButtons() {
     const isDodgeAction = button.dataset.action === "dodge";
     const isUltimateAction = button.dataset.action === "ultimate";
     button.disabled =
-      disabled || (isDodgeAction && playerAnger <= 0) || (isUltimateAction && playerAnger < 100);
+      disabled ||
+      (isDodgeAction && !canUseDodge("player", playerAnger)) ||
+      (isUltimateAction && playerAnger < 100);
   }
 }
 
@@ -1802,6 +1984,8 @@ function updateBattleBoard(state) {
 
   playerElementLabel.textContent = getElementText(state.player.element);
   enemyElementLabel.textContent = getElementText(state.enemy.element);
+  setModelElementTint(playerModel, state.player.element);
+  setModelElementTint(enemyModel, state.enemy.element);
   setElementTagTheme(playerElementLabel, state.player.element);
   setElementTagTheme(enemyElementLabel, state.enemy.element);
   updateBattleRelationTag(state.player.element, state.enemy.element);
@@ -2041,6 +2225,8 @@ async function resetBattle() {
   clearActionCountdown();
   isRoundResolving = false;
   hideBattleSettlement();
+  settlementExtraMessage = "";
+  freeDodgeUsedBySide = { player: false, enemy: false };
   setBattleMode(true);
   clearRoundFeed();
   lastRoundResultElement.textContent = "";
@@ -2050,6 +2236,8 @@ async function resetBattle() {
   enemyPetInBattle = chooseEnemyPetForBattle();
   playerModel.src = activePet.model;
   enemyModel.src = enemyPetInBattle.model;
+  setModelElementTint(playerModel, activePet.element);
+  setModelElementTint(enemyModel, enemyPetInBattle.element);
 
   const playerElement = activePet.element;
   const enemyElement = enemyPetInBattle.element;
@@ -2087,11 +2275,18 @@ async function endBattle(manual = true) {
         serial: battleEndResult.captureOutcome.wildPet?.serial || "-"
       })
     );
+    appendLog(
+      t("battleSettlementCaptureAbandon", {
+        serial: battleEndResult.captureOutcome.wildPet?.serial || "-"
+      })
+    );
     await refreshNearbyWildPets({ silent: true });
   }
   clearActionCountdown();
   isRoundResolving = false;
   hideBattleSettlement();
+  settlementExtraMessage = "";
+  freeDodgeUsedBySide = { player: false, enemy: false };
   setBattleMode(false);
   syncActionButtons();
   appendLog(manual ? t("battleExitLog") : t("battleSettlementConfirmLog"));
@@ -2105,7 +2300,7 @@ async function actBattle(action, options = {}) {
   if (isRoundResolving) return;
 
   let resolvedAction = options.auto ? "normal_attack" : action;
-  if (resolvedAction === "dodge" && (lastBattleState?.player?.anger ?? 0) <= 0) {
+  if (resolvedAction === "dodge" && !canUseDodge("player", lastBattleState?.player?.anger ?? 0)) {
     resolvedAction = "normal_attack";
     appendLog(t("battleNoAngerDodge"));
   }
@@ -2129,6 +2324,15 @@ async function actBattle(action, options = {}) {
       await sleep(220 - elapsed);
     }
     const round = result.roundResult;
+    if (round.actions?.player === "dodge") {
+      freeDodgeUsedBySide.player = true;
+      if ((lastBattleState?.player?.anger ?? 0) <= 0) {
+        appendLog(t("battleFreeDodgeUsed"));
+      }
+    }
+    if (round.actions?.enemy === "dodge") {
+      freeDodgeUsedBySide.enemy = true;
+    }
     const directDamage = round.directDamage || round.damageTaken;
     const dotDamageEvents = round.dotDamageEvents || { player: [], enemy: [] };
     const healEvents = round.healEvents || { player: [], enemy: [] };
@@ -2300,6 +2504,9 @@ async function actBattle(action, options = {}) {
 
       if (result.captureOutcome && result.captureOutcome.ok) {
         if (result.captureOutcome.success) {
+          settlementExtraMessage = t("battleSettlementCaptureSuccess", {
+            serial: result.captureOutcome.wildPet?.serial || "-"
+          });
           appendLog(
             t("wildCaptureSuccessLog", {
               serial: result.captureOutcome.wildPet?.serial || "-"
@@ -2316,6 +2523,9 @@ async function actBattle(action, options = {}) {
           updateBattleHudBadges(getActivePet(), enemyPetInBattle);
           await refreshNearbyWildPets({ silent: true });
         } else {
+          settlementExtraMessage = t("battleSettlementCaptureFail", {
+            serial: result.captureOutcome.wildPet?.serial || "-"
+          });
           appendLog(
             t("wildCaptureFailLog", {
               serial: result.captureOutcome.wildPet?.serial || "-"
@@ -2343,9 +2553,23 @@ async function actBattle(action, options = {}) {
 
 function setupMouseTracking() {
   window.addEventListener("mousemove", (event) => {
+    updateWindowDrag(event);
+    if (rotatePointerSession) {
+      const delta = event.clientX - rotatePointerSession.lastClientX;
+      rotatePointerSession.lastClientX = event.clientX;
+      if (delta !== 0) {
+        idleOrbitDeg += delta * 0.55;
+        applyIdleOrbit();
+      }
+    }
     window.__lastMouseX = event.clientX;
     window.__lastMouseY = event.clientY;
     reportHitState();
+  });
+
+  window.addEventListener("mouseup", () => {
+    endWindowDrag();
+    rotatePointerSession = null;
   });
 
   playerCard.addEventListener("mouseenter", () => {
@@ -2362,6 +2586,14 @@ function setupMouseTracking() {
 
   playerCard.addEventListener("click", () => {
     setBurstInteraction(t("petInteract"));
+  });
+
+  playerCard.addEventListener("mousedown", (event) => {
+    if (event.button !== 0) return;
+    const panelVisible = !panelElement.classList.contains("hidden");
+    if (battleMode || panelVisible) return;
+    event.preventDefault();
+    beginWindowDrag(event);
   });
 
   playerCard.addEventListener("contextmenu", (event) => {
@@ -2386,9 +2618,32 @@ function setupMouseTracking() {
     },
     { passive: false }
   );
+
+  battleSceneElement.addEventListener("mousedown", (event) => {
+    if (event.button !== 0) return;
+    const panelVisible = !panelElement.classList.contains("hidden");
+    if (battleMode || panelVisible) return;
+    if (event.target instanceof HTMLElement && event.target.closest("#player-card")) return;
+    rotatePointerSession = {
+      lastClientX: event.clientX
+    };
+  });
+
+  panelElement.addEventListener("mousedown", (event) => {
+    if (event.button !== 0) return;
+    if (isInteractivePanelTarget(event.target)) return;
+    beginWindowDrag(event);
+  });
 }
 
 function setupButtons() {
+  window.addEventListener("keydown", (event) => {
+    if (event.key !== "Escape") return;
+    if (closeTopLayerByEsc()) {
+      event.preventDefault();
+    }
+  });
+
   languageBtn.addEventListener("click", () => {
     toggleLanguage();
   });
@@ -2541,6 +2796,8 @@ function setupIpcEvents() {
 
 function setupModelDefaults() {
   playerModel.addEventListener("load", () => {
+    measureIdleModelBase();
+    applyIdleOrbit();
     playModelAnimation(playerModel, ["survey", "idle", "walk"]);
   });
 
@@ -2555,6 +2812,9 @@ async function bootstrap() {
   playerModel.src = activePet.model;
   enemyPetInBattle = chooseEnemyPetForBattle();
   enemyModel.src = enemyPetInBattle.model;
+  setModelElementTint(playerModel, activePet.element);
+  setModelElementTint(enemyModel, enemyPetInBattle.element);
+  applyIdleOrbit();
 
   applyLanguage();
   await refreshBattleReports();
@@ -2568,6 +2828,7 @@ async function bootstrap() {
   setupIpcEvents();
   setupModelDefaults();
   window.addEventListener("resize", () => {
+    measureIdleModelBase();
     syncInventoryListHeight();
     positionPetDetailPopover();
   });

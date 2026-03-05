@@ -1,4 +1,4 @@
-const { readFileSync, writeFileSync } = require("node:fs");
+﻿const { readFileSync, writeFileSync } = require("node:fs");
 const { join } = require("node:path");
 const { randomUUID } = require("node:crypto");
 
@@ -33,8 +33,8 @@ const BATTLE_BOUNDS = {
 };
 
 const PANEL_BOUNDS = {
-  width: 520,
-  height: 700
+  width: 430,
+  height: 560
 };
 
 const IDLE_SIZE_LIMITS = {
@@ -43,6 +43,8 @@ const IDLE_SIZE_LIMITS = {
   minHeight: 200,
   maxHeight: 640
 };
+
+const WINDOW_MOVE_LIMIT = 200;
 
 let currentIdleBounds = { ...IDLE_BOUNDS };
 
@@ -97,7 +99,9 @@ function scheduleSaveAndSnap() {
   if (moveTimer) clearTimeout(moveTimer);
   moveTimer = setTimeout(() => {
     if (!mainWindow || mainWindow.isDestroyed()) return;
-    const snapped = clampBoundsToWorkArea(mainWindow.getBounds());
+    const snapped = clampBoundsToWorkArea(mainWindow.getBounds(), {
+      margin: activeLayoutMode === "panel" ? 8 : 0
+    });
     mainWindow.setBounds(snapped);
     saveWindowBounds(snapped);
   }, 220);
@@ -195,12 +199,21 @@ function getWindowConfigPath() {
   return join(app.getPath("userData"), "pet-window-bounds.json");
 }
 
-function clampBoundsToWorkArea(bounds) {
+function clampBoundsToWorkArea(bounds, options = {}) {
   const area = getVirtualWorkArea();
-  const width = Math.min(Math.max(180, bounds.width), area.width);
-  const height = Math.min(Math.max(200, bounds.height), area.height);
-  const x = Math.min(Math.max(area.x, bounds.x), area.x + area.width - width);
-  const y = Math.min(Math.max(area.y, bounds.y), area.y + area.height - height);
+  const marginRaw = Number(options.margin);
+  const margin = Number.isFinite(marginRaw) ? Math.max(0, Math.round(marginRaw)) : 0;
+  const safeArea = {
+    x: area.x + margin,
+    y: area.y + margin,
+    width: Math.max(120, area.width - margin * 2),
+    height: Math.max(120, area.height - margin * 2)
+  };
+
+  const width = Math.min(Math.max(180, bounds.width), safeArea.width);
+  const height = Math.min(Math.max(200, bounds.height), safeArea.height);
+  const x = Math.min(Math.max(safeArea.x, bounds.x), safeArea.x + safeArea.width - width);
+  const y = Math.min(Math.max(safeArea.y, bounds.y), safeArea.y + safeArea.height - height);
   return { x, y, width, height };
 }
 
@@ -236,6 +249,30 @@ function registerIpcHandlers() {
     if (!mainWindow || mainWindow.isDestroyed()) return;
     if (interactionPaused) return;
     mainWindow.setIgnoreMouseEvents(!Boolean(isInside), { forward: true });
+  });
+
+  ipcMain.on("pet:move-window-by", (_event, payload) => {
+    if (!mainWindow || mainWindow.isDestroyed()) return;
+    const dxRaw = Number(payload?.dx);
+    const dyRaw = Number(payload?.dy);
+    if (!Number.isFinite(dxRaw) || !Number.isFinite(dyRaw)) return;
+
+    const dx = Math.max(-WINDOW_MOVE_LIMIT, Math.min(WINDOW_MOVE_LIMIT, Math.round(dxRaw)));
+    const dy = Math.max(-WINDOW_MOVE_LIMIT, Math.min(WINDOW_MOVE_LIMIT, Math.round(dyRaw)));
+    if (dx === 0 && dy === 0) return;
+
+    const current = mainWindow.getBounds();
+    const next = clampBoundsToWorkArea(
+      {
+        x: current.x + dx,
+        y: current.y + dy,
+        width: current.width,
+        height: current.height
+      },
+      { margin: activeLayoutMode === "panel" ? 8 : 0 }
+    );
+    mainWindow.setBounds(next);
+    saveWindowBounds(next);
   });
 
   ipcMain.handle("pet:get-runtime-info", () => ({
@@ -430,6 +467,11 @@ function registerIpcHandlers() {
     return runtimeDataStore.setActivePet(petId);
   });
 
+  ipcMain.handle("pet:release-pet", (_event, payload) => {
+    const petId = payload && typeof payload.petId === "string" ? payload.petId : "";
+    return runtimeDataStore.releasePet(petId);
+  });
+
   ipcMain.handle("pet:get-battle-reports", (_event, payload) => {
     const limit = payload && typeof payload.limit === "number" ? payload.limit : undefined;
     return runtimeDataStore.listBattleReports(limit);
@@ -526,12 +568,17 @@ function registerIpcHandlers() {
     }
 
     const current = mainWindow.getBounds();
-    const next = clampBoundsToWorkArea({
-      x: current.x,
-      y: current.y,
-      width: currentIdleBounds.width,
-      height: currentIdleBounds.height
-    });
+    const centerX = current.x + Math.floor(current.width / 2);
+    const centerY = current.y + Math.floor(current.height / 2);
+    const next = clampBoundsToWorkArea(
+      {
+        x: centerX - Math.floor(currentIdleBounds.width / 2),
+        y: centerY - Math.floor(currentIdleBounds.height / 2),
+        width: currentIdleBounds.width,
+        height: currentIdleBounds.height
+      },
+      { margin: activeLayoutMode === "panel" ? 8 : 0 }
+    );
     mainWindow.setBounds(next);
     saveWindowBounds(next);
     return {
@@ -596,12 +643,15 @@ function applyLayoutMode(mode) {
   const current = mainWindow.getBounds();
   const centerX = current.x + Math.floor(current.width / 2);
   const centerY = current.y + Math.floor(current.height / 2);
-  const next = clampBoundsToWorkArea({
-    x: centerX - Math.floor(target.width / 2),
-    y: centerY - Math.floor(target.height / 2),
-    width: target.width,
-    height: target.height
-  });
+  const next = clampBoundsToWorkArea(
+    {
+      x: centerX - Math.floor(target.width / 2),
+      y: centerY - Math.floor(target.height / 2),
+      width: target.width,
+      height: target.height
+    },
+    { margin: mode === "panel" ? 8 : 0 }
+  );
 
   mainWindow.setResizable(true);
   mainWindow.setBounds(next);
@@ -618,6 +668,10 @@ app.whenReady().then(() => {
   runtimeDataStore = new RuntimeDataStore({
     filePath: join(app.getPath("userData"), "pet-runtime-data.json")
   });
+  if (typeof wildPetService.seedSerialCounters === "function") {
+    const snapshot = runtimeDataStore.getInventorySnapshot();
+    wildPetService.seedSerialCounters(snapshot.pets || []);
+  }
   registerIpcHandlers();
 
   app.on("activate", () => {
@@ -640,3 +694,4 @@ app.on("before-quit", () => {
 app.on("window-all-closed", () => {
   // Keep tray behavior.
 });
+
