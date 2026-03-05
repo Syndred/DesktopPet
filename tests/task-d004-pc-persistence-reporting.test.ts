@@ -5,8 +5,19 @@ import { pathToFileURL } from "node:url";
 
 import { afterEach, beforeAll, describe, expect, it } from "vitest";
 
+type InventoryPet = {
+  id: string;
+  serial: string;
+  element: string;
+  stats: string;
+  name: { zh: string; en: string };
+  level: number;
+  experience: number;
+  winsTotal: number;
+};
+
 type InventorySnapshot = {
-  pets: Array<{ id: string; name: { zh: string; en: string } }>;
+  pets: InventoryPet[];
   activePetId: string;
   updatedAt: string;
 };
@@ -16,6 +27,9 @@ type BattleReport = {
   sessionId?: string;
   status?: "finished" | "abandoned";
   winner?: "player" | "enemy" | "draw" | null;
+  mode?: "duel" | "capture";
+  captureSuccess?: boolean | null;
+  captureSerial?: string | null;
   totalRounds?: number;
   startedAt?: string;
   endedAt?: string;
@@ -36,6 +50,39 @@ type RuntimeDataStoreType = new (options: { filePath: string }) => {
   setActivePet: (petId: string) => InventorySnapshot;
   listBattleReports: (limit?: number) => BattleReport[];
   saveBattleReport: (report: BattleReport) => BattleReport;
+  captureWildPet: (payload: {
+    wildPetId: string;
+    wildSerial: string;
+    rarity: "common" | "rare" | "epic";
+    element: string;
+    name: { zh: string; en: string };
+    capturedAt: string;
+    avatar?: string;
+  }) => {
+    duplicate: boolean;
+    pet: {
+      id: string;
+      serial: string;
+      element: string;
+      level: number;
+      experience: number;
+      winsTotal: number;
+    } | null;
+  };
+  recordBattleWin: (petId: string) => {
+    ok: boolean;
+    leveledUp?: boolean;
+    previousLevel?: number;
+    currentLevel?: number;
+    currentExperience?: number;
+    pet?: {
+      id: string;
+      stats: string;
+      level: number;
+      experience: number;
+      winsTotal: number;
+    };
+  };
 };
 
 let RuntimeDataStore: RuntimeDataStoreType;
@@ -71,6 +118,8 @@ describe("D-004 pc inventory persistence and battle report persistence", () => {
 
     expect(snapshot.pets.length).toBeGreaterThanOrEqual(6);
     expect(snapshot.activePetId).toBe(snapshot.pets[0]?.id);
+    expect(snapshot.pets[0]?.level).toBe(1);
+    expect(snapshot.pets[0]?.experience).toBe(0);
   });
 
   it("persists active pet across runtime restarts", () => {
@@ -110,6 +159,9 @@ describe("D-004 pc inventory persistence and battle report persistence", () => {
       sessionId: "s-1",
       status: "finished",
       winner: "player",
+      mode: "capture",
+      captureSuccess: true,
+      captureSerial: "WP-2026030508-0001",
       startedAt: "2026-03-05T08:00:00.000Z",
       endedAt: "2026-03-05T08:02:00.000Z",
       player: { petId: "pet-001", petName: "焰尾", element: "fire" },
@@ -129,6 +181,7 @@ describe("D-004 pc inventory persistence and battle report persistence", () => {
       sessionId: "s-2",
       status: "abandoned",
       winner: null,
+      mode: "duel",
       startedAt: "2026-03-05T09:00:00.000Z",
       endedAt: "2026-03-05T09:00:30.000Z",
       player: { petId: "pet-003", petName: "草蹄", element: "wood" },
@@ -141,5 +194,53 @@ describe("D-004 pc inventory persistence and battle report persistence", () => {
     expect(reports[0]?.sessionId).toBe("s-2");
     expect(reports[1]?.sessionId).toBe("s-1");
     expect(reports[1]?.totalRounds).toBe(1);
+    expect(reports[1]?.mode).toBe("capture");
+    expect(reports[1]?.captureSuccess).toBe(true);
+    expect(reports[1]?.captureSerial).toBe("WP-2026030508-0001");
+  });
+
+  it("supports duplicate species by different serial and tracks level progression", () => {
+    const store = new RuntimeDataStore({ filePath: createTempFilePath() });
+    const initial = store.getInventorySnapshot();
+    const activePet = initial.pets[0];
+    expect(activePet).toBeTruthy();
+    const baseStats = activePet.stats;
+
+    const capturedA = store.captureWildPet({
+      wildPetId: "wild-fire-a",
+      wildSerial: "WP-2026030509-0001",
+      rarity: "common",
+      element: "fire",
+      name: { zh: "火灵", en: "Fireling" },
+      capturedAt: "2026-03-05 09:01:00"
+    });
+    const capturedB = store.captureWildPet({
+      wildPetId: "wild-fire-a",
+      wildSerial: "WP-2026030509-0002",
+      rarity: "common",
+      element: "fire",
+      name: { zh: "火灵", en: "Fireling" },
+      capturedAt: "2026-03-05 09:02:00"
+    });
+    expect(capturedA.duplicate).toBe(false);
+    expect(capturedB.duplicate).toBe(false);
+
+    const inventoryAfterCapture = store.getInventorySnapshot();
+    const duplicatedSpecies = inventoryAfterCapture.pets.filter(
+      (pet) => pet.name.zh === "火灵" && pet.element === "fire"
+    );
+    expect(duplicatedSpecies.length).toBe(2);
+    expect(new Set(duplicatedSpecies.map((pet) => pet.serial)).size).toBe(2);
+
+    for (let i = 0; i < 5; i += 1) {
+      const progression = store.recordBattleWin(activePet.id);
+      expect(progression.ok).toBe(true);
+    }
+    const leveled = store.getInventorySnapshot().pets.find((pet) => pet.id === activePet.id);
+    expect(leveled?.level).toBe(2);
+    expect(leveled?.experience).toBe(0);
+    expect(leveled?.winsTotal).toBe(5);
+    expect(leveled?.stats).not.toBe(baseStats);
+    expect(leveled?.stats).toContain("ATK34");
   });
 });

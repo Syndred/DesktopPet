@@ -30,6 +30,10 @@ describe("D-003 desktop stage battle UX", () => {
     expect(html).not.toContain("id=\"anger-label-player\"");
     expect(html).toContain("id=\"hp-value-player\"");
     expect(html).toContain("id=\"anger-value-player\"");
+    expect(html).toContain("id=\"player-hud-avatar\"");
+    expect(html).toContain("id=\"player-hud-level\"");
+    expect(html).toContain("id=\"enemy-hud-avatar\"");
+    expect(html).toContain("id=\"enemy-hud-level\"");
 
     expect(rendererCode).toContain("setBattleMode(true);");
     expect(rendererCode).toContain("setBattleMode(false);");
@@ -41,6 +45,7 @@ describe("D-003 desktop stage battle UX", () => {
     expect(rendererCode).toContain("battleSettlementConfirmLog");
     expect(rendererCode).toContain("updateBattleRelationTag(");
     expect(rendererCode).toContain("updateBattleCountdown(");
+    expect(rendererCode).toContain("updateBattleHudBadges(");
   });
 
   it("uses panel as lightweight controller while battle actions stay on stage tags", () => {
@@ -66,6 +71,7 @@ describe("D-003 desktop stage battle UX", () => {
     expect(html).toContain("class=\"battle-tag\" data-action=\"normal_attack\"");
     expect(html).toContain("id=\"pet-detail-placeholder\"");
     expect(html).toContain("id=\"battle-report-list\"");
+    expect(html).toContain("id=\"wild-list\"");
 
     expect(rendererCode).toContain("if (!battleMode) {");
     expect(rendererCode).toContain("battleResetBtn.addEventListener(\"click\"");
@@ -85,14 +91,21 @@ describe("D-003 desktop stage battle UX", () => {
     expect(rendererCode).toContain("startActionCountdown()");
     expect(rendererCode).toContain("void actBattle(\"normal_attack\", { auto: true });");
     expect(rendererCode).toContain("void setActivePet(pet.id, { closePanel: true })");
+    expect(rendererCode).toContain("startCaptureBattle(");
     expect(rendererCode).toContain("class=\"pet-avatar-item");
+    expect(rendererCode).toContain("pet-avatar-level-chip");
     expect(rendererCode).toContain("isUltimateAction && playerAnger < 100");
     expect(rendererCode).toContain("setElementTagTheme(playerElementLabel, state.player.element)");
+    expect(rendererCode).toContain("battleLevelUpLog");
+    expect(rendererCode).toContain("wildCaptureReportLog");
+    expect(rendererCode).toContain("battleReportCaptureSuccess");
 
     expect(stylesCode).toContain("grid-template-columns: repeat(6, minmax(0, 1fr))");
     expect(stylesCode).toContain("overflow-x: hidden;");
     expect(stylesCode).toContain(".battle-settlement");
     expect(stylesCode).toContain("z-index: 40");
     expect(stylesCode).toContain("min-width: 42px");
+    expect(stylesCode).toContain(".hud-badge");
+    expect(stylesCode).toContain(".pet-avatar-level-chip");
   });
 });

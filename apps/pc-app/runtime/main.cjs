@@ -5,6 +5,8 @@ const { randomUUID } = require("node:crypto");
 const { app, BrowserWindow, Menu, Tray, ipcMain, nativeImage, screen } = require("electron");
 const { BattleRuntimeService } = require("./services/battle-runtime.cjs");
 const { RuntimeDataStore } = require("./services/runtime-data-store.cjs");
+const { MapRuntimeService } = require("./services/map-runtime.cjs");
+const { CAPTURE_RADIUS_METERS, WildPetRuntimeService } = require("./services/wild-pet-runtime.cjs");
 
 let mainWindow = null;
 let tray = null;
@@ -12,6 +14,10 @@ let isQuitting = false;
 let interactionPaused = false;
 let moveTimer = null;
 const battleService = new BattleRuntimeService();
+const mapService = new MapRuntimeService({
+  providerId: "tencent"
+});
+const wildPetService = new WildPetRuntimeService();
 let runtimeDataStore = null;
 let activeBattleSession = null;
 
@@ -214,6 +220,10 @@ function registerIpcHandlers() {
     const snapshot = battleService.reset(payload);
     activeBattleSession = {
       id: randomUUID(),
+      mode: "duel",
+      captureResolved: false,
+      captureWildPetId: null,
+      captureProviderId: null,
       startedAt: new Date().toISOString(),
       player: {
         petId: typeof payload.playerPetId === "string" ? payload.playerPetId : null,
@@ -230,6 +240,77 @@ function registerIpcHandlers() {
     return snapshot;
   });
 
+  ipcMain.handle("pet:begin-capture-battle", (_event, payload) => {
+    const request = payload && typeof payload === "object" ? payload : {};
+    const wildPetId = typeof request.wildPetId === "string" ? request.wildPetId.trim() : "";
+    const playerElement =
+      typeof request.playerElement === "string" && request.playerElement.length > 0
+        ? request.playerElement
+        : "metal";
+
+    if (!wildPetId) {
+      return {
+        ok: false,
+        error: {
+          code: "INVALID_WILD_PET",
+          message: "wildPetId is required"
+        }
+      };
+    }
+
+    const mapState = mapService.snapshot();
+    const providerId = mapState.providerId;
+    const location = mapState.lastLocation;
+    const prepareResult = wildPetService.prepareCaptureBattle({
+      providerId,
+      wildPetId,
+      location
+    });
+    if (!prepareResult.ok) {
+      return prepareResult;
+    }
+
+    if (activeBattleSession) {
+      closeBattleSession("abandoned", null);
+    }
+
+    const wildPet = prepareResult.wildPet;
+    const snapshot = battleService.reset({
+      playerElement,
+      enemyElement: wildPet.element
+    });
+
+    activeBattleSession = {
+      id: randomUUID(),
+      mode: "capture",
+      captureResolved: false,
+      captureWildPetId: wildPet.id,
+      captureProviderId: providerId,
+      startedAt: new Date().toISOString(),
+      player: {
+        petId: typeof request.playerPetId === "string" ? request.playerPetId : null,
+        petName: typeof request.playerPetName === "string" ? request.playerPetName : "Player",
+        element: snapshot.player.element
+      },
+      enemy: {
+        petId: wildPet.id,
+        petName:
+          typeof wildPet.name?.en === "string" && wildPet.name.en.length > 0
+            ? wildPet.name.en
+            : "WildPet",
+        element: snapshot.enemy.element
+      },
+      rounds: []
+    };
+
+    return {
+      ok: true,
+      state: snapshot,
+      capture: wildPet,
+      captureRadiusMeters: CAPTURE_RADIUS_METERS
+    };
+  });
+
   ipcMain.handle("pet:battle-state", () => {
     return battleService.snapshot();
   });
@@ -237,6 +318,8 @@ function registerIpcHandlers() {
   ipcMain.handle("pet:battle-act", (_event, payload) => {
     const action = payload && typeof payload.action === "string" ? payload.action : "normal_attack";
     const result = battleService.act(action);
+    let captureOutcome = null;
+    let progression = null;
 
     if (activeBattleSession) {
       activeBattleSession.rounds.push({
@@ -248,18 +331,52 @@ function registerIpcHandlers() {
         notes: result.roundResult.notes
       });
       if (result.roundResult.winner) {
-        closeBattleSession("finished", result.roundResult.winner);
+        if (
+          result.roundResult.winner === "player" &&
+          runtimeDataStore &&
+          typeof activeBattleSession.player?.petId === "string" &&
+          activeBattleSession.player.petId.length > 0
+        ) {
+          progression = runtimeDataStore.recordBattleWin(activeBattleSession.player.petId);
+        }
+        if (activeBattleSession.mode === "capture" && !activeBattleSession.captureResolved) {
+          captureOutcome = wildPetService.completeCaptureBattle({
+            providerId: activeBattleSession.captureProviderId,
+            wildPetId: activeBattleSession.captureWildPetId,
+            success: result.roundResult.winner === "player",
+            runtimeDataStore
+          });
+          activeBattleSession.captureResolved = true;
+        }
+        closeBattleSession("finished", result.roundResult.winner, { captureOutcome });
       }
     }
 
-    return result;
+    return {
+      ...result,
+      captureOutcome,
+      progression
+    };
   });
 
   ipcMain.handle("pet:battle-end", () => {
+    let captureOutcome = null;
     if (activeBattleSession) {
-      closeBattleSession("abandoned", null);
+      if (activeBattleSession.mode === "capture" && !activeBattleSession.captureResolved) {
+        captureOutcome = wildPetService.completeCaptureBattle({
+          providerId: activeBattleSession.captureProviderId,
+          wildPetId: activeBattleSession.captureWildPetId,
+          success: false,
+          runtimeDataStore
+        });
+        activeBattleSession.captureResolved = true;
+      }
+      closeBattleSession("abandoned", null, { captureOutcome });
     }
-    return true;
+    return {
+      ok: true,
+      captureOutcome
+    };
   });
 
   ipcMain.handle("pet:get-inventory", () => {
@@ -276,6 +393,49 @@ function registerIpcHandlers() {
     return runtimeDataStore.listBattleReports(limit);
   });
 
+  ipcMain.handle("pet:get-nearby-wild-pets", (_event, payload) => {
+    const radiusMeters =
+      payload && typeof payload.radiusMeters === "number" ? payload.radiusMeters : undefined;
+    const mapState = mapService.snapshot();
+    return wildPetService.getNearbyWildPets({
+      providerId: mapState.providerId,
+      location: mapState.lastLocation,
+      radiusMeters
+    });
+  });
+
+  ipcMain.handle("pet:get-map-state", () => {
+    return mapService.snapshot();
+  });
+
+  ipcMain.handle("pet:set-map-provider", (_event, payload) => {
+    const providerId = payload && typeof payload.providerId === "string" ? payload.providerId : "";
+    return mapService.setProvider(providerId);
+  });
+
+  ipcMain.handle("pet:request-map-permission", (_event, payload) => {
+    const mode = payload && typeof payload.mode === "string" ? payload.mode : undefined;
+    return mapService.requestPermission(mode);
+  });
+
+  ipcMain.handle("pet:get-current-location", () => {
+    return mapService.getCurrentLocation();
+  });
+
+  ipcMain.handle("pet:start-map-watch", (_event, payload) => {
+    const intervalMs = payload && typeof payload.intervalMs === "number" ? payload.intervalMs : undefined;
+    return mapService.startWatch({ intervalMs });
+  });
+
+  ipcMain.handle("pet:stop-map-watch", () => {
+    return mapService.stopWatch();
+  });
+
+  ipcMain.handle("pet:distance-to", (_event, payload) => {
+    const target = payload && typeof payload.target === "object" ? payload.target : {};
+    return mapService.distanceTo(target);
+  });
+
   ipcMain.handle("pet:set-layout-mode", (_event, payload) => {
     const mode =
       payload && typeof payload.mode === "string" && payload.mode === "battle" ? "battle" : "idle";
@@ -285,14 +445,41 @@ function registerIpcHandlers() {
   });
 }
 
-function closeBattleSession(status, winner) {
+function closeBattleSession(status, winner, options = {}) {
   if (!activeBattleSession || !runtimeDataStore) return;
+  let captureOutcome =
+    options && typeof options === "object" && options.captureOutcome ? options.captureOutcome : null;
+  if (activeBattleSession.mode === "capture" && !activeBattleSession.captureResolved) {
+    captureOutcome = wildPetService.completeCaptureBattle({
+      providerId: activeBattleSession.captureProviderId,
+      wildPetId: activeBattleSession.captureWildPetId,
+      success: false,
+      runtimeDataStore
+    });
+    activeBattleSession.captureResolved = true;
+  }
+
+  const mode = activeBattleSession.mode === "capture" ? "capture" : "duel";
+  const captureSuccess =
+    mode === "capture" && captureOutcome && captureOutcome.ok
+      ? Boolean(captureOutcome.success)
+      : mode === "capture"
+        ? false
+        : null;
+  const captureSerial =
+    mode === "capture" && captureOutcome && captureOutcome.ok
+      ? captureOutcome.wildPet?.serial || null
+      : null;
+
   const endedAt = new Date().toISOString();
   runtimeDataStore.saveBattleReport({
     id: `battle-${activeBattleSession.id}`,
     sessionId: activeBattleSession.id,
     status,
     winner,
+    mode,
+    captureSuccess,
+    captureSerial,
     startedAt: activeBattleSession.startedAt,
     endedAt,
     player: activeBattleSession.player,
@@ -324,6 +511,10 @@ function applyLayoutMode(mode) {
 app.whenReady().then(() => {
   createMainWindow();
   createTray();
+  mapService.subscribe((state) => {
+    if (!mainWindow || mainWindow.isDestroyed()) return;
+    mainWindow.webContents.send("pet:map-state", state);
+  });
   runtimeDataStore = new RuntimeDataStore({
     filePath: join(app.getPath("userData"), "pet-runtime-data.json")
   });
@@ -340,6 +531,7 @@ app.whenReady().then(() => {
 
 app.on("before-quit", () => {
   isQuitting = true;
+  mapService.dispose();
   if (activeBattleSession) {
     closeBattleSession("abandoned", null);
   }

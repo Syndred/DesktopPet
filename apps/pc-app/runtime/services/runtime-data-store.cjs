@@ -6,72 +6,101 @@ const DEFAULT_PET_ROSTER = [
   {
     id: "pet-001",
     serial: "QP-202603-001",
-    name: { zh: "焰尾", en: "BlazeTail" },
+    name: { zh: "\u7130\u5c3e", en: "BlazeTail" },
     model: "../assets/models/Fox.glb",
     element: "fire",
     stats: "HP128 / ATK32 / DEF20 / SPD18",
     capturedAt: "2026-03-01 21:10",
-    avatar: "焰"
+    avatar: "\u7130",
+    level: 1,
+    experience: 0,
+    winsTotal: 0
   },
   {
     id: "pet-002",
     serial: "QP-202603-002",
-    name: { zh: "星航", en: "Astror" },
+    name: { zh: "\u661f\u822a", en: "Astror" },
     model: "../assets/models/Astronaut.glb",
     element: "water",
     stats: "HP122 / ATK28 / DEF24 / SPD21",
     capturedAt: "2026-03-02 09:35",
-    avatar: "星"
+    avatar: "\u661f",
+    level: 1,
+    experience: 0,
+    winsTotal: 0
   },
   {
     id: "pet-003",
     serial: "QP-202603-003",
-    name: { zh: "草蹄", en: "Hoofleaf" },
+    name: { zh: "\u8349\u8e44", en: "Hoofleaf" },
     model: "../assets/models/Horse.glb",
     element: "wood",
     stats: "HP130 / ATK26 / DEF26 / SPD17",
     capturedAt: "2026-03-02 20:42",
-    avatar: "草"
+    avatar: "\u8349",
+    level: 1,
+    experience: 0,
+    winsTotal: 0
   },
   {
     id: "pet-004",
     serial: "QP-202603-004",
-    name: { zh: "锐铠", en: "IronGuard" },
+    name: { zh: "\u9510\u94e0", en: "IronGuard" },
     model: "../assets/models/CesiumMan.glb",
     element: "metal",
     stats: "HP135 / ATK30 / DEF30 / SPD12",
     capturedAt: "2026-03-03 08:20",
-    avatar: "铠"
+    avatar: "\u94e0",
+    level: 1,
+    experience: 0,
+    winsTotal: 0
   },
   {
     id: "pet-005",
     serial: "QP-202603-005",
-    name: { zh: "月壤", en: "MoonSoil" },
+    name: { zh: "\u6708\u58e4", en: "MoonSoil" },
     model: "../assets/models/NeilArmstrong.glb",
     element: "earth",
     stats: "HP142 / ATK24 / DEF34 / SPD10",
     capturedAt: "2026-03-03 18:05",
-    avatar: "壤"
+    avatar: "\u58e4",
+    level: 1,
+    experience: 0,
+    winsTotal: 0
   },
   {
     id: "pet-006",
     serial: "QP-202603-006",
-    name: { zh: "律动", en: "Groove" },
+    name: { zh: "\u5f8b\u52a8", en: "Groove" },
     model: "../assets/models/RobotExpressive.glb",
     element: "fire",
     stats: "HP118 / ATK33 / DEF22 / SPD20",
     capturedAt: "2026-03-04 12:11",
-    avatar: "律"
+    avatar: "\u5f8b",
+    level: 1,
+    experience: 0,
+    winsTotal: 0
   }
 ];
 
-const DEFAULT_STATE_VERSION = 1;
+const DEFAULT_STATE_VERSION = 2;
 const MAX_BATTLE_REPORTS = 60;
 const DEFAULT_ACTIVE_PET_ID = DEFAULT_PET_ROSTER[0].id;
 const DEFAULT_REPORT_LIMIT = 10;
+const LEVEL_UP_REQUIRED_WINS = 5;
+
 const ALLOWED_ELEMENTS = new Set(["metal", "wood", "earth", "water", "fire"]);
 const ALLOWED_BATTLE_STATUS = new Set(["finished", "abandoned"]);
 const ALLOWED_BATTLE_WINNERS = new Set(["player", "enemy", "draw"]);
+const ALLOWED_BATTLE_MODES = new Set(["duel", "capture"]);
+
+const MODEL_BY_ELEMENT = {
+  fire: "../assets/models/Fox.glb",
+  water: "../assets/models/Astronaut.glb",
+  wood: "../assets/models/Horse.glb",
+  metal: "../assets/models/CesiumMan.glb",
+  earth: "../assets/models/NeilArmstrong.glb"
+};
 
 class RuntimeDataStore {
   constructor(options = {}) {
@@ -121,6 +150,81 @@ class RuntimeDataStore {
     this.state.updatedAt = new Date().toISOString();
     this.persistState();
     return cloneBattleReport(report);
+  }
+
+  captureWildPet(input) {
+    const captureInput = normalizeCaptureInput(input);
+    const existingRecord = this.state.captureRecords.find(
+      (item) => item.wildSerial === captureInput.wildSerial
+    );
+    if (existingRecord) {
+      const existingPet = this.state.pets.find((pet) => pet.id === existingRecord.petId) || null;
+      return {
+        duplicate: true,
+        pet: existingPet ? clonePet(existingPet) : null,
+        captureRecord: { ...existingRecord }
+      };
+    }
+
+    const nextPet = createCapturedPet(captureInput, this.state.pets.length + 1);
+    const record = {
+      id: `capture-${randomUUID()}`,
+      wildPetId: captureInput.wildPetId,
+      wildSerial: captureInput.wildSerial,
+      petId: nextPet.id,
+      rarity: captureInput.rarity,
+      element: captureInput.element,
+      capturedAt: captureInput.capturedAt
+    };
+
+    this.state.pets.push(nextPet);
+    this.state.captureRecords = [record, ...this.state.captureRecords].slice(0, 500);
+    this.state.updatedAt = new Date().toISOString();
+    this.persistState();
+    return {
+      duplicate: false,
+      pet: clonePet(nextPet),
+      captureRecord: { ...record }
+    };
+  }
+
+  recordBattleWin(petId) {
+    if (typeof petId !== "string" || petId.trim().length === 0) {
+      return { ok: false, error: "invalid pet id" };
+    }
+    const targetId = petId.trim();
+    const pet = this.state.pets.find((item) => item.id === targetId);
+    if (!pet) {
+      return { ok: false, error: "pet not found" };
+    }
+
+    const previousLevel = sanitizeLevel(pet.level);
+    const previousExp = sanitizeExperience(pet.experience);
+    let nextLevel = previousLevel;
+    let nextExp = previousExp + 1;
+    const nextWinsTotal = sanitizeWinsTotal(pet.winsTotal) + 1;
+    let leveledUp = false;
+
+    while (nextExp >= LEVEL_UP_REQUIRED_WINS) {
+      nextExp -= LEVEL_UP_REQUIRED_WINS;
+      nextLevel += 1;
+      leveledUp = true;
+      pet.stats = applyLevelBonus(pet.element, pet.stats);
+    }
+
+    pet.level = nextLevel;
+    pet.experience = nextExp;
+    pet.winsTotal = nextWinsTotal;
+    this.state.updatedAt = new Date().toISOString();
+    this.persistState();
+    return {
+      ok: true,
+      leveledUp,
+      previousLevel,
+      currentLevel: nextLevel,
+      currentExperience: nextExp,
+      pet: clonePet(pet)
+    };
   }
 
   loadState() {
@@ -178,7 +282,7 @@ function normalizeRuntimeState(input) {
     pets,
     activePetId,
     battleReports,
-    captureRecords: Array.isArray(input?.captureRecords) ? input.captureRecords.slice(0, 300) : [],
+    captureRecords: normalizeCaptureRecords(input?.captureRecords),
     createdAt: isIsoDate(input?.createdAt) ? input.createdAt : base.createdAt,
     updatedAt: isIsoDate(input?.updatedAt) ? input.updatedAt : new Date().toISOString()
   };
@@ -213,13 +317,13 @@ function normalizePet(input) {
     id: input.id.trim(),
     serial: typeof input.serial === "string" && input.serial.trim().length > 0 ? input.serial.trim() : "N/A",
     name: {
-      zh: nameZh || nameEn || "未命名宠物",
+      zh: nameZh || nameEn || "\u672a\u547d\u540d\u5ba0\u7269",
       en: nameEn || nameZh || "Unknown Pet"
     },
     model:
       typeof input.model === "string" && input.model.trim().length > 0
         ? input.model.trim()
-        : "../assets/models/Fox.glb",
+        : MODEL_BY_ELEMENT[element],
     element,
     stats: typeof input.stats === "string" && input.stats.trim().length > 0 ? input.stats.trim() : "N/A",
     capturedAt:
@@ -229,8 +333,29 @@ function normalizePet(input) {
     avatar:
       typeof input.avatar === "string" && input.avatar.trim().length > 0
         ? input.avatar.trim().slice(0, 2)
-        : "宠"
+        : "\u5ba0",
+    level: sanitizeLevel(input.level),
+    experience: sanitizeExperience(input.experience),
+    winsTotal: sanitizeWinsTotal(input.winsTotal)
   };
+}
+
+function sanitizeLevel(input) {
+  const parsed = Number(input);
+  if (!Number.isInteger(parsed) || parsed < 1) return 1;
+  return parsed;
+}
+
+function sanitizeExperience(input) {
+  const parsed = Number(input);
+  if (!Number.isInteger(parsed) || parsed < 0) return 0;
+  return parsed % LEVEL_UP_REQUIRED_WINS;
+}
+
+function sanitizeWinsTotal(input) {
+  const parsed = Number(input);
+  if (!Number.isInteger(parsed) || parsed < 0) return 0;
+  return parsed;
 }
 
 function normalizeBattleReports(input) {
@@ -258,6 +383,13 @@ function normalizeBattleReport(input) {
   const endedAt = isIsoDate(input?.endedAt) ? input.endedAt : new Date().toISOString();
   const status = ALLOWED_BATTLE_STATUS.has(input?.status) ? input.status : "finished";
   const winner = ALLOWED_BATTLE_WINNERS.has(input?.winner) ? input.winner : null;
+  const mode = ALLOWED_BATTLE_MODES.has(input?.mode) ? input.mode : "duel";
+  const captureSuccess =
+    typeof input?.captureSuccess === "boolean" ? input.captureSuccess : null;
+  const captureSerial =
+    typeof input?.captureSerial === "string" && input.captureSerial.trim().length > 0
+      ? input.captureSerial.trim()
+      : null;
   const rounds = Array.isArray(input?.rounds)
     ? input.rounds
         .map((round) => normalizeBattleRound(round))
@@ -270,6 +402,9 @@ function normalizeBattleReport(input) {
     sessionId,
     status,
     winner,
+    mode,
+    captureSuccess,
+    captureSerial,
     startedAt,
     endedAt,
     totalRounds: rounds.length,
@@ -319,6 +454,165 @@ function normalizeBattleRound(input) {
   };
 }
 
+function normalizeCaptureRecords(input) {
+  if (!Array.isArray(input)) return [];
+  return input
+    .map((item) => normalizeCaptureRecord(item))
+    .filter(Boolean)
+    .slice(0, 500);
+}
+
+function normalizeCaptureRecord(input) {
+  if (!input || typeof input !== "object") return null;
+  if (typeof input.wildSerial !== "string" || input.wildSerial.trim().length === 0) return null;
+  if (typeof input.petId !== "string" || input.petId.trim().length === 0) return null;
+  return {
+    id:
+      typeof input.id === "string" && input.id.trim().length > 0
+        ? input.id.trim()
+        : `capture-${randomUUID()}`,
+    wildPetId:
+      typeof input.wildPetId === "string" && input.wildPetId.trim().length > 0
+        ? input.wildPetId.trim()
+        : `wild-${randomUUID()}`,
+    wildSerial: input.wildSerial.trim(),
+    petId: input.petId.trim(),
+    rarity:
+      input.rarity === "epic" || input.rarity === "rare" || input.rarity === "common"
+        ? input.rarity
+        : "common",
+    element: ALLOWED_ELEMENTS.has(input.element) ? input.element : "metal",
+    capturedAt:
+      typeof input.capturedAt === "string" && input.capturedAt.trim().length > 0
+        ? input.capturedAt.trim()
+        : new Date().toISOString().slice(0, 19).replace("T", " ")
+  };
+}
+
+function normalizeCaptureInput(input) {
+  const wildPetId =
+    typeof input?.wildPetId === "string" && input.wildPetId.trim().length > 0
+      ? input.wildPetId.trim()
+      : `wild-${randomUUID()}`;
+  const wildSerial =
+    typeof input?.wildSerial === "string" && input.wildSerial.trim().length > 0
+      ? input.wildSerial.trim()
+      : `WP-${Date.now()}`;
+  const element = ALLOWED_ELEMENTS.has(input?.element) ? input.element : "metal";
+  const rarity =
+    input?.rarity === "epic" || input?.rarity === "rare" || input?.rarity === "common"
+      ? input.rarity
+      : "common";
+  const nameZh =
+    typeof input?.name?.zh === "string" && input.name.zh.trim().length > 0
+      ? input.name.zh.trim()
+      : "\u65b0\u6536\u7559\u5ba0\u7269";
+  const nameEn =
+    typeof input?.name?.en === "string" && input.name.en.trim().length > 0
+      ? input.name.en.trim()
+      : "CapturedPet";
+  const model =
+    typeof input?.model === "string" && input.model.trim().length > 0
+      ? input.model.trim()
+      : MODEL_BY_ELEMENT[element];
+  const capturedAt =
+    typeof input?.capturedAt === "string" && input.capturedAt.trim().length > 0
+      ? input.capturedAt.trim()
+      : new Date().toISOString().slice(0, 19).replace("T", " ");
+  const avatar =
+    typeof input?.avatar === "string" && input.avatar.trim().length > 0
+      ? input.avatar.trim().slice(0, 2)
+      : nameZh.slice(0, 1);
+
+  return {
+    wildPetId,
+    wildSerial,
+    element,
+    rarity,
+    name: { zh: nameZh, en: nameEn },
+    model,
+    capturedAt,
+    avatar
+  };
+}
+
+function createCapturedPet(captureInput, seqNo) {
+  const rarityRatio =
+    captureInput.rarity === "epic" ? 1.2 : captureInput.rarity === "rare" ? 1.1 : 1;
+  const baseStats = {
+    fire: { hp: 118, atk: 33, def: 20, spd: 22 },
+    water: { hp: 124, atk: 28, def: 24, spd: 20 },
+    wood: { hp: 130, atk: 26, def: 26, spd: 18 },
+    metal: { hp: 136, atk: 30, def: 30, spd: 13 },
+    earth: { hp: 142, atk: 24, def: 34, spd: 11 }
+  }[captureInput.element] || { hp: 120, atk: 30, def: 24, spd: 18 };
+
+  const hp = Math.round(baseStats.hp * rarityRatio);
+  const atk = Math.round(baseStats.atk * rarityRatio);
+  const def = Math.round(baseStats.def * rarityRatio);
+  const spd = Math.round(baseStats.spd * rarityRatio);
+
+  return {
+    id: `pet-${randomUUID()}`,
+    serial: captureInput.wildSerial,
+    name: {
+      zh: captureInput.name.zh,
+      en: captureInput.name.en
+    },
+    model: captureInput.model,
+    element: captureInput.element,
+    stats: `HP${hp} / ATK${atk} / DEF${def} / SPD${spd}`,
+    capturedAt: captureInput.capturedAt,
+    avatar: captureInput.avatar || String(seqNo),
+    level: 1,
+    experience: 0,
+    winsTotal: 0
+  };
+}
+
+function applyLevelBonus(element, statsText) {
+  const stats = parseStatsText(statsText);
+  if (!stats) return statsText;
+  if (element === "fire") {
+    stats.ATK += 2;
+  } else if (element === "water") {
+    stats.SPD += 1;
+    stats.HP += 1;
+  } else if (element === "wood") {
+    stats.HP += 4;
+  } else if (element === "metal") {
+    stats.DEF += 2;
+  } else if (element === "earth") {
+    stats.HP += 3;
+    stats.DEF += 1;
+  }
+  return formatStats(stats);
+}
+
+function parseStatsText(statsText) {
+  if (typeof statsText !== "string" || statsText.length === 0) return null;
+  const entries = statsText.split("/").map((item) => item.trim());
+  const stats = {
+    HP: 0,
+    ATK: 0,
+    DEF: 0,
+    SPD: 0
+  };
+  for (const entry of entries) {
+    const matched = entry.match(/^(HP|ATK|DEF|SPD)\s*([0-9]+)$/i);
+    if (!matched) continue;
+    const key = matched[1].toUpperCase();
+    const value = Number(matched[2]);
+    if (!Number.isFinite(value)) continue;
+    stats[key] = value;
+  }
+  return stats;
+}
+
+function formatStats(stats) {
+  return `HP${stats.HP} / ATK${stats.ATK} / DEF${stats.DEF} / SPD${stats.SPD}`;
+}
+
 function clampNonNegativeNumber(input) {
   const parsed = Number(input);
   if (!Number.isFinite(parsed) || parsed < 0) return 0;
@@ -338,7 +632,10 @@ function clonePet(pet) {
     element: pet.element,
     stats: pet.stats,
     capturedAt: pet.capturedAt,
-    avatar: pet.avatar
+    avatar: pet.avatar,
+    level: sanitizeLevel(pet.level),
+    experience: sanitizeExperience(pet.experience),
+    winsTotal: sanitizeWinsTotal(pet.winsTotal)
   };
 }
 

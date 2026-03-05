@@ -14,6 +14,21 @@ const inventoryListElement = document.getElementById("pet-inventory-list");
 const petDetailElement = document.getElementById("pet-detail");
 const petDetailPlaceholderElement = document.getElementById("pet-detail-placeholder");
 const battleReportListElement = document.getElementById("battle-report-list");
+const mapProviderSelectElement = document.getElementById("map-provider-select");
+const mapPermissionSelectElement = document.getElementById("map-permission-select");
+const mapPermissionBtn = document.getElementById("btn-map-permission");
+const mapCurrentBtn = document.getElementById("btn-map-current");
+const mapWatchStartBtn = document.getElementById("btn-map-watch-start");
+const mapWatchStopBtn = document.getElementById("btn-map-watch-stop");
+const mapDistanceBtn = document.getElementById("btn-map-distance");
+const mapStatusProviderValueElement = document.getElementById("map-status-provider-value");
+const mapStatusCoordinateValueElement = document.getElementById("map-status-coordinate-value");
+const mapStatusPermissionValueElement = document.getElementById("map-status-permission-state-value");
+const mapStatusWatchValueElement = document.getElementById("map-status-watch-value");
+const mapStatusLocationValueElement = document.getElementById("map-status-location-value");
+const mapStatusDistanceValueElement = document.getElementById("map-status-distance-value");
+const wildListElement = document.getElementById("wild-list");
+const wildRefreshBtn = document.getElementById("btn-wild-refresh");
 const playerModel = document.getElementById("player-model");
 const enemyModel = document.getElementById("enemy-model");
 
@@ -46,6 +61,10 @@ const hpValuePlayer = document.getElementById("hp-value-player");
 const hpValueEnemy = document.getElementById("hp-value-enemy");
 const angerValuePlayer = document.getElementById("anger-value-player");
 const angerValueEnemy = document.getElementById("anger-value-enemy");
+const playerHudAvatarElement = document.getElementById("player-hud-avatar");
+const playerHudLevelElement = document.getElementById("player-hud-level");
+const enemyHudAvatarElement = document.getElementById("enemy-hud-avatar");
+const enemyHudLevelElement = document.getElementById("enemy-hud-level");
 
 const playerCard = document.getElementById("player-card");
 const enemyCard = document.getElementById("enemy-card");
@@ -106,6 +125,8 @@ const i18n = {
     battleSettlementConfirm: "确认",
     petInteract: "宠物交互：宠物给出轻量陪伴反馈。",
     actionSent: "已提交本回合动作。",
+    battleLevelUpLog: "{petName} 升级到 Lv.{level}，属性已提升。",
+    battleExpGainLog: "{petName} 获得经验：{exp}/{required}。",
     activePetChanged: "已切换当前宠物：{petName}",
     inventoryTitle: "现有宠物",
     inventoryTip: "桌面右键宠物可打开面板；点击下方头像后在右侧查看详情。",
@@ -117,6 +138,9 @@ const i18n = {
     inventoryFieldModel: "模型",
     inventoryFieldElement: "属性",
     inventoryFieldStats: "数值",
+    inventoryFieldLevel: "等级",
+    inventoryFieldExperience: "经验",
+    inventoryFieldWins: "胜场",
     inventoryFieldCapturedAt: "收留时间",
     inventoryActive: "当前出战",
     inventorySetActive: "设为出战",
@@ -130,6 +154,61 @@ const i18n = {
     battleReportDraw: "平局",
     battleReportRound: "回合",
     battleReportStartedAt: "开始",
+    battleReportModeDuel: "对战",
+    battleReportModeCapture: "收服",
+    battleReportCaptureSuccess: "收服成功 · 编号 {serial}",
+    battleReportCaptureFail: "收服失败 · 编号 {serial}",
+    mapTitle: "地图能力（演示）",
+    mapTip: "PC 演示版地图能力抽象：Provider、权限状态、定位与追踪。",
+    mapProviderLabel: "地图 Provider",
+    mapPermissionLabel: "权限模式",
+    mapProviderTencent: "腾讯地图",
+    mapProviderGoogle: "谷歌地图",
+    mapPermissionPrompt: "未请求",
+    mapPermissionGranted: "已授权",
+    mapPermissionDenied: "已拒绝",
+    mapPermissionSystemDisabled: "系统定位关闭",
+    mapRequestPermission: "请求权限",
+    mapRefreshLocation: "刷新位置",
+    mapStartWatch: "开始追踪",
+    mapStopWatch: "停止追踪",
+    mapDistanceDemo: "距离演示",
+    mapStatusProvider: "Provider",
+    mapStatusCoordinate: "坐标系",
+    mapStatusPermission: "权限",
+    mapStatusWatch: "追踪",
+    mapStatusLocation: "当前位置",
+    mapStatusDistance: "到演示点距离",
+    mapWatchOn: "追踪中",
+    mapWatchOff: "未追踪",
+    mapProviderChangedLog: "地图 Provider 已切换：{provider}",
+    mapPermissionAppliedLog: "定位权限模式已更新：{mode}",
+    mapLocationLog: "定位刷新成功：{lat}, {lng}",
+    mapWatchStartLog: "定位追踪已启动。",
+    mapWatchStopLog: "定位追踪已停止。",
+    mapDistanceLog: "到演示点距离：{meters}m",
+    mapErrorLog: "地图操作失败：{message}",
+    wildTitle: "附近流浪宠物",
+    wildTip: "进入100米范围可发起收服对战，胜利后自动入库并保留编号。",
+    wildRefresh: "刷新附近宠物",
+    wildEmpty: "附近暂无可见流浪宠物，请先开启定位或移动位置。",
+    wildCaptureAction: "收服对战",
+    wildStatusInRange: "可收服",
+    wildStatusOutRange: "超出范围",
+    wildStatusCooldown: "冷却中",
+    wildStatusCaptured: "已收服",
+    wildStatusEngaged: "对战中",
+    wildDistance: "距离",
+    wildCaptureStartLog: "已发起收服对战：{serial}（{name}）",
+    wildCaptureSuccessLog: "收服成功：{serial} 已加入仓库。",
+    wildCaptureReportLog: "收服战报已记录：{serial}",
+    wildCaptureFailLog: "收服失败：{serial} 进入冷却。",
+    wildCaptureAbortLog: "收服对战中断：{serial} 进入冷却。",
+    wildRefreshLog: "附近流浪宠物刷新完成，共 {count} 只。",
+    wildRefreshFailLog: "附近宠物刷新失败：{message}",
+    wildRarityCommon: "普通",
+    wildRarityRare: "稀有",
+    wildRarityEpic: "史诗",
     captureLog: "收留测试：记忆标签已记录，收益倍率 {reward}。",
     captureBurst: "收留反馈触发。",
     occupyNoAttempts: "占领测试：今日免费入侵次数已用完。",
@@ -219,6 +298,8 @@ const i18n = {
     battleSettlementConfirm: "Confirm",
     petInteract: "Pet interaction: companion gives a gentle response.",
     actionSent: "Battle action sent.",
+    battleLevelUpLog: "{petName} reached Lv.{level}; stats upgraded.",
+    battleExpGainLog: "{petName} gained EXP: {exp}/{required}.",
     activePetChanged: "Active pet switched: {petName}",
     inventoryTitle: "Pet Inventory",
     inventoryTip: "Right-click your desktop pet to open panel; click avatar then view details on the right.",
@@ -230,6 +311,9 @@ const i18n = {
     inventoryFieldModel: "Model",
     inventoryFieldElement: "Element",
     inventoryFieldStats: "Stats",
+    inventoryFieldLevel: "Level",
+    inventoryFieldExperience: "EXP",
+    inventoryFieldWins: "Wins",
     inventoryFieldCapturedAt: "Captured At",
     inventoryActive: "Active",
     inventorySetActive: "Set Active",
@@ -243,6 +327,61 @@ const i18n = {
     battleReportDraw: "Draw",
     battleReportRound: "Round",
     battleReportStartedAt: "Started",
+    battleReportModeDuel: "Duel",
+    battleReportModeCapture: "Capture",
+    battleReportCaptureSuccess: "Capture success · Serial {serial}",
+    battleReportCaptureFail: "Capture failed · Serial {serial}",
+    mapTitle: "Map Capability (Demo)",
+    mapTip: "Desktop demo of map abstraction: provider, permission state, location and watch.",
+    mapProviderLabel: "Map Provider",
+    mapPermissionLabel: "Permission Mode",
+    mapProviderTencent: "Tencent Map",
+    mapProviderGoogle: "Google Map",
+    mapPermissionPrompt: "Prompt",
+    mapPermissionGranted: "Granted",
+    mapPermissionDenied: "Denied",
+    mapPermissionSystemDisabled: "System Disabled",
+    mapRequestPermission: "Request Permission",
+    mapRefreshLocation: "Refresh Location",
+    mapStartWatch: "Start Watch",
+    mapStopWatch: "Stop Watch",
+    mapDistanceDemo: "Distance Demo",
+    mapStatusProvider: "Provider",
+    mapStatusCoordinate: "Coord System",
+    mapStatusPermission: "Permission",
+    mapStatusWatch: "Watch",
+    mapStatusLocation: "Current Location",
+    mapStatusDistance: "Distance to Demo Point",
+    mapWatchOn: "Watching",
+    mapWatchOff: "Idle",
+    mapProviderChangedLog: "Map provider switched: {provider}",
+    mapPermissionAppliedLog: "Location permission mode updated: {mode}",
+    mapLocationLog: "Location refreshed: {lat}, {lng}",
+    mapWatchStartLog: "Location watch started.",
+    mapWatchStopLog: "Location watch stopped.",
+    mapDistanceLog: "Distance to demo point: {meters}m",
+    mapErrorLog: "Map operation failed: {message}",
+    wildTitle: "Nearby Wild Pets",
+    wildTip: "Enter 100m capture radius to duel and recruit wild pets with serial IDs.",
+    wildRefresh: "Refresh Nearby Pets",
+    wildEmpty: "No visible wild pets nearby. Enable location or move around.",
+    wildCaptureAction: "Capture Duel",
+    wildStatusInRange: "Capturable",
+    wildStatusOutRange: "Out of Range",
+    wildStatusCooldown: "Cooling Down",
+    wildStatusCaptured: "Captured",
+    wildStatusEngaged: "In Duel",
+    wildDistance: "Distance",
+    wildCaptureStartLog: "Capture duel started: {serial} ({name}).",
+    wildCaptureSuccessLog: "Capture success: {serial} added to inventory.",
+    wildCaptureReportLog: "Capture report persisted: {serial}.",
+    wildCaptureFailLog: "Capture failed: {serial} entered cooldown.",
+    wildCaptureAbortLog: "Capture duel aborted: {serial} entered cooldown.",
+    wildRefreshLog: "Nearby wild pets refreshed: {count}.",
+    wildRefreshFailLog: "Failed to refresh nearby pets: {message}",
+    wildRarityCommon: "Common",
+    wildRarityRare: "Rare",
+    wildRarityEpic: "Epic",
     captureLog: "Capture test: memory tag persisted, reward multiplier {reward}.",
     captureBurst: "Capture feedback triggered.",
     occupyNoAttempts: "Territory test: no free invade attempts left for today.",
@@ -288,7 +427,10 @@ const DEFAULT_PET_ROSTER = [
     element: "fire",
     stats: "HP128 / ATK32 / DEF20 / SPD18",
     capturedAt: "2026-03-01 21:10",
-    avatar: "焰"
+    avatar: "焰",
+    level: 1,
+    experience: 0,
+    winsTotal: 0
   },
   {
     id: "pet-002",
@@ -298,7 +440,10 @@ const DEFAULT_PET_ROSTER = [
     element: "water",
     stats: "HP122 / ATK28 / DEF24 / SPD21",
     capturedAt: "2026-03-02 09:35",
-    avatar: "星"
+    avatar: "星",
+    level: 1,
+    experience: 0,
+    winsTotal: 0
   },
   {
     id: "pet-003",
@@ -308,7 +453,10 @@ const DEFAULT_PET_ROSTER = [
     element: "wood",
     stats: "HP130 / ATK26 / DEF26 / SPD17",
     capturedAt: "2026-03-02 20:42",
-    avatar: "草"
+    avatar: "草",
+    level: 1,
+    experience: 0,
+    winsTotal: 0
   },
   {
     id: "pet-004",
@@ -318,7 +466,10 @@ const DEFAULT_PET_ROSTER = [
     element: "metal",
     stats: "HP135 / ATK30 / DEF30 / SPD12",
     capturedAt: "2026-03-03 08:20",
-    avatar: "铠"
+    avatar: "铠",
+    level: 1,
+    experience: 0,
+    winsTotal: 0
   },
   {
     id: "pet-005",
@@ -328,7 +479,10 @@ const DEFAULT_PET_ROSTER = [
     element: "earth",
     stats: "HP142 / ATK24 / DEF34 / SPD10",
     capturedAt: "2026-03-03 18:05",
-    avatar: "壤"
+    avatar: "壤",
+    level: 1,
+    experience: 0,
+    winsTotal: 0
   },
   {
     id: "pet-006",
@@ -338,7 +492,10 @@ const DEFAULT_PET_ROSTER = [
     element: "fire",
     stats: "HP118 / ATK33 / DEF22 / SPD20",
     capturedAt: "2026-03-04 12:11",
-    avatar: "律"
+    avatar: "律",
+    level: 1,
+    experience: 0,
+    winsTotal: 0
   }
 ];
 
@@ -354,6 +511,18 @@ const uiRefs = {
   inventoryTitle: document.getElementById("inventory-title"),
   inventoryTip: document.getElementById("inventory-tip"),
   battleReportTitle: document.getElementById("battle-report-title"),
+  mapTitle: document.getElementById("map-title"),
+  mapTip: document.getElementById("map-tip"),
+  mapProviderLabel: document.getElementById("map-provider-label"),
+  mapPermissionLabel: document.getElementById("map-permission-label"),
+  mapStatusProviderLabel: document.getElementById("map-status-provider-label"),
+  mapStatusCoordinateLabel: document.getElementById("map-status-coordinate-label"),
+  mapStatusPermissionLabel: document.getElementById("map-status-permission-state-label"),
+  mapStatusWatchLabel: document.getElementById("map-status-watch-label"),
+  mapStatusLocationLabel: document.getElementById("map-status-location-label"),
+  mapStatusDistanceLabel: document.getElementById("map-status-distance-label"),
+  wildTitle: document.getElementById("wild-title"),
+  wildTip: document.getElementById("wild-tip"),
   companionTitle: document.getElementById("companion-title"),
   tipText: document.getElementById("tip-text")
 };
@@ -381,8 +550,13 @@ let enemyPetInBattle = petRoster[1];
 let selectedPetDetailId = null;
 let settlementWinner = null;
 let battleReports = [];
+let mapState = null;
+let mapDemoDistanceMeters = null;
+let nearbyWildPets = [];
+let lastNearbyRefreshSeq = -1;
 
 const ACTION_COUNTDOWN_SECONDS = 5;
+const LEVEL_UP_REQUIRED_WINS = 5;
 
 const ELEMENT_ADVANTAGE_CHAIN = {
   metal: "wood",
@@ -390,6 +564,11 @@ const ELEMENT_ADVANTAGE_CHAIN = {
   earth: "water",
   water: "fire",
   fire: "metal"
+};
+
+const MAP_DEMO_TARGET = {
+  tencent: { lat: 31.2331, lng: 121.4751 },
+  google: { lat: 37.7769, lng: -122.4177 }
 };
 
 function getInitialLanguage() {
@@ -573,13 +752,75 @@ function getRoster() {
   return petRoster.length > 0 ? petRoster : DEFAULT_PET_ROSTER;
 }
 
+function toPositiveInt(value, fallback = 1) {
+  const parsed = Number(value);
+  if (!Number.isInteger(parsed) || parsed < 1) return fallback;
+  return parsed;
+}
+
+function toNonNegativeInt(value, fallback = 0) {
+  const parsed = Number(value);
+  if (!Number.isInteger(parsed) || parsed < 0) return fallback;
+  return parsed;
+}
+
+function normalizeRosterPet(input, fallback = {}) {
+  const level = toPositiveInt(input?.level, toPositiveInt(fallback.level, 1));
+  const experienceRaw = toNonNegativeInt(input?.experience, toNonNegativeInt(fallback.experience, 0));
+  const winsTotal = toNonNegativeInt(input?.winsTotal, toNonNegativeInt(fallback.winsTotal, 0));
+  const nameZh =
+    typeof input?.name?.zh === "string" && input.name.zh.trim().length > 0
+      ? input.name.zh.trim()
+      : typeof fallback?.name?.zh === "string" && fallback.name.zh.trim().length > 0
+        ? fallback.name.zh.trim()
+        : "";
+  const nameEn =
+    typeof input?.name?.en === "string" && input.name.en.trim().length > 0
+      ? input.name.en.trim()
+      : typeof fallback?.name?.en === "string" && fallback.name.en.trim().length > 0
+        ? fallback.name.en.trim()
+        : "";
+
+  return {
+    ...fallback,
+    ...input,
+    name: {
+      zh: nameZh || nameEn || "未命名宠物",
+      en: nameEn || nameZh || "Unknown Pet"
+    },
+    level,
+    experience: experienceRaw % LEVEL_UP_REQUIRED_WINS,
+    winsTotal
+  };
+}
+
+function getPetLevel(pet) {
+  return toPositiveInt(pet?.level, 1);
+}
+
+function getPetExperience(pet) {
+  return toNonNegativeInt(pet?.experience, 0) % LEVEL_UP_REQUIRED_WINS;
+}
+
+function getPetWinsTotal(pet) {
+  return toNonNegativeInt(pet?.winsTotal, 0);
+}
+
+function getPetAvatarToken(pet) {
+  const displayName = getPetDisplayName(pet || { name: { zh: "宠", en: "Pet" } });
+  return pet?.avatar || displayName.slice(0, 1).toUpperCase();
+}
+
+function formatLevelText(level) {
+  return `Lv.${toPositiveInt(level, 1)}`;
+}
+
 function applyInventorySnapshot(snapshot) {
   const incomingPets = Array.isArray(snapshot?.pets) ? snapshot.pets : [];
   const normalizedPets = incomingPets.length > 0 ? incomingPets : DEFAULT_PET_ROSTER;
-  petRoster = normalizedPets.map((pet) => ({
-    ...pet,
-    name: { ...(pet.name || {}) }
-  }));
+  petRoster = normalizedPets.map((pet, index) =>
+    normalizeRosterPet(pet, DEFAULT_PET_ROSTER[index] || {})
+  );
 
   const fallbackActivePetId = petRoster[0]?.id ?? DEFAULT_PET_ROSTER[0].id;
   const incomingActivePetId =
@@ -588,7 +829,11 @@ function applyInventorySnapshot(snapshot) {
     ? incomingActivePetId
     : fallbackActivePetId;
 
-  if (!petRoster.some((pet) => pet.id === enemyPetInBattle?.id)) {
+  const keepBattleEnemy =
+    battleMode &&
+    typeof enemyPetInBattle?.id === "string" &&
+    enemyPetInBattle.id.startsWith("wild-");
+  if (!keepBattleEnemy && !petRoster.some((pet) => pet.id === enemyPetInBattle?.id)) {
     enemyPetInBattle = petRoster[1] || petRoster[0];
   }
   if (selectedPetDetailId && !petRoster.some((pet) => pet.id === selectedPetDetailId)) {
@@ -624,7 +869,10 @@ function chooseEnemyPetForBattle() {
 }
 
 function getPetDisplayName(pet) {
-  return language === "zh" ? pet.name.zh : pet.name.en;
+  const zh = pet?.name?.zh;
+  const en = pet?.name?.en;
+  if (language === "zh") return zh || en || "宠物";
+  return en || zh || "Pet";
 }
 
 function getPetById(petId) {
@@ -668,6 +916,7 @@ async function setActivePet(petId, options = {}) {
   playerModel.src = activePet.model;
   playerElementLabel.textContent = getElementText(activePet.element);
   setElementTagTheme(playerElementLabel, activePet.element);
+  updateBattleHudBadges(activePet, enemyPetInBattle);
   appendLog(t("activePetChanged", { petName: getPetDisplayName(activePet) }));
   renderPetInventory();
   renderPetDetail();
@@ -694,6 +943,9 @@ function renderPetDetail() {
   const index = getRoster().findIndex((item) => item.id === pet.id) + 1;
   const modelName = pet.model.split("/").pop();
   const statTags = renderStatTagHtml(pet.stats);
+  const level = getPetLevel(pet);
+  const experience = getPetExperience(pet);
+  const winsTotal = getPetWinsTotal(pet);
 
   petDetailElement.classList.remove("hidden");
   if (petDetailPlaceholderElement) {
@@ -704,6 +956,8 @@ function renderPetDetail() {
       <span class="pet-detail-name">${currentI18n().inventorySelectedDetail} · ${displayName}</span>
       <div class="pet-detail-tags">
         <span class="pet-meta-chip serial">#${index}</span>
+        <span class="pet-meta-chip level">${formatLevelText(level)}</span>
+        <span class="pet-meta-chip exp">EXP ${experience}/${LEVEL_UP_REQUIRED_WINS}</span>
         <span class="pet-meta-chip model">${modelName}</span>
         <span class="pet-meta-chip element element-${pet.element}">${elementName}</span>
       </div>
@@ -711,6 +965,9 @@ function renderPetDetail() {
     <div class="pet-detail-meta">
       <span><b>${currentI18n().inventoryFieldSerial}:</b> ${pet.serial}</span>
       <span><b>${currentI18n().inventoryFieldCapturedAt}:</b> ${pet.capturedAt}</span>
+      <span><b>${currentI18n().inventoryFieldLevel}:</b> ${formatLevelText(level)}</span>
+      <span><b>${currentI18n().inventoryFieldExperience}:</b> ${experience}/${LEVEL_UP_REQUIRED_WINS}</span>
+      <span><b>${currentI18n().inventoryFieldWins}:</b> ${winsTotal}</span>
       <span><b>${currentI18n().inventoryFieldStats}:</b></span>
       <div class="pet-stat-chip-row">${statTags}</div>
     </div>
@@ -737,7 +994,8 @@ function renderPetInventory() {
     const isSelected = selectedPetDetailId === pet.id;
     const elementName = getElementText(pet.element);
     const displayName = getPetDisplayName(pet);
-    const avatar = pet.avatar || displayName.slice(0, 1).toUpperCase();
+    const avatar = getPetAvatarToken(pet);
+    const levelText = formatLevelText(getPetLevel(pet));
     const entry = document.createElement("div");
     entry.className = `pet-avatar-entry${isSelected ? " selected" : ""}`;
     entry.innerHTML = `
@@ -749,6 +1007,7 @@ function renderPetInventory() {
         aria-label="${displayName} ${elementName}"
       >
         <span class="pet-avatar">${avatar}</span>
+        <span class="pet-avatar-level-chip">${levelText}</span>
         ${isActive ? "<span class=\"pet-avatar-active\"></span>" : ""}
       </button>
       ${
@@ -810,6 +1069,10 @@ function renderBattleReports() {
       const statusLabel = finished
         ? currentI18n().battleReportFinished
         : currentI18n().battleReportAbandoned;
+      const modeLabel =
+        report.mode === "capture"
+          ? currentI18n().battleReportModeCapture
+          : currentI18n().battleReportModeDuel;
       const winnerLabel = finished ? getBattleReportWinnerText(report) : "-";
       const statusClass = finished ? "finished" : "abandoned";
       const winnerClass =
@@ -820,6 +1083,15 @@ function renderBattleReports() {
             : report.winner === "draw"
               ? "draw"
               : "neutral";
+      let captureLine = "";
+      if (report.mode === "capture") {
+        const serial = report.captureSerial || "-";
+        if (report.captureSuccess === true) {
+          captureLine = `<div class="battle-report-capture success">${t("battleReportCaptureSuccess", { serial })}</div>`;
+        } else if (report.captureSuccess === false) {
+          captureLine = `<div class="battle-report-capture fail">${t("battleReportCaptureFail", { serial })}</div>`;
+        }
+      }
       return `
         <article class="battle-report-item ${statusClass}">
           <div class="battle-report-head">
@@ -828,13 +1100,14 @@ function renderBattleReports() {
           </div>
           <div class="battle-report-main">
             <span class="battle-report-side">${report.player.petName || "Player"}</span>
-            <span class="battle-report-vs">VS</span>
+            <span class="battle-report-vs">${modeLabel}</span>
             <span class="battle-report-side">${report.enemy.petName || "Enemy"}</span>
           </div>
           <div class="battle-report-foot">
             <span class="battle-report-round">${currentI18n().battleReportRound}: ${report.totalRounds}</span>
             <span class="battle-report-winner ${winnerClass}">${winnerLabel}</span>
           </div>
+          ${captureLine}
         </article>
       `;
     })
@@ -849,6 +1122,272 @@ async function refreshBattleReports(limit = 8) {
     battleReports = [];
   }
   renderBattleReports();
+}
+
+function getMapProviderName(providerId) {
+  return providerId === "google"
+    ? currentI18n().mapProviderGoogle
+    : currentI18n().mapProviderTencent;
+}
+
+function getMapPermissionName(status) {
+  if (status === "granted") return currentI18n().mapPermissionGranted;
+  if (status === "denied") return currentI18n().mapPermissionDenied;
+  if (status === "system_disabled") return currentI18n().mapPermissionSystemDisabled;
+  return currentI18n().mapPermissionPrompt;
+}
+
+function formatMapLocation(location) {
+  if (!location || typeof location.lat !== "number" || typeof location.lng !== "number") {
+    return "-";
+  }
+  const accuracy = Number.isFinite(location.accuracyMeters) ? Math.round(location.accuracyMeters) : 0;
+  return `${location.lat.toFixed(5)}, ${location.lng.toFixed(5)} (±${accuracy}m)`;
+}
+
+function formatMapDistance(meters) {
+  if (!Number.isFinite(meters)) return "-";
+  return `${Number(meters).toFixed(2)}m`;
+}
+
+function syncMapSelectLabels() {
+  if (mapProviderSelectElement) {
+    const tencentOption = mapProviderSelectElement.querySelector("option[value='tencent']");
+    const googleOption = mapProviderSelectElement.querySelector("option[value='google']");
+    if (tencentOption) tencentOption.textContent = currentI18n().mapProviderTencent;
+    if (googleOption) googleOption.textContent = currentI18n().mapProviderGoogle;
+  }
+
+  if (mapPermissionSelectElement) {
+    const grantedOption = mapPermissionSelectElement.querySelector("option[value='granted']");
+    const deniedOption = mapPermissionSelectElement.querySelector("option[value='denied']");
+    const systemDisabledOption = mapPermissionSelectElement.querySelector(
+      "option[value='system_disabled']"
+    );
+    if (grantedOption) grantedOption.textContent = currentI18n().mapPermissionGranted;
+    if (deniedOption) deniedOption.textContent = currentI18n().mapPermissionDenied;
+    if (systemDisabledOption) {
+      systemDisabledOption.textContent = currentI18n().mapPermissionSystemDisabled;
+    }
+  }
+}
+
+function renderMapState() {
+  const state = mapState;
+  if (!mapStatusProviderValueElement || !mapStatusCoordinateValueElement) return;
+  if (!state) {
+    mapStatusProviderValueElement.textContent = "-";
+    mapStatusCoordinateValueElement.textContent = "-";
+    mapStatusPermissionValueElement.textContent = currentI18n().mapPermissionPrompt;
+    mapStatusWatchValueElement.textContent = currentI18n().mapWatchOff;
+    mapStatusLocationValueElement.textContent = "-";
+    mapStatusDistanceValueElement.textContent = "-";
+    mapCurrentBtn.disabled = true;
+    mapWatchStartBtn.disabled = true;
+    mapWatchStopBtn.disabled = true;
+    mapDistanceBtn.disabled = true;
+    return;
+  }
+
+  mapStatusProviderValueElement.textContent = getMapProviderName(state.providerId);
+  mapStatusCoordinateValueElement.textContent = state.coordinateSystem || "-";
+  mapStatusPermissionValueElement.textContent = getMapPermissionName(state.permissionStatus);
+  mapStatusWatchValueElement.textContent = state.watchActive
+    ? currentI18n().mapWatchOn
+    : currentI18n().mapWatchOff;
+  mapStatusLocationValueElement.textContent = formatMapLocation(state.lastLocation);
+  mapStatusDistanceValueElement.textContent = formatMapDistance(mapDemoDistanceMeters);
+
+  if (mapProviderSelectElement && state.providerId) {
+    mapProviderSelectElement.value = state.providerId;
+  }
+  const granted = state.permissionStatus === "granted";
+  mapCurrentBtn.disabled = !granted;
+  mapWatchStartBtn.disabled = !granted || Boolean(state.watchActive);
+  mapWatchStopBtn.disabled = !state.watchActive;
+  mapDistanceBtn.disabled = !granted;
+}
+
+function applyMapState(nextState) {
+  if (!nextState || typeof nextState !== "object") return;
+  mapState = nextState;
+  renderMapState();
+  if (mapState.permissionStatus === "granted" && Number.isFinite(mapState.updateSeq)) {
+    if (mapState.updateSeq !== lastNearbyRefreshSeq) {
+      lastNearbyRefreshSeq = mapState.updateSeq;
+      void refreshNearbyWildPets({ silent: true });
+    }
+  }
+}
+
+async function refreshMapState() {
+  try {
+    const state = await window.petApi.getMapState();
+    applyMapState(state);
+  } catch {
+    // Keep non-blocking for environments without map runtime.
+  }
+}
+
+function applyMapActionResult(result) {
+  if (result?.state) {
+    applyMapState(result.state);
+  }
+  if (!result?.ok) {
+    appendLog(t("mapErrorLog", { message: result?.error?.message || "unknown error" }));
+    return false;
+  }
+  return true;
+}
+
+function getWildRarityText(rarity) {
+  if (rarity === "epic") return currentI18n().wildRarityEpic;
+  if (rarity === "rare") return currentI18n().wildRarityRare;
+  return currentI18n().wildRarityCommon;
+}
+
+function getWildStatusText(pet) {
+  if (pet.status === "captured") return currentI18n().wildStatusCaptured;
+  if (pet.status === "engaged") return currentI18n().wildStatusEngaged;
+  if (pet.status === "cooldown") return `${currentI18n().wildStatusCooldown} (${pet.cooldownRemainingSec}s)`;
+  if (pet.inRange) return currentI18n().wildStatusInRange;
+  return currentI18n().wildStatusOutRange;
+}
+
+function getWildPetDisplayName(pet) {
+  if (language === "zh") return pet.name?.zh || pet.name?.en || pet.serial || "WildPet";
+  return pet.name?.en || pet.name?.zh || pet.serial || "WildPet";
+}
+
+function renderNearbyWildPets() {
+  if (!wildListElement) return;
+  if (!nearbyWildPets || nearbyWildPets.length === 0) {
+    wildListElement.innerHTML = `<div class="wild-empty">${currentI18n().wildEmpty}</div>`;
+    return;
+  }
+
+  wildListElement.innerHTML = nearbyWildPets
+    .map((pet) => {
+      const rarityClass = pet.rarity === "epic" ? "epic" : pet.rarity === "rare" ? "rare" : "common";
+      const inRange = Boolean(pet.inRange);
+      const canCapture = inRange && pet.status === "available";
+      const itemClass =
+        pet.status === "captured"
+          ? "captured"
+          : pet.status === "cooldown"
+            ? "cooldown"
+            : inRange
+              ? "in"
+              : "out";
+      return `
+        <article class="wild-item ${itemClass}" data-wild-id="${pet.id}">
+          <div class="wild-head">
+            <span class="wild-serial">${pet.serial}</span>
+            <span class="wild-rarity ${rarityClass}">${getWildRarityText(pet.rarity)}</span>
+          </div>
+          <div class="wild-main">
+            <span class="wild-name">${getWildPetDisplayName(pet)}</span>
+            <span class="wild-meta">${pet.element} · ${pet.landmarkType}</span>
+          </div>
+          <div class="wild-actions">
+            <span class="wild-status">${currentI18n().wildDistance}: ${pet.distanceMeters}m · ${getWildStatusText(pet)}</span>
+            <button class="wild-capture-btn" ${canCapture ? "" : "disabled"}>${currentI18n().wildCaptureAction}</button>
+          </div>
+        </article>
+      `;
+    })
+    .join("");
+
+  const cards = wildListElement.querySelectorAll(".wild-item");
+  for (const card of cards) {
+    const id = card.getAttribute("data-wild-id");
+    const btn = card.querySelector(".wild-capture-btn");
+    btn?.addEventListener("click", () => {
+      const target = nearbyWildPets.find((item) => item.id === id);
+      if (!target) return;
+      void startCaptureBattle(target);
+    });
+  }
+}
+
+async function refreshNearbyWildPets(options = {}) {
+  const silent = Boolean(options.silent);
+  const result = await window.petApi.getNearbyWildPets(280);
+  if (!result?.ok) {
+    nearbyWildPets = [];
+    renderNearbyWildPets();
+    if (!silent) {
+      appendLog(
+        t("wildRefreshFailLog", {
+          message: result?.error?.message || "unknown error"
+        })
+      );
+    }
+    return;
+  }
+  nearbyWildPets = Array.isArray(result.pets) ? result.pets : [];
+  renderNearbyWildPets();
+  if (!silent) {
+    appendLog(
+      t("wildRefreshLog", {
+        count: nearbyWildPets.length
+      })
+    );
+  }
+}
+
+async function startCaptureBattle(wildPet) {
+  if (!wildPet?.id) return;
+  const activePet = getActivePet();
+  clearActionCountdown();
+  isRoundResolving = false;
+  hideBattleSettlement();
+  setBattleMode(true);
+  clearRoundFeed();
+  lastRoundResultElement.textContent = "";
+  setPanelVisible(false);
+
+  const response = await window.petApi.beginCaptureBattle({
+    wildPetId: wildPet.id,
+    playerElement: activePet.element,
+    playerPetId: activePet.id,
+    playerPetName: getPetDisplayName(activePet)
+  });
+  if (!response?.ok) {
+    setBattleMode(false);
+    appendLog(
+      t("wildRefreshFailLog", {
+        message: response?.error?.message || "capture battle start failed"
+      })
+    );
+    return;
+  }
+
+  const capture = response.capture;
+  playerModel.src = activePet.model;
+  enemyPetInBattle = {
+    id: capture.id,
+    serial: capture.serial,
+    name: { zh: capture.name?.zh || "流浪宠物", en: capture.name?.en || "WildPet" },
+    model: capture.model,
+    element: capture.element,
+    stats: capture.stats || "N/A",
+    capturedAt: "",
+    avatar: capture.avatar || "野",
+    level: 1,
+    experience: 0,
+    winsTotal: 0
+  };
+  enemyModel.src = capture.model;
+  updateBattleBoard(response.state);
+  setActiveActionTag("");
+  startActionCountdown();
+  appendLog(
+    t("wildCaptureStartLog", {
+      serial: capture.serial,
+      name: getWildPetDisplayName(capture)
+    })
+  );
 }
 
 function setLanguage(nextLanguage) {
@@ -880,9 +1419,27 @@ function applyLanguage() {
   uiRefs.inventoryTitle.textContent = currentI18n().inventoryTitle;
   uiRefs.inventoryTip.textContent = currentI18n().inventoryTip;
   uiRefs.battleReportTitle.textContent = currentI18n().battleReportTitle;
+  uiRefs.mapTitle.textContent = currentI18n().mapTitle;
+  uiRefs.mapTip.textContent = currentI18n().mapTip;
+  uiRefs.mapProviderLabel.textContent = currentI18n().mapProviderLabel;
+  uiRefs.mapPermissionLabel.textContent = currentI18n().mapPermissionLabel;
+  uiRefs.mapStatusProviderLabel.textContent = currentI18n().mapStatusProvider;
+  uiRefs.mapStatusCoordinateLabel.textContent = currentI18n().mapStatusCoordinate;
+  uiRefs.mapStatusPermissionLabel.textContent = currentI18n().mapStatusPermission;
+  uiRefs.mapStatusWatchLabel.textContent = currentI18n().mapStatusWatch;
+  uiRefs.mapStatusLocationLabel.textContent = currentI18n().mapStatusLocation;
+  uiRefs.mapStatusDistanceLabel.textContent = currentI18n().mapStatusDistance;
+  uiRefs.wildTitle.textContent = currentI18n().wildTitle;
+  uiRefs.wildTip.textContent = currentI18n().wildTip;
   uiRefs.companionTitle.textContent = currentI18n().companionTitle;
   captureBtn.textContent = currentI18n().captureTest;
   occupyBtn.textContent = currentI18n().occupyTest;
+  mapPermissionBtn.textContent = currentI18n().mapRequestPermission;
+  mapCurrentBtn.textContent = currentI18n().mapRefreshLocation;
+  mapWatchStartBtn.textContent = currentI18n().mapStartWatch;
+  mapWatchStopBtn.textContent = currentI18n().mapStopWatch;
+  mapDistanceBtn.textContent = currentI18n().mapDistanceDemo;
+  wildRefreshBtn.textContent = currentI18n().wildRefresh;
   uiRefs.tipText.textContent = currentI18n().tip;
   updatePauseText();
   languageBtn.textContent = currentI18n().languageButton;
@@ -893,8 +1450,12 @@ function applyLanguage() {
   enemyElementLabel.textContent = getElementText(enemyPetInBattle.element);
   setElementTagTheme(playerElementLabel, activePet.element);
   setElementTagTheme(enemyElementLabel, enemyPetInBattle.element);
+  updateBattleHudBadges(activePet, enemyPetInBattle);
   renderPetInventory();
   renderBattleReports();
+  syncMapSelectLabels();
+  renderMapState();
+  renderNearbyWildPets();
   syncBattleSettlementText();
 
   if (!runtimeInfo) {
@@ -1091,6 +1652,28 @@ function syncActionButtons() {
   }
 }
 
+function updateBattleHudBadges(playerPet, enemyPet) {
+  if (playerHudAvatarElement) {
+    playerHudAvatarElement.textContent = getPetAvatarToken(playerPet);
+  }
+  if (playerHudLevelElement) {
+    playerHudLevelElement.textContent = formatLevelText(getPetLevel(playerPet));
+  }
+  if (enemyHudAvatarElement) {
+    enemyHudAvatarElement.textContent = getPetAvatarToken(enemyPet);
+  }
+  if (enemyHudLevelElement) {
+    enemyHudLevelElement.textContent = formatLevelText(getPetLevel(enemyPet));
+  }
+}
+
+function patchRosterPet(updatedPet) {
+  if (!updatedPet?.id) return;
+  const idx = petRoster.findIndex((pet) => pet.id === updatedPet.id);
+  if (idx < 0) return;
+  petRoster[idx] = normalizeRosterPet(updatedPet, petRoster[idx]);
+}
+
 function setActiveActionTag(action) {
   for (const button of stageBattleActionButtons) {
     button.classList.toggle("active", button.dataset.action === action);
@@ -1116,6 +1699,7 @@ function updateBattleBoard(state) {
   updateBattleRelationTag(state.player.element, state.enemy.element);
   uiRefs.playerLabel.textContent = `${currentI18n().playerPet} · ${getPetDisplayName(activePet)}`;
   uiRefs.enemyLabel.textContent = `${currentI18n().enemyPet} · ${getPetDisplayName(enemyPetInBattle)}`;
+  updateBattleHudBadges(activePet, enemyPetInBattle);
 
   statusPlayerElement.textContent = formatStatuses(state.player.statuses);
   statusEnemyElement.textContent = formatStatuses(state.enemy.statuses);
@@ -1383,10 +1967,19 @@ async function resetBattle() {
 }
 
 async function endBattle(manual = true) {
+  let battleEndResult = null;
   try {
-    await window.petApi.battleEnd();
+    battleEndResult = await window.petApi.battleEnd();
   } catch {
     // Keep runtime flow non-blocking even if persistence fails.
+  }
+  if (battleEndResult?.captureOutcome?.ok && battleEndResult.captureOutcome.success === false) {
+    appendLog(
+      t("wildCaptureAbortLog", {
+        serial: battleEndResult.captureOutcome.wildPet?.serial || "-"
+      })
+    );
+    await refreshNearbyWildPets({ silent: true });
   }
   clearActionCountdown();
   isRoundResolving = false;
@@ -1573,6 +2166,57 @@ async function actBattle(action, options = {}) {
         tickerMessages.push(t("battleTickerWinnerDraw"));
         tickerMessages.push(t("battleCelebrateDraw"));
       }
+
+      if (result.progression?.ok && result.progression.pet) {
+        patchRosterPet(result.progression.pet);
+        if (result.progression.leveledUp) {
+          appendLog(
+            t("battleLevelUpLog", {
+              petName: getPetDisplayName(result.progression.pet),
+              level: result.progression.currentLevel
+            })
+          );
+        } else {
+          appendLog(
+            t("battleExpGainLog", {
+              petName: getPetDisplayName(result.progression.pet),
+              exp: result.progression.currentExperience,
+              required: LEVEL_UP_REQUIRED_WINS
+            })
+          );
+        }
+        renderPetInventory();
+        renderPetDetail();
+        updateBattleHudBadges(getActivePet(), enemyPetInBattle);
+      }
+
+      if (result.captureOutcome && result.captureOutcome.ok) {
+        if (result.captureOutcome.success) {
+          appendLog(
+            t("wildCaptureSuccessLog", {
+              serial: result.captureOutcome.wildPet?.serial || "-"
+            })
+          );
+          appendLog(
+            t("wildCaptureReportLog", {
+              serial: result.captureOutcome.wildPet?.serial || "-"
+            })
+          );
+          await loadInventorySnapshot();
+          renderPetInventory();
+          renderPetDetail();
+          updateBattleHudBadges(getActivePet(), enemyPetInBattle);
+          await refreshNearbyWildPets({ silent: true });
+        } else {
+          appendLog(
+            t("wildCaptureFailLog", {
+              serial: result.captureOutcome.wildPet?.serial || "-"
+            })
+          );
+          await refreshNearbyWildPets({ silent: true });
+        }
+      }
+
       showBattleSettlement(round.winner);
       void refreshBattleReports();
     }
@@ -1687,6 +2331,68 @@ function setupButtons() {
     updatePetClass();
     reportHitState();
   });
+
+  mapProviderSelectElement.addEventListener("change", async () => {
+    const providerId = mapProviderSelectElement.value;
+    const result = await window.petApi.setMapProvider(providerId);
+    if (!applyMapActionResult(result)) return;
+    mapDemoDistanceMeters = null;
+    renderMapState();
+    appendLog(t("mapProviderChangedLog", { provider: getMapProviderName(providerId) }));
+  });
+
+  mapPermissionBtn.addEventListener("click", async () => {
+    const mode = mapPermissionSelectElement.value;
+    const result = await window.petApi.requestMapPermission(mode);
+    if (!applyMapActionResult(result)) return;
+    if (mode !== "granted") {
+      mapDemoDistanceMeters = null;
+      nearbyWildPets = [];
+      renderNearbyWildPets();
+    }
+    renderMapState();
+    appendLog(t("mapPermissionAppliedLog", { mode: getMapPermissionName(mode) }));
+  });
+
+  mapCurrentBtn.addEventListener("click", async () => {
+    const result = await window.petApi.getCurrentLocation();
+    if (!applyMapActionResult(result)) return;
+    const location = result.state?.lastLocation;
+    if (location) {
+      appendLog(
+        t("mapLocationLog", {
+          lat: Number(location.lat).toFixed(5),
+          lng: Number(location.lng).toFixed(5)
+        })
+      );
+    }
+  });
+
+  mapWatchStartBtn.addEventListener("click", async () => {
+    const result = await window.petApi.startMapWatch(1200);
+    if (!applyMapActionResult(result)) return;
+    appendLog(t("mapWatchStartLog"));
+  });
+
+  mapWatchStopBtn.addEventListener("click", async () => {
+    const result = await window.petApi.stopMapWatch();
+    if (!applyMapActionResult(result)) return;
+    appendLog(t("mapWatchStopLog"));
+  });
+
+  mapDistanceBtn.addEventListener("click", async () => {
+    const providerId = mapState?.providerId === "google" ? "google" : "tencent";
+    const target = MAP_DEMO_TARGET[providerId];
+    const result = await window.petApi.distanceTo(target);
+    if (!applyMapActionResult(result)) return;
+    mapDemoDistanceMeters = Number(result.distanceMeters);
+    renderMapState();
+    appendLog(t("mapDistanceLog", { meters: Number(result.distanceMeters).toFixed(2) }));
+  });
+
+  wildRefreshBtn.addEventListener("click", () => {
+    void refreshNearbyWildPets();
+  });
 }
 
 function setupIpcEvents() {
@@ -1700,6 +2406,10 @@ function setupIpcEvents() {
 
   window.petApi.onTogglePanel((visible) => {
     setPanelVisible(visible);
+  });
+
+  window.petApi.onMapState((state) => {
+    applyMapState(state);
   });
 }
 
@@ -1722,6 +2432,7 @@ async function bootstrap() {
 
   applyLanguage();
   await refreshBattleReports();
+  await refreshMapState();
   runtimeInfo = await window.petApi.getRuntimeInfo();
   renderRuntimeInfo();
   appendLog(t("runtimeStarted"));

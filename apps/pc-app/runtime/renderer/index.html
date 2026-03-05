@@ -20,54 +20,70 @@
 
           <div id="hud-top">
             <section id="player-hud" class="pet-hud">
-              <div class="hud-header">
-                <span id="player-label">Player Pet</span>
-                <div class="hud-tags">
-                  <span id="player-element-label" class="status-tag element-tag">Metal</span>
+              <div class="hud-layout">
+                <div class="hud-badge left">
+                  <span id="player-hud-avatar" class="hud-avatar">焰</span>
+                  <span id="player-hud-level" class="hud-level">Lv.1</span>
                 </div>
-              </div>
-              <div class="status-bars">
-                <div class="bar-item">
-                  <div class="bar-track hp-track">
-                    <div id="hp-fill-player" class="bar-fill hp"></div>
-                    <span id="hp-value-player" class="bar-value">120/120</span>
+                <div class="hud-main">
+                  <div class="hud-header">
+                    <span id="player-label">Player Pet</span>
+                    <div class="hud-tags">
+                      <span id="player-element-label" class="status-tag element-tag">Metal</span>
+                    </div>
+                  </div>
+                  <div class="status-bars">
+                    <div class="bar-item">
+                      <div class="bar-track hp-track">
+                        <div id="hp-fill-player" class="bar-fill hp"></div>
+                        <span id="hp-value-player" class="bar-value">120/120</span>
+                      </div>
+                    </div>
+                    <div class="bar-item">
+                      <div class="bar-track anger-track">
+                        <div id="anger-fill-player" class="bar-fill anger"></div>
+                        <span id="anger-value-player" class="bar-value">0%</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="state-row">
+                    <span id="status-player" class="status-tag state-tag">none</span>
                   </div>
                 </div>
-                <div class="bar-item">
-                  <div class="bar-track anger-track">
-                    <div id="anger-fill-player" class="bar-fill anger"></div>
-                    <span id="anger-value-player" class="bar-value">0%</span>
-                  </div>
-                </div>
-              </div>
-              <div class="state-row">
-                <span id="status-player" class="status-tag state-tag">none</span>
               </div>
             </section>
 
             <section id="enemy-hud" class="pet-hud hidden">
-              <div class="hud-header">
-                <span id="enemy-label">Enemy Pet</span>
-                <div class="hud-tags">
-                  <span id="enemy-element-label" class="status-tag element-tag">Wood</span>
-                </div>
-              </div>
-              <div class="status-bars">
-                <div class="bar-item">
-                  <div class="bar-track hp-track">
-                    <div id="hp-fill-enemy" class="bar-fill hp"></div>
-                    <span id="hp-value-enemy" class="bar-value">120/120</span>
+              <div class="hud-layout enemy">
+                <div class="hud-main">
+                  <div class="hud-header">
+                    <span id="enemy-label">Enemy Pet</span>
+                    <div class="hud-tags">
+                      <span id="enemy-element-label" class="status-tag element-tag">Wood</span>
+                    </div>
+                  </div>
+                  <div class="status-bars">
+                    <div class="bar-item">
+                      <div class="bar-track hp-track">
+                        <div id="hp-fill-enemy" class="bar-fill hp"></div>
+                        <span id="hp-value-enemy" class="bar-value">120/120</span>
+                      </div>
+                    </div>
+                    <div class="bar-item">
+                      <div class="bar-track anger-track">
+                        <div id="anger-fill-enemy" class="bar-fill anger"></div>
+                        <span id="anger-value-enemy" class="bar-value">0%</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="state-row">
+                    <span id="status-enemy" class="status-tag state-tag">none</span>
                   </div>
                 </div>
-                <div class="bar-item">
-                  <div class="bar-track anger-track">
-                    <div id="anger-fill-enemy" class="bar-fill anger"></div>
-                    <span id="anger-value-enemy" class="bar-value">0%</span>
-                  </div>
+                <div class="hud-badge right">
+                  <span id="enemy-hud-avatar" class="hud-avatar">铠</span>
+                  <span id="enemy-hud-level" class="hud-level">Lv.1</span>
                 </div>
-              </div>
-              <div class="state-row">
-                <span id="status-enemy" class="status-tag state-tag">none</span>
               </div>
             </section>
           </div>
@@ -158,6 +174,76 @@
         <div class="panel-section">
           <h2 id="battle-report-title">Recent Battle Reports</h2>
           <div id="battle-report-list" class="battle-report-list"></div>
+        </div>
+
+        <div class="panel-section">
+          <h2 id="map-title">Map Capability</h2>
+          <p id="map-tip" class="inventory-tip">
+            Desktop demo for map capability abstraction (provider/permission/location watch).
+          </p>
+          <div class="field-row">
+            <div class="field">
+              <label id="map-provider-label" for="map-provider-select">Provider</label>
+              <select id="map-provider-select">
+                <option value="tencent">Tencent</option>
+                <option value="google">Google</option>
+              </select>
+            </div>
+            <div class="field">
+              <label id="map-permission-label" for="map-permission-select">Permission Mode</label>
+              <select id="map-permission-select">
+                <option value="granted">Granted</option>
+                <option value="denied">Denied</option>
+                <option value="system_disabled">System Disabled</option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <button id="btn-map-permission">Request Permission</button>
+            <button id="btn-map-current">Refresh Location</button>
+          </div>
+          <div class="row">
+            <button id="btn-map-watch-start">Start Watch</button>
+            <button id="btn-map-watch-stop">Stop Watch</button>
+            <button id="btn-map-distance">Distance Demo</button>
+          </div>
+          <div id="map-status" class="map-status-card">
+            <div class="map-status-line">
+              <span id="map-status-provider-label">Provider</span>
+              <span id="map-status-provider-value">-</span>
+            </div>
+            <div class="map-status-line">
+              <span id="map-status-coordinate-label">Coord</span>
+              <span id="map-status-coordinate-value">-</span>
+            </div>
+            <div class="map-status-line">
+              <span id="map-status-permission-state-label">Permission</span>
+              <span id="map-status-permission-state-value">-</span>
+            </div>
+            <div class="map-status-line">
+              <span id="map-status-watch-label">Watch</span>
+              <span id="map-status-watch-value">-</span>
+            </div>
+            <div class="map-status-line">
+              <span id="map-status-location-label">Location</span>
+              <span id="map-status-location-value">-</span>
+            </div>
+            <div class="map-status-line">
+              <span id="map-status-distance-label">Distance</span>
+              <span id="map-status-distance-value">-</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel-section">
+          <h2 id="wild-title">Nearby Wild Pets</h2>
+          <p id="wild-tip" class="inventory-tip">
+            Enter capture radius to start duel and recruit wild pet to your inventory.
+          </p>
+          <div class="row">
+            <button id="btn-wild-refresh">Refresh Nearby Pets</button>
+          </div>
+          <div id="wild-list" class="wild-list"></div>
         </div>
 
         <div class="panel-section">

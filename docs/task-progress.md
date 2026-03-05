@@ -322,3 +322,84 @@ Reference: `docs/project-delivery-tasks.md`
      - `npm run pc:smoke`
      - `npm run verify`
      - All passed.
+
+17. `D-020 PC map capability abstraction + location state-machine demo` [DONE]
+   - Added map runtime abstraction service: `apps/pc-app/runtime/services/map-runtime.cjs`.
+   - Added provider abstraction:
+     - `tencent` -> `gcj02`
+     - `google` -> `wgs84`
+   - Added permission state-machine (`prompt/granted/denied/system_disabled`) and unified APIs:
+     - `getCurrentLocation`
+     - `startWatch/stopWatch`
+     - `distanceTo`
+   - Added main/preload IPC bridge:
+     - `pet:get-map-state`
+     - `pet:set-map-provider`
+     - `pet:request-map-permission`
+     - `pet:get-current-location`
+     - `pet:start-map-watch`
+     - `pet:stop-map-watch`
+     - `pet:distance-to`
+     - broadcast `pet:map-state`
+   - Added panel UI section "地图能力（演示）/Map Capability (Demo)" for provider switch, permission mode, location refresh, watch control and distance demo.
+   - Updated smoke check to include `map-runtime.cjs`.
+   - Updated tests:
+     - `tests/task-d005-pc-map-runtime.test.ts`
+     - `tests/task-d001-pc-runnable-runtime.test.ts`
+     - `tests/task-d003-desktop-stage-battle.test.ts`
+   - Validation:
+     - `npm run test:unit -- tests/task-d005-pc-map-runtime.test.ts tests/task-d001-pc-runnable-runtime.test.ts tests/task-d003-desktop-stage-battle.test.ts`
+     - Passed.
+
+18. `D-021 Nearby wild-pet discovery + capture duel loop (PC demo)` [DONE]
+   - Added wild-pet runtime service: `apps/pc-app/runtime/services/wild-pet-runtime.cjs`.
+   - Added nearby wild-pet query API:
+     - `pet:get-nearby-wild-pets`
+   - Added capture battle entry API:
+     - `pet:begin-capture-battle`
+   - Extended battle flow for capture outcome:
+     - player win -> auto capture into inventory with serial
+     - lose / manual end -> target enters cooldown
+   - Added panel section `附近流浪宠物/Nearby Wild Pets`:
+     - serial / rarity / distance / status
+     - capture button enabled only when target is within 100m and available
+   - Added capture persistence + duplicate guard in runtime data store.
+   - Updated smoke checks to include `wild-pet-runtime.cjs`.
+   - Updated tests:
+     - `tests/task-d006-pc-wild-capture-flow.test.ts`
+     - `tests/task-d001-pc-runnable-runtime.test.ts`
+     - `tests/task-d003-desktop-stage-battle.test.ts`
+     - `tests/task-d004-pc-persistence-reporting.test.ts`
+   - Validation:
+   - `npm run test:unit`
+   - `npm run pc:smoke`
+   - `npm run verify`
+   - All passed.
+
+19. `D-022 Capture report hint + pet leveling progression + HUD avatar/level` [DONE]
+   - Extended battle settlement pipeline in main process:
+     - player win now calls `runtimeDataStore.recordBattleWin(...)`
+     - `pet:battle-act` now returns `progression`
+     - capture-session battle report persists `mode/captureSuccess/captureSerial`
+   - Inventory progression model is now visible end-to-end in renderer:
+     - per-pet level badge on avatar strip (`Lv.x`)
+     - detail panel includes `Level / EXP / Wins`
+     - battle HUD shows avatar + level (player-left / enemy-right)
+   - Capture success now emits explicit report hint log:
+     - `收服战报已记录：{serial}` / `Capture report persisted: {serial}`
+   - Duplicate-species ownership rule confirmed:
+     - duplicate is blocked by `wildSerial` only
+     - same species with different serial can both be owned
+   - Updated tests:
+     - `tests/task-d001-pc-runnable-runtime.test.ts`
+     - `tests/task-d003-desktop-stage-battle.test.ts`
+     - `tests/task-d004-pc-persistence-reporting.test.ts`
+     - `tests/task-d006-pc-wild-capture-flow.test.ts`
+   - Validation:
+     - `npm run test:unit -- tests/task-d001-pc-runnable-runtime.test.ts`
+     - `npm run test:unit -- tests/task-d003-desktop-stage-battle.test.ts`
+     - `npm run test:unit -- tests/task-d004-pc-persistence-reporting.test.ts`
+     - `npm run test:unit -- tests/task-d006-pc-wild-capture-flow.test.ts`
+     - `npm run pc:smoke`
+     - `npm run verify`
+     - All passed.
