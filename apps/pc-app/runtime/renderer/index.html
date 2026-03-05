@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QingPet Lord 3D Desktop</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div id="root">
+      <div id="desktop-stage" class="drag-region">
+        <div id="battle-scene">
+          <div id="battle-round" class="round-badge">Round: 0</div>
+          <div id="battle-vs" class="relation-badge hidden">克制</div>
+          <div id="battle-countdown" class="countdown-orb hidden">
+            <span id="battle-countdown-value">5</span>
+          </div>
+          <div id="round-feed" class="round-feed hidden">Round feed</div>
+          <div id="last-round-result" class="last-round-result hidden">Last round result</div>
+
+          <div id="hud-top">
+            <section id="player-hud" class="pet-hud">
+              <div class="hud-header">
+                <span id="player-label">Player Pet</span>
+                <div class="hud-tags">
+                  <span id="player-element-label" class="status-tag element-tag">Metal</span>
+                </div>
+              </div>
+              <div class="status-bars">
+                <div class="bar-item">
+                  <div class="bar-track hp-track">
+                    <div id="hp-fill-player" class="bar-fill hp"></div>
+                    <span id="hp-value-player" class="bar-value">120/120</span>
+                  </div>
+                </div>
+                <div class="bar-item">
+                  <div class="bar-track anger-track">
+                    <div id="anger-fill-player" class="bar-fill anger"></div>
+                    <span id="anger-value-player" class="bar-value">0%</span>
+                  </div>
+                </div>
+              </div>
+              <div class="state-row">
+                <span id="status-player" class="status-tag state-tag">none</span>
+              </div>
+            </section>
+
+            <section id="enemy-hud" class="pet-hud hidden">
+              <div class="hud-header">
+                <span id="enemy-label">Enemy Pet</span>
+                <div class="hud-tags">
+                  <span id="enemy-element-label" class="status-tag element-tag">Wood</span>
+                </div>
+              </div>
+              <div class="status-bars">
+                <div class="bar-item">
+                  <div class="bar-track hp-track">
+                    <div id="hp-fill-enemy" class="bar-fill hp"></div>
+                    <span id="hp-value-enemy" class="bar-value">120/120</span>
+                  </div>
+                </div>
+                <div class="bar-item">
+                  <div class="bar-track anger-track">
+                    <div id="anger-fill-enemy" class="bar-fill anger"></div>
+                    <span id="anger-value-enemy" class="bar-value">0%</span>
+                  </div>
+                </div>
+              </div>
+              <div class="state-row">
+                <span id="status-enemy" class="status-tag state-tag">none</span>
+              </div>
+            </section>
+          </div>
+
+          <article id="player-card" class="battle-actor player no-drag">
+            <model-viewer
+              id="player-model"
+              src="../assets/models/Fox.glb"
+              camera-controls
+              disable-pan
+              autoplay
+              shadow-intensity="1"
+              exposure="1"
+              interaction-prompt="none"
+            ></model-viewer>
+          </article>
+
+          <article id="enemy-card" class="battle-actor enemy hidden no-drag">
+            <model-viewer
+              id="enemy-model"
+              src="../assets/models/CesiumMan.glb"
+              camera-controls
+              disable-pan
+              autoplay
+              shadow-intensity="1"
+              exposure="1"
+              interaction-prompt="none"
+            ></model-viewer>
+          </article>
+
+          <div id="battle-fx" class="battle-fx"></div>
+
+          <div id="battle-action-tags" class="battle-action-tags no-drag hidden">
+            <button class="battle-tag" data-action="normal_attack" id="tag-action-normal">
+              Normal
+            </button>
+            <button class="battle-tag" data-action="element_attack" id="tag-action-element">
+              Element
+            </button>
+            <button class="battle-tag" data-action="dodge" id="tag-action-dodge">Dodge</button>
+            <button class="battle-tag" data-action="ultimate" id="tag-action-ultimate">
+              Ultimate
+            </button>
+          </div>
+
+          <div id="battle-settlement" class="battle-settlement no-drag hidden">
+            <div id="battle-settlement-title" class="battle-settlement-title">Battle Result</div>
+            <div id="battle-settlement-subtitle" class="battle-settlement-subtitle">Result message</div>
+            <button id="btn-settlement-confirm" class="battle-settlement-confirm">Confirm</button>
+          </div>
+        </div>
+      </div>
+
+      <section id="panel" class="no-drag hidden">
+        <div class="panel-header">
+          <h1 id="app-title">QingPet Lord 3D</h1>
+          <div class="panel-header-actions">
+            <button id="btn-language" class="lang-toggle">EN</button>
+            <button id="btn-close-panel" class="panel-close-icon" aria-label="Close panel">
+              &times;
+            </button>
+          </div>
+        </div>
+        <p id="runtime">Loading runtime...</p>
+
+        <div class="panel-section">
+          <h2 id="battle-title">Battle Control</h2>
+          <div class="row">
+            <button id="btn-battle-reset">Reset Battle</button>
+            <button id="btn-end-battle">End Battle</button>
+          </div>
+        </div>
+
+        <div class="panel-section">
+          <h2 id="inventory-title">Pet Inventory</h2>
+          <p id="inventory-tip" class="inventory-tip">
+            Right-click pet on desktop to open panel; click any pet card to set as active.
+          </p>
+          <div class="pet-inventory-layout">
+            <div id="pet-inventory-list" class="pet-inventory-list"></div>
+            <div id="pet-detail-placeholder" class="pet-detail-placeholder">
+              Select an avatar to view details.
+            </div>
+            <article id="pet-detail" class="pet-detail-card hidden"></article>
+          </div>
+        </div>
+
+        <div class="panel-section">
+          <h2 id="companion-title">Companion Interaction</h2>
+          <div class="row">
+            <button id="btn-capture">Capture Test</button>
+            <button id="btn-occupy">Territory Test</button>
+          </div>
+          <div class="row">
+            <button id="btn-pause">Pause Hit-Test</button>
+          </div>
+        </div>
+
+        <div class="row note-row">
+          <small id="tip-text">Tip: desktop shows your pet by default. Start battle to spawn enemy.</small>
+        </div>
+        <pre id="log"></pre>
+      </section>
+    </div>
+    <script
+      type="module"
+      src="../../../../node_modules/@google/model-viewer/dist/model-viewer.min.js"
+    ></script>
+    <script type="module" src="./renderer.mjs"></script>
+  </body>
+</html>

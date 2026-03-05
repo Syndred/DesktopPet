@@ -2,7 +2,8 @@ module.exports = {
   root: true,
   env: {
     es2022: true,
-    node: true
+    node: true,
+    browser: true
   },
   parser: "@typescript-eslint/parser",
   parserOptions: {
@@ -13,4 +14,3 @@ module.exports = {
   extends: ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
   ignorePatterns: ["node_modules/", "dist/", "coverage/"]
 };
-

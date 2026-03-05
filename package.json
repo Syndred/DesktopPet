@@ -26,6 +26,9 @@
     "release:manifest": "node scripts/release/create-release-manifest.mjs",
     "release:prepare": "npm run release:build && npm run release:sign && npm run release:manifest",
     "release:rollback": "node scripts/release/rollback-release.mjs",
+    "dev:pc": "node scripts/desktop/run-electron.cjs apps/pc-app/runtime",
+    "start:pc": "node scripts/desktop/run-electron.cjs apps/pc-app/runtime",
+    "pc:smoke": "node scripts/smoke/check-pc-runtime.mjs",
     "dr:backup": "node scripts/dr/backup-state.mjs",
     "dr:restore": "node scripts/dr/restore-state.mjs",
     "perf:report": "node scripts/perf/generate-weekly-report.mjs",
@@ -37,11 +40,15 @@
     "@typescript-eslint/eslint-plugin": "^8.26.1",
     "@typescript-eslint/parser": "^8.26.1",
     "@vitest/coverage-v8": "^3.0.9",
+    "electron": "^36.9.5",
     "eslint": "^8.57.1",
     "typescript": "^5.8.2",
     "vitest": "^3.0.9"
   },
   "engines": {
     "node": ">=20"
+  },
+  "dependencies": {
+    "@google/model-viewer": "^4.1.0"
   }
 }

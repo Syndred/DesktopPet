@@ -11,6 +11,8 @@ This repository contains the baseline monorepo for:
 ```bash
 npm install
 npm run verify
+npm run pc:smoke
+npm run dev:pc
 ```
 
 ## Scripts
@@ -19,9 +21,12 @@ npm run verify
 2. `npm run typecheck`
 3. `npm run test`
 4. `npm run verify`
+5. `npm run dev:pc`
 
 ## Notes
 
 1. Copy `.env.example` to `.env` and fill required keys.
 2. Mobile app implementation is tracked in `apps/mobile-app/README.md`.
-
+3. Runtime setup and validation guide is in `docs/runtime-config.md`.
+4. Delivery-grade task plan is in `docs/project-delivery-tasks.md`.
+5. After `npm run dev:pc`, open panel (`☰`) to verify battle actions and interaction logs.
