@@ -31,6 +31,11 @@ describe("D-001 pc runnable runtime", () => {
     expect(mainCode).toContain("pet:battle-reset");
     expect(mainCode).toContain("pet:battle-act");
     expect(mainCode).toContain("pet:set-layout-mode");
+    expect(mainCode).toContain("pet:get-inventory");
+    expect(mainCode).toContain("pet:set-active-pet");
+    expect(mainCode).toContain("pet:get-battle-reports");
+    expect(mainCode).toContain("pet-runtime-data.json");
+    expect(mainCode).toContain("RuntimeDataStore");
   });
 
   it("includes renderer entry and control panel actions", () => {
@@ -52,6 +57,8 @@ describe("D-001 pc runnable runtime", () => {
     expect(html).toContain("btn-language");
     expect(html).toContain("pet-inventory-list");
     expect(html).toContain("pet-detail-placeholder");
+    expect(html).toContain("battle-report-list");
+    expect(html).toContain("battle-report-title");
     expect(html).toContain("hp-fill-player");
     expect(html).toContain("anger-fill-enemy");
     expect(html).toContain("Fox.glb");
@@ -60,11 +67,17 @@ describe("D-001 pc runnable runtime", () => {
     expect(html).toContain("btn-end-battle");
     expect(html).toContain("btn-close-panel");
     expect(html).toContain("battle-settlement");
+    expect(html).toContain("battle-countdown");
     expect(html).not.toContain("panel-toggle");
     expect(html).toContain("enemy-card\" class=\"battle-actor enemy hidden");
     expect(rendererCode).toContain("window.petApi.getRuntimeInfo()");
     expect(rendererCode).toContain("window.petApi.setHitRegion");
     expect(rendererCode).toContain("window.petApi.battleAct");
+    expect(rendererCode).toContain("window.petApi.getPetInventory()");
+    expect(rendererCode).toContain("window.petApi.setActivePet");
+    expect(rendererCode).toContain("window.petApi.getBattleReports");
+    expect(rendererCode).toContain("loadInventorySnapshot()");
+    expect(rendererCode).toContain("refreshBattleReports()");
     expect(rendererCode).toContain("insideInteractiveRegion");
     expect(rendererCode).toContain("panelElement.getBoundingClientRect()");
     expect(rendererCode).toContain("localStorage.getItem");
@@ -73,6 +86,9 @@ describe("D-001 pc runnable runtime", () => {
     expect(rendererCode).toContain("if (!selectedPetDetailId)");
     expect(rendererCode).toContain("showBattleSettlement(winner)");
     expect(rendererCode).toContain("battleSettlementConfirmLog");
+    expect(rendererCode).toContain("updateBattleRelationTag(");
+    expect(rendererCode).toContain("updateBattleCountdown(");
+    expect(rendererCode).toContain("void setActivePet(pet.id, { closePanel: true })");
   });
 
   it("ships multiple local GLB models for pet inventory", () => {

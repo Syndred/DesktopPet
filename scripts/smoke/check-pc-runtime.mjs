@@ -8,6 +8,7 @@ const requiredFiles = [
   "apps/pc-app/runtime/main.cjs",
   "apps/pc-app/runtime/preload.cjs",
   "apps/pc-app/runtime/services/battle-runtime.cjs",
+  "apps/pc-app/runtime/services/runtime-data-store.cjs",
   "apps/pc-app/runtime/assets/models/Fox.glb",
   "apps/pc-app/runtime/assets/models/CesiumMan.glb",
   "apps/pc-app/runtime/package.json",

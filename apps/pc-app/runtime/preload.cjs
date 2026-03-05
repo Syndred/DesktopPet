@@ -19,6 +19,18 @@ contextBridge.exposeInMainWorld("petApi", {
   battleAct(action) {
     return ipcRenderer.invoke("pet:battle-act", { action });
   },
+  battleEnd() {
+    return ipcRenderer.invoke("pet:battle-end");
+  },
+  getPetInventory() {
+    return ipcRenderer.invoke("pet:get-inventory");
+  },
+  setActivePet(petId) {
+    return ipcRenderer.invoke("pet:set-active-pet", { petId });
+  },
+  getBattleReports(limit) {
+    return ipcRenderer.invoke("pet:get-battle-reports", { limit });
+  },
   setLayoutMode(mode) {
     return ipcRenderer.invoke("pet:set-layout-mode", { mode });
   },

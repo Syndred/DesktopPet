@@ -272,3 +272,53 @@ Reference: `docs/project-delivery-tasks.md`
    - Updated tests: `tests/task-d001-pc-runnable-runtime.test.ts`, `tests/task-d003-desktop-stage-battle.test.ts`
    - Updated runtime doc: `docs/runtime-config.md` (v2.3)
    - Validation: `npm run test:unit`, `npm run pc:smoke`, `npm run verify` passed.
+
+13. `D-016 Runtime UX polish + relation/countdown split + quick deploy + parasite heal popup` [DONE]
+   - Split battle center UI into independent relation badge + countdown orb (with color states).
+   - Raised HUD layer/position to avoid overlap with taller models.
+   - Upgraded inventory interaction:
+     - avatar row supports centered/even distribution
+     - selected avatar shows quick deploy button under avatar
+     - quick deploy auto-closes panel after switching active pet
+   - Enhanced pet detail panel with colored chips/tags.
+   - Panel interaction updated:
+     - panel fills window bounds
+     - left mouse drag supported in panel drag region
+   - Added structured parasite heal events in runtime battle service and surfaced green `+heal` popup in battle.
+   - Updated tests: `tests/task-d001-pc-runnable-runtime.test.ts`, `tests/task-d002-pc-battle-runtime.test.ts`, `tests/task-d003-desktop-stage-battle.test.ts`
+   - Updated docs: `docs/runtime-config.md` (v2.4), `docs/tasks.md` (v2.0, Chinese rewrite + map task backlog)
+   - Validation: `npm run test:unit`, `npm run pc:smoke`, `npm run verify` passed.
+
+14. `D-017 Panel usability fix + avatar row hard-layout` [DONE]
+   - Fixed panel wheel scrolling by ensuring panel body is non-drag interaction region.
+   - Panel open now hides desktop pet layer to avoid visual overlap/blocking.
+   - Updated inventory avatar list to fixed 6 columns per row with centered distribution.
+   - Kept panel-header drag behavior for window repositioning.
+   - Updated docs: `docs/runtime-config.md`
+   - Validation: `npm run test:unit -- tests/task-d001-pc-runnable-runtime.test.ts tests/task-d003-desktop-stage-battle.test.ts`, `npm run pc:smoke`, `npm run verify` passed.
+
+15. `D-018 Quick-deploy width trim + center HUD vertical tune + settlement top-layer` [DONE]
+   - Reduced quick-deploy button footprint to prevent right-edge overflow when selecting last avatar.
+   - Enforced panel/inventory horizontal overflow guard (`overflow-x: hidden`) to remove unexpected horizontal scrollbar.
+   - Moved relation badge and countdown orb upward into the visual region between both HUD bars.
+   - Raised settlement modal layer (`z-index`) and adjusted vertical placement to ensure it stays visible above battle overlays.
+   - Updated tests: `tests/task-d003-desktop-stage-battle.test.ts`
+   - Updated docs: `docs/runtime-config.md`
+   - Validation: `npm run test:unit -- tests/task-d001-pc-runnable-runtime.test.ts tests/task-d003-desktop-stage-battle.test.ts`, `npm run pc:smoke`, `npm run verify` passed.
+
+16. `D-019 PC inventory persistence + battle-report panel` [DONE]
+   - Added runtime persistent store: `apps/pc-app/runtime/services/runtime-data-store.cjs`.
+   - Inventory now loads from IPC (`pet:get-inventory`) and active-pet changes persist via `pet:set-active-pet`.
+   - Battle sessions now auto-record in main process and are queryable via `pet:get-battle-reports`.
+   - Added panel section `最近战报/Recent Battle Reports` with latest session summary cards.
+   - Added Supabase migration `infra/supabase/migrations/0002_pet_inventory_battle_reports.sql` for `pet_instances`, `pet_capture_records`, `battle_sessions`, `battle_round_events`.
+   - Updated tests:
+     - `tests/task-d004-pc-persistence-reporting.test.ts`
+     - `tests/task-t205-persistence-schema.test.ts`
+     - `tests/task-d001-pc-runnable-runtime.test.ts`
+     - `tests/task-d003-desktop-stage-battle.test.ts`
+   - Validation:
+     - `npm run test:unit`
+     - `npm run pc:smoke`
+     - `npm run verify`
+     - All passed.

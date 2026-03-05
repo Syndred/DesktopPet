@@ -28,6 +28,10 @@ type BattleRuntimeServiceType = new () => {
       winner: "player" | "enemy" | "draw" | null;
       notes: string[];
       statusesAfter: { enemy: Array<{ type: string; stacks?: number; duration?: number }> };
+      healEvents?: {
+        player: Array<{ type: string; amount: number }>;
+        enemy: Array<{ type: string; amount: number }>;
+      };
     };
     state: {
       round: number;
@@ -123,6 +127,25 @@ describe("D-002 pc battle runtime service", () => {
     expect(second.enemyAction).toBe("element_attack");
     expect(burn).toBeTruthy();
     expect(burn?.stacks).toBe(2);
+  });
+
+  it("applies parasite drain and emits heal event to source", () => {
+    // player uses wood element attack; enemy responds with element attack
+    // so player first takes damage, then receives parasite heal at round end.
+    mockRandomSequence([0.9, 0.1]);
+    const service = new BattleRuntimeService();
+    service.reset({
+      playerElement: "wood",
+      enemyElement: "metal"
+    });
+
+    const result = service.act("element_attack");
+    const playerHealEvents = result.roundResult.healEvents?.player ?? [];
+
+    expect(result.roundResult.statusesAfter.enemy.some((item) => item.type === "parasite")).toBe(true);
+    expect(playerHealEvents.length).toBeGreaterThan(0);
+    expect(playerHealEvents[0]?.type).toBe("parasite");
+    expect(playerHealEvents[0]?.amount).toBeGreaterThan(0);
   });
 
   it("downgrades dodge to normal attack when anger is 0", () => {

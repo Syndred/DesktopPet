@@ -13,6 +13,7 @@ const languageBtn = document.getElementById("btn-language");
 const inventoryListElement = document.getElementById("pet-inventory-list");
 const petDetailElement = document.getElementById("pet-detail");
 const petDetailPlaceholderElement = document.getElementById("pet-detail-placeholder");
+const battleReportListElement = document.getElementById("battle-report-list");
 const playerModel = document.getElementById("player-model");
 const enemyModel = document.getElementById("enemy-model");
 
@@ -109,6 +110,8 @@ const i18n = {
     inventoryTitle: "现有宠物",
     inventoryTip: "桌面右键宠物可打开面板；点击下方头像后在右侧查看详情。",
     inventoryPlaceholder: "点击左侧宠物头像查看详情",
+    inventoryQuickSet: "出战",
+    inventoryQuickActive: "出战中",
     inventoryFieldIndex: "序号",
     inventoryFieldSerial: "编号",
     inventoryFieldModel: "模型",
@@ -118,6 +121,15 @@ const i18n = {
     inventoryActive: "当前出战",
     inventorySetActive: "设为出战",
     inventorySelectedDetail: "宠物详情",
+    battleReportTitle: "最近战报",
+    battleReportEmpty: "暂无战报，先开一局对战吧。",
+    battleReportFinished: "已结算",
+    battleReportAbandoned: "中断",
+    battleReportPlayerWin: "我方胜",
+    battleReportEnemyWin: "敌方胜",
+    battleReportDraw: "平局",
+    battleReportRound: "回合",
+    battleReportStartedAt: "开始",
     captureLog: "收留测试：记忆标签已记录，收益倍率 {reward}。",
     captureBurst: "收留反馈触发。",
     occupyNoAttempts: "占领测试：今日免费入侵次数已用完。",
@@ -211,6 +223,8 @@ const i18n = {
     inventoryTitle: "Pet Inventory",
     inventoryTip: "Right-click your desktop pet to open panel; click avatar then view details on the right.",
     inventoryPlaceholder: "Click an avatar on the left to view details.",
+    inventoryQuickSet: "Deploy",
+    inventoryQuickActive: "Active",
     inventoryFieldIndex: "Index",
     inventoryFieldSerial: "Serial",
     inventoryFieldModel: "Model",
@@ -220,6 +234,15 @@ const i18n = {
     inventoryActive: "Active",
     inventorySetActive: "Set Active",
     inventorySelectedDetail: "Pet Detail",
+    battleReportTitle: "Recent Battle Reports",
+    battleReportEmpty: "No reports yet. Start a battle to generate one.",
+    battleReportFinished: "Finished",
+    battleReportAbandoned: "Abandoned",
+    battleReportPlayerWin: "Player Win",
+    battleReportEnemyWin: "Enemy Win",
+    battleReportDraw: "Draw",
+    battleReportRound: "Round",
+    battleReportStartedAt: "Started",
     captureLog: "Capture test: memory tag persisted, reward multiplier {reward}.",
     captureBurst: "Capture feedback triggered.",
     occupyNoAttempts: "Territory test: no free invade attempts left for today.",
@@ -256,7 +279,7 @@ const i18n = {
   }
 };
 
-const PET_ROSTER = [
+const DEFAULT_PET_ROSTER = [
   {
     id: "pet-001",
     serial: "QP-202603-001",
@@ -330,6 +353,7 @@ const uiRefs = {
   tagActionUltimate: document.getElementById("tag-action-ultimate"),
   inventoryTitle: document.getElementById("inventory-title"),
   inventoryTip: document.getElementById("inventory-tip"),
+  battleReportTitle: document.getElementById("battle-report-title"),
   companionTitle: document.getElementById("companion-title"),
   tipText: document.getElementById("tip-text")
 };
@@ -351,10 +375,12 @@ let roundFeedTimer = null;
 let actionCountdownTimer = null;
 let actionCountdownRemaining = 0;
 let isRoundResolving = false;
-let activePetId = PET_ROSTER[0].id;
-let enemyPetInBattle = PET_ROSTER[1];
+let petRoster = DEFAULT_PET_ROSTER.map((pet) => ({ ...pet, name: { ...pet.name } }));
+let activePetId = petRoster[0].id;
+let enemyPetInBattle = petRoster[1];
 let selectedPetDetailId = null;
 let settlementWinner = null;
+let battleReports = [];
 
 const ACTION_COUNTDOWN_SECONDS = 5;
 
@@ -391,8 +417,10 @@ function appendLog(text) {
 function setPanelVisible(visible) {
   if (visible) {
     panelElement.classList.remove("hidden");
+    battleSceneElement.classList.add("panel-open");
   } else {
     panelElement.classList.add("hidden");
+    battleSceneElement.classList.remove("panel-open");
   }
   reportHitState();
 }
@@ -505,18 +533,94 @@ function getBattleRelationText(playerElement, enemyElement) {
   return currentI18n().battleRelationEven;
 }
 
+function getBattleRelationTone(playerElement, enemyElement) {
+  const multiplier = getElementMultiplier(playerElement, enemyElement);
+  if (multiplier > 1) return "advantage";
+  if (multiplier < 1) return "disadvantage";
+  return "even";
+}
+
+function updateBattleRelationTag(playerElement, enemyElement) {
+  if (!battleMode || !playerElement || !enemyElement) {
+    battleVsElement.classList.add("hidden");
+    battleVsElement.classList.remove("advantage", "disadvantage", "even");
+    battleVsElement.textContent = "";
+    return;
+  }
+
+  const tone = getBattleRelationTone(playerElement, enemyElement);
+  battleVsElement.classList.remove("hidden", "advantage", "disadvantage", "even");
+  battleVsElement.classList.add(tone);
+  battleVsElement.textContent = getBattleRelationText(playerElement, enemyElement);
+}
+
+function hideBattleCountdown() {
+  if (battleCountdownElement) {
+    battleCountdownElement.classList.add("hidden");
+  }
+  if (battleCountdownValueElement) {
+    battleCountdownValueElement.textContent = "";
+  }
+}
+
+function updateBattleCountdown(value) {
+  if (!battleCountdownElement || !battleCountdownValueElement) return;
+  battleCountdownElement.classList.remove("hidden");
+  battleCountdownValueElement.textContent = `${value}`;
+}
+
+function getRoster() {
+  return petRoster.length > 0 ? petRoster : DEFAULT_PET_ROSTER;
+}
+
+function applyInventorySnapshot(snapshot) {
+  const incomingPets = Array.isArray(snapshot?.pets) ? snapshot.pets : [];
+  const normalizedPets = incomingPets.length > 0 ? incomingPets : DEFAULT_PET_ROSTER;
+  petRoster = normalizedPets.map((pet) => ({
+    ...pet,
+    name: { ...(pet.name || {}) }
+  }));
+
+  const fallbackActivePetId = petRoster[0]?.id ?? DEFAULT_PET_ROSTER[0].id;
+  const incomingActivePetId =
+    typeof snapshot?.activePetId === "string" ? snapshot.activePetId : fallbackActivePetId;
+  activePetId = petRoster.some((pet) => pet.id === incomingActivePetId)
+    ? incomingActivePetId
+    : fallbackActivePetId;
+
+  if (!petRoster.some((pet) => pet.id === enemyPetInBattle?.id)) {
+    enemyPetInBattle = petRoster[1] || petRoster[0];
+  }
+  if (selectedPetDetailId && !petRoster.some((pet) => pet.id === selectedPetDetailId)) {
+    selectedPetDetailId = null;
+  }
+}
+
+async function loadInventorySnapshot() {
+  try {
+    const snapshot = await window.petApi.getPetInventory();
+    applyInventorySnapshot(snapshot);
+  } catch {
+    applyInventorySnapshot({
+      pets: DEFAULT_PET_ROSTER,
+      activePetId: DEFAULT_PET_ROSTER[0].id
+    });
+  }
+}
+
 function getActivePet() {
-  return PET_ROSTER.find((pet) => pet.id === activePetId) || PET_ROSTER[0];
+  const roster = getRoster();
+  return roster.find((pet) => pet.id === activePetId) || roster[0];
 }
 
 function getEnemyCandidates() {
-  return PET_ROSTER.filter((pet) => pet.id !== activePetId);
+  return getRoster().filter((pet) => pet.id !== activePetId);
 }
 
 function chooseEnemyPetForBattle() {
   const candidates = getEnemyCandidates();
   const idx = Math.floor(Math.random() * candidates.length);
-  return candidates[idx] || PET_ROSTER[0];
+  return candidates[idx] || getRoster()[0];
 }
 
 function getPetDisplayName(pet) {
@@ -524,18 +628,52 @@ function getPetDisplayName(pet) {
 }
 
 function getPetById(petId) {
-  return PET_ROSTER.find((pet) => pet.id === petId) || PET_ROSTER[0];
+  const roster = getRoster();
+  return roster.find((pet) => pet.id === petId) || roster[0];
 }
 
-function setActivePet(petId) {
+function getStatTone(token) {
+  const key = token.toUpperCase();
+  if (key.startsWith("HP")) return "hp";
+  if (key.startsWith("ATK")) return "atk";
+  if (key.startsWith("DEF")) return "def";
+  if (key.startsWith("SPD")) return "spd";
+  return "neutral";
+}
+
+function renderStatTagHtml(statsText) {
+  return statsText
+    .split("/")
+    .map((item) => item.trim())
+    .filter(Boolean)
+    .map((token) => `<span class="pet-stat-chip ${getStatTone(token)}">${token}</span>`)
+    .join("");
+}
+
+async function setActivePet(petId, options = {}) {
   const pet = getPetById(petId);
   if (pet.id === activePetId) return;
+  const previousActivePetId = activePetId;
   activePetId = pet.id;
-  playerModel.src = pet.model;
-  playerElementLabel.textContent = getElementText(pet.element);
-  setElementTagTheme(playerElementLabel, pet.element);
-  appendLog(t("activePetChanged", { petName: getPetDisplayName(pet) }));
+
+  try {
+    const snapshot = await window.petApi.setActivePet(pet.id);
+    applyInventorySnapshot(snapshot);
+  } catch {
+    activePetId = previousActivePetId;
+    return;
+  }
+
+  const activePet = getActivePet();
+  playerModel.src = activePet.model;
+  playerElementLabel.textContent = getElementText(activePet.element);
+  setElementTagTheme(playerElementLabel, activePet.element);
+  appendLog(t("activePetChanged", { petName: getPetDisplayName(activePet) }));
   renderPetInventory();
+  renderPetDetail();
+  if (options.closePanel) {
+    setPanelVisible(false);
+  }
 }
 
 function renderPetDetail() {
@@ -553,7 +691,9 @@ function renderPetDetail() {
   const isActive = pet.id === activePetId;
   const elementName = getElementText(pet.element);
   const displayName = getPetDisplayName(pet);
-  const index = PET_ROSTER.findIndex((item) => item.id === pet.id) + 1;
+  const index = getRoster().findIndex((item) => item.id === pet.id) + 1;
+  const modelName = pet.model.split("/").pop();
+  const statTags = renderStatTagHtml(pet.stats);
 
   petDetailElement.classList.remove("hidden");
   if (petDetailPlaceholderElement) {
@@ -562,15 +702,17 @@ function renderPetDetail() {
   petDetailElement.innerHTML = `
     <div class="pet-detail-head">
       <span class="pet-detail-name">${currentI18n().inventorySelectedDetail} · ${displayName}</span>
-      <span class="status-tag element-tag element-${pet.element}">${elementName}</span>
+      <div class="pet-detail-tags">
+        <span class="pet-meta-chip serial">#${index}</span>
+        <span class="pet-meta-chip model">${modelName}</span>
+        <span class="pet-meta-chip element element-${pet.element}">${elementName}</span>
+      </div>
     </div>
     <div class="pet-detail-meta">
-      <span>${currentI18n().inventoryFieldIndex}: ${index}</span>
-      <span>${currentI18n().inventoryFieldSerial}: ${pet.serial}</span>
-      <span>${currentI18n().inventoryFieldModel}: ${pet.model.split("/").pop()}</span>
-      <span>${currentI18n().inventoryFieldElement}: ${elementName}</span>
-      <span>${currentI18n().inventoryFieldStats}: ${pet.stats}</span>
-      <span>${currentI18n().inventoryFieldCapturedAt}: ${pet.capturedAt}</span>
+      <span><b>${currentI18n().inventoryFieldSerial}:</b> ${pet.serial}</span>
+      <span><b>${currentI18n().inventoryFieldCapturedAt}:</b> ${pet.capturedAt}</span>
+      <span><b>${currentI18n().inventoryFieldStats}:</b></span>
+      <div class="pet-stat-chip-row">${statTags}</div>
     </div>
     <div class="pet-detail-actions">
       <button id="btn-set-active-pet" ${isActive ? "disabled" : ""}>${currentI18n().inventorySetActive}</button>
@@ -580,7 +722,7 @@ function renderPetDetail() {
   const setActiveBtn = document.getElementById("btn-set-active-pet");
   if (setActiveBtn) {
     setActiveBtn.addEventListener("click", () => {
-      setActivePet(pet.id);
+      void setActivePet(pet.id);
     });
   }
 }
@@ -590,29 +732,123 @@ function renderPetInventory() {
   const activePet = getActivePet();
   inventoryListElement.innerHTML = "";
 
-  PET_ROSTER.forEach((pet) => {
-    const item = document.createElement("button");
-    item.type = "button";
-    item.className = `pet-avatar-item${pet.id === activePet.id ? " active" : ""}${selectedPetDetailId === pet.id ? " selected" : ""}`;
-    item.dataset.petId = pet.id;
+  getRoster().forEach((pet) => {
+    const isActive = pet.id === activePet.id;
+    const isSelected = selectedPetDetailId === pet.id;
     const elementName = getElementText(pet.element);
     const displayName = getPetDisplayName(pet);
     const avatar = pet.avatar || displayName.slice(0, 1).toUpperCase();
-    item.title = `${displayName} · ${elementName}`;
-    item.setAttribute("aria-label", `${displayName} ${elementName}`);
-    item.innerHTML = `
-      <span class="pet-avatar">${avatar}</span>
-      ${pet.id === activePet.id ? "<span class=\"pet-avatar-active\"></span>" : ""}
+    const entry = document.createElement("div");
+    entry.className = `pet-avatar-entry${isSelected ? " selected" : ""}`;
+    entry.innerHTML = `
+      <button
+        type="button"
+        class="pet-avatar-item${isActive ? " active" : ""}${isSelected ? " selected" : ""}"
+        data-pet-id="${pet.id}"
+        title="${displayName} · ${elementName}"
+        aria-label="${displayName} ${elementName}"
+      >
+        <span class="pet-avatar">${avatar}</span>
+        ${isActive ? "<span class=\"pet-avatar-active\"></span>" : ""}
+      </button>
+      ${
+        isSelected
+          ? isActive
+            ? `<span class="pet-quick-active">${currentI18n().inventoryQuickActive}</span>`
+            : `<button type="button" class="pet-quick-set">${currentI18n().inventoryQuickSet}</button>`
+          : "<span class=\"pet-quick-placeholder\"></span>"
+      }
     `;
-    item.addEventListener("click", () => {
+
+    const avatarBtn = entry.querySelector(".pet-avatar-item");
+    avatarBtn?.addEventListener("click", () => {
       selectedPetDetailId = pet.id;
       renderPetInventory();
       renderPetDetail();
     });
-    inventoryListElement.appendChild(item);
+
+    const quickSetBtn = entry.querySelector(".pet-quick-set");
+    quickSetBtn?.addEventListener("click", (event) => {
+      event.stopPropagation();
+      void setActivePet(pet.id, { closePanel: true });
+    });
+
+    inventoryListElement.appendChild(entry);
   });
 
   renderPetDetail();
+}
+
+function formatReportTime(value) {
+  const parsed = Date.parse(value);
+  if (Number.isNaN(parsed)) return value || "-";
+  const date = new Date(parsed);
+  const yyyy = date.getFullYear();
+  const mm = String(date.getMonth() + 1).padStart(2, "0");
+  const dd = String(date.getDate()).padStart(2, "0");
+  const hh = String(date.getHours()).padStart(2, "0");
+  const mi = String(date.getMinutes()).padStart(2, "0");
+  return `${yyyy}-${mm}-${dd} ${hh}:${mi}`;
+}
+
+function getBattleReportWinnerText(report) {
+  if (report.winner === "player") return currentI18n().battleReportPlayerWin;
+  if (report.winner === "enemy") return currentI18n().battleReportEnemyWin;
+  return currentI18n().battleReportDraw;
+}
+
+function renderBattleReports() {
+  if (!battleReportListElement) return;
+  if (!battleReports || battleReports.length === 0) {
+    battleReportListElement.innerHTML = `<div class="battle-report-empty">${currentI18n().battleReportEmpty}</div>`;
+    return;
+  }
+
+  battleReportListElement.innerHTML = battleReports
+    .map((report) => {
+      const finished = report.status === "finished";
+      const statusLabel = finished
+        ? currentI18n().battleReportFinished
+        : currentI18n().battleReportAbandoned;
+      const winnerLabel = finished ? getBattleReportWinnerText(report) : "-";
+      const statusClass = finished ? "finished" : "abandoned";
+      const winnerClass =
+        report.winner === "player"
+          ? "player-win"
+          : report.winner === "enemy"
+            ? "enemy-win"
+            : report.winner === "draw"
+              ? "draw"
+              : "neutral";
+      return `
+        <article class="battle-report-item ${statusClass}">
+          <div class="battle-report-head">
+            <span class="battle-report-status ${statusClass}">${statusLabel}</span>
+            <span class="battle-report-time">${currentI18n().battleReportStartedAt}: ${formatReportTime(report.startedAt)}</span>
+          </div>
+          <div class="battle-report-main">
+            <span class="battle-report-side">${report.player.petName || "Player"}</span>
+            <span class="battle-report-vs">VS</span>
+            <span class="battle-report-side">${report.enemy.petName || "Enemy"}</span>
+          </div>
+          <div class="battle-report-foot">
+            <span class="battle-report-round">${currentI18n().battleReportRound}: ${report.totalRounds}</span>
+            <span class="battle-report-winner ${winnerClass}">${winnerLabel}</span>
+          </div>
+        </article>
+      `;
+    })
+    .join("");
+}
+
+async function refreshBattleReports(limit = 8) {
+  try {
+    const reports = await window.petApi.getBattleReports(limit);
+    battleReports = Array.isArray(reports) ? reports : [];
+  } catch {
+    battleReports = [];
+  }
+  renderBattleReports();
 }
 
 function setLanguage(nextLanguage) {
@@ -643,6 +879,7 @@ function applyLanguage() {
   uiRefs.tagActionUltimate.textContent = currentI18n().actionUltimate;
   uiRefs.inventoryTitle.textContent = currentI18n().inventoryTitle;
   uiRefs.inventoryTip.textContent = currentI18n().inventoryTip;
+  uiRefs.battleReportTitle.textContent = currentI18n().battleReportTitle;
   uiRefs.companionTitle.textContent = currentI18n().companionTitle;
   captureBtn.textContent = currentI18n().captureTest;
   occupyBtn.textContent = currentI18n().occupyTest;
@@ -657,6 +894,7 @@ function applyLanguage() {
   setElementTagTheme(playerElementLabel, activePet.element);
   setElementTagTheme(enemyElementLabel, enemyPetInBattle.element);
   renderPetInventory();
+  renderBattleReports();
   syncBattleSettlementText();
 
   if (!runtimeInfo) {
@@ -730,8 +968,6 @@ function hideBattleSettlement() {
 function setBattleMode(active) {
   battleMode = active;
   battleSceneElement.classList.toggle("battle-mode", active);
-  battleVsElement.classList.add("hidden");
-  battleVsElement.textContent = "";
   roundFeedElement.classList.toggle("hidden", !active);
   lastRoundResultElement.classList.toggle("hidden", !active);
   enemyCard.classList.toggle("hidden", !active);
@@ -743,8 +979,11 @@ function setBattleMode(active) {
     setActiveActionTag("");
     clearRoundFeed();
     lastRoundResultElement.textContent = "";
-    battleVsElement.textContent = "";
+    updateBattleRelationTag(null, null);
+    hideBattleCountdown();
     hideBattleSettlement();
+  } else {
+    updateBattleRelationTag(lastBattleState?.player?.element, lastBattleState?.enemy?.element);
   }
   void window.petApi.setLayoutMode(active ? "battle" : "idle");
   syncActionButtons();
@@ -806,42 +1045,34 @@ function clearActionCountdown() {
     actionCountdownTimer = null;
   }
   actionCountdownRemaining = 0;
+  hideBattleCountdown();
 }
 
 function startActionCountdown() {
   clearActionCountdown();
   if (!battleMode || isRoundResolving || isBattleFinished(lastBattleState)) {
-    battleVsElement.classList.add("hidden");
-    battleVsElement.textContent = "";
+    hideBattleCountdown();
     return;
   }
 
-  const relationText = getBattleRelationText(
-    lastBattleState?.player?.element,
-    lastBattleState?.enemy?.element
-  );
+  updateBattleRelationTag(lastBattleState?.player?.element, lastBattleState?.enemy?.element);
   actionCountdownRemaining = ACTION_COUNTDOWN_SECONDS;
-  battleVsElement.classList.remove("hidden");
-  battleVsElement.textContent = `${relationText} ${actionCountdownRemaining}`;
+  updateBattleCountdown(actionCountdownRemaining);
 
   actionCountdownTimer = setInterval(() => {
     if (!battleMode || isRoundResolving || isBattleFinished(lastBattleState)) {
       clearActionCountdown();
-      battleVsElement.classList.add("hidden");
-      battleVsElement.textContent = "";
       return;
     }
 
     actionCountdownRemaining -= 1;
     if (actionCountdownRemaining <= 0) {
       clearActionCountdown();
-      battleVsElement.classList.add("hidden");
-      battleVsElement.textContent = "";
       appendLog(t("battleAutoNormal"));
       void actBattle("normal_attack", { auto: true });
       return;
     }
-    battleVsElement.textContent = `${relationText} ${actionCountdownRemaining}`;
+    updateBattleCountdown(actionCountdownRemaining);
   }, 1000);
 }
 
@@ -882,6 +1113,7 @@ function updateBattleBoard(state) {
   enemyElementLabel.textContent = getElementText(state.enemy.element);
   setElementTagTheme(playerElementLabel, state.player.element);
   setElementTagTheme(enemyElementLabel, state.enemy.element);
+  updateBattleRelationTag(state.player.element, state.enemy.element);
   uiRefs.playerLabel.textContent = `${currentI18n().playerPet} · ${getPetDisplayName(activePet)}`;
   uiRefs.enemyLabel.textContent = `${currentI18n().enemyPet} · ${getPetDisplayName(enemyPetInBattle)}`;
 
@@ -1131,7 +1363,11 @@ async function resetBattle() {
   const enemyElement = enemyPetInBattle.element;
   const state = await window.petApi.battleReset({
     playerElement,
-    enemyElement
+    enemyElement,
+    playerPetId: activePet.id,
+    enemyPetId: enemyPetInBattle.id,
+    playerPetName: getPetDisplayName(activePet),
+    enemyPetName: getPetDisplayName(enemyPetInBattle)
   });
 
   territoryOwner = "enemy";
@@ -1146,13 +1382,19 @@ async function resetBattle() {
   );
 }
 
-function endBattle(manual = true) {
+async function endBattle(manual = true) {
+  try {
+    await window.petApi.battleEnd();
+  } catch {
+    // Keep runtime flow non-blocking even if persistence fails.
+  }
   clearActionCountdown();
   isRoundResolving = false;
   hideBattleSettlement();
   setBattleMode(false);
   syncActionButtons();
   appendLog(manual ? t("battleExitLog") : t("battleSettlementConfirmLog"));
+  void refreshBattleReports();
 }
 
 async function actBattle(action, options = {}) {
@@ -1168,8 +1410,7 @@ async function actBattle(action, options = {}) {
   }
 
   clearActionCountdown();
-  battleVsElement.classList.add("hidden");
-  battleVsElement.textContent = "";
+  hideBattleCountdown();
 
   isRoundResolving = true;
   syncActionButtons();
@@ -1189,6 +1430,7 @@ async function actBattle(action, options = {}) {
     const round = result.roundResult;
     const directDamage = round.directDamage || round.damageTaken;
     const dotDamageEvents = round.dotDamageEvents || { player: [], enemy: [] };
+    const healEvents = round.healEvents || { player: [], enemy: [] };
     const totalDamage = round.damageTaken.player + round.damageTaken.enemy;
     const playerElement = result.state.player.element;
     const enemyElement = result.state.enemy.element;
@@ -1249,6 +1491,22 @@ async function actBattle(action, options = {}) {
         color: getDotColor(event.type),
         offsetY: 36 + idx * 12,
         duration: 760
+      });
+    });
+    healEvents.player.forEach((event, idx) => {
+      spawnDamagePopup("player", event.amount, {
+        prefix: "+",
+        color: "#7ff5a8",
+        offsetY: 54 + idx * 12,
+        duration: 860
+      });
+    });
+    healEvents.enemy.forEach((event, idx) => {
+      spawnDamagePopup("enemy", event.amount, {
+        prefix: "+",
+        color: "#7ff5a8",
+        offsetY: 54 + idx * 12,
+        duration: 860
       });
     });
 
@@ -1316,6 +1574,7 @@ async function actBattle(action, options = {}) {
         tickerMessages.push(t("battleCelebrateDraw"));
       }
       showBattleSettlement(round.winner);
+      void refreshBattleReports();
     }
     enqueueRoundFeed(tickerMessages);
   } finally {
@@ -1373,12 +1632,12 @@ function setupButtons() {
   });
 
   endBattleBtn.addEventListener("click", () => {
-    endBattle(true);
+    void endBattle(true);
   });
 
   if (settlementConfirmBtn) {
     settlementConfirmBtn.addEventListener("click", () => {
-      endBattle(false);
+      void endBattle(false);
     });
   }
 
@@ -1455,12 +1714,14 @@ function setupModelDefaults() {
 }
 
 async function bootstrap() {
+  await loadInventorySnapshot();
   const activePet = getActivePet();
   playerModel.src = activePet.model;
   enemyPetInBattle = chooseEnemyPetForBattle();
   enemyModel.src = enemyPetInBattle.model;
 
   applyLanguage();
+  await refreshBattleReports();
   runtimeInfo = await window.petApi.getRuntimeInfo();
   renderRuntimeInfo();
   appendLog(t("runtimeStarted"));

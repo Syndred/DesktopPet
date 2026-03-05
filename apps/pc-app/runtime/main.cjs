@@ -1,8 +1,10 @@
 const { readFileSync, writeFileSync } = require("node:fs");
 const { join } = require("node:path");
+const { randomUUID } = require("node:crypto");
 
 const { app, BrowserWindow, Menu, Tray, ipcMain, nativeImage, screen } = require("electron");
 const { BattleRuntimeService } = require("./services/battle-runtime.cjs");
+const { RuntimeDataStore } = require("./services/runtime-data-store.cjs");
 
 let mainWindow = null;
 let tray = null;
@@ -10,6 +12,8 @@ let isQuitting = false;
 let interactionPaused = false;
 let moveTimer = null;
 const battleService = new BattleRuntimeService();
+let runtimeDataStore = null;
+let activeBattleSession = null;
 
 const IDLE_BOUNDS = {
   width: 300,
@@ -203,7 +207,27 @@ function registerIpcHandlers() {
   });
 
   ipcMain.handle("pet:battle-reset", (_event, config) => {
-    return battleService.reset(config && typeof config === "object" ? config : {});
+    const payload = config && typeof config === "object" ? config : {};
+    if (activeBattleSession) {
+      closeBattleSession("abandoned", null);
+    }
+    const snapshot = battleService.reset(payload);
+    activeBattleSession = {
+      id: randomUUID(),
+      startedAt: new Date().toISOString(),
+      player: {
+        petId: typeof payload.playerPetId === "string" ? payload.playerPetId : null,
+        petName: typeof payload.playerPetName === "string" ? payload.playerPetName : "Player",
+        element: snapshot.player.element
+      },
+      enemy: {
+        petId: typeof payload.enemyPetId === "string" ? payload.enemyPetId : null,
+        petName: typeof payload.enemyPetName === "string" ? payload.enemyPetName : "Enemy",
+        element: snapshot.enemy.element
+      },
+      rounds: []
+    };
+    return snapshot;
   });
 
   ipcMain.handle("pet:battle-state", () => {
@@ -212,7 +236,44 @@ function registerIpcHandlers() {
 
   ipcMain.handle("pet:battle-act", (_event, payload) => {
     const action = payload && typeof payload.action === "string" ? payload.action : "normal_attack";
-    return battleService.act(action);
+    const result = battleService.act(action);
+
+    if (activeBattleSession) {
+      activeBattleSession.rounds.push({
+        round: result.roundResult.round,
+        playerAction: result.roundResult.actions.player,
+        enemyAction: result.roundResult.actions.enemy,
+        damageTaken: result.roundResult.damageTaken,
+        winner: result.roundResult.winner,
+        notes: result.roundResult.notes
+      });
+      if (result.roundResult.winner) {
+        closeBattleSession("finished", result.roundResult.winner);
+      }
+    }
+
+    return result;
+  });
+
+  ipcMain.handle("pet:battle-end", () => {
+    if (activeBattleSession) {
+      closeBattleSession("abandoned", null);
+    }
+    return true;
+  });
+
+  ipcMain.handle("pet:get-inventory", () => {
+    return runtimeDataStore.getInventorySnapshot();
+  });
+
+  ipcMain.handle("pet:set-active-pet", (_event, payload) => {
+    const petId = payload && typeof payload.petId === "string" ? payload.petId : "";
+    return runtimeDataStore.setActivePet(petId);
+  });
+
+  ipcMain.handle("pet:get-battle-reports", (_event, payload) => {
+    const limit = payload && typeof payload.limit === "number" ? payload.limit : undefined;
+    return runtimeDataStore.listBattleReports(limit);
   });
 
   ipcMain.handle("pet:set-layout-mode", (_event, payload) => {
@@ -222,6 +283,23 @@ function registerIpcHandlers() {
     applyLayoutMode(mode);
     return true;
   });
+}
+
+function closeBattleSession(status, winner) {
+  if (!activeBattleSession || !runtimeDataStore) return;
+  const endedAt = new Date().toISOString();
+  runtimeDataStore.saveBattleReport({
+    id: `battle-${activeBattleSession.id}`,
+    sessionId: activeBattleSession.id,
+    status,
+    winner,
+    startedAt: activeBattleSession.startedAt,
+    endedAt,
+    player: activeBattleSession.player,
+    enemy: activeBattleSession.enemy,
+    rounds: activeBattleSession.rounds
+  });
+  activeBattleSession = null;
 }
 
 function applyLayoutMode(mode) {
@@ -246,6 +324,9 @@ function applyLayoutMode(mode) {
 app.whenReady().then(() => {
   createMainWindow();
   createTray();
+  runtimeDataStore = new RuntimeDataStore({
+    filePath: join(app.getPath("userData"), "pet-runtime-data.json")
+  });
   registerIpcHandlers();
 
   app.on("activate", () => {
@@ -259,6 +340,9 @@ app.whenReady().then(() => {
 
 app.on("before-quit", () => {
   isQuitting = true;
+  if (activeBattleSession) {
+    closeBattleSession("abandoned", null);
+  }
 });
 
 app.on("window-all-closed", () => {
