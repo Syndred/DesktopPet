@@ -7,6 +7,7 @@ const { BattleRuntimeService } = require("./services/battle-runtime.cjs");
 const { RuntimeDataStore } = require("./services/runtime-data-store.cjs");
 const { MapRuntimeService } = require("./services/map-runtime.cjs");
 const { CAPTURE_RADIUS_METERS, WildPetRuntimeService } = require("./services/wild-pet-runtime.cjs");
+const { OnlineDuelService } = require("./services/online-duel-service.cjs");
 
 let mainWindow = null;
 let authWindow = null;
@@ -19,6 +20,7 @@ const mapService = new MapRuntimeService({
   providerId: "tencent"
 });
 const wildPetService = new WildPetRuntimeService();
+const onlineDuelService = new OnlineDuelService();
 let runtimeDataStore = null;
 let activeBattleSession = null;
 let activeLayoutMode = "idle";
@@ -122,6 +124,7 @@ function buildAuthSessionPayload() {
 
 function emitAuthState() {
   const payload = buildAuthSessionPayload();
+  onlineDuelService.setCurrentUser(payload.currentUser || null);
   if (mainWindow && !mainWindow.isDestroyed()) {
     mainWindow.webContents.send("pet:auth-state", payload);
   }
@@ -393,6 +396,25 @@ function getVirtualWorkArea() {
     y: minY,
     width: maxRight - minX,
     height: maxBottom - minY
+  };
+}
+
+function getOnlineSidePrefix(side) {
+  return side === "host" ? "host" : "guest";
+}
+
+function getOnlinePeerPrefix(side) {
+  return side === "host" ? "guest" : "host";
+}
+
+function getOnlineRoomParticipant(room, side, role = "self") {
+  const targetSide = role === "self" ? getOnlineSidePrefix(side) : getOnlinePeerPrefix(side);
+  const sideLabel = targetSide === "host" ? "Host" : "Guest";
+  return {
+    userId: room?.[`${targetSide}_user_id`] || null,
+    account: room?.[`${targetSide}_account`] || null,
+    petName: room?.[`${targetSide}_pet_name`] || sideLabel,
+    element: room?.[`${targetSide}_element`] || (targetSide === "host" ? "metal" : "wood")
   };
 }
 
@@ -728,9 +750,17 @@ function registerIpcHandlers() {
     }
   });
 
-  ipcMain.handle("pet:auth-logout", () => {
+  ipcMain.handle("pet:auth-logout", async () => {
     const result = runtimeDataStore.logoutUser();
     if (result?.ok) {
+      try {
+        await onlineDuelService.leaveRoom({ reason: "logout" });
+      } catch {
+        // Best effort cleanup.
+      }
+      if (activeBattleSession && String(activeBattleSession.id || "").startsWith("online-")) {
+        closeBattleSession("abandoned", null);
+      }
       openAuthGate();
     } else {
       emitAuthState();
@@ -789,6 +819,191 @@ function registerIpcHandlers() {
 
   ipcMain.handle("pet:duel-request-list", () => {
     return runtimeDataStore.listDuelRequests();
+  });
+
+  ipcMain.handle("pet:duel-online-status", () => {
+    return {
+      ok: true,
+      ...onlineDuelService.getStatus()
+    };
+  });
+
+  ipcMain.handle("pet:duel-online-create-room", async (_event, payload) => {
+    try {
+      const session = runtimeDataStore.getAuthSession();
+      onlineDuelService.setCurrentUser(session?.currentUser || null);
+      const petElement =
+        payload && typeof payload.petElement === "string" ? payload.petElement : "metal";
+      const petName =
+        payload && typeof payload.petName === "string" ? payload.petName : "Player";
+      const result = await onlineDuelService.createRoom({ petElement, petName });
+      return {
+        ok: true,
+        ...result
+      };
+    } catch (error) {
+      return {
+        ok: false,
+        error: error instanceof Error ? error.message : "online room create failed"
+      };
+    }
+  });
+
+  ipcMain.handle("pet:duel-online-join-room", async (_event, payload) => {
+    try {
+      const session = runtimeDataStore.getAuthSession();
+      onlineDuelService.setCurrentUser(session?.currentUser || null);
+      const roomCode =
+        payload && typeof payload.roomCode === "string" ? payload.roomCode : "";
+      const petElement =
+        payload && typeof payload.petElement === "string" ? payload.petElement : "metal";
+      const petName =
+        payload && typeof payload.petName === "string" ? payload.petName : "Player";
+      const result = await onlineDuelService.joinRoom({ roomCode, petElement, petName });
+      return {
+        ok: true,
+        ...result
+      };
+    } catch (error) {
+      return {
+        ok: false,
+        error: error instanceof Error ? error.message : "online room join failed"
+      };
+    }
+  });
+
+  ipcMain.handle("pet:duel-online-sync-room", async (_event, payload) => {
+    try {
+      const roomId = payload && typeof payload.roomId === "string" ? payload.roomId : undefined;
+      const roomCode =
+        payload && typeof payload.roomCode === "string" ? payload.roomCode : undefined;
+      const roundsLimit =
+        payload && typeof payload.roundsLimit === "number" ? payload.roundsLimit : undefined;
+      const result = await onlineDuelService.syncRoom({ roomId, roomCode, roundsLimit });
+      return {
+        ok: true,
+        ...result
+      };
+    } catch (error) {
+      return {
+        ok: false,
+        error: error instanceof Error ? error.message : "online room sync failed"
+      };
+    }
+  });
+
+  ipcMain.handle("pet:duel-online-leave-room", async (_event, payload) => {
+    try {
+      const reason =
+        payload && typeof payload.reason === "string" ? payload.reason : "manual";
+      await onlineDuelService.leaveRoom({ reason });
+      if (activeBattleSession && String(activeBattleSession.id || "").startsWith("online-")) {
+        closeBattleSession("abandoned", null);
+      }
+      return { ok: true };
+    } catch (error) {
+      return {
+        ok: false,
+        error: error instanceof Error ? error.message : "online room leave failed"
+      };
+    }
+  });
+
+  ipcMain.handle("pet:duel-online-reset", async (_event, payload) => {
+    try {
+      const state = await onlineDuelService.resetBattle();
+      const status = onlineDuelService.getStatus();
+      const room = status.room;
+      const side = status.side;
+      if (!room || !side) {
+        return {
+          ok: false,
+          error: "online room not ready"
+        };
+      }
+
+      const playerInfo = getOnlineRoomParticipant(room, side, "self");
+      const enemyInfo = getOnlineRoomParticipant(room, side, "peer");
+      if (activeBattleSession) {
+        closeBattleSession("abandoned", null);
+      }
+      activeBattleSession = {
+        id: `online-${room.id}`,
+        mode: "duel",
+        captureResolved: true,
+        captureDecisionPending: false,
+        captureWildPetId: null,
+        captureProviderId: null,
+        startedAt: new Date().toISOString(),
+        player: {
+          petId:
+            payload && typeof payload.playerPetId === "string" && payload.playerPetId.length > 0
+              ? payload.playerPetId
+              : playerInfo.userId,
+          petName: playerInfo.petName,
+          element: playerInfo.element
+        },
+        enemy: {
+          petId: enemyInfo.userId,
+          petName: enemyInfo.petName,
+          element: enemyInfo.element
+        },
+        rounds: []
+      };
+
+      return {
+        ok: true,
+        state,
+        room,
+        side
+      };
+    } catch (error) {
+      return {
+        ok: false,
+        error: error instanceof Error ? error.message : "online battle reset failed"
+      };
+    }
+  });
+
+  ipcMain.handle("pet:duel-online-act", async (_event, payload) => {
+    try {
+      const action = payload && typeof payload.action === "string" ? payload.action : "normal_attack";
+      const result = await onlineDuelService.submitAction({ action });
+      let progression = null;
+
+      if (activeBattleSession) {
+        activeBattleSession.rounds.push({
+          round: result.roundResult.round,
+          playerAction: result.roundResult.actions.player,
+          enemyAction: result.roundResult.actions.enemy,
+          damageTaken: result.roundResult.damageTaken,
+          winner: result.roundResult.winner,
+          notes: Array.isArray(result.roundResult.notes) ? result.roundResult.notes : []
+        });
+        if (result.roundResult.winner) {
+          if (
+            result.roundResult.winner === "player" &&
+            runtimeDataStore &&
+            typeof activeBattleSession.player?.petId === "string" &&
+            activeBattleSession.player.petId.length > 0
+          ) {
+            progression = runtimeDataStore.recordBattleWin(activeBattleSession.player.petId);
+          }
+          closeBattleSession("finished", result.roundResult.winner);
+        }
+      }
+
+      return {
+        ok: true,
+        ...result,
+        progression
+      };
+    } catch (error) {
+      return {
+        ok: false,
+        error: error instanceof Error ? error.message : "online duel action failed"
+      };
+    }
   });
 
   ipcMain.handle("pet:set-active-pet", (_event, payload) => {
@@ -1013,6 +1228,10 @@ function getLayoutTargetSize(mode) {
 app.whenReady().then(() => {
   createMainWindow();
   createTray();
+  onlineDuelService.onEvent((event) => {
+    if (!mainWindow || mainWindow.isDestroyed()) return;
+    mainWindow.webContents.send("pet:duel-online-event", event);
+  });
   mapService.subscribe((state) => {
     if (!mainWindow || mainWindow.isDestroyed()) return;
     mainWindow.webContents.send("pet:map-state", state);
@@ -1054,6 +1273,7 @@ app.whenReady().then(() => {
 app.on("before-quit", () => {
   isQuitting = true;
   mapService.dispose();
+  void onlineDuelService.leaveRoom({ reason: "quit" });
   if (activeBattleSession) {
     closeBattleSession("abandoned", null);
   }

@@ -50,6 +50,11 @@ const duelSearchKeywordInput = document.getElementById("duel-search-keyword");
 const duelSearchBtn = document.getElementById("btn-duel-search");
 const duelSearchResultsElement = document.getElementById("duel-search-results");
 const duelRequestListElement = document.getElementById("duel-request-list");
+const duelOnlineRoomInput = document.getElementById("duel-online-room-code");
+const duelOnlineCreateBtn = document.getElementById("btn-duel-online-create");
+const duelOnlineJoinBtn = document.getElementById("btn-duel-online-join");
+const duelOnlineLeaveBtn = document.getElementById("btn-duel-online-leave");
+const duelOnlineStatusElement = document.getElementById("duel-online-status");
 const playerModel = document.getElementById("player-model");
 const enemyModel = document.getElementById("enemy-model");
 
@@ -219,6 +224,21 @@ const i18n = {
     authActionFailLog: "账号操作失败：{message}",
     authSendRequestSuccessLog: "已向 {account} 发起对战申请。",
     authSendRequestFailLog: "发起对战申请失败：{message}",
+    duelOnlineRoomLabel: "联机房间号",
+    duelOnlineCreateBtn: "创建联机房",
+    duelOnlineJoinBtn: "加入房间",
+    duelOnlineLeaveBtn: "离开房间",
+    duelOnlineStatusNeedLogin: "联机状态：请先登录",
+    duelOnlineStatusDisabled: "联机状态：未配置 SUPABASE_URL / SUPABASE_ANON_KEY",
+    duelOnlineStatusIdle: "联机状态：未加入房间",
+    duelOnlineStatusWaiting: "联机状态：房间 {roomCode} 等待对手",
+    duelOnlineStatusActive: "联机状态：房间 {roomCode} 对战中",
+    duelOnlineStatusFinished: "联机状态：房间 {roomCode} 已结束",
+    duelOnlineCreateSuccessLog: "联机房已创建：{roomCode}",
+    duelOnlineJoinSuccessLog: "已加入联机房：{roomCode}",
+    duelOnlineLeaveLog: "已离开联机房。",
+    duelOnlineActionFailLog: "联机操作失败：{message}",
+    duelOnlineResetLog: "联机对战已同步，房间号：{roomCode}",
     battleReportTitle: "最近战报",
     battleReportEmpty: "暂无战报，先开一局对战吧。",
     battleReportFinished: "已结算",
@@ -442,6 +462,21 @@ const i18n = {
     authActionFailLog: "Auth action failed: {message}",
     authSendRequestSuccessLog: "Duel request sent to {account}.",
     authSendRequestFailLog: "Duel request failed: {message}",
+    duelOnlineRoomLabel: "Online Room Code",
+    duelOnlineCreateBtn: "Create Online Room",
+    duelOnlineJoinBtn: "Join Room",
+    duelOnlineLeaveBtn: "Leave Room",
+    duelOnlineStatusNeedLogin: "Online: login required",
+    duelOnlineStatusDisabled: "Online: SUPABASE_URL / SUPABASE_ANON_KEY not configured",
+    duelOnlineStatusIdle: "Online: no room joined",
+    duelOnlineStatusWaiting: "Online: room {roomCode} waiting for opponent",
+    duelOnlineStatusActive: "Online: room {roomCode} active",
+    duelOnlineStatusFinished: "Online: room {roomCode} finished",
+    duelOnlineCreateSuccessLog: "Online room created: {roomCode}",
+    duelOnlineJoinSuccessLog: "Joined online room: {roomCode}",
+    duelOnlineLeaveLog: "Left online room.",
+    duelOnlineActionFailLog: "Online operation failed: {message}",
+    duelOnlineResetLog: "Online battle synced. Room: {roomCode}",
     battleReportTitle: "Recent Battle Reports",
     battleReportEmpty: "No reports yet. Start a battle to generate one.",
     battleReportFinished: "Finished",
@@ -641,6 +676,7 @@ const uiRefs = {
   mapTip: document.getElementById("map-tip"),
   duelTitle: document.getElementById("duel-title"),
   duelSearchLabel: document.getElementById("duel-search-label"),
+  duelOnlineRoomLabel: document.getElementById("duel-online-room-label"),
   profileAccountLabel: document.getElementById("profile-account-label"),
   profileOldPasswordLabel: document.getElementById("profile-old-password-label"),
   profileNewPasswordLabel: document.getElementById("profile-new-password-label"),
@@ -695,6 +731,13 @@ let authSearchResults = [];
 let duelRequests = {
   inbound: [],
   outbound: []
+};
+let onlineDuelState = {
+  enabled: false,
+  available: false,
+  configured: false,
+  room: null,
+  side: null
 };
 let authSearchExecuted = false;
 let profileUpdatePending = false;
@@ -1365,6 +1408,53 @@ function getPetDisplayName(pet) {
 function getPetById(petId) {
   const roster = getRoster();
   return roster.find((pet) => pet.id === petId) || roster[0];
+}
+
+function getModelByElement(element) {
+  const roster = getRoster();
+  const matched = roster.find((pet) => pet.element === element && typeof pet.model === "string");
+  return matched?.model || DEFAULT_PET_ROSTER[0].model;
+}
+
+function getOnlinePeerPrefix(side) {
+  return side === "host" ? "guest" : "host";
+}
+
+function buildOnlineEnemyPet(room, side) {
+  const peerPrefix = getOnlinePeerPrefix(side);
+  const peerElement = room?.[`${peerPrefix}_element`] || "wood";
+  const peerName = room?.[`${peerPrefix}_pet_name`] || (language === "zh" ? "对手" : "Opponent");
+  return normalizeRosterPet({
+    id: `online-${room?.id || "room"}-${peerPrefix}`,
+    serial: room?.room_code || "ONLINE",
+    name: {
+      zh: peerName,
+      en: peerName
+    },
+    model: getModelByElement(peerElement),
+    element: peerElement,
+    stats: "HP120 / ATK30 / DEF24 / SPD18",
+    capturedAt: room?.updated_at || "",
+    avatar: peerName.slice(0, 1) || "O",
+    level: 1,
+    experience: 0,
+    winsTotal: 0
+  });
+}
+
+function isOnlineDuelReadyForBattle() {
+  return Boolean(onlineDuelState?.enabled && onlineDuelState?.room?.id && onlineDuelState?.side);
+}
+
+function applyOnlineDuelSnapshot(payload) {
+  if (!payload || typeof payload !== "object") return;
+  onlineDuelState = {
+    enabled: Boolean(payload.enabled),
+    available: Boolean(payload.available),
+    configured: Boolean(payload.configured),
+    room: payload.room && typeof payload.room === "object" ? { ...payload.room } : null,
+    side: typeof payload.side === "string" ? payload.side : null
+  };
 }
 
 function getStatTone(token) {
@@ -2116,6 +2206,9 @@ function applyLanguage() {
   uiRefs.mapTip.textContent = currentI18n().mapTip;
   uiRefs.duelTitle.textContent = currentI18n().duelTitle;
   uiRefs.duelSearchLabel.textContent = currentI18n().authSearchLabel;
+  if (uiRefs.duelOnlineRoomLabel) {
+    uiRefs.duelOnlineRoomLabel.textContent = currentI18n().duelOnlineRoomLabel;
+  }
   uiRefs.profileAccountLabel.textContent = currentI18n().profileAccountLabel;
   uiRefs.profileOldPasswordLabel.textContent = currentI18n().profileOldPasswordLabel;
   uiRefs.profileNewPasswordLabel.textContent = currentI18n().profileNewPasswordLabel;
@@ -2151,6 +2244,12 @@ function applyLanguage() {
   if (duelSearchBtn) duelSearchBtn.textContent = currentI18n().authSearchBtn;
   if (duelSearchKeywordInput) {
     duelSearchKeywordInput.placeholder = currentI18n().authSearchPlaceholder;
+  }
+  if (duelOnlineCreateBtn) duelOnlineCreateBtn.textContent = currentI18n().duelOnlineCreateBtn;
+  if (duelOnlineJoinBtn) duelOnlineJoinBtn.textContent = currentI18n().duelOnlineJoinBtn;
+  if (duelOnlineLeaveBtn) duelOnlineLeaveBtn.textContent = currentI18n().duelOnlineLeaveBtn;
+  if (duelOnlineRoomInput) {
+    duelOnlineRoomInput.placeholder = "ABC123";
   }
   uiRefs.tipText.textContent = currentI18n().tip;
   updatePauseText();
@@ -2330,6 +2429,164 @@ function renderDuelRequestList() {
   `;
 }
 
+function getOnlineDuelStatusText() {
+  if (!authSession?.currentUser) {
+    return currentI18n().duelOnlineStatusNeedLogin;
+  }
+  if (!onlineDuelState.enabled) {
+    return currentI18n().duelOnlineStatusDisabled;
+  }
+  const room = onlineDuelState.room;
+  if (!room?.id) {
+    return currentI18n().duelOnlineStatusIdle;
+  }
+  if (room.status === "waiting") {
+    return t("duelOnlineStatusWaiting", { roomCode: room.room_code || "-" });
+  }
+  if (room.status === "active") {
+    return t("duelOnlineStatusActive", { roomCode: room.room_code || "-" });
+  }
+  return t("duelOnlineStatusFinished", { roomCode: room.room_code || "-" });
+}
+
+function renderOnlineDuelStatus() {
+  if (duelOnlineStatusElement) {
+    duelOnlineStatusElement.textContent = getOnlineDuelStatusText();
+  }
+  const canOperate = Boolean(authSession?.currentUser && onlineDuelState.enabled);
+  if (duelOnlineCreateBtn) duelOnlineCreateBtn.disabled = !canOperate;
+  if (duelOnlineJoinBtn) duelOnlineJoinBtn.disabled = !canOperate;
+  if (duelOnlineLeaveBtn) duelOnlineLeaveBtn.disabled = !canOperate || !onlineDuelState.room?.id;
+}
+
+async function refreshOnlineDuelStatus(options = {}) {
+  const silent = Boolean(options.silent);
+  if (!authSession?.currentUser) {
+    onlineDuelState = {
+      enabled: false,
+      available: false,
+      configured: false,
+      room: null,
+      side: null
+    };
+    renderOnlineDuelStatus();
+    return;
+  }
+  try {
+    const response = await window.petApi.getOnlineDuelStatus();
+    if (response?.ok) {
+      applyOnlineDuelSnapshot(response);
+    } else if (!silent) {
+      appendLog(
+        t("duelOnlineActionFailLog", {
+          message: localizeAuthErrorMessage(response?.error || "status failed")
+        })
+      );
+    }
+  } catch (error) {
+    if (!silent) {
+      appendLog(
+        t("duelOnlineActionFailLog", {
+          message: localizeAuthErrorMessage(error instanceof Error ? error.message : "status failed")
+        })
+      );
+    }
+  }
+  renderOnlineDuelStatus();
+}
+
+async function createOnlineDuelRoom() {
+  if (!authSession?.currentUser) return;
+  const activePet = getActivePet();
+  try {
+    const response = await window.petApi.createOnlineDuelRoom({
+      petElement: activePet.element,
+      petName: getPetDisplayName(activePet)
+    });
+    if (!response?.ok) {
+      appendLog(
+        t("duelOnlineActionFailLog", {
+          message: localizeAuthErrorMessage(response?.error || "create room failed")
+        })
+      );
+      return;
+    }
+    applyOnlineDuelSnapshot(response);
+    if (duelOnlineRoomInput && response.room?.room_code) {
+      duelOnlineRoomInput.value = response.room.room_code;
+    }
+    renderOnlineDuelStatus();
+    appendLog(
+      t("duelOnlineCreateSuccessLog", {
+        roomCode: response.room?.room_code || "-"
+      })
+    );
+  } catch (error) {
+    appendLog(
+      t("duelOnlineActionFailLog", {
+        message: localizeAuthErrorMessage(error instanceof Error ? error.message : "create room failed")
+      })
+    );
+  }
+}
+
+async function joinOnlineDuelRoom() {
+  if (!authSession?.currentUser) return;
+  const roomCode = duelOnlineRoomInput?.value?.trim() || "";
+  if (!roomCode) return;
+  const activePet = getActivePet();
+  try {
+    const response = await window.petApi.joinOnlineDuelRoom({
+      roomCode,
+      petElement: activePet.element,
+      petName: getPetDisplayName(activePet)
+    });
+    if (!response?.ok) {
+      appendLog(
+        t("duelOnlineActionFailLog", {
+          message: localizeAuthErrorMessage(response?.error || "join room failed")
+        })
+      );
+      return;
+    }
+    applyOnlineDuelSnapshot(response);
+    renderOnlineDuelStatus();
+    appendLog(
+      t("duelOnlineJoinSuccessLog", {
+        roomCode: response.room?.room_code || roomCode
+      })
+    );
+  } catch (error) {
+    appendLog(
+      t("duelOnlineActionFailLog", {
+        message: localizeAuthErrorMessage(error instanceof Error ? error.message : "join room failed")
+      })
+    );
+  }
+}
+
+async function leaveOnlineDuelRoom(reason = "manual") {
+  try {
+    const response = await window.petApi.leaveOnlineDuelRoom(reason);
+    if (!response?.ok) {
+      appendLog(
+        t("duelOnlineActionFailLog", {
+          message: localizeAuthErrorMessage(response?.error || "leave room failed")
+        })
+      );
+      return;
+    }
+    await refreshOnlineDuelStatus({ silent: true });
+    appendLog(currentI18n().duelOnlineLeaveLog);
+  } catch (error) {
+    appendLog(
+      t("duelOnlineActionFailLog", {
+        message: localizeAuthErrorMessage(error instanceof Error ? error.message : "leave room failed")
+      })
+    );
+  }
+}
+
 function renderAuthSection() {
   const currentUser = authSession?.currentUser || null;
   const account = currentUser?.account || "-";
@@ -2356,6 +2613,7 @@ function renderAuthSection() {
 
   renderDuelSearchResults();
   renderDuelRequestList();
+  renderOnlineDuelStatus();
 }
 
 async function refreshAuthSession() {
@@ -2374,8 +2632,16 @@ async function refreshAuthSession() {
 
   if (authSession.currentUser) {
     await refreshDuelRequests({ silent: true });
+    await refreshOnlineDuelStatus({ silent: true });
   } else {
     duelRequests = { inbound: [], outbound: [] };
+    onlineDuelState = {
+      enabled: false,
+      available: false,
+      configured: false,
+      room: null,
+      side: null
+    };
   }
   renderAuthSection();
 }
@@ -2390,12 +2656,21 @@ async function applyAuthStateFromEvent(session) {
   }
   if (authSession.currentUser) {
     await refreshDuelRequests({ silent: true });
+    await refreshOnlineDuelStatus({ silent: true });
   } else {
     authSearchResults = [];
     authSearchExecuted = false;
     duelRequests = { inbound: [], outbound: [] };
+    onlineDuelState = {
+      enabled: false,
+      available: false,
+      configured: false,
+      room: null,
+      side: null
+    };
     renderDuelSearchResults();
     renderDuelRequestList();
+    renderOnlineDuelStatus();
   }
   renderAuthSection();
 }
@@ -2475,6 +2750,13 @@ async function logoutAccount() {
   authSearchResults = [];
   authSearchExecuted = false;
   duelRequests = { inbound: [], outbound: [] };
+  onlineDuelState = {
+    enabled: false,
+    available: false,
+    configured: false,
+    room: null,
+    side: null
+  };
   appendLog(currentI18n().authLogoutLog);
   await refreshAuthSession();
 }
@@ -3215,6 +3497,46 @@ async function resetBattle() {
   setPanelVisible(false);
 
   const activePet = getActivePet();
+  if (isOnlineDuelReadyForBattle()) {
+    playerModel.src = activePet.model;
+    setModelElementTint(playerModel, activePet.element);
+    const onlineReset = await window.petApi.onlineDuelReset({
+      playerPetId: activePet.id
+    });
+    if (!onlineReset?.ok) {
+      appendLog(
+        t("duelOnlineActionFailLog", {
+          message: localizeAuthErrorMessage(onlineReset?.error || "online battle reset failed")
+        })
+      );
+      setBattleMode(false);
+      return;
+    }
+    if (onlineReset.room && typeof onlineReset.room === "object") {
+      onlineDuelState.room = { ...onlineReset.room };
+    }
+    if (typeof onlineReset.side === "string" && onlineReset.side.length > 0) {
+      onlineDuelState.side = onlineReset.side;
+    }
+    if (duelOnlineRoomInput && onlineDuelState.room?.room_code) {
+      duelOnlineRoomInput.value = onlineDuelState.room.room_code;
+    }
+    enemyPetInBattle = buildOnlineEnemyPet(onlineDuelState.room || {}, onlineDuelState.side || "host");
+    enemyModel.src = enemyPetInBattle.model;
+    setModelElementTint(enemyModel, enemyPetInBattle.element);
+    territoryOwner = "enemy";
+    updateBattleBoard(onlineReset.state);
+    setActiveActionTag("");
+    startActionCountdown();
+    renderOnlineDuelStatus();
+    appendLog(
+      t("duelOnlineResetLog", {
+        roomCode: onlineDuelState.room?.room_code || "-"
+      })
+    );
+    return;
+  }
+
   enemyPetInBattle = chooseEnemyPetForBattle();
   playerModel.src = activePet.model;
   enemyModel.src = enemyPetInBattle.model;
@@ -3246,10 +3568,19 @@ async function resetBattle() {
 
 async function endBattle(manual = true) {
   let battleEndResult = null;
-  try {
-    battleEndResult = await window.petApi.battleEnd();
-  } catch {
-    // Keep runtime flow non-blocking even if persistence fails.
+  if (isOnlineDuelReadyForBattle()) {
+    try {
+      await window.petApi.leaveOnlineDuelRoom(manual ? "manual_end" : "settlement_confirm");
+      await refreshOnlineDuelStatus({ silent: true });
+    } catch {
+      // Keep runtime flow non-blocking.
+    }
+  } else {
+    try {
+      battleEndResult = await window.petApi.battleEnd();
+    } catch {
+      // Keep runtime flow non-blocking even if persistence fails.
+    }
   }
   if (battleEndResult?.captureOutcome?.ok && battleEndResult.captureOutcome.success === false) {
     appendLog(
@@ -3301,7 +3632,16 @@ async function actBattle(action, options = {}) {
   let hasWinner = false;
   try {
     const startAt = Date.now();
-    const result = await window.petApi.battleAct(resolvedAction);
+    let result = null;
+    if (isOnlineDuelReadyForBattle()) {
+      const onlineResult = await window.petApi.onlineDuelAct(resolvedAction);
+      if (!onlineResult?.ok) {
+        throw new Error(onlineResult?.error || "online action failed");
+      }
+      result = onlineResult;
+    } else {
+      result = await window.petApi.battleAct(resolvedAction);
+    }
     const elapsed = Date.now() - startAt;
     if (elapsed < 220) {
       await sleep(220 - elapsed);
@@ -3702,6 +4042,24 @@ function setupButtons() {
     void searchDuelTarget();
   });
 
+  duelOnlineCreateBtn?.addEventListener("click", () => {
+    void createOnlineDuelRoom();
+  });
+
+  duelOnlineJoinBtn?.addEventListener("click", () => {
+    void joinOnlineDuelRoom();
+  });
+
+  duelOnlineLeaveBtn?.addEventListener("click", () => {
+    void leaveOnlineDuelRoom("manual");
+  });
+
+  duelOnlineRoomInput?.addEventListener("keydown", (event) => {
+    if (event.key !== "Enter") return;
+    event.preventDefault();
+    void joinOnlineDuelRoom();
+  });
+
   battleResetBtn.addEventListener("click", () => {
     void resetBattle();
   });
@@ -3862,6 +4220,21 @@ function setupIpcEvents() {
 
   window.petApi.onAuthState((session) => {
     void applyAuthStateFromEvent(session);
+  });
+
+  window.petApi.onOnlineDuelEvent((event) => {
+    const room = event?.payload?.room;
+    const side = event?.payload?.side;
+    if (room && typeof room === "object") {
+      onlineDuelState.room = { ...room };
+      if (typeof side === "string" && side.length > 0) {
+        onlineDuelState.side = side;
+      }
+      if (duelOnlineRoomInput && room.room_code) {
+        duelOnlineRoomInput.value = room.room_code;
+      }
+      renderOnlineDuelStatus();
+    }
   });
 }
 

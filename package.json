@@ -52,6 +52,8 @@
     "node": ">=20"
   },
   "dependencies": {
-    "@google/model-viewer": "^4.1.0"
+    "@google/model-viewer": "^4.1.0",
+    "@supabase/supabase-js": "^2.57.4",
+    "ws": "^8.19.0"
   }
 }

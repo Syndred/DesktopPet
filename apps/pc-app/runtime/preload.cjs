@@ -49,6 +49,27 @@ contextBridge.exposeInMainWorld("petApi", {
   listDuelRequests() {
     return ipcRenderer.invoke("pet:duel-request-list");
   },
+  getOnlineDuelStatus() {
+    return ipcRenderer.invoke("pet:duel-online-status");
+  },
+  createOnlineDuelRoom(payload) {
+    return ipcRenderer.invoke("pet:duel-online-create-room", payload ?? {});
+  },
+  joinOnlineDuelRoom(payload) {
+    return ipcRenderer.invoke("pet:duel-online-join-room", payload ?? {});
+  },
+  syncOnlineDuelRoom(payload) {
+    return ipcRenderer.invoke("pet:duel-online-sync-room", payload ?? {});
+  },
+  leaveOnlineDuelRoom(reason) {
+    return ipcRenderer.invoke("pet:duel-online-leave-room", { reason });
+  },
+  onlineDuelReset(payload) {
+    return ipcRenderer.invoke("pet:duel-online-reset", payload ?? {});
+  },
+  onlineDuelAct(action) {
+    return ipcRenderer.invoke("pet:duel-online-act", { action });
+  },
   setActivePet(petId) {
     return ipcRenderer.invoke("pet:set-active-pet", { petId });
   },
@@ -116,5 +137,10 @@ contextBridge.exposeInMainWorld("petApi", {
     const wrapped = (_event, session) => listener(session);
     ipcRenderer.on("pet:auth-state", wrapped);
     return () => ipcRenderer.removeListener("pet:auth-state", wrapped);
+  },
+  onOnlineDuelEvent(listener) {
+    const wrapped = (_event, payload) => listener(payload);
+    ipcRenderer.on("pet:duel-online-event", wrapped);
+    return () => ipcRenderer.removeListener("pet:duel-online-event", wrapped);
   }
 });

@@ -10,7 +10,65 @@
 
 ## 最新里程碑
 
-1. `D-037` 用户模型升级（账号/用户名分离）+ 中文鉴权提示完善 `[DONE]`
+1. `D-040` 阿里云联机对战双端验收 + Realtime 稳定性修复 `[DONE]`
+   - 完成内容：
+     - 完成本地双客户端并发验收（A/B）：
+       - `create_room -> join_room -> submit_action -> sync_room` 全链路通过；
+       - 双端回合结算一致（同回合同步 HP/怒气/round 结果）。
+     - 完成 Realtime 端到端验证：
+       - 双端均收到 `realtime-status: SUBSCRIBED`；
+       - 可收到 `duel_rooms` 的 `room-updated(source=realtime)`；
+       - 可收到 `duel_rounds` 的 `round-updated(source=realtime)`。
+     - 修复 Node/Electron Realtime 订阅超时问题：
+       - 在 `online-duel-service.cjs` 中为 Supabase client 显式注入 `ws` transport，
+         规避 Node 运行时下 websocket 构造兼容问题。
+     - 修复 Realtime 发布缺失问题：
+       - 在迁移 `0003_duel_realtime_schema.sql` 增加 `supabase_realtime` publication 绑定，
+         自动纳入 `duel_rooms`、`duel_actions`、`duel_rounds`。
+   - 验证时间：`2026-03-06`（北京时间）
+
+1. `D-039` 阿里云自建 Supabase 落地（部署与公网验证完成）`[DONE]`
+   - 已完成：
+     - ECS（`47.112.208.97`，深圳）已通过 SSH 部署官方 Supabase Docker 自托管栈（目录：`/opt/supabase`）。
+     - 核心容器已启动并健康：`supabase-kong`、`supabase-db`、`supabase-auth`、`supabase-rest`、`realtime`、`functions`、`studio` 等。
+     - 已在服务器执行数据库迁移：
+       - `0001_core_schema.sql`
+       - `0002_pet_inventory_battle_reports.sql`
+       - `0003_duel_realtime_schema.sql`
+     - 已上传并启用 Edge Function：`duel-online`（路径：`/opt/supabase/volumes/functions/duel-online/index.ts`）。
+     - 已在服务器本机验证联机闭环接口：
+       - `create_room`
+       - `join_room`
+       - `submit_action`
+       - `get_room`
+   - 联通性验证：
+     - 已完成安全组入方向放行：`TCP 8000`、`TCP 8443`。
+     - 本地外网验证通过：
+       - `curl -I http://47.112.208.97:8000` 返回 `401`（Kong 正常暴露）。
+       - `curl -k -I https://47.112.208.97:8443` 返回 `401`（Kong HTTPS 入口可达）。
+       - 外网 `POST /functions/v1/duel-online`（`create_room`）返回 `200` + `ok=true`。
+
+1. `D-038` Supabase 联机对战最小闭环（表结构 + Edge Function + PC 接入）`[DONE]`
+   - 完成内容：
+     - 新增迁移 `infra/supabase/migrations/0003_duel_realtime_schema.sql`：
+       - `duel_rooms`、`duel_actions`、`duel_rounds` 三张联机表；
+       - 回合幂等唯一索引（`room+round+actor`、`room+round`）；
+       - RLS 与 Realtime 原型读策略、`updated_at` 触发器。
+     - 新增 Edge Function `infra/supabase/functions/duel-online/index.ts`：
+       - `create_room / join_room / get_room / submit_action / leave_room`；
+       - 回合服务端权威结算（客户端只提交动作，血量/怒气由服务端更新）。
+     - PC Runtime 新增 `apps/pc-app/runtime/services/online-duel-service.cjs`：
+       - Supabase Function 调用 + Realtime 订阅；
+       - 房间状态同步、动作提交、等待回合结算、断线后补拉房间快照。
+     - 主进程/预加载/渲染层联调：
+       - 新增 IPC：`pet:duel-online-*`；
+       - 新增面板最小联机控件：创建房间、加入房间、离开房间、联机状态；
+       - 对战动作在联机场景下自动切换到在线结算链路。
+   - 测试：
+     - `tests/task-t206-online-duel-schema.test.ts`
+     - `tests/task-d008-pc-online-duel-runtime.test.ts`
+
+2. `D-037` 用户模型升级（账号/用户名分离）+ 中文鉴权提示完善 `[DONE]`
    - 完成内容：
      - 用户模型升级为：`id(内部主键)` + `account(登录账号)` + `username(展示名)` + `passwordHash`。
      - 注册新增用户名字段，默认与账号解耦；登录仍采用账号+密码。
