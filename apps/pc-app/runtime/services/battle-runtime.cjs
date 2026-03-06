@@ -15,6 +15,8 @@ const BASE_DAMAGE = {
 
 const ACTIONS = ["normal_attack", "element_attack", "dodge", "ultimate"];
 const ELEMENTS = ["metal", "wood", "earth", "water", "fire"];
+const ULTIMATE_ANGER_THRESHOLD = 50;
+const ULTIMATE_ANGER_COST = 50;
 
 class BattleRuntimeService {
   constructor() {
@@ -76,6 +78,7 @@ function createCombatant(id, element) {
 function executeRound(session, playerInputAction, enemyInputAction) {
   session.round += 1;
   const notes = [];
+  let firstDefeated = null;
   const damageTaken = {
     player: 0,
     enemy: 0
@@ -121,7 +124,9 @@ function executeRound(session, playerInputAction, enemyInputAction) {
   if (playerAction !== "stunned" && playerAction !== "dodge") {
     if (doesActionHit(playerAction, enemyAction)) {
       const damage = computeDamage(playerAction, session.player, session.enemy);
-      applyDamage(session.enemy, damage);
+      applyDamage(session.enemy, damage, (defeatedId) => {
+        if (!firstDefeated) firstDefeated = defeatedId;
+      });
       damageTaken.enemy += damage;
       directDamage.enemy += damage;
       if (playerAction !== "ultimate") {
@@ -137,7 +142,9 @@ function executeRound(session, playerInputAction, enemyInputAction) {
   if (enemyAction !== "stunned" && enemyAction !== "dodge") {
     if (doesActionHit(enemyAction, playerAction)) {
       const damage = computeDamage(enemyAction, session.enemy, session.player);
-      applyDamage(session.player, damage);
+      applyDamage(session.player, damage, (defeatedId) => {
+        if (!firstDefeated) firstDefeated = defeatedId;
+      });
       damageTaken.player += damage;
       directDamage.player += damage;
       if (enemyAction !== "ultimate") {
@@ -158,9 +165,28 @@ function executeRound(session, playerInputAction, enemyInputAction) {
     refundDodgeAnger(session.enemy, notes);
   }
 
-  applyRoundEndStatusEffects(session, damageTaken, dotDamageEvents, healEvents, notes);
+  applyRoundEndStatusEffects(session, damageTaken, dotDamageEvents, healEvents, notes, {
+    onDefeated: (defeatedId) => {
+      if (!firstDefeated) firstDefeated = defeatedId;
+    }
+  });
   reduceStatusDuration(session.player);
   reduceStatusDuration(session.enemy);
+
+  let winner = null;
+  if (session.player.hp <= 0 && session.enemy.hp <= 0) {
+    if (firstDefeated === "player") {
+      winner = "enemy";
+    } else if (firstDefeated === "enemy") {
+      winner = "player";
+    } else {
+      winner = "enemy";
+    }
+  } else if (session.player.hp <= 0) {
+    winner = "enemy";
+  } else if (session.enemy.hp <= 0) {
+    winner = "player";
+  }
 
   return {
     round: session.round,
@@ -184,14 +210,7 @@ function executeRound(session, playerInputAction, enemyInputAction) {
       player: session.player.statuses.map(cloneStatus),
       enemy: session.enemy.statuses.map(cloneStatus)
     },
-    winner:
-      session.player.hp <= 0 && session.enemy.hp <= 0
-        ? "draw"
-        : session.player.hp <= 0
-          ? "enemy"
-          : session.enemy.hp <= 0
-            ? "player"
-            : null,
+    winner,
     notes
   };
 }
@@ -230,12 +249,14 @@ function normalizeAction(player, action, notes) {
   if (normalized === "dodge") {
     player.freeDodgeUsed = true;
   }
-  if (normalized === "ultimate" && player.anger < 100) {
-    notes.push(player.id + " ultimate downgraded to normal_attack (anger < 100)");
+  if (normalized === "ultimate" && player.anger < ULTIMATE_ANGER_THRESHOLD) {
+    notes.push(
+      player.id + " ultimate downgraded to normal_attack (anger < " + ULTIMATE_ANGER_THRESHOLD + ")"
+    );
     return "normal_attack";
   }
   if (normalized === "ultimate") {
-    player.anger = 0;
+    player.anger = Math.max(0, player.anger - ULTIMATE_ANGER_COST);
   }
   return normalized;
 }
@@ -273,7 +294,7 @@ function applyAttackStatus(action, attacker, defender, notes) {
   if (attacker.element === "fire") {
     const status = addOrRefreshStatus(defender, {
       type: "burn",
-      duration: 3,
+      duration: 2,
       potency: 5,
       stacks: 1,
       stackable: true,
@@ -284,7 +305,7 @@ function applyAttackStatus(action, attacker, defender, notes) {
   if (attacker.element === "water") {
     addOrRefreshStatus(defender, {
       type: "freeze",
-      duration: 3,
+      duration: 2,
       stacks: 1,
       stackable: false,
       sourceId: attacker.id
@@ -294,7 +315,7 @@ function applyAttackStatus(action, attacker, defender, notes) {
   if (attacker.element === "wood") {
     const status = addOrRefreshStatus(defender, {
       type: "parasite",
-      duration: 3,
+      duration: 2,
       potency: 4,
       stacks: 1,
       stackable: true,
@@ -305,7 +326,7 @@ function applyAttackStatus(action, attacker, defender, notes) {
   if (attacker.element === "metal") {
     const status = addOrRefreshStatus(defender, {
       type: "vulnerability",
-      duration: 3,
+      duration: 2,
       stacks: 1,
       stackable: true,
       sourceId: attacker.id
@@ -315,7 +336,7 @@ function applyAttackStatus(action, attacker, defender, notes) {
   if (attacker.element === "earth") {
     addOrRefreshStatus(defender, {
       type: "petrify",
-      duration: 3,
+      duration: 2,
       stacks: 1,
       stackable: false,
       sourceId: attacker.id
@@ -349,20 +370,29 @@ function refundDodgeAnger(player, notes) {
   notes.push(`${player.id} dodged normal attack and refunded 30 anger`);
 }
 
-function applyRoundEndStatusEffects(session, damageTaken, dotDamageEvents, healEvents, notes) {
+function applyRoundEndStatusEffects(
+  session,
+  damageTaken,
+  dotDamageEvents,
+  healEvents,
+  notes,
+  options = {}
+) {
   const players = [session.player, session.enemy];
+  const onDefeated =
+    options && typeof options.onDefeated === "function" ? options.onDefeated : () => {};
   for (const player of players) {
     for (const status of player.statuses) {
       if (status.type === "burn" && status.potency) {
         const burnDamage = status.potency * Math.max(1, status.stacks || 1);
-        applyDamage(player, burnDamage);
+        applyDamage(player, burnDamage, onDefeated);
         damageTaken[player.id] += burnDamage;
         dotDamageEvents[player.id].push({ type: "burn", amount: burnDamage });
         notes.push(player.id + " takes burn damage");
       }
       if (status.type === "parasite" && status.potency && status.sourceId) {
         const parasiteDamage = status.potency * Math.max(1, status.stacks || 1);
-        applyDamage(player, parasiteDamage);
+        applyDamage(player, parasiteDamage, onDefeated);
         damageTaken[player.id] += parasiteDamage;
         dotDamageEvents[player.id].push({ type: "parasite", amount: parasiteDamage });
         const source = players.find((item) => item.id === status.sourceId);
@@ -391,10 +421,15 @@ function addOrRefreshStatus(player, next) {
   const current = player.statuses[idx];
   const stackable = Boolean(next.stackable);
   const nextStacks = stackable ? Math.min(5, Math.max(1, (current.stacks || 1) + 1)) : 1;
+  const addDuration = Math.max(1, Number(next.duration) || 1);
+  const mergedDuration = stackable
+    ? Math.min(12, Math.max(1, Number(current.duration) || 0) + addDuration)
+    : Math.max(Math.max(1, Number(current.duration) || 1), addDuration);
   const merged = {
     ...current,
     ...next,
-    stacks: nextStacks
+    stacks: nextStacks,
+    duration: mergedDuration
   };
   player.statuses[idx] = merged;
   return merged;
@@ -414,8 +449,12 @@ function reduceStatusDuration(player) {
     .filter((status) => status.duration > 0);
 }
 
-function applyDamage(player, damage) {
+function applyDamage(player, damage, onDefeated = null) {
+  const wasAlive = player.hp > 0;
   player.hp = Math.max(0, player.hp - damage);
+  if (wasAlive && player.hp <= 0 && typeof onDefeated === "function") {
+    onDefeated(player.id);
+  }
 }
 
 function cloneCombatant(player) {

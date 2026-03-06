@@ -1,7 +1,6 @@
 ﻿const panelElement = document.getElementById("panel");
 const runtimeElement = document.getElementById("runtime");
 const logElement = document.getElementById("log");
-const closePanelBtn = document.getElementById("btn-close-panel");
 const captureBtn = document.getElementById("btn-capture");
 const occupyBtn = document.getElementById("btn-occupy");
 const pauseBtn = document.getElementById("btn-pause");
@@ -10,12 +9,27 @@ const endBattleBtn = document.getElementById("btn-end-battle");
 const stageBattleActionButtons = [...document.querySelectorAll(".battle-tag")];
 const battleActionButtons = [...stageBattleActionButtons];
 const languageBtn = document.getElementById("btn-language");
+const userMenuBtn = document.getElementById("btn-user-menu");
+const userAvatarElement = document.getElementById("user-avatar");
+const userMenuDropdownElement = document.getElementById("user-menu-dropdown");
+const userMenuAccountElement = document.getElementById("user-menu-account");
+const userEditProfileBtn = document.getElementById("btn-user-edit-profile");
+const userLogoutBtn = document.getElementById("btn-user-logout");
+const profileModalElement = document.getElementById("profile-modal");
+const profileModalTitleElement = document.getElementById("profile-modal-title");
+const profileModalStatusElement = document.getElementById("profile-modal-status");
+const profileAccountInput = document.getElementById("profile-account");
+const profileOldPasswordInput = document.getElementById("profile-old-password");
+const profileNewPasswordInput = document.getElementById("profile-new-password");
+const profileConfirmPasswordInput = document.getElementById("profile-confirm-password");
+const profileSaveBtn = document.getElementById("btn-profile-save");
 const petInventoryLayoutElement = document.getElementById("pet-inventory-layout");
 const inventoryListElement = document.getElementById("pet-inventory-list");
 const petDetailPopoverElement = document.getElementById("pet-detail-popover");
 const petDetailElement = document.getElementById("pet-detail");
 const petDetailPlaceholderElement = document.getElementById("pet-detail-placeholder");
 const battleReportListElement = document.getElementById("battle-report-list");
+const battleReportDetailPopoverElement = document.getElementById("battle-report-detail-popover");
 const mapProviderSelectElement = document.getElementById("map-provider-select");
 const mapPermissionSelectElement = document.getElementById("map-permission-select");
 const mapPermissionBtn = document.getElementById("btn-map-permission");
@@ -31,6 +45,11 @@ const mapStatusLocationValueElement = document.getElementById("map-status-locati
 const mapStatusDistanceValueElement = document.getElementById("map-status-distance-value");
 const wildListElement = document.getElementById("wild-list");
 const wildRefreshBtn = document.getElementById("btn-wild-refresh");
+const authStatusElement = document.getElementById("auth-status");
+const duelSearchKeywordInput = document.getElementById("duel-search-keyword");
+const duelSearchBtn = document.getElementById("btn-duel-search");
+const duelSearchResultsElement = document.getElementById("duel-search-results");
+const duelRequestListElement = document.getElementById("duel-request-list");
 const playerModel = document.getElementById("player-model");
 const enemyModel = document.getElementById("enemy-model");
 
@@ -54,6 +73,11 @@ const battleSettlementElement = document.getElementById("battle-settlement");
 const battleSettlementTitleElement = document.getElementById("battle-settlement-title");
 const battleSettlementSubtitleElement = document.getElementById("battle-settlement-subtitle");
 const settlementConfirmBtn = document.getElementById("btn-settlement-confirm");
+const settlementSecondaryBtn = document.getElementById("btn-settlement-secondary");
+const captureDecisionElement = document.getElementById("capture-decision");
+const captureDecisionTextElement = document.getElementById("capture-decision-text");
+const captureDecisionConfirmBtn = document.getElementById("btn-capture-confirm");
+const captureDecisionCancelBtn = document.getElementById("btn-capture-cancel");
 
 const hpFillPlayer = document.getElementById("hp-fill-player");
 const hpFillEnemy = document.getElementById("hp-fill-enemy");
@@ -104,7 +128,7 @@ const i18n = {
     battleTickerAction: "我方 {playerAction} · 敌方 {enemyAction}",
     battleTickerDamage: "伤害 我方-{playerDamage} / 敌方-{enemyDamage}",
     battleWaiting: "已选择 {playerAction}，等待对方...",
-    battleAutoNormal: "5秒未选择动作，已默认普攻。",
+    battleAutoNormal: "10秒未选择动作，已默认普攻。",
     battleNoAngerDodge: "怒气为 0，无法闪避，已改为普攻。",
     battleFreeDodgeUsed: "首回免费闪避已使用，后续闪避需消耗怒气。",
     battleRelationAdvantage: "克制",
@@ -126,9 +150,14 @@ const i18n = {
     battleSettlementLoseTitle: "失败",
     battleSettlementDrawTitle: "平局",
     battleSettlementConfirm: "确认",
+    battleSettlementCancel: "取消",
+    battleSettlementCaptureTitle: "收服确认",
     battleSettlementCaptureSuccess: "收服成功：{serial}",
     battleSettlementCaptureFail: "收服失败：{serial}",
     battleSettlementCaptureAbandon: "已放弃收服：{serial}",
+    captureDecisionPrompt: "恭喜战胜 {name}（序号 {serial}），是否收服？",
+    captureDecisionConfirm: "确认",
+    captureDecisionCancel: "取消",
     petInteract: "宠物交互：宠物给出轻量陪伴反馈。",
     actionSent: "已提交本回合动作。",
     battleLevelUpLog: "{petName} 升级到 Lv.{level}，属性已提升。",
@@ -154,6 +183,42 @@ const i18n = {
     inventoryDetailClose: "关闭",
     inventoryRelease: "放逐",
     inventoryReleaseDone: "已放逐宠物：{petName}",
+    duelTitle: "对战申请",
+    authStatusLoggedOut: "未登录",
+    authStatusLoggedIn: "已登录：{username}（@{account}）",
+    userMenuAriaLabel: "账号菜单",
+    userMenuEditProfile: "修改信息",
+    userMenuLogout: "退出登录",
+    profileModalTitle: "修改信息",
+    profileAccountLabel: "用户名",
+    profileOldPasswordLabel: "旧密码",
+    profileNewPasswordLabel: "新密码",
+    profileConfirmPasswordLabel: "确认新密码",
+    profileSaveBtn: "保存修改",
+    profileHint: "输入旧密码后可修改用户名或密码。",
+    profileSaved: "账号信息已更新。",
+    profileNoChange: "未检测到修改项。",
+    profileNeedOldPassword: "请输入旧密码。",
+    profilePasswordMismatch: "两次输入的新密码不一致。",
+    authSearchLabel: "搜索账号发起对战",
+    authSearchBtn: "搜索",
+    authSearchPlaceholder: "输入账号关键字",
+    authSearchEmpty: "未找到可发起对战的账号。",
+    authSearchSend: "发起申请",
+    authSearchSelf: "不能挑战自己",
+    authRequestTitle: "对战申请",
+    authRequestInbound: "收到申请",
+    authRequestOutbound: "发出申请",
+    authRequestEmpty: "暂无申请记录。",
+    authRequestPending: "待处理",
+    authRequestAccepted: "已接受",
+    authRequestRejected: "已拒绝",
+    authRequestCancelled: "已取消",
+    authLogoutLog: "已退出登录。",
+    authSearchErrorLog: "账号搜索失败：{message}",
+    authActionFailLog: "账号操作失败：{message}",
+    authSendRequestSuccessLog: "已向 {account} 发起对战申请。",
+    authSendRequestFailLog: "发起对战申请失败：{message}",
     battleReportTitle: "最近战报",
     battleReportEmpty: "暂无战报，先开一局对战吧。",
     battleReportFinished: "已结算",
@@ -167,6 +232,8 @@ const i18n = {
     battleReportModeCapture: "收服",
     battleReportCaptureSuccess: "收服成功 · 编号 {serial}",
     battleReportCaptureFail: "收服失败 · 编号 {serial}",
+    battleReportDetailTitle: "对局回顾",
+    battleReportDetailClose: "关闭",
     mapTitle: "地图能力（演示）",
     mapTip: "PC 演示版地图能力抽象：Provider、权限状态、定位与追踪。",
     mapProviderLabel: "地图 Provider",
@@ -284,7 +351,7 @@ const i18n = {
     battleTickerAction: "Player {playerAction} · Enemy {enemyAction}",
     battleTickerDamage: "Damage You-{playerDamage} / Enemy-{enemyDamage}",
     battleWaiting: "Selected {playerAction}. Waiting for opponent...",
-    battleAutoNormal: "No action selected in 5 seconds. Defaulted to Normal.",
+    battleAutoNormal: "No action selected in 10 seconds. Defaulted to Normal.",
     battleNoAngerDodge: "Anger is 0. Dodge is unavailable, switched to Normal.",
     battleFreeDodgeUsed: "Free first dodge consumed. Dodge now requires anger.",
     battleRelationAdvantage: "Adv",
@@ -306,9 +373,14 @@ const i18n = {
     battleSettlementLoseTitle: "Defeat",
     battleSettlementDrawTitle: "Draw",
     battleSettlementConfirm: "Confirm",
+    battleSettlementCancel: "Cancel",
+    battleSettlementCaptureTitle: "Capture Decision",
     battleSettlementCaptureSuccess: "Capture success: {serial}",
     battleSettlementCaptureFail: "Capture failed: {serial}",
     battleSettlementCaptureAbandon: "Capture abandoned: {serial}",
+    captureDecisionPrompt: "You defeated {name} (Serial {serial}). Capture this pet?",
+    captureDecisionConfirm: "Confirm",
+    captureDecisionCancel: "Cancel",
     petInteract: "Pet interaction: companion gives a gentle response.",
     actionSent: "Battle action sent.",
     battleLevelUpLog: "{petName} reached Lv.{level}; stats upgraded.",
@@ -334,6 +406,42 @@ const i18n = {
     inventoryDetailClose: "Close",
     inventoryRelease: "Release",
     inventoryReleaseDone: "Pet released: {petName}",
+    duelTitle: "Duel Requests",
+    authStatusLoggedOut: "Not logged in",
+    authStatusLoggedIn: "Logged in: {username} (@{account})",
+    userMenuAriaLabel: "Account Menu",
+    userMenuEditProfile: "Edit Profile",
+    userMenuLogout: "Logout",
+    profileModalTitle: "Edit Profile",
+    profileAccountLabel: "Username",
+    profileOldPasswordLabel: "Old Password",
+    profileNewPasswordLabel: "New Password",
+    profileConfirmPasswordLabel: "Confirm New Password",
+    profileSaveBtn: "Save Changes",
+    profileHint: "Enter old password to update username or password.",
+    profileSaved: "Profile updated.",
+    profileNoChange: "No changes detected.",
+    profileNeedOldPassword: "Old password is required.",
+    profilePasswordMismatch: "New password and confirm password do not match.",
+    authSearchLabel: "Search account to request a duel",
+    authSearchBtn: "Search",
+    authSearchPlaceholder: "Enter account keyword",
+    authSearchEmpty: "No account found for duel request.",
+    authSearchSend: "Request Duel",
+    authSearchSelf: "Cannot challenge yourself",
+    authRequestTitle: "Duel Requests",
+    authRequestInbound: "Inbound",
+    authRequestOutbound: "Outbound",
+    authRequestEmpty: "No duel requests yet.",
+    authRequestPending: "Pending",
+    authRequestAccepted: "Accepted",
+    authRequestRejected: "Rejected",
+    authRequestCancelled: "Cancelled",
+    authLogoutLog: "Logged out.",
+    authSearchErrorLog: "Account search failed: {message}",
+    authActionFailLog: "Auth action failed: {message}",
+    authSendRequestSuccessLog: "Duel request sent to {account}.",
+    authSendRequestFailLog: "Duel request failed: {message}",
     battleReportTitle: "Recent Battle Reports",
     battleReportEmpty: "No reports yet. Start a battle to generate one.",
     battleReportFinished: "Finished",
@@ -347,6 +455,8 @@ const i18n = {
     battleReportModeCapture: "Capture",
     battleReportCaptureSuccess: "Capture success · Serial {serial}",
     battleReportCaptureFail: "Capture failed · Serial {serial}",
+    battleReportDetailTitle: "Battle Replay",
+    battleReportDetailClose: "Close",
     mapTitle: "Map Capability (Demo)",
     mapTip: "Desktop demo of map abstraction: provider, permission state, location and watch.",
     mapProviderLabel: "Map Provider",
@@ -529,6 +639,12 @@ const uiRefs = {
   battleReportTitle: document.getElementById("battle-report-title"),
   mapTitle: document.getElementById("map-title"),
   mapTip: document.getElementById("map-tip"),
+  duelTitle: document.getElementById("duel-title"),
+  duelSearchLabel: document.getElementById("duel-search-label"),
+  profileAccountLabel: document.getElementById("profile-account-label"),
+  profileOldPasswordLabel: document.getElementById("profile-old-password-label"),
+  profileNewPasswordLabel: document.getElementById("profile-new-password-label"),
+  profileConfirmPasswordLabel: document.getElementById("profile-confirm-password-label"),
   mapProviderLabel: document.getElementById("map-provider-label"),
   mapPermissionLabel: document.getElementById("map-permission-label"),
   mapStatusProviderLabel: document.getElementById("map-status-provider-label"),
@@ -564,31 +680,49 @@ let petRoster = DEFAULT_PET_ROSTER.map((pet) => ({ ...pet, name: { ...pet.name }
 let activePetId = petRoster[0].id;
 let enemyPetInBattle = petRoster[1];
 let selectedPetDetailId = null;
+let selectedBattleReportId = null;
 let settlementWinner = null;
+let settlementActionMode = "normal";
 let battleReports = [];
 let mapState = null;
 let mapDemoDistanceMeters = null;
 let nearbyWildPets = [];
 let lastNearbyRefreshSeq = -1;
-
-const ACTION_COUNTDOWN_SECONDS = 5;
-const LEVEL_UP_REQUIRED_WINS = 5;
-const IDLE_WINDOW_BASE = {
-  width: 220,
-  height: 250
+let authSession = {
+  currentUser: null
 };
+let authSearchResults = [];
+let duelRequests = {
+  inbound: [],
+  outbound: []
+};
+let authSearchExecuted = false;
+let profileUpdatePending = false;
+
+const ACTION_COUNTDOWN_SECONDS = 10;
+const LEVEL_UP_REQUIRED_WINS = 5;
 const IDLE_WINDOW_SCALE_STEP = 0.04;
 const IDLE_WINDOW_SCALE_MIN = 0.82;
 const IDLE_WINDOW_SCALE_MAX = 2.2;
+const BATTLE_PLAYER_AZIMUTH_DEG = -92;
+const BATTLE_ENEMY_AZIMUTH_DEG = 92;
+const BATTLE_CAMERA_PITCH_MIN = 58;
+const BATTLE_CAMERA_PITCH_MAX = 86;
 let idleWindowScale = 1;
 let settlementExtraMessage = "";
+let pendingCaptureDecision = null;
 let dragPointerSession = null;
 let rotatePointerSession = null;
 let idleOrbitDeg = 0;
+let battleFacingOffsetDeg = 0;
+let battleCameraPitchDeg = 74;
 let idleModelBaseSize = {
   width: 188,
   height: 220
 };
+let idleWheelScaleDelta = 0;
+let idleWheelFrameToken = null;
+let panelTransitionSeq = 0;
 let freeDodgeUsedBySide = {
   player: false,
   enemy: false
@@ -623,6 +757,46 @@ function t(key, params) {
   return template.replace(/\{(\w+)\}/g, (_, token) => String(params?.[token] ?? ""));
 }
 
+function localizeAuthErrorMessage(message) {
+  const raw = typeof message === "string" ? message.trim() : String(message ?? "");
+  if (!raw) {
+    return language === "zh" ? "未知错误" : "unknown error";
+  }
+  if (language !== "zh") return raw;
+
+  const lower = raw.toLowerCase();
+  const mappings = [
+    ["account already exists", "账号已存在"],
+    ["account length must be 3-32", "账号长度需在 3-32 之间"],
+    ["account cannot contain spaces", "账号不能包含空格"],
+    ["password length must be 6-64", "密码长度需在 6-64 之间"],
+    ["account not found", "账号不存在"],
+    ["invalid password", "密码错误"],
+    ["login required", "请先登录"],
+    ["target account not found", "目标账号不存在"],
+    ["cannot challenge yourself", "不能挑战自己"],
+    ["pending duel request already exists", "已存在待处理的对战申请"],
+    ["username is required", "用户名不能为空"],
+    ["username length must be 2-24", "用户名长度需在 2-24 之间"],
+    ["old password is required", "请输入旧密码"],
+    ["invalid old password", "旧密码错误"],
+    ["invalid username", "用户名格式不合法"],
+    ["invalid new password", "新密码格式不合法"],
+    ["profile update failed", "修改信息失败"],
+    ["list failed", "列表加载失败"],
+    ["search failed", "搜索失败"],
+    ["request failed", "请求失败"],
+    ["logout failed", "退出登录失败"],
+    ["login failed", "登录失败"],
+    ["register failed", "注册失败"]
+  ];
+
+  for (const [keyword, translated] of mappings) {
+    if (lower.includes(keyword)) return translated;
+  }
+  return raw;
+}
+
 function appendLog(text) {
   const time = new Date().toLocaleTimeString();
   const current = logElement.textContent || "";
@@ -635,11 +809,11 @@ function clampNumber(value, min, max) {
 
 function getIdleWindowSize(scaleValue) {
   const scale = clampNumber(scaleValue, IDLE_WINDOW_SCALE_MIN, IDLE_WINDOW_SCALE_MAX);
-  const baseWidth = Math.max(140, idleModelBaseSize.width);
-  const baseHeight = Math.max(170, idleModelBaseSize.height);
+  const baseWidth = Math.max(150, idleModelBaseSize.width + 26);
+  const baseHeight = Math.max(180, idleModelBaseSize.height + 26);
   return {
-    width: Math.round((baseWidth + 26) * scale),
-    height: Math.round((baseHeight + 22) * scale)
+    width: Math.round(baseWidth * scale),
+    height: Math.round(baseHeight * scale)
   };
 }
 
@@ -651,6 +825,22 @@ async function applyIdleWindowScale(scaleValue) {
   } catch {
     // Keep non-blocking behavior when IPC is unavailable.
   }
+}
+
+function queueIdleScale(stepDelta) {
+  idleWheelScaleDelta += stepDelta;
+  if (idleWheelFrameToken) return;
+  idleWheelFrameToken = requestAnimationFrame(() => {
+    idleWheelFrameToken = null;
+    const nextScale = clampNumber(
+      idleWindowScale + idleWheelScaleDelta,
+      IDLE_WINDOW_SCALE_MIN,
+      IDLE_WINDOW_SCALE_MAX
+    );
+    idleWheelScaleDelta = 0;
+    if (Math.abs(nextScale - idleWindowScale) < 0.001) return;
+    void applyIdleWindowScale(nextScale);
+  });
 }
 
 function beginWindowDrag(event) {
@@ -679,23 +869,133 @@ function isInteractivePanelTarget(target) {
   return Boolean(
     target.closest(
       "button, input, select, textarea, label, article, model-viewer, .row, .field, .panel-section, .pet-avatar-item, .pet-quick-set, .battle-report-item, .wild-item, .pet-detail-popover, #log"
+      + ", .battle-report-detail-popover, .user-menu-wrap, .user-menu-dropdown, .profile-modal, .profile-modal-card"
     )
   );
 }
 
 function measureIdleModelBase() {
+  const dims =
+    typeof playerModel.getDimensions === "function" ? playerModel.getDimensions() : null;
+  const dimX = Number(dims?.x);
+  const dimY = Number(dims?.y);
+  const dimZ = Number(dims?.z);
+  if (Number.isFinite(dimX) && Number.isFinite(dimY) && Number.isFinite(dimZ) && dimY > 0.001) {
+    const aspect = clampNumber(Math.max(dimX, dimZ) / dimY, 0.55, 1.45);
+    const baseHeight = 212;
+    idleModelBaseSize = {
+      width: Math.round(baseHeight * aspect),
+      height: baseHeight
+    };
+    return;
+  }
+
   const rect = playerModel.getBoundingClientRect();
   if (!Number.isFinite(rect.width) || !Number.isFinite(rect.height)) return;
-  if (rect.width < 40 || rect.height < 40) return;
+  if (rect.width < 30 || rect.height < 30) return;
+  const fallbackHeight = Math.max(180, Math.round(rect.height * 0.88));
+  const fallbackAspect = clampNumber(rect.width / Math.max(1, rect.height), 0.55, 1.45);
   idleModelBaseSize = {
-    width: Math.round(rect.width),
-    height: Math.round(rect.height)
+    width: Math.round(fallbackHeight * fallbackAspect),
+    height: fallbackHeight
   };
 }
 
+function isUserMenuOpen() {
+  return Boolean(userMenuDropdownElement && !userMenuDropdownElement.classList.contains("hidden"));
+}
+
+function closeUserMenu() {
+  if (!userMenuDropdownElement || !userMenuBtn) return;
+  userMenuDropdownElement.classList.add("hidden");
+  userMenuBtn.setAttribute("aria-expanded", "false");
+}
+
+function openUserMenu() {
+  if (!userMenuDropdownElement || !userMenuBtn) return;
+  userMenuDropdownElement.classList.remove("hidden");
+  userMenuBtn.setAttribute("aria-expanded", "true");
+}
+
+function setProfileStatus(text, type = "normal") {
+  if (!profileModalStatusElement) return;
+  profileModalStatusElement.textContent = text;
+  profileModalStatusElement.classList.remove("error", "success");
+  if (type === "error") profileModalStatusElement.classList.add("error");
+  if (type === "success") profileModalStatusElement.classList.add("success");
+}
+
+function setProfileModalVisible(visible) {
+  if (!profileModalElement) return;
+  profileModalElement.classList.toggle("hidden", !visible);
+  if (profileSaveBtn && !visible && !profileUpdatePending) {
+    profileSaveBtn.disabled = false;
+  }
+  if (!visible) {
+    if (profileOldPasswordInput) profileOldPasswordInput.value = "";
+    if (profileNewPasswordInput) profileNewPasswordInput.value = "";
+    if (profileConfirmPasswordInput) profileConfirmPasswordInput.value = "";
+    setProfileStatus(currentI18n().profileHint);
+  } else {
+    profileAccountInput?.focus();
+  }
+  reportHitState();
+}
+
+function openProfileModal() {
+  if (!authSession?.currentUser?.account) return;
+  const username =
+    authSession?.currentUser?.username || authSession?.currentUser?.account || "";
+  if (profileAccountInput) profileAccountInput.value = username;
+  if (profileOldPasswordInput) profileOldPasswordInput.value = "";
+  if (profileNewPasswordInput) profileNewPasswordInput.value = "";
+  if (profileConfirmPasswordInput) profileConfirmPasswordInput.value = "";
+  setProfileStatus(currentI18n().profileHint);
+  setProfileModalVisible(true);
+}
+
+function updateBattleHudTop() {
+  if (!battleSceneElement) return;
+  if (!battleMode) {
+    battleSceneElement.style.removeProperty("--hud-top");
+    return;
+  }
+  const sceneRect = battleSceneElement.getBoundingClientRect();
+  const candidates = [playerCard, enemyCard].filter((card) => {
+    if (!(card instanceof HTMLElement)) return false;
+    return !card.classList.contains("hidden");
+  });
+  if (candidates.length === 0) return;
+  const minTop = Math.min(
+    ...candidates.map((card) => card.getBoundingClientRect().top - sceneRect.top)
+  );
+  const hudTop = clampNumber(minTop - 52, 18, 124);
+  battleSceneElement.style.setProperty("--hud-top", `${Math.round(hudTop)}px`);
+}
+
 function closeTopLayerByEsc() {
+  if (profileModalElement && !profileModalElement.classList.contains("hidden")) {
+    setProfileModalVisible(false);
+    return true;
+  }
+  if (isUserMenuOpen()) {
+    closeUserMenu();
+    return true;
+  }
   if (battleSettlementElement && !battleSettlementElement.classList.contains("hidden")) {
-    void endBattle(false);
+    if (settlementActionMode === "capture") {
+      void resolveCaptureDecision(false);
+    } else {
+      void endBattle(false);
+    }
+    return true;
+  }
+  if (
+    battleReportDetailPopoverElement &&
+    !battleReportDetailPopoverElement.classList.contains("hidden")
+  ) {
+    selectedBattleReportId = null;
+    renderBattleReportDetail();
     return true;
   }
   if (petDetailPopoverElement && !petDetailPopoverElement.classList.contains("hidden")) {
@@ -712,14 +1012,31 @@ function closeTopLayerByEsc() {
 }
 
 function setPanelVisible(visible) {
+  const seq = ++panelTransitionSeq;
   if (visible) {
-    panelElement.classList.remove("hidden");
+    closeUserMenu();
+    setProfileModalVisible(false);
+    // Hide scene immediately, then reveal panel after layout switch to avoid top-left flash.
     battleSceneElement.classList.add("panel-open");
-  } else {
     panelElement.classList.add("hidden");
-    battleSceneElement.classList.remove("panel-open");
+    void window.petApi
+      .setLayoutMode("panel")
+      .catch(() => null)
+      .then(() => {
+        if (seq !== panelTransitionSeq) return;
+        panelElement.classList.remove("hidden");
+        reportHitState();
+      });
+    return;
   }
-  void window.petApi.setLayoutMode(visible ? "panel" : battleMode ? "battle" : "idle");
+
+  panelElement.classList.add("hidden");
+  battleSceneElement.classList.remove("panel-open");
+  closeUserMenu();
+  setProfileModalVisible(false);
+  selectedBattleReportId = null;
+  renderBattleReportDetail();
+  void window.petApi.setLayoutMode(battleMode ? "battle" : "idle");
   reportHitState();
 }
 
@@ -811,10 +1128,24 @@ function applyIdleOrbit() {
   playerModel.cameraOrbit = orbit;
 }
 
+function applyBattleView() {
+  if (!battleMode) return;
+  const yawOffset = clampNumber(battleFacingOffsetDeg, -120, 120);
+  const playerAzimuth = BATTLE_PLAYER_AZIMUTH_DEG + yawOffset;
+  const enemyAzimuth = BATTLE_ENEMY_AZIMUTH_DEG - yawOffset;
+  const pitch = clampNumber(battleCameraPitchDeg, BATTLE_CAMERA_PITCH_MIN, BATTLE_CAMERA_PITCH_MAX);
+  playerModel.orientation = "0deg 0deg 0deg";
+  enemyModel.orientation = "0deg 0deg 0deg";
+  playerModel.cameraOrbit = `${playerAzimuth}deg ${pitch}deg auto`;
+  enemyModel.cameraOrbit = `${enemyAzimuth}deg ${pitch}deg auto`;
+}
+
 function canUseDodge(side, anger) {
-  if (side === "player" || side === "enemy") {
-    if (!freeDodgeUsedBySide[side]) return true;
-  }
+  const stateUsed =
+    side === "player" || side === "enemy"
+      ? Boolean(lastBattleState?.[side]?.freeDodgeUsed ?? freeDodgeUsedBySide[side])
+      : true;
+  if (!stateUsed) return true;
   return anger > 0;
 }
 
@@ -1131,6 +1462,10 @@ async function setActivePet(petId, options = {}) {
   playerModel.src = activePet.model;
   setModelElementTint(playerModel, activePet.element);
   applyIdleOrbit();
+  measureIdleModelBase();
+  if (!battleMode && panelElement.classList.contains("hidden")) {
+    void applyIdleWindowScale(idleWindowScale);
+  }
   playerElementLabel.textContent = getElementText(activePet.element);
   setElementTagTheme(playerElementLabel, activePet.element);
   updateBattleHudBadges(activePet, enemyPetInBattle);
@@ -1181,7 +1516,6 @@ function renderPetDetail() {
   const isActive = pet.id === activePetId;
   const elementName = getElementText(pet.element);
   const displayName = getPetDisplayName(pet);
-  const modelName = pet.model.split("/").pop();
   const statTags = renderStatTagHtml(pet.stats);
   const level = getPetLevel(pet);
   const experience = getPetExperience(pet);
@@ -1198,7 +1532,6 @@ function renderPetDetail() {
         <span class="pet-meta-chip serial">${pet.serial}</span>
         <span class="pet-meta-chip level">${formatLevelText(level)}</span>
         <span class="pet-meta-chip exp">EXP ${experience}/${LEVEL_UP_REQUIRED_WINS}</span>
-        <span class="pet-meta-chip model">${modelName}</span>
         <span class="pet-meta-chip element element-${pet.element}">${elementName}</span>
       </div>
     </div>
@@ -1309,8 +1642,15 @@ function renderPetInventory() {
 }
 
 function formatReportTime(value) {
-  const parsed = Date.parse(value);
-  if (Number.isNaN(parsed)) return value || "-";
+  const raw = typeof value === "string" ? value.trim() : "";
+  let parsed = Date.parse(raw);
+  if (
+    Number.isNaN(parsed) &&
+    /^\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2}(:\d{2})?$/.test(raw)
+  ) {
+    parsed = Date.parse(raw.replace(" ", "T") + "+08:00");
+  }
+  if (Number.isNaN(parsed)) return raw || "-";
   const date = new Date(parsed);
   const locale = language === "zh" ? "zh-CN" : "en-GB";
   const timeZone = language === "zh" ? "Asia/Shanghai" : undefined;
@@ -1338,6 +1678,8 @@ function renderBattleReports() {
   if (!battleReportListElement) return;
   if (!battleReports || battleReports.length === 0) {
     battleReportListElement.innerHTML = `<div class="battle-report-empty">${currentI18n().battleReportEmpty}</div>`;
+    selectedBattleReportId = null;
+    renderBattleReportDetail();
     return;
   }
 
@@ -1371,7 +1713,7 @@ function renderBattleReports() {
         }
       }
       return `
-        <article class="battle-report-item ${statusClass}">
+        <article class="battle-report-item ${statusClass}" data-report-id="${report.id}">
           <div class="battle-report-head">
             <span class="battle-report-status ${statusClass}">${statusLabel}</span>
             <span class="battle-report-time">${currentI18n().battleReportStartedAt}: ${formatReportTime(report.startedAt)}</span>
@@ -1390,6 +1732,16 @@ function renderBattleReports() {
       `;
     })
     .join("");
+
+  const cards = battleReportListElement.querySelectorAll(".battle-report-item");
+  for (const card of cards) {
+    card.addEventListener("click", () => {
+      const reportId = card.getAttribute("data-report-id");
+      selectedBattleReportId = reportId || null;
+      renderBattleReportDetail();
+    });
+  }
+  renderBattleReportDetail();
 }
 
 async function refreshBattleReports(limit = 8) {
@@ -1400,6 +1752,66 @@ async function refreshBattleReports(limit = 8) {
     battleReports = [];
   }
   renderBattleReports();
+}
+
+function renderBattleReportDetail() {
+  if (!battleReportDetailPopoverElement) return;
+  if (!selectedBattleReportId) {
+    battleReportDetailPopoverElement.classList.add("hidden");
+    battleReportDetailPopoverElement.innerHTML = "";
+    return;
+  }
+
+  const report = battleReports.find((item) => item.id === selectedBattleReportId);
+  if (!report) {
+    selectedBattleReportId = null;
+    battleReportDetailPopoverElement.classList.add("hidden");
+    battleReportDetailPopoverElement.innerHTML = "";
+    return;
+  }
+
+  const rounds = Array.isArray(report.rounds) ? report.rounds : [];
+  const roundListHtml =
+    rounds.length === 0
+      ? `<div class="battle-report-round-item">${currentI18n().battleReportEmpty}</div>`
+      : rounds
+          .map((round) => {
+            const notes = Array.isArray(round.notes) ? round.notes.filter(Boolean).join("；") : "";
+            const playerAction = formatAction(round.playerAction || "normal_attack");
+            const enemyAction = formatAction(round.enemyAction || "normal_attack");
+            const playerDamage = Number(round.damageTaken?.player || 0);
+            const enemyDamage = Number(round.damageTaken?.enemy || 0);
+            const actionsLine =
+              language === "zh"
+                ? `我方 ${playerAction} · 敌方 ${enemyAction}`
+                : `Player ${playerAction} · Enemy ${enemyAction}`;
+            return `
+              <article class="battle-report-round-item">
+                <div class="battle-report-round-top">
+                  <span>${currentI18n().battleReportRound} ${round.round}</span>
+                  <span>HP-${playerDamage} / HP-${enemyDamage}</span>
+                </div>
+                <div class="battle-report-round-actions">${actionsLine}</div>
+                <div class="battle-report-round-notes">${notes || "-"}</div>
+              </article>
+            `;
+          })
+          .join("");
+
+  battleReportDetailPopoverElement.classList.remove("hidden");
+  battleReportDetailPopoverElement.innerHTML = `
+    <div class="battle-report-detail-head">
+      <span class="battle-report-detail-title">${currentI18n().battleReportDetailTitle}</span>
+      <button id="btn-close-battle-report-detail" class="battle-report-detail-close">${currentI18n().battleReportDetailClose}</button>
+    </div>
+    <div class="battle-report-round-list">${roundListHtml}</div>
+  `;
+
+  const closeBtn = document.getElementById("btn-close-battle-report-detail");
+  closeBtn?.addEventListener("click", () => {
+    selectedBattleReportId = null;
+    renderBattleReportDetail();
+  });
 }
 
 function getMapProviderName(providerId) {
@@ -1620,6 +2032,7 @@ async function startCaptureBattle(wildPet) {
   clearActionCountdown();
   isRoundResolving = false;
   hideBattleSettlement();
+  hideCaptureDecision();
   settlementExtraMessage = "";
   freeDodgeUsedBySide = { player: false, enemy: false };
   setBattleMode(true);
@@ -1692,8 +2105,6 @@ function applyLanguage() {
   uiRefs.enemyLabel.textContent = getPetDisplayName(enemyPetInBattle);
   battleResetBtn.textContent = currentI18n().resetBattle;
   endBattleBtn.textContent = currentI18n().endBattle;
-  closePanelBtn.title = currentI18n().closePanel;
-  closePanelBtn.setAttribute("aria-label", currentI18n().closePanel);
   uiRefs.tagActionNormal.textContent = currentI18n().actionNormal;
   uiRefs.tagActionElement.textContent = currentI18n().actionElement;
   uiRefs.tagActionDodge.textContent = currentI18n().actionDodge;
@@ -1703,6 +2114,12 @@ function applyLanguage() {
   uiRefs.battleReportTitle.textContent = currentI18n().battleReportTitle;
   uiRefs.mapTitle.textContent = currentI18n().mapTitle;
   uiRefs.mapTip.textContent = currentI18n().mapTip;
+  uiRefs.duelTitle.textContent = currentI18n().duelTitle;
+  uiRefs.duelSearchLabel.textContent = currentI18n().authSearchLabel;
+  uiRefs.profileAccountLabel.textContent = currentI18n().profileAccountLabel;
+  uiRefs.profileOldPasswordLabel.textContent = currentI18n().profileOldPasswordLabel;
+  uiRefs.profileNewPasswordLabel.textContent = currentI18n().profileNewPasswordLabel;
+  uiRefs.profileConfirmPasswordLabel.textContent = currentI18n().profileConfirmPasswordLabel;
   uiRefs.mapProviderLabel.textContent = currentI18n().mapProviderLabel;
   uiRefs.mapPermissionLabel.textContent = currentI18n().mapPermissionLabel;
   uiRefs.mapStatusProviderLabel.textContent = currentI18n().mapStatusProvider;
@@ -1722,11 +2139,43 @@ function applyLanguage() {
   mapWatchStopBtn.textContent = currentI18n().mapStopWatch;
   mapDistanceBtn.textContent = currentI18n().mapDistanceDemo;
   wildRefreshBtn.textContent = currentI18n().wildRefresh;
+  if (userMenuBtn) userMenuBtn.setAttribute("aria-label", currentI18n().userMenuAriaLabel);
+  if (userEditProfileBtn) userEditProfileBtn.textContent = currentI18n().userMenuEditProfile;
+  if (userLogoutBtn) userLogoutBtn.textContent = currentI18n().userMenuLogout;
+  if (profileModalTitleElement) profileModalTitleElement.textContent = currentI18n().profileModalTitle;
+  if (profileSaveBtn) profileSaveBtn.textContent = currentI18n().profileSaveBtn;
+  if (profileModalStatusElement && profileModalElement?.classList.contains("hidden")) {
+    profileModalStatusElement.textContent = currentI18n().profileHint;
+    profileModalStatusElement.classList.remove("error", "success");
+  }
+  if (duelSearchBtn) duelSearchBtn.textContent = currentI18n().authSearchBtn;
+  if (duelSearchKeywordInput) {
+    duelSearchKeywordInput.placeholder = currentI18n().authSearchPlaceholder;
+  }
   uiRefs.tipText.textContent = currentI18n().tip;
   updatePauseText();
   languageBtn.textContent = currentI18n().languageButton;
   if (settlementConfirmBtn) {
-    settlementConfirmBtn.textContent = currentI18n().battleSettlementConfirm;
+    settlementConfirmBtn.textContent =
+      settlementActionMode === "capture"
+        ? currentI18n().captureDecisionConfirm
+        : currentI18n().battleSettlementConfirm;
+  }
+  if (settlementSecondaryBtn) {
+    settlementSecondaryBtn.textContent = currentI18n().battleSettlementCancel;
+    settlementSecondaryBtn.classList.toggle("hidden", settlementActionMode !== "capture");
+  }
+  if (captureDecisionConfirmBtn) {
+    captureDecisionConfirmBtn.textContent = currentI18n().captureDecisionConfirm;
+  }
+  if (captureDecisionCancelBtn) {
+    captureDecisionCancelBtn.textContent = currentI18n().captureDecisionCancel;
+  }
+  if (pendingCaptureDecision && captureDecisionTextElement) {
+    captureDecisionTextElement.textContent = t("captureDecisionPrompt", {
+      name: pendingCaptureDecision.name,
+      serial: pendingCaptureDecision.serial
+    });
   }
   playerElementLabel.textContent = getElementText(activePet.element);
   enemyElementLabel.textContent = getElementText(enemyPetInBattle.element);
@@ -1735,6 +2184,7 @@ function applyLanguage() {
   updateBattleHudBadges(activePet, enemyPetInBattle);
   renderPetInventory();
   renderBattleReports();
+  renderAuthSection();
   syncMapSelectLabels();
   renderMapState();
   renderNearbyWildPets();
@@ -1755,6 +2205,366 @@ function renderRuntimeInfo() {
     platform: runtimeInfo.platform,
     app: runtimeInfo.appVersion
   });
+}
+
+function getDuelRequestStatusText(status) {
+  if (status === "accepted") return currentI18n().authRequestAccepted;
+  if (status === "rejected") return currentI18n().authRequestRejected;
+  if (status === "cancelled") return currentI18n().authRequestCancelled;
+  return currentI18n().authRequestPending;
+}
+
+function hasPendingDuelWithAccount(account) {
+  const accountKey = typeof account === "string" ? account.toLowerCase() : "";
+  if (!accountKey) return false;
+  const all = [...(duelRequests.inbound || []), ...(duelRequests.outbound || [])];
+  return all.some((request) => {
+    if (request.status !== "pending") return false;
+    return (
+      String(request.fromAccount || "").toLowerCase() === accountKey ||
+      String(request.toAccount || "").toLowerCase() === accountKey
+    );
+  });
+}
+
+function renderDuelSearchResults() {
+  if (!duelSearchResultsElement) return;
+  const currentUser = authSession?.currentUser || null;
+  if (!currentUser) {
+    duelSearchResultsElement.innerHTML = "";
+    return;
+  }
+
+  if (!authSearchExecuted) {
+    duelSearchResultsElement.innerHTML = "";
+    return;
+  }
+
+  if (!Array.isArray(authSearchResults) || authSearchResults.length === 0) {
+    duelSearchResultsElement.innerHTML = `<div class="duel-empty">${currentI18n().authSearchEmpty}</div>`;
+    return;
+  }
+
+  duelSearchResultsElement.innerHTML = authSearchResults
+    .map((user) => {
+      const account = String(user.account || "-");
+      const self = String(account).toLowerCase() === String(currentUser.account || "").toLowerCase();
+      const pending = hasPendingDuelWithAccount(account);
+      const disabled = self || pending;
+      const statusText = self
+        ? currentI18n().authSearchSelf
+        : pending
+          ? currentI18n().authRequestPending
+          : "";
+      return `
+        <article class="duel-result-item" data-account="${account}">
+          <div class="duel-result-main">
+            <span class="duel-account">${account}</span>
+            <span class="duel-account-meta">${formatReportTime(user.createdAt)}</span>
+          </div>
+          <div class="duel-result-actions">
+            <button class="duel-send-btn" ${disabled ? "disabled" : ""}>${currentI18n().authSearchSend}</button>
+            ${statusText ? `<span class="duel-send-state">${statusText}</span>` : ""}
+          </div>
+        </article>
+      `;
+    })
+    .join("");
+
+  const sendButtons = duelSearchResultsElement.querySelectorAll(".duel-result-item .duel-send-btn");
+  for (const button of sendButtons) {
+    button.addEventListener("click", () => {
+      const container = button.closest(".duel-result-item");
+      const account = container?.getAttribute("data-account");
+      if (!account) return;
+      void sendDuelRequest(account);
+    });
+  }
+}
+
+function renderDuelRequestList() {
+  if (!duelRequestListElement) return;
+  const currentUser = authSession?.currentUser || null;
+  if (!currentUser) {
+    duelRequestListElement.innerHTML = "";
+    return;
+  }
+
+  const inbound = Array.isArray(duelRequests.inbound) ? duelRequests.inbound : [];
+  const outbound = Array.isArray(duelRequests.outbound) ? duelRequests.outbound : [];
+  if (inbound.length === 0 && outbound.length === 0) {
+    duelRequestListElement.innerHTML = `<div class="duel-empty">${currentI18n().authRequestEmpty}</div>`;
+    return;
+  }
+
+  const renderItems = (list, direction) => {
+    if (!Array.isArray(list) || list.length === 0) {
+      return `<div class="duel-empty">${currentI18n().authRequestEmpty}</div>`;
+    }
+    return list
+      .slice(0, 8)
+      .map((request) => {
+        const peer = direction === "inbound" ? request.fromAccount : request.toAccount;
+        return `
+          <article class="duel-request-item ${request.status}">
+            <div class="duel-request-main">
+              <span class="duel-account">${peer || "-"}</span>
+              <span class="duel-send-state">${getDuelRequestStatusText(request.status)}</span>
+            </div>
+            <span class="duel-account-meta">${formatReportTime(request.createdAt)}</span>
+          </article>
+        `;
+      })
+      .join("");
+  };
+
+  duelRequestListElement.innerHTML = `
+    <div class="duel-request-group">
+      <h3>${currentI18n().authRequestInbound}</h3>
+      ${renderItems(inbound, "inbound")}
+    </div>
+    <div class="duel-request-group">
+      <h3>${currentI18n().authRequestOutbound}</h3>
+      ${renderItems(outbound, "outbound")}
+    </div>
+  `;
+}
+
+function renderAuthSection() {
+  const currentUser = authSession?.currentUser || null;
+  const account = currentUser?.account || "-";
+  const username = currentUser?.username || currentUser?.account || "-";
+  const loggedIn = Boolean(currentUser?.account);
+  if (authStatusElement) {
+    authStatusElement.textContent = loggedIn
+      ? t("authStatusLoggedIn", { account, username })
+      : currentI18n().authStatusLoggedOut;
+  }
+  if (userMenuAccountElement) {
+    userMenuAccountElement.textContent = loggedIn ? `${username} (@${account})` : "-";
+  }
+  if (userAvatarElement) {
+    userAvatarElement.textContent = getUserAvatarToken(username);
+  }
+  if (userMenuBtn) {
+    userMenuBtn.disabled = !loggedIn;
+  }
+  if (!currentUser) {
+    closeUserMenu();
+    setProfileModalVisible(false);
+  }
+
+  renderDuelSearchResults();
+  renderDuelRequestList();
+}
+
+async function refreshAuthSession() {
+  try {
+    const session = await window.petApi.getAuthSession();
+    if (session?.ok) {
+      authSession = {
+        currentUser: session.currentUser || null
+      };
+    } else {
+      authSession = { currentUser: null };
+    }
+  } catch {
+    authSession = { currentUser: null };
+  }
+
+  if (authSession.currentUser) {
+    await refreshDuelRequests({ silent: true });
+  } else {
+    duelRequests = { inbound: [], outbound: [] };
+  }
+  renderAuthSection();
+}
+
+async function applyAuthStateFromEvent(session) {
+  if (session?.ok) {
+    authSession = {
+      currentUser: session.currentUser || null
+    };
+  } else {
+    authSession = { currentUser: null };
+  }
+  if (authSession.currentUser) {
+    await refreshDuelRequests({ silent: true });
+  } else {
+    authSearchResults = [];
+    authSearchExecuted = false;
+    duelRequests = { inbound: [], outbound: [] };
+    renderDuelSearchResults();
+    renderDuelRequestList();
+  }
+  renderAuthSection();
+}
+
+async function refreshDuelRequests(options = {}) {
+  const silent = Boolean(options.silent);
+  if (!authSession.currentUser) {
+    duelRequests = { inbound: [], outbound: [] };
+    renderDuelRequestList();
+    return;
+  }
+  try {
+    const response = await window.petApi.listDuelRequests();
+    if (response?.ok) {
+      duelRequests = {
+        inbound: Array.isArray(response.inbound) ? response.inbound : [],
+        outbound: Array.isArray(response.outbound) ? response.outbound : []
+      };
+    } else {
+      duelRequests = { inbound: [], outbound: [] };
+      if (!silent) {
+        appendLog(
+          t("authSearchErrorLog", {
+            message: localizeAuthErrorMessage(response?.error || "list failed")
+          })
+        );
+      }
+    }
+  } catch (error) {
+    duelRequests = { inbound: [], outbound: [] };
+    if (!silent) {
+      appendLog(
+        t("authSearchErrorLog", {
+          message: localizeAuthErrorMessage(error instanceof Error ? error.message : "list failed")
+        })
+      );
+    }
+  }
+  renderDuelRequestList();
+  renderDuelSearchResults();
+}
+
+async function sendDuelRequest(targetAccount) {
+  const account = typeof targetAccount === "string" ? targetAccount.trim() : "";
+  if (!account) return;
+  const response = await window.petApi.sendDuelRequest(account);
+  if (!response?.ok) {
+    appendLog(
+      t("authSendRequestFailLog", {
+        message: localizeAuthErrorMessage(response?.error || "request failed")
+      })
+    );
+    return;
+  }
+  appendLog(t("authSendRequestSuccessLog", { account }));
+  await refreshDuelRequests({ silent: true });
+}
+
+function getUserAvatarToken(input) {
+  const text = typeof input === "string" ? input.trim() : "";
+  if (!text) return "U";
+  return text.slice(0, 1).toUpperCase();
+}
+
+async function logoutAccount() {
+  closeUserMenu();
+  setProfileModalVisible(false);
+  const response = await window.petApi.authLogout();
+  if (!response?.ok) {
+    appendLog(
+      t("authActionFailLog", {
+        message: localizeAuthErrorMessage(response?.error || "logout failed")
+      })
+    );
+    return;
+  }
+  authSearchResults = [];
+  authSearchExecuted = false;
+  duelRequests = { inbound: [], outbound: [] };
+  appendLog(currentI18n().authLogoutLog);
+  await refreshAuthSession();
+}
+
+function toggleUserMenu() {
+  if (isUserMenuOpen()) {
+    closeUserMenu();
+  } else {
+    openUserMenu();
+  }
+  reportHitState();
+}
+
+async function saveProfileChanges() {
+  if (profileUpdatePending) return;
+  const username = profileAccountInput?.value?.trim() || "";
+  const oldPassword = profileOldPasswordInput?.value?.trim() || "";
+  const newPassword = profileNewPasswordInput?.value?.trim() || "";
+  const confirmPassword = profileConfirmPasswordInput?.value?.trim() || "";
+
+  if (!oldPassword) {
+    setProfileStatus(currentI18n().profileNeedOldPassword, "error");
+    return;
+  }
+  if (newPassword && newPassword !== confirmPassword) {
+    setProfileStatus(currentI18n().profilePasswordMismatch, "error");
+    return;
+  }
+
+  const currentUsername =
+    authSession?.currentUser?.username || authSession?.currentUser?.account || "";
+  const changedUsername = username && username !== currentUsername;
+  const changedPassword = Boolean(newPassword);
+  if (!changedUsername && !changedPassword) {
+    setProfileStatus(currentI18n().profileNoChange);
+    return;
+  }
+
+  profileUpdatePending = true;
+  if (profileSaveBtn) profileSaveBtn.disabled = true;
+  setProfileStatus(currentI18n().profileHint);
+  try {
+    const response = await window.petApi.authUpdateProfile({
+      username,
+      oldPassword,
+      newPassword
+    });
+    if (!response?.ok) {
+      setProfileStatus(
+        t("authActionFailLog", {
+          message: localizeAuthErrorMessage(response?.error || "profile update failed")
+        }),
+        "error"
+      );
+      return;
+    }
+    setProfileStatus(currentI18n().profileSaved, "success");
+    await refreshAuthSession();
+    setTimeout(() => {
+      setProfileModalVisible(false);
+    }, 240);
+  } catch (error) {
+    setProfileStatus(
+      t("authActionFailLog", {
+        message: localizeAuthErrorMessage(
+          error instanceof Error ? error.message : "profile update failed"
+        )
+      }),
+      "error"
+    );
+  } finally {
+    profileUpdatePending = false;
+    if (profileSaveBtn) profileSaveBtn.disabled = false;
+  }
+}
+
+async function searchDuelTarget() {
+  const keyword = duelSearchKeywordInput?.value?.trim() || "";
+  const response = await window.petApi.searchUsers(keyword, 12);
+  if (!response?.ok) {
+    appendLog(
+      t("authSearchErrorLog", {
+        message: localizeAuthErrorMessage(response?.error || "search failed")
+      })
+    );
+    return;
+  }
+  authSearchExecuted = true;
+  authSearchResults = Array.isArray(response.users) ? response.users : [];
+  renderDuelSearchResults();
 }
 
 function getBattleSettlementCopy(winner) {
@@ -1783,23 +2593,88 @@ function getBattleSettlementCopy(winner) {
   };
 }
 
+function getCaptureDecisionSettlementCopy() {
+  const decision = pendingCaptureDecision || {
+    serial: enemyPetInBattle?.serial || "-",
+    name: getPetDisplayName(enemyPetInBattle)
+  };
+  return {
+    theme: "win",
+    title: currentI18n().battleSettlementCaptureTitle,
+    subtitle: t("captureDecisionPrompt", {
+      name: decision.name,
+      serial: decision.serial
+    })
+  };
+}
+
 function syncBattleSettlementText() {
-  if (!settlementWinner || !battleSettlementTitleElement || !battleSettlementSubtitleElement) return;
-  const copy = getBattleSettlementCopy(settlementWinner);
+  if (!battleSettlementElement || battleSettlementElement.classList.contains("hidden")) return;
+  if (!battleSettlementTitleElement || !battleSettlementSubtitleElement) return;
+  const copy =
+    settlementActionMode === "capture"
+      ? getCaptureDecisionSettlementCopy()
+      : getBattleSettlementCopy(settlementWinner);
   battleSettlementTitleElement.textContent = copy.title;
   battleSettlementSubtitleElement.textContent = copy.subtitle;
+  if (settlementConfirmBtn) {
+    settlementConfirmBtn.textContent =
+      settlementActionMode === "capture"
+        ? currentI18n().captureDecisionConfirm
+        : currentI18n().battleSettlementConfirm;
+  }
+  if (settlementSecondaryBtn) {
+    settlementSecondaryBtn.textContent = currentI18n().battleSettlementCancel;
+    settlementSecondaryBtn.classList.toggle("hidden", settlementActionMode !== "capture");
+  }
 }
 
 function showBattleSettlement(winner) {
   if (!battleSettlementElement || !battleSettlementTitleElement || !battleSettlementSubtitleElement) {
     return;
   }
+  settlementActionMode = "normal";
   settlementWinner = winner;
   const copy = getBattleSettlementCopy(winner);
   battleSettlementElement.classList.remove("hidden", "show", "win", "lose", "draw");
   battleSettlementElement.classList.add(copy.theme);
   battleSettlementTitleElement.textContent = copy.title;
   battleSettlementSubtitleElement.textContent = copy.subtitle;
+  if (settlementConfirmBtn) {
+    settlementConfirmBtn.textContent = currentI18n().battleSettlementConfirm;
+  }
+  if (settlementSecondaryBtn) {
+    settlementSecondaryBtn.classList.add("hidden");
+  }
+  requestAnimationFrame(() => {
+    battleSettlementElement.classList.add("show");
+  });
+}
+
+function showCaptureDecisionSettlement(payload) {
+  if (!battleSettlementElement || !battleSettlementTitleElement || !battleSettlementSubtitleElement) {
+    return;
+  }
+  pendingCaptureDecision = {
+    serial: payload?.serial || enemyPetInBattle?.serial || "-",
+    name: payload?.name || getPetDisplayName(enemyPetInBattle)
+  };
+  settlementActionMode = "capture";
+  settlementWinner = "player";
+  const copy = getCaptureDecisionSettlementCopy();
+  battleSettlementElement.classList.remove("hidden", "show", "win", "lose", "draw");
+  battleSettlementElement.classList.add(copy.theme);
+  battleSettlementTitleElement.textContent = copy.title;
+  battleSettlementSubtitleElement.textContent = copy.subtitle;
+  if (settlementConfirmBtn) {
+    settlementConfirmBtn.textContent = currentI18n().captureDecisionConfirm;
+    settlementConfirmBtn.disabled = false;
+  }
+  if (settlementSecondaryBtn) {
+    settlementSecondaryBtn.textContent = currentI18n().battleSettlementCancel;
+    settlementSecondaryBtn.classList.remove("hidden");
+    settlementSecondaryBtn.disabled = false;
+  }
   requestAnimationFrame(() => {
     battleSettlementElement.classList.add("show");
   });
@@ -1809,13 +2684,114 @@ function hideBattleSettlement() {
   if (!battleSettlementElement) return;
   settlementWinner = null;
   settlementExtraMessage = "";
+  settlementActionMode = "normal";
   battleSettlementElement.classList.remove("show", "win", "lose", "draw");
   battleSettlementElement.classList.add("hidden");
+  if (settlementConfirmBtn) {
+    settlementConfirmBtn.textContent = currentI18n().battleSettlementConfirm;
+    settlementConfirmBtn.disabled = false;
+  }
+  if (settlementSecondaryBtn) {
+    settlementSecondaryBtn.classList.add("hidden");
+    settlementSecondaryBtn.disabled = false;
+  }
+}
+
+function hideCaptureDecision() {
+  pendingCaptureDecision = null;
+  if (!captureDecisionElement || !captureDecisionTextElement) return;
+  captureDecisionTextElement.textContent = "";
+  captureDecisionElement.classList.add("hidden");
+}
+
+function showCaptureDecision(payload) {
+  // Keep compatibility function name while converging to a single settlement dialog.
+  hideCaptureDecision();
+  showCaptureDecisionSettlement(payload);
+}
+
+async function resolveCaptureDecision(accept) {
+  if (!pendingCaptureDecision) {
+    hideBattleSettlement();
+    hideCaptureDecision();
+    return;
+  }
+  const decision = { ...pendingCaptureDecision };
+  if (settlementConfirmBtn) {
+    settlementConfirmBtn.disabled = true;
+  }
+  if (settlementSecondaryBtn) {
+    settlementSecondaryBtn.disabled = true;
+  }
+
+  const result = await window.petApi.resolveCapture(Boolean(accept));
+  if (!result?.ok) {
+    if (settlementConfirmBtn) {
+      settlementConfirmBtn.disabled = false;
+    }
+    if (settlementSecondaryBtn) {
+      settlementSecondaryBtn.disabled = false;
+    }
+    appendLog(t("wildRefreshFailLog", { message: result?.error?.message || "resolve failed" }));
+    return;
+  }
+
+  const captureOutcome = result.captureOutcome;
+  if (captureOutcome?.ok) {
+    if (captureOutcome.success) {
+      settlementExtraMessage = t("battleSettlementCaptureSuccess", {
+        serial: captureOutcome.wildPet?.serial || decision.serial || "-"
+      });
+      appendLog(
+        t("wildCaptureSuccessLog", {
+          serial: captureOutcome.wildPet?.serial || decision.serial || "-"
+        })
+      );
+      appendLog(
+        t("wildCaptureReportLog", {
+          serial: captureOutcome.wildPet?.serial || decision.serial || "-"
+        })
+      );
+      await loadInventorySnapshot();
+      renderPetInventory();
+      renderPetDetail();
+      updateBattleHudBadges(getActivePet(), enemyPetInBattle);
+    } else {
+      settlementExtraMessage = t("battleSettlementCaptureAbandon", {
+        serial: captureOutcome.wildPet?.serial || decision.serial || "-"
+      });
+      appendLog(
+        t("battleSettlementCaptureAbandon", {
+          serial: captureOutcome.wildPet?.serial || decision.serial || "-"
+        })
+      );
+      appendLog(
+        t("wildCaptureAbortLog", {
+          serial: captureOutcome.wildPet?.serial || decision.serial || "-"
+        })
+      );
+    }
+    await refreshNearbyWildPets({ silent: true });
+  }
+
+  hideCaptureDecision();
+  hideBattleSettlement();
+  await endBattle(false);
 }
 
 function setBattleMode(active) {
   battleMode = active;
   battleSceneElement.classList.toggle("battle-mode", active);
+  playerModel.orientation = "0deg 0deg 0deg";
+  enemyModel.orientation = "0deg 0deg 0deg";
+  if (active) {
+    applyBattleView();
+  } else {
+    applyIdleOrbit();
+    enemyModel.cameraOrbit = "0deg 74deg auto";
+    battleFacingOffsetDeg = 0;
+    battleCameraPitchDeg = 74;
+  }
   roundFeedElement.classList.toggle("hidden", !active);
   lastRoundResultElement.classList.toggle("hidden", !active);
   enemyCard.classList.toggle("hidden", !active);
@@ -1830,9 +2806,11 @@ function setBattleMode(active) {
     updateBattleRelationTag(null, null);
     hideBattleCountdown();
     hideBattleSettlement();
+    hideCaptureDecision();
   } else {
     updateBattleRelationTag(lastBattleState?.player?.element, lastBattleState?.enemy?.element);
   }
+  updateBattleHudTop();
   const panelVisible = !panelElement.classList.contains("hidden");
   void window.petApi.setLayoutMode(panelVisible ? "panel" : active ? "battle" : "idle");
   syncActionButtons();
@@ -1938,7 +2916,7 @@ function syncActionButtons() {
     button.disabled =
       disabled ||
       (isDodgeAction && !canUseDodge("player", playerAnger)) ||
-      (isUltimateAction && playerAnger < 100);
+      (isUltimateAction && playerAnger < 50);
   }
 }
 
@@ -1974,6 +2952,8 @@ function updateBattleBoard(state) {
   if (!state) return;
   lastBattleState = state;
   const activePet = getActivePet();
+  const playerDisplayElement = battleMode ? state.player.element : activePet.element;
+  const enemyDisplayElement = battleMode ? state.enemy.element : enemyPetInBattle.element;
 
   battleRoundElement.textContent = `${currentI18n().round}: ${state.round}`;
 
@@ -1982,13 +2962,13 @@ function updateBattleBoard(state) {
   updateBar(angerFillPlayer, angerValuePlayer, state.player.anger, 100, (v) => `${v}%`);
   updateBar(angerFillEnemy, angerValueEnemy, state.enemy.anger, 100, (v) => `${v}%`);
 
-  playerElementLabel.textContent = getElementText(state.player.element);
-  enemyElementLabel.textContent = getElementText(state.enemy.element);
-  setModelElementTint(playerModel, state.player.element);
-  setModelElementTint(enemyModel, state.enemy.element);
-  setElementTagTheme(playerElementLabel, state.player.element);
-  setElementTagTheme(enemyElementLabel, state.enemy.element);
-  updateBattleRelationTag(state.player.element, state.enemy.element);
+  playerElementLabel.textContent = getElementText(playerDisplayElement);
+  enemyElementLabel.textContent = getElementText(enemyDisplayElement);
+  setModelElementTint(playerModel, playerDisplayElement);
+  setModelElementTint(enemyModel, enemyDisplayElement);
+  setElementTagTheme(playerElementLabel, playerDisplayElement);
+  setElementTagTheme(enemyElementLabel, enemyDisplayElement);
+  updateBattleRelationTag(playerDisplayElement, enemyDisplayElement);
   uiRefs.playerLabel.textContent = getPetDisplayName(activePet);
   uiRefs.enemyLabel.textContent = getPetDisplayName(enemyPetInBattle);
   updateBattleHudBadges(activePet, enemyPetInBattle);
@@ -1996,6 +2976,7 @@ function updateBattleBoard(state) {
   statusPlayerElement.textContent = formatStatuses(state.player.statuses);
   statusEnemyElement.textContent = formatStatuses(state.enemy.statuses);
 
+  updateBattleHudTop();
   syncActionButtons();
 }
 
@@ -2225,6 +3206,7 @@ async function resetBattle() {
   clearActionCountdown();
   isRoundResolving = false;
   hideBattleSettlement();
+  hideCaptureDecision();
   settlementExtraMessage = "";
   freeDodgeUsedBySide = { player: false, enemy: false };
   setBattleMode(true);
@@ -2297,6 +3279,7 @@ async function actBattle(action, options = {}) {
   if (!battleMode) {
     setBattleMode(true);
   }
+  if (pendingCaptureDecision) return;
   if (isRoundResolving) return;
 
   let resolvedAction = options.auto ? "normal_attack" : action;
@@ -2466,17 +3449,12 @@ async function actBattle(action, options = {}) {
         appendLog(t("battleCelebrateWin"));
         tickerMessages.push(t("battleTickerWinnerPlayer"));
         tickerMessages.push(t("battleCelebrateWin"));
-      } else if (round.winner === "enemy") {
+      } else {
         territoryOwner = "enemy";
         appendLog(t("battleWinEnemy"));
         appendLog(t("battleCelebrateLose"));
         tickerMessages.push(t("battleTickerWinnerEnemy"));
         tickerMessages.push(t("battleCelebrateLose"));
-      } else {
-        appendLog(t("battleDraw"));
-        appendLog(t("battleCelebrateDraw"));
-        tickerMessages.push(t("battleTickerWinnerDraw"));
-        tickerMessages.push(t("battleCelebrateDraw"));
       }
 
       if (result.progression?.ok && result.progression.pet) {
@@ -2502,7 +3480,12 @@ async function actBattle(action, options = {}) {
         updateBattleHudBadges(getActivePet(), enemyPetInBattle);
       }
 
-      if (result.captureOutcome && result.captureOutcome.ok) {
+      if (result.captureDecisionRequired) {
+        showCaptureDecision({
+          serial: enemyPetInBattle?.serial || "-",
+          name: getPetDisplayName(enemyPetInBattle)
+        });
+      } else if (result.captureOutcome && result.captureOutcome.ok) {
         if (result.captureOutcome.success) {
           settlementExtraMessage = t("battleSettlementCaptureSuccess", {
             serial: result.captureOutcome.wildPet?.serial || "-"
@@ -2535,8 +3518,10 @@ async function actBattle(action, options = {}) {
         }
       }
 
-      showBattleSettlement(round.winner);
-      void refreshBattleReports();
+      if (!result.captureDecisionRequired) {
+        showBattleSettlement(round.winner);
+        void refreshBattleReports();
+      }
     }
     enqueueRoundFeed(tickerMessages);
   } finally {
@@ -2555,10 +3540,24 @@ function setupMouseTracking() {
   window.addEventListener("mousemove", (event) => {
     updateWindowDrag(event);
     if (rotatePointerSession) {
-      const delta = event.clientX - rotatePointerSession.lastClientX;
+      const deltaX = event.clientX - rotatePointerSession.lastClientX;
+      const deltaY = event.clientY - rotatePointerSession.lastClientY;
       rotatePointerSession.lastClientX = event.clientX;
-      if (delta !== 0) {
-        idleOrbitDeg += delta * 0.55;
+      rotatePointerSession.lastClientY = event.clientY;
+      if (rotatePointerSession.mode === "battle") {
+        if (deltaX !== 0) {
+          battleFacingOffsetDeg += deltaX * 0.45;
+        }
+        if (deltaY !== 0) {
+          battleCameraPitchDeg = clampNumber(
+            battleCameraPitchDeg + deltaY * 0.2,
+            BATTLE_CAMERA_PITCH_MIN,
+            BATTLE_CAMERA_PITCH_MAX
+          );
+        }
+        applyBattleView();
+      } else if (deltaX !== 0) {
+        idleOrbitDeg += deltaX * 0.55;
         applyIdleOrbit();
       }
     }
@@ -2591,8 +3590,17 @@ function setupMouseTracking() {
   playerCard.addEventListener("mousedown", (event) => {
     if (event.button !== 0) return;
     const panelVisible = !panelElement.classList.contains("hidden");
-    if (battleMode || panelVisible) return;
+    if (panelVisible) return;
     event.preventDefault();
+    if (event.ctrlKey) {
+      rotatePointerSession = {
+        mode: battleMode ? "battle" : "idle",
+        lastClientX: event.clientX,
+        lastClientY: event.clientY
+      };
+      return;
+    }
+    if (battleMode) return;
     beginWindowDrag(event);
   });
 
@@ -2606,15 +3614,10 @@ function setupMouseTracking() {
     (event) => {
       const panelVisible = !panelElement.classList.contains("hidden");
       if (battleMode || panelVisible) return;
+      if (!event.ctrlKey) return;
       event.preventDefault();
       const delta = event.deltaY < 0 ? IDLE_WINDOW_SCALE_STEP : -IDLE_WINDOW_SCALE_STEP;
-      const nextScale = clampNumber(
-        idleWindowScale + delta,
-        IDLE_WINDOW_SCALE_MIN,
-        IDLE_WINDOW_SCALE_MAX
-      );
-      if (Math.abs(nextScale - idleWindowScale) < 0.001) return;
-      void applyIdleWindowScale(nextScale);
+      queueIdleScale(delta);
     },
     { passive: false }
   );
@@ -2622,10 +3625,12 @@ function setupMouseTracking() {
   battleSceneElement.addEventListener("mousedown", (event) => {
     if (event.button !== 0) return;
     const panelVisible = !panelElement.classList.contains("hidden");
-    if (battleMode || panelVisible) return;
-    if (event.target instanceof HTMLElement && event.target.closest("#player-card")) return;
+    if (panelVisible) return;
+    if (!event.ctrlKey) return;
     rotatePointerSession = {
-      lastClientX: event.clientX
+      mode: battleMode ? "battle" : "idle",
+      lastClientX: event.clientX,
+      lastClientY: event.clientY
     };
   });
 
@@ -2648,8 +3653,53 @@ function setupButtons() {
     toggleLanguage();
   });
 
-  closePanelBtn.addEventListener("click", () => {
-    setPanelVisible(false);
+  userMenuBtn?.addEventListener("click", (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    toggleUserMenu();
+  });
+
+  userEditProfileBtn?.addEventListener("click", () => {
+    closeUserMenu();
+    openProfileModal();
+  });
+
+  userLogoutBtn?.addEventListener("click", () => {
+    void logoutAccount();
+  });
+
+  profileSaveBtn?.addEventListener("click", () => {
+    void saveProfileChanges();
+  });
+
+  const handleProfileEnter = (event) => {
+    if (event.key !== "Enter") return;
+    event.preventDefault();
+    void saveProfileChanges();
+  };
+  profileAccountInput?.addEventListener("keydown", handleProfileEnter);
+  profileOldPasswordInput?.addEventListener("keydown", handleProfileEnter);
+  profileNewPasswordInput?.addEventListener("keydown", handleProfileEnter);
+  profileConfirmPasswordInput?.addEventListener("keydown", handleProfileEnter);
+
+  window.addEventListener("mousedown", (event) => {
+    if (!isUserMenuOpen()) return;
+    const target = event.target;
+    if (!(target instanceof HTMLElement)) return;
+    const clickedInsideMenu = Boolean(target.closest(".user-menu-wrap"));
+    if (!clickedInsideMenu) {
+      closeUserMenu();
+    }
+  });
+
+  duelSearchBtn?.addEventListener("click", () => {
+    void searchDuelTarget();
+  });
+
+  duelSearchKeywordInput?.addEventListener("keydown", (event) => {
+    if (event.key !== "Enter") return;
+    event.preventDefault();
+    void searchDuelTarget();
   });
 
   battleResetBtn.addEventListener("click", () => {
@@ -2662,9 +3712,26 @@ function setupButtons() {
 
   if (settlementConfirmBtn) {
     settlementConfirmBtn.addEventListener("click", () => {
-      void endBattle(false);
+      if (settlementActionMode === "capture") {
+        void resolveCaptureDecision(true);
+      } else {
+        void endBattle(false);
+      }
     });
   }
+
+  settlementSecondaryBtn?.addEventListener("click", () => {
+    if (settlementActionMode === "capture") {
+      void resolveCaptureDecision(false);
+    }
+  });
+
+  captureDecisionConfirmBtn?.addEventListener("click", () => {
+    void resolveCaptureDecision(true);
+  });
+  captureDecisionCancelBtn?.addEventListener("click", () => {
+    void resolveCaptureDecision(false);
+  });
 
   for (const button of battleActionButtons) {
     button.addEventListener("click", () => {
@@ -2792,16 +3859,32 @@ function setupIpcEvents() {
   window.petApi.onMapState((state) => {
     applyMapState(state);
   });
+
+  window.petApi.onAuthState((session) => {
+    void applyAuthStateFromEvent(session);
+  });
 }
 
 function setupModelDefaults() {
   playerModel.addEventListener("load", () => {
     measureIdleModelBase();
-    applyIdleOrbit();
+    if (battleMode) {
+      applyBattleView();
+    } else {
+      applyIdleOrbit();
+    }
+    updateBattleHudTop();
+    if (!battleMode && panelElement.classList.contains("hidden")) {
+      void applyIdleWindowScale(idleWindowScale);
+    }
     playModelAnimation(playerModel, ["survey", "idle", "walk"]);
   });
 
   enemyModel.addEventListener("load", () => {
+    if (battleMode) {
+      applyBattleView();
+    }
+    updateBattleHudTop();
     playModelAnimation(enemyModel, ["idle", "walk", "run"]);
   });
 }
@@ -2818,6 +3901,7 @@ async function bootstrap() {
 
   applyLanguage();
   await refreshBattleReports();
+  await refreshAuthSession();
   await refreshMapState();
   runtimeInfo = await window.petApi.getRuntimeInfo();
   renderRuntimeInfo();
@@ -2828,9 +3912,9 @@ async function bootstrap() {
   setupIpcEvents();
   setupModelDefaults();
   window.addEventListener("resize", () => {
-    measureIdleModelBase();
     syncInventoryListHeight();
     positionPetDetailPopover();
+    updateBattleHudTop();
   });
   panelElement.addEventListener(
     "scroll",

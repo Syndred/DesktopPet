@@ -189,7 +189,7 @@ class WildPetRuntimeService {
       }
       spawn.status = "captured";
       spawn.cooldownUntilMs = null;
-      const capturedAt = new Date().toISOString().slice(0, 19).replace("T", " ");
+      const capturedAt = new Date().toISOString();
       const captureResult = runtimeDataStore.captureWildPet({
         wildPetId: spawn.id,
         wildSerial: spawn.serial,

@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
@@ -133,7 +133,20 @@
           <div id="battle-settlement" class="battle-settlement no-drag hidden">
             <div id="battle-settlement-title" class="battle-settlement-title">Battle Result</div>
             <div id="battle-settlement-subtitle" class="battle-settlement-subtitle">Result message</div>
-            <button id="btn-settlement-confirm" class="battle-settlement-confirm">Confirm</button>
+            <div class="battle-settlement-actions">
+              <button id="btn-settlement-secondary" class="battle-settlement-secondary hidden">
+                Cancel
+              </button>
+              <button id="btn-settlement-confirm" class="battle-settlement-confirm">Confirm</button>
+            </div>
+          </div>
+
+          <div id="capture-decision" class="capture-decision no-drag hidden">
+            <div id="capture-decision-text" class="capture-decision-text">是否收服？</div>
+            <div class="capture-decision-actions">
+              <button id="btn-capture-confirm" class="capture-decision-btn confirm">确认</button>
+              <button id="btn-capture-cancel" class="capture-decision-btn cancel">取消</button>
+            </div>
           </div>
         </div>
       </div>
@@ -143,12 +156,80 @@
           <h1 id="app-title">QingPet Lord 3D</h1>
           <div class="panel-header-actions">
             <button id="btn-language" class="lang-toggle">EN</button>
-            <button id="btn-close-panel" class="panel-close-icon" aria-label="Close panel">
-              &times;
-            </button>
+            <div class="user-menu-wrap">
+              <button
+                id="btn-user-menu"
+                class="user-menu-btn"
+                type="button"
+                aria-label="Account menu"
+                aria-haspopup="menu"
+                aria-expanded="false"
+              >
+                <span id="user-avatar" class="user-avatar">U</span>
+              </button>
+              <div id="user-menu-dropdown" class="user-menu-dropdown hidden">
+                <div id="user-menu-account" class="user-menu-account">-</div>
+                <button id="btn-user-edit-profile" type="button">修改信息</button>
+                <button id="btn-user-logout" type="button">退出登录</button>
+              </div>
+            </div>
           </div>
         </div>
         <p id="runtime">Loading runtime...</p>
+
+        <div id="profile-modal" class="profile-modal hidden">
+          <article class="profile-modal-card">
+            <h2 id="profile-modal-title">修改信息</h2>
+            <div class="field-row single">
+              <div class="field">
+                <label id="profile-account-label" for="profile-account">用户名</label>
+                <input id="profile-account" type="text" autocomplete="username" />
+              </div>
+            </div>
+            <div class="field-row single">
+              <div class="field">
+                <label id="profile-old-password-label" for="profile-old-password">旧密码</label>
+                <input id="profile-old-password" type="password" autocomplete="current-password" />
+              </div>
+            </div>
+            <div class="field-row">
+              <div class="field">
+                <label id="profile-new-password-label" for="profile-new-password">新密码</label>
+                <input id="profile-new-password" type="password" autocomplete="new-password" />
+              </div>
+              <div class="field">
+                <label id="profile-confirm-password-label" for="profile-confirm-password">
+                  确认新密码
+                </label>
+                <input
+                  id="profile-confirm-password"
+                  type="password"
+                  autocomplete="new-password"
+                />
+              </div>
+            </div>
+            <p id="profile-modal-status" class="inventory-tip">输入旧密码后可修改用户名或密码。</p>
+            <div class="row">
+              <button id="btn-profile-save">保存修改</button>
+            </div>
+          </article>
+        </div>
+
+        <div class="panel-section">
+          <h2 id="duel-title">对战申请</h2>
+          <p id="auth-status" class="inventory-tip">已登录</p>
+          <div class="field-row single">
+            <div class="field">
+              <label id="duel-search-label" for="duel-search-keyword">搜索账号发起对战</label>
+              <input id="duel-search-keyword" type="text" autocomplete="off" />
+            </div>
+          </div>
+          <div class="row">
+            <button id="btn-duel-search">搜索</button>
+          </div>
+          <div id="duel-search-results" class="duel-search-results"></div>
+          <div id="duel-request-list" class="duel-request-list"></div>
+        </div>
 
         <div class="panel-section">
           <h2 id="battle-title">Battle Control</h2>
@@ -176,6 +257,7 @@
         <div class="panel-section">
           <h2 id="battle-report-title">Recent Battle Reports</h2>
           <div id="battle-report-list" class="battle-report-list"></div>
+          <article id="battle-report-detail-popover" class="battle-report-detail-popover hidden"></article>
         </div>
 
         <div class="panel-section">
@@ -272,3 +354,5 @@
     <script type="module" src="./renderer.mjs"></script>
   </body>
 </html>
+
+

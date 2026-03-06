@@ -106,7 +106,7 @@ describe("D-002 pc battle runtime service", () => {
     const burn = result.roundResult.statusesAfter.enemy.find((item) => item.type === "burn");
     expect(result.enemyAction).toBe("element_attack");
     expect(Boolean(burn)).toBe(true);
-    expect(burn?.duration).toBe(2);
+    expect(burn?.duration).toBe(1);
     expect(result.state.round).toBe(1);
   });
 
@@ -148,18 +148,56 @@ describe("D-002 pc battle runtime service", () => {
     expect(playerHealEvents[0]?.amount).toBeGreaterThan(0);
   });
 
-  it("downgrades dodge to normal attack when anger is 0", () => {
-    mockRandomSequence([0.4]);
+  it("allows first dodge at 0 anger, then downgrades when anger remains 0", () => {
+    mockRandomSequence([0.9, 0.9]);
     const service = new BattleRuntimeService();
     service.reset({
       playerElement: "fire",
       enemyElement: "metal"
     });
 
-    const result = service.act("dodge");
-    expect(result.playerAction).toBe("dodge");
-    expect(result.roundResult.actions.player).toBe("normal_attack");
-    expect(result.roundResult.notes).toContain("player dodge downgraded to normal_attack (anger <= 0)");
+    const first = service.act("dodge");
+    expect(first.playerAction).toBe("dodge");
+    expect(first.roundResult.actions.player).toBe("dodge");
+
+    const second = service.act("dodge");
+    expect(second.playerAction).toBe("dodge");
+    expect(second.roundResult.actions.player).toBe("normal_attack");
+    expect(second.roundResult.notes).toContain("player dodge downgraded to normal_attack (anger <= 0)");
+  });
+
+  it("allows ultimate at 50 anger and consumes 50 anger", () => {
+    mockRandomSequence([0.9]);
+    const service = new BattleRuntimeService();
+    service.reset({
+      playerElement: "fire",
+      enemyElement: "metal"
+    });
+
+    (service as unknown as { session: { player: { anger: number } } }).session.player.anger = 50;
+    const result = service.act("ultimate");
+    expect(result.playerAction).toBe("ultimate");
+    expect(result.roundResult.actions.player).toBe("ultimate");
+    expect(result.state.player.anger).toBe(0);
+  });
+
+  it("never returns draw when both pets reach 0 HP in same round", () => {
+    mockRandomSequence([0.4, 0.4]);
+    const service = new BattleRuntimeService();
+    service.reset({
+      playerElement: "fire",
+      enemyElement: "metal"
+    });
+
+    const mutable = service as unknown as {
+      session: { player: { hp: number }; enemy: { hp: number } };
+    };
+    mutable.session.player.hp = 20;
+    mutable.session.enemy.hp = 20;
+
+    const result = service.act("normal_attack");
+    expect(result.roundResult.winner).toBe("player");
+    expect(result.roundResult.winner).not.toBe("draw");
   });
 
   it("consumes 20 anger when player chooses dodge", () => {

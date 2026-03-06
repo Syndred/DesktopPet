@@ -26,6 +26,7 @@ describe("D-001 pc runnable runtime", () => {
 
     expect(mainCode).toContain("transparent: true");
     expect(mainCode).toContain("frame: false");
+    expect(mainCode).toContain("show: false");
     expect(mainCode).toContain("new Tray(");
     expect(mainCode).toContain("pet:set-hit-region");
     expect(mainCode).toContain("pet:battle-reset");
@@ -42,6 +43,13 @@ describe("D-001 pc runnable runtime", () => {
     expect(mainCode).toContain("pet:set-idle-window-size");
     expect(mainCode).toContain("pet:get-nearby-wild-pets");
     expect(mainCode).toContain("pet:begin-capture-battle");
+    expect(mainCode).toContain("pet:resolve-capture");
+    expect(mainCode).toContain("pet:auth-register");
+    expect(mainCode).toContain("pet:auth-login");
+    expect(mainCode).toContain("pet:auth-update-profile");
+    expect(mainCode).toContain("pet:auth-state");
+    expect(mainCode).toContain("pet:user-search");
+    expect(mainCode).toContain("pet:duel-request-send");
     expect(mainCode).toContain("runtimeDataStore.recordBattleWin");
     expect(mainCode).toContain("captureSerial");
     expect(mainCode).toContain("mode");
@@ -53,11 +61,23 @@ describe("D-001 pc runnable runtime", () => {
     expect(mainCode).toContain("pet-runtime-data.json");
     expect(mainCode).toContain("RuntimeDataStore");
     expect(mainCode).toContain("MapRuntimeService");
+    expect(mainCode).toContain("function createAuthWindow()");
+    expect(mainCode).toContain("join(__dirname, \"auth\", \"index.html\")");
+    expect(mainCode).toContain("openRuntimeAfterAuth()");
+    expect(mainCode).toContain("openAuthGate()");
   });
 
   it("includes renderer entry and control panel actions", () => {
     const html = readFileSync(
       join(process.cwd(), "apps/pc-app/runtime/renderer/index.html"),
+      "utf8"
+    );
+    const authHtml = readFileSync(
+      join(process.cwd(), "apps/pc-app/runtime/auth/index.html"),
+      "utf8"
+    );
+    const authRendererCode = readFileSync(
+      join(process.cwd(), "apps/pc-app/runtime/auth/renderer.mjs"),
       "utf8"
     );
     const rendererCode = readFileSync(
@@ -86,6 +106,16 @@ describe("D-001 pc runnable runtime", () => {
     expect(html).toContain("wild-title");
     expect(html).toContain("wild-list");
     expect(html).toContain("btn-wild-refresh");
+    expect(html).toContain("duel-title");
+    expect(html).toContain("btn-user-menu");
+    expect(html).toContain("btn-user-edit-profile");
+    expect(html).toContain("btn-user-logout");
+    expect(html).toContain("profile-modal");
+    expect(html).toContain("profile-account");
+    expect(html).toContain("profile-old-password");
+    expect(html).toContain("btn-profile-save");
+    expect(html).toContain("duel-search-results");
+    expect(html).toContain("duel-request-list");
     expect(html).toContain("hp-fill-player");
     expect(html).toContain("anger-fill-enemy");
     expect(html).toContain("player-hud-avatar");
@@ -96,7 +126,7 @@ describe("D-001 pc runnable runtime", () => {
     expect(html).toContain("CesiumMan.glb");
     expect(html).toContain("desktop-stage");
     expect(html).toContain("btn-end-battle");
-    expect(html).toContain("btn-close-panel");
+    expect(html).not.toContain("btn-close-panel");
     expect(html).toContain("battle-settlement");
     expect(html).toContain("battle-countdown");
     expect(html).not.toContain("panel-toggle");
@@ -116,6 +146,12 @@ describe("D-001 pc runnable runtime", () => {
     expect(rendererCode).toContain("window.petApi.onMapState");
     expect(rendererCode).toContain("window.petApi.getNearbyWildPets");
     expect(rendererCode).toContain("window.petApi.beginCaptureBattle");
+    expect(rendererCode).toContain("window.petApi.resolveCapture");
+    expect(rendererCode).toContain("window.petApi.authUpdateProfile");
+    expect(rendererCode).toContain("window.petApi.authLogout");
+    expect(rendererCode).toContain("window.petApi.onAuthState");
+    expect(rendererCode).toContain("window.petApi.searchUsers");
+    expect(rendererCode).toContain("window.petApi.sendDuelRequest");
     expect(rendererCode).toContain("loadInventorySnapshot()");
     expect(rendererCode).toContain("refreshBattleReports()");
     expect(rendererCode).toContain("refreshMapState()");
@@ -127,7 +163,8 @@ describe("D-001 pc runnable runtime", () => {
     expect(rendererCode).toContain("wildCaptureReportLog");
     expect(rendererCode).toContain("insideInteractiveRegion");
     expect(rendererCode).toContain("panelElement.getBoundingClientRect()");
-    expect(rendererCode).toContain("void window.petApi.setLayoutMode(visible ? \"panel\" : battleMode ? \"battle\" : \"idle\")");
+    expect(rendererCode).toContain(".setLayoutMode(\"panel\")");
+    expect(rendererCode).toContain("void window.petApi.setLayoutMode(battleMode ? \"battle\" : \"idle\")");
     expect(rendererCode).toContain("localStorage.getItem");
     expect(rendererCode).toContain("const i18n =");
     expect(rendererCode).toContain("let selectedPetDetailId = null");
@@ -136,9 +173,19 @@ describe("D-001 pc runnable runtime", () => {
     expect(rendererCode).toContain("battleSettlementConfirmLog");
     expect(rendererCode).toContain("updateBattleRelationTag(");
     expect(rendererCode).toContain("updateBattleCountdown(");
+    expect(rendererCode).toContain("updateBattleHudTop()");
     expect(rendererCode).toContain("uiRefs.playerLabel.textContent = getPetDisplayName(activePet)");
     expect(rendererCode).toContain("uiRefs.enemyLabel.textContent = getPetDisplayName(enemyPetInBattle)");
     expect(rendererCode).toContain("void setActivePet(pet.id, { closePanel: true })");
+    expect(rendererCode).toContain("setProfileModalVisible(");
+    expect(rendererCode).toContain("toggleUserMenu()");
+    expect(authHtml).toContain("btn-register");
+    expect(authHtml).toContain("btn-login");
+    expect(authHtml).toContain("btn-switch-auth");
+    expect(authHtml).toContain("register-username");
+    expect(authRendererCode).toContain("window.petApi.authRegister");
+    expect(authRendererCode).toContain("window.petApi.authLogin");
+    expect(authRendererCode).toContain("window.petApi.getAuthSession");
   });
 
   it("ships multiple local GLB models for pet inventory", () => {

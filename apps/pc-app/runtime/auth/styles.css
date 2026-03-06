@@ -1,0 +1,124 @@
+:root {
+  color-scheme: dark;
+  --bg0: #09121e;
+  --bg1: #10233b;
+  --text: #e9f7ff;
+  --muted: #a7c8dd;
+  --line: rgba(170, 220, 255, 0.28);
+  --accent: #7dd2ff;
+  --accent2: #8decb4;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  font-family: "Segoe UI", "PingFang SC", sans-serif;
+  background: radial-gradient(100% 140% at 20% 0%, #143050 0%, var(--bg0) 62%);
+  color: var(--text);
+}
+
+.auth-root {
+  min-height: 100%;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+}
+
+.auth-card {
+  width: min(100%, 400px);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: linear-gradient(180deg, rgba(17, 33, 54, 0.92), rgba(10, 20, 34, 0.95));
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.38);
+  padding: 14px;
+  display: grid;
+  gap: 12px;
+}
+
+.auth-card h1 {
+  margin: 0;
+  font-size: 20px;
+  letter-spacing: 0.02em;
+}
+
+.subtitle {
+  margin: 0;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.auth-form {
+  border: 1px solid rgba(172, 220, 250, 0.2);
+  border-radius: 10px;
+  padding: 10px;
+  display: grid;
+  gap: 6px;
+}
+
+.auth-form h2 {
+  margin: 0 0 2px;
+  font-size: 13px;
+  color: var(--accent2);
+}
+
+label {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+input,
+button {
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: rgba(13, 31, 51, 0.82);
+  color: var(--text);
+  font-size: 13px;
+  padding: 8px;
+}
+
+input:focus-visible,
+button:hover {
+  border-color: var(--accent);
+  outline: none;
+}
+
+button {
+  cursor: pointer;
+  font-weight: 600;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.switch-auth-btn {
+  border-style: dashed;
+  border-color: rgba(145, 212, 255, 0.55);
+  background: rgba(11, 26, 42, 0.72);
+}
+
+.status {
+  margin: 0;
+  min-height: 18px;
+  font-size: 12px;
+  color: #d0ebfb;
+}
+
+.status.error {
+  color: #ffb7b7;
+}
+
+.status.success {
+  color: #9bf0c2;
+}
+
+.hidden {
+  display: none !important;
+}

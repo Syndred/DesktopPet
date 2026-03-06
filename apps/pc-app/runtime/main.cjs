@@ -9,6 +9,7 @@ const { MapRuntimeService } = require("./services/map-runtime.cjs");
 const { CAPTURE_RADIUS_METERS, WildPetRuntimeService } = require("./services/wild-pet-runtime.cjs");
 
 let mainWindow = null;
+let authWindow = null;
 let tray = null;
 let isQuitting = false;
 let interactionPaused = false;
@@ -45,6 +46,10 @@ const IDLE_SIZE_LIMITS = {
 };
 
 const WINDOW_MOVE_LIMIT = 200;
+const AUTH_WINDOW_BOUNDS = {
+  width: 430,
+  height: 520
+};
 
 let currentIdleBounds = { ...IDLE_BOUNDS };
 
@@ -61,12 +66,13 @@ function createMainWindow() {
 
   mainWindow = new BrowserWindow({
     ...bounds,
+    show: false,
     transparent: true,
     frame: false,
     hasShadow: false,
     alwaysOnTop: true,
     skipTaskbar: true,
-    resizable: true,
+    resizable: false,
     backgroundColor: "#00000000",
     webPreferences: {
       preload: join(__dirname, "preload.cjs"),
@@ -90,20 +96,124 @@ function createMainWindow() {
     saveWindowBounds(mainWindow.getBounds());
   });
 
-  mainWindow.on("move", scheduleSaveAndSnap);
-  mainWindow.on("resize", scheduleSaveAndSnap);
+  mainWindow.on("move", scheduleSaveWindowBounds);
+  mainWindow.on("resize", scheduleSaveWindowBounds);
 }
 
-function scheduleSaveAndSnap() {
+function hasAuthenticatedSession() {
+  if (!runtimeDataStore) return false;
+  const session = runtimeDataStore.getAuthSession();
+  return Boolean(session?.currentUser?.id);
+}
+
+function buildAuthSessionPayload() {
+  if (!runtimeDataStore) {
+    return { ok: true, currentUser: null };
+  }
+  const session = runtimeDataStore.getAuthSession();
+  if (!session || typeof session !== "object") {
+    return { ok: true, currentUser: null };
+  }
+  return {
+    ok: true,
+    currentUser: session.currentUser || null
+  };
+}
+
+function emitAuthState() {
+  const payload = buildAuthSessionPayload();
+  if (mainWindow && !mainWindow.isDestroyed()) {
+    mainWindow.webContents.send("pet:auth-state", payload);
+  }
+  if (authWindow && !authWindow.isDestroyed()) {
+    authWindow.webContents.send("pet:auth-state", payload);
+  }
+}
+
+function createAuthWindow() {
+  if (authWindow && !authWindow.isDestroyed()) return authWindow;
+  const area = screen.getPrimaryDisplay().workArea;
+  const bounds = {
+    x: Math.round(area.x + (area.width - AUTH_WINDOW_BOUNDS.width) / 2),
+    y: Math.round(area.y + (area.height - AUTH_WINDOW_BOUNDS.height) / 2),
+    width: AUTH_WINDOW_BOUNDS.width,
+    height: AUTH_WINDOW_BOUNDS.height
+  };
+  authWindow = new BrowserWindow({
+    ...bounds,
+    resizable: false,
+    minimizable: false,
+    maximizable: false,
+    autoHideMenuBar: true,
+    title: "轻宠·领主 3D - 登录",
+    backgroundColor: "#0b1522",
+    webPreferences: {
+      preload: join(__dirname, "preload.cjs"),
+      contextIsolation: true,
+      nodeIntegration: false,
+      sandbox: false
+    }
+  });
+  authWindow.loadFile(join(__dirname, "auth", "index.html"));
+  authWindow.on("closed", () => {
+    authWindow = null;
+    if (!isQuitting && !hasAuthenticatedSession()) {
+      isQuitting = true;
+      app.quit();
+    }
+  });
+  return authWindow;
+}
+
+function openRuntimeAfterAuth() {
+  if (!mainWindow || mainWindow.isDestroyed()) return;
+  if (!hasAuthenticatedSession()) {
+    openAuthGate();
+    return;
+  }
+  if (authWindow && !authWindow.isDestroyed()) {
+    authWindow.close();
+    authWindow = null;
+  }
+  mainWindow.show();
+  mainWindow.focus();
+  emitAuthState();
+  refreshTrayMenu();
+}
+
+function openAuthGate() {
+  if (mainWindow && !mainWindow.isDestroyed()) {
+    mainWindow.hide();
+  }
+  const windowRef = createAuthWindow();
+  windowRef.show();
+  windowRef.focus();
+  emitAuthState();
+  refreshTrayMenu();
+}
+
+function scheduleSaveWindowBounds() {
   if (!mainWindow || mainWindow.isDestroyed()) return;
   if (moveTimer) clearTimeout(moveTimer);
   moveTimer = setTimeout(() => {
     if (!mainWindow || mainWindow.isDestroyed()) return;
-    const snapped = clampBoundsToWorkArea(mainWindow.getBounds(), {
-      margin: activeLayoutMode === "panel" ? 8 : 0
-    });
-    mainWindow.setBounds(snapped);
-    saveWindowBounds(snapped);
+    const current = mainWindow.getBounds();
+    const target = getLayoutTargetSize(activeLayoutMode);
+    if (target.width !== current.width || target.height !== current.height) {
+      const locked = clampPositionToWorkArea(
+        {
+          x: current.x,
+          y: current.y,
+          width: target.width,
+          height: target.height
+        },
+        { margin: activeLayoutMode === "panel" ? 8 : 0 }
+      );
+      mainWindow.setBounds(locked, false);
+      saveWindowBounds(locked);
+      return;
+    }
+    saveWindowBounds(current);
   }, 220);
 }
 
@@ -119,13 +229,18 @@ function createTray() {
 
 function refreshTrayMenu() {
   if (!tray) return;
+  const authenticated = hasAuthenticatedSession();
+  const primaryWindow = authenticated ? mainWindow : authWindow;
+  const isVisible =
+    Boolean(primaryWindow) && !primaryWindow.isDestroyed() && primaryWindow.isVisible();
   const menu = Menu.buildFromTemplate([
     {
-      label: mainWindow && mainWindow.isVisible() ? "Hide" : "Show",
+      label: isVisible ? "Hide" : "Show",
       click: toggleWindowVisibility
     },
     {
       label: interactionPaused ? "Resume Interaction" : "Pause Interaction",
+      enabled: authenticated,
       click: () => {
         interactionPaused = !interactionPaused;
         if (mainWindow && !mainWindow.isDestroyed()) {
@@ -136,8 +251,12 @@ function refreshTrayMenu() {
       }
     },
     {
-      label: "Open Panel",
+      label: authenticated ? "Open Panel" : "Open Login",
       click: () => {
+        if (!authenticated) {
+          openAuthGate();
+          return;
+        }
         if (!mainWindow || mainWindow.isDestroyed()) return;
         mainWindow.show();
         mainWindow.focus();
@@ -157,12 +276,21 @@ function refreshTrayMenu() {
 }
 
 function toggleWindowVisibility() {
-  if (!mainWindow || mainWindow.isDestroyed()) return;
-  if (mainWindow.isVisible()) {
+  const authenticated = hasAuthenticatedSession();
+  if (!authenticated && mainWindow && !mainWindow.isDestroyed() && mainWindow.isVisible()) {
     mainWindow.hide();
+  }
+  const targetWindow = authenticated ? mainWindow : authWindow;
+  if (!authenticated && (!targetWindow || targetWindow.isDestroyed())) {
+    openAuthGate();
+    return;
+  }
+  if (!targetWindow || targetWindow.isDestroyed()) return;
+  if (targetWindow.isVisible()) {
+    targetWindow.hide();
   } else {
-    mainWindow.show();
-    mainWindow.focus();
+    targetWindow.show();
+    targetWindow.focus();
   }
   refreshTrayMenu();
 }
@@ -217,6 +345,30 @@ function clampBoundsToWorkArea(bounds, options = {}) {
   return { x, y, width, height };
 }
 
+function clampPositionToWorkArea(bounds, options = {}) {
+  const area = getVirtualWorkArea();
+  const marginRaw = Number(options.margin);
+  const margin = Number.isFinite(marginRaw) ? Math.max(0, Math.round(marginRaw)) : 0;
+  const safeArea = {
+    x: area.x + margin,
+    y: area.y + margin,
+    width: Math.max(120, area.width - margin * 2),
+    height: Math.max(120, area.height - margin * 2)
+  };
+
+  const width = Math.max(1, Math.round(Number(bounds.width) || 1));
+  const height = Math.max(1, Math.round(Number(bounds.height) || 1));
+  const maxX = safeArea.x + safeArea.width - width;
+  const maxY = safeArea.y + safeArea.height - height;
+  const x = Math.round(
+    Math.min(Math.max(bounds.x, safeArea.x), maxX >= safeArea.x ? maxX : safeArea.x)
+  );
+  const y = Math.round(
+    Math.min(Math.max(bounds.y, safeArea.y), maxY >= safeArea.y ? maxY : safeArea.y)
+  );
+  return { x, y, width, height };
+}
+
 function getVirtualWorkArea() {
   const displays = screen.getAllDisplays();
   if (!Array.isArray(displays) || displays.length === 0) {
@@ -262,17 +414,34 @@ function registerIpcHandlers() {
     if (dx === 0 && dy === 0) return;
 
     const current = mainWindow.getBounds();
-    const next = clampBoundsToWorkArea(
+    const target = getLayoutTargetSize(activeLayoutMode);
+    if (current.width !== target.width || current.height !== target.height) {
+      mainWindow.setBounds(
+        {
+          x: current.x,
+          y: current.y,
+          width: target.width,
+          height: target.height
+        },
+        false
+      );
+    }
+    const next = clampPositionToWorkArea(
       {
         x: current.x + dx,
         y: current.y + dy,
-        width: current.width,
-        height: current.height
+        width: target.width,
+        height: target.height
       },
       { margin: activeLayoutMode === "panel" ? 8 : 0 }
     );
-    mainWindow.setBounds(next);
-    saveWindowBounds(next);
+    mainWindow.setPosition(next.x, next.y, false);
+    saveWindowBounds({
+      x: next.x,
+      y: next.y,
+      width: target.width,
+      height: target.height
+    });
   });
 
   ipcMain.handle("pet:get-runtime-info", () => ({
@@ -301,6 +470,7 @@ function registerIpcHandlers() {
       id: randomUUID(),
       mode: "duel",
       captureResolved: false,
+      captureDecisionPending: false,
       captureWildPetId: null,
       captureProviderId: null,
       startedAt: new Date().toISOString(),
@@ -363,6 +533,7 @@ function registerIpcHandlers() {
       id: randomUUID(),
       mode: "capture",
       captureResolved: false,
+      captureDecisionPending: false,
       captureWildPetId: wildPet.id,
       captureProviderId: providerId,
       startedAt: new Date().toISOString(),
@@ -399,6 +570,7 @@ function registerIpcHandlers() {
     const result = battleService.act(action);
     let captureOutcome = null;
     let progression = null;
+    let captureDecisionRequired = false;
 
     if (activeBattleSession) {
       activeBattleSession.rounds.push({
@@ -419,22 +591,72 @@ function registerIpcHandlers() {
           progression = runtimeDataStore.recordBattleWin(activeBattleSession.player.petId);
         }
         if (activeBattleSession.mode === "capture" && !activeBattleSession.captureResolved) {
-          captureOutcome = wildPetService.completeCaptureBattle({
-            providerId: activeBattleSession.captureProviderId,
-            wildPetId: activeBattleSession.captureWildPetId,
-            success: result.roundResult.winner === "player",
-            runtimeDataStore
-          });
-          activeBattleSession.captureResolved = true;
+          if (result.roundResult.winner === "player") {
+            activeBattleSession.captureDecisionPending = true;
+            captureDecisionRequired = true;
+          } else {
+            captureOutcome = wildPetService.completeCaptureBattle({
+              providerId: activeBattleSession.captureProviderId,
+              wildPetId: activeBattleSession.captureWildPetId,
+              success: false,
+              runtimeDataStore
+            });
+            activeBattleSession.captureResolved = true;
+          }
         }
-        closeBattleSession("finished", result.roundResult.winner, { captureOutcome });
+        if (!captureDecisionRequired) {
+          closeBattleSession("finished", result.roundResult.winner, { captureOutcome });
+        }
       }
     }
 
     return {
       ...result,
       captureOutcome,
-      progression
+      progression,
+      captureDecisionRequired
+    };
+  });
+
+  ipcMain.handle("pet:resolve-capture", (_event, payload) => {
+    if (!activeBattleSession || activeBattleSession.mode !== "capture") {
+      return {
+        ok: false,
+        error: {
+          code: "CAPTURE_SESSION_NOT_FOUND",
+          message: "capture session not found"
+        }
+      };
+    }
+    if (activeBattleSession.captureResolved) {
+      return {
+        ok: true,
+        captureOutcome: null
+      };
+    }
+    if (!activeBattleSession.captureDecisionPending) {
+      return {
+        ok: false,
+        error: {
+          code: "CAPTURE_DECISION_NOT_REQUIRED",
+          message: "capture decision is not required"
+        }
+      };
+    }
+
+    const accept = Boolean(payload?.accept);
+    const captureOutcome = wildPetService.completeCaptureBattle({
+      providerId: activeBattleSession.captureProviderId,
+      wildPetId: activeBattleSession.captureWildPetId,
+      success: accept,
+      runtimeDataStore
+    });
+    activeBattleSession.captureResolved = true;
+    activeBattleSession.captureDecisionPending = false;
+    closeBattleSession("finished", "player", { captureOutcome });
+    return {
+      ok: true,
+      captureOutcome
     };
   });
 
@@ -449,6 +671,7 @@ function registerIpcHandlers() {
           runtimeDataStore
         });
         activeBattleSession.captureResolved = true;
+        activeBattleSession.captureDecisionPending = false;
       }
       closeBattleSession("abandoned", null, { captureOutcome });
     }
@@ -460,6 +683,112 @@ function registerIpcHandlers() {
 
   ipcMain.handle("pet:get-inventory", () => {
     return runtimeDataStore.getInventorySnapshot();
+  });
+
+  ipcMain.handle("pet:auth-session", () => {
+    return runtimeDataStore.getAuthSession();
+  });
+
+  ipcMain.handle("pet:auth-register", (_event, payload) => {
+    try {
+      const account = payload && typeof payload.account === "string" ? payload.account : "";
+      const password = payload && typeof payload.password === "string" ? payload.password : "";
+      const username = payload && typeof payload.username === "string" ? payload.username : "";
+      const result = runtimeDataStore.registerUser(account, password, username);
+      if (result?.ok) {
+        openRuntimeAfterAuth();
+      } else {
+        emitAuthState();
+      }
+      return result;
+    } catch (error) {
+      return {
+        ok: false,
+        error: error instanceof Error ? error.message : "register failed"
+      };
+    }
+  });
+
+  ipcMain.handle("pet:auth-login", (_event, payload) => {
+    try {
+      const account = payload && typeof payload.account === "string" ? payload.account : "";
+      const password = payload && typeof payload.password === "string" ? payload.password : "";
+      const result = runtimeDataStore.loginUser(account, password);
+      if (result?.ok) {
+        openRuntimeAfterAuth();
+      } else {
+        emitAuthState();
+      }
+      return result;
+    } catch (error) {
+      return {
+        ok: false,
+        error: error instanceof Error ? error.message : "login failed"
+      };
+    }
+  });
+
+  ipcMain.handle("pet:auth-logout", () => {
+    const result = runtimeDataStore.logoutUser();
+    if (result?.ok) {
+      openAuthGate();
+    } else {
+      emitAuthState();
+    }
+    return result;
+  });
+
+  ipcMain.handle("pet:auth-update-profile", (_event, payload) => {
+    try {
+      const username = payload && typeof payload.username === "string" ? payload.username : "";
+      const oldPassword =
+        payload && typeof payload.oldPassword === "string" ? payload.oldPassword : "";
+      const newPassword =
+        payload && typeof payload.newPassword === "string" ? payload.newPassword : "";
+      const result = runtimeDataStore.updateCurrentUserProfile({
+        username,
+        oldPassword,
+        newPassword
+      });
+      emitAuthState();
+      return result;
+    } catch (error) {
+      return {
+        ok: false,
+        error: error instanceof Error ? error.message : "profile update failed"
+      };
+    }
+  });
+
+  ipcMain.handle("pet:user-search", (_event, payload) => {
+    try {
+      const keyword = payload && typeof payload.keyword === "string" ? payload.keyword : "";
+      const limit = payload && typeof payload.limit === "number" ? payload.limit : undefined;
+      return runtimeDataStore.searchUsers(keyword, limit);
+    } catch (error) {
+      return {
+        ok: false,
+        error: error instanceof Error ? error.message : "search failed",
+        users: []
+      };
+    }
+  });
+
+  ipcMain.handle("pet:duel-request-send", (_event, payload) => {
+    try {
+      const targetAccount =
+        payload && typeof payload.targetAccount === "string" ? payload.targetAccount : "";
+      return runtimeDataStore.sendDuelRequest(targetAccount);
+    } catch (error) {
+      return {
+        ok: false,
+        error: error instanceof Error ? error.message : "send request failed"
+      };
+    }
+  });
+
+  ipcMain.handle("pet:duel-request-list", () => {
+    return runtimeDataStore.listDuelRequests();
   });
 
   ipcMain.handle("pet:set-active-pet", (_event, payload) => {
@@ -579,7 +908,7 @@ function registerIpcHandlers() {
       },
       { margin: activeLayoutMode === "panel" ? 8 : 0 }
     );
-    mainWindow.setBounds(next);
+    mainWindow.setBounds(next, false);
     saveWindowBounds(next);
     return {
       ok: true,
@@ -641,21 +970,44 @@ function applyLayoutMode(mode) {
   const target =
     mode === "battle" ? BATTLE_BOUNDS : mode === "panel" ? PANEL_BOUNDS : currentIdleBounds;
   const current = mainWindow.getBounds();
-  const centerX = current.x + Math.floor(current.width / 2);
-  const centerY = current.y + Math.floor(current.height / 2);
-  const next = clampBoundsToWorkArea(
-    {
-      x: centerX - Math.floor(target.width / 2),
-      y: centerY - Math.floor(target.height / 2),
-      width: target.width,
-      height: target.height
-    },
-    { margin: mode === "panel" ? 8 : 0 }
-  );
+  const byTopLeft = mode === "panel";
+  const next = byTopLeft
+    ? clampBoundsToWorkArea(
+        {
+          x: current.x,
+          y: current.y,
+          width: target.width,
+          height: target.height
+        },
+        { margin: 8 }
+      )
+    : (() => {
+        const centerX = current.x + Math.floor(current.width / 2);
+        const centerY = current.y + Math.floor(current.height / 2);
+        return clampBoundsToWorkArea(
+          {
+            x: centerX - Math.floor(target.width / 2),
+            y: centerY - Math.floor(target.height / 2),
+            width: target.width,
+            height: target.height
+          },
+          { margin: mode === "panel" ? 8 : 0 }
+        );
+      })();
 
-  mainWindow.setResizable(true);
-  mainWindow.setBounds(next);
+  mainWindow.setResizable(false);
+  mainWindow.setBounds(next, false);
   saveWindowBounds(next);
+}
+
+function getLayoutTargetSize(mode) {
+  if (mode === "battle") {
+    return { ...BATTLE_BOUNDS };
+  }
+  if (mode === "panel") {
+    return { ...PANEL_BOUNDS };
+  }
+  return { ...currentIdleBounds };
 }
 
 app.whenReady().then(() => {
@@ -673,12 +1025,28 @@ app.whenReady().then(() => {
     wildPetService.seedSerialCounters(snapshot.pets || []);
   }
   registerIpcHandlers();
+  emitAuthState();
+  if (hasAuthenticatedSession()) {
+    openRuntimeAfterAuth();
+  } else {
+    openAuthGate();
+  }
 
   app.on("activate", () => {
     if (BrowserWindow.getAllWindows().length === 0) {
       createMainWindow();
-    } else if (mainWindow) {
-      mainWindow.show();
+      if (hasAuthenticatedSession()) {
+        openRuntimeAfterAuth();
+      } else {
+        openAuthGate();
+      }
+    } else if (hasAuthenticatedSession()) {
+      if (mainWindow && !mainWindow.isDestroyed()) {
+        mainWindow.show();
+        mainWindow.focus();
+      }
+    } else {
+      openAuthGate();
     }
   });
 });

@@ -1,480 +1,142 @@
-﻿# 浠诲姟杩涘害璁板綍
+﻿# 任务进度记录
 
-鏇存柊鏃堕棿锛?026-03-04
+更新时间：2026-03-06
 
-## 宸插畬鎴?
-1. `T-001 Monorepo 涓庡熀纭€宸ョ▼鍒濆鍖朻
-   - 鐘舵€侊細瀹屾垚
-   - 娴嬭瘯鐢ㄤ緥锛歔tests/task-t001-monorepo.test.ts](C:/Users/Administrator/Desktop/project/DesktopPet/tests/task-t001-monorepo.test.ts)
-   - 楠岃瘉缁撴灉锛氶€氳繃锛坙int/typecheck/test 鍏ㄧ豢锛?
-2. `T-002 鍏变韩鍗忚涓庨敊璇爜浣撶郴`
-   - 鐘舵€侊細瀹屾垚
-   - 娴嬭瘯鐢ㄤ緥锛歔tests/task-t002-shared-contracts.test.ts](C:/Users/Administrator/Desktop/project/DesktopPet/tests/task-t002-shared-contracts.test.ts)
-   - 楠岃瘉缁撴灉锛氶€氳繃
+## 当前状态
 
-3. `T-003 Supabase 鏁版嵁灞備笌 RLS`
-   - 鐘舵€侊細瀹屾垚
-   - 娴嬭瘯鐢ㄤ緥锛歔tests/task-t003-supabase-migration.test.ts](C:/Users/Administrator/Desktop/project/DesktopPet/tests/task-t003-supabase-migration.test.ts)
-   - 楠岃瘉缁撴灉锛氶€氳繃
+1. PC 端核心闭环已可运行并通过全量验证（`npm run verify`、`npm run pc:smoke`）。
+2. 地图演示版（M-301/M-302/M-304）已完成，后续重点在地图可视化与收益联动（M-303/M-305）。
+3. 鉴权与账号体验已升级为“独立登录窗口 + 运行面板头像下拉资料管理”，不再占用仓库区域。
 
-4. `T-004 鍩嬬偣銆佹棩蹇椾笌鎶ヨ鍩虹`
-   - 鐘舵€侊細瀹屾垚
-   - 娴嬭瘯鐢ㄤ緥锛歔tests/task-t004-observability.test.ts](C:/Users/Administrator/Desktop/project/DesktopPet/tests/task-t004-observability.test.ts)
-   - 楠岃瘉缁撴灉锛氶€氳繃
+## 最新里程碑
 
-5. `T-101 PC 閫忔槑绐楀彛銆佹墭鐩樹笌绐楀彛鎺у埗`
-   - 鐘舵€侊細瀹屾垚锛堢涓€鐗堥€昏緫灞傦級
-   - 娴嬭瘯鐢ㄤ緥锛歔tests/task-t101-pc-window.test.ts](C:/Users/Administrator/Desktop/project/DesktopPet/tests/task-t101-pc-window.test.ts)
-   - 楠岃瘉缁撴灉锛氶€氳繃
-
-6. `T-102 妯″瀷鍛戒腑妫€娴嬨€侀紶鏍囩┛閫忎笌 R3F 娓叉煋`
-   - 鐘舵€侊細瀹屾垚锛堢涓€鐗堜氦浜掔瓥鐣ュ眰锛?   - 娴嬭瘯鐢ㄤ緥锛歔tests/task-t102-interaction.test.ts](C:/Users/Administrator/Desktop/project/DesktopPet/tests/task-t102-interaction.test.ts)
-   - 楠岃瘉缁撴灉锛氶€氳繃
-
-7. `T-103 BattleEngine 鍥炲悎鍒惰鍒欏紩鎿巂
-   - 鐘舵€侊細瀹屾垚锛堟牳蹇冭鍒欑増锛?   - 娴嬭瘯鐢ㄤ緥锛歔tests/task-t103-battle-engine.test.ts](C:/Users/Administrator/Desktop/project/DesktopPet/tests/task-t103-battle-engine.test.ts)
-   - 楠岃瘉缁撴灉锛氶€氳繃
-
-8. `T-104 瀹炴椂瀵规垬鎴块棿銆佸悓姝ヤ笌鍙嶄綔寮奰
-   - 鐘舵€侊細瀹屾垚锛堝唴瀛樼増鏈嶅姟灞傦級
-   - 娴嬭瘯鐢ㄤ緥锛歔tests/task-t104-realtime-room.test.ts](C:/Users/Administrator/Desktop/project/DesktopPet/tests/task-t104-realtime-room.test.ts)
-   - 楠岃瘉缁撴灉锛氶€氳繃
-
-9. `T-105 LBS 鐐逛綅鍒锋柊涓庡湴鐞嗗洿鏍廯
-   - 鐘舵€侊細瀹屾垚
-   - 娴嬭瘯鐢ㄤ緥锛歔tests/task-t105-lbs.test.ts](C:/Users/Administrator/Desktop/project/DesktopPet/tests/task-t105-lbs.test.ts)
-   - 楠岃瘉缁撴灉锛氶€氳繃
-
-10. `T-106 鏀剁暀銆佸浘閴翠笌璁板繂鏍囩`
-   - 鐘舵€侊細瀹屾垚
-   - 娴嬭瘯鐢ㄤ緥锛歔tests/task-t106-capture-pokedex.test.ts](C:/Users/Administrator/Desktop/project/DesktopPet/tests/task-t106-capture-pokedex.test.ts)
-   - 楠岃瘉缁撴灉锛氶€氳繃
-
-11. `T-107 鎯呯华闀滃儚寮曟搸锛堜綆鎵撴壈锛塦
-   - 鐘舵€侊細瀹屾垚
-   - 娴嬭瘯鐢ㄤ緥锛歔tests/task-t107-emotion-engine.test.ts](C:/Users/Administrator/Desktop/project/DesktopPet/tests/task-t107-emotion-engine.test.ts)
-   - 楠岃瘉缁撴灉锛氶€氳繃
-
-12. `T-108 鍖哄煙鍗犻鏈€灏忓彲鐢ㄧ増`
-   - 鐘舵€侊細瀹屾垚
-   - 娴嬭瘯鐢ㄤ緥锛歔tests/task-t108-territory.test.ts](C:/Users/Administrator/Desktop/project/DesktopPet/tests/task-t108-territory.test.ts)
-   - 楠岃瘉缁撴灉锛氶€氳繃
-
-13. `T-109 鏍稿績闂幆鑱旇皟`
-   - 鐘舵€侊細瀹屾垚锛堟渶灏忓彲杩愯闂幆锛?   - 娴嬭瘯鐢ㄤ緥锛歔tests/task-t109-core-loop.test.ts](C:/Users/Administrator/Desktop/project/DesktopPet/tests/task-t109-core-loop.test.ts)
-   - 楠岃瘉缁撴灉锛氶€氳繃
-
-14. `T-201 杞荤ぞ浜わ紙寰厜鐩搁亣 + 鍖垮悕瀹堟姢锛塦
-   - 鐘舵€侊細瀹屾垚
-   - 娴嬭瘯鐢ㄤ緥锛歔tests/task-t201-light-social.test.ts](C:/Users/Administrator/Desktop/project/DesktopPet/tests/task-t201-light-social.test.ts)
-   - 楠岃瘉缁撴灉锛氶€氳繃
-
-15. `T-202 濂藉弸涓庣瀵嗙害鎴榒
-   - 鐘舵€侊細瀹屾垚
-   - 娴嬭瘯鐢ㄤ緥锛歔tests/task-t202-friends-private-duel.test.ts](C:/Users/Administrator/Desktop/project/DesktopPet/tests/task-t202-friends-private-duel.test.ts)
-   - 楠岃瘉缁撴灉锛氶€氳繃
-
-16. `T-203 鍏绘垚绯荤粺锛堢瓑绾с€佷翰瀵嗗害銆佹妧鑳斤級`
-   - 鐘舵€侊細瀹屾垚锛堣鍒欏眰锛?   - 娴嬭瘯鐢ㄤ緥锛歔tests/task-t203-progression.test.ts](C:/Users/Administrator/Desktop/project/DesktopPet/tests/task-t203-progression.test.ts)
-   - 楠岃瘉缁撴灉锛氶€氳繃
-
-17. `T-204 澶栬涓庢崲瑁卄
-   - 鐘舵€侊細瀹屾垚锛堟湇鍔″眰锛?   - 娴嬭瘯鐢ㄤ緥锛歔tests/task-t204-appearance.test.ts](C:/Users/Administrator/Desktop/project/DesktopPet/tests/task-t204-appearance.test.ts)
-   - 楠岃瘉缁撴灉锛氶€氳繃
-
-18. `T-301 鍏ㄩ摼璺祴璇曚綋绯绘惌寤篳
-   - 鐘舵€侊細瀹屾垚
-   - 娴嬭瘯鐢ㄤ緥锛歔tests/task-t301-testing-pipeline.test.ts](C:/Users/Administrator/Desktop/project/DesktopPet/tests/task-t301-testing-pipeline.test.ts)
-   - 楠岃瘉缁撴灉锛氶€氳繃
-
-19. `T-302 鍙戝竷娴佹按绾夸笌鍥炴粴鏂规`
-   - 鐘舵€侊細瀹屾垚
-   - 娴嬭瘯鐢ㄤ緥锛歔tests/task-t302-release-pipeline.test.ts](C:/Users/Administrator/Desktop/project/DesktopPet/tests/task-t302-release-pipeline.test.ts)
-   - 楠岃瘉缁撴灉锛氶€氳繃锛堝寘鍚彂甯冩紨缁冧笌鍥炴粴婕旂粌锛?
-20. `T-303 鎬ц兘涓庢垚鏈不鐞哷
-   - 鐘舵€侊細瀹屾垚
-   - 娴嬭瘯鐢ㄤ緥锛歔tests/task-t303-performance-cost.test.ts](C:/Users/Administrator/Desktop/project/DesktopPet/tests/task-t303-performance-cost.test.ts)
-   - 楠岃瘉缁撴灉锛氶€氳繃
-
-21. `S-01 閰嶇疆涓績涓庤繙绋嬪紑鍏砢 `鉁卄
-   - 鐘舵€侊細瀹屾垚
-   - 娴嬭瘯鐢ㄤ緥锛歔tests/task-s01-config-center.test.ts](C:/Users/Administrator/Desktop/project/DesktopPet/tests/task-s01-config-center.test.ts)
-   - 楠岃瘉缁撴灉锛氶€氳繃
-
-22. `S-02 鏁版嵁澶囦唤涓庣伨澶囨紨缁僠 `鉁卄
-   - 鐘舵€侊細瀹屾垚
-   - 娴嬭瘯鐢ㄤ緥锛歔tests/task-s02-dr-rehearsal.test.ts](C:/Users/Administrator/Desktop/project/DesktopPet/tests/task-s02-dr-rehearsal.test.ts)
-   - 楠岃瘉缁撴灉锛氶€氳繃
-
-23. `S-03 鍙嶄綔寮婄瓥鐣ヨ凯浠 `鉁卄
-   - 鐘舵€侊細瀹屾垚
-   - 娴嬭瘯鐢ㄤ緥锛歔tests/task-s03-anti-cheat.test.ts](C:/Users/Administrator/Desktop/project/DesktopPet/tests/task-s03-anti-cheat.test.ts)
-   - 楠岃瘉缁撴灉锛氶€氳繃
-
-24. `S-04 闅愮鍚堣娓呭崟鍖朻 `鉁卄
-   - 鐘舵€侊細瀹屾垚
-   - 娴嬭瘯鐢ㄤ緥锛歔tests/task-s04-privacy-compliance.test.ts](C:/Users/Administrator/Desktop/project/DesktopPet/tests/task-s04-privacy-compliance.test.ts)
-   - 楠岃瘉缁撴灉锛氶€氳繃
-
-## 寰呮墽琛岋紙涓嬩竴鎵癸級
-
-1. 褰撳墠浠诲姟鏂囨。涓殑涓讳换鍔′笌寤鸿琛ュ厖浠诲姟宸插叏閮ㄥ畬鎴?`鉁卄銆?
-## Delivery Scope Snapshot (2026-03-04)
-
-1. Desktop runnable delivery: [DONE]
-2. Core gameplay service layer delivery: [DONE]
-3. Test pipeline + release/rollback/dr rehearsal: [DONE]
-4. Mobile Flutter + Unity runnable app: [PENDING] (next-phase D-009)
-
-Reference: `docs/project-delivery-tasks.md`
-
-## PRD Traceability Audit (2026-03-04)
-
-1. Audit document created: `docs/prd-traceability-audit.md`
-2. Status summary: core loop and service-layer features are mostly complete, but full cross-end deliverable remains pending for mobile runtime and production-grade PC 3D stack.
-3. Test verification command: `npm run verify`
-4. 2026-03-04 check: `npm run verify` and `npm run pc:smoke` both passed after audit-doc updates.
-
-## Runtime Milestone (2026-03-04)
-
-1. `D-002 PC battle runtime integration` [DONE]
-   - Scope: wired battle system into Electron runtime via IPC (`pet:battle-reset`, `pet:battle-act`, `pet:battle-state`).
-   - UI: added battle setup, round board, and action buttons in runtime panel.
-   - Tests: `tests/task-d002-pc-battle-runtime.test.ts`
-   - Verification: `npm run verify` and `npm run pc:smoke` passed.
-5. 2026-03-04 runtime battle milestone: `npm run verify` and `npm run pc:smoke` passed; unit tests total now 99.
-6. 2026-03-05 hit-test fix: panel/toggle regions added to interactive hit area to prevent click-through on control panel.
-7. 2026-03-05 `D-003 PC dual-pet battle visualization + i18n` [DONE]
-   - Added local GLB assets (Fox + CesiumMan) and model-viewer stage.
-   - Added HP/Anger bars, round/status rendering, card hit/attack effects.
-   - Added global zh/en toggle with localStorage persistence.
-   - Validation: `npm run verify`, `npm run pc:smoke` passed.
-
-## Runtime Milestone (2026-03-05 Update)
-
-1. `D-004 Desktop-stage duel behavior` [DONE]
-   - Battle now renders on desktop stage (two pets PK), not inside panel content.
-   - Default desktop state shows only player pet; enemy pet appears only after battle starts.
-   - Battle end (manual or auto) returns desktop back to solo player pet.
-   - Added regression test: `tests/task-d003-desktop-stage-battle.test.ts`
-   - Validation: `npm run test:unit`, `npm run verify`, `npm run pc:smoke` passed.
-
-2. `D-005 Desktop combat HUD + attack tags + mutual hit effects` [DONE]
-   - Default desktop mode removes framed card look; player pet is presented as solo desktop companion.
-   - Moved HP/Anger/status tag display to top HUD above desktop pet(s).
-   - Added bottom battle action tags (Normal/Element/Dodge/Ultimate) for quick attack-mode selection during battle.
-   - Added bilateral attack trail effect when both sides exchange hits in a round.
-   - Updated runtime doc: `docs/runtime-config.md`
-   - Validation: `npm run test:unit`, `npm run verify`, `npm run pc:smoke` passed.
-
-3. `D-006 Frameless compact HUD + center round carousel + richer FX` [DONE]
-   - Removed framed look in both idle and battle mode for pet container and top status HUD.
-   - Tuned top HUD to compact, closer alignment with each pet (smaller bars and status tag).
-   - Added center round-feed carousel that rotates action/damage/note/winner messages each round.
-   - Upgraded attack feedback with impact ring, spark burst, and light/heavy scene shake.
-   - Updated tests: `tests/task-d003-desktop-stage-battle.test.ts`
-   - Updated runtime doc: `docs/runtime-config.md`
-   - Validation: `npm run test:unit`, `npm run pc:smoke`, `npm run verify` passed.
-
-4. `D-007 Battle click reliability + draggable non-penetration HUD + compact tags` [DONE]
-   - Fixed stage action reliability by strengthening hit-region capture when battle is active.
-   - Added hover/move reinforcement for bottom action tags to avoid click-through misses.
-   - Made top HUD draggable in non-penetration mode for direct desktop window reposition.
-   - Simplified top HUD to bar-only style (HP/Anger labels removed), retaining element/status tags.
-   - Reduced HUD visual height and moved it closer to pets.
-   - Updated tests: `tests/task-d003-desktop-stage-battle.test.ts`
-   - Updated runtime doc: `docs/runtime-config.md` (v1.5)
-   - Validation: `npm run test:unit`, `npm run pc:smoke`, `npm run verify` passed.
-
-5. `D-008 Round pacing + last-round snapshot + status stacking visual rules` [DONE]
-   - Lowered center round feed and added persistent last-round snapshot line.
-   - Added wait-state prompt after player action selection and before round resolve playback.
-   - Improved no-hit feedback with explicit `MISS` popup and maintained attack trails for attempted strikes.
-   - Added elemental status stacking (e.g., burn x1 -> burn x2) with stack count surfaced in runtime status tag.
-   - Moved status tag to below anger bar left side, and added element-based tag color mapping.
-   - Updated tests: `tests/task-d002-pc-battle-runtime.test.ts`, `tests/task-d003-desktop-stage-battle.test.ts`
-   - Updated runtime doc: `docs/runtime-config.md` (v1.6)
-   - Validation: `npm run test:unit`, `npm run pc:smoke`, `npm run verify` passed.
-
-6. `D-009 Top round snapshot alignment + panel auto-hide + DOT 3-turn visibility` [DONE]
-   - Moved last-round snapshot into top round area and adjusted round/snapshot vertical placement.
-   - Auto-hid control panel immediately after pressing Start Battle.
-   - Extended elemental status durations to 3 rounds and preserved stack growth rules.
-   - Added direct-damage vs DOT split in battle result data for precise UI feedback.
-   - Added colorized DOT damage numbers and retained MISS feedback for non-hit attempts.
-   - Restored bar text display inside bars: HP as value/max, Anger as percent.
-   - Updated tests: `tests/task-d002-pc-battle-runtime.test.ts`, `tests/task-d003-desktop-stage-battle.test.ts`
-   - Updated runtime doc: `docs/runtime-config.md` (v1.7)
-   - Validation: `npm run test:unit`, `npm run pc:smoke`, `npm run verify` passed.
-
-7. `D-010 HUD readability + dodge anger economy + stage-only action input` [DONE]
-   - Increased HP/Anger bar height and value readability to prevent number clipping.
-   - Implemented dodge anger rules in runtime battle engine:
-     - dodge consumes 20 anger
-     - dodge vs normal attack refunds 30 anger
-     - double-dodge does not refund
-   - Removed panel-side battle action buttons; battle inputs now stay on desktop stage tags only.
-   - Updated tests: `tests/task-d001-pc-runnable-runtime.test.ts`, `tests/task-d002-pc-battle-runtime.test.ts`, `tests/task-d003-desktop-stage-battle.test.ts`
-   - Validation: `npm run test:unit`, `npm run pc:smoke`, `npm run verify` passed.
-
-8. `D-011 Countdown-centric battle pacing + idle minimal mode + action motion upgrade` [DONE]
-   - Center area now shows only a 5-second countdown during battle input windows.
-   - If no input is made within 5 seconds, action auto-falls back to `normal_attack`.
-   - Round feed is repositioned below top round/snapshot area (not between both pets).
-   - Idle (non-battle) mode now shows only player pet + menu icon; HUD/round/feed are hidden.
-   - Menu button switched to icon style and aligned vertically with top round badge.
-   - Added `anger == 0` dodge guard in both renderer flow and battle-runtime normalization.
-   - Enhanced action expression:
-     - normal attack: forward lunge strike feel
-     - element attack: in-place chant + cast aura
-   - Updated tests: `tests/task-d002-pc-battle-runtime.test.ts`, `tests/task-d003-desktop-stage-battle.test.ts`
-   - Updated runtime doc: `docs/runtime-config.md` (v1.9)
-   - Validation: `npm run test:unit`, `npm run pc:smoke`, `npm run verify` passed.
-
-9. `D-012 Pet-inventory panel + right-click entry + layout mode split` [DONE]
-   - Added idle/battle window layout mode switching via IPC (`pet:set-layout-mode`):
-     - idle mode uses compact pet-sized window
-     - battle mode expands to dual-pet arena window
-   - Menu icon is hidden in idle by default; right-clicking the desktop pet opens the panel.
-   - Removed manual element selectors from panel; battle elements now come from selected active pet and sampled enemy pet.
-   - Added in-panel pet inventory cards with name/model/element/stats/captured-time/serial/index.
-   - Added battle center relation text (`克制/被克/均势`) with 5s action countdown.
-   - Added action gating:
-     - dodge disabled when anger is 0
-     - ultimate disabled when anger < 100
-   - Added winner/loser/draw celebration broadcast lines.
-   - Updated tests: `tests/task-d001-pc-runnable-runtime.test.ts`, `tests/task-d002-pc-battle-runtime.test.ts`, `tests/task-d003-desktop-stage-battle.test.ts`
-   - Updated runtime doc: `docs/runtime-config.md` (v2.0)
-   - Validation: `npm run test:unit`, `npm run pc:smoke`, `npm run verify` passed.
-
-10. `D-013 Battle-size rollback + row-list inventory detail + multi-model asset expansion` [DONE]
-   - Restored battle-window sizing/display to pre-enlargement behavior; kept idle mode compact pet-sized window.
-   - Kept menu button hidden in idle; panel opens via right-click on desktop pet.
-   - Reworked inventory UX to row-based avatar list + click-to-view detail panel.
-   - Added local model assets beyond two baseline models:
-     - `Astronaut.glb`, `Horse.glb`, `NeilArmstrong.glb`, `RobotExpressive.glb`
-   - Active pet now selects model/element from inventory; enemy pet is sampled from roster.
-   - Updated tests: `tests/task-d001-pc-runnable-runtime.test.ts`
-   - Updated runtime doc: `docs/runtime-config.md` (v2.1)
-   - Validation: `npm run test:unit`, `npm run pc:smoke`, `npm run verify` passed.
-
-11. `D-014 Inventory default-detail hide regression fix` [DONE]
-   - Fixed inventory behavior to match UX expectation: detail card is hidden by default and only opens after clicking a pet row.
-   - Kept row-list avatar cards as the only default inventory view.
-   - Updated tests: `tests/task-d001-pc-runnable-runtime.test.ts`
-   - Updated runtime doc: `docs/runtime-config.md` (v2.2)
-   - Validation: `npm run test:unit -- tests/task-d001-pc-runnable-runtime.test.ts`, `npm run pc:smoke`, `npm run verify` passed.
-
-12. `D-015 Settlement confirm flow + panel-entry simplification + avatar-strip inventory` [DONE]
-   - Replaced auto-close battle finish with settlement animation layer; battle exits only after user clicks `确认`.
-   - Removed floating menu button entry; panel is opened by right-click pet and closed by panel top-right `×`.
-   - Reworked inventory to avatar strip + right-side detail view (default shows placeholder, click avatar to open detail).
-   - Updated tests: `tests/task-d001-pc-runnable-runtime.test.ts`, `tests/task-d003-desktop-stage-battle.test.ts`
-   - Updated runtime doc: `docs/runtime-config.md` (v2.3)
-   - Validation: `npm run test:unit`, `npm run pc:smoke`, `npm run verify` passed.
-
-13. `D-016 Runtime UX polish + relation/countdown split + quick deploy + parasite heal popup` [DONE]
-   - Split battle center UI into independent relation badge + countdown orb (with color states).
-   - Raised HUD layer/position to avoid overlap with taller models.
-   - Upgraded inventory interaction:
-     - avatar row supports centered/even distribution
-     - selected avatar shows quick deploy button under avatar
-     - quick deploy auto-closes panel after switching active pet
-   - Enhanced pet detail panel with colored chips/tags.
-   - Panel interaction updated:
-     - panel fills window bounds
-     - left mouse drag supported in panel drag region
-   - Added structured parasite heal events in runtime battle service and surfaced green `+heal` popup in battle.
-   - Updated tests: `tests/task-d001-pc-runnable-runtime.test.ts`, `tests/task-d002-pc-battle-runtime.test.ts`, `tests/task-d003-desktop-stage-battle.test.ts`
-   - Updated docs: `docs/runtime-config.md` (v2.4), `docs/tasks.md` (v2.0, Chinese rewrite + map task backlog)
-   - Validation: `npm run test:unit`, `npm run pc:smoke`, `npm run verify` passed.
-
-14. `D-017 Panel usability fix + avatar row hard-layout` [DONE]
-   - Fixed panel wheel scrolling by ensuring panel body is non-drag interaction region.
-   - Panel open now hides desktop pet layer to avoid visual overlap/blocking.
-   - Updated inventory avatar list to fixed 6 columns per row with centered distribution.
-   - Kept panel-header drag behavior for window repositioning.
-   - Updated docs: `docs/runtime-config.md`
-   - Validation: `npm run test:unit -- tests/task-d001-pc-runnable-runtime.test.ts tests/task-d003-desktop-stage-battle.test.ts`, `npm run pc:smoke`, `npm run verify` passed.
-
-15. `D-018 Quick-deploy width trim + center HUD vertical tune + settlement top-layer` [DONE]
-   - Reduced quick-deploy button footprint to prevent right-edge overflow when selecting last avatar.
-   - Enforced panel/inventory horizontal overflow guard (`overflow-x: hidden`) to remove unexpected horizontal scrollbar.
-   - Moved relation badge and countdown orb upward into the visual region between both HUD bars.
-   - Raised settlement modal layer (`z-index`) and adjusted vertical placement to ensure it stays visible above battle overlays.
-   - Updated tests: `tests/task-d003-desktop-stage-battle.test.ts`
-   - Updated docs: `docs/runtime-config.md`
-   - Validation: `npm run test:unit -- tests/task-d001-pc-runnable-runtime.test.ts tests/task-d003-desktop-stage-battle.test.ts`, `npm run pc:smoke`, `npm run verify` passed.
-
-16. `D-019 PC inventory persistence + battle-report panel` [DONE]
-   - Added runtime persistent store: `apps/pc-app/runtime/services/runtime-data-store.cjs`.
-   - Inventory now loads from IPC (`pet:get-inventory`) and active-pet changes persist via `pet:set-active-pet`.
-   - Battle sessions now auto-record in main process and are queryable via `pet:get-battle-reports`.
-   - Added panel section `最近战报/Recent Battle Reports` with latest session summary cards.
-   - Added Supabase migration `infra/supabase/migrations/0002_pet_inventory_battle_reports.sql` for `pet_instances`, `pet_capture_records`, `battle_sessions`, `battle_round_events`.
-   - Updated tests:
-     - `tests/task-d004-pc-persistence-reporting.test.ts`
-     - `tests/task-t205-persistence-schema.test.ts`
+1. `D-037` 用户模型升级（账号/用户名分离）+ 中文鉴权提示完善 `[DONE]`
+   - 完成内容：
+     - 用户模型升级为：`id(内部主键)` + `account(登录账号)` + `username(展示名)` + `passwordHash`。
+     - 注册新增用户名字段，默认与账号解耦；登录仍采用账号+密码。
+     - 资料修改改为“改用户名 + 改密码（需旧密码）”，账号保持稳定不变。
+     - 运行面板与头像显示优先展示用户名，同时保留 `@账号`。
+     - 中文模式下鉴权错误提示统一中文化（登录/注册/资料修改/搜索申请等）。
+   - 测试：
      - `tests/task-d001-pc-runnable-runtime.test.ts`
-     - `tests/task-d003-desktop-stage-battle.test.ts`
-   - Validation:
-     - `npm run test:unit`
-     - `npm run pc:smoke`
+     - `tests/task-d007-pc-user-auth-duel-request.test.ts`
      - `npm run verify`
-     - All passed.
-
-17. `D-020 PC map capability abstraction + location state-machine demo` [DONE]
-   - Added map runtime abstraction service: `apps/pc-app/runtime/services/map-runtime.cjs`.
-   - Added provider abstraction:
-     - `tencent` -> `gcj02`
-     - `google` -> `wgs84`
-   - Added permission state-machine (`prompt/granted/denied/system_disabled`) and unified APIs:
-     - `getCurrentLocation`
-     - `startWatch/stopWatch`
-     - `distanceTo`
-   - Added main/preload IPC bridge:
-     - `pet:get-map-state`
-     - `pet:set-map-provider`
-     - `pet:request-map-permission`
-     - `pet:get-current-location`
-     - `pet:start-map-watch`
-     - `pet:stop-map-watch`
-     - `pet:distance-to`
-     - broadcast `pet:map-state`
-   - Added panel UI section "地图能力（演示）/Map Capability (Demo)" for provider switch, permission mode, location refresh, watch control and distance demo.
-   - Updated smoke check to include `map-runtime.cjs`.
-   - Updated tests:
-     - `tests/task-d005-pc-map-runtime.test.ts`
-     - `tests/task-d001-pc-runnable-runtime.test.ts`
-     - `tests/task-d003-desktop-stage-battle.test.ts`
-   - Validation:
-     - `npm run test:unit -- tests/task-d005-pc-map-runtime.test.ts tests/task-d001-pc-runnable-runtime.test.ts tests/task-d003-desktop-stage-battle.test.ts`
-     - Passed.
-
-18. `D-021 Nearby wild-pet discovery + capture duel loop (PC demo)` [DONE]
-   - Added wild-pet runtime service: `apps/pc-app/runtime/services/wild-pet-runtime.cjs`.
-   - Added nearby wild-pet query API:
-     - `pet:get-nearby-wild-pets`
-   - Added capture battle entry API:
-     - `pet:begin-capture-battle`
-   - Extended battle flow for capture outcome:
-     - player win -> auto capture into inventory with serial
-     - lose / manual end -> target enters cooldown
-   - Added panel section `附近流浪宠物/Nearby Wild Pets`:
-     - serial / rarity / distance / status
-     - capture button enabled only when target is within 100m and available
-   - Added capture persistence + duplicate guard in runtime data store.
-   - Updated smoke checks to include `wild-pet-runtime.cjs`.
-   - Updated tests:
-     - `tests/task-d006-pc-wild-capture-flow.test.ts`
-     - `tests/task-d001-pc-runnable-runtime.test.ts`
-     - `tests/task-d003-desktop-stage-battle.test.ts`
-     - `tests/task-d004-pc-persistence-reporting.test.ts`
-   - Validation:
-   - `npm run test:unit`
-   - `npm run pc:smoke`
-   - `npm run verify`
-   - All passed.
-
-19. `D-022 Capture report hint + pet leveling progression + HUD avatar/level` [DONE]
-   - Extended battle settlement pipeline in main process:
-     - player win now calls `runtimeDataStore.recordBattleWin(...)`
-     - `pet:battle-act` now returns `progression`
-     - capture-session battle report persists `mode/captureSuccess/captureSerial`
-   - Inventory progression model is now visible end-to-end in renderer:
-     - per-pet level badge on avatar strip (`Lv.x`)
-     - detail panel includes `Level / EXP / Wins`
-     - battle HUD shows avatar + level (player-left / enemy-right)
-   - Capture success now emits explicit report hint log:
-     - `收服战报已记录：{serial}` / `Capture report persisted: {serial}`
-   - Duplicate-species ownership rule confirmed:
-     - duplicate is blocked by `wildSerial` only
-     - same species with different serial can both be owned
-   - Updated tests:
-     - `tests/task-d001-pc-runnable-runtime.test.ts`
-     - `tests/task-d003-desktop-stage-battle.test.ts`
-     - `tests/task-d004-pc-persistence-reporting.test.ts`
-     - `tests/task-d006-pc-wild-capture-flow.test.ts`
-   - Validation:
-     - `npm run test:unit -- tests/task-d001-pc-runnable-runtime.test.ts`
-     - `npm run test:unit -- tests/task-d003-desktop-stage-battle.test.ts`
-     - `npm run test:unit -- tests/task-d004-pc-persistence-reporting.test.ts`
-     - `npm run test:unit -- tests/task-d006-pc-wild-capture-flow.test.ts`
      - `npm run pc:smoke`
+
+2. `D-036` 账号体验重构 + HUD自适应 + ESC分层退出 `[DONE]`
+   - 完成内容：
+     - 独立鉴权窗口改为主流单卡片流程：默认登录，支持“去注册/去登录”单按钮切换。
+     - 运行面板移除登录/注册表单，改为右上角用户头像下拉（退出登录、修改信息）。
+     - 新增资料修改弹层：支持修改用户名、修改密码，均要求输入旧密码校验。
+     - 对战 HUD 顶部高度改为按双方模型最高点动态计算，避免血条/怒气条被高模型遮挡。
+     - 面板关闭按钮移除，ESC 现在按层关闭：资料弹层 -> 用户下拉 -> 战报/详情弹层 -> 面板。
+     - 鉴权状态改为主进程实时广播（`pet:auth-state`）：修复“登录后头像仍禁用/会话状态不同步”问题。
+     - 头像按钮样式居中修复（去除默认按钮 padding，改 flex 居中）。
+   - 测试：
+     - `tests/task-d001-pc-runnable-runtime.test.ts`
+     - `tests/task-d003-desktop-stage-battle.test.ts`
+     - `tests/task-d007-pc-user-auth-duel-request.test.ts`
      - `npm run verify`
-     - All passed.
-
-20. `D-023 Avatar layout + battle nameplate + idle window drag boundary fix` [DONE]
-   - Inventory avatar strip updated from fixed 6-column grid to responsive wrap layout with fixed spacing:
-     - wider panel shows more avatars per row
-     - overflow wraps naturally to next line
-     - fixed right-edge clipping on last avatar
-   - Increased top padding and badge offset for avatar level chip to avoid clipping.
-   - Battle top labels now show only pet names (removed player/enemy prefix in HUD title).
-   - Wild-pet generated names no longer append numeric suffix; uniqueness remains by `id/serial`.
-   - Window interaction updates in main process:
-     - reduced idle bounds to pet-sized compact window
-     - replaced primary-display clamp with virtual multi-display work-area clamp
-     - fixed drag-to-corners / drag-to-extended-monitor behavior
-     - removed drag-time auto-enlarge side-effect caused by oversized minimum clamp
-   - Updated tests:
-     - `tests/task-d003-desktop-stage-battle.test.ts`
-     - `tests/task-d001-pc-runnable-runtime.test.ts`
-     - `tests/task-d006-pc-wild-capture-flow.test.ts`
-   - Validation:
-     - `npm run test:unit -- tests/task-d001-pc-runnable-runtime.test.ts`
-     - `npm run test:unit -- tests/task-d003-desktop-stage-battle.test.ts`
-     - `npm run test:unit -- tests/task-d006-pc-wild-capture-flow.test.ts`
-   - `npm run pc:smoke`
-   - `npm run verify`
-   - All passed.
-
-21. `D-024 Panel-size decoupling + avatar-detail popover + scrollbar polish` [DONE]
-   - Window layout behavior refined to keep panel and pet window independent:
-     - panel open -> fixed `panel` layout mode
-     - panel close -> fallback to `idle/battle` layout mode
-     - idle pet viewport remains compact (pet-sized), panel no longer shrinks with pet window
-   - Inventory detail UX switched to nearby popover:
-     - click avatar -> show detail popover adjacent to selected avatar
-     - popover supports close + set-active actions
-     - reduced long scroll pressure from always-expanded detail area
-   - Scrollbar visual polish:
-     - unified thin scrollbar theme for panel/inventory/battle-report/wild-list
-     - removed rough default scrollbar look while preserving usability
-   - Added regression assertions:
-     - `tests/task-d001-pc-runnable-runtime.test.ts`
-       - verifies `PANEL_BOUNDS` and panel layout routing
-       - verifies renderer `setLayoutMode(visible ? "panel" ...)` call path
-     - `tests/task-d003-desktop-stage-battle.test.ts`
-       - verifies popover styles and custom scrollbar style hooks
-   - Validation:
-     - `npm run test:unit -- tests/task-d001-pc-runnable-runtime.test.ts tests/task-d003-desktop-stage-battle.test.ts`
-   - `npm run pc:smoke`
-   - `npm run verify`
-   - All passed.
-
-22. `D-025 Idle wheel-resize + inventory row-height auto + unified species serial` [DONE]
-   - Added idle-mode wheel scaling on desktop pet:
-     - scroll up/down on pet adjusts idle scale
-     - idle window size now updates with pet scale through new IPC `pet:set-idle-window-size`
-     - panel/battle modes keep their own fixed layout behavior
-   - Inventory avatar list height now follows actual row count:
-     - removed fixed empty area under one-row avatar list
-     - one row = one row height, two rows = two rows height
-   - Wild pet naming/serial rule normalized:
-     - same species uses same base name (no rarity suffix in name)
-     - new serial format `CCCNNNN` (e.g. `0010012`)
-     - `CCC` maps to species code, `NNNN` is species sequence
-   - Default inventory serials switched to 7-digit numeric style for consistency.
-   - Added/updated regression assertions:
-     - `tests/task-d001-pc-runnable-runtime.test.ts`
-       - checks `pet:set-idle-window-size` and renderer `setIdleWindowSize` usage
-     - `tests/task-d003-desktop-stage-battle.test.ts`
-       - checks idle wheel scale path + inventory auto-height hook
-     - `tests/task-d006-pc-wild-capture-flow.test.ts`
-       - checks 7-digit serial pattern and duplicate-species capture with different serial
-   - Validation:
-     - `npm run test:unit -- tests/task-d001-pc-runnable-runtime.test.ts tests/task-d003-desktop-stage-battle.test.ts tests/task-d006-pc-wild-capture-flow.test.ts`
      - `npm run pc:smoke`
-     - `npm run verify`
-     - All passed.
+
+3. `D-035` 独立鉴权窗口 + 对战朝向修正（Azimuth/Pitch）`[DONE]`
+   - 完成内容：
+     - 新增独立登录窗口：应用启动先进入鉴权窗口，注册/登录成功后再进入桌宠主窗口。
+     - 主窗口改为 `show: false` 启动，托盘行为适配鉴权状态（未登录优先打开登录窗口）。
+     - 对战朝向由模型 `orientation` 旋转改为 `cameraOrbit` 方位角控制（azimuth），`Ctrl + 左键` 水平拖动可稳定绕水平角旋转，不再只出现“X轴观感”。
+     - 修复模型 load 回调覆盖战斗视角：战斗态加载模型不再回退到 idle 视角。
+   - 测试：`tests/task-d001-pc-runnable-runtime.test.ts`、`tests/task-d003-desktop-stage-battle.test.ts`、`tests/task-d007-pc-user-auth-duel-request.test.ts`、`npm run verify`、`npm run pc:smoke`
+
+4. `D-034` PC 用户系统一期（注册/登录/搜索账号/对战申请）`[DONE]`
+   - 完成内容：
+     - 新增本地账号系统持久化：注册、登录、退出登录、会话恢复。
+     - 新增账号搜索与对战申请：可搜索账号并发起申请，支持收/发申请列表查看。
+     - 主进程/预加载/渲染层全链路打通（`runtime-data-store` + IPC + 面板 UI + 中英文文案）。
+   - 测试：`tests/task-d007-pc-user-auth-duel-request.test.ts`、`tests/task-d001-pc-runnable-runtime.test.ts`、`npm run verify`、`npm run pc:smoke`
+
+3. `D-033` 对战自由视角微调 + 启动颜色同步修复 `[DONE]`
+   - 完成内容：
+     - 对战模式支持 `Ctrl + 左键拖动` 自由微调（左右调朝向、上下调俯仰），用于兜底不同模型的朝向差异。
+     - 修复启动颜色不一致：非对战态 HUD/模型染色按当前出战宠物与当前敌宠显示，不再被旧 battle state 覆盖。
+   - 测试：`tests/task-d003-desktop-stage-battle.test.ts`、`npm run verify`、`npm run pc:smoke`
+
+4. `D-032` 面板开启动画跳位修复 + 对向符号反转校正 `[DONE]`
+   - 完成内容：
+     - 面板打开改为“先切布局再显示面板”，消除右键开面板时闪到左上角的一帧跳位。
+     - 面板布局切换改为保留当前左上角锚点并禁用动画 `setBounds(..., false)`，降低视觉突变。
+     - 战斗模型朝向符号反转为 `player=+90deg`、`enemy=-90deg`，修复朝向方向仍错误的问题。
+   - 测试：`tests/task-d001-pc-runnable-runtime.test.ts`、`tests/task-d003-desktop-stage-battle.test.ts`、`npm run verify`、`npm run pc:smoke`
+
+5. `D-031` 面板闪烁与战斗模型可见性修复 `[DONE]`
+   - 完成内容：
+     - 面板打开时隐藏舞台层（`panel-open` 下整体透明/禁交互），避免右键开面板瞬间模型放大闪烁。
+     - 撤销错误的元素级 `rotateY`（会把 `model-viewer` 平面转到近乎不可见）。
+     - 战斗朝向改为模型内部朝向：`player=-90deg`、`enemy=90deg`，恢复可见且面对面对战。
+   - 测试：`tests/task-d003-desktop-stage-battle.test.ts`、`npm run verify`、`npm run pc:smoke`
+
+6. `D-030` 拖动尺寸硬锁 + 朝向绕Y轴修正 `[DONE]`
+   - 完成内容：
+     - 拖动链路增加布局尺寸硬锁：移动与保存阶段均按 `idle/panel/battle` 目标尺寸回正，彻底阻断拖动过程宽高漂移。
+     - 对战朝向改为 CSS `rotateY(±90deg)`，仅绕竖轴旋转，规避相机与模型轴导致的背对背/翻转问题。
+   - 测试：`tests/task-d003-desktop-stage-battle.test.ts`、`npm run verify`、`npm run pc:smoke`
+
+7. `D-029` 拖动与对向显示二次修复 `[DONE]`
+   - 完成内容：
+     - 拖动改为主进程 `setPosition` 位移，不再在拖动链路调用 `setBounds`，进一步消除拖动中尺寸漂移。
+     - 战斗对向改为“左右相机轨道对向”（`player=90deg` / `enemy=-90deg`），不再依赖模型旋转轴，规避朝向翻车。
+   - 测试：`tests/task-d003-desktop-stage-battle.test.ts`、`npm run verify`、`npm run pc:smoke`
+
+8. `D-028` 拖动防扩窗与战斗朝向翻转修复 `[DONE]`
+   - 完成内容：
+     - 主窗口禁用系统手动缩放（`resizable=false`），仅保留 `Ctrl + 滚轮` 缩放入口，避免拖动误触边缘导致越拖越大。
+     - 战斗朝向从 `orientation` 旋转改为安全镜像翻转（`player scaleX(-1)`），修复“模型四脚朝天/方向错乱”。
+   - 测试：`tests/task-d003-desktop-stage-battle.test.ts`、`npm run verify`、`npm run pc:smoke`
+
+9. `D-027` 拖动稳定与收服结算单弹层修复 `[DONE]`
+   - 完成内容：
+     - 主进程拖动链路改为“仅移动位置不改尺寸”，修复左键拖动过程中窗口逐步变大的问题。
+     - 对战模型朝向改为强制水平对向（`±90deg`），并在战斗模式锁定相机轨道，消除方向错乱。
+     - 收服流程改为单一结算弹层确认：胜利后直接在结算框内“确认/取消”收服，不再二次确认。
+   - 测试：`tests/task-d001-pc-runnable-runtime.test.ts`、`tests/task-d003-desktop-stage-battle.test.ts`
+
+10. `D-024` 空闲交互与窗口缩放稳定化 `[DONE]`
+   - 完成内容：
+     - 空闲态改为 `Ctrl + 滚轮` 缩放，普通滚轮不再触发缩放。
+     - `Ctrl + 左键` 旋转模型；左键按住宠物保持拖窗。
+     - 缩放窗口按模型基准尺寸计算，避免拖动过程中误放大。
+     - idle 态保留半透明虚线边界辅助，去除多余实线视觉干扰。
+   - 测试：`tests/task-d003-desktop-stage-battle.test.ts`
+
+11. `D-025` 战斗规则与收服流程升级 `[DONE]`
+   - 完成内容：
+     - 倒计时改为 10 秒，展示改为轻量数字（不再使用圆环）。
+     - 大招门槛改为 `>=50` 怒气。
+     - 首次允许 0 怒气闪避，后续 0 怒气不可闪避。
+     - 平局规则移除：同回合同归于尽按“先掉到 0 HP 的一方判负”。
+     - 属性状态基础 2 回合；叠层时增加层数并额外延长 2 回合。
+     - 收服战胜后新增确认弹层（确认/取消），取消会记为放弃收服。
+     - 最近战报支持点击查看逐回合回放。
+   - 测试：`tests/task-d002-pc-battle-runtime.test.ts`、`tests/task-d003-desktop-stage-battle.test.ts`
+
+12. `D-026` 仓库与收服数据一致性修复 `[DONE]`
+   - 完成内容：
+     - 收服时间统一为 ISO 时间写入并按中文时区显示，修复显示偏差。
+     - 宠物详情移除模型文件名显示（不再展示 `Horse.glb` 这类字段）。
+     - 放逐后允许同编号重新收服（清理过期捕获记录）。
+     - 属性染色增强，避免仅显示单一绿色模型观感。
+   - 测试：`tests/task-d004-pc-persistence-reporting.test.ts`、`tests/task-d006-pc-wild-capture-flow.test.ts`
+
+## 已通过验证
+
+1. 定向测试：
+   - `npm run test:unit -- tests/task-d001-pc-runnable-runtime.test.ts tests/task-d002-pc-battle-runtime.test.ts tests/task-d003-desktop-stage-battle.test.ts tests/task-d004-pc-persistence-reporting.test.ts tests/task-d006-pc-wild-capture-flow.test.ts`
+2. 冒烟测试：
+   - `npm run pc:smoke`
+3. 全量门禁：
+   - `npm run verify`
+
+## 待办（下一阶段）
+
+1. `M-303` 地图 marker 可视化与交互层。
+2. `M-305` 区域占领收益与地图收服倍率联动。
+3. `M-306/M-307` 后台围栏提醒与地图验收包。

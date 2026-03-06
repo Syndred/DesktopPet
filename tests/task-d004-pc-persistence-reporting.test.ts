@@ -48,6 +48,7 @@ type BattleReport = {
 type RuntimeDataStoreType = new (options: { filePath: string }) => {
   getInventorySnapshot: () => InventorySnapshot;
   setActivePet: (petId: string) => InventorySnapshot;
+  releasePet: (petId: string) => InventorySnapshot;
   listBattleReports: (limit?: number) => BattleReport[];
   saveBattleReport: (report: BattleReport) => BattleReport;
   captureWildPet: (payload: {
@@ -242,5 +243,33 @@ describe("D-004 pc inventory persistence and battle report persistence", () => {
     expect(leveled?.winsTotal).toBe(5);
     expect(leveled?.stats).not.toBe(baseStats);
     expect(leveled?.stats).toContain("ATK34");
+  });
+
+  it("supports release and allows recapturing the same serial after release", () => {
+    const store = new RuntimeDataStore({ filePath: createTempFilePath() });
+    const captured = store.captureWildPet({
+      wildPetId: "wild-fire-r",
+      wildSerial: "0010018",
+      rarity: "common",
+      element: "fire",
+      name: { zh: "焰尾", en: "BlazeTail" },
+      capturedAt: new Date("2026-03-05T10:03:00.000Z").toISOString()
+    });
+    expect(captured.duplicate).toBe(false);
+    expect(captured.pet?.id).toBeTruthy();
+
+    const releasedSnapshot = store.releasePet(captured.pet!.id);
+    expect(releasedSnapshot.pets.some((pet) => pet.id === captured.pet!.id)).toBe(false);
+
+    const recaptured = store.captureWildPet({
+      wildPetId: "wild-fire-r",
+      wildSerial: "0010018",
+      rarity: "common",
+      element: "fire",
+      name: { zh: "焰尾", en: "BlazeTail" },
+      capturedAt: new Date("2026-03-05T10:04:00.000Z").toISOString()
+    });
+    expect(recaptured.duplicate).toBe(false);
+    expect(recaptured.pet?.id).toBeTruthy();
   });
 });

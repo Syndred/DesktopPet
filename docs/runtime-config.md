@@ -1,7 +1,7 @@
 ﻿# 运行配置文档（PC 桌宠对战）
 
-文档版本：v2.11  
-更新时间：2026-03-05
+文档版本：v2.22  
+更新时间：2026-03-06
 
 ## 1. 环境要求
 
@@ -24,6 +24,81 @@ npm run verify
 2. `npm run pc:smoke` 输出 `PC runtime smoke passed.`。
 3. `npm run verify` 通过（lint/typecheck/test layers）。
 
+## 2.1 v2.20 规则覆盖（优先于旧段落）
+
+1. 空闲交互：
+   - 左键按住宠物：拖动窗口
+   - `Ctrl + 左键`：旋转模型角度
+   - `Ctrl + 滚轮`：缩放宠物（普通滚轮不再触发缩放）
+   - 拖动窗口只改变位置，不再触发尺寸漂移
+   - 主窗口禁用系统手动缩放（防止边缘误触发 resize）
+   - 拖动位移使用 `setPosition`，不在拖动链路改动宽高
+   - 拖动/保存阶段均按当前布局尺寸（idle/panel/battle）硬锁回正
+2. 战斗倒计时：
+   - 每回合等待时间改为 `10` 秒
+   - 倒计时改为轻量数字文本（位于克制标签上方），不再使用圆环样式
+3. 收服确认流程：
+   - 收服战胜后在结算弹层内直接确认：`确认/取消`
+   - 确认才入库；取消则记为放弃收服并写入战报（不再出现二次确认）
+4. 怒气与大招：
+   - 大招门槛改为 `>=50` 怒气
+   - 首次允许 `0` 怒气闪避；首次后 `0` 怒气不可闪避
+5. 结算与状态：
+   - 不再出现平局，同回合同归于尽按“先掉到 0 HP 的一方判负”
+   - 属性状态基础持续 2 回合；叠层时额外延长 2 回合并增加层数
+6. 战报回放：
+   - 最近战报支持点击查看逐回合回顾（动作、伤害、回合说明）
+7. 仓库详情：
+   - 不再显示模型文件名（如 `Horse.glb`）
+   - 收服时间统一按时区格式化显示（中文固定 `Asia/Shanghai`）
+8. 对战朝向（修正版）：
+   - 战斗朝向改为 `cameraOrbit` 控制（不再依赖模型 `orientation` 旋转）。
+   - 默认方位角：我方 `-92deg`，敌方 `92deg`；可保证左右相对更稳定。
+   - 对战中支持 `Ctrl + 左键拖动` 自由微调视角：
+     - 左右拖动：调整 `cameraOrbit` 第一参数（azimuth，水平角）
+     - 上下拖动：调整 `cameraOrbit` 第二参数（pitch，俯仰角）
+   - 模型 load 后会按战斗态重新应用 `applyBattleView`，避免被 idle 相机逻辑覆盖。
+9. 面板开启动画：
+   - `panel-open` 状态下舞台层整体隐藏，避免右键打开面板时出现瞬间放大闪烁
+   - 面板改为“先切窗口布局，再显示面板内容”，降低右键打开时闪到左上角的跳位感
+10. 布局切换策略：
+   - 切到 `panel` 时保持当前左上角锚点并禁用动画（`setBounds(..., false)`）
+11. 当前对战朝向：
+   - 通过 `cameraOrbit` 控制：我方 `-92deg`、敌方 `92deg`（可实时微调）。
+12. 启动颜色同步：
+   - 应用启动后会按“当前出战宠物”的属性直接渲染颜色，不再被旧对战状态覆盖。
+13. 用户系统（PC 一期）：
+   - 支持账号注册：账号 + 密码 + 确认密码
+   - 支持账号登录：账号 + 密码
+   - 支持账号搜索并发起对战申请
+   - 支持查看收/发申请列表
+14. 独立鉴权窗口（新增）：
+   - 启动时先弹出独立登录窗口，未鉴权不会进入桌宠主窗口。
+   - 注册/登录成功后自动关闭登录窗口并进入主窗口。
+   - 退出登录后会回到登录窗口。
+15. 鉴权窗口交互（v2.21）：
+   - 默认显示登录表单。
+   - “没有账号？去注册 / 已有账号？去登录”单按钮切换，不再双表单同时堆叠。
+16. 运行面板账号入口（v2.21）：
+   - 移除面板内注册/登录表单，避免挤占仓库区域。
+   - 面板右上角显示用户头像下拉菜单：`修改信息`、`退出登录`。
+17. 资料修改（v2.21）：
+   - 支持修改用户名、修改密码。
+   - 必须输入旧密码；修改密码时要求确认新密码一致。
+18. ESC 分层退出（v2.21）：
+   - 优先关闭资料弹层 -> 账号下拉 -> 战报/宠物详情弹层 -> 面板。
+   - 已移除面板右上角 `×` 关闭按钮。
+19. 战斗 HUD 高度（v2.21）：
+   - HUD 顶部高度会按双方模型最高点动态上移，避免血条/怒气条被模型遮挡。
+20. 用户模型（v2.22）：
+   - 每个用户固定内部 `id`，并包含 `account(登录账号)`、`username(展示名)`、`passwordHash`。
+   - 登录使用 `账号 + 密码`；显示层优先展示 `用户名`，并保留 `@账号`。
+21. 注册与资料修改（v2.22）：
+   - 注册新增“用户名”字段。
+   - 资料修改改为：修改用户名、修改密码（均要求输入旧密码）。
+22. 中文提示（v2.22）：
+   - 中文模式下鉴权相关失败提示会自动本地化为中文，不再直接透出英文错误码。
+
 ## 3. 启动 PC 端
 
 ```powershell
@@ -37,7 +112,7 @@ npm run dev:pc
 1. 非战斗状态：窗口为宠物大小（小窗），仅显示宠物模型。
 2. 对战状态：恢复为之前的窗口尺寸与显示风格（不再放大成大舞台窗口）。
 3. 已移除菜单按钮；仅通过右键宠物打开控制面板。
-4. 面板右上角提供关闭按钮（`×`）。
+4. 面板右上角不再提供关闭按钮，统一使用 `ESC` 分层退出。
 5. 面板尺寸覆盖当前窗口区域，滚轮可正常上下滚动内容。
 6. 面板打开时会隐藏桌面宠物层，避免被宠物遮挡。
 7. 面板头部区域支持按住左键拖动窗口（按钮等交互控件不受影响）。
@@ -47,15 +122,15 @@ npm run dev:pc
 
 1. 克制关系与倒计时已分离显示：
    - 血条中间显示克制标签（`克制/被克/均势`，带颜色态）
-   - 下方独立显示圆环倒计时（中心数字倒计时）
-2. 5 秒内未操作自动普攻。
+   - 克制标签上方显示轻量数字倒计时（不再使用圆环）
+2. 10 秒内未操作自动普攻。
 3. 回合播报仍在顶部区域（回合数/快照下方）。
 4. 胜负产生后会播放结算弹层动画，需点击“确认”才退出对战返回桌宠模式。
 
 ### 4.3 怒气规则
 
-1. 怒气 `<100` 时大招按钮禁用。
-2. 怒气 `=0` 时闪避按钮禁用。
+1. 怒气 `<50` 时大招按钮禁用（`>=50` 可释放一次大招）。
+2. 首次允许 0 怒气闪避；首次之后怒气 `=0` 时闪避按钮禁用。
 3. 引擎兜底：怒气不足的闪避/大招都会自动降级普攻。
 4. 闪避经济规则：
    - 闪避消耗 20 怒气
@@ -197,8 +272,8 @@ npm run dev:pc
 
 ### 4.12 空闲缩放与序号规范（D-025）
 
-1. 非战斗状态支持滚轮缩放宠物：
-   - 在宠物上滚轮上滑放大、下滑缩小。
+1. 非战斗状态支持 `Ctrl + 滚轮` 缩放宠物：
+   - 在宠物上 `Ctrl + 滚轮上滑` 放大、`Ctrl + 滚轮下滑` 缩小。
    - 宠物缩放会同步调整 idle 窗口尺寸（不是仅模型缩放）。
 2. 仓库头像列表高度按内容行数自适应：
    - 1 行头像只占 1 行高度，不再预留大块空白。
@@ -220,10 +295,10 @@ npm run dev:pc
 5. 点击某个头像后，在头像旁弹出详情层；点击“设为出战”后生效。
 6. 点击选中头像下方“出战”快捷按钮后，会自动关闭面板并切换当前宠物。
 7. 开始对战后窗口恢复为旧尺寸，不会被放大。
-8. 血条中间显示克制标签，圆环倒计时单独显示，超时自动普攻。
+8. 血条中间显示克制标签；其上方显示数字倒计时，超时自动普攻。
 9. 克制标签和倒计时上移，位于双方血条之间更易读。
 10. 结算框置顶显示，不会被其它 UI 挡住。
-11. 怒气不足 100 时大招不可点；怒气为 0 时闪避不可点。
+11. 怒气不足 50 时大招不可点；首次闪避免费，后续怒气为 0 时不可闪避。
 12. 闪避对闪避时怒气按规则扣减，不返还。
 13. 寄生回血时治疗方会显示绿色 `+数值`。
 14. 对战胜负出现后，必须点击结算“确认”才会退出对战。
@@ -252,26 +327,36 @@ npm run dev:pc
 37. 打开控制面板时应切换到固定面板尺寸；关闭面板后应恢复宠物小窗尺寸。
 38. 弹层详情打开后，关闭按钮可立即收起弹层，不影响头像行布局。
 39. 面板内容可滚动，但不应出现默认粗滚动条；应为统一细样式。
-40. 非战斗状态对宠物滚轮缩放时，宠物与窗口应同步变大/变小。
+40. 非战斗状态 `Ctrl + 滚轮` 缩放时，宠物与窗口应同步变大/变小。
 41. 附近流浪宠物名称不带稀有度后缀，编号应为 `CCCNNNN` 7 位数字。
+42. 应用启动后应先出现独立登录窗口，主桌宠窗口不应先显示。
+43. 在登录窗口注册成功后，应自动进入主窗口；重启后会话应保持。
+44. 登录成功后可在运行时搜索其他账号，并可点击“发起申请”。
+45. 发起申请成功后，在“发出申请”列表可看到 `待处理` 记录；被申请方登录后在“收到申请”可见同记录。
+46. 退出登录后应回到独立登录窗口，主桌宠窗口自动隐藏。
+47. 对战中按 `Ctrl + 左键拖动` 可实时微调朝向与俯仰，松开后保持当前视角。
 
 ## 6. 关键文件
 
 1. `apps/pc-app/runtime/main.cjs`
 2. `apps/pc-app/runtime/preload.cjs`
-3. `apps/pc-app/runtime/renderer/index.html`
-4. `apps/pc-app/runtime/renderer/styles.css`
-5. `apps/pc-app/runtime/renderer/renderer.mjs`
-6. `apps/pc-app/runtime/services/battle-runtime.cjs`
-7. `apps/pc-app/runtime/services/runtime-data-store.cjs`
-8. `apps/pc-app/runtime/services/map-runtime.cjs`
-9. `apps/pc-app/runtime/services/wild-pet-runtime.cjs`
-10. `apps/pc-app/runtime/assets/models/`
-11. `infra/supabase/migrations/0002_pet_inventory_battle_reports.sql`
-12. `tests/task-d001-pc-runnable-runtime.test.ts`
-13. `tests/task-d002-pc-battle-runtime.test.ts`
-14. `tests/task-d003-desktop-stage-battle.test.ts`
-15. `tests/task-d004-pc-persistence-reporting.test.ts`
-16. `tests/task-d005-pc-map-runtime.test.ts`
-17. `tests/task-d006-pc-wild-capture-flow.test.ts`
-18. `tests/task-t205-persistence-schema.test.ts`
+3. `apps/pc-app/runtime/auth/index.html`
+4. `apps/pc-app/runtime/auth/renderer.mjs`
+5. `apps/pc-app/runtime/auth/styles.css`
+6. `apps/pc-app/runtime/renderer/index.html`
+7. `apps/pc-app/runtime/renderer/styles.css`
+8. `apps/pc-app/runtime/renderer/renderer.mjs`
+9. `apps/pc-app/runtime/services/battle-runtime.cjs`
+10. `apps/pc-app/runtime/services/runtime-data-store.cjs`
+11. `apps/pc-app/runtime/services/map-runtime.cjs`
+12. `apps/pc-app/runtime/services/wild-pet-runtime.cjs`
+13. `apps/pc-app/runtime/assets/models/`
+14. `infra/supabase/migrations/0002_pet_inventory_battle_reports.sql`
+15. `tests/task-d001-pc-runnable-runtime.test.ts`
+16. `tests/task-d002-pc-battle-runtime.test.ts`
+17. `tests/task-d003-desktop-stage-battle.test.ts`
+18. `tests/task-d004-pc-persistence-reporting.test.ts`
+19. `tests/task-d005-pc-map-runtime.test.ts`
+20. `tests/task-d006-pc-wild-capture-flow.test.ts`
+21. `tests/task-d007-pc-user-auth-duel-request.test.ts`
+22. `tests/task-t205-persistence-schema.test.ts`

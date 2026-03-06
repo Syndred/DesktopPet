@@ -1,4 +1,4 @@
-const { randomUUID } = require("node:crypto");
+const { createHash, randomUUID } = require("node:crypto");
 const { existsSync, mkdirSync, readFileSync, writeFileSync } = require("node:fs");
 const { dirname } = require("node:path");
 
@@ -83,16 +83,19 @@ const DEFAULT_PET_ROSTER = [
   }
 ];
 
-const DEFAULT_STATE_VERSION = 2;
+const DEFAULT_STATE_VERSION = 3;
 const MAX_BATTLE_REPORTS = 60;
 const DEFAULT_ACTIVE_PET_ID = DEFAULT_PET_ROSTER[0].id;
 const DEFAULT_REPORT_LIMIT = 10;
 const LEVEL_UP_REQUIRED_WINS = 5;
+const DEFAULT_USER_SEARCH_LIMIT = 12;
+const MAX_DUEL_REQUESTS = 500;
 
 const ALLOWED_ELEMENTS = new Set(["metal", "wood", "earth", "water", "fire"]);
 const ALLOWED_BATTLE_STATUS = new Set(["finished", "abandoned"]);
 const ALLOWED_BATTLE_WINNERS = new Set(["player", "enemy", "draw"]);
 const ALLOWED_BATTLE_MODES = new Set(["duel", "capture"]);
+const ALLOWED_DUEL_REQUEST_STATUS = new Set(["pending", "accepted", "rejected", "cancelled"]);
 
 const MODEL_BY_ELEMENT = {
   fire: "../assets/models/Fox.glb",
@@ -285,6 +288,278 @@ class RuntimeDataStore {
     };
   }
 
+  getAuthSession() {
+    const user = this.state.users.find((item) => item.id === this.state.currentUserId) || null;
+    return {
+      ok: true,
+      currentUser: user ? toPublicUser(user) : null
+    };
+  }
+
+  registerUser(account, password, username) {
+    const normalizedAccount = normalizeAccount(account);
+    const normalizedPassword = normalizePassword(password);
+    const normalizedUsername = normalizeUsername(
+      typeof username === "string" && username.trim().length > 0 ? username : normalizedAccount
+    );
+    const accountKey = normalizedAccount.toLowerCase();
+    const exists = this.state.users.some((item) => item.accountKey === accountKey);
+    if (exists) {
+      return {
+        ok: false,
+        error: "account already exists"
+      };
+    }
+
+    const now = new Date().toISOString();
+    const user = {
+      id: `user-${randomUUID()}`,
+      account: normalizedAccount,
+      accountKey,
+      username: normalizedUsername,
+      passwordHash: hashPassword(normalizedPassword),
+      createdAt: now,
+      updatedAt: now,
+      lastLoginAt: now
+    };
+    this.state.users = [user, ...this.state.users].slice(0, 5000);
+    this.state.currentUserId = user.id;
+    this.state.updatedAt = now;
+    this.persistState();
+    return {
+      ok: true,
+      currentUser: toPublicUser(user)
+    };
+  }
+
+  loginUser(account, password) {
+    const normalizedAccount = normalizeAccount(account);
+    const normalizedPassword = normalizePassword(password);
+    const accountKey = normalizedAccount.toLowerCase();
+    const user = this.state.users.find((item) => item.accountKey === accountKey);
+    if (!user) {
+      return {
+        ok: false,
+        error: "account not found"
+      };
+    }
+
+    const passwordHash = hashPassword(normalizedPassword);
+    if (user.passwordHash !== passwordHash) {
+      return {
+        ok: false,
+        error: "invalid password"
+      };
+    }
+
+    user.lastLoginAt = new Date().toISOString();
+    user.updatedAt = user.lastLoginAt;
+    this.state.currentUserId = user.id;
+    this.state.updatedAt = user.updatedAt;
+    this.persistState();
+    return {
+      ok: true,
+      currentUser: toPublicUser(user)
+    };
+  }
+
+  logoutUser() {
+    this.state.currentUserId = null;
+    this.state.updatedAt = new Date().toISOString();
+    this.persistState();
+    return {
+      ok: true,
+      currentUser: null
+    };
+  }
+
+  updateCurrentUserProfile(payload = {}) {
+    const currentUser = this.state.users.find((item) => item.id === this.state.currentUserId) || null;
+    if (!currentUser) {
+      return {
+        ok: false,
+        error: "login required"
+      };
+    }
+
+    const oldPasswordRaw =
+      payload && typeof payload.oldPassword === "string" ? payload.oldPassword : "";
+    if (oldPasswordRaw.trim().length === 0) {
+      return {
+        ok: false,
+        error: "old password is required"
+      };
+    }
+
+    let normalizedOldPassword = "";
+    try {
+      normalizedOldPassword = normalizePassword(oldPasswordRaw);
+    } catch (error) {
+      return {
+        ok: false,
+        error: error instanceof Error ? error.message : "invalid old password"
+      };
+    }
+
+    if (hashPassword(normalizedOldPassword) !== currentUser.passwordHash) {
+      return {
+        ok: false,
+        error: "invalid old password"
+      };
+    }
+
+    let changed = false;
+    const nextUsernameRaw = payload && typeof payload.username === "string" ? payload.username : "";
+    if (nextUsernameRaw.trim().length > 0) {
+      let normalizedUsername = "";
+      try {
+        normalizedUsername = normalizeUsername(nextUsernameRaw);
+      } catch (error) {
+        return {
+          ok: false,
+          error: error instanceof Error ? error.message : "invalid username"
+        };
+      }
+      if (normalizedUsername !== currentUser.username) {
+        currentUser.username = normalizedUsername;
+        changed = true;
+      }
+    }
+
+    const nextPasswordRaw =
+      payload && typeof payload.newPassword === "string" ? payload.newPassword : "";
+    if (nextPasswordRaw.trim().length > 0) {
+      let normalizedNewPassword = "";
+      try {
+        normalizedNewPassword = normalizePassword(nextPasswordRaw);
+      } catch (error) {
+        return {
+          ok: false,
+          error: error instanceof Error ? error.message : "invalid new password"
+        };
+      }
+      const nextHash = hashPassword(normalizedNewPassword);
+      if (nextHash !== currentUser.passwordHash) {
+        currentUser.passwordHash = nextHash;
+        changed = true;
+      }
+    }
+
+    if (!changed) {
+      return {
+        ok: true,
+        changed: false,
+        currentUser: toPublicUser(currentUser)
+      };
+    }
+
+    const now = new Date().toISOString();
+    currentUser.updatedAt = now;
+    this.state.updatedAt = now;
+    this.persistState();
+    return {
+      ok: true,
+      changed: true,
+      currentUser: toPublicUser(currentUser)
+    };
+  }
+
+  searchUsers(keyword, limit = DEFAULT_USER_SEARCH_LIMIT) {
+    const query = typeof keyword === "string" ? keyword.trim().toLowerCase() : "";
+    const safeLimit = Math.max(1, Math.min(50, Number(limit) || DEFAULT_USER_SEARCH_LIMIT));
+    const currentUserId = this.state.currentUserId;
+    const list = this.state.users
+      .filter((item) => item.id !== currentUserId)
+      .filter((item) => query.length === 0 || item.accountKey.includes(query))
+      .slice(0, safeLimit)
+      .map(toPublicUser);
+    return {
+      ok: true,
+      users: list
+    };
+  }
+
+  sendDuelRequest(targetAccount) {
+    const fromUser = this.state.users.find((item) => item.id === this.state.currentUserId) || null;
+    if (!fromUser) {
+      return {
+        ok: false,
+        error: "login required"
+      };
+    }
+    const normalizedTargetAccount = normalizeAccount(targetAccount);
+    const targetAccountKey = normalizedTargetAccount.toLowerCase();
+    const toUser = this.state.users.find((item) => item.accountKey === targetAccountKey) || null;
+    if (!toUser) {
+      return {
+        ok: false,
+        error: "target account not found"
+      };
+    }
+    if (toUser.id === fromUser.id) {
+      return {
+        ok: false,
+        error: "cannot challenge yourself"
+      };
+    }
+
+    const duplicate = this.state.duelRequests.find((item) => {
+      if (item.status !== "pending") return false;
+      const sameDirection = item.fromUserId === fromUser.id && item.toUserId === toUser.id;
+      const reverseDirection = item.fromUserId === toUser.id && item.toUserId === fromUser.id;
+      return sameDirection || reverseDirection;
+    });
+    if (duplicate) {
+      return {
+        ok: false,
+        error: "pending duel request already exists",
+        request: cloneDuelRequest(duplicate)
+      };
+    }
+
+    const now = new Date().toISOString();
+    const request = {
+      id: `duel-${randomUUID()}`,
+      fromUserId: fromUser.id,
+      fromAccount: fromUser.account,
+      toUserId: toUser.id,
+      toAccount: toUser.account,
+      status: "pending",
+      createdAt: now,
+      updatedAt: now
+    };
+    this.state.duelRequests = [request, ...this.state.duelRequests].slice(0, MAX_DUEL_REQUESTS);
+    this.state.updatedAt = now;
+    this.persistState();
+    return {
+      ok: true,
+      request: cloneDuelRequest(request)
+    };
+  }
+
+  listDuelRequests() {
+    const currentUserId = this.state.currentUserId;
+    if (!currentUserId) {
+      return {
+        ok: false,
+        error: "login required",
+        inbound: [],
+        outbound: []
+      };
+    }
+    const inbound = this.state.duelRequests
+      .filter((item) => item.toUserId === currentUserId)
+      .map(cloneDuelRequest);
+    const outbound = this.state.duelRequests
+      .filter((item) => item.fromUserId === currentUserId)
+      .map(cloneDuelRequest);
+    return {
+      ok: true,
+      inbound,
+      outbound
+    };
+  }
+
   loadState() {
     if (!existsSync(this.filePath)) {
       const defaults = createDefaultState();
@@ -323,6 +598,9 @@ function createDefaultState() {
     activePetId: DEFAULT_ACTIVE_PET_ID,
     battleReports: [],
     captureRecords: [],
+    users: [],
+    currentUserId: null,
+    duelRequests: [],
     createdAt,
     updatedAt: createdAt
   };
@@ -335,12 +613,17 @@ function normalizeRuntimeState(input) {
     ? input.activePetId
     : pets[0]?.id ?? DEFAULT_ACTIVE_PET_ID;
   const battleReports = normalizeBattleReports(input?.battleReports);
+  const users = normalizeUsers(input?.users);
+  const currentUserId = normalizeCurrentUserId(input?.currentUserId, users);
   return {
     version: DEFAULT_STATE_VERSION,
     pets,
     activePetId,
     battleReports,
     captureRecords: normalizeCaptureRecords(input?.captureRecords),
+    users,
+    currentUserId,
+    duelRequests: normalizeDuelRequests(input?.duelRequests, users),
     createdAt: isIsoDate(input?.createdAt) ? input.createdAt : base.createdAt,
     updatedAt: isIsoDate(input?.updatedAt) ? input.updatedAt : new Date().toISOString()
   };
@@ -669,17 +952,19 @@ function createCapturedPet(captureInput, seqNo) {
 function applyLevelBonus(element, statsText) {
   const stats = parseStatsText(statsText);
   if (!stats) return statsText;
+  stats.HP += 2;
   if (element === "fire") {
     stats.ATK += 2;
   } else if (element === "water") {
     stats.SPD += 1;
     stats.HP += 1;
   } else if (element === "wood") {
-    stats.HP += 4;
+    stats.HP += 2;
   } else if (element === "metal") {
+    stats.HP += 1;
     stats.DEF += 2;
   } else if (element === "earth") {
-    stats.HP += 3;
+    stats.HP += 2;
     stats.DEF += 1;
   }
   return formatStats(stats);
@@ -715,6 +1000,158 @@ function clampNonNegativeNumber(input) {
   return Math.round(parsed);
 }
 
+function normalizeAccount(input) {
+  if (typeof input !== "string") {
+    throw new Error("account is required");
+  }
+  const account = input.trim();
+  if (account.length < 3 || account.length > 32) {
+    throw new Error("account length must be 3-32");
+  }
+  if (/\s/.test(account)) {
+    throw new Error("account cannot contain spaces");
+  }
+  return account;
+}
+
+function normalizeUsername(input) {
+  if (typeof input !== "string") {
+    throw new Error("username is required");
+  }
+  const username = input.trim();
+  if (username.length < 2 || username.length > 24) {
+    throw new Error("username length must be 2-24");
+  }
+  return username;
+}
+
+function normalizePassword(input) {
+  if (typeof input !== "string") {
+    throw new Error("password is required");
+  }
+  const password = input.trim();
+  if (password.length < 6 || password.length > 64) {
+    throw new Error("password length must be 6-64");
+  }
+  return password;
+}
+
+function hashPassword(password) {
+  return createHash("sha256").update(password).digest("hex");
+}
+
+function normalizeUsers(input) {
+  if (!Array.isArray(input)) return [];
+  const unique = new Map();
+  for (const candidate of input) {
+    const user = normalizeUser(candidate);
+    if (!user) continue;
+    if (!unique.has(user.accountKey)) {
+      unique.set(user.accountKey, user);
+    }
+  }
+  return [...unique.values()].slice(0, 5000);
+}
+
+function normalizeUser(input) {
+  if (!input || typeof input !== "object") return null;
+  if (typeof input.id !== "string" || input.id.trim().length === 0) return null;
+  if (typeof input.account !== "string" || input.account.trim().length < 3) return null;
+  const account = input.account.trim();
+  const accountKey =
+    typeof input.accountKey === "string" && input.accountKey.trim().length > 0
+      ? input.accountKey.trim().toLowerCase()
+      : account.toLowerCase();
+  let username = account;
+  if (typeof input.username === "string" && input.username.trim().length > 0) {
+    try {
+      username = normalizeUsername(input.username);
+    } catch {
+      username = account;
+    }
+  }
+  const passwordHash =
+    typeof input.passwordHash === "string" && input.passwordHash.trim().length > 0
+      ? input.passwordHash.trim()
+      : hashPassword("123456");
+  const now = new Date().toISOString();
+  return {
+    id: input.id.trim(),
+    account,
+    accountKey,
+    username,
+    passwordHash,
+    createdAt: isIsoDate(input.createdAt) ? input.createdAt : now,
+    updatedAt: isIsoDate(input.updatedAt) ? input.updatedAt : now,
+    lastLoginAt: isIsoDate(input.lastLoginAt) ? input.lastLoginAt : null
+  };
+}
+
+function normalizeCurrentUserId(currentUserId, users) {
+  if (typeof currentUserId !== "string" || currentUserId.trim().length === 0) return null;
+  const userId = currentUserId.trim();
+  if (!users.some((item) => item.id === userId)) return null;
+  return userId;
+}
+
+function normalizeDuelRequests(input, users) {
+  if (!Array.isArray(input)) return [];
+  const userIdSet = new Set(users.map((item) => item.id));
+  const normalized = [];
+  const unique = new Set();
+  for (const candidate of input) {
+    const request = normalizeDuelRequest(candidate, userIdSet);
+    if (!request) continue;
+    if (unique.has(request.id)) continue;
+    unique.add(request.id);
+    normalized.push(request);
+    if (normalized.length >= MAX_DUEL_REQUESTS) break;
+  }
+  return normalized.sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+}
+
+function normalizeDuelRequest(input, userIdSet) {
+  if (!input || typeof input !== "object") return null;
+  if (typeof input.id !== "string" || input.id.trim().length === 0) return null;
+  if (typeof input.fromUserId !== "string" || input.fromUserId.trim().length === 0) return null;
+  if (typeof input.toUserId !== "string" || input.toUserId.trim().length === 0) return null;
+  const fromUserId = input.fromUserId.trim();
+  const toUserId = input.toUserId.trim();
+  if (!userIdSet.has(fromUserId) || !userIdSet.has(toUserId) || fromUserId === toUserId) {
+    return null;
+  }
+  const fromAccount =
+    typeof input.fromAccount === "string" && input.fromAccount.trim().length > 0
+      ? input.fromAccount.trim()
+      : fromUserId;
+  const toAccount =
+    typeof input.toAccount === "string" && input.toAccount.trim().length > 0
+      ? input.toAccount.trim()
+      : toUserId;
+  const status = ALLOWED_DUEL_REQUEST_STATUS.has(input.status) ? input.status : "pending";
+  const now = new Date().toISOString();
+  return {
+    id: input.id.trim(),
+    fromUserId,
+    fromAccount,
+    toUserId,
+    toAccount,
+    status,
+    createdAt: isIsoDate(input.createdAt) ? input.createdAt : now,
+    updatedAt: isIsoDate(input.updatedAt) ? input.updatedAt : now
+  };
+}
+
+function toPublicUser(user) {
+  return {
+    id: user.id,
+    account: user.account,
+    username: user.username || user.account,
+    createdAt: user.createdAt,
+    lastLoginAt: user.lastLoginAt
+  };
+}
+
 function isIsoDate(input) {
   return typeof input === "string" && input.trim().length >= 16 && !Number.isNaN(Date.parse(input));
 }
@@ -745,6 +1182,19 @@ function cloneBattleReport(report) {
       damageTaken: { ...round.damageTaken },
       notes: [...round.notes]
     }))
+  };
+}
+
+function cloneDuelRequest(request) {
+  return {
+    id: request.id,
+    fromUserId: request.fromUserId,
+    fromAccount: request.fromAccount,
+    toUserId: request.toUserId,
+    toAccount: request.toAccount,
+    status: request.status,
+    createdAt: request.createdAt,
+    updatedAt: request.updatedAt
   };
 }
 

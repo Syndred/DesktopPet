@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>轻宠·领主 3D - 登录</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="auth-root">
+      <section class="auth-card">
+        <h1>轻宠·领主 3D</h1>
+        <p class="subtitle">先登录后进入桌宠运行时</p>
+
+        <form id="auth-login-form" class="auth-form" novalidate>
+          <h2>登录</h2>
+          <label for="login-account">账号</label>
+          <input id="login-account" type="text" autocomplete="username" />
+          <label for="login-password">密码</label>
+          <input id="login-password" type="password" autocomplete="current-password" />
+          <button id="btn-login" type="submit">登录进入</button>
+        </form>
+
+        <form id="auth-register-form" class="auth-form hidden" novalidate>
+          <h2>注册</h2>
+          <label for="register-account">账号</label>
+          <input id="register-account" type="text" autocomplete="username" />
+          <label for="register-username">用户名</label>
+          <input id="register-username" type="text" autocomplete="nickname" />
+          <label for="register-password">密码</label>
+          <input id="register-password" type="password" autocomplete="new-password" />
+          <label for="register-confirm">确认密码</label>
+          <input id="register-confirm" type="password" autocomplete="new-password" />
+          <button id="btn-register" type="submit">注册并进入</button>
+        </form>
+
+        <button id="btn-switch-auth" class="switch-auth-btn" type="button">
+          没有账号？去注册
+        </button>
+        <p id="status" class="status">请先登录</p>
+      </section>
+    </main>
+    <script type="module" src="./renderer.mjs"></script>
+  </body>
+</html>

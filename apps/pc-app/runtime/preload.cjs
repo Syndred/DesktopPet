@@ -25,6 +25,30 @@ contextBridge.exposeInMainWorld("petApi", {
   getPetInventory() {
     return ipcRenderer.invoke("pet:get-inventory");
   },
+  getAuthSession() {
+    return ipcRenderer.invoke("pet:auth-session");
+  },
+  authRegister(account, password, username) {
+    return ipcRenderer.invoke("pet:auth-register", { account, password, username });
+  },
+  authLogin(account, password) {
+    return ipcRenderer.invoke("pet:auth-login", { account, password });
+  },
+  authLogout() {
+    return ipcRenderer.invoke("pet:auth-logout");
+  },
+  authUpdateProfile(payload) {
+    return ipcRenderer.invoke("pet:auth-update-profile", payload ?? {});
+  },
+  searchUsers(keyword, limit) {
+    return ipcRenderer.invoke("pet:user-search", { keyword, limit });
+  },
+  sendDuelRequest(targetAccount) {
+    return ipcRenderer.invoke("pet:duel-request-send", { targetAccount });
+  },
+  listDuelRequests() {
+    return ipcRenderer.invoke("pet:duel-request-list");
+  },
   setActivePet(petId) {
     return ipcRenderer.invoke("pet:set-active-pet", { petId });
   },
@@ -39,6 +63,9 @@ contextBridge.exposeInMainWorld("petApi", {
   },
   beginCaptureBattle(payload) {
     return ipcRenderer.invoke("pet:begin-capture-battle", payload ?? {});
+  },
+  resolveCapture(accept) {
+    return ipcRenderer.invoke("pet:resolve-capture", { accept: Boolean(accept) });
   },
   getMapState() {
     return ipcRenderer.invoke("pet:get-map-state");
@@ -84,5 +111,10 @@ contextBridge.exposeInMainWorld("petApi", {
     const wrapped = (_event, state) => listener(state);
     ipcRenderer.on("pet:map-state", wrapped);
     return () => ipcRenderer.removeListener("pet:map-state", wrapped);
+  },
+  onAuthState(listener) {
+    const wrapped = (_event, session) => listener(session);
+    ipcRenderer.on("pet:auth-state", wrapped);
+    return () => ipcRenderer.removeListener("pet:auth-state", wrapped);
   }
 });
