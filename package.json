@@ -1,6 +1,6 @@
 {
   "name": "qingpet-lord-3d",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "description": "Monorepo baseline for QingPet Lord 3D",
   "workspaces": [
@@ -22,6 +22,7 @@
     "release:build:pc": "node scripts/release/build-pc.mjs",
     "release:build:mobile": "node scripts/release/build-mobile.mjs",
     "release:build": "npm run release:build:pc && npm run release:build:mobile",
+    "package:pc:win": "npx electron-builder --config scripts/release/electron-builder.pc.json --win portable --x64",
     "release:sign": "node scripts/release/sign-artifacts.mjs",
     "release:manifest": "node scripts/release/create-release-manifest.mjs",
     "release:prepare": "npm run release:build && npm run release:sign && npm run release:manifest",

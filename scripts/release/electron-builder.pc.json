@@ -1,0 +1,26 @@
+{
+  "appId": "com.lingjing.desktop",
+  "productName": "Lingjing",
+  "directories": {
+    "output": "artifacts/pc-beta"
+  },
+  "files": [
+    "apps/pc-app/runtime/**/*",
+    "package.json"
+  ],
+  "asar": true,
+  "extraMetadata": {
+    "main": "apps/pc-app/runtime/main.cjs"
+  },
+  "win": {
+    "target": [
+      {
+        "target": "portable",
+        "arch": [
+          "x64"
+        ]
+      }
+    ],
+    "artifactName": "Lingjing-${version}-portable-${arch}.${ext}"
+  }
+}

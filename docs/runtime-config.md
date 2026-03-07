@@ -1,7 +1,7 @@
 ﻿# 运行配置文档（PC 桌宠对战）
 
-文档版本：v2.22  
-更新时间：2026-03-06
+文档版本：v2.24  
+更新时间：2026-03-07
 
 补充文档（灵境命名版，含双开联机步骤与排障）：
 
@@ -103,6 +103,18 @@ npm run verify
 22. 中文提示（v2.22）：
    - 中文模式下鉴权相关失败提示会自动本地化为中文，不再直接透出英文错误码。
 
+## 2.2 v2.24 本次更新
+
+1. 注册/登录/联机错误提示中文化增强：
+   - 扩充登录页与运行时面板的错误映射，覆盖账号长度、密码长度、会话失效、房间异常、网络异常等常见英文错误。
+   - 增加错误消息解包逻辑（支持从函数返回体中提取 `error.message`），减少“泛化英文错误”透出。
+2. 对战平衡调整（全局一致）：
+   - 基础伤害整体减半：普攻 `20 -> 10`，属性攻击 `24 -> 12`，大招 `40 -> 20`。
+   - 属性克制倍率调整为 `1.2`（被克 `0.8`），不再使用更高倍率。
+   - DOT 同步下调：灼烧 `5 -> 3`，寄生 `4 -> 2`。
+3. 版本号：
+   - 根包与 PC 运行时版本更新为 `0.1.1`，用于本次内测包识别。
+
 ## 3. 启动 PC 端
 
 ```powershell
@@ -134,6 +146,31 @@ npm run dev:pc
    - 同时注入共享 `PET_RUNTIME_DATA_FILE`（`%LOCALAPPDATA%\DesktopPetProfiles\shared\pet-runtime-data.json`）：
      - 账号注册/搜索与对战申请可在 A/B 间互通。
    - 注意：若一端刚注册新账号，另一端建议刷新一次搜索或重新打开面板。
+
+## 3.2 云端账号与申请迁移（内测前必做）
+
+目标：让注册/登录/搜索/对战申请都以服务器为准，不再依赖本机账号库。
+
+1. 执行数据库迁移（至少到 `0005`）：
+   - `infra/supabase/migrations/0001_core_schema.sql`
+   - `infra/supabase/migrations/0002_pet_inventory_battle_reports.sql`
+   - `infra/supabase/migrations/0003_duel_realtime_schema.sql`
+   - `infra/supabase/migrations/0004_runtime_cloud_auth_duel_requests.sql`
+   - `infra/supabase/migrations/0005_runtime_single_login_session.sql`
+2. 部署/更新 Edge Function：
+   - `infra/supabase/functions/duel-online/index.ts`
+   - 确保函数内可读取：
+     - `SUPABASE_URL`
+     - `SUPABASE_SERVICE_ROLE_KEY`
+3. 客户端运行参数（`scripts/desktop/local-online-env.cmd`）：
+   - `SUPABASE_URL=http://<你的服务器>:8000`
+   - `SUPABASE_ANON_KEY=<ANON_KEY>`
+   - `SUPABASE_DUEL_FUNCTION=duel-online`
+4. 验证标准（A/B 双开）：
+   - A 注册后，B 无需重启可搜索到 A（手动点刷新即可）。
+   - A 发起申请，B 能收到并接受，接受后自动建房并开战。
+   - A/B 退出后重新登录，账号仍可用，不需重新注册。
+   - 同一账号在 B 登录后，A 端会在下一次云端操作时触发“会话失效”，并自动退出登录（单账号单会话生效）。
 
 ## 4. v2.11 行为说明
 

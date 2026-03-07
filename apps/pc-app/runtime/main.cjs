@@ -443,7 +443,7 @@ function registerIpcHandlers() {
   ipcMain.on("pet:set-hit-region", (_event, isInside) => {
     if (!mainWindow || mainWindow.isDestroyed()) return;
     if (interactionPaused) return;
-    mainWindow.setIgnoreMouseEvents(!Boolean(isInside), { forward: true });
+    mainWindow.setIgnoreMouseEvents(!isInside, { forward: true });
   });
 
   ipcMain.on("pet:move-window-by", (_event, payload) => {
@@ -729,15 +729,27 @@ function registerIpcHandlers() {
   });
 
   ipcMain.handle("pet:auth-session", () => {
-    return runtimeDataStore.getAuthSession();
+    const session = runtimeDataStore.getAuthSession();
+    onlineDuelService.setCurrentUser(session?.currentUser || null);
+    return session;
   });
 
-  ipcMain.handle("pet:auth-register", (_event, payload) => {
+  ipcMain.handle("pet:auth-register", async (_event, payload) => {
     try {
       const account = payload && typeof payload.account === "string" ? payload.account : "";
       const password = payload && typeof payload.password === "string" ? payload.password : "";
       const username = payload && typeof payload.username === "string" ? payload.username : "";
-      const result = runtimeDataStore.registerUser(account, password, username);
+      let result = null;
+      if (onlineDuelService.enabled) {
+        const cloudResult = await onlineDuelService.registerAccount({
+          account,
+          password,
+          username
+        });
+        result = runtimeDataStore.applyRemoteAuthSession(cloudResult.currentUser);
+      } else {
+        result = runtimeDataStore.registerUser(account, password, username);
+      }
       if (result?.ok) {
         openRuntimeAfterAuth();
       } else {
@@ -752,11 +764,20 @@ function registerIpcHandlers() {
     }
   });
 
-  ipcMain.handle("pet:auth-login", (_event, payload) => {
+  ipcMain.handle("pet:auth-login", async (_event, payload) => {
     try {
       const account = payload && typeof payload.account === "string" ? payload.account : "";
       const password = payload && typeof payload.password === "string" ? payload.password : "";
-      const result = runtimeDataStore.loginUser(account, password);
+      let result = null;
+      if (onlineDuelService.enabled) {
+        const cloudResult = await onlineDuelService.loginAccount({
+          account,
+          password
+        });
+        result = runtimeDataStore.applyRemoteAuthSession(cloudResult.currentUser);
+      } else {
+        result = runtimeDataStore.loginUser(account, password);
+      }
       if (result?.ok) {
         openRuntimeAfterAuth();
       } else {
@@ -789,18 +810,39 @@ function registerIpcHandlers() {
     return result;
   });
 
-  ipcMain.handle("pet:auth-update-profile", (_event, payload) => {
+  ipcMain.handle("pet:auth-update-profile", async (_event, payload) => {
     try {
       const username = payload && typeof payload.username === "string" ? payload.username : "";
       const oldPassword =
         payload && typeof payload.oldPassword === "string" ? payload.oldPassword : "";
       const newPassword =
         payload && typeof payload.newPassword === "string" ? payload.newPassword : "";
-      const result = runtimeDataStore.updateCurrentUserProfile({
-        username,
-        oldPassword,
-        newPassword
-      });
+      let result = null;
+      if (onlineDuelService.enabled) {
+        const session = runtimeDataStore.getAuthSession();
+        onlineDuelService.setCurrentUser(session?.currentUser || null);
+        const cloudResult = await onlineDuelService.updateAccount({
+          username,
+          oldPassword,
+          newPassword
+        });
+        const synced = runtimeDataStore.applyRemoteAuthSession(cloudResult.currentUser);
+        if (synced?.ok) {
+          result = {
+            ok: true,
+            changed: Boolean(cloudResult.changed),
+            currentUser: synced.currentUser
+          };
+        } else {
+          result = synced;
+        }
+      } else {
+        result = runtimeDataStore.updateCurrentUserProfile({
+          username,
+          oldPassword,
+          newPassword
+        });
+      }
       emitAuthState();
       return result;
     } catch (error) {
@@ -811,10 +853,15 @@ function registerIpcHandlers() {
     }
   });
 
-  ipcMain.handle("pet:user-search", (_event, payload) => {
+  ipcMain.handle("pet:user-search", async (_event, payload) => {
     try {
       const keyword = payload && typeof payload.keyword === "string" ? payload.keyword : "";
       const limit = payload && typeof payload.limit === "number" ? payload.limit : undefined;
+      if (onlineDuelService.enabled) {
+        const session = runtimeDataStore.getAuthSession();
+        onlineDuelService.setCurrentUser(session?.currentUser || null);
+        return await onlineDuelService.searchAccounts({ keyword, limit });
+      }
       return runtimeDataStore.searchUsers(keyword, limit);
     } catch (error) {
       return {
@@ -825,11 +872,16 @@ function registerIpcHandlers() {
     }
   });
 
-  ipcMain.handle("pet:duel-request-send", (_event, payload) => {
+  ipcMain.handle("pet:duel-request-send", async (_event, payload) => {
     try {
       const targetAccount =
         payload && typeof payload.targetAccount === "string" ? payload.targetAccount : "";
       const allowResend = Boolean(payload?.allowResend);
+      if (onlineDuelService.enabled) {
+        const session = runtimeDataStore.getAuthSession();
+        onlineDuelService.setCurrentUser(session?.currentUser || null);
+        return await onlineDuelService.sendDuelRequest({ targetAccount, allowResend });
+      }
       return runtimeDataStore.sendDuelRequest(targetAccount, { allowResend });
     } catch (error) {
       return {
@@ -839,7 +891,21 @@ function registerIpcHandlers() {
     }
   });
 
-  ipcMain.handle("pet:duel-request-list", () => {
+  ipcMain.handle("pet:duel-request-list", async () => {
+    if (onlineDuelService.enabled) {
+      try {
+        const session = runtimeDataStore.getAuthSession();
+        onlineDuelService.setCurrentUser(session?.currentUser || null);
+        return await onlineDuelService.listDuelRequests();
+      } catch (error) {
+        return {
+          ok: false,
+          error: error instanceof Error ? error.message : "list failed",
+          inbound: [],
+          outbound: []
+        };
+      }
+    }
     return runtimeDataStore.listDuelRequests();
   });
 
@@ -848,9 +914,54 @@ function registerIpcHandlers() {
       const requestId = payload && typeof payload.requestId === "string" ? payload.requestId : "";
       const decision = payload && typeof payload.decision === "string" ? payload.decision : "";
       const normalizedDecision = decision.trim().toLowerCase();
+      const session = runtimeDataStore.getAuthSession();
+      onlineDuelService.setCurrentUser(session?.currentUser || null);
+
+      if (onlineDuelService.enabled) {
+        if (normalizedDecision !== "accept") {
+          return await onlineDuelService.respondDuelRequest({
+            requestId,
+            decision: normalizedDecision
+          });
+        }
+
+        const inventory = runtimeDataStore.getInventorySnapshot();
+        const activePet =
+          Array.isArray(inventory?.pets) && inventory.activePetId
+            ? inventory.pets.find((item) => item.id === inventory.activePetId) || null
+            : null;
+        const createRoomResult = await onlineDuelService.createRoom({
+          petElement: activePet?.element || "metal",
+          petName:
+            activePet?.name?.zh ||
+            activePet?.name?.en ||
+            activePet?.serial ||
+            activePet?.id ||
+            session?.currentUser?.username ||
+            "Player"
+        });
+
+        try {
+          const response = await onlineDuelService.respondDuelRequest({
+            requestId,
+            decision: normalizedDecision,
+            roomId: createRoomResult.room?.id || null,
+            roomCode: createRoomResult.room?.room_code || null,
+            roomStatus: createRoomResult.room?.status || null
+          });
+          return {
+            ...response,
+            room: createRoomResult.room,
+            side: createRoomResult.side,
+            autoRoomCreated: true
+          };
+        } catch (error) {
+          await onlineDuelService.leaveRoom({ reason: "request_accept_sync_failed" });
+          throw error;
+        }
+      }
+
       if (normalizedDecision === "accept") {
-        const session = runtimeDataStore.getAuthSession();
-        onlineDuelService.setCurrentUser(session?.currentUser || null);
         const inventory = runtimeDataStore.getInventorySnapshot();
         const activePet =
           Array.isArray(inventory?.pets) && inventory.activePetId
@@ -891,9 +1002,14 @@ function registerIpcHandlers() {
     }
   });
 
-  ipcMain.handle("pet:duel-request-cancel", (_event, payload) => {
+  ipcMain.handle("pet:duel-request-cancel", async (_event, payload) => {
     try {
       const requestId = payload && typeof payload.requestId === "string" ? payload.requestId : "";
+      if (onlineDuelService.enabled) {
+        const session = runtimeDataStore.getAuthSession();
+        onlineDuelService.setCurrentUser(session?.currentUser || null);
+        return await onlineDuelService.cancelDuelRequest({ requestId });
+      }
       return runtimeDataStore.cancelDuelRequest(requestId);
     } catch (error) {
       return {

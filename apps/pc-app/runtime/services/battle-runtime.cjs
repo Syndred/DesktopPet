@@ -7,10 +7,10 @@ const ELEMENT_ADVANTAGE_CHAIN = {
 };
 
 const BASE_DAMAGE = {
-  normal_attack: 20,
-  element_attack: 24,
+  normal_attack: 10,
+  element_attack: 12,
   dodge: 0,
-  ultimate: 40
+  ultimate: 20
 };
 
 const ACTIONS = ["normal_attack", "element_attack", "dodge", "ultimate"];
@@ -283,8 +283,8 @@ function computeDamage(action, attacker, defender) {
 }
 
 function getElementMultiplier(attacker, defender) {
-  if (ELEMENT_ADVANTAGE_CHAIN[attacker] === defender) return 1.5;
-  if (ELEMENT_ADVANTAGE_CHAIN[defender] === attacker) return 0.7;
+  if (ELEMENT_ADVANTAGE_CHAIN[attacker] === defender) return 1.2;
+  if (ELEMENT_ADVANTAGE_CHAIN[defender] === attacker) return 0.8;
   return 1;
 }
 
@@ -295,7 +295,7 @@ function applyAttackStatus(action, attacker, defender, notes) {
     const status = addOrRefreshStatus(defender, {
       type: "burn",
       duration: 2,
-      potency: 5,
+      potency: 3,
       stacks: 1,
       stackable: true,
       sourceId: attacker.id
@@ -316,7 +316,7 @@ function applyAttackStatus(action, attacker, defender, notes) {
     const status = addOrRefreshStatus(defender, {
       type: "parasite",
       duration: 2,
-      potency: 4,
+      potency: 2,
       stacks: 1,
       stackable: true,
       sourceId: attacker.id

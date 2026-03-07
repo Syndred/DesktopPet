@@ -29,10 +29,7 @@ const profileNewPasswordInput = document.getElementById("profile-new-password");
 const profileConfirmPasswordInput = document.getElementById("profile-confirm-password");
 const profileSaveBtn = document.getElementById("btn-profile-save");
 const releaseConfirmModalElement = document.getElementById("release-confirm-modal");
-const releaseConfirmTitleElement = document.getElementById("release-confirm-title");
 const releaseConfirmMessageElement = document.getElementById("release-confirm-message");
-const releaseConfirmSerialLabelElement = document.getElementById("release-confirm-serial-label");
-const releaseConfirmCapturedLabelElement = document.getElementById("release-confirm-captured-label");
 const releaseConfirmSerialValueElement = document.getElementById("release-confirm-serial-value");
 const releaseConfirmCapturedValueElement = document.getElementById("release-confirm-captured-value");
 const releaseConfirmCancelBtn = document.getElementById("btn-release-confirm-cancel");
@@ -64,6 +61,7 @@ const duelSearchKeywordInput = document.getElementById("duel-search-keyword");
 const duelSearchBtn = document.getElementById("btn-duel-search");
 const duelSearchResultsElement = document.getElementById("duel-search-results");
 const duelRequestListElement = document.getElementById("duel-request-list");
+const duelRequestIndicatorElement = document.getElementById("duel-request-indicator");
 const duelAdvancedToggleBtn = document.getElementById("btn-duel-advanced-toggle");
 const duelAdvancedToggleIconElement = document.getElementById("duel-advanced-toggle-icon");
 const duelAdvancedContentElement = document.getElementById("duel-advanced-content");
@@ -268,6 +266,9 @@ const i18n = {
     authLogoutLog: "已退出登录。",
     authSearchErrorLog: "账号搜索失败：{message}",
     authActionFailLog: "账号操作失败：{message}",
+    authSessionInvalidatedLog: "登录状态已失效：该账号已在其他设备登录，请重新登录。",
+    authSessionInvalidatedToast: "账号已在其他设备登录，当前会话已下线。",
+    authPendingRequestBadgeTitle: "待处理对战申请",
     authSendRequestSuccessLog: "已向 {account} 发起对战申请。",
     authSendRequestResentLog: "已向 {account} 补发对战申请。",
     authSendRequestFailLog: "发起对战申请失败：{message}",
@@ -556,6 +557,9 @@ const i18n = {
     authLogoutLog: "Logged out.",
     authSearchErrorLog: "Account search failed: {message}",
     authActionFailLog: "Auth action failed: {message}",
+    authSessionInvalidatedLog: "Session expired: this account signed in elsewhere. Please log in again.",
+    authSessionInvalidatedToast: "Signed out: this account is active on another device.",
+    authPendingRequestBadgeTitle: "Pending duel requests",
     authSendRequestSuccessLog: "Duel request sent to {account}.",
     authSendRequestResentLog: "Duel request resent to {account}.",
     authSendRequestFailLog: "Duel request failed: {message}",
@@ -931,7 +935,6 @@ let freeDodgeUsedBySide = {
   enemy: false
 };
 let pendingReleasePet = null;
-let pendingBattleLeaveConfirm = false;
 
 const ELEMENT_ADVANTAGE_CHAIN = {
   metal: "wood",
@@ -1114,8 +1117,35 @@ function t(key, params) {
   return template.replace(/\{(\w+)\}/g, (_, token) => String(params?.[token] ?? ""));
 }
 
+function unwrapErrorMessage(raw) {
+  const text = typeof raw === "string" ? raw.trim() : String(raw ?? "").trim();
+  if (!text) return "";
+
+  const tryParseMessage = (candidate) => {
+    try {
+      const parsed = JSON.parse(candidate);
+      const payloadMessage =
+        parsed?.error?.message || parsed?.message || parsed?.data?.error?.message || null;
+      return typeof payloadMessage === "string" ? payloadMessage.trim() : "";
+    } catch {
+      return "";
+    }
+  };
+
+  const direct = tryParseMessage(text);
+  if (direct) return direct;
+
+  const jsonStart = text.indexOf("{");
+  if (jsonStart >= 0) {
+    const sliced = text.slice(jsonStart);
+    const nested = tryParseMessage(sliced);
+    if (nested) return nested;
+  }
+  return text;
+}
+
 function localizeAuthErrorMessage(message) {
-  const raw = typeof message === "string" ? message.trim() : String(message ?? "");
+  const raw = unwrapErrorMessage(message);
   if (!raw) {
     return language === "zh" ? "未知错误" : "unknown error";
   }
@@ -1123,36 +1153,93 @@ function localizeAuthErrorMessage(message) {
 
   const lower = raw.toLowerCase();
   const mappings = [
+    ["session invalidated", "账号已在其他设备登录，请重新登录"],
+    ["session token is required", "登录态已失效，请重新登录"],
+    ["invalid session token", "登录态已失效，请重新登录"],
+    ["login required", "请先登录"],
+    ["account is required", "账号不能为空"],
     ["account already exists", "账号已存在"],
     ["account length must be 3-32", "账号长度需在 3-32 之间"],
     ["account cannot contain spaces", "账号不能包含空格"],
-    ["password length must be 6-64", "密码长度需在 6-64 之间"],
     ["account not found", "账号不存在"],
+    ["password is required", "密码不能为空"],
+    ["password length must be 6-64", "密码长度需在 6-64 之间"],
     ["invalid password", "密码错误"],
-    ["login required", "请先登录"],
-    ["target account not found", "目标账号不存在"],
-    ["cannot challenge yourself", "不能挑战自己"],
-    ["pending duel request already exists", "已存在待处理的对战申请"],
-    ["resend too frequent", "补发太频繁，请稍后再试"],
-    ["request id is required", "请求编号不能为空"],
-    ["duel request not found", "对战申请不存在"],
-    ["request is not inbound", "只能处理收到的申请"],
-    ["request is not outbound", "只能取消自己发出的申请"],
-    ["duel request already resolved", "该申请已处理"],
-    ["invalid duel request decision", "申请处理动作不合法"],
     ["username is required", "用户名不能为空"],
     ["username length must be 2-24", "用户名长度需在 2-24 之间"],
     ["old password is required", "请输入旧密码"],
     ["invalid old password", "旧密码错误"],
     ["invalid username", "用户名格式不合法"],
     ["invalid new password", "新密码格式不合法"],
+    ["target account not found", "目标账号不存在"],
+    ["cannot challenge yourself", "不能挑战自己"],
+    ["pending duel request already exists", "已存在待处理的对战申请"],
+    ["resend too frequent", "补发太频繁，请稍后再试"],
+    ["request id is required", "请求编号不能为空"],
+    ["decision is required", "请选择处理动作"],
+    ["invalid duel request decision", "申请处理动作不合法"],
+    ["duel request not found", "对战申请不存在"],
+    ["request is not inbound", "只能处理收到的申请"],
+    ["request is not outbound", "只能取消自己发出的申请"],
+    ["duel request already resolved", "该申请已处理"],
+    ["user id is required", "用户标识不能为空"],
+    ["roomcode is required", "联机房间号不能为空"],
+    ["roomid or roomcode is required", "缺少房间标识，请重新进入联机"],
+    ["roomid, userid, roundno and valid action are required", "回合参数不完整，请重试"],
+    ["roomid and userid are required", "房间参数不完整，请重试"],
+    ["room is waiting for second player", "房间还在等待对手加入"],
+    ["room is waiting for opponent", "房间还在等待对手加入"],
+    ["room already finished", "对局已结束"],
+    ["room not found", "房间不存在或已失效"],
+    ["room is not joinable", "房间当前不可加入"],
+    ["room is full", "房间已满"],
+    ["room is waiting", "房间还在等待对手"],
+    ["room side not available", "房间席位异常，请重新加入"],
+    ["round mismatch", "回合同步失败，请等待房间刷新后重试"],
+    ["round resolution timeout", "回合结算超时，请重试"],
+    ["invalid action", "回合动作无效"],
+    ["invalid round payload", "回合数据异常，请重试"],
+    ["user is not room participant", "你不在该房间对局中"],
+    ["failed to query account", "账号查询失败，请稍后重试"],
+    ["failed to create account", "账号创建失败，请稍后重试"],
+    ["failed to update login timestamp", "登录状态更新失败，请稍后重试"],
+    ["failed to update account", "账号更新失败，请稍后重试"],
+    ["failed to query pending requests", "申请列表加载失败，请稍后重试"],
+    ["failed to load inbound requests", "收到申请加载失败，请稍后重试"],
+    ["failed to load outbound requests", "发出申请加载失败，请稍后重试"],
+    ["failed to send duel request", "发起申请失败，请稍后重试"],
+    ["failed to respond duel request", "处理申请失败，请稍后重试"],
+    ["failed to cancel duel request", "取消申请失败，请稍后重试"],
+    ["failed to query duel request", "申请查询失败，请稍后重试"],
+    ["failed to query room", "房间查询失败，请稍后重试"],
+    ["failed to query rounds", "回合数据查询失败，请稍后重试"],
+    ["failed to query round", "回合数据查询失败，请稍后重试"],
+    ["failed to query actions", "动作数据查询失败，请稍后重试"],
+    ["failed to create room code", "创建房间号失败，请稍后重试"],
+    ["failed to create room", "创建房间失败，请稍后重试"],
+    ["failed to join room", "加入房间失败，请稍后重试"],
+    ["failed to leave room", "离开房间失败，请稍后重试"],
+    ["failed to submit action", "提交动作失败，请稍后重试"],
+    ["failed to persist resolved round", "回合写入失败，请稍后重试"],
+    ["failed to update room", "房间状态更新失败，请稍后重试"],
+    ["supabase_url and supabase_anon_key are required", "联机服务未配置，请联系管理员"],
+    ["supabase_url and supabase_service_role_key are required", "服务端联机配置缺失，请联系管理员"],
+    ["supabase client not initialized", "联机客户端初始化失败，请重启后再试"],
+    ["@supabase/supabase-js is not installed", "联机依赖缺失，请重新安装客户端"],
+    ["edge function returned a non-2xx status code", "服务端请求失败，请稍后重试"],
+    ["fetch failed", "网络请求失败，请检查网络后重试"],
+    ["network request failed", "网络请求失败，请检查网络后重试"],
+    ["failed to fetch", "网络请求失败，请检查网络后重试"],
+    ["payload.op is required", "请求参数不完整，请重试"],
+    ["unsupported op", "请求动作不受支持，请升级客户端"],
+    ["invalid current user", "当前登录态异常，请重新登录"],
+    ["at least one pet must remain", "至少保留一只灵宠"],
+    ["pet id not found", "灵宠不存在或已被放逐"],
+    ["invalid pet id", "灵宠编号无效"],
     ["profile update failed", "修改信息失败"],
     ["list failed", "列表加载失败"],
     ["search failed", "搜索失败"],
     ["request failed", "请求失败"],
-    ["at least one pet must remain", "至少保留一只灵宠"],
-    ["pet id not found", "灵宠不存在或已被放逐"],
-    ["invalid pet id", "灵宠编号无效"],
     ["logout failed", "退出登录失败"],
     ["login failed", "登录失败"],
     ["register failed", "注册失败"]
@@ -1446,7 +1533,6 @@ function updateBattleHudTop() {
 
 function setBattleLeaveConfirmVisible(visible) {
   const nextVisible = Boolean(visible);
-  pendingBattleLeaveConfirm = nextVisible;
   if (battleExitConfirmElement) {
     battleExitConfirmElement.classList.toggle("hidden", !nextVisible);
   }
@@ -1532,6 +1618,7 @@ function setPanelVisible(visible) {
             }
           });
         }
+        renderDuelRequestIndicator();
         reportHitState();
       });
     return;
@@ -1546,6 +1633,7 @@ function setPanelVisible(visible) {
   duelRequestListExpanded = false;
   selectedBattleReportId = null;
   renderBattleReportDetail();
+  renderDuelRequestIndicator();
   void window.petApi.setLayoutMode(battleMode ? "battle" : "idle");
   reportHitState();
 }
@@ -1833,8 +1921,8 @@ function getElementColor(element) {
 }
 
 function getElementMultiplier(attacker, defender) {
-  if (ELEMENT_ADVANTAGE_CHAIN[attacker] === defender) return 1.5;
-  if (ELEMENT_ADVANTAGE_CHAIN[defender] === attacker) return 0.7;
+  if (ELEMENT_ADVANTAGE_CHAIN[attacker] === defender) return 1.2;
+  if (ELEMENT_ADVANTAGE_CHAIN[defender] === attacker) return 0.8;
   return 1;
 }
 
@@ -2205,6 +2293,26 @@ function collectPendingInboundRequestIds(requests) {
     idSet.add(id);
   }
   return idSet;
+}
+
+function getPendingInboundRequestCount() {
+  const inbound = Array.isArray(duelRequests.inbound) ? duelRequests.inbound : [];
+  let count = 0;
+  for (const request of inbound) {
+    if (request && request.status === "pending") {
+      count += 1;
+    }
+  }
+  return count;
+}
+
+function renderDuelRequestIndicator() {
+  if (!duelRequestIndicatorElement) return;
+  const pendingCount = getPendingInboundRequestCount();
+  const shouldShow = pendingCount > 0 && !isPanelVisible();
+  duelRequestIndicatorElement.classList.toggle("hidden", !shouldShow);
+  duelRequestIndicatorElement.textContent = pendingCount > 99 ? "99+" : String(pendingCount);
+  duelRequestIndicatorElement.title = currentI18n().authPendingRequestBadgeTitle;
 }
 
 function collectNewInboundPendingRequests(previousIdSet, currentInbound) {
@@ -3056,7 +3164,11 @@ function applyMapActionResult(result) {
     applyMapState(result.state);
   }
   if (!result?.ok) {
-    appendLog(t("mapErrorLog", { message: result?.error?.message || "unknown error" }));
+    appendLog(
+      t("mapErrorLog", {
+        message: localizeAuthErrorMessage(result?.error?.message || "unknown error")
+      })
+    );
     return false;
   }
   return true;
@@ -3139,11 +3251,11 @@ async function refreshNearbyWildPets(options = {}) {
     nearbyWildPets = [];
     renderNearbyWildPets();
     if (!silent) {
-      appendLog(
-        t("wildRefreshFailLog", {
-          message: result?.error?.message || "unknown error"
-        })
-      );
+        appendLog(
+          t("wildRefreshFailLog", {
+            message: localizeAuthErrorMessage(result?.error?.message || "unknown error")
+          })
+        );
     }
     return;
   }
@@ -3546,12 +3658,14 @@ function renderDuelRequestList() {
   const currentUser = authSession?.currentUser || null;
   if (!currentUser) {
     duelRequestListElement.innerHTML = "";
+    renderDuelRequestIndicator();
     return;
   }
 
   const merged = buildMergedDuelRequests();
   if (merged.length === 0) {
     duelRequestListElement.innerHTML = `<div class="duel-empty">${currentI18n().authRequestEmpty}</div>`;
+    renderDuelRequestIndicator();
     return;
   }
 
@@ -3649,6 +3763,7 @@ function renderDuelRequestList() {
       }
     });
   }
+  renderDuelRequestIndicator();
 }
 
 function getOnlineDuelStatusText() {
@@ -3913,6 +4028,7 @@ function renderAuthSection() {
   renderDuelSearchResults();
   renderDuelRequestList();
   renderOnlineDuelStatus();
+  renderDuelRequestIndicator();
 }
 
 async function refreshAuthSession() {
@@ -4540,7 +4656,11 @@ async function resolveCaptureDecision(accept) {
     if (settlementSecondaryBtn) {
       settlementSecondaryBtn.disabled = false;
     }
-    appendLog(t("wildRefreshFailLog", { message: result?.error?.message || "resolve failed" }));
+    appendLog(
+      t("wildRefreshFailLog", {
+        message: localizeAuthErrorMessage(result?.error?.message || "resolve failed")
+      })
+    );
     return;
   }
 
@@ -5820,6 +5940,12 @@ function setupIpcEvents() {
   });
 
   window.petApi.onOnlineDuelEvent((event) => {
+    if (event?.type === "session-invalidated") {
+      appendLog(currentI18n().authSessionInvalidatedLog);
+      showDuelRequestToast(currentI18n().authSessionInvalidatedToast);
+      void logoutAccount();
+      return;
+    }
     const room = event?.payload?.room;
     const side = event?.payload?.side;
     if (room && typeof room === "object") {

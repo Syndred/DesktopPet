@@ -9,10 +9,10 @@ const ELEMENT_ADVANTAGE_CHAIN: Record<ElementType, ElementType> = {
 };
 
 const BASE_DAMAGE: Record<BattleActionType, number> = {
-  normal_attack: 20,
-  element_attack: 24,
+  normal_attack: 10,
+  element_attack: 12,
   dodge: 0,
-  ultimate: 40
+  ultimate: 20
 };
 
 export type StatusType = "burn" | "freeze" | "parasite" | "vulnerability" | "petrify";
@@ -158,8 +158,8 @@ export function getElementMultiplier(
   attacker: ElementType,
   defender: ElementType
 ): number {
-  if (ELEMENT_ADVANTAGE_CHAIN[attacker] === defender) return 1.5;
-  if (ELEMENT_ADVANTAGE_CHAIN[defender] === attacker) return 0.7;
+  if (ELEMENT_ADVANTAGE_CHAIN[attacker] === defender) return 1.2;
+  if (ELEMENT_ADVANTAGE_CHAIN[defender] === attacker) return 0.8;
   return 1;
 }
 
@@ -215,7 +215,7 @@ function applyAttackStatus(
   if (action !== "element_attack") return;
 
   if (attacker.element === "fire") {
-    addOrRefreshStatus(defender, { type: "burn", duration: 2, potency: 5, sourceId: attacker.id });
+    addOrRefreshStatus(defender, { type: "burn", duration: 2, potency: 3, sourceId: attacker.id });
     notes.push(`${defender.id} is burned`);
   }
   if (attacker.element === "water") {
@@ -226,7 +226,7 @@ function applyAttackStatus(
     addOrRefreshStatus(defender, {
       type: "parasite",
       duration: 2,
-      potency: 4,
+      potency: 2,
       sourceId: attacker.id
     });
     notes.push(`${defender.id} is parasitized`);

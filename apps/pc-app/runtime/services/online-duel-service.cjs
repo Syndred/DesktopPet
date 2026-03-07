@@ -1,7 +1,7 @@
 ﻿const { setTimeout: sleep } = require("node:timers/promises");
 
 const { existsSync, readFileSync } = require("node:fs");
-const { resolve } = require("node:path");
+const { dirname, resolve } = require("node:path");
 
 let createClient = null;
 let createClientLoadError = null;
@@ -23,14 +23,24 @@ const DEFAULT_FUNCTION_NAME = "duel-online";
 const DEFAULT_WAIT_TIMEOUT_MS = 12000;
 const DEFAULT_WAIT_INTERVAL_MS = 350;
 const LAUNCHER_ENV_FILE = "local-online-env.cmd";
+// Internal-test fallback so testers can launch exe directly without manual env setup.
+const BUILTIN_SUPABASE_URL = "http://47.112.208.97:8000";
+const BUILTIN_SUPABASE_ANON_KEY =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlzcyI6InN1cGFiYXNlIiwiaWF0IjoxNzcyODA1ODk2LCJleHAiOjE5MzA0ODU4OTZ9.zknBXZGayiAH0y36JFXMES9jSxoKz-54DjXNfXNwn24";
 
 class OnlineDuelService {
   constructor(options = {}) {
     const fallbackEnv = loadLauncherEnvFallback();
     this.supabaseUrl =
-      options.supabaseUrl || process.env.SUPABASE_URL || fallbackEnv.SUPABASE_URL || "";
+      options.supabaseUrl ||
+      process.env.SUPABASE_URL ||
+      fallbackEnv.SUPABASE_URL ||
+      BUILTIN_SUPABASE_URL;
     this.supabaseAnonKey =
-      options.supabaseAnonKey || process.env.SUPABASE_ANON_KEY || fallbackEnv.SUPABASE_ANON_KEY || "";
+      options.supabaseAnonKey ||
+      process.env.SUPABASE_ANON_KEY ||
+      fallbackEnv.SUPABASE_ANON_KEY ||
+      BUILTIN_SUPABASE_ANON_KEY;
     this.functionName =
       options.functionName ||
       process.env.SUPABASE_DUEL_FUNCTION ||
@@ -136,6 +146,7 @@ class OnlineDuelService {
 
     const response = await this.invoke("create_room", {
       userId: user.id,
+      sessionToken: user.sessionToken,
       userAccount: user.account,
       petElement: normalizeElement(payload.petElement) || "metal",
       petName: normalizePetName(payload.petName)
@@ -166,6 +177,7 @@ class OnlineDuelService {
     const response = await this.invoke("join_room", {
       roomCode,
       userId: user.id,
+      sessionToken: user.sessionToken,
       userAccount: user.account,
       petElement: normalizeElement(payload.petElement) || "metal",
       petName: normalizePetName(payload.petName)
@@ -187,6 +199,7 @@ class OnlineDuelService {
 
   async syncRoom(options = {}) {
     this.ensureEnabled();
+    const user = this.requireUser();
     const roomId = options.roomId || this.room?.id;
     const roomCode = options.roomCode || this.room?.room_code;
     if (!roomId && !roomCode) {
@@ -194,6 +207,8 @@ class OnlineDuelService {
     }
 
     const response = await this.invoke("get_room", {
+      userId: user.id,
+      sessionToken: user.sessionToken,
       roomId,
       roomCode,
       roundsLimit: clampRoundsLimit(options.roundsLimit)
@@ -239,6 +254,7 @@ class OnlineDuelService {
     const response = await this.invoke("submit_action", {
       roomId: room.id,
       userId: user.id,
+      sessionToken: user.sessionToken,
       action,
       roundNo
     });
@@ -268,6 +284,172 @@ class OnlineDuelService {
     return mapped;
   }
 
+  async registerAccount(payload = {}) {
+    this.ensureEnabled();
+    const account = normalizeString(payload.account) || "";
+    const password = normalizeString(payload.password) || "";
+    const username = normalizeString(payload.username) || account;
+    const response = await this.invoke("register_account", {
+      account,
+      password,
+      username
+    });
+    const currentUser = normalizeUser(response.currentUser);
+    if (!currentUser) {
+      throw new Error("invalid register response");
+    }
+    this.currentUser = currentUser;
+    return {
+      ok: true,
+      currentUser
+    };
+  }
+
+  async loginAccount(payload = {}) {
+    this.ensureEnabled();
+    const account = normalizeString(payload.account) || "";
+    const password = normalizeString(payload.password) || "";
+    const response = await this.invoke("login_account", {
+      account,
+      password
+    });
+    const currentUser = normalizeUser(response.currentUser);
+    if (!currentUser) {
+      throw new Error("invalid login response");
+    }
+    this.currentUser = currentUser;
+    return {
+      ok: true,
+      currentUser
+    };
+  }
+
+  async updateAccount(payload = {}) {
+    this.ensureEnabled();
+    const user = this.requireUser();
+    const response = await this.invoke("update_account", {
+      userId: user.id,
+      sessionToken: user.sessionToken,
+      oldPassword: normalizeString(payload.oldPassword) || "",
+      newPassword: normalizeString(payload.newPassword) || "",
+      username: normalizeString(payload.username) || ""
+    });
+    const currentUser = normalizeUser(response.currentUser) || this.currentUser;
+    if (!currentUser) {
+      throw new Error("invalid update response");
+    }
+    this.currentUser = currentUser;
+    return {
+      ok: true,
+      changed: Boolean(response.changed),
+      currentUser
+    };
+  }
+
+  async searchAccounts(payload = {}) {
+    this.ensureEnabled();
+    const user = this.requireUser();
+    const keyword = normalizeString(payload.keyword) || "";
+    const limit = Number.isInteger(Number(payload.limit)) ? Number(payload.limit) : 12;
+    const response = await this.invoke("search_accounts", {
+      userId: user.id,
+      sessionToken: user.sessionToken,
+      keyword,
+      limit
+    });
+    const users = Array.isArray(response.users)
+      ? response.users.map(normalizeUser).filter(Boolean)
+      : [];
+    return {
+      ok: true,
+      users
+    };
+  }
+
+  async sendDuelRequest(payload = {}) {
+    this.ensureEnabled();
+    const user = this.requireUser();
+    const targetAccount = normalizeString(payload.targetAccount) || "";
+    const allowResend = Boolean(payload.allowResend);
+    const response = await this.invoke("send_duel_request", {
+      userId: user.id,
+      sessionToken: user.sessionToken,
+      targetAccount,
+      allowResend
+    });
+    const retryAfterSeconds =
+      Number.isFinite(Number(response.retryAfterSeconds)) && Number(response.retryAfterSeconds) > 0
+        ? Math.ceil(Number(response.retryAfterSeconds))
+        : undefined;
+    if (allowResend && !response.resent && retryAfterSeconds) {
+      return {
+        ok: false,
+        error: "resend too frequent",
+        retryAfterSeconds,
+        request: normalizeRuntimeDuelRequest(response.request)
+      };
+    }
+    return {
+      ok: true,
+      resent: Boolean(response.resent),
+      retryAfterSeconds,
+      request: normalizeRuntimeDuelRequest(response.request)
+    };
+  }
+
+  async listDuelRequests() {
+    this.ensureEnabled();
+    const user = this.requireUser();
+    const response = await this.invoke("list_duel_requests", {
+      userId: user.id,
+      sessionToken: user.sessionToken
+    });
+    return {
+      ok: true,
+      inbound: Array.isArray(response.inbound)
+        ? response.inbound.map(normalizeRuntimeDuelRequest).filter(Boolean)
+        : [],
+      outbound: Array.isArray(response.outbound)
+        ? response.outbound.map(normalizeRuntimeDuelRequest).filter(Boolean)
+        : []
+    };
+  }
+
+  async respondDuelRequest(payload = {}) {
+    this.ensureEnabled();
+    const user = this.requireUser();
+    const requestId = normalizeString(payload.requestId) || "";
+    const decision = normalizeString(payload.decision) || "";
+    const response = await this.invoke("respond_duel_request", {
+      userId: user.id,
+      sessionToken: user.sessionToken,
+      requestId,
+      decision,
+      roomId: normalizeString(payload.roomId) || null,
+      roomCode: normalizeRoomCode(payload.roomCode),
+      roomStatus: normalizeRuntimeRoomStatus(payload.roomStatus)
+    });
+    return {
+      ok: true,
+      request: normalizeRuntimeDuelRequest(response.request)
+    };
+  }
+
+  async cancelDuelRequest(payload = {}) {
+    this.ensureEnabled();
+    const user = this.requireUser();
+    const requestId = normalizeString(payload.requestId) || "";
+    const response = await this.invoke("cancel_duel_request", {
+      userId: user.id,
+      sessionToken: user.sessionToken,
+      requestId
+    });
+    return {
+      ok: true,
+      request: normalizeRuntimeDuelRequest(response.request)
+    };
+  }
+
   async leaveRoom(options = {}) {
     const room = this.room;
     const user = this.currentUser;
@@ -277,6 +459,7 @@ class OnlineDuelService {
         await this.invoke("leave_room", {
           roomId: room.id,
           userId: user.id,
+          sessionToken: user.sessionToken,
           reason: normalizeString(options.reason) || "client_leave"
         });
       } catch {
@@ -328,6 +511,9 @@ class OnlineDuelService {
     if (!this.currentUser?.id) {
       throw new Error("login required");
     }
+    if (!this.currentUser?.sessionToken) {
+      throw new Error("session invalidated");
+    }
     return this.currentUser;
   }
 
@@ -350,12 +536,16 @@ class OnlineDuelService {
     });
 
     if (error) {
-      throw new Error(error.message || `failed to invoke function: ${op}`);
+      const message = await resolveFunctionErrorMessage(error, `failed to invoke function: ${op}`);
+      await this.handleSessionInvalidatedIfNeeded(message);
+      throw new Error(message);
     }
 
     const wrapped = data && typeof data === "object" ? data : null;
     if (wrapped?.ok === false) {
-      throw new Error(wrapped.error?.message || `function rejected op: ${op}`);
+      const message = wrapped.error?.message || `function rejected op: ${op}`;
+      await this.handleSessionInvalidatedIfNeeded(message);
+      throw new Error(message);
     }
 
     const body = wrapped && wrapped.ok === true ? wrapped.data : wrapped;
@@ -364,6 +554,22 @@ class OnlineDuelService {
     }
 
     return body;
+  }
+
+  async handleSessionInvalidatedIfNeeded(message) {
+    const lower = typeof message === "string" ? message.toLowerCase() : "";
+    const invalidated =
+      lower.includes("session invalidated") ||
+      lower.includes("session token is required") ||
+      lower.includes("invalid session token");
+    if (!invalidated || !this.currentUser) return;
+    const previousUser = this.currentUser;
+    this.currentUser = null;
+    await this.clearRoomState({ notify: true, reason: "session-invalidated" });
+    this.emit("session-invalidated", {
+      userId: previousUser.id,
+      account: previousUser.account
+    });
   }
 
   async subscribeRoom() {
@@ -550,6 +756,64 @@ class OnlineDuelService {
   }
 }
 
+async function resolveFunctionErrorMessage(error, fallback) {
+  const fallbackMessage =
+    (typeof fallback === "string" && fallback.trim().length > 0 ? fallback.trim() : "request failed");
+  if (!error || typeof error !== "object") {
+    return fallbackMessage;
+  }
+
+  const defaultMessage =
+    (typeof error.message === "string" && error.message.trim().length > 0
+      ? error.message.trim()
+      : fallbackMessage);
+  const context = error.context;
+  if (!context || typeof context !== "object") {
+    return defaultMessage;
+  }
+
+  const extractFromPayload = (payload) => {
+    if (!payload || typeof payload !== "object") return null;
+    const direct =
+      normalizeString(payload?.error?.message) ||
+      normalizeString(payload?.message) ||
+      normalizeString(payload?.data?.error?.message);
+    return direct || null;
+  };
+
+  try {
+    if (typeof context.clone === "function") {
+      const cloned = context.clone();
+      if (cloned && typeof cloned.json === "function") {
+        const parsed = await cloned.json();
+        const payloadMessage = extractFromPayload(parsed);
+        if (payloadMessage) return payloadMessage;
+      }
+    }
+  } catch {
+    // Ignore parse failures, fallback to default message.
+  }
+
+  try {
+    if (typeof context.text === "function") {
+      const text = await context.text();
+      if (typeof text === "string" && text.trim().length > 0) {
+        try {
+          const parsed = JSON.parse(text);
+          const payloadMessage = extractFromPayload(parsed);
+          if (payloadMessage) return payloadMessage;
+        } catch {
+          // Not a JSON body.
+        }
+      }
+    }
+  } catch {
+    // Ignore context read failures.
+  }
+
+  return defaultMessage;
+}
+
 function normalizeRoomCode(value) {
   const normalized = normalizeString(value);
   return normalized ? normalized.toUpperCase() : null;
@@ -628,7 +892,51 @@ function normalizeUser(input) {
   const id = normalizeString(input.id);
   if (!id) return null;
   const account = normalizeString(input.account) || id;
-  return { id, account };
+  return {
+    id,
+    account,
+    username: normalizeString(input.username) || account,
+    createdAt: normalizeString(input.createdAt) || null,
+    lastLoginAt: normalizeString(input.lastLoginAt) || null,
+    sessionToken: normalizeString(input.sessionToken) || null
+  };
+}
+
+function normalizeRuntimeDuelRequest(input) {
+  if (!input || typeof input !== "object") return null;
+  const id = normalizeString(input.id);
+  if (!id) return null;
+  const fromUserId = normalizeString(input.fromUserId);
+  const toUserId = normalizeString(input.toUserId);
+  const fromAccount = normalizeString(input.fromAccount);
+  const toAccount = normalizeString(input.toAccount);
+  if (!fromUserId || !toUserId || !fromAccount || !toAccount) {
+    return null;
+  }
+  const status = normalizeString(input.status) || "pending";
+  return {
+    id,
+    fromUserId,
+    fromAccount,
+    toUserId,
+    toAccount,
+    status,
+    roomId: normalizeString(input.roomId) || null,
+    roomCode: normalizeRoomCode(input.roomCode),
+    roomStatus: normalizeRuntimeRoomStatus(input.roomStatus),
+    createdAt: normalizeString(input.createdAt) || null,
+    updatedAt: normalizeString(input.updatedAt) || null
+  };
+}
+
+function normalizeRuntimeRoomStatus(value) {
+  const status = normalizeString(value);
+  if (!status) return null;
+  const lower = status.toLowerCase();
+  if (lower === "waiting" || lower === "active" || lower === "finished" || lower === "abandoned") {
+    return lower;
+  }
+  return null;
 }
 
 function resolveUserSide(room, userId) {
@@ -727,10 +1035,25 @@ function normalizeRoundEvents(input) {
 }
 
 function loadLauncherEnvFallback() {
-  const candidates = [
-    resolve(process.cwd(), "scripts", "desktop", LAUNCHER_ENV_FILE),
-    resolve(__dirname, "..", "..", "..", "..", "scripts", "desktop", LAUNCHER_ENV_FILE)
-  ];
+  const candidates = [];
+  const portableDir =
+    typeof process.env.PORTABLE_EXECUTABLE_DIR === "string" &&
+    process.env.PORTABLE_EXECUTABLE_DIR.trim().length > 0
+      ? process.env.PORTABLE_EXECUTABLE_DIR.trim()
+      : "";
+  if (portableDir) {
+    candidates.push(resolve(portableDir, LAUNCHER_ENV_FILE));
+  }
+  const cwd = typeof process.cwd === "function" ? process.cwd() : "";
+  if (cwd) {
+    candidates.push(resolve(cwd, LAUNCHER_ENV_FILE));
+    candidates.push(resolve(cwd, "scripts", "desktop", LAUNCHER_ENV_FILE));
+  }
+  if (typeof process.execPath === "string" && process.execPath.length > 0) {
+    candidates.push(resolve(dirname(process.execPath), LAUNCHER_ENV_FILE));
+  }
+  candidates.push(resolve(__dirname, "..", "..", "..", "..", "scripts", "desktop", LAUNCHER_ENV_FILE));
+
   for (const filePath of candidates) {
     if (!existsSync(filePath)) continue;
     try {

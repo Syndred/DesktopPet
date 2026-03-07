@@ -59,22 +59,121 @@ function clearRememberedLogin() {
   }
 }
 
+function unwrapErrorMessage(raw) {
+  const text = typeof raw === "string" ? raw.trim() : String(raw ?? "").trim();
+  if (!text) return "";
+
+  const tryParseMessage = (candidate) => {
+    try {
+      const parsed = JSON.parse(candidate);
+      const payloadMessage =
+        parsed?.error?.message || parsed?.message || parsed?.data?.error?.message || null;
+      return typeof payloadMessage === "string" ? payloadMessage.trim() : "";
+    } catch {
+      return "";
+    }
+  };
+
+  const direct = tryParseMessage(text);
+  if (direct) return direct;
+
+  const jsonStart = text.indexOf("{");
+  if (jsonStart >= 0) {
+    const nested = tryParseMessage(text.slice(jsonStart));
+    if (nested) return nested;
+  }
+  return text;
+}
+
 function localizeAuthErrorMessage(message) {
-  const raw = typeof message === "string" ? message.trim() : String(message ?? "");
+  const raw = unwrapErrorMessage(message);
   if (!raw) return "未知错误";
   const lower = raw.toLowerCase();
+
   const mappings = [
+    ["session invalidated", "账号已在其他设备登录，请重新登录"],
+    ["session token is required", "登录态已失效，请重新登录"],
+    ["invalid session token", "登录态已失效，请重新登录"],
+    ["login required", "请先登录"],
+    ["account is required", "账号不能为空"],
     ["account already exists", "账号已存在"],
     ["account length must be 3-32", "账号长度需在 3-32 之间"],
     ["account cannot contain spaces", "账号不能包含空格"],
+    ["account not found", "账号不存在"],
+    ["password is required", "密码不能为空"],
+    ["password length must be 6-64", "密码长度需在 6-64 之间"],
+    ["invalid password", "密码错误"],
     ["username is required", "用户名不能为空"],
     ["username length must be 2-24", "用户名长度需在 2-24 之间"],
-    ["password length must be 6-64", "密码长度需在 6-64 之间"],
-    ["account not found", "账号不存在"],
-    ["invalid password", "密码错误"],
+    ["old password is required", "请输入旧密码"],
+    ["invalid old password", "旧密码错误"],
+    ["invalid username", "用户名格式不合法"],
+    ["invalid new password", "新密码格式不合法"],
+    ["target account not found", "目标账号不存在"],
+    ["cannot challenge yourself", "不能挑战自己"],
+    ["pending duel request already exists", "已存在待处理的对战申请"],
+    ["resend too frequent", "补发太频繁，请稍后再试"],
+    ["request id is required", "请求编号不能为空"],
+    ["decision is required", "请选择处理动作"],
+    ["invalid duel request decision", "申请处理动作不合法"],
+    ["duel request not found", "对战申请不存在"],
+    ["request is not inbound", "只能处理收到的申请"],
+    ["request is not outbound", "只能取消自己发出的申请"],
+    ["duel request already resolved", "该申请已处理"],
+    ["user id is required", "用户标识不能为空"],
+    ["roomcode is required", "联机房间号不能为空"],
+    ["roomid or roomcode is required", "缺少房间标识，请重新进入联机"],
+    ["roomid, userid, roundno and valid action are required", "回合参数不完整，请重试"],
+    ["roomid and userid are required", "房间参数不完整，请重试"],
+    ["room is waiting for second player", "房间还在等待对手加入"],
+    ["room is waiting for opponent", "房间还在等待对手加入"],
+    ["room already finished", "对局已结束"],
+    ["room not found", "房间不存在或已失效"],
+    ["room is not joinable", "房间当前不可加入"],
+    ["room is full", "房间已满"],
+    ["room side not available", "房间席位异常，请重新加入"],
+    ["round mismatch", "回合同步失败，请等待房间刷新后重试"],
+    ["round resolution timeout", "回合结算超时，请重试"],
+    ["invalid action", "回合动作无效"],
+    ["invalid round payload", "回合数据异常，请重试"],
+    ["user is not room participant", "你不在该房间对局中"],
+    ["failed to query account", "账号查询失败，请稍后重试"],
+    ["failed to create account", "账号创建失败，请稍后重试"],
+    ["failed to update login timestamp", "登录状态更新失败，请稍后重试"],
+    ["failed to update account", "账号更新失败，请稍后重试"],
+    ["failed to query pending requests", "申请列表加载失败，请稍后重试"],
+    ["failed to load inbound requests", "收到申请加载失败，请稍后重试"],
+    ["failed to load outbound requests", "发出申请加载失败，请稍后重试"],
+    ["failed to send duel request", "发起申请失败，请稍后重试"],
+    ["failed to respond duel request", "处理申请失败，请稍后重试"],
+    ["failed to cancel duel request", "取消申请失败，请稍后重试"],
+    ["failed to query duel request", "申请查询失败，请稍后重试"],
+    ["failed to query room", "房间查询失败，请稍后重试"],
+    ["failed to query rounds", "回合数据查询失败，请稍后重试"],
+    ["failed to query round", "回合数据查询失败，请稍后重试"],
+    ["failed to query actions", "动作数据查询失败，请稍后重试"],
+    ["failed to create room code", "创建房间号失败，请稍后重试"],
+    ["failed to create room", "创建房间失败，请稍后重试"],
+    ["failed to join room", "加入房间失败，请稍后重试"],
+    ["failed to leave room", "离开房间失败，请稍后重试"],
+    ["failed to submit action", "提交动作失败，请稍后重试"],
+    ["failed to persist resolved round", "回合写入失败，请稍后重试"],
+    ["failed to update room", "房间状态更新失败，请稍后重试"],
+    ["supabase_url and supabase_anon_key are required", "联机服务未配置，请联系管理员"],
+    ["supabase_url and supabase_service_role_key are required", "服务端联机配置缺失，请联系管理员"],
+    ["supabase client not initialized", "联机客户端初始化失败，请重启后再试"],
+    ["@supabase/supabase-js is not installed", "联机依赖缺失，请重新安装客户端"],
+    ["edge function returned a non-2xx status code", "服务端请求失败，请稍后重试"],
+    ["fetch failed", "网络请求失败，请检查网络后重试"],
+    ["network request failed", "网络请求失败，请检查网络后重试"],
+    ["failed to fetch", "网络请求失败，请检查网络后重试"],
+    ["payload.op is required", "请求参数不完整，请重试"],
+    ["unsupported op", "请求动作不受支持，请升级客户端"],
+    ["invalid current user", "当前登录态异常，请重新登录"],
     ["login failed", "登录失败"],
     ["register failed", "注册失败"]
   ];
+
   for (const [keyword, translated] of mappings) {
     if (lower.includes(keyword)) return translated;
   }

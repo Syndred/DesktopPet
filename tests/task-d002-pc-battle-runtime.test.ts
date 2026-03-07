@@ -192,8 +192,8 @@ describe("D-002 pc battle runtime service", () => {
     const mutable = service as unknown as {
       session: { player: { hp: number }; enemy: { hp: number } };
     };
-    mutable.session.player.hp = 20;
-    mutable.session.enemy.hp = 20;
+    mutable.session.player.hp = 10;
+    mutable.session.enemy.hp = 10;
 
     const result = service.act("normal_attack");
     expect(result.roundResult.winner).toBe("player");

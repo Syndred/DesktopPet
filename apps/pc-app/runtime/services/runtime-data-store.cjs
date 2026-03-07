@@ -394,6 +394,80 @@ class RuntimeDataStore {
     };
   }
 
+  applyRemoteAuthSession(currentUser) {
+    this.refreshStateFromDisk();
+    const remoteUser = normalizeRemotePublicUser(currentUser);
+    if (!remoteUser) {
+      return {
+        ok: false,
+        error: "invalid current user"
+      };
+    }
+
+    const now = new Date().toISOString();
+    let user = this.state.users.find((item) => item.id === remoteUser.id) || null;
+    if (!user) {
+      const accountKey = remoteUser.account.toLowerCase();
+      user = this.state.users.find((item) => item.accountKey === accountKey) || null;
+    }
+
+    if (user) {
+      const previousId = user.id;
+      if (previousId !== remoteUser.id) {
+        if (
+          this.state.userInventories &&
+          this.state.userInventories[previousId] &&
+          !this.state.userInventories[remoteUser.id]
+        ) {
+          this.state.userInventories[remoteUser.id] = normalizeInventoryState(
+            this.state.userInventories[previousId]
+          );
+        }
+        if (this.state.userInventories && this.state.userInventories[previousId]) {
+          delete this.state.userInventories[previousId];
+        }
+        if (Array.isArray(this.state.duelRequests) && this.state.duelRequests.length > 0) {
+          this.state.duelRequests = this.state.duelRequests.map((item) => ({
+            ...item,
+            fromUserId: item.fromUserId === previousId ? remoteUser.id : item.fromUserId,
+            toUserId: item.toUserId === previousId ? remoteUser.id : item.toUserId
+          }));
+        }
+        user.id = remoteUser.id;
+      }
+      user.account = remoteUser.account;
+      user.accountKey = remoteUser.account.toLowerCase();
+      user.username = remoteUser.username || remoteUser.account;
+      user.sessionToken = remoteUser.sessionToken || null;
+      user.createdAt = remoteUser.createdAt || user.createdAt || now;
+      user.lastLoginAt = remoteUser.lastLoginAt || now;
+      user.updatedAt = now;
+    } else {
+      user = {
+        id: remoteUser.id,
+        account: remoteUser.account,
+        accountKey: remoteUser.account.toLowerCase(),
+        username: remoteUser.username || remoteUser.account,
+        sessionToken: remoteUser.sessionToken || null,
+        passwordHash: hashPassword(`remote-session-${remoteUser.id}`),
+        createdAt: remoteUser.createdAt || now,
+        updatedAt: now,
+        lastLoginAt: remoteUser.lastLoginAt || now
+      };
+      this.state.users = [user, ...this.state.users].slice(0, 5000);
+    }
+
+    this.sessionUserId = user.id;
+    this.state.currentUserId = this.sessionUserId;
+    this.ensureSessionInventory({ seedFromLegacy: true });
+    this.state.updatedAt = now;
+    this.persistState();
+    return {
+      ok: true,
+      currentUser: toPublicUser(user)
+    };
+  }
+
   registerUser(account, password, username) {
     this.refreshStateFromDisk();
     const normalizedAccount = normalizeAccount(account);
@@ -913,7 +987,6 @@ function createDefaultInventoryState() {
 }
 
 function normalizeInventoryState(input) {
-  const fallback = createDefaultInventoryState();
   const pets = normalizePetList(input?.pets);
   const activePetId = pets.some((pet) => pet.id === input?.activePetId)
     ? input.activePetId
@@ -1348,6 +1421,29 @@ function clampNonNegativeNumber(input) {
   return Math.round(parsed);
 }
 
+function normalizeRemotePublicUser(input) {
+  if (!input || typeof input !== "object") return null;
+  if (typeof input.id !== "string" || input.id.trim().length === 0) return null;
+  if (typeof input.account !== "string" || input.account.trim().length < 3) return null;
+  const id = input.id.trim();
+  const account = input.account.trim();
+  if (account.length > 32 || /\s/.test(account)) return null;
+  const rawUsername = typeof input.username === "string" ? input.username.trim() : "";
+  const username =
+    rawUsername.length >= 2 && rawUsername.length <= 24 ? rawUsername : account;
+  return {
+    id,
+    account,
+    username,
+    sessionToken:
+      typeof input.sessionToken === "string" && input.sessionToken.trim().length > 0
+        ? input.sessionToken.trim()
+        : null,
+    createdAt: isIsoDate(input.createdAt) ? input.createdAt : null,
+    lastLoginAt: isIsoDate(input.lastLoginAt) ? input.lastLoginAt : null
+  };
+}
+
 function normalizeAccount(input) {
   if (typeof input !== "string") {
     throw new Error("account is required");
@@ -1428,6 +1524,10 @@ function normalizeUser(input) {
     account,
     accountKey,
     username,
+    sessionToken:
+      typeof input.sessionToken === "string" && input.sessionToken.trim().length > 0
+        ? input.sessionToken.trim()
+        : null,
     passwordHash,
     createdAt: isIsoDate(input.createdAt) ? input.createdAt : now,
     updatedAt: isIsoDate(input.updatedAt) ? input.updatedAt : now,
@@ -1508,6 +1608,10 @@ function toPublicUser(user) {
     id: user.id,
     account: user.account,
     username: user.username || user.account,
+    sessionToken:
+      typeof user.sessionToken === "string" && user.sessionToken.trim().length > 0
+        ? user.sessionToken.trim()
+        : null,
     createdAt: user.createdAt,
     lastLoginAt: user.lastLoginAt
   };

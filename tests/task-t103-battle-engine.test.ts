@@ -15,8 +15,8 @@ function createCombatant(id: string, element: Combatant["element"]): Combatant {
 
 describe("T-103 battle engine rules", () => {
   it("applies element advantage and disadvantage multipliers", () => {
-    expect(getElementMultiplier("metal", "wood")).toBe(1.5);
-    expect(getElementMultiplier("wood", "metal")).toBe(0.7);
+    expect(getElementMultiplier("metal", "wood")).toBe(1.2);
+    expect(getElementMultiplier("wood", "metal")).toBe(0.8);
     expect(getElementMultiplier("fire", "earth")).toBe(1);
   });
 
@@ -92,7 +92,7 @@ describe("T-103 battle engine rules", () => {
     });
 
     expect(round1.appliedActions.p1).toBe("ultimate");
-    expect(round1.damageTaken.p2).toBeGreaterThanOrEqual(40);
+    expect(round1.damageTaken.p2).toBeGreaterThanOrEqual(20);
     expect(round1.angerAfter.p1).toBe(0);
   });
 
@@ -115,4 +115,3 @@ describe("T-103 battle engine rules", () => {
     expect(round2.appliedActions.p2).toBe("stunned");
   });
 });
-

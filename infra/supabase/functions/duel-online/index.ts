@@ -15,19 +15,21 @@ const ELEMENT_ADVANTAGE_CHAIN = {
 };
 
 const BASE_DAMAGE = {
-  normal_attack: 20,
-  element_attack: 24,
+  normal_attack: 10,
+  element_attack: 12,
   dodge: 0,
-  ultimate: 40
+  ultimate: 20
 };
 
 const ROOM_CODE_ALPHABET = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
 const ALLOWED_ELEMENTS = new Set(["metal", "wood", "earth", "water", "fire"]);
 const ALLOWED_ACTIONS = new Set(["normal_attack", "element_attack", "dodge", "ultimate"]);
 const ALLOWED_STATUS_TYPES = new Set(["burn", "freeze", "parasite", "vulnerability", "petrify"]);
+const ALLOWED_DUEL_REQUEST_STATUS = new Set(["pending", "accepted", "rejected", "cancelled"]);
 const MAX_HP = 120;
 const ULTIMATE_ANGER_THRESHOLD = 50;
 const ULTIMATE_ANGER_COST = 50;
+const DUEL_REQUEST_RESEND_INTERVAL_MS = 30 * 1000;
 
 Deno.serve(async (request) => {
   if (request.method === "OPTIONS") {
@@ -59,6 +61,30 @@ Deno.serve(async (request) => {
 
     const supabase = createSupabaseServiceClient();
 
+    if (op === "register_account") {
+      return jsonResponse({ ok: true, data: await handleRegisterAccount(supabase, payload) });
+    }
+    if (op === "login_account") {
+      return jsonResponse({ ok: true, data: await handleLoginAccount(supabase, payload) });
+    }
+    if (op === "update_account") {
+      return jsonResponse({ ok: true, data: await handleUpdateAccount(supabase, payload) });
+    }
+    if (op === "search_accounts") {
+      return jsonResponse({ ok: true, data: await handleSearchAccounts(supabase, payload) });
+    }
+    if (op === "send_duel_request") {
+      return jsonResponse({ ok: true, data: await handleSendDuelRequest(supabase, payload) });
+    }
+    if (op === "list_duel_requests") {
+      return jsonResponse({ ok: true, data: await handleListDuelRequests(supabase, payload) });
+    }
+    if (op === "respond_duel_request") {
+      return jsonResponse({ ok: true, data: await handleRespondDuelRequest(supabase, payload) });
+    }
+    if (op === "cancel_duel_request") {
+      return jsonResponse({ ok: true, data: await handleCancelDuelRequest(supabase, payload) });
+    }
     if (op === "create_room") {
       return jsonResponse({ ok: true, data: await handleCreateRoom(supabase, payload) });
     }
@@ -168,6 +194,21 @@ function normalizeUser(payload) {
   };
 }
 
+function normalizeSessionToken(input) {
+  const token = normalizeString(input);
+  if (!token) {
+    throw new Error("session token is required");
+  }
+  if (token.length < 16 || token.length > 128) {
+    throw new Error("invalid session token");
+  }
+  return token;
+}
+
+function generateSessionToken() {
+  return `sess_${crypto.randomUUID().replaceAll("-", "")}`;
+}
+
 function normalizeRoomCode(value) {
   return normalizeString(value)?.toUpperCase() || null;
 }
@@ -193,8 +234,8 @@ function generateRoomCode() {
 }
 
 function getElementMultiplier(attacker, defender) {
-  if (ELEMENT_ADVANTAGE_CHAIN[attacker] === defender) return 1.5;
-  if (ELEMENT_ADVANTAGE_CHAIN[defender] === attacker) return 0.7;
+  if (ELEMENT_ADVANTAGE_CHAIN[attacker] === defender) return 1.2;
+  if (ELEMENT_ADVANTAGE_CHAIN[defender] === attacker) return 0.8;
   return 1;
 }
 
@@ -319,7 +360,12 @@ function normalizeRound(input) {
 }
 
 async function handleCreateRoom(supabase, payload) {
-  const user = normalizeUser(payload);
+  const sessionUser = await requireRuntimeSessionUser(supabase, payload);
+  const user = normalizeUser({
+    ...payload,
+    userId: sessionUser.id,
+    userAccount: sessionUser.account
+  });
   const hostElement = normalizeElement(payload?.petElement) || "metal";
   const hostPetName = normalizePetName(payload?.petName);
 
@@ -357,7 +403,12 @@ async function handleCreateRoom(supabase, payload) {
 }
 
 async function handleJoinRoom(supabase, payload) {
-  const user = normalizeUser(payload);
+  const sessionUser = await requireRuntimeSessionUser(supabase, payload);
+  const user = normalizeUser({
+    ...payload,
+    userId: sessionUser.id,
+    userAccount: sessionUser.account
+  });
   const roomCode = normalizeRoomCode(payload?.roomCode);
   const guestElement = normalizeElement(payload?.petElement) || "metal";
   const guestPetName = normalizePetName(payload?.petName);
@@ -402,6 +453,7 @@ async function handleJoinRoom(supabase, payload) {
 }
 
 async function handleGetRoom(supabase, payload) {
+  const sessionUser = await requireRuntimeSessionUser(supabase, payload);
   const roomId = normalizeString(payload?.roomId);
   const roomCode = normalizeRoomCode(payload?.roomCode);
   const roundsLimit = clampRoundsLimit(payload?.roundsLimit);
@@ -417,6 +469,9 @@ async function handleGetRoom(supabase, payload) {
 
   if (!room) {
     throw new Error("room not found");
+  }
+  if (room.host_user_id !== sessionUser.id && room.guest_user_id !== sessionUser.id) {
+    throw new Error("user is not room participant");
   }
 
   return {
@@ -731,7 +786,7 @@ function applyAttackStatus(action, attacker, defender, notes) {
     const status = addOrRefreshStatus(defender, {
       type: "burn",
       duration: 2,
-      potency: 5,
+      potency: 3,
       stacks: 1,
       stackable: true,
       sourceId: attacker.id
@@ -752,7 +807,7 @@ function applyAttackStatus(action, attacker, defender, notes) {
     const status = addOrRefreshStatus(defender, {
       type: "parasite",
       duration: 2,
-      potency: 4,
+      potency: 2,
       stacks: 1,
       stackable: true,
       sourceId: attacker.id
@@ -853,7 +908,8 @@ function cloneStatus(status) {
 
 async function handleSubmitAction(supabase, payload) {
   const roomId = normalizeString(payload?.roomId);
-  const userId = normalizeString(payload?.userId);
+  const sessionUser = await requireRuntimeSessionUser(supabase, payload);
+  const userId = sessionUser.id;
   const actionType = normalizeAction(payload?.action);
   const roundNo = toPositiveInt(payload?.roundNo, 0);
 
@@ -988,7 +1044,8 @@ async function handleSubmitAction(supabase, payload) {
 
 async function handleLeaveRoom(supabase, payload) {
   const roomId = normalizeString(payload?.roomId);
-  const userId = normalizeString(payload?.userId);
+  const sessionUser = await requireRuntimeSessionUser(supabase, payload);
+  const userId = sessionUser.id;
 
   if (!roomId || !userId) {
     throw new Error("roomId and userId are required");
@@ -1022,4 +1079,546 @@ async function handleLeaveRoom(supabase, payload) {
   return {
     room: normalizeRoom(data)
   };
+}
+
+async function handleRegisterAccount(supabase, payload) {
+  const account = normalizeAccount(payload?.account);
+  const password = normalizePassword(payload?.password);
+  const username = normalizeUsername(
+    typeof payload?.username === "string" && payload.username.trim().length > 0
+      ? payload.username
+      : account
+  );
+  const accountKey = account.toLowerCase();
+
+  const { data: existing, error: existingError } = await supabase
+    .from("runtime_accounts")
+    .select("*")
+    .eq("account_key", accountKey)
+    .maybeSingle();
+  if (existingError) {
+    throw new Error(existingError.message || "failed to query account");
+  }
+  if (existing) {
+    throw new Error("account already exists");
+  }
+
+  const now = new Date().toISOString();
+  const sessionToken = generateSessionToken();
+  const row = {
+    id: `user-${crypto.randomUUID()}`,
+    account,
+    account_key: accountKey,
+    username,
+    password_hash: await hashPassword(password),
+    session_token: sessionToken,
+    session_issued_at: now,
+    created_at: now,
+    updated_at: now,
+    last_login_at: now
+  };
+
+  const { data, error } = await supabase.from("runtime_accounts").insert(row).select("*").single();
+  if (error || !data) {
+    throw new Error(error?.message || "failed to create account");
+  }
+
+  return {
+    currentUser: toPublicRuntimeUser(data, { includeSessionToken: true })
+  };
+}
+
+async function handleLoginAccount(supabase, payload) {
+  const account = normalizeAccount(payload?.account);
+  const password = normalizePassword(payload?.password);
+  const accountKey = account.toLowerCase();
+
+  const { data: candidate, error } = await supabase
+    .from("runtime_accounts")
+    .select("*")
+    .eq("account_key", accountKey)
+    .maybeSingle();
+  if (error) {
+    throw new Error(error.message || "failed to query account");
+  }
+  if (!candidate) {
+    throw new Error("account not found");
+  }
+
+  const incomingHash = await hashPassword(password);
+  if (incomingHash !== String(candidate.password_hash || "")) {
+    throw new Error("invalid password");
+  }
+
+  const now = new Date().toISOString();
+  const sessionToken = generateSessionToken();
+  const { data: updated, error: updateError } = await supabase
+    .from("runtime_accounts")
+    .update({
+      session_token: sessionToken,
+      session_issued_at: now,
+      last_login_at: now,
+      updated_at: now
+    })
+    .eq("id", candidate.id)
+    .select("*")
+    .single();
+  if (updateError || !updated) {
+    throw new Error(updateError?.message || "failed to update login timestamp");
+  }
+
+  return {
+    currentUser: toPublicRuntimeUser(updated, { includeSessionToken: true })
+  };
+}
+
+async function handleUpdateAccount(supabase, payload) {
+  const sessionUser = await requireRuntimeSessionUser(supabase, payload);
+  const userId = sessionUser.id;
+  const oldPassword = normalizePassword(payload?.oldPassword);
+  const nextUsernameRaw = typeof payload?.username === "string" ? payload.username : "";
+  const nextPasswordRaw = typeof payload?.newPassword === "string" ? payload.newPassword : "";
+
+  const account = await getRuntimeAccountByIdOrThrow(supabase, userId);
+  const oldPasswordHash = await hashPassword(oldPassword);
+  if (oldPasswordHash !== String(account.password_hash || "")) {
+    throw new Error("invalid old password");
+  }
+
+  const patch = {};
+  let changed = false;
+  if (nextUsernameRaw.trim().length > 0) {
+    const username = normalizeUsername(nextUsernameRaw);
+    if (username !== account.username) {
+      patch.username = username;
+      changed = true;
+    }
+  }
+  if (nextPasswordRaw.trim().length > 0) {
+    const newPassword = normalizePassword(nextPasswordRaw);
+    const newHash = await hashPassword(newPassword);
+    if (newHash !== account.password_hash) {
+      patch.password_hash = newHash;
+      changed = true;
+    }
+  }
+
+  if (!changed) {
+    return {
+      changed: false,
+      currentUser: toPublicRuntimeUser(account, { includeSessionToken: true })
+    };
+  }
+
+  patch.updated_at = new Date().toISOString();
+  const { data, error } = await supabase
+    .from("runtime_accounts")
+    .update(patch)
+    .eq("id", account.id)
+    .select("*")
+    .single();
+  if (error || !data) {
+    throw new Error(error?.message || "failed to update account");
+  }
+
+  return {
+    changed: true,
+    currentUser: toPublicRuntimeUser(data, { includeSessionToken: true })
+  };
+}
+
+async function handleSearchAccounts(supabase, payload) {
+  const sessionUser = await requireRuntimeSessionUser(supabase, payload);
+  const userId = sessionUser.id;
+  const keyword = typeof payload?.keyword === "string" ? payload.keyword.trim().toLowerCase() : "";
+  const limit = clampPositiveInt(payload?.limit, 12, 1, 50);
+
+  let query = supabase
+    .from("runtime_accounts")
+    .select("id, account, username, created_at, last_login_at")
+    .order("created_at", { ascending: false })
+    .limit(Math.min(limit + 5, 120));
+  if (keyword.length > 0) {
+    query = query.ilike("account_key", `%${keyword}%`);
+  }
+
+  const { data, error } = await query;
+  if (error) {
+    throw new Error(error.message || "search failed");
+  }
+
+  const users = (Array.isArray(data) ? data : [])
+    .filter((item) => String(item?.id || "") !== userId)
+    .slice(0, limit)
+    .map(toPublicRuntimeUser);
+
+  return { users };
+}
+
+async function handleSendDuelRequest(supabase, payload) {
+  const sessionUser = await requireRuntimeSessionUser(supabase, payload);
+  const userId = sessionUser.id;
+  const targetAccount = normalizeAccount(payload?.targetAccount);
+  const allowResend = Boolean(payload?.allowResend);
+
+  const fromUser = await getRuntimeAccountByIdOrThrow(supabase, userId);
+  const toUser = await getRuntimeAccountByAccountOrThrow(supabase, targetAccount);
+  if (fromUser.id === toUser.id) {
+    throw new Error("cannot challenge yourself");
+  }
+
+  const { data: pendingRows, error: pendingError } = await supabase
+    .from("runtime_duel_requests")
+    .select("*")
+    .eq("status", "pending")
+    .or(
+      `and(from_user_id.eq.${fromUser.id},to_user_id.eq.${toUser.id}),and(from_user_id.eq.${toUser.id},to_user_id.eq.${fromUser.id})`
+    )
+    .order("updated_at", { ascending: false })
+    .limit(1);
+  if (pendingError) {
+    throw new Error(pendingError.message || "failed to query pending requests");
+  }
+
+  const duplicate = Array.isArray(pendingRows) && pendingRows.length > 0 ? pendingRows[0] : null;
+  if (duplicate) {
+    if (allowResend && String(duplicate.from_user_id || "") === fromUser.id) {
+      const now = Date.now();
+      const lastTouched = Date.parse(String(duplicate.updated_at || duplicate.created_at || ""));
+      const elapsed = Number.isFinite(lastTouched) ? Math.max(0, now - lastTouched) : Number.MAX_SAFE_INTEGER;
+      if (elapsed < DUEL_REQUEST_RESEND_INTERVAL_MS) {
+        return {
+          resent: false,
+          retryAfterSeconds: Math.ceil((DUEL_REQUEST_RESEND_INTERVAL_MS - elapsed) / 1000),
+          request: normalizeRuntimeDuelRequest(duplicate)
+        };
+      }
+      const { data: resentRow, error: resentError } = await supabase
+        .from("runtime_duel_requests")
+        .update({ updated_at: new Date(now).toISOString() })
+        .eq("id", duplicate.id)
+        .select("*")
+        .single();
+      if (resentError || !resentRow) {
+        throw new Error(resentError?.message || "failed to resend request");
+      }
+      return {
+        resent: true,
+        request: normalizeRuntimeDuelRequest(resentRow)
+      };
+    }
+    throw new Error("pending duel request already exists");
+  }
+
+  const now = new Date().toISOString();
+  const row = {
+    from_user_id: fromUser.id,
+    from_account: fromUser.account,
+    to_user_id: toUser.id,
+    to_account: toUser.account,
+    status: "pending",
+    room_id: null,
+    room_code: null,
+    room_status: null,
+    created_at: now,
+    updated_at: now
+  };
+  const { data, error } = await supabase
+    .from("runtime_duel_requests")
+    .insert(row)
+    .select("*")
+    .single();
+  if (error || !data) {
+    throw new Error(error?.message || "failed to send duel request");
+  }
+
+  return {
+    resent: false,
+    request: normalizeRuntimeDuelRequest(data)
+  };
+}
+
+async function handleListDuelRequests(supabase, payload) {
+  const sessionUser = await requireRuntimeSessionUser(supabase, payload);
+  const userId = sessionUser.id;
+
+  const [inboundRes, outboundRes] = await Promise.all([
+    supabase
+      .from("runtime_duel_requests")
+      .select("*")
+      .eq("to_user_id", userId)
+      .order("updated_at", { ascending: false })
+      .limit(200),
+    supabase
+      .from("runtime_duel_requests")
+      .select("*")
+      .eq("from_user_id", userId)
+      .order("updated_at", { ascending: false })
+      .limit(200)
+  ]);
+
+  if (inboundRes.error) {
+    throw new Error(inboundRes.error.message || "failed to load inbound requests");
+  }
+  if (outboundRes.error) {
+    throw new Error(outboundRes.error.message || "failed to load outbound requests");
+  }
+
+  return {
+    inbound: (Array.isArray(inboundRes.data) ? inboundRes.data : []).map(normalizeRuntimeDuelRequest),
+    outbound: (Array.isArray(outboundRes.data) ? outboundRes.data : []).map(normalizeRuntimeDuelRequest)
+  };
+}
+
+async function handleRespondDuelRequest(supabase, payload) {
+  const sessionUser = await requireRuntimeSessionUser(supabase, payload);
+  const userId = sessionUser.id;
+  const requestId = normalizeString(payload?.requestId);
+  const decision = normalizeDuelRequestDecision(payload?.decision);
+  if (!requestId) {
+    throw new Error("request id is required");
+  }
+
+  const { data: request, error } = await supabase
+    .from("runtime_duel_requests")
+    .select("*")
+    .eq("id", requestId)
+    .maybeSingle();
+  if (error) {
+    throw new Error(error.message || "failed to query duel request");
+  }
+  if (!request) {
+    throw new Error("duel request not found");
+  }
+  if (String(request.to_user_id || "") !== userId) {
+    throw new Error("request is not inbound");
+  }
+  if (String(request.status || "") !== "pending") {
+    throw new Error("duel request already resolved");
+  }
+
+  const now = new Date().toISOString();
+  const status = decision === "accept" ? "accepted" : "rejected";
+  const patch =
+    status === "accepted"
+      ? {
+          status,
+          room_id: normalizeString(payload?.roomId) || null,
+          room_code: normalizeRoomCode(payload?.roomCode),
+          room_status: normalizeRuntimeRoomStatus(payload?.roomStatus),
+          updated_at: now
+        }
+      : {
+          status,
+          room_id: null,
+          room_code: null,
+          room_status: null,
+          updated_at: now
+        };
+
+  const { data: updated, error: updateError } = await supabase
+    .from("runtime_duel_requests")
+    .update(patch)
+    .eq("id", request.id)
+    .select("*")
+    .single();
+  if (updateError || !updated) {
+    throw new Error(updateError?.message || "failed to respond duel request");
+  }
+
+  return {
+    request: normalizeRuntimeDuelRequest(updated)
+  };
+}
+
+async function handleCancelDuelRequest(supabase, payload) {
+  const sessionUser = await requireRuntimeSessionUser(supabase, payload);
+  const userId = sessionUser.id;
+  const requestId = normalizeString(payload?.requestId);
+  if (!requestId) {
+    throw new Error("request id is required");
+  }
+
+  const { data: request, error } = await supabase
+    .from("runtime_duel_requests")
+    .select("*")
+    .eq("id", requestId)
+    .maybeSingle();
+  if (error) {
+    throw new Error(error.message || "failed to query duel request");
+  }
+  if (!request) {
+    throw new Error("duel request not found");
+  }
+  if (String(request.from_user_id || "") !== userId) {
+    throw new Error("request is not outbound");
+  }
+  if (String(request.status || "") !== "pending") {
+    throw new Error("duel request already resolved");
+  }
+
+  const { data: updated, error: updateError } = await supabase
+    .from("runtime_duel_requests")
+    .update({
+      status: "cancelled",
+      room_id: null,
+      room_code: null,
+      room_status: null,
+      updated_at: new Date().toISOString()
+    })
+    .eq("id", request.id)
+    .select("*")
+    .single();
+  if (updateError || !updated) {
+    throw new Error(updateError?.message || "failed to cancel duel request");
+  }
+
+  return {
+    request: normalizeRuntimeDuelRequest(updated)
+  };
+}
+
+async function getRuntimeAccountByIdOrThrow(supabase, userId) {
+  const { data, error } = await supabase
+    .from("runtime_accounts")
+    .select("*")
+    .eq("id", userId)
+    .maybeSingle();
+  if (error) {
+    throw new Error(error.message || "failed to query account");
+  }
+  if (!data) {
+    throw new Error("account not found");
+  }
+  return data;
+}
+
+async function requireRuntimeSessionUser(supabase, payload) {
+  const userId = normalizeRuntimeUserId(payload?.userId);
+  const sessionToken = normalizeSessionToken(payload?.sessionToken);
+  const account = await getRuntimeAccountByIdOrThrow(supabase, userId);
+  const currentToken = normalizeString(account?.session_token) || null;
+  if (!currentToken || currentToken !== sessionToken) {
+    throw new Error("session invalidated");
+  }
+  return toPublicRuntimeUser(account, { includeSessionToken: true });
+}
+
+async function getRuntimeAccountByAccountOrThrow(supabase, account) {
+  const { data, error } = await supabase
+    .from("runtime_accounts")
+    .select("*")
+    .eq("account_key", account.toLowerCase())
+    .maybeSingle();
+  if (error) {
+    throw new Error(error.message || "failed to query account");
+  }
+  if (!data) {
+    throw new Error("target account not found");
+  }
+  return data;
+}
+
+function toPublicRuntimeUser(input, options = {}) {
+  const base = {
+    id: normalizeRuntimeUserId(input?.id),
+    account: normalizeString(input?.account) || "",
+    username: normalizeString(input?.username) || normalizeString(input?.account) || "",
+    createdAt: normalizeString(input?.created_at) || new Date().toISOString(),
+    lastLoginAt: normalizeString(input?.last_login_at) || null
+  };
+  if (options?.includeSessionToken) {
+    return {
+      ...base,
+      sessionToken: normalizeString(input?.session_token) || ""
+    };
+  }
+  return base;
+}
+
+function normalizeRuntimeDuelRequest(input) {
+  const status = normalizeString(input?.status) || "pending";
+  return {
+    id: normalizeString(input?.id) || "",
+    fromUserId: normalizeRuntimeUserId(input?.from_user_id),
+    fromAccount: normalizeString(input?.from_account) || "",
+    toUserId: normalizeRuntimeUserId(input?.to_user_id),
+    toAccount: normalizeString(input?.to_account) || "",
+    status: ALLOWED_DUEL_REQUEST_STATUS.has(status) ? status : "pending",
+    roomId: normalizeString(input?.room_id) || null,
+    roomCode: normalizeRoomCode(input?.room_code),
+    roomStatus: normalizeRuntimeRoomStatus(input?.room_status),
+    createdAt: normalizeString(input?.created_at) || new Date().toISOString(),
+    updatedAt: normalizeString(input?.updated_at) || new Date().toISOString()
+  };
+}
+
+function normalizeRuntimeUserId(input) {
+  const text = normalizeString(input);
+  if (!text) {
+    throw new Error("user id is required");
+  }
+  return text;
+}
+
+function normalizeAccount(input) {
+  const account = normalizeString(input);
+  if (!account) throw new Error("account is required");
+  if (account.length < 3 || account.length > 32) {
+    throw new Error("account length must be 3-32");
+  }
+  if (/\s/.test(account)) {
+    throw new Error("account cannot contain spaces");
+  }
+  return account;
+}
+
+function normalizeUsername(input) {
+  const username = normalizeString(input);
+  if (!username) throw new Error("username is required");
+  if (username.length < 2 || username.length > 24) {
+    throw new Error("username length must be 2-24");
+  }
+  return username;
+}
+
+function normalizePassword(input) {
+  const password = normalizeString(input);
+  if (!password) throw new Error("password is required");
+  if (password.length < 6 || password.length > 64) {
+    throw new Error("password length must be 6-64");
+  }
+  return password;
+}
+
+function normalizeDuelRequestDecision(input) {
+  const decision = normalizeString(input);
+  if (!decision) throw new Error("decision is required");
+  const lower = decision.toLowerCase();
+  if (lower !== "accept" && lower !== "reject") {
+    throw new Error("invalid duel request decision");
+  }
+  return lower;
+}
+
+function normalizeRuntimeRoomStatus(input) {
+  const status = normalizeString(input);
+  if (!status) return null;
+  const lower = status.toLowerCase();
+  if (lower === "waiting" || lower === "active" || lower === "finished" || lower === "abandoned") {
+    return lower;
+  }
+  return null;
+}
+
+function clampPositiveInt(input, fallback, min, max) {
+  const num = Number(input);
+  if (!Number.isInteger(num)) return fallback;
+  return Math.max(min, Math.min(max, num));
+}
+
+async function hashPassword(password) {
+  const bytes = new TextEncoder().encode(password);
+  const digest = await crypto.subtle.digest("SHA-256", bytes);
+  return [...new Uint8Array(digest)].map((value) => value.toString(16).padStart(2, "0")).join("");
 }

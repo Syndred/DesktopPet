@@ -53,6 +53,7 @@ describe("D-008 pc online duel runtime bridge", () => {
     expect(html).toContain("btn-duel-online-join");
     expect(html).toContain("btn-duel-online-leave");
     expect(html).toContain("duel-online-status");
+    expect(html).toContain("duel-request-indicator");
 
     expect(rendererCode).toContain("window.petApi.getOnlineDuelStatus");
     expect(rendererCode).toContain("window.petApi.createOnlineDuelRoom");
@@ -60,6 +61,9 @@ describe("D-008 pc online duel runtime bridge", () => {
     expect(rendererCode).toContain("window.petApi.onlineDuelReset");
     expect(rendererCode).toContain("window.petApi.onlineDuelAct");
     expect(rendererCode).toContain("window.petApi.onOnlineDuelEvent");
+    expect(rendererCode).toContain("renderDuelRequestIndicator");
+    expect(rendererCode).toContain("authPendingRequestBadgeTitle");
+    expect(rendererCode).toContain("session-invalidated");
   });
 
   it("configures supabase realtime ws transport for node/electron runtime", () => {
@@ -72,5 +76,8 @@ describe("D-008 pc online duel runtime bridge", () => {
     expect(serviceCode).toContain("realtime: realtimeOptions");
     expect(serviceCode).toContain("local-online-env.cmd");
     expect(serviceCode).toContain("loadLauncherEnvFallback");
+    expect(serviceCode).toContain("sessionToken: user.sessionToken");
+    expect(serviceCode).toContain("handleSessionInvalidatedIfNeeded");
+    expect(serviceCode).toContain('this.emit("session-invalidated"');
   });
 });
