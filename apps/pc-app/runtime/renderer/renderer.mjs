@@ -297,6 +297,8 @@ const i18n = {
     duelOnlineJoinSuccessLog: "已加入联机房：{roomCode}",
     duelOnlineLeaveLog: "已离开联机房。",
     duelOnlineActionFailLog: "联机操作失败：{message}",
+    duelOnlineAutoJoinSwitchRoomLog: "检测到旧房间 {fromCode}，正在切换并自动加入新房间 {toCode}",
+    duelOnlineAutoJoinStopRetryLog: "自动加入房间 {roomCode} 失败，已停止自动重试（可手动加入）。",
     duelOnlineResetLog: "联机对战已同步，房间号：{roomCode}",
     duelOnlineAutoEnterLog: "检测到房间 {roomCode} 已开战，正在自动进入对战。",
     duelOnlinePetLockedLog: "本场联机已锁定出战灵宠：{petName}（{element}）。",
@@ -591,6 +593,10 @@ const i18n = {
     duelOnlineJoinSuccessLog: "Joined online room: {roomCode}",
     duelOnlineLeaveLog: "Left online room.",
     duelOnlineActionFailLog: "Online operation failed: {message}",
+    duelOnlineAutoJoinSwitchRoomLog:
+      "Detected stale room {fromCode}, switching to auto-join new room {toCode}",
+    duelOnlineAutoJoinStopRetryLog:
+      "Auto-join failed for room {roomCode}; stopped retrying automatically (manual join available).",
     duelOnlineResetLog: "Online battle synced. Room: {roomCode}",
     duelOnlineAutoEnterLog: "Room {roomCode} is active. Auto entering battle.",
     duelOnlinePetLockedLog: "This online match is locked to: {petName} ({element}).",
@@ -890,6 +896,7 @@ let profileUpdatePending = false;
 const ACTION_COUNTDOWN_SECONDS = 10;
 const DUEL_SYNC_POLL_INTERVAL_MS = 1200;
 const DUEL_REQUEST_RESEND_INTERVAL_MS = 30 * 1000;
+const DUEL_AUTO_JOIN_MAX_AGE_MS = 30 * 60 * 1000;
 const DUEL_REQUEST_TOAST_DURATION_MS = 4200;
 const LEVEL_UP_REQUIRED_WINS = 5;
 const IDLE_WINDOW_SCALE_STEP = 0.04;
@@ -2618,10 +2625,11 @@ function closeReleaseConfirm() {
   setReleaseConfirmVisible(false);
 }
 
-async function waitForActivePetUpdate() {
+async function waitForActivePetUpdate(options = {}) {
   if (!activePetUpdatePromise) return;
+  const timeoutMs = Math.max(300, Number(options?.timeoutMs) || 1800);
   try {
-    await activePetUpdatePromise;
+    await Promise.race([activePetUpdatePromise, sleep(timeoutMs)]);
   } catch {
     // Keep duel operations non-blocking.
   }
@@ -4178,21 +4186,56 @@ async function refreshDuelRequests(options = {}) {
 async function maybeAutoJoinMatchedRoom() {
   if (duelAutoJoinInFlight || !authSession?.currentUser) return;
   if (!onlineDuelState.available || !onlineDuelState.configured) return;
-  if (onlineDuelState.room?.id) return;
 
   const outbound = Array.isArray(duelRequests.outbound) ? duelRequests.outbound : [];
-  const matched = outbound.find(
-    (item) =>
-      item &&
-      item.status === "accepted" &&
-      typeof item.roomCode === "string" &&
-      item.roomCode.trim().length > 0 &&
-      !autoJoinHandledRequestIds.has(item.id)
-  );
+  let matched = null;
+  for (const item of outbound) {
+    if (!item || item.status !== "accepted") continue;
+    if (typeof item.roomCode !== "string" || item.roomCode.trim().length === 0) continue;
+    if (autoJoinHandledRequestIds.has(item.id)) continue;
+
+    const requestTs = parseRequestTimestamp(item);
+    const isExpired = requestTs > 0 && Date.now() - requestTs > DUEL_AUTO_JOIN_MAX_AGE_MS;
+    if (isExpired) {
+      autoJoinHandledRequestIds.add(item.id);
+      continue;
+    }
+    matched = item;
+    break;
+  }
   if (!matched) return;
 
   const roomCode = String(matched.roomCode || "").trim().toUpperCase();
   if (!roomCode) return;
+  const roomId = typeof matched.roomId === "string" ? matched.roomId.trim() : "";
+
+  const existingRoom = onlineDuelState.room?.id ? onlineDuelState.room : null;
+  if (existingRoom) {
+    const existingCode = String(existingRoom.room_code || "").trim().toUpperCase();
+    const sameRoom = Boolean(
+      (roomId && existingRoom.id === roomId) ||
+        (existingCode.length > 0 && existingCode === roomCode)
+    );
+    if (sameRoom) {
+      if (existingRoom.status === "active") {
+        maybeAutoEnterOnlineBattle({ silentLog: true });
+      }
+      return;
+    }
+    const hasActiveSeat = existingRoom.status === "waiting" || existingRoom.status === "active";
+    if (hasActiveSeat) {
+      appendLog(
+        t("duelOnlineActionFailLog", {
+          message: t("duelOnlineAutoJoinSwitchRoomLog", {
+            fromCode: existingRoom.room_code || "-",
+            toCode: roomCode
+          })
+        })
+      );
+      await leaveOnlineDuelRoom("auto_join_switch_room", { silent: true });
+      await refreshOnlineDuelStatus({ silent: true, autoJoin: false, deepSync: false });
+    }
+  }
 
   duelAutoJoinInFlight = true;
   autoJoinHandledRequestIds.add(matched.id);
@@ -4202,10 +4245,10 @@ async function maybeAutoJoinMatchedRoom() {
     }
     appendLog(t("authRequestAutoJoinLog", { roomCode }));
     const joined = await joinOnlineDuelRoomByCode(roomCode, { silent: true });
-    if (!joined) {
-      autoJoinHandledRequestIds.delete(matched.id);
-    } else {
+    if (joined) {
       appendLog(t("duelOnlineJoinSuccessLog", { roomCode }));
+    } else {
+      appendLog(t("duelOnlineAutoJoinStopRetryLog", { roomCode }));
     }
   } finally {
     duelAutoJoinInFlight = false;
@@ -4279,7 +4322,7 @@ async function respondDuelRequest(requestId, decision, peerAccount) {
   const minimumDelayMs = normalizedDecision === "accept" ? 1200 : 320;
   const startedAt = Date.now();
   try {
-    await waitForActivePetUpdate();
+    await waitForActivePetUpdate({ timeoutMs: 1800 });
     const response = await window.petApi.respondDuelRequest({
       requestId: normalizedId,
       decision: normalizedDecision
@@ -4319,6 +4362,12 @@ async function respondDuelRequest(requestId, decision, peerAccount) {
       appendLog(currentI18n().authRequestAcceptedGuideLog);
     }
     await refreshDuelRequests({ silent: true });
+  } catch (error) {
+    appendLog(
+      t("authActionFailLog", {
+        message: localizeAuthErrorMessage(error instanceof Error ? error.message : "respond request failed")
+      })
+    );
   } finally {
     const elapsed = Date.now() - startedAt;
     if (elapsed < minimumDelayMs) {
