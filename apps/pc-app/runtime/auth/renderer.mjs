@@ -1,18 +1,63 @@
 const loginForm = document.getElementById("auth-login-form");
 const registerForm = document.getElementById("auth-register-form");
 const switchAuthBtn = document.getElementById("btn-switch-auth");
+
 const loginAccountInput = document.getElementById("login-account");
 const loginPasswordInput = document.getElementById("login-password");
-const registerAccountInput = document.getElementById("register-account");
+const loginRememberInput = document.getElementById("login-remember");
+
 const registerUsernameInput = document.getElementById("register-username");
+const registerAccountInput = document.getElementById("register-account");
 const registerPasswordInput = document.getElementById("register-password");
 const registerConfirmInput = document.getElementById("register-confirm");
+
 const loginBtn = document.getElementById("btn-login");
 const registerBtn = document.getElementById("btn-register");
 const statusElement = document.getElementById("status");
 
 let mode = "login";
 let pending = false;
+const LOGIN_REMEMBER_STORAGE_KEY = "lingjing_auth_remember_v1";
+
+function loadRememberedLogin() {
+  try {
+    const raw = localStorage.getItem(LOGIN_REMEMBER_STORAGE_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    const account = typeof parsed?.account === "string" ? parsed.account : "";
+    const password = typeof parsed?.password === "string" ? parsed.password : "";
+    if (!account || !password) return null;
+    return {
+      account,
+      password,
+      remember: true
+    };
+  } catch {
+    return null;
+  }
+}
+
+function saveRememberedLogin(account, password) {
+  try {
+    localStorage.setItem(
+      LOGIN_REMEMBER_STORAGE_KEY,
+      JSON.stringify({
+        account: String(account || ""),
+        password: String(password || "")
+      })
+    );
+  } catch {
+    // Best effort persistence.
+  }
+}
+
+function clearRememberedLogin() {
+  try {
+    localStorage.removeItem(LOGIN_REMEMBER_STORAGE_KEY);
+  } catch {
+    // Best effort clear.
+  }
+}
 
 function localizeAuthErrorMessage(message) {
   const raw = typeof message === "string" ? message.trim() : String(message ?? "");
@@ -46,23 +91,27 @@ function setStatus(text, type = "normal") {
 
 function setPending(nextPending) {
   pending = Boolean(nextPending);
-  loginBtn.disabled = pending;
-  registerBtn.disabled = pending;
-  switchAuthBtn.disabled = pending;
+  if (loginBtn) loginBtn.disabled = pending;
+  if (registerBtn) registerBtn.disabled = pending;
+  if (switchAuthBtn) switchAuthBtn.disabled = pending;
+  if (loginRememberInput) loginRememberInput.disabled = pending;
 }
 
 function setMode(nextMode) {
   mode = nextMode === "register" ? "register" : "login";
   const isLogin = mode === "login";
-  loginForm.classList.toggle("hidden", !isLogin);
-  registerForm.classList.toggle("hidden", isLogin);
-  switchAuthBtn.textContent = isLogin ? "没有账号？去注册" : "已有账号？去登录";
-  setStatus(isLogin ? "请先登录" : "请填写注册信息");
+  loginForm?.classList.toggle("hidden", !isLogin);
+  registerForm?.classList.toggle("hidden", isLogin);
+  if (switchAuthBtn) {
+    switchAuthBtn.textContent = isLogin ? "没有账号？去注册" : "已有账号？去登录";
+  }
+  setStatus(isLogin ? "请先登录" : "注册即可");
 }
 
 async function loginAndEnter() {
-  const account = loginAccountInput.value.trim();
-  const password = loginPasswordInput.value.trim();
+  const account = loginAccountInput?.value?.trim() || "";
+  const password = loginPasswordInput?.value?.trim() || "";
+  const remember = Boolean(loginRememberInput?.checked);
   if (!account || !password) {
     setStatus("请填写账号和密码。", "error");
     return;
@@ -80,6 +129,11 @@ async function loginAndEnter() {
       `登录成功，欢迎 ${result.currentUser?.username || result.currentUser?.account || account}。`,
       "success"
     );
+    if (remember) {
+      saveRememberedLogin(account, password);
+    } else {
+      clearRememberedLogin();
+    }
     window.close();
   } catch (error) {
     setStatus(
@@ -92,11 +146,12 @@ async function loginAndEnter() {
 }
 
 async function registerAndEnter() {
-  const account = registerAccountInput.value.trim();
-  const username = registerUsernameInput.value.trim();
-  const password = registerPasswordInput.value.trim();
-  const confirm = registerConfirmInput.value.trim();
-  if (!account || !username || !password || !confirm) {
+  const username = registerUsernameInput?.value?.trim() || "";
+  const account = registerAccountInput?.value?.trim() || "";
+  const password = registerPasswordInput?.value?.trim() || "";
+  const confirm = registerConfirmInput?.value?.trim() || "";
+
+  if (!username || !account || !password || !confirm) {
     setStatus("请填写完整注册信息。", "error");
     return;
   }
@@ -129,17 +184,17 @@ async function registerAndEnter() {
 }
 
 function bindEvents() {
-  switchAuthBtn.addEventListener("click", () => {
+  switchAuthBtn?.addEventListener("click", () => {
     if (pending) return;
     setMode(mode === "login" ? "register" : "login");
   });
 
-  loginForm.addEventListener("submit", (event) => {
+  loginForm?.addEventListener("submit", (event) => {
     event.preventDefault();
     void loginAndEnter();
   });
 
-  registerForm.addEventListener("submit", (event) => {
+  registerForm?.addEventListener("submit", (event) => {
     event.preventDefault();
     void registerAndEnter();
   });
@@ -160,9 +215,16 @@ async function bootstrap() {
       return;
     }
   } catch {
-    // ignore and stay on auth view
+    // Ignore and stay on auth page.
   }
+
   bindEvents();
+  const remembered = loadRememberedLogin();
+  if (remembered) {
+    if (loginAccountInput) loginAccountInput.value = remembered.account;
+    if (loginPasswordInput) loginPasswordInput.value = remembered.password;
+    if (loginRememberInput) loginRememberInput.checked = true;
+  }
   setMode("login");
 }
 

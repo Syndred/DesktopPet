@@ -90,17 +90,7 @@ body {
 }
 
 .idle-bounds-guide {
-  position: absolute;
-  inset: 6px;
-  border: 1px dashed rgba(160, 210, 245, 0.52);
-  border-radius: 10px;
-  background: rgba(108, 171, 214, 0.03);
-  pointer-events: none;
-  opacity: 0;
-}
-
-#battle-scene:not(.battle-mode):not(.panel-open) .idle-bounds-guide {
-  opacity: 1;
+  display: none;
 }
 
 .round-badge {
@@ -195,6 +185,10 @@ body {
   font-size: 12px;
   line-height: 1.35;
   letter-spacing: 0.1px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   box-shadow: 0 10px 22px rgba(0, 0, 0, 0.35);
   opacity: 0;
   transform: translateY(8px);
@@ -206,6 +200,92 @@ body {
 .duel-request-toast.show {
   opacity: 1;
   transform: translateY(0);
+}
+
+.battle-exit-door {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 34px;
+  height: 34px;
+  border: 1px solid rgba(152, 210, 246, 0.5);
+  border-radius: 10px;
+  background: rgba(9, 21, 35, 0.85);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.32);
+  padding: 0;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  pointer-events: auto;
+  z-index: 18;
+}
+
+.battle-exit-door:hover {
+  border-color: rgba(196, 235, 255, 0.88);
+}
+
+.battle-exit-door-icon {
+  width: 14px;
+  height: 16px;
+  border: 2px solid rgba(226, 247, 255, 0.92);
+  border-radius: 2px;
+  position: relative;
+}
+
+.battle-exit-door-icon::after {
+  content: "";
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: rgba(226, 247, 255, 0.95);
+  right: 2px;
+  top: 6px;
+}
+
+.battle-exit-confirm {
+  position: absolute;
+  top: 54px;
+  right: 14px;
+  width: min(240px, calc(100vw - 28px));
+  border: 1px solid rgba(160, 219, 255, 0.45);
+  border-radius: 11px;
+  background: rgba(8, 20, 33, 0.95);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.38);
+  padding: 9px;
+  display: grid;
+  gap: 8px;
+  pointer-events: auto;
+  z-index: 18;
+}
+
+.battle-exit-confirm-text {
+  font-size: 12px;
+  color: #e4f5ff;
+  line-height: 1.35;
+}
+
+.battle-exit-confirm-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 7px;
+}
+
+.battle-exit-confirm-actions button {
+  border-radius: 8px;
+  font-size: 11px;
+  line-height: 1;
+  padding: 7px 8px;
+  border: 1px solid rgba(150, 210, 246, 0.42);
+  background: rgba(16, 35, 53, 0.82);
+  color: #dff4ff;
+  cursor: pointer;
+}
+
+.battle-exit-confirm-actions #btn-battle-exit-confirm {
+  border-color: rgba(255, 183, 162, 0.55);
+  background: rgba(74, 33, 27, 0.88);
+  color: #ffd9d0;
 }
 
 #battle-scene:not(.battle-mode) #battle-round,
@@ -885,10 +965,16 @@ body {
 
 .panel-header {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   gap: 8px;
   -webkit-app-region: drag;
+}
+
+.panel-header-brand {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
 }
 
 .panel-header-actions {
@@ -902,6 +988,13 @@ body {
 #app-title {
   margin: 0 0 4px;
   font-size: 16px;
+}
+
+.app-slogan {
+  margin: 0;
+  font-size: 11px;
+  color: #a5c9de;
+  letter-spacing: 0.02em;
 }
 
 .lang-toggle {
@@ -1021,17 +1114,20 @@ body {
 }
 
 .panel-section-toggle {
-  width: 22px;
-  height: 22px;
+  width: 24px;
+  height: 24px;
   border: 1px solid rgba(146, 215, 255, 0.45);
   border-radius: 999px;
   background: rgba(13, 30, 49, 0.9);
   color: #dff4ff;
-  font-size: 13px;
+  font-size: 11px;
+  font-weight: 700;
   line-height: 1;
+  padding: 0;
   display: grid;
   place-items: center;
   cursor: pointer;
+  text-align: center;
 }
 
 .panel-section-toggle:hover {
@@ -1095,6 +1191,93 @@ body {
   color: var(--accent-2);
 }
 
+.release-confirm-modal {
+  position: absolute;
+  left: 6px;
+  top: 6px;
+  padding: 0;
+  background: transparent;
+  z-index: 90;
+  pointer-events: none;
+}
+
+.release-confirm-card {
+  width: min(300px, calc(100vw - 28px));
+  max-height: min(240px, calc(100vh - 36px));
+  overflow: auto;
+  border: 1px solid rgba(240, 180, 125, 0.45);
+  border-radius: 12px;
+  background: rgba(28, 16, 12, 0.94);
+  box-shadow: inset 0 0 0 1px rgba(255, 214, 179, 0.08);
+  padding: 10px 10px 8px;
+  display: grid;
+  gap: 8px;
+  pointer-events: auto;
+}
+
+.release-confirm-card h2 {
+  margin: 0;
+  font-size: 13px;
+  color: #ffdcbf;
+}
+
+.release-confirm-message {
+  margin: 0;
+  font-size: 12px;
+  color: #ffe8d3;
+  line-height: 1.35;
+}
+
+.release-confirm-meta {
+  border: 1px solid rgba(255, 206, 169, 0.24);
+  border-radius: 9px;
+  background: rgba(17, 10, 7, 0.62);
+  padding: 7px 8px;
+  display: grid;
+  gap: 5px;
+}
+
+.release-confirm-meta-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 11px;
+  color: #f9c89e;
+}
+
+.release-confirm-meta-item b {
+  color: #ffe9d3;
+  font-weight: 600;
+  word-break: break-all;
+  text-align: right;
+}
+
+.release-confirm-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.release-confirm-actions button {
+  border-radius: 9px;
+  font-size: 11px;
+  line-height: 1;
+  padding: 7px 10px;
+}
+
+#btn-release-confirm-cancel {
+  border: 1px solid rgba(152, 205, 235, 0.44);
+  background: rgba(16, 34, 52, 0.84);
+  color: #d8f1ff;
+}
+
+#btn-release-confirm-ok {
+  border: 1px solid rgba(255, 179, 160, 0.55);
+  background: rgba(72, 32, 26, 0.84);
+  color: #ffd9d0;
+}
+
 .field {
   display: flex;
   flex: 1;
@@ -1146,11 +1329,10 @@ body {
   align-content: flex-start;
   gap: 12px 10px;
   height: auto;
-  overflow-y: hidden;
-  overflow-x: hidden;
+  overflow: visible;
   width: 100%;
   min-width: 0;
-  padding: 8px 4px 4px;
+  padding: 8px 4px 10px;
 }
 
 .pet-avatar-entry {
@@ -1573,6 +1755,22 @@ body {
   color: #cfeafd;
 }
 
+.duel-request-toggle {
+  border: 1px dashed rgba(160, 219, 255, 0.42);
+  border-radius: 8px;
+  background: rgba(14, 32, 50, 0.56);
+  color: #cfeaff;
+  font-size: 10px;
+  line-height: 1;
+  padding: 6px 8px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.duel-request-toggle:hover {
+  border-color: rgba(160, 219, 255, 0.8);
+}
+
 .duel-request-item.pending {
   border-color: rgba(123, 214, 255, 0.48);
 }
@@ -1584,6 +1782,50 @@ body {
 .duel-request-item.rejected,
 .duel-request-item.cancelled {
   border-color: rgba(255, 166, 166, 0.5);
+}
+
+.duel-request-item.highlight {
+  border-color: rgba(255, 228, 152, 0.9);
+  box-shadow: 0 0 0 1px rgba(255, 228, 152, 0.44), 0 0 16px rgba(255, 220, 136, 0.28);
+}
+
+.duel-advanced-block {
+  display: grid;
+  gap: 6px;
+  margin: 2px 0 8px;
+}
+
+.duel-advanced-toggle {
+  border: 1px dashed rgba(152, 209, 241, 0.42);
+  border-radius: 9px;
+  background: rgba(12, 30, 46, 0.64);
+  color: #d7eeff;
+  padding: 6px 8px;
+  font-size: 11px;
+  line-height: 1.2;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.duel-advanced-toggle:hover {
+  border-color: rgba(152, 209, 241, 0.76);
+}
+
+.duel-advanced-toggle-icon {
+  width: 10px;
+  display: grid;
+  place-items: center;
+  flex: 0 0 10px;
+}
+
+.duel-advanced-content {
+  border-left: 1px dashed rgba(152, 209, 241, 0.32);
+  padding: 0 0 0 10px;
+  display: grid;
+  gap: 0;
 }
 
 .duel-request-actions {
@@ -1598,6 +1840,11 @@ body {
   line-height: 1;
   padding: 5px 10px;
   cursor: pointer;
+}
+
+.duel-request-btn:disabled {
+  opacity: 0.62;
+  cursor: not-allowed;
 }
 
 .duel-request-btn.accept {
@@ -2001,6 +2248,28 @@ body {
   border-radius: 8px;
   background: rgba(3, 9, 17, 0.45);
   padding: 8px;
+}
+
+.log-toolbar {
+  margin-top: 4px;
+  margin-bottom: 6px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+#btn-export-online-log {
+  border: 1px solid rgba(140, 206, 245, 0.5);
+  border-radius: 8px;
+  background: rgba(13, 31, 49, 0.82);
+  color: #dcf1ff;
+  font-size: 11px;
+  line-height: 1;
+  padding: 7px 10px;
+  cursor: pointer;
+}
+
+#btn-export-online-log:hover {
+  border-color: rgba(191, 232, 255, 0.82);
 }
 
 #panel,

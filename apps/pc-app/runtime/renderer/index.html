@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>QingPet Lord 3D Desktop</title>
+    <title>灵境 桌宠运行时</title>
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
@@ -116,6 +116,23 @@
           </article>
 
           <div id="battle-fx" class="battle-fx"></div>
+          <button
+            id="btn-battle-exit-door"
+            class="battle-exit-door no-drag hidden"
+            type="button"
+            aria-label="离开战斗"
+            title="离开战斗"
+          >
+            <span class="battle-exit-door-icon" aria-hidden="true"></span>
+          </button>
+
+          <div id="battle-exit-confirm" class="battle-exit-confirm no-drag hidden">
+            <div id="battle-exit-confirm-text" class="battle-exit-confirm-text">确认离开战斗？</div>
+            <div class="battle-exit-confirm-actions">
+              <button id="btn-battle-exit-cancel" type="button">取消</button>
+              <button id="btn-battle-exit-confirm" type="button">确认离开</button>
+            </div>
+          </div>
 
           <div id="battle-action-tags" class="battle-action-tags no-drag hidden">
             <button class="battle-tag" data-action="normal_attack" id="tag-action-normal">
@@ -153,7 +170,10 @@
 
       <section id="panel" class="no-drag hidden">
         <div class="panel-header">
-          <h1 id="app-title">QingPet Lord 3D</h1>
+          <div class="panel-header-brand">
+            <h1 id="app-title">灵境</h1>
+            <p id="app-slogan" class="app-slogan">拾一缕灵息，守一方小境</p>
+          </div>
           <div class="panel-header-actions">
             <button id="btn-language" class="lang-toggle">EN</button>
             <div class="user-menu-wrap">
@@ -215,6 +235,27 @@
           </article>
         </div>
 
+        <div id="release-confirm-modal" class="release-confirm-modal hidden">
+          <article class="release-confirm-card">
+            <h2 id="release-confirm-title">确认放逐</h2>
+            <p id="release-confirm-message" class="release-confirm-message">确认放逐该灵宠？</p>
+            <div class="release-confirm-meta">
+              <div class="release-confirm-meta-item">
+                <span id="release-confirm-serial-label">编号</span>
+                <b id="release-confirm-serial-value">-</b>
+              </div>
+              <div class="release-confirm-meta-item">
+                <span id="release-confirm-captured-label">收留时间</span>
+                <b id="release-confirm-captured-value">-</b>
+              </div>
+            </div>
+            <div class="release-confirm-actions">
+              <button id="btn-release-confirm-cancel" type="button">取消</button>
+              <button id="btn-release-confirm-ok" type="button">确认放逐</button>
+            </div>
+          </article>
+        </div>
+
         <div class="panel-section">
           <h2 id="duel-title">对战申请</h2>
           <p id="auth-status" class="inventory-tip">已登录</p>
@@ -229,21 +270,35 @@
           </div>
           <div id="duel-search-results" class="duel-search-results"></div>
           <div id="duel-request-list" class="duel-request-list"></div>
-          <div class="field-row single">
-            <div class="field">
-              <label id="duel-online-room-label" for="duel-online-room-code">联机房间号</label>
-              <input id="duel-online-room-code" type="text" autocomplete="off" />
+          <div class="duel-advanced-block">
+            <button
+              id="btn-duel-advanced-toggle"
+              class="duel-advanced-toggle"
+              type="button"
+              aria-expanded="false"
+              aria-controls="duel-advanced-content"
+            >
+              <span id="duel-advanced-toggle-icon" class="duel-advanced-toggle-icon">▸</span>
+              <span id="duel-advanced-title">高级选项：手动房间控制</span>
+            </button>
+            <div id="duel-advanced-content" class="duel-advanced-content hidden">
+              <div class="field-row single">
+                <div class="field">
+                  <label id="duel-online-room-label" for="duel-online-room-code">联机房间号</label>
+                  <input id="duel-online-room-code" type="text" autocomplete="off" />
+                </div>
+              </div>
+              <div class="row">
+                <button id="btn-duel-online-create">创建联机房</button>
+                <button id="btn-duel-online-join">加入房间</button>
+                <button id="btn-duel-online-leave">离开房间</button>
+              </div>
             </div>
-          </div>
-          <div class="row">
-            <button id="btn-duel-online-create">创建联机房</button>
-            <button id="btn-duel-online-join">加入房间</button>
-            <button id="btn-duel-online-leave">离开房间</button>
           </div>
           <p id="duel-online-status" class="inventory-tip">联机状态：未连接</p>
         </div>
 
-        <div class="panel-section">
+        <div class="legacy-battle-control hidden" aria-hidden="true">
           <h2 id="battle-title">Battle Control</h2>
           <div class="row">
             <button id="btn-battle-reset">Reset Battle</button>
@@ -252,16 +307,14 @@
         </div>
 
         <div class="panel-section">
-          <h2 id="inventory-title">Pet Inventory</h2>
+          <h2 id="inventory-title">灵宠仓库</h2>
           <p id="inventory-tip" class="inventory-tip">
-            Right-click pet on desktop to open panel; click any pet card to set as active.
+            桌面右键灵宠打开面板，点击头像可查看详情并快捷出战。
           </p>
           <div id="pet-inventory-layout" class="pet-inventory-layout">
             <div id="pet-inventory-list" class="pet-inventory-list"></div>
             <article id="pet-detail-popover" class="pet-detail-popover hidden"></article>
-            <div id="pet-detail-placeholder" class="pet-detail-placeholder hidden">
-              Select an avatar to view details.
-            </div>
+            <div id="pet-detail-placeholder" class="pet-detail-placeholder hidden">选择一个头像查看详情。</div>
             <article id="pet-detail" class="pet-detail-card hidden" aria-hidden="true"></article>
           </div>
         </div>
@@ -343,7 +396,7 @@
         </div>
 
         <div class="panel-section">
-          <h2 id="companion-title">Companion Interaction</h2>
+          <h2 id="companion-title">陪伴交互（待开发）</h2>
           <div class="row">
             <button id="btn-capture">Capture Test</button>
             <button id="btn-occupy">Territory Test</button>
@@ -355,6 +408,9 @@
 
         <div class="row note-row">
           <small id="tip-text">Tip: desktop shows your pet by default. Start battle to spawn enemy.</small>
+        </div>
+        <div class="log-toolbar">
+          <button id="btn-export-online-log" type="button">导出联机会话日志</button>
         </div>
         <pre id="log"></pre>
       </section>

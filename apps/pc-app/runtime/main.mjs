@@ -77,7 +77,7 @@ function createTray() {
     "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAAAXUlEQVR4AWP4//8/AzWAhYGBgYHhfwYGBjA8MDAw/3+MDAwM/38GqIFkYGBg+P/PMDAwMPx/GKgBk4GBgWH4fzQwMDD8fxioAZOBgYFh+H80MDAw/H8YqAFQYwABANQRCajbDiqQAAAAAElFTkSuQmCC"
   );
   tray = new Tray(icon);
-  tray.setToolTip("轻宠·领主 3D 桌宠");
+  tray.setToolTip("灵境 桌宠");
   tray.on("double-click", toggleWindowVisibility);
   refreshTrayMenu();
 }

@@ -49,6 +49,12 @@ set "PET_RUNTIME_DATA_FILE=%BASE_PROFILE_DIR%\shared\pet-runtime-data.json"
 if not exist "%PET_USER_DATA_DIR%" (
   mkdir "%PET_USER_DATA_DIR%" >nul 2>nul
 )
+set "PET_SESSION_DATA_FILE=%PET_USER_DATA_DIR%\pet-auth-session.json"
+if /I not "%PET_KEEP_AUTH_SESSION%"=="1" (
+  if exist "%PET_SESSION_DATA_FILE%" (
+    del /f /q "%PET_SESSION_DATA_FILE%" >nul 2>nul
+  )
+)
 for %%I in ("%PET_RUNTIME_DATA_FILE%") do set "PET_RUNTIME_DATA_DIR=%%~dpI"
 if not exist "%PET_RUNTIME_DATA_DIR%" (
   mkdir "%PET_RUNTIME_DATA_DIR%" >nul 2>nul
@@ -58,6 +64,10 @@ echo [INFO] Profile=%PROFILE%
 echo [INFO] SUPABASE_URL=%SUPABASE_URL%
 echo [INFO] PET_USER_DATA_DIR=%PET_USER_DATA_DIR%
 echo [INFO] PET_RUNTIME_DATA_FILE=%PET_RUNTIME_DATA_FILE%
+echo [INFO] PET_SESSION_DATA_FILE=%PET_SESSION_DATA_FILE%
+if /I not "%PET_KEEP_AUTH_SESSION%"=="1" (
+  echo [INFO] Auto-clear auth session enabled. Set PET_KEEP_AUTH_SESSION=1 to keep login state.
+)
 
 cd /d "%ROOT_DIR%"
 call npm run dev:pc

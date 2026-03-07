@@ -165,10 +165,67 @@ class RuntimeDataStore {
     return this.state;
   }
 
+  ensureSessionInventory(options = {}) {
+    const userId = normalizeCurrentUserId(this.sessionUserId, this.state.users);
+    if (!userId) {
+      return null;
+    }
+
+    if (!this.state.userInventories || typeof this.state.userInventories !== "object") {
+      this.state.userInventories = {};
+    }
+
+    const shouldSeedFromLegacy = Boolean(options.seedFromLegacy);
+    let inventory = this.state.userInventories[userId];
+    if (!inventory) {
+      const seed = shouldSeedFromLegacy
+        ? {
+            pets: normalizePetList(this.state.pets),
+            activePetId: this.state.activePetId,
+            battleReports: normalizeBattleReports(this.state.battleReports),
+            captureRecords: normalizeCaptureRecords(this.state.captureRecords)
+          }
+        : createDefaultInventoryState();
+      inventory = normalizeInventoryState(seed);
+      this.state.userInventories[userId] = inventory;
+    } else {
+      inventory = normalizeInventoryState(inventory);
+      this.state.userInventories[userId] = inventory;
+    }
+
+    this.syncLegacyInventoryMirror(inventory);
+    return inventory;
+  }
+
+  getSessionInventory(options = {}) {
+    const userId = normalizeCurrentUserId(this.sessionUserId, this.state.users);
+    if (!userId) {
+      const fallback = normalizeInventoryState({
+        pets: this.state.pets,
+        activePetId: this.state.activePetId,
+        battleReports: this.state.battleReports,
+        captureRecords: this.state.captureRecords
+      });
+      this.syncLegacyInventoryMirror(fallback);
+      return fallback;
+    }
+    return this.ensureSessionInventory(options) || createDefaultInventoryState();
+  }
+
+  syncLegacyInventoryMirror(inventory) {
+    if (!inventory || typeof inventory !== "object") return;
+    this.state.pets = inventory.pets.map(clonePet);
+    this.state.activePetId = inventory.activePetId;
+    this.state.battleReports = inventory.battleReports.map(cloneBattleReport);
+    this.state.captureRecords = inventory.captureRecords.map(cloneCaptureRecord);
+  }
+
   getInventorySnapshot() {
-    const pets = this.state.pets.map(clonePet);
-    const activePetId = pets.some((pet) => pet.id === this.state.activePetId)
-      ? this.state.activePetId
+    this.refreshStateFromDisk();
+    const inventory = this.getSessionInventory({ createIfMissing: true });
+    const pets = inventory.pets.map(clonePet);
+    const activePetId = pets.some((pet) => pet.id === inventory.activePetId)
+      ? inventory.activePetId
       : pets[0]?.id ?? null;
     return {
       pets,
@@ -178,67 +235,80 @@ class RuntimeDataStore {
   }
 
   setActivePet(petId) {
+    this.refreshStateFromDisk();
     if (typeof petId !== "string" || petId.trim().length === 0) {
       throw new Error("invalid pet id");
     }
     const normalizedPetId = petId.trim();
-    const exists = this.state.pets.some((pet) => pet.id === normalizedPetId);
+    const inventory = this.getSessionInventory({ createIfMissing: true });
+    const exists = inventory.pets.some((pet) => pet.id === normalizedPetId);
     if (!exists) {
       throw new Error("pet id not found");
     }
-    this.state.activePetId = normalizedPetId;
+    inventory.activePetId = normalizedPetId;
+    this.syncLegacyInventoryMirror(inventory);
     this.state.updatedAt = new Date().toISOString();
     this.persistState();
     return this.getInventorySnapshot();
   }
 
   releasePet(petId) {
+    this.refreshStateFromDisk();
     if (typeof petId !== "string" || petId.trim().length === 0) {
       throw new Error("invalid pet id");
     }
+    const inventory = this.getSessionInventory({ createIfMissing: true });
     const targetPetId = petId.trim();
-    if (this.state.pets.length <= 1) {
+    if (inventory.pets.length <= 1) {
       throw new Error("at least one pet must remain");
     }
 
-    const beforeLength = this.state.pets.length;
-    this.state.pets = this.state.pets.filter((pet) => pet.id !== targetPetId);
-    if (this.state.pets.length === beforeLength) {
+    const beforeLength = inventory.pets.length;
+    inventory.pets = inventory.pets.filter((pet) => pet.id !== targetPetId);
+    if (inventory.pets.length === beforeLength) {
       throw new Error("pet id not found");
     }
 
-    this.state.captureRecords = this.state.captureRecords.filter((record) => record.petId !== targetPetId);
-    if (!this.state.pets.some((pet) => pet.id === this.state.activePetId)) {
-      this.state.activePetId = this.state.pets[0].id;
+    inventory.captureRecords = inventory.captureRecords.filter((record) => record.petId !== targetPetId);
+    if (!inventory.pets.some((pet) => pet.id === inventory.activePetId)) {
+      inventory.activePetId = inventory.pets[0].id;
     }
+    this.syncLegacyInventoryMirror(inventory);
     this.state.updatedAt = new Date().toISOString();
     this.persistState();
     return this.getInventorySnapshot();
   }
 
   listBattleReports(limit = DEFAULT_REPORT_LIMIT) {
+    this.refreshStateFromDisk();
     const safeLimit = Math.max(1, Math.min(100, Number(limit) || DEFAULT_REPORT_LIMIT));
-    return this.state.battleReports.slice(0, safeLimit).map(cloneBattleReport);
+    const inventory = this.getSessionInventory({ createIfMissing: true });
+    return inventory.battleReports.slice(0, safeLimit).map(cloneBattleReport);
   }
 
   saveBattleReport(input) {
+    this.refreshStateFromDisk();
+    const inventory = this.getSessionInventory({ createIfMissing: true });
     const report = normalizeBattleReport(input);
-    const next = [report, ...this.state.battleReports.filter((item) => item.id !== report.id)];
-    this.state.battleReports = next.slice(0, MAX_BATTLE_REPORTS);
+    const next = [report, ...inventory.battleReports.filter((item) => item.id !== report.id)];
+    inventory.battleReports = next.slice(0, MAX_BATTLE_REPORTS);
+    this.syncLegacyInventoryMirror(inventory);
     this.state.updatedAt = new Date().toISOString();
     this.persistState();
     return cloneBattleReport(report);
   }
 
   captureWildPet(input) {
+    this.refreshStateFromDisk();
+    const inventory = this.getSessionInventory({ createIfMissing: true });
     const captureInput = normalizeCaptureInput(input);
-    const existingRecord = this.state.captureRecords.find(
+    const existingRecord = inventory.captureRecords.find(
       (item) => item.wildSerial === captureInput.wildSerial
     );
     if (existingRecord) {
-      const existingPet = this.state.pets.find((pet) => pet.id === existingRecord.petId) || null;
+      const existingPet = inventory.pets.find((pet) => pet.id === existingRecord.petId) || null;
       if (!existingPet) {
-        this.state.captureRecords = this.state.captureRecords.filter(
+        inventory.captureRecords = inventory.captureRecords.filter(
           (record) => record.id !== existingRecord.id
         );
       } else {
@@ -250,7 +320,7 @@ class RuntimeDataStore {
       }
     }
 
-    const nextPet = createCapturedPet(captureInput, this.state.pets.length + 1);
+    const nextPet = createCapturedPet(captureInput, inventory.pets.length + 1);
     const record = {
       id: `capture-${randomUUID()}`,
       wildPetId: captureInput.wildPetId,
@@ -261,8 +331,9 @@ class RuntimeDataStore {
       capturedAt: captureInput.capturedAt
     };
 
-    this.state.pets.push(nextPet);
-    this.state.captureRecords = [record, ...this.state.captureRecords].slice(0, 500);
+    inventory.pets.push(nextPet);
+    inventory.captureRecords = [record, ...inventory.captureRecords].slice(0, 500);
+    this.syncLegacyInventoryMirror(inventory);
     this.state.updatedAt = new Date().toISOString();
     this.persistState();
     return {
@@ -273,11 +344,13 @@ class RuntimeDataStore {
   }
 
   recordBattleWin(petId) {
+    this.refreshStateFromDisk();
+    const inventory = this.getSessionInventory({ createIfMissing: true });
     if (typeof petId !== "string" || petId.trim().length === 0) {
       return { ok: false, error: "invalid pet id" };
     }
     const targetId = petId.trim();
-    const pet = this.state.pets.find((item) => item.id === targetId);
+    const pet = inventory.pets.find((item) => item.id === targetId);
     if (!pet) {
       return { ok: false, error: "pet not found" };
     }
@@ -299,6 +372,7 @@ class RuntimeDataStore {
     pet.level = nextLevel;
     pet.experience = nextExp;
     pet.winsTotal = nextWinsTotal;
+    this.syncLegacyInventoryMirror(inventory);
     this.state.updatedAt = new Date().toISOString();
     this.persistState();
     return {
@@ -350,6 +424,7 @@ class RuntimeDataStore {
     this.state.users = [user, ...this.state.users].slice(0, 5000);
     this.sessionUserId = user.id;
     this.state.currentUserId = this.sessionUserId;
+    this.ensureSessionInventory({ seedFromLegacy: false });
     this.state.updatedAt = now;
     this.persistState();
     return {
@@ -383,6 +458,7 @@ class RuntimeDataStore {
     user.updatedAt = user.lastLoginAt;
     this.sessionUserId = user.id;
     this.state.currentUserId = this.sessionUserId;
+    this.ensureSessionInventory({ seedFromLegacy: true });
     this.state.updatedAt = user.updatedAt;
     this.persistState();
     return {
@@ -818,6 +894,7 @@ function createDefaultState() {
     activePetId: DEFAULT_ACTIVE_PET_ID,
     battleReports: [],
     captureRecords: [],
+    userInventories: {},
     users: [],
     currentUserId: null,
     duelRequests: [],
@@ -826,21 +903,72 @@ function createDefaultState() {
   };
 }
 
-function normalizeRuntimeState(input) {
-  const base = createDefaultState();
+function createDefaultInventoryState() {
+  return {
+    pets: DEFAULT_PET_ROSTER.map(clonePet),
+    activePetId: DEFAULT_ACTIVE_PET_ID,
+    battleReports: [],
+    captureRecords: []
+  };
+}
+
+function normalizeInventoryState(input) {
+  const fallback = createDefaultInventoryState();
   const pets = normalizePetList(input?.pets);
   const activePetId = pets.some((pet) => pet.id === input?.activePetId)
     ? input.activePetId
     : pets[0]?.id ?? DEFAULT_ACTIVE_PET_ID;
-  const battleReports = normalizeBattleReports(input?.battleReports);
-  const users = normalizeUsers(input?.users);
-  const currentUserId = normalizeCurrentUserId(input?.currentUserId, users);
   return {
-    version: DEFAULT_STATE_VERSION,
     pets,
     activePetId,
-    battleReports,
-    captureRecords: normalizeCaptureRecords(input?.captureRecords),
+    battleReports: normalizeBattleReports(input?.battleReports),
+    captureRecords: normalizeCaptureRecords(input?.captureRecords).filter((record) =>
+      pets.some((pet) => pet.id === record.petId)
+    )
+  };
+}
+
+function normalizeUserInventories(input, users, legacyInventory) {
+  const output = {};
+  const userIds = users.map((item) => item.id);
+  const userIdSet = new Set(userIds);
+  const source = input && typeof input === "object" ? input : {};
+  for (const [userId, candidate] of Object.entries(source)) {
+    if (!userIdSet.has(userId)) continue;
+    output[userId] = normalizeInventoryState(candidate);
+  }
+  for (const userId of userIds) {
+    if (output[userId]) continue;
+    if (legacyInventory) {
+      output[userId] = normalizeInventoryState(legacyInventory);
+    } else {
+      output[userId] = createDefaultInventoryState();
+    }
+  }
+  return output;
+}
+
+function normalizeRuntimeState(input) {
+  const base = createDefaultState();
+  const users = normalizeUsers(input?.users);
+  const currentUserId = normalizeCurrentUserId(input?.currentUserId, users);
+  const legacyInventory = normalizeInventoryState({
+    pets: input?.pets,
+    activePetId: input?.activePetId,
+    battleReports: input?.battleReports,
+    captureRecords: input?.captureRecords
+  });
+  const userInventories = normalizeUserInventories(input?.userInventories, users, legacyInventory);
+  const currentInventory = currentUserId
+    ? userInventories[currentUserId] || createDefaultInventoryState()
+    : legacyInventory;
+  return {
+    version: DEFAULT_STATE_VERSION,
+    pets: currentInventory.pets.map(clonePet),
+    activePetId: currentInventory.activePetId,
+    battleReports: currentInventory.battleReports.map(cloneBattleReport),
+    captureRecords: currentInventory.captureRecords.map(cloneCaptureRecord),
+    userInventories,
     users,
     currentUserId,
     duelRequests: normalizeDuelRequests(input?.duelRequests, users),
@@ -1420,6 +1548,18 @@ function cloneBattleReport(report) {
       damageTaken: { ...round.damageTaken },
       notes: [...round.notes]
     }))
+  };
+}
+
+function cloneCaptureRecord(record) {
+  return {
+    id: record.id,
+    wildPetId: record.wildPetId,
+    wildSerial: record.wildSerial,
+    petId: record.petId,
+    rarity: record.rarity,
+    element: record.element,
+    capturedAt: record.capturedAt
   };
 }
 
