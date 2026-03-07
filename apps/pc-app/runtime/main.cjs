@@ -1,4 +1,4 @@
-﻿const { readFileSync, writeFileSync } = require("node:fs");
+﻿const { readFileSync, writeFileSync, existsSync } = require("node:fs");
 const { join, resolve } = require("node:path");
 const { randomUUID } = require("node:crypto");
 
@@ -59,6 +59,12 @@ const AUTH_WINDOW_BOUNDS = {
   height: 520
 };
 
+const ICON_DIR = join(__dirname, "assets", "icons");
+const TRAY_ICON_PATH = join(ICON_DIR, "tray.png");
+const WINDOW_ICON_PATH = join(ICON_DIR, "app.ico");
+const FALLBACK_TRAY_ICON_DATA_URL =
+  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAAAXUlEQVR4AWP4//8/AzWAhYGBgYHhfwYGBjA8MDAw/3+MDAwM/38GqIFkYGBg+P/PMDAwMPx/GKgBk4GBgWH4fzQwMDD8fxioAZOBgYFh+H80MDAw/H8YqAFQYwABANQRCajbDiqQAAAAAElFTkSuQmCC";
+
 let currentIdleBounds = { ...IDLE_BOUNDS };
 
 const DEFAULT_BOUNDS = {
@@ -83,6 +89,43 @@ function getSessionDataFilePath() {
   return join(app.getPath("userData"), "pet-auth-session.json");
 }
 
+function isZhLocale() {
+  const locale = String(app.getLocale?.() || process.env.LANG || "")
+    .toLowerCase()
+    .replace("_", "-");
+  return locale.startsWith("zh");
+}
+
+function trayText(key) {
+  const zh = isZhLocale();
+  const table = {
+    tooltip: zh ? "\u7075\u5883 \u684c\u5ba0" : "Lingjing Desktop Pet",
+    showWindow: zh ? "\u663e\u793a\u7a97\u53e3" : "Show Window",
+    hideWindow: zh ? "\u9690\u85cf\u7a97\u53e3" : "Hide Window",
+    pauseInteraction: zh ? "\u6682\u505c\u4ea4\u4e92" : "Pause Interaction",
+    resumeInteraction: zh ? "\u6062\u590d\u4ea4\u4e92" : "Resume Interaction",
+    openPanel: zh ? "\u6253\u5f00\u9762\u677f" : "Open Panel",
+    openLogin: zh ? "\u6253\u5f00\u767b\u5f55" : "Open Login",
+    quit: zh ? "\u9000\u51fa" : "Quit"
+  };
+  return table[key] || key;
+}
+
+function getWindowIconPath() {
+  return existsSync(WINDOW_ICON_PATH) ? WINDOW_ICON_PATH : undefined;
+}
+
+function createTrayIcon() {
+  if (existsSync(TRAY_ICON_PATH)) {
+    const icon = nativeImage.createFromPath(TRAY_ICON_PATH);
+    if (!icon.isEmpty()) {
+      const targetSize = process.platform === "win32" ? { width: 16, height: 16 } : { width: 18, height: 18 };
+      return icon.resize(targetSize);
+    }
+  }
+  return nativeImage.createFromDataURL(FALLBACK_TRAY_ICON_DATA_URL);
+}
+
 function createMainWindow() {
   const restored = loadWindowBounds();
   const bounds = clampBoundsToWorkArea(restored || DEFAULT_BOUNDS);
@@ -96,6 +139,7 @@ function createMainWindow() {
     alwaysOnTop: true,
     skipTaskbar: true,
     resizable: false,
+    icon: getWindowIconPath(),
     backgroundColor: "#00000000",
     webPreferences: {
       preload: join(__dirname, "preload.cjs"),
@@ -170,6 +214,7 @@ function createAuthWindow() {
     maximizable: false,
     autoHideMenuBar: true,
     title: "灵境 - 登录",
+    icon: getWindowIconPath(),
     backgroundColor: "#0b1522",
     webPreferences: {
       preload: join(__dirname, "preload.cjs"),
@@ -242,11 +287,9 @@ function scheduleSaveWindowBounds() {
 }
 
 function createTray() {
-  const icon = nativeImage.createFromDataURL(
-    "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAAAXUlEQVR4AWP4//8/AzWAhYGBgYHhfwYGBjA8MDAw/3+MDAwM/38GqIFkYGBg+P/PMDAwMPx/GKgBk4GBgWH4fzQwMDD8fxioAZOBgYFh+H80MDAw/H8YqAFQYwABANQRCajbDiqQAAAAAElFTkSuQmCC"
-  );
+  const icon = createTrayIcon();
   tray = new Tray(icon);
-  tray.setToolTip("灵境 桌宠");
+  tray.setToolTip(trayText("tooltip"));
   tray.on("double-click", toggleWindowVisibility);
   refreshTrayMenu();
 }
@@ -259,11 +302,11 @@ function refreshTrayMenu() {
     Boolean(primaryWindow) && !primaryWindow.isDestroyed() && primaryWindow.isVisible();
   const menu = Menu.buildFromTemplate([
     {
-      label: isVisible ? "Hide" : "Show",
+      label: isVisible ? trayText("hideWindow") : trayText("showWindow"),
       click: toggleWindowVisibility
     },
     {
-      label: interactionPaused ? "Resume Interaction" : "Pause Interaction",
+      label: interactionPaused ? trayText("resumeInteraction") : trayText("pauseInteraction"),
       enabled: authenticated,
       click: () => {
         interactionPaused = !interactionPaused;
@@ -275,7 +318,7 @@ function refreshTrayMenu() {
       }
     },
     {
-      label: authenticated ? "Open Panel" : "Open Login",
+      label: authenticated ? trayText("openPanel") : trayText("openLogin"),
       click: () => {
         if (!authenticated) {
           openAuthGate();
@@ -289,7 +332,7 @@ function refreshTrayMenu() {
     },
     { type: "separator" },
     {
-      label: "Quit",
+      label: trayText("quit"),
       click: () => {
         isQuitting = true;
         app.quit();

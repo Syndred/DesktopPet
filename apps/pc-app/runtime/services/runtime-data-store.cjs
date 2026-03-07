@@ -6,12 +6,12 @@ const DEFAULT_PET_ROSTER = [
   {
     id: "pet-001",
     serial: "0019001",
-    name: { zh: "\u7130\u5c3e", en: "BlazeTail" },
-    model: "../assets/models/Fox.glb",
+    name: { zh: "柴团", en: "ShibaMochi" },
+    model: "../assets/models/ShibaInu.glb",
     element: "fire",
     stats: "HP128 / ATK32 / DEF20 / SPD18",
     capturedAt: "2026-03-01 21:10",
-    avatar: "\u7130",
+    avatar: "柴",
     level: 1,
     experience: 0,
     winsTotal: 0
@@ -19,12 +19,12 @@ const DEFAULT_PET_ROSTER = [
   {
     id: "pet-002",
     serial: "0029001",
-    name: { zh: "\u661f\u822a", en: "Astror" },
-    model: "../assets/models/Astronaut.glb",
+    name: { zh: "雪团", en: "SnowPaw" },
+    model: "../assets/models/Husky.glb",
     element: "water",
     stats: "HP122 / ATK28 / DEF24 / SPD21",
     capturedAt: "2026-03-02 09:35",
-    avatar: "\u661f",
+    avatar: "雪",
     level: 1,
     experience: 0,
     winsTotal: 0
@@ -32,12 +32,12 @@ const DEFAULT_PET_ROSTER = [
   {
     id: "pet-003",
     serial: "0039001",
-    name: { zh: "\u8349\u8e44", en: "Hoofleaf" },
-    model: "../assets/models/Horse.glb",
+    name: { zh: "奶油喵", en: "ButterCat" },
+    model: "../assets/models/CatQuaterniusA.glb",
     element: "wood",
     stats: "HP130 / ATK26 / DEF26 / SPD17",
     capturedAt: "2026-03-02 20:42",
-    avatar: "\u8349",
+    avatar: "喵",
     level: 1,
     experience: 0,
     winsTotal: 0
@@ -45,12 +45,12 @@ const DEFAULT_PET_ROSTER = [
   {
     id: "pet-004",
     serial: "0049001",
-    name: { zh: "\u9510\u94e0", en: "IronGuard" },
-    model: "../assets/models/CesiumMan.glb",
+    name: { zh: "焦糖喵", en: "CaramelCat" },
+    model: "../assets/models/CatQuaterniusB.glb",
     element: "metal",
     stats: "HP135 / ATK30 / DEF30 / SPD12",
     capturedAt: "2026-03-03 08:20",
-    avatar: "\u94e0",
+    avatar: "咪",
     level: 1,
     experience: 0,
     winsTotal: 0
@@ -58,12 +58,12 @@ const DEFAULT_PET_ROSTER = [
   {
     id: "pet-005",
     serial: "0059001",
-    name: { zh: "\u6708\u58e4", en: "MoonSoil" },
-    model: "../assets/models/NeilArmstrong.glb",
+    name: { zh: "霜牙", en: "FrostFang" },
+    model: "../assets/models/Husky.glb",
     element: "earth",
     stats: "HP142 / ATK24 / DEF34 / SPD10",
     capturedAt: "2026-03-03 18:05",
-    avatar: "\u58e4",
+    avatar: "霜",
     level: 1,
     experience: 0,
     winsTotal: 0
@@ -71,12 +71,12 @@ const DEFAULT_PET_ROSTER = [
   {
     id: "pet-006",
     serial: "0069001",
-    name: { zh: "\u5f8b\u52a8", en: "Groove" },
-    model: "../assets/models/RobotExpressive.glb",
+    name: { zh: "柴豆", en: "ShibaBean" },
+    model: "../assets/models/ShibaInu.glb",
     element: "fire",
     stats: "HP118 / ATK33 / DEF22 / SPD20",
     capturedAt: "2026-03-04 12:11",
-    avatar: "\u5f8b",
+    avatar: "豆",
     level: 1,
     experience: 0,
     winsTotal: 0
@@ -99,38 +99,38 @@ const ALLOWED_BATTLE_MODES = new Set(["duel", "capture"]);
 const ALLOWED_DUEL_REQUEST_STATUS = new Set(["pending", "accepted", "rejected", "cancelled"]);
 
 const MODEL_BY_ELEMENT = {
-  fire: "../assets/models/Fox.glb",
-  water: "../assets/models/Astronaut.glb",
-  wood: "../assets/models/Horse.glb",
-  metal: "../assets/models/CesiumMan.glb",
-  earth: "../assets/models/NeilArmstrong.glb"
+  fire: "../assets/models/ShibaInu.glb",
+  water: "../assets/models/Husky.glb",
+  wood: "../assets/models/CatQuaterniusA.glb",
+  metal: "../assets/models/CatQuaterniusB.glb",
+  earth: "../assets/models/Husky.glb"
 };
 
 const SPECIES_META_BY_ELEMENT = {
   fire: {
     code: "001",
-    name: { zh: "\u7130\u5c3e", en: "BlazeTail" },
-    avatar: "\u7130"
+    name: { zh: "柴团", en: "ShibaMochi" },
+    avatar: "柴"
   },
   water: {
     code: "002",
-    name: { zh: "\u661f\u822a", en: "Astror" },
-    avatar: "\u661f"
+    name: { zh: "雪团", en: "SnowPaw" },
+    avatar: "雪"
   },
   wood: {
     code: "003",
-    name: { zh: "\u8349\u8e44", en: "Hoofleaf" },
-    avatar: "\u8349"
+    name: { zh: "奶油喵", en: "ButterCat" },
+    avatar: "喵"
   },
   metal: {
     code: "004",
-    name: { zh: "\u9510\u94e0", en: "IronGuard" },
-    avatar: "\u94e0"
+    name: { zh: "焦糖喵", en: "CaramelCat" },
+    avatar: "咪"
   },
   earth: {
     code: "005",
-    name: { zh: "\u6708\u58e4", en: "MoonSoil" },
-    avatar: "\u58e4"
+    name: { zh: "霜牙", en: "FrostFang" },
+    avatar: "霜"
   }
 };
 
@@ -1131,6 +1131,12 @@ function normalizePetSerial(serialInput, speciesMeta, legacySerialCounters) {
   const serial =
     typeof serialInput === "string" && serialInput.trim().length > 0 ? serialInput.trim() : "";
   if (/^\d{7}$/.test(serial)) {
+    const speciesCode = serial.slice(0, 3);
+    const seq = Number(serial.slice(3));
+    const previous = Number(legacySerialCounters.get(speciesCode) || 0);
+    if (Number.isInteger(seq) && seq > previous) {
+      legacySerialCounters.set(speciesCode, seq);
+    }
     return serial;
   }
 

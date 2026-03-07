@@ -100,7 +100,7 @@
           <article id="player-card" class="battle-actor player no-drag">
             <model-viewer
               id="player-model"
-              src="../assets/models/Fox.glb"
+              src="../assets/models/ShibaInu.glb"
               disable-pan
               disable-zoom
               autoplay
@@ -113,7 +113,7 @@
           <article id="enemy-card" class="battle-actor enemy hidden no-drag">
             <model-viewer
               id="enemy-model"
-              src="../assets/models/CesiumMan.glb"
+              src="../assets/models/Husky.glb"
               disable-pan
               disable-zoom
               autoplay
@@ -179,7 +179,18 @@
       <section id="panel" class="no-drag hidden">
         <div class="panel-header">
           <div class="panel-header-brand">
-            <h1 id="app-title">灵境</h1>
+            <h1 id="app-title">
+              <span id="app-title-text">灵境</span>
+              <span
+                id="runtime"
+                class="runtime-version no-drag"
+                role="button"
+                tabindex="0"
+                title="点击查看版本更新"
+              >
+                v-
+              </span>
+            </h1>
             <p id="app-slogan" class="app-slogan">拾一缕灵息，守一方小境</p>
           </div>
           <div class="panel-header-actions">
@@ -203,7 +214,17 @@
             </div>
           </div>
         </div>
-        <p id="runtime">Loading runtime...</p>
+
+        <div id="version-history-modal" class="version-history-modal hidden">
+          <article class="version-history-card">
+            <div class="version-history-head">
+              <h2 id="version-history-title">版本更新历史</h2>
+              <button id="btn-version-history-close" type="button">关闭</button>
+            </div>
+            <p id="version-history-hint" class="inventory-tip">点击上方版本号可查看每次更新内容。</p>
+            <div id="version-history-list" class="version-history-list"></div>
+          </article>
+        </div>
 
         <div id="profile-modal" class="profile-modal hidden">
           <article class="profile-modal-card">

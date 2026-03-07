@@ -1,6 +1,7 @@
 {
   "appId": "com.lingjing.desktop",
   "productName": "Lingjing",
+  "icon": "build/icon.png",
   "directories": {
     "output": "artifacts/pc-beta"
   },
@@ -21,6 +22,7 @@
         ]
       }
     ],
+    "icon": "build/icon.png",
     "artifactName": "Lingjing-${version}-portable-${arch}.${ext}"
   }
 }

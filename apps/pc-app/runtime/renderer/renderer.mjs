@@ -1,5 +1,10 @@
 ﻿const panelElement = document.getElementById("panel");
 const runtimeElement = document.getElementById("runtime");
+const versionHistoryModalElement = document.getElementById("version-history-modal");
+const versionHistoryTitleElement = document.getElementById("version-history-title");
+const versionHistoryHintElement = document.getElementById("version-history-hint");
+const versionHistoryListElement = document.getElementById("version-history-list");
+const versionHistoryCloseBtn = document.getElementById("btn-version-history-close");
 const logElement = document.getElementById("log");
 const captureBtn = document.getElementById("btn-capture");
 const occupyBtn = document.getElementById("btn-occupy");
@@ -386,7 +391,14 @@ const i18n = {
     trayResumed: "托盘操作：已恢复交互穿透。",
     runtimeStarted: "灵境桌宠运行时已启动。",
     languageButton: "EN",
-    runtimeInfo: "灵境 v{app}",
+    runtimeVersionHint: "点击查看版本更新历史",
+    runtimeInfo: "v{app}",
+    versionHistoryTitle: "版本更新历史",
+    versionHistoryHint: "点击上方版本号可随时查看每个版本的更新内容。",
+    versionHistoryClose: "关闭",
+    versionHistoryEmpty: "暂无版本记录。",
+    versionHistoryCurrent: "当前版本",
+    versionHistoryDatePrefix: "日期",
     elementNames: {
       metal: "金",
       wood: "木",
@@ -684,7 +696,14 @@ const i18n = {
     trayResumed: "Tray action: interaction resumed.",
     runtimeStarted: "Lingjing desktop runtime started.",
     languageButton: "中文",
-    runtimeInfo: "Lingjing v{app}",
+    runtimeVersionHint: "Click to view release history",
+    runtimeInfo: "v{app}",
+    versionHistoryTitle: "Release History",
+    versionHistoryHint: "Click the version text above to view updates for each build.",
+    versionHistoryClose: "Close",
+    versionHistoryEmpty: "No release notes available.",
+    versionHistoryCurrent: "Current",
+    versionHistoryDatePrefix: "Date",
     elementNames: {
       metal: "Metal",
       wood: "Wood",
@@ -709,16 +728,83 @@ const i18n = {
   }
 };
 
+const RELEASE_HISTORY = [
+  {
+    version: "0.1.5",
+    date: "2026-03-07",
+    highlights: {
+      zh: [
+        "版本号移动到左上角标题“灵境”后方，不再单独占行。",
+        "接入 4 个猫狗主题模型并切换默认展示与联机映射。",
+        "新增模型目录清单（含来源与许可信息）。"
+      ],
+      en: [
+        "Moved version text beside top-left title instead of a separate row.",
+        "Integrated 4 cat/dog themed models and switched default + online mappings.",
+        "Added model catalog with source and license metadata."
+      ]
+    }
+  },
+  {
+    version: "0.1.4",
+    date: "2026-03-07",
+    highlights: {
+      zh: [
+        "修复托盘与程序图标显示，补齐 Windows 打包图标。",
+        "托盘右键菜单改为中文/英文自适应。",
+        "版本号并入左上角标题，点击可查看更新历史。",
+        "新增猫狗主题模型（Shiba Inu / Husky / Cat）。"
+      ],
+      en: [
+        "Fixed tray/app icon rendering and added Windows packaging icon assets.",
+        "Tray context menu now follows zh/en locale.",
+        "Version text moved into top-left title and opens release history on click.",
+        "Added cat & dog themed model set (Shiba Inu / Husky / Cat)."
+      ]
+    }
+  },
+  {
+    version: "0.1.3",
+    date: "2026-03-07",
+    highlights: {
+      zh: ["修复登录后反复自动连接历史房间的问题。", "增加自动入房失败后停重试与请求过期保护。"],
+      en: [
+        "Fixed repeated auto-join attempts to stale rooms after login.",
+        "Added stop-retry and accepted-request age guard for auto-join."
+      ]
+    }
+  },
+  {
+    version: "0.1.2",
+    date: "2026-03-07",
+    highlights: {
+      zh: ["修复接受对战后偶发不进入战斗的问题。"],
+      en: ["Fixed occasional failure to enter battle after accepting a duel request."]
+    }
+  },
+  {
+    version: "0.1.1",
+    date: "2026-03-07",
+    highlights: {
+      zh: ["全局伤害下调，属性克制倍率调整为 1.2。", "注册/登录/联机错误提示中文化增强。"],
+      en: [
+        "Reduced global damage values and adjusted elemental multiplier to 1.2.",
+        "Improved Chinese localization for auth/online error prompts."
+      ]
+    }
+  }
+];
+
 const DEFAULT_PET_ROSTER = [
   {
     id: "pet-001",
     serial: "0019001",
-    name: { zh: "焰尾", en: "BlazeTail" },
-    model: "../assets/models/Fox.glb",
+    name: { zh: "柴团", en: "ShibaMochi" },
+    model: "../assets/models/ShibaInu.glb",
     element: "fire",
     stats: "HP128 / ATK32 / DEF20 / SPD18",
     capturedAt: "2026-03-01 21:10",
-    avatar: "焰",
+    avatar: "柴",
     level: 1,
     experience: 0,
     winsTotal: 0
@@ -726,12 +812,12 @@ const DEFAULT_PET_ROSTER = [
   {
     id: "pet-002",
     serial: "0029001",
-    name: { zh: "星航", en: "Astror" },
-    model: "../assets/models/Astronaut.glb",
+    name: { zh: "雪团", en: "SnowPaw" },
+    model: "../assets/models/Husky.glb",
     element: "water",
     stats: "HP122 / ATK28 / DEF24 / SPD21",
     capturedAt: "2026-03-02 09:35",
-    avatar: "星",
+    avatar: "雪",
     level: 1,
     experience: 0,
     winsTotal: 0
@@ -739,12 +825,12 @@ const DEFAULT_PET_ROSTER = [
   {
     id: "pet-003",
     serial: "0039001",
-    name: { zh: "草蹄", en: "Hoofleaf" },
-    model: "../assets/models/Horse.glb",
+    name: { zh: "奶油喵", en: "ButterCat" },
+    model: "../assets/models/CatQuaterniusA.glb",
     element: "wood",
     stats: "HP130 / ATK26 / DEF26 / SPD17",
     capturedAt: "2026-03-02 20:42",
-    avatar: "草",
+    avatar: "喵",
     level: 1,
     experience: 0,
     winsTotal: 0
@@ -752,12 +838,12 @@ const DEFAULT_PET_ROSTER = [
   {
     id: "pet-004",
     serial: "0049001",
-    name: { zh: "锐铠", en: "IronGuard" },
-    model: "../assets/models/CesiumMan.glb",
+    name: { zh: "焦糖喵", en: "CaramelCat" },
+    model: "../assets/models/CatQuaterniusB.glb",
     element: "metal",
     stats: "HP135 / ATK30 / DEF30 / SPD12",
     capturedAt: "2026-03-03 08:20",
-    avatar: "铠",
+    avatar: "咪",
     level: 1,
     experience: 0,
     winsTotal: 0
@@ -765,12 +851,12 @@ const DEFAULT_PET_ROSTER = [
   {
     id: "pet-005",
     serial: "0059001",
-    name: { zh: "月壤", en: "MoonSoil" },
-    model: "../assets/models/NeilArmstrong.glb",
+    name: { zh: "霜牙", en: "FrostFang" },
+    model: "../assets/models/Husky.glb",
     element: "earth",
     stats: "HP142 / ATK24 / DEF34 / SPD10",
     capturedAt: "2026-03-03 18:05",
-    avatar: "壤",
+    avatar: "霜",
     level: 1,
     experience: 0,
     winsTotal: 0
@@ -778,12 +864,12 @@ const DEFAULT_PET_ROSTER = [
   {
     id: "pet-006",
     serial: "0069001",
-    name: { zh: "律动", en: "Groove" },
-    model: "../assets/models/RobotExpressive.glb",
+    name: { zh: "柴豆", en: "ShibaBean" },
+    model: "../assets/models/ShibaInu.glb",
     element: "fire",
     stats: "HP118 / ATK33 / DEF22 / SPD20",
     capturedAt: "2026-03-04 12:11",
-    avatar: "律",
+    avatar: "豆",
     level: 1,
     experience: 0,
     winsTotal: 0
@@ -791,15 +877,15 @@ const DEFAULT_PET_ROSTER = [
 ];
 
 const ONLINE_MODEL_BY_ELEMENT = {
-  fire: "../assets/models/Fox.glb",
-  water: "../assets/models/Astronaut.glb",
-  wood: "../assets/models/Horse.glb",
-  metal: "../assets/models/CesiumMan.glb",
-  earth: "../assets/models/NeilArmstrong.glb"
+  fire: "../assets/models/ShibaInu.glb",
+  water: "../assets/models/Husky.glb",
+  wood: "../assets/models/CatQuaterniusA.glb",
+  metal: "../assets/models/CatQuaterniusB.glb",
+  earth: "../assets/models/Husky.glb"
 };
 
 const uiRefs = {
-  appTitle: document.getElementById("app-title"),
+  appTitleText: document.getElementById("app-title-text"),
   appSlogan: document.getElementById("app-slogan"),
   battleTitle: document.getElementById("battle-title"),
   playerLabel: document.getElementById("player-label"),
@@ -1124,6 +1210,54 @@ function t(key, params) {
   return template.replace(/\{(\w+)\}/g, (_, token) => String(params?.[token] ?? ""));
 }
 
+function setVersionHistoryVisible(visible) {
+  if (!versionHistoryModalElement) return;
+  const nextVisible = Boolean(visible);
+  versionHistoryModalElement.classList.toggle("hidden", !nextVisible);
+  if (nextVisible) {
+    renderVersionHistory();
+  }
+  reportHitState();
+}
+
+function renderVersionHistory() {
+  if (!versionHistoryListElement) return;
+  if (!Array.isArray(RELEASE_HISTORY) || RELEASE_HISTORY.length === 0) {
+    versionHistoryListElement.innerHTML = `<div class="duel-empty">${currentI18n().versionHistoryEmpty}</div>`;
+    return;
+  }
+
+  const locale = language === "zh" ? "zh" : "en";
+  const currentVersion = String(runtimeInfo?.appVersion || "").trim();
+  const entries = RELEASE_HISTORY.slice().sort((a, b) => String(b.date || "").localeCompare(String(a.date || "")));
+  const cardHtml = entries
+    .map((item) => {
+      const version = String(item.version || "-");
+      const date = String(item.date || "-");
+      const notes = Array.isArray(item.highlights?.[locale]) ? item.highlights[locale] : [];
+      const noteItems =
+        notes.length > 0
+          ? notes.map((note) => `<li>${String(note || "")}</li>`).join("")
+          : `<li>${currentI18n().versionHistoryEmpty}</li>`;
+      const isCurrent = currentVersion.length > 0 && version === currentVersion;
+      const currentBadge = isCurrent
+        ? `<span class="version-history-item-current">${currentI18n().versionHistoryCurrent}</span>`
+        : "";
+      return `
+        <article class="version-history-item ${isCurrent ? "current" : ""}">
+          <div class="version-history-item-head">
+            <span class="version-history-item-version">v${version}</span>
+            <span class="version-history-item-date">${currentI18n().versionHistoryDatePrefix}: ${date}</span>
+            ${currentBadge}
+          </div>
+          <ul class="version-history-item-notes">${noteItems}</ul>
+        </article>
+      `;
+    })
+    .join("");
+  versionHistoryListElement.innerHTML = cardHtml;
+}
+
 function unwrapErrorMessage(raw) {
   const text = typeof raw === "string" ? raw.trim() : String(raw ?? "").trim();
   if (!text) return "";
@@ -1434,6 +1568,7 @@ function isInteractivePanelTarget(target) {
     target.closest(
       "button, input, select, textarea, label, article, model-viewer, .row, .field, .panel-section, .pet-avatar-item, .pet-quick-set, .battle-report-item, .wild-item, .pet-detail-popover, #log"
       + ", .battle-report-detail-popover, .user-menu-wrap, .user-menu-dropdown, .profile-modal, .profile-modal-card"
+      + ", .version-history-modal, .version-history-card"
     )
   );
 }
@@ -1556,6 +1691,10 @@ function closeBattleLeaveConfirm() {
 }
 
 function closeTopLayerByEsc() {
+  if (versionHistoryModalElement && !versionHistoryModalElement.classList.contains("hidden")) {
+    setVersionHistoryVisible(false);
+    return true;
+  }
   if (profileModalElement && !profileModalElement.classList.contains("hidden")) {
     setProfileModalVisible(false);
     return true;
@@ -1607,6 +1746,7 @@ function setPanelVisible(visible) {
     hideDuelRequestToast();
     closeUserMenu();
     setProfileModalVisible(false);
+    setVersionHistoryVisible(false);
     closeBattleLeaveConfirm();
     closeReleaseConfirm();
     // Hide scene immediately, then reveal panel after layout switch to avoid top-left flash.
@@ -1635,6 +1775,7 @@ function setPanelVisible(visible) {
   battleSceneElement.classList.remove("panel-open");
   closeUserMenu();
   setProfileModalVisible(false);
+  setVersionHistoryVisible(false);
   closeBattleLeaveConfirm();
   closeReleaseConfirm();
   duelRequestListExpanded = false;
@@ -3350,7 +3491,9 @@ function toggleLanguage() {
 }
 
 function applyLanguage() {
-  uiRefs.appTitle.textContent = currentI18n().appTitle;
+  if (uiRefs.appTitleText) {
+    uiRefs.appTitleText.textContent = currentI18n().appTitle;
+  }
   if (uiRefs.appSlogan) {
     uiRefs.appSlogan.textContent = currentI18n().appSlogan;
   }
@@ -3448,6 +3591,21 @@ function applyLanguage() {
   if (duelOnlineRoomInput) {
     duelOnlineRoomInput.placeholder = "ABC123";
   }
+  if (runtimeElement) {
+    runtimeElement.title = currentI18n().runtimeVersionHint;
+  }
+  if (versionHistoryTitleElement) {
+    versionHistoryTitleElement.textContent = currentI18n().versionHistoryTitle;
+  }
+  if (versionHistoryHintElement) {
+    versionHistoryHintElement.textContent = currentI18n().versionHistoryHint;
+  }
+  if (versionHistoryCloseBtn) {
+    versionHistoryCloseBtn.textContent = currentI18n().versionHistoryClose;
+  }
+  if (versionHistoryModalElement && !versionHistoryModalElement.classList.contains("hidden")) {
+    renderVersionHistory();
+  }
   applyDuelAdvancedExpanded(duelAdvancedExpanded, { persist: false });
   refreshPanelSectionToggleLabels();
   uiRefs.tipText.textContent = currentI18n().tip;
@@ -3500,13 +3658,14 @@ function applyLanguage() {
   syncBattleSettlementText();
 
   if (!runtimeInfo) {
-    runtimeElement.textContent = currentI18n().loadingRuntime;
+    runtimeElement.textContent = "v...";
   }
 }
 
 function renderRuntimeInfo() {
   if (!runtimeInfo) {
-    runtimeElement.textContent = currentI18n().loadingRuntime;
+    runtimeElement.textContent = "v...";
+    runtimeElement.title = currentI18n().runtimeVersionHint;
     return;
   }
   runtimeElement.textContent = t("runtimeInfo", {
@@ -3514,6 +3673,7 @@ function renderRuntimeInfo() {
     platform: runtimeInfo.platform,
     app: runtimeInfo.appVersion
   });
+  runtimeElement.title = currentI18n().runtimeVersionHint;
 }
 
 function getDuelRequestStatusText(status) {
@@ -5714,6 +5874,20 @@ function setupButtons() {
     toggleLanguage();
   });
 
+  runtimeElement?.addEventListener("click", () => {
+    setVersionHistoryVisible(true);
+  });
+
+  runtimeElement?.addEventListener("keydown", (event) => {
+    if (event.key !== "Enter" && event.key !== " ") return;
+    event.preventDefault();
+    setVersionHistoryVisible(true);
+  });
+
+  versionHistoryCloseBtn?.addEventListener("click", () => {
+    setVersionHistoryVisible(false);
+  });
+
   userMenuBtn?.addEventListener("click", (event) => {
     event.preventDefault();
     event.stopPropagation();
@@ -5766,6 +5940,15 @@ function setupButtons() {
     if (!(target instanceof HTMLElement)) return;
     if (target.closest(".release-confirm-card")) return;
     closeReleaseConfirm();
+  });
+
+  window.addEventListener("mousedown", (event) => {
+    if (!versionHistoryModalElement || versionHistoryModalElement.classList.contains("hidden")) return;
+    const target = event.target;
+    if (!(target instanceof HTMLElement)) return;
+    if (target.closest(".version-history-card")) return;
+    if (target.closest("#runtime")) return;
+    setVersionHistoryVisible(false);
   });
 
   window.addEventListener("mousedown", (event) => {

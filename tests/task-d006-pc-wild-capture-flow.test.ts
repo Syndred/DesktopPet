@@ -119,8 +119,8 @@ describe("D-006 pc nearby wild pet and capture flow", () => {
     const first = result.pets?.[0];
     expect(typeof first?.serial).toBe("string");
     expect(first?.serial).toMatch(/^\d{7}$/);
-    const allowedZhNames = new Set(["焰尾", "星航", "草蹄", "锐铠", "月壤"]);
-    const allowedEnNames = new Set(["BlazeTail", "Astror", "Hoofleaf", "IronGuard", "MoonSoil"]);
+    const allowedZhNames = new Set(["柴团", "雪团", "奶油喵", "焦糖喵", "霜牙"]);
+    const allowedEnNames = new Set(["ShibaMochi", "SnowPaw", "ButterCat", "CaramelCat", "FrostFang"]);
     expect(allowedZhNames.has(first?.name.zh || "")).toBe(true);
     expect(allowedEnNames.has(first?.name.en || "")).toBe(true);
     expect(first?.name.zh).not.toMatch(/[0-9]+$/);

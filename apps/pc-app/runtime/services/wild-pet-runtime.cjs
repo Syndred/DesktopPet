@@ -13,38 +13,38 @@ const DEFAULT_RADIUS_METERS = 220;
 const CAPTURE_RADIUS_METERS = 100;
 const COOLDOWN_MS = 5 * 60 * 1000;
 const MODEL_BY_ELEMENT = {
-  fire: "../assets/models/Fox.glb",
-  water: "../assets/models/Astronaut.glb",
-  wood: "../assets/models/Horse.glb",
-  metal: "../assets/models/CesiumMan.glb",
-  earth: "../assets/models/NeilArmstrong.glb"
+  fire: "../assets/models/ShibaInu.glb",
+  water: "../assets/models/Husky.glb",
+  wood: "../assets/models/CatQuaterniusA.glb",
+  metal: "../assets/models/CatQuaterniusB.glb",
+  earth: "../assets/models/Husky.glb"
 };
 
 const SPECIES_BY_ELEMENT = {
   fire: {
     code: "001",
-    name: { zh: "\u7130\u5c3e", en: "BlazeTail" },
-    avatar: "\u7130"
+    name: { zh: "柴团", en: "ShibaMochi" },
+    avatar: "柴"
   },
   water: {
     code: "002",
-    name: { zh: "\u661f\u822a", en: "Astror" },
-    avatar: "\u661f"
+    name: { zh: "雪团", en: "SnowPaw" },
+    avatar: "雪"
   },
   wood: {
     code: "003",
-    name: { zh: "\u8349\u8e44", en: "Hoofleaf" },
-    avatar: "\u8349"
+    name: { zh: "奶油喵", en: "ButterCat" },
+    avatar: "喵"
   },
   metal: {
     code: "004",
-    name: { zh: "\u9510\u94e0", en: "IronGuard" },
-    avatar: "\u94e0"
+    name: { zh: "焦糖喵", en: "CaramelCat" },
+    avatar: "咪"
   },
   earth: {
     code: "005",
-    name: { zh: "\u6708\u58e4", en: "MoonSoil" },
-    avatar: "\u58e4"
+    name: { zh: "霜牙", en: "FrostFang" },
+    avatar: "霜"
   }
 };
 
@@ -268,7 +268,7 @@ function createSpawnSet(providerId, serialCounters) {
       rarity,
       landmarkType: layout.landmarkType,
       position,
-      model: MODEL_BY_ELEMENT[element] || "../assets/models/RobotExpressive.glb",
+      model: MODEL_BY_ELEMENT[element] || "../assets/models/ShibaInu.glb",
       stats: rarityToStats(element, rarity),
       avatar: species.avatar,
       name: { ...species.name },
