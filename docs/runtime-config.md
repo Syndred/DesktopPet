@@ -105,6 +105,32 @@ npm run verify
 npm run dev:pc
 ```
 
+## 3.1 联机双开（推荐）
+
+用于“同机 A/B 两账号联机实测”，避免两个实例互相覆盖本地会话数据。
+
+1. 复制配置模板：
+   - `scripts/desktop/local-online-env.example.cmd`
+   - 重命名为：`scripts/desktop/local-online-env.cmd`
+2. 编辑 `local-online-env.cmd`：
+   - `SUPABASE_URL=http://47.112.208.97:8000`
+   - `SUPABASE_ANON_KEY=<你的 ANON_KEY>`
+   - `SUPABASE_DUEL_FUNCTION=duel-online`
+   - 运行时会优先使用环境变量；若环境变量缺失，会尝试从 `local-online-env.cmd` 兜底读取。
+3. 启动双实例：
+   - 双击 `scripts/desktop/start-online-dual.cmd`
+   - 或分别启动：
+     - `scripts/desktop/start-online-a.cmd`
+     - `scripts/desktop/start-online-b.cmd`
+   - 若双击后无反应，先在终端执行并查看错误：
+     - `cmd /k scripts\\desktop\\start-online-a.cmd`
+     - `cmd /k scripts\\desktop\\start-online-b.cmd`
+4. 数据隔离说明：
+   - 启动器会给每个实例注入独立 `PET_USER_DATA_DIR`（默认在 `%LOCALAPPDATA%\DesktopPetProfiles\<Profile>\userData`）。
+   - 同时注入共享 `PET_RUNTIME_DATA_FILE`（`%LOCALAPPDATA%\DesktopPetProfiles\shared\pet-runtime-data.json`）：
+     - 账号注册/搜索与对战申请可在 A/B 间互通。
+   - 注意：若一端刚注册新账号，另一端建议刷新一次搜索或重新打开面板。
+
 ## 4. v2.11 行为说明
 
 ### 4.1 窗口策略（按你要求修正）

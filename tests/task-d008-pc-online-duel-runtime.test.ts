@@ -8,6 +8,8 @@ describe("D-008 pc online duel runtime bridge", () => {
     const mainCode = readFileSync(join(process.cwd(), "apps/pc-app/runtime/main.cjs"), "utf8");
 
     expect(mainCode).toContain("OnlineDuelService");
+    expect(mainCode).toContain("pet:duel-request-respond");
+    expect(mainCode).toContain("pet:duel-request-cancel");
     expect(mainCode).toContain("pet:duel-online-status");
     expect(mainCode).toContain("pet:duel-online-create-room");
     expect(mainCode).toContain("pet:duel-online-join-room");
@@ -25,6 +27,8 @@ describe("D-008 pc online duel runtime bridge", () => {
     );
 
     expect(preloadCode).toContain("getOnlineDuelStatus");
+    expect(preloadCode).toContain("respondDuelRequest");
+    expect(preloadCode).toContain("cancelDuelRequest");
     expect(preloadCode).toContain("createOnlineDuelRoom");
     expect(preloadCode).toContain("joinOnlineDuelRoom");
     expect(preloadCode).toContain("syncOnlineDuelRoom");
@@ -66,5 +70,7 @@ describe("D-008 pc online duel runtime bridge", () => {
 
     expect(serviceCode).toContain('require("ws")');
     expect(serviceCode).toContain("realtime: realtimeOptions");
+    expect(serviceCode).toContain("local-online-env.cmd");
+    expect(serviceCode).toContain("loadLauncherEnvFallback");
   });
 });

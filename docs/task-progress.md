@@ -10,6 +10,21 @@
 
 ## 最新里程碑
 
+1. `D-041` 双开启动器与实例数据隔离（联机验收易用性）`[DONE]`
+   - 完成内容：
+     - 主进程支持环境变量 `PET_USER_DATA_DIR`，可在启动时覆盖 Electron `userData` 路径。
+     - 主进程支持环境变量 `PET_RUNTIME_DATA_FILE`，可指定共享的账号/对战申请状态文件。
+     - 新增双开启动脚本：
+       - `scripts/desktop/start-online-instance.cmd`
+       - `scripts/desktop/start-online-a.cmd`
+       - `scripts/desktop/start-online-b.cmd`
+       - `scripts/desktop/start-online-dual.cmd`
+     - 新增联机环境模板：
+       - `scripts/desktop/local-online-env.example.cmd`
+       - 用户复制为 `local-online-env.cmd` 后填 `SUPABASE_URL / SUPABASE_ANON_KEY` 即可双击启动。
+     - 启动器默认将运行缓存写入 `%LOCALAPPDATA%\\DesktopPetProfiles`，避免污染仓库目录。
+     - 运行配置文档新增“双开推荐流程”（含独立数据目录 + 共享账号索引说明）。
+
 1. `D-040` 阿里云联机对战双端验收 + Realtime 稳定性修复 `[DONE]`
    - 完成内容：
      - 完成本地双客户端并发验收（A/B）：

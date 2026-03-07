@@ -24,7 +24,10 @@ const BASE_DAMAGE = {
 const ROOM_CODE_ALPHABET = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
 const ALLOWED_ELEMENTS = new Set(["metal", "wood", "earth", "water", "fire"]);
 const ALLOWED_ACTIONS = new Set(["normal_attack", "element_attack", "dodge", "ultimate"]);
+const ALLOWED_STATUS_TYPES = new Set(["burn", "freeze", "parasite", "vulnerability", "petrify"]);
 const MAX_HP = 120;
+const ULTIMATE_ANGER_THRESHOLD = 50;
+const ULTIMATE_ANGER_COST = 50;
 
 Deno.serve(async (request) => {
   if (request.method === "OPTIONS") {
@@ -293,8 +296,8 @@ function normalizeRoom(input) {
     guest_anger: clampInt(input.guest_anger, 0, 100, 0),
     host_free_dodge_used: Boolean(input.host_free_dodge_used),
     guest_free_dodge_used: Boolean(input.guest_free_dodge_used),
-    host_statuses: [],
-    guest_statuses: [],
+    host_statuses: normalizeStatusList(input.host_statuses),
+    guest_statuses: normalizeStatusList(input.guest_statuses),
     winner_side: normalizeWinnerSide(input.winner_side),
     created_at: input.created_at,
     updated_at: input.updated_at
@@ -442,12 +445,12 @@ function normalizeRoundResult(input) {
       guest: clampInt(result.direct_damage?.guest, 0, 9999, 0)
     },
     dot_damage_events: {
-      host: [],
-      guest: []
+      host: normalizeRoundEvents(result.dot_damage_events?.host),
+      guest: normalizeRoundEvents(result.dot_damage_events?.guest)
     },
     heal_events: {
-      host: [],
-      guest: []
+      host: normalizeRoundEvents(result.heal_events?.host),
+      guest: normalizeRoundEvents(result.heal_events?.guest)
     },
     hp_after: {
       host: clampInt(result.hp_after?.host, 0, MAX_HP, MAX_HP),
@@ -458,8 +461,8 @@ function normalizeRoundResult(input) {
       guest: clampInt(result.anger_after?.guest, 0, 100, 0)
     },
     statuses_after: {
-      host: [],
-      guest: []
+      host: normalizeStatusList(result.statuses_after?.host),
+      guest: normalizeStatusList(result.statuses_after?.guest)
     },
     free_dodge_used: {
       host: Boolean(result.free_dodge_used?.host),
@@ -474,17 +477,21 @@ function resolveRound(room, hostInputAction, guestInputAction) {
   const notes = [];
 
   const host = {
+    id: "host",
     element: room.host_element,
     hp: room.host_hp,
     anger: room.host_anger,
-    freeDodgeUsed: Boolean(room.host_free_dodge_used)
+    freeDodgeUsed: Boolean(room.host_free_dodge_used),
+    statuses: normalizeStatusList(room.host_statuses)
   };
 
   const guest = {
+    id: "guest",
     element: room.guest_element || "wood",
     hp: room.guest_hp,
     anger: room.guest_anger,
-    freeDodgeUsed: Boolean(room.guest_free_dodge_used)
+    freeDodgeUsed: Boolean(room.guest_free_dodge_used),
+    statuses: normalizeStatusList(room.guest_statuses)
   };
 
   const normalizeCombatAction = (side, actor, actionInput) => {
@@ -493,80 +500,120 @@ function resolveRound(room, hostInputAction, guestInputAction) {
       notes.push(`${side} dodge downgraded to normal_attack (anger <= 0)`);
       return "normal_attack";
     }
-    if (normalized === "ultimate" && actor.anger < 50) {
-      notes.push(`${side} ultimate downgraded to normal_attack (anger < 50)`);
+    if (normalized === "ultimate" && actor.anger < ULTIMATE_ANGER_THRESHOLD) {
+      notes.push(`${side} ultimate downgraded to normal_attack (anger < ${ULTIMATE_ANGER_THRESHOLD})`);
       return "normal_attack";
     }
     if (normalized === "ultimate") {
-      actor.anger = Math.max(0, actor.anger - 50);
+      actor.anger = Math.max(0, actor.anger - ULTIMATE_ANGER_COST);
       return "ultimate";
     }
     if (normalized === "dodge") {
       actor.freeDodgeUsed = true;
-      if (actor.anger > 0) {
-        actor.anger = Math.max(0, actor.anger - 20);
-      }
     }
     return normalized;
   };
 
-  const hostAction = normalizeCombatAction("host", host, hostInputAction);
-  const guestAction = normalizeCombatAction("guest", guest, guestInputAction);
+  let hostAction = normalizeCombatAction("host", host, hostInputAction);
+  let guestAction = normalizeCombatAction("guest", guest, guestInputAction);
+
+  if (hasStatus(host, "freeze") || hasStatus(host, "petrify")) {
+    hostAction = "stunned";
+    notes.push("host is stunned and cannot act");
+  }
+  if (hasStatus(guest, "freeze") || hasStatus(guest, "petrify")) {
+    guestAction = "stunned";
+    notes.push("guest is stunned and cannot act");
+  }
+
+  if (hostAction === "dodge") {
+    spendDodgeAnger(host, notes);
+  }
+  if (guestAction === "dodge") {
+    spendDodgeAnger(guest, notes);
+  }
 
   const doesHit = (attackerAction, defenderAction) => {
     if (attackerAction === "dodge") return false;
     if (attackerAction === "ultimate") return true;
+    if (defenderAction === "stunned") return true;
     if (attackerAction === "normal_attack" && defenderAction === "dodge") return false;
     if (attackerAction === "element_attack" && defenderAction === "normal_attack") return false;
     return true;
   };
 
-  const computeDamage = (attackerAction, attackerElement, defenderElement) => {
+  const computeDamage = (attackerAction, attacker, defender) => {
     let damage = BASE_DAMAGE[attackerAction] || BASE_DAMAGE.normal_attack;
-    damage *= getElementMultiplier(attackerElement, defenderElement);
+    damage *= getElementMultiplier(attacker.element, defender.element);
+    const vulnerability = getStatus(defender, "vulnerability");
+    if (vulnerability) {
+      const stacks = Math.max(1, vulnerability.stacks || 1);
+      damage *= 1 + 0.2 * stacks;
+    }
     return Math.max(0, Math.round(damage));
   };
 
+  const dotDamageEvents = {
+    host: [],
+    guest: []
+  };
+  const healEvents = {
+    host: [],
+    guest: []
+  };
   const damageTaken = { host: 0, guest: 0 };
   const directDamage = { host: 0, guest: 0 };
+  let firstDefeated = null;
 
   if (doesHit(hostAction, guestAction)) {
-    const damage = computeDamage(hostAction, host.element, guest.element);
+    const damage = computeDamage(hostAction, host, guest);
+    const guestWasAlive = guest.hp > 0;
     guest.hp = Math.max(0, guest.hp - damage);
+    if (guestWasAlive && guest.hp <= 0 && !firstDefeated) firstDefeated = "guest";
     damageTaken.guest += damage;
     directDamage.guest += damage;
     if (hostAction !== "ultimate" && getElementMultiplier(host.element, guest.element) > 1) {
       host.anger = Math.min(100, host.anger + 20);
     }
     guest.anger = Math.min(100, guest.anger + Math.floor(damage * 0.5));
+    applyAttackStatus(hostAction, host, guest, notes);
   } else if (hostAction !== "dodge") {
     notes.push("host action missed");
   }
 
   if (doesHit(guestAction, hostAction)) {
-    const damage = computeDamage(guestAction, guest.element, host.element);
+    const damage = computeDamage(guestAction, guest, host);
+    const hostWasAlive = host.hp > 0;
     host.hp = Math.max(0, host.hp - damage);
+    if (hostWasAlive && host.hp <= 0 && !firstDefeated) firstDefeated = "host";
     damageTaken.host += damage;
     directDamage.host += damage;
     if (guestAction !== "ultimate" && getElementMultiplier(guest.element, host.element) > 1) {
       guest.anger = Math.min(100, guest.anger + 20);
     }
     host.anger = Math.min(100, host.anger + Math.floor(damage * 0.5));
+    applyAttackStatus(guestAction, guest, host, notes);
   } else if (guestAction !== "dodge") {
     notes.push("guest action missed");
   }
 
-  if (hostAction === "dodge" && guestAction === "normal_attack") {
-    host.anger = Math.min(100, host.anger + 30);
+  const bothDodged = hostAction === "dodge" && guestAction === "dodge";
+  if (!bothDodged && hostAction === "dodge" && guestAction === "normal_attack") {
+    refundDodgeAnger(host, notes);
+  }
+  if (!bothDodged && guestAction === "dodge" && hostAction === "normal_attack") {
+    refundDodgeAnger(guest, notes);
   }
 
-  if (guestAction === "dodge" && hostAction === "normal_attack") {
-    guest.anger = Math.min(100, guest.anger + 30);
-  }
+  applyRoundEndStatusEffects([host, guest], damageTaken, dotDamageEvents, healEvents, notes, (side) => {
+    if (!firstDefeated) firstDefeated = side;
+  });
+  reduceStatusDuration(host);
+  reduceStatusDuration(guest);
 
   let winnerSide = null;
   if (host.hp <= 0 && guest.hp <= 0) {
-    winnerSide = "guest";
+    winnerSide = firstDefeated === "host" ? "guest" : "host";
   } else if (host.hp <= 0) {
     winnerSide = "guest";
   } else if (guest.hp <= 0) {
@@ -581,14 +628,8 @@ function resolveRound(room, hostInputAction, guestInputAction) {
     },
     damage_taken: damageTaken,
     direct_damage: directDamage,
-    dot_damage_events: {
-      host: [],
-      guest: []
-    },
-    heal_events: {
-      host: [],
-      guest: []
-    },
+    dot_damage_events: dotDamageEvents,
+    heal_events: healEvents,
     hp_after: {
       host: host.hp,
       guest: guest.hp
@@ -598,8 +639,8 @@ function resolveRound(room, hostInputAction, guestInputAction) {
       guest: guest.anger
     },
     statuses_after: {
-      host: [],
-      guest: []
+      host: host.statuses.map(cloneStatus),
+      guest: guest.statuses.map(cloneStatus)
     },
     free_dodge_used: {
       host: host.freeDodgeUsed,
@@ -607,6 +648,206 @@ function resolveRound(room, hostInputAction, guestInputAction) {
     },
     winner_side: winnerSide,
     notes
+  };
+}
+
+function normalizeStatusList(input) {
+  if (!Array.isArray(input)) return [];
+  return input
+    .map(normalizeStatus)
+    .filter(Boolean)
+    .slice(0, 12);
+}
+
+function normalizeStatus(input) {
+  if (!input || typeof input !== "object") return null;
+  const type = normalizeString(input.type);
+  if (!type || !ALLOWED_STATUS_TYPES.has(type)) return null;
+  const duration = clampInt(input.duration, 1, 12, 1);
+  const potency = input.potency == null ? undefined : clampInt(input.potency, 1, 999, 1);
+  const stacks = clampInt(input.stacks, 1, 5, 1);
+  const sourceId = normalizeString(input.sourceId);
+  return {
+    type,
+    duration,
+    ...(potency != null ? { potency } : {}),
+    stacks,
+    stackable: Boolean(input.stackable),
+    ...(sourceId ? { sourceId } : {})
+  };
+}
+
+function normalizeRoundEvents(input) {
+  if (!Array.isArray(input)) return [];
+  return input
+    .map((item) => {
+      if (!item || typeof item !== "object") return null;
+      const type = normalizeString(item.type);
+      const amount = clampInt(item.amount, 0, 9999, 0);
+      if (!type || amount <= 0) return null;
+      return { type, amount };
+    })
+    .filter(Boolean)
+    .slice(0, 20);
+}
+
+function hasStatus(actor, type) {
+  return Array.isArray(actor.statuses) && actor.statuses.some((status) => status.type === type);
+}
+
+function getStatus(actor, type) {
+  if (!Array.isArray(actor.statuses)) return null;
+  return actor.statuses.find((status) => status.type === type) || null;
+}
+
+function addOrRefreshStatus(actor, next) {
+  if (!Array.isArray(actor.statuses)) actor.statuses = [];
+  const idx = actor.statuses.findIndex((status) => status.type === next.type);
+  if (idx === -1) {
+    const inserted = { ...next };
+    actor.statuses.push(inserted);
+    return inserted;
+  }
+  const current = actor.statuses[idx];
+  const stackable = Boolean(next.stackable);
+  const nextStacks = stackable ? Math.min(5, Math.max(1, (current.stacks || 1) + 1)) : 1;
+  const addDuration = Math.max(1, Number(next.duration) || 1);
+  const mergedDuration = stackable
+    ? Math.min(12, Math.max(1, Number(current.duration) || 0) + addDuration)
+    : Math.max(Math.max(1, Number(current.duration) || 1), addDuration);
+  const merged = {
+    ...current,
+    ...next,
+    stacks: nextStacks,
+    duration: mergedDuration
+  };
+  actor.statuses[idx] = merged;
+  return merged;
+}
+
+function applyAttackStatus(action, attacker, defender, notes) {
+  if (action !== "element_attack") return;
+  if (attacker.element === "fire") {
+    const status = addOrRefreshStatus(defender, {
+      type: "burn",
+      duration: 2,
+      potency: 5,
+      stacks: 1,
+      stackable: true,
+      sourceId: attacker.id
+    });
+    notes.push(`enemy burned x${status.stacks || 1}`);
+  }
+  if (attacker.element === "water") {
+    addOrRefreshStatus(defender, {
+      type: "freeze",
+      duration: 2,
+      stacks: 1,
+      stackable: false,
+      sourceId: attacker.id
+    });
+    notes.push("enemy frozen");
+  }
+  if (attacker.element === "wood") {
+    const status = addOrRefreshStatus(defender, {
+      type: "parasite",
+      duration: 2,
+      potency: 4,
+      stacks: 1,
+      stackable: true,
+      sourceId: attacker.id
+    });
+    notes.push(`enemy parasitized x${status.stacks || 1}`);
+  }
+  if (attacker.element === "metal") {
+    const status = addOrRefreshStatus(defender, {
+      type: "vulnerability",
+      duration: 2,
+      stacks: 1,
+      stackable: true,
+      sourceId: attacker.id
+    });
+    notes.push(`enemy vulnerable x${status.stacks || 1}`);
+  }
+  if (attacker.element === "earth") {
+    addOrRefreshStatus(defender, {
+      type: "petrify",
+      duration: 2,
+      stacks: 1,
+      stackable: false,
+      sourceId: attacker.id
+    });
+    notes.push("enemy petrified");
+  }
+}
+
+function spendDodgeAnger(actor, notes) {
+  if (actor.anger > 0) {
+    actor.anger = Math.max(0, actor.anger - 20);
+    notes.push(`${actor.id} spends 20 anger on dodge`);
+    return;
+  }
+  notes.push(`${actor.id} uses first free dodge`);
+}
+
+function refundDodgeAnger(actor, notes) {
+  actor.anger = Math.min(100, actor.anger + 30);
+  notes.push(`${actor.id} dodged normal attack and refunded 30 anger`);
+}
+
+function reduceStatusDuration(actor) {
+  if (!Array.isArray(actor.statuses)) {
+    actor.statuses = [];
+    return;
+  }
+  actor.statuses = actor.statuses
+    .map((status) => ({ ...status, duration: clampInt(status.duration, 1, 12, 1) - 1 }))
+    .filter((status) => status.duration > 0);
+}
+
+function applyRoundEndStatusEffects(players, damageTaken, dotDamageEvents, healEvents, notes, onDefeated) {
+  for (const player of players) {
+    for (const status of player.statuses) {
+      if (status.type === "burn" && status.potency) {
+        const burnDamage = status.potency * Math.max(1, status.stacks || 1);
+        applyDamage(player, burnDamage, onDefeated);
+        damageTaken[player.id] += burnDamage;
+        dotDamageEvents[player.id].push({ type: "burn", amount: burnDamage });
+        notes.push(`${player.id} takes burn damage`);
+      }
+      if (status.type === "parasite" && status.potency && status.sourceId) {
+        const parasiteDamage = status.potency * Math.max(1, status.stacks || 1);
+        applyDamage(player, parasiteDamage, onDefeated);
+        damageTaken[player.id] += parasiteDamage;
+        dotDamageEvents[player.id].push({ type: "parasite", amount: parasiteDamage });
+        const source = players.find((item) => item.id === status.sourceId);
+        if (source) {
+          const hpBefore = source.hp;
+          source.hp = Math.min(MAX_HP, source.hp + parasiteDamage);
+          const healAmount = source.hp - hpBefore;
+          if (healAmount > 0) {
+            healEvents[source.id].push({ type: "parasite", amount: healAmount });
+            notes.push(`${source.id} healed by parasite`);
+          }
+        }
+        notes.push(`${player.id} takes parasite damage`);
+      }
+    }
+  }
+}
+
+function applyDamage(actor, amount, onDefeated) {
+  const damage = clampInt(amount, 0, 9999, 0);
+  const wasAlive = actor.hp > 0;
+  actor.hp = Math.max(0, actor.hp - damage);
+  if (wasAlive && actor.hp <= 0 && typeof onDefeated === "function") {
+    onDefeated(actor.id);
+  }
+}
+
+function cloneStatus(status) {
+  return {
+    ...status
   };
 }
 
@@ -713,8 +954,8 @@ async function handleSubmitAction(supabase, payload) {
     guest_hp: resolved.hp_after.guest,
     host_anger: resolved.anger_after.host,
     guest_anger: resolved.anger_after.guest,
-    host_statuses: [],
-    guest_statuses: [],
+    host_statuses: resolved.statuses_after.host,
+    guest_statuses: resolved.statuses_after.guest,
     host_free_dodge_used: resolved.free_dodge_used.host,
     guest_free_dodge_used: resolved.free_dodge_used.guest,
     last_resolved_round: roundNo,

@@ -1,10 +1,15 @@
 ﻿const { setTimeout: sleep } = require("node:timers/promises");
 
+const { existsSync, readFileSync } = require("node:fs");
+const { resolve } = require("node:path");
+
 let createClient = null;
+let createClientLoadError = null;
 try {
   ({ createClient } = require("@supabase/supabase-js"));
-} catch {
+} catch (error) {
   createClient = null;
+  createClientLoadError = error instanceof Error ? error.message : String(error);
 }
 
 let websocketTransport = null;
@@ -17,14 +22,23 @@ try {
 const DEFAULT_FUNCTION_NAME = "duel-online";
 const DEFAULT_WAIT_TIMEOUT_MS = 12000;
 const DEFAULT_WAIT_INTERVAL_MS = 350;
+const LAUNCHER_ENV_FILE = "local-online-env.cmd";
 
 class OnlineDuelService {
   constructor(options = {}) {
-    this.supabaseUrl = options.supabaseUrl || process.env.SUPABASE_URL || "";
-    this.supabaseAnonKey = options.supabaseAnonKey || process.env.SUPABASE_ANON_KEY || "";
-    this.functionName = options.functionName || process.env.SUPABASE_DUEL_FUNCTION || DEFAULT_FUNCTION_NAME;
+    const fallbackEnv = loadLauncherEnvFallback();
+    this.supabaseUrl =
+      options.supabaseUrl || process.env.SUPABASE_URL || fallbackEnv.SUPABASE_URL || "";
+    this.supabaseAnonKey =
+      options.supabaseAnonKey || process.env.SUPABASE_ANON_KEY || fallbackEnv.SUPABASE_ANON_KEY || "";
+    this.functionName =
+      options.functionName ||
+      process.env.SUPABASE_DUEL_FUNCTION ||
+      fallbackEnv.SUPABASE_DUEL_FUNCTION ||
+      DEFAULT_FUNCTION_NAME;
 
     this.available = Boolean(createClient);
+    this.availabilityError = this.available ? null : createClientLoadError || "supabase client unavailable";
     this.configured = Boolean(this.supabaseUrl && this.supabaseAnonKey);
     this.enabled = this.available && this.configured;
 
@@ -82,7 +96,10 @@ class OnlineDuelService {
     return {
       enabled: this.enabled,
       available: this.available,
+      availabilityError: this.availabilityError,
       configured: this.configured,
+      hasSupabaseUrl: Boolean(this.supabaseUrl),
+      hasSupabaseAnonKey: Boolean(this.supabaseAnonKey),
       room: this.room ? { ...this.room } : null,
       side: this.side,
       currentUser: this.currentUser ? { ...this.currentUser } : null
@@ -464,7 +481,7 @@ class OnlineDuelService {
         hp: clampInt(room[`${playerPrefix}_hp`], 0, 120, 120),
         maxHp: 120,
         anger: clampInt(room[`${playerPrefix}_anger`], 0, 100, 0),
-        statuses: []
+        statuses: normalizeStatusList(room[`${playerPrefix}_statuses`])
       },
       enemy: {
         id: "enemy",
@@ -472,7 +489,7 @@ class OnlineDuelService {
         hp: clampInt(room[`${enemyPrefix}_hp`], 0, 120, 120),
         maxHp: 120,
         anger: clampInt(room[`${enemyPrefix}_anger`], 0, 100, 0),
-        statuses: []
+        statuses: normalizeStatusList(room[`${enemyPrefix}_statuses`])
       }
     };
   }
@@ -513,12 +530,12 @@ class OnlineDuelService {
           enemy: clampInt(result.direct_damage?.[enemySide], 0, 9999, 0)
         },
         dotDamageEvents: {
-          player: [],
-          enemy: []
+          player: normalizeRoundEvents(result.dot_damage_events?.[playerSide]),
+          enemy: normalizeRoundEvents(result.dot_damage_events?.[enemySide])
         },
         healEvents: {
-          player: [],
-          enemy: []
+          player: normalizeRoundEvents(result.heal_events?.[playerSide]),
+          enemy: normalizeRoundEvents(result.heal_events?.[enemySide])
         },
         winner:
           normalizeWinnerSide(result.winner_side) === playerSide
@@ -560,6 +577,8 @@ function normalizeRoom(input) {
     guest_anger: clampInt(input.guest_anger, 0, 100, 0),
     host_free_dodge_used: Boolean(input.host_free_dodge_used),
     guest_free_dodge_used: Boolean(input.guest_free_dodge_used),
+    host_statuses: normalizeStatusList(input.host_statuses),
+    guest_statuses: normalizeStatusList(input.guest_statuses),
     winner_side: normalizeWinnerSide(input.winner_side),
     created_at: normalizeString(input.created_at) || null,
     updated_at: normalizeString(input.updated_at) || null
@@ -585,6 +604,18 @@ function normalizeRound(input) {
       direct_damage: {
         host: clampInt(result.direct_damage?.host, 0, 9999, 0),
         guest: clampInt(result.direct_damage?.guest, 0, 9999, 0)
+      },
+      dot_damage_events: {
+        host: normalizeRoundEvents(result.dot_damage_events?.host),
+        guest: normalizeRoundEvents(result.dot_damage_events?.guest)
+      },
+      heal_events: {
+        host: normalizeRoundEvents(result.heal_events?.host),
+        guest: normalizeRoundEvents(result.heal_events?.guest)
+      },
+      statuses_after: {
+        host: normalizeStatusList(result.statuses_after?.host),
+        guest: normalizeStatusList(result.statuses_after?.guest)
       },
       notes: Array.isArray(result.notes) ? result.notes.slice(0, 20) : []
     },
@@ -652,6 +683,101 @@ function clampRoundsLimit(value) {
   const parsed = Number(value);
   if (!Number.isInteger(parsed)) return 20;
   return Math.max(1, Math.min(50, parsed));
+}
+
+function normalizeStatusList(input) {
+  if (!Array.isArray(input)) return [];
+  return input
+    .map(normalizeStatus)
+    .filter(Boolean)
+    .slice(0, 12);
+}
+
+function normalizeStatus(input) {
+  if (!input || typeof input !== "object") return null;
+  const type = normalizeString(input.type);
+  if (!type) return null;
+  const duration = clampInt(input.duration, 1, 12, 1);
+  const potency =
+    input.potency == null ? undefined : clampInt(input.potency, 1, 999, 1);
+  const stacks = clampInt(input.stacks, 1, 5, 1);
+  const sourceId = normalizeString(input.sourceId);
+  return {
+    type,
+    duration,
+    ...(potency != null ? { potency } : {}),
+    stacks,
+    stackable: Boolean(input.stackable),
+    ...(sourceId ? { sourceId } : {})
+  };
+}
+
+function normalizeRoundEvents(input) {
+  if (!Array.isArray(input)) return [];
+  return input
+    .map((item) => {
+      if (!item || typeof item !== "object") return null;
+      const type = normalizeString(item.type);
+      const amount = clampInt(item.amount, 0, 9999, 0);
+      if (!type || amount <= 0) return null;
+      return { type, amount };
+    })
+    .filter(Boolean)
+    .slice(0, 20);
+}
+
+function loadLauncherEnvFallback() {
+  const candidates = [
+    resolve(process.cwd(), "scripts", "desktop", LAUNCHER_ENV_FILE),
+    resolve(__dirname, "..", "..", "..", "..", "scripts", "desktop", LAUNCHER_ENV_FILE)
+  ];
+  for (const filePath of candidates) {
+    if (!existsSync(filePath)) continue;
+    try {
+      const content = readFileSync(filePath, "utf8");
+      const parsed = parseCmdEnvFile(content);
+      if (Object.keys(parsed).length > 0) {
+        return parsed;
+      }
+    } catch {
+      // Keep fallback non-blocking.
+    }
+  }
+  return {};
+}
+
+function parseCmdEnvFile(content) {
+  if (typeof content !== "string" || content.length === 0) return {};
+  const result = {};
+  const lines = content.split(/\r?\n/);
+  for (const line of lines) {
+    const text = line.trim();
+    if (!text) continue;
+    if (text.startsWith("::")) continue;
+    if (/^@?echo\b/i.test(text)) continue;
+    if (/^rem\b/i.test(text)) continue;
+
+    let match = text.match(/^set\s+"([^"=]+)=(.*)"$/i);
+    if (!match) {
+      match = text.match(/^set\s+([^=]+)=(.*)$/i);
+    }
+    if (!match) continue;
+
+    const key = normalizeString(match[1]);
+    if (!key) continue;
+    const value = normalizeCmdEnvValue(match[2]);
+    result[key.toUpperCase()] = value;
+  }
+  return result;
+}
+
+function normalizeCmdEnvValue(value) {
+  if (typeof value !== "string") return "";
+  const trimmed = value.trim();
+  if (trimmed.startsWith('"') && trimmed.endsWith('"') && trimmed.length >= 2) {
+    return trimmed.slice(1, -1);
+  }
+  return trimmed;
 }
 
 module.exports = {

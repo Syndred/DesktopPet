@@ -43,11 +43,20 @@ contextBridge.exposeInMainWorld("petApi", {
   searchUsers(keyword, limit) {
     return ipcRenderer.invoke("pet:user-search", { keyword, limit });
   },
-  sendDuelRequest(targetAccount) {
-    return ipcRenderer.invoke("pet:duel-request-send", { targetAccount });
+  sendDuelRequest(targetAccount, options) {
+    return ipcRenderer.invoke("pet:duel-request-send", {
+      targetAccount,
+      allowResend: Boolean(options?.allowResend)
+    });
   },
   listDuelRequests() {
     return ipcRenderer.invoke("pet:duel-request-list");
+  },
+  respondDuelRequest(payload) {
+    return ipcRenderer.invoke("pet:duel-request-respond", payload ?? {});
+  },
+  cancelDuelRequest(requestId) {
+    return ipcRenderer.invoke("pet:duel-request-cancel", { requestId });
   },
   getOnlineDuelStatus() {
     return ipcRenderer.invoke("pet:duel-online-status");

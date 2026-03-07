@@ -90,6 +90,7 @@ const DEFAULT_REPORT_LIMIT = 10;
 const LEVEL_UP_REQUIRED_WINS = 5;
 const DEFAULT_USER_SEARCH_LIMIT = 12;
 const MAX_DUEL_REQUESTS = 500;
+const DUEL_REQUEST_RESEND_INTERVAL_MS = 30 * 1000;
 
 const ALLOWED_ELEMENTS = new Set(["metal", "wood", "earth", "water", "fire"]);
 const ALLOWED_BATTLE_STATUS = new Set(["finished", "abandoned"]);
@@ -136,10 +137,32 @@ const SPECIES_META_BY_ELEMENT = {
 class RuntimeDataStore {
   constructor(options = {}) {
     this.filePath = options.filePath;
+    this.sessionFilePath =
+      typeof options.sessionFilePath === "string" && options.sessionFilePath.trim().length > 0
+        ? options.sessionFilePath.trim()
+        : null;
     if (!this.filePath) {
       throw new Error("RuntimeDataStore requires filePath");
     }
     this.state = this.loadState();
+    const persistedSessionUserId = this.loadSessionUserId();
+    const fromSessionFile = normalizeCurrentUserId(persistedSessionUserId, this.state.users);
+    const fromSharedState = normalizeCurrentUserId(this.state.currentUserId, this.state.users);
+    this.sessionUserId = this.sessionFilePath ? fromSessionFile : fromSessionFile || fromSharedState;
+  }
+
+  refreshStateFromDisk() {
+    const previousSessionUserId = this.sessionUserId;
+    this.state = this.loadState();
+    const persistedSessionUserId = this.loadSessionUserId();
+    const storedUserId = normalizeCurrentUserId(this.state.currentUserId, this.state.users);
+    const keepPreviousSession = normalizeCurrentUserId(previousSessionUserId, this.state.users);
+    const keepPersistedSession = normalizeCurrentUserId(persistedSessionUserId, this.state.users);
+    this.sessionUserId = this.sessionFilePath
+      ? keepPreviousSession || keepPersistedSession || null
+      : keepPreviousSession || keepPersistedSession || storedUserId || null;
+    this.state.currentUserId = this.sessionUserId;
+    return this.state;
   }
 
   getInventorySnapshot() {
@@ -289,7 +312,8 @@ class RuntimeDataStore {
   }
 
   getAuthSession() {
-    const user = this.state.users.find((item) => item.id === this.state.currentUserId) || null;
+    this.refreshStateFromDisk();
+    const user = this.state.users.find((item) => item.id === this.sessionUserId) || null;
     return {
       ok: true,
       currentUser: user ? toPublicUser(user) : null
@@ -297,6 +321,7 @@ class RuntimeDataStore {
   }
 
   registerUser(account, password, username) {
+    this.refreshStateFromDisk();
     const normalizedAccount = normalizeAccount(account);
     const normalizedPassword = normalizePassword(password);
     const normalizedUsername = normalizeUsername(
@@ -323,7 +348,8 @@ class RuntimeDataStore {
       lastLoginAt: now
     };
     this.state.users = [user, ...this.state.users].slice(0, 5000);
-    this.state.currentUserId = user.id;
+    this.sessionUserId = user.id;
+    this.state.currentUserId = this.sessionUserId;
     this.state.updatedAt = now;
     this.persistState();
     return {
@@ -333,6 +359,7 @@ class RuntimeDataStore {
   }
 
   loginUser(account, password) {
+    this.refreshStateFromDisk();
     const normalizedAccount = normalizeAccount(account);
     const normalizedPassword = normalizePassword(password);
     const accountKey = normalizedAccount.toLowerCase();
@@ -354,7 +381,8 @@ class RuntimeDataStore {
 
     user.lastLoginAt = new Date().toISOString();
     user.updatedAt = user.lastLoginAt;
-    this.state.currentUserId = user.id;
+    this.sessionUserId = user.id;
+    this.state.currentUserId = this.sessionUserId;
     this.state.updatedAt = user.updatedAt;
     this.persistState();
     return {
@@ -364,6 +392,8 @@ class RuntimeDataStore {
   }
 
   logoutUser() {
+    this.refreshStateFromDisk();
+    this.sessionUserId = null;
     this.state.currentUserId = null;
     this.state.updatedAt = new Date().toISOString();
     this.persistState();
@@ -374,7 +404,8 @@ class RuntimeDataStore {
   }
 
   updateCurrentUserProfile(payload = {}) {
-    const currentUser = this.state.users.find((item) => item.id === this.state.currentUserId) || null;
+    this.refreshStateFromDisk();
+    const currentUser = this.state.users.find((item) => item.id === this.sessionUserId) || null;
     if (!currentUser) {
       return {
         ok: false,
@@ -465,9 +496,10 @@ class RuntimeDataStore {
   }
 
   searchUsers(keyword, limit = DEFAULT_USER_SEARCH_LIMIT) {
+    this.refreshStateFromDisk();
     const query = typeof keyword === "string" ? keyword.trim().toLowerCase() : "";
     const safeLimit = Math.max(1, Math.min(50, Number(limit) || DEFAULT_USER_SEARCH_LIMIT));
-    const currentUserId = this.state.currentUserId;
+    const currentUserId = this.sessionUserId;
     const list = this.state.users
       .filter((item) => item.id !== currentUserId)
       .filter((item) => query.length === 0 || item.accountKey.includes(query))
@@ -479,8 +511,9 @@ class RuntimeDataStore {
     };
   }
 
-  sendDuelRequest(targetAccount) {
-    const fromUser = this.state.users.find((item) => item.id === this.state.currentUserId) || null;
+  sendDuelRequest(targetAccount, options = {}) {
+    this.refreshStateFromDisk();
+    const fromUser = this.state.users.find((item) => item.id === this.sessionUserId) || null;
     if (!fromUser) {
       return {
         ok: false,
@@ -510,6 +543,30 @@ class RuntimeDataStore {
       return sameDirection || reverseDirection;
     });
     if (duplicate) {
+      const allowResend = Boolean(options?.allowResend);
+      if (allowResend && duplicate.fromUserId === fromUser.id) {
+        const now = new Date();
+        const lastTouchedAt = isoDateToTimestamp(duplicate.updatedAt || duplicate.createdAt);
+        const elapsedMs = Math.max(0, now.getTime() - lastTouchedAt);
+        if (elapsedMs < DUEL_REQUEST_RESEND_INTERVAL_MS) {
+          return {
+            ok: false,
+            error: "resend too frequent",
+            retryAfterSeconds: Math.ceil((DUEL_REQUEST_RESEND_INTERVAL_MS - elapsedMs) / 1000),
+            request: cloneDuelRequest(duplicate)
+          };
+        }
+        const updatedAt = now.toISOString();
+        duplicate.updatedAt = updatedAt;
+        this.state.duelRequests = [duplicate, ...this.state.duelRequests.filter((item) => item.id !== duplicate.id)];
+        this.state.updatedAt = updatedAt;
+        this.persistState();
+        return {
+          ok: true,
+          resent: true,
+          request: cloneDuelRequest(duplicate)
+        };
+      }
       return {
         ok: false,
         error: "pending duel request already exists",
@@ -525,6 +582,9 @@ class RuntimeDataStore {
       toUserId: toUser.id,
       toAccount: toUser.account,
       status: "pending",
+      roomId: null,
+      roomCode: null,
+      roomStatus: null,
       createdAt: now,
       updatedAt: now
     };
@@ -537,8 +597,139 @@ class RuntimeDataStore {
     };
   }
 
+  respondDuelRequest(requestId, decision, options = {}) {
+    this.refreshStateFromDisk();
+    const currentUser = this.state.users.find((item) => item.id === this.sessionUserId) || null;
+    if (!currentUser) {
+      return {
+        ok: false,
+        error: "login required"
+      };
+    }
+
+    const normalizedRequestId = typeof requestId === "string" ? requestId.trim() : "";
+    if (!normalizedRequestId) {
+      return {
+        ok: false,
+        error: "request id is required"
+      };
+    }
+    const request = this.state.duelRequests.find((item) => item.id === normalizedRequestId) || null;
+    if (!request) {
+      return {
+        ok: false,
+        error: "duel request not found"
+      };
+    }
+    if (request.toUserId !== currentUser.id) {
+      return {
+        ok: false,
+        error: "request is not inbound"
+      };
+    }
+    if (request.status !== "pending") {
+      return {
+        ok: false,
+        error: "duel request already resolved",
+        request: cloneDuelRequest(request)
+      };
+    }
+
+    const normalizedDecision = typeof decision === "string" ? decision.trim().toLowerCase() : "";
+    if (normalizedDecision !== "accept" && normalizedDecision !== "reject") {
+      return {
+        ok: false,
+        error: "invalid duel request decision"
+      };
+    }
+    const status = normalizedDecision === "accept" ? "accepted" : "rejected";
+    const now = new Date().toISOString();
+    request.status = status;
+    if (status === "accepted") {
+      const roomId =
+        typeof options.roomId === "string" && options.roomId.trim().length > 0
+          ? options.roomId.trim()
+          : null;
+      const roomCode =
+        typeof options.roomCode === "string" && options.roomCode.trim().length > 0
+          ? options.roomCode.trim().toUpperCase()
+          : null;
+      const roomStatus =
+        typeof options.roomStatus === "string" && options.roomStatus.trim().length > 0
+          ? options.roomStatus.trim().toLowerCase()
+          : null;
+      request.roomId = roomId;
+      request.roomCode = roomCode;
+      request.roomStatus = roomStatus;
+    } else {
+      request.roomId = null;
+      request.roomCode = null;
+      request.roomStatus = null;
+    }
+    request.updatedAt = now;
+    this.state.updatedAt = now;
+    this.persistState();
+    return {
+      ok: true,
+      request: cloneDuelRequest(request)
+    };
+  }
+
+  cancelDuelRequest(requestId) {
+    this.refreshStateFromDisk();
+    const currentUser = this.state.users.find((item) => item.id === this.sessionUserId) || null;
+    if (!currentUser) {
+      return {
+        ok: false,
+        error: "login required"
+      };
+    }
+
+    const normalizedRequestId = typeof requestId === "string" ? requestId.trim() : "";
+    if (!normalizedRequestId) {
+      return {
+        ok: false,
+        error: "request id is required"
+      };
+    }
+    const request = this.state.duelRequests.find((item) => item.id === normalizedRequestId) || null;
+    if (!request) {
+      return {
+        ok: false,
+        error: "duel request not found"
+      };
+    }
+    if (request.fromUserId !== currentUser.id) {
+      return {
+        ok: false,
+        error: "request is not outbound"
+      };
+    }
+    if (request.status !== "pending") {
+      return {
+        ok: false,
+        error: "duel request already resolved",
+        request: cloneDuelRequest(request)
+      };
+    }
+
+    const now = new Date().toISOString();
+    request.status = "cancelled";
+    request.roomId = null;
+    request.roomCode = null;
+    request.roomStatus = null;
+    request.updatedAt = now;
+    this.state.updatedAt = now;
+    this.persistState();
+    return {
+      ok: true,
+      request: cloneDuelRequest(request)
+    };
+  }
+
   listDuelRequests() {
-    const currentUserId = this.state.currentUserId;
+    this.refreshStateFromDisk();
+    const currentUserId = this.sessionUserId;
     if (!currentUserId) {
       return {
         ok: false,
@@ -581,12 +772,41 @@ class RuntimeDataStore {
   }
 
   persistState() {
+    this.state.currentUserId = this.sessionFilePath ? null : this.sessionUserId || null;
     this.persistRaw(this.state);
+    this.persistSessionUserId();
   }
 
   persistRaw(state) {
     mkdirSync(dirname(this.filePath), { recursive: true });
     writeFileSync(this.filePath, JSON.stringify(state, null, 2), "utf8");
+  }
+
+  loadSessionUserId() {
+    if (!this.sessionFilePath || !existsSync(this.sessionFilePath)) {
+      return null;
+    }
+    try {
+      const raw = readFileSync(this.sessionFilePath, "utf8");
+      const parsed = JSON.parse(raw);
+      if (typeof parsed?.currentUserId === "string" && parsed.currentUserId.trim().length > 0) {
+        return parsed.currentUserId.trim();
+      }
+      return null;
+    } catch {
+      return null;
+    }
+  }
+
+  persistSessionUserId() {
+    if (!this.sessionFilePath) return;
+    const payload = {
+      version: 1,
+      currentUserId: this.sessionUserId || null,
+      updatedAt: new Date().toISOString()
+    };
+    mkdirSync(dirname(this.sessionFilePath), { recursive: true });
+    writeFileSync(this.sessionFilePath, JSON.stringify(payload, null, 2), "utf8");
   }
 }
 
@@ -1129,6 +1349,16 @@ function normalizeDuelRequest(input, userIdSet) {
       ? input.toAccount.trim()
       : toUserId;
   const status = ALLOWED_DUEL_REQUEST_STATUS.has(input.status) ? input.status : "pending";
+  const roomId =
+    typeof input.roomId === "string" && input.roomId.trim().length > 0 ? input.roomId.trim() : null;
+  const roomCode =
+    typeof input.roomCode === "string" && input.roomCode.trim().length > 0
+      ? input.roomCode.trim().toUpperCase()
+      : null;
+  const roomStatus =
+    typeof input.roomStatus === "string" && input.roomStatus.trim().length > 0
+      ? input.roomStatus.trim().toLowerCase()
+      : null;
   const now = new Date().toISOString();
   return {
     id: input.id.trim(),
@@ -1137,6 +1367,9 @@ function normalizeDuelRequest(input, userIdSet) {
     toUserId,
     toAccount,
     status,
+    roomId,
+    roomCode,
+    roomStatus,
     createdAt: isIsoDate(input.createdAt) ? input.createdAt : now,
     updatedAt: isIsoDate(input.updatedAt) ? input.updatedAt : now
   };
@@ -1154,6 +1387,11 @@ function toPublicUser(user) {
 
 function isIsoDate(input) {
   return typeof input === "string" && input.trim().length >= 16 && !Number.isNaN(Date.parse(input));
+}
+
+function isoDateToTimestamp(input) {
+  const parsed = Date.parse(typeof input === "string" ? input : "");
+  return Number.isFinite(parsed) ? parsed : 0;
 }
 
 function clonePet(pet) {
@@ -1193,6 +1431,9 @@ function cloneDuelRequest(request) {
     toUserId: request.toUserId,
     toAccount: request.toAccount,
     status: request.status,
+    roomId: request.roomId || null,
+    roomCode: request.roomCode || null,
+    roomStatus: request.roomStatus || null,
     createdAt: request.createdAt,
     updatedAt: request.updatedAt
   };

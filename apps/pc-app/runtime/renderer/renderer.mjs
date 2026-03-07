@@ -115,6 +115,8 @@ const i18n = {
     resetBattle: "开始对战",
     endBattle: "结束对战",
     closePanel: "关闭面板",
+    sectionCollapse: "收起分组",
+    sectionExpand: "展开分组",
     actionNormal: "普攻",
     actionElement: "属性",
     actionDodge: "闪避",
@@ -210,6 +212,8 @@ const i18n = {
     authSearchPlaceholder: "输入账号关键字",
     authSearchEmpty: "未找到可发起对战的账号。",
     authSearchSend: "发起申请",
+    authSearchResend: "补发申请",
+    authSearchResendCooldown: "{seconds}s 后可补发",
     authSearchSelf: "不能挑战自己",
     authRequestTitle: "对战申请",
     authRequestInbound: "收到申请",
@@ -219,26 +223,42 @@ const i18n = {
     authRequestAccepted: "已接受",
     authRequestRejected: "已拒绝",
     authRequestCancelled: "已取消",
+    authRequestAcceptBtn: "接受",
+    authRequestRejectBtn: "拒绝",
+    authRequestCancelBtn: "取消",
     authLogoutLog: "已退出登录。",
     authSearchErrorLog: "账号搜索失败：{message}",
     authActionFailLog: "账号操作失败：{message}",
     authSendRequestSuccessLog: "已向 {account} 发起对战申请。",
+    authSendRequestResentLog: "已向 {account} 补发对战申请。",
     authSendRequestFailLog: "发起对战申请失败：{message}",
+    authRequestRespondSuccessLog: "已{decision}来自 {account} 的对战申请。",
+    authRequestCancelSuccessLog: "已取消发给 {account} 的对战申请。",
+    authRequestAcceptedGuideLog: "申请通过后自动建房并同步房间号，双方将自动进入联机房。",
+    authRequestMatchedRoomLog: "匹配房间已创建：{roomCode}，正在等待对手加入。",
+    authRequestAutoJoinLog: "检测到匹配房间：{roomCode}，正在自动加入。",
+    authInboundRequestLog: "收到新的对战申请：{accounts}。",
+    authInboundRequestToastSingle: "收到来自 {account} 的对战申请（右键宠物打开面板可处理）",
+    authInboundRequestToastMulti: "收到 {count} 条新的对战申请（右键宠物打开面板可处理）",
     duelOnlineRoomLabel: "联机房间号",
     duelOnlineCreateBtn: "创建联机房",
     duelOnlineJoinBtn: "加入房间",
     duelOnlineLeaveBtn: "离开房间",
     duelOnlineStatusNeedLogin: "联机状态：请先登录",
+    duelOnlineStatusInitializing: "联机状态：初始化中...",
+    duelOnlineStatusUnavailable: "联机状态：Supabase 客户端不可用（请先执行 npm install）",
     duelOnlineStatusDisabled: "联机状态：未配置 SUPABASE_URL / SUPABASE_ANON_KEY",
+    duelOnlineStatusDisabledDetail: "联机状态：未配置 {keys}",
     duelOnlineStatusIdle: "联机状态：未加入房间",
     duelOnlineStatusWaiting: "联机状态：房间 {roomCode} 等待对手",
-    duelOnlineStatusActive: "联机状态：房间 {roomCode} 对战中",
+    duelOnlineStatusActive: "联机状态：房间 {roomCode} 对战中（点“开始对战”进入）",
     duelOnlineStatusFinished: "联机状态：房间 {roomCode} 已结束",
     duelOnlineCreateSuccessLog: "联机房已创建：{roomCode}",
     duelOnlineJoinSuccessLog: "已加入联机房：{roomCode}",
     duelOnlineLeaveLog: "已离开联机房。",
     duelOnlineActionFailLog: "联机操作失败：{message}",
     duelOnlineResetLog: "联机对战已同步，房间号：{roomCode}",
+    duelOnlineAutoEnterLog: "检测到房间 {roomCode} 已开战，正在自动进入对战。",
     battleReportTitle: "最近战报",
     battleReportEmpty: "暂无战报，先开一局对战吧。",
     battleReportFinished: "已结算",
@@ -353,6 +373,8 @@ const i18n = {
     resetBattle: "Start Battle",
     endBattle: "End Battle",
     closePanel: "Close Panel",
+    sectionCollapse: "Collapse section",
+    sectionExpand: "Expand section",
     actionNormal: "Normal",
     actionElement: "Element",
     actionDodge: "Dodge",
@@ -448,6 +470,8 @@ const i18n = {
     authSearchPlaceholder: "Enter account keyword",
     authSearchEmpty: "No account found for duel request.",
     authSearchSend: "Request Duel",
+    authSearchResend: "Resend",
+    authSearchResendCooldown: "Resend in {seconds}s",
     authSearchSelf: "Cannot challenge yourself",
     authRequestTitle: "Duel Requests",
     authRequestInbound: "Inbound",
@@ -457,26 +481,45 @@ const i18n = {
     authRequestAccepted: "Accepted",
     authRequestRejected: "Rejected",
     authRequestCancelled: "Cancelled",
+    authRequestAcceptBtn: "Accept",
+    authRequestRejectBtn: "Reject",
+    authRequestCancelBtn: "Cancel",
     authLogoutLog: "Logged out.",
     authSearchErrorLog: "Account search failed: {message}",
     authActionFailLog: "Auth action failed: {message}",
     authSendRequestSuccessLog: "Duel request sent to {account}.",
+    authSendRequestResentLog: "Duel request resent to {account}.",
     authSendRequestFailLog: "Duel request failed: {message}",
+    authRequestRespondSuccessLog: "Request from {account} has been {decision}.",
+    authRequestCancelSuccessLog: "Cancelled request sent to {account}.",
+    authRequestAcceptedGuideLog:
+      "Accepting request now auto-creates a room and shares room code to both sides.",
+    authRequestMatchedRoomLog: "Match room created: {roomCode}. Waiting for opponent.",
+    authRequestAutoJoinLog: "Matched room detected: {roomCode}. Auto joining...",
+    authInboundRequestLog: "New duel request(s) received: {accounts}.",
+    authInboundRequestToastSingle:
+      "New duel request from {account} (right-click pet to open panel and respond)",
+    authInboundRequestToastMulti:
+      "Received {count} new duel requests (right-click pet to open panel and respond)",
     duelOnlineRoomLabel: "Online Room Code",
     duelOnlineCreateBtn: "Create Online Room",
     duelOnlineJoinBtn: "Join Room",
     duelOnlineLeaveBtn: "Leave Room",
     duelOnlineStatusNeedLogin: "Online: login required",
+    duelOnlineStatusInitializing: "Online: initializing...",
+    duelOnlineStatusUnavailable: "Online: Supabase client unavailable (run npm install first)",
     duelOnlineStatusDisabled: "Online: SUPABASE_URL / SUPABASE_ANON_KEY not configured",
+    duelOnlineStatusDisabledDetail: "Online: missing {keys}",
     duelOnlineStatusIdle: "Online: no room joined",
     duelOnlineStatusWaiting: "Online: room {roomCode} waiting for opponent",
-    duelOnlineStatusActive: "Online: room {roomCode} active",
+    duelOnlineStatusActive: "Online: room {roomCode} active (click Start Battle)",
     duelOnlineStatusFinished: "Online: room {roomCode} finished",
     duelOnlineCreateSuccessLog: "Online room created: {roomCode}",
     duelOnlineJoinSuccessLog: "Joined online room: {roomCode}",
     duelOnlineLeaveLog: "Left online room.",
     duelOnlineActionFailLog: "Online operation failed: {message}",
     duelOnlineResetLog: "Online battle synced. Room: {roomCode}",
+    duelOnlineAutoEnterLog: "Room {roomCode} is active. Auto entering battle.",
     battleReportTitle: "Recent Battle Reports",
     battleReportEmpty: "No reports yet. Start a battle to generate one.",
     battleReportFinished: "Finished",
@@ -696,8 +739,11 @@ const uiRefs = {
 };
 
 const LANG_STORAGE_KEY = "qp_runtime_lang";
+const PANEL_SECTION_STATE_STORAGE_KEY = "qp_panel_section_state_v1";
 
 let language = getInitialLanguage();
+let panelSectionState = loadPanelSectionState();
+let panelSectionToggleEntries = [];
 let isPaused = false;
 let isInteractive = false;
 let lastHitReportAt = 0;
@@ -736,6 +782,10 @@ let onlineDuelState = {
   enabled: false,
   available: false,
   configured: false,
+  statusLoaded: false,
+  availabilityError: null,
+  hasSupabaseUrl: false,
+  hasSupabaseAnonKey: false,
   room: null,
   side: null
 };
@@ -743,6 +793,9 @@ let authSearchExecuted = false;
 let profileUpdatePending = false;
 
 const ACTION_COUNTDOWN_SECONDS = 10;
+const DUEL_SYNC_POLL_INTERVAL_MS = 1200;
+const DUEL_REQUEST_RESEND_INTERVAL_MS = 30 * 1000;
+const DUEL_REQUEST_TOAST_DURATION_MS = 4200;
 const LEVEL_UP_REQUIRED_WINS = 5;
 const IDLE_WINDOW_SCALE_STEP = 0.04;
 const IDLE_WINDOW_SCALE_MIN = 0.82;
@@ -766,6 +819,15 @@ let idleModelBaseSize = {
 let idleWheelScaleDelta = 0;
 let idleWheelFrameToken = null;
 let panelTransitionSeq = 0;
+let duelSyncPollingTimer = null;
+let duelSyncPollingInFlight = false;
+let duelRequestsInitialized = false;
+let pendingInboundRequestIds = new Set();
+let duelRequestToastElement = null;
+let duelRequestToastTimer = null;
+let onlineBattleAutoEnterInFlight = false;
+const autoJoinHandledRequestIds = new Set();
+let duelAutoJoinInFlight = false;
 let freeDodgeUsedBySide = {
   player: false,
   enemy: false
@@ -788,6 +850,109 @@ function getInitialLanguage() {
   const stored = localStorage.getItem(LANG_STORAGE_KEY);
   if (stored === "en" || stored === "zh") return stored;
   return "zh";
+}
+
+function loadPanelSectionState() {
+  try {
+    const raw = localStorage.getItem(PANEL_SECTION_STATE_STORAGE_KEY);
+    if (!raw) return {};
+    const parsed = JSON.parse(raw);
+    if (!parsed || typeof parsed !== "object") return {};
+    return parsed;
+  } catch {
+    return {};
+  }
+}
+
+function savePanelSectionState() {
+  try {
+    localStorage.setItem(PANEL_SECTION_STATE_STORAGE_KEY, JSON.stringify(panelSectionState));
+  } catch {
+    // Keep local persistence best-effort.
+  }
+}
+
+function resolvePanelSectionKey(sectionElement, index) {
+  const explicitKey = sectionElement.getAttribute("data-section-key");
+  if (explicitKey && explicitKey.trim().length > 0) return explicitKey.trim();
+  const titleId = sectionElement.querySelector("h2[id]")?.id;
+  if (titleId && titleId.trim().length > 0) return titleId.trim();
+  return `section-${index}`;
+}
+
+function applyPanelSectionExpanded(entry, expanded, options = {}) {
+  if (!entry || !entry.section || !entry.body || !entry.button) return;
+  const normalized = Boolean(expanded);
+  entry.section.classList.toggle("collapsed", !normalized);
+  entry.body.classList.toggle("hidden", !normalized);
+  entry.button.setAttribute("aria-expanded", String(normalized));
+  entry.button.textContent = normalized ? "-" : "+";
+  const label = normalized ? currentI18n().sectionCollapse : currentI18n().sectionExpand;
+  entry.button.setAttribute("aria-label", label);
+  entry.button.title = label;
+
+  if (options.persist) {
+    panelSectionState[entry.key] = normalized;
+    savePanelSectionState();
+  }
+}
+
+function refreshPanelSectionToggleLabels() {
+  for (const entry of panelSectionToggleEntries) {
+    const expanded = entry.button.getAttribute("aria-expanded") === "true";
+    applyPanelSectionExpanded(entry, expanded, { persist: false });
+  }
+}
+
+function setupPanelSectionToggles() {
+  if (!panelElement) return;
+  if (panelSectionToggleEntries.length > 0) {
+    refreshPanelSectionToggleLabels();
+    return;
+  }
+
+  const sections = panelElement.querySelectorAll(".panel-section");
+  sections.forEach((sectionElement, index) => {
+    const titleElement = sectionElement.querySelector("h2");
+    if (!titleElement) return;
+
+    const header = document.createElement("div");
+    header.className = "panel-section-header";
+    sectionElement.insertBefore(header, titleElement);
+    header.appendChild(titleElement);
+
+    const body = document.createElement("div");
+    body.className = "panel-section-body";
+    while (header.nextSibling) {
+      body.appendChild(header.nextSibling);
+    }
+    sectionElement.appendChild(body);
+
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "panel-section-toggle";
+    header.appendChild(button);
+
+    const key = resolvePanelSectionKey(sectionElement, index);
+    sectionElement.setAttribute("data-section-key", key);
+    const entry = {
+      key,
+      section: sectionElement,
+      body,
+      button
+    };
+    panelSectionToggleEntries.push(entry);
+
+    const expanded = panelSectionState[key] !== false;
+    applyPanelSectionExpanded(entry, expanded, { persist: false });
+    button.addEventListener("click", () => {
+      const currentExpanded = button.getAttribute("aria-expanded") === "true";
+      applyPanelSectionExpanded(entry, !currentExpanded, { persist: true });
+      syncInventoryListHeight();
+      positionPetDetailPopover();
+      updateBattleHudTop();
+    });
+  });
 }
 
 function currentI18n() {
@@ -819,6 +984,13 @@ function localizeAuthErrorMessage(message) {
     ["target account not found", "目标账号不存在"],
     ["cannot challenge yourself", "不能挑战自己"],
     ["pending duel request already exists", "已存在待处理的对战申请"],
+    ["resend too frequent", "补发太频繁，请稍后再试"],
+    ["request id is required", "请求编号不能为空"],
+    ["duel request not found", "对战申请不存在"],
+    ["request is not inbound", "只能处理收到的申请"],
+    ["request is not outbound", "只能取消自己发出的申请"],
+    ["duel request already resolved", "该申请已处理"],
+    ["invalid duel request decision", "申请处理动作不合法"],
     ["username is required", "用户名不能为空"],
     ["username length must be 2-24", "用户名长度需在 2-24 之间"],
     ["old password is required", "请输入旧密码"],
@@ -1057,6 +1229,7 @@ function closeTopLayerByEsc() {
 function setPanelVisible(visible) {
   const seq = ++panelTransitionSeq;
   if (visible) {
+    hideDuelRequestToast();
     closeUserMenu();
     setProfileModalVisible(false);
     // Hide scene immediately, then reveal panel after layout switch to avoid top-left flash.
@@ -1098,7 +1271,7 @@ function reportHitState() {
       ? isPointInsideRect(x, y, enemyCard.getBoundingClientRect())
       : false;
 
-  const panelVisible = !panelElement.classList.contains("hidden");
+  const panelVisible = isPanelVisible();
   const insidePanel = panelVisible && isPointInsideRect(x, y, panelElement.getBoundingClientRect());
   const insideIdleScene =
     !battleMode &&
@@ -1150,6 +1323,142 @@ function formatStatuses(statuses) {
 
 function formatAction(action) {
   return currentI18n().actionNames[action] ?? action;
+}
+
+function resolveRoundSidePerspective(sideToken) {
+  const side = typeof sideToken === "string" ? sideToken.trim().toLowerCase() : "";
+  if (side !== "host" && side !== "guest") return null;
+  const currentSide = onlineDuelState?.side === "guest" ? "guest" : "host";
+  return side === currentSide ? "player" : "enemy";
+}
+
+function getRoundSideText(sideToken) {
+  const perspective = resolveRoundSidePerspective(sideToken);
+  if (!perspective) return String(sideToken || "-");
+  if (language === "zh") {
+    return perspective === "player" ? "我方" : "敌方";
+  }
+  return perspective === "player" ? "You" : "Enemy";
+}
+
+function hasCjkText(text) {
+  return /[\u3400-\u9fff]/.test(text);
+}
+
+function hasLatinText(text) {
+  return /[A-Za-z]/.test(text);
+}
+
+function localizeRoundNote(note) {
+  const raw = typeof note === "string" ? note.trim() : "";
+  if (!raw) return "";
+
+  let match = raw.match(/^(host|guest) dodge downgraded to normal_attack \(anger <= 0\)$/i);
+  if (match) {
+    const sideText = getRoundSideText(match[1]);
+    return language === "zh"
+      ? `${sideText}怒气不足，闪避改为普攻`
+      : `${sideText} had dodge downgraded to normal attack (anger <= 0)`;
+  }
+
+  match = raw.match(/^(host|guest) ultimate downgraded to normal_attack \(anger < (\d+)\)$/i);
+  if (match) {
+    const sideText = getRoundSideText(match[1]);
+    const threshold = Number(match[2]) || 50;
+    return language === "zh"
+      ? `${sideText}怒气不足（<${threshold}），大招改为普攻`
+      : `${sideText} had ultimate downgraded to normal attack (anger < ${threshold})`;
+  }
+
+  match = raw.match(/^(host|guest) is stunned and cannot act$/i);
+  if (match) {
+    const sideText = getRoundSideText(match[1]);
+    return language === "zh" ? `${sideText}被眩晕，无法行动` : `${sideText} is stunned and cannot act`;
+  }
+
+  match = raw.match(/^(host|guest) action missed$/i);
+  if (match) {
+    const sideText = getRoundSideText(match[1]);
+    return language === "zh" ? `${sideText}本回合攻击落空` : `${sideText} action missed`;
+  }
+
+  match = raw.match(/^enemy burned x(\d+)$/i);
+  if (match) {
+    const stacks = Math.max(1, Number(match[1]) || 1);
+    return language === "zh" ? `目标附加灼烧 x${stacks}` : `Target inflicted burn x${stacks}`;
+  }
+
+  if (/^enemy frozen$/i.test(raw)) {
+    return language === "zh" ? "目标附加冻结" : "Target frozen";
+  }
+
+  match = raw.match(/^enemy parasitized x(\d+)$/i);
+  if (match) {
+    const stacks = Math.max(1, Number(match[1]) || 1);
+    return language === "zh" ? `目标附加寄生 x${stacks}` : `Target parasitized x${stacks}`;
+  }
+
+  match = raw.match(/^enemy vulnerable x(\d+)$/i);
+  if (match) {
+    const stacks = Math.max(1, Number(match[1]) || 1);
+    return language === "zh" ? `目标附加易伤 x${stacks}` : `Target vulnerable x${stacks}`;
+  }
+
+  if (/^enemy petrified$/i.test(raw)) {
+    return language === "zh" ? "目标附加石化" : "Target petrified";
+  }
+
+  match = raw.match(/^(host|guest) spends 20 anger on dodge$/i);
+  if (match) {
+    const sideText = getRoundSideText(match[1]);
+    return language === "zh" ? `${sideText}闪避消耗 20 怒气` : `${sideText} spends 20 anger on dodge`;
+  }
+
+  match = raw.match(/^(host|guest) uses first free dodge$/i);
+  if (match) {
+    const sideText = getRoundSideText(match[1]);
+    return language === "zh" ? `${sideText}使用首回免费闪避` : `${sideText} uses the first free dodge`;
+  }
+
+  match = raw.match(/^(host|guest) dodged normal attack and refunded 30 anger$/i);
+  if (match) {
+    const sideText = getRoundSideText(match[1]);
+    return language === "zh"
+      ? `${sideText}闪避普攻并返还 30 怒气`
+      : `${sideText} dodged normal attack and refunded 30 anger`;
+  }
+
+  match = raw.match(/^(host|guest) takes burn damage$/i);
+  if (match) {
+    const sideText = getRoundSideText(match[1]);
+    return language === "zh" ? `${sideText}受到灼烧伤害` : `${sideText} takes burn damage`;
+  }
+
+  match = raw.match(/^(host|guest) healed by parasite$/i);
+  if (match) {
+    const sideText = getRoundSideText(match[1]);
+    return language === "zh" ? `${sideText}因寄生回复生命` : `${sideText} healed by parasite`;
+  }
+
+  match = raw.match(/^(host|guest) takes parasite damage$/i);
+  if (match) {
+    const sideText = getRoundSideText(match[1]);
+    return language === "zh" ? `${sideText}受到寄生伤害` : `${sideText} takes parasite damage`;
+  }
+
+  if (language === "zh") {
+    if (hasCjkText(raw)) return raw;
+    if (hasLatinText(raw)) return "";
+  } else if (language === "en") {
+    if (hasLatinText(raw)) return raw;
+    if (hasCjkText(raw)) return "";
+  }
+  return raw;
+}
+
+function localizeRoundNotes(notes) {
+  if (!Array.isArray(notes)) return [];
+  return notes.map(localizeRoundNote).map((item) => item.trim()).filter(Boolean);
 }
 
 function getElementText(element) {
@@ -1448,13 +1757,157 @@ function isOnlineDuelReadyForBattle() {
 
 function applyOnlineDuelSnapshot(payload) {
   if (!payload || typeof payload !== "object") return;
+  const hasEnabled = typeof payload.enabled === "boolean";
+  const hasAvailable = typeof payload.available === "boolean";
+  const hasConfigured = typeof payload.configured === "boolean";
+  const hasRoom = Object.prototype.hasOwnProperty.call(payload, "room");
+  const hasSide = Object.prototype.hasOwnProperty.call(payload, "side");
+  const hasSupabaseUrl = typeof payload.hasSupabaseUrl === "boolean";
+  const hasSupabaseAnonKey = typeof payload.hasSupabaseAnonKey === "boolean";
+  const hasAvailabilityError = typeof payload.availabilityError === "string";
   onlineDuelState = {
-    enabled: Boolean(payload.enabled),
-    available: Boolean(payload.available),
-    configured: Boolean(payload.configured),
-    room: payload.room && typeof payload.room === "object" ? { ...payload.room } : null,
-    side: typeof payload.side === "string" ? payload.side : null
+    enabled: hasEnabled ? Boolean(payload.enabled) : Boolean(onlineDuelState.enabled),
+    available: hasAvailable ? Boolean(payload.available) : Boolean(onlineDuelState.available),
+    configured: hasConfigured ? Boolean(payload.configured) : Boolean(onlineDuelState.configured),
+    statusLoaded:
+      onlineDuelState.statusLoaded || hasEnabled || hasAvailable || hasConfigured || hasSupabaseUrl || hasSupabaseAnonKey,
+    availabilityError:
+      hasAvailabilityError && payload.availabilityError.length > 0
+        ? payload.availabilityError
+        : hasAvailabilityError
+          ? null
+          : onlineDuelState.availabilityError,
+    hasSupabaseUrl: hasSupabaseUrl ? Boolean(payload.hasSupabaseUrl) : Boolean(onlineDuelState.hasSupabaseUrl),
+    hasSupabaseAnonKey: hasSupabaseAnonKey
+      ? Boolean(payload.hasSupabaseAnonKey)
+      : Boolean(onlineDuelState.hasSupabaseAnonKey),
+    room: hasRoom
+      ? payload.room && typeof payload.room === "object"
+        ? { ...payload.room }
+        : null
+      : onlineDuelState.room
+        ? { ...onlineDuelState.room }
+        : null,
+    side: hasSide
+      ? typeof payload.side === "string"
+        ? payload.side
+        : null
+      : onlineDuelState.side
   };
+}
+
+function isPanelVisible() {
+  return Boolean(panelElement && !panelElement.classList.contains("hidden"));
+}
+
+function ensureDuelRequestToastElement() {
+  if (duelRequestToastElement && duelRequestToastElement.isConnected) {
+    return duelRequestToastElement;
+  }
+  const element = document.createElement("div");
+  element.id = "duel-request-toast";
+  element.className = "duel-request-toast";
+  document.body.appendChild(element);
+  duelRequestToastElement = element;
+  return duelRequestToastElement;
+}
+
+function hideDuelRequestToast() {
+  if (duelRequestToastTimer) {
+    clearTimeout(duelRequestToastTimer);
+    duelRequestToastTimer = null;
+  }
+  if (!duelRequestToastElement) return;
+  duelRequestToastElement.classList.remove("show");
+}
+
+function showDuelRequestToast(message) {
+  const text = typeof message === "string" ? message.trim() : "";
+  if (!text) return;
+  const toast = ensureDuelRequestToastElement();
+  if (!toast) return;
+  toast.textContent = text;
+  toast.classList.add("show");
+  if (duelRequestToastTimer) {
+    clearTimeout(duelRequestToastTimer);
+  }
+  duelRequestToastTimer = setTimeout(() => {
+    if (duelRequestToastElement) {
+      duelRequestToastElement.classList.remove("show");
+    }
+    duelRequestToastTimer = null;
+  }, DUEL_REQUEST_TOAST_DURATION_MS);
+}
+
+function collectPendingInboundRequestIds(requests) {
+  const idSet = new Set();
+  const list = Array.isArray(requests) ? requests : [];
+  for (const request of list) {
+    if (!request || request.status !== "pending") continue;
+    const id = typeof request.id === "string" ? request.id.trim() : "";
+    if (!id) continue;
+    idSet.add(id);
+  }
+  return idSet;
+}
+
+function collectNewInboundPendingRequests(previousIdSet, currentInbound) {
+  const baseline = previousIdSet instanceof Set ? previousIdSet : new Set();
+  const list = Array.isArray(currentInbound) ? currentInbound : [];
+  return list.filter((request) => {
+    if (!request || request.status !== "pending") return false;
+    const id = typeof request.id === "string" ? request.id.trim() : "";
+    if (!id) return false;
+    return !baseline.has(id);
+  });
+}
+
+function notifyNewInboundDuelRequests(newRequests) {
+  if (!Array.isArray(newRequests) || newRequests.length === 0) return;
+  const accounts = Array.from(
+    new Set(
+      newRequests
+        .map((request) => {
+          const account = typeof request?.fromAccount === "string" ? request.fromAccount.trim() : "";
+          return account || "-";
+        })
+        .filter(Boolean)
+    )
+  );
+
+  appendLog(
+    t("authInboundRequestLog", {
+      accounts: accounts.join(", ")
+    })
+  );
+
+  if (isPanelVisible()) return;
+  const toastText =
+    accounts.length <= 1
+      ? t("authInboundRequestToastSingle", { account: accounts[0] || "-" })
+      : t("authInboundRequestToastMulti", { count: newRequests.length });
+  showDuelRequestToast(toastText);
+}
+
+function maybeAutoEnterOnlineBattle(options = {}) {
+  if (onlineBattleAutoEnterInFlight || battleMode) return;
+  if (!isOnlineDuelReadyForBattle()) return;
+  const room = onlineDuelState.room;
+  if (!room?.id || room.status !== "active") return;
+
+  onlineBattleAutoEnterInFlight = true;
+  const silentLog = Boolean(options.silentLog);
+  if (!silentLog) {
+    appendLog(
+      t("duelOnlineAutoEnterLog", {
+        roomCode: room.room_code || "-"
+      })
+    );
+  }
+
+  void resetBattle().finally(() => {
+    onlineBattleAutoEnterInFlight = false;
+  });
 }
 
 function getStatTone(token) {
@@ -1866,7 +2319,8 @@ function renderBattleReportDetail() {
       ? `<div class="battle-report-round-item">${currentI18n().battleReportEmpty}</div>`
       : rounds
           .map((round) => {
-            const notes = Array.isArray(round.notes) ? round.notes.filter(Boolean).join("；") : "";
+            const localizedNotes = localizeRoundNotes(round.notes);
+            const notes = localizedNotes.join(language === "zh" ? "；" : "; ");
             const playerAction = formatAction(round.playerAction || "normal_attack");
             const enemyAction = formatAction(round.enemyAction || "normal_attack");
             const playerDamage = Number(round.damageTaken?.player || 0);
@@ -2251,6 +2705,7 @@ function applyLanguage() {
   if (duelOnlineRoomInput) {
     duelOnlineRoomInput.placeholder = "ABC123";
   }
+  refreshPanelSectionToggleLabels();
   uiRefs.tipText.textContent = currentI18n().tip;
   updatePauseText();
   languageBtn.textContent = currentI18n().languageButton;
@@ -2313,17 +2768,34 @@ function getDuelRequestStatusText(status) {
   return currentI18n().authRequestPending;
 }
 
-function hasPendingDuelWithAccount(account) {
+function getPendingDuelWithAccount(account) {
   const accountKey = typeof account === "string" ? account.toLowerCase() : "";
-  if (!accountKey) return false;
-  const all = [...(duelRequests.inbound || []), ...(duelRequests.outbound || [])];
-  return all.some((request) => {
-    if (request.status !== "pending") return false;
-    return (
+  if (!accountKey) return null;
+  const inbound = Array.isArray(duelRequests.inbound) ? duelRequests.inbound : [];
+  const outbound = Array.isArray(duelRequests.outbound) ? duelRequests.outbound : [];
+  const all = [
+    ...inbound.map((request) => ({ direction: "inbound", request })),
+    ...outbound.map((request) => ({ direction: "outbound", request }))
+  ];
+  for (const item of all) {
+    const request = item.request;
+    if (request.status !== "pending") continue;
+    const match = (
       String(request.fromAccount || "").toLowerCase() === accountKey ||
       String(request.toAccount || "").toLowerCase() === accountKey
     );
-  });
+    if (match) return item;
+  }
+  return null;
+}
+
+function getResendCooldownSeconds(request) {
+  if (!request || typeof request !== "object") return 0;
+  const reference = Date.parse(String(request.updatedAt || request.createdAt || ""));
+  if (!Number.isFinite(reference)) return 0;
+  const elapsedMs = Date.now() - reference;
+  if (elapsedMs >= DUEL_REQUEST_RESEND_INTERVAL_MS) return 0;
+  return Math.ceil((DUEL_REQUEST_RESEND_INTERVAL_MS - elapsedMs) / 1000);
 }
 
 function renderDuelSearchResults() {
@@ -2348,12 +2820,21 @@ function renderDuelSearchResults() {
     .map((user) => {
       const account = String(user.account || "-");
       const self = String(account).toLowerCase() === String(currentUser.account || "").toLowerCase();
-      const pending = hasPendingDuelWithAccount(account);
-      const disabled = self || pending;
+      const pendingRelation = getPendingDuelWithAccount(account);
+      const pendingInbound = pendingRelation?.direction === "inbound";
+      const pendingOutbound = pendingRelation?.direction === "outbound";
+      const resendCooldown = pendingOutbound ? getResendCooldownSeconds(pendingRelation.request) : 0;
+      const canResend = pendingOutbound && resendCooldown <= 0;
+      const disabled = self || pendingInbound || (pendingOutbound && !canResend);
+      const buttonLabel = pendingOutbound ? currentI18n().authSearchResend : currentI18n().authSearchSend;
       const statusText = self
         ? currentI18n().authSearchSelf
-        : pending
-          ? currentI18n().authRequestPending
+        : pendingOutbound
+          ? resendCooldown > 0
+            ? t("authSearchResendCooldown", { seconds: resendCooldown })
+            : currentI18n().authRequestPending
+          : pendingInbound
+            ? currentI18n().authRequestPending
           : "";
       return `
         <article class="duel-result-item" data-account="${account}">
@@ -2362,7 +2843,7 @@ function renderDuelSearchResults() {
             <span class="duel-account-meta">${formatReportTime(user.createdAt)}</span>
           </div>
           <div class="duel-result-actions">
-            <button class="duel-send-btn" ${disabled ? "disabled" : ""}>${currentI18n().authSearchSend}</button>
+            <button class="duel-send-btn" data-resend="${pendingOutbound ? "1" : "0"}" ${disabled ? "disabled" : ""}>${buttonLabel}</button>
             ${statusText ? `<span class="duel-send-state">${statusText}</span>` : ""}
           </div>
         </article>
@@ -2375,8 +2856,9 @@ function renderDuelSearchResults() {
     button.addEventListener("click", () => {
       const container = button.closest(".duel-result-item");
       const account = container?.getAttribute("data-account");
+      const allowResend = button.getAttribute("data-resend") === "1";
       if (!account) return;
-      void sendDuelRequest(account);
+      void sendDuelRequest(account, { allowResend });
     });
   }
 }
@@ -2404,13 +2886,35 @@ function renderDuelRequestList() {
       .slice(0, 8)
       .map((request) => {
         const peer = direction === "inbound" ? request.fromAccount : request.toAccount;
+        const actionButtons = [];
+        if (request.status === "pending" && direction === "inbound") {
+          actionButtons.push(
+            `<button class="duel-request-btn accept" data-request-id="${request.id}" data-action="accept" data-peer="${peer || "-"}">${currentI18n().authRequestAcceptBtn}</button>`
+          );
+          actionButtons.push(
+            `<button class="duel-request-btn reject" data-request-id="${request.id}" data-action="reject" data-peer="${peer || "-"}">${currentI18n().authRequestRejectBtn}</button>`
+          );
+        } else if (request.status === "pending" && direction === "outbound") {
+          actionButtons.push(
+            `<button class="duel-request-btn cancel" data-request-id="${request.id}" data-action="cancel" data-peer="${peer || "-"}">${currentI18n().authRequestCancelBtn}</button>`
+          );
+        }
+        const actionHtml =
+          actionButtons.length > 0 ? `<div class="duel-request-actions">${actionButtons.join("")}</div>` : "";
+        const roomMeta =
+          request.status === "accepted" && request.roomCode
+            ? `<span class="duel-account-meta">Room: ${String(request.roomCode).toUpperCase()}</span>`
+            : "";
+        const displayTime = request.status === "pending" ? request.updatedAt || request.createdAt : request.updatedAt;
         return `
           <article class="duel-request-item ${request.status}">
             <div class="duel-request-main">
               <span class="duel-account">${peer || "-"}</span>
               <span class="duel-send-state">${getDuelRequestStatusText(request.status)}</span>
             </div>
-            <span class="duel-account-meta">${formatReportTime(request.createdAt)}</span>
+            <span class="duel-account-meta">${formatReportTime(displayTime || request.createdAt)}</span>
+            ${roomMeta}
+            ${actionHtml}
           </article>
         `;
       })
@@ -2427,13 +2931,48 @@ function renderDuelRequestList() {
       ${renderItems(outbound, "outbound")}
     </div>
   `;
+
+  const actionButtons = duelRequestListElement.querySelectorAll(".duel-request-btn");
+  for (const button of actionButtons) {
+    button.addEventListener("click", () => {
+      const action = button.getAttribute("data-action");
+      const requestId = button.getAttribute("data-request-id");
+      const peer = button.getAttribute("data-peer") || "-";
+      if (!action || !requestId) return;
+      if (action === "accept" || action === "reject") {
+        void respondDuelRequest(requestId, action, peer);
+        return;
+      }
+      if (action === "cancel") {
+        void cancelDuelRequest(requestId, peer);
+      }
+    });
+  }
 }
 
 function getOnlineDuelStatusText() {
   if (!authSession?.currentUser) {
     return currentI18n().duelOnlineStatusNeedLogin;
   }
-  if (!onlineDuelState.enabled) {
+  if (!onlineDuelState.statusLoaded) {
+    return currentI18n().duelOnlineStatusInitializing;
+  }
+  if (!onlineDuelState.available) {
+    return currentI18n().duelOnlineStatusUnavailable;
+  }
+  if (!onlineDuelState.configured || !onlineDuelState.enabled) {
+    const missingKeys = [];
+    if (!onlineDuelState.hasSupabaseUrl) {
+      missingKeys.push("SUPABASE_URL");
+    }
+    if (!onlineDuelState.hasSupabaseAnonKey) {
+      missingKeys.push("SUPABASE_ANON_KEY");
+    }
+    if (missingKeys.length > 0) {
+      return t("duelOnlineStatusDisabledDetail", {
+        keys: missingKeys.join(" / ")
+      });
+    }
     return currentI18n().duelOnlineStatusDisabled;
   }
   const room = onlineDuelState.room;
@@ -2461,11 +3000,18 @@ function renderOnlineDuelStatus() {
 
 async function refreshOnlineDuelStatus(options = {}) {
   const silent = Boolean(options.silent);
+  const previousRoomId = onlineDuelState.room?.id || null;
+  const previousRoomStatus = onlineDuelState.room?.status || null;
   if (!authSession?.currentUser) {
+    onlineBattleAutoEnterInFlight = false;
     onlineDuelState = {
       enabled: false,
       available: false,
       configured: false,
+      statusLoaded: false,
+      availabilityError: null,
+      hasSupabaseUrl: false,
+      hasSupabaseAnonKey: false,
       room: null,
       side: null
     };
@@ -2493,6 +3039,13 @@ async function refreshOnlineDuelStatus(options = {}) {
     }
   }
   renderOnlineDuelStatus();
+  if (onlineDuelState.room?.status === "active") {
+    const silentLog = previousRoomId === onlineDuelState.room?.id && previousRoomStatus === "active";
+    maybeAutoEnterOnlineBattle({ silentLog });
+  }
+  if (options.autoJoin !== false) {
+    await maybeAutoJoinMatchedRoom();
+  }
 }
 
 async function createOnlineDuelRoom() {
@@ -2530,10 +3083,11 @@ async function createOnlineDuelRoom() {
   }
 }
 
-async function joinOnlineDuelRoom() {
-  if (!authSession?.currentUser) return;
-  const roomCode = duelOnlineRoomInput?.value?.trim() || "";
-  if (!roomCode) return;
+async function joinOnlineDuelRoomByCode(roomCodeInput, options = {}) {
+  if (!authSession?.currentUser) return false;
+  const roomCode = typeof roomCodeInput === "string" ? roomCodeInput.trim() : "";
+  if (!roomCode) return false;
+  const silent = Boolean(options.silent);
   const activePet = getActivePet();
   try {
     const response = await window.petApi.joinOnlineDuelRoom({
@@ -2542,27 +3096,46 @@ async function joinOnlineDuelRoom() {
       petName: getPetDisplayName(activePet)
     });
     if (!response?.ok) {
-      appendLog(
-        t("duelOnlineActionFailLog", {
-          message: localizeAuthErrorMessage(response?.error || "join room failed")
-        })
-      );
-      return;
+      if (!silent) {
+        appendLog(
+          t("duelOnlineActionFailLog", {
+            message: localizeAuthErrorMessage(response?.error || "join room failed")
+          })
+        );
+      }
+      return false;
     }
     applyOnlineDuelSnapshot(response);
+    if (duelOnlineRoomInput) {
+      duelOnlineRoomInput.value = response.room?.room_code || roomCode;
+    }
     renderOnlineDuelStatus();
-    appendLog(
-      t("duelOnlineJoinSuccessLog", {
-        roomCode: response.room?.room_code || roomCode
-      })
-    );
+    if (response.room?.status === "active") {
+      maybeAutoEnterOnlineBattle({ silentLog: true });
+    }
+    if (!silent) {
+      appendLog(
+        t("duelOnlineJoinSuccessLog", {
+          roomCode: response.room?.room_code || roomCode
+        })
+      );
+    }
+    return true;
   } catch (error) {
-    appendLog(
-      t("duelOnlineActionFailLog", {
-        message: localizeAuthErrorMessage(error instanceof Error ? error.message : "join room failed")
-      })
-    );
+    if (!silent) {
+      appendLog(
+        t("duelOnlineActionFailLog", {
+          message: localizeAuthErrorMessage(error instanceof Error ? error.message : "join room failed")
+        })
+      );
+    }
+    return false;
   }
+}
+
+async function joinOnlineDuelRoom() {
+  const roomCode = duelOnlineRoomInput?.value?.trim() || "";
+  await joinOnlineDuelRoomByCode(roomCode);
 }
 
 async function leaveOnlineDuelRoom(reason = "manual") {
@@ -2577,6 +3150,7 @@ async function leaveOnlineDuelRoom(reason = "manual") {
       return;
     }
     await refreshOnlineDuelStatus({ silent: true });
+    onlineBattleAutoEnterInFlight = false;
     appendLog(currentI18n().duelOnlineLeaveLog);
   } catch (error) {
     appendLog(
@@ -2634,11 +3208,20 @@ async function refreshAuthSession() {
     await refreshDuelRequests({ silent: true });
     await refreshOnlineDuelStatus({ silent: true });
   } else {
+    hideDuelRequestToast();
+    duelRequestsInitialized = false;
+    pendingInboundRequestIds = new Set();
+    onlineBattleAutoEnterInFlight = false;
+    autoJoinHandledRequestIds.clear();
     duelRequests = { inbound: [], outbound: [] };
     onlineDuelState = {
       enabled: false,
       available: false,
       configured: false,
+      statusLoaded: false,
+      availabilityError: null,
+      hasSupabaseUrl: false,
+      hasSupabaseAnonKey: false,
       room: null,
       side: null
     };
@@ -2658,6 +3241,11 @@ async function applyAuthStateFromEvent(session) {
     await refreshDuelRequests({ silent: true });
     await refreshOnlineDuelStatus({ silent: true });
   } else {
+    hideDuelRequestToast();
+    duelRequestsInitialized = false;
+    pendingInboundRequestIds = new Set();
+    onlineBattleAutoEnterInFlight = false;
+    autoJoinHandledRequestIds.clear();
     authSearchResults = [];
     authSearchExecuted = false;
     duelRequests = { inbound: [], outbound: [] };
@@ -2665,6 +3253,10 @@ async function applyAuthStateFromEvent(session) {
       enabled: false,
       available: false,
       configured: false,
+      statusLoaded: false,
+      availabilityError: null,
+      hasSupabaseUrl: false,
+      hasSupabaseAnonKey: false,
       room: null,
       side: null
     };
@@ -2678,17 +3270,28 @@ async function applyAuthStateFromEvent(session) {
 async function refreshDuelRequests(options = {}) {
   const silent = Boolean(options.silent);
   if (!authSession.currentUser) {
+    duelRequestsInitialized = false;
+    pendingInboundRequestIds = new Set();
     duelRequests = { inbound: [], outbound: [] };
     renderDuelRequestList();
     return;
   }
+
+  let newInboundRequests = [];
   try {
     const response = await window.petApi.listDuelRequests();
     if (response?.ok) {
+      const inbound = Array.isArray(response.inbound) ? response.inbound : [];
+      const outbound = Array.isArray(response.outbound) ? response.outbound : [];
+      if (duelRequestsInitialized) {
+        newInboundRequests = collectNewInboundPendingRequests(pendingInboundRequestIds, inbound);
+      }
       duelRequests = {
-        inbound: Array.isArray(response.inbound) ? response.inbound : [],
-        outbound: Array.isArray(response.outbound) ? response.outbound : []
+        inbound,
+        outbound
       };
+      pendingInboundRequestIds = collectPendingInboundRequestIds(inbound);
+      duelRequestsInitialized = true;
     } else {
       duelRequests = { inbound: [], outbound: [] };
       if (!silent) {
@@ -2711,21 +3314,166 @@ async function refreshDuelRequests(options = {}) {
   }
   renderDuelRequestList();
   renderDuelSearchResults();
+  notifyNewInboundDuelRequests(newInboundRequests);
+  if (options.autoJoin !== false) {
+    await maybeAutoJoinMatchedRoom();
+  }
 }
 
-async function sendDuelRequest(targetAccount) {
+async function maybeAutoJoinMatchedRoom() {
+  if (duelAutoJoinInFlight || !authSession?.currentUser) return;
+  if (!onlineDuelState.available || !onlineDuelState.configured) return;
+  if (onlineDuelState.room?.id) return;
+
+  const outbound = Array.isArray(duelRequests.outbound) ? duelRequests.outbound : [];
+  const matched = outbound.find(
+    (item) =>
+      item &&
+      item.status === "accepted" &&
+      typeof item.roomCode === "string" &&
+      item.roomCode.trim().length > 0 &&
+      !autoJoinHandledRequestIds.has(item.id)
+  );
+  if (!matched) return;
+
+  const roomCode = String(matched.roomCode || "").trim().toUpperCase();
+  if (!roomCode) return;
+
+  duelAutoJoinInFlight = true;
+  autoJoinHandledRequestIds.add(matched.id);
+  try {
+    if (duelOnlineRoomInput) {
+      duelOnlineRoomInput.value = roomCode;
+    }
+    appendLog(t("authRequestAutoJoinLog", { roomCode }));
+    const joined = await joinOnlineDuelRoomByCode(roomCode, { silent: true });
+    if (!joined) {
+      autoJoinHandledRequestIds.delete(matched.id);
+    } else {
+      appendLog(t("duelOnlineJoinSuccessLog", { roomCode }));
+    }
+  } finally {
+    duelAutoJoinInFlight = false;
+  }
+}
+
+async function runDuelSyncPollingTick() {
+  if (duelSyncPollingInFlight || !authSession?.currentUser) return;
+  duelSyncPollingInFlight = true;
+  try {
+    await refreshDuelRequests({ silent: true });
+    await refreshOnlineDuelStatus({ silent: true });
+  } finally {
+    duelSyncPollingInFlight = false;
+  }
+}
+
+function startDuelSyncPolling() {
+  if (duelSyncPollingTimer) return;
+  duelSyncPollingTimer = setInterval(() => {
+    void runDuelSyncPollingTick();
+  }, DUEL_SYNC_POLL_INTERVAL_MS);
+}
+
+function stopDuelSyncPolling() {
+  if (!duelSyncPollingTimer) return;
+  clearInterval(duelSyncPollingTimer);
+  duelSyncPollingTimer = null;
+  duelSyncPollingInFlight = false;
+}
+
+async function sendDuelRequest(targetAccount, options = {}) {
   const account = typeof targetAccount === "string" ? targetAccount.trim() : "";
   if (!account) return;
-  const response = await window.petApi.sendDuelRequest(account);
+  const allowResend = Boolean(options?.allowResend);
+  const response = await window.petApi.sendDuelRequest(account, { allowResend });
   if (!response?.ok) {
+    let message = localizeAuthErrorMessage(response?.error || "request failed");
+    if (
+      typeof response?.error === "string" &&
+      response.error.toLowerCase().includes("resend too frequent") &&
+      Number.isFinite(Number(response?.retryAfterSeconds))
+    ) {
+      message = `${message} (${t("authSearchResendCooldown", {
+        seconds: Math.max(1, Number(response.retryAfterSeconds))
+      })})`;
+    }
     appendLog(
       t("authSendRequestFailLog", {
-        message: localizeAuthErrorMessage(response?.error || "request failed")
+        message
       })
     );
     return;
   }
-  appendLog(t("authSendRequestSuccessLog", { account }));
+  if (response?.resent) {
+    appendLog(t("authSendRequestResentLog", { account }));
+  } else {
+    appendLog(t("authSendRequestSuccessLog", { account }));
+  }
+  await refreshDuelRequests({ silent: true });
+}
+
+async function respondDuelRequest(requestId, decision, peerAccount) {
+  const normalizedId = typeof requestId === "string" ? requestId.trim() : "";
+  if (!normalizedId) return;
+  const normalizedDecision = decision === "accept" ? "accept" : "reject";
+  const response = await window.petApi.respondDuelRequest({
+    requestId: normalizedId,
+    decision: normalizedDecision
+  });
+  if (!response?.ok) {
+    appendLog(
+      t("authActionFailLog", {
+        message: localizeAuthErrorMessage(response?.error || "respond request failed")
+      })
+    );
+    return;
+  }
+  const decisionText =
+    normalizedDecision === "accept"
+      ? currentI18n().authRequestAccepted
+      : currentI18n().authRequestRejected;
+  appendLog(
+    t("authRequestRespondSuccessLog", {
+      account: peerAccount || "-",
+      decision: decisionText
+    })
+  );
+  if (normalizedDecision === "accept") {
+    if (response.room && typeof response.room === "object") {
+      applyOnlineDuelSnapshot(response);
+      if (duelOnlineRoomInput && response.room.room_code) {
+        duelOnlineRoomInput.value = response.room.room_code;
+      }
+      renderOnlineDuelStatus();
+      appendLog(
+        t("authRequestMatchedRoomLog", {
+          roomCode: response.room.room_code || "-"
+        })
+      );
+    }
+    appendLog(currentI18n().authRequestAcceptedGuideLog);
+  }
+  await refreshDuelRequests({ silent: true });
+}
+
+async function cancelDuelRequest(requestId, peerAccount) {
+  const normalizedId = typeof requestId === "string" ? requestId.trim() : "";
+  if (!normalizedId) return;
+  const response = await window.petApi.cancelDuelRequest(normalizedId);
+  if (!response?.ok) {
+    appendLog(
+      t("authActionFailLog", {
+        message: localizeAuthErrorMessage(response?.error || "cancel request failed")
+      })
+    );
+    return;
+  }
+  appendLog(
+    t("authRequestCancelSuccessLog", {
+      account: peerAccount || "-"
+    })
+  );
   await refreshDuelRequests({ silent: true });
 }
 
@@ -2749,11 +3497,20 @@ async function logoutAccount() {
   }
   authSearchResults = [];
   authSearchExecuted = false;
+  hideDuelRequestToast();
+  duelRequestsInitialized = false;
+  pendingInboundRequestIds = new Set();
+  onlineBattleAutoEnterInFlight = false;
+  autoJoinHandledRequestIds.clear();
   duelRequests = { inbound: [], outbound: [] };
   onlineDuelState = {
     enabled: false,
     available: false,
     configured: false,
+    statusLoaded: false,
+    availabilityError: null,
+    hasSupabaseUrl: false,
+    hasSupabaseAnonKey: false,
     room: null,
     side: null
   };
@@ -3647,6 +4404,7 @@ async function actBattle(action, options = {}) {
       await sleep(220 - elapsed);
     }
     const round = result.roundResult;
+    const localizedRoundNotes = localizeRoundNotes(round?.notes);
     if (round.actions?.player === "dodge") {
       freeDodgeUsedBySide.player = true;
       if ((lastBattleState?.player?.anger ?? 0) <= 0) {
@@ -3758,8 +4516,8 @@ async function actBattle(action, options = {}) {
       })
     );
 
-    if (round.notes.length > 0) {
-      appendLog(t("battleNotesLog", { notes: round.notes.join("; ") }));
+    if (localizedRoundNotes.length > 0) {
+      appendLog(t("battleNotesLog", { notes: localizedRoundNotes.join("; ") }));
     }
 
     lastRoundResultElement.textContent = t("battleLastResult", {
@@ -3777,8 +4535,8 @@ async function actBattle(action, options = {}) {
         enemyDamage: round.damageTaken.enemy
       })
     ];
-    if (round.notes.length > 0) {
-      tickerMessages.push(round.notes.slice(0, 2).join(" | "));
+    if (localizedRoundNotes.length > 0) {
+      tickerMessages.push(localizedRoundNotes.slice(0, 2).join(" | "));
     }
 
     if (round.winner) {
@@ -4226,6 +4984,7 @@ function setupIpcEvents() {
     const room = event?.payload?.room;
     const side = event?.payload?.side;
     if (room && typeof room === "object") {
+      const previousStatus = onlineDuelState.room?.status || null;
       onlineDuelState.room = { ...room };
       if (typeof side === "string" && side.length > 0) {
         onlineDuelState.side = side;
@@ -4234,6 +4993,17 @@ function setupIpcEvents() {
         duelOnlineRoomInput.value = room.room_code;
       }
       renderOnlineDuelStatus();
+      const becameActive = room.status === "active" && previousStatus !== "active";
+      if (becameActive) {
+        appendLog(
+          t("duelOnlineStatusActive", {
+            roomCode: room.room_code || "-"
+          })
+        );
+      }
+      if (room.status === "active") {
+        maybeAutoEnterOnlineBattle({ silentLog: true });
+      }
     }
   });
 }
@@ -4272,6 +5042,7 @@ async function bootstrap() {
   setModelElementTint(enemyModel, enemyPetInBattle.element);
   applyIdleOrbit();
 
+  setupPanelSectionToggles();
   applyLanguage();
   await refreshBattleReports();
   await refreshAuthSession();
@@ -4284,6 +5055,10 @@ async function bootstrap() {
   setupMouseTracking();
   setupIpcEvents();
   setupModelDefaults();
+  startDuelSyncPolling();
+  window.addEventListener("beforeunload", () => {
+    stopDuelSyncPolling();
+  });
   window.addEventListener("resize", () => {
     syncInventoryListHeight();
     positionPetDetailPopover();

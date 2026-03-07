@@ -182,6 +182,32 @@ body {
   display: none !important;
 }
 
+.duel-request-toast {
+  position: fixed;
+  right: 16px;
+  bottom: 18px;
+  max-width: min(360px, calc(100vw - 24px));
+  border: 1px solid rgba(127, 207, 255, 0.58);
+  border-radius: 10px;
+  background: rgba(8, 23, 37, 0.94);
+  color: #e9f7ff;
+  padding: 10px 12px;
+  font-size: 12px;
+  line-height: 1.35;
+  letter-spacing: 0.1px;
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.35);
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  pointer-events: none;
+  z-index: 30;
+}
+
+.duel-request-toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 #battle-scene:not(.battle-mode) #battle-round,
 #battle-scene:not(.battle-mode) #last-round-result,
 #battle-scene:not(.battle-mode) #round-feed,
@@ -980,10 +1006,40 @@ body {
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+.panel-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
 .panel-section h2 {
-  margin: 0 0 8px;
+  margin: 0;
   font-size: 13px;
   color: var(--accent-2);
+}
+
+.panel-section-toggle {
+  width: 22px;
+  height: 22px;
+  border: 1px solid rgba(146, 215, 255, 0.45);
+  border-radius: 999px;
+  background: rgba(13, 30, 49, 0.9);
+  color: #dff4ff;
+  font-size: 13px;
+  line-height: 1;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+
+.panel-section-toggle:hover {
+  border-color: var(--accent);
+}
+
+.panel-section.collapsed .panel-section-header {
+  margin-bottom: 0;
 }
 
 .row {
@@ -1528,6 +1584,33 @@ body {
 .duel-request-item.rejected,
 .duel-request-item.cancelled {
   border-color: rgba(255, 166, 166, 0.5);
+}
+
+.duel-request-actions {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.duel-request-btn {
+  border-radius: 999px;
+  font-size: 11px;
+  line-height: 1;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.duel-request-btn.accept {
+  border: 1px solid rgba(141, 236, 180, 0.52);
+  background: rgba(26, 66, 48, 0.84);
+  color: #d9f6e7;
+}
+
+.duel-request-btn.reject,
+.duel-request-btn.cancel {
+  border: 1px solid rgba(255, 171, 171, 0.6);
+  background: rgba(64, 28, 28, 0.84);
+  color: #ffdcdc;
 }
 
 .duel-empty {

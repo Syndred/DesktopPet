@@ -1,4 +1,4 @@
-import { readdirSync, readFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
 import { describe, expect, it } from "vitest";
@@ -16,6 +16,10 @@ describe("D-001 pc runnable runtime", () => {
       "node scripts/desktop/run-electron.cjs apps/pc-app/runtime"
     );
     expect(pkg.scripts["pc:smoke"]).toBe("node scripts/smoke/check-pc-runtime.mjs");
+    expect(existsSync(join(process.cwd(), "scripts/desktop/start-online-instance.cmd"))).toBe(true);
+    expect(existsSync(join(process.cwd(), "scripts/desktop/start-online-a.cmd"))).toBe(true);
+    expect(existsSync(join(process.cwd(), "scripts/desktop/start-online-b.cmd"))).toBe(true);
+    expect(existsSync(join(process.cwd(), "scripts/desktop/start-online-dual.cmd"))).toBe(true);
   });
 
   it("configures transparent frameless window and tray in main process", () => {
@@ -65,6 +69,10 @@ describe("D-001 pc runnable runtime", () => {
     expect(mainCode).toContain("join(__dirname, \"auth\", \"index.html\")");
     expect(mainCode).toContain("openRuntimeAfterAuth()");
     expect(mainCode).toContain("openAuthGate()");
+    expect(mainCode).toContain("PET_USER_DATA_DIR");
+    expect(mainCode).toContain("PET_RUNTIME_DATA_FILE");
+    expect(mainCode).toContain("app.setPath(\"userData\", overrideUserDataDir)");
+    expect(mainCode).toContain("function getRuntimeDataFilePath()");
   });
 
   it("includes renderer entry and control panel actions", () => {

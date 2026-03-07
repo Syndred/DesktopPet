@@ -20,6 +20,9 @@ type DuelRequest = {
   toUserId: string;
   toAccount: string;
   status: "pending" | "accepted" | "rejected" | "cancelled";
+  roomId?: string | null;
+  roomCode?: string | null;
+  roomStatus?: string | null;
   createdAt: string;
   updatedAt: string;
 };
@@ -55,7 +58,32 @@ type RuntimeDataStoreType = new (options: { filePath: string }) => {
     users: PublicUser[];
     error?: string;
   };
-  sendDuelRequest: (targetAccount: string) => {
+  sendDuelRequest: (
+    targetAccount: string,
+    options?: {
+      allowResend?: boolean;
+    }
+  ) => {
+    ok: boolean;
+    error?: string;
+    resent?: boolean;
+    retryAfterSeconds?: number;
+    request?: DuelRequest;
+  };
+  respondDuelRequest: (
+    requestId: string,
+    decision: "accept" | "reject",
+    options?: {
+      roomId?: string | null;
+      roomCode?: string | null;
+      roomStatus?: string | null;
+    }
+  ) => {
+    ok: boolean;
+    error?: string;
+    request?: DuelRequest;
+  };
+  cancelDuelRequest: (requestId: string) => {
     ok: boolean;
     error?: string;
     request?: DuelRequest;
@@ -157,6 +185,57 @@ describe("D-007 pc user auth and duel request", () => {
     expect(bobRequests.ok).toBe(true);
     expect(bobRequests.inbound.length).toBe(1);
     expect(bobRequests.inbound[0]?.fromAccount).toBe("alice_01");
+  });
+
+  it("supports duel request accept, reject, cancel and resend cooldown", () => {
+    const store = new RuntimeDataStore({ filePath: createTempFilePath() });
+    expect(store.registerUser("alice_01", "123456", "Alice").ok).toBe(true);
+    expect(store.logoutUser().ok).toBe(true);
+    expect(store.registerUser("bob_02", "123456", "Bob").ok).toBe(true);
+    expect(store.logoutUser().ok).toBe(true);
+
+    expect(store.loginUser("alice_01", "123456").ok).toBe(true);
+    const first = store.sendDuelRequest("bob_02");
+    expect(first.ok).toBe(true);
+    expect(first.request?.status).toBe("pending");
+
+    const resendTooSoon = store.sendDuelRequest("bob_02", { allowResend: true });
+    expect(resendTooSoon.ok).toBe(false);
+    expect(String(resendTooSoon.error || "")).toContain("resend");
+    expect(Number(resendTooSoon.retryAfterSeconds)).toBeGreaterThan(0);
+
+    const pendingRequestId = first.request?.id || "";
+    expect(pendingRequestId.length).toBeGreaterThan(0);
+
+    expect(store.loginUser("bob_02", "123456").ok).toBe(true);
+    const accepted = store.respondDuelRequest(pendingRequestId, "accept", {
+      roomId: "room-001",
+      roomCode: "ab12cd",
+      roomStatus: "waiting"
+    });
+    expect(accepted.ok).toBe(true);
+    expect(accepted.request?.status).toBe("accepted");
+    expect(accepted.request?.roomId).toBe("room-001");
+    expect(accepted.request?.roomCode).toBe("AB12CD");
+
+    const resolveAgain = store.respondDuelRequest(pendingRequestId, "reject");
+    expect(resolveAgain.ok).toBe(false);
+    expect(String(resolveAgain.error || "")).toContain("resolved");
+
+    expect(store.loginUser("alice_01", "123456").ok).toBe(true);
+    const second = store.sendDuelRequest("bob_02");
+    expect(second.ok).toBe(true);
+    expect(second.request?.status).toBe("pending");
+    const secondId = second.request?.id || "";
+
+    const cancelled = store.cancelDuelRequest(secondId);
+    expect(cancelled.ok).toBe(true);
+    expect(cancelled.request?.status).toBe("cancelled");
+
+    expect(store.loginUser("bob_02", "123456").ok).toBe(true);
+    const bobInbound = store.listDuelRequests().inbound;
+    expect(bobInbound.some((item) => item.id === pendingRequestId && item.status === "accepted")).toBe(true);
+    expect(bobInbound.some((item) => item.id === secondId && item.status === "cancelled")).toBe(true);
   });
 
   it("blocks duel request when not logged in or targeting self", () => {

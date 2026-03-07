@@ -1,5 +1,5 @@
 ﻿const { readFileSync, writeFileSync } = require("node:fs");
-const { join } = require("node:path");
+const { join, resolve } = require("node:path");
 const { randomUUID } = require("node:crypto");
 
 const { app, BrowserWindow, Menu, Tray, ipcMain, nativeImage, screen } = require("electron");
@@ -8,6 +8,12 @@ const { RuntimeDataStore } = require("./services/runtime-data-store.cjs");
 const { MapRuntimeService } = require("./services/map-runtime.cjs");
 const { CAPTURE_RADIUS_METERS, WildPetRuntimeService } = require("./services/wild-pet-runtime.cjs");
 const { OnlineDuelService } = require("./services/online-duel-service.cjs");
+
+const overrideUserDataDir = normalizeOptionalPath(process.env.PET_USER_DATA_DIR);
+if (overrideUserDataDir) {
+  app.setPath("userData", overrideUserDataDir);
+}
+const overrideRuntimeDataFile = normalizeOptionalPath(process.env.PET_RUNTIME_DATA_FILE);
 
 let mainWindow = null;
 let authWindow = null;
@@ -61,6 +67,21 @@ const DEFAULT_BOUNDS = {
   width: IDLE_BOUNDS.width,
   height: IDLE_BOUNDS.height
 };
+
+function normalizeOptionalPath(value) {
+  if (typeof value !== "string") return null;
+  const trimmed = value.trim();
+  if (!trimmed) return null;
+  return resolve(trimmed);
+}
+
+function getRuntimeDataFilePath() {
+  return overrideRuntimeDataFile || join(app.getPath("userData"), "pet-runtime-data.json");
+}
+
+function getSessionDataFilePath() {
+  return join(app.getPath("userData"), "pet-auth-session.json");
+}
 
 function createMainWindow() {
   const restored = loadWindowBounds();
@@ -808,7 +829,8 @@ function registerIpcHandlers() {
     try {
       const targetAccount =
         payload && typeof payload.targetAccount === "string" ? payload.targetAccount : "";
-      return runtimeDataStore.sendDuelRequest(targetAccount);
+      const allowResend = Boolean(payload?.allowResend);
+      return runtimeDataStore.sendDuelRequest(targetAccount, { allowResend });
     } catch (error) {
       return {
         ok: false,
@@ -819,6 +841,66 @@ function registerIpcHandlers() {
 
   ipcMain.handle("pet:duel-request-list", () => {
     return runtimeDataStore.listDuelRequests();
+  });
+
+  ipcMain.handle("pet:duel-request-respond", async (_event, payload) => {
+    try {
+      const requestId = payload && typeof payload.requestId === "string" ? payload.requestId : "";
+      const decision = payload && typeof payload.decision === "string" ? payload.decision : "";
+      const normalizedDecision = decision.trim().toLowerCase();
+      if (normalizedDecision === "accept") {
+        const session = runtimeDataStore.getAuthSession();
+        onlineDuelService.setCurrentUser(session?.currentUser || null);
+        const inventory = runtimeDataStore.getInventorySnapshot();
+        const activePet =
+          Array.isArray(inventory?.pets) && inventory.activePetId
+            ? inventory.pets.find((item) => item.id === inventory.activePetId) || null
+            : null;
+        const createRoomResult = await onlineDuelService.createRoom({
+          petElement: activePet?.element || "metal",
+          petName:
+            activePet?.name?.zh ||
+            activePet?.name?.en ||
+            activePet?.serial ||
+            activePet?.id ||
+            session?.currentUser?.username ||
+            "Player"
+        });
+        const response = runtimeDataStore.respondDuelRequest(requestId, normalizedDecision, {
+          roomId: createRoomResult.room?.id || null,
+          roomCode: createRoomResult.room?.room_code || null,
+          roomStatus: createRoomResult.room?.status || null
+        });
+        if (!response?.ok) {
+          await onlineDuelService.leaveRoom({ reason: "request_accept_sync_failed" });
+          return response;
+        }
+        return {
+          ...response,
+          room: createRoomResult.room,
+          side: createRoomResult.side,
+          autoRoomCreated: true
+        };
+      }
+      return runtimeDataStore.respondDuelRequest(requestId, normalizedDecision);
+    } catch (error) {
+      return {
+        ok: false,
+        error: error instanceof Error ? error.message : "respond request failed"
+      };
+    }
+  });
+
+  ipcMain.handle("pet:duel-request-cancel", (_event, payload) => {
+    try {
+      const requestId = payload && typeof payload.requestId === "string" ? payload.requestId : "";
+      return runtimeDataStore.cancelDuelRequest(requestId);
+    } catch (error) {
+      return {
+        ok: false,
+        error: error instanceof Error ? error.message : "cancel request failed"
+      };
+    }
   });
 
   ipcMain.handle("pet:duel-online-status", () => {
@@ -1237,7 +1319,8 @@ app.whenReady().then(() => {
     mainWindow.webContents.send("pet:map-state", state);
   });
   runtimeDataStore = new RuntimeDataStore({
-    filePath: join(app.getPath("userData"), "pet-runtime-data.json")
+    filePath: getRuntimeDataFilePath(),
+    sessionFilePath: getSessionDataFilePath()
   });
   if (typeof wildPetService.seedSerialCounters === "function") {
     const snapshot = runtimeDataStore.getInventorySnapshot();
