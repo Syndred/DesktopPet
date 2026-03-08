@@ -14,6 +14,7 @@ const DEFAULT_PET_ROSTER = [
     avatar: "柴",
     level: 1,
     experience: 0,
+    mood: 60,
     winsTotal: 0
   },
   {
@@ -27,6 +28,7 @@ const DEFAULT_PET_ROSTER = [
     avatar: "墨",
     level: 1,
     experience: 0,
+    mood: 60,
     winsTotal: 0
   },
   {
@@ -40,6 +42,7 @@ const DEFAULT_PET_ROSTER = [
     avatar: "礼",
     level: 1,
     experience: 0,
+    mood: 60,
     winsTotal: 0
   },
   {
@@ -53,6 +56,7 @@ const DEFAULT_PET_ROSTER = [
     avatar: "钢",
     level: 1,
     experience: 0,
+    mood: 60,
     winsTotal: 0
   },
   {
@@ -66,6 +70,7 @@ const DEFAULT_PET_ROSTER = [
     avatar: "赤",
     level: 1,
     experience: 0,
+    mood: 60,
     winsTotal: 0
   },
   {
@@ -79,6 +84,7 @@ const DEFAULT_PET_ROSTER = [
     avatar: "豆",
     level: 1,
     experience: 0,
+    mood: 60,
     winsTotal: 0
   }
 ];
@@ -87,7 +93,12 @@ const DEFAULT_STATE_VERSION = 3;
 const MAX_BATTLE_REPORTS = 60;
 const DEFAULT_ACTIVE_PET_ID = DEFAULT_PET_ROSTER[0].id;
 const DEFAULT_REPORT_LIMIT = 10;
-const LEVEL_UP_REQUIRED_WINS = 5;
+const LEVEL_UP_REQUIRED_EXPERIENCE = 100;
+const BATTLE_WIN_EXPERIENCE = 20;
+const BATTLE_LOSE_EXPERIENCE = 5;
+const PET_MOOD_DEFAULT = 60;
+const PET_MOOD_MIN = 0;
+const PET_MOOD_MAX = 100;
 const DEFAULT_USER_SEARCH_LIMIT = 12;
 const MAX_DUEL_REQUESTS = 500;
 const DUEL_REQUEST_RESEND_INTERVAL_MS = 30 * 1000;
@@ -357,11 +368,15 @@ class RuntimeDataStore {
     };
   }
 
-  recordBattleWin(petId) {
+  addPetExperience(petId, amount, options = {}) {
     this.refreshStateFromDisk();
     const inventory = this.getSessionInventory({ createIfMissing: true });
     if (typeof petId !== "string" || petId.trim().length === 0) {
       return { ok: false, error: "invalid pet id" };
+    }
+    const normalizedAmount = Math.max(0, Math.round(Number(amount) || 0));
+    if (normalizedAmount <= 0) {
+      return { ok: false, error: "invalid experience amount" };
     }
     const targetId = petId.trim();
     const pet = inventory.pets.find((item) => item.id === targetId);
@@ -372,14 +387,15 @@ class RuntimeDataStore {
     const previousLevel = sanitizeLevel(pet.level);
     const previousExp = sanitizeExperience(pet.experience);
     let nextLevel = previousLevel;
-    let nextExp = previousExp + 1;
-    const nextWinsTotal = sanitizeWinsTotal(pet.winsTotal) + 1;
-    let leveledUp = false;
+    let nextExp = previousExp + normalizedAmount;
+    const incrementWins = Boolean(options.incrementWins);
+    const nextWinsTotal = sanitizeWinsTotal(pet.winsTotal) + (incrementWins ? 1 : 0);
+    let levelsGained = 0;
 
-    while (nextExp >= LEVEL_UP_REQUIRED_WINS) {
-      nextExp -= LEVEL_UP_REQUIRED_WINS;
+    while (nextExp >= LEVEL_UP_REQUIRED_EXPERIENCE) {
+      nextExp -= LEVEL_UP_REQUIRED_EXPERIENCE;
       nextLevel += 1;
-      leveledUp = true;
+      levelsGained += 1;
       pet.stats = applyLevelBonus(pet.element, pet.stats);
     }
 
@@ -391,10 +407,51 @@ class RuntimeDataStore {
     this.persistState();
     return {
       ok: true,
-      leveledUp,
+      gainedExperience: normalizedAmount,
+      leveledUp: levelsGained > 0,
+      levelsGained,
       previousLevel,
+      previousExperience: previousExp,
       currentLevel: nextLevel,
       currentExperience: nextExp,
+      pet: clonePet(pet)
+    };
+  }
+
+  recordBattleResult(petId, options = {}) {
+    const won = Boolean(options.won);
+    const gainedExperience = won ? BATTLE_WIN_EXPERIENCE : BATTLE_LOSE_EXPERIENCE;
+    return this.addPetExperience(petId, gainedExperience, { incrementWins: won });
+  }
+
+  recordBattleWin(petId) {
+    return this.recordBattleResult(petId, { won: true });
+  }
+
+  updatePetMood(petId, delta) {
+    this.refreshStateFromDisk();
+    const inventory = this.getSessionInventory({ createIfMissing: true });
+    if (typeof petId !== "string" || petId.trim().length === 0) {
+      return { ok: false, error: "invalid pet id" };
+    }
+    const normalizedDelta = Math.round(Number(delta) || 0);
+    if (!Number.isFinite(normalizedDelta) || normalizedDelta === 0) {
+      return { ok: false, error: "invalid mood delta" };
+    }
+    const pet = inventory.pets.find((item) => item.id === petId.trim());
+    if (!pet) {
+      return { ok: false, error: "pet not found" };
+    }
+    const previousMood = sanitizeMood(pet.mood);
+    const nextMood = clampNumber(previousMood + normalizedDelta, PET_MOOD_MIN, PET_MOOD_MAX);
+    pet.mood = nextMood;
+    this.syncLegacyInventoryMirror(inventory);
+    this.state.updatedAt = new Date().toISOString();
+    this.persistState();
+    return {
+      ok: true,
+      previousMood,
+      currentMood: nextMood,
       pet: clonePet(pet)
     };
   }
@@ -1110,6 +1167,7 @@ function normalizePet(input, legacySerialCounters = new Map()) {
         : speciesMeta.avatar,
     level: sanitizeLevel(input.level),
     experience: sanitizeExperience(input.experience),
+    mood: sanitizeMood(input.mood),
     winsTotal: sanitizeWinsTotal(input.winsTotal)
   };
 }
@@ -1178,7 +1236,13 @@ function sanitizeLevel(input) {
 function sanitizeExperience(input) {
   const parsed = Number(input);
   if (!Number.isInteger(parsed) || parsed < 0) return 0;
-  return parsed % LEVEL_UP_REQUIRED_WINS;
+  return parsed % LEVEL_UP_REQUIRED_EXPERIENCE;
+}
+
+function sanitizeMood(input) {
+  const parsed = Number(input);
+  if (!Number.isFinite(parsed)) return PET_MOOD_DEFAULT;
+  return clampNumber(Math.round(parsed), PET_MOOD_MIN, PET_MOOD_MAX);
 }
 
 function sanitizeWinsTotal(input) {
@@ -1395,6 +1459,7 @@ function createCapturedPet(captureInput, seqNo) {
     avatar: captureInput.avatar || String(seqNo),
     level: 1,
     experience: 0,
+    mood: PET_MOOD_DEFAULT,
     winsTotal: 0
   };
 }
@@ -1402,22 +1467,19 @@ function createCapturedPet(captureInput, seqNo) {
 function applyLevelBonus(element, statsText) {
   const stats = parseStatsText(statsText);
   if (!stats) return statsText;
-  stats.HP += 2;
-  if (element === "fire") {
-    stats.ATK += 2;
-  } else if (element === "water") {
-    stats.SPD += 1;
-    stats.HP += 1;
-  } else if (element === "wood") {
-    stats.HP += 2;
-  } else if (element === "metal") {
-    stats.HP += 1;
-    stats.DEF += 2;
-  } else if (element === "earth") {
-    stats.HP += 2;
-    stats.DEF += 1;
-  }
+  // Keep argument for compatibility with old callsites.
+  void element;
+  stats.HP = increaseStatByLevel(stats.HP);
+  stats.ATK = increaseStatByLevel(stats.ATK);
+  stats.DEF = increaseStatByLevel(stats.DEF);
+  stats.SPD = increaseStatByLevel(stats.SPD);
   return formatStats(stats);
+}
+
+function increaseStatByLevel(value) {
+  const base = Number(value);
+  if (!Number.isFinite(base) || base <= 0) return 0;
+  return Math.max(base + 1, Math.round(base * 1.1));
 }
 
 function parseStatsText(statsText) {
@@ -1448,6 +1510,14 @@ function clampNonNegativeNumber(input) {
   const parsed = Number(input);
   if (!Number.isFinite(parsed) || parsed < 0) return 0;
   return Math.round(parsed);
+}
+
+function clampNumber(value, min, max) {
+  const parsed = Number(value);
+  if (!Number.isFinite(parsed)) return min;
+  if (parsed < min) return min;
+  if (parsed > max) return max;
+  return parsed;
 }
 
 function normalizeRemotePublicUser(input) {
@@ -1667,6 +1737,7 @@ function clonePet(pet) {
     avatar: pet.avatar,
     level: sanitizeLevel(pet.level),
     experience: sanitizeExperience(pet.experience),
+    mood: sanitizeMood(pet.mood),
     winsTotal: sanitizeWinsTotal(pet.winsTotal)
   };
 }

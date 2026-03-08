@@ -10,6 +10,9 @@ contextBridge.exposeInMainWorld("petApi", {
   togglePause() {
     return ipcRenderer.invoke("pet:toggle-pause");
   },
+  hideWindow() {
+    return ipcRenderer.invoke("pet:hide-window");
+  },
   battleReset(config) {
     return ipcRenderer.invoke("pet:battle-reset", config ?? {});
   },
@@ -81,6 +84,15 @@ contextBridge.exposeInMainWorld("petApi", {
   },
   setActivePet(petId) {
     return ipcRenderer.invoke("pet:set-active-pet", { petId });
+  },
+  addExperience(petId, amount) {
+    return ipcRenderer.invoke("pet:add-experience", { petId, amount });
+  },
+  updatePetMood(petId, delta) {
+    return ipcRenderer.invoke("pet:update-pet-mood", { petId, delta });
+  },
+  aiChat(payload) {
+    return ipcRenderer.invoke("pet:ai-chat", payload ?? {});
   },
   releasePet(petId) {
     return ipcRenderer.invoke("pet:release-pet", { petId });

@@ -110,6 +110,36 @@
             ></model-viewer>
           </article>
 
+          <div id="pet-hover-tools" class="pet-action-icons no-drag hidden" aria-hidden="true">
+            <button id="btn-hover-train" class="pet-icon-btn" type="button" aria-label="对战" title="对战">
+              ⚔
+            </button>
+            <button
+              id="btn-hover-interact"
+              class="pet-icon-btn"
+              type="button"
+              aria-label="互动"
+              title="互动"
+            >
+              🤍
+            </button>
+            <button
+              id="btn-hover-mood"
+              class="pet-icon-btn mood"
+              type="button"
+              aria-label="心情"
+              title="心情"
+              tabindex="-1"
+              disabled
+            >
+              60
+            </button>
+          </div>
+
+          <article id="pet-chat-bubble" class="pet-chat-bubble no-drag hidden" aria-live="polite"></article>
+
+          <button id="btn-show-pet" class="btn-show-pet no-drag hidden" type="button">显示灵宠</button>
+
           <article id="enemy-card" class="battle-actor enemy hidden no-drag">
               <model-viewer
                 id="enemy-model"
@@ -422,6 +452,56 @@
             <button id="btn-wild-refresh">Refresh Nearby Pets</button>
           </div>
           <div id="wild-list" class="wild-list"></div>
+        </div>
+
+        <div class="panel-section" data-section-key="ai-settings">
+          <h2 id="ai-settings-title">AI互动设置</h2>
+          <p id="ai-settings-tip" class="inventory-tip">
+            配置大模型厂商、密钥和互动频率；可用于主动互动气泡和“互动”按钮回复。
+          </p>
+          <div class="field-row">
+            <div class="field">
+              <label id="ai-provider-label" for="ai-provider-select">大模型厂商</label>
+              <select id="ai-provider-select">
+                <option value="deepseek">DeepSeek</option>
+                <option value="openai">OpenAI</option>
+                <option value="openai_compatible">OpenAI兼容</option>
+              </select>
+            </div>
+            <div class="field">
+              <label id="ai-frequency-label" for="ai-frequency-select">互动频率</label>
+              <select id="ai-frequency-select">
+                <option value="30">每30分钟</option>
+                <option value="60">每1小时</option>
+                <option value="custom">自定义</option>
+              </select>
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label id="ai-api-key-label" for="ai-api-key-input">API Key</label>
+              <input id="ai-api-key-input" type="password" autocomplete="off" />
+            </div>
+            <div class="field">
+              <label id="ai-custom-minutes-label" for="ai-custom-minutes-input">自定义分钟</label>
+              <input id="ai-custom-minutes-input" type="number" min="5" max="720" step="5" />
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label id="ai-base-url-label" for="ai-base-url-input">Base URL</label>
+              <input id="ai-base-url-input" type="text" autocomplete="off" />
+            </div>
+            <div class="field">
+              <label id="ai-model-label" for="ai-model-input">模型名</label>
+              <input id="ai-model-input" type="text" autocomplete="off" />
+            </div>
+          </div>
+          <div class="row">
+            <button id="btn-ai-settings-test" type="button">测试连接</button>
+            <button id="btn-ai-settings-save" type="button">保存设置</button>
+          </div>
+          <p id="ai-settings-status" class="inventory-tip">未配置 AI Key 时将使用本地文案兜底。</p>
         </div>
 
         <div class="panel-section">

@@ -482,6 +482,257 @@ function getOnlineRoomParticipant(room, side, role = "self") {
   };
 }
 
+const AI_NEWS_CACHE_TTL_MS = 15 * 60 * 1000;
+const AI_NEWS_FETCH_TIMEOUT_MS = 4500;
+const AI_NEWS_MAX_HEADLINES = 4;
+const AI_NEWS_SOURCES = Object.freeze({
+  zh: [
+    "https://rss.sina.com.cn/rollnews.xml",
+    "https://rss.sina.com.cn/tech/rollnews.xml"
+  ],
+  en: [
+    "https://feeds.bbci.co.uk/news/world/rss.xml",
+    "https://feeds.bbci.co.uk/news/technology/rss.xml"
+  ]
+});
+const aiNewsCache = {
+  zh: {
+    updatedAt: 0,
+    headlines: []
+  },
+  en: {
+    updatedAt: 0,
+    headlines: []
+  }
+};
+
+function normalizeAiProvider(input) {
+  const value = typeof input === "string" ? input.trim().toLowerCase() : "";
+  if (value === "deepseek" || value === "openai" || value === "openai_compatible") {
+    return value;
+  }
+  return "deepseek";
+}
+
+function normalizeAiLocale(input) {
+  const raw = typeof input === "string" ? input.trim().toLowerCase() : "";
+  if (raw.startsWith("zh")) return "zh";
+  return "en";
+}
+
+function normalizeAiBaseUrl(provider, input) {
+  const custom = typeof input === "string" ? input.trim() : "";
+  if (custom.length > 0) {
+    return custom.replace(/\/+$/, "");
+  }
+  if (provider === "openai") return "https://api.openai.com/v1";
+  return "https://api.deepseek.com/v1";
+}
+
+function decodeXmlEntities(value) {
+  return String(value || "")
+    .replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, "$1")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, "\"")
+    .replace(/&#39;/g, "'")
+    .replace(/&amp;/g, "&")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function extractRssTitles(xml, limit = AI_NEWS_MAX_HEADLINES) {
+  const titles = [];
+  const itemRegex = /<item[\s\S]*?<\/item>/gi;
+  const titleRegex = /<title[^>]*>([\s\S]*?)<\/title>/i;
+  const items = String(xml || "").match(itemRegex) || [];
+  for (const item of items) {
+    const match = item.match(titleRegex);
+    if (!match) continue;
+    const title = decodeXmlEntities(match[1]);
+    if (!title) continue;
+    titles.push(title);
+    if (titles.length >= limit) break;
+  }
+  return titles;
+}
+
+async function fetchTextWithTimeout(url, timeoutMs = AI_NEWS_FETCH_TIMEOUT_MS) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    const response = await fetch(url, {
+      signal: controller.signal,
+      headers: {
+        accept: "application/rss+xml, application/xml, text/xml, text/plain"
+      }
+    });
+    if (!response.ok) {
+      throw new Error(`news fetch failed (${response.status})`);
+    }
+    return await response.text();
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+async function fetchAiNewsHeadlines(locale) {
+  const normalizedLocale = normalizeAiLocale(locale);
+  const now = Date.now();
+  const cache = aiNewsCache[normalizedLocale];
+  if (
+    cache &&
+    Array.isArray(cache.headlines) &&
+    cache.headlines.length > 0 &&
+    now - cache.updatedAt < AI_NEWS_CACHE_TTL_MS
+  ) {
+    return cache.headlines;
+  }
+
+  const sources = AI_NEWS_SOURCES[normalizedLocale] || AI_NEWS_SOURCES.en;
+  for (const url of sources) {
+    try {
+      const xml = await fetchTextWithTimeout(url, AI_NEWS_FETCH_TIMEOUT_MS);
+      const headlines = extractRssTitles(xml, AI_NEWS_MAX_HEADLINES);
+      if (headlines.length > 0) {
+        aiNewsCache[normalizedLocale] = {
+          updatedAt: now,
+          headlines
+        };
+        return headlines;
+      }
+    } catch {
+      // Keep fallback to next source.
+    }
+  }
+
+  return Array.isArray(cache?.headlines) ? cache.headlines : [];
+}
+
+function buildAiMessages(payload) {
+  const messages = [];
+  const systemPrompt =
+    typeof payload?.systemPrompt === "string" && payload.systemPrompt.trim().length > 0
+      ? payload.systemPrompt.trim()
+      : "You are a cute desktop pet assistant. Keep responses brief and playful.";
+  messages.push({ role: "system", content: systemPrompt });
+  const headlines = Array.isArray(payload?.newsHeadlines)
+    ? payload.newsHeadlines
+        .map((item) => (typeof item === "string" ? item.trim() : ""))
+        .filter((item) => item.length > 0)
+        .slice(0, AI_NEWS_MAX_HEADLINES)
+    : [];
+  if (headlines.length > 0) {
+    const newsContext = headlines.map((item, index) => `${index + 1}. ${item}`).join("\n");
+    messages.push({
+      role: "system",
+      content:
+        "Optional real-time context. If relevant, mention at most one headline naturally:\n" +
+        newsContext
+    });
+  }
+  const userPrompt =
+    typeof payload?.prompt === "string" && payload.prompt.trim().length > 0
+      ? payload.prompt.trim()
+      : "Say a short companion message to your owner.";
+  messages.push({ role: "user", content: userPrompt });
+  return messages;
+}
+
+async function resolveAiErrorMessage(response, fallback) {
+  try {
+    const data = await response.json();
+    const message =
+      data?.error?.message ||
+      data?.message ||
+      (typeof data === "string" ? data : null);
+    if (typeof message === "string" && message.trim().length > 0) {
+      return message.trim();
+    }
+  } catch {
+    // Ignore parse failures.
+  }
+  return fallback;
+}
+
+async function requestAiChat(payload) {
+  const provider = normalizeAiProvider(payload?.provider);
+  const locale = normalizeAiLocale(payload?.locale);
+  const apiKey =
+    typeof payload?.apiKey === "string" && payload.apiKey.trim().length > 0
+      ? payload.apiKey.trim()
+      : "";
+  if (!apiKey) {
+    return {
+      ok: false,
+      error: "api key is required"
+    };
+  }
+
+  const baseUrl = normalizeAiBaseUrl(provider, payload?.baseUrl);
+  const modelInput = typeof payload?.model === "string" ? payload.model.trim() : "";
+  const model = modelInput || (provider === "openai" ? "gpt-4o-mini" : "deepseek-chat");
+  let newsHeadlines = [];
+  if (Boolean(payload?.includeNews)) {
+    try {
+      newsHeadlines = await fetchAiNewsHeadlines(locale);
+    } catch {
+      newsHeadlines = [];
+    }
+  }
+  const temperature = Number(payload?.temperature);
+  const maxTokens = Number(payload?.maxTokens);
+  const endpoint = `${baseUrl}/chat/completions`;
+  const body = {
+    model,
+    messages: buildAiMessages({
+      ...payload,
+      locale,
+      newsHeadlines
+    }),
+    temperature: Number.isFinite(temperature) ? Math.max(0, Math.min(1.5, temperature)) : 0.8,
+    max_tokens: Number.isFinite(maxTokens) ? Math.max(32, Math.min(512, Math.round(maxTokens))) : 180
+  };
+
+  const response = await fetch(endpoint, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${apiKey}`
+    },
+    body: JSON.stringify(body)
+  });
+
+  if (!response.ok) {
+    const message = await resolveAiErrorMessage(
+      response,
+      `ai request failed (${response.status})`
+    );
+    return {
+      ok: false,
+      error: message
+    };
+  }
+
+  const data = await response.json();
+  const content = data?.choices?.[0]?.message?.content;
+  const text = typeof content === "string" ? content.trim() : "";
+  if (!text) {
+    return {
+      ok: false,
+      error: "empty ai response"
+    };
+  }
+  return {
+    ok: true,
+    text,
+    provider,
+    model,
+    newsHeadlines,
+    usage: data?.usage || null
+  };
+}
+
 function registerIpcHandlers() {
   ipcMain.on("pet:set-hit-region", (_event, isInside) => {
     if (!mainWindow || mainWindow.isDestroyed()) return;
@@ -544,6 +795,21 @@ function registerIpcHandlers() {
     }
     refreshTrayMenu();
     return interactionPaused;
+  });
+
+  ipcMain.handle("pet:hide-window", () => {
+    if (!mainWindow || mainWindow.isDestroyed()) {
+      return {
+        ok: false,
+        error: {
+          code: "WINDOW_UNAVAILABLE",
+          message: "window unavailable"
+        }
+      };
+    }
+    mainWindow.hide();
+    refreshTrayMenu();
+    return { ok: true };
   });
 
   ipcMain.handle("pet:battle-reset", (_event, config) => {
@@ -669,12 +935,17 @@ function registerIpcHandlers() {
       });
       if (result.roundResult.winner) {
         if (
-          result.roundResult.winner === "player" &&
           runtimeDataStore &&
           typeof activeBattleSession.player?.petId === "string" &&
           activeBattleSession.player.petId.length > 0
         ) {
-          progression = runtimeDataStore.recordBattleWin(activeBattleSession.player.petId);
+          if (result.roundResult.winner === "player") {
+            progression = runtimeDataStore.recordBattleWin(activeBattleSession.player.petId);
+          } else if (result.roundResult.winner === "enemy") {
+            progression = runtimeDataStore.recordBattleResult(activeBattleSession.player.petId, {
+              won: false
+            });
+          }
         }
         if (activeBattleSession.mode === "capture" && !activeBattleSession.captureResolved) {
           if (result.roundResult.winner === "player") {
@@ -1223,12 +1494,17 @@ function registerIpcHandlers() {
         });
         if (result.roundResult.winner) {
           if (
-            result.roundResult.winner === "player" &&
             runtimeDataStore &&
             typeof activeBattleSession.player?.petId === "string" &&
             activeBattleSession.player.petId.length > 0
           ) {
-            progression = runtimeDataStore.recordBattleWin(activeBattleSession.player.petId);
+            if (result.roundResult.winner === "player") {
+              progression = runtimeDataStore.recordBattleWin(activeBattleSession.player.petId);
+            } else if (result.roundResult.winner === "enemy") {
+              progression = runtimeDataStore.recordBattleResult(activeBattleSession.player.petId, {
+                won: false
+              });
+            }
           }
           closeBattleSession("finished", result.roundResult.winner);
         }
@@ -1250,6 +1526,29 @@ function registerIpcHandlers() {
   ipcMain.handle("pet:set-active-pet", (_event, payload) => {
     const petId = payload && typeof payload.petId === "string" ? payload.petId : "";
     return runtimeDataStore.setActivePet(petId);
+  });
+
+  ipcMain.handle("pet:add-experience", (_event, payload) => {
+    const petId = payload && typeof payload.petId === "string" ? payload.petId : "";
+    const amount = payload && typeof payload.amount === "number" ? payload.amount : 0;
+    return runtimeDataStore.addPetExperience(petId, amount);
+  });
+
+  ipcMain.handle("pet:update-pet-mood", (_event, payload) => {
+    const petId = payload && typeof payload.petId === "string" ? payload.petId : "";
+    const delta = payload && typeof payload.delta === "number" ? payload.delta : 0;
+    return runtimeDataStore.updatePetMood(petId, delta);
+  });
+
+  ipcMain.handle("pet:ai-chat", async (_event, payload) => {
+    try {
+      return await requestAiChat(payload);
+    } catch (error) {
+      return {
+        ok: false,
+        error: error instanceof Error ? error.message : "ai request failed"
+      };
+    }
   });
 
   ipcMain.handle("pet:release-pet", (_event, payload) => {
