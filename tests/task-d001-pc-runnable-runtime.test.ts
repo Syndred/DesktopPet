@@ -130,7 +130,7 @@ describe("D-001 pc runnable runtime", () => {
     expect(html).toContain("player-hud-level");
     expect(html).toContain("enemy-hud-avatar");
     expect(html).toContain("enemy-hud-level");
-    expect(html).toContain("ShibaInu.glb");
+    expect(html).toContain("AnimatedDogShibaInu.glb");
     expect(html).toContain("Husky.glb");
     expect(html).toContain("desktop-stage");
     expect(html).toContain("btn-end-battle");

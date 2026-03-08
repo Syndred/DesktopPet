@@ -1,7 +1,7 @@
 ﻿# 运行配置文档（PC 桌宠对战）
 
-文档版本：v2.28  
-更新时间：2026-03-07
+文档版本：v2.32  
+更新时间：2026-03-08
 
 补充文档（灵境命名版，含双开联机步骤与排障）：
 
@@ -174,6 +174,56 @@ npm run verify
    - 修复“非 7 位旧 serial 归一化后可能重复”的问题，保证同种类自动补号递增。
 4. 版本号：
    - 根包与 PC 运行时版本更新为 `0.1.5`。
+
+## 2.7 v2.29 默认阵容升级（统一猫狗风格）
+
+1. 默认阵容模型替换（更精美统一风格）：
+   - 新增并启用：`Beagle / Puppy / Poodle / Cat / Kitten`。
+   - 保留 `Husky` 作为默认阵容的一员。
+   - 默认仓库、联机元素映射、附近灵宠模型映射均已同步到新模型集。
+2. 模型来源与许可清单更新：
+   - 模型目录清单：`apps/pc-app/runtime/assets/models/catalog.json`。
+   - 文档说明：`docs/model-sourcing-and-import.md`。
+   - 本次新增模型来源于 Poly Pizza（`Poly by Google`，`CC-BY 3.0`），保留来源与作者信息用于内测分发说明。
+3. 版本号：
+   - 根包与 PC 运行时版本更新为 `0.1.6`。
+
+## 2.8 v2.30 质量回滚与动效补丁
+
+1. 默认阵容回滚：
+   - 撤回 `Beagle / Puppy / Poodle / Cat / Kitten` 的默认映射。
+   - 默认阵容恢复为上一版：`Shiba Inu / Husky / Cat(A) / Cat(B)`。
+2. 动效补丁：
+   - 新增“保底呼吸动效”，即使模型本身没有骨骼动画也会有轻微起伏感。
+   - 对攻击/受击/交互状态自动暂停该保底动效，避免动作冲突。
+3. 模型策略调整：
+   - 新导入模型保留在仓库内作为候选包，不再直接覆盖默认阵容。
+   - 待完成下一批“高精度 + 骨骼动画”资源后再切换默认。
+4. 版本号：
+   - 根包与 PC 运行时版本更新为 `0.1.7`。
+
+## 2.9 v2.31 默认阵容切换（方案F，排除 Bakeneko）
+
+1. 默认阵容映射已切换到方案F文件名：
+   - `AnimatedDogShibaInu.glb`
+   - `AnAnimatedCat.glb`
+   - `TuxedoCatAnimated.glb`
+   - `MarcelPrizePug.glb`
+2. 已按产品决策排除：
+   - `Cute Monster Cat (Bakeneko)`（不进入默认阵容）。
+3. 该阶段先完成了方案F文件名切换，随后在 `v2.32` 已替换为真实模型文件。
+
+## 2.10 v2.32 方案F真实模型替换（1K）
+
+1. 已落地真实模型（均为 `1K` 档，含动画）：
+   - `AnimatedDogShibaInu.glb`
+   - `AnAnimatedCat.glb`
+   - `TuxedoCatAnimated.glb`
+   - `MarcelPrizePug.glb`
+2. 旧默认模型兼容迁移：
+   - 本地历史数据中的旧默认模型路径会自动按属性映射到新默认文件，避免老号出现“模型不切换”。
+3. 资产台账：
+   - `apps/pc-app/runtime/assets/models/catalog.json` 对应条目状态已从 `placeholder` 更新为 `imported`，并记录 `qualityPreset=1k`。
 
 ## 3. 启动 PC 端
 

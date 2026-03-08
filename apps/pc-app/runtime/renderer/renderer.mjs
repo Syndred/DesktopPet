@@ -76,6 +76,19 @@ const duelOnlineJoinBtn = document.getElementById("btn-duel-online-join");
 const duelOnlineLeaveBtn = document.getElementById("btn-duel-online-leave");
 const duelOnlineStatusElement = document.getElementById("duel-online-status");
 const exportOnlineLogBtn = document.getElementById("btn-export-online-log");
+const modelCalibrationModelSelect = document.getElementById("model-calibration-model");
+const modelCalibrationIdleOrientationXInput = document.getElementById("model-calibration-idle-orientation-x");
+const modelCalibrationIdleOrientationYInput = document.getElementById("model-calibration-idle-orientation-y");
+const modelCalibrationBattleOrientationXInput = document.getElementById("model-calibration-battle-orientation-x");
+const modelCalibrationBattleOrientationYInput = document.getElementById("model-calibration-battle-orientation-y");
+const modelCalibrationIdleScaleInput = document.getElementById("model-calibration-idle-scale");
+const modelCalibrationBattleScaleInput = document.getElementById("model-calibration-battle-scale");
+const modelCalibrationApplyBtn = document.getElementById("btn-model-calibration-apply");
+const modelCalibrationResetBtn = document.getElementById("btn-model-calibration-reset");
+const modelCalibrationStatusElement = document.getElementById("model-calibration-status");
+const modelCalibrationPreviewLabelElement = document.getElementById("model-calibration-preview-label");
+const modelCalibrationPreviewModeBtn = document.getElementById("btn-model-calibration-preview-mode");
+const modelCalibrationPreviewModel = document.getElementById("model-calibration-preview");
 const playerModel = document.getElementById("player-model");
 const enemyModel = document.getElementById("enemy-model");
 
@@ -224,6 +237,26 @@ const i18n = {
     inventoryReleaseDone: "已放逐灵宠：{petName}",
     inventoryReleaseKeepOne: "至少保留一只灵宠，无法放逐。",
     inventoryReleaseFail: "放逐失败：{message}",
+    modelCalibrationTitle: "模型校准（高级）",
+    modelCalibrationTip: "按模型调整静息/对战朝向，修正倒地截断和朝向反转。",
+    modelCalibrationModelLabel: "目标模型",
+    modelCalibrationIdleOrientationXLabel: "静息朝向X(度)",
+    modelCalibrationIdleOrientationYLabel: "静息朝向Y(度)",
+    modelCalibrationBattleOrientationXLabel: "对战朝向X(度)",
+    modelCalibrationBattleOrientationYLabel: "对战朝向Y(度)",
+    modelCalibrationIdleScaleLabel: "静息动作缩放",
+    modelCalibrationBattleScaleLabel: "对战动作缩放",
+    modelCalibrationPreviewLabel: "实时预览（左右拖动=Y朝向，上下拖动=X朝向）",
+    modelCalibrationOriginTip:
+      "说明：原点在底部（脚底）是常见模型枢轴设置，绕 X/Z 旋转会像“翻倒”，属模型原始特性。",
+    modelCalibrationPreviewModeIdle: "静息预览",
+    modelCalibrationPreviewModeBattle: "对战预览",
+    modelCalibrationApplyBtn: "保存校准",
+    modelCalibrationResetBtn: "恢复默认",
+    modelCalibrationStatusHint: "可按模型保存独立校准。",
+    modelCalibrationStatusSaved: "模型校准已保存并生效。",
+    modelCalibrationStatusReset: "已清除该模型校准，恢复默认。",
+    modelCalibrationStatusNoModel: "暂无可校准模型。",
     duelTitle: "对战申请",
     duelAdvancedTitle: "高级选项：手动房间控制",
     duelAdvancedExpand: "展开高级选项",
@@ -524,6 +557,26 @@ const i18n = {
     inventoryReleaseDone: "Spirit pet released: {petName}",
     inventoryReleaseKeepOne: "At least one spirit pet must remain.",
     inventoryReleaseFail: "Release failed: {message}",
+    modelCalibrationTitle: "Model Calibration (Advanced)",
+    modelCalibrationTip: "Adjust idle/battle facing per model to fix clipping and wrong orientation.",
+    modelCalibrationModelLabel: "Target Model",
+    modelCalibrationIdleOrientationXLabel: "Idle Facing X (deg)",
+    modelCalibrationIdleOrientationYLabel: "Idle Facing Y (deg)",
+    modelCalibrationBattleOrientationXLabel: "Battle Facing X (deg)",
+    modelCalibrationBattleOrientationYLabel: "Battle Facing Y (deg)",
+    modelCalibrationIdleScaleLabel: "Idle Action Scale",
+    modelCalibrationBattleScaleLabel: "Battle Action Scale",
+    modelCalibrationPreviewLabel: "Live Preview (Left/Right=Y, Up/Down=X)",
+    modelCalibrationOriginTip:
+      "Note: a bottom/feet pivot is common; X/Z rotation can look like tipping. This is a model pivot characteristic.",
+    modelCalibrationPreviewModeIdle: "Idle Preview",
+    modelCalibrationPreviewModeBattle: "Battle Preview",
+    modelCalibrationApplyBtn: "Save Calibration",
+    modelCalibrationResetBtn: "Reset Default",
+    modelCalibrationStatusHint: "Calibration is stored per model file.",
+    modelCalibrationStatusSaved: "Model calibration saved and applied.",
+    modelCalibrationStatusReset: "Model calibration cleared and reset to defaults.",
+    modelCalibrationStatusNoModel: "No model available for calibration.",
     duelTitle: "Duel Requests",
     duelAdvancedTitle: "Advanced: Manual Room Controls",
     duelAdvancedExpand: "Expand advanced options",
@@ -730,6 +783,36 @@ const i18n = {
 
 const RELEASE_HISTORY = [
   {
+    version: "0.1.7",
+    date: "2026-03-08",
+    highlights: {
+      zh: [
+        "默认阵容回滚到上一版猫狗模型（Shiba Inu / Husky / Cat），撤回低质替换。",
+        "新增模型保底呼吸动效，未带骨骼动画的模型也不再静止。"
+      ],
+      en: [
+        "Rolled default roster back to previous cat/dog set (Shiba Inu / Husky / Cat).",
+        "Added fallback breathing motion so non-rigged models no longer look static."
+      ]
+    }
+  },
+  {
+    version: "0.1.6",
+    date: "2026-03-08",
+    highlights: {
+      zh: [
+        "默认阵容升级为统一风格猫狗模型（Beagle / Puppy / Poodle / Cat / Kitten / Husky）。",
+        "联机元素模型映射同步更新，优先展示新版猫狗模型。",
+        "补充模型来源与许可清单，便于内测阶段素材追溯。"
+      ],
+      en: [
+        "Upgraded default roster to a cohesive cat/dog set (Beagle / Puppy / Poodle / Cat / Kitten / Husky).",
+        "Updated online elemental model mapping to prioritize the new model set.",
+        "Expanded model source/license catalog for easier beta asset tracking."
+      ]
+    }
+  },
+  {
     version: "0.1.5",
     date: "2026-03-07",
     highlights: {
@@ -799,8 +882,8 @@ const DEFAULT_PET_ROSTER = [
   {
     id: "pet-001",
     serial: "0019001",
-    name: { zh: "柴团", en: "ShibaMochi" },
-    model: "../assets/models/ShibaInu.glb",
+    name: { zh: "焰柴", en: "BlazeShiba" },
+    model: "../assets/models/AnimatedDogShibaInu.glb",
     element: "fire",
     stats: "HP128 / ATK32 / DEF20 / SPD18",
     capturedAt: "2026-03-01 21:10",
@@ -812,12 +895,12 @@ const DEFAULT_PET_ROSTER = [
   {
     id: "pet-002",
     serial: "0029001",
-    name: { zh: "雪团", en: "SnowPaw" },
+    name: { zh: "墨喵", en: "InkCat" },
     model: "../assets/models/Husky.glb",
     element: "water",
     stats: "HP122 / ATK28 / DEF24 / SPD21",
     capturedAt: "2026-03-02 09:35",
-    avatar: "雪",
+    avatar: "墨",
     level: 1,
     experience: 0,
     winsTotal: 0
@@ -825,12 +908,12 @@ const DEFAULT_PET_ROSTER = [
   {
     id: "pet-003",
     serial: "0039001",
-    name: { zh: "奶油喵", en: "ButterCat" },
-    model: "../assets/models/CatQuaterniusA.glb",
+    name: { zh: "礼帽喵", en: "TuxedoCat" },
+    model: "../assets/models/TuxedoCatAnimated.glb",
     element: "wood",
     stats: "HP130 / ATK26 / DEF26 / SPD17",
     capturedAt: "2026-03-02 20:42",
-    avatar: "喵",
+    avatar: "礼",
     level: 1,
     experience: 0,
     winsTotal: 0
@@ -838,12 +921,12 @@ const DEFAULT_PET_ROSTER = [
   {
     id: "pet-004",
     serial: "0049001",
-    name: { zh: "焦糖喵", en: "CaramelCat" },
-    model: "../assets/models/CatQuaterniusB.glb",
+    name: { zh: "钢狼", en: "SteelWolf" },
+    model: "../assets/models/Husky.glb",
     element: "metal",
     stats: "HP135 / ATK30 / DEF30 / SPD12",
     capturedAt: "2026-03-03 08:20",
-    avatar: "咪",
+    avatar: "钢",
     level: 1,
     experience: 0,
     winsTotal: 0
@@ -851,12 +934,12 @@ const DEFAULT_PET_ROSTER = [
   {
     id: "pet-005",
     serial: "0059001",
-    name: { zh: "霜牙", en: "FrostFang" },
-    model: "../assets/models/Husky.glb",
+    name: { zh: "赤柴", en: "AmberShiba" },
+    model: "../assets/models/AnimatedDogShibaInu.glb",
     element: "earth",
     stats: "HP142 / ATK24 / DEF34 / SPD10",
     capturedAt: "2026-03-03 18:05",
-    avatar: "霜",
+    avatar: "赤",
     level: 1,
     experience: 0,
     winsTotal: 0
@@ -865,7 +948,7 @@ const DEFAULT_PET_ROSTER = [
     id: "pet-006",
     serial: "0069001",
     name: { zh: "柴豆", en: "ShibaBean" },
-    model: "../assets/models/ShibaInu.glb",
+    model: "../assets/models/AnimatedDogShibaInu.glb",
     element: "fire",
     stats: "HP118 / ATK33 / DEF22 / SPD20",
     capturedAt: "2026-03-04 12:11",
@@ -877,12 +960,16 @@ const DEFAULT_PET_ROSTER = [
 ];
 
 const ONLINE_MODEL_BY_ELEMENT = {
-  fire: "../assets/models/ShibaInu.glb",
+  fire: "../assets/models/AnimatedDogShibaInu.glb",
   water: "../assets/models/Husky.glb",
-  wood: "../assets/models/CatQuaterniusA.glb",
-  metal: "../assets/models/CatQuaterniusB.glb",
-  earth: "../assets/models/Husky.glb"
+  wood: "../assets/models/TuxedoCatAnimated.glb",
+  metal: "../assets/models/Husky.glb",
+  earth: "../assets/models/AnimatedDogShibaInu.glb"
 };
+const DISABLED_MODEL_FILE_TO_FALLBACK = Object.freeze({
+  "ananimatedcat.glb": "../assets/models/Husky.glb",
+  "marcelprizepug.glb": "../assets/models/Husky.glb"
+});
 
 const uiRefs = {
   appTitleText: document.getElementById("app-title-text"),
@@ -903,6 +990,17 @@ const uiRefs = {
   duelAdvancedTitle: document.getElementById("duel-advanced-title"),
   duelSearchLabel: document.getElementById("duel-search-label"),
   duelOnlineRoomLabel: document.getElementById("duel-online-room-label"),
+  modelCalibrationTitle: document.getElementById("model-calibration-title"),
+  modelCalibrationTip: document.getElementById("model-calibration-tip"),
+  modelCalibrationModelLabel: document.getElementById("model-calibration-model-label"),
+  modelCalibrationIdleOrientationXLabel: document.getElementById("model-calibration-idle-orientation-x-label"),
+  modelCalibrationIdleOrientationYLabel: document.getElementById("model-calibration-idle-orientation-y-label"),
+  modelCalibrationBattleOrientationXLabel: document.getElementById("model-calibration-battle-orientation-x-label"),
+  modelCalibrationBattleOrientationYLabel: document.getElementById("model-calibration-battle-orientation-y-label"),
+  modelCalibrationIdleScaleLabel: document.getElementById("model-calibration-idle-scale-label"),
+  modelCalibrationBattleScaleLabel: document.getElementById("model-calibration-battle-scale-label"),
+  modelCalibrationPreviewLabel: document.getElementById("model-calibration-preview-label"),
+  modelCalibrationOriginTip: document.getElementById("model-calibration-origin-tip"),
   profileAccountLabel: document.getElementById("profile-account-label"),
   profileOldPasswordLabel: document.getElementById("profile-old-password-label"),
   profileNewPasswordLabel: document.getElementById("profile-new-password-label"),
@@ -927,9 +1025,14 @@ const uiRefs = {
 const LANG_STORAGE_KEY = "qp_runtime_lang";
 const PANEL_SECTION_STATE_STORAGE_KEY = "qp_panel_section_state_v1";
 const DUEL_ADVANCED_STATE_STORAGE_KEY = "qp_duel_advanced_state_v1";
+const MODEL_VIEW_CALIBRATION_STORAGE_KEY = "qp_model_view_calibration_v3";
+const PANEL_SECTION_DEFAULT_EXPANDED_BY_KEY = Object.freeze({
+  "model-calibration": false
+});
 
 let language = getInitialLanguage();
 let panelSectionState = loadPanelSectionState();
+let modelViewCalibrations = loadModelViewCalibrations();
 let panelSectionToggleEntries = [];
 let isPaused = false;
 let isInteractive = false;
@@ -988,10 +1091,47 @@ const LEVEL_UP_REQUIRED_WINS = 5;
 const IDLE_WINDOW_SCALE_STEP = 0.04;
 const IDLE_WINDOW_SCALE_MIN = 0.82;
 const IDLE_WINDOW_SCALE_MAX = 2.2;
+const IDLE_POSE_WINDOW_SYNC_INTERVAL_MS = 280;
 const BATTLE_PLAYER_AZIMUTH_DEG = -92;
 const BATTLE_ENEMY_AZIMUTH_DEG = 92;
 const BATTLE_CAMERA_PITCH_MIN = 58;
 const BATTLE_CAMERA_PITCH_MAX = 86;
+const DETAIL_MODEL_DEFAULT_ORBIT_DEG = 18;
+const DETAIL_MODEL_DEFAULT_PITCH_DEG = 74;
+const WIDE_POSE_ANIMATION_PATTERN = /(lie|lying|sleep|down|rest|roll|crawl|sprawl|sit)/i;
+const CALIBRATION_DRAG_DEADZONE_PX = 1.1;
+const CALIBRATION_DRAG_HORIZONTAL_SENSITIVITY = 0.6;
+const CALIBRATION_DRAG_VERTICAL_SENSITIVITY = 0.5;
+const DEFAULT_MODEL_VIEW_PROFILE = Object.freeze({
+  idleOrientationXDeg: 0,
+  idleOrientationYDeg: 0,
+  idleRadius: "auto",
+  idleTarget: "",
+  battleOrientationXDeg: 0,
+  battleOrientationYDeg: 0,
+  battleRadius: "auto",
+  battleTarget: "",
+  battlePitchOffsetDeg: 0,
+  detailOrientationXDeg: 0,
+  detailOrientationYDeg: 0,
+  detailOrbitDeg: DETAIL_MODEL_DEFAULT_ORBIT_DEG,
+  detailPitchDeg: DETAIL_MODEL_DEFAULT_PITCH_DEG,
+  detailRadius: "auto",
+  detailTarget: "",
+  poseWideScaleIdle: 1.24,
+  poseWideScaleBattle: 1.34,
+  poseWideScaleDetail: 1.24
+});
+const MODEL_VIEW_PROFILE_BY_FILE = {
+  "animateddogshibainu.glb": {
+    idleRadius: "118%",
+    idleTarget: "0m -0.03m 0m",
+    detailRadius: "122%",
+    poseWideScaleIdle: 1.32,
+    poseWideScaleBattle: 1.46,
+    poseWideScaleDetail: 1.28
+  }
+};
 let idleWindowScale = 1;
 let settlementExtraMessage = "";
 let pendingCaptureDecision = null;
@@ -1006,6 +1146,8 @@ let idleModelBaseSize = {
 };
 let idleWheelScaleDelta = 0;
 let idleWheelFrameToken = null;
+let idleWindowSizeSignature = "";
+let lastIdlePoseWindowSyncAt = 0;
 let panelTransitionSeq = 0;
 let duelSyncPollingTimer = null;
 let duelSyncPollingInFlight = false;
@@ -1028,6 +1170,10 @@ let freeDodgeUsedBySide = {
   enemy: false
 };
 let pendingReleasePet = null;
+let selectedCalibrationModelFile = "";
+let calibrationPreviewMode = "idle";
+let calibrationPreviewDragSession = null;
+const modelCalibrationSourceMap = new Map();
 
 const ELEMENT_ADVANTAGE_CHAIN = {
   metal: "wood",
@@ -1092,6 +1238,65 @@ function saveDuelAdvancedState() {
   }
 }
 
+function normalizeModelViewCalibrationEntry(entry) {
+  if (!entry || typeof entry !== "object") return {};
+  const read = (key, min, max) => {
+    const value = Number(entry[key]);
+    if (!Number.isFinite(value)) return null;
+    return clampNumber(value, min, max);
+  };
+
+  const normalized = {};
+  const idleOrientationXDeg = read("idleOrientationXDeg", -180, 180);
+  const idleOrientationYDeg = read("idleOrientationYDeg", -180, 180);
+  const battleOrientationXDeg = read("battleOrientationXDeg", -180, 180);
+  const battleOrientationYDeg = read("battleOrientationYDeg", -180, 180);
+  const detailOrientationXDeg = read("detailOrientationXDeg", -180, 180);
+  const detailOrientationYDeg = read("detailOrientationYDeg", -180, 180);
+  const poseWideScaleIdle = read("poseWideScaleIdle", 1, 2.6);
+  const poseWideScaleBattle = read("poseWideScaleBattle", 1, 2.6);
+  const poseWideScaleDetail = read("poseWideScaleDetail", 1, 2.6);
+
+  if (idleOrientationXDeg !== null) normalized.idleOrientationXDeg = idleOrientationXDeg;
+  if (idleOrientationYDeg !== null) normalized.idleOrientationYDeg = idleOrientationYDeg;
+  if (battleOrientationXDeg !== null) normalized.battleOrientationXDeg = battleOrientationXDeg;
+  if (battleOrientationYDeg !== null) normalized.battleOrientationYDeg = battleOrientationYDeg;
+  if (detailOrientationXDeg !== null) normalized.detailOrientationXDeg = detailOrientationXDeg;
+  if (detailOrientationYDeg !== null) normalized.detailOrientationYDeg = detailOrientationYDeg;
+  if (poseWideScaleIdle !== null) normalized.poseWideScaleIdle = poseWideScaleIdle;
+  if (poseWideScaleBattle !== null) normalized.poseWideScaleBattle = poseWideScaleBattle;
+  if (poseWideScaleDetail !== null) normalized.poseWideScaleDetail = poseWideScaleDetail;
+  return normalized;
+}
+
+function loadModelViewCalibrations() {
+  try {
+    const raw = localStorage.getItem(MODEL_VIEW_CALIBRATION_STORAGE_KEY);
+    if (!raw) return {};
+    const parsed = JSON.parse(raw);
+    if (!parsed || typeof parsed !== "object") return {};
+    const normalized = {};
+    for (const [key, value] of Object.entries(parsed)) {
+      const fileKey = getModelSourceFileName(key);
+      if (!fileKey) continue;
+      const entry = normalizeModelViewCalibrationEntry(value);
+      if (Object.keys(entry).length === 0) continue;
+      normalized[fileKey] = entry;
+    }
+    return normalized;
+  } catch {
+    return {};
+  }
+}
+
+function saveModelViewCalibrations() {
+  try {
+    localStorage.setItem(MODEL_VIEW_CALIBRATION_STORAGE_KEY, JSON.stringify(modelViewCalibrations));
+  } catch {
+    // Keep local persistence best-effort.
+  }
+}
+
 function applyDuelAdvancedExpanded(expanded, options = {}) {
   const normalized = Boolean(expanded);
   duelAdvancedExpanded = normalized;
@@ -1123,6 +1328,12 @@ function resolvePanelSectionKey(sectionElement, index) {
   const titleId = sectionElement.querySelector("h2[id]")?.id;
   if (titleId && titleId.trim().length > 0) return titleId.trim();
   return `section-${index}`;
+}
+
+function getPanelSectionDefaultExpanded(key) {
+  if (!key) return true;
+  if (!Object.prototype.hasOwnProperty.call(PANEL_SECTION_DEFAULT_EXPANDED_BY_KEY, key)) return true;
+  return Boolean(PANEL_SECTION_DEFAULT_EXPANDED_BY_KEY[key]);
 }
 
 function applyPanelSectionExpanded(entry, expanded, options = {}) {
@@ -1188,7 +1399,9 @@ function setupPanelSectionToggles() {
     };
     panelSectionToggleEntries.push(entry);
 
-    const expanded = panelSectionState[key] !== false;
+    const expanded = Object.prototype.hasOwnProperty.call(panelSectionState, key)
+      ? panelSectionState[key] !== false
+      : getPanelSectionDefaultExpanded(key);
     applyPanelSectionExpanded(entry, expanded, { persist: false });
     button.addEventListener("click", () => {
       const currentExpanded = button.getAttribute("aria-expanded") === "true";
@@ -1507,8 +1720,14 @@ function clampNumber(value, min, max) {
 
 function getIdleWindowSize(scaleValue) {
   const scale = clampNumber(scaleValue, IDLE_WINDOW_SCALE_MIN, IDLE_WINDOW_SCALE_MAX);
-  const baseWidth = Math.max(150, idleModelBaseSize.width + 26);
-  const baseHeight = Math.max(180, idleModelBaseSize.height + 26);
+  const activeModelFile = getModelSourceFileName(getActivePet()?.model || playerModel?.src || "");
+  const currentAnimationName = typeof playerModel?.animationName === "string" ? playerModel.animationName : "";
+  const hasWideAnimation = WIDE_POSE_ANIMATION_PATTERN.test(currentAnimationName);
+  const isShibaLike = activeModelFile === "animateddogshibainu.glb";
+  const widthPadding = hasWideAnimation ? (isShibaLike ? 72 : 56) : isShibaLike ? 20 : 26;
+  const heightPadding = hasWideAnimation ? (isShibaLike ? 66 : 52) : isShibaLike ? 20 : 24;
+  const baseWidth = Math.max(154, idleModelBaseSize.width + widthPadding);
+  const baseHeight = Math.max(184, idleModelBaseSize.height + heightPadding);
   return {
     width: Math.round(baseWidth * scale),
     height: Math.round(baseHeight * scale)
@@ -1518,11 +1737,24 @@ function getIdleWindowSize(scaleValue) {
 async function applyIdleWindowScale(scaleValue) {
   idleWindowScale = clampNumber(scaleValue, IDLE_WINDOW_SCALE_MIN, IDLE_WINDOW_SCALE_MAX);
   const size = getIdleWindowSize(idleWindowScale);
+  const nextSignature = `${size.width}x${size.height}`;
+  if (nextSignature === idleWindowSizeSignature) return;
+  idleWindowSizeSignature = nextSignature;
   try {
     await window.petApi.setIdleWindowSize(size);
   } catch {
     // Keep non-blocking behavior when IPC is unavailable.
   }
+}
+
+function syncIdleWindowSizeForCurrentPose(options = {}) {
+  const force = Boolean(options.force);
+  if (force) {
+    idleWindowSizeSignature = "";
+  }
+  if (battleMode) return;
+  if (!panelElement.classList.contains("hidden")) return;
+  void applyIdleWindowScale(idleWindowScale);
 }
 
 function queueIdleScale(stepDelta) {
@@ -2005,9 +2237,482 @@ function setModelElementTint(modelElement, element) {
   modelElement.classList.add(`model-tint-${element}`);
 }
 
+function getModelSourceFileName(source) {
+  if (typeof source !== "string") return "";
+  const trimmed = source.trim();
+  if (!trimmed) return "";
+  let decoded = trimmed;
+  try {
+    decoded = decodeURIComponent(trimmed);
+  } catch {
+    decoded = trimmed;
+  }
+  const normalized = decoded.replace(/\\/g, "/");
+  const withoutQuery = normalized.split(/[?#]/)[0];
+  const lastSlashIndex = withoutQuery.lastIndexOf("/");
+  return (lastSlashIndex >= 0 ? withoutQuery.slice(lastSlashIndex + 1) : withoutQuery).toLowerCase();
+}
+
+function sanitizeModelSource(source, element = "") {
+  const fileName = getModelSourceFileName(source);
+  if (fileName && DISABLED_MODEL_FILE_TO_FALLBACK[fileName]) {
+    return DISABLED_MODEL_FILE_TO_FALLBACK[fileName];
+  }
+  if (typeof source === "string" && source.trim().length > 0) {
+    return source.trim();
+  }
+  return getModelByElement(element);
+}
+
+function setModelCalibrationStatus(message, tone = "") {
+  if (!modelCalibrationStatusElement) return;
+  const text =
+    typeof message === "string" && message.trim().length > 0
+      ? message.trim()
+      : currentI18n().modelCalibrationStatusHint;
+  modelCalibrationStatusElement.textContent = text;
+  modelCalibrationStatusElement.classList.remove("error", "success");
+  if (tone === "error" || tone === "success") {
+    modelCalibrationStatusElement.classList.add(tone);
+  }
+}
+
+function collectModelCalibrationSources() {
+  const sourceMap = new Map();
+  const append = (source, displayName = "") => {
+    const fileName = getModelSourceFileName(source);
+    if (!fileName) return;
+    if (!sourceMap.has(fileName)) {
+      sourceMap.set(fileName, {
+        fileName,
+        source: typeof source === "string" ? source : "",
+        names: new Set()
+      });
+    }
+    const entry = sourceMap.get(fileName);
+    if (displayName && displayName.trim().length > 0) {
+      entry.names.add(displayName.trim());
+    }
+  };
+
+  for (const pet of [...DEFAULT_PET_ROSTER, ...getRoster()]) {
+    append(pet?.model, getPetDisplayName(pet));
+  }
+  append(enemyPetInBattle?.model, getPetDisplayName(enemyPetInBattle));
+  append(playerModel?.getAttribute?.("src"), getPetDisplayName(getActivePet()));
+  append(enemyModel?.getAttribute?.("src"), getPetDisplayName(enemyPetInBattle));
+  for (const source of Object.values(ONLINE_MODEL_BY_ELEMENT)) {
+    append(source, "");
+  }
+
+  return [...sourceMap.values()]
+    .map((entry) => {
+      const names = [...entry.names];
+      const summary = names.slice(0, 2).join(" / ");
+      const label = summary ? `${summary} · ${entry.fileName}` : entry.fileName;
+      return {
+        value: entry.fileName,
+        label,
+        source: entry.source
+      };
+    })
+    .sort((a, b) => a.label.localeCompare(b.label, language === "zh" ? "zh-CN" : "en-US"));
+}
+
+function resolveModelViewProfileByFileName(fileName) {
+  const key = getModelSourceFileName(fileName);
+  if (!key) return DEFAULT_MODEL_VIEW_PROFILE;
+  const customProfile = MODEL_VIEW_PROFILE_BY_FILE[key];
+  const userProfile = modelViewCalibrations[key];
+  if (!customProfile && !userProfile) return DEFAULT_MODEL_VIEW_PROFILE;
+  return {
+    ...DEFAULT_MODEL_VIEW_PROFILE,
+    ...(customProfile || {}),
+    ...(userProfile || {})
+  };
+}
+
+function normalizeOrientationDegrees(value) {
+  if (!Number.isFinite(value)) return 0;
+  const wrapped = ((((value + 180) % 360) + 360) % 360) - 180;
+  return Math.round(wrapped);
+}
+
+function getCalibrationPreviewSource(fileName) {
+  const key = getModelSourceFileName(fileName);
+  if (!key) return "";
+  const mapped = modelCalibrationSourceMap.get(key);
+  if (mapped?.source && mapped.source.trim().length > 0) return mapped.source;
+  return `../assets/models/${key}`;
+}
+
+function getSelectedCalibrationFileName() {
+  return getModelSourceFileName(modelCalibrationModelSelect?.value || selectedCalibrationModelFile);
+}
+
+function getCalibrationPreviewOrientationInput() {
+  return calibrationPreviewMode === "battle"
+    ? {
+        x: modelCalibrationBattleOrientationXInput,
+        y: modelCalibrationBattleOrientationYInput
+      }
+    : {
+        x: modelCalibrationIdleOrientationXInput,
+        y: modelCalibrationIdleOrientationYInput
+      };
+}
+
+function getCalibrationPreviewScaleInput() {
+  return calibrationPreviewMode === "battle" ? modelCalibrationBattleScaleInput : modelCalibrationIdleScaleInput;
+}
+
+function syncCalibrationPreviewModeText() {
+  if (modelCalibrationPreviewLabelElement) {
+    modelCalibrationPreviewLabelElement.textContent = currentI18n().modelCalibrationPreviewLabel;
+  }
+  if (!modelCalibrationPreviewModeBtn) return;
+  const label =
+    calibrationPreviewMode === "battle"
+      ? currentI18n().modelCalibrationPreviewModeBattle
+      : currentI18n().modelCalibrationPreviewModeIdle;
+  modelCalibrationPreviewModeBtn.textContent = label;
+  modelCalibrationPreviewModeBtn.title = label;
+}
+
+function readCalibrationNumber(inputElement, min, max) {
+  if (!inputElement) return null;
+  const raw = inputElement.value.trim();
+  if (!raw) return null;
+  const value = Number(raw);
+  if (!Number.isFinite(value)) return null;
+  return clampNumber(value, min, max);
+}
+
+function formatCalibrationNumber(value, digits = 2) {
+  if (!Number.isFinite(value)) return "";
+  const rounded = Number(value.toFixed(digits));
+  return String(rounded);
+}
+
+function fillModelCalibrationInputs(fileName) {
+  const key = getModelSourceFileName(fileName);
+  const profile = key ? resolveModelViewProfileByFileName(key) : DEFAULT_MODEL_VIEW_PROFILE;
+  if (modelCalibrationIdleOrientationXInput) {
+    modelCalibrationIdleOrientationXInput.value = formatCalibrationNumber(profile.idleOrientationXDeg, 0);
+  }
+  if (modelCalibrationIdleOrientationYInput) {
+    modelCalibrationIdleOrientationYInput.value = formatCalibrationNumber(profile.idleOrientationYDeg, 0);
+  }
+  if (modelCalibrationBattleOrientationXInput) {
+    modelCalibrationBattleOrientationXInput.value = formatCalibrationNumber(profile.battleOrientationXDeg, 0);
+  }
+  if (modelCalibrationBattleOrientationYInput) {
+    modelCalibrationBattleOrientationYInput.value = formatCalibrationNumber(profile.battleOrientationYDeg, 0);
+  }
+  if (modelCalibrationIdleScaleInput) {
+    modelCalibrationIdleScaleInput.value = formatCalibrationNumber(profile.poseWideScaleIdle, 2);
+  }
+  if (modelCalibrationBattleScaleInput) {
+    modelCalibrationBattleScaleInput.value = formatCalibrationNumber(profile.poseWideScaleBattle, 2);
+  }
+}
+
+function applyModelCalibrationPreviewBox(options = {}) {
+  if (!modelCalibrationPreviewModel) return;
+  const fileName = getSelectedCalibrationFileName();
+  if (!fileName) {
+    modelCalibrationPreviewModel.removeAttribute("src");
+    return;
+  }
+  const source = getCalibrationPreviewSource(fileName);
+  if (source && modelCalibrationPreviewModel.getAttribute("src") !== source) {
+    modelCalibrationPreviewModel.setAttribute("src", source);
+  }
+
+  const profile = resolveModelViewProfileByFileName(fileName);
+  const orientationInput = getCalibrationPreviewOrientationInput();
+  const scaleInput = getCalibrationPreviewScaleInput();
+  const orientationFallbackX =
+    calibrationPreviewMode === "battle" ? profile.battleOrientationXDeg : profile.idleOrientationXDeg;
+  const orientationFallbackY =
+    calibrationPreviewMode === "battle" ? profile.battleOrientationYDeg : profile.idleOrientationYDeg;
+  const scaleFallback =
+    calibrationPreviewMode === "battle" ? profile.poseWideScaleBattle : profile.poseWideScaleIdle;
+  const orientationX = readCalibrationNumber(orientationInput.x, -180, 180);
+  const orientationY = readCalibrationNumber(orientationInput.y, -180, 180);
+  const scale = readCalibrationNumber(scaleInput, 1, 2.6);
+  const effectiveScale = scale ?? scaleFallback;
+  const previewRadiusPercent = clampNumber(100 * effectiveScale, 70, 260);
+
+  applyModelViewerFrame(modelCalibrationPreviewModel, {
+    orbitDeg: 0,
+    pitchDeg: 74,
+    radius: `${previewRadiusPercent.toFixed(1)}%`,
+    target: "",
+    orientationXDeg: orientationX ?? orientationFallbackX,
+    orientationYDeg: orientationY ?? orientationFallbackY,
+    zoomScale: 1
+  });
+  if (typeof modelCalibrationPreviewModel.jumpCameraToGoal === "function") {
+    modelCalibrationPreviewModel.jumpCameraToGoal();
+  }
+
+  if (options.playAnimation !== false) {
+    const names = modelCalibrationPreviewModel.availableAnimations || [];
+    if (names.length > 0) {
+      const preferred = ["idle", "walk", "run", "survey", "rest"]
+        .map((name) => names.find((candidate) => candidate.toLowerCase().includes(name)))
+        .find(Boolean);
+      const nextAnimation = preferred || names[0];
+      if (modelCalibrationPreviewModel.animationName !== nextAnimation) {
+        modelCalibrationPreviewModel.animationName = nextAnimation;
+      }
+      modelCalibrationPreviewModel.play();
+    }
+  }
+}
+
+function applyModelCalibrationPreview() {
+  if (battleMode) {
+    applyBattleView();
+  } else {
+    applyIdleOrbit();
+    applyEnemyIdleOrbit();
+  }
+  const detailModelElement = document.getElementById("pet-detail-model-viewer");
+  if (detailModelElement) {
+    applyDetailModelView(detailModelElement);
+  }
+}
+
+function renderModelCalibrationPanel() {
+  if (!modelCalibrationModelSelect) return;
+  const options = collectModelCalibrationSources();
+  if (options.length === 0) {
+    modelCalibrationModelSelect.innerHTML = "";
+    selectedCalibrationModelFile = "";
+    modelCalibrationSourceMap.clear();
+    if (modelCalibrationPreviewModel) {
+      modelCalibrationPreviewModel.removeAttribute("src");
+    }
+    setModelCalibrationStatus(currentI18n().modelCalibrationStatusNoModel, "error");
+    return;
+  }
+
+  const preferredCurrent =
+    getModelSourceFileName(selectedCalibrationModelFile) ||
+    getModelSourceFileName(getActivePet()?.model || "") ||
+    options[0].value;
+  selectedCalibrationModelFile = options.some((item) => item.value === preferredCurrent)
+    ? preferredCurrent
+    : options[0].value;
+  modelCalibrationSourceMap.clear();
+  modelCalibrationModelSelect.innerHTML = "";
+  for (const item of options) {
+    modelCalibrationSourceMap.set(item.value, item);
+    const optionElement = document.createElement("option");
+    optionElement.value = item.value;
+    optionElement.textContent = item.label;
+    if (item.value === selectedCalibrationModelFile) {
+      optionElement.selected = true;
+    }
+    modelCalibrationModelSelect.appendChild(optionElement);
+  }
+  modelCalibrationModelSelect.value = selectedCalibrationModelFile;
+  fillModelCalibrationInputs(selectedCalibrationModelFile);
+  syncCalibrationPreviewModeText();
+  applyModelCalibrationPreviewBox();
+}
+
+function saveModelCalibrationForSelectedModel(options = {}) {
+  const fileName = getSelectedCalibrationFileName();
+  if (!fileName) {
+    if (!options.silent) {
+      setModelCalibrationStatus(currentI18n().modelCalibrationStatusNoModel, "error");
+    }
+    return;
+  }
+  selectedCalibrationModelFile = fileName;
+
+  const entry = normalizeModelViewCalibrationEntry({
+    idleOrientationXDeg: readCalibrationNumber(modelCalibrationIdleOrientationXInput, -180, 180),
+    idleOrientationYDeg: readCalibrationNumber(modelCalibrationIdleOrientationYInput, -180, 180),
+    battleOrientationXDeg: readCalibrationNumber(modelCalibrationBattleOrientationXInput, -180, 180),
+    battleOrientationYDeg: readCalibrationNumber(modelCalibrationBattleOrientationYInput, -180, 180),
+    detailOrientationXDeg: readCalibrationNumber(modelCalibrationIdleOrientationXInput, -180, 180),
+    detailOrientationYDeg: readCalibrationNumber(modelCalibrationIdleOrientationYInput, -180, 180),
+    poseWideScaleIdle: readCalibrationNumber(modelCalibrationIdleScaleInput, 1, 2.6),
+    poseWideScaleBattle: readCalibrationNumber(modelCalibrationBattleScaleInput, 1, 2.6),
+    poseWideScaleDetail: readCalibrationNumber(modelCalibrationIdleScaleInput, 1, 2.6)
+  });
+
+  if (Object.keys(entry).length === 0) {
+    delete modelViewCalibrations[fileName];
+  } else {
+    modelViewCalibrations[fileName] = entry;
+  }
+  saveModelViewCalibrations();
+  fillModelCalibrationInputs(fileName);
+  applyModelCalibrationPreviewBox();
+  if (!options.silent) {
+    setModelCalibrationStatus(currentI18n().modelCalibrationStatusSaved, "success");
+  }
+  applyModelCalibrationPreview();
+}
+
+function resetModelCalibrationForSelectedModel() {
+  const fileName = getModelSourceFileName(modelCalibrationModelSelect?.value || selectedCalibrationModelFile);
+  if (!fileName) {
+    setModelCalibrationStatus(currentI18n().modelCalibrationStatusNoModel, "error");
+    return;
+  }
+  selectedCalibrationModelFile = fileName;
+  delete modelViewCalibrations[fileName];
+  saveModelViewCalibrations();
+  fillModelCalibrationInputs(fileName);
+  applyModelCalibrationPreviewBox();
+  setModelCalibrationStatus(currentI18n().modelCalibrationStatusReset, "success");
+  applyModelCalibrationPreview();
+}
+
+function resolveModelViewProfile(modelElement) {
+  if (!modelElement) return DEFAULT_MODEL_VIEW_PROFILE;
+  const propSrc = getModelSourceFileName(typeof modelElement.src === "string" ? modelElement.src : "");
+  const attrSrc = getModelSourceFileName(modelElement.getAttribute("src") || "");
+  const fileName = propSrc || attrSrc;
+  return resolveModelViewProfileByFileName(fileName);
+}
+
+function setModelViewerOrientation(modelElement, orientationXDeg = 0, orientationYDeg = 0, orientationZDeg = 0) {
+  if (!modelElement) return;
+  const safeX = Number.isFinite(orientationXDeg) ? orientationXDeg : 0;
+  const safeY = Number.isFinite(orientationYDeg) ? orientationYDeg : 0;
+  const safeZ = Number.isFinite(orientationZDeg) ? orientationZDeg : 0;
+  // model-viewer orientation is interpreted as [roll(Z), pitch(X), yaw(Y)].
+  // Keep UI/runtime semantics as X=pitch, Y=yaw, Z=roll, then remap here.
+  modelElement.orientation = `${safeZ}deg ${safeX}deg ${safeY}deg`;
+}
+
+function formatModelViewerRadius(radius) {
+  if (!Number.isFinite(radius)) return "";
+  const clamped = clampNumber(radius, 26, 260);
+  const rounded = Math.round(clamped * 10) / 10;
+  return `${rounded % 1 === 0 ? rounded.toFixed(0) : rounded.toFixed(1)}%`;
+}
+
+function scaleModelViewerRadius(radius, scale = 1) {
+  const safeScale = Number.isFinite(scale) ? Math.max(0.4, Math.min(2.6, scale)) : 1;
+  const raw = typeof radius === "string" ? radius.trim() : "";
+  if (!raw || raw === "auto") {
+    return safeScale === 1 ? "auto" : formatModelViewerRadius(100 * safeScale) || "auto";
+  }
+
+  const percentMatch = raw.match(/^(-?\d+(?:\.\d+)?)%$/);
+  if (percentMatch) {
+    const percentValue = Number(percentMatch[1]);
+    if (Number.isFinite(percentValue)) {
+      return formatModelViewerRadius(percentValue * safeScale) || raw;
+    }
+    return raw;
+  }
+
+  const meterMatch = raw.match(/^(-?\d+(?:\.\d+)?)m$/);
+  if (meterMatch) {
+    const meterValue = Number(meterMatch[1]);
+    if (Number.isFinite(meterValue)) {
+      const scaledMeter = Math.max(0.12, Math.min(12, meterValue * safeScale));
+      const rounded = Math.round(scaledMeter * 1000) / 1000;
+      return `${rounded}m`;
+    }
+    return raw;
+  }
+
+  return raw;
+}
+
+function getModelPoseScale(modelElement, profile, mode) {
+  if (!modelElement || !profile) return 1;
+  const safeScale = (value, fallback) =>
+    Number.isFinite(value) ? clampNumber(value, 1, 2.6) : fallback;
+  const modeScale =
+    mode === "battle"
+      ? safeScale(profile.poseWideScaleBattle, 1.2)
+      : mode === "detail"
+        ? safeScale(profile.poseWideScaleDetail, 1.14)
+        : safeScale(profile.poseWideScaleIdle, 1.14);
+  const animationName = typeof modelElement.animationName === "string" ? modelElement.animationName : "";
+  if (WIDE_POSE_ANIMATION_PATTERN.test(animationName)) {
+    return modeScale;
+  }
+  const availableAnimations = Array.isArray(modelElement.availableAnimations)
+    ? modelElement.availableAnimations
+    : [];
+  const hasWideAnimation = availableAnimations.some((name) => WIDE_POSE_ANIMATION_PATTERN.test(String(name || "")));
+  return hasWideAnimation ? modeScale : 1;
+}
+
+function applyModelViewerFrame(modelElement, options = {}) {
+  if (!modelElement) return;
+  const orbitDeg = Number.isFinite(options.orbitDeg) ? options.orbitDeg : 0;
+  const pitchDeg = clampNumber(options.pitchDeg, 8, 88);
+  const radiusRaw =
+    typeof options.radius === "string" && options.radius.trim().length > 0 ? options.radius : "auto";
+  const radius = scaleModelViewerRadius(radiusRaw, options.zoomScale);
+  const target =
+    typeof options.target === "string" && options.target.trim().length > 0
+      ? options.target.trim()
+      : "";
+  setModelViewerOrientation(
+    modelElement,
+    options.orientationXDeg,
+    options.orientationYDeg,
+    options.orientationZDeg
+  );
+  modelElement.cameraOrbit = `${orbitDeg}deg ${pitchDeg}deg ${radius}`;
+  if (target) {
+    modelElement.setAttribute("camera-target", target);
+  } else {
+    modelElement.removeAttribute("camera-target");
+  }
+}
+
 function applyIdleOrbit() {
-  const orbit = `${idleOrbitDeg}deg 74deg auto`;
-  playerModel.cameraOrbit = orbit;
+  const profile = resolveModelViewProfile(playerModel);
+  applyModelViewerFrame(playerModel, {
+    orbitDeg: idleOrbitDeg,
+    pitchDeg: 74,
+    radius: profile.idleRadius,
+    target: profile.idleTarget,
+    orientationXDeg: profile.idleOrientationXDeg,
+    orientationYDeg: profile.idleOrientationYDeg,
+    zoomScale: getModelPoseScale(playerModel, profile, "idle")
+  });
+}
+
+function applyEnemyIdleOrbit() {
+  const profile = resolveModelViewProfile(enemyModel);
+  applyModelViewerFrame(enemyModel, {
+    orbitDeg: 0,
+    pitchDeg: 74,
+    radius: profile.idleRadius,
+    target: profile.idleTarget,
+    orientationXDeg: profile.idleOrientationXDeg,
+    orientationYDeg: profile.idleOrientationYDeg,
+    zoomScale: getModelPoseScale(enemyModel, profile, "idle")
+  });
+}
+
+function applyDetailModelView(modelElement) {
+  const profile = resolveModelViewProfile(modelElement);
+  applyModelViewerFrame(modelElement, {
+    orbitDeg: profile.detailOrbitDeg,
+    pitchDeg: profile.detailPitchDeg,
+    radius: profile.detailRadius,
+    target: profile.detailTarget,
+    orientationXDeg: profile.detailOrientationXDeg,
+    orientationYDeg: profile.detailOrientationYDeg,
+    zoomScale: getModelPoseScale(modelElement, profile, "detail")
+  });
 }
 
 function applyBattleView() {
@@ -2016,10 +2721,26 @@ function applyBattleView() {
   const playerAzimuth = BATTLE_PLAYER_AZIMUTH_DEG + yawOffset;
   const enemyAzimuth = BATTLE_ENEMY_AZIMUTH_DEG - yawOffset;
   const pitch = clampNumber(battleCameraPitchDeg, BATTLE_CAMERA_PITCH_MIN, BATTLE_CAMERA_PITCH_MAX);
-  playerModel.orientation = "0deg 0deg 0deg";
-  enemyModel.orientation = "0deg 0deg 0deg";
-  playerModel.cameraOrbit = `${playerAzimuth}deg ${pitch}deg auto`;
-  enemyModel.cameraOrbit = `${enemyAzimuth}deg ${pitch}deg auto`;
+  const playerProfile = resolveModelViewProfile(playerModel);
+  const enemyProfile = resolveModelViewProfile(enemyModel);
+  applyModelViewerFrame(playerModel, {
+    orbitDeg: playerAzimuth,
+    pitchDeg: pitch,
+    radius: "auto",
+    target: "",
+    orientationXDeg: playerProfile.battleOrientationXDeg,
+    orientationYDeg: playerProfile.battleOrientationYDeg,
+    zoomScale: getModelPoseScale(playerModel, playerProfile, "battle")
+  });
+  applyModelViewerFrame(enemyModel, {
+    orbitDeg: enemyAzimuth,
+    pitchDeg: pitch,
+    radius: "auto",
+    target: "",
+    orientationXDeg: enemyProfile.battleOrientationXDeg,
+    orientationYDeg: enemyProfile.battleOrientationYDeg,
+    zoomScale: getModelPoseScale(enemyModel, enemyProfile, "battle")
+  });
 }
 
 function canUseDodge(side, anger) {
@@ -2153,6 +2874,7 @@ function normalizeRosterPet(input, fallback = {}) {
   return {
     ...fallback,
     ...input,
+    model: sanitizeModelSource(input?.model, input?.element || fallback?.element),
     name: {
       zh: nameZh || nameEn || "未命名灵宠",
       en: nameEn || nameZh || "Unknown Spirit Pet"
@@ -2279,11 +3001,9 @@ function normalizePetNameToken(input) {
 }
 
 function resolveModelByPetIdentity(petName, element, preferredModel = "") {
-  const preferred =
-    typeof preferredModel === "string" && preferredModel.trim().length > 0
-      ? preferredModel.trim()
-      : "";
-  if (preferred) return preferred;
+  if (typeof preferredModel === "string" && preferredModel.trim().length > 0) {
+    return sanitizeModelSource(preferredModel, element);
+  }
 
   const token = normalizePetNameToken(petName);
   const targetElement =
@@ -2925,7 +3645,7 @@ function renderPetDetail() {
       </div>
     </div>
     <div class="pet-detail-preview">
-      <model-viewer class="pet-detail-model model-tint-${pet.element}" src="${pet.model}" autoplay disable-pan disable-zoom interaction-prompt="none"></model-viewer>
+      <model-viewer id="pet-detail-model-viewer" class="pet-detail-model model-tint-${pet.element}" src="${pet.model}" autoplay disable-pan disable-zoom interaction-prompt="none"></model-viewer>
       <div class="pet-detail-relation">
         <span class="pet-relation-chip strong">${currentI18n().battleRelationAdvantage}: ${strongText}</span>
         <span class="pet-relation-chip weak">${currentI18n().battleRelationDisadvantage}: ${weakText}</span>
@@ -2967,6 +3687,22 @@ function renderPetDetail() {
   if (releaseBtn) {
     releaseBtn.addEventListener("click", () => {
       void releasePet(pet.id);
+    });
+  }
+
+  const detailModelElement = document.getElementById("pet-detail-model-viewer");
+  if (detailModelElement) {
+    detailModelElement.addEventListener(
+      "load",
+      () => {
+        applyDetailModelView(detailModelElement);
+        playModelAnimation(detailModelElement, ["idle", "walk", "run", "survey"]);
+      },
+      { once: true }
+    );
+    requestAnimationFrame(() => {
+      applyDetailModelView(detailModelElement);
+      playModelAnimation(detailModelElement, ["idle", "walk", "run", "survey"]);
     });
   }
 
@@ -3027,6 +3763,7 @@ function renderPetInventory() {
 
   scheduleInventoryListHeightSync();
   renderPetDetail();
+  renderModelCalibrationPanel();
 }
 
 function formatReportTime(value) {
@@ -3533,6 +4270,43 @@ function applyLanguage() {
   if (uiRefs.duelOnlineRoomLabel) {
     uiRefs.duelOnlineRoomLabel.textContent = currentI18n().duelOnlineRoomLabel;
   }
+  if (uiRefs.modelCalibrationTitle) {
+    uiRefs.modelCalibrationTitle.textContent = currentI18n().modelCalibrationTitle;
+  }
+  if (uiRefs.modelCalibrationTip) {
+    uiRefs.modelCalibrationTip.textContent = currentI18n().modelCalibrationTip;
+  }
+  if (uiRefs.modelCalibrationModelLabel) {
+    uiRefs.modelCalibrationModelLabel.textContent = currentI18n().modelCalibrationModelLabel;
+  }
+  if (uiRefs.modelCalibrationIdleOrientationXLabel) {
+    uiRefs.modelCalibrationIdleOrientationXLabel.textContent =
+      currentI18n().modelCalibrationIdleOrientationXLabel;
+  }
+  if (uiRefs.modelCalibrationIdleOrientationYLabel) {
+    uiRefs.modelCalibrationIdleOrientationYLabel.textContent =
+      currentI18n().modelCalibrationIdleOrientationYLabel;
+  }
+  if (uiRefs.modelCalibrationBattleOrientationXLabel) {
+    uiRefs.modelCalibrationBattleOrientationXLabel.textContent =
+      currentI18n().modelCalibrationBattleOrientationXLabel;
+  }
+  if (uiRefs.modelCalibrationBattleOrientationYLabel) {
+    uiRefs.modelCalibrationBattleOrientationYLabel.textContent =
+      currentI18n().modelCalibrationBattleOrientationYLabel;
+  }
+  if (uiRefs.modelCalibrationIdleScaleLabel) {
+    uiRefs.modelCalibrationIdleScaleLabel.textContent = currentI18n().modelCalibrationIdleScaleLabel;
+  }
+  if (uiRefs.modelCalibrationBattleScaleLabel) {
+    uiRefs.modelCalibrationBattleScaleLabel.textContent = currentI18n().modelCalibrationBattleScaleLabel;
+  }
+  if (uiRefs.modelCalibrationPreviewLabel) {
+    uiRefs.modelCalibrationPreviewLabel.textContent = currentI18n().modelCalibrationPreviewLabel;
+  }
+  if (uiRefs.modelCalibrationOriginTip) {
+    uiRefs.modelCalibrationOriginTip.textContent = currentI18n().modelCalibrationOriginTip;
+  }
   uiRefs.profileAccountLabel.textContent = currentI18n().profileAccountLabel;
   uiRefs.profileOldPasswordLabel.textContent = currentI18n().profileOldPasswordLabel;
   uiRefs.profileNewPasswordLabel.textContent = currentI18n().profileNewPasswordLabel;
@@ -3588,6 +4362,12 @@ function applyLanguage() {
   if (duelOnlineJoinBtn) duelOnlineJoinBtn.textContent = currentI18n().duelOnlineJoinBtn;
   if (duelOnlineLeaveBtn) duelOnlineLeaveBtn.textContent = currentI18n().duelOnlineLeaveBtn;
   if (exportOnlineLogBtn) exportOnlineLogBtn.textContent = currentI18n().duelDiagnosticExportBtn;
+  if (modelCalibrationApplyBtn) modelCalibrationApplyBtn.textContent = currentI18n().modelCalibrationApplyBtn;
+  if (modelCalibrationResetBtn) modelCalibrationResetBtn.textContent = currentI18n().modelCalibrationResetBtn;
+  syncCalibrationPreviewModeText();
+  if (modelCalibrationStatusElement) {
+    setModelCalibrationStatus(currentI18n().modelCalibrationStatusHint);
+  }
   if (duelOnlineRoomInput) {
     duelOnlineRoomInput.placeholder = "ABC123";
   }
@@ -4919,13 +5699,12 @@ async function resolveCaptureDecision(accept) {
 function setBattleMode(active) {
   battleMode = active;
   battleSceneElement.classList.toggle("battle-mode", active);
-  playerModel.orientation = "0deg 0deg 0deg";
-  enemyModel.orientation = "0deg 0deg 0deg";
   if (active) {
     applyBattleView();
   } else {
     applyIdleOrbit();
-    enemyModel.cameraOrbit = "0deg 74deg auto";
+    applyEnemyIdleOrbit();
+    syncIdleWindowSizeForCurrentPose({ force: true });
     battleFacingOffsetDeg = 0;
     battleCameraPitchDeg = 74;
   }
@@ -5146,6 +5925,18 @@ function playModelAnimation(modelElement, preferredNames) {
     .find(Boolean);
   modelElement.animationName = preferred || names[0];
   modelElement.play();
+  if (modelElement === playerModel || modelElement === enemyModel) {
+    if (battleMode) {
+      applyBattleView();
+    } else if (modelElement === playerModel) {
+      applyIdleOrbit();
+      syncIdleWindowSizeForCurrentPose();
+    } else {
+      applyEnemyIdleOrbit();
+    }
+  } else {
+    applyDetailModelView(modelElement);
+  }
 }
 
 function animateDefenderHit(defender) {
@@ -5778,7 +6569,7 @@ function setupMouseTracking() {
         }
         applyBattleView();
       } else if (deltaX !== 0) {
-        idleOrbitDeg += deltaX * 0.55;
+        idleOrbitDeg -= deltaX * 0.55;
         applyIdleOrbit();
       }
     }
@@ -5994,6 +6785,106 @@ function setupButtons() {
     if (event.key !== "Enter") return;
     event.preventDefault();
     void joinOnlineDuelRoom();
+  });
+
+  modelCalibrationModelSelect?.addEventListener("change", () => {
+    selectedCalibrationModelFile = getModelSourceFileName(modelCalibrationModelSelect.value);
+    fillModelCalibrationInputs(selectedCalibrationModelFile);
+    applyModelCalibrationPreviewBox();
+    setModelCalibrationStatus(currentI18n().modelCalibrationStatusHint);
+  });
+
+  modelCalibrationApplyBtn?.addEventListener("click", () => {
+    saveModelCalibrationForSelectedModel();
+  });
+
+  modelCalibrationResetBtn?.addEventListener("click", () => {
+    resetModelCalibrationForSelectedModel();
+  });
+
+  const handleCalibrationEnter = (event) => {
+    if (event.key !== "Enter") return;
+    event.preventDefault();
+    saveModelCalibrationForSelectedModel();
+  };
+  modelCalibrationIdleOrientationXInput?.addEventListener("keydown", handleCalibrationEnter);
+  modelCalibrationIdleOrientationYInput?.addEventListener("keydown", handleCalibrationEnter);
+  modelCalibrationBattleOrientationXInput?.addEventListener("keydown", handleCalibrationEnter);
+  modelCalibrationBattleOrientationYInput?.addEventListener("keydown", handleCalibrationEnter);
+  modelCalibrationIdleScaleInput?.addEventListener("keydown", handleCalibrationEnter);
+  modelCalibrationBattleScaleInput?.addEventListener("keydown", handleCalibrationEnter);
+  modelCalibrationIdleOrientationXInput?.addEventListener("input", () => {
+    applyModelCalibrationPreviewBox({ playAnimation: false });
+  });
+  modelCalibrationIdleOrientationYInput?.addEventListener("input", () => {
+    applyModelCalibrationPreviewBox({ playAnimation: false });
+  });
+  modelCalibrationBattleOrientationXInput?.addEventListener("input", () => {
+    applyModelCalibrationPreviewBox({ playAnimation: false });
+  });
+  modelCalibrationBattleOrientationYInput?.addEventListener("input", () => {
+    applyModelCalibrationPreviewBox({ playAnimation: false });
+  });
+  modelCalibrationIdleScaleInput?.addEventListener("input", () => {
+    applyModelCalibrationPreviewBox({ playAnimation: false });
+  });
+  modelCalibrationBattleScaleInput?.addEventListener("input", () => {
+    applyModelCalibrationPreviewBox({ playAnimation: false });
+  });
+
+  modelCalibrationPreviewModeBtn?.addEventListener("click", () => {
+    calibrationPreviewMode = calibrationPreviewMode === "battle" ? "idle" : "battle";
+    syncCalibrationPreviewModeText();
+    applyModelCalibrationPreviewBox();
+  });
+
+  modelCalibrationPreviewModel?.addEventListener("load", () => {
+    applyModelCalibrationPreviewBox();
+  });
+
+  modelCalibrationPreviewModel?.addEventListener("mousedown", (event) => {
+    if (event.button !== 0) return;
+    event.preventDefault();
+    const orientationInput = getCalibrationPreviewOrientationInput();
+    const startOrientationX = readCalibrationNumber(orientationInput.x, -180, 180) ?? 0;
+    const startOrientationY = readCalibrationNumber(orientationInput.y, -180, 180) ?? 0;
+    calibrationPreviewDragSession = {
+      startX: event.clientX,
+      startY: event.clientY,
+      startOrientationX,
+      startOrientationY
+    };
+    modelCalibrationPreviewModel.classList.add("dragging");
+  });
+
+  window.addEventListener("mousemove", (event) => {
+    if (!calibrationPreviewDragSession) return;
+    event.preventDefault();
+    const orientationInput = getCalibrationPreviewOrientationInput();
+    if (!orientationInput?.x || !orientationInput?.y) return;
+    let deltaX = event.clientX - calibrationPreviewDragSession.startX;
+    let deltaY = event.clientY - calibrationPreviewDragSession.startY;
+    if (Math.abs(deltaX) < CALIBRATION_DRAG_DEADZONE_PX) deltaX = 0;
+    if (Math.abs(deltaY) < CALIBRATION_DRAG_DEADZONE_PX) deltaY = 0;
+
+    const nextOrientationX = normalizeOrientationDegrees(
+      calibrationPreviewDragSession.startOrientationX + deltaY * CALIBRATION_DRAG_VERTICAL_SENSITIVITY
+    );
+    const nextOrientationY = normalizeOrientationDegrees(
+      calibrationPreviewDragSession.startOrientationY + deltaX * CALIBRATION_DRAG_HORIZONTAL_SENSITIVITY
+    );
+    orientationInput.x.value = formatCalibrationNumber(nextOrientationX, 0);
+    orientationInput.y.value = formatCalibrationNumber(nextOrientationY, 0);
+    applyModelCalibrationPreviewBox({ playAnimation: false });
+  });
+
+  window.addEventListener("mouseup", () => {
+    if (!calibrationPreviewDragSession) return;
+    calibrationPreviewDragSession = null;
+    if (modelCalibrationPreviewModel) {
+      modelCalibrationPreviewModel.classList.remove("dragging");
+    }
+    saveModelCalibrationForSelectedModel({ silent: true });
   });
 
   battleResetBtn.addEventListener("click", () => {
@@ -6225,7 +7116,7 @@ function setupModelDefaults() {
     }
     updateBattleHudTop();
     if (!battleMode && panelElement.classList.contains("hidden")) {
-      void applyIdleWindowScale(idleWindowScale);
+      syncIdleWindowSizeForCurrentPose({ force: true });
     }
     playModelAnimation(playerModel, ["survey", "idle", "walk"]);
   });
@@ -6233,6 +7124,8 @@ function setupModelDefaults() {
   enemyModel.addEventListener("load", () => {
     if (battleMode) {
       applyBattleView();
+    } else {
+      applyEnemyIdleOrbit();
     }
     updateBattleHudTop();
     playModelAnimation(enemyModel, ["idle", "walk", "run"]);
@@ -6248,6 +7141,7 @@ async function bootstrap() {
   setModelElementTint(playerModel, activePet.element);
   setModelElementTint(enemyModel, enemyPetInBattle.element);
   applyIdleOrbit();
+  applyEnemyIdleOrbit();
 
   setupPanelSectionToggles();
   applyLanguage();
@@ -6295,6 +7189,11 @@ async function bootstrap() {
   setBattleMode(false);
 
   setInterval(() => {
+    const now = Date.now();
+    if (now - lastIdlePoseWindowSyncAt >= IDLE_POSE_WINDOW_SYNC_INTERVAL_MS) {
+      lastIdlePoseWindowSyncAt = now;
+      syncIdleWindowSizeForCurrentPose();
+    }
     if (!isInteractive && !isPaused) {
       reportHitState();
     }

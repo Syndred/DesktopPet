@@ -98,12 +98,12 @@
           </div>
 
           <article id="player-card" class="battle-actor player no-drag">
-            <model-viewer
-              id="player-model"
-              src="../assets/models/ShibaInu.glb"
-              disable-pan
-              disable-zoom
-              autoplay
+              <model-viewer
+                id="player-model"
+                src="../assets/models/AnimatedDogShibaInu.glb"
+                disable-pan
+                disable-zoom
+                autoplay
               shadow-intensity="1"
               exposure="1"
               interaction-prompt="none"
@@ -111,12 +111,12 @@
           </article>
 
           <article id="enemy-card" class="battle-actor enemy hidden no-drag">
-            <model-viewer
-              id="enemy-model"
-              src="../assets/models/Husky.glb"
-              disable-pan
-              disable-zoom
-              autoplay
+              <model-viewer
+                id="enemy-model"
+                src="../assets/models/Husky.glb"
+                disable-pan
+                disable-zoom
+                autoplay
               shadow-intensity="1"
               exposure="1"
               interaction-prompt="none"
@@ -432,6 +432,51 @@
           </div>
           <div class="row">
             <button id="btn-pause">Pause Hit-Test</button>
+          </div>
+        </div>
+
+        <div class="panel-section" data-section-key="model-calibration">
+          <h2 id="model-calibration-title">模型校准（高级）</h2>
+          <p id="model-calibration-tip" class="inventory-tip">
+            按模型调整静息/对战朝向，修正倒地截断和朝向反转。
+          </p>
+          <div class="field-row single">
+            <div class="field">
+              <label id="model-calibration-model-label" for="model-calibration-model">目标模型</label>
+              <select id="model-calibration-model"></select>
+            </div>
+          </div>
+          <div class="model-calibration-hidden-fields" aria-hidden="true">
+            <input id="model-calibration-idle-orientation-x" type="hidden" />
+            <input id="model-calibration-idle-orientation-y" type="hidden" />
+            <input id="model-calibration-battle-orientation-x" type="hidden" />
+            <input id="model-calibration-battle-orientation-y" type="hidden" />
+            <input id="model-calibration-idle-scale" type="hidden" />
+            <input id="model-calibration-battle-scale" type="hidden" />
+          </div>
+          <div class="model-calibration-preview-wrap">
+            <div class="model-calibration-preview-head">
+              <span id="model-calibration-preview-label">
+                实时预览（左右拖动=Y朝向，上下拖动=X朝向）
+              </span>
+              <button id="btn-model-calibration-preview-mode" type="button">静息预览</button>
+            </div>
+            <div class="model-calibration-preview-stage">
+              <model-viewer
+                id="model-calibration-preview"
+                class="model-calibration-preview-model"
+                autoplay
+                disable-pan
+                disable-zoom
+                interaction-prompt="none"
+              ></model-viewer>
+            </div>
+            <p id="model-calibration-origin-tip" class="model-calibration-origin-tip">
+              说明：部分模型原点在脚底，绕 X/Z 旋转会像“翻倒”，属模型原始枢轴特性。
+            </p>
+          </div>
+          <div class="row">
+            <button id="btn-model-calibration-reset" type="button">恢复默认</button>
           </div>
         </div>
 

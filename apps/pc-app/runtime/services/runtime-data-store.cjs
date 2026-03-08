@@ -1,4 +1,4 @@
-const { createHash, randomUUID } = require("node:crypto");
+﻿const { createHash, randomUUID } = require("node:crypto");
 const { existsSync, mkdirSync, readFileSync, writeFileSync } = require("node:fs");
 const { dirname } = require("node:path");
 
@@ -6,8 +6,8 @@ const DEFAULT_PET_ROSTER = [
   {
     id: "pet-001",
     serial: "0019001",
-    name: { zh: "柴团", en: "ShibaMochi" },
-    model: "../assets/models/ShibaInu.glb",
+    name: { zh: "焰柴", en: "BlazeShiba" },
+    model: "../assets/models/AnimatedDogShibaInu.glb",
     element: "fire",
     stats: "HP128 / ATK32 / DEF20 / SPD18",
     capturedAt: "2026-03-01 21:10",
@@ -19,12 +19,12 @@ const DEFAULT_PET_ROSTER = [
   {
     id: "pet-002",
     serial: "0029001",
-    name: { zh: "雪团", en: "SnowPaw" },
+    name: { zh: "墨喵", en: "InkCat" },
     model: "../assets/models/Husky.glb",
     element: "water",
     stats: "HP122 / ATK28 / DEF24 / SPD21",
     capturedAt: "2026-03-02 09:35",
-    avatar: "雪",
+    avatar: "墨",
     level: 1,
     experience: 0,
     winsTotal: 0
@@ -32,12 +32,12 @@ const DEFAULT_PET_ROSTER = [
   {
     id: "pet-003",
     serial: "0039001",
-    name: { zh: "奶油喵", en: "ButterCat" },
-    model: "../assets/models/CatQuaterniusA.glb",
+    name: { zh: "礼帽喵", en: "TuxedoCat" },
+    model: "../assets/models/TuxedoCatAnimated.glb",
     element: "wood",
     stats: "HP130 / ATK26 / DEF26 / SPD17",
     capturedAt: "2026-03-02 20:42",
-    avatar: "喵",
+    avatar: "礼",
     level: 1,
     experience: 0,
     winsTotal: 0
@@ -45,12 +45,12 @@ const DEFAULT_PET_ROSTER = [
   {
     id: "pet-004",
     serial: "0049001",
-    name: { zh: "焦糖喵", en: "CaramelCat" },
-    model: "../assets/models/CatQuaterniusB.glb",
+    name: { zh: "钢狼", en: "SteelWolf" },
+    model: "../assets/models/Husky.glb",
     element: "metal",
     stats: "HP135 / ATK30 / DEF30 / SPD12",
     capturedAt: "2026-03-03 08:20",
-    avatar: "咪",
+    avatar: "钢",
     level: 1,
     experience: 0,
     winsTotal: 0
@@ -58,12 +58,12 @@ const DEFAULT_PET_ROSTER = [
   {
     id: "pet-005",
     serial: "0059001",
-    name: { zh: "霜牙", en: "FrostFang" },
-    model: "../assets/models/Husky.glb",
+    name: { zh: "赤柴", en: "AmberShiba" },
+    model: "../assets/models/AnimatedDogShibaInu.glb",
     element: "earth",
     stats: "HP142 / ATK24 / DEF34 / SPD10",
     capturedAt: "2026-03-03 18:05",
-    avatar: "霜",
+    avatar: "赤",
     level: 1,
     experience: 0,
     winsTotal: 0
@@ -72,7 +72,7 @@ const DEFAULT_PET_ROSTER = [
     id: "pet-006",
     serial: "0069001",
     name: { zh: "柴豆", en: "ShibaBean" },
-    model: "../assets/models/ShibaInu.glb",
+    model: "../assets/models/AnimatedDogShibaInu.glb",
     element: "fire",
     stats: "HP118 / ATK33 / DEF22 / SPD20",
     capturedAt: "2026-03-04 12:11",
@@ -99,38 +99,52 @@ const ALLOWED_BATTLE_MODES = new Set(["duel", "capture"]);
 const ALLOWED_DUEL_REQUEST_STATUS = new Set(["pending", "accepted", "rejected", "cancelled"]);
 
 const MODEL_BY_ELEMENT = {
-  fire: "../assets/models/ShibaInu.glb",
+  fire: "../assets/models/AnimatedDogShibaInu.glb",
   water: "../assets/models/Husky.glb",
-  wood: "../assets/models/CatQuaterniusA.glb",
-  metal: "../assets/models/CatQuaterniusB.glb",
-  earth: "../assets/models/Husky.glb"
+  wood: "../assets/models/TuxedoCatAnimated.glb",
+  metal: "../assets/models/Husky.glb",
+  earth: "../assets/models/AnimatedDogShibaInu.glb"
 };
+
+const LEGACY_DEFAULT_MODEL_PATHS = new Set([
+  "../assets/models/AnAnimatedCat.glb",
+  "../assets/models/MarcelPrizePug.glb",
+  "../assets/models/ShibaInu.glb",
+  "../assets/models/Husky.glb",
+  "../assets/models/CatQuaterniusA.glb",
+  "../assets/models/CatQuaterniusB.glb",
+  "../assets/models/BeaglePoly.glb",
+  "../assets/models/PuppyPoly.glb",
+  "../assets/models/PoodlePoly.glb",
+  "../assets/models/CatPoly.glb",
+  "../assets/models/KittenPoly.glb"
+]);
 
 const SPECIES_META_BY_ELEMENT = {
   fire: {
     code: "001",
-    name: { zh: "柴团", en: "ShibaMochi" },
+    name: { zh: "焰柴", en: "BlazeShiba" },
     avatar: "柴"
   },
   water: {
     code: "002",
-    name: { zh: "雪团", en: "SnowPaw" },
-    avatar: "雪"
+    name: { zh: "墨喵", en: "InkCat" },
+    avatar: "墨"
   },
   wood: {
     code: "003",
-    name: { zh: "奶油喵", en: "ButterCat" },
-    avatar: "喵"
+    name: { zh: "礼帽喵", en: "TuxedoCat" },
+    avatar: "礼"
   },
   metal: {
     code: "004",
-    name: { zh: "焦糖喵", en: "CaramelCat" },
-    avatar: "咪"
+    name: { zh: "钢狼", en: "SteelWolf" },
+    avatar: "钢"
   },
   earth: {
     code: "005",
-    name: { zh: "霜牙", en: "FrostFang" },
-    avatar: "霜"
+    name: { zh: "赤柴", en: "AmberShiba" },
+    avatar: "赤"
   }
 };
 
@@ -1083,10 +1097,7 @@ function normalizePet(input, legacySerialCounters = new Map()) {
     id: input.id.trim(),
     serial,
     name,
-    model:
-      typeof input.model === "string" && input.model.trim().length > 0
-        ? input.model.trim()
-        : MODEL_BY_ELEMENT[element],
+    model: resolvePetModelPath(input.model, element),
     element,
     stats: typeof input.stats === "string" && input.stats.trim().length > 0 ? input.stats.trim() : "N/A",
     capturedAt:
@@ -1101,6 +1112,18 @@ function normalizePet(input, legacySerialCounters = new Map()) {
     experience: sanitizeExperience(input.experience),
     winsTotal: sanitizeWinsTotal(input.winsTotal)
   };
+}
+
+function resolvePetModelPath(inputModel, element) {
+  const fallback = MODEL_BY_ELEMENT[element] || MODEL_BY_ELEMENT.fire;
+  if (typeof inputModel !== "string" || inputModel.trim().length === 0) {
+    return fallback;
+  }
+  const normalized = inputModel.trim();
+  if (LEGACY_DEFAULT_MODEL_PATHS.has(normalized)) {
+    return fallback;
+  }
+  return normalized;
 }
 
 function getSpeciesMeta(element) {

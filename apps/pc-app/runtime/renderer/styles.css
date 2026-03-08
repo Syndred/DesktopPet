@@ -504,8 +504,14 @@ body {
   padding: 0;
   box-shadow: none;
   transition: transform 180ms ease, filter 180ms ease, opacity 220ms ease;
+  animation: actor-idle-float 3.4s ease-in-out infinite;
+  transform-origin: center bottom;
   pointer-events: auto;
   z-index: 3;
+}
+
+#enemy-card {
+  animation-delay: 1.2s;
 }
 
 #battle-scene:not(.battle-mode) .battle-actor.player {
@@ -514,7 +520,7 @@ body {
 
 .battle-actor model-viewer {
   width: 100%;
-  height: min(260px, 32vw);
+  height: min(276px, 34vw);
   background: transparent;
   border: 0;
   outline: none;
@@ -526,6 +532,7 @@ body {
 }
 
 .battle-actor.attack {
+  animation: none;
   transform: translateY(-4px) scale(1.06);
 }
 
@@ -543,6 +550,7 @@ body {
 }
 
 .battle-actor.paused {
+  animation-play-state: paused;
   filter: grayscale(0.35) brightness(0.9);
 }
 
@@ -1276,6 +1284,65 @@ body {
 
 .panel-section.collapsed .panel-section-header {
   margin-bottom: 0;
+}
+
+.model-calibration-preview-wrap {
+  border: 1px solid rgba(148, 214, 255, 0.24);
+  border-radius: 10px;
+  background: rgba(10, 24, 40, 0.62);
+  padding: 8px;
+  margin-bottom: 8px;
+  display: grid;
+  gap: 8px;
+}
+
+.model-calibration-preview-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+#model-calibration-preview-label {
+  font-size: 11px;
+  color: #c4e7fb;
+}
+
+#btn-model-calibration-preview-mode {
+  min-width: 86px;
+  padding: 5px 8px;
+  font-size: 11px;
+}
+
+.model-calibration-preview-model {
+  width: 100%;
+  height: 170px;
+  border-radius: 8px;
+  border: 1px solid rgba(153, 214, 255, 0.2);
+  background: radial-gradient(circle at 50% 12%, rgba(117, 187, 248, 0.18), rgba(8, 19, 33, 0.88));
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+}
+
+.model-calibration-preview-model.dragging {
+  cursor: grabbing;
+}
+
+.model-calibration-preview-stage {
+  position: relative;
+}
+
+.model-calibration-hidden-fields {
+  display: none;
+}
+
+.model-calibration-origin-tip {
+  margin: 0;
+  font-size: 10px;
+  color: #b9d8eb;
+  line-height: 1.35;
 }
 
 .row {
@@ -2447,6 +2514,18 @@ body {
   background: linear-gradient(180deg, rgba(144, 220, 255, 0.72), rgba(110, 182, 224, 0.6));
   border-radius: 999px;
   border: 1px solid rgba(20, 44, 66, 0.6);
+}
+
+@keyframes actor-idle-float {
+  0% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-5px) scale(1.012);
+  }
+  100% {
+    transform: translateY(0) scale(1);
+  }
 }
 
 @keyframes actor-bounce {
