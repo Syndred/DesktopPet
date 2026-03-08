@@ -499,7 +499,7 @@ const i18n = {
       freeze: "冻结",
       parasite: "寄生",
       vulnerability: "易伤",
-      petrify: "石化"
+      petrify: "钝化"
     },
     actionNames: {
       normal_attack: "普攻",
@@ -857,7 +857,7 @@ const i18n = {
       freeze: "Freeze",
       parasite: "Parasite",
       vulnerability: "Vulnerability",
-      petrify: "Petrify"
+      petrify: "Dullness"
     },
     actionNames: {
       normal_attack: "Normal",
@@ -870,6 +870,22 @@ const i18n = {
 };
 
 const RELEASE_HISTORY = [
+  {
+    version: "0.1.8",
+    date: "2026-03-08",
+    highlights: {
+      zh: [
+        "属性技能重做：易伤 1.5x、寄生吸血、冰封改为削减对方当前怒气 50%、灼烧每回合扣当前生命 8%、钝化使对方伤害减半。",
+        "灼烧/寄生/易伤/钝化持续 3 回合并支持叠加，冰封改为命中即削减怒气。",
+        "大招统一为双倍伤害 + 附带属性效果 + 固定回复 20 生命（本地与联机云端结算一致）。"
+      ],
+      en: [
+        "Reworked elemental effects: 1.5x vulnerability, parasite lifesteal, freeze now halves current anger, burn deals 8% current HP per round, and dullness halves outgoing damage.",
+        "Burn/parasite/vulnerability/dullness now last 3 rounds and stack; freeze is now an instant anger-halving effect.",
+        "Ultimate now applies 2x damage + elemental side effect + fixed 20 HP heal (local and online authoritative resolution kept in sync)."
+      ]
+    }
+  },
   {
     version: "0.1.7",
     date: "2026-03-08",
@@ -2480,6 +2496,23 @@ function localizeRoundNote(note) {
       : `${sideText} had ultimate downgraded to normal attack (anger < ${threshold})`;
   }
 
+  match = raw.match(/^(host|guest) ultimate sealed by freeze$/i);
+  if (match) {
+    const sideText = getRoundSideText(match[1]);
+    return language === "zh"
+      ? `${sideText}被冰封，无法释放大招`
+      : `${sideText} is frozen and cannot use ultimate`;
+  }
+
+  match = raw.match(/^enemy anger halved by freeze \((\d+)->(\d+)\)$/i);
+  if (match) {
+    const before = Math.max(0, Number(match[1]) || 0);
+    const after = Math.max(0, Number(match[2]) || 0);
+    return language === "zh"
+      ? `目标被冰封，怒气减半（${before} -> ${after}）`
+      : `Target frozen, anger halved (${before} -> ${after})`;
+  }
+
   match = raw.match(/^(host|guest) is stunned and cannot act$/i);
   if (match) {
     const sideText = getRoundSideText(match[1]);
@@ -2498,8 +2531,10 @@ function localizeRoundNote(note) {
     return language === "zh" ? `目标附加灼烧 x${stacks}` : `Target inflicted burn x${stacks}`;
   }
 
-  if (/^enemy frozen$/i.test(raw)) {
-    return language === "zh" ? "目标附加冻结" : "Target frozen";
+  match = raw.match(/^enemy frozen(?: x(\d+))?$/i);
+  if (match) {
+    const stacks = Math.max(1, Number(match[1]) || 1);
+    return language === "zh" ? `目标附加冰封 x${stacks}` : `Target frozen x${stacks}`;
   }
 
   match = raw.match(/^enemy parasitized x(\d+)$/i);
@@ -2514,8 +2549,14 @@ function localizeRoundNote(note) {
     return language === "zh" ? `目标附加易伤 x${stacks}` : `Target vulnerable x${stacks}`;
   }
 
+  match = raw.match(/^enemy dulled x(\d+)$/i);
+  if (match) {
+    const stacks = Math.max(1, Number(match[1]) || 1);
+    return language === "zh" ? `目标附加钝化 x${stacks}` : `Target dulled x${stacks}`;
+  }
+
   if (/^enemy petrified$/i.test(raw)) {
-    return language === "zh" ? "目标附加石化" : "Target petrified";
+    return language === "zh" ? "目标附加钝化" : "Target dulled";
   }
 
   match = raw.match(/^(host|guest) spends 20 anger on dodge$/i);
@@ -2554,6 +2595,12 @@ function localizeRoundNote(note) {
   if (match) {
     const sideText = getRoundSideText(match[1]);
     return language === "zh" ? `${sideText}受到寄生伤害` : `${sideText} takes parasite damage`;
+  }
+
+  match = raw.match(/^(host|guest) healed by ultimate$/i);
+  if (match) {
+    const sideText = getRoundSideText(match[1]);
+    return language === "zh" ? `${sideText}因大招回复生命` : `${sideText} healed by ultimate`;
   }
 
   if (language === "zh") {

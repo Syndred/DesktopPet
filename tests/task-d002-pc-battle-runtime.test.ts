@@ -27,6 +27,11 @@ type BattleRuntimeServiceType = new () => {
       actions: { player: string; enemy: string };
       winner: "player" | "enemy" | "draw" | null;
       notes: string[];
+      directDamage: { player: number; enemy: number };
+      dotDamageEvents: {
+        player: Array<{ type: string; amount: number }>;
+        enemy: Array<{ type: string; amount: number }>;
+      };
       statusesAfter: { enemy: Array<{ type: string; stacks?: number; duration?: number }> };
       healEvents?: {
         player: Array<{ type: string; amount: number }>;
@@ -106,7 +111,7 @@ describe("D-002 pc battle runtime service", () => {
     const burn = result.roundResult.statusesAfter.enemy.find((item) => item.type === "burn");
     expect(result.enemyAction).toBe("element_attack");
     expect(Boolean(burn)).toBe(true);
-    expect(burn?.duration).toBe(1);
+    expect(burn?.duration).toBe(2);
     expect(result.state.round).toBe(1);
   });
 
@@ -149,7 +154,7 @@ describe("D-002 pc battle runtime service", () => {
   });
 
   it("allows first dodge at 0 anger, then downgrades when anger remains 0", () => {
-    mockRandomSequence([0.9, 0.9]);
+    mockRandomSequence([0.9, 0.1]);
     const service = new BattleRuntimeService();
     service.reset({
       playerElement: "fire",
@@ -175,10 +180,44 @@ describe("D-002 pc battle runtime service", () => {
     });
 
     (service as unknown as { session: { player: { anger: number } } }).session.player.anger = 50;
+    (service as unknown as { session: { player: { hp: number } } }).session.player.hp = 80;
     const result = service.act("ultimate");
     expect(result.playerAction).toBe("ultimate");
     expect(result.roundResult.actions.player).toBe("ultimate");
     expect(result.state.player.anger).toBe(0);
+    const ultimateHeal = result.roundResult.healEvents?.player?.find((item) => item.type === "ultimate");
+    expect(Boolean(ultimateHeal)).toBe(true);
+  });
+
+  it("freeze halves current anger (50 -> 25) and suppresses hurt anger gain", () => {
+    mockRandomSequence([0.9, 0.1]);
+    const service = new BattleRuntimeService();
+    service.reset({
+      playerElement: "water",
+      enemyElement: "fire"
+    });
+
+    (service as unknown as { session: { enemy: { anger: number } } }).session.enemy.anger = 50;
+    const round = service.act("element_attack");
+
+    expect(round.state.enemy.anger).toBe(25);
+    expect(round.roundResult.notes).toContain("enemy anger halved by freeze (50->25)");
+  });
+
+  it("burn damage uses current HP ratio (8%) per stack", () => {
+    mockRandomSequence([0.9, 0.9]);
+    const service = new BattleRuntimeService();
+    service.reset({
+      playerElement: "fire",
+      enemyElement: "metal"
+    });
+
+    const round = service.act("element_attack");
+    const burnEvent = round.roundResult.dotDamageEvents.enemy.find((item) => item.type === "burn");
+    expect(burnEvent).toBeTruthy();
+    const hpBeforeBurn = 120 - round.roundResult.directDamage.enemy;
+    const expectedBurn = Math.max(1, Math.round(hpBeforeBurn * 0.08));
+    expect(burnEvent?.amount).toBe(expectedBurn);
   });
 
   it("never returns draw when both pets reach 0 HP in same round", () => {

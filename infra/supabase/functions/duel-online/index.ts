@@ -29,6 +29,9 @@ const ALLOWED_DUEL_REQUEST_STATUS = new Set(["pending", "accepted", "rejected", 
 const MAX_HP = 120;
 const ULTIMATE_ANGER_THRESHOLD = 50;
 const ULTIMATE_ANGER_COST = 50;
+const ELEMENT_STATUS_DURATION = 3;
+const ULTIMATE_FIXED_HEAL = 20;
+const BURN_CURRENT_HP_RATIO_PER_STACK = 0.08;
 const DUEL_REQUEST_RESEND_INTERVAL_MS = 30 * 1000;
 
 Deno.serve(async (request) => {
@@ -569,17 +572,8 @@ function resolveRound(room, hostInputAction, guestInputAction) {
     return normalized;
   };
 
-  let hostAction = normalizeCombatAction("host", host, hostInputAction);
-  let guestAction = normalizeCombatAction("guest", guest, guestInputAction);
-
-  if (hasStatus(host, "freeze") || hasStatus(host, "petrify")) {
-    hostAction = "stunned";
-    notes.push("host is stunned and cannot act");
-  }
-  if (hasStatus(guest, "freeze") || hasStatus(guest, "petrify")) {
-    guestAction = "stunned";
-    notes.push("guest is stunned and cannot act");
-  }
+  const hostAction = normalizeCombatAction("host", host, hostInputAction);
+  const guestAction = normalizeCombatAction("guest", guest, guestInputAction);
 
   if (hostAction === "dodge") {
     spendDodgeAnger(host, notes);
@@ -598,12 +592,20 @@ function resolveRound(room, hostInputAction, guestInputAction) {
   };
 
   const computeDamage = (attackerAction, attacker, defender) => {
-    let damage = BASE_DAMAGE[attackerAction] || BASE_DAMAGE.normal_attack;
+    let damage =
+      attackerAction === "ultimate"
+        ? BASE_DAMAGE.normal_attack * 2
+        : BASE_DAMAGE[attackerAction] || BASE_DAMAGE.normal_attack;
     damage *= getElementMultiplier(attacker.element, defender.element);
     const vulnerability = getStatus(defender, "vulnerability");
     if (vulnerability) {
       const stacks = Math.max(1, vulnerability.stacks || 1);
-      damage *= 1 + 0.2 * stacks;
+      damage *= Math.pow(1.5, stacks);
+    }
+    const dulled = getStatus(attacker, "petrify");
+    if (dulled) {
+      const stacks = Math.max(1, dulled.stacks || 1);
+      damage *= Math.pow(0.5, stacks);
     }
     return Math.max(0, Math.round(damage));
   };
@@ -630,8 +632,13 @@ function resolveRound(room, hostInputAction, guestInputAction) {
     if (hostAction !== "ultimate" && getElementMultiplier(host.element, guest.element) > 1) {
       host.anger = Math.min(100, host.anger + 20);
     }
-    guest.anger = Math.min(100, guest.anger + Math.floor(damage * 0.5));
-    applyAttackStatus(hostAction, host, guest, notes);
+    const statusResult = applyAttackStatus(hostAction, host, guest, notes);
+    if (!statusResult.preventHurtAngerGain) {
+      guest.anger = Math.min(100, guest.anger + Math.floor(damage * 0.5));
+    }
+    if (hostAction === "ultimate") {
+      applyFixedUltimateHeal(host, healEvents, notes);
+    }
   } else if (hostAction !== "dodge") {
     notes.push("host action missed");
   }
@@ -646,8 +653,13 @@ function resolveRound(room, hostInputAction, guestInputAction) {
     if (guestAction !== "ultimate" && getElementMultiplier(guest.element, host.element) > 1) {
       guest.anger = Math.min(100, guest.anger + 20);
     }
-    host.anger = Math.min(100, host.anger + Math.floor(damage * 0.5));
-    applyAttackStatus(guestAction, guest, host, notes);
+    const statusResult = applyAttackStatus(guestAction, guest, host, notes);
+    if (!statusResult.preventHurtAngerGain) {
+      host.anger = Math.min(100, host.anger + Math.floor(damage * 0.5));
+    }
+    if (guestAction === "ultimate") {
+      applyFixedUltimateHeal(guest, healEvents, notes);
+    }
   } else if (guestAction !== "dodge") {
     notes.push("guest action missed");
   }
@@ -746,10 +758,6 @@ function normalizeRoundEvents(input) {
     .slice(0, 20);
 }
 
-function hasStatus(actor, type) {
-  return Array.isArray(actor.statuses) && actor.statuses.some((status) => status.type === type);
-}
-
 function getStatus(actor, type) {
   if (!Array.isArray(actor.statuses)) return null;
   return actor.statuses.find((status) => status.type === type) || null;
@@ -781,12 +789,15 @@ function addOrRefreshStatus(actor, next) {
 }
 
 function applyAttackStatus(action, attacker, defender, notes) {
-  if (action !== "element_attack") return;
+  if (action !== "element_attack" && action !== "ultimate") {
+    return { preventHurtAngerGain: false };
+  }
+
+  const result = { preventHurtAngerGain: false };
   if (attacker.element === "fire") {
     const status = addOrRefreshStatus(defender, {
       type: "burn",
-      duration: 2,
-      potency: 3,
+      duration: ELEMENT_STATUS_DURATION,
       stacks: 1,
       stackable: true,
       sourceId: attacker.id
@@ -794,19 +805,16 @@ function applyAttackStatus(action, attacker, defender, notes) {
     notes.push(`enemy burned x${status.stacks || 1}`);
   }
   if (attacker.element === "water") {
-    addOrRefreshStatus(defender, {
-      type: "freeze",
-      duration: 2,
-      stacks: 1,
-      stackable: false,
-      sourceId: attacker.id
-    });
-    notes.push("enemy frozen");
+    const angerBefore = defender.anger;
+    const angerAfter = Math.max(0, Math.floor(angerBefore * 0.5));
+    defender.anger = angerAfter;
+    notes.push(`enemy anger halved by freeze (${angerBefore}->${angerAfter})`);
+    result.preventHurtAngerGain = true;
   }
   if (attacker.element === "wood") {
     const status = addOrRefreshStatus(defender, {
       type: "parasite",
-      duration: 2,
+      duration: ELEMENT_STATUS_DURATION,
       potency: 2,
       stacks: 1,
       stackable: true,
@@ -817,7 +825,7 @@ function applyAttackStatus(action, attacker, defender, notes) {
   if (attacker.element === "metal") {
     const status = addOrRefreshStatus(defender, {
       type: "vulnerability",
-      duration: 2,
+      duration: ELEMENT_STATUS_DURATION,
       stacks: 1,
       stackable: true,
       sourceId: attacker.id
@@ -825,15 +833,17 @@ function applyAttackStatus(action, attacker, defender, notes) {
     notes.push(`enemy vulnerable x${status.stacks || 1}`);
   }
   if (attacker.element === "earth") {
-    addOrRefreshStatus(defender, {
+    const status = addOrRefreshStatus(defender, {
       type: "petrify",
-      duration: 2,
+      duration: ELEMENT_STATUS_DURATION,
       stacks: 1,
-      stackable: false,
+      stackable: true,
       sourceId: attacker.id
     });
-    notes.push("enemy petrified");
+    notes.push(`enemy dulled x${status.stacks || 1}`);
   }
+
+  return result;
 }
 
 function spendDodgeAnger(actor, notes) {
@@ -863,8 +873,11 @@ function reduceStatusDuration(actor) {
 function applyRoundEndStatusEffects(players, damageTaken, dotDamageEvents, healEvents, notes, onDefeated) {
   for (const player of players) {
     for (const status of player.statuses) {
-      if (status.type === "burn" && status.potency) {
-        const burnDamage = status.potency * Math.max(1, status.stacks || 1);
+      if (status.type === "burn") {
+        const burnDamage = Math.max(
+          1,
+          Math.round(player.hp * BURN_CURRENT_HP_RATIO_PER_STACK * Math.max(1, status.stacks || 1))
+        );
         applyDamage(player, burnDamage, onDefeated);
         damageTaken[player.id] += burnDamage;
         dotDamageEvents[player.id].push({ type: "burn", amount: burnDamage });
@@ -889,6 +902,15 @@ function applyRoundEndStatusEffects(players, damageTaken, dotDamageEvents, healE
       }
     }
   }
+}
+
+function applyFixedUltimateHeal(actor, healEvents, notes) {
+  const hpBefore = actor.hp;
+  actor.hp = Math.min(MAX_HP, actor.hp + ULTIMATE_FIXED_HEAL);
+  const healAmount = actor.hp - hpBefore;
+  if (healAmount <= 0) return;
+  healEvents[actor.id].push({ type: "ultimate", amount: healAmount });
+  notes.push(`${actor.id} healed by ultimate`);
 }
 
 function applyDamage(actor, amount, onDefeated) {
