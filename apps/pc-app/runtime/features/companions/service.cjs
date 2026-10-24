@@ -146,7 +146,12 @@ class CompanionsService {
       const template = this.resolveTemplate(identifier(input.templateId, '角色模板'));
       if (!template) throw new CompanionError('TEMPLATE_NOT_FOUND', '角色模板不可用');
       const pet = this.newPet(ownerAccountId, template, input, 'capture');
-      if (input.stats) pet.growth.stats = parseStats(input.stats, template.baseStats);
+      if (input.element !== undefined) {
+        if (!Object.hasOwn(BASE_STATS, input.element)) invalid('收服元素无效');
+        pet.element = input.element;
+        pet.growth.stats = clone(BASE_STATS[input.element]);
+      }
+      if (input.stats) pet.growth.stats = parseStats(input.stats, pet.growth.stats);
       this.storePet(pet, true);
       this.db.prepare('INSERT INTO companion_capture_receipts(owner_account_id, battle_id, wild_pet_id, pet_id) VALUES (?, ?, ?, ?)').run(ownerAccountId, battleId, wildPetId, pet.petId);
       return { pet, selections: this.selections(ownerAccountId) };

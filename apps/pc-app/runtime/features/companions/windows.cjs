@@ -17,7 +17,7 @@ function createDesktopWindowManager({ services, service, ensureImported, changed
   const { screen } = require('electron');
   if (!services.windows?.create) throw new Error('Companions require the foundation desktop window adapter');
   const entries = new Map();
-  let owner = null; let disposed = false; let syncing = false; let quiet = false;
+  let owner = null; let disposed = false; let syncing = false; let quiet = false; let animationsAllowed = true;
   const notifyWindows = () => services.events.emit('companions:windows-changed', { ownerAccountId: owner });
 
   function persistPosition(entry) {
@@ -61,7 +61,10 @@ function createDesktopWindowManager({ services, service, ensureImported, changed
     syncing = true;
     try {
       const current = services.session.getOwnerAccountId();
-      if (current !== owner) { for (const entry of [...entries.values()]) destroy(entry, false); owner = current; }
+      if (current !== owner) {
+        for (const entry of [...entries.values()]) destroy(entry, false); owner = current;
+        if (owner && services.get('accounts')?.settings) animationsAllowed = services.get('accounts').settings(owner).document.desktop.animationsEnabled !== false;
+      }
       if (!owner) return;
       ensureImported(owner);
       // Historical unsupported appearances remain in storage, never opened by this 2D release.
@@ -101,7 +104,7 @@ function createDesktopWindowManager({ services, service, ensureImported, changed
     return { ok: true, data: { petId: input.petId } };
   }
   const motionTimer = setInterval(() => {
-    if (disposed || quiet) return;
+    if (disposed || quiet || !animationsAllowed) return;
     const currentOwner = services.session.getOwnerAccountId();
     for (const entry of entries.values()) {
       if (entry.owner !== currentOwner) { sync(); break; }
@@ -122,7 +125,7 @@ function createDesktopWindowManager({ services, service, ensureImported, changed
   }, 100);
   const syncTimer = setInterval(sync, 800);
   const saveTimer = setInterval(() => { for (const entry of entries.values()) if (!entry.drag) { try { persistPosition(entry); } catch (error) { console.error('[companions:save-position]', error); } } }, 5000);
-  const stopPolicy = services.events.on('accounts:behavior', policy => { quiet = Boolean(policy?.quiet || policy?.fullscreen || policy?.settings?.desktop?.animationsEnabled === false); });
+  const stopPolicy = services.events.on('accounts:behavior', policy => { quiet = Boolean(policy?.quiet || policy?.fullscreen); animationsAllowed = policy?.settings?.desktop?.animationsEnabled !== false; });
   for (const timer of [motionTimer, syncTimer, saveTimer]) timer.unref();
   return { sync, handleInput,
     inspect: () => [...entries.values()].map(entry => ({ petId: entry.pet.petId, ownerAccountId: entry.owner, windowId: entry.window.id, bounds: entry.window.getBounds(), visible: entry.window.isVisible() })),
