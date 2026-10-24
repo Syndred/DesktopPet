@@ -37,6 +37,8 @@ test('real accounts aliases and verified local login isolate 2D instances while 
     const ownerA = services.session.requireOwner(); assert.equal(ownerA, `local:${a.id}`);
     const imported = await services.invoke('companions', 'list');
     assert.equal(imported.data.pets.length, 6);
+    assert.equal(imported.data.templates.length, 6);
+    assert.equal(new Set(imported.data.templates.map(template => template.resource.resourceId)).size, 6);
     assert.equal(services.get('companions').listPets(ownerA).length, 0);
     assert.equal(services.get('companions').getSelections(ownerA).battlePetId, null);
     assert.throws(() => services.get('companions').getPet(ownerA, 'pet-001'), error => error.code === 'RESOURCE_UNAVAILABLE');

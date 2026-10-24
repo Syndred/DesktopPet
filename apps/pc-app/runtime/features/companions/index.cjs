@@ -53,7 +53,7 @@ module.exports = {
         return pet;
       },
       getSelections(ownerAccountId) { return service.selections(ownerAccountId); },
-      getCombatProfile(ownerAccountId, petId) { return companionCombatProfile(api.getPet(ownerAccountId, petId)); },
+      getCombatProfile(ownerAccountId, petId) { return companionCombatProfile(api.getPet(ownerAccountId, petId), services.get('battle')?.getRules()); },
       listTemplates() { return service.templates(); },
       playAction(ownerAccountId, input) { return playback.play(ownerAccountId, api.getPet(ownerAccountId, input.petId), input.action, input.actionId); },
       applyGrowthInTransaction(ownerAccountId, input) {
@@ -100,7 +100,7 @@ module.exports = {
       commands: {
         async list(_payload, context) { await services.get('resources')?.ready; ensureImported(context.ownerAccountId); desktop?.sync(); return service.snapshot(context.ownerAccountId); },
         async get(payload, context) { await services.get('resources')?.ready; const pet = api.getPet(context.ownerAccountId, payload.petId); return { ok: true, data: pet, revision: pet.revision }; },
-        combatProfile(payload, context) { return { ok: true, data: api.getCombatProfile(context.ownerAccountId, payload.petId) }; },
+        combatProfile(payload, context) { const data = api.getCombatProfile(context.ownerAccountId, payload.petId); return { ok: true, data, revision: service.requirePet(context.ownerAccountId, payload.petId).revision }; },
         desktopInput(payload, context) {
           if (!desktop) return { ok: false, code: 'DESKTOP_UNAVAILABLE', message: '请在灵境桌面应用中操作伙伴' };
           return desktop.handleInput(context.ownerAccountId, payload);
