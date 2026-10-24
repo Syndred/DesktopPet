@@ -340,6 +340,8 @@ function normalizeRoom(input) {
     guest_account: normalizeString(input.guest_account) || null,
     host_pet_id: normalizeString(input.host_pet_id),
     guest_pet_id: normalizeString(input.guest_pet_id),
+    host_resource_id: normalizeString(input.host_resource_id),
+    guest_resource_id: normalizeString(input.guest_resource_id),
     invitation_id: normalizeString(input.invitation_id),
     invited_user_id: normalizeString(input.invited_user_id),
     host_pet_name: normalizePetName(input.host_pet_name),
@@ -409,6 +411,7 @@ async function handleCreateRoom(supabase, payload) {
         host_account: user.account,
         host_pet_name: hostPetName,
         host_pet_id: normalizeString(payload?.petId),
+        host_resource_id: normalizeString(payload?.petResourceId)?.slice(0, 200) || null,
         invitation_id: invitationId,
         invited_user_id: invitedUserId,
         host_element: hostElement,
@@ -474,6 +477,7 @@ async function handleJoinRoom(supabase, payload) {
       guest_account: user.account,
       guest_pet_name: guestPetName,
       guest_pet_id: normalizeString(payload?.petId),
+      guest_resource_id: normalizeString(payload?.petResourceId)?.slice(0, 200) || null,
       guest_element: guestElement,
       status: "active"
     })
