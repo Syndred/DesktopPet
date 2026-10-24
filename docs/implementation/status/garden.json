@@ -2,12 +2,14 @@
   "module": "garden",
   "branch": "codex/lingjing-garden",
   "commit": "see git log for this file",
-  "status": "integrated-2d-native-flow-running-external-dependencies-explicit",
+  "status": "local-native-chain-verified-A04-fixed-central-and-cloud-acceptance-pending",
   "upstream": {
     "fetched": true,
     "originMain": "4786f97",
     "baseline": "6c8ce65",
-    "originMainIsAncestor": true
+    "originMainIsAncestor": true,
+    "recheckedAt": "2026-10-24T21:24:14+08:00",
+    "behindOriginMain": 0
   },
   "foundationRequired": "7f0e896 consumed in dea840a; actual shadcn/Radix, Tailwind, live Motion policy, MapLibre and shared 2D portraits",
   "contract": "docs/implementation/garden-contract.md",
@@ -140,19 +142,17 @@
     },
     {
       "command": "smoke.electron.mjs motion/map/library/battle/carrot/rewardplant",
-      "result": "actual Electron 36.9.5: live system/app animation toggle, Radix keys/focus, valid card geometry, shared companion portraits, OS WiFi accuracy212m rejected for territory, real training seed receipt +2, 10m carrot harvest, rewarded tomato planted; rice harvest due21:16, rewarded tomato due21:21"
+      "result": "Actual Electron36.9.5: 25m rice growth -> harvest2 -> craft1 -> feed fish1; actual training reward tomato seeds -> 15m planting -> harvest3 -> feed fish1 -> next actual training reward; all non-fish pets unchanged; restart exact; duplicate harvest and stale-owner request rejected; A04 layout/Select/Tabs/Motion/real WiFi diagnostics checked"
     }
   ],
   "evidence": [
-    "artifacts/garden/electron/run.json",
-    "artifacts/garden/electron/02a-2d-mature-garden.png",
-    "artifacts/garden/electron/02-cooked-and-fed.png",
-    "artifacts/garden/electron/03-inventory.png",
-    "artifacts/garden/electron/04-radix-kitchen.png",
-    "artifacts/garden/electron/05-radix-inventory.png",
-    "artifacts/garden/electron/harvest-disk-readback.json",
-    "artifacts/garden/electron/readback-disk-readback.json",
-    "artifacts/garden/postgres/run-1792844746757/evidence.json",
+    "docs/implementation/evidence/garden/verification.json",
+    "docs/implementation/evidence/garden/README.md",
+    "docs/implementation/evidence/garden/09a-reward-mature.png",
+    "docs/implementation/evidence/garden/11-kitchen-current.png",
+    "docs/implementation/evidence/garden/12-inventory-current.png",
+    "docs/implementation/evidence/garden/A04-1280x844-inventory.png",
+    "docs/implementation/evidence/garden/A04-1440x900-inventory.png",
     "docs/implementation/garden-assets.json"
   ],
   "uiComparison": {
@@ -161,7 +161,7 @@
       "10-garden-harvest-and-feeding.png"
     ],
     "implemented": "milk-white/mist-blue panels, garden 3x2 scene, side crop/seed controls, three-column kitchen, four-column inventory and explicit pet picker, approved whale-girl and original detailed 2D foods",
-    "remaining": "Final rice/craft/feed and rewarded-tomato native screenshots; actual kit card-height regression fixed and geometry checked"
+    "remaining": "A04 fixed and native measurements passed at1280x844 and1440x900; foundation central A01-A12 visual recheck remains pending"
   },
   "twoDOnly": {
     "implemented": true,
@@ -182,11 +182,11 @@
   ],
   "remaining": [
     "HTTPS garden-sync/accounts migrations not deployed; live real-account two-device receipt/readback not verified",
-    "Cloud territory authority/challenge/garrison integration unavailable and fails explicitly",
-    "Companions owner-alias migration callback required for pre-Accounts raw-ID companion rows; original garden and pets preserved, no target starter granted",
-    "Accounts save-version reconciliation required after authoritative garden updates; unsynced companion changes preserved as CLOUD_LOCAL_CONFLICT",
-    "Actual Windows WiFi location returned accuracy212m, above80m; physical territory capture/garrison cannot be accepted at this precision",
-    "Production-duration rice and newly rewarded tomato cycle native readback still in progress"
+    "Cloud territory challenge/garrison authority and shared battle integration unavailable; fails explicitly",
+    "Companions verified owner-alias migration callback required for pre-Accounts raw-ID companion rows; all original garden/pet data preserved",
+    "Accounts public save-version reconciliation required after authoritative garden updates; unsynced companion changes conservatively preserved",
+    "Actual Windows WiFi accuracy212m exceeds80m; physical-location occupation/garrison not accepted",
+    "Foundation central A01-A12 visual recheck and full combined integration/packaging remain pending; canonical six distinct resources/actions owned by resources"
   ],
   "cloudReview": "docs/implementation/garden-cloud-review.md",
   "dataPolicy": "additive migrations; original history/designs/models retained; no production deployment, destructive migration or user-data reset",
@@ -202,7 +202,7 @@
     "profile": "artifacts/garden/integrated-electron",
     "ricePlanted": "2026-10-24T12:51:09.487Z",
     "riceMatures": "2026-10-24T13:16:09.487Z",
-    "realTimeGrowth": "production 25-minute duration, no clock or database edits",
+    "realTimeGrowth": "25m13.735s rice and 15m rewarded tomato through actual UI, no clock edits; exact restart readback complete",
     "focusedChecks": "16 SQLite + 8 PostgreSQL checks; build/typecheck/ESLint; native library/geometry at1280x844, H1 29px/700, Motion, privacy-aware actual WiFi diagnostics; 25m rice/craft/feed/restart passed"
   },
   "testTool": {
@@ -223,5 +223,25 @@
     "realGeographicAcceptance": false,
     "result": "native UI -> IPC -> SQLite garrison change/restart passed; exact pet growth and independent selections unchanged",
     "profile": "artifacts/garden/territory-electron"
-  }
+  },
+  "visualAudit": {
+    "reference": "codex/lingjing-implementation-base@9915684:docs/implementation/acceptance/2026-10-24/visual-audit.txt",
+    "A04": {
+      "status": "fixed-ready-for-central-recheck",
+      "fixCommits": [
+        "a79d9b9",
+        "155ac37"
+      ],
+      "sizes": [
+        "1280x844",
+        "1440x900"
+      ],
+      "result": "no card intersections; every image contained; pet card scrollHeight <= height; H1 29px/700; Card margin-bottom0"
+    },
+    "A01": "inherits foundation font stack/H1 and foundation-page; no feature vw clamp",
+    "A03": "native card margin-bottom0; parent owns gaps",
+    "A07A08": "consumes canonical pet.resource through shared CompanionPortrait; resource production remains resources-owned",
+    "centralFullAppAcceptance": "pending"
+  },
+  "goalComplete": false
 }

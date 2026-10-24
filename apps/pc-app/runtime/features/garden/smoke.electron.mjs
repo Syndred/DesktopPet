@@ -110,6 +110,27 @@ try {
         await page.screenshot({path:resolve(output,'07-real-location-result.png'),fullPage:true});
       }
     }finally{await save(original);}
+  } else if (phase === 'audit') {
+    const nativeWindow=await application.browserWindow(page),measurements=[];
+    await page.emulateMedia({reducedMotion:'reduce'});await page.waitForFunction(()=>document.documentElement.dataset.motion==='reduced');
+    for(const [width,height] of [[1280,844],[1440,900]]){
+      await nativeWindow.evaluate((win,{width,height})=>win.setContentSize(width,height),{width,height});
+      for(const path of ['/inventory','/garden/kitchen']){
+        await route(path);await page.locator('.garden-pet-picker .cp-sheet-thumbnail').first().waitFor();
+        const result=await page.evaluate(()=>{
+          const rect=e=>e.getBoundingClientRect().toJSON(),style=e=>({fontSize:getComputedStyle(e).fontSize,fontWeight:getComputedStyle(e).fontWeight,lineHeight:getComputedStyle(e).lineHeight,marginBottom:getComputedStyle(e).marginBottom});
+          const cards=[...document.querySelectorAll('.garden-item')],pets=[...document.querySelectorAll('.garden-pet')];
+          const boxes=cards.map(rect),overlap=boxes.some((a,i)=>boxes.some((b,j)=>i!==j&&Math.min(a.right,b.right)-Math.max(a.left,b.left)>.5&&Math.min(a.bottom,b.bottom)-Math.max(a.top,b.top)>.5));
+          return {viewport:{width:innerWidth,height:innerHeight,dpr:devicePixelRatio},heading:{...style(document.querySelector('.garden-feature h1')),...rect(document.querySelector('.garden-feature h1'))},pagePadding:getComputedStyle(document.querySelector('.garden-feature')).padding,cards:cards.map(card=>({rect:rect(card),art:rect(card.querySelector('.garden-item-art'))})),petCards:pets.map(card=>({height:card.clientHeight,scrollHeight:card.scrollHeight})),overlap,cardsSpacing:[...document.querySelectorAll('.garden-card')].map(card=>({marginBottom:getComputedStyle(card).marginBottom,parentGap:getComputedStyle(card.parentElement).gap}))};
+        });
+        assert.equal(result.overlap,false);assert.equal(result.heading.fontSize,'29px');assert.equal(result.heading.fontWeight,'700');
+        assert.equal(result.cards.every(card=>card.art.top>=card.rect.top&&card.art.bottom<=card.rect.bottom),true);
+        assert.equal(result.petCards.every(card=>card.height>=100&&card.scrollHeight<=card.height),true);
+        assert.equal(result.cardsSpacing.every(card=>card.marginBottom==='0px'),true);
+        measurements.push({path,...result});await page.screenshot({path:resolve(output,`A04-${width}x${height}-${path.split('/').at(-1)}.png`),fullPage:true});
+      }
+    }
+    run.visualAudit={source:'visual-audit.txt A04; follow A01/A03',fixCommits:['a79d9b9','155ac37'],measurements,readyForCentralRecheck:true};
   } else if (phase === 'territory-ui' || phase === 'territory-readback') {
     assert.ok(run.territoryFixture,'Only run this phase in the explicitly labelled isolated territory fixture');
     const snapshot=await invoke('snapshot'),territory=snapshot.data.territories.find(t=>t.id===run.territoryFixture.id);assert.equal(territory.ownerAccountId,run.ownerAccountId);
