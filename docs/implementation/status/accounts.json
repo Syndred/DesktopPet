@@ -1,0 +1,25 @@
+{
+  "module": "accounts",
+  "branch": "codex/lingjing-accounts",
+  "status": "verifying",
+  "implementationCommit": "see git log for the accounts implementation commit",
+  "foundationBase": "8f17aec",
+  "upstream": { "fetched": true, "originMain": "4786f97", "originMainIsAncestor": true },
+  "dependencies": [],
+  "integrationContract": "apps/pc-app/runtime/features/accounts/INTEGRATION.md",
+  "tests": [
+    { "command": "node --test apps/pc-app/runtime/features/accounts/tests/accounts.test.cjs", "result": "13 passed; real SQLite files, account isolation, raw migration, backup/restore rollback and reopen, offline outbox; cloud-success path is explicitly a protocol unit test" },
+    { "command": "npm run typecheck:ui", "result": "passed" },
+    { "command": "npm exec eslint -- apps/pc-app/ui/src/features/accounts packages/shared-types/src/features/accounts --ext .ts,.tsx", "result": "passed" },
+    { "command": "npm run build:pc", "result": "passed" }
+  ],
+  "runtimeEvidence": [],
+  "integrationDependencies": [
+    "Companions/battle/conversations import raw owner data with accounts.getLegacyInventory(mappedOwner), not the old runtime global mirror",
+    "Discovery gates acquisition/watch with privacy.mayUseLocation and reports exploration state",
+    "Audio/proactive behavior and emotion collectors consume accounts behavior/privacy policies",
+    "Resource file assets and tables without owner_account_id register explicit backup adapters"
+  ],
+  "remaining": ["Real Windows Electron account/settings/backup UI acceptance in progress", "Cloud migration and accounts-sync deployment are not performed; real cloud save readback remains unverified"],
+  "dataPolicy": "Original source and JSON preserved; backups are versioned, owner-scoped, checksummed and non-overwriting; restore saves current data first; no production migration or release"
+}
