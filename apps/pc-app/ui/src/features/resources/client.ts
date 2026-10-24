@@ -16,5 +16,4 @@ async function invoke<T>(command: string, payload?: unknown): Promise<ResourceRe
 export const resourcesClient: ResourcesClient = {
   list: () => invoke('list'), importResource: metadata => invoke('import', metadata), save: payload => invoke('save', payload),
   resolve: payload => invoke('resolve', payload), assetUrl: resourceAssetUrl,
-  importLegacyCalibration: profiles => invoke('migrate-legacy-calibration', profiles),
 };
