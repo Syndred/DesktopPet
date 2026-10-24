@@ -1,0 +1,398 @@
+{
+  "at": "2026-10-24T15:51:12.390Z",
+  "codeCommit": "5ca0bc3a87cebfa8b8ce14a73929388d8a02613d",
+  "scope": "U01-U08; module self-verification complete, main integrated acceptance pending",
+  "provenance": "simulated",
+  "liveCloud": "deferred by explicit latest user goal; not claimed",
+  "runs": [
+    {
+      "label": "interactions",
+      "source": "artifacts\\battle\\unified-1792854039894",
+      "at": "2026-10-24T15:00:40.023Z",
+      "sourceCommit": "57116dcecaa68609cf7d0822f1ad986624a1d735",
+      "sourceDirty": "M apps/pc-app/runtime/features/battle/service.cjs\n M apps/pc-app/runtime/features/battle/tests/qa-duel-server.cjs\n M apps/pc-app/runtime/features/discovery/index.cjs\n M apps/pc-app/runtime/features/discovery/service.cjs\n M apps/pc-app/ui/src/features/battle/BattleScreen.tsx\n M docs/implementation/battle-screen-contract.txt\n M packages/shared-types/src/features/discovery/index.ts\n?? apps/pc-app/runtime/features/battle/verify-unified.mjs",
+      "passed": true,
+      "checks": [
+        "real local account and independent canonical adoptions",
+        "native interaction interrupt passed",
+        "native interaction dodge passed",
+        "native interaction water passed",
+        "native interaction ultimate passed",
+        "focused native interaction pass complete"
+      ]
+    },
+    {
+      "label": "hit",
+      "source": "artifacts\\battle\\unified-1792855005586",
+      "at": "2026-10-24T15:16:45.724Z",
+      "sourceCommit": "dbc7446c6822abe06c9e46d06e377a4fd59e2b5c",
+      "sourceDirty": "M apps/pc-app/runtime/features/battle/verify-unified.mjs\n M apps/pc-app/ui/src/features/battle/FriendsPanel.tsx",
+      "passed": true,
+      "checks": [
+        "real local account and independent canonical adoptions",
+        "native interaction interrupt passed",
+        "focused native interaction pass complete"
+      ]
+    },
+    {
+      "label": "copy",
+      "source": "artifacts\\battle\\unified-1792855052894",
+      "at": "2026-10-24T15:17:33.004Z",
+      "sourceCommit": "f0463947c39299f247f8f3ff1d1368c54f6857b7",
+      "sourceDirty": "",
+      "passed": true,
+      "checks": [
+        "real local account and independent canonical adoptions",
+        "friend lobby compact copy with real selected identity and pending invitation; all actions remain available",
+        "focused native interaction pass complete"
+      ]
+    },
+    {
+      "label": "entries",
+      "source": "artifacts\\battle\\unified-1792855630674",
+      "at": "2026-10-24T15:27:10.840Z",
+      "sourceCommit": "ce2b18ede711fe3703a7ba1fc00fe3b4e2d155b5",
+      "sourceDirty": "M apps/pc-app/runtime/features/battle/verify-unified.mjs",
+      "passed": true,
+      "checks": [
+        "real local account and independent canonical adoptions",
+        "shared geometry entry-wild-1280",
+        "wild entry uses shared battlefield; source capture receipt is simulated and duplicate confirmation adds no pet",
+        "shared geometry entry-territory-win-1280",
+        "territory win: source confirmation, correct owner and no duplicate XP/inventory",
+        "shared geometry entry-territory-loss-1280",
+        "territory loss: source confirmation, correct owner and no duplicate XP/inventory",
+        "focused native interaction pass complete"
+      ]
+    },
+    {
+      "label": "matrix",
+      "source": "artifacts\\battle\\unified-1792855814504",
+      "at": "2026-10-24T15:30:14.704Z",
+      "sourceCommit": "ce2b18ede711fe3703a7ba1fc00fe3b4e2d155b5",
+      "sourceDirty": "M apps/pc-app/runtime/features/battle/verify-unified.mjs",
+      "passed": true,
+      "checks": [
+        "real local account and independent canonical adoptions",
+        "native ordered element pairs 5/25",
+        "native ordered element pairs 10/25",
+        "native ordered element pairs 15/25",
+        "native ordered element pairs 20/25",
+        "native ordered element pairs 25/25",
+        "25 real UI elemental pairings passed",
+        "focused native interaction pass complete"
+      ]
+    },
+    {
+      "label": "motion-friends",
+      "source": "artifacts\\battle\\unified-1792856133774",
+      "at": "2026-10-24T15:35:33.903Z",
+      "sourceCommit": "cb5c2c3a7aa44bb13c4320788c7487d54d259bb3",
+      "sourceDirty": "",
+      "passed": true,
+      "checks": [
+        "real local account and independent canonical adoptions",
+        "shared geometry entry-training-1280",
+        "shared geometry entry-training-1440",
+        "same elemental action restarts real release texture without replacing canvases; motion off adopts final state, stops actual frames and unlocks controls; reenable does not replay history",
+        "shared geometry entry-friend-1280",
+        "two isolated friend UIs: invite, accept, same room, pending restart, one resolution and no historical replay",
+        "friend simulated settlement and two retries preserve XP and inventory",
+        "focused native interaction pass complete"
+      ]
+    }
+  ],
+  "carriedActiveModeEvidence": {
+    "fromCommit": "ce2b18ede711fe3703a7ba1fc00fe3b4e2d155b5",
+    "toCommit": "cb5c2c3a7aa44bb13c4320788c7487d54d259bb3",
+    "unchangedHashChecks": [
+      {
+        "file": "apps/pc-app/runtime/services/battle-runtime.cjs",
+        "sha256": "0c7475da1cb6a7171d8dceca57e78dcf1ee28b2e46ac70957774d0dd86673b38",
+        "currentSha256": "0c7475da1cb6a7171d8dceca57e78dcf1ee28b2e46ac70957774d0dd86673b38"
+      },
+      {
+        "file": "apps/pc-app/runtime/features/battle/service.cjs",
+        "sha256": "cf265498249b7216deef56a2071c0225c2f76656448a43c52428d2dbae406e87",
+        "currentSha256": "cf265498249b7216deef56a2071c0225c2f76656448a43c52428d2dbae406e87"
+      },
+      {
+        "file": "apps/pc-app/runtime/features/battle/presentation.cjs",
+        "sha256": "83493cda1c79fb7aee5f08ff7c5d8dd2cb3ed95b1737382db63739cd7198c90c",
+        "currentSha256": "83493cda1c79fb7aee5f08ff7c5d8dd2cb3ed95b1737382db63739cd7198c90c"
+      },
+      {
+        "file": "apps/pc-app/runtime/features/battle/qa-adapter.cjs",
+        "sha256": "cdcd69765e1754835a2d7d678cb600a563f49a1f72091315842e49d793400878",
+        "currentSha256": "cdcd69765e1754835a2d7d678cb600a563f49a1f72091315842e49d793400878"
+      },
+      {
+        "file": "apps/pc-app/ui/src/features/battle/BattleScreen.tsx",
+        "sha256": "e702f3ec88767875e5f774491fcb5a0ac8a5eee1ff5904f7fd33a89164776220",
+        "currentSha256": "e702f3ec88767875e5f774491fcb5a0ac8a5eee1ff5904f7fd33a89164776220"
+      },
+      {
+        "file": "apps/pc-app/ui/src/features/battle/BattleMoves.tsx",
+        "sha256": "e3ec8031282fb2fea3e070d26288c6d84716d41f55632162a15c39538aec043c",
+        "currentSha256": "e3ec8031282fb2fea3e070d26288c6d84716d41f55632162a15c39538aec043c"
+      },
+      {
+        "file": "apps/pc-app/ui/src/features/battle/useBattleAnimation.ts",
+        "sha256": "aa5bcc6a1679982ccb35891dd0f034fc3b6c81cf1a2b1d49e4dc33fce26be4c3",
+        "currentSha256": "aa5bcc6a1679982ccb35891dd0f034fc3b6c81cf1a2b1d49e4dc33fce26be4c3"
+      },
+      {
+        "file": "apps/pc-app/ui/src/features/battle/useBattleSession.ts",
+        "sha256": "5c4babe197833057f082fe683050c87846ab3c4800203aea61303d5df47a030c",
+        "currentSha256": "5c4babe197833057f082fe683050c87846ab3c4800203aea61303d5df47a030c"
+      },
+      {
+        "file": "apps/pc-app/runtime/features/resources/assets/roster-v2/catalog.json",
+        "sha256": "8d40e857fbad95130051085b0dcff64feb099d0375260a0ab6259ea217d2da08",
+        "currentSha256": "8d40e857fbad95130051085b0dcff64feb099d0375260a0ab6259ea217d2da08"
+      }
+    ],
+    "productChange": "Only unknown-peer waiting rendering and its CSS changed after the 25-pair active-scene run; this state is covered by the later namespaced two-peer run.",
+    "finalMainAcceptance": "pending"
+  },
+  "rules": {
+    "orderedPairs": 25,
+    "damageCases": 75,
+    "interactionCases": 9,
+    "authority": "apps/pc-app/runtime/services/battle-runtime.cjs"
+  },
+  "sqlite": {
+    "readOnly": true,
+    "profiles": 5,
+    "finishedRewardReceipts": 5,
+    "confirmedCaptures": 1,
+    "confirmedTerritoryResults": 2
+  },
+  "hashPolicy": "sha256 records raw capture bytes; normalizedTextSha256 uses LF for text carried through Git line-ending conversion",
+  "files": [
+    {
+      "file": "build-manifest.json",
+      "sha256": "89378a7ddcdd212e6cf938566a18478181ff8e98fbea457c9006ffc46149c89c",
+      "normalizedTextSha256": "89378a7ddcdd212e6cf938566a18478181ff8e98fbea457c9006ffc46149c89c"
+    },
+    {
+      "file": "copy/evidence.json",
+      "sha256": "64943bb01a8e3f378e6fe20c379bc1cc24c8de73fe0ec1013a4f385c4503642f",
+      "normalizedTextSha256": "64943bb01a8e3f378e6fe20c379bc1cc24c8de73fe0ec1013a4f385c4503642f"
+    },
+    {
+      "file": "copy/friends-compact-invitation.png",
+      "sha256": "c82e29410ee815c95ec8c01b8691e9a6fa90ec6251cbf40a1c9aeb69cc8b079b"
+    },
+    {
+      "file": "copy/friends-compact-selected.png",
+      "sha256": "bf1f940d9da645514278a71fd34c1474ec541660f1a9923e4b0723c19bd9202e"
+    },
+    {
+      "file": "entries/entry-territory-loss-1280.png",
+      "sha256": "f10f87fea0cc832e93f1fc9cb8c4eb302cfbb8ad43bfdac1ea150116d01bb566"
+    },
+    {
+      "file": "entries/entry-territory-win-1280.png",
+      "sha256": "e45df74d007ace69933c97ea558ccc6ee211e64077b6f082aa3bcae51dd13832"
+    },
+    {
+      "file": "entries/entry-wild-1280.png",
+      "sha256": "d6c6a28164025e2681cc15d32d7d7596dc442519398b29fbb7c29120badc7b2f"
+    },
+    {
+      "file": "entries/evidence.json",
+      "sha256": "1e89701d104cba8891cdd82ff2aa0727dcf7678b949f82fe0d5261d1aa924932",
+      "normalizedTextSha256": "1e89701d104cba8891cdd82ff2aa0727dcf7678b949f82fe0d5261d1aa924932"
+    },
+    {
+      "file": "entries/territory-loss-shared-result.png",
+      "sha256": "78f55e0d97f330dce47a000665c6483d5f111a3f1597e5cea596767ea43efd45"
+    },
+    {
+      "file": "entries/territory-win-shared-result.png",
+      "sha256": "f1be3e1615b260967ad4638c3eb886b2c14e66687d10c4b2a46145fd134038bc"
+    },
+    {
+      "file": "entries/wild-captured-result.png",
+      "sha256": "b59c515dfe79bb6aeb4020ab5f7bb7655bbf9e7ec62346808fe9085c176abb45"
+    },
+    {
+      "file": "hit/evidence.json",
+      "sha256": "68dd44dd25182e38b7ac6df3cc36d48474a61f834cc673fcc5ce8f102d759f5b",
+      "normalizedTextSha256": "68dd44dd25182e38b7ac6df3cc36d48474a61f834cc673fcc5ce8f102d759f5b"
+    },
+    {
+      "file": "hit/interrupt-effects.png",
+      "sha256": "7a888f5727bf261f4f9dda00c66048b42f1820bc963b039684eac663ca6fb898"
+    },
+    {
+      "file": "hit/interrupt-impact.png",
+      "sha256": "2863009b9e5b144e60caa55f71c7be3e5203bdb918433a94831f9958e8327fad"
+    },
+    {
+      "file": "hit/interrupt-release.png",
+      "sha256": "67ed5841ec1f9f5d0a6c5befc4e5cc7c9899ba57ba9ef4851cbcd98eea951091"
+    },
+    {
+      "file": "interactions/evidence.json",
+      "sha256": "cca2e09667cba8334eeb65554d2a51462e383cd12fe7576c926d21cbda76e14a",
+      "normalizedTextSha256": "cca2e09667cba8334eeb65554d2a51462e383cd12fe7576c926d21cbda76e14a"
+    },
+    {
+      "file": "legacy-rules-readback.json",
+      "sha256": "271e478459b239038e5ddf74dea55537f5152f37a5fe4e4165606720db0c43b1",
+      "normalizedTextSha256": "271e478459b239038e5ddf74dea55537f5152f37a5fe4e4165606720db0c43b1"
+    },
+    {
+      "file": "matrix/evidence.json",
+      "sha256": "3bb6fe99b8580ee3cd71f4a526487027c94514bba686e016d8cca018a224cbe3",
+      "normalizedTextSha256": "3bb6fe99b8580ee3cd71f4a526487027c94514bba686e016d8cca018a224cbe3"
+    },
+    {
+      "file": "matrix/matrix-earth-earth-effects.png",
+      "sha256": "3f52feba215383891e96e0fe19fdf105360056c6025f7e1af62a9674ddea0dcd"
+    },
+    {
+      "file": "matrix/matrix-earth-earth-impact.png",
+      "sha256": "64de8435193dbd28de052a4ec9363de0e50faf152492216e4522bde978baaec8"
+    },
+    {
+      "file": "matrix/matrix-earth-earth-release.png",
+      "sha256": "3a7f7cda2cf30aefa1b13e5de2886297baa99b4919354bfef368a909219e22b0"
+    },
+    {
+      "file": "matrix/matrix-fire-fire-effects.png",
+      "sha256": "1a64a68de879b2f5ccabb9fff31591e60f2d1c5835af192d6d93deae45a252eb"
+    },
+    {
+      "file": "matrix/matrix-fire-fire-impact.png",
+      "sha256": "27894dbfff2f0b786309212cfa567f100e0e8686d2fd066a0cefd4701c347d2e"
+    },
+    {
+      "file": "matrix/matrix-fire-fire-release.png",
+      "sha256": "b3d3c7a3a7b676224eee6c5eb44d3334e96747002fef8283dcc2b7284371795d"
+    },
+    {
+      "file": "matrix/matrix-metal-metal-effects.png",
+      "sha256": "c33beef3e1cecf2759f7c2ed7c35bf5a4ca0a3c5289ee4202dc50adf27124ae4"
+    },
+    {
+      "file": "matrix/matrix-metal-metal-impact.png",
+      "sha256": "ccb1a135926cc3d1d315d8408c50cbfc15c1b82a3a3754feb81bc2339da16559"
+    },
+    {
+      "file": "matrix/matrix-metal-metal-release.png",
+      "sha256": "eff1ef555fb21dd4438136a3260ae36788ccbbe11880edacefc57884fae13a5a"
+    },
+    {
+      "file": "matrix/matrix-water-water-effects.png",
+      "sha256": "98064d8cc2f45907a2f14c4b0741f52dc5f74efe627f5c2ec869ec3a92942b6e"
+    },
+    {
+      "file": "matrix/matrix-water-water-impact.png",
+      "sha256": "1fa483f8945e8dfb0077db7c0f4d50fa6dccf87fe1d6197decbcf2966d632454"
+    },
+    {
+      "file": "matrix/matrix-water-water-release.png",
+      "sha256": "53414f5039ba695b992b07e40f1d32ecdb0faeaf0e1b97ec26f835cbbd422388"
+    },
+    {
+      "file": "matrix/matrix-wood-wood-effects.png",
+      "sha256": "4d2ad2d2f8c1e4a60bf95fcc4a3259bb2e39aa529625fecd5a3a575907195057"
+    },
+    {
+      "file": "matrix/matrix-wood-wood-impact.png",
+      "sha256": "ff09944ca56cd1fe9488eee38a6e79c92e66fe3eb5cd6bd60cda06fc9e94e431"
+    },
+    {
+      "file": "matrix/matrix-wood-wood-release.png",
+      "sha256": "3e386d72746bdc0f372f3672ab83ebb7c86f49e6b2aee507b1d3b08130700163"
+    },
+    {
+      "file": "motion-friends/animations-off-terminal-snapshot.png",
+      "sha256": "8fd379924c956a4d5d3632461ba9c6d801d5b155e65da3acf407a7fef13489ba"
+    },
+    {
+      "file": "motion-friends/entry-friend-1280.png",
+      "sha256": "af09c860672c6a28544eb68b66e68c8aed8ca2a21de0910c102562bddc25eeea"
+    },
+    {
+      "file": "motion-friends/entry-training-1280.png",
+      "sha256": "8d90a4e02d23dd248a60a3c3d6858b51ce43273d78614569447e39e1e293c247"
+    },
+    {
+      "file": "motion-friends/entry-training-1440.png",
+      "sha256": "c1f469999f8caf4b7d74879a9b000628713e428222e132d463e567d7e1b9438c"
+    },
+    {
+      "file": "motion-friends/evidence.json",
+      "sha256": "ded84c497c9505a44f76f6fbb35dc91c5ca8b1872fce42389415ff69fbeefae1",
+      "normalizedTextSha256": "ded84c497c9505a44f76f6fbb35dc91c5ca8b1872fce42389415ff69fbeefae1"
+    },
+    {
+      "file": "motion-friends/friend-finished-shared-result.png",
+      "sha256": "19091a8417937686fc62f7113ad0b150fd89b4378812b30b2506ca9daa4c3fa3"
+    },
+    {
+      "file": "motion-friends/friend-interrupted-guest-effects.png",
+      "sha256": "b45ed176904d9758150d2afbc91affcb649946ca1b551374b269b8b2d6641ba4"
+    },
+    {
+      "file": "motion-friends/friend-interrupted-guest-impact.png",
+      "sha256": "4ef28b982692fdc6bada4a7054d4846e8217a0b35c9e86c7f08b4a21c23cd079"
+    },
+    {
+      "file": "motion-friends/friend-interrupted-guest-release.png",
+      "sha256": "2de5458c9c1b5471ac604f952e0ce74d81f2ebbe61dcfcdaab7fe47176211230"
+    },
+    {
+      "file": "motion-friends/friend-pending-before-restart.png",
+      "sha256": "e651ff7d1584c6f1cd9eb7fb7ae1a09fddc15e73ade51029899719224b131b20"
+    },
+    {
+      "file": "motion-friends/friend-restored-after-resolution.png",
+      "sha256": "ffbaf529c82eafee7f443dfdf0087c52c3e97c12ca3b2b4004ee098c80c921d4"
+    },
+    {
+      "file": "motion-friends/friend-waiting-peer-is-unknown.png",
+      "sha256": "7b0140165cb97aaf2dc7d60272703c29206caab931fd6ec9cf9093951dd40c16"
+    },
+    {
+      "file": "README.txt",
+      "sha256": "26e8841e94c993474821d6b91b6f50e7d49634495c1a6b6013a8e186f5f5d3a7",
+      "normalizedTextSha256": "26e8841e94c993474821d6b91b6f50e7d49634495c1a6b6013a8e186f5f5d3a7"
+    },
+    {
+      "file": "rules/evidence.json",
+      "sha256": "c8f92a1e9f373c33e49885513b591d3ce0e4395b6e04a789cd379d18ae50059c",
+      "normalizedTextSha256": "c8f92a1e9f373c33e49885513b591d3ce0e4395b6e04a789cd379d18ae50059c"
+    },
+    {
+      "file": "simulated-friend-authority.json",
+      "sha256": "e8e2a7d2da2bc0799d928dad674c5a51f82a2244ba98da4a698773f6ae5ffb30",
+      "normalizedTextSha256": "e8e2a7d2da2bc0799d928dad674c5a51f82a2244ba98da4a698773f6ae5ffb30"
+    },
+    {
+      "file": "sqlite-readback.json",
+      "sha256": "da5270365decc1a61072bde84b51380d0798b9ff5de730c6985c2703bbf86948",
+      "normalizedTextSha256": "da5270365decc1a61072bde84b51380d0798b9ff5de730c6985c2703bbf86948"
+    }
+  ],
+  "testedUiBuildCommit": "cb5c2c3a7aa44bb13c4320788c7487d54d259bb3",
+  "legacyRulesProjectionFix": {
+    "at": "2026-10-24T15:51:12.390Z",
+    "sourceCommit": "5ca0bc3a87cebfa8b8ce14a73929388d8a02613d",
+    "command": "node --test apps/pc-app/runtime/features/battle/tests/legacy-rules.test.cjs",
+    "passed": 1,
+    "failed": 0,
+    "scope": "Pure shared read projection and actual getReport/listReports service read methods; same rules version only",
+    "checks": [
+      "metal shows 易伤 and metal→wood relation",
+      "saved numeric rules, rounds, HP, anger and reward remain unchanged",
+      "unknown version returns the original profile",
+      "no engine execution or store write"
+    ],
+    "note": "The deliberately nondefault numeric test sentinel proves preservation; production rules remain unchanged. Main rechecks its specified old Electron sample."
+  }
+}

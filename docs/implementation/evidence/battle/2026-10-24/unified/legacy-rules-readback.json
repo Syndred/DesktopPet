@@ -1,0 +1,15 @@
+{
+  "at": "2026-10-24T15:51:12.390Z",
+  "sourceCommit": "5ca0bc3a87cebfa8b8ce14a73929388d8a02613d",
+  "command": "node --test apps/pc-app/runtime/features/battle/tests/legacy-rules.test.cjs",
+  "passed": 1,
+  "failed": 0,
+  "scope": "Pure shared read projection and actual getReport/listReports service read methods; same rules version only",
+  "checks": [
+    "metal shows 易伤 and metal→wood relation",
+    "saved numeric rules, rounds, HP, anger and reward remain unchanged",
+    "unknown version returns the original profile",
+    "no engine execution or store write"
+  ],
+  "note": "The deliberately nondefault numeric test sentinel proves preservation; production rules remain unchanged. Main rechecks its specified old Electron sample."
+}

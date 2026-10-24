@@ -1,0 +1,685 @@
+{
+  "provenance": "simulated",
+  "runId": "a6a628a9-74ac-4b35-841e-48c6d222cd3c",
+  "users": {
+    "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-0f34a853-d4c6-47f9-a994-b0dfb21a35bc": {
+      "id": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-0f34a853-d4c6-47f9-a994-b0dfb21a35bc",
+      "account": "qa_guest_56143632",
+      "username": "并肩乙"
+    },
+    "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-ec28cad1-0c22-4c75-af83-dbc47c4b607d": {
+      "id": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-ec28cad1-0c22-4c75-af83-dbc47c4b607d",
+      "account": "qa_host_56133958",
+      "username": "并肩甲"
+    }
+  },
+  "requests": {
+    "e30f8d9d-fe81-45df-b592-92462fc34b7e": {
+      "id": "e30f8d9d-fe81-45df-b592-92462fc34b7e",
+      "fromUserId": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-ec28cad1-0c22-4c75-af83-dbc47c4b607d",
+      "toUserId": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-0f34a853-d4c6-47f9-a994-b0dfb21a35bc",
+      "fromAccount": "qa_host_56133958",
+      "toAccount": "qa_guest_56143632",
+      "status": "accepted",
+      "createdAt": "2026-10-24T15:35:45.575Z",
+      "updatedAt": "2026-10-24T15:35:45.671Z",
+      "roomId": "130b09ea-4ceb-445b-aa75-a1c22e53d74d",
+      "roomCode": "96E8BF",
+      "roomStatus": "waiting"
+    }
+  },
+  "rooms": {
+    "130b09ea-4ceb-445b-aa75-a1c22e53d74d": {
+      "id": "130b09ea-4ceb-445b-aa75-a1c22e53d74d",
+      "room_code": "96E8BF",
+      "status": "abandoned",
+      "host_user_id": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-0f34a853-d4c6-47f9-a994-b0dfb21a35bc",
+      "host_account": "qa_guest_56143632",
+      "host_pet_id": "pet-3b3c437d-ce1f-4cfe-ae67-3fc88534660c",
+      "host_pet_name": "礼帽喵",
+      "host_resource_id": "builtin:lingjing-hatcat-v1",
+      "host_element": "metal",
+      "guest_user_id": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-ec28cad1-0c22-4c75-af83-dbc47c4b607d",
+      "guest_element": "water",
+      "invitation_id": "e30f8d9d-fe81-45df-b592-92462fc34b7e",
+      "invited_user_id": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-ec28cad1-0c22-4c75-af83-dbc47c4b607d",
+      "current_round": 2,
+      "last_resolved_round": 1,
+      "host_hp": 90,
+      "guest_hp": 85,
+      "host_anger": 35,
+      "guest_anger": 50,
+      "host_statuses": [],
+      "guest_statuses": [],
+      "host_free_dodge_used": false,
+      "guest_free_dodge_used": false,
+      "winner_side": null,
+      "created_at": "2026-10-24T15:35:45.668Z",
+      "updated_at": "2026-10-24T15:35:49.346Z",
+      "guest_account": "qa_host_56133958",
+      "guest_pet_id": "pet-26998bae-6688-438a-b51f-c0e0bc441c07",
+      "guest_pet_name": "鱼丸",
+      "guest_resource_id": "builtin:lingjing-yuwan-v2",
+      "qaPreset": "charged"
+    },
+    "0c98a40c-58c3-4d8b-8ab3-6df0bd0a019b": {
+      "id": "0c98a40c-58c3-4d8b-8ab3-6df0bd0a019b",
+      "room_code": "F702CF",
+      "status": "finished",
+      "host_user_id": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-ec28cad1-0c22-4c75-af83-dbc47c4b607d",
+      "host_account": "qa_host_56133958",
+      "host_pet_id": "pet-26998bae-6688-438a-b51f-c0e0bc441c07",
+      "host_pet_name": "鱼丸",
+      "host_resource_id": "builtin:lingjing-yuwan-v2",
+      "host_element": "water",
+      "guest_user_id": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-0f34a853-d4c6-47f9-a994-b0dfb21a35bc",
+      "guest_element": "metal",
+      "invitation_id": null,
+      "invited_user_id": null,
+      "current_round": 2,
+      "last_resolved_round": 1,
+      "host_hp": 120,
+      "guest_hp": 0,
+      "host_anger": 0,
+      "guest_anger": 0,
+      "host_statuses": [],
+      "guest_statuses": [],
+      "host_free_dodge_used": false,
+      "guest_free_dodge_used": true,
+      "winner_side": "host",
+      "created_at": "2026-10-24T15:35:56.964Z",
+      "updated_at": "2026-10-24T15:35:59.969Z",
+      "guest_account": "qa_guest_56143632",
+      "guest_pet_id": "pet-3b3c437d-ce1f-4cfe-ae67-3fc88534660c",
+      "guest_pet_name": "礼帽喵",
+      "guest_resource_id": "builtin:lingjing-hatcat-v1",
+      "qaPreset": "finisher"
+    }
+  },
+  "rounds": {
+    "130b09ea-4ceb-445b-aa75-a1c22e53d74d": [
+      {
+        "id": "2b60bdb2-b032-4aa8-99c9-2b873bfd2688",
+        "room_id": "130b09ea-4ceb-445b-aa75-a1c22e53d74d",
+        "round_no": 1,
+        "host_action": "element_attack",
+        "guest_action": "normal_attack",
+        "winner_side": null,
+        "round_result": {
+          "hp_after": {
+            "host": 90,
+            "guest": 85
+          },
+          "anger_after": {
+            "host": 35,
+            "guest": 50
+          },
+          "damage_taken": {
+            "host": 10,
+            "guest": 0
+          },
+          "direct_damage": {
+            "host": 10,
+            "guest": 0
+          },
+          "free_dodge_used": {
+            "host": false,
+            "guest": false
+          },
+          "statuses_after": {
+            "host": [],
+            "guest": []
+          },
+          "dot_damage_events": {
+            "host": [],
+            "guest": []
+          },
+          "heal_events": {
+            "host": [],
+            "guest": []
+          },
+          "winner_side": null,
+          "notes": [
+            "player action missed"
+          ]
+        },
+        "created_at": "2026-10-24T15:35:49.346Z"
+      }
+    ],
+    "0c98a40c-58c3-4d8b-8ab3-6df0bd0a019b": [
+      {
+        "id": "1e4601d9-dd7e-484e-8b2e-3d697015ef4b",
+        "room_id": "0c98a40c-58c3-4d8b-8ab3-6df0bd0a019b",
+        "round_no": 1,
+        "host_action": "ultimate",
+        "guest_action": "dodge",
+        "winner_side": "host",
+        "round_result": {
+          "hp_after": {
+            "host": 120,
+            "guest": 0
+          },
+          "anger_after": {
+            "host": 0,
+            "guest": 0
+          },
+          "damage_taken": {
+            "host": 0,
+            "guest": 20
+          },
+          "direct_damage": {
+            "host": 0,
+            "guest": 20
+          },
+          "free_dodge_used": {
+            "host": false,
+            "guest": true
+          },
+          "statuses_after": {
+            "host": [],
+            "guest": []
+          },
+          "dot_damage_events": {
+            "host": [],
+            "guest": []
+          },
+          "heal_events": {
+            "host": [],
+            "guest": []
+          },
+          "winner_side": "host",
+          "notes": [
+            "enemy uses first free dodge",
+            "enemy anger halved by freeze (0->0)"
+          ]
+        },
+        "created_at": "2026-10-24T15:35:59.969Z"
+      }
+    ]
+  },
+  "actions": {
+    "130b09ea-4ceb-445b-aa75-a1c22e53d74d:1": {
+      "guest": "normal_attack",
+      "host": "element_attack"
+    },
+    "0c98a40c-58c3-4d8b-8ab3-6df0bd0a019b:1": {
+      "host": "ultimate",
+      "guest": "dodge"
+    }
+  },
+  "claims": {
+    "0c98a40c-58c3-4d8b-8ab3-6df0bd0a019b:qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-0f34a853-d4c6-47f9-a994-b0dfb21a35bc": {
+      "owner_account_id": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-0f34a853-d4c6-47f9-a994-b0dfb21a35bc",
+      "room_id": "0c98a40c-58c3-4d8b-8ab3-6df0bd0a019b",
+      "pet_id": "pet-3b3c437d-ce1f-4cfe-ae67-3fc88534660c",
+      "action_id": "battle:0c98a40c-58c3-4d8b-8ab3-6df0bd0a019b:qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-0f34a853-d4c6-47f9-a994-b0dfb21a35bc",
+      "experience": 5,
+      "won": false,
+      "authority": "simulated",
+      "scenarioId": "a6a628a9-74ac-4b35-841e-48c6d222cd3c"
+    },
+    "0c98a40c-58c3-4d8b-8ab3-6df0bd0a019b:qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-ec28cad1-0c22-4c75-af83-dbc47c4b607d": {
+      "owner_account_id": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-ec28cad1-0c22-4c75-af83-dbc47c4b607d",
+      "room_id": "0c98a40c-58c3-4d8b-8ab3-6df0bd0a019b",
+      "pet_id": "pet-26998bae-6688-438a-b51f-c0e0bc441c07",
+      "action_id": "battle:0c98a40c-58c3-4d8b-8ab3-6df0bd0a019b:qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-ec28cad1-0c22-4c75-af83-dbc47c4b607d",
+      "experience": 20,
+      "won": true,
+      "authority": "simulated",
+      "scenarioId": "a6a628a9-74ac-4b35-841e-48c6d222cd3c"
+    }
+  },
+  "operations": [
+    {
+      "at": "2026-10-24T15:35:44.633Z",
+      "op": "list_duel_requests",
+      "userId": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-0f34a853-d4c6-47f9-a994-b0dfb21a35bc",
+      "provenance": "simulated"
+    },
+    {
+      "at": "2026-10-24T15:35:44.895Z",
+      "op": "list_duel_requests",
+      "userId": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-0f34a853-d4c6-47f9-a994-b0dfb21a35bc",
+      "provenance": "simulated"
+    },
+    {
+      "at": "2026-10-24T15:35:45.125Z",
+      "op": "list_duel_requests",
+      "userId": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-ec28cad1-0c22-4c75-af83-dbc47c4b607d",
+      "provenance": "simulated"
+    },
+    {
+      "at": "2026-10-24T15:35:45.300Z",
+      "op": "list_duel_requests",
+      "userId": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-ec28cad1-0c22-4c75-af83-dbc47c4b607d",
+      "provenance": "simulated"
+    },
+    {
+      "at": "2026-10-24T15:35:45.356Z",
+      "op": "search_accounts",
+      "userId": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-ec28cad1-0c22-4c75-af83-dbc47c4b607d",
+      "provenance": "simulated"
+    },
+    {
+      "at": "2026-10-24T15:35:45.575Z",
+      "op": "send_duel_request",
+      "userId": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-ec28cad1-0c22-4c75-af83-dbc47c4b607d",
+      "provenance": "simulated"
+    },
+    {
+      "at": "2026-10-24T15:35:45.577Z",
+      "op": "list_duel_requests",
+      "userId": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-ec28cad1-0c22-4c75-af83-dbc47c4b607d",
+      "provenance": "simulated"
+    },
+    {
+      "at": "2026-10-24T15:35:45.603Z",
+      "op": "list_duel_requests",
+      "userId": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-0f34a853-d4c6-47f9-a994-b0dfb21a35bc",
+      "provenance": "simulated"
+    },
+    {
+      "at": "2026-10-24T15:35:45.662Z",
+      "op": "list_duel_requests",
+      "userId": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-0f34a853-d4c6-47f9-a994-b0dfb21a35bc",
+      "provenance": "simulated"
+    },
+    {
+      "at": "2026-10-24T15:35:45.668Z",
+      "op": "create_room",
+      "userId": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-0f34a853-d4c6-47f9-a994-b0dfb21a35bc",
+      "provenance": "simulated"
+    },
+    {
+      "at": "2026-10-24T15:35:45.671Z",
+      "op": "respond_duel_request",
+      "userId": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-0f34a853-d4c6-47f9-a994-b0dfb21a35bc",
+      "roomId": "130b09ea-4ceb-445b-aa75-a1c22e53d74d",
+      "provenance": "simulated"
+    },
+    {
+      "at": "2026-10-24T15:35:45.673Z",
+      "op": "get_room",
+      "userId": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-0f34a853-d4c6-47f9-a994-b0dfb21a35bc",
+      "roomId": "130b09ea-4ceb-445b-aa75-a1c22e53d74d",
+      "provenance": "simulated"
+    },
+    {
+      "at": "2026-10-24T15:35:45.682Z",
+      "op": "list_duel_requests",
+      "userId": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-0f34a853-d4c6-47f9-a994-b0dfb21a35bc",
+      "provenance": "simulated"
+    },
+    {
+      "at": "2026-10-24T15:35:45.898Z",
+      "op": "get_room",
+      "userId": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-0f34a853-d4c6-47f9-a994-b0dfb21a35bc",
+      "roomId": "130b09ea-4ceb-445b-aa75-a1c22e53d74d",
+      "provenance": "simulated"
+    },
+    {
+      "at": "2026-10-24T15:35:46.409Z",
+      "op": "list_duel_requests",
+      "userId": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-ec28cad1-0c22-4c75-af83-dbc47c4b607d",
+      "provenance": "simulated"
+    },
+    {
+      "at": "2026-10-24T15:35:46.432Z",
+      "op": "join_room",
+      "userId": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-ec28cad1-0c22-4c75-af83-dbc47c4b607d",
+      "provenance": "simulated"
+    },
+    {
+      "at": "2026-10-24T15:35:46.438Z",
+      "op": "get_room",
+      "userId": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-ec28cad1-0c22-4c75-af83-dbc47c4b607d",
+      "roomId": "130b09ea-4ceb-445b-aa75-a1c22e53d74d",
+      "provenance": "simulated"
+    },
+    {
+      "at": "2026-10-24T15:35:46.646Z",
+      "op": "get_room",
+      "userId": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-ec28cad1-0c22-4c75-af83-dbc47c4b607d",
+      "roomId": "130b09ea-4ceb-445b-aa75-a1c22e53d74d",
+      "provenance": "simulated"
+    },
+    {
+      "at": "2026-10-24T15:35:47.390Z",
+      "op": "get_room",
+      "userId": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-0f34a853-d4c6-47f9-a994-b0dfb21a35bc",
+      "roomId": "130b09ea-4ceb-445b-aa75-a1c22e53d74d",
+      "provenance": "simulated"
+    },
+    {
+      "at": "2026-10-24T15:35:47.933Z",
+      "op": "qa_set_state",
+      "userId": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-ec28cad1-0c22-4c75-af83-dbc47c4b607d",
+      "roomId": "130b09ea-4ceb-445b-aa75-a1c22e53d74d",
+      "provenance": "simulated"
+    },
+    {
+      "at": "2026-10-24T15:35:47.935Z",
+      "op": "get_room",
+      "userId": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-ec28cad1-0c22-4c75-af83-dbc47c4b607d",
+      "roomId": "130b09ea-4ceb-445b-aa75-a1c22e53d74d",
+      "provenance": "simulated"
+    },
+    {
+      "at": "2026-10-24T15:35:48.195Z",
+      "op": "get_room",
+      "userId": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-ec28cad1-0c22-4c75-af83-dbc47c4b607d",
+      "roomId": "130b09ea-4ceb-445b-aa75-a1c22e53d74d",
+      "provenance": "simulated"
+    },
+    {
+      "at": "2026-10-24T15:35:48.682Z",
+      "op": "get_room",
+      "userId": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-0f34a853-d4c6-47f9-a994-b0dfb21a35bc",
+      "roomId": "130b09ea-4ceb-445b-aa75-a1c22e53d74d",
+      "provenance": "simulated"
+    },
+    {
+      "at": "2026-10-24T15:35:48.935Z",
+      "op": "submit_action",
+      "userId": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-ec28cad1-0c22-4c75-af83-dbc47c4b607d",
+      "roomId": "130b09ea-4ceb-445b-aa75-a1c22e53d74d",
+      "action": "normal_attack",
+      "roundNo": 1,
+      "provenance": "simulated"
+    },
+    {
+      "at": "2026-10-24T15:35:48.937Z",
+      "op": "get_room",
+      "userId": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-ec28cad1-0c22-4c75-af83-dbc47c4b607d",
+      "roomId": "130b09ea-4ceb-445b-aa75-a1c22e53d74d",
+      "provenance": "simulated"
+    },
+    {
+      "at": "2026-10-24T15:35:49.345Z",
+      "op": "submit_action",
+      "userId": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-0f34a853-d4c6-47f9-a994-b0dfb21a35bc",
+      "roomId": "130b09ea-4ceb-445b-aa75-a1c22e53d74d",
+      "action": "element_attack",
+      "roundNo": 1,
+      "provenance": "simulated"
+    },
+    {
+      "at": "2026-10-24T15:35:49.356Z",
+      "op": "get_room",
+      "userId": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-0f34a853-d4c6-47f9-a994-b0dfb21a35bc",
+      "roomId": "130b09ea-4ceb-445b-aa75-a1c22e53d74d",
+      "provenance": "simulated"
+    },
+    {
+      "at": "2026-10-24T15:35:49.358Z",
+      "op": "get_room",
+      "userId": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-0f34a853-d4c6-47f9-a994-b0dfb21a35bc",
+      "roomId": "130b09ea-4ceb-445b-aa75-a1c22e53d74d",
+      "provenance": "simulated"
+    },
+    {
+      "at": "2026-10-24T15:35:50.209Z",
+      "op": "get_room",
+      "userId": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-0f34a853-d4c6-47f9-a994-b0dfb21a35bc",
+      "roomId": "130b09ea-4ceb-445b-aa75-a1c22e53d74d",
+      "provenance": "simulated"
+    },
+    {
+      "at": "2026-10-24T15:35:51.675Z",
+      "op": "get_room",
+      "userId": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-0f34a853-d4c6-47f9-a994-b0dfb21a35bc",
+      "roomId": "130b09ea-4ceb-445b-aa75-a1c22e53d74d",
+      "provenance": "simulated"
+    },
+    {
+      "at": "2026-10-24T15:35:51.926Z",
+      "op": "get_room",
+      "userId": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-ec28cad1-0c22-4c75-af83-dbc47c4b607d",
+      "roomId": "130b09ea-4ceb-445b-aa75-a1c22e53d74d",
+      "provenance": "simulated"
+    },
+    {
+      "at": "2026-10-24T15:35:52.162Z",
+      "op": "get_room",
+      "userId": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-ec28cad1-0c22-4c75-af83-dbc47c4b607d",
+      "roomId": "130b09ea-4ceb-445b-aa75-a1c22e53d74d",
+      "provenance": "simulated"
+    },
+    {
+      "at": "2026-10-24T15:35:53.168Z",
+      "op": "get_room",
+      "userId": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-0f34a853-d4c6-47f9-a994-b0dfb21a35bc",
+      "roomId": "130b09ea-4ceb-445b-aa75-a1c22e53d74d",
+      "provenance": "simulated"
+    },
+    {
+      "at": "2026-10-24T15:35:53.403Z",
+      "op": "get_room",
+      "userId": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-ec28cad1-0c22-4c75-af83-dbc47c4b607d",
+      "roomId": "130b09ea-4ceb-445b-aa75-a1c22e53d74d",
+      "provenance": "simulated"
+    },
+    {
+      "at": "2026-10-24T15:35:54.674Z",
+      "op": "get_room",
+      "userId": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-0f34a853-d4c6-47f9-a994-b0dfb21a35bc",
+      "roomId": "130b09ea-4ceb-445b-aa75-a1c22e53d74d",
+      "provenance": "simulated"
+    },
+    {
+      "at": "2026-10-24T15:35:54.831Z",
+      "op": "get_room",
+      "userId": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-ec28cad1-0c22-4c75-af83-dbc47c4b607d",
+      "roomId": "130b09ea-4ceb-445b-aa75-a1c22e53d74d",
+      "provenance": "simulated"
+    },
+    {
+      "at": "2026-10-24T15:35:55.020Z",
+      "op": "get_room",
+      "userId": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-ec28cad1-0c22-4c75-af83-dbc47c4b607d",
+      "roomId": "130b09ea-4ceb-445b-aa75-a1c22e53d74d",
+      "provenance": "simulated"
+    },
+    {
+      "at": "2026-10-24T15:35:56.047Z",
+      "op": "leave_room",
+      "userId": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-ec28cad1-0c22-4c75-af83-dbc47c4b607d",
+      "roomId": "130b09ea-4ceb-445b-aa75-a1c22e53d74d",
+      "provenance": "simulated"
+    },
+    {
+      "at": "2026-10-24T15:35:56.053Z",
+      "op": "get_room",
+      "userId": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-0f34a853-d4c6-47f9-a994-b0dfb21a35bc",
+      "roomId": "130b09ea-4ceb-445b-aa75-a1c22e53d74d",
+      "provenance": "simulated"
+    },
+    {
+      "at": "2026-10-24T15:35:56.171Z",
+      "op": "get_room",
+      "userId": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-0f34a853-d4c6-47f9-a994-b0dfb21a35bc",
+      "roomId": "130b09ea-4ceb-445b-aa75-a1c22e53d74d",
+      "provenance": "simulated"
+    },
+    {
+      "at": "2026-10-24T15:35:56.271Z",
+      "op": "list_duel_requests",
+      "userId": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-ec28cad1-0c22-4c75-af83-dbc47c4b607d",
+      "provenance": "simulated"
+    },
+    {
+      "at": "2026-10-24T15:35:56.528Z",
+      "op": "list_duel_requests",
+      "userId": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-ec28cad1-0c22-4c75-af83-dbc47c4b607d",
+      "provenance": "simulated"
+    },
+    {
+      "at": "2026-10-24T15:35:56.747Z",
+      "op": "list_duel_requests",
+      "userId": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-0f34a853-d4c6-47f9-a994-b0dfb21a35bc",
+      "provenance": "simulated"
+    },
+    {
+      "at": "2026-10-24T15:35:56.932Z",
+      "op": "list_duel_requests",
+      "userId": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-0f34a853-d4c6-47f9-a994-b0dfb21a35bc",
+      "provenance": "simulated"
+    },
+    {
+      "at": "2026-10-24T15:35:56.964Z",
+      "op": "create_room",
+      "userId": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-ec28cad1-0c22-4c75-af83-dbc47c4b607d",
+      "provenance": "simulated"
+    },
+    {
+      "at": "2026-10-24T15:35:57.174Z",
+      "op": "get_room",
+      "userId": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-ec28cad1-0c22-4c75-af83-dbc47c4b607d",
+      "roomId": "0c98a40c-58c3-4d8b-8ab3-6df0bd0a019b",
+      "provenance": "simulated"
+    },
+    {
+      "at": "2026-10-24T15:35:57.285Z",
+      "op": "join_room",
+      "userId": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-0f34a853-d4c6-47f9-a994-b0dfb21a35bc",
+      "provenance": "simulated"
+    },
+    {
+      "at": "2026-10-24T15:35:57.288Z",
+      "op": "get_room",
+      "userId": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-0f34a853-d4c6-47f9-a994-b0dfb21a35bc",
+      "roomId": "0c98a40c-58c3-4d8b-8ab3-6df0bd0a019b",
+      "provenance": "simulated"
+    },
+    {
+      "at": "2026-10-24T15:35:57.500Z",
+      "op": "get_room",
+      "userId": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-0f34a853-d4c6-47f9-a994-b0dfb21a35bc",
+      "roomId": "0c98a40c-58c3-4d8b-8ab3-6df0bd0a019b",
+      "provenance": "simulated"
+    },
+    {
+      "at": "2026-10-24T15:35:58.675Z",
+      "op": "get_room",
+      "userId": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-ec28cad1-0c22-4c75-af83-dbc47c4b607d",
+      "roomId": "0c98a40c-58c3-4d8b-8ab3-6df0bd0a019b",
+      "provenance": "simulated"
+    },
+    {
+      "at": "2026-10-24T15:35:58.757Z",
+      "op": "get_room",
+      "userId": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-ec28cad1-0c22-4c75-af83-dbc47c4b607d",
+      "roomId": "0c98a40c-58c3-4d8b-8ab3-6df0bd0a019b",
+      "provenance": "simulated"
+    },
+    {
+      "at": "2026-10-24T15:35:58.767Z",
+      "op": "qa_set_state",
+      "userId": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-ec28cad1-0c22-4c75-af83-dbc47c4b607d",
+      "roomId": "0c98a40c-58c3-4d8b-8ab3-6df0bd0a019b",
+      "provenance": "simulated"
+    },
+    {
+      "at": "2026-10-24T15:35:58.770Z",
+      "op": "get_room",
+      "userId": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-ec28cad1-0c22-4c75-af83-dbc47c4b607d",
+      "roomId": "0c98a40c-58c3-4d8b-8ab3-6df0bd0a019b",
+      "provenance": "simulated"
+    },
+    {
+      "at": "2026-10-24T15:35:58.992Z",
+      "op": "get_room",
+      "userId": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-0f34a853-d4c6-47f9-a994-b0dfb21a35bc",
+      "roomId": "0c98a40c-58c3-4d8b-8ab3-6df0bd0a019b",
+      "provenance": "simulated"
+    },
+    {
+      "at": "2026-10-24T15:35:59.077Z",
+      "op": "get_room",
+      "userId": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-ec28cad1-0c22-4c75-af83-dbc47c4b607d",
+      "roomId": "0c98a40c-58c3-4d8b-8ab3-6df0bd0a019b",
+      "provenance": "simulated"
+    },
+    {
+      "at": "2026-10-24T15:35:59.603Z",
+      "op": "get_room",
+      "userId": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-0f34a853-d4c6-47f9-a994-b0dfb21a35bc",
+      "roomId": "0c98a40c-58c3-4d8b-8ab3-6df0bd0a019b",
+      "provenance": "simulated"
+    },
+    {
+      "at": "2026-10-24T15:35:59.927Z",
+      "op": "submit_action",
+      "userId": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-ec28cad1-0c22-4c75-af83-dbc47c4b607d",
+      "roomId": "0c98a40c-58c3-4d8b-8ab3-6df0bd0a019b",
+      "action": "ultimate",
+      "roundNo": 1,
+      "provenance": "simulated"
+    },
+    {
+      "at": "2026-10-24T15:35:59.929Z",
+      "op": "get_room",
+      "userId": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-ec28cad1-0c22-4c75-af83-dbc47c4b607d",
+      "roomId": "0c98a40c-58c3-4d8b-8ab3-6df0bd0a019b",
+      "provenance": "simulated"
+    },
+    {
+      "at": "2026-10-24T15:35:59.968Z",
+      "op": "submit_action",
+      "userId": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-0f34a853-d4c6-47f9-a994-b0dfb21a35bc",
+      "roomId": "0c98a40c-58c3-4d8b-8ab3-6df0bd0a019b",
+      "action": "dodge",
+      "roundNo": 1,
+      "provenance": "simulated"
+    },
+    {
+      "at": "2026-10-24T15:35:59.970Z",
+      "op": "get_room",
+      "userId": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-0f34a853-d4c6-47f9-a994-b0dfb21a35bc",
+      "roomId": "0c98a40c-58c3-4d8b-8ab3-6df0bd0a019b",
+      "provenance": "simulated"
+    },
+    {
+      "at": "2026-10-24T15:35:59.972Z",
+      "op": "get_room",
+      "userId": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-0f34a853-d4c6-47f9-a994-b0dfb21a35bc",
+      "roomId": "0c98a40c-58c3-4d8b-8ab3-6df0bd0a019b",
+      "provenance": "simulated"
+    },
+    {
+      "at": "2026-10-24T15:35:59.975Z",
+      "op": "claim_battle_settlement",
+      "userId": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-0f34a853-d4c6-47f9-a994-b0dfb21a35bc",
+      "roomId": "0c98a40c-58c3-4d8b-8ab3-6df0bd0a019b",
+      "provenance": "simulated"
+    },
+    {
+      "at": "2026-10-24T15:36:00.566Z",
+      "op": "get_room",
+      "userId": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-ec28cad1-0c22-4c75-af83-dbc47c4b607d",
+      "roomId": "0c98a40c-58c3-4d8b-8ab3-6df0bd0a019b",
+      "provenance": "simulated"
+    },
+    {
+      "at": "2026-10-24T15:36:00.568Z",
+      "op": "claim_battle_settlement",
+      "userId": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-ec28cad1-0c22-4c75-af83-dbc47c4b607d",
+      "roomId": "0c98a40c-58c3-4d8b-8ab3-6df0bd0a019b",
+      "provenance": "simulated"
+    },
+    {
+      "at": "2026-10-24T15:36:02.473Z",
+      "op": "get_room",
+      "userId": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-ec28cad1-0c22-4c75-af83-dbc47c4b607d",
+      "roomId": "0c98a40c-58c3-4d8b-8ab3-6df0bd0a019b",
+      "provenance": "simulated"
+    },
+    {
+      "at": "2026-10-24T15:36:02.479Z",
+      "op": "get_room",
+      "userId": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-ec28cad1-0c22-4c75-af83-dbc47c4b607d",
+      "roomId": "0c98a40c-58c3-4d8b-8ab3-6df0bd0a019b",
+      "provenance": "simulated"
+    }
+  ]
+}
