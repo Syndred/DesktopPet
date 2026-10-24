@@ -1,7 +1,7 @@
 灵境 discovery 模块交付与集成接口（2026-10-24，2D UI first）
 
 当前范围以 scope-2d-ui-first.txt 为准。正式实现采用 React / TypeScript 模块组件；新页面、遭遇、收服、头像均使用 2D 图集。保留历史文件，不实现旧 3D 渲染兼容。
-本分支已合入 foundation a930ebf（本工作树合并提交114dbfa）；完成前已 git fetch origin，origin/main 为 4786f97。
+本分支已合入 foundation f734775（本工作树合并提交d5f7c64）；完成前已 git fetch origin，origin/main 为 4786f97。
 入口：runtime/features/discovery/index.cjs、ui/src/features/discovery/index.tsx，由 foundation 的模块注册与路由加载。
 
 公开命令：snapshot、locate、watch、stopWatch、setDemo、setProvider、tile、setExploring。
@@ -19,7 +19,7 @@ memories：{petId}，只能读取本账号伙伴。
 
 伙伴：调用 companions 的 listPets / getPet / createCapturedInstance。
 以 discovery:<encounterId> 为伙伴创建幂等键；伙伴、收服、首次相遇记忆、遭遇状态和操作凭据在同一 SQLite SAVEPOINT 中提交，失败全部回滚。
-结果页使用当前实例的 nickname / desktop 命令；同形象的其他伙伴不受影响。结果和图鉴展示读取当前 pet.resource，形象更换后不继续显示首次收服时的旧资源；原始收服凭据保持不变。非旧鱼丸的缩略图按资源 atlas 的真实帧范围显示，避免把一种图集的裁切参数套给其他角色。
+结果页使用当前实例的 nickname / desktop 命令；同形象的其他伙伴不受影响。结果和图鉴展示读取当前 pet.resource，形象更换后不继续显示首次收服时的旧资源；原始收服凭据保持不变。静态缩略图统一复用 resources.ResourcePortrait 与其构图契约，地图/卡片使用 portrait，图鉴静态大图使用 full，不在本模块维护另一套 atlas 裁切或旧鱼丸兜底图。
 origin.memoryTags 同步保存首次相遇标签，conversations 可按真实 petId 读取。
 
 战斗：复用 battle.beginWildChallenge、act、leave 和 getOutcome。
@@ -37,7 +37,7 @@ origin.memoryTags 同步保存首次相遇标签，conversations 可按真实 pe
 保留 denied / timeout / unavailable / imprecise / stale / demo / privacy_disabled 状态；默认 OS 位置不能收服。
 正式互动要求位置年龄 ≤30 秒、精度 ≤80 米、100 米范围，沿用半精度且最多30米的漂移补偿。
 系统原始 fix 不随存档落盘；精确位置截图和原始值只留本机忽略目录。
-用户开启 Windows 权限后已取得真实 WiFi fix；本轮诊断精度91米，ASAR 模块实测138米，均高于80米门槛。真实物理位置收服仍未验收。
+用户开启 Windows 权限后已取得真实 WiFi fix。最新一轮独立原生请求曾取得合格58米样本；随后正式窗口返回177米，60秒主动原生监听始终为313米。58米诊断不等于正式窗口完成收服；真实物理位置收服仍未验收，没有降低80米门槛。
 演示模式明确标识且禁止战斗、收服和奖励；测试 host 的受控位置也在界面标明，不能作为真实定位验收。
 
 地图：使用 MapLibre GL JS 6.15.0 管理相机、缩放、拖动、控件、标记和 GeoJSON 图层。
@@ -79,6 +79,8 @@ UI：页面拆分为 ExploreView、WildPreviewView、EncounterView、CaptureDial
   node apps/pc-app/runtime/features/discovery/verification/asar-location.mjs
   node apps/pc-app/runtime/features/discovery/verification/roster-actions.mjs
   node apps/pc-app/runtime/features/discovery/verification/roster-actions.mjs --arena-only
+  node apps/pc-app/runtime/features/discovery/verification/roster-actions.mjs --portraits-only
+  node apps/pc-app/runtime/features/discovery/verification/physical-flow.mjs
 PostgreSQL verifier 的 PGlite 只安装于忽略的 artifacts/discovery/sql-validation，或由 LINGJING_PGLITE_ROOT 指向已有开发安装，不增加运行时依赖。
 验证 host 使用独立 PET_USER_DATA_DIR、真实模块注册、真实账号/资源/伙伴/战斗/菜园服务；只替换明确标记的测试位置，生产入口不加载它。
 不运行生产迁移或发布，不修改原用户数据，最终整包回归和发布由 foundation 统一负责。
@@ -94,3 +96,9 @@ A01—A03 定向整改（提交 d4d8462、0156faf 及后续原生请求修正）
 实际 canvas 截图记录了独立技能和受击图像，回合观察包含 attack / skill / hit / victory 且无待机降级；首场26回合保留原 Pixi canvas。此证据只覆盖本次实际回合，不冒称所有角色的全部日常动作已被逐帧验收。
 最终生命条样式修改后只补跑 arena-only：实际回合生命110/120、四张公共命令卡、基于规则禁用的大招及取消保留记录。没有再次运行全项目或重复26回合。
 证据：evidence/discovery/2026-10-24-roster。CSS视口1280×844，Windows DPR1.25；六预览与收服结果为窗口截图，战斗命令区为真实元素截图。foundation 已提供并导入公共 layout.css，本模块不维护另一套全局 token；集中 A01—A12 视觉复核和安装包验收仍由 foundation 负责。
+
+共享构图与原生正向入口（fed3800）：
+六个探索头像已在真实窗口验证为共享 ResourcePortrait / portrait 构图，动态大角色仍复用 Pixi。--portraits-only 只复查这项变化，不重复整场战斗与全项目回归。
+physical-flow 从正式生产入口启动、创建隔离本机账号，仅通过正常原生定位、地图、战斗、收服命令推进；不会注入位置、结果或随机数。主动持续定位最多等待60秒，失败保存去坐标诊断并以失败退出；成功还必须完成独立 SQLite 只读核对和重启。当前只运行到精度失败，正向后半段没有被宣称通过。
+read-capture.cjs 使用实际 Electron SQLite ABI 只读核对了此前受控位置收服的一份既有存档：收服、伙伴、记忆和战报各1条。此核对不改变其受控位置来源，也不算真实物理位置验收。
+本轮 Node fetch 对现有联机配置端点的无凭据 OPTIONS 未收到可用响应（UND_ERR_SOCKET），discovery 的 HTTPS 环境仍未配置；这项探测不冒称已部署服务的版本或精确 HTTP 状态。云端缺少的野外战斗接口、可信伙伴同步与审核部署继续单列。证据见 evidence/discovery/2026-10-24-location-portrait。

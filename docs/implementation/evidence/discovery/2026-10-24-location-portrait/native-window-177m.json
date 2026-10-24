@@ -1,0 +1,32 @@
+{
+  "at": "2026-10-24T14:16:48.691Z",
+  "productionMain": true,
+  "controlledPosition": false,
+  "rawCoordinatesCommitted": false,
+  "systemSamples": [
+    {
+      "phase": "before challenge",
+      "at": "2026-10-24T14:16:54.631Z",
+      "status": "imprecise",
+      "permission": "granted",
+      "provider": "windows-geolocator",
+      "source": "os",
+      "positionSource": "WiFi",
+      "accuracyMeters": 177,
+      "timestampMs": 1792851414356,
+      "coordinateHash": "41c7cea08119823eb2e9ed345c14ad060adae56d4bd532246921d40478af599e",
+      "error": {
+        "code": "LOCATION_IMPRECISE",
+        "message": "定位精度不足，请移动到信号较好的地方（需要 ≤ 80 米）"
+      }
+    }
+  ],
+  "rendererErrors": [],
+  "entry": {
+    "appPath": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-discovery\\DesktopPet",
+    "electron": "36.9.5",
+    "verificationHostPresent": false
+  },
+  "physicalLocationAcceptance": false,
+  "error": "Native precision required: imprecise / 177\n+ actual - expected\n\n+ 'imprecise'\n- 'ready'\n"
+}

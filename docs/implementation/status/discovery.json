@@ -1,15 +1,15 @@
 {
   "module": "discovery",
   "branch": "codex/lingjing-discovery",
-  "commit": "4352336aa74d52c9f93d8642e367e2936b19ac95",
-  "status": "2d_canonical_roster_and_live_battle_poses_verified_external_acceptance_pending",
+  "commit": "fed3800d0a55a94f5568baa6c713a8add95e0e7d",
+  "status": "shared_portraits_verified_precise_native_capture_and_cloud_pending",
   "goalStatus": "active",
   "workspace": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-discovery\\DesktopPet",
   "upstream": {
     "fetched": true,
     "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086",
-    "foundationMerged": "a930ebf8db6bb7c49ea9c6da9aa84f96f75a343a",
-    "foundationMergeCommit": "114dbfada6073c13a4e4c242ab304079488e6c3f",
+    "foundationMerged": "f73477589239c9c5ed76396126bd6d225a4d4df7",
+    "foundationMergeCommit": "d5f7c641f0b028f58683d71f7c24be435d739b2f",
     "originMainIsAncestor": true,
     "sourceCheckoutModified": false
   },
@@ -31,7 +31,8 @@
     "Windows script is read by Electron fs and delivered without external ASAR file-path dependence; actual archive execution verified",
     "Encounter metadata comes from canonical 2D templates; capture and pokedex views follow the current per-instance resource without rewriting the original receipt",
     "Six canonical resources verified in real exploration previews; actual random non-fish capture preserves the same petId/resource in result, backpack, pokedex, memories and restart",
-    "Battle rules and command cards come from battle.getRules/BattleMoves; actual persisted rounds select real attack/skill/hit/victory clips without rebuilding the Pixi canvas"
+    "Battle rules and command cards come from battle.getRules/BattleMoves; actual persisted rounds select real attack/skill/hit/victory clips without rebuilding the Pixi canvas",
+    "Compact exploration portraits and static full-body pokedex images now delegate to resources.ResourcePortrait; duplicate atlas cropping and legacy image fallback removed"
   ],
   "openSource": [
     {
@@ -196,17 +197,18 @@
       "Parent-controlled16px result-card gap without margin stacking",
       "Current petId resource reflected in capture result and pokedex",
       "Six distinct canonical exploration actors and actual non-fish capture",
-      "Shared battle action cards and independent attack/skill/hit/victory atlas clips; normalized rules do not overwrite growth stats"
+      "Shared battle action cards and independent attack/skill/hit/victory atlas clips; normalized rules do not overwrite growth stats",
+      "Shared head-and-shoulders composition consumed by all six exploration portrait identities; static pokedex keeps shared full-body framing"
     ],
-    "canonicalRosterEvidence": "docs/implementation/evidence/discovery/2026-10-24-roster"
+    "canonicalRosterEvidence": "docs/implementation/evidence/discovery/2026-10-24-roster",
+    "sharedPortraitEvidence": "docs/implementation/evidence/discovery/2026-10-24-location-portrait"
   },
   "twoDimensionalOnly": {
     "passed": true,
     "newModel3dCode": false,
     "activeRenderers": [
       "resources.ResourceStage / PixiJS",
-      "static atlas frame for map and list thumbnails",
-      "Authored atlas-frame bounds for compact non-legacy resources; rotated frames reuse Pixi"
+      "resources.ResourcePortrait / shared static portrait or full framing"
     ],
     "activeTemplates": [
       "big-fish-gentle",
@@ -248,15 +250,15 @@
   "tests": [
     {
       "command": "npm run typecheck:ui",
-      "result": "passed after latest foundation and portrait-card changes"
+      "result": "passed after foundation f734775 and shared portrait consumption; build retains known shared chunk-size warning"
     },
     {
       "command": "npx eslint apps/pc-app/ui/src/features/discovery --ext .ts,.tsx",
-      "result": "passed"
+      "result": "passed after foundation f734775 and shared portrait consumption; build retains known shared chunk-size warning"
     },
     {
       "command": "npm run build:pc",
-      "result": "passed; emitted local maplibre-gl-worker asset; remaining shared chunk-size warnings are recorded"
+      "result": "passed after foundation f734775 and shared portrait consumption; build retains known shared chunk-size warning"
     },
     {
       "command": "node scripts/desktop/run-native-tests.cjs apps/pc-app/runtime/features/discovery/tests/discovery.test.cjs",
@@ -321,6 +323,18 @@
     {
       "command": "node apps/pc-app/runtime/features/discovery/verification/roster-actions.mjs --arena-only",
       "result": "passed after final meter-only CSS change: four shared command cards, actual turn110/120, rule-based ultimate availability and preserved cancellation; no repeated full capture flow"
+    },
+    {
+      "command": "node apps/pc-app/runtime/features/discovery/verification/roster-actions.mjs --portraits-only",
+      "result": "passed six real canonical previews using the shared portrait framing; renderer errors[]; explicitly controlled positions; no repeated complete battle"
+    },
+    {
+      "command": "node apps/pc-app/runtime/features/discovery/verification/physical-flow.mjs",
+      "result": "not passed: production main returned177m; the bounded60s opt-in watch returned313m and failed before challenge. A separate adapter request returned58m, but no production-window physical capture is claimed."
+    },
+    {
+      "command": "read-capture.cjs via actual Electron CLI, against the previous controlled-position profile",
+      "result": "passed read-only matching capture/pet/resource/owner, counts1 capture +1 instance +1 memory +1 report; does not count as physical-location evidence"
     }
   ],
   "runtimeEvidence": {
@@ -368,21 +382,20 @@
     },
     "privateSystemMapScreenshotNotCommitted": "artifacts/discovery/2d-windows-1792847349359/real-system-location-private.png",
     "latestNativeDiagnostic": {
-      "at": "2026-10-24T13:38:42.561Z",
+      "at": "2026-10-24T14:11:27.798Z",
       "adapter": "production WindowsLocationAdapter diagnostic",
       "ok": true,
       "source": "os",
       "provider": "windows-geolocator",
       "positionSource": "WiFi",
-      "accuracyMeters": 91,
-      "timestampMs": 1792849122361,
+      "accuracyMeters": 58,
+      "timestampMs": 1792851087652,
       "quality": {
-        "ok": false,
-        "code": "LOCATION_IMPRECISE",
-        "message": "定位精度不足，请移动到信号较好的地方（需要 ≤ 80 米）"
+        "ok": true
       },
-      "coordinateHash": "fce6f5da6ea421743bb23262b62a400e4b7bdb3bea61a07eab980cf2f1f74ae8",
-      "rawCoordinatesSaved": false
+      "coordinateHash": "9531055a98e4532a7a3b9ebe16c48d4d4384e73d9a6fb919cb209429b4b4d92e",
+      "rawCoordinatesSaved": false,
+      "physicalLocationAcceptance": false
     },
     "latestArchiveNative": {
       "at": "2026-10-24T13:50:51.474Z",
@@ -693,6 +706,207 @@
       "cancellationPreserved": true,
       "rendererErrors": [],
       "committedEvidence": "docs/implementation/evidence/discovery/2026-10-24-roster/arena.json"
+    },
+    "latestPhysicalWindow": {
+      "at": "2026-10-24T14:18:03.522Z",
+      "productionMain": true,
+      "controlledPosition": false,
+      "rawCoordinatesCommitted": false,
+      "systemSamples": [
+        {
+          "phase": "before challenge",
+          "at": "2026-10-24T14:18:10.364Z",
+          "status": "imprecise",
+          "permission": "granted",
+          "provider": "windows-geolocator",
+          "source": "os",
+          "positionSource": "WiFi",
+          "accuracyMeters": 313,
+          "timestampMs": 1792851490015,
+          "coordinateHash": "dce02adaabb3e55436c8a17f30acf0fdc9fbeb2e19f1d97a33b099bf000f1429",
+          "error": {
+            "code": "LOCATION_IMPRECISE",
+            "message": "定位精度不足，请移动到信号较好的地方（需要 ≤ 80 米）"
+          }
+        },
+        {
+          "phase": "before challenge",
+          "at": "2026-10-24T14:18:22.091Z",
+          "status": "imprecise",
+          "permission": "granted",
+          "provider": "windows-geolocator",
+          "source": "os",
+          "positionSource": "WiFi",
+          "accuracyMeters": 313,
+          "timestampMs": 1792851501828,
+          "coordinateHash": "dce02adaabb3e55436c8a17f30acf0fdc9fbeb2e19f1d97a33b099bf000f1429",
+          "error": {
+            "code": "LOCATION_IMPRECISE",
+            "message": "定位精度不足，请移动到信号较好的地方（需要 ≤ 80 米）"
+          }
+        },
+        {
+          "phase": "before challenge",
+          "at": "2026-10-24T14:18:37.175Z",
+          "status": "imprecise",
+          "permission": "granted",
+          "provider": "windows-geolocator",
+          "source": "os",
+          "positionSource": "WiFi",
+          "accuracyMeters": 313,
+          "timestampMs": 1792851516806,
+          "coordinateHash": "dce02adaabb3e55436c8a17f30acf0fdc9fbeb2e19f1d97a33b099bf000f1429",
+          "error": {
+            "code": "LOCATION_IMPRECISE",
+            "message": "定位精度不足，请移动到信号较好的地方（需要 ≤ 80 米）"
+          }
+        },
+        {
+          "phase": "before challenge",
+          "at": "2026-10-24T14:18:52.000Z",
+          "status": "imprecise",
+          "permission": "granted",
+          "provider": "windows-geolocator",
+          "source": "os",
+          "positionSource": "WiFi",
+          "accuracyMeters": 313,
+          "timestampMs": 1792851531846,
+          "coordinateHash": "dce02adaabb3e55436c8a17f30acf0fdc9fbeb2e19f1d97a33b099bf000f1429",
+          "error": {
+            "code": "LOCATION_IMPRECISE",
+            "message": "定位精度不足，请移动到信号较好的地方（需要 ≤ 80 米）"
+          }
+        },
+        {
+          "phase": "before challenge",
+          "at": "2026-10-24T14:19:07.316Z",
+          "status": "imprecise",
+          "permission": "granted",
+          "provider": "windows-geolocator",
+          "source": "os",
+          "positionSource": "WiFi",
+          "accuracyMeters": 313,
+          "timestampMs": 1792851546901,
+          "coordinateHash": "dce02adaabb3e55436c8a17f30acf0fdc9fbeb2e19f1d97a33b099bf000f1429",
+          "error": {
+            "code": "LOCATION_IMPRECISE",
+            "message": "定位精度不足，请移动到信号较好的地方（需要 ≤ 80 米）"
+          }
+        }
+      ],
+      "rendererErrors": [],
+      "entry": {
+        "appPath": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-discovery\\DesktopPet",
+        "electron": "36.9.5",
+        "verificationHostPresent": false
+      },
+      "physicalLocationAcceptance": false,
+      "error": "No precise OS fix within the bounded60s native watch: before challenge",
+      "committedEvidence": "docs/implementation/evidence/discovery/2026-10-24-location-portrait/native-watch.json"
+    },
+    "currentPortraits": {
+      "at": "2026-10-24T14:21:47.365Z",
+      "controlledPosition": true,
+      "physicalLocationAcceptance": false,
+      "previews": [
+        {
+          "spawnId": "wild-2d-v2-e196afe1f4-498014-52052-202457",
+          "templateId": "big-fish-gentle",
+          "name": "鱼丸",
+          "resourceId": "builtin:lingjing-yuwan-v2",
+          "pixiReady": true,
+          "realAtlasThumbnail": true
+        },
+        {
+          "spawnId": "wild-2d-v2-e196afe1f4-498014-52050-202457",
+          "templateId": "big-fish-cheerful",
+          "name": "小蓝",
+          "resourceId": "builtin:lingjing-xiaolan-v1",
+          "pixiReady": true,
+          "realAtlasThumbnail": true
+        },
+        {
+          "spawnId": "wild-2d-v2-e196afe1f4-498014-52051-202456",
+          "templateId": "big-fish-foodie",
+          "name": "饭团",
+          "resourceId": "builtin:lingjing-fantuan-v1",
+          "pixiReady": true,
+          "realAtlasThumbnail": true
+        },
+        {
+          "spawnId": "wild-2d-v2-e196afe1f4-498014-52051-202454",
+          "templateId": "animal-shiba",
+          "name": "焰柴",
+          "resourceId": "builtin:lingjing-shiba-v2",
+          "pixiReady": true,
+          "realAtlasThumbnail": true
+        },
+        {
+          "spawnId": "wild-2d-v2-e196afe1f4-498014-52050-202454",
+          "templateId": "animal-white-fox",
+          "name": "小狐",
+          "resourceId": "builtin:lingjing-xiaohu-v1",
+          "pixiReady": true,
+          "realAtlasThumbnail": true
+        },
+        {
+          "spawnId": "wild-2d-v2-e196afe1f4-498014-52050-202456",
+          "templateId": "animal-hat-cat",
+          "name": "礼帽喵",
+          "resourceId": "builtin:lingjing-hatcat-v1",
+          "pixiReady": true,
+          "realAtlasThumbnail": true
+        }
+      ],
+      "viewport": {
+        "nativeAfterResize": {
+          "width": 1280,
+          "height": 844
+        },
+        "cssViewportOverride": null,
+        "verification": {
+          "width": 1280,
+          "height": 844
+        }
+      },
+      "rendererErrors": [],
+      "component": "resources.ResourcePortrait",
+      "committedEvidence": "docs/implementation/evidence/discovery/2026-10-24-location-portrait/portraits.json"
+    },
+    "readOnlyLedger": {
+      "at": "2026-10-24T14:24:35.914Z",
+      "passed": true,
+      "source": "previous controlled-position capture; actual read-only Electron SQLite CLI",
+      "physicalLocationAcceptance": false,
+      "ledger": {
+        "ownerAccountId": "local:user-85771e33-1168-4f6e-98b1-edf399c0afdf",
+        "captures": 1,
+        "ownedInstances": 1,
+        "memories": 1,
+        "reports": 1,
+        "petId": "pet-81360b28-beec-4655-885e-019843fe6904",
+        "resourceId": "builtin:lingjing-hatcat-v1",
+        "validation": "local-os"
+      }
+    },
+    "latestCloudProbe": {
+      "at": "2026-10-24T14:20:24.940Z",
+      "scope": "read-only unauthenticated OPTIONS at configured endpoints",
+      "discoveryEnvironmentConfigured": false,
+      "tlsConfigured": false,
+      "requests": [
+        {
+          "function": "duel-online",
+          "ok": false,
+          "error": "UND_ERR_SOCKET"
+        },
+        {
+          "function": "discovery",
+          "ok": false,
+          "error": "UND_ERR_SOCKET"
+        }
+      ],
+      "transport": "Node fetch; no credentials; not an Electron proxy probe"
     }
   },
   "dependencyManifest": "apps/pc-app/runtime/features/discovery/dependencies.json",
@@ -705,7 +919,7 @@
     "Foundation performs one centralized A01–A12 visual recheck; resources owns full daily-action asset acceptance"
   ],
   "realIncomplete": [
-    "Physical-location capture remains unaccepted: latest ASAR/native WiFi accuracy138m and earlier standalone91m exceed the80m gate. The last production-window flow reported95m. Controlled captures are independent evidence.",
+    "Physical-location capture remains unaccepted. The standalone native adapter returned one58m fix; subsequent production-window177m and bounded60s watch313m could not proceed. The native positive path is prepared but not passed; no accuracy threshold changed.",
     "Cloud migration/function is reviewable and locally PostgreSQL-verified, but not deployed or live-Supabase-tested. Cloud mode fails closed while the battle authority adapter is missing.",
     "Tencent/Google credentials are not configured; both coordinate adapters remain and OSM is verified.",
     "Final combined packaging/regression remains foundation work.",
@@ -720,8 +934,8 @@
   "historicalBaselineEvidence": [
     "artifacts/discovery/windows/evidence.json (pre-2D scope; not current visual acceptance)"
   ],
-  "dataPolicy": "Only this managed worktree and discovery-owned implementation/status were changed directly; foundation changes came through its branch. User data and old files are preserved. No production migration, deployment, credential change, remote message or additional chat was performed. Goal remains active for unmet external acceptance. This continuation copied only a completed test profile for reversible appearance verification; original profiles and records were preserved. The native-helper archive probe uses its own isolated userData and saves no raw coordinates. This continuation merged foundation a930ebf only, consumed its actual six-character roster and shared rules/cards, and used isolated labelled profiles for real random combat. No native-accuracy threshold, battle formula, production migration or deployment was changed.",
-  "updatedAt": "2026-10-24T14:09:44.913Z",
+  "dataPolicy": "Only this managed worktree and discovery-owned implementation/status were changed directly; foundation changes came through its branch. User data and old files are preserved. No production migration, deployment, credential change, remote message or additional chat was performed. Goal remains active for unmet external acceptance. This continuation copied only a completed test profile for reversible appearance verification; original profiles and records were preserved. The native-helper archive probe uses its own isolated userData and saves no raw coordinates. This continuation merged foundation a930ebf only, consumed its actual six-character roster and shared rules/cards, and used isolated labelled profiles for real random combat. No native-accuracy threshold, battle formula, production migration or deployment was changed. This continuation used one standalone native read and two production-window attempts, the second bounded to60s native watch; these failed safely and are terminal. No raw system coordinates or private location screenshots were committed. Shared portrait changes arrived through foundation; no other module was edited directly.",
+  "updatedAt": "2026-10-24T14:27:02.797Z",
   "visualAudit": {
     "source": {
       "branch": "codex/lingjing-implementation-base",
