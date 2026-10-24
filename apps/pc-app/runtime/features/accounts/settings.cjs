@@ -22,7 +22,8 @@ function validateSettings(input) {
     const source = input[section];
     invariant(source && typeof source === "object" && !Array.isArray(source), "INVALID_SETTINGS", "设置分组缺失。");
     for (const key of keys) {
-      if (key === 'animationsEnabled' && source[key] === undefined) continue;
+      // Additive field: old version-1 settings/backups retain the enabled default.
+      if (section === "desktop" && key === "animationsEnabled" && source[key] === undefined) continue;
       invariant(typeof source[key] === "boolean", "INVALID_SETTINGS", "设置开关值无效。");
       output[section][key] = source[key];
     }

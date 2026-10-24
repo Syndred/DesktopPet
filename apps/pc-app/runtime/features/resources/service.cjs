@@ -2,77 +2,76 @@ const fs = require('node:fs/promises');
 const path = require('node:path');
 const { randomUUID } = require('node:crypto');
 const { ResourcesRepository } = require('./repository.cjs');
-const { ResourceError, fail, plain, text, provenance, calibrations, actionMap, safeRelative, isWithin, parseCharacterFile, resolveAction } = require('./parser.cjs');
+const { ResourceError, fail, plain, text, provenance, calibrations, actionMap, safeRelative, isWithin, parseCharacterFile, normalize2DResource, resolveAction } = require('./parser.cjs');
 
 class ResourcesService {
-  constructor({ db, storageRoot, legacyModelsDir = path.resolve(__dirname, '../../assets/models'), starterManifest = path.join(__dirname, 'assets/fat-fish/character.json') }) {
+  constructor({ db, storageRoot, starterManifest = path.resolve(__dirname, '../../assets/illustrations/yuwan-character-v1.json'), starterId = 'builtin:lingjing-yuwan-v1', seedBuiltin = true }) {
     if (!db || !storageRoot) throw new Error('Resources requires the shared database and a managed storage root');
     this.repository = new ResourcesRepository(db);
     this.storageRoot = path.resolve(storageRoot);
-    this.legacyModelsDir = path.resolve(legacyModelsDir);
     this.starterManifest = starterManifest;
-    this.builtinAssetRoots = [];
+    this.starterId = starterId;
+    this.seedBuiltin = seedBuiltin;
+    this.importTail = Promise.resolve();
+    this.builtinAssetRoots = [path.join(__dirname, 'assets/fat-fish')];
   }
   // Only trusted main-process registration can extend built-in package roots.
   addBuiltinAssetRoot(root) { const resolved = path.resolve(root); if (!this.builtinAssetRoots.includes(resolved)) this.builtinAssetRoots.push(resolved); }
-  relocateGlobal(id, root) {
-    const update = this.repository.db.prepare('UPDATE lingjing_resource_files SET file_path=? WHERE resource_id=? AND asset_key=?');
-    this.repository.transaction(() => {
-      for (const row of this.repository.files('builtin', id)) update.run(path.join(root, safeRelative(row.asset_key)), id, row.asset_key);
-    });
-  }
   owner(value) { if (typeof value !== 'string' || !value.trim() || value.length > 200) fail('AUTH_REQUIRED', '请先选择本机存档或登录账号'); return value; }
   async seed() {
     await fs.mkdir(this.storageRoot, { recursive: true });
-    const starterId = 'builtin:fat-fish-v1';
+    if (!this.seedBuiltin) return;
+    const starterId = this.starterId;
     if (!this.repository.hasGlobal(starterId)) {
       const parsed = await parseCharacterFile(this.starterManifest);
       const resource = { ...parsed.resource, id: starterId, origin: 'builtin', revision: 0, importedAt: '2026-10-24T00:00:00.000Z', provenance: { ...parsed.resource.provenance, status: 'project-original' } };
-      this.repository.transaction(() => this.repository.insert(null, resource, [...parsed.files.keys()].map(key => [key, path.join(path.dirname(this.starterManifest), key)])));
-    } else this.relocateGlobal(starterId, path.dirname(this.starterManifest));
-    let catalog = { models: [] };
-    try { catalog = JSON.parse((await fs.readFile(path.join(this.legacyModelsDir, 'catalog.json'), 'utf8')).replace(/^\uFEFF/, '')); } catch { /* A missing catalog must not hide existing files. */ }
-    const disk = await fs.readdir(this.legacyModelsDir).catch(() => []);
-    const names = new Set([...disk.filter(name => /\.(glb|gltf)$/i.test(name)), ...(catalog.models ?? []).map(item => item.file)]);
-    for (const filename of names) {
-      if (typeof filename !== 'string' || path.basename(filename) !== filename) continue;
-      const id = `legacy:${filename.toLowerCase()}`;
-      if (this.repository.hasGlobal(id)) { this.relocateGlobal(id, this.legacyModelsDir); continue; }
-      const item = (catalog.models ?? []).find(row => row.file === filename);
-      const metadata = { author: item?.creator, source: item?.source, license: item?.license, attribution: item?.creator ? `${item.name} — ${item.creator} (${item.license})` : '' };
-      let parsed;
-      try { parsed = await parseCharacterFile(path.join(this.legacyModelsDir, filename), metadata); }
-      catch (error) {
-        parsed = { resource: { name: item?.name || filename, kind: 'model3d', contentHash: `legacy:${filename}`, entryAsset: filename, clips: [], actions: actionMap(undefined, []), calibration: calibrations(), provenance: provenance(metadata), warnings: [error.code === 'MISSING_ASSET' ? '历史模型文件缺失，记录已保留' : '历史模型无法解析，记录已保留'], availability: error.code === 'MISSING_ASSET' ? 'missing' : 'invalid' }, files: new Map([[filename, null]]) };
-      }
-      const resource = { ...parsed.resource, id, name: item?.name || parsed.resource.name, origin: 'legacy', revision: 0, legacyModel: `../assets/models/${filename}`, importedAt: item?.importedAt || '2026-03-08', provenance: { ...parsed.resource.provenance, status: item ? 'recorded' : 'unverified' } };
-      this.repository.transaction(() => this.repository.insert(null, resource, [...parsed.files.keys()].map(key => [key, path.join(this.legacyModelsDir, key)])));
+      this.repository.transaction(() => { if (!this.repository.hasGlobal(starterId)) this.repository.insert(null, resource, [...parsed.files.keys()].map(key => [key, path.join(path.dirname(this.starterManifest), key)])); });
     }
   }
   async withAvailability(owner, resource) {
+    resource = normalize2DResource(resource);
     const paths = this.repository.files(owner, resource.id);
-    const readable = await Promise.all(paths.map(row => fs.access(row.file_path).then(() => true, () => false)));
+    const readable = await Promise.all(paths.map(row => this.assetFile(owner, resource.id, row.asset_key).then(() => true, () => false)));
     if (readable.some(value => !value)) return { ...resource, availability: 'missing', warnings: [...resource.warnings, '文件已缺失；原有资源与导入记录仍然保留'] };
     return resource;
   }
   async list(owner) {
     this.owner(owner);
-    return Promise.all(this.repository.list(owner).map(resource => this.withAvailability(owner, resource)));
+    return Promise.all(this.repository.list(owner).filter(resource => resource.kind === 'spritesheet').map(resource => this.withAvailability(owner, resource)));
   }
   async get(owner, id) { this.owner(owner); return this.withAvailability(owner, this.repository.get(owner, id)); }
-  async importFile(owner, filePath, metadata = {}) {
+  /** Synchronous adapters for callers already inside the shared SQLite transaction. */
+  getRecord(owner, id) { this.owner(owner); return normalize2DResource(this.repository.get(owner, id)); }
+  importFile(owner, filePath, metadata = {}) {
+    const operation = this.importTail.then(() => this.importValidatedFile(owner, filePath, metadata));
+    this.importTail = operation.catch(() => {});
+    return operation;
+  }
+  async importValidatedFile(owner, filePath, metadata = {}) {
     this.owner(owner);
     // Parse all referenced files before creating a managed directory or touching the database.
     const parsed = await parseCharacterFile(filePath, metadata);
     const known = this.repository.findGlobalHash(parsed.resource.contentHash);
-    if (known?.provenance.status === 'recorded') {
+    if (known && ['recorded', 'project-original'].includes(known.provenance.status)) {
       const supplied = Object.fromEntries(Object.entries(metadata).filter(([, value]) => typeof value === 'string' && value.trim()));
-      parsed.resource.provenance = provenance({ ...known.provenance, ...supplied }, Object.keys(supplied).length ? 'unverified' : 'recorded');
+      parsed.resource.provenance = provenance({ ...known.provenance, ...supplied }, Object.keys(supplied).length ? 'unverified' : known.provenance.status);
       parsed.resource.warnings = parsed.resource.warnings.filter(warning => warning !== '素材许可未确认，请补充作者与许可记录');
     }
     const duplicate = this.repository.findHash(owner, parsed.resource.contentHash);
     const date = new Date().toISOString();
     if (duplicate) {
+      // Re-importing a complete original repairs missing managed copies while retaining IDs and settings.
+      for (const [key, bytes] of parsed.files) {
+        const destination = this.currentFilePath(duplicate, key, this.repository.file(owner, duplicate.id, key));
+        if (!isWithin(this.storageRoot, destination)) fail('UNSAFE_PATH', '原有资源存储目录无效');
+        if (await fs.access(destination).then(() => false, () => true)) {
+          await fs.mkdir(path.dirname(destination), { recursive: true });
+          const parent = await fs.realpath(path.dirname(destination));
+          const root = await fs.realpath(this.storageRoot);
+          if (!isWithin(root, parent)) fail('UNSAFE_PATH', '资源目录已变更');
+          await fs.writeFile(destination, bytes, { flag: 'wx' });
+        }
+      }
       this.repository.recordImport(owner, { ...duplicate, provenance: parsed.resource.provenance }, parsed.sourceFilename, randomUUID(), date);
       return { resource: await this.withAvailability(owner, duplicate), duplicate: true };
     }
@@ -103,7 +102,7 @@ class ResourcesService {
   async save(owner, request) {
     this.owner(owner);
     if (!plain(request) || typeof request.resourceId !== 'string' || !Number.isInteger(request.expectedRevision) || request.expectedRevision < 0) fail('INVALID_REQUEST', '保存参数格式错误');
-    const resource = this.repository.get(owner, request.resourceId);
+    const resource = this.getRecord(owner, request.resourceId);
     const saved = this.repository.save(owner, resource.id, request.expectedRevision, calibrations(request.calibration), actionMap(request.actions, resource.clips, true));
     return this.withAvailability(owner, saved);
   }
@@ -115,33 +114,50 @@ class ResourcesService {
     const context = request.context || 'desktop';
     const display = { ...resource.calibration[context] };
     if (request.facing === 'left') display.mirrorX = !display.mirrorX;
-    return { resource, petId: request.petId, context, calibration: display, ...resolveAction(resource, request.action) };
+    const resolved = resolveAction(resource, request.action);
+    return { resource, petId: request.petId, context, calibration: display, ...resolved, clip: resolved.clip ? { ...resolved.clip, fps: display.fps || resolved.clip.fps } : null };
+  }
+  /** Companion native-window adapter, retaining registered URLs instead of leaking local file paths. */
+  async resolveForPet(owner, pet) {
+    if (this.ready) await this.ready;
+    if (!pet || (pet.ownerAccountId && pet.ownerAccountId !== owner)) fail('RESOURCE_NOT_FOUND', '该伙伴不属于当前账号');
+    const behavior = pet.desktop?.behavior;
+    const action = behavior === 'sleep' ? 'sleep' : ['wander', 'follow'].includes(behavior) ? 'walk' : 'idle';
+    const display = await this.resolve(owner, { resourceId: pet.resource?.resourceId, petId: pet.petId, context: 'desktop', action });
+    if (display.resource.availability !== 'ready') return null;
+    return {
+      kind: 'spritesheet',
+      url: `lingjing-resource://asset/${encodeURIComponent(display.resource.id)}/${display.resource.entryAsset.split('/').map(encodeURIComponent).join('/')}`,
+      sheet: display.resource.sheet, clip: display.clip, calibration: display.calibration, resourceRevision: display.resource.revision,
+    };
   }
   async assetFile(owner, id, key) {
     this.owner(owner); safeRelative(key);
-    const filePath = this.repository.file(owner, id, key);
-    const allowed = [this.storageRoot, this.legacyModelsDir, path.dirname(this.starterManifest), ...this.builtinAssetRoots];
+    const resource = this.getRecord(owner, id);
+    const filePath = this.currentFilePath(resource, key, this.repository.file(owner, id, key));
+    const allowed = [this.storageRoot, path.dirname(this.starterManifest), ...this.builtinAssetRoots];
     const actual = await fs.realpath(filePath).catch(() => fail('MISSING_ASSET', '资源文件已缺失'));
     const roots = await Promise.all(allowed.map(root => fs.realpath(root).catch(() => path.resolve(root))));
     if (!roots.some(root => isWithin(root, actual))) fail('UNSAFE_PATH', '资源路径已变更或超出允许目录');
     return actual;
   }
-  async migrateLegacyCalibration(owner, profiles) {
-    this.owner(owner);
-    if (!plain(profiles) || Object.keys(profiles).length > 200) fail('INVALID_REQUEST', '旧校准数据无效');
-    let migrated = 0;
-    for (const [filename, profile] of Object.entries(profiles)) {
-      if (!plain(profile)) continue;
-      const id = `legacy:${path.basename(filename).toLowerCase()}`;
-      let current;
-      try { current = this.repository.get(owner, id); } catch { continue; }
-      if (current.revision !== 0) continue;
-      const clamp = (value, fallback, min, max) => typeof value === 'number' && Number.isFinite(value) ? Math.min(max, Math.max(min, value)) : fallback;
-      const convert = mode => ({ scale: clamp(profile[`poseWideScale${mode}`], 1, 0.25, 3), yawDeg: clamp(profile[`${mode.toLowerCase()}OrientationYDeg`], 0, -180, 180), pitchDeg: clamp(profile[`${mode.toLowerCase()}OrientationXDeg`], 0, -90, 90), verticalOffset: 0, mirrorX: false });
-      this.repository.save(owner, id, 0, { desktop: convert('Idle'), battle: convert('Battle') }, current.actions); migrated++;
+  currentFilePath(resource, key, registeredPath) {
+    // Immutable asset keys survive an installation or a complete user-data-directory move.
+    // The registry is still consulted first; an arbitrary renderer path never becomes a key.
+    if (resource.id === this.starterId) return path.resolve(path.dirname(this.starterManifest), key);
+    if (resource.origin === 'import') {
+      if (isWithin(this.storageRoot, registeredPath)) return registeredPath;
+      // Backups restore to a new directory so existing user files remain intact.
+      // Retain that directory when the complete user-data tree moves as well.
+      let directory = path.dirname(registeredPath);
+      for (let index = 1; index < key.split('/').length; index++) directory = path.dirname(directory);
+      const name = path.basename(directory);
+      const managedDirectory = /^restore-[0-9a-f-]{36}$/i.test(name) ? name : resource.id;
+      return path.resolve(this.storageRoot, managedDirectory, key);
     }
-    return { migrated };
+    return registeredPath;
   }
+
 }
 function toResult(error) {
   return { ok: false, error: { code: error instanceof ResourceError ? error.code : 'RESOURCE_UNAVAILABLE', message: error instanceof ResourceError ? error.message : '资源操作暂时无法完成，请重试', ...(error.details?.revision !== undefined ? { revision: error.details.revision } : {}) } };

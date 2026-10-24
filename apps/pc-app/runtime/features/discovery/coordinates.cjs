@@ -1,5 +1,6 @@
 // Canonical coordinates are WGS84. Convert only at the map-provider boundary.
 const PI = Math.PI;
+const {distance}=require('@turf/distance');
 function point(value) {
   if (!value || typeof value.lat !== 'number' || typeof value.lng !== 'number' ||
       !Number.isFinite(value.lat) || !Number.isFinite(value.lng) ||
@@ -45,9 +46,7 @@ function convertPoint(input, from = 'wgs84', to = 'wgs84') {
 }
 function distanceMeters(a, b) {
   a=point(a); b=point(b);
-  const rad = PI/180, dLat = (b.lat-a.lat)*rad, dLng=(b.lng-a.lng)*rad;
-  const h = Math.sin(dLat/2)**2 + Math.cos(a.lat*rad)*Math.cos(b.lat*rad)*Math.sin(dLng/2)**2;
-  return 6371000*2*Math.atan2(Math.sqrt(h), Math.sqrt(Math.max(0,1-h)));
+  return distance([a.lng,a.lat],[b.lng,b.lat],{units:'meters'});
 }
 function checkFix(fix, now = Date.now(), { maxAgeMs = 30000, maxAccuracyMeters = 80 } = {}) {
   if (!fix) return { ok: false, code: 'LOCATION_REQUIRED', message: '请先获取系统位置' };

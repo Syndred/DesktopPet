@@ -63,6 +63,12 @@ const migrations = [{
     CREATE INDEX IF NOT EXISTS account_sync_outbox_due
       ON account_sync_outbox(owner_account_id,status,next_attempt_at);
   `
+}, {
+  id: "accounts-002-secure-session-revocation",
+  sql: `CREATE TABLE IF NOT EXISTS account_session_control (
+    singleton INTEGER PRIMARY KEY CHECK(singleton=1),
+    blocked INTEGER NOT NULL CHECK(blocked IN (0,1))
+  );`
 }];
 
 module.exports = { migrations };

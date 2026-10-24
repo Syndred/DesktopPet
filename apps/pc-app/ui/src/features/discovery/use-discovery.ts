@@ -13,9 +13,13 @@ export function useDiscovery() {
     catch (e) { if (alive.current) setError(e instanceof Error ? e.message : String(e)); }
   }, []);
   useEffect(() => {
-    alive.current = true; void refresh();
-    const subscriptions = ['discovery:changed', 'discovery:location', 'app:session', 'companions:changed'].map(event => window.lingjing?.subscribe(event, () => void refresh()));
-    return () => { alive.current = false; for (const off of subscriptions) off?.(); };
+    alive.current = true;
+    const exploring = () => {void window.lingjing?.invoke('discovery', 'setExploring', {active:document.visibilityState === 'visible'});};
+    exploring(); void refresh();document.addEventListener('visibilitychange', exploring);
+    const subscriptions = ['discovery:changed', 'discovery:location', 'app:session', 'companions:changed', 'garden:changed'].map(event => window.lingjing?.subscribe(event, () => void refresh()));
+    subscriptions.push(window.lingjing?.subscribe('accounts:session-changed', () => { exploring(); void refresh(); }));
+    const timer = setInterval(() => { if(document.visibilityState === 'visible') void refresh(); }, 15000);
+    return () => { alive.current = false;clearInterval(timer);document.removeEventListener('visibilitychange', exploring);void window.lingjing?.invoke('discovery', 'setExploring', {active:false}); for (const off of subscriptions) off?.(); };
   }, [refresh]);
   const run = useCallback(async <T,>(command: string, payload?: unknown): Promise<T | undefined> => {
     if (locked.current) return undefined;

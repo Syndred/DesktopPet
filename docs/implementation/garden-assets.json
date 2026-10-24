@@ -1,0 +1,43 @@
+{
+  "date": "2026-10-24",
+  "tool": "内置 ImageGen；无 CLI/API 密钥",
+  "reference": [
+    "docs/design/2026-10-24/full-ui/05-territory-garden-and-inventory.png",
+    "docs/design/2026-10-24/full-ui/10-garden-harvest-and-feeding.png"
+  ],
+  "assets": [
+    {
+      "path": "apps/pc-app/ui/src/features/garden/assets/garden-terrace-v1.png",
+      "source": "C:/Users/Administrator/.codex/generated_images/01a16dc5-c0f2-7ea2-b491-d5d4b65e55e3/exec-b2cfb4a1-d2c6-42f0-a5cf-d4009e8a1ae5.png",
+      "license": "项目生成素材；未使用第三方示例贴图",
+      "prompt": "Use case: illustration-story. Asset type: production 2D game background for the approved Lingjing garden UI. Reference image is a UI design board: match the detailed hand-painted anime cottage garden style in its TOP garden panel, soft milk-white and mist-blue daylight, lush plants and wood, lake and distant blue mountains, flower-covered cottage and white stone path. Create ONLY the background illustration, landscape 4:3. NO UI, NO text, NO logo, NO characters, NO crop plants, NO plot labels. Composition: top 35% has the cozy cottage terrace, flowers, pale-blue lake and mountains; the lower 65% has a neat 3 columns by 2 rows grid of exactly six EMPTY soil growing beds bordered with warm wooden boards, viewed from a gentle elevated 2D isometric angle; the beds take most of the width, aligned regularly so interactive crops can be composited onto each. Leave a small stone walkway along the left edge. High quality anime game environment, delicate outlines, painterly textures, light warm natural shadows, same visual richness and soft palette as approved reference. Flat illustration, never 3D rendered, not geometric placeholder artwork. Scene art only."
+    },
+    {
+      "path": "apps/pc-app/ui/src/features/garden/assets/garden-food-atlas-v1.png",
+      "source": "C:/Users/Administrator/.codex/generated_images/01a16dc5-c0f2-7ea2-b491-d5d4b65e55e3/exec-0c1a4c11-8fda-491a-b2c9-e1a832da7fbe.png",
+      "license": "项目生成素材；透明通道原样保留",
+      "frames": {
+        "columns": 4,
+        "rows": 2,
+        "names": [
+          "carrot",
+          "tomato",
+          "berry",
+          "rice",
+          "cooked_rice",
+          "sprout",
+          "seeds",
+          "soil"
+        ]
+      },
+      "prompt": "Use case: illustration-story. Asset type: ONE production 2D game UI sprite atlas, transparent PNG, exactly 4 columns by 2 rows of equal square cells, total landscape ratio 2:1. The input is the approved UI design board; match the delicate detailed hand-painted anime food illustrations from its garden harvest and feeding panels, creamy light shadows, charming cozy palette and clean contours. Contents, in exact order left to right: TOP ROW: 1 a bunch of three fresh orange carrots with green tops; 2 cluster of glossy red tomatoes with green leaves; 3 mixed blueberries and red berries with small leaves; 4 golden rice stalks and rice grains. BOTTOM ROW: 5 steaming white cooked rice in a lovely small white and mist-blue porcelain bowl; 6 a small green seedling rooted in a little soil mound; 7 a little pile of golden seeds; 8 a wide shallow EMPTY wooden garden planter with dark tilled soil, for a clickable growing bed. Center each object in its own cell with at least 12 percent transparent padding on every side. Objects never touch other cells. Each entire cell background must be genuinely transparent, no white rectangles and no checkerboard painted into image. No labels, no letters, no interface, no frame around cells, no logo, no people, no modern 3D render, no simple geometric vector icons. Cohesive production anime game illustration quality."
+    }
+  ],
+  "sharedCharacter": {
+    "path": "apps/pc-app/runtime/assets/illustrations/yuwan-sprites-v1.png",
+    "owner": "foundation/resources",
+    "sourceCommit": "8d95af5",
+    "use": "PetPortrait 优先共享 ResourceStage，静态备用直接引用同一图集，不复制角色资源库"
+  },
+  "excluded": "未使用 farming-game 的 GPL3 tiles、旧 Phaser 整包、3D 资源或几何角色占位"
+}
