@@ -1,0 +1,24 @@
+{
+  "status": "accepted_by_main_review",
+  "recordedAt": "2026-10-24T15:26:16.689Z",
+  "sourceThreadId": "01a16d86-7650-7871-8e27-5b65477a126e",
+  "acceptedSourceCommit": "d9e1b71119e3141f9f82164db26586d371835e19",
+  "acceptedDeliveryCommit": "deda2f218786df3c71e869957d684165f8388af0",
+  "reviewedRun": "run-1792855135940",
+  "reviewedRunSourceCommit": "0e7a9679d91c1a1a64b8a11c83cb5b0526f8a88a",
+  "finalEvidenceRun": "run-1792855266773",
+  "productionCodeAndCompiledFingerprintsMatch": true,
+  "codeFingerprint": "5a5bc7711318f0aeeccf617b2872f4f619b8e1f5667dc3ae6515cc549a6499e0",
+  "compiledFingerprint": "21c7aef7d1db9288a68bc48d35c3bb202e85316124e2892e876f2d9919fbde45",
+  "acceptedChecks": [
+    "1440聊天与1280 AI设置实际截图及完整JSON读回",
+    "八资源/五行与青芽侧图身份一致",
+    "两次实际localhost连接失败，未伪造助手回复",
+    "清空历史后保留记忆与人设",
+    "renderer无密钥",
+    "返回控件中心差约4px且无横向溢出"
+  ],
+  "externalModel": "deferred_by_current_scope_not_counted_as_verified_success",
+  "repeatSelfAcceptanceRequired": false,
+  "remaining": "仅在最终集成出现具体问题时针对回传问题修正；全产品U08由主会话验收。"
+}

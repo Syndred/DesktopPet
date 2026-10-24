@@ -12,6 +12,7 @@ const { OnlineDuelService } = require("../../services/online-duel-service.cjs");
 const { BattleFeatureService } = require("./service.cjs");
 const migrations = require("./migrations.cjs");
 const { createBattleBackupAdapter } = require("./backup.cjs");
+const { presentSession } = require('./presentation.cjs');
 
 const companionsFile = process.env.LINGJING_COMPANIONS_MODULE || resolve(__dirname, "../companions/index.cjs");
 const hasCompanions = existsSync(companionsFile);
@@ -399,7 +400,8 @@ test("battle backup keeps newer final state and cannot roll a reward ledger back
     const settled = backup.export(f.owner);
     assert.throws(() => backup.restore(f.owner, earlier, 'replace'), error => error.code === 'BATTLE_BACKUP_CONFLICT');
     backup.restore(f.owner, settled, 'merge'); backup.restore(f.owner, settled, 'replace');
-    assert.deepEqual(f.service.snapshot({ sessionId: session.id }, f.context), session);
+    assert.deepEqual(backup.export(f.owner), settled);
+    assert.deepEqual(f.service.snapshot({ sessionId: session.id }, f.context), presentSession(session));
     const invalid = clone(settled); invalid.sessions[0].data_json = JSON.stringify({ ...JSON.parse(invalid.sessions[0].data_json), id: 'another-session' });
     assert.throws(() => backup.validate(invalid), error => error.code === 'INVALID_BATTLE_BACKUP');
     assert.equal(f.db.prepare('SELECT COUNT(*) n FROM battle_reward_receipts').get().n, 1);

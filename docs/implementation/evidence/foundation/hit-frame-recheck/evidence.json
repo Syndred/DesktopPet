@@ -1,0 +1,2719 @@
+{
+  "at": "2026-10-24T15:25:51.865Z",
+  "sourceCommit": "f80026b0fe5fc4345abbfe1aec7a5a00c51c2cf9",
+  "scenario": {
+    "schemaVersion": 1,
+    "application": "lingjing",
+    "scenario": "unified-battle",
+    "runId": "d309a890-09df-4e4e-863c-c561eefa3734",
+    "isolated": true,
+    "profilePath": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\artifacts\\qa\\unified-battle\\qa-1792855551855-d309a890",
+    "createdAt": "2026-10-24T15:25:51.856Z",
+    "env": {
+      "LINGJING_QA_SCENARIO": "unified-battle",
+      "PET_USER_DATA_DIR": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\artifacts\\qa\\unified-battle\\qa-1792855551855-d309a890"
+    }
+  },
+  "scope": "Actual production Electron screen and UI actions. Explicit isolated QA legal charged prestate and controlled opponent actions; actual engine, no live cloud or natural-game claim.",
+  "cases": [
+    {
+      "id": "normal-interrupts-element",
+      "player": "normal_attack",
+      "enemy": "element_attack",
+      "expect": "interrupt",
+      "sessionId": "battle-a4aef2a1-c4b0-4abc-9866-e36b55eaf526",
+      "before": {
+        "id": "battle-a4aef2a1-c4b0-4abc-9866-e36b55eaf526",
+        "mode": "training",
+        "status": "active",
+        "startedAt": "2026-10-24T15:25:53.970Z",
+        "player": {
+          "petId": "pet-b4f68127-d449-4d8e-8c4e-6102643f2423",
+          "petName": "鱼丸",
+          "element": "water",
+          "level": 1,
+          "resourceRef": "builtin:lingjing-yuwan-v2",
+          "resource": {
+            "resourceId": "builtin:lingjing-yuwan-v2",
+            "kind": "2d"
+          },
+          "appearance2d": "builtin:lingjing-yuwan-v2"
+        },
+        "enemy": {
+          "petId": "training-fire",
+          "petName": "焰柴",
+          "element": "fire",
+          "level": 1,
+          "resourceRef": "builtin:lingjing-shiba-v2",
+          "appearance2d": "builtin:lingjing-shiba-v2",
+          "resource": {
+            "resourceId": "builtin:lingjing-shiba-v2",
+            "kind": "2d"
+          }
+        },
+        "snapshot": {
+          "round": 0,
+          "player": {
+            "id": "player",
+            "element": "water",
+            "hp": 85,
+            "maxHp": 120,
+            "anger": 50,
+            "freeDodgeUsed": false,
+            "statuses": []
+          },
+          "enemy": {
+            "id": "enemy",
+            "element": "fire",
+            "hp": 100,
+            "maxHp": 120,
+            "anger": 30,
+            "freeDodgeUsed": false,
+            "statuses": []
+          }
+        },
+        "rounds": [],
+        "winner": null,
+        "pendingAction": null,
+        "historyComplete": true,
+        "rules": {
+          "id": "five-elements-standard-v1",
+          "label": "标准五行对战",
+          "vitalPolicy": "normalized",
+          "maxHp": 120,
+          "maxAnger": 100,
+          "companionStatsApplied": false,
+          "baseDamage": {
+            "normal_attack": 10,
+            "element_attack": 12,
+            "dodge": 0,
+            "ultimate": 20
+          },
+          "ultimateAnger": 50,
+          "ultimateCost": 50,
+          "ultimateHeal": 20,
+          "dodgeMaxCost": 20,
+          "dodgeRefund": 30,
+          "advantage": {
+            "metal": "wood",
+            "wood": "earth",
+            "earth": "water",
+            "water": "fire",
+            "fire": "metal"
+          },
+          "elementEffects": {
+            "metal": {
+              "label": "易伤",
+              "description": "每层受伤×1.5，最多5层"
+            },
+            "wood": {
+              "label": "寄生",
+              "description": "每层回合末吸取2生命，最多5层"
+            },
+            "earth": {
+              "label": "迟钝",
+              "description": "每层伤害×0.5，最多5层"
+            },
+            "water": {
+              "label": "降怒",
+              "description": "命中后对方怒气向下取半，不增加受击怒气"
+            },
+            "fire": {
+              "label": "燃烧",
+              "description": "回合末按当前生命8%×层数伤害，最多5层"
+            }
+          }
+        },
+        "context": {
+          "id": "training:fire",
+          "authority": "simulated",
+          "scenarioId": "d309a890-09df-4e4e-863c-c561eefa3734",
+          "qaPreset": "charged",
+          "qaEnemyAction": "element_attack"
+        },
+        "updatedAt": "2026-10-24T15:25:54.354Z",
+        "revision": 2
+      },
+      "hitName": "frame_10",
+      "hitTexture": "677,706,237,215",
+      "sizes": [
+        {
+          "viewport": {
+            "width": 1280,
+            "height": 844
+          },
+          "authority": "simulated",
+          "arenas": 1,
+          "hud": [
+            {
+              "x": 234.8000030517578,
+              "y": 154,
+              "width": 316.9624938964844,
+              "height": 76,
+              "right": 551.7624969482422,
+              "bottom": 230,
+              "text": "鱼丸Lv.01 85/12050/100",
+              "font": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif"
+            },
+            {
+              "x": 627.7625122070312,
+              "y": 154,
+              "width": 316.9624938964844,
+              "height": 76,
+              "right": 944.7250061035156,
+              "bottom": 230,
+              "text": "焰柴Lv.01 100/12030/100",
+              "font": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif"
+            }
+          ],
+          "moves": [
+            {
+              "x": 232.8000030517578,
+              "y": 550,
+              "width": 172.47500610351562,
+              "height": 112,
+              "right": 405.27500915527344,
+              "bottom": 662,
+              "text": "普通攻击打断 10",
+              "font": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif"
+            },
+            {
+              "x": 413.2749938964844,
+              "y": 550,
+              "width": 172.4875030517578,
+              "height": 112,
+              "right": 585.7624969482422,
+              "bottom": 662,
+              "text": "属性攻击降怒 12",
+              "font": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif"
+            },
+            {
+              "x": 593.7625122070312,
+              "y": 550,
+              "width": 172.47500610351562,
+              "height": 112,
+              "right": 766.2375183105469,
+              "bottom": 662,
+              "text": "闪避回避 20",
+              "font": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif"
+            },
+            {
+              "x": 774.2374877929688,
+              "y": 550,
+              "width": 172.4875030517578,
+              "height": 112,
+              "right": 946.7249908447266,
+              "bottom": 662,
+              "text": "大招必中 · 回复 50/50",
+              "font": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif"
+            }
+          ],
+          "stages": [
+            {
+              "x": 244.8000030517578,
+              "y": 238,
+              "width": 332.9624938964844,
+              "height": 302.20001220703125,
+              "right": 577.7624969482422,
+              "bottom": 540.2000122070312,
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "idle",
+              "clip": "idle",
+              "fallback": "false",
+              "canvasCount": 1
+            },
+            {
+              "x": 601.7625122070312,
+              "y": 238,
+              "width": 332.9624938964844,
+              "height": 302.20001220703125,
+              "right": 934.7250061035156,
+              "bottom": 540.2000122070312,
+              "resourceId": "builtin:lingjing-shiba-v2",
+              "action": "idle",
+              "clip": "idle",
+              "fallback": "false",
+              "canvasCount": 1
+            }
+          ],
+          "portraits": 2,
+          "smallCanvasCount": 0,
+          "duplicateWildArenas": 0,
+          "animation": {
+            "phase": "rest",
+            "key": "battle-a4aef2a1-c4b0-4abc-9866-e36b55eaf526:0"
+          },
+          "displayedText": "对战\n鱼丸\nLv.01\n85/120\n50/100\n回合\n01\n焰柴\nLv.01\n100/120\n30/100\n普通攻击\n打断\n10\n属性攻击\n降怒\n12\n闪避\n回避\n20\n大招\n必中 · 回复\n50/50\n出战伙伴\n鱼丸\nLv.01\n回合记录\n—\n离开"
+        }
+      ],
+      "actions": [
+        {
+          "after": {
+            "id": "battle-a4aef2a1-c4b0-4abc-9866-e36b55eaf526",
+            "mode": "training",
+            "status": "active",
+            "startedAt": "2026-10-24T15:25:53.970Z",
+            "player": {
+              "petId": "pet-b4f68127-d449-4d8e-8c4e-6102643f2423",
+              "petName": "鱼丸",
+              "element": "water",
+              "level": 1,
+              "resourceRef": "builtin:lingjing-yuwan-v2",
+              "resource": {
+                "resourceId": "builtin:lingjing-yuwan-v2",
+                "kind": "2d"
+              },
+              "appearance2d": "builtin:lingjing-yuwan-v2"
+            },
+            "enemy": {
+              "petId": "training-fire",
+              "petName": "焰柴",
+              "element": "fire",
+              "level": 1,
+              "resourceRef": "builtin:lingjing-shiba-v2",
+              "appearance2d": "builtin:lingjing-shiba-v2",
+              "resource": {
+                "resourceId": "builtin:lingjing-shiba-v2",
+                "kind": "2d"
+              }
+            },
+            "snapshot": {
+              "round": 1,
+              "player": {
+                "id": "player",
+                "element": "water",
+                "hp": 85,
+                "maxHp": 120,
+                "anger": 70,
+                "freeDodgeUsed": false,
+                "statuses": []
+              },
+              "enemy": {
+                "id": "enemy",
+                "element": "fire",
+                "hp": 88,
+                "maxHp": 120,
+                "anger": 36,
+                "freeDodgeUsed": false,
+                "statuses": []
+              }
+            },
+            "rounds": [
+              {
+                "round": 1,
+                "actions": {
+                  "player": "normal_attack",
+                  "enemy": "element_attack"
+                },
+                "damageTaken": {
+                  "player": 0,
+                  "enemy": 12
+                },
+                "directDamage": {
+                  "player": 0,
+                  "enemy": 12
+                },
+                "dotDamageEvents": {
+                  "player": [],
+                  "enemy": []
+                },
+                "healEvents": {
+                  "player": [],
+                  "enemy": []
+                },
+                "hpAfter": {
+                  "player": 85,
+                  "enemy": 88
+                },
+                "angerAfter": {
+                  "player": 70,
+                  "enemy": 36
+                },
+                "statusesAfter": {
+                  "player": [],
+                  "enemy": []
+                },
+                "winner": null,
+                "notes": [
+                  "enemy action missed"
+                ],
+                "state": {
+                  "round": 1,
+                  "player": {
+                    "id": "player",
+                    "element": "water",
+                    "hp": 85,
+                    "maxHp": 120,
+                    "anger": 70,
+                    "freeDodgeUsed": false,
+                    "statuses": []
+                  },
+                  "enemy": {
+                    "id": "enemy",
+                    "element": "fire",
+                    "hp": 88,
+                    "maxHp": 120,
+                    "anger": 36,
+                    "freeDodgeUsed": false,
+                    "statuses": []
+                  }
+                },
+                "visualEvents": [
+                  {
+                    "id": "1:player:windup:action:0",
+                    "side": "player",
+                    "phase": "windup",
+                    "kind": "action",
+                    "action": "normal_attack"
+                  },
+                  {
+                    "id": "1:player:release:action:1",
+                    "side": "player",
+                    "phase": "release",
+                    "kind": "action",
+                    "action": "normal_attack",
+                    "element": "water"
+                  },
+                  {
+                    "id": "1:enemy:impact:damage:2",
+                    "side": "enemy",
+                    "phase": "impact",
+                    "kind": "damage",
+                    "amount": 12
+                  },
+                  {
+                    "id": "1:enemy:windup:action:3",
+                    "side": "enemy",
+                    "phase": "windup",
+                    "kind": "action",
+                    "action": "element_attack"
+                  },
+                  {
+                    "id": "1:enemy:release:action:4",
+                    "side": "enemy",
+                    "phase": "release",
+                    "kind": "action",
+                    "action": "element_attack",
+                    "element": "fire"
+                  },
+                  {
+                    "id": "1:enemy:impact:interrupt:5",
+                    "side": "enemy",
+                    "phase": "impact",
+                    "kind": "interrupt"
+                  }
+                ]
+              }
+            ],
+            "winner": null,
+            "pendingAction": null,
+            "historyComplete": true,
+            "rules": {
+              "id": "five-elements-standard-v1",
+              "label": "标准五行对战",
+              "vitalPolicy": "normalized",
+              "maxHp": 120,
+              "maxAnger": 100,
+              "companionStatsApplied": false,
+              "baseDamage": {
+                "normal_attack": 10,
+                "element_attack": 12,
+                "dodge": 0,
+                "ultimate": 20
+              },
+              "ultimateAnger": 50,
+              "ultimateCost": 50,
+              "ultimateHeal": 20,
+              "dodgeMaxCost": 20,
+              "dodgeRefund": 30,
+              "advantage": {
+                "metal": "wood",
+                "wood": "earth",
+                "earth": "water",
+                "water": "fire",
+                "fire": "metal"
+              },
+              "elementEffects": {
+                "metal": {
+                  "label": "易伤",
+                  "description": "每层受伤×1.5，最多5层"
+                },
+                "wood": {
+                  "label": "寄生",
+                  "description": "每层回合末吸取2生命，最多5层"
+                },
+                "earth": {
+                  "label": "迟钝",
+                  "description": "每层伤害×0.5，最多5层"
+                },
+                "water": {
+                  "label": "降怒",
+                  "description": "命中后对方怒气向下取半，不增加受击怒气"
+                },
+                "fire": {
+                  "label": "燃烧",
+                  "description": "回合末按当前生命8%×层数伤害，最多5层"
+                }
+              }
+            },
+            "context": {
+              "id": "training:fire",
+              "authority": "simulated",
+              "scenarioId": "d309a890-09df-4e4e-863c-c561eefa3734",
+              "qaPreset": "charged",
+              "qaEnemyAction": "element_attack"
+            },
+            "updatedAt": "2026-10-24T15:25:55.421Z",
+            "revision": 3
+          },
+          "engineResult": {
+            "round": 1,
+            "actions": {
+              "player": "normal_attack",
+              "enemy": "element_attack"
+            },
+            "damageTaken": {
+              "player": 0,
+              "enemy": 12
+            },
+            "directDamage": {
+              "player": 0,
+              "enemy": 12
+            },
+            "dotDamageEvents": {
+              "player": [],
+              "enemy": []
+            },
+            "healEvents": {
+              "player": [],
+              "enemy": []
+            },
+            "hpAfter": {
+              "player": 85,
+              "enemy": 88
+            },
+            "angerAfter": {
+              "player": 70,
+              "enemy": 36
+            },
+            "statusesAfter": {
+              "player": [],
+              "enemy": []
+            },
+            "winner": null,
+            "notes": [
+              "enemy action missed"
+            ]
+          },
+          "timeline": {
+            "action": "normal_attack",
+            "phases": [
+              "rest",
+              "windup",
+              "release",
+              "impact",
+              "effects"
+            ],
+            "entries": [
+              {
+                "ms": 0,
+                "phase": "rest",
+                "key": "battle-a4aef2a1-c4b0-4abc-9866-e36b55eaf526:0",
+                "actors": [
+                  {
+                    "resourceId": "builtin:lingjing-yuwan-v2",
+                    "action": "idle",
+                    "clip": "idle",
+                    "frame": "3",
+                    "frameTexture": "20",
+                    "textureFrame": "59,61,221,251",
+                    "contentBounds": "{\"x\":71.01058823529414,\"y\":33.33070588235293,\"width\":191.646,\"height\":217.66129411764703,\"canvasWidth\":332.8,\"canvasHeight\":302.4}",
+                    "fallback": "false"
+                  },
+                  {
+                    "resourceId": "builtin:lingjing-shiba-v2",
+                    "action": "idle",
+                    "clip": "idle",
+                    "frame": "3",
+                    "frameTexture": "3",
+                    "textureFrame": "40,84,224,229",
+                    "contentBounds": "{\"x\":70.13043708609273,\"y\":54.155125827814544,\"width\":192.53912582781456,\"height\":196.83687417218542,\"canvasWidth\":332.8,\"canvasHeight\":302.4}",
+                    "fallback": "false"
+                  }
+                ],
+                "events": []
+              },
+              {
+                "ms": 79.79999999701977,
+                "phase": "windup",
+                "key": "battle-a4aef2a1-c4b0-4abc-9866-e36b55eaf526:1",
+                "actors": [
+                  {
+                    "resourceId": "builtin:lingjing-yuwan-v2",
+                    "action": "attack_windup",
+                    "clip": "attack_windup",
+                    "frame": "0",
+                    "frameTexture": "28",
+                    "textureFrame": "41,654,264,243",
+                    "contentBounds": "{\"x\":51.93270588235296,\"y\":40.2681176470588,\"width\":228.9345882352941,\"height\":210.72388235294116,\"canvasWidth\":332.8,\"canvasHeight\":302.4}",
+                    "fallback": "false"
+                  },
+                  {
+                    "resourceId": "builtin:lingjing-shiba-v2",
+                    "action": "attack_windup",
+                    "clip": "attack_windup",
+                    "frame": "0",
+                    "frameTexture": "11",
+                    "textureFrame": "40,710,227,202",
+                    "contentBounds": "{\"x\":69.27088741721855,\"y\":77.36296688741717,\"width\":195.11777483443709,\"height\":173.6290331125828,\"canvasWidth\":332.8,\"canvasHeight\":302.4}",
+                    "fallback": "false"
+                  }
+                ],
+                "events": []
+              },
+              {
+                "ms": 364.3999999985099,
+                "phase": "release",
+                "key": "battle-a4aef2a1-c4b0-4abc-9866-e36b55eaf526:1",
+                "actors": [
+                  {
+                    "resourceId": "builtin:lingjing-yuwan-v2",
+                    "action": "attack_release",
+                    "clip": "attack_release",
+                    "frame": "0",
+                    "frameTexture": "28",
+                    "textureFrame": "41,654,264,243",
+                    "contentBounds": "{\"x\":51.93270588235296,\"y\":40.2681176470588,\"width\":228.9345882352941,\"height\":210.72388235294116,\"canvasWidth\":332.8,\"canvasHeight\":302.4}",
+                    "fallback": "false"
+                  },
+                  {
+                    "resourceId": "builtin:lingjing-shiba-v2",
+                    "action": "idle",
+                    "clip": "idle",
+                    "frame": "0",
+                    "frameTexture": "11",
+                    "textureFrame": "40,710,227,202",
+                    "contentBounds": "{\"x\":69.27088741721855,\"y\":77.36296688741717,\"width\":195.11777483443709,\"height\":173.6290331125828,\"canvasWidth\":332.8,\"canvasHeight\":302.4}",
+                    "fallback": "false"
+                  }
+                ],
+                "events": []
+              },
+              {
+                "ms": 364.79999999701977,
+                "phase": "release",
+                "key": "battle-a4aef2a1-c4b0-4abc-9866-e36b55eaf526:1",
+                "actors": [
+                  {
+                    "resourceId": "builtin:lingjing-yuwan-v2",
+                    "action": "attack_release",
+                    "clip": "attack_release",
+                    "frame": "0",
+                    "frameTexture": "29",
+                    "textureFrame": "356,642,280,257",
+                    "contentBounds": "{\"x\":44.99529411764708,\"y\":28.1276470588235,\"width\":242.80941176470586,\"height\":222.86435294117646,\"canvasWidth\":332.8,\"canvasHeight\":302.4}",
+                    "fallback": "false"
+                  },
+                  {
+                    "resourceId": "builtin:lingjing-shiba-v2",
+                    "action": "idle",
+                    "clip": "idle",
+                    "frame": "0",
+                    "frameTexture": "3",
+                    "textureFrame": "40,84,224,229",
+                    "contentBounds": "{\"x\":70.13043708609273,\"y\":54.155125827814544,\"width\":192.53912582781456,\"height\":196.83687417218542,\"canvasWidth\":332.8,\"canvasHeight\":302.4}",
+                    "fallback": "false"
+                  }
+                ],
+                "events": []
+              },
+              {
+                "ms": 490.5,
+                "phase": "release",
+                "key": "battle-a4aef2a1-c4b0-4abc-9866-e36b55eaf526:1",
+                "actors": [
+                  {
+                    "resourceId": "builtin:lingjing-yuwan-v2",
+                    "action": "attack_release",
+                    "clip": "attack_release",
+                    "frame": "0",
+                    "frameTexture": "29",
+                    "textureFrame": "356,642,280,257",
+                    "contentBounds": "{\"x\":44.99529411764708,\"y\":28.1276470588235,\"width\":242.80941176470586,\"height\":222.86435294117646,\"canvasWidth\":332.8,\"canvasHeight\":302.4}",
+                    "fallback": "false"
+                  },
+                  {
+                    "resourceId": "builtin:lingjing-shiba-v2",
+                    "action": "idle",
+                    "clip": "idle",
+                    "frame": "1",
+                    "frameTexture": "3",
+                    "textureFrame": "40,84,224,229",
+                    "contentBounds": "{\"x\":70.13043708609273,\"y\":54.155125827814544,\"width\":192.53912582781456,\"height\":196.83687417218542,\"canvasWidth\":332.8,\"canvasHeight\":302.4}",
+                    "fallback": "false"
+                  }
+                ],
+                "events": []
+              },
+              {
+                "ms": 615.7999999970198,
+                "phase": "release",
+                "key": "battle-a4aef2a1-c4b0-4abc-9866-e36b55eaf526:1",
+                "actors": [
+                  {
+                    "resourceId": "builtin:lingjing-yuwan-v2",
+                    "action": "attack_release",
+                    "clip": "attack_release",
+                    "frame": "0",
+                    "frameTexture": "29",
+                    "textureFrame": "356,642,280,257",
+                    "contentBounds": "{\"x\":44.99529411764708,\"y\":28.1276470588235,\"width\":242.80941176470586,\"height\":222.86435294117646,\"canvasWidth\":332.8,\"canvasHeight\":302.4}",
+                    "fallback": "false"
+                  },
+                  {
+                    "resourceId": "builtin:lingjing-shiba-v2",
+                    "action": "idle",
+                    "clip": "idle",
+                    "frame": "2",
+                    "frameTexture": "3",
+                    "textureFrame": "40,84,224,229",
+                    "contentBounds": "{\"x\":70.13043708609273,\"y\":54.155125827814544,\"width\":192.53912582781456,\"height\":196.83687417218542,\"canvasWidth\":332.8,\"canvasHeight\":302.4}",
+                    "fallback": "false"
+                  }
+                ],
+                "events": []
+              },
+              {
+                "ms": 708,
+                "phase": "impact",
+                "key": "battle-a4aef2a1-c4b0-4abc-9866-e36b55eaf526:1",
+                "actors": [
+                  {
+                    "resourceId": "builtin:lingjing-yuwan-v2",
+                    "action": "idle",
+                    "clip": "idle",
+                    "frame": "0",
+                    "frameTexture": "29",
+                    "textureFrame": "356,642,280,257",
+                    "contentBounds": "{\"x\":44.99529411764708,\"y\":28.1276470588235,\"width\":242.80941176470586,\"height\":222.86435294117646,\"canvasWidth\":332.8,\"canvasHeight\":302.4}",
+                    "fallback": "false"
+                  },
+                  {
+                    "resourceId": "builtin:lingjing-shiba-v2",
+                    "action": "hit",
+                    "clip": "hit",
+                    "frame": "2",
+                    "frameTexture": "3",
+                    "textureFrame": "40,84,224,229",
+                    "contentBounds": "{\"x\":70.13043708609273,\"y\":54.155125827814544,\"width\":192.53912582781456,\"height\":196.83687417218542,\"canvasWidth\":332.8,\"canvasHeight\":302.4}",
+                    "fallback": "false"
+                  }
+                ],
+                "events": [
+                  {
+                    "kind": "damage",
+                    "id": "1:enemy:impact:damage:2",
+                    "text": "−12",
+                    "icons": []
+                  },
+                  {
+                    "kind": "interrupt",
+                    "id": "1:enemy:impact:interrupt:5",
+                    "text": "",
+                    "icons": [
+                      "lucide lucide-circle-slash"
+                    ]
+                  }
+                ]
+              },
+              {
+                "ms": 709.1000000014901,
+                "phase": "impact",
+                "key": "battle-a4aef2a1-c4b0-4abc-9866-e36b55eaf526:1",
+                "actors": [
+                  {
+                    "resourceId": "builtin:lingjing-yuwan-v2",
+                    "action": "idle",
+                    "clip": "idle",
+                    "frame": "0",
+                    "frameTexture": "20",
+                    "textureFrame": "59,61,221,251",
+                    "contentBounds": "{\"x\":71.01058823529414,\"y\":33.33070588235293,\"width\":191.646,\"height\":217.66129411764703,\"canvasWidth\":332.8,\"canvasHeight\":302.4}",
+                    "fallback": "false"
+                  },
+                  {
+                    "resourceId": "builtin:lingjing-shiba-v2",
+                    "action": "hit",
+                    "clip": "hit",
+                    "frame": "0",
+                    "frameTexture": "13",
+                    "textureFrame": "677,706,237,215",
+                    "contentBounds": "{\"x\":64.97313907284769,\"y\":66.18882119205296,\"width\":203.7132715231788,\"height\":184.803178807947,\"canvasWidth\":332.8,\"canvasHeight\":302.4}",
+                    "fallback": "false"
+                  }
+                ],
+                "events": [
+                  {
+                    "kind": "damage",
+                    "id": "1:enemy:impact:damage:2",
+                    "text": "−12",
+                    "icons": []
+                  },
+                  {
+                    "kind": "interrupt",
+                    "id": "1:enemy:impact:interrupt:5",
+                    "text": "",
+                    "icons": [
+                      "lucide lucide-circle-slash"
+                    ]
+                  }
+                ]
+              },
+              {
+                "ms": 832.3999999985099,
+                "phase": "impact",
+                "key": "battle-a4aef2a1-c4b0-4abc-9866-e36b55eaf526:1",
+                "actors": [
+                  {
+                    "resourceId": "builtin:lingjing-yuwan-v2",
+                    "action": "idle",
+                    "clip": "idle",
+                    "frame": "1",
+                    "frameTexture": "20",
+                    "textureFrame": "59,61,221,251",
+                    "contentBounds": "{\"x\":71.01058823529414,\"y\":33.33070588235293,\"width\":191.646,\"height\":217.66129411764703,\"canvasWidth\":332.8,\"canvasHeight\":302.4}",
+                    "fallback": "false"
+                  },
+                  {
+                    "resourceId": "builtin:lingjing-shiba-v2",
+                    "action": "hit",
+                    "clip": "hit",
+                    "frame": "1",
+                    "frameTexture": "13",
+                    "textureFrame": "677,706,237,215",
+                    "contentBounds": "{\"x\":64.97313907284769,\"y\":66.18882119205296,\"width\":203.7132715231788,\"height\":184.803178807947,\"canvasWidth\":332.8,\"canvasHeight\":302.4}",
+                    "fallback": "false"
+                  }
+                ],
+                "events": [
+                  {
+                    "kind": "damage",
+                    "id": "1:enemy:impact:damage:2",
+                    "text": "−12",
+                    "icons": []
+                  },
+                  {
+                    "kind": "interrupt",
+                    "id": "1:enemy:impact:interrupt:5",
+                    "text": "",
+                    "icons": [
+                      "lucide lucide-circle-slash"
+                    ]
+                  }
+                ]
+              },
+              {
+                "ms": 954.6999999955297,
+                "phase": "impact",
+                "key": "battle-a4aef2a1-c4b0-4abc-9866-e36b55eaf526:1",
+                "actors": [
+                  {
+                    "resourceId": "builtin:lingjing-yuwan-v2",
+                    "action": "idle",
+                    "clip": "idle",
+                    "frame": "2",
+                    "frameTexture": "20",
+                    "textureFrame": "59,61,221,251",
+                    "contentBounds": "{\"x\":71.01058823529414,\"y\":33.33070588235293,\"width\":191.646,\"height\":217.66129411764703,\"canvasWidth\":332.8,\"canvasHeight\":302.4}",
+                    "fallback": "false"
+                  },
+                  {
+                    "resourceId": "builtin:lingjing-shiba-v2",
+                    "action": "hit",
+                    "clip": "hit",
+                    "frame": "2",
+                    "frameTexture": "3",
+                    "textureFrame": "40,84,224,229",
+                    "contentBounds": "{\"x\":70.13043708609273,\"y\":54.155125827814544,\"width\":192.53912582781456,\"height\":196.83687417218542,\"canvasWidth\":332.8,\"canvasHeight\":302.4}",
+                    "fallback": "false"
+                  }
+                ],
+                "events": [
+                  {
+                    "kind": "damage",
+                    "id": "1:enemy:impact:damage:2",
+                    "text": "−12",
+                    "icons": []
+                  },
+                  {
+                    "kind": "interrupt",
+                    "id": "1:enemy:impact:interrupt:5",
+                    "text": "",
+                    "icons": [
+                      "lucide lucide-circle-slash"
+                    ]
+                  }
+                ]
+              },
+              {
+                "ms": 1019.5,
+                "phase": "effects",
+                "key": "battle-a4aef2a1-c4b0-4abc-9866-e36b55eaf526:1",
+                "actors": [
+                  {
+                    "resourceId": "builtin:lingjing-yuwan-v2",
+                    "action": "idle",
+                    "clip": "idle",
+                    "frame": "2",
+                    "frameTexture": "20",
+                    "textureFrame": "59,61,221,251",
+                    "contentBounds": "{\"x\":71.01058823529414,\"y\":33.33070588235293,\"width\":191.646,\"height\":217.66129411764703,\"canvasWidth\":332.8,\"canvasHeight\":302.4}",
+                    "fallback": "false"
+                  },
+                  {
+                    "resourceId": "builtin:lingjing-shiba-v2",
+                    "action": "idle",
+                    "clip": "idle",
+                    "frame": "2",
+                    "frameTexture": "3",
+                    "textureFrame": "40,84,224,229",
+                    "contentBounds": "{\"x\":70.13043708609273,\"y\":54.155125827814544,\"width\":192.53912582781456,\"height\":196.83687417218542,\"canvasWidth\":332.8,\"canvasHeight\":302.4}",
+                    "fallback": "false"
+                  }
+                ],
+                "events": [
+                  {
+                    "kind": "damage",
+                    "id": "1:enemy:impact:damage:2",
+                    "text": "−12",
+                    "icons": []
+                  },
+                  {
+                    "kind": "interrupt",
+                    "id": "1:enemy:impact:interrupt:5",
+                    "text": "",
+                    "icons": [
+                      "lucide lucide-circle-slash"
+                    ]
+                  }
+                ]
+              },
+              {
+                "ms": 1019.7999999970198,
+                "phase": "effects",
+                "key": "battle-a4aef2a1-c4b0-4abc-9866-e36b55eaf526:1",
+                "actors": [
+                  {
+                    "resourceId": "builtin:lingjing-yuwan-v2",
+                    "action": "idle",
+                    "clip": "idle",
+                    "frame": "0",
+                    "frameTexture": "20",
+                    "textureFrame": "59,61,221,251",
+                    "contentBounds": "{\"x\":71.01058823529414,\"y\":33.33070588235293,\"width\":191.646,\"height\":217.66129411764703,\"canvasWidth\":332.8,\"canvasHeight\":302.4}",
+                    "fallback": "false"
+                  },
+                  {
+                    "resourceId": "builtin:lingjing-shiba-v2",
+                    "action": "idle",
+                    "clip": "idle",
+                    "frame": "0",
+                    "frameTexture": "3",
+                    "textureFrame": "40,84,224,229",
+                    "contentBounds": "{\"x\":70.13043708609273,\"y\":54.155125827814544,\"width\":192.53912582781456,\"height\":196.83687417218542,\"canvasWidth\":332.8,\"canvasHeight\":302.4}",
+                    "fallback": "false"
+                  }
+                ],
+                "events": [
+                  {
+                    "kind": "damage",
+                    "id": "1:enemy:impact:damage:2",
+                    "text": "−12",
+                    "icons": []
+                  },
+                  {
+                    "kind": "interrupt",
+                    "id": "1:enemy:impact:interrupt:5",
+                    "text": "",
+                    "icons": [
+                      "lucide lucide-circle-slash"
+                    ]
+                  }
+                ]
+              },
+              {
+                "ms": 1146,
+                "phase": "effects",
+                "key": "battle-a4aef2a1-c4b0-4abc-9866-e36b55eaf526:1",
+                "actors": [
+                  {
+                    "resourceId": "builtin:lingjing-yuwan-v2",
+                    "action": "idle",
+                    "clip": "idle",
+                    "frame": "1",
+                    "frameTexture": "20",
+                    "textureFrame": "59,61,221,251",
+                    "contentBounds": "{\"x\":71.01058823529414,\"y\":33.33070588235293,\"width\":191.646,\"height\":217.66129411764703,\"canvasWidth\":332.8,\"canvasHeight\":302.4}",
+                    "fallback": "false"
+                  },
+                  {
+                    "resourceId": "builtin:lingjing-shiba-v2",
+                    "action": "idle",
+                    "clip": "idle",
+                    "frame": "1",
+                    "frameTexture": "3",
+                    "textureFrame": "40,84,224,229",
+                    "contentBounds": "{\"x\":70.13043708609273,\"y\":54.155125827814544,\"width\":192.53912582781456,\"height\":196.83687417218542,\"canvasWidth\":332.8,\"canvasHeight\":302.4}",
+                    "fallback": "false"
+                  }
+                ],
+                "events": [
+                  {
+                    "kind": "damage",
+                    "id": "1:enemy:impact:damage:2",
+                    "text": "−12",
+                    "icons": []
+                  },
+                  {
+                    "kind": "interrupt",
+                    "id": "1:enemy:impact:interrupt:5",
+                    "text": "",
+                    "icons": [
+                      "lucide lucide-circle-slash"
+                    ]
+                  }
+                ]
+              },
+              {
+                "ms": 1223.1999999955297,
+                "phase": "effects",
+                "key": "battle-a4aef2a1-c4b0-4abc-9866-e36b55eaf526:1",
+                "actors": [
+                  {
+                    "resourceId": "builtin:lingjing-yuwan-v2",
+                    "action": "idle",
+                    "clip": "idle",
+                    "frame": "1",
+                    "frameTexture": "20",
+                    "textureFrame": "59,61,221,251",
+                    "contentBounds": "{\"x\":71.01058823529414,\"y\":33.33070588235293,\"width\":191.646,\"height\":217.66129411764703,\"canvasWidth\":332.8,\"canvasHeight\":302.4}",
+                    "fallback": "false"
+                  },
+                  {
+                    "resourceId": "builtin:lingjing-shiba-v2",
+                    "action": "idle",
+                    "clip": "idle",
+                    "frame": "1",
+                    "frameTexture": "3",
+                    "textureFrame": "40,84,224,229",
+                    "contentBounds": "{\"x\":70.13043708609273,\"y\":54.155125827814544,\"width\":192.53912582781456,\"height\":196.83687417218542,\"canvasWidth\":332.8,\"canvasHeight\":302.4}",
+                    "fallback": "false"
+                  }
+                ],
+                "events": []
+              },
+              {
+                "ms": 1267.3999999985099,
+                "phase": "effects",
+                "key": "battle-a4aef2a1-c4b0-4abc-9866-e36b55eaf526:1",
+                "actors": [
+                  {
+                    "resourceId": "builtin:lingjing-yuwan-v2",
+                    "action": "idle",
+                    "clip": "idle",
+                    "frame": "2",
+                    "frameTexture": "20",
+                    "textureFrame": "59,61,221,251",
+                    "contentBounds": "{\"x\":71.01058823529414,\"y\":33.33070588235293,\"width\":191.646,\"height\":217.66129411764703,\"canvasWidth\":332.8,\"canvasHeight\":302.4}",
+                    "fallback": "false"
+                  },
+                  {
+                    "resourceId": "builtin:lingjing-shiba-v2",
+                    "action": "idle",
+                    "clip": "idle",
+                    "frame": "2",
+                    "frameTexture": "3",
+                    "textureFrame": "40,84,224,229",
+                    "contentBounds": "{\"x\":70.13043708609273,\"y\":54.155125827814544,\"width\":192.53912582781456,\"height\":196.83687417218542,\"canvasWidth\":332.8,\"canvasHeight\":302.4}",
+                    "fallback": "false"
+                  }
+                ],
+                "events": []
+              },
+              {
+                "ms": 1396.2999999970198,
+                "phase": "effects",
+                "key": "battle-a4aef2a1-c4b0-4abc-9866-e36b55eaf526:1",
+                "actors": [
+                  {
+                    "resourceId": "builtin:lingjing-yuwan-v2",
+                    "action": "idle",
+                    "clip": "idle",
+                    "frame": "3",
+                    "frameTexture": "20",
+                    "textureFrame": "59,61,221,251",
+                    "contentBounds": "{\"x\":71.01058823529414,\"y\":33.33070588235293,\"width\":191.646,\"height\":217.66129411764703,\"canvasWidth\":332.8,\"canvasHeight\":302.4}",
+                    "fallback": "false"
+                  },
+                  {
+                    "resourceId": "builtin:lingjing-shiba-v2",
+                    "action": "idle",
+                    "clip": "idle",
+                    "frame": "3",
+                    "frameTexture": "3",
+                    "textureFrame": "40,84,224,229",
+                    "contentBounds": "{\"x\":70.13043708609273,\"y\":54.155125827814544,\"width\":192.53912582781456,\"height\":196.83687417218542,\"canvasWidth\":332.8,\"canvasHeight\":302.4}",
+                    "fallback": "false"
+                  }
+                ],
+                "events": []
+              },
+              {
+                "ms": 1523.1999999955297,
+                "phase": "effects",
+                "key": "battle-a4aef2a1-c4b0-4abc-9866-e36b55eaf526:1",
+                "actors": [
+                  {
+                    "resourceId": "builtin:lingjing-yuwan-v2",
+                    "action": "idle",
+                    "clip": "idle",
+                    "frame": "4",
+                    "frameTexture": "20",
+                    "textureFrame": "59,61,221,251",
+                    "contentBounds": "{\"x\":71.01058823529414,\"y\":33.33070588235293,\"width\":191.646,\"height\":217.66129411764703,\"canvasWidth\":332.8,\"canvasHeight\":302.4}",
+                    "fallback": "false"
+                  },
+                  {
+                    "resourceId": "builtin:lingjing-shiba-v2",
+                    "action": "idle",
+                    "clip": "idle",
+                    "frame": "4",
+                    "frameTexture": "3",
+                    "textureFrame": "40,84,224,229",
+                    "contentBounds": "{\"x\":70.13043708609273,\"y\":54.155125827814544,\"width\":192.53912582781456,\"height\":196.83687417218542,\"canvasWidth\":332.8,\"canvasHeight\":302.4}",
+                    "fallback": "false"
+                  }
+                ],
+                "events": []
+              },
+              {
+                "ms": 1600.6000000014901,
+                "phase": "rest",
+                "key": "battle-a4aef2a1-c4b0-4abc-9866-e36b55eaf526:1",
+                "actors": [
+                  {
+                    "resourceId": "builtin:lingjing-yuwan-v2",
+                    "action": "idle",
+                    "clip": "idle",
+                    "frame": "4",
+                    "frameTexture": "20",
+                    "textureFrame": "59,61,221,251",
+                    "contentBounds": "{\"x\":71.01058823529414,\"y\":33.33070588235293,\"width\":191.646,\"height\":217.66129411764703,\"canvasWidth\":332.8,\"canvasHeight\":302.4}",
+                    "fallback": "false"
+                  },
+                  {
+                    "resourceId": "builtin:lingjing-shiba-v2",
+                    "action": "idle",
+                    "clip": "idle",
+                    "frame": "4",
+                    "frameTexture": "3",
+                    "textureFrame": "40,84,224,229",
+                    "contentBounds": "{\"x\":70.13043708609273,\"y\":54.155125827814544,\"width\":192.53912582781456,\"height\":196.83687417218542,\"canvasWidth\":332.8,\"canvasHeight\":302.4}",
+                    "fallback": "false"
+                  }
+                ],
+                "events": []
+              },
+              {
+                "ms": 1600.7999999970198,
+                "phase": "rest",
+                "key": "battle-a4aef2a1-c4b0-4abc-9866-e36b55eaf526:1",
+                "actors": [
+                  {
+                    "resourceId": "builtin:lingjing-yuwan-v2",
+                    "action": "idle",
+                    "clip": "idle",
+                    "frame": "0",
+                    "frameTexture": "20",
+                    "textureFrame": "59,61,221,251",
+                    "contentBounds": "{\"x\":71.01058823529414,\"y\":33.33070588235293,\"width\":191.646,\"height\":217.66129411764703,\"canvasWidth\":332.8,\"canvasHeight\":302.4}",
+                    "fallback": "false"
+                  },
+                  {
+                    "resourceId": "builtin:lingjing-shiba-v2",
+                    "action": "idle",
+                    "clip": "idle",
+                    "frame": "0",
+                    "frameTexture": "3",
+                    "textureFrame": "40,84,224,229",
+                    "contentBounds": "{\"x\":70.13043708609273,\"y\":54.155125827814544,\"width\":192.53912582781456,\"height\":196.83687417218542,\"canvasWidth\":332.8,\"canvasHeight\":302.4}",
+                    "fallback": "false"
+                  }
+                ],
+                "events": []
+              }
+            ]
+          }
+        },
+        {
+          "after": {
+            "id": "battle-a4aef2a1-c4b0-4abc-9866-e36b55eaf526",
+            "mode": "training",
+            "status": "active",
+            "startedAt": "2026-10-24T15:25:53.970Z",
+            "player": {
+              "petId": "pet-b4f68127-d449-4d8e-8c4e-6102643f2423",
+              "petName": "鱼丸",
+              "element": "water",
+              "level": 1,
+              "resourceRef": "builtin:lingjing-yuwan-v2",
+              "resource": {
+                "resourceId": "builtin:lingjing-yuwan-v2",
+                "kind": "2d"
+              },
+              "appearance2d": "builtin:lingjing-yuwan-v2"
+            },
+            "enemy": {
+              "petId": "training-fire",
+              "petName": "焰柴",
+              "element": "fire",
+              "level": 1,
+              "resourceRef": "builtin:lingjing-shiba-v2",
+              "appearance2d": "builtin:lingjing-shiba-v2",
+              "resource": {
+                "resourceId": "builtin:lingjing-shiba-v2",
+                "kind": "2d"
+              }
+            },
+            "snapshot": {
+              "round": 2,
+              "player": {
+                "id": "player",
+                "element": "water",
+                "hp": 85,
+                "maxHp": 120,
+                "anger": 90,
+                "freeDodgeUsed": false,
+                "statuses": []
+              },
+              "enemy": {
+                "id": "enemy",
+                "element": "fire",
+                "hp": 76,
+                "maxHp": 120,
+                "anger": 42,
+                "freeDodgeUsed": false,
+                "statuses": []
+              }
+            },
+            "rounds": [
+              {
+                "round": 1,
+                "actions": {
+                  "player": "normal_attack",
+                  "enemy": "element_attack"
+                },
+                "damageTaken": {
+                  "player": 0,
+                  "enemy": 12
+                },
+                "directDamage": {
+                  "player": 0,
+                  "enemy": 12
+                },
+                "dotDamageEvents": {
+                  "player": [],
+                  "enemy": []
+                },
+                "healEvents": {
+                  "player": [],
+                  "enemy": []
+                },
+                "hpAfter": {
+                  "player": 85,
+                  "enemy": 88
+                },
+                "angerAfter": {
+                  "player": 70,
+                  "enemy": 36
+                },
+                "statusesAfter": {
+                  "player": [],
+                  "enemy": []
+                },
+                "winner": null,
+                "notes": [
+                  "enemy action missed"
+                ],
+                "state": {
+                  "round": 1,
+                  "player": {
+                    "id": "player",
+                    "element": "water",
+                    "hp": 85,
+                    "maxHp": 120,
+                    "anger": 70,
+                    "freeDodgeUsed": false,
+                    "statuses": []
+                  },
+                  "enemy": {
+                    "id": "enemy",
+                    "element": "fire",
+                    "hp": 88,
+                    "maxHp": 120,
+                    "anger": 36,
+                    "freeDodgeUsed": false,
+                    "statuses": []
+                  }
+                },
+                "visualEvents": [
+                  {
+                    "id": "1:player:windup:action:0",
+                    "side": "player",
+                    "phase": "windup",
+                    "kind": "action",
+                    "action": "normal_attack"
+                  },
+                  {
+                    "id": "1:player:release:action:1",
+                    "side": "player",
+                    "phase": "release",
+                    "kind": "action",
+                    "action": "normal_attack",
+                    "element": "water"
+                  },
+                  {
+                    "id": "1:enemy:impact:damage:2",
+                    "side": "enemy",
+                    "phase": "impact",
+                    "kind": "damage",
+                    "amount": 12
+                  },
+                  {
+                    "id": "1:enemy:windup:action:3",
+                    "side": "enemy",
+                    "phase": "windup",
+                    "kind": "action",
+                    "action": "element_attack"
+                  },
+                  {
+                    "id": "1:enemy:release:action:4",
+                    "side": "enemy",
+                    "phase": "release",
+                    "kind": "action",
+                    "action": "element_attack",
+                    "element": "fire"
+                  },
+                  {
+                    "id": "1:enemy:impact:interrupt:5",
+                    "side": "enemy",
+                    "phase": "impact",
+                    "kind": "interrupt"
+                  }
+                ]
+              },
+              {
+                "round": 2,
+                "actions": {
+                  "player": "normal_attack",
+                  "enemy": "element_attack"
+                },
+                "damageTaken": {
+                  "player": 0,
+                  "enemy": 12
+                },
+                "directDamage": {
+                  "player": 0,
+                  "enemy": 12
+                },
+                "dotDamageEvents": {
+                  "player": [],
+                  "enemy": []
+                },
+                "healEvents": {
+                  "player": [],
+                  "enemy": []
+                },
+                "hpAfter": {
+                  "player": 85,
+                  "enemy": 76
+                },
+                "angerAfter": {
+                  "player": 90,
+                  "enemy": 42
+                },
+                "statusesAfter": {
+                  "player": [],
+                  "enemy": []
+                },
+                "winner": null,
+                "notes": [
+                  "enemy action missed"
+                ],
+                "state": {
+                  "round": 2,
+                  "player": {
+                    "id": "player",
+                    "element": "water",
+                    "hp": 85,
+                    "maxHp": 120,
+                    "anger": 90,
+                    "freeDodgeUsed": false,
+                    "statuses": []
+                  },
+                  "enemy": {
+                    "id": "enemy",
+                    "element": "fire",
+                    "hp": 76,
+                    "maxHp": 120,
+                    "anger": 42,
+                    "freeDodgeUsed": false,
+                    "statuses": []
+                  }
+                },
+                "visualEvents": [
+                  {
+                    "id": "2:player:windup:action:0",
+                    "side": "player",
+                    "phase": "windup",
+                    "kind": "action",
+                    "action": "normal_attack"
+                  },
+                  {
+                    "id": "2:player:release:action:1",
+                    "side": "player",
+                    "phase": "release",
+                    "kind": "action",
+                    "action": "normal_attack",
+                    "element": "water"
+                  },
+                  {
+                    "id": "2:enemy:impact:damage:2",
+                    "side": "enemy",
+                    "phase": "impact",
+                    "kind": "damage",
+                    "amount": 12
+                  },
+                  {
+                    "id": "2:enemy:windup:action:3",
+                    "side": "enemy",
+                    "phase": "windup",
+                    "kind": "action",
+                    "action": "element_attack"
+                  },
+                  {
+                    "id": "2:enemy:release:action:4",
+                    "side": "enemy",
+                    "phase": "release",
+                    "kind": "action",
+                    "action": "element_attack",
+                    "element": "fire"
+                  },
+                  {
+                    "id": "2:enemy:impact:interrupt:5",
+                    "side": "enemy",
+                    "phase": "impact",
+                    "kind": "interrupt"
+                  }
+                ]
+              }
+            ],
+            "winner": null,
+            "pendingAction": null,
+            "historyComplete": true,
+            "rules": {
+              "id": "five-elements-standard-v1",
+              "label": "标准五行对战",
+              "vitalPolicy": "normalized",
+              "maxHp": 120,
+              "maxAnger": 100,
+              "companionStatsApplied": false,
+              "baseDamage": {
+                "normal_attack": 10,
+                "element_attack": 12,
+                "dodge": 0,
+                "ultimate": 20
+              },
+              "ultimateAnger": 50,
+              "ultimateCost": 50,
+              "ultimateHeal": 20,
+              "dodgeMaxCost": 20,
+              "dodgeRefund": 30,
+              "advantage": {
+                "metal": "wood",
+                "wood": "earth",
+                "earth": "water",
+                "water": "fire",
+                "fire": "metal"
+              },
+              "elementEffects": {
+                "metal": {
+                  "label": "易伤",
+                  "description": "每层受伤×1.5，最多5层"
+                },
+                "wood": {
+                  "label": "寄生",
+                  "description": "每层回合末吸取2生命，最多5层"
+                },
+                "earth": {
+                  "label": "迟钝",
+                  "description": "每层伤害×0.5，最多5层"
+                },
+                "water": {
+                  "label": "降怒",
+                  "description": "命中后对方怒气向下取半，不增加受击怒气"
+                },
+                "fire": {
+                  "label": "燃烧",
+                  "description": "回合末按当前生命8%×层数伤害，最多5层"
+                }
+              }
+            },
+            "context": {
+              "id": "training:fire",
+              "authority": "simulated",
+              "scenarioId": "d309a890-09df-4e4e-863c-c561eefa3734",
+              "qaPreset": "charged",
+              "qaEnemyAction": "element_attack"
+            },
+            "updatedAt": "2026-10-24T15:25:57.090Z",
+            "revision": 4
+          },
+          "engineResult": {
+            "round": 2,
+            "actions": {
+              "player": "normal_attack",
+              "enemy": "element_attack"
+            },
+            "damageTaken": {
+              "player": 0,
+              "enemy": 12
+            },
+            "directDamage": {
+              "player": 0,
+              "enemy": 12
+            },
+            "dotDamageEvents": {
+              "player": [],
+              "enemy": []
+            },
+            "healEvents": {
+              "player": [],
+              "enemy": []
+            },
+            "hpAfter": {
+              "player": 85,
+              "enemy": 76
+            },
+            "angerAfter": {
+              "player": 90,
+              "enemy": 42
+            },
+            "statusesAfter": {
+              "player": [],
+              "enemy": []
+            },
+            "winner": null,
+            "notes": [
+              "enemy action missed"
+            ]
+          },
+          "timeline": {
+            "action": "normal_attack",
+            "phases": [
+              "rest",
+              "windup",
+              "release",
+              "impact",
+              "effects"
+            ],
+            "entries": [
+              {
+                "ms": 0.20000000298023224,
+                "phase": "rest",
+                "key": "battle-a4aef2a1-c4b0-4abc-9866-e36b55eaf526:1",
+                "actors": [
+                  {
+                    "resourceId": "builtin:lingjing-yuwan-v2",
+                    "action": "idle",
+                    "clip": "idle",
+                    "frame": "0",
+                    "frameTexture": "20",
+                    "textureFrame": "59,61,221,251",
+                    "contentBounds": "{\"x\":71.01058823529414,\"y\":33.33070588235293,\"width\":191.646,\"height\":217.66129411764703,\"canvasWidth\":332.8,\"canvasHeight\":302.4}",
+                    "fallback": "false"
+                  },
+                  {
+                    "resourceId": "builtin:lingjing-shiba-v2",
+                    "action": "idle",
+                    "clip": "idle",
+                    "frame": "0",
+                    "frameTexture": "3",
+                    "textureFrame": "40,84,224,229",
+                    "contentBounds": "{\"x\":70.13043708609273,\"y\":54.155125827814544,\"width\":192.53912582781456,\"height\":196.83687417218542,\"canvasWidth\":332.8,\"canvasHeight\":302.4}",
+                    "fallback": "false"
+                  }
+                ],
+                "events": []
+              },
+              {
+                "ms": 98.80000000447035,
+                "phase": "rest",
+                "key": "battle-a4aef2a1-c4b0-4abc-9866-e36b55eaf526:1",
+                "actors": [
+                  {
+                    "resourceId": "builtin:lingjing-yuwan-v2",
+                    "action": "idle",
+                    "clip": "idle",
+                    "frame": "1",
+                    "frameTexture": "20",
+                    "textureFrame": "59,61,221,251",
+                    "contentBounds": "{\"x\":71.01058823529414,\"y\":33.33070588235293,\"width\":191.646,\"height\":217.66129411764703,\"canvasWidth\":332.8,\"canvasHeight\":302.4}",
+                    "fallback": "false"
+                  },
+                  {
+                    "resourceId": "builtin:lingjing-shiba-v2",
+                    "action": "idle",
+                    "clip": "idle",
+                    "frame": "1",
+                    "frameTexture": "3",
+                    "textureFrame": "40,84,224,229",
+                    "contentBounds": "{\"x\":70.13043708609273,\"y\":54.155125827814544,\"width\":192.53912582781456,\"height\":196.83687417218542,\"canvasWidth\":332.8,\"canvasHeight\":302.4}",
+                    "fallback": "false"
+                  }
+                ],
+                "events": []
+              },
+              {
+                "ms": 112.20000000298023,
+                "phase": "windup",
+                "key": "battle-a4aef2a1-c4b0-4abc-9866-e36b55eaf526:2",
+                "actors": [
+                  {
+                    "resourceId": "builtin:lingjing-yuwan-v2",
+                    "action": "attack_windup",
+                    "clip": "attack_windup",
+                    "frame": "1",
+                    "frameTexture": "20",
+                    "textureFrame": "59,61,221,251",
+                    "contentBounds": "{\"x\":71.01058823529414,\"y\":33.33070588235293,\"width\":191.646,\"height\":217.66129411764703,\"canvasWidth\":332.8,\"canvasHeight\":302.4}",
+                    "fallback": "false"
+                  },
+                  {
+                    "resourceId": "builtin:lingjing-shiba-v2",
+                    "action": "attack_windup",
+                    "clip": "attack_windup",
+                    "frame": "1",
+                    "frameTexture": "3",
+                    "textureFrame": "40,84,224,229",
+                    "contentBounds": "{\"x\":70.13043708609273,\"y\":54.155125827814544,\"width\":192.53912582781456,\"height\":196.83687417218542,\"canvasWidth\":332.8,\"canvasHeight\":302.4}",
+                    "fallback": "false"
+                  }
+                ],
+                "events": []
+              },
+              {
+                "ms": 115.30000000447035,
+                "phase": "windup",
+                "key": "battle-a4aef2a1-c4b0-4abc-9866-e36b55eaf526:2",
+                "actors": [
+                  {
+                    "resourceId": "builtin:lingjing-yuwan-v2",
+                    "action": "attack_windup",
+                    "clip": "attack_windup",
+                    "frame": "0",
+                    "frameTexture": "28",
+                    "textureFrame": "41,654,264,243",
+                    "contentBounds": "{\"x\":51.93270588235296,\"y\":40.2681176470588,\"width\":228.9345882352941,\"height\":210.72388235294116,\"canvasWidth\":332.8,\"canvasHeight\":302.4}",
+                    "fallback": "false"
+                  },
+                  {
+                    "resourceId": "builtin:lingjing-shiba-v2",
+                    "action": "attack_windup",
+                    "clip": "attack_windup",
+                    "frame": "0",
+                    "frameTexture": "11",
+                    "textureFrame": "40,710,227,202",
+                    "contentBounds": "{\"x\":69.27088741721855,\"y\":77.36296688741717,\"width\":195.11777483443709,\"height\":173.6290331125828,\"canvasWidth\":332.8,\"canvasHeight\":302.4}",
+                    "fallback": "false"
+                  }
+                ],
+                "events": []
+              },
+              {
+                "ms": 395.5,
+                "phase": "release",
+                "key": "battle-a4aef2a1-c4b0-4abc-9866-e36b55eaf526:2",
+                "actors": [
+                  {
+                    "resourceId": "builtin:lingjing-yuwan-v2",
+                    "action": "attack_release",
+                    "clip": "attack_release",
+                    "frame": "0",
+                    "frameTexture": "28",
+                    "textureFrame": "41,654,264,243",
+                    "contentBounds": "{\"x\":51.93270588235296,\"y\":40.2681176470588,\"width\":228.9345882352941,\"height\":210.72388235294116,\"canvasWidth\":332.8,\"canvasHeight\":302.4}",
+                    "fallback": "false"
+                  },
+                  {
+                    "resourceId": "builtin:lingjing-shiba-v2",
+                    "action": "idle",
+                    "clip": "idle",
+                    "frame": "0",
+                    "frameTexture": "11",
+                    "textureFrame": "40,710,227,202",
+                    "contentBounds": "{\"x\":69.27088741721855,\"y\":77.36296688741717,\"width\":195.11777483443709,\"height\":173.6290331125828,\"canvasWidth\":332.8,\"canvasHeight\":302.4}",
+                    "fallback": "false"
+                  }
+                ],
+                "events": []
+              },
+              {
+                "ms": 395.80000000447035,
+                "phase": "release",
+                "key": "battle-a4aef2a1-c4b0-4abc-9866-e36b55eaf526:2",
+                "actors": [
+                  {
+                    "resourceId": "builtin:lingjing-yuwan-v2",
+                    "action": "attack_release",
+                    "clip": "attack_release",
+                    "frame": "0",
+                    "frameTexture": "29",
+                    "textureFrame": "356,642,280,257",
+                    "contentBounds": "{\"x\":44.99529411764708,\"y\":28.1276470588235,\"width\":242.80941176470586,\"height\":222.86435294117646,\"canvasWidth\":332.8,\"canvasHeight\":302.4}",
+                    "fallback": "false"
+                  },
+                  {
+                    "resourceId": "builtin:lingjing-shiba-v2",
+                    "action": "idle",
+                    "clip": "idle",
+                    "frame": "0",
+                    "frameTexture": "3",
+                    "textureFrame": "40,84,224,229",
+                    "contentBounds": "{\"x\":70.13043708609273,\"y\":54.155125827814544,\"width\":192.53912582781456,\"height\":196.83687417218542,\"canvasWidth\":332.8,\"canvasHeight\":302.4}",
+                    "fallback": "false"
+                  }
+                ],
+                "events": []
+              },
+              {
+                "ms": 522.2000000029802,
+                "phase": "release",
+                "key": "battle-a4aef2a1-c4b0-4abc-9866-e36b55eaf526:2",
+                "actors": [
+                  {
+                    "resourceId": "builtin:lingjing-yuwan-v2",
+                    "action": "attack_release",
+                    "clip": "attack_release",
+                    "frame": "0",
+                    "frameTexture": "29",
+                    "textureFrame": "356,642,280,257",
+                    "contentBounds": "{\"x\":44.99529411764708,\"y\":28.1276470588235,\"width\":242.80941176470586,\"height\":222.86435294117646,\"canvasWidth\":332.8,\"canvasHeight\":302.4}",
+                    "fallback": "false"
+                  },
+                  {
+                    "resourceId": "builtin:lingjing-shiba-v2",
+                    "action": "idle",
+                    "clip": "idle",
+                    "frame": "1",
+                    "frameTexture": "3",
+                    "textureFrame": "40,84,224,229",
+                    "contentBounds": "{\"x\":70.13043708609273,\"y\":54.155125827814544,\"width\":192.53912582781456,\"height\":196.83687417218542,\"canvasWidth\":332.8,\"canvasHeight\":302.4}",
+                    "fallback": "false"
+                  }
+                ],
+                "events": []
+              },
+              {
+                "ms": 651.3000000044703,
+                "phase": "release",
+                "key": "battle-a4aef2a1-c4b0-4abc-9866-e36b55eaf526:2",
+                "actors": [
+                  {
+                    "resourceId": "builtin:lingjing-yuwan-v2",
+                    "action": "attack_release",
+                    "clip": "attack_release",
+                    "frame": "0",
+                    "frameTexture": "29",
+                    "textureFrame": "356,642,280,257",
+                    "contentBounds": "{\"x\":44.99529411764708,\"y\":28.1276470588235,\"width\":242.80941176470586,\"height\":222.86435294117646,\"canvasWidth\":332.8,\"canvasHeight\":302.4}",
+                    "fallback": "false"
+                  },
+                  {
+                    "resourceId": "builtin:lingjing-shiba-v2",
+                    "action": "idle",
+                    "clip": "idle",
+                    "frame": "2",
+                    "frameTexture": "3",
+                    "textureFrame": "40,84,224,229",
+                    "contentBounds": "{\"x\":70.13043708609273,\"y\":54.155125827814544,\"width\":192.53912582781456,\"height\":196.83687417218542,\"canvasWidth\":332.8,\"canvasHeight\":302.4}",
+                    "fallback": "false"
+                  }
+                ],
+                "events": []
+              },
+              {
+                "ms": 734.5,
+                "phase": "impact",
+                "key": "battle-a4aef2a1-c4b0-4abc-9866-e36b55eaf526:2",
+                "actors": [
+                  {
+                    "resourceId": "builtin:lingjing-yuwan-v2",
+                    "action": "idle",
+                    "clip": "idle",
+                    "frame": "0",
+                    "frameTexture": "29",
+                    "textureFrame": "356,642,280,257",
+                    "contentBounds": "{\"x\":44.99529411764708,\"y\":28.1276470588235,\"width\":242.80941176470586,\"height\":222.86435294117646,\"canvasWidth\":332.8,\"canvasHeight\":302.4}",
+                    "fallback": "false"
+                  },
+                  {
+                    "resourceId": "builtin:lingjing-shiba-v2",
+                    "action": "hit",
+                    "clip": "hit",
+                    "frame": "2",
+                    "frameTexture": "3",
+                    "textureFrame": "40,84,224,229",
+                    "contentBounds": "{\"x\":70.13043708609273,\"y\":54.155125827814544,\"width\":192.53912582781456,\"height\":196.83687417218542,\"canvasWidth\":332.8,\"canvasHeight\":302.4}",
+                    "fallback": "false"
+                  }
+                ],
+                "events": [
+                  {
+                    "kind": "damage",
+                    "id": "2:enemy:impact:damage:2",
+                    "text": "−12",
+                    "icons": []
+                  },
+                  {
+                    "kind": "interrupt",
+                    "id": "2:enemy:impact:interrupt:5",
+                    "text": "",
+                    "icons": [
+                      "lucide lucide-circle-slash"
+                    ]
+                  }
+                ]
+              },
+              {
+                "ms": 737,
+                "phase": "impact",
+                "key": "battle-a4aef2a1-c4b0-4abc-9866-e36b55eaf526:2",
+                "actors": [
+                  {
+                    "resourceId": "builtin:lingjing-yuwan-v2",
+                    "action": "idle",
+                    "clip": "idle",
+                    "frame": "0",
+                    "frameTexture": "20",
+                    "textureFrame": "59,61,221,251",
+                    "contentBounds": "{\"x\":71.01058823529414,\"y\":33.33070588235293,\"width\":191.646,\"height\":217.66129411764703,\"canvasWidth\":332.8,\"canvasHeight\":302.4}",
+                    "fallback": "false"
+                  },
+                  {
+                    "resourceId": "builtin:lingjing-shiba-v2",
+                    "action": "hit",
+                    "clip": "hit",
+                    "frame": "0",
+                    "frameTexture": "13",
+                    "textureFrame": "677,706,237,215",
+                    "contentBounds": "{\"x\":64.97313907284769,\"y\":66.18882119205296,\"width\":203.7132715231788,\"height\":184.803178807947,\"canvasWidth\":332.8,\"canvasHeight\":302.4}",
+                    "fallback": "false"
+                  }
+                ],
+                "events": [
+                  {
+                    "kind": "damage",
+                    "id": "2:enemy:impact:damage:2",
+                    "text": "−12",
+                    "icons": []
+                  },
+                  {
+                    "kind": "interrupt",
+                    "id": "2:enemy:impact:interrupt:5",
+                    "text": "",
+                    "icons": [
+                      "lucide lucide-circle-slash"
+                    ]
+                  }
+                ]
+              },
+              {
+                "ms": 863.5,
+                "phase": "impact",
+                "key": "battle-a4aef2a1-c4b0-4abc-9866-e36b55eaf526:2",
+                "actors": [
+                  {
+                    "resourceId": "builtin:lingjing-yuwan-v2",
+                    "action": "idle",
+                    "clip": "idle",
+                    "frame": "1",
+                    "frameTexture": "20",
+                    "textureFrame": "59,61,221,251",
+                    "contentBounds": "{\"x\":71.01058823529414,\"y\":33.33070588235293,\"width\":191.646,\"height\":217.66129411764703,\"canvasWidth\":332.8,\"canvasHeight\":302.4}",
+                    "fallback": "false"
+                  },
+                  {
+                    "resourceId": "builtin:lingjing-shiba-v2",
+                    "action": "hit",
+                    "clip": "hit",
+                    "frame": "1",
+                    "frameTexture": "13",
+                    "textureFrame": "677,706,237,215",
+                    "contentBounds": "{\"x\":64.97313907284769,\"y\":66.18882119205296,\"width\":203.7132715231788,\"height\":184.803178807947,\"canvasWidth\":332.8,\"canvasHeight\":302.4}",
+                    "fallback": "false"
+                  }
+                ],
+                "events": [
+                  {
+                    "kind": "damage",
+                    "id": "2:enemy:impact:damage:2",
+                    "text": "−12",
+                    "icons": []
+                  },
+                  {
+                    "kind": "interrupt",
+                    "id": "2:enemy:impact:interrupt:5",
+                    "text": "",
+                    "icons": [
+                      "lucide lucide-circle-slash"
+                    ]
+                  }
+                ]
+              },
+              {
+                "ms": 990,
+                "phase": "impact",
+                "key": "battle-a4aef2a1-c4b0-4abc-9866-e36b55eaf526:2",
+                "actors": [
+                  {
+                    "resourceId": "builtin:lingjing-yuwan-v2",
+                    "action": "idle",
+                    "clip": "idle",
+                    "frame": "2",
+                    "frameTexture": "20",
+                    "textureFrame": "59,61,221,251",
+                    "contentBounds": "{\"x\":71.01058823529414,\"y\":33.33070588235293,\"width\":191.646,\"height\":217.66129411764703,\"canvasWidth\":332.8,\"canvasHeight\":302.4}",
+                    "fallback": "false"
+                  },
+                  {
+                    "resourceId": "builtin:lingjing-shiba-v2",
+                    "action": "hit",
+                    "clip": "hit",
+                    "frame": "2",
+                    "frameTexture": "3",
+                    "textureFrame": "40,84,224,229",
+                    "contentBounds": "{\"x\":70.13043708609273,\"y\":54.155125827814544,\"width\":192.53912582781456,\"height\":196.83687417218542,\"canvasWidth\":332.8,\"canvasHeight\":302.4}",
+                    "fallback": "false"
+                  }
+                ],
+                "events": [
+                  {
+                    "kind": "damage",
+                    "id": "2:enemy:impact:damage:2",
+                    "text": "−12",
+                    "icons": []
+                  },
+                  {
+                    "kind": "interrupt",
+                    "id": "2:enemy:impact:interrupt:5",
+                    "text": "",
+                    "icons": [
+                      "lucide lucide-circle-slash"
+                    ]
+                  }
+                ]
+              },
+              {
+                "ms": 1053.4000000059605,
+                "phase": "effects",
+                "key": "battle-a4aef2a1-c4b0-4abc-9866-e36b55eaf526:2",
+                "actors": [
+                  {
+                    "resourceId": "builtin:lingjing-yuwan-v2",
+                    "action": "idle",
+                    "clip": "idle",
+                    "frame": "2",
+                    "frameTexture": "20",
+                    "textureFrame": "59,61,221,251",
+                    "contentBounds": "{\"x\":71.01058823529414,\"y\":33.33070588235293,\"width\":191.646,\"height\":217.66129411764703,\"canvasWidth\":332.8,\"canvasHeight\":302.4}",
+                    "fallback": "false"
+                  },
+                  {
+                    "resourceId": "builtin:lingjing-shiba-v2",
+                    "action": "idle",
+                    "clip": "idle",
+                    "frame": "2",
+                    "frameTexture": "3",
+                    "textureFrame": "40,84,224,229",
+                    "contentBounds": "{\"x\":70.13043708609273,\"y\":54.155125827814544,\"width\":192.53912582781456,\"height\":196.83687417218542,\"canvasWidth\":332.8,\"canvasHeight\":302.4}",
+                    "fallback": "false"
+                  }
+                ],
+                "events": [
+                  {
+                    "kind": "damage",
+                    "id": "2:enemy:impact:damage:2",
+                    "text": "−12",
+                    "icons": []
+                  },
+                  {
+                    "kind": "interrupt",
+                    "id": "2:enemy:impact:interrupt:5",
+                    "text": "",
+                    "icons": [
+                      "lucide lucide-circle-slash"
+                    ]
+                  }
+                ]
+              },
+              {
+                "ms": 1053.8000000044703,
+                "phase": "effects",
+                "key": "battle-a4aef2a1-c4b0-4abc-9866-e36b55eaf526:2",
+                "actors": [
+                  {
+                    "resourceId": "builtin:lingjing-yuwan-v2",
+                    "action": "idle",
+                    "clip": "idle",
+                    "frame": "0",
+                    "frameTexture": "20",
+                    "textureFrame": "59,61,221,251",
+                    "contentBounds": "{\"x\":71.01058823529414,\"y\":33.33070588235293,\"width\":191.646,\"height\":217.66129411764703,\"canvasWidth\":332.8,\"canvasHeight\":302.4}",
+                    "fallback": "false"
+                  },
+                  {
+                    "resourceId": "builtin:lingjing-shiba-v2",
+                    "action": "idle",
+                    "clip": "idle",
+                    "frame": "0",
+                    "frameTexture": "3",
+                    "textureFrame": "40,84,224,229",
+                    "contentBounds": "{\"x\":70.13043708609273,\"y\":54.155125827814544,\"width\":192.53912582781456,\"height\":196.83687417218542,\"canvasWidth\":332.8,\"canvasHeight\":302.4}",
+                    "fallback": "false"
+                  }
+                ],
+                "events": [
+                  {
+                    "kind": "damage",
+                    "id": "2:enemy:impact:damage:2",
+                    "text": "−12",
+                    "icons": []
+                  },
+                  {
+                    "kind": "interrupt",
+                    "id": "2:enemy:impact:interrupt:5",
+                    "text": "",
+                    "icons": [
+                      "lucide lucide-circle-slash"
+                    ]
+                  }
+                ]
+              },
+              {
+                "ms": 1179.4000000059605,
+                "phase": "effects",
+                "key": "battle-a4aef2a1-c4b0-4abc-9866-e36b55eaf526:2",
+                "actors": [
+                  {
+                    "resourceId": "builtin:lingjing-yuwan-v2",
+                    "action": "idle",
+                    "clip": "idle",
+                    "frame": "1",
+                    "frameTexture": "20",
+                    "textureFrame": "59,61,221,251",
+                    "contentBounds": "{\"x\":71.01058823529414,\"y\":33.33070588235293,\"width\":191.646,\"height\":217.66129411764703,\"canvasWidth\":332.8,\"canvasHeight\":302.4}",
+                    "fallback": "false"
+                  },
+                  {
+                    "resourceId": "builtin:lingjing-shiba-v2",
+                    "action": "idle",
+                    "clip": "idle",
+                    "frame": "1",
+                    "frameTexture": "3",
+                    "textureFrame": "40,84,224,229",
+                    "contentBounds": "{\"x\":70.13043708609273,\"y\":54.155125827814544,\"width\":192.53912582781456,\"height\":196.83687417218542,\"canvasWidth\":332.8,\"canvasHeight\":302.4}",
+                    "fallback": "false"
+                  }
+                ],
+                "events": [
+                  {
+                    "kind": "damage",
+                    "id": "2:enemy:impact:damage:2",
+                    "text": "−12",
+                    "icons": []
+                  },
+                  {
+                    "kind": "interrupt",
+                    "id": "2:enemy:impact:interrupt:5",
+                    "text": "",
+                    "icons": [
+                      "lucide lucide-circle-slash"
+                    ]
+                  }
+                ]
+              },
+              {
+                "ms": 1255.4000000059605,
+                "phase": "effects",
+                "key": "battle-a4aef2a1-c4b0-4abc-9866-e36b55eaf526:2",
+                "actors": [
+                  {
+                    "resourceId": "builtin:lingjing-yuwan-v2",
+                    "action": "idle",
+                    "clip": "idle",
+                    "frame": "1",
+                    "frameTexture": "20",
+                    "textureFrame": "59,61,221,251",
+                    "contentBounds": "{\"x\":71.01058823529414,\"y\":33.33070588235293,\"width\":191.646,\"height\":217.66129411764703,\"canvasWidth\":332.8,\"canvasHeight\":302.4}",
+                    "fallback": "false"
+                  },
+                  {
+                    "resourceId": "builtin:lingjing-shiba-v2",
+                    "action": "idle",
+                    "clip": "idle",
+                    "frame": "1",
+                    "frameTexture": "3",
+                    "textureFrame": "40,84,224,229",
+                    "contentBounds": "{\"x\":70.13043708609273,\"y\":54.155125827814544,\"width\":192.53912582781456,\"height\":196.83687417218542,\"canvasWidth\":332.8,\"canvasHeight\":302.4}",
+                    "fallback": "false"
+                  }
+                ],
+                "events": []
+              },
+              {
+                "ms": 1306.7000000029802,
+                "phase": "effects",
+                "key": "battle-a4aef2a1-c4b0-4abc-9866-e36b55eaf526:2",
+                "actors": [
+                  {
+                    "resourceId": "builtin:lingjing-yuwan-v2",
+                    "action": "idle",
+                    "clip": "idle",
+                    "frame": "2",
+                    "frameTexture": "20",
+                    "textureFrame": "59,61,221,251",
+                    "contentBounds": "{\"x\":71.01058823529414,\"y\":33.33070588235293,\"width\":191.646,\"height\":217.66129411764703,\"canvasWidth\":332.8,\"canvasHeight\":302.4}",
+                    "fallback": "false"
+                  },
+                  {
+                    "resourceId": "builtin:lingjing-shiba-v2",
+                    "action": "idle",
+                    "clip": "idle",
+                    "frame": "2",
+                    "frameTexture": "3",
+                    "textureFrame": "40,84,224,229",
+                    "contentBounds": "{\"x\":70.13043708609273,\"y\":54.155125827814544,\"width\":192.53912582781456,\"height\":196.83687417218542,\"canvasWidth\":332.8,\"canvasHeight\":302.4}",
+                    "fallback": "false"
+                  }
+                ],
+                "events": []
+              },
+              {
+                "ms": 1427.1000000014901,
+                "phase": "effects",
+                "key": "battle-a4aef2a1-c4b0-4abc-9866-e36b55eaf526:2",
+                "actors": [
+                  {
+                    "resourceId": "builtin:lingjing-yuwan-v2",
+                    "action": "idle",
+                    "clip": "idle",
+                    "frame": "3",
+                    "frameTexture": "20",
+                    "textureFrame": "59,61,221,251",
+                    "contentBounds": "{\"x\":71.01058823529414,\"y\":33.33070588235293,\"width\":191.646,\"height\":217.66129411764703,\"canvasWidth\":332.8,\"canvasHeight\":302.4}",
+                    "fallback": "false"
+                  },
+                  {
+                    "resourceId": "builtin:lingjing-shiba-v2",
+                    "action": "idle",
+                    "clip": "idle",
+                    "frame": "3",
+                    "frameTexture": "3",
+                    "textureFrame": "40,84,224,229",
+                    "contentBounds": "{\"x\":70.13043708609273,\"y\":54.155125827814544,\"width\":192.53912582781456,\"height\":196.83687417218542,\"canvasWidth\":332.8,\"canvasHeight\":302.4}",
+                    "fallback": "false"
+                  }
+                ],
+                "events": []
+              },
+              {
+                "ms": 1557.2000000029802,
+                "phase": "effects",
+                "key": "battle-a4aef2a1-c4b0-4abc-9866-e36b55eaf526:2",
+                "actors": [
+                  {
+                    "resourceId": "builtin:lingjing-yuwan-v2",
+                    "action": "idle",
+                    "clip": "idle",
+                    "frame": "4",
+                    "frameTexture": "20",
+                    "textureFrame": "59,61,221,251",
+                    "contentBounds": "{\"x\":71.01058823529414,\"y\":33.33070588235293,\"width\":191.646,\"height\":217.66129411764703,\"canvasWidth\":332.8,\"canvasHeight\":302.4}",
+                    "fallback": "false"
+                  },
+                  {
+                    "resourceId": "builtin:lingjing-shiba-v2",
+                    "action": "idle",
+                    "clip": "idle",
+                    "frame": "4",
+                    "frameTexture": "3",
+                    "textureFrame": "40,84,224,229",
+                    "contentBounds": "{\"x\":70.13043708609273,\"y\":54.155125827814544,\"width\":192.53912582781456,\"height\":196.83687417218542,\"canvasWidth\":332.8,\"canvasHeight\":302.4}",
+                    "fallback": "false"
+                  }
+                ],
+                "events": []
+              },
+              {
+                "ms": 1635.2000000029802,
+                "phase": "rest",
+                "key": "battle-a4aef2a1-c4b0-4abc-9866-e36b55eaf526:2",
+                "actors": [
+                  {
+                    "resourceId": "builtin:lingjing-yuwan-v2",
+                    "action": "idle",
+                    "clip": "idle",
+                    "frame": "4",
+                    "frameTexture": "20",
+                    "textureFrame": "59,61,221,251",
+                    "contentBounds": "{\"x\":71.01058823529414,\"y\":33.33070588235293,\"width\":191.646,\"height\":217.66129411764703,\"canvasWidth\":332.8,\"canvasHeight\":302.4}",
+                    "fallback": "false"
+                  },
+                  {
+                    "resourceId": "builtin:lingjing-shiba-v2",
+                    "action": "idle",
+                    "clip": "idle",
+                    "frame": "4",
+                    "frameTexture": "3",
+                    "textureFrame": "40,84,224,229",
+                    "contentBounds": "{\"x\":70.13043708609273,\"y\":54.155125827814544,\"width\":192.53912582781456,\"height\":196.83687417218542,\"canvasWidth\":332.8,\"canvasHeight\":302.4}",
+                    "fallback": "false"
+                  }
+                ],
+                "events": []
+              },
+              {
+                "ms": 1635.5,
+                "phase": "rest",
+                "key": "battle-a4aef2a1-c4b0-4abc-9866-e36b55eaf526:2",
+                "actors": [
+                  {
+                    "resourceId": "builtin:lingjing-yuwan-v2",
+                    "action": "idle",
+                    "clip": "idle",
+                    "frame": "0",
+                    "frameTexture": "20",
+                    "textureFrame": "59,61,221,251",
+                    "contentBounds": "{\"x\":71.01058823529414,\"y\":33.33070588235293,\"width\":191.646,\"height\":217.66129411764703,\"canvasWidth\":332.8,\"canvasHeight\":302.4}",
+                    "fallback": "false"
+                  },
+                  {
+                    "resourceId": "builtin:lingjing-shiba-v2",
+                    "action": "idle",
+                    "clip": "idle",
+                    "frame": "0",
+                    "frameTexture": "3",
+                    "textureFrame": "40,84,224,229",
+                    "contentBounds": "{\"x\":70.13043708609273,\"y\":54.155125827814544,\"width\":192.53912582781456,\"height\":196.83687417218542,\"canvasWidth\":332.8,\"canvasHeight\":302.4}",
+                    "fallback": "false"
+                  }
+                ],
+                "events": []
+              }
+            ]
+          }
+        }
+      ],
+      "final": {
+        "id": "battle-a4aef2a1-c4b0-4abc-9866-e36b55eaf526",
+        "mode": "training",
+        "status": "abandoned",
+        "startedAt": "2026-10-24T15:25:53.970Z",
+        "player": {
+          "petId": "pet-b4f68127-d449-4d8e-8c4e-6102643f2423",
+          "petName": "鱼丸",
+          "element": "water",
+          "level": 1,
+          "resourceRef": "builtin:lingjing-yuwan-v2",
+          "resource": {
+            "resourceId": "builtin:lingjing-yuwan-v2",
+            "kind": "2d"
+          },
+          "appearance2d": "builtin:lingjing-yuwan-v2"
+        },
+        "enemy": {
+          "petId": "training-fire",
+          "petName": "焰柴",
+          "element": "fire",
+          "level": 1,
+          "resourceRef": "builtin:lingjing-shiba-v2",
+          "appearance2d": "builtin:lingjing-shiba-v2",
+          "resource": {
+            "resourceId": "builtin:lingjing-shiba-v2",
+            "kind": "2d"
+          }
+        },
+        "snapshot": {
+          "round": 2,
+          "player": {
+            "id": "player",
+            "element": "water",
+            "hp": 85,
+            "maxHp": 120,
+            "anger": 90,
+            "freeDodgeUsed": false,
+            "statuses": []
+          },
+          "enemy": {
+            "id": "enemy",
+            "element": "fire",
+            "hp": 76,
+            "maxHp": 120,
+            "anger": 42,
+            "freeDodgeUsed": false,
+            "statuses": []
+          }
+        },
+        "rounds": [
+          {
+            "round": 1,
+            "actions": {
+              "player": "normal_attack",
+              "enemy": "element_attack"
+            },
+            "damageTaken": {
+              "player": 0,
+              "enemy": 12
+            },
+            "directDamage": {
+              "player": 0,
+              "enemy": 12
+            },
+            "dotDamageEvents": {
+              "player": [],
+              "enemy": []
+            },
+            "healEvents": {
+              "player": [],
+              "enemy": []
+            },
+            "hpAfter": {
+              "player": 85,
+              "enemy": 88
+            },
+            "angerAfter": {
+              "player": 70,
+              "enemy": 36
+            },
+            "statusesAfter": {
+              "player": [],
+              "enemy": []
+            },
+            "winner": null,
+            "notes": [
+              "enemy action missed"
+            ],
+            "state": {
+              "round": 1,
+              "player": {
+                "id": "player",
+                "element": "water",
+                "hp": 85,
+                "maxHp": 120,
+                "anger": 70,
+                "freeDodgeUsed": false,
+                "statuses": []
+              },
+              "enemy": {
+                "id": "enemy",
+                "element": "fire",
+                "hp": 88,
+                "maxHp": 120,
+                "anger": 36,
+                "freeDodgeUsed": false,
+                "statuses": []
+              }
+            },
+            "visualEvents": [
+              {
+                "id": "1:player:windup:action:0",
+                "side": "player",
+                "phase": "windup",
+                "kind": "action",
+                "action": "normal_attack"
+              },
+              {
+                "id": "1:player:release:action:1",
+                "side": "player",
+                "phase": "release",
+                "kind": "action",
+                "action": "normal_attack",
+                "element": "water"
+              },
+              {
+                "id": "1:enemy:impact:damage:2",
+                "side": "enemy",
+                "phase": "impact",
+                "kind": "damage",
+                "amount": 12
+              },
+              {
+                "id": "1:enemy:windup:action:3",
+                "side": "enemy",
+                "phase": "windup",
+                "kind": "action",
+                "action": "element_attack"
+              },
+              {
+                "id": "1:enemy:release:action:4",
+                "side": "enemy",
+                "phase": "release",
+                "kind": "action",
+                "action": "element_attack",
+                "element": "fire"
+              },
+              {
+                "id": "1:enemy:impact:interrupt:5",
+                "side": "enemy",
+                "phase": "impact",
+                "kind": "interrupt"
+              }
+            ]
+          },
+          {
+            "round": 2,
+            "actions": {
+              "player": "normal_attack",
+              "enemy": "element_attack"
+            },
+            "damageTaken": {
+              "player": 0,
+              "enemy": 12
+            },
+            "directDamage": {
+              "player": 0,
+              "enemy": 12
+            },
+            "dotDamageEvents": {
+              "player": [],
+              "enemy": []
+            },
+            "healEvents": {
+              "player": [],
+              "enemy": []
+            },
+            "hpAfter": {
+              "player": 85,
+              "enemy": 76
+            },
+            "angerAfter": {
+              "player": 90,
+              "enemy": 42
+            },
+            "statusesAfter": {
+              "player": [],
+              "enemy": []
+            },
+            "winner": null,
+            "notes": [
+              "enemy action missed"
+            ],
+            "state": {
+              "round": 2,
+              "player": {
+                "id": "player",
+                "element": "water",
+                "hp": 85,
+                "maxHp": 120,
+                "anger": 90,
+                "freeDodgeUsed": false,
+                "statuses": []
+              },
+              "enemy": {
+                "id": "enemy",
+                "element": "fire",
+                "hp": 76,
+                "maxHp": 120,
+                "anger": 42,
+                "freeDodgeUsed": false,
+                "statuses": []
+              }
+            },
+            "visualEvents": [
+              {
+                "id": "2:player:windup:action:0",
+                "side": "player",
+                "phase": "windup",
+                "kind": "action",
+                "action": "normal_attack"
+              },
+              {
+                "id": "2:player:release:action:1",
+                "side": "player",
+                "phase": "release",
+                "kind": "action",
+                "action": "normal_attack",
+                "element": "water"
+              },
+              {
+                "id": "2:enemy:impact:damage:2",
+                "side": "enemy",
+                "phase": "impact",
+                "kind": "damage",
+                "amount": 12
+              },
+              {
+                "id": "2:enemy:windup:action:3",
+                "side": "enemy",
+                "phase": "windup",
+                "kind": "action",
+                "action": "element_attack"
+              },
+              {
+                "id": "2:enemy:release:action:4",
+                "side": "enemy",
+                "phase": "release",
+                "kind": "action",
+                "action": "element_attack",
+                "element": "fire"
+              },
+              {
+                "id": "2:enemy:impact:interrupt:5",
+                "side": "enemy",
+                "phase": "impact",
+                "kind": "interrupt"
+              }
+            ]
+          }
+        ],
+        "winner": null,
+        "pendingAction": null,
+        "historyComplete": true,
+        "rules": {
+          "id": "five-elements-standard-v1",
+          "label": "标准五行对战",
+          "vitalPolicy": "normalized",
+          "maxHp": 120,
+          "maxAnger": 100,
+          "companionStatsApplied": false,
+          "baseDamage": {
+            "normal_attack": 10,
+            "element_attack": 12,
+            "dodge": 0,
+            "ultimate": 20
+          },
+          "ultimateAnger": 50,
+          "ultimateCost": 50,
+          "ultimateHeal": 20,
+          "dodgeMaxCost": 20,
+          "dodgeRefund": 30,
+          "advantage": {
+            "metal": "wood",
+            "wood": "earth",
+            "earth": "water",
+            "water": "fire",
+            "fire": "metal"
+          },
+          "elementEffects": {
+            "metal": {
+              "label": "易伤",
+              "description": "每层受伤×1.5，最多5层"
+            },
+            "wood": {
+              "label": "寄生",
+              "description": "每层回合末吸取2生命，最多5层"
+            },
+            "earth": {
+              "label": "迟钝",
+              "description": "每层伤害×0.5，最多5层"
+            },
+            "water": {
+              "label": "降怒",
+              "description": "命中后对方怒气向下取半，不增加受击怒气"
+            },
+            "fire": {
+              "label": "燃烧",
+              "description": "回合末按当前生命8%×层数伤害，最多5层"
+            }
+          }
+        },
+        "context": {
+          "id": "training:fire",
+          "authority": "simulated",
+          "scenarioId": "d309a890-09df-4e4e-863c-c561eefa3734",
+          "qaPreset": "charged",
+          "qaEnemyAction": "element_attack"
+        },
+        "updatedAt": "2026-10-24T15:25:58.948Z",
+        "revision": 5,
+        "endedAt": "2026-10-24T15:25:58.948Z",
+        "reportId": "battle-a4aef2a1-c4b0-4abc-9866-e36b55eaf526"
+      }
+    }
+  ],
+  "errors": [],
+  "runtime": {
+    "version": "0.1.8",
+    "platform": "win32",
+    "build": {
+      "schemaVersion": 1,
+      "builtAt": "2026-10-24T15:25:51.176Z",
+      "sourceCommit": "f80026b0fe5fc4345abbfe1aec7a5a00c51c2cf9",
+      "sourceDirtyFiles": [],
+      "codeFingerprint": "aec78372b333a2d85b90bf455f046ad9635a5a3648bc059ee88d7e5cf399348f",
+      "compiledFingerprint": "a925a1d3a71918b73ce70d7dd71e959819567fe440c5b578bb4b1a163276c645",
+      "codeFiles": 216,
+      "compiledFiles": 25
+    },
+    "features": [
+      {
+        "id": "accounts",
+        "commands": [
+          "session",
+          "login",
+          "register",
+          "logout",
+          "profileSave",
+          "passwordChange",
+          "settingsGet",
+          "settingsDefaults",
+          "settingsSave",
+          "backupList",
+          "backupExport",
+          "backupPreview",
+          "backupRestore",
+          "syncStatus",
+          "syncNow",
+          "syncRetry",
+          "cloudPreview",
+          "testNotification",
+          "pointer"
+        ]
+      },
+      {
+        "id": "resources",
+        "commands": [
+          "list",
+          "resolve",
+          "save",
+          "import"
+        ]
+      },
+      {
+        "id": "companions",
+        "commands": [
+          "list",
+          "get",
+          "combatProfile",
+          "desktopInput",
+          "adopt",
+          "rename",
+          "desktop",
+          "select",
+          "interact",
+          "perform",
+          "appearance"
+        ]
+      },
+      {
+        "id": "battle",
+        "commands": [
+          "overview",
+          "rules",
+          "context",
+          "settleContext",
+          "selectPet",
+          "startTraining",
+          "snapshot",
+          "act",
+          "retryAction",
+          "search",
+          "invitations",
+          "invite",
+          "respondInvite",
+          "cancelInvite",
+          "createRoom",
+          "joinRoom",
+          "sync",
+          "leave",
+          "listReports",
+          "getReport",
+          "retrySettlement",
+          "qaPreset"
+        ]
+      },
+      {
+        "id": "garden",
+        "commands": [
+          "plant",
+          "harvest",
+          "craft",
+          "feed",
+          "garrison",
+          "snapshot",
+          "territoryLocate",
+          "territoryChallenge",
+          "territorySettle"
+        ]
+      },
+      {
+        "id": "discovery",
+        "commands": [
+          "snapshot",
+          "setExploring",
+          "locate",
+          "watch",
+          "stopWatch",
+          "setDemo",
+          "setProvider",
+          "tile",
+          "qaTarget",
+          "begin",
+          "act",
+          "cancel",
+          "confirm",
+          "pokedex",
+          "memories"
+        ]
+      },
+      {
+        "id": "conversations",
+        "commands": [
+          "snapshot",
+          "select",
+          "history",
+          "profile.save",
+          "connection.save",
+          "connection.test",
+          "connection.cancel",
+          "memory.save",
+          "memory.delete",
+          "send",
+          "retry",
+          "cancel",
+          "history.clear"
+        ]
+      }
+    ],
+    "user": {
+      "id": "qa:d309a890-09df-4e4e-863c-c561eefa3734:local-f1ccf9cb-3d4f-4044-96c4-3485053a636c",
+      "subjectId": "qa:d309a890-09df-4e4e-863c-c561eefa3734:local-f1ccf9cb-3d4f-4044-96c4-3485053a636c",
+      "ownerAccountId": "qa:d309a890-09df-4e4e-863c-c561eefa3734:local-f1ccf9cb-3d4f-4044-96c4-3485053a636c",
+      "provider": "local",
+      "account": "feedback_1792855552779",
+      "username": "共享战场实操",
+      "revision": 0,
+      "createdAt": "2026-10-24T15:25:52.784Z",
+      "updatedAt": "2026-10-24T15:25:52.784Z",
+      "dataMode": "simulated"
+    },
+    "scenario": {
+      "id": "unified-battle",
+      "runId": "d309a890-09df-4e4e-863c-c561eefa3734",
+      "provenance": "simulated",
+      "isolated": true
+    }
+  },
+  "passed": true
+}
