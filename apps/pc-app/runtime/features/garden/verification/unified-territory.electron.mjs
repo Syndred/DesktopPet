@@ -182,12 +182,34 @@ try{
       const beforeReplay=await current.garden(),replayed=await current.invoke('garden','territorySettle',scenario.confirmInput);assert.equal(replayed.replayed,true);
       const reread=await current.garden();assert.deepEqual(reread.data.items,beforeReplay.data.items);assert.deepEqual(reread.data.territories,beforeReplay.data.territories);assert.equal(reread.revision,beforeReplay.revision);assert.deepEqual((await current.invoke('companions','list')).data,scenario.pets);
       await current.route(`/battle/session/${encodeURIComponent(scenario.sessionId)}`);await current.page.getByRole('button',{name:'已确认',exact:true}).waitFor();assert.equal(await current.page.getByRole('button',{name:'已确认',exact:true}).isDisabled(),true);assert.equal(await current.page.locator('.battle-live-layout').getAttribute('data-animation-phase'),'rest');scenario.confirmedResultUi=true;
+      await current.page.waitForFunction(()=>document.querySelectorAll('.battle-stage .resource-stage[data-status="ready"]').length===2);
       await current.page.screenshot({path:join(output,`${label}-confirmed-battle.png`),fullPage:true});
       scenario.exactRestartAndReplay=true;save();await current.app.close();current=null;
     }
     proof.checks.push('Both outcomes use the same shared battle screen; exact session route/page/restart recovery, public context confirmation and one seed receipt; repeat confirmation preserves all state');
     assert.deepEqual(proof.errors,[]);proof.passed=true;
-  }else throw new Error('Use prepare, visual or verify');
+  }else if(phase==='readback'){
+    assert.equal(proof.passed,true);
+    for(const [path,hash]of Object.entries(proof.verificationSource.hashes))assert.equal(createHash('sha256').update(readFileSync(path)).digest('hex'),hash,`Runtime changed since verification: ${path}`);
+    proof.readbackCaptureSource=source();assert.equal(proof.readbackCaptureSource.dirty,'');
+    for(const label of ['win','loss']){
+      const scenario=proof.scenarios[label];assert.ok(scenario.completed&&scenario.exactRestartAndReplay);
+      current=await open(scenario);await register(current,scenario,label);
+      const before=await current.garden();
+      assert.deepEqual(before.data.items,scenario.after.data.items);assert.deepEqual(before.data.territories,scenario.after.data.territories);assert.equal(before.revision,scenario.after.revision);assert.deepEqual((await current.invoke('companions','list')).data,scenario.pets);
+      assert.deepEqual(stable(await current.session(scenario.sessionId)),stable(scenario.session));
+      await current.route(`/battle/session/${encodeURIComponent(scenario.sessionId)}`);
+      await current.page.getByRole('button',{name:'已确认',exact:true}).waitFor();assert.equal(await current.page.getByRole('button',{name:'已确认',exact:true}).isDisabled(),true);
+      await current.page.waitForFunction(()=>document.querySelectorAll('.battle-stage .resource-stage[data-status="ready"]').length===2);
+      assert.equal(await current.page.locator('.battle-live-layout').getAttribute('data-animation-phase'),'rest');
+      const identities=await current.page.locator('.battle-stage .resource-stage').evaluateAll(nodes=>nodes.map(node=>({petId:node.getAttribute('data-pet-id'),resourceId:node.getAttribute('data-resource-id'),status:node.getAttribute('data-status')})));
+      assert.deepEqual(identities,scenario.actorIdentities);scenario.confirmedActorsReady=true;
+      await current.page.screenshot({path:join(output,`${label}-confirmed-battle.png`),fullPage:true});
+      const after=await current.garden();assert.deepEqual(after.data.items,before.data.items);assert.deepEqual(after.data.territories,before.data.territories);assert.equal(after.revision,before.revision);
+      await current.app.close();current=null;save();
+    }
+    assert.deepEqual(proof.errors,[]);proof.checks.push('Read-only restart recapture waits for both exact canonical actors; confirmed state, stock, territory and pets remain unchanged');
+  }else throw new Error('Use prepare, visual, verify or readback');
   delete proof.failure;save();console.log(JSON.stringify({phase,evidence:file,passed:proof.passed||false,checks:proof.checks}));
 }catch(error){proof.failure=String(error);save();throw error;}
 finally{if(current)await current.app.close();}

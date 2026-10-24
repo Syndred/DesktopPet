@@ -13,7 +13,7 @@ assert.equal(proof.visual.actorsActuallyReady,true);assert.equal(proof.ordinaryP
 for(const [path,hash]of Object.entries(proof.verificationSource.hashes))assert.equal(createHash('sha256').update(readFileSync(path)).digest('hex'),hash,`Source/build changed since verification: ${path}`);
 const scenes={};
 for(const label of ['win','loss']){
-  const scene=proof.scenarios[label];assert.ok(scene.completed&&scene.exactRestartAndReplay&&scene.restartRecovered&&scene.confirmedResultUi);
+  const scene=proof.scenarios[label];assert.ok(scene.completed&&scene.exactRestartAndReplay&&scene.restartRecovered&&scene.confirmedResultUi&&scene.confirmedActorsReady);
   assert.equal(scene.nonTargetPetsUnchanged,true);
   assert.ok(scene.owner.startsWith(`qa:${scene.runId}:`));assert.equal(scene.session.mode,'territory');assert.equal(scene.session.winner,label==='win'?'player':'enemy');assert.equal(scene.session.context.authority,'simulated');
   const db=new DatabaseSync(join(scene.profilePath,'lingjing.sqlite'),{readOnly:true});
@@ -30,7 +30,7 @@ for(const label of ['win','loss']){
     scenes[label]={runId:scene.runId,ownerAccountId:scene.owner,provenance:'simulated',simulated:{location:true,prestate:scene.preset,enemyChoice:true},actualEngine:true,session:scene.session,actorIdentities:scene.actorIdentities,animation:scene.animation,midBattleRestartRecovered:true,explicitQaLogin:true,territory:{ownerAccountId:territory.owner_account_id,revision:territory.revision,result:JSON.parse(challenge.result_json)},seedReceipt:rewards[0],rewardEvents,confirmation:confirmed,inventory,crop,exactRestartAndReplay:true,confirmedResultUi:true,garrisonNoGrowthOrSelectionChange:scene.garrisonNoGrowthOrSelectionChange||false};
   }finally{db.close();}
 }
-const evidence={capturedAt:new Date().toISOString(),scope:'unified-battle-goal U01/U04/U05/U06/U07; garden territory integration',source:proof.verificationSource,runtime:proof.runtime,mode:proof.mode,cloudAcceptance:false,physicalGpsAcceptance:false,visual:proof.visual,ordinaryProfile:proof.ordinaryProfile,checks:proof.checks,scenes,mainIndependentReview:'pending'};
+const evidence={capturedAt:new Date().toISOString(),scope:'unified-battle-goal U01/U04/U05/U06/U07; garden territory integration',source:proof.verificationSource,readbackCaptureSource:proof.readbackCaptureSource,runtime:proof.runtime,mode:proof.mode,cloudAcceptance:false,physicalGpsAcceptance:false,visual:proof.visual,ordinaryProfile:proof.ordinaryProfile,checks:proof.checks,scenes,mainIndependentReview:'pending'};
 mkdirSync(output,{recursive:true});
 for(const name of ['A04-1280x844-inventory.png','A04-1440x900-inventory.png','territory-entry-ready.png','win-shared-result.png','loss-shared-result.png','win-confirmed-territory.png','loss-confirmed-territory.png','win-confirmed-battle.png','loss-confirmed-battle.png'])copyFileSync(join(source,name),join(output,name));
 writeFileSync(join(output,'verification.json'),JSON.stringify(evidence,null,2)+'\n');
