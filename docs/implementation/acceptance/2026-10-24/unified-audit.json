@@ -1,0 +1,40 @@
+{
+  "scope": "U01-U08; final user goal supersedes the earlier six-character visual recheck",
+  "status": "in-progress",
+  "rulesEvidence": "artifacts/ui-acceptance/2026-10-24/rules-v3/evidence.json",
+  "independentChecks": {"orderedElementPairs": 25, "actionCases": 75, "elementProperties": 9, "failures": 0},
+  "openFindings": [
+    {
+      "id": "U01-screen-reuse",
+      "owner": "battle/discovery/garden/foundation",
+      "finding": "Exploration previously owned a second arena/HUD/timer. Sharing BattleMoves alone does not satisfy reuse.",
+      "requiredEvidence": "All four actual entry paths render the same BattleScreen, controller, HUD, log and animation; contextual settlement keeps the originating session ID."
+    },
+    {
+      "id": "U02-roster",
+      "owner": "resources/companions",
+      "finding": "The six-character roster has water, fire and metal only.",
+      "requiredEvidence": "Distinct wood and earth artwork and usable instances, with consistent resource/element identity in adoption, detail, desktop, chat, battle and territory."
+    },
+    {
+      "id": "U03-water-presentation",
+      "owner": "battle",
+      "finding": "presentation.cjs infers freeze from a successful water action although the engine applies immediate rage reduction without freeze.",
+      "requiredEvidence": "Actual water result shows rage reduction, no invented freeze/stun, no disabled turn."
+    },
+    {
+      "id": "U04-interrupt-presentation",
+      "owner": "battle",
+      "finding": "The engine's action-missed note also covers normal interrupting element. The view currently renders every miss as successful dodge.",
+      "requiredEvidence": "Normal-vs-element interruption and dodge-vs-normal avoidance have distinct truthful animation and events."
+    },
+    {
+      "id": "U04-animation-and-controls",
+      "owner": "battle/foundation",
+      "finding": "Natural-gameplay attempts cannot provide deterministic ultimate coverage; earlier failed harness evidence is retained.",
+      "requiredEvidence": "A verified isolated QA profile supplies a legal charged state; all four controls, repeated actions, elemental effects, ultimate cost/heal/hit, restart and reduced motion are independently observed."
+    }
+  ],
+  "deliveryGate": "Each module self-verifies real Electron, main chat independently reviews, concrete failures return to the owning chat. Final integrated acceptance and current-workspace delivery follow only after all required work passes.",
+  "provenance": "Controlled engine fixtures and isolated simulated transport/location are not live cloud or real GPS evidence."
+}
