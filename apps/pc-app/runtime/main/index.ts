@@ -120,14 +120,17 @@ app.whenReady().then(async () => {
   session.defaultSession.setPermissionRequestHandler((_contents, _permission, callback) => callback(false));
   const userData = app.getPath('userData');
   const legacyDataFile = process.env.PET_RUNTIME_DATA_FILE || join(userData, 'pet-runtime-data.json');
+  const db = openDatabase(join(userData, 'lingjing.sqlite'));
+  const sourceKey = `legacy-source:${legacyDataFile}`;
+  const sourceMarker = db.prepare('SELECT value FROM lingjing_meta WHERE key=?').get(sourceKey);
+  const legacyDataExisted = sourceMarker ? sourceMarker.value === 'existing' : existsSync(legacyDataFile);
+  if (!sourceMarker) db.prepare('INSERT INTO lingjing_meta(key,value) VALUES(?,?)').run(sourceKey, legacyDataExisted ? 'existing' : 'new');
   backupLegacy(legacyDataFile);
   const legacy = initializeLegacy();
-  const db = openDatabase(join(userData, 'lingjing.sqlite'));
-  services = createServices({ db, legacy, paths: { userData, assets: join(runtime, 'assets'), legacyDataFile }, windows, safeStorage });
+  services = createServices({ db, legacy, paths: { userData, assets: join(runtime, 'assets'), legacyDataFile, legacyDataExisted }, windows, safeStorage });
   features = discoverFeatures(join(runtime, 'features'), services);
   await require(join(runtime, 'core/builtin-art.cjs')).registerBuiltinArt(services);
   services.ipc.handle('app:info', () => ({ version: app.getVersion(), platform: process.platform, features: features.map(x => ({ id: x.id, commands: x.commands })), user: services.session.getCurrentUser() }), { public: true });
-  services.ipc.handle('app:legacy', () => { legacy.open(); return { opened: true }; });
   ipcMain.handle('lingjing:invoke', async (event, request) => {
     if (!trusted(event)) return { ok: false, code: 'UNTRUSTED_SENDER', message: '请求来源无效。' };
     try {

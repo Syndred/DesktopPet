@@ -11,7 +11,7 @@ const identifier = value => {
   invariant(typeof value === "string" && /^[a-z][a-z0-9_]*$/i.test(value), "INVALID_BACKUP_TABLE", "存档表名无效。");
   return `"${value}"`;
 };
-const secretColumn = /(^|_)(password|password_hash|api_key|secret|session_token|access_token|refresh_token|credential)(_|$)/i;
+const secretColumn = /(^|_)(password|password_hash|api_key|encrypted_key|encrypted_secret|proof_hash|secret|session_token|access_token|refresh_token|credential)(_|$)/i;
 
 function liveTables(db) {
   return db.prepare("SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%' ORDER BY name").all()

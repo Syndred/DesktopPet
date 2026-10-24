@@ -1,0 +1,129 @@
+{
+  "feature": "conversations",
+  "branch": "codex/lingjing-conversations",
+  "commit": "27db7fb16ee32fdf968630b2adcc0d4f75342353",
+  "status": "ready_for_foundation_integration",
+  "date": "2026-10-24",
+  "timezone": "Asia/Shanghai",
+  "workspace": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-conversations\\DesktopPet",
+  "base": {
+    "implementationBaseline": "6c8ce65f95d1b9a65a795a7d6c780a783d9889d9",
+    "foundationBaseCommit": "8f17aec",
+    "originMainFetched": true,
+    "originMain": "4786f97",
+    "originMainIncludedInHistory": true,
+    "sharedCheckoutModified": false,
+    "requestedModelAndGoalSettingsPreserved": true
+  },
+  "implemented": [
+    "React 聊天页 /chat 与连接人设页 /settings/ai，按 foundation v1 自动发现",
+    "同模板宠物按已验证账号 + 实例 petId 隔离人设、历史、记忆、独立连接与聊天选择",
+    "分页历史、手动记忆添加/编辑/删除、revision 冲突拒绝、记忆开关",
+    "全局连接与单伙伴独立覆盖、独立密钥、实际连接测试与测试取消",
+    "主进程 SSE/JSON Chat Completions、超时、流式取消、失败重试、actionId 去重及有界上下文",
+    "Electron safeStorage/Windows DPAPI 加密密钥，只返回 hasKey；更换接口后不自动转发旧密钥",
+    "退出与异常中断恢复、账号切换中止请求、旧界面写入拒绝、草稿/记忆弹窗/未保存密钥隔离"
+  ],
+  "tests": [
+    {
+      "command": "node --test apps/pc-app/runtime/features/conversations/tests/runtime.test.cjs",
+      "status": "passed",
+      "checks": 11,
+      "evidence": "真实文件 SQLite 与本机 HTTP 流；覆盖隔离、加密、测试取消、重试去重、记忆删除、分页、上下文界限、失败、旧界面拒绝、同步退出落盘"
+    },
+    {
+      "command": "node apps/pc-app/runtime/features/conversations/tests/electron-flow.mjs",
+      "status": "passed",
+      "checks": 9,
+      "evidence": "真实生产 Electron 36.9.5 / React / preload / FeatureModule / IPC / DPAPI / better-sqlite3；包含实际进程重启与保留的主进程本地登录会话切换",
+      "requestCount": 7,
+      "abortedStreams": 2,
+      "rendererPageErrors": 0,
+      "rendererLocalStorageEntries": 0,
+      "externalModel": false
+    },
+    {
+      "command": "npm run typecheck:ui",
+      "status": "passed"
+    },
+    {
+      "command": "npm run typecheck",
+      "status": "passed"
+    },
+    {
+      "command": "npx eslint apps/pc-app/runtime/features/conversations apps/pc-app/ui/src/features/conversations packages/shared-types/src/features/conversations --ext .cjs,.mjs,.ts,.tsx",
+      "status": "passed"
+    },
+    {
+      "command": "npm run build:pc",
+      "status": "passed"
+    },
+    {
+      "command": "git diff --cached --check",
+      "status": "passed"
+    }
+  ],
+  "runtimeEvidence": {
+    "record": "docs/implementation/evidence/conversations/electron.json",
+    "screenshots": [
+      "docs/implementation/evidence/conversations/chat.png",
+      "docs/implementation/evidence/conversations/ai-settings.png",
+      "docs/implementation/evidence/conversations/restored.png"
+    ],
+    "isolatedProfile": true,
+    "originalUserDataUntouched": true,
+    "transport": "明确标识的本机 HTTP 协议 fixture，不代表云端模型回复",
+    "cloudModelTest": "pending_authorized_configuration"
+  },
+  "integrationDependencies": {
+    "contract": "docs/implementation/foundation-contract.md",
+    "details": "apps/pc-app/runtime/features/conversations/INTEGRATION.txt",
+    "newNpmDependencies": [],
+    "database": "foundation 单连接和事务迁移执行器；不打开另一个业务数据库",
+    "session": "services.session.getCurrentUser/getOwnerAccountId 与 accounts:session-changed/session:changed；旧本地会话有观察兜底",
+    "companions": "优先 services.get('companions').listPets(ownerAccountId)，回退已验证旧 RuntimeDataStore 库存",
+    "providedService": [
+      "services.get('conversations').getProfile(ownerAccountId,petId)",
+      "services.get('conversations').isChatting(ownerAccountId,petId)"
+    ],
+    "events": [
+      "conversations:changed",
+      "conversations:session",
+      "conversations:activity"
+    ],
+    "backupAndSync": "如 accounts 将此领域纳入备份/同步，需保留 owner 归属，并排除 encrypted_key；DPAPI 密文不能当成跨设备可用密钥",
+    "resourcePreview": "支持伙伴可信 avatarUrl/thumbnailUrl；缺失时显示名字首字，角色资源本身由 resources 提供"
+  },
+  "unfinished": [
+    {
+      "id": "authorized-cloud-model-verification",
+      "owner": "user_configuration_then_conversations_or_foundation",
+      "status": "pending_external_configuration",
+      "detail": "本会话没有收到授权的云端模型连接配置；未发现或扫描生产密钥。完成了连接表单和真实网络协议链路，但没有把本机 fixture 算作云端成功。"
+    },
+    {
+      "id": "combined-windows-regression",
+      "owner": "foundation",
+      "status": "pending_final_integration",
+      "detail": "需收集 conversations、accounts、companions、resources 后做最终统一 Windows 回归。本分支在 foundation 基础提交 8f17aec 上完成真实专项验收。"
+    },
+    {
+      "id": "companion-motion-pause-consumer",
+      "owner": "foundation_companions_integration",
+      "status": "pending_cross_module_wiring",
+      "detail": "已提供逐实例 pauseWhileChatting 配置、isChatting 同步读取与 conversations:activity 事件。companions 的移动 tick 仍需在此状态为真时跳过移动；未越界修改其目录。"
+    },
+    {
+      "id": "legacy-ai-settings-security-migration",
+      "owner": "foundation",
+      "status": "pending_legacy_root_wiring",
+      "detail": "新 React 页面不使用 localStorage 保存密钥，已验收 DPAPI。既有兼容 renderer 的旧 AI 明文设置仍在原文件中，需由根文件所有者将入口导向 /settings/ai，或实施明确账号映射且成功后移除明文的迁移；不能声称整个旧兼容界面已通过同样安全验收。"
+    }
+  ],
+  "scopeNotes": [
+    "未改共享源检出、根依赖、公共 main/preload 或其他业务目录；只合入 foundation 的两个基础提交",
+    "未删除旧存档，未执行破坏性生产迁移，未发布生产版本",
+    "记忆为用户明确保存的记录；没有声称已实现自动长期记忆抽取",
+    "语音仅保留能力扩展接口，本次没有完整语音系统"
+  ]
+}

@@ -39,8 +39,14 @@ try {
     return { status: response.status, bytes: bytes.byteLength, canvas: document.querySelector('canvas')?.getBoundingClientRect().toJSON() };
   });
   assert.equal(actual.status, 200); assert.ok(actual.bytes > 100000); assert.ok(actual.canvas.width > 0);
+  const shiba = list.data.find(resource => resource.id === 'legacy:animateddogshibainu.glb');
+  await page.locator('.resource-card').filter({ hasText: shiba.name }).click();
+  await page.locator('.resource-stage[data-status="ready"][data-resource-id="legacy:animateddogshibainu.glb"]').waitFor({ timeout: 30000 });
+  const model = await page.locator('model-viewer').evaluate(element => ({ loaded: element.loaded, clips: element.availableAnimations, src: element.src }));
+  assert.ok(model.loaded); assert.ok(model.clips.length > 0);
+  await page.screenshot({ path: join(output, 'textured-shiba.png') });
   assert.deepEqual(errors, []);
-  writeFileSync(join(output, 'evidence.json'), JSON.stringify({ at: new Date().toISOString(), actual, resources: list.data.map(r => ({ id: r.id, name: r.name, kind: r.kind })), errors }, null, 2));
+  writeFileSync(join(output, 'evidence.json'), JSON.stringify({ at: new Date().toISOString(), actual, model, resources: list.data.map(r => ({ id: r.id, name: r.name, kind: r.kind })), errors }, null, 2));
   console.log('Approved artwork rendered in real Electron:', output);
 } catch (error) {
   const page = await application.firstWindow();
