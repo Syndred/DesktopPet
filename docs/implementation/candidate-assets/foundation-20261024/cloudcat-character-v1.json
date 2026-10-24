@@ -1,0 +1,115 @@
+{
+  "format": "lingjing.character",
+  "version": 1,
+  "name": "云朵 · 蓝星小猫",
+  "kind": "spritesheet",
+  "image": "cloudcat-sprites-v1.png",
+  "sheet": {
+    "width": 313.5,
+    "height": 313.5,
+    "columns": 4,
+    "rows": 4
+  },
+  "clips": {
+    "idle": {
+      "frames": [
+        0,
+        0,
+        0,
+        2,
+        1,
+        0,
+        3
+      ],
+      "fps": 4,
+      "loop": true
+    },
+    "blink": {
+      "frames": [
+        0,
+        1,
+        0
+      ],
+      "fps": 4,
+      "loop": false
+    },
+    "walk": {
+      "frames": [
+        4,
+        5,
+        6,
+        7
+      ],
+      "fps": 6,
+      "loop": true
+    },
+    "attack": {
+      "frames": [
+        8,
+        9,
+        11
+      ],
+      "fps": 6,
+      "loop": false
+    },
+    "skill": {
+      "frames": [
+        8,
+        9,
+        10,
+        11
+      ],
+      "fps": 6,
+      "loop": false
+    },
+    "hit": {
+      "frames": [
+        8,
+        11
+      ],
+      "fps": 6,
+      "loop": false
+    },
+    "sleep": {
+      "frames": [
+        12,
+        13
+      ],
+      "fps": 1,
+      "loop": true
+    },
+    "wave": {
+      "frames": [
+        0,
+        14,
+        14,
+        0
+      ],
+      "fps": 4,
+      "loop": false
+    },
+    "happy": {
+      "frames": [
+        14,
+        15
+      ],
+      "fps": 3,
+      "loop": true
+    }
+  },
+  "actions": {
+    "idle": "idle",
+    "walk": "walk",
+    "attack": "attack",
+    "hit": "hit",
+    "skill": "skill",
+    "victory": "happy",
+    "sleep": "sleep"
+  },
+  "provenance": {
+    "author": "灵境项目 / ImageGen",
+    "source": "Built-in image_gen, 2026-10-24; prompt and original source recorded in docs/implementation/illustration-assets.json",
+    "license": "项目生成素材",
+    "attribution": "云朵 · 蓝星小猫 · 灵境"
+  }
+}

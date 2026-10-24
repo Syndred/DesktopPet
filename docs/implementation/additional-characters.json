@@ -1,0 +1,24 @@
+{
+  "tool": "built-in image_gen",
+  "date": "2026-10-24",
+  "assets": [
+    {
+      "resourceId": "builtin:lingjing-cloudcat-v1",
+      "path": "docs/implementation/candidate-assets/foundation-20261024/cloudcat-sprites-v1.png",
+      "manifest": "docs/implementation/candidate-assets/foundation-20261024/cloudcat-character-v1.json",
+      "original": "C:\\Users\\Administrator\\.codex\\generated_images\\01a16dc5-7796-7a43-a251-17ddd68b2a49\\exec-20e551ed-91fd-40d0-a94d-6b4b3058cf75.png",
+      "prompt": "Use case: stylized-concept. Asset type: production 2D desktop-pet animation sprite atlas for 灵境. Create one square transparent PNG with an EXACT 4 column by 4 row equal-cell grid, sixteen full-body poses of ONE original chibi ivory-white cat with small soft-gray ear tips, clear blue eyes, a mist-blue ribbon collar and tiny four-point star charm. Warm hand-painted anime illustration, soft cream/mist-blue palette, rounded paws and fluffy tail, polished consistent linework matching a gentle Chinese desktop companion game. Every cat centered within its own equal square cell, same size and baseline, generous transparent gutters, all ears/tail/effects inside the cell. Faces three-quarter right. Row 1: idle relaxed open eyes, gentle blink, idle slight breathing, smile. Row 2: walking step left, walking passing pose, walking step right, walking passing pose. Row 3: crouch attack preparation, paw swipe, small blue star skill burst from paw, recover upright. Row 4: curled sleeping eyes closed, curled sleeping breathing, happy raised paw, happy celebration. Real alpha background, completely transparent outside art. No text, labels, numbers, border, checkerboard, ground plane, cast shadow, UI, extra characters, watermarks, or cell backgrounds. Do not merge cells.",
+      "actions": "idle, blink, walk, attack, skill, hit (brief recoil pose), sleep, wave, happy"
+    },
+    {
+      "resourceId": "builtin:lingjing-leafrabbit-v1",
+      "path": "docs/implementation/candidate-assets/foundation-20261024/leafrabbit-sprites-v1.png",
+      "manifest": "docs/implementation/candidate-assets/foundation-20261024/leafrabbit-character-v1.json",
+      "original": "C:\\Users\\Administrator\\.codex\\generated_images\\01a16dc5-7796-7a43-a251-17ddd68b2a49\\exec-ddf1f217-4e82-4e2f-a79e-ccffe2742522.png",
+      "prompt": "Use case: stylized-concept. Asset type: production 2D desktop-pet animation sprite atlas for 灵境. Create one square transparent PNG with an EXACT 4 column by 4 row equal-cell grid, sixteen full-body poses of ONE original chibi cream rabbit with long soft ears, warm rose-brown eyes, a pale-lavender short capelet, a tiny leaf-shaped clasp and a small round fluffy tail. Warm hand-painted anime illustration, cream and lavender with subtle mint accents, polished fine linework, soft cel/painterly shading matching a gentle Chinese desktop companion game. Full body in every cell facing three-quarter right, same design, consistent scale and foot baseline; long ears stay INSIDE each cell; generous transparent gutters and no cropping. Row 1: idle relaxed open eyes, blink, slight breathing idle, smile. Row 2: hopping crouch, hop lift, small landing, recover. Row 3: attack preparation, small paw jab, mint leaf magic skill from paw, recover upright. Row 4: curled sleeping with ears folded, sleeping breathing, happy raised paws, happy small celebration. Genuine alpha background fully transparent outside art. No text, labels, numbers, grid lines, border, checkerboard, ground plane, shadow, UI, extra characters, watermark, or cell backgrounds. Keep all effects within each equal cell, do not merge cells.",
+      "actions": "idle, blink, walk, attack, skill, hit (brief recoil pose), sleep, wave, happy"
+    }
+  ],
+  "status": "candidate-only; no runtime registration or roster replacement",
+  "integration": "Official six-character roster is owned by the resources branch. These earlier generated candidates are preserved for optional reuse."
+}
