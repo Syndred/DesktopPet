@@ -2,7 +2,7 @@ const { invariant } = require("./errors.cjs");
 
 const DEFAULT_SETTINGS = Object.freeze({
   desktop: { alwaysOnTop: true, clickThrough: true, launchAtLogin: false, closeToTray: true,
-    companionLimit: 3, interactionSounds: true, volume: 70, hideInFullscreen: true },
+    companionLimit: 3, interactionSounds: true, volume: 70, hideInFullscreen: true, animationsEnabled: true },
   notifications: { enabled: true, companions: true, battles: true, garden: true,
     quietEnabled: true, quietStart: "22:00", quietEnd: "08:00" },
   privacy: { locationAllowed: false, locationOnlyWhileExploring: true, emotionStatistics: false },
@@ -14,7 +14,7 @@ function validateSettings(input) {
   invariant(input && typeof input === "object" && !Array.isArray(input), "INVALID_SETTINGS", "设置内容无效。");
   const output = defaultSettings();
   const bools = {
-    desktop: ["alwaysOnTop", "clickThrough", "launchAtLogin", "closeToTray", "interactionSounds", "hideInFullscreen"],
+    desktop: ["alwaysOnTop", "clickThrough", "launchAtLogin", "closeToTray", "interactionSounds", "hideInFullscreen", "animationsEnabled"],
     notifications: ["enabled", "companions", "battles", "garden", "quietEnabled"],
     privacy: ["locationAllowed", "locationOnlyWhileExploring", "emotionStatistics"], sync: ["enabled"]
   };
@@ -22,6 +22,7 @@ function validateSettings(input) {
     const source = input[section];
     invariant(source && typeof source === "object" && !Array.isArray(source), "INVALID_SETTINGS", "设置分组缺失。");
     for (const key of keys) {
+      if (key === 'animationsEnabled' && source[key] === undefined) continue;
       invariant(typeof source[key] === "boolean", "INVALID_SETTINGS", "设置开关值无效。");
       output[section][key] = source[key];
     }

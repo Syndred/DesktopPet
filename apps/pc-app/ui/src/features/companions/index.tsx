@@ -6,6 +6,7 @@ import { Badge, Button, Card, EmptyState, ErrorNotice, PageHeader } from '../../
 import type { FeatureModule } from '../../app/types';
 import { useCompanions } from './client';
 import { CompanionPortrait } from './CompanionPortrait';
+import { AppDialog } from '../../components/dialog';
 import './styles.css';
 
 const elements: Record<string, string> = { metal: '金', wood: '木', water: '水', fire: '火', earth: '土' };
@@ -25,7 +26,7 @@ function StateMeters({ pet }: { pet: CompanionPet }) {
 
 function RenameDialog({ pet, controller, close }: { pet: CompanionPet; controller: Controller; close: () => void }) {
   const [name, setName] = useState(pet.name);
-  return <div className="cp-modal-backdrop" onKeyDown={event => { if (event.key === 'Escape' && !controller.busy) close(); }}><section className="cp-modal" role="dialog" aria-modal="true" aria-labelledby="cp-rename-title"><header><h2 id="cp-rename-title">给伙伴起个名字</h2><button aria-label="关闭改名" onClick={close} disabled={controller.busy}><X size={18}/></button></header><p className="muted">这是这只伙伴独有的名字。</p><form onSubmit={async event => { event.preventDefault(); if (await controller.petAction('rename', pet, { name })) close(); }}><label htmlFor="cp-new-name">伙伴名字</label><input id="cp-new-name" autoFocus value={name} onChange={event => setName(event.target.value)} maxLength={48} required/><small>1–24 个字符</small><ErrorNotice message={controller.error}/><div className="cp-dialog-actions"><Button type="button" variant="secondary" onClick={close} disabled={controller.busy}>取消</Button><Button disabled={controller.busy || !name.trim() || [...name.trim()].length > 24} type="submit">{controller.busy ? '正在保存…' : '保存名字'}</Button></div></form></section></div>;
+  return <AppDialog title="给伙伴起个名字" onClose={close} busy={controller.busy}><section className="cp-modal"><header><h2>给伙伴起个名字</h2><button aria-label="关闭改名" onClick={close} disabled={controller.busy}><X size={18}/></button></header><p className="muted">这是这只伙伴独有的名字。</p><form onSubmit={async event => { event.preventDefault(); if (await controller.petAction('rename', pet, { name })) close(); }}><label htmlFor="cp-new-name">伙伴名字</label><input id="cp-new-name" autoFocus value={name} onChange={event => setName(event.target.value)} maxLength={48} required/><small>1–24 个字符</small><ErrorNotice message={controller.error}/><div className="cp-dialog-actions"><Button type="button" variant="secondary" onClick={close} disabled={controller.busy}>取消</Button><Button disabled={controller.busy || !name.trim() || [...name.trim()].length > 24} type="submit">{controller.busy ? '正在保存…' : '保存名字'}</Button></div></form></section></AppDialog>;
 }
 
 function PetActions({ pet, controller }: { pet: CompanionPet; controller: Controller }) {
