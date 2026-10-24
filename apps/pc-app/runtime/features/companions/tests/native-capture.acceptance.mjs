@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync, writeFileSync, mkdtempSync } from 'node:fs';
 import { resolve, join } from 'node:path';
 import { execFileSync } from 'node:child_process';
+import { randomUUID } from 'node:crypto';
 import { setTimeout as delay } from 'node:timers/promises';
 
 // Targeted correction only: reopen the completed isolated flow and capture its
@@ -14,7 +15,7 @@ const output = mkdtempSync(join(previous.output, 'native-validated-'));
 const env = { ...process.env, PET_USER_DATA_DIR: previous.profile, LINGJING_QA_SCENARIO: previous.scenario.id }; delete env.ELECTRON_RUN_AS_NODE;
 const evidence = { at: new Date().toISOString(), runtimeSourceSha: previous.source.sha, harnessSourceSha: execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(), previousEvidence: previousFile, scenario: previous.scenario, captures: [] };
 const app = await _electron.launch({ args: [resolve('.'), '--force-device-scale-factor=1'], env });
-let main;
+let main, originalSettings;
 const invoke = (feature, command, payload) => main.evaluate(({ feature, command, payload }) => window.lingjing.invoke(feature, command, payload), { feature, command, payload });
 try {
   for (let attempt = 0; attempt < 100; attempt++) { main = app.windows().find(page => page.url().includes('/dist/ui/index.html') && !page.url().includes('#/desktop/')); if (main) break; await delay(100); }
@@ -30,6 +31,10 @@ try {
   evidence.build = info.build;
   assert.equal((await invoke('accounts', 'login', { provider: 'local', account: 'companions_five', password: 'Local-five-proof-72!', rememberSession: false })).ok, true);
   const before = (await invoke('companions', 'list')).data;
+  const settings = (await invoke('accounts', 'settingsGet')).data; originalSettings = settings.document;
+  const captureSettings = structuredClone(originalSettings); captureSettings.desktop.companionLimit = 5; captureSettings.desktop.hideInFullscreen = false;
+  assert.equal((await invoke('accounts', 'settingsSave', { actionId: randomUUID(), revision: settings.revision, document: captureSettings })).ok, true);
+  evidence.captureSettings = { original: { companionLimit: originalSettings.desktop.companionLimit, hideInFullscreen: originalSettings.desktop.hideInFullscreen }, temporary: { companionLimit: 5, hideInFullscreen: false }, provenance: 'explicit-isolated-QA-settings-command' };
   for (const element of ['wood', 'earth']) {
     const pet = before.pets.find(pet => pet.element === element && pet.resource.kind === '2d'); assert.ok(pet);
     let page;
@@ -65,4 +70,12 @@ try {
   for (const pet of before.pets) { const actual = after.pets.find(candidate => candidate.petId === pet.petId); assert.equal(actual.name, pet.name); assert.deepEqual(actual.growth, pet.growth); assert.deepEqual(actual.resource, pet.resource); assert.deepEqual(actual.desktop, pet.desktop); }
   evidence.stateUnchanged = true; evidence.result = 'passed'; console.log(`REAL_NATIVE_CAPTURE_PASSED ${output}`);
 } catch (error) { evidence.result = 'failed'; evidence.error = error.stack; process.exitCode = 1; console.error(error); }
-finally { writeFileSync(join(output, 'evidence.json'), JSON.stringify(evidence, null, 2)); await app.close(); }
+finally {
+  if (originalSettings) {
+    const current = (await invoke('accounts', 'settingsGet')).data;
+    const restored = await invoke('accounts', 'settingsSave', { actionId: randomUUID(), revision: current.revision, document: originalSettings });
+    evidence.settingsRestored = restored.ok && JSON.stringify((await invoke('accounts', 'settingsGet')).data.document) === JSON.stringify(originalSettings);
+    if (!evidence.settingsRestored) { evidence.result = 'failed'; process.exitCode = 1; }
+  }
+  writeFileSync(join(output, 'evidence.json'), JSON.stringify(evidence, null, 2)); await app.close();
+}
