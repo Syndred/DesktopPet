@@ -1,0 +1,85 @@
+{
+  "module": "accounts",
+  "implementationCommit": "47260b5f48767a0acc4c1bc6dce861b3e3a04eb3",
+  "worktree": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-accounts\\DesktopPet",
+  "realElectronVersion": "36.9.5",
+  "uiWorkflow": {
+    "source": "artifacts/accounts/electron-1792845865236/failure.json",
+    "checksPassed": [
+      "raw legacy accounts imported before login",
+      "shared Radix Tabs keyboard and local registration through the live UI",
+      "local account login and DPAPI-backed session",
+      "nickname and current-password validation via UI",
+      "saved desktop preferences through real IPC",
+      "quiet hours suppress native notifications via host",
+      "native file picker export contains only account A historical records",
+      "UI restore reads original snapshot and preserves pre-restore data",
+      "second real account has isolated preferences and historical data"
+    ],
+    "harnessNote": "Workflow succeeded through second-account isolation. Its restart wait looked for an accounts page before selecting /account; the launcher was corrected. Restart was separately verified against the same persisted profile below."
+  },
+  "restartAndSharedControls": {
+    "source": "artifacts/accounts/restart-controls-1792846645295/evidence.json",
+    "passed": true,
+    "checks": [
+      "actual restart restores DPAPI-verified session, profile and settings",
+      "saved application animation switch reaches shared Motion provider",
+      "system reduced motion at page load reaches the shared route wrapper",
+      "restore dialog remains centered in the real Electron viewport",
+      "shared Radix dialog traps Tab, closes on Escape and returns focus to the opener"
+    ],
+    "sliderAccessibleName": "音量"
+  },
+  "nativeHost": {
+    "source": "artifacts/accounts/host-1792844565312/evidence.json",
+    "realBeforeQuit": true,
+    "checks": [
+      "actual topmost/count APIs and pointer policy; startup unchanged without explicit opt-in",
+      "actual native windows restore count and opaque hit area stays clickable",
+      "quiet notifications and host privacy gates follow saved policy",
+      "close-to-tray true retains native main window",
+      "focused fullscreen hides actual companion windows",
+      "leaving fullscreen restores only the hidden companion windows"
+    ]
+  },
+  "win32Foreground": {
+    "source": "artifacts/accounts/win32-fullscreen-1792844685194/evidence.json",
+    "passed": true,
+    "states": [
+      {
+        "full": false,
+        "at": "2026-10-24T12:24:46.967Z"
+      },
+      {
+        "full": true,
+        "at": "2026-10-24T12:24:48.482Z"
+      },
+      {
+        "full": false,
+        "at": "2026-10-24T12:24:49.988Z"
+      }
+    ]
+  },
+  "cloud": {
+    "at": "2026-10-24T12:17:24.559Z",
+    "origin": "http://47.112.208.97:8000",
+    "probes": [
+      {
+        "endpoint": "duel-online",
+        "error": "UND_ERR_SOCKET"
+      },
+      {
+        "endpoint": "accounts-sync",
+        "error": "UND_ERR_SOCKET"
+      }
+    ],
+    "authenticatedCloudReadbackVerified": false
+  },
+  "screenshots": {
+    "login": "artifacts/accounts/electron-1792845865236/01-login.png",
+    "account": "artifacts/accounts/restart-controls-1792846645295/account.png",
+    "settings": "artifacts/accounts/restart-controls-1792846645295/settings.png",
+    "restoreDialog": "artifacts/accounts/restart-controls-1792846645295/restore-dialog.png"
+  },
+  "acceptanceData": "Isolated synthetic legacy users, histories and userData. No production userData or original browser was used."
+}

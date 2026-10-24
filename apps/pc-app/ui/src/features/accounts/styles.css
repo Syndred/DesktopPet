@@ -178,3 +178,7 @@
 .accounts .ac-modal { width:100%; }
 .ac-auth-mark { display:block; width:26px; height:26px; object-fit:contain; margin:0 auto 8px; }
 .accounts .ac-card { display:block; gap:0; }
+/* Tailwind v4 uses the individual translate property on primitive thumbs/content. */
+.accounts .ac-radix-switch [data-slot=switch-thumb] { translate:none!important; }
+.ac-save-art-illustrated::before { width:165px; height:55px; }
+.app-dialog-content:has(.accounts.ac-modal) { position:fixed!important; inset:auto!important; left:50%!important; top:50%!important; width:min(540px,calc(100vw - 48px))!important; max-width:none!important; height:auto!important; display:block!important; padding:0!important; translate:none!important; transform:translate(-50%,-50%)!important; }
