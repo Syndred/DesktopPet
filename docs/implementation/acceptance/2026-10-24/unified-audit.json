@@ -12,6 +12,15 @@
       "review": "Reviewed actual Electron screenshots, isolated identity and backup/restart readback. Independently launched the delivered app and used CSS.getPlatformFontsForNode to confirm actual Microsoft YaHei UI glyphs in titles, setting labels and cards.",
       "independentEvidence": "artifacts/ui-acceptance/2026-10-24/account-platform-fonts/evidence.json",
       "integrationNote": "The account-only branch retains historical H1 29px and card heading 18px. Final foundation build must apply the shared 28px/700 title and card tokens."
+    },
+    {
+      "module": "resources",
+      "code": "f4c210d",
+      "selfEvidenceCommit": "58c3a9d",
+      "status": "asset and public renderer scope accepted; cross-feature consumers remain under integrated acceptance",
+      "review": "Viewed original artwork, actual Pixi 32-frame gallery and resource page. Reviewed two portraits, adoption/selection SQLite readback and eight repeated-action traces. Independently confirmed the original six PNGs/manifests have no Git diff.",
+      "coverage": {"characters": 8, "elements": 5, "newActualFrames": 32, "newCanonicalActionMappings": 24},
+      "integrationNote": "Battle/companions must pass actual event playback keys to the common renderer and retain canonical resource/element identity."
     }
   ],
   "openFindings": [

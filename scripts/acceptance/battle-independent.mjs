@@ -23,6 +23,7 @@ const save = () => writeFileSync(join(output, 'evidence.json'), JSON.stringify(p
 const check = (id, passed, detail) => { proof.checks.push({ id, passed: Boolean(passed), detail }); save(); assert.ok(passed, id); };
 const credentials = { provider: 'local', account: `root_battle_${Date.now()}`, username: '战斗独立验收', password: `Qa-${randomUUID()}!`, rememberSession: false };
 let app, page;
+const resources = new Map();
 async function open() {
   const env = { ...process.env, ...scenario.env }; delete env.ELECTRON_RUN_AS_NODE; delete env.PET_RUNTIME_DATA_FILE;
   app = await electron.launch({ args: [source], cwd: source, env });
@@ -89,7 +90,7 @@ async function act(session, action, label, screenshot = false) {
     const root = document.querySelector('[data-battle-screen="shared-v1"]'), observations = [], begun = performance.now(); let previous = '';
     const sample = () => {
       const state = { phase: root.querySelector('[data-animation-phase]')?.getAttribute('data-animation-phase'), key: root.querySelector('[data-animation-key]')?.getAttribute('data-animation-key'),
-        actors: [...root.querySelectorAll('.battle-stage .resource-stage')].map(element => ({ action: element.getAttribute('data-action'), clip: element.getAttribute('data-clip'), frame: element.querySelector('.resource-sprite-host')?.getAttribute('data-frame'), fallback: element.getAttribute('data-fallback') })),
+        actors: [...root.querySelectorAll('.battle-stage .resource-stage')].map(element => ({ action: element.getAttribute('data-action'), clip: element.getAttribute('data-clip'), frame: element.querySelector('.resource-sprite-host')?.getAttribute('data-frame'), textureFrame: element.querySelector('.resource-sprite-host')?.getAttribute('data-texture-frame'), texture: element.querySelector('.resource-sprite-host')?.getAttribute('data-frame-texture'), fallback: element.getAttribute('data-fallback') })),
         events: [...root.querySelectorAll('[data-event-kind]')].map(element => ({ kind: element.getAttribute('data-event-kind'), text: element.textContent })) };
       const next = JSON.stringify(state); if (next !== previous && observations.length < 1500) { observations.push({ ms: performance.now() - begun, ...state }); previous = next; }
     };
@@ -105,6 +106,13 @@ async function act(session, action, label, screenshot = false) {
     const after = await invoke('battle', 'snapshot', { sessionId: session.id }), round = after.rounds.at(-1);
     const phases = [...new Set(observations.map(value => value.phase))];
     check(`${label}:actual-action-and-timeline`, after.snapshot.round === session.snapshot.round + 1 && round.actions.player === action && ['windup', 'release', 'impact', 'effects', 'rest'].every(phase => phases.includes(phase)) && observations.every(value => value.actors.every(actor => actor.fallback === 'false')), { phases, round, observations });
+    for (const [index, side] of ['player', 'enemy'].entries()) if (round.directDamage[side] > 0) {
+      const actor = session[side], id = actor.resource?.resourceId || actor.appearance2d;
+      if (!resources.has(id)) resources.set(id, (await invoke('resources', 'resolve', { resourceId: id, petId: actor.petId, context: 'battle', action: 'hit' })).resource);
+      const resource = resources.get(id), clip = resource.clips.find(clip => clip.name === resource.actions.hit);
+      const region = resource.atlas.frames[clip.frameNames[0]].frame, expected = [region.x, region.y, region.w, region.h].join(',');
+      check(`${label}:${side}:real-hit-texture-at-impact`, observations.some(value => value.phase === 'impact' && value.actors[index]?.textureFrame === expected), { expected, impact: observations.filter(value => value.phase === 'impact').map(value => value.actors[index]) });
+    }
     return { after, round, observations };
   } finally { await page.evaluate(() => { window.__rootBattleAcceptance?.stop(); delete window.__rootBattleAcceptance; }); }
 }
