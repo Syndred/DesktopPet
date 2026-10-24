@@ -28,7 +28,7 @@ function setup() {
 test("six personal plots, starter grants once, strict account isolation", () => {
   const f = setup(); const first = f.service.snapshot(owner); const again = f.service.snapshot(owner);
   assert.equal(first.data.plots.length, 6); assert.equal(first.data.items.find(i => i.id === "seed:rice").quantity, 2);
-  assert.deepEqual(first.data.items, again.data.items); assert.equal(f.db.prepare("SELECT COUNT(*) n FROM garden_ledger").get().n, 4);
+  assert.deepEqual(first.data.items, again.data.items); assert.equal(f.db.prepare("SELECT COUNT(*) n FROM garden_events").get().n, 4);
   const other = f.service.snapshot({ ownerAccountId: "garden-account-b" }); assert.equal(other.data.pets.length, 0);
   const denial = f.service.feed({ ownerAccountId: "garden-account-b" }, { actionId: 'foreign-feed', expectedRevision: 0, petId: f.pets[0].petId, itemId: 'cooked_rice', quantity: 1 }); assert.equal(denial.ok, false);
   f.db.close();
@@ -59,16 +59,16 @@ test("recipe consumes rice and food debits one, changes only the selected real c
   assert.equal(after.find(p => p.name === '鱼丸').growth.satiety, 80); assert.equal(after.find(p => p.name === '鱼丸').growth.affinity, 4);
   assert.deepEqual(after.filter(p => p.name !== '鱼丸'), before.filter(p => p.name !== '鱼丸'));
   assert.equal(f.service.itemCount(owner.ownerAccountId, 'cooked_rice'), 0);
-  assert.equal(f.service.feed(owner, f.input('feed-empty', { petId: f.pets[0].petId, itemId: 'cooked_rice', quantity: 1 })).code, 'INSUFFICIENT_ITEMS');
+  assert.equal(f.service.feed(owner, f.input('feed-empty', { petId: f.pets[0].petId, expectedPetRevision: 2, itemId: 'cooked_rice', quantity: 1 })).code, 'INSUFFICIENT_ITEMS');
   f.db.close();
 });
 test("failed companion update rolls back inventory, ledger, revision and action", () => {
   const f = setup(); f.service.plant(owner, f.input('p', { plotId: 'plot-1', cropType: 'carrot' })); f.advance(11 * 60_000); f.service.harvest(owner, f.input('h', { plotIds: ['plot-1'] }));
   const revision = f.service.revision(owner.ownerAccountId); const count = f.service.itemCount(owner.ownerAccountId, 'carrot');
-  const result = f.service.feed(owner, f.input('bad-pet', { petId: 'someone-elses-pet', itemId: 'carrot', quantity: 1 })); assert.equal(result.code, 'PET_NOT_FOUND');
+  const result = f.service.feed(owner, f.input('bad-pet', { petId: 'someone-elses-pet', expectedPetRevision: 1, itemId: 'carrot', quantity: 1 })); assert.equal(result.code, 'PET_NOT_FOUND');
   assert.equal(f.service.itemCount(owner.ownerAccountId, 'carrot'), count); assert.equal(f.service.revision(owner.ownerAccountId), revision);
   assert.equal(f.db.prepare("SELECT 1 FROM garden_actions WHERE action_id='bad-pet'").get(), undefined);
-  assert.equal(f.db.prepare("SELECT 1 FROM garden_ledger WHERE action_id='bad-pet'").get(), undefined);
+  assert.equal(f.db.prepare("SELECT 1 FROM garden_events WHERE action_id='bad-pet'").get(), undefined);
   const stale = f.service.feed(owner, f.input('stale-pet', { petId: f.pets[0].petId, expectedPetRevision: 999, itemId: 'carrot', quantity: 1 })); assert.equal(stale.code, 'REVISION_CONFLICT'); assert.equal(f.service.itemCount(owner.ownerAccountId, 'carrot'), count);
   f.db.close();
 });
