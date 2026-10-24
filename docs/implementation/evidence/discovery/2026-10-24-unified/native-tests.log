@@ -1,0 +1,44 @@
+TAP version 13
+# [discovery:confirm] Error: 赢得挑战后才能邀请伙伴加入
+#     at problem (C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-discovery\\DesktopPet\\apps\\pc-app\\runtime\\features\\discovery\\service.cjs:9:53)
+#     at DiscoveryService.confirm (C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-discovery\\DesktopPet\\apps\\pc-app\\runtime\\features\\discovery\\service.cjs:175:99)
+#     at Object.confirm [as handler] (C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-discovery\\DesktopPet\\apps\\pc-app\\runtime\\features\\discovery\\index.cjs:43:152)
+#     at Object.invoke (C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-discovery\\DesktopPet\\apps\\pc-app\\runtime\\core\\services.cjs:43:35)
+#     at TestContext.<anonymous> (C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-discovery\\DesktopPet\\apps\\pc-app\\runtime\\features\\discovery\\tests\\discovery.test.cjs:158:38)
+#     at async Test.run (node:internal/test_runner/test:1054:7)
+#     at async Test.processPendingSubtests (node:internal/test_runner/test:744:7) {
+#   code: 'VICTORY_REQUIRED'
+# }
+# Subtest: real adapter errors clear old coordinates; demo never masquerades as permission granted
+ok 1 - real adapter errors clear old coordinates; demo never masquerades as permission granted
+  ---
+  duration_ms: 1.4955
+  type: 'test'
+  ...
+# Subtest: application privacy blocks native calls and discards a late fix after revocation
+ok 2 - application privacy blocks native calls and discards a late fix after revocation
+  ---
+  duration_ms: 0.4922
+  type: 'test'
+  ...
+# Subtest: actual shared SQLite + companions + battle: map to victory, confirmation, pokedex, memory, idempotency and restart
+ok 3 - actual shared SQLite + companions + battle: map to victory, confirmation, pokedex, memory, idempotency and restart
+  ---
+  duration_ms: 212.7982
+  type: 'test'
+  ...
+# Subtest: shared battle commands finish the linked wild session and confirmation reads that authority
+ok 4 - shared battle commands finish the linked wild session and confirmation reads that authority
+  ---
+  duration_ms: 76
+  type: 'test'
+  ...
+1..4
+# tests 4
+# suites 0
+# pass 4
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 425.2877

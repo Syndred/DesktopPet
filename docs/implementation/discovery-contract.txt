@@ -4,8 +4,14 @@
 EncounterView 仅传实际 sessionId 到 battle/BattleScreen；HUD、四行动、动画、回合记录、结算弹层均由 battle 提供，探索不再保留另一套呈现或动画。getBattleContext / settleBattleContext 是主进程来源服务接口，按账号与 sessionId 查原遭遇并转交原 confirm 事务；不接受客户端胜负。QA scenario 随遭遇、伙伴来源和收服凭据持久保存。
 
 早期范围 scope-2d-ui-first.txt 的 2D 要求继续保留；最新统一战场目标优先。正式实现采用 React / TypeScript 模块组件；新页面、遭遇、收服、头像均使用 2D 图集。保留历史文件，不实现旧 3D 渲染兼容。
-本分支已合入 foundation 0ad9dc5（本工作树合并提交99751b2）；完成前已 git fetch origin，origin/main 为 4786f97。
+本分支已合入 foundation 67d0d4d（本工作树合并提交a78bfb7）；完成前已 git fetch origin，origin/main 为 4786f97 且已包含在当前提交中。
 入口：runtime/features/discovery/index.cjs、ui/src/features/discovery/index.tsx，由 foundation 的模块注册与路由加载。
+
+统一战场自验（实现提交 cd19fa1）：
+从生产 Electron 入口、新建且验证的 QA 档案启动，依次通过八个 canonical 角色的实际地图与遭遇预览；木、土也分别进入公共野外战场并执行实际属性行动。主挑战使用原引擎随机对手，完成连续同招、四行动、返回续战、胜利收服、重复确认、已收服地图入口、取消保留、两档窗口与重启登录恢复。普通启动没有 QA descriptor / qaTarget 命令，也没有模拟位置。
+只读 SQLite 核对：一份收服、一只对应伙伴、一条记忆、一份匹配该 battleId 的战报和一份伙伴收服回执；收服与伙伴来源保存同一 runId。新增两个角色及取消/训练另有各自战报，未把总战报数误当成单场回执数。
+共享战场在1280×844、1440×900的 HUD / 技能栏几何一致（容许0.5 CSS像素舍入）；新回合使用独立动画键，恢复历史回合不重播。完整证据见 evidence/discovery/2026-10-24-unified。模块自验通过，主会话独立复验和最终四入口 U01—U08 仍待完成。
+用户开启系统位置后，本次原生重试成功返回 WiFi 位置，精度155米；未达到原80米门槛，因此未声称真实位置收服成功。QA source 始终 simulated，OS permission 仍为 unknown；真实定位与云端均按U06延后。
 
 公开命令：snapshot、locate、watch、stopWatch、setDemo、setProvider、tile、setExploring。
 需要账号：begin、act、cancel、confirm、pokedex、memories。
