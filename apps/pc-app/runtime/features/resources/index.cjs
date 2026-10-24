@@ -3,6 +3,7 @@ const path = require('node:path');
 const { ResourcesService, toResult } = require('./service.cjs');
 const { migrations } = require('./repository.cjs');
 const { ResourceError } = require('./parser.cjs');
+const { registerRoster } = require('./roster.cjs');
 const CHANNEL = 'lingjing:resources';
 const SCHEME = 'lingjing-resource';
 const MIME = { '.json': 'application/json', '.png': 'image/png', '.webp': 'image/webp' };
@@ -64,7 +65,7 @@ async function registerResources({ db, storageRoot, ipcMain, dialog, protocol, g
 function register(services) {
   const { dialog, protocol, BrowserWindow } = require('electron');
   const service = new ResourcesService({ db: services.db, storageRoot: path.join(services.paths.userData, 'character-resources'), seedBuiltin: false });
-  const ready = service.seed();
+  const ready = service.seed().then(() => registerRoster(service));
   service.ready = ready;
   // Commands surface seed errors; keep a failed seed from becoming an unhandled rejection.
   void ready.catch(() => {});
