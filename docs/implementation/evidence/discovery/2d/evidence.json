@@ -1,0 +1,137 @@
+{
+  "at": "2026-10-24T13:16:32.533Z",
+  "verifiedRuntimeCommit": "543d75ee744ca9535ec96bed021cd9287e6d875e",
+  "system": {
+    "productionMain": true,
+    "status": "imprecise",
+    "source": "os",
+    "provider": "windows-geolocator",
+    "positionSource": "WiFi",
+    "accuracyMeters": 95,
+    "timestampMs": 1792847355601,
+    "coordinateHash": "92942c0c9628c06b29b000d2e6d2aae367e27de922d8fc19d8e4972e065f5514",
+    "error": {
+      "code": "LOCATION_IMPRECISE",
+      "message": "定位精度不足，请移动到信号较好的地方（需要 ≤ 80 米）"
+    },
+    "preciseCoordinatesCommitted": false
+  },
+  "appPrivacyDefaultBlocked": true,
+  "appPrivacyRevokesAndClearsFix": true,
+  "map": {
+    "at": "2026-10-24T13:09:47.174Z",
+    "productionMain": true,
+    "passed": true,
+    "explicitDemo": true,
+    "realPhysicalLocationAcceptance": false,
+    "engine": "MapLibre GL JS 6.15.0",
+    "loadedTiles": 12,
+    "cachedPngTiles": 14,
+    "warnings": [],
+    "output": "artifacts/discovery/map-1792847383583"
+  },
+  "controlled": {
+    "explicitlyLabelledFixture": true,
+    "realLocationAcceptance": false,
+    "realRandomCombat": true,
+    "attempts": 1,
+    "capture": {
+      "ownerAccountId": "local:user-86cd366a-c11c-41fd-a040-c17cdfd0eb70",
+      "encounterId": "encounter-3626106a-f042-4cad-919f-83451133ac05",
+      "petId": "pet-e4404d79-1293-4c96-bae1-d8b1efaa56fb",
+      "actionId": "discovery:encounter-3626106a-f042-4cad-919f-83451133ac05",
+      "name": "新相遇伙伴",
+      "templateId": "big-fish-foodie",
+      "resourceId": "builtin:lingjing-yuwan-v1",
+      "element": "water",
+      "serial": "D642C5C0B5B406CFE",
+      "territoryId": null,
+      "captureMultiplier": 1,
+      "capturedAtMs": 1792847363582,
+      "placeLabel": "附近探索点",
+      "memoryTags": [
+        {
+          "id": "encounter-3626106a-f042-4cad-919f-83451133ac05:first-meeting",
+          "kind": "first_meeting",
+          "title": "我们的第一次见面",
+          "text": "在附近探索点相遇，赢得挑战后成为了伙伴。",
+          "placeLabel": "附近探索点",
+          "createdAt": "2026-10-24T13:09:23.582Z"
+        }
+      ],
+      "showOnDesktop": false,
+      "validation": "local-os",
+      "distanceMeters": 0
+    },
+    "rows": {
+      "owner": "local:user-86cd366a-c11c-41fd-a040-c17cdfd0eb70",
+      "pets": 8,
+      "captures": 1,
+      "memories": 1,
+      "reports": 1
+    },
+    "desktops": [
+      {
+        "route": "/desktop/pet-e4404d79-1293-4c96-bae1-d8b1efaa56fb",
+        "visible": true,
+        "bounds": {
+          "x": 560,
+          "y": 469,
+          "width": 232,
+          "height": 283
+        }
+      },
+      {
+        "route": "/discovery/result/encounter-3626106a-f042-4cad-919f-83451133ac05",
+        "visible": true,
+        "bounds": {
+          "x": 364,
+          "y": 125,
+          "width": 1320,
+          "height": 901
+        }
+      }
+    ],
+    "radixSelect": true,
+    "radixSwitch": true,
+    "radixPopover": true,
+    "dialogKeyboardFocusAndEscape": true,
+    "sharedPixiStage": true,
+    "sharedMotion": true
+  },
+  "animations": true,
+  "restart": {
+    "samePetId": true,
+    "currentLocationPersisted": false
+  },
+  "errors": [],
+  "visualReview": {
+    "at": "2026-10-24T13:14:56.306Z",
+    "kind": "final visual review of persisted controlled-fixture capture and preview",
+    "portraitCards": 2,
+    "selectedCard": 1,
+    "radixKeyboardSelection": true,
+    "priorFlow": "artifacts/discovery/2d-windows-1792847349359",
+    "output": "artifacts/discovery/review-1792847693443"
+  },
+  "postgres": {
+    "at": "2026-10-24T13:08:42.670Z",
+    "passed": true,
+    "backend": "PGlite 0.5.11 embedded PostgreSQL; not deployed Supabase",
+    "checks": [
+      "existing runtime account schema and additive discovery migration execute",
+      "unfinished battle and foreign account cannot claim capture",
+      "round compare-and-swap, action validation and action replay preserve persisted server outcome",
+      "locked claim rechecks victory, receipt identity and range; failed insert leaves no partial capture",
+      "capture receipt and permit state commit together, duplicate claim returns original receipt",
+      "expired permit cannot advance or settle",
+      "anon and authenticated cannot directly read state or invoke privileged settlement"
+    ]
+  },
+  "localRawArtifacts": {
+    "flow": "artifacts/discovery/2d-windows-1792847349359",
+    "map": "artifacts/discovery/map-1792847383583",
+    "review": "artifacts/discovery/review-1792847693443"
+  },
+  "privacy": "No raw physical coordinates or physical-map screenshots are copied into this folder. Controlled fixtures are not physical-location acceptance."
+}

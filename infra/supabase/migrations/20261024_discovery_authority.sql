@@ -41,6 +41,9 @@ begin
     if existing->>'permitId' <> p_permit::text or existing->>'action' <> p_action then raise exception 'ACTION_ID_CONFLICT'; end if;
     return existing->'result';
   end if;
+  if coalesce((permit_row.data_json->>'expiresAt')::numeric,0) < extract(epoch from clock_timestamp())*1000 then raise exception 'ENCOUNTER_EXPIRED'; end if;
+  if p_action is null or p_action not in ('normal_attack','element_attack','dodge','ultimate') then raise exception 'INVALID_BATTLE_ACTION'; end if;
+  if p_action_id is null or length(trim(p_action_id)) not between 1 and 180 then raise exception 'ACTION_ID_REQUIRED'; end if;
   if (permit_row.data_json#>>'{battle,view,round}')::integer + 1 <> p_expected_round then raise exception 'ROUND_CONFLICT'; end if;
   if (permit_row.data_json#>>'{battle,finished}')::boolean then raise exception 'BATTLE_FINISHED'; end if;
   if (p_battle#>>'{view,round}')::integer <> p_expected_round then raise exception 'INVALID_BATTLE_ROUND'; end if;
@@ -60,6 +63,17 @@ begin
   if not found then raise exception 'PERMIT_INVALID'; end if;
   select data_json into existing from public.runtime_discovery_captures where permit_id=p_permit;
   if existing is not null then return existing; end if;
+  -- Recheck authoritative state while holding the permit lock. The edge handler
+  -- checks the fresh OS fix; a stale concurrent request cannot award twice or
+  -- turn an unfinished battle into a capture through this settlement function.
+  if coalesce((permit_row.data_json->>'expiresAt')::numeric,0) < extract(epoch from clock_timestamp())*1000 then raise exception 'ENCOUNTER_EXPIRED'; end if;
+  if (permit_row.data_json#>>'{battle,finished}')::boolean is distinct from true
+    or permit_row.data_json#>>'{battle,winner}' is distinct from 'player' then raise exception 'VICTORY_REQUIRED'; end if;
+  if p_receipt->>'owner' is distinct from p_owner
+    or p_receipt->>'permitId' is distinct from p_permit::text
+    or p_receipt->>'spawnId' is distinct from permit_row.spawn_id then raise exception 'RECEIPT_MISMATCH'; end if;
+  if jsonb_typeof(p_receipt->'distanceMeters') is distinct from 'number' then raise exception 'DISTANCE_INVALID'; end if;
+  if (p_receipt->>'distanceMeters')::numeric not between 0 and 100 then raise exception 'OUT_OF_RANGE'; end if;
   insert into public.runtime_discovery_captures(id,owner_account_id,permit_id,data_json)
     values((p_receipt->>'id')::uuid,p_owner,p_permit,p_receipt);
   update public.runtime_discovery_permits set data_json=jsonb_set(data_json,'{status}','"captured"'::jsonb) where id=p_permit;
