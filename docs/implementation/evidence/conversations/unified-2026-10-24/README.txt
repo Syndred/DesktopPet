@@ -1,6 +1,6 @@
 聊天与 AI 设置自验（2026-10-24）
 
-范围：聊天 / AI 设置的 U02、U05、U07 自验；主会话独立复验与全产品 U08 尚未完成。
+范围：聊天 / AI 设置的 U02、U05、U07 自验；主会话独立复验已接受；全产品 U08 仍由主会话完成。
 八个正式资源均通过当前 petId/resourceId 解析近景；五行标记来自实际库存 element，不从角色名称或外观推测。
 前台使用短标题、图标和公共 Tooltip；保留可理解的空态、错误、危险操作后果、键盘焦点和禁用原因。
 真实生产 Electron，1280×844 / 1440×900，隔离 QA profile。simulation=none；模型部分仅验证真实本机连接失败，不含云模型成功。
@@ -24,4 +24,9 @@ node apps/pc-app/runtime/features/conversations/tests/compact-acceptance.mjs
 证据：evidence.json 包含源码哈希、构建记录、输入操作、八个资源/元素、五行页面投影与 SQLite 回读。
 index.html 汇总10张真实截图；artifacts 中保留独立 QA profile，未提交数据库或密钥。
 本交付只修改 conversations 所属目录和对应文档；公共模块来自 foundation，五行资源来自 f4c210d / 58c3a9d。
-模块状态：ready_for_main_review。
+模块状态：accepted_by_main_review。
+
+主会话复验接受记录
+已查看 run-1792855135940 的1440聊天、1280 AI设置和完整JSON回读，接受代码 d9e1b71 / 交付 deda2f2。
+该次查看与最终稳定态证据 run-1792855266773 的生产源码和编译指纹一致。
+具体接受项及来源记录见 parent-review.json。本组无需重复自验；外部模型成功按本轮范围暂缓。

@@ -2,7 +2,7 @@
   "feature": "conversations",
   "branch": "codex/lingjing-conversations",
   "commit": "d9e1b71119e3141f9f82164db26586d371835e19",
-  "status": "ready_for_main_review",
+  "status": "accepted_by_main_review",
   "date": "2026-10-24",
   "timezone": "Asia/Shanghai",
   "workspace": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-conversations\\DesktopPet",
@@ -443,7 +443,7 @@
     "doNotClaimOverallVisualPass": true
   },
   "previousImplementationCommit": "0a1722033c209d0b8190b98ff3b5f80cdc20b550",
-  "updatedAt": "2026-10-24T15:22:43.421Z",
+  "updatedAt": "2026-10-24T15:26:16.689Z",
   "portraitAudit": {
     "items": [
       "A07",
@@ -504,7 +504,7 @@
       "U05",
       "U07"
     ],
-    "status": "self_acceptance_passed_ready_for_main_review",
+    "status": "accepted_by_main_review",
     "implementationCommit": "eb50973",
     "foundationBase": "67d0d4df781d3eae7dd2a546b5d981107c45f737",
     "implementation": [
@@ -549,8 +549,7 @@
       }
     ],
     "remaining": [
-      "主会话对本模块的独立复验。",
-      "全产品 U08 由主会话在最终集成构建验收；本模块不宣告整体目标完成。"
+      "全产品U08由主会话在最终集成构建验收；如回传本模块的具体问题，再按问题定向修正与复验。"
     ],
     "doNotClaimOverallGoalComplete": true,
     "resourceImplementationCommit": "f4c210d",
@@ -593,6 +592,14 @@
       "Short destructive confirmation remains explicit; real history clear preserves the saved memory/persona and renderer key storage remains empty."
     ],
     "sqliteReadbackIncluded": true,
-    "rendererErrors": 0
+    "rendererErrors": 0,
+    "parentReview": {
+      "record": "docs/implementation/evidence/conversations/unified-2026-10-24/parent-review.json",
+      "sourceThreadId": "01a16d86-7650-7871-8e27-5b65477a126e",
+      "acceptedSourceCommit": "d9e1b71119e3141f9f82164db26586d371835e19",
+      "acceptedDeliveryCommit": "deda2f218786df3c71e869957d684165f8388af0",
+      "reviewedRun": "run-1792855135940",
+      "repeatSelfAcceptanceRequired": false
+    }
   }
 }

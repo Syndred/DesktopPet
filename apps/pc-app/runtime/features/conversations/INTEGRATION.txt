@@ -134,4 +134,7 @@ SQLite 只读核对失败轮次、清空后的历史/记忆/人设和加密密�
 两次真实本机连接失败，助手回复为空；重试不重复用户消息；清空历史后保留记忆和人设。
 DPAPI 加密密钥、记忆关闭及历史清空通过 SQLite 只读核对。
 证据与10张截图：docs/implementation/evidence/conversations/unified-2026-10-24/index.html / evidence.json。
-状态 ready_for_main_review；云模型按本轮范围暂缓，主会话独立复验与 U08 全产品验收仍由主会话完成。
+状态 accepted_by_main_review；主会话已接受代码 d9e1b71 / 交付 deda2f2。云模型按本轮范围暂缓，U08 全产品验收由主会话完成。
+
+主会话复验已接受，依据与接受项见 docs/implementation/evidence/conversations/unified-2026-10-24/parent-review.json。
+本组不重复自验；最终集成若回传本模块具体问题，再定向修正和复验。
