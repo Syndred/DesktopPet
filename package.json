@@ -40,7 +40,7 @@
     "typecheck:ui": "tsc --noEmit -p apps/pc-app/ui/tsconfig.json",
     "native:electron": "electron-rebuild -f -w better-sqlite3",
     "package:pc:dir": "npm run build:pc && electron-builder --config scripts/release/electron-builder.pc.json --win --dir --x64",
-    "test:foundation": "node scripts/desktop/run-native-tests.cjs tests/foundation/services.test.cjs tests/foundation/resource-backup.test.cjs tests/foundation/conversation-backup.test.cjs tests/foundation/owner-alias.test.cjs",
+    "test:foundation": "node scripts/desktop/run-native-tests.cjs tests/foundation/services.test.cjs tests/foundation/resource-backup.test.cjs tests/foundation/conversation-backup.test.cjs tests/foundation/owner-alias.test.cjs tests/foundation/cloud-checkpoint.test.cjs",
     "pc:smoke:shell": "node scripts/smoke/lingjing-shell.mjs"
   },
   "config": {

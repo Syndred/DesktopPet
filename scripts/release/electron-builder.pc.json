@@ -25,9 +25,34 @@
   ],
   "asar": true,
   "extraFiles": [
-    { "from": "apps/pc-app/ui/src/components/ui/LICENSE.shadcn", "to": "licenses/shadcn-ui.txt" },
-    { "from": "docs/implementation/foundation-dependencies.json", "to": "licenses/dependencies.json" },
-    { "from": "docs/implementation/illustration-assets.json", "to": "licenses/generated-illustrations.json" }
+    {
+      "from": "apps/pc-app/ui/src/components/ui/LICENSE.shadcn",
+      "to": "licenses/shadcn-ui.txt"
+    },
+    {
+      "from": "docs/implementation/foundation-dependencies.json",
+      "to": "licenses/dependencies.json"
+    },
+    {
+      "from": "docs/implementation/illustration-assets.json",
+      "to": "licenses/generated-illustrations.json"
+    },
+    {
+      "from": "docs/implementation/garden-assets.json",
+      "to": "licenses/generated-garden.json"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/resources/assets/roster-v2/source-record.json",
+      "to": "licenses/generated-roster.json"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/resources/assets/roster-v2/generation-prompts.json",
+      "to": "licenses/roster-generation-prompts.json"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/resources/assets/roster-v2/layout-refinement-prompts.json",
+      "to": "licenses/roster-refinement-prompts.json"
+    }
   ],
   "extraMetadata": {
     "main": "apps/pc-app/dist/main/index.cjs"

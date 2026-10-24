@@ -1,3 +1,5 @@
+import type { BattleRulesProfile } from '../battle';
+
 /** A template is an appearance. A petId identifies one owned, independent companion. */
 export type PetId = string;
 export type CompanionBehavior = 'wander' | 'quiet' | 'follow' | 'sleep';
@@ -89,7 +91,7 @@ export interface CompanionGrowthEffect {
 export type CompanionErrorCode =
   | 'AUTH_REQUIRED' | 'PET_NOT_FOUND' | 'TEMPLATE_NOT_FOUND'
   | 'INVALID_INPUT' | 'REVISION_CONFLICT' | 'ACTION_ID_CONFLICT'
-  | 'RATE_LIMITED' | 'RESOURCE_UNAVAILABLE' | 'INTERNAL_ERROR';
+  | 'RATE_LIMITED' | 'RESOURCE_UNAVAILABLE' | 'ACTION_UNAVAILABLE' | 'SESSION_CHANGED' | 'INTERNAL_ERROR';
 
 export type CompanionResult<T> =
   | { ok: true; data: T; revision: number; duplicate?: boolean }
@@ -99,6 +101,14 @@ export interface CompanionMutation {
   pet: CompanionPet;
   selections: CompanionSelections;
 }
+export interface CompanionCombatProfile {
+  petId: PetId;
+  resourceId: string;
+  growthStats: CompanionPet['growth']['stats'];
+  training: { initialHp: number; maxHp: number; initialAnger: number; normalized: boolean };
+  rules: BattleRulesProfile;
+  authority: string;
+}
 
 export interface CompanionsClient {
   list(): Promise<CompanionResult<CompanionsSnapshot>>;
@@ -107,5 +117,7 @@ export interface CompanionsClient {
   desktop(input: CompanionAction & { visible?: boolean; behavior?: CompanionBehavior; scale?: number; position?: CompanionPosition }): Promise<CompanionResult<CompanionMutation>>;
   select(input: CompanionAction & { slot: keyof CompanionSelections }): Promise<CompanionResult<CompanionMutation>>;
   interact(input: CompanionAction): Promise<CompanionResult<CompanionMutation>>;
+  perform(input: { actionId: string; petId: PetId; resourceId?: string; action: string }): Promise<CompanionResult<CompanionMutation>>;
+  combatProfile(input: { petId: PetId }): Promise<CompanionResult<CompanionCombatProfile>>;
   subscribe(listener: () => void): () => void;
 }

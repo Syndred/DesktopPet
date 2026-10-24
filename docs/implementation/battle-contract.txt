@@ -23,6 +23,8 @@ session.snapshot 与每条 rounds[n].state 保存该回合生命、怒气、状�
 网络提交前落库原始 actionId/action/roundNo；超时保持 uncertain，不自动换行动或进入下一回合。
 retryAction 重试同一个 actionId 与原回合；结束回合重试返回原回执。
 房间版本单调更新；进程重启后重新订阅。分页补齐中间缺口，未补齐明确 historyComplete:false。
+分页期间接到更高房间版本时继续补取新回合，以最终房间版本生成快照和完整性标记。
+Realtime 回调同时绑定当前频道对象与 roomId；已移除频道、跨房间或清理后的迟到通知不会恢复旧状态。
 训练、野外和本机领地挑战使用原本机内核，authority:'local'；好友对战必须进入真实云端房间。
 不把本机挑战或测试传输表示成远端 PvP。
 

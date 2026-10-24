@@ -1,0 +1,20 @@
+{
+  "at": "2026-10-24T13:10:12.709Z",
+  "sourceCommit": "12a6e7e31f828babcb968d95d8f7000f58b344f1",
+  "environment": "Actual SQLite and OnlineDuelService with explicitly scripted transport/channel callbacks; not a real cloud session",
+  "tests": {
+    "nativePassed": 15,
+    "relatedExistingPassed": 9
+  },
+  "verified": [
+    "Uncertain action persists across database restart; retries keep original round/action and stop after receipt recovery",
+    "History pagination fills an interior gap even when lower and higher rounds are already cached",
+    "Room advancement during pagination updates snapshot and fetches newly missing rounds",
+    "Callbacks from removed channels cannot overwrite another room or recreate cleared state"
+  ],
+  "failuresReproducedBeforeFix": [
+    "Expected room last_resolved_round=3; actual=2 after room advanced during paging",
+    "Expected active room=second; actual=first after delayed callback from removed channel"
+  ],
+  "realMultiplayerAcceptance": false
+}

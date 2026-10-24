@@ -1,5 +1,5 @@
 /** Resource IDs identify shared appearances. They must never replace a pet instance ID. */
-export const RESOURCE_ACTIONS = ['idle', 'walk', 'attack', 'hit', 'skill', 'victory', 'sleep'] as const;
+export const RESOURCE_ACTIONS = ['idle', 'blink', 'walk', 'wave', 'eat', 'attack_windup', 'attack_release', 'attack', 'hit', 'skill', 'victory', 'sleep'] as const;
 export type ResourceAction = (typeof RESOURCE_ACTIONS)[number];
 export type ResourceContext = 'desktop' | 'battle';
 export type ResourceKind = 'spritesheet' | 'model3d';

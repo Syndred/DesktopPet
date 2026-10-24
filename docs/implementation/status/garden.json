@@ -2,14 +2,16 @@
   "module": "garden",
   "branch": "codex/lingjing-garden",
   "commit": "see git log for this file",
-  "status": "2d-local-flow-verified-cloud-review-pending",
+  "status": "local-native-chain-verified-A04-fixed-central-and-cloud-acceptance-pending",
   "upstream": {
     "fetched": true,
     "originMain": "4786f97",
     "baseline": "6c8ce65",
-    "originMainIsAncestor": true
+    "originMainIsAncestor": true,
+    "recheckedAt": "2026-10-24T21:24:14+08:00",
+    "behindOriginMain": 0
   },
-  "foundationRequired": "f0af90f (official shared shadcn/Radix, Tailwind, Motion provider and aliases)",
+  "foundationRequired": "7f0e896 consumed in dea840a; actual shadcn/Radix, Tailwind, live Motion policy, MapLibre and shared 2D portraits",
   "contract": "docs/implementation/garden-contract.md",
   "scope": "docs/implementation/scope-2d-ui-first.txt",
   "routes": [
@@ -31,67 +33,85 @@
       "project": "React",
       "version": "19.3.1",
       "license": "MIT",
-      "where": "modular page and domain components under ui/src/features/garden"
+      "where": "modular page and domain components under ui/src/features/garden",
+      "source": "https://github.com/react/react"
     },
     {
       "project": "electron-vite",
       "version": "4.0.1",
       "license": "MIT",
-      "where": "foundation Electron build; actual native window verification"
+      "where": "foundation Electron build; actual native window verification",
+      "source": "https://github.com/alex8088/electron-vite"
     },
     {
       "project": "PixiJS",
       "version": "8.22.0",
       "license": "MIT",
-      "where": "GardenScene.tsx Application, Assets, Texture and Sprite; shared ResourceStage"
+      "where": "GardenScene.tsx Application, Assets, Texture and Sprite; shared ResourceStage",
+      "source": "https://github.com/pixijs/pixijs"
     },
     {
       "project": "shadcn/ui",
       "version": "4.22.1 official CLI source imported by foundation f0af90f",
       "license": "MIT",
-      "where": "Button/Input and actual Radix Select/Tabs; no cloned feature-local primitives"
+      "where": "Button/Input and actual Radix Select/Tabs; no cloned feature-local primitives",
+      "source": "https://github.com/shadcn-ui/ui"
     },
     {
       "project": "Radix UI",
       "version": "1.8.1",
       "license": "MIT",
-      "where": "food Select Esc/focus recovery, inventory Tabs arrow/Home/End"
+      "where": "food Select Esc/focus recovery, inventory Tabs arrow/Home/End",
+      "source": "https://github.com/radix-ui/primitives"
     },
     {
       "project": "Motion",
       "version": "14.6.0",
       "license": "MIT",
-      "where": "shared AnimatedList in inventory; global provider owned by foundation"
+      "where": "shared AnimatedList in inventory; global provider owned by foundation",
+      "source": "https://github.com/motiondivision/motion"
     },
     {
       "project": "Tailwind CSS",
       "version": "4.3.3",
       "license": "MIT",
-      "where": "foundation shared kit and design tokens; scene-specific module CSS"
+      "where": "foundation shared kit and design tokens; scene-specific module CSS",
+      "source": "https://github.com/tailwindlabs/tailwindcss"
     },
     {
       "project": "better-sqlite3",
       "version": "12.11.1",
       "license": "MIT",
-      "where": "single foundation connection and atomic inventory/companion settlement in Electron"
+      "where": "single foundation connection and atomic inventory/companion settlement in Electron",
+      "source": "https://github.com/WiseLibs/better-sqlite3"
     },
     {
       "project": "Lucide",
       "version": "1.61.0",
       "license": "ISC",
-      "where": "formal action icons"
+      "where": "formal action icons",
+      "source": "https://github.com/lucide-icons/lucide"
     },
     {
       "project": "MapLibre",
       "version": "6.15.0",
       "license": "BSD-3-Clause",
-      "where": "through shared discovery/NearbyMap; garden no longer owns a map engine"
+      "where": "through shared discovery/NearbyMap; garden no longer owns a map engine",
+      "source": "https://github.com/maplibre/maplibre-gl-js"
     },
     {
       "project": "amcolash/farming-game",
       "version": "design-phase reference; no code/assets imported",
       "license": "MIT code; GPL3 sample tiles excluded",
-      "where": "crop-configuration and timestamp-stage ideas only; old Phaser not installed"
+      "where": "crop-configuration and timestamp-stage ideas only; old Phaser not installed",
+      "source": "https://github.com/amcolash/farming-game"
+    },
+    {
+      "project": "Turf",
+      "version": "7.4.0",
+      "license": "MIT",
+      "where": "reuse discovery boundary contains/checkFix; rejects Windows default location and invalid geometry",
+      "source": "https://github.com/Turfjs/turf"
     }
   ],
   "selfDeveloped": [
@@ -102,43 +122,37 @@
   "tests": [
     {
       "command": "npm run build:pc",
-      "result": "passed with actual public kit source"
+      "result": "passed after official kit integration and content-height card fix"
     },
     {
-      "command": "tsc -p artifacts/garden/ui-typecheck.json",
-      "result": "passed; temporary config supplies the @ alias from required foundation base; root config remains foundation-owned"
+      "command": "npm run typecheck:ui",
+      "result": "passed with actual foundation aliases"
     },
     {
       "command": "eslint apps/pc-app/ui/src/features/garden --ext .ts,.tsx",
       "result": "passed"
     },
     {
-      "command": "node --test .../garden.test.cjs",
-      "result": "9 passed; real disk SQLite/reopen/two connections and real CompanionsService"
-    },
-    {
-      "command": "node --test .../integration.test.cjs",
-      "result": "3 passed; actual BattleFeatureService settlement -> seeds, territory battle, atomic backup conflict rejection"
+      "command": "node --test .../garden.test.cjs .../integration.test.cjs .../identity.test.cjs",
+      "result": "16 passed; real disk SQLite, actual companions/battle, fixed dice only for reproducible domain battle takeover; no live GPS/PvP claim"
     },
     {
       "command": "node --test .../cloud.test.mjs",
-      "result": "5 passed; real local HTTP handler + PostgreSQL WASM/PGlite RPC + SQLite; not a deployed Supabase test"
+      "result": "8 passed: actual local HTTP + PostgreSQL WASM RPC + SQLite; concurrent initialization, lost HTTP reply after commit, SQL role privileges; not live Supabase"
     },
     {
-      "command": "smoke.electron.mjs plant/carrot/battle/harvest/readback/library",
-      "result": "actual Electron 36.9.5: production 25-minute rice growth across app restarts, one harvest, one rice crafted/consumed, fish-only growth, stable post-restart data; Radix Esc/focus and Tabs keys passed"
+      "command": "smoke.electron.mjs motion/map/library/battle/carrot/rewardplant",
+      "result": "Actual Electron36.9.5: 25m rice growth -> harvest2 -> craft1 -> feed fish1; actual training reward tomato seeds -> 15m planting -> harvest3 -> feed fish1 -> next actual training reward; all non-fish pets unchanged; restart exact; duplicate harvest and stale-owner request rejected; A04 layout/Select/Tabs/Motion/real WiFi diagnostics checked"
     }
   ],
   "evidence": [
-    "artifacts/garden/electron/run.json",
-    "artifacts/garden/electron/02a-2d-mature-garden.png",
-    "artifacts/garden/electron/02-cooked-and-fed.png",
-    "artifacts/garden/electron/03-inventory.png",
-    "artifacts/garden/electron/04-radix-kitchen.png",
-    "artifacts/garden/electron/05-radix-inventory.png",
-    "artifacts/garden/electron/harvest-disk-readback.json",
-    "artifacts/garden/electron/readback-disk-readback.json",
-    "artifacts/garden/postgres/run-1792844746757/evidence.json",
+    "docs/implementation/evidence/garden/verification.json",
+    "docs/implementation/evidence/garden/README.md",
+    "docs/implementation/evidence/garden/09a-reward-mature.png",
+    "docs/implementation/evidence/garden/11-kitchen-current.png",
+    "docs/implementation/evidence/garden/12-inventory-current.png",
+    "docs/implementation/evidence/garden/A04-1280x844-inventory.png",
+    "docs/implementation/evidence/garden/A04-1440x900-inventory.png",
     "docs/implementation/garden-assets.json"
   ],
   "uiComparison": {
@@ -147,7 +161,7 @@
       "10-garden-harvest-and-feeding.png"
     ],
     "implemented": "milk-white/mist-blue panels, garden 3x2 scene, side crop/seed controls, three-column kitchen, four-column inventory and explicit pet picker, approved whale-girl and original detailed 2D foods",
-    "remaining": "Final screenshots after the latest common foundation kit integration and updated inventory detail layout"
+    "remaining": "A04 fixed and native measurements passed at1280x844 and1440x900; foundation central A01-A12 visual recheck remains pending"
   },
   "twoDOnly": {
     "implemented": true,
@@ -160,18 +174,19 @@
     "assets": "project-generated background and transparent atlas; no GPL sample tiles; shared character is not copied into a second resource library"
   },
   "integrationDependencies": [
-    "Requires foundation f0af90f or later; final common Tailwind/route Motion and animation toggle verification in integrated shell",
-    "Accounts canonical save module/backup adapter registered as garden version 1; never per-table merge independent garden progress",
-    "Battle/discovery trusted grantSeeds adapter and durable receipt repair; cloud adapters return explicit pending without local grants",
-    "Territories provider and actual local battle/garrison implemented; shared discovery MapLibre component used",
-    "Foundation owns final full integration regression and packaging"
+    "Public foundation 7f0e896 is consumed; native Motion reduced/system/app setting checks passed",
+    "Garden directly reuses CompanionPortrait, NearbyMap and useDiscovery; Turf/quality checks come from discovery",
+    "Accounts verified legacy-id alias requires companions.migrateOwnerAlias on the same SQLite connection; guarded until provided",
+    "Canonical garden/companion cloud save uses existing runtime TEXT IDs and accounts CAS; no new inventory or identity store",
+    "Foundation owns final full integration regression and Windows packaging"
   ],
   "remaining": [
-    "HTTPS garden-sync and reviewed accounts/garden migrations are not deployed; live actual-account two-device receipt/readback not verified",
-    "Cloud territorial ownership/challenge/garrison authority is still unavailable and fails explicitly, without altering local inventory",
-    "Unsynced companion changes are conservatively preserved as CLOUD_LOCAL_CONFLICT; common accounts sync/version reconciliation remains required",
-    "Real OS positioning and native territory takeover/garrison flow still need integrated discovery validation",
-    "Final updated UI comparison and application animation toggle validation in progress"
+    "HTTPS garden-sync/accounts migrations not deployed; live real-account two-device receipt/readback not verified",
+    "Cloud territory challenge/garrison authority and shared battle integration unavailable; fails explicitly",
+    "Companions verified owner-alias migration callback required for pre-Accounts raw-ID companion rows; all original garden/pet data preserved",
+    "Accounts public save-version reconciliation required after authoritative garden updates; unsynced companion changes conservatively preserved",
+    "Actual Windows WiFi accuracy212m exceeds80m; physical-location occupation/garrison not accepted",
+    "Foundation central A01-A12 visual recheck and full combined integration/packaging remain pending; canonical six distinct resources/actions owned by resources"
   ],
   "cloudReview": "docs/implementation/garden-cloud-review.md",
   "dataPolicy": "additive migrations; original history/designs/models retained; no production deployment, destructive migration or user-data reset",
@@ -183,11 +198,56 @@
     "preserved": "Old graph archived after successful migration; source becomes read-only; no starter grant on incomplete migration; two progressed graphs rejected"
   },
   "integratedRevalidation": {
-    "foundation": "f0af90f consumed in 9b6fe47",
+    "foundation": "7f0e896 consumed in dea840a",
     "profile": "artifacts/garden/integrated-electron",
     "ricePlanted": "2026-10-24T12:51:09.487Z",
     "riceMatures": "2026-10-24T13:16:09.487Z",
-    "realTimeGrowth": "production 25-minute duration, no clock or database edits",
-    "focusedChecks": "15 SQLite + 5 PostgreSQL checks passed; root UI typecheck and garden ESLint passed"
+    "realTimeGrowth": "25m13.735s rice and 15m rewarded tomato through actual UI, no clock edits; exact restart readback complete",
+    "focusedChecks": "16 SQLite + 8 PostgreSQL checks; build/typecheck/ESLint; native library/geometry at1280x844, H1 29px/700, Motion, privacy-aware actual WiFi diagnostics; 25m rice/craft/feed/restart passed"
+  },
+  "testTool": {
+    "project": "@electric-sql/pglite",
+    "version": "0.5.11",
+    "license": "Apache-2.0",
+    "where": "ignored artifacts/garden/pg-qa; actual PostgreSQL WASM SQL checks only; not a product dependency"
+  },
+  "concentratedUiFix": {
+    "viewport": "1280x844",
+    "cards": "actual native Button cards use content height; images/names/counts/pet levels fully contained",
+    "h1": "inherits foundation H1 29px; public Tailwind font-bold 700",
+    "spacing": "foundation-page",
+    "verified": true
+  },
+  "controlledTerritoryUi": {
+    "fixture": true,
+    "realGeographicAcceptance": false,
+    "result": "native UI -> IPC -> SQLite garrison change/restart passed; exact pet growth and independent selections unchanged",
+    "profile": "artifacts/garden/territory-electron"
+  },
+  "visualAudit": {
+    "reference": "codex/lingjing-implementation-base@9915684:docs/implementation/acceptance/2026-10-24/visual-audit.txt",
+    "A04": {
+      "status": "fixed-ready-for-central-recheck",
+      "fixCommits": [
+        "a79d9b9",
+        "155ac37"
+      ],
+      "sizes": [
+        "1280x844",
+        "1440x900"
+      ],
+      "result": "no card intersections; every image contained; pet card scrollHeight <= height; H1 29px/700; Card margin-bottom0"
+    },
+    "A01": "inherits foundation font stack/H1 and foundation-page; no feature vw clamp",
+    "A03": "native card margin-bottom0; parent owns gaps",
+    "A07A08": "consumes canonical pet.resource through shared CompanionPortrait; resource production remains resources-owned",
+    "centralFullAppAcceptance": "pending"
+  },
+  "goalComplete": false,
+  "foundationClosure": {
+    "commit": "b3c15a5",
+    "ownerAlias": "Actual registered service migration now verified on one SQLite connection",
+    "accountCloudRevision": "Guarded authoritative checkpoint bridge implemented and tested; real deployed readback still pending",
+    "evidence": "tests/foundation/owner-alias.test.cjs and cloud-checkpoint.test.cjs"
   }
 }

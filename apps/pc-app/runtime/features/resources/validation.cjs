@@ -2,7 +2,7 @@ const fs = require('node:fs/promises');
 const path = require('node:path');
 const { createHash } = require('node:crypto');
 
-const ACTIONS = Object.freeze(['idle', 'walk', 'attack', 'hit', 'skill', 'victory', 'sleep']);
+const ACTIONS = Object.freeze(['idle', 'blink', 'walk', 'wave', 'eat', 'attack_windup', 'attack_release', 'attack', 'hit', 'skill', 'victory', 'sleep']);
 const LIMITS = Object.freeze({ file: 128 * 1024 * 1024, total: 256 * 1024 * 1024, json: 4 * 1024 * 1024, files: 128, pixels: 4096 * 4096 });
 const DEFAULT_CALIBRATION = Object.freeze({ scale: 1, rotationDeg: 0, verticalOffset: 0, mirrorX: false, anchorX: 0.5, anchorY: 0.85, fps: 0 });
 class ResourceError extends Error {
@@ -45,7 +45,8 @@ function actionMap(value, clips, strict = false) {
   if (value !== undefined && !plain(value)) fail('INVALID_ACTION_MAP', '动作映射格式错误');
   const names = new Set(clips.map(clip => clip.name));
   const patterns = {
-    idle: /idle|stand|静|待机/i, walk: /walk|run|move|走|跑/i, attack: /attack|bite|punch|攻击/i,
+    idle: /idle|stand|静|待机/i, blink: /blink|眨眼/i, walk: /walk|run|move|走|跑/i, wave: /wave|greet|招手/i, eat: /eat|feed|chew|进食|吃/i,
+    attack_windup: /attack[_ -]?(?:windup|start)|攻击起手|蓄势/i, attack_release: /attack[_ -]?(?:release|strike)|攻击释放/i, attack: /attack|bite|punch|攻击/i,
     hit: /hit|hurt|damage|受击/i, skill: /skill|cast|spell|技能/i, victory: /victory|win|dance|胜利/i, sleep: /sleep|rest|睡/i,
   };
   return Object.fromEntries(ACTIONS.map(action => {
@@ -58,7 +59,7 @@ function actionMap(value, clips, strict = false) {
       return [action, clip];
     }
     const preferredIdle = action === 'idle' ? clips.find(clip => /(^|[|:_])idle(?:norm)?$/i.test(clip.name)) : null;
-    return [action, preferredIdle?.name ?? clips.find(clip => patterns[action].test(clip.name))?.name ?? (action === 'idle' ? clips[0]?.name ?? null : null)];
+    return [action, clips.find(clip => clip.name === action)?.name ?? preferredIdle?.name ?? clips.find(clip => patterns[action].test(clip.name))?.name ?? (action === 'idle' ? clips[0]?.name ?? null : null)];
   }));
 }
 function safeRelative(value) {

@@ -44,9 +44,12 @@ function sqlClient() {
   };
 }
 const handler=createGardenHandler(sqlClient);
+const dropAfterCommit=new Set();
 const server=createServer(async(request,response)=>{
   const chunks=[];for await(const chunk of request)chunks.push(chunk);
   const result=await handler(new Request('http://127.0.0.1/garden-sync',{method:request.method,headers:request.headers,body:Buffer.concat(chunks)}));
+  const actionId=JSON.parse(Buffer.concat(chunks).toString()).input?.actionId;
+  if(dropAfterCommit.delete(actionId)){response.destroy();return;}
   response.writeHead(result.status,Object.fromEntries(result.headers));response.end(await result.text());
 });
 await new Promise(done=>server.listen(0,'127.0.0.1',done)); const url=`http://127.0.0.1:${server.address().port}/garden-sync`;
@@ -95,6 +98,52 @@ try {
     const claims=await Promise.all([invoke({op:'claimReward',source:'battle',receiptId}),invoke({op:'claimReward',source:'battle',receiptId})]);assert.equal(claims.every(result=>result.data.ok),true);
     const after=(await invoke({op:'snapshot'})).data.data.snapshot.items.filter(item=>item.category==='seed').reduce((sum,item)=>sum+item.quantity,0);assert.equal(after-before,2);
     assert.equal((await invoke({op:'claimReward',source:'battle',receiptId})).data.data.alreadyClaimed,true);evidence.checks.push('server-owned reward row + concurrent receipt deduplication');
+  });
+  await test('first cloud open grants starters once on PostgreSQL and cannot mint a local fallback',async()=>{
+    const freshOwner='user-first-cloud-garden',freshToken='fresh-local-qa-session';
+    await pg.query('INSERT INTO public.runtime_accounts VALUES ($1,$2)',[freshOwner,freshToken]);
+    const fresh=structuredClone(envelope);fresh.ownerAccountId=freshOwner;fresh.identity.subjectId=freshOwner;
+    fresh.data.modules.garden.data=createGardenBackupAdapter(db).export(freshOwner);
+    for(const table of Object.values(fresh.data.tables))table.rows=[];
+    const {checksum:ignored,...document}=fresh;void ignored;fresh.checksum=await digest(document);
+    await pg.query('SELECT public.accounts_push_save($1,$2,$3,$4,$5::jsonb)',[freshOwner,freshToken,'first-empty-save:qa',0,JSON.stringify(fresh)]);
+    let activeToken='invalid-session';const providers=new Map();
+    const freshServices={...services,get:name=>name==='accounts'?{privateSession:()=>({id:freshOwner,ownerAccountId:freshOwner,provider:'runtime',sessionToken:activeToken})}:providers.get(name),provide:(name,value)=>providers.set(name,value),session:{getCurrentUser:()=>({id:freshOwner}),getOwnerAccountId:()=>freshOwner}};
+    const registered=require('./index.cjs').register(freshServices),freshContext={ownerAccountId:freshOwner};
+    try{
+      const denied=await registered.commands.snapshot(undefined,freshContext);assert.equal(denied.code,'SESSION_INVALIDATED');
+      assert.equal(db.prepare('SELECT 1 FROM garden_accounts WHERE owner_account_id=?').get(freshOwner),undefined);
+      activeToken=freshToken;
+      const simultaneous=await Promise.all([invoke({op:'snapshot',userId:freshOwner,sessionToken:freshToken}),invoke({op:'snapshot',userId:freshOwner,sessionToken:freshToken})]);
+      assert.equal(simultaneous.every(result=>result.data.ok),true);
+      const result=await registered.commands.snapshot(undefined,freshContext);assert.equal(result.ok,true);assert.equal(result.data.sync.mode,'cloud');
+      assert.equal(result.data.plots.length,6);assert.equal(result.data.items.filter(item=>item.category==='seed').reduce((sum,item)=>sum+item.quantity,0),8);
+      const receipts=(await pg.query('SELECT COUNT(*) n FROM public.runtime_garden_operations WHERE owner_account_id=$1',[freshOwner])).rows[0];assert.equal(Number(receipts.n),1);
+      assert.equal(db.prepare("SELECT COUNT(*) n FROM garden_events WHERE owner_account_id=? AND kind='starter'").get(freshOwner).n,4);
+      evidence.checks.push('concurrent first cloud open -> one PostgreSQL starter receipt; rejected session creates no local garden');
+    }finally{registered.dispose();}
+  });
+  await test('an HTTP disconnect after PostgreSQL commit retries the exact craft once',async()=>{
+    const before=await authority.snapshot(context),input={actionId:'craft-lost-http-reply',expectedRevision:before.revision,recipeId:'cooked_rice',quantity:1};
+    dropAfterCommit.add(input.actionId);
+    await assert.rejects(authority.command(context,'craft',input),{code:'GARDEN_CLOUD_UNAVAILABLE'});
+    const committed=(await pg.query('SELECT COUNT(*) n FROM public.runtime_garden_operations WHERE owner_account_id=$1 AND action_id=$2',[owner,input.actionId])).rows[0];assert.equal(Number(committed.n),1);
+    const retry=await authority.command(context,'craft',input);assert.equal(retry.ok,true);assert.equal(retry.replayed,true);
+    assert.equal(garden.itemCount(owner,'rice'),0);assert.equal(garden.itemCount(owner,'cooked_rice'),1);
+    const again=await authority.command(context,'craft',input);assert.equal(again.replayed,true);assert.equal(garden.itemCount(owner,'cooked_rice'),1);
+    evidence.checks.push('real HTTP socket disconnect after PostgreSQL commit -> exact action replay -> one craft debit and one output after SQLite readback');
+  });
+  await test('only the service role can read garden receipts or execute settlement RPC',async()=>{
+    await pg.exec('ALTER ROLE service_role BYPASSRLS; BEGIN; SET LOCAL ROLE service_role;');
+    try {assert.ok((await pg.query('SELECT action_id FROM public.runtime_garden_operations')).rows.length>0);}
+    finally {await pg.exec('ROLLBACK');}
+    for(const role of ['anon','authenticated']){
+      await pg.exec(`BEGIN; SET LOCAL ROLE ${role};`);
+      try {await assert.rejects(pg.query('SELECT action_id FROM public.runtime_garden_operations'),/permission denied/);}
+      finally {await pg.exec('ROLLBACK');}
+      const privilege=(await pg.query("SELECT has_function_privilege($1,'public.garden_commit_operation(text,text,text,text,bigint,jsonb,jsonb)','EXECUTE') allowed",[role])).rows[0];assert.equal(privilege.allowed,false);
+    }
+    evidence.checks.push('actual SQL roles: service receipt read allowed; anon/authenticated receipt read and settlement execution denied');
   });
   // Also validate that the pure reducer never alters its input after a failure.
   const original=JSON.stringify(envelope);assert.throws(()=>applyCloudCommand(envelope,owner,'craft',{actionId:'negative',expectedRevision:1,recipeId:'cooked_rice',quantity:-1},Date.now(),'a'.repeat(64)),{code:'INVALID_QUANTITY'});assert.equal(JSON.stringify(envelope),original);

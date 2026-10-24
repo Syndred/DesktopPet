@@ -1,0 +1,77 @@
+{
+  "at": "2026-10-24T13:24:03.704Z",
+  "output": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-companions\\DesktopPet\\artifacts\\companions\\visual-xVE2hc",
+  "window": {
+    "width": 1320,
+    "height": 900,
+    "deviceScaleFactor": 1
+  },
+  "checks": [
+    "Detail title/scene are in the left column; right Tabs align at the top and span the column; genuine scene and memory art are loaded",
+    "Verified-owner action command reaches the exact native pet and actual shared Pixi frames advance, then return to its own idle behavior",
+    "Adoption header stays in the left column, preview aligns to page top; actual registered 2D assets render without page errors"
+  ],
+  "errors": [],
+  "viewport": {
+    "width": 1320,
+    "height": 900,
+    "dpr": 1
+  },
+  "detail": {
+    "title": {
+      "x": 218,
+      "y": 78,
+      "width": 454.9375,
+      "height": 88.875
+    },
+    "tabs": {
+      "x": 690.9375,
+      "y": 78,
+      "width": 603.0625,
+      "height": 36
+    },
+    "right": {
+      "x": 690.9375,
+      "y": 78,
+      "width": 603.0625,
+      "height": 672.109375
+    },
+    "scene": {
+      "x": 218,
+      "y": 178.875,
+      "width": 454.9375,
+      "height": 650
+    },
+    "memory": {
+      "x": 701.9375,
+      "y": 619.109375,
+      "width": 581.0625,
+      "height": 120
+    },
+    "headingFont": "26px",
+    "scroll": {
+      "clientHeight": 846,
+      "scrollHeight": 846
+    },
+    "memoryArtworkLoaded": true
+  },
+  "playback": {
+    "petId": "pet-a26dc6ae-a749-4eee-8ff6-02f5f210cb1b",
+    "resourceId": "builtin:lingjing-yuwan-v1",
+    "action": "attack",
+    "frames": [
+      "0",
+      "0",
+      "1",
+      "1",
+      "2",
+      "2"
+    ]
+  },
+  "adoption": {
+    "titleTop": 78,
+    "previewTop": 78,
+    "cards": 3
+  },
+  "result": "passed"
+}

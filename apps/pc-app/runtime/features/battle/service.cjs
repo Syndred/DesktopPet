@@ -1,8 +1,8 @@
 const { randomUUID } = require("node:crypto");
-const { BattleRuntimeService } = require("../../services/battle-runtime.cjs");
+const { BattleRuntimeService, getBattleRules } = require("../../services/battle-runtime.cjs");
 const { OnlineDuelService } = require("../../services/online-duel-service.cjs");
 const { BattleStore, copy } = require("./store.cjs");
-const { appearance2d, SHIBA_RESOURCE } = require("./assets.cjs");
+const { appearance2d, SHIBA_RESOURCE, CANONICAL_SHIBA_RESOURCE } = require("./assets.cjs");
 
 const ACTIONS = new Set(["normal_attack", "element_attack", "dodge", "ultimate"]);
 const ELEMENTS = new Set(["metal", "wood", "earth", "water", "fire"]);
@@ -114,16 +114,18 @@ class BattleFeatureService {
     const current = this.store.latest(owner);
     const status = this.online.getStatus();
     return {
-      pets: this.pets(owner), session: current, selectedPetId: this.services.get("companions")?.getSelections?.(owner)?.battlePetId || null,
+      pets: this.pets(owner), session: current, rules: getBattleRules(), selectedPetId: this.services.get("companions")?.getSelections?.(owner)?.battlePetId || null,
       online: { enabled: status.enabled, configured: status.configured, available: status.available },
       reports: this.listReports({}, { ownerAccountId: owner })
     };
   }
 
+  rules(_payload, context) { this.owner(context); return getBattleRules(); }
+
   requireSession(owner, sessionId) {
     const session = sessionId ? this.store.session(owner, text(sessionId, "对战编号")) : this.store.latest(owner);
     if (!session) throw fail("BATTLE_NOT_FOUND", "未找到当前账号的对战");
-    return session;
+    return { ...session, rules: session.rules || getBattleRules() };
   }
 
   startLocal(owner, input, mode, challenge) {
@@ -144,7 +146,7 @@ class BattleFeatureService {
     const session = {
       id: `battle-${randomUUID()}`, mode, status: "active", startedAt: new Date().toISOString(),
       player, enemy: opponent, snapshot: engine.reset({ playerElement: player.element, enemyElement: opponent.element }),
-      rounds: [], winner: null, pendingAction: null, historyComplete: true,
+      rounds: [], winner: null, pendingAction: null, historyComplete: true, rules: getBattleRules(),
       context: { ...copy(challenge), authority: "local", opponent: undefined }
     };
     return this.services.db.transaction(() => {
@@ -162,7 +164,7 @@ class BattleFeatureService {
     if (!ELEMENTS.has(payload.enemyElement)) throw fail("INVALID_ELEMENT", "请选择训练对手的五行");
     return this.serial(owner, () => this.startLocal(owner, payload, "training", {
       id: `training:${payload.enemyElement}`,
-      opponent: { petId: `training-${payload.enemyElement}`, petName: "焰柴", element: payload.enemyElement, level: 1, appearance2d: SHIBA_RESOURCE }
+      opponent: { petId: `training-${payload.enemyElement}`, petName: "焰柴", element: payload.enemyElement, level: 1, appearance2d: this.services.get('resources')?.repository?.hasGlobal(CANONICAL_SHIBA_RESOURCE) ? CANONICAL_SHIBA_RESOURCE : SHIBA_RESOURCE }
     }));
   }
 
@@ -253,7 +255,7 @@ class BattleFeatureService {
       id: session.id, sessionId: session.id, mode: session.mode, status, winner: session.winner,
       player: session.player, enemy: session.enemy, startedAt: session.startedAt, endedAt: session.endedAt,
       rounds: session.rounds, reward: session.reward || null, historyComplete: session.historyComplete,
-      context: session.context
+      context: session.context, rules: session.rules || getBattleRules()
     });
     return saved;
   }
@@ -417,7 +419,7 @@ class BattleFeatureService {
       startedAt: room.created_at || new Date().toISOString(), player,
       enemy: { petId: room[`${peer}_pet_id`] || room[`${peer}_user_id`] || "waiting-peer", petName: room[`${peer}_pet_name`] || "等待好友", element: room[`${peer}_element`] || "wood", appearance2d: room[`${peer}_resource_id`] || appearance2d({ element: room[`${peer}_element`] }) },
       snapshot: this.online.toBattleState(), room: copy(room), side,
-      rounds: [], winner: null, pendingAction: null, historyComplete: true,
+      rounds: [], winner: null, pendingAction: null, historyComplete: true, rules: getBattleRules(),
       context: { authority: "supabase", cloudUserId: user.id }
     };
     return this.store.save(owner, session);
@@ -463,11 +465,7 @@ class BattleFeatureService {
     const response = await this.online.syncRoom({ roomId: session.room.id, roundsLimit: 50 });
     this.assertOwner(owner);
     session = this.requireSession(owner, session.id);
-    const room = response.room;
-    session.room = copy(room);
-    session.snapshot = this.online.toBattleState();
-    const peer = session.side === "host" ? "guest" : "host";
-    session.enemy = { ...session.enemy, petId: room[`${peer}_pet_id`] || room[`${peer}_user_id`] || "waiting-peer", petName: room[`${peer}_pet_name`] || "等待好友", element: room[`${peer}_element`] || "wood", appearance2d: room[`${peer}_resource_id`] || appearance2d({ element: room[`${peer}_element`] }) };
+    let room = response.room;
     const rounds = new Map(session.rounds.map(round => [round.round, round]));
     let page = response.rounds || [];
     for (let pageNo = 0; pageNo < 100; pageNo++) {
@@ -475,6 +473,10 @@ class BattleFeatureService {
         const mapped = this.online.mapRoundToBattleResult(round);
         rounds.set(round.round_no, { ...mapped.roundResult, state: mapped.state });
       }
+      // Pagination awaits can also receive a newer room through get_room or Realtime.
+      // Include its new rounds before declaring the saved history complete.
+      const liveRoom = this.online.getStatus().room;
+      if (liveRoom?.id === room.id) room = liveRoom;
       const last = Number(room.last_resolved_round || 0);
       let missing = 1;
       while (missing <= last && rounds.has(missing)) missing++;
@@ -485,6 +487,12 @@ class BattleFeatureService {
       page = (earlier.rounds || []).filter(round => round.round_no < before && !rounds.has(round.round_no));
       if (!page.length) break;
     }
+    const latestRoom = this.online.getStatus().room;
+    if (latestRoom?.id === room.id) room = latestRoom;
+    session.room = copy(room);
+    session.snapshot = this.online.toBattleState();
+    const peer = session.side === "host" ? "guest" : "host";
+    session.enemy = { ...session.enemy, petId: room[`${peer}_pet_id`] || room[`${peer}_user_id`] || "waiting-peer", petName: room[`${peer}_pet_name`] || "等待好友", element: room[`${peer}_element`] || "wood", appearance2d: room[`${peer}_resource_id`] || appearance2d({ element: room[`${peer}_element`] }) };
     session.rounds = [...rounds.values()].sort((a, b) => a.round - b.round);
     session.historyComplete = session.rounds.length === Number(room.last_resolved_round || 0) && session.rounds.every((round, index) => round.round === index + 1);
     const pending = session.pendingAction;

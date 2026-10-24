@@ -38,6 +38,10 @@ try {
   await page.getByRole("button", { name: "恢复本地备份", exact: true }).click();
   console.log("NATIVE_DIALOG", "keyboard-preview", join(previous, "export.lingjing.json"));
   const dialog = page.getByRole("dialog", { name: "预览恢复内容" }); await dialog.waitFor({ timeout: 180_000 });
+  const modalBox = await dialog.boundingBox(), viewport = await page.evaluate(() => ({ width: innerWidth, height: innerHeight }));
+  assert.ok(Math.abs(modalBox.x + modalBox.width / 2 - viewport.width / 2) < 5);
+  assert.ok(Math.abs(modalBox.y + modalBox.height / 2 - viewport.height / 2) < 5);
+  record("restore dialog remains centered in the real Electron viewport", { modalBox, viewport });
   for (let i = 0; i < 9; i++) { await page.keyboard.press("Tab"); assert.equal(await dialog.evaluate(node => node.contains(document.activeElement)), true); }
   await page.screenshot({ path: join(output, "restore-dialog.png") });
   await page.keyboard.press("Escape"); await dialog.waitFor({ state: "hidden" });

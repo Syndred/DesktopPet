@@ -1,11 +1,14 @@
 const { migrations } = require('./migrations.cjs');
 const { CompanionsService, toLegacyPet } = require('./service.cjs');
 const { createCompanionOwnerMigration } = require('./identity.cjs');
+const { createCompanionPlayback } = require('./playback.cjs');
+const { companionCombatProfile } = require('./combat-profile.cjs');
 
 module.exports = {
   id: 'companions', migrations,
   register(services) {
     const service = new CompanionsService({ db: services.db });
+    const playback = createCompanionPlayback({ services, service });
     const disposers = [];
     let desktop;
     let changeQueued = false;
@@ -19,13 +22,18 @@ module.exports = {
       });
     }
     const ownerMigration = createCompanionOwnerMigration(services, changed);
+    function upgradeBuiltins(ownerAccountId) {
+      const resources = services.get('resources');
+      if (resources?.canonicalId && service.upgradeBuiltinResources(ownerAccountId, id => resources.canonicalId(id)).length) changed(ownerAccountId);
+    }
     function ensureImported(ownerAccountId) {
       ownerMigration.ensure(ownerAccountId);
-      if (service.account(ownerAccountId).legacy_imported_at) return;
+      if (service.account(ownerAccountId).legacy_imported_at) { upgradeBuiltins(ownerAccountId); return; }
       const accounts = services.get('accounts');
       if (accounts?.getLegacyInventory) {
         const inventory = accounts.getLegacyInventory(ownerAccountId);
         service.importLegacyInventory(ownerAccountId, inventory || { pets: [] });
+        upgradeBuiltins(ownerAccountId);
         return;
       }
       const legacy = services.legacy?.runtimeDataStore;
@@ -33,6 +41,7 @@ module.exports = {
       if (!legacy || legacy.getAuthSession()?.currentUser?.id !== ownerAccountId) return;
       const inventory = legacy.getInventorySnapshot();
       service.importLegacyInventory(ownerAccountId, inventory);
+      upgradeBuiltins(ownerAccountId);
     }
     const api = {
       db: services.db,
@@ -44,10 +53,13 @@ module.exports = {
         return pet;
       },
       getSelections(ownerAccountId) { return service.selections(ownerAccountId); },
+      getCombatProfile(ownerAccountId, petId) { return companionCombatProfile(api.getPet(ownerAccountId, petId), services.get('battle')?.getRules()); },
       listTemplates() { return service.templates(); },
+      playAction(ownerAccountId, input) { return playback.play(ownerAccountId, api.getPet(ownerAccountId, input.petId), input.action, input.actionId); },
       applyGrowthInTransaction(ownerAccountId, input) {
         const result = service.applyGrowthInTransaction(ownerAccountId, input);
         changed(ownerAccountId);
+        playback.afterGrowthCommit(ownerAccountId, input, result);
         return result;
       },
       createCapturedInstance(ownerAccountId, input) {
@@ -86,14 +98,21 @@ module.exports = {
     };
     return {
       commands: {
-        list(_payload, context) { ensureImported(context.ownerAccountId); desktop?.sync(); return service.snapshot(context.ownerAccountId); },
-        get(payload, context) { const pet = api.getPet(context.ownerAccountId, payload.petId); return { ok: true, data: pet, revision: pet.revision }; },
+        async list(_payload, context) { await services.get('resources')?.ready; ensureImported(context.ownerAccountId); desktop?.sync(); return service.snapshot(context.ownerAccountId); },
+        async get(payload, context) { await services.get('resources')?.ready; const pet = api.getPet(context.ownerAccountId, payload.petId); return { ok: true, data: pet, revision: pet.revision }; },
+        combatProfile(payload, context) { const data = api.getCombatProfile(context.ownerAccountId, payload.petId); return { ok: true, data, revision: service.requirePet(context.ownerAccountId, payload.petId).revision }; },
         desktopInput(payload, context) {
           if (!desktop) return { ok: false, code: 'DESKTOP_UNAVAILABLE', message: '请在灵境桌面应用中操作伙伴' };
           return desktop.handleInput(context.ownerAccountId, payload);
         },
         adopt: execute('adopt'), rename: execute('rename'), desktop: execute('updateDesktop'),
-        select: execute('select'), interact: execute('interact'),
+        select: execute('select'),
+        interact(payload, context) {
+          const result = execute('interact')(payload, context);
+          if (!result.duplicate) void playback.play(context.ownerAccountId, result.data.pet, 'wave', payload.actionId).catch(() => {});
+          return result;
+        },
+        perform(payload, context) { ensureImported(context.ownerAccountId); return playback.perform(context.ownerAccountId, payload); },
         async appearance(payload, context) {
           ensureImported(context.ownerAccountId);
           const resource = await services.get('resources').get(context.ownerAccountId, payload.resourceId);
@@ -109,7 +128,7 @@ module.exports = {
           changed(context.ownerAccountId); return result;
         }
       },
-      dispose() { for (const dispose of disposers) dispose(); desktop?.dispose(); }
+      dispose() { playback.dispose(); for (const dispose of disposers) dispose(); desktop?.dispose(); }
     };
   }
 };
