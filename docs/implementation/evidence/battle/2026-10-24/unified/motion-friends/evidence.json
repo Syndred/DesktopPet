@@ -1,0 +1,6126 @@
+{
+  "at": "2026-10-24T15:35:33.903Z",
+  "provenance": "simulated",
+  "scenarioId": "a6a628a9-74ac-4b35-841e-48c6d222cd3c",
+  "sourceCommit": "cb5c2c3a7aa44bb13c4320788c7487d54d259bb3",
+  "sourceDirty": "",
+  "sourceHashes": [
+    {
+      "file": "apps/pc-app/runtime/services/battle-runtime.cjs",
+      "sha256": "0c7475da1cb6a7171d8dceca57e78dcf1ee28b2e46ac70957774d0dd86673b38"
+    },
+    {
+      "file": "apps/pc-app/runtime/features/battle/service.cjs",
+      "sha256": "cf265498249b7216deef56a2071c0225c2f76656448a43c52428d2dbae406e87"
+    },
+    {
+      "file": "apps/pc-app/runtime/features/battle/presentation.cjs",
+      "sha256": "83493cda1c79fb7aee5f08ff7c5d8dd2cb3ed95b1737382db63739cd7198c90c"
+    },
+    {
+      "file": "apps/pc-app/runtime/features/battle/qa-adapter.cjs",
+      "sha256": "cdcd69765e1754835a2d7d678cb600a563f49a1f72091315842e49d793400878"
+    },
+    {
+      "file": "apps/pc-app/ui/src/features/battle/BattleScreen.tsx",
+      "sha256": "e702f3ec88767875e5f774491fcb5a0ac8a5eee1ff5904f7fd33a89164776220"
+    },
+    {
+      "file": "apps/pc-app/ui/src/features/battle/BattleArena.tsx",
+      "sha256": "21d71909d89d2086d342a6713c26f05ebdea711e8b60d6693681d3f0748a0f5c"
+    },
+    {
+      "file": "apps/pc-app/ui/src/features/battle/BattleMoves.tsx",
+      "sha256": "e3ec8031282fb2fea3e070d26288c6d84716d41f55632162a15c39538aec043c"
+    },
+    {
+      "file": "apps/pc-app/ui/src/features/battle/useBattleAnimation.ts",
+      "sha256": "aa5bcc6a1679982ccb35891dd0f034fc3b6c81cf1a2b1d49e4dc33fce26be4c3"
+    },
+    {
+      "file": "apps/pc-app/ui/src/features/battle/useBattleSession.ts",
+      "sha256": "5c4babe197833057f082fe683050c87846ab3c4800203aea61303d5df47a030c"
+    },
+    {
+      "file": "apps/pc-app/runtime/features/resources/assets/roster-v2/catalog.json",
+      "sha256": "8d40e857fbad95130051085b0dcff64feb099d0375260a0ab6259ea217d2da08"
+    }
+  ],
+  "fixtures": {
+    "location": "domain-owned validated QA location adapter; no WindowsLocationAdapter replacement and no physical location claim",
+    "enemy": "explicit QA preset or declared opponent action; unchanged runtime executeRound",
+    "profiles": "fresh path-bound foundation QA profiles; namespaced SQLite accounts, no legacy user seed"
+  },
+  "steps": [
+    {
+      "at": "2026-10-24T15:35:34.781Z",
+      "name": "real local account and independent canonical adoptions",
+      "petCount": 8
+    },
+    {
+      "at": "2026-10-24T15:35:36.471Z",
+      "name": "shared geometry entry-training-1280",
+      "viewport": {
+        "width": 1280,
+        "height": 846,
+        "dpr": 1.25
+      },
+      "mode": "training",
+      "signature": [
+        {
+          "selector": ".battle-arena",
+          "count": 1,
+          "box": {
+            "x": 224,
+            "y": 141.1999969482422,
+            "width": 731.5250244140625,
+            "height": 530.6000366210938
+          }
+        },
+        {
+          "selector": ".battle-stage",
+          "count": 1,
+          "box": {
+            "x": 224.8000030517578,
+            "y": 233,
+            "width": 729.9249877929688,
+            "height": 307.20001220703125
+          }
+        },
+        {
+          "selector": ".battle-arena-top",
+          "count": 1,
+          "box": {
+            "x": 224.8000030517578,
+            "y": 142,
+            "width": 729.9249877929688,
+            "height": 91
+          }
+        },
+        {
+          "selector": ".battle-moves",
+          "count": 1,
+          "box": {
+            "x": 224.8000030517578,
+            "y": 540.2000122070312,
+            "width": 729.9249877929688,
+            "height": 130.8000030517578
+          }
+        },
+        {
+          "selector": ".battle-current-log",
+          "count": 1,
+          "box": {
+            "x": 985.3250122070312,
+            "y": 338.7375183105469,
+            "width": 248.875,
+            "height": 252.2624969482422
+          }
+        }
+      ],
+      "cards": [
+        {
+          "label": "普通攻击",
+          "bottom": 662,
+          "shadow": "none",
+          "transform": "none"
+        },
+        {
+          "label": "属性攻击",
+          "bottom": 662,
+          "shadow": "none",
+          "transform": "none"
+        },
+        {
+          "label": "闪避",
+          "bottom": 662,
+          "shadow": "none",
+          "transform": "none"
+        },
+        {
+          "label": "大招",
+          "bottom": 662,
+          "shadow": "none",
+          "transform": "none"
+        }
+      ],
+      "portraitCount": 6
+    },
+    {
+      "at": "2026-10-24T15:35:36.929Z",
+      "name": "shared geometry entry-training-1440",
+      "viewport": {
+        "width": 1440,
+        "height": 900,
+        "dpr": 1.25
+      },
+      "mode": "training",
+      "signature": [
+        {
+          "selector": ".battle-arena",
+          "count": 1,
+          "box": {
+            "x": 224,
+            "y": 141.1999969482422,
+            "width": 848.3250122070312,
+            "height": 539.4000244140625
+          }
+        },
+        {
+          "selector": ".battle-stage",
+          "count": 1,
+          "box": {
+            "x": 224.8000030517578,
+            "y": 233,
+            "width": 846.7250366210938,
+            "height": 316
+          }
+        },
+        {
+          "selector": ".battle-arena-top",
+          "count": 1,
+          "box": {
+            "x": 224.8000030517578,
+            "y": 142,
+            "width": 846.7250366210938,
+            "height": 91
+          }
+        },
+        {
+          "selector": ".battle-moves",
+          "count": 1,
+          "box": {
+            "x": 224.8000030517578,
+            "y": 549,
+            "width": 846.7250366210938,
+            "height": 130.8000030517578
+          }
+        },
+        {
+          "selector": ".battle-current-log",
+          "count": 1,
+          "box": {
+            "x": 1102.125,
+            "y": 351.01251220703125,
+            "width": 292.07501220703125,
+            "height": 248.78750610351562
+          }
+        }
+      ],
+      "cards": [
+        {
+          "label": "普通攻击",
+          "bottom": 670.7999877929688,
+          "shadow": "none",
+          "transform": "none"
+        },
+        {
+          "label": "属性攻击",
+          "bottom": 670.7999877929688,
+          "shadow": "none",
+          "transform": "none"
+        },
+        {
+          "label": "闪避",
+          "bottom": 670.7999877929688,
+          "shadow": "none",
+          "transform": "none"
+        },
+        {
+          "label": "大招",
+          "bottom": 670.7999877929688,
+          "shadow": "none",
+          "transform": "none"
+        }
+      ],
+      "portraitCount": 6
+    },
+    {
+      "at": "2026-10-24T15:35:43.622Z",
+      "name": "same elemental action restarts real release texture without replacing canvases; motion off adopts final state, stops actual frames and unlocks controls; reenable does not replay history",
+      "sessionId": "battle-c5ecbe80-f6d9-4c42-8825-fb378b716366",
+      "frames": [
+        [
+          {
+            "frame": "0",
+            "region": "76,63,184,261"
+          },
+          {
+            "frame": "0",
+            "region": "59,61,221,251"
+          }
+        ],
+        [
+          {
+            "frame": "0",
+            "region": "76,63,184,261"
+          },
+          {
+            "frame": "0",
+            "region": "59,61,221,251"
+          }
+        ],
+        [
+          {
+            "frame": "0",
+            "region": "76,63,184,261"
+          },
+          {
+            "frame": "0",
+            "region": "59,61,221,251"
+          }
+        ],
+        [
+          {
+            "frame": "0",
+            "region": "76,63,184,261"
+          },
+          {
+            "frame": "0",
+            "region": "59,61,221,251"
+          }
+        ],
+        [
+          {
+            "frame": "0",
+            "region": "76,63,184,261"
+          },
+          {
+            "frame": "0",
+            "region": "59,61,221,251"
+          }
+        ]
+      ],
+      "restored": [
+        {
+          "at": 4776.20000000298,
+          "phase": "rest",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "0",
+              "textureFrame": "76,63,184,261",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "0",
+              "textureFrame": "59,61,221,251",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": []
+        },
+        {
+          "at": 4905,
+          "phase": "rest",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "1",
+              "textureFrame": "76,63,184,261",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "1",
+              "textureFrame": "59,61,221,251",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": []
+        },
+        {
+          "at": 5025.89999999851,
+          "phase": "rest",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "2",
+              "textureFrame": "76,63,184,261",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "2",
+              "textureFrame": "59,61,221,251",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": []
+        },
+        {
+          "at": 5153.89999999851,
+          "phase": "rest",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "3",
+              "textureFrame": "76,63,184,261",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "3",
+              "textureFrame": "59,61,221,251",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": []
+        },
+        {
+          "at": 5274.79999999702,
+          "phase": "rest",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "4",
+              "textureFrame": "76,63,184,261",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "4",
+              "textureFrame": "59,61,221,251",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": []
+        }
+      ],
+      "beforeRound": 0,
+      "afterRound": 3
+    },
+    {
+      "at": "2026-10-24T15:35:47.930Z",
+      "name": "shared geometry entry-friend-1280",
+      "viewport": {
+        "width": 1280,
+        "height": 844,
+        "dpr": 1.25
+      },
+      "mode": "friend",
+      "signature": [
+        {
+          "selector": ".battle-arena",
+          "count": 1,
+          "box": {
+            "x": 224,
+            "y": 141.1999969482422,
+            "width": 731.5250244140625,
+            "height": 530.6000366210938
+          }
+        },
+        {
+          "selector": ".battle-stage",
+          "count": 1,
+          "box": {
+            "x": 224.8000030517578,
+            "y": 233,
+            "width": 729.9249877929688,
+            "height": 307.20001220703125
+          }
+        },
+        {
+          "selector": ".battle-arena-top",
+          "count": 1,
+          "box": {
+            "x": 224.8000030517578,
+            "y": 142,
+            "width": 729.9249877929688,
+            "height": 91
+          }
+        },
+        {
+          "selector": ".battle-moves",
+          "count": 1,
+          "box": {
+            "x": 224.8000030517578,
+            "y": 540.2000122070312,
+            "width": 729.9249877929688,
+            "height": 130.8000030517578
+          }
+        },
+        {
+          "selector": ".battle-current-log",
+          "count": 1,
+          "box": {
+            "x": 985.3250122070312,
+            "y": 363.45001220703125,
+            "width": 248.875,
+            "height": 180.5500030517578
+          }
+        }
+      ],
+      "cards": [
+        {
+          "label": "普通攻击",
+          "bottom": 662,
+          "shadow": "none",
+          "transform": "none"
+        },
+        {
+          "label": "属性攻击",
+          "bottom": 662,
+          "shadow": "none",
+          "transform": "none"
+        },
+        {
+          "label": "闪避",
+          "bottom": 662,
+          "shadow": "none",
+          "transform": "none"
+        },
+        {
+          "label": "大招",
+          "bottom": 662,
+          "shadow": "none",
+          "transform": "none"
+        }
+      ],
+      "portraitCount": 6
+    },
+    {
+      "at": "2026-10-24T15:35:56.044Z",
+      "name": "two isolated friend UIs: invite, accept, same room, pending restart, one resolution and no historical replay",
+      "roomId": "130b09ea-4ceb-445b-aa75-a1c22e53d74d",
+      "pending": {
+        "actionId": "33eb8471-2e03-4e32-b34d-a669f60507d9",
+        "action": "normal_attack",
+        "roundNo": 1,
+        "uncertain": false
+      },
+      "host": {
+        "id": "online-130b09ea-4ceb-445b-aa75-a1c22e53d74d",
+        "mode": "friend",
+        "status": "active",
+        "startedAt": "2026-10-24T15:35:45.668Z",
+        "player": {
+          "petId": "pet-26998bae-6688-438a-b51f-c0e0bc441c07",
+          "petName": "鱼丸",
+          "element": "water",
+          "level": 1,
+          "resourceRef": "builtin:lingjing-yuwan-v2",
+          "resource": {
+            "resourceId": "builtin:lingjing-yuwan-v2",
+            "kind": "2d"
+          },
+          "appearance2d": "builtin:lingjing-yuwan-v2"
+        },
+        "enemy": {
+          "petId": "pet-3b3c437d-ce1f-4cfe-ae67-3fc88534660c",
+          "petName": "礼帽喵",
+          "element": "metal",
+          "appearance2d": "builtin:lingjing-hatcat-v1"
+        },
+        "snapshot": {
+          "round": 1,
+          "player": {
+            "id": "player",
+            "element": "water",
+            "hp": 85,
+            "maxHp": 120,
+            "anger": 50,
+            "freeDodgeUsed": false,
+            "statuses": []
+          },
+          "enemy": {
+            "id": "enemy",
+            "element": "metal",
+            "hp": 90,
+            "maxHp": 120,
+            "anger": 35,
+            "freeDodgeUsed": false,
+            "statuses": []
+          }
+        },
+        "room": {
+          "id": "130b09ea-4ceb-445b-aa75-a1c22e53d74d",
+          "room_code": "96E8BF",
+          "status": "active",
+          "host_user_id": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-0f34a853-d4c6-47f9-a994-b0dfb21a35bc",
+          "host_account": "qa_guest_56143632",
+          "guest_user_id": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-ec28cad1-0c22-4c75-af83-dbc47c4b607d",
+          "guest_account": "qa_host_56133958",
+          "host_pet_id": "pet-3b3c437d-ce1f-4cfe-ae67-3fc88534660c",
+          "guest_pet_id": "pet-26998bae-6688-438a-b51f-c0e0bc441c07",
+          "host_resource_id": "builtin:lingjing-hatcat-v1",
+          "guest_resource_id": "builtin:lingjing-yuwan-v2",
+          "invitation_id": "e30f8d9d-fe81-45df-b592-92462fc34b7e",
+          "invited_user_id": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-ec28cad1-0c22-4c75-af83-dbc47c4b607d",
+          "host_pet_name": "礼帽喵",
+          "guest_pet_name": "鱼丸",
+          "host_element": "metal",
+          "guest_element": "water",
+          "current_round": 2,
+          "last_resolved_round": 1,
+          "host_hp": 90,
+          "guest_hp": 85,
+          "host_anger": 35,
+          "guest_anger": 50,
+          "host_free_dodge_used": false,
+          "guest_free_dodge_used": false,
+          "host_statuses": [],
+          "guest_statuses": [],
+          "winner_side": null,
+          "created_at": "2026-10-24T15:35:45.668Z",
+          "updated_at": "2026-10-24T15:35:49.346Z"
+        },
+        "side": "guest",
+        "rounds": [
+          {
+            "round": 1,
+            "actions": {
+              "player": "normal_attack",
+              "enemy": "element_attack"
+            },
+            "damageTaken": {
+              "player": 0,
+              "enemy": 10
+            },
+            "directDamage": {
+              "player": 0,
+              "enemy": 10
+            },
+            "dotDamageEvents": {
+              "player": [],
+              "enemy": []
+            },
+            "healEvents": {
+              "player": [],
+              "enemy": []
+            },
+            "hpAfter": {
+              "player": 85,
+              "enemy": 90
+            },
+            "angerAfter": {
+              "player": 50,
+              "enemy": 35
+            },
+            "statusesAfter": {
+              "player": [],
+              "enemy": []
+            },
+            "winner": null,
+            "notes": [
+              "player action missed"
+            ],
+            "state": {
+              "round": 1,
+              "player": {
+                "id": "player",
+                "element": "water",
+                "hp": 85,
+                "maxHp": 120,
+                "anger": 50,
+                "freeDodgeUsed": false,
+                "statuses": []
+              },
+              "enemy": {
+                "id": "enemy",
+                "element": "metal",
+                "hp": 90,
+                "maxHp": 120,
+                "anger": 35,
+                "freeDodgeUsed": false,
+                "statuses": []
+              }
+            },
+            "visualEvents": [
+              {
+                "id": "1:player:windup:action:0",
+                "side": "player",
+                "phase": "windup",
+                "kind": "action",
+                "action": "normal_attack"
+              },
+              {
+                "id": "1:player:release:action:1",
+                "side": "player",
+                "phase": "release",
+                "kind": "action",
+                "action": "normal_attack",
+                "element": "water"
+              },
+              {
+                "id": "1:enemy:impact:damage:2",
+                "side": "enemy",
+                "phase": "impact",
+                "kind": "damage",
+                "amount": 10
+              },
+              {
+                "id": "1:enemy:windup:action:3",
+                "side": "enemy",
+                "phase": "windup",
+                "kind": "action",
+                "action": "element_attack"
+              },
+              {
+                "id": "1:enemy:release:action:4",
+                "side": "enemy",
+                "phase": "release",
+                "kind": "action",
+                "action": "element_attack",
+                "element": "metal"
+              },
+              {
+                "id": "1:enemy:impact:interrupt:5",
+                "side": "enemy",
+                "phase": "impact",
+                "kind": "interrupt"
+              }
+            ]
+          }
+        ],
+        "winner": null,
+        "pendingAction": null,
+        "historyComplete": true,
+        "rules": {
+          "id": "five-elements-standard-v1",
+          "label": "标准五行对战",
+          "vitalPolicy": "normalized",
+          "maxHp": 120,
+          "maxAnger": 100,
+          "companionStatsApplied": false,
+          "baseDamage": {
+            "normal_attack": 10,
+            "element_attack": 12,
+            "dodge": 0,
+            "ultimate": 20
+          },
+          "ultimateAnger": 50,
+          "ultimateCost": 50,
+          "ultimateHeal": 20,
+          "dodgeMaxCost": 20,
+          "dodgeRefund": 30,
+          "advantage": {
+            "metal": "wood",
+            "wood": "earth",
+            "earth": "water",
+            "water": "fire",
+            "fire": "metal"
+          },
+          "elementEffects": {
+            "metal": {
+              "label": "易伤",
+              "description": "每层受伤×1.5，最多5层"
+            },
+            "wood": {
+              "label": "寄生",
+              "description": "每层回合末吸取2生命，最多5层"
+            },
+            "earth": {
+              "label": "迟钝",
+              "description": "每层伤害×0.5，最多5层"
+            },
+            "water": {
+              "label": "降怒",
+              "description": "命中后对方怒气向下取半，不增加受击怒气"
+            },
+            "fire": {
+              "label": "燃烧",
+              "description": "回合末按当前生命8%×层数伤害，最多5层"
+            }
+          }
+        },
+        "context": {
+          "authority": "simulated",
+          "cloudUserId": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-ec28cad1-0c22-4c75-af83-dbc47c4b607d",
+          "scenarioId": "a6a628a9-74ac-4b35-841e-48c6d222cd3c",
+          "qaPreset": "charged"
+        },
+        "updatedAt": "2026-10-24T15:35:53.404Z",
+        "revision": 12
+      },
+      "guest": {
+        "id": "online-130b09ea-4ceb-445b-aa75-a1c22e53d74d",
+        "mode": "friend",
+        "status": "active",
+        "startedAt": "2026-10-24T15:35:45.668Z",
+        "player": {
+          "petId": "pet-3b3c437d-ce1f-4cfe-ae67-3fc88534660c",
+          "petName": "礼帽喵",
+          "element": "metal",
+          "level": 1,
+          "resourceRef": "builtin:lingjing-hatcat-v1",
+          "resource": {
+            "resourceId": "builtin:lingjing-hatcat-v1",
+            "kind": "2d"
+          },
+          "appearance2d": "builtin:lingjing-hatcat-v1"
+        },
+        "enemy": {
+          "petId": "pet-26998bae-6688-438a-b51f-c0e0bc441c07",
+          "petName": "鱼丸",
+          "element": "water",
+          "appearance2d": "builtin:lingjing-yuwan-v2"
+        },
+        "snapshot": {
+          "round": 1,
+          "player": {
+            "id": "player",
+            "element": "metal",
+            "hp": 90,
+            "maxHp": 120,
+            "anger": 35,
+            "freeDodgeUsed": false,
+            "statuses": []
+          },
+          "enemy": {
+            "id": "enemy",
+            "element": "water",
+            "hp": 85,
+            "maxHp": 120,
+            "anger": 50,
+            "freeDodgeUsed": false,
+            "statuses": []
+          }
+        },
+        "room": {
+          "id": "130b09ea-4ceb-445b-aa75-a1c22e53d74d",
+          "room_code": "96E8BF",
+          "status": "active",
+          "host_user_id": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-0f34a853-d4c6-47f9-a994-b0dfb21a35bc",
+          "host_account": "qa_guest_56143632",
+          "guest_user_id": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-ec28cad1-0c22-4c75-af83-dbc47c4b607d",
+          "guest_account": "qa_host_56133958",
+          "host_pet_id": "pet-3b3c437d-ce1f-4cfe-ae67-3fc88534660c",
+          "guest_pet_id": "pet-26998bae-6688-438a-b51f-c0e0bc441c07",
+          "host_resource_id": "builtin:lingjing-hatcat-v1",
+          "guest_resource_id": "builtin:lingjing-yuwan-v2",
+          "invitation_id": "e30f8d9d-fe81-45df-b592-92462fc34b7e",
+          "invited_user_id": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-ec28cad1-0c22-4c75-af83-dbc47c4b607d",
+          "host_pet_name": "礼帽喵",
+          "guest_pet_name": "鱼丸",
+          "host_element": "metal",
+          "guest_element": "water",
+          "current_round": 2,
+          "last_resolved_round": 1,
+          "host_hp": 90,
+          "guest_hp": 85,
+          "host_anger": 35,
+          "guest_anger": 50,
+          "host_free_dodge_used": false,
+          "guest_free_dodge_used": false,
+          "host_statuses": [],
+          "guest_statuses": [],
+          "winner_side": null,
+          "created_at": "2026-10-24T15:35:45.668Z",
+          "updated_at": "2026-10-24T15:35:49.346Z"
+        },
+        "side": "host",
+        "rounds": [
+          {
+            "round": 1,
+            "actions": {
+              "player": "element_attack",
+              "enemy": "normal_attack"
+            },
+            "damageTaken": {
+              "player": 10,
+              "enemy": 0
+            },
+            "directDamage": {
+              "player": 10,
+              "enemy": 0
+            },
+            "dotDamageEvents": {
+              "player": [],
+              "enemy": []
+            },
+            "healEvents": {
+              "player": [],
+              "enemy": []
+            },
+            "hpAfter": {
+              "player": 90,
+              "enemy": 85
+            },
+            "angerAfter": {
+              "player": 35,
+              "enemy": 50
+            },
+            "statusesAfter": {
+              "player": [],
+              "enemy": []
+            },
+            "winner": null,
+            "notes": [
+              "player action missed"
+            ],
+            "state": {
+              "round": 1,
+              "player": {
+                "id": "player",
+                "element": "metal",
+                "hp": 90,
+                "maxHp": 120,
+                "anger": 35,
+                "freeDodgeUsed": false,
+                "statuses": []
+              },
+              "enemy": {
+                "id": "enemy",
+                "element": "water",
+                "hp": 85,
+                "maxHp": 120,
+                "anger": 50,
+                "freeDodgeUsed": false,
+                "statuses": []
+              }
+            },
+            "visualEvents": [
+              {
+                "id": "1:player:windup:action:0",
+                "side": "player",
+                "phase": "windup",
+                "kind": "action",
+                "action": "element_attack"
+              },
+              {
+                "id": "1:player:release:action:1",
+                "side": "player",
+                "phase": "release",
+                "kind": "action",
+                "action": "element_attack",
+                "element": "metal"
+              },
+              {
+                "id": "1:player:impact:interrupt:2",
+                "side": "player",
+                "phase": "impact",
+                "kind": "interrupt"
+              },
+              {
+                "id": "1:enemy:windup:action:3",
+                "side": "enemy",
+                "phase": "windup",
+                "kind": "action",
+                "action": "normal_attack"
+              },
+              {
+                "id": "1:enemy:release:action:4",
+                "side": "enemy",
+                "phase": "release",
+                "kind": "action",
+                "action": "normal_attack",
+                "element": "water"
+              },
+              {
+                "id": "1:player:impact:damage:5",
+                "side": "player",
+                "phase": "impact",
+                "kind": "damage",
+                "amount": 10
+              }
+            ]
+          }
+        ],
+        "winner": null,
+        "pendingAction": null,
+        "historyComplete": true,
+        "rules": {
+          "id": "five-elements-standard-v1",
+          "label": "标准五行对战",
+          "vitalPolicy": "normalized",
+          "maxHp": 120,
+          "maxAnger": 100,
+          "companionStatsApplied": false,
+          "baseDamage": {
+            "normal_attack": 10,
+            "element_attack": 12,
+            "dodge": 0,
+            "ultimate": 20
+          },
+          "ultimateAnger": 50,
+          "ultimateCost": 50,
+          "ultimateHeal": 20,
+          "dodgeMaxCost": 20,
+          "dodgeRefund": 30,
+          "advantage": {
+            "metal": "wood",
+            "wood": "earth",
+            "earth": "water",
+            "water": "fire",
+            "fire": "metal"
+          },
+          "elementEffects": {
+            "metal": {
+              "label": "易伤",
+              "description": "每层受伤×1.5，最多5层"
+            },
+            "wood": {
+              "label": "寄生",
+              "description": "每层回合末吸取2生命，最多5层"
+            },
+            "earth": {
+              "label": "迟钝",
+              "description": "每层伤害×0.5，最多5层"
+            },
+            "water": {
+              "label": "降怒",
+              "description": "命中后对方怒气向下取半，不增加受击怒气"
+            },
+            "fire": {
+              "label": "燃烧",
+              "description": "回合末按当前生命8%×层数伤害，最多5层"
+            }
+          }
+        },
+        "context": {
+          "authority": "simulated",
+          "cloudUserId": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-0f34a853-d4c6-47f9-a994-b0dfb21a35bc",
+          "scenarioId": "a6a628a9-74ac-4b35-841e-48c6d222cd3c"
+        },
+        "updatedAt": "2026-10-24T15:35:53.169Z",
+        "revision": 10
+      },
+      "restoredSamples": [
+        {
+          "at": 1025.2999999970198,
+          "phase": "rest",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "0",
+              "textureFrame": "59,61,221,251",
+              "textureSource": "3",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-hatcat-v1",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "0",
+              "textureFrame": "51,65,208,223",
+              "textureSource": "2",
+              "fallback": "false"
+            }
+          ],
+          "events": []
+        },
+        {
+          "at": 1046,
+          "phase": "rest",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "1",
+              "textureFrame": "59,61,221,251",
+              "textureSource": "3",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-hatcat-v1",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "1",
+              "textureFrame": "51,65,208,223",
+              "textureSource": "2",
+              "fallback": "false"
+            }
+          ],
+          "events": []
+        },
+        {
+          "at": 1162.1000000014901,
+          "phase": "rest",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "2",
+              "textureFrame": "59,61,221,251",
+              "textureSource": "3",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-hatcat-v1",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "2",
+              "textureFrame": "51,65,208,223",
+              "textureSource": "2",
+              "fallback": "false"
+            }
+          ],
+          "events": []
+        },
+        {
+          "at": 1283.1000000014901,
+          "phase": "rest",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "3",
+              "textureFrame": "59,61,221,251",
+              "textureSource": "3",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-hatcat-v1",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "3",
+              "textureFrame": "51,65,208,223",
+              "textureSource": "2",
+              "fallback": "false"
+            }
+          ],
+          "events": []
+        },
+        {
+          "at": 1413.7999999970198,
+          "phase": "rest",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "4",
+              "textureFrame": "59,61,221,251",
+              "textureSource": "3",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-hatcat-v1",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "4",
+              "textureFrame": "51,65,208,223",
+              "textureSource": "2",
+              "fallback": "false"
+            }
+          ],
+          "events": []
+        },
+        {
+          "at": 1533.7999999970198,
+          "phase": "rest",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "5",
+              "textureFrame": "59,61,221,251",
+              "textureSource": "3",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-hatcat-v1",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "5",
+              "textureFrame": "51,65,208,223",
+              "textureSource": "2",
+              "fallback": "false"
+            }
+          ],
+          "events": []
+        },
+        {
+          "at": 1662.5,
+          "phase": "rest",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "6",
+              "textureFrame": "59,61,221,251",
+              "textureSource": "3",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-hatcat-v1",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "6",
+              "textureFrame": "51,65,208,223",
+              "textureSource": "2",
+              "fallback": "false"
+            }
+          ],
+          "events": []
+        },
+        {
+          "at": 1782,
+          "phase": "rest",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "7",
+              "textureFrame": "59,61,221,251",
+              "textureSource": "3",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-hatcat-v1",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "7",
+              "textureFrame": "51,65,208,223",
+              "textureSource": "2",
+              "fallback": "false"
+            }
+          ],
+          "events": []
+        }
+      ]
+    },
+    {
+      "at": "2026-10-24T15:36:02.546Z",
+      "name": "friend simulated settlement and two retries preserve XP and inventory",
+      "session": {
+        "id": "online-0c98a40c-58c3-4d8b-8ab3-6df0bd0a019b",
+        "mode": "friend",
+        "status": "finished",
+        "startedAt": "2026-10-24T15:35:56.964Z",
+        "player": {
+          "petId": "pet-26998bae-6688-438a-b51f-c0e0bc441c07",
+          "petName": "鱼丸",
+          "element": "water",
+          "level": 1,
+          "resourceRef": "builtin:lingjing-yuwan-v2",
+          "resource": {
+            "resourceId": "builtin:lingjing-yuwan-v2",
+            "kind": "2d"
+          },
+          "appearance2d": "builtin:lingjing-yuwan-v2"
+        },
+        "enemy": {
+          "petId": "pet-3b3c437d-ce1f-4cfe-ae67-3fc88534660c",
+          "petName": "礼帽喵",
+          "element": "metal",
+          "appearance2d": "builtin:lingjing-hatcat-v1"
+        },
+        "snapshot": {
+          "round": 1,
+          "player": {
+            "id": "player",
+            "element": "water",
+            "hp": 120,
+            "maxHp": 120,
+            "anger": 0,
+            "freeDodgeUsed": false,
+            "statuses": []
+          },
+          "enemy": {
+            "id": "enemy",
+            "element": "metal",
+            "hp": 0,
+            "maxHp": 120,
+            "anger": 0,
+            "freeDodgeUsed": true,
+            "statuses": []
+          }
+        },
+        "room": {
+          "id": "0c98a40c-58c3-4d8b-8ab3-6df0bd0a019b",
+          "room_code": "F702CF",
+          "status": "finished",
+          "host_user_id": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-ec28cad1-0c22-4c75-af83-dbc47c4b607d",
+          "host_account": "qa_host_56133958",
+          "guest_user_id": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-0f34a853-d4c6-47f9-a994-b0dfb21a35bc",
+          "guest_account": "qa_guest_56143632",
+          "host_pet_id": "pet-26998bae-6688-438a-b51f-c0e0bc441c07",
+          "guest_pet_id": "pet-3b3c437d-ce1f-4cfe-ae67-3fc88534660c",
+          "host_resource_id": "builtin:lingjing-yuwan-v2",
+          "guest_resource_id": "builtin:lingjing-hatcat-v1",
+          "invitation_id": null,
+          "invited_user_id": null,
+          "host_pet_name": "鱼丸",
+          "guest_pet_name": "礼帽喵",
+          "host_element": "water",
+          "guest_element": "metal",
+          "current_round": 2,
+          "last_resolved_round": 1,
+          "host_hp": 120,
+          "guest_hp": 0,
+          "host_anger": 0,
+          "guest_anger": 0,
+          "host_free_dodge_used": false,
+          "guest_free_dodge_used": true,
+          "host_statuses": [],
+          "guest_statuses": [],
+          "winner_side": "host",
+          "created_at": "2026-10-24T15:35:56.964Z",
+          "updated_at": "2026-10-24T15:35:59.969Z"
+        },
+        "side": "host",
+        "rounds": [
+          {
+            "round": 1,
+            "actions": {
+              "player": "ultimate",
+              "enemy": "dodge"
+            },
+            "damageTaken": {
+              "player": 0,
+              "enemy": 20
+            },
+            "directDamage": {
+              "player": 0,
+              "enemy": 20
+            },
+            "dotDamageEvents": {
+              "player": [],
+              "enemy": []
+            },
+            "healEvents": {
+              "player": [],
+              "enemy": []
+            },
+            "hpAfter": {
+              "player": 120,
+              "enemy": 0
+            },
+            "angerAfter": {
+              "player": 0,
+              "enemy": 0
+            },
+            "statusesAfter": {
+              "player": [],
+              "enemy": []
+            },
+            "winner": "player",
+            "notes": [
+              "enemy uses first free dodge",
+              "enemy anger halved by freeze (0->0)"
+            ],
+            "state": {
+              "round": 1,
+              "player": {
+                "id": "player",
+                "element": "water",
+                "hp": 120,
+                "maxHp": 120,
+                "anger": 0,
+                "freeDodgeUsed": false,
+                "statuses": []
+              },
+              "enemy": {
+                "id": "enemy",
+                "element": "metal",
+                "hp": 0,
+                "maxHp": 120,
+                "anger": 0,
+                "freeDodgeUsed": true,
+                "statuses": []
+              }
+            },
+            "visualEvents": [
+              {
+                "id": "1:player:windup:action:0",
+                "side": "player",
+                "phase": "windup",
+                "kind": "action",
+                "action": "ultimate"
+              },
+              {
+                "id": "1:player:release:action:1",
+                "side": "player",
+                "phase": "release",
+                "kind": "action",
+                "action": "ultimate",
+                "element": "water"
+              },
+              {
+                "id": "1:enemy:impact:damage:2",
+                "side": "enemy",
+                "phase": "impact",
+                "kind": "damage",
+                "amount": 20
+              },
+              {
+                "id": "1:enemy:effects:anger:3",
+                "side": "enemy",
+                "phase": "effects",
+                "kind": "anger",
+                "amount": 0,
+                "element": "water"
+              },
+              {
+                "id": "1:enemy:windup:action:4",
+                "side": "enemy",
+                "phase": "windup",
+                "kind": "action",
+                "action": "dodge"
+              },
+              {
+                "id": "1:enemy:release:action:5",
+                "side": "enemy",
+                "phase": "release",
+                "kind": "action",
+                "action": "dodge",
+                "element": "metal"
+              }
+            ]
+          }
+        ],
+        "winner": "player",
+        "pendingAction": null,
+        "historyComplete": true,
+        "rules": {
+          "id": "five-elements-standard-v1",
+          "label": "标准五行对战",
+          "vitalPolicy": "normalized",
+          "maxHp": 120,
+          "maxAnger": 100,
+          "companionStatsApplied": false,
+          "baseDamage": {
+            "normal_attack": 10,
+            "element_attack": 12,
+            "dodge": 0,
+            "ultimate": 20
+          },
+          "ultimateAnger": 50,
+          "ultimateCost": 50,
+          "ultimateHeal": 20,
+          "dodgeMaxCost": 20,
+          "dodgeRefund": 30,
+          "advantage": {
+            "metal": "wood",
+            "wood": "earth",
+            "earth": "water",
+            "water": "fire",
+            "fire": "metal"
+          },
+          "elementEffects": {
+            "metal": {
+              "label": "易伤",
+              "description": "每层受伤×1.5，最多5层"
+            },
+            "wood": {
+              "label": "寄生",
+              "description": "每层回合末吸取2生命，最多5层"
+            },
+            "earth": {
+              "label": "迟钝",
+              "description": "每层伤害×0.5，最多5层"
+            },
+            "water": {
+              "label": "降怒",
+              "description": "命中后对方怒气向下取半，不增加受击怒气"
+            },
+            "fire": {
+              "label": "燃烧",
+              "description": "回合末按当前生命8%×层数伤害，最多5层"
+            }
+          }
+        },
+        "context": {
+          "authority": "simulated",
+          "cloudUserId": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-ec28cad1-0c22-4c75-af83-dbc47c4b607d",
+          "scenarioId": "a6a628a9-74ac-4b35-841e-48c6d222cd3c",
+          "qaPreset": "finisher"
+        },
+        "updatedAt": "2026-10-24T15:36:00.570Z",
+        "revision": 11,
+        "endedAt": "2026-10-24T15:36:00.568Z",
+        "reward": {
+          "actionId": "battle:0c98a40c-58c3-4d8b-8ab3-6df0bd0a019b:qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-ec28cad1-0c22-4c75-af83-dbc47c4b607d",
+          "petId": "pet-26998bae-6688-438a-b51f-c0e0bc441c07",
+          "experience": 20,
+          "applied": true,
+          "previousExperience": 0,
+          "previousLevel": 1,
+          "currentExperience": 20,
+          "currentLevel": 1,
+          "seeds": {
+            "source": "battle",
+            "receiptId": "online-0c98a40c-58c3-4d8b-8ab3-6df0bd0a019b",
+            "itemId": "seed:rice",
+            "quantity": 2
+          }
+        },
+        "reportId": "online-0c98a40c-58c3-4d8b-8ab3-6df0bd0a019b"
+      },
+      "peer": {
+        "id": "online-0c98a40c-58c3-4d8b-8ab3-6df0bd0a019b",
+        "mode": "friend",
+        "status": "finished",
+        "startedAt": "2026-10-24T15:35:56.964Z",
+        "player": {
+          "petId": "pet-3b3c437d-ce1f-4cfe-ae67-3fc88534660c",
+          "petName": "礼帽喵",
+          "element": "metal",
+          "level": 1,
+          "resourceRef": "builtin:lingjing-hatcat-v1",
+          "resource": {
+            "resourceId": "builtin:lingjing-hatcat-v1",
+            "kind": "2d"
+          },
+          "appearance2d": "builtin:lingjing-hatcat-v1"
+        },
+        "enemy": {
+          "petId": "pet-26998bae-6688-438a-b51f-c0e0bc441c07",
+          "petName": "鱼丸",
+          "element": "water",
+          "appearance2d": "builtin:lingjing-yuwan-v2"
+        },
+        "snapshot": {
+          "round": 1,
+          "player": {
+            "id": "player",
+            "element": "metal",
+            "hp": 0,
+            "maxHp": 120,
+            "anger": 0,
+            "freeDodgeUsed": true,
+            "statuses": []
+          },
+          "enemy": {
+            "id": "enemy",
+            "element": "water",
+            "hp": 120,
+            "maxHp": 120,
+            "anger": 0,
+            "freeDodgeUsed": false,
+            "statuses": []
+          }
+        },
+        "room": {
+          "id": "0c98a40c-58c3-4d8b-8ab3-6df0bd0a019b",
+          "room_code": "F702CF",
+          "status": "finished",
+          "host_user_id": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-ec28cad1-0c22-4c75-af83-dbc47c4b607d",
+          "host_account": "qa_host_56133958",
+          "guest_user_id": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-0f34a853-d4c6-47f9-a994-b0dfb21a35bc",
+          "guest_account": "qa_guest_56143632",
+          "host_pet_id": "pet-26998bae-6688-438a-b51f-c0e0bc441c07",
+          "guest_pet_id": "pet-3b3c437d-ce1f-4cfe-ae67-3fc88534660c",
+          "host_resource_id": "builtin:lingjing-yuwan-v2",
+          "guest_resource_id": "builtin:lingjing-hatcat-v1",
+          "invitation_id": null,
+          "invited_user_id": null,
+          "host_pet_name": "鱼丸",
+          "guest_pet_name": "礼帽喵",
+          "host_element": "water",
+          "guest_element": "metal",
+          "current_round": 2,
+          "last_resolved_round": 1,
+          "host_hp": 120,
+          "guest_hp": 0,
+          "host_anger": 0,
+          "guest_anger": 0,
+          "host_free_dodge_used": false,
+          "guest_free_dodge_used": true,
+          "host_statuses": [],
+          "guest_statuses": [],
+          "winner_side": "host",
+          "created_at": "2026-10-24T15:35:56.964Z",
+          "updated_at": "2026-10-24T15:35:59.969Z"
+        },
+        "side": "guest",
+        "rounds": [
+          {
+            "round": 1,
+            "actions": {
+              "player": "dodge",
+              "enemy": "ultimate"
+            },
+            "damageTaken": {
+              "player": 20,
+              "enemy": 0
+            },
+            "directDamage": {
+              "player": 20,
+              "enemy": 0
+            },
+            "dotDamageEvents": {
+              "player": [],
+              "enemy": []
+            },
+            "healEvents": {
+              "player": [],
+              "enemy": []
+            },
+            "hpAfter": {
+              "player": 0,
+              "enemy": 120
+            },
+            "angerAfter": {
+              "player": 0,
+              "enemy": 0
+            },
+            "statusesAfter": {
+              "player": [],
+              "enemy": []
+            },
+            "winner": "enemy",
+            "notes": [
+              "enemy uses first free dodge",
+              "enemy anger halved by freeze (0->0)"
+            ],
+            "state": {
+              "round": 1,
+              "player": {
+                "id": "player",
+                "element": "metal",
+                "hp": 0,
+                "maxHp": 120,
+                "anger": 0,
+                "freeDodgeUsed": true,
+                "statuses": []
+              },
+              "enemy": {
+                "id": "enemy",
+                "element": "water",
+                "hp": 120,
+                "maxHp": 120,
+                "anger": 0,
+                "freeDodgeUsed": false,
+                "statuses": []
+              }
+            },
+            "visualEvents": [
+              {
+                "id": "1:player:windup:action:0",
+                "side": "player",
+                "phase": "windup",
+                "kind": "action",
+                "action": "dodge"
+              },
+              {
+                "id": "1:player:release:action:1",
+                "side": "player",
+                "phase": "release",
+                "kind": "action",
+                "action": "dodge",
+                "element": "metal"
+              },
+              {
+                "id": "1:enemy:windup:action:2",
+                "side": "enemy",
+                "phase": "windup",
+                "kind": "action",
+                "action": "ultimate"
+              },
+              {
+                "id": "1:enemy:release:action:3",
+                "side": "enemy",
+                "phase": "release",
+                "kind": "action",
+                "action": "ultimate",
+                "element": "water"
+              },
+              {
+                "id": "1:player:impact:damage:4",
+                "side": "player",
+                "phase": "impact",
+                "kind": "damage",
+                "amount": 20
+              },
+              {
+                "id": "1:player:effects:anger:5",
+                "side": "player",
+                "phase": "effects",
+                "kind": "anger",
+                "amount": 0,
+                "element": "water"
+              }
+            ]
+          }
+        ],
+        "winner": "enemy",
+        "pendingAction": null,
+        "historyComplete": true,
+        "rules": {
+          "id": "five-elements-standard-v1",
+          "label": "标准五行对战",
+          "vitalPolicy": "normalized",
+          "maxHp": 120,
+          "maxAnger": 100,
+          "companionStatsApplied": false,
+          "baseDamage": {
+            "normal_attack": 10,
+            "element_attack": 12,
+            "dodge": 0,
+            "ultimate": 20
+          },
+          "ultimateAnger": 50,
+          "ultimateCost": 50,
+          "ultimateHeal": 20,
+          "dodgeMaxCost": 20,
+          "dodgeRefund": 30,
+          "advantage": {
+            "metal": "wood",
+            "wood": "earth",
+            "earth": "water",
+            "water": "fire",
+            "fire": "metal"
+          },
+          "elementEffects": {
+            "metal": {
+              "label": "易伤",
+              "description": "每层受伤×1.5，最多5层"
+            },
+            "wood": {
+              "label": "寄生",
+              "description": "每层回合末吸取2生命，最多5层"
+            },
+            "earth": {
+              "label": "迟钝",
+              "description": "每层伤害×0.5，最多5层"
+            },
+            "water": {
+              "label": "降怒",
+              "description": "命中后对方怒气向下取半，不增加受击怒气"
+            },
+            "fire": {
+              "label": "燃烧",
+              "description": "回合末按当前生命8%×层数伤害，最多5层"
+            }
+          }
+        },
+        "context": {
+          "authority": "simulated",
+          "cloudUserId": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-0f34a853-d4c6-47f9-a994-b0dfb21a35bc",
+          "scenarioId": "a6a628a9-74ac-4b35-841e-48c6d222cd3c"
+        },
+        "updatedAt": "2026-10-24T15:35:59.979Z",
+        "revision": 8,
+        "endedAt": "2026-10-24T15:35:59.977Z",
+        "reward": {
+          "actionId": "battle:0c98a40c-58c3-4d8b-8ab3-6df0bd0a019b:qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-0f34a853-d4c6-47f9-a994-b0dfb21a35bc",
+          "petId": "pet-3b3c437d-ce1f-4cfe-ae67-3fc88534660c",
+          "experience": 5,
+          "applied": true,
+          "previousExperience": 0,
+          "previousLevel": 1,
+          "currentExperience": 5,
+          "currentLevel": 1,
+          "seeds": {
+            "source": "battle",
+            "receiptId": "online-0c98a40c-58c3-4d8b-8ab3-6df0bd0a019b",
+            "itemId": "seed:rice",
+            "quantity": 2
+          }
+        },
+        "reportId": "online-0c98a40c-58c3-4d8b-8ab3-6df0bd0a019b"
+      },
+      "proof": {
+        "owner_account_id": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-ec28cad1-0c22-4c75-af83-dbc47c4b607d",
+        "room_id": "0c98a40c-58c3-4d8b-8ab3-6df0bd0a019b",
+        "pet_id": "pet-26998bae-6688-438a-b51f-c0e0bc441c07",
+        "action_id": "battle:0c98a40c-58c3-4d8b-8ab3-6df0bd0a019b:qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-ec28cad1-0c22-4c75-af83-dbc47c4b607d",
+        "experience": 20,
+        "won": true,
+        "authority": "simulated",
+        "scenarioId": "a6a628a9-74ac-4b35-841e-48c6d222cd3c"
+      },
+      "unchangedPets": true,
+      "unchangedInventory": true
+    },
+    {
+      "at": "2026-10-24T15:36:02.547Z",
+      "name": "focused native interaction pass complete"
+    }
+  ],
+  "cases": [
+    {
+      "label": "repeat-first",
+      "action": "element_attack",
+      "before": {
+        "id": "battle-c5ecbe80-f6d9-4c42-8825-fb378b716366",
+        "mode": "training",
+        "status": "active",
+        "startedAt": "2026-10-24T15:35:37.854Z",
+        "player": {
+          "petId": "pet-03117d25-f49d-4e35-8199-07a1a4dd40cf",
+          "petName": "青芽",
+          "element": "wood",
+          "level": 1,
+          "resourceRef": "builtin:lingjing-qingya-v1",
+          "resource": {
+            "resourceId": "builtin:lingjing-qingya-v1",
+            "kind": "2d"
+          },
+          "appearance2d": "builtin:lingjing-qingya-v1"
+        },
+        "enemy": {
+          "petId": "training-water",
+          "petName": "鱼丸",
+          "element": "water",
+          "level": 1,
+          "resourceRef": "builtin:lingjing-yuwan-v2",
+          "appearance2d": "builtin:lingjing-yuwan-v2",
+          "resource": {
+            "resourceId": "builtin:lingjing-yuwan-v2",
+            "kind": "2d"
+          }
+        },
+        "snapshot": {
+          "round": 0,
+          "player": {
+            "id": "player",
+            "element": "wood",
+            "hp": 85,
+            "maxHp": 120,
+            "anger": 50,
+            "freeDodgeUsed": false,
+            "statuses": []
+          },
+          "enemy": {
+            "id": "enemy",
+            "element": "water",
+            "hp": 100,
+            "maxHp": 120,
+            "anger": 30,
+            "freeDodgeUsed": false,
+            "statuses": []
+          }
+        },
+        "rounds": [],
+        "winner": null,
+        "pendingAction": null,
+        "historyComplete": true,
+        "rules": {
+          "id": "five-elements-standard-v1",
+          "label": "标准五行对战",
+          "vitalPolicy": "normalized",
+          "maxHp": 120,
+          "maxAnger": 100,
+          "companionStatsApplied": false,
+          "baseDamage": {
+            "normal_attack": 10,
+            "element_attack": 12,
+            "dodge": 0,
+            "ultimate": 20
+          },
+          "ultimateAnger": 50,
+          "ultimateCost": 50,
+          "ultimateHeal": 20,
+          "dodgeMaxCost": 20,
+          "dodgeRefund": 30,
+          "advantage": {
+            "metal": "wood",
+            "wood": "earth",
+            "earth": "water",
+            "water": "fire",
+            "fire": "metal"
+          },
+          "elementEffects": {
+            "metal": {
+              "label": "易伤",
+              "description": "每层受伤×1.5，最多5层"
+            },
+            "wood": {
+              "label": "寄生",
+              "description": "每层回合末吸取2生命，最多5层"
+            },
+            "earth": {
+              "label": "迟钝",
+              "description": "每层伤害×0.5，最多5层"
+            },
+            "water": {
+              "label": "降怒",
+              "description": "命中后对方怒气向下取半，不增加受击怒气"
+            },
+            "fire": {
+              "label": "燃烧",
+              "description": "回合末按当前生命8%×层数伤害，最多5层"
+            }
+          }
+        },
+        "context": {
+          "id": "training:water",
+          "authority": "simulated",
+          "scenarioId": "a6a628a9-74ac-4b35-841e-48c6d222cd3c",
+          "qaPreset": "charged",
+          "qaEnemyAction": "dodge"
+        },
+        "updatedAt": "2026-10-24T15:35:38.223Z",
+        "revision": 2
+      },
+      "after": {
+        "id": "battle-c5ecbe80-f6d9-4c42-8825-fb378b716366",
+        "mode": "training",
+        "status": "active",
+        "startedAt": "2026-10-24T15:35:37.854Z",
+        "player": {
+          "petId": "pet-03117d25-f49d-4e35-8199-07a1a4dd40cf",
+          "petName": "青芽",
+          "element": "wood",
+          "level": 1,
+          "resourceRef": "builtin:lingjing-qingya-v1",
+          "resource": {
+            "resourceId": "builtin:lingjing-qingya-v1",
+            "kind": "2d"
+          },
+          "appearance2d": "builtin:lingjing-qingya-v1"
+        },
+        "enemy": {
+          "petId": "training-water",
+          "petName": "鱼丸",
+          "element": "water",
+          "level": 1,
+          "resourceRef": "builtin:lingjing-yuwan-v2",
+          "appearance2d": "builtin:lingjing-yuwan-v2",
+          "resource": {
+            "resourceId": "builtin:lingjing-yuwan-v2",
+            "kind": "2d"
+          }
+        },
+        "snapshot": {
+          "round": 1,
+          "player": {
+            "id": "player",
+            "element": "wood",
+            "hp": 87,
+            "maxHp": 120,
+            "anger": 50,
+            "freeDodgeUsed": false,
+            "statuses": []
+          },
+          "enemy": {
+            "id": "enemy",
+            "element": "water",
+            "hp": 86,
+            "maxHp": 120,
+            "anger": 16,
+            "freeDodgeUsed": true,
+            "statuses": [
+              {
+                "type": "parasite",
+                "duration": 2,
+                "potency": 2,
+                "stacks": 1,
+                "stackable": true,
+                "sourceId": "player"
+              }
+            ]
+          }
+        },
+        "rounds": [
+          {
+            "round": 1,
+            "actions": {
+              "player": "element_attack",
+              "enemy": "dodge"
+            },
+            "damageTaken": {
+              "player": 0,
+              "enemy": 14
+            },
+            "directDamage": {
+              "player": 0,
+              "enemy": 12
+            },
+            "dotDamageEvents": {
+              "player": [],
+              "enemy": [
+                {
+                  "type": "parasite",
+                  "amount": 2
+                }
+              ]
+            },
+            "healEvents": {
+              "player": [
+                {
+                  "type": "parasite",
+                  "amount": 2
+                }
+              ],
+              "enemy": []
+            },
+            "hpAfter": {
+              "player": 87,
+              "enemy": 86
+            },
+            "angerAfter": {
+              "player": 50,
+              "enemy": 16
+            },
+            "statusesAfter": {
+              "player": [],
+              "enemy": [
+                {
+                  "type": "parasite",
+                  "duration": 2,
+                  "potency": 2,
+                  "stacks": 1,
+                  "stackable": true,
+                  "sourceId": "player"
+                }
+              ]
+            },
+            "winner": null,
+            "notes": [
+              "enemy spends 20 anger on dodge",
+              "enemy parasitized x1",
+              "player healed by parasite",
+              "enemy takes parasite damage"
+            ],
+            "state": {
+              "round": 1,
+              "player": {
+                "id": "player",
+                "element": "wood",
+                "hp": 87,
+                "maxHp": 120,
+                "anger": 50,
+                "freeDodgeUsed": false,
+                "statuses": []
+              },
+              "enemy": {
+                "id": "enemy",
+                "element": "water",
+                "hp": 86,
+                "maxHp": 120,
+                "anger": 16,
+                "freeDodgeUsed": true,
+                "statuses": [
+                  {
+                    "type": "parasite",
+                    "duration": 2,
+                    "potency": 2,
+                    "stacks": 1,
+                    "stackable": true,
+                    "sourceId": "player"
+                  }
+                ]
+              }
+            },
+            "visualEvents": [
+              {
+                "id": "1:player:windup:action:0",
+                "side": "player",
+                "phase": "windup",
+                "kind": "action",
+                "action": "element_attack"
+              },
+              {
+                "id": "1:player:release:action:1",
+                "side": "player",
+                "phase": "release",
+                "kind": "action",
+                "action": "element_attack",
+                "element": "wood"
+              },
+              {
+                "id": "1:enemy:impact:damage:2",
+                "side": "enemy",
+                "phase": "impact",
+                "kind": "damage",
+                "amount": 12
+              },
+              {
+                "id": "1:player:effects:heal:3",
+                "side": "player",
+                "phase": "effects",
+                "kind": "heal",
+                "amount": 2,
+                "status": "parasite"
+              },
+              {
+                "id": "1:enemy:effects:status:4",
+                "side": "enemy",
+                "phase": "effects",
+                "kind": "status",
+                "status": "parasite",
+                "element": "wood"
+              },
+              {
+                "id": "1:enemy:windup:action:5",
+                "side": "enemy",
+                "phase": "windup",
+                "kind": "action",
+                "action": "dodge"
+              },
+              {
+                "id": "1:enemy:release:action:6",
+                "side": "enemy",
+                "phase": "release",
+                "kind": "action",
+                "action": "dodge",
+                "element": "water"
+              },
+              {
+                "id": "1:enemy:effects:dot:7",
+                "side": "enemy",
+                "phase": "effects",
+                "kind": "dot",
+                "amount": 2,
+                "status": "parasite"
+              }
+            ]
+          }
+        ],
+        "winner": null,
+        "pendingAction": null,
+        "historyComplete": true,
+        "rules": {
+          "id": "five-elements-standard-v1",
+          "label": "标准五行对战",
+          "vitalPolicy": "normalized",
+          "maxHp": 120,
+          "maxAnger": 100,
+          "companionStatsApplied": false,
+          "baseDamage": {
+            "normal_attack": 10,
+            "element_attack": 12,
+            "dodge": 0,
+            "ultimate": 20
+          },
+          "ultimateAnger": 50,
+          "ultimateCost": 50,
+          "ultimateHeal": 20,
+          "dodgeMaxCost": 20,
+          "dodgeRefund": 30,
+          "advantage": {
+            "metal": "wood",
+            "wood": "earth",
+            "earth": "water",
+            "water": "fire",
+            "fire": "metal"
+          },
+          "elementEffects": {
+            "metal": {
+              "label": "易伤",
+              "description": "每层受伤×1.5，最多5层"
+            },
+            "wood": {
+              "label": "寄生",
+              "description": "每层回合末吸取2生命，最多5层"
+            },
+            "earth": {
+              "label": "迟钝",
+              "description": "每层伤害×0.5，最多5层"
+            },
+            "water": {
+              "label": "降怒",
+              "description": "命中后对方怒气向下取半，不增加受击怒气"
+            },
+            "fire": {
+              "label": "燃烧",
+              "description": "回合末按当前生命8%×层数伤害，最多5层"
+            }
+          }
+        },
+        "context": {
+          "id": "training:water",
+          "authority": "simulated",
+          "scenarioId": "a6a628a9-74ac-4b35-841e-48c6d222cd3c",
+          "qaPreset": "charged",
+          "qaEnemyAction": "dodge"
+        },
+        "updatedAt": "2026-10-24T15:35:38.851Z",
+        "revision": 3
+      },
+      "samples": [
+        {
+          "at": 546.7999999970198,
+          "phase": "rest",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "1",
+              "textureFrame": "76,63,184,261",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "1",
+              "textureFrame": "59,61,221,251",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": []
+        },
+        {
+          "at": 638.6000000014901,
+          "phase": "windup",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "action": "attack_windup",
+              "clip": "attack_windup",
+              "frame": "0",
+              "textureFrame": "40,673,243,215",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "walk",
+              "clip": "walk",
+              "frame": "0",
+              "textureFrame": "672,59,221,254",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": []
+        },
+        {
+          "at": 792.8999999985099,
+          "phase": "windup",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "action": "attack_windup",
+              "clip": "attack_windup",
+              "frame": "0",
+              "textureFrame": "40,673,243,215",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "walk",
+              "clip": "walk",
+              "frame": "1",
+              "textureFrame": "983,60,223,253",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": []
+        },
+        {
+          "at": 921.7999999970198,
+          "phase": "release",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "action": "skill",
+              "clip": "skill",
+              "frame": "0",
+              "textureFrame": "40,673,243,215",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "walk",
+              "clip": "walk",
+              "frame": "1",
+              "textureFrame": "983,60,223,253",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": []
+        },
+        {
+          "at": 922.2000000029802,
+          "phase": "release",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "action": "skill",
+              "clip": "skill",
+              "frame": "0",
+              "textureFrame": "1018,659,197,260",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "walk",
+              "clip": "walk",
+              "frame": "0",
+              "textureFrame": "672,59,221,254",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": []
+        },
+        {
+          "at": 1049.7000000029802,
+          "phase": "release",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "action": "skill",
+              "clip": "skill",
+              "frame": "1",
+              "textureFrame": "1018,659,197,260",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "walk",
+              "clip": "walk",
+              "frame": "0",
+              "textureFrame": "672,59,221,254",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": []
+        },
+        {
+          "at": 1086.6000000014901,
+          "phase": "release",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "action": "skill",
+              "clip": "skill",
+              "frame": "1",
+              "textureFrame": "1018,659,197,260",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "walk",
+              "clip": "walk",
+              "frame": "1",
+              "textureFrame": "983,60,223,253",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": []
+        },
+        {
+          "at": 1177.2999999970198,
+          "phase": "release",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "action": "skill",
+              "clip": "skill",
+              "frame": "2",
+              "textureFrame": "35,947,300,271",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "walk",
+              "clip": "walk",
+              "frame": "1",
+              "textureFrame": "983,60,223,253",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": []
+        },
+        {
+          "at": 1253.3999999985099,
+          "phase": "release",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "action": "skill",
+              "clip": "skill",
+              "frame": "2",
+              "textureFrame": "35,947,300,271",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "walk",
+              "clip": "walk",
+              "frame": "0",
+              "textureFrame": "672,59,221,254",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": []
+        },
+        {
+          "at": 1265.1000000014901,
+          "phase": "impact",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "0",
+              "textureFrame": "76,63,184,261",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "hit",
+              "clip": "hit",
+              "frame": "0",
+              "textureFrame": "664,654,261,246",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": [
+            "damage"
+          ]
+        },
+        {
+          "at": 1388.1000000014901,
+          "phase": "impact",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "1",
+              "textureFrame": "76,63,184,261",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "hit",
+              "clip": "hit",
+              "frame": "1",
+              "textureFrame": "664,654,261,246",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": [
+            "damage"
+          ]
+        },
+        {
+          "at": 1516.7000000029802,
+          "phase": "impact",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "2",
+              "textureFrame": "76,63,184,261",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "hit",
+              "clip": "hit",
+              "frame": "2",
+              "textureFrame": "59,61,221,251",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": [
+            "damage"
+          ]
+        },
+        {
+          "at": 1579.6000000014901,
+          "phase": "effects",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "2",
+              "textureFrame": "76,63,184,261",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "walk",
+              "clip": "walk",
+              "frame": "2",
+              "textureFrame": "59,61,221,251",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": [
+            "heal",
+            "damage",
+            "status",
+            "dot"
+          ]
+        },
+        {
+          "at": 1582.6000000014901,
+          "phase": "effects",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "0",
+              "textureFrame": "76,63,184,261",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "walk",
+              "clip": "walk",
+              "frame": "0",
+              "textureFrame": "672,59,221,254",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": [
+            "heal",
+            "damage",
+            "status",
+            "dot"
+          ]
+        },
+        {
+          "at": 1704.8999999985099,
+          "phase": "effects",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "1",
+              "textureFrame": "76,63,184,261",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "walk",
+              "clip": "walk",
+              "frame": "0",
+              "textureFrame": "672,59,221,254",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": [
+            "heal",
+            "damage",
+            "status",
+            "dot"
+          ]
+        },
+        {
+          "at": 1749.8999999985099,
+          "phase": "effects",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "1",
+              "textureFrame": "76,63,184,261",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "walk",
+              "clip": "walk",
+              "frame": "1",
+              "textureFrame": "983,60,223,253",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": [
+            "heal",
+            "damage",
+            "status",
+            "dot"
+          ]
+        },
+        {
+          "at": 1781.3999999985099,
+          "phase": "effects",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "1",
+              "textureFrame": "76,63,184,261",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "walk",
+              "clip": "walk",
+              "frame": "1",
+              "textureFrame": "983,60,223,253",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": [
+            "heal",
+            "status",
+            "dot"
+          ]
+        },
+        {
+          "at": 1832.5,
+          "phase": "effects",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "2",
+              "textureFrame": "76,63,184,261",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "walk",
+              "clip": "walk",
+              "frame": "1",
+              "textureFrame": "983,60,223,253",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": [
+            "heal",
+            "status",
+            "dot"
+          ]
+        },
+        {
+          "at": 1915.8999999985099,
+          "phase": "effects",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "2",
+              "textureFrame": "76,63,184,261",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "walk",
+              "clip": "walk",
+              "frame": "0",
+              "textureFrame": "672,59,221,254",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": [
+            "heal",
+            "status",
+            "dot"
+          ]
+        },
+        {
+          "at": 1954.2999999970198,
+          "phase": "effects",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "3",
+              "textureFrame": "76,63,184,261",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "walk",
+              "clip": "walk",
+              "frame": "0",
+              "textureFrame": "672,59,221,254",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": [
+            "heal",
+            "status",
+            "dot"
+          ]
+        },
+        {
+          "at": 2081.5,
+          "phase": "effects",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "4",
+              "textureFrame": "76,63,184,261",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "walk",
+              "clip": "walk",
+              "frame": "1",
+              "textureFrame": "983,60,223,253",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": [
+            "heal",
+            "status",
+            "dot"
+          ]
+        },
+        {
+          "at": 2159.7999999970198,
+          "phase": "rest",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "4",
+              "textureFrame": "76,63,184,261",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "1",
+              "textureFrame": "983,60,223,253",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": [
+            "heal",
+            "status",
+            "dot"
+          ]
+        },
+        {
+          "at": 2160.10000000149,
+          "phase": "rest",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "0",
+              "textureFrame": "76,63,184,261",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "0",
+              "textureFrame": "59,61,221,251",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": [
+            "heal",
+            "status",
+            "dot"
+          ]
+        }
+      ],
+      "screenshots": []
+    },
+    {
+      "label": "repeat-second",
+      "action": "element_attack",
+      "before": {
+        "id": "battle-c5ecbe80-f6d9-4c42-8825-fb378b716366",
+        "mode": "training",
+        "status": "active",
+        "startedAt": "2026-10-24T15:35:37.854Z",
+        "player": {
+          "petId": "pet-03117d25-f49d-4e35-8199-07a1a4dd40cf",
+          "petName": "青芽",
+          "element": "wood",
+          "level": 1,
+          "resourceRef": "builtin:lingjing-qingya-v1",
+          "resource": {
+            "resourceId": "builtin:lingjing-qingya-v1",
+            "kind": "2d"
+          },
+          "appearance2d": "builtin:lingjing-qingya-v1"
+        },
+        "enemy": {
+          "petId": "training-water",
+          "petName": "鱼丸",
+          "element": "water",
+          "level": 1,
+          "resourceRef": "builtin:lingjing-yuwan-v2",
+          "appearance2d": "builtin:lingjing-yuwan-v2",
+          "resource": {
+            "resourceId": "builtin:lingjing-yuwan-v2",
+            "kind": "2d"
+          }
+        },
+        "snapshot": {
+          "round": 1,
+          "player": {
+            "id": "player",
+            "element": "wood",
+            "hp": 87,
+            "maxHp": 120,
+            "anger": 50,
+            "freeDodgeUsed": false,
+            "statuses": []
+          },
+          "enemy": {
+            "id": "enemy",
+            "element": "water",
+            "hp": 86,
+            "maxHp": 120,
+            "anger": 16,
+            "freeDodgeUsed": true,
+            "statuses": [
+              {
+                "type": "parasite",
+                "duration": 2,
+                "potency": 2,
+                "stacks": 1,
+                "stackable": true,
+                "sourceId": "player"
+              }
+            ]
+          }
+        },
+        "rounds": [
+          {
+            "round": 1,
+            "actions": {
+              "player": "element_attack",
+              "enemy": "dodge"
+            },
+            "damageTaken": {
+              "player": 0,
+              "enemy": 14
+            },
+            "directDamage": {
+              "player": 0,
+              "enemy": 12
+            },
+            "dotDamageEvents": {
+              "player": [],
+              "enemy": [
+                {
+                  "type": "parasite",
+                  "amount": 2
+                }
+              ]
+            },
+            "healEvents": {
+              "player": [
+                {
+                  "type": "parasite",
+                  "amount": 2
+                }
+              ],
+              "enemy": []
+            },
+            "hpAfter": {
+              "player": 87,
+              "enemy": 86
+            },
+            "angerAfter": {
+              "player": 50,
+              "enemy": 16
+            },
+            "statusesAfter": {
+              "player": [],
+              "enemy": [
+                {
+                  "type": "parasite",
+                  "duration": 2,
+                  "potency": 2,
+                  "stacks": 1,
+                  "stackable": true,
+                  "sourceId": "player"
+                }
+              ]
+            },
+            "winner": null,
+            "notes": [
+              "enemy spends 20 anger on dodge",
+              "enemy parasitized x1",
+              "player healed by parasite",
+              "enemy takes parasite damage"
+            ],
+            "state": {
+              "round": 1,
+              "player": {
+                "id": "player",
+                "element": "wood",
+                "hp": 87,
+                "maxHp": 120,
+                "anger": 50,
+                "freeDodgeUsed": false,
+                "statuses": []
+              },
+              "enemy": {
+                "id": "enemy",
+                "element": "water",
+                "hp": 86,
+                "maxHp": 120,
+                "anger": 16,
+                "freeDodgeUsed": true,
+                "statuses": [
+                  {
+                    "type": "parasite",
+                    "duration": 2,
+                    "potency": 2,
+                    "stacks": 1,
+                    "stackable": true,
+                    "sourceId": "player"
+                  }
+                ]
+              }
+            },
+            "visualEvents": [
+              {
+                "id": "1:player:windup:action:0",
+                "side": "player",
+                "phase": "windup",
+                "kind": "action",
+                "action": "element_attack"
+              },
+              {
+                "id": "1:player:release:action:1",
+                "side": "player",
+                "phase": "release",
+                "kind": "action",
+                "action": "element_attack",
+                "element": "wood"
+              },
+              {
+                "id": "1:enemy:impact:damage:2",
+                "side": "enemy",
+                "phase": "impact",
+                "kind": "damage",
+                "amount": 12
+              },
+              {
+                "id": "1:player:effects:heal:3",
+                "side": "player",
+                "phase": "effects",
+                "kind": "heal",
+                "amount": 2,
+                "status": "parasite"
+              },
+              {
+                "id": "1:enemy:effects:status:4",
+                "side": "enemy",
+                "phase": "effects",
+                "kind": "status",
+                "status": "parasite",
+                "element": "wood"
+              },
+              {
+                "id": "1:enemy:windup:action:5",
+                "side": "enemy",
+                "phase": "windup",
+                "kind": "action",
+                "action": "dodge"
+              },
+              {
+                "id": "1:enemy:release:action:6",
+                "side": "enemy",
+                "phase": "release",
+                "kind": "action",
+                "action": "dodge",
+                "element": "water"
+              },
+              {
+                "id": "1:enemy:effects:dot:7",
+                "side": "enemy",
+                "phase": "effects",
+                "kind": "dot",
+                "amount": 2,
+                "status": "parasite"
+              }
+            ]
+          }
+        ],
+        "winner": null,
+        "pendingAction": null,
+        "historyComplete": true,
+        "rules": {
+          "id": "five-elements-standard-v1",
+          "label": "标准五行对战",
+          "vitalPolicy": "normalized",
+          "maxHp": 120,
+          "maxAnger": 100,
+          "companionStatsApplied": false,
+          "baseDamage": {
+            "normal_attack": 10,
+            "element_attack": 12,
+            "dodge": 0,
+            "ultimate": 20
+          },
+          "ultimateAnger": 50,
+          "ultimateCost": 50,
+          "ultimateHeal": 20,
+          "dodgeMaxCost": 20,
+          "dodgeRefund": 30,
+          "advantage": {
+            "metal": "wood",
+            "wood": "earth",
+            "earth": "water",
+            "water": "fire",
+            "fire": "metal"
+          },
+          "elementEffects": {
+            "metal": {
+              "label": "易伤",
+              "description": "每层受伤×1.5，最多5层"
+            },
+            "wood": {
+              "label": "寄生",
+              "description": "每层回合末吸取2生命，最多5层"
+            },
+            "earth": {
+              "label": "迟钝",
+              "description": "每层伤害×0.5，最多5层"
+            },
+            "water": {
+              "label": "降怒",
+              "description": "命中后对方怒气向下取半，不增加受击怒气"
+            },
+            "fire": {
+              "label": "燃烧",
+              "description": "回合末按当前生命8%×层数伤害，最多5层"
+            }
+          }
+        },
+        "context": {
+          "id": "training:water",
+          "authority": "simulated",
+          "scenarioId": "a6a628a9-74ac-4b35-841e-48c6d222cd3c",
+          "qaPreset": "charged",
+          "qaEnemyAction": "dodge"
+        },
+        "updatedAt": "2026-10-24T15:35:38.851Z",
+        "revision": 3
+      },
+      "after": {
+        "id": "battle-c5ecbe80-f6d9-4c42-8825-fb378b716366",
+        "mode": "training",
+        "status": "active",
+        "startedAt": "2026-10-24T15:35:37.854Z",
+        "player": {
+          "petId": "pet-03117d25-f49d-4e35-8199-07a1a4dd40cf",
+          "petName": "青芽",
+          "element": "wood",
+          "level": 1,
+          "resourceRef": "builtin:lingjing-qingya-v1",
+          "resource": {
+            "resourceId": "builtin:lingjing-qingya-v1",
+            "kind": "2d"
+          },
+          "appearance2d": "builtin:lingjing-qingya-v1"
+        },
+        "enemy": {
+          "petId": "training-water",
+          "petName": "鱼丸",
+          "element": "water",
+          "level": 1,
+          "resourceRef": "builtin:lingjing-yuwan-v2",
+          "appearance2d": "builtin:lingjing-yuwan-v2",
+          "resource": {
+            "resourceId": "builtin:lingjing-yuwan-v2",
+            "kind": "2d"
+          }
+        },
+        "snapshot": {
+          "round": 2,
+          "player": {
+            "id": "player",
+            "element": "wood",
+            "hp": 91,
+            "maxHp": 120,
+            "anger": 50,
+            "freeDodgeUsed": false,
+            "statuses": []
+          },
+          "enemy": {
+            "id": "enemy",
+            "element": "water",
+            "hp": 70,
+            "maxHp": 120,
+            "anger": 6,
+            "freeDodgeUsed": true,
+            "statuses": [
+              {
+                "type": "parasite",
+                "duration": 4,
+                "potency": 2,
+                "stacks": 2,
+                "stackable": true,
+                "sourceId": "player"
+              }
+            ]
+          }
+        },
+        "rounds": [
+          {
+            "round": 1,
+            "actions": {
+              "player": "element_attack",
+              "enemy": "dodge"
+            },
+            "damageTaken": {
+              "player": 0,
+              "enemy": 14
+            },
+            "directDamage": {
+              "player": 0,
+              "enemy": 12
+            },
+            "dotDamageEvents": {
+              "player": [],
+              "enemy": [
+                {
+                  "type": "parasite",
+                  "amount": 2
+                }
+              ]
+            },
+            "healEvents": {
+              "player": [
+                {
+                  "type": "parasite",
+                  "amount": 2
+                }
+              ],
+              "enemy": []
+            },
+            "hpAfter": {
+              "player": 87,
+              "enemy": 86
+            },
+            "angerAfter": {
+              "player": 50,
+              "enemy": 16
+            },
+            "statusesAfter": {
+              "player": [],
+              "enemy": [
+                {
+                  "type": "parasite",
+                  "duration": 2,
+                  "potency": 2,
+                  "stacks": 1,
+                  "stackable": true,
+                  "sourceId": "player"
+                }
+              ]
+            },
+            "winner": null,
+            "notes": [
+              "enemy spends 20 anger on dodge",
+              "enemy parasitized x1",
+              "player healed by parasite",
+              "enemy takes parasite damage"
+            ],
+            "state": {
+              "round": 1,
+              "player": {
+                "id": "player",
+                "element": "wood",
+                "hp": 87,
+                "maxHp": 120,
+                "anger": 50,
+                "freeDodgeUsed": false,
+                "statuses": []
+              },
+              "enemy": {
+                "id": "enemy",
+                "element": "water",
+                "hp": 86,
+                "maxHp": 120,
+                "anger": 16,
+                "freeDodgeUsed": true,
+                "statuses": [
+                  {
+                    "type": "parasite",
+                    "duration": 2,
+                    "potency": 2,
+                    "stacks": 1,
+                    "stackable": true,
+                    "sourceId": "player"
+                  }
+                ]
+              }
+            },
+            "visualEvents": [
+              {
+                "id": "1:player:windup:action:0",
+                "side": "player",
+                "phase": "windup",
+                "kind": "action",
+                "action": "element_attack"
+              },
+              {
+                "id": "1:player:release:action:1",
+                "side": "player",
+                "phase": "release",
+                "kind": "action",
+                "action": "element_attack",
+                "element": "wood"
+              },
+              {
+                "id": "1:enemy:impact:damage:2",
+                "side": "enemy",
+                "phase": "impact",
+                "kind": "damage",
+                "amount": 12
+              },
+              {
+                "id": "1:player:effects:heal:3",
+                "side": "player",
+                "phase": "effects",
+                "kind": "heal",
+                "amount": 2,
+                "status": "parasite"
+              },
+              {
+                "id": "1:enemy:effects:status:4",
+                "side": "enemy",
+                "phase": "effects",
+                "kind": "status",
+                "status": "parasite",
+                "element": "wood"
+              },
+              {
+                "id": "1:enemy:windup:action:5",
+                "side": "enemy",
+                "phase": "windup",
+                "kind": "action",
+                "action": "dodge"
+              },
+              {
+                "id": "1:enemy:release:action:6",
+                "side": "enemy",
+                "phase": "release",
+                "kind": "action",
+                "action": "dodge",
+                "element": "water"
+              },
+              {
+                "id": "1:enemy:effects:dot:7",
+                "side": "enemy",
+                "phase": "effects",
+                "kind": "dot",
+                "amount": 2,
+                "status": "parasite"
+              }
+            ]
+          },
+          {
+            "round": 2,
+            "actions": {
+              "player": "element_attack",
+              "enemy": "dodge"
+            },
+            "damageTaken": {
+              "player": 0,
+              "enemy": 16
+            },
+            "directDamage": {
+              "player": 0,
+              "enemy": 12
+            },
+            "dotDamageEvents": {
+              "player": [],
+              "enemy": [
+                {
+                  "type": "parasite",
+                  "amount": 4
+                }
+              ]
+            },
+            "healEvents": {
+              "player": [
+                {
+                  "type": "parasite",
+                  "amount": 4
+                }
+              ],
+              "enemy": []
+            },
+            "hpAfter": {
+              "player": 91,
+              "enemy": 70
+            },
+            "angerAfter": {
+              "player": 50,
+              "enemy": 6
+            },
+            "statusesAfter": {
+              "player": [],
+              "enemy": [
+                {
+                  "type": "parasite",
+                  "duration": 4,
+                  "potency": 2,
+                  "stacks": 2,
+                  "stackable": true,
+                  "sourceId": "player"
+                }
+              ]
+            },
+            "winner": null,
+            "notes": [
+              "enemy spends 20 anger on dodge",
+              "enemy parasitized x2",
+              "player healed by parasite",
+              "enemy takes parasite damage"
+            ],
+            "state": {
+              "round": 2,
+              "player": {
+                "id": "player",
+                "element": "wood",
+                "hp": 91,
+                "maxHp": 120,
+                "anger": 50,
+                "freeDodgeUsed": false,
+                "statuses": []
+              },
+              "enemy": {
+                "id": "enemy",
+                "element": "water",
+                "hp": 70,
+                "maxHp": 120,
+                "anger": 6,
+                "freeDodgeUsed": true,
+                "statuses": [
+                  {
+                    "type": "parasite",
+                    "duration": 4,
+                    "potency": 2,
+                    "stacks": 2,
+                    "stackable": true,
+                    "sourceId": "player"
+                  }
+                ]
+              }
+            },
+            "visualEvents": [
+              {
+                "id": "2:player:windup:action:0",
+                "side": "player",
+                "phase": "windup",
+                "kind": "action",
+                "action": "element_attack"
+              },
+              {
+                "id": "2:player:release:action:1",
+                "side": "player",
+                "phase": "release",
+                "kind": "action",
+                "action": "element_attack",
+                "element": "wood"
+              },
+              {
+                "id": "2:enemy:impact:damage:2",
+                "side": "enemy",
+                "phase": "impact",
+                "kind": "damage",
+                "amount": 12
+              },
+              {
+                "id": "2:player:effects:heal:3",
+                "side": "player",
+                "phase": "effects",
+                "kind": "heal",
+                "amount": 4,
+                "status": "parasite"
+              },
+              {
+                "id": "2:enemy:effects:status:4",
+                "side": "enemy",
+                "phase": "effects",
+                "kind": "status",
+                "status": "parasite",
+                "element": "wood"
+              },
+              {
+                "id": "2:enemy:windup:action:5",
+                "side": "enemy",
+                "phase": "windup",
+                "kind": "action",
+                "action": "dodge"
+              },
+              {
+                "id": "2:enemy:release:action:6",
+                "side": "enemy",
+                "phase": "release",
+                "kind": "action",
+                "action": "dodge",
+                "element": "water"
+              },
+              {
+                "id": "2:enemy:effects:dot:7",
+                "side": "enemy",
+                "phase": "effects",
+                "kind": "dot",
+                "amount": 4,
+                "status": "parasite"
+              }
+            ]
+          }
+        ],
+        "winner": null,
+        "pendingAction": null,
+        "historyComplete": true,
+        "rules": {
+          "id": "five-elements-standard-v1",
+          "label": "标准五行对战",
+          "vitalPolicy": "normalized",
+          "maxHp": 120,
+          "maxAnger": 100,
+          "companionStatsApplied": false,
+          "baseDamage": {
+            "normal_attack": 10,
+            "element_attack": 12,
+            "dodge": 0,
+            "ultimate": 20
+          },
+          "ultimateAnger": 50,
+          "ultimateCost": 50,
+          "ultimateHeal": 20,
+          "dodgeMaxCost": 20,
+          "dodgeRefund": 30,
+          "advantage": {
+            "metal": "wood",
+            "wood": "earth",
+            "earth": "water",
+            "water": "fire",
+            "fire": "metal"
+          },
+          "elementEffects": {
+            "metal": {
+              "label": "易伤",
+              "description": "每层受伤×1.5，最多5层"
+            },
+            "wood": {
+              "label": "寄生",
+              "description": "每层回合末吸取2生命，最多5层"
+            },
+            "earth": {
+              "label": "迟钝",
+              "description": "每层伤害×0.5，最多5层"
+            },
+            "water": {
+              "label": "降怒",
+              "description": "命中后对方怒气向下取半，不增加受击怒气"
+            },
+            "fire": {
+              "label": "燃烧",
+              "description": "回合末按当前生命8%×层数伤害，最多5层"
+            }
+          }
+        },
+        "context": {
+          "id": "training:water",
+          "authority": "simulated",
+          "scenarioId": "a6a628a9-74ac-4b35-841e-48c6d222cd3c",
+          "qaPreset": "charged",
+          "qaEnemyAction": "dodge"
+        },
+        "updatedAt": "2026-10-24T15:35:40.462Z",
+        "revision": 4
+      },
+      "samples": [
+        {
+          "at": 2179.10000000149,
+          "phase": "rest",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "0",
+              "textureFrame": "76,63,184,261",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "0",
+              "textureFrame": "59,61,221,251",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": [
+            "heal",
+            "status",
+            "dot"
+          ]
+        },
+        {
+          "at": 2245.7999999970198,
+          "phase": "windup",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "action": "attack_windup",
+              "clip": "attack_windup",
+              "frame": "0",
+              "textureFrame": "76,63,184,261",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "walk",
+              "clip": "walk",
+              "frame": "0",
+              "textureFrame": "59,61,221,251",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": [
+            "heal",
+            "status",
+            "dot"
+          ]
+        },
+        {
+          "at": 2248.2000000029802,
+          "phase": "windup",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "action": "attack_windup",
+              "clip": "attack_windup",
+              "frame": "0",
+              "textureFrame": "40,673,243,215",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "walk",
+              "clip": "walk",
+              "frame": "0",
+              "textureFrame": "672,59,221,254",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": [
+            "heal",
+            "status",
+            "dot"
+          ]
+        },
+        {
+          "at": 2363,
+          "phase": "windup",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "action": "attack_windup",
+              "clip": "attack_windup",
+              "frame": "0",
+              "textureFrame": "40,673,243,215",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "walk",
+              "clip": "walk",
+              "frame": "0",
+              "textureFrame": "672,59,221,254",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": []
+        },
+        {
+          "at": 2412.5,
+          "phase": "windup",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "action": "attack_windup",
+              "clip": "attack_windup",
+              "frame": "0",
+              "textureFrame": "40,673,243,215",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "walk",
+              "clip": "walk",
+              "frame": "1",
+              "textureFrame": "983,60,223,253",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": []
+        },
+        {
+          "at": 2526.89999999851,
+          "phase": "release",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "action": "skill",
+              "clip": "skill",
+              "frame": "0",
+              "textureFrame": "40,673,243,215",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "walk",
+              "clip": "walk",
+              "frame": "1",
+              "textureFrame": "983,60,223,253",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": []
+        },
+        {
+          "at": 2527.2999999970198,
+          "phase": "release",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "action": "skill",
+              "clip": "skill",
+              "frame": "0",
+              "textureFrame": "1018,659,197,260",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "walk",
+              "clip": "walk",
+              "frame": "0",
+              "textureFrame": "672,59,221,254",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": []
+        },
+        {
+          "at": 2656,
+          "phase": "release",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "action": "skill",
+              "clip": "skill",
+              "frame": "1",
+              "textureFrame": "1018,659,197,260",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "walk",
+              "clip": "walk",
+              "frame": "0",
+              "textureFrame": "672,59,221,254",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": []
+        },
+        {
+          "at": 2694,
+          "phase": "release",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "action": "skill",
+              "clip": "skill",
+              "frame": "1",
+              "textureFrame": "1018,659,197,260",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "walk",
+              "clip": "walk",
+              "frame": "1",
+              "textureFrame": "983,60,223,253",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": []
+        },
+        {
+          "at": 2776.7999999970198,
+          "phase": "release",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "action": "skill",
+              "clip": "skill",
+              "frame": "2",
+              "textureFrame": "35,947,300,271",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "walk",
+              "clip": "walk",
+              "frame": "1",
+              "textureFrame": "983,60,223,253",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": []
+        },
+        {
+          "at": 2860.5,
+          "phase": "release",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "action": "skill",
+              "clip": "skill",
+              "frame": "2",
+              "textureFrame": "35,947,300,271",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "walk",
+              "clip": "walk",
+              "frame": "0",
+              "textureFrame": "672,59,221,254",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": []
+        },
+        {
+          "at": 2871.10000000149,
+          "phase": "impact",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "2",
+              "textureFrame": "35,947,300,271",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "hit",
+              "clip": "hit",
+              "frame": "0",
+              "textureFrame": "672,59,221,254",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": [
+            "damage"
+          ]
+        },
+        {
+          "at": 2871.7000000029802,
+          "phase": "impact",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "0",
+              "textureFrame": "76,63,184,261",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "hit",
+              "clip": "hit",
+              "frame": "0",
+              "textureFrame": "664,654,261,246",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": [
+            "damage"
+          ]
+        },
+        {
+          "at": 2997.7000000029802,
+          "phase": "impact",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "1",
+              "textureFrame": "76,63,184,261",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "hit",
+              "clip": "hit",
+              "frame": "1",
+              "textureFrame": "664,654,261,246",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": [
+            "damage"
+          ]
+        },
+        {
+          "at": 3118,
+          "phase": "impact",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "2",
+              "textureFrame": "76,63,184,261",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "hit",
+              "clip": "hit",
+              "frame": "2",
+              "textureFrame": "59,61,221,251",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": [
+            "damage"
+          ]
+        },
+        {
+          "at": 3186.5,
+          "phase": "effects",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "2",
+              "textureFrame": "76,63,184,261",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "walk",
+              "clip": "walk",
+              "frame": "2",
+              "textureFrame": "59,61,221,251",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": [
+            "heal",
+            "damage",
+            "status",
+            "dot"
+          ]
+        },
+        {
+          "at": 3189.7999999970198,
+          "phase": "effects",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "0",
+              "textureFrame": "76,63,184,261",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "walk",
+              "clip": "walk",
+              "frame": "0",
+              "textureFrame": "672,59,221,254",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": [
+            "heal",
+            "damage",
+            "status",
+            "dot"
+          ]
+        },
+        {
+          "at": 3315.2000000029802,
+          "phase": "effects",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "1",
+              "textureFrame": "76,63,184,261",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "walk",
+              "clip": "walk",
+              "frame": "0",
+              "textureFrame": "672,59,221,254",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": [
+            "heal",
+            "damage",
+            "status",
+            "dot"
+          ]
+        },
+        {
+          "at": 3359.7999999970198,
+          "phase": "effects",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "1",
+              "textureFrame": "76,63,184,261",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "walk",
+              "clip": "walk",
+              "frame": "1",
+              "textureFrame": "983,60,223,253",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": [
+            "heal",
+            "damage",
+            "status",
+            "dot"
+          ]
+        },
+        {
+          "at": 3391.10000000149,
+          "phase": "effects",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "1",
+              "textureFrame": "76,63,184,261",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "walk",
+              "clip": "walk",
+              "frame": "1",
+              "textureFrame": "983,60,223,253",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": [
+            "heal",
+            "status",
+            "dot"
+          ]
+        },
+        {
+          "at": 3442.2000000029802,
+          "phase": "effects",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "2",
+              "textureFrame": "76,63,184,261",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "walk",
+              "clip": "walk",
+              "frame": "1",
+              "textureFrame": "983,60,223,253",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": [
+            "heal",
+            "status",
+            "dot"
+          ]
+        },
+        {
+          "at": 3525.2000000029802,
+          "phase": "effects",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "2",
+              "textureFrame": "76,63,184,261",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "walk",
+              "clip": "walk",
+              "frame": "0",
+              "textureFrame": "672,59,221,254",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": [
+            "heal",
+            "status",
+            "dot"
+          ]
+        },
+        {
+          "at": 3563,
+          "phase": "effects",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "3",
+              "textureFrame": "76,63,184,261",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "walk",
+              "clip": "walk",
+              "frame": "0",
+              "textureFrame": "672,59,221,254",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": [
+            "heal",
+            "status",
+            "dot"
+          ]
+        },
+        {
+          "at": 3689.5,
+          "phase": "effects",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "4",
+              "textureFrame": "76,63,184,261",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "walk",
+              "clip": "walk",
+              "frame": "1",
+              "textureFrame": "983,60,223,253",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": [
+            "heal",
+            "status",
+            "dot"
+          ]
+        },
+        {
+          "at": 3767.2999999970198,
+          "phase": "rest",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "4",
+              "textureFrame": "76,63,184,261",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "1",
+              "textureFrame": "983,60,223,253",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": [
+            "heal",
+            "status",
+            "dot"
+          ]
+        },
+        {
+          "at": 3767.60000000149,
+          "phase": "rest",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "0",
+              "textureFrame": "76,63,184,261",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "0",
+              "textureFrame": "59,61,221,251",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": [
+            "heal",
+            "status",
+            "dot"
+          ]
+        }
+      ],
+      "screenshots": []
+    },
+    {
+      "label": "friend-interrupted-guest",
+      "action": "element_attack",
+      "before": {
+        "id": "online-130b09ea-4ceb-445b-aa75-a1c22e53d74d",
+        "mode": "friend",
+        "status": "active",
+        "startedAt": "2026-10-24T15:35:45.668Z",
+        "player": {
+          "petId": "pet-3b3c437d-ce1f-4cfe-ae67-3fc88534660c",
+          "petName": "礼帽喵",
+          "element": "metal",
+          "level": 1,
+          "resourceRef": "builtin:lingjing-hatcat-v1",
+          "resource": {
+            "resourceId": "builtin:lingjing-hatcat-v1",
+            "kind": "2d"
+          },
+          "appearance2d": "builtin:lingjing-hatcat-v1"
+        },
+        "enemy": {
+          "petId": "pet-26998bae-6688-438a-b51f-c0e0bc441c07",
+          "petName": "鱼丸",
+          "element": "water",
+          "appearance2d": "builtin:lingjing-yuwan-v2"
+        },
+        "snapshot": {
+          "round": 0,
+          "player": {
+            "id": "player",
+            "element": "metal",
+            "hp": 100,
+            "maxHp": 120,
+            "anger": 30,
+            "freeDodgeUsed": false,
+            "statuses": []
+          },
+          "enemy": {
+            "id": "enemy",
+            "element": "water",
+            "hp": 85,
+            "maxHp": 120,
+            "anger": 50,
+            "freeDodgeUsed": false,
+            "statuses": []
+          }
+        },
+        "room": {
+          "id": "130b09ea-4ceb-445b-aa75-a1c22e53d74d",
+          "room_code": "96E8BF",
+          "status": "active",
+          "host_user_id": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-0f34a853-d4c6-47f9-a994-b0dfb21a35bc",
+          "host_account": "qa_guest_56143632",
+          "guest_user_id": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-ec28cad1-0c22-4c75-af83-dbc47c4b607d",
+          "guest_account": "qa_host_56133958",
+          "host_pet_id": "pet-3b3c437d-ce1f-4cfe-ae67-3fc88534660c",
+          "guest_pet_id": "pet-26998bae-6688-438a-b51f-c0e0bc441c07",
+          "host_resource_id": "builtin:lingjing-hatcat-v1",
+          "guest_resource_id": "builtin:lingjing-yuwan-v2",
+          "invitation_id": "e30f8d9d-fe81-45df-b592-92462fc34b7e",
+          "invited_user_id": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-ec28cad1-0c22-4c75-af83-dbc47c4b607d",
+          "host_pet_name": "礼帽喵",
+          "guest_pet_name": "鱼丸",
+          "host_element": "metal",
+          "guest_element": "water",
+          "current_round": 1,
+          "last_resolved_round": 0,
+          "host_hp": 100,
+          "guest_hp": 85,
+          "host_anger": 30,
+          "guest_anger": 50,
+          "host_free_dodge_used": false,
+          "guest_free_dodge_used": false,
+          "host_statuses": [],
+          "guest_statuses": [],
+          "winner_side": null,
+          "created_at": "2026-10-24T15:35:45.668Z",
+          "updated_at": "2026-10-24T15:35:47.933Z"
+        },
+        "side": "host",
+        "rounds": [],
+        "winner": null,
+        "pendingAction": null,
+        "historyComplete": true,
+        "rules": {
+          "id": "five-elements-standard-v1",
+          "label": "标准五行对战",
+          "vitalPolicy": "normalized",
+          "maxHp": 120,
+          "maxAnger": 100,
+          "companionStatsApplied": false,
+          "baseDamage": {
+            "normal_attack": 10,
+            "element_attack": 12,
+            "dodge": 0,
+            "ultimate": 20
+          },
+          "ultimateAnger": 50,
+          "ultimateCost": 50,
+          "ultimateHeal": 20,
+          "dodgeMaxCost": 20,
+          "dodgeRefund": 30,
+          "advantage": {
+            "metal": "wood",
+            "wood": "earth",
+            "earth": "water",
+            "water": "fire",
+            "fire": "metal"
+          },
+          "elementEffects": {
+            "metal": {
+              "label": "易伤",
+              "description": "每层受伤×1.5，最多5层"
+            },
+            "wood": {
+              "label": "寄生",
+              "description": "每层回合末吸取2生命，最多5层"
+            },
+            "earth": {
+              "label": "迟钝",
+              "description": "每层伤害×0.5，最多5层"
+            },
+            "water": {
+              "label": "降怒",
+              "description": "命中后对方怒气向下取半，不增加受击怒气"
+            },
+            "fire": {
+              "label": "燃烧",
+              "description": "回合末按当前生命8%×层数伤害，最多5层"
+            }
+          }
+        },
+        "context": {
+          "authority": "simulated",
+          "cloudUserId": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-0f34a853-d4c6-47f9-a994-b0dfb21a35bc",
+          "scenarioId": "a6a628a9-74ac-4b35-841e-48c6d222cd3c"
+        },
+        "updatedAt": "2026-10-24T15:35:48.685Z",
+        "revision": 4
+      },
+      "after": {
+        "id": "online-130b09ea-4ceb-445b-aa75-a1c22e53d74d",
+        "mode": "friend",
+        "status": "active",
+        "startedAt": "2026-10-24T15:35:45.668Z",
+        "player": {
+          "petId": "pet-3b3c437d-ce1f-4cfe-ae67-3fc88534660c",
+          "petName": "礼帽喵",
+          "element": "metal",
+          "level": 1,
+          "resourceRef": "builtin:lingjing-hatcat-v1",
+          "resource": {
+            "resourceId": "builtin:lingjing-hatcat-v1",
+            "kind": "2d"
+          },
+          "appearance2d": "builtin:lingjing-hatcat-v1"
+        },
+        "enemy": {
+          "petId": "pet-26998bae-6688-438a-b51f-c0e0bc441c07",
+          "petName": "鱼丸",
+          "element": "water",
+          "appearance2d": "builtin:lingjing-yuwan-v2"
+        },
+        "snapshot": {
+          "round": 1,
+          "player": {
+            "id": "player",
+            "element": "metal",
+            "hp": 90,
+            "maxHp": 120,
+            "anger": 35,
+            "freeDodgeUsed": false,
+            "statuses": []
+          },
+          "enemy": {
+            "id": "enemy",
+            "element": "water",
+            "hp": 85,
+            "maxHp": 120,
+            "anger": 50,
+            "freeDodgeUsed": false,
+            "statuses": []
+          }
+        },
+        "room": {
+          "id": "130b09ea-4ceb-445b-aa75-a1c22e53d74d",
+          "room_code": "96E8BF",
+          "status": "active",
+          "host_user_id": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-0f34a853-d4c6-47f9-a994-b0dfb21a35bc",
+          "host_account": "qa_guest_56143632",
+          "guest_user_id": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-ec28cad1-0c22-4c75-af83-dbc47c4b607d",
+          "guest_account": "qa_host_56133958",
+          "host_pet_id": "pet-3b3c437d-ce1f-4cfe-ae67-3fc88534660c",
+          "guest_pet_id": "pet-26998bae-6688-438a-b51f-c0e0bc441c07",
+          "host_resource_id": "builtin:lingjing-hatcat-v1",
+          "guest_resource_id": "builtin:lingjing-yuwan-v2",
+          "invitation_id": "e30f8d9d-fe81-45df-b592-92462fc34b7e",
+          "invited_user_id": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-ec28cad1-0c22-4c75-af83-dbc47c4b607d",
+          "host_pet_name": "礼帽喵",
+          "guest_pet_name": "鱼丸",
+          "host_element": "metal",
+          "guest_element": "water",
+          "current_round": 2,
+          "last_resolved_round": 1,
+          "host_hp": 90,
+          "guest_hp": 85,
+          "host_anger": 35,
+          "guest_anger": 50,
+          "host_free_dodge_used": false,
+          "guest_free_dodge_used": false,
+          "host_statuses": [],
+          "guest_statuses": [],
+          "winner_side": null,
+          "created_at": "2026-10-24T15:35:45.668Z",
+          "updated_at": "2026-10-24T15:35:49.346Z"
+        },
+        "side": "host",
+        "rounds": [
+          {
+            "round": 1,
+            "actions": {
+              "player": "element_attack",
+              "enemy": "normal_attack"
+            },
+            "damageTaken": {
+              "player": 10,
+              "enemy": 0
+            },
+            "directDamage": {
+              "player": 10,
+              "enemy": 0
+            },
+            "dotDamageEvents": {
+              "player": [],
+              "enemy": []
+            },
+            "healEvents": {
+              "player": [],
+              "enemy": []
+            },
+            "hpAfter": {
+              "player": 90,
+              "enemy": 85
+            },
+            "angerAfter": {
+              "player": 35,
+              "enemy": 50
+            },
+            "statusesAfter": {
+              "player": [],
+              "enemy": []
+            },
+            "winner": null,
+            "notes": [
+              "player action missed"
+            ],
+            "state": {
+              "round": 1,
+              "player": {
+                "id": "player",
+                "element": "metal",
+                "hp": 90,
+                "maxHp": 120,
+                "anger": 35,
+                "freeDodgeUsed": false,
+                "statuses": []
+              },
+              "enemy": {
+                "id": "enemy",
+                "element": "water",
+                "hp": 85,
+                "maxHp": 120,
+                "anger": 50,
+                "freeDodgeUsed": false,
+                "statuses": []
+              }
+            },
+            "visualEvents": [
+              {
+                "id": "1:player:windup:action:0",
+                "side": "player",
+                "phase": "windup",
+                "kind": "action",
+                "action": "element_attack"
+              },
+              {
+                "id": "1:player:release:action:1",
+                "side": "player",
+                "phase": "release",
+                "kind": "action",
+                "action": "element_attack",
+                "element": "metal"
+              },
+              {
+                "id": "1:player:impact:interrupt:2",
+                "side": "player",
+                "phase": "impact",
+                "kind": "interrupt"
+              },
+              {
+                "id": "1:enemy:windup:action:3",
+                "side": "enemy",
+                "phase": "windup",
+                "kind": "action",
+                "action": "normal_attack"
+              },
+              {
+                "id": "1:enemy:release:action:4",
+                "side": "enemy",
+                "phase": "release",
+                "kind": "action",
+                "action": "normal_attack",
+                "element": "water"
+              },
+              {
+                "id": "1:player:impact:damage:5",
+                "side": "player",
+                "phase": "impact",
+                "kind": "damage",
+                "amount": 10
+              }
+            ]
+          }
+        ],
+        "winner": null,
+        "pendingAction": null,
+        "historyComplete": true,
+        "rules": {
+          "id": "five-elements-standard-v1",
+          "label": "标准五行对战",
+          "vitalPolicy": "normalized",
+          "maxHp": 120,
+          "maxAnger": 100,
+          "companionStatsApplied": false,
+          "baseDamage": {
+            "normal_attack": 10,
+            "element_attack": 12,
+            "dodge": 0,
+            "ultimate": 20
+          },
+          "ultimateAnger": 50,
+          "ultimateCost": 50,
+          "ultimateHeal": 20,
+          "dodgeMaxCost": 20,
+          "dodgeRefund": 30,
+          "advantage": {
+            "metal": "wood",
+            "wood": "earth",
+            "earth": "water",
+            "water": "fire",
+            "fire": "metal"
+          },
+          "elementEffects": {
+            "metal": {
+              "label": "易伤",
+              "description": "每层受伤×1.5，最多5层"
+            },
+            "wood": {
+              "label": "寄生",
+              "description": "每层回合末吸取2生命，最多5层"
+            },
+            "earth": {
+              "label": "迟钝",
+              "description": "每层伤害×0.5，最多5层"
+            },
+            "water": {
+              "label": "降怒",
+              "description": "命中后对方怒气向下取半，不增加受击怒气"
+            },
+            "fire": {
+              "label": "燃烧",
+              "description": "回合末按当前生命8%×层数伤害，最多5层"
+            }
+          }
+        },
+        "context": {
+          "authority": "simulated",
+          "cloudUserId": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-0f34a853-d4c6-47f9-a994-b0dfb21a35bc",
+          "scenarioId": "a6a628a9-74ac-4b35-841e-48c6d222cd3c"
+        },
+        "updatedAt": "2026-10-24T15:35:50.210Z",
+        "revision": 8
+      },
+      "samples": [
+        {
+          "at": 876.6000000014901,
+          "phase": "rest",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-hatcat-v1",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "3",
+              "textureFrame": "51,65,208,223",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "3",
+              "textureFrame": "59,61,221,251",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": []
+        },
+        {
+          "at": 893.6000000014901,
+          "phase": "rest",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-hatcat-v1",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "4",
+              "textureFrame": "51,65,208,223",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "4",
+              "textureFrame": "59,61,221,251",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": []
+        },
+        {
+          "at": 948,
+          "phase": "windup",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-hatcat-v1",
+              "action": "attack_windup",
+              "clip": "attack_windup",
+              "frame": "0",
+              "textureFrame": "48,687,231,208",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "attack_windup",
+              "clip": "attack_windup",
+              "frame": "0",
+              "textureFrame": "41,654,264,243",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": []
+        },
+        {
+          "at": 1228.3999999985099,
+          "phase": "release",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-hatcat-v1",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "0",
+              "textureFrame": "48,687,231,208",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "attack_release",
+              "clip": "attack_release",
+              "frame": "0",
+              "textureFrame": "41,654,264,243",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": []
+        },
+        {
+          "at": 1229,
+          "phase": "release",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-hatcat-v1",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "0",
+              "textureFrame": "51,65,208,223",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "attack_release",
+              "clip": "attack_release",
+              "frame": "0",
+              "textureFrame": "356,642,280,257",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": []
+        },
+        {
+          "at": 1355.2000000029802,
+          "phase": "release",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-hatcat-v1",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "1",
+              "textureFrame": "51,65,208,223",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "attack_release",
+              "clip": "attack_release",
+              "frame": "0",
+              "textureFrame": "356,642,280,257",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": []
+        },
+        {
+          "at": 1542.3999999985099,
+          "phase": "release",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-hatcat-v1",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "2",
+              "textureFrame": "51,65,208,223",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "attack_release",
+              "clip": "attack_release",
+              "frame": "0",
+              "textureFrame": "356,642,280,257",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": []
+        },
+        {
+          "at": 1583.6000000014901,
+          "phase": "impact",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-hatcat-v1",
+              "action": "hit",
+              "clip": "hit",
+              "frame": "2",
+              "textureFrame": "51,65,208,223",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "0",
+              "textureFrame": "356,642,280,257",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": [
+            "interrupt",
+            "damage"
+          ]
+        },
+        {
+          "at": 1587.3000000044703,
+          "phase": "impact",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-hatcat-v1",
+              "action": "hit",
+              "clip": "hit",
+              "frame": "0",
+              "textureFrame": "660,676,238,226",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "0",
+              "textureFrame": "59,61,221,251",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": [
+            "interrupt",
+            "damage"
+          ]
+        },
+        {
+          "at": 1715.1000000014901,
+          "phase": "impact",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-hatcat-v1",
+              "action": "hit",
+              "clip": "hit",
+              "frame": "1",
+              "textureFrame": "660,676,238,226",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "1",
+              "textureFrame": "59,61,221,251",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": [
+            "interrupt",
+            "damage"
+          ]
+        },
+        {
+          "at": 1888.3000000044703,
+          "phase": "effects",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-hatcat-v1",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "1",
+              "textureFrame": "660,676,238,226",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "1",
+              "textureFrame": "59,61,221,251",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": [
+            "interrupt",
+            "damage"
+          ]
+        },
+        {
+          "at": 1888.7000000029802,
+          "phase": "effects",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-hatcat-v1",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "0",
+              "textureFrame": "51,65,208,223",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "0",
+              "textureFrame": "59,61,221,251",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": [
+            "interrupt",
+            "damage"
+          ]
+        },
+        {
+          "at": 1965.2000000029802,
+          "phase": "effects",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-hatcat-v1",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "1",
+              "textureFrame": "51,65,208,223",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "1",
+              "textureFrame": "59,61,221,251",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": [
+            "interrupt",
+            "damage"
+          ]
+        },
+        {
+          "at": 2093.3000000044703,
+          "phase": "effects",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-hatcat-v1",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "2",
+              "textureFrame": "51,65,208,223",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "2",
+              "textureFrame": "59,61,221,251",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": [
+            "interrupt",
+            "damage"
+          ]
+        },
+        {
+          "at": 2094.3000000044703,
+          "phase": "effects",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-hatcat-v1",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "2",
+              "textureFrame": "51,65,208,223",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "2",
+              "textureFrame": "59,61,221,251",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": []
+        },
+        {
+          "at": 2304.7000000029802,
+          "phase": "effects",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-hatcat-v1",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "3",
+              "textureFrame": "51,65,208,223",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "3",
+              "textureFrame": "59,61,221,251",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": []
+        },
+        {
+          "at": 2357.2000000029802,
+          "phase": "effects",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-hatcat-v1",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "4",
+              "textureFrame": "51,65,208,223",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "4",
+              "textureFrame": "59,61,221,251",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": []
+        },
+        {
+          "at": 2473.39999999851,
+          "phase": "rest",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-hatcat-v1",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "4",
+              "textureFrame": "51,65,208,223",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "4",
+              "textureFrame": "59,61,221,251",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": []
+        },
+        {
+          "at": 2473.60000000149,
+          "phase": "rest",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-hatcat-v1",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "0",
+              "textureFrame": "51,65,208,223",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "0",
+              "textureFrame": "59,61,221,251",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": []
+        }
+      ],
+      "screenshots": [
+        "friend-interrupted-guest-release.png",
+        "friend-interrupted-guest-impact.png",
+        "friend-interrupted-guest-effects.png"
+      ]
+    },
+    {
+      "label": "friend-guaranteed-ultimate",
+      "action": "dodge",
+      "before": {
+        "id": "online-0c98a40c-58c3-4d8b-8ab3-6df0bd0a019b",
+        "mode": "friend",
+        "status": "active",
+        "startedAt": "2026-10-24T15:35:56.964Z",
+        "player": {
+          "petId": "pet-3b3c437d-ce1f-4cfe-ae67-3fc88534660c",
+          "petName": "礼帽喵",
+          "element": "metal",
+          "level": 1,
+          "resourceRef": "builtin:lingjing-hatcat-v1",
+          "resource": {
+            "resourceId": "builtin:lingjing-hatcat-v1",
+            "kind": "2d"
+          },
+          "appearance2d": "builtin:lingjing-hatcat-v1"
+        },
+        "enemy": {
+          "petId": "pet-26998bae-6688-438a-b51f-c0e0bc441c07",
+          "petName": "鱼丸",
+          "element": "water",
+          "appearance2d": "builtin:lingjing-yuwan-v2"
+        },
+        "snapshot": {
+          "round": 0,
+          "player": {
+            "id": "player",
+            "element": "metal",
+            "hp": 12,
+            "maxHp": 120,
+            "anger": 0,
+            "freeDodgeUsed": false,
+            "statuses": []
+          },
+          "enemy": {
+            "id": "enemy",
+            "element": "water",
+            "hp": 120,
+            "maxHp": 120,
+            "anger": 50,
+            "freeDodgeUsed": false,
+            "statuses": []
+          }
+        },
+        "room": {
+          "id": "0c98a40c-58c3-4d8b-8ab3-6df0bd0a019b",
+          "room_code": "F702CF",
+          "status": "active",
+          "host_user_id": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-ec28cad1-0c22-4c75-af83-dbc47c4b607d",
+          "host_account": "qa_host_56133958",
+          "guest_user_id": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-0f34a853-d4c6-47f9-a994-b0dfb21a35bc",
+          "guest_account": "qa_guest_56143632",
+          "host_pet_id": "pet-26998bae-6688-438a-b51f-c0e0bc441c07",
+          "guest_pet_id": "pet-3b3c437d-ce1f-4cfe-ae67-3fc88534660c",
+          "host_resource_id": "builtin:lingjing-yuwan-v2",
+          "guest_resource_id": "builtin:lingjing-hatcat-v1",
+          "invitation_id": null,
+          "invited_user_id": null,
+          "host_pet_name": "鱼丸",
+          "guest_pet_name": "礼帽喵",
+          "host_element": "water",
+          "guest_element": "metal",
+          "current_round": 1,
+          "last_resolved_round": 0,
+          "host_hp": 120,
+          "guest_hp": 12,
+          "host_anger": 50,
+          "guest_anger": 0,
+          "host_free_dodge_used": false,
+          "guest_free_dodge_used": false,
+          "host_statuses": [],
+          "guest_statuses": [],
+          "winner_side": null,
+          "created_at": "2026-10-24T15:35:56.964Z",
+          "updated_at": "2026-10-24T15:35:58.767Z"
+        },
+        "side": "guest",
+        "rounds": [],
+        "winner": null,
+        "pendingAction": null,
+        "historyComplete": true,
+        "rules": {
+          "id": "five-elements-standard-v1",
+          "label": "标准五行对战",
+          "vitalPolicy": "normalized",
+          "maxHp": 120,
+          "maxAnger": 100,
+          "companionStatsApplied": false,
+          "baseDamage": {
+            "normal_attack": 10,
+            "element_attack": 12,
+            "dodge": 0,
+            "ultimate": 20
+          },
+          "ultimateAnger": 50,
+          "ultimateCost": 50,
+          "ultimateHeal": 20,
+          "dodgeMaxCost": 20,
+          "dodgeRefund": 30,
+          "advantage": {
+            "metal": "wood",
+            "wood": "earth",
+            "earth": "water",
+            "water": "fire",
+            "fire": "metal"
+          },
+          "elementEffects": {
+            "metal": {
+              "label": "易伤",
+              "description": "每层受伤×1.5，最多5层"
+            },
+            "wood": {
+              "label": "寄生",
+              "description": "每层回合末吸取2生命，最多5层"
+            },
+            "earth": {
+              "label": "迟钝",
+              "description": "每层伤害×0.5，最多5层"
+            },
+            "water": {
+              "label": "降怒",
+              "description": "命中后对方怒气向下取半，不增加受击怒气"
+            },
+            "fire": {
+              "label": "燃烧",
+              "description": "回合末按当前生命8%×层数伤害，最多5层"
+            }
+          }
+        },
+        "context": {
+          "authority": "simulated",
+          "cloudUserId": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-0f34a853-d4c6-47f9-a994-b0dfb21a35bc",
+          "scenarioId": "a6a628a9-74ac-4b35-841e-48c6d222cd3c"
+        },
+        "updatedAt": "2026-10-24T15:35:59.605Z",
+        "revision": 5
+      },
+      "after": {
+        "id": "online-0c98a40c-58c3-4d8b-8ab3-6df0bd0a019b",
+        "mode": "friend",
+        "status": "finished",
+        "startedAt": "2026-10-24T15:35:56.964Z",
+        "player": {
+          "petId": "pet-3b3c437d-ce1f-4cfe-ae67-3fc88534660c",
+          "petName": "礼帽喵",
+          "element": "metal",
+          "level": 1,
+          "resourceRef": "builtin:lingjing-hatcat-v1",
+          "resource": {
+            "resourceId": "builtin:lingjing-hatcat-v1",
+            "kind": "2d"
+          },
+          "appearance2d": "builtin:lingjing-hatcat-v1"
+        },
+        "enemy": {
+          "petId": "pet-26998bae-6688-438a-b51f-c0e0bc441c07",
+          "petName": "鱼丸",
+          "element": "water",
+          "appearance2d": "builtin:lingjing-yuwan-v2"
+        },
+        "snapshot": {
+          "round": 1,
+          "player": {
+            "id": "player",
+            "element": "metal",
+            "hp": 0,
+            "maxHp": 120,
+            "anger": 0,
+            "freeDodgeUsed": true,
+            "statuses": []
+          },
+          "enemy": {
+            "id": "enemy",
+            "element": "water",
+            "hp": 120,
+            "maxHp": 120,
+            "anger": 0,
+            "freeDodgeUsed": false,
+            "statuses": []
+          }
+        },
+        "room": {
+          "id": "0c98a40c-58c3-4d8b-8ab3-6df0bd0a019b",
+          "room_code": "F702CF",
+          "status": "finished",
+          "host_user_id": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-ec28cad1-0c22-4c75-af83-dbc47c4b607d",
+          "host_account": "qa_host_56133958",
+          "guest_user_id": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-0f34a853-d4c6-47f9-a994-b0dfb21a35bc",
+          "guest_account": "qa_guest_56143632",
+          "host_pet_id": "pet-26998bae-6688-438a-b51f-c0e0bc441c07",
+          "guest_pet_id": "pet-3b3c437d-ce1f-4cfe-ae67-3fc88534660c",
+          "host_resource_id": "builtin:lingjing-yuwan-v2",
+          "guest_resource_id": "builtin:lingjing-hatcat-v1",
+          "invitation_id": null,
+          "invited_user_id": null,
+          "host_pet_name": "鱼丸",
+          "guest_pet_name": "礼帽喵",
+          "host_element": "water",
+          "guest_element": "metal",
+          "current_round": 2,
+          "last_resolved_round": 1,
+          "host_hp": 120,
+          "guest_hp": 0,
+          "host_anger": 0,
+          "guest_anger": 0,
+          "host_free_dodge_used": false,
+          "guest_free_dodge_used": true,
+          "host_statuses": [],
+          "guest_statuses": [],
+          "winner_side": "host",
+          "created_at": "2026-10-24T15:35:56.964Z",
+          "updated_at": "2026-10-24T15:35:59.969Z"
+        },
+        "side": "guest",
+        "rounds": [
+          {
+            "round": 1,
+            "actions": {
+              "player": "dodge",
+              "enemy": "ultimate"
+            },
+            "damageTaken": {
+              "player": 20,
+              "enemy": 0
+            },
+            "directDamage": {
+              "player": 20,
+              "enemy": 0
+            },
+            "dotDamageEvents": {
+              "player": [],
+              "enemy": []
+            },
+            "healEvents": {
+              "player": [],
+              "enemy": []
+            },
+            "hpAfter": {
+              "player": 0,
+              "enemy": 120
+            },
+            "angerAfter": {
+              "player": 0,
+              "enemy": 0
+            },
+            "statusesAfter": {
+              "player": [],
+              "enemy": []
+            },
+            "winner": "enemy",
+            "notes": [
+              "enemy uses first free dodge",
+              "enemy anger halved by freeze (0->0)"
+            ],
+            "state": {
+              "round": 1,
+              "player": {
+                "id": "player",
+                "element": "metal",
+                "hp": 0,
+                "maxHp": 120,
+                "anger": 0,
+                "freeDodgeUsed": true,
+                "statuses": []
+              },
+              "enemy": {
+                "id": "enemy",
+                "element": "water",
+                "hp": 120,
+                "maxHp": 120,
+                "anger": 0,
+                "freeDodgeUsed": false,
+                "statuses": []
+              }
+            },
+            "visualEvents": [
+              {
+                "id": "1:player:windup:action:0",
+                "side": "player",
+                "phase": "windup",
+                "kind": "action",
+                "action": "dodge"
+              },
+              {
+                "id": "1:player:release:action:1",
+                "side": "player",
+                "phase": "release",
+                "kind": "action",
+                "action": "dodge",
+                "element": "metal"
+              },
+              {
+                "id": "1:enemy:windup:action:2",
+                "side": "enemy",
+                "phase": "windup",
+                "kind": "action",
+                "action": "ultimate"
+              },
+              {
+                "id": "1:enemy:release:action:3",
+                "side": "enemy",
+                "phase": "release",
+                "kind": "action",
+                "action": "ultimate",
+                "element": "water"
+              },
+              {
+                "id": "1:player:impact:damage:4",
+                "side": "player",
+                "phase": "impact",
+                "kind": "damage",
+                "amount": 20
+              },
+              {
+                "id": "1:player:effects:anger:5",
+                "side": "player",
+                "phase": "effects",
+                "kind": "anger",
+                "amount": 0,
+                "element": "water"
+              }
+            ]
+          }
+        ],
+        "winner": "enemy",
+        "pendingAction": null,
+        "historyComplete": true,
+        "rules": {
+          "id": "five-elements-standard-v1",
+          "label": "标准五行对战",
+          "vitalPolicy": "normalized",
+          "maxHp": 120,
+          "maxAnger": 100,
+          "companionStatsApplied": false,
+          "baseDamage": {
+            "normal_attack": 10,
+            "element_attack": 12,
+            "dodge": 0,
+            "ultimate": 20
+          },
+          "ultimateAnger": 50,
+          "ultimateCost": 50,
+          "ultimateHeal": 20,
+          "dodgeMaxCost": 20,
+          "dodgeRefund": 30,
+          "advantage": {
+            "metal": "wood",
+            "wood": "earth",
+            "earth": "water",
+            "water": "fire",
+            "fire": "metal"
+          },
+          "elementEffects": {
+            "metal": {
+              "label": "易伤",
+              "description": "每层受伤×1.5，最多5层"
+            },
+            "wood": {
+              "label": "寄生",
+              "description": "每层回合末吸取2生命，最多5层"
+            },
+            "earth": {
+              "label": "迟钝",
+              "description": "每层伤害×0.5，最多5层"
+            },
+            "water": {
+              "label": "降怒",
+              "description": "命中后对方怒气向下取半，不增加受击怒气"
+            },
+            "fire": {
+              "label": "燃烧",
+              "description": "回合末按当前生命8%×层数伤害，最多5层"
+            }
+          }
+        },
+        "context": {
+          "authority": "simulated",
+          "cloudUserId": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-0f34a853-d4c6-47f9-a994-b0dfb21a35bc",
+          "scenarioId": "a6a628a9-74ac-4b35-841e-48c6d222cd3c"
+        },
+        "updatedAt": "2026-10-24T15:35:59.979Z",
+        "revision": 8,
+        "endedAt": "2026-10-24T15:35:59.977Z",
+        "reward": {
+          "actionId": "battle:0c98a40c-58c3-4d8b-8ab3-6df0bd0a019b:qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-0f34a853-d4c6-47f9-a994-b0dfb21a35bc",
+          "petId": "pet-3b3c437d-ce1f-4cfe-ae67-3fc88534660c",
+          "experience": 5,
+          "applied": true,
+          "previousExperience": 0,
+          "previousLevel": 1,
+          "currentExperience": 5,
+          "currentLevel": 1,
+          "seeds": {
+            "source": "battle",
+            "receiptId": "online-0c98a40c-58c3-4d8b-8ab3-6df0bd0a019b",
+            "itemId": "seed:rice",
+            "quantity": 2
+          }
+        },
+        "reportId": "online-0c98a40c-58c3-4d8b-8ab3-6df0bd0a019b"
+      },
+      "samples": [
+        {
+          "at": 602.9000000059605,
+          "phase": "rest",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-hatcat-v1",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "1",
+              "textureFrame": "51,65,208,223",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "1",
+              "textureFrame": "59,61,221,251",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": []
+        },
+        {
+          "at": 648.9000000059605,
+          "phase": "windup",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-hatcat-v1",
+              "action": "walk",
+              "clip": "walk",
+              "frame": "0",
+              "textureFrame": "662,71,218,219",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "attack_windup",
+              "clip": "attack_windup",
+              "frame": "0",
+              "textureFrame": "41,654,264,243",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": []
+        },
+        {
+          "at": 804.5,
+          "phase": "windup",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-hatcat-v1",
+              "action": "walk",
+              "clip": "walk",
+              "frame": "1",
+              "textureFrame": "972,72,210,216",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "attack_windup",
+              "clip": "attack_windup",
+              "frame": "0",
+              "textureFrame": "41,654,264,243",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": []
+        },
+        {
+          "at": 928.7000000029802,
+          "phase": "release",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-hatcat-v1",
+              "action": "walk",
+              "clip": "walk",
+              "frame": "1",
+              "textureFrame": "972,72,210,216",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "skill",
+              "clip": "skill",
+              "frame": "0",
+              "textureFrame": "41,654,264,243",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": []
+        },
+        {
+          "at": 928.9000000059605,
+          "phase": "release",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-hatcat-v1",
+              "action": "walk",
+              "clip": "walk",
+              "frame": "0",
+              "textureFrame": "662,71,218,219",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "skill",
+              "clip": "skill",
+              "frame": "0",
+              "textureFrame": "983,656,238,247",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": []
+        },
+        {
+          "at": 1054.8000000044703,
+          "phase": "release",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-hatcat-v1",
+              "action": "walk",
+              "clip": "walk",
+              "frame": "0",
+              "textureFrame": "662,71,218,219",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "skill",
+              "clip": "skill",
+              "frame": "1",
+              "textureFrame": "983,656,238,247",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": []
+        },
+        {
+          "at": 1101.2000000029802,
+          "phase": "release",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-hatcat-v1",
+              "action": "walk",
+              "clip": "walk",
+              "frame": "1",
+              "textureFrame": "972,72,210,216",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "skill",
+              "clip": "skill",
+              "frame": "1",
+              "textureFrame": "983,656,238,247",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": []
+        },
+        {
+          "at": 1185.4000000059605,
+          "phase": "release",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-hatcat-v1",
+              "action": "walk",
+              "clip": "walk",
+              "frame": "1",
+              "textureFrame": "972,72,210,216",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "skill",
+              "clip": "skill",
+              "frame": "2",
+              "textureFrame": "40,931,297,272",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": []
+        },
+        {
+          "at": 1270.5,
+          "phase": "impact",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-hatcat-v1",
+              "action": "hit",
+              "clip": "hit",
+              "frame": "1",
+              "textureFrame": "972,72,210,216",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "2",
+              "textureFrame": "40,931,297,272",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": [
+            "damage"
+          ]
+        },
+        {
+          "at": 1270.8000000044703,
+          "phase": "impact",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-hatcat-v1",
+              "action": "hit",
+              "clip": "hit",
+              "frame": "0",
+              "textureFrame": "662,71,218,219",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "2",
+              "textureFrame": "40,931,297,272",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": [
+            "damage"
+          ]
+        },
+        {
+          "at": 1273.4000000059605,
+          "phase": "impact",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-hatcat-v1",
+              "action": "hit",
+              "clip": "hit",
+              "frame": "0",
+              "textureFrame": "660,676,238,226",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "0",
+              "textureFrame": "59,61,221,251",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": [
+            "damage"
+          ]
+        },
+        {
+          "at": 1397.8000000044703,
+          "phase": "impact",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-hatcat-v1",
+              "action": "hit",
+              "clip": "hit",
+              "frame": "1",
+              "textureFrame": "660,676,238,226",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "1",
+              "textureFrame": "59,61,221,251",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": [
+            "damage"
+          ]
+        },
+        {
+          "at": 1526.8000000044703,
+          "phase": "impact",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-hatcat-v1",
+              "action": "hit",
+              "clip": "hit",
+              "frame": "2",
+              "textureFrame": "51,65,208,223",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "2",
+              "textureFrame": "59,61,221,251",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": [
+            "damage"
+          ]
+        },
+        {
+          "at": 1589,
+          "phase": "effects",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-hatcat-v1",
+              "action": "walk",
+              "clip": "walk",
+              "frame": "2",
+              "textureFrame": "51,65,208,223",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "2",
+              "textureFrame": "59,61,221,251",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": [
+            "damage",
+            "anger"
+          ]
+        },
+        {
+          "at": 1589.4000000059605,
+          "phase": "effects",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-hatcat-v1",
+              "action": "walk",
+              "clip": "walk",
+              "frame": "0",
+              "textureFrame": "662,71,218,219",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "0",
+              "textureFrame": "59,61,221,251",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": [
+            "damage",
+            "anger"
+          ]
+        },
+        {
+          "at": 1716.4000000059605,
+          "phase": "effects",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-hatcat-v1",
+              "action": "walk",
+              "clip": "walk",
+              "frame": "0",
+              "textureFrame": "662,71,218,219",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "1",
+              "textureFrame": "59,61,221,251",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": [
+            "damage",
+            "anger"
+          ]
+        },
+        {
+          "at": 1753.9000000059605,
+          "phase": "effects",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-hatcat-v1",
+              "action": "walk",
+              "clip": "walk",
+              "frame": "1",
+              "textureFrame": "972,72,210,216",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "1",
+              "textureFrame": "59,61,221,251",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": [
+            "damage",
+            "anger"
+          ]
+        },
+        {
+          "at": 1793.5,
+          "phase": "effects",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-hatcat-v1",
+              "action": "walk",
+              "clip": "walk",
+              "frame": "1",
+              "textureFrame": "972,72,210,216",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "1",
+              "textureFrame": "59,61,221,251",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": [
+            "anger"
+          ]
+        },
+        {
+          "at": 1837,
+          "phase": "effects",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-hatcat-v1",
+              "action": "walk",
+              "clip": "walk",
+              "frame": "1",
+              "textureFrame": "972,72,210,216",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "2",
+              "textureFrame": "59,61,221,251",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": [
+            "anger"
+          ]
+        },
+        {
+          "at": 1920.5,
+          "phase": "effects",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-hatcat-v1",
+              "action": "walk",
+              "clip": "walk",
+              "frame": "0",
+              "textureFrame": "662,71,218,219",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "2",
+              "textureFrame": "59,61,221,251",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": [
+            "anger"
+          ]
+        },
+        {
+          "at": 1967.5,
+          "phase": "effects",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-hatcat-v1",
+              "action": "walk",
+              "clip": "walk",
+              "frame": "0",
+              "textureFrame": "662,71,218,219",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "3",
+              "textureFrame": "59,61,221,251",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": [
+            "anger"
+          ]
+        },
+        {
+          "at": 2090.10000000149,
+          "phase": "effects",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-hatcat-v1",
+              "action": "walk",
+              "clip": "walk",
+              "frame": "1",
+              "textureFrame": "972,72,210,216",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "4",
+              "textureFrame": "59,61,221,251",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": [
+            "anger"
+          ]
+        },
+        {
+          "at": 2172.60000000149,
+          "phase": "rest",
+          "actors": [
+            {
+              "resourceId": "builtin:lingjing-hatcat-v1",
+              "action": "idle",
+              "clip": "idle",
+              "frame": "0",
+              "textureFrame": "51,65,208,223",
+              "textureSource": "2",
+              "fallback": "false"
+            },
+            {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "action": "victory",
+              "clip": "victory",
+              "frame": "0",
+              "textureFrame": "395,951,240,250",
+              "textureSource": "3",
+              "fallback": "false"
+            }
+          ],
+          "events": [
+            "anger"
+          ]
+        }
+      ],
+      "screenshots": []
+    }
+  ],
+  "errors": [],
+  "passed": true
+}

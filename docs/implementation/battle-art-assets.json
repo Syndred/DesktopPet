@@ -48,5 +48,11 @@
     "Generated alpha and original pixels are preserved; no manual image edits.",
     "Sprite descriptors map real idle/attack/hit/skill actions through the shared resource parser and Pixi AnimatedSprite.",
     "Artwork is separate from third-party library license records; no MIT or CC0 provenance is asserted for generated assets."
-  ]
+  ],
+  "currentUsage": {
+    "background": "night-courtyard-v1",
+    "characters": "resources roster-v2 catalog: eight canonical companions, all five elements; source f4c210d",
+    "legacyAtlases": "retained for historical references; no new mode-specific character identity",
+    "publicRenderers": "ResourceStage with playbackKey; ResourcePortrait portrait framing"
+  }
 }

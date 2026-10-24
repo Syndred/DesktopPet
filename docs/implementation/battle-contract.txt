@@ -1,5 +1,6 @@
 灵境 battle 接入契约 · 2026-10-24
 范围遵循 scope-2d-ui-first.txt；本版仅显示 2D，原始存档、旧战报和历史文件保留。
+最新统一范围以 acceptance/2026-10-24/unified-battle-goal.txt 为准；共享入口与领域 adapter 见 battle-screen-contract.txt。
 
 入口与权限
 Runtime: apps/pc-app/runtime/features/battle/index.cjs
@@ -10,7 +11,8 @@ owner 来自 services.session 的已验证会话；不接受 renderer 指定账�
 云端登录凭证仅通过 accounts.requireRuntimeUser() 在主进程读取，不回传 renderer。
 
 公开命令
-overview（含 rules）；rules(); selectPet({petId,actionId}); startTraining({petId,enemyElement,actionId});
+overview（含 rules/opponents）；rules(); context({sessionId}); settleContext({sessionId,actionId,name?,showOnDesktop?});
+selectPet({petId,actionId}); startTraining({petId,enemyElement,actionId});
 snapshot({sessionId}); act({sessionId,actionId,action,expectedRound}); retryAction({sessionId});
 search({keyword}); invitations(); invite({targetAccount,petId,allowResend?});
 respondInvite({requestId,decision:'accept'|'reject',petId}); cancelInvite({requestId});
@@ -25,8 +27,9 @@ retryAction 重试同一个 actionId 与原回合；结束回合重试返回原�
 房间版本单调更新；进程重启后重新订阅。分页补齐中间缺口，未补齐明确 historyComplete:false。
 分页期间接到更高房间版本时继续补取新回合，以最终房间版本生成快照和完整性标记。
 Realtime 回调同时绑定当前频道对象与 roomId；已移除频道、跨房间或清理后的迟到通知不会恢复旧状态。
-训练、野外和本机领地挑战使用原本机内核，authority:'local'；好友对战必须进入真实云端房间。
-不把本机挑战或测试传输表示成远端 PvP。
+训练、野外和本机领地挑战使用原本机内核；普通好友保留真实 Supabase 房间协议。
+foundation 验证的隔离 QA profile 可使用命名空间身份和 loopback 双端 adapter，authority:'simulated'；同一内核实际执行。
+本轮允许暂缓 live 云端验收；所有模拟来源和预置前态明确记录，不作为远端成功。
 
 仅主进程提供 services.get('battle')
 getRules() -> 原 battle-runtime 的标准五行规则配置；详情使用的 companions.combatProfile 同样读取 createSession。
@@ -60,14 +63,15 @@ verifiedReceipt={ownerAccountId,id:session.id,source:'battle',eligible:true}；g
 BattlePortrait 只接受 resources.resolve 返回的 spritesheet，使用共享 ResourceStage/PixiJS。
 保留自定义 2D 资源；缺失资源使用真实内置 2D 图集，并显示加载/失败状态。
 新宠物直接使用 canonical pet.resource，不再把鱼丸改绑到独立 battle-yuwan 包。
-六形象与动作来自 resources roster-v2；旧 ID 的兼容映射由资源服务统一处理。
+八形象覆盖全部五行，动作来自 resources roster-v2；旧 ID 的兼容映射由资源服务统一处理。
 HUD/出战列表/战报小头像使用公共 ResourcePortrait 的 portrait 构图；场景使用同一资源的真实动作图集。
 只有已存旧记录或公共焰柴尚未可用的旧环境保留历史图集登记；公共 roster 就绪后不再追加独立战斗形象。
 没有 model-viewer/Three/GLB 加载和独立动画引擎。
 组件从公共 components/kit 导入：实际 Radix Tabs/Select/AppDialog/Tooltip/ScrollArea，以及 Button/Card/Input。
 动画从公共 components/motion 导入：AnimatedList/useAppMotion；路由和弹层使用公共 PageTransition/MotionPanel。
 useAppMotion 同时控制战斗动作阶段和 ResourceStage.playing，实时遵守系统与应用动画设置。
-恢复页面或重新开启动画时不重播已结算攻击；连续同类行动会重启公共动作序列，不新建画布或动画引擎。
+恢复页面或重新开启动画时不重播已结算攻击；连续同类行动通过 ResourceStage.playbackKey 重启公共动作，不新建画布。
+同版本旧 rules 的缺失 advantage/elementEffects 在会话与战报读投影补齐，保留已存数值、回合、生命/怒气、奖励和未知版本。
 训练/房间/战报的生命来自实际快照；规则说明、怒气上限与技能门槛统一读取 rules。归一生命120与成长属性的区别见 battle-rules-profile.txt。
 素材提示词、原文件、项目文件与授权来源记录在 battle-art-assets.json。
 
@@ -76,7 +80,7 @@ useAppMotion 同时控制战斗动作阶段和 ResourceStage.playing，实时遵
 增量新增每邀请房间绑定、实例 pet/resource ID、原子回合提交和服务器结算回执；沿用现有 Supabase 协议。
 edge 固定原行动、原子 RPC 提交、分页历史、校验邀请房间及 claim_battle_settlement。
 生产回滚先恢复旧 edge；保留新增表、列与奖励历史，不执行 DROP 或数据重置。
-当前配置端点返回 502/连接失败，真实双实例邀请→房间→Realtime→结算尚未验收，不以本机测试替代。
+此前21:11的端点核验为502；本轮未据此推断当前服务状态。真实双实例云端与跨设备验收按最新目标暂缓。
 
 定向验证
 node scripts/desktop/run-native-tests.cjs apps/pc-app/runtime/features/battle/battle.test.cjs
@@ -84,3 +88,5 @@ node apps/pc-app/runtime/features/battle/verify-electron.mjs
 node apps/pc-app/runtime/features/battle/verify-postgres.mjs
 PostgreSQL 验证仅使用 artifacts/battle/sql-validation 下的开发依赖 PGlite，不修改生产数据库。
 详细结果、对应提交、UI 原图与可复查截图见 status/battle.json。
+统一自验：verify-unified.mjs（--entries-only / --matrix-only / --friends-only --geometry --motion / --interrupt-only / --copy-only）。
+旧规则定向检查：node --test apps/pc-app/runtime/features/battle/tests/legacy-rules.test.cjs（1项，不重跑25 UI）。

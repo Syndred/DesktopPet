@@ -1,0 +1,81 @@
+{
+  "at": "2026-10-24T15:17:33.004Z",
+  "provenance": "simulated",
+  "scenarioId": "77721bf7-59b9-40be-a838-eade6822be63",
+  "sourceCommit": "f0463947c39299f247f8f3ff1d1368c54f6857b7",
+  "sourceDirty": "",
+  "sourceHashes": [
+    {
+      "file": "apps/pc-app/runtime/services/battle-runtime.cjs",
+      "sha256": "0c7475da1cb6a7171d8dceca57e78dcf1ee28b2e46ac70957774d0dd86673b38"
+    },
+    {
+      "file": "apps/pc-app/runtime/features/battle/service.cjs",
+      "sha256": "cf265498249b7216deef56a2071c0225c2f76656448a43c52428d2dbae406e87"
+    },
+    {
+      "file": "apps/pc-app/runtime/features/battle/presentation.cjs",
+      "sha256": "83493cda1c79fb7aee5f08ff7c5d8dd2cb3ed95b1737382db63739cd7198c90c"
+    },
+    {
+      "file": "apps/pc-app/runtime/features/battle/qa-adapter.cjs",
+      "sha256": "50abd65b644048e6b12bf8f33bfd1c876e80b7ed9b60f7a199e0580cfe9aaf0d"
+    },
+    {
+      "file": "apps/pc-app/ui/src/features/battle/BattleScreen.tsx",
+      "sha256": "e702f3ec88767875e5f774491fcb5a0ac8a5eee1ff5904f7fd33a89164776220"
+    },
+    {
+      "file": "apps/pc-app/ui/src/features/battle/BattleArena.tsx",
+      "sha256": "5f89c7e8e1ba3e32b01388df8a7055a5c6a7a5772d7898be705e316c100ff303"
+    },
+    {
+      "file": "apps/pc-app/ui/src/features/battle/BattleMoves.tsx",
+      "sha256": "e3ec8031282fb2fea3e070d26288c6d84716d41f55632162a15c39538aec043c"
+    },
+    {
+      "file": "apps/pc-app/ui/src/features/battle/useBattleAnimation.ts",
+      "sha256": "aa5bcc6a1679982ccb35891dd0f034fc3b6c81cf1a2b1d49e4dc33fce26be4c3"
+    },
+    {
+      "file": "apps/pc-app/ui/src/features/battle/useBattleSession.ts",
+      "sha256": "5c4babe197833057f082fe683050c87846ab3c4800203aea61303d5df47a030c"
+    },
+    {
+      "file": "apps/pc-app/runtime/features/resources/assets/roster-v2/catalog.json",
+      "sha256": "aa6247a9d0fd7b7b0606bc303213d556385878c0f78684101b23ce464531e5b2"
+    }
+  ],
+  "fixtures": {
+    "location": "explicit QA WindowsLocationAdapter replacement in isolated bootstrap; not physical location evidence",
+    "enemy": "explicit QA preset or declared opponent action; unchanged runtime executeRound",
+    "profiles": "two newly created and path-bound foundation QA profiles"
+  },
+  "steps": [
+    {
+      "at": "2026-10-24T15:17:33.943Z",
+      "name": "real local account and independent canonical adoptions",
+      "petCount": 6
+    },
+    {
+      "at": "2026-10-24T15:17:36.731Z",
+      "name": "friend lobby compact copy with real selected identity and pending invitation; all actions remain available",
+      "forbiddenAbsent": [
+        "搜索结果来自当前联机服务",
+        "输入账号或昵称，找到想一起切磋的朋友",
+        "和朋友的伙伴",
+        "对方进入房间后",
+        "想和你的伙伴切磋一下"
+      ],
+      "hostAccount": "battle-qa-host-1792855053072",
+      "guestAccount": "battle-qa-guest-1792855053945"
+    },
+    {
+      "at": "2026-10-24T15:17:36.732Z",
+      "name": "focused native interaction pass complete"
+    }
+  ],
+  "cases": [],
+  "errors": [],
+  "passed": true
+}

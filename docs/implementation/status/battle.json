@@ -1,26 +1,28 @@
 {
   "module": "battle",
   "branch": "codex/lingjing-battle",
-  "commit": "941d2535cee497bc21df880c9ac0607dac5a71ae",
-  "status": "unified_battle_implementation_in_progress",
-  "implementationReady": false,
+  "commit": "5ca0bc3a87cebfa8b8ce14a73929388d8a02613d",
+  "status": "unified_battle_ready_for_main_review",
+  "implementationReady": true,
   "goalComplete": false,
   "productionDeployed": false,
-  "scope": "docs/implementation/scope-2d-ui-first.txt",
+  "scope": "docs/implementation/acceptance/2026-10-24/unified-battle-goal.txt",
   "upstream": {
     "fetched": true,
-    "fetchCheckedAt": "2026-10-24T14:20:00.047Z",
+    "fetchCheckedAt": "2026-10-24T15:54:27.294Z",
     "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086",
     "originMainIsAncestor": true,
     "mergeOriginMainResult": "Already up to date"
   },
   "foundation": {
-    "mergedThrough": "bbb4395",
-    "mergeCommit": "6df4406",
+    "mergedThrough": "67d0d4d",
+    "mergeCommit": "43f7409",
     "publicKitSource": "f0af90f5a6eaf4b8e0bc686728ddc5af3e8584d9",
     "liveMotionFix": "7f0e896",
     "canonicalRosterSource": "2d0b5c8",
-    "publicPortraitSource": "1dac04e"
+    "publicPortraitSource": "1dac04e",
+    "canonicalFiveElementSource": "f4c210d",
+    "playbackKeySource": "f4c210d"
   },
   "contract": "docs/implementation/battle-contract.txt",
   "uiComponents": "docs/implementation/battle-ui-components.txt",
@@ -36,70 +38,124 @@
     "正式使用公共 shadcn/Radix 与 Motion 接口，复用资源模块 PixiJS 舞台；应用和系统动画设置均实时生效。",
     "无法联网时邀请数量显示未知，保存本地战报并说明云端账号/连接要求。",
     "修复分页同步期间房间推进仍标记旧快照完整、旧频道迟到回调覆盖新房间/恢复已清理房间两个竞态。",
-    "战斗 HUD 改为固定 8px 浅斜角；姓名/生命/怒气位于浅底内，HUD/队伍/旧战报统一公共近景头像；连续相同行动实际重播技能帧。"
+    "战斗 HUD 改为固定 8px 浅斜角；姓名/生命/怒气位于浅底内，HUD/队伍/旧战报统一公共近景头像；连续相同行动实际重播技能帧。",
+    "训练、好友、野外、领地统一 BattleScreen/useBattleSession/BattleArena/HUD/四技能/日志/useBattleAnimation；来源只保留上下文结算。",
+    "补齐五行实际资源，25 种有序对阵经真实 UI 提交，逐一核对图标、释放/受击纹理、状态与身份。",
+    "打断/闪避/水即时降怒区分事件；受击在 impact 启动，公共 playbackKey 支持同招重播且不替换画布。",
+    "五行实际规则、75 个伤害用例、9 项特性/交互已验证并发布；旧 TS 原型明确不作为桌面四入口权威。",
+    "使用 foundation 路径绑定 QA profile、命名空间账号和领域模拟定位；双端模拟邀请/房间/重启恢复/奖励使用实际内核，所有证据标 simulated。",
+    "领地胜负均完成来源确认；野外胜利收服、重复确认/领奖的真实 SQLite 回执只读核对通过。",
+    "精简战斗与好友大厅重复文案，保留真实错误、身份、房间码、键盘、禁用原因与实际操作。",
+    "同版本旧 rules 的缺失展示元数据在共享会话/战报读路径补齐；保留旧数值与历史，单项恢复检查通过，未重跑25 UI。"
   ],
   "tests": [
     {
       "check": "现有战斗/房间/好友/schema 定向回归",
       "command": "npx vitest run tests/task-d002-pc-battle-runtime.test.ts tests/task-t103-battle-engine.test.ts tests/task-t104-realtime-room.test.ts tests/task-t202-friends-private-duel.test.ts tests/task-t206-online-duel-schema.test.ts",
-      "result": "33 passed（前一轮）；本轮涉及的房间/好友 9 项复查通过"
+      "result": "33 passed（前一轮）；本轮涉及的房间/好友 9 项复查通过",
+      "validationScope": "historical_before_unified_delivery"
     },
     {
       "check": "原生 SQLite + 实际 companions/accounts/garden",
       "command": "node scripts/desktop/run-native-tests.cjs apps/pc-app/runtime/features/battle/battle.test.cjs",
-      "result": "15 passed, 0 skipped；含 400 公式组合及实际数据库/领域适配；其中 4 项明确使用脚本传输/回调验证恢复边界，不计为真实联机验收"
+      "result": "15 passed, 0 skipped；含 400 公式组合及实际数据库/领域适配；其中 4 项明确使用脚本传输/回调验证恢复边界，不计为真实联机验收",
+      "validationScope": "historical_before_unified_delivery"
     },
     {
       "check": "嵌入式 PostgreSQL 实际执行",
       "command": "node apps/pc-app/runtime/features/battle/verify-postgres.mjs",
       "result": "passed; 原子提交、重复回执、事务回滚、参与者/宠物绑定与匿名 RPC 拒绝。未连接或部署生产 Supabase",
-      "evidence": "docs/implementation/evidence/battle/2026-10-24/postgres-evidence.json"
+      "evidence": "docs/implementation/evidence/battle/2026-10-24/postgres-evidence.json",
+      "validationScope": "historical_before_unified_delivery"
     },
     {
       "check": "真实 Windows Electron 完整点击流程",
       "command": "node apps/pc-app/runtime/features/battle/verify-electron.mjs",
       "result": "前轮 passed；训练→出招→真实进程重启恢复→终局→经验/种子/战报→重复结算。本次视觉收口未重复完整流程。",
       "evidence": "docs/implementation/evidence/battle/2026-10-24/evidence.json",
-      "validationRole": "historical_full_flow_not_repeated_in_visual_refinement"
+      "validationRole": "historical_full_flow_not_repeated_in_visual_refinement",
+      "validationScope": "historical_before_unified_delivery"
     },
     {
       "check": "公共无障碍交互",
-      "result": "passed; Radix Select 真实门户/Esc/焦点返回，Tabs 左右键切路由，禁用技能 Tooltip 可聚焦，Dialog 焦点约束/Tab/Esc/返回触发器，战报实际使用 ScrollArea"
+      "result": "passed; Radix Select 真实门户/Esc/焦点返回，Tabs 左右键切路由，禁用技能 Tooltip 可聚焦，Dialog 焦点约束/Tab/Esc/返回触发器，战报实际使用 ScrollArea",
+      "validationScope": "historical_before_unified_delivery"
     },
     {
       "check": "动画开关",
       "result": "passed; 应用关闭与系统 reduced motion 均让两角色停止帧变化；解码截图逐像素比较，仅容许 GPU 通道 1/255 舍入差",
-      "evidence": "docs/implementation/evidence/battle/2026-10-24/motion-evidence.json"
+      "evidence": "docs/implementation/evidence/battle/2026-10-24/motion-evidence.json",
+      "validationScope": "historical_before_unified_delivery"
     },
     {
       "check": "邀请不可用状态",
       "result": "passed; 实际 Electron 本地账号提示云端登录，邀请状态为未知，不宣称 0 邀请",
-      "evidence": "docs/implementation/evidence/battle/2026-10-24/friends-capture.json"
+      "evidence": "docs/implementation/evidence/battle/2026-10-24/friends-capture.json",
+      "validationScope": "historical_before_unified_delivery"
     },
     {
       "check": "UI 类型、功能 lint、正式打包",
-      "result": "npm run typecheck:ui; npx eslint apps/pc-app/ui/src/features/battle --ext .ts,.tsx; npm run build:pc 均通过。构建仍提示公共 bundle >500kB，与功能验证分开记录"
+      "result": "npm run typecheck:ui; npx eslint apps/pc-app/ui/src/features/battle --ext .ts,.tsx; npm run build:pc 均通过。构建仍提示公共 bundle >500kB，与功能验证分开记录",
+      "validationScope": "historical_before_unified_delivery"
     },
     {
       "check": "上游最新代码",
-      "result": "git fetch origin 成功，origin/main 已是 HEAD 祖先，合入检查 Already up to date"
+      "result": "git fetch origin 成功，origin/main 已是 HEAD 祖先，合入检查 Already up to date",
+      "validationScope": "historical_before_unified_delivery"
     },
     {
       "check": "同步与断线恢复竞态",
       "result": "passed；已先复现分页快照滞后和旧频道回调覆盖两个失败，再修复；新增 4 项定向检查",
-      "evidence": "docs/implementation/evidence/battle/2026-10-24/network-recovery.json"
+      "evidence": "docs/implementation/evidence/battle/2026-10-24/network-recovery.json",
+      "validationScope": "historical_before_unified_delivery"
     },
     {
       "check": "HUD、技能卡、公共头像定向原生窗口复查",
       "command": "node apps/pc-app/runtime/features/battle/verify-electron.mjs --visual-only",
       "result": "passed；1280×846/1440×900 CSS（DPI1.25 原生窗口舍入），HUD 浅底安全区、6 处近景头像、4 卡布局/选中/hover/焦点/真实禁用提示、连续技能双帧、HP124/120 权威配置；renderer pageerror 为零。未重跑整链或云端验收。",
-      "evidence": "docs/implementation/evidence/battle/2026-10-24/visual-audit/visual-recheck.json"
+      "evidence": "docs/implementation/evidence/battle/2026-10-24/visual-audit/visual-recheck.json",
+      "validationScope": "historical_before_unified_delivery"
     },
     {
       "check": "旧真实战报头像兼容",
       "command": "node apps/pc-app/runtime/features/battle/verify-report-portraits.mjs <targeted-application> <cloned-isolated-profile> <real-report-id>",
       "result": "passed；11 回合真实历史战报的四处头像均用公共 portrait 构图；读取前后报告/奖励相同。原始隔离测试档未操作，未重新结算。",
-      "evidence": "docs/implementation/evidence/battle/2026-10-24/visual-audit/report-portraits.json"
+      "evidence": "docs/implementation/evidence/battle/2026-10-24/visual-audit/report-portraits.json",
+      "validationScope": "historical_before_unified_delivery"
+    },
+    {
+      "check": "统一战场真实 Electron 自验",
+      "command": "node apps/pc-app/runtime/features/battle/verify-unified.mjs --entries-only",
+      "validationScope": "current_unified_delivery",
+      "result": "passed；四模式共享同一呈现/控制器；25 UI 对阵；领地胜负/收服幂等；双端模拟重启/唯一回合；实际纹理与连续动作；动画关闭立即终态并解锁；1280/1440；文案清单",
+      "evidence": "docs/implementation/evidence/battle/2026-10-24/unified/manifest.json",
+      "commands": [
+        "node apps/pc-app/runtime/features/battle/verify-unified.mjs --entries-only",
+        "node apps/pc-app/runtime/features/battle/verify-unified.mjs --matrix-only",
+        "node apps/pc-app/runtime/features/battle/verify-unified.mjs --friends-only --geometry --motion",
+        "node apps/pc-app/runtime/features/battle/verify-unified.mjs --interrupt-only",
+        "node apps/pc-app/runtime/features/battle/verify-unified.mjs --copy-only"
+      ]
+    },
+    {
+      "check": "五行权威矩阵",
+      "command": "node apps/pc-app/runtime/features/battle/verify-rules.mjs",
+      "validationScope": "current_rules_baseline",
+      "result": "25 ordered pairs × 3 actions = 75 damage checks, 9 traits/interactions, 0 failures; real runtime engine, no remote service claim",
+      "evidence": "docs/implementation/evidence/battle/2026-10-24/unified/rules/evidence.json"
+    },
+    {
+      "check": "独立 SQLite 回执只读核对",
+      "validationScope": "current_unified_delivery",
+      "result": "5 个新 QA profile，34 个真实会话/战报；5 个终局奖励回执、1 次收服、2 个已确认领地胜负；25 个矩阵离开战报无奖励。未查询账号秘密字段。",
+      "evidence": "docs/implementation/evidence/battle/2026-10-24/unified/sqlite-readback.json"
+    },
+    {
+      "check": "同版本旧 rules 恢复展示",
+      "command": "node --test apps/pc-app/runtime/features/battle/tests/legacy-rules.test.cjs",
+      "validationScope": "legacy_read_projection_followup",
+      "result": "1 passed, 0 failed; preserved saved numbers, rounds, HP, anger, reward; unknown version unchanged; no engine/store writes",
+      "evidence": "docs/implementation/evidence/battle/2026-10-24/unified/legacy-rules-readback.json"
     }
   ],
   "openSource": [
@@ -208,19 +264,19 @@
     }
   ],
   "uiComparison": {
-    "review": "docs/implementation/evidence/battle/2026-10-24/visual-audit/README.txt",
+    "review": "docs/implementation/evidence/battle/2026-10-24/unified/README.txt",
     "mappings": [
       {
         "design": "docs/design/2026-10-24/full-ui/02-exploration-and-battle.png",
         "area": "03 对战中心",
-        "actual": "docs/implementation/evidence/battle/2026-10-24/visual-audit/02-live-1280.png",
+        "actual": "docs/implementation/evidence/battle/2026-10-24/unified/motion-friends/entry-training-1280.png",
         "matched": "庭院双角色、两侧状态栏、中间回合、右侧伙伴/回合记录、底部四行动卡、浅蓝选中线及平面按钮",
-        "wide": "docs/implementation/evidence/battle/2026-10-24/visual-audit/02-live-1440.png"
+        "wide": "docs/implementation/evidence/battle/2026-10-24/unified/motion-friends/entry-training-1440.png"
       },
       {
         "design": "docs/design/2026-10-24/full-ui/06-chat-and-friend-duels.png",
         "area": "好友约战",
-        "actual": "docs/implementation/evidence/battle/2026-10-24/04-friends.png",
+        "actual": "docs/implementation/evidence/battle/2026-10-24/unified/copy/friends-compact-invitation.png",
         "matched": "账号搜索、对方信息、我方独立出战宠物、待处理/已发邀请与房间码操作"
       },
       {
@@ -231,11 +287,8 @@
       }
     ],
     "remainingDifferences": [
-      "六个角色使用公共 canonical 2D 素材；庭院和可播放动作的绘制细节与概念画不逐像素相同。",
-      "好友页呈现实际账号状态；服务不可用或本地账号未云端登录时，不填样例联系人、在线灯或邀请数量。",
-      "保留原规则的免费闪避、真实怒气门槛与 20/5 经验；没有添加样例倒计时或技能冷却。",
-      "旧战报保留当时的元素、回合与结算快照；本轮仅更新头像显示，长回合记录可滚动访问。",
-      "主会话在 foundation 集成构建后独立操作四技能及最终图稿验收仍待进行。"
+      "共享布局和操作已经统一；最终按批准02板的综合视觉审校由主会话执行。",
+      "角色使用实际可动画的八个原创 canonical 2D 资源，场景状态取真实规则；示例数值不覆盖原内核。"
     ]
   },
   "twoDOnly": {
@@ -258,18 +311,16 @@
     "docs/implementation/evidence/battle/2026-10-24/cloud-reachability-2111.json",
     "docs/implementation/evidence/battle/2026-10-24/visual-audit/manifest.json",
     "docs/implementation/evidence/battle/2026-10-24/visual-audit/visual-recheck.json",
-    "docs/implementation/evidence/battle/2026-10-24/visual-audit/report-portraits.json"
+    "docs/implementation/evidence/battle/2026-10-24/visual-audit/report-portraits.json",
+    "docs/implementation/evidence/battle/2026-10-24/unified/manifest.json",
+    "docs/implementation/evidence/battle/2026-10-24/unified/sqlite-readback.json"
   ],
   "realIncomplete": [
-    "最近一次云端核验为 2026-10-24 21:11（Asia/Shanghai），实际配置端点 OPTIONS 返回 502；本轮为 UI 定向检查，未再次探测服务。真实双实例邀请→接受→房间→Realtime→结算仍未验收。",
-    "本会话没有部署增量 Supabase 迁移或 duel-online 更新；服务不可用时也无法核实当前服务器版本。需按 scope-2d-ui-first.txt 审核云端变更，不自动执行生产发布。",
-    "跨设备奖励与账号同步的最终收敛仍需服务恢复后的实际双端核对；稳定云端 actionId、奖励回执及本机备份账本保护不能替代该验收。"
+    "主会话统一构建的独立四入口与最终视觉验收尚待进行；模块自验通过不等于全目标最终完成。",
+    "真实云端双端好友、生产服务/迁移版本与跨设备收敛按最新用户目标暂缓；没有把本轮模拟证据写成 live 成功。"
   ],
   "integrationDependencies": [
-    "foundation 统一合并、打包与最终集成回归；无需八功能各自重复全量测试",
-    "需要当前 companions/resources/accounts/garden 同库适配和公共 useAppMotion（含 7f0e896 实时系统设置修复）",
-    "审核后先部署 infra/supabase/migrations/20261024_lingjing_battle_atomic_rounds.sql，再发布更新的 duel-online",
-    "服务恢复并具备两个隔离的真实云端账号后，完成好友双端联机与跨设备结算验收"
+    "foundation 合并本轮提交，进行同一最终构建的逐模块独立验收；发现具体问题后由原会话返工自验。"
   ],
   "policy": "仅在独立 battle 工作树交付；根 manifests/config/共享 kit 的变动来自 foundation 合并。未新建会话、未发消息给其他会话、未操作真实用户个人目录、未删除历史数据、未部署生产。目标保持未完成，绝不把本机或嵌入式 SQL 验证当成真实好友联机成功。",
   "blockedAudit": {
@@ -282,7 +333,8 @@
     "goalStatusConfirmedByTool": true,
     "confirmedAt": "2026-10-24T13:12:27Z",
     "evidence": "docs/implementation/evidence/battle/2026-10-24/cloud-reachability-2111.json",
-    "note": "Completion is not claimed. All delivered code, local verification and unresolved cloud acceptance remain preserved."
+    "note": "Completion is not claimed. All delivered code, local verification and unresolved cloud acceptance remain preserved.",
+    "applicability": "Historical original cloud goal. Latest user scope explicitly defers live cloud; not a blocker for this QA delivery."
   },
   "completionAudit": [
     {
@@ -316,13 +368,13 @@
   "uiAudit": {
     "source": "docs/implementation/acceptance/2026-10-24/visual-audit.txt",
     "auditCommit": "9915684",
-    "implementationCommit": "941d2535cee497bc21df880c9ac0607dac5a71ae",
-    "phase": "Targeted HUD and portrait verification passed; ready for foundation integration",
+    "implementationCommit": "5ca0bc3a87cebfa8b8ce14a73929388d8a02613d",
+    "phase": "Shared UI self-verification passed; same-version old-rule metadata fix awaits main sample recheck",
     "A01": "Public --font-ui/--text-title/--text-card/--weight-title and spacing tokens integrated; H1 28px/700",
     "A03": "Sidebar is one continuous panel; no default Card bottom margin stacked with grid gaps",
-    "A08": "Six canonical resources and shared portrait framing integrated through foundation 2d0b5c8 / 1dac04e; HUD, actor and party share pet resource; old reports use same aliases without rewriting stored snapshots",
-    "A09": "Fixed 8px decorative HUD cut; names, element labels, HP and anger pass native 1280/1440 light-background safety checks",
-    "A10": "Main recheck-1 accepted structure and alternate hat-cat identity. Targeted hover, keyboard focus, real disabled Tooltip and selected state passed; integrated four-action final acceptance remains with main",
+    "A08": "Eight resources / five elements / canonical portraits and action textures verified",
+    "A09": "One shared layout across four entry paths; native standard and wide geometry captured",
+    "A10": "Shared four commands retain selected, disabled and focus states; real action/interrupt/dodge/ultimate results observed",
     "A11": "Rules derive from battle-runtime; companions combatProfile also reads createSession. HP124 growth versus HP120 normalized training explicitly documented and original stats preserved",
     "sharedDependency": {
       "owner": "resources",
@@ -335,9 +387,48 @@
     "verificationScope": "Only HUD, command interaction, canonical portraits and normalized-HP contract; no repeated full regression",
     "finalVisualAcceptance": false,
     "targetedVisualVerification": "passed",
-    "evidence": "docs/implementation/evidence/battle/2026-10-24/visual-audit/manifest.json",
+    "evidence": "docs/implementation/evidence/battle/2026-10-24/unified/manifest.json",
     "pendingAcceptance": "Main foundation integrated four-action check and final visual review; original online closure remains unverified"
   },
-  "integrationReady": false,
-  "updatedAt": "2026-10-24T14:20:00.047Z"
+  "integrationReady": true,
+  "updatedAt": "2026-10-24T15:51:12.390Z",
+  "baseScope": "docs/implementation/scope-2d-ui-first.txt",
+  "unifiedBattle": {
+    "goal": "docs/implementation/acceptance/2026-10-24/unified-battle-goal.txt",
+    "codeCommit": "5ca0bc3a87cebfa8b8ce14a73929388d8a02613d",
+    "contract": "docs/implementation/battle-screen-contract.txt",
+    "rules": "docs/implementation/battle-five-elements.txt",
+    "evidence": "docs/implementation/evidence/battle/2026-10-24/unified/manifest.json",
+    "selfAcceptance": "passed",
+    "mainAcceptance": "Fresh integrated checks reported passed by main; exact old-save sample after this projection-only patch remains with main",
+    "U01": "Four entry paths use BattleScreen -> BattleArena, CombatantStatus, BattleMoves and the same session/animation hooks",
+    "U02": "Eight actual canonical companions cover all five elements; per-pair resource and element identity verified",
+    "U03": "75 engine damage checks, 9 feature/interaction checks and 25 real UI pairings; current runtime remains authority",
+    "U04": "Real windup/release/hit/effect/rest textures; interrupt waits for impact; same action replays without canvas replacement; motion policy verified",
+    "U05": "Live descriptions/tutorials and five specified friend-lobby copies removed; controls/errors/identity/room code retained",
+    "U06": "Foundation namespaced QA profiles and domain QA adapters, loopback friend transport; no ordinary-save import or live-success claim",
+    "U07": "Module self-evidence and source SHAs published",
+    "U08": "Main single integrated-build final acceptance pending",
+    "legacyRulesProjectionFix": {
+      "at": "2026-10-24T15:51:12.390Z",
+      "sourceCommit": "5ca0bc3a87cebfa8b8ce14a73929388d8a02613d",
+      "command": "node --test apps/pc-app/runtime/features/battle/tests/legacy-rules.test.cjs",
+      "passed": 1,
+      "failed": 0,
+      "scope": "Pure shared read projection and actual getReport/listReports service read methods; same rules version only",
+      "checks": [
+        "metal shows 易伤 and metal→wood relation",
+        "saved numeric rules, rounds, HP, anger and reward remain unchanged",
+        "unknown version returns the original profile",
+        "no engine execution or store write"
+      ],
+      "note": "The deliberately nondefault numeric test sentinel proves preservation; production rules remain unchanged. Main rechecks its specified old Electron sample."
+    }
+  },
+  "deferredCloudPlan": [
+    "foundation 统一合并、打包与最终集成回归；无需八功能各自重复全量测试",
+    "需要当前 companions/resources/accounts/garden 同库适配和公共 useAppMotion（含 7f0e896 实时系统设置修复）",
+    "审核后先部署 infra/supabase/migrations/20261024_lingjing_battle_atomic_rounds.sql，再发布更新的 duel-online",
+    "服务恢复并具备两个隔离的真实云端账号后，完成好友双端联机与跨设备结算验收"
+  ]
 }
