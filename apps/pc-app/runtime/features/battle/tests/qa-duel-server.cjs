@@ -77,10 +77,11 @@ async function startQaDuelServer({ runId, token, directory }) {
     const role = owned(room, user);
     if (op === 'get_room') return { room, rounds: state.rounds[room.id].filter(round => !input.beforeRound || round.round_no < input.beforeRound).slice(-(input.roundsLimit || 50)) };
     if (op === 'qa_set_state') {
-      if (room.current_round !== 1 || input.preset !== 'charged') reject('QA_PRESET_INVALID', '仅支持未出招的场景');
+      const presets = { charged: [85,50,100,30], finisher: [120,50,12,0], defending: [12,0,120,50] };
+      if (room.current_round !== 1 || !presets[input.preset]) reject('QA_PRESET_INVALID', '仅支持未出招的场景');
       const peer = role === 'host' ? 'guest' : 'host';
-      room[`${role}_hp`] = 85; room[`${role}_anger`] = 50; room[`${peer}_hp`] = 100; room[`${peer}_anger`] = 30;
-      room.qaPreset = 'charged'; room.updated_at = new Date().toISOString(); return { room };
+      [room[`${role}_hp`],room[`${role}_anger`],room[`${peer}_hp`],room[`${peer}_anger`]]=presets[input.preset];
+      room.qaPreset = input.preset; room.updated_at = new Date().toISOString(); return { room };
     }
     if (op === 'submit_action') {
       const prior = state.rounds[room.id].find(value => value.round_no === input.roundNo);
