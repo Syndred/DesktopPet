@@ -30,6 +30,18 @@
     {
       "command": "shared typography check",
       "result": "30 actual native route/size cases passed; this is only A01-A03 verification"
+    },
+    {
+      "command": "qa-scenario.test.cjs",
+      "result": "4 passed; explicit opt-in, ordinary-profile rejection, cross-profile/legacy-store isolation, restart descriptor"
+    },
+    {
+      "command": "qa-profile-isolation.mjs",
+      "result": "Actual production Electron: ordinary startup has no QA flag; explicit QA tooltip; IPC cannot enable QA; account restores in same independent profile"
+    },
+    {
+      "command": "garden/cloud.test.mjs after final incoming module merge",
+      "result": "11 passed on local HTTP + PostgreSQL WASM; not a live deployed service"
     }
   ],
   "evidence": [
@@ -56,7 +68,7 @@
     "Module self-review, main chat independent review, one final integrated acceptance and new portable package"
   ],
   "dataPolicy": "Original JSON/history retained with one-time backup before opening; one SQLite connection and transactional migration ledger; no destructive production migration or production release",
-  "updatedAt": "2026-10-24T14:38:43.574Z",
+  "updatedAt": "2026-10-24T14:40:47.762Z",
   "integratedModules": [
     "accounts",
     "resources",
@@ -110,7 +122,9 @@
     ],
     "matrixPairs": 25,
     "liveCloudDeferred": true,
-    "simulationRequiresIsolatedProfile": true
+    "simulationRequiresIsolatedProfile": true,
+    "sharedBattleContract": "docs/implementation/unified-battle-contract.txt",
+    "acceptance": "docs/implementation/acceptance/2026-10-24/unified-battle-goal.txt"
   },
   "previousPortable": {
     "status": "historical-stage-only-superseded-by-unified-battle-scope",
@@ -124,5 +138,17 @@
   "deferredExternal": [
     "Live cloud friend/sync/territory service and real two-device readback",
     "Precise physical location and live AI provider credentials"
-  ]
+  ],
+  "qaIsolation": {
+    "source": "4c05172",
+    "descriptor": {
+      "id": "unified-battle",
+      "provenance": "simulated",
+      "isolated": true
+    },
+    "normalStartupUnaffected": true,
+    "realElectronRestartPassed": true,
+    "evidence": "docs/implementation/evidence/foundation/qa-isolation/evidence.json",
+    "adapterFlows": "pending battle/discovery/garden shared contract implementation; isolation itself does not simulate a transport"
+  }
 }
