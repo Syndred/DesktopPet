@@ -11,6 +11,7 @@ class ResourcesService {
     this.storageRoot = path.resolve(storageRoot);
     this.legacyModelsDir = path.resolve(legacyModelsDir);
     this.starterManifest = starterManifest;
+    this.importTail = Promise.resolve();
   }
   owner(value) { if (typeof value !== 'string' || !value.trim() || value.length > 200) fail('AUTH_REQUIRED', '请先选择本机存档或登录账号'); return value; }
   async seed() {
@@ -51,19 +52,45 @@ class ResourcesService {
     return Promise.all(this.repository.list(owner).map(resource => this.withAvailability(owner, resource)));
   }
   async get(owner, id) { this.owner(owner); return this.withAvailability(owner, this.repository.get(owner, id)); }
-  async importFile(owner, filePath, metadata = {}) {
+  /** Synchronous adapters for callers already inside the shared SQLite transaction. */
+  getRecord(owner, id) { this.owner(owner); return this.repository.get(owner, id); }
+  resolveLegacyReference(owner, reference) {
+    this.owner(owner);
+    if (typeof reference !== 'string') return null;
+    const value = reference.replaceAll('\\', '/').toLowerCase();
+    return this.repository.list(owner).find(resource => resource.id.toLowerCase() === value || resource.legacyModel?.toLowerCase() === value || (resource.origin === 'legacy' && resource.entryAsset.toLowerCase() === value)) ?? null;
+  }
+  importFile(owner, filePath, metadata = {}) {
+    const operation = this.importTail.then(() => this.importValidatedFile(owner, filePath, metadata));
+    this.importTail = operation.catch(() => {});
+    return operation;
+  }
+  async importValidatedFile(owner, filePath, metadata = {}) {
     this.owner(owner);
     // Parse all referenced files before creating a managed directory or touching the database.
     const parsed = await parseCharacterFile(filePath, metadata);
     const known = this.repository.findGlobalHash(parsed.resource.contentHash);
-    if (known?.provenance.status === 'recorded') {
+    if (known && ['recorded', 'project-original'].includes(known.provenance.status)) {
       const supplied = Object.fromEntries(Object.entries(metadata).filter(([, value]) => typeof value === 'string' && value.trim()));
-      parsed.resource.provenance = provenance({ ...known.provenance, ...supplied }, Object.keys(supplied).length ? 'unverified' : 'recorded');
+      parsed.resource.provenance = provenance({ ...known.provenance, ...supplied }, Object.keys(supplied).length ? 'unverified' : known.provenance.status);
       parsed.resource.warnings = parsed.resource.warnings.filter(warning => warning !== '素材许可未确认，请补充作者与许可记录');
+      if (/\.(glb|gltf)$/i.test(parsed.sourceFilename)) parsed.resource.name = known.name;
     }
     const duplicate = this.repository.findHash(owner, parsed.resource.contentHash);
     const date = new Date().toISOString();
     if (duplicate) {
+      // Re-importing a complete original repairs missing managed copies while retaining IDs and settings.
+      for (const [key, bytes] of parsed.files) {
+        const destination = this.repository.file(owner, duplicate.id, key);
+        if (!isWithin(this.storageRoot, destination)) fail('UNSAFE_PATH', '原有资源存储目录无效');
+        if (await fs.access(destination).then(() => false, () => true)) {
+          await fs.mkdir(path.dirname(destination), { recursive: true });
+          const parent = await fs.realpath(path.dirname(destination));
+          const root = await fs.realpath(this.storageRoot);
+          if (!isWithin(root, parent)) fail('UNSAFE_PATH', '资源目录已变更');
+          await fs.writeFile(destination, bytes, { flag: 'wx' });
+        }
+      }
       this.repository.recordImport(owner, { ...duplicate, provenance: parsed.resource.provenance }, parsed.sourceFilename, randomUUID(), date);
       return { resource: await this.withAvailability(owner, duplicate), duplicate: true };
     }
@@ -107,6 +134,20 @@ class ResourcesService {
     const display = { ...resource.calibration[context] };
     if (request.facing === 'left') display.mirrorX = !display.mirrorX;
     return { resource, petId: request.petId, context, calibration: display, ...resolveAction(resource, request.action) };
+  }
+  /** Companion native-window adapter, retaining registered URLs instead of leaking local file paths. */
+  async resolveForPet(owner, pet) {
+    if (this.ready) await this.ready;
+    if (!pet || (pet.ownerAccountId && pet.ownerAccountId !== owner)) fail('RESOURCE_NOT_FOUND', '该伙伴不属于当前账号');
+    const behavior = pet.desktop?.behavior;
+    const action = behavior === 'sleep' ? 'sleep' : ['wander', 'follow'].includes(behavior) ? 'walk' : 'idle';
+    const display = await this.resolve(owner, { resourceId: pet.resource?.resourceId, petId: pet.petId, context: 'desktop', action });
+    if (display.resource.availability !== 'ready') return null;
+    return {
+      kind: display.resource.kind === 'model3d' ? 'model' : 'spritesheet',
+      url: `lingjing-resource://asset/${encodeURIComponent(display.resource.id)}/${display.resource.entryAsset.split('/').map(encodeURIComponent).join('/')}`,
+      sheet: display.resource.sheet, clip: display.clip, calibration: display.calibration, resourceRevision: display.resource.revision,
+    };
   }
   async assetFile(owner, id, key) {
     this.owner(owner); safeRelative(key);

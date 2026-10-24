@@ -65,6 +65,8 @@ test('one resource resolves independently for multiple pet IDs with durable owne
   assert.equal((await service.get('owner-b', id)).calibration.desktop.scale, 1);
   const reopened = new ResourcesService({ db, storageRoot: path.join(root, 'managed') });
   assert.equal((await reopened.get('owner-a', id)).calibration.desktop.verticalOffset, -0.12);
+  const native = await service.resolveForPet('owner-a', { petId: 'native-fish', ownerAccountId: 'owner-a', resource: { resourceId: id }, desktop: { behavior: 'sleep' } });
+  assert.match(native.url, /^lingjing-resource:\/\/asset\//); assert.equal(native.url.includes('file:'), false); assert.equal(native.clip.name, 'sleep');
   await assert.rejects(service.save('owner-a', { resourceId: id, expectedRevision: 0, calibration, actions: source.actions }), error => error.code === 'REVISION_CONFLICT' && error.details.revision === 1);
 });
 test('legacy calibration migration is non-destructive, per-owner and never overwrites saved preferences', async () => {
@@ -111,4 +113,13 @@ test('missing managed files are reported without deleting the record or import h
   assert.equal((await service.get('missing-owner', imported.resource.id)).availability, 'missing');
   assert.equal(db.prepare('SELECT count(*) AS n FROM lingjing_resource_imports WHERE resource_id=?').get(imported.resource.id).n, 1);
   assert.equal(new ResourcesRepository(db).get('missing-owner', imported.resource.id).id, imported.resource.id);
+  const repaired = await service.importFile('missing-owner', path.join(fishDir, 'character.json'));
+  assert.equal(repaired.resource.id, imported.resource.id); assert.equal(repaired.duplicate, true); assert.equal(repaired.resource.availability, 'ready');
+  assert.equal(db.prepare('SELECT count(*) AS n FROM lingjing_resource_imports WHERE resource_id=?').get(imported.resource.id).n, 2);
+});
+test('concurrent imports share one resource and retain every successful import receipt', async () => {
+  const imports = await Promise.all(Array.from({ length: 3 }, () => service.importFile('concurrent-owner', path.join(fishDir, 'character.json'))));
+  assert.equal(new Set(imports.map(result => result.resource.id)).size, 1);
+  assert.equal(imports.filter(result => !result.duplicate).length, 1);
+  assert.equal(db.prepare('SELECT count(*) AS n FROM lingjing_resource_imports WHERE owner_account_id=?').get('concurrent-owner').n, 3);
 });

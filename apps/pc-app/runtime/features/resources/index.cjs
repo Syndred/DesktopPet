@@ -66,6 +66,7 @@ function register(services) {
   const { dialog, protocol, BrowserWindow } = require('electron');
   const service = new ResourcesService({ db: services.db, storageRoot: path.join(services.paths.userData, 'character-resources'), legacyModelsDir: path.join(services.paths.assets, 'models') });
   const ready = service.seed();
+  service.ready = ready;
   // Commands surface seed errors; keep a failed seed from becoming an unhandled rejection.
   void ready.catch(() => {});
   services.provide('resources', service);
