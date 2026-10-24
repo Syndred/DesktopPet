@@ -10,7 +10,7 @@ owner 来自 services.session 的已验证会话；不接受 renderer 指定账�
 云端登录凭证仅通过 accounts.requireRuntimeUser() 在主进程读取，不回传 renderer。
 
 公开命令
-overview; selectPet({petId,actionId}); startTraining({petId,enemyElement,actionId});
+overview（含 rules）；rules(); selectPet({petId,actionId}); startTraining({petId,enemyElement,actionId});
 snapshot({sessionId}); act({sessionId,actionId,action,expectedRound}); retryAction({sessionId});
 search({keyword}); invitations(); invite({targetAccount,petId,allowResend?});
 respondInvite({requestId,decision:'accept'|'reject',petId}); cancelInvite({requestId});
@@ -29,6 +29,7 @@ Realtime 回调同时绑定当前频道对象与 roomId；已移除频道、跨�
 不把本机挑战或测试传输表示成远端 PvP。
 
 仅主进程提供 services.get('battle')
+getRules() -> 原 battle-runtime 的标准五行规则配置；详情使用的 companions.combatProfile 同样读取 createSession。
 beginWildChallenge({ownerAccountId,petId,actionId,challenge:{id,opponent:{petId,petName,element,level?,resourceRef?},...provenance}})
 beginTerritoryChallenge(同上，challenge.territoryId 推荐提供)
 getOutcome({ownerAccountId,sessionId}) -> {session,won,settled}
@@ -58,11 +59,16 @@ verifiedReceipt={ownerAccountId,id:session.id,source:'battle',eligible:true}；g
 2D 资源与界面
 BattlePortrait 只接受 resources.resolve 返回的 spritesheet，使用共享 ResourceStage/PixiJS。
 保留自定义 2D 资源；缺失资源使用真实内置 2D 图集，并显示加载/失败状态。
-原始鱼丸映射至同角色新增战斗动作图集；焰柴使用项目原创图集。登记复用资源 parser/repository。
+新宠物直接使用 canonical pet.resource，不再把鱼丸改绑到独立 battle-yuwan 包。
+六形象与动作来自 resources roster-v2；旧 ID 的兼容映射由资源服务统一处理。
+HUD/出战列表/战报小头像使用公共 ResourcePortrait 的 portrait 构图；场景使用同一资源的真实动作图集。
+只有已存旧记录或公共焰柴尚未可用的旧环境保留历史图集登记；公共 roster 就绪后不再追加独立战斗形象。
 没有 model-viewer/Three/GLB 加载和独立动画引擎。
 组件从公共 components/kit 导入：实际 Radix Tabs/Select/AppDialog/Tooltip/ScrollArea，以及 Button/Card/Input。
 动画从公共 components/motion 导入：AnimatedList/useAppMotion；路由和弹层使用公共 PageTransition/MotionPanel。
 useAppMotion 同时控制战斗动作阶段和 ResourceStage.playing，实时遵守系统与应用动画设置。
+恢复页面或重新开启动画时不重播已结算攻击；连续同类行动会重启公共动作序列，不新建画布或动画引擎。
+训练/房间/战报的生命来自实际快照；规则说明、怒气上限与技能门槛统一读取 rules。归一生命120与成长属性的区别见 battle-rules-profile.txt。
 素材提示词、原文件、项目文件与授权来源记录在 battle-art-assets.json。
 
 待审核的云端变更（未部署）
