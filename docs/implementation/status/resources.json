@@ -1,0 +1,22 @@
+{
+  "module": "resources",
+  "state": "in_progress_real_electron_verification",
+  "branch": "codex/lingjing-resources",
+  "implementationCommit": "63e695f",
+  "foundationBase": "8f17aec",
+  "tests": { "nativeSqliteDomain": "8/8 passed in Electron Node", "uiTypecheck": "passed", "rendererLint": "passed", "productionBuild": "passed" },
+  "runtimeEvidence": [],
+  "integrationDependencies": [
+    {
+      "owner": "foundation",
+      "requirement": "Register the resources custom scheme before app.whenReady() in runtime/main/index.ts.",
+      "exactHook": "require(join(runtime, 'features/resources/index.cjs')).registerResourceScheme(protocol)",
+      "electronImport": "protocol",
+      "reason": "PixiJS and model-viewer fetch registered keys through lingjing-resource://asset; filesystem paths are never sent to the renderer.",
+      "verificationWrapper": "apps/pc-app/runtime/features/resources/verification/bootstrap.cjs"
+    },
+    { "owner": "companions and battle", "requirement": "Render shared resources through exported ResourceStage with resource, independent petId, context and action; resolve descriptors from services.get('resources').resolve(ownerAccountId, request)." }
+  ],
+  "remaining": ["Native dialog imports, visible 2D/3D preview, save/restart persistence and independent multi-instance rendering are being verified; no completion claim yet."],
+  "preservation": "Existing 17 GLBs, catalog.json, original JSON saves and qp_model_view_calibration_v3 are read only; imports copy into UUID directories and preserve every import attempt that succeeds."
+}
