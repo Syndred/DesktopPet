@@ -1,0 +1,212 @@
+{
+  "at": "2026-10-24T15:21:16.958Z",
+  "status": "passed",
+  "sourceCommit": "d9e1b71119e3141f9f82164db26586d371835e19",
+  "sourceHashes": {
+    "apps/pc-app/runtime/features/conversations/service.cjs": "7d41b86695dde559e6d7710ab19929a6d028f143bedc067c884c5ac91e3445f1",
+    "apps/pc-app/ui/src/features/conversations/components.tsx": "58f769813e6b8883212c26cfbf3c8d0a77d5659cd9c0dca1ebba4221464d2770",
+    "apps/pc-app/ui/src/features/conversations/chat-page.tsx": "77c7a829279fe4584ca4b8cb96d252f091bcf7f40d9c0bb2d098ca0f2bff71c5",
+    "apps/pc-app/ui/src/features/conversations/settings-page.tsx": "fd0733134cb271345aa9377b6966e5b4f20318d96a1d7e86d65111abfa40d23d",
+    "apps/pc-app/ui/src/features/conversations/assistant-thread.tsx": "af6967be3056e43d8fbdfacd5f7d88ae8509d08c4194c8734f61d513c6ffb7da",
+    "apps/pc-app/ui/src/features/conversations/styles.css": "b142367b0cf267dc6429864238882b9fbb26487024e9756d116494fa20f19ca6",
+    "apps/pc-app/runtime/features/resources/assets/roster-v2/catalog.json": "8d40e857fbad95130051085b0dcff64feb099d0375260a0ab6259ea217d2da08"
+  },
+  "buildProvenance": {
+    "schemaVersion": 1,
+    "builtAt": "2026-10-24T15:20:58.234Z",
+    "sourceCommit": "d9e1b71119e3141f9f82164db26586d371835e19",
+    "sourceDirtyFiles": [],
+    "codeFingerprint": "5a5bc7711318f0aeeccf617b2872f4f619b8e1f5667dc3ae6515cc549a6499e0",
+    "compiledFingerprint": "21c7aef7d1db9288a68bc48d35c3bb202e85316124e2892e876f2d9919fbde45",
+    "codeFiles": 216,
+    "compiledFiles": 24
+  },
+  "realElectron": true,
+  "isolatedQaProfile": true,
+  "simulation": "none",
+  "modelVerification": "real local connection failure only; no mocked response and no external model",
+  "network": {
+    "attempts": 2,
+    "savedMemoryIncluded": [
+      false,
+      false
+    ]
+  },
+  "operations": [
+    "All five authoritative elements project into the real chat list/header/side portrait; every canonical resource remains distinct.",
+    "Shared tooltips expose keyboard/key/disabled reasons on focus; Tabs, Switch, memory save and persona save operate through actual IPC.",
+    "Invalid non-local HTTP address is rejected before storage; valid local configuration stores only a redacted key state.",
+    "Icon send/retry execute two real unavailable-local-endpoint attempts; no assistant reply is fabricated, memory-off excludes the saved note, and one user turn is retained.",
+    "Short destructive confirmation remains explicit; real history clear preserves the saved memory/persona and renderer key storage remains empty."
+  ],
+  "portraitRows": [
+    {
+      "petId": "pet-255fda8b-6a1d-4712-90f6-7c52697db3f0",
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "element": "water",
+      "image": "lingjing-resource://asset/builtin:lingjing-yuwan-v2/sprites.png"
+    },
+    {
+      "petId": "pet-bdd10ee4-9357-405b-9d44-25d7f8c301b8",
+      "resourceId": "builtin:lingjing-xiaolan-v1",
+      "element": "water",
+      "image": "lingjing-resource://asset/builtin:lingjing-xiaolan-v1/sprites.png"
+    },
+    {
+      "petId": "pet-6ca44fbf-14fb-4575-a4b8-7eca4aa9b9e6",
+      "resourceId": "builtin:lingjing-fantuan-v1",
+      "element": "water",
+      "image": "lingjing-resource://asset/builtin:lingjing-fantuan-v1/sprites.png"
+    },
+    {
+      "petId": "pet-44f78fe5-430b-4c4c-ac95-63a655ccc363",
+      "resourceId": "builtin:lingjing-shiba-v2",
+      "element": "fire",
+      "image": "lingjing-resource://asset/builtin:lingjing-shiba-v2/sprites.png"
+    },
+    {
+      "petId": "pet-64bbe7fd-f11d-4ecc-afc5-c31cf9123966",
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "element": "metal",
+      "image": "lingjing-resource://asset/builtin:lingjing-hatcat-v1/sprites.png"
+    },
+    {
+      "petId": "pet-aa040941-d9e8-4286-962c-e5b5390b3c8e",
+      "resourceId": "builtin:lingjing-xiaohu-v1",
+      "element": "water",
+      "image": "lingjing-resource://asset/builtin:lingjing-xiaohu-v1/sprites.png"
+    },
+    {
+      "petId": "pet-22c73318-5650-4fa4-add2-5417fcf72bf9",
+      "resourceId": "builtin:lingjing-qingya-v1",
+      "element": "wood",
+      "image": "lingjing-resource://asset/builtin:lingjing-qingya-v1/sprites.png"
+    },
+    {
+      "petId": "pet-462dc998-6e87-4a7b-a5ca-72fc90b344f5",
+      "resourceId": "builtin:lingjing-yantuan-v1",
+      "element": "earth",
+      "image": "lingjing-resource://asset/builtin:lingjing-yantuan-v1/sprites.png"
+    }
+  ],
+  "projections": [
+    {
+      "petId": "pet-64bbe7fd-f11d-4ecc-afc5-c31cf9123966",
+      "name": "礼帽喵",
+      "element": "metal",
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "image": "lingjing-resource://asset/builtin:lingjing-hatcat-v1/sprites.png"
+    },
+    {
+      "petId": "pet-22c73318-5650-4fa4-add2-5417fcf72bf9",
+      "name": "青芽",
+      "element": "wood",
+      "resourceId": "builtin:lingjing-qingya-v1",
+      "image": "lingjing-resource://asset/builtin:lingjing-qingya-v1/sprites.png"
+    },
+    {
+      "petId": "pet-255fda8b-6a1d-4712-90f6-7c52697db3f0",
+      "name": "鱼丸",
+      "element": "water",
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "image": "lingjing-resource://asset/builtin:lingjing-yuwan-v2/sprites.png"
+    },
+    {
+      "petId": "pet-44f78fe5-430b-4c4c-ac95-63a655ccc363",
+      "name": "焰柴",
+      "element": "fire",
+      "resourceId": "builtin:lingjing-shiba-v2",
+      "image": "lingjing-resource://asset/builtin:lingjing-shiba-v2/sprites.png"
+    },
+    {
+      "petId": "pet-462dc998-6e87-4a7b-a5ca-72fc90b344f5",
+      "name": "岩团",
+      "element": "earth",
+      "resourceId": "builtin:lingjing-yantuan-v1",
+      "image": "lingjing-resource://asset/builtin:lingjing-yantuan-v1/sprites.png"
+    }
+  ],
+  "sqliteReadback": {
+    "failed": {
+      "profile": {
+        "owner_account_id": "local-8981372c-ed00-4aaf-9d7c-1c21b9559674",
+        "pet_id": "pet-22c73318-5650-4fa4-add2-5417fcf72bf9",
+        "persona": "QA：青芽使用简短回复",
+        "memory_enabled": 0
+      },
+      "messages": [
+        {
+          "role": "user",
+          "content": "QA：验证真实本机连接失败状态",
+          "status": "complete",
+          "error_code": null,
+          "attempt": 1
+        },
+        {
+          "role": "assistant",
+          "content": "",
+          "status": "failed",
+          "error_code": "NETWORK_ERROR",
+          "attempt": 2
+        }
+      ],
+      "memories": [
+        {
+          "id": "c105682f-11a2-4e32-b393-ed3d5c16697c",
+          "content": "QA：仅青芽保留的记忆"
+        }
+      ],
+      "keyEncrypted": true,
+      "encryptedKeyBytes": 67
+    },
+    "cleared": {
+      "profile": {
+        "owner_account_id": "local-8981372c-ed00-4aaf-9d7c-1c21b9559674",
+        "pet_id": "pet-22c73318-5650-4fa4-add2-5417fcf72bf9",
+        "persona": "QA：青芽使用简短回复",
+        "memory_enabled": 0
+      },
+      "messages": [],
+      "memories": [
+        {
+          "id": "c105682f-11a2-4e32-b393-ed3d5c16697c",
+          "content": "QA：仅青芽保留的记忆"
+        }
+      ],
+      "keyEncrypted": true,
+      "encryptedKeyBytes": 67
+    }
+  },
+  "canonicalCount": 8,
+  "coveredElements": [
+    "metal",
+    "wood",
+    "water",
+    "fire",
+    "earth"
+  ],
+  "rendererErrors": [],
+  "settingsLayout": {
+    "headerControlCenterDifference": 4.000003814697266,
+    "horizontalOverflow": false
+  },
+  "dataReadback": {
+    "selectedPetId": "pet-22c73318-5650-4fa4-add2-5417fcf72bf9",
+    "historyAfterClear": 0,
+    "savedMemoryRetained": true,
+    "personaRetained": true,
+    "memoryEnabled": false,
+    "encryptedKeyConfigured": true,
+    "rendererKeyStorage": 0
+  },
+  "viewports": [
+    {
+      "width": 1280,
+      "height": 844
+    },
+    {
+      "width": 1440,
+      "height": 900
+    }
+  ]
+}

@@ -1,15 +1,15 @@
 {
   "feature": "conversations",
   "branch": "codex/lingjing-conversations",
-  "commit": "eb50973",
-  "status": "self_acceptance_in_progress",
+  "commit": "d9e1b71119e3141f9f82164db26586d371835e19",
+  "status": "accepted_by_main_review",
   "date": "2026-10-24",
   "timezone": "Asia/Shanghai",
   "workspace": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-conversations\\DesktopPet",
   "scopeRevision": "docs/implementation/acceptance/2026-10-24/unified-battle-goal.txt",
   "base": {
-    "foundationBaseCommit": "bbb43958d59d856b9af5d88f509025b8fd8f089a",
-    "integrationMerge": "b92366decd9fd98ffef7983f2669186077134788",
+    "foundationBaseCommit": "67d0d4df781d3eae7dd2a546b5d981107c45f737",
+    "integrationMerge": "0e7a9679d91c1a1a64b8a11c83cb5b0526f8a88a",
     "originMainFetched": true,
     "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086",
     "originMainIncludedInHistory": true,
@@ -197,7 +197,7 @@
       "shared MotionPanel",
       "shell PageTransition"
     ],
-    "character": "companions/CompanionPortrait -> resources/ResourceStage -> PixiJS",
+    "character": "Static ResourcePortrait framing=portrait; completed reply reaction uses CompanionPortrait -> ResourceStage -> PixiJS",
     "interactionTest": "apps/pc-app/runtime/features/conversations/tests/electron-flow.mjs",
     "rootDependencyOwner": "foundation",
     "requiredDependenciesManifest": "apps/pc-app/runtime/features/conversations/dependencies.json",
@@ -226,11 +226,13 @@
       "记忆为手动保存；未提供图片附件/语音假按钮。表情选择可实际输入。",
       "窗口尺寸/Windows 缩放不同，AI 设置较长区域纵向滚动，980x750 无横向溢出。"
     ],
-    "currentVisualEvidence": "docs/implementation/evidence/conversations/portrait-2026-10-24/index.html",
+    "currentVisualEvidence": "docs/implementation/evidence/conversations/unified-2026-10-24/index.html",
     "latestEmptyHistoryScreenshots": [
-      "docs/implementation/evidence/conversations/audit-2026-10-24/chat-shiba.png",
-      "docs/implementation/evidence/conversations/audit-2026-10-24/ai-settings-shiba.png",
-      "docs/implementation/evidence/conversations/audit-2026-10-24/chat-yuwan.png"
+      "docs/implementation/evidence/conversations/unified-2026-10-24/chat-metal.png",
+      "docs/implementation/evidence/conversations/unified-2026-10-24/chat-wood.png",
+      "docs/implementation/evidence/conversations/unified-2026-10-24/chat-water.png",
+      "docs/implementation/evidence/conversations/unified-2026-10-24/chat-fire.png",
+      "docs/implementation/evidence/conversations/unified-2026-10-24/chat-earth.png"
     ],
     "previousProtocolScreenshotsNote": "原 ui-comparison.html 和 electron.json 保留上一轮11/12专项的功能证据；最新字体/间距/角色视觉以 audit-2026-10-24 为准。"
   },
@@ -248,11 +250,26 @@
   },
   "tests": [
     {
+      "command": "node apps/pc-app/runtime/features/conversations/tests/compact-acceptance.mjs",
+      "status": "passed",
+      "checks": 5,
+      "canonicalResources": 8,
+      "coveredElements": [
+        "metal",
+        "wood",
+        "water",
+        "fire",
+        "earth"
+      ],
+      "verifiedAtRevision": "d9e1b71119e3141f9f82164db26586d371835e19",
+      "evidence": "docs/implementation/evidence/conversations/unified-2026-10-24/evidence.json"
+    },
+    {
       "command": "node --test apps/pc-app/runtime/features/conversations/tests/runtime.test.cjs",
       "status": "passed",
-      "checks": 11,
+      "checks": 12,
       "evidence": "真实文件 SQLite + 本机 HTTP；隔离、加密、取消、重试去重、记忆删除、分页、上下文、失败、旧界面拒绝、退出落盘。",
-      "verifiedAtRevision": "c08e685"
+      "verifiedAtRevision": "eb50973"
     },
     {
       "command": "node apps/pc-app/runtime/features/conversations/tests/electron-flow.mjs",
@@ -294,12 +311,12 @@
     }
   ],
   "runtimeEvidence": {
-    "record": "docs/implementation/evidence/conversations/electron.json",
+    "record": "docs/implementation/evidence/conversations/unified-2026-10-24/evidence.json",
     "isolatedProfile": true,
     "originalUserDataUntouched": true,
-    "transport": "AI SDK 7 + explicitly local HTTP protocol fixture; not a cloud model",
-    "cloudModelTest": "pending_authorized_configuration",
-    "sourceRun": "run-1792846674986"
+    "transport": "AI SDK actual unavailable-local-endpoint failure; no response injection",
+    "cloudModelTest": "deferred_by_current_scope",
+    "sourceRun": "run-1792855266773"
   },
   "integrationDependencies": {
     "contract": "docs/implementation/foundation-contract.md",
@@ -426,7 +443,7 @@
     "doNotClaimOverallVisualPass": true
   },
   "previousImplementationCommit": "0a1722033c209d0b8190b98ff3b5f80cdc20b550",
-  "updatedAt": "2026-10-24T15:16:22.999Z",
+  "updatedAt": "2026-10-24T15:26:16.689Z",
   "portraitAudit": {
     "items": [
       "A07",
@@ -487,9 +504,9 @@
       "U05",
       "U07"
     ],
-    "status": "awaiting_foundation_five_element_merge",
+    "status": "accepted_by_main_review",
     "implementationCommit": "eb50973",
-    "foundationBase": "3db8d97",
+    "foundationBase": "67d0d4df781d3eae7dd2a546b5d981107c45f737",
     "implementation": [
       "聊天与 AI 设置使用短标题、图标、公共 Tooltip，保留空态、失败、危险操作后果、键盘焦点及禁用原因。",
       "头像与侧图统一使用当前 petId/resourceId 的 ResourcePortrait 近景；不再对鱼丸资源使用额外房间插画。",
@@ -500,15 +517,18 @@
       {
         "command": "node --test apps/pc-app/runtime/features/conversations/tests/runtime.test.cjs",
         "status": "passed",
-        "checks": 12
+        "checks": 12,
+        "verifiedAtRevision": "eb50973"
       },
       {
         "command": "npm run typecheck:ui",
-        "status": "passed"
+        "status": "passed",
+        "verifiedAtRevision": "d9e1b71119e3141f9f82164db26586d371835e19"
       },
       {
         "command": "npm run typecheck",
-        "status": "passed"
+        "status": "passed",
+        "verifiedAtRevision": "3db8d97"
       },
       {
         "command": "feature-scoped eslint",
@@ -517,19 +537,69 @@
       {
         "command": "npm run build:pc",
         "status": "passed",
-        "note": "Existing shared bundle size warning only."
+        "verifiedAtRevision": "d9e1b71119e3141f9f82164db26586d371835e19",
+        "note": "Existing bundle size warning only."
       },
       {
         "command": "node apps/pc-app/runtime/features/conversations/tests/compact-acceptance.mjs",
-        "status": "pending_canonical_wood_earth_assets"
+        "status": "passed",
+        "checks": 5,
+        "canonicalResources": 8,
+        "verifiedAtRevision": "d9e1b71119e3141f9f82164db26586d371835e19"
       }
     ],
     "remaining": [
-      "等待 foundation 合入已交付的 f4c210d / 58c3a9d，再执行已备好的 compact-acceptance.mjs；本分支不直接合入其他业务分支。",
-      "主会话独立复验。"
+      "全产品U08由主会话在最终集成构建验收；如回传本模块的具体问题，再按问题定向修正与复验。"
     ],
     "doNotClaimOverallGoalComplete": true,
     "resourceImplementationCommit": "f4c210d",
-    "resourceEvidenceCommit": "58c3a9d"
+    "resourceEvidenceCommit": "58c3a9d",
+    "headerCorrectionCommit": "7fc4ff6",
+    "compiledSourceCommit": "d9e1b71119e3141f9f82164db26586d371835e19",
+    "evidence": "docs/implementation/evidence/conversations/unified-2026-10-24/evidence.json",
+    "comparison": "docs/implementation/evidence/conversations/unified-2026-10-24/index.html",
+    "sourceRun": "run-1792855266773",
+    "canonicalResources": 8,
+    "coveredElements": [
+      "metal",
+      "wood",
+      "water",
+      "fire",
+      "earth"
+    ],
+    "realElectron": true,
+    "simulation": "none",
+    "modelVerification": "real local connection failure only; no mocked response and no external model",
+    "codeFingerprint": "5a5bc7711318f0aeeccf617b2872f4f619b8e1f5667dc3ae6515cc549a6499e0",
+    "compiledFingerprint": "21c7aef7d1db9288a68bc48d35c3bb202e85316124e2892e876f2d9919fbde45",
+    "screenshots": [
+      "docs/implementation/evidence/conversations/unified-2026-10-24/chat-metal.png",
+      "docs/implementation/evidence/conversations/unified-2026-10-24/chat-wood.png",
+      "docs/implementation/evidence/conversations/unified-2026-10-24/chat-water.png",
+      "docs/implementation/evidence/conversations/unified-2026-10-24/chat-fire.png",
+      "docs/implementation/evidence/conversations/unified-2026-10-24/chat-earth.png",
+      "docs/implementation/evidence/conversations/unified-2026-10-24/ai-compact-1280.png",
+      "docs/implementation/evidence/conversations/unified-2026-10-24/settings-disabled-hint.png",
+      "docs/implementation/evidence/conversations/unified-2026-10-24/chat-keyboard-hint.png",
+      "docs/implementation/evidence/conversations/unified-2026-10-24/chat-real-local-error.png",
+      "docs/implementation/evidence/conversations/unified-2026-10-24/chat-compact-1440.png"
+    ],
+    "operations": [
+      "All five authoritative elements project into the real chat list/header/side portrait; every canonical resource remains distinct.",
+      "Shared tooltips expose keyboard/key/disabled reasons on focus; Tabs, Switch, memory save and persona save operate through actual IPC.",
+      "Invalid non-local HTTP address is rejected before storage; valid local configuration stores only a redacted key state.",
+      "Icon send/retry execute two real unavailable-local-endpoint attempts; no assistant reply is fabricated, memory-off excludes the saved note, and one user turn is retained.",
+      "Short destructive confirmation remains explicit; real history clear preserves the saved memory/persona and renderer key storage remains empty."
+    ],
+    "sqliteReadbackIncluded": true,
+    "rendererErrors": 0,
+    "parentReview": {
+      "record": "docs/implementation/evidence/conversations/unified-2026-10-24/parent-review.json",
+      "sourceThreadId": "01a16d86-7650-7871-8e27-5b65477a126e",
+      "acceptedSourceCommit": "d9e1b71119e3141f9f82164db26586d371835e19",
+      "acceptedDeliveryCommit": "deda2f218786df3c71e869957d684165f8388af0",
+      "reviewedRun": "run-1792855135940",
+      "repeatSelfAcceptanceRequired": false
+    }
   }
 }
