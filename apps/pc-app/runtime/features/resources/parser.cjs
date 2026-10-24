@@ -54,7 +54,8 @@ function actionMap(value, clips, strict = false) {
       }
       return [action, clip];
     }
-    return [action, clips.find(clip => patterns[action].test(clip.name))?.name ?? (action === 'idle' ? clips[0]?.name ?? null : null)];
+    const preferredIdle = action === 'idle' ? clips.find(clip => /(^|[|:_])idle(?:norm)?$/i.test(clip.name)) : null;
+    return [action, preferredIdle?.name ?? clips.find(clip => patterns[action].test(clip.name))?.name ?? (action === 'idle' ? clips[0]?.name ?? null : null)];
   }));
 }
 function safeRelative(value) {
@@ -68,7 +69,9 @@ async function readBounded(filePath, max = LIMITS.file) {
   const stat = await fs.stat(filePath).catch(() => fail('MISSING_ASSET', '资源文件不存在或无法读取'));
   if (!stat.isFile()) fail('INVALID_FILE', '请选择资源文件');
   if (stat.size < 1 || stat.size > max) fail('FILE_TOO_LARGE', '资源文件为空或超过大小限制');
-  return fs.readFile(filePath);
+  const bytes = await fs.readFile(filePath);
+  if (bytes.length < 1 || bytes.length > max) fail('FILE_TOO_LARGE', '资源文件在读取时已变更或超过大小限制');
+  return bytes;
 }
 async function readPackageFile(root, relative) {
   safeRelative(relative);
@@ -112,7 +115,8 @@ function parseGlb(bytes) {
 async function parseModel(bytes, filename, loadFile) {
   const glb = /\.glb$/i.test(filename);
   const { document, binary } = glb ? parseGlb(bytes) : { document: parseJson(bytes) };
-  if (!plain(document) || !/^2\./.test(document.asset?.version) || !Array.isArray(document.scenes) || !document.scenes.length || !Array.isArray(document.nodes) || !document.nodes.length) fail('INVALID_GLTF', '模型必须包含 glTF 2.x 场景与节点');
+  if (!plain(document) || !/^2\./.test(document.asset?.version) || !Array.isArray(document.scenes) || !document.scenes.length || !Array.isArray(document.nodes) || !document.nodes.length || !Array.isArray(document.meshes) || !document.meshes.length) fail('INVALID_GLTF', '模型必须包含 glTF 2.x 场景、节点与网格');
+  for (const key of ['buffers', 'bufferViews', 'images', 'animations', 'accessors']) if (document[key] !== undefined && (!Array.isArray(document[key]) || document[key].some(item => !plain(item)))) fail('INVALID_GLTF', '模型数组结构错误');
   const bufferLengths = [];
   for (const [index, item] of (document.buffers ?? []).entries()) {
     if (!Number.isInteger(item.byteLength) || item.byteLength < 0 || item.byteLength > LIMITS.file) fail('INVALID_GLTF', '模型缓冲区长度错误');
@@ -143,7 +147,8 @@ async function parseModel(bytes, filename, loadFile) {
   }
   const names = new Set();
   const clips = (document.animations ?? []).map((item, index) => {
-    const name = text(item.name, 200) || `animation_${index}`;
+    const name = typeof item.name === 'string' && item.name.trim() ? item.name : `animation_${index}`;
+    if (name.length > 200) fail('INVALID_CLIPS', '模型动画名称过长');
     if (names.has(name)) fail('DUPLICATE_CLIP', '模型动画名称重复，请先重命名');
     names.add(name); return { name, loop: true };
   });
@@ -193,7 +198,8 @@ async function parseCharacterFile(filePath, metadata = {}) {
     files.set(filename, entryBytes);
     const result = await parseModel(entryBytes, filename, loadFile); clips = result.clips; warnings = result.warnings;
   }
-  const origin = provenance({ ...descriptor.provenance, ...metadata });
+  const suppliedMetadata = Object.fromEntries(Object.entries(metadata).filter(([, value]) => typeof value === 'string' && value.trim()));
+  const origin = provenance({ ...descriptor.provenance, ...suppliedMetadata });
   if (origin.license === '授权未确认') warnings.push('素材许可未确认，请补充作者与许可记录');
   const hash = createHash('sha256');
   for (const [key, data] of [...files.entries()].sort(([a], [b]) => a.localeCompare(b))) hash.update(key).update('\0').update(data);
