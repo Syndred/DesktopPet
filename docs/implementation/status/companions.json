@@ -2,7 +2,7 @@
   "module": "companions",
   "branch": "codex/lingjing-companions",
   "implementationCommit": "deeebe0ba5af7823c68393533adfe7e4f7317a15",
-  "status": "self-verified-awaiting-main-independent-review",
+  "status": "accepted-by-main-awaiting-final-integration",
   "unifiedBattleScope": {
     "required": [
       "U02 complete five-element roster and stable instance identity",
@@ -11,8 +11,7 @@
       "U07 real Electron self-acceptance with source SHA"
     ],
     "pending": [
-      "Main independent module acceptance",
-      "Final integrated four-mode acceptance by main/foundation"
+      "Final integrated acceptance continues in the main chat"
     ],
     "publicPresentationContract": {
       "file": "ui/src/features/battle/BattleMoves.tsx",
@@ -30,7 +29,7 @@
     "nativeVisualProof": "docs/implementation/evidence/companions/unified-2026-10-24/native/evidence.json",
     "ruleScope": "Companions consumes the actual rules and compares five UI element hints; battle/main own the complete 25-matchup numeric and four-mode acceptance."
   },
-  "updatedAt": "2026-10-24T15:45:40.491Z",
+  "updatedAt": "2026-10-24T15:49:03.414Z",
   "upstream": {
     "fetchedAgainBeforeDelivery": true,
     "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086",
@@ -200,7 +199,8 @@
     "portraitConsumer": "capture-UCPqyb: six adoption portraits at both sizes, same canonical idle frames, large preview and native full body preserved; images decoded and inspected",
     "nativeSpritePixels": "docs/implementation/evidence/companions/unified-2026-10-24/native/evidence.json: actual visible canonical canvases, 12671 wood and 12788 earth nontransparent pixels, PNGs inspected; original limit 3 and all preferences/visibility restored",
     "sharedBattlePresenter": "Live command bar and read-only companion details use getBattleMovePresentation + SkillContent; source guard confirms exactly one BattleMoves mount",
-    "sourceArchitecture": "12 passed; source guards only, not final four-mode runtime acceptance"
+    "sourceArchitecture": "12 passed; source guards only, not final four-mode runtime acceptance",
+    "mainIndependentReview": "accepted by main after independent visual and evidence readback"
   },
   "only2d": {
     "activeTemplatesAndConsumerList": "2D spritesheets only",
@@ -221,8 +221,7 @@
     "Local acceptance does not assert online AI, cloud synchronization or production deployment success"
   ],
   "remaining": [
-    "Main independent module acceptance",
-    "Final integrated four-mode acceptance by main/foundation"
+    "Final integrated acceptance continues in the main chat"
   ],
   "dataPolicy": "Only additive owner-scoped tables/raw archive; original JSON/animals/history/design files preserved; no production migration/deployment",
   "uiRefinement": {
@@ -332,5 +331,13 @@
       "sessionPersistence": "memory-only-by-QA-policy"
     },
     "architecture": "12 source guards passed; this is not four-mode runtime final acceptance"
+  },
+  "mainIndependentReview": {
+    "status": "accepted",
+    "receivedAt": "2026-10-24T15:49:03.414Z",
+    "sourceThreadId": "01a16d86-7650-7871-8e27-5b65477a126e",
+    "runtimeSourceSha": "4770aa1fd2abcca98a1986ccd0a7b38f7826049c",
+    "acceptedCodeHead": "deeebe0ba5af7823c68393533adfe7e4f7317a15",
+    "evidence": "Main independently viewed both real native sprite images, wood detail, earth skills, verification and SQLite readback; accepted canonical identity, pixels, original limit 3, restored settings/state, eight adoptions, five-element paths, 25 actions, replay and restart. No full rerun requested."
   }
 }

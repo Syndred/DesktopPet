@@ -5,7 +5,7 @@ App: Electron 36.9.5 / application 0.1.8
 Code fingerprint: 174c6ddb752052ef9c593b7b39acea245f81f44eb2250f917f3e7cb0293ef108
 Compiled fingerprint: 44991a5559b0cdf7f08f73174ce016c0cc2f0a30fa0bffd35a381ae9b2b2f5a0
 
-Author acceptance passed. Main independent review and final four-mode integration remain separate.
+Author self-acceptance and main independent module review passed. Final integrated acceptance continues in the main chat.
 
 verification.json is the acceptance index. flow-evidence.json preserves the real eight-adoption/five-instance input log and runtime state. database-readback.json independently reads all five actual garden garrison receipts and restored pet state. architecture.json contains the twelve source-only architecture guards. ui/ contains 24 actual Electron main-window screenshots. native/ contains the two accepted real visible sprite captures and their source/settings/state evidence. images.json binds all 26 accepted PNGs by SHA256.
 

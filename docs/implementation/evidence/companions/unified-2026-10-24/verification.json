@@ -1,7 +1,7 @@
 {
   "at": "2026-10-24T15:45:40.490Z",
   "module": "companions",
-  "status": "author-self-verified-awaiting-main-independent-review",
+  "status": "accepted-by-main-awaiting-final-integration",
   "runtimeSourceSha": "4770aa1fd2abcca98a1986ccd0a7b38f7826049c",
   "deliveryCodeHead": "deeebe0ba5af7823c68393533adfe7e4f7317a15",
   "productCodeUnchangedSinceRuntimeProof": true,
@@ -102,12 +102,19 @@
     "realGeographicAcceptance": false
   },
   "remaining": [
-    "Main independent module acceptance",
-    "Final integrated four-mode acceptance by main/foundation"
+    "Final integrated acceptance continues in the main chat"
   ],
   "upstream": {
     "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086",
     "lastFetchUtc": "2026-10-24T15:47:21.402Z",
     "missingRemoteCommits": 0
+  },
+  "mainIndependentReview": {
+    "status": "accepted",
+    "receivedAt": "2026-10-24T15:49:03.414Z",
+    "sourceThreadId": "01a16d86-7650-7871-8e27-5b65477a126e",
+    "runtimeSourceSha": "4770aa1fd2abcca98a1986ccd0a7b38f7826049c",
+    "acceptedCodeHead": "deeebe0ba5af7823c68393533adfe7e4f7317a15",
+    "evidence": "Main independently viewed both real native sprite images, wood detail, earth skills, verification and SQLite readback; accepted canonical identity, pixels, original limit 3, restored settings/state, eight adoptions, five-element paths, 25 actions, replay and restart. No full rerun requested."
   }
 }
