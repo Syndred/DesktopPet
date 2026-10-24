@@ -24,7 +24,7 @@
     "package.json",
     "!**/verify-*.mjs",
     "!**/write-evidence.mjs",
-    "!**/prepare-territory-fixture.mjs"
+    "!**/prepare-*-fixture.mjs"
   ],
   "asar": true,
   "extraFiles": [
