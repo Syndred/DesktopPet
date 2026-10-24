@@ -79,7 +79,7 @@ export function ResourceStage({ resource, petId, context = 'desktop', action = '
       if (motionBoundary) policyObserver.observe(motionBoundary, { attributes: true, attributeFilter: ['data-motion'] });
       document.addEventListener('visibilitychange', update); reduced.addEventListener('change', update);
       engine.current = { app, sprite, update }; update();
-      element.dataset.textureKey = cacheKey; element.dataset.frame = String(sprite.currentFrame);
+      element.dataset.textureKey = cacheKey; element.dataset.textureSource = String(first.source.uid); element.dataset.frame = String(sprite.currentFrame);
       destroy = () => { observer.disconnect(); policyObserver.disconnect(); document.removeEventListener('visibilitychange', update); reduced.removeEventListener('change', update); sprite.stop(); engine.current = null; app.destroy(true, { children: true, texture: false, textureSource: false }); };
       setStatus({ state: 'ready' });
     }

@@ -1,27 +1,41 @@
-# 角色资源模块 v1
+# 2D 角色资源模块
 
-入口：`ui/src/features/resources/index.tsx` 与 `runtime/features/resources/index.cjs`。模块按 foundation v1 自动注册；只使用注入的同一 SQLite 连接。
+以 `scope-2d-ui-first.txt`（d6a1ab1）为当前范围。入口为 `ui/src/features/resources/index.tsx`、`runtime/features/resources/index.cjs`；数据表使用 foundation 注入的同一 SQLite 连接。本版导入、列表、预览、动作映射、校准及资源访问只处理 2D 图集。旧 3D 实现封存在资源模块的 `legacy/`，不进入活动链路；原模型文件、历史数据库行、偏好与导入流水保留，也不迁移旧 3D localStorage 校准。
 
-`resources:list/import/save/resolve/migrate-legacy-calibration` 均经已验证账号调用。导入文件由主进程原生选择器获取，renderer 不能传入文件路径或 owner。保存需携带 `expectedRevision`；冲突返回 `REVISION_CONFLICT`，不覆盖另一窗口设置。
+## 导入与存储
 
-资源 ID 指共享形象，petId 指独立伙伴；companions 保存 resourceId，不复制模型库。事务内校验可以使用 `services.get('resources').getRecord(ownerAccountId, resourceId)`，旧形象路径可由同步 `resolveLegacyReference(ownerAccountId, legacyModel)` 映射；两者不访问磁盘、不启动其他事务。磁盘状态检查 `get/list/resolve` 是异步操作，应放在事务之外。调用方负责确认 petId 属于当前账号。
+`resources:list/import/save/resolve` 使用经过主进程验证的当前账号。导入仅由 Windows 原生文件选择器选择 JSON；renderer 不传文件路径或 owner。支持解压后的 `lingjing.character` v1 网格角色包，以及单图片的 PixiJS / TexturePacker JSON 图集。图片支持 PNG/WebP。网格数据转成标准 Spritesheet JSON；旋转帧、裁剪帧、原始尺寸和动画帧由 PixiJS `Spritesheet.parse()` 处理。
 
-UI 共用 `ResourceStage`，传入 `resource, petId, context: 'desktop'|'battle', action, facing, playing`。PixiJS 共享 Assets 纹理来源，各实例的 AnimatedSprite、帧、ticker、动作和生命周期独立。销毁实例不卸载其他实例正在使用的纹理。model-viewer 保留原有 3D 渲染能力，不添加另一套 Three.js 场景。
+项目角色示例为 `runtime/assets/illustrations/yuwan-character-v1.json` 及 `yuwan-sprites-v1.png`，使用项目图稿中的鱼丸二次元形象。旧测试鱼素材保留为历史文件，不作为新安装默认角色。常规注册由 foundation `registerBuiltinArt` 提供 `builtin:lingjing-yuwan-v1`，资源模块不另造默认角色或扫描模型目录。
 
-companions 原生窗口适配可调用 `resolveForPet(ownerAccountId, pet)`，返回既有窗口所需的 `kind,url,sheet,clip,calibration,resourceRevision`；URL 仍使用安全协议，不返回 file 路径。该方法等待首次资源扫描完成。
+网格包字段：`format:'lingjing.character', version:1, kind:'spritesheet', name, image, sheet:{width,height,columns,rows}, clips:{name:{frames,fps,loop}}, actions, calibration, provenance`。标准图集字段：`frames, meta:{image,size,scale}, animations`，可选 `character:{name,fps,actions,calibration,provenance}`。来源、作者、许可及署名随记录保存；同哈希项目素材可以沿用明确登记的来源，不将任意用户素材标为已授权。
 
-主进程 `resolve(ownerAccountId,{resourceId,petId,context,action,facing})` 返回相同资源描述、独立校准副本和实际动画选择。动作 `idle/walk/attack/hit/skill/victory/sleep` 未提供时回退映射待机或首个动画；无动画的模型显示静态姿势。两场景分别保存大小、朝向、俯仰、垂直偏移和水平翻转；每个账号的内置形象校准也分别保存。
+限制：单文件 128 MiB、总量 256 MiB、128 文件、JSON 4 MiB、图片不超过 4096² 像素且单边不超过 8192、4096 图集帧、128 动作、每动作 1024 帧、1–60 fps。拒绝绝对路径、上级目录、网络 URI、编码路径及指向包外的符号链接。完整校验后才复制到 UUID 目录并写入事务；导入串行执行。同内容重试保留资源 ID、增加流水，并可修复缺失托管副本，原文件不变。
 
-`resources:changed` 事件提供 ownerAccountId、resourceId、revision，供已登录的伙伴和战斗页面重新读取；不要把事件载荷当成账号验证。所有文件通过 `lingjing-resource://asset/<id>/<key>` 读取，主进程再次核对账号、文件登记和允许目录。绝对路径不返回 renderer。
+## 动作、显示与实例
 
-公共接线由 foundation 完成：在 app.ready 前调用 `registerResourceScheme(protocol)`；CSP 的 `img-src/media-src/connect-src` 允许 `lingjing-resource:`，`connect-src` 还需 `blob:` 以读取 GLTFLoader 的内嵌贴图，`script-src` 需 `'wasm-unsafe-eval'` 供 model-viewer 自带解码器初始化。**不需要**一般 `'unsafe-eval'`；资源舞台使用 PixiJS 的静态同步 polyfill。
+`resourceId` 标识共享形象，`petId` 标识独立伙伴。桌面和战斗分别保存 `scale, rotationDeg, verticalOffset, mirrorX, anchorX, anchorY, fps`；fps 为 0 时使用动作原始帧率。保存携带 `expectedRevision`；冲突返回 `REVISION_CONFLICT`。动作 `idle/walk/attack/hit/skill/victory/sleep` 缺失时回退映射待机或首个动画。
 
-2D 包选择解压目录内的 JSON 描述，不直接读取 ZIP。示例及原创素材在 `runtime/features/resources/assets/fat-fish/character.json`。格式为 `format: 'lingjing.character', version: 1, kind: 'spritesheet'`，附 `name,image,sheet:{width,height,columns,rows},clips:{name:{frames,fps,loop}},actions,calibration,provenance:{author,source,license,licenseUrl,attribution}`。精灵图支持 PNG/WebP，必须与网格尺寸一致。3D 包可改为 `kind:'model3d',model:'subdirectory/model.gltf'`，相对缓冲区与贴图会一起复制。也可直接导入 GLB/GLTF。
+UI 共用 `ResourceStage`，传入 `resource, petId, context, action, facing, playing, motionEnabled`。同资源共享 Pixi Assets 纹理来源和图集，各实例持有独立 Application、AnimatedSprite、播放帧和生命周期；销毁实例不卸载其他实例使用的纹理。帧率、锚点和动作直接更新 Pixi 对象，没有自制帧循环、裁图或动画引擎。DOM 的 `data-texture-source` 是实际 TextureSource UID，可核验共享来源。
 
-导入限制：单文件 128 MiB，包总量 256 MiB，最多 128 文件；JSON 4 MiB；精灵图 1600 万像素、单边 8192；动画 1–60 fps。禁止绝对路径、上级目录、编码路径、网络 URI 和指向包外的符号链接。文件先完整解析，成功后写入独立 UUID 目录及导入流水；同内容重试保留资源 ID，新增导入记录，补回缺失的托管副本。
+主进程 `resolve(owner,{resourceId,petId,context,action,facing})` 返回资源、实际动作与独立校准副本。`resolveForPet(owner,pet)` 等待资源就绪，返回 `kind:'spritesheet',url,sheet,atlas,resource,clip,calibration,resourceRevision` 供桌面窗口适配，FPS 覆盖已应用到 clip。调用方确认 petId 属于当前账号。事务内可用无磁盘访问的 `getRecord`；异步磁盘检查在事务外调用。
 
-已有 17 个 GLB 与 catalog.json 只读，台账已登记的作者/许可沿用为 recorded，不宣称重新核验授权；未知素材显示 unverified。原创鱼素材附 SVG、生成代码和独立权属说明。旧 localStorage 校准键 `qp_model_view_calibration_v3` 只读迁入当前账号尚未自定义的形象，原键保留。旧 JSON 账号、宠物、历史和用户原始资源不会被删除或重写。
+`ApplyToCompanion` 通过现有 companions 列表及 appearance CAS 命令给一个真实伙伴绑定 resourceId，不复制资源或改变其他伙伴。`resources:changed` 通知页面重新读取，事件载荷不是权限凭据。
 
-账号升级兼容读取仅依据 `account_aliases` 的已验证映射，将当前 canonical owner 与无歧义的旧 subject ID 归为同一资源访问范围。旧资源、导入流水和旧校准行保持原样；新保存使用 canonical owner，版本冲突检查仍适用。同一个 subject ID 如映射到多个 provider 的不同 owner，不会猜测归属或跨账号合并。
+## 公共 UI 与动画
 
-参考实现文档：[PixiJS 纹理](https://pixijs.com/8.x/guides/components/textures)、[model-viewer API](https://modelviewer.dev/docs/)。渲染器代码许可与角色素材许可分开记录。
+正式页拆成 ResourceLibrary、ResourceEditor、ResourceControls、ResourceStage、ApplyToCompanion 和 useResources。沿用 foundation 官方 shadcn Radix Nova 的 Tabs、Select、Slider、Switch、ScrollArea、Popover、Input 与 Button，来源及哈希见 `shadcn-source-record.json`。选择器使用 Radix Portal、键盘导航及 Esc 焦点恢复，标签页使用实际 Tabs 状态。Slider 命名 group 标明用途，thumb 范围、数值及方向键行为由 Radix 提供；公共 Slider 的 thumb 命名改进由 foundation 维护。
+
+列表用公共 AnimatedList，页面用 foundation Motion for React 的 PageTransition/AppMotionProvider。Pixi 监听系统减少动画、document visibility、playing/motionEnabled 和祖先 `data-motion` 策略，关闭动画时暂停精灵和 ticker。按钮无阴影或 hover 位移。图稿 07 下半部分保留左资源库、右预览和校准结构，按最新范围改成图集、FPS、锚点与动作配置。
+
+## 权限与数据保留
+
+文件只经 `lingjing-resource://asset/<id>/<key>` 读取，主进程再次校验账号、文件登记、扩展名和允许目录，renderer 不接收绝对文件路径。foundation 在 ready 前注册安全协议，CSP 允许该协议加载图片及连接。舞台加载 Pixi 静态 `pixi.js/unsafe-eval` 同步实现，不为 2D 放宽一般 unsafe-eval。
+
+账号升级只依据 `account_aliases` 已验证映射，把 canonical owner 和无歧义旧 subject ID 归到同一访问范围。旧资源、流水及偏好保持原 owner；新偏好写 canonical owner。subject 映射到不同 provider owner 时不猜测合并。完整安装及数据目录迁移通过登记资源键重新定位，不向 renderer 开放路径。
+
+## 验收
+
+领域检查：`node scripts/desktop/run-native-tests.cjs apps/pc-app/runtime/features/resources/verification/resources.test.cjs`，使用真实 Electron ABI SQLite、文件复制、内容哈希、CAS、账号别名及历史记录保留断言。
+
+原生导入、校准保存、双实例、动画策略、错误回执、数据库及重启证据见 `evidence/resources/` 与 `status/resources.json`。模块验收不代替 foundation 在最终整合版本中进行的桌面多伙伴和战斗完整回归。
