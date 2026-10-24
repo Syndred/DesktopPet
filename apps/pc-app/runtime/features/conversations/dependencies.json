@@ -15,7 +15,7 @@
   },
   "sharedComponents": [
     "components/ui/button",
-    "components/dialog AppDialog",
+    "components/ui/dialog + components/motion MotionPanel",
     "components/ui/tabs",
     "components/ui/select",
     "components/ui/switch",
