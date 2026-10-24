@@ -197,6 +197,21 @@ try {
   state = await until(value => value.encounters.some(item => item.battle.battleId === cancelled.id && item.status === 'cancelled'), 'shared abandon links to encounter');
   proof.cancelled = state.encounters.find(item => item.battle.battleId === cancelled.id); encounter = originalEncounter;
 
+  proof.elementWild = [];
+  for (const template of templates.filter(value => ['wood', 'earth'].includes(value.element))) {
+    let roleSession = await begin(template.templateId);
+    assert.equal(roleSession.enemy.element, template.element);
+    await size(1280, 844);
+    const view = await inspectBattle(page, { session: roleSession, screenshot: join(output, `wild-${template.element}-1280.png`) });
+    roleSession = await action(roleSession, 'element_attack');
+    proof.elementWild.push({ templateId: template.templateId, resourceId: template.resource.resourceId, element: template.element, sessionId: roleSession.id, view, actualRound: roleSession.rounds.at(-1) });
+    await leave();
+    await page.getByRole('button', { name: '返回', exact: true }).click();
+    await until(value => value.encounters.some(item => item.battle.battleId === roleSession.id && item.status === 'cancelled'), 'new canonical role preserves shared cancellation');
+  }
+  encounter = originalEncounter;
+  if (proof.elementWild.length) proof.checks.push('Canonical wood/earth also enter the actual shared wild battle, render authored resources, execute a real element action and retain cancellation');
+
   const training = await invoke('battle', 'startTraining', { petId: pet.petId, enemyElement: 'fire', actionId: randomUUID() });
   await navigate(`/battle/session/${training.id}`); proof.trainingGeometry = [];
   for (const width of [1280, 1440]) {
