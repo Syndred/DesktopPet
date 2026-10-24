@@ -26,18 +26,20 @@ const checkpoint = name => { writeFileSync(join(output, "checkpoint.json"), JSON
 async function launch() {
   application = await electron.launch({ args: [resolve(".")], env });
   const page = await application.firstWindow(); page.on("pageerror", error => errors.push(error.message));
-  await page.evaluate(() => { document.title = "灵境 · 账号验收（独立数据）"; });
-  await page.getByRole("navigation", { name: "主导航" }).waitFor();
-  await page.evaluate(() => { location.hash = "#/account"; });
+  await page.waitForLoadState("domcontentloaded");
+  await page.evaluate(() => { document.title = "灵境 · 账号验收（独立数据）"; location.hash = "#/account"; });
+  await page.locator(".ac-auth, .ac-page-heading").first().waitFor();
   return page;
 }
 async function accountLogin(page, account, secret, remember = false) {
+  await page.locator(".app-shell.is-auth").waitFor();
   await choose(page, "账号类型", "本机账号");
   await page.getByLabel("账号", { exact: true }).fill(account);
   await page.getByLabel("密码", { exact: true }).fill(secret);
   if (remember) await page.getByRole("checkbox", { name: "保持登录（系统安全存储）" }).check();
   await page.getByRole("button", { name: "登录进入 →" }).click();
   await page.getByRole("heading", { name: "把每一段陪伴，好好保存。" }).waitFor();
+  await page.locator(".app-shell:not(.is-auth)").waitFor();
 }
 async function choose(page, name, option) {
   await page.getByRole("combobox", { name, exact: true }).click();

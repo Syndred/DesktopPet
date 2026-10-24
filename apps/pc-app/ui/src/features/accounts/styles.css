@@ -60,10 +60,6 @@
 .accounts .ac-setting-row>label{display:flex;justify-content:space-between;align-items:center;gap:22px;margin-bottom:0}
 .ac-setting-row strong{font-size:13px;font-weight:600;display:block}
 .ac-setting-row small{font-size:11px;color:var(--ac-muted);display:block;margin-top:5px;font-weight:400}
-.accounts .ac-switch{appearance:none;position:relative;width:38px;height:22px;min-width:38px;border:1px solid #c8d1df;border-radius:16px;background:#d2d9e4;cursor:pointer;transition:background-color .15s}
-.ac-switch:checked{background:var(--ac-blue);border-color:var(--ac-blue)}
-.ac-switch:after{content:"";position:absolute;width:16px;height:16px;top:2px;left:2px;background:#fff;border-radius:50%}
-.ac-switch:checked:after{left:18px}
 .accounts .ac-setting-row select{width:65px;flex-shrink:0}
 .ac-settings-content .ac-card{margin-bottom:16px}
 .accounts .ac-volume{display:flex!important;justify-content:flex-end;gap:10px;align-items:center;margin:8px 0 0;font-size:11px;color:var(--ac-muted)}
@@ -78,11 +74,6 @@
 .ac-auth-scene{position:relative;overflow:hidden;padding:55px 40px;background:radial-gradient(ellipse at 20% 10%,#fffbe7 0,transparent 45%),radial-gradient(ellipse at 100% 95%,#d1e9ff,transparent 55%),linear-gradient(145deg,#e1efff,#f5f9ff 50%,#dbe7fa)}
 .accounts .ac-auth-scene h1{font-size:40px;margin:18px 0 12px}
 .ac-auth-scene>p:not(.ac-eyebrow){font-size:15px;color:#5e719d}
-.ac-brand-star{font-size:40px;color:#5279ef}
-.ac-scene-orbit{display:flex;align-items:center;justify-content:center;gap:18px;height:230px;margin-top:34px;color:#6599e1}
-.ac-scene-orbit>b{display:grid;place-items:center;border:1px solid #bfd6f3;width:150px;height:150px;border-radius:50%;background:radial-gradient(circle at 30% 25%,#fff,#e8f4ff);font-weight:400;letter-spacing:.15em;font-size:28px;flex-shrink:0}
-.ac-scene-orbit>span{font-size:28px}
-.ac-scene-orbit>i{width:28px;height:1px;background:#b9d0f1}
 .accounts .ac-scene-footer{position:absolute;bottom:32px;left:40px;font-size:12px;letter-spacing:.12em}
 .ac-auth-card{padding:32px 38px}
 .ac-segment{display:flex;border-radius:8px;overflow:hidden;background:#edf4ff}
@@ -96,7 +87,6 @@
 .accounts .ac-password>input{border:0!important;margin:0!important;min-width:0}
 .accounts .ac-password>button{background:#fcfdff;padding:8px;color:var(--ac-muted);font-size:11px;border-radius:0}
 .accounts .ac-submit{width:100%;margin-top:14px}
-.ac-modal-backdrop{position:fixed;inset:0;display:grid;place-items:center;background:#18295452;z-index:1000;padding:24px}
 .ac-modal{width:min(540px,100%);max-height:90vh;overflow:auto;background:#fff;border:1px solid #dce7f6;border-radius:15px;padding:30px}
 .ac-modal>p{margin-bottom:10px}
 .ac-loading{display:grid;place-items:center;min-height:300px;color:var(--ac-muted)}
@@ -186,3 +176,5 @@
 .accounts .ac-auth-card [data-slot=tabs-content] { margin:0; outline:0; }
 .accounts .ac-animation-preference { display:flex; margin:0; align-items:center; gap:6px; font-size:11px; }
 .accounts .ac-modal { width:100%; }
+.ac-auth-mark { display:block; width:26px; height:26px; object-fit:contain; margin:0 auto 8px; }
+.accounts .ac-card { display:block; gap:0; }
