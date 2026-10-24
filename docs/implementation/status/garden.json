@@ -31,73 +31,85 @@
       "project": "React",
       "version": "19.3.1",
       "license": "MIT",
-      "where": "modular page and domain components under ui/src/features/garden"
+      "where": "modular page and domain components under ui/src/features/garden",
+      "source": "https://github.com/react/react"
     },
     {
       "project": "electron-vite",
       "version": "4.0.1",
       "license": "MIT",
-      "where": "foundation Electron build; actual native window verification"
+      "where": "foundation Electron build; actual native window verification",
+      "source": "https://github.com/alex8088/electron-vite"
     },
     {
       "project": "PixiJS",
       "version": "8.22.0",
       "license": "MIT",
-      "where": "GardenScene.tsx Application, Assets, Texture and Sprite; shared ResourceStage"
+      "where": "GardenScene.tsx Application, Assets, Texture and Sprite; shared ResourceStage",
+      "source": "https://github.com/pixijs/pixijs"
     },
     {
       "project": "shadcn/ui",
       "version": "4.22.1 official CLI source imported by foundation f0af90f",
       "license": "MIT",
-      "where": "Button/Input and actual Radix Select/Tabs; no cloned feature-local primitives"
+      "where": "Button/Input and actual Radix Select/Tabs; no cloned feature-local primitives",
+      "source": "https://github.com/shadcn-ui/ui"
     },
     {
       "project": "Radix UI",
       "version": "1.8.1",
       "license": "MIT",
-      "where": "food Select Esc/focus recovery, inventory Tabs arrow/Home/End"
+      "where": "food Select Esc/focus recovery, inventory Tabs arrow/Home/End",
+      "source": "https://github.com/radix-ui/primitives"
     },
     {
       "project": "Motion",
       "version": "14.6.0",
       "license": "MIT",
-      "where": "shared AnimatedList in inventory; global provider owned by foundation"
+      "where": "shared AnimatedList in inventory; global provider owned by foundation",
+      "source": "https://github.com/motiondivision/motion"
     },
     {
       "project": "Tailwind CSS",
       "version": "4.3.3",
       "license": "MIT",
-      "where": "foundation shared kit and design tokens; scene-specific module CSS"
+      "where": "foundation shared kit and design tokens; scene-specific module CSS",
+      "source": "https://github.com/tailwindlabs/tailwindcss"
     },
     {
       "project": "better-sqlite3",
       "version": "12.11.1",
       "license": "MIT",
-      "where": "single foundation connection and atomic inventory/companion settlement in Electron"
+      "where": "single foundation connection and atomic inventory/companion settlement in Electron",
+      "source": "https://github.com/WiseLibs/better-sqlite3"
     },
     {
       "project": "Lucide",
       "version": "1.61.0",
       "license": "ISC",
-      "where": "formal action icons"
+      "where": "formal action icons",
+      "source": "https://github.com/lucide-icons/lucide"
     },
     {
       "project": "MapLibre",
       "version": "6.15.0",
       "license": "BSD-3-Clause",
-      "where": "through shared discovery/NearbyMap; garden no longer owns a map engine"
+      "where": "through shared discovery/NearbyMap; garden no longer owns a map engine",
+      "source": "https://github.com/maplibre/maplibre-gl-js"
     },
     {
       "project": "amcolash/farming-game",
       "version": "design-phase reference; no code/assets imported",
       "license": "MIT code; GPL3 sample tiles excluded",
-      "where": "crop-configuration and timestamp-stage ideas only; old Phaser not installed"
+      "where": "crop-configuration and timestamp-stage ideas only; old Phaser not installed",
+      "source": "https://github.com/amcolash/farming-game"
     },
     {
       "project": "Turf",
       "version": "7.4.0",
       "license": "MIT",
-      "where": "reuse discovery boundary contains/checkFix; rejects Windows default location and invalid geometry"
+      "where": "reuse discovery boundary contains/checkFix; rejects Windows default location and invalid geometry",
+      "source": "https://github.com/Turfjs/turf"
     }
   ],
   "selfDeveloped": [
@@ -124,7 +136,7 @@
     },
     {
       "command": "node --test .../cloud.test.mjs",
-      "result": "6 passed: local HTTP + real PostgreSQL WASM RPC + SQLite; includes concurrent first cloud initialization and no local fallback grant"
+      "result": "8 passed: actual local HTTP + PostgreSQL WASM RPC + SQLite; concurrent initialization, lost HTTP reply after commit, SQL role privileges; not live Supabase"
     },
     {
       "command": "smoke.electron.mjs motion/map/library/battle/carrot/rewardplant",
@@ -191,6 +203,25 @@
     "ricePlanted": "2026-10-24T12:51:09.487Z",
     "riceMatures": "2026-10-24T13:16:09.487Z",
     "realTimeGrowth": "production 25-minute duration, no clock or database edits",
-    "focusedChecks": "16 SQLite + 6 PostgreSQL checks; root UI typecheck, garden ESLint, native library/geometry/motion and real WiFi location diagnostics passed with external precision limitation"
+    "focusedChecks": "16 SQLite + 8 PostgreSQL checks; build/typecheck/ESLint; native library/geometry at1280x844, H1 29px/700, Motion, privacy-aware actual WiFi diagnostics; 25m rice/craft/feed/restart passed"
+  },
+  "testTool": {
+    "project": "@electric-sql/pglite",
+    "version": "0.5.11",
+    "license": "Apache-2.0",
+    "where": "ignored artifacts/garden/pg-qa; actual PostgreSQL WASM SQL checks only; not a product dependency"
+  },
+  "concentratedUiFix": {
+    "viewport": "1280x844",
+    "cards": "actual native Button cards use content height; images/names/counts/pet levels fully contained",
+    "h1": "inherits foundation H1 29px; public Tailwind font-bold 700",
+    "spacing": "foundation-page",
+    "verified": true
+  },
+  "controlledTerritoryUi": {
+    "fixture": true,
+    "realGeographicAcceptance": false,
+    "result": "native UI -> IPC -> SQLite garrison change/restart passed; exact pet growth and independent selections unchanged",
+    "profile": "artifacts/garden/territory-electron"
   }
 }
