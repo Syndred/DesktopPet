@@ -8,18 +8,21 @@ import roomArtwork from '../../../../runtime/assets/illustrations/companionship-
 import { companionsRequest, useCompanions } from './client';
 import { CompanionPortrait } from './CompanionPortrait';
 import { ActionPreview } from './ActionPreview';
+import { hasYuwanRoomArtwork } from './artwork';
 import { DesktopControls, elements, LoadingOrEmpty, PetActions, RenameControl, StateMeters, usePageScroll, type Controller } from './components';
 
-const hasRoomArtwork = (pet: CompanionPet) => pet.resource.resourceId === 'builtin:lingjing-yuwan-v1';
+const hasRoomArtwork = (pet: CompanionPet) => hasYuwanRoomArtwork(pet.resource.resourceId);
 
 function OriginMemory({ pet, controller }: { pet: CompanionPet; controller: Controller }) {
   const source = pet.source === 'legacy' ? '往日的陪伴，继续保存在这里。' : pet.source === 'capture' ? '探索途中相遇，从此一起出发。' : '你为它起了名字，一份新的陪伴开始了。';
   const place = typeof pet.origin.locationName === 'string' ? pet.origin.locationName : '';
+  const capturedAt = typeof pet.origin.capturedAt === 'string' ? Date.parse(pet.origin.capturedAt) : NaN;
+  const meetingDate = new Date(Number.isFinite(capturedAt) ? capturedAt : pet.createdAt).toLocaleDateString('zh-CN');
   return <Card className="cp-origin">
     <div className="cp-origin-heading"><h3>重要的回忆</h3><Button variant="secondary" disabled={controller.busy} onClick={() => controller.petAction('desktop', pet, { visible: !pet.desktop.visible })}><Monitor size={14}/>{pet.desktop.visible ? '收回桌面' : '放到桌面'}</Button></div>
-    <div className="cp-origin-memory"><div className={`cp-memory-art ${hasRoomArtwork(pet) ? 'has-scene' : ''}`}>
+    <div className="cp-origin-memory"><div className={`cp-memory-art ${hasRoomArtwork(pet) ? 'has-scene' : 'cp-lakeside-scene'}`}>
       {hasRoomArtwork(pet) ? <img src={roomArtwork} alt={`${pet.name}的湖畔陪伴插画`}/> : <CompanionPortrait petId={pet.petId} resource={pet.resource} name={pet.name}/>}
-    </div><div className="cp-memory-copy"><h4>{pet.source === 'legacy' ? '从前的故事，接着写' : '第一次相遇'}</h4><p>{source}</p><div className="cp-memory-meta">{place && <span><MapPin size={12}/>{place}</span>}<span><CalendarDays size={12}/>{new Date(pet.createdAt).toLocaleDateString('zh-CN')}</span></div></div></div>
+    </div><div className="cp-memory-copy"><h4>{pet.source === 'legacy' ? '从前的故事，接着写' : '第一次相遇'}</h4><p>{source}</p><div className="cp-memory-meta">{place && <span><MapPin size={12}/>{place}</span>}<span><CalendarDays size={12}/>{meetingDate}</span></div></div></div>
   </Card>;
 }
 
@@ -50,7 +53,7 @@ function PetDetailContent({ pet, snapshot, controller }: { pet: CompanionPet; sn
   const template = snapshot.templates.find(candidate => candidate.templateId === pet.templateId);
   const openChat = async () => { if (await controller.petAction('select', pet, { slot: 'chatPetId' })) navigate('/chat'); };
   return <div className="cp-detail-layout"><div className="cp-detail-left"><PageHeader back={{ label: '我的灵宠', onClick: () => navigate('/companions') }} eyebrow={pet.name} title="每一份陪伴，都有回应。" description="和你在一起的每一天，都是特别的日常。"/>
-    <section className={`cp-detail-hero ${hasRoomArtwork(pet) ? 'cp-detail-room' : ''}`} aria-label={`${pet.name}的陪伴场景`}>
+    <section className={`cp-detail-hero ${hasRoomArtwork(pet) ? 'cp-detail-room' : 'cp-lakeside-scene'}`} aria-label={`${pet.name}的陪伴场景`}>
       {hasRoomArtwork(pet) ? <img className="cp-detail-scene-art" src={roomArtwork} alt={`${pet.name}在湖畔房间陪伴的插画`}/> : <CompanionPortrait ownerAccountId={pet.ownerAccountId} petId={pet.petId} resource={pet.resource} name={pet.name} animate/>}
       <div className="cp-detail-copy"><h2>{pet.name}<RenameControl pet={pet} controller={controller}/></h2><Badge>Lv.{String(pet.growth.level).padStart(2, '0')} · {elements[pet.element]}</Badge><p className="cp-serial">伙伴编号 {pet.serial}</p><div className="cp-detail-badges">{pet.desktop.visible && <Badge><Monitor size={13}/>桌面中</Badge>}{snapshot.selections.battlePetId === pet.petId && <Badge><Heart size={13}/>出战伙伴</Badge>}{snapshot.selections.guardPetId === pet.petId && <Badge><Shield size={13}/>驻守选择</Badge>}</div><p className="cp-detail-personality">{template?.description || '每一份陪伴，都有属于自己的故事。'}</p><PetActions pet={pet} controller={controller}/></div>
     </section></div>

@@ -4,8 +4,8 @@ import { mkdirSync, mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
 import { resolve, join } from 'node:path';
 import { setTimeout as delay } from 'node:timers/promises';
 
-const width = Number(process.env.LINGJING_ACCEPTANCE_WIDTH || 1320);
-const height = Number(process.env.LINGJING_ACCEPTANCE_HEIGHT || 900);
+const width = Number(process.env.LINGJING_ACCEPTANCE_WIDTH || 1280);
+const height = Number(process.env.LINGJING_ACCEPTANCE_HEIGHT || 844);
 const profile = process.env.COMPANIONS_UI_PROFILE || join(readFileSync(resolve('artifacts/companions/latest.txt'), 'utf8').trim(), 'profile');
 const outputRoot = resolve('artifacts/companions'); mkdirSync(outputRoot, { recursive: true });
 const output = mkdtempSync(join(outputRoot, 'visual-'));
@@ -37,11 +37,13 @@ try {
   evidence.detail = await page.evaluate(() => {
     const rect = selector => { const bounds = document.querySelector(selector).getBoundingClientRect(); return { x: bounds.x, y: bounds.y, width: bounds.width, height: bounds.height }; };
     const main = document.querySelector('.main-content');
-    return { title: rect('.cp-detail-left .page-header'), tabs: rect('.cp-detail-tabs'), right: rect('.cp-detail-body'), scene: rect('.cp-detail-hero'), memory: rect('.cp-origin-memory'), headingFont: getComputedStyle(document.querySelector('.cp-detail-left h1')).fontSize, scroll: { clientHeight: main.clientHeight, scrollHeight: main.scrollHeight }, memoryArtworkLoaded: document.querySelector('.cp-memory-art img').naturalWidth > 0 };
+    return { title: rect('.cp-detail-left .page-header'), tabs: rect('.cp-detail-tabs'), right: rect('.cp-detail-body'), scene: rect('.cp-detail-hero'), memory: rect('.cp-origin-memory'), headingFont: getComputedStyle(document.querySelector('.cp-detail-left h1')).fontSize, headingWeight: getComputedStyle(document.querySelector('.cp-detail-left h1')).fontWeight, cardMargins: [...document.querySelectorAll('.cp-detail-body .card')].map(card => getComputedStyle(card).marginBottom), scroll: { clientHeight: main.clientHeight, scrollHeight: main.scrollHeight }, memoryArtworkLoaded: document.querySelector('.cp-memory-art img').naturalWidth > 0 };
   });
   assert.ok(Math.abs(evidence.detail.title.y - evidence.detail.tabs.y) <= 2, 'Title and right Tabs must start side by side');
   assert.ok(evidence.detail.tabs.width >= evidence.detail.right.width - 2, 'Tabs must span the right column');
   assert.equal(evidence.detail.memoryArtworkLoaded, true);
+  assert.equal(evidence.detail.headingFont, '28px'); assert.equal(evidence.detail.headingWeight, '700');
+  assert.ok(evidence.detail.cardMargins.every(margin => margin === '0px'));
   assert.equal(await page.locator('.cp-detail-page > .cp-back').count(), 0);
   evidence.checks.push('Detail title/scene are in the left column; right Tabs align at the top and span the column; genuine scene and memory art are loaded');
   await page.getByRole('tab', { name: '外观', exact: true }).click();

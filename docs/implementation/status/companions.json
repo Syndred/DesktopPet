@@ -156,9 +156,9 @@
   "dataPolicy": "Only additive owner-scoped tables/raw archive; original JSON/animals/history/design files preserved; no production migration/deployment",
   "uiRefinement": {
     "scope": "Follow-up: approved 03 layout/font/card spacing, at least six distinct shared resource shapes, real wave/eat/hit actions, same resourceId in battle",
-    "foundationIntegrated": "e69c377",
-    "normalizedLayoutEvidence": "artifacts/companions/visual-VkyUyP/evidence.json",
-    "normalizedViewport": "Final target 1280x844 and 1440x900 CSS px, actual DPR recorded; interim geometry captured at 1320x900 DPR1",
+    "foundationIntegrated": "adf5664 via merge 43c5252",
+    "normalizedLayoutEvidence": "artifacts/companions/visual-L3Ys3d/evidence.json",
+    "normalizedViewport": "1280x844 CSS px, DPR1 normalized capture; final wide-window capture follows six-character integration",
     "implemented": [
       "Title and room scene in left column; right Tabs start at page top and span its width",
       "Real illustrated memory with actual source/date",
@@ -184,6 +184,25 @@
     ],
     "visualPass": false,
     "interimEvidence": "docs/implementation/evidence/companions/refinement-v1/evidence.json: geometry and one existing clip route passed; not final six-character visual acceptance",
-    "combatAuthority": "New companions.combatProfile/getCombatProfile derives training HP from existing battle-runtime.createSession; labels stored values as growth stats, no formula or UI constant change"
+    "combatAuthority": "New companions.combatProfile/getCombatProfile derives training HP from existing battle-runtime.createSession; labels stored values as growth stats, no formula or UI constant change",
+    "completedAuditItems": [
+      "A01: consumes public font/page tokens, H1 28px/700",
+      "A02: compact common breadcrumb inside left column, right Tabs at top",
+      "A03: zero Card margins, parent gap from public layout tokens",
+      "A06: genuine scene + name/info/actions layers and illustrated memory",
+      "A11: actual training max HP equals unchanged authority read by detail; growth values labelled separately"
+    ],
+    "pendingAuditItems": [
+      "A07: six distinct resource templates await resource roster commit through foundation",
+      "A08: expanded public clips await resource roster; routing and one native Pixi clip already exercised",
+      "Central independent visual approval remains pending"
+    ],
+    "directionChecks": [
+      "13 actual SQLite/account/resource checks passed",
+      "TypeScript and feature ESLint passed",
+      "1280x844 real production Electron: scene/footer no vertical overflow; title/tabs alignment and Card margins passed",
+      "Real native per-pet clip frames advanced 0/1/2 and returned to idle",
+      "Actual training same pet/resource reads max HP120; persisted growth HP124 retained"
+    ]
   }
 }
