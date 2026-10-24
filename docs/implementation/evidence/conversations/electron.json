@@ -1,0 +1,28 @@
+{
+  "at": "2026-10-24T12:17:12.109Z",
+  "status": "passed",
+  "cloudModelTest": "not-run-no-authorized-model-config",
+  "transport": "local HTTP protocol fixture; not a cloud model",
+  "electron": "36.9.5",
+  "checks": [
+    "production window: sandbox + contextIsolation + real Electron safeStorage",
+    "settings buttons -> IPC -> DPAPI encrypted SQLite connection; HTTP connection test returned text",
+    "real compose + send + streamed rendering + user-added memory in outbound context",
+    "two existing legacy pets use the same model path but independent persona, memory and history",
+    "stop button aborts real HTTP stream; retry reuses one user message",
+    "actual Electron process restart restores both histories, selection, persona, notes and decryptable credential",
+    "real IPC note deletion updates UI and removes note from the next model context",
+    "retained local main session switch clears mounted UI, aborts pending response, and restores original owner on return",
+    "chat drafts, settings dialogs and unsaved keys never reappear in another account or login"
+  ],
+  "requestCount": 7,
+  "abortedStreams": 2,
+  "sqliteFile": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-conversations\\DesktopPet\\artifacts\\conversations\\electron\\run-1792844226486\\profile\\lingjing.sqlite",
+  "window": {
+    "sandbox": true,
+    "contextIsolation": true,
+    "safeStorage": true
+  },
+  "noRendererKeyStorage": true,
+  "errors": []
+}
