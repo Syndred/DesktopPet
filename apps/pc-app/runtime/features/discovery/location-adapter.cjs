@@ -33,11 +33,13 @@ class LocationService {
     this.pending=null; this.readController=null; this.mode='real'; this.timer=null; this.listeners=new Set(); this.generation=0;
   }
   snapshot() {
-    const quality=this.fix?.source==='os' ? checkFix(this.fix,this.now()) : null;
+    const quality=this.fix&&this.fix.source!=='demo' ? this.quality(this.fix) : null;
     const stale=quality && !quality.ok && this.status==='ready';
     return {mode:this.mode,status:stale ? 'stale' : this.status,permission:this.permission,fix:this.fix ? {...this.fix} : null,lastError:stale ? {code:quality.code,message:quality.message} : this.lastError,watching:Boolean(this.timer)};
   }
   subscribe(listener) { this.listeners.add(listener); return () => this.listeners.delete(listener); }
+  metricFix(fix=this.fix) {return this.adapter.metricFix?this.adapter.metricFix(fix):fix;}
+  quality(fix=this.fix) {try{return checkFix(this.metricFix(fix),this.now());}catch(error){return {ok:false,code:error.code||'LOCATION_UNAVAILABLE',message:error.message};}}
   emit() { const state=this.snapshot(); for (const listener of this.listeners) { try { listener(state); } catch { /* isolate listeners */ } } }
   policyAllowed() {try{return this.mayUseLocation() === true;}catch{return false;}}
   blockByPolicy() {
@@ -70,13 +72,14 @@ class LocationService {
       this.emit(); return {ok:false,error:this.lastError,state:this.snapshot()};
     }
     try { point(result); } catch(error) { this.fix=null; this.status='unavailable'; this.lastError={code:error.code,message:error.message}; this.emit(); return {ok:false,error:this.lastError,state:this.snapshot()}; }
-    const fix={lat:result.lat,lng:result.lng,accuracyMeters:result.accuracyMeters,timestampMs:result.timestampMs,coordinateSystem:'wgs84',source:'os',provider:result.provider,positionSource:result.positionSource};
-    const quality=checkFix(fix,this.now());
+    if(result.source==='simulated'&&!this.adapter.metricFix){this.fix=null;this.permission='unknown';this.status='unavailable';this.lastError={code:'QA_PROFILE_REQUIRED',message:'模拟位置需要独立 QA 场景'};this.emit();return {ok:false,error:this.lastError,state:this.snapshot()};}
+    const fix={lat:result.lat,lng:result.lng,accuracyMeters:result.accuracyMeters,timestampMs:result.timestampMs,coordinateSystem:'wgs84',source:result.source==='simulated'?'simulated':'os',...(result.scenarioId?{scenarioId:result.scenarioId}:{}),provider:result.provider,positionSource:result.positionSource};
+    const quality=this.quality(fix);
     if (this.fix?.source==='os' && fix.timestampMs>this.fix.timestampMs && distanceMeters(this.fix,fix)/Math.max(1,(fix.timestampMs-this.fix.timestampMs)/1000)>45) {
       this.fix=null; this.status='imprecise'; this.lastError={code:'LOCATION_DRIFT',message:'位置跳变过大，请重新定位'};
       this.emit(); return {ok:false,error:this.lastError,state:this.snapshot()};
     }
-    this.fix=fix; this.permission='granted'; this.status=quality.ok ? 'ready' : quality.code==='LOCATION_STALE' ? 'stale' : 'imprecise';
+    this.fix=fix; this.permission=fix.source==='simulated'?'unknown':'granted'; this.status=quality.ok ? 'ready' : quality.code==='LOCATION_STALE' ? 'stale' : 'imprecise';
     this.lastError=quality.ok ? null : {code:quality.code,message:quality.message}; this.emit();
     return {ok:true,state:this.snapshot()};
   }

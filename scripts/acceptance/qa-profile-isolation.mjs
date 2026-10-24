@@ -25,7 +25,7 @@ async function launch(profile, sceneEnv = {}) {
   };
   return { app, page, invoke };
 }
-let current;
+let current, qaLogin;
 try {
   current = await launch(join(output, 'ordinary-profile'));
   const info = await current.invoke('app', 'info');
@@ -42,10 +42,12 @@ try {
   await current.page.getByRole('tooltip').filter({ hasText: '隔离验收 · 模拟场景' }).waitFor();
   await current.page.screenshot({ path: join(output, 'qa-indicator.png') });
   const password = `Scenario-${randomUUID()}!`;
-  const registration = await current.invoke('accounts', 'register', { provider: 'local', account: `qa_${Date.now()}`, username: '统一战场验收', password, confirmPassword: password, rememberSession: true });
+  qaLogin = { provider: 'local', account: `qa_${Date.now()}`, password, rememberSession: false };
+  const registration = await current.invoke('accounts', 'register', { ...qaLogin, username: '统一战场验收', confirmPassword: password });
   await current.page.getByRole('navigation', { name: '主导航' }).waitFor();
   const owner = (await current.invoke('app', 'info')).user.id;
-  assert.ok(owner); proof.owner = owner; proof.registrationOk = Boolean(registration);
+  assert.ok(owner.startsWith(`qa:${scenario.runId}:`)); proof.owner = owner; proof.registrationOk = Boolean(registration);
+  assert.equal((await current.invoke('accounts', 'session')).persistence, 'memory');
   const unavailable = await current.page.evaluate(() => window.lingjing.invoke('app', 'enableScenario', { id: 'unified-battle' }));
   assert.equal(unavailable.ok, false); assert.equal(unavailable.code, 'COMMAND_UNAVAILABLE');
   proof.checks.push('QA is explicitly marked with a keyboard-accessible tooltip and cannot be enabled through IPC');
@@ -53,9 +55,11 @@ try {
 
   current = await launch(scenario.profilePath, scenario.env);
   const restored = await current.invoke('accounts', 'session');
-  assert.equal(restored.currentUser.id, owner);
+  assert.equal(restored.currentUser, null);
+  await current.invoke('accounts', 'login', qaLogin);
+  assert.equal((await current.invoke('accounts', 'session')).currentUser.id, owner);
   assert.deepEqual((await current.invoke('app', 'info')).scenario, qaInfo.scenario);
-  proof.checks.push('Actual Electron restart restores only the independent QA account and the same run provenance');
+  proof.checks.push('QA restart has no automatic login; explicit login restores the same independent account and run provenance');
   assert.deepEqual(proof.errors, []); proof.passed = true;
   console.log(JSON.stringify({ passed: true, evidence: join(output, 'evidence.json'), checks: proof.checks }));
 } catch (error) { proof.failure = String(error); throw error; }

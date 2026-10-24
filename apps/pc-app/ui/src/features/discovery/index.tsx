@@ -22,7 +22,6 @@ function DiscoveryPage() {
   const selected = state.spawns.find(spawn => spawn.id === selectedId) || state.spawns[0];
   const pet = state.pets.find(p => p.petId === petId && twoDimensional(p.resource?.kind)) || state.pets.find(p => twoDimensional(p.resource?.kind));
   const spawn = state.spawns.find(s => s.id === id), encounter = state.encounters.find(e => e.encounterId === id), capture = state.captures.find(c => c.encounterId === id);
-  if (path.startsWith('/discovery/encounter/') && encounter) return <EncounterView key={encounter.encounterId} encounter={encounter} state={state} pending={pending} run={run}/>;
   const begin = async () => {
     if (!spawn || !pet) return;
     const result = await run<WildEncounter>('begin', { spawnId: spawn.id, petId: pet.petId, actionId: actionId() });
@@ -30,14 +29,11 @@ function DiscoveryPage() {
   };
   const controls = <div className="discovery-header-controls"><LocationControl state={state} pending={pending} locate={() => void run('locate')}/><DiscoverySettings state={state} pending={pending} run={run}/></div>;
   const missing = <div className="discovery-empty"><h2>这次相遇暂时不在当前账号中</h2><p>附近伙伴可能已经刷新，已有记录始终按账号保留。</p><Button variant="ghost" onClick={() => navigate('/discovery')}>返回附近探索</Button></div>;
-  return <div className="discovery-page">
+  if (path.startsWith('/discovery/encounter/')) return encounter ? <EncounterView key={encounter.encounterId} encounter={encounter}/> : <div className="discovery-page">{missing}</div>;
+  return <div className="discovery-page" data-discovery-scenario={state.scenario}>
     {path === '/discovery' ? <header className="discovery-main-heading"><div><h1>下楼走走，遇见新伙伴。</h1><p>附近伙伴 · 捕捉 · 领地</p></div>{controls}</header> : <div className="discovery-sub-controls">{controls}</div>}
     {error ? <div className="discovery-alert" role="alert"><ShieldAlert size={17}/>{error}</div> : null}
-    {state.location.mode === 'demo' ? <div className="discovery-demo-banner">演示模式 · 示例位置与游戏点位，仅供浏览，不能收服或发放奖励。</div> : null}
-    {state.location.lastError ? <p className="discovery-location-error" role="status">{state.location.lastError.message}</p> : null}
-    {state.cloudStatus !== 'disabled' && state.cloudStatus !== 'ready' ? <p className="discovery-location-error">云端收服暂不可用；地图浏览与已有记录仍可访问。</p> : null}
     {path.startsWith('/discovery/result/') ? capture ? <CaptureResultView key={capture.petId} capture={capture} state={state}/> : missing
-      : path.startsWith('/discovery/encounter/') ? encounter ? <EncounterView key={encounter.encounterId} encounter={encounter} state={state} pending={pending} run={run}/> : missing
       : path.startsWith('/discovery/wild/') ? spawn ? <WildPreviewView state={state} spawn={spawn} pet={pet} selectPet={setPetId} pending={pending} begin={() => void begin()}/> : missing
       : path === '/discovery/pokedex' ? <PokedexView state={state}/>
       : <ExploreView state={state} selected={selected} select={setSelectedId}/>}

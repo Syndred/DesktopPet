@@ -27,3 +27,9 @@
 .garden-feature .garden-pet-portrait .cp-portrait{pointer-events:none;width:100%;height:auto;aspect-ratio:1;align-self:flex-start}
 .garden-feature .garden-pet-portrait .cp-sheet-thumbnail{transform:none}
 .garden-feature .garden-empty-icon{display:grid;place-items:center}
+.garden-info-icon{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;color:var(--g-muted);vertical-align:middle;border-radius:6px;cursor:help}
+.garden-info-icon:focus-visible,.garden-save-note [tabindex]:focus-visible{outline:2px solid var(--g-blue);outline-offset:3px}
+.garden-feature .garden-save-note{display:flex;gap:10px;justify-content:flex-end;margin-top:12px;padding:0}
+.garden-save-note>span{display:inline-flex;gap:4px;align-items:center;color:var(--g-muted)}
+.garden-save-note svg{flex-shrink:0}
+.garden-item .garden-source{display:inline-flex;width:max-content;align-items:center;justify-content:center;min-height:20px}

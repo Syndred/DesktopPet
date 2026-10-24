@@ -1,5 +1,6 @@
 const {BattleRuntimeService,getBattleRules}=require('../../services/battle-runtime.cjs');
-/** Reuse the current combat engine unchanged. The saved state lives with its encounter. */
+/** Compatibility helper for the separate server authority and archived fixtures.
+ * Desktop DiscoveryService requires the registered battle feature, with no fallback. */
 class LegacyWildBattleAdapter {
   begin({pet,spawn,battleId}) {
     const engine=new BattleRuntimeService(); engine.reset({playerElement:pet.element,enemyElement:spawn.element});
@@ -21,8 +22,9 @@ function fromFeatureSession(session) {
 }
 class RegisteredWildBattleAdapter {
   constructor(api,invoke) {this.api=api;this.invoke=invoke;}
-  begin({ownerAccountId,pet,spawn,actionId}) {
+  begin({ownerAccountId,pet,spawn,actionId,encounterId,scenario}) {
     return fromFeatureSession(this.api.beginWildChallenge({ownerAccountId,petId:pet.petId,actionId,challenge:{id:spawn.id,spawnId:spawn.id,expiresAt:spawn.expiresAt,
+      origin:'discovery',encounterId,scenario,returnPath:`/discovery/encounter/${encounterId}`,
       opponent:{petId:spawn.id,petName:spawn.name,element:spawn.element,resourceRef:spawn.resourceId}}}));
   }
   read(owner,battleId) {return fromFeatureSession(this.api.getOutcome({ownerAccountId:owner,sessionId:battleId}).session);}

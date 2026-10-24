@@ -3,7 +3,7 @@
   "productName": "Lingjing",
   "icon": "build/icon.png",
   "directories": {
-    "output": "artifacts/pc-beta"
+    "output": "artifacts/pc-beta-unified"
   },
   "files": [
     "apps/pc-app/dist/**/*",
@@ -12,7 +12,7 @@
     "!**/*.test.mjs",
     "!**/tests/**/*",
     "!**/verification/**/*",
-    "!**/smoke.electron.mjs",
+    "!**/*.electron.mjs",
     "!**/verify-electron.mjs",
     "!**/testing-adapter.cjs",
     "!**/generate-fish.cjs",
@@ -24,7 +24,7 @@
     "package.json",
     "!**/verify-*.mjs",
     "!**/write-evidence.mjs",
-    "!**/prepare-territory-fixture.mjs"
+    "!**/prepare-*-fixture.mjs"
   ],
   "asar": true,
   "extraFiles": [

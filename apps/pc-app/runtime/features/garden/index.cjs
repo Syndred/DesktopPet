@@ -56,21 +56,22 @@ module.exports = {
       service,
       snapshot: context => service.snapshot(context),
       territories,
-      getBattleContext: ({ownerAccountId,sessionId}) => {
-        if (services.session.getOwnerAccountId()!==ownerAccountId) throw Object.assign(new Error('账号已切换'),{code:'SESSION_CHANGED'});
-        const challenge=services.db.prepare('SELECT settled FROM garden_territory_challenges WHERE owner_account_id=? AND battle_id=?').get(ownerAccountId,sessionId);
-        return {returnTo:'/garden',action:challenge?'territory':undefined,settled:Boolean(challenge?.settled)};
+      migrateOwnerAlias:context=>identity.migrate(context),
+      getBattleContext:input=>{
+        if(input.ownerAccountId!==services.session.getOwnerAccountId())throw Object.assign(new Error('账号已切换'),{code:'SESSION_CHANGED'});
+        const challenge=territories.challengeForOwner(input);
+        return challenge?{...challenge,returnTo:'/garden',resultPath:'/garden',action:'territory',gardenRevision:service.snapshot(input).revision}:null;
       },
-      settleBattleContext: async ({ownerAccountId,sessionId,actionId}) => {
-        if (services.session.getOwnerAccountId()!==ownerAccountId) return {ok:false,code:'SESSION_CHANGED',message:'账号已切换'};
-        const context={ownerAccountId};
-        if(cloud.isCloud(context)) return {ok:false,code:'CLOUD_TERRITORY_UNAVAILABLE',message:'云端领地暂不可用'};
-        // The saved challenge guards its territory revision. Unrelated inventory changes
-        // must not invalidate confirmation or alter a repeated action's request hash.
-        const result=service.command(context,'territorySettle',{sessionId,actionId},({owner})=>territories.settleChallenge({ownerAccountId:owner,sessionId}),{checkRevision:false});
+      settleBattleContext:async input=>{
+        const owner=input.ownerAccountId;
+        if(owner!==services.session.getOwnerAccountId())return {ok:false,code:'SESSION_CHANGED',message:'账号已切换'};
+        const row=services.db.prepare('SELECT payload_json FROM garden_outbox WHERE owner_account_id=? AND action_id=?').get(owner,input.actionId);
+        const previous=row?JSON.parse(row.payload_json):null;
+        if(previous&&(previous.kind!=='territorySettle'||previous.input.sessionId!==input.sessionId))return {ok:false,code:'ACTION_ID_REUSED',message:'操作编号已使用'};
+        const payload=previous?.input||{sessionId:input.sessionId,actionId:input.actionId,sessionOwnerAccountId:owner,expectedRevision:service.snapshot({ownerAccountId:owner}).revision};
+        const result=await commands.territorySettle(payload,{ownerAccountId:owner});
         return result.ok?{...result,data:{...result.data,resultPath:'/garden'}}:result;
       },
-      migrateOwnerAlias:context=>identity.migrate(context),
       // Trusted callers can include this in their own synchronous settlement transaction.
       grantSeeds: (context, input, verifiedReceipt) => {
         if (!cloud.isCloud(context)) return service.grantSeeds(context,input,verifiedReceipt);
@@ -99,9 +100,10 @@ module.exports = {
       const snapshot = service.snapshot(context);
       if (snapshot.ok) {
         snapshot.data.remainingInvasions = territories.dailyRemaining?.(context.ownerAccountId) ?? 2;
+        if(territories.scenario)snapshot.data.scenario=territories.scenario.descriptor;
         const discovery = services.get('discovery');
         if (discovery?.map?.project) snapshot.data.territories = snapshot.data.territories.map(t => ({ ...t, mapBoundary: t.boundary?.map(point => discovery.map.project(point)) }));
-        snapshot.data.territoryChallenges = services.db.prepare('SELECT battle_id sessionId,territory_id territoryId FROM garden_territory_challenges WHERE owner_account_id=? AND settled=0').all(context.ownerAccountId);
+        snapshot.data.territoryChallenges = services.db.prepare('SELECT battle_id sessionId,territory_id territoryId FROM garden_territory_challenges WHERE owner_account_id=? AND settled=0').all(context.ownerAccountId).map(challenge=>({...challenge,status:services.get('battle')?.getOutcome?.({ownerAccountId:context.ownerAccountId,sessionId:challenge.sessionId})?.session?.status}));
       }
       return snapshot;
     };

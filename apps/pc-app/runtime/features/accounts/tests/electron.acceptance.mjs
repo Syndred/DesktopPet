@@ -36,7 +36,7 @@ async function accountLogin(page, account, secret, remember = false) {
   await choose(page, "账号类型", "本机账号");
   await page.getByLabel("账号", { exact: true }).fill(account);
   await page.getByLabel("密码", { exact: true }).fill(secret);
-  if (remember) await page.getByRole("checkbox", { name: "保持登录（系统安全存储）" }).check();
+  if (remember) await page.getByRole("checkbox", { name: "保持登录" }).check();
   await page.getByRole("button", { name: "登录进入 →" }).click();
   await page.getByRole("heading", { name: "把每一段陪伴，好好保存。" }).waitFor();
   await page.locator(".app-shell:not(.is-auth)").waitFor();
@@ -84,13 +84,13 @@ try {
   await topSwitch.focus(); await topSwitch.press("Space"); assert.equal(await topSwitch.getAttribute("aria-checked"), "false");
   await page.getByRole("switch", { name: "透明区域鼠标穿透", exact: true }).click();
   await setVolume(page, 37); await page.getByRole("button", { name: "保存设置", exact: true }).click();
-  await page.getByText("设置已保存，将在下次启动时恢复。", { exact: true }).waitFor();
+  await page.getByText("设置已保存。", { exact: true }).waitFor();
   await page.screenshot({ path: join(output, "02-desktop-settings.png") });
   const settings37 = await ipc(page, "settingsGet"); assert.equal(settings37.document.desktop.volume, 37);
   assert.equal(settings37.document.desktop.alwaysOnTop, false); check("saved desktop preferences through real IPC", settings37);
   await page.getByRole("link", { name: /通知与隐私/ }).click();
   await page.getByLabel("开始时间", { exact: true }).fill("00:00"); await page.getByLabel("结束时间", { exact: true }).fill("00:00");
-  await page.getByRole("button", { name: "保存设置", exact: true }).click(); await page.getByText("设置已保存，将在下次启动时恢复。", { exact: true }).waitFor();
+  await page.getByRole("button", { name: "保存设置", exact: true }).click(); await page.getByText("设置已保存。", { exact: true }).waitFor();
   await page.getByRole("button", { name: "测试已保存的通知设置" }).click();
   await page.getByText("当前未发送通知：正处于安静时段。", { exact: true }).waitFor();
   check("quiet hours suppress native notifications via host");
@@ -98,14 +98,14 @@ try {
   await page.getByRole("heading", { name: "把每一段陪伴，好好保存。" }).waitFor();
   const exportPending = page.getByRole("button", { name: "导出本地备份", exact: true }).click();
   checkpoint("save-backup"); await exportPending;
-  await page.getByText(/备份已导出：/).waitFor({ timeout: 180_000 }); evidence.nativeDialogs.push("native Save As selected real export file");
+  await page.getByText(/备份已导出。/).waitFor({ timeout: 180_000 }); evidence.nativeDialogs.push("native Save As selected real export file");
   const backupFile = join(output, "export.lingjing.json"); assert.equal(existsSync(backupFile), true);
   const backup = JSON.parse(readFileSync(backupFile, "utf8")); assert.equal(backup.ownerAccountId, "local:legacy-alice");
   assert.equal(backup.data.modules.legacy.data.chats[0].id, "alice-chat");
   assert.equal(JSON.stringify(backup).includes("bobby-report"), false); assert.equal(JSON.stringify(backup).includes("password_hash"), false);
   check("native file picker export contains only account A historical records", { checksum: backup.checksum });
   await page.getByRole("link", { name: /桌面与行为/ }).click(); await setVolume(page, 75);
-  await page.getByRole("button", { name: "保存设置", exact: true }).click(); await page.getByText("设置已保存，将在下次启动时恢复。", { exact: true }).waitFor();
+  await page.getByRole("button", { name: "保存设置", exact: true }).click(); await page.getByText("设置已保存。", { exact: true }).waitFor();
   await page.getByRole("link", { name: /账号与同步/ }).click();
   const previewPending = page.getByRole("button", { name: "恢复本地备份", exact: true }).click(); checkpoint("open-backup"); await previewPending;
   await page.getByRole("dialog", { name: "预览恢复内容" }).waitFor({ timeout: 180_000 }); evidence.nativeDialogs.push("native Open selected exact export file");
@@ -115,7 +115,7 @@ try {
     assert.equal(await restoreDialog.evaluate(node => node.contains(document.activeElement)), true);
   }
   await choose(page, "恢复方式", "恢复到此备份版本"); await page.getByRole("button", { name: "确认恢复", exact: true }).click();
-  await page.getByText(/恢复已完成。恢复前存档保存在：/).waitFor();
+  await page.getByText(/恢复完成，原存档已备份。/).waitFor();
   const restored = await ipc(page, "settingsGet"); assert.equal(restored.document.desktop.volume, 37);
   const receipt = (await ipc(page, "backupList")).find(r => r.reason === "before-restore");
   const preserved = JSON.parse(readFileSync(receipt.filePath, "utf8")); assert.equal(preserved.data.modules.settings.data.desktop.volume, 75);

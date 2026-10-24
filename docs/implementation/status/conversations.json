@@ -1,12 +1,12 @@
 {
   "feature": "conversations",
   "branch": "codex/lingjing-conversations",
-  "commit": "0a1722033c209d0b8190b98ff3b5f80cdc20b550",
-  "status": "ready_for_portrait_integration",
+  "commit": "eb50973",
+  "status": "self_acceptance_in_progress",
   "date": "2026-10-24",
   "timezone": "Asia/Shanghai",
   "workspace": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-conversations\\DesktopPet",
-  "scopeRevision": "docs/implementation/scope-2d-ui-first.txt",
+  "scopeRevision": "docs/implementation/acceptance/2026-10-24/unified-battle-goal.txt",
   "base": {
     "foundationBaseCommit": "bbb43958d59d856b9af5d88f509025b8fd8f089a",
     "integrationMerge": "b92366decd9fd98ffef7983f2669186077134788",
@@ -321,8 +321,8 @@
     {
       "id": "authorized-cloud-model-verification",
       "owner": "user_configuration_then_conversations_or_foundation",
-      "status": "pending_external_configuration",
-      "detail": "本会话未收到授权云模型配置，未扫描生产密钥；未把本机 HTTP fixture 算作云端成功。"
+      "status": "deferred_by_current_scope",
+      "detail": "本轮明确允许暂缓云能力。未使用云模型成功声明，也未扫描现有密钥。"
     },
     {
       "id": "combined-windows-regression",
@@ -425,8 +425,8 @@
     ],
     "doNotClaimOverallVisualPass": true
   },
-  "previousImplementationCommit": "2fe1060aa5b4093e46e704076fcb2e4555fa64b7",
-  "updatedAt": "2026-10-24T14:03:15.201Z",
+  "previousImplementationCommit": "0a1722033c209d0b8190b98ff3b5f80cdc20b550",
+  "updatedAt": "2026-10-24T15:02:46.348Z",
   "portraitAudit": {
     "items": [
       "A07",
@@ -480,5 +480,54 @@
       }
     ],
     "remaining": "foundation merges the consumers and performs the requested narrow portrait/HUD visual recheck; no full regression was repeated in this round."
+  },
+  "unifiedAcceptance": {
+    "items": [
+      "U02",
+      "U05",
+      "U07"
+    ],
+    "status": "awaiting_canonical_five_element_roster_for_real_electron_check",
+    "implementationCommit": "eb50973",
+    "foundationBase": "3db8d97",
+    "implementation": [
+      "聊天与 AI 设置使用短标题、图标、公共 Tooltip，保留空态、失败、危险操作后果、键盘焦点及禁用原因。",
+      "头像与侧图统一使用当前 petId/resourceId 的 ResourcePortrait 近景；不再对鱼丸资源使用额外房间插画。",
+      "元素只投影实际库存 element，并复用公共五行图标；不从名称、资源或调用载荷猜测。",
+      "真实云模型按本轮允许范围暂缓；本轮自验只使用独立 QA profile 和真实本机连接失败，不注入模型回复。"
+    ],
+    "tests": [
+      {
+        "command": "node --test apps/pc-app/runtime/features/conversations/tests/runtime.test.cjs",
+        "status": "passed",
+        "checks": 12
+      },
+      {
+        "command": "npm run typecheck:ui",
+        "status": "passed"
+      },
+      {
+        "command": "npm run typecheck",
+        "status": "passed"
+      },
+      {
+        "command": "feature-scoped eslint",
+        "status": "passed"
+      },
+      {
+        "command": "npm run build:pc",
+        "status": "passed",
+        "note": "Existing shared bundle size warning only."
+      },
+      {
+        "command": "node apps/pc-app/runtime/features/conversations/tests/compact-acceptance.mjs",
+        "status": "pending_canonical_wood_earth_assets"
+      }
+    ],
+    "remaining": [
+      "资源模块交付木/土并由 foundation 汇总后执行真实 Electron 自验，提交截图、源版本和 SQLite 证据。",
+      "主会话独立复验。"
+    ],
+    "doNotClaimOverallGoalComplete": true
   }
 }
