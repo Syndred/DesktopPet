@@ -18,6 +18,9 @@ export function TerritoryMap({ territories, owner, onLocated, simulated=false }:
     mapBoundary:territory.mapBoundary||territory.boundary||[],revision:territory.revision,
     bonusMultiplier:territory.captureMultiplier
   })).filter(territory=>territory.mapBoundary.length>=3);
+  const ring=simulated?mapped[0]?.mapBoundary:undefined;
+  // A map viewport is not a location fix and cannot authorize capture/challenge.
+  const scenarioCenter=ring?{lat:ring.reduce((sum,point)=>sum+point.lat,0)/ring.length,lng:ring.reduce((sum,point)=>sum+point.lng,0)/ring.length}:null;
   async function locate(){
     if(locating.current || document.hidden)return;
     locating.current=true;setReading(true);
@@ -36,7 +39,7 @@ export function TerritoryMap({ territories, owner, onLocated, simulated=false }:
     }
   }
   return <div className="garden-map garden-shared-map" aria-label="领地现实地图">
-    {data ? <NearbyMap state={{...data,territories:mapped}} onSelect={()=>{window.location.hash='/discovery';}}/> : <div className="garden-map-empty" role="status">正在打开附近地图…</div>}
+    {data ? <NearbyMap state={{...data,mapLocation:data.mapLocation||scenarioCenter,territories:mapped}} onSelect={()=>{window.location.hash='/discovery';}}/> : <div className="garden-map-empty" role="status">正在打开附近地图…</div>}
     <Button variant="secondary" className="garden-map-locate" disabled={pending||reading} onClick={()=>{void locate();}}><RefreshCw size={14}/>{pending||reading?'正在定位…':simulated?'查看演练领地':'获取系统位置'}</Button>
     {error && <span className="garden-map-status" role="alert">{error}</span>}
   </div>;

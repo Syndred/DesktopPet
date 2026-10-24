@@ -13,6 +13,7 @@ const proof=existsSync(file)?JSON.parse(readFileSync(file,'utf8')):{at:new Date(
 const save=()=>writeFileSync(file,JSON.stringify(proof,null,2));
 const stable=session=>({id:session.id,mode:session.mode,status:session.status,snapshot:session.snapshot,playerId:session.player.petId,enemyId:session.enemy.petId,rounds:session.rounds.map(round=>({round:round.round,actions:round.actions,state:round.state}))});
 const source=()=>({sha:execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim(),dirty:execFileSync('git',['status','--short','--','apps/pc-app/runtime/features/garden','apps/pc-app/ui/src/features/garden','packages/shared-types/src/features/garden'],{encoding:'utf8'}).trim(),hashes:Object.fromEntries(['apps/pc-app/dist/main/index.cjs','apps/pc-app/dist/ui/index.html','apps/pc-app/runtime/features/garden/index.cjs','apps/pc-app/runtime/features/garden/territories.cjs','apps/pc-app/runtime/features/garden/qa-location.cjs'].map(path=>[path,createHash('sha256').update(readFileSync(path)).digest('hex')]))});
+const portraitsReady=page=>page.waitForFunction(()=>{const portraits=[...document.querySelectorAll('.garden-pet-picker .cp-portrait')];return portraits.length>0&&portraits.every(portrait=>portrait.querySelector('.resource-stage[data-status="ready"],.cp-sheet-thumbnail,.resource-portrait'));});
 async function open(scenario){
   const env={...process.env,PET_USER_DATA_DIR:scenario.profilePath,...(scenario.env||{})};delete env.ELECTRON_RUN_AS_NODE;delete env.PET_RUNTIME_DATA_FILE;
   if(!scenario.env)delete env.LINGJING_QA_SCENARIO;
@@ -58,6 +59,30 @@ try{
       await current.app.close();current=null;
     }
     proof.checks.push('Two fresh foundation-validated QA profiles preserve actual planted crops; simulated location creates only run-scoped territories');
+  }else if(phase==='visual'){
+    const scenario=proof.scenarios.win;assert.ok(scenario?.prepared);current=await open(scenario);await register(current,scenario,'win');
+    await current.page.emulateMedia({reducedMotion:'reduce'});await current.page.waitForFunction(()=>document.documentElement.dataset.motion==='reduced');
+    const window=await current.app.browserWindow(current.page),measurements=[];
+    for(const [width,height]of [[1280,844],[1440,900]]){
+      await window.evaluate((window,size)=>window.setContentSize(size.width,size.height),{width,height});await current.route('/inventory');await portraitsReady(current.page);
+      const metrics=await current.page.evaluate(()=>{
+        const rect=element=>element.getBoundingClientRect().toJSON(),cards=[...document.querySelectorAll('.garden-item')].map(element=>({box:rect(element),art:rect(element.querySelector('.garden-item-art'))}));
+        const overlap=cards.some((left,index)=>cards.slice(index+1).some(right=>Math.min(left.box.right,right.box.right)-Math.max(left.box.left,right.box.left)>1&&Math.min(left.box.bottom,right.box.bottom)-Math.max(left.box.top,right.box.top)>1));
+        const title=getComputedStyle(document.querySelector('.garden-heading h1'));
+        return {viewport:{width:innerWidth,height:innerHeight},title:{size:title.fontSize,weight:title.fontWeight},cards,overlap,pets:[...document.querySelectorAll('.garden-pet')].map(element=>({height:element.getBoundingClientRect().height,scrollHeight:element.scrollHeight}))};
+      });
+      assert.equal(metrics.overlap,false);assert.equal(metrics.title.size,'28px');assert.equal(metrics.title.weight,'700');assert.ok(metrics.cards.every(card=>card.art.top>=card.box.top&&card.art.bottom<=card.box.bottom));assert.ok(metrics.pets.every(pet=>pet.scrollHeight<=pet.height+1));measurements.push(metrics);
+      await current.page.screenshot({path:join(output,`A04-${width}x${height}-inventory.png`),fullPage:true});
+    }
+    await current.route('/garden');await portraitsReady(current.page);await current.page.locator('.garden-shared-map [data-map-ready="true"]').waitFor();await current.page.screenshot({path:join(output,'territory-entry-ready.png'),fullPage:true});
+    proof.visual={source:source(),measurements,actorsActuallyReady:true,mapEngine:'shared MapLibre',qaMapViewportOnly:true};
+    await current.app.close();current=null;
+    const ordinary={profilePath:join(output,'ordinary-profile')};current=await open(ordinary);await register(current,ordinary,'ordinary');
+    assert.equal((await current.invoke('app','info')).data.scenario,undefined);assert.equal(await current.page.getByRole('button',{name:'隔离验收场景',exact:true}).count(),0);
+    const before=await current.garden();assert.equal(before.data.scenario,undefined);
+    const rejected=await current.page.evaluate(input=>window.lingjing.invoke('garden','territoryLocate',input),{actionId:'ordinary-no-simulation',sessionOwnerAccountId:ordinary.owner,expectedRevision:before.revision});assert.equal(rejected.code,'REAL_LOCATION_REQUIRED');
+    const after=await current.garden();assert.deepEqual(after.data.items,before.data.items);assert.equal(after.revision,before.revision);proof.ordinaryProfile={noScenario:true,realLocationStillRequired:true,exactInventoryAndRevision:true};
+    await current.app.close();current=null;proof.checks.push('Actual 1280/1440 A04 cards and decoded actors pass; ordinary profile has no QA marker/adapter and cannot use simulated territory location');
   }else if(phase==='verify'){
     proof.verificationSource=source();
     for(const label of ['win','loss']){
@@ -114,7 +139,7 @@ try{
     }
     proof.checks.push('Both outcomes use the same shared battle screen; exact session route/page/restart recovery, public context confirmation and one seed receipt; repeat confirmation preserves all state');
     assert.deepEqual(proof.errors,[]);proof.passed=true;
-  }else throw new Error('Use prepare or verify');
+  }else throw new Error('Use prepare, visual or verify');
   delete proof.failure;save();console.log(JSON.stringify({phase,evidence:file,passed:proof.passed||false,checks:proof.checks}));
 }catch(error){proof.failure=String(error);save();throw error;}
 finally{if(current)await current.app.close();}
