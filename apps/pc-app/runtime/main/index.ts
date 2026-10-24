@@ -130,6 +130,7 @@ app.whenReady().then(async () => {
   services = createServices({ db, legacy, paths: { userData, assets: join(runtime, 'assets'), legacyDataFile, legacyDataExisted }, windows, safeStorage });
   features = discoverFeatures(join(runtime, 'features'), services);
   await require(join(runtime, 'core/builtin-art.cjs')).registerBuiltinArt(services);
+  if (services.get('backups') && services.get('resources')) services.get('backups').register(require(join(runtime, 'core/resource-backup.cjs')).createResourceBackupAdapter(services));
   services.ipc.handle('app:info', () => ({ version: app.getVersion(), platform: process.platform, features: features.map(x => ({ id: x.id, commands: x.commands })), user: services.session.getCurrentUser() }), { public: true });
   ipcMain.handle('lingjing:invoke', async (event, request) => {
     if (!trusted(event)) return { ok: false, code: 'UNTRUSTED_SENDER', message: '请求来源无效。' };
