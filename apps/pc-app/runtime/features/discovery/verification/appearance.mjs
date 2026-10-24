@@ -20,7 +20,7 @@ try {
     if (page) break; await new Promise(resolve => setTimeout(resolve, 100));
   }
   assert.ok(page);
-  await page.getByRole('button', { name: '获取系统位置', exact: true }).click();
+  await page.getByRole('button', { name: /(?:获取系统位置|更新场景位置)/ }).click();
   const before = await invoke('discovery', 'snapshot'); assert.equal(before.ok, true);
   const capture = before.data.captures[0]; assert.ok(capture);
   const pet = await invoke('companions', 'get', { petId: capture.petId }); assert.equal(pet.ok, true);
