@@ -3,14 +3,16 @@ const { join } = require('node:path');
 const { point, checkFix, distanceMeters } = require('./coordinates.cjs');
 
 class WindowsLocationAdapter {
-  constructor({ timeoutSeconds = 16 } = {}) { this.timeoutSeconds=timeoutSeconds; }
-  getPosition() {
+  constructor({ timeoutSeconds = 16, execute = execFile } = {}) { this.timeoutSeconds=timeoutSeconds;this.execute=execute; }
+  getPosition({signal}={}) {
+    if(signal?.aborted)return Promise.resolve({ok:false,code:'LOCATION_CANCELLED',message:'定位已取消'});
     if (process.platform !== 'win32') return Promise.resolve({ ok:false, code:'LOCATION_PLATFORM_UNSUPPORTED', message:'当前系统尚未接入原生定位' });
     return new Promise(resolve => {
       const script=join(__dirname,'windows-location.ps1');
       const powershell=join(process.env.SystemRoot || 'C:\\Windows','System32','WindowsPowerShell','v1.0','powershell.exe');
-      execFile(powershell,['-NoLogo','-NoProfile','-NonInteractive','-ExecutionPolicy','Bypass','-File',script,'-TimeoutSeconds',String(this.timeoutSeconds)],
-        {windowsHide:true,timeout:(this.timeoutSeconds+8)*1000,encoding:'utf8',maxBuffer:16384}, (error,stdout) => {
+      this.execute(powershell,['-NoLogo','-NoProfile','-NonInteractive','-ExecutionPolicy','Bypass','-File',script,'-TimeoutSeconds',String(this.timeoutSeconds)],
+        {windowsHide:true,timeout:(this.timeoutSeconds+8)*1000,encoding:'utf8',maxBuffer:16384,signal}, (error,stdout) => {
+          if(signal?.aborted){resolve({ok:false,code:'LOCATION_CANCELLED',message:'定位已取消'});return;}
           try { const result=JSON.parse(stdout.trim().replace(/^\uFEFF/,'')); resolve(result); }
           catch { resolve({ok:false,code:error?.killed ? 'LOCATION_TIMEOUT' : 'LOCATION_UNAVAILABLE',message:error?.message || '系统定位没有返回有效结果'}); }
         });
@@ -22,7 +24,7 @@ class LocationService {
   constructor({ adapter = new WindowsLocationAdapter(), now = Date.now, mayUseLocation = () => true } = {}) {
     this.adapter=adapter; this.now=now; this.fix=null; this.lastError=null; this.status='idle'; this.permission='unknown';
     this.mayUseLocation=mayUseLocation;
-    this.pending=null; this.mode='real'; this.timer=null; this.listeners=new Set(); this.generation=0;
+    this.pending=null; this.readController=null; this.mode='real'; this.timer=null; this.listeners=new Set(); this.generation=0;
   }
   snapshot() {
     const quality=this.fix?.source==='os' ? checkFix(this.fix,this.now()) : null;
@@ -37,19 +39,21 @@ class LocationService {
     this.lastError={code:'APP_LOCATION_DISABLED',message:'应用内定位尚未开启，或当前不在可定位的探索页面。请检查设置中的位置隐私选项。'};
     this.emit();return {ok:false,error:this.lastError,state:this.snapshot()};
   }
-  suspend() {if(this.timer)clearInterval(this.timer);this.timer=null;++this.generation;this.pending=null;if(this.status==='locating') this.status='idle';this.emit();}
+  cancelRead() {this.readController?.abort();this.readController=null;}
+  suspend() {if(this.timer)clearInterval(this.timer);this.timer=null;++this.generation;this.cancelRead();this.pending=null;if(this.status==='locating') this.status='idle';this.emit();}
   reset() {this.suspend();this.fix=null;this.mode='real';this.status='idle';this.permission='unknown';this.lastError=null;this.emit();}
   locate() {
     if(!this.policyAllowed()) return Promise.resolve(this.blockByPolicy());
     if (this.pending) return this.pending;
-    this.mode='real'; this.status='locating'; this.lastError=null; this.emit();
+    this.mode='real';if(this.fix?.source==='demo')this.fix=null; this.status='locating'; this.lastError=null; this.emit();
     const generation=++this.generation;
-    this.pending=this.read(generation).finally(()=>{ if(generation===this.generation) this.pending=null; });
+    this.readController=new AbortController();
+    this.pending=this.read(generation,this.readController.signal).finally(()=>{ if(generation===this.generation){this.pending=null;this.readController=null;} });
     return this.pending;
   }
-  async read(generation) {
+  async read(generation,signal) {
     let result;
-    try { result=await this.adapter.getPosition(); }
+    try { result=await this.adapter.getPosition({signal}); }
     catch(error) { result={ok:false,code:'LOCATION_UNAVAILABLE',message:error.message}; }
     if (generation!==this.generation) return {ok:false,error:{code:'LOCATION_CANCELLED',message:'定位已取消'},state:this.snapshot()};
     if(!this.policyAllowed()) return this.blockByPolicy();
@@ -62,7 +66,7 @@ class LocationService {
     try { point(result); } catch(error) { this.fix=null; this.status='unavailable'; this.lastError={code:error.code,message:error.message}; this.emit(); return {ok:false,error:this.lastError,state:this.snapshot()}; }
     const fix={lat:result.lat,lng:result.lng,accuracyMeters:result.accuracyMeters,timestampMs:result.timestampMs,coordinateSystem:'wgs84',source:'os',provider:result.provider,positionSource:result.positionSource};
     const quality=checkFix(fix,this.now());
-    if (this.fix && fix.timestampMs>this.fix.timestampMs && distanceMeters(this.fix,fix)/Math.max(1,(fix.timestampMs-this.fix.timestampMs)/1000)>45) {
+    if (this.fix?.source==='os' && fix.timestampMs>this.fix.timestampMs && distanceMeters(this.fix,fix)/Math.max(1,(fix.timestampMs-this.fix.timestampMs)/1000)>45) {
       this.fix=null; this.status='imprecise'; this.lastError={code:'LOCATION_DRIFT',message:'位置跳变过大，请重新定位'};
       this.emit(); return {ok:false,error:this.lastError,state:this.snapshot()};
     }
@@ -71,12 +75,12 @@ class LocationService {
     return {ok:true,state:this.snapshot()};
   }
   setDemo(enabled) {
-    this.stopWatch(); ++this.generation; this.pending=null; this.mode=enabled ? 'demo' : 'real'; this.lastError=null;
+    this.stopWatch(); ++this.generation; this.cancelRead();this.pending=null; this.mode=enabled ? 'demo' : 'real'; this.lastError=null;
     this.fix=enabled ? {lat:31.2304,lng:121.4737,accuracyMeters:15,timestampMs:this.now(),source:'demo',coordinateSystem:'wgs84',provider:'explicit-demo'} : null;
     this.status=enabled ? 'demo' : 'idle'; this.permission='unknown'; this.emit(); return {ok:true,state:this.snapshot()};
   }
   startWatch() { if(!this.policyAllowed()) return Promise.resolve(this.blockByPolicy()); if(!this.timer) {this.timer=setInterval(()=>void this.locate(),15000); this.timer.unref?.();} return this.locate(); }
-  stopWatch() { if(this.timer) clearInterval(this.timer); this.timer=null; this.emit(); return {ok:true,state:this.snapshot()}; }
-  dispose() { this.stopWatch(); ++this.generation; this.listeners.clear(); }
+  stopWatch() { this.suspend(); return {ok:true,state:this.snapshot()}; }
+  dispose() { this.stopWatch(); ++this.generation;this.cancelRead(); this.listeners.clear(); }
 }
 module.exports={WindowsLocationAdapter,LocationService};
