@@ -37,6 +37,9 @@ function createRemoteAdapter(online) {
       return normalizeRemoteUser(result.currentUser);
     },
     setCurrentUser(user) { online?.setCurrentUser?.(user); },
+    onInvalidated(listener) {
+      return online?.onEvent?.(event => { if (event.type === "session-invalidated") listener(event.payload); });
+    },
     async clear() { await online?.leaveRoom?.({ reason: "logout" }).catch(() => {}); online?.setCurrentUser?.(null); },
     async cloudSave(op, session, payload = {}) {
       invariant(enabled && online?.client, "SYNC_UNAVAILABLE", "云存档服务未配置。");

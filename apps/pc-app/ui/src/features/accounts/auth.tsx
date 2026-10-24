@@ -1,4 +1,6 @@
+import { Button } from "../../components/ui";
 import { useState, type FormEvent } from "react";
+import { Eye, EyeOff } from "lucide-react";
 import type { AccountsSession } from "../../../../../../packages/shared-types/src/features/accounts";
 import { errorText, request } from "./api";
 
@@ -45,17 +47,15 @@ export function AuthPage({ session, onSignedIn }: { session: AccountsSession; on
   }
   return <div className="accounts ac-auth">
     <section className="ac-auth-scene" aria-label="灵境陪伴">
-      <span className="ac-brand-star" aria-hidden="true">✦</span>
-      <p className="ac-eyebrow">灵境 · 陪伴从这里开始</p>
-      <h1>有些陪伴，<br />一直都在。</h1>
+      <div className="ac-auth-illustration" aria-hidden="true" />
+      <h1>有些陪伴，一直都在。</h1>
       <p>登录，和你的伙伴再次相见。</p>
-      <div className="ac-scene-orbit" aria-hidden="true"><span>✦</span><i /><b>灵境</b><i /><span>✧</span></div>
       <p className="ac-scene-footer">陪伴 · 探索 · 并肩成长</p>
     </section>
     <section className="ac-auth-card">
       <div className="ac-segment" role="group" aria-label="账号操作">
-        <button type="button" aria-pressed={!register} disabled={pending} onClick={() => { setRegister(false); setError(""); }}>登录</button>
-        <button type="button" aria-pressed={register} disabled={pending} onClick={() => { setRegister(true); setError(""); }}>注册</button>
+        <Button type="button" aria-pressed={!register} disabled={pending} onClick={() => { setRegister(false); setError(""); }}>登录</Button>
+        <Button type="button" aria-pressed={register} disabled={pending} onClick={() => { setRegister(true); setError(""); }}>注册</Button>
       </div>
       <div className="ac-auth-heading"><span aria-hidden="true">✧</span><h2>{register ? "遇见新的陪伴" : "欢迎回来"}</h2><p>{register ? "给自己起个名字，开始你的灵境故事。" : "和伙伴们一起，继续今天的故事吧。"}</p></div>
       <form onSubmit={event => void submit(event)}>
@@ -66,12 +66,12 @@ export function AuthPage({ session, onSignedIn }: { session: AccountsSession; on
           {provider === "local" && <p className="ac-hint">存档保存在这台电脑，可导出备份。旧本机账号可继续登录。</p>}
           {register && <label>用户名<input value={username} onChange={e => setUsername(e.target.value)} autoComplete="nickname" minLength={2} maxLength={24} required /></label>}
           <label>账号<input value={account} onChange={e => setAccount(e.target.value)} autoComplete="username" minLength={3} maxLength={32} required spellCheck={false} /></label>
-          <label>密码<div className="ac-password"><input type={visible ? "text" : "password"} value={password} onChange={e => setPassword(e.target.value)} autoComplete={register ? "new-password" : "current-password"} minLength={6} maxLength={64} required /><button type="button" onClick={() => setVisible(!visible)} aria-label={visible ? "隐藏密码" : "显示密码"}>{visible ? "隐藏" : "显示"}</button></div></label>
+          <label>密码<div className="ac-password"><input aria-label="密码" type={visible ? "text" : "password"} value={password} onChange={e => setPassword(e.target.value)} autoComplete={register ? "new-password" : "current-password"} minLength={6} maxLength={64} required /><Button type="button" onClick={() => setVisible(!visible)} aria-label={visible ? "隐藏密码" : "显示密码"}>{visible ? <EyeOff size={18} /> : <Eye size={18} />}</Button></div></label>
           {register && <label>确认密码<input type="password" value={confirm} onChange={e => setConfirm(e.target.value)} autoComplete="new-password" minLength={6} maxLength={64} required /></label>}
           <label className="ac-check"><input type="checkbox" checked={remember} onChange={e => setRemember(e.target.checked)} />记住账号</label>
           <label className="ac-check"><input type="checkbox" checked={rememberSession} disabled={!session.secureStorageAvailable} onChange={e => setRememberSession(e.target.checked)} />保持登录（系统安全存储）</label>
           <div className="ac-notice ac-error" role="alert">{error}</div>
-          <button className="ac-primary ac-submit" type="submit">{pending ? "正在验证…" : register ? "创建账号 →" : "登录进入 →"}</button>
+          <Button className="ac-primary ac-submit" type="submit">{pending ? "正在验证…" : register ? "创建账号 →" : "登录进入 →"}</Button>
         </fieldset>
       </form>
       {session.startupIssue && <p className="ac-hint">上次登录需重新验证，请输入账号与密码。</p>}

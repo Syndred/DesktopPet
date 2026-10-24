@@ -1,4 +1,6 @@
+import { Button } from "../../components/ui";
 import { useEffect, useState, type ReactNode, type FormEvent } from "react";
+import { Monitor, Pointer, RefreshCw } from "lucide-react";
 import type { SettingsDocument, SettingsSnapshot, AccountsSession } from "../../../../../../packages/shared-types/src/features/accounts";
 import { errorText, newActionId, request, useAccountsSession } from "./api";
 import { AuthPage } from "./auth";
@@ -15,6 +17,7 @@ function SettingsForm({ privacy = false }: { privacy?: boolean; session: Account
   const [pending, setPending] = useState(false);
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
+  const [pointerPreview, setPointerPreview] = useState(false);
   useEffect(() => {
     let active = true;
     void request<SettingsSnapshot>("settingsGet").then(value => { if (active) { setSnapshot(value); setDocument(value.document); } }).catch(e => { if (active) setError(errorText(e)); });
@@ -33,10 +36,10 @@ function SettingsForm({ privacy = false }: { privacy?: boolean; session: Account
     } catch (e) { setError(errorText(e)); }
     finally { setPending(false); }
   }
-  return <div className="accounts ac-page"><header className="ac-page-heading"><p className="ac-eyebrow">设置 / {privacy ? "通知与隐私" : "桌面与行为"}</p><h1>{privacy ? "留一点安静，给自己。" : "按你的节奏，安静陪伴。"}</h1><p>自由调整桌面陪伴行为，让可爱的伙伴以你喜欢的方式出现。</p></header>
-    <div className="ac-settings-layout"><SettingsNavigation /><form className="ac-settings-content" onSubmit={event => void save(event)}>
+  return <div className="accounts ac-page ac-preferences-page">
+    <div className="ac-settings-layout"><SettingsNavigation /><div className="ac-settings-body"><header className="ac-page-heading"><p className="ac-eyebrow">设置 / {privacy ? "通知与隐私" : "桌面与行为"}</p><h1>{privacy ? "留一点安静，给自己。" : "按你的节奏，安静陪伴。"}</h1><p>自由调整桌面陪伴行为，让可爱的伙伴以你喜欢的方式出现。</p></header><form className="ac-settings-content" onSubmit={event => void save(event)}>
       {!document ? <p role="status">正在读取设置…</p> : <fieldset disabled={pending}>
-        {!privacy && <section className="ac-card"><h2>桌面表现</h2>
+        {!privacy && <div className="ac-desktop-columns"><section className="ac-card"><h2>桌面表现</h2>
           <ToggleRow title="始终置顶" description="让桌面伙伴始终显示在其他窗口之上。" checked={document.desktop.alwaysOnTop} onChange={v => edit("desktop", "alwaysOnTop", v)} />
           <ToggleRow title="透明区域鼠标穿透" description="透明区域不拦截鼠标，伙伴本体仍可互动。" checked={document.desktop.clickThrough} onChange={v => edit("desktop", "clickThrough", v)} />
           <ToggleRow title="开机启动" description="由你决定是否随系统启动灵境。" checked={document.desktop.launchAtLogin} onChange={v => edit("desktop", "launchAtLogin", v)} />
@@ -46,25 +49,27 @@ function SettingsForm({ privacy = false }: { privacy?: boolean; session: Account
             <label className="ac-volume">音量<input type="range" min={0} max={100} value={document.desktop.volume} onChange={e => edit("desktop", "volume", Number(e.target.value))} /><output>{document.desktop.volume}%</output></label>
           </ToggleRow>
           <ToggleRow title="全屏应用时暂时隐藏" description="进入全屏应用时暂时收起桌面伙伴，结束后恢复。" checked={document.desktop.hideInFullscreen} onChange={v => edit("desktop", "hideInFullscreen", v)} />
-        </section>}
-        <section className="ac-card"><h2>{privacy ? "通知与安静时段" : "安静时段"}</h2>
+          <ToggleRow title="启用安静时段" checked={document.notifications.quietEnabled} onChange={v => edit("notifications", "quietEnabled", v)}><div className="ac-time-range ac-inline-time"><label>开始时间<input type="time" value={document.notifications.quietStart} onChange={e => edit("notifications", "quietStart", e.target.value)} required /></label><span>至</span><label>结束时间<input type="time" value={document.notifications.quietEnd} onChange={e => edit("notifications", "quietEnd", e.target.value)} required /></label></div></ToggleRow>
+          <ToggleRow title="界面动效" description="页面与弹层遵循系统的减少动态效果设置。" checked={document.desktop.animationsEnabled} onChange={v => edit("desktop", "animationsEnabled", v)} />
+        </section><aside className="ac-card ac-desktop-preview"><div className="ac-preview-heading"><h2><Monitor size={18} />桌面预览</h2><Button type="button" className="ac-secondary" aria-pressed={pointerPreview} onClick={() => setPointerPreview(!pointerPreview)}><Pointer size={13} />穿透预览</Button></div><div className={`ac-desktop-scene ${pointerPreview ? "ac-preview-pointer" : ""}`} aria-label="批准的灵境 2D 桌面场景">{pointerPreview && <span className="ac-pointer-hint">{document.desktop.clickThrough ? "透明区域可穿透" : "透明区域接收鼠标"}</span>}</div><p>桌面已出场 {snapshot?.host?.companionWindows ?? 0} 位 · 陪伴上限 {document.desktop.companionLimit} 位</p><p className="ac-hint">每位伙伴的位置与养成独立保存。</p></aside></div>}
+        {privacy && <section className="ac-card"><h2>通知与安静时段</h2>
           {privacy && <><ToggleRow title="桌面通知" checked={document.notifications.enabled} onChange={v => edit("notifications", "enabled", v)} />
             <ToggleRow title="伙伴互动提醒" checked={document.notifications.companions} onChange={v => edit("notifications", "companions", v)} />
             <ToggleRow title="对战邀请提醒" checked={document.notifications.battles} onChange={v => edit("notifications", "battles", v)} />
             <ToggleRow title="菜园成熟提醒" checked={document.notifications.garden} onChange={v => edit("notifications", "garden", v)} /></>}
           <ToggleRow title="启用安静时段" description="在设定时间内暂停主动通知与互动音效；开始与结束相同表示全天安静。" checked={document.notifications.quietEnabled} onChange={v => edit("notifications", "quietEnabled", v)} />
           <div className="ac-time-range"><label>开始时间<input type="time" value={document.notifications.quietStart} onChange={e => edit("notifications", "quietStart", e.target.value)} required /></label><span>至</span><label>结束时间<input type="time" value={document.notifications.quietEnd} onChange={e => edit("notifications", "quietEnd", e.target.value)} required /></label></div>
-        </section>
+        </section>}
         <section className="ac-card"><h2>位置与隐私</h2>
           <ToggleRow title="允许附近探索使用位置" description="用于发现附近的地图与同好，首次探索仍需通过系统权限。" checked={document.privacy.locationAllowed} onChange={v => edit("privacy", "locationAllowed", v)} />
           <ToggleRow title="位置仅在探索时更新" description="离开附近探索页面后，停止获取位置。" checked={document.privacy.locationOnlyWhileExploring} onChange={v => edit("privacy", "locationOnlyWhileExploring", v)} />
           <ToggleRow title="情绪统计" description="开启后允许记录互动统计；不读取输入内容。" checked={document.privacy.emotionStatistics} onChange={v => edit("privacy", "emotionStatistics", v)} />
         </section>
-        <div className="ac-settings-footer"><button type="button" className="ac-text-button" onClick={() => { void request<SettingsDocument>("settingsDefaults").then(value => { setDocument(value); setNotice("已填入默认设置，保存后生效。"); }).catch(e => setError(errorText(e))); }}>⟳ 恢复默认设置</button><button type="submit" className="ac-primary">{pending ? "正在保存…" : "保存设置"}</button></div>
-        {privacy && <button type="button" className="ac-secondary" onClick={() => { void request<{ delivered: boolean; reason?: string }>("testNotification").then(value => setNotice(value.delivered ? "已发送测试通知。" : `当前未发送通知：${value.reason === "quiet-hours" ? "正处于安静时段" : "通知已关闭或系统不支持"}。`)).catch(e => setError(errorText(e))); }}>测试已保存的通知设置</button>}
+        <div className="ac-settings-footer"><Button type="button" className="ac-text-button" onClick={() => { void request<SettingsDocument>("settingsDefaults").then(value => { setDocument(value); setNotice("已填入默认设置，保存后生效。"); }).catch(e => setError(errorText(e))); }}><RefreshCw size={16} />恢复默认设置</Button><Button type="submit" className="ac-primary">{pending ? "正在保存…" : "保存设置"}</Button></div>
+        {privacy && <Button type="button" className="ac-secondary" onClick={() => { void request<{ delivered: boolean; reason?: string }>("testNotification").then(value => setNotice(value.delivered ? "已发送测试通知。" : `当前未发送通知：${value.reason === "quiet-hours" ? "正处于安静时段" : "通知已关闭或系统不支持"}。`)).catch(e => setError(errorText(e))); }}>测试已保存的通知设置</Button>}
       </fieldset>}
       <p role="status" aria-live="polite" className="ac-notice">{notice}</p><p role="alert" className="ac-notice ac-error">{error}</p>
-    </form></div>
+    </form></div></div>
   </div>;
 }
 export function SettingsPage({ privacy = false }: { privacy?: boolean }) {

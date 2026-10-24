@@ -17,7 +17,11 @@ class AccountsService {
     this.vault = new SessionVault({ userData: services.paths.userData, safeStorage: services.safeStorage });
     this.backups = new BackupManager({ db: this.db, directory: join(services.paths.userData, "accounts", "backups"),
       getIdentity: owner => this.identity(owner) });
-    this.sync = new AccountSync({ db: this.db, backups: this.backups, remote, getSession: () => this.privateSession(), getSettings: owner => this.settings(owner) });
+    this.sync = new AccountSync({ db: this.db, backups: this.backups, remote, getSession: () => this.privateSession(), getSettings: owner => this.settings(owner),
+      onInvalidSession: owner => this.invalidateSession(owner) });
+    this.remoteUnsubscribe = remote.onInvalidated?.(({ userId }) => {
+      if (this.current?.provider === "runtime" && this.identity(this.current.ownerAccountId)?.subject_id === userId) this.invalidateSession(this.current.ownerAccountId);
+    });
     const file = services.paths.legacyDataFile;
     this.migration = importLegacy({ db: this.db, filePath: file && existsSync(`${file}.before-lingjing.bak`) ? `${file}.before-lingjing.bak` : file,
       archiveDir: join(services.paths.userData, "accounts", "legacy-archives") });
@@ -51,6 +55,7 @@ class AccountsService {
         unresolved: this.migration.unresolved.map(({ reason }) => ({ reason })) }, startupIssue: this.startupIssue };
   }
   async initialize() {
+    if (this.db.prepare("SELECT blocked FROM account_session_control WHERE singleton=1").get()?.blocked) return;
     const saved = this.vault.load();
     if (!saved) return;
     const row = this.identity(saved.ownerAccountId);
@@ -89,9 +94,11 @@ class AccountsService {
     return this.emitSession();
   }
   persistSession(rememberSession) {
+    this.db.prepare("INSERT INTO account_session_control VALUES(1,1) ON CONFLICT(singleton) DO UPDATE SET blocked=1").run();
     try {
       if (rememberSession && this.vault.available()) {
         this.vault.save({ ownerAccountId: this.current.ownerAccountId, proof: this.current.proof }); this.current.persistence = "secure";
+        this.db.prepare("UPDATE account_session_control SET blocked=0 WHERE singleton=1").run();
       } else this.vault.clear();
     } catch {
       this.current.persistence = "memory"; this.startupIssue = "SECURE_SESSION_WRITE_FAILED";
@@ -164,13 +171,22 @@ class AccountsService {
   async logout() {
     const prior = this.current;
     this.epoch++; this.current = null;
-    this.vault.clear(); this.host?.clear?.();
+    this.db.prepare("INSERT INTO account_session_control VALUES(1,1) ON CONFLICT(singleton) DO UPDATE SET blocked=1").run();
+    try { this.vault.clear(); } catch { this.startupIssue = "SECURE_SESSION_CLEAR_FAILED"; }
+    this.host?.clear?.();
     if (prior?.provider === "local") this.db.prepare("DELETE FROM account_login_sessions WHERE proof_hash=?").run(checksum(prior.proof));
     this.remote.setCurrentUser(null);
     this.emitSession();
     // Do not block sign-out on an unavailable cloud service or realtime disconnect.
     void this.remote.clear?.().catch(() => {});
     return { currentUser: null };
+  }
+  invalidateSession(owner) {
+    if (this.current?.provider !== "runtime" || this.current.ownerAccountId !== owner) return;
+    this.epoch++; this.current = null; this.startupIssue = "SESSION_INVALIDATED";
+    this.db.prepare("INSERT INTO account_session_control VALUES(1,1) ON CONFLICT(singleton) DO UPDATE SET blocked=1").run();
+    try { this.vault.clear(); } catch { /* SQLite revocation still prevents this proof from resuming. */ }
+    this.host?.clear?.(); this.remote.setCurrentUser(null); this.emitSession();
   }
   settings(owner = this.requireOwner()) {
     invariant(this.identity(owner), "LOGIN_REQUIRED", "请先登录。");
@@ -180,7 +196,7 @@ class AccountsService {
       this.db.prepare("INSERT INTO account_settings VALUES(?,0,?,?)").run(owner, JSON.stringify(document), new Date().toISOString());
       row = this.db.prepare("SELECT * FROM account_settings WHERE owner_account_id=?").get(owner);
     }
-    return { document: JSON.parse(row.document), revision: row.revision, updatedAt: row.updated_at };
+    return { document: validateSettings(JSON.parse(row.document)), revision: row.revision, updatedAt: row.updated_at };
   }
   async saveSettings(input) {
     invariant(!this.settingsBusy, "SETTINGS_BUSY", "正在保存设置，请稍候。");
@@ -244,6 +260,9 @@ class AccountsService {
       this.remote.setCurrentUser(row.provider === "runtime" ? this.privateSession() : null);
       this.emitSession();
       return { currentUser: this.getCurrentUser(), changed: true };
+    } catch (error) {
+      if (error.code === "SESSION_INVALIDATED") this.invalidateSession(owner);
+      throw error;
     } finally { this.profileBusy = false; }
   }
   getLegacyInventory(owner = this.requireOwner()) {
@@ -265,12 +284,15 @@ class AccountsService {
   async restoreBackup(input) {
     const owner = this.requireOwner();
     const preview = this.backups.previews.get(input.previewId);
-    const restored = this.backups.restore(owner, input);
-    if (preview?.cloudRevision) this.sync.acceptCloudRestore(owner, preview);
+    const restored = transaction(this.db, () => {
+      const result = this.backups.restore(owner, input);
+      if (preview?.cloudRevision) this.sync.acceptCloudRestore(owner, preview);
+      return result;
+    });
     await this.host?.apply?.(this.settings(owner).document);
     this.services.events?.emit("accounts:save-restored", { ownerAccountId: owner });
     return restored;
   }
-  dispose() { clearInterval(this.retryTimer); this.host?.dispose?.(); }
+  dispose() { clearInterval(this.retryTimer); this.remoteUnsubscribe?.(); this.host?.dispose?.(); }
 }
 module.exports = { AccountsService };

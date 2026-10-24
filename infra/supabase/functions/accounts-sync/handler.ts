@@ -33,7 +33,8 @@ export function createAccountsHandler(createClient) {
         && typeof sessionToken === "string" && sessionToken.length >= 16 && sessionToken.length <= 1024, "SESSION_INVALIDATED");
       const supabase = createClient();
       const account = await supabase.from("runtime_accounts").select("id,session_token").eq("id", userId).maybeSingle();
-      assert(!account.error && account.data?.session_token === sessionToken, "SESSION_INVALIDATED");
+      assert(!account.error, "SYNC_UNAVAILABLE");
+      assert(account.data?.session_token === sessionToken, "SESSION_INVALIDATED");
       if (payload.op === "push") {
         assert(typeof payload.actionId === "string" && /^[a-zA-Z0-9][a-zA-Z0-9:_-]{7,127}$/.test(payload.actionId)
           && Number.isSafeInteger(payload.baseRevision) && payload.baseRevision >= 0, "INVALID_REQUEST");

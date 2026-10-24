@@ -12,7 +12,7 @@ export interface AccountUser {
 export interface SettingsDocument {
   desktop: {
     alwaysOnTop: boolean; clickThrough: boolean; launchAtLogin: boolean; closeToTray: boolean;
-    companionLimit: number; interactionSounds: boolean; volume: number; hideInFullscreen: boolean;
+    companionLimit: number; interactionSounds: boolean; volume: number; hideInFullscreen: boolean; animationsEnabled: boolean;
   };
   notifications: {
     enabled: boolean; companions: boolean; battles: boolean; garden: boolean;
@@ -31,6 +31,7 @@ export interface AccountsSession {
 }
 export interface DesktopHostStatus {
   startup: boolean; fullscreenMonitor: boolean; foregroundFullscreen: boolean;
+  fullscreenMonitorReady: boolean; fullscreenSource: "win32" | "electron" | null;
   companionWindows: number; clickThroughWindows: number[];
   windows: Array<{ id: number; alwaysOnTop: boolean; visible: boolean }>;
   locationAllowed: boolean; emotionStatistics: boolean;
