@@ -21,6 +21,7 @@ const evidence = {
   at: new Date().toISOString(), output, profile,
   source: { sha: git(['rev-parse', 'HEAD']), dirty: git(['status', '--porcelain']), mainBundleSha256: digest(readFileSync(resolve('apps/pc-app/dist/main/index.cjs'))), uiEntrySha256: digest(readFileSync(resolve('apps/pc-app/dist/ui/index.html'))) },
   scenario: { id: scenario.scenario, runId: scenario.runId, provenance: 'simulated', isolated: true },
+  sources: { authentication: 'real-local-account', characters: 'registered-project-original-atlases', playback: 'production-IPC-and-Pixi', training: 'actual-local-authoritative-engine', territory: 'simulated-controlled-owned-record', garrison: 'production-command-against-controlled-territory', realCloudAcceptance: false, realGeographicAcceptance: false },
   scope: 'U02/U03 presentation/U05/U07 companions self-acceptance; four-mode/all-25 rules are separately owned by battle and central integration',
   inputs: [], characters: [], screenshots: [], errors: []
 };
@@ -122,6 +123,13 @@ try {
   assert.deepEqual([...new Set(templates.map(template => template.element))].sort(), ['earth', 'fire', 'metal', 'water', 'wood']);
   await route('/companions/adopt'); await settle('.cp-adoption-page');
   assert.equal(await page.locator('.cp-template-card').count(), 8); assert.equal(await page.locator('.cp-template-card .cp-element').count(), 8);
+  for (const [element, label] of [['metal', '金'], ['wood', '木'], ['water', '水'], ['fire', '火'], ['earth', '土']]) {
+    await page.getByRole('combobox', { name: '按五行筛选', exact: true }).click(); await page.getByRole('option', { name: label, exact: true }).click();
+    await page.waitForFunction(element => { const cards = [...document.querySelectorAll('.cp-template-card .cp-element')]; return cards.length > 0 && cards.every(card => card.dataset.element === element); }, element);
+    input('adoption-element-filter', { element, actualCards: await page.locator('.cp-template-card').count() });
+  }
+  await page.getByRole('combobox', { name: '按五行筛选', exact: true }).click(); await page.getByRole('option', { name: '全部五行', exact: true }).click();
+  await page.waitForFunction(() => document.querySelectorAll('.cp-template-card').length === 8);
   const show = page.getByRole('checkbox', { name: '领养后放到桌面', exact: true }); if (await show.getAttribute('aria-checked') === 'true') await show.click();
   for (const template of templates) {
     await page.locator('.cp-template-card').filter({ has: page.locator('strong', { hasText: new RegExp(`^${template.name}$`) }) }).click();
