@@ -81,9 +81,14 @@ async function desktop(pet) {
 async function captureDesktop(pet) {
   const captured = await app.evaluate(async ({ BrowserWindow }, petId) => {
     const window = BrowserWindow.getAllWindows().find(window => window.webContents.getURL().includes(`#/desktop/${petId}`));
-    const image = await window.webContents.capturePage(), bitmap = image.toBitmap();
-    let visiblePixels = 0; for (let offset = 3; offset < bitmap.length; offset += 4) if (bitmap[offset]) visiblePixels++;
-    return { png: image.toPNG().toString('base64'), size: image.getSize(), visiblePixels, bounds: window.getBounds(), visible: window.isVisible(), route: window.webContents.getURL() };
+    const wasThrottled = window.webContents.getBackgroundThrottling(); let timeout;
+    window.webContents.setBackgroundThrottling(false); window.showInactive(); window.moveTop();
+    try {
+      const image = await Promise.race([window.webContents.capturePage(undefined, { stayAwake: true }), new Promise((_, reject) => { timeout = setTimeout(() => reject(new Error('Native capture timed out after making the QA window visible')), 8000); })]);
+      const bitmap = image.toBitmap(); let visiblePixels = 0;
+      for (let offset = 3; offset < bitmap.length; offset += 4) if (bitmap[offset]) visiblePixels++;
+      return { png: image.toPNG().toString('base64'), size: image.getSize(), visiblePixels, bounds: window.getBounds(), visible: window.isVisible(), route: window.webContents.getURL(), capturePolicy: 'temporary-front-and-unthrottled-in-isolated-QA', originalBackgroundThrottling: wasThrottled };
+    } finally { clearTimeout(timeout); window.webContents.setBackgroundThrottling(wasThrottled); }
   }, pet.petId);
   assert.equal(captured.visible, true); assert.ok(captured.visiblePixels > 200, 'Native capture must contain the actual rendered sprite');
   const name = `desktop-${pet.element}.png`; writeFileSync(join(output, name), Buffer.from(captured.png, 'base64'));
