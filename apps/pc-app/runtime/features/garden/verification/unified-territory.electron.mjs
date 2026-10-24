@@ -1,3 +1,4 @@
+// Native QA harness; excluded from portable builds by the shared verification rule.
 import { _electron as electron } from 'playwright';
 import assert from 'node:assert/strict';
 import { existsSync,mkdirSync,readFileSync,writeFileSync } from 'node:fs';
@@ -159,6 +160,7 @@ try{
       await current.page.waitForFunction(()=>location.hash==='#/garden');
       let after=await current.garden();const territory=after.data.territories.find(value=>value.id===scenario.territoryId);
       assert.equal(territory.ownerAccountId,label==='win'?scenario.owner:null);assert.deepEqual(storedPlot(after.data.plots[0]),storedPlot(scenario.personalCrop));
+      assert.deepEqual(after.data.pets.filter(pet=>pet.petId!==chosen.petId),scenario.before.data.pets.filter(pet=>pet.petId!==chosen.petId));scenario.nonTargetPetsUnchanged=true;
       const seedCount=data=>data.items.filter(item=>item.category==='seed').reduce((total,item)=>total+item.quantity,0);
       assert.equal(seedCount(after.data)-seedCount(scenario.before.data),2);
       if(label==='win'){
@@ -167,6 +169,7 @@ try{
         assert.deepEqual((await current.invoke('companions','list')).data,beforeGuard);const guarded=await current.garden();assert.deepEqual(guarded.data.items,after.data.items);assert.equal(guarded.data.territories.find(value=>value.id===scenario.territoryId).garrisonPetId,guard.petId);after=guarded;scenario.garrisonNoGrowthOrSelectionChange=true;
       }else assert.equal(await current.page.getByRole('button',{name:'确认驻守',exact:true}).count(),0);
       scenario.after=after;scenario.pets=(await current.invoke('companions','list')).data;scenario.completed=true;save();
+      await portraitsReady(current.page);
       await current.page.screenshot({path:join(output,`${label}-confirmed-territory.png`),fullPage:true});
       await current.app.close();current=null;
       const db=new DatabaseSync(join(scenario.profilePath,'lingjing.sqlite'),{readOnly:true});
@@ -176,6 +179,8 @@ try{
       current=await open(scenario);await register(current,scenario,label);
       const beforeReplay=await current.garden(),replayed=await current.invoke('garden','territorySettle',scenario.confirmInput);assert.equal(replayed.replayed,true);
       const reread=await current.garden();assert.deepEqual(reread.data.items,beforeReplay.data.items);assert.deepEqual(reread.data.territories,beforeReplay.data.territories);assert.equal(reread.revision,beforeReplay.revision);assert.deepEqual((await current.invoke('companions','list')).data,scenario.pets);
+      await current.route(`/battle/session/${encodeURIComponent(scenario.sessionId)}`);await current.page.getByRole('button',{name:'已确认',exact:true}).waitFor();assert.equal(await current.page.getByRole('button',{name:'已确认',exact:true}).isDisabled(),true);assert.equal(await current.page.locator('.battle-live-layout').getAttribute('data-animation-phase'),'rest');scenario.confirmedResultUi=true;
+      await current.page.screenshot({path:join(output,`${label}-confirmed-battle.png`),fullPage:true});
       scenario.exactRestartAndReplay=true;save();await current.app.close();current=null;
     }
     proof.checks.push('Both outcomes use the same shared battle screen; exact session route/page/restart recovery, public context confirmation and one seed receipt; repeat confirmation preserves all state');
