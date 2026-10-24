@@ -3,6 +3,7 @@ export interface AccountUser {
   subjectId: string;
   ownerAccountId: string;
   provider: "local" | "runtime";
+  dataMode?: "live" | "simulated";
   account: string;
   username: string;
   revision: number;
@@ -22,6 +23,8 @@ export interface SettingsDocument {
   sync: { enabled: boolean };
 }
 export interface AccountsSession {
+  dataMode?: "live" | "simulated";
+  scenario?: { mode: "simulated"; profileId: string; scenarioId: string } | null;
   currentUser: AccountUser | null;
   defaultProvider: "local" | "runtime";
   secureStorageAvailable: boolean;
