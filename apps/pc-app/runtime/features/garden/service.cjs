@@ -1,5 +1,5 @@
 "use strict";
-const { createHash } = require("node:crypto");
+const { createHash, randomUUID } = require("node:crypto");
 const { CROPS, ITEMS, RECIPES, BASE_PLOTS, STARTER_SEEDS, MAX_QUANTITY } = require("./catalog.cjs");
 const { migrate } = require("./migrations.cjs");
 
@@ -62,7 +62,7 @@ class GardenService {
     if (!Number.isSafeInteger(balance) || balance < 0) reject("INSUFFICIENT_ITEMS", `${ITEMS[itemId]?.name || itemId}不足`);
     if (balance > 1_000_000_000) reject("INVENTORY_LIMIT", "库存已达上限");
     this.db.prepare("INSERT INTO garden_items VALUES (?,?,?) ON CONFLICT(owner_account_id,item_id) DO UPDATE SET quantity=excluded.quantity").run(owner, itemId, balance);
-    this.db.prepare("INSERT INTO garden_ledger(owner_account_id,action_id,kind,item_id,delta,balance,pet_id,created_at) VALUES (?,?,?,?,?,?,?,?)").run(owner, actionId, kind, itemId, delta, balance, petId, now);
+    this.db.prepare("INSERT INTO garden_events(owner_account_id,event_id,action_id,kind,item_id,delta,balance,pet_id,created_at) VALUES (?,?,?,?,?,?,?,?,?)").run(owner, randomUUID(), actionId, kind, itemId, delta, balance, petId, now);
     return balance;
   }
   command(context, kind, input, work, { checkRevision = true } = {}) {
@@ -114,7 +114,7 @@ class GardenService {
         }));
         const items = Object.values(ITEMS).map(item => ({ ...item, quantity: this.itemCount(owner, item.id) }));
         const pending = this.db.prepare("SELECT status,COUNT(*) count FROM garden_outbox WHERE owner_account_id=? GROUP BY status").all(owner);
-        const ledger = this.db.prepare("SELECT id,action_id actionId,kind,item_id itemId,delta,balance,pet_id petId,created_at createdAt FROM garden_ledger WHERE owner_account_id=? ORDER BY id DESC LIMIT 60").all(owner);
+        const ledger = this.db.prepare("SELECT event_id id,action_id actionId,kind,item_id itemId,delta,balance,pet_id petId,created_at createdAt FROM garden_events WHERE owner_account_id=? ORDER BY created_at DESC,event_id DESC LIMIT 60").all(owner);
         const pets = this.companions?.listForOwner?.({ db: this.db, ownerAccountId: owner }) || [];
         const territories = this.listTerritories(owner);
         return { ok: true, revision: this.revision(owner), data: { ownerAccountId: owner, serverTime: now, plots, items, crops: Object.values(CROPS), recipes: Object.values(RECIPES), pets, territories, ledger, sync: { mode: this.cloud ? "available" : "local", pending: pending.find(p => p.status === "pending")?.count || 0, conflicts: pending.find(p => p.status === "conflict")?.count || 0 } } };
@@ -167,6 +167,7 @@ class GardenService {
     return this.command(context, "feed", input, ({ owner, now, actionId }) => {
       const item = ITEMS[input.itemId]; if (!item?.effects) reject("NOT_EDIBLE", input.itemId === "rice" ? "稻米需要先制作成米饭" : "这件物品不能喂食");
       const count = quantity(input.quantity); identifier(input.petId, "伙伴实例");
+      if (!Number.isSafeInteger(input.expectedPetRevision) || input.expectedPetRevision < 0) reject('INVALID_PET_REVISION', '请刷新伙伴状态后再喂食');
       if (!this.companions?.applyFoodInTransaction) reject("COMPANIONS_UNAVAILABLE", "伙伴养成服务尚未就绪");
       this.changeItem(owner, actionId, "feed", item.id, -count, now, input.petId);
       const effects = Object.fromEntries(Object.entries(item.effects).map(([key, value]) => [key, value * count]));
