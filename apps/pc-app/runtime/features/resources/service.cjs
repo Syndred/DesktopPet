@@ -114,7 +114,8 @@ class ResourcesService {
     const context = request.context || 'desktop';
     const display = { ...resource.calibration[context] };
     if (request.facing === 'left') display.mirrorX = !display.mirrorX;
-    return { resource, petId: request.petId, context, calibration: display, ...resolveAction(resource, request.action) };
+    const resolved = resolveAction(resource, request.action);
+    return { resource, petId: request.petId, context, calibration: display, ...resolved, clip: resolved.clip ? { ...resolved.clip, fps: display.fps || resolved.clip.fps } : null };
   }
   /** Companion native-window adapter, retaining registered URLs instead of leaking local file paths. */
   async resolveForPet(owner, pet) {

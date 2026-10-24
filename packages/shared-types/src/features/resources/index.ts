@@ -85,5 +85,4 @@ export interface ResourcesClient {
   save(request: ResourceSaveRequest): Promise<ResourceResult<CharacterResource>>;
   resolve(request: ResourceDisplayRequest): Promise<ResourceResult<ResourceDisplay>>;
   assetUrl(resourceId: string, assetKey: string): string;
-  importLegacyCalibration?(profiles: Record<string, unknown>): Promise<ResourceResult<{ migrated: number }>>;
 }

@@ -24,7 +24,8 @@
   ],
   "designReference": "docs/design/2026-10-24/full-ui/07-battle-report-and-model-import.png, lower half, adapted to 2D import/action calibration",
   "integrationDependencies": [
-    "foundation public shadcn/Radix Tabs, Select, Slider, Switch, ScrollArea and Motion entry wrappers; do not build private copies",
+    "foundation public shadcn/Radix + Motion files are being adopted at components/ui/{tabs,select,slider,switch,scroll-area,popover,input} and components/motion AnimatedList; await its committed base",
+    "Shared Slider must forward aria-label / aria-labelledby to its actual Thumb (the focusable slider); otherwise labeled keyboard tests cannot address it",
     "foundation registerBuiltinArt supplies approved builtin:lingjing-yuwan-v1 on normal registration"
   ],
   "remaining": [

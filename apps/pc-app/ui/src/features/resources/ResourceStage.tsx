@@ -58,6 +58,8 @@ export function ResourceStage({ resource, petId, context = 'desktop', action = '
       const maxWidth = Math.max(...Object.values(sheet.textures).map(texture => texture.orig.width)), maxHeight = Math.max(...Object.values(sheet.textures).map(texture => texture.orig.height));
       let selectedClip = '';
       const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+      // Foundation's Motion wrapper owns the app/system policy; this only bridges it to Pixi.
+      const motionBoundary = element.closest('[data-motion]');
       app.stage.addChild(sprite); element.appendChild(app.canvas);
       app.canvas.setAttribute('aria-label', `${resource.name} · 2D 动画`);
       sprite.onFrameChange = frame => { element.dataset.frame = String(frame); };
@@ -68,15 +70,17 @@ export function ResourceStage({ resource, petId, context = 'desktop', action = '
         sprite.position.set(app.screen.width / 2, app.screen.height * 0.83);
         sprite.scale.set(Math.min(app.screen.width * 0.78 / maxWidth, app.screen.height * 0.88 / maxHeight));
         sprite.animationSpeed = (value.calibration.fps || value.clip?.fps || 8) / 60; sprite.loop = value.clip?.loop ?? true;
-        if (value.playing && value.motionEnabled && !document.hidden && !reduced.matches) { sprite.play(); app.ticker.start(); }
+        if (value.playing && value.motionEnabled && !document.hidden && !reduced.matches && motionBoundary?.getAttribute('data-motion') !== 'reduced') { sprite.play(); app.ticker.start(); }
         else { sprite.stop(); app.renderer.render(app.stage); app.ticker.stop(); }
       };
       const resize = () => { app.renderer.resize(element.clientWidth || 200, element.clientHeight || 240); update(); };
       const observer = new ResizeObserver(resize); observer.observe(element);
+      const policyObserver = new MutationObserver(update);
+      if (motionBoundary) policyObserver.observe(motionBoundary, { attributes: true, attributeFilter: ['data-motion'] });
       document.addEventListener('visibilitychange', update); reduced.addEventListener('change', update);
       engine.current = { app, sprite, update }; update();
       element.dataset.textureKey = cacheKey; element.dataset.frame = String(sprite.currentFrame);
-      destroy = () => { observer.disconnect(); document.removeEventListener('visibilitychange', update); reduced.removeEventListener('change', update); sprite.stop(); engine.current = null; app.destroy(true, { children: true, texture: false, textureSource: false }); };
+      destroy = () => { observer.disconnect(); policyObserver.disconnect(); document.removeEventListener('visibilitychange', update); reduced.removeEventListener('change', update); sprite.stop(); engine.current = null; app.destroy(true, { children: true, texture: false, textureSource: false }); };
       setStatus({ state: 'ready' });
     }
     void mount().catch(error => { if (!cancelled) { console.warn('[resources:2d-atlas]', error); destroy?.(); destroy = undefined; setStatus({ state: 'error', message: '图集无法载入，请检查图片与帧信息后重试。' }); } });
