@@ -1,4 +1,4 @@
-# 六伙伴 canonical 资源与近景构图契约
+# 八伙伴 canonical 资源与近景构图契约
 
 本轮对应集中清单 A07、A08、A12，资源页同时消费 A01 的公共字体及间距。首个可合入资产提交为 `2d0b5c8`；资产位于 `runtime/features/resources/assets/roster-v2/`，位图均来自 OpenAI 内置 `image_gen.imagegen`，不是旧 GLB 或几何占位。
 
@@ -10,8 +10,10 @@
 | animal-shiba | 焰柴 | builtin:lingjing-shiba-v2 |
 | animal-hat-cat | 礼帽喵 | builtin:lingjing-hatcat-v1 |
 | animal-white-fox | 小狐 | builtin:lingjing-xiaohu-v1 |
+| animal-wood-deer | 青芽 | builtin:lingjing-qingya-v1 |
+| animal-earth-pangolin | 岩团 | builtin:lingjing-yantuan-v1 |
 
-`roster.cjs` 的 `listRosterTemplates()` 是模板与资源关联的单一来源；companions/templates 只补充原有 BASE_STATS，原先三个模板 ID 和属性公式保留。`registerRoster(resourcesService)` 完整解析六包后用共享 SQLite 事务登记，资源模块启动已接入。图集 PNG 校验精确 SHA256；描述文件按语义比较，兼容 Git 的 LF/CRLF 转换。
+`roster.cjs` 的 `listRosterTemplates()` 是模板与资源关联的单一来源；companions/templates 只补充原有 BASE_STATS，原先三个模板 ID 和属性公式保留。`registerRoster(resourcesService)` 完整解析八包后用共享 SQLite 事务登记，资源模块启动已接入。图集 PNG 校验精确 SHA256；描述文件按语义比较，兼容 Git 的 LF/CRLF 转换。五行扩展保留原六只 PNG 与描述文件原字节，新增木、土各一只，公共事件重播接口与本轮证据见 [five-element-resources-contract.md](five-element-resources-contract.md)。
 
 `pet.resource.resourceId` 始终是身份来源。领养、详情、桌面、聊天、出战和战报均以该字段获取资源；不要按 element 或战斗场景换另一套默认角色。资源服务 get/getRecord/resolve/resolveForPet 将明确的旧内置 ID 读穿到 canonical ID：yuwan-v1、battle-yuwan-v1 → yuwan-v2；battle-shiba-v1 → shiba-v2。原实例引用、旧资源行、旧偏好、流水和原位图不删除或重写。旧 URL 仍服务其原登记字节；新解析返回 canonical ID 和新资产 URL。用户导入的 UUID 不参与别名，也不会被折叠。新 canonical 资源的偏好独立于保留的旧版本偏好，避免把旧 attack=wave 当作新动作设置。
 
@@ -50,7 +52,7 @@
 .pet-avatar { width: 40px; height: 40px; border-radius: 50%; overflow: hidden; }
 ```
 
-默认 `framing="portrait"` 从同一 canonical 待机帧的实际主体区域取头部/上身，忽略 512×512 逻辑帧的透明边距；六种轮廓各有集中维护的构图参数。函数返回源帧、viewBox、原图尺寸及 SVG imageTransform，消费方也可自行组合 SVG。支持 TexturePacker 旋转帧；视口始终在同一个源帧内。`framing="full"` 可用于需要全身的静态卡片；动态桌面与战斗舞台继续使用 ResourceStage，不全局放大、不换角色、不生成新头像图。
+默认 `framing="portrait"` 从同一 canonical 待机帧的实际主体区域取头部/上身，忽略 512×512 逻辑帧的透明边距；八种轮廓各有集中维护的构图参数。函数返回源帧、viewBox、原图尺寸及 SVG imageTransform，消费方也可自行组合 SVG。支持 TexturePacker 旋转帧；视口始终在同一个源帧内。`framing="full"` 可用于需要全身的静态卡片；动态桌面与战斗舞台继续使用 ResourceStage，不全局放大、不换角色、不生成新头像图。
 
 领养/详情缩略图由 companions 接入，聊天侧图与圆头像由 conversations 接入，HUD 与出战卡由 battle 接入，foundation 统一集成。资源卡已采用该公共构图。`decorative` 用于旁边已有名字的装饰图；`label` 用于独立头像的可访问名称。自定义 assetUrl 只接收资源 ID 和登记 key，默认仍走安全资源协议。
 

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Check, FolderUp, Search } from 'lucide-react';
+import { Check, Droplets, Flame, FolderUp, Gem, Leaf, Mountain, Search } from 'lucide-react';
 import type { CharacterResource, ResourcesClient } from '../../../../../../packages/shared-types/src/features/resources';
 import { Button } from '../../components/ui';
 import { AnimatedList } from '../../components/motion';
@@ -8,6 +8,8 @@ import { ScrollArea } from '../../components/ui/scroll-area';
 import { Popover, PopoverContent, PopoverTrigger } from '../../components/ui/popover';
 import type { ResourceProvenance } from '../../../../../../packages/shared-types/src/features/resources';
 import { ResourcePortrait } from './ResourcePortrait';
+import { RESOURCE_ELEMENT_LABELS } from './display';
+const ELEMENT_ICONS = {metal:Gem,wood:Leaf,water:Droplets,fire:Flame,earth:Mountain};
 
 export function ResourceThumbnail({ resource, client }: { resource: CharacterResource; client: ResourcesClient }) {
   return <div className="resource-card-art"><ResourcePortrait resource={resource} assetUrl={client.assetUrl} decorative /></div>;
@@ -19,10 +21,10 @@ export function ResourceLibrary({ resources, selectedId, choose, client, loading
     <div className="resources-panel-heading"><h2 id="resource-library-title">我的角色资源</h2><span>{resources.length} 个 2D 形象</span></div>
     <label className="resource-search"><Search size={14} aria-hidden="true" /><Input aria-label="搜索角色" placeholder="搜索角色名称" value={search} onChange={event => setSearch(event.target.value)} /></label>
     <ScrollArea className="resources-library-scroll"><AnimatedList className="resources-grid">
-      {visible.map(resource => <Button variant="ghost" key={resource.id} data-resource-id={resource.id} className={`resource-card ${selectedId === resource.id ? 'is-selected' : ''}`} aria-pressed={selectedId === resource.id} onClick={() => choose(resource)}>
-        <span className="resource-dimension is-2d">2D</span>{selectedId === resource.id ? <span className="resource-selected-mark"><Check size={12} /></span> : null}
+      {visible.map(resource => { const ElementIcon=resource.element ? ELEMENT_ICONS[resource.element] : null; return <Button variant="ghost" key={resource.id} data-resource-id={resource.id} className={`resource-card ${selectedId === resource.id ? 'is-selected' : ''}`} aria-pressed={selectedId === resource.id} onClick={() => choose(resource)}>
+        <span className={`resource-dimension ${resource.element ? `resource-element-${resource.element}` : 'is-2d'}`} aria-label={resource.element ? `${RESOURCE_ELEMENT_LABELS[resource.element]}属性` : '2D'} title={resource.element ? `${RESOURCE_ELEMENT_LABELS[resource.element]}属性` : undefined}>{ElementIcon ? <ElementIcon size={10} aria-hidden="true" /> : null}{resource.element ? RESOURCE_ELEMENT_LABELS[resource.element] : '2D'}</span>{selectedId === resource.id ? <span className="resource-selected-mark"><Check size={12} /></span> : null}
         <ResourceThumbnail resource={resource} client={client} /><strong>{resource.name}</strong><span>{Object.keys(resource.atlas?.frames ?? {}).length} 帧 · {resource.origin === 'import' ? '本地导入' : '项目角色'}</span>
-      </Button>)}
+      </Button>;})}
       {!visible.length ? <p className="resources-empty">{loading ? '正在读取角色…' : '没有匹配的 2D 角色。'}</p> : null}
     </AnimatedList></ScrollArea>
     <div className="resources-import"><FolderUp size={27} aria-hidden="true" /><strong>带上喜欢的 2D 角色</strong><p>支持角色包与 PixiJS / TexturePacker 图集。<br />选择解压目录内的 JSON 描述文件。</p>

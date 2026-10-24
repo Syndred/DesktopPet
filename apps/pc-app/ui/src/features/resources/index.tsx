@@ -13,7 +13,7 @@ import './resources.css';
 export { ResourceStage } from './ResourceStage';
 export { ResourcePortrait } from './ResourcePortrait';
 export { resourceAssetUrl, resourcesClient } from './client';
-export { resolveResourceCalibration, resolveResourceClip, resolveResourcePortrait } from './display';
+export { resolveResourceCalibration, resolveResourceClip, resolveResourcePortrait, RESOURCE_ELEMENT_LABELS } from './display';
 const tabs = [['library', '角色资源'], ['actions', '动作配置'], ['calibration', '动作校准']] as const;
 export function ResourcesPage({ client = resourcesClient }: { client?: ResourcesClient }) {
   const state = useResources(client), [tab, setTab] = useState('library');
@@ -24,7 +24,7 @@ export function ResourcesPage({ client = resourcesClient }: { client?: Resources
         {tabs.map(([value]) => <TabsContent value={value} key={value} className="resources-tab-content">{state.draft ? <ResourceEditor resource={state.draft} mode={value} client={client} edit={state.edit} dirty={state.dirty} saving={state.operation === 'save'} save={() => void state.save()} discard={state.discard} /> : <section className="resources-preview resources-panel resources-empty"><img src={brandMark} alt="" /><p>选择一个 2D 角色，开始预览。</p><Button variant="secondary" onClick={() => void state.reload()}><RotateCcw size={14} />重新载入资源库</Button></section>}</TabsContent>)}
       </div>
     </Tabs>
-    <p className="resources-status" role="status" aria-live="polite">{state.message || (state.dirty ? '动作与显示设置尚未保存。' : state.loading ? '正在读取 2D 角色资源…' : '仅显示 2D 角色。既有用户文件、存档与导入历史完整保留。')}</p>
+    {state.message || state.dirty || state.loading ? <p className="resources-status" role="status" aria-live="polite">{state.message || (state.dirty ? '尚未保存' : '正在读取角色…')}</p> : null}
   </main>;
 }
 export const feature = { id: 'resources', title: '2D 角色资源', routes: [{ path: '/resources', title: '2D 角色资源', component: ResourcesPage }, { path: '/settings/resources', title: '2D 角色资源', component: ResourcesPage }] };
