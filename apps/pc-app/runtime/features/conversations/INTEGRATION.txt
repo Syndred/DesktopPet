@@ -91,3 +91,18 @@ npm run typecheck
 npm run build:pc
 node apps/pc-app/runtime/features/conversations/tests/electron-flow.mjs
 Electron 测试只写 artifacts/conversations 下的隔离账号、角色和加密数据库，保留原用户数据。
+
+固定视觉清单 A01 / A03 / A07 聊天接点 / A12（2026-10-24 后续修正）
+已采用 foundation 50f6cad 的公共 tokens.css/layout.css，不在业务层另建字体体系。
+聊天与 AI 设置：主标题 text-title=28px/weight-title=700，卡片标题 text-card=16px，
+正文 text-body=14px，标签 text-label=12px，辅助 text-caption=11px；移除业务标题 vw clamp。
+卡片 margin=0，父布局 space-4=16px；页面内距随公共 page-pad-*，卡片内距16px。
+所有头像通过当前 pet.resource 调用共享 CompanionPortrait，不再用固定鱼丸图作为默认头像。
+专属房间插画只匹配明确的旧鱼丸资源 ID；其他资源由共享组件显示，缺资源显示提示。
+监听 companions:changed，使当前页面内的形象绑定替换实时刷新，保留 petId、历史与模型连接。
+伙伴选择采用三列自适应宽度，副标签在卡片内正常换行；不向截图添加聊天记录。
+4 项定向真实 Electron 检查通过，覆盖1280×844、1440×900和980×900计算样式、两种真实资源、
+切换/原地替换后的身份一致；本轮模型请求为0。原生文件选择器由测试适配器指定项目包，
+资源解析、复制、归属检查与公开IPC绑定均为产品实现，不把文件选择器本身算作原生操作验收。
+证据：docs/implementation/evidence/conversations/audit-2026-10-24/index.html 与 evidence.json。
+六个正式形象和完整动作由 resources/companions 统一交付；全部模块合并后的集中视觉回验仍由主会话负责。
