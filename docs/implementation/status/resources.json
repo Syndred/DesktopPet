@@ -1,63 +1,78 @@
 {
   "module": "resources",
   "branch": "codex/lingjing-resources",
-  "state": "roster_assets_ready_preview_pending",
+  "state": "ready_for_foundation_acceptance",
   "audit": [
-    "A07",
-    "A08",
-    "A12",
-    "A01 consumer"
+    "A07 resources and template mapping",
+    "A08 canonical daily/battle action contract",
+    "A12 common portrait viewport and resource density",
+    "A01 common typography consumer"
   ],
-  "scope": "Six distinct canonical 2D companions with real daily and battle poses; production preview evidence pending",
-  "baselineAcceptanceCommit": "d7201a8",
+  "assetCommit": "2d0b5c8",
+  "portraitCommit": "1dac04e",
+  "stageFitCommit": "939c254",
+  "verifiedCodeCommit": "939c254",
+  "sourceSync": {
+    "remote": "origin/main",
+    "revision": "4786f97680679c2db0aa307fa5f67ec247f93086",
+    "fetchedThisTurn": true,
+    "ancestorOfHead": true,
+    "verifiedAt": "2026-10-24T14:20:12.537Z"
+  },
   "characters": [
     {
       "name": "鱼丸",
       "templateId": "big-fish-gentle",
       "resourceId": "builtin:lingjing-yuwan-v2",
       "manifest": "apps/pc-app/runtime/features/resources/assets/roster-v2/yuwan/character.json",
-      "frames": 16,
-      "canonicalActions": 12
+      "distinctPoseFrames": 16,
+      "canonicalActions": 12,
+      "availableClips": 13
     },
     {
       "name": "小蓝",
       "templateId": "big-fish-cheerful",
       "resourceId": "builtin:lingjing-xiaolan-v1",
       "manifest": "apps/pc-app/runtime/features/resources/assets/roster-v2/xiaolan/character.json",
-      "frames": 16,
-      "canonicalActions": 12
+      "distinctPoseFrames": 16,
+      "canonicalActions": 12,
+      "availableClips": 13
     },
     {
       "name": "饭团",
       "templateId": "big-fish-foodie",
       "resourceId": "builtin:lingjing-fantuan-v1",
       "manifest": "apps/pc-app/runtime/features/resources/assets/roster-v2/fantuan/character.json",
-      "frames": 16,
-      "canonicalActions": 12
+      "distinctPoseFrames": 16,
+      "canonicalActions": 12,
+      "availableClips": 13
     },
     {
       "name": "焰柴",
       "templateId": "animal-shiba",
       "resourceId": "builtin:lingjing-shiba-v2",
       "manifest": "apps/pc-app/runtime/features/resources/assets/roster-v2/shiba/character.json",
-      "frames": 16,
-      "canonicalActions": 12
+      "distinctPoseFrames": 16,
+      "canonicalActions": 12,
+      "availableClips": 13
     },
     {
       "name": "礼帽喵",
       "templateId": "animal-hat-cat",
       "resourceId": "builtin:lingjing-hatcat-v1",
       "manifest": "apps/pc-app/runtime/features/resources/assets/roster-v2/hatcat/character.json",
-      "frames": 16,
-      "canonicalActions": 12
+      "distinctPoseFrames": 16,
+      "canonicalActions": 12,
+      "availableClips": 13
     },
     {
       "name": "小狐",
       "templateId": "animal-white-fox",
       "resourceId": "builtin:lingjing-xiaohu-v1",
       "manifest": "apps/pc-app/runtime/features/resources/assets/roster-v2/xiaohu/character.json",
-      "frames": 16,
-      "canonicalActions": 12
+      "distinctPoseFrames": 16,
+      "canonicalActions": 12,
+      "availableClips": 13
     }
   ],
   "canonicalAliases": {
@@ -70,27 +85,124 @@
     "apps/pc-app/runtime/features/resources/assets/roster-v2/generation-prompts.json",
     "apps/pc-app/runtime/features/resources/assets/roster-v2/layout-refinement-prompts.json"
   ],
-  "assetChecks": {
-    "parsedPacks": 6,
-    "framesPerPack": 16,
-    "actionsPerPack": 12,
-    "independentAttackHitSkill": true,
-    "nonLoopingAttack": true,
-    "highAlphaAtlasSeamsClear": true,
-    "unchangedGeneratedPngBytes": true
+  "generation": {
+    "tool": "built-in image_gen.imagegen",
+    "imagesInProject": true,
+    "actualPngSize": [
+      1254,
+      1254
+    ],
+    "sourcePngBytesUnchanged": true,
+    "logicalFrameSize": [
+      512,
+      512
+    ],
+    "footBaseline": 435,
+    "anchor": [
+      0.5,
+      0.849609375
+    ],
+    "framing": "16 exact standard Pixi atlas rectangles, not equal 313.5 pixel cuts; fixed transparent logical canvas and common foot baseline"
   },
-  "remaining": [
-    "Corrected native-scale 96-frame Pixi captures and visual inspection",
-    "Portrait screenshot and computed-style evidence at 1280/1440",
-    "Final evidence/status commit"
-  ],
-  "assetCommit": "2d0b5c8",
+  "runtimeAcceptance": {
+    "passed": true,
+    "realPixiFrames": 96,
+    "canonicalActionsPerCharacter": 12,
+    "independentRealFrameTexturesPerCharacter": 16,
+    "sceneBounds": {
+      "capturedFrames": 96,
+      "allInsideStage": true,
+      "minimumTopPadding": 10.399999999999977,
+      "maximumBottom": 172.64
+    },
+    "pageErrors": [],
+    "consoleErrors": [],
+    "portraits": 6,
+    "independentInstances": {
+      "sameTextureSource": true,
+      "differentPetIds": true,
+      "leftPausedTextureCount": 1,
+      "rightPlayingTextureCount": 2
+    },
+    "attackReplay": [
+      "41,654,264,243",
+      "356,642,280,257",
+      "59,61,221,251"
+    ],
+    "sqliteCounts": {
+      "allResourceRows": 10,
+      "globalRows": 8
+    },
+    "retainedHistoricalBuiltins": [
+      {
+        "resource_id": "builtin:lingjing-yuwan-v1"
+      },
+      {
+        "resource_id": "builtin:lingjing-battle-shiba-v1"
+      }
+    ],
+    "retainedImportReceipts": 2,
+    "canonicalPreferenceRows": 0,
+    "evidence": "docs/implementation/evidence/resources/roster-v2/evidence.json",
+    "visualReview": "docs/implementation/evidence/resources/roster-v2/visual-review.json"
+  },
   "portraitContract": {
     "component": "ResourcePortrait",
     "helper": "resolveResourcePortrait",
     "publicEntry": "apps/pc-app/ui/src/features/resources/index.tsx",
     "documentation": "docs/implementation/roster-contract.md",
-    "source": "Same canonical idle texture, per-identity head/upper-body viewport; no new raster assets",
-    "consumers": "resources wired; companions, conversations and battle integrate via foundation"
-  }
+    "source": "Same canonical idle texture; centralized head/upper-body viewport; no new raster image or global stage enlargement",
+    "resourcesConsumer": "wired"
+  },
+  "tests": [
+    {
+      "command": "node scripts/desktop/run-native-tests.cjs apps/pc-app/runtime/features/resources/verification/resources.test.cjs apps/pc-app/runtime/features/resources/verification/roster.test.cjs tests/foundation/resource-backup.test.cjs",
+      "result": "14/14 passed before adding the LF/CRLF case"
+    },
+    {
+      "command": "node scripts/desktop/run-native-tests.cjs apps/pc-app/runtime/features/resources/verification/roster.test.cjs",
+      "result": "latest roster suite 5/5 passed, including Git LF/CRLF relocation without replacing rows/preferences"
+    },
+    {
+      "command": "npm run typecheck:ui",
+      "result": "passed"
+    },
+    {
+      "command": "npx eslint apps/pc-app/ui/src/features/resources packages/shared-types/src/features/resources",
+      "result": "passed"
+    },
+    {
+      "command": "npm run build:pc",
+      "result": "passed; existing Vite large-chunk warning remains"
+    },
+    {
+      "command": "node apps/pc-app/runtime/features/resources/verification/roster-preview.electron.mjs",
+      "result": "passed: 6 characters, 96 actual frames, 12 actions each, all drawn rectangles inside stage, 0 renderer/console errors"
+    }
+  ],
+  "reused": [
+    {
+      "project": "PixiJS",
+      "version": "8.22.0",
+      "license": "MIT",
+      "usage": "Assets, Spritesheet, standard trim metadata and AnimatedSprite; no custom animation engine"
+    },
+    {
+      "project": "shadcn/ui Radix Nova",
+      "license": "MIT",
+      "usage": "existing public tabs/select/slider/switch/popover/scroll area/buttons; portrait is only an SVG viewport of the same registered bitmap"
+    },
+    {
+      "project": "Motion for React",
+      "version": "14.6.0",
+      "license": "MIT",
+      "usage": "existing foundation page/list/animation policy; Pixi bridge retained"
+    }
+  ],
+  "preservation": "Original model directory, old fish/shiba PNGs and .codex/config.toml unchanged; original resource rows/preferences/receipts retained; only explicit built-in aliases resolve to the new canonical collection; imported UUIDs remain independent",
+  "integrationDependencies": [
+    "companions consumes ResourcePortrait for adoption/detail thumbnails; conversations consumes it for chat avatars/side art; battle consumes it for HUD/party cards; foundation merges and performs the requested small thumbnail/HUD recheck",
+    "Producer evidence covers canonical resources, real resource-page rendering and shared portrait API, not a new all-product acceptance claim"
+  ],
+  "remaining": []
 }
