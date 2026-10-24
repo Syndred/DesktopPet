@@ -1,6 +1,9 @@
 "use strict";
 const { GardenService } = require("./service.cjs");
 const { migrations } = require("./migrations.cjs");
+const { reconcileSeeds } = require("./settlements.cjs");
+const { TerritoryService } = require("./territories.cjs");
+const { createGardenBackupAdapter } = require('./backup.cjs');
 
 function companionAdapter(services) {
   const get = () => {
@@ -42,12 +45,31 @@ module.exports = {
         if (event.kind === "feed") services.events.emit("companions:changed", event);
       }
     });
+    const territories = services.get('territories') || new TerritoryService(services);
+    if (!services.get('territories')) services.provide('territories', territories);
+    const removeBackupAdapter = services.get('backups')?.register(createGardenBackupAdapter(services.db));
     services.provide("garden", {
       service,
       snapshot: context => service.snapshot(context),
+      territories,
       // Trusted callers can include this in their own synchronous settlement transaction.
       grantSeeds: (context, input, verifiedReceipt) => service.grantSeeds(context, input, verifiedReceipt)
     });
-    return { commands: Object.fromEntries(["snapshot", "plant", "harvest", "craft", "feed", "garrison"].map(command => [command, (payload, context) => command === "snapshot" ? service.snapshot(context) : service[command](context, payload)])) };
+    const commands = Object.fromEntries(["plant", "harvest", "craft", "feed", "garrison"].map(command => [command, (payload, context) => service[command](context, payload)]));
+    commands.snapshot = async (_payload, context) => {
+      await reconcileSeeds(services, service, context);
+      const snapshot = service.snapshot(context);
+      if (snapshot.ok) {
+        snapshot.data.remainingInvasions = territories.dailyRemaining?.(context.ownerAccountId) ?? 2;
+        const discovery = services.get('discovery');
+        if (discovery?.map?.project) snapshot.data.territories = snapshot.data.territories.map(t => ({ ...t, mapBoundary: t.boundary?.map(point => discovery.map.project(point)) }));
+        snapshot.data.territoryChallenges = services.db.prepare('SELECT battle_id sessionId,territory_id territoryId FROM garden_territory_challenges WHERE owner_account_id=? AND settled=0').all(context.ownerAccountId);
+      }
+      return snapshot;
+    };
+    commands.territoryLocate = (payload, context) => service.command(context, 'territoryLocate', payload, () => territories.discoverAtSystemFix(territories.currentFix()));
+    commands.territoryChallenge = (payload, context) => service.command(context, 'territoryChallenge', payload, ({ owner, actionId }) => territories.startChallenge({ ...payload, ownerAccountId: owner, actionId }));
+    commands.territorySettle = (payload, context) => service.command(context, 'territorySettle', payload, ({ owner }) => territories.settleChallenge({ ...payload, ownerAccountId: owner }));
+    return { commands, dispose() { removeBackupAdapter?.(); } };
   }
 };
