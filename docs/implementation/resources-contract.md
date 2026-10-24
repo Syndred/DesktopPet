@@ -22,4 +22,6 @@ companions 原生窗口适配可调用 `resolveForPet(ownerAccountId, pet)`，�
 
 已有 17 个 GLB 与 catalog.json 只读，台账已登记的作者/许可沿用为 recorded，不宣称重新核验授权；未知素材显示 unverified。原创鱼素材附 SVG、生成代码和独立权属说明。旧 localStorage 校准键 `qp_model_view_calibration_v3` 只读迁入当前账号尚未自定义的形象，原键保留。旧 JSON 账号、宠物、历史和用户原始资源不会被删除或重写。
 
+账号升级兼容读取仅依据 `account_aliases` 的已验证映射，将当前 canonical owner 与无歧义的旧 subject ID 归为同一资源访问范围。旧资源、导入流水和旧校准行保持原样；新保存使用 canonical owner，版本冲突检查仍适用。同一个 subject ID 如映射到多个 provider 的不同 owner，不会猜测归属或跨账号合并。
+
 参考实现文档：[PixiJS 纹理](https://pixijs.com/8.x/guides/components/textures)、[model-viewer API](https://modelviewer.dev/docs/)。渲染器代码许可与角色素材许可分开记录。

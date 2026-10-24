@@ -133,3 +133,19 @@ test('resource keys and calibration survive moving the app and the complete mana
   assert.equal((await moved.get('owner-a', 'builtin:fat-fish-v1')).calibration.desktop.scale, 1.23);
   assert.equal((await moved.get('move-owner', imported.resource.id)).availability, 'ready');
 });
+test('verified account aliases recover old imports and preferences without rewriting history or crossing providers', async () => {
+  const oldOwner = 'legacy-resource-owner', canonical = `local:${oldOwner}`;
+  const imported = await service.importFile(oldOwner, path.join(fishDir, 'character.json'));
+  const calibration = structuredClone(imported.resource.calibration); calibration.desktop.scale = 1.42;
+  await service.save(oldOwner, { resourceId: imported.resource.id, expectedRevision: 0, calibration, actions: imported.resource.actions });
+  db.exec('CREATE TABLE account_aliases(provider TEXT,subject_id TEXT,owner_account_id TEXT,evidence TEXT,created_at TEXT,PRIMARY KEY(provider,subject_id))');
+  db.prepare('INSERT INTO account_aliases VALUES(?,?,?,?,?)').run('local', oldOwner, canonical, 'legacy-id', new Date().toISOString());
+  assert.equal((await service.get(canonical, imported.resource.id)).calibration.desktop.scale, 1.42);
+  assert.equal((await service.importFile(canonical, path.join(fishDir, 'character.json'))).duplicate, true);
+  await service.save(canonical, { resourceId: imported.resource.id, expectedRevision: 1, calibration, actions: imported.resource.actions });
+  assert.equal((await service.get(oldOwner, imported.resource.id)).revision, 2);
+  assert.equal(db.prepare('SELECT owner_account_id FROM lingjing_resources WHERE resource_id=?').get(imported.resource.id).owner_account_id, oldOwner);
+  assert.equal(db.prepare('SELECT count(*) AS n FROM lingjing_resource_imports WHERE resource_id=?').get(imported.resource.id).n, 2);
+  db.prepare('INSERT INTO account_aliases VALUES(?,?,?,?,?)').run('runtime', oldOwner, oldOwner, 'ambiguous-test', new Date().toISOString());
+  await assert.rejects(service.get(canonical, imported.resource.id), error => error.code === 'RESOURCE_NOT_FOUND');
+});

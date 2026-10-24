@@ -77,6 +77,10 @@ function ModelStage({ name, url, clip, playing, yaw, pitch, onStatus }: { name: 
     void import('@google/model-viewer').then(() => {
       if (cancelled || !host.current) return;
       const element = document.createElement('model-viewer') as ModelElement;
+      // model-viewer's current AR scene updater assumes an active XR scene when an already
+      // loaded model's orientation changes. Apply orientation before load instead; its GLTF
+      // cache is reused when calibration creates a fresh viewer, without that XR-only path.
+      element.setAttribute('orientation', `0deg ${pitch}deg ${yaw}deg`);
       element.setAttribute('src', url); element.setAttribute('alt', name);
       element.setAttribute('camera-controls', ''); element.setAttribute('disable-pan', '');
       element.setAttribute('interaction-prompt', 'none'); element.setAttribute('shadow-intensity', '0.5');
@@ -90,11 +94,10 @@ function ModelStage({ name, url, clip, playing, yaw, pitch, onStatus }: { name: 
       remove = () => { window.clearTimeout(timer); element.removeEventListener('load', onLoad); element.removeEventListener('error', onError); element.remove(); viewer.current = null; };
     }).catch(() => { if (!cancelled) statusCallback.current({ state: 'error', message: '3D 显示组件暂时不可用。' }); });
     return () => { cancelled = true; remove?.(); };
-  }, [url, name]);
+  }, [url, name, yaw, pitch]);
   useEffect(() => {
     const element = viewer.current; if (!element) return;
     const value = current.current;
-    element.setAttribute('orientation', `0deg ${value.pitch}deg ${value.yaw}deg`);
     const requested = value.clip?.name;
     element.animationName = requested && element.availableAnimations.includes(requested) ? requested : element.availableAnimations[0] ?? '';
     const play = () => {
