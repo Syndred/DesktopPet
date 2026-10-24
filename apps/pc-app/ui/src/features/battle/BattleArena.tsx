@@ -14,8 +14,8 @@ import { actionLabels, elements, petName, roundLines, statusLabel } from './pres
 import { BattleMoves, ElementMark } from './BattleMoves';
 import { useBattleAnimation } from './useBattleAnimation';
 
-export function BattlePortrait({ pet, facing = 'right', small = false, action = 'idle', playing = true }: {
-  pet: BattleParticipant; facing?: 'left' | 'right'; small?: boolean; action?: ResourceAction; playing?: boolean;
+export function BattlePortrait({ pet, facing = 'right', small = false, action = 'idle', playing = true, playbackKey }: {
+  pet: BattleParticipant; facing?: 'left' | 'right'; small?: boolean; action?: ResourceAction; playing?: boolean; playbackKey?: string;
 }) {
   const [resource, setResource] = useState<CharacterResource | null>(null), [error, setError] = useState('');
   const motionAllowed = useAppMotion();
@@ -30,7 +30,7 @@ export function BattlePortrait({ pet, facing = 'right', small = false, action = 
     return () => { alive = false; };
   }, [pet.petId, resourceId]);
   return <div className={`battle-portrait ${small ? 'small' : ''} element-${pet.element}`} data-pet-id={pet.petId} data-resource-id={resource?.id} data-2d-only="true" data-animating={!small && playing && motionAllowed}>
-    {resource && small ? <ResourcePortrait resource={resource} framing="portrait" className="battle-sprite-thumb" label={petName(pet)}/> : resource ? <ResourceStage resource={resource} petId={pet.petId} context="battle" action={action} facing={facing} playing={playing} motionEnabled={motionAllowed}/> : <span className="battle-asset-state" role="status">{error || '…'}</span>}
+    {resource && small ? <ResourcePortrait resource={resource} framing="portrait" className="battle-sprite-thumb" label={petName(pet)}/> : resource ? <ResourceStage resource={resource} petId={pet.petId} context="battle" action={action} playbackKey={playbackKey} facing={facing} playing={playing} motionEnabled={motionAllowed}/> : <span className="battle-asset-state" role="status">{error || '…'}</span>}
   </div>;
 }
 const statusIcons = { burn: Flame, freeze: Zap, parasite: Leaf, vulnerability: Gem, petrify: Mountain };
@@ -75,7 +75,7 @@ export function BattleArena({ session, rules, busy, onAct, onSync, onLeave, onRe
             const dodge = animation.round?.actions[side] === 'dodge';
             const shift = !animation.allowed ? 0 : animation.phase === 'windup' ? -direction * 10 : animation.phase === 'release' ? animation.interrupted(side) ? 0 : direction * (dodge ? -32 : 38) : animation.phase === 'impact' && dodge && !(animation.round?.directDamage?.[side] || 0) ? -direction * 35 : 0;
             return <motion.div key={side} className={`battle-actor-slot ${side}`} data-side={side} animate={{ x: shift }} transition={{ duration: animation.allowed ? .22 : 0, ease: 'easeOut' }}>
-              <BattlePortrait pet={session[side]} action={animation.action(side)} facing={side === 'enemy' ? 'left' : 'right'}/>
+              <BattlePortrait pet={session[side]} action={animation.action(side)} playbackKey={`${animation.key}:${side}:${animation.phase}:${animation.action(side)}`} facing={side === 'enemy' ? 'left' : 'right'}/>
               <AnimatePresence>{animation.events.filter(event => event.side === side).map(event => <motion.span key={`${animation.key}:${event.id}`} className={`battle-hit-feedback ${event.kind} element-${event.element || session[side].element}`} data-event-kind={event.kind} data-event-id={event.id} initial={{ opacity: 0, y: 8, scale: .85 }} animate={{ opacity: 1, y: -24, scale: 1 }} exit={{ opacity: 0, y: -40 }} transition={{ duration: .2 }}>
                 {event.kind === 'status' ? <StatusIcon type={event.status || ''}/> : event.kind === 'dodge' ? <Footprints size={23} aria-label="闪避成功"/> : event.kind === 'interrupt' ? <CircleSlash size={23} aria-label="施法打断"/> : event.kind === 'anger' ? <><Zap size={20}/><ArrowDown size={15}/><span>{event.amount}</span></> : `${event.kind === 'heal' ? '+' : '−'}${event.amount}`}
               </motion.span>)}</AnimatePresence>

@@ -6,7 +6,6 @@ import { randomUUID, randomBytes, createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
-const { RuntimeDataStore } = require('../../services/runtime-data-store.cjs');
 const { startQaDuelServer } = require('./tests/qa-duel-server.cjs');
 const { MARKER, SCENARIO } = require('../../core/qa-scenario.cjs');
 const output = resolve('artifacts/battle', `unified-${Date.now()}`), project = join(output, 'application');
@@ -17,21 +16,13 @@ cpSync(runtime, overlay, { recursive: true, filter: source => source !== join(ru
 symlinkSync(join(runtime, 'assets'), join(overlay, 'assets'), 'junction');
 cpSync(resolve('apps/pc-app/dist'), join(project, 'apps/pc-app/dist'), { recursive: true });
 writeFileSync(join(project, 'package.json'), JSON.stringify({ name: 'lingjing-unified-battle-qa', version: '0.0.0', main: 'bootstrap.cjs' }));
-writeFileSync(join(project, 'bootstrap.cjs'), `
-const {readQaScenario}=require('./apps/pc-app/runtime/core/qa-scenario.cjs');
-const scenario=readQaScenario({userData:process.env.PET_USER_DATA_DIR});
-if(!scenario)throw new Error('This verification host requires an explicitly isolated profile');
-const {readFileSync,existsSync}=require('node:fs');const {join}=require('node:path');
-const {WindowsLocationAdapter}=require('./apps/pc-app/runtime/features/discovery/location-adapter.cjs');
-WindowsLocationAdapter.prototype.getPosition=async function(){const file=join(scenario.profilePath,'qa-location.json');const point=existsSync(file)?JSON.parse(readFileSync(file,'utf8')):{lat:31.2304,lng:121.4737};return {ok:true,...point,accuracyMeters:15,timestampMs:Date.now(),provider:'qa-simulated-location',positionSource:'simulated'};};
-require('./apps/pc-app/dist/main/index.cjs');
-`);
+writeFileSync(join(project, 'bootstrap.cjs'), "require('./apps/pc-app/dist/main/index.cjs');\n");
 const server = await startQaDuelServer({ runId, token, directory: join(output, 'authority') });
 const profiles = {}, apps = new Map(), logs = {}, errors = [], steps = [], cases = [];
 let failure;
 const sourceFiles = ['apps/pc-app/runtime/services/battle-runtime.cjs','apps/pc-app/runtime/features/battle/service.cjs','apps/pc-app/runtime/features/battle/presentation.cjs','apps/pc-app/runtime/features/battle/qa-adapter.cjs','apps/pc-app/ui/src/features/battle/BattleScreen.tsx','apps/pc-app/ui/src/features/battle/BattleArena.tsx','apps/pc-app/ui/src/features/battle/BattleMoves.tsx','apps/pc-app/ui/src/features/battle/useBattleAnimation.ts','apps/pc-app/ui/src/features/battle/useBattleSession.ts','apps/pc-app/runtime/features/resources/assets/roster-v2/catalog.json'];
 const evidence = { at: new Date().toISOString(), provenance: 'simulated', scenarioId: runId, sourceCommit: execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim(), sourceDirty: execFileSync('git',['status','--short'],{encoding:'utf8'}).trim(), sourceHashes: sourceFiles.map(file=>({file,sha256:createHash('sha256').update(readFileSync(file)).digest('hex')})),
-  fixtures: { location:'explicit QA WindowsLocationAdapter replacement in isolated bootstrap; not physical location evidence', enemy:'explicit QA preset or declared opponent action; unchanged runtime executeRound', profiles:'two newly created and path-bound foundation QA profiles' }, steps, cases, errors };
+  fixtures: { location:'domain-owned validated QA location adapter; no WindowsLocationAdapter replacement and no physical location claim', enemy:'explicit QA preset or declared opponent action; unchanged runtime executeRound', profiles:'fresh path-bound foundation QA profiles; namespaced SQLite accounts, no legacy user seed' }, steps, cases, errors };
 function save() { writeFileSync(join(output,'evidence.json'),JSON.stringify(evidence,null,2)); }
 function record(name, details={}) { steps.push({at:new Date().toISOString(),name,...details}); save(); console.log(name); }
 async function api(page, feature, command, payload={}) {
@@ -43,8 +34,6 @@ function profile(name) {
   writeFileSync(join(directory,MARKER),JSON.stringify({schemaVersion:1,application:'lingjing',scenario:SCENARIO,runId,isolated:true,profilePath:realpathSync(directory),createdAt:new Date().toISOString()},null,2),{flag:'wx'});
   writeFileSync(join(directory,'battle-transport.json'),JSON.stringify({runId,endpoint:server.endpoint,token,enemyActions:{training:['dodge'],wild:['dodge'],territory:['dodge']}}));
   const account=`battle-qa-${name}-${Date.now()}`;
-  const legacy=new RuntimeDataStore({filePath:join(directory,'pet-runtime-data.json'),sessionFilePath:join(directory,'pet-auth-session.json')});
-  legacy.registerUser(account,'isolated-local-verification',name==='host'?'并肩甲':'并肩乙');
   profiles[name]={directory,account}; return profiles[name];
 }
 async function launch(name) {
@@ -55,7 +44,9 @@ async function launch(name) {
   await window.evaluate(win=>win.setContentSize(1280,844,false));
   page.on('pageerror',error=>errors.push({peer:name,message:error.message}));
   await page.waitForFunction(()=>Boolean(window.lingjing));
-  await api(page,'accounts','login',{provider:'local',account:config.account,password:'isolated-local-verification',rememberSession:true});
+  if(config.registered)await api(page,'accounts','login',{provider:'local',account:config.account,password:'isolated-local-verification',rememberSession:false});
+  else {await api(page,'accounts','register',{provider:'local',account:config.account,username:name==='host'?'并肩甲':'并肩乙',password:'isolated-local-verification',confirmPassword:'isolated-local-verification',rememberSession:false});config.registered=true;}
+  const identity=await api(page,'accounts','session');assert.equal(identity.dataMode,'simulated');assert.ok(identity.currentUser.id.startsWith(`qa:${runId}:`));
   const settings=await api(page,'accounts','settingsGet'); settings.document.privacy.locationAllowed=true; settings.document.notifications.enabled=false; settings.document.desktop.interactionSounds=false;
   await api(page,'accounts','settingsSave',{actionId:randomUUID(),revision:settings.revision,document:settings.document});
   const inventory=await api(page,'companions','list');
@@ -173,10 +164,10 @@ async function verifyEntries(host) {
   await api(page,'battle','settleContext',{sessionId:session.id,actionId:`context:${session.id}`,name:'隔离收服伙伴'});assert.equal((await api(page,'companions','list')).pets.length,countAfter);
   record('wild entry uses shared battlefield; source capture receipt is simulated and duplicate confirmation adds no pet',{session:win.after,capture:savedCapture,countBefore,countAfter});
   for(const [label,presetId,enemyAction] of [['win','finisher','dodge'],['loss','defending','ultimate']]) {
-    if(label==='loss'){writeFileSync(join(profiles.host.directory,'qa-location.json'),JSON.stringify({lat:31.2504,lng:121.4937}));await api(page,'discovery','setDemo',{enabled:false});}
-    await route(page,'/garden');await page.locator('.garden-map-locate').waitFor();await page.locator('.garden-map-locate').click();
+    const actor=label==='loss'?await launch('territory-loss'):host,page=actor.page;
+    await route(page,'/garden');await page.getByRole('button',{name:'查看演练领地',exact:true}).waitFor();await page.getByRole('button',{name:'查看演练领地',exact:true}).click();
     await page.waitForFunction(()=>document.querySelectorAll('.garden-territory-list > button').length>0);
-    const garden=await api(page,'garden','snapshot'),target=garden.territories.find(value=>value.ownerAccountId!==garden.ownerAccountId&&value.boundary?.some(point=>Math.abs(point.lat-(label==='loss'?31.2504:31.2304))<.006));assert.ok(target);
+    const garden=await api(page,'garden','snapshot'),target=garden.territories.find(value=>value.ownerAccountId!==garden.ownerAccountId&&value.provenance==='simulated-geographic');assert.ok(target);
     const index=garden.territories.findIndex(value=>value.id===target.id);await page.locator('.garden-territory-list > button').nth(index).click();
     await page.locator('.garden-territory-panel .garden-pet').first().click();await page.getByRole('button',{name:'发起领地挑战',exact:true}).click();
     session=await screen(page);assert.equal(session.mode,'territory');assert.equal(session.context.territoryId,target.id);await geometry(page,`entry-territory-${label}-1280`);
