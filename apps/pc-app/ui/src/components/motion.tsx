@@ -4,13 +4,22 @@ import { AnimatePresence, MotionConfig, motion, useReducedMotion } from 'motion/
 export const motionTokens = { duration: .18, exit: .1, ease: [.22, 1, .36, 1] as const, distance: 5 };
 const AnimationPreference = createContext(true);
 export { AnimatePresence as AppPresence };
+export function useAppMotion() {
+  const allowed = useContext(AnimationPreference);
+  const reduced = useReducedMotion();
+  return allowed && !reduced;
+}
 export function MotionPanel({ children }: { children: ReactNode }) {
-  const enabled = useContext(AnimationPreference) && !useReducedMotion();
+  const enabled = useAppMotion();
   return <motion.div initial={enabled ? { opacity: 0, scale: .99 } : false} animate={{ opacity: 1, scale: 1 }} exit={enabled ? { opacity: 0, scale: .99 } : undefined} transition={{ duration: enabled ? motionTokens.duration : 0, ease: motionTokens.ease }}>{children}</motion.div>;
 }
 
 export function AppMotionProvider({ children }: { children: ReactNode }) {
   const [enabled, setEnabled] = useState(true);
+  const reduced = useReducedMotion();
+  useEffect(() => {
+    document.documentElement.dataset.motion = enabled && !reduced ? 'enabled' : 'reduced';
+  }, [enabled, reduced]);
   useEffect(() => {
     const refresh = async () => {
       const result = await window.lingjing.invoke<any>('accounts', 'settingsGet');
@@ -32,5 +41,6 @@ export function PageTransition({ routeKey, children }: { routeKey: string; child
 }
 
 export function AnimatedList({ children, className }: { children: ReactNode; className?: string }) {
-  return <motion.div layout className={className} transition={{ duration: motionTokens.duration, ease: motionTokens.ease }}>{children}</motion.div>;
+  const enabled = useAppMotion();
+  return <motion.div layout={enabled} className={className} transition={{ duration: enabled ? motionTokens.duration : 0, ease: motionTokens.ease }}>{children}</motion.div>;
 }

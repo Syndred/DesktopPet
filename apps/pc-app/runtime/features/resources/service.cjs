@@ -145,7 +145,16 @@ class ResourcesService {
     // Immutable asset keys survive an installation or a complete user-data-directory move.
     // The registry is still consulted first; an arbitrary renderer path never becomes a key.
     if (resource.id === this.starterId) return path.resolve(path.dirname(this.starterManifest), key);
-    if (resource.origin === 'import') return path.resolve(this.storageRoot, resource.id, key);
+    if (resource.origin === 'import') {
+      if (isWithin(this.storageRoot, registeredPath)) return registeredPath;
+      // Backups restore to a new directory so existing user files remain intact.
+      // Retain that directory when the complete user-data tree moves as well.
+      let directory = path.dirname(registeredPath);
+      for (let index = 1; index < key.split('/').length; index++) directory = path.dirname(directory);
+      const name = path.basename(directory);
+      const managedDirectory = /^restore-[0-9a-f-]{36}$/i.test(name) ? name : resource.id;
+      return path.resolve(this.storageRoot, managedDirectory, key);
+    }
     return registeredPath;
   }
 
