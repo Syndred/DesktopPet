@@ -12,7 +12,9 @@ function appearance2d(pet = {}) {
 async function registerBattleArt(services) {
   const resources = services.get("resources");
   if (!resources?.repository || !resources.addBuiltinAssetRoot) return false;
+  await resources.ready;
   const repository = resources.repository;
+  if (repository.hasGlobal(CANONICAL_YUWAN_RESOURCE) && repository.hasGlobal(CANONICAL_SHIBA_RESOURCE)) return true;
   // Reuse the existing resource parser/repository and Pixi stage; no battle-specific animation engine.
   const { parseCharacterFile } = require("../resources/parser.cjs");
   for (const [id, folder] of [[SHIBA_RESOURCE, "shiba-v1"], [YUWAN_RESOURCE, "yuwan-v1"]]) {
