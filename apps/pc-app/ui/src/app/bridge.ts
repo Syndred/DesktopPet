@@ -20,5 +20,6 @@ export function useFeatureRequest<T = any>(feature: FeatureId | 'app', command: 
   }, [feature, command, serialized]);
   useEffect(() => { void reload(); }, [reload]);
   useEffect(() => window.lingjing?.subscribe('app:session', () => { void reload(); }), [reload]);
+  useEffect(() => window.lingjing?.subscribe('accounts:session-changed', () => { void reload(); }), [reload]);
   return { data, error, loading, reload };
 }

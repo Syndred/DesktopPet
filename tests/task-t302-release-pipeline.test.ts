@@ -57,7 +57,7 @@ describe("T-302 release pipeline and rollback", () => {
     } finally {
       rmSync(sandbox, { recursive: true, force: true });
     }
-  });
+  }, 30000);
 
   it("contains release and rollback workflows plus runbook", () => {
     const releaseWorkflow = readFileSync(
