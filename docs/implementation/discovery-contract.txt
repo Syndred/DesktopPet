@@ -1,0 +1,68 @@
+灵境 discovery 模块交付与集成接口（2026-10-24）
+
+入口：runtime/features/discovery/index.cjs、ui/src/features/discovery/index.tsx。
+模块通过 foundation 的 discoverFeatures / import.meta.glob 注册，不修改根依赖、preload 或公共导航。
+本分支已合入 foundation 8f17aec；云端 origin/main 4786f97 已 fetch 并确认为祖先。
+
+公开只读/定位命令：snapshot、locate、watch、stopWatch、setDemo、setProvider、tile。
+需要已验证账号：begin、act、cancel、confirm、pokedex、memories。
+所有归属从 services.session 读取；renderer 的 ownerAccountId、坐标、胜负、宠物属性不构成可信输入。
+
+begin：{spawnId,petId,actionId}。
+act：{encounterId,action,expectedRevision,actionId}；四种 action 与原战斗引擎一致。
+cancel：{encounterId,actionId}；保留取消记录，不删除战斗或伙伴历史。
+confirm：{encounterId,name?,showOnDesktop?,expectedRevision?,actionId}。
+确认需要权威战斗胜利、当前真实位置和围栏校验；返回明确的 petId 实例。
+memories：{petId}；仅可读取本账号伙伴的首次相遇标签。
+返回统一 {ok:true,data,duplicate?}；错误由 foundation 转为稳定 code 和中文 message。
+
+伙伴接口：services.get('companions').listPets(owner)、getPet(owner,petId)、createCapturedInstance(owner,input)。
+收服以 discovery:<encounterId> 作为伙伴幂等 actionId。
+伙伴创建、discovery_captures、discovery_memory_tags、遭遇状态和确认操作凭据共用 services.db 的 SAVEPOINT 事务。
+数据库失败会一起回滚；跨回包重试仍返回相同 petId。
+origin.memoryTags 同时写入伙伴起源，供 conversations 展示；discovery.memories() 提供独立读取入口。
+结果页使用伙伴 desktop 命令打开当前实例，绝不改变同模板的其他伙伴。
+
+战斗接口：services.get('battle').beginWildChallenge({ownerAccountId,petId,actionId,challenge})。
+动作通过 services.invoke('battle','act',...)，离开走 battle:leave；getOutcome 查询持久化结果。
+snapshot 会同步 battle 的已落盘回合，恢复“战斗已提交但 discovery 尚未回包”的状态。
+复用现有 BattleRuntimeService 的五行、怒气和随机 NPC 规则，未改战斗数值。
+未注册 battle 时保留旧 BattleRuntimeService 适配；最终集成必须注册 battle，才能统一经验与战报。
+
+定位：Windows PowerShell 5.1 调 Windows.Devices.Geolocation.Geolocator.GetGeopositionAsync。
+它遵守系统权限，不修改系统隐私开关，不使用 IP、固定坐标或模拟轨迹冒充系统位置。
+系统 WGS84 坐标只在主进程内取得，地图 GCJ02/WGS84 转换与定位权限独立。
+保留 denied、timeout、unavailable、imprecise、stale、demo 等状态；OS 默认位置不能收服。
+正式互动要求位置年龄 ≤30 秒、精度 ≤80 米；范围仍为 100 米，沿用原有半精度/最多30米漂移补偿。
+系统原始 fix 不随存档落盘；遭遇保存游戏点位、战斗、时间和相遇标签。
+底图瓦片按用户可见视口请求、主进程独立 User-Agent、6路并发、至少7天本地缓存，并显示来源署名。
+默认可用 OpenStreetMap；腾讯 GCJ02 / Google WGS84 适配保留，未配置商业底图时明确显示不可用。
+真实地图与游戏生成点位分开标识；不把生成的点位称为已核实的现实地标。
+
+领地接口：discovery.territories 转接 services.get('territories')。
+listForOwner/getForOwner/gardenBonusForOwner 与 garden 使用同一来源。
+可选 listNearby({ownerAccountId,position,coordinateSystem:'wgs84',radiusMeters}) 返回真实记录：
+  {territoryId,name,ownerAccountId,revision,boundary:[{lat,lng}],bonusMultiplier}。
+没有领地权威服务或有效几何时，地图不制造占领区域、归属或加成。
+
+云端：infra/supabase/functions/discovery 和独立描述性迁移 20261024_discovery_authority.sql 是审查产物，未发布。
+沿用 runtime_accounts 文本 ID/session_token 验证，RLS 禁止 anon/authenticated 直接写状态和领取 RPC。
+服务端校验生成点位、坐标时效、精度、围栏和账号所属出战实例，持久化自己的随机战斗结果。
+server reserve/act/confirm 已实现；不会通过随机重放客户端动作或者 renderer winner 发奖。
+cloud battle_profiles 仅允许可信 companions 同步服务写入；缺少记录返回 CLOUD_PET_NOT_SYNCED。
+当前 battle 公共模块提供本机 wild challenge，尚未提供 supportsCloudWild/云端野外动作适配。
+因此 LINGJING_DISCOVERY_CLOUD=1 时正式挑战明确返回 CLOUD_BATTLE_INTEGRATION_REQUIRED；不会降级为伪云端成功。
+后续 foundation/battle 需把云端 permit 和 act 的权威回合适配到统一战报，再启用该模式。
+迁移需经独立审查和明确部署授权，不能为测试自动改生产。
+
+验证：
+  npm run typecheck:ui
+  npx eslint apps/pc-app/ui/src/features/discovery --ext .ts,.tsx
+  npm run build:pc
+  node scripts/desktop/run-native-tests.cjs apps/pc-app/runtime/features/discovery/tests/discovery.test.cjs
+  node apps/pc-app/runtime/features/discovery/verification/windows-flow.mjs
+未集成的工作树可用 LINGJING_COMPANIONS_RUNTIME / LINGJING_BATTLE_RUNTIME 指向真实模块目录作只读验证，禁止复制或覆盖其他模块源码。
+验证 host 是测试入口，加载正式 React UI、preload、共享 SQLite 和真实伙伴/战斗模块；生产入口从不加载它。
+Windows flow 把真实 OS 证据和“受控集成坐标”分开。受控坐标带醒目横幅，不能算真实位置的正向收服验收。
+本机实际 OS 已返回 WiFi 位置，多次实测精度约212–500米；精度拦截正确。精确物理位置收服仍需满足系统精度要求。
+实际位置截图与原始坐标只留 artifacts 本机，不提交精确位置。状态文件只记录来源、精度、时间与哈希。
