@@ -17,6 +17,12 @@ class ResourcesService {
   }
   // Only trusted main-process registration can extend built-in package roots.
   addBuiltinAssetRoot(root) { const resolved = path.resolve(root); if (!this.builtinAssetRoots.includes(resolved)) this.builtinAssetRoots.push(resolved); }
+  relocateGlobal(id, root) {
+    const update = this.repository.db.prepare('UPDATE lingjing_resource_files SET file_path=? WHERE resource_id=? AND asset_key=?');
+    this.repository.transaction(() => {
+      for (const row of this.repository.files('builtin', id)) update.run(path.join(root, safeRelative(row.asset_key)), id, row.asset_key);
+    });
+  }
   owner(value) { if (typeof value !== 'string' || !value.trim() || value.length > 200) fail('AUTH_REQUIRED', '请先选择本机存档或登录账号'); return value; }
   async seed() {
     await fs.mkdir(this.storageRoot, { recursive: true });

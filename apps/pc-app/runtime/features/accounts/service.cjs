@@ -18,7 +18,7 @@ class AccountsService {
     this.backups = new BackupManager({ db: this.db, directory: join(services.paths.userData, "accounts", "backups"),
       getIdentity: owner => this.identity(owner) });
     this.sync = new AccountSync({ db: this.db, backups: this.backups, remote, getSession: () => this.privateSession(), getSettings: owner => this.settings(owner) });
-    const file = services.paths.legacyDataFile;
+    const file = services.paths.legacyDataExisted === false ? null : services.paths.legacyDataFile;
     this.migration = importLegacy({ db: this.db, filePath: file && existsSync(`${file}.before-lingjing.bak`) ? `${file}.before-lingjing.bak` : file,
       archiveDir: join(services.paths.userData, "accounts", "legacy-archives") });
     this.ready = this.initialize();
@@ -180,7 +180,9 @@ class AccountsService {
       this.db.prepare("INSERT INTO account_settings VALUES(?,0,?,?)").run(owner, JSON.stringify(document), new Date().toISOString());
       row = this.db.prepare("SELECT * FROM account_settings WHERE owner_account_id=?").get(owner);
     }
-    return { document: JSON.parse(row.document), revision: row.revision, updatedAt: row.updated_at };
+    const document = JSON.parse(row.document);
+    document.desktop.animationsEnabled ??= true;
+    return { document, revision: row.revision, updatedAt: row.updated_at };
   }
   async saveSettings(input) {
     invariant(!this.settingsBusy, "SETTINGS_BUSY", "正在保存设置，请稍候。");

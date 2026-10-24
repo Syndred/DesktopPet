@@ -12,6 +12,9 @@
     "!**/verification/**/*",
     "!**/testing-adapter.cjs",
     "!**/generate-fish.cjs",
+    "!**/assets/models/**/*",
+    "!apps/pc-app/runtime/renderer/**/*",
+    "!apps/pc-app/runtime/auth/**/*",
     "package.json"
   ],
   "asar": true,
