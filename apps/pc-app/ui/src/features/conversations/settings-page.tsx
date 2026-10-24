@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import type { ConnectionSettings, ConversationClient, ConversationCommands, ConversationMemory, ConversationPet, ConversationProfile, PublicConnection } from '../../../../../../packages/shared-types/src/features/conversations';
-import { MemoryEditor, MemoryPanel, PetAvatar, PetScene, FormSelect } from './components';
-import { Monitor, Bell, MessageCircle, Box, UserRound, ChevronLeft } from 'lucide-react';
+import { MemoryEditor, MemoryPanel, PetAvatar, PetScene, PetElement, petElementLabel, FormSelect, InfoHint, ActionHint } from './components';
+import { Monitor, Bell, MessageCircle, Box, UserRound, ChevronLeft, ShieldCheck, PlugZap, Save, Square } from 'lucide-react';
 import { Button } from '../../components/ui/button';
 import { Input } from '../../components/ui/input';
 import { Textarea } from '../../components/ui/textarea';
@@ -13,8 +13,9 @@ import { useConversations } from './use-conversations';
 type Request = <K extends keyof ConversationCommands>(command: K, payload: ConversationCommands[K]['input']) => Promise<ConversationCommands[K]['output']>;
 const blank: ConnectionSettings = { provider: 'deepseek', baseUrl: 'https://api.deepseek.com/v1', model: '', contextChars: 24000, maxOutputTokens: 512 };
 
-function ConnectionForm({ connection, petId, label, secure, request, refresh }: {
+function ConnectionForm({ connection, petId, label, secure, request, refresh, scope }: {
   connection: PublicConnection | null; petId: string | null; label: string; secure: boolean; request: Request; refresh: () => Promise<void>;
+  scope?: { enabled: boolean; hint: string };
 }) {
   const initial: ConnectionSettings = connection ? { provider: connection.provider, baseUrl: connection.baseUrl, model: connection.model,
     contextChars: connection.contextChars, maxOutputTokens: connection.maxOutputTokens } : blank;
@@ -25,38 +26,44 @@ function ConnectionForm({ connection, petId, label, secure, request, refresh }: 
   const [notice, setNotice] = useState('');
   const [error, setError] = useState('');
   const dirty = JSON.stringify(initial) !== JSON.stringify(form) || Boolean(apiKey) || clearKey;
+  const endpointChanged = connection && (form.provider !== connection.provider || form.baseUrl.replace(/\/+$/, '') !== connection.baseUrl.replace(/\/+$/, ''));
+  const testHint = busy === 'test' ? '测试中，可停止本次测试。' : busy === 'save' ? '保存中。' : dirty ? '请先保存修改。' : !connection?.hasKey ? '请先填写并保存密钥。' : '测试会向所选模型发送一条简短消息。';
   const change = (value: Partial<ConnectionSettings>) => { setForm(current => ({ ...current, ...value })); setNotice(''); setError(''); };
-  return <section className="cv-card cv-connection"><h2>{label}</h2><p className="cv-muted">保存后测试连接，仅发送一条简短测试消息。</p>
+  return <section className="cv-card cv-connection"><div className="cv-section-heading"><h2>{label}</h2><div className="cv-card-tools">
+    {scope && <ActionHint text={scope.hint}><span className="cv-scope-state" tabIndex={0}>{scope.enabled ? '已启用' : '未启用'}</span></ActionHint>}
+    <InfoHint label="连接提示" text={scope?.hint || '本账号默认使用这组连接。测试会发送一条简短消息。'}/>
+  </div></div>
     <form autoComplete="off" onSubmit={event => { event.preventDefault(); setBusy('save'); setError(''); setNotice('');
       void request('connection.save', { petId, connection: form, revision: connection?.revision ?? 0, apiKey, clearKey })
         .then(() => { setApiKey(''); setClearKey(false); setNotice('连接已保存。'); return refresh(); })
         .catch(cause => setError(cause instanceof Error ? cause.message : '保存失败。')).finally(() => setBusy(null)); }}>
-      <label className="cv-field">服务提供商<FormSelect label="服务提供商" value={form.provider} options={[{ value: 'deepseek', label: 'DeepSeek' }, { value: 'openai', label: 'OpenAI' }, { value: 'openai_compatible', label: 'OpenAI 兼容 / 本机服务' }]} onValueChange={value => {
+      <label className="cv-field">提供商<FormSelect label="服务提供商" value={form.provider} options={[{ value: 'deepseek', label: 'DeepSeek' }, { value: 'openai', label: 'OpenAI' }, { value: 'openai_compatible', label: 'OpenAI 兼容' }]} onValueChange={value => {
         const provider = value as ConnectionSettings['provider'];
         change({ provider, baseUrl: provider === 'openai' ? 'https://api.openai.com/v1' : provider === 'deepseek' ? 'https://api.deepseek.com/v1' : '', model: '' });
         setApiKey(''); setClearKey(false);
       }}/></label>
-      <label className="cv-field">API Key<Input type="password" autoComplete="new-password" spellCheck={false} value={apiKey} maxLength={4096} disabled={!secure || busy !== null}
-        placeholder={connection?.hasKey ? '已安全保存；留空保留密钥' : '填写此连接的 API Key'} onChange={event => { setApiKey(event.target.value); setNotice(''); setClearKey(false); }}/></label>
-      <p className="cv-caption">密钥安全保存在此设备，留空可继续使用。</p>
-      {connection?.hasKey && <label className="cv-check"><Checkbox checked={clearKey} onCheckedChange={checked => { setClearKey(checked === true); setApiKey(''); setNotice(''); }}/>保存时移除此连接的密钥</label>}
+      <div className="cv-secret-field"><label className="cv-field">API Key<Input type="password" autoComplete="new-password" spellCheck={false} value={apiKey} maxLength={4096} disabled={!secure || busy !== null}
+        placeholder={endpointChanged ? '请重新填写密钥' : connection?.hasKey ? '已保存；留空保留' : '填写密钥'} onChange={event => { setApiKey(event.target.value); setNotice(''); setClearKey(false); }}/></label>
+        <InfoHint label="密钥提示" icon={ShieldCheck} text="密钥加密保存在本机。留空保留；更换服务或地址后需重新填写。"/>
+      </div>
+      {connection?.hasKey && <label className="cv-check"><Checkbox aria-label="保存时移除此连接的密钥" checked={clearKey} onCheckedChange={checked => { setClearKey(checked === true); setApiKey(''); setNotice(''); }}/>移除密钥</label>}
       <label className="cv-field">接口地址<Input type="url" value={form.baseUrl} maxLength={512} required placeholder="https://服务地址/v1" onChange={event => change({ baseUrl: event.target.value })}/></label>
-      <label className="cv-field">模型<Input value={form.model} maxLength={200} required placeholder="填写服务支持的模型 ID" onChange={event => change({ model: event.target.value })}/></label>
-      <details className="cv-advanced"><summary>回复与上下文</summary><div className="cv-form-row">
-        <label className="cv-field">上下文字符上限<FormSelect label="上下文字符上限" value={String(form.contextChars)} onValueChange={value => change({ contextChars: Number(value) })}
+      <label className="cv-field">模型<Input value={form.model} maxLength={200} required placeholder="模型 ID" onChange={event => change({ model: event.target.value })}/></label>
+      <details className="cv-advanced"><summary>高级</summary><div className="cv-advanced-heading"><InfoHint label="上下文提示" text="超出上限的较早消息不随本次请求发送，聊天历史仍保留。"/></div><div className="cv-form-row">
+        <label className="cv-field">上下文上限<FormSelect label="上下文字符上限" value={String(form.contextChars)} onValueChange={value => change({ contextChars: Number(value) })}
           options={[{ value: '12000', label: '12,000 字符' }, { value: '24000', label: '24,000 字符' }, { value: '48000', label: '48,000 字符' }]}/></label>
-        <label className="cv-field">回复 Token 上限<Input type="number" min={64} max={4096} value={form.maxOutputTokens} onChange={event => change({ maxOutputTokens: Number(event.target.value) })}/></label>
-      </div><p className="cv-caption">较早消息超出上限后不随请求发送，历史记录仍保留在本机。</p></details>
-      {!secure && <p className="cv-error" role="alert">系统安全存储不可用，请恢复系统存储后再填写密钥。</p>}
+        <label className="cv-field">回复 Token<Input aria-label="回复 Token 上限" type="number" min={64} max={4096} value={form.maxOutputTokens} onChange={event => change({ maxOutputTokens: Number(event.target.value) })}/></label>
+      </div></details>
+      {!secure && <p className="cv-error" role="alert">安全存储不可用，暂不能填写密钥。</p>}
       {error && <p className="cv-error" role="alert">{error}</p>}
       {notice && <p className="cv-success" role="status">{notice}</p>}
-      <div className="cv-form-actions"><Button type="button" className="cv-button secondary" disabled={busy !== null || dirty || !connection?.hasKey} onClick={() => {
-        setBusy('test'); setError(''); setNotice('正在等待模型返回文本…');
-        void request('connection.test', { petId }).then(result => setNotice(`连接可用 · ${result.model} · ${(result.elapsedMs / 1000).toFixed(1)} 秒`))
+      <div className="cv-form-actions"><ActionHint text={testHint}><Button type="button" className="cv-button secondary" aria-label="测试连接" disabled={busy !== null || dirty || !connection?.hasKey} onClick={() => {
+        setBusy('test'); setError(''); setNotice('');
+        void request('connection.test', { petId }).then(result => setNotice(`可用 · ${(result.elapsedMs / 1000).toFixed(1)} 秒`))
           .catch(cause => { setNotice(''); setError(cause instanceof Error ? cause.message : '测试失败。'); }).finally(() => setBusy(null));
-      }}>{busy === 'test' ? '正在测试…' : dirty ? '保存后可测试' : '测试连接'}</Button>
-      <Button className="cv-button" disabled={busy !== null || !form.model.trim() || !form.baseUrl.trim()}>{busy === 'save' ? '正在保存…' : '保存连接'}</Button></div>
-      {busy === 'test' && <Button type="button" className="cv-link" onClick={() => { void request('connection.cancel', { petId }).catch(cause => setError(cause instanceof Error ? cause.message : '停止测试失败。')); }}>停止测试</Button>}
+      }}><PlugZap size={16}/>{busy === 'test' ? '测试中' : '测试'}</Button></ActionHint>
+      <Button className="cv-button" aria-label="保存连接" disabled={busy !== null || !form.model.trim() || !form.baseUrl.trim()}><Save size={16}/>{busy === 'save' ? '保存中' : '保存'}</Button></div>
+      {busy === 'test' && <ActionHint text="停止测试"><Button type="button" className="cv-icon" aria-label="停止测试" onClick={() => { void request('connection.cancel', { petId }).catch(cause => setError(cause instanceof Error ? cause.message : '停止测试失败。')); }}><Square size={15}/></Button></ActionHint>}
     </form>
   </section>;
 }
@@ -66,26 +73,26 @@ function PersonaForm({ pet, profile, request, refresh }: { pet: ConversationPet;
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
   const [saved, setSaved] = useState(false);
-  return <section className="cv-card cv-persona"><div className="cv-section-heading"><h2>{pet.name}的对话设置</h2><span className="cv-level">仅当前实例</span></div>
+  return <section className="cv-card cv-persona"><div className="cv-section-heading"><h2>{pet.name}<PetElement pet={pet}/></h2><InfoHint label="伙伴设置提示" text="人设、记忆和独立连接只应用于这位伙伴。"/></div>
     <PetScene pet={pet}/>
     <form onSubmit={event => { event.preventDefault(); setBusy(true); setError('');
       void request('profile.save', { petId: pet.petId, profile: form, revision: profile.revision })
         .then(() => { setSaved(true); return refresh(); }).catch(cause => setError(cause instanceof Error ? cause.message : '保存失败。')).finally(() => setBusy(false)); }}>
-      <label className="cv-field">性格设定 <span className="cv-caption">只对{pet.name}生效</span>
-        <Textarea rows={4} maxLength={2000} placeholder="温柔、爱撒娇，喜欢和你待在一起。用你希望的方式，描述这只伙伴。" value={form.persona}
+      <label className="cv-field">性格
+        <Textarea aria-label="性格设定" rows={4} maxLength={2000} placeholder="例如：温柔、简短、爱分享。" value={form.persona}
           onChange={event => { setForm(current => ({ ...current, persona: event.target.value })); setSaved(false); }}/></label>
       <div className="cv-counter">{form.persona.length}/2000</div>
       <label className="cv-field">回复风格<FormSelect label="回复风格" value={form.replyStyle}
         options={[{ value: 'natural', label: '简短、自然' }, { value: 'warm', label: '温柔、细腻' }, { value: 'playful', label: '活泼、俏皮' }, { value: 'detailed', label: '清晰、充分' }]}
         onValueChange={value => { setForm(current => ({ ...current, replyStyle: value as ConversationProfile['replyStyle'] })); setSaved(false); }}/></label>
-      <label className="cv-toggle-row"><span>启用记忆<small>在回复中使用你为她保存的小事</small></span><Switch aria-label="启用记忆" checked={form.memoryEnabled}
-        onCheckedChange={checked => { setForm(current => ({ ...current, memoryEnabled: checked })); setSaved(false); }}/></label>
-      <label className="cv-toggle-row"><span>使用独立连接<small>关闭时沿用本账号的全局连接</small></span><Switch aria-label="使用独立连接" checked={form.useOverride}
-        onCheckedChange={checked => { setForm(current => ({ ...current, useOverride: checked })); setSaved(false); }}/></label>
-      <label className="cv-toggle-row"><span>聊天时暂停散步<small>只暂停正在对话的伙伴</small></span><Switch aria-label="聊天时暂停散步" checked={form.pauseWhileChatting}
-        onCheckedChange={checked => { setForm(current => ({ ...current, pauseWhileChatting: checked })); setSaved(false); }}/></label>
-      {error && <p className="cv-error" role="alert">{error}</p>}{saved && <p className="cv-success" role="status">人设已保存。</p>}
-      <Button className="cv-button" disabled={busy}>{busy ? '正在保存…' : '保存伙伴人设'}</Button>
+      <div className="cv-toggle-row"><label htmlFor={`memory-${pet.petId}`}>使用记忆</label><InfoHint label="记忆开关提示" text="关闭后暂停用于回复，已保存的记忆仍保留。"/><Switch id={`memory-${pet.petId}`} aria-label="启用记忆" checked={form.memoryEnabled}
+        onCheckedChange={checked => { setForm(current => ({ ...current, memoryEnabled: checked })); setSaved(false); }}/></div>
+      <div className="cv-toggle-row"><label htmlFor={`override-${pet.petId}`}>独立连接</label><InfoHint label="独立连接提示" text="开启后使用这位伙伴自己的连接和密钥；关闭时沿用全局连接。"/><Switch id={`override-${pet.petId}`} aria-label="使用独立连接" checked={form.useOverride}
+        onCheckedChange={checked => { setForm(current => ({ ...current, useOverride: checked })); setSaved(false); }}/></div>
+      <div className="cv-toggle-row"><label htmlFor={`pause-${pet.petId}`}>回复时暂停散步</label><InfoHint label="暂停散步提示" text="仅在这位伙伴回复期间暂停散步。"/><Switch id={`pause-${pet.petId}`} aria-label="聊天时暂停散步" checked={form.pauseWhileChatting}
+        onCheckedChange={checked => { setForm(current => ({ ...current, pauseWhileChatting: checked })); setSaved(false); }}/></div>
+      {error && <p className="cv-error" role="alert">{error}</p>}{saved && <p className="cv-success" role="status">已保存</p>}
+      <Button className="cv-button" aria-label="保存伙伴人设" disabled={busy}><Save size={16}/>{busy ? '保存中' : '保存'}</Button>
     </form>
   </section>;
 }
@@ -104,25 +111,23 @@ export function ConversationSettingsPage({ client }: { client?: ConversationClie
   const data = chat.data;
   const scope = JSON.stringify([data?.accountId, data?.sessionRevision, data?.petId]);
   const pet = data?.pets.find(item => item.petId === data.petId);
-  if (!data) return <div className="cv-root"><header className="cv-page-header"><h1>给每位伙伴，不同的声音与性格。</h1></header><section className="cv-card cv-empty">
+  if (!data) return <div className="cv-root"><header className="cv-page-header"><h1>AI 对话</h1></header><section className="cv-card cv-empty">
     <p role={chat.error ? 'alert' : 'status'}>{chat.loading ? '正在读取设置…' : chat.error || '请先登录账号。'}</p><a className="cv-button" href="#/account">前往账号</a></section></div>;
   const refresh = () => chat.reload(data.petId ?? undefined);
-  return <div className="cv-root cv-ai-settings"><SettingsNavigation/><div className="cv-settings-content"><header className="cv-page-header"><p>设置 / AI 对话</p><div><div><h1>给每位伙伴，不同的声音与性格。</h1>
-    <p>选择合适的对话服务，并为每位伙伴设定独特的性格与回应方式。</p></div><a className="cv-link cv-settings-shortcut" href="#/chat"><ChevronLeft size={14}/>回到聊天</a></div></header>
+  return <div className="cv-root cv-ai-settings"><SettingsNavigation/><div className="cv-settings-content"><header className="cv-page-header"><p>设置 / AI 对话</p><div><div><h1>AI 对话</h1></div><ActionHint text="回到聊天"><a className="cv-icon cv-settings-shortcut" href="#/chat" aria-label="回到聊天"><ChevronLeft size={18}/></a></ActionHint></div></header>
     {chat.error && <p className="cv-error" role="alert">{chat.error}</p>}
     <div className="cv-settings-grid"><div className="cv-settings-main"><Tabs value={tab} onValueChange={value => setTab(value as 'global' | 'pet')}>
-      <TabsList className="cv-tabs" aria-label="AI 设置范围"><TabsTrigger value="global">全局连接</TabsTrigger><TabsTrigger value="pet" disabled={!pet}>伙伴人设</TabsTrigger></TabsList>
+      <TabsList className="cv-tabs" aria-label="AI 设置范围"><TabsTrigger value="global">全局连接</TabsTrigger><TabsTrigger value="pet" disabled={!pet}>独立连接</TabsTrigger></TabsList>
       <TabsContent value={tab}>
-        {tab === 'global' ? <ConnectionForm key={`${data.accountId}:global:${data.globalConnection?.revision ?? 0}`} connection={data.globalConnection} petId={null} label="对话服务设置"
+        {tab === 'global' ? <ConnectionForm key={`${data.accountId}:global:${data.globalConnection?.revision ?? 0}`} connection={data.globalConnection} petId={null} label="模型连接"
           secure={data.secureStorageAvailable} request={chat.request} refresh={refresh}/> : pet && <>
-          <p className="cv-note">为{pet.name}单独保存连接后，在右侧开启“使用独立连接”。独立连接需要自己的密钥。</p>
           <ConnectionForm key={`${data.accountId}:${pet.petId}:${data.connection?.revision ?? 0}`} connection={data.connection ?? null} petId={pet.petId} label={`${pet.name}的独立连接`}
-            secure={data.secureStorageAvailable} request={chat.request} refresh={refresh}/></>}
+            secure={data.secureStorageAvailable} request={chat.request} refresh={refresh} scope={{ enabled: data.profile?.useOverride === true, hint: '需要自己的密钥；保存后，在右侧开启独立连接。' }}/></>}
       </TabsContent></Tabs>
-      <section className="cv-card cv-partners"><h2>选择设置的伙伴 <small>{pet?.name || '暂无伙伴'}</small></h2><div>
-        {data.pets.map(item => <Button className={item.petId === pet?.petId ? 'selected' : ''} key={item.petId} aria-pressed={item.petId === pet?.petId}
-          onClick={() => { setEditor(null); void chat.choose(item.petId); }}><PetAvatar pet={item}/><strong>{item.name}</strong><small>实例 · {item.petId.slice(-8)}</small></Button>)}
-      </div><p className="cv-caption">全局连接属于当前账号。伙伴人设、独立连接和记忆分别保存。</p></section>
+      <section className="cv-card cv-partners"><h2>伙伴 <small>{data.pets.length}</small></h2><div>
+        {data.pets.map(item => <ActionHint key={item.petId} text={[item.name, petElementLabel(item), item.petId.slice(-8)].filter(Boolean).join(' · ')}><Button className={item.petId === pet?.petId ? 'selected' : ''} aria-pressed={item.petId === pet?.petId} aria-label={`${item.name}，${petElementLabel(item)}，伙伴 ${item.petId.slice(-8)}`}
+          onClick={() => { setEditor(null); void chat.choose(item.petId); }}><PetAvatar pet={item}/><strong>{item.name}<PetElement pet={item} hint={false}/></strong></Button></ActionHint>)}
+      </div></section>
     </div>
     <aside className="cv-settings-side">{pet && data.profile ? <>
       <PersonaForm key={`${data.accountId}:${pet.petId}:${data.profile.revision}`} pet={pet} profile={data.profile} request={chat.request} refresh={refresh}/>

@@ -39,3 +39,14 @@
 .cv-scene-unavailable{height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:var(--space-3,12px);padding:var(--space-4,16px);font-size:var(--text-label,12px);line-height:1.7;color:var(--cv-muted);text-align:center}
 
 .cv-root .cv-card :is(h2,h3){font-size:var(--text-card,16px);font-weight:var(--weight-section,600)}.cv-root .cv-pet-list h2{font-size:var(--text-label,12px);font-weight:var(--weight-label,500)}.cv-partners>div{grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--space-2,8px)}.cv-partners button{min-width:0;white-space:normal}.cv-partners button small{display:block;max-width:100%;white-space:normal;overflow-wrap:anywhere;line-height:1.5;text-align:center}
+
+/* Compact player-facing controls; explanations live in shared tooltips. */
+.cv-tooltip{max-width:270px;white-space:normal;overflow-wrap:anywhere;font-family:var(--font-ui);font-size:var(--text-label,12px);line-height:1.6}
+.cv-card-tools{display:flex;align-items:center;gap:var(--space-1,4px)}.cv-root .cv-info-hint,.cv-dialog .cv-info-hint{width:22px;height:22px;min-width:22px;min-height:22px;padding:3px}
+.cv-disabled-hint{display:inline-flex;align-items:center}.cv-disabled-hint:focus-visible,.cv-element:focus-visible,.cv-memory-paused:focus-visible,.cv-connection-state:focus-visible,.cv-scope-state:focus-visible{outline:2px solid var(--ring,#9db5ff);outline-offset:3px;border-radius:5px}
+.cv-element{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;padding:2px;border-radius:50%;background:var(--mist,#edf5ff);flex-shrink:0;vertical-align:middle}
+.cv-thread-header h2,.cv-section-heading h2,.cv-pet-option strong,.cv-partners strong{display:flex;align-items:center;gap:var(--space-2,8px)}.cv-pet-option strong{margin-bottom:0}.cv-pet-option:has(small) strong{margin-bottom:4px}.cv-partners strong{justify-content:center;gap:var(--space-1,4px)}
+.cv-pause-label,.cv-toggle-row>label{flex:1;min-width:0}.cv-memory-paused{display:inline-flex;color:var(--muted);padding:3px}.cv-memory-empty{padding:var(--space-3,12px) 0;margin:0}.cv-scope-state{font-size:var(--text-caption,11px);color:var(--muted);line-height:1.5}
+.cv-secret-field{position:relative}.cv-secret-field .cv-field input{padding-right:36px}.cv-secret-field>.cv-info-hint{position:absolute;right:6px;bottom:8px}.cv-advanced-heading{display:flex;justify-content:flex-end}
+.cv-message-actions .cv-icon{width:24px;height:24px;min-width:24px;min-height:24px;padding:4px}.cv-composer-hint{align-items:center;min-height:22px}.cv-root .cv-composer>.cv-button{min-width:42px;padding-inline:12px}.cv-pet-scene>.resource-portrait{width:100%;height:100%}
+.cv-connection-state .cv-dot:not(.offline){background:var(--cv-blue)}

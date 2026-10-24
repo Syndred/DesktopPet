@@ -53,7 +53,7 @@ try {
     pets.push({ petId: pet.petId, name: pet.name, resourceId: pet.resource.resourceId, frame: display.resource.atlas.frames[name].frame });
   }
   await page.getByRole('navigation', { name: '主导航' }).getByRole('button', { name: '聊天', exact: true }).click();
-  await page.getByRole('heading', { name: '想说的话，我都在听。', exact: true }).waitFor();
+  await page.getByRole('heading', { name: '聊天', exact: true }).waitFor();
   await waitUntil(async () => (await page.locator('.cv-pet-option .cv-avatar svg.resource-portrait[data-framing="portrait"] image').count()) === 6, 'six actual atlas portrait images');
   const portraits = await page.locator('.cv-pet-option .cv-avatar').evaluateAll(nodes => nodes.map(node => {
     const svg = node.querySelector('svg.resource-portrait[data-framing="portrait"]');
@@ -77,13 +77,13 @@ try {
   await page.screenshot({ path: join(output, 'chat-hatcat-1280.png'), fullPage: true });
   await page.locator('.cv-pet-list').screenshot({ path: join(output, 'six-portraits.png') });
   await page.getByRole('link', { name: '对话设置', exact: true }).click();
-  await page.getByRole('heading', { name: '给每位伙伴，不同的声音与性格。', exact: true }).waitFor();
+  await page.getByRole('heading', { name: 'AI 对话', exact: true }).waitFor();
   await waitUntil(async () => (await page.locator('.cv-partners .cv-avatar svg.resource-portrait[data-framing="portrait"] image').count()) === 6, 'settings use the same portraits');
   await settlePortraits();
   await page.screenshot({ path: join(output, 'ai-portraits-1280.png'), fullPage: true });
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.getByRole('navigation', { name: '主导航' }).getByRole('button', { name: '聊天', exact: true }).click();
-  await page.getByRole('heading', { name: '想说的话，我都在听。', exact: true }).waitFor();
+  await page.getByRole('heading', { name: '聊天', exact: true }).waitFor();
   await settlePortraits();
   await page.screenshot({ path: join(output, 'chat-hatcat-1440.png'), fullPage: true });
   assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
