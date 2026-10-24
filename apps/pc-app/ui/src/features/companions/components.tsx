@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
-import { Footprints, Heart, Maximize2, MessageCircle, Monitor, Pencil, Plus, Smile, Soup, Swords, X } from 'lucide-react';
+import { useEffect, useState, type ReactNode } from 'react';
+import { Footprints, Heart, Info, Maximize2, MessageCircle, Monitor, Pencil, Plus, Smile, Soup, Swords, X } from 'lucide-react';
+import type { ElementType } from '../../../../../../packages/shared-types/src/battle';
 import type { CompanionPet, CompanionsSnapshot } from '../../../../../../packages/shared-types/src/features/companions';
 import { navigate } from '../../app/navigation';
 import { Button, EmptyState, ErrorNotice } from '../../components/ui';
@@ -10,10 +11,17 @@ import { Slider } from '../../components/ui/slider';
 import { Switch } from '../../components/ui/switch';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../../components/ui/tooltip';
 import { PageTransition } from '../../components/motion';
+import { ElementMark } from '../battle/BattleMoves';
+import { elements as battleElements } from '../battle/presentation';
 import type { useCompanions } from './client';
 
 export type Controller = ReturnType<typeof useCompanions>;
-export const elements: Record<string, string> = { metal: '金', wood: '木', water: '水', fire: '火', earth: '土' };
+export function CompanionElement({ element }: { element: ElementType }) {
+  return <span className="cp-element" data-element={element}><ElementMark element={element}/>{battleElements[element].label}</span>;
+}
+export function InfoHint({ label, children, content }: { label: string; children?: ReactNode; content: ReactNode }) {
+  return <TooltipProvider delayDuration={250}><Tooltip><TooltipTrigger asChild><Button type="button" variant="ghost" className="cp-hint" aria-label={label}>{children || <Info size={14}/>}</Button></TooltipTrigger><TooltipContent>{content}</TooltipContent></Tooltip></TooltipProvider>;
+}
 export const behaviors = [{ value: 'wander', label: '自由散步' }, { value: 'quiet', label: '安静陪伴' }, { value: 'follow', label: '跟随鼠标' }, { value: 'sleep', label: '好好休息' }] as const;
 export function activeSnapshot(snapshot: CompanionsSnapshot): CompanionsSnapshot {
   return { ...snapshot, pets: snapshot.pets.filter(pet => pet.resource.kind === '2d'), templates: snapshot.templates.filter(template => template.resource.kind === '2d') };
@@ -25,7 +33,7 @@ export function StateMeters({ pet, showMax = false }: { pet: CompanionPet; showM
     { name: '心情', value: pet.growth.mood, className: 'mood', Icon: Smile },
     { name: '饱食', value: pet.growth.satiety, className: 'satiety', Icon: Soup },
     { name: '亲密度', value: pet.growth.affinity, className: 'affinity', Icon: Heart }
-  ].map(item => <div className={`cp-meter ${item.className}`} key={item.name}><item.Icon className="cp-meter-icon" size={20} aria-hidden="true"/><span>{item.name}</span><meter min={0} max={100} value={item.value} aria-label={`${pet.name}的${item.name}`}/><strong>{item.value}{showMax && <small> / 100</small>}</strong></div>)}</div>;
+  ].map(item => <div className={`cp-meter ${item.className}`} key={item.name}><InfoHint label={`${item.name} ${item.value}`} content={`${item.name} ${item.value} / 100`}><item.Icon className="cp-meter-icon" size={20} aria-hidden="true"/></InfoHint><meter min={0} max={100} value={item.value} aria-label={`${pet.name}的${item.name}`}/><strong>{item.value}{showMax && <small> / 100</small>}</strong></div>)}</div>;
 }
 
 /** Public shadcn/Radix primitives own modal focus, Tab containment, Escape and focus return. */
@@ -34,7 +42,7 @@ export function RenameControl({ pet, controller }: { pet: CompanionPet; controll
   return <Dialog open={open} onOpenChange={next => { if (!controller.busy) { if (next) setName(pet.name); setOpen(next); } }}>
     <TooltipProvider delayDuration={350}><Tooltip><TooltipTrigger asChild><DialogTrigger asChild><Button variant="ghost" className="cp-icon-button" aria-label={`修改${pet.name}的名字`}><Pencil size={16}/></Button></DialogTrigger></TooltipTrigger><TooltipContent>给它起个独有的名字</TooltipContent></Tooltip></TooltipProvider>
     <DialogContent className="cp-modal shadow-none" showCloseButton={false} onEscapeKeyDown={event => { if (controller.busy) event.preventDefault(); }} onPointerDownOutside={event => { if (controller.busy) event.preventDefault(); }}>
-      <PageTransition routeKey={`rename:${pet.petId}`}><div className="cp-dialog-heading"><DialogHeader><DialogTitle>给伙伴起个名字</DialogTitle><DialogDescription>这是这只伙伴独有的名字。</DialogDescription></DialogHeader><DialogClose asChild><Button variant="ghost" className="cp-icon-button" aria-label="关闭改名" disabled={controller.busy}><X size={18}/></Button></DialogClose></div>
+      <PageTransition routeKey={`rename:${pet.petId}`}><div className="cp-dialog-heading"><DialogHeader><DialogTitle>给伙伴起个名字</DialogTitle><DialogDescription className="sr-only">修改{pet.name}的名字，1–24 个字符。</DialogDescription></DialogHeader><DialogClose asChild><Button variant="ghost" className="cp-icon-button" aria-label="关闭改名" disabled={controller.busy}><X size={18}/></Button></DialogClose></div>
         <form onSubmit={async event => { event.preventDefault(); if (await controller.petAction('rename', pet, { name })) setOpen(false); }} className="cp-rename-form">
           <label htmlFor="cp-new-name">伙伴名字</label><Input id="cp-new-name" autoFocus value={name} onChange={event => setName(event.target.value)} maxLength={48} required/>
           <small>1–24 个字符</small><ErrorNotice message={controller.error}/><DialogFooter className="cp-dialog-actions"><DialogClose asChild><Button type="button" variant="secondary" disabled={controller.busy}>取消</Button></DialogClose><Button disabled={controller.busy || !name.trim() || [...name.trim()].length > 24} type="submit">{controller.busy ? '正在保存…' : '保存名字'}</Button></DialogFooter>
