@@ -1,0 +1,1146 @@
+{
+  "at": "2026-10-24T16:04:53.613Z",
+  "sourceCommit": "1b1b699c68ccef46e349384fbba280f484002b37",
+  "mode": "controlled-domain-fixtures; actual public runtime engine, not live cloud or UI acceptance",
+  "engine": "apps/pc-app/runtime/services/battle-runtime.cjs",
+  "rules": {
+    "id": "five-elements-standard-v1",
+    "label": "标准五行对战",
+    "vitalPolicy": "normalized",
+    "maxHp": 120,
+    "maxAnger": 100,
+    "companionStatsApplied": false,
+    "baseDamage": {
+      "normal_attack": 10,
+      "element_attack": 12,
+      "dodge": 0,
+      "ultimate": 20
+    },
+    "ultimateAnger": 50,
+    "ultimateCost": 50,
+    "ultimateHeal": 20,
+    "dodgeMaxCost": 20,
+    "dodgeRefund": 30,
+    "advantage": {
+      "metal": "wood",
+      "wood": "earth",
+      "earth": "water",
+      "water": "fire",
+      "fire": "metal"
+    },
+    "elementEffects": {
+      "metal": {
+        "label": "易伤",
+        "description": "每层受伤×1.5，最多5层"
+      },
+      "wood": {
+        "label": "寄生",
+        "description": "每层回合末吸取2生命，最多5层"
+      },
+      "earth": {
+        "label": "迟钝",
+        "description": "每层伤害×0.5，最多5层"
+      },
+      "water": {
+        "label": "降怒",
+        "description": "命中后对方怒气向下取半，不增加受击怒气"
+      },
+      "fire": {
+        "label": "燃烧",
+        "description": "回合末按当前生命8%×层数伤害，最多5层"
+      }
+    }
+  },
+  "matrix": [
+    {
+      "attacker": "metal",
+      "defender": "metal",
+      "expectedFactor": 1,
+      "actions": [
+        {
+          "action": "normal_attack",
+          "expected": 10,
+          "actual": 10,
+          "passed": true
+        },
+        {
+          "action": "element_attack",
+          "expected": 12,
+          "actual": 12,
+          "passed": true
+        },
+        {
+          "action": "ultimate",
+          "expected": 20,
+          "actual": 20,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "attacker": "metal",
+      "defender": "wood",
+      "expectedFactor": 1.2,
+      "actions": [
+        {
+          "action": "normal_attack",
+          "expected": 12,
+          "actual": 12,
+          "passed": true
+        },
+        {
+          "action": "element_attack",
+          "expected": 14,
+          "actual": 14,
+          "passed": true
+        },
+        {
+          "action": "ultimate",
+          "expected": 24,
+          "actual": 24,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "attacker": "metal",
+      "defender": "earth",
+      "expectedFactor": 1,
+      "actions": [
+        {
+          "action": "normal_attack",
+          "expected": 10,
+          "actual": 10,
+          "passed": true
+        },
+        {
+          "action": "element_attack",
+          "expected": 12,
+          "actual": 12,
+          "passed": true
+        },
+        {
+          "action": "ultimate",
+          "expected": 20,
+          "actual": 20,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "attacker": "metal",
+      "defender": "water",
+      "expectedFactor": 1,
+      "actions": [
+        {
+          "action": "normal_attack",
+          "expected": 10,
+          "actual": 10,
+          "passed": true
+        },
+        {
+          "action": "element_attack",
+          "expected": 12,
+          "actual": 12,
+          "passed": true
+        },
+        {
+          "action": "ultimate",
+          "expected": 20,
+          "actual": 20,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "attacker": "metal",
+      "defender": "fire",
+      "expectedFactor": 0.8,
+      "actions": [
+        {
+          "action": "normal_attack",
+          "expected": 8,
+          "actual": 8,
+          "passed": true
+        },
+        {
+          "action": "element_attack",
+          "expected": 10,
+          "actual": 10,
+          "passed": true
+        },
+        {
+          "action": "ultimate",
+          "expected": 16,
+          "actual": 16,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "attacker": "wood",
+      "defender": "metal",
+      "expectedFactor": 0.8,
+      "actions": [
+        {
+          "action": "normal_attack",
+          "expected": 8,
+          "actual": 8,
+          "passed": true
+        },
+        {
+          "action": "element_attack",
+          "expected": 10,
+          "actual": 10,
+          "passed": true
+        },
+        {
+          "action": "ultimate",
+          "expected": 16,
+          "actual": 16,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "attacker": "wood",
+      "defender": "wood",
+      "expectedFactor": 1,
+      "actions": [
+        {
+          "action": "normal_attack",
+          "expected": 10,
+          "actual": 10,
+          "passed": true
+        },
+        {
+          "action": "element_attack",
+          "expected": 12,
+          "actual": 12,
+          "passed": true
+        },
+        {
+          "action": "ultimate",
+          "expected": 20,
+          "actual": 20,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "attacker": "wood",
+      "defender": "earth",
+      "expectedFactor": 1.2,
+      "actions": [
+        {
+          "action": "normal_attack",
+          "expected": 12,
+          "actual": 12,
+          "passed": true
+        },
+        {
+          "action": "element_attack",
+          "expected": 14,
+          "actual": 14,
+          "passed": true
+        },
+        {
+          "action": "ultimate",
+          "expected": 24,
+          "actual": 24,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "attacker": "wood",
+      "defender": "water",
+      "expectedFactor": 1,
+      "actions": [
+        {
+          "action": "normal_attack",
+          "expected": 10,
+          "actual": 10,
+          "passed": true
+        },
+        {
+          "action": "element_attack",
+          "expected": 12,
+          "actual": 12,
+          "passed": true
+        },
+        {
+          "action": "ultimate",
+          "expected": 20,
+          "actual": 20,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "attacker": "wood",
+      "defender": "fire",
+      "expectedFactor": 1,
+      "actions": [
+        {
+          "action": "normal_attack",
+          "expected": 10,
+          "actual": 10,
+          "passed": true
+        },
+        {
+          "action": "element_attack",
+          "expected": 12,
+          "actual": 12,
+          "passed": true
+        },
+        {
+          "action": "ultimate",
+          "expected": 20,
+          "actual": 20,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "attacker": "earth",
+      "defender": "metal",
+      "expectedFactor": 1,
+      "actions": [
+        {
+          "action": "normal_attack",
+          "expected": 10,
+          "actual": 10,
+          "passed": true
+        },
+        {
+          "action": "element_attack",
+          "expected": 12,
+          "actual": 12,
+          "passed": true
+        },
+        {
+          "action": "ultimate",
+          "expected": 20,
+          "actual": 20,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "attacker": "earth",
+      "defender": "wood",
+      "expectedFactor": 0.8,
+      "actions": [
+        {
+          "action": "normal_attack",
+          "expected": 8,
+          "actual": 8,
+          "passed": true
+        },
+        {
+          "action": "element_attack",
+          "expected": 10,
+          "actual": 10,
+          "passed": true
+        },
+        {
+          "action": "ultimate",
+          "expected": 16,
+          "actual": 16,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "attacker": "earth",
+      "defender": "earth",
+      "expectedFactor": 1,
+      "actions": [
+        {
+          "action": "normal_attack",
+          "expected": 10,
+          "actual": 10,
+          "passed": true
+        },
+        {
+          "action": "element_attack",
+          "expected": 12,
+          "actual": 12,
+          "passed": true
+        },
+        {
+          "action": "ultimate",
+          "expected": 20,
+          "actual": 20,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "attacker": "earth",
+      "defender": "water",
+      "expectedFactor": 1.2,
+      "actions": [
+        {
+          "action": "normal_attack",
+          "expected": 12,
+          "actual": 12,
+          "passed": true
+        },
+        {
+          "action": "element_attack",
+          "expected": 14,
+          "actual": 14,
+          "passed": true
+        },
+        {
+          "action": "ultimate",
+          "expected": 24,
+          "actual": 24,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "attacker": "earth",
+      "defender": "fire",
+      "expectedFactor": 1,
+      "actions": [
+        {
+          "action": "normal_attack",
+          "expected": 10,
+          "actual": 10,
+          "passed": true
+        },
+        {
+          "action": "element_attack",
+          "expected": 12,
+          "actual": 12,
+          "passed": true
+        },
+        {
+          "action": "ultimate",
+          "expected": 20,
+          "actual": 20,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "attacker": "water",
+      "defender": "metal",
+      "expectedFactor": 1,
+      "actions": [
+        {
+          "action": "normal_attack",
+          "expected": 10,
+          "actual": 10,
+          "passed": true
+        },
+        {
+          "action": "element_attack",
+          "expected": 12,
+          "actual": 12,
+          "passed": true
+        },
+        {
+          "action": "ultimate",
+          "expected": 20,
+          "actual": 20,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "attacker": "water",
+      "defender": "wood",
+      "expectedFactor": 1,
+      "actions": [
+        {
+          "action": "normal_attack",
+          "expected": 10,
+          "actual": 10,
+          "passed": true
+        },
+        {
+          "action": "element_attack",
+          "expected": 12,
+          "actual": 12,
+          "passed": true
+        },
+        {
+          "action": "ultimate",
+          "expected": 20,
+          "actual": 20,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "attacker": "water",
+      "defender": "earth",
+      "expectedFactor": 0.8,
+      "actions": [
+        {
+          "action": "normal_attack",
+          "expected": 8,
+          "actual": 8,
+          "passed": true
+        },
+        {
+          "action": "element_attack",
+          "expected": 10,
+          "actual": 10,
+          "passed": true
+        },
+        {
+          "action": "ultimate",
+          "expected": 16,
+          "actual": 16,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "attacker": "water",
+      "defender": "water",
+      "expectedFactor": 1,
+      "actions": [
+        {
+          "action": "normal_attack",
+          "expected": 10,
+          "actual": 10,
+          "passed": true
+        },
+        {
+          "action": "element_attack",
+          "expected": 12,
+          "actual": 12,
+          "passed": true
+        },
+        {
+          "action": "ultimate",
+          "expected": 20,
+          "actual": 20,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "attacker": "water",
+      "defender": "fire",
+      "expectedFactor": 1.2,
+      "actions": [
+        {
+          "action": "normal_attack",
+          "expected": 12,
+          "actual": 12,
+          "passed": true
+        },
+        {
+          "action": "element_attack",
+          "expected": 14,
+          "actual": 14,
+          "passed": true
+        },
+        {
+          "action": "ultimate",
+          "expected": 24,
+          "actual": 24,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "attacker": "fire",
+      "defender": "metal",
+      "expectedFactor": 1.2,
+      "actions": [
+        {
+          "action": "normal_attack",
+          "expected": 12,
+          "actual": 12,
+          "passed": true
+        },
+        {
+          "action": "element_attack",
+          "expected": 14,
+          "actual": 14,
+          "passed": true
+        },
+        {
+          "action": "ultimate",
+          "expected": 24,
+          "actual": 24,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "attacker": "fire",
+      "defender": "wood",
+      "expectedFactor": 1,
+      "actions": [
+        {
+          "action": "normal_attack",
+          "expected": 10,
+          "actual": 10,
+          "passed": true
+        },
+        {
+          "action": "element_attack",
+          "expected": 12,
+          "actual": 12,
+          "passed": true
+        },
+        {
+          "action": "ultimate",
+          "expected": 20,
+          "actual": 20,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "attacker": "fire",
+      "defender": "earth",
+      "expectedFactor": 1,
+      "actions": [
+        {
+          "action": "normal_attack",
+          "expected": 10,
+          "actual": 10,
+          "passed": true
+        },
+        {
+          "action": "element_attack",
+          "expected": 12,
+          "actual": 12,
+          "passed": true
+        },
+        {
+          "action": "ultimate",
+          "expected": 20,
+          "actual": 20,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "attacker": "fire",
+      "defender": "water",
+      "expectedFactor": 0.8,
+      "actions": [
+        {
+          "action": "normal_attack",
+          "expected": 8,
+          "actual": 8,
+          "passed": true
+        },
+        {
+          "action": "element_attack",
+          "expected": 10,
+          "actual": 10,
+          "passed": true
+        },
+        {
+          "action": "ultimate",
+          "expected": 16,
+          "actual": 16,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "attacker": "fire",
+      "defender": "fire",
+      "expectedFactor": 1,
+      "actions": [
+        {
+          "action": "normal_attack",
+          "expected": 10,
+          "actual": 10,
+          "passed": true
+        },
+        {
+          "action": "element_attack",
+          "expected": 12,
+          "actual": 12,
+          "passed": true
+        },
+        {
+          "action": "ultimate",
+          "expected": 20,
+          "actual": 20,
+          "passed": true
+        }
+      ]
+    }
+  ],
+  "properties": [
+    {
+      "id": "fire-current-hp-burn-and-stack",
+      "passed": true,
+      "details": {
+        "first": {
+          "round": 1,
+          "actions": {
+            "player": "element_attack",
+            "enemy": "dodge"
+          },
+          "damageTaken": {
+            "player": 0,
+            "enemy": 22
+          },
+          "directDamage": {
+            "player": 0,
+            "enemy": 14
+          },
+          "dotDamageEvents": {
+            "player": [],
+            "enemy": [
+              {
+                "type": "burn",
+                "amount": 8
+              }
+            ]
+          },
+          "healEvents": {
+            "player": [],
+            "enemy": []
+          },
+          "hpAfter": {
+            "player": 120,
+            "enemy": 98
+          },
+          "angerAfter": {
+            "player": 20,
+            "enemy": 7
+          },
+          "statusesAfter": {
+            "player": [],
+            "enemy": [
+              {
+                "type": "burn",
+                "duration": 2,
+                "stacks": 1,
+                "stackable": true,
+                "sourceId": "player"
+              }
+            ]
+          },
+          "winner": null,
+          "notes": [
+            "enemy uses first free dodge",
+            "enemy burned x1",
+            "enemy takes burn damage"
+          ]
+        },
+        "second": {
+          "round": 2,
+          "actions": {
+            "player": "element_attack",
+            "enemy": "dodge"
+          },
+          "damageTaken": {
+            "player": 0,
+            "enemy": 27
+          },
+          "directDamage": {
+            "player": 0,
+            "enemy": 14
+          },
+          "dotDamageEvents": {
+            "player": [],
+            "enemy": [
+              {
+                "type": "burn",
+                "amount": 13
+              }
+            ]
+          },
+          "healEvents": {
+            "player": [],
+            "enemy": []
+          },
+          "hpAfter": {
+            "player": 120,
+            "enemy": 71
+          },
+          "angerAfter": {
+            "player": 40,
+            "enemy": 7
+          },
+          "statusesAfter": {
+            "player": [],
+            "enemy": [
+              {
+                "type": "burn",
+                "duration": 4,
+                "stacks": 2,
+                "stackable": true,
+                "sourceId": "player"
+              }
+            ]
+          },
+          "winner": null,
+          "notes": [
+            "enemy spends 20 anger on dodge",
+            "enemy burned x2",
+            "enemy takes burn damage"
+          ]
+        }
+      }
+    },
+    {
+      "id": "wood-parasite-drains-and-heals-source",
+      "passed": true,
+      "details": {
+        "round": 1,
+        "actions": {
+          "player": "element_attack",
+          "enemy": "dodge"
+        },
+        "damageTaken": {
+          "player": 0,
+          "enemy": 12
+        },
+        "directDamage": {
+          "player": 0,
+          "enemy": 10
+        },
+        "dotDamageEvents": {
+          "player": [],
+          "enemy": [
+            {
+              "type": "parasite",
+              "amount": 2
+            }
+          ]
+        },
+        "healEvents": {
+          "player": [
+            {
+              "type": "parasite",
+              "amount": 2
+            }
+          ],
+          "enemy": []
+        },
+        "hpAfter": {
+          "player": 82,
+          "enemy": 108
+        },
+        "angerAfter": {
+          "player": 0,
+          "enemy": 5
+        },
+        "statusesAfter": {
+          "player": [],
+          "enemy": [
+            {
+              "type": "parasite",
+              "duration": 2,
+              "potency": 2,
+              "stacks": 1,
+              "stackable": true,
+              "sourceId": "player"
+            }
+          ]
+        },
+        "winner": null,
+        "notes": [
+          "enemy uses first free dodge",
+          "enemy parasitized x1",
+          "player healed by parasite",
+          "enemy takes parasite damage"
+        ]
+      }
+    },
+    {
+      "id": "metal-vulnerability-multiplies-subsequent-damage",
+      "passed": true,
+      "details": {
+        "firstDamage": 14,
+        "secondDamage": 22,
+        "statuses": [
+          {
+            "type": "vulnerability",
+            "duration": 4,
+            "stacks": 2,
+            "stackable": true,
+            "sourceId": "player"
+          }
+        ]
+      }
+    },
+    {
+      "id": "earth-petrify-halves-target-output",
+      "passed": true,
+      "details": {
+        "round": 2,
+        "actions": {
+          "player": "dodge",
+          "enemy": "element_attack"
+        },
+        "damageTaken": {
+          "player": 5,
+          "enemy": 0
+        },
+        "directDamage": {
+          "player": 5,
+          "enemy": 0
+        },
+        "dotDamageEvents": {
+          "player": [],
+          "enemy": []
+        },
+        "healEvents": {
+          "player": [],
+          "enemy": []
+        },
+        "hpAfter": {
+          "player": 115,
+          "enemy": 106
+        },
+        "angerAfter": {
+          "player": 0,
+          "enemy": 7
+        },
+        "statusesAfter": {
+          "player": [],
+          "enemy": [
+            {
+              "type": "petrify",
+              "duration": 1,
+              "stacks": 1,
+              "stackable": true,
+              "sourceId": "player"
+            }
+          ]
+        },
+        "winner": null,
+        "notes": [
+          "player spends 20 anger on dodge",
+          "enemy anger halved by freeze (0->0)"
+        ]
+      }
+    },
+    {
+      "id": "water-halves-rage-and-prevents-hurt-rage",
+      "passed": true,
+      "details": {
+        "round": 1,
+        "actions": {
+          "player": "element_attack",
+          "enemy": "ultimate"
+        },
+        "damageTaken": {
+          "player": 24,
+          "enemy": 14
+        },
+        "directDamage": {
+          "player": 16,
+          "enemy": 14
+        },
+        "dotDamageEvents": {
+          "player": [
+            {
+              "type": "burn",
+              "amount": 8
+            }
+          ],
+          "enemy": []
+        },
+        "healEvents": {
+          "player": [],
+          "enemy": [
+            {
+              "type": "ultimate",
+              "amount": 14
+            }
+          ]
+        },
+        "hpAfter": {
+          "player": 96,
+          "enemy": 120
+        },
+        "angerAfter": {
+          "player": 28,
+          "enemy": 15
+        },
+        "statusesAfter": {
+          "player": [
+            {
+              "type": "burn",
+              "duration": 2,
+              "stacks": 1,
+              "stackable": true,
+              "sourceId": "enemy"
+            }
+          ],
+          "enemy": []
+        },
+        "winner": null,
+        "notes": [
+          "enemy anger halved by freeze (30->15)",
+          "enemy burned x1",
+          "enemy healed by ultimate",
+          "player takes burn damage"
+        ]
+      }
+    },
+    {
+      "id": "normal-interrupts-element-attack",
+      "passed": true,
+      "details": {
+        "round": 1,
+        "actions": {
+          "player": "normal_attack",
+          "enemy": "element_attack"
+        },
+        "damageTaken": {
+          "player": 0,
+          "enemy": 12
+        },
+        "directDamage": {
+          "player": 0,
+          "enemy": 12
+        },
+        "dotDamageEvents": {
+          "player": [],
+          "enemy": []
+        },
+        "healEvents": {
+          "player": [],
+          "enemy": []
+        },
+        "hpAfter": {
+          "player": 120,
+          "enemy": 108
+        },
+        "angerAfter": {
+          "player": 20,
+          "enemy": 6
+        },
+        "statusesAfter": {
+          "player": [],
+          "enemy": []
+        },
+        "winner": null,
+        "notes": [
+          "enemy action missed"
+        ]
+      }
+    },
+    {
+      "id": "first-dodge-avoids-normal-and-refunds-thirty",
+      "passed": true,
+      "details": {
+        "round": 1,
+        "actions": {
+          "player": "dodge",
+          "enemy": "normal_attack"
+        },
+        "damageTaken": {
+          "player": 0,
+          "enemy": 0
+        },
+        "directDamage": {
+          "player": 0,
+          "enemy": 0
+        },
+        "dotDamageEvents": {
+          "player": [],
+          "enemy": []
+        },
+        "healEvents": {
+          "player": [],
+          "enemy": []
+        },
+        "hpAfter": {
+          "player": 120,
+          "enemy": 120
+        },
+        "angerAfter": {
+          "player": 30,
+          "enemy": 0
+        },
+        "statusesAfter": {
+          "player": [],
+          "enemy": []
+        },
+        "winner": null,
+        "notes": [
+          "player uses first free dodge",
+          "enemy action missed",
+          "player dodged normal attack and refunded 30 anger"
+        ]
+      }
+    },
+    {
+      "id": "ultimate-hits-dodge-costs-fifty-and-heals-twenty",
+      "passed": true,
+      "details": {
+        "round": 1,
+        "actions": {
+          "player": "ultimate",
+          "enemy": "dodge"
+        },
+        "damageTaken": {
+          "player": 0,
+          "enemy": 20
+        },
+        "directDamage": {
+          "player": 0,
+          "enemy": 20
+        },
+        "dotDamageEvents": {
+          "player": [],
+          "enemy": []
+        },
+        "healEvents": {
+          "player": [
+            {
+              "type": "ultimate",
+              "amount": 20
+            }
+          ],
+          "enemy": []
+        },
+        "hpAfter": {
+          "player": 90,
+          "enemy": 100
+        },
+        "angerAfter": {
+          "player": 0,
+          "enemy": 0
+        },
+        "statusesAfter": {
+          "player": [],
+          "enemy": []
+        },
+        "winner": null,
+        "notes": [
+          "enemy uses first free dodge",
+          "enemy anger halved by freeze (0->0)",
+          "player healed by ultimate"
+        ]
+      }
+    },
+    {
+      "id": "status-duration-expires-without-reapplication",
+      "passed": true,
+      "details": {
+        "round": 3,
+        "statuses": []
+      }
+    }
+  ],
+  "failures": [],
+  "engineSha256": "0c7475da1cb6a7171d8dceca57e78dcf1ee28b2e46ac70957774d0dd86673b38",
+  "engineWorkingTree": "",
+  "matrixCases": 75,
+  "passed": true
+}

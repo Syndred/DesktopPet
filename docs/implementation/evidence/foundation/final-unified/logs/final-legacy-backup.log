@@ -1,0 +1,22 @@
+TAP version 13
+# Subtest: battle backup keeps newer final state and cannot roll a reward ledger backward
+ok 1 - battle backup keeps newer final state and cannot roll a reward ledger backward
+  ---
+  duration_ms: 133.2887
+  type: 'test'
+  ...
+# Subtest: same-version legacy session and report gain missing display metadata without changing stored gameplay
+ok 2 - same-version legacy session and report gain missing display metadata without changing stored gameplay
+  ---
+  duration_ms: 3.0497
+  type: 'test'
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 2
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 325.8445

@@ -1,0 +1,3960 @@
+{
+  "at": "2026-10-24T15:40:45.916Z",
+  "profileGate": "namespaced-v2",
+  "mode": "simulated location + declared public QA prestate/enemy choice; actual shared Electron screen, original kernel, SQLite and explicit-login restart",
+  "scenarios": {
+    "win": {
+      "schemaVersion": 1,
+      "application": "lingjing",
+      "scenario": "unified-battle",
+      "runId": "dfca3ded-e050-4c74-9193-60478c55ccbb",
+      "isolated": true,
+      "profilePath": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\artifacts\\qa\\unified-battle\\qa-1792856445957-dfca3ded",
+      "createdAt": "2026-10-24T15:40:45.957Z",
+      "env": {
+        "LINGJING_QA_SCENARIO": "unified-battle",
+        "PET_USER_DATA_DIR": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\artifacts\\qa\\unified-battle\\qa-1792856445957-dfca3ded"
+      },
+      "owner": "qa:dfca3ded-e050-4c74-9193-60478c55ccbb:local-5bc68bcf-17f4-4f02-aabb-db045ebb4bd2",
+      "plantInput": {
+        "actionId": "unified:personal-plot",
+        "expectedRevision": 0,
+        "sessionOwnerAccountId": "qa:dfca3ded-e050-4c74-9193-60478c55ccbb:local-5bc68bcf-17f4-4f02-aabb-db045ebb4bd2",
+        "plotId": "plot-1",
+        "cropType": "carrot"
+      },
+      "personalCrop": {
+        "plotId": "plot-1",
+        "cropType": "carrot",
+        "plantedAt": 1792856446965,
+        "maturesAt": 1792857046965,
+        "yieldQuantity": 3,
+        "revision": 1,
+        "stage": "growing"
+      },
+      "territoryId": "qa:dfca3ded-e050-4c74-9193-60478c55ccbb:territory:5205:20245",
+      "before": {
+        "ok": true,
+        "revision": 3,
+        "data": {
+          "ownerAccountId": "qa:dfca3ded-e050-4c74-9193-60478c55ccbb:local-5bc68bcf-17f4-4f02-aabb-db045ebb4bd2",
+          "serverTime": 1792856453643,
+          "plots": [
+            {
+              "plotId": "plot-1",
+              "cropType": "carrot",
+              "plantedAt": 1792856446965,
+              "maturesAt": 1792857046965,
+              "yieldQuantity": 3,
+              "revision": 1,
+              "stage": "growing"
+            },
+            {
+              "plotId": "plot-2",
+              "cropType": null,
+              "plantedAt": null,
+              "maturesAt": null,
+              "yieldQuantity": 0,
+              "revision": 0,
+              "stage": "empty"
+            },
+            {
+              "plotId": "plot-3",
+              "cropType": null,
+              "plantedAt": null,
+              "maturesAt": null,
+              "yieldQuantity": 0,
+              "revision": 0,
+              "stage": "empty"
+            },
+            {
+              "plotId": "plot-4",
+              "cropType": null,
+              "plantedAt": null,
+              "maturesAt": null,
+              "yieldQuantity": 0,
+              "revision": 0,
+              "stage": "empty"
+            },
+            {
+              "plotId": "plot-5",
+              "cropType": null,
+              "plantedAt": null,
+              "maturesAt": null,
+              "yieldQuantity": 0,
+              "revision": 0,
+              "stage": "empty"
+            },
+            {
+              "plotId": "plot-6",
+              "cropType": null,
+              "plantedAt": null,
+              "maturesAt": null,
+              "yieldQuantity": 0,
+              "revision": 0,
+              "stage": "empty"
+            }
+          ],
+          "items": [
+            {
+              "id": "seed:carrot",
+              "name": "胡萝卜种子",
+              "icon": "🥕",
+              "category": "seed",
+              "source": "探索与对战",
+              "effects": null,
+              "quantity": 1
+            },
+            {
+              "id": "seed:tomato",
+              "name": "番茄种子",
+              "icon": "🍅",
+              "category": "seed",
+              "source": "探索与对战",
+              "effects": null,
+              "quantity": 2
+            },
+            {
+              "id": "seed:berry",
+              "name": "莓果种子",
+              "icon": "🫐",
+              "category": "seed",
+              "source": "探索与对战",
+              "effects": null,
+              "quantity": 2
+            },
+            {
+              "id": "seed:rice",
+              "name": "稻米种子",
+              "icon": "🌾",
+              "category": "seed",
+              "source": "探索与对战",
+              "effects": null,
+              "quantity": 2
+            },
+            {
+              "id": "carrot",
+              "name": "胡萝卜",
+              "icon": "🥕",
+              "category": "food",
+              "source": "菜园收获",
+              "effects": {
+                "satiety": 12,
+                "mood": 2,
+                "intimacy": 2
+              },
+              "quantity": 0
+            },
+            {
+              "id": "tomato",
+              "name": "番茄",
+              "icon": "🍅",
+              "category": "food",
+              "source": "菜园收获",
+              "effects": {
+                "satiety": 10,
+                "mood": 3,
+                "intimacy": 2
+              },
+              "quantity": 0
+            },
+            {
+              "id": "berry",
+              "name": "莓果",
+              "icon": "🫐",
+              "category": "food",
+              "source": "菜园收获",
+              "effects": {
+                "satiety": 8,
+                "mood": 4,
+                "intimacy": 3
+              },
+              "quantity": 0
+            },
+            {
+              "id": "rice",
+              "name": "稻米",
+              "icon": "🌾",
+              "category": "ingredient",
+              "source": "菜园收获",
+              "effects": null,
+              "quantity": 0
+            },
+            {
+              "id": "cooked_rice",
+              "name": "热乎乎的米饭",
+              "icon": "🍚",
+              "category": "food",
+              "source": "稻米制作",
+              "effects": {
+                "satiety": 20,
+                "mood": 3,
+                "intimacy": 4
+              },
+              "quantity": 0
+            }
+          ],
+          "crops": [
+            {
+              "id": "carrot",
+              "name": "胡萝卜",
+              "icon": "🥕",
+              "seedItemId": "seed:carrot",
+              "harvestItemId": "carrot",
+              "growMs": 600000,
+              "yield": 3,
+              "color": "#ed9448"
+            },
+            {
+              "id": "tomato",
+              "name": "番茄",
+              "icon": "🍅",
+              "seedItemId": "seed:tomato",
+              "harvestItemId": "tomato",
+              "growMs": 900000,
+              "yield": 3,
+              "color": "#ef7875"
+            },
+            {
+              "id": "berry",
+              "name": "莓果",
+              "icon": "🫐",
+              "seedItemId": "seed:berry",
+              "harvestItemId": "berry",
+              "growMs": 1200000,
+              "yield": 4,
+              "color": "#9e8fd4"
+            },
+            {
+              "id": "rice",
+              "name": "稻米",
+              "icon": "🌾",
+              "seedItemId": "seed:rice",
+              "harvestItemId": "rice",
+              "growMs": 1500000,
+              "yield": 2,
+              "color": "#d2ad54"
+            }
+          ],
+          "recipes": [
+            {
+              "id": "cooked_rice",
+              "name": "热乎乎的米饭",
+              "input": {
+                "itemId": "rice",
+                "quantity": 1
+              },
+              "output": {
+                "itemId": "cooked_rice",
+                "quantity": 1
+              }
+            }
+          ],
+          "pets": [
+            {
+              "ownerAccountId": "qa:dfca3ded-e050-4c74-9193-60478c55ccbb:local-5bc68bcf-17f4-4f02-aabb-db045ebb4bd2",
+              "petId": "pet-77f20411-248c-4825-b9a9-ffcc474a726b",
+              "templateId": "big-fish-gentle",
+              "name": "鱼丸",
+              "serial": "77F20411",
+              "element": "water",
+              "resource": {
+                "resourceId": "builtin:lingjing-yuwan-v2",
+                "kind": "2d"
+              },
+              "source": "adoption",
+              "origin": {},
+              "growth": {
+                "level": 1,
+                "experience": 0,
+                "mood": 60,
+                "satiety": 60,
+                "affinity": 0,
+                "winsTotal": 0,
+                "stats": {
+                  "hp": 124,
+                  "atk": 28,
+                  "def": 24,
+                  "spd": 20
+                }
+              },
+              "desktop": {
+                "visible": false,
+                "behavior": "quiet",
+                "scale": 1,
+                "position": {
+                  "x": 80,
+                  "y": 520,
+                  "displayId": null
+                }
+              },
+              "revision": 1,
+              "createdAt": "2026-10-24T15:40:46.939Z",
+              "updatedAt": "2026-10-24T15:40:46.939Z"
+            },
+            {
+              "ownerAccountId": "qa:dfca3ded-e050-4c74-9193-60478c55ccbb:local-5bc68bcf-17f4-4f02-aabb-db045ebb4bd2",
+              "petId": "pet-611ca2da-70a9-4781-a89b-97872b125c86",
+              "templateId": "animal-hat-cat",
+              "name": "礼帽喵",
+              "serial": "611CA2DA",
+              "element": "metal",
+              "resource": {
+                "resourceId": "builtin:lingjing-hatcat-v1",
+                "kind": "2d"
+              },
+              "source": "adoption",
+              "origin": {},
+              "growth": {
+                "level": 1,
+                "experience": 0,
+                "mood": 60,
+                "satiety": 60,
+                "affinity": 0,
+                "winsTotal": 0,
+                "stats": {
+                  "hp": 136,
+                  "atk": 30,
+                  "def": 30,
+                  "spd": 13
+                }
+              },
+              "desktop": {
+                "visible": false,
+                "behavior": "quiet",
+                "scale": 1,
+                "position": {
+                  "x": 320,
+                  "y": 520,
+                  "displayId": null
+                }
+              },
+              "revision": 1,
+              "createdAt": "2026-10-24T15:40:46.947Z",
+              "updatedAt": "2026-10-24T15:40:46.947Z"
+            },
+            {
+              "ownerAccountId": "qa:dfca3ded-e050-4c74-9193-60478c55ccbb:local-5bc68bcf-17f4-4f02-aabb-db045ebb4bd2",
+              "petId": "pet-6112b3a2-1a09-43ac-9416-4b2930b0e226",
+              "templateId": "animal-shiba",
+              "name": "焰柴",
+              "serial": "6112B3A2",
+              "element": "fire",
+              "resource": {
+                "resourceId": "builtin:lingjing-shiba-v2",
+                "kind": "2d"
+              },
+              "source": "adoption",
+              "origin": {},
+              "growth": {
+                "level": 1,
+                "experience": 0,
+                "mood": 60,
+                "satiety": 60,
+                "affinity": 0,
+                "winsTotal": 0,
+                "stats": {
+                  "hp": 118,
+                  "atk": 33,
+                  "def": 20,
+                  "spd": 22
+                }
+              },
+              "desktop": {
+                "visible": false,
+                "behavior": "quiet",
+                "scale": 1,
+                "position": {
+                  "x": 560,
+                  "y": 520,
+                  "displayId": null
+                }
+              },
+              "revision": 1,
+              "createdAt": "2026-10-24T15:40:46.951Z",
+              "updatedAt": "2026-10-24T15:40:46.951Z"
+            }
+          ],
+          "territories": [
+            {
+              "id": "qa:dfca3ded-e050-4c74-9193-60478c55ccbb:territory:5205:20245",
+              "name": "附近的庭院",
+              "regionName": "领地演练",
+              "ownerAccountId": null,
+              "revision": 1,
+              "captureMultiplier": 2,
+              "provenance": "simulated-geographic",
+              "boundary": [
+                {
+                  "lat": 31.23,
+                  "lng": 121.47
+                },
+                {
+                  "lat": 31.236,
+                  "lng": 121.47
+                },
+                {
+                  "lat": 31.236,
+                  "lng": 121.476
+                },
+                {
+                  "lat": 31.23,
+                  "lng": 121.476
+                }
+              ],
+              "logs": [],
+              "garrisonPetId": null,
+              "mapBoundary": [
+                {
+                  "lat": 31.23,
+                  "lng": 121.47
+                },
+                {
+                  "lat": 31.236,
+                  "lng": 121.47
+                },
+                {
+                  "lat": 31.236,
+                  "lng": 121.476
+                },
+                {
+                  "lat": 31.23,
+                  "lng": 121.476
+                }
+              ]
+            }
+          ],
+          "ledger": [
+            {
+              "id": "268dbbe0-a691-4b21-b10f-d1507207a791",
+              "actionId": "unified:personal-plot",
+              "kind": "plant",
+              "itemId": "seed:carrot",
+              "delta": -1,
+              "balance": 1,
+              "petId": null,
+              "createdAt": 1792856446965
+            },
+            {
+              "id": "dbdb9825-92a9-494f-9b7a-d5557665ce70",
+              "actionId": "starter:v1",
+              "kind": "starter",
+              "itemId": "seed:carrot",
+              "delta": 2,
+              "balance": 2,
+              "petId": null,
+              "createdAt": 1792856446955
+            },
+            {
+              "id": "ce935db5-cf30-4f70-81a6-f8934da31464",
+              "actionId": "starter:v1",
+              "kind": "starter",
+              "itemId": "seed:berry",
+              "delta": 2,
+              "balance": 2,
+              "petId": null,
+              "createdAt": 1792856446955
+            },
+            {
+              "id": "676fed37-791d-48d3-9160-43c4e22c3b8b",
+              "actionId": "starter:v1",
+              "kind": "starter",
+              "itemId": "seed:rice",
+              "delta": 2,
+              "balance": 2,
+              "petId": null,
+              "createdAt": 1792856446955
+            },
+            {
+              "id": "14045c39-a7da-47b3-91ef-92835d11280c",
+              "actionId": "starter:v1",
+              "kind": "starter",
+              "itemId": "seed:tomato",
+              "delta": 2,
+              "balance": 2,
+              "petId": null,
+              "createdAt": 1792856446955
+            }
+          ],
+          "sync": {
+            "mode": "local",
+            "pending": 3,
+            "conflicts": 0
+          },
+          "remainingInvasions": 2,
+          "scenario": {
+            "mode": "simulated",
+            "id": "dfca3ded-e050-4c74-9193-60478c55ccbb",
+            "label": "领地演练 · 模拟定位"
+          },
+          "territoryChallenges": []
+        }
+      },
+      "prepared": true,
+      "preparationSource": {
+        "sha": "fd0f81a84b1aedbcadab69dd5bbb0badff05c3c6",
+        "dirty": "",
+        "hashes": {
+          "apps/pc-app/dist/main/index.cjs": "c7bad7ec905876fee122e0970b83b5ba9ddce61c4de715459e6050ffa49ab504",
+          "apps/pc-app/dist/ui/index.html": "5998c549b0b2e149958d0516d972919efa1e5eb37a23ad65825d55e4c68df470",
+          "apps/pc-app/runtime/features/garden/index.cjs": "84e3bbceadfb1703293c8c74c08e556f04d82b6f6a49824c821a1d3f39510d2e",
+          "apps/pc-app/runtime/features/garden/territories.cjs": "cbe45a2dac9b3238417e864c5f694fe72769f1da9b0896fe09970ceb609d8bc7",
+          "apps/pc-app/runtime/features/garden/qa-location.cjs": "0a4be95e869b7548b152a04573ff3591931dacd663eac106202c16888d3e0da4"
+        }
+      },
+      "sessionId": "battle-b1ee641f-5004-495b-87dc-37223ecae4df",
+      "preset": {
+        "preset": "charged",
+        "enemyAction": "dodge"
+      },
+      "actorIdentities": [
+        {
+          "petId": "pet-611ca2da-70a9-4781-a89b-97872b125c86",
+          "resourceId": "builtin:lingjing-hatcat-v1",
+          "status": "ready"
+        },
+        {
+          "petId": "guardian:qa:dfca3ded-e050-4c74-9193-60478c55ccbb:territory:5205:20245",
+          "resourceId": "builtin:lingjing-qingya-v1",
+          "status": "ready"
+        }
+      ],
+      "resume": {
+        "id": "battle-b1ee641f-5004-495b-87dc-37223ecae4df",
+        "mode": "territory",
+        "status": "active",
+        "snapshot": {
+          "round": 1,
+          "player": {
+            "id": "player",
+            "element": "metal",
+            "hp": 85,
+            "maxHp": 120,
+            "anger": 50,
+            "freeDodgeUsed": false,
+            "statuses": []
+          },
+          "enemy": {
+            "id": "enemy",
+            "element": "wood",
+            "hp": 100,
+            "maxHp": 120,
+            "anger": 40,
+            "freeDodgeUsed": true,
+            "statuses": []
+          }
+        },
+        "playerId": "pet-611ca2da-70a9-4781-a89b-97872b125c86",
+        "enemyId": "guardian:qa:dfca3ded-e050-4c74-9193-60478c55ccbb:territory:5205:20245",
+        "rounds": [
+          {
+            "round": 1,
+            "actions": {
+              "player": "normal_attack",
+              "enemy": "dodge"
+            },
+            "state": {
+              "round": 1,
+              "player": {
+                "id": "player",
+                "element": "metal",
+                "hp": 85,
+                "maxHp": 120,
+                "anger": 50,
+                "freeDodgeUsed": false,
+                "statuses": []
+              },
+              "enemy": {
+                "id": "enemy",
+                "element": "wood",
+                "hp": 100,
+                "maxHp": 120,
+                "anger": 40,
+                "freeDodgeUsed": true,
+                "statuses": []
+              }
+            }
+          }
+        ]
+      },
+      "restartRecovered": true,
+      "session": {
+        "id": "battle-b1ee641f-5004-495b-87dc-37223ecae4df",
+        "mode": "territory",
+        "status": "finished",
+        "startedAt": "2026-10-24T15:40:53.808Z",
+        "player": {
+          "petId": "pet-611ca2da-70a9-4781-a89b-97872b125c86",
+          "petName": "礼帽喵",
+          "element": "metal",
+          "level": 1,
+          "resourceRef": "builtin:lingjing-hatcat-v1",
+          "resource": {
+            "resourceId": "builtin:lingjing-hatcat-v1",
+            "kind": "2d"
+          },
+          "appearance2d": "builtin:lingjing-hatcat-v1"
+        },
+        "enemy": {
+          "petId": "guardian:qa:dfca3ded-e050-4c74-9193-60478c55ccbb:territory:5205:20245",
+          "petName": "青芽",
+          "element": "wood",
+          "level": 1,
+          "resource": {
+            "resourceId": "builtin:lingjing-qingya-v1",
+            "kind": "2d"
+          },
+          "appearance2d": "builtin:lingjing-qingya-v1"
+        },
+        "snapshot": {
+          "round": 5,
+          "player": {
+            "id": "player",
+            "element": "metal",
+            "hp": 105,
+            "maxHp": 120,
+            "anger": 60,
+            "freeDodgeUsed": false,
+            "statuses": []
+          },
+          "enemy": {
+            "id": "enemy",
+            "element": "wood",
+            "hp": 0,
+            "maxHp": 120,
+            "anger": 24,
+            "freeDodgeUsed": true,
+            "statuses": [
+              {
+                "type": "vulnerability",
+                "duration": 8,
+                "stacks": 4,
+                "stackable": true,
+                "sourceId": "player"
+              }
+            ]
+          }
+        },
+        "rounds": [
+          {
+            "round": 1,
+            "actions": {
+              "player": "normal_attack",
+              "enemy": "dodge"
+            },
+            "damageTaken": {
+              "player": 0,
+              "enemy": 0
+            },
+            "directDamage": {
+              "player": 0,
+              "enemy": 0
+            },
+            "dotDamageEvents": {
+              "player": [],
+              "enemy": []
+            },
+            "healEvents": {
+              "player": [],
+              "enemy": []
+            },
+            "hpAfter": {
+              "player": 85,
+              "enemy": 100
+            },
+            "angerAfter": {
+              "player": 50,
+              "enemy": 40
+            },
+            "statusesAfter": {
+              "player": [],
+              "enemy": []
+            },
+            "winner": null,
+            "notes": [
+              "enemy spends 20 anger on dodge",
+              "player action missed",
+              "enemy dodged normal attack and refunded 30 anger"
+            ],
+            "state": {
+              "round": 1,
+              "player": {
+                "id": "player",
+                "element": "metal",
+                "hp": 85,
+                "maxHp": 120,
+                "anger": 50,
+                "freeDodgeUsed": false,
+                "statuses": []
+              },
+              "enemy": {
+                "id": "enemy",
+                "element": "wood",
+                "hp": 100,
+                "maxHp": 120,
+                "anger": 40,
+                "freeDodgeUsed": true,
+                "statuses": []
+              }
+            },
+            "visualEvents": [
+              {
+                "id": "1:player:windup:action:0",
+                "side": "player",
+                "phase": "windup",
+                "kind": "action",
+                "action": "normal_attack"
+              },
+              {
+                "id": "1:player:release:action:1",
+                "side": "player",
+                "phase": "release",
+                "kind": "action",
+                "action": "normal_attack",
+                "element": "metal"
+              },
+              {
+                "id": "1:enemy:impact:dodge:2",
+                "side": "enemy",
+                "phase": "impact",
+                "kind": "dodge"
+              },
+              {
+                "id": "1:enemy:windup:action:3",
+                "side": "enemy",
+                "phase": "windup",
+                "kind": "action",
+                "action": "dodge"
+              },
+              {
+                "id": "1:enemy:release:action:4",
+                "side": "enemy",
+                "phase": "release",
+                "kind": "action",
+                "action": "dodge",
+                "element": "wood"
+              }
+            ]
+          },
+          {
+            "round": 2,
+            "actions": {
+              "player": "ultimate",
+              "enemy": "dodge"
+            },
+            "damageTaken": {
+              "player": 0,
+              "enemy": 24
+            },
+            "directDamage": {
+              "player": 0,
+              "enemy": 24
+            },
+            "dotDamageEvents": {
+              "player": [],
+              "enemy": []
+            },
+            "healEvents": {
+              "player": [
+                {
+                  "type": "ultimate",
+                  "amount": 20
+                }
+              ],
+              "enemy": []
+            },
+            "hpAfter": {
+              "player": 105,
+              "enemy": 76
+            },
+            "angerAfter": {
+              "player": 0,
+              "enemy": 32
+            },
+            "statusesAfter": {
+              "player": [],
+              "enemy": [
+                {
+                  "type": "vulnerability",
+                  "duration": 2,
+                  "stacks": 1,
+                  "stackable": true,
+                  "sourceId": "player"
+                }
+              ]
+            },
+            "winner": null,
+            "notes": [
+              "enemy spends 20 anger on dodge",
+              "enemy vulnerable x1",
+              "player healed by ultimate"
+            ],
+            "state": {
+              "round": 2,
+              "player": {
+                "id": "player",
+                "element": "metal",
+                "hp": 105,
+                "maxHp": 120,
+                "anger": 0,
+                "freeDodgeUsed": false,
+                "statuses": []
+              },
+              "enemy": {
+                "id": "enemy",
+                "element": "wood",
+                "hp": 76,
+                "maxHp": 120,
+                "anger": 32,
+                "freeDodgeUsed": true,
+                "statuses": [
+                  {
+                    "type": "vulnerability",
+                    "duration": 2,
+                    "stacks": 1,
+                    "stackable": true,
+                    "sourceId": "player"
+                  }
+                ]
+              }
+            },
+            "visualEvents": [
+              {
+                "id": "2:player:windup:action:0",
+                "side": "player",
+                "phase": "windup",
+                "kind": "action",
+                "action": "ultimate"
+              },
+              {
+                "id": "2:player:release:action:1",
+                "side": "player",
+                "phase": "release",
+                "kind": "action",
+                "action": "ultimate",
+                "element": "metal"
+              },
+              {
+                "id": "2:enemy:impact:damage:2",
+                "side": "enemy",
+                "phase": "impact",
+                "kind": "damage",
+                "amount": 24
+              },
+              {
+                "id": "2:player:effects:heal:3",
+                "side": "player",
+                "phase": "effects",
+                "kind": "heal",
+                "amount": 20,
+                "status": "ultimate"
+              },
+              {
+                "id": "2:enemy:effects:status:4",
+                "side": "enemy",
+                "phase": "effects",
+                "kind": "status",
+                "status": "vulnerability",
+                "element": "metal"
+              },
+              {
+                "id": "2:enemy:windup:action:5",
+                "side": "enemy",
+                "phase": "windup",
+                "kind": "action",
+                "action": "dodge"
+              },
+              {
+                "id": "2:enemy:release:action:6",
+                "side": "enemy",
+                "phase": "release",
+                "kind": "action",
+                "action": "dodge",
+                "element": "wood"
+              }
+            ]
+          },
+          {
+            "round": 3,
+            "actions": {
+              "player": "element_attack",
+              "enemy": "dodge"
+            },
+            "damageTaken": {
+              "player": 0,
+              "enemy": 22
+            },
+            "directDamage": {
+              "player": 0,
+              "enemy": 22
+            },
+            "dotDamageEvents": {
+              "player": [],
+              "enemy": []
+            },
+            "healEvents": {
+              "player": [],
+              "enemy": []
+            },
+            "hpAfter": {
+              "player": 105,
+              "enemy": 54
+            },
+            "angerAfter": {
+              "player": 20,
+              "enemy": 23
+            },
+            "statusesAfter": {
+              "player": [],
+              "enemy": [
+                {
+                  "type": "vulnerability",
+                  "duration": 4,
+                  "stacks": 2,
+                  "stackable": true,
+                  "sourceId": "player"
+                }
+              ]
+            },
+            "winner": null,
+            "notes": [
+              "enemy spends 20 anger on dodge",
+              "enemy vulnerable x2"
+            ],
+            "state": {
+              "round": 3,
+              "player": {
+                "id": "player",
+                "element": "metal",
+                "hp": 105,
+                "maxHp": 120,
+                "anger": 20,
+                "freeDodgeUsed": false,
+                "statuses": []
+              },
+              "enemy": {
+                "id": "enemy",
+                "element": "wood",
+                "hp": 54,
+                "maxHp": 120,
+                "anger": 23,
+                "freeDodgeUsed": true,
+                "statuses": [
+                  {
+                    "type": "vulnerability",
+                    "duration": 4,
+                    "stacks": 2,
+                    "stackable": true,
+                    "sourceId": "player"
+                  }
+                ]
+              }
+            },
+            "visualEvents": [
+              {
+                "id": "3:player:windup:action:0",
+                "side": "player",
+                "phase": "windup",
+                "kind": "action",
+                "action": "element_attack"
+              },
+              {
+                "id": "3:player:release:action:1",
+                "side": "player",
+                "phase": "release",
+                "kind": "action",
+                "action": "element_attack",
+                "element": "metal"
+              },
+              {
+                "id": "3:enemy:impact:damage:2",
+                "side": "enemy",
+                "phase": "impact",
+                "kind": "damage",
+                "amount": 22
+              },
+              {
+                "id": "3:enemy:effects:status:3",
+                "side": "enemy",
+                "phase": "effects",
+                "kind": "status",
+                "status": "vulnerability",
+                "element": "metal"
+              },
+              {
+                "id": "3:enemy:windup:action:4",
+                "side": "enemy",
+                "phase": "windup",
+                "kind": "action",
+                "action": "dodge"
+              },
+              {
+                "id": "3:enemy:release:action:5",
+                "side": "enemy",
+                "phase": "release",
+                "kind": "action",
+                "action": "dodge",
+                "element": "wood"
+              }
+            ]
+          },
+          {
+            "round": 4,
+            "actions": {
+              "player": "element_attack",
+              "enemy": "dodge"
+            },
+            "damageTaken": {
+              "player": 0,
+              "enemy": 32
+            },
+            "directDamage": {
+              "player": 0,
+              "enemy": 32
+            },
+            "dotDamageEvents": {
+              "player": [],
+              "enemy": []
+            },
+            "healEvents": {
+              "player": [],
+              "enemy": []
+            },
+            "hpAfter": {
+              "player": 105,
+              "enemy": 22
+            },
+            "angerAfter": {
+              "player": 40,
+              "enemy": 19
+            },
+            "statusesAfter": {
+              "player": [],
+              "enemy": [
+                {
+                  "type": "vulnerability",
+                  "duration": 6,
+                  "stacks": 3,
+                  "stackable": true,
+                  "sourceId": "player"
+                }
+              ]
+            },
+            "winner": null,
+            "notes": [
+              "enemy spends 20 anger on dodge",
+              "enemy vulnerable x3"
+            ],
+            "state": {
+              "round": 4,
+              "player": {
+                "id": "player",
+                "element": "metal",
+                "hp": 105,
+                "maxHp": 120,
+                "anger": 40,
+                "freeDodgeUsed": false,
+                "statuses": []
+              },
+              "enemy": {
+                "id": "enemy",
+                "element": "wood",
+                "hp": 22,
+                "maxHp": 120,
+                "anger": 19,
+                "freeDodgeUsed": true,
+                "statuses": [
+                  {
+                    "type": "vulnerability",
+                    "duration": 6,
+                    "stacks": 3,
+                    "stackable": true,
+                    "sourceId": "player"
+                  }
+                ]
+              }
+            },
+            "visualEvents": [
+              {
+                "id": "4:player:windup:action:0",
+                "side": "player",
+                "phase": "windup",
+                "kind": "action",
+                "action": "element_attack"
+              },
+              {
+                "id": "4:player:release:action:1",
+                "side": "player",
+                "phase": "release",
+                "kind": "action",
+                "action": "element_attack",
+                "element": "metal"
+              },
+              {
+                "id": "4:enemy:impact:damage:2",
+                "side": "enemy",
+                "phase": "impact",
+                "kind": "damage",
+                "amount": 32
+              },
+              {
+                "id": "4:enemy:effects:status:3",
+                "side": "enemy",
+                "phase": "effects",
+                "kind": "status",
+                "status": "vulnerability",
+                "element": "metal"
+              },
+              {
+                "id": "4:enemy:windup:action:4",
+                "side": "enemy",
+                "phase": "windup",
+                "kind": "action",
+                "action": "dodge"
+              },
+              {
+                "id": "4:enemy:release:action:5",
+                "side": "enemy",
+                "phase": "release",
+                "kind": "action",
+                "action": "dodge",
+                "element": "wood"
+              }
+            ]
+          },
+          {
+            "round": 5,
+            "actions": {
+              "player": "element_attack",
+              "enemy": "dodge"
+            },
+            "damageTaken": {
+              "player": 0,
+              "enemy": 49
+            },
+            "directDamage": {
+              "player": 0,
+              "enemy": 49
+            },
+            "dotDamageEvents": {
+              "player": [],
+              "enemy": []
+            },
+            "healEvents": {
+              "player": [],
+              "enemy": []
+            },
+            "hpAfter": {
+              "player": 105,
+              "enemy": 0
+            },
+            "angerAfter": {
+              "player": 60,
+              "enemy": 24
+            },
+            "statusesAfter": {
+              "player": [],
+              "enemy": [
+                {
+                  "type": "vulnerability",
+                  "duration": 8,
+                  "stacks": 4,
+                  "stackable": true,
+                  "sourceId": "player"
+                }
+              ]
+            },
+            "winner": "player",
+            "notes": [
+              "enemy spends 20 anger on dodge",
+              "enemy vulnerable x4"
+            ],
+            "state": {
+              "round": 5,
+              "player": {
+                "id": "player",
+                "element": "metal",
+                "hp": 105,
+                "maxHp": 120,
+                "anger": 60,
+                "freeDodgeUsed": false,
+                "statuses": []
+              },
+              "enemy": {
+                "id": "enemy",
+                "element": "wood",
+                "hp": 0,
+                "maxHp": 120,
+                "anger": 24,
+                "freeDodgeUsed": true,
+                "statuses": [
+                  {
+                    "type": "vulnerability",
+                    "duration": 8,
+                    "stacks": 4,
+                    "stackable": true,
+                    "sourceId": "player"
+                  }
+                ]
+              }
+            },
+            "visualEvents": [
+              {
+                "id": "5:player:windup:action:0",
+                "side": "player",
+                "phase": "windup",
+                "kind": "action",
+                "action": "element_attack"
+              },
+              {
+                "id": "5:player:release:action:1",
+                "side": "player",
+                "phase": "release",
+                "kind": "action",
+                "action": "element_attack",
+                "element": "metal"
+              },
+              {
+                "id": "5:enemy:impact:damage:2",
+                "side": "enemy",
+                "phase": "impact",
+                "kind": "damage",
+                "amount": 49
+              },
+              {
+                "id": "5:enemy:effects:status:3",
+                "side": "enemy",
+                "phase": "effects",
+                "kind": "status",
+                "status": "vulnerability",
+                "element": "metal"
+              },
+              {
+                "id": "5:enemy:windup:action:4",
+                "side": "enemy",
+                "phase": "windup",
+                "kind": "action",
+                "action": "dodge"
+              },
+              {
+                "id": "5:enemy:release:action:5",
+                "side": "enemy",
+                "phase": "release",
+                "kind": "action",
+                "action": "dodge",
+                "element": "wood"
+              }
+            ]
+          }
+        ],
+        "winner": "player",
+        "pendingAction": null,
+        "historyComplete": true,
+        "rules": {
+          "id": "five-elements-standard-v1",
+          "label": "标准五行对战",
+          "vitalPolicy": "normalized",
+          "maxHp": 120,
+          "maxAnger": 100,
+          "companionStatsApplied": false,
+          "baseDamage": {
+            "normal_attack": 10,
+            "element_attack": 12,
+            "dodge": 0,
+            "ultimate": 20
+          },
+          "ultimateAnger": 50,
+          "ultimateCost": 50,
+          "ultimateHeal": 20,
+          "dodgeMaxCost": 20,
+          "dodgeRefund": 30,
+          "advantage": {
+            "metal": "wood",
+            "wood": "earth",
+            "earth": "water",
+            "water": "fire",
+            "fire": "metal"
+          },
+          "elementEffects": {
+            "metal": {
+              "label": "易伤",
+              "description": "每层受伤×1.5，最多5层"
+            },
+            "wood": {
+              "label": "寄生",
+              "description": "每层回合末吸取2生命，最多5层"
+            },
+            "earth": {
+              "label": "迟钝",
+              "description": "每层伤害×0.5，最多5层"
+            },
+            "water": {
+              "label": "降怒",
+              "description": "命中后对方怒气向下取半，不增加受击怒气"
+            },
+            "fire": {
+              "label": "燃烧",
+              "description": "回合末按当前生命8%×层数伤害，最多5层"
+            }
+          }
+        },
+        "context": {
+          "id": "qa:dfca3ded-e050-4c74-9193-60478c55ccbb:territory:5205:20245:1",
+          "territoryId": "qa:dfca3ded-e050-4c74-9193-60478c55ccbb:territory:5205:20245",
+          "territoryRevision": 1,
+          "authority": "simulated",
+          "scenarioId": "dfca3ded-e050-4c74-9193-60478c55ccbb",
+          "qaPreset": "charged",
+          "qaEnemyAction": "dodge"
+        },
+        "updatedAt": "2026-10-24T15:41:03.893Z",
+        "revision": 7,
+        "endedAt": "2026-10-24T15:41:03.890Z",
+        "reward": {
+          "actionId": "battle:battle-b1ee641f-5004-495b-87dc-37223ecae4df:qa:dfca3ded-e050-4c74-9193-60478c55ccbb:local-5bc68bcf-17f4-4f02-aabb-db045ebb4bd2",
+          "petId": "pet-611ca2da-70a9-4781-a89b-97872b125c86",
+          "experience": 20,
+          "applied": true,
+          "previousExperience": 0,
+          "previousLevel": 1,
+          "currentExperience": 20,
+          "currentLevel": 1,
+          "seeds": {
+            "source": "battle",
+            "receiptId": "battle-b1ee641f-5004-495b-87dc-37223ecae4df",
+            "itemId": "seed:carrot",
+            "quantity": 2
+          }
+        },
+        "reportId": "battle-b1ee641f-5004-495b-87dc-37223ecae4df"
+      },
+      "animation": [
+        {
+          "phase": "windup",
+          "key": "battle-b1ee641f-5004-495b-87dc-37223ecae4df:2"
+        },
+        {
+          "phase": "release",
+          "key": "battle-b1ee641f-5004-495b-87dc-37223ecae4df:2"
+        },
+        {
+          "phase": "impact",
+          "key": "battle-b1ee641f-5004-495b-87dc-37223ecae4df:2"
+        },
+        {
+          "phase": "effects",
+          "key": "battle-b1ee641f-5004-495b-87dc-37223ecae4df:2"
+        },
+        {
+          "phase": "rest",
+          "key": "battle-b1ee641f-5004-495b-87dc-37223ecae4df:2"
+        },
+        {
+          "phase": "windup",
+          "key": "battle-b1ee641f-5004-495b-87dc-37223ecae4df:3"
+        },
+        {
+          "phase": "release",
+          "key": "battle-b1ee641f-5004-495b-87dc-37223ecae4df:3"
+        },
+        {
+          "phase": "impact",
+          "key": "battle-b1ee641f-5004-495b-87dc-37223ecae4df:3"
+        },
+        {
+          "phase": "effects",
+          "key": "battle-b1ee641f-5004-495b-87dc-37223ecae4df:3"
+        },
+        {
+          "phase": "rest",
+          "key": "battle-b1ee641f-5004-495b-87dc-37223ecae4df:3"
+        },
+        {
+          "phase": "windup",
+          "key": "battle-b1ee641f-5004-495b-87dc-37223ecae4df:4"
+        },
+        {
+          "phase": "release",
+          "key": "battle-b1ee641f-5004-495b-87dc-37223ecae4df:4"
+        },
+        {
+          "phase": "impact",
+          "key": "battle-b1ee641f-5004-495b-87dc-37223ecae4df:4"
+        },
+        {
+          "phase": "effects",
+          "key": "battle-b1ee641f-5004-495b-87dc-37223ecae4df:4"
+        },
+        {
+          "phase": "rest",
+          "key": "battle-b1ee641f-5004-495b-87dc-37223ecae4df:4"
+        },
+        {
+          "phase": "windup",
+          "key": "battle-b1ee641f-5004-495b-87dc-37223ecae4df:5"
+        },
+        {
+          "phase": "release",
+          "key": "battle-b1ee641f-5004-495b-87dc-37223ecae4df:5"
+        },
+        {
+          "phase": "impact",
+          "key": "battle-b1ee641f-5004-495b-87dc-37223ecae4df:5"
+        },
+        {
+          "phase": "effects",
+          "key": "battle-b1ee641f-5004-495b-87dc-37223ecae4df:5"
+        },
+        {
+          "phase": "rest",
+          "key": "battle-b1ee641f-5004-495b-87dc-37223ecae4df:5"
+        }
+      ],
+      "nonTargetPetsUnchanged": true,
+      "garrisonNoGrowthOrSelectionChange": true,
+      "after": {
+        "ok": true,
+        "revision": 7,
+        "data": {
+          "ownerAccountId": "qa:dfca3ded-e050-4c74-9193-60478c55ccbb:local-5bc68bcf-17f4-4f02-aabb-db045ebb4bd2",
+          "serverTime": 1792856466687,
+          "plots": [
+            {
+              "plotId": "plot-1",
+              "cropType": "carrot",
+              "plantedAt": 1792856446965,
+              "maturesAt": 1792857046965,
+              "yieldQuantity": 3,
+              "revision": 1,
+              "stage": "growing"
+            },
+            {
+              "plotId": "plot-2",
+              "cropType": null,
+              "plantedAt": null,
+              "maturesAt": null,
+              "yieldQuantity": 0,
+              "revision": 0,
+              "stage": "empty"
+            },
+            {
+              "plotId": "plot-3",
+              "cropType": null,
+              "plantedAt": null,
+              "maturesAt": null,
+              "yieldQuantity": 0,
+              "revision": 0,
+              "stage": "empty"
+            },
+            {
+              "plotId": "plot-4",
+              "cropType": null,
+              "plantedAt": null,
+              "maturesAt": null,
+              "yieldQuantity": 0,
+              "revision": 0,
+              "stage": "empty"
+            },
+            {
+              "plotId": "plot-5",
+              "cropType": null,
+              "plantedAt": null,
+              "maturesAt": null,
+              "yieldQuantity": 0,
+              "revision": 0,
+              "stage": "empty"
+            },
+            {
+              "plotId": "plot-6",
+              "cropType": null,
+              "plantedAt": null,
+              "maturesAt": null,
+              "yieldQuantity": 0,
+              "revision": 0,
+              "stage": "empty"
+            }
+          ],
+          "items": [
+            {
+              "id": "seed:carrot",
+              "name": "胡萝卜种子",
+              "icon": "🥕",
+              "category": "seed",
+              "source": "探索与对战",
+              "effects": null,
+              "quantity": 3
+            },
+            {
+              "id": "seed:tomato",
+              "name": "番茄种子",
+              "icon": "🍅",
+              "category": "seed",
+              "source": "探索与对战",
+              "effects": null,
+              "quantity": 2
+            },
+            {
+              "id": "seed:berry",
+              "name": "莓果种子",
+              "icon": "🫐",
+              "category": "seed",
+              "source": "探索与对战",
+              "effects": null,
+              "quantity": 2
+            },
+            {
+              "id": "seed:rice",
+              "name": "稻米种子",
+              "icon": "🌾",
+              "category": "seed",
+              "source": "探索与对战",
+              "effects": null,
+              "quantity": 2
+            },
+            {
+              "id": "carrot",
+              "name": "胡萝卜",
+              "icon": "🥕",
+              "category": "food",
+              "source": "菜园收获",
+              "effects": {
+                "satiety": 12,
+                "mood": 2,
+                "intimacy": 2
+              },
+              "quantity": 0
+            },
+            {
+              "id": "tomato",
+              "name": "番茄",
+              "icon": "🍅",
+              "category": "food",
+              "source": "菜园收获",
+              "effects": {
+                "satiety": 10,
+                "mood": 3,
+                "intimacy": 2
+              },
+              "quantity": 0
+            },
+            {
+              "id": "berry",
+              "name": "莓果",
+              "icon": "🫐",
+              "category": "food",
+              "source": "菜园收获",
+              "effects": {
+                "satiety": 8,
+                "mood": 4,
+                "intimacy": 3
+              },
+              "quantity": 0
+            },
+            {
+              "id": "rice",
+              "name": "稻米",
+              "icon": "🌾",
+              "category": "ingredient",
+              "source": "菜园收获",
+              "effects": null,
+              "quantity": 0
+            },
+            {
+              "id": "cooked_rice",
+              "name": "热乎乎的米饭",
+              "icon": "🍚",
+              "category": "food",
+              "source": "稻米制作",
+              "effects": {
+                "satiety": 20,
+                "mood": 3,
+                "intimacy": 4
+              },
+              "quantity": 0
+            }
+          ],
+          "crops": [
+            {
+              "id": "carrot",
+              "name": "胡萝卜",
+              "icon": "🥕",
+              "seedItemId": "seed:carrot",
+              "harvestItemId": "carrot",
+              "growMs": 600000,
+              "yield": 3,
+              "color": "#ed9448"
+            },
+            {
+              "id": "tomato",
+              "name": "番茄",
+              "icon": "🍅",
+              "seedItemId": "seed:tomato",
+              "harvestItemId": "tomato",
+              "growMs": 900000,
+              "yield": 3,
+              "color": "#ef7875"
+            },
+            {
+              "id": "berry",
+              "name": "莓果",
+              "icon": "🫐",
+              "seedItemId": "seed:berry",
+              "harvestItemId": "berry",
+              "growMs": 1200000,
+              "yield": 4,
+              "color": "#9e8fd4"
+            },
+            {
+              "id": "rice",
+              "name": "稻米",
+              "icon": "🌾",
+              "seedItemId": "seed:rice",
+              "harvestItemId": "rice",
+              "growMs": 1500000,
+              "yield": 2,
+              "color": "#d2ad54"
+            }
+          ],
+          "recipes": [
+            {
+              "id": "cooked_rice",
+              "name": "热乎乎的米饭",
+              "input": {
+                "itemId": "rice",
+                "quantity": 1
+              },
+              "output": {
+                "itemId": "cooked_rice",
+                "quantity": 1
+              }
+            }
+          ],
+          "pets": [
+            {
+              "ownerAccountId": "qa:dfca3ded-e050-4c74-9193-60478c55ccbb:local-5bc68bcf-17f4-4f02-aabb-db045ebb4bd2",
+              "petId": "pet-77f20411-248c-4825-b9a9-ffcc474a726b",
+              "templateId": "big-fish-gentle",
+              "name": "鱼丸",
+              "serial": "77F20411",
+              "element": "water",
+              "resource": {
+                "resourceId": "builtin:lingjing-yuwan-v2",
+                "kind": "2d"
+              },
+              "source": "adoption",
+              "origin": {},
+              "growth": {
+                "level": 1,
+                "experience": 0,
+                "mood": 60,
+                "satiety": 60,
+                "affinity": 0,
+                "winsTotal": 0,
+                "stats": {
+                  "hp": 124,
+                  "atk": 28,
+                  "def": 24,
+                  "spd": 20
+                }
+              },
+              "desktop": {
+                "visible": false,
+                "behavior": "quiet",
+                "scale": 1,
+                "position": {
+                  "x": 80,
+                  "y": 520,
+                  "displayId": null
+                }
+              },
+              "revision": 1,
+              "createdAt": "2026-10-24T15:40:46.939Z",
+              "updatedAt": "2026-10-24T15:40:46.939Z"
+            },
+            {
+              "ownerAccountId": "qa:dfca3ded-e050-4c74-9193-60478c55ccbb:local-5bc68bcf-17f4-4f02-aabb-db045ebb4bd2",
+              "petId": "pet-611ca2da-70a9-4781-a89b-97872b125c86",
+              "templateId": "animal-hat-cat",
+              "name": "礼帽喵",
+              "serial": "611CA2DA",
+              "element": "metal",
+              "resource": {
+                "resourceId": "builtin:lingjing-hatcat-v1",
+                "kind": "2d"
+              },
+              "source": "adoption",
+              "origin": {},
+              "growth": {
+                "level": 1,
+                "experience": 20,
+                "mood": 60,
+                "satiety": 60,
+                "affinity": 0,
+                "winsTotal": 1,
+                "stats": {
+                  "hp": 136,
+                  "atk": 30,
+                  "def": 30,
+                  "spd": 13
+                }
+              },
+              "desktop": {
+                "visible": false,
+                "behavior": "quiet",
+                "scale": 1,
+                "position": {
+                  "x": 320,
+                  "y": 520,
+                  "displayId": null
+                }
+              },
+              "revision": 2,
+              "createdAt": "2026-10-24T15:40:46.947Z",
+              "updatedAt": "2026-10-24T15:41:03.891Z"
+            },
+            {
+              "ownerAccountId": "qa:dfca3ded-e050-4c74-9193-60478c55ccbb:local-5bc68bcf-17f4-4f02-aabb-db045ebb4bd2",
+              "petId": "pet-6112b3a2-1a09-43ac-9416-4b2930b0e226",
+              "templateId": "animal-shiba",
+              "name": "焰柴",
+              "serial": "6112B3A2",
+              "element": "fire",
+              "resource": {
+                "resourceId": "builtin:lingjing-shiba-v2",
+                "kind": "2d"
+              },
+              "source": "adoption",
+              "origin": {},
+              "growth": {
+                "level": 1,
+                "experience": 0,
+                "mood": 60,
+                "satiety": 60,
+                "affinity": 0,
+                "winsTotal": 0,
+                "stats": {
+                  "hp": 118,
+                  "atk": 33,
+                  "def": 20,
+                  "spd": 22
+                }
+              },
+              "desktop": {
+                "visible": false,
+                "behavior": "quiet",
+                "scale": 1,
+                "position": {
+                  "x": 560,
+                  "y": 520,
+                  "displayId": null
+                }
+              },
+              "revision": 1,
+              "createdAt": "2026-10-24T15:40:46.951Z",
+              "updatedAt": "2026-10-24T15:40:46.951Z"
+            }
+          ],
+          "territories": [
+            {
+              "id": "qa:dfca3ded-e050-4c74-9193-60478c55ccbb:territory:5205:20245",
+              "name": "附近的庭院",
+              "regionName": "领地演练",
+              "ownerAccountId": "qa:dfca3ded-e050-4c74-9193-60478c55ccbb:local-5bc68bcf-17f4-4f02-aabb-db045ebb4bd2",
+              "revision": 2,
+              "captureMultiplier": 2,
+              "provenance": "simulated-geographic",
+              "boundary": [
+                {
+                  "lat": 31.23,
+                  "lng": 121.47
+                },
+                {
+                  "lat": 31.236,
+                  "lng": 121.47
+                },
+                {
+                  "lat": 31.236,
+                  "lng": 121.476
+                },
+                {
+                  "lat": 31.23,
+                  "lng": 121.476
+                }
+              ],
+              "logs": [
+                {
+                  "id": "2",
+                  "action": "占领成功",
+                  "actorName": "领地演练·win",
+                  "createdAt": "2026-10-24T15:41:06.078Z"
+                },
+                {
+                  "id": "1",
+                  "action": "发起入侵",
+                  "actorName": "领地演练·win",
+                  "createdAt": "2026-10-24T15:40:53.809Z"
+                }
+              ],
+              "occupiedAt": "2026-10-24T15:41:06.077Z",
+              "garrisonPetId": "pet-77f20411-248c-4825-b9a9-ffcc474a726b",
+              "mapBoundary": [
+                {
+                  "lat": 31.23,
+                  "lng": 121.47
+                },
+                {
+                  "lat": 31.236,
+                  "lng": 121.47
+                },
+                {
+                  "lat": 31.236,
+                  "lng": 121.476
+                },
+                {
+                  "lat": 31.23,
+                  "lng": 121.476
+                }
+              ]
+            }
+          ],
+          "ledger": [
+            {
+              "id": "665e5cec-a503-49dc-8ec3-8f269007e554",
+              "actionId": "battle:battle-b1ee641f-5004-495b-87dc-37223ecae4df:qa:dfca3ded-e050-4c74-9193-60478c55ccbb:local-5bc68bcf-17f4-4f02-aabb-db045ebb4bd2:seeds",
+              "kind": "reward",
+              "itemId": "seed:carrot",
+              "delta": 2,
+              "balance": 3,
+              "petId": null,
+              "createdAt": 1792856463892
+            },
+            {
+              "id": "268dbbe0-a691-4b21-b10f-d1507207a791",
+              "actionId": "unified:personal-plot",
+              "kind": "plant",
+              "itemId": "seed:carrot",
+              "delta": -1,
+              "balance": 1,
+              "petId": null,
+              "createdAt": 1792856446965
+            },
+            {
+              "id": "dbdb9825-92a9-494f-9b7a-d5557665ce70",
+              "actionId": "starter:v1",
+              "kind": "starter",
+              "itemId": "seed:carrot",
+              "delta": 2,
+              "balance": 2,
+              "petId": null,
+              "createdAt": 1792856446955
+            },
+            {
+              "id": "ce935db5-cf30-4f70-81a6-f8934da31464",
+              "actionId": "starter:v1",
+              "kind": "starter",
+              "itemId": "seed:berry",
+              "delta": 2,
+              "balance": 2,
+              "petId": null,
+              "createdAt": 1792856446955
+            },
+            {
+              "id": "676fed37-791d-48d3-9160-43c4e22c3b8b",
+              "actionId": "starter:v1",
+              "kind": "starter",
+              "itemId": "seed:rice",
+              "delta": 2,
+              "balance": 2,
+              "petId": null,
+              "createdAt": 1792856446955
+            },
+            {
+              "id": "14045c39-a7da-47b3-91ef-92835d11280c",
+              "actionId": "starter:v1",
+              "kind": "starter",
+              "itemId": "seed:tomato",
+              "delta": 2,
+              "balance": 2,
+              "petId": null,
+              "createdAt": 1792856446955
+            }
+          ],
+          "sync": {
+            "mode": "local",
+            "pending": 7,
+            "conflicts": 0
+          },
+          "remainingInvasions": 1,
+          "scenario": {
+            "mode": "simulated",
+            "id": "dfca3ded-e050-4c74-9193-60478c55ccbb",
+            "label": "领地演练 · 模拟定位"
+          },
+          "territoryChallenges": []
+        }
+      },
+      "pets": {
+        "ownerAccountId": "qa:dfca3ded-e050-4c74-9193-60478c55ccbb:local-5bc68bcf-17f4-4f02-aabb-db045ebb4bd2",
+        "pets": [
+          {
+            "ownerAccountId": "qa:dfca3ded-e050-4c74-9193-60478c55ccbb:local-5bc68bcf-17f4-4f02-aabb-db045ebb4bd2",
+            "petId": "pet-77f20411-248c-4825-b9a9-ffcc474a726b",
+            "templateId": "big-fish-gentle",
+            "name": "鱼丸",
+            "serial": "77F20411",
+            "element": "water",
+            "resource": {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "kind": "2d"
+            },
+            "source": "adoption",
+            "origin": {},
+            "growth": {
+              "level": 1,
+              "experience": 0,
+              "mood": 60,
+              "satiety": 60,
+              "affinity": 0,
+              "winsTotal": 0,
+              "stats": {
+                "hp": 124,
+                "atk": 28,
+                "def": 24,
+                "spd": 20
+              }
+            },
+            "desktop": {
+              "visible": false,
+              "behavior": "quiet",
+              "scale": 1,
+              "position": {
+                "x": 80,
+                "y": 520,
+                "displayId": null
+              }
+            },
+            "revision": 1,
+            "createdAt": "2026-10-24T15:40:46.939Z",
+            "updatedAt": "2026-10-24T15:40:46.939Z"
+          },
+          {
+            "ownerAccountId": "qa:dfca3ded-e050-4c74-9193-60478c55ccbb:local-5bc68bcf-17f4-4f02-aabb-db045ebb4bd2",
+            "petId": "pet-611ca2da-70a9-4781-a89b-97872b125c86",
+            "templateId": "animal-hat-cat",
+            "name": "礼帽喵",
+            "serial": "611CA2DA",
+            "element": "metal",
+            "resource": {
+              "resourceId": "builtin:lingjing-hatcat-v1",
+              "kind": "2d"
+            },
+            "source": "adoption",
+            "origin": {},
+            "growth": {
+              "level": 1,
+              "experience": 20,
+              "mood": 60,
+              "satiety": 60,
+              "affinity": 0,
+              "winsTotal": 1,
+              "stats": {
+                "hp": 136,
+                "atk": 30,
+                "def": 30,
+                "spd": 13
+              }
+            },
+            "desktop": {
+              "visible": false,
+              "behavior": "quiet",
+              "scale": 1,
+              "position": {
+                "x": 320,
+                "y": 520,
+                "displayId": null
+              }
+            },
+            "revision": 2,
+            "createdAt": "2026-10-24T15:40:46.947Z",
+            "updatedAt": "2026-10-24T15:41:03.891Z"
+          },
+          {
+            "ownerAccountId": "qa:dfca3ded-e050-4c74-9193-60478c55ccbb:local-5bc68bcf-17f4-4f02-aabb-db045ebb4bd2",
+            "petId": "pet-6112b3a2-1a09-43ac-9416-4b2930b0e226",
+            "templateId": "animal-shiba",
+            "name": "焰柴",
+            "serial": "6112B3A2",
+            "element": "fire",
+            "resource": {
+              "resourceId": "builtin:lingjing-shiba-v2",
+              "kind": "2d"
+            },
+            "source": "adoption",
+            "origin": {},
+            "growth": {
+              "level": 1,
+              "experience": 0,
+              "mood": 60,
+              "satiety": 60,
+              "affinity": 0,
+              "winsTotal": 0,
+              "stats": {
+                "hp": 118,
+                "atk": 33,
+                "def": 20,
+                "spd": 22
+              }
+            },
+            "desktop": {
+              "visible": false,
+              "behavior": "quiet",
+              "scale": 1,
+              "position": {
+                "x": 560,
+                "y": 520,
+                "displayId": null
+              }
+            },
+            "revision": 1,
+            "createdAt": "2026-10-24T15:40:46.951Z",
+            "updatedAt": "2026-10-24T15:40:46.951Z"
+          }
+        ],
+        "selections": {
+          "chatPetId": null,
+          "battlePetId": "pet-611ca2da-70a9-4781-a89b-97872b125c86",
+          "guardPetId": null
+        },
+        "templates": [
+          {
+            "templateId": "big-fish-gentle",
+            "name": "鱼丸",
+            "category": "big-fish",
+            "element": "water",
+            "description": "安静温柔的鲸尾少女，喜欢陪你度过日常。",
+            "resource": {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "kind": "2d"
+            },
+            "baseStats": {
+              "hp": 124,
+              "atk": 28,
+              "def": 24,
+              "spd": 20
+            }
+          },
+          {
+            "templateId": "big-fish-cheerful",
+            "name": "小蓝",
+            "category": "big-fish",
+            "element": "water",
+            "description": "活泼的侧马尾伙伴，穿着宽松鲸鱼斗篷。",
+            "resource": {
+              "resourceId": "builtin:lingjing-xiaolan-v1",
+              "kind": "2d"
+            },
+            "baseStats": {
+              "hp": 124,
+              "atk": 28,
+              "def": 24,
+              "spd": 20
+            }
+          },
+          {
+            "templateId": "big-fish-foodie",
+            "name": "饭团",
+            "category": "big-fish",
+            "element": "water",
+            "description": "盘着双丸子头的美食家，认真珍惜每一顿饭。",
+            "resource": {
+              "resourceId": "builtin:lingjing-fantuan-v1",
+              "kind": "2d"
+            },
+            "baseStats": {
+              "hp": 124,
+              "atk": 28,
+              "def": 24,
+              "spd": 20
+            }
+          },
+          {
+            "templateId": "animal-shiba",
+            "name": "焰柴",
+            "category": "animal",
+            "element": "fire",
+            "description": "热情勇敢的柴犬，星星项圈总是闪闪发亮。",
+            "resource": {
+              "resourceId": "builtin:lingjing-shiba-v2",
+              "kind": "2d"
+            },
+            "baseStats": {
+              "hp": 118,
+              "atk": 33,
+              "def": 20,
+              "spd": 22
+            }
+          },
+          {
+            "templateId": "animal-hat-cat",
+            "name": "礼帽喵",
+            "category": "animal",
+            "element": "metal",
+            "description": "戴着礼帽的燕尾猫，擅长温柔的小魔术。",
+            "resource": {
+              "resourceId": "builtin:lingjing-hatcat-v1",
+              "kind": "2d"
+            },
+            "baseStats": {
+              "hp": 136,
+              "atk": 30,
+              "def": 30,
+              "spd": 13
+            }
+          },
+          {
+            "templateId": "animal-white-fox",
+            "name": "小狐",
+            "category": "animal",
+            "element": "water",
+            "description": "安静机灵的雪白小狐，像雪花一样轻盈。",
+            "resource": {
+              "resourceId": "builtin:lingjing-xiaohu-v1",
+              "kind": "2d"
+            },
+            "baseStats": {
+              "hp": 124,
+              "atk": 28,
+              "def": 24,
+              "spd": 20
+            }
+          },
+          {
+            "templateId": "animal-wood-deer",
+            "name": "青芽",
+            "category": "animal",
+            "element": "wood",
+            "description": "戴着枝叶小角的林间幼鹿，喜欢收集新芽。",
+            "resource": {
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "kind": "2d"
+            },
+            "baseStats": {
+              "hp": 130,
+              "atk": 26,
+              "def": 26,
+              "spd": 18
+            }
+          },
+          {
+            "templateId": "animal-earth-pangolin",
+            "name": "岩团",
+            "category": "animal",
+            "element": "earth",
+            "description": "披着暖褐鳞甲的小穿山甲，稳稳守住每一步。",
+            "resource": {
+              "resourceId": "builtin:lingjing-yantuan-v1",
+              "kind": "2d"
+            },
+            "baseStats": {
+              "hp": 142,
+              "atk": 24,
+              "def": 34,
+              "spd": 11
+            }
+          }
+        ],
+        "revision": 6
+      },
+      "completed": true,
+      "confirmInput": {
+        "sessionId": "battle-b1ee641f-5004-495b-87dc-37223ecae4df",
+        "actionId": "context:battle-b1ee641f-5004-495b-87dc-37223ecae4df",
+        "sessionOwnerAccountId": "qa:dfca3ded-e050-4c74-9193-60478c55ccbb:local-5bc68bcf-17f4-4f02-aabb-db045ebb4bd2",
+        "expectedRevision": 5
+      },
+      "confirmedResultUi": true,
+      "exactRestartAndReplay": true
+    },
+    "loss": {
+      "schemaVersion": 1,
+      "application": "lingjing",
+      "scenario": "unified-battle",
+      "runId": "37c878e7-2790-4ead-89a0-ef596b024537",
+      "isolated": true,
+      "profilePath": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\artifacts\\qa\\unified-battle\\qa-1792856448614-37c878e7",
+      "createdAt": "2026-10-24T15:40:48.614Z",
+      "env": {
+        "LINGJING_QA_SCENARIO": "unified-battle",
+        "PET_USER_DATA_DIR": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\artifacts\\qa\\unified-battle\\qa-1792856448614-37c878e7"
+      },
+      "owner": "qa:37c878e7-2790-4ead-89a0-ef596b024537:local-319a5867-d2fc-473c-981b-a00f90479ee3",
+      "plantInput": {
+        "actionId": "unified:personal-plot",
+        "expectedRevision": 0,
+        "sessionOwnerAccountId": "qa:37c878e7-2790-4ead-89a0-ef596b024537:local-319a5867-d2fc-473c-981b-a00f90479ee3",
+        "plotId": "plot-1",
+        "cropType": "carrot"
+      },
+      "personalCrop": {
+        "plotId": "plot-1",
+        "cropType": "carrot",
+        "plantedAt": 1792856449580,
+        "maturesAt": 1792857049580,
+        "yieldQuantity": 3,
+        "revision": 1,
+        "stage": "growing"
+      },
+      "territoryId": "qa:37c878e7-2790-4ead-89a0-ef596b024537:territory:5205:20245",
+      "before": {
+        "ok": true,
+        "revision": 3,
+        "data": {
+          "ownerAccountId": "qa:37c878e7-2790-4ead-89a0-ef596b024537:local-319a5867-d2fc-473c-981b-a00f90479ee3",
+          "serverTime": 1792856470779,
+          "plots": [
+            {
+              "plotId": "plot-1",
+              "cropType": "carrot",
+              "plantedAt": 1792856449580,
+              "maturesAt": 1792857049580,
+              "yieldQuantity": 3,
+              "revision": 1,
+              "stage": "growing"
+            },
+            {
+              "plotId": "plot-2",
+              "cropType": null,
+              "plantedAt": null,
+              "maturesAt": null,
+              "yieldQuantity": 0,
+              "revision": 0,
+              "stage": "empty"
+            },
+            {
+              "plotId": "plot-3",
+              "cropType": null,
+              "plantedAt": null,
+              "maturesAt": null,
+              "yieldQuantity": 0,
+              "revision": 0,
+              "stage": "empty"
+            },
+            {
+              "plotId": "plot-4",
+              "cropType": null,
+              "plantedAt": null,
+              "maturesAt": null,
+              "yieldQuantity": 0,
+              "revision": 0,
+              "stage": "empty"
+            },
+            {
+              "plotId": "plot-5",
+              "cropType": null,
+              "plantedAt": null,
+              "maturesAt": null,
+              "yieldQuantity": 0,
+              "revision": 0,
+              "stage": "empty"
+            },
+            {
+              "plotId": "plot-6",
+              "cropType": null,
+              "plantedAt": null,
+              "maturesAt": null,
+              "yieldQuantity": 0,
+              "revision": 0,
+              "stage": "empty"
+            }
+          ],
+          "items": [
+            {
+              "id": "seed:carrot",
+              "name": "胡萝卜种子",
+              "icon": "🥕",
+              "category": "seed",
+              "source": "探索与对战",
+              "effects": null,
+              "quantity": 1
+            },
+            {
+              "id": "seed:tomato",
+              "name": "番茄种子",
+              "icon": "🍅",
+              "category": "seed",
+              "source": "探索与对战",
+              "effects": null,
+              "quantity": 2
+            },
+            {
+              "id": "seed:berry",
+              "name": "莓果种子",
+              "icon": "🫐",
+              "category": "seed",
+              "source": "探索与对战",
+              "effects": null,
+              "quantity": 2
+            },
+            {
+              "id": "seed:rice",
+              "name": "稻米种子",
+              "icon": "🌾",
+              "category": "seed",
+              "source": "探索与对战",
+              "effects": null,
+              "quantity": 2
+            },
+            {
+              "id": "carrot",
+              "name": "胡萝卜",
+              "icon": "🥕",
+              "category": "food",
+              "source": "菜园收获",
+              "effects": {
+                "satiety": 12,
+                "mood": 2,
+                "intimacy": 2
+              },
+              "quantity": 0
+            },
+            {
+              "id": "tomato",
+              "name": "番茄",
+              "icon": "🍅",
+              "category": "food",
+              "source": "菜园收获",
+              "effects": {
+                "satiety": 10,
+                "mood": 3,
+                "intimacy": 2
+              },
+              "quantity": 0
+            },
+            {
+              "id": "berry",
+              "name": "莓果",
+              "icon": "🫐",
+              "category": "food",
+              "source": "菜园收获",
+              "effects": {
+                "satiety": 8,
+                "mood": 4,
+                "intimacy": 3
+              },
+              "quantity": 0
+            },
+            {
+              "id": "rice",
+              "name": "稻米",
+              "icon": "🌾",
+              "category": "ingredient",
+              "source": "菜园收获",
+              "effects": null,
+              "quantity": 0
+            },
+            {
+              "id": "cooked_rice",
+              "name": "热乎乎的米饭",
+              "icon": "🍚",
+              "category": "food",
+              "source": "稻米制作",
+              "effects": {
+                "satiety": 20,
+                "mood": 3,
+                "intimacy": 4
+              },
+              "quantity": 0
+            }
+          ],
+          "crops": [
+            {
+              "id": "carrot",
+              "name": "胡萝卜",
+              "icon": "🥕",
+              "seedItemId": "seed:carrot",
+              "harvestItemId": "carrot",
+              "growMs": 600000,
+              "yield": 3,
+              "color": "#ed9448"
+            },
+            {
+              "id": "tomato",
+              "name": "番茄",
+              "icon": "🍅",
+              "seedItemId": "seed:tomato",
+              "harvestItemId": "tomato",
+              "growMs": 900000,
+              "yield": 3,
+              "color": "#ef7875"
+            },
+            {
+              "id": "berry",
+              "name": "莓果",
+              "icon": "🫐",
+              "seedItemId": "seed:berry",
+              "harvestItemId": "berry",
+              "growMs": 1200000,
+              "yield": 4,
+              "color": "#9e8fd4"
+            },
+            {
+              "id": "rice",
+              "name": "稻米",
+              "icon": "🌾",
+              "seedItemId": "seed:rice",
+              "harvestItemId": "rice",
+              "growMs": 1500000,
+              "yield": 2,
+              "color": "#d2ad54"
+            }
+          ],
+          "recipes": [
+            {
+              "id": "cooked_rice",
+              "name": "热乎乎的米饭",
+              "input": {
+                "itemId": "rice",
+                "quantity": 1
+              },
+              "output": {
+                "itemId": "cooked_rice",
+                "quantity": 1
+              }
+            }
+          ],
+          "pets": [
+            {
+              "ownerAccountId": "qa:37c878e7-2790-4ead-89a0-ef596b024537:local-319a5867-d2fc-473c-981b-a00f90479ee3",
+              "petId": "pet-6f284114-8f72-4180-9d18-2f2556989632",
+              "templateId": "big-fish-gentle",
+              "name": "鱼丸",
+              "serial": "6F284114",
+              "element": "water",
+              "resource": {
+                "resourceId": "builtin:lingjing-yuwan-v2",
+                "kind": "2d"
+              },
+              "source": "adoption",
+              "origin": {},
+              "growth": {
+                "level": 1,
+                "experience": 0,
+                "mood": 60,
+                "satiety": 60,
+                "affinity": 0,
+                "winsTotal": 0,
+                "stats": {
+                  "hp": 124,
+                  "atk": 28,
+                  "def": 24,
+                  "spd": 20
+                }
+              },
+              "desktop": {
+                "visible": false,
+                "behavior": "quiet",
+                "scale": 1,
+                "position": {
+                  "x": 80,
+                  "y": 520,
+                  "displayId": null
+                }
+              },
+              "revision": 1,
+              "createdAt": "2026-10-24T15:40:49.539Z",
+              "updatedAt": "2026-10-24T15:40:49.539Z"
+            },
+            {
+              "ownerAccountId": "qa:37c878e7-2790-4ead-89a0-ef596b024537:local-319a5867-d2fc-473c-981b-a00f90479ee3",
+              "petId": "pet-87f1d49c-a150-4df5-bad6-4081d37205bf",
+              "templateId": "animal-hat-cat",
+              "name": "礼帽喵",
+              "serial": "87F1D49C",
+              "element": "metal",
+              "resource": {
+                "resourceId": "builtin:lingjing-hatcat-v1",
+                "kind": "2d"
+              },
+              "source": "adoption",
+              "origin": {},
+              "growth": {
+                "level": 1,
+                "experience": 0,
+                "mood": 60,
+                "satiety": 60,
+                "affinity": 0,
+                "winsTotal": 0,
+                "stats": {
+                  "hp": 136,
+                  "atk": 30,
+                  "def": 30,
+                  "spd": 13
+                }
+              },
+              "desktop": {
+                "visible": false,
+                "behavior": "quiet",
+                "scale": 1,
+                "position": {
+                  "x": 320,
+                  "y": 520,
+                  "displayId": null
+                }
+              },
+              "revision": 1,
+              "createdAt": "2026-10-24T15:40:49.550Z",
+              "updatedAt": "2026-10-24T15:40:49.550Z"
+            },
+            {
+              "ownerAccountId": "qa:37c878e7-2790-4ead-89a0-ef596b024537:local-319a5867-d2fc-473c-981b-a00f90479ee3",
+              "petId": "pet-999841fc-6fe4-47ff-a0cc-2610a2c6917a",
+              "templateId": "animal-shiba",
+              "name": "焰柴",
+              "serial": "999841FC",
+              "element": "fire",
+              "resource": {
+                "resourceId": "builtin:lingjing-shiba-v2",
+                "kind": "2d"
+              },
+              "source": "adoption",
+              "origin": {},
+              "growth": {
+                "level": 1,
+                "experience": 0,
+                "mood": 60,
+                "satiety": 60,
+                "affinity": 0,
+                "winsTotal": 0,
+                "stats": {
+                  "hp": 118,
+                  "atk": 33,
+                  "def": 20,
+                  "spd": 22
+                }
+              },
+              "desktop": {
+                "visible": false,
+                "behavior": "quiet",
+                "scale": 1,
+                "position": {
+                  "x": 560,
+                  "y": 520,
+                  "displayId": null
+                }
+              },
+              "revision": 1,
+              "createdAt": "2026-10-24T15:40:49.554Z",
+              "updatedAt": "2026-10-24T15:40:49.554Z"
+            }
+          ],
+          "territories": [
+            {
+              "id": "qa:37c878e7-2790-4ead-89a0-ef596b024537:territory:5205:20245",
+              "name": "附近的庭院",
+              "regionName": "领地演练",
+              "ownerAccountId": null,
+              "revision": 1,
+              "captureMultiplier": 2,
+              "provenance": "simulated-geographic",
+              "boundary": [
+                {
+                  "lat": 31.23,
+                  "lng": 121.47
+                },
+                {
+                  "lat": 31.236,
+                  "lng": 121.47
+                },
+                {
+                  "lat": 31.236,
+                  "lng": 121.476
+                },
+                {
+                  "lat": 31.23,
+                  "lng": 121.476
+                }
+              ],
+              "logs": [],
+              "garrisonPetId": null,
+              "mapBoundary": [
+                {
+                  "lat": 31.23,
+                  "lng": 121.47
+                },
+                {
+                  "lat": 31.236,
+                  "lng": 121.47
+                },
+                {
+                  "lat": 31.236,
+                  "lng": 121.476
+                },
+                {
+                  "lat": 31.23,
+                  "lng": 121.476
+                }
+              ]
+            }
+          ],
+          "ledger": [
+            {
+              "id": "b38ee90c-5293-442c-8322-073afcbf44c7",
+              "actionId": "unified:personal-plot",
+              "kind": "plant",
+              "itemId": "seed:carrot",
+              "delta": -1,
+              "balance": 1,
+              "petId": null,
+              "createdAt": 1792856449580
+            },
+            {
+              "id": "d2fa2ea3-dfb7-4caa-beec-065c66b1ea47",
+              "actionId": "starter:v1",
+              "kind": "starter",
+              "itemId": "seed:carrot",
+              "delta": 2,
+              "balance": 2,
+              "petId": null,
+              "createdAt": 1792856449559
+            },
+            {
+              "id": "76d97b61-4dc2-44eb-9ac7-25e286f2095f",
+              "actionId": "starter:v1",
+              "kind": "starter",
+              "itemId": "seed:tomato",
+              "delta": 2,
+              "balance": 2,
+              "petId": null,
+              "createdAt": 1792856449559
+            },
+            {
+              "id": "0da261dc-debd-4589-a0d1-406640073911",
+              "actionId": "starter:v1",
+              "kind": "starter",
+              "itemId": "seed:rice",
+              "delta": 2,
+              "balance": 2,
+              "petId": null,
+              "createdAt": 1792856449559
+            },
+            {
+              "id": "02af8f31-2631-4c9f-a943-f69f22310929",
+              "actionId": "starter:v1",
+              "kind": "starter",
+              "itemId": "seed:berry",
+              "delta": 2,
+              "balance": 2,
+              "petId": null,
+              "createdAt": 1792856449559
+            }
+          ],
+          "sync": {
+            "mode": "local",
+            "pending": 3,
+            "conflicts": 0
+          },
+          "remainingInvasions": 2,
+          "scenario": {
+            "mode": "simulated",
+            "id": "37c878e7-2790-4ead-89a0-ef596b024537",
+            "label": "领地演练 · 模拟定位"
+          },
+          "territoryChallenges": []
+        }
+      },
+      "prepared": true,
+      "preparationSource": {
+        "sha": "fd0f81a84b1aedbcadab69dd5bbb0badff05c3c6",
+        "dirty": "",
+        "hashes": {
+          "apps/pc-app/dist/main/index.cjs": "c7bad7ec905876fee122e0970b83b5ba9ddce61c4de715459e6050ffa49ab504",
+          "apps/pc-app/dist/ui/index.html": "5998c549b0b2e149958d0516d972919efa1e5eb37a23ad65825d55e4c68df470",
+          "apps/pc-app/runtime/features/garden/index.cjs": "84e3bbceadfb1703293c8c74c08e556f04d82b6f6a49824c821a1d3f39510d2e",
+          "apps/pc-app/runtime/features/garden/territories.cjs": "cbe45a2dac9b3238417e864c5f694fe72769f1da9b0896fe09970ceb609d8bc7",
+          "apps/pc-app/runtime/features/garden/qa-location.cjs": "0a4be95e869b7548b152a04573ff3591931dacd663eac106202c16888d3e0da4"
+        }
+      },
+      "sessionId": "battle-354aa139-a005-4dd5-96fd-8c046e24b4ba",
+      "preset": {
+        "preset": "defending",
+        "enemyAction": "element_attack"
+      },
+      "actorIdentities": [
+        {
+          "petId": "pet-6f284114-8f72-4180-9d18-2f2556989632",
+          "resourceId": "builtin:lingjing-yuwan-v2",
+          "status": "ready"
+        },
+        {
+          "petId": "guardian:qa:37c878e7-2790-4ead-89a0-ef596b024537:territory:5205:20245",
+          "resourceId": "builtin:lingjing-qingya-v1",
+          "status": "ready"
+        }
+      ],
+      "resume": {
+        "id": "battle-354aa139-a005-4dd5-96fd-8c046e24b4ba",
+        "mode": "territory",
+        "status": "active",
+        "snapshot": {
+          "round": 1,
+          "player": {
+            "id": "player",
+            "element": "water",
+            "hp": 12,
+            "maxHp": 120,
+            "anger": 0,
+            "freeDodgeUsed": false,
+            "statuses": []
+          },
+          "enemy": {
+            "id": "enemy",
+            "element": "wood",
+            "hp": 110,
+            "maxHp": 120,
+            "anger": 55,
+            "freeDodgeUsed": false,
+            "statuses": []
+          }
+        },
+        "playerId": "pet-6f284114-8f72-4180-9d18-2f2556989632",
+        "enemyId": "guardian:qa:37c878e7-2790-4ead-89a0-ef596b024537:territory:5205:20245",
+        "rounds": [
+          {
+            "round": 1,
+            "actions": {
+              "player": "normal_attack",
+              "enemy": "element_attack"
+            },
+            "state": {
+              "round": 1,
+              "player": {
+                "id": "player",
+                "element": "water",
+                "hp": 12,
+                "maxHp": 120,
+                "anger": 0,
+                "freeDodgeUsed": false,
+                "statuses": []
+              },
+              "enemy": {
+                "id": "enemy",
+                "element": "wood",
+                "hp": 110,
+                "maxHp": 120,
+                "anger": 55,
+                "freeDodgeUsed": false,
+                "statuses": []
+              }
+            }
+          }
+        ]
+      },
+      "restartRecovered": true,
+      "session": {
+        "id": "battle-354aa139-a005-4dd5-96fd-8c046e24b4ba",
+        "mode": "territory",
+        "status": "finished",
+        "startedAt": "2026-10-24T15:41:10.916Z",
+        "player": {
+          "petId": "pet-6f284114-8f72-4180-9d18-2f2556989632",
+          "petName": "鱼丸",
+          "element": "water",
+          "level": 1,
+          "resourceRef": "builtin:lingjing-yuwan-v2",
+          "resource": {
+            "resourceId": "builtin:lingjing-yuwan-v2",
+            "kind": "2d"
+          },
+          "appearance2d": "builtin:lingjing-yuwan-v2"
+        },
+        "enemy": {
+          "petId": "guardian:qa:37c878e7-2790-4ead-89a0-ef596b024537:territory:5205:20245",
+          "petName": "青芽",
+          "element": "wood",
+          "level": 1,
+          "resource": {
+            "resourceId": "builtin:lingjing-qingya-v1",
+            "kind": "2d"
+          },
+          "appearance2d": "builtin:lingjing-qingya-v1"
+        },
+        "snapshot": {
+          "round": 2,
+          "player": {
+            "id": "player",
+            "element": "water",
+            "hp": 0,
+            "maxHp": 120,
+            "anger": 6,
+            "freeDodgeUsed": true,
+            "statuses": [
+              {
+                "type": "parasite",
+                "duration": 2,
+                "potency": 2,
+                "stacks": 1,
+                "stackable": true,
+                "sourceId": "enemy"
+              }
+            ]
+          },
+          "enemy": {
+            "id": "enemy",
+            "element": "wood",
+            "hp": 112,
+            "maxHp": 120,
+            "anger": 55,
+            "freeDodgeUsed": false,
+            "statuses": []
+          }
+        },
+        "rounds": [
+          {
+            "round": 1,
+            "actions": {
+              "player": "normal_attack",
+              "enemy": "element_attack"
+            },
+            "damageTaken": {
+              "player": 0,
+              "enemy": 10
+            },
+            "directDamage": {
+              "player": 0,
+              "enemy": 10
+            },
+            "dotDamageEvents": {
+              "player": [],
+              "enemy": []
+            },
+            "healEvents": {
+              "player": [],
+              "enemy": []
+            },
+            "hpAfter": {
+              "player": 12,
+              "enemy": 110
+            },
+            "angerAfter": {
+              "player": 0,
+              "enemy": 55
+            },
+            "statusesAfter": {
+              "player": [],
+              "enemy": []
+            },
+            "winner": null,
+            "notes": [
+              "enemy action missed"
+            ],
+            "state": {
+              "round": 1,
+              "player": {
+                "id": "player",
+                "element": "water",
+                "hp": 12,
+                "maxHp": 120,
+                "anger": 0,
+                "freeDodgeUsed": false,
+                "statuses": []
+              },
+              "enemy": {
+                "id": "enemy",
+                "element": "wood",
+                "hp": 110,
+                "maxHp": 120,
+                "anger": 55,
+                "freeDodgeUsed": false,
+                "statuses": []
+              }
+            },
+            "visualEvents": [
+              {
+                "id": "1:player:windup:action:0",
+                "side": "player",
+                "phase": "windup",
+                "kind": "action",
+                "action": "normal_attack"
+              },
+              {
+                "id": "1:player:release:action:1",
+                "side": "player",
+                "phase": "release",
+                "kind": "action",
+                "action": "normal_attack",
+                "element": "water"
+              },
+              {
+                "id": "1:enemy:impact:damage:2",
+                "side": "enemy",
+                "phase": "impact",
+                "kind": "damage",
+                "amount": 10
+              },
+              {
+                "id": "1:enemy:windup:action:3",
+                "side": "enemy",
+                "phase": "windup",
+                "kind": "action",
+                "action": "element_attack"
+              },
+              {
+                "id": "1:enemy:release:action:4",
+                "side": "enemy",
+                "phase": "release",
+                "kind": "action",
+                "action": "element_attack",
+                "element": "wood"
+              },
+              {
+                "id": "1:enemy:impact:interrupt:5",
+                "side": "enemy",
+                "phase": "impact",
+                "kind": "interrupt"
+              }
+            ]
+          },
+          {
+            "round": 2,
+            "actions": {
+              "player": "dodge",
+              "enemy": "element_attack"
+            },
+            "damageTaken": {
+              "player": 14,
+              "enemy": 0
+            },
+            "directDamage": {
+              "player": 12,
+              "enemy": 0
+            },
+            "dotDamageEvents": {
+              "player": [
+                {
+                  "type": "parasite",
+                  "amount": 2
+                }
+              ],
+              "enemy": []
+            },
+            "healEvents": {
+              "player": [],
+              "enemy": [
+                {
+                  "type": "parasite",
+                  "amount": 2
+                }
+              ]
+            },
+            "hpAfter": {
+              "player": 0,
+              "enemy": 112
+            },
+            "angerAfter": {
+              "player": 6,
+              "enemy": 55
+            },
+            "statusesAfter": {
+              "player": [
+                {
+                  "type": "parasite",
+                  "duration": 2,
+                  "potency": 2,
+                  "stacks": 1,
+                  "stackable": true,
+                  "sourceId": "enemy"
+                }
+              ],
+              "enemy": []
+            },
+            "winner": "enemy",
+            "notes": [
+              "player uses first free dodge",
+              "enemy parasitized x1",
+              "enemy healed by parasite",
+              "player takes parasite damage"
+            ],
+            "state": {
+              "round": 2,
+              "player": {
+                "id": "player",
+                "element": "water",
+                "hp": 0,
+                "maxHp": 120,
+                "anger": 6,
+                "freeDodgeUsed": true,
+                "statuses": [
+                  {
+                    "type": "parasite",
+                    "duration": 2,
+                    "potency": 2,
+                    "stacks": 1,
+                    "stackable": true,
+                    "sourceId": "enemy"
+                  }
+                ]
+              },
+              "enemy": {
+                "id": "enemy",
+                "element": "wood",
+                "hp": 112,
+                "maxHp": 120,
+                "anger": 55,
+                "freeDodgeUsed": false,
+                "statuses": []
+              }
+            },
+            "visualEvents": [
+              {
+                "id": "2:player:windup:action:0",
+                "side": "player",
+                "phase": "windup",
+                "kind": "action",
+                "action": "dodge"
+              },
+              {
+                "id": "2:player:release:action:1",
+                "side": "player",
+                "phase": "release",
+                "kind": "action",
+                "action": "dodge",
+                "element": "water"
+              },
+              {
+                "id": "2:player:effects:dot:2",
+                "side": "player",
+                "phase": "effects",
+                "kind": "dot",
+                "amount": 2,
+                "status": "parasite"
+              },
+              {
+                "id": "2:enemy:windup:action:3",
+                "side": "enemy",
+                "phase": "windup",
+                "kind": "action",
+                "action": "element_attack"
+              },
+              {
+                "id": "2:enemy:release:action:4",
+                "side": "enemy",
+                "phase": "release",
+                "kind": "action",
+                "action": "element_attack",
+                "element": "wood"
+              },
+              {
+                "id": "2:player:impact:damage:5",
+                "side": "player",
+                "phase": "impact",
+                "kind": "damage",
+                "amount": 12
+              },
+              {
+                "id": "2:enemy:effects:heal:6",
+                "side": "enemy",
+                "phase": "effects",
+                "kind": "heal",
+                "amount": 2,
+                "status": "parasite"
+              },
+              {
+                "id": "2:player:effects:status:7",
+                "side": "player",
+                "phase": "effects",
+                "kind": "status",
+                "status": "parasite",
+                "element": "wood"
+              }
+            ]
+          }
+        ],
+        "winner": "enemy",
+        "pendingAction": null,
+        "historyComplete": true,
+        "rules": {
+          "id": "five-elements-standard-v1",
+          "label": "标准五行对战",
+          "vitalPolicy": "normalized",
+          "maxHp": 120,
+          "maxAnger": 100,
+          "companionStatsApplied": false,
+          "baseDamage": {
+            "normal_attack": 10,
+            "element_attack": 12,
+            "dodge": 0,
+            "ultimate": 20
+          },
+          "ultimateAnger": 50,
+          "ultimateCost": 50,
+          "ultimateHeal": 20,
+          "dodgeMaxCost": 20,
+          "dodgeRefund": 30,
+          "advantage": {
+            "metal": "wood",
+            "wood": "earth",
+            "earth": "water",
+            "water": "fire",
+            "fire": "metal"
+          },
+          "elementEffects": {
+            "metal": {
+              "label": "易伤",
+              "description": "每层受伤×1.5，最多5层"
+            },
+            "wood": {
+              "label": "寄生",
+              "description": "每层回合末吸取2生命，最多5层"
+            },
+            "earth": {
+              "label": "迟钝",
+              "description": "每层伤害×0.5，最多5层"
+            },
+            "water": {
+              "label": "降怒",
+              "description": "命中后对方怒气向下取半，不增加受击怒气"
+            },
+            "fire": {
+              "label": "燃烧",
+              "description": "回合末按当前生命8%×层数伤害，最多5层"
+            }
+          }
+        },
+        "context": {
+          "id": "qa:37c878e7-2790-4ead-89a0-ef596b024537:territory:5205:20245:1",
+          "territoryId": "qa:37c878e7-2790-4ead-89a0-ef596b024537:territory:5205:20245",
+          "territoryRevision": 1,
+          "authority": "simulated",
+          "scenarioId": "37c878e7-2790-4ead-89a0-ef596b024537",
+          "qaPreset": "defending",
+          "qaEnemyAction": "element_attack"
+        },
+        "updatedAt": "2026-10-24T15:41:15.042Z",
+        "revision": 4,
+        "endedAt": "2026-10-24T15:41:15.040Z",
+        "reward": {
+          "actionId": "battle:battle-354aa139-a005-4dd5-96fd-8c046e24b4ba:qa:37c878e7-2790-4ead-89a0-ef596b024537:local-319a5867-d2fc-473c-981b-a00f90479ee3",
+          "petId": "pet-6f284114-8f72-4180-9d18-2f2556989632",
+          "experience": 5,
+          "applied": true,
+          "previousExperience": 0,
+          "previousLevel": 1,
+          "currentExperience": 5,
+          "currentLevel": 1,
+          "seeds": {
+            "source": "battle",
+            "receiptId": "battle-354aa139-a005-4dd5-96fd-8c046e24b4ba",
+            "itemId": "seed:tomato",
+            "quantity": 2
+          }
+        },
+        "reportId": "battle-354aa139-a005-4dd5-96fd-8c046e24b4ba"
+      },
+      "animation": [
+        {
+          "phase": "windup",
+          "key": "battle-354aa139-a005-4dd5-96fd-8c046e24b4ba:2"
+        },
+        {
+          "phase": "release",
+          "key": "battle-354aa139-a005-4dd5-96fd-8c046e24b4ba:2"
+        },
+        {
+          "phase": "impact",
+          "key": "battle-354aa139-a005-4dd5-96fd-8c046e24b4ba:2"
+        },
+        {
+          "phase": "effects",
+          "key": "battle-354aa139-a005-4dd5-96fd-8c046e24b4ba:2"
+        },
+        {
+          "phase": "rest",
+          "key": "battle-354aa139-a005-4dd5-96fd-8c046e24b4ba:2"
+        }
+      ],
+      "nonTargetPetsUnchanged": true,
+      "after": {
+        "ok": true,
+        "revision": 6,
+        "data": {
+          "ownerAccountId": "qa:37c878e7-2790-4ead-89a0-ef596b024537:local-319a5867-d2fc-473c-981b-a00f90479ee3",
+          "serverTime": 1792856477320,
+          "plots": [
+            {
+              "plotId": "plot-1",
+              "cropType": "carrot",
+              "plantedAt": 1792856449580,
+              "maturesAt": 1792857049580,
+              "yieldQuantity": 3,
+              "revision": 1,
+              "stage": "growing"
+            },
+            {
+              "plotId": "plot-2",
+              "cropType": null,
+              "plantedAt": null,
+              "maturesAt": null,
+              "yieldQuantity": 0,
+              "revision": 0,
+              "stage": "empty"
+            },
+            {
+              "plotId": "plot-3",
+              "cropType": null,
+              "plantedAt": null,
+              "maturesAt": null,
+              "yieldQuantity": 0,
+              "revision": 0,
+              "stage": "empty"
+            },
+            {
+              "plotId": "plot-4",
+              "cropType": null,
+              "plantedAt": null,
+              "maturesAt": null,
+              "yieldQuantity": 0,
+              "revision": 0,
+              "stage": "empty"
+            },
+            {
+              "plotId": "plot-5",
+              "cropType": null,
+              "plantedAt": null,
+              "maturesAt": null,
+              "yieldQuantity": 0,
+              "revision": 0,
+              "stage": "empty"
+            },
+            {
+              "plotId": "plot-6",
+              "cropType": null,
+              "plantedAt": null,
+              "maturesAt": null,
+              "yieldQuantity": 0,
+              "revision": 0,
+              "stage": "empty"
+            }
+          ],
+          "items": [
+            {
+              "id": "seed:carrot",
+              "name": "胡萝卜种子",
+              "icon": "🥕",
+              "category": "seed",
+              "source": "探索与对战",
+              "effects": null,
+              "quantity": 1
+            },
+            {
+              "id": "seed:tomato",
+              "name": "番茄种子",
+              "icon": "🍅",
+              "category": "seed",
+              "source": "探索与对战",
+              "effects": null,
+              "quantity": 4
+            },
+            {
+              "id": "seed:berry",
+              "name": "莓果种子",
+              "icon": "🫐",
+              "category": "seed",
+              "source": "探索与对战",
+              "effects": null,
+              "quantity": 2
+            },
+            {
+              "id": "seed:rice",
+              "name": "稻米种子",
+              "icon": "🌾",
+              "category": "seed",
+              "source": "探索与对战",
+              "effects": null,
+              "quantity": 2
+            },
+            {
+              "id": "carrot",
+              "name": "胡萝卜",
+              "icon": "🥕",
+              "category": "food",
+              "source": "菜园收获",
+              "effects": {
+                "satiety": 12,
+                "mood": 2,
+                "intimacy": 2
+              },
+              "quantity": 0
+            },
+            {
+              "id": "tomato",
+              "name": "番茄",
+              "icon": "🍅",
+              "category": "food",
+              "source": "菜园收获",
+              "effects": {
+                "satiety": 10,
+                "mood": 3,
+                "intimacy": 2
+              },
+              "quantity": 0
+            },
+            {
+              "id": "berry",
+              "name": "莓果",
+              "icon": "🫐",
+              "category": "food",
+              "source": "菜园收获",
+              "effects": {
+                "satiety": 8,
+                "mood": 4,
+                "intimacy": 3
+              },
+              "quantity": 0
+            },
+            {
+              "id": "rice",
+              "name": "稻米",
+              "icon": "🌾",
+              "category": "ingredient",
+              "source": "菜园收获",
+              "effects": null,
+              "quantity": 0
+            },
+            {
+              "id": "cooked_rice",
+              "name": "热乎乎的米饭",
+              "icon": "🍚",
+              "category": "food",
+              "source": "稻米制作",
+              "effects": {
+                "satiety": 20,
+                "mood": 3,
+                "intimacy": 4
+              },
+              "quantity": 0
+            }
+          ],
+          "crops": [
+            {
+              "id": "carrot",
+              "name": "胡萝卜",
+              "icon": "🥕",
+              "seedItemId": "seed:carrot",
+              "harvestItemId": "carrot",
+              "growMs": 600000,
+              "yield": 3,
+              "color": "#ed9448"
+            },
+            {
+              "id": "tomato",
+              "name": "番茄",
+              "icon": "🍅",
+              "seedItemId": "seed:tomato",
+              "harvestItemId": "tomato",
+              "growMs": 900000,
+              "yield": 3,
+              "color": "#ef7875"
+            },
+            {
+              "id": "berry",
+              "name": "莓果",
+              "icon": "🫐",
+              "seedItemId": "seed:berry",
+              "harvestItemId": "berry",
+              "growMs": 1200000,
+              "yield": 4,
+              "color": "#9e8fd4"
+            },
+            {
+              "id": "rice",
+              "name": "稻米",
+              "icon": "🌾",
+              "seedItemId": "seed:rice",
+              "harvestItemId": "rice",
+              "growMs": 1500000,
+              "yield": 2,
+              "color": "#d2ad54"
+            }
+          ],
+          "recipes": [
+            {
+              "id": "cooked_rice",
+              "name": "热乎乎的米饭",
+              "input": {
+                "itemId": "rice",
+                "quantity": 1
+              },
+              "output": {
+                "itemId": "cooked_rice",
+                "quantity": 1
+              }
+            }
+          ],
+          "pets": [
+            {
+              "ownerAccountId": "qa:37c878e7-2790-4ead-89a0-ef596b024537:local-319a5867-d2fc-473c-981b-a00f90479ee3",
+              "petId": "pet-6f284114-8f72-4180-9d18-2f2556989632",
+              "templateId": "big-fish-gentle",
+              "name": "鱼丸",
+              "serial": "6F284114",
+              "element": "water",
+              "resource": {
+                "resourceId": "builtin:lingjing-yuwan-v2",
+                "kind": "2d"
+              },
+              "source": "adoption",
+              "origin": {},
+              "growth": {
+                "level": 1,
+                "experience": 5,
+                "mood": 60,
+                "satiety": 60,
+                "affinity": 0,
+                "winsTotal": 0,
+                "stats": {
+                  "hp": 124,
+                  "atk": 28,
+                  "def": 24,
+                  "spd": 20
+                }
+              },
+              "desktop": {
+                "visible": false,
+                "behavior": "quiet",
+                "scale": 1,
+                "position": {
+                  "x": 80,
+                  "y": 520,
+                  "displayId": null
+                }
+              },
+              "revision": 2,
+              "createdAt": "2026-10-24T15:40:49.539Z",
+              "updatedAt": "2026-10-24T15:41:15.041Z"
+            },
+            {
+              "ownerAccountId": "qa:37c878e7-2790-4ead-89a0-ef596b024537:local-319a5867-d2fc-473c-981b-a00f90479ee3",
+              "petId": "pet-87f1d49c-a150-4df5-bad6-4081d37205bf",
+              "templateId": "animal-hat-cat",
+              "name": "礼帽喵",
+              "serial": "87F1D49C",
+              "element": "metal",
+              "resource": {
+                "resourceId": "builtin:lingjing-hatcat-v1",
+                "kind": "2d"
+              },
+              "source": "adoption",
+              "origin": {},
+              "growth": {
+                "level": 1,
+                "experience": 0,
+                "mood": 60,
+                "satiety": 60,
+                "affinity": 0,
+                "winsTotal": 0,
+                "stats": {
+                  "hp": 136,
+                  "atk": 30,
+                  "def": 30,
+                  "spd": 13
+                }
+              },
+              "desktop": {
+                "visible": false,
+                "behavior": "quiet",
+                "scale": 1,
+                "position": {
+                  "x": 320,
+                  "y": 520,
+                  "displayId": null
+                }
+              },
+              "revision": 1,
+              "createdAt": "2026-10-24T15:40:49.550Z",
+              "updatedAt": "2026-10-24T15:40:49.550Z"
+            },
+            {
+              "ownerAccountId": "qa:37c878e7-2790-4ead-89a0-ef596b024537:local-319a5867-d2fc-473c-981b-a00f90479ee3",
+              "petId": "pet-999841fc-6fe4-47ff-a0cc-2610a2c6917a",
+              "templateId": "animal-shiba",
+              "name": "焰柴",
+              "serial": "999841FC",
+              "element": "fire",
+              "resource": {
+                "resourceId": "builtin:lingjing-shiba-v2",
+                "kind": "2d"
+              },
+              "source": "adoption",
+              "origin": {},
+              "growth": {
+                "level": 1,
+                "experience": 0,
+                "mood": 60,
+                "satiety": 60,
+                "affinity": 0,
+                "winsTotal": 0,
+                "stats": {
+                  "hp": 118,
+                  "atk": 33,
+                  "def": 20,
+                  "spd": 22
+                }
+              },
+              "desktop": {
+                "visible": false,
+                "behavior": "quiet",
+                "scale": 1,
+                "position": {
+                  "x": 560,
+                  "y": 520,
+                  "displayId": null
+                }
+              },
+              "revision": 1,
+              "createdAt": "2026-10-24T15:40:49.554Z",
+              "updatedAt": "2026-10-24T15:40:49.554Z"
+            }
+          ],
+          "territories": [
+            {
+              "id": "qa:37c878e7-2790-4ead-89a0-ef596b024537:territory:5205:20245",
+              "name": "附近的庭院",
+              "regionName": "领地演练",
+              "ownerAccountId": null,
+              "revision": 2,
+              "captureMultiplier": 2,
+              "provenance": "simulated-geographic",
+              "boundary": [
+                {
+                  "lat": 31.23,
+                  "lng": 121.47
+                },
+                {
+                  "lat": 31.236,
+                  "lng": 121.47
+                },
+                {
+                  "lat": 31.236,
+                  "lng": 121.476
+                },
+                {
+                  "lat": 31.23,
+                  "lng": 121.476
+                }
+              ],
+              "logs": [
+                {
+                  "id": "2",
+                  "action": "守住领地",
+                  "actorName": "领地演练·loss",
+                  "createdAt": "2026-10-24T15:41:17.305Z"
+                },
+                {
+                  "id": "1",
+                  "action": "发起入侵",
+                  "actorName": "领地演练·loss",
+                  "createdAt": "2026-10-24T15:41:10.917Z"
+                }
+              ],
+              "garrisonPetId": null,
+              "mapBoundary": [
+                {
+                  "lat": 31.23,
+                  "lng": 121.47
+                },
+                {
+                  "lat": 31.236,
+                  "lng": 121.47
+                },
+                {
+                  "lat": 31.236,
+                  "lng": 121.476
+                },
+                {
+                  "lat": 31.23,
+                  "lng": 121.476
+                }
+              ]
+            }
+          ],
+          "ledger": [
+            {
+              "id": "850ba71d-698b-40e7-9c5e-fb42bd8c5188",
+              "actionId": "battle:battle-354aa139-a005-4dd5-96fd-8c046e24b4ba:qa:37c878e7-2790-4ead-89a0-ef596b024537:local-319a5867-d2fc-473c-981b-a00f90479ee3:seeds",
+              "kind": "reward",
+              "itemId": "seed:tomato",
+              "delta": 2,
+              "balance": 4,
+              "petId": null,
+              "createdAt": 1792856475041
+            },
+            {
+              "id": "b38ee90c-5293-442c-8322-073afcbf44c7",
+              "actionId": "unified:personal-plot",
+              "kind": "plant",
+              "itemId": "seed:carrot",
+              "delta": -1,
+              "balance": 1,
+              "petId": null,
+              "createdAt": 1792856449580
+            },
+            {
+              "id": "d2fa2ea3-dfb7-4caa-beec-065c66b1ea47",
+              "actionId": "starter:v1",
+              "kind": "starter",
+              "itemId": "seed:carrot",
+              "delta": 2,
+              "balance": 2,
+              "petId": null,
+              "createdAt": 1792856449559
+            },
+            {
+              "id": "76d97b61-4dc2-44eb-9ac7-25e286f2095f",
+              "actionId": "starter:v1",
+              "kind": "starter",
+              "itemId": "seed:tomato",
+              "delta": 2,
+              "balance": 2,
+              "petId": null,
+              "createdAt": 1792856449559
+            },
+            {
+              "id": "0da261dc-debd-4589-a0d1-406640073911",
+              "actionId": "starter:v1",
+              "kind": "starter",
+              "itemId": "seed:rice",
+              "delta": 2,
+              "balance": 2,
+              "petId": null,
+              "createdAt": 1792856449559
+            },
+            {
+              "id": "02af8f31-2631-4c9f-a943-f69f22310929",
+              "actionId": "starter:v1",
+              "kind": "starter",
+              "itemId": "seed:berry",
+              "delta": 2,
+              "balance": 2,
+              "petId": null,
+              "createdAt": 1792856449559
+            }
+          ],
+          "sync": {
+            "mode": "local",
+            "pending": 6,
+            "conflicts": 0
+          },
+          "remainingInvasions": 1,
+          "scenario": {
+            "mode": "simulated",
+            "id": "37c878e7-2790-4ead-89a0-ef596b024537",
+            "label": "领地演练 · 模拟定位"
+          },
+          "territoryChallenges": []
+        }
+      },
+      "pets": {
+        "ownerAccountId": "qa:37c878e7-2790-4ead-89a0-ef596b024537:local-319a5867-d2fc-473c-981b-a00f90479ee3",
+        "pets": [
+          {
+            "ownerAccountId": "qa:37c878e7-2790-4ead-89a0-ef596b024537:local-319a5867-d2fc-473c-981b-a00f90479ee3",
+            "petId": "pet-6f284114-8f72-4180-9d18-2f2556989632",
+            "templateId": "big-fish-gentle",
+            "name": "鱼丸",
+            "serial": "6F284114",
+            "element": "water",
+            "resource": {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "kind": "2d"
+            },
+            "source": "adoption",
+            "origin": {},
+            "growth": {
+              "level": 1,
+              "experience": 5,
+              "mood": 60,
+              "satiety": 60,
+              "affinity": 0,
+              "winsTotal": 0,
+              "stats": {
+                "hp": 124,
+                "atk": 28,
+                "def": 24,
+                "spd": 20
+              }
+            },
+            "desktop": {
+              "visible": false,
+              "behavior": "quiet",
+              "scale": 1,
+              "position": {
+                "x": 80,
+                "y": 520,
+                "displayId": null
+              }
+            },
+            "revision": 2,
+            "createdAt": "2026-10-24T15:40:49.539Z",
+            "updatedAt": "2026-10-24T15:41:15.041Z"
+          },
+          {
+            "ownerAccountId": "qa:37c878e7-2790-4ead-89a0-ef596b024537:local-319a5867-d2fc-473c-981b-a00f90479ee3",
+            "petId": "pet-87f1d49c-a150-4df5-bad6-4081d37205bf",
+            "templateId": "animal-hat-cat",
+            "name": "礼帽喵",
+            "serial": "87F1D49C",
+            "element": "metal",
+            "resource": {
+              "resourceId": "builtin:lingjing-hatcat-v1",
+              "kind": "2d"
+            },
+            "source": "adoption",
+            "origin": {},
+            "growth": {
+              "level": 1,
+              "experience": 0,
+              "mood": 60,
+              "satiety": 60,
+              "affinity": 0,
+              "winsTotal": 0,
+              "stats": {
+                "hp": 136,
+                "atk": 30,
+                "def": 30,
+                "spd": 13
+              }
+            },
+            "desktop": {
+              "visible": false,
+              "behavior": "quiet",
+              "scale": 1,
+              "position": {
+                "x": 320,
+                "y": 520,
+                "displayId": null
+              }
+            },
+            "revision": 1,
+            "createdAt": "2026-10-24T15:40:49.550Z",
+            "updatedAt": "2026-10-24T15:40:49.550Z"
+          },
+          {
+            "ownerAccountId": "qa:37c878e7-2790-4ead-89a0-ef596b024537:local-319a5867-d2fc-473c-981b-a00f90479ee3",
+            "petId": "pet-999841fc-6fe4-47ff-a0cc-2610a2c6917a",
+            "templateId": "animal-shiba",
+            "name": "焰柴",
+            "serial": "999841FC",
+            "element": "fire",
+            "resource": {
+              "resourceId": "builtin:lingjing-shiba-v2",
+              "kind": "2d"
+            },
+            "source": "adoption",
+            "origin": {},
+            "growth": {
+              "level": 1,
+              "experience": 0,
+              "mood": 60,
+              "satiety": 60,
+              "affinity": 0,
+              "winsTotal": 0,
+              "stats": {
+                "hp": 118,
+                "atk": 33,
+                "def": 20,
+                "spd": 22
+              }
+            },
+            "desktop": {
+              "visible": false,
+              "behavior": "quiet",
+              "scale": 1,
+              "position": {
+                "x": 560,
+                "y": 520,
+                "displayId": null
+              }
+            },
+            "revision": 1,
+            "createdAt": "2026-10-24T15:40:49.554Z",
+            "updatedAt": "2026-10-24T15:40:49.554Z"
+          }
+        ],
+        "selections": {
+          "chatPetId": null,
+          "battlePetId": "pet-6f284114-8f72-4180-9d18-2f2556989632",
+          "guardPetId": null
+        },
+        "templates": [
+          {
+            "templateId": "big-fish-gentle",
+            "name": "鱼丸",
+            "category": "big-fish",
+            "element": "water",
+            "description": "安静温柔的鲸尾少女，喜欢陪你度过日常。",
+            "resource": {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "kind": "2d"
+            },
+            "baseStats": {
+              "hp": 124,
+              "atk": 28,
+              "def": 24,
+              "spd": 20
+            }
+          },
+          {
+            "templateId": "big-fish-cheerful",
+            "name": "小蓝",
+            "category": "big-fish",
+            "element": "water",
+            "description": "活泼的侧马尾伙伴，穿着宽松鲸鱼斗篷。",
+            "resource": {
+              "resourceId": "builtin:lingjing-xiaolan-v1",
+              "kind": "2d"
+            },
+            "baseStats": {
+              "hp": 124,
+              "atk": 28,
+              "def": 24,
+              "spd": 20
+            }
+          },
+          {
+            "templateId": "big-fish-foodie",
+            "name": "饭团",
+            "category": "big-fish",
+            "element": "water",
+            "description": "盘着双丸子头的美食家，认真珍惜每一顿饭。",
+            "resource": {
+              "resourceId": "builtin:lingjing-fantuan-v1",
+              "kind": "2d"
+            },
+            "baseStats": {
+              "hp": 124,
+              "atk": 28,
+              "def": 24,
+              "spd": 20
+            }
+          },
+          {
+            "templateId": "animal-shiba",
+            "name": "焰柴",
+            "category": "animal",
+            "element": "fire",
+            "description": "热情勇敢的柴犬，星星项圈总是闪闪发亮。",
+            "resource": {
+              "resourceId": "builtin:lingjing-shiba-v2",
+              "kind": "2d"
+            },
+            "baseStats": {
+              "hp": 118,
+              "atk": 33,
+              "def": 20,
+              "spd": 22
+            }
+          },
+          {
+            "templateId": "animal-hat-cat",
+            "name": "礼帽喵",
+            "category": "animal",
+            "element": "metal",
+            "description": "戴着礼帽的燕尾猫，擅长温柔的小魔术。",
+            "resource": {
+              "resourceId": "builtin:lingjing-hatcat-v1",
+              "kind": "2d"
+            },
+            "baseStats": {
+              "hp": 136,
+              "atk": 30,
+              "def": 30,
+              "spd": 13
+            }
+          },
+          {
+            "templateId": "animal-white-fox",
+            "name": "小狐",
+            "category": "animal",
+            "element": "water",
+            "description": "安静机灵的雪白小狐，像雪花一样轻盈。",
+            "resource": {
+              "resourceId": "builtin:lingjing-xiaohu-v1",
+              "kind": "2d"
+            },
+            "baseStats": {
+              "hp": 124,
+              "atk": 28,
+              "def": 24,
+              "spd": 20
+            }
+          },
+          {
+            "templateId": "animal-wood-deer",
+            "name": "青芽",
+            "category": "animal",
+            "element": "wood",
+            "description": "戴着枝叶小角的林间幼鹿，喜欢收集新芽。",
+            "resource": {
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "kind": "2d"
+            },
+            "baseStats": {
+              "hp": 130,
+              "atk": 26,
+              "def": 26,
+              "spd": 18
+            }
+          },
+          {
+            "templateId": "animal-earth-pangolin",
+            "name": "岩团",
+            "category": "animal",
+            "element": "earth",
+            "description": "披着暖褐鳞甲的小穿山甲，稳稳守住每一步。",
+            "resource": {
+              "resourceId": "builtin:lingjing-yantuan-v1",
+              "kind": "2d"
+            },
+            "baseStats": {
+              "hp": 142,
+              "atk": 24,
+              "def": 34,
+              "spd": 11
+            }
+          }
+        ],
+        "revision": 6
+      },
+      "completed": true,
+      "confirmInput": {
+        "sessionId": "battle-354aa139-a005-4dd5-96fd-8c046e24b4ba",
+        "actionId": "context:battle-354aa139-a005-4dd5-96fd-8c046e24b4ba",
+        "sessionOwnerAccountId": "qa:37c878e7-2790-4ead-89a0-ef596b024537:local-319a5867-d2fc-473c-981b-a00f90479ee3",
+        "expectedRevision": 5
+      },
+      "confirmedResultUi": true,
+      "exactRestartAndReplay": true
+    }
+  },
+  "checks": [
+    "Two fresh foundation-validated QA profiles preserve actual planted crops; simulated location creates only run-scoped territories",
+    "Both outcomes use the same shared battle screen; exact session route/page/restart recovery, public context confirmation and one seed receipt; repeat confirmation preserves all state"
+  ],
+  "errors": [],
+  "runtime": {
+    "application": "0.1.8",
+    "electron": "36.9.5"
+  },
+  "verificationSource": {
+    "sha": "fd0f81a84b1aedbcadab69dd5bbb0badff05c3c6",
+    "dirty": "",
+    "hashes": {
+      "apps/pc-app/dist/main/index.cjs": "c7bad7ec905876fee122e0970b83b5ba9ddce61c4de715459e6050ffa49ab504",
+      "apps/pc-app/dist/ui/index.html": "5998c549b0b2e149958d0516d972919efa1e5eb37a23ad65825d55e4c68df470",
+      "apps/pc-app/runtime/features/garden/index.cjs": "84e3bbceadfb1703293c8c74c08e556f04d82b6f6a49824c821a1d3f39510d2e",
+      "apps/pc-app/runtime/features/garden/territories.cjs": "cbe45a2dac9b3238417e864c5f694fe72769f1da9b0896fe09970ceb609d8bc7",
+      "apps/pc-app/runtime/features/garden/qa-location.cjs": "0a4be95e869b7548b152a04573ff3591931dacd663eac106202c16888d3e0da4"
+    }
+  },
+  "passed": true
+}

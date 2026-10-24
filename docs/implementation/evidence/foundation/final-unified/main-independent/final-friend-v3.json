@@ -1,0 +1,6133 @@
+{
+  "at": "2026-10-24T15:40:23.545Z",
+  "sourceCommit": "7cdcfdc9d022bb646c20bb2e96f90f03b6f5a3a1",
+  "provenance": "Independent two-process actual Electron flow. Explicit loopback transport fixture and charged state; original engine and player controls. This is simulated cloud, not live Supabase or real two-device evidence.",
+  "runId": "c5ce225f-4bf6-423f-bba8-a045ac9deae6",
+  "actors": [
+    {
+      "label": "A",
+      "profilePath": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\ui-acceptance\\2026-10-24\\final-friend-v3\\qa-A",
+      "owner": "qa:c5ce225f-4bf6-423f-bba8-a045ac9deae6:local-1c35d513-8abc-4511-acf0-6df9c08b5ad9",
+      "pet": {
+        "ownerAccountId": "qa:c5ce225f-4bf6-423f-bba8-a045ac9deae6:local-1c35d513-8abc-4511-acf0-6df9c08b5ad9",
+        "petId": "pet-dedc56fe-2e0a-4a17-afe3-2bd011d40b6e",
+        "templateId": "big-fish-gentle",
+        "name": "鱼丸",
+        "serial": "DEDC56FE",
+        "element": "water",
+        "resource": {
+          "resourceId": "builtin:lingjing-yuwan-v2",
+          "kind": "2d"
+        },
+        "source": "adoption",
+        "origin": {},
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        },
+        "desktop": {
+          "visible": false,
+          "behavior": "quiet",
+          "scale": 1,
+          "position": {
+            "x": 80,
+            "y": 520,
+            "displayId": null
+          }
+        },
+        "revision": 1,
+        "createdAt": "2026-10-24T15:40:24.426Z",
+        "updatedAt": "2026-10-24T15:40:24.426Z"
+      }
+    },
+    {
+      "label": "B",
+      "profilePath": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\ui-acceptance\\2026-10-24\\final-friend-v3\\qa-B",
+      "owner": "qa:c5ce225f-4bf6-423f-bba8-a045ac9deae6:local-17770139-dd73-48f0-b1ff-39c4bfc6a597",
+      "pet": {
+        "ownerAccountId": "qa:c5ce225f-4bf6-423f-bba8-a045ac9deae6:local-17770139-dd73-48f0-b1ff-39c4bfc6a597",
+        "petId": "pet-6d86f065-b435-4662-88f1-3fee586a0f27",
+        "templateId": "animal-wood-deer",
+        "name": "青芽",
+        "serial": "6D86F065",
+        "element": "wood",
+        "resource": {
+          "resourceId": "builtin:lingjing-qingya-v1",
+          "kind": "2d"
+        },
+        "source": "adoption",
+        "origin": {},
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 130,
+            "atk": 26,
+            "def": 26,
+            "spd": 18
+          }
+        },
+        "desktop": {
+          "visible": false,
+          "behavior": "quiet",
+          "scale": 1,
+          "position": {
+            "x": 80,
+            "y": 520,
+            "displayId": null
+          }
+        },
+        "revision": 1,
+        "createdAt": "2026-10-24T15:40:25.628Z",
+        "updatedAt": "2026-10-24T15:40:25.628Z"
+      }
+    }
+  ],
+  "rounds": [
+    {
+      "round": 1,
+      "a": {
+        "round": 1,
+        "actions": {
+          "player": "ultimate",
+          "enemy": "dodge"
+        },
+        "damageTaken": {
+          "player": 0,
+          "enemy": 20
+        },
+        "directDamage": {
+          "player": 0,
+          "enemy": 20
+        },
+        "dotDamageEvents": {
+          "player": [],
+          "enemy": []
+        },
+        "healEvents": {
+          "player": [
+            {
+              "type": "ultimate",
+              "amount": 20
+            }
+          ],
+          "enemy": []
+        },
+        "hpAfter": {
+          "player": 105,
+          "enemy": 80
+        },
+        "angerAfter": {
+          "player": 0,
+          "enemy": 5
+        },
+        "statusesAfter": {
+          "player": [],
+          "enemy": []
+        },
+        "winner": null,
+        "notes": [
+          "enemy spends 20 anger on dodge",
+          "enemy anger halved by freeze (10->5)",
+          "player healed by ultimate"
+        ],
+        "state": {
+          "round": 1,
+          "player": {
+            "id": "player",
+            "element": "water",
+            "hp": 105,
+            "maxHp": 120,
+            "anger": 0,
+            "freeDodgeUsed": false,
+            "statuses": []
+          },
+          "enemy": {
+            "id": "enemy",
+            "element": "wood",
+            "hp": 80,
+            "maxHp": 120,
+            "anger": 5,
+            "freeDodgeUsed": true,
+            "statuses": []
+          }
+        },
+        "visualEvents": [
+          {
+            "id": "1:player:windup:action:0",
+            "side": "player",
+            "phase": "windup",
+            "kind": "action",
+            "action": "ultimate"
+          },
+          {
+            "id": "1:player:release:action:1",
+            "side": "player",
+            "phase": "release",
+            "kind": "action",
+            "action": "ultimate",
+            "element": "water"
+          },
+          {
+            "id": "1:enemy:impact:damage:2",
+            "side": "enemy",
+            "phase": "impact",
+            "kind": "damage",
+            "amount": 20
+          },
+          {
+            "id": "1:player:effects:heal:3",
+            "side": "player",
+            "phase": "effects",
+            "kind": "heal",
+            "amount": 20,
+            "status": "ultimate"
+          },
+          {
+            "id": "1:enemy:effects:anger:4",
+            "side": "enemy",
+            "phase": "effects",
+            "kind": "anger",
+            "amount": 5,
+            "element": "water"
+          },
+          {
+            "id": "1:enemy:windup:action:5",
+            "side": "enemy",
+            "phase": "windup",
+            "kind": "action",
+            "action": "dodge"
+          },
+          {
+            "id": "1:enemy:release:action:6",
+            "side": "enemy",
+            "phase": "release",
+            "kind": "action",
+            "action": "dodge",
+            "element": "wood"
+          }
+        ]
+      },
+      "b": {
+        "round": 1,
+        "actions": {
+          "player": "dodge",
+          "enemy": "ultimate"
+        },
+        "damageTaken": {
+          "player": 20,
+          "enemy": 0
+        },
+        "directDamage": {
+          "player": 20,
+          "enemy": 0
+        },
+        "dotDamageEvents": {
+          "player": [],
+          "enemy": []
+        },
+        "healEvents": {
+          "player": [],
+          "enemy": [
+            {
+              "type": "ultimate",
+              "amount": 20
+            }
+          ]
+        },
+        "hpAfter": {
+          "player": 80,
+          "enemy": 105
+        },
+        "angerAfter": {
+          "player": 5,
+          "enemy": 0
+        },
+        "statusesAfter": {
+          "player": [],
+          "enemy": []
+        },
+        "winner": null,
+        "notes": [
+          "enemy spends 20 anger on dodge",
+          "enemy anger halved by freeze (10->5)",
+          "player healed by ultimate"
+        ],
+        "state": {
+          "round": 1,
+          "player": {
+            "id": "player",
+            "element": "wood",
+            "hp": 80,
+            "maxHp": 120,
+            "anger": 5,
+            "freeDodgeUsed": true,
+            "statuses": []
+          },
+          "enemy": {
+            "id": "enemy",
+            "element": "water",
+            "hp": 105,
+            "maxHp": 120,
+            "anger": 0,
+            "freeDodgeUsed": false,
+            "statuses": []
+          }
+        },
+        "visualEvents": [
+          {
+            "id": "1:player:windup:action:0",
+            "side": "player",
+            "phase": "windup",
+            "kind": "action",
+            "action": "dodge"
+          },
+          {
+            "id": "1:player:release:action:1",
+            "side": "player",
+            "phase": "release",
+            "kind": "action",
+            "action": "dodge",
+            "element": "wood"
+          },
+          {
+            "id": "1:enemy:windup:action:2",
+            "side": "enemy",
+            "phase": "windup",
+            "kind": "action",
+            "action": "ultimate"
+          },
+          {
+            "id": "1:enemy:release:action:3",
+            "side": "enemy",
+            "phase": "release",
+            "kind": "action",
+            "action": "ultimate",
+            "element": "water"
+          },
+          {
+            "id": "1:player:impact:damage:4",
+            "side": "player",
+            "phase": "impact",
+            "kind": "damage",
+            "amount": 20
+          },
+          {
+            "id": "1:enemy:effects:heal:5",
+            "side": "enemy",
+            "phase": "effects",
+            "kind": "heal",
+            "amount": 20,
+            "status": "ultimate"
+          },
+          {
+            "id": "1:player:effects:anger:6",
+            "side": "player",
+            "phase": "effects",
+            "kind": "anger",
+            "amount": 5,
+            "element": "water"
+          }
+        ]
+      }
+    },
+    {
+      "round": 2,
+      "a": {
+        "round": 2,
+        "actions": {
+          "player": "element_attack",
+          "enemy": "normal_attack"
+        },
+        "damageTaken": {
+          "player": 10,
+          "enemy": 0
+        },
+        "directDamage": {
+          "player": 10,
+          "enemy": 0
+        },
+        "dotDamageEvents": {
+          "player": [],
+          "enemy": []
+        },
+        "healEvents": {
+          "player": [],
+          "enemy": []
+        },
+        "hpAfter": {
+          "player": 95,
+          "enemy": 80
+        },
+        "angerAfter": {
+          "player": 5,
+          "enemy": 5
+        },
+        "statusesAfter": {
+          "player": [],
+          "enemy": []
+        },
+        "winner": null,
+        "notes": [
+          "player action missed"
+        ],
+        "state": {
+          "round": 2,
+          "player": {
+            "id": "player",
+            "element": "water",
+            "hp": 95,
+            "maxHp": 120,
+            "anger": 5,
+            "freeDodgeUsed": false,
+            "statuses": []
+          },
+          "enemy": {
+            "id": "enemy",
+            "element": "wood",
+            "hp": 80,
+            "maxHp": 120,
+            "anger": 5,
+            "freeDodgeUsed": true,
+            "statuses": []
+          }
+        },
+        "visualEvents": [
+          {
+            "id": "2:player:windup:action:0",
+            "side": "player",
+            "phase": "windup",
+            "kind": "action",
+            "action": "element_attack"
+          },
+          {
+            "id": "2:player:release:action:1",
+            "side": "player",
+            "phase": "release",
+            "kind": "action",
+            "action": "element_attack",
+            "element": "water"
+          },
+          {
+            "id": "2:player:impact:interrupt:2",
+            "side": "player",
+            "phase": "impact",
+            "kind": "interrupt"
+          },
+          {
+            "id": "2:enemy:windup:action:3",
+            "side": "enemy",
+            "phase": "windup",
+            "kind": "action",
+            "action": "normal_attack"
+          },
+          {
+            "id": "2:enemy:release:action:4",
+            "side": "enemy",
+            "phase": "release",
+            "kind": "action",
+            "action": "normal_attack",
+            "element": "wood"
+          },
+          {
+            "id": "2:player:impact:damage:5",
+            "side": "player",
+            "phase": "impact",
+            "kind": "damage",
+            "amount": 10
+          }
+        ]
+      },
+      "b": {
+        "round": 2,
+        "actions": {
+          "player": "normal_attack",
+          "enemy": "element_attack"
+        },
+        "damageTaken": {
+          "player": 0,
+          "enemy": 10
+        },
+        "directDamage": {
+          "player": 0,
+          "enemy": 10
+        },
+        "dotDamageEvents": {
+          "player": [],
+          "enemy": []
+        },
+        "healEvents": {
+          "player": [],
+          "enemy": []
+        },
+        "hpAfter": {
+          "player": 80,
+          "enemy": 95
+        },
+        "angerAfter": {
+          "player": 5,
+          "enemy": 5
+        },
+        "statusesAfter": {
+          "player": [],
+          "enemy": []
+        },
+        "winner": null,
+        "notes": [
+          "player action missed"
+        ],
+        "state": {
+          "round": 2,
+          "player": {
+            "id": "player",
+            "element": "wood",
+            "hp": 80,
+            "maxHp": 120,
+            "anger": 5,
+            "freeDodgeUsed": true,
+            "statuses": []
+          },
+          "enemy": {
+            "id": "enemy",
+            "element": "water",
+            "hp": 95,
+            "maxHp": 120,
+            "anger": 5,
+            "freeDodgeUsed": false,
+            "statuses": []
+          }
+        },
+        "visualEvents": [
+          {
+            "id": "2:player:windup:action:0",
+            "side": "player",
+            "phase": "windup",
+            "kind": "action",
+            "action": "normal_attack"
+          },
+          {
+            "id": "2:player:release:action:1",
+            "side": "player",
+            "phase": "release",
+            "kind": "action",
+            "action": "normal_attack",
+            "element": "wood"
+          },
+          {
+            "id": "2:enemy:impact:damage:2",
+            "side": "enemy",
+            "phase": "impact",
+            "kind": "damage",
+            "amount": 10
+          },
+          {
+            "id": "2:enemy:windup:action:3",
+            "side": "enemy",
+            "phase": "windup",
+            "kind": "action",
+            "action": "element_attack"
+          },
+          {
+            "id": "2:enemy:release:action:4",
+            "side": "enemy",
+            "phase": "release",
+            "kind": "action",
+            "action": "element_attack",
+            "element": "water"
+          },
+          {
+            "id": "2:enemy:impact:interrupt:5",
+            "side": "enemy",
+            "phase": "impact",
+            "kind": "interrupt"
+          }
+        ]
+      }
+    },
+    {
+      "round": 3,
+      "a": {
+        "round": 3,
+        "actions": {
+          "player": "normal_attack",
+          "enemy": "dodge"
+        },
+        "damageTaken": {
+          "player": 0,
+          "enemy": 0
+        },
+        "directDamage": {
+          "player": 0,
+          "enemy": 0
+        },
+        "dotDamageEvents": {
+          "player": [],
+          "enemy": []
+        },
+        "healEvents": {
+          "player": [],
+          "enemy": []
+        },
+        "hpAfter": {
+          "player": 95,
+          "enemy": 80
+        },
+        "angerAfter": {
+          "player": 5,
+          "enemy": 30
+        },
+        "statusesAfter": {
+          "player": [],
+          "enemy": []
+        },
+        "winner": null,
+        "notes": [
+          "enemy spends 20 anger on dodge",
+          "player action missed",
+          "enemy dodged normal attack and refunded 30 anger"
+        ],
+        "state": {
+          "round": 3,
+          "player": {
+            "id": "player",
+            "element": "water",
+            "hp": 95,
+            "maxHp": 120,
+            "anger": 5,
+            "freeDodgeUsed": false,
+            "statuses": []
+          },
+          "enemy": {
+            "id": "enemy",
+            "element": "wood",
+            "hp": 80,
+            "maxHp": 120,
+            "anger": 30,
+            "freeDodgeUsed": true,
+            "statuses": []
+          }
+        },
+        "visualEvents": [
+          {
+            "id": "3:player:windup:action:0",
+            "side": "player",
+            "phase": "windup",
+            "kind": "action",
+            "action": "normal_attack"
+          },
+          {
+            "id": "3:player:release:action:1",
+            "side": "player",
+            "phase": "release",
+            "kind": "action",
+            "action": "normal_attack",
+            "element": "water"
+          },
+          {
+            "id": "3:enemy:impact:dodge:2",
+            "side": "enemy",
+            "phase": "impact",
+            "kind": "dodge"
+          },
+          {
+            "id": "3:enemy:windup:action:3",
+            "side": "enemy",
+            "phase": "windup",
+            "kind": "action",
+            "action": "dodge"
+          },
+          {
+            "id": "3:enemy:release:action:4",
+            "side": "enemy",
+            "phase": "release",
+            "kind": "action",
+            "action": "dodge",
+            "element": "wood"
+          }
+        ]
+      },
+      "b": {
+        "round": 3,
+        "actions": {
+          "player": "dodge",
+          "enemy": "normal_attack"
+        },
+        "damageTaken": {
+          "player": 0,
+          "enemy": 0
+        },
+        "directDamage": {
+          "player": 0,
+          "enemy": 0
+        },
+        "dotDamageEvents": {
+          "player": [],
+          "enemy": []
+        },
+        "healEvents": {
+          "player": [],
+          "enemy": []
+        },
+        "hpAfter": {
+          "player": 80,
+          "enemy": 95
+        },
+        "angerAfter": {
+          "player": 30,
+          "enemy": 5
+        },
+        "statusesAfter": {
+          "player": [],
+          "enemy": []
+        },
+        "winner": null,
+        "notes": [
+          "enemy spends 20 anger on dodge",
+          "player action missed",
+          "enemy dodged normal attack and refunded 30 anger"
+        ],
+        "state": {
+          "round": 3,
+          "player": {
+            "id": "player",
+            "element": "wood",
+            "hp": 80,
+            "maxHp": 120,
+            "anger": 30,
+            "freeDodgeUsed": true,
+            "statuses": []
+          },
+          "enemy": {
+            "id": "enemy",
+            "element": "water",
+            "hp": 95,
+            "maxHp": 120,
+            "anger": 5,
+            "freeDodgeUsed": false,
+            "statuses": []
+          }
+        },
+        "visualEvents": [
+          {
+            "id": "3:player:windup:action:0",
+            "side": "player",
+            "phase": "windup",
+            "kind": "action",
+            "action": "dodge"
+          },
+          {
+            "id": "3:player:release:action:1",
+            "side": "player",
+            "phase": "release",
+            "kind": "action",
+            "action": "dodge",
+            "element": "wood"
+          },
+          {
+            "id": "3:enemy:windup:action:2",
+            "side": "enemy",
+            "phase": "windup",
+            "kind": "action",
+            "action": "normal_attack"
+          },
+          {
+            "id": "3:enemy:release:action:3",
+            "side": "enemy",
+            "phase": "release",
+            "kind": "action",
+            "action": "normal_attack",
+            "element": "water"
+          },
+          {
+            "id": "3:player:impact:dodge:4",
+            "side": "player",
+            "phase": "impact",
+            "kind": "dodge"
+          }
+        ]
+      }
+    },
+    {
+      "round": 4,
+      "a": {
+        "round": 4,
+        "actions": {
+          "player": "normal_attack",
+          "enemy": "element_attack"
+        },
+        "damageTaken": {
+          "player": 0,
+          "enemy": 10
+        },
+        "directDamage": {
+          "player": 0,
+          "enemy": 10
+        },
+        "dotDamageEvents": {
+          "player": [],
+          "enemy": []
+        },
+        "healEvents": {
+          "player": [],
+          "enemy": []
+        },
+        "hpAfter": {
+          "player": 95,
+          "enemy": 70
+        },
+        "angerAfter": {
+          "player": 5,
+          "enemy": 35
+        },
+        "statusesAfter": {
+          "player": [],
+          "enemy": []
+        },
+        "winner": null,
+        "notes": [
+          "enemy action missed"
+        ],
+        "state": {
+          "round": 4,
+          "player": {
+            "id": "player",
+            "element": "water",
+            "hp": 95,
+            "maxHp": 120,
+            "anger": 5,
+            "freeDodgeUsed": false,
+            "statuses": []
+          },
+          "enemy": {
+            "id": "enemy",
+            "element": "wood",
+            "hp": 70,
+            "maxHp": 120,
+            "anger": 35,
+            "freeDodgeUsed": true,
+            "statuses": []
+          }
+        },
+        "visualEvents": [
+          {
+            "id": "4:player:windup:action:0",
+            "side": "player",
+            "phase": "windup",
+            "kind": "action",
+            "action": "normal_attack"
+          },
+          {
+            "id": "4:player:release:action:1",
+            "side": "player",
+            "phase": "release",
+            "kind": "action",
+            "action": "normal_attack",
+            "element": "water"
+          },
+          {
+            "id": "4:enemy:impact:damage:2",
+            "side": "enemy",
+            "phase": "impact",
+            "kind": "damage",
+            "amount": 10
+          },
+          {
+            "id": "4:enemy:windup:action:3",
+            "side": "enemy",
+            "phase": "windup",
+            "kind": "action",
+            "action": "element_attack"
+          },
+          {
+            "id": "4:enemy:release:action:4",
+            "side": "enemy",
+            "phase": "release",
+            "kind": "action",
+            "action": "element_attack",
+            "element": "wood"
+          },
+          {
+            "id": "4:enemy:impact:interrupt:5",
+            "side": "enemy",
+            "phase": "impact",
+            "kind": "interrupt"
+          }
+        ]
+      },
+      "b": {
+        "round": 4,
+        "actions": {
+          "player": "element_attack",
+          "enemy": "normal_attack"
+        },
+        "damageTaken": {
+          "player": 10,
+          "enemy": 0
+        },
+        "directDamage": {
+          "player": 10,
+          "enemy": 0
+        },
+        "dotDamageEvents": {
+          "player": [],
+          "enemy": []
+        },
+        "healEvents": {
+          "player": [],
+          "enemy": []
+        },
+        "hpAfter": {
+          "player": 70,
+          "enemy": 95
+        },
+        "angerAfter": {
+          "player": 35,
+          "enemy": 5
+        },
+        "statusesAfter": {
+          "player": [],
+          "enemy": []
+        },
+        "winner": null,
+        "notes": [
+          "enemy action missed"
+        ],
+        "state": {
+          "round": 4,
+          "player": {
+            "id": "player",
+            "element": "wood",
+            "hp": 70,
+            "maxHp": 120,
+            "anger": 35,
+            "freeDodgeUsed": true,
+            "statuses": []
+          },
+          "enemy": {
+            "id": "enemy",
+            "element": "water",
+            "hp": 95,
+            "maxHp": 120,
+            "anger": 5,
+            "freeDodgeUsed": false,
+            "statuses": []
+          }
+        },
+        "visualEvents": [
+          {
+            "id": "4:player:windup:action:0",
+            "side": "player",
+            "phase": "windup",
+            "kind": "action",
+            "action": "element_attack"
+          },
+          {
+            "id": "4:player:release:action:1",
+            "side": "player",
+            "phase": "release",
+            "kind": "action",
+            "action": "element_attack",
+            "element": "wood"
+          },
+          {
+            "id": "4:player:impact:interrupt:2",
+            "side": "player",
+            "phase": "impact",
+            "kind": "interrupt"
+          },
+          {
+            "id": "4:enemy:windup:action:3",
+            "side": "enemy",
+            "phase": "windup",
+            "kind": "action",
+            "action": "normal_attack"
+          },
+          {
+            "id": "4:enemy:release:action:4",
+            "side": "enemy",
+            "phase": "release",
+            "kind": "action",
+            "action": "normal_attack",
+            "element": "water"
+          },
+          {
+            "id": "4:player:impact:damage:5",
+            "side": "player",
+            "phase": "impact",
+            "kind": "damage",
+            "amount": 10
+          }
+        ]
+      }
+    },
+    {
+      "round": 5,
+      "a": {
+        "round": 5,
+        "actions": {
+          "player": "normal_attack",
+          "enemy": "element_attack"
+        },
+        "damageTaken": {
+          "player": 0,
+          "enemy": 10
+        },
+        "directDamage": {
+          "player": 0,
+          "enemy": 10
+        },
+        "dotDamageEvents": {
+          "player": [],
+          "enemy": []
+        },
+        "healEvents": {
+          "player": [],
+          "enemy": []
+        },
+        "hpAfter": {
+          "player": 95,
+          "enemy": 60
+        },
+        "angerAfter": {
+          "player": 5,
+          "enemy": 40
+        },
+        "statusesAfter": {
+          "player": [],
+          "enemy": []
+        },
+        "winner": null,
+        "notes": [
+          "enemy action missed"
+        ],
+        "state": {
+          "round": 5,
+          "player": {
+            "id": "player",
+            "element": "water",
+            "hp": 95,
+            "maxHp": 120,
+            "anger": 5,
+            "freeDodgeUsed": false,
+            "statuses": []
+          },
+          "enemy": {
+            "id": "enemy",
+            "element": "wood",
+            "hp": 60,
+            "maxHp": 120,
+            "anger": 40,
+            "freeDodgeUsed": true,
+            "statuses": []
+          }
+        },
+        "visualEvents": [
+          {
+            "id": "5:player:windup:action:0",
+            "side": "player",
+            "phase": "windup",
+            "kind": "action",
+            "action": "normal_attack"
+          },
+          {
+            "id": "5:player:release:action:1",
+            "side": "player",
+            "phase": "release",
+            "kind": "action",
+            "action": "normal_attack",
+            "element": "water"
+          },
+          {
+            "id": "5:enemy:impact:damage:2",
+            "side": "enemy",
+            "phase": "impact",
+            "kind": "damage",
+            "amount": 10
+          },
+          {
+            "id": "5:enemy:windup:action:3",
+            "side": "enemy",
+            "phase": "windup",
+            "kind": "action",
+            "action": "element_attack"
+          },
+          {
+            "id": "5:enemy:release:action:4",
+            "side": "enemy",
+            "phase": "release",
+            "kind": "action",
+            "action": "element_attack",
+            "element": "wood"
+          },
+          {
+            "id": "5:enemy:impact:interrupt:5",
+            "side": "enemy",
+            "phase": "impact",
+            "kind": "interrupt"
+          }
+        ]
+      },
+      "b": {
+        "round": 5,
+        "actions": {
+          "player": "element_attack",
+          "enemy": "normal_attack"
+        },
+        "damageTaken": {
+          "player": 10,
+          "enemy": 0
+        },
+        "directDamage": {
+          "player": 10,
+          "enemy": 0
+        },
+        "dotDamageEvents": {
+          "player": [],
+          "enemy": []
+        },
+        "healEvents": {
+          "player": [],
+          "enemy": []
+        },
+        "hpAfter": {
+          "player": 60,
+          "enemy": 95
+        },
+        "angerAfter": {
+          "player": 40,
+          "enemy": 5
+        },
+        "statusesAfter": {
+          "player": [],
+          "enemy": []
+        },
+        "winner": null,
+        "notes": [
+          "enemy action missed"
+        ],
+        "state": {
+          "round": 5,
+          "player": {
+            "id": "player",
+            "element": "wood",
+            "hp": 60,
+            "maxHp": 120,
+            "anger": 40,
+            "freeDodgeUsed": true,
+            "statuses": []
+          },
+          "enemy": {
+            "id": "enemy",
+            "element": "water",
+            "hp": 95,
+            "maxHp": 120,
+            "anger": 5,
+            "freeDodgeUsed": false,
+            "statuses": []
+          }
+        },
+        "visualEvents": [
+          {
+            "id": "5:player:windup:action:0",
+            "side": "player",
+            "phase": "windup",
+            "kind": "action",
+            "action": "element_attack"
+          },
+          {
+            "id": "5:player:release:action:1",
+            "side": "player",
+            "phase": "release",
+            "kind": "action",
+            "action": "element_attack",
+            "element": "wood"
+          },
+          {
+            "id": "5:player:impact:interrupt:2",
+            "side": "player",
+            "phase": "impact",
+            "kind": "interrupt"
+          },
+          {
+            "id": "5:enemy:windup:action:3",
+            "side": "enemy",
+            "phase": "windup",
+            "kind": "action",
+            "action": "normal_attack"
+          },
+          {
+            "id": "5:enemy:release:action:4",
+            "side": "enemy",
+            "phase": "release",
+            "kind": "action",
+            "action": "normal_attack",
+            "element": "water"
+          },
+          {
+            "id": "5:player:impact:damage:5",
+            "side": "player",
+            "phase": "impact",
+            "kind": "damage",
+            "amount": 10
+          }
+        ]
+      }
+    },
+    {
+      "round": 6,
+      "a": {
+        "round": 6,
+        "actions": {
+          "player": "normal_attack",
+          "enemy": "element_attack"
+        },
+        "damageTaken": {
+          "player": 0,
+          "enemy": 10
+        },
+        "directDamage": {
+          "player": 0,
+          "enemy": 10
+        },
+        "dotDamageEvents": {
+          "player": [],
+          "enemy": []
+        },
+        "healEvents": {
+          "player": [],
+          "enemy": []
+        },
+        "hpAfter": {
+          "player": 95,
+          "enemy": 50
+        },
+        "angerAfter": {
+          "player": 5,
+          "enemy": 45
+        },
+        "statusesAfter": {
+          "player": [],
+          "enemy": []
+        },
+        "winner": null,
+        "notes": [
+          "enemy action missed"
+        ],
+        "state": {
+          "round": 6,
+          "player": {
+            "id": "player",
+            "element": "water",
+            "hp": 95,
+            "maxHp": 120,
+            "anger": 5,
+            "freeDodgeUsed": false,
+            "statuses": []
+          },
+          "enemy": {
+            "id": "enemy",
+            "element": "wood",
+            "hp": 50,
+            "maxHp": 120,
+            "anger": 45,
+            "freeDodgeUsed": true,
+            "statuses": []
+          }
+        },
+        "visualEvents": [
+          {
+            "id": "6:player:windup:action:0",
+            "side": "player",
+            "phase": "windup",
+            "kind": "action",
+            "action": "normal_attack"
+          },
+          {
+            "id": "6:player:release:action:1",
+            "side": "player",
+            "phase": "release",
+            "kind": "action",
+            "action": "normal_attack",
+            "element": "water"
+          },
+          {
+            "id": "6:enemy:impact:damage:2",
+            "side": "enemy",
+            "phase": "impact",
+            "kind": "damage",
+            "amount": 10
+          },
+          {
+            "id": "6:enemy:windup:action:3",
+            "side": "enemy",
+            "phase": "windup",
+            "kind": "action",
+            "action": "element_attack"
+          },
+          {
+            "id": "6:enemy:release:action:4",
+            "side": "enemy",
+            "phase": "release",
+            "kind": "action",
+            "action": "element_attack",
+            "element": "wood"
+          },
+          {
+            "id": "6:enemy:impact:interrupt:5",
+            "side": "enemy",
+            "phase": "impact",
+            "kind": "interrupt"
+          }
+        ]
+      },
+      "b": {
+        "round": 6,
+        "actions": {
+          "player": "element_attack",
+          "enemy": "normal_attack"
+        },
+        "damageTaken": {
+          "player": 10,
+          "enemy": 0
+        },
+        "directDamage": {
+          "player": 10,
+          "enemy": 0
+        },
+        "dotDamageEvents": {
+          "player": [],
+          "enemy": []
+        },
+        "healEvents": {
+          "player": [],
+          "enemy": []
+        },
+        "hpAfter": {
+          "player": 50,
+          "enemy": 95
+        },
+        "angerAfter": {
+          "player": 45,
+          "enemy": 5
+        },
+        "statusesAfter": {
+          "player": [],
+          "enemy": []
+        },
+        "winner": null,
+        "notes": [
+          "enemy action missed"
+        ],
+        "state": {
+          "round": 6,
+          "player": {
+            "id": "player",
+            "element": "wood",
+            "hp": 50,
+            "maxHp": 120,
+            "anger": 45,
+            "freeDodgeUsed": true,
+            "statuses": []
+          },
+          "enemy": {
+            "id": "enemy",
+            "element": "water",
+            "hp": 95,
+            "maxHp": 120,
+            "anger": 5,
+            "freeDodgeUsed": false,
+            "statuses": []
+          }
+        },
+        "visualEvents": [
+          {
+            "id": "6:player:windup:action:0",
+            "side": "player",
+            "phase": "windup",
+            "kind": "action",
+            "action": "element_attack"
+          },
+          {
+            "id": "6:player:release:action:1",
+            "side": "player",
+            "phase": "release",
+            "kind": "action",
+            "action": "element_attack",
+            "element": "wood"
+          },
+          {
+            "id": "6:player:impact:interrupt:2",
+            "side": "player",
+            "phase": "impact",
+            "kind": "interrupt"
+          },
+          {
+            "id": "6:enemy:windup:action:3",
+            "side": "enemy",
+            "phase": "windup",
+            "kind": "action",
+            "action": "normal_attack"
+          },
+          {
+            "id": "6:enemy:release:action:4",
+            "side": "enemy",
+            "phase": "release",
+            "kind": "action",
+            "action": "normal_attack",
+            "element": "water"
+          },
+          {
+            "id": "6:player:impact:damage:5",
+            "side": "player",
+            "phase": "impact",
+            "kind": "damage",
+            "amount": 10
+          }
+        ]
+      }
+    },
+    {
+      "round": 7,
+      "a": {
+        "round": 7,
+        "actions": {
+          "player": "normal_attack",
+          "enemy": "element_attack"
+        },
+        "damageTaken": {
+          "player": 0,
+          "enemy": 10
+        },
+        "directDamage": {
+          "player": 0,
+          "enemy": 10
+        },
+        "dotDamageEvents": {
+          "player": [],
+          "enemy": []
+        },
+        "healEvents": {
+          "player": [],
+          "enemy": []
+        },
+        "hpAfter": {
+          "player": 95,
+          "enemy": 40
+        },
+        "angerAfter": {
+          "player": 5,
+          "enemy": 50
+        },
+        "statusesAfter": {
+          "player": [],
+          "enemy": []
+        },
+        "winner": null,
+        "notes": [
+          "enemy action missed"
+        ],
+        "state": {
+          "round": 7,
+          "player": {
+            "id": "player",
+            "element": "water",
+            "hp": 95,
+            "maxHp": 120,
+            "anger": 5,
+            "freeDodgeUsed": false,
+            "statuses": []
+          },
+          "enemy": {
+            "id": "enemy",
+            "element": "wood",
+            "hp": 40,
+            "maxHp": 120,
+            "anger": 50,
+            "freeDodgeUsed": true,
+            "statuses": []
+          }
+        },
+        "visualEvents": [
+          {
+            "id": "7:player:windup:action:0",
+            "side": "player",
+            "phase": "windup",
+            "kind": "action",
+            "action": "normal_attack"
+          },
+          {
+            "id": "7:player:release:action:1",
+            "side": "player",
+            "phase": "release",
+            "kind": "action",
+            "action": "normal_attack",
+            "element": "water"
+          },
+          {
+            "id": "7:enemy:impact:damage:2",
+            "side": "enemy",
+            "phase": "impact",
+            "kind": "damage",
+            "amount": 10
+          },
+          {
+            "id": "7:enemy:windup:action:3",
+            "side": "enemy",
+            "phase": "windup",
+            "kind": "action",
+            "action": "element_attack"
+          },
+          {
+            "id": "7:enemy:release:action:4",
+            "side": "enemy",
+            "phase": "release",
+            "kind": "action",
+            "action": "element_attack",
+            "element": "wood"
+          },
+          {
+            "id": "7:enemy:impact:interrupt:5",
+            "side": "enemy",
+            "phase": "impact",
+            "kind": "interrupt"
+          }
+        ]
+      },
+      "b": {
+        "round": 7,
+        "actions": {
+          "player": "element_attack",
+          "enemy": "normal_attack"
+        },
+        "damageTaken": {
+          "player": 10,
+          "enemy": 0
+        },
+        "directDamage": {
+          "player": 10,
+          "enemy": 0
+        },
+        "dotDamageEvents": {
+          "player": [],
+          "enemy": []
+        },
+        "healEvents": {
+          "player": [],
+          "enemy": []
+        },
+        "hpAfter": {
+          "player": 40,
+          "enemy": 95
+        },
+        "angerAfter": {
+          "player": 50,
+          "enemy": 5
+        },
+        "statusesAfter": {
+          "player": [],
+          "enemy": []
+        },
+        "winner": null,
+        "notes": [
+          "enemy action missed"
+        ],
+        "state": {
+          "round": 7,
+          "player": {
+            "id": "player",
+            "element": "wood",
+            "hp": 40,
+            "maxHp": 120,
+            "anger": 50,
+            "freeDodgeUsed": true,
+            "statuses": []
+          },
+          "enemy": {
+            "id": "enemy",
+            "element": "water",
+            "hp": 95,
+            "maxHp": 120,
+            "anger": 5,
+            "freeDodgeUsed": false,
+            "statuses": []
+          }
+        },
+        "visualEvents": [
+          {
+            "id": "7:player:windup:action:0",
+            "side": "player",
+            "phase": "windup",
+            "kind": "action",
+            "action": "element_attack"
+          },
+          {
+            "id": "7:player:release:action:1",
+            "side": "player",
+            "phase": "release",
+            "kind": "action",
+            "action": "element_attack",
+            "element": "wood"
+          },
+          {
+            "id": "7:player:impact:interrupt:2",
+            "side": "player",
+            "phase": "impact",
+            "kind": "interrupt"
+          },
+          {
+            "id": "7:enemy:windup:action:3",
+            "side": "enemy",
+            "phase": "windup",
+            "kind": "action",
+            "action": "normal_attack"
+          },
+          {
+            "id": "7:enemy:release:action:4",
+            "side": "enemy",
+            "phase": "release",
+            "kind": "action",
+            "action": "normal_attack",
+            "element": "water"
+          },
+          {
+            "id": "7:player:impact:damage:5",
+            "side": "player",
+            "phase": "impact",
+            "kind": "damage",
+            "amount": 10
+          }
+        ]
+      }
+    },
+    {
+      "round": 8,
+      "a": {
+        "round": 8,
+        "actions": {
+          "player": "normal_attack",
+          "enemy": "element_attack"
+        },
+        "damageTaken": {
+          "player": 0,
+          "enemy": 10
+        },
+        "directDamage": {
+          "player": 0,
+          "enemy": 10
+        },
+        "dotDamageEvents": {
+          "player": [],
+          "enemy": []
+        },
+        "healEvents": {
+          "player": [],
+          "enemy": []
+        },
+        "hpAfter": {
+          "player": 95,
+          "enemy": 30
+        },
+        "angerAfter": {
+          "player": 5,
+          "enemy": 55
+        },
+        "statusesAfter": {
+          "player": [],
+          "enemy": []
+        },
+        "winner": null,
+        "notes": [
+          "enemy action missed"
+        ],
+        "state": {
+          "round": 8,
+          "player": {
+            "id": "player",
+            "element": "water",
+            "hp": 95,
+            "maxHp": 120,
+            "anger": 5,
+            "freeDodgeUsed": false,
+            "statuses": []
+          },
+          "enemy": {
+            "id": "enemy",
+            "element": "wood",
+            "hp": 30,
+            "maxHp": 120,
+            "anger": 55,
+            "freeDodgeUsed": true,
+            "statuses": []
+          }
+        },
+        "visualEvents": [
+          {
+            "id": "8:player:windup:action:0",
+            "side": "player",
+            "phase": "windup",
+            "kind": "action",
+            "action": "normal_attack"
+          },
+          {
+            "id": "8:player:release:action:1",
+            "side": "player",
+            "phase": "release",
+            "kind": "action",
+            "action": "normal_attack",
+            "element": "water"
+          },
+          {
+            "id": "8:enemy:impact:damage:2",
+            "side": "enemy",
+            "phase": "impact",
+            "kind": "damage",
+            "amount": 10
+          },
+          {
+            "id": "8:enemy:windup:action:3",
+            "side": "enemy",
+            "phase": "windup",
+            "kind": "action",
+            "action": "element_attack"
+          },
+          {
+            "id": "8:enemy:release:action:4",
+            "side": "enemy",
+            "phase": "release",
+            "kind": "action",
+            "action": "element_attack",
+            "element": "wood"
+          },
+          {
+            "id": "8:enemy:impact:interrupt:5",
+            "side": "enemy",
+            "phase": "impact",
+            "kind": "interrupt"
+          }
+        ]
+      },
+      "b": {
+        "round": 8,
+        "actions": {
+          "player": "element_attack",
+          "enemy": "normal_attack"
+        },
+        "damageTaken": {
+          "player": 10,
+          "enemy": 0
+        },
+        "directDamage": {
+          "player": 10,
+          "enemy": 0
+        },
+        "dotDamageEvents": {
+          "player": [],
+          "enemy": []
+        },
+        "healEvents": {
+          "player": [],
+          "enemy": []
+        },
+        "hpAfter": {
+          "player": 30,
+          "enemy": 95
+        },
+        "angerAfter": {
+          "player": 55,
+          "enemy": 5
+        },
+        "statusesAfter": {
+          "player": [],
+          "enemy": []
+        },
+        "winner": null,
+        "notes": [
+          "enemy action missed"
+        ],
+        "state": {
+          "round": 8,
+          "player": {
+            "id": "player",
+            "element": "wood",
+            "hp": 30,
+            "maxHp": 120,
+            "anger": 55,
+            "freeDodgeUsed": true,
+            "statuses": []
+          },
+          "enemy": {
+            "id": "enemy",
+            "element": "water",
+            "hp": 95,
+            "maxHp": 120,
+            "anger": 5,
+            "freeDodgeUsed": false,
+            "statuses": []
+          }
+        },
+        "visualEvents": [
+          {
+            "id": "8:player:windup:action:0",
+            "side": "player",
+            "phase": "windup",
+            "kind": "action",
+            "action": "element_attack"
+          },
+          {
+            "id": "8:player:release:action:1",
+            "side": "player",
+            "phase": "release",
+            "kind": "action",
+            "action": "element_attack",
+            "element": "wood"
+          },
+          {
+            "id": "8:player:impact:interrupt:2",
+            "side": "player",
+            "phase": "impact",
+            "kind": "interrupt"
+          },
+          {
+            "id": "8:enemy:windup:action:3",
+            "side": "enemy",
+            "phase": "windup",
+            "kind": "action",
+            "action": "normal_attack"
+          },
+          {
+            "id": "8:enemy:release:action:4",
+            "side": "enemy",
+            "phase": "release",
+            "kind": "action",
+            "action": "normal_attack",
+            "element": "water"
+          },
+          {
+            "id": "8:player:impact:damage:5",
+            "side": "player",
+            "phase": "impact",
+            "kind": "damage",
+            "amount": 10
+          }
+        ]
+      }
+    },
+    {
+      "round": 9,
+      "a": {
+        "round": 9,
+        "actions": {
+          "player": "normal_attack",
+          "enemy": "element_attack"
+        },
+        "damageTaken": {
+          "player": 0,
+          "enemy": 10
+        },
+        "directDamage": {
+          "player": 0,
+          "enemy": 10
+        },
+        "dotDamageEvents": {
+          "player": [],
+          "enemy": []
+        },
+        "healEvents": {
+          "player": [],
+          "enemy": []
+        },
+        "hpAfter": {
+          "player": 95,
+          "enemy": 20
+        },
+        "angerAfter": {
+          "player": 5,
+          "enemy": 60
+        },
+        "statusesAfter": {
+          "player": [],
+          "enemy": []
+        },
+        "winner": null,
+        "notes": [
+          "enemy action missed"
+        ],
+        "state": {
+          "round": 9,
+          "player": {
+            "id": "player",
+            "element": "water",
+            "hp": 95,
+            "maxHp": 120,
+            "anger": 5,
+            "freeDodgeUsed": false,
+            "statuses": []
+          },
+          "enemy": {
+            "id": "enemy",
+            "element": "wood",
+            "hp": 20,
+            "maxHp": 120,
+            "anger": 60,
+            "freeDodgeUsed": true,
+            "statuses": []
+          }
+        },
+        "visualEvents": [
+          {
+            "id": "9:player:windup:action:0",
+            "side": "player",
+            "phase": "windup",
+            "kind": "action",
+            "action": "normal_attack"
+          },
+          {
+            "id": "9:player:release:action:1",
+            "side": "player",
+            "phase": "release",
+            "kind": "action",
+            "action": "normal_attack",
+            "element": "water"
+          },
+          {
+            "id": "9:enemy:impact:damage:2",
+            "side": "enemy",
+            "phase": "impact",
+            "kind": "damage",
+            "amount": 10
+          },
+          {
+            "id": "9:enemy:windup:action:3",
+            "side": "enemy",
+            "phase": "windup",
+            "kind": "action",
+            "action": "element_attack"
+          },
+          {
+            "id": "9:enemy:release:action:4",
+            "side": "enemy",
+            "phase": "release",
+            "kind": "action",
+            "action": "element_attack",
+            "element": "wood"
+          },
+          {
+            "id": "9:enemy:impact:interrupt:5",
+            "side": "enemy",
+            "phase": "impact",
+            "kind": "interrupt"
+          }
+        ]
+      },
+      "b": {
+        "round": 9,
+        "actions": {
+          "player": "element_attack",
+          "enemy": "normal_attack"
+        },
+        "damageTaken": {
+          "player": 10,
+          "enemy": 0
+        },
+        "directDamage": {
+          "player": 10,
+          "enemy": 0
+        },
+        "dotDamageEvents": {
+          "player": [],
+          "enemy": []
+        },
+        "healEvents": {
+          "player": [],
+          "enemy": []
+        },
+        "hpAfter": {
+          "player": 20,
+          "enemy": 95
+        },
+        "angerAfter": {
+          "player": 60,
+          "enemy": 5
+        },
+        "statusesAfter": {
+          "player": [],
+          "enemy": []
+        },
+        "winner": null,
+        "notes": [
+          "enemy action missed"
+        ],
+        "state": {
+          "round": 9,
+          "player": {
+            "id": "player",
+            "element": "wood",
+            "hp": 20,
+            "maxHp": 120,
+            "anger": 60,
+            "freeDodgeUsed": true,
+            "statuses": []
+          },
+          "enemy": {
+            "id": "enemy",
+            "element": "water",
+            "hp": 95,
+            "maxHp": 120,
+            "anger": 5,
+            "freeDodgeUsed": false,
+            "statuses": []
+          }
+        },
+        "visualEvents": [
+          {
+            "id": "9:player:windup:action:0",
+            "side": "player",
+            "phase": "windup",
+            "kind": "action",
+            "action": "element_attack"
+          },
+          {
+            "id": "9:player:release:action:1",
+            "side": "player",
+            "phase": "release",
+            "kind": "action",
+            "action": "element_attack",
+            "element": "wood"
+          },
+          {
+            "id": "9:player:impact:interrupt:2",
+            "side": "player",
+            "phase": "impact",
+            "kind": "interrupt"
+          },
+          {
+            "id": "9:enemy:windup:action:3",
+            "side": "enemy",
+            "phase": "windup",
+            "kind": "action",
+            "action": "normal_attack"
+          },
+          {
+            "id": "9:enemy:release:action:4",
+            "side": "enemy",
+            "phase": "release",
+            "kind": "action",
+            "action": "normal_attack",
+            "element": "water"
+          },
+          {
+            "id": "9:player:impact:damage:5",
+            "side": "player",
+            "phase": "impact",
+            "kind": "damage",
+            "amount": 10
+          }
+        ]
+      }
+    },
+    {
+      "round": 10,
+      "a": {
+        "round": 10,
+        "actions": {
+          "player": "normal_attack",
+          "enemy": "element_attack"
+        },
+        "damageTaken": {
+          "player": 0,
+          "enemy": 10
+        },
+        "directDamage": {
+          "player": 0,
+          "enemy": 10
+        },
+        "dotDamageEvents": {
+          "player": [],
+          "enemy": []
+        },
+        "healEvents": {
+          "player": [],
+          "enemy": []
+        },
+        "hpAfter": {
+          "player": 95,
+          "enemy": 10
+        },
+        "angerAfter": {
+          "player": 5,
+          "enemy": 65
+        },
+        "statusesAfter": {
+          "player": [],
+          "enemy": []
+        },
+        "winner": null,
+        "notes": [
+          "enemy action missed"
+        ],
+        "state": {
+          "round": 10,
+          "player": {
+            "id": "player",
+            "element": "water",
+            "hp": 95,
+            "maxHp": 120,
+            "anger": 5,
+            "freeDodgeUsed": false,
+            "statuses": []
+          },
+          "enemy": {
+            "id": "enemy",
+            "element": "wood",
+            "hp": 10,
+            "maxHp": 120,
+            "anger": 65,
+            "freeDodgeUsed": true,
+            "statuses": []
+          }
+        },
+        "visualEvents": [
+          {
+            "id": "10:player:windup:action:0",
+            "side": "player",
+            "phase": "windup",
+            "kind": "action",
+            "action": "normal_attack"
+          },
+          {
+            "id": "10:player:release:action:1",
+            "side": "player",
+            "phase": "release",
+            "kind": "action",
+            "action": "normal_attack",
+            "element": "water"
+          },
+          {
+            "id": "10:enemy:impact:damage:2",
+            "side": "enemy",
+            "phase": "impact",
+            "kind": "damage",
+            "amount": 10
+          },
+          {
+            "id": "10:enemy:windup:action:3",
+            "side": "enemy",
+            "phase": "windup",
+            "kind": "action",
+            "action": "element_attack"
+          },
+          {
+            "id": "10:enemy:release:action:4",
+            "side": "enemy",
+            "phase": "release",
+            "kind": "action",
+            "action": "element_attack",
+            "element": "wood"
+          },
+          {
+            "id": "10:enemy:impact:interrupt:5",
+            "side": "enemy",
+            "phase": "impact",
+            "kind": "interrupt"
+          }
+        ]
+      },
+      "b": {
+        "round": 10,
+        "actions": {
+          "player": "element_attack",
+          "enemy": "normal_attack"
+        },
+        "damageTaken": {
+          "player": 10,
+          "enemy": 0
+        },
+        "directDamage": {
+          "player": 10,
+          "enemy": 0
+        },
+        "dotDamageEvents": {
+          "player": [],
+          "enemy": []
+        },
+        "healEvents": {
+          "player": [],
+          "enemy": []
+        },
+        "hpAfter": {
+          "player": 10,
+          "enemy": 95
+        },
+        "angerAfter": {
+          "player": 65,
+          "enemy": 5
+        },
+        "statusesAfter": {
+          "player": [],
+          "enemy": []
+        },
+        "winner": null,
+        "notes": [
+          "enemy action missed"
+        ],
+        "state": {
+          "round": 10,
+          "player": {
+            "id": "player",
+            "element": "wood",
+            "hp": 10,
+            "maxHp": 120,
+            "anger": 65,
+            "freeDodgeUsed": true,
+            "statuses": []
+          },
+          "enemy": {
+            "id": "enemy",
+            "element": "water",
+            "hp": 95,
+            "maxHp": 120,
+            "anger": 5,
+            "freeDodgeUsed": false,
+            "statuses": []
+          }
+        },
+        "visualEvents": [
+          {
+            "id": "10:player:windup:action:0",
+            "side": "player",
+            "phase": "windup",
+            "kind": "action",
+            "action": "element_attack"
+          },
+          {
+            "id": "10:player:release:action:1",
+            "side": "player",
+            "phase": "release",
+            "kind": "action",
+            "action": "element_attack",
+            "element": "wood"
+          },
+          {
+            "id": "10:player:impact:interrupt:2",
+            "side": "player",
+            "phase": "impact",
+            "kind": "interrupt"
+          },
+          {
+            "id": "10:enemy:windup:action:3",
+            "side": "enemy",
+            "phase": "windup",
+            "kind": "action",
+            "action": "normal_attack"
+          },
+          {
+            "id": "10:enemy:release:action:4",
+            "side": "enemy",
+            "phase": "release",
+            "kind": "action",
+            "action": "normal_attack",
+            "element": "water"
+          },
+          {
+            "id": "10:player:impact:damage:5",
+            "side": "player",
+            "phase": "impact",
+            "kind": "damage",
+            "amount": 10
+          }
+        ]
+      }
+    },
+    {
+      "round": 11,
+      "a": {
+        "round": 11,
+        "actions": {
+          "player": "normal_attack",
+          "enemy": "element_attack"
+        },
+        "damageTaken": {
+          "player": 0,
+          "enemy": 10
+        },
+        "directDamage": {
+          "player": 0,
+          "enemy": 10
+        },
+        "dotDamageEvents": {
+          "player": [],
+          "enemy": []
+        },
+        "healEvents": {
+          "player": [],
+          "enemy": []
+        },
+        "hpAfter": {
+          "player": 95,
+          "enemy": 0
+        },
+        "angerAfter": {
+          "player": 5,
+          "enemy": 70
+        },
+        "statusesAfter": {
+          "player": [],
+          "enemy": []
+        },
+        "winner": "player",
+        "notes": [
+          "enemy action missed"
+        ],
+        "state": {
+          "round": 11,
+          "player": {
+            "id": "player",
+            "element": "water",
+            "hp": 95,
+            "maxHp": 120,
+            "anger": 5,
+            "freeDodgeUsed": false,
+            "statuses": []
+          },
+          "enemy": {
+            "id": "enemy",
+            "element": "wood",
+            "hp": 0,
+            "maxHp": 120,
+            "anger": 70,
+            "freeDodgeUsed": true,
+            "statuses": []
+          }
+        },
+        "visualEvents": [
+          {
+            "id": "11:player:windup:action:0",
+            "side": "player",
+            "phase": "windup",
+            "kind": "action",
+            "action": "normal_attack"
+          },
+          {
+            "id": "11:player:release:action:1",
+            "side": "player",
+            "phase": "release",
+            "kind": "action",
+            "action": "normal_attack",
+            "element": "water"
+          },
+          {
+            "id": "11:enemy:impact:damage:2",
+            "side": "enemy",
+            "phase": "impact",
+            "kind": "damage",
+            "amount": 10
+          },
+          {
+            "id": "11:enemy:windup:action:3",
+            "side": "enemy",
+            "phase": "windup",
+            "kind": "action",
+            "action": "element_attack"
+          },
+          {
+            "id": "11:enemy:release:action:4",
+            "side": "enemy",
+            "phase": "release",
+            "kind": "action",
+            "action": "element_attack",
+            "element": "wood"
+          },
+          {
+            "id": "11:enemy:impact:interrupt:5",
+            "side": "enemy",
+            "phase": "impact",
+            "kind": "interrupt"
+          }
+        ]
+      },
+      "b": {
+        "round": 11,
+        "actions": {
+          "player": "element_attack",
+          "enemy": "normal_attack"
+        },
+        "damageTaken": {
+          "player": 10,
+          "enemy": 0
+        },
+        "directDamage": {
+          "player": 10,
+          "enemy": 0
+        },
+        "dotDamageEvents": {
+          "player": [],
+          "enemy": []
+        },
+        "healEvents": {
+          "player": [],
+          "enemy": []
+        },
+        "hpAfter": {
+          "player": 0,
+          "enemy": 95
+        },
+        "angerAfter": {
+          "player": 70,
+          "enemy": 5
+        },
+        "statusesAfter": {
+          "player": [],
+          "enemy": []
+        },
+        "winner": "enemy",
+        "notes": [
+          "enemy action missed"
+        ],
+        "state": {
+          "round": 11,
+          "player": {
+            "id": "player",
+            "element": "wood",
+            "hp": 0,
+            "maxHp": 120,
+            "anger": 70,
+            "freeDodgeUsed": true,
+            "statuses": []
+          },
+          "enemy": {
+            "id": "enemy",
+            "element": "water",
+            "hp": 95,
+            "maxHp": 120,
+            "anger": 5,
+            "freeDodgeUsed": false,
+            "statuses": []
+          }
+        },
+        "visualEvents": [
+          {
+            "id": "11:player:windup:action:0",
+            "side": "player",
+            "phase": "windup",
+            "kind": "action",
+            "action": "element_attack"
+          },
+          {
+            "id": "11:player:release:action:1",
+            "side": "player",
+            "phase": "release",
+            "kind": "action",
+            "action": "element_attack",
+            "element": "wood"
+          },
+          {
+            "id": "11:player:impact:interrupt:2",
+            "side": "player",
+            "phase": "impact",
+            "kind": "interrupt"
+          },
+          {
+            "id": "11:enemy:windup:action:3",
+            "side": "enemy",
+            "phase": "windup",
+            "kind": "action",
+            "action": "normal_attack"
+          },
+          {
+            "id": "11:enemy:release:action:4",
+            "side": "enemy",
+            "phase": "release",
+            "kind": "action",
+            "action": "normal_attack",
+            "element": "water"
+          },
+          {
+            "id": "11:player:impact:damage:5",
+            "side": "player",
+            "phase": "impact",
+            "kind": "damage",
+            "amount": 10
+          }
+        ]
+      }
+    }
+  ],
+  "checks": [
+    {
+      "id": "A-shared-friend-layout",
+      "passed": true,
+      "detail": {
+        "mode": "friend",
+        "authority": "simulated",
+        "hud": 2,
+        "moves": [
+          {
+            "bottom": 662,
+            "width": 172.47500610351562
+          },
+          {
+            "bottom": 662,
+            "width": 172.4875030517578
+          },
+          {
+            "bottom": 662,
+            "width": 172.47500610351562
+          },
+          {
+            "bottom": 662,
+            "width": 172.4875030517578
+          }
+        ],
+        "height": 846,
+        "resources": [
+          "builtin:lingjing-yuwan-v2",
+          "builtin:lingjing-qingya-v1"
+        ],
+        "duplicate": 0
+      }
+    },
+    {
+      "id": "B-shared-friend-layout",
+      "passed": true,
+      "detail": {
+        "mode": "friend",
+        "authority": "simulated",
+        "hud": 2,
+        "moves": [
+          {
+            "bottom": 662,
+            "width": 172.47500610351562
+          },
+          {
+            "bottom": 662,
+            "width": 172.4875030517578
+          },
+          {
+            "bottom": 662,
+            "width": 172.47500610351562
+          },
+          {
+            "bottom": 662,
+            "width": 172.4875030517578
+          }
+        ],
+        "height": 846,
+        "resources": [
+          "builtin:lingjing-qingya-v1",
+          "builtin:lingjing-yuwan-v2"
+        ],
+        "duplicate": 0
+      }
+    },
+    {
+      "id": "mirrored-round-1",
+      "passed": true,
+      "detail": {
+        "a": {
+          "round": 1,
+          "player": {
+            "id": "player",
+            "element": "water",
+            "hp": 105,
+            "maxHp": 120,
+            "anger": 0,
+            "freeDodgeUsed": false,
+            "statuses": []
+          },
+          "enemy": {
+            "id": "enemy",
+            "element": "wood",
+            "hp": 80,
+            "maxHp": 120,
+            "anger": 5,
+            "freeDodgeUsed": true,
+            "statuses": []
+          }
+        },
+        "b": {
+          "round": 1,
+          "player": {
+            "id": "player",
+            "element": "wood",
+            "hp": 80,
+            "maxHp": 120,
+            "anger": 5,
+            "freeDodgeUsed": true,
+            "statuses": []
+          },
+          "enemy": {
+            "id": "enemy",
+            "element": "water",
+            "hp": 105,
+            "maxHp": 120,
+            "anger": 0,
+            "freeDodgeUsed": false,
+            "statuses": []
+          }
+        }
+      }
+    },
+    {
+      "id": "friend-ultimate-hits-dodge-and-heals",
+      "passed": true,
+      "detail": {
+        "round": 1,
+        "actions": {
+          "player": "ultimate",
+          "enemy": "dodge"
+        },
+        "damageTaken": {
+          "player": 0,
+          "enemy": 20
+        },
+        "directDamage": {
+          "player": 0,
+          "enemy": 20
+        },
+        "dotDamageEvents": {
+          "player": [],
+          "enemy": []
+        },
+        "healEvents": {
+          "player": [
+            {
+              "type": "ultimate",
+              "amount": 20
+            }
+          ],
+          "enemy": []
+        },
+        "hpAfter": {
+          "player": 105,
+          "enemy": 80
+        },
+        "angerAfter": {
+          "player": 0,
+          "enemy": 5
+        },
+        "statusesAfter": {
+          "player": [],
+          "enemy": []
+        },
+        "winner": null,
+        "notes": [
+          "enemy spends 20 anger on dodge",
+          "enemy anger halved by freeze (10->5)",
+          "player healed by ultimate"
+        ],
+        "state": {
+          "round": 1,
+          "player": {
+            "id": "player",
+            "element": "water",
+            "hp": 105,
+            "maxHp": 120,
+            "anger": 0,
+            "freeDodgeUsed": false,
+            "statuses": []
+          },
+          "enemy": {
+            "id": "enemy",
+            "element": "wood",
+            "hp": 80,
+            "maxHp": 120,
+            "anger": 5,
+            "freeDodgeUsed": true,
+            "statuses": []
+          }
+        },
+        "visualEvents": [
+          {
+            "id": "1:player:windup:action:0",
+            "side": "player",
+            "phase": "windup",
+            "kind": "action",
+            "action": "ultimate"
+          },
+          {
+            "id": "1:player:release:action:1",
+            "side": "player",
+            "phase": "release",
+            "kind": "action",
+            "action": "ultimate",
+            "element": "water"
+          },
+          {
+            "id": "1:enemy:impact:damage:2",
+            "side": "enemy",
+            "phase": "impact",
+            "kind": "damage",
+            "amount": 20
+          },
+          {
+            "id": "1:player:effects:heal:3",
+            "side": "player",
+            "phase": "effects",
+            "kind": "heal",
+            "amount": 20,
+            "status": "ultimate"
+          },
+          {
+            "id": "1:enemy:effects:anger:4",
+            "side": "enemy",
+            "phase": "effects",
+            "kind": "anger",
+            "amount": 5,
+            "element": "water"
+          },
+          {
+            "id": "1:enemy:windup:action:5",
+            "side": "enemy",
+            "phase": "windup",
+            "kind": "action",
+            "action": "dodge"
+          },
+          {
+            "id": "1:enemy:release:action:6",
+            "side": "enemy",
+            "phase": "release",
+            "kind": "action",
+            "action": "dodge",
+            "element": "wood"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mirrored-round-2",
+      "passed": true,
+      "detail": {
+        "a": {
+          "round": 2,
+          "player": {
+            "id": "player",
+            "element": "water",
+            "hp": 95,
+            "maxHp": 120,
+            "anger": 5,
+            "freeDodgeUsed": false,
+            "statuses": []
+          },
+          "enemy": {
+            "id": "enemy",
+            "element": "wood",
+            "hp": 80,
+            "maxHp": 120,
+            "anger": 5,
+            "freeDodgeUsed": true,
+            "statuses": []
+          }
+        },
+        "b": {
+          "round": 2,
+          "player": {
+            "id": "player",
+            "element": "wood",
+            "hp": 80,
+            "maxHp": 120,
+            "anger": 5,
+            "freeDodgeUsed": true,
+            "statuses": []
+          },
+          "enemy": {
+            "id": "enemy",
+            "element": "water",
+            "hp": 95,
+            "maxHp": 120,
+            "anger": 5,
+            "freeDodgeUsed": false,
+            "statuses": []
+          }
+        }
+      }
+    },
+    {
+      "id": "friend-interrupt-has-correct-event",
+      "passed": true,
+      "detail": {
+        "round": 2,
+        "actions": {
+          "player": "element_attack",
+          "enemy": "normal_attack"
+        },
+        "damageTaken": {
+          "player": 10,
+          "enemy": 0
+        },
+        "directDamage": {
+          "player": 10,
+          "enemy": 0
+        },
+        "dotDamageEvents": {
+          "player": [],
+          "enemy": []
+        },
+        "healEvents": {
+          "player": [],
+          "enemy": []
+        },
+        "hpAfter": {
+          "player": 95,
+          "enemy": 80
+        },
+        "angerAfter": {
+          "player": 5,
+          "enemy": 5
+        },
+        "statusesAfter": {
+          "player": [],
+          "enemy": []
+        },
+        "winner": null,
+        "notes": [
+          "player action missed"
+        ],
+        "state": {
+          "round": 2,
+          "player": {
+            "id": "player",
+            "element": "water",
+            "hp": 95,
+            "maxHp": 120,
+            "anger": 5,
+            "freeDodgeUsed": false,
+            "statuses": []
+          },
+          "enemy": {
+            "id": "enemy",
+            "element": "wood",
+            "hp": 80,
+            "maxHp": 120,
+            "anger": 5,
+            "freeDodgeUsed": true,
+            "statuses": []
+          }
+        },
+        "visualEvents": [
+          {
+            "id": "2:player:windup:action:0",
+            "side": "player",
+            "phase": "windup",
+            "kind": "action",
+            "action": "element_attack"
+          },
+          {
+            "id": "2:player:release:action:1",
+            "side": "player",
+            "phase": "release",
+            "kind": "action",
+            "action": "element_attack",
+            "element": "water"
+          },
+          {
+            "id": "2:player:impact:interrupt:2",
+            "side": "player",
+            "phase": "impact",
+            "kind": "interrupt"
+          },
+          {
+            "id": "2:enemy:windup:action:3",
+            "side": "enemy",
+            "phase": "windup",
+            "kind": "action",
+            "action": "normal_attack"
+          },
+          {
+            "id": "2:enemy:release:action:4",
+            "side": "enemy",
+            "phase": "release",
+            "kind": "action",
+            "action": "normal_attack",
+            "element": "wood"
+          },
+          {
+            "id": "2:player:impact:damage:5",
+            "side": "player",
+            "phase": "impact",
+            "kind": "damage",
+            "amount": 10
+          }
+        ]
+      }
+    },
+    {
+      "id": "mirrored-round-3",
+      "passed": true,
+      "detail": {
+        "a": {
+          "round": 3,
+          "player": {
+            "id": "player",
+            "element": "water",
+            "hp": 95,
+            "maxHp": 120,
+            "anger": 5,
+            "freeDodgeUsed": false,
+            "statuses": []
+          },
+          "enemy": {
+            "id": "enemy",
+            "element": "wood",
+            "hp": 80,
+            "maxHp": 120,
+            "anger": 30,
+            "freeDodgeUsed": true,
+            "statuses": []
+          }
+        },
+        "b": {
+          "round": 3,
+          "player": {
+            "id": "player",
+            "element": "wood",
+            "hp": 80,
+            "maxHp": 120,
+            "anger": 30,
+            "freeDodgeUsed": true,
+            "statuses": []
+          },
+          "enemy": {
+            "id": "enemy",
+            "element": "water",
+            "hp": 95,
+            "maxHp": 120,
+            "anger": 5,
+            "freeDodgeUsed": false,
+            "statuses": []
+          }
+        }
+      }
+    },
+    {
+      "id": "friend-dodge-has-correct-event",
+      "passed": true,
+      "detail": {
+        "round": 3,
+        "actions": {
+          "player": "normal_attack",
+          "enemy": "dodge"
+        },
+        "damageTaken": {
+          "player": 0,
+          "enemy": 0
+        },
+        "directDamage": {
+          "player": 0,
+          "enemy": 0
+        },
+        "dotDamageEvents": {
+          "player": [],
+          "enemy": []
+        },
+        "healEvents": {
+          "player": [],
+          "enemy": []
+        },
+        "hpAfter": {
+          "player": 95,
+          "enemy": 80
+        },
+        "angerAfter": {
+          "player": 5,
+          "enemy": 30
+        },
+        "statusesAfter": {
+          "player": [],
+          "enemy": []
+        },
+        "winner": null,
+        "notes": [
+          "enemy spends 20 anger on dodge",
+          "player action missed",
+          "enemy dodged normal attack and refunded 30 anger"
+        ],
+        "state": {
+          "round": 3,
+          "player": {
+            "id": "player",
+            "element": "water",
+            "hp": 95,
+            "maxHp": 120,
+            "anger": 5,
+            "freeDodgeUsed": false,
+            "statuses": []
+          },
+          "enemy": {
+            "id": "enemy",
+            "element": "wood",
+            "hp": 80,
+            "maxHp": 120,
+            "anger": 30,
+            "freeDodgeUsed": true,
+            "statuses": []
+          }
+        },
+        "visualEvents": [
+          {
+            "id": "3:player:windup:action:0",
+            "side": "player",
+            "phase": "windup",
+            "kind": "action",
+            "action": "normal_attack"
+          },
+          {
+            "id": "3:player:release:action:1",
+            "side": "player",
+            "phase": "release",
+            "kind": "action",
+            "action": "normal_attack",
+            "element": "water"
+          },
+          {
+            "id": "3:enemy:impact:dodge:2",
+            "side": "enemy",
+            "phase": "impact",
+            "kind": "dodge"
+          },
+          {
+            "id": "3:enemy:windup:action:3",
+            "side": "enemy",
+            "phase": "windup",
+            "kind": "action",
+            "action": "dodge"
+          },
+          {
+            "id": "3:enemy:release:action:4",
+            "side": "enemy",
+            "phase": "release",
+            "kind": "action",
+            "action": "dodge",
+            "element": "wood"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mirrored-round-4",
+      "passed": true,
+      "detail": {
+        "a": {
+          "round": 4,
+          "player": {
+            "id": "player",
+            "element": "water",
+            "hp": 95,
+            "maxHp": 120,
+            "anger": 5,
+            "freeDodgeUsed": false,
+            "statuses": []
+          },
+          "enemy": {
+            "id": "enemy",
+            "element": "wood",
+            "hp": 70,
+            "maxHp": 120,
+            "anger": 35,
+            "freeDodgeUsed": true,
+            "statuses": []
+          }
+        },
+        "b": {
+          "round": 4,
+          "player": {
+            "id": "player",
+            "element": "wood",
+            "hp": 70,
+            "maxHp": 120,
+            "anger": 35,
+            "freeDodgeUsed": true,
+            "statuses": []
+          },
+          "enemy": {
+            "id": "enemy",
+            "element": "water",
+            "hp": 95,
+            "maxHp": 120,
+            "anger": 5,
+            "freeDodgeUsed": false,
+            "statuses": []
+          }
+        }
+      }
+    },
+    {
+      "id": "mirrored-round-5",
+      "passed": true,
+      "detail": {
+        "a": {
+          "round": 5,
+          "player": {
+            "id": "player",
+            "element": "water",
+            "hp": 95,
+            "maxHp": 120,
+            "anger": 5,
+            "freeDodgeUsed": false,
+            "statuses": []
+          },
+          "enemy": {
+            "id": "enemy",
+            "element": "wood",
+            "hp": 60,
+            "maxHp": 120,
+            "anger": 40,
+            "freeDodgeUsed": true,
+            "statuses": []
+          }
+        },
+        "b": {
+          "round": 5,
+          "player": {
+            "id": "player",
+            "element": "wood",
+            "hp": 60,
+            "maxHp": 120,
+            "anger": 40,
+            "freeDodgeUsed": true,
+            "statuses": []
+          },
+          "enemy": {
+            "id": "enemy",
+            "element": "water",
+            "hp": 95,
+            "maxHp": 120,
+            "anger": 5,
+            "freeDodgeUsed": false,
+            "statuses": []
+          }
+        }
+      }
+    },
+    {
+      "id": "mirrored-round-6",
+      "passed": true,
+      "detail": {
+        "a": {
+          "round": 6,
+          "player": {
+            "id": "player",
+            "element": "water",
+            "hp": 95,
+            "maxHp": 120,
+            "anger": 5,
+            "freeDodgeUsed": false,
+            "statuses": []
+          },
+          "enemy": {
+            "id": "enemy",
+            "element": "wood",
+            "hp": 50,
+            "maxHp": 120,
+            "anger": 45,
+            "freeDodgeUsed": true,
+            "statuses": []
+          }
+        },
+        "b": {
+          "round": 6,
+          "player": {
+            "id": "player",
+            "element": "wood",
+            "hp": 50,
+            "maxHp": 120,
+            "anger": 45,
+            "freeDodgeUsed": true,
+            "statuses": []
+          },
+          "enemy": {
+            "id": "enemy",
+            "element": "water",
+            "hp": 95,
+            "maxHp": 120,
+            "anger": 5,
+            "freeDodgeUsed": false,
+            "statuses": []
+          }
+        }
+      }
+    },
+    {
+      "id": "mirrored-round-7",
+      "passed": true,
+      "detail": {
+        "a": {
+          "round": 7,
+          "player": {
+            "id": "player",
+            "element": "water",
+            "hp": 95,
+            "maxHp": 120,
+            "anger": 5,
+            "freeDodgeUsed": false,
+            "statuses": []
+          },
+          "enemy": {
+            "id": "enemy",
+            "element": "wood",
+            "hp": 40,
+            "maxHp": 120,
+            "anger": 50,
+            "freeDodgeUsed": true,
+            "statuses": []
+          }
+        },
+        "b": {
+          "round": 7,
+          "player": {
+            "id": "player",
+            "element": "wood",
+            "hp": 40,
+            "maxHp": 120,
+            "anger": 50,
+            "freeDodgeUsed": true,
+            "statuses": []
+          },
+          "enemy": {
+            "id": "enemy",
+            "element": "water",
+            "hp": 95,
+            "maxHp": 120,
+            "anger": 5,
+            "freeDodgeUsed": false,
+            "statuses": []
+          }
+        }
+      }
+    },
+    {
+      "id": "mirrored-round-8",
+      "passed": true,
+      "detail": {
+        "a": {
+          "round": 8,
+          "player": {
+            "id": "player",
+            "element": "water",
+            "hp": 95,
+            "maxHp": 120,
+            "anger": 5,
+            "freeDodgeUsed": false,
+            "statuses": []
+          },
+          "enemy": {
+            "id": "enemy",
+            "element": "wood",
+            "hp": 30,
+            "maxHp": 120,
+            "anger": 55,
+            "freeDodgeUsed": true,
+            "statuses": []
+          }
+        },
+        "b": {
+          "round": 8,
+          "player": {
+            "id": "player",
+            "element": "wood",
+            "hp": 30,
+            "maxHp": 120,
+            "anger": 55,
+            "freeDodgeUsed": true,
+            "statuses": []
+          },
+          "enemy": {
+            "id": "enemy",
+            "element": "water",
+            "hp": 95,
+            "maxHp": 120,
+            "anger": 5,
+            "freeDodgeUsed": false,
+            "statuses": []
+          }
+        }
+      }
+    },
+    {
+      "id": "mirrored-round-9",
+      "passed": true,
+      "detail": {
+        "a": {
+          "round": 9,
+          "player": {
+            "id": "player",
+            "element": "water",
+            "hp": 95,
+            "maxHp": 120,
+            "anger": 5,
+            "freeDodgeUsed": false,
+            "statuses": []
+          },
+          "enemy": {
+            "id": "enemy",
+            "element": "wood",
+            "hp": 20,
+            "maxHp": 120,
+            "anger": 60,
+            "freeDodgeUsed": true,
+            "statuses": []
+          }
+        },
+        "b": {
+          "round": 9,
+          "player": {
+            "id": "player",
+            "element": "wood",
+            "hp": 20,
+            "maxHp": 120,
+            "anger": 60,
+            "freeDodgeUsed": true,
+            "statuses": []
+          },
+          "enemy": {
+            "id": "enemy",
+            "element": "water",
+            "hp": 95,
+            "maxHp": 120,
+            "anger": 5,
+            "freeDodgeUsed": false,
+            "statuses": []
+          }
+        }
+      }
+    },
+    {
+      "id": "mirrored-round-10",
+      "passed": true,
+      "detail": {
+        "a": {
+          "round": 10,
+          "player": {
+            "id": "player",
+            "element": "water",
+            "hp": 95,
+            "maxHp": 120,
+            "anger": 5,
+            "freeDodgeUsed": false,
+            "statuses": []
+          },
+          "enemy": {
+            "id": "enemy",
+            "element": "wood",
+            "hp": 10,
+            "maxHp": 120,
+            "anger": 65,
+            "freeDodgeUsed": true,
+            "statuses": []
+          }
+        },
+        "b": {
+          "round": 10,
+          "player": {
+            "id": "player",
+            "element": "wood",
+            "hp": 10,
+            "maxHp": 120,
+            "anger": 65,
+            "freeDodgeUsed": true,
+            "statuses": []
+          },
+          "enemy": {
+            "id": "enemy",
+            "element": "water",
+            "hp": 95,
+            "maxHp": 120,
+            "anger": 5,
+            "freeDodgeUsed": false,
+            "statuses": []
+          }
+        }
+      }
+    },
+    {
+      "id": "mirrored-round-11",
+      "passed": true,
+      "detail": {
+        "a": {
+          "round": 11,
+          "player": {
+            "id": "player",
+            "element": "water",
+            "hp": 95,
+            "maxHp": 120,
+            "anger": 5,
+            "freeDodgeUsed": false,
+            "statuses": []
+          },
+          "enemy": {
+            "id": "enemy",
+            "element": "wood",
+            "hp": 0,
+            "maxHp": 120,
+            "anger": 70,
+            "freeDodgeUsed": true,
+            "statuses": []
+          }
+        },
+        "b": {
+          "round": 11,
+          "player": {
+            "id": "player",
+            "element": "wood",
+            "hp": 0,
+            "maxHp": 120,
+            "anger": 70,
+            "freeDodgeUsed": true,
+            "statuses": []
+          },
+          "enemy": {
+            "id": "enemy",
+            "element": "water",
+            "hp": 95,
+            "maxHp": 120,
+            "anger": 5,
+            "freeDodgeUsed": false,
+            "statuses": []
+          }
+        }
+      }
+    },
+    {
+      "id": "two-sided-finished-same-authority",
+      "passed": true,
+      "detail": {
+        "a": {
+          "id": "online-dc330b5d-511e-468e-ba1c-117c5ecac2ee",
+          "mode": "friend",
+          "status": "finished",
+          "startedAt": "2026-10-24T15:40:25.927Z",
+          "player": {
+            "petId": "pet-dedc56fe-2e0a-4a17-afe3-2bd011d40b6e",
+            "petName": "鱼丸",
+            "element": "water",
+            "level": 1,
+            "resourceRef": "builtin:lingjing-yuwan-v2",
+            "resource": {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "kind": "2d"
+            },
+            "appearance2d": "builtin:lingjing-yuwan-v2"
+          },
+          "enemy": {
+            "petId": "pet-6d86f065-b435-4662-88f1-3fee586a0f27",
+            "petName": "青芽",
+            "element": "wood",
+            "appearance2d": "builtin:lingjing-qingya-v1"
+          },
+          "snapshot": {
+            "round": 11,
+            "player": {
+              "id": "player",
+              "element": "water",
+              "hp": 95,
+              "maxHp": 120,
+              "anger": 5,
+              "freeDodgeUsed": false,
+              "statuses": []
+            },
+            "enemy": {
+              "id": "enemy",
+              "element": "wood",
+              "hp": 0,
+              "maxHp": 120,
+              "anger": 70,
+              "freeDodgeUsed": true,
+              "statuses": []
+            }
+          },
+          "room": {
+            "id": "dc330b5d-511e-468e-ba1c-117c5ecac2ee",
+            "room_code": "C4BE70",
+            "status": "finished",
+            "host_user_id": "qa:c5ce225f-4bf6-423f-bba8-a045ac9deae6:local-1c35d513-8abc-4511-acf0-6df9c08b5ad9",
+            "host_account": "root_A_1792856423571",
+            "guest_user_id": "qa:c5ce225f-4bf6-423f-bba8-a045ac9deae6:local-17770139-dd73-48f0-b1ff-39c4bfc6a597",
+            "guest_account": "root_B_1792856424679",
+            "host_pet_id": "pet-dedc56fe-2e0a-4a17-afe3-2bd011d40b6e",
+            "guest_pet_id": "pet-6d86f065-b435-4662-88f1-3fee586a0f27",
+            "host_resource_id": "builtin:lingjing-yuwan-v2",
+            "guest_resource_id": "builtin:lingjing-qingya-v1",
+            "invitation_id": null,
+            "invited_user_id": null,
+            "host_pet_name": "鱼丸",
+            "guest_pet_name": "青芽",
+            "host_element": "water",
+            "guest_element": "wood",
+            "current_round": 12,
+            "last_resolved_round": 11,
+            "host_hp": 95,
+            "guest_hp": 0,
+            "host_anger": 5,
+            "guest_anger": 70,
+            "host_free_dodge_used": false,
+            "guest_free_dodge_used": true,
+            "host_statuses": [],
+            "guest_statuses": [],
+            "winner_side": "host",
+            "created_at": "2026-10-24T15:40:25.927Z",
+            "updated_at": "2026-10-24T15:40:57.797Z"
+          },
+          "side": "host",
+          "rounds": [
+            {
+              "round": 1,
+              "actions": {
+                "player": "ultimate",
+                "enemy": "dodge"
+              },
+              "damageTaken": {
+                "player": 0,
+                "enemy": 20
+              },
+              "directDamage": {
+                "player": 0,
+                "enemy": 20
+              },
+              "dotDamageEvents": {
+                "player": [],
+                "enemy": []
+              },
+              "healEvents": {
+                "player": [
+                  {
+                    "type": "ultimate",
+                    "amount": 20
+                  }
+                ],
+                "enemy": []
+              },
+              "hpAfter": {
+                "player": 105,
+                "enemy": 80
+              },
+              "angerAfter": {
+                "player": 0,
+                "enemy": 5
+              },
+              "statusesAfter": {
+                "player": [],
+                "enemy": []
+              },
+              "winner": null,
+              "notes": [
+                "enemy spends 20 anger on dodge",
+                "enemy anger halved by freeze (10->5)",
+                "player healed by ultimate"
+              ],
+              "state": {
+                "round": 1,
+                "player": {
+                  "id": "player",
+                  "element": "water",
+                  "hp": 105,
+                  "maxHp": 120,
+                  "anger": 0,
+                  "freeDodgeUsed": false,
+                  "statuses": []
+                },
+                "enemy": {
+                  "id": "enemy",
+                  "element": "wood",
+                  "hp": 80,
+                  "maxHp": 120,
+                  "anger": 5,
+                  "freeDodgeUsed": true,
+                  "statuses": []
+                }
+              },
+              "visualEvents": [
+                {
+                  "id": "1:player:windup:action:0",
+                  "side": "player",
+                  "phase": "windup",
+                  "kind": "action",
+                  "action": "ultimate"
+                },
+                {
+                  "id": "1:player:release:action:1",
+                  "side": "player",
+                  "phase": "release",
+                  "kind": "action",
+                  "action": "ultimate",
+                  "element": "water"
+                },
+                {
+                  "id": "1:enemy:impact:damage:2",
+                  "side": "enemy",
+                  "phase": "impact",
+                  "kind": "damage",
+                  "amount": 20
+                },
+                {
+                  "id": "1:player:effects:heal:3",
+                  "side": "player",
+                  "phase": "effects",
+                  "kind": "heal",
+                  "amount": 20,
+                  "status": "ultimate"
+                },
+                {
+                  "id": "1:enemy:effects:anger:4",
+                  "side": "enemy",
+                  "phase": "effects",
+                  "kind": "anger",
+                  "amount": 5,
+                  "element": "water"
+                },
+                {
+                  "id": "1:enemy:windup:action:5",
+                  "side": "enemy",
+                  "phase": "windup",
+                  "kind": "action",
+                  "action": "dodge"
+                },
+                {
+                  "id": "1:enemy:release:action:6",
+                  "side": "enemy",
+                  "phase": "release",
+                  "kind": "action",
+                  "action": "dodge",
+                  "element": "wood"
+                }
+              ]
+            },
+            {
+              "round": 2,
+              "actions": {
+                "player": "element_attack",
+                "enemy": "normal_attack"
+              },
+              "damageTaken": {
+                "player": 10,
+                "enemy": 0
+              },
+              "directDamage": {
+                "player": 10,
+                "enemy": 0
+              },
+              "dotDamageEvents": {
+                "player": [],
+                "enemy": []
+              },
+              "healEvents": {
+                "player": [],
+                "enemy": []
+              },
+              "hpAfter": {
+                "player": 95,
+                "enemy": 80
+              },
+              "angerAfter": {
+                "player": 5,
+                "enemy": 5
+              },
+              "statusesAfter": {
+                "player": [],
+                "enemy": []
+              },
+              "winner": null,
+              "notes": [
+                "player action missed"
+              ],
+              "state": {
+                "round": 2,
+                "player": {
+                  "id": "player",
+                  "element": "water",
+                  "hp": 95,
+                  "maxHp": 120,
+                  "anger": 5,
+                  "freeDodgeUsed": false,
+                  "statuses": []
+                },
+                "enemy": {
+                  "id": "enemy",
+                  "element": "wood",
+                  "hp": 80,
+                  "maxHp": 120,
+                  "anger": 5,
+                  "freeDodgeUsed": true,
+                  "statuses": []
+                }
+              },
+              "visualEvents": [
+                {
+                  "id": "2:player:windup:action:0",
+                  "side": "player",
+                  "phase": "windup",
+                  "kind": "action",
+                  "action": "element_attack"
+                },
+                {
+                  "id": "2:player:release:action:1",
+                  "side": "player",
+                  "phase": "release",
+                  "kind": "action",
+                  "action": "element_attack",
+                  "element": "water"
+                },
+                {
+                  "id": "2:player:impact:interrupt:2",
+                  "side": "player",
+                  "phase": "impact",
+                  "kind": "interrupt"
+                },
+                {
+                  "id": "2:enemy:windup:action:3",
+                  "side": "enemy",
+                  "phase": "windup",
+                  "kind": "action",
+                  "action": "normal_attack"
+                },
+                {
+                  "id": "2:enemy:release:action:4",
+                  "side": "enemy",
+                  "phase": "release",
+                  "kind": "action",
+                  "action": "normal_attack",
+                  "element": "wood"
+                },
+                {
+                  "id": "2:player:impact:damage:5",
+                  "side": "player",
+                  "phase": "impact",
+                  "kind": "damage",
+                  "amount": 10
+                }
+              ]
+            },
+            {
+              "round": 3,
+              "actions": {
+                "player": "normal_attack",
+                "enemy": "dodge"
+              },
+              "damageTaken": {
+                "player": 0,
+                "enemy": 0
+              },
+              "directDamage": {
+                "player": 0,
+                "enemy": 0
+              },
+              "dotDamageEvents": {
+                "player": [],
+                "enemy": []
+              },
+              "healEvents": {
+                "player": [],
+                "enemy": []
+              },
+              "hpAfter": {
+                "player": 95,
+                "enemy": 80
+              },
+              "angerAfter": {
+                "player": 5,
+                "enemy": 30
+              },
+              "statusesAfter": {
+                "player": [],
+                "enemy": []
+              },
+              "winner": null,
+              "notes": [
+                "enemy spends 20 anger on dodge",
+                "player action missed",
+                "enemy dodged normal attack and refunded 30 anger"
+              ],
+              "state": {
+                "round": 3,
+                "player": {
+                  "id": "player",
+                  "element": "water",
+                  "hp": 95,
+                  "maxHp": 120,
+                  "anger": 5,
+                  "freeDodgeUsed": false,
+                  "statuses": []
+                },
+                "enemy": {
+                  "id": "enemy",
+                  "element": "wood",
+                  "hp": 80,
+                  "maxHp": 120,
+                  "anger": 30,
+                  "freeDodgeUsed": true,
+                  "statuses": []
+                }
+              },
+              "visualEvents": [
+                {
+                  "id": "3:player:windup:action:0",
+                  "side": "player",
+                  "phase": "windup",
+                  "kind": "action",
+                  "action": "normal_attack"
+                },
+                {
+                  "id": "3:player:release:action:1",
+                  "side": "player",
+                  "phase": "release",
+                  "kind": "action",
+                  "action": "normal_attack",
+                  "element": "water"
+                },
+                {
+                  "id": "3:enemy:impact:dodge:2",
+                  "side": "enemy",
+                  "phase": "impact",
+                  "kind": "dodge"
+                },
+                {
+                  "id": "3:enemy:windup:action:3",
+                  "side": "enemy",
+                  "phase": "windup",
+                  "kind": "action",
+                  "action": "dodge"
+                },
+                {
+                  "id": "3:enemy:release:action:4",
+                  "side": "enemy",
+                  "phase": "release",
+                  "kind": "action",
+                  "action": "dodge",
+                  "element": "wood"
+                }
+              ]
+            },
+            {
+              "round": 4,
+              "actions": {
+                "player": "normal_attack",
+                "enemy": "element_attack"
+              },
+              "damageTaken": {
+                "player": 0,
+                "enemy": 10
+              },
+              "directDamage": {
+                "player": 0,
+                "enemy": 10
+              },
+              "dotDamageEvents": {
+                "player": [],
+                "enemy": []
+              },
+              "healEvents": {
+                "player": [],
+                "enemy": []
+              },
+              "hpAfter": {
+                "player": 95,
+                "enemy": 70
+              },
+              "angerAfter": {
+                "player": 5,
+                "enemy": 35
+              },
+              "statusesAfter": {
+                "player": [],
+                "enemy": []
+              },
+              "winner": null,
+              "notes": [
+                "enemy action missed"
+              ],
+              "state": {
+                "round": 4,
+                "player": {
+                  "id": "player",
+                  "element": "water",
+                  "hp": 95,
+                  "maxHp": 120,
+                  "anger": 5,
+                  "freeDodgeUsed": false,
+                  "statuses": []
+                },
+                "enemy": {
+                  "id": "enemy",
+                  "element": "wood",
+                  "hp": 70,
+                  "maxHp": 120,
+                  "anger": 35,
+                  "freeDodgeUsed": true,
+                  "statuses": []
+                }
+              },
+              "visualEvents": [
+                {
+                  "id": "4:player:windup:action:0",
+                  "side": "player",
+                  "phase": "windup",
+                  "kind": "action",
+                  "action": "normal_attack"
+                },
+                {
+                  "id": "4:player:release:action:1",
+                  "side": "player",
+                  "phase": "release",
+                  "kind": "action",
+                  "action": "normal_attack",
+                  "element": "water"
+                },
+                {
+                  "id": "4:enemy:impact:damage:2",
+                  "side": "enemy",
+                  "phase": "impact",
+                  "kind": "damage",
+                  "amount": 10
+                },
+                {
+                  "id": "4:enemy:windup:action:3",
+                  "side": "enemy",
+                  "phase": "windup",
+                  "kind": "action",
+                  "action": "element_attack"
+                },
+                {
+                  "id": "4:enemy:release:action:4",
+                  "side": "enemy",
+                  "phase": "release",
+                  "kind": "action",
+                  "action": "element_attack",
+                  "element": "wood"
+                },
+                {
+                  "id": "4:enemy:impact:interrupt:5",
+                  "side": "enemy",
+                  "phase": "impact",
+                  "kind": "interrupt"
+                }
+              ]
+            },
+            {
+              "round": 5,
+              "actions": {
+                "player": "normal_attack",
+                "enemy": "element_attack"
+              },
+              "damageTaken": {
+                "player": 0,
+                "enemy": 10
+              },
+              "directDamage": {
+                "player": 0,
+                "enemy": 10
+              },
+              "dotDamageEvents": {
+                "player": [],
+                "enemy": []
+              },
+              "healEvents": {
+                "player": [],
+                "enemy": []
+              },
+              "hpAfter": {
+                "player": 95,
+                "enemy": 60
+              },
+              "angerAfter": {
+                "player": 5,
+                "enemy": 40
+              },
+              "statusesAfter": {
+                "player": [],
+                "enemy": []
+              },
+              "winner": null,
+              "notes": [
+                "enemy action missed"
+              ],
+              "state": {
+                "round": 5,
+                "player": {
+                  "id": "player",
+                  "element": "water",
+                  "hp": 95,
+                  "maxHp": 120,
+                  "anger": 5,
+                  "freeDodgeUsed": false,
+                  "statuses": []
+                },
+                "enemy": {
+                  "id": "enemy",
+                  "element": "wood",
+                  "hp": 60,
+                  "maxHp": 120,
+                  "anger": 40,
+                  "freeDodgeUsed": true,
+                  "statuses": []
+                }
+              },
+              "visualEvents": [
+                {
+                  "id": "5:player:windup:action:0",
+                  "side": "player",
+                  "phase": "windup",
+                  "kind": "action",
+                  "action": "normal_attack"
+                },
+                {
+                  "id": "5:player:release:action:1",
+                  "side": "player",
+                  "phase": "release",
+                  "kind": "action",
+                  "action": "normal_attack",
+                  "element": "water"
+                },
+                {
+                  "id": "5:enemy:impact:damage:2",
+                  "side": "enemy",
+                  "phase": "impact",
+                  "kind": "damage",
+                  "amount": 10
+                },
+                {
+                  "id": "5:enemy:windup:action:3",
+                  "side": "enemy",
+                  "phase": "windup",
+                  "kind": "action",
+                  "action": "element_attack"
+                },
+                {
+                  "id": "5:enemy:release:action:4",
+                  "side": "enemy",
+                  "phase": "release",
+                  "kind": "action",
+                  "action": "element_attack",
+                  "element": "wood"
+                },
+                {
+                  "id": "5:enemy:impact:interrupt:5",
+                  "side": "enemy",
+                  "phase": "impact",
+                  "kind": "interrupt"
+                }
+              ]
+            },
+            {
+              "round": 6,
+              "actions": {
+                "player": "normal_attack",
+                "enemy": "element_attack"
+              },
+              "damageTaken": {
+                "player": 0,
+                "enemy": 10
+              },
+              "directDamage": {
+                "player": 0,
+                "enemy": 10
+              },
+              "dotDamageEvents": {
+                "player": [],
+                "enemy": []
+              },
+              "healEvents": {
+                "player": [],
+                "enemy": []
+              },
+              "hpAfter": {
+                "player": 95,
+                "enemy": 50
+              },
+              "angerAfter": {
+                "player": 5,
+                "enemy": 45
+              },
+              "statusesAfter": {
+                "player": [],
+                "enemy": []
+              },
+              "winner": null,
+              "notes": [
+                "enemy action missed"
+              ],
+              "state": {
+                "round": 6,
+                "player": {
+                  "id": "player",
+                  "element": "water",
+                  "hp": 95,
+                  "maxHp": 120,
+                  "anger": 5,
+                  "freeDodgeUsed": false,
+                  "statuses": []
+                },
+                "enemy": {
+                  "id": "enemy",
+                  "element": "wood",
+                  "hp": 50,
+                  "maxHp": 120,
+                  "anger": 45,
+                  "freeDodgeUsed": true,
+                  "statuses": []
+                }
+              },
+              "visualEvents": [
+                {
+                  "id": "6:player:windup:action:0",
+                  "side": "player",
+                  "phase": "windup",
+                  "kind": "action",
+                  "action": "normal_attack"
+                },
+                {
+                  "id": "6:player:release:action:1",
+                  "side": "player",
+                  "phase": "release",
+                  "kind": "action",
+                  "action": "normal_attack",
+                  "element": "water"
+                },
+                {
+                  "id": "6:enemy:impact:damage:2",
+                  "side": "enemy",
+                  "phase": "impact",
+                  "kind": "damage",
+                  "amount": 10
+                },
+                {
+                  "id": "6:enemy:windup:action:3",
+                  "side": "enemy",
+                  "phase": "windup",
+                  "kind": "action",
+                  "action": "element_attack"
+                },
+                {
+                  "id": "6:enemy:release:action:4",
+                  "side": "enemy",
+                  "phase": "release",
+                  "kind": "action",
+                  "action": "element_attack",
+                  "element": "wood"
+                },
+                {
+                  "id": "6:enemy:impact:interrupt:5",
+                  "side": "enemy",
+                  "phase": "impact",
+                  "kind": "interrupt"
+                }
+              ]
+            },
+            {
+              "round": 7,
+              "actions": {
+                "player": "normal_attack",
+                "enemy": "element_attack"
+              },
+              "damageTaken": {
+                "player": 0,
+                "enemy": 10
+              },
+              "directDamage": {
+                "player": 0,
+                "enemy": 10
+              },
+              "dotDamageEvents": {
+                "player": [],
+                "enemy": []
+              },
+              "healEvents": {
+                "player": [],
+                "enemy": []
+              },
+              "hpAfter": {
+                "player": 95,
+                "enemy": 40
+              },
+              "angerAfter": {
+                "player": 5,
+                "enemy": 50
+              },
+              "statusesAfter": {
+                "player": [],
+                "enemy": []
+              },
+              "winner": null,
+              "notes": [
+                "enemy action missed"
+              ],
+              "state": {
+                "round": 7,
+                "player": {
+                  "id": "player",
+                  "element": "water",
+                  "hp": 95,
+                  "maxHp": 120,
+                  "anger": 5,
+                  "freeDodgeUsed": false,
+                  "statuses": []
+                },
+                "enemy": {
+                  "id": "enemy",
+                  "element": "wood",
+                  "hp": 40,
+                  "maxHp": 120,
+                  "anger": 50,
+                  "freeDodgeUsed": true,
+                  "statuses": []
+                }
+              },
+              "visualEvents": [
+                {
+                  "id": "7:player:windup:action:0",
+                  "side": "player",
+                  "phase": "windup",
+                  "kind": "action",
+                  "action": "normal_attack"
+                },
+                {
+                  "id": "7:player:release:action:1",
+                  "side": "player",
+                  "phase": "release",
+                  "kind": "action",
+                  "action": "normal_attack",
+                  "element": "water"
+                },
+                {
+                  "id": "7:enemy:impact:damage:2",
+                  "side": "enemy",
+                  "phase": "impact",
+                  "kind": "damage",
+                  "amount": 10
+                },
+                {
+                  "id": "7:enemy:windup:action:3",
+                  "side": "enemy",
+                  "phase": "windup",
+                  "kind": "action",
+                  "action": "element_attack"
+                },
+                {
+                  "id": "7:enemy:release:action:4",
+                  "side": "enemy",
+                  "phase": "release",
+                  "kind": "action",
+                  "action": "element_attack",
+                  "element": "wood"
+                },
+                {
+                  "id": "7:enemy:impact:interrupt:5",
+                  "side": "enemy",
+                  "phase": "impact",
+                  "kind": "interrupt"
+                }
+              ]
+            },
+            {
+              "round": 8,
+              "actions": {
+                "player": "normal_attack",
+                "enemy": "element_attack"
+              },
+              "damageTaken": {
+                "player": 0,
+                "enemy": 10
+              },
+              "directDamage": {
+                "player": 0,
+                "enemy": 10
+              },
+              "dotDamageEvents": {
+                "player": [],
+                "enemy": []
+              },
+              "healEvents": {
+                "player": [],
+                "enemy": []
+              },
+              "hpAfter": {
+                "player": 95,
+                "enemy": 30
+              },
+              "angerAfter": {
+                "player": 5,
+                "enemy": 55
+              },
+              "statusesAfter": {
+                "player": [],
+                "enemy": []
+              },
+              "winner": null,
+              "notes": [
+                "enemy action missed"
+              ],
+              "state": {
+                "round": 8,
+                "player": {
+                  "id": "player",
+                  "element": "water",
+                  "hp": 95,
+                  "maxHp": 120,
+                  "anger": 5,
+                  "freeDodgeUsed": false,
+                  "statuses": []
+                },
+                "enemy": {
+                  "id": "enemy",
+                  "element": "wood",
+                  "hp": 30,
+                  "maxHp": 120,
+                  "anger": 55,
+                  "freeDodgeUsed": true,
+                  "statuses": []
+                }
+              },
+              "visualEvents": [
+                {
+                  "id": "8:player:windup:action:0",
+                  "side": "player",
+                  "phase": "windup",
+                  "kind": "action",
+                  "action": "normal_attack"
+                },
+                {
+                  "id": "8:player:release:action:1",
+                  "side": "player",
+                  "phase": "release",
+                  "kind": "action",
+                  "action": "normal_attack",
+                  "element": "water"
+                },
+                {
+                  "id": "8:enemy:impact:damage:2",
+                  "side": "enemy",
+                  "phase": "impact",
+                  "kind": "damage",
+                  "amount": 10
+                },
+                {
+                  "id": "8:enemy:windup:action:3",
+                  "side": "enemy",
+                  "phase": "windup",
+                  "kind": "action",
+                  "action": "element_attack"
+                },
+                {
+                  "id": "8:enemy:release:action:4",
+                  "side": "enemy",
+                  "phase": "release",
+                  "kind": "action",
+                  "action": "element_attack",
+                  "element": "wood"
+                },
+                {
+                  "id": "8:enemy:impact:interrupt:5",
+                  "side": "enemy",
+                  "phase": "impact",
+                  "kind": "interrupt"
+                }
+              ]
+            },
+            {
+              "round": 9,
+              "actions": {
+                "player": "normal_attack",
+                "enemy": "element_attack"
+              },
+              "damageTaken": {
+                "player": 0,
+                "enemy": 10
+              },
+              "directDamage": {
+                "player": 0,
+                "enemy": 10
+              },
+              "dotDamageEvents": {
+                "player": [],
+                "enemy": []
+              },
+              "healEvents": {
+                "player": [],
+                "enemy": []
+              },
+              "hpAfter": {
+                "player": 95,
+                "enemy": 20
+              },
+              "angerAfter": {
+                "player": 5,
+                "enemy": 60
+              },
+              "statusesAfter": {
+                "player": [],
+                "enemy": []
+              },
+              "winner": null,
+              "notes": [
+                "enemy action missed"
+              ],
+              "state": {
+                "round": 9,
+                "player": {
+                  "id": "player",
+                  "element": "water",
+                  "hp": 95,
+                  "maxHp": 120,
+                  "anger": 5,
+                  "freeDodgeUsed": false,
+                  "statuses": []
+                },
+                "enemy": {
+                  "id": "enemy",
+                  "element": "wood",
+                  "hp": 20,
+                  "maxHp": 120,
+                  "anger": 60,
+                  "freeDodgeUsed": true,
+                  "statuses": []
+                }
+              },
+              "visualEvents": [
+                {
+                  "id": "9:player:windup:action:0",
+                  "side": "player",
+                  "phase": "windup",
+                  "kind": "action",
+                  "action": "normal_attack"
+                },
+                {
+                  "id": "9:player:release:action:1",
+                  "side": "player",
+                  "phase": "release",
+                  "kind": "action",
+                  "action": "normal_attack",
+                  "element": "water"
+                },
+                {
+                  "id": "9:enemy:impact:damage:2",
+                  "side": "enemy",
+                  "phase": "impact",
+                  "kind": "damage",
+                  "amount": 10
+                },
+                {
+                  "id": "9:enemy:windup:action:3",
+                  "side": "enemy",
+                  "phase": "windup",
+                  "kind": "action",
+                  "action": "element_attack"
+                },
+                {
+                  "id": "9:enemy:release:action:4",
+                  "side": "enemy",
+                  "phase": "release",
+                  "kind": "action",
+                  "action": "element_attack",
+                  "element": "wood"
+                },
+                {
+                  "id": "9:enemy:impact:interrupt:5",
+                  "side": "enemy",
+                  "phase": "impact",
+                  "kind": "interrupt"
+                }
+              ]
+            },
+            {
+              "round": 10,
+              "actions": {
+                "player": "normal_attack",
+                "enemy": "element_attack"
+              },
+              "damageTaken": {
+                "player": 0,
+                "enemy": 10
+              },
+              "directDamage": {
+                "player": 0,
+                "enemy": 10
+              },
+              "dotDamageEvents": {
+                "player": [],
+                "enemy": []
+              },
+              "healEvents": {
+                "player": [],
+                "enemy": []
+              },
+              "hpAfter": {
+                "player": 95,
+                "enemy": 10
+              },
+              "angerAfter": {
+                "player": 5,
+                "enemy": 65
+              },
+              "statusesAfter": {
+                "player": [],
+                "enemy": []
+              },
+              "winner": null,
+              "notes": [
+                "enemy action missed"
+              ],
+              "state": {
+                "round": 10,
+                "player": {
+                  "id": "player",
+                  "element": "water",
+                  "hp": 95,
+                  "maxHp": 120,
+                  "anger": 5,
+                  "freeDodgeUsed": false,
+                  "statuses": []
+                },
+                "enemy": {
+                  "id": "enemy",
+                  "element": "wood",
+                  "hp": 10,
+                  "maxHp": 120,
+                  "anger": 65,
+                  "freeDodgeUsed": true,
+                  "statuses": []
+                }
+              },
+              "visualEvents": [
+                {
+                  "id": "10:player:windup:action:0",
+                  "side": "player",
+                  "phase": "windup",
+                  "kind": "action",
+                  "action": "normal_attack"
+                },
+                {
+                  "id": "10:player:release:action:1",
+                  "side": "player",
+                  "phase": "release",
+                  "kind": "action",
+                  "action": "normal_attack",
+                  "element": "water"
+                },
+                {
+                  "id": "10:enemy:impact:damage:2",
+                  "side": "enemy",
+                  "phase": "impact",
+                  "kind": "damage",
+                  "amount": 10
+                },
+                {
+                  "id": "10:enemy:windup:action:3",
+                  "side": "enemy",
+                  "phase": "windup",
+                  "kind": "action",
+                  "action": "element_attack"
+                },
+                {
+                  "id": "10:enemy:release:action:4",
+                  "side": "enemy",
+                  "phase": "release",
+                  "kind": "action",
+                  "action": "element_attack",
+                  "element": "wood"
+                },
+                {
+                  "id": "10:enemy:impact:interrupt:5",
+                  "side": "enemy",
+                  "phase": "impact",
+                  "kind": "interrupt"
+                }
+              ]
+            },
+            {
+              "round": 11,
+              "actions": {
+                "player": "normal_attack",
+                "enemy": "element_attack"
+              },
+              "damageTaken": {
+                "player": 0,
+                "enemy": 10
+              },
+              "directDamage": {
+                "player": 0,
+                "enemy": 10
+              },
+              "dotDamageEvents": {
+                "player": [],
+                "enemy": []
+              },
+              "healEvents": {
+                "player": [],
+                "enemy": []
+              },
+              "hpAfter": {
+                "player": 95,
+                "enemy": 0
+              },
+              "angerAfter": {
+                "player": 5,
+                "enemy": 70
+              },
+              "statusesAfter": {
+                "player": [],
+                "enemy": []
+              },
+              "winner": "player",
+              "notes": [
+                "enemy action missed"
+              ],
+              "state": {
+                "round": 11,
+                "player": {
+                  "id": "player",
+                  "element": "water",
+                  "hp": 95,
+                  "maxHp": 120,
+                  "anger": 5,
+                  "freeDodgeUsed": false,
+                  "statuses": []
+                },
+                "enemy": {
+                  "id": "enemy",
+                  "element": "wood",
+                  "hp": 0,
+                  "maxHp": 120,
+                  "anger": 70,
+                  "freeDodgeUsed": true,
+                  "statuses": []
+                }
+              },
+              "visualEvents": [
+                {
+                  "id": "11:player:windup:action:0",
+                  "side": "player",
+                  "phase": "windup",
+                  "kind": "action",
+                  "action": "normal_attack"
+                },
+                {
+                  "id": "11:player:release:action:1",
+                  "side": "player",
+                  "phase": "release",
+                  "kind": "action",
+                  "action": "normal_attack",
+                  "element": "water"
+                },
+                {
+                  "id": "11:enemy:impact:damage:2",
+                  "side": "enemy",
+                  "phase": "impact",
+                  "kind": "damage",
+                  "amount": 10
+                },
+                {
+                  "id": "11:enemy:windup:action:3",
+                  "side": "enemy",
+                  "phase": "windup",
+                  "kind": "action",
+                  "action": "element_attack"
+                },
+                {
+                  "id": "11:enemy:release:action:4",
+                  "side": "enemy",
+                  "phase": "release",
+                  "kind": "action",
+                  "action": "element_attack",
+                  "element": "wood"
+                },
+                {
+                  "id": "11:enemy:impact:interrupt:5",
+                  "side": "enemy",
+                  "phase": "impact",
+                  "kind": "interrupt"
+                }
+              ]
+            }
+          ],
+          "winner": "player",
+          "pendingAction": null,
+          "historyComplete": true,
+          "rules": {
+            "id": "five-elements-standard-v1",
+            "label": "标准五行对战",
+            "vitalPolicy": "normalized",
+            "maxHp": 120,
+            "maxAnger": 100,
+            "companionStatsApplied": false,
+            "baseDamage": {
+              "normal_attack": 10,
+              "element_attack": 12,
+              "dodge": 0,
+              "ultimate": 20
+            },
+            "ultimateAnger": 50,
+            "ultimateCost": 50,
+            "ultimateHeal": 20,
+            "dodgeMaxCost": 20,
+            "dodgeRefund": 30,
+            "advantage": {
+              "metal": "wood",
+              "wood": "earth",
+              "earth": "water",
+              "water": "fire",
+              "fire": "metal"
+            },
+            "elementEffects": {
+              "metal": {
+                "label": "易伤",
+                "description": "每层受伤×1.5，最多5层"
+              },
+              "wood": {
+                "label": "寄生",
+                "description": "每层回合末吸取2生命，最多5层"
+              },
+              "earth": {
+                "label": "迟钝",
+                "description": "每层伤害×0.5，最多5层"
+              },
+              "water": {
+                "label": "降怒",
+                "description": "命中后对方怒气向下取半，不增加受击怒气"
+              },
+              "fire": {
+                "label": "燃烧",
+                "description": "回合末按当前生命8%×层数伤害，最多5层"
+              }
+            }
+          },
+          "context": {
+            "authority": "simulated",
+            "cloudUserId": "qa:c5ce225f-4bf6-423f-bba8-a045ac9deae6:local-1c35d513-8abc-4511-acf0-6df9c08b5ad9",
+            "scenarioId": "c5ce225f-4bf6-423f-bba8-a045ac9deae6",
+            "qaPreset": "charged"
+          },
+          "updatedAt": "2026-10-24T15:40:59.142Z",
+          "revision": 61,
+          "endedAt": "2026-10-24T15:40:59.139Z",
+          "reward": {
+            "actionId": "battle:dc330b5d-511e-468e-ba1c-117c5ecac2ee:qa:c5ce225f-4bf6-423f-bba8-a045ac9deae6:local-1c35d513-8abc-4511-acf0-6df9c08b5ad9",
+            "petId": "pet-dedc56fe-2e0a-4a17-afe3-2bd011d40b6e",
+            "experience": 20,
+            "applied": true,
+            "previousExperience": 0,
+            "previousLevel": 1,
+            "currentExperience": 20,
+            "currentLevel": 1,
+            "seeds": {
+              "source": "battle",
+              "receiptId": "online-dc330b5d-511e-468e-ba1c-117c5ecac2ee",
+              "itemId": "seed:berry",
+              "quantity": 2
+            }
+          },
+          "reportId": "online-dc330b5d-511e-468e-ba1c-117c5ecac2ee"
+        },
+        "b": {
+          "id": "online-dc330b5d-511e-468e-ba1c-117c5ecac2ee",
+          "mode": "friend",
+          "status": "finished",
+          "startedAt": "2026-10-24T15:40:25.927Z",
+          "player": {
+            "petId": "pet-6d86f065-b435-4662-88f1-3fee586a0f27",
+            "petName": "青芽",
+            "element": "wood",
+            "level": 1,
+            "resourceRef": "builtin:lingjing-qingya-v1",
+            "resource": {
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "kind": "2d"
+            },
+            "appearance2d": "builtin:lingjing-qingya-v1"
+          },
+          "enemy": {
+            "petId": "pet-dedc56fe-2e0a-4a17-afe3-2bd011d40b6e",
+            "petName": "鱼丸",
+            "element": "water",
+            "appearance2d": "builtin:lingjing-yuwan-v2"
+          },
+          "snapshot": {
+            "round": 11,
+            "player": {
+              "id": "player",
+              "element": "wood",
+              "hp": 0,
+              "maxHp": 120,
+              "anger": 70,
+              "freeDodgeUsed": true,
+              "statuses": []
+            },
+            "enemy": {
+              "id": "enemy",
+              "element": "water",
+              "hp": 95,
+              "maxHp": 120,
+              "anger": 5,
+              "freeDodgeUsed": false,
+              "statuses": []
+            }
+          },
+          "room": {
+            "id": "dc330b5d-511e-468e-ba1c-117c5ecac2ee",
+            "room_code": "C4BE70",
+            "status": "finished",
+            "host_user_id": "qa:c5ce225f-4bf6-423f-bba8-a045ac9deae6:local-1c35d513-8abc-4511-acf0-6df9c08b5ad9",
+            "host_account": "root_A_1792856423571",
+            "guest_user_id": "qa:c5ce225f-4bf6-423f-bba8-a045ac9deae6:local-17770139-dd73-48f0-b1ff-39c4bfc6a597",
+            "guest_account": "root_B_1792856424679",
+            "host_pet_id": "pet-dedc56fe-2e0a-4a17-afe3-2bd011d40b6e",
+            "guest_pet_id": "pet-6d86f065-b435-4662-88f1-3fee586a0f27",
+            "host_resource_id": "builtin:lingjing-yuwan-v2",
+            "guest_resource_id": "builtin:lingjing-qingya-v1",
+            "invitation_id": null,
+            "invited_user_id": null,
+            "host_pet_name": "鱼丸",
+            "guest_pet_name": "青芽",
+            "host_element": "water",
+            "guest_element": "wood",
+            "current_round": 12,
+            "last_resolved_round": 11,
+            "host_hp": 95,
+            "guest_hp": 0,
+            "host_anger": 5,
+            "guest_anger": 70,
+            "host_free_dodge_used": false,
+            "guest_free_dodge_used": true,
+            "host_statuses": [],
+            "guest_statuses": [],
+            "winner_side": "host",
+            "created_at": "2026-10-24T15:40:25.927Z",
+            "updated_at": "2026-10-24T15:40:57.797Z"
+          },
+          "side": "guest",
+          "rounds": [
+            {
+              "round": 1,
+              "actions": {
+                "player": "dodge",
+                "enemy": "ultimate"
+              },
+              "damageTaken": {
+                "player": 20,
+                "enemy": 0
+              },
+              "directDamage": {
+                "player": 20,
+                "enemy": 0
+              },
+              "dotDamageEvents": {
+                "player": [],
+                "enemy": []
+              },
+              "healEvents": {
+                "player": [],
+                "enemy": [
+                  {
+                    "type": "ultimate",
+                    "amount": 20
+                  }
+                ]
+              },
+              "hpAfter": {
+                "player": 80,
+                "enemy": 105
+              },
+              "angerAfter": {
+                "player": 5,
+                "enemy": 0
+              },
+              "statusesAfter": {
+                "player": [],
+                "enemy": []
+              },
+              "winner": null,
+              "notes": [
+                "enemy spends 20 anger on dodge",
+                "enemy anger halved by freeze (10->5)",
+                "player healed by ultimate"
+              ],
+              "state": {
+                "round": 1,
+                "player": {
+                  "id": "player",
+                  "element": "wood",
+                  "hp": 80,
+                  "maxHp": 120,
+                  "anger": 5,
+                  "freeDodgeUsed": true,
+                  "statuses": []
+                },
+                "enemy": {
+                  "id": "enemy",
+                  "element": "water",
+                  "hp": 105,
+                  "maxHp": 120,
+                  "anger": 0,
+                  "freeDodgeUsed": false,
+                  "statuses": []
+                }
+              },
+              "visualEvents": [
+                {
+                  "id": "1:player:windup:action:0",
+                  "side": "player",
+                  "phase": "windup",
+                  "kind": "action",
+                  "action": "dodge"
+                },
+                {
+                  "id": "1:player:release:action:1",
+                  "side": "player",
+                  "phase": "release",
+                  "kind": "action",
+                  "action": "dodge",
+                  "element": "wood"
+                },
+                {
+                  "id": "1:enemy:windup:action:2",
+                  "side": "enemy",
+                  "phase": "windup",
+                  "kind": "action",
+                  "action": "ultimate"
+                },
+                {
+                  "id": "1:enemy:release:action:3",
+                  "side": "enemy",
+                  "phase": "release",
+                  "kind": "action",
+                  "action": "ultimate",
+                  "element": "water"
+                },
+                {
+                  "id": "1:player:impact:damage:4",
+                  "side": "player",
+                  "phase": "impact",
+                  "kind": "damage",
+                  "amount": 20
+                },
+                {
+                  "id": "1:enemy:effects:heal:5",
+                  "side": "enemy",
+                  "phase": "effects",
+                  "kind": "heal",
+                  "amount": 20,
+                  "status": "ultimate"
+                },
+                {
+                  "id": "1:player:effects:anger:6",
+                  "side": "player",
+                  "phase": "effects",
+                  "kind": "anger",
+                  "amount": 5,
+                  "element": "water"
+                }
+              ]
+            },
+            {
+              "round": 2,
+              "actions": {
+                "player": "normal_attack",
+                "enemy": "element_attack"
+              },
+              "damageTaken": {
+                "player": 0,
+                "enemy": 10
+              },
+              "directDamage": {
+                "player": 0,
+                "enemy": 10
+              },
+              "dotDamageEvents": {
+                "player": [],
+                "enemy": []
+              },
+              "healEvents": {
+                "player": [],
+                "enemy": []
+              },
+              "hpAfter": {
+                "player": 80,
+                "enemy": 95
+              },
+              "angerAfter": {
+                "player": 5,
+                "enemy": 5
+              },
+              "statusesAfter": {
+                "player": [],
+                "enemy": []
+              },
+              "winner": null,
+              "notes": [
+                "player action missed"
+              ],
+              "state": {
+                "round": 2,
+                "player": {
+                  "id": "player",
+                  "element": "wood",
+                  "hp": 80,
+                  "maxHp": 120,
+                  "anger": 5,
+                  "freeDodgeUsed": true,
+                  "statuses": []
+                },
+                "enemy": {
+                  "id": "enemy",
+                  "element": "water",
+                  "hp": 95,
+                  "maxHp": 120,
+                  "anger": 5,
+                  "freeDodgeUsed": false,
+                  "statuses": []
+                }
+              },
+              "visualEvents": [
+                {
+                  "id": "2:player:windup:action:0",
+                  "side": "player",
+                  "phase": "windup",
+                  "kind": "action",
+                  "action": "normal_attack"
+                },
+                {
+                  "id": "2:player:release:action:1",
+                  "side": "player",
+                  "phase": "release",
+                  "kind": "action",
+                  "action": "normal_attack",
+                  "element": "wood"
+                },
+                {
+                  "id": "2:enemy:impact:damage:2",
+                  "side": "enemy",
+                  "phase": "impact",
+                  "kind": "damage",
+                  "amount": 10
+                },
+                {
+                  "id": "2:enemy:windup:action:3",
+                  "side": "enemy",
+                  "phase": "windup",
+                  "kind": "action",
+                  "action": "element_attack"
+                },
+                {
+                  "id": "2:enemy:release:action:4",
+                  "side": "enemy",
+                  "phase": "release",
+                  "kind": "action",
+                  "action": "element_attack",
+                  "element": "water"
+                },
+                {
+                  "id": "2:enemy:impact:interrupt:5",
+                  "side": "enemy",
+                  "phase": "impact",
+                  "kind": "interrupt"
+                }
+              ]
+            },
+            {
+              "round": 3,
+              "actions": {
+                "player": "dodge",
+                "enemy": "normal_attack"
+              },
+              "damageTaken": {
+                "player": 0,
+                "enemy": 0
+              },
+              "directDamage": {
+                "player": 0,
+                "enemy": 0
+              },
+              "dotDamageEvents": {
+                "player": [],
+                "enemy": []
+              },
+              "healEvents": {
+                "player": [],
+                "enemy": []
+              },
+              "hpAfter": {
+                "player": 80,
+                "enemy": 95
+              },
+              "angerAfter": {
+                "player": 30,
+                "enemy": 5
+              },
+              "statusesAfter": {
+                "player": [],
+                "enemy": []
+              },
+              "winner": null,
+              "notes": [
+                "enemy spends 20 anger on dodge",
+                "player action missed",
+                "enemy dodged normal attack and refunded 30 anger"
+              ],
+              "state": {
+                "round": 3,
+                "player": {
+                  "id": "player",
+                  "element": "wood",
+                  "hp": 80,
+                  "maxHp": 120,
+                  "anger": 30,
+                  "freeDodgeUsed": true,
+                  "statuses": []
+                },
+                "enemy": {
+                  "id": "enemy",
+                  "element": "water",
+                  "hp": 95,
+                  "maxHp": 120,
+                  "anger": 5,
+                  "freeDodgeUsed": false,
+                  "statuses": []
+                }
+              },
+              "visualEvents": [
+                {
+                  "id": "3:player:windup:action:0",
+                  "side": "player",
+                  "phase": "windup",
+                  "kind": "action",
+                  "action": "dodge"
+                },
+                {
+                  "id": "3:player:release:action:1",
+                  "side": "player",
+                  "phase": "release",
+                  "kind": "action",
+                  "action": "dodge",
+                  "element": "wood"
+                },
+                {
+                  "id": "3:enemy:windup:action:2",
+                  "side": "enemy",
+                  "phase": "windup",
+                  "kind": "action",
+                  "action": "normal_attack"
+                },
+                {
+                  "id": "3:enemy:release:action:3",
+                  "side": "enemy",
+                  "phase": "release",
+                  "kind": "action",
+                  "action": "normal_attack",
+                  "element": "water"
+                },
+                {
+                  "id": "3:player:impact:dodge:4",
+                  "side": "player",
+                  "phase": "impact",
+                  "kind": "dodge"
+                }
+              ]
+            },
+            {
+              "round": 4,
+              "actions": {
+                "player": "element_attack",
+                "enemy": "normal_attack"
+              },
+              "damageTaken": {
+                "player": 10,
+                "enemy": 0
+              },
+              "directDamage": {
+                "player": 10,
+                "enemy": 0
+              },
+              "dotDamageEvents": {
+                "player": [],
+                "enemy": []
+              },
+              "healEvents": {
+                "player": [],
+                "enemy": []
+              },
+              "hpAfter": {
+                "player": 70,
+                "enemy": 95
+              },
+              "angerAfter": {
+                "player": 35,
+                "enemy": 5
+              },
+              "statusesAfter": {
+                "player": [],
+                "enemy": []
+              },
+              "winner": null,
+              "notes": [
+                "enemy action missed"
+              ],
+              "state": {
+                "round": 4,
+                "player": {
+                  "id": "player",
+                  "element": "wood",
+                  "hp": 70,
+                  "maxHp": 120,
+                  "anger": 35,
+                  "freeDodgeUsed": true,
+                  "statuses": []
+                },
+                "enemy": {
+                  "id": "enemy",
+                  "element": "water",
+                  "hp": 95,
+                  "maxHp": 120,
+                  "anger": 5,
+                  "freeDodgeUsed": false,
+                  "statuses": []
+                }
+              },
+              "visualEvents": [
+                {
+                  "id": "4:player:windup:action:0",
+                  "side": "player",
+                  "phase": "windup",
+                  "kind": "action",
+                  "action": "element_attack"
+                },
+                {
+                  "id": "4:player:release:action:1",
+                  "side": "player",
+                  "phase": "release",
+                  "kind": "action",
+                  "action": "element_attack",
+                  "element": "wood"
+                },
+                {
+                  "id": "4:player:impact:interrupt:2",
+                  "side": "player",
+                  "phase": "impact",
+                  "kind": "interrupt"
+                },
+                {
+                  "id": "4:enemy:windup:action:3",
+                  "side": "enemy",
+                  "phase": "windup",
+                  "kind": "action",
+                  "action": "normal_attack"
+                },
+                {
+                  "id": "4:enemy:release:action:4",
+                  "side": "enemy",
+                  "phase": "release",
+                  "kind": "action",
+                  "action": "normal_attack",
+                  "element": "water"
+                },
+                {
+                  "id": "4:player:impact:damage:5",
+                  "side": "player",
+                  "phase": "impact",
+                  "kind": "damage",
+                  "amount": 10
+                }
+              ]
+            },
+            {
+              "round": 5,
+              "actions": {
+                "player": "element_attack",
+                "enemy": "normal_attack"
+              },
+              "damageTaken": {
+                "player": 10,
+                "enemy": 0
+              },
+              "directDamage": {
+                "player": 10,
+                "enemy": 0
+              },
+              "dotDamageEvents": {
+                "player": [],
+                "enemy": []
+              },
+              "healEvents": {
+                "player": [],
+                "enemy": []
+              },
+              "hpAfter": {
+                "player": 60,
+                "enemy": 95
+              },
+              "angerAfter": {
+                "player": 40,
+                "enemy": 5
+              },
+              "statusesAfter": {
+                "player": [],
+                "enemy": []
+              },
+              "winner": null,
+              "notes": [
+                "enemy action missed"
+              ],
+              "state": {
+                "round": 5,
+                "player": {
+                  "id": "player",
+                  "element": "wood",
+                  "hp": 60,
+                  "maxHp": 120,
+                  "anger": 40,
+                  "freeDodgeUsed": true,
+                  "statuses": []
+                },
+                "enemy": {
+                  "id": "enemy",
+                  "element": "water",
+                  "hp": 95,
+                  "maxHp": 120,
+                  "anger": 5,
+                  "freeDodgeUsed": false,
+                  "statuses": []
+                }
+              },
+              "visualEvents": [
+                {
+                  "id": "5:player:windup:action:0",
+                  "side": "player",
+                  "phase": "windup",
+                  "kind": "action",
+                  "action": "element_attack"
+                },
+                {
+                  "id": "5:player:release:action:1",
+                  "side": "player",
+                  "phase": "release",
+                  "kind": "action",
+                  "action": "element_attack",
+                  "element": "wood"
+                },
+                {
+                  "id": "5:player:impact:interrupt:2",
+                  "side": "player",
+                  "phase": "impact",
+                  "kind": "interrupt"
+                },
+                {
+                  "id": "5:enemy:windup:action:3",
+                  "side": "enemy",
+                  "phase": "windup",
+                  "kind": "action",
+                  "action": "normal_attack"
+                },
+                {
+                  "id": "5:enemy:release:action:4",
+                  "side": "enemy",
+                  "phase": "release",
+                  "kind": "action",
+                  "action": "normal_attack",
+                  "element": "water"
+                },
+                {
+                  "id": "5:player:impact:damage:5",
+                  "side": "player",
+                  "phase": "impact",
+                  "kind": "damage",
+                  "amount": 10
+                }
+              ]
+            },
+            {
+              "round": 6,
+              "actions": {
+                "player": "element_attack",
+                "enemy": "normal_attack"
+              },
+              "damageTaken": {
+                "player": 10,
+                "enemy": 0
+              },
+              "directDamage": {
+                "player": 10,
+                "enemy": 0
+              },
+              "dotDamageEvents": {
+                "player": [],
+                "enemy": []
+              },
+              "healEvents": {
+                "player": [],
+                "enemy": []
+              },
+              "hpAfter": {
+                "player": 50,
+                "enemy": 95
+              },
+              "angerAfter": {
+                "player": 45,
+                "enemy": 5
+              },
+              "statusesAfter": {
+                "player": [],
+                "enemy": []
+              },
+              "winner": null,
+              "notes": [
+                "enemy action missed"
+              ],
+              "state": {
+                "round": 6,
+                "player": {
+                  "id": "player",
+                  "element": "wood",
+                  "hp": 50,
+                  "maxHp": 120,
+                  "anger": 45,
+                  "freeDodgeUsed": true,
+                  "statuses": []
+                },
+                "enemy": {
+                  "id": "enemy",
+                  "element": "water",
+                  "hp": 95,
+                  "maxHp": 120,
+                  "anger": 5,
+                  "freeDodgeUsed": false,
+                  "statuses": []
+                }
+              },
+              "visualEvents": [
+                {
+                  "id": "6:player:windup:action:0",
+                  "side": "player",
+                  "phase": "windup",
+                  "kind": "action",
+                  "action": "element_attack"
+                },
+                {
+                  "id": "6:player:release:action:1",
+                  "side": "player",
+                  "phase": "release",
+                  "kind": "action",
+                  "action": "element_attack",
+                  "element": "wood"
+                },
+                {
+                  "id": "6:player:impact:interrupt:2",
+                  "side": "player",
+                  "phase": "impact",
+                  "kind": "interrupt"
+                },
+                {
+                  "id": "6:enemy:windup:action:3",
+                  "side": "enemy",
+                  "phase": "windup",
+                  "kind": "action",
+                  "action": "normal_attack"
+                },
+                {
+                  "id": "6:enemy:release:action:4",
+                  "side": "enemy",
+                  "phase": "release",
+                  "kind": "action",
+                  "action": "normal_attack",
+                  "element": "water"
+                },
+                {
+                  "id": "6:player:impact:damage:5",
+                  "side": "player",
+                  "phase": "impact",
+                  "kind": "damage",
+                  "amount": 10
+                }
+              ]
+            },
+            {
+              "round": 7,
+              "actions": {
+                "player": "element_attack",
+                "enemy": "normal_attack"
+              },
+              "damageTaken": {
+                "player": 10,
+                "enemy": 0
+              },
+              "directDamage": {
+                "player": 10,
+                "enemy": 0
+              },
+              "dotDamageEvents": {
+                "player": [],
+                "enemy": []
+              },
+              "healEvents": {
+                "player": [],
+                "enemy": []
+              },
+              "hpAfter": {
+                "player": 40,
+                "enemy": 95
+              },
+              "angerAfter": {
+                "player": 50,
+                "enemy": 5
+              },
+              "statusesAfter": {
+                "player": [],
+                "enemy": []
+              },
+              "winner": null,
+              "notes": [
+                "enemy action missed"
+              ],
+              "state": {
+                "round": 7,
+                "player": {
+                  "id": "player",
+                  "element": "wood",
+                  "hp": 40,
+                  "maxHp": 120,
+                  "anger": 50,
+                  "freeDodgeUsed": true,
+                  "statuses": []
+                },
+                "enemy": {
+                  "id": "enemy",
+                  "element": "water",
+                  "hp": 95,
+                  "maxHp": 120,
+                  "anger": 5,
+                  "freeDodgeUsed": false,
+                  "statuses": []
+                }
+              },
+              "visualEvents": [
+                {
+                  "id": "7:player:windup:action:0",
+                  "side": "player",
+                  "phase": "windup",
+                  "kind": "action",
+                  "action": "element_attack"
+                },
+                {
+                  "id": "7:player:release:action:1",
+                  "side": "player",
+                  "phase": "release",
+                  "kind": "action",
+                  "action": "element_attack",
+                  "element": "wood"
+                },
+                {
+                  "id": "7:player:impact:interrupt:2",
+                  "side": "player",
+                  "phase": "impact",
+                  "kind": "interrupt"
+                },
+                {
+                  "id": "7:enemy:windup:action:3",
+                  "side": "enemy",
+                  "phase": "windup",
+                  "kind": "action",
+                  "action": "normal_attack"
+                },
+                {
+                  "id": "7:enemy:release:action:4",
+                  "side": "enemy",
+                  "phase": "release",
+                  "kind": "action",
+                  "action": "normal_attack",
+                  "element": "water"
+                },
+                {
+                  "id": "7:player:impact:damage:5",
+                  "side": "player",
+                  "phase": "impact",
+                  "kind": "damage",
+                  "amount": 10
+                }
+              ]
+            },
+            {
+              "round": 8,
+              "actions": {
+                "player": "element_attack",
+                "enemy": "normal_attack"
+              },
+              "damageTaken": {
+                "player": 10,
+                "enemy": 0
+              },
+              "directDamage": {
+                "player": 10,
+                "enemy": 0
+              },
+              "dotDamageEvents": {
+                "player": [],
+                "enemy": []
+              },
+              "healEvents": {
+                "player": [],
+                "enemy": []
+              },
+              "hpAfter": {
+                "player": 30,
+                "enemy": 95
+              },
+              "angerAfter": {
+                "player": 55,
+                "enemy": 5
+              },
+              "statusesAfter": {
+                "player": [],
+                "enemy": []
+              },
+              "winner": null,
+              "notes": [
+                "enemy action missed"
+              ],
+              "state": {
+                "round": 8,
+                "player": {
+                  "id": "player",
+                  "element": "wood",
+                  "hp": 30,
+                  "maxHp": 120,
+                  "anger": 55,
+                  "freeDodgeUsed": true,
+                  "statuses": []
+                },
+                "enemy": {
+                  "id": "enemy",
+                  "element": "water",
+                  "hp": 95,
+                  "maxHp": 120,
+                  "anger": 5,
+                  "freeDodgeUsed": false,
+                  "statuses": []
+                }
+              },
+              "visualEvents": [
+                {
+                  "id": "8:player:windup:action:0",
+                  "side": "player",
+                  "phase": "windup",
+                  "kind": "action",
+                  "action": "element_attack"
+                },
+                {
+                  "id": "8:player:release:action:1",
+                  "side": "player",
+                  "phase": "release",
+                  "kind": "action",
+                  "action": "element_attack",
+                  "element": "wood"
+                },
+                {
+                  "id": "8:player:impact:interrupt:2",
+                  "side": "player",
+                  "phase": "impact",
+                  "kind": "interrupt"
+                },
+                {
+                  "id": "8:enemy:windup:action:3",
+                  "side": "enemy",
+                  "phase": "windup",
+                  "kind": "action",
+                  "action": "normal_attack"
+                },
+                {
+                  "id": "8:enemy:release:action:4",
+                  "side": "enemy",
+                  "phase": "release",
+                  "kind": "action",
+                  "action": "normal_attack",
+                  "element": "water"
+                },
+                {
+                  "id": "8:player:impact:damage:5",
+                  "side": "player",
+                  "phase": "impact",
+                  "kind": "damage",
+                  "amount": 10
+                }
+              ]
+            },
+            {
+              "round": 9,
+              "actions": {
+                "player": "element_attack",
+                "enemy": "normal_attack"
+              },
+              "damageTaken": {
+                "player": 10,
+                "enemy": 0
+              },
+              "directDamage": {
+                "player": 10,
+                "enemy": 0
+              },
+              "dotDamageEvents": {
+                "player": [],
+                "enemy": []
+              },
+              "healEvents": {
+                "player": [],
+                "enemy": []
+              },
+              "hpAfter": {
+                "player": 20,
+                "enemy": 95
+              },
+              "angerAfter": {
+                "player": 60,
+                "enemy": 5
+              },
+              "statusesAfter": {
+                "player": [],
+                "enemy": []
+              },
+              "winner": null,
+              "notes": [
+                "enemy action missed"
+              ],
+              "state": {
+                "round": 9,
+                "player": {
+                  "id": "player",
+                  "element": "wood",
+                  "hp": 20,
+                  "maxHp": 120,
+                  "anger": 60,
+                  "freeDodgeUsed": true,
+                  "statuses": []
+                },
+                "enemy": {
+                  "id": "enemy",
+                  "element": "water",
+                  "hp": 95,
+                  "maxHp": 120,
+                  "anger": 5,
+                  "freeDodgeUsed": false,
+                  "statuses": []
+                }
+              },
+              "visualEvents": [
+                {
+                  "id": "9:player:windup:action:0",
+                  "side": "player",
+                  "phase": "windup",
+                  "kind": "action",
+                  "action": "element_attack"
+                },
+                {
+                  "id": "9:player:release:action:1",
+                  "side": "player",
+                  "phase": "release",
+                  "kind": "action",
+                  "action": "element_attack",
+                  "element": "wood"
+                },
+                {
+                  "id": "9:player:impact:interrupt:2",
+                  "side": "player",
+                  "phase": "impact",
+                  "kind": "interrupt"
+                },
+                {
+                  "id": "9:enemy:windup:action:3",
+                  "side": "enemy",
+                  "phase": "windup",
+                  "kind": "action",
+                  "action": "normal_attack"
+                },
+                {
+                  "id": "9:enemy:release:action:4",
+                  "side": "enemy",
+                  "phase": "release",
+                  "kind": "action",
+                  "action": "normal_attack",
+                  "element": "water"
+                },
+                {
+                  "id": "9:player:impact:damage:5",
+                  "side": "player",
+                  "phase": "impact",
+                  "kind": "damage",
+                  "amount": 10
+                }
+              ]
+            },
+            {
+              "round": 10,
+              "actions": {
+                "player": "element_attack",
+                "enemy": "normal_attack"
+              },
+              "damageTaken": {
+                "player": 10,
+                "enemy": 0
+              },
+              "directDamage": {
+                "player": 10,
+                "enemy": 0
+              },
+              "dotDamageEvents": {
+                "player": [],
+                "enemy": []
+              },
+              "healEvents": {
+                "player": [],
+                "enemy": []
+              },
+              "hpAfter": {
+                "player": 10,
+                "enemy": 95
+              },
+              "angerAfter": {
+                "player": 65,
+                "enemy": 5
+              },
+              "statusesAfter": {
+                "player": [],
+                "enemy": []
+              },
+              "winner": null,
+              "notes": [
+                "enemy action missed"
+              ],
+              "state": {
+                "round": 10,
+                "player": {
+                  "id": "player",
+                  "element": "wood",
+                  "hp": 10,
+                  "maxHp": 120,
+                  "anger": 65,
+                  "freeDodgeUsed": true,
+                  "statuses": []
+                },
+                "enemy": {
+                  "id": "enemy",
+                  "element": "water",
+                  "hp": 95,
+                  "maxHp": 120,
+                  "anger": 5,
+                  "freeDodgeUsed": false,
+                  "statuses": []
+                }
+              },
+              "visualEvents": [
+                {
+                  "id": "10:player:windup:action:0",
+                  "side": "player",
+                  "phase": "windup",
+                  "kind": "action",
+                  "action": "element_attack"
+                },
+                {
+                  "id": "10:player:release:action:1",
+                  "side": "player",
+                  "phase": "release",
+                  "kind": "action",
+                  "action": "element_attack",
+                  "element": "wood"
+                },
+                {
+                  "id": "10:player:impact:interrupt:2",
+                  "side": "player",
+                  "phase": "impact",
+                  "kind": "interrupt"
+                },
+                {
+                  "id": "10:enemy:windup:action:3",
+                  "side": "enemy",
+                  "phase": "windup",
+                  "kind": "action",
+                  "action": "normal_attack"
+                },
+                {
+                  "id": "10:enemy:release:action:4",
+                  "side": "enemy",
+                  "phase": "release",
+                  "kind": "action",
+                  "action": "normal_attack",
+                  "element": "water"
+                },
+                {
+                  "id": "10:player:impact:damage:5",
+                  "side": "player",
+                  "phase": "impact",
+                  "kind": "damage",
+                  "amount": 10
+                }
+              ]
+            },
+            {
+              "round": 11,
+              "actions": {
+                "player": "element_attack",
+                "enemy": "normal_attack"
+              },
+              "damageTaken": {
+                "player": 10,
+                "enemy": 0
+              },
+              "directDamage": {
+                "player": 10,
+                "enemy": 0
+              },
+              "dotDamageEvents": {
+                "player": [],
+                "enemy": []
+              },
+              "healEvents": {
+                "player": [],
+                "enemy": []
+              },
+              "hpAfter": {
+                "player": 0,
+                "enemy": 95
+              },
+              "angerAfter": {
+                "player": 70,
+                "enemy": 5
+              },
+              "statusesAfter": {
+                "player": [],
+                "enemy": []
+              },
+              "winner": "enemy",
+              "notes": [
+                "enemy action missed"
+              ],
+              "state": {
+                "round": 11,
+                "player": {
+                  "id": "player",
+                  "element": "wood",
+                  "hp": 0,
+                  "maxHp": 120,
+                  "anger": 70,
+                  "freeDodgeUsed": true,
+                  "statuses": []
+                },
+                "enemy": {
+                  "id": "enemy",
+                  "element": "water",
+                  "hp": 95,
+                  "maxHp": 120,
+                  "anger": 5,
+                  "freeDodgeUsed": false,
+                  "statuses": []
+                }
+              },
+              "visualEvents": [
+                {
+                  "id": "11:player:windup:action:0",
+                  "side": "player",
+                  "phase": "windup",
+                  "kind": "action",
+                  "action": "element_attack"
+                },
+                {
+                  "id": "11:player:release:action:1",
+                  "side": "player",
+                  "phase": "release",
+                  "kind": "action",
+                  "action": "element_attack",
+                  "element": "wood"
+                },
+                {
+                  "id": "11:player:impact:interrupt:2",
+                  "side": "player",
+                  "phase": "impact",
+                  "kind": "interrupt"
+                },
+                {
+                  "id": "11:enemy:windup:action:3",
+                  "side": "enemy",
+                  "phase": "windup",
+                  "kind": "action",
+                  "action": "normal_attack"
+                },
+                {
+                  "id": "11:enemy:release:action:4",
+                  "side": "enemy",
+                  "phase": "release",
+                  "kind": "action",
+                  "action": "normal_attack",
+                  "element": "water"
+                },
+                {
+                  "id": "11:player:impact:damage:5",
+                  "side": "player",
+                  "phase": "impact",
+                  "kind": "damage",
+                  "amount": 10
+                }
+              ]
+            }
+          ],
+          "winner": "enemy",
+          "pendingAction": null,
+          "historyComplete": true,
+          "rules": {
+            "id": "five-elements-standard-v1",
+            "label": "标准五行对战",
+            "vitalPolicy": "normalized",
+            "maxHp": 120,
+            "maxAnger": 100,
+            "companionStatsApplied": false,
+            "baseDamage": {
+              "normal_attack": 10,
+              "element_attack": 12,
+              "dodge": 0,
+              "ultimate": 20
+            },
+            "ultimateAnger": 50,
+            "ultimateCost": 50,
+            "ultimateHeal": 20,
+            "dodgeMaxCost": 20,
+            "dodgeRefund": 30,
+            "advantage": {
+              "metal": "wood",
+              "wood": "earth",
+              "earth": "water",
+              "water": "fire",
+              "fire": "metal"
+            },
+            "elementEffects": {
+              "metal": {
+                "label": "易伤",
+                "description": "每层受伤×1.5，最多5层"
+              },
+              "wood": {
+                "label": "寄生",
+                "description": "每层回合末吸取2生命，最多5层"
+              },
+              "earth": {
+                "label": "迟钝",
+                "description": "每层伤害×0.5，最多5层"
+              },
+              "water": {
+                "label": "降怒",
+                "description": "命中后对方怒气向下取半，不增加受击怒气"
+              },
+              "fire": {
+                "label": "燃烧",
+                "description": "回合末按当前生命8%×层数伤害，最多5层"
+              }
+            }
+          },
+          "context": {
+            "authority": "simulated",
+            "cloudUserId": "qa:c5ce225f-4bf6-423f-bba8-a045ac9deae6:local-17770139-dd73-48f0-b1ff-39c4bfc6a597",
+            "scenarioId": "c5ce225f-4bf6-423f-bba8-a045ac9deae6"
+          },
+          "updatedAt": "2026-10-24T15:40:57.810Z",
+          "revision": 58,
+          "endedAt": "2026-10-24T15:40:57.807Z",
+          "reward": {
+            "actionId": "battle:dc330b5d-511e-468e-ba1c-117c5ecac2ee:qa:c5ce225f-4bf6-423f-bba8-a045ac9deae6:local-17770139-dd73-48f0-b1ff-39c4bfc6a597",
+            "petId": "pet-6d86f065-b435-4662-88f1-3fee586a0f27",
+            "experience": 5,
+            "applied": true,
+            "previousExperience": 0,
+            "previousLevel": 1,
+            "currentExperience": 5,
+            "currentLevel": 1,
+            "seeds": {
+              "source": "battle",
+              "receiptId": "online-dc330b5d-511e-468e-ba1c-117c5ecac2ee",
+              "itemId": "seed:berry",
+              "quantity": 2
+            }
+          },
+          "reportId": "online-dc330b5d-511e-468e-ba1c-117c5ecac2ee"
+        }
+      }
+    },
+    {
+      "id": "A-idempotent-growth",
+      "passed": true,
+      "detail": {
+        "before": {
+          "level": 1,
+          "experience": 20,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 1,
+          "stats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        },
+        "after": {
+          "level": 1,
+          "experience": 20,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 1,
+          "stats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        }
+      }
+    },
+    {
+      "id": "B-idempotent-growth",
+      "passed": true,
+      "detail": {
+        "before": {
+          "level": 1,
+          "experience": 5,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 130,
+            "atk": 26,
+            "def": 26,
+            "spd": 18
+          }
+        },
+        "after": {
+          "level": 1,
+          "experience": 5,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 130,
+            "atk": 26,
+            "def": 26,
+            "spd": 18
+          }
+        }
+      }
+    },
+    {
+      "id": "no-renderer-errors",
+      "passed": true,
+      "detail": []
+    }
+  ],
+  "errors": [],
+  "passed": true,
+  "completedAt": "2026-10-24T15:41:01.182Z"
+}
