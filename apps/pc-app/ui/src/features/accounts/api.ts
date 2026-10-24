@@ -22,7 +22,10 @@ export function useAccountsSession() {
   useEffect(() => {
     let active = true;
     void request<AccountsSession>("session").then(value => { if (active) setSession(value); }).catch(e => { if (active) setError(errorText(e)); });
-    const dispose = bridge()?.subscribe("accounts:session-changed", data => { if (active) setSession(data as AccountsSession); });
+    const dispose = bridge()?.subscribe("app:session", () => {
+      void request<AccountsSession>("session").then(value => { if (active) { setSession(value); setError(""); } })
+        .catch(e => { if (active) setError(errorText(e)); });
+    });
     return () => { active = false; dispose?.(); };
   }, []);
   return { session, error, refresh };

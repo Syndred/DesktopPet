@@ -6,7 +6,13 @@ const profile = resolve(process.env.ACCOUNTS_REVIEW_PROFILE || "artifacts/accoun
 const env = { ...process.env, PET_USER_DATA_DIR: profile }; delete env.ELECTRON_RUN_AS_NODE;
 const application = await electron.launch({ args: [resolve(".")], env });
 try {
-  const page = await application.firstWindow(); await page.getByRole("navigation", { name: "主导航" }).waitFor();
+  const page = await application.firstWindow(); await page.locator(".ac-auth, .ac-page-heading").first().waitFor();
+  const auth = await page.evaluate(() => window.lingjing.invoke("accounts", "session"));
+  if (auth.ok && !auth.data.currentUser) {
+    await page.getByRole("combobox", { name: "账号类型", exact: true }).click(); await page.getByRole("option", { name: "本机账号", exact: true }).click();
+    await page.getByLabel("账号", { exact: true }).fill("qa_alice"); await page.getByLabel("密码", { exact: true }).fill("qa-new-secret-456");
+    await page.getByRole("button", { name: "登录进入 →", exact: true }).click(); await page.getByRole("navigation", { name: "主导航" }).waitFor();
+  }
   const records = [];
   for (const [path, image] of [["/account", "account.png"], ["/settings", "settings.png"], ["/settings/privacy", "privacy.png"]]) {
     await page.evaluate(path => { location.hash = `#${path}`; }, path);

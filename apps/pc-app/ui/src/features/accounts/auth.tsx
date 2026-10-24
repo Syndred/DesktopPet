@@ -61,7 +61,7 @@ export function AuthPage({ session, onSignedIn }: { session: AccountsSession; on
         <TabsTrigger value="register" disabled={pending}>注册</TabsTrigger>
       </TabsList>
       <TabsContent value={register ? "register" : "login"} forceMount>
-      <div className="ac-auth-heading"><span aria-hidden="true">✧</span><h2>{register ? "遇见新的陪伴" : "欢迎回来"}</h2><p>{register ? "给自己起个名字，开始你的灵境故事。" : "和伙伴们一起，继续今天的故事吧。"}</p></div>
+      <div className="ac-auth-heading"><img className="ac-auth-mark" src="./brand/logo-mark.png" alt="" /><h2>{register ? "遇见新的陪伴" : "欢迎回来"}</h2><p>{register ? "给自己起个名字，开始你的灵境故事。" : "和伙伴们一起，继续今天的故事吧。"}</p></div>
       <form onSubmit={event => void submit(event)}>
         <fieldset disabled={pending}>
           <label>账号类型<AccountSelect label="账号类型" value={provider} onChange={value => setProvider(value as "local" | "runtime")} disabled={pending} options={[{ value: "runtime", label: "云端账号" }, { value: "local", label: "本机账号" }]} /></label>

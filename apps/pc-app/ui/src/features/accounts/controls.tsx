@@ -20,5 +20,9 @@ export function AccountCheckbox({ label, checked, onChange, disabled = false }: 
   return <Checkbox className="ac-radix-checkbox" aria-label={label} checked={checked} onCheckedChange={value => onChange(value === true)} disabled={disabled} />;
 }
 export function AccountSlider({ value, onChange, disabled = false }: { value: number; onChange: (value: number) => void; disabled?: boolean }) {
-  return <Slider className="ac-radix-slider" aria-label="音量" min={0} max={100} step={1} value={[value]} onValueChange={values => onChange(values[0])} disabled={disabled} />;
+  return <Slider ref={node => {
+    // The registry Slider forwards attributes to Root; the accessible name belongs
+    // on its Radix Thumb. Preserve the shared interaction, label its actual slider.
+    node?.querySelector('[role="slider"]')?.setAttribute("aria-label", "音量");
+  }} className="ac-radix-slider" min={0} max={100} step={1} value={[value]} onValueChange={values => onChange(values[0])} disabled={disabled} />;
 }

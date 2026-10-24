@@ -1,19 +1,21 @@
-import { useCallback, useEffect, useState, type FormEvent } from "react";
+import { useCallback, useEffect, useRef, useState, type FormEvent } from "react";
 import { Monitor, Bell, MessageCircle, Box, RefreshCw, Cloud, ClipboardPen, LockKeyhole, Download, LogOut } from "lucide-react";
 import type { AccountUser, AccountsSession, BackupPreview, SettingsSnapshot, SyncStatus } from "../../../../../../packages/shared-types/src/features/accounts";
 import { errorText, newActionId, request, useAccountsSession } from "./api";
 import { AuthPage } from "./auth";
-import { Button } from "../../components/ui";
+import { Button, Card } from "../../components/ui";
 import { Input } from "../../components/ui/input";
 import { AppDialog } from "../../components/dialog";
 import { AccountSelect, AccountSwitch } from "./controls";
 import { AnimatedList } from "../../components/motion";
+import { usePath } from "../../app/navigation";
 
 export function SettingsNavigation() {
+  const path = usePath();
   return <nav className="ac-settings-nav" aria-label="设置分类">
-    <a href="#/settings"><Monitor size={19} /><span>桌面与行为</span></a><a href="#/settings/privacy"><Bell size={19} /><span>通知与隐私</span></a>
-    <a href="#/settings/ai"><MessageCircle size={19} /><span>AI 对话</span></a><a href="#/resources"><Box size={19} /><span>角色资源</span></a>
-    <a href="#/account"><RefreshCw size={19} /><span>账号与同步</span></a>
+    <a href="#/settings" aria-current={path === "/settings" ? "page" : undefined}><Monitor size={19} /><span>桌面与行为</span></a><a href="#/settings/privacy" aria-current={path === "/settings/privacy" ? "page" : undefined}><Bell size={19} /><span>通知与隐私</span></a>
+    <a href="#/settings/ai" aria-current={path === "/settings/ai" ? "page" : undefined}><MessageCircle size={19} /><span>AI 对话</span></a><a href="#/resources" aria-current={path === "/resources" ? "page" : undefined}><Box size={19} /><span>角色资源</span></a>
+    <a href="#/account" aria-current={path === "/account" ? "page" : undefined}><RefreshCw size={19} /><span>账号与同步</span></a>
   </nav>;
 }
 function dateText(value?: string | null) { return value ? new Date(value).toLocaleString("zh-CN") : "尚未完成"; }
@@ -31,6 +33,15 @@ function AccountDetails({ user, session, refreshSession }: { user: AccountUser; 
   const [error, setError] = useState("");
   const [preview, setPreview] = useState<BackupPreview | null>(null);
   const [restoreMode, setRestoreMode] = useState<"merge" | "replace">("merge");
+  const previewOpener = useRef<HTMLButtonElement | null>(null);
+  const returnPreviewFocus = useRef(false);
+  const closePreview = () => { returnPreviewFocus.current = true; setPreview(null); };
+  useEffect(() => {
+    if (preview || pending || !returnPreviewFocus.current) return;
+    returnPreviewFocus.current = false;
+    const frame = requestAnimationFrame(() => { if (previewOpener.current?.isConnected) previewOpener.current.focus(); });
+    return () => cancelAnimationFrame(frame);
+  }, [preview, pending]);
   const refresh = useCallback(async () => {
     const [nextSync, nextSettings] = await Promise.all([request<SyncStatus>("syncStatus"), request<SettingsSnapshot>("settingsGet")]);
     setSync(nextSync); setSettings(nextSettings);
@@ -67,23 +78,23 @@ function AccountDetails({ user, session, refreshSession }: { user: AccountUser; 
     <header className="ac-page-heading"><p className="ac-eyebrow">设置 / 账号与同步</p><h1>把每一段陪伴，好好保存。</h1><p>在这里管理你的账号资料与数据同步。</p></header>
     <div className="ac-settings-layout"><SettingsNavigation /><AnimatedList className="ac-account-grid">
       <div className="ac-stack">
-        <section className="ac-card"><h2><ClipboardPen size={18} />账号资料</h2>
+        <Card className="ac-card"><h2><ClipboardPen size={18} />账号资料</h2>
           <div className="ac-identity"><span className="ac-avatar" role="img" aria-label="灵境默认头像" /><div><strong>{user.username}</strong><p>@{user.account} · {user.provider === "runtime" ? "云端账号" : "本机账号"}</p></div></div>
           <form className="ac-profile-form" onSubmit={submitProfile}><fieldset disabled={Boolean(pending)}>
             <label>用户名<Input value={label} onChange={e => setLabel(e.target.value)} minLength={2} maxLength={24} autoComplete="nickname" required /></label>
             {user.provider === "runtime" && <label>当前密码（云端资料验证）<Input type="password" value={profilePassword} onChange={e => setProfilePassword(e.target.value)} autoComplete="current-password" minLength={6} required /></label>}
             <Button className="ac-primary" type="submit">{pending === "profile" ? "保存中…" : "保存资料"}</Button>
           </fieldset></form>
-        </section>
-        <section className="ac-card"><h2><LockKeyhole size={18} />修改密码</h2><form className="ac-password-form" onSubmit={submitPassword}><fieldset disabled={Boolean(pending)}>
+        </Card>
+        <Card className="ac-card"><h2><LockKeyhole size={18} />修改密码</h2><form className="ac-password-form" onSubmit={submitPassword}><fieldset disabled={Boolean(pending)}>
           <label>当前密码<Input type="password" value={oldPassword} onChange={e => setOldPassword(e.target.value)} autoComplete="current-password" minLength={6} maxLength={64} required /></label>
           <label>新密码<Input type="password" value={newPassword} onChange={e => setNewPassword(e.target.value)} autoComplete="new-password" minLength={6} maxLength={64} required /></label>
           <label>确认新密码<Input type="password" value={confirm} onChange={e => setConfirm(e.target.value)} autoComplete="new-password" minLength={6} maxLength={64} required /></label>
           <Button className="ac-secondary" type="submit">{pending === "password" ? "保存中…" : "保存密码"}</Button>
-        </fieldset></form></section>
+        </fieldset></form></Card>
       </div>
       <div className="ac-stack">
-        <section className="ac-card ac-save-card"><h2><Cloud size={20} />伙伴与记录</h2>
+        <Card className="ac-card ac-save-card"><h2><Cloud size={20} />伙伴与记录</h2>
           <div className="ac-save-art ac-save-art-illustrated" aria-hidden="true" />
           <p>伙伴、养成、聊天与战报，按当前账号独立保存。</p>
           <dl className="ac-facts"><div><dt>云端已核对版本</dt><dd>{sync?.cloudRevision || 0}</dd></div><div><dt>上次同步读回核对</dt><dd>{dateText(sync?.lastVerifiedAt)}</dd></div><div><dt>待处理同步</dt><dd>{sync?.pending || 0} 项</dd></div></dl>
@@ -106,29 +117,29 @@ function AccountDetails({ user, session, refreshSession }: { user: AccountUser; 
               const result = await request<{ canceled?: boolean; filePath?: string; excluded?: string[] }>("backupExport");
               return result.canceled ? undefined : `备份已导出：${result.filePath}${result.excluded?.length ? "（安全凭据由系统安全存储单独管理）" : ""}`;
             })}><Download size={16} />导出本地备份</Button>
-            <Button className="ac-secondary" disabled={Boolean(pending)} onClick={() => void run("preview", async () => {
+            <Button className="ac-secondary" disabled={Boolean(pending)} onClick={event => { previewOpener.current = event.currentTarget; void run("preview", async () => {
               const result = await request<BackupPreview & { canceled?: boolean }>("backupPreview");
               if (!result.canceled) { setRestoreMode("merge"); setPreview(result); }
-            })}>恢复本地备份</Button>
-            {user.provider === "runtime" && <Button className="ac-secondary" disabled={Boolean(pending)} onClick={() => void run("cloud-preview", async () => {
+            }); }}>恢复本地备份</Button>
+            {user.provider === "runtime" && <Button className="ac-secondary" disabled={Boolean(pending)} onClick={event => { previewOpener.current = event.currentTarget; void run("cloud-preview", async () => {
               setPreview(await request<BackupPreview>("cloudPreview")); setRestoreMode("merge");
-            })}>预览云端存档</Button>}
+            }); }}>预览云端存档</Button>}
           </div>
-        </section>
-        <section className="ac-card"><h2><Monitor size={19} />当前设备</h2><div className="ac-device"><Monitor size={25} /><div><strong>Windows PC</strong><p>{session.persistence === "secure" ? "系统安全存储保持登录" : "仅在本次运行中登录"}</p></div><span className="ac-badge">当前设备</span></div>
+        </Card>
+        <Card className="ac-card"><h2><Monitor size={19} />当前设备</h2><div className="ac-device"><Monitor size={25} /><div><strong>Windows PC</strong><p>{session.persistence === "secure" ? "系统安全存储保持登录" : "仅在本次运行中登录"}</p></div><span className="ac-badge">当前设备</span></div>
           <Button className="ac-quiet-button" disabled={Boolean(pending)} onClick={() => void run("logout", async () => { await request("logout"); await refreshSession(); })}><LogOut size={16} />退出登录</Button>
-        </section>
+        </Card>
       </div>
       <div className="ac-feedback"><p role="status" aria-live="polite" className="ac-notice">{notice}</p><p role="alert" className="ac-notice ac-error">{error}</p></div>
     </AnimatedList></div>
-    {preview && <AppDialog title="预览恢复内容" busy={Boolean(pending)} onClose={() => setPreview(null)}><section className="accounts ac-modal">
+    {preview && <AppDialog title="预览恢复内容" busy={Boolean(pending)} onClose={closePreview}><section className="accounts ac-modal">
       <h2 id="restore-title">预览恢复内容</h2><p>备份时间：{dateText(preview.createdAt)}</p><p>模块：{preview.modules.join("、")}</p>
       <p>{preview.tables.reduce((n, t) => n + t.count, 0)} 条模块记录 · 完整性校验通过</p>
       <label>恢复方式<AccountSelect label="恢复方式" value={restoreMode} onChange={value => setRestoreMode(value as "merge" | "replace")} disabled={Boolean(pending)} options={[{ value: "merge", label: "合并，保留本机现有记录" }, { value: "replace", label: "恢复到此备份版本" }]} /></label>
       <p className="ac-hint">恢复前会自动保存当前账号的完整副本。账号资料与登录凭据由当前账号保留。</p>
-      <div className="ac-actions"><Button className="ac-secondary" disabled={Boolean(pending)} onClick={() => setPreview(null)}>取消</Button><Button className="ac-primary" disabled={Boolean(pending)} onClick={() => void run("restore", async () => {
+      <div className="ac-actions"><Button className="ac-secondary" disabled={Boolean(pending)} onClick={closePreview}>取消</Button><Button className="ac-primary" disabled={Boolean(pending)} onClick={() => void run("restore", async () => {
         const result = await request<{ preservedBackup: { filePath: string } }>("backupRestore", { previewId: preview.previewId, mode: restoreMode, actionId: newActionId() });
-        setPreview(null); await refresh(); return `恢复已完成。恢复前存档保存在：${result.preservedBackup.filePath}`;
+        closePreview(); await refresh(); return `恢复已完成。恢复前存档保存在：${result.preservedBackup.filePath}`;
       })}>{pending === "restore" ? "正在恢复…" : "确认恢复"}</Button></div>
       {error && <p role="alert" className="ac-error">{error}</p>}
     </section></AppDialog>}
@@ -137,8 +148,12 @@ function AccountDetails({ user, session, refreshSession }: { user: AccountUser; 
 
 export function AccountPage() {
   const { session, error, refresh } = useAccountsSession();
+  const hadVerifiedUser = useRef(false);
+  if (session?.currentUser) hadVerifiedUser.current = true;
   if (error) return <div className="accounts ac-card" role="alert">{error}<Button className="ac-secondary" onClick={() => void refresh()}>重试</Button></div>;
   if (!session) return <div className="accounts ac-loading" role="status">正在核对账号…</div>;
-  if (!session.currentUser) return <AuthPage session={session} onSignedIn={refresh} />;
+  if (!session.currentUser) return hadVerifiedUser.current
+    ? <div className="accounts ac-loading" role="status">正在切换账号…</div>
+    : <AuthPage session={session} onSignedIn={refresh} />;
   return <AccountDetails key={session.currentUser.id} user={session.currentUser} session={session} refreshSession={refresh} />;
 }
