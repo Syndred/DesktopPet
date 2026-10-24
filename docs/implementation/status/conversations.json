@@ -2,7 +2,7 @@
   "feature": "conversations",
   "branch": "codex/lingjing-conversations",
   "commit": "27db7fb16ee32fdf968630b2adcc0d4f75342353",
-  "status": "ready_for_foundation_integration",
+  "status": "in_progress_ui_2d",
   "date": "2026-10-24",
   "timezone": "Asia/Shanghai",
   "workspace": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-conversations\\DesktopPet",
@@ -125,5 +125,7 @@
     "未删除旧存档，未执行破坏性生产迁移，未发布生产版本",
     "记忆为用户明确保存的记录；没有声称已实现自动长期记忆抽取",
     "语音仅保留能力扩展接口，本次没有完整语音系统"
-  ]
+  ],
+  "scopeRevision": "2026-10-24 UI-first, 2D-only, shared shadcn/Radix + Motion; previous screenshots are superseded",
+  "requiredDependenciesManifest": "apps/pc-app/runtime/features/conversations/dependencies.json"
 }

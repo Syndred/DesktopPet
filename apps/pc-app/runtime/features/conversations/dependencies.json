@@ -1,0 +1,40 @@
+{
+  "feature": "conversations",
+  "rootManifestOwner": "foundation",
+  "runtime": {
+    "ai": "7.0.152",
+    "@ai-sdk/openai-compatible": "3.0.77"
+  },
+  "renderer": {
+    "@assistant-ui/react": "0.15.31"
+  },
+  "sharedExisting": {
+    "radix-ui": "1.8.1",
+    "motion": "14.6.0",
+    "lucide-react": "1.61.0"
+  },
+  "sharedComponents": [
+    "components/ui/button",
+    "components/dialog AppDialog",
+    "components/ui/tabs",
+    "components/ui/select",
+    "components/ui/switch",
+    "components/ui/tooltip",
+    "components/ui/popover",
+    "components/motion AnimatedList"
+  ],
+  "license": {
+    "ai": "Apache-2.0",
+    "@ai-sdk/openai-compatible": "Apache-2.0",
+    "@assistant-ui/react": "MIT",
+    "radix-ui": "MIT",
+    "motion": "MIT",
+    "lucide-react": "ISC"
+  },
+  "notes": [
+    "Node >=22; tested with the existing Electron 36.9.5 Node runtime",
+    "Main imports ai/provider lazily; renderer never imports model provider packages",
+    "No new model-viewer, Three, VRM, Vue, Python, voice stack or proprietary character dependency",
+    "Use foundation shared shadcn/Radix and Motion entry points; no feature-local copies"
+  ]
+}
