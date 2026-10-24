@@ -1,9 +1,9 @@
 {
   "module": "discovery",
   "branch": "codex/lingjing-discovery",
-  "commit": "cd19fa1b145c20d0180fbc79eda2a62146b2207a",
-  "status": "self_test_passed_awaiting_independent_review",
-  "goalStatus": "active",
+  "commit": "79c7534",
+  "status": "module_complete_main_review_accepted",
+  "goalStatus": "complete",
   "workspace": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-discovery\\DesktopPet",
   "upstream": {
     "fetched": true,
@@ -11,7 +11,8 @@
     "foundationMerged": "67d0d4df781d3eae7dd2a546b5d981107c45f737",
     "foundationMergeCommit": "a78bfb704e9871d5e4d5f81ec0fa000b4e36e944",
     "originMainIsAncestor": true,
-    "sourceCheckoutModified": false
+    "sourceCheckoutModified": false,
+    "fetchedBeforeCompletion": "2026-10-24T15:40:44.285Z"
   },
   "scopeRevision": "docs/implementation/acceptance/2026-10-24/unified-battle-goal.txt",
   "contract": "docs/implementation/discovery-contract.txt",
@@ -999,29 +1000,33 @@
       },
       "committedEvidence": "docs/implementation/evidence/discovery/2026-10-24-native-preflight/evidence.json",
       "rendererErrors": []
+    },
+    "currentProjectSourceIntegration": {
+      "mainHead": "d1fa9a9b6deeb05a9c87ef631681af07fe95e087",
+      "includesCandidate": true,
+      "comparedFiles": 35,
+      "differences": [],
+      "evidence": "docs/implementation/evidence/discovery/2026-10-24-main-review/current-project-source.json"
     }
   },
   "dependencyManifest": "apps/pc-app/runtime/features/discovery/dependencies.json",
   "additionalFoundationPackages": [],
   "rootDependenciesConsumedFromFoundation": true,
   "integrationDependencies": [
-    "Main chat independent module review and foundation final combined build",
-    "Live cloud/precise physical capture remain deferred under U06"
+    "Product-wide final integration is owned by the main chat; discovery module acceptance is complete."
   ],
   "realIncomplete": [
     "Precise physical-position capture remains unaccepted and deferred under U06; latest actual production Electron native read returned114m with permission granted. The80m threshold is unchanged.",
     "Cloud deployment/live Supabase receipt remains deferred under U06; QA never claims cloud success.",
     "Tencent/Google provider credentials are not configured; coordinate adapter boundaries are retained.",
-    "Main independent acceptance and final combined package remain pending; discovery self-check is complete."
+    "Product-wide final integration remains with the main chat. It is not claimed complete by this module and does not hold this accepted module goal open."
   ],
-  "verificationPending": [
-    "Main chat independent module acceptance and final combined U01-U08 review"
-  ],
+  "verificationPending": [],
   "historicalBaselineEvidence": [
     "artifacts/discovery/windows/evidence.json (pre-2D scope; not current visual acceptance)"
   ],
   "dataPolicy": "Only discovery-owned source/docs were edited directly. Other features and foundation scripts arrived through committed foundation merges. QA uses newly created verified directories and namespaced local accounts; ordinary user saves, original profiles and historical evidence are preserved. No real coordinate, credential, production migration/deployment or external message was committed/sent. Live cloud and precise native capture are explicitly deferred, not inferred from simulated receipts.",
-  "updatedAt": "2026-10-24T15:30:55.820Z",
+  "updatedAt": "2026-10-24T15:40:44.285Z",
   "visualAudit": {
     "source": {
       "branch": "codex/lingjing-implementation-base",
@@ -1219,9 +1224,21 @@
       "companionScenarioId": "53aad687-0a35-46e9-bce6-fc9235d5e12c"
     },
     "coreFlowStatus": "passed actual production Electron UI, explicit return/resume, capture/cancel, two sizes, restart and SQLite",
-    "independentAcceptance": "pending main chat; final combined U01-U08 remains separate"
+    "independentAcceptance": {
+      "status": "accepted",
+      "reviewerThreadId": "01a16d86-7650-7871-8e27-5b65477a126e",
+      "reviewedImplementationCommit": "cd19fa1b145c20d0180fbc79eda2a62146b2207a",
+      "reviewedDeliveryCommit": "79c7534",
+      "evidence": "docs/implementation/evidence/discovery/2026-10-24-main-review/acceptance.json"
+    }
   },
   "deferredVerification": [
     "Genuine precise OS-position capture and deployed live cloud/readback are retained as unverified history; latest user U06 allows isolated simulation and deferral for this round"
-  ]
+  ],
+  "overallFinalIntegration": {
+    "owner": "main chat",
+    "status": "continues separately",
+    "moduleGoalBlocker": false
+  },
+  "moduleCompletionAudit": "docs/implementation/evidence/discovery/2026-10-24-main-review/completion-audit.json"
 }

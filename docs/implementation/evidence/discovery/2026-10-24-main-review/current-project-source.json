@@ -1,0 +1,237 @@
+{
+  "at": "2026-10-24T15:37:12.553Z",
+  "scope": "Read-only current-project source/roster integration prerequisite; not runtime or independent acceptance",
+  "candidate": "cd19fa1b145c20d0180fbc79eda2a62146b2207a",
+  "mainRoot": "C:/Users/Administrator/Desktop/project/DesktopPet",
+  "mainHead": "d1fa9a9b6deeb05a9c87ef631681af07fe95e087",
+  "includesCandidate": true,
+  "comparedFiles": 35,
+  "matches": [
+    {
+      "file": "apps/pc-app/runtime/features/discovery/battle-adapter.cjs",
+      "expected": "7b3f2970311035d02c5318b22b0a6beb2697eaee94b17ad93ad7e1b1e4e6623a",
+      "actual": "7b3f2970311035d02c5318b22b0a6beb2697eaee94b17ad93ad7e1b1e4e6623a"
+    },
+    {
+      "file": "apps/pc-app/runtime/features/discovery/cloud-adapter.cjs",
+      "expected": "522bf56df76255d19c5a31865dba96a7d1848da81a12ac1a263bc5975c86e7e2",
+      "actual": "522bf56df76255d19c5a31865dba96a7d1848da81a12ac1a263bc5975c86e7e2"
+    },
+    {
+      "file": "apps/pc-app/runtime/features/discovery/coordinates.cjs",
+      "expected": "0cf629d1c1c35a848ae03f5633492dbf94d4478687c839da0677ce3f18843077",
+      "actual": "0cf629d1c1c35a848ae03f5633492dbf94d4478687c839da0677ce3f18843077"
+    },
+    {
+      "file": "apps/pc-app/runtime/features/discovery/dependencies.json",
+      "expected": "1f5f3a7c1f42255a143bf383698e74a11370234c1b3c43e3b4221f680e3464fa",
+      "actual": "1f5f3a7c1f42255a143bf383698e74a11370234c1b3c43e3b4221f680e3464fa"
+    },
+    {
+      "file": "apps/pc-app/runtime/features/discovery/index.cjs",
+      "expected": "1d4b48af073cb56e08f27056bc74e87d0dfb5310ae50354412ca601fe32d4cf2",
+      "actual": "1d4b48af073cb56e08f27056bc74e87d0dfb5310ae50354412ca601fe32d4cf2"
+    },
+    {
+      "file": "apps/pc-app/runtime/features/discovery/location-adapter.cjs",
+      "expected": "cd6ba6bd8dd2736b3fa33d64d284bf814a46bfe27675f6f5a72f8587efaaba81",
+      "actual": "cd6ba6bd8dd2736b3fa33d64d284bf814a46bfe27675f6f5a72f8587efaaba81"
+    },
+    {
+      "file": "apps/pc-app/runtime/features/discovery/map-adapter.cjs",
+      "expected": "031e4aaefc1d57d4e6305da2f9579708acd1f1d45032c832f43b09bd2d9b0379",
+      "actual": "031e4aaefc1d57d4e6305da2f9579708acd1f1d45032c832f43b09bd2d9b0379"
+    },
+    {
+      "file": "apps/pc-app/runtime/features/discovery/migrations.cjs",
+      "expected": "c38adc1ed6329316f52e880e999a20df0855803ff352d102a750be37bb32a3c4",
+      "actual": "c38adc1ed6329316f52e880e999a20df0855803ff352d102a750be37bb32a3c4"
+    },
+    {
+      "file": "apps/pc-app/runtime/features/discovery/qa-location.cjs",
+      "expected": "4b3e7171b5d18862e940e4b5383ae94e190119200b71558d663f93e3993be276",
+      "actual": "4b3e7171b5d18862e940e4b5383ae94e190119200b71558d663f93e3993be276"
+    },
+    {
+      "file": "apps/pc-app/runtime/features/discovery/repository.cjs",
+      "expected": "7f93d84756ed5cf1027295e2df34591095b11e64c07dc93854a745c836d1da19",
+      "actual": "7f93d84756ed5cf1027295e2df34591095b11e64c07dc93854a745c836d1da19"
+    },
+    {
+      "file": "apps/pc-app/runtime/features/discovery/server-authority.cjs",
+      "expected": "25ab6f46dcd58814474695960e3ecab22c21c78cc545676fa7cdb3106bfb98fb",
+      "actual": "25ab6f46dcd58814474695960e3ecab22c21c78cc545676fa7cdb3106bfb98fb"
+    },
+    {
+      "file": "apps/pc-app/runtime/features/discovery/service.cjs",
+      "expected": "090b6bec60123c67bb34798cf90e4ba940a80e2af02a82255c9c673d047d98da",
+      "actual": "090b6bec60123c67bb34798cf90e4ba940a80e2af02a82255c9c673d047d98da"
+    },
+    {
+      "file": "apps/pc-app/runtime/features/discovery/spawns.cjs",
+      "expected": "756da390303cb42d09a7de9498da14a6a56a4788faa9e59bc15ad56407e6a291",
+      "actual": "756da390303cb42d09a7de9498da14a6a56a4788faa9e59bc15ad56407e6a291"
+    },
+    {
+      "file": "apps/pc-app/runtime/features/discovery/territory-adapter.cjs",
+      "expected": "14426c21c7a05f3e2bfc8ca74253514c0dacd7d4d3bc567b347fcbb082a52868",
+      "actual": "14426c21c7a05f3e2bfc8ca74253514c0dacd7d4d3bc567b347fcbb082a52868"
+    },
+    {
+      "file": "apps/pc-app/runtime/features/discovery/tile-cache.cjs",
+      "expected": "478ac10f6d21465d5d91a3139d47fc2127cc73c284c8d8fa18bf5f88025e2876",
+      "actual": "478ac10f6d21465d5d91a3139d47fc2127cc73c284c8d8fa18bf5f88025e2876"
+    },
+    {
+      "file": "apps/pc-app/runtime/features/discovery/window-visibility.cjs",
+      "expected": "343d72abf4f7b53180afd5ec11a4bcccca6f36847e575a485c5d8622b89f1d6b",
+      "actual": "343d72abf4f7b53180afd5ec11a4bcccca6f36847e575a485c5d8622b89f1d6b"
+    },
+    {
+      "file": "apps/pc-app/runtime/features/discovery/windows-location.ps1",
+      "expected": "7b8d58ea1d2682aaff12e499e8385bb3a1168530ef21f751568cef453149d43f",
+      "actual": "7b8d58ea1d2682aaff12e499e8385bb3a1168530ef21f751568cef453149d43f"
+    },
+    {
+      "file": "apps/pc-app/ui/src/features/discovery/CaptureResultView.tsx",
+      "expected": "51568ec6bbfd09eea21f16e78341fedac33c08f49fc7b15ade17b681f80afe40",
+      "actual": "51568ec6bbfd09eea21f16e78341fedac33c08f49fc7b15ade17b681f80afe40"
+    },
+    {
+      "file": "apps/pc-app/ui/src/features/discovery/DiscoverySettings.tsx",
+      "expected": "58301be661f0a3cc16205efa72e0ffe991821c6abc605beeca4147f803e9c2f1",
+      "actual": "58301be661f0a3cc16205efa72e0ffe991821c6abc605beeca4147f803e9c2f1"
+    },
+    {
+      "file": "apps/pc-app/ui/src/features/discovery/EncounterView.tsx",
+      "expected": "14a10cbb8e1e3c600e304d354545f386a7f6be01f98d3c5ed0a27a3a8cff547a",
+      "actual": "14a10cbb8e1e3c600e304d354545f386a7f6be01f98d3c5ed0a27a3a8cff547a"
+    },
+    {
+      "file": "apps/pc-app/ui/src/features/discovery/ExploreView.tsx",
+      "expected": "a5775803f3154aae51b04d0c5aa2c46efa23c9426c29979a4819016a07f6dfc9",
+      "actual": "a5775803f3154aae51b04d0c5aa2c46efa23c9426c29979a4819016a07f6dfc9"
+    },
+    {
+      "file": "apps/pc-app/ui/src/features/discovery/LocationControl.tsx",
+      "expected": "3890d679b730d5d12d8131ab09d6a833ab2896d71277a87e8c25d070e19be10e",
+      "actual": "3890d679b730d5d12d8131ab09d6a833ab2896d71277a87e8c25d070e19be10e"
+    },
+    {
+      "file": "apps/pc-app/ui/src/features/discovery/NearbyMap.tsx",
+      "expected": "f7d91bf094982c774e9bf0eec569f66d646a5f0433b0fcd6d8a4166a4c8c7a41",
+      "actual": "f7d91bf094982c774e9bf0eec569f66d646a5f0433b0fcd6d8a4166a4c8c7a41"
+    },
+    {
+      "file": "apps/pc-app/ui/src/features/discovery/PetPicker.tsx",
+      "expected": "b057201e53639273249ed2fec59202355ee6972ded62d1968d1b21a36a0d0d39",
+      "actual": "b057201e53639273249ed2fec59202355ee6972ded62d1968d1b21a36a0d0d39"
+    },
+    {
+      "file": "apps/pc-app/ui/src/features/discovery/PokedexView.tsx",
+      "expected": "8edba046a4d9b60939eae6207be1da49dd6906b28b7cb80f2bc601db9d027a16",
+      "actual": "8edba046a4d9b60939eae6207be1da49dd6906b28b7cb80f2bc601db9d027a16"
+    },
+    {
+      "file": "apps/pc-app/ui/src/features/discovery/ResourcePortrait.tsx",
+      "expected": "5142e69e9b9d19a2611d75c13ba416f78a0a0583e0cf37a88f10bd1634e7ddf6",
+      "actual": "5142e69e9b9d19a2611d75c13ba416f78a0a0583e0cf37a88f10bd1634e7ddf6"
+    },
+    {
+      "file": "apps/pc-app/ui/src/features/discovery/ResultActions.tsx",
+      "expected": "9efb334adee0e6cbb1ea176d181c34ffca9d7bc5882f99c4272e5b716d15e1a0",
+      "actual": "9efb334adee0e6cbb1ea176d181c34ffca9d7bc5882f99c4272e5b716d15e1a0"
+    },
+    {
+      "file": "apps/pc-app/ui/src/features/discovery/WildPreviewView.tsx",
+      "expected": "6bc5dce7dfdb9718b9357bc3645a9a4e4ce67e6c0e1e30482531e505f510d34e",
+      "actual": "6bc5dce7dfdb9718b9357bc3645a9a4e4ce67e6c0e1e30482531e505f510d34e"
+    },
+    {
+      "file": "apps/pc-app/ui/src/features/discovery/assets/provenance.json",
+      "expected": "2287f8e877ce758b7bcd62e0d9cfb2b89a48fc78b746a5414295c6204605e738",
+      "actual": "2287f8e877ce758b7bcd62e0d9cfb2b89a48fc78b746a5414295c6204605e738"
+    },
+    {
+      "file": "apps/pc-app/ui/src/features/discovery/assets/wild-lake-v1.png",
+      "expected": "9740152e788e60443941057d02e55f819821be7037571a1ee9451f727c63ec9b",
+      "actual": "9740152e788e60443941057d02e55f819821be7037571a1ee9451f727c63ec9b"
+    },
+    {
+      "file": "apps/pc-app/ui/src/features/discovery/index.tsx",
+      "expected": "4d2b8591750e7cba372a9cf8ed5e59c388f050866b5448c66f9d2f66e600db3b",
+      "actual": "4d2b8591750e7cba372a9cf8ed5e59c388f050866b5448c66f9d2f66e600db3b"
+    },
+    {
+      "file": "apps/pc-app/ui/src/features/discovery/presentation.ts",
+      "expected": "4fa67dee93188ae0dc9b884421f348709db4b37d04a8802bc43d894c0a70e653",
+      "actual": "4fa67dee93188ae0dc9b884421f348709db4b37d04a8802bc43d894c0a70e653"
+    },
+    {
+      "file": "apps/pc-app/ui/src/features/discovery/styles.css",
+      "expected": "bd83111e570943b36d694e51c6153ec26035427596ee872709bc0196bf8308a8",
+      "actual": "bd83111e570943b36d694e51c6153ec26035427596ee872709bc0196bf8308a8"
+    },
+    {
+      "file": "apps/pc-app/ui/src/features/discovery/use-discovery.ts",
+      "expected": "f7b9801389cad3599cdc3e57b82df6cd46cf57d32bf362e28697a0a4816092f6",
+      "actual": "f7b9801389cad3599cdc3e57b82df6cd46cf57d32bf362e28697a0a4816092f6"
+    },
+    {
+      "file": "packages/shared-types/src/features/discovery/index.ts",
+      "expected": "5877298ac34d873a34f524ea941a8082f9473ad0d7c83417545998d4fd46bf3b",
+      "actual": "5877298ac34d873a34f524ea941a8082f9473ad0d7c83417545998d4fd46bf3b"
+    }
+  ],
+  "differences": [],
+  "projectRoster": [
+    {
+      "templateId": "big-fish-gentle",
+      "element": "water",
+      "resourceId": "builtin:lingjing-yuwan-v2"
+    },
+    {
+      "templateId": "big-fish-cheerful",
+      "element": "water",
+      "resourceId": "builtin:lingjing-xiaolan-v1"
+    },
+    {
+      "templateId": "big-fish-foodie",
+      "element": "water",
+      "resourceId": "builtin:lingjing-fantuan-v1"
+    },
+    {
+      "templateId": "animal-shiba",
+      "element": "fire",
+      "resourceId": "builtin:lingjing-shiba-v2"
+    },
+    {
+      "templateId": "animal-hat-cat",
+      "element": "metal",
+      "resourceId": "builtin:lingjing-hatcat-v1"
+    },
+    {
+      "templateId": "animal-white-fox",
+      "element": "water",
+      "resourceId": "builtin:lingjing-xiaohu-v1"
+    },
+    {
+      "templateId": "animal-wood-deer",
+      "element": "wood",
+      "resourceId": "builtin:lingjing-qingya-v1"
+    },
+    {
+      "templateId": "animal-earth-pangolin",
+      "element": "earth",
+      "resourceId": "builtin:lingjing-yantuan-v1"
+    }
+  ],
+  "elements": [
+    "water",
+    "fire",
+    "metal",
+    "wood",
+    "earth"
+  ],
+  "runtimeAcceptance": false
+}
