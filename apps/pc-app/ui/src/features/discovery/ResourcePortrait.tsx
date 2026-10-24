@@ -25,7 +25,7 @@ export function ResourcePortrait({ resourceId, instanceId, compact = false, anim
   const frame = display?.clip?.frames?.[0] || 0;
   const projectBuiltin = resourceId === 'builtin:lingjing-yuwan-v1';
   return <div className={`discovery-resource-portrait ${compact ? 'compact' : ''}`} role="img" aria-label="伙伴的 2D 形象" data-appearance="2d">
-    {display && !compact && animate ? <ResourceStage resource={display.resource} petId={instanceId} context="battle" action={selectedAction} playing/>
+    {display && !compact && animate ? <ResourceStage className="discovery-character-stage" resource={display.resource} petId={instanceId} context="battle" action={selectedAction} playing/>
       : display && sheet ? <div className="discovery-sheet-thumbnail" style={{
         backgroundImage: `url("${resourceAssetUrl(display.resource.id, display.resource.entryAsset)}")`,
         backgroundSize: `${sheet.columns * 100}% ${sheet.rows * 100}%`,

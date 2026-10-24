@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { createRoot, type Root } from 'react-dom/client';
 import { Crosshair, Flag, PawPrint, RefreshCw } from 'lucide-react';
-import { Map as LibreMap, Marker, NavigationControl, AttributionControl, addProtocol, type GeoJSONSource, type StyleSpecification } from 'maplibre-gl';
+import { Map as LibreMap, Marker, LngLat, NavigationControl, AttributionControl, addProtocol, setWorkerUrl, type GeoJSONSource, type StyleSpecification } from 'maplibre-gl';
+import workerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url';
 import { circle } from '@turf/circle';
 import type { FeatureCollection, Polygon } from 'geojson';
 import { request } from '../../app/bridge';
@@ -9,6 +10,9 @@ import { Button } from '../../components/ui';
 import type { DiscoverySnapshot, WildSpawn } from '../../../../../../packages/shared-types/src/features/discovery';
 import { ResourcePortrait } from './ResourcePortrait';
 import 'maplibre-gl/dist/maplibre-gl.css';
+
+// v6 ships its worker separately; Vite must bundle its imports into a local file.
+setWorkerUrl(workerUrl);
 
 // MapLibre owns tiles, projection, gestures and camera movement. This protocol
 // only routes visible tile requests through the existing main-process cache.
@@ -35,20 +39,28 @@ function mapStyle(state: DiscoverySnapshot): StyleSpecification {
 }
 export function NearbyMap({ state, selectedId, onSelect, mini = false }: { state: DiscoverySnapshot; selectedId?: string; onSelect?: (spawn: WildSpawn) => void; mini?: boolean }) {
   const host = useRef<HTMLDivElement>(null), map = useRef<LibreMap | null>(null), latest = useRef(state), selection = useRef(onSelect);
-  const [ready, setReady] = useState(false), [error, setError] = useState(''), [retry, setRetry] = useState(0);
+  const [ready, setReady] = useState(false), [error, setError] = useState(''), [retry, setRetry] = useState(0), [loadedTiles, setLoadedTiles] = useState(0);
   latest.current = state; selection.current = onSelect;
   const center = state.mapLocation, canRender = Boolean(center && state.map.available);
   useEffect(() => {
     if (!host.current || !canRender || !center) return;
-    setReady(false); setError('');
+    setReady(false); setError(''); setLoadedTiles(0);
     const instance = new LibreMap({ container: host.current, style: mapStyle(latest.current), center: [center.lng, center.lat], zoom: mini ? 14 : 16.8,
       minZoom: 11, maxZoom: state.map.maxZoom, attributionControl: false, interactive: !mini, dragRotate: false, pitchWithRotate: false,
       renderWorldCopies: false, fadeDuration: 0, maxTileCacheSize: 64 });
     map.current = instance;
     instance.addControl(new AttributionControl({ compact: false, customAttribution: '<a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">© OpenStreetMap contributors</a>' }), 'bottom-right');
     if (!mini) instance.addControl(new NavigationControl({ showCompass: true }), 'top-right');
-    instance.on('load', () => setReady(true));
-    instance.on('error', () => setError('部分底图暂时无法加载，可稍后重试。'));
+    // Overlays depend on the style, not on every remote raster tile finishing.
+    // A slow or failed tile must not hide the reported position or encounters.
+    instance.on('style.load', () => setReady(true));
+    const tiles = new Set<string>();
+    instance.on('sourcedata', event => {
+      if (event.sourceId !== 'osm' || !event.tile || typeof event.tile !== 'object') return;
+      const tile = event.tile as { state?: string; tileID?: { key?: string } };
+      if (tile.state === 'loaded') { tiles.add(String(tile.tileID?.key)); setLoadedTiles(tiles.size); }
+    });
+    instance.on('error', event => { console.warn('[discovery:map]', event.error?.message); setError('部分底图暂时无法加载，可稍后重试。'); });
     const observer = new ResizeObserver(() => instance.resize()); observer.observe(host.current);
     return () => { observer.disconnect(); instance.remove(); map.current = null; };
   }, [canRender, state.map.id, mini, retry]);
@@ -61,7 +73,7 @@ export function NearbyMap({ state, selectedId, onSelect, mini = false }: { state
       return { type: 'Feature', properties: { id: t.territoryId, name: t.name, owned: t.owned }, geometry: { type: 'Polygon', coordinates: [ring] } };
     }) };
     (instance.getSource('territories') as GeoJSONSource)?.setData(features);
-    if(instance.getCenter().distanceTo([center.lng,center.lat])>2000) instance.jumpTo({center:[center.lng,center.lat]});
+    if(instance.getCenter().distanceTo(new LngLat(center.lng,center.lat))>2000) instance.jumpTo({center:[center.lng,center.lat]});
     const current = document.createElement('span'); current.className = `discovery-my-location ${state.location.mode === 'demo' ? 'demo' : ''}`;
     const locationMarker = new Marker({ element: current }).setLngLat([center.lng, center.lat]).addTo(instance);
     return () => { locationMarker.remove(); };
@@ -78,7 +90,7 @@ export function NearbyMap({ state, selectedId, onSelect, mini = false }: { state
     }
     return () => { for (const entry of entries) { entry.marker.remove(); queueMicrotask(() => entry.root.unmount()); } };
   }, [ready, mini, selectedId, state.spawns]);
-  return <div className={`discovery-map ${mini ? 'mini' : ''}`} data-map-engine="maplibre-gl" data-map-ready={ready} aria-label={mini ? '相遇位置小地图' : '附近探索地图'}>
+  return <div className={`discovery-map ${mini ? 'mini' : ''}`} data-map-engine="maplibre-gl" data-map-ready={canRender && ready} data-map-loaded-tiles={loadedTiles} aria-label={mini ? '相遇位置小地图' : '附近探索地图'}>
     <div className="discovery-map-canvas" ref={host}/>
     {!canRender ? <div className="discovery-map-empty"><Crosshair size={30}/><strong>{center ? '当前底图尚未配置' : '让相遇，从这里开始。'}</strong><span>{center ? '请选择已配置的地图服务。' : '获取系统位置，或明确进入演示模式。'}</span></div> : null}
     {!mini ? <><div className="discovery-map-legend"><PawPrint size={16}/>可相遇伙伴 <Flag size={15}/>领地</div><div className="discovery-map-controls"><Button variant="ghost" aria-label="地图回到当前位置" onClick={() => { if (center) map.current?.easeTo({ center: [center.lng, center.lat], duration: 0 }); }}><Crosshair size={19}/></Button><Button variant="ghost" aria-label="重新加载底图" onClick={() => setRetry(v => v + 1)}><RefreshCw size={17}/></Button></div>{error ? <span className="discovery-map-error" role="status">{error}</span> : null}</> : null}
