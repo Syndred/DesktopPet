@@ -29,6 +29,7 @@ const unavailableBaseUrl = await new Promise((done, reject) => {
 });
 let app;
 let page;
+let settingsLayout;
 const errors = [];
 const operations = [];
 const sourceCommit = execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
@@ -148,6 +149,11 @@ try {
   await waitUntil(async () => (await feature('conversations', 'snapshot')).memories.length === 1, 'memory persisted');
   const note = (await feature('conversations', 'snapshot')).memories[0];
   await openSettings();
+  const settingsHeading = await page.getByRole('heading', { name: 'AI 对话', exact: true }).boundingBox();
+  const returnControl = await page.getByRole('link', { name: '回到聊天', exact: true }).boundingBox();
+  settingsLayout = { headerControlCenterDifference: Math.abs(settingsHeading.y + settingsHeading.height / 2 - returnControl.y - returnControl.height / 2),
+    horizontalOverflow: await page.evaluate(() => document.documentElement.scrollWidth > innerWidth) };
+  assert.ok(settingsLayout.headerControlCenterDifference < 4); assert.equal(settingsLayout.horizontalOverflow, false);
   await page.getByRole('button', { name: '密钥提示', exact: true }).focus();
   await page.getByRole('tooltip').filter({ hasText: '密钥加密保存在本机' }).waitFor();
   await page.keyboard.press('Escape');
@@ -230,7 +236,7 @@ try {
   const evidence = { at: new Date().toISOString(), status: 'passed', sourceCommit, sourceHashes, buildProvenance, realElectron: true, isolatedQaProfile: true, simulation: 'none',
     modelVerification: 'real local connection failure only; no mocked response and no external model', network, operations, portraitRows, projections,
     sqliteReadback: { failed: failedDatabase, cleared: clearedDatabase },
-    canonicalCount: catalog.characters.length, coveredElements: requiredElements, rendererErrors: errors,
+    canonicalCount: catalog.characters.length, coveredElements: requiredElements, rendererErrors: errors, settingsLayout,
     dataReadback: { selectedPetId: cleared.petId, historyAfterClear: cleared.messages.length, savedMemoryRetained: cleared.memories[0].id === note.id,
       personaRetained: true, memoryEnabled: cleared.profile.memoryEnabled, encryptedKeyConfigured: cleared.globalConnection.hasKey, rendererKeyStorage: 0 },
     viewports: [{ width: 1280, height: 844 }, { width: 1440, height: 900 }] };
