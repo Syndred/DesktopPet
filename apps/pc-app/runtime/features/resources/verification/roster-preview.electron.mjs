@@ -47,11 +47,13 @@ try {
     }
     assert.equal(await host.getAttribute('data-texture-frame'),expected,`${character.id}/${index}`);
     assert.equal(await page.locator('.resource-stage').first().getAttribute('data-fallback'),'false');
+    const bounds=JSON.parse(await host.getAttribute('data-content-bounds'));
+    assert(bounds.x>=-.5 && bounds.y>=-.5 && bounds.x+bounds.width<=bounds.canvasWidth+.5 && bounds.y+bounds.height<=bounds.canvasHeight+.5,`${character.id}/${index}: rendered content is clipped by the stage`);
     const filename=`${character.id}-frame-${String(index).padStart(2,'0')}.png`;
     const screenshot=await page.locator('.resource-stage').first().screenshot({path:path.join(directory,filename)});
     const box=await page.locator('.resource-stage').first().boundingBox(), dpr=await page.evaluate(()=>devicePixelRatio);
     assert(Math.abs(screenshot.readUInt32BE(16)-box.width*dpr)<=2 && Math.abs(screenshot.readUInt32BE(20)-box.height*dpr)<=2,'Native screenshot geometry does not match the stage');
-    return {index,action,notes,screenshot:filename,physicalPixels:[screenshot.readUInt32BE(16),screenshot.readUInt32BE(20)],expectedRectangle:source,actual:await host.evaluate(element=>({...element.dataset}))};
+    return {index,action,notes,screenshot:filename,physicalPixels:[screenshot.readUInt32BE(16),screenshot.readUInt32BE(20)],expectedRectangle:source,renderedBounds:bounds,actual:await host.evaluate(element=>({...element.dataset}))};
   }
 
   for(const character of catalog.characters) {
@@ -85,7 +87,7 @@ try {
     await page.locator('.resources-library-scroll [data-radix-scroll-area-viewport]').evaluate(e=>{e.scrollTop=0;});
     await page.locator('.main-content').evaluate(e=>{e.scrollTop=0;});
     await page.screenshot({path:path.join(directory,`${character.id}-page-1280.png`)});
-    const gallery=`<!doctype html><meta charset="utf-8"><title>${character.name} · 实际 Pixi 帧截图</title><style>body{margin:24px;background:#f7faff;color:#192f61;font:14px 'Microsoft YaHei',sans-serif}h1{font-size:24px;margin:0 0 8px}p{margin:0 0 18px;color:#617797}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}figure{margin:0;border:1px solid #dfe8f8;border-radius:8px;overflow:hidden;background:white}figure>a{display:block;height:240px;position:relative;overflow:hidden}img{position:absolute;height:100%;width:auto;max-width:none;left:50%;top:50%;transform:translate(-50%,-50%)}figcaption{padding:9px 12px;font-size:13px}</style><h1>${character.name} · 16 个真实 Pixi 帧</h1><p>证据排版，非产品页面。每格来自正式资源页 ResourceStage 截图；只裁去舞台两侧空白以便查看，原始截图可点击。</p><div class="grid">${result.frames.map(frame=>`<figure><a href="${frame.screenshot}"><img src="${frame.screenshot}" alt="frame ${frame.index}"></a><figcaption>${String(frame.index).padStart(2,'0')} · ${labels[frame.action]}${frame.index===14?'（坐睡）':''}</figcaption></figure>`).join('')}</div>`;
+    const gallery=`<!doctype html><meta charset="utf-8"><title>${character.name} · 实际 Pixi 帧截图</title><style>body{margin:24px;background:#f7faff;color:#192f61;font:14px 'Microsoft YaHei',sans-serif}h1{font-size:24px;margin:0 0 8px}p{margin:0 0 18px;color:#617797}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}figure{margin:0;border:1px solid #dfe8f8;border-radius:8px;overflow:hidden;background:white}figure>a{display:block;height:180px;position:relative;overflow:hidden}img{position:absolute;height:100%;width:auto;max-width:none;left:50%;top:50%;transform:translate(-50%,-50%)}figcaption{padding:9px 12px;font-size:13px}</style><h1>${character.name} · 16 个真实 Pixi 帧</h1><p>证据排版，非产品页面。每格来自正式资源页 ResourceStage 截图；只裁去舞台两侧空白以便查看，原始截图可点击。</p><div class="grid">${result.frames.map(frame=>`<figure><a href="${frame.screenshot}"><img src="${frame.screenshot}" alt="frame ${frame.index}"></a><figcaption>${String(frame.index).padStart(2,'0')} · ${labels[frame.action]}${frame.index===14?'（坐睡）':''}</figcaption></figure>`).join('')}</div>`;
     const galleryPath=path.join(directory,`${character.id}-frames.html`);await fs.writeFile(galleryPath,gallery);
     const galleryImage=await app.evaluate(async({BrowserWindow},file)=>{
       const window=new BrowserWindow({width:1600,height:1280,useContentSize:true,show:false,webPreferences:{contextIsolation:true,sandbox:true,nodeIntegration:false,backgroundThrottling:false}});
