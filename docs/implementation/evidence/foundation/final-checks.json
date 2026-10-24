@@ -1,0 +1,38 @@
+{
+  "at": "2026-10-24T14:01:28.653Z",
+  "legacyLayers": {
+    "unit": 141,
+    "integration": 1,
+    "e2e": 1,
+    "performance": 2,
+    "security": 2,
+    "total": 147,
+    "note": "One full unit pass found three stale assertions; 12 cases in those three files passed after expectation-only correction. Remaining four layers ran once. Original runtime files match origin/main."
+  },
+  "native": {
+    "uniqueCases": 110,
+    "passed": 110,
+    "failed": []
+  },
+  "postgres": {
+    "cases": 8,
+    "scope": "local HTTP + PGlite PostgreSQL WASM; not a deployed service"
+  },
+  "buildChecks": {
+    "lint": "passed",
+    "rootTypecheck": "passed",
+    "uiTypecheck": "passed"
+  },
+  "runtimeEvidence": {
+    "pages": "artifacts/foundation/visual-recheck/evidence.json",
+    "revisions": "artifacts/foundation/visual-recheck/revision-checks.json",
+    "rapidNavigation": "72 route changes at 24ms intervals; one visible current route remains",
+    "packagedLocation": "ASAR module obtained genuine Windows WiFi location, accuracy 500m; precise-location acceptance false"
+  },
+  "remaining": [
+    "Portrait and HUD follow-up recheck",
+    "Final Windows artifact build, source/asset audit and packaged launch",
+    "Independent final visual approval",
+    "External cloud, two-device, precise-location and live-model acceptance"
+  ]
+}
