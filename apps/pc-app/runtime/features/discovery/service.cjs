@@ -3,7 +3,7 @@ const {DiscoveryRepository,atomic}=require('./repository.cjs');
 const {LocationService}=require('./location-adapter.cjs');
 const {MapAdapter}=require('./map-adapter.cjs');
 const {nearbySpawns}=require('./spawns.cjs');
-const {LegacyWildBattleAdapter,RegisteredWildBattleAdapter}=require('./battle-adapter.cjs');
+const {RegisteredWildBattleAdapter}=require('./battle-adapter.cjs');
 const {checkFix,geofence,distanceMeters}=require('./coordinates.cjs');
 const {getBattleRules}=require('../../services/battle-runtime.cjs');
 function problem(code,message) {throw Object.assign(new Error(message),{code});}
@@ -19,7 +19,7 @@ function publicEncounter(value) {
 class DiscoveryService {
   constructor({db,getCompanions,getOwner,getBattle,invokeBattle,location=new LocationService(),map=new MapAdapter(),authority=null,getAuthority,now=Date.now,events={emit(){}}}) {
     this.db=db; this.repo=new DiscoveryRepository(db); this.getCompanions=getCompanions; this.getOwner=getOwner;
-    this.getBattle=getBattle; this.invokeBattle=invokeBattle; this.localBattle=new LegacyWildBattleAdapter(); this.location=location; this.map=map; this.getAuthority=getAuthority || (()=>authority); this.now=now; this.events=events;
+    this.getBattle=getBattle; this.invokeBattle=invokeBattle; this.location=location; this.map=map; this.getAuthority=getAuthority || (()=>authority); this.now=now; this.events=events;
     this.locks=new Map();
   }
   get authority() {return this.getAuthority();}
@@ -27,6 +27,21 @@ class DiscoveryService {
   companions() {const service=this.getCompanions?.(); if((!service?.getPet && !service?.requirePet) || !service?.createCapturedInstance) problem('COMPANIONS_UNAVAILABLE','伙伴服务暂未连接，请稍后重试'); return service;}
   pet(owner,id) {const api=this.companions(); return api.getPet ? api.getPet(owner,id) : api.requirePet(owner,id);}
   currentEncounter(owner,id) {const value=this.repo.get(owner,id); if(!value) problem('ENCOUNTER_NOT_FOUND','找不到这次遭遇'); return value;}
+  getBattleContext({ownerAccountId,sessionId}) {
+    const owner=this.owner(); if(owner!==ownerAccountId) problem('AUTH_CHANGED','账号已切换');
+    const saved=this.repo.list(owner).find(value=>value.battle?.battleId===sessionId);
+    if(!saved) return {returnTo:'/discovery'};
+    const encounter=this.syncExternal(saved);
+    return {returnTo:'/discovery',action:encounter.status==='won'?'capture':undefined,name:encounter.spawn.name,settled:encounter.status==='captured',resultPath:encounter.status==='captured'?`/discovery/result/${encounter.encounterId}`:undefined};
+  }
+  async settleBattleContext({ownerAccountId,sessionId,actionId,name,showOnDesktop}) {
+    const owner=this.owner(); if(owner!==ownerAccountId) problem('AUTH_CHANGED','账号已切换');
+    const saved=this.repo.list(owner).find(value=>value.battle?.battleId===sessionId);
+    if(!saved) problem('ENCOUNTER_NOT_FOUND','未找到这次相遇');
+    const encounter=this.syncExternal(saved);
+    const result=await this.confirm({encounterId:encounter.encounterId,actionId,name:name||encounter.spawn.name,showOnDesktop,expectedRevision:encounter.revision});
+    return result.ok?{...result,data:{...result.data,resultPath:`/discovery/result/${encounter.encounterId}`}}:result;
+  }
   checkRevision(value,expected) {if(expected!==undefined && expected!==value.revision) problem('REVISION_CONFLICT','遭遇进度已更新，请刷新后重试');}
   requireFix(spawn) {
     if(!this.location.policyAllowed()) {const failure=this.location.blockByPolicy();problem(failure.error.code,failure.error.message);}
@@ -89,7 +104,11 @@ class DiscoveryService {
       this.repo.put(encounter); this.notify(owner); return ok(publicEncounter(encounter));
     });
   }
-  battleAdapter() {const battle=this.getBattle?.(); return battle?.wildAdapter || (battle?.beginWildChallenge && this.invokeBattle ? new RegisteredWildBattleAdapter(battle,this.invokeBattle) : this.localBattle);}
+  battleAdapter() {
+    const battle=this.getBattle?.();
+    if (!battle?.beginWildChallenge || !this.invokeBattle) problem('BATTLE_UNAVAILABLE','对战服务尚未就绪');
+    return new RegisteredWildBattleAdapter(battle,this.invokeBattle);
+  }
   syncExternal(encounter) {
     if(encounter.battle?.adapter!=='battle-feature' || !['challenging','won'].includes(encounter.status)) return encounter;
     const adapter=this.battleAdapter(); if(!adapter.read) return encounter;
@@ -120,7 +139,8 @@ class DiscoveryService {
       if(encounter.status!=='challenging') problem('BATTLE_FINISHED','这场挑战已结束');
       this.pet(owner,encounter.petId);
       const previous=encounter.revision;
-      encounter.battle=battle || this.battleAdapter().act(encounter.battle,input.action);
+      if (!battle) problem('LEGACY_BATTLE_READ_ONLY','历史挑战已保留，请开始新的相遇');
+      encounter.battle=battle;
       if(encounter.battle?.then) problem('BATTLE_ADAPTER_INVALID','野外挑战适配器必须支持同步存档');
       if(encounter.battle.finished) encounter.status=encounter.battle.winner==='player' ? 'won' : 'lost';
       encounter.revision++; encounter.updatedAt=this.now(); this.repo.put(encounter,previous); this.notify(owner);

@@ -62,7 +62,7 @@ export function AuthPage({ session, onSignedIn }: { session: AccountsSession; on
         <TabsTrigger value="register" disabled={pending}>注册</TabsTrigger>
       </TabsList>
       <TabsContent value={register ? "register" : "login"} forceMount>
-      <div className="ac-auth-heading"><img className="ac-auth-mark" src="./brand/logo-mark.png" alt="" /><h2>{register ? "遇见新的陪伴" : "欢迎回来"}</h2>{session.scenario && <AccountStatus icon={FlaskConical} label="测试场景" detail={`隔离测试 · ${session.scenario.scenarioId}`} iconOnly />}</div>
+      <div className="ac-auth-heading"><img className="ac-auth-mark" src="./brand/logo-mark.png" alt="" /><h2>{register ? "遇见新的陪伴" : "欢迎回来"}</h2>{session.scenario && <AccountStatus icon={FlaskConical} label="测试场景" detail={`隔离测试 · ${session.scenario.id}`} iconOnly />}</div>
       <form onSubmit={event => void submit(event)}>
         <fieldset disabled={pending}>
           <label><span className="ac-field-caption">账号类型{provider === "local" && <AccountStatus icon={HardDrive} label="本机存档" detail="仅保存在这台电脑，可导出备份。" iconOnly />}</span><AccountSelect label="账号类型" value={provider} onChange={value => setProvider(value as "local" | "runtime")} disabled={pending} options={session.scenario ? [{ value: "local", label: "本机账号" }] : [{ value: "runtime", label: "云端账号" }, { value: "local", label: "本机账号" }]} /></label>

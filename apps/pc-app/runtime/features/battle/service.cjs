@@ -1,8 +1,10 @@
 const { randomUUID } = require("node:crypto");
-const { BattleRuntimeService, getBattleRules } = require("../../services/battle-runtime.cjs");
+const { BattleRuntimeService, getBattleRules, executeRound } = require("../../services/battle-runtime.cjs");
 const { OnlineDuelService } = require("../../services/online-duel-service.cjs");
 const { BattleStore, copy } = require("./store.cjs");
-const { appearance2d, SHIBA_RESOURCE, CANONICAL_SHIBA_RESOURCE } = require("./assets.cjs");
+const { appearance2d } = require("./assets.cjs");
+const { readQaProfile, createQaOnline, qaUser } = require('./qa-adapter.cjs');
+const { presentSession } = require('./presentation.cjs');
 
 const ACTIONS = new Set(["normal_attack", "element_attack", "dodge", "ultimate"]);
 const ELEMENTS = new Set(["metal", "wood", "earth", "water", "fire"]);
@@ -17,7 +19,8 @@ class BattleFeatureService {
   constructor(services) {
     this.services = services;
     this.store = new BattleStore(services.db);
-    this.online = services.legacy?.onlineDuelService || new OnlineDuelService();
+    this.qa = readQaProfile(services);
+    this.online = this.qa?.endpoint ? createQaOnline(this.qa) : services.legacy?.onlineDuelService || new OnlineDuelService();
     this.locks = new Map();
     this.unsubscribe = this.online.onEvent(event => {
       // Network notifications trigger a verified sync; their payload is never a settlement.
@@ -39,7 +42,7 @@ class BattleFeatureService {
 
   user(owner) {
     const accounts = this.services.get("accounts");
-    const user = accounts?.requireRuntimeUser ? accounts.requireRuntimeUser() : this.services.session.getCurrentUser();
+    const user = this.qa ? qaUser(this.services, owner, this.qa) : accounts?.requireRuntimeUser ? accounts.requireRuntimeUser() : this.services.session.getCurrentUser();
     if (!user || (user.ownerAccountId || user.id) !== owner || !user.sessionToken) throw fail("ONLINE_LOGIN_REQUIRED", "请登录云端账号后使用好友对战");
     this.online.setCurrentUser(user);
     return user;
@@ -75,9 +78,10 @@ class BattleFeatureService {
       pet = inventory?.pets?.find(item => item.id === petId);
     }
     if (!pet || (pet.ownerAccountId && pet.ownerAccountId !== owner)) throw fail("PET_NOT_OWNED", "当前账号没有这只伙伴");
+    if (!ELEMENTS.has(pet.element)) throw fail('INVALID_ELEMENT', '伙伴五行尚未就绪');
     return {
       petId: pet.id || pet.petId, petName: typeof pet.name === "object" ? pet.name.zh : pet.name || pet.petName,
-      element: ELEMENTS.has(pet.element) ? pet.element : "metal", level: pet.growth?.level || pet.level || 1,
+      element: pet.element, level: pet.growth?.level || pet.level || 1,
       resourceRef: appearance2d(pet), resource: { resourceId: appearance2d(pet), kind: "2d" },
       appearance2d: appearance2d(pet),
       avatar: pet.avatar
@@ -116,16 +120,24 @@ class BattleFeatureService {
     return {
       pets: this.pets(owner), session: current, rules: getBattleRules(), selectedPetId: this.services.get("companions")?.getSelections?.(owner)?.battlePetId || null,
       online: { enabled: status.enabled, configured: status.configured, available: status.available },
-      reports: this.listReports({}, { ownerAccountId: owner })
+      reports: this.listReports({}, { ownerAccountId: owner }), opponents: this.opponents()
     };
   }
 
   rules(_payload, context) { this.owner(context); return getBattleRules(); }
 
+  opponents() {
+    const catalog = require('../resources/assets/roster-v2/catalog.json');
+    return [...ELEMENTS].map(element => catalog.characters.find(character => character.element === element)).filter(Boolean).map(character => ({
+      petId: `training-${character.element}`, petName: character.name, element: character.element, level: 1,
+      resourceRef: character.resourceId, appearance2d: character.resourceId, resource: { resourceId: character.resourceId, kind: '2d' }
+    }));
+  }
+
   requireSession(owner, sessionId) {
     const session = sessionId ? this.store.session(owner, text(sessionId, "对战编号")) : this.store.latest(owner);
     if (!session) throw fail("BATTLE_NOT_FOUND", "未找到当前账号的对战");
-    return { ...session, rules: session.rules || getBattleRules() };
+    return presentSession({ ...session, rules: session.rules || getBattleRules() });
   }
 
   startLocal(owner, input, mode, challenge) {
@@ -147,7 +159,7 @@ class BattleFeatureService {
       id: `battle-${randomUUID()}`, mode, status: "active", startedAt: new Date().toISOString(),
       player, enemy: opponent, snapshot: engine.reset({ playerElement: player.element, enemyElement: opponent.element }),
       rounds: [], winner: null, pendingAction: null, historyComplete: true, rules: getBattleRules(),
-      context: { ...copy(challenge), authority: "local", opponent: undefined }
+      context: { ...copy(challenge), authority: this.qa ? 'simulated' : 'local', ...(this.qa ? { scenarioId: this.qa.runId } : {}), opponent: undefined }
     };
     return this.services.db.transaction(() => {
       if (this.store.latest(owner)) throw fail("BATTLE_IN_PROGRESS", "当前账号已有进行中的对战");
@@ -162,9 +174,11 @@ class BattleFeatureService {
   startTraining(payload, context) {
     const owner = this.owner(context);
     if (!ELEMENTS.has(payload.enemyElement)) throw fail("INVALID_ELEMENT", "请选择训练对手的五行");
+    const opponent = this.opponents().find(pet => pet.element === payload.enemyElement);
+    if (!opponent) throw fail('ELEMENT_ROSTER_MISSING', `${ELEMENT_NAMES[payload.enemyElement]}系伙伴尚未就绪`);
     return this.serial(owner, () => this.startLocal(owner, payload, "training", {
       id: `training:${payload.enemyElement}`,
-      opponent: { petId: `training-${payload.enemyElement}`, petName: "焰柴", element: payload.enemyElement, level: 1, appearance2d: this.services.get('resources')?.repository?.hasGlobal(CANONICAL_SHIBA_RESOURCE) ? CANONICAL_SHIBA_RESOURCE : SHIBA_RESOURCE }
+      opponent
     }));
   }
 
@@ -184,6 +198,29 @@ class BattleFeatureService {
   snapshot(payload, context) {
     const owner = this.owner(context);
     return this.requireSession(owner, payload.sessionId);
+  }
+
+  qaPreset(payload, context) {
+    const owner = this.owner(context);
+    if (!this.qa) throw fail('QA_DISABLED', '场景不可用');
+    if (this.services.get('accounts')?.privateSession?.()?.provider !== 'local') throw fail('QA_ACCOUNT_REQUIRED', '需要本机场景账号');
+    return this.serial(owner, async () => {
+      const session = this.requireSession(owner, payload.sessionId);
+      if (session.status !== 'active' || session.snapshot.round !== 0 || payload.preset !== 'charged') throw fail('QA_PRESET_INVALID', '仅支持未出招场景的合法充能前态');
+      if (session.mode === 'friend') {
+        const user = this.user(owner);
+        await this.online.invoke('qa_set_state', { userId: user.id, sessionToken: user.sessionToken, roomId: session.room.id, preset: payload.preset });
+        return this.syncInternal(owner, session);
+      }
+      const engine = new BattleRuntimeService();
+      engine.restore({ ...session.snapshot, player: { ...session.snapshot.player, hp: 85, anger: 50 }, enemy: { ...session.snapshot.enemy, hp: 100, anger: 30 } });
+      session.snapshot = engine.snapshot(); session.context.qaPreset = 'charged';
+      if (payload.enemyAction != null) {
+        if (!ACTIONS.has(payload.enemyAction)) throw fail('QA_PRESET_INVALID', '无效场景行动');
+        session.context.qaEnemyAction = payload.enemyAction;
+      }
+      return this.store.save(owner, session);
+    });
   }
 
   selectPet(payload, context) {
@@ -279,7 +316,8 @@ class BattleFeatureService {
         if (!receipt) this.store.reserve(owner, actionId, session.id, { action: payload.action, roundNo: session.snapshot.round + 1 });
         const engine = new BattleRuntimeService();
         engine.restore(session.snapshot);
-        const result = engine.act(payload.action);
+        const scripted = this.qa && session.context?.qaEnemyAction || this.qa?.enemyActions?.[session.mode]?.[session.snapshot.round % this.qa.enemyActions[session.mode].length];
+        const result = scripted ? (() => { const roundResult = executeRound(engine.session, payload.action, scripted); return { state: engine.snapshot(), roundResult }; })() : engine.act(payload.action);
         session.snapshot = result.state;
         session.rounds.push({ ...result.roundResult, state: result.state });
         session.winner = result.roundResult.winner;
@@ -420,7 +458,7 @@ class BattleFeatureService {
       enemy: { petId: room[`${peer}_pet_id`] || room[`${peer}_user_id`] || "waiting-peer", petName: room[`${peer}_pet_name`] || "等待好友", element: room[`${peer}_element`] || "wood", appearance2d: room[`${peer}_resource_id`] || appearance2d({ element: room[`${peer}_element`] }) },
       snapshot: this.online.toBattleState(), room: copy(room), side,
       rounds: [], winner: null, pendingAction: null, historyComplete: true, rules: getBattleRules(),
-      context: { authority: "supabase", cloudUserId: user.id }
+      context: { authority: this.qa ? 'simulated' : 'supabase', cloudUserId: user.id, ...(this.qa ? { scenarioId: this.qa.runId } : {}) }
     };
     return this.store.save(owner, session);
   }
@@ -573,6 +611,31 @@ class BattleFeatureService {
     const owner = this.owner(input);
     const session = this.requireSession(owner, input.sessionId);
     return { session, won: session.status === "finished" && session.winner === "player", settled: session.status === "finished" };
+  }
+
+  context(payload, context) {
+    const owner = this.owner(context), session = this.requireSession(owner, payload.sessionId);
+    if (session.mode === 'wild') {
+      return this.services.get('discovery')?.getBattleContext?.({ ownerAccountId: owner, sessionId: session.id }) || { returnTo: '/discovery' };
+    }
+    if (session.mode === 'territory') {
+      return this.services.get('garden')?.getBattleContext?.({ ownerAccountId: owner, sessionId: session.id }) || { returnTo: '/garden' };
+    }
+    return { returnTo: session.mode === 'friend' ? '/battle/friends' : '/battle' };
+  }
+
+  settleContext(payload, context) {
+    const owner = this.owner(context);
+    return this.serial(owner, async () => {
+      const session = this.requireSession(owner, payload.sessionId);
+      if (session.status !== 'finished' || session.winner !== 'player') throw fail('VICTORY_REQUIRED', '胜利后可确认');
+      const adapter = this.services.get(session.mode === 'wild' ? 'discovery' : session.mode === 'territory' ? 'garden' : '');
+      if (!adapter?.settleBattleContext) throw fail('NO_CONTEXT_ACTION', '本场结算已自动保存');
+      const result = await adapter.settleBattleContext({ ownerAccountId: owner, sessionId: session.id, actionId: text(payload.actionId, '操作编号'), name: payload.name, showOnDesktop: Boolean(payload.showOnDesktop) });
+      this.assertOwner(owner);
+      if (!result?.ok) throw fail(result?.code || 'CONTEXT_SETTLEMENT_FAILED', result?.message || '确认失败');
+      return result.data;
+    });
   }
 
   settleTerritoryChallenge(input) {

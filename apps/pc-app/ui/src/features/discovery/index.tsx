@@ -22,6 +22,7 @@ function DiscoveryPage() {
   const selected = state.spawns.find(spawn => spawn.id === selectedId) || state.spawns[0];
   const pet = state.pets.find(p => p.petId === petId && twoDimensional(p.resource?.kind)) || state.pets.find(p => twoDimensional(p.resource?.kind));
   const spawn = state.spawns.find(s => s.id === id), encounter = state.encounters.find(e => e.encounterId === id), capture = state.captures.find(c => c.encounterId === id);
+  if (path.startsWith('/discovery/encounter/') && encounter) return <EncounterView key={encounter.encounterId} encounter={encounter} state={state} pending={pending} run={run}/>;
   const begin = async () => {
     if (!spawn || !pet) return;
     const result = await run<WildEncounter>('begin', { spawnId: spawn.id, petId: pet.petId, actionId: actionId() });
