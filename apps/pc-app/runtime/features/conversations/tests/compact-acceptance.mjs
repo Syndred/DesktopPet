@@ -6,6 +6,7 @@ import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { resolve, join } from 'node:path';
 import { randomUUID, createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
+import { createServer } from 'node:net';
 import assert from 'node:assert/strict';
 
 const catalog = JSON.parse(readFileSync(resolve('apps/pc-app/runtime/features/resources/assets/roster-v2/catalog.json'), 'utf8'));
@@ -16,6 +17,16 @@ mkdirSync(output, { recursive: true });
 const env = { ...process.env, PET_USER_DATA_DIR: join(output, 'qa-profile') };
 delete env.ELECTRON_RUN_AS_NODE;
 const qaKey = 'synthetic-local-error-acceptance-key';
+// Reserve, then release, an ordinary local port so fetch reaches the actual
+// connection-refused path rather than a browser's restricted-port check.
+const unavailableBaseUrl = await new Promise((done, reject) => {
+  const server = createServer();
+  server.once('error', reject);
+  server.listen(0, '127.0.0.1', () => {
+    const { port } = server.address();
+    server.close(error => error ? reject(error) : done(`http://127.0.0.1:${port}/v1`));
+  });
+});
 let app;
 let page;
 const errors = [];
@@ -162,7 +173,7 @@ try {
   await page.locator('.cv-connection [role="alert"]').waitFor();
   assert.equal((await feature('conversations', 'snapshot')).globalConnection, null);
   assert.equal((await page.locator('.cv-connection [role="alert"]').innerText()).includes(qaKey), false);
-  await page.getByLabel('接口地址', { exact: true }).fill('http://127.0.0.1:9/v1');
+  await page.getByLabel('接口地址', { exact: true }).fill(unavailableBaseUrl);
   await page.getByRole('button', { name: '保存连接', exact: true }).click();
   await page.getByPlaceholder('已保存；留空保留', { exact: true }).waitFor();
   const configured = await feature('conversations', 'snapshot');
@@ -171,18 +182,18 @@ try {
 
   // Observe real fetch attempts to an unavailable local endpoint. This does not
   // inject a response, simulate an online model, or contact an external model.
-  await app.evaluate((_electron, needle) => {
+  await app.evaluate((_electron, { needle, baseUrl }) => {
     const original = globalThis.fetch;
     globalThis.__conversationCompactNetwork = { attempts: 0, savedMemoryIncluded: [] };
     globalThis.fetch = (...args) => {
       const url = typeof args[0] === 'string' ? args[0] : args[0]?.url ?? String(args[0]);
-      if (String(url).startsWith('http://127.0.0.1:9/')) {
+      if (String(url).startsWith(baseUrl + '/')) {
         globalThis.__conversationCompactNetwork.attempts++;
         globalThis.__conversationCompactNetwork.savedMemoryIncluded.push(String(args[1]?.body).includes(needle));
       }
       return original(...args);
     };
-  }, note.content);
+  }, { needle: note.content, baseUrl: unavailableBaseUrl });
   await openChat();
   await page.getByLabel(`给${selected.name}发消息`, { exact: true }).fill('QA：验证真实本机连接失败状态');
   await page.getByRole('button', { name: '发送', exact: true }).click();
