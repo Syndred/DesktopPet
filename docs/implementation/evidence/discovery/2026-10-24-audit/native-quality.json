@@ -1,0 +1,17 @@
+{
+  "at": "2026-10-24T13:38:42.561Z",
+  "adapter": "production WindowsLocationAdapter diagnostic",
+  "ok": true,
+  "source": "os",
+  "provider": "windows-geolocator",
+  "positionSource": "WiFi",
+  "accuracyMeters": 91,
+  "timestampMs": 1792849122361,
+  "quality": {
+    "ok": false,
+    "code": "LOCATION_IMPRECISE",
+    "message": "定位精度不足，请移动到信号较好的地方（需要 ≤ 80 米）"
+  },
+  "coordinateHash": "fce6f5da6ea421743bb23262b62a400e4b7bdb3bea61a07eab980cf2f1f74ae8",
+  "rawCoordinatesSaved": false
+}

@@ -1,0 +1,27 @@
+{
+  "at": "2026-10-24T13:50:52.070Z",
+  "passed": true,
+  "platform": "win32",
+  "runtime": {
+    "node": "22.19.0",
+    "electron": "36.9.5"
+  },
+  "checks": [
+    {
+      "operation": "suspend",
+      "actualNativeHelperStarted": true,
+      "nativeHelperClosed": true,
+      "nativeHelperStillRunning": false,
+      "resultCode": "LOCATION_CANCELLED"
+    },
+    {
+      "operation": "stopWatch",
+      "actualNativeHelperStarted": true,
+      "nativeHelperClosed": true,
+      "nativeHelperStillRunning": false,
+      "resultCode": "LOCATION_CANCELLED"
+    }
+  ],
+  "rawCoordinatesSaved": false,
+  "physicalLocationAcceptance": false
+}
