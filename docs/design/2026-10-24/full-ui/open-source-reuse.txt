@@ -1,0 +1,160 @@
+灵境：开源可复用清单与采用建议
+核对日期：2026-10-24（Asia/Shanghai）
+依据：维护者仓库、README、许可证文件与官方文档。已查看部分直接相关源文件。
+本轮没有安装候选依赖、复制候选项目源码、执行候选项目或完成 Electron 兼容性测试。
+以下“优先采用 / 适配 / 参考 / 备选”为面向本项目的工程判断。
+
+一、建议保留的产品基础
+
+继续使用当前 DesktopPet 仓库。保留账号、养成、回合规则、联机协议、战报、捕捉、领地、模型导入与历史数据。
+桌面壳继续采用 Electron；界面改成 React + TypeScript；2D 舞台采用 PixiJS；既有 3D model-viewer 保留适配器。
+Supabase 是现有账号与联机基础，先完善它，不同时引入另一套多人服务器。
+基础 UI、动画、状态、聊天和地图组件可以采用开源库；跨宠物 / 账号隔离、菜园经济和服务端结算需要自己的规则。
+
+二、优先采用或验证接入
+
+1. 桌面开发构建：alex8088/electron-vite
+   主许可：MIT。适用：Electron 主进程、preload、renderer 的 TypeScript/Vite 构建。
+   接入点：逐步替换当前直接运行的大段原生 JS；窗口、托盘和现有 IPC 用适配层迁移。
+   https://github.com/alex8088/electron-vite
+
+2. 管理界面组件：shadcn-ui/ui
+   主许可：MIT。适用：表单、Tabs、Dialog、Dropdown、Switch 等可定制 React 组件。
+   接入点：组件行为和可访问性复用；颜色、排版、圆角与插画按本设计集重做，保持平面按钮。
+   https://github.com/shadcn-ui/ui
+   https://github.com/shadcn-ui/ui/blob/main/LICENSE.md
+
+3. 多宠物 / 菜园 2D 绘制：pixijs/pixijs
+   主许可：MIT。适用：精灵图集、动画、场景、命中区域和批量渲染。
+   接入点：同一舞台共享纹理；宠物逐帧行为不通过 React 全局状态刷新。
+   https://github.com/pixijs/pixijs
+   https://github.com/pixijs/pixijs/blob/dev/LICENSE
+
+4. 宠物 / 作物状态：statelyai/xstate
+   主许可：MIT。适用：事件、状态机、独立 actor 与快照。
+   接入点：每只宠物 / 每个地块具有自己的状态；播种、生长、成熟、收获与库存事务分层。
+   注意：它不自动提供账号权限、持久化事务、联网防作弊或完整农场经济。
+   https://github.com/statelyai/xstate
+   https://stately.ai/docs/actors
+
+5. 现有 GLB 展示：google/model-viewer
+   主许可：Apache-2.0。仓库已经依赖该库，继续复用模型预览、动画与显示校准适配。
+   只有确需多角色共享 3D 场景时再评估 Three.js / React Three Fiber，避免同时维护两套不必要的渲染器。
+   https://github.com/google/model-viewer
+
+6. 复杂 3D / VRM 备选：mrdoob/three.js、pmndrs/react-three-fiber、pixiv/three-vrm
+   三者维护者仓库标注 MIT。适用：3D 场景、React 场景绑定、VRM 角色。
+   角色模型文件的授权与渲染器代码许可分别核对。
+   https://github.com/mrdoob/three.js
+   https://github.com/pmndrs/react-three-fiber
+   https://github.com/pixiv/three-vrm
+
+7. 聊天界面：assistant-ui/assistant-ui
+   主许可：MIT。适用：React 聊天交互和可组合的消息界面。
+   接入点：消息列表、输入、发送状态；按“账号 + petId”接自己的持久化和记忆，保持大肥鱼视觉样式。
+   https://github.com/assistant-ui/assistant-ui
+   https://github.com/assistant-ui/assistant-ui/blob/main/LICENSE
+
+8. 模型连接与流式交互：vercel/ai
+   主许可：Apache-2.0，已读 LICENSE。适用：TypeScript 模型适配、流式响应与结构化输出。
+   接入点：主进程 / 服务端统一代理模型调用；不要把它当作已完成的逐宠物长期记忆系统。
+   https://github.com/vercel/ai
+   https://github.com/vercel/ai/blob/main/LICENSE
+
+9. 地图绘制：maplibre/maplibre-gl-js
+   主许可：BSD-3-Clause，LICENSE.txt 另含随附代码的声明。
+   适用：地图、GeoJSON 领地区域、宠物点位和覆盖层。
+   地图渲染器不等于地图数据或定位服务；底图来源、署名和系统定位另接。
+   https://github.com/maplibre/maplibre-gl-js
+   https://github.com/maplibre/maplibre-gl-js/blob/main/LICENSE.txt
+
+10. 距离 / 区域计算：Turfjs/turf
+    主许可：MIT（维护者仓库标注）。适用：点在多边形内、距离、缓冲区和领地几何。
+    接入点：统一坐标系后计算；客户端几何用于展示，捕捉和领地奖励仍由服务端确认。
+    https://github.com/Turfjs/turf
+
+11. 本地存档：WiseLibs/better-sqlite3
+    主许可：MIT（维护者仓库标注）。适用：SQLite 事务、逐宠物记录、库存流水和迁移。
+    接入点：放在主进程，由服务统一写入；需对目标 Electron 版本验证原生模块构建。
+    SQLite 库不会自动提供云同步或跨设备库存去重。
+    https://github.com/WiseLibs/better-sqlite3
+
+12. 账号、云端、Realtime：supabase/supabase
+    主仓库许可：Apache-2.0；部署中各组件和依赖分别保留声明。
+    项目已经在使用。优先复用当前账号 / 联机链路，增加菜园、库存事件和权限；不重新搭第二套账号体系。
+    当前 runtime_accounts 的文本 ID 与旧 player_profiles 的 UUID 需要明确映射。
+    https://github.com/supabase/supabase
+
+三、已有完整项目：适配或参考，不整包替换产品
+
+13. AI 角色舞台与语音：moeru-ai/airi
+    主许可：MIT，已核对 LICENSE 和桌面应用 package.json。
+    它有 Electron 桌面、Live2D / VRM、角色与音频相关模块。桌面前端为 Vue，不能直接把 Vue 组件塞进本项目的 React 界面。
+    建议借鉴角色舞台生命周期、音频流水线和平台无关 TS 工具；README 中部分记忆能力仍标 WIP，不按现成稳定能力估算。
+    https://github.com/moeru-ai/airi
+    https://github.com/moeru-ai/airi/blob/main/LICENSE
+    https://github.com/moeru-ai/airi/blob/main/apps/stage-tamagotchi/package.json
+
+14. 语音对话：Open-LLM-VTuber/Open-LLM-VTuber
+    代码为 MIT，已读 LICENSE；主要后端为 Python，适合作为后续 ASR / TTS / VAD / 打断能力的独立适配候选。
+    README 明确长期记忆暂时移除；示例 Live2D 模型使用独立授权，不随代码 MIT 自动放开。
+    https://github.com/Open-LLM-VTuber/Open-LLM-VTuber
+    https://github.com/Open-LLM-VTuber/Open-LLM-VTuber/blob/main/LICENSE
+
+15. 桌宠交互：LorisYounger/VPet
+    代码为 Apache-2.0，C# / WPF，适合参考喂食、动画分层与互动状态。
+    不能直接并入 Electron 前端。自带动画 / 图片有单独授权条件，不能按源码许可直接搬素材。
+    https://github.com/LorisYounger/VPet
+    https://github.com/LorisYounger/VPet#动画版权声明与授权
+
+16. 菜园逻辑：amcolash/farming-game
+    代码 MIT；README 明确 Farm tileset 为 GPL3。已查看作物数据文件与 package.json。
+    可借作物配置、成熟时间和地块流程；其 Phaser ^3.23.0 依赖较旧，不作为本项目整包基础。
+    只适配代码 / 数据思想；不用其示例贴图，不照搬成熟后枯死和卖菜赚钱规则。
+    https://github.com/amcolash/farming-game
+    https://github.com/amcolash/farming-game/blob/master/LICENSE
+    https://github.com/amcolash/farming-game/blob/master/src/data/crops.ts
+    https://github.com/amcolash/farming-game/blob/master/README.md
+
+四、对战与联机备选
+
+17. boardgameio/boardgame.io
+    MIT。提供回合制状态、多玩家同步、阶段和日志回顾。
+    可以参考其命令 / 回合 / 日志结构；本项目已有回合制规则与战报，不为使用框架而重写一遍。
+    https://github.com/boardgameio/boardgame.io
+
+18. colyseus/colyseus
+    MIT。Node.js / TypeScript 权威多人服务器框架，提供房间与状态同步。
+    仅在现有 Supabase 联机不能满足明确需求时评估；当前不同时运行两套房间、身份与同步协议。
+    https://github.com/colyseus/colyseus
+
+五、可采用的原型素材
+
+19. Kenney Food Kit / Nature Kit
+    官方页面标注 CC0。可用于食物、植物与场景原型；这两套主要是 3D 资源，不是本设计图的二次元角色或完整作物生长精灵图。
+    本项目最终二次元角色、表情与动画仍需自己的统一素材生产。
+    https://kenney.nl/assets/food-kit
+    https://kenney.nl/assets/nature-kit
+
+六、不进入采用清单的例子
+
+BingyanStudio/robofarm 是 TypeScript 农业无人机编程游戏。查询时仓库 API 没有给出许可证，且玩法与陪伴菜园不同。
+可以阅读公开介绍；在明确许可之前不复制其代码、素材或视作可直接复用依赖。
+https://github.com/BingyanStudio/robofarm
+
+七、本项目需要自己完成的部分
+
+多宠物实例归属、逐宠物人设与记忆隔离、桌面出场 / 出战 / 驻守选择分离。
+种子来源、作物成熟、产量、食谱、食物效果、养成与对战经济平衡。
+收获、制作、喂养与背包的原子事务；actionId 幂等、版本冲突、跨设备重复领取防护。
+真实地理位置获取、坐标系转换、服务端距离与区域校验。
+已有账号和历史数据迁移、旧模型兼容、断线恢复、Windows 鼠标穿透和多屏验证。
+
+八、建议采用顺序
+
+第一批：Electron/Vite/React UI、PixiJS、现有 model-viewer、SQLite、现有 Supabase。
+第二批：菜园与背包事务、逐宠物状态，按复杂度决定引入 XState；先完整跑通收获 → 制作 → 指定伙伴喂食。
+第三批：assistant-ui / AI SDK 与独立人设记忆；需要语音时再评估 AIRI 或 Open-LLM-VTuber 的相关模块。
+第四批：针对真实瓶颈考虑 Three.js 共享场景或 Colyseus，不预先堆叠第二套引擎 / 服务器。
+
+结论：有大量成熟开源组件可以复用；完整产品的价值在玩法规则、数据一致性、统一交互与原有能力的衔接。

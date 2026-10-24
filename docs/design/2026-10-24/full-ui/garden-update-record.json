@@ -1,0 +1,40 @@
+{
+  "date": "2026-10-24",
+  "tool": "built-in imagegen",
+  "status": "concept-design",
+  "newPageCount": 19,
+  "uiBoardCount": 10,
+  "brandAssetCount": 3,
+  "assets": [
+    {
+      "file": "05-territory-garden-and-inventory.png",
+      "stem": "05-territory-garden-and-inventory",
+      "source": "C:\\Users\\Administrator\\.codex\\generated_images\\01a16d86-7650-7871-8e27-5b65477a126e\\exec-de9ec1c6-d2d3-440d-afc4-ee36a7a1fcc1.png",
+      "prompt": "Use case: ui-mockup. Edit target image 1, the approved TWO-screen 灵境 territory and inventory concept board. Image 2 is the exact existing brand mark (symmetrical four-point star / diamond) to preserve. The user has approved the style and wants a vegetable garden INSIDE the territory feature, connecting crops with feeding owned pets.\nPreserve the existing warm ivory/mist-blue palette, clean Chinese typography, native window chrome, global sidebar, star branding, character identity and TWO vertically stacked complete desktop windows. All original territory-map ownership, guarding, battle-derived capture reward bonus and inventory feeding features stay.\nTOP screen: retain the title \"给伙伴，留一片小天地。\" and the dominant realistic light street map with 湖畔花园 owned, 竹影空地 neutral, 月光小筑 belonging to another player. Add a clean tab bar below the heading: \"领地总览\" SELECTED and \"我的菜园\" with a small badge \"2 可收获\". Right detail retains selected 湖畔花园 ownership, 区域捕捉收益 ×2, guard 鱼丸 and change-guard control. Replace the small recent-events area with a delightful compact garden entry card titled \"我的菜园\": tiny original isometric 2x3 raised vegetable beds, tomato and carrot ready, rice growing; label \"2 块作物成熟了\"; primary compact action \"去收获 →\". Include a subtle caption \"基础菜园属于你，领地提供额外加成\". Keep 查看占领记录 accessible as the bottom secondary button and preserve 前往探索 as the other territory action. Do not replace the geographic map with fantasy farmland; garden is a separate tab with a preview entry.\nBOTTOM screen: keep the existing inventory + selected-target feeding layout and title. Existing hot rice, fish snack, cake, decoration items and three independent companion choices remain. Add a small \"去菜园\" action next to inventory search. Make the inventory clearly connect harvest to food: include a carrot item \"胡萝卜\" with a tiny \"菜园收获\" source chip, a berry item \"莓果\" with same source chip, and the selected food \"热乎乎的米饭\" with a source label \"稻米制作\". Keep selected target 鱼丸 only, quantity 1, before/after satiety 58 → 78 and primary button 喂给鱼丸. Do not imply that raw rice is instantly cooked on harvest. No prices, market, loot boxes or real payments. No permanent crop loss when territory changes ownership.\nOnly these functional additions and the limited layout adjustments needed for them. Preserve the established high-quality polished anime companion visual style. Add the small outer note \"UI 概念稿 · 内容为示例\".",
+      "referenceImages": [
+        "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\design\\2026-10-24\\full-ui\\05-territory-and-inventory.png",
+        "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\design\\2026-10-24\\full-ui\\logo-mark.png"
+      ],
+      "transparent_background": false,
+      "pages": [
+        "08 领地总览与菜园入口",
+        "09 背包与喂养"
+      ]
+    },
+    {
+      "file": "10-garden-harvest-and-feeding.png",
+      "stem": "10-garden-harvest-and-feeding",
+      "source": "C:\\Users\\Administrator\\.codex\\generated_images\\01a16d86-7650-7871-8e27-5b65477a126e\\exec-8f61ddd9-5c32-4b80-920a-47260f343083.png",
+      "prompt": "Use case: ui-mockup. Create TWO NEW full desktop UI screens stacked vertically on a portrait 3:4 board for the Chinese anime companion game 灵境. Reference image 1 gives the approved app visual system and character identity. Reference image 2 is the exact symmetrical four-point-star brand mark: preserve it beside 灵境 in both windows, NO whale/fish/tail logo. Warm ivory #F8F9F5, mist-blue #EAF2FF, ink navy #182A48, periwinkle #587DE8, restrained peach and fresh garden green accents, crisp Chinese text, flat buttons, fine separators, rounded 12–18px corners. Senior product designer quality, usable layout. Each screen has slim native Windows title bar and identical global navigation 我的灵宠, 附近探索, 对战中心, 领地 SELECTED, 背包, 聊天; bottom 设置 and Syndred profile. Real app screen mockups, not a marketing infographic. Small outer note \"UI 概念稿 · 内容为示例\".\nTOP outer caption \"18 / 领地 · 我的菜园\". Heading \"把小日子，种成好收成。\". Tabs \"领地总览\" inactive, \"我的菜园\" SELECTED, \"制作食物\" inactive. Central large charming isometric personal vegetable garden inside a tidy viewport: SIX clearly separated raised plots in a 3x2 arrangement with stone paths, little wooden labels, watering can and restrained garden flowers. Two plots ready: plump red tomatoes labeled 番茄 可收获, bright orange carrots labeled 胡萝卜 可收获. Two plots growing: 稻米 with thin time progress \"还需 01:24\", 莓果 with \"还需 00:38\". One newly seeded plot \"已播种\", one empty plot with \"+ 播种\". Pet 鱼丸, the fully clothed blue-haired chibi whale girl in navy-and-ivory outfit, stands near the garden with a basket as a companion, not a worker making API calls. Selected carrot plot has a blue outline and small clear harvest control. Compact top action \"收获成熟作物\" enabled; no unreadable floating clutter. Below garden a simple real crop lifecycle strip: 播种 → 生长 → 成熟 → 收获入库. Right panel: \"地块 02 · 胡萝卜\", a lovely carrot illustration, status 已成熟, expected harvest \"胡萝卜 ×3\", primary \"收获\". Beneath, seed pouch choices 番茄种子/胡萝卜种子/稻米种子/莓果种子 with small owned counts, an unobtrusive \"从探索和对战中获得种子\" helper. Small ownership note \"基础菜园随账号保存，领地带来丰收加成\". No fantasy-world map replacing territory, no coin factory, no purchases or stolen crops.\nBOTTOM outer caption \"19 / 收获 · 制作 · 喂食\". Same sidebar and heading \"这一口，是亲手种下的喜欢。\". Tabs 领地总览, 我的菜园, 制作食物 SELECTED. Clear three-step working flow within the actual UI, not a diagram. Left compact harvest basket / inventory column \"今日收获\": 胡萝卜 ×3, 莓果 ×4, 稻米 ×2 with beautiful matching crop icons and small \"已入背包\" badges. Middle main recipe panel selected \"热乎乎的米饭\", simple illustrated small pot and rice bowl, explicit input/output \"稻米 ×1 → 米饭 ×1\", quantity stepper 1, blue primary \"制作米饭\". A restrained note \"胡萝卜、莓果可直接喂食；稻米需要先制作。\". Right feeding panel titled \"给哪位伙伴？\" with independent 鱼丸、小蓝、饭团 avatar choices, 鱼丸 ONLY selected. Selected existing cooked meal row 米饭 ×2, target satiety before/after \"58 → 78\", primary button \"喂给鱼丸\" and subtle affinity heart \"+亲密度\". Include a small recent toast \"胡萝卜 ×3 已放入背包\" near bottom, not an entire success overlay. Keep harvesting, cooking and feeding as distinct operations: harvest adds inventory, cooking consumes grain and creates meal, feeding consumes one meal only for chosen pet. No bulk feed to all pets. No need to buy anything. Clean, beautiful, coherent with approved UI, legible Chinese labels.",
+      "referenceImages": [
+        "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\design\\2026-10-24\\full-ui\\01-companions-and-desktop.png",
+        "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\design\\2026-10-24\\full-ui\\logo-mark.png"
+      ],
+      "transparent_background": false,
+      "pages": [
+        "18 领地·我的菜园",
+        "19 收获·制作·喂食"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,272 @@
+{
+  "checkedOn": "2026-10-24",
+  "timezone": "Asia/Shanghai",
+  "repoHead": "4786f97",
+  "integrationTested": false,
+  "repositories": [
+    {
+      "repo": "alex8088/electron-vite",
+      "url": "https://github.com/alex8088/electron-vite",
+      "license": "MIT",
+      "decision": "优先采用",
+      "area": "Electron 构建",
+      "defaultBranch": "master",
+      "archived": false,
+      "pushedAt": "2026-10-14T16:28:56Z",
+      "reviewType": "maintainer README / selected license files / selected source files / GitHub repository metadata; not integration-tested"
+    },
+    {
+      "repo": "shadcn-ui/ui",
+      "url": "https://github.com/shadcn-ui/ui",
+      "license": "MIT",
+      "decision": "优先采用",
+      "area": "管理 UI",
+      "defaultBranch": "main",
+      "archived": false,
+      "pushedAt": "2026-10-24T11:02:30Z",
+      "reviewType": "maintainer README / selected license files / selected source files / GitHub repository metadata; not integration-tested"
+    },
+    {
+      "repo": "pixijs/pixijs",
+      "url": "https://github.com/pixijs/pixijs",
+      "license": "MIT",
+      "decision": "优先采用",
+      "area": "2D 桌宠与菜园",
+      "defaultBranch": "dev",
+      "archived": false,
+      "pushedAt": "2026-10-22T15:05:59Z",
+      "reviewType": "maintainer README / selected license files / selected source files / GitHub repository metadata; not integration-tested"
+    },
+    {
+      "repo": "statelyai/xstate",
+      "url": "https://github.com/statelyai/xstate",
+      "license": "MIT",
+      "decision": "按复杂度采用",
+      "area": "宠物与作物状态",
+      "defaultBranch": "main",
+      "archived": false,
+      "pushedAt": "2026-10-23T10:32:02Z",
+      "reviewType": "maintainer README / selected license files / selected source files / GitHub repository metadata; not integration-tested"
+    },
+    {
+      "repo": "google/model-viewer",
+      "url": "https://github.com/google/model-viewer",
+      "license": "Apache-2.0",
+      "decision": "保留现有集成",
+      "area": "GLB 模型",
+      "defaultBranch": "master",
+      "archived": false,
+      "pushedAt": "2026-10-23T18:03:42Z",
+      "reviewType": "maintainer README / selected license files / selected source files / GitHub repository metadata; not integration-tested"
+    },
+    {
+      "repo": "mrdoob/three.js",
+      "url": "https://github.com/mrdoob/three.js",
+      "license": "MIT",
+      "decision": "复杂场景备选",
+      "area": "3D 场景",
+      "defaultBranch": "dev",
+      "archived": false,
+      "pushedAt": "2026-10-24T08:36:41Z",
+      "reviewType": "maintainer README / selected license files / selected source files / GitHub repository metadata; not integration-tested"
+    },
+    {
+      "repo": "pmndrs/react-three-fiber",
+      "url": "https://github.com/pmndrs/react-three-fiber",
+      "license": "MIT",
+      "decision": "复杂场景备选",
+      "area": "React 3D",
+      "defaultBranch": "master",
+      "archived": false,
+      "pushedAt": "2026-10-21T15:24:39Z",
+      "reviewType": "maintainer README / selected license files / selected source files / GitHub repository metadata; not integration-tested"
+    },
+    {
+      "repo": "pixiv/three-vrm",
+      "url": "https://github.com/pixiv/three-vrm",
+      "license": "MIT",
+      "decision": "VRM 角色备选",
+      "area": "VRM",
+      "defaultBranch": "dev",
+      "archived": false,
+      "pushedAt": "2026-10-22T05:14:04Z",
+      "reviewType": "maintainer README / selected license files / selected source files / GitHub repository metadata; not integration-tested"
+    },
+    {
+      "repo": "assistant-ui/assistant-ui",
+      "url": "https://github.com/assistant-ui/assistant-ui",
+      "license": "MIT",
+      "decision": "适配采用",
+      "area": "聊天 UI",
+      "defaultBranch": "main",
+      "archived": false,
+      "pushedAt": "2026-10-24T08:12:59Z",
+      "reviewType": "maintainer README / selected license files / selected source files / GitHub repository metadata; not integration-tested"
+    },
+    {
+      "repo": "vercel/ai",
+      "url": "https://github.com/vercel/ai",
+      "license": "Apache-2.0",
+      "decision": "适配采用",
+      "area": "模型连接与流式输出",
+      "defaultBranch": "main",
+      "archived": false,
+      "pushedAt": "2026-10-24T00:37:06Z",
+      "reviewType": "maintainer README / selected license files / selected source files / GitHub repository metadata; not integration-tested"
+    },
+    {
+      "repo": "maplibre/maplibre-gl-js",
+      "url": "https://github.com/maplibre/maplibre-gl-js",
+      "license": "BSD-3-Clause with bundled notices",
+      "decision": "适配采用",
+      "area": "地图",
+      "defaultBranch": "main",
+      "archived": false,
+      "pushedAt": "2026-10-23T22:34:13Z",
+      "reviewType": "maintainer README / selected license files / selected source files / GitHub repository metadata; not integration-tested"
+    },
+    {
+      "repo": "Turfjs/turf",
+      "url": "https://github.com/Turfjs/turf",
+      "license": "MIT",
+      "decision": "适配采用",
+      "area": "地理计算",
+      "defaultBranch": "master",
+      "archived": false,
+      "pushedAt": "2026-10-21T10:23:49Z",
+      "reviewType": "maintainer README / selected license files / selected source files / GitHub repository metadata; not integration-tested"
+    },
+    {
+      "repo": "WiseLibs/better-sqlite3",
+      "url": "https://github.com/WiseLibs/better-sqlite3",
+      "license": "MIT",
+      "decision": "优先验证",
+      "area": "SQLite",
+      "defaultBranch": "master",
+      "archived": false,
+      "pushedAt": "2026-08-10T03:10:10Z",
+      "reviewType": "maintainer README / selected license files / selected source files / GitHub repository metadata; not integration-tested"
+    },
+    {
+      "repo": "supabase/supabase",
+      "url": "https://github.com/supabase/supabase",
+      "license": "Apache-2.0",
+      "decision": "保留现有基础",
+      "area": "账号与联机",
+      "defaultBranch": "master",
+      "archived": false,
+      "pushedAt": "2026-10-24T03:59:32Z",
+      "reviewType": "maintainer README / selected license files / selected source files / GitHub repository metadata; not integration-tested"
+    },
+    {
+      "repo": "moeru-ai/airi",
+      "url": "https://github.com/moeru-ai/airi",
+      "license": "MIT",
+      "decision": "适配与参考",
+      "area": "AI 角色舞台和音频",
+      "defaultBranch": "main",
+      "archived": false,
+      "pushedAt": "2026-10-24T10:12:25Z",
+      "reviewType": "maintainer README / selected license files / selected source files / GitHub repository metadata; not integration-tested"
+    },
+    {
+      "repo": "Open-LLM-VTuber/Open-LLM-VTuber",
+      "url": "https://github.com/Open-LLM-VTuber/Open-LLM-VTuber",
+      "license": "MIT; sample models separately licensed",
+      "decision": "语音备选",
+      "area": "语音角色",
+      "defaultBranch": "main",
+      "archived": false,
+      "pushedAt": "2026-05-15T07:18:04Z",
+      "reviewType": "maintainer README / selected license files / selected source files / GitHub repository metadata; not integration-tested"
+    },
+    {
+      "repo": "LorisYounger/VPet",
+      "url": "https://github.com/LorisYounger/VPet",
+      "license": "Apache-2.0; animations separately licensed",
+      "decision": "交互参考",
+      "area": "桌宠交互",
+      "defaultBranch": "main",
+      "archived": false,
+      "pushedAt": "2026-10-23T19:08:16Z",
+      "reviewType": "maintainer README / selected license files / selected source files / GitHub repository metadata; not integration-tested"
+    },
+    {
+      "repo": "amcolash/farming-game",
+      "url": "https://github.com/amcolash/farming-game",
+      "license": "MIT code; GPL3 farm tileset in README",
+      "decision": "仅适配逻辑",
+      "area": "菜园",
+      "defaultBranch": "master",
+      "archived": false,
+      "pushedAt": "2022-07-20T05:09:19Z",
+      "reviewType": "maintainer README / selected license files / selected source files / GitHub repository metadata; not integration-tested"
+    },
+    {
+      "repo": "boardgameio/boardgame.io",
+      "url": "https://github.com/boardgameio/boardgame.io",
+      "license": "MIT",
+      "decision": "结构参考",
+      "area": "回合制",
+      "defaultBranch": "main",
+      "archived": false,
+      "pushedAt": "2026-09-18T15:14:16Z",
+      "reviewType": "maintainer README / selected license files / selected source files / GitHub repository metadata; not integration-tested"
+    },
+    {
+      "repo": "colyseus/colyseus",
+      "url": "https://github.com/colyseus/colyseus",
+      "license": "MIT",
+      "decision": "未来联机备选",
+      "area": "权威多人服务器",
+      "defaultBranch": "master",
+      "archived": false,
+      "pushedAt": "2026-10-22T12:14:11Z",
+      "reviewType": "maintainer README / selected license files / selected source files / GitHub repository metadata; not integration-tested"
+    },
+    {
+      "repo": "BingyanStudio/robofarm",
+      "url": "https://github.com/BingyanStudio/robofarm",
+      "license": "not established by reviewed repository metadata",
+      "decision": "不纳入复用",
+      "area": "农业无人机编程",
+      "defaultBranch": "main",
+      "archived": false,
+      "pushedAt": "2026-10-21T15:46:42Z",
+      "reviewType": "maintainer README / selected license files / selected source files / GitHub repository metadata; not integration-tested"
+    }
+  ],
+  "assetPacks": [
+    {
+      "name": "Kenney Food Kit",
+      "url": "https://kenney.nl/assets/food-kit",
+      "license": "CC0",
+      "type": "3D food/kitchen assets"
+    },
+    {
+      "name": "Kenney Nature Kit",
+      "url": "https://kenney.nl/assets/nature-kit",
+      "license": "CC0",
+      "type": "3D nature assets"
+    }
+  ],
+  "primaryFilesReviewed": [
+    "https://github.com/moeru-ai/airi/blob/main/LICENSE",
+    "https://github.com/moeru-ai/airi/blob/main/apps/stage-tamagotchi/package.json",
+    "https://github.com/Open-LLM-VTuber/Open-LLM-VTuber/blob/main/README.md",
+    "https://github.com/Open-LLM-VTuber/Open-LLM-VTuber/blob/main/LICENSE",
+    "https://github.com/LorisYounger/VPet/blob/main/README.md",
+    "https://github.com/amcolash/farming-game/blob/master/README.md",
+    "https://github.com/amcolash/farming-game/blob/master/LICENSE",
+    "https://github.com/amcolash/farming-game/blob/master/src/data/crops.ts",
+    "https://github.com/amcolash/farming-game/blob/master/package.json",
+    "https://github.com/maplibre/maplibre-gl-js/blob/main/LICENSE.txt",
+    "https://github.com/vercel/ai/blob/main/LICENSE",
+    "https://github.com/shadcn-ui/ui/blob/main/LICENSE.md",
+    "https://github.com/pixijs/pixijs/blob/dev/LICENSE",
+    "https://github.com/statelyai/xstate/blob/main/LICENSE",
+    "https://github.com/assistant-ui/assistant-ui/blob/main/LICENSE",
+    "https://github.com/boardgameio/boardgame.io/blob/main/README.md",
+    "https://github.com/colyseus/colyseus/blob/master/README.md"
+  ]
+}

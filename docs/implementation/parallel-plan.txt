@@ -1,0 +1,108 @@
+灵境：分会话实现计划与共享约定
+日期：2026-10-24（Asia/Shanghai）
+用户明确要求：侧边栏新建会话实施，每个大功能一个会话；全部使用 GPT-6.1 Sol、max、快速模式、目标模式。
+
+一、已批准的设计与功能
+
+设计入口：docs/design/2026-10-24/full-ui/index.html
+页面与流程：docs/design/2026-10-24/full-ui/design-index.txt
+菜园规则：docs/design/2026-10-24/full-ui/garden-feature-plan.txt
+开源清单：docs/design/2026-10-24/full-ui/open-source-reuse.txt
+图稿来源：docs/design/2026-10-24/full-ui/generation-results.json
+19 个页面、10 张页面设计板、3 个 Logo 文件均为实施参考。图中数值是示例，现有规则优先。
+奶白与雾蓝、中文优先、平面按钮；品牌是对称四芒星 / 菱形，不使用鲸鱼 Logo。大肥鱼角色可保留鲸鱼娘形象。
+保留原有对战、联机、定位入口、捕捉、领地、背包、养成、账号、历史记录和 3D 模型导入。
+
+二、运行设置与工作区
+
+模型：gpt-6.1-sol；推理：max；快速请求档：priority；features.fast_mode=true；features.goals=true。
+每个新会话必须首先调用 create_goal，设置本功能的具体目标，不指定用户未要求的 token_budget。
+共享源检出：C:\Users\Administrator\Desktop\project\DesktopPet。
+实施基线：本地分支 codex/lingjing-implementation-base（已包含本计划、项目配置和批准的设计材料）。
+先 git fetch origin，确认已读取云端最新提交；保留所有既有历史与修改。
+各会话先用 list_artifacts 查是否有合适工作树；没有时用 create_worktree 从实施基线创建自己的托管工作树。
+必须在返回的 workspace 目录工作，使用自己的 codex/lingjing-<module> 分支；禁止切换、重置或覆盖共享源检出。
+原始设计图和既有未提交设计档案不得删除。
+
+三、会话与主要修改范围
+
+01 foundation：基础架构、新版 UI、公共契约、打包与最终集成。
+   拥有根 package.json / lockfile / TS / Vite / lint / CI 配置。
+   拥有 apps/pc-app/ui/src/app、components、styles、公共路由与导航；runtime main / preload 公共桥接；公共 SQLite 连接与迁移执行器。
+   分支 codex/lingjing-foundation；工作树名称 lingjing-foundation。
+
+02 companions：多宠物桌面、领养、详情、养成、逐只状态与多个独立出场。
+   拥有 ui/src/features/companions、runtime/features/companions、对应 shared-types/features/companions。
+   分支 codex/lingjing-companions；工作树名称 lingjing-companions。
+
+03 discovery：地图、真实定位适配、附近发现、野外挑战、收服结果与记忆标签。
+   拥有 ui/src/features/discovery、runtime/features/discovery、对应 shared-types/features/discovery。
+   分支 codex/lingjing-discovery；工作树名称 lingjing-discovery。
+
+04 battle：战斗规则、好友约战、房间、断线恢复、战报和回合回顾。
+   拥有 ui/src/features/battle、runtime/features/battle、对应 shared-types/features/battle，以及原有战斗领域包的必要兼容改动。
+   分支 codex/lingjing-battle；工作树名称 lingjing-battle。
+
+05 garden：领地、菜园、种子、作物、背包、食谱和指定伙伴喂养闭环。
+   拥有 ui/src/features/garden、runtime/features/garden、对应 shared-types/features/garden。
+   分支 codex/lingjing-garden；工作树名称 lingjing-garden。
+
+06 conversations：独立聊天、人设、记忆、模型连接与 AI 设置。
+   拥有 ui/src/features/conversations、runtime/features/conversations、对应 shared-types/features/conversations。
+   分支 codex/lingjing-conversations；工作树名称 lingjing-conversations。
+
+07 resources：角色资源库、2D 动画包、3D GLB/GLTF、校准与动画映射。
+   拥有 ui/src/features/resources、runtime/features/resources、对应 shared-types/features/resources。
+   分支 codex/lingjing-resources；工作树名称 lingjing-resources。
+
+08 accounts：登录注册、资料、用户身份映射、同步备份、桌面和隐私设置。
+   拥有 ui/src/features/accounts、runtime/features/accounts、对应 shared-types/features/accounts。
+   分支 codex/lingjing-accounts；工作树名称 lingjing-accounts。
+
+四、公共接口与模块衔接
+
+前端统一入口：apps/pc-app/ui；按 features/<module>/index.tsx 导出模块页面与子路由。
+主进程模块：apps/pc-app/runtime/features/<module>/index.cjs（或基础架构确定的等价编译入口）。
+foundation 先落地公共 FeatureModule / AppServices / IPC 契约，并让前端与主进程能发现和注册模块；业务会话通过各自导出接入。
+公共类型由 foundation 定义，领域类型放 packages/shared-types/src/features/<module>，避免共同编辑一个巨大类型文件。
+根依赖、公共路由和 preload 只由 foundation 汇总修改；业务模块提供自己的依赖清单和注册入口。
+ownerAccountId 与 petId 使用明确的字符串实例 ID；不得用角色模板 ID 代替宠物实例。
+桌面出场、当前聊天、出战、驻守是不同状态。
+主进程和服务端根据已验证会话确认 owner，不能信任 renderer 传入的 ownerId。
+公共结果契约包含 ok、稳定的错误 code / message、必要的 revision；跨模块命令包含 petId / actionId 等明确归属。
+SQLite 连接与迁移事务由 foundation 提供；每功能自己的迁移放对应模块中，不各自开一套库存或账号库。
+新云端迁移使用独立描述性文件名，避免争用同一迁移文件；先提交可审查的迁移与回滚说明，不做破坏性生产迁移。
+喂养：garden 负责库存扣减与食品效果；companions 暴露对指定 petId 更新养成的事务适配，二者通过公共数据库服务原子提交。
+捕捉：discovery 发起现有 battle 挑战；胜利并确认后由 companions 创建实例，按 actionId 去重。
+领地：garden 保留既有归属和捕捉收益；不擅自改动对战公式。
+模型：resources 暴露资源解析 / 显示适配；companions 和 battle 使用同一资源引用，不各自复制模型库。
+账号：accounts 提供旧 runtime_accounts 文本 ID 与新存档归属的稳定映射，不盲目套用旧 auth.uid UUID 表。
+
+五、功能约束
+
+多宠物：可同形象多实例；名字、状态、位置、养成、聊天与记忆互相独立；重启恢复。
+菜园：每账号有基础菜园；探索/对战获得种子；离线生长；收获入库；稻米先制作米饭；喂食只作用于选中的一只。
+基础菜园和已收获物品不随领地易主清空；第一版不加入偷菜、离线枯死、付费催熟。
+收获、制作、喂养必须用事务与 actionId 幂等，不能重复发物品或产生负库存。
+定位：当前服务仍是 SimulatedMapProvider；需要接真实系统定位，并区分权限拒绝、不可用、精度不足与演示模式。
+对战：复用当前源代码规则；旧需求文档中部分数值可能过时，不能照图或旧文档改回旧公式。
+AI：密钥只走主进程 / 安全存储；单宠物记录、记忆删除与人设独立；不能把本地台词伪称在线模型回复。
+资源：保留既有 GLB 导入与 3D 模型；不用默认授权不清的桌宠角色素材；代码与素材许可分别记录。
+
+六、依赖与集成
+
+foundation 先交付最小可运行的新壳、公共契约和旧能力适配，让其他会话可以尽早合入其基础提交。
+其他会话先实现自己目录内的领域逻辑与组件；公共依赖未就绪时继续独立工作，不在共享源检出改动基础文件。
+可只读查看 foundation 分支与其他功能分支，必要时把 foundation 的基础提交合入自己的独立工作树。
+各功能会话提交代码和 docs/implementation/status/<module>.json，记录分支、提交、验证结果、实际运行证据与剩余依赖。
+功能会话不相互合并功能分支；foundation 负责收集七个功能分支、解决冲突、补公共 wiring 和最终 Windows 全流程验收。
+会话标识保存在共享源检出的 docs/implementation/feature-chats.json；可通过 list_threads / read_thread / wait_threads 只读跟踪。
+创建会话不等于功能完成；静态 HTML、假 API、填好表单、源码字符串断言或纯 mock 测试都不能代替实际运行验收。
+
+七、验收与交付
+
+每个功能先做相关定向检查；修正真实发现的问题后，最终集成做一次完整回归，避免无理由反复全量测试。
+需要验证真实 Electron 窗口、可点击界面、IPC、数据库落盘和重启恢复；有云端依赖时单独列明真实服务验证状态。
+登录 / OTP / CAPTCHA 等人工边界单列，继续可自主完成的本地工作，不伪造云端成功。
+已完成的代码提交到各自分支；不得仅完成计划、截图、静态占位页或脚手架就把目标标记完成。
+不创建用户没有要求的额外实现会话，不覆盖其他会话工作，不删除旧数据，不自动发布生产版本。

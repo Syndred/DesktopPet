@@ -1,0 +1,9 @@
+# Requested settings for Lingjing implementation chats.
+model = "gpt-6.1-sol"
+model_reasoning_effort = "max"
+# Fast mode uses the supported priority service tier request value.
+service_tier = "priority"
+
+[features]
+fast_mode = true
+goals = true

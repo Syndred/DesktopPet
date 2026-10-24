@@ -1,0 +1,60 @@
+灵境 · 核心页面设计集
+2026-10-24
+
+设计阶段交付，所有页面均为概念效果图，地图、账号、状态和数值均为示例。
+本轮不实施框架迁移、不改业务代码、不替换运行中的应用图标。
+
+Logo 方向：对称、圆润的四芒星 / 菱形；中心为灵境入口与光点。
+Logo 不包含鲸鱼、鱼、尾巴，不复制其他游戏的图标或字体。
+UI 延续已认可的奶白、雾蓝、深蓝文字与蓝紫主操作，保留二次元陪伴感。
+
+页面目录
+
+01 我的灵宠与桌面多只同屏 — 01-companions-and-desktop.png
+02 附近探索与地图捕捉 — 02-exploration-and-battle.png 上半
+03 好友对战 — 02-exploration-and-battle.png 下半
+04 宠物详情、成长与技能 — 03-pet-detail-and-adoption.png 上半
+05 领养伙伴 — 03-pet-detail-and-adoption.png 下半
+06 野外遭遇与挑战入口 — 04-wild-encounter-and-capture.png 上半
+07 收服结果与新伙伴去向 — 04-wild-encounter-and-capture.png 下半
+08 领地、归属、驻守与菜园入口 — 05-territory-garden-and-inventory.png 上半
+09 背包、装扮与指定伙伴喂养 — 05-territory-garden-and-inventory.png 下半
+10 每只伙伴的独立聊天与记忆 — 06-chat-and-friend-duels.png 上半
+11 好友搜索、约战与邀请处理 — 06-chat-and-friend-duels.png 下半
+12 战报、经验结算与回合回顾 — 07-battle-report-and-model-import.png 上半
+13 2D/3D 模型资源导入与校准 — 07-battle-report-and-model-import.png 下半
+14 桌面、行为、位置与隐私设置 — 08-desktop-and-ai-settings.png 上半
+15 全局 AI 连接、单宠物人设与记忆 — 08-desktop-and-ai-settings.png 下半
+16 登录与注册入口 — 09-login-and-account.png 上半
+17 账号资料、密码和同步 — 09-login-and-account.png 下半
+18 领地·我的菜园 — 10-garden-harvest-and-feeding.png 上半
+19 收获、制作与指定伙伴喂食 — 10-garden-harvest-and-feeding.png 下半
+
+关键流程
+
+登录 / 注册 → 我的灵宠 → 独立伙伴详情 → 放到桌面 / 喂养 / 聊天
+附近探索 → 野外遭遇 → 挑战 → 收服确认 → 收服结果 → 查看详情 / 放到桌面
+好友约战 → 处理邀请 → 对战 → 战报与结算
+附近领地 → 入侵 / 驻守 → 对战 → 领地归属与区域捕捉加成
+背包选择物品 → 指定伙伴 → 使用数量 → 确认效果
+角色资源 → 导入 2D 动画包或 3D 模型 → 预览与校准 → 保存
+设置 → 全局 AI 连接 → 单伙伴人设 / 记忆
+
+设计约束
+
+1. 角色模板与宠物实例分开；相同形象可有多个独立实例。
+2. 桌面出场、当前聊天、出战伙伴、驻守伙伴是不同的选择状态。
+3. 聊天、人设与记忆必须明确归属当前伙伴。
+4. 原有对战、定位、捕捉、领地、养成、模型导入与账号能力均保留为正式页面。
+5. 源码中的定位服务仍是模拟实现；效果图不代表系统真实定位已经接通。
+6. 生成提示词与每张图的来源记录在 generation-plan.json 和 generation-results.json。
+
+
+菜园更新（v3）
+
+探索/对战获得种子 → 播种 → 成熟收获入库 → 直接喂食或制作米饭 → 指定伙伴喂食 → 继续养成与探索。
+基础菜园属于账号，领地提供额外加成；领地易主不清空基础菜园或已收获物品。
+详细规则：garden-feature-plan.txt
+开源复用清单：open-source-reuse.txt
+开源核对记录：open-source-reuse.json
+菜园图稿提示词：garden-update-record.json
