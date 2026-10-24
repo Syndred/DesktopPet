@@ -1,6 +1,6 @@
 # 菜园界面与集成验收记录
 
-工作分支：`codex/lingjing-garden`。已接入 foundation `7aa6f3b` 的公共归属迁移与 `50f6cad` 排版 token，在独立托管工作树验证；共享源检出保持原状。远端 `origin/main` 已重新 fetch，当前为 `4786f97680679c2db0aa307fa5f67ec247f93086`。
+工作分支：`codex/lingjing-garden`。已合入 foundation `1457f36`，包含 `b3c15a5` 公共账号 checkpoint、`2d0b5c8` 六个正式形象，以及已验收的归属迁移和公共排版 token；在独立托管工作树验证。共享源检出保持原状。远端 `origin/main` 已重新 fetch，当前为 `4786f97680679c2db0aa307fa5f67ec247f93086`。
 
 对照原图：`docs/design/2026-10-24/full-ui/05-territory-garden-and-inventory.png` 与 `10-garden-harvest-and-feeding.png`。截图来自实际 Electron 窗口，界面通过正式 IPC 操作同一个 SQLite 连接，未使用静态网页替代产品。
 
@@ -21,7 +21,9 @@
 
 素材来自内置 ImageGen，原始文件、完整提示词和项目目标路径见 [garden-assets.json](garden-assets.json)。使用 foundation 的鲸鱼娘角色资源，不复制出第二份角色库；未导入 farming-game 的 GPL 示例贴图。各实际依赖的版本、来源和许可证见 [status/garden.json](status/garden.json)。
 
-最终原生截图和读回数据放在 [evidence/garden](evidence/garden)。`verification.json` 将物理定位失败、旧归属待衔接、本地 PostgreSQL 测试与真实原生流程分别记录，不能把它们混称线上成功。
+最终原生截图和读回数据放在 [evidence/garden](evidence/garden)。`verification.json` 分别记录物理定位失败、旧归属迁移完成、本地 PostgreSQL 测试与真实原生流程，不能把它们混称线上成功。
+
+已消费资源模块六个正式资源：鱼丸、小蓝、饭团、焰柴、礼帽喵、小狐。独立本机 QA 目录复用已正式生长得到的食物，再通过真实领养 IPC 创建六只伙伴；六个 PNG 的内容 hash、资源路径均不同，实际解码为 1254×1254。公共 ResourceStage 渲染任意图集，无功能私有精灵播放器。指定小狐喂食后，原生窗口收到唯一 owner/pet/resource 对应的 eat 通知，并实测帧 0→1；其他伙伴记录完全一致。原 action 重放不再次扣物品或发动作，重启后库存和伙伴精确读回。这个目录明确是本机 UI 验收资料，不是云端或双设备证明。
 
 复验入口：
 
@@ -39,4 +41,4 @@ node apps/pc-app/runtime/features/garden/smoke.electron.mjs plant
 
 PostgreSQL 检查采用测试工具 PGlite 0.5.11（Apache-2.0）。foundation 已统一提供测试依赖；原 ignored `artifacts/garden/pg-qa` 仍保留，可用 `GARDEN_PGLITE_MODULE` 指向该测试模块。运行 `node --test apps/pc-app/runtime/features/garden/cloud.test.mjs`，会保留实际 SQL、HTTP、SQLite 验证结果；这不构成已部署 Supabase 的证明。
 
-旧归属迁移回调已发布并通过原生验收。仍需统一集成解决的事项：accounts 衔接菜园更新后的公共云版本；云端领地对战/驻守接入统一权威服务；HTTPS 部署与真实双设备读回；精度合格的实际定位验收（最新原生 WiFi 精度 177m）。接口和回滚说明见 [garden-contract.md](garden-contract.md) 与 [garden-cloud-review.md](garden-cloud-review.md)。foundation 负责最后一次全功能集成回归和 Windows 打包，本会话没有反复运行全项目回归或自动发布生产服务。
+旧归属迁移、accounts 公共云版本衔接、六个正式形象与指定伙伴本机进食已接入并通过定向验收。本轮为 18 项 SQLite/实际领域检查和 10 项本地 HTTP/PostgreSQL 检查；类型检查、功能 ESLint 与最新原生布局复核通过。仍需统一集成解决的事项：云端领地对战/驻守接入统一权威服务；HTTPS 部署与真实双设备读回；精度合格的实际定位验收（最新原生 WiFi 精度 177m）。接口和回滚说明见 [garden-contract.md](garden-contract.md) 与 [garden-cloud-review.md](garden-cloud-review.md)。foundation 负责最后一次全功能集成回归和 Windows 打包，本会话没有反复运行全项目回归或自动发布生产服务。

@@ -77,7 +77,7 @@ try {
     const again=await invoke('snapshot');assert.equal(again.revision,result.revision);assert.deepEqual(again.data.items,result.data.items);
     if(phase==='identity-upgrade'){
       run.identityUpgrade={target:run.storageOwnerAccountId,source:run.ownerAccountId,result,pets,secondReadSame:true};
-      await page.emulateMedia({reducedMotion:'reduce'});await route('/inventory');await page.locator('.garden-pet-picker .cp-sheet-thumbnail').first().waitFor();await page.screenshot({path:resolve(output,'identity-upgraded-preserved.png'),fullPage:true});
+      await page.emulateMedia({reducedMotion:'reduce'});await route('/inventory');await page.locator('.garden-pet-picker .cp-sheet-thumbnail, .garden-pet-picker .resource-stage[data-status="ready"]').first().waitFor();await page.screenshot({path:resolve(output,'identity-upgraded-preserved.png'),fullPage:true});
     }else{assert.deepEqual(pets.data.pets,run.identityUpgrade.pets.data.pets);run.identityUpgrade.restartExact=true;}
   } else if (phase === 'identity') {
     const failure=await invoke('snapshot');assert.equal(failure.code,'OWNER_MIGRATION_REQUIRED');run.identity={source:run.ownerAccountId,target:run.storageOwnerAccountId,result:failure};
@@ -122,13 +122,72 @@ try {
         await page.screenshot({path:resolve(output,'07-real-location-result.png'),fullPage:true});
       }
     }finally{await save(original);}
+  } else if (phase === 'roster-action') {
+    assert.ok(run.roster?.restartExact,'Complete and reopen the six-resource feeding proof first');
+    assert.ok(!run.rosterAction,'The feed receipt already exists; run roster-readback instead of feeding again');
+    await page.emulateMedia({reducedMotion:'no-preference'});await page.waitForFunction(()=>document.documentElement.dataset.motion==='enabled');
+    const before=await page.evaluate(()=>window.lingjing.invoke('companions','list')),stockBefore=await invoke('snapshot'),target=before.data.pets.find(pet=>pet.petId===run.roster.targetPetId);assert.ok(target);
+    await route('/inventory');await page.locator('.garden-item').filter({has:page.getByText('番茄',{exact:true})}).click();
+    const button=page.getByRole('button',{name:`${target.name} Lv.`,exact:false});await button.click();await button.locator('.resource-stage[data-status="ready"]').waitFor();
+    await button.locator('.resource-stage').evaluate(stage=>{
+      window.__gardenEatEvents=[];window.__gardenEatFrames=[];
+      window.__gardenEatStop=window.lingjing.subscribe('companions:action',event=>window.__gardenEatEvents.push(event));
+      const observer=new MutationObserver(()=>window.__gardenEatFrames.push({action:stage.getAttribute('data-action'),frame:stage.querySelector('.resource-sprite-host')?.getAttribute('data-frame')}));
+      observer.observe(stage,{subtree:true,attributes:true,attributeFilter:['data-action','data-frame']});window.__gardenEatObserver=observer;
+    });
+    await page.getByRole('button',{name:`喂给${target.name}`,exact:true}).click();await page.getByRole('status').filter({hasText:`已给${target.name}喂食 1 份番茄`}).waitFor();
+    await page.waitForFunction(()=>new Set(window.__gardenEatFrames.filter(frame=>frame.action==='eat'&&frame.frame!==null).map(frame=>frame.frame)).size>=2);
+    const after=await page.evaluate(()=>window.lingjing.invoke('companions','list')),stockAfter=await invoke('snapshot'),receipt=stockAfter.data.ledger.find(event=>event.kind==='feed'&&event.itemId==='tomato'&&event.petId===target.petId);assert.ok(receipt);
+    assert.equal(stockBefore.data.items.find(item=>item.id==='tomato').quantity-stockAfter.data.items.find(item=>item.id==='tomato').quantity,1);
+    assert.deepEqual(after.data.pets.filter(pet=>pet.petId!==target.petId),before.data.pets.filter(pet=>pet.petId!==target.petId));
+    const repeated=await invoke('feed',{actionId:receipt.actionId,expectedRevision:stockBefore.revision,expectedPetRevision:target.revision,petId:target.petId,itemId:'tomato',quantity:1});assert.equal(repeated.ok,true,JSON.stringify(repeated));assert.equal(repeated.replayed,true);
+    const events=await page.evaluate(()=>({events:window.__gardenEatEvents,frames:window.__gardenEatFrames}));assert.equal(events.events.length,1);assert.equal(events.events[0].ownerAccountId,run.ownerAccountId);assert.equal(events.events[0].petId,target.petId);assert.equal(events.events[0].resourceId,target.resource.resourceId);assert.equal(events.events[0].action,'eat');
+    run.rosterAction={targetPetId:target.petId,before,after,stockBefore,stockAfter,repeated,...events,otherPetsUnchanged:true};
+    await page.screenshot({path:resolve(output,'only-selected-fox-eating.png'),fullPage:true});
+    await page.evaluate(()=>{window.__gardenEatStop();window.__gardenEatObserver.disconnect();});
+  } else if (phase === 'roster' || phase === 'roster-readback') {
+    assert.ok(run.rosterFixture,'Use the separately copied, explicitly labelled roster QA profile');
+    if(phase==='roster'){
+      assert.ok(!run.roster,'The roster feed receipt already exists; run roster-readback instead of feeding again');
+      const initial=await page.evaluate(()=>window.lingjing.invoke('companions','list'));assert.equal(initial.ok,true);
+      const templates=initial.data.templates;assert.equal(templates.length,6);assert.equal(new Set(templates.map(template=>template.resource.resourceId)).size,6);
+      const adopted=[];
+      for(const template of templates){
+        const result=await page.evaluate(template=>window.lingjing.invoke('companions','adopt',{actionId:`garden-roster:${template.templateId}`,templateId:template.templateId,name:`形象验收·${template.name}`,showOnDesktop:false}),template);
+        assert.equal(result.ok,true,JSON.stringify(result));adopted.push(result.data.pet);
+      }
+      await route('/inventory');const assets=[];
+      for(const pet of adopted){
+        const button=page.getByRole('button',{name:`${pet.name} Lv.`,exact:false});await button.scrollIntoViewIfNeeded();
+        const resolved=await page.evaluate(pet=>window.lingjing.invoke('resources','resolve',{resourceId:pet.resource.resourceId,petId:pet.petId,context:'desktop',action:'idle'}),pet);assert.equal(resolved.ok,true,JSON.stringify(resolved));
+        const resource=resolved.data.resource,source=`lingjing-resource://asset/${encodeURIComponent(resource.id)}/${resource.entryAsset.split('/').map(encodeURIComponent).join('/')}`;
+        const visible=button.locator('.cp-sheet-thumbnail, .resource-stage[data-status="ready"]');await visible.waitFor();
+        const displayed=await visible.evaluate(async (element,source)=>{
+          const image=new Image();image.src=source;await image.decode();const bounds=element.getBoundingClientRect();return {source,width:image.naturalWidth,height:image.naturalHeight,renderedWidth:bounds.width,renderedHeight:bounds.height,renderer:element.tagName==='svg'?'shared-thumbnail':'shared-pixi-stage'};
+        },source);
+        assert.ok(displayed.width>0&&displayed.height>0&&displayed.renderedWidth>0&&displayed.renderedHeight>0);assert.ok(decodeURIComponent(displayed.source).includes(pet.resource.resourceId));assets.push({petId:pet.petId,name:pet.name,resourceId:pet.resource.resourceId,contentHash:resource.contentHash,...displayed});
+      }
+      assert.equal(new Set(assets.map(asset=>asset.source)).size,6);assert.equal(new Set(assets.map(asset=>asset.contentHash)).size,6);
+      const before=await page.evaluate(()=>window.lingjing.invoke('companions','list')),stockBefore=await invoke('snapshot');
+      const target=adopted.find(pet=>pet.name.endsWith('小狐'));assert.ok(target);
+      await page.locator('.garden-item').filter({has:page.getByText('胡萝卜',{exact:true})}).click();await page.getByRole('button',{name:`${target.name} Lv.`,exact:false}).click();
+      await page.getByRole('button',{name:`喂给${target.name}`,exact:true}).click();await page.getByRole('status').filter({hasText:`已给${target.name}喂食 1 份胡萝卜`}).waitFor();
+      const after=await page.evaluate(()=>window.lingjing.invoke('companions','list')),stockAfter=await invoke('snapshot');
+      assert.equal(stockBefore.data.items.find(item=>item.id==='carrot').quantity-stockAfter.data.items.find(item=>item.id==='carrot').quantity,1);
+      const changed=after.data.pets.find(pet=>pet.petId===target.petId);assert.equal(changed.growth.satiety,target.growth.satiety+12);assert.equal(changed.growth.affinity,target.growth.affinity+2);
+      assert.deepEqual(after.data.pets.filter(pet=>pet.petId!==target.petId),before.data.pets.filter(pet=>pet.petId!==target.petId));
+      run.roster={assets,targetPetId:target.petId,before,after,stockBefore,stockAfter,onlyTargetChanged:true};
+      await page.emulateMedia({reducedMotion:'reduce'});await page.waitForFunction(()=>document.documentElement.dataset.motion==='reduced');await page.screenshot({path:resolve(output,'six-canonical-resources-and-selected-fox-feed.png'),fullPage:true});
+    }else{
+      const pets=await page.evaluate(()=>window.lingjing.invoke('companions','list')),snapshot=await invoke('snapshot'),expected=run.rosterAction||run.roster;assert.deepEqual(pets.data.pets,expected.after.data.pets);assert.deepEqual(snapshot.data.items,expected.stockAfter.data.items);run.roster.restartExact=true;if(run.rosterAction)run.rosterAction.restartExact=true;
+    }
   } else if (phase === 'audit') {
     const nativeWindow=await application.browserWindow(page),measurements=[];
     await page.emulateMedia({reducedMotion:'reduce'});await page.waitForFunction(()=>document.documentElement.dataset.motion==='reduced');
     for(const [width,height] of [[1280,844],[1440,900]]){
       await nativeWindow.evaluate((win,{width,height})=>win.setContentSize(width,height),{width,height});
       for(const path of ['/inventory','/garden/kitchen']){
-        await route(path);await page.locator('.garden-pet-picker .cp-sheet-thumbnail').first().waitFor();
+        await route(path);await page.locator('.garden-pet-picker .cp-sheet-thumbnail, .garden-pet-picker .resource-stage[data-status="ready"]').first().waitFor();
         const result=await page.evaluate(()=>{
           const rect=e=>e.getBoundingClientRect().toJSON(),style=e=>({fontSize:getComputedStyle(e).fontSize,fontWeight:getComputedStyle(e).fontWeight,lineHeight:getComputedStyle(e).lineHeight,marginBottom:getComputedStyle(e).marginBottom});
           const cards=[...document.querySelectorAll('.garden-item')],pets=[...document.querySelectorAll('.garden-pet')];
@@ -166,7 +225,7 @@ try {
     for(const [path,name] of [['/garden/plots','10-garden-current.png'],['/garden/kitchen','11-kitchen-current.png'],['/inventory','12-inventory-current.png']]){
       await route(path);await page.locator('.garden-feature').waitFor();
       if(path==='/garden/plots')await page.locator('.garden-pixi-scene canvas').waitFor();
-      else {await page.locator('.garden-pet-picker .cp-sheet-thumbnail').first().waitFor();await page.getByRole('button',{name:'鱼丸 Lv.',exact:false}).click();}
+      else {await page.locator('.garden-pet-picker .cp-sheet-thumbnail, .garden-pet-picker .resource-stage[data-status="ready"]').first().waitFor();await page.getByRole('button',{name:'鱼丸 Lv.',exact:false}).click();}
       await page.evaluate(()=>{for(const element of document.querySelectorAll('*'))if(element.scrollHeight>element.clientHeight&&['auto','scroll'].includes(getComputedStyle(element).overflowY))element.scrollTop=0;document.activeElement?.blur();});
       await page.screenshot({path:resolve(output,name),fullPage:true});
     }
@@ -248,7 +307,7 @@ try {
     const select=page.getByRole('combobox',{name:'选择食物'});await select.focus();await select.press('Enter');await page.getByRole('listbox').waitFor();await page.keyboard.press('Escape');
     await page.getByRole('listbox').waitFor({state:'hidden'});await page.waitForFunction(()=>document.activeElement?.getAttribute('role')==='combobox');assert.equal(await select.evaluate(element=>element===document.activeElement),true);
     await select.click();await page.getByRole('option',{name:/^胡萝卜 × \d+$/}).click();assert.match(await select.innerText(),/胡萝卜/);
-    await page.locator('.garden-pet-picker .cp-sheet-thumbnail').first().waitFor();
+    await page.locator('.garden-pet-picker .cp-sheet-thumbnail, .garden-pet-picker .resource-stage[data-status="ready"]').first().waitFor();
     await page.screenshot({path:resolve(output,'04-radix-kitchen.png'),fullPage:true});
     await route('/inventory');await page.getByRole('tablist',{name:'背包分类'}).waitFor();
     const all=page.getByRole('tab',{name:'全部',exact:true});await all.focus();await all.press('ArrowRight');

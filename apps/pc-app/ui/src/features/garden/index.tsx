@@ -42,7 +42,7 @@ function Frame({ state, page, title, subtitle, children, action }: { state: Gard
 function PetPicker({ pets, selected, onSelect, disabled }: { pets: GardenPet[]; selected: string; onSelect: (id: string) => void; disabled?: boolean }) {
   return <div className="garden-pet-picker" role="group" aria-label="指定伙伴">
     {pets.length === 0 ? <p className="garden-help">还没有伙伴，先去<a href="#/companions/adopt">领养一只</a>吧。</p> : pets.map(pet => <Button variant="ghost" type="button" key={pet.petId} className={`garden-pet ${selected === pet.petId ? 'is-selected' : ''}`} aria-pressed={selected === pet.petId} onClick={() => onSelect(pet.petId)} disabled={disabled}>
-      <span className="garden-pet-portrait" aria-hidden="true"><PetPortrait pet={pet} /><i>{selected === pet.petId ? '✓' : '✧'}</i></span><strong>{pet.name}</strong><small>Lv.{String(pet.growth.level).padStart(2, '0')}</small>
+      <span className="garden-pet-portrait" aria-hidden="true"><PetPortrait pet={pet} animate={selected === pet.petId} /><i>{selected === pet.petId ? '✓' : '✧'}</i></span><strong>{pet.name}</strong><small>Lv.{String(pet.growth.level).padStart(2, '0')}</small>
     </Button>)}
   </div>;
 }

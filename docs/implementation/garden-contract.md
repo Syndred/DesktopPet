@@ -29,6 +29,10 @@ const result = garden.grantSeeds(
 2026-10-24 范围修订已接入：只渲染 2D 伙伴，保留旧数据；PixiJS Application/Assets/Texture/Sprite 负责正式菜园背景和作物，图集路径/提示词在 garden-assets.json。Button/Input、Radix Select/Tabs 直接使用 foundation 公共 shadcn 入口；背包列表使用公共 AnimatedList（Motion）。依赖 foundation f0af90f 的公共组件、Tailwind 和全局动画偏好 Provider。地图通过 discovery/NearbyMap 共享入口复用，不再维护第二套地图引擎。
 
 CloudGardenAuthority 对云端账号采用服务端结算和二次读回，服务不可用时只显示缓存并保留原 action；服务端代码与真实未完成项见 garden-cloud-review.md。本机账号仍可完整离线种植与喂养。
+
+已接入公共 `accounts.sync.acceptAuthoritativeReadback(owner,{envelope,cloudRevision})`。二次读回通过后，与菜园/伙伴落盘一起更新公共账号 checkpoint；全存档 checksum 必须一致，未同步数据、运行中或待确认的整存档请求一律保留。实际 HTTP/PostgreSQL 联调已验证下一次 accounts 整存档 CAS 推送成功，离线其他模块数据不会被覆盖。
+
+伙伴选择器沿用公共 CompanionPortrait/ResourceStage，并传入 ownerAccountId、petId 和真实 pet.resource；只让选中的伙伴订阅公共动作通知。本机喂养继续由 companions 的事务提交后回调播放 eat，原 action 重放不重复播放或扣库存。不新增动画引擎，也不按伙伴名字推测资源。六个正式资源已在原生窗口验证；线上云端进食动作仍需随真实部署一起验收。
 # Verified legacy-owner transition
 
 Accounts may map an old raw local ID to `local:<id>`. Garden only considers an

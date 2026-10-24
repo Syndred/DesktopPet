@@ -1,6 +1,6 @@
 {
-  "capturedAt": "2026-10-24T13:32:43.678Z",
-  "commit": "7aa6f3ba6b7aa9b6bf55cdb9b878feada10159b4",
+  "capturedAt": "2026-10-24T13:56:54.181Z",
+  "commit": "3c6bba9705d848c5950797bbc27631e0c985d5ca",
   "mode": "Actual Windows Electron + IPC + SQLite reopen. PostgreSQL checks use a local WASM server, not deployed Supabase.",
   "ownerAccountId": "local:user-8c0af433-aa89-44dd-b1ce-34872d297267",
   "electron": "36.9.5",
@@ -140,6 +140,24 @@
     {
       "phase": "screens",
       "at": "2026-10-24T13:32:43.516Z",
+      "errors": [],
+      "electron": "36.9.5"
+    },
+    {
+      "phase": "readback",
+      "at": "2026-10-24T13:52:56.795Z",
+      "errors": [],
+      "electron": "36.9.5"
+    },
+    {
+      "phase": "audit",
+      "at": "2026-10-24T13:53:00.681Z",
+      "errors": [],
+      "electron": "36.9.5"
+    },
+    {
+      "phase": "screens",
+      "at": "2026-10-24T13:53:04.014Z",
       "errors": [],
       "electron": "36.9.5"
     }
@@ -1924,7 +1942,7 @@
   },
   "postgres": {
     "mode": "local HTTP + real PostgreSQL WASM + SQLite; not a deployed Supabase receipt",
-    "at": "2026-10-24T13:31:44.758Z",
+    "at": "2026-10-24T13:42:10.612Z",
     "checks": [
       "verified session and server-time maturity",
       "one credit under concurrent HTTP harvest + exact action replay",
@@ -1933,14 +1951,715 @@
       "server-owned reward row + concurrent receipt deduplication",
       "concurrent first cloud open -> one PostgreSQL starter receipt; rejected session creates no local garden",
       "real HTTP socket disconnect after PostgreSQL commit -> exact action replay -> one craft debit and one output after SQLite readback",
-      "actual SQL roles: service receipt read allowed; anon/authenticated receipt read and settlement execution denied"
+      "actual SQL roles: service receipt read allowed; anon/authenticated receipt read and settlement execution denied",
+      "garden HTTP readback -> actual AccountSync checkpoint -> next full-save HTTP CAS push/readback succeeds with exact inventory",
+      "unrelated offline notes preserved; local garden/checkpoint rollback; exact pending action replay never duplicates the committed server plant"
     ],
-    "accountRevision": 4
+    "accountRevision": 4,
+    "accountCoordination": {
+      "realAccountsHandler": true,
+      "realPostgreSql": true,
+      "beforeRevision": 6,
+      "nextFullSaveRevision": 7,
+      "exactInventory": true
+    }
+  },
+  "canonicalRoster": {
+    "fixture": {
+      "source": "completed production-duration garden QA profile",
+      "cloudAcceptance": false
+    },
+    "assets": [
+      {
+        "petId": "pet-cbd89c47-2361-44ba-a758-b7f18161439c",
+        "name": "形象验收·鱼丸",
+        "resourceId": "builtin:lingjing-yuwan-v2",
+        "contentHash": "cc82fe006209adb2be8f7f5ffbca460611956555f8ddbc7469ba8ac33796f5e7",
+        "source": "lingjing-resource://asset/builtin%3Alingjing-yuwan-v2/sprites.png",
+        "width": 1254,
+        "height": 1254,
+        "renderedWidth": 64.4000015258789,
+        "renderedHeight": 64.4000015258789,
+        "renderer": "shared-pixi-stage"
+      },
+      {
+        "petId": "pet-dc123416-b8ef-47c2-96e1-a867a69b673a",
+        "name": "形象验收·小蓝",
+        "resourceId": "builtin:lingjing-xiaolan-v1",
+        "contentHash": "1176351843557387d70c6cdf33942cd4f39fde27323077bbe33795cc6a81d9b9",
+        "source": "lingjing-resource://asset/builtin%3Alingjing-xiaolan-v1/sprites.png",
+        "width": 1254,
+        "height": 1254,
+        "renderedWidth": 64.4000015258789,
+        "renderedHeight": 64.4000015258789,
+        "renderer": "shared-pixi-stage"
+      },
+      {
+        "petId": "pet-1546d7b5-1a87-411c-a0b5-d1a82bd3aa27",
+        "name": "形象验收·饭团",
+        "resourceId": "builtin:lingjing-fantuan-v1",
+        "contentHash": "c395254032588907ecbca1a0fc31497c3c184cee0e59231485a10860d60e240b",
+        "source": "lingjing-resource://asset/builtin%3Alingjing-fantuan-v1/sprites.png",
+        "width": 1254,
+        "height": 1254,
+        "renderedWidth": 64.4000015258789,
+        "renderedHeight": 64.4000015258789,
+        "renderer": "shared-pixi-stage"
+      },
+      {
+        "petId": "pet-4c58a8b8-1f16-47dc-92c5-7d35d081db47",
+        "name": "形象验收·焰柴",
+        "resourceId": "builtin:lingjing-shiba-v2",
+        "contentHash": "fac73538d366cc2f10fd27a36af882e9c77ad8826429d080581f606b6064f4e2",
+        "source": "lingjing-resource://asset/builtin%3Alingjing-shiba-v2/sprites.png",
+        "width": 1254,
+        "height": 1254,
+        "renderedWidth": 64.4000015258789,
+        "renderedHeight": 64.4000015258789,
+        "renderer": "shared-pixi-stage"
+      },
+      {
+        "petId": "pet-892af276-55fa-4e8b-8960-9ea5cbdf19cb",
+        "name": "形象验收·礼帽喵",
+        "resourceId": "builtin:lingjing-hatcat-v1",
+        "contentHash": "3b525dd5171acdf7e869c645616beda7f2965ad432fa77dbd9937d763e04c449",
+        "source": "lingjing-resource://asset/builtin%3Alingjing-hatcat-v1/sprites.png",
+        "width": 1254,
+        "height": 1254,
+        "renderedWidth": 64.4000015258789,
+        "renderedHeight": 64.4000015258789,
+        "renderer": "shared-pixi-stage"
+      },
+      {
+        "petId": "pet-ef45020a-39ca-4611-9b55-e9e284ae03ce",
+        "name": "形象验收·小狐",
+        "resourceId": "builtin:lingjing-xiaohu-v1",
+        "contentHash": "05ef8e37a7519f64d6e9ccdfeb73292269dedf10ea836e285d997d265cb9e4da",
+        "source": "lingjing-resource://asset/builtin%3Alingjing-xiaohu-v1/sprites.png",
+        "width": 1254,
+        "height": 1254,
+        "renderedWidth": 64.4000015258789,
+        "renderedHeight": 64.4000015258789,
+        "renderer": "shared-pixi-stage"
+      }
+    ],
+    "targetPetId": "pet-ef45020a-39ca-4611-9b55-e9e284ae03ce",
+    "onlyTargetChanged": true,
+    "restartExact": true
+  },
+  "selectedPetAnimation": {
+    "fixture": true,
+    "cloudAcceptance": false,
+    "targetPetId": "pet-ef45020a-39ca-4611-9b55-e9e284ae03ce",
+    "before": [
+      {
+        "petId": "pet-001",
+        "name": "焰柴",
+        "revision": 1,
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 128,
+            "atk": 32,
+            "def": 20,
+            "spd": 18
+          }
+        }
+      },
+      {
+        "petId": "pet-002",
+        "name": "墨喵",
+        "revision": 1,
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 122,
+            "atk": 28,
+            "def": 24,
+            "spd": 21
+          }
+        }
+      },
+      {
+        "petId": "pet-003",
+        "name": "礼帽喵",
+        "revision": 1,
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 130,
+            "atk": 26,
+            "def": 26,
+            "spd": 17
+          }
+        }
+      },
+      {
+        "petId": "pet-004",
+        "name": "钢狼",
+        "revision": 1,
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 135,
+            "atk": 30,
+            "def": 30,
+            "spd": 12
+          }
+        }
+      },
+      {
+        "petId": "pet-005",
+        "name": "赤柴",
+        "revision": 1,
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 142,
+            "atk": 24,
+            "def": 34,
+            "spd": 10
+          }
+        }
+      },
+      {
+        "petId": "pet-006",
+        "name": "柴豆",
+        "revision": 1,
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 118,
+            "atk": 33,
+            "def": 22,
+            "spd": 20
+          }
+        }
+      },
+      {
+        "petId": "pet-ef03204d-bbc6-4b2b-86b5-1b24c5cc9068",
+        "name": "鱼丸",
+        "revision": 5,
+        "growth": {
+          "level": 1,
+          "experience": 10,
+          "mood": 66,
+          "satiety": 90,
+          "affinity": 6,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        }
+      },
+      {
+        "petId": "pet-69a13dbc-02dc-447f-91fd-fe2812363c46",
+        "name": "小蓝",
+        "revision": 1,
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        }
+      },
+      {
+        "petId": "pet-20ec2000-12a1-44f0-bf6f-95bb27f0c37a",
+        "name": "饭团",
+        "revision": 1,
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        }
+      },
+      {
+        "petId": "pet-cbd89c47-2361-44ba-a758-b7f18161439c",
+        "name": "形象验收·鱼丸",
+        "revision": 1,
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        }
+      },
+      {
+        "petId": "pet-dc123416-b8ef-47c2-96e1-a867a69b673a",
+        "name": "形象验收·小蓝",
+        "revision": 1,
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        }
+      },
+      {
+        "petId": "pet-1546d7b5-1a87-411c-a0b5-d1a82bd3aa27",
+        "name": "形象验收·饭团",
+        "revision": 1,
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        }
+      },
+      {
+        "petId": "pet-4c58a8b8-1f16-47dc-92c5-7d35d081db47",
+        "name": "形象验收·焰柴",
+        "revision": 1,
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 118,
+            "atk": 33,
+            "def": 20,
+            "spd": 22
+          }
+        }
+      },
+      {
+        "petId": "pet-892af276-55fa-4e8b-8960-9ea5cbdf19cb",
+        "name": "形象验收·礼帽喵",
+        "revision": 1,
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 136,
+            "atk": 30,
+            "def": 30,
+            "spd": 13
+          }
+        }
+      },
+      {
+        "petId": "pet-ef45020a-39ca-4611-9b55-e9e284ae03ce",
+        "name": "形象验收·小狐",
+        "revision": 2,
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 62,
+          "satiety": 72,
+          "affinity": 2,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        }
+      }
+    ],
+    "after": [
+      {
+        "petId": "pet-001",
+        "name": "焰柴",
+        "revision": 1,
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 128,
+            "atk": 32,
+            "def": 20,
+            "spd": 18
+          }
+        }
+      },
+      {
+        "petId": "pet-002",
+        "name": "墨喵",
+        "revision": 1,
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 122,
+            "atk": 28,
+            "def": 24,
+            "spd": 21
+          }
+        }
+      },
+      {
+        "petId": "pet-003",
+        "name": "礼帽喵",
+        "revision": 1,
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 130,
+            "atk": 26,
+            "def": 26,
+            "spd": 17
+          }
+        }
+      },
+      {
+        "petId": "pet-004",
+        "name": "钢狼",
+        "revision": 1,
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 135,
+            "atk": 30,
+            "def": 30,
+            "spd": 12
+          }
+        }
+      },
+      {
+        "petId": "pet-005",
+        "name": "赤柴",
+        "revision": 1,
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 142,
+            "atk": 24,
+            "def": 34,
+            "spd": 10
+          }
+        }
+      },
+      {
+        "petId": "pet-006",
+        "name": "柴豆",
+        "revision": 1,
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 118,
+            "atk": 33,
+            "def": 22,
+            "spd": 20
+          }
+        }
+      },
+      {
+        "petId": "pet-ef03204d-bbc6-4b2b-86b5-1b24c5cc9068",
+        "name": "鱼丸",
+        "revision": 5,
+        "growth": {
+          "level": 1,
+          "experience": 10,
+          "mood": 66,
+          "satiety": 90,
+          "affinity": 6,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        }
+      },
+      {
+        "petId": "pet-69a13dbc-02dc-447f-91fd-fe2812363c46",
+        "name": "小蓝",
+        "revision": 1,
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        }
+      },
+      {
+        "petId": "pet-20ec2000-12a1-44f0-bf6f-95bb27f0c37a",
+        "name": "饭团",
+        "revision": 1,
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        }
+      },
+      {
+        "petId": "pet-cbd89c47-2361-44ba-a758-b7f18161439c",
+        "name": "形象验收·鱼丸",
+        "revision": 1,
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        }
+      },
+      {
+        "petId": "pet-dc123416-b8ef-47c2-96e1-a867a69b673a",
+        "name": "形象验收·小蓝",
+        "revision": 1,
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        }
+      },
+      {
+        "petId": "pet-1546d7b5-1a87-411c-a0b5-d1a82bd3aa27",
+        "name": "形象验收·饭团",
+        "revision": 1,
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        }
+      },
+      {
+        "petId": "pet-4c58a8b8-1f16-47dc-92c5-7d35d081db47",
+        "name": "形象验收·焰柴",
+        "revision": 1,
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 118,
+            "atk": 33,
+            "def": 20,
+            "spd": 22
+          }
+        }
+      },
+      {
+        "petId": "pet-892af276-55fa-4e8b-8960-9ea5cbdf19cb",
+        "name": "形象验收·礼帽喵",
+        "revision": 1,
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 136,
+            "atk": 30,
+            "def": 30,
+            "spd": 13
+          }
+        }
+      },
+      {
+        "petId": "pet-ef45020a-39ca-4611-9b55-e9e284ae03ce",
+        "name": "形象验收·小狐",
+        "revision": 3,
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 65,
+          "satiety": 82,
+          "affinity": 4,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        }
+      }
+    ],
+    "events": [
+      {
+        "ownerAccountId": "local:user-8c0af433-aa89-44dd-b1ce-34872d297267",
+        "petId": "pet-ef45020a-39ca-4611-9b55-e9e284ae03ce",
+        "resourceId": "builtin:lingjing-xiaohu-v1",
+        "action": "eat",
+        "actionId": "garden:5387e0b2-6778-42a7-a19d-a79942d3958a",
+        "startedAt": 1792849780000,
+        "expiresAt": 1792849781000
+      }
+    ],
+    "frames": [
+      {
+        "action": "eat",
+        "frame": "0"
+      },
+      {
+        "action": "eat",
+        "frame": "0"
+      },
+      {
+        "action": "eat",
+        "frame": "1"
+      }
+    ],
+    "foodConsumed": 1,
+    "otherPetsUnchanged": true,
+    "replayed": true,
+    "noSecondDebitOrAction": true,
+    "restartExact": true
   },
   "externalGaps": [
     "Live HTTPS Supabase deployment and real-account two-device readback",
     "Cloud territory challenge/garrison authority and shared battle integration",
-    "Common accounts save-version reconciliation after garden operations",
-    "Physical location precision <= 80m for actual capture/occupation"
+    "Physical location precision <= 80m for actual capture/occupation",
+    "Central full-app A01-A12 visual acceptance and Windows packaging"
   ]
 }

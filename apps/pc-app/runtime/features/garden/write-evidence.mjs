@@ -44,6 +44,24 @@ if(upgraded){
   assert.equal(oldDb.prepare('SELECT 1 FROM garden_accounts WHERE owner_account_id=?').get(old.storageOwnerAccountId),undefined);ownerTransition.newGardenNotCreated=true;
 }
 const sql=JSON.parse(readFileSync(sqlSource,'utf8'));
+assert.equal(sql.accountCoordination?.exactInventory,true,'Verify the shared AccountSync checkpoint and next full-save push first');
+const rosterSource=resolve('artifacts/garden/roster-electron'),roster=JSON.parse(readFileSync(resolve(rosterSource,'run.json'),'utf8'));
+const rosterDb=new DatabaseSync(resolve(rosterSource,'profile/lingjing.sqlite'),{readOnly:true});
+assert.equal(roster.rosterFixture.cloudAcceptance,false);
+assert.equal(roster.roster.restartExact,true);assert.equal(roster.rosterAction.restartExact,true);
+assert.equal(new Set(roster.roster.assets.map(asset=>asset.resourceId)).size,6);
+assert.equal(new Set(roster.roster.assets.map(asset=>asset.contentHash)).size,6);
+assert.ok(roster.roster.assets.every(asset=>asset.width>0&&asset.height>0&&asset.renderer==='shared-pixi-stage'));
+const eat=roster.rosterAction,otherThanTarget=result=>result.data.pets.filter(pet=>pet.petId!==eat.targetPetId);
+assert.deepEqual(otherThanTarget(eat.before),otherThanTarget(eat.after));
+assert.equal(eat.stockBefore.data.items.find(item=>item.id==='tomato').quantity-eat.stockAfter.data.items.find(item=>item.id==='tomato').quantity,1);
+assert.equal(eat.repeated.replayed,true);assert.equal(eat.events.length,1);
+const rosterItems=rosterDb.prepare('SELECT item_id,quantity FROM garden_items WHERE owner_account_id=?').all(roster.ownerAccountId);
+assert.ok(eat.stockAfter.data.items.every(item=>(rosterItems.find(row=>row.item_id===item.id)?.quantity||0)===item.quantity));
+assert.equal(eat.after.data.pets.find(pet=>pet.petId===eat.targetPetId).growth.satiety-eat.before.data.pets.find(pet=>pet.petId===eat.targetPetId).growth.satiety,10);
+assert.equal(eat.events[0].petId,eat.targetPetId);assert.equal(eat.events[0].ownerAccountId,roster.ownerAccountId);
+assert.equal(eat.events[0].action,'eat');
+assert.ok(new Set(eat.frames.filter(frame=>frame.action==='eat').map(frame=>frame.frame)).size>=2);
 const territoryRun=JSON.parse(readFileSync(resolve('artifacts/garden/territory-electron/run.json'),'utf8'));
 assert.equal(territoryRun.territoryRestart.exactGarrisonAndIndependentSelections,true);
 const evidence={
@@ -58,13 +76,16 @@ const evidence={
   publicComponents:{...run.library,...run.motion},visualAudit:run.visualAudit,responsive:run.responsive,realLocation:run.map,
   oldOwnerSafety:ownerTransition,
   controlledTerritoryUI:{fixture:true,realGeographicAcceptance:false,actualIPCAndSqlite:true,garrisonOnly:territoryRun.territoryUI.garrisonOnly,restart:territoryRun.territoryRestart},
-  postgres:{mode:sql.mode,at:sql.at,checks:sql.checks,accountRevision:sql.finalCloud?.revision},
-  externalGaps:['Live HTTPS Supabase deployment and real-account two-device readback','Cloud territory challenge/garrison authority and shared battle integration',...(upgraded?[]:['Companions verified alias migration callback']),'Common accounts save-version reconciliation after garden operations','Physical location precision <= 80m for actual capture/occupation']
+  postgres:{mode:sql.mode,at:sql.at,checks:sql.checks,accountRevision:sql.finalCloud?.revision,accountCoordination:sql.accountCoordination},
+  canonicalRoster:{fixture:roster.rosterFixture,assets:roster.roster.assets,targetPetId:roster.roster.targetPetId,onlyTargetChanged:true,restartExact:true},
+  selectedPetAnimation:{fixture:true,cloudAcceptance:false,targetPetId:eat.targetPetId,before:eat.before.data.pets.map(petState),after:eat.after.data.pets.map(petState),events:eat.events,frames:eat.frames,foodConsumed:1,otherPetsUnchanged:true,replayed:eat.repeated.replayed,noSecondDebitOrAction:true,restartExact:true},
+  externalGaps:['Live HTTPS Supabase deployment and real-account two-device readback','Cloud territory challenge/garrison authority and shared battle integration',...(upgraded?[]:['Companions verified alias migration callback']),'Physical location precision <= 80m for actual capture/occupation','Central full-app A01-A12 visual acceptance and Windows packaging']
 };
 mkdirSync(output,{recursive:true});
 for(const name of ['02a-2d-mature-garden.png','02-cooked-and-fed.png','05-radix-inventory.png','09a-reward-mature.png','11-kitchen-current.png','12-inventory-current.png','A04-1280x844-inventory.png','A04-1440x900-inventory.png'])copyFileSync(resolve(source,name),resolve(output,name));
 copyFileSync(resolve(oldSource,'identity-migration-preserved.png'),resolve(output,'identity-migration-preserved.png'));
 if(upgraded)copyFileSync(resolve(oldSource,'identity-upgraded-preserved.png'),resolve(output,'identity-upgraded-preserved.png'));
+for(const name of ['six-canonical-resources-and-selected-fox-feed.png','only-selected-fox-eating.png'])copyFileSync(resolve(rosterSource,name),resolve(output,name));
 writeFileSync(resolve(output,'verification.json'),JSON.stringify(evidence,null,2)+'\n');
-nativeDb.close();oldDb.close();
-console.log(JSON.stringify({output,screenshots:upgraded?10:9,elapsedMs:elapsed,sqlEvidence:basename(sqlSource)}));
+nativeDb.close();oldDb.close();rosterDb.close();
+console.log(JSON.stringify({output,screenshots:upgraded?12:11,elapsedMs:elapsed,sqlEvidence:basename(sqlSource),canonicalResources:6,accountCoordination:true}));
