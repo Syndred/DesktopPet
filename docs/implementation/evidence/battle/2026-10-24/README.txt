@@ -27,13 +27,21 @@ motion-evidence.json 与四张阶段截图：应用关闭/系统减少动画时�
 长战报在实际 ScrollArea 中查看，截图底部之外的回合日志仍可访问。
 
 领域验证
-原生 11 项全部通过，包含 400 个五行/行动组合的 desktop/edge 执行一致性、重启、并发、指定实例经验、
+原生 15 项全部通过，包含 400 个五行/行动组合的 desktop/edge 执行一致性、重启、并发、指定实例经验、
 种子失败整笔回滚、账号边界、旧归档保留、garden 领地和备份账本保护。
 既有 5 个战斗/房间/好友/schema 文件共 33 项定向回归通过；UI 类型、功能 lint、正式 build 通过。
 未额外运行整库回归；最终八功能整合回归由 foundation 统一执行。
 
+后续恢复边界复查
+network-recovery.json 记录新增 4 项脚本传输/频道回调检查。这些测试使用实际 SQLite 与 OnlineDuelService，
+但不建立真实云端会话，不能证明外部好友联机成功。先复现并修复两处竞态：
+分页历史期间房间推进，旧快照仍被标记完整；已移除频道的迟到回调覆盖新房间或恢复已清理状态。
+另外验证超时原行动跨数据库重启仍保持同一回合，以及缓存中间缺口能被补齐。
+本轮相关原生 15 项、既有房间/好友回归 9 项通过；未重复与此次 runtime 变动无关的 UI/整库测试。
+
 外部边界
 postgres-evidence.json 使用真实 PGlite/PostgreSQL 引擎执行增量迁移和 RPC，但不是生产 Supabase 验收。
 cloud-reachability.json 记录 2026-10-24 20:55（Asia/Shanghai）的 OPTIONS 502。
+cloud-reachability-2103.json 记录同日 21:03 再查仍为 502。
 真实双账号好友邀请、接受、房间、Realtime、结算和跨设备收敛尚未验收；迁移和 edge 更新未部署。
 不把本机训练、可信定位夹具或 SQL 回执模拟成远端成功。完整状态及所需发布顺序见 ../../../status/battle.json。
