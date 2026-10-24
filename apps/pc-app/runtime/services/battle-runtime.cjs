@@ -43,9 +43,34 @@ class BattleRuntimeService {
     };
   }
 
+  // Restore an owned, persisted session. Rendering/reconnecting must not start a new fight.
+  restore(snapshot) {
+    if (!snapshot || !Number.isInteger(snapshot.round) || snapshot.round < 0) {
+      throw new Error("invalid battle snapshot");
+    }
+    const combatants = [snapshot.player, snapshot.enemy];
+    for (const actor of combatants) {
+      if (!actor || !ELEMENTS.includes(actor.element) || !Number.isFinite(actor.hp) ||
+          !Number.isFinite(actor.maxHp) || actor.maxHp <= 0 || actor.hp < 0 || actor.hp > actor.maxHp ||
+          !Number.isFinite(actor.anger) || actor.anger < 0 || actor.anger > 100 ||
+          !Array.isArray(actor.statuses)) {
+        throw new Error("invalid battle combatant");
+      }
+    }
+    this.session = {
+      round: snapshot.round,
+      player: { ...cloneCombatant(snapshot.player), id: "player" },
+      enemy: { ...cloneCombatant(snapshot.enemy), id: "enemy" }
+    };
+    return this.snapshot();
+  }
+
   act(playerActionInput) {
     if (!this.session) this.reset();
     const session = this.session;
+    if (session.player.hp <= 0 || session.enemy.hp <= 0) {
+      throw new Error("battle already finished");
+    }
     const playerAction = normalizeActionInput(playerActionInput);
     const enemyAction = chooseEnemyAction(session, playerAction);
     const roundResult = executeRound(session, playerAction, enemyAction);
@@ -499,5 +524,6 @@ function normalizeElement(element) {
 module.exports = {
   BattleRuntimeService,
   createSession,
-  getElementMultiplier
+  getElementMultiplier,
+  executeRound
 };
