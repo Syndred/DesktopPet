@@ -1,0 +1,20 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>聊天 A01 / A03 / A12 定向整改对照</title>
+<style>:root{font-family:'Microsoft YaHei UI','Microsoft YaHei',sans-serif;color:#192f61;background:#f5f8ff}body{max-width:1480px;margin:30px auto;padding:0 24px 40px}h1{font-size:28px}h2{font-size:18px;margin-top:30px}p,li{font-size:14px;line-height:1.8}a{color:#5278ff}.pair{display:grid;grid-template-columns:1fr 1fr;gap:16px}figure{margin:0;background:white;border:1px solid #e3eaf8;border-radius:12px;overflow:hidden}figcaption{padding:14px;font-size:13px}figure img{display:block;width:100%;height:auto}table{width:100%;border-collapse:collapse;font-size:13px;background:white}td,th{text-align:left;border:1px solid #e3eaf8;padding:12px;line-height:1.7}.note{padding:16px;background:white;border:1px solid #e3eaf8;border-radius:12px}@media(max-width:950px){.pair{grid-template-columns:1fr}}</style>
+<h1>聊天 / AI 设置：固定清单定向整改</h1>
+<p>依据 <a href="../../../acceptance/2026-10-24/visual-audit.txt">9915684 的 A01—A12 清单</a>，本分支处理 A01、A03、A12 及 A07 的聊天资源适配。以下均为正式构建的真实 Electron 截图，文件未修改；这是证据图册，不承载产品逻辑。</p>
+<p class="note">本轮 <strong>零模型请求、零虚构聊天消息</strong>。在隔离本地账号公开领养两只宠物，将项目已有原创焰柴角色包通过正式导入和形象绑定服务用于验证。测试适配器只为原生文件选择器提供指定包路径，解析、复制、归属检查、绑定和绘制均使用产品代码。六个正式形象及完整动作仍由资源会话统一交付，整体验收等待合并后的集中回验。</p>
+<table><tr><th>层级 / 间距</th><th>当前实测</th><th>公共 token</th></tr>
+<tr><td>两页主标题</td><td>28px / 700，行高 39.2px</td><td>text-title / weight-title</td></tr>
+<tr><td>卡片标题 / 正文 / 辅助字</td><td>16px / 14px / 11px</td><td>text-card / text-body / text-caption</td></tr>
+<tr><td>卡片间距 / 外边距</td><td>父 gap 16px / Card margin 0</td><td>space-4；不叠加默认 Card 外距</td></tr>
+<tr><td>页面内距</td><td>1280、1440：24px 32px 16px；980：24px 24px 16px</td><td>page-pad-block / page-pad-inline / space-4</td></tr>
+</table>
+<h2>聊天：独立基线 / 当前选中焰柴</h2>
+<div class="pair"><figure><figcaption>整改前 · 主会话独立基线 10-chat</figcaption><a href="before-chat.png"><img src="before-chat.png" alt="聊天独立基线截图"></a></figure><figure><figcaption>整改后 · 1280×844 CSS 窗口 · 真实空历史</figcaption><a href="chat-shiba.png"><img src="chat-shiba.png" alt="焰柴聊天页面"></a></figure></div>
+<h2>AI 设置：独立基线 / 当前选中焰柴</h2>
+<div class="pair"><figure><figcaption>整改前 · 主会话独立基线 15-ai-settings</figcaption><a href="before-ai-settings.png"><img src="before-ai-settings.png" alt="AI设置独立基线截图"></a></figure><figure><figcaption>整改后 · 1280×844 CSS 窗口</figcaption><a href="ai-settings-shiba.png"><img src="ai-settings-shiba.png" alt="焰柴AI设置页面"></a></figure></div>
+<h2>身份与窗口适配证据</h2>
+<ul><li>列表和对话头像读取各自实际 pet.resource；切换到焰柴后，侧图不会保留鱼丸。</li><li>聊天保持挂载时，通过正式 IPC 替换形象，头像和侧图都会刷新；选中 petId、空历史保持。</li><li>只有明确匹配旧鱼丸 resourceId 的角色使用鱼丸专属房间插画。其他角色使用共享资源组件，缺资源时显示提示。</li><li>980、1280、1440 三档，两页相同层级的字号、字重一致，伙伴卡未发生横向溢出；较长 AI 表单通过页面正常纵向滚动查看。</li></ul>
+<p><a href="chat-yuwan.png">切回鱼丸</a> · <a href="chat-shiba-wide.png">1440 聊天</a> · <a href="ai-settings-shiba-wide.png">1440 AI 设置</a> · <a href="evidence.json">完整 computed-style 与 IPC 验收记录</a></p>
+<p>基线窗口高度与当前相差 2 CSS 像素，Windows DPR/截图尺寸见 JSON。不可仅凭两张物理图的像素差，宣称全部视觉通过；当前结果是本模块定向检查通过，整体仍待集中验收。</p></html>
