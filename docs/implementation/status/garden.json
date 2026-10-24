@@ -2,16 +2,16 @@
   "module": "garden",
   "branch": "codex/lingjing-garden",
   "commit": "see git log for this file",
-  "status": "unified-battle-entry-and-qa-scenarios-prepared-self-verification-in-progress",
+  "status": "self-verified-awaiting-main-independent-review",
   "upstream": {
     "fetched": true,
     "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086",
     "baseline": "6c8ce65",
     "originMainIsAncestor": true,
-    "recheckedAt": "2026-10-24T22:12:52.2360134+08:00",
+    "recheckedAt": "2026-10-24T15:23:48.926Z",
     "behindOriginMain": 0
   },
-  "foundationRequired": "4c05172 consumed; foundation verified QA profile gate, common components and existing battle arena",
+  "foundationRequired": "45477b0 consumed through foundation; shared BattleScreen/territory defeat confirmation, verified QA identity/location, all eight canonical resources including wood and earth",
   "contract": "docs/implementation/garden-contract.md",
   "scope": "docs/implementation/scope-2d-ui-first.txt",
   "routes": [
@@ -122,15 +122,15 @@
   "tests": [
     {
       "command": "npm run build:pc",
-      "result": "passed after official kit integration and content-height card fix"
+      "result": "passed on e90dcb9 after final shared roster/location integration"
     },
     {
       "command": "npm run typecheck:ui",
-      "result": "passed with actual foundation aliases"
+      "result": "passed on e90dcb9 after final shared roster/location integration"
     },
     {
       "command": "eslint apps/pc-app/ui/src/features/garden --ext .ts,.tsx",
-      "result": "passed"
+      "result": "passed on e90dcb9 after final shared roster/location integration"
     },
     {
       "command": "node --test .../garden.test.cjs .../integration.test.cjs .../identity.test.cjs",
@@ -145,8 +145,12 @@
       "result": "Actual Electron36.9.5: 25m rice growth -> harvest2 -> craft1 -> feed fish1; actual training reward tomato seeds -> 15m planting -> harvest3 -> feed fish1 -> next training; non-target pets unchanged; exact restart; duplicate harvest/stale-owner rejected; A04 layout/Select/Tabs/Motion/WiFi diagnostics; original raw-ID upgrade exact. Separate labelled local QA verifies six distinct PNGs, selected fox eat event and actual frames0->1, exact action replay without second debit/action, restart exact; latest foundation canonical reference migration preserves all growth, positions, names and stock; full restart exact; territory explicit public foreground read releases permission without a continuous watch; actual59m WiFi fix -> real territory battle9 rounds/player victory -> occupy -> selected Xiaolan garrison -> full restart exact; coordinates omitted from committed summary"
     },
     {
-      "command": "node --test .../qa-location.test.cjs .../integration.test.cjs",
-      "result": "7 passed: verified QA marker, normal-profile rejection, location age/accuracy/run isolation, public context replay after later inventory mutation; native preparation/build/UI typecheck/ESLint passed"
+      "command": "node scripts/desktop/run-native-tests.cjs .../garden.test.cjs .../integration.test.cjs .../identity.test.cjs .../qa-location.test.cjs",
+      "result": "21 passed on e90dcb9: original garden/domain/inventory/identity guards, actual registered battle/companions integration, receipt replay after later mutation, shared discovery QA identity/provenance/quality checks"
+    },
+    {
+      "command": "unified-territory.electron.mjs visual + verify; export-unified-evidence.mjs",
+      "result": "Electron36.9.5 actual UI: win5 rounds and loss2 rounds through one shared battle screen; five animation phases; exact route/page and full restart recovery; public confirmation; SQLite one +2 seed receipt per session; replay exact; non-target pets and planted crop timestamps unchanged; win garrison changes no growth/independent selection; ordinary profile QA disabled; 1280x844 and1440x900 A04 geometry and decoded actors; cloud/GPS simulated, original engine"
     }
   ],
   "evidence": [
@@ -161,7 +165,9 @@
     "docs/implementation/evidence/garden/identity-upgraded-preserved.png",
     "docs/implementation/evidence/garden/six-canonical-resources-and-selected-fox-feed.png",
     "docs/implementation/evidence/garden/only-selected-fox-eating.png",
-    "docs/implementation/evidence/garden/real-territory-battle.png"
+    "docs/implementation/evidence/garden/real-territory-battle.png",
+    "docs/implementation/evidence/garden/unified-battle/README.md",
+    "docs/implementation/evidence/garden/unified-battle/verification.json"
   ],
   "uiComparison": {
     "references": [
@@ -182,7 +188,7 @@
     "assets": "project-generated background and transparent atlas; no GPL sample tiles; shared character is not copied into a second resource library"
   },
   "integrationDependencies": [
-    "Foundation99c1b9e consumed; current build/typecheck/ESLint and garden native layout checks at1280x844 and1440x900",
+    "Foundation45477b0 consumed; original battle kernel, shared screen/context/animation, namespaced QA accounts/location, full eight-resource roster; final garden source e90dcb9 self-verified",
     "Garden directly reuses CompanionPortrait, NearbyMap and useDiscovery; Turf/quality checks come from discovery",
     "Accounts verified legacy-id alias and companions.migrateOwnerAlias consumed; original raw-ID profile upgraded and restarted with exact inventory/pet preservation and no starter regrant",
     "Canonical garden/companion cloud save uses existing runtime TEXT IDs and accounts CAS; no new inventory or identity store",
@@ -190,12 +196,12 @@
     "Six canonical resources resolve through shared CompanionPortrait/ResourceStage; selected instance consumes existing committed growth eat notification",
     "Foundation owns final full integration regression and Windows packaging",
     "Territory explicit location uses public discovery.setExploring only around the foreground read and territoryLocate; private setting and hidden-window cancellation remain shared",
-    "Cloud feed uses public companions.playAction after exact action receipt/readback/checkpoint; a concurrent replay cannot emit twice"
+    "Cloud feed uses public companions.playAction after exact action receipt/readback/checkpoint; a concurrent replay cannot emit twice",
+    "Garden QA location delegates to the shared discovery adapter, explicit foreground lease and quality/identity checks; no second coordinate generator or normal-profile toggle"
   ],
   "remaining": [
-    "Consume the published shared BattleScreen/context implementation and five-element canonical roster",
-    "Native QA: both victory/defeat, exact session and restart recovery, shared context confirmation and receipt replay",
-    "Main chat independent module review; final whole-product acceptance remains pending"
+    "Main chat independent garden module review and any requested rework",
+    "Foundation final whole-product U08 acceptance on one final build"
   ],
   "cloudReview": "docs/implementation/garden-cloud-review.md",
   "dataPolicy": "additive migrations; original history/designs/models retained; no production deployment, destructive migration or user-data reset",
@@ -265,7 +271,9 @@
     "fixture": true,
     "cloudAcceptance": false,
     "result": "Six distinct1254x1254 PNGs decoded; selected fox receives unique owner/pet/resource eat event and frames0->1; replay gives no extra debit/event; non-target pets and restart exact",
-    "renderer": "shared CompanionPortrait/ResourceStage; no second animation engine"
+    "renderer": "shared CompanionPortrait/ResourceStage; no second animation engine",
+    "historicalSixCharacterProof": true,
+    "current": "All eight resources consumed via foundation; territory uses matching wood guardian Qingya resource; actual actor identity/readiness verified in new shared-scene evidence"
   },
   "cloudPlayback": {
     "provider": "public companions.playAction",
@@ -282,9 +290,10 @@
     "permissionReleased": true,
     "continuousWatch": false,
     "lastPhysicalAccuracyMeters": 59,
-    "physicalAcceptance": true,
-    "mode": "real OS fix and local account; no imported territory fixture",
-    "result": "Nine real UI battle rounds -> victory/experience20/seeds2 -> confirmed ownership -> selected Xiaolan garrison -> exact restart; growth and independent selections unaffected by garrison"
+    "physicalAcceptance": false,
+    "mode": "Current round: explicitly isolated shared discovery QA adapter; old physical proof preserved below",
+    "result": "Current win/loss unified scene and foreground policy verified; precise GPS/live cloud deferred by latest user scope",
+    "historicalPhysicalAcceptance": true
   },
   "physicalTerritory": {
     "verified": true,
@@ -300,23 +309,119 @@
     "garrisonChangesNoGrowthOrIndependentSelection": true,
     "restartExact": true,
     "coordinatesOmitted": true,
-    "profile": "artifacts/garden/roster-electron"
+    "profile": "artifacts/garden/roster-electron",
+    "historical": true,
+    "scope": "Prior source 8dadfc2/063d135, retained as historical proof; not current unified-battle GPS acceptance"
   },
-  "latestScope": "docs/implementation/battle-screen-contract.txt and latest delegated unified battle goal; live cloud/GPS may be deferred",
+  "latestScope": "docs/implementation/acceptance/2026-10-24/unified-battle-goal.txt U01/U04/U05/U06/U07: garden territory integration",
   "deferred": [
     "Live HTTPS deployment and real two-device verification",
     "Live cloud territory authority"
   ],
   "unifiedBattle": {
-    "stage": "native-scenario-preparation-passed; final shared-result verification pending",
+    "stage": "self-verified-awaiting-main-independent-review",
+    "sourceSha": "e90dcb9ad99ac43b03b50dde40e08865160f3763",
+    "foundation": "45477b0",
+    "runtime": {
+      "application": "0.1.8",
+      "electron": "36.9.5"
+    },
     "route": "/battle/session/:sessionId",
     "noFeatureCombatUI": true,
     "publicContext": "garden.getBattleContext({ownerAccountId,sessionId})",
-    "publicSettlement": "garden.settleBattleContext({ownerAccountId,sessionId,actionId}) restores original outbox input on replay",
-    "guards": "Original renderer expectedRevision/sessionOwner checks remain; no rule/outcome override",
-    "qa": "Foundation qaScenario only; source simulated, run-bound geographic record, no normal-profile switch",
-    "nativePreparation": "Two actual Electron QA profiles registered, adopted canonical pets, planted a real crop and located a simulated territory; no win/loss claim yet",
+    "publicSettlement": "garden.settleBattleContext({ownerAccountId,sessionId,actionId}); original outbox input restored on replay",
+    "guards": "Original expectedRevision/sessionOwner checks; namespaced current QA identity; authoritative battle result; one reward receipt",
+    "qa": {
+      "location": "shared discovery public adapter; simulated/run-bound, explicit foreground lease",
+      "prestate": "public battle.qaPreset: charged/dodge for win, defending/element_attack for loss",
+      "actual": "same UI, controller, original kernel, inventory/territory/garrison services and SQLite",
+      "ordinaryProfileDisabled": true,
+      "cloudAcceptance": false,
+      "physicalGpsAcceptance": false
+    },
+    "scenarios": {
+      "win": {
+        "sessionId": "battle-2e979736-5a53-43a1-b24d-e0633a1fcc96",
+        "runId": "d4366bb6-3067-4a1d-958d-44fc796056b7",
+        "winner": "player",
+        "rounds": 5,
+        "actorIdentities": [
+          {
+            "petId": "pet-eabacd21-2314-4241-9130-0e4c59f7eaac",
+            "resourceId": "builtin:lingjing-hatcat-v1",
+            "status": "ready"
+          },
+          {
+            "petId": "guardian:qa:d4366bb6-3067-4a1d-958d-44fc796056b7:territory:5205:20245",
+            "resourceId": "builtin:lingjing-qingya-v1",
+            "status": "ready"
+          }
+        ],
+        "animationPhases": [
+          "windup",
+          "release",
+          "impact",
+          "effects",
+          "rest"
+        ],
+        "midBattleRestartRecovered": true,
+        "exactRestartAndReplay": true,
+        "confirmedResultUi": true,
+        "rewardEventCount": 1,
+        "seedDelta": 2,
+        "territory": {
+          "territoryId": "qa:d4366bb6-3067-4a1d-958d-44fc796056b7:territory:5205:20245",
+          "won": true,
+          "ownerAccountId": "qa:d4366bb6-3067-4a1d-958d-44fc796056b7:local-9df28c75-62f2-42d9-9856-5bbfe792e9d8",
+          "territoryRevision": 2,
+          "captureMultiplier": 2
+        },
+        "garrisonNoGrowthOrSelectionChange": true
+      },
+      "loss": {
+        "sessionId": "battle-146fe5a0-b24b-483d-ab3c-be821a442536",
+        "runId": "ea6d30f3-99fd-4a01-8e7a-f733dd5cb6b5",
+        "winner": "enemy",
+        "rounds": 2,
+        "actorIdentities": [
+          {
+            "petId": "pet-459c1177-a8e6-452e-b503-354c79d5a196",
+            "resourceId": "builtin:lingjing-yuwan-v2",
+            "status": "ready"
+          },
+          {
+            "petId": "guardian:qa:ea6d30f3-99fd-4a01-8e7a-f733dd5cb6b5:territory:5205:20245",
+            "resourceId": "builtin:lingjing-qingya-v1",
+            "status": "ready"
+          }
+        ],
+        "animationPhases": [
+          "windup",
+          "release",
+          "impact",
+          "effects",
+          "rest"
+        ],
+        "midBattleRestartRecovered": true,
+        "exactRestartAndReplay": true,
+        "confirmedResultUi": true,
+        "rewardEventCount": 1,
+        "seedDelta": 2,
+        "territory": {
+          "territoryId": "qa:ea6d30f3-99fd-4a01-8e7a-f733dd5cb6b5:territory:5205:20245",
+          "won": false,
+          "ownerAccountId": null,
+          "territoryRevision": 2,
+          "captureMultiplier": 1
+        },
+        "garrisonNoGrowthOrSelectionChange": false
+      }
+    },
     "contract": "docs/implementation/garden-battle-integration.txt",
-    "pendingIntegration": "Battle settleContext should call public settlement adapter; bare territorySettle still requires expectedRevision. Defeat should also confirm its unchanged ownership context."
+    "evidence": "docs/implementation/evidence/garden/unified-battle/verification.json",
+    "mainIndependentReview": "pending",
+    "readbackCaptureSourceSha": "10dcb1dcb5ef337e61d37e9512a7cdba4a42ef89",
+    "confirmedActorsReady": true,
+    "readback": "Second actual full app restart; two exact actors ready before confirmed screenshot; no action/settlement submitted and SQLite state unchanged"
   }
 }
