@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ArrowLeft, MessageCircle, Monitor, Shield, Sparkles, Swords, Zap } from 'lucide-react';
+import { MessageCircle, Monitor, Shield, Sparkles, Swords, Zap } from 'lucide-react';
 import type { CompanionPet, CompanionsSnapshot } from '../../../../../../packages/shared-types/src/features/companions';
 import { navigate, usePath } from '../../app/navigation';
 import { Badge, Button, Card, EmptyState, ErrorNotice, PageHeader } from '../../components/ui';
@@ -33,5 +33,5 @@ function PetDetailContent({ pet, snapshot, controller }: { pet: CompanionPet; sn
 export function PetDetailPage() {
   usePageScroll(); const controller = useCompanions(); const path = usePath(); const petId = path.slice('/companions/'.length);
   const stored = controller.snapshot?.pets.find(candidate => candidate.petId === petId); const pet = stored?.resource.kind === '2d' ? stored : null;
-  return <div className="cp-page"><Button variant="ghost" className="cp-back" onClick={() => navigate('/companions')}><ArrowLeft size={16}/>我的灵宠</Button><PageHeader eyebrow={`我的灵宠 / ${pet?.name || '伙伴详情'}`} title="每一份陪伴，都有回应。" description="和你在一起的每一天，都是特别的日常。"/><ErrorNotice message={controller.error}/>{!controller.snapshot ? <LoadingOrEmpty controller={controller}/> : !pet ? <EmptyState title={stored ? '这份旧伙伴记录已保留' : '这只伙伴不在当前账号的灵境里'} action={<Button onClick={() => navigate('/companions')}>回到我的灵宠</Button>}/> : <PetDetailContent key={`${controller.snapshot.ownerAccountId}:${pet.petId}`} pet={pet} snapshot={controller.snapshot} controller={controller}/>}</div>;
+  return <div className="cp-page"><PageHeader back={{ label: '我的灵宠', onClick: () => navigate('/companions') }} eyebrow={pet?.name || '伙伴详情'} title="每一份陪伴，都有回应。" description="和你在一起的每一天，都是特别的日常。"/><ErrorNotice message={controller.error}/>{!controller.snapshot ? <LoadingOrEmpty controller={controller}/> : !pet ? <EmptyState title={stored ? '这份旧伙伴记录已保留' : '这只伙伴不在当前账号的灵境里'} action={<Button onClick={() => navigate('/companions')}>回到我的灵宠</Button>}/> : <PetDetailContent key={`${controller.snapshot.ownerAccountId}:${pet.petId}`} pet={pet} snapshot={controller.snapshot} controller={controller}/>}</div>;
 }
