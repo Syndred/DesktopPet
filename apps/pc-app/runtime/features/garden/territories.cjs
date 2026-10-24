@@ -14,7 +14,7 @@ function validFix(fix, now) {
   return fix;
 }
 class TerritoryService {
-  constructor(services, { now = Date.now } = {}) { this.services = services; this.db = services.db; this.now = now; this.scenario=createQaTerritoryLocation(services,now); }
+  constructor(services, { now = Date.now } = {}) { this.services = services; this.db = services.db; this.now = now; this.scenario=createQaTerritoryLocation(services); }
   verifyFix(fix){return this.scenario?this.scenario.validate(fix):validFix(fix,this.now());}
   challengeForOwner({ownerAccountId,sessionId}) {
     const row=this.db.prepare('SELECT * FROM garden_territory_challenges WHERE owner_account_id=? AND battle_id=?').get(ownerAccountId,sessionId);
@@ -25,7 +25,7 @@ class TerritoryService {
     const row = this.db.prepare('SELECT * FROM garden_territory_records WHERE territory_id=?').get(territoryId);
     if (!row) return null;
     const data = JSON.parse(row.data_json);
-    const logs = this.db.prepare('SELECT * FROM garden_territory_logs WHERE territory_id=? ORDER BY id DESC LIMIT 20').all(territoryId).map(l => ({ id: String(l.id), action: ({ invade: '发起入侵', occupy: '占领成功', defend: '守住领地' })[l.action] || l.action, actorName: l.owner_account_id, createdAt: new Date(l.created_at).toISOString() }));
+    const logs = this.db.prepare('SELECT * FROM garden_territory_logs WHERE territory_id=? ORDER BY id DESC LIMIT 20').all(territoryId).map(l => ({ id: String(l.id), action: ({ invade: '发起入侵', occupy: '占领成功', defend: '守住领地' })[l.action] || l.action, actorName: this.services.get('accounts')?.identity?.(l.owner_account_id)?.username||'旅人', createdAt: new Date(l.created_at).toISOString() }));
     return { ...data, id: territoryId, ownerAccountId: row.owner_account_id, revision: row.revision, logs };
   }
   listForOwner() {

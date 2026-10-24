@@ -116,7 +116,9 @@ try{
       const wood=roster.find(template=>template.element==='wood');assert.ok(wood?.resource?.resourceId,'Consume the shared wood character before accepting this territory scenario');
       const chosen=(await current.invoke('companions','list')).data.pets.find(pet=>pet.templateId===(label==='win'?'animal-hat-cat':'big-fish-gentle'));assert.ok(chosen);
       if(!scenario.sessionId){
-        await current.route('/garden');await current.page.getByRole('button',{name:`${chosen.name} Lv.`,exact:false}).click();await current.page.getByRole('button',{name:'发起领地挑战',exact:true}).click();
+        await current.route('/garden');await current.page.getByRole('button',{name:'查看演练领地',exact:true}).click();await current.page.getByRole('status').filter({hasText:'附近领地已更新'}).waitFor();
+        const located=await current.garden();scenario.territoryId=located.data.territories[0].id;scenario.before=located;save();
+        await current.page.getByRole('button',{name:`${chosen.name} Lv.`,exact:false}).click();await current.page.getByRole('button',{name:'发起领地挑战',exact:true}).click();
         await current.page.waitForFunction(()=>location.hash.startsWith('#/battle/session/'));
         snap=await current.garden();scenario.sessionId=snap.data.territoryChallenges.find(value=>value.territoryId===scenario.territoryId).sessionId;save();
       }
