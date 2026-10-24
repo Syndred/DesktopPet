@@ -34,9 +34,10 @@ export function CompanionPortrait({ petId, resource, name, animate = false, acti
   }, [animate, resource.kind]);
   useEffect(() => {
     let active = true; setDisplay(null); setError('');
+    if (resource.kind !== '2d') { setError('原始记录已保留'); return; }
     void window.lingjing.invoke<ResourceDisplay>('resources', 'resolve', { resourceId: resource.resourceId, petId, context: 'desktop', action }).then(result => {
       if (!active) return;
-      if (result.ok) setDisplay(result.data);
+      if (result.ok) { if (result.data.resource.kind !== 'spritesheet') setError('请选择 2D 角色资源'); else setDisplay(result.data); }
       else setError(result.message || '角色资源暂不可用');
     }).catch(() => { if (active) setError('角色资源暂不可用'); });
     return () => { active = false; };

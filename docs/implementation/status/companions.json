@@ -2,28 +2,60 @@
   "module": "companions",
   "branch": "codex/lingjing-companions",
   "commit": "See latest companions implementation commit; this status will be finalized after native revalidation",
-  "status": "verifying-real-electron",
-  "upstream": { "fetched": true, "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086", "baseline": "6c8ce65", "originMainIsAncestor": true },
+  "status": "adapting-2d-and-shared-radix-motion",
+  "upstream": {
+    "fetched": true,
+    "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086",
+    "baseline": "6c8ce65",
+    "originMainIsAncestor": true
+  },
   "foundation": "b50e4c7",
   "contract": "apps/pc-app/runtime/features/companions/INTEGRATION.md",
-  "dependencies": ["React, lucide-react, pixi.js/unsafe-eval, @google/model-viewer: already supplied by foundation", "resources ResourceStage + resolve/assetFile, builtin:fat-fish-v1 and legacy model IDs"],
-  "routes": ["/companions", "/companions/adopt", "/companions/:petId"],
+  "dependencies": [
+    "React, lucide-react, pixi.js/unsafe-eval, @google/model-viewer: already supplied by foundation",
+    "resources ResourceStage + resolve/assetFile, builtin:fat-fish-v1 and legacy model IDs"
+  ],
+  "routes": [
+    "/companions",
+    "/companions/adopt",
+    "/companions/:petId"
+  ],
   "tests": [
-    { "command": "node --test apps/pc-app/runtime/features/companions/tests/service.test.cjs", "result": "11 passed, actual SQLite files, reopen, second connection, per-owner isolation, capture receipts and shared inventory rollback" },
-    { "command": "tsc --noEmit -p apps/pc-app/ui/tsconfig.json and feature ESLint", "result": "passed" },
-    { "command": "npm run build:pc", "result": "passed" }
+    {
+      "command": "node --test apps/pc-app/runtime/features/companions/tests/service.test.cjs",
+      "result": "11 passed, actual SQLite files, reopen, second connection, per-owner isolation, capture receipts and shared inventory rollback"
+    },
+    {
+      "command": "tsc --noEmit -p apps/pc-app/ui/tsconfig.json and feature ESLint",
+      "result": "passed"
+    },
+    {
+      "command": "npm run build:pc",
+      "result": "passed"
+    }
   ],
   "runtimeEvidence": [
-    { "path": "artifacts/companions/electron-bfvDxG", "result": "Actual Electron: UI adopts three independent instances, all three render in visible sandbox windows; rename one; garden harvest/craft/feed affects only fish; restart restores growth/names/position. Account switch test harness require fix and native fast drag revalidation pending." },
-    { "path": "artifacts/companions/electron-bfvDxG/desktop-鱼丸.png", "result": "Actual desktop 2D canvas rendered nonempty pixels" }
+    {
+      "path": "artifacts/companions/electron-bfvDxG",
+      "result": "Actual Electron: UI adopts three independent instances, all three render in visible sandbox windows; rename one; garden harvest/craft/feed affects only fish; restart restores growth/names/position. Account switch test harness require fix and native fast drag revalidation pending."
+    },
+    {
+      "path": "artifacts/companions/electron-bfvDxG/desktop-鱼丸.png",
+      "result": "Actual desktop 2D canvas rendered nonempty pixels"
+    }
   ],
   "integrationDependencies": [
-    "accounts.getLegacyInventory(mappedOwner) now consumed; no local-owner/legacy-id equality assumption",
-    "Garden already uses listPets and applyGrowthInTransaction on the same db",
-    "Discovery already calls createCapturedInstance with trusted origin and actionId",
-    "Foundation tray recall should call companions.recallAll(owner, actionId); its own companionWindows map does not contain these narrow-preload native windows",
-    "3D material textures need blob: in root renderer connect-src CSP (found during real run); no root file changed by this feature"
+    "Scope: source docs/implementation/scope-2d-ui-first.txt read; new shell is 2D only, old records/files remain archived",
+    "Public components needed: Dialog, Tabs, Select, Switch, Checkbox, Slider, Tooltip, PageMotion/ListMotion; root dependencies remain foundation-owned",
+    "Shared resources ResourceStage must be 2D-only before building against removed model-viewer dependency",
+    "Desktop windows now created by services.windows.create and rendered by /desktop/:petId React route, no custom canvas animation engine",
+    "Garden listPets and discovery capture adapters remain synchronous and owner-scoped"
   ],
-  "remaining": ["Revalidate native fast drag after pointer-event coordinate fix", "Complete true account-switch acceptance against latest foundation/accounts", "Refresh runtime evidence after latest foundation resource CSP fixes", "Foundation owns final complete integrated regression"],
+  "remaining": [
+    "Run updated real Electron acceptance for shared React/Pixi desktop route and 2D-only new shell",
+    "Migrate Dialog, Tabs, Select, Switch, Checkbox, Slider and Tooltip to foundation shared shadcn/Radix exports; use foundation Motion wrappers",
+    "Provide approved 01/03 vs real Electron UI comparison evidence",
+    "Foundation owns final complete integrated regression"
+  ],
   "dataPolicy": "Additive owner-scoped tables and raw legacy archive; original animals, JSON, histories and design images retained; no production migration/deployment"
 }
