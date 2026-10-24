@@ -18,7 +18,7 @@ class AccountsService {
     this.backups = new BackupManager({ db: this.db, directory: join(services.paths.userData, "accounts", "backups"),
       getIdentity: owner => this.identity(owner) });
     this.sync = new AccountSync({ db: this.db, backups: this.backups, remote, getSession: () => this.privateSession(), getSettings: owner => this.settings(owner) });
-    const file = services.paths.legacyDataFile;
+    const file = services.paths.legacyDataExisted === false ? null : services.paths.legacyDataFile;
     this.migration = importLegacy({ db: this.db, filePath: file && existsSync(`${file}.before-lingjing.bak`) ? `${file}.before-lingjing.bak` : file,
       archiveDir: join(services.paths.userData, "accounts", "legacy-archives") });
     this.ready = this.initialize();

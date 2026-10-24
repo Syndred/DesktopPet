@@ -106,6 +106,8 @@ function createDesktopWindowManager({ services, service, ensureImported, changed
     for (const entry of entries.values()) {
       if (entry.owner !== currentOwner) { sync(); break; }
       if (entry.drag || entry.window.isDestroyed() || !entry.window.isVisible()) continue;
+      const conversations = services.get('conversations');
+      if (conversations?.isChatting(entry.owner, entry.pet.petId) && conversations.getProfile(entry.owner, entry.pet.petId)?.pauseWhileChatting) continue;
       const mode = entry.pet.desktop.behavior;
       if (mode !== 'wander' && mode !== 'follow') continue;
       const bounds = entry.window.getBounds(); let x = bounds.x; let y = bounds.y;

@@ -88,7 +88,21 @@ module.exports = {
           return desktop.handleInput(context.ownerAccountId, payload);
         },
         adopt: execute('adopt'), rename: execute('rename'), desktop: execute('updateDesktop'),
-        select: execute('select'), interact: execute('interact')
+        select: execute('select'), interact: execute('interact'),
+        async appearance(payload, context) {
+          ensureImported(context.ownerAccountId);
+          const resource = await services.get('resources').get(context.ownerAccountId, payload.resourceId);
+          if (resource.availability !== 'ready') throw Object.assign(new Error('角色文件暂不可用。'), { code: 'RESOURCE_UNAVAILABLE' });
+          if (resource.kind !== 'spritesheet') throw Object.assign(new Error('本版请选择 2D 角色资源。'), { code: 'RESOURCE_UNAVAILABLE' });
+          if (services.session.getOwnerAccountId() !== context.ownerAccountId) throw Object.assign(new Error('账号已切换。'), { code: 'SESSION_CHANGED' });
+          const result = service.action(context.ownerAccountId, 'appearance', payload, () => {
+            const pet = service.requirePet(context.ownerAccountId, payload.petId, payload.expectedRevision);
+            pet.resource = { resourceId: resource.id, kind: '2d' };
+            service.storePet(pet);
+            return { pet, selections: service.selections(context.ownerAccountId) };
+          });
+          changed(context.ownerAccountId); return result;
+        }
       },
       dispose() { for (const dispose of disposers) dispose(); desktop?.dispose(); }
     };

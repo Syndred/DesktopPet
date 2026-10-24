@@ -15,6 +15,12 @@ class ResourcesService {
   }
   // Only trusted main-process registration can extend built-in package roots.
   addBuiltinAssetRoot(root) { const resolved = path.resolve(root); if (!this.builtinAssetRoots.includes(resolved)) this.builtinAssetRoots.push(resolved); }
+  relocateGlobal(id, root) {
+    const update = this.repository.db.prepare('UPDATE lingjing_resource_files SET file_path=? WHERE resource_id=? AND asset_key=?');
+    this.repository.transaction(() => {
+      for (const row of this.repository.files('builtin', id)) update.run(path.join(root, safeRelative(row.asset_key)), id, row.asset_key);
+    });
+  }
   owner(value) { if (typeof value !== 'string' || !value.trim() || value.length > 200) fail('AUTH_REQUIRED', '请先选择本机存档或登录账号'); return value; }
   async seed() {
     await fs.mkdir(this.storageRoot, { recursive: true });
@@ -23,7 +29,7 @@ class ResourcesService {
       const parsed = await parseCharacterFile(this.starterManifest);
       const resource = { ...parsed.resource, id: starterId, origin: 'builtin', revision: 0, importedAt: '2026-10-24T00:00:00.000Z', provenance: { ...parsed.resource.provenance, status: 'project-original' } };
       this.repository.transaction(() => this.repository.insert(null, resource, [...parsed.files.keys()].map(key => [key, path.join(path.dirname(this.starterManifest), key)])));
-    }
+    } else this.relocateGlobal(starterId, path.dirname(this.starterManifest));
     let catalog = { models: [] };
     try { catalog = JSON.parse((await fs.readFile(path.join(this.legacyModelsDir, 'catalog.json'), 'utf8')).replace(/^\uFEFF/, '')); } catch { /* A missing catalog must not hide existing files. */ }
     const disk = await fs.readdir(this.legacyModelsDir).catch(() => []);
@@ -31,7 +37,7 @@ class ResourcesService {
     for (const filename of names) {
       if (typeof filename !== 'string' || path.basename(filename) !== filename) continue;
       const id = `legacy:${filename.toLowerCase()}`;
-      if (this.repository.hasGlobal(id)) continue;
+      if (this.repository.hasGlobal(id)) { this.relocateGlobal(id, this.legacyModelsDir); continue; }
       const item = (catalog.models ?? []).find(row => row.file === filename);
       const metadata = { author: item?.creator, source: item?.source, license: item?.license, attribution: item?.creator ? `${item.name} — ${item.creator} (${item.license})` : '' };
       let parsed;

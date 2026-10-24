@@ -1,0 +1,77 @@
+灵境 conversations 模块集成说明
+
+入口
+runtime/features/conversations/index.cjs 遵守 foundation-contract.md v1，导出 register/migrations。
+ui/src/features/conversations/index.tsx 注册 /chat 与 /settings/ai。公共壳自动发现，无需修改根配置。
+已合入 foundation 基础提交 8f17aec；没有合并其他业务分支，没有增加运行依赖。
+
+身份与持久化
+所有命令使用主进程的已验证账号与实际 petId。ownerId/ownerAccountId 载荷不能选择账号。
+expectedAccountId / expectedSessionRevision 只用于拒绝旧界面操作，不能授权账号。
+companions.listPets(ownerAccountId) 优先；尚未集成时回退到已验证旧 RuntimeDataStore 的实例库存。
+profiles/messages/memories/connections 均以账号与实例限定；全局连接另有 account 范围。
+聊天选择保存在 conversation_preferences，完全独立于出战、驻守与桌面出场选择。
+迁移仅交给 foundation 的单 SQLite 连接和迁移执行器。本模块不打开第二个数据库。
+应用退出同步标记中断回复；异常退出留下的 pending/streaming 在下次注册时恢复为 cancelled。
+回滚界面/代码时保留所有 conversation_* 表与 lingjing_migrations 记录，不删旧数据或执行生产迁移。
+
+命令（成功返回 {ok:true,data}，失败返回 {ok:false,code,message}）
+snapshot / select / history
+profile.save / connection.save / connection.test / connection.cancel
+memory.save / memory.delete / send / retry / cancel / history.clear
+具体输入输出见 packages/shared-types/src/features/conversations/index.ts。
+send/retry 在流完成后返回，期间通过事件更新；并发 IPC cancel 可中止网络请求。
+相同 actionId 重试 send 不会重复记录或重复请求；显式 retry 只允许最后一次失败/取消回复。
+profile、memory 与 connection 编辑使用 revision，旧版本返回 REVISION_CONFLICT。
+
+安全模型调用
+继续支持原有 DeepSeek / OpenAI / OpenAI 兼容 Chat Completions 能力，在主进程 fetch。
+本次不增加 AI SDK/assistant-ui 依赖，也不引入网关或第二套模型账户。
+模型 ID 必须由用户填写；没有固定“云端成功”台词，没有自动尝试收费服务。
+支持 SSE、JSON 兼容回复、真实 AbortController 中止、超时、错误重试与 4 个并发请求上限。
+HTTP 仅允许 localhost / 127.0.0.1 / [::1]；其他接口必须 HTTPS。禁止 URL 凭据、query、fragment 和重定向。
+密钥只作为一次 connection.save 输入，经 Electron safeStorage 加密后保存在 SQLite。
+读取只返回 hasKey，provider 原始错误正文不会返回 renderer 或写日志。系统安全存储不可用时拒绝保存。
+更换接口地址/提供商后，必须重新填写密钥；不会把旧密钥自动发给新地址。
+单伙伴独立连接使用自己的密钥，不把全局密钥隐式转发给覆盖接口。
+DPAPI 密文不应视为可跨机器使用的密钥备份；账号云同步请排除 encrypted_key。
+
+上下文与记忆
+历史分页每次 50 条，上下文只使用最近最多 24 个完整对话轮次。
+总文本字符上限可设 12000/24000/48000，保留最新输入并限制记忆预算至 6000 字符/24 条。
+每条记忆最多 1000 字符，每实例最多 100 条；人设最多 2000 字符，用户输入最多 8000 字符。
+这是字符限制而不是声称精确 token 计量；回复 token 上限可配置 64..4096，接收文本硬限 32000 字符。
+记忆由用户明确添加/编辑/删除，“启用记忆”决定后续上下文是否使用。没有未授权的自动记忆抽取。
+删除/编辑记忆、人设或连接会中止正在使用旧上下文的回复；已发送给服务的内容无法撤回。
+删除记忆不删除历史原文，清空历史也不删除单独保存的记忆。
+
+事件与其他模块的接入点
+conversations:changed：当前已验证会话的 reply/changed 更新，包含 accountId、petId、actionId。
+conversations:session：清空旧界面并读取当前账号。除 accounts/session 事件外，旧登录链路有观察器兜底。
+conversations:activity：{ownerAccountId,petId,active,pauseWhileChatting}，供 companions 临时暂停散步。
+services.get('conversations').getProfile(owner,petId) / isChatting(owner,petId) 可同步读取。
+companions 的 motionTimer 需消费此状态：isChatting && profile.pauseWhileChatting 时跳过移动；不改持久化行为选择。
+头像使用可信资源提供的 avatarUrl/thumbnailUrl，无资源时显示名字首字。最终角色预览复用 resources，不引入授权不明素材。
+语音 capabilities 显式为 false，后续 ASR/TTS 只能通过相同实例范围的文本命令扩展；本次没有假语音按钮。
+
+最终集成仍需处理的公共项
+foundation 收集本分支后做 accounts + companions + resources 一起运行的最终 Windows 回归。
+companions 接入上述暂停散步状态；本分支只交付配置、实时状态和事件，未越界修改 companions。
+旧兼容 renderer 的明文 AI 设置代码仍在既有文件中。foundation 应将旧 AI 设置入口导向 /settings/ai，
+或另做有明确账号映射的安全导入，再移除迁移成功的明文密钥；不能把无账号的旧 Key 擅自归给当前账号。
+本模块不扫描或复制用户旧密钥，不把旧兼容 renderer 的安全状态算作新页面已验收。
+账号备份/云同步若纳入本功能：需要同步带 ownerAccountId 的领域记录并排除 encrypted_key；当前只验证本机持久化与账号切换。
+
+定向验证
+node --test apps/pc-app/runtime/features/conversations/tests/runtime.test.cjs
+npm run typecheck:ui
+npm run typecheck
+npm run build:pc
+node apps/pc-app/runtime/features/conversations/tests/electron-flow.mjs
+Electron 验收使用隔离数据与明确标识的本机 HTTP 协议 fixture，调用真实生产壳/preload/IPC/DPAPI/SQLite。
+它不代表真实云端模型可用；本会话未收到授权的云端模型连接配置，真实云端测试必须单列待验证。
+
+协议核对来源
+https://api-docs.deepseek.com/api/create-chat-completion/
+https://developers.openai.com/api/reference/resources/chat/subresources/completions/methods/create
+https://developers.openai.com/api/reference/resources/chat/subresources/completions/streaming-events
