@@ -25,7 +25,8 @@
       "goalStatus": "active",
       "goalId": "c60425f8-74c7-4490-bfa1-41c43595b96a",
       "goalTokenBudget": null,
-      "goalVerified": true
+      "goalVerified": true,
+      "effectiveGoal": "实现灵境的新 Electron + React + TypeScript + Vite 桌面架构，按已批准的 19 页设计落地公共 UI、四芒星品牌和模块注册机制；接入其余七个功能分支，保留旧数据和原有功能，完成真实 Windows Electron 的完整玩法闭环验收和可运行打包。 所有页面按批准 UI 图验收，本版仅 2D，使用统一 shadcn/ui（Radix）/Tailwind/Motion/PixiJS 组件与动效体系，优先复用成熟开源模块。"
     },
     {
       "module": "companions",
@@ -38,7 +39,8 @@
       "goalStatus": "active",
       "goalId": "91da3402-abc2-4496-a853-568c1bbbf89e",
       "goalTokenBudget": null,
-      "goalVerified": true
+      "goalVerified": true,
+      "effectiveGoal": "按批准设计实现多宠物桌面、领养、宠物详情与养成；同一账号可拥有多个相同角色模板的独立实例并同时出场，每只名字、状态、位置、养成、聊天归属与记录互不串用，重启后恢复，保留已有动物与历史数据。 所有页面按批准 UI 图验收，本版仅 2D，使用统一 shadcn/ui（Radix）/Tailwind/Motion/PixiJS 组件与动效体系，优先复用成熟开源模块。"
     },
     {
       "module": "discovery",
@@ -51,7 +53,8 @@
       "goalStatus": "active",
       "goalId": "0562f4f8-20a3-4d15-ac64-ad6983f17729",
       "goalTokenBudget": null,
-      "goalVerified": true
+      "goalVerified": true,
+      "effectiveGoal": "实现真实定位适配、附近地图探索、野外遭遇、挑战捕捉、收服结果与记忆标签，接入现有账号、宠物实例与战斗链路；清楚区分真实位置、权限失败与演示数据，保留国内外坐标适配。 所有页面按批准 UI 图验收，本版仅 2D，使用统一 shadcn/ui（Radix）/Tailwind/Motion/PixiJS 组件与动效体系，优先复用成熟开源模块。"
     },
     {
       "module": "battle",
@@ -64,7 +67,8 @@
       "goalStatus": "active",
       "goalId": "0aa261df-dc4e-4793-beee-3dfe2989020c",
       "goalTokenBudget": null,
-      "goalVerified": true
+      "goalVerified": true,
+      "effectiveGoal": "保留并接入现有五行回合战斗、好友搜索约战、房间同步、断线恢复、怒气技能、战斗结算与战报回顾，按批准设计在新 UI 中形成真实可用闭环，不用假对战替换已有能力。 所有页面按批准 UI 图验收，本版仅 2D，使用统一 shadcn/ui（Radix）/Tailwind/Motion/PixiJS 组件与动效体系，优先复用成熟开源模块。"
     },
     {
       "module": "garden",
@@ -77,7 +81,8 @@
       "goalStatus": "active",
       "goalId": "3271b938-72f5-4301-aeca-3affaeea9bb1",
       "goalTokenBudget": null,
-      "goalVerified": true
+      "goalVerified": true,
+      "effectiveGoal": "实现领地总览、驻守、菜园种植、离线生长、收获入库、配方制作、背包与指定宠物喂养；完成探索/对战得种子→种植→收获→制作食物→喂养→养成与继续探索的真实数据闭环，所有库存事务幂等且不串宠物。 所有页面按批准 UI 图验收，本版仅 2D，使用统一 shadcn/ui（Radix）/Tailwind/Motion/PixiJS 组件与动效体系，优先复用成熟开源模块。"
     },
     {
       "module": "conversations",
@@ -90,11 +95,12 @@
       "goalStatus": "active",
       "goalId": "ad43bdb7-456a-4429-ad7d-2497cc608028",
       "goalTokenBudget": null,
-      "goalVerified": true
+      "goalVerified": true,
+      "effectiveGoal": "实现每只宠物独立的 AI 聊天、人设、消息历史、记忆管理和模型连接设置，按批准设计接入主进程安全调用，确保同形象不同实例之间不串历史或记忆，重启与账号切换正确恢复。 所有页面按批准 UI 图验收，本版仅 2D，使用统一 shadcn/ui（Radix）/Tailwind/Motion/PixiJS 组件与动效体系，优先复用成熟开源模块。"
     },
     {
       "module": "resources",
-      "title": "灵境 07｜角色资源与模型导入",
+      "title": "灵境 07｜2D 角色资源与动画导入",
       "threadId": "01a16dc5-c785-7e61-86ea-6d27260788f3",
       "hostId": "local",
       "branch": "codex/lingjing-resources",
@@ -103,7 +109,10 @@
       "goalStatus": "active",
       "goalId": "0893d247-340c-4a29-b44d-bc8f4647b486",
       "goalTokenBudget": null,
-      "goalVerified": true
+      "goalVerified": true,
+      "effectiveGoal": "按批准设计实现 2D 角色资源库、动画包/图集导入、动作映射、锚点/缩放/帧率校准和真实预览，使用 PixiJS 现成加载与动画能力，供多个独立 petId 共享合规资源；本版不兼容 3D，不删除原始用户文件，UI 使用统一 shadcn/ui（Radix）/Tailwind/Motion。",
+      "previousTitle": "灵境 07｜角色资源与模型导入",
+      "initialGoalContainsSuperseded3DRequirement": true
     },
     {
       "module": "accounts",
@@ -116,7 +125,8 @@
       "goalStatus": "active",
       "goalId": "20905790-e647-4a40-bfc9-afbe56841949",
       "goalTokenBudget": null,
-      "goalVerified": true
+      "goalVerified": true,
+      "effectiveGoal": "保留并完善现有登录注册、资料与密码流程，建立稳定账号归属映射和安全存档同步/备份，接入桌面行为、通知与隐私设置；已有用户、宠物、聊天与战报历史可迁移且互相隔离。 所有页面按批准 UI 图验收，本版仅 2D，使用统一 shadcn/ui（Radix）/Tailwind/Motion/PixiJS 组件与动效体系，优先复用成熟开源模块。"
     }
   ],
   "verification": {
@@ -127,5 +137,20 @@
     "goalMode": "active on all 8 chats",
     "goalEvidence": "Read-only thread_goals readback",
     "fastMode": "Configured via project and user config service_tier=priority, fast_mode=true"
+  },
+  "currentScope": {
+    "revisedOn": "2026-10-24",
+    "source": "Latest human instructions in parent chat",
+    "document": "docs/implementation/scope-2d-ui-first.txt",
+    "ui": "Approved 19-page boards are acceptance reference",
+    "rendering": "2D only; no old 3D compatibility",
+    "componentLibrary": "shadcn/ui (Radix)",
+    "styling": "Tailwind CSS + shared UI tokens",
+    "uiMotion": "Motion for React",
+    "characterAnimation": "PixiJS",
+    "openSourcePolicy": "Reuse mature components and existing project modules before custom implementations; record actual usage and licences",
+    "dispatchedToAll8Chats": true,
+    "dispatchedAt": "2026-10-24T12:29:30.130504+00:00",
+    "precedence": "This scope and each effectiveGoal supersede outdated 3D requirements in initial goal text"
   }
 }
