@@ -158,6 +158,8 @@
 .battle-portrait > .resource-stage { border: 0; }
 .battle-portrait .resource-stage::before, .battle-portrait .resource-stage::after { display: none; }
 .battle-sprite-thumb { display: block; width: 100%; height: 100%; background-repeat: no-repeat; }
+.battle-sprite-thumb > .resource-card-art { width: 100%; height: 100%; aspect-ratio: auto; background: transparent; border-radius: inherit; }
+.battle-sprite-thumb svg { width: 100%; height: 100%; }
 .battle-asset-state { color: var(--muted); font-size: 11px; text-align: center; padding: 10px; }
 .battle-replay-scene { position: relative; height: 190px; display: grid; grid-template-columns: 1fr 1fr; gap: 0; overflow: hidden; border-radius: 8px; background: url('./assets/night-courtyard-v1.png') center / cover; margin-bottom: 14px; }
 .battle-replay-scene .battle-portrait { height: 190px; min-height: 0; aspect-ratio: auto; background: transparent; border-radius: 0; }
@@ -192,17 +194,18 @@
 .combatant-title > span { display: inline-flex; align-items: center; gap: 2px; color: #7392bd; font-size: 10px; font-weight: 500; white-space: nowrap; }
 .combatant-status.enemy > .battle-portrait { order: 2; }
 .battle-arena-top .combatant-status { position: relative; isolation: isolate; padding: 8px 14px 7px 7px; min-height: 68px; }
-.battle-arena-top .combatant-status::before { content: ''; position: absolute; inset: 0; z-index: -1; background: #f7fbfff0; border-radius: 8px; clip-path: polygon(0 0, 91% 0, 100% 100%, 0 100%); }
+.battle-arena-top .combatant-status::before { content: ''; position: absolute; inset: 0; z-index: -1; background: #f7fbfff0; border-radius: 8px; clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 100%, 0 100%); }
 .battle-arena-top .combatant-status.enemy { padding: 8px 7px 7px 14px; }
-.battle-arena-top .combatant-status.enemy::before { clip-path: polygon(9% 0, 100% 0, 100% 100%, 0 100%); }
+.battle-arena-top .combatant-status.enemy::before { clip-path: polygon(8px 0, 100% 0, 100% 100%, 0 100%); }
 .battle-arena-top .battle-portrait.small { flex: 0 0 50px; width: 50px; height: 50px; border: 2px solid var(--hud-accent); border-radius: 50%; background: #f7fbff; outline: 2px solid #fff; }
 .battle-arena-top .combatant-title { margin-bottom: 4px; font-size: 12px; }
+.battle-arena-top .combatant-title > span { color: #536f99; }
 .battle-meter-row { display: flex; align-items: center; gap: 5px; margin-top: 5px; font-size: 10px; color: #7193aa; }
 .battle-meter-row progress { flex: 1; min-width: 18px; height: 6px; appearance: none; border: 0; }
 .battle-meter-row progress::-webkit-progress-bar, .battle-experience progress::-webkit-progress-bar { background: #d9e3f4; border-radius: 8px; }
 .battle-meter-row progress::-webkit-progress-value { background: #7bc6a9; border-radius: 8px; }
 .battle-meter-row.anger progress::-webkit-progress-value { background: var(--hud-accent); }
-.battle-meter-row b { min-width: 39px; text-align: right; font-size: 9px; font-weight: 500; }
+.battle-meter-row b { min-width: 45px; text-align: right; color: #4c6995; font-size: var(--text-caption, 11px); font-weight: var(--weight-label, 500); }
 .battle-arena-top .battle-meter-row > span { display: none; }
 .battle-statuses { display: flex; flex-wrap: wrap; gap: 3px; margin-top: 5px; }
 .battle-statuses:empty { display: none; }
