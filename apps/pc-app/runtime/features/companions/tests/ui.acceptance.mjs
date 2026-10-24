@@ -96,6 +96,8 @@ try {
   await page.waitForFunction(() => document.querySelector('.main-content > .app-page-motion')?.getAttribute('data-motion') === 'reduced');
   const desktop = application.windows().find(candidate => candidate.url().includes(`#/desktop/${fish.petId}`)); assert.ok(desktop);
   const canvas = desktop.locator('[data-renderer="pixi"] canvas'); await desktop.locator('.resource-stage[data-status="ready"]').waitFor();
+  assert.equal(await desktop.locator('.resource-stage').evaluate(element => getComputedStyle(element, '::before').display), 'none');
+  await desktop.screenshot({ path: join(output, 'desktop-pixi.png'), timeout: 5000, omitBackground: true });
   const first = await canvas.screenshot({ timeout: 5000, omitBackground: true }); await delay(1800);
   const second = await canvas.screenshot({ timeout: 5000, omitBackground: true });
   assert.equal(digest(first), digest(second), 'Application animations off must leave actual desktop Pixi pixels unchanged');
