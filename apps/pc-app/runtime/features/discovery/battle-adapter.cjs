@@ -1,5 +1,6 @@
 const {BattleRuntimeService,getBattleRules}=require('../../services/battle-runtime.cjs');
-/** Reuse the current combat engine unchanged. The saved state lives with its encounter. */
+/** Retired compatibility helper for archived fixtures. Production DiscoveryService
+ * requires the registered battle feature and never instantiates this fallback. */
 class LegacyWildBattleAdapter {
   begin({pet,spawn,battleId}) {
     const engine=new BattleRuntimeService(); engine.reset({playerElement:pet.element,enemyElement:spawn.element});

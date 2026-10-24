@@ -15,7 +15,7 @@ function fingerprint(paths) {
 }
 const code = ['apps/pc-app/runtime', 'apps/pc-app/ui/src', 'packages/shared-types/src'].flatMap(directory => files(resolve(directory))).filter(file => {
   const path = portable(file);
-  return /\.(?:[cm]?js|tsx?|css)$/.test(path) && !/(?:^|\/)(tests|verification|legacy|renderer|auth)\//.test(path) && !/\.(?:test|acceptance)\./.test(path) && !/(?:verify-|smoke\.|prepare-.*fixture|write-evidence|generate-fish)/.test(path);
+  return /\.(?:[cm]?js|tsx?|css)$/.test(path) && !/(?:^|\/)(tests|verification|legacy|renderer|auth)\//.test(path) && !/\.(?:test|acceptance)\./.test(path) && !/\.electron\.mjs$/.test(path) && !/(?:verify-|smoke\.|prepare-.*fixture|write-evidence|generate-fish)/.test(path);
 });
 code.push(...['package.json', 'package-lock.json', 'electron.vite.config.ts', 'scripts/desktop/write-build-manifest.mjs'].map(file => resolve(file)));
 const built = files(resolve('apps/pc-app/dist')).filter(file => !file.endsWith('build-manifest.json'));
