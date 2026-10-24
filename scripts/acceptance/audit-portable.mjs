@@ -6,7 +6,8 @@ import { execFileSync } from 'node:child_process';
 import assert from 'node:assert/strict';
 
 const require = createRequire(import.meta.url), asar = require('@electron/asar');
-const base = resolve(process.argv[2] || 'artifacts/pc-beta');
+const builder = JSON.parse(readFileSync('scripts/release/electron-builder.pc.json', 'utf8'));
+const base = resolve(process.argv[2] || builder.directories.output);
 const archive = join(base, 'win-unpacked/resources/app.asar');
 const output = resolve(process.argv[3] || 'artifacts/foundation/unified-battle/package-audit.json');
 const hash = bytes => createHash('sha256').update(bytes).digest('hex');
@@ -15,7 +16,7 @@ const proof = { at: new Date().toISOString(), archive, sourceCommit: execFileSyn
 try {
   const entries = asar.listPackage(archive).map(path => path.replaceAll('\\', '/').replace(/^\/+/, ''));
   proof.entries = entries.length;
-  proof.forbidden = entries.filter(path => /\.(?:glb|gltf|vrm)$/i.test(path) || /^apps\/pc-app\/runtime\/(?:renderer|auth)\//.test(path) || /^apps\/pc-app\/runtime\//.test(path) && (/(?:^|\/)(?:tests|verification)\//.test(path) || /\.(?:test|acceptance)\.[cm]?js$/.test(path) || /(?:verify-.*\.mjs|smoke\.electron\.mjs|prepare-.*-fixture\.mjs|write-evidence\.mjs|testing-adapter\.cjs|generate-fish\.cjs)$/.test(path)));
+  proof.forbidden = entries.filter(path => /\.(?:glb|gltf|vrm)$/i.test(path) || /^apps\/pc-app\/runtime\/(?:renderer|auth)\//.test(path) || /^apps\/pc-app\/runtime\//.test(path) && (/(?:^|\/)(?:tests|verification)\//.test(path) || /\.(?:test|acceptance)\.[cm]?js$/.test(path) || /(?:verify-.*\.mjs|.*\.electron\.mjs|prepare-.*-fixture\.mjs|write-evidence\.mjs|testing-adapter\.cjs|generate-fish\.cjs)$/.test(path)));
   assert.deepEqual(proof.forbidden, []);
   const manifest = JSON.parse(extract('apps/pc-app/dist/build-manifest.json').toString('utf8'));
   proof.build = manifest;
@@ -33,7 +34,6 @@ try {
     assert.equal(digest, source.sha256); proof.assets.push({ id: character.resourceId, element: character.element, bytes: bytes.length, sha256: digest });
   }
   assert.ok(['metal', 'wood', 'water', 'fire', 'earth'].every(element => proof.assets.some(asset => asset.element === element)));
-  const builder = JSON.parse(readFileSync('scripts/release/electron-builder.pc.json', 'utf8'));
   proof.licenses = builder.extraFiles.map(file => {
     const path = join(base, 'win-unpacked', file.to); assert.equal(hash(readFileSync(path)), hash(readFileSync(file.from))); return file.to;
   });

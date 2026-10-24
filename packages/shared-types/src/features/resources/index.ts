@@ -3,6 +3,7 @@ export const RESOURCE_ACTIONS = ['idle', 'blink', 'walk', 'wave', 'eat', 'attack
 export type ResourceAction = (typeof RESOURCE_ACTIONS)[number];
 export type ResourceContext = 'desktop' | 'battle';
 export type ResourceKind = 'spritesheet' | 'model3d';
+export type ResourceElement = 'metal' | 'wood' | 'water' | 'fire' | 'earth';
 export interface ResourceCalibration {
   scale: number;
   rotationDeg?: number;
@@ -34,6 +35,8 @@ export interface ResourceClip {
 export interface CharacterResource {
   id: string;
   name: string;
+  /** Default element of a canonical character; the pet's battle state remains authoritative. */
+  element?: ResourceElement;
   kind: ResourceKind;
   origin: 'builtin' | 'import' | 'legacy';
   revision: number;

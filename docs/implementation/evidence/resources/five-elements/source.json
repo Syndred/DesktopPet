@@ -1,0 +1,72 @@
+{
+  "at": "2026-10-24T15:11:36.622Z",
+  "runtimeSourceCommit": "f4c210deaa826d3c2ab8d68cb5dadb18538ca864",
+  "captureBaseCommit": "4afd06127884b08c083654a213e4cdbd12508e73",
+  "capturesOccurredBeforeCommit": true,
+  "capturedRuntimeContentMatchesCommit": true,
+  "verification": "No resource runtime/UI/shared-type/config diff against source commit after capture and final build; no runtime edits between capture and commit",
+  "dataSource": {
+    "mode": "local-qa",
+    "simulated": false,
+    "cloud": "not used",
+    "profile": "artifacts/resources/2d-profile"
+  },
+  "sourceSync": {
+    "remote": "origin/main",
+    "revision": "4786f97680679c2db0aa307fa5f67ec247f93086",
+    "fetchedThisTurn": true,
+    "ancestorOfHead": true,
+    "verifiedAt": "2026-10-24T15:12:20.727Z"
+  },
+  "referenceRules": {
+    "source": "C:/Users/Administrator/Desktop/project/DesktopPet/apps/pc-app/runtime/services/battle-runtime.cjs",
+    "sha256": "db020275329196bf0d18d420ab8be32831d44a1e6c434ec36a16d47ea717f593",
+    "usage": "Read-only reference for wood parasite and earth dull visuals; this resource branch did not modify or certify battle formulas"
+  },
+  "files": [
+    {
+      "file": "apps/pc-app/runtime/features/resources/roster.cjs",
+      "sha256": "0d37b88493fdddb59223219b901b9a92e868fc86e9c1a121093d8ff96fa1acfd"
+    },
+    {
+      "file": "apps/pc-app/runtime/features/resources/service.cjs",
+      "sha256": "cd353e36db454aec088f082baf36db4893d39fa5ffa23b3d373171297a5a65b2"
+    },
+    {
+      "file": "apps/pc-app/runtime/features/resources/package-2d.cjs",
+      "sha256": "30605cc092f70af40e657898db89c897ae481899fa016f935c68405da7a329e8"
+    },
+    {
+      "file": "apps/pc-app/runtime/features/companions/templates.cjs",
+      "sha256": "2ae024c5af2703e77854066caa6068c9b941b4fd6d83705023600ab604e79d4b"
+    },
+    {
+      "file": "apps/pc-app/ui/src/features/resources/ResourceStage.tsx",
+      "sha256": "342632259d18659db48435a51641e67d5eb175f529666289a176d7c3b59df28a"
+    },
+    {
+      "file": "apps/pc-app/ui/src/features/resources/display.ts",
+      "sha256": "04b59bfe0fe2634c59d5d410c1aa7ee97f0d1d6a1b222d1212c85a607594d5cf"
+    },
+    {
+      "file": "packages/shared-types/src/features/resources/index.ts",
+      "sha256": "013f39228110b3dd19efc7cae13b2db4153b419c56d3ef2835b991be30825e33"
+    },
+    {
+      "file": "apps/pc-app/runtime/features/resources/assets/roster-v2/qingya/sprites.png",
+      "sha256": "aa59df3af26d4f7faf9272193b7d1d35ed6d2f22ebb6b294a5a2853f0539f693"
+    },
+    {
+      "file": "apps/pc-app/runtime/features/resources/assets/roster-v2/qingya/character.json",
+      "sha256": "ac176d23703fd8d9de97a23574966b44728657ceb7c32bb3fcea80469cfa9954"
+    },
+    {
+      "file": "apps/pc-app/runtime/features/resources/assets/roster-v2/yantuan/sprites.png",
+      "sha256": "f03bc1b8cd1c20c5ef6d466d20db9fb7f9584b7739f21414d22fc2c91c01d886"
+    },
+    {
+      "file": "apps/pc-app/runtime/features/resources/assets/roster-v2/yantuan/character.json",
+      "sha256": "7de3962242825294eb9958a9d4859de7153e7ac5162020540eed0f7cbf37b692"
+    }
+  ]
+}

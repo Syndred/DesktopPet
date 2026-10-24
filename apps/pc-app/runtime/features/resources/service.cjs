@@ -3,7 +3,7 @@ const path = require('node:path');
 const { randomUUID } = require('node:crypto');
 const { ResourcesRepository } = require('./repository.cjs');
 const { ResourceError, fail, plain, text, provenance, calibrations, actionMap, safeRelative, isWithin, parseCharacterFile, normalize2DResource, resolveAction } = require('./parser.cjs');
-const { canonicalResourceId, catalog } = require('./roster.cjs');
+const { canonicalResourceId, catalog, withRosterElement } = require('./roster.cjs');
 const ROSTER_ORDER = new Map(catalog.characters.map((entry,index) => [entry.resourceId,index]));
 
 class ResourcesService {
@@ -32,7 +32,7 @@ class ResourcesService {
     }
   }
   async withAvailability(owner, resource) {
-    resource = normalize2DResource(resource);
+    resource = withRosterElement(normalize2DResource(resource));
     const paths = this.repository.files(owner, resource.id);
     const readable = await Promise.all(paths.map(row => this.assetFile(owner, resource.id, row.asset_key).then(() => true, () => false)));
     if (readable.some(value => !value)) return { ...resource, availability: 'missing', warnings: [...resource.warnings, '文件已缺失；原有资源与导入记录仍然保留'] };
@@ -46,7 +46,7 @@ class ResourcesService {
   }
   async get(owner, id) { this.owner(owner); return this.withAvailability(owner, this.repository.get(owner, this.canonicalId(id))); }
   /** Synchronous adapters for callers already inside the shared SQLite transaction. */
-  getRecord(owner, id) { this.owner(owner); return normalize2DResource(this.repository.get(owner, this.canonicalId(id))); }
+  getRecord(owner, id) { this.owner(owner); return withRosterElement(normalize2DResource(this.repository.get(owner, this.canonicalId(id)))); }
   importFile(owner, filePath, metadata = {}) {
     const operation = this.importTail.then(() => this.importValidatedFile(owner, filePath, metadata));
     this.importTail = operation.catch(() => {});
