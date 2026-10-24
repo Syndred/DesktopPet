@@ -1,6 +1,6 @@
 import { useState, type ReactNode } from 'react';
 import type { ConversationMemory, ConversationPet } from '../../../../../../packages/shared-types/src/features/conversations';
-import { Pencil, Trash2, Heart, Plus, X } from 'lucide-react';
+import { Pencil, Trash2, Heart, Plus, X, ImageOff } from 'lucide-react';
 import { Dialog, DialogContent, DialogTitle } from '../../components/ui/dialog';
 import { Button } from '../../components/ui/button';
 import { Textarea } from '../../components/ui/textarea';
@@ -10,18 +10,17 @@ import { AnimatedList, MotionPanel } from '../../components/motion';
 import { CompanionPortrait } from '../companions/CompanionPortrait';
 
 export function PetAvatar({ pet, large = false }: { pet: ConversationPet; large?: boolean }) {
-  const [failed, setFailed] = useState(false);
-  return <span className={`cv-avatar ${large ? 'cv-avatar-large' : ''}`} aria-hidden="true">
-    {pet.resource && pet.resource.resourceId !== 'builtin:lingjing-yuwan-v1' ? <CompanionPortrait petId={pet.petId} name={pet.name} resource={pet.resource}/> :
-      pet.avatarUrl && /\.(png|jpe?g|webp)(?:$|\?)/i.test(pet.avatarUrl) && !failed ? <img src={pet.avatarUrl} alt="" onError={() => setFailed(true)}/> :
-        <span className="cv-avatar-art" data-character="lingjing-yuwan-2d" style={{ backgroundImage: 'url("./illustrations/yuwan-sprites-v1.png")' }}/>}
+  return <span className={`cv-avatar ${large ? 'cv-avatar-large' : ''}`} aria-hidden="true" data-pet-id={pet.petId} data-resource-id={pet.resource?.resourceId}>
+    {pet.resource ? <CompanionPortrait key={`${pet.petId}:${pet.resource.resourceId}`} petId={pet.petId} name={pet.name} resource={pet.resource}/> : <ImageOff size={20}/>}
   </span>;
 }
 export function PetScene({ pet }: { pet: ConversationPet }) {
-  if (pet.resource && pet.resource.resourceId !== 'builtin:lingjing-yuwan-v1') return <figure className="cv-pet-scene cv-custom-scene">
-    <CompanionPortrait petId={pet.petId} name={pet.name} resource={pet.resource}/>
+  // This authored scene belongs to this exact resource, never to every pet name.
+  const illustration = pet.resource?.resourceId === 'builtin:lingjing-yuwan-v1' ? './illustrations/companionship-room-v1.png' : null;
+  return <figure className={`cv-pet-scene ${illustration ? '' : 'cv-custom-scene'}`} aria-label={`${pet.name}的当前形象`} data-pet-id={pet.petId} data-resource-id={pet.resource?.resourceId}>
+    {illustration ? <img src={illustration} data-resource-illustration={pet.resource?.resourceId} alt={`${pet.name}在湖畔房间陪伴你`} draggable={false}/> :
+      pet.resource ? <CompanionPortrait key={`${pet.petId}:${pet.resource.resourceId}`} petId={pet.petId} name={pet.name} resource={pet.resource}/> : <div className="cv-scene-unavailable"><ImageOff size={30}/><span>为{pet.name}选择角色资源后，形象会显示在这里。</span></div>}
   </figure>;
-  return <figure className="cv-pet-scene"><img src="./illustrations/companionship-room-v1.png" alt={`${pet.name}在湖畔房间陪伴你`} draggable={false}/></figure>;
 }
 export function Modal({ title, children, close, busy = false }: { title: string; children: ReactNode; close: () => void; busy?: boolean }) {
   // Controlled editors can be invoked by several buttons. Use Radix's focus

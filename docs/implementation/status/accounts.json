@@ -2,7 +2,7 @@
   "module": "accounts",
   "branch": "codex/lingjing-accounts",
   "status": "ready-for-integration",
-  "implementationCommit": "47260b5f48767a0acc4c1bc6dce861b3e3a04eb3",
+  "implementationCommit": "7df45969de287c01842a3038139b803c4672fb40",
   "worktree": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-accounts\\DesktopPet",
   "foundationBase": "8f17aec",
   "publicFoundationSnapshot": "f0af90f",
@@ -43,6 +43,12 @@
     {
       "command": "npm run build:pc",
       "result": "passed"
+    },
+    {
+      "command": "node apps/pc-app/runtime/features/accounts/tests/settings-layout.acceptance.mjs",
+      "result": "passed",
+      "evidence": "artifacts/accounts/settings-layout-1792848528037/evidence.json",
+      "scope": "A05/A12 only: actual 1280x844 and 1440x900 Electron layouts, all 11 settings switches in both states with real thumb/track bounds and vertical centering, 1024x700 scroll, notification/privacy page; no settings submit or machine permission changes"
     },
     {
       "command": "node apps/pc-app/runtime/features/accounts/tests/electron.acceptance.mjs",
@@ -188,19 +194,51 @@
     {
       "reference": "08-desktop-and-ai-settings.png",
       "actual": [
-        "artifacts/accounts/restart-controls-1792846645295/settings.png",
-        "artifacts/accounts/restart-controls-1792846645295/restore-dialog.png"
+        "artifacts/accounts/settings-layout-1792848528037/desktop-1280x844.png",
+        "artifacts/accounts/settings-layout-1792848528037/wide-1440x900.png",
+        "artifacts/accounts/settings-layout-1792848528037/compact-1024x700-save.png",
+        "artifacts/accounts/settings-layout-1792848528037/notification-and-privacy-1280x844.png"
       ],
       "matched": [
         "Secondary settings navigation",
         "Desktop controls beside approved 2D preview; privacy section and save actions",
-        "Lucide icons, shared Radix switches/selects and flat button styling"
+        "Lucide icons, shared Radix switches/selects and flat button styling",
+        "Compact desktop rows and horizontal privacy copy; standard-window save remains visible without scaling or scrolling",
+        "Shared Chinese font stack and global page/card heading sizes; no private 30px page-title size or 750 weight"
       ],
-      "remainingVisualDifferences": [
-        "At 1320x900 the extended settings/footer may require vertical scrolling; additional animation/privacy controls are functional rather than squeezed into design example spacing"
-      ]
+      "remainingVisualDifferences": []
     }
   ],
+  "visualAudit20261024": {
+    "checklist": "docs/implementation/acceptance/2026-10-24/visual-audit.txt in shared implementation-base commit 9915684",
+    "codeCommit": "7df45969de287c01842a3038139b803c4672fb40",
+    "items": {
+      "A05": "Fixed in accounts branch: one CSS translate mechanism, geometry derived from track/thumb/inset variables; complete white thumb in checked/unchecked states. Compact cards, bounded proportional illustration, inline privacy rows and visible save at 1280x844.",
+      "A01": "Accounts now inherits public global H1/H2 sizes and Chinese font stack; removed private H1 30px/750 overrides. Foundation owns the final shared typography tokens and cross-module comparison.",
+      "A03": "Settings cards have no implicit margin; form fieldset and desktop parent grid own their 12px gaps.",
+      "A12": "Settings density aligned while retaining actual shared Radix Switch/Select/Slider, accessible names and Motion route integration. Footer button dimensions target Button slots so they cannot stretch Switch tracks."
+    },
+    "computedSwitch": {
+      "track": "38x22 CSS pixels",
+      "thumb": "16x16 CSS pixels",
+      "inset": "3 CSS pixels on both vertical edges and the selected horizontal end",
+      "translateUnchecked": "0px",
+      "translateChecked": "16px",
+      "transformBothStates": "none"
+    },
+    "standardWindow": {
+      "viewport": "1280x844, DPR 1.25, zoom 1",
+      "mainClientHeight": 790,
+      "mainScrollHeight": 790,
+      "saveTop": 730.725,
+      "saveBottom": 766.725,
+      "privacyBottom": 718.725
+    },
+    "evidence": "artifacts/accounts/settings-layout-1792848528037/evidence.json",
+    "baselinePreserved": "Parent baseline plus own pre-layout capture artifacts/accounts/settings-layout-1792848273882 retained",
+    "verificationPolicy": "Targeted UI check only; no full regression repeated. Final combined visual recheck remains foundation-owned.",
+    "settingsAndMachinePolicy": "Independent copied synthetic QA profile; form never submitted; settings document and revision read back unchanged. No system permission/privacy settings were opened or changed."
+  },
   "twoDOnly": {
     "newUiOnly2D": true,
     "noNew3DDependency": true,

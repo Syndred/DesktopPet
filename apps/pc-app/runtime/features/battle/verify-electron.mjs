@@ -35,24 +35,38 @@ legacy.registerUser(account, 'isolated-local-verification', '并肩验证');
 const env = { ...process.env, PET_USER_DATA_DIR: profile };
 delete env.ELECTRON_RUN_AS_NODE;
 const checks = [], errors = [], logs = [], requested3dAssets = [];
+const visualOnly = process.argv.includes('--visual-only');
 let application;
 let sessionId;
+async function sizeWindow(app, page, width, height) {
+  const window = await app.browserWindow(page);
+  await window.evaluate((win, size) => win.setContentSize(size.width, size.height, false), { width, height });
+  await page.waitForFunction(size => Math.abs(innerWidth - size.width) <= 2 && Math.abs(innerHeight - size.height) <= 2, { width, height });
+}
 async function launch() {
   const app = await electron.launch({ args: [project], env });
   application = app;
   app.process().stdout?.on('data', data => logs.push(String(data)));
   app.process().stderr?.on('data', data => logs.push(String(data)));
   const page = await app.firstWindow();
+  await sizeWindow(app, page, 1280, 844);
   page.on('pageerror', error => errors.push(error.message));
   page.on('request', request => { if (/\.(glb|gltf|vrm)(?:[?#]|$)/i.test(request.url())) requested3dAssets.push(request.url()); });
   await page.waitForFunction(() => Boolean(window.lingjing));
   const login = await page.evaluate(account => window.lingjing.invoke('accounts', 'login', { provider: 'local', account, password: 'isolated-local-verification', rememberSession: true }), account);
   if (!login.ok && login.code !== 'COMMAND_UNAVAILABLE') throw new Error(JSON.stringify(login));
-  // Adopt and select a real independent 2D instance through the registered companions API.
+  // The party is populated by actual independent adoptions, never by painted sample portraits.
   {
-    const adopted = await page.evaluate(() => window.lingjing.invoke('companions', 'adopt', { actionId: 'battle-ui-adoption', templateId: 'big-fish-gentle', name: '鱼丸', showOnDesktop: false }));
-    assert.equal(adopted.ok, true, JSON.stringify(adopted));
-    const selected = await page.evaluate(petId => window.lingjing.invoke('companions', 'select', { actionId: 'battle-ui-party', petId, slot: 'battlePetId' }), adopted.data.pet.petId);
+    const inventory = await page.evaluate(() => window.lingjing.invoke('companions', 'list'));
+    assert.equal(inventory.ok, true);
+    const templates = inventory.data.templates.slice(0, 4);
+    let chosen;
+    for (const [index, template] of templates.entries()) {
+      const adopted = await page.evaluate(({ template, index }) => window.lingjing.invoke('companions', 'adopt', { actionId: `battle-ui-adoption-${template.templateId}`, templateId: template.templateId, name: index === 0 ? '鱼丸' : template.name, showOnDesktop: false }), { template, index });
+      assert.equal(adopted.ok, true, JSON.stringify(adopted));
+      if (index === 0) chosen = adopted.data.pet.petId;
+    }
+    const selected = await page.evaluate(petId => window.lingjing.invoke('companions', 'select', { actionId: 'battle-ui-party', petId, slot: 'battlePetId' }), chosen);
     assert.equal(selected.ok, true);
   }
   await page.getByRole('navigation', { name: '主导航' }).getByRole('button', { name: '对战中心', exact: true }).click();
@@ -104,7 +118,26 @@ async function captureSettledPage(page, name) {
   });
   await page.screenshot({ path: join(output, name) });
 }
-try {
+async function captureBattleLayout(page, name) {
+  await captureSettledPage(page, `${name}.png`);
+  const metrics = await page.evaluate(() => {
+    const read = element => ({ rect: element.getBoundingClientRect().toJSON(), font: { family: getComputedStyle(element).fontFamily, size: getComputedStyle(element).fontSize, weight: getComputedStyle(element).fontWeight }, marginBottom: getComputedStyle(element).marginBottom });
+    return { viewport: { width: innerWidth, height: innerHeight, dpr: devicePixelRatio }, title: read(document.querySelector('.page-header h1')), tabs: read(document.querySelector('.battle-tabs')), arena: read(document.querySelector('.battle-arena')), sidebar: read(document.querySelector('.battle-side-panel')), cards: [...document.querySelectorAll('.battle-move')].map(element => ({ action: element.className, selected: element.getAttribute('aria-pressed'), ...read(element), art: read(element.querySelector('.battle-skill-art')), copy: read(element.querySelector('.battle-skill-copy')), status: read(element.querySelector('.battle-skill-status')) })), party: [...document.querySelectorAll('.battle-party-grid > div')].map(element => ({ name: element.textContent, petId: element.querySelector('[data-pet-id]')?.getAttribute('data-pet-id') })), resources: [...document.querySelectorAll('.battle-stage .resource-stage')].map(element => ({ petId: element.getAttribute('data-pet-id'), resourceId: element.getAttribute('data-resource-id'), action: element.getAttribute('data-action') })) };
+  });
+  writeFileSync(join(output, `${name}.json`), JSON.stringify(metrics, null, 2));
+  assert.equal(metrics.cards.length, 4);
+  assert.ok(Number(metrics.title.font.weight) >= 700);
+  for (const card of metrics.cards) {
+    assert.ok(card.art.rect.width >= 44);
+    assert.ok(card.copy.rect.left >= card.art.rect.right);
+    assert.ok(Math.abs(card.status.rect.bottom - metrics.cards[0].status.rect.bottom) <= 1);
+    assert.ok(card.rect.bottom <= metrics.viewport.height, 'Core actions must fit the standard viewport');
+  }
+  assert.ok(Math.abs(metrics.arena.rect.top - metrics.sidebar.rect.top) <= 1);
+  assert.ok(Math.abs(metrics.arena.rect.bottom - metrics.sidebar.rect.bottom) <= 2);
+  return metrics;
+}
+async function verify() {
   let instance = await launch(); application = instance.app; let page = instance.page;
   await page.getByRole('button', { name: '开始训练', exact: true }).waitFor();
   let overview = await api(page, 'overview');
@@ -112,7 +145,7 @@ try {
   await page.getByRole('combobox', { name: '选择出战伙伴' }).click();
   await page.getByRole('option', { name: /^鱼丸 ·/ }).click();
   await page.getByRole('combobox', { name: '训练对手五行' }).click();
-  await page.getByRole('option', { name: /^金系/ }).click();
+  await page.getByRole('option', { name: /^火系/ }).click();
   await page.getByRole('combobox', { name: '训练对手五行' }).click();
   await page.keyboard.press('Escape');
   await page.getByRole('listbox').waitFor({ state: 'detached' });
@@ -138,9 +171,18 @@ try {
   }
   const saved = await api(page, 'snapshot', { sessionId });
   assert.equal(await page.locator('.battle-page model-viewer').count(), 0);
-  await page.locator('.battle-stage [data-resource-id="builtin:lingjing-battle-shiba-v1"][data-status="ready"]').waitFor();
+  await page.locator('.battle-stage > .battle-portrait').nth(1).locator('.resource-stage[data-status="ready"]').waitFor();
   assert.equal(await page.locator('.battle-stage canvas').count(), 2);
   checks.push('both actors use real 2D sprite atlases; battlefield contains two live Pixi canvases and no 3D element');
+  if (visualOnly) {
+    const standard = await captureBattleLayout(page, '02-live-1280');
+    await sizeWindow(application, page, 1440, 900);
+    const wide = await captureBattleLayout(page, '02-live-1440');
+    const state = await api(page, 'snapshot', { sessionId });
+    writeFileSync(join(output, 'visual-preview.json'), JSON.stringify({ at: new Date().toISOString(), source: 'Real Electron and real adoptions; visual iteration only, not final integrated acceptance', standard, wide, state, checks, errors }, null, 2));
+    console.log(JSON.stringify({ output, passed: true, mode: 'visual-preview' }));
+    return;
+  }
   await page.locator('.battle-move-tooltip').filter({ has: page.locator('.battle-move.ultimate') }).focus();
   await page.getByRole('tooltip').filter({ hasText: '需要至少 50 怒气' }).waitFor();
   await page.keyboard.press('Escape');
@@ -225,7 +267,8 @@ try {
   assert.deepEqual(requested3dAssets, []);
   writeFileSync(join(output, 'evidence.json'), JSON.stringify({ at: new Date().toISOString(), platform: process.platform, checks, dependencies, sessionId, rounds: session.snapshot.round, winner: session.winner, reward: session.reward, errors, requested3dAssets, onlineAcceptance: 'Not verified: deployed Supabase endpoint is unavailable; no simulated multiplayer success claimed' }, null, 2));
   console.log(JSON.stringify({ output, passed: true, checks }, null, 2));
-} catch (error) {
+}
+try { await verify(); } catch (error) {
   if (application) {
     try {
       const page = application.windows()[0];
