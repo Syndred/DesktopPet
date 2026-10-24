@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Footprints, Heart, Maximize2, MessageCircle, Monitor, Pencil, Plus, Smile, Soup, Swords, X } from 'lucide-react';
 import type { CompanionPet, CompanionsSnapshot } from '../../../../../../packages/shared-types/src/features/companions';
 import { navigate } from '../../app/navigation';
@@ -20,12 +20,12 @@ export function activeSnapshot(snapshot: CompanionsSnapshot): CompanionsSnapshot
 }
 export function usePageScroll() { useEffect(() => { document.querySelector('.main-content')?.scrollTo({ top: 0 }); }, []); }
 
-export function StateMeters({ pet }: { pet: CompanionPet }) {
+export function StateMeters({ pet, showMax = false }: { pet: CompanionPet; showMax?: boolean }) {
   return <div className="cp-meters">{[
     { name: '心情', value: pet.growth.mood, className: 'mood', Icon: Smile },
     { name: '饱食', value: pet.growth.satiety, className: 'satiety', Icon: Soup },
     { name: '亲密度', value: pet.growth.affinity, className: 'affinity', Icon: Heart }
-  ].map(item => <div className={`cp-meter ${item.className}`} key={item.name}><item.Icon className="cp-meter-icon" size={20} aria-hidden="true"/><span>{item.name}</span><meter min={0} max={100} value={item.value} aria-label={`${pet.name}的${item.name}`}/><strong>{item.value}</strong></div>)}</div>;
+  ].map(item => <div className={`cp-meter ${item.className}`} key={item.name}><item.Icon className="cp-meter-icon" size={20} aria-hidden="true"/><span>{item.name}</span><meter min={0} max={100} value={item.value} aria-label={`${pet.name}的${item.name}`}/><strong>{item.value}{showMax && <small> / 100</small>}</strong></div>)}</div>;
 }
 
 /** Public shadcn/Radix primitives own modal focus, Tab containment, Escape and focus return. */
@@ -50,15 +50,10 @@ export function PetActions({ pet, controller }: { pet: CompanionPet; controller:
 
 export function DesktopControls({ pet, controller }: { pet: CompanionPet; controller: Controller }) {
   const [scale, setScale] = useState(pet.desktop.scale);
-  // The shared shadcn Slider does not forward the author's label to its Thumb yet.
-  // Supply only that name; Radix continues to own focus, keyboard, values and gestures.
-  const labelScaleThumb = useCallback((node: HTMLSpanElement | null) => {
-    node?.querySelector('[role="slider"]')?.setAttribute('aria-label', `${pet.name}的外观大小`);
-  }, [pet.name]);
   useEffect(() => setScale(pet.desktop.scale), [pet.petId, pet.desktop.scale]);
   return <div className="cp-desktop-controls">
     <div className="cp-control-row"><span><Footprints size={16}/>行为模式</span><Select value={pet.desktop.behavior} disabled={controller.busy} onValueChange={behavior => { void controller.petAction('desktop', pet, { behavior }); }}><SelectTrigger aria-label={`${pet.name}的行为模式`} className="cp-behavior-select"><SelectValue/></SelectTrigger><SelectContent>{behaviors.map(item => <SelectItem key={item.value} value={item.value}>{item.label}</SelectItem>)}</SelectContent></Select></div>
-    <div className="cp-control-row"><span><Maximize2 size={16}/>外观大小</span><Slider ref={labelScaleThumb} className="cp-scale-slider" aria-label={`${pet.name}的外观大小`} value={[scale]} min={.5} max={2} step={.05} disabled={controller.busy} onValueChange={values => setScale(values[0])} onValueCommit={values => { if (values[0] !== pet.desktop.scale) void controller.petAction('desktop', pet, { scale: values[0] }); }}/><small>{Math.round(scale * 100)}%</small></div>
+    <div className="cp-control-row"><span><Maximize2 size={16}/>外观大小</span><Slider className="cp-scale-slider" aria-label={`${pet.name}的外观大小`} value={[scale]} min={.5} max={2} step={.05} disabled={controller.busy} onValueChange={values => setScale(values[0])} onValueCommit={values => { if (values[0] !== pet.desktop.scale) void controller.petAction('desktop', pet, { scale: values[0] }); }}/><small>{Math.round(scale * 100)}%</small></div>
     <div className="cp-control-row"><span><Monitor size={17}/>在桌面显示</span><Switch aria-label={`${pet.name}在桌面显示`} checked={pet.desktop.visible} disabled={controller.busy} onCheckedChange={visible => { void controller.petAction('desktop', pet, { visible }); }}/></div>
     <Button variant="secondary" disabled={controller.busy || controller.snapshot?.selections.battlePetId === pet.petId} onClick={() => controller.petAction('select', pet, { slot: 'battlePetId' })}><Swords size={17}/>{controller.snapshot?.selections.battlePetId === pet.petId ? '当前出战伙伴' : '设为出战伙伴'}</Button>
   </div>;

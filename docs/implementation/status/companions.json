@@ -2,7 +2,7 @@
   "module": "companions",
   "branch": "codex/lingjing-companions",
   "implementationCommit": "1b07e6892b00002fba6ff4d19d2828f47ee02baa",
-  "status": "complete-awaiting-foundation-integration",
+  "status": "refining-ui-and-multi-character-actions",
   "updatedAt": "2026-10-24",
   "upstream": {
     "fetchedAgainBeforeDelivery": true,
@@ -14,7 +14,12 @@
   "foundationContractIntegrated": "f0af90f",
   "contract": "apps/pc-app/runtime/features/companions/INTEGRATION.md",
   "verification": "docs/implementation/evidence/companions/verification.json",
-  "routes": ["/companions", "/companions/adopt", "/companions/:petId", "/desktop/:petId"],
+  "routes": [
+    "/companions",
+    "/companions/adopt",
+    "/companions/:petId",
+    "/desktop/:petId"
+  ],
   "delivered": [
     "Repeated adoption of one template creates independent petId/serial/name/growth/desktop state/provenance",
     "Three simultaneous transparent native windows use foundation windows/preload plus the common React/Pixi desktop route",
@@ -25,16 +30,67 @@
     "Approved 01/03 layouts with Chinese flat UI, public shadcn Radix controls, shared Motion and actual Pixi rendering"
   ],
   "actualOpenSourceUse": [
-    { "project": "React", "version": "19.3.1", "license": "MIT", "where": "ui/src/features/companions: all four pages and native desktop route" },
-    { "project": "Electron", "version": "36.9.5", "license": "MIT", "where": "runtime/features/companions/windows.cjs consumes foundation sandboxed transparent windows" },
-    { "project": "electron-vite", "version": "4.0.1", "license": "MIT", "where": "foundation production build used in real runtime acceptance" },
-    { "project": "shadcn/ui Radix Nova", "version": "official registry source snapshot 2026-10-24", "license": "MIT", "where": "components.tsx/AdoptionPage.tsx/PetDetailPage.tsx use shared actual Dialog/Tabs/Select/Slider/Switch/Checkbox/Input/Tooltip/Button/Card/Badge", "provenance": "docs/implementation/shadcn-source-record.json and ui/src/components/ui/LICENSE.shadcn" },
-    { "project": "radix-ui", "version": "1.8.1", "license": "MIT", "where": "Real focus trap/roving tabs/keyboard/Escape/focus restoration and controlled value behavior through public shadcn components" },
-    { "project": "Tailwind CSS", "version": "4.3.3", "license": "MIT", "where": "Shared Radix component variants, theme tokens and flat styles; feature CSS supplies approved composed page layouts" },
-    { "project": "Motion for React", "version": "14.6.0", "license": "MIT", "where": "Foundation route PageTransition, feature modal PageTransition and roster/template AnimatedList; application animation setting is consumed by Pixi portraits" },
-    { "project": "PixiJS", "version": "8.22.0", "license": "MIT", "where": "CompanionPortrait delegates actual animated native/detail/adoption drawing to resources/ResourceStage using registered approved atlas; shared static shader adapter supports strict CSP" },
-    { "project": "Lucide React", "version": "1.61.0", "license": "ISC", "where": "Status/action/behavior/detail/native-window controls throughout companions feature" },
-    { "project": "better-sqlite3", "version": "12.11.1", "license": "MIT", "where": "Foundation single SQLite connection consumed by additive migrations, CAS, idempotency and composable growth/capture transactions; Node domain checks use the actual node:sqlite alternative" }
+    {
+      "project": "React",
+      "version": "19.3.1",
+      "license": "MIT",
+      "where": "ui/src/features/companions: all four pages and native desktop route"
+    },
+    {
+      "project": "Electron",
+      "version": "36.9.5",
+      "license": "MIT",
+      "where": "runtime/features/companions/windows.cjs consumes foundation sandboxed transparent windows"
+    },
+    {
+      "project": "electron-vite",
+      "version": "4.0.1",
+      "license": "MIT",
+      "where": "foundation production build used in real runtime acceptance"
+    },
+    {
+      "project": "shadcn/ui Radix Nova",
+      "version": "official registry source snapshot 2026-10-24",
+      "license": "MIT",
+      "where": "components.tsx/AdoptionPage.tsx/PetDetailPage.tsx use shared actual Dialog/Tabs/Select/Slider/Switch/Checkbox/Input/Tooltip/Button/Card/Badge",
+      "provenance": "docs/implementation/shadcn-source-record.json and ui/src/components/ui/LICENSE.shadcn"
+    },
+    {
+      "project": "radix-ui",
+      "version": "1.8.1",
+      "license": "MIT",
+      "where": "Real focus trap/roving tabs/keyboard/Escape/focus restoration and controlled value behavior through public shadcn components"
+    },
+    {
+      "project": "Tailwind CSS",
+      "version": "4.3.3",
+      "license": "MIT",
+      "where": "Shared Radix component variants, theme tokens and flat styles; feature CSS supplies approved composed page layouts"
+    },
+    {
+      "project": "Motion for React",
+      "version": "14.6.0",
+      "license": "MIT",
+      "where": "Foundation route PageTransition, feature modal PageTransition and roster/template AnimatedList; application animation setting is consumed by Pixi portraits"
+    },
+    {
+      "project": "PixiJS",
+      "version": "8.22.0",
+      "license": "MIT",
+      "where": "CompanionPortrait delegates actual animated native/detail/adoption drawing to resources/ResourceStage using registered approved atlas; shared static shader adapter supports strict CSP"
+    },
+    {
+      "project": "Lucide React",
+      "version": "1.61.0",
+      "license": "ISC",
+      "where": "Status/action/behavior/detail/native-window controls throughout companions feature"
+    },
+    {
+      "project": "better-sqlite3",
+      "version": "12.11.1",
+      "license": "MIT",
+      "where": "Foundation single SQLite connection consumed by additive migrations, CAS, idempotency and composable growth/capture transactions; Node domain checks use the actual node:sqlite alternative"
+    }
   ],
   "necessaryCustomLogic": [
     "Owner plus petId domain identity, migration/archive, revision checks, durable action and encounter receipts",
@@ -50,9 +106,21 @@
     "catalog": "Three big-fish personality templates share the approved whale-girl atlas; 2D animal category currently has no assets and shows an honest empty state"
   },
   "uiComparisons": [
-    { "reference": "docs/design/2026-10-24/full-ui/01-companions-and-desktop.png", "actual": "docs/implementation/evidence/companions/overview.png", "verified": "Room illustration hero, status/control panel, independent roster, public shell and flat Chinese actions" },
-    { "reference": "docs/design/2026-10-24/full-ui/03-pet-detail-and-adoption.png", "actual": "docs/implementation/evidence/companions/detail.png", "verified": "Large left character, growth/stats/skill summary, detail tabs, true per-pet values and source encounter" },
-    { "reference": "docs/design/2026-10-24/full-ui/03-pet-detail-and-adoption.png", "actual": "docs/implementation/evidence/companions/adoption.png", "verified": "Category/template cards, owned filter, right character preview/nickname/desktop checkbox and actual adoption" }
+    {
+      "reference": "docs/design/2026-10-24/full-ui/01-companions-and-desktop.png",
+      "actual": "docs/implementation/evidence/companions/overview.png",
+      "verified": "Room illustration hero, status/control panel, independent roster, public shell and flat Chinese actions"
+    },
+    {
+      "reference": "docs/design/2026-10-24/full-ui/03-pet-detail-and-adoption.png",
+      "actual": "docs/implementation/evidence/companions/detail.png",
+      "verified": "Large left character, growth/stats/skill summary, detail tabs, true per-pet values and source encounter"
+    },
+    {
+      "reference": "docs/design/2026-10-24/full-ui/03-pet-detail-and-adoption.png",
+      "actual": "docs/implementation/evidence/companions/adoption.png",
+      "verified": "Category/template cards, owned filter, right character preview/nickname/desktop checkbox and actual adoption"
+    }
   ],
   "checks": {
     "sqliteAndAccountBoundary": "12 passed, 0 failed; includes real account aliases, conversation messages/memories scoped per pet and owner, rollback, reopen, stale revisions and capture replay",
@@ -82,6 +150,59 @@
     "Installed Motion useReducedMotion reads system preference on mount; app animation switch updates live and pauses actual desktop Pixi frames",
     "No online AI response or cloud synchronization success is asserted by this feature's local acceptance"
   ],
-  "remaining": ["Foundation owns collection of this branch, shared-contract conflict resolution and one final all-module Windows release regression"],
-  "dataPolicy": "Only additive owner-scoped tables/raw archive; original JSON/animals/history/design files preserved; no production migration/deployment"
+  "remaining": [
+    "Foundation owns collection of this branch, shared-contract conflict resolution and one final all-module Windows release regression"
+  ],
+  "dataPolicy": "Only additive owner-scoped tables/raw archive; original JSON/animals/history/design files preserved; no production migration/deployment",
+  "uiRefinement": {
+    "scope": "Follow-up: approved 03 layout/font/card spacing, at least six distinct shared resource shapes, real wave/eat/hit actions, same resourceId in battle",
+    "foundationIntegrated": "adf5664 via merge 43c5252",
+    "normalizedLayoutEvidence": "artifacts/companions/visual-L3Ys3d/evidence.json",
+    "normalizedViewport": "1280x844 CSS px, DPR1 normalized capture; final wide-window capture follows six-character integration",
+    "implemented": [
+      "Title and room scene in left column; right Tabs start at page top and span its width",
+      "Real illustrated memory with actual source/date",
+      "Adoption preview aligns at page top",
+      "Aspect-preserving static atlas thumbnails; standard non-grid atlas uses shared Pixi",
+      "Per-owner/pet transient action playback, preview and feeding-commit routing in progress"
+    ],
+    "pendingResourceContract": [
+      "Six distinct public resource IDs and owned source atlas manifests",
+      "Public ResourceAction wave/eat mappings with genuine frame clips",
+      "Per-character scene/poster metadata if supplied; do not duplicate character generation here"
+    ],
+    "finalEvidencePending": true,
+    "audit": "9915684: docs/implementation/acceptance/2026-10-24/visual-audit.txt",
+    "auditItems": [
+      "A01",
+      "A02",
+      "A03",
+      "A06",
+      "A07",
+      "A08",
+      "A11"
+    ],
+    "visualPass": false,
+    "interimEvidence": "docs/implementation/evidence/companions/refinement-v1/evidence.json: geometry and one existing clip route passed; not final six-character visual acceptance",
+    "combatAuthority": "New companions.combatProfile/getCombatProfile derives training HP from existing battle-runtime.createSession; labels stored values as growth stats, no formula or UI constant change",
+    "completedAuditItems": [
+      "A01: consumes public font/page tokens, H1 28px/700",
+      "A02: compact common breadcrumb inside left column, right Tabs at top",
+      "A03: zero Card margins, parent gap from public layout tokens",
+      "A06: genuine scene + name/info/actions layers and illustrated memory",
+      "A11: actual training max HP equals unchanged authority read by detail; growth values labelled separately"
+    ],
+    "pendingAuditItems": [
+      "A07: six distinct resource templates await resource roster commit through foundation",
+      "A08: expanded public clips await resource roster; routing and one native Pixi clip already exercised",
+      "Central independent visual approval remains pending"
+    ],
+    "directionChecks": [
+      "13 actual SQLite/account/resource checks passed",
+      "TypeScript and feature ESLint passed",
+      "1280x844 real production Electron: scene/footer no vertical overflow; title/tabs alignment and Card margins passed",
+      "Real native per-pet clip frames advanced 0/1/2 and returned to idle",
+      "Actual training same pet/resource reads max HP120; persisted growth HP124 retained"
+    ]
+  }
 }

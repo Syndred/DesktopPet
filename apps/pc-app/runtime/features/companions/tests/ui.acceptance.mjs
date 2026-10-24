@@ -77,7 +77,7 @@ try {
   assert.equal(await page.evaluate(() => document.activeElement?.getAttribute('aria-label')), '鱼丸一号的行为模式');
   evidence.checks.push('Real Radix Tabs roving keyboard, named Slider Thumb, Select keyboard/Escape/focus return');
   await page.getByRole('tab', { name: '成长', exact: true }).click();
-  await page.locator('.cp-detail-hero .resource-stage[data-status="ready"]').waitFor();
+  await page.locator('.cp-detail-scene-art').waitFor();
   await screenshot('detail');
   await page.getByRole('button', { name: '我的灵宠', exact: true }).first().click();
   await page.getByRole('button', { name: '领养伙伴', exact: true }).click();
@@ -95,7 +95,7 @@ try {
   await page.getByRole('button', { name: '我的灵宠', exact: true }).first().click();
   await page.waitForFunction(() => document.querySelector('.main-content > .app-page-motion')?.getAttribute('data-motion') === 'reduced');
   const desktop = application.windows().find(candidate => candidate.url().includes(`#/desktop/${fish.petId}`)); assert.ok(desktop);
-  const canvas = desktop.locator('[data-renderer="pixi"] canvas'); await desktop.locator('.resource-stage[data-status="ready"]').waitFor();
+  const canvas = desktop.locator('[data-renderer^="pixi"] canvas'); await desktop.locator('.resource-stage[data-status="ready"]').waitFor();
   assert.equal(await desktop.locator('.resource-stage').evaluate(element => getComputedStyle(element, '::before').display), 'none');
   await desktop.screenshot({ path: join(output, 'desktop-pixi.png'), timeout: 5000, omitBackground: true });
   const first = await canvas.screenshot({ timeout: 5000, omitBackground: true }); await delay(1800);
