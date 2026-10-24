@@ -1,6 +1,6 @@
 {
   "scope": "U01-U08; final user goal supersedes the earlier six-character visual recheck",
-  "status": "runtime-accepted-packaging-pending",
+  "status": "accepted",
   "rulesEvidence": "artifacts/ui-acceptance/2026-10-24/rules-v3/evidence.json",
   "independentChecks": {
     "orderedElementPairs": 25,
@@ -13,7 +13,7 @@
       "module": "accounts",
       "code": "b08adcc",
       "selfEvidenceCommit": "830b658",
-      "status": "feature scope accepted; final integrated typography remains a separate gate",
+      "status": "accepted in final integrated review",
       "review": "Reviewed actual Electron screenshots, isolated identity and backup/restart readback. Independently launched the delivered app and used CSS.getPlatformFontsForNode to confirm actual Microsoft YaHei UI glyphs in titles, setting labels and cards.",
       "independentEvidence": "artifacts/ui-acceptance/2026-10-24/account-platform-fonts/evidence.json",
       "integrationNote": "The account-only branch retains historical H1 29px and card heading 18px. Final foundation build must apply the shared 28px/700 title and card tokens."
@@ -22,7 +22,7 @@
       "module": "resources",
       "code": "f4c210d",
       "selfEvidenceCommit": "58c3a9d",
-      "status": "asset and public renderer scope accepted; cross-feature consumers remain under integrated acceptance",
+      "status": "accepted in final integrated review",
       "review": "Viewed original artwork, actual Pixi 32-frame gallery and resource page. Reviewed two portraits, adoption/selection SQLite readback and eight repeated-action traces. Independently confirmed the original six PNGs/manifests have no Git diff.",
       "coverage": {
         "characters": 8,
@@ -36,7 +36,7 @@
       "module": "conversations",
       "code": "d9e1b71",
       "selfEvidenceCommit": "deda2f2",
-      "status": "feature scope accepted; external model service deferred",
+      "status": "accepted in final integrated review",
       "review": "Reviewed actual 1440 chat and 1280 AI-settings windows plus persisted results: eight canonical portraits, all five instance elements, saved persona/memory, real send/retry failures without fabricated assistant output, clear-history preserving memory/persona, no renderer key storage. Header control center differs by about 4px; no horizontal overflow.",
       "evidence": "docs/implementation/evidence/conversations/unified-2026-10-24/",
       "integrationNote": "Final shared typography and current-build route checks remain part of final integrated acceptance."
@@ -45,7 +45,7 @@
       "module": "garden",
       "code": "e90dcb9",
       "selfEvidenceCommit": "ef01d4d",
-      "status": "territory adapter and context scope accepted; final integrated scene check pending",
+      "status": "accepted in final integrated review",
       "review": "Reviewed actual shared-screen win/loss pictures and SQLite/restart evidence. Victory occupies; defeat confirms without occupying. Both keep exact session identity, one seed receipt, preserved personal crops, and idempotent re-confirmation. The defender uses canonical wood Qingya. Garrison does not alter independent pet selection or combat growth.",
       "evidence": "docs/implementation/evidence/garden/unified-battle/verification.json",
       "provenance": "Simulated shared location and declared legal QA prestate/opponent action; actual original engine, UI and local transactions. No live GPS or cloud acceptance."
@@ -54,7 +54,7 @@
       "module": "discovery",
       "code": "cd19fa1",
       "selfEvidenceCommit": "79c7534",
-      "status": "feature and context scope accepted; final integrated scene check pending",
+      "status": "accepted in final integrated review",
       "review": "Viewed earth wild battle and capture result, reviewed exact session resume, canonical wood/earth actions, duplicate capture, restarted capture/memory and linked SQLite reports/receipts. Training and wild use equal HUD/move geometry at both sizes; no separate arena remains.",
       "evidence": "docs/implementation/evidence/discovery/2026-10-24-unified/evidence.json",
       "provenance": "Wild gameplay uses explicit simulated location. Real Windows provider separately returned granted WiFi position at 114m accuracy and stopped watching; this exceeds the existing 80m requirement and does not establish physical-location capture success."
@@ -63,7 +63,7 @@
       "module": "companions",
       "code": "4770aa1",
       "selfEvidenceCommit": "deeebe0",
-      "status": "feature scope and corrected native sprite images accepted",
+      "status": "accepted in final integrated review",
       "review": "Reviewed wood detail, earth shared skill cards, real transparent native wood/earth windows, five garrison receipts and restart database readback. Eight adoptions, five elements and 25 actual clip plays are covered. Corrected native frames have 12671 and 12788 visible pixels; the original loading-star frame is explicitly excluded.",
       "evidence": "docs/implementation/evidence/companions/unified-2026-10-24/verification.json",
       "nativePolicy": "The legal product range remains 1-4. QA kept the original limit 3 and temporarily recalled three instances for capture, restoring all settings and meaningful pet state."
@@ -72,8 +72,15 @@
       "module": "battle",
       "code": "5ca0bc3",
       "selfEvidenceCommit": "07bd49a",
-      "status": "accepted after main actual four-entry and old-save checks",
+      "status": "accepted in final integrated review",
       "review": "Reviewed 25 actual UI element pairs and focused animation/peer/motion self-evidence. Main independently verified all four entries, four actions and textures, two-process outcomes, contextual receipts and old-save read projection."
+    },
+    {
+      "module": "foundation",
+      "code": "c4ac693",
+      "selfEvidenceCommit": "731cf25",
+      "status": "accepted in final integrated and portable review",
+      "review": "Reviewed final layered/native/local PostgreSQL results, ASAR file/asset/license audit, original six-instance growth retention, and independently launched the copied portable EXE with real two-character Pixi and one training round."
     }
   ],
   "openFindings": [],
@@ -197,6 +204,31 @@
       "passed": true
     },
     "rendererErrors": 0,
-    "packageStatus": "pending foundation local portable delivery and main readback"
+    "packageStatus": "passed",
+    "package": {
+      "path": "artifacts/releases/2026-10-25-unified-battle/Lingjing-0.1.8-portable-x64.exe",
+      "bytes": 146009889,
+      "sha256": "605c5ee6f943b1be235bb5a839b11572dd4e227c3cc25adbcf320cbee6b000b9",
+      "sourceCommit": "c4ac69369d01786549dc55ac0bc76c98c930445d",
+      "codeFingerprint": "0e78fde20d39557ef89bff8914470d6e8c08166b8b340b63b430e85aa936a380",
+      "compiledFingerprint": "2d1b1bdfa86cf6defd54bf676a44ed1473fc2b0f86c199dbd8abd4ee4412d791",
+      "independentChecks": 7,
+      "evidence": "artifacts/ui-acceptance/2026-10-24/final-portable-v3/evidence.json",
+      "asarAudit": "docs/implementation/evidence/foundation/final-unified/package-audit.json",
+      "codeComparison": "artifacts/ui-acceptance/2026-10-24/packaged-worktree-comparison.json"
+    },
+    "remainingRequiredWork": [],
+    "deferred": [
+      "Live Supabase/two-device cloud service validation",
+      "Physical capture with a real location meeting the existing <=80m threshold; native Windows provider read verified at 114m",
+      "Successful external-model call using user-provided credentials"
+    ]
+  },
+  "completedAt": "2026-10-24T16:29:02.360Z",
+  "upstream": {
+    "command": "git pull --ff-only origin main",
+    "result": "Already up to date",
+    "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086",
+    "verifiedBeforeCompletion": "2026-10-24T16:29:02.360Z"
   }
 }
