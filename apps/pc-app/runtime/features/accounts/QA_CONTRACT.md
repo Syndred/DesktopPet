@@ -1,5 +1,7 @@
 # Isolated QA identity contract
 
+Unified integration: use foundation's `create-scenario-profile.mjs`, `.lingjing-qa-profile.json` and `unified-battle` flag. Foundation preflights before opening stores and passes the verified private account context as `qaProfile`. Accounts consumes it, validates the SQLite namespace and publishes one `qaScenario` service with both the common `{id,runId,provenance,isolated,profilePath,descriptor}` fields and `requireIdentity()`. The marker/run UUID is shared; a second profile marker is unnecessary. The older marker/provisioning API below remains for standalone Accounts harnesses.
+
 For the unified battle goal (2026-10-24). This adds no battle engine, remote authentication, or simulated cloud synchronization.
 
 ## Explicit launch

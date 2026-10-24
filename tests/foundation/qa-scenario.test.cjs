@@ -12,10 +12,10 @@ function fixture() {
   writeFileSync(join(profile, MARKER), JSON.stringify(marker));
   return { profile, marker, env: { LINGJING_QA_SCENARIO: SCENARIO, PET_USER_DATA_DIR: profile } };
 }
-test('ordinary startup does not enable a simulation, even when a marker is present', () => {
+test('ordinary startup has no simulation; an existing QA profile requires its explicit flag', () => {
   assert.equal(readQaScenario({ env: {}, userData: 'unused-no-filesystem-read' }), null);
   const f = fixture();
-  assert.equal(readQaScenario({ env: { PET_USER_DATA_DIR: f.profile }, userData: f.profile }), null);
+  assert.throws(() => readQaScenario({ env: { PET_USER_DATA_DIR: f.profile }, userData: f.profile }), { code: 'QA_SCENARIO_REQUIRED' });
 });
 test('scenario refuses an ordinary profile, unknown mode, or marker copied from another directory', () => {
   const f = fixture();

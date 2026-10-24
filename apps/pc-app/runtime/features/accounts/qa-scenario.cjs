@@ -22,7 +22,8 @@ function provisionQaProfile(directory, scenarioId = "friend-pk") {
  * initialization. A renderer flag, network error, or ordinary local login never
  * selects this path. A QA profile cannot silently reopen as a normal profile. */
 function resolveQaScenario({ env = process.env, userData, legacyDataFile, productionDirectories = [] }) {
-  const markerFile = join(userData, MARKER), selected = env.LINGJING_QA_SCENARIO;
+  const commonMarker = join(userData, '.lingjing-qa-profile.json');
+  const markerFile = existsSync(commonMarker) ? commonMarker : join(userData, MARKER), selected = env.LINGJING_QA_SCENARIO;
   if (!selected) {
     invariant(!existsSync(markerFile), "QA_SCENARIO_REQUIRED", "请用对应测试场景打开此独立存档。");
     return null;
@@ -37,6 +38,12 @@ function resolveQaScenario({ env = process.env, userData, legacyDataFile, produc
   }
   let marker;
   try { marker = JSON.parse(readFileSync(markerFile, "utf8")); } catch { invariant(false, "QA_PROFILE_INVALID", "测试目录标记无效。"); }
+  // The unified profile is provisioned by foundation once. Reuse its UUID and
+  // exact directory binding rather than requiring a second marker or flag.
+  if (marker?.schemaVersion === 1 && marker.application === 'lingjing' && marker.isolated === true) {
+    invariant(isAbsolute(marker.profilePath || '') && same(resolve(marker.profilePath), directory), 'QA_PROFILE_MISMATCH', '测试目录标记不属于当前目录。');
+    marker = { ...marker, format: 'lingjing-qa-profile', version: 1, mode: 'simulated', profileId: marker.runId, scenarioId: marker.scenario };
+  }
   invariant(marker?.format === "lingjing-qa-profile" && marker.version === 1 && marker.mode === "simulated"
     && /^[0-9a-f-]{36}$/i.test(marker.profileId || "") && marker.scenarioId === selected,
     "QA_SCENARIO_MISMATCH", "测试场景与存档不匹配。");
