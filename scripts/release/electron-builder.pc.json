@@ -12,7 +12,7 @@
     "!**/*.test.mjs",
     "!**/tests/**/*",
     "!**/verification/**/*",
-    "!**/smoke.electron.mjs",
+    "!**/*.electron.mjs",
     "!**/verify-electron.mjs",
     "!**/testing-adapter.cjs",
     "!**/generate-fish.cjs",
@@ -55,6 +55,14 @@
     {
       "from": "apps/pc-app/runtime/features/resources/assets/roster-v2/layout-refinement-prompts.json",
       "to": "licenses/roster-refinement-prompts.json"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/resources/assets/roster-v2/element-extension-prompts.json",
+      "to": "licenses/roster-element-extension-prompts.json"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/resources/assets/roster-v2/element-extension-refinement.json",
+      "to": "licenses/roster-element-extension-refinement.json"
     }
   ],
   "extraMetadata": {
