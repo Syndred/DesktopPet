@@ -1,15 +1,21 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
+import { MotionConfigContext, useReducedMotion } from 'motion/react';
 import { Droplets, MoveRight, RefreshCw, Shield, Sparkles, Swords, Zap } from 'lucide-react';
 import type { BattleActor, BattleParticipant, BattleSession } from '../../../../../../packages/shared-types/src/features/battle';
 import type { BattleActionType } from '../../../../../../packages/shared-types/src/battle';
 import type { CharacterResource, ResourceAction } from '../../../../../../packages/shared-types/src/features/resources';
 import { request } from '../../app/bridge';
-import { Button, Card } from '../../components/ui';
+import { AppDialog, Button, Card, Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../../components/kit';
 import { ResourceStage } from '../resources/ResourceStage';
 import { resourceAssetUrl } from '../resources/client';
 import { actionLabels, elements, modeLabels, petName, roundLines, statusLabel } from './presentation';
 
-const fallback2d = (pet: BattleParticipant) => pet.element === 'water' ? 'builtin:lingjing-yuwan-v1' : 'builtin:lingjing-battle-shiba-v1';
+const fallback2d = (pet: BattleParticipant) => pet.element === 'water' ? 'builtin:lingjing-battle-yuwan-v1' : 'builtin:lingjing-battle-shiba-v1';
+function useBattleMotionAllowed() {
+  const config = useContext(MotionConfigContext);
+  const systemReduced = useReducedMotion();
+  return config.reducedMotion !== 'always' && !systemReduced;
+}
 const publicResources = new Map<string, Promise<CharacterResource>>();
 async function resolve2d(petId: string, resourceId: string) {
   const load = async () => {
@@ -32,7 +38,9 @@ export function BattlePortrait({ pet, facing = 'right', small = false, action = 
 }) {
   const [resource, setResource] = useState<CharacterResource | null>(null);
   const [error, setError] = useState('');
-  const resourceId = pet.appearance2d || (pet.resource?.kind === '2d' ? pet.resource.resourceId : fallback2d(pet));
+  const motionAllowed = useBattleMotionAllowed();
+  const originalId = pet.appearance2d || (pet.resource?.kind === '2d' ? pet.resource.resourceId : fallback2d(pet));
+  const resourceId = ['builtin:lingjing-yuwan-v1','builtin:fat-fish-v1'].includes(originalId) ? 'builtin:lingjing-battle-yuwan-v1' : originalId;
   useEffect(() => {
     let alive = true;
     setResource(null); setError('');
@@ -42,11 +50,11 @@ export function BattlePortrait({ pet, facing = 'right', small = false, action = 
     return () => { alive = false; };
   }, [pet.petId, pet.element, resourceId]);
   const sheet = resource?.sheet;
-  return <div className={`battle-portrait ${small ? 'small' : ''} element-${pet.element}`} data-pet-id={pet.petId} data-2d-only="true">
+  return <div className={`battle-portrait ${small ? 'small' : ''} element-${pet.element}`} data-pet-id={pet.petId} data-2d-only="true" data-animating={playing && motionAllowed}>
     {resource && small && sheet ? <span className="battle-sprite-thumb" role="img" aria-label={petName(pet)} style={{
       backgroundImage: `url("${resourceAssetUrl(resource.id, resource.entryAsset)}")`,
       backgroundSize: `${sheet.columns * 100}% ${sheet.rows * 100}%`, backgroundPosition: '0 0'
-    }}/> : resource ? <ResourceStage resource={resource} petId={pet.petId} context="battle" action={action} facing={facing} playing={playing}/> : <span className="battle-asset-state" role="status">{error || '正在唤醒伙伴…'}</span>}
+    }}/> : resource ? <ResourceStage resource={resource} petId={pet.petId} context="battle" action={action} facing={facing} playing={playing && motionAllowed}/> : <span className="battle-asset-state" role="status">{error || '正在唤醒伙伴…'}</span>}
   </div>;
 }
 
@@ -73,31 +81,35 @@ export function BattleArena({ session, busy, onAct, onSync, onLeave, onReport, s
   onLeave(): void; onReport(): void; onRetry(): void; syncedAt?: string; party?: BattleParticipant[];
 }) {
   const [leaveOpen, setLeaveOpen] = useState(false);
+  const leaveTrigger = useRef<HTMLButtonElement | null>(null);
+  const motionAllowed = useBattleMotionAllowed();
   const [pose, setPose] = useState<{ player: ResourceAction; enemy: ResourceAction }>({ player: 'idle', enemy: 'idle' });
   const current = session.rounds.at(-1);
   const complete = ['finished', 'abandoned'].includes(session.status);
   const waiting = session.status === 'waiting';
   useEffect(() => {
-    if (!current) return;
+    if (!current || !motionAllowed) { setPose({ player: 'idle', enemy: 'idle' }); return; }
     setPose({ player: battleActionAnimation(current.actions.player), enemy: battleActionAnimation(current.actions.enemy) });
     const hit = window.setTimeout(() => setPose({ player: current.damageTaken.player > 0 ? 'hit' : 'idle', enemy: current.damageTaken.enemy > 0 ? 'hit' : 'idle' }), 650);
     const idle = window.setTimeout(() => setPose({ player: 'idle', enemy: 'idle' }), 1150);
     return () => { window.clearTimeout(hit); window.clearTimeout(idle); };
-  }, [session.id, current?.round]);
+  }, [session.id, current?.round, motionAllowed]);
   const companions = [session.player, ...party.filter(pet => pet.petId !== session.player.petId)].slice(0, 4);
+  const closeLeave = () => { setLeaveOpen(false); window.setTimeout(() => leaveTrigger.current?.focus(), 0); };
   return <div className="battle-live-layout"><section className="battle-arena" aria-label="当前对战"><div className="battle-arena-viewport">
     <div className="battle-arena-top"><CombatantStatus pet={session.player} actor={session.snapshot.player}/><div className="battle-round-number"><span>{complete ? '对战结束' : waiting ? '等待好友' : `第 ${session.snapshot.round + 1} 回合`}</span><strong>{String(complete ? session.snapshot.round : session.snapshot.round + 1).padStart(2, '0')}</strong><small>{modeLabels[session.mode]}</small></div><CombatantStatus pet={session.enemy} actor={session.snapshot.enemy} enemy/></div>
     <div className="battle-stage"><BattlePortrait pet={session.player} action={pose.player}/><div className="battle-vs"><Sparkles size={24}/><span>VS</span></div><BattlePortrait pet={session.enemy} action={pose.enemy} facing="left"/></div>
     <div className="battle-arena-message" role="status" aria-live="polite">{complete ? session.status === 'abandoned' ? '已离开对战，回合记录已保存' : session.winner === 'player' ? '并肩获胜，每一步都值得记住。' : '每一次并肩，都是成长。' : waiting ? '分享房间码，等待约好的好友进入。' : session.pendingAction ? `第 ${session.pendingAction.roundNo} 回合行动已锁定${session.pendingAction.uncertain ? '，等待确认' : '，等待对方行动'}` : '选择本回合行动，与伙伴并肩出战。'}</div>
     </div>{complete ? <div className="battle-complete-actions"><Button onClick={onReport}>查看战报与结算 <MoveRight size={16}/></Button></div> : <div className="battle-moves">{moves.map(move => {
       const disabled = busy || waiting || Boolean(session.pendingAction) || (move.action === 'ultimate' && session.snapshot.player.anger < 50) || (move.action === 'dodge' && session.snapshot.player.freeDodgeUsed && session.snapshot.player.anger <= 0);
-      return <button key={move.action} className={`battle-move ${move.action}`} disabled={disabled} onClick={() => onAct(move.action)}><move.icon size={27}/><strong>{actionLabels[move.action]}</strong><small>{move.description}</small><span>{move.action === 'ultimate' ? `${session.snapshot.player.anger}/50 怒气` : move.action === 'dodge' ? session.snapshot.player.freeDodgeUsed ? '消耗最多 20 怒气' : '首次免费' : '无需冷却'}</span></button>;
+      const reason = busy ? '正在提交行动' : waiting ? '等待好友进入房间' : session.pendingAction ? '本回合行动已锁定，请同步原回合' : move.action === 'ultimate' && session.snapshot.player.anger < 50 ? '需要至少 50 怒气' : move.action === 'dodge' && session.snapshot.player.freeDodgeUsed && session.snapshot.player.anger <= 0 ? '免费闪避已使用，需要怒气' : move.description;
+      return <TooltipProvider key={move.action}><Tooltip><TooltipTrigger asChild><span className="battle-move-tooltip" tabIndex={disabled ? 0 : -1}><button className={`battle-move ${move.action}`} disabled={disabled} onClick={() => onAct(move.action)}><move.icon size={27}/><strong>{actionLabels[move.action]}</strong><small>{move.description}</small><span>{move.action === 'ultimate' ? `${session.snapshot.player.anger}/50 怒气` : move.action === 'dodge' ? session.snapshot.player.freeDodgeUsed ? '消耗最多 20 怒气' : '首次免费' : '无需冷却'}</span></button></span></TooltipTrigger><TooltipContent>{reason}</TooltipContent></Tooltip></TooltipProvider>;
     })}</div>}</section>
     <aside className="battle-live-sidebar"><Card><h3>出战伙伴</h3><div className="battle-party-grid">{companions.map((pet, index) => <div key={pet.petId} className={index === 0 ? 'chosen' : ''}><BattlePortrait pet={pet} small/><strong>{petName(pet)}</strong><small>Lv.{pet.level || 1}</small></div>)}</div>{session.room ? <div className="battle-room-summary"><span>房间码</span><strong>{session.room.room_code}</strong><small>{syncedAt ? `已核对 ${new Date(syncedAt).toLocaleTimeString('zh-CN')}` : '等待同步'}</small><Button variant="secondary" disabled={busy} onClick={onSync}><RefreshCw size={15}/>同步 / 恢复</Button></div> : <p className="battle-authority-label">{session.mode === 'training' ? '本机训练 · 电脑对手' : '本机挑战 · 完成后返回来源页面'}</p>}</Card>
     <Card className="battle-current-log"><h3>回合记录 <Sparkles size={16}/></h3>{current ? <><p className="muted">第 {current.round} 回合</p><ol>{roundLines(current, session.player, session.enemy).map((line, index) => <li key={index}>{line}</li>)}</ol></> : <p className="muted">行动结算后，伤害、怒气与异常状态会记在这里。</p>}</Card>
     {session.pendingAction?.uncertain ? <Button variant="secondary" disabled={busy} onClick={onRetry}>重试原回合行动</Button> : null}
-    {!complete && <Button variant="secondary" onClick={() => setLeaveOpen(true)} disabled={busy}>离开对战</Button>}
-    {leaveOpen ? <div className="battle-leave-confirm" role="alertdialog" aria-label="确认离开对战"><p>{session.mode === 'friend' ? '离开会通知服务器结束本场对战。' : '离开后会保存当前回合记录。'}</p><Button variant="danger" disabled={busy} onClick={() => { setLeaveOpen(false); onLeave(); }}>确认离开</Button><Button variant="secondary" onClick={() => setLeaveOpen(false)}>继续对战</Button></div> : null}
+    {!complete && <Button variant="secondary" onClick={event => { leaveTrigger.current = event.currentTarget; setLeaveOpen(true); }} disabled={busy}>离开对战</Button>}
+    {leaveOpen ? <AppDialog title="确认离开对战" onClose={closeLeave} busy={busy}><Card className="battle-leave-confirm"><h2>现在离开这场对战？</h2><p>{session.mode === 'friend' ? '离开会通知服务器结束本场对战。' : '离开后会保存当前回合记录。'}</p><div className="battle-two-buttons"><Button variant="secondary" autoFocus onClick={closeLeave}>继续对战</Button><Button variant="danger" disabled={busy} onClick={() => { setLeaveOpen(false); onLeave(); }}>确认离开</Button></div></Card></AppDialog> : null}
     </aside>
   </div>;
 }
