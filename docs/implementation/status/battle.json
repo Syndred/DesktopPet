@@ -1,24 +1,26 @@
 {
   "module": "battle",
   "branch": "codex/lingjing-battle",
-  "commit": "12a6e7e31f828babcb968d95d8f7000f58b344f1",
-  "status": "blocked_external_service",
+  "commit": "941d2535cee497bc21df880c9ac0607dac5a71ae",
+  "status": "visual_fix_ready_for_integration",
   "implementationReady": true,
   "goalComplete": false,
   "productionDeployed": false,
   "scope": "docs/implementation/scope-2d-ui-first.txt",
   "upstream": {
     "fetched": true,
-    "fetchCheckedAt": "2026-10-24T13:11:01Z",
+    "fetchCheckedAt": "2026-10-24T14:20:00.047Z",
     "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086",
     "originMainIsAncestor": true,
     "mergeOriginMainResult": "Already up to date"
   },
   "foundation": {
-    "mergedThrough": "d0488f0",
-    "mergeCommit": "5f7af41",
+    "mergedThrough": "bbb4395",
+    "mergeCommit": "6df4406",
     "publicKitSource": "f0af90f5a6eaf4b8e0bc686728ddc5af3e8584d9",
-    "liveMotionFix": "7f0e896"
+    "liveMotionFix": "7f0e896",
+    "canonicalRosterSource": "2d0b5c8",
+    "publicPortraitSource": "1dac04e"
   },
   "contract": "docs/implementation/battle-contract.txt",
   "uiComponents": "docs/implementation/battle-ui-components.txt",
@@ -33,7 +35,8 @@
     "依据批准原图实现 2D 庭院舞台、实际角色动作、状态栏、出战列表、行动卡、好友三栏和战报回顾。",
     "正式使用公共 shadcn/Radix 与 Motion 接口，复用资源模块 PixiJS 舞台；应用和系统动画设置均实时生效。",
     "无法联网时邀请数量显示未知，保存本地战报并说明云端账号/连接要求。",
-    "修复分页同步期间房间推进仍标记旧快照完整、旧频道迟到回调覆盖新房间/恢复已清理房间两个竞态。"
+    "修复分页同步期间房间推进仍标记旧快照完整、旧频道迟到回调覆盖新房间/恢复已清理房间两个竞态。",
+    "战斗 HUD 改为固定 8px 浅斜角；姓名/生命/怒气位于浅底内，HUD/队伍/旧战报统一公共近景头像；连续相同行动实际重播技能帧。"
   ],
   "tests": [
     {
@@ -55,8 +58,9 @@
     {
       "check": "真实 Windows Electron 完整点击流程",
       "command": "node apps/pc-app/runtime/features/battle/verify-electron.mjs",
-      "result": "passed; 训练→出招→真实进程重启恢复→终局→经验/种子/战报→重复结算；所有 renderer pageerror 为零",
-      "evidence": "docs/implementation/evidence/battle/2026-10-24/evidence.json"
+      "result": "前轮 passed；训练→出招→真实进程重启恢复→终局→经验/种子/战报→重复结算。本次视觉收口未重复完整流程。",
+      "evidence": "docs/implementation/evidence/battle/2026-10-24/evidence.json",
+      "validationRole": "historical_full_flow_not_repeated_in_visual_refinement"
     },
     {
       "check": "公共无障碍交互",
@@ -84,6 +88,18 @@
       "check": "同步与断线恢复竞态",
       "result": "passed；已先复现分页快照滞后和旧频道回调覆盖两个失败，再修复；新增 4 项定向检查",
       "evidence": "docs/implementation/evidence/battle/2026-10-24/network-recovery.json"
+    },
+    {
+      "check": "HUD、技能卡、公共头像定向原生窗口复查",
+      "command": "node apps/pc-app/runtime/features/battle/verify-electron.mjs --visual-only",
+      "result": "passed；1280×846/1440×900 CSS（DPI1.25 原生窗口舍入），HUD 浅底安全区、6 处近景头像、4 卡布局/选中/hover/焦点/真实禁用提示、连续技能双帧、HP124/120 权威配置；renderer pageerror 为零。未重跑整链或云端验收。",
+      "evidence": "docs/implementation/evidence/battle/2026-10-24/visual-audit/visual-recheck.json"
+    },
+    {
+      "check": "旧真实战报头像兼容",
+      "command": "node apps/pc-app/runtime/features/battle/verify-report-portraits.mjs <targeted-application> <cloned-isolated-profile> <real-report-id>",
+      "result": "passed；11 回合真实历史战报的四处头像均用公共 portrait 构图；读取前后报告/奖励相同。原始隔离测试档未操作，未重新结算。",
+      "evidence": "docs/implementation/evidence/battle/2026-10-24/visual-audit/report-portraits.json"
     }
   ],
   "openSource": [
@@ -188,17 +204,18 @@
     },
     {
       "item": "2D 艺术素材",
-      "reason": "项目原创生成庭院及两角色动作图集，经现有资源包 parser/repository 登记；素材来源单独记录，不宣称第三方 MIT/CC0 授权"
+      "reason": "庭院使用项目原创素材；角色与近景头像统一资源模块的六个 canonical 2D 图集和公共构图接口。旧两角色图集保留作历史兼容，来源单独记录，不宣称第三方 MIT/CC0 授权"
     }
   ],
   "uiComparison": {
-    "review": "docs/implementation/evidence/battle/2026-10-24/README.txt",
+    "review": "docs/implementation/evidence/battle/2026-10-24/visual-audit/README.txt",
     "mappings": [
       {
         "design": "docs/design/2026-10-24/full-ui/02-exploration-and-battle.png",
         "area": "03 对战中心",
-        "actual": "docs/implementation/evidence/battle/2026-10-24/02-live.png",
-        "matched": "庭院双角色、两侧状态栏、中间回合、右侧伙伴/回合记录、底部四行动卡、浅蓝选中线及平面按钮"
+        "actual": "docs/implementation/evidence/battle/2026-10-24/visual-audit/02-live-1280.png",
+        "matched": "庭院双角色、两侧状态栏、中间回合、右侧伙伴/回合记录、底部四行动卡、浅蓝选中线及平面按钮",
+        "wide": "docs/implementation/evidence/battle/2026-10-24/visual-audit/02-live-1440.png"
       },
       {
         "design": "docs/design/2026-10-24/full-ui/06-chat-and-friend-duels.png",
@@ -209,15 +226,16 @@
       {
         "design": "docs/design/2026-10-24/full-ui/07-battle-report-and-model-import.png",
         "area": "战报部分",
-        "actual": "docs/implementation/evidence/battle/2026-10-24/03-report.png",
+        "actual": "docs/implementation/evidence/battle/2026-10-24/visual-audit/report-portraits.png",
         "matched": "最近战报、真实胜负/经验/种子、逐回合选择、状态回顾和可播放 2D 场景"
       }
     ],
     "remainingDifferences": [
-      "庭院与可动画角色使用单独原创素材，角色姿态、服装细节与概念画不同，未声称像素一致。",
-      "好友页仅呈现实际账号状态；服务不可用且本地账号未云端登录，不填入概念稿的样例联系人、在线/就绪灯或邀请数量。",
-      "现有规则没有概念稿的技能冷却和倒计时，显示真实免费闪避/怒气门槛；结算经验沿用 20/5，不复制样例数值。",
-      "战报本次实际为失败，显示真实 5 经验；长回合记录可滚动查看。"
+      "六个角色使用公共 canonical 2D 素材；庭院和可播放动作的绘制细节与概念画不逐像素相同。",
+      "好友页呈现实际账号状态；服务不可用或本地账号未云端登录时，不填样例联系人、在线灯或邀请数量。",
+      "保留原规则的免费闪避、真实怒气门槛与 20/5 经验；没有添加样例倒计时或技能冷却。",
+      "旧战报保留当时的元素、回合与结算快照；本轮仅更新头像显示，长回合记录可滚动访问。",
+      "主会话在 foundation 集成构建后独立操作四技能及最终图稿验收仍待进行。"
     ]
   },
   "twoDOnly": {
@@ -237,10 +255,13 @@
     "docs/implementation/evidence/battle/2026-10-24/cloud-reachability.json",
     "docs/implementation/evidence/battle/2026-10-24/network-recovery.json",
     "docs/implementation/evidence/battle/2026-10-24/cloud-reachability-2103.json",
-    "docs/implementation/evidence/battle/2026-10-24/cloud-reachability-2111.json"
+    "docs/implementation/evidence/battle/2026-10-24/cloud-reachability-2111.json",
+    "docs/implementation/evidence/battle/2026-10-24/visual-audit/manifest.json",
+    "docs/implementation/evidence/battle/2026-10-24/visual-audit/visual-recheck.json",
+    "docs/implementation/evidence/battle/2026-10-24/visual-audit/report-portraits.json"
   ],
   "realIncomplete": [
-    "2026-10-24 21:11（Asia/Shanghai）第三轮复查：实际配置端点的 OPTIONS 仍返回 502，无可用替代配置；真实双实例邀请→接受→房间→Realtime→结算无法验收。",
+    "最近一次云端核验为 2026-10-24 21:11（Asia/Shanghai），实际配置端点 OPTIONS 返回 502；本轮为 UI 定向检查，未再次探测服务。真实双实例邀请→接受→房间→Realtime→结算仍未验收。",
     "本会话没有部署增量 Supabase 迁移或 duel-online 更新；服务不可用时也无法核实当前服务器版本。需按 scope-2d-ui-first.txt 审核云端变更，不自动执行生产发布。",
     "跨设备奖励与账号同步的最终收敛仍需服务恢复后的实际双端核对；稳定云端 actionId、奖励回执及本机备份账本保护不能替代该验收。"
   ],
@@ -291,5 +312,32 @@
     "恢复配置中的 duel-online 服务，或提供已验证的可用环境配置",
     "审核并核实增量迁移及更新 edge 功能的发布状态",
     "使用两个隔离的真实云端账号完成邀请、接受、房间、Realtime、重连和结算/跨设备收敛验收"
-  ]
+  ],
+  "uiAudit": {
+    "source": "docs/implementation/acceptance/2026-10-24/visual-audit.txt",
+    "auditCommit": "9915684",
+    "implementationCommit": "941d2535cee497bc21df880c9ac0607dac5a71ae",
+    "phase": "Targeted HUD and portrait verification passed; ready for foundation integration",
+    "A01": "Public --font-ui/--text-title/--text-card/--weight-title and spacing tokens integrated; H1 28px/700",
+    "A03": "Sidebar is one continuous panel; no default Card bottom margin stacked with grid gaps",
+    "A08": "Six canonical resources and shared portrait framing integrated through foundation 2d0b5c8 / 1dac04e; HUD, actor and party share pet resource; old reports use same aliases without rewriting stored snapshots",
+    "A09": "Fixed 8px decorative HUD cut; names, element labels, HP and anger pass native 1280/1440 light-background safety checks",
+    "A10": "Main recheck-1 accepted structure and alternate hat-cat identity. Targeted hover, keyboard focus, real disabled Tooltip and selected state passed; integrated four-action final acceptance remains with main",
+    "A11": "Rules derive from battle-runtime; companions combatProfile also reads createSession. HP124 growth versus HP120 normalized training explicitly documented and original stats preserved",
+    "sharedDependency": {
+      "owner": "resources",
+      "commit": "1dac04e",
+      "foundationMerge": "bbb4395",
+      "observedSource": "apps/pc-app/ui/src/features/resources/ResourcePortrait.tsx",
+      "interface": "ResourcePortrait({resource,framing:portrait,label,className})",
+      "phase": "committed public API merged and used in built battle/party/report"
+    },
+    "verificationScope": "Only HUD, command interaction, canonical portraits and normalized-HP contract; no repeated full regression",
+    "finalVisualAcceptance": false,
+    "targetedVisualVerification": "passed",
+    "evidence": "docs/implementation/evidence/battle/2026-10-24/visual-audit/manifest.json",
+    "pendingAcceptance": "Main foundation integrated four-action check and final visual review; original online closure remains unverified"
+  },
+  "integrationReady": true,
+  "updatedAt": "2026-10-24T14:20:00.047Z"
 }
