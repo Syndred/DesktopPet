@@ -10,7 +10,7 @@ import { useAppMotion } from '../../components/motion';
 import { navigate } from '../../app/navigation';
 import { ResourceStage } from '../resources/ResourceStage';
 import { ResourcePortrait } from '../resources/ResourcePortrait';
-import { actionLabels, petName, roundLines, statusLabel } from './presentation';
+import { actionLabels, elements, petName, roundLines, statusLabel } from './presentation';
 import { BattleMoves, ElementMark } from './BattleMoves';
 import { useBattleAnimation } from './useBattleAnimation';
 
@@ -37,7 +37,7 @@ const statusIcons = { burn: Flame, freeze: Zap, parasite: Leaf, vulnerability: G
 function StatusIcon({ type }: { type: string }) { const Icon = statusIcons[type as keyof typeof statusIcons] || Zap; return <Icon size={13} aria-hidden="true"/>; }
 export function CombatantStatus({ pet, actor, rules, enemy = false }: { pet: BattleParticipant; actor: BattleActor; rules: BattleRulesProfile; enemy?: boolean }) {
   return <div className={`combatant-status ${enemy ? 'enemy' : ''}`} data-element={actor.element}><BattlePortrait pet={pet} small/>
-    <div className="combatant-bars"><div className="combatant-title"><strong>{petName(pet)}</strong><span>Lv.{String(pet.level || 1).padStart(2, '0')} <ElementMark element={actor.element} size={12}/></span></div>
+    <div className="combatant-bars"><div className="combatant-title"><strong>{petName(pet)}</strong><Tooltip><TooltipTrigger asChild><span tabIndex={0} aria-label={`Lv.${pet.level || 1} · ${elements[actor.element].label}系`}>Lv.{String(pet.level || 1).padStart(2, '0')} <ElementMark element={actor.element} size={12}/></span></TooltipTrigger><TooltipContent>{elements[actor.element].label} · {rules.elementEffects?.[actor.element]?.description || elements[actor.element].hint}</TooltipContent></Tooltip></div>
       <div className="battle-meter-row"><Heart size={11}/><progress aria-label={`${petName(pet)}生命`} max={actor.maxHp} value={actor.hp}/><b>{actor.hp}/{actor.maxHp}</b></div>
       <div className="battle-meter-row anger"><Zap size={11}/><progress aria-label={`${petName(pet)}怒气`} max={rules.maxAnger} value={actor.anger}/><b>{actor.anger}/{rules.maxAnger}</b></div>
       <div className="battle-statuses">{actor.statuses.map(status => <Tooltip key={status.type}><TooltipTrigger asChild><span className="battle-status-chip" tabIndex={0} aria-label={statusLabel(status)}><StatusIcon type={status.type}/>{(status.stacks || 1) > 1 ? <b>{status.stacks}</b> : null}<small>{status.duration}</small></span></TooltipTrigger><TooltipContent>{statusLabel(status)}</TooltipContent></Tooltip>)}</div>
@@ -59,12 +59,14 @@ export function BattleArena({ session, rules, busy, onAct, onSync, onLeave, onRe
   const closeLeave = () => { setLeaveOpen(false); window.setTimeout(() => leaveTrigger.current?.focus(), 0); };
   const closeLogs = () => { setLogsOpen(false); window.setTimeout(() => logTrigger.current?.focus(), 0); };
   const advantage = rules.advantage?.[session.player.element] === session.enemy.element ? '克制 ×1.2' : rules.advantage?.[session.enemy.element] === session.player.element ? '受制 ×0.8' : '伤害 ×1';
-  const feedback = session.pendingAction ? session.pendingAction.uncertain ? '待确认' : '已锁定' : waiting ? '等待好友' : complete ? session.status === 'abandoned' ? '已离开' : session.winner === 'player' ? '胜利' : '惜败' : '';
+  const revealed = complete && !animation.busy;
+  const shownRound = animation.busy && animation.round ? animation.round.round : complete ? session.snapshot.round : session.snapshot.round + 1;
+  const feedback = session.pendingAction ? session.pendingAction.uncertain ? '待确认' : '已锁定' : waiting ? '等待好友' : revealed ? session.status === 'abandoned' ? '已离开' : session.winner === 'player' ? '胜利' : '惜败' : '';
   return <TooltipProvider><div className="battle-live-layout" data-animation-phase={animation.phase} data-animation-key={animation.key}>
     <section className="battle-arena" aria-label="当前对战">
       <div className="battle-arena-viewport">
         <div className="battle-arena-top"><CombatantStatus pet={session.player} actor={animation.snapshot.player} rules={rules}/>
-          <div className="battle-round-number"><span>{complete ? '终局' : '回合'}</span><strong>{String(complete ? session.snapshot.round : session.snapshot.round + 1).padStart(2, '0')}</strong><Tooltip><TooltipTrigger asChild><small className="battle-affinity" tabIndex={0} aria-label={advantage}><ElementMark element={session.player.element}/><ArrowRight size={12}/><ElementMark element={session.enemy.element}/></small></TooltipTrigger><TooltipContent>{advantage}</TooltipContent></Tooltip></div>
+          <div className="battle-round-number"><span>{revealed ? '终局' : '回合'}</span><strong>{String(shownRound).padStart(2, '0')}</strong><Tooltip><TooltipTrigger asChild><small className="battle-affinity" tabIndex={0} aria-label={advantage}><ElementMark element={session.player.element}/><ArrowRight size={12}/><ElementMark element={session.enemy.element}/></small></TooltipTrigger><TooltipContent>{advantage}</TooltipContent></Tooltip></div>
           <CombatantStatus pet={session.enemy} actor={animation.snapshot.enemy} rules={rules} enemy/>
         </div>
         <div className="battle-stage" data-round={current?.round || 0}>
@@ -82,7 +84,7 @@ export function BattleArena({ session, rules, busy, onAct, onSync, onLeave, onRe
         </div>
         {feedback ? <div className="battle-compact-status" role="status" aria-live="polite">{complete ? <Trophy size={14}/> : <Clock3 size={14}/>} {feedback}</div> : null}
       </div>
-      {complete && !animation.busy ? <div className="battle-complete-actions">{settlementActions}<Button variant="secondary" onClick={onReport}><ScrollText size={17}/>战报</Button></div> : <BattleMoves session={session} rules={rules} busy={busy || animation.busy} onAct={onAct}/>}
+      {complete && !animation.busy ? <div className="battle-complete-actions">{settlementActions}<Button variant="secondary" onClick={onReport}><ScrollText size={17}/>战报</Button></div> : <BattleMoves session={{...session,snapshot:animation.snapshot}} rules={rules} busy={busy || animation.busy} onAct={onAct}/>}
     </section>
     <aside className="battle-live-sidebar"><Card className="battle-side-panel"><section className="battle-party-section">
       <div className="battle-side-heading"><h3>出战伙伴</h3><Tooltip><TooltipTrigger asChild><Button variant="ghost" aria-label="伙伴列表" onClick={() => navigate('/companions')}><Grid2X2 size={15}/></Button></TooltipTrigger><TooltipContent>伙伴列表</TooltipContent></Tooltip></div>

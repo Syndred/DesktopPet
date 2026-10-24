@@ -41,12 +41,12 @@ try {
   page=await mainWindow(application);
   const registered=await invoke(page,'accounts','register',{provider:'local',account:'discovery_os_test',password:'isolated-verification-only',confirmPassword:'isolated-verification-only',username:'系统定位验证',rememberSession:false});assert.equal(registered.ok,true,JSON.stringify(registered));
   await page.getByRole('navigation',{name:'主导航'}).getByRole('button',{name:'附近探索',exact:true}).click();
-  await page.getByRole('button',{name:'获取系统位置',exact:true}).click();
+  await page.getByRole('button',{name:/(?:获取系统位置|更新场景位置)/}).click();
   let state=await until(page,s=>s.location.status==='privacy_disabled','app privacy');
   assert.equal(state.location.fix,null);assert.equal(state.location.lastError.code,'APP_LOCATION_DISABLED');
   evidence.appPrivacyDefaultBlocked=true;
   await settings(page,document=>{document.privacy.locationAllowed=true;});
-  await page.getByRole('button',{name:'获取系统位置',exact:true}).click();
+  await page.getByRole('button',{name:/(?:获取系统位置|更新场景位置)/}).click();
   state=await until(page,s=>['ready','imprecise','denied','unavailable','timeout'].includes(s.location.status),'native OS result');
   const fix=state.location.fix;
   evidence.system={productionMain:true,status:state.location.status,source:fix?.source,provider:fix?.provider,positionSource:fix?.positionSource,accuracyMeters:fix?.accuracyMeters,timestampMs:fix?.timestampMs,
@@ -79,7 +79,7 @@ try {
   const controlledEnv={...env,PET_USER_DATA_DIR:join(output,'controlled-profile'),LINGJING_CONTROLLED_LOCATION:'1'};
   application=await electron.launch({args:[host],env:controlledEnv});page=await mainWindow(application);
   await page.emulateMedia({reducedMotion:'no-preference'});
-  await page.getByRole('button',{name:'获取系统位置',exact:true}).click();
+  await page.getByRole('button',{name:/(?:获取系统位置|更新场景位置)/}).click();
   let current=await until(page,s=>s.location.status==='ready','controlled fix');
   assert.equal(current.location.fix.provider,'controlled-test-fixture');
   const before=current.pets.length;
@@ -91,7 +91,7 @@ try {
   await page.waitForFunction(()=>{const el=document.querySelector('[aria-label="当前挑战伙伴"]');return el&&!el.disabled;});
   await picker.press('ArrowDown');
   await page.getByRole('option',{name:/验证出战伙伴/}).waitFor();await page.keyboard.press('Enter');
-  await page.getByRole('button',{name:'获取系统位置',exact:true}).click();
+  await page.getByRole('button',{name:/(?:获取系统位置|更新场景位置)/}).click();
   await until(page,s=>s.location.status==='ready','fresh fix before challenge');
   await page.locator('[data-renderer="pixi-spritesheet"] canvas').first().waitFor({timeout:30000});
   await shot(page,'04-wild-preview.png');
@@ -113,13 +113,13 @@ try {
       await page.getByRole('heading',{name:'下楼走走，遇见新伙伴。',exact:true}).waitFor();
       await page.locator(`[data-spawn-id="${target.id}"]`).click();
       await page.getByRole('button',{name:'和她打个招呼',exact:true}).click();
-      await page.getByRole('button',{name:'获取系统位置',exact:true}).click();await until(page,s=>s.location.status==='ready','retry fix');
+      await page.getByRole('button',{name:/(?:获取系统位置|更新场景位置)/}).click();await until(page,s=>s.location.status==='ready','retry fix');
       await page.getByRole('button',{name:'开始挑战',exact:true}).click();
       await until(page,s=>s.encounters.some(e=>e.status==='challenging'&&!previousIds.includes(e.encounterId)),'new persisted challenge');
     }
   }
   assert.equal(victory,true);
-  await page.getByRole('button',{name:'获取系统位置',exact:true}).click();await until(page,s=>s.location.status==='ready','fresh fix before capture');
+  await page.getByRole('button',{name:/(?:获取系统位置|更新场景位置)/}).click();await until(page,s=>s.location.status==='ready','fresh fix before capture');
   await shot(page,'04-wild-victory.png');
   const invite=page.getByRole('button',{name:'邀请成为伙伴',exact:true});await invite.click();
   const dialog=page.getByRole('dialog',{name:/邀请.*成为伙伴/});await dialog.waitFor();

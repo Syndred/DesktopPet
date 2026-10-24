@@ -6,10 +6,11 @@ import { execFileSync } from 'node:child_process';
 import { randomUUID,createHash } from 'node:crypto';
 import { DatabaseSync } from 'node:sqlite';
 
-const root=resolve('.'),phase=process.argv[2]||'prepare',output=resolve(process.env.GARDEN_UNIFIED_OUTPUT||'artifacts/garden/unified-battle');
+const root=resolve('.'),phase=process.argv[2]||'prepare',output=resolve(process.env.GARDEN_UNIFIED_OUTPUT||'artifacts/garden/unified-battle-v2');
 mkdirSync(output,{recursive:true});
 const file=join(output,'evidence.json');
-const proof=existsSync(file)?JSON.parse(readFileSync(file,'utf8')):{at:new Date().toISOString(),mode:'simulated location; actual Electron, public battle kernel, SQLite and restart',scenarios:{},checks:[],errors:[]};
+const proof=existsSync(file)?JSON.parse(readFileSync(file,'utf8')):{at:new Date().toISOString(),profileGate:'namespaced-v2',mode:'simulated location; actual Electron, public battle kernel, SQLite and restart with explicit QA login',scenarios:{},checks:[],errors:[]};
+assert.equal(proof.profileGate,'namespaced-v2','Preserve earlier QA profiles and select a fresh v2 output directory');
 const save=()=>writeFileSync(file,JSON.stringify(proof,null,2));
 const stable=session=>({id:session.id,mode:session.mode,status:session.status,snapshot:session.snapshot,playerId:session.player.petId,enemyId:session.enemy.petId,rounds:session.rounds.map(round=>({round:round.round,actions:round.actions,state:round.state}))});
 const source=()=>({sha:execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim(),dirty:execFileSync('git',['status','--short','--','apps/pc-app/runtime/features/garden','apps/pc-app/ui/src/features/garden','packages/shared-types/src/features/garden'],{encoding:'utf8'}).trim(),hashes:Object.fromEntries(['apps/pc-app/dist/main/index.cjs','apps/pc-app/dist/ui/index.html','apps/pc-app/runtime/features/garden/index.cjs','apps/pc-app/runtime/features/garden/territories.cjs','apps/pc-app/runtime/features/garden/qa-location.cjs'].map(path=>[path,createHash('sha256').update(readFileSync(path)).digest('hex')]))});
@@ -30,11 +31,17 @@ async function open(scenario){
 async function register(current,scenario,label){
   const existing=await current.invoke('accounts','session');
   if(!existing.data.currentUser){
-    const password=`Qa-${randomUUID()}!`;
-    await current.invoke('accounts','register',{provider:'local',account:`qa_garden_${label}_${Date.now()}`,username:`领地演练·${label}`,password,confirmPassword:password,rememberSession:true});
+    const privateFile=join(scenario.profilePath,'.garden-qa-login.json');
+    if(existsSync(privateFile))await current.invoke('accounts','login',{...JSON.parse(readFileSync(privateFile,'utf8')),provider:'local',rememberSession:false});
+    else{
+      const password=`Qa-${randomUUID()}!`,account=`qa_garden_${label}_${Date.now()}`;
+      writeFileSync(privateFile,JSON.stringify({account,password}),{flag:'wx'});
+      await current.invoke('accounts','register',{provider:'local',account,username:`领地演练·${label}`,password,confirmPassword:password,rememberSession:false});
+    }
   }
   await current.page.getByRole('navigation',{name:'主导航'}).waitFor();
   scenario.owner=(await current.invoke('accounts','session')).data.currentUser.id;
+  if(scenario.env){assert.ok(scenario.owner.startsWith(`qa:${scenario.runId}:`));assert.equal((await current.invoke('accounts','session')).data.dataMode,'simulated');}
 }
 let current;
 try{

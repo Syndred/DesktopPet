@@ -16,7 +16,7 @@ const proof = { at: new Date().toISOString(), archive, sourceCommit: execFileSyn
 try {
   const entries = asar.listPackage(archive).map(path => path.replaceAll('\\', '/').replace(/^\/+/, ''));
   proof.entries = entries.length;
-  proof.forbidden = entries.filter(path => /\.(?:glb|gltf|vrm)$/i.test(path) || /^apps\/pc-app\/runtime\/(?:renderer|auth)\//.test(path) || /^apps\/pc-app\/runtime\//.test(path) && (/(?:^|\/)(?:tests|verification)\//.test(path) || /\.(?:test|acceptance)\.[cm]?js$/.test(path) || /(?:verify-.*\.mjs|smoke\.electron\.mjs|prepare-.*-fixture\.mjs|write-evidence\.mjs|testing-adapter\.cjs|generate-fish\.cjs)$/.test(path)));
+  proof.forbidden = entries.filter(path => /\.(?:glb|gltf|vrm)$/i.test(path) || /^apps\/pc-app\/runtime\/(?:renderer|auth)\//.test(path) || /^apps\/pc-app\/runtime\//.test(path) && (/(?:^|\/)(?:tests|verification)\//.test(path) || /\.(?:test|acceptance)\.[cm]?js$/.test(path) || /(?:verify-.*\.mjs|.*\.electron\.mjs|prepare-.*-fixture\.mjs|write-evidence\.mjs|testing-adapter\.cjs|generate-fish\.cjs)$/.test(path)));
   assert.deepEqual(proof.forbidden, []);
   const manifest = JSON.parse(extract('apps/pc-app/dist/build-manifest.json').toString('utf8'));
   proof.build = manifest;

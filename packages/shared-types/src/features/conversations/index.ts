@@ -1,4 +1,5 @@
 import type { AppResult } from '../../app.js';
+import type { ElementType } from '../../battle.js';
 
 export type Provider = 'deepseek' | 'openai' | 'openai_compatible';
 export type ReplyStyle = 'natural' | 'warm' | 'playful' | 'detailed';
@@ -12,6 +13,7 @@ export interface ConnectionSettings {
 export interface PublicConnection extends ConnectionSettings { hasKey: boolean; revision: number }
 export interface ConversationPet {
   petId: string; name: string; templateId: string | null; avatarUrl: string | null; level: number;
+  element?: ElementType | null;
   resource?: { resourceId: string; kind: '2d' | '3d' };
 }
 export type MessageStatus = 'complete' | 'pending' | 'streaming' | 'failed' | 'cancelled';

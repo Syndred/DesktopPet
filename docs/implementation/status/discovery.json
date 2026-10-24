@@ -2,7 +2,7 @@
   "module": "discovery",
   "branch": "codex/lingjing-discovery",
   "commit": "fed3800d0a55a94f5568baa6c713a8add95e0e7d",
-  "status": "shared_portraits_verified_precise_native_capture_and_cloud_pending",
+  "status": "unified_battle_integration_in_progress",
   "goalStatus": "active",
   "workspace": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-discovery\\DesktopPet",
   "upstream": {
@@ -13,7 +13,7 @@
     "originMainIsAncestor": true,
     "sourceCheckoutModified": false
   },
-  "scopeRevision": "docs/implementation/scope-2d-ui-first.txt",
+  "scopeRevision": "docs/implementation/acceptance/2026-10-24/unified-battle-goal.txt",
   "contract": "docs/implementation/discovery-contract.txt",
   "implemented": [
     "Native Windows Geolocator with honest permission, coarse/stale/default-position, timeout and unavailable states; no fake fallback",
@@ -913,10 +913,10 @@
   "additionalFoundationPackages": [],
   "rootDependenciesConsumedFromFoundation": true,
   "integrationDependencies": [
-    "Cloud needs trusted companion battle-profile synchronization and battle supportsCloudWild/wildAdapter integration",
-    "Cloud migration/function deployment and live runtime-account verification remain separate",
-    "Foundation owns final combined regression and Windows packaging",
-    "Foundation performs one centralized A01–A12 visual recheck; resources owns full daily-action asset acceptance"
+    "BattleScreen / useBattleSession / context settlement implementation through foundation",
+    "Canonical resources and companions templates covering all five elements",
+    "Main chat independent acceptance; foundation final combined package",
+    "Live cloud and precise OS capture are deferred under latest U06 and are not used to block the isolated QA acceptance"
   ],
   "realIncomplete": [
     "Physical-location capture remains unaccepted. The standalone native adapter returned one58m fix; subsequent production-window177m and bounded60s watch313m could not proceed. The native positive path is prepared but not passed; no accuracy threshold changed.",
@@ -926,16 +926,15 @@
     "Canonical six-character exploration and actual battle action integration are now locally verified. Foundation centralized visual review, full resource daily-action acceptance and installer verification remain separate."
   ],
   "verificationPending": [
-    "Genuine <=80m OS-fix capture",
-    "Deployed cloud battle/profile integration and live runtime-account readback",
-    "Foundation combined release verification",
-    "Central A01–A12 visual acceptance and full shared-resource action/release verification"
+    "Integrated shared BattleScreen build and real Electron wild start/round/return/resume/capture/cancel/restart self-check",
+    "Canonical five-element role identity and common battlefield comparison at1280/1440",
+    "Main chat independent module acceptance and final combined U01–U08 review"
   ],
   "historicalBaselineEvidence": [
     "artifacts/discovery/windows/evidence.json (pre-2D scope; not current visual acceptance)"
   ],
-  "dataPolicy": "Only this managed worktree and discovery-owned implementation/status were changed directly; foundation changes came through its branch. User data and old files are preserved. No production migration, deployment, credential change, remote message or additional chat was performed. Goal remains active for unmet external acceptance. This continuation copied only a completed test profile for reversible appearance verification; original profiles and records were preserved. The native-helper archive probe uses its own isolated userData and saves no raw coordinates. This continuation merged foundation a930ebf only, consumed its actual six-character roster and shared rules/cards, and used isolated labelled profiles for real random combat. No native-accuracy threshold, battle formula, production migration or deployment was changed. This continuation used one standalone native read and two production-window attempts, the second bounded to60s native watch; these failed safely and are terminal. No raw system coordinates or private location screenshots were committed. Shared portrait changes arrived through foundation; no other module was edited directly.",
-  "updatedAt": "2026-10-24T14:27:02.797Z",
+  "dataPolicy": "Only this managed worktree and discovery-owned implementation/status were changed directly; foundation changes came through its branch. User data and old files are preserved. No production migration, deployment, credential change, remote message or additional chat was performed. Goal remains active for unmet external acceptance. This continuation copied only a completed test profile for reversible appearance verification; original profiles and records were preserved. The native-helper archive probe uses its own isolated userData and saves no raw coordinates. This continuation merged foundation a930ebf only, consumed its actual six-character roster and shared rules/cards, and used isolated labelled profiles for real random combat. No native-accuracy threshold, battle formula, production migration or deployment was changed. This continuation used one standalone native read and two production-window attempts, the second bounded to60s native watch; these failed safely and are terminal. No raw system coordinates or private location screenshots were committed. Shared portrait changes arrived through foundation; no other module was edited directly. Latest unified-battle scope is explicit user steering from the main chat. Current integration is in progress; earlier local battle screenshots are historical. No production success is inferred from QA records.",
+  "updatedAt": "2026-10-24T14:57:22.427Z",
   "visualAudit": {
     "source": {
       "branch": "codex/lingjing-implementation-base",
@@ -1006,5 +1005,28 @@
     ],
     "centralVisualRerunOwner": "foundation",
     "projectWideRegressionRepeated": false
-  }
+  },
+  "unifiedBattle": {
+    "readyForIndependentReview": false,
+    "sharedScreen": "battle/BattleScreen(sessionId, returnTo)",
+    "sharedContract": "docs/implementation/battle-screen-contract.txt",
+    "battleImplementationTarget": "57116dc",
+    "removed": [
+      "discovery HUD",
+      "discovery action panel",
+      "useEncounterPose",
+      "discovery capture dialog",
+      "local battle fallback in DiscoveryService"
+    ],
+    "contextApi": [
+      "getBattleContext",
+      "settleBattleContext"
+    ],
+    "qaSource": "Explicit scenario stored on encounter, captured companion origin and capture receipt; verification hosts require an artifacts profile",
+    "nativeChecks": "3 focused real SQLite integration cases passed before final shared battle dependency integration",
+    "electronSelfCheck": "pending the shared BattleScreen implementation in foundation and the integrated five-element assets"
+  },
+  "deferredVerification": [
+    "Genuine precise OS-position capture and deployed live cloud/readback are retained as unverified history; latest user U06 allows isolated simulation and deferral for this round"
+  ]
 }

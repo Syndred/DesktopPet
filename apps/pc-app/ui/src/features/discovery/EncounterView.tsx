@@ -1,8 +1,8 @@
-import type { DiscoverySnapshot, WildEncounter } from '../../../../../../packages/shared-types/src/features/discovery';
-import type { useDiscovery } from './use-discovery';
+import type { WildEncounter } from '../../../../../../packages/shared-types/src/features/discovery';
 import { BattleScreen } from '../battle/BattleScreen';
 
-/** Encounter owns provenance and capture; the battle feature owns all combat UI and actions. */
-export function EncounterView({ encounter }: { encounter: WildEncounter; state: DiscoverySnapshot; pending: boolean; run: ReturnType<typeof useDiscovery>['run'] }) {
+/** This route retains the exploration location lease. The battle module owns
+ * the screen, controller, animation and contextual capture settlement. */
+export function EncounterView({ encounter }: { encounter: WildEncounter }) {
   return <BattleScreen sessionId={encounter.battle.battleId} returnTo="/discovery"/>;
 }

@@ -49,12 +49,12 @@ async function launch(setup = false) {
 async function openChat() {
   await page.getByRole('navigation', { name: '主导航' }).waitFor();
   await page.getByRole('navigation', { name: '主导航' }).getByRole('button', { name: '聊天', exact: true }).click();
-  await page.getByRole('heading', { name: '想说的话，我都在听。' }).waitFor();
+  await page.getByRole('heading', { name: '聊天' }).waitFor();
   await page.locator('.cv-pet-option').first().waitFor();
 }
 async function openSettings() {
   await page.getByRole('link', { name: '对话设置', exact: true }).click();
-  await page.getByRole('heading', { name: '给每位伙伴，不同的声音与性格。', exact: true }).waitFor();
+  await page.getByRole('heading', { name: 'AI 对话', exact: true }).waitFor();
   await page.getByRole('tab', { name: '全局连接', exact: true }).waitFor();
 }
 async function feature(feature, command, payload = {}) {
@@ -98,7 +98,7 @@ try {
   await openSettings();
   await page.getByRole('tab', { name: '全局连接', exact: true }).focus();
   await page.keyboard.press('ArrowRight');
-  await waitUntil(async () => (await page.getByRole('tab', { name: '伙伴人设', exact: true }).getAttribute('aria-selected')) === 'true', 'Radix tabs keyboard activation');
+  await waitUntil(async () => (await page.getByRole('tab', { name: '独立连接', exact: true }).getAttribute('aria-selected')) === 'true', 'Radix tabs keyboard activation');
   await page.keyboard.press('ArrowLeft');
   await waitUntil(async () => (await page.getByRole('tab', { name: '全局连接', exact: true }).getAttribute('aria-selected')) === 'true', 'Radix tabs keyboard return');
   const memorySwitch = page.getByRole('switch', { name: '启用记忆', exact: true });
@@ -116,9 +116,9 @@ try {
   await page.getByLabel('接口地址', { exact: true }).fill(baseUrl);
   await page.getByLabel('模型', { exact: true }).fill('local-protocol-fixture');
   await page.getByRole('button', { name: '保存连接', exact: true }).click();
-  await page.getByPlaceholder('已安全保存；留空保留密钥').waitFor();
+  await page.getByPlaceholder('已保存；留空保留').waitFor();
   await page.getByRole('button', { name: '测试连接', exact: true }).click();
-  await page.getByText(/连接可用 · local-protocol-fixture/).waitFor();
+  await page.getByRole('status').filter({ hasText: '可用' }).waitFor();
   await page.getByLabel(/性格设定/).fill('验收人设：鱼丸喜欢安静地分享日常。');
   await page.getByRole('button', { name: '保存伙伴人设', exact: true }).click();
   await waitUntil(async () => (await invoke('snapshot')).profile.persona.includes('验收人设'), 'persona save');
