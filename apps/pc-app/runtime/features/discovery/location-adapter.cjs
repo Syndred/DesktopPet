@@ -1,16 +1,22 @@
 const { execFile } = require('node:child_process');
 const { join } = require('node:path');
+const { readFileSync } = require('node:fs');
 const { point, checkFix, distanceMeters } = require('./coordinates.cjs');
 
 class WindowsLocationAdapter {
-  constructor({ timeoutSeconds = 16, execute = execFile } = {}) { this.timeoutSeconds=timeoutSeconds;this.execute=execute; }
+  constructor({ timeoutSeconds = 16, execute = execFile } = {}) {
+    if(!Number.isInteger(timeoutSeconds)||timeoutSeconds<1||timeoutSeconds>60)throw new TypeError('Location timeout must be an integer from 1 to 60 seconds');
+    this.timeoutSeconds=timeoutSeconds;this.execute=execute;
+  }
   getPosition({signal}={}) {
     if(signal?.aborted)return Promise.resolve({ok:false,code:'LOCATION_CANCELLED',message:'定位已取消'});
     if (process.platform !== 'win32') return Promise.resolve({ ok:false, code:'LOCATION_PLATFORM_UNSUPPORTED', message:'当前系统尚未接入原生定位' });
     return new Promise(resolve => {
-      const script=join(__dirname,'windows-location.ps1');
+      // Electron's fs can read ASAR entries; an external PowerShell -File cannot.
+      const script=readFileSync(join(__dirname,'windows-location.ps1'),'utf8').replace(/^\uFEFF/,'');
+      const command=Buffer.from(`& {\n${script}\n} -TimeoutSeconds ${this.timeoutSeconds}`,'utf16le').toString('base64');
       const powershell=join(process.env.SystemRoot || 'C:\\Windows','System32','WindowsPowerShell','v1.0','powershell.exe');
-      this.execute(powershell,['-NoLogo','-NoProfile','-NonInteractive','-ExecutionPolicy','Bypass','-File',script,'-TimeoutSeconds',String(this.timeoutSeconds)],
+      this.execute(powershell,['-NoLogo','-NoProfile','-NonInteractive','-ExecutionPolicy','Bypass','-EncodedCommand',command],
         {windowsHide:true,timeout:(this.timeoutSeconds+8)*1000,encoding:'utf8',maxBuffer:16384,signal}, (error,stdout) => {
           if(signal?.aborted){resolve({ok:false,code:'LOCATION_CANCELLED',message:'定位已取消'});return;}
           try { const result=JSON.parse(stdout.trim().replace(/^\uFEFF/,'')); resolve(result); }
