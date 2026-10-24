@@ -28,6 +28,7 @@ export function ResourcesPage({ client = resourcesClient }: { client?: Resources
   const [context, setContext] = useState<ResourceContext>('desktop'), [action, setAction] = useState<ResourceAction>('idle');
   const [busy, setBusy] = useState(false), [loading, setLoading] = useState(true), [message, setMessage] = useState('');
   const [dirty, setDirty] = useState(false), [playing, setPlaying] = useState(true), [search, setSearch] = useState('');
+  const [comparison, setComparison] = useState(false), [comparisonAction, setComparisonAction] = useState<ResourceAction>('walk');
   const [metadata, setMetadata] = useState<Partial<ResourceProvenance>>({});
   const alive = useRef(true), loadSequence = useRef(0);
   const reload = useCallback(async (selectId?: string) => {
@@ -99,7 +100,11 @@ export function ResourcesPage({ client = resourcesClient }: { client?: Resources
       </section>
       <section className="resources-preview resources-panel" aria-labelledby="resources-preview-title"><div className="resources-panel-heading"><h2 id="resources-preview-title">{draft ? `角色预览 · ${draft.name}` : '角色预览'}</h2><button type="button" disabled={busy || dirty} onClick={() => void reload()}>↻ 重新载入</button></div>
         {draft ? <>
-          <ResourceStage resource={draft} petId="resource-preview" context={context} action={action} playing={playing} assetUrl={client.assetUrl} />
+          <div className={comparison ? 'resource-stage-pair' : ''}>
+            <ResourceStage resource={draft} petId="resource-preview-a" context={context} action={action} playing={playing} assetUrl={client.assetUrl} />
+            {comparison ? <ResourceStage resource={draft} petId="resource-preview-b" context={context} action={comparisonAction} playing assetUrl={client.assetUrl} facing="left" /> : null}
+          </div>
+          <div className="resource-comparison"><button type="button" aria-pressed={comparison} onClick={() => setComparison(value => !value)}>{comparison ? '收起双实例对照' : '双实例对照'}</button>{comparison ? <label>右侧独立动作<select aria-label="右侧独立动作" value={comparisonAction} onChange={event => setComparisonAction(event.target.value as ResourceAction)}>{RESOURCE_ACTIONS.map(value => <option key={value} value={value}>{ACTION_LABELS[value]}</option>)}</select></label> : <span>检查同一角色的多个独立显示实例</span>}</div>
           <div className="resources-context"><span>显示场景</span><button type="button" aria-pressed={context === 'desktop'} onClick={() => setContext('desktop')}>桌面</button><button type="button" aria-pressed={context === 'battle'} onClick={() => setContext('battle')}>战斗</button><span className="resources-context-note">{context === 'desktop' ? '桌面与详情共用' : '出战独立校准'}</span></div>
           <div className="resources-controls">
             <section className="resource-calibration"><h3>显示校准</h3>{([

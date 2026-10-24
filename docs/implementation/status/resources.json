@@ -2,10 +2,10 @@
   "module": "resources",
   "state": "in_progress_real_electron_verification",
   "branch": "codex/lingjing-resources",
-  "implementationCommit": "63e695f",
-  "foundationBase": "8f17aec",
+  "implementationCommit": "280dffa plus pending strict-CSP Pixi fix",
+  "foundationBase": "b50e4c7",
   "tests": { "nativeSqliteDomain": "8/8 passed in Electron Node", "uiTypecheck": "passed", "rendererLint": "passed", "productionBuild": "passed" },
-  "runtimeEvidence": [],
+  "runtimeEvidence": ["Real native Windows dialog imported fish pack as f4f06fce-f424-4fa4-ae13-9ae975dfd8fa", "Real native Windows dialog imported AnimatedDogShibaInu.glb as 4d64be72-715e-40ea-a717-8a98c216f55c; actual model-viewer loaded all five clips", "artifacts/resources/library-2d.png", "artifacts/resources/imported-2d.png", "artifacts/resources/imported-3d.png (texture CSP defect still visible, not a successful final proof)"],
   "integrationDependencies": [
     {
       "owner": "foundation",
@@ -13,10 +13,11 @@
       "exactHook": "require(join(runtime, 'features/resources/index.cjs')).registerResourceScheme(protocol)",
       "electronImport": "protocol",
       "reason": "PixiJS and model-viewer fetch registered keys through lingjing-resource://asset; filesystem paths are never sent to the renderer.",
-      "verificationWrapper": "apps/pc-app/runtime/features/resources/verification/bootstrap.cjs"
+      "status": "implemented in foundation b50e4c7 and merged; obsolete verification wrapper removed"
     },
+    { "owner": "foundation", "status": "custom scheme directives merged; additional real 3D CSP defect discovered", "requirement": "Add blob: to connect-src (GLTFLoader fetches embedded texture Blob URLs); add 'wasm-unsafe-eval' to script-src (model-viewer's built-in Meshopt decoder initializes WebAssembly even for uncompressed models). Do not add general 'unsafe-eval'. PixiJS is fixed inside ResourceStage by importing pixi.js/unsafe-eval, which removes eval code generation." },
     { "owner": "companions and battle", "requirement": "Render shared resources through exported ResourceStage with resource, independent petId, context and action; resolve descriptors from services.get('resources').resolve(ownerAccountId, request)." }
   ],
-  "remaining": ["Native dialog imports, visible 2D/3D preview, save/restart persistence and independent multi-instance rendering are being verified; no completion claim yet."],
+  "remaining": ["Final textured GLB proof requires public CSP additions listed above; real restart and independent animation proofs are in progress; no completion claim yet."],
   "preservation": "Existing 17 GLBs, catalog.json, original JSON saves and qp_model_view_calibration_v3 are read only; imports copy into UUID directories and preserve every import attempt that succeeds."
 }

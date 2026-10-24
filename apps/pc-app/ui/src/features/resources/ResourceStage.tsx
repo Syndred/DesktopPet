@@ -18,9 +18,9 @@ function SpriteStage({ resource, clip, url, playing, onStatus }: { resource: Cha
     let cleanup: (() => void) | undefined;
     statusCallback.current({ state: 'loading' });
     async function mount() {
-      const { Application, Assets, AnimatedSprite, Texture, Rectangle } = await import('pixi.js');
-      // Use Pixi's interpreted shader/uniform adapters under the app's strict CSP.
-      await import('pixi.js/unsafe-eval');
+      // This static-sync polyfill removes Pixi's need for eval; CSP remains strict.
+      const [pixi] = await Promise.all([import('pixi.js'), import('pixi.js/unsafe-eval')]);
+      const { Application, Assets, AnimatedSprite, Texture, Rectangle } = pixi;
       const element = host.current;
       if (cancelled || !element) return;
       const app = new Application();
