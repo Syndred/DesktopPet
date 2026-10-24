@@ -123,3 +123,13 @@ test('concurrent imports share one resource and retain every successful import r
   assert.equal(imports.filter(result => !result.duplicate).length, 1);
   assert.equal(db.prepare('SELECT count(*) AS n FROM lingjing_resource_imports WHERE owner_account_id=?').get('concurrent-owner').n, 3);
 });
+test('resource keys and calibration survive moving the app and the complete managed asset directory', async () => {
+  const imported = await service.importFile('move-owner', path.join(fishDir, 'character.json'));
+  const movedAssets = path.join(root, 'moved-managed'), movedStarter = path.join(root, 'moved-starter');
+  await fs.cp(path.join(root, 'managed'), movedAssets, { recursive: true }); await fs.cp(fishDir, movedStarter, { recursive: true });
+  const moved = new ResourcesService({ db, storageRoot: movedAssets, starterManifest: path.join(movedStarter, 'character.json') });
+  assert.match(await moved.assetFile('move-owner', imported.resource.id, 'fish.png'), /moved-managed/);
+  assert.match(await moved.assetFile('owner-a', 'builtin:fat-fish-v1', 'fish.png'), /moved-starter/);
+  assert.equal((await moved.get('owner-a', 'builtin:fat-fish-v1')).calibration.desktop.scale, 1.23);
+  assert.equal((await moved.get('move-owner', imported.resource.id)).availability, 'ready');
+});

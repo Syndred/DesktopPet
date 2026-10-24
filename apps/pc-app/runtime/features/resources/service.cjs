@@ -46,7 +46,7 @@ class ResourcesService {
   }
   async withAvailability(owner, resource) {
     const paths = this.repository.files(owner, resource.id);
-    const readable = await Promise.all(paths.map(row => fs.access(row.file_path).then(() => true, () => false)));
+    const readable = await Promise.all(paths.map(row => this.assetFile(owner, resource.id, row.asset_key).then(() => true, () => false)));
     if (readable.some(value => !value)) return { ...resource, availability: 'missing', warnings: [...resource.warnings, '文件已缺失；原有资源与导入记录仍然保留'] };
     return resource;
   }
@@ -84,7 +84,7 @@ class ResourcesService {
     if (duplicate) {
       // Re-importing a complete original repairs missing managed copies while retaining IDs and settings.
       for (const [key, bytes] of parsed.files) {
-        const destination = this.repository.file(owner, duplicate.id, key);
+        const destination = this.currentFilePath(duplicate, key, this.repository.file(owner, duplicate.id, key));
         if (!isWithin(this.storageRoot, destination)) fail('UNSAFE_PATH', '原有资源存储目录无效');
         if (await fs.access(destination).then(() => false, () => true)) {
           await fs.mkdir(path.dirname(destination), { recursive: true });
@@ -154,12 +154,21 @@ class ResourcesService {
   }
   async assetFile(owner, id, key) {
     this.owner(owner); safeRelative(key);
-    const filePath = this.repository.file(owner, id, key);
+    const resource = this.repository.get(owner, id);
+    const filePath = this.currentFilePath(resource, key, this.repository.file(owner, id, key));
     const allowed = [this.storageRoot, this.legacyModelsDir, path.dirname(this.starterManifest), ...this.builtinAssetRoots];
     const actual = await fs.realpath(filePath).catch(() => fail('MISSING_ASSET', '资源文件已缺失'));
     const roots = await Promise.all(allowed.map(root => fs.realpath(root).catch(() => path.resolve(root))));
     if (!roots.some(root => isWithin(root, actual))) fail('UNSAFE_PATH', '资源路径已变更或超出允许目录');
     return actual;
+  }
+  currentFilePath(resource, key, registeredPath) {
+    // Immutable asset keys survive an installation or a complete user-data-directory move.
+    // The registry is still consulted first; an arbitrary renderer path never becomes a key.
+    if (resource.id === 'builtin:fat-fish-v1') return path.resolve(path.dirname(this.starterManifest), key);
+    if (resource.origin === 'legacy') return path.resolve(this.legacyModelsDir, key);
+    if (resource.origin === 'import') return path.resolve(this.storageRoot, resource.id, key);
+    return registeredPath;
   }
   async migrateLegacyCalibration(owner, profiles) {
     this.owner(owner);
