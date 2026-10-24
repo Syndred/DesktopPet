@@ -1,0 +1,254 @@
+{
+  "importedAt": "2026-10-24T12:33:22.227Z",
+  "library": "shadcn/ui Radix Nova",
+  "license": "MIT",
+  "records": [
+    {
+      "name": "button",
+      "url": "https://ui.shadcn.com/r/styles/radix-nova/button.json",
+      "target": "apps/pc-app/ui/src/components/ui/button.tsx",
+      "sourceSha256": "08e5f87833c5db8436e89337ebde0f776bcdbf649d3de69fb89be6441ca2e366",
+      "modifications": [
+        "Rewrite registry aliases to local components",
+        "Remove active translation to match approved flat design"
+      ],
+      "dependencies": [
+        "cn"
+      ],
+      "registryDependencies": []
+    },
+    {
+      "name": "card",
+      "url": "https://ui.shadcn.com/r/styles/radix-nova/card.json",
+      "target": "apps/pc-app/ui/src/components/ui/card.tsx",
+      "sourceSha256": "645c3d73e387a99f1492220cc619453b0c7f5454134ee3cd548be7a80f7eccde",
+      "modifications": [
+        "Rewrite registry aliases to local components"
+      ],
+      "dependencies": [
+        "cn"
+      ],
+      "registryDependencies": []
+    },
+    {
+      "name": "dialog",
+      "url": "https://ui.shadcn.com/r/styles/radix-nova/dialog.json",
+      "target": "apps/pc-app/ui/src/components/ui/dialog.tsx",
+      "sourceSha256": "9a4690ab16c37b62c2dd5c023c28fb0fbb262e21fa981f07c679e53e8155acc3",
+      "modifications": [
+        "Rewrite registry aliases to local components",
+        "Resolve registry icon slots to Lucide and remove redundant client directive",
+        "Localize close labels to Chinese"
+      ],
+      "dependencies": [
+        "cn"
+      ],
+      "registryDependencies": [
+        "button"
+      ]
+    },
+    {
+      "name": "sheet",
+      "url": "https://ui.shadcn.com/r/styles/radix-nova/sheet.json",
+      "target": "apps/pc-app/ui/src/components/ui/sheet.tsx",
+      "sourceSha256": "0598c3a868ef88da6e142d9e440fef56e0231b3d0c9644302ef4a931f6928d25",
+      "modifications": [
+        "Rewrite registry aliases to local components",
+        "Resolve registry icon slots to Lucide and remove redundant client directive",
+        "Localize close labels to Chinese"
+      ],
+      "dependencies": [
+        "cn"
+      ],
+      "registryDependencies": [
+        "button"
+      ]
+    },
+    {
+      "name": "tabs",
+      "url": "https://ui.shadcn.com/r/styles/radix-nova/tabs.json",
+      "target": "apps/pc-app/ui/src/components/ui/tabs.tsx",
+      "sourceSha256": "b977274550595594055d850a16775c75761765e1cd76b4827e101c2f432762df",
+      "modifications": [
+        "Rewrite registry aliases to local components"
+      ],
+      "dependencies": [
+        "cn"
+      ],
+      "registryDependencies": []
+    },
+    {
+      "name": "select",
+      "url": "https://ui.shadcn.com/r/styles/radix-nova/select.json",
+      "target": "apps/pc-app/ui/src/components/ui/select.tsx",
+      "sourceSha256": "d5b78764549e83e4f0deb49b1eb409b94aaa8d7eaca5edb659b6fde79701ff26",
+      "modifications": [
+        "Rewrite registry aliases to local components",
+        "Resolve registry icon slots to Lucide and remove redundant client directive"
+      ],
+      "dependencies": [
+        "cn"
+      ],
+      "registryDependencies": []
+    },
+    {
+      "name": "native-select",
+      "url": "https://ui.shadcn.com/r/styles/radix-nova/native-select.json",
+      "target": "apps/pc-app/ui/src/components/ui/native-select.tsx",
+      "sourceSha256": "17552c2df3b8f5ee44675979c3c29a02f48454e9204f2a02b64f4b7f28bdfc2c",
+      "modifications": [
+        "Rewrite registry aliases to local components",
+        "Resolve registry icon slots to Lucide and remove redundant client directive"
+      ],
+      "dependencies": [
+        "cn"
+      ],
+      "registryDependencies": []
+    },
+    {
+      "name": "switch",
+      "url": "https://ui.shadcn.com/r/styles/radix-nova/switch.json",
+      "target": "apps/pc-app/ui/src/components/ui/switch.tsx",
+      "sourceSha256": "afd5b6e6b9c2bcd42ee164a39ca18c342b2d7a2dfedd29da3065dc37021090e8",
+      "modifications": [
+        "Rewrite registry aliases to local components"
+      ],
+      "dependencies": [
+        "cn"
+      ],
+      "registryDependencies": []
+    },
+    {
+      "name": "tooltip",
+      "url": "https://ui.shadcn.com/r/styles/radix-nova/tooltip.json",
+      "target": "apps/pc-app/ui/src/components/ui/tooltip.tsx",
+      "sourceSha256": "e94530dd6877132d5eda73f6fb0d217f345477232f140f2ca6e024d790177f6a",
+      "modifications": [
+        "Rewrite registry aliases to local components"
+      ],
+      "dependencies": [
+        "cn"
+      ],
+      "registryDependencies": []
+    },
+    {
+      "name": "popover",
+      "url": "https://ui.shadcn.com/r/styles/radix-nova/popover.json",
+      "target": "apps/pc-app/ui/src/components/ui/popover.tsx",
+      "sourceSha256": "61be62a441fb6b90e26ceaf93353f57411a4d114f305e0417b8f1122750b9018",
+      "modifications": [
+        "Rewrite registry aliases to local components"
+      ],
+      "dependencies": [
+        "cn"
+      ],
+      "registryDependencies": []
+    },
+    {
+      "name": "scroll-area",
+      "url": "https://ui.shadcn.com/r/styles/radix-nova/scroll-area.json",
+      "target": "apps/pc-app/ui/src/components/ui/scroll-area.tsx",
+      "sourceSha256": "436777583f300e9fb0ca9df97ce9d1ca45443b7513273f39d27c6183b99db396",
+      "modifications": [
+        "Rewrite registry aliases to local components"
+      ],
+      "dependencies": [
+        "cn"
+      ],
+      "registryDependencies": []
+    },
+    {
+      "name": "input",
+      "url": "https://ui.shadcn.com/r/styles/radix-nova/input.json",
+      "target": "apps/pc-app/ui/src/components/ui/input.tsx",
+      "sourceSha256": "75418e030b2a54dd017ac0f4588db4bbdbabca7525e88bbc9d84cb3e18bcb905",
+      "modifications": [
+        "Rewrite registry aliases to local components"
+      ],
+      "dependencies": [
+        "cn"
+      ],
+      "registryDependencies": []
+    },
+    {
+      "name": "textarea",
+      "url": "https://ui.shadcn.com/r/styles/radix-nova/textarea.json",
+      "target": "apps/pc-app/ui/src/components/ui/textarea.tsx",
+      "sourceSha256": "82601c91ffc6c727d924162c78d7cb853114bcced4e2eb922a68ca12d4239c0f",
+      "modifications": [
+        "Rewrite registry aliases to local components"
+      ],
+      "dependencies": [
+        "cn"
+      ],
+      "registryDependencies": []
+    },
+    {
+      "name": "checkbox",
+      "url": "https://ui.shadcn.com/r/styles/radix-nova/checkbox.json",
+      "target": "apps/pc-app/ui/src/components/ui/checkbox.tsx",
+      "sourceSha256": "038e8d38fbea4d1c2f602938b00b095171d40a8371d7b60f772260c2eb8cb2cf",
+      "modifications": [
+        "Rewrite registry aliases to local components",
+        "Resolve registry icon slots to Lucide and remove redundant client directive"
+      ],
+      "dependencies": [
+        "cn"
+      ],
+      "registryDependencies": []
+    },
+    {
+      "name": "label",
+      "url": "https://ui.shadcn.com/r/styles/radix-nova/label.json",
+      "target": "apps/pc-app/ui/src/components/ui/label.tsx",
+      "sourceSha256": "344bde38b8531615dbf8e14af3895517c24d8ef6ce56ddeda7e2e6fe4b5d0c00",
+      "modifications": [
+        "Rewrite registry aliases to local components"
+      ],
+      "dependencies": [
+        "cn"
+      ],
+      "registryDependencies": []
+    },
+    {
+      "name": "badge",
+      "url": "https://ui.shadcn.com/r/styles/radix-nova/badge.json",
+      "target": "apps/pc-app/ui/src/components/ui/badge.tsx",
+      "sourceSha256": "59953420d01d23d172b4e32583426db153ff09226e2d460d53526b9f25282801",
+      "modifications": [
+        "Rewrite registry aliases to local components"
+      ],
+      "dependencies": [
+        "cn"
+      ],
+      "registryDependencies": []
+    },
+    {
+      "name": "separator",
+      "url": "https://ui.shadcn.com/r/styles/radix-nova/separator.json",
+      "target": "apps/pc-app/ui/src/components/ui/separator.tsx",
+      "sourceSha256": "b5b5460e5337c2d5f361c1512001615b2e5eacb38c7449a4418bb9ddb47c4bba",
+      "modifications": [
+        "Rewrite registry aliases to local components"
+      ],
+      "dependencies": [
+        "cn"
+      ],
+      "registryDependencies": []
+    },
+    {
+      "name": "slider",
+      "url": "https://ui.shadcn.com/r/styles/radix-nova/slider.json",
+      "target": "apps/pc-app/ui/src/components/ui/slider.tsx",
+      "sourceSha256": "c427312448882a4e504d0e8c9367cd309ebedb19c40d64b511b7fa02e62fd370",
+      "modifications": [
+        "Rewrite registry aliases to local components",
+        "Forward accessible names and descriptions to focusable thumbs"
+      ],
+      "dependencies": [
+        "cn"
+      ],
+      "registryDependencies": []
+    }
+  ]
+}

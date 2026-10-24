@@ -1,0 +1,22 @@
+{
+  "owner": "foundation",
+  "scopeRevision": "2026-10-24 2D UI first",
+  "runtime": {
+    "maplibre-gl": "6.15.0",
+    "@turf/distance": "7.4.0",
+    "@turf/boolean-point-in-polygon": "7.4.0",
+    "@turf/helpers": "7.4.0",
+    "@turf/circle": "7.4.0"
+  },
+  "licenses": {"maplibre-gl": "BSD-3-Clause", "@turf/*": "MIT"},
+  "usage": {
+    "maplibre-gl": "Production 2D raster map viewport, tile lifecycle, gestures, markers, GeoJSON polygons and controls. Replaces the custom WebMercator/tile viewport.",
+    "@turf/distance": "Canonical WGS84 distance used by capture fences and encounter queries.",
+    "@turf/boolean-point-in-polygon": "Shared authoritative territory boundary containment.",
+    "@turf/helpers": "GeoJSON point/polygon construction.",
+    "@turf/circle": "Displayed OS uncertainty circle in the MapLibre GeoJSON overlay."
+  },
+  "notAdopted": {"xstate": "Current persisted encounter transitions remain small and transaction-bound; adding a second state owner would complicate battle recovery.", "secondMultiplayerBackend": "Reuse the existing battle/Supabase chain."},
+  "customDomainCode": "OS permission/precision policy, WGS84/GCJ02 provider boundary, account-owned encounter and capture receipts remain application-specific rules.",
+  "rootFilesModifiedByDiscovery": false
+}

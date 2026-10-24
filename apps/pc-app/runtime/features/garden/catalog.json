@@ -1,0 +1,151 @@
+{
+  "CROPS": {
+    "carrot": {
+      "id": "carrot",
+      "name": "胡萝卜",
+      "icon": "🥕",
+      "seedItemId": "seed:carrot",
+      "harvestItemId": "carrot",
+      "growMs": 600000,
+      "yield": 3,
+      "color": "#ed9448"
+    },
+    "tomato": {
+      "id": "tomato",
+      "name": "番茄",
+      "icon": "🍅",
+      "seedItemId": "seed:tomato",
+      "harvestItemId": "tomato",
+      "growMs": 900000,
+      "yield": 3,
+      "color": "#ef7875"
+    },
+    "berry": {
+      "id": "berry",
+      "name": "莓果",
+      "icon": "🫐",
+      "seedItemId": "seed:berry",
+      "harvestItemId": "berry",
+      "growMs": 1200000,
+      "yield": 4,
+      "color": "#9e8fd4"
+    },
+    "rice": {
+      "id": "rice",
+      "name": "稻米",
+      "icon": "🌾",
+      "seedItemId": "seed:rice",
+      "harvestItemId": "rice",
+      "growMs": 1500000,
+      "yield": 2,
+      "color": "#d2ad54"
+    }
+  },
+  "ITEMS": {
+    "seed:carrot": {
+      "id": "seed:carrot",
+      "name": "胡萝卜种子",
+      "icon": "🥕",
+      "category": "seed",
+      "source": "探索与对战",
+      "effects": null
+    },
+    "seed:tomato": {
+      "id": "seed:tomato",
+      "name": "番茄种子",
+      "icon": "🍅",
+      "category": "seed",
+      "source": "探索与对战",
+      "effects": null
+    },
+    "seed:berry": {
+      "id": "seed:berry",
+      "name": "莓果种子",
+      "icon": "🫐",
+      "category": "seed",
+      "source": "探索与对战",
+      "effects": null
+    },
+    "seed:rice": {
+      "id": "seed:rice",
+      "name": "稻米种子",
+      "icon": "🌾",
+      "category": "seed",
+      "source": "探索与对战",
+      "effects": null
+    },
+    "carrot": {
+      "id": "carrot",
+      "name": "胡萝卜",
+      "icon": "🥕",
+      "category": "food",
+      "source": "菜园收获",
+      "effects": {
+        "satiety": 12,
+        "mood": 2,
+        "intimacy": 2
+      }
+    },
+    "tomato": {
+      "id": "tomato",
+      "name": "番茄",
+      "icon": "🍅",
+      "category": "food",
+      "source": "菜园收获",
+      "effects": {
+        "satiety": 10,
+        "mood": 3,
+        "intimacy": 2
+      }
+    },
+    "berry": {
+      "id": "berry",
+      "name": "莓果",
+      "icon": "🫐",
+      "category": "food",
+      "source": "菜园收获",
+      "effects": {
+        "satiety": 8,
+        "mood": 4,
+        "intimacy": 3
+      }
+    },
+    "rice": {
+      "id": "rice",
+      "name": "稻米",
+      "icon": "🌾",
+      "category": "ingredient",
+      "source": "菜园收获",
+      "effects": null
+    },
+    "cooked_rice": {
+      "id": "cooked_rice",
+      "name": "热乎乎的米饭",
+      "icon": "🍚",
+      "category": "food",
+      "source": "稻米制作",
+      "effects": {
+        "satiety": 20,
+        "mood": 3,
+        "intimacy": 4
+      }
+    }
+  },
+  "RECIPES": {
+    "cooked_rice": {
+      "id": "cooked_rice",
+      "name": "热乎乎的米饭",
+      "input": {
+        "itemId": "rice",
+        "quantity": 1
+      },
+      "output": {
+        "itemId": "cooked_rice",
+        "quantity": 1
+      }
+    }
+  },
+  "BASE_PLOTS": 6,
+  "STARTER_SEEDS": 2,
+  "MAX_QUANTITY": 99
+}

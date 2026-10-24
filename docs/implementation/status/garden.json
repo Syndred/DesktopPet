@@ -1,0 +1,322 @@
+{
+  "module": "garden",
+  "branch": "codex/lingjing-garden",
+  "commit": "see git log for this file",
+  "status": "unified-battle-entry-and-qa-scenarios-prepared-self-verification-in-progress",
+  "upstream": {
+    "fetched": true,
+    "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086",
+    "baseline": "6c8ce65",
+    "originMainIsAncestor": true,
+    "recheckedAt": "2026-10-24T22:12:52.2360134+08:00",
+    "behindOriginMain": 0
+  },
+  "foundationRequired": "4c05172 consumed; foundation verified QA profile gate, common components and existing battle arena",
+  "contract": "docs/implementation/garden-contract.md",
+  "scope": "docs/implementation/scope-2d-ui-first.txt",
+  "routes": [
+    "/garden",
+    "/garden/plots",
+    "/garden/kitchen",
+    "/inventory"
+  ],
+  "dependencies": [],
+  "requiredPublicComponents": [
+    "Button",
+    "Input",
+    "Tabs/TabsList/TabsTrigger/TabsContent",
+    "Select/SelectTrigger/SelectValue/SelectContent/SelectItem",
+    "AnimatedList and global AppMotionProvider"
+  ],
+  "reuse": [
+    {
+      "project": "React",
+      "version": "19.3.1",
+      "license": "MIT",
+      "where": "modular page and domain components under ui/src/features/garden",
+      "source": "https://github.com/react/react"
+    },
+    {
+      "project": "electron-vite",
+      "version": "4.0.1",
+      "license": "MIT",
+      "where": "foundation Electron build; actual native window verification",
+      "source": "https://github.com/alex8088/electron-vite"
+    },
+    {
+      "project": "PixiJS",
+      "version": "8.22.0",
+      "license": "MIT",
+      "where": "GardenScene.tsx Application, Assets, Texture and Sprite; shared ResourceStage",
+      "source": "https://github.com/pixijs/pixijs"
+    },
+    {
+      "project": "shadcn/ui",
+      "version": "4.22.1 official CLI source imported by foundation f0af90f",
+      "license": "MIT",
+      "where": "Button/Input and actual Radix Select/Tabs; no cloned feature-local primitives",
+      "source": "https://github.com/shadcn-ui/ui"
+    },
+    {
+      "project": "Radix UI",
+      "version": "1.8.1",
+      "license": "MIT",
+      "where": "food Select Esc/focus recovery, inventory Tabs arrow/Home/End",
+      "source": "https://github.com/radix-ui/primitives"
+    },
+    {
+      "project": "Motion",
+      "version": "14.6.0",
+      "license": "MIT",
+      "where": "shared AnimatedList in inventory; global provider owned by foundation",
+      "source": "https://github.com/motiondivision/motion"
+    },
+    {
+      "project": "Tailwind CSS",
+      "version": "4.3.3",
+      "license": "MIT",
+      "where": "foundation shared kit and design tokens; scene-specific module CSS",
+      "source": "https://github.com/tailwindlabs/tailwindcss"
+    },
+    {
+      "project": "better-sqlite3",
+      "version": "12.11.1",
+      "license": "MIT",
+      "where": "single foundation connection and atomic inventory/companion settlement in Electron",
+      "source": "https://github.com/WiseLibs/better-sqlite3"
+    },
+    {
+      "project": "Lucide",
+      "version": "1.61.0",
+      "license": "ISC",
+      "where": "formal action icons",
+      "source": "https://github.com/lucide-icons/lucide"
+    },
+    {
+      "project": "MapLibre",
+      "version": "6.15.0",
+      "license": "BSD-3-Clause",
+      "where": "through shared discovery/NearbyMap; garden no longer owns a map engine",
+      "source": "https://github.com/maplibre/maplibre-gl-js"
+    },
+    {
+      "project": "amcolash/farming-game",
+      "version": "design-phase reference; no code/assets imported",
+      "license": "MIT code; GPL3 sample tiles excluded",
+      "where": "crop-configuration and timestamp-stage ideas only; old Phaser not installed",
+      "source": "https://github.com/amcolash/farming-game"
+    },
+    {
+      "project": "Turf",
+      "version": "7.4.0",
+      "license": "MIT",
+      "where": "reuse discovery boundary contains/checkFix; rejects Windows default location and invalid geometry",
+      "source": "https://github.com/Turfjs/turf"
+    }
+  ],
+  "selfDeveloped": [
+    "Owner and pet-instance authorization; idempotent action receipts, revision conflicts and inventory conservation are project-specific",
+    "Plant/harvest/craft/feed ledger and atomic companion adapter; six personal plots independent of shared-world territory",
+    "Canonical cloud account-save reducer and PostgreSQL CAS preserve this project's existing runtime text IDs and account schema"
+  ],
+  "tests": [
+    {
+      "command": "npm run build:pc",
+      "result": "passed after official kit integration and content-height card fix"
+    },
+    {
+      "command": "npm run typecheck:ui",
+      "result": "passed with actual foundation aliases"
+    },
+    {
+      "command": "eslint apps/pc-app/ui/src/features/garden --ext .ts,.tsx",
+      "result": "passed"
+    },
+    {
+      "command": "node --test .../garden.test.cjs .../integration.test.cjs .../identity.test.cjs",
+      "result": "18 passed across garden/integration/identity files; actual companion owner adapter, shared transaction rollback on conflicting target, disk reopen and real battle rules"
+    },
+    {
+      "command": "node --test .../cloud.test.mjs",
+      "result": "11 passed: real accounts/garden HTTP handlers, BackupManager/AccountSync, PostgreSQL RPC and public companion/resource playback; one event under concurrent exact feeds; pending/missing receipt cannot apply or play; verified retry once; not deployed Supabase"
+    },
+    {
+      "command": "smoke.electron.mjs motion/map/library/battle/carrot/rewardplant",
+      "result": "Actual Electron36.9.5: 25m rice growth -> harvest2 -> craft1 -> feed fish1; actual training reward tomato seeds -> 15m planting -> harvest3 -> feed fish1 -> next training; non-target pets unchanged; exact restart; duplicate harvest/stale-owner rejected; A04 layout/Select/Tabs/Motion/WiFi diagnostics; original raw-ID upgrade exact. Separate labelled local QA verifies six distinct PNGs, selected fox eat event and actual frames0->1, exact action replay without second debit/action, restart exact; latest foundation canonical reference migration preserves all growth, positions, names and stock; full restart exact; territory explicit public foreground read releases permission without a continuous watch; actual59m WiFi fix -> real territory battle9 rounds/player victory -> occupy -> selected Xiaolan garrison -> full restart exact; coordinates omitted from committed summary"
+    },
+    {
+      "command": "node --test .../qa-location.test.cjs .../integration.test.cjs",
+      "result": "7 passed: verified QA marker, normal-profile rejection, location age/accuracy/run isolation, public context replay after later inventory mutation; native preparation/build/UI typecheck/ESLint passed"
+    }
+  ],
+  "evidence": [
+    "docs/implementation/evidence/garden/verification.json",
+    "docs/implementation/evidence/garden/README.md",
+    "docs/implementation/evidence/garden/09a-reward-mature.png",
+    "docs/implementation/evidence/garden/11-kitchen-current.png",
+    "docs/implementation/evidence/garden/12-inventory-current.png",
+    "docs/implementation/evidence/garden/A04-1280x844-inventory.png",
+    "docs/implementation/evidence/garden/A04-1440x900-inventory.png",
+    "docs/implementation/garden-assets.json",
+    "docs/implementation/evidence/garden/identity-upgraded-preserved.png",
+    "docs/implementation/evidence/garden/six-canonical-resources-and-selected-fox-feed.png",
+    "docs/implementation/evidence/garden/only-selected-fox-eating.png",
+    "docs/implementation/evidence/garden/real-territory-battle.png"
+  ],
+  "uiComparison": {
+    "references": [
+      "05-territory-garden-and-inventory.png",
+      "10-garden-harvest-and-feeding.png"
+    ],
+    "implemented": "milk-white/mist-blue panels, garden 3x2 scene, side crop/seed controls, three-column kitchen, four-column inventory and explicit pet picker, approved whale-girl and original detailed 2D foods",
+    "remaining": "A04 fixed and native measurements passed at1280x844 and1440x900; foundation central A01-A12 visual recheck remains pending"
+  },
+  "twoDOnly": {
+    "implemented": true,
+    "legacyData": "preserved, not rendered as 3D targets",
+    "renderers": [
+      "PixiJS",
+      "shared 2D sprite sheet"
+    ],
+    "new3dImports": [],
+    "assets": "project-generated background and transparent atlas; no GPL sample tiles; shared character is not copied into a second resource library"
+  },
+  "integrationDependencies": [
+    "Foundation99c1b9e consumed; current build/typecheck/ESLint and garden native layout checks at1280x844 and1440x900",
+    "Garden directly reuses CompanionPortrait, NearbyMap and useDiscovery; Turf/quality checks come from discovery",
+    "Accounts verified legacy-id alias and companions.migrateOwnerAlias consumed; original raw-ID profile upgraded and restarted with exact inventory/pet preservation and no starter regrant",
+    "Canonical garden/companion cloud save uses existing runtime TEXT IDs and accounts CAS; no new inventory or identity store",
+    "Public accounts.sync.acceptAuthoritativeReadback checkpoint consumed and actual next full-save HTTP push/readback verified; unrelated offline data preserved",
+    "Six canonical resources resolve through shared CompanionPortrait/ResourceStage; selected instance consumes existing committed growth eat notification",
+    "Foundation owns final full integration regression and Windows packaging",
+    "Territory explicit location uses public discovery.setExploring only around the foreground read and territoryLocate; private setting and hidden-window cancellation remain shared",
+    "Cloud feed uses public companions.playAction after exact action receipt/readback/checkpoint; a concurrent replay cannot emit twice"
+  ],
+  "remaining": [
+    "Consume the published shared BattleScreen/context implementation and five-element canonical roster",
+    "Native QA: both victory/defeat, exact session and restart recovery, shared context confirmation and receipt replay",
+    "Main chat independent module review; final whole-product acceptance remains pending"
+  ],
+  "cloudReview": "docs/implementation/garden-cloud-review.md",
+  "dataPolicy": "additive migrations; original history/designs/models retained; no production deployment, destructive migration or user-data reset",
+  "identityMigration": {
+    "status": "native-upgrade-and-restart-verified",
+    "source": "Accounts verified legacy-id alias",
+    "result": "5 identity integration checks passed; original raw-ID native profile upgraded with exact source/target inventory, original pet records and target growth; both archives present",
+    "required": "Published companions.migrateOwnerAlias adapter consumed from7aa6f3b; no outstanding adapter requirement",
+    "preserved": "Exact old rows plus full companion/garden archives; duplicate snapshot/restart gives no new starter; independently progressed target rolls back both migrations"
+  },
+  "integratedRevalidation": {
+    "foundation": "99c1b9e consumed",
+    "profile": "artifacts/garden/integrated-electron",
+    "ricePlanted": "2026-10-24T12:51:09.487Z",
+    "riceMatures": "2026-10-24T13:16:09.487Z",
+    "realTimeGrowth": "25m13.735s rice and 15m rewarded tomato through actual UI, no clock edits; exact restart readback complete",
+    "focusedChecks": "18 SQLite/domain/integration +11 PostgreSQL/HTTP; actual public companion/resource cloud playback; canonical resource upgrade and restart; explicit territory foreground privacy lease; current build/typecheck/ESLint and A04 geometry; actual59m geographic occupation/garrison and full restart"
+  },
+  "testTool": {
+    "project": "@electric-sql/pglite",
+    "version": "0.5.11",
+    "license": "Apache-2.0",
+    "where": "foundation shared test dependency @electric-sql/pglite; older artifacts/garden/pg-qa retained as optional override"
+  },
+  "concentratedUiFix": {
+    "viewport": "1280x844",
+    "cards": "actual native Button cards use content height; images/names/counts/pet levels fully contained",
+    "h1": "inherits foundation --text-title28px and --weight-title700; no local font clamp or override",
+    "spacing": "public --page-pad-block/--page-pad-inline via layout.css",
+    "verified": true
+  },
+  "controlledTerritoryUi": {
+    "fixture": true,
+    "realGeographicAcceptance": false,
+    "result": "native UI -> IPC -> SQLite garrison change/restart passed; exact pet growth and independent selections unchanged",
+    "profile": "artifacts/garden/territory-electron"
+  },
+  "visualAudit": {
+    "reference": "codex/lingjing-implementation-base@9915684:docs/implementation/acceptance/2026-10-24/visual-audit.txt",
+    "A04": {
+      "status": "fixed-ready-for-central-recheck",
+      "fixCommits": [
+        "a79d9b9",
+        "155ac37"
+      ],
+      "sizes": [
+        "1280x844",
+        "1440x900"
+      ],
+      "result": "1280x844 and1440x900: no card intersections; images contained; pet scrollHeight<=height; public H1 28px/700; Card margin-bottom0"
+    },
+    "A01": "follows public --font-ui/--text-title/--weight-title and page spacing tokens; no feature vw clamp",
+    "A03": "native card margin-bottom0; parent owns gaps",
+    "A07A08": "six actual canonical assets consumed through CompanionPortrait/ResourceStage; selected fox eat event/frames0->1 and unchanged other pets verified; central all-page review remains foundation-owned",
+    "centralFullAppAcceptance": "pending"
+  },
+  "goalComplete": false,
+  "foundationClosure": {
+    "commit": "b3c15a5",
+    "ownerAlias": "Actual registered service migration now verified on one SQLite connection",
+    "accountCloudRevision": "Guarded authoritative checkpoint bridge consumed; actual local accounts/garden HTTP+PostgreSQL push/readback6->7 verified with exact inventory and offline-note preservation; deployed readback pending",
+    "evidence": "tests/foundation/owner-alias.test.cjs and cloud-checkpoint.test.cjs"
+  },
+  "canonicalRoster": {
+    "resourcesCommit": "2d0b5c8",
+    "profile": "artifacts/garden/roster-electron",
+    "fixture": true,
+    "cloudAcceptance": false,
+    "result": "Six distinct1254x1254 PNGs decoded; selected fox receives unique owner/pet/resource eat event and frames0->1; replay gives no extra debit/event; non-target pets and restart exact",
+    "renderer": "shared CompanionPortrait/ResourceStage; no second animation engine"
+  },
+  "cloudPlayback": {
+    "provider": "public companions.playAction",
+    "deployedCloudAcceptance": false,
+    "verified": "real local HTTP+PostgreSQL with actual resources/companions providers; matching action receipt required; concurrent one event; no animation while pending; verified retry one event; no extra growth/action write"
+  },
+  "canonicalResourceUpgrade": {
+    "verified": true,
+    "result": "Original built-in references upgrade through actual companion adapter; every other field and inventory preserved; complete restart exact; earlier native receipts retained"
+  },
+  "locationIntegration": {
+    "sharedPolicy": true,
+    "explicitForegroundRead": true,
+    "permissionReleased": true,
+    "continuousWatch": false,
+    "lastPhysicalAccuracyMeters": 59,
+    "physicalAcceptance": true,
+    "mode": "real OS fix and local account; no imported territory fixture",
+    "result": "Nine real UI battle rounds -> victory/experience20/seeds2 -> confirmed ownership -> selected Xiaolan garrison -> exact restart; growth and independent selections unaffected by garrison"
+  },
+  "physicalTerritory": {
+    "verified": true,
+    "fixture": false,
+    "localAccount": true,
+    "cloudAcceptance": false,
+    "battleSessionId": "battle-c570a97f-8c10-47f3-a48b-7a82fe1a3091",
+    "accuracyMeters": 59,
+    "winner": "player",
+    "rounds": 9,
+    "experience": 20,
+    "tomatoSeeds": 2,
+    "garrisonChangesNoGrowthOrIndependentSelection": true,
+    "restartExact": true,
+    "coordinatesOmitted": true,
+    "profile": "artifacts/garden/roster-electron"
+  },
+  "latestScope": "docs/implementation/battle-screen-contract.txt and latest delegated unified battle goal; live cloud/GPS may be deferred",
+  "deferred": [
+    "Live HTTPS deployment and real two-device verification",
+    "Live cloud territory authority"
+  ],
+  "unifiedBattle": {
+    "stage": "native-scenario-preparation-passed; final shared-result verification pending",
+    "route": "/battle/session/:sessionId",
+    "noFeatureCombatUI": true,
+    "publicContext": "garden.getBattleContext({ownerAccountId,sessionId})",
+    "publicSettlement": "garden.settleBattleContext({ownerAccountId,sessionId,actionId}) restores original outbox input on replay",
+    "guards": "Original renderer expectedRevision/sessionOwner checks remain; no rule/outcome override",
+    "qa": "Foundation qaScenario only; source simulated, run-bound geographic record, no normal-profile switch",
+    "nativePreparation": "Two actual Electron QA profiles registered, adopted canonical pets, planted a real crop and located a simulated territory; no win/loss claim yet",
+    "contract": "docs/implementation/garden-battle-integration.txt",
+    "pendingIntegration": "Battle settleContext should call public settlement adapter; bare territorySettle still requires expectedRevision. Defeat should also confirm its unchanged ownership context."
+  }
+}

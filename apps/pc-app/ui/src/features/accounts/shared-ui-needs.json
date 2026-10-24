@@ -1,0 +1,20 @@
+{
+  "scope": "scope-2d-ui-first: shadcn Radix + Tailwind + Motion; approved boards 08 and 09",
+  "module": "accounts",
+  "status": "adopted and verified in real Electron",
+  "foundationSource": "f0af90f",
+  "components": {
+    "Button": "Uses the existing shared components/ui.tsx Button across account/auth/settings actions",
+    "Input": "username, account and password fields; native password autocomplete retained",
+    "Tabs": "controlled login/register tabs, keyboard Arrow/Home/End selection",
+    "Select": "account provider and companion limit",
+    "Switch": "desktop, notification, privacy and sync policies",
+    "Checkbox": "remember account and opt-in secure login",
+    "Slider": "desktop volume, keyboard Arrow/Home/End",
+    "RestoreChoice": "Shared Radix Select implements the merge/replace choice; no local radio-group implementation",
+    "AppDialog": "restore preview; title, children, onClose, busy; focus trap/return, Escape, no accidental close while saving"
+  },
+  "motion": "Foundation PageTransition/AppMotionProvider, account AnimatedList, AppDialog -> MotionPanel; saved animation preference and reduced motion at load verified",
+  "assets": "Only approved illustration regions of boards 08/09 are used as CSS artwork. Forms, data, native file dialogs and host policies remain live components. No design board is used as a whole page.",
+  "dependencyPolicy": "Foundation alone owns package/lock, shared components and motion; this module adds no root dependencies"
+}

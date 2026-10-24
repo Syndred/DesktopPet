@@ -242,7 +242,8 @@ describe("D-004 pc inventory persistence and battle report persistence", () => {
     expect(leveled?.experience).toBe(0);
     expect(leveled?.winsTotal).toBe(5);
     expect(leveled?.stats).not.toBe(baseStats);
-    expect(leveled?.stats).toContain("ATK34");
+    // Upstream 4786f97 retains the 10% level bonus: starter ATK32 -> ATK35.
+    expect(leveled?.stats).toContain("ATK35");
   });
 
   it("supports release and allows recapturing the same serial after release", () => {

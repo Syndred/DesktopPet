@@ -1,0 +1,107 @@
+灵境 discovery 模块交付与集成接口（2026-10-24，2D UI first）
+
+当前优先范围：acceptance/2026-10-24/unified-battle-goal.txt（U01—U08）。已接入唯一 BattleScreen；本文件后半的旧独立战场截图与原生精度记录是历史证据，不代表本轮全部目标已验收。云端与精准位置按最新用户要求延后，本轮使用隔离且明确标识的 QA 场景完成操作与存档闭环，不能伪称真实 GPS / 云成功。
+EncounterView 仅传实际 sessionId 到 battle/BattleScreen；HUD、四行动、动画、回合记录、结算弹层均由 battle 提供，探索不再保留另一套呈现或动画。getBattleContext / settleBattleContext 是主进程来源服务接口，按账号与 sessionId 查原遭遇并转交原 confirm 事务；不接受客户端胜负。QA scenario 随遭遇、伙伴来源和收服凭据持久保存。
+
+早期范围 scope-2d-ui-first.txt 的 2D 要求继续保留；最新统一战场目标优先。正式实现采用 React / TypeScript 模块组件；新页面、遭遇、收服、头像均使用 2D 图集。保留历史文件，不实现旧 3D 渲染兼容。
+本分支已合入 foundation 0ad9dc5（本工作树合并提交99751b2）；完成前已 git fetch origin，origin/main 为 4786f97。
+入口：runtime/features/discovery/index.cjs、ui/src/features/discovery/index.tsx，由 foundation 的模块注册与路由加载。
+
+公开命令：snapshot、locate、watch、stopWatch、setDemo、setProvider、tile、setExploring。
+需要账号：begin、act、cancel、confirm、pokedex、memories。
+账号归属取 services.session；云端身份凭据只在主进程经 accounts.privateSession 取得，不发送给 renderer。
+本机账号保存在本机；runtime 账号要求云端权威链路，不以本机结果冒充云端验证。
+
+begin：{spawnId,petId,actionId}。
+act：{encounterId,action,expectedRevision,actionId}，四种 action 复用现有战斗内核。
+cancel：{encounterId,actionId}，保留记录。
+confirm：{encounterId,name?,showOnDesktop?,expectedRevision?,actionId}。
+普通模式确认需要权威战斗胜利、当前真实位置、隐私许可和围栏校验；返回真实 petId 独立实例。已验证隔离 QA 档案使用 source:simulated 的位置，保留同样的时效、精度与围栏计算，不声称取得系统位置授权。
+memories：{petId}，只能读取本账号伙伴。
+返回统一 {ok:true,data,duplicate?} 或稳定 code / 中文 message。
+
+伙伴：调用 companions 的 listPets / getPet / createCapturedInstance。
+以 discovery:<encounterId> 为伙伴创建幂等键；伙伴、收服、首次相遇记忆、遭遇状态和操作凭据在同一 SQLite SAVEPOINT 中提交，失败全部回滚。
+结果页使用当前实例的 nickname / desktop 命令；同形象的其他伙伴不受影响。结果和图鉴展示读取当前 pet.resource，形象更换后不继续显示首次收服时的旧资源；原始收服凭据保持不变。静态缩略图统一复用 resources.ResourcePortrait 与其构图契约，地图/卡片使用 portrait，图鉴静态大图使用 full，不在本模块维护另一套 atlas 裁切或旧鱼丸兜底图。
+origin.memoryTags 同步保存首次相遇标签，conversations 可按真实 petId 读取。
+
+战斗：复用 battle.beginWildChallenge、act、leave 和 getOutcome。
+已落盘战斗回合在 snapshot 恢复，不重启战斗、不随机重放客户端动作。
+复用 BattleRuntimeService 的五行、怒气、闪避、随机 NPC 和胜负规则，不修改战斗数值。
+桌面、聊天、出战选择互相独立；出战与捕获仅接受 2D / spritesheet 资源。
+游戏遭遇从 companions.listTemplates 读取 canonical 2D 模板，服务端使用同一模板目录；资源与属性变更生成新的 catalog 身份，旧遭遇继续保留。当前目录已接入鱼丸、小蓝、饭团、焰柴、礼帽喵、小狐的六个独立资源；每个角色都在真实探索预览中确认了共享 Pixi 与 atlas 缩略图。游戏点位按固定地理网格生成，不作为核实过的现实地标。
+野外战斗快照附带 battle 的 rules，整个界面直接复用 BattleScreen / BattleArena / useBattleSession / useBattleAnimation；大招门槛、怒气上限、首次免费闪避和禁用原因消费权威配置。辅助规则使用公共图标与 tooltip，不添加探索专有说明或规则。旧遭遇只在公开读回时补规则，既有存档与凭据不被重写。
+攻击、属性/大招、受击与胜利姿态消费实际保存的双方回合；动作映射复用 battle，帧播放仍由 ResourceStage / Pixi 负责。资源元数据按身份读取，切换动作保留同一 canvas。应用或系统关闭动画时遵循共享 Motion 策略。
+
+定位：Windows PowerShell 5.1 调 Windows.Devices.Geolocation.Geolocator.GetGeopositionAsync，遵守 Windows 隐私权限。
+应用隐私关闭时不调用系统定位；撤销、切号、离开探索页和窗口隐藏会停止持续请求并丢弃迟到结果。探索内部切页在共享 Motion 的有限交接期内保留用户主动开启的监听；离开探索立即停止。Windows hide 可能仍让 document.visibilityState 报 visible，因此主进程额外监听真实窗口的 hide / minimize / close，并禁止隐藏窗口重新开启位置权限上下文。恢复窗口不会暗自恢复持续定位。
+取消通过 AbortController 传到 execFile，终止尚未完成的原生辅助进程，而不只是忽略回包。Windows 脚本由 Electron fs 读取并经 EncodedCommand 执行，支持位于 ASAR 内而未解包的脚本；不依赖 PowerShell 直接读取归档路径。
+定位与地图投影分开；canonical WGS84，国内 GCJ02 和海外 WGS84 适配保留。
+保留 denied / timeout / unavailable / imprecise / stale / demo / privacy_disabled 状态；默认 OS 位置不能收服。
+正式互动要求位置年龄 ≤30 秒、精度 ≤80 米、100 米范围，沿用半精度且最多30米的漂移补偿。
+系统原始 fix 不随存档落盘；精确位置截图和原始值只留本机忽略目录。
+用户开启 Windows 权限后已取得真实 WiFi fix。最新一轮独立原生请求曾取得合格58米样本；随后正式窗口返回177米，60秒主动原生监听始终为313米。58米诊断不等于正式窗口完成收服；真实物理位置收服仍未验收，没有降低80米门槛。
+演示模式明确标识且禁止战斗、收服和奖励；测试 host 的受控位置也在界面标明，不能作为真实定位验收。
+
+地图：使用 MapLibre GL JS 6.15.0 管理相机、缩放、拖动、控件、标记和 GeoJSON 图层。
+按官方 Vite 用法打包 v6 的独立 worker，避免“底图可见但 GeoJSON 不工作”。样式就绪即可显示标记，远程瓦片慢请求不会阻塞叠加层。
+可见瓦片通过主进程 TileCache 请求；Electron net.fetch 遵循现有系统/会话网络配置，独立 User-Agent、6路并发、7天缓存和 OpenStreetMap 署名。
+Turf 7.4.0 实际计算 WGS84 距离、精度圆和真实领地多边形包含关系。
+默认 OSM 可用；腾讯 / Google 凭据未配置时明确显示不可用，不伪装成已开通。
+
+领地：复用 garden 提供的 territories 权威服务 listForOwner / getForOwner / gardenBonusForOwner。
+只显示该服务的有效边界、归属和 revision。已验证真实领地挑战、归属落盘、探索地图投影及收服来源记录。
+收服保存 territoryId、captureMultiplier、territoryRevision；没有把奖励倍率用于修改伙伴战斗数值。
+
+UI：页面拆分为 ExploreView、WildPreviewView、EncounterView、CaptureDialog、CaptureResultView、PokedexView。
+复用 foundation 的真实 shadcn Radix Button/Card/Select/Switch/Dialog/Popover/Tooltip/Input 和 Motion 包装。
+弹窗自动焦点、Esc 关闭和焦点返回、键盘 Select、动画开关冻结 Pixi 已在实际 Electron 窗口验证。
+大角色由共享 resources.ResourceStage / PixiJS 绘制；地图和列表只取同图集静态帧，不为每个标记开 WebGL 实例。
+素材来源与代码许可分开：项目生成的湖畔背景见 ui/src/features/discovery/assets/provenance.json；当前六角色图集及来源见 runtime/features/resources/assets/roster-v2/catalog.json 和 source-record.json。旧图集与收服记录保留。
+图稿对应 docs/design/2026-10-24/full-ui/02-exploration-and-battle.png、04-wild-encounter-and-capture.png。
+真实窗口证据、对照差异与许可证清单见 docs/implementation/evidence/discovery/2d 和 status/discovery.json。
+
+云端：独立 discovery Edge Function 和 20261024_discovery_authority.sql 是可审查产物，未部署。
+沿用 runtime_accounts 文本 ID / session_token。RLS 和授权禁止普通客户端直接写状态或调用结算 RPC。
+服务器保存自己的随机战斗；不接受 renderer winner，不用重新随机回放推断胜负。
+领取 RPC 在行锁下复核胜利、归属、点位、距离和过期状态；重复领取返回原凭据，失败插入不会留下半条结果。
+本地 PGlite 0.5.11 的实际 PostgreSQL 引擎已执行原账号迁移与本模块迁移，验证了权限、回合 CAS、回放、回滚和重复领取；不等同于已部署 Supabase 验收。
+正式启用还需要可信伙伴 battle_profiles 同步、battle supportsCloudWild / wildAdapter、HTTPS 配置及独立部署授权；缺少适配时返回 CLOUD_BATTLE_INTEGRATION_REQUIRED。
+
+验证入口：
+  npm run typecheck:ui
+  npx eslint apps/pc-app/ui/src/features/discovery --ext .ts,.tsx
+  npm run build:pc
+  node scripts/desktop/run-native-tests.cjs apps/pc-app/runtime/features/discovery/tests/discovery.test.cjs
+  node apps/pc-app/runtime/features/discovery/verification/windows-flow.mjs
+  node apps/pc-app/runtime/features/discovery/verification/map.mjs
+  node apps/pc-app/runtime/features/discovery/verification/postgres.mjs
+  node apps/pc-app/runtime/features/discovery/verification/foreground-location.mjs
+  node apps/pc-app/runtime/features/discovery/verification/appearance.mjs
+  node scripts/desktop/run-native-tests.cjs apps/pc-app/runtime/features/discovery/verification/native-cancellation.cjs
+  node apps/pc-app/runtime/features/discovery/verification/asar-location.mjs
+  node apps/pc-app/runtime/features/discovery/verification/roster-actions.mjs
+  node apps/pc-app/runtime/features/discovery/verification/roster-actions.mjs --arena-only
+  node apps/pc-app/runtime/features/discovery/verification/roster-actions.mjs --portraits-only
+  node apps/pc-app/runtime/features/discovery/verification/physical-flow.mjs
+PostgreSQL verifier 的 PGlite 只安装于忽略的 artifacts/discovery/sql-validation，或由 LINGJING_PGLITE_ROOT 指向已有开发安装，不增加运行时依赖。
+验证 host 使用独立 PET_USER_DATA_DIR、真实模块注册、真实账号/资源/伙伴/战斗/菜园服务；只替换明确标记的测试位置，生产入口不加载它。
+不运行生产迁移或发布，不修改原用户数据，最终整包回归和发布由 foundation 统一负责。
+
+A01—A03 定向整改（提交 d4d8462、0156faf 及后续原生请求修正）：
+遵循 foundation layout.css 的 --font-ui / --text-* / --weight-* / --space-* / --page-pad-* 名称，不声明第二套全局 token。独立工作树使用相同值的 fallback，公共导入由 foundation 完成。
+1280×844 CSS 视口：主内容 x192/y54；标题 x224/y78，左右32px/上下24px边距，H1 28px/700。地图与标题同一左沿；空状态不伪造 GPS，演示图保留标识。
+结果右栏由父容器 gap=16px 控制，Card margin-bottom=0；真实计算样式与当前实例换装截图见 evidence/discovery/2026-10-24-audit。
+本轮只进行相关定向检查，最终集中视觉回验仍由 foundation 执行。
+
+六角色与战斗动作集成（4352336）：
+真实 Electron 窗口逐一显示六个 canonical 资源。受控位置明确标识，真实随机战斗第26回合获胜后收服金属性礼帽喵；结果、伙伴背包、图鉴、首次相遇记忆及重启后 petId / resourceId 一致。重复确认未产生新实例。
+实际 canvas 截图记录了独立技能和受击图像，回合观察包含 attack / skill / hit / victory 且无待机降级；首场26回合保留原 Pixi canvas。此证据只覆盖本次实际回合，不冒称所有角色的全部日常动作已被逐帧验收。
+最终生命条样式修改后只补跑 arena-only：实际回合生命110/120、四张公共命令卡、基于规则禁用的大招及取消保留记录。没有再次运行全项目或重复26回合。
+证据：evidence/discovery/2026-10-24-roster。CSS视口1280×844，Windows DPR1.25；六预览与收服结果为窗口截图，战斗命令区为真实元素截图。foundation 已提供并导入公共 layout.css，本模块不维护另一套全局 token；集中 A01—A12 视觉复核和安装包验收仍由 foundation 负责。
+
+共享构图与原生正向入口（fed3800）：
+六个探索头像已在真实窗口验证为共享 ResourcePortrait / portrait 构图，动态大角色仍复用 Pixi。--portraits-only 只复查这项变化，不重复整场战斗与全项目回归。
+physical-flow 从正式生产入口启动、创建隔离本机账号，仅通过正常原生定位、地图、战斗、收服命令推进；不会注入位置、结果或随机数。主动持续定位最多等待60秒，失败保存去坐标诊断并以失败退出；成功还必须完成独立 SQLite 只读核对和重启。当前只运行到精度失败，正向后半段没有被宣称通过。
+read-capture.cjs 使用实际 Electron SQLite ABI 只读核对了此前受控位置收服的一份既有存档：收服、伙伴、记忆和战报各1条。此核对不改变其受控位置来源，也不算真实物理位置验收。
+本轮 Node fetch 对现有联机配置端点的无凭据 OPTIONS 未收到可用响应（UND_ERR_SOCKET），discovery 的 HTTPS 环境仍未配置；这项探测不冒称已部署服务的版本或精确 HTTP 状态。云端缺少的野外战斗接口、可信伙伴同步与审核部署继续单列。证据见 evidence/discovery/2026-10-24-location-portrait。

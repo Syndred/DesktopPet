@@ -40,51 +40,63 @@
   "findings": [
     {
       "id": "A01",
-      "status": "verified-after-first-recheck"
+      "status": "verified-after-first-recheck",
+      "foundationStatus": "fixed-and-rechecked-pending-independent-visual-approval"
     },
     {
       "id": "A02",
-      "status": "verified-after-first-recheck"
+      "status": "verified-after-first-recheck",
+      "foundationStatus": "fixed-and-rechecked-pending-independent-visual-approval"
     },
     {
       "id": "A03",
-      "status": "verified-after-first-recheck"
+      "status": "verified-after-first-recheck",
+      "foundationStatus": "fixed-and-rechecked-pending-independent-visual-approval"
     },
     {
       "id": "A04",
-      "status": "verified-after-first-recheck"
+      "status": "verified-after-first-recheck",
+      "foundationStatus": "fixed-and-rechecked-pending-independent-visual-approval"
     },
     {
       "id": "A05",
-      "status": "verified-after-first-recheck"
+      "status": "verified-after-first-recheck",
+      "foundationStatus": "fixed-and-rechecked-pending-independent-visual-approval"
     },
     {
       "id": "A06",
-      "status": "verified-after-first-recheck"
+      "status": "verified-after-first-recheck",
+      "foundationStatus": "fixed-and-rechecked-pending-independent-visual-approval"
     },
     {
       "id": "A07",
-      "status": "final-focused-recheck-pending"
+      "status": "final-focused-recheck-pending",
+      "foundationStatus": "fixed-and-rechecked-pending-independent-visual-approval"
     },
     {
       "id": "A08",
-      "status": "final-focused-recheck-pending"
+      "status": "final-focused-recheck-pending",
+      "foundationStatus": "fixed-and-rechecked-pending-independent-visual-approval"
     },
     {
       "id": "A09",
-      "status": "final-focused-recheck-pending"
+      "status": "final-focused-recheck-pending",
+      "foundationStatus": "fixed-and-rechecked-pending-independent-visual-approval"
     },
     {
       "id": "A10",
-      "status": "final-focused-recheck-pending"
+      "status": "final-focused-recheck-pending",
+      "foundationStatus": "fixed-and-rechecked-pending-independent-visual-approval"
     },
     {
       "id": "A11",
-      "status": "verified-after-first-recheck"
+      "status": "verified-after-first-recheck",
+      "foundationStatus": "fixed-and-rechecked-pending-independent-visual-approval"
     },
     {
       "id": "A12",
-      "status": "final-focused-recheck-pending"
+      "status": "final-focused-recheck-pending",
+      "foundationStatus": "fixed-and-rechecked-pending-independent-visual-approval"
     }
   ],
   "scope": "Approved UI, 2D only, six distinct canonical character resources, real independent actions",
@@ -152,5 +164,18 @@
       "A07/A12: portrait framing should show face/upper body instead of a tiny whole body",
       "A10: final native four-control interaction after HUD/portrait merge"
     ]
-  }
+  },
+  "foundationRecheck": {
+    "at": "2026-10-24T13:46:32.612Z",
+    "status": "targeted-runtime-checks-passed-pending-independent-visual-approval",
+    "capture": "artifacts/foundation/visual-recheck/evidence.json",
+    "checks": "artifacts/foundation/visual-recheck/revision-checks.json",
+    "sizes": [
+      "1280x844",
+      "1440x900"
+    ],
+    "originalBaselinePreserved": true,
+    "scope": "20 actual captures plus targeted geometry, 72 authored action resolutions, 24 Pixi previews, real skill/ultimate/reward flow; external gates unchanged"
+  },
+  "supersededBy": "unified-battle-goal.txt and unified-audit.json preserve the current eight-character/four-entry gate"
 }

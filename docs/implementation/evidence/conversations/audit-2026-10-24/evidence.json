@@ -1,0 +1,356 @@
+{
+  "at": "2026-10-24T13:31:36.595Z",
+  "status": "passed",
+  "checks": [
+    "Two publicly adopted instances show their own real Yuwan/Shiba resource images; chat remains empty.",
+    "Selecting Shiba updates thread avatar and right-side character on chat and AI settings; no fixed Yuwan scene.",
+    "Chat and AI settings use one fixed title size/weight at 980, 1280 and 1440 CSS pixels; no horizontal overflow.",
+    "Appearance rebinding while chat stays mounted refreshes the selected instance and image; no history reset or fake message."
+  ],
+  "measurements": [
+    {
+      "route": "settings",
+      "width": 1280,
+      "height": 844,
+      "devicePixelRatio": 1.0000000149011612,
+      "title": {
+        "size": "28px",
+        "weight": "700",
+        "lineHeight": "39.2px"
+      },
+      "body": {
+        "size": "14px",
+        "weight": "400"
+      },
+      "caption": {
+        "size": "11px",
+        "weight": "400"
+      },
+      "gridGap": "16px",
+      "pagePadding": "24px 32px 16px",
+      "cardTitle": "16px",
+      "tokens": {
+        "--text-title": "28px",
+        "--text-body": "14px",
+        "--text-caption": "11px",
+        "--weight-title": "700",
+        "--space-4": "16px"
+      },
+      "cards": [
+        {
+          "padding": "16px",
+          "margin": "0px"
+        },
+        {
+          "padding": "16px",
+          "margin": "0px"
+        },
+        {
+          "padding": "16px",
+          "margin": "0px"
+        },
+        {
+          "padding": "16px",
+          "margin": "0px"
+        }
+      ],
+      "partnerCardsFit": true,
+      "noHorizontalOverflow": true
+    },
+    {
+      "route": "chat",
+      "width": 1280,
+      "height": 844,
+      "devicePixelRatio": 1.0000000149011612,
+      "title": {
+        "size": "28px",
+        "weight": "700",
+        "lineHeight": "39.2px"
+      },
+      "body": {
+        "size": "14px",
+        "weight": "400"
+      },
+      "caption": {
+        "size": "11px",
+        "weight": "400"
+      },
+      "gridGap": "16px",
+      "pagePadding": "24px 32px 16px",
+      "cardTitle": "16px",
+      "tokens": {
+        "--text-title": "28px",
+        "--text-body": "14px",
+        "--text-caption": "11px",
+        "--weight-title": "700",
+        "--space-4": "16px"
+      },
+      "cards": [
+        {
+          "padding": "8px",
+          "margin": "0px"
+        },
+        {
+          "padding": "0px",
+          "margin": "0px"
+        },
+        {
+          "padding": "16px",
+          "margin": "0px"
+        },
+        {
+          "padding": "16px",
+          "margin": "0px"
+        },
+        {
+          "padding": "16px",
+          "margin": "0px"
+        }
+      ],
+      "partnerCardsFit": true,
+      "noHorizontalOverflow": true
+    },
+    {
+      "route": "settings",
+      "width": 1440,
+      "height": 900,
+      "devicePixelRatio": 1.0000000149011612,
+      "title": {
+        "size": "28px",
+        "weight": "700",
+        "lineHeight": "39.2px"
+      },
+      "body": {
+        "size": "14px",
+        "weight": "400"
+      },
+      "caption": {
+        "size": "11px",
+        "weight": "400"
+      },
+      "gridGap": "16px",
+      "pagePadding": "24px 32px 16px",
+      "cardTitle": "16px",
+      "tokens": {
+        "--text-title": "28px",
+        "--text-body": "14px",
+        "--text-caption": "11px",
+        "--weight-title": "700",
+        "--space-4": "16px"
+      },
+      "cards": [
+        {
+          "padding": "16px",
+          "margin": "0px"
+        },
+        {
+          "padding": "16px",
+          "margin": "0px"
+        },
+        {
+          "padding": "16px",
+          "margin": "0px"
+        },
+        {
+          "padding": "16px",
+          "margin": "0px"
+        }
+      ],
+      "partnerCardsFit": true,
+      "noHorizontalOverflow": true
+    },
+    {
+      "route": "chat",
+      "width": 1440,
+      "height": 900,
+      "devicePixelRatio": 1.0000000149011612,
+      "title": {
+        "size": "28px",
+        "weight": "700",
+        "lineHeight": "39.2px"
+      },
+      "body": {
+        "size": "14px",
+        "weight": "400"
+      },
+      "caption": {
+        "size": "11px",
+        "weight": "400"
+      },
+      "gridGap": "16px",
+      "pagePadding": "24px 32px 16px",
+      "cardTitle": "16px",
+      "tokens": {
+        "--text-title": "28px",
+        "--text-body": "14px",
+        "--text-caption": "11px",
+        "--weight-title": "700",
+        "--space-4": "16px"
+      },
+      "cards": [
+        {
+          "padding": "8px",
+          "margin": "0px"
+        },
+        {
+          "padding": "0px",
+          "margin": "0px"
+        },
+        {
+          "padding": "16px",
+          "margin": "0px"
+        },
+        {
+          "padding": "16px",
+          "margin": "0px"
+        },
+        {
+          "padding": "16px",
+          "margin": "0px"
+        }
+      ],
+      "partnerCardsFit": true,
+      "noHorizontalOverflow": true
+    },
+    {
+      "route": "settings",
+      "width": 980,
+      "height": 900,
+      "devicePixelRatio": 1.0000000149011612,
+      "title": {
+        "size": "28px",
+        "weight": "700",
+        "lineHeight": "39.2px"
+      },
+      "body": {
+        "size": "14px",
+        "weight": "400"
+      },
+      "caption": {
+        "size": "11px",
+        "weight": "400"
+      },
+      "gridGap": "16px",
+      "pagePadding": "24px 24px 16px",
+      "cardTitle": "16px",
+      "tokens": {
+        "--text-title": "28px",
+        "--text-body": "14px",
+        "--text-caption": "11px",
+        "--weight-title": "700",
+        "--space-4": "16px"
+      },
+      "cards": [
+        {
+          "padding": "16px",
+          "margin": "0px"
+        },
+        {
+          "padding": "16px",
+          "margin": "0px"
+        },
+        {
+          "padding": "16px",
+          "margin": "0px"
+        },
+        {
+          "padding": "16px",
+          "margin": "0px"
+        }
+      ],
+      "partnerCardsFit": true,
+      "noHorizontalOverflow": true
+    },
+    {
+      "route": "chat",
+      "width": 980,
+      "height": 900,
+      "devicePixelRatio": 1.0000000149011612,
+      "title": {
+        "size": "28px",
+        "weight": "700",
+        "lineHeight": "39.2px"
+      },
+      "body": {
+        "size": "14px",
+        "weight": "400"
+      },
+      "caption": {
+        "size": "11px",
+        "weight": "400"
+      },
+      "gridGap": "16px",
+      "pagePadding": "24px 24px 16px",
+      "cardTitle": "16px",
+      "tokens": {
+        "--text-title": "28px",
+        "--text-body": "14px",
+        "--text-caption": "11px",
+        "--weight-title": "700",
+        "--space-4": "16px"
+      },
+      "cards": [
+        {
+          "padding": "8px",
+          "margin": "0px"
+        },
+        {
+          "padding": "0px",
+          "margin": "0px"
+        },
+        {
+          "padding": "16px",
+          "margin": "0px"
+        },
+        {
+          "padding": "16px",
+          "margin": "0px"
+        },
+        {
+          "padding": "16px",
+          "margin": "0px"
+        }
+      ],
+      "partnerCardsFit": true,
+      "noHorizontalOverflow": true
+    }
+  ],
+  "errors": [],
+  "modelRequests": 0,
+  "fabricatedMessages": false,
+  "realElectron": true,
+  "isolatedProfile": true,
+  "importNote": "Harness supplies one project-original Shiba package to the file-picker adapter; parser, copying, owner checks and public appearance IPC are actual product code.",
+  "pets": [
+    {
+      "petId": "pet-0649b205-e1e0-4727-844e-68c83b01396a",
+      "resourceId": "builtin:lingjing-yuwan-v1"
+    },
+    {
+      "petId": "pet-12be7c40-e976-4f98-a8d9-b7abbc5b6526",
+      "resourceId": "06614d99-e833-46ea-8eae-9cd2babb0c97"
+    }
+  ],
+  "auditSource": {
+    "file": "docs/implementation/acceptance/2026-10-24/visual-audit.txt",
+    "commit": "9915684",
+    "items": [
+      "A01",
+      "A03",
+      "A07 conversation adapter",
+      "A12"
+    ]
+  },
+  "sharedTypographyCommit": "50f6cad",
+  "buildBase": "adf5664",
+  "sourceRun": "run-1792848691610",
+  "visualAcceptance": "pending_concentrated_review_after_integration",
+  "baselineSource": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/ui-acceptance/2026-10-24/baseline",
+  "sourceSha256": {
+    "apps/pc-app/ui/src/features/conversations/client.ts": "5ad14395b8c1175ddaacf25fc25246c921ce0959a55433a3e7c40ef295bc357d",
+    "apps/pc-app/ui/src/features/conversations/components.tsx": "0153d49a204d850496ba1be125840a22072e9925c16c41e9cbe3742f49b20351",
+    "apps/pc-app/ui/src/features/conversations/styles.css": "072d6eba8685b6f75bb6ca133830075458730a86f858a355c34d548bf52debb4",
+    "apps/pc-app/runtime/features/conversations/tests/ui-acceptance.mjs": "3589be4dbd60b9b7d1efd9d23440208de2ed2c7bb0509eff490be5f99356d6ef"
+  },
+  "correctionCommit": "2fe1060aa5b4093e46e704076fcb2e4555fa64b7"
+}

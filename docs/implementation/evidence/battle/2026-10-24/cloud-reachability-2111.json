@@ -1,0 +1,22 @@
+{
+  "at": "2026-10-24T13:11:01.7307649Z",
+  "endpoint": "http://47.112.208.97:8000/functions/v1/duel-online",
+  "method": "OPTIONS",
+  "status": 502,
+  "reachable": false,
+  "failure": "Response status code does not indicate success: 502 (Bad Gateway).",
+  "actualRuntimeConfig": {
+    "url": "http://47.112.208.97:8000",
+    "functionName": "duel-online",
+    "configured": true,
+    "available": true
+  },
+  "alternateConfigPresent": {
+    "supabaseUrlOverride": false,
+    "anonKeyOverride": false,
+    "duelFunctionOverride": false,
+    "localOnlineEnv": false,
+    "dotEnv": false,
+    "dotEnvLocal": false
+  }
+}

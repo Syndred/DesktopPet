@@ -1,0 +1,49 @@
+唯一战场契约 · 2026-10-24（统一战斗目标）
+
+权威入口：runtime/services/battle-runtime.cjs。训练、好友、野外、领地均通过 battle feature
+生成 BattleSession、提交 act、读取 snapshot，并由同一个 BattleScreen -> BattleArena 渲染。
+packages/game-engine 的旧 TS 引擎不是桌面四模式的执行入口；差异与25对阵执行证据单独发布。
+
+共享 React 入口：ui/src/features/battle/BattleScreen.tsx
+<BattleScreen sessionId={实际战斗ID} returnTo={可选返回路由}/>
+共用 hook：useBattleSession(sessionId)。页面不得自行调用 executeRound 或绘制另一套 HUD/四技能。
+统一路由：/battle/session/:sessionId；训练/好友成功创建后进入该路由。
+探索 EncounterView 只把 encounter.battle.battleId 交给 BattleScreen，不保留旧技能栏、HUD或规则 fallback。
+领地挑战成功后进入其返回的确切 sessionId，不能依赖“最近一场”。
+
+上下文结算：battle.context({sessionId}) -> {returnTo, action?, resultPath?, name?, settled?}。
+battle.settleContext({sessionId,actionId,name?,showOnDesktop?}) 只转交已验证的 discovery.confirm 或
+garden.territorySettle。共享结算区渲染收服/领地按钮；来源服务仍掌握定位/归属/库存/幂等。
+普通战斗奖励和上下文结算分别有回执，不在 UI 自算伤害、经验、种子或领地归属。
+
+动画与事件：BattleRound.visualEvents 由主进程从权威 round_result 生成。
+阶段 windup -> release -> impact -> effects -> rest；分别表示起手、释放、命中/闪避、属性/治疗/持续伤害、
+回归待机/胜利。ResourceStage 使用 attack_windup/attack_release/skill/hit/walk/idle/victory，
+Motion 处理角色位移和真实数值反馈。HUD 只展示权威前态或后态，不重算中间伤害。
+动画期间四技能锁定；应用关闭动画或 reduced motion 时立即采用最终权威状态，不播放动作。
+恢复页面不重播旧回合；新回合（包括连续同技能）使用 sessionId+round 的独立序列。
+
+QA 隔离：仅消费 foundation 验证并提供的 services.get('qaScenario')，不建立第二套 QA gate。
+使用 LINGJING_QA_SCENARIO=unified-battle 和新建目录的 .lingjing-qa-profile.json。
+该目录可增加 battle-transport.json（runId、loopback endpoint、至少32字符 token、enemyActions）。
+模拟好友只接受此验证目录、本地场景账号与 loopback 连接；无配置时拒绝，不回退成真实云。
+模拟好友保留 OnlineDuelService 协议与同一内核，证据标 authority:simulated 与 scenarioId；
+界面仅以小型场景图标和 tooltip 标识，不把模拟回执称作真实云端成功。
+
+来源领域主进程 adapter（discovery service / services.get('garden')）：
+getBattleContext({ownerAccountId,sessionId}) -> BattleContext；由领域查回真实遭遇/领地记录。
+settleBattleContext({ownerAccountId,sessionId,actionId,name?,showOnDesktop?}) -> {ok,data:{resultPath,...}}。
+battle 不查询来源领域私有表，不接受 renderer 注入来源记录；两个 adapter 都复核当前 owner。
+
+反馈修正：水命中输出 kind:anger（目标权威回合后怒气），不创建 freeze/status。
+普攻对属性输出 kind:interrupt（被打断一方），该方释放阶段保持 idle，impact 才开始 hit，不提前耗尽受击帧；普攻对闪避才输出 kind:dodge。
+终结对闪避会命中并播放受击，不输出成功闪避事件。持续状态事件必须能在该回合 statusesAfter 找到。
+以上是 foundation/discovery/garden 共用事件契约；不得按选招补造状态或一律把 miss 画为闪避。
+领地 finished 的胜负均交来源 adapter 确认，失败按钮为“确认结果”，不显示占领；capture 仍仅胜利可确认。
+qaPreset({sessionId,preset:'charged'|'finisher'|'defending',enemyAction?}) 仅限验证 QA profile 的未出招会话；合法 charged 前态
+为我方HP85/怒气50、对方HP100/怒气30。明确保存 qaPreset/qaEnemyAction，规则仍由原内核执行。
+finisher 前态为120/50对12/0；defending 前态为12/0对120/50。证据必须标明预置，不能称为自然充能一局。
+闪避费用显示实际 min(当前怒气,20)：只有零怒且未用过免费闪避时为0；已有怒气即扣至多20。
+成功躲开普攻返30，含首次充能前态；不为说明文案改变 spendDodgeAnger 原行为。
+
+接口在实施与自验中；完成状态及源码 SHA 以 status/battle.json 和自验 manifest 为准。

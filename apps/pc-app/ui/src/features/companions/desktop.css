@@ -1,0 +1,13 @@
+.cp-desktop-document, .cp-desktop-document body { width: 100%; height: 100%; margin: 0; overflow: hidden; background: transparent !important; user-select: none; }
+.cp-desktop-document #root { width: 100%; height: 100%; }
+.cp-desktop-surface { width: 100%; height: 100%; padding: 25px 9px 8px; position: relative; display: flex; flex-direction: column; align-items: center; justify-content: end; }
+.cp-desktop-visual { width: 100%; flex: 1; min-height: 0; cursor: grab; touch-action: none; }
+.cp-desktop-visual:active { cursor: grabbing; }
+.cp-desktop-visual .resource-stage { border: none; border-radius: 0; min-height: 0; width: 100%; height: 100%; background: transparent; }
+.cp-desktop-visual .resource-stage::before { display: none; }
+.cp-desktop-name { font-size: 11px; padding: 3px 12px; border-radius: 20px; background: var(--cream, #fbfcff); color: var(--ink, #192f61); border: 1px solid var(--line, #e3eaf8); }
+.cp-desktop-tools { position: absolute; right: 6px; top: 8px; display: flex; gap: 4px; opacity: 0; z-index: 2; }
+.cp-desktop-surface:hover .cp-desktop-tools, .cp-desktop-tools:focus-within { opacity: 1; }
+.cp-desktop-tools .button { width: 28px; height: 27px; min-height: 0; padding: 5px; border-radius: 8px; background: var(--cream, #fbfcff); box-shadow: none; }
+.cp-desktop-message { position: absolute; top: 45px; right: 5px; left: 5px; padding: 5px 7px; font-size: 11px; background: var(--cream, #fbfcff); border: 1px solid var(--line, #e3eaf8); border-radius: 10px; text-align: center; pointer-events: none; }
+.is-sleeping .cp-desktop-visual { opacity: .9; }

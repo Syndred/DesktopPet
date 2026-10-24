@@ -1,0 +1,192 @@
+{
+  "at": "2026-10-24T14:20:00.047Z",
+  "codeCommit": "941d2535cee497bc21df880c9ac0607dac5a71ae",
+  "sourceFoundation": "bbb4395",
+  "sharedPortraitCommit": "1dac04e",
+  "auditCommit": "9915684",
+  "scope": "Focused HUD, command interaction, canonical portraits and original HP authority. No repeated full regression.",
+  "nativeWindowRun": {
+    "at": "2026-10-24T14:03:15.876Z",
+    "folder": "artifacts/battle/windows-1792850588849",
+    "standard": {
+      "width": 1280,
+      "height": 846,
+      "dpr": 1.25
+    },
+    "wide": {
+      "width": 1440,
+      "height": 900,
+      "dpr": 1.25
+    }
+  },
+  "reportRun": {
+    "at": "2026-10-24T14:18:13.360Z",
+    "reportId": "battle-1c7f340f-902b-41b2-b00e-fcc48db6b9b6",
+    "preservedReport": true,
+    "portraitCount": 4
+  },
+  "checks": [
+    "1280 and 1440 native Electron window geometry; all HUD names, icon labels, health and anger remain within the light background beyond the 8px decorative cut",
+    "Six shared portrait-mode SVGs in battle HUD and party; four actual independently adopted party instances retain their resource identity",
+    "Four large horizontal command cards, aligned actual state strips, selected border, flat hover, keyboard focus and real unavailable-ultimate Tooltip",
+    "Three consecutive real elemental attacks; third skill advances from charge to its separate release frame",
+    "Companion growth HP124 is preserved; combatProfile, rules and battle HUD use the original normalized HP120 authority",
+    "Four shared portrait-mode SVGs in a real historical report; reading the cloned test profile does not change report or reward",
+    "Current built output and battle asset adapter hashes match the application used by the targeted verification"
+  ],
+  "notVerifiedInThisRun": [
+    "Foundation integrated four-action acceptance, final approved-design review and global regression",
+    "Full battle completion, restart and reward flow were not repeated; previous evidence remains historical",
+    "Live two-account online duel, cross-device rewards and production service health"
+  ],
+  "screenshotAndEvidenceHashes": [
+    {
+      "file": "02-live-1280.png",
+      "sha256": "2db4503959371d5405ab8867651bd2939b777018089f881ffa494b31157c207f"
+    },
+    {
+      "file": "02-live-1280.json",
+      "sha256": "bdce4bc47adcd3c993a7852fbf66007cd88ace39ff205b6d69f3b799f6e7f6df"
+    },
+    {
+      "file": "02-live-1440.png",
+      "sha256": "54161a1cd99e66bb560f06ce9badcca7a38cfc8ff45cc1bf543be7893c087c1c"
+    },
+    {
+      "file": "02-live-1440.json",
+      "sha256": "08a85a5ae3b78a483c350b5d29300a58782088d0cf03717c82b1136f9caf3ae0"
+    },
+    {
+      "file": "action-skill-release.png",
+      "sha256": "5e9c9e81c3ba1638e2387caa060e2c70658149121f238bbeca88fafd0dcd84f1"
+    },
+    {
+      "file": "actions-hover.png",
+      "sha256": "aaae4a2962474e7657939981eaaa65f950d63a4f86f493133a6b116fada5befe"
+    },
+    {
+      "file": "actions-keyboard-focus.png",
+      "sha256": "76694bbdbcea67e98e841c4ef98367daeeeb4c8902b95e3ab26db8d55d172272"
+    },
+    {
+      "file": "actions-unavailable-tooltip.png",
+      "sha256": "b7017312b0c2bd2a37e357607330bb0ea4fbb5ed89598dfc203c4b3e4d785129"
+    },
+    {
+      "file": "visual-recheck.json",
+      "sha256": "801d1a1dcce69db80ef39da8057cbea06354b5232d0bb0f0015fbf67bf2cde33"
+    },
+    {
+      "file": "report-portraits.png",
+      "sha256": "fdd71d574741cf35060664a3e955c9e83cc65ce3064e927c6105fc26c4e5f35f"
+    },
+    {
+      "file": "report-portraits.json",
+      "sha256": "1e5728d6e9a3611314029ce1492bda3af403902de2128a5dce58effef522b799"
+    }
+  ],
+  "testedBuildHashes": [
+    {
+      "file": "main/index.cjs",
+      "sha256": "feb68bb7a00e13599d52d2b064084b73c52ba7b8d80b01f5dc0c4be56a8d8aa6"
+    },
+    {
+      "file": "preload/index.cjs",
+      "sha256": "704f2f8e9dcf015b4577ef333a00a029ba3e87cb1d40ebea9384fdb53ef81356"
+    },
+    {
+      "file": "ui/assets/account-artwork-xSsPx11U.png",
+      "sha256": "6d3eb3811b611f8cba44786251d6e325ecd8090ca41523b22bcd55d163623af9"
+    },
+    {
+      "file": "ui/assets/brand-mark-DlZ0bfA1.png",
+      "sha256": "0fa83a572b4219aae3c8b07dc741e19bd508ab895444cff9e478529bb6a507fa"
+    },
+    {
+      "file": "ui/assets/browserAll-CawjZlbk.js",
+      "sha256": "ab3271b5c8ee8c109922c1625e5cf6271021c7aa9fee368f790a8fdd654e4956"
+    },
+    {
+      "file": "ui/assets/companionship-room-v1-DVsfRJRu.png",
+      "sha256": "6e9b1ac9ef4c9629b6d13e2c8a8ffd0692cf81b01c5161dbfc865b4c16d75489"
+    },
+    {
+      "file": "ui/assets/desktop-artwork-Dni2yrGU.png",
+      "sha256": "36b6b61255f9579785c90c05b4bcb48f1ca68a55f1910d2ff407f40e09e133c7"
+    },
+    {
+      "file": "ui/assets/garden-food-atlas-v1-DiKuftwr.png",
+      "sha256": "c1eb9d27d0b0863c8cbe42cb0450f0373619aafa435ba8d5864e57205d24ca93"
+    },
+    {
+      "file": "ui/assets/garden-terrace-v1-DxO0gG7c.png",
+      "sha256": "a9ce9afea8e43d05f303cafa3b6b3139dcd7b1543590b11306ea336ee5b51df7"
+    },
+    {
+      "file": "ui/assets/index-BU_OPZWp.js",
+      "sha256": "879d2d1b090fab02b2aaeead1be51f5dc4cce5f2f06b3396603d8b1a3ac722a1"
+    },
+    {
+      "file": "ui/assets/index-JhYLub38.css",
+      "sha256": "4574fbe68a01a65012613cdba4a537af6e791de31b826ffedc886fc3df45cbb7"
+    },
+    {
+      "file": "ui/assets/index-kyuirHJd.js",
+      "sha256": "9742e2ab10f0c6802ed8d75a5cc07b95fe1910a2f2f9b00d23d72aab6476cb60"
+    },
+    {
+      "file": "ui/assets/init-BUPVhecc.js",
+      "sha256": "9bae1a216b3564d723e05b2a58e1c1546524ae0809c2904f222f3f4e98a16854"
+    },
+    {
+      "file": "ui/assets/maplibre-gl-worker-BJZj9QkU.js",
+      "sha256": "214560363975d3075c01106123b51ed094605f3526c8a7b0d1699f83eb25fcd7"
+    },
+    {
+      "file": "ui/assets/night-courtyard-v1-DYpzU6pT.png",
+      "sha256": "ef23d195849208c37a8bbad220e6e59f38fb03591792d982b837516a37906bf4"
+    },
+    {
+      "file": "ui/assets/ParticleBuffer-tldKkcWq.js",
+      "sha256": "a690692f044b39e9e4468216ff012638d0a8c1a75e8bde6ecf8a9bfddadc2959"
+    },
+    {
+      "file": "ui/assets/webworkerAll-CXY329U4.js",
+      "sha256": "cc71663a7643699c4ca7a529221a0fbeae4c6ce65e160322895043fdefeb500a"
+    },
+    {
+      "file": "ui/assets/wild-lake-v1-k7Ftd-7_.png",
+      "sha256": "9740152e788e60443941057d02e55f819821be7037571a1ee9451f727c63ec9b"
+    },
+    {
+      "file": "ui/assets/yuwan-sprites-v1-q8I7N_cj.png",
+      "sha256": "f2ccc23b6a6afd66ae123adc71f984d22789fde0d51d08d0fe7790756e435739"
+    },
+    {
+      "file": "ui/brand/app-icon.png",
+      "sha256": "1e269281ce4d2fdd73a47cbf4c951c1937f6f8390dab23aff1a986d840bd688e"
+    },
+    {
+      "file": "ui/brand/logo-mark.png",
+      "sha256": "0fa83a572b4219aae3c8b07dc741e19bd508ab895444cff9e478529bb6a507fa"
+    },
+    {
+      "file": "ui/illustrations/companionship-room-v1.png",
+      "sha256": "6e9b1ac9ef4c9629b6d13e2c8a8ffd0692cf81b01c5161dbfc865b4c16d75489"
+    },
+    {
+      "file": "ui/illustrations/yuwan-character-v1.json",
+      "sha256": "316be839b0389e1b559d04120f3991c79871b51cb7b575f090ebd13d1dc1c47c"
+    },
+    {
+      "file": "ui/illustrations/yuwan-sprites-v1.png",
+      "sha256": "f2ccc23b6a6afd66ae123adc71f984d22789fde0d51d08d0fe7790756e435739"
+    },
+    {
+      "file": "ui/index.html",
+      "sha256": "754ddcbc0874c428c8b5b937b3cc374de5baca429972a93ea727a7d526bb3fa1"
+    }
+  ],
+  "battleAssetAdapterHash": "33432f726b2553ca0d574456eb415de678f7450da7b7ea475a693f5aa8608ec6",
+  "errors": []
+}

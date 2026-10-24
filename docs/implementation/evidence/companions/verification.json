@@ -1,0 +1,68 @@
+{
+  "module": "companions",
+  "implementationCommit": "1b07e6892b00002fba6ff4d19d2828f47ee02baa",
+  "date": "2026-10-24",
+  "environment": "Real Windows Electron 36.9.5, production electron-vite build, isolated test profile, actual shared SQLite and verified local accounts",
+  "lifecycle": {
+    "result": "passed",
+    "source": "artifacts/companions/electron-4yE4tp/evidence.json",
+    "checks": [
+      "Three adoptions of big-fish-gentle produce distinct petIds and three visible sandboxed native windows using the shared React/Pixi route",
+      "Rename one pet through the actual UI and production preload/IPC",
+      "Harvest an offline-matured rice crop, craft rice, feed only the specified pet; actual stock decreases by one, other pets stay unchanged",
+      "Desktop, chat, battle and guard selections remain independent",
+      "Close and relaunch restores names, growth, visibility, modes and saved global desktop positions",
+      "Actual account A to B transition removes A windows; a forged renderer owner cannot mutate A pet; login A restores three windows",
+      "Six archived legacy animal records and one original battle report remain unchanged"
+    ],
+    "instanceIds": [
+      "pet-a26dc6ae-a749-4eee-8ff6-02f5f210cb1b",
+      "pet-d0ad42c2-43e2-47ab-a92f-be5f9094daf8",
+      "pet-2b6a3889-2598-491d-a1ba-87936cca36e7"
+    ]
+  },
+  "nativeDrag": {
+    "result": "passed",
+    "source": "artifacts/companions/electron-4yE4tp/native-drag.json",
+    "method": "Windows Computer Use sky.drag on the real shared React/Pixi desktop window",
+    "target": "pet-a26dc6ae-a749-4eee-8ff6-02f5f210cb1b",
+    "preparedPosition": { "x": 8, "y": 8 },
+    "savedPosition": { "x": 85, "y": 62 },
+    "unchangedPositions": [{ "name": "小蓝", "x": 560, "y": 469 }, { "name": "饭团", "x": 800, "y": 469 }]
+  },
+  "finalUi": {
+    "result": "passed",
+    "source": "artifacts/companions/ui-2d-7ZlLnF/evidence.json",
+    "checks": [
+      "Real public Radix Dialog: Chinese close name, initial input focus, Tab containment, Escape and trigger focus return",
+      "Fish and Blue chat entry selects the precise petId in the real ConversationService; saved local memories stay isolated",
+      "Real Radix Tabs arrow/End navigation, named Slider Thumb and Select keyboard/Escape/focus return",
+      "Official Checkbox/Input in adoption; no model-viewer or 3D import label in the live feature",
+      "Application animation switch pauses actual desktop Pixi pixels; system reduced-motion preference is respected at initialization"
+    ],
+    "pausedDesktopCanvasSha256": "eba0589c0628fc4cdab8ac7aeb3a7fefc9197124269c3b1d8c6fb861d8fb976e",
+    "additionalKeyboardPersistenceSource": "artifacts/companions/electron-4yE4tp/radix-ui.json",
+    "additionalKeyboardPersistenceChecks": ["Switch Space persists desktop visibility", "Slider ArrowRight/ArrowLeft persists scale"]
+  },
+  "automatedChecks": [
+    { "command": "node --test apps/pc-app/runtime/features/companions/tests/service.test.cjs apps/pc-app/runtime/features/companions/tests/accounts-boundary.test.cjs", "result": "12 passed, 0 failed" },
+    { "command": "node node_modules/typescript/bin/tsc --noEmit -p apps/pc-app/ui/tsconfig.json", "result": "passed" },
+    { "command": "node node_modules/eslint/bin/eslint.js apps/pc-app/ui/src/features/companions --ext .ts,.tsx", "result": "passed" },
+    { "command": "npm run build:pc", "result": "passed; existing bundle-size and shared ResourceStage chunk warnings" },
+    { "command": "git diff --check", "result": "passed" }
+  ],
+  "screenshots": [
+    { "path": "overview.png", "reference": "docs/design/2026-10-24/full-ui/01-companions-and-desktop.png", "comparison": "Illustrated room hero, real per-pet status panel, horizontal independent roster, flat controls, shared brand shell" },
+    { "path": "detail.png", "reference": "docs/design/2026-10-24/full-ui/03-pet-detail-and-adoption.png", "comparison": "Large 2D character on the left; growth, actual stats, skills, memories and appearance tabs on the right" },
+    { "path": "adoption.png", "reference": "docs/design/2026-10-24/full-ui/03-pet-detail-and-adoption.png", "comparison": "Template cards, categories, owned filter, large preview, nickname and real adoption action" },
+    { "path": "rename-dialog.png", "comparison": "Actual shadcn Radix modal and Chinese controls" },
+    { "path": "desktop-pixi.png", "comparison": "Actual transparent native Electron window rendering the registered 2D atlas through shared Pixi ResourceStage" }
+  ],
+  "boundaries": [
+    "UI counts and growth values use actual stored data; design-board examples are not fabricated as owned pets",
+    "Current catalog has three personalities sharing the approved whale-girl atlas; separate 2D animal artwork is not supplied and the animal tab honestly shows an empty state",
+    "Old 3D metadata is archived without a new model renderer; original user files and history are retained",
+    "No online AI response or cloud synchronization success is claimed by this feature acceptance",
+    "Foundation owns the final all-module Windows release regression"
+  ]
+}

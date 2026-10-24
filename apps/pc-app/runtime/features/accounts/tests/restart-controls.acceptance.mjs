@@ -1,0 +1,54 @@
+import { _electron as electron } from "playwright";
+import assert from "node:assert/strict";
+import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { resolve, join } from "node:path";
+const previous = resolve(process.env.ACCOUNTS_PREVIOUS_EVIDENCE || "artifacts/accounts/electron-1792845865236");
+const output = resolve(`artifacts/accounts/restart-controls-${Date.now()}`); mkdirSync(output, { recursive: true });
+const env = { ...process.env, PET_USER_DATA_DIR: join(previous, "profile") }; delete env.ELECTRON_RUN_AS_NODE;
+const application = await electron.launch({ args: [resolve(".")], env });
+const evidence = { at: new Date().toISOString(), previousWorkflow: previous, checks: [] };
+const record = (name, data) => { evidence.checks.push({ name, data }); console.log("PASS", name); };
+try {
+  const page = await application.firstWindow(); await page.waitForLoadState("domcontentloaded");
+  await page.evaluate(() => { document.title = "灵境 · 公共控件验收（独立数据）"; location.hash = "#/account"; });
+  await page.getByRole("heading", { name: "把每一段陪伴，好好保存。" }).waitFor();
+  const session = await page.evaluate(() => window.lingjing.invoke("accounts", "session"));
+  const prefs = await page.evaluate(() => window.lingjing.invoke("accounts", "settingsGet"));
+  assert.equal(session.ok, true); assert.equal(session.data.currentUser.username, "云朵测试甲"); assert.equal(session.data.persistence, "secure");
+  assert.equal(prefs.data.document.desktop.volume, 37); assert.equal(prefs.data.document.desktop.clickThrough, false);
+  record("actual restart restores DPAPI-verified session, profile and settings", { session: session.data, settings: prefs.data });
+  await page.screenshot({ path: join(output, "account.png") });
+  await page.getByRole("link", { name: /桌面与行为/ }).click(); await page.getByRole("switch", { name: "界面动效", exact: true }).waitFor();
+  assert.equal(await page.getByRole("slider").count(), 1);
+  evidence.sliderAccessibleName = await page.getByRole("slider").getAttribute("aria-label");
+  assert.equal(evidence.sliderAccessibleName, "音量");
+  const animations = page.getByRole("switch", { name: "界面动效", exact: true }); await animations.click();
+  await page.getByRole("button", { name: "保存设置", exact: true }).click(); await page.getByText("设置已保存。", { exact: true }).waitFor();
+  await page.waitForFunction(() => document.querySelector(".app-page-motion")?.getAttribute("data-motion") === "reduced");
+  record("saved application animation switch reaches shared Motion provider");
+  await animations.click(); await page.getByRole("button", { name: "保存设置", exact: true }).click();
+  await page.waitForFunction(() => document.querySelector(".app-page-motion")?.getAttribute("data-motion") === "enabled");
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.reload(); await page.getByRole("heading", { name: "按你的节奏，安静陪伴。" }).waitFor();
+  await page.evaluate(() => { document.title = "灵境 · 公共控件验收（独立数据）"; });
+  await page.waitForFunction(() => document.querySelector(".app-page-motion")?.getAttribute("data-motion") === "reduced");
+  record("system reduced motion at page load reaches the shared route wrapper");
+  await page.evaluate(() => { document.querySelector(".main-content").scrollTop = 0; }); await page.screenshot({ path: join(output, "settings.png") });
+  await page.getByRole("link", { name: /账号与同步/ }).click();
+  await page.getByRole("button", { name: "恢复本地备份", exact: true }).click();
+  console.log("NATIVE_DIALOG", "keyboard-preview", join(previous, "export.lingjing.json"));
+  const dialog = page.getByRole("dialog", { name: "预览恢复内容" }); await dialog.waitFor({ timeout: 180_000 });
+  const modalBox = await dialog.boundingBox(), viewport = await page.evaluate(() => ({ width: innerWidth, height: innerHeight }));
+  assert.ok(Math.abs(modalBox.x + modalBox.width / 2 - viewport.width / 2) < 5);
+  assert.ok(Math.abs(modalBox.y + modalBox.height / 2 - viewport.height / 2) < 5);
+  record("restore dialog remains centered in the real Electron viewport", { modalBox, viewport });
+  for (let i = 0; i < 9; i++) { await page.keyboard.press("Tab"); assert.equal(await dialog.evaluate(node => node.contains(document.activeElement)), true); }
+  await page.screenshot({ path: join(output, "restore-dialog.png") });
+  await page.keyboard.press("Escape"); await dialog.waitFor({ state: "hidden" });
+  await page.waitForFunction(() => document.activeElement?.textContent?.trim() === "恢复本地备份");
+  record("shared Radix dialog traps Tab, closes on Escape and returns focus to the opener");
+  evidence.priorWorkflowChecks = JSON.parse(readFileSync(join(previous, "failure.json"), "utf8")).checks;
+  evidence.passed = true; writeFileSync(join(output, "evidence.json"), JSON.stringify(evidence, null, 2)); console.log("ACCOUNTS_RESTART_CONTROLS_PASSED", output);
+} catch (error) {
+  evidence.error = { message: error.message, stack: error.stack }; writeFileSync(join(output, "failure.json"), JSON.stringify(evidence, null, 2)); console.error(error); process.exitCode = 1;
+} finally { await application.close(); }

@@ -1,0 +1,27 @@
+{
+  "at": "2026-10-24T14:38:44.064Z",
+  "sourceCommit": "4c051728fcf2b943abfc5efbb549808957c9ee1d",
+  "sourceDirtyFiles": [],
+  "scenario": {
+    "schemaVersion": 1,
+    "application": "lingjing",
+    "scenario": "unified-battle",
+    "runId": "f4b9964a-0e12-4e8c-b0c2-7d1946a54b39",
+    "isolated": true,
+    "profilePath": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\artifacts\\qa\\unified-battle\\qa-1792852724056-f4b9964a",
+    "createdAt": "2026-10-24T14:38:44.057Z",
+    "env": {
+      "LINGJING_QA_SCENARIO": "unified-battle",
+      "PET_USER_DATA_DIR": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\artifacts\\qa\\unified-battle\\qa-1792852724056-f4b9964a"
+    }
+  },
+  "checks": [
+    "Ordinary Electron startup has no simulation descriptor or scene indicator",
+    "QA is explicitly marked with a keyboard-accessible tooltip and cannot be enabled through IPC",
+    "Actual Electron restart restores only the independent QA account and the same run provenance"
+  ],
+  "errors": [],
+  "owner": "local-9492def0-3739-426b-aa7d-2d5e26016307",
+  "registrationOk": true,
+  "passed": true
+}

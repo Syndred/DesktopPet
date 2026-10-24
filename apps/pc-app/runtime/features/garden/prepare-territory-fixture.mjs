@@ -1,0 +1,14 @@
+import {cpSync,existsSync,mkdirSync,readFileSync,writeFileSync} from 'node:fs';
+import {resolve} from 'node:path';
+import {createRequire} from 'node:module';
+import {DatabaseSync} from 'node:sqlite';
+const require=createRequire(import.meta.url),source=resolve('artifacts/garden/integrated-electron'),output=resolve('artifacts/garden/territory-electron');
+if(existsSync(output))throw new Error('Refuse to overwrite an existing fixture');
+mkdirSync(output,{recursive:true});cpSync(resolve(source,'profile'),resolve(output,'profile'),{recursive:true});
+const run=JSON.parse(readFileSync(resolve(source,'run.json'),'utf8'));run.phases=[];
+run.territoryFixture={id:'qa:garden-garrison',name:'受控驻守验收庭院（非实际占领）'};
+const db=new DatabaseSync(resolve(output,'profile/lingjing.sqlite'));
+const {TerritoryService}=require(resolve('apps/pc-app/runtime/features/garden/territories.cjs'));
+new TerritoryService({db,get(){return null;}}).importRecord({id:run.territoryFixture.id,name:run.territoryFixture.name,regionName:'独立 QA 资料目录 / 仅验证驻守交互',ownerAccountId:run.ownerAccountId,revision:1,captureMultiplier:2,provenance:'controlled-ui-fixture',boundary:[{lat:31,lng:121},{lat:31.006,lng:121},{lat:31.006,lng:121.006},{lat:31,lng:121.006}]});
+db.close();writeFileSync(resolve(output,'run.json'),JSON.stringify(run,null,2));
+console.log(JSON.stringify({output,fixture:true,realGeographicAcceptance:false}));

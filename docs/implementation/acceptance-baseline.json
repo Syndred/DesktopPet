@@ -1,0 +1,16 @@
+{
+  "frozenAt": "2026-10-24T13:13:34.151Z",
+  "commit": "e69c377f606f01fed899602a5f37619047f2de79",
+  "visualAcceptance": "pending-independent-review",
+  "scope": "19 approved pages; latest request adds typography, spacing, more 2D appearances/actions and complete battle skill controls",
+  "screenshots": "artifacts/foundation/pages",
+  "knownFunctionalFinding": "Route transition can remain at opacity 0 after battle/report navigation; correction under verification",
+  "doNotClaimVisualPass": true,
+  "routeCorrection": {
+    "cause": "Outgoing modules observed the next global route and mounted a new layout during exit",
+    "fix": "Retain a route-scoped location snapshot until AnimatePresence removes the page",
+    "verifiedAt": "2026-10-24T13:19:17.917Z",
+    "evidence": "artifacts/foundation/pages/evidence.json",
+    "result": "battle to report to chat visible, completed exit nodes removed"
+  }
+}
