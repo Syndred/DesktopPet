@@ -22,11 +22,21 @@ Garden 的挑战回执、领地版本与战斗上下文校验保持原样；重�
 隔离定位直接消费 foundation 已验证的 services.get('qaScenario')，仅 unified-battle、
 simulated/isolated 且 profilePath 与 services.paths.userData 匹配时启用。
 正常启动无适配器；模拟位置 source 始终为 simulated，并绑定场景 runId。
+定位数据来自 discovery 的公共 QA 适配器，领地只读取其快照并调用同一质量与身份校验；
+入口显式申请并释放 discovery 前台定位租约，不再生成另一份固定坐标。
 模拟领地 ID 和 provenance 独立，不允许演练位置挑战真实地理记录。
-只有定位被模拟，战斗、胜负、成长、种子、归属、驻守、事务与重启走实际产品服务。
+模拟内容为定位以及公共 battle.qaPreset 标明的合法前态/对手选招；不覆盖规则或胜负。
+胜利用 charged+对手闪避，失败用 defending+对手属性攻击，先实际出一回合再重启恢复。
+胜负、成长、种子、归属、驻守、事务与重启走实际产品服务，不宣称自然充能或实时云端一局。
 公共标题栏 flask/tooltip 及 garden snapshot.scenario 标明模拟；不声明实时云端或物理GPS成功。
 
 自验目标：两个新建 QA profile 分别覆盖胜/负，实际按钮开战、确定 sessionId、
 离开页面与完整重启后恢复、公共结果确认、种子/库存/领地/驻守精确读回及同请求重放。
 source SHA、模拟边界、实际截图和 SQLite 回执随最终验收资料提交，主会话复验前不标记完成。
 HTTPS/跨设备能力按用户最新要求暂缓，不再作为本轮阻塞。
+
+原生入口：node apps/pc-app/runtime/features/garden/verification/unified-territory.electron.mjs
+依次使用 prepare、visual、verify；最后 export-unified-evidence.mjs 导出已验证证据。
+脚本置于 verification/，消费公共打包排除规则；普通产品不携带测试启动器。
+旧版初始 QA 目录保留。最终使用新的 namespaced-v2 档案，凭据只留 ignored 目录，
+重启通过公共 accounts.login 重新登录同一 QA 身份，不模拟自动登录或安全凭据恢复。

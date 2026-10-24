@@ -25,7 +25,6 @@ export function TerritoryMap({ territories, owner, onLocated, simulated=false }:
     if(locating.current || document.hidden)return;
     locating.current=true;setReading(true);
     try {
-      if(simulated){await onLocated();return;}
       // The shared hook maintains continuous leases only on discovery routes.
       // Territory uses the same public policy for this explicit foreground read.
       const lease=await window.lingjing.invoke('discovery','setExploring',{active:true}).catch(()=>null);
@@ -35,7 +34,7 @@ export function TerritoryMap({ territories, owner, onLocated, simulated=false }:
     } finally {
       locating.current=false;setReading(false);
       // A navigation to discovery hands control to its own mounted hook.
-      if(!simulated&&!/^#\/discovery(?:\/|$|\?)/.test(window.location.hash))await window.lingjing.invoke('discovery','setExploring',{active:false}).catch(()=>{});
+      if(!/^#\/discovery(?:\/|$|\?)/.test(window.location.hash))await window.lingjing.invoke('discovery','setExploring',{active:false}).catch(()=>{});
     }
   }
   return <div className="garden-map garden-shared-map" aria-label="领地现实地图">
