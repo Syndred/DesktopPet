@@ -4,8 +4,8 @@ const { isQuiet, notificationPolicy } = require("./settings.cjs");
 
 /** Electron bindings live here; domain services never import Electron in Node tests. */
 function createDesktopHost(services, electron) {
-  let settings = null, foregroundFullscreen = false, exploring = false;
-  let monitor = null, stdout = "", permissionInstalled = false;
+  let settings = null, foregroundFullscreen = false, nativeFullscreen = false, exploring = false;
+  let monitor = null, monitorReady = false, stdout = "", permissionInstalled = false;
   const ignored = new Set(), hiddenByFullscreen = new Set(), hiddenByLimit = new Set();
   const cleanups = [];
   const bindings = new Map();
@@ -40,7 +40,9 @@ function createDesktopHost(services, electron) {
         };
         bindings.set(win.id, binding);
       }
-      win.setAlwaysOnTop(settings.desktop.alwaysOnTop, settings.desktop.alwaysOnTop ? "floating" : undefined);
+      // Match the retained Windows host. The floating level is repositioned behind the
+      // taskbar and can lose topmost status on this Windows desktop (Electron 36).
+      win.setAlwaysOnTop(settings.desktop.alwaysOnTop, settings.desktop.alwaysOnTop ? "screen-saver" : undefined);
       const binding = bindings.get(win.id);
       const ignoredNow = settings.desktop.clickThrough && binding.requested;
       binding.original(ignoredNow, { forward: true });
@@ -53,6 +55,11 @@ function createDesktopHost(services, electron) {
       if (!hide && hiddenByFullscreen.has(win.id) && !overLimit) { win.showInactive(); hiddenByFullscreen.delete(win.id); }
     }
     publish();
+  };
+  const updateFullscreen = () => {
+    const ownFullscreen = electron.BrowserWindow.getAllWindows().some(win => !win.isDestroyed() && win.isFullScreen() && win.isFocused());
+    const next = nativeFullscreen || ownFullscreen;
+    if (next !== foregroundFullscreen) { foregroundFullscreen = next; applyWindows(); }
   };
   function installPermissions() {
     if (permissionInstalled || !electron.session?.defaultSession) return;
@@ -70,6 +77,10 @@ function createDesktopHost(services, electron) {
   let closingApplication = false;
   const onWindow = (_event, win) => {
     win.once("ready-to-show", () => queueMicrotask(applyWindows));
+    for (const name of ["enter-full-screen", "leave-full-screen", "focus", "blur", "closed"]) {
+      const handler = () => queueMicrotask(updateFullscreen);
+      win.on(name, handler); cleanups.push(() => { if (!win.isDestroyed()) win.removeListener(name, handler); });
+    }
     win.on("close", () => {
       if (!settings || settings.desktop.closeToTray || closingApplication) return;
       if (getPetWindows().includes(win)) return;
@@ -86,9 +97,9 @@ function createDesktopHost(services, electron) {
     monitor.stdout.on("data", chunk => {
       stdout += chunk.toString();
       const lines = stdout.split(/\r?\n/); stdout = lines.pop() || "";
+      for (const line of lines) if (line.startsWith("diag:")) services.events?.emit("accounts:fullscreen-diagnostic", { bounds: line.slice(5) });
       for (const line of lines) if (line === "true" || line === "false") {
-        const next = line === "true";
-        if (next !== foregroundFullscreen) { foregroundFullscreen = next; applyWindows(); }
+        monitorReady = true; nativeFullscreen = line === "true"; updateFullscreen();
       }
     });
     monitor.on("error", () => services.events?.emit("accounts:host-warning", { code: "FULLSCREEN_MONITOR_UNAVAILABLE" }));
@@ -149,7 +160,8 @@ function createDesktopHost(services, electron) {
     status() {
       const windows = getPetWindows();
       return { startup: electron.app.getLoginItemSettings?.().openAtLogin ?? false,
-        fullscreenMonitor: Boolean(monitor && !monitor.killed), foregroundFullscreen,
+        fullscreenMonitor: Boolean(monitor && !monitor.killed), fullscreenMonitorReady: monitorReady, foregroundFullscreen,
+        fullscreenSource: foregroundFullscreen ? nativeFullscreen ? "win32" : "electron" : null,
         companionWindows: windows.length, clickThroughWindows: [...ignored],
         windows: windows.map(w => ({ id: w.id, alwaysOnTop: w.isAlwaysOnTop(), visible: w.isVisible() })),
         locationAllowed: this.mayUseLocation(), emotionStatistics: this.mayCollectEmotion(),
@@ -161,7 +173,7 @@ function createDesktopHost(services, electron) {
       ignored.clear(); hiddenByFullscreen.clear(); hiddenByLimit.clear();
     },
     dispose() {
-      clearInterval(everyMinute); monitor?.kill(); cleanups.forEach(fn => fn?.());
+      settings = null; clearInterval(everyMinute); monitor?.kill(); cleanups.forEach(fn => fn?.());
       for (const binding of bindings.values()) if (!binding.win.isDestroyed()) binding.win.setIgnoreMouseEvents = binding.original;
       bindings.clear();
     }
