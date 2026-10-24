@@ -28,7 +28,15 @@ function getBattleRules() {
   return { id: 'five-elements-standard-v1', label: '标准五行对战', vitalPolicy: 'normalized',
     maxHp: STANDARD_MAX_HP, maxAnger: MAX_ANGER, companionStatsApplied: false,
     baseDamage: { ...BASE_DAMAGE }, ultimateAnger: ULTIMATE_ANGER_THRESHOLD,
-    ultimateCost: ULTIMATE_ANGER_COST, ultimateHeal: ULTIMATE_FIXED_HEAL, dodgeMaxCost: DODGE_MAX_COST };
+    ultimateCost: ULTIMATE_ANGER_COST, ultimateHeal: ULTIMATE_FIXED_HEAL, dodgeMaxCost: DODGE_MAX_COST,
+    advantage: { ...ELEMENT_ADVANTAGE_CHAIN },
+    elementEffects: {
+      metal: { label: '易伤', description: '每层受伤×1.5，最多5层' },
+      wood: { label: '寄生', description: '每层回合末吸取2生命，最多5层' },
+      earth: { label: '迟钝', description: '每层伤害×0.5，最多5层' },
+      water: { label: '降怒', description: '命中后对方怒气向下取半，不增加受击怒气' },
+      fire: { label: '燃烧', description: '回合末按当前生命8%×层数伤害，最多5层' }
+    } };
 }
 
 class BattleRuntimeService {

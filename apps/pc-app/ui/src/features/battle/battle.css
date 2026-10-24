@@ -251,6 +251,35 @@
 .battle-skill-status progress { position: absolute; inset: 0; width: 100%; height: 100%; appearance: none; opacity: .5; }
 .battle-skill-status progress::-webkit-progress-bar { background: #edf0f8; }
 .battle-skill-status progress::-webkit-progress-value { background: #cdddf5; }
+.battle-skill-status > span { display: inline-flex; align-items: center; justify-content: center; gap: 5px; }
+.battle-screen-toolbar { display: flex; align-items: center; gap: 10px; margin: 0 0 16px; min-height: 44px; }
+.battle-screen-toolbar h1 { margin: 0; font-size: var(--text-title, 28px); font-weight: var(--weight-title, 700); line-height: 40px; }
+.battle-screen-toolbar > .button { padding: 7px; }
+.battle-mode-mark, .battle-scenario-mark { display: inline-flex; align-items: center; padding: 7px; color: #7495c8; }
+.battle-scenario-mark { margin-left: auto; color: #a2844e; }
+.battle-screen .battle-live-layout { margin-top: 0; }
+.battle-actor-slot { position: relative; min-width: 0; height: 100%; }
+.battle-stage .battle-actor-slot > .battle-portrait { height: 100%; }
+.battle-hit-feedback { position: absolute; z-index: 4; top: 30%; left: 50%; display: grid; place-items: center; min-width: 30px; min-height: 30px; color: #fff3eb; text-shadow: 0 2px 3px #522f4c; font-size: 29px; font-weight: 800; pointer-events: none; }
+.battle-hit-feedback.heal { color: #b1f3b7; }
+.battle-hit-feedback.anger { display: flex; align-items: center; color: #bce9ff; font-size: 21px; }
+.battle-hit-feedback.status { width: 38px; height: 38px; border: 2px solid #fff8; border-radius: 50%; background: #d5eaffcf; color: #4e91d0; box-shadow: 0 0 25px #c2eaff90; }
+.battle-hit-feedback.status > svg { width: 25px; height: 25px; }
+.battle-hit-feedback.status.element-fire { background: #ffe0b8d9; color: #e3814e; }
+.battle-hit-feedback.status.element-wood { background: #caf2d5d9; color: #4e9e71; }
+.battle-hit-feedback.status.element-metal { background: #ffeeb9d9; color: #bd9751; }
+.battle-hit-feedback.status.element-earth { background: #ead2b7d9; color: #9d7759; }
+.battle-compact-status { position: absolute; right: 12px; bottom: 10px; display: inline-flex; align-items: center; gap: 5px; padding: 5px 9px; border-radius: 7px; background: #203b62b8; color: #f5f9ff; font-size: 12px; }
+.battle-status-chip { display: inline-flex; align-items: center; gap: 2px; }
+.battle-status-chip small { opacity: .8; }
+.battle-event-row { display: flex; align-items: center; gap: 7px; }
+.battle-event-row strong { flex: 1; font-size: 12px; }
+.battle-log-damage { color: #ba7d77; font-variant-numeric: tabular-nums; }
+.battle-log-empty { display: flex; align-items: center; justify-content: center; gap: 12px; min-height: 86px; }
+.battle-complete-actions { display: flex; align-items: center; justify-content: center; gap: 10px; }
+.battle-capture-dialog { padding: 24px; min-width: 300px; }
+.battle-capture-dialog label { display: block; margin: 18px 0 8px; }
+.battle-capture-dialog .battle-two-buttons { margin-top: 20px; }
 .battle-complete-actions { padding: 18px; text-align: center; background: #f5f9ff; }
 .battle-live-sidebar { min-width: 0; }
 .battle-page .battle-side-panel { display: flex; flex-direction: column; height: 100%; padding: 16px 13px 13px; margin: 0; border-radius: 10px; }

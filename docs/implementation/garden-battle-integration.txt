@@ -5,10 +5,12 @@ garden 不包含 HUD、技能栏、回合动画或另一套战斗控制器。
 结果确认须放在 battle 的公共 context 结算区；领地页只链接回该场战斗。
 
 主进程公开入口：services.get('garden').getBattleContext({ownerAccountId,sessionId})。
-返回 null 或 {sessionId,territoryId,name,settled,result,gardenRevision}，只查询该 owner 的持久化挑战。
+返回 null 或 {returnTo:'/garden',resultPath:'/garden',action:'territory',sessionId,
+territoryId,name,settled,result,gardenRevision}，只查询该 owner 的持久化挑战。
 Battle context 可据此判断是否已经确认。胜负仍来自 battle.getOutcome；不得从 renderer 自报获胜。
 Battle settleContext 优先转交主进程公开适配器：
 services.get('garden').settleBattleContext({ownerAccountId,sessionId,actionId})。
+返回仍为 GardenResult，成功 data 附带 resultPath:'/garden'，供公共战场导航回领地。
 适配器从当前公共 SQLite 取得版本，再执行原 territorySettle；重试从已有 outbox
 恢复相同完整 input，因此其他种植/喂食推进版本后仍能重放原结算，不重复入账。
 若直接 services.invoke('garden','territorySettle')，仍须提供 sessionOwnerAccountId 和

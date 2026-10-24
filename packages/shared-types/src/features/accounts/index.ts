@@ -24,7 +24,7 @@ export interface SettingsDocument {
 }
 export interface AccountsSession {
   dataMode?: "live" | "simulated";
-  scenario?: { mode: "simulated"; profileId: string; scenarioId: string } | null;
+  scenario?: { id: "unified-battle"; runId: string; provenance: "simulated"; isolated: true } | null;
   currentUser: AccountUser | null;
   defaultProvider: "local" | "runtime";
   secureStorageAvailable: boolean;

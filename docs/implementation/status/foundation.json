@@ -46,6 +46,10 @@
     {
       "command": "foundation + accounts QA boundary tests",
       "result": "9 passed after unified preflight/identity integration"
+    },
+    {
+      "command": "shared-battle-feedback.mjs",
+      "result": "4 targeted feedback cases / 5 actual UI actions passed; 1280x844 and 1440x900 skill card geometry passed"
     }
   ],
   "evidence": [
@@ -72,7 +76,7 @@
     "Module self-review, main chat independent review, one final integrated acceptance and new portable package"
   ],
   "dataPolicy": "Original JSON/history retained with one-time backup before opening; one SQLite connection and transactional migration ledger; no destructive production migration or production release",
-  "updatedAt": "2026-10-24T14:57:32.197Z",
+  "updatedAt": "2026-10-24T15:05:12.389Z",
   "integratedModules": [
     "accounts",
     "resources",
@@ -156,5 +160,18 @@
     "adapterFlows": "pending battle/discovery/garden shared contract implementation; isolation itself does not simulate a transport",
     "identityBoundary": "One shared marker/preflight; same run ID in account SQLite namespace; memory-only login; real cloud/OS startup/location/backup boundaries retained",
     "restartPolicy": "Explicit QA login required; restores the same QA owner and provenance"
+  },
+  "sharedBattleFeedback": {
+    "source": "a2c4535",
+    "passed": true,
+    "scope": "Actual production Electron; explicit QA legal charged prestate and controlled opponent. Four actions; water repeated twice; same engine snapshots and rendered windup/release/impact/effects/rest. Not natural-game or live cloud evidence.",
+    "cases": [
+      "water immediate anger, no freeze status",
+      "normal interrupts element, no dodge feedback or skill release",
+      "actual dodge versus normal",
+      "ultimate hits dodge, spends 50 anger and heals 20"
+    ],
+    "evidence": "docs/implementation/evidence/foundation/shared-battle-feedback/evidence.json",
+    "allFourModesAccepted": false
   }
 }

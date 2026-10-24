@@ -23,7 +23,7 @@ try {
   evidence.sliderAccessibleName = await page.getByRole("slider").getAttribute("aria-label");
   assert.equal(evidence.sliderAccessibleName, "音量");
   const animations = page.getByRole("switch", { name: "界面动效", exact: true }); await animations.click();
-  await page.getByRole("button", { name: "保存设置", exact: true }).click(); await page.getByText("设置已保存，将在下次启动时恢复。", { exact: true }).waitFor();
+  await page.getByRole("button", { name: "保存设置", exact: true }).click(); await page.getByText("设置已保存。", { exact: true }).waitFor();
   await page.waitForFunction(() => document.querySelector(".app-page-motion")?.getAttribute("data-motion") === "reduced");
   record("saved application animation switch reaches shared Motion provider");
   await animations.click(); await page.getByRole("button", { name: "保存设置", exact: true }).click();

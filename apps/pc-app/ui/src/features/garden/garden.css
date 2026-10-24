@@ -32,3 +32,4 @@
 .garden-feature .garden-save-note{display:flex;gap:10px;justify-content:flex-end;margin-top:12px;padding:0}
 .garden-save-note>span{display:inline-flex;gap:4px;align-items:center;color:var(--g-muted)}
 .garden-save-note svg{flex-shrink:0}
+.garden-source[tabindex]{display:inline-flex;width:max-content;align-items:center;justify-content:center;min-height:20px}
