@@ -35,8 +35,8 @@ function decodeCell(value) {
 /** Automatically covers each feature's owner_account_id tables on the shared connection.
  * Tables containing secrets are excluded and visibly reported; custom adapters can override tables. */
 class BackupManager {
-  constructor({ db, directory, getIdentity }) {
-    this.db = db; this.directory = directory; this.getIdentity = getIdentity;
+  constructor({ db, directory, getIdentity, scenario = null }) {
+    this.db = db; this.directory = directory; this.getIdentity = getIdentity; this.scenario = scenario;
     this.adapters = new Map(); this.previews = new Map();
     this.register(createLegacyBackupAdapter(db));
     this.register({
@@ -84,6 +84,7 @@ class BackupManager {
         };
       }
       const body = { format: "lingjing-account-save", version: 1, ownerAccountId: owner,
+        provenance: this.scenario || { mode: "live" },
         identity: { provider: identity.provider, subjectId: identity.subject_id },
         createdAt: new Date().toISOString(), data: { modules, tables }, excluded };
       const envelope = { ...body, checksum: checksum(body) };
@@ -96,6 +97,9 @@ class BackupManager {
     invariant(envelope?.format === "lingjing-account-save" && envelope.version === 1, "BACKUP_VERSION_UNSUPPORTED", "备份版本不兼容，请使用匹配版本的灵境。");
     const { checksum: digest, ...body } = envelope;
     invariant(typeof digest === "string" && /^[0-9a-f]{64}$/.test(digest) && checksum(body) === digest, "BACKUP_CHECKSUM_MISMATCH", "备份完整性校验失败。");
+    const provenance = body.provenance || { mode: "live" };
+    invariant(this.scenario ? checksum(provenance) === checksum(this.scenario) : provenance.mode === "live",
+      "BACKUP_ENVIRONMENT_MISMATCH", "测试存档与正式存档不能互相恢复。");
     invariant(body.ownerAccountId === owner, "BACKUP_OWNER_MISMATCH", "此备份属于其他账号，请先登录对应账号。");
     const identity = this.getIdentity(owner);
     invariant(identity && body.identity?.provider === identity.provider && body.identity?.subjectId === identity.subject_id,

@@ -1,8 +1,8 @@
 {
   "module": "foundation",
   "branch": "codex/lingjing-foundation",
-  "commit": "138b35eddb0ee7f9aeb0407c99c7998dbe9e9a96",
-  "status": "integrating-visual-revision",
+  "commit": "e068d372c111c2eb3a3d55fd130dffef14657c53",
+  "status": "implementing-unified-four-entry-battle",
   "upstream": {
     "fetched": true,
     "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086",
@@ -30,6 +30,18 @@
     {
       "command": "shared typography check",
       "result": "30 actual native route/size cases passed; this is only A01-A03 verification"
+    },
+    {
+      "command": "qa-scenario.test.cjs",
+      "result": "4 passed; explicit opt-in, ordinary-profile rejection, cross-profile/legacy-store isolation, restart descriptor"
+    },
+    {
+      "command": "qa-profile-isolation.mjs",
+      "result": "Actual production Electron: ordinary startup has no QA flag; explicit QA tooltip; IPC cannot enable QA; account restores in same independent profile"
+    },
+    {
+      "command": "garden/cloud.test.mjs after final incoming module merge",
+      "result": "11 passed on local HTTP + PostgreSQL WASM; not a live deployed service"
     }
   ],
   "evidence": [
@@ -49,13 +61,14 @@
     "accounts"
   ],
   "remaining": [
-    "Merge final A04-A12 module refinements and canonical six-resource actions",
-    "One concentrated UI review at standard/wide sizes against approved boards",
-    "One final combined regression and Windows portable build/launch",
-    "External: deployed HTTPS cloud friend/sync/territory service, genuine two-account/two-device readback, precise location acceptance, configured live AI provider"
+    "Integrate one shared battle screen/controller/animations across training, friend, wild and territory entries",
+    "Integrate canonical wood and earth characters and verify five-element identity consistency",
+    "Actual Electron four-entry flows, 25-pair rule/trait checks and contextual settlement/restart readback",
+    "Remove irrelevant production explanations while retaining essential actions, tooltips and accessibility",
+    "Module self-review, main chat independent review, one final integrated acceptance and new portable package"
   ],
   "dataPolicy": "Original JSON/history retained with one-time backup before opening; one SQLite connection and transactional migration ledger; no destructive production migration or production release",
-  "updatedAt": "2026-10-24T13:34:43.457Z",
+  "updatedAt": "2026-10-24T14:40:47.762Z",
   "integratedModules": [
     "accounts",
     "resources",
@@ -78,7 +91,7 @@
     "pagePadding": "24px block / 32px inline; responsive spacing tokens",
     "cardMargins": 0,
     "targetedResult": "1280 and 1440, 15 routes each; actual computed styles passed",
-    "fullVisualAcceptance": "pending A01-A12 concentrated review after final feature merges"
+    "fullVisualAcceptance": "Earlier A01-A12 rechecks retained; four-entry battle and final module reviews pending"
   },
   "integrationClosure": {
     "route": "92c6f0e route-scoped location snapshots; actual report/chat exit cleanup verified",
@@ -87,6 +100,55 @@
     "conversationBackup": "stable IDs and message order across SQLite sequence collisions; encrypted credentials excluded",
     "resourceBackup": "grid + Pixi atlas bytes restored and relocated; original files retained"
   },
-  "visualAcceptance": "pending-independent-review",
-  "goalComplete": false
+  "visualAcceptance": "pending-unified-four-entry-independent-review",
+  "goalComplete": false,
+  "previousIntegratedSource": "e068d372c111c2eb3a3d55fd130dffef14657c53",
+  "scopeUpdate": {
+    "at": "2026-10-24T14:38:43.574Z",
+    "contract": "docs/implementation/unified-battle-integration.md",
+    "fourEntries": [
+      "training",
+      "friend",
+      "wild",
+      "territory"
+    ],
+    "singleSharedBattleRequired": true,
+    "elementCoverage": [
+      "metal",
+      "wood",
+      "water",
+      "fire",
+      "earth"
+    ],
+    "matrixPairs": 25,
+    "liveCloudDeferred": true,
+    "simulationRequiresIsolatedProfile": true,
+    "sharedBattleContract": "docs/implementation/unified-battle-contract.txt",
+    "acceptance": "docs/implementation/acceptance/2026-10-24/unified-battle-goal.txt"
+  },
+  "previousPortable": {
+    "status": "historical-stage-only-superseded-by-unified-battle-scope",
+    "builtAtSource": "d8e922ecaf99b2e9654299a68af98e292769fdb1",
+    "path": "artifacts/pc-beta/Lingjing-0.1.8-portable-x64.exe",
+    "sha256": "8062ac079407dd7ddde0a6a9453d4020b0d9a1edba99072bebb5474bd76a640b",
+    "sfxLaunch": "artifacts/foundation/portable/evidence.json",
+    "asarAudit": "artifacts/foundation/packaged-audit/evidence.json",
+    "passed": true
+  },
+  "deferredExternal": [
+    "Live cloud friend/sync/territory service and real two-device readback",
+    "Precise physical location and live AI provider credentials"
+  ],
+  "qaIsolation": {
+    "source": "4c05172",
+    "descriptor": {
+      "id": "unified-battle",
+      "provenance": "simulated",
+      "isolated": true
+    },
+    "normalStartupUnaffected": true,
+    "realElectronRestartPassed": true,
+    "evidence": "docs/implementation/evidence/foundation/qa-isolation/evidence.json",
+    "adapterFlows": "pending battle/discovery/garden shared contract implementation; isolation itself does not simulate a transport"
+  }
 }

@@ -1,5 +1,7 @@
 Battle 定向验收与 UI 对照 · 2026-10-24
 
+本文件及本目录原截图保留为前轮领域/整链基线；最新 HUD、技能卡和公共头像证据见 visual-audit/README.txt。
+
 本目录证据来自 Windows 真正运行的 Electron + React renderer。使用 battle 独立测试用户目录，
 经实际 accounts 本地登录、companions 领养/选中实例及正式 battle IPC；未使用真实个人账号或原用户目录。
 场景与角色是独立素材层，按钮、状态、行动、养成、战报均由实际业务渲染，不是整张设计图或静态网页。

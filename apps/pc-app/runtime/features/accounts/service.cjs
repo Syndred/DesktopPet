@@ -8,15 +8,19 @@ const { importLegacy } = require("./legacy.cjs");
 const { BackupManager } = require("./backups.cjs");
 const { AccountSync } = require("./sync.cjs");
 const { SessionVault } = require("./vault.cjs");
+const { assertQaDatabase, publicScenario, qaRemoteBoundary, qaHostBoundary } = require("./qa-scenario.cjs");
 
 class AccountsService {
-  constructor({ services, remote, host }) {
+  constructor({ services, remote, host, qaScenario = null }) {
+    assertQaDatabase(services.db, qaScenario);
+    if (qaScenario) { remote = qaRemoteBoundary(); host = qaHostBoundary(host); }
     this.services = services; this.db = services.db; this.remote = remote; this.host = host;
+    this.qaScenario = qaScenario;
     this.current = null; this.epoch = 0; this.authBusy = false; this.profileBusy = false; this.settingsBusy = false;
     this.startupIssue = null;
     this.vault = new SessionVault({ userData: services.paths.userData, safeStorage: services.safeStorage });
     this.backups = new BackupManager({ db: this.db, directory: join(services.paths.userData, "accounts", "backups"),
-      getIdentity: owner => this.identity(owner) });
+      getIdentity: owner => this.identity(owner), scenario: publicScenario(qaScenario) });
     this.sync = new AccountSync({ db: this.db, backups: this.backups, remote, getSession: () => this.privateSession(), getSettings: owner => this.settings(owner),
       onInvalidSession: owner => this.invalidateSession(owner) });
     this.remoteUnsubscribe = remote.onInvalidated?.(({ userId }) => {
@@ -34,7 +38,7 @@ class AccountsService {
     this.retryTimer.unref?.();
   }
   identity(owner) { return this.db.prepare("SELECT * FROM account_identities WHERE owner_account_id=?").get(owner); }
-  getCurrentUser() { return this.current ? publicIdentity(this.identity(this.current.ownerAccountId)) : null; }
+  getCurrentUser() { return this.current ? { ...publicIdentity(this.identity(this.current.ownerAccountId)), dataMode: this.qaScenario ? "simulated" : "live" } : null; }
   getOwnerAccountId() { return this.current?.ownerAccountId || null; }
   requireOwner() { const id = this.getOwnerAccountId(); invariant(id, "LOGIN_REQUIRED", "请先登录。"); return id; }
   privateSession() {
@@ -44,17 +48,20 @@ class AccountsService {
       account: row.account, username: row.username, sessionToken: row.provider === "runtime" ? this.current.proof : null };
   }
   requireRuntimeUser() {
+    invariant(!this.qaScenario, "SIMULATED_SESSION_ONLY", "测试场景不连接真实云端。");
     const session = this.privateSession();
     invariant(session?.provider === "runtime", "CLOUD_LOGIN_REQUIRED", "此功能需要云端账号。");
     return session;
   }
   session() {
-    return { currentUser: this.getCurrentUser(), defaultProvider: this.remote.enabled ? "runtime" : "local",
-      secureStorageAvailable: this.vault.available(), persistence: this.current?.persistence || "none",
+    return { currentUser: this.getCurrentUser(), defaultProvider: !this.qaScenario && this.remote.enabled ? "runtime" : "local",
+      dataMode: this.qaScenario ? "simulated" : "live", scenario: publicScenario(this.qaScenario),
+      secureStorageAvailable: !this.qaScenario && this.vault.available(), persistence: this.current?.persistence || "none",
       migration: { status: this.migration.status, imported: this.migration.imported,
         unresolved: this.migration.unresolved.map(({ reason }) => ({ reason })) }, startupIssue: this.startupIssue };
   }
   async initialize() {
+    if (this.qaScenario) return;
     if (this.db.prepare("SELECT blocked FROM account_session_control WHERE singleton=1").get()?.blocked) return;
     const saved = this.vault.load();
     if (!saved) return;
@@ -99,7 +106,7 @@ class AccountsService {
   persistSession(rememberSession) {
     this.db.prepare("INSERT INTO account_session_control VALUES(1,1) ON CONFLICT(singleton) DO UPDATE SET blocked=1").run();
     try {
-      if (rememberSession && this.vault.available()) {
+      if (!this.qaScenario && rememberSession && this.vault.available()) {
         this.vault.save({ ownerAccountId: this.current.ownerAccountId, proof: this.current.proof }); this.current.persistence = "secure";
         this.db.prepare("UPDATE account_session_control SET blocked=0 WHERE singleton=1").run();
       } else this.vault.clear();
@@ -141,6 +148,7 @@ class AccountsService {
       const name = accountName(input.account), secret = password(input.password);
       const provider = input.provider || (this.remote.enabled ? "runtime" : "local");
       invariant(provider === "local" || provider === "runtime", "INVALID_PROVIDER", "请选择账号类型。");
+      invariant(!this.qaScenario || provider === "local", "SIMULATED_SESSION_ONLY", "测试场景不连接真实云端。");
       const label = register ? username(input.username) : null;
       if (register) invariant(secret === password(input.confirmPassword), "PASSWORD_MISMATCH", "两次输入的密码不一致。");
       let row, proof;
@@ -152,7 +160,7 @@ class AccountsService {
         row = this.db.prepare("SELECT * FROM account_identities WHERE provider='local' AND account_key=?").get(name.toLowerCase());
         if (register) {
           invariant(!row, "ACCOUNT_EXISTS", "本机账号已存在。");
-          const id = `local-${randomUUID()}`, now = new Date().toISOString();
+          const id = `${this.qaScenario ? `qa:${this.qaScenario.profileId}:` : ""}local-${randomUUID()}`, now = new Date().toISOString();
           transaction(this.db, () => {
             this.db.prepare(`INSERT INTO account_identities
               (owner_account_id,provider,subject_id,account,account_key,username,password_hash,created_at,updated_at)
@@ -271,6 +279,13 @@ class AccountsService {
   getLegacyInventory(owner = this.requireOwner()) {
     const row = this.db.prepare("SELECT document FROM account_legacy_data WHERE owner_account_id=?").get(owner);
     return row ? JSON.parse(row.document) : null;
+  }
+  requireScenarioIdentity(scenarioId) {
+    invariant(this.qaScenario && this.qaScenario.scenarioId === scenarioId, "QA_SCENARIO_REQUIRED", "当前未运行对应测试场景。");
+    const owner = this.requireOwner(), row = this.identity(owner);
+    invariant(row.provider === "local" && owner.startsWith(`qa:${this.qaScenario.profileId}:`), "QA_IDENTITY_MISMATCH", "测试身份归属不匹配。");
+    return Object.freeze({ ...publicScenario(this.qaScenario), id: row.subject_id, ownerAccountId: owner,
+      provider: "qa", account: row.account, username: row.username });
   }
   async exportBackup() {
     const owner = this.requireOwner(), epoch = this.epoch;

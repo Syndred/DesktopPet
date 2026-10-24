@@ -1,0 +1,271 @@
+{
+  "at": "2026-10-24T14:31:07.728Z",
+  "executable": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\artifacts\\pc-beta\\Lingjing-0.1.8-portable-x64.exe",
+  "launcherPid": 16204,
+  "profile": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\artifacts\\foundation\\visual-recheck\\profile-1792849157992",
+  "checks": [
+    "Actual portable SFX launched from its extracted ASAR, retaining the independent QA account and six canonical instances",
+    "Packaged secure IPC, registered asset protocol and real Pixi walk canvas work; every bundled canonical asset is readable"
+  ],
+  "errors": [],
+  "loadedUrl": "file:///C:/Users/ADMINI~1/AppData/Local/Temp/3L92fj6ytZzFNPhlVHEw0chTYiX/resources/app.asar/apps/pc-app/dist/ui/index.html#/companions",
+  "info": {
+    "version": "0.1.8",
+    "platform": "win32",
+    "features": [
+      {
+        "id": "accounts",
+        "commands": [
+          "session",
+          "login",
+          "register",
+          "logout",
+          "profileSave",
+          "passwordChange",
+          "settingsGet",
+          "settingsDefaults",
+          "settingsSave",
+          "backupList",
+          "backupExport",
+          "backupPreview",
+          "backupRestore",
+          "syncStatus",
+          "syncNow",
+          "syncRetry",
+          "cloudPreview",
+          "testNotification",
+          "pointer"
+        ]
+      },
+      {
+        "id": "resources",
+        "commands": [
+          "list",
+          "resolve",
+          "save",
+          "import"
+        ]
+      },
+      {
+        "id": "companions",
+        "commands": [
+          "list",
+          "get",
+          "combatProfile",
+          "desktopInput",
+          "adopt",
+          "rename",
+          "desktop",
+          "select",
+          "interact",
+          "perform",
+          "appearance"
+        ]
+      },
+      {
+        "id": "battle",
+        "commands": [
+          "overview",
+          "rules",
+          "selectPet",
+          "startTraining",
+          "snapshot",
+          "act",
+          "retryAction",
+          "search",
+          "invitations",
+          "invite",
+          "respondInvite",
+          "cancelInvite",
+          "createRoom",
+          "joinRoom",
+          "sync",
+          "leave",
+          "listReports",
+          "getReport",
+          "retrySettlement"
+        ]
+      },
+      {
+        "id": "garden",
+        "commands": [
+          "plant",
+          "harvest",
+          "craft",
+          "feed",
+          "garrison",
+          "snapshot",
+          "territoryLocate",
+          "territoryChallenge",
+          "territorySettle"
+        ]
+      },
+      {
+        "id": "discovery",
+        "commands": [
+          "snapshot",
+          "setExploring",
+          "locate",
+          "watch",
+          "stopWatch",
+          "setDemo",
+          "setProvider",
+          "tile",
+          "begin",
+          "act",
+          "cancel",
+          "confirm",
+          "pokedex",
+          "memories"
+        ]
+      },
+      {
+        "id": "conversations",
+        "commands": [
+          "snapshot",
+          "select",
+          "history",
+          "profile.save",
+          "connection.save",
+          "connection.test",
+          "connection.cancel",
+          "memory.save",
+          "memory.delete",
+          "send",
+          "retry",
+          "cancel",
+          "history.clear"
+        ]
+      }
+    ],
+    "user": {
+      "id": "local-dee29432-3094-4efc-852a-31772b6fb6ce",
+      "subjectId": "local-dee29432-3094-4efc-852a-31772b6fb6ce",
+      "ownerAccountId": "local-dee29432-3094-4efc-852a-31772b6fb6ce",
+      "provider": "local",
+      "account": "visual_1792849159690",
+      "username": "UI独立验收",
+      "revision": 0,
+      "createdAt": "2026-10-24T13:39:19.690Z",
+      "updatedAt": "2026-10-24T13:39:19.690Z"
+    }
+  },
+  "stage": {
+    "resource": "builtin:lingjing-yuwan-v2",
+    "clip": "walk",
+    "frame": "0",
+    "texture": "lingjing-resource://asset/builtin%3Alingjing-yuwan-v2/sprites.png:cc82fe006209adb2be8f7f5ffbca460611956555f8ddbc7469ba8ac33796f5e7"
+  },
+  "pets": [
+    {
+      "petId": "pet-a3914145-3f0c-49fd-9f09-ec57f51546d0",
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "growth": {
+        "level": 1,
+        "experience": 5,
+        "mood": 60,
+        "satiety": 60,
+        "affinity": 0,
+        "winsTotal": 0,
+        "stats": {
+          "hp": 124,
+          "atk": 28,
+          "def": 24,
+          "spd": 20
+        }
+      }
+    },
+    {
+      "petId": "pet-5d27a205-5faf-421a-919b-6d81eef37677",
+      "resourceId": "builtin:lingjing-xiaolan-v1",
+      "growth": {
+        "level": 1,
+        "experience": 0,
+        "mood": 60,
+        "satiety": 60,
+        "affinity": 0,
+        "winsTotal": 0,
+        "stats": {
+          "hp": 124,
+          "atk": 28,
+          "def": 24,
+          "spd": 20
+        }
+      }
+    },
+    {
+      "petId": "pet-161cf74b-dd17-406e-9d62-df945624355d",
+      "resourceId": "builtin:lingjing-fantuan-v1",
+      "growth": {
+        "level": 1,
+        "experience": 0,
+        "mood": 60,
+        "satiety": 60,
+        "affinity": 0,
+        "winsTotal": 0,
+        "stats": {
+          "hp": 124,
+          "atk": 28,
+          "def": 24,
+          "spd": 20
+        }
+      }
+    },
+    {
+      "petId": "pet-3f711d62-2935-422e-b912-43739271695a",
+      "resourceId": "builtin:lingjing-shiba-v2",
+      "growth": {
+        "level": 1,
+        "experience": 0,
+        "mood": 60,
+        "satiety": 60,
+        "affinity": 0,
+        "winsTotal": 0,
+        "stats": {
+          "hp": 118,
+          "atk": 33,
+          "def": 20,
+          "spd": 22
+        }
+      }
+    },
+    {
+      "petId": "pet-4ebf0235-1167-4078-8660-e6024afce82c",
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "growth": {
+        "level": 1,
+        "experience": 0,
+        "mood": 60,
+        "satiety": 60,
+        "affinity": 0,
+        "winsTotal": 0,
+        "stats": {
+          "hp": 136,
+          "atk": 30,
+          "def": 30,
+          "spd": 13
+        }
+      }
+    },
+    {
+      "petId": "pet-6ebc2664-99fc-4659-913b-fc86acb0e957",
+      "resourceId": "builtin:lingjing-xiaohu-v1",
+      "growth": {
+        "level": 1,
+        "experience": 0,
+        "mood": 60,
+        "satiety": 60,
+        "affinity": 0,
+        "winsTotal": 0,
+        "stats": {
+          "hp": 124,
+          "atk": 28,
+          "def": 24,
+          "spd": 20
+        }
+      }
+    }
+  ],
+  "passed": true,
+  "completedAt": "2026-10-24T14:31:18.216Z"
+}

@@ -1,4 +1,4 @@
-import type { BattleRulesProfile } from '../battle';
+import type { BattleRulesProfile } from '../battle/index.js';
 
 /** A template is an appearance. A petId identifies one owned, independent companion. */
 export type PetId = string;

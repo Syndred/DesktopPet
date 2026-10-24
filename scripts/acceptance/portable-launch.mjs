@@ -47,7 +47,13 @@ try {
   proof.pets=pets.pets.map(p=>({petId:p.petId,resourceId:p.resource.resourceId,growth:p.growth}));
   assert.deepEqual(proof.errors,[]);proof.passed=true;proof.completedAt=new Date().toISOString();console.log('Portable SFX/ASAR launch and live Pixi checks passed:',output);
 }catch(error){proof.failure=String(error);throw error;}finally{
-  if(browser){try{const cdp=await browser.newBrowserCDPSession();await cdp.send('Browser.close');}catch{/* The portable launcher may close its pipe first. */}await browser.close().catch(()=>{});}
+  writeFileSync(join(output,'evidence.json'),JSON.stringify(proof,null,2));
+  if(browser){
+    // Electron can exit before replying to Browser.close. Keep a bounded timer
+    // alive so Node does not abandon the final evidence write on that promise.
+    const closing=(async()=>{try{const cdp=await browser.newBrowserCDPSession();await cdp.send('Browser.close');}catch{/* The process may close its pipe first. */}await browser.close().catch(()=>{});})();
+    await Promise.race([closing,new Promise(resolve=>setTimeout(resolve,2000))]);
+  }
   if(child.exitCode===null&&!launchError){await Promise.race([new Promise(resolve=>child.once('exit',resolve)),new Promise(resolve=>setTimeout(resolve,2500))]);}
   if(child.exitCode===null&&Number.isInteger(child.pid)){try{execFileSync('taskkill',['/PID',String(child.pid),'/T','/F'],{windowsHide:true,stdio:'ignore'});proof.qaProcessTreeStopped=true;}catch{/* It may already have exited. */}}
   writeFileSync(join(output,'evidence.json'),JSON.stringify(proof,null,2));writeFileSync(join(output,'launcher.log'),logs);
