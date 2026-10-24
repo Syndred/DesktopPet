@@ -40,6 +40,7 @@ async function parseCharacterFile(filePath, metadata = {}) {
   const entryAsset = safeRelative(grid ? descriptor.image : descriptor.meta.image), actualImage = await fs.realpath(path.resolve(root, entryAsset)).catch(() => fail('MISSING_ASSET', `缺少图集：${entryAsset}`));
   if (!isWithin(root, actualImage)) fail('UNSAFE_PATH', '图集越过了包目录（含符号链接）');
   const image = await readBounded(actualImage), size = imageSize(image, entryAsset), options = grid ? descriptor : descriptor.character ?? {};
+  if (options.element !== undefined && !['metal','wood','water','fire','earth'].includes(options.element)) fail('INVALID_ELEMENT', '角色属性应为金、木、水、火或土');
   let sheet, clips, atlas;
   if (grid) {
     sheet = descriptor.sheet;
@@ -65,7 +66,7 @@ async function parseCharacterFile(filePath, metadata = {}) {
   const origin = provenance({ ...options.provenance, ...supplied }), warnings = origin.license === '授权未确认' ? ['素材许可未确认，请补充作者与许可记录'] : [];
   const files = new Map([[filename, entryBytes], [entryAsset, image]]), hash = createHash('sha256');
   for (const [key, bytes] of [...files].sort(([a],[b]) => a.localeCompare(b))) hash.update(key).update('\0').update(bytes);
-  return { resource: { name: text(options.name, 100) || filename.replace(/\.json$/i, ''), kind: 'spritesheet', origin: 'import', provenance: origin, entryAsset, sheet, atlas, clips, actions: actionMap(options.actions, clips, true), calibration: calibrations(options.calibration), contentHash: hash.digest('hex'), warnings, availability: 'ready' }, files, sourceFilename: filename };
+  return { resource: { name: text(options.name, 100) || filename.replace(/\.json$/i, ''), ...(options.element ? {element:options.element} : {}), kind: 'spritesheet', origin: 'import', provenance: origin, entryAsset, sheet, atlas, clips, actions: actionMap(options.actions, clips, true), calibration: calibrations(options.calibration), contentHash: hash.digest('hex'), warnings, availability: 'ready' }, files, sourceFilename: filename };
 }
 function normalize2DResource(resource) {
   if (resource.kind !== 'spritesheet') fail('TWO_D_ONLY', '本版仅显示 2D 角色，历史资源记录与文件已保留');

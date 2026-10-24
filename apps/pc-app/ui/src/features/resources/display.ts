@@ -1,5 +1,6 @@
 import type { CharacterResource, ResourceAction, ResourceCalibration, ResourceClip, ResourceContext } from '../../../../../../packages/shared-types/src/features/resources';
 export const ACTION_LABELS: Record<ResourceAction, string> = { idle: '待机', blink: '眨眼', walk: '行走', wave: '招手', eat: '吃东西', attack_windup: '攻击起手', attack_release: '攻击释放', attack: '普通攻击', hit: '受击', skill: '技能施放', victory: '胜利', sleep: '睡眠' };
+export const RESOURCE_ELEMENT_LABELS = {metal:'金',wood:'木',water:'水',fire:'火',earth:'土'} as const;
 export function resolveResourceClip(resource: CharacterResource, action: ResourceAction): { clip: ResourceClip | null; fallback: boolean } {
   const direct = resource.clips.find(clip => clip.name === resource.actions[action]);
   return { clip: direct ?? resource.clips.find(clip => clip.name === resource.actions.idle) ?? resource.clips[0] ?? null, fallback: !direct };
@@ -29,6 +30,8 @@ const PORTRAIT_FOCUS: Record<string, { x:number; y:number; width:number; height:
   'builtin:lingjing-shiba-v2': { x:.27,y:0,width:.72,height:.73 },
   'builtin:lingjing-hatcat-v1': { x:.20,y:0,width:.78,height:.74 },
   'builtin:lingjing-xiaohu-v1': { x:.26,y:0,width:.73,height:.78 },
+  'builtin:lingjing-qingya-v1': { x:.22,y:.13,width:.78,height:.65 },
+  'builtin:lingjing-yantuan-v1': { x:.30,y:.02,width:.68,height:.70 },
 };
 /** Same canonical image/idle frame, composed as a head-and-shoulders portrait. No new asset. */
 export function resolveResourcePortrait(resource: CharacterResource, framing: 'portrait' | 'full' = 'portrait'): ResourcePortraitView | null {

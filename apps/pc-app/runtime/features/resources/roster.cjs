@@ -8,6 +8,8 @@ const ROOT = path.join(__dirname, 'assets/roster-v2');
 /** Only explicit historical built-in IDs are aliases. Imported IDs and model paths are untouched. */
 function canonicalResourceId(id) { return Object.hasOwn(catalog.legacyAliases, id) ? catalog.legacyAliases[id] : id; }
 function listRosterDefinitions() { return JSON.parse(JSON.stringify(catalog.characters)); }
+function getRosterDefinition(id) { return listRosterDefinitions().find(entry=>entry.resourceId===canonicalResourceId(id)) ?? null; }
+function withRosterElement(resource) { const entry=getRosterDefinition(resource.id); return entry ? {...resource,element:entry.element} : resource; }
 function listRosterTemplates() {
   return catalog.characters.map(({ templateId, name, category, element, description, resourceId }) => ({
     templateId, name, category, element, description, resource: { resourceId, kind: '2d' },
@@ -43,4 +45,4 @@ async function registerRoster(service, root = ROOT) {
   return parsed.map(({ entry }) => entry.resourceId);
 }
 
-module.exports = { ROOT, catalog, canonicalResourceId, listRosterDefinitions, listRosterTemplates, registerRoster };
+module.exports = { ROOT, catalog, canonicalResourceId, listRosterDefinitions, getRosterDefinition, withRosterElement, listRosterTemplates, registerRoster };
