@@ -1,8 +1,8 @@
 {
   "module": "discovery",
   "branch": "codex/lingjing-discovery",
-  "commit": "543d75ee744ca9535ec96bed021cd9287e6d875e",
-  "status": "2d_local_verified_external_acceptance_pending",
+  "commit": "1ca1aeaacd79ea967fa92f45e7cf4abe3d66cce8",
+  "status": "2d_local_verified_a01_a03_ready_external_acceptance_pending",
   "goalStatus": "active",
   "workspace": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-discovery\\DesktopPet",
   "upstream": {
@@ -25,7 +25,11 @@
     "Victory and fresh precise fix required; companion/capture/memory/action receipt commit atomically and duplicate confirmation returns the same petId",
     "2D preview, portrait selection cards, battle, Radix capture dialog, capture result, nickname, pokedex and independent desktop presence",
     "Real garden territory challenge/ownership adapter, Turf boundary containment and saved capture provenance without changing combat stats",
-    "Reviewable server-owned random battle and PostgreSQL row-locked claim artifact; deployed cloud success is not claimed"
+    "Reviewable server-owned random battle and PostgreSQL row-locked claim artifact; deployed cloud success is not claimed",
+    "Opt-in watch survives bounded internal page transitions; native hide/minimize/close checks enforce foreground policy even when Chromium reports visible",
+    "Pending native requests use AbortController and actually terminate the PowerShell helper on suspend or stopWatch",
+    "Windows script is read by Electron fs and delivered without external ASAR file-path dependence; actual archive execution verified",
+    "Encounter metadata comes from canonical 2D templates; capture and pokedex views follow the current per-instance resource without rewriting the original receipt"
   ],
   "openSource": [
     {
@@ -182,6 +186,12 @@
       "OSM uses current real map content rather than a painted sample map",
       "Generated game place labels replace unverified sample landmarks",
       "Shared atlas poses and simplified postcard decoration differ from the design still illustration"
+    ],
+    "auditEvidence": "docs/implementation/evidence/discovery/2026-10-24-audit",
+    "additionalVerified": [
+      "Exact1280x844 content gutter and typography",
+      "Parent-controlled16px result-card gap without margin stacking",
+      "Current petId resource reflected in capture result and pokedex"
     ]
   },
   "twoDimensionalOnly": {
@@ -189,7 +199,8 @@
     "newModel3dCode": false,
     "activeRenderers": [
       "resources.ResourceStage / PixiJS",
-      "static atlas frame for map and list thumbnails"
+      "static atlas frame for map and list thumbnails",
+      "Authored atlas-frame bounds for compact non-legacy resources; rotated frames reuse Pixi"
     ],
     "activeTemplates": [
       "big-fish-gentle",
@@ -218,7 +229,7 @@
     },
     {
       "command": "node scripts/desktop/run-native-tests.cjs --test-name-pattern=\"real territory battle\" apps/pc-app/runtime/features/discovery/tests/discovery.test.cjs",
-      "result": "passed after updating the fixture to the garden sessionOwnerAccountId guard; all 12 current cases covered; no project-wide suite repeated"
+      "result": "passed after updating the fixture to the garden sessionOwnerAccountId guard; the 12 cases defined at that point were covered. Two later cases were verified by the targeted runs below; no project-wide suite repeated"
     },
     {
       "command": "node apps/pc-app/runtime/features/discovery/verification/windows-flow.mjs",
@@ -235,6 +246,34 @@
     {
       "check": "final visual review on persisted fixture data",
       "result": "passed; 2 actual 2D pet cards, one selected card, Radix keyboard selection, real mini-map tiles and shared Pixi stage"
+    },
+    {
+      "command": "node scripts/desktop/run-native-tests.cjs --test-name-pattern=\"application privacy|cancelling an in-flight|real adapter errors|leaving demo\" apps/pc-app/runtime/features/discovery/tests/discovery.test.cjs",
+      "result": "4 passed; switching demo to native clears the demo sample before requesting, so demo-city distance cannot reject a genuine fix as drift"
+    },
+    {
+      "command": "node scripts/desktop/run-native-tests.cjs --test-name-pattern=\"canonical 2D|generated encounters|server authority|actual shared SQLite\" apps/pc-app/runtime/features/discovery/tests/discovery.test.cjs",
+      "result": "4 passed, including canonical resource changes producing a new encounter generation while earlier records remain unchanged"
+    },
+    {
+      "command": "node apps/pc-app/runtime/features/discovery/verification/foreground-location.mjs",
+      "result": "passed six actual-window/interval/privacy checks; explicit controlled position, not physical-location acceptance"
+    },
+    {
+      "command": "node apps/pc-app/runtime/features/discovery/verification/appearance.mjs",
+      "result": "passed real resources/companions/discovery APIs and rendered Pixi/atlas identity checks on a copied controlled profile; parent gap16 and card margins0"
+    },
+    {
+      "command": "node scripts/desktop/run-native-tests.cjs apps/pc-app/runtime/features/discovery/verification/native-cancellation.cjs",
+      "result": "passed with actual Electron36.9.5 and two actual native helpers; both suspend and stopWatch terminate their child"
+    },
+    {
+      "command": "node apps/pc-app/runtime/features/discovery/verification/asar-location.mjs",
+      "result": "passed actual module-in-ASAR native OS read without an unpacked PS1; imprecise138m honestly retained; not full installer acceptance"
+    },
+    {
+      "command": "node apps/pc-app/runtime/features/discovery/verification/map.mjs",
+      "result": "passed exact1280x844 CSS viewport, A01/A02 computed geometry, empty/no-position state and explicitly labelled demo with 13 actual rendered tiles; warnings[]"
     }
   ],
   "runtimeEvidence": {
@@ -280,7 +319,170 @@
       "map": "artifacts/discovery/map-1792847383583",
       "review": "artifacts/discovery/review-1792847693443"
     },
-    "privateSystemMapScreenshotNotCommitted": "artifacts/discovery/2d-windows-1792847349359/real-system-location-private.png"
+    "privateSystemMapScreenshotNotCommitted": "artifacts/discovery/2d-windows-1792847349359/real-system-location-private.png",
+    "latestNativeDiagnostic": {
+      "at": "2026-10-24T13:38:42.561Z",
+      "adapter": "production WindowsLocationAdapter diagnostic",
+      "ok": true,
+      "source": "os",
+      "provider": "windows-geolocator",
+      "positionSource": "WiFi",
+      "accuracyMeters": 91,
+      "timestampMs": 1792849122361,
+      "quality": {
+        "ok": false,
+        "code": "LOCATION_IMPRECISE",
+        "message": "定位精度不足，请移动到信号较好的地方（需要 ≤ 80 米）"
+      },
+      "coordinateHash": "fce6f5da6ea421743bb23262b62a400e4b7bdb3bea61a07eab980cf2f1f74ae8",
+      "rawCoordinatesSaved": false
+    },
+    "latestArchiveNative": {
+      "at": "2026-10-24T13:50:51.474Z",
+      "ok": true,
+      "source": "os",
+      "provider": "windows-geolocator",
+      "positionSource": "WiFi",
+      "accuracyMeters": 138,
+      "timestampMs": 1792849851314,
+      "quality": {
+        "ok": false,
+        "code": "LOCATION_IMPRECISE",
+        "message": "定位精度不足，请移动到信号较好的地方（需要 ≤ 80 米）"
+      },
+      "encodedCommand": true,
+      "coordinateHash": "7c8cf2f42ef0617cc7c25deb52fab0d20d02865b2f4c243c94251941f7ab29a6",
+      "rawCoordinatesSaved": false,
+      "passed": true,
+      "loadedFromAsar": true,
+      "unpackedScript": false,
+      "asarVersion": "3.4.1",
+      "physicalLocationAcceptance": false,
+      "validationScope": "Actual Electron module loaded from ASAR; full installer validation belongs to foundation",
+      "output": "artifacts/discovery/asar-location-1792849846926"
+    },
+    "foregroundLifecycle": {
+      "at": "2026-10-24T13:47:06.003Z",
+      "controlledPosition": true,
+      "physicalLocationAcceptance": false,
+      "checks": [
+        "opt-in watch survives map to encounter-preview navigation",
+        "real scheduled timer supplies a newer position sample while preview remains open",
+        "hiding the actual Electron window stops watch",
+        "minimizing also stops watch and restoring does not silently restart it",
+        "leaving discovery stops watch and blocks another native request",
+        "application permission revocation stops watch and clears its cached fix"
+      ],
+      "afterPreview": {
+        "watching": true,
+        "status": "ready"
+      },
+      "hiddenDocumentVisibility": "visible",
+      "passed": true,
+      "output": "artifacts/discovery/foreground-1792849625721"
+    },
+    "nativeCancellation": {
+      "at": "2026-10-24T13:50:52.070Z",
+      "passed": true,
+      "platform": "win32",
+      "runtime": {
+        "node": "22.19.0",
+        "electron": "36.9.5"
+      },
+      "checks": [
+        {
+          "operation": "suspend",
+          "actualNativeHelperStarted": true,
+          "nativeHelperClosed": true,
+          "nativeHelperStillRunning": false,
+          "resultCode": "LOCATION_CANCELLED"
+        },
+        {
+          "operation": "stopWatch",
+          "actualNativeHelperStarted": true,
+          "nativeHelperClosed": true,
+          "nativeHelperStillRunning": false,
+          "resultCode": "LOCATION_CANCELLED"
+        }
+      ],
+      "rawCoordinatesSaved": false,
+      "physicalLocationAcceptance": false
+    },
+    "currentInstanceBinding": {
+      "at": "2026-10-24T13:41:43.983Z",
+      "copiedControlledProfile": true,
+      "physicalLocationAcceptance": false,
+      "petId": "pet-e4404d79-1293-4c96-bae1-d8b1efaa56fb",
+      "originalResource": "builtin:lingjing-yuwan-v1",
+      "currentResource": "builtin:lingjing-battle-shiba-v1",
+      "passed": true,
+      "otherInstancesUnchanged": true,
+      "layout": {
+        "gap": "16px",
+        "cards": [
+          {
+            "top": 152,
+            "bottom": 482.8500061035156,
+            "marginBottom": "0px"
+          },
+          {
+            "top": 498.8500061035156,
+            "bottom": 618.8500061035156,
+            "marginBottom": "0px"
+          }
+        ]
+      },
+      "output": "artifacts/discovery/appearance-1792849303756"
+    },
+    "auditEvidence": "docs/implementation/evidence/discovery/2026-10-24-audit",
+    "latestMap": {
+      "at": "2026-10-24T13:39:53.196Z",
+      "productionMain": true,
+      "passed": true,
+      "emptyStateHasNoPosition": true,
+      "explicitDemo": true,
+      "realPhysicalLocationAcceptance": false,
+      "layout": {
+        "viewport": {
+          "width": 1280,
+          "height": 844
+        },
+        "main": {
+          "x": 192,
+          "y": 54,
+          "width": 1088,
+          "height": 790
+        },
+        "title": {
+          "x": 224,
+          "y": 78,
+          "width": 314.1625061035156,
+          "height": 39.20000076293945
+        },
+        "map": {
+          "x": 224,
+          "y": 173,
+          "width": 707.7999877929688,
+          "height": 609
+        },
+        "panel": {
+          "x": 947.7999877929688,
+          "y": 173,
+          "width": 285,
+          "height": 609
+        },
+        "paddingLeft": "32px",
+        "paddingTop": "24px",
+        "fontSize": "28px",
+        "fontWeight": "700",
+        "fontFamily": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif"
+      },
+      "engine": "MapLibre GL JS 6.15.0",
+      "loadedTiles": 13,
+      "cachedPngTiles": 15,
+      "warnings": [],
+      "output": "artifacts/discovery/map-1792849188337"
+    }
   },
   "dependencyManifest": "apps/pc-app/runtime/features/discovery/dependencies.json",
   "additionalFoundationPackages": [],
@@ -288,21 +490,96 @@
   "integrationDependencies": [
     "Cloud needs trusted companion battle-profile synchronization and battle supportsCloudWild/wildAdapter integration",
     "Cloud migration/function deployment and live runtime-account verification remain separate",
-    "Foundation owns final combined regression and Windows packaging"
+    "Foundation owns final combined regression and Windows packaging",
+    "Consume resources/companions canonical six-character/action contract during foundation integration; discovery no longer duplicates their template resource IDs",
+    "Foundation imports shared layout.css and performs the one centralized A01–A12 visual recheck"
   ],
   "realIncomplete": [
-    "Physical-location capture is not accepted: latest native Windows WiFi accuracy is 95m, above the 80m gate for the 100m interaction fence. Controlled captures are separate evidence.",
+    "Physical-location capture remains unaccepted: latest ASAR/native WiFi accuracy138m and earlier standalone91m exceed the80m gate. The last production-window flow reported95m. Controlled captures are independent evidence.",
     "Cloud migration/function is reviewable and locally PostgreSQL-verified, but not deployed or live-Supabase-tested. Cloud mode fails closed while the battle authority adapter is missing.",
     "Tencent/Google credentials are not configured; both coordinate adapters remain and OSM is verified.",
-    "Final combined packaging/regression remains foundation work."
+    "Final combined packaging/regression remains foundation work.",
+    "A01–A03 require the foundation central visual recheck; the unified six-character and real-action resources have not been accepted in this discovery worktree."
   ],
   "verificationPending": [
     "Genuine <=80m OS-fix capture",
     "Deployed cloud battle/profile integration and live runtime-account readback",
-    "Foundation combined release verification"
+    "Foundation combined release verification",
+    "Canonical six-character/action integration and central A01–A12 visual acceptance"
   ],
   "historicalBaselineEvidence": [
     "artifacts/discovery/windows/evidence.json (pre-2D scope; not current visual acceptance)"
   ],
-  "dataPolicy": "Only this managed worktree and discovery-owned implementation/status were changed directly; foundation changes came through its branch. User data and old files are preserved. No production migration, deployment, credential change, remote message or additional chat was performed. Goal remains active for unmet external acceptance."
+  "dataPolicy": "Only this managed worktree and discovery-owned implementation/status were changed directly; foundation changes came through its branch. User data and old files are preserved. No production migration, deployment, credential change, remote message or additional chat was performed. Goal remains active for unmet external acceptance. This continuation copied only a completed test profile for reversible appearance verification; original profiles and records were preserved. The native-helper archive probe uses its own isolated userData and saves no raw coordinates.",
+  "updatedAt": "2026-10-24T13:53:24.447Z",
+  "visualAudit": {
+    "source": {
+      "branch": "codex/lingjing-implementation-base",
+      "commit": "9915684",
+      "path": "docs/implementation/acceptance/2026-10-24/visual-audit.txt"
+    },
+    "fixCommits": [
+      "d4d8462",
+      "0156faf",
+      "9722659",
+      "1ca1aea"
+    ],
+    "evidence": "docs/implementation/evidence/discovery/2026-10-24-audit",
+    "items": [
+      {
+        "id": "A01",
+        "state": "discovery token references and fallback verified; foundation global import/central review pending",
+        "tokens": [
+          "--font-ui",
+          "--text-title",
+          "--weight-title",
+          "--page-pad-block",
+          "--page-pad-inline",
+          "--space-4"
+        ],
+        "font": {
+          "size": "28px",
+          "weight": "700",
+          "family": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif"
+        }
+      },
+      {
+        "id": "A02",
+        "state": "local fix verified",
+        "viewport": {
+          "width": 1280,
+          "height": 844
+        },
+        "previousTitle": {
+          "x": 192,
+          "y": 54
+        },
+        "currentTitle": {
+          "x": 224,
+          "y": 78
+        },
+        "padding": {
+          "block": "24px",
+          "inline": "32px"
+        },
+        "emptyStateHasNoPosition": true
+      },
+      {
+        "id": "A03",
+        "state": "local fix verified",
+        "parentGap": "16px",
+        "cardMarginBottom": [
+          "0px",
+          "0px"
+        ]
+      },
+      {
+        "id": "A07/A08",
+        "state": "canonical resource/template interoperability prepared; six characters and real action coverage require resources/companions/battle integration",
+        "verified": "Existing actual 2D resource rebound on one captured pet; snapshot/pokedex/rendered result follow it while other pets retain their resource IDs"
+      }
+    ],
+    "centralVisualRerunOwner": "foundation",
+    "projectWideRegressionRepeated": false
+  }
 }
