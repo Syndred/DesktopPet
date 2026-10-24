@@ -2,10 +2,11 @@ import { createRequire } from 'node:module';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { existsSync } from 'node:fs';
-import { app, BrowserWindow, ipcMain, Menu, nativeImage, safeStorage, session, Tray } from 'electron';
+import { app, BrowserWindow, ipcMain, Menu, nativeImage, protocol, safeStorage, screen, session, Tray } from 'electron';
 
 const require = createRequire(import.meta.url);
 const runtime = resolve(dirname(fileURLToPath(import.meta.url)), '../../runtime');
+if (process.platform === 'win32') app.setAppUserModelId('com.lingjing.desktop');
 process.env.LINGJING_FOUNDATION = '1';
 // Retain the original app identity/path so existing accounts and history are found.
 if (process.env.PET_USER_DATA_DIR) app.setPath('userData', resolve(process.env.PET_USER_DATA_DIR));
@@ -16,21 +17,26 @@ else {
 const { openDatabase, backupLegacy } = require(join(runtime, 'core/database.cjs'));
 const { createServices, discoverFeatures } = require(join(runtime, 'core/services.cjs'));
 const { initializeLegacy } = require(join(runtime, 'main.cjs'));
+const resourceEntry = join(runtime, 'features/resources/index.cjs');
+if (existsSync(resourceEntry)) require(resourceEntry).registerResourceScheme(protocol);
 
 let window: BrowserWindow | null = null;
 let tray: Tray | null = null;
 let quitting = false;
 let services: any;
 let features: any[] = [];
+let closeToTray = true;
 const companionWindows = new Map<string, BrowserWindow>();
 const rendererFile = resolve(runtime, '../dist/ui/index.html');
 const preload = resolve(runtime, '../dist/preload/index.cjs');
 
 function trusted(event: Electron.IpcMainEvent | Electron.IpcMainInvokeEvent) {
+  try {
   const frame = event.senderFrame;
   if (!frame || frame !== event.sender.mainFrame) return false;
   if (process.env.ELECTRON_RENDERER_URL) return new URL(frame.url).origin === new URL(process.env.ELECTRON_RENDERER_URL).origin;
   return frame.url.startsWith('file:') && fileURLToPath(frame.url.split('#')[0]) === rendererFile;
+  } catch { return false; }
 }
 
 function protect(win: BrowserWindow) {
@@ -47,13 +53,31 @@ function load(win: BrowserWindow, route = '/companions') {
 }
 
 function createWindow() {
-  window = new BrowserWindow({ width: 1320, height: 900, minWidth: 960, minHeight: 700,
+  let restored: any = {};
+  try { restored = JSON.parse(services.db.prepare('SELECT value FROM lingjing_meta WHERE key=?').get('main-window-bounds')?.value || '{}'); } catch { /* Use default geometry if older settings are invalid. */ }
+  const area = screen.getDisplayMatching({ x: Number(restored.x) || 0, y: Number(restored.y) || 0, width: 100, height: 100 }).workArea;
+  const width = Math.min(area.width, Math.max(960, Number(restored.width) || 1320));
+  const height = Math.min(area.height, Math.max(700, Number(restored.height) || 900));
+  const position = Number.isFinite(restored.x) && Number.isFinite(restored.y) ? { x: Math.max(area.x, Math.min(area.x + area.width - width, restored.x)), y: Math.max(area.y, Math.min(area.y + area.height - height, restored.y)) } : {};
+  window = new BrowserWindow({ ...position, width, height, minWidth: 960, minHeight: 700,
     show: false, frame: false, backgroundColor: '#f8fbff', title: '灵境',
     icon: join(runtime, 'assets/brand/app-icon.png'),
     webPreferences: { preload, contextIsolation: true, nodeIntegration: false, sandbox: true } });
   protect(window);
   window.once('ready-to-show', () => window?.show());
-  window.on('close', event => { if (!quitting) { event.preventDefault(); window?.hide(); } });
+  const persist = () => {
+    if (services.db.open && window && !window.isDestroyed() && !window.isMinimized()) services.db.prepare('INSERT INTO lingjing_meta(key,value) VALUES(?,?) ON CONFLICT(key) DO UPDATE SET value=excluded.value').run('main-window-bounds', JSON.stringify(window.getNormalBounds()));
+  };
+  window.on('close', event => {
+    persist();
+    if (!quitting && closeToTray) { event.preventDefault(); window?.hide(); }
+    else if (!quitting) { quitting = true; app.quit(); }
+  });
+  let geometryTimer: ReturnType<typeof setTimeout>;
+  const schedule = () => { clearTimeout(geometryTimer); geometryTimer = setTimeout(persist, 400); };
+  window.on('move', schedule);
+  window.on('resize', schedule);
+  window.on('closed', () => clearTimeout(geometryTimer));
   window.on('closed', () => { window = null; });
   load(window);
 }
@@ -80,6 +104,13 @@ const windows = {
   close(petId: string) { companionWindows.get(petId)?.close(); companionWindows.delete(petId); },
   get(petId: string) { return companionWindows.get(petId); },
   all() { return [...companionWindows.entries()]; },
+  applySettings(settings: { alwaysOnTop?: boolean; clickThrough?: boolean; closeToTray?: boolean }) {
+    if (typeof settings.closeToTray === 'boolean') closeToTray = settings.closeToTray;
+    for (const win of companionWindows.values()) {
+      if (typeof settings.alwaysOnTop === 'boolean') win.setAlwaysOnTop(settings.alwaysOnTop);
+      if (typeof settings.clickThrough === 'boolean') win.setIgnoreMouseEvents(settings.clickThrough, { forward: true });
+    }
+  },
   showMain() { if (!window) createWindow(); window?.show(); window?.focus(); },
   emit
 };
@@ -98,7 +129,9 @@ app.whenReady().then(() => {
   services.ipc.handle('app:legacy', () => { legacy.open(); return { opened: true }; });
   ipcMain.handle('lingjing:invoke', async (event, request) => {
     if (!trusted(event)) return { ok: false, code: 'UNTRUSTED_SENDER', message: '请求来源无效。' };
-    if (!request || typeof request.feature !== 'string' || typeof request.command !== 'string' || JSON.stringify(request).length > 2_000_000) return { ok: false, code: 'INVALID_REQUEST', message: '请求格式无效。' };
+    try {
+      if (!request || typeof request.feature !== 'string' || typeof request.command !== 'string' || JSON.stringify(request).length > 2_000_000) return { ok: false, code: 'INVALID_REQUEST', message: '请求格式无效。' };
+    } catch { return { ok: false, code: 'INVALID_REQUEST', message: '请求格式无效。' }; }
     const owner = services.session.getOwnerAccountId();
     const result = await services.invoke(request.feature, request.command, request.payload);
     if (owner !== services.session.getOwnerAccountId()) {

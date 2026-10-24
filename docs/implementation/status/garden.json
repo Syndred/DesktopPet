@@ -1,0 +1,30 @@
+{
+  "module": "garden",
+  "branch": "codex/lingjing-garden",
+  "commit": "see git log for this file",
+  "status": "implementing-and-verifying",
+  "upstream": { "fetched": true, "originMain": "4786f97", "baseline": "6c8ce65", "originMainIsAncestor": true },
+  "foundation": "8f17aec",
+  "contract": "docs/implementation/garden-contract.md",
+  "dependencies": [],
+  "routes": ["/garden", "/garden/plots", "/garden/kitchen", "/inventory"],
+  "tests": [
+    { "command": "npm run typecheck:ui", "result": "passed" },
+    { "command": "npm run build:pc", "result": "passed" },
+    { "command": "GARDEN_COMPANIONS_DIR=<companions worktree runtime feature> node --test apps/pc-app/runtime/features/garden/garden.test.cjs", "result": "9 passed; real disk SQLite, close/reopen, two independent connections and real CompanionsService" }
+  ],
+  "evidence": [],
+  "integrationDependencies": [
+    "companions provider: listPets(owner), applyGrowthInTransaction(owner,input), same db; adapter implemented",
+    "battle/discovery trusted settlement must call garden.grantSeeds(context,input,verifiedReceipt); no renderer reward endpoint",
+    "territories provider: listForOwner, getForOwner, gardenBonusForOwner; documented in garden-contract.md",
+    "foundation owns final full integration and one complete regression"
+  ],
+  "remaining": [
+    "Real Electron click-through and database readback in progress",
+    "Connect trusted exploration/battle settlement receipt path",
+    "Implement authoritative territory persistence and main-process battle result integration",
+    "Cloud authoritative inventory operation and live cross-device verification are not deployed; local outbox does not mean cloud success"
+  ],
+  "dataPolicy": "Additive migrations; keep original histories and images; no production deployment or destructive migration"
+}

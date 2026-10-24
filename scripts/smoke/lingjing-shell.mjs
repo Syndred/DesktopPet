@@ -3,11 +3,11 @@ import { mkdirSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import assert from 'node:assert/strict';
 
-const output = resolve('artifacts/foundation/shell');
+const output = resolve(process.env.LINGJING_EXECUTABLE ? 'artifacts/foundation/packaged-shell' : 'artifacts/foundation/shell');
 mkdirSync(output, { recursive: true });
 const env = { ...process.env, PET_USER_DATA_DIR: resolve(output, 'profile') };
 delete env.ELECTRON_RUN_AS_NODE;
-const application = await electron.launch({ args: [resolve('.')], env });
+const application = await electron.launch({ ...(process.env.LINGJING_EXECUTABLE ? { executablePath: resolve(process.env.LINGJING_EXECUTABLE) } : {}), args: process.env.LINGJING_EXECUTABLE ? [] : [resolve('.')], env });
 const errors = [];
 try {
   const page = await application.firstWindow();

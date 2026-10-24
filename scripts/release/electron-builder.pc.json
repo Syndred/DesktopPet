@@ -8,6 +8,10 @@
   "files": [
     "apps/pc-app/dist/**/*",
     "apps/pc-app/runtime/**/*",
+    "!**/*.test.cjs",
+    "!**/verification/**/*",
+    "!**/testing-adapter.cjs",
+    "!**/generate-fish.cjs",
     "package.json"
   ],
   "asar": true,
