@@ -78,6 +78,18 @@ async function desktop(pet) {
   assert.equal(await native.locator('.resource-portrait').count(), 0);
   return native;
 }
+async function captureDesktop(pet) {
+  const captured = await app.evaluate(async ({ BrowserWindow }, petId) => {
+    const window = BrowserWindow.getAllWindows().find(window => window.webContents.getURL().includes(`#/desktop/${petId}`));
+    const image = await window.webContents.capturePage(), bitmap = image.toBitmap();
+    let visiblePixels = 0; for (let offset = 3; offset < bitmap.length; offset += 4) if (bitmap[offset]) visiblePixels++;
+    return { png: image.toPNG().toString('base64'), size: image.getSize(), visiblePixels, bounds: window.getBounds(), visible: window.isVisible(), route: window.webContents.getURL() };
+  }, pet.petId);
+  assert.equal(captured.visible, true); assert.ok(captured.visiblePixels > 200, 'Native capture must contain the actual rendered sprite');
+  const name = `desktop-${pet.element}.png`; writeFileSync(join(output, name), Buffer.from(captured.png, 'base64'));
+  const { png, ...metadata } = captured; void png;
+  (evidence.nativeCaptures ||= []).push({ name, petId: pet.petId, resourceId: pet.resource.resourceId, element: pet.element, method: 'Electron.webContents.capturePage', ...metadata });
+}
 async function play(pet, native, action, label) {
   await page.getByRole('combobox', { name: `${pet.name}的预览动作` }).click();
   await page.getByRole('option', { name: label, exact: true }).click();
@@ -170,7 +182,7 @@ try {
   for (const pet of representatives) success(await invoke('companions', 'desktop', { actionId: `quiet-${pet.petId}`, petId: pet.petId, behavior: 'quiet', visible: true }));
   for (const pet of representatives) {
     const native = await desktop(pet); const detailIdentity = await detail(pet);
-    if (['wood', 'earth'].includes(pet.element)) await native.screenshot({ path: join(output, `desktop-${pet.element}.png`), omitBackground: true, timeout: 5000 });
+    if (['wood', 'earth'].includes(pet.element)) await captureDesktop(pet);
     await shot(`detail-${pet.element}.png`, '.cp-detail-page');
     await page.getByRole('button', { name: '对战属性规则', exact: true }).focus();
     const hint = page.getByRole('tooltip'); await hint.waitFor(); assert.match(await hint.innerText(), /开场生命 120/);
