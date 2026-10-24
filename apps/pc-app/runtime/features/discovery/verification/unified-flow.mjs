@@ -171,7 +171,7 @@ try {
   await page.locator('.discovery-result').waitFor();
   let state = await snapshot(); capture = state.captures.find(value => value.encounterId === encounter.encounterId);
   assert.ok(capture?.petId); assert.equal(capture.resourceId, encounter.spawn.resourceId); assert.equal(capture.element, 'fire');
-  assert.equal(capture.scenario, 'qa'); assert.equal(capture.validation, 'simulated'); assert.equal(capture.memoryTags.length, 1);
+  assert.equal(capture.scenario, 'qa'); assert.equal(capture.scenarioId, scenario.runId); assert.equal(capture.validation, 'simulated'); assert.equal(capture.memoryTags.length, 1);
   await page.getByLabel('QA 场景存档', { exact: true }).waitFor();
   await page.screenshot({ path: join(output, 'capture-result.png') }); proof.capture = capture;
   for (const actionId of [`context:${session.id}`, randomUUID()]) {
@@ -181,7 +181,7 @@ try {
   assert.equal((await snapshot()).captures.filter(value => value.encounterId === encounter.encounterId).length, 1);
   const companion = await invoke('companions', 'get', { petId: capture.petId });
   assert.equal(companion.resource.resourceId, capture.resourceId); assert.equal(companion.origin.scenario, 'qa');
-  assert.equal(companion.origin.validation, 'simulated');
+  assert.equal(companion.origin.validation, 'simulated'); assert.equal(companion.origin.scenarioId, scenario.runId);
   const memories = await invoke('discovery', 'memories', { petId: capture.petId }); assert.equal(memories.length, 1);
   assert.equal((await invoke('discovery', 'pokedex')).find(value => value.petId === capture.petId).resourceId, capture.resourceId);
   proof.checks.push('Shared result action creates one real instance, capture and memory; both duplicate confirmations return the same petId');
@@ -231,6 +231,10 @@ try {
   proof.ledger = JSON.parse(execFileSync(require('electron'), [resolve('apps/pc-app/runtime/features/discovery/verification/read-capture.cjs'), database, capture.petId, capture.encounterId], { env: { ...env, ELECTRON_RUN_AS_NODE: '1' }, encoding: 'utf8' }));
   assert.equal(proof.ledger.ownerAccountId, proof.owner); assert.equal(proof.ledger.captures, 1);
   assert.equal(proof.ledger.ownedInstances, 1); assert.equal(proof.ledger.memories, 1); assert.equal(proof.ledger.validation, 'simulated');
+  assert.equal(proof.ledger.matchingBattleReports, 1); assert.equal(proof.ledger.matchingCompanionReceipts, 1);
+  assert.equal(proof.ledger.encounterStatus, 'captured'); assert.equal(proof.ledger.battleId, proof.finishedBattle.id);
+  assert.equal(proof.ledger.companionOriginBattleId, proof.finishedBattle.id); assert.equal(proof.ledger.capturePetId, capture.petId);
+  assert.equal(proof.ledger.scenarioId, scenario.runId); assert.equal(proof.ledger.companionScenarioId, scenario.runId);
   await launch(join(output, 'ordinary-profile'), false);
   assert.equal((await invoke('app', 'info')).scenario, undefined);
   const unavailable = await page.evaluate(() => window.lingjing.invoke('discovery', 'qaTarget', { templateId: 'animal-shiba' }));
