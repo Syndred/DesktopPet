@@ -2,14 +2,14 @@
   "module": "garden",
   "branch": "codex/lingjing-garden",
   "commit": "see git log for this file",
-  "status": "2d-local-flow-verified-cloud-review-pending",
+  "status": "integrated-2d-native-flow-running-external-dependencies-explicit",
   "upstream": {
     "fetched": true,
     "originMain": "4786f97",
     "baseline": "6c8ce65",
     "originMainIsAncestor": true
   },
-  "foundationRequired": "f0af90f (official shared shadcn/Radix, Tailwind, Motion provider and aliases)",
+  "foundationRequired": "7f0e896 consumed in dea840a; actual shadcn/Radix, Tailwind, live Motion policy, MapLibre and shared 2D portraits",
   "contract": "docs/implementation/garden-contract.md",
   "scope": "docs/implementation/scope-2d-ui-first.txt",
   "routes": [
@@ -92,6 +92,12 @@
       "version": "design-phase reference; no code/assets imported",
       "license": "MIT code; GPL3 sample tiles excluded",
       "where": "crop-configuration and timestamp-stage ideas only; old Phaser not installed"
+    },
+    {
+      "project": "Turf",
+      "version": "7.4.0",
+      "license": "MIT",
+      "where": "reuse discovery boundary contains/checkFix; rejects Windows default location and invalid geometry"
     }
   ],
   "selfDeveloped": [
@@ -102,31 +108,27 @@
   "tests": [
     {
       "command": "npm run build:pc",
-      "result": "passed with actual public kit source"
+      "result": "passed after official kit integration and content-height card fix"
     },
     {
-      "command": "tsc -p artifacts/garden/ui-typecheck.json",
-      "result": "passed; temporary config supplies the @ alias from required foundation base; root config remains foundation-owned"
+      "command": "npm run typecheck:ui",
+      "result": "passed with actual foundation aliases"
     },
     {
       "command": "eslint apps/pc-app/ui/src/features/garden --ext .ts,.tsx",
       "result": "passed"
     },
     {
-      "command": "node --test .../garden.test.cjs",
-      "result": "9 passed; real disk SQLite/reopen/two connections and real CompanionsService"
-    },
-    {
-      "command": "node --test .../integration.test.cjs",
-      "result": "3 passed; actual BattleFeatureService settlement -> seeds, territory battle, atomic backup conflict rejection"
+      "command": "node --test .../garden.test.cjs .../integration.test.cjs .../identity.test.cjs",
+      "result": "16 passed; real disk SQLite, actual companions/battle, fixed dice only for reproducible domain battle takeover; no live GPS/PvP claim"
     },
     {
       "command": "node --test .../cloud.test.mjs",
-      "result": "5 passed; real local HTTP handler + PostgreSQL WASM/PGlite RPC + SQLite; not a deployed Supabase test"
+      "result": "6 passed: local HTTP + real PostgreSQL WASM RPC + SQLite; includes concurrent first cloud initialization and no local fallback grant"
     },
     {
-      "command": "smoke.electron.mjs plant/carrot/battle/harvest/readback/library",
-      "result": "actual Electron 36.9.5: production 25-minute rice growth across app restarts, one harvest, one rice crafted/consumed, fish-only growth, stable post-restart data; Radix Esc/focus and Tabs keys passed"
+      "command": "smoke.electron.mjs motion/map/library/battle/carrot/rewardplant",
+      "result": "actual Electron 36.9.5: live system/app animation toggle, Radix keys/focus, valid card geometry, shared companion portraits, OS WiFi accuracy212m rejected for territory, real training seed receipt +2, 10m carrot harvest, rewarded tomato planted; rice harvest due21:16, rewarded tomato due21:21"
     }
   ],
   "evidence": [
@@ -147,7 +149,7 @@
       "10-garden-harvest-and-feeding.png"
     ],
     "implemented": "milk-white/mist-blue panels, garden 3x2 scene, side crop/seed controls, three-column kitchen, four-column inventory and explicit pet picker, approved whale-girl and original detailed 2D foods",
-    "remaining": "Final screenshots after the latest common foundation kit integration and updated inventory detail layout"
+    "remaining": "Final rice/craft/feed and rewarded-tomato native screenshots; actual kit card-height regression fixed and geometry checked"
   },
   "twoDOnly": {
     "implemented": true,
@@ -160,18 +162,19 @@
     "assets": "project-generated background and transparent atlas; no GPL sample tiles; shared character is not copied into a second resource library"
   },
   "integrationDependencies": [
-    "Requires foundation f0af90f or later; final common Tailwind/route Motion and animation toggle verification in integrated shell",
-    "Accounts canonical save module/backup adapter registered as garden version 1; never per-table merge independent garden progress",
-    "Battle/discovery trusted grantSeeds adapter and durable receipt repair; cloud adapters return explicit pending without local grants",
-    "Territories provider and actual local battle/garrison implemented; shared discovery MapLibre component used",
-    "Foundation owns final full integration regression and packaging"
+    "Public foundation 7f0e896 is consumed; native Motion reduced/system/app setting checks passed",
+    "Garden directly reuses CompanionPortrait, NearbyMap and useDiscovery; Turf/quality checks come from discovery",
+    "Accounts verified legacy-id alias requires companions.migrateOwnerAlias on the same SQLite connection; guarded until provided",
+    "Canonical garden/companion cloud save uses existing runtime TEXT IDs and accounts CAS; no new inventory or identity store",
+    "Foundation owns final full integration regression and Windows packaging"
   ],
   "remaining": [
-    "HTTPS garden-sync and reviewed accounts/garden migrations are not deployed; live actual-account two-device receipt/readback not verified",
-    "Cloud territorial ownership/challenge/garrison authority is still unavailable and fails explicitly, without altering local inventory",
-    "Unsynced companion changes are conservatively preserved as CLOUD_LOCAL_CONFLICT; common accounts sync/version reconciliation remains required",
-    "Real OS positioning and native territory takeover/garrison flow still need integrated discovery validation",
-    "Final updated UI comparison and application animation toggle validation in progress"
+    "HTTPS garden-sync/accounts migrations not deployed; live real-account two-device receipt/readback not verified",
+    "Cloud territory authority/challenge/garrison integration unavailable and fails explicitly",
+    "Companions owner-alias migration callback required for pre-Accounts raw-ID companion rows; original garden and pets preserved, no target starter granted",
+    "Accounts save-version reconciliation required after authoritative garden updates; unsynced companion changes preserved as CLOUD_LOCAL_CONFLICT",
+    "Actual Windows WiFi location returned accuracy212m, above80m; physical territory capture/garrison cannot be accepted at this precision",
+    "Production-duration rice and newly rewarded tomato cycle native readback still in progress"
   ],
   "cloudReview": "docs/implementation/garden-cloud-review.md",
   "dataPolicy": "additive migrations; original history/designs/models retained; no production deployment, destructive migration or user-data reset",
@@ -183,11 +186,11 @@
     "preserved": "Old graph archived after successful migration; source becomes read-only; no starter grant on incomplete migration; two progressed graphs rejected"
   },
   "integratedRevalidation": {
-    "foundation": "f0af90f consumed in 9b6fe47",
+    "foundation": "7f0e896 consumed in dea840a",
     "profile": "artifacts/garden/integrated-electron",
     "ricePlanted": "2026-10-24T12:51:09.487Z",
     "riceMatures": "2026-10-24T13:16:09.487Z",
     "realTimeGrowth": "production 25-minute duration, no clock or database edits",
-    "focusedChecks": "15 SQLite + 5 PostgreSQL checks passed; root UI typecheck and garden ESLint passed"
+    "focusedChecks": "16 SQLite + 6 PostgreSQL checks; root UI typecheck, garden ESLint, native library/geometry/motion and real WiFi location diagnostics passed with external precision limitation"
   }
 }

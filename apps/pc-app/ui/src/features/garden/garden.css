@@ -15,3 +15,15 @@
 .garden-feature{--g-ink:var(--ink,#273453);--g-muted:var(--muted,#8291aa);--g-blue:var(--primary,#527aeb);--g-border:var(--line,#e0e8f5)}.garden-backpack-food-hero{display:grid;grid-template-columns:125px minmax(0,1fr);gap:13px;align-items:center;margin-bottom:20px}.garden-backpack-food-hero>.garden-crop-art{width:125px;height:138px}.garden-backpack-food-hero h2{font-size:18px;margin-bottom:7px}.garden-backpack-food-hero p{font-size:11px;color:var(--g-muted);line-height:1.85}.garden-backpack-food-hero strong{display:flex;align-items:center;gap:5px;font-size:12px;color:#6b9d79;margin-top:9px}.garden-backpack-food-hero small{display:block;font-size:10px;color:#8aaa92;margin-top:7px}.garden-feeding h2.garden-pet-question{font-size:14px}.garden-feature .garden-item-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.garden-feature .garden-item{padding:6px 6px 11px;min-width:0}.garden-feature .garden-item-art .garden-crop-art{height:92px}.garden-feature .garden-item>strong{font-size:11px;line-height:1.4}.garden-feature .garden-source{font-size:9px;padding:3px 5px}
 @media(max-width:850px){.garden-backpack-food-hero{grid-template-columns:130px 1fr}.garden-feature .garden-item-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
 @media(max-width:570px){.garden-feature .garden-item-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+
+/* Card-shaped shared Buttons need content height instead of the kit's toolbar
+   height. Keep the official Button focus/disabled semantics and flat styling. */
+.garden-feature .garden-item,
+.garden-feature .garden-pet,
+.garden-feature .garden-seeds button,
+.garden-feature .garden-territory-list>button{height:auto;min-height:0}
+.garden-feature .garden-item{align-self:stretch}
+.garden-feature .garden-pet-picker{align-items:stretch;overflow-y:hidden}
+.garden-feature .garden-pet-portrait .cp-portrait{pointer-events:none}
+.garden-feature .garden-pet-portrait .cp-sheet-thumbnail{transform:scale(1.55);transform-origin:50% 35%}
+.garden-feature .garden-empty-icon{display:grid;place-items:center}

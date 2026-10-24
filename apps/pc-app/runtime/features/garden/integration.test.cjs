@@ -24,7 +24,11 @@ function fixture() {
   return { db, owner, pet, services, garden, territories, battle, fix, close() { battle.dispose(); db.close(); } };
 }
 async function finishBattle(f, session) {
-  for (let i = 0; i < 150 && session.status === 'active'; i++) session = await f.battle.act({ sessionId: session.id, actionId: `act:${session.id}:${i}`, expectedRound: session.snapshot.round + 1, action: session.snapshot.player.anger >= 50 ? 'ultimate' : 'element_attack' }, { ownerAccountId: f.owner });
+  // Fixed dice exercise an actual winning sequence and its real persisted
+  // receipt. This is a domain fixture, not a claim of live PvP or GPS success.
+  const originalRandom=Math.random;Math.random=()=>.4;
+  try {for (let i = 0; i < 150 && session.status === 'active'; i++) session = await f.battle.act({ sessionId: session.id, actionId: `act:${session.id}:${i}`, expectedRound: session.snapshot.round + 1, action: session.snapshot.player.anger >= 50 ? 'ultimate' : 'normal_attack' }, { ownerAccountId: f.owner });}
+  finally{Math.random=originalRandom;}
   assert.equal(session.status, 'finished'); return session;
 }
 test('a real battle receipt repairs seed settlement exactly once on garden open', async () => {
@@ -43,6 +47,7 @@ test('territory challenge uses the real battle outcome and retains a personal cr
   const challenge = f.garden.command(context, 'territoryChallenge', { actionId: 'invade', expectedRevision: 1 }, () => f.territories.startChallenge({ ownerAccountId: f.owner, petId: f.pet.petId, territoryId: territory.id, expectedTerritoryRevision: territory.revision, actionId: 'invade' })); assert.equal(challenge.ok, true, JSON.stringify(challenge));
   assert.equal(f.territories.dailyRemaining(f.owner), 1);
   const session = await finishBattle(f, f.battle.store.session(f.owner, challenge.data.sessionId));
+  assert.equal(session.winner,'player');
   const settled = f.garden.command(context, 'territorySettle', { actionId: 'settle', expectedRevision: 2 }, () => f.territories.settleChallenge({ ownerAccountId: f.owner, sessionId: session.id })); assert.equal(settled.ok, true);
   const bonus = f.territories.applyCaptureBonus({ ownerAccountId: f.owner, territoryId: territory.id, baseReward: 12 }); assert.equal(bonus.multiplier, session.winner === 'player' ? 2 : 1);
   assert.equal(f.garden.snapshot(context).data.plots[0].cropType, 'carrot');
@@ -52,6 +57,14 @@ test('territory challenge uses the real battle outcome and retains a personal cr
     assert.equal(f.garden.snapshot(context).data.plots[0].cropType, 'carrot'); assert.equal(f.garden.snapshot(context).data.territories[0].garrisonPetId, null);
   }
   assert.throws(() => validFix({ ...f.fix, source: 'demo' }, Date.now()), { code: 'REAL_LOCATION_REQUIRED' }); f.close();
+});
+test('territory refuses the OS default location and shares discovery boundary rules', () => {
+  const f = fixture();
+  assert.throws(() => f.territories.discoverAtSystemFix({...f.fix,positionSource:'Default'}),{code:'LOCATION_DEFAULT_POSITION'});
+  assert.equal(f.territories.listForOwner().length,0);
+  const region=f.territories.discoverAtSystemFix(f.fix),{inside}=require('./territories.cjs');
+  assert.equal(inside(region.boundary[0],region.boundary),true);
+  assert.equal(inside({lat:0,lng:0},region.boundary),false);f.close();
 });
 test('account backup cannot merge a harvest action with an older planted plot', () => {
   const f = fixture(); const context = { ownerAccountId: f.owner }; f.garden.snapshot(context);
