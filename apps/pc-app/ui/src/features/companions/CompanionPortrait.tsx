@@ -3,6 +3,7 @@ import { useAppMotion } from '../../components/motion';
 import type { CompanionResourceRef } from '../../../../../../packages/shared-types/src/features/companions/index';
 import type { ResourceDisplay, ResourceAction } from '../../../../../../packages/shared-types/src/features/resources';
 import { ResourceStage } from '../resources/ResourceStage';
+import { ResourcePortrait } from '../resources/ResourcePortrait';
 import { resourceAssetUrl } from '../resources/client';
 import { useCompanionPlayback } from './useCompanionPlayback';
 import '../../app/types';
@@ -21,7 +22,7 @@ function subscribeResources(listener: () => void) {
 const getResourcesVersion = () => resourcesVersion;
 
 /** The resources module owns drawing, calibration and action fallback. */
-export function CompanionPortrait({ ownerAccountId, petId, resource, name, animate = false, action: defaultAction = 'idle' }: { ownerAccountId?: string; petId: string; resource: CompanionResourceRef; name: string; animate?: boolean; action?: ResourceAction }) {
+export function CompanionPortrait({ ownerAccountId, petId, resource, name, animate = false, framing = 'full', action: defaultAction = 'idle' }: { ownerAccountId?: string; petId: string; resource: CompanionResourceRef; name: string; animate?: boolean; framing?: 'portrait' | 'full'; action?: ResourceAction }) {
   const [display, setDisplay] = useState<ResourceDisplay | null>(null);
   const [error, setError] = useState('');
   const motionAllowed = useAppMotion();
@@ -48,7 +49,7 @@ export function CompanionPortrait({ ownerAccountId, petId, resource, name, anima
   const thumbnail = !animate && display?.resource.kind === 'spritesheet' && sheet && display.resource.availability === 'ready';
   const frame = display?.clip?.frames?.[0] || 0;
   return <div className="cp-portrait" aria-label={`${name}的形象`} role="img">
-    {error ? <div className="cp-resource-error"><span>✧</span><small>{error}</small></div> : !display ? <span className="cp-resource-loading" aria-label="加载角色">✧</span> : thumbnail ? <svg className="cp-sheet-thumbnail size-full" viewBox={`0 0 ${sheet.width} ${sheet.height}`} preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+    {error ? <div className="cp-resource-error"><span>✧</span><small>{error}</small></div> : !display ? <span className="cp-resource-loading" aria-label="加载角色">✧</span> : framing === 'portrait' ? <ResourcePortrait resource={display.resource} framing="portrait" className="size-full" decorative/> : thumbnail ? <svg className="cp-sheet-thumbnail size-full" viewBox={`0 0 ${sheet.width} ${sheet.height}`} preserveAspectRatio="xMidYMid meet" aria-hidden="true">
       <defs><clipPath id={clipId}><rect width={sheet.width} height={sheet.height}/></clipPath></defs>
       <image href={resourceAssetUrl(display.resource.id, display.resource.entryAsset)} width={sheet.width * sheet.columns} height={sheet.height * sheet.rows} x={-(frame % sheet.columns) * sheet.width} y={-Math.floor(frame / sheet.columns) * sheet.height} clipPath={`url(#${clipId})`}/>
     </svg> : <ResourceStage petId={petId} resource={display.resource} context="desktop" action={action} playing={playing}/>}
