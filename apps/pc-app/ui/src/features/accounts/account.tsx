@@ -4,6 +4,10 @@ import type { AccountUser, AccountsSession, BackupPreview, SettingsSnapshot, Syn
 import { errorText, newActionId, request, useAccountsSession } from "./api";
 import { AuthPage } from "./auth";
 import { Button } from "../../components/ui";
+import { Input } from "../../components/ui/input";
+import { AppDialog } from "../../components/dialog";
+import { AccountSelect, AccountSwitch } from "./controls";
+import { AnimatedList } from "../../components/motion";
 
 export function SettingsNavigation() {
   return <nav className="ac-settings-nav" aria-label="设置分类">
@@ -61,20 +65,20 @@ function AccountDetails({ user, session, refreshSession }: { user: AccountUser; 
   }
   return <div className="accounts ac-page">
     <header className="ac-page-heading"><p className="ac-eyebrow">设置 / 账号与同步</p><h1>把每一段陪伴，好好保存。</h1><p>在这里管理你的账号资料与数据同步。</p></header>
-    <div className="ac-settings-layout"><SettingsNavigation /><div className="ac-account-grid">
+    <div className="ac-settings-layout"><SettingsNavigation /><AnimatedList className="ac-account-grid">
       <div className="ac-stack">
         <section className="ac-card"><h2><ClipboardPen size={18} />账号资料</h2>
           <div className="ac-identity"><span className="ac-avatar" role="img" aria-label="灵境默认头像" /><div><strong>{user.username}</strong><p>@{user.account} · {user.provider === "runtime" ? "云端账号" : "本机账号"}</p></div></div>
           <form className="ac-profile-form" onSubmit={submitProfile}><fieldset disabled={Boolean(pending)}>
-            <label>用户名<input value={label} onChange={e => setLabel(e.target.value)} minLength={2} maxLength={24} autoComplete="nickname" required /></label>
-            {user.provider === "runtime" && <label>当前密码（云端资料验证）<input type="password" value={profilePassword} onChange={e => setProfilePassword(e.target.value)} autoComplete="current-password" minLength={6} required /></label>}
+            <label>用户名<Input value={label} onChange={e => setLabel(e.target.value)} minLength={2} maxLength={24} autoComplete="nickname" required /></label>
+            {user.provider === "runtime" && <label>当前密码（云端资料验证）<Input type="password" value={profilePassword} onChange={e => setProfilePassword(e.target.value)} autoComplete="current-password" minLength={6} required /></label>}
             <Button className="ac-primary" type="submit">{pending === "profile" ? "保存中…" : "保存资料"}</Button>
           </fieldset></form>
         </section>
         <section className="ac-card"><h2><LockKeyhole size={18} />修改密码</h2><form className="ac-password-form" onSubmit={submitPassword}><fieldset disabled={Boolean(pending)}>
-          <label>当前密码<input type="password" value={oldPassword} onChange={e => setOldPassword(e.target.value)} autoComplete="current-password" minLength={6} maxLength={64} required /></label>
-          <label>新密码<input type="password" value={newPassword} onChange={e => setNewPassword(e.target.value)} autoComplete="new-password" minLength={6} maxLength={64} required /></label>
-          <label>确认新密码<input type="password" value={confirm} onChange={e => setConfirm(e.target.value)} autoComplete="new-password" minLength={6} maxLength={64} required /></label>
+          <label>当前密码<Input type="password" value={oldPassword} onChange={e => setOldPassword(e.target.value)} autoComplete="current-password" minLength={6} maxLength={64} required /></label>
+          <label>新密码<Input type="password" value={newPassword} onChange={e => setNewPassword(e.target.value)} autoComplete="new-password" minLength={6} maxLength={64} required /></label>
+          <label>确认新密码<Input type="password" value={confirm} onChange={e => setConfirm(e.target.value)} autoComplete="new-password" minLength={6} maxLength={64} required /></label>
           <Button className="ac-secondary" type="submit">{pending === "password" ? "保存中…" : "保存密码"}</Button>
         </fieldset></form></section>
       </div>
@@ -84,8 +88,8 @@ function AccountDetails({ user, session, refreshSession }: { user: AccountUser; 
           <p>伙伴、养成、聊天与战报，按当前账号独立保存。</p>
           <dl className="ac-facts"><div><dt>云端已核对版本</dt><dd>{sync?.cloudRevision || 0}</dd></div><div><dt>上次同步读回核对</dt><dd>{dateText(sync?.lastVerifiedAt)}</dd></div><div><dt>待处理同步</dt><dd>{sync?.pending || 0} 项</dd></div></dl>
           {sync?.localChanged && <p className="ac-hint">本机有尚未核对到云端的内容。</p>}
-          <label className="ac-check"><input type="checkbox" disabled={Boolean(pending) || !settings || user.provider !== "runtime"} checked={settings?.document.sync.enabled || false}
-            onChange={event => { const enabled = event.target.checked; void run("sync-preference", async () => {
+          <label className="ac-check"><AccountSwitch label="开启存档同步" disabled={Boolean(pending) || !settings || user.provider !== "runtime"} checked={settings?.document.sync.enabled || false}
+            onChange={enabled => { void run("sync-preference", async () => {
               if (!settings) return;
               const next = await request<SettingsSnapshot>("settingsSave", { document: { ...settings.document, sync: { enabled } }, revision: settings.revision, actionId: newActionId() });
               setSettings(next); return enabled ? "存档同步已开启。" : "存档同步已关闭，待处理记录已保留。";
@@ -116,19 +120,18 @@ function AccountDetails({ user, session, refreshSession }: { user: AccountUser; 
         </section>
       </div>
       <div className="ac-feedback"><p role="status" aria-live="polite" className="ac-notice">{notice}</p><p role="alert" className="ac-notice ac-error">{error}</p></div>
-    </div></div>
-    {preview && <div className="ac-modal-backdrop"><section role="dialog" aria-modal="true" aria-labelledby="restore-title" className="ac-modal">
+    </AnimatedList></div>
+    {preview && <AppDialog title="预览恢复内容" busy={Boolean(pending)} onClose={() => setPreview(null)}><section className="accounts ac-modal">
       <h2 id="restore-title">预览恢复内容</h2><p>备份时间：{dateText(preview.createdAt)}</p><p>模块：{preview.modules.join("、")}</p>
       <p>{preview.tables.reduce((n, t) => n + t.count, 0)} 条模块记录 · 完整性校验通过</p>
-      <label className="ac-check"><input type="radio" name="restore-mode" checked={restoreMode === "merge"} onChange={() => setRestoreMode("merge")} />合并，保留本机现有记录</label>
-      <label className="ac-check"><input type="radio" name="restore-mode" checked={restoreMode === "replace"} onChange={() => setRestoreMode("replace")} />恢复到此备份版本</label>
+      <label>恢复方式<AccountSelect label="恢复方式" value={restoreMode} onChange={value => setRestoreMode(value as "merge" | "replace")} disabled={Boolean(pending)} options={[{ value: "merge", label: "合并，保留本机现有记录" }, { value: "replace", label: "恢复到此备份版本" }]} /></label>
       <p className="ac-hint">恢复前会自动保存当前账号的完整副本。账号资料与登录凭据由当前账号保留。</p>
       <div className="ac-actions"><Button className="ac-secondary" disabled={Boolean(pending)} onClick={() => setPreview(null)}>取消</Button><Button className="ac-primary" disabled={Boolean(pending)} onClick={() => void run("restore", async () => {
         const result = await request<{ preservedBackup: { filePath: string } }>("backupRestore", { previewId: preview.previewId, mode: restoreMode, actionId: newActionId() });
         setPreview(null); await refresh(); return `恢复已完成。恢复前存档保存在：${result.preservedBackup.filePath}`;
       })}>{pending === "restore" ? "正在恢复…" : "确认恢复"}</Button></div>
       {error && <p role="alert" className="ac-error">{error}</p>}
-    </section></div>}
+    </section></AppDialog>}
   </div>;
 }
 

@@ -85,12 +85,14 @@ class AccountsService {
   }
   async adopt(row, proof, rememberSession) {
     this.epoch++;
+    const epoch = this.epoch;
     this.current = { ownerAccountId: row.owner_account_id, provider: row.provider, proof, persistence: "memory", rememberSession };
     this.startupIssue = null;
     this.settings(row.owner_account_id);
     this.persistSession(rememberSession);
     this.remote.setCurrentUser(row.provider === "runtime" ? this.privateSession() : null);
     await this.host?.apply?.(this.settings(row.owner_account_id).document);
+    invariant(this.epoch === epoch && this.current?.ownerAccountId === row.owner_account_id, "SESSION_CHANGED", "账号状态已改变，请重新登录。");
     return this.emitSession();
   }
   persistSession(rememberSession) {
@@ -165,20 +167,20 @@ class AccountsService {
         }
         proof = this.localProof(row.owner_account_id);
       }
-      return this.adopt(row, proof, input.rememberSession === true);
+      return await this.adopt(row, proof, input.rememberSession === true);
     } finally { this.authBusy = false; }
   }
   async logout() {
     const prior = this.current;
+    const previousCloudSession = this.privateSession();
     this.epoch++; this.current = null;
     this.db.prepare("INSERT INTO account_session_control VALUES(1,1) ON CONFLICT(singleton) DO UPDATE SET blocked=1").run();
     try { this.vault.clear(); } catch { this.startupIssue = "SECURE_SESSION_CLEAR_FAILED"; }
     this.host?.clear?.();
     if (prior?.provider === "local") this.db.prepare("DELETE FROM account_login_sessions WHERE proof_hash=?").run(checksum(prior.proof));
-    this.remote.setCurrentUser(null);
+    if (this.remote.signOut) void this.remote.signOut(previousCloudSession).catch(() => {});
+    else this.remote.setCurrentUser(null);
     this.emitSession();
-    // Do not block sign-out on an unavailable cloud service or realtime disconnect.
-    void this.remote.clear?.().catch(() => {});
     return { currentUser: null };
   }
   invalidateSession(owner) {

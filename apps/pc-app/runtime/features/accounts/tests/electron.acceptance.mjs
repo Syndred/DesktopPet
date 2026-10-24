@@ -32,12 +32,16 @@ async function launch() {
   return page;
 }
 async function accountLogin(page, account, secret, remember = false) {
-  await page.getByLabel("账号类型").selectOption("local");
+  await choose(page, "账号类型", "本机账号");
   await page.getByLabel("账号", { exact: true }).fill(account);
   await page.getByLabel("密码", { exact: true }).fill(secret);
   if (remember) await page.getByRole("checkbox", { name: "保持登录（系统安全存储）" }).check();
   await page.getByRole("button", { name: "登录进入 →" }).click();
   await page.getByRole("heading", { name: "把每一段陪伴，好好保存。" }).waitFor();
+}
+async function choose(page, name, option) {
+  await page.getByRole("combobox", { name, exact: true }).click();
+  await page.getByRole("option", { name: option, exact: true }).click();
 }
 const ipc = (page, command, payload) => page.evaluate(async ({ command, payload }) => {
   const result = await window.lingjing.invoke("accounts", command, payload);
@@ -54,6 +58,15 @@ try {
   await page.screenshot({ path: join(output, "01-login.png") });
   const session = await ipc(page, "session"); assert.equal(session.currentUser, null);
   assert.equal(session.migration.imported, 2); check("raw legacy accounts imported before login", session.migration);
+  await page.getByRole("tab", { name: "登录", exact: true }).focus();
+  await page.keyboard.press("ArrowRight"); await page.getByRole("heading", { name: "遇见新的陪伴" }).waitFor();
+  await choose(page, "账号类型", "本机账号");
+  await page.getByLabel("用户名", { exact: true }).fill("新伙伴测试"); await page.getByLabel("账号", { exact: true }).fill("qa_registered");
+  await page.getByLabel("密码", { exact: true }).fill("qa-register-secret"); await page.getByLabel("确认密码", { exact: true }).fill("qa-register-secret");
+  await page.getByRole("button", { name: "创建账号 →", exact: true }).click(); await page.getByRole("heading", { name: "把每一段陪伴，好好保存。" }).waitFor();
+  assert.equal((await ipc(page, "session")).currentUser.account, "qa_registered");
+  check("shared Radix Tabs keyboard and local registration through the live UI");
+  await page.getByRole("button", { name: "退出登录", exact: true }).click(); await page.getByRole("heading", { name: "欢迎回来" }).waitFor();
   await accountLogin(page, "qa_alice", "qa-secret-123", true);
   const signedIn = await ipc(page, "session"); assert.equal(signedIn.currentUser.ownerAccountId, "local:legacy-alice");
   assert.equal(signedIn.persistence, "secure"); check("local account login and DPAPI-backed session", { user: signedIn.currentUser, persistence: signedIn.persistence });
@@ -65,8 +78,9 @@ try {
   await page.getByLabel("当前密码", { exact: true }).fill("qa-secret-123"); await page.getByRole("button", { name: "保存密码", exact: true }).click();
   await page.getByText("密码已更新。", { exact: true }).waitFor(); check("nickname and current-password validation via UI");
   await page.getByRole("link", { name: /桌面与行为/ }).click();
-  await page.getByRole("switch", { name: "始终置顶", exact: true }).uncheck();
-  await page.getByRole("switch", { name: "透明区域鼠标穿透", exact: true }).uncheck();
+  const topSwitch = page.getByRole("switch", { name: "始终置顶", exact: true });
+  await topSwitch.focus(); await topSwitch.press("Space"); assert.equal(await topSwitch.getAttribute("aria-checked"), "false");
+  await page.getByRole("switch", { name: "透明区域鼠标穿透", exact: true }).click();
   await setVolume(page, 37); await page.getByRole("button", { name: "保存设置", exact: true }).click();
   await page.getByText("设置已保存，将在下次启动时恢复。", { exact: true }).waitFor();
   await page.screenshot({ path: join(output, "02-desktop-settings.png") });
@@ -80,7 +94,7 @@ try {
   check("quiet hours suppress native notifications via host");
   await page.getByRole("link", { name: /账号与同步/ }).click();
   await page.getByRole("heading", { name: "把每一段陪伴，好好保存。" }).waitFor();
-  const exportPending = page.getByRole("button", { name: "↓ 导出本地备份" }).click();
+  const exportPending = page.getByRole("button", { name: "导出本地备份", exact: true }).click();
   checkpoint("save-backup"); await exportPending;
   await page.getByText(/备份已导出：/).waitFor({ timeout: 180_000 }); evidence.nativeDialogs.push("native Save As selected real export file");
   const backupFile = join(output, "export.lingjing.json"); assert.equal(existsSync(backupFile), true);
@@ -93,7 +107,12 @@ try {
   await page.getByRole("link", { name: /账号与同步/ }).click();
   const previewPending = page.getByRole("button", { name: "恢复本地备份", exact: true }).click(); checkpoint("open-backup"); await previewPending;
   await page.getByRole("dialog", { name: "预览恢复内容" }).waitFor({ timeout: 180_000 }); evidence.nativeDialogs.push("native Open selected exact export file");
-  await page.getByRole("radio", { name: "恢复到此备份版本" }).check(); await page.getByRole("button", { name: "确认恢复", exact: true }).click();
+  const restoreDialog = page.getByRole("dialog", { name: "预览恢复内容" });
+  for (let i = 0; i < 7; i++) {
+    await page.keyboard.press("Tab");
+    assert.equal(await restoreDialog.evaluate(node => node.contains(document.activeElement)), true);
+  }
+  await choose(page, "恢复方式", "恢复到此备份版本"); await page.getByRole("button", { name: "确认恢复", exact: true }).click();
   await page.getByText(/恢复已完成。恢复前存档保存在：/).waitFor();
   const restored = await ipc(page, "settingsGet"); assert.equal(restored.document.desktop.volume, 37);
   const receipt = (await ipc(page, "backupList")).find(r => r.reason === "before-restore");
