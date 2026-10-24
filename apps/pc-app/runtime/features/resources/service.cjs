@@ -11,7 +11,10 @@ class ResourcesService {
     this.storageRoot = path.resolve(storageRoot);
     this.legacyModelsDir = path.resolve(legacyModelsDir);
     this.starterManifest = starterManifest;
+    this.builtinAssetRoots = [];
   }
+  // Only trusted main-process registration can extend built-in package roots.
+  addBuiltinAssetRoot(root) { const resolved = path.resolve(root); if (!this.builtinAssetRoots.includes(resolved)) this.builtinAssetRoots.push(resolved); }
   owner(value) { if (typeof value !== 'string' || !value.trim() || value.length > 200) fail('AUTH_REQUIRED', '请先选择本机存档或登录账号'); return value; }
   async seed() {
     await fs.mkdir(this.storageRoot, { recursive: true });
@@ -111,7 +114,7 @@ class ResourcesService {
   async assetFile(owner, id, key) {
     this.owner(owner); safeRelative(key);
     const filePath = this.repository.file(owner, id, key);
-    const allowed = [this.storageRoot, this.legacyModelsDir, path.dirname(this.starterManifest)];
+    const allowed = [this.storageRoot, this.legacyModelsDir, path.dirname(this.starterManifest), ...this.builtinAssetRoots];
     const actual = await fs.realpath(filePath).catch(() => fail('MISSING_ASSET', '资源文件已缺失'));
     const roots = await Promise.all(allowed.map(root => fs.realpath(root).catch(() => path.resolve(root))));
     if (!roots.some(root => isWithin(root, actual))) fail('UNSAFE_PATH', '资源路径已变更或超出允许目录');

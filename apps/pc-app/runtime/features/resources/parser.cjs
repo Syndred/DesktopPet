@@ -180,7 +180,7 @@ async function parseCharacterFile(filePath, metadata = {}) {
       entryAsset = safeRelative(descriptor.image);
       const bytes = await loadFile(entryAsset), size = imageSize(bytes, entryAsset);
       sheet = descriptor.sheet;
-      if (!plain(sheet) || ['width', 'height', 'columns', 'rows'].some(key => !Number.isInteger(sheet[key]) || sheet[key] <= 0) || sheet.columns * sheet.rows > 4096 || sheet.width * sheet.columns !== size.width || sheet.height * sheet.rows !== size.height) fail('INVALID_SHEET', '精灵图尺寸与帧网格不一致');
+      if (!plain(sheet) || ['width', 'height'].some(key => !Number.isFinite(sheet[key]) || sheet[key] <= 0) || ['columns', 'rows'].some(key => !Number.isInteger(sheet[key]) || sheet[key] <= 0) || sheet.columns * sheet.rows > 4096 || sheet.width * sheet.columns !== size.width || sheet.height * sheet.rows !== size.height) fail('INVALID_SHEET', '精灵图尺寸与帧网格不一致');
       if (!plain(descriptor.clips) || Object.keys(descriptor.clips).length < 1 || Object.keys(descriptor.clips).length > 128) fail('INVALID_CLIPS', '角色包应包含 1 到 128 组动画');
       clips = Object.entries(descriptor.clips).map(([name, clip]) => {
         if (!text(name, 200) || name.length > 200 || !plain(clip) || !Array.isArray(clip.frames) || !clip.frames.length || clip.frames.length > 1024 || clip.frames.some(frame => !Number.isInteger(frame) || frame < 0 || frame >= sheet.columns * sheet.rows) || !Number.isFinite(clip.fps) || clip.fps < 1 || clip.fps > 60 || (clip.loop !== undefined && typeof clip.loop !== 'boolean')) fail('INVALID_CLIPS', '动画帧、帧率或循环参数无效');

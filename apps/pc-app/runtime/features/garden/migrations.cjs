@@ -76,5 +76,58 @@ CREATE TABLE IF NOT EXISTS garden_outbox (
   PRIMARY KEY(owner_account_id, action_id)
 );`
 };
-function migrate(db) { db.exec(migration.sql); }
-module.exports = { migration, migrations: [migration], migrate };
+const territoryMigration = {
+  id: 'garden-20261024-territories-v1',
+  sql: `
+CREATE TABLE IF NOT EXISTS garden_territory_records (
+  territory_id TEXT PRIMARY KEY,
+  owner_account_id TEXT,
+  revision INTEGER NOT NULL DEFAULT 1,
+  data_json TEXT NOT NULL,
+  updated_at INTEGER NOT NULL
+);
+CREATE TABLE IF NOT EXISTS garden_territory_logs (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  territory_id TEXT NOT NULL,
+  owner_account_id TEXT NOT NULL,
+  action TEXT NOT NULL,
+  old_owner_id TEXT,
+  new_owner_id TEXT,
+  battle_id TEXT,
+  created_at INTEGER NOT NULL
+);
+CREATE TABLE IF NOT EXISTS garden_territory_challenges (
+  owner_account_id TEXT NOT NULL,
+  battle_id TEXT NOT NULL,
+  territory_id TEXT NOT NULL,
+  territory_revision INTEGER NOT NULL,
+  settled INTEGER NOT NULL DEFAULT 0,
+  result_json TEXT,
+  PRIMARY KEY(owner_account_id,battle_id)
+);
+CREATE TABLE IF NOT EXISTS garden_territory_attempts (
+  owner_account_id TEXT NOT NULL,
+  day_key TEXT NOT NULL,
+  count INTEGER NOT NULL CHECK(count BETWEEN 0 AND 2),
+  PRIMARY KEY(owner_account_id,day_key)
+);`
+};
+const eventMigration = { id: 'garden-20261024-owner-events-v1', sql: `
+CREATE TABLE IF NOT EXISTS garden_events (
+  owner_account_id TEXT NOT NULL,
+  event_id TEXT NOT NULL,
+  action_id TEXT NOT NULL,
+  kind TEXT NOT NULL,
+  item_id TEXT NOT NULL,
+  delta INTEGER NOT NULL,
+  balance INTEGER NOT NULL CHECK(balance >= 0),
+  pet_id TEXT,
+  created_at INTEGER NOT NULL,
+  PRIMARY KEY(owner_account_id,event_id)
+);
+CREATE INDEX IF NOT EXISTS garden_events_time ON garden_events(owner_account_id,created_at DESC);
+INSERT OR IGNORE INTO garden_events SELECT owner_account_id,'legacy:'||id,action_id,kind,item_id,delta,balance,pet_id,created_at FROM garden_ledger;
+` };
+const migrations = [migration, territoryMigration, eventMigration];
+function migrate(db) { for (const item of migrations) db.exec(item.sql); }
+module.exports = { migration, migrations, migrate };
