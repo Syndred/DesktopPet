@@ -41,10 +41,11 @@ async function select(name) {
 }
 async function boundVisual(selector, resourceId) {
   await waitUntil(async () => page.locator(selector).evaluateAll((nodes, id) => nodes.length > 0 && nodes.every(node => {
-    const sheet = node.querySelector('.cp-sheet-thumbnail');
+    const sheet = node.querySelector('.resource-portrait, .cp-sheet-thumbnail');
+    const atlasImage = sheet?.querySelector('image')?.getAttribute('href');
     const illustration = node.querySelector('img[data-resource-illustration]');
     return node.getAttribute('data-resource-id') === id && (
-      sheet && decodeURIComponent(getComputedStyle(sheet).backgroundImage).includes(id) ||
+      sheet && (decodeURIComponent(getComputedStyle(sheet).backgroundImage).includes(id) || atlasImage && decodeURIComponent(atlasImage).includes(id)) ||
       illustration?.getAttribute('data-resource-illustration') === id && id === 'builtin:lingjing-yuwan-v1' && illustration.getAttribute('src').endsWith('companionship-room-v1.png'));
   }), resourceId), `${selector} uses its actual resource image`);
 }
