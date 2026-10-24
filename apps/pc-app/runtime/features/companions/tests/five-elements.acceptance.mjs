@@ -22,6 +22,7 @@ const evidence = {
   source: { sha: git(['rev-parse', 'HEAD']), dirty: git(['status', '--porcelain']), mainBundleSha256: digest(readFileSync(resolve('apps/pc-app/dist/main/index.cjs'))), uiEntrySha256: digest(readFileSync(resolve('apps/pc-app/dist/ui/index.html'))) },
   scenario: { id: scenario.scenario, runId: scenario.runId, provenance: 'simulated', isolated: true },
   sources: { authentication: 'isolated-QA-local-account-through-actual-accounts-service', characters: 'registered-project-original-atlases', playback: 'production-IPC-and-Pixi', training: 'actual-local-authoritative-engine', territory: 'simulated-controlled-owned-record', garrison: 'production-command-against-controlled-territory', realCloudAcceptance: false, realGeographicAcceptance: false },
+  nativeCaptureRequired: 'Run native-capture.acceptance.mjs on this evidence file; the account display limit remains authoritative, and sprite pixel acceptance is separate from the five-instance functional flow.',
   scope: 'U02/U03 presentation/U05/U07 companions self-acceptance; four-mode/all-25 rules are separately owned by battle and central integration',
   inputs: [], characters: [], screenshots: [], errors: []
 };
@@ -77,23 +78,6 @@ async function desktop(pet) {
   assert.equal(await native.locator('.resource-stage').getAttribute('data-resource-id'), pet.resource.resourceId);
   assert.equal(await native.locator('.resource-portrait').count(), 0);
   return native;
-}
-async function captureDesktop(pet) {
-  const captured = await app.evaluate(async ({ BrowserWindow }, petId) => {
-    const window = BrowserWindow.getAllWindows().find(window => window.webContents.getURL().includes(`#/desktop/${petId}`));
-    const wasThrottled = window.webContents.getBackgroundThrottling(); let timeout;
-    window.webContents.setBackgroundThrottling(false); window.showInactive(); window.moveTop();
-    try {
-      const image = await Promise.race([window.webContents.capturePage(undefined, { stayAwake: true }), new Promise((_, reject) => { timeout = setTimeout(() => reject(new Error('Native capture timed out after making the QA window visible')), 8000); })]);
-      const bitmap = image.toBitmap(); let visiblePixels = 0;
-      for (let offset = 3; offset < bitmap.length; offset += 4) if (bitmap[offset]) visiblePixels++;
-      return { png: image.toPNG().toString('base64'), size: image.getSize(), visiblePixels, bounds: window.getBounds(), visible: window.isVisible(), route: window.webContents.getURL(), capturePolicy: 'temporary-front-and-unthrottled-in-isolated-QA', originalBackgroundThrottling: wasThrottled };
-    } finally { clearTimeout(timeout); window.webContents.setBackgroundThrottling(wasThrottled); }
-  }, pet.petId);
-  assert.equal(captured.visible, true); assert.ok(captured.visiblePixels > 200, 'Native capture must contain the actual rendered sprite');
-  const name = `desktop-${pet.element}.png`; writeFileSync(join(output, name), Buffer.from(captured.png, 'base64'));
-  const { png, ...metadata } = captured; void png;
-  (evidence.nativeCaptures ||= []).push({ name, petId: pet.petId, resourceId: pet.resource.resourceId, element: pet.element, method: 'Electron.webContents.capturePage', ...metadata });
 }
 async function play(pet, native, action, label) {
   await page.getByRole('combobox', { name: `${pet.name}的预览动作` }).click();
@@ -187,7 +171,6 @@ try {
   for (const pet of representatives) success(await invoke('companions', 'desktop', { actionId: `quiet-${pet.petId}`, petId: pet.petId, behavior: 'quiet', visible: true }));
   for (const pet of representatives) {
     const native = await desktop(pet); const detailIdentity = await detail(pet);
-    if (['wood', 'earth'].includes(pet.element)) await captureDesktop(pet);
     await shot(`detail-${pet.element}.png`, '.cp-detail-page');
     await page.getByRole('button', { name: '对战属性规则', exact: true }).focus();
     const hint = page.getByRole('tooltip'); await hint.waitFor(); assert.match(await hint.innerText(), /开场生命 120/);
