@@ -21,8 +21,9 @@ function fromFeatureSession(session) {
 }
 class RegisteredWildBattleAdapter {
   constructor(api,invoke) {this.api=api;this.invoke=invoke;}
-  begin({ownerAccountId,pet,spawn,actionId}) {
+  begin({ownerAccountId,pet,spawn,actionId,encounterId,scenario}) {
     return fromFeatureSession(this.api.beginWildChallenge({ownerAccountId,petId:pet.petId,actionId,challenge:{id:spawn.id,spawnId:spawn.id,expiresAt:spawn.expiresAt,
+      origin:'discovery',encounterId,scenario,returnPath:`/discovery/encounter/${encounterId}`,
       opponent:{petId:spawn.id,petName:spawn.name,element:spawn.element,resourceRef:spawn.resourceId}}}));
   }
   read(owner,battleId) {return fromFeatureSession(this.api.getOutcome({ownerAccountId:owner,sessionId:battleId}).session);}
