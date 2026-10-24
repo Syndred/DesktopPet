@@ -47,7 +47,7 @@ try {
     const screen = page.locator('[data-battle-screen="shared-v1"]'); await screen.waitFor();
     const sessionId = await screen.getAttribute('data-session-id');
     const before = await invoke('battle', 'qaPreset', { sessionId, preset: 'charged', enemyAction: fixture.enemy });
-    const resolvedEnemy = await invoke('resources', 'resolve', { resourceId: before.enemy.resource?.resourceId || before.enemy.appearance2d || before.enemy.resourceRef, context: 'battle', action: 'hit' });
+    const resolvedEnemy = await invoke('resources', 'resolve', { petId: before.enemy.petId, resourceId: before.enemy.resource?.resourceId || before.enemy.appearance2d || before.enemy.resourceRef, context: 'battle', action: 'hit' });
     const hitName = resolvedEnemy.resource.atlas.animations.hit[0], hitRect = resolvedEnemy.resource.atlas.frames[hitName].frame;
     const hitTexture = [hitRect.x, hitRect.y, hitRect.w, hitRect.h].join(',');
     await page.reload(); await screen.waitFor();
