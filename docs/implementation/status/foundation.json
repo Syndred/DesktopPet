@@ -42,6 +42,10 @@
     {
       "command": "garden/cloud.test.mjs after final incoming module merge",
       "result": "11 passed on local HTTP + PostgreSQL WASM; not a live deployed service"
+    },
+    {
+      "command": "foundation + accounts QA boundary tests",
+      "result": "9 passed after unified preflight/identity integration"
     }
   ],
   "evidence": [
@@ -68,7 +72,7 @@
     "Module self-review, main chat independent review, one final integrated acceptance and new portable package"
   ],
   "dataPolicy": "Original JSON/history retained with one-time backup before opening; one SQLite connection and transactional migration ledger; no destructive production migration or production release",
-  "updatedAt": "2026-10-24T14:40:47.762Z",
+  "updatedAt": "2026-10-24T14:57:32.197Z",
   "integratedModules": [
     "accounts",
     "resources",
@@ -140,7 +144,7 @@
     "Precise physical location and live AI provider credentials"
   ],
   "qaIsolation": {
-    "source": "4c05172",
+    "source": "4702b06",
     "descriptor": {
       "id": "unified-battle",
       "provenance": "simulated",
@@ -148,7 +152,9 @@
     },
     "normalStartupUnaffected": true,
     "realElectronRestartPassed": true,
-    "evidence": "docs/implementation/evidence/foundation/qa-isolation/evidence.json",
-    "adapterFlows": "pending battle/discovery/garden shared contract implementation; isolation itself does not simulate a transport"
+    "evidence": "docs/implementation/evidence/foundation/qa-isolation/integrated-evidence.json",
+    "adapterFlows": "pending battle/discovery/garden shared contract implementation; isolation itself does not simulate a transport",
+    "identityBoundary": "One shared marker/preflight; same run ID in account SQLite namespace; memory-only login; real cloud/OS startup/location/backup boundaries retained",
+    "restartPolicy": "Explicit QA login required; restores the same QA owner and provenance"
   }
 }
