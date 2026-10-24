@@ -56,6 +56,16 @@ module.exports = {
       service,
       snapshot: context => service.snapshot(context),
       territories,
+      getBattleContext: ({ownerAccountId,sessionId}) => {
+        if (services.session.getOwnerAccountId()!==ownerAccountId) throw Object.assign(new Error('账号已切换'),{code:'SESSION_CHANGED'});
+        const challenge=services.db.prepare('SELECT settled FROM garden_territory_challenges WHERE owner_account_id=? AND battle_id=?').get(ownerAccountId,sessionId);
+        return {returnTo:'/garden',action:challenge?'territory':undefined,settled:Boolean(challenge?.settled)};
+      },
+      settleBattleContext: async ({ownerAccountId,sessionId,actionId}) => {
+        if (services.session.getOwnerAccountId()!==ownerAccountId) return {ok:false,code:'SESSION_CHANGED',message:'账号已切换'};
+        const result=await services.invoke('garden','territorySettle',{sessionId,actionId,sessionOwnerAccountId:ownerAccountId});
+        return result.ok?{...result,data:{...result.data,resultPath:'/garden'}}:result;
+      },
       migrateOwnerAlias:context=>identity.migrate(context),
       getBattleContext:input=>{
         if(input.ownerAccountId!==services.session.getOwnerAccountId())throw Object.assign(new Error('账号已切换'),{code:'SESSION_CHANGED'});

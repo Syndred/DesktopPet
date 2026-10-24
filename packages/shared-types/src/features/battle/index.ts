@@ -7,6 +7,8 @@ export interface BattleRulesProfile {
   companionStatsApplied: false;
   baseDamage: Record<BattleActionType, number>;
   ultimateAnger: number; ultimateCost: number; ultimateHeal: number; dodgeMaxCost: number;
+  advantage?: Record<ElementType, ElementType>;
+  elementEffects?: Record<ElementType, { label: string; description: string }>;
 }
 export interface BattleStatus {
   type: "burn" | "freeze" | "parasite" | "vulnerability" | "petrify";
@@ -33,6 +35,15 @@ export interface BattleRound {
   hpAfter?: { player: number; enemy: number }; angerAfter?: { player: number; enemy: number };
   statusesAfter?: { player: BattleStatus[]; enemy: BattleStatus[] };
   state?: BattleSnapshot; winner: BattleWinner; notes: string[];
+  visualEvents?: BattleVisualEvent[];
+}
+export interface BattleVisualEvent {
+  id: string; phase: 'windup' | 'release' | 'impact' | 'effects';
+  side: 'player' | 'enemy'; kind: 'action' | 'damage' | 'dodge' | 'interrupt' | 'anger' | 'heal' | 'status' | 'dot';
+  action?: BattleActionType | 'stunned'; amount?: number; status?: string; element?: ElementType;
+}
+export interface BattleContext {
+  returnTo: string; action?: 'capture' | 'territory'; name?: string; settled?: boolean; resultPath?: string;
 }
 export interface BattleReward {
   actionId: string; experience: number; applied: boolean; petId: string;
