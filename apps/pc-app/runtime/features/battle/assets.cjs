@@ -2,7 +2,6 @@ const { join } = require("node:path");
 const SHIBA_RESOURCE = "builtin:lingjing-battle-shiba-v1";
 const YUWAN_RESOURCE = "builtin:lingjing-battle-yuwan-v1";
 function appearance2d(pet = {}) {
-  if (["builtin:lingjing-yuwan-v1", "builtin:fat-fish-v1"].includes(pet.resource?.resourceId)) return YUWAN_RESOURCE;
   if (pet.resource?.kind === "2d" && pet.resource.resourceId) return pet.resource.resourceId;
   if (pet.appearance2d) return pet.appearance2d;
   return pet.element === "water" ? YUWAN_RESOURCE : SHIBA_RESOURCE;

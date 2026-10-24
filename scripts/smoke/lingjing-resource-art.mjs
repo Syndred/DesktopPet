@@ -79,10 +79,12 @@ try {
   const anchor = page.getByRole('slider', { name: '锚点 X', exact: true }); await anchor.focus(); await anchor.press('ArrowRight');
   await page.getByRole('button', { name: '保存动作与显示设置', exact: true }).click();
   await page.getByRole('status').filter({ hasText: '2D 动作与显示设置已保存' }).waitFor();
+  await page.getByRole('button', { name: '应用给伙伴', exact: true }).click();
   await page.getByRole('combobox', { name: '应用形象的伙伴', exact: true }).click(); await page.getByRole('option', { name: /图集伙伴甲/ }).click();
   await page.getByRole('button', { name: '应用给图集伙伴甲', exact: true }).click(); await page.getByRole('status').filter({ hasText: '已为图集伙伴甲应用形象' }).waitFor();
   pets = (await invoke(page, 'companions', 'list')).pets;
   assert.equal(pets.find(p => p.petId === firstId).resource.resourceId, imported.id); assert.notEqual(pets.find(p => p.petId === secondId).resource.resourceId, imported.id);
+  await page.keyboard.press('Escape');
   evidence.calibration = (await invoke(page, 'resources', 'resolve', { resourceId: imported.id, petId: firstId, context: 'desktop', action: 'idle' })).calibration;
   assert.equal(evidence.calibration.scale, 1.01); assert.equal(evidence.calibration.anchorX, .51);
   await page.getByRole('button', { name: '双实例对照', exact: true }).click(); await page.locator('.resource-stage-pair .resource-stage[data-status="ready"]').nth(1).waitFor();

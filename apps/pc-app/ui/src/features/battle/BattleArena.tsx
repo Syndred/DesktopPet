@@ -1,5 +1,5 @@
-import { useContext, useEffect, useRef, useState } from 'react';
-import { MotionConfigContext, useReducedMotion } from 'motion/react';
+import { useEffect, useRef, useState } from 'react';
+import { useAppMotion } from '../../components/motion';
 import { Droplets, MoveRight, RefreshCw, Shield, Sparkles, Swords, Zap } from 'lucide-react';
 import type { BattleActor, BattleParticipant, BattleSession } from '../../../../../../packages/shared-types/src/features/battle';
 import type { BattleActionType } from '../../../../../../packages/shared-types/src/battle';
@@ -12,9 +12,7 @@ import { actionLabels, elements, modeLabels, petName, roundLines, statusLabel } 
 
 const fallback2d = (pet: BattleParticipant) => pet.element === 'water' ? 'builtin:lingjing-battle-yuwan-v1' : 'builtin:lingjing-battle-shiba-v1';
 function useBattleMotionAllowed() {
-  const config = useContext(MotionConfigContext);
-  const systemReduced = useReducedMotion();
-  return config.reducedMotion !== 'always' && !systemReduced;
+  return useAppMotion();
 }
 const publicResources = new Map<string, Promise<CharacterResource>>();
 async function resolve2d(petId: string, resourceId: string) {
@@ -39,8 +37,7 @@ export function BattlePortrait({ pet, facing = 'right', small = false, action = 
   const [resource, setResource] = useState<CharacterResource | null>(null);
   const [error, setError] = useState('');
   const motionAllowed = useBattleMotionAllowed();
-  const originalId = pet.appearance2d || (pet.resource?.kind === '2d' ? pet.resource.resourceId : fallback2d(pet));
-  const resourceId = ['builtin:lingjing-yuwan-v1','builtin:fat-fish-v1'].includes(originalId) ? 'builtin:lingjing-battle-yuwan-v1' : originalId;
+  const resourceId = pet.appearance2d || (pet.resource?.kind === '2d' ? pet.resource.resourceId : fallback2d(pet));
   useEffect(() => {
     let alive = true;
     setResource(null); setError('');

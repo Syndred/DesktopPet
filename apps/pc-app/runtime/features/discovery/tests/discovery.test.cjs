@@ -42,7 +42,7 @@ function fixture() {
 }
 async function start(f) {
   await f.api.location.locate();
-  const adopted=await f.services.invoke('companions','adopt',{actionId:'adopt-test',templateId:'husky',name:'实战伙伴',showOnDesktop:false});assert.equal(adopted.ok,true);
+  const adopted=await f.services.invoke('companions','adopt',{actionId:'adopt-test',templateId:'big-fish-gentle',name:'实战伙伴',showOnDesktop:false});assert.equal(adopted.ok,true);
   const petId=adopted.data.pet.petId;
   // Pick a real generated wood encounter. Coordinates remain explicitly controlled fixtures.
   let spawn=f.api.snapshot().data.spawns.find(s=>s.element==='wood'&&s.inRange);
