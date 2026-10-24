@@ -52,7 +52,8 @@ class DiscoveryService {
     return ok({location:this.location.snapshot(),map:this.map.snapshot(),...nearby,
       mapLocation:fix ? this.map.project(fix) : null,spawns:nearby.spawns.map(s=>({...s,mapPosition:this.map.project(s.position)})),territories:territories.items,territoriesAvailable:territories.available,pets,
       encounters:owner ? this.repo.list(owner).map(publicEncounter) : [],captures:owner ? this.repo.captures(owner).map(capture=>{const pet=owned.find(p=>p.petId===capture.petId);return {...capture,...(pet ? {name:pet.name,showOnDesktop:Boolean(pet.desktop?.visible)} : {})};}) : [],
-      signedIn:Boolean(owner),storage:this.authority ? 'cloud-validated-local' : 'local',cloudConfigured:Boolean(this.authority)});
+      signedIn:Boolean(owner),storage:'local',cloudConfigured:Boolean(this.authority?.url && this.authority?.anonKey),
+      cloudStatus:!this.authority ? 'disabled' : !this.authority.url || !this.authority.anonKey ? 'not_configured' : !this.getBattle?.()?.supportsCloudWild ? 'battle_adapter_missing' : 'ready'});
   }
   async begin(input) {
     const owner=this.owner(),request={op:'begin',spawnId:input.spawnId,petId:input.petId};
