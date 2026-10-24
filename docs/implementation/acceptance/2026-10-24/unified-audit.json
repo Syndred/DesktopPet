@@ -3,6 +3,17 @@
   "status": "in-progress",
   "rulesEvidence": "artifacts/ui-acceptance/2026-10-24/rules-v3/evidence.json",
   "independentChecks": {"orderedElementPairs": 25, "actionCases": 75, "elementProperties": 9, "failures": 0},
+  "moduleReviews": [
+    {
+      "module": "accounts",
+      "code": "b08adcc",
+      "selfEvidenceCommit": "830b658",
+      "status": "feature scope accepted; final integrated typography remains a separate gate",
+      "review": "Reviewed actual Electron screenshots, isolated identity and backup/restart readback. Independently launched the delivered app and used CSS.getPlatformFontsForNode to confirm actual Microsoft YaHei UI glyphs in titles, setting labels and cards.",
+      "independentEvidence": "artifacts/ui-acceptance/2026-10-24/account-platform-fonts/evidence.json",
+      "integrationNote": "The account-only branch retains historical H1 29px and card heading 18px. Final foundation build must apply the shared 28px/700 title and card tokens."
+    }
+  ],
   "openFindings": [
     {
       "id": "U01-screen-reuse",
