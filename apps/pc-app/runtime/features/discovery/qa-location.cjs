@@ -11,7 +11,7 @@ function createQaLocationAdapter(services,now=Date.now) {
   function identity() {
     if(services.get('qaScenario')!==scene)throw Object.assign(new Error('QA 场景已变更'),{code:'QA_SCENARIO_CHANGED'});
     const value=scene.requireIdentity();
-    if(value.mode!=='simulated'||value.profileId!==scene.runId||value.ownerAccountId!==services.session.getOwnerAccountId())throw Object.assign(new Error('QA 身份不匹配'),{code:'QA_IDENTITY_MISMATCH'});
+    if(value.authority!=='simulated'||value.scenarioId!==scene.id||value.runId!==scene.runId||value.ownerAccountId!==services.session.getOwnerAccountId())throw Object.assign(new Error('QA 身份不匹配'),{code:'QA_IDENTITY_MISMATCH'});
     return value;
   }
   function selectTemplate(templateId) {

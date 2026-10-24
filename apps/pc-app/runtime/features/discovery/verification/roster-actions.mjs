@@ -6,6 +6,8 @@ import { randomUUID, createHash } from 'node:crypto';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { resolve, join } from 'node:path';
 
+if (!process.argv.includes('--portraits-only')) throw new Error('The historical independent arena is retired. Run verification/unified-flow.mjs for current production QA acceptance.');
+
 const output = resolve(`artifacts/discovery/roster-actions-${Date.now()}`);
 mkdirSync(output, { recursive: true });
 const env = { ...process.env, PET_USER_DATA_DIR: join(output, 'profile'), LINGJING_CONTROLLED_LOCATION: '1' };

@@ -5,7 +5,7 @@ const {LocationService}=require('../location-adapter.cjs');
 const {geofence}=require('../coordinates.cjs');
 function fixture() {
   let clock=1792854000000;
-  const scene={id:'unified-battle',runId:'test-qa-run',provenance:'simulated',isolated:true,profilePath:resolve('artifacts/qa/unit-profile'),requireIdentity:()=>({mode:'simulated',profileId:'test-qa-run',ownerAccountId:'qa:test-owner'})};
+  const scene={id:'unified-battle',runId:'test-qa-run',provenance:'simulated',isolated:true,profilePath:resolve('artifacts/qa/unit-profile'),requireIdentity:()=>({authority:'simulated',scenarioId:'unified-battle',runId:'test-qa-run',ownerAccountId:'qa:test-owner'})};
   let selected=scene;
   const services={paths:{userData:scene.profilePath},session:{getOwnerAccountId:()=> 'qa:test-owner'},get:key=>key==='qaScenario'?selected:null};
   return {scene,services,now:()=>clock,advance:ms=>clock+=ms,remove:()=>{selected=null;}};
@@ -15,7 +15,7 @@ test('QA adapter requires the verified isolated scenario and matching current id
   const f=fixture();f.services.paths.userData=resolve('artifacts/qa/other-profile');assert.throws(()=>createQaLocationAdapter(f.services),{code:'QA_PROFILE_REQUIRED'});
   f.services.paths.userData=f.scene.profilePath;
   const adapter=createQaLocationAdapter(f.services,f.now);assert.equal(adapter.allowed(),true);
-  f.scene.requireIdentity=()=>({mode:'simulated',profileId:'wrong-run',ownerAccountId:'qa:test-owner'});
+  f.scene.requireIdentity=()=>({authority:'simulated',scenarioId:'unified-battle',runId:'wrong-run',ownerAccountId:'qa:test-owner'});
   assert.equal(adapter.allowed(),false);await assert.rejects(adapter.getPosition(),{code:'QA_IDENTITY_MISMATCH'});
 });
 test('simulated fixes keep their source and cannot pass the native geofence without the explicit QA adapter',async()=>{
