@@ -12,6 +12,7 @@ CREATE TABLE IF NOT EXISTS public.runtime_garden_operations (
 );
 ALTER TABLE public.runtime_garden_operations ENABLE ROW LEVEL SECURITY;
 REVOKE ALL ON public.runtime_garden_operations FROM PUBLIC,anon,authenticated;
+GRANT SELECT ON public.runtime_garden_operations TO service_role;
 
 CREATE OR REPLACE FUNCTION public.garden_commit_operation(
   p_owner TEXT,p_session_token TEXT,p_action_id TEXT,p_request_hash TEXT,
