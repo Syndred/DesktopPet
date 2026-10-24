@@ -178,6 +178,12 @@ try {
     assert.deepEqual(skillNames, ['normal_attack', 'element_attack', 'dodge', 'ultimate']);
     const skillPresentation = await page.locator('.cp-skill-list [data-action]').evaluateAll(nodes => nodes.map(node => ({ action: node.dataset.action, name: node.querySelector('strong').textContent, caption: node.querySelector('.battle-skill-copy small').textContent, icon: node.querySelector('.battle-skill-icon').getAttribute('class') })));
     assert.equal(await page.locator('.cp-skill-list [data-presentation="battle-shared-v1"]').count(), 1);
+    const combatProfile = success(await invoke('companions', 'combatProfile', { petId: pet.petId }));
+    assert.equal(combatProfile.petId, pet.petId); assert.equal(combatProfile.resourceId, pet.resource.resourceId);
+    await page.locator('.cp-skill-list button[data-action="element_attack"]').focus(); await page.getByRole('tooltip').waitFor();
+    const elementHint = await page.getByRole('tooltip').innerText(); assert.ok(elementHint.includes(combatProfile.rules.elementEffects[pet.element].description));
+    if (pet.element === 'water') assert.doesNotMatch(elementHint, /冻结|跳过行动|禁用按钮/);
+    await page.keyboard.press('Escape');
     await page.getByRole('tab', { name: '外观', exact: true }).click();
     const actions = [];
     for (const [action, label] of [['wave', '招手'], ['eat', '吃饭'], ['attack', '普通攻击'], ['hit', '受击'], ['skill', '元素技能']]) actions.push(await play(pet, native, action, label));
@@ -193,6 +199,7 @@ try {
     await page.locator('[data-battle-screen="shared-v1"]').waitFor();
     const overview = success(await invoke('battle', 'overview')), session = success(await invoke('battle', 'snapshot', { sessionId: overview.session.id }));
     assert.equal(session.player.petId, pet.petId); assert.equal(session.player.resource.resourceId, pet.resource.resourceId); assert.equal(session.player.element, pet.element);
+    assert.deepEqual(session.rules, combatProfile.rules);
     const livePresentation = await page.locator('[data-battle-screen] .battle-moves [data-action]').evaluateAll(nodes => nodes.map(node => ({ action: node.dataset.action, name: node.querySelector('strong').textContent, caption: node.querySelector('.battle-skill-copy small').textContent, icon: node.querySelector('.battle-skill-icon').getAttribute('class') })));
     assert.deepEqual(livePresentation, skillPresentation, 'Detail and live skill cards must share exact names, captions and icons');
     let timeline;
@@ -220,7 +227,7 @@ try {
     assert.equal(gardenPet.resource.resourceId, pet.resource.resourceId); assert.equal(gardenPet.element, pet.element);
     input('garrison-confirm-button', { territoryId: territory.id, petId: pet.petId, resourceId: gardenPet.resource.resourceId, element: gardenPet.element, territoryProvenance: 'controlled-ui-fixture' });
     if (['wood', 'earth'].includes(pet.element)) await shot(`garrison-${pet.element}.png`, '.garden-feature');
-    evidence.characters.push({ name: pet.name, templateId: pet.templateId, ...detailIdentity, actions, chat: { petId: chat.petId, resourceId: chatPet.resource.resourceId, element: chatPet.element }, training: { sessionId: session.id, petId: session.player.petId, resourceId: session.player.resource.resourceId, element: session.player.element, timeline }, garrison: { territoryId: territory.id, petId: garden.territories.find(value => value.id === territory.id).garrisonPetId, resourceId: gardenPet.resource.resourceId, element: gardenPet.element }, skillNames, skillPresentation });
+    evidence.characters.push({ name: pet.name, templateId: pet.templateId, ...detailIdentity, actions, chat: { petId: chat.petId, resourceId: chatPet.resource.resourceId, element: chatPet.element }, training: { sessionId: session.id, petId: session.player.petId, resourceId: session.player.resource.resourceId, element: session.player.element, timeline }, garrison: { territoryId: territory.id, petId: garden.territories.find(value => value.id === territory.id).garrisonPetId, resourceId: gardenPet.resource.resourceId, element: gardenPet.element }, skillNames, skillPresentation, rulesId: combatProfile.rules.id, elementHint });
   }
   evidence.layouts = [];
   for (const [width, height] of [[1280, 844], [1440, 900]]) {
