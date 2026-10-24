@@ -1,0 +1,117 @@
+{
+  "format": "lingjing.roster",
+  "version": 2,
+  "createdAt": "2026-10-24T13:22:52.669Z",
+  "designReference": "docs/design/2026-10-24/full-ui/03-pet-detail-and-adoption.png",
+  "actionConvention": [
+    "idle",
+    "blink",
+    "walk",
+    "wave",
+    "eat",
+    "attack_windup",
+    "attack_release",
+    "attack",
+    "hit",
+    "skill",
+    "victory",
+    "sleep"
+  ],
+  "legacyAliases": {
+    "builtin:lingjing-yuwan-v1": "builtin:lingjing-yuwan-v2",
+    "builtin:lingjing-battle-yuwan-v1": "builtin:lingjing-yuwan-v2",
+    "builtin:lingjing-battle-shiba-v1": "builtin:lingjing-shiba-v2"
+  },
+  "characters": [
+    {
+      "id": "yuwan",
+      "name": "鱼丸",
+      "templateId": "big-fish-gentle",
+      "category": "big-fish",
+      "element": "water",
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "description": "安静温柔的鲸尾少女，喜欢陪你度过日常。",
+      "identityFeatures": [
+        "白色水手帽",
+        "鲸尾",
+        "海军蓝褶裙"
+      ],
+      "manifest": "yuwan/character.json"
+    },
+    {
+      "id": "xiaolan",
+      "name": "小蓝",
+      "templateId": "big-fish-cheerful",
+      "category": "big-fish",
+      "element": "water",
+      "resourceId": "builtin:lingjing-xiaolan-v1",
+      "description": "活泼的侧马尾伙伴，穿着宽松鲸鱼斗篷。",
+      "identityFeatures": [
+        "高侧马尾与大蝴蝶结",
+        "鲸鱼连帽斗篷",
+        "小靴子"
+      ],
+      "manifest": "xiaolan/character.json"
+    },
+    {
+      "id": "fantuan",
+      "name": "饭团",
+      "templateId": "big-fish-foodie",
+      "category": "big-fish",
+      "element": "water",
+      "resourceId": "builtin:lingjing-fantuan-v1",
+      "description": "盘着双丸子头的美食家，认真珍惜每一顿饭。",
+      "identityFeatures": [
+        "双丸子发髻",
+        "米白围裙",
+        "饭团发夹"
+      ],
+      "manifest": "fantuan/character.json"
+    },
+    {
+      "id": "shiba",
+      "name": "焰柴",
+      "templateId": "animal-shiba",
+      "category": "animal",
+      "element": "fire",
+      "resourceId": "builtin:lingjing-shiba-v2",
+      "description": "热情勇敢的柴犬，星星项圈总是闪闪发亮。",
+      "identityFeatures": [
+        "橙白毛柴犬",
+        "卷尾",
+        "星星项圈"
+      ],
+      "manifest": "shiba/character.json"
+    },
+    {
+      "id": "hatcat",
+      "name": "礼帽喵",
+      "templateId": "animal-hat-cat",
+      "category": "animal",
+      "element": "metal",
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "description": "戴着礼帽的燕尾猫，擅长温柔的小魔术。",
+      "identityFeatures": [
+        "黑白燕尾猫",
+        "黑色高礼帽",
+        "海军蓝魔术披肩"
+      ],
+      "manifest": "hatcat/character.json"
+    },
+    {
+      "id": "xiaohu",
+      "name": "小狐",
+      "templateId": "animal-white-fox",
+      "category": "animal",
+      "element": "water",
+      "resourceId": "builtin:lingjing-xiaohu-v1",
+      "description": "安静机灵的雪白小狐，像雪花一样轻盈。",
+      "identityFeatures": [
+        "雪白狐毛与大耳朵",
+        "蓬松长尾",
+        "蓝金宝石领结"
+      ],
+      "manifest": "xiaohu/character.json"
+    }
+  ]
+}
