@@ -1,11 +1,13 @@
 const { join } = require("node:path");
 const SHIBA_RESOURCE = "builtin:lingjing-battle-shiba-v1";
 const YUWAN_RESOURCE = "builtin:lingjing-battle-yuwan-v1";
+const CANONICAL_YUWAN_RESOURCE = "builtin:lingjing-yuwan-v2";
+const CANONICAL_SHIBA_RESOURCE = "builtin:lingjing-shiba-v2";
 function appearance2d(pet = {}) {
-  if (["builtin:lingjing-yuwan-v1", "builtin:fat-fish-v1"].includes(pet.resource?.resourceId)) return YUWAN_RESOURCE;
   if (pet.resource?.kind === "2d" && pet.resource.resourceId) return pet.resource.resourceId;
   if (pet.appearance2d) return pet.appearance2d;
-  return pet.element === "water" ? YUWAN_RESOURCE : SHIBA_RESOURCE;
+  if (pet.resourceRef) return pet.resourceRef;
+  return pet.element === "water" ? CANONICAL_YUWAN_RESOURCE : CANONICAL_SHIBA_RESOURCE;
 }
 async function registerBattleArt(services) {
   const resources = services.get("resources");
@@ -14,6 +16,8 @@ async function registerBattleArt(services) {
   // Reuse the existing resource parser/repository and Pixi stage; no battle-specific animation engine.
   const { parseCharacterFile } = require("../resources/parser.cjs");
   for (const [id, folder] of [[SHIBA_RESOURCE, "shiba-v1"], [YUWAN_RESOURCE, "yuwan-v1"]]) {
+    const referenced = services.db.prepare("SELECT 1 FROM battle_sessions WHERE instr(data_json, ?) > 0 UNION ALL SELECT 1 FROM battle_reports_v2 WHERE instr(data_json, ?) > 0 LIMIT 1").get(id, id);
+    if (!referenced && !(id === SHIBA_RESOURCE && !repository.hasGlobal(CANONICAL_SHIBA_RESOURCE))) continue;
     const root = join(__dirname, "assets", folder);
     resources.addBuiltinAssetRoot(root);
     if (repository.hasGlobal(id)) {
@@ -28,4 +32,4 @@ async function registerBattleArt(services) {
   }
   return true;
 }
-module.exports = { registerBattleArt, appearance2d, SHIBA_RESOURCE, YUWAN_RESOURCE };
+module.exports = { registerBattleArt, appearance2d, SHIBA_RESOURCE, YUWAN_RESOURCE, CANONICAL_YUWAN_RESOURCE, CANONICAL_SHIBA_RESOURCE };

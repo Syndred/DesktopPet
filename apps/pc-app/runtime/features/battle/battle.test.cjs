@@ -236,9 +236,16 @@ test("real SQLite and companions: full training awards only the selected instanc
     const companions = f.services.get("companions");
     const selected = pets[0].petId;
     const before = companions.getPet(f.owner, selected).growth;
+    const rules = f.service.rules({}, f.context);
+    assert.deepEqual(f.service.overview({}, f.context).rules, rules);
+    assert.equal(rules.vitalPolicy, 'normalized');
+    assert.equal(rules.companionStatsApplied, false);
+    assert.notEqual(before.stats.hp, rules.maxHp, 'The fixture keeps its actual growth HP; standard battle HP is a separate declared rule');
     const otherBefore = companions.getPet(f.owner, pets[1].petId);
     const legacyBefore = readFileSync(join(f.folder, "legacy.json"), "utf8");
     let session = await f.service.startTraining({ actionId: "start-one", petId: selected, enemyElement: "metal" }, f.context);
+    assert.equal(session.snapshot.player.maxHp, rules.maxHp);
+    assert.equal(session.snapshot.enemy.maxHp, rules.maxHp);
     assert.equal((await f.service.startTraining({ actionId: "start-one", petId: selected, enemyElement: "metal" }, f.context)).id, session.id);
     let finalAction;
     for (let round = 1; round <= 150 && session.status === "active"; round++) {
@@ -247,6 +254,7 @@ test("real SQLite and companions: full training awards only the selected instanc
     }
     assert.equal(session.status, "finished"); assert.equal(session.reward.applied, true);
     const after = companions.getPet(f.owner, selected).growth;
+    assert.deepEqual(after.stats, before.stats, 'Standard battle normalization must not rewrite companion base stats');
     const award = session.winner === "player" ? 20 : 5;
     assert.equal((after.level - before.level) * 100 + after.experience - before.experience, award);
     await f.service.act(finalAction, f.context);
