@@ -11,8 +11,9 @@ import brandMark from './brand-mark.png';
 import './resources.css';
 
 export { ResourceStage } from './ResourceStage';
+export { ResourcePortrait } from './ResourcePortrait';
 export { resourceAssetUrl, resourcesClient } from './client';
-export { resolveResourceCalibration, resolveResourceClip } from './display';
+export { resolveResourceCalibration, resolveResourceClip, resolveResourcePortrait } from './display';
 const tabs = [['library', '角色资源'], ['actions', '动作配置'], ['calibration', '动作校准']] as const;
 export function ResourcesPage({ client = resourcesClient }: { client?: ResourcesClient }) {
   const state = useResources(client), [tab, setTab] = useState('library');
