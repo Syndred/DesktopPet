@@ -54,7 +54,12 @@ async function parseCharacterFile(filePath, metadata = {}) {
     atlas = normalizeAtlas(descriptor, size);
     const fps = options.fps === undefined ? 8 : options.fps;
     if (!Number.isFinite(fps) || fps < 1 || fps > 60) fail('INVALID_CLIPS', '动画帧率无效');
-    clips = Object.entries(atlas.animations).map(([name, frameNames]) => ({ name, frameNames, fps, loop: true }));
+    if (options.clips !== undefined && !plain(options.clips)) fail('INVALID_CLIPS', '图集动作参数结构无效');
+    clips = Object.entries(atlas.animations).map(([name, frameNames]) => {
+      const settings = options.clips?.[name] ?? {}, rate = settings.fps ?? fps;
+      if (!plain(settings) || !Number.isFinite(rate) || rate < 1 || rate > 60 || (settings.loop !== undefined && typeof settings.loop !== 'boolean')) fail('INVALID_CLIPS', '图集动作帧率或循环参数无效');
+      return { name, frameNames, fps: rate, loop: settings.loop !== false };
+    });
   }
   const supplied = Object.fromEntries(Object.entries(metadata).filter(([, value]) => typeof value === 'string' && value.trim()));
   const origin = provenance({ ...options.provenance, ...supplied }), warnings = origin.license === '授权未确认' ? ['素材许可未确认，请补充作者与许可记录'] : [];
@@ -64,7 +69,7 @@ async function parseCharacterFile(filePath, metadata = {}) {
 }
 function normalize2DResource(resource) {
   if (resource.kind !== 'spritesheet') fail('TWO_D_ONLY', '本版仅显示 2D 角色，历史资源记录与文件已保留');
-  return { ...resource, calibration: calibrations(resource.calibration), atlas: resource.atlas ?? (resource.sheet ? atlasFromGrid(resource.sheet, resource.clips, resource.entryAsset) : undefined) };
+  return { ...resource, actions: actionMap(resource.actions, resource.clips, true), calibration: calibrations(resource.calibration), atlas: resource.atlas ?? (resource.sheet ? atlasFromGrid(resource.sheet, resource.clips, resource.entryAsset) : undefined) };
 }
 function resolveAction(resource, action = 'idle') {
   if (!ACTIONS.includes(action)) fail('INVALID_ACTION', '不支持的动作');

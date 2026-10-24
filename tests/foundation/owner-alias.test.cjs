@@ -35,3 +35,34 @@ test('verified alias retains independent pet IDs, growth, receipts and original 
   assert.equal(service.snapshot('old-2').data.pets[0].name,'旧存档进度'); assert.equal(service.snapshot(owner).data.pets[0].name,'新存档进度');
   assert.equal(db.prepare('SELECT COUNT(*) AS count FROM companion_identity_imports').get().count, 1); db.close();
 });
+
+test('registered garden and companions migrate the same verified old save without a second starter or changed pet', async () => {
+  const db=openDatabase(join(mkdtempSync(join(tmpdir(),'lingjing-garden-alias-')),'save.sqlite'));
+  migrate(db,'accounts',require('../../apps/pc-app/runtime/features/accounts/schema.cjs').migrations);
+  migrate(db,'companions',migrations);
+  const source='before-accounts',owner=`local:${source}`,service=new CompanionsService({db});
+  const pet=service.adopt(source,{templateId:'big-fish-gentle',name:'原有鱼丸',showOnDesktop:false,actionId:'original-adopt'}).data.pet;
+  service.applyGrowthInTransaction(source,{petId:pet.petId,actionId:'original-growth',effect:{experience:17}});
+  const originalPet=service.requirePet(source,pet.petId);
+  const { GardenService }=require('../../apps/pc-app/runtime/features/garden/service.cjs');
+  const garden=new GardenService({db});garden.snapshot({ownerAccountId:source});
+  assert.equal(garden.plant({ownerAccountId:source},{actionId:'original-plant',expectedRevision:0,plotId:'plot-1',cropType:'rice'}).ok,true);
+  const plot=db.prepare('SELECT * FROM garden_plots WHERE owner_account_id=? AND plot_id=?').get(source,'plot-1');
+  db.prepare('INSERT INTO account_identities(owner_account_id,provider,subject_id,account,account_key,username,created_at,updated_at) VALUES(?,?,?,?,?,?,?,?)').run(owner,'local',source,'alias-qa','alias-qa','归属验证','2026-10-24','2026-10-24');
+  db.prepare('INSERT INTO account_aliases VALUES(?,?,?,?,?)').run('local',source,owner,'legacy-id','2026-10-24');
+  const registry=new Map([['accounts',{identity:who=>db.prepare('SELECT * FROM account_identities WHERE owner_account_id=?').get(who)}]]);
+  const services={db,legacy:{},paths:{},session:{getOwnerAccountId:()=>owner,getCurrentUser:()=>({id:owner})},events:{emit(){},on(){return()=>{};}},get:name=>registry.get(name),provide:(name,value)=>registry.set(name,value)};
+  const companions=require('../../apps/pc-app/runtime/features/companions/index.cjs').register(services);
+  const registered=require('../../apps/pc-app/runtime/features/garden/index.cjs').register(services);
+  try {
+    const state=await registered.commands.snapshot({}, {ownerAccountId:owner});assert.equal(state.ok,true,JSON.stringify(state));
+    assert.deepEqual(service.requirePet(owner,pet.petId).growth,originalPet.growth);
+    assert.deepEqual(service.requirePet(source,pet.petId),originalPet);
+    assert.deepEqual(db.prepare('SELECT * FROM garden_plots WHERE owner_account_id=? AND plot_id=?').get(owner,'plot-1'),{...plot,owner_account_id:owner});
+    assert.equal(garden.itemCount(owner,'seed:rice'),1);
+    await registered.commands.snapshot({}, {ownerAccountId:owner});
+    assert.equal(garden.itemCount(owner,'seed:rice'),1);
+    assert.equal(db.prepare('SELECT COUNT(*) n FROM garden_identity_imports').get().n,1);
+    assert.equal(garden.snapshot({ownerAccountId:source}).code,'OWNER_MIGRATED');
+  } finally {registered.dispose?.();companions.dispose();db.close();}
+});

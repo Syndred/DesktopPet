@@ -2,7 +2,7 @@ const { randomUUID } = require("node:crypto");
 const { readFileSync, statSync } = require("node:fs");
 const { join } = require("node:path");
 const { invariant } = require("./errors.cjs");
-const { checksum, canonical, writeNew, transaction, actionId } = require("./util.cjs");
+const { checksum, saveDataChecksum, canonical, writeNew, transaction, actionId } = require("./util.cjs");
 const { validateSettings } = require("./settings.cjs");
 const { createLegacyBackupAdapter } = require("./legacy.cjs");
 
@@ -91,7 +91,7 @@ class BackupManager {
       return envelope;
     });
   }
-  dataChecksum(owner) { return checksum(this.snapshot(owner).data); }
+  dataChecksum(owner) { return saveDataChecksum(this.snapshot(owner).data); }
   validate(envelope, owner) {
     invariant(envelope?.format === "lingjing-account-save" && envelope.version === 1, "BACKUP_VERSION_UNSUPPORTED", "备份版本不兼容，请使用匹配版本的灵境。");
     const { checksum: digest, ...body } = envelope;

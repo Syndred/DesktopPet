@@ -13,6 +13,17 @@ function canonical(value) {
   return `{${Object.keys(value).sort().map(key => `${JSON.stringify(key)}:${canonical(value[key])}`).join(",")}}`;
 }
 function checksum(value) { return createHash("sha256").update(canonical(value)).digest("hex"); }
+// SQL table rows are sets: query plans may return them in a different order.
+// Specialized message/history arrays keep their order and remain significant.
+function saveDataChecksum(data) {
+  const sortRows = rows => [...rows].sort((a,b) => { const left=canonical(a),right=canonical(b); return left < right ? -1 : left > right ? 1 : 0; });
+  const modules = { ...data.modules };
+  const garden = modules.garden;
+  if (garden?.data?.tables) modules.garden = { ...garden, data: { ...garden.data,
+    tables: Object.fromEntries(Object.entries(garden.data.tables).map(([name,rows]) => [name, sortRows(rows)])) } };
+  const tables = Object.fromEntries(Object.entries(data.tables).map(([name,table]) => [name, { ...table, rows: sortRows(table.rows) }]));
+  return checksum({ ...data, modules, tables });
+}
 function atomicWrite(file, data) {
   mkdirSync(dirname(file), { recursive: true });
   const temp = `${file}.${randomBytes(8).toString("hex")}.tmp`;
@@ -79,5 +90,5 @@ function publicIdentity(row) {
     account: row.account, username: row.username, revision: row.profile_revision,
     createdAt: row.created_at, updatedAt: row.updated_at };
 }
-module.exports = { canonical, checksum, atomicWrite, writeNew, archiveOnce, transaction,
+module.exports = { saveDataChecksum, canonical, checksum, atomicWrite, writeNew, archiveOnce, transaction,
   accountName, username, password, hashPassword, verifyPassword, actionId, publicIdentity };

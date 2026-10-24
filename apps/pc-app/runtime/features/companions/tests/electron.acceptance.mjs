@@ -84,7 +84,7 @@ try {
   await waitForCount(3);
   evidence.adopted = adopted.map(pet => ({ petId: pet.petId, name: pet.name, templateId: pet.templateId }));
   for (const companionPage of application.windows().filter(page => page.url().includes('#/desktop/'))) {
-    await companionPage.locator('.resource-stage[data-status="ready"] [data-renderer="pixi"] canvas').waitFor();
+    await companionPage.locator('.resource-stage[data-status="ready"] [data-renderer^="pixi"] canvas').waitFor();
     assert.equal(await companionPage.locator('model-viewer').count(), 0);
     await screenshot(companionPage, `desktop-${await companionPage.locator('.cp-desktop-name').innerText()}`);
   }

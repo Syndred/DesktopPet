@@ -55,7 +55,7 @@ export function ResourceStage({ resource, petId, context = 'desktop', action = '
       if (cancelled) { app.destroy(true); return; }
       const first = Object.values(sheet.textures)[0];
       const sprite = new pixi.AnimatedSprite({ textures: [first], autoPlay: false });
-      const maxWidth = Math.max(...Object.values(sheet.textures).map(texture => texture.orig.width)), maxHeight = Math.max(...Object.values(sheet.textures).map(texture => texture.orig.height));
+      const maxWidth = Math.max(...Object.values(sheet.textures).map(texture => texture.trim?.width ?? texture.orig.width)), maxHeight = Math.max(...Object.values(sheet.textures).map(texture => texture.trim?.height ?? texture.orig.height));
       let selectedClip = '';
       const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
       // Foundation's Motion wrapper owns the app/system policy; this only bridges it to Pixi.

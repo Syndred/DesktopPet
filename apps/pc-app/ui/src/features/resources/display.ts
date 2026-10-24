@@ -1,5 +1,5 @@
 import type { CharacterResource, ResourceAction, ResourceCalibration, ResourceClip, ResourceContext } from '../../../../../../packages/shared-types/src/features/resources';
-export const ACTION_LABELS: Record<ResourceAction, string> = { idle: '待机', walk: '行走', attack: '攻击', hit: '受击', skill: '技能', victory: '胜利', sleep: '睡眠' };
+export const ACTION_LABELS: Record<ResourceAction, string> = { idle: '待机', blink: '眨眼', walk: '行走', wave: '招手', eat: '吃东西', attack_windup: '攻击起手', attack_release: '攻击释放', attack: '普通攻击', hit: '受击', skill: '技能施放', victory: '胜利', sleep: '睡眠' };
 export function resolveResourceClip(resource: CharacterResource, action: ResourceAction): { clip: ResourceClip | null; fallback: boolean } {
   const direct = resource.clips.find(clip => clip.name === resource.actions[action]);
   return { clip: direct ?? resource.clips.find(clip => clip.name === resource.actions.idle) ?? resource.clips[0] ?? null, fallback: !direct };

@@ -1,21 +1,22 @@
 {
   "feature": "conversations",
   "branch": "codex/lingjing-conversations",
-  "commit": "c08e6851fe611c0a5cce7765f16acb9a810c8df8",
-  "status": "ready_for_foundation_integration",
+  "commit": "2fe1060aa5b4093e46e704076fcb2e4555fa64b7",
+  "status": "ready_for_concentrated_visual_review",
   "date": "2026-10-24",
   "timezone": "Asia/Shanghai",
   "workspace": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-conversations\\DesktopPet",
   "scopeRevision": "docs/implementation/scope-2d-ui-first.txt",
   "base": {
-    "foundationBaseCommit": "d0488f081c5ab643d7913cf0f2a66c5d55a79d05",
+    "foundationBaseCommit": "adf5664",
     "integrationMerge": "b92366decd9fd98ffef7983f2669186077134788",
     "originMainFetched": true,
     "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086",
     "originMainIncludedInHistory": true,
     "sharedCheckoutModified": false,
     "requestedModelAndGoalSettingsPreserved": true,
-    "originMainCheckedAgainBeforeCommit": true
+    "originMainCheckedAgainBeforeCommit": true,
+    "foundationLastIncludedTypographyCommit": "50f6cad"
   },
   "implemented": [
     "正式 React /chat 与 /settings/ai 按 06 上半、08 下半布局，使用公共 shadcn/Radix、Motion、Lucide 与动漫 2D 素材。",
@@ -222,7 +223,14 @@
       "Key 不回显；增加显式清除、逐宠物连接与上下文预算。",
       "记忆为手动保存；未提供图片附件/语音假按钮。表情选择可实际输入。",
       "窗口尺寸/Windows 缩放不同，AI 设置较长区域纵向滚动，980x750 无横向溢出。"
-    ]
+    ],
+    "currentVisualEvidence": "docs/implementation/evidence/conversations/audit-2026-10-24/index.html",
+    "latestEmptyHistoryScreenshots": [
+      "docs/implementation/evidence/conversations/audit-2026-10-24/chat-shiba.png",
+      "docs/implementation/evidence/conversations/audit-2026-10-24/ai-settings-shiba.png",
+      "docs/implementation/evidence/conversations/audit-2026-10-24/chat-yuwan.png"
+    ],
+    "previousProtocolScreenshotsNote": "原 ui-comparison.html 和 electron.json 保留上一轮11/12专项的功能证据；最新字体/间距/角色视觉以 audit-2026-10-24 为准。"
   },
   "twoDOnly": {
     "activeRenderer": "2D spritesheet / PixiJS",
@@ -241,7 +249,8 @@
       "command": "node --test apps/pc-app/runtime/features/conversations/tests/runtime.test.cjs",
       "status": "passed",
       "checks": 11,
-      "evidence": "真实文件 SQLite + 本机 HTTP；隔离、加密、取消、重试去重、记忆删除、分页、上下文、失败、旧界面拒绝、退出落盘。"
+      "evidence": "真实文件 SQLite + 本机 HTTP；隔离、加密、取消、重试去重、记忆删除、分页、上下文、失败、旧界面拒绝、退出落盘。",
+      "verifiedAtRevision": "c08e685"
     },
     {
       "command": "node apps/pc-app/runtime/features/conversations/tests/electron-flow.mjs",
@@ -254,7 +263,8 @@
       "rendererLocalStorageEntries": 0,
       "externalModel": false,
       "sourceRun": "run-1792846674986",
-      "dialogFocusCycles": 3
+      "dialogFocusCycles": 3,
+      "verifiedAtRevision": "c08e685"
     },
     {
       "command": "npm run typecheck:ui",
@@ -262,7 +272,8 @@
     },
     {
       "command": "npm run typecheck",
-      "status": "passed"
+      "status": "passed",
+      "verifiedAtRevision": "c08e685"
     },
     {
       "command": "npx eslint apps/pc-app/runtime/features/conversations/ apps/pc-app/ui/src/features/conversations/ packages/shared-types/src/features/conversations --ext .cjs,.mjs,.ts,.tsx",
@@ -339,5 +350,80 @@
   "integrationResolved": [
     "探索模块 MapLibre 类型错误与 Turf 根依赖缺失已由 foundation 修复并合入 d0488f0；本分支最终 typecheck:ui、typecheck 和 build:pc 均通过。"
   ],
-  "completedAt": "2026-10-24T12:58:56.304Z"
+  "completedAt": "2026-10-24T12:58:56.304Z",
+  "visualAudit": {
+    "source": "docs/implementation/acceptance/2026-10-24/visual-audit.txt",
+    "sourceCommit": "9915684",
+    "correctionCommit": "2fe1060aa5b4093e46e704076fcb2e4555fa64b7",
+    "sharedTypographyCommit": "50f6cad",
+    "status": "own_fixes_verified_pending_concentrated_review",
+    "items": [
+      {
+        "id": "A01",
+        "status": "implemented",
+        "detail": "复用公共 font-ui/text-title/text-card/text-body/text-label/text-caption 与 weight tokens；两页 H1 均为28px/700，不使用 viewport clamp。"
+      },
+      {
+        "id": "A03",
+        "status": "implemented_for_conversations",
+        "detail": "卡片 margin=0，父网格 gap=space-4/16px；卡片内距16px，列表8px；页面24px/32px/16px，小窗口随公共token收敛。"
+      },
+      {
+        "id": "A07",
+        "status": "conversation_adapter_ready",
+        "detail": "头像按当前 pet.resource 经共享 CompanionPortrait 解析；资源绑定事件刷新快照。六个正式形象与动作由 resources/companions 统一交付，待集成后集中复验。"
+      },
+      {
+        "id": "A12",
+        "status": "implemented_for_conversations",
+        "detail": "右侧已知鱼丸插画只匹配明确的鱼丸 resourceId，其他形象使用当前资源，不以鱼丸作默认图；三列布局、Radix/Motion/Pixi 与主进程 AI 边界保持。伙伴选择卡三列，实例副标签可换行。"
+      }
+    ],
+    "evidence": "docs/implementation/evidence/conversations/audit-2026-10-24/evidence.json",
+    "comparison": "docs/implementation/evidence/conversations/audit-2026-10-24/index.html",
+    "targetedChecks": 4,
+    "zeroModelRequests": true,
+    "noFabricatedMessages": true,
+    "viewports": [
+      {
+        "width": 1280,
+        "height": 844
+      },
+      {
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "width": 980,
+        "height": 900
+      }
+    ],
+    "tests": [
+      {
+        "command": "node apps/pc-app/runtime/features/conversations/tests/ui-acceptance.mjs",
+        "status": "passed",
+        "checks": 4
+      },
+      {
+        "command": "npm run typecheck:ui",
+        "status": "passed"
+      },
+      {
+        "command": "feature-scoped eslint",
+        "status": "passed"
+      },
+      {
+        "command": "npm run build:pc",
+        "status": "passed",
+        "note": "已有共享 bundle size warning，无编译错误"
+      }
+    ],
+    "remaining": [
+      "六个正式资源与模板绑定由 resources/companions 交付后，主会话按固定A01-A12清单做一次集中视觉回验。",
+      "本轮只做聊天字体、间距和身份定向检查，未运行全仓全量回归。"
+    ],
+    "doNotClaimOverallVisualPass": true
+  },
+  "previousImplementationCommit": "c08e6851fe611c0a5cce7765f16acb9a810c8df8",
+  "updatedAt": "2026-10-24T13:34:29.785Z"
 }

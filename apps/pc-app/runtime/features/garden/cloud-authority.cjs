@@ -58,7 +58,8 @@ class CloudGardenAuthority {
       const checkpoint = this.db.prepare('SELECT account_revision FROM garden_cloud_state WHERE owner_account_id=?').get(owner);
       if (checkpoint && remote.accountRevision < checkpoint.account_revision) problem('CLOUD_STALE_READBACK', '云端读回版本较旧，请重试');
       this.backup.restore(owner, incoming, 'replace');
-      this.db.prepare("UPDATE garden_outbox SET status='synced',last_error=NULL WHERE owner_account_id=?").run(owner);
+      // Keep the authoritative document byte-for-byte, including its outbox
+      // metadata. Cloud snapshots report confirmation from the server receipt.
       const companionAccount = envelope.data?.tables?.companion_accounts?.rows?.find(row => row.owner_account_id === owner);
       if (companionAccount) this.db.prepare('INSERT INTO companion_accounts(owner_account_id,revision,selections_json,legacy_imported_at) VALUES (?,?,?,?) ON CONFLICT(owner_account_id) DO UPDATE SET revision=MAX(companion_accounts.revision,excluded.revision)').run(owner,companionAccount.revision,companionAccount.selections_json,companionAccount.legacy_imported_at);
       for (const row of remotePets) {
@@ -71,6 +72,7 @@ class CloudGardenAuthority {
         this.db.prepare('INSERT OR IGNORE INTO companion_actions(owner_account_id,action_id,operation,request_hash,result_json,created_at) VALUES (?,?,?,?,?,?)').run(owner,row.action_id,row.operation,row.request_hash,row.result_json,row.created_at);
       }
       this.db.prepare('INSERT INTO garden_cloud_state VALUES (?,?,?,?) ON CONFLICT(owner_account_id) DO UPDATE SET account_revision=excluded.account_revision,checksum=excluded.checksum,server_time=excluded.server_time').run(owner,remote.accountRevision,digest,remote.snapshot.serverTime);
+      this.services.get('accounts')?.sync?.acceptAuthoritativeReadback?.(owner, { envelope, cloudRevision: remote.accountRevision });
       return remote.snapshot;
     });
   }

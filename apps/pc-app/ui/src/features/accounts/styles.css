@@ -1,8 +1,8 @@
 .accounts{--ac-ink:#192957;--ac-muted:#7a88a6;--ac-line:#e3ebf5;--ac-blue:#476dff;color:var(--ac-ink);font-family:inherit;width:100%}
 .accounts *{box-sizing:border-box}
 .accounts h1,.accounts h2,.accounts p{margin:0}
-.accounts h1{font-size:30px;line-height:1.4;font-weight:750;letter-spacing:.02em}
-.accounts h2{font-size:16px;margin-bottom:17px}
+.accounts h1{font-weight:700}
+.accounts h2{font-weight:600;margin-bottom:17px}
 .accounts p{font-size:13px;line-height:1.75;color:var(--ac-muted)}
 .accounts button,.accounts input,.accounts select{font:inherit}
 .accounts button{border:1px solid transparent;border-radius:8px;padding:10px 18px;cursor:pointer;box-shadow:none!important;transform:none!important;transition:background-color .15s,color .15s}
@@ -61,7 +61,8 @@
 .ac-setting-row strong{font-size:13px;font-weight:600;display:block}
 .ac-setting-row small{font-size:11px;color:var(--ac-muted);display:block;margin-top:5px;font-weight:400}
 .accounts .ac-setting-row select{width:65px;flex-shrink:0}
-.ac-settings-content .ac-card{margin-bottom:16px}
+.ac-settings-content fieldset{display:grid;gap:12px}
+.ac-settings-content .ac-card{margin:0}
 .accounts .ac-volume{display:flex!important;justify-content:flex-end;gap:10px;align-items:center;margin:8px 0 0;font-size:11px;color:var(--ac-muted)}
 .ac-volume input{width:160px;accent-color:var(--ac-blue);margin:0!important}
 .ac-volume output{min-width:34px}
@@ -129,37 +130,52 @@
 .ac-account-grid .ac-card h2 { margin-bottom:14px; }
 .ac-settings-nav a[aria-current=page] { color:var(--ac-blue); background:#eaf0ff; }
 .ac-settings-body { min-width:0; }
-.ac-desktop-columns { display:grid; grid-template-columns:minmax(280px,1.15fr) minmax(250px,.95fr); gap:14px; align-items:stretch; }
-.ac-preferences-page .ac-setting-row { padding:8px 0; }
-.ac-preferences-page .ac-setting-row small { margin-top:3px; font-size:10px; }
+.ac-desktop-columns { display:grid; grid-template-columns:minmax(280px,1.15fr) minmax(250px,.95fr); gap:12px; align-items:stretch; }
+.ac-preferences-page { padding:20px 24px; }
+.ac-preferences-page .ac-settings-layout { gap:16px; }
+.ac-preferences-page .ac-card { padding:14px; }
+.ac-preferences-page h2 { line-height:1.4; margin-bottom:8px; }
+.ac-preferences-page .ac-setting-row { padding:4px 0; }
+.ac-preferences-page .ac-setting-row strong { line-height:18px; }
+.ac-preferences-page .ac-setting-row small { margin-top:0; font-size:11px; line-height:14px; }
+.ac-preferences-page .ac-select-trigger.ac-limit-select { height:30px; min-height:30px; padding:4px 10px; }
+.ac-preferences-page .ac-volume { margin-top:4px; height:20px; }
+.ac-preferences-page .ac-privacy-card .ac-setting-copy { display:grid; grid-template-columns:176px minmax(0,1fr); align-items:center; gap:12px; flex:1; }
+.ac-preferences-page .ac-privacy-card .ac-setting-row>label { gap:16px; }
+.ac-preferences-page .ac-settings-footer { padding:0; gap:12px; }
+.ac-preferences-page .ac-settings-footer [data-slot=button] { height:36px; min-height:36px; padding:6px 14px; }
+.ac-preferences-page .ac-settings-footer .ac-text-button { padding-left:0; }
 .ac-desktop-preview { background:linear-gradient(135deg,#f4f9ff,#fff); }
-.ac-preview-heading { display:flex; justify-content:space-between; align-items:center; gap:8px; margin-bottom:10px; }
-.ac-preview-heading h2 { margin-bottom:0; white-space:nowrap; }
-.accounts .ac-preview-heading button { padding:5px 8px; font-size:10px; }
-.ac-desktop-scene { position:relative; width:100%; aspect-ratio:310/313; border:1px solid #d7e5fa; border-radius:8px; background-image:url('./assets/desktop-artwork.png'); background-size:350.323% 462.62%; background-position:93.04% 18.062%; overflow:hidden; }
-.ac-desktop-preview>p { margin-top:12px; font-size:11px; }
+.ac-preview-heading { display:flex; justify-content:space-between; align-items:center; gap:8px; margin-bottom:8px; }
+.ac-preferences-page .ac-preview-heading h2 { margin-bottom:0; white-space:nowrap; }
+.accounts .ac-preview-heading button { height:28px; min-height:28px; padding:4px 8px; font-size:11px; }
+.ac-desktop-scene { position:relative; width:min(100%,292px); margin-inline:auto; aspect-ratio:310/313; border:1px solid #d7e5fa; border-radius:8px; background-image:url('./assets/desktop-artwork.png'); background-size:350.323% 462.62%; background-position:93.04% 18.062%; overflow:hidden; }
+.ac-preview-caption { margin-top:8px; }
+.accounts .ac-preview-caption p { margin:0; font-size:11px; line-height:16px; }
 .ac-preview-pointer { cursor:crosshair; }
 .ac-pointer-hint { position:absolute; left:10px; top:20px; border:1px dashed #6d91e7; border-radius:5px; background:#f8fbffdb; color:#375292; font-size:11px; padding:22px 12px; }
 .ac-inline-time { padding-top:6px; justify-content:flex-end; gap:8px; }
 .accounts .ac-inline-time label { font-size:10px; max-width:115px; }
 .accounts .ac-inline-time input { min-height:30px!important; padding:4px 7px!important; font-size:11px; }
-@media(max-width:1100px){.ac-desktop-columns{grid-template-columns:1fr}.ac-desktop-preview{display:none}.ac-preferences-page .ac-setting-row{padding:10px 0}}
+@media(max-width:1100px){.ac-desktop-columns{grid-template-columns:1fr}.accounts.ac-preferences-page .ac-desktop-preview{display:none}.ac-preferences-page .ac-privacy-card .ac-setting-copy{grid-template-columns:1fr;gap:2px}.ac-preferences-page .ac-setting-row{padding:8px 0}}
 .accounts .ac-auth-heading h2 { justify-content:center; }
 .ac-save-art-illustrated { position:relative; width:280px; height:150px; background-size:359.603% 893.827%; background-position:93.112% 73.095%; }
 .ac-save-art-illustrated::before { content:''; position:absolute; left:0; top:0; width:120px; height:47px; background:#fff; }
 .ac-preferences-page .ac-page-heading .ac-eyebrow { display:none; }
-.ac-preferences-page .ac-page-heading { margin-bottom:16px; }
-.ac-preferences-page .ac-setting-row { padding:6px 0; }
-.ac-setting-row:has(.ac-inline-time) { position:relative; min-height:44px; }
+.ac-preferences-page .ac-page-heading { margin-bottom:12px; }
+.ac-preferences-page .ac-page-heading>p:last-child { margin-top:4px; }
+.ac-setting-row:has(.ac-inline-time) { position:relative; min-height:36px; }
 .ac-inline-time { position:absolute; top:50%; right:50px; transform:translateY(-50%); padding:0; width:214px; }
 .accounts .ac-inline-time label { font-size:0; }
 .accounts .ac-inline-time label>input { margin-top:0; }
 .ac-animation-preference { display:flex; align-items:center; gap:7px; font-size:11px; color:var(--ac-muted); }
 .accounts { --ac-ink:var(--foreground,#192957); --ac-muted:var(--muted-foreground,#7a88a6); --ac-line:var(--border,#e3ebf5); --ac-blue:var(--primary,#476dff); }
-.accounts .ac-radix-switch { display:inline-flex; position:relative; width:38px!important; height:22px!important; min-width:38px; min-height:22px; padding:0!important; border:0!important; border-radius:14px; flex-shrink:0; background:#d2d9e4!important; }
+.accounts .ac-radix-switch { --ac-switch-width:38px; --ac-switch-height:22px; --ac-switch-thumb:16px; --ac-switch-inset:3px; display:inline-flex; position:relative; width:var(--ac-switch-width)!important; height:var(--ac-switch-height)!important; min-width:var(--ac-switch-width); min-height:var(--ac-switch-height); padding:0!important; border:0!important; border-radius:14px; flex-shrink:0; background:var(--input,#d2d9e4)!important; }
 .accounts .ac-radix-switch[data-state=checked] { background:var(--ac-blue)!important; }
-.accounts .ac-radix-switch [data-slot=switch-thumb] { position:absolute; left:0; top:3px; width:16px; height:16px; background:white; border-radius:50%; transform:translateX(3px)!important; transition:transform .16s; }
-.accounts .ac-radix-switch[data-state=checked] [data-slot=switch-thumb] { transform:translateX(19px)!important; }
+/* Tailwind v4's translate and CSS transform compose. Use only translate here;
+   checked travel is track width minus thumb size and the two equal insets. */
+.accounts .ac-radix-switch [data-slot=switch-thumb] { position:absolute; left:var(--ac-switch-inset); top:var(--ac-switch-inset); width:var(--ac-switch-thumb); height:var(--ac-switch-thumb); background:var(--primary-foreground,#fff); border-radius:50%; transform:none!important; translate:0 0!important; transition:translate .16s; }
+.accounts .ac-radix-switch[data-state=checked] [data-slot=switch-thumb] { translate:calc(var(--ac-switch-width) - var(--ac-switch-thumb) - 2 * var(--ac-switch-inset)) 0!important; }
 .accounts .ac-radix-checkbox { width:16px; height:16px; min-width:16px; min-height:16px; padding:0!important; border:1px solid #c8d5e9!important; border-radius:3px; background:white; }
 .accounts .ac-radix-checkbox[data-state=checked] { background:var(--ac-blue); color:white; }
 .accounts .ac-select-trigger { display:flex; width:100%; justify-content:space-between; min-height:38px; padding:8px 12px; margin-top:6px; border:1px solid #d8e2f3; border-radius:6px; background:#fcfdff; color:var(--ac-ink); font-size:13px; font-weight:400; }
@@ -178,7 +194,5 @@
 .accounts .ac-modal { width:100%; }
 .ac-auth-mark { display:block; width:26px; height:26px; object-fit:contain; margin:0 auto 8px; }
 .accounts .ac-card { display:block; gap:0; }
-/* Tailwind v4 uses the individual translate property on primitive thumbs/content. */
-.accounts .ac-radix-switch [data-slot=switch-thumb] { translate:none!important; }
 .ac-save-art-illustrated::before { width:165px; height:55px; }
 .app-dialog-content:has(.accounts.ac-modal) { position:fixed!important; inset:auto!important; left:50%!important; top:50%!important; width:min(540px,calc(100vw - 48px))!important; max-width:none!important; height:auto!important; display:block!important; padding:0!important; translate:none!important; transform:translate(-50%,-50%)!important; }
