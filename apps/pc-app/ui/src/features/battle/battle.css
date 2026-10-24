@@ -256,6 +256,8 @@
 .battle-screen-toolbar h1 { margin: 0; font-size: var(--text-title, 28px); font-weight: var(--weight-title, 700); line-height: 40px; }
 .battle-screen-toolbar > .button { padding: 7px; }
 .battle-mode-mark, .battle-scenario-mark { display: inline-flex; align-items: center; padding: 7px; color: #7495c8; }
+.battle-arena-top .battle-waiting-peer { justify-content: center; align-items: center; gap: 14px; color: #819bc1; }
+.battle-waiting-actor { display: grid; place-items: center; height: 100%; color: #dceaff99; }
 .battle-scenario-mark { margin-left: auto; color: #a2844e; }
 .battle-screen .battle-live-layout { margin-top: 0; }
 .battle-actor-slot { position: relative; min-width: 0; height: 100%; }
