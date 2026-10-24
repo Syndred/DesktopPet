@@ -58,17 +58,19 @@ module.exports = {
       territories,
       migrateOwnerAlias:context=>identity.migrate(context),
       getBattleContext:input=>{
+        if(input.ownerAccountId!==services.session.getOwnerAccountId())throw Object.assign(new Error('账号已切换'),{code:'SESSION_CHANGED'});
         const challenge=territories.challengeForOwner(input);
-        return challenge?{...challenge,gardenRevision:service.snapshot(input).revision}:null;
+        return challenge?{...challenge,returnTo:'/garden',resultPath:'/garden',action:'territory',gardenRevision:service.snapshot(input).revision}:null;
       },
-      settleBattleContext:input=>{
+      settleBattleContext:async input=>{
         const owner=input.ownerAccountId;
         if(owner!==services.session.getOwnerAccountId())return {ok:false,code:'SESSION_CHANGED',message:'账号已切换'};
         const row=services.db.prepare('SELECT payload_json FROM garden_outbox WHERE owner_account_id=? AND action_id=?').get(owner,input.actionId);
         const previous=row?JSON.parse(row.payload_json):null;
         if(previous&&(previous.kind!=='territorySettle'||previous.input.sessionId!==input.sessionId))return {ok:false,code:'ACTION_ID_REUSED',message:'操作编号已使用'};
         const payload=previous?.input||{sessionId:input.sessionId,actionId:input.actionId,sessionOwnerAccountId:owner,expectedRevision:service.snapshot({ownerAccountId:owner}).revision};
-        return commands.territorySettle(payload,{ownerAccountId:owner});
+        const result=await commands.territorySettle(payload,{ownerAccountId:owner});
+        return result.ok?{...result,data:{...result.data,resultPath:'/garden'}}:result;
       },
       // Trusted callers can include this in their own synchronous settlement transaction.
       grantSeeds: (context, input, verifiedReceipt) => {
