@@ -1,4 +1,4 @@
-import type { BattleActor, BattleRound, BattleRulesProfile, BattleSnapshot } from '../battle';
+import type { BattleActor, BattleRound, BattleRulesProfile, BattleSnapshot } from '../battle/index.js';
 
 export type CoordinateSystem = 'wgs84' | 'gcj02';
 export type LocationStatus = 'idle' | 'locating' | 'ready' | 'denied' | 'timeout' | 'unavailable' | 'imprecise' | 'stale' | 'demo' | 'privacy_disabled';
