@@ -40,7 +40,7 @@ function SettingsForm({ privacy = false, session }: { privacy?: boolean; session
     finally { setPending(false); }
   }
   return <div className="accounts ac-page ac-preferences-page">
-    <div className="ac-settings-layout"><SettingsNavigation /><div className="ac-settings-body"><header className="ac-page-heading"><div className="ac-title-row"><h1>{privacy ? "留一点安静，给自己。" : "按你的节奏，安静陪伴。"}</h1>{session.scenario && <AccountStatus icon={FlaskConical} label="测试场景" detail={`隔离测试 · ${session.scenario.scenarioId}`} iconOnly />}</div></header><form className="ac-settings-content" onSubmit={event => void save(event)}>
+    <div className="ac-settings-layout"><SettingsNavigation /><div className="ac-settings-body"><header className="ac-page-heading"><div className="ac-title-row"><h1>{privacy ? "留一点安静，给自己。" : "按你的节奏，安静陪伴。"}</h1>{session.scenario && <AccountStatus icon={FlaskConical} label="测试场景" detail={`隔离测试 · ${session.scenario.id}`} iconOnly />}</div></header><form className="ac-settings-content" onSubmit={event => void save(event)}>
       {!document ? <p role="status">正在读取设置…</p> : <fieldset disabled={pending}>
         {!privacy && <div className="ac-desktop-columns"><Card className="ac-card"><h2>桌面表现</h2>
           <ToggleRow title="始终置顶" checked={document.desktop.alwaysOnTop} onChange={v => edit("desktop", "alwaysOnTop", v)} />
