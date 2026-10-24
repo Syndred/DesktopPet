@@ -4,7 +4,7 @@ const { OnlineDuelService } = require("../../services/online-duel-service.cjs");
 const { BattleStore, copy } = require("./store.cjs");
 const { appearance2d } = require("./assets.cjs");
 const { readQaProfile, createQaOnline, qaUser } = require('./qa-adapter.cjs');
-const { presentSession } = require('./presentation.cjs');
+const { presentSession, presentReport } = require('./presentation.cjs');
 
 const ACTIONS = new Set(["normal_attack", "element_attack", "dodge", "ultimate"]);
 const ELEMENTS = new Set(["metal", "wood", "earth", "water", "fire"]);
@@ -599,14 +599,14 @@ class BattleFeatureService {
         rounds: (report.rounds || []).map(round => ({ ...round, actions: round.actions || { player: round.playerAction, enemy: round.enemyAction } }))
       });
     }
-    return reports.sort((a, b) => b.endedAt.localeCompare(a.endedAt)).slice(0, Math.max(1, Math.min(200, Number(payload.limit) || 60)));
+    return reports.sort((a, b) => b.endedAt.localeCompare(a.endedAt)).slice(0, Math.max(1, Math.min(200, Number(payload.limit) || 60))).map(presentReport);
   }
 
   getReport(payload, context) {
     const owner = this.owner(context);
     const report = this.store.report(owner, text(payload.reportId, "战报编号")) || this.listReports({ limit: 200 }, context).find(item => item.id === payload.reportId);
     if (!report) throw fail("REPORT_NOT_FOUND", "未找到当前账号的战报");
-    return report;
+    return presentReport(report);
   }
 
   getOutcome(input) {

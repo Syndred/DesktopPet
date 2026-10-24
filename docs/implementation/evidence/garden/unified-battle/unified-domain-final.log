@@ -1,0 +1,142 @@
+TAP version 13
+# (node:4148) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `electron --trace-warnings ...` to show where the warning was created)
+# Subtest: six personal plots, starter grants once, strict account isolation
+ok 1 - six personal plots, starter grants once, strict account isolation
+  ---
+  duration_ms: 112.9495
+  type: 'test'
+  ...
+# Subtest: offline growth survives actual database close/reopen, harvest issues once
+ok 2 - offline growth survives actual database close/reopen, harvest issues once
+  ---
+  duration_ms: 124.9004
+  type: 'test'
+  ...
+# Subtest: recipe consumes rice and food debits one, changes only the selected real companion
+ok 3 - recipe consumes rice and food debits one, changes only the selected real companion
+  ---
+  duration_ms: 110.4165
+  type: 'test'
+  ...
+# Subtest: failed companion update rolls back inventory, ledger, revision and action
+ok 4 - failed companion update rolls back inventory, ledger, revision and action
+  ---
+  duration_ms: 103.8059
+  type: 'test'
+  ...
+# Subtest: invalid quantities, stale revisions and raw rice cannot consume inventory
+ok 5 - invalid quantities, stale revisions and raw rice cannot consume inventory
+  ---
+  duration_ms: 105.7741
+  type: 'test'
+  ...
+# Subtest: batch harvest is all-or-nothing
+ok 6 - batch harvest is all-or-nothing
+  ---
+  duration_ms: 111.2636
+  type: 'test'
+  ...
+# Subtest: seed rewards require trusted receipts, dedupe the settlement and compose with rollback
+ok 7 - seed rewards require trusted receipts, dedupe the settlement and compose with rollback
+  ---
+  duration_ms: 90.7249
+  type: 'test'
+  ...
+# Subtest: two database connections cannot duplicate a mature plot or overspend
+ok 8 - two database connections cannot duplicate a mature plot or overspend
+  ---
+  duration_ms: 107.8405
+  type: 'test'
+  ...
+# Subtest: territory changes keep personal garden, crops and harvested items
+ok 9 - territory changes keep personal garden, crops and harvested items
+  ---
+  duration_ms: 78.4068
+  type: 'test'
+  ...
+# (node:23572) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `electron --trace-warnings ...` to show where the warning was created)
+# Subtest: verified alias without companion migration preserves old garden and refuses a second starter grant
+ok 10 - verified alias without companion migration preserves old garden and refuses a second starter grant
+  ---
+  duration_ms: 12.5702
+  type: 'test'
+  ...
+# Subtest: published companion owner adapter and garden migrate the real old graph once together
+ok 11 - published companion owner adapter and garden migrate the real old graph once together
+  ---
+  duration_ms: 12.7758
+  type: 'test'
+  ...
+# Subtest: once real companion rows match the alias, garden rekeys once and archives its exact old graph
+ok 12 - once real companion rows match the alias, garden rekeys once and archives its exact old graph
+  ---
+  duration_ms: 7.7034
+  type: 'test'
+  ...
+# Subtest: two progressed owner graphs cannot be merged by an alias
+ok 13 - two progressed owner graphs cannot be merged by an alias
+  ---
+  duration_ms: 7.0174
+  type: 'test'
+  ...
+# Subtest: a progressed target garden rolls back the shared companion migration in the same transaction
+ok 14 - a progressed target garden rolls back the shared companion migration in the same transaction
+  ---
+  duration_ms: 8.0369
+  type: 'test'
+  ...
+# (node:27916) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `electron --trace-warnings ...` to show where the warning was created)
+# Subtest: a real battle receipt repairs seed settlement exactly once on garden open
+ok 15 - a real battle receipt repairs seed settlement exactly once on garden open
+  ---
+  duration_ms: 212.4701
+  type: 'test'
+  ...
+# Subtest: territory challenge uses the real battle outcome and retains a personal crop
+ok 16 - territory challenge uses the real battle outcome and retains a personal crop
+  ---
+  duration_ms: 184.4491
+  type: 'test'
+  ...
+# Subtest: territory refuses the OS default location and shares discovery boundary rules
+ok 17 - territory refuses the OS default location and shares discovery boundary rules
+  ---
+  duration_ms: 122.017
+  type: 'test'
+  ...
+# Subtest: account backup cannot merge a harvest action with an older planted plot
+ok 18 - account backup cannot merge a harvest action with an older planted plot
+  ---
+  duration_ms: 124.1971
+  type: 'test'
+  ...
+# Subtest: public battle-context settlement keeps its original receipt after another inventory transaction
+ok 19 - public battle-context settlement keeps its original receipt after another inventory transaction
+  ---
+  duration_ms: 171.7699
+  type: 'test'
+  ...
+# Subtest: ordinary services never gain a simulated territory location
+ok 20 - ordinary services never gain a simulated territory location
+  ---
+  duration_ms: 2.555
+  type: 'test'
+  ...
+# Subtest: verified independent QA marker reuses discovery location and its identity and quality checks
+ok 21 - verified independent QA marker reuses discovery location and its identity and quality checks
+  ---
+  duration_ms: 8.4125
+  type: 'test'
+  ...
+1..21
+# tests 21
+# suites 0
+# pass 21
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1125.2814

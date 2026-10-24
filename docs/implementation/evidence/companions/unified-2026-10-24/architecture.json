@@ -1,0 +1,283 @@
+{
+  "at": "2026-10-24T15:33:07.884Z",
+  "sourceCommit": "4770aa1fd2abcca98a1986ccd0a7b38f7826049c",
+  "sourceDirtyFiles": [],
+  "scope": "Source architecture preflight only; actual Electron four-entry flow and visual/animation acceptance are separate requirements. Active runtime follows static local requires from the desktop feature registry; server-only compatibility is recorded separately.",
+  "board": {
+    "path": "docs/design/2026-10-24/full-ui/02-exploration-and-battle.png",
+    "sha256": "e3f7801f95648b6ac2556d17edc9c6415b17455d906b14c5695c3c037e09a211"
+  },
+  "activeRuntime": [
+    "apps/pc-app/runtime/core/qa-scenario.cjs",
+    "apps/pc-app/runtime/features/accounts/backups.cjs",
+    "apps/pc-app/runtime/features/accounts/desktop-host.cjs",
+    "apps/pc-app/runtime/features/accounts/errors.cjs",
+    "apps/pc-app/runtime/features/accounts/index.cjs",
+    "apps/pc-app/runtime/features/accounts/legacy.cjs",
+    "apps/pc-app/runtime/features/accounts/qa-scenario.cjs",
+    "apps/pc-app/runtime/features/accounts/remote.cjs",
+    "apps/pc-app/runtime/features/accounts/schema.cjs",
+    "apps/pc-app/runtime/features/accounts/service.cjs",
+    "apps/pc-app/runtime/features/accounts/settings.cjs",
+    "apps/pc-app/runtime/features/accounts/sync.cjs",
+    "apps/pc-app/runtime/features/accounts/util.cjs",
+    "apps/pc-app/runtime/features/accounts/vault.cjs",
+    "apps/pc-app/runtime/features/battle/assets.cjs",
+    "apps/pc-app/runtime/features/battle/backup.cjs",
+    "apps/pc-app/runtime/features/battle/index.cjs",
+    "apps/pc-app/runtime/features/battle/migrations.cjs",
+    "apps/pc-app/runtime/features/battle/presentation.cjs",
+    "apps/pc-app/runtime/features/battle/qa-adapter.cjs",
+    "apps/pc-app/runtime/features/battle/service.cjs",
+    "apps/pc-app/runtime/features/battle/store.cjs",
+    "apps/pc-app/runtime/features/companions/combat-profile.cjs",
+    "apps/pc-app/runtime/features/companions/identity.cjs",
+    "apps/pc-app/runtime/features/companions/index.cjs",
+    "apps/pc-app/runtime/features/companions/migrations.cjs",
+    "apps/pc-app/runtime/features/companions/playback.cjs",
+    "apps/pc-app/runtime/features/companions/service.cjs",
+    "apps/pc-app/runtime/features/companions/templates.cjs",
+    "apps/pc-app/runtime/features/companions/windows.cjs",
+    "apps/pc-app/runtime/features/conversations/context.cjs",
+    "apps/pc-app/runtime/features/conversations/errors.cjs",
+    "apps/pc-app/runtime/features/conversations/index.cjs",
+    "apps/pc-app/runtime/features/conversations/schema.cjs",
+    "apps/pc-app/runtime/features/conversations/secrets.cjs",
+    "apps/pc-app/runtime/features/conversations/service.cjs",
+    "apps/pc-app/runtime/features/conversations/store.cjs",
+    "apps/pc-app/runtime/features/conversations/transport.cjs",
+    "apps/pc-app/runtime/features/discovery/battle-adapter.cjs",
+    "apps/pc-app/runtime/features/discovery/cloud-adapter.cjs",
+    "apps/pc-app/runtime/features/discovery/coordinates.cjs",
+    "apps/pc-app/runtime/features/discovery/index.cjs",
+    "apps/pc-app/runtime/features/discovery/location-adapter.cjs",
+    "apps/pc-app/runtime/features/discovery/map-adapter.cjs",
+    "apps/pc-app/runtime/features/discovery/migrations.cjs",
+    "apps/pc-app/runtime/features/discovery/qa-location.cjs",
+    "apps/pc-app/runtime/features/discovery/repository.cjs",
+    "apps/pc-app/runtime/features/discovery/service.cjs",
+    "apps/pc-app/runtime/features/discovery/spawns.cjs",
+    "apps/pc-app/runtime/features/discovery/territory-adapter.cjs",
+    "apps/pc-app/runtime/features/discovery/tile-cache.cjs",
+    "apps/pc-app/runtime/features/discovery/window-visibility.cjs",
+    "apps/pc-app/runtime/features/garden/backup.cjs",
+    "apps/pc-app/runtime/features/garden/catalog.cjs",
+    "apps/pc-app/runtime/features/garden/cloud-authority.cjs",
+    "apps/pc-app/runtime/features/garden/identity.cjs",
+    "apps/pc-app/runtime/features/garden/index.cjs",
+    "apps/pc-app/runtime/features/garden/migrations.cjs",
+    "apps/pc-app/runtime/features/garden/qa-location.cjs",
+    "apps/pc-app/runtime/features/garden/service.cjs",
+    "apps/pc-app/runtime/features/garden/settlements.cjs",
+    "apps/pc-app/runtime/features/garden/territories.cjs",
+    "apps/pc-app/runtime/features/resources/index.cjs",
+    "apps/pc-app/runtime/features/resources/package-2d.cjs",
+    "apps/pc-app/runtime/features/resources/parser.cjs",
+    "apps/pc-app/runtime/features/resources/repository.cjs",
+    "apps/pc-app/runtime/features/resources/roster.cjs",
+    "apps/pc-app/runtime/features/resources/service.cjs",
+    "apps/pc-app/runtime/features/resources/validation.cjs",
+    "apps/pc-app/runtime/services/battle-runtime.cjs",
+    "apps/pc-app/runtime/services/online-duel-service.cjs"
+  ],
+  "nonDesktopFallbacks": [
+    "apps/pc-app/runtime/features/discovery/server-authority.cjs"
+  ],
+  "definitions": {
+    "BattleScreen": [
+      "apps/pc-app/ui/src/features/battle/BattleScreen.tsx"
+    ],
+    "BattleArena": [
+      "apps/pc-app/ui/src/features/battle/BattleArena.tsx"
+    ],
+    "BattleMoves": [
+      "apps/pc-app/ui/src/features/battle/BattleMoves.tsx"
+    ],
+    "useBattleSession": [
+      "apps/pc-app/ui/src/features/battle/useBattleSession.ts"
+    ],
+    "useBattleAnimation": [
+      "apps/pc-app/ui/src/features/battle/useBattleAnimation.ts"
+    ],
+    "useEncounterPose": []
+  },
+  "jsx": {
+    "BattleScreen": [
+      "apps/pc-app/ui/src/features/battle/index.tsx",
+      "apps/pc-app/ui/src/features/discovery/EncounterView.tsx"
+    ],
+    "BattleArena": [
+      "apps/pc-app/ui/src/features/battle/BattleScreen.tsx"
+    ],
+    "BattleMoves": [
+      "apps/pc-app/ui/src/features/battle/BattleArena.tsx"
+    ],
+    "useBattleSession": [],
+    "useBattleAnimation": [],
+    "useEncounterPose": []
+  },
+  "checks": [
+    {
+      "id": "single-definition:BattleScreen",
+      "passed": true,
+      "detail": [
+        "apps/pc-app/ui/src/features/battle/BattleScreen.tsx"
+      ]
+    },
+    {
+      "id": "single-definition:BattleArena",
+      "passed": true,
+      "detail": [
+        "apps/pc-app/ui/src/features/battle/BattleArena.tsx"
+      ]
+    },
+    {
+      "id": "single-definition:BattleMoves",
+      "passed": true,
+      "detail": [
+        "apps/pc-app/ui/src/features/battle/BattleMoves.tsx"
+      ]
+    },
+    {
+      "id": "single-definition:useBattleSession",
+      "passed": true,
+      "detail": [
+        "apps/pc-app/ui/src/features/battle/useBattleSession.ts"
+      ]
+    },
+    {
+      "id": "single-definition:useBattleAnimation",
+      "passed": true,
+      "detail": [
+        "apps/pc-app/ui/src/features/battle/useBattleAnimation.ts"
+      ]
+    },
+    {
+      "id": "one-arena-mount",
+      "passed": true,
+      "detail": [
+        "apps/pc-app/ui/src/features/battle/BattleScreen.tsx"
+      ]
+    },
+    {
+      "id": "one-moves-mount",
+      "passed": true,
+      "detail": [
+        "apps/pc-app/ui/src/features/battle/BattleArena.tsx"
+      ]
+    },
+    {
+      "id": "no-separate-wild-animation-or-arena",
+      "passed": true,
+      "detail": {
+        "definitions": [],
+        "oldArenas": []
+      }
+    },
+    {
+      "id": "no-active-legacy-wild-fallback",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "id": "no-active-legacy-package-rules",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "id": "complete-five-element-roster",
+      "passed": true,
+      "detail": {
+        "metal": [
+          {
+            "templateId": "animal-hat-cat",
+            "resourceId": "builtin:lingjing-hatcat-v1"
+          }
+        ],
+        "wood": [
+          {
+            "templateId": "animal-wood-deer",
+            "resourceId": "builtin:lingjing-qingya-v1"
+          }
+        ],
+        "water": [
+          {
+            "templateId": "big-fish-gentle",
+            "resourceId": "builtin:lingjing-yuwan-v2"
+          },
+          {
+            "templateId": "big-fish-cheerful",
+            "resourceId": "builtin:lingjing-xiaolan-v1"
+          },
+          {
+            "templateId": "big-fish-foodie",
+            "resourceId": "builtin:lingjing-fantuan-v1"
+          },
+          {
+            "templateId": "animal-white-fox",
+            "resourceId": "builtin:lingjing-xiaohu-v1"
+          }
+        ],
+        "fire": [
+          {
+            "templateId": "animal-shiba",
+            "resourceId": "builtin:lingjing-shiba-v2"
+          }
+        ],
+        "earth": [
+          {
+            "templateId": "animal-earth-pangolin",
+            "resourceId": "builtin:lingjing-yantuan-v1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "eight-distinct-canonical-appearances",
+      "passed": true,
+      "detail": [
+        {
+          "id": "yuwan",
+          "element": "water",
+          "resourceId": "builtin:lingjing-yuwan-v2"
+        },
+        {
+          "id": "xiaolan",
+          "element": "water",
+          "resourceId": "builtin:lingjing-xiaolan-v1"
+        },
+        {
+          "id": "fantuan",
+          "element": "water",
+          "resourceId": "builtin:lingjing-fantuan-v1"
+        },
+        {
+          "id": "shiba",
+          "element": "fire",
+          "resourceId": "builtin:lingjing-shiba-v2"
+        },
+        {
+          "id": "hatcat",
+          "element": "metal",
+          "resourceId": "builtin:lingjing-hatcat-v1"
+        },
+        {
+          "id": "xiaohu",
+          "element": "water",
+          "resourceId": "builtin:lingjing-xiaohu-v1"
+        },
+        {
+          "id": "qingya",
+          "element": "wood",
+          "resourceId": "builtin:lingjing-qingya-v1"
+        },
+        {
+          "id": "yantuan",
+          "element": "earth",
+          "resourceId": "builtin:lingjing-yantuan-v1"
+        }
+      ]
+    }
+  ],
+  "passed": true
+}

@@ -24,7 +24,12 @@ Dialog Tab 焦点约束/Esc/焦点返回。真实回合日志存在 Radix Scroll
 2D 原创素材：
 夜庭背景、鱼丸水系战斗图集、焰柴图集，提示词与存储位置见 battle-art-assets.json。
 没有字母、几何符号或 Emoji 替代正式战斗角色。应用品牌复用 foundation 四芒星资源。
-六形象由 resources 统一提供，battle 直接消费 canonical pet.resource；各处小头像使用公共 ResourcePortrait 的 portrait 构图，同一待机帧的近景保持一致。
+八形象、五行由 resources 统一提供，battle 直接消费 canonical pet.resource；各处小头像使用公共 ResourcePortrait 的 portrait 构图，同一待机帧的近景保持一致。
 H1/卡片/正文/辅助文字与页面间距消费公共 --font-ui、--text-*、--weight-*、--page-pad-* token。
 右栏采用连续 Card，间距由父容器负责；HUD 的斜角固定8px，小于文字内距，不再随宽度侵入姓名和数值。
 所有按钮平面化；无 hover/active 位移。对照证据和仍有差异见 status/battle.json。
+
+统一战场：BattleScreen / useBattleSession / BattleArena / CombatantStatus / BattleMoves / useBattleAnimation。
+训练、好友、探索、领地只交付真实 sessionId；来源操作占用同一个结算区，不再复制战场。
+共享事件分为 windup/release/impact/effects/rest；ResourceStage.playbackKey绑定回合、阶段、角色和动作。
+读投影为同规则版本的旧会话、战报补齐缺失展示元数据，不重算历史；五行与四行动详见 battle-five-elements.txt。
