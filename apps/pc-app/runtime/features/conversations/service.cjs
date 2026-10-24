@@ -68,7 +68,8 @@ class ConversationService {
   snapshot(session, payload) {
     const pets = this.pets(session).map((pet) => ({ petId: pet.petId ?? pet.id,
       name: typeof pet.name === "string" ? pet.name : pet.name?.zh || "灵宠",
-      templateId: pet.templateId ?? null, avatarUrl: pet.avatarUrl ?? pet.resource?.thumbnailUrl ?? null, level: pet.level ?? pet.growth?.level ?? 1 }));
+      templateId: pet.templateId ?? null, avatarUrl: pet.avatarUrl ?? pet.resource?.thumbnailUrl ?? null, level: pet.level ?? pet.growth?.level ?? 1,
+      ...(pet.resource ? { resource: { resourceId: pet.resource.resourceId, kind: pet.resource.kind } } : {}) }));
     const selected = payload.petId ?? this.store.getSelectedPet(session.owner);
     const petId = pets.some((pet) => pet.petId === selected) ? selected : pets[0]?.petId ?? null;
     return { accountId: session.owner, sessionRevision: session.epoch, pets, petId, summaries: this.store.summaries(session.owner, pets.map((p) => p.petId)),

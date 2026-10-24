@@ -2,6 +2,7 @@ import { createRequire } from 'node:module';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { existsSync } from 'node:fs';
+import { randomUUID } from 'node:crypto';
 import { app, BrowserWindow, ipcMain, Menu, nativeImage, protocol, safeStorage, screen, session, Tray } from 'electron';
 
 const require = createRequire(import.meta.url);
@@ -160,7 +161,11 @@ app.whenReady().then(async () => {
   tray.setToolTip('灵境 · 桌面伙伴');
   tray.setContextMenu(Menu.buildFromTemplate([
     { label: '打开灵境', click: windows.showMain },
-    { label: '收起桌面伙伴', click: () => { for (const [id] of companionWindows) windows.close(id); } },
+    { label: '收起桌面伙伴', click: () => {
+      const owner = services.session.getOwnerAccountId();
+      if (owner) services.get('companions')?.recallAll(owner, randomUUID());
+      for (const [id] of companionWindows) windows.close(id);
+    } },
     { type: 'separator' }, { label: '退出灵境', click: () => { quitting = true; app.quit(); } }
   ]));
   tray.on('double-click', windows.showMain);
