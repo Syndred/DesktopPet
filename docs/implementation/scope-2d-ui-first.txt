@@ -1,0 +1,64 @@
+灵境：当前实施范围与统一 UI 技术约定
+修订日期：2026-10-24（Asia/Shanghai）
+
+本文件记录用户对正在实施的八个功能会话的最新约束，优先于初始会话提示、旧目标文字和此前研究中关于 3D 兼容的要求。
+用户原文：
+“统一按照ui图为准 原先的3d不用兼容了 先实现2d就好；记得优先用已有的开源项目去搞不要重复造轮子”
+“包括组件库 动效框架之类的 也是用主流的实现 避免以前那种全堆html”
+
+一、以设计图验收
+
+设计入口：docs/design/2026-10-24/full-ui/index.html。
+19 个页面及菜园补充图是界面实现依据，不只是配色参考。页面布局、层级、留白、字体、侧栏、表单、卡片、角色与四芒星品牌应统一。
+各会话先查看相关原图，再实现并在真实 Electron 窗口中截图对照，记录仍有差异的项目。图中示例数值不覆盖现有玩法规则。
+实际应用使用 React + TypeScript 按页面、功能、共享组件和领域服务组织。index.html 仅作 Vite 入口或设计图册，不承载整套业务。
+不可通过拼接 HTML 字符串、innerHTML、大型单文件 renderer 或另一个静态网站替代桌面应用；React 渲染正常语义化 HTML 标签不受此限制。
+
+二、本版仅实现 2D
+
+本轮不再实现、兼容或验收 GLB/GLTF/VRM、model-viewer、Three.js/R3F 及旧 3D 导入与校准链路。
+新壳、桌面、对战、捕捉、聊天头像和资源库统一使用 2D 角色资源；移除新 UI 的 3D 专用入口和不再使用的直接依赖。
+原有用户文件、存档和旧代码保留，不为范围收缩删除历史数据。历史文件可以备份，但不要求可在新版渲染。
+第 13 页沿用原设计板 07 下半的布局，改为“2D 角色资源导入与动作校准”：图集、帧率、动作、锚点、缩放、预览与保存，删除 3D 专用项。
+多宠物独立实例、养成、好友联机对战、真实定位、捕捉、领地、菜园、背包、AI、账号均继续实施。
+
+三、统一采用的组件与动效方案
+
+桌面与构建：现有 Electron + electron-vite，前端 React + TypeScript。
+基础组件：shadcn/ui，统一采用其受支持的 Radix primitives 方案，不混用另一套基础交互系统。foundation 负责导入官方组件、components.json、公共导出和主题。
+弹窗、抽屉、Tabs、Select、Switch、Tooltip、Popover、滚动区等采用已导入的真实组件；保留焦点管理、键盘操作、Esc 退出与可访问名称，不能仅仿照其外观自写交互。
+样式：Tailwind CSS 的 Vite 集成与公共设计变量，按批准 UI 定制颜色、字体、间距和圆角；复杂舞台样式可保留模块 CSS，避免复制主题值。
+界面动效：Motion for React（motion 包，motion/react 入口），由 foundation 提供统一的入场、退出、列表和弹层动效组件及节奏变量。
+2D 绘制与动画：PixiJS 的 Assets/Spritesheet/AnimatedSprite/Ticker 等现成能力；同角色多实例共享纹理，实例状态各自独立。DOM 界面动效与角色舞台动画分别由 Motion 和 PixiJS 负责。
+图标：统一复用已采用的 Lucide 图标与批准品牌资源，不用 Emoji 充当正式图标或角色。
+复杂行为状态按实际需要采用 XState；简单表单和局部状态不额外堆叠框架。现有地图、AI、数据库、联机模块继续按开源复用清单适配。
+按钮保持平面风格；动效遵守系统 reduced motion 和应用动画开关，不用 hover 位移或连续弹跳改变图稿风格。
+不能把“已安装依赖”作为采用完成的证据，必须在正式组件和实际交互中使用。
+
+四、开源优先与模块分工
+
+先检索、核对现有项目、官方组件及许可证，再决定适配；优先组合成熟组件，避免自写精灵动画、地图、可访问弹层、流式协议或第二套联机服务。
+现有研究：docs/design/2026-10-24/full-ui/open-source-reuse.txt 和 open-source-reuse.json；其中 3D 候选已标为本版范围外。
+原项目已实现的战斗内核、账号协议和 Supabase 链路同样应优先复用。账号/宠物归属、种植经济、库存事务与权限校验仍需要本项目领域逻辑。
+foundation 独占根 package/lock、构建、公共 components、样式、路由与动效契约；各功能会话提供所需组件和依赖清单，不自行覆盖公共实现。
+其他会话只在各自工作树和功能目录接入，统一使用 foundation 的公共组件和动画包装；不分别搭八套 UI 或动效方案。
+代码与素材分别记录许可；整包项目仅取兼容的模块，不为复用而引入与现有架构冲突的一整套框架。
+
+五、验收与交付记录
+
+每个功能的 docs/implementation/status/<module>.json 至少记录：
+- 本次采用的开源项目、实际版本或源码提交、许可证、来源及使用位置。
+- 自研差异及必要理由；未采用候选的实际不兼容点。
+- 正式页面使用公共组件和 Motion/PixiJS 的证据，不能只有 package.json 依赖名。
+- 对应 UI 原图、真实 Electron 截图和仍有差异的条目。
+- 本版 2D-only 检查，公共无障碍交互、动画开关及相关定向检查结果。
+
+各会话继续现有目标与功能任务，验收范围按本文件收敛；不新建额外会话，不伪造外部服务成功，不自动执行生产发布。
+
+官方技术来源（2026-10-24 核对）：
+https://ui.shadcn.com/docs/components
+https://ui.shadcn.com/docs/changelog/2026-07-base-ui-default
+https://tailwindcss.com/docs/installation/using-vite
+https://motion.dev/docs/react-installation
+https://motion.dev/docs/react-layout-animations
+https://motion.dev/docs/react-animate-presence
