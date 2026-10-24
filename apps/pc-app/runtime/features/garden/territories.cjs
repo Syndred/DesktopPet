@@ -2,6 +2,7 @@
 const { GardenError } = require('./service.cjs');
 const { checkFix } = require('../discovery/coordinates.cjs');
 const { contains: inside } = require('../discovery/territory-adapter.cjs');
+const { createQaTerritoryLocation } = require('./qa-location.cjs');
 const problem = (code, message) => { throw new GardenError(code, message); };
 const EARTH_RADIUS = 6371000;
 const dayKey = now => new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Shanghai', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date(now));
@@ -13,7 +14,13 @@ function validFix(fix, now) {
   return fix;
 }
 class TerritoryService {
-  constructor(services, { now = Date.now } = {}) { this.services = services; this.db = services.db; this.now = now; }
+  constructor(services, { now = Date.now } = {}) { this.services = services; this.db = services.db; this.now = now; this.scenario=createQaTerritoryLocation(services,now); }
+  verifyFix(fix){return this.scenario?this.scenario.validate(fix):validFix(fix,this.now());}
+  challengeForOwner({ownerAccountId,sessionId}) {
+    const row=this.db.prepare('SELECT * FROM garden_territory_challenges WHERE owner_account_id=? AND battle_id=?').get(ownerAccountId,sessionId);
+    if(!row)return null;
+    return {sessionId:row.battle_id,territoryId:row.territory_id,name:this.get(row.territory_id)?.name,settled:Boolean(row.settled),result:row.result_json?JSON.parse(row.result_json):null};
+  }
   get(territoryId) {
     const row = this.db.prepare('SELECT * FROM garden_territory_records WHERE territory_id=?').get(territoryId);
     if (!row) return null;
@@ -41,29 +48,31 @@ class TerritoryService {
   }
   /** Local world cells are deterministic geographic regions, never sample places. */
   discoverAtSystemFix(fix) {
-    validFix(fix, this.now());
+    this.verifyFix(fix);
     const step = .006, latIndex = Math.floor(fix.lat / step), lngIndex = Math.floor(fix.lng / step);
-    const id = `territory:${latIndex}:${lngIndex}`;
+    const id = `${this.scenario?`qa:${this.scenario.descriptor.id}:`:''}territory:${latIndex}:${lngIndex}`;
     if (!this.get(id)) {
       const south = latIndex * step, west = lngIndex * step;
-      this.importRecord({ id, name: '附近的庭院', regionName: `${Math.abs(fix.lat).toFixed(3)}° ${fix.lat >= 0 ? 'N' : 'S'} · ${Math.abs(fix.lng).toFixed(3)}° ${fix.lng >= 0 ? 'E' : 'W'}`, ownerAccountId: null, revision: 1, captureMultiplier: 2, provenance: 'local-geographic', boundary: [{ lat: south, lng: west }, { lat: south + step, lng: west }, { lat: south + step, lng: west + step }, { lat: south, lng: west + step }] });
+      this.importRecord({ id, name: '附近的庭院', regionName: this.scenario?'领地演练':`${Math.abs(fix.lat).toFixed(3)}° ${fix.lat >= 0 ? 'N' : 'S'} · ${Math.abs(fix.lng).toFixed(3)}° ${fix.lng >= 0 ? 'E' : 'W'}`, ownerAccountId: null, revision: 1, captureMultiplier: 2, provenance: this.scenario?'simulated-geographic':'local-geographic', boundary: [{ lat: south, lng: west }, { lat: south + step, lng: west }, { lat: south + step, lng: west + step }, { lat: south, lng: west + step }] });
     }
     return this.get(id);
   }
-  currentFix() { return this.services.get('discovery')?.location?.snapshot?.()?.fix || null; }
+  currentFix() { return this.scenario?.fix()||this.services.get('discovery')?.location?.snapshot?.()?.fix || null; }
   startChallenge({ ownerAccountId, petId, territoryId, expectedTerritoryRevision, actionId }) {
     const territory = this.get(territoryId);
     if (!territory) problem('TERRITORY_NOT_FOUND', '找不到这片领地');
     if (territory.ownerAccountId === ownerAccountId) problem('ALREADY_OWNED', '这片领地已经属于你');
     if (territory.revision !== expectedTerritoryRevision) problem('TERRITORY_CONFLICT', '领地归属已更新，请刷新');
-    const fix = validFix(this.currentFix(), this.now());
+    if(this.scenario&&territory.provenance!=='simulated-geographic')problem('QA_TERRITORY_REQUIRED','演练仅可挑战当前场景生成的领地');
+    const fix = this.verifyFix(this.currentFix());
     if (!inside(fix, territory.boundary)) problem('OUT_OF_TERRITORY_RANGE', '请先进入领地区域再发起挑战');
     if (this.dailyRemaining(ownerAccountId) <= 0) problem('DAILY_INVASIONS_USED', '今日两次免费入侵机会已用完');
     const companions = this.services.get('companions');
     if (!companions?.getPet?.(ownerAccountId, petId)) problem('PET_NOT_FOUND', '请选择当前账号的出战伙伴');
     const battle = this.services.get('battle');
     if (!battle?.beginTerritoryChallenge) problem('BATTLE_UNAVAILABLE', '领地挑战服务尚未就绪');
-    let opponent = { petId: `guardian:${territory.id}`, petName: '庭院守护者', element: 'wood', level: 1 };
+    const guardian=companions.listTemplates?.().find(template=>template.element==='wood');
+    let opponent = { petId: `guardian:${territory.id}`, petName: guardian?.name||'庭院守护者', element: 'wood', level: 1, ...(guardian?.resource?{resource:guardian.resource}:{}) };
     if (territory.ownerAccountId) {
       const garrison = this.db.prepare('SELECT pet_id FROM garden_garrisons WHERE owner_account_id=? AND territory_id=?').get(territory.ownerAccountId, territory.id);
       if (garrison) {

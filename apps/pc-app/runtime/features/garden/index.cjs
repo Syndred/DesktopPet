@@ -57,6 +57,19 @@ module.exports = {
       snapshot: context => service.snapshot(context),
       territories,
       migrateOwnerAlias:context=>identity.migrate(context),
+      getBattleContext:input=>{
+        const challenge=territories.challengeForOwner(input);
+        return challenge?{...challenge,gardenRevision:service.snapshot(input).revision}:null;
+      },
+      settleBattleContext:input=>{
+        const owner=input.ownerAccountId;
+        if(owner!==services.session.getOwnerAccountId())return {ok:false,code:'SESSION_CHANGED',message:'账号已切换'};
+        const row=services.db.prepare('SELECT payload_json FROM garden_outbox WHERE owner_account_id=? AND action_id=?').get(owner,input.actionId);
+        const previous=row?JSON.parse(row.payload_json):null;
+        if(previous&&(previous.kind!=='territorySettle'||previous.input.sessionId!==input.sessionId))return {ok:false,code:'ACTION_ID_REUSED',message:'操作编号已使用'};
+        const payload=previous?.input||{sessionId:input.sessionId,actionId:input.actionId,sessionOwnerAccountId:owner,expectedRevision:service.snapshot({ownerAccountId:owner}).revision};
+        return commands.territorySettle(payload,{ownerAccountId:owner});
+      },
       // Trusted callers can include this in their own synchronous settlement transaction.
       grantSeeds: (context, input, verifiedReceipt) => {
         if (!cloud.isCloud(context)) return service.grantSeeds(context,input,verifiedReceipt);
@@ -85,9 +98,10 @@ module.exports = {
       const snapshot = service.snapshot(context);
       if (snapshot.ok) {
         snapshot.data.remainingInvasions = territories.dailyRemaining?.(context.ownerAccountId) ?? 2;
+        if(territories.scenario)snapshot.data.scenario=territories.scenario.descriptor;
         const discovery = services.get('discovery');
         if (discovery?.map?.project) snapshot.data.territories = snapshot.data.territories.map(t => ({ ...t, mapBoundary: t.boundary?.map(point => discovery.map.project(point)) }));
-        snapshot.data.territoryChallenges = services.db.prepare('SELECT battle_id sessionId,territory_id territoryId FROM garden_territory_challenges WHERE owner_account_id=? AND settled=0').all(context.ownerAccountId);
+        snapshot.data.territoryChallenges = services.db.prepare('SELECT battle_id sessionId,territory_id territoryId FROM garden_territory_challenges WHERE owner_account_id=? AND settled=0').all(context.ownerAccountId).map(challenge=>({...challenge,status:services.get('battle')?.getOutcome?.({ownerAccountId:context.ownerAccountId,sessionId:challenge.sessionId})?.session?.status}));
       }
       return snapshot;
     };

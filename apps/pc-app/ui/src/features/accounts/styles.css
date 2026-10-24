@@ -196,3 +196,13 @@
 .accounts .ac-card { display:block; gap:0; }
 .ac-save-art-illustrated::before { width:165px; height:55px; }
 .app-dialog-content:has(.accounts.ac-modal) { position:fixed!important; inset:auto!important; left:50%!important; top:50%!important; width:min(540px,calc(100vw - 48px))!important; max-width:none!important; height:auto!important; display:block!important; padding:0!important; translate:none!important; transform:translate(-50%,-50%)!important; }
+.ac-title-row { display:flex; align-items:center; gap:10px; }
+.ac-status-badge { display:inline-flex; align-items:center; gap:5px; width:fit-content; padding:4px 7px; border-radius:6px; font-size:11px; line-height:16px; color:var(--ac-muted); background:var(--secondary,#edf2ff); cursor:help; }
+.ac-status-badge:focus-visible { outline:3px solid var(--ring,#9db5ff); outline-offset:3px; }
+.ac-status-success { color:#397964; background:#eaf6ef; }
+.ac-status-warning { color:#956022; background:#fff3e2; }
+.ac-save-status { display:flex; align-items:center; flex-wrap:wrap; gap:6px; }
+.ac-tooltip { font-size:12px; line-height:1.5; }
+.ac-login-preference { display:flex; align-items:center; gap:6px; }
+.accounts .ac-login-preference .ac-check { margin-bottom:0; }
+.ac-field-caption { display:flex; align-items:center; gap:6px; }

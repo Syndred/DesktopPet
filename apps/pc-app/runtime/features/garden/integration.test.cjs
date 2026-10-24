@@ -75,3 +75,27 @@ test('account backup cannot merge a harvest action with an older planted plot', 
   const same = adapter.export(f.owner); assert.doesNotThrow(() => adapter.restore(f.owner, same, 'merge'));
   f.db.exec('BEGIN IMMEDIATE'); adapter.restore(f.owner, before, 'replace'); f.db.exec('COMMIT'); assert.equal(f.garden.snapshot(context).data.plots[0].cropType, null); f.close();
 });
+
+test('public battle-context settlement keeps its original receipt after another inventory transaction',async()=>{
+  const f=fixture(),context={ownerAccountId:f.owner},originalGet=f.services.get,providers=new Map();
+  f.services.get=name=>providers.has(name)?providers.get(name):originalGet(name);
+  f.services.provide=(name,value)=>providers.set(name,value);
+  const registered=require('./index.cjs').register(f.services),api=f.services.get('garden');
+  try{
+    const initial=await registered.commands.snapshot({},context),territory=f.territories.discoverAtSystemFix(f.fix);
+    const started=await registered.commands.territoryChallenge({actionId:'shared-context-start',sessionOwnerAccountId:f.owner,expectedRevision:initial.revision,petId:f.pet.petId,territoryId:territory.id,expectedTerritoryRevision:territory.revision},context);
+    assert.equal(started.ok,true,JSON.stringify(started));
+    await finishBattle(f,f.battle.snapshot({sessionId:started.data.sessionId},context));
+    assert.equal(api.getBattleContext({...context,sessionId:started.data.sessionId}).settled,false);
+    assert.equal(api.getBattleContext({ownerAccountId:'another-owner',sessionId:started.data.sessionId}),null);
+    const input={...context,sessionId:started.data.sessionId,actionId:'shared-context-confirm'};
+    const settled=await api.settleBattleContext(input);assert.equal(settled.ok,true,JSON.stringify(settled));
+    assert.equal(api.getBattleContext({...context,sessionId:input.sessionId}).settled,true);
+    const current=await registered.commands.snapshot({},context);
+    const planted=await registered.commands.plant({actionId:'later-personal-plant',sessionOwnerAccountId:f.owner,expectedRevision:current.revision,plotId:'plot-1',cropType:'carrot'},context);assert.equal(planted.ok,true);
+    const before=await registered.commands.snapshot({},context),territoryRevision=f.territories.get(territory.id).revision;
+    const replay=await api.settleBattleContext(input);assert.equal(replay.ok,true);assert.equal(replay.replayed,true);
+    const after=await registered.commands.snapshot({},context);assert.deepEqual(after.data.items,before.data.items);assert.equal(after.revision,before.revision);assert.equal(f.territories.get(territory.id).revision,territoryRevision);
+    assert.equal((await api.settleBattleContext({...input,sessionId:'different-battle'})).code,'ACTION_ID_REUSED');
+  }finally{registered.dispose();f.close();}
+});

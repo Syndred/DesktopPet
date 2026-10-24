@@ -60,7 +60,7 @@ export function useGarden() {
     if (locked.current) return false;
     if (ownerRef.current !== action.owner) { setError("账号已切换，请刷新后操作"); return false; }
     locked.current = true; setBusy(true); setError(""); setMessage("");
-    let succeeded = false;
+    let succeeded: Extract<GardenResult<unknown>, {ok:true}> | false = false;
     try {
       const api = bridge(); if (!api) throw new Error("桌面连接已断开");
       // Persist the exact action before IPC. An interrupted reply must retry the same action.
@@ -74,9 +74,9 @@ export function useGarden() {
         await refresh();
         setError(result.message); return false;
       }
-      succeeded = true;
+      succeeded = result;
       await refresh();
-      setMessage(result.replayed ? "这次操作已经保存，未重复扣除或发放物品。" : success);
+      setMessage(result.replayed ? "已确认。" : success);
     } catch (failure) {
       if (mounted.current) setError(`${failure instanceof Error ? failure.message : "连接中断"}。可安全重试原操作。`);
     } finally {

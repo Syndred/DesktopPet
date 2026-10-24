@@ -124,9 +124,9 @@ app.whenReady().then(async () => {
   Menu.setApplicationMenu(null);
   session.defaultSession.setPermissionRequestHandler((_contents, _permission, callback) => callback(false));
   const userData = app.getPath('userData');
-  // Refuse invalid QA configuration before reading, backing up or opening saves.
-  const qaScenario = readQaScenario({ userData });
   const legacyDataFile = process.env.PET_RUNTIME_DATA_FILE || join(userData, 'pet-runtime-data.json');
+  // Refuse invalid QA configuration before reading, backing up or opening saves.
+  const qaScenario = readQaScenario({ userData, legacyDataFile, productionDirectories: ['Lingjing', 'qingpet-desktop-runtime', 'qingpet-lord-3d'].map(name => join(app.getPath('appData'), name)) });
   const db = openDatabase(join(userData, 'lingjing.sqlite'));
   const sourceKey = `legacy-source:${legacyDataFile}`;
   const sourceMarker = db.prepare('SELECT value FROM lingjing_meta WHERE key=?').get(sourceKey);
@@ -135,7 +135,7 @@ app.whenReady().then(async () => {
   backupLegacy(legacyDataFile);
   const legacy = initializeLegacy();
   services = createServices({ db, legacy, paths: { userData, assets: join(runtime, 'assets'), legacyDataFile, legacyDataExisted }, windows, safeStorage });
-  if (qaScenario) services.provide('qaScenario', qaScenario);
+  if (qaScenario) services.provide('qaProfile', qaScenario);
   features = discoverFeatures(join(runtime, 'features'), services);
   await require(join(runtime, 'core/builtin-art.cjs')).registerBuiltinArt(services);
   if (services.get('backups') && services.get('resources')) services.get('backups').register(require(join(runtime, 'core/resource-backup.cjs')).createResourceBackupAdapter(services));

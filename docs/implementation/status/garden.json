@@ -2,7 +2,7 @@
   "module": "garden",
   "branch": "codex/lingjing-garden",
   "commit": "see git log for this file",
-  "status": "local-native-chain-and-real-geographic-garrison-verified-cloud-acceptance-blocked",
+  "status": "unified-battle-entry-and-qa-scenarios-prepared-self-verification-in-progress",
   "upstream": {
     "fetched": true,
     "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086",
@@ -11,7 +11,7 @@
     "recheckedAt": "2026-10-24T22:12:52.2360134+08:00",
     "behindOriginMain": 0
   },
-  "foundationRequired": "99c1b9e consumed; includes public checkpoint, canonical resource upgrades, playAction and shared portrait API",
+  "foundationRequired": "4c05172 consumed; foundation verified QA profile gate, common components and existing battle arena",
   "contract": "docs/implementation/garden-contract.md",
   "scope": "docs/implementation/scope-2d-ui-first.txt",
   "routes": [
@@ -143,6 +143,10 @@
     {
       "command": "smoke.electron.mjs motion/map/library/battle/carrot/rewardplant",
       "result": "Actual Electron36.9.5: 25m rice growth -> harvest2 -> craft1 -> feed fish1; actual training reward tomato seeds -> 15m planting -> harvest3 -> feed fish1 -> next training; non-target pets unchanged; exact restart; duplicate harvest/stale-owner rejected; A04 layout/Select/Tabs/Motion/WiFi diagnostics; original raw-ID upgrade exact. Separate labelled local QA verifies six distinct PNGs, selected fox eat event and actual frames0->1, exact action replay without second debit/action, restart exact; latest foundation canonical reference migration preserves all growth, positions, names and stock; full restart exact; territory explicit public foreground read releases permission without a continuous watch; actual59m WiFi fix -> real territory battle9 rounds/player victory -> occupy -> selected Xiaolan garrison -> full restart exact; coordinates omitted from committed summary"
+    },
+    {
+      "command": "node --test .../qa-location.test.cjs .../integration.test.cjs",
+      "result": "7 passed: verified QA marker, normal-profile rejection, location age/accuracy/run isolation, public context replay after later inventory mutation; native preparation/build/UI typecheck/ESLint passed"
     }
   ],
   "evidence": [
@@ -189,9 +193,9 @@
     "Cloud feed uses public companions.playAction after exact action receipt/readback/checkpoint; a concurrent replay cannot emit twice"
   ],
   "remaining": [
-    "HTTPS garden-sync/accounts migrations not deployed; live real-account two-device receipt/readback not verified",
-    "Cloud territory challenge/garrison authority and shared battle integration unavailable; fails explicitly",
-    "Foundation central A01-A12 visual recheck and full combined integration/packaging remain pending; six canonical resources and selected local eat action consumed and verified"
+    "Consume the published shared BattleScreen/context implementation and five-element canonical roster",
+    "Native QA: both victory/defeat, exact session and restart recovery, shared context confirmation and receipt replay",
+    "Main chat independent module review; final whole-product acceptance remains pending"
   ],
   "cloudReview": "docs/implementation/garden-cloud-review.md",
   "dataPolicy": "additive migrations; original history/designs/models retained; no production deployment, destructive migration or user-data reset",
@@ -297,5 +301,22 @@
     "restartExact": true,
     "coordinatesOmitted": true,
     "profile": "artifacts/garden/roster-electron"
+  },
+  "latestScope": "docs/implementation/battle-screen-contract.txt and latest delegated unified battle goal; live cloud/GPS may be deferred",
+  "deferred": [
+    "Live HTTPS deployment and real two-device verification",
+    "Live cloud territory authority"
+  ],
+  "unifiedBattle": {
+    "stage": "native-scenario-preparation-passed; final shared-result verification pending",
+    "route": "/battle/session/:sessionId",
+    "noFeatureCombatUI": true,
+    "publicContext": "garden.getBattleContext({ownerAccountId,sessionId})",
+    "publicSettlement": "garden.settleBattleContext({ownerAccountId,sessionId,actionId}) restores original outbox input on replay",
+    "guards": "Original renderer expectedRevision/sessionOwner checks remain; no rule/outcome override",
+    "qa": "Foundation qaScenario only; source simulated, run-bound geographic record, no normal-profile switch",
+    "nativePreparation": "Two actual Electron QA profiles registered, adopted canonical pets, planted a real crop and located a simulated territory; no win/loss claim yet",
+    "contract": "docs/implementation/garden-battle-integration.txt",
+    "pendingIntegration": "Battle settleContext should call public settlement adapter; bare territorySettle still requires expectedRevision. Defeat should also confirm its unchanged ownership context."
   }
 }

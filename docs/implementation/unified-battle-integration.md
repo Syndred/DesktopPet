@@ -12,6 +12,8 @@ The full five-element roster must include metal, wood, water, fire and earth. Ch
 
 `runtime/core/qa-scenario.cjs` validates the marker before opening saves. Unknown scenarios, copied markers and a legacy store outside the independent directory are rejected. Ordinary startup has no scenario service or scenario flag. Enabling a scenario through renderer IPC is unsupported. A QA restart reuses its own profile and run ID.
 
+Accounts now consumes this same preflight through the private `qaProfile` service and binds its database namespace to the same run UUID. It publishes the single `qaScenario` service after identity/database validation; there is no second unified-scene marker. A QA profile requires its explicit flag even when reopening. QA logins remain in memory and require login after restart; they cannot use the live cloud client, OS startup settings, real location or normal-account backups. Explicit login restores the same QA save. The standalone older Accounts test-harness marker remains supported by Accounts without weakening the unified profile binding.
+
 Main-only modules can read `services.get('qaScenario')` with `{id,runId,provenance:'simulated',isolated:true,profilePath,descriptor}`. This does not replace adapters by itself. Feature-specific simulated adapters must opt into this verified service and retain their real validation, state, receipts and UI path. Report exactly which transport/location authority is simulated. `app.info.scenario` exposes only the descriptor; a small titlebar flask and tooltip identify the isolated scene. No developer explanations are added to ordinary player pages.
 
 ## Delivery and acceptance
