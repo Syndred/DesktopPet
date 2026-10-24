@@ -71,7 +71,7 @@ class BackupManager {
       for (const [id, adapter] of this.adapters) {
         const data = adapter.export(owner, this.db);
         invariant(!data?.then, "ASYNC_BACKUP_ADAPTER", "存档读取适配器必须同步执行。");
-        adapter.validate(data, owner, this.db);
+        invariant(!adapter.validate(data, owner, this.db)?.then, "ASYNC_BACKUP_ADAPTER", "存档验证适配器必须同步执行。");
         modules[id] = { version: adapter.version, data };
       }
       const claimed = new Set([...this.adapters.values()].flatMap(a => a.tables || []));
@@ -86,7 +86,9 @@ class BackupManager {
       const body = { format: "lingjing-account-save", version: 1, ownerAccountId: owner,
         identity: { provider: identity.provider, subjectId: identity.subject_id },
         createdAt: new Date().toISOString(), data: { modules, tables }, excluded };
-      return { ...body, checksum: checksum(body) };
+      const envelope = { ...body, checksum: checksum(body) };
+      invariant(Buffer.byteLength(canonical(envelope)) <= MAX_BACKUP_BYTES, "BACKUP_TOO_LARGE", "备份超过 25 MB 限制。");
+      return envelope;
     });
   }
   dataChecksum(owner) { return checksum(this.snapshot(owner).data); }
@@ -103,7 +105,7 @@ class BackupManager {
     for (const [id, module] of Object.entries(body.data.modules)) {
       const adapter = this.adapters.get(id);
       invariant(adapter && module?.version === adapter.version, "BACKUP_MODULE_UNSUPPORTED", `无法恢复模块 ${id}，请安装对应模块版本。`);
-      adapter.validate(module.data, owner, this.db);
+      invariant(!adapter.validate(module.data, owner, this.db)?.then, "ASYNC_BACKUP_ADAPTER", "存档验证适配器必须同步执行。");
     }
     const available = new Map(liveTables(this.db).map(t => [t.name, t]));
     for (const [name, table] of Object.entries(body.data.tables)) {

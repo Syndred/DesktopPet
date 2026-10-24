@@ -5,6 +5,7 @@ import { Button } from '../../components/ui';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../../components/ui/select';
 import { Popover, PopoverContent, PopoverTrigger } from '../../components/ui/popover';
 import { ResourceStage } from './ResourceStage';
+import { ApplyToCompanion } from './ApplyToCompanion';
 import { ActionSelect, ResourceActionMapping, ResourceCalibrationControls, ResourceFrameRate } from './ResourceControls';
 import { ApplyToCompanion } from './ApplyToCompanion';
 
@@ -19,6 +20,7 @@ export function ResourceEditor({ resource, client, mode, edit, dirty, saving, sa
       <ResourceStage resource={resource} petId="resource-preview-a" context={context} action={action} playing={playing} motionEnabled={motionEnabled} assetUrl={client.assetUrl} />
       {comparison ? <ResourceStage resource={resource} petId="resource-preview-b" context={context} action={rightAction} facing="left" motionEnabled={motionEnabled} assetUrl={client.assetUrl} /> : null}
     </div>
+    <ApplyToCompanion resource={resource} disabled={dirty || saving || resource.availability !== 'ready'} />
     <div className="resource-preview-toolbar"><span>{Object.keys(resource.atlas?.frames ?? {}).length} 帧 · {resource.clips.length} 组动作</span><Button variant="ghost" aria-pressed={comparison} onClick={() => setComparison(value => !value)}><Copy size={12} />{comparison ? '收起双实例对照' : '双实例对照'}</Button>
       <ApplyToCompanion key={resource.id} resource={resource} disabled={dirty || saving} /><Select value={context} onValueChange={value => setContext(value as ResourceContext)}><SelectTrigger aria-label="显示场景"><SelectValue /></SelectTrigger><SelectContent><SelectItem value="desktop">桌面</SelectItem><SelectItem value="battle">战斗</SelectItem></SelectContent></Select>
     </div>

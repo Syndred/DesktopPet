@@ -73,7 +73,7 @@ test('main-derived account ownership isolates reads, edits, selections, actions 
   service.importLegacyInventory(owner, legacy); service.importLegacyInventory(another, legacy);
   service.rename(owner, { actionId: 'legacy-rename', petId: 'pet-001', name: '一号账号的动物' });
   assert.equal(service.requirePet(another, 'pet-001').name, '旧动物');
-  assert.equal(service.selections(owner).battlePetId, 'pet-001');
+  assert.equal(service.selections(owner).battlePetId, null);
 });
 
 test('legacy migration preserves raw records, original JSON/history, IDs, stats and does not overwrite later progress', () => {
@@ -119,7 +119,7 @@ test('second SQLite connection rejects a stale revision without losing a newer n
 });
 
 test('trusted capture creation is idempotent; distinct captures of one template remain distinct', () => {
-  const input = { actionId: 'capture-1', templateId: 'blaze-shiba', name: '收服的柴柴', origin: { wildPetId: 'wild-1', wildSerial: '0019812', battleId: 'battle-1' }, showOnDesktop: false };
+  const input = { actionId: 'capture-1', templateId: 'big-fish-gentle', name: '收服的伙伴', origin: { wildPetId: 'wild-1', wildSerial: '0019812', battleId: 'battle-1' }, showOnDesktop: false };
   const first = service.createCapturedInstance(owner, input);
   assert.equal(service.createCapturedInstance(owner, input).data.pet.petId, first.data.pet.petId);
   assert.equal(service.createCapturedInstance(owner, { ...input, actionId: 'same-encounter-new-request' }).data.pet.petId, first.data.pet.petId);

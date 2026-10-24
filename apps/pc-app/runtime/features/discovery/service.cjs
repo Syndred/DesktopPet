@@ -16,17 +16,19 @@ function publicEncounter(value) {
 }
 
 class DiscoveryService {
-  constructor({db,getCompanions,getOwner,getBattle,invokeBattle,location=new LocationService(),map=new MapAdapter(),authority=null,now=Date.now,events={emit(){}}}) {
+  constructor({db,getCompanions,getOwner,getBattle,invokeBattle,location=new LocationService(),map=new MapAdapter(),authority=null,getAuthority,now=Date.now,events={emit(){}}}) {
     this.db=db; this.repo=new DiscoveryRepository(db); this.getCompanions=getCompanions; this.getOwner=getOwner;
-    this.getBattle=getBattle; this.invokeBattle=invokeBattle; this.localBattle=new LegacyWildBattleAdapter(); this.location=location; this.map=map; this.authority=authority; this.now=now; this.events=events;
+    this.getBattle=getBattle; this.invokeBattle=invokeBattle; this.localBattle=new LegacyWildBattleAdapter(); this.location=location; this.map=map; this.getAuthority=getAuthority || (()=>authority); this.now=now; this.events=events;
     this.locks=new Map();
   }
+  get authority() {return this.getAuthority();}
   owner() {const owner=this.getOwner(); if(!owner || typeof owner!=='string') problem('AUTH_REQUIRED','请先登录，再邀请新伙伴加入'); return owner;}
   companions() {const service=this.getCompanions?.(); if((!service?.getPet && !service?.requirePet) || !service?.createCapturedInstance) problem('COMPANIONS_UNAVAILABLE','伙伴服务暂未连接，请稍后重试'); return service;}
   pet(owner,id) {const api=this.companions(); return api.getPet ? api.getPet(owner,id) : api.requirePet(owner,id);}
   currentEncounter(owner,id) {const value=this.repo.get(owner,id); if(!value) problem('ENCOUNTER_NOT_FOUND','找不到这次遭遇'); return value;}
   checkRevision(value,expected) {if(expected!==undefined && expected!==value.revision) problem('REVISION_CONFLICT','遭遇进度已更新，请刷新后重试');}
   requireFix(spawn) {
+    if(!this.location.policyAllowed()) {const failure=this.location.blockByPolicy();problem(failure.error.code,failure.error.message);}
     const fix=this.location.snapshot().fix,quality=spawn ? geofence(fix,spawn.position,100,this.now()) : checkFix(fix,this.now());
     if(!quality.ok) problem(quality.code,quality.message); return fix;
   }
@@ -52,7 +54,8 @@ class DiscoveryService {
     return ok({location:this.location.snapshot(),map:this.map.snapshot(),...nearby,
       mapLocation:fix ? this.map.project(fix) : null,spawns:nearby.spawns.map(s=>({...s,mapPosition:this.map.project(s.position)})),territories:territories.items,territoriesAvailable:territories.available,pets,
       encounters:owner ? this.repo.list(owner).map(publicEncounter) : [],captures:owner ? this.repo.captures(owner).map(capture=>{const pet=owned.find(p=>p.petId===capture.petId);return {...capture,...(pet ? {name:pet.name,showOnDesktop:Boolean(pet.desktop?.visible)} : {})};}) : [],
-      signedIn:Boolean(owner),storage:this.authority ? 'cloud-validated-local' : 'local',cloudConfigured:Boolean(this.authority)});
+      signedIn:Boolean(owner),storage:'local',cloudConfigured:Boolean(this.authority?.url && this.authority?.anonKey),
+      cloudStatus:!this.authority ? 'disabled' : !this.authority.url || !this.authority.anonKey ? 'not_configured' : !this.getBattle?.()?.supportsCloudWild ? 'battle_adapter_missing' : 'ready'});
   }
   async begin(input) {
     const owner=this.owner(),request={op:'begin',spawnId:input.spawnId,petId:input.petId};
@@ -60,6 +63,7 @@ class DiscoveryService {
     if(this.authority && !this.getBattle?.()?.supportsCloudWild) problem('CLOUD_BATTLE_INTEGRATION_REQUIRED','云端野外对战适配尚未连接，可先使用本机探索模式');
     this.requireFix();
     const pet=this.pet(owner,input.petId);
+    if(!['2d','spritesheet'].includes(pet.resource?.kind)) problem('PET_2D_REQUIRED','本版只支持 2D 出战伙伴，请先领养或选择一位 2D 伙伴');
     const spawn=this.nearby().spawns.find(s=>s.id===input.spawnId);
     if(!spawn) problem('SPAWN_EXPIRED','附近伙伴已刷新，请重新查看地图');
     const fix=this.requireFix(spawn);
@@ -150,13 +154,15 @@ class DiscoveryService {
       const prior=this.repo.capture(owner,encounter.encounterId); if(prior) return {...ok(prior),duplicate:true};
       const current=this.currentEncounter(owner,encounter.encounterId); this.checkRevision(current,encounter.revision);
       const companion=this.companions(),capturedAtMs=this.now();
+      const territoryContext=this.territories?.captureContext(owner,fix) || {territoryId:null,captureMultiplier:1};
       const tags=[{id:`${encounter.encounterId}:first-meeting`,kind:'first_meeting',title:'我们的第一次见面',text:`在${encounter.spawn.placeLabel}相遇，赢得挑战后成为了伙伴。`,placeLabel:encounter.spawn.placeLabel,createdAt:new Date(capturedAtMs).toISOString()}];
       const captureActionId=`discovery:${encounter.encounterId}`;
       const result=companion.createCapturedInstance(owner,{actionId:captureActionId,templateId:encounter.spawn.templateId,name,stats:encounter.spawn.stats,showOnDesktop:Boolean(input.showOnDesktop),
-        origin:{wildPetId:encounter.spawn.id,wildSerial:encounter.spawn.wildSerial,battleId:encounter.battle.battleId,capturedAt:new Date(capturedAtMs).toISOString(),encounterId:encounter.encounterId,placeLabel:encounter.spawn.placeLabel,memoryTags:tags,validation:cloudReceipt ? 'cloud' : 'local-os',cloudReceiptId:cloudReceipt?.id || null}});
+        origin:{wildPetId:encounter.spawn.id,wildSerial:encounter.spawn.wildSerial,battleId:encounter.battle.battleId,capturedAt:new Date(capturedAtMs).toISOString(),encounterId:encounter.encounterId,placeLabel:encounter.spawn.placeLabel,memoryTags:tags,...territoryContext,validation:cloudReceipt ? 'cloud' : 'local-os',cloudReceiptId:cloudReceipt?.id || null}});
       if(!result.ok || !result.data?.pet?.petId) problem(result.code || 'CAPTURE_FAILED',result.message || '收服未完成，请重试');
       const pet=result.data.pet;
-      const capture={ownerAccountId:owner,encounterId:encounter.encounterId,petId:pet.petId,actionId:captureActionId,name:pet.name,templateId:pet.templateId,element:pet.element,serial:pet.serial,
+      if(!['2d','spritesheet'].includes(pet.resource?.kind)) problem('CAPTURE_2D_REQUIRED','这次相遇尚未提供 2D 形象，请保留记录并重新探索');
+      const capture={ownerAccountId:owner,encounterId:encounter.encounterId,petId:pet.petId,actionId:captureActionId,name:pet.name,templateId:pet.templateId,resourceId:pet.resource.resourceId,element:pet.element,serial:pet.serial,...territoryContext,
         capturedAtMs,placeLabel:encounter.spawn.placeLabel,memoryTags:tags,showOnDesktop:Boolean(pet.desktop?.visible),validation:cloudReceipt ? 'cloud' : 'local-os',distanceMeters:Math.round(distanceMeters(fix,encounter.spawn.position))};
       this.repo.putCapture(capture); for(const tag of tags) this.repo.putMemory(owner,pet.petId,tag);
       const revision=current.revision; current.status='captured'; current.capturePetId=pet.petId; current.revision++; current.updatedAt=this.now(); this.repo.put(current,revision);

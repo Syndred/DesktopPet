@@ -264,7 +264,10 @@ class CompanionsService {
         imported += 1;
       }
       const selections = JSON.parse(account.selections_json);
-      if (!selections.battlePetId && inventory.activePetId && this.db.prepare('SELECT 1 FROM companion_pets WHERE owner_account_id = ? AND pet_id = ?').get(ownerAccountId, inventory.activePetId)) selections.battlePetId = inventory.activePetId;
+      if (!selections.battlePetId && inventory.activePetId) {
+        const row = this.db.prepare('SELECT data_json FROM companion_pets WHERE owner_account_id = ? AND pet_id = ?').get(ownerAccountId, inventory.activePetId);
+        if (row && JSON.parse(row.data_json).resource.kind === '2d') selections.battlePetId = inventory.activePetId;
+      }
       this.db.prepare('UPDATE companion_accounts SET legacy_imported_at = ?, revision = revision + 1, selections_json = ? WHERE owner_account_id = ?').run(now, JSON.stringify(selections), ownerAccountId);
       return { imported, alreadyImported: false };
     });

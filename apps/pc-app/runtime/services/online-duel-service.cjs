@@ -150,6 +150,7 @@ class OnlineDuelService {
       userAccount: user.account,
       petId: normalizeString(payload.petId),
       requestId: normalizeString(payload.requestId),
+      petResourceId: normalizeString(payload.petResourceId),
       petElement: normalizeElement(payload.petElement) || "metal",
       petName: normalizePetName(payload.petName)
     });
@@ -183,6 +184,7 @@ class OnlineDuelService {
       userAccount: user.account,
       petId: normalizeString(payload.petId),
       petElement: normalizeElement(payload.petElement) || "metal",
+      petResourceId: normalizeString(payload.petResourceId),
       petName: normalizePetName(payload.petName)
     });
 
@@ -866,6 +868,8 @@ function normalizeRoom(input) {
     guest_account: normalizeString(input.guest_account) || null,
     host_pet_id: normalizeString(input.host_pet_id) || null,
     guest_pet_id: normalizeString(input.guest_pet_id) || null,
+    host_resource_id: normalizeString(input.host_resource_id) || null,
+    guest_resource_id: normalizeString(input.guest_resource_id) || null,
     invitation_id: normalizeString(input.invitation_id) || null,
     invited_user_id: normalizeString(input.invited_user_id) || null,
     host_pet_name: normalizePetName(input.host_pet_name),

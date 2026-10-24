@@ -71,4 +71,4 @@ function resolveAction(resource, action = 'idle') {
   const direct = resource.clips.find(clip => clip.name === resource.actions[action]), fallback = resource.clips.find(clip => clip.name === resource.actions.idle) ?? resource.clips[0] ?? null;
   return { clip: direct ?? fallback, fallback: !direct, warning: direct ? undefined : '该动作不可用，已回退待机动画' };
 }
-module.exports = { ...guards, parseCharacterFile, normalize2DResource, atlasFromGrid, resolveAction };
+module.exports = { ...guards, parseCharacterFile, normalize2DResource, normalizeAtlas, atlasFromGrid, resolveAction };

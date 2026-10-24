@@ -1,10 +1,9 @@
 const {createHash}=require('node:crypto');
 const {point,distanceMeters}=require('./coordinates.cjs');
 const CATALOG=[
-  {templateId:'big-fish-cheerful',name:'小蓝',element:'water',avatar:'✧',description:'活泼开朗，对每一次新的相遇充满好奇。',resourceId:'builtin:lingjing-yuwan-v1',stats:{hp:124,atk:28,def:24,spd:20}},
-  {templateId:'blaze-shiba',name:'焰柴',element:'fire',avatar:'柴',description:'热情勇敢，走到哪里都带着满满的元气。',resourceId:'legacy:animateddogshibainu.glb',stats:{hp:118,atk:33,def:20,spd:22}},
-  {templateId:'tuxedo-cat',name:'礼帽喵',element:'wood',avatar:'喵',description:'优雅而温柔，珍惜安静陪伴的时光。',resourceId:'legacy:tuxedocatanimated.glb',stats:{hp:130,atk:26,def:26,spd:18}},
-  {templateId:'husky',name:'钢狼',element:'metal',avatar:'狼',description:'忠诚的伙伴，喜欢一起探索。',resourceId:'legacy:husky.glb',stats:{hp:136,atk:30,def:30,spd:13}}
+  {templateId:'big-fish-cheerful',name:'小蓝',element:'water',description:'活泼开朗，对每一次新的相遇充满好奇。',resourceId:'builtin:lingjing-yuwan-v1',stats:{hp:124,atk:28,def:24,spd:20}},
+  {templateId:'big-fish-gentle',name:'鱼丸',element:'water',description:'温柔安静，喜欢陪你看湖边的风景。',resourceId:'builtin:lingjing-yuwan-v1',stats:{hp:124,atk:28,def:24,spd:20}},
+  {templateId:'big-fish-foodie',name:'饭团',element:'water',description:'喜欢美食，也珍惜每一份陪伴。',resourceId:'builtin:lingjing-yuwan-v1',stats:{hp:124,atk:28,def:24,spd:20}}
 ];
 const CELL_DEGREES=.0006;
 function hourKey(now) {return Math.floor(now/3600000);}
@@ -16,7 +15,7 @@ function nearbySpawns(position,now=Date.now(),radiusMeters=450) {
   const latRange=Math.ceil(safeRadius/(CELL_DEGREES*111320))+1;
   const spawns=[];
   for(let y=latCell-latRange;y<=latCell+latRange;y++) for(let x=lngCell-lngRange;x<=lngCell+lngRange;x++) {
-    const id=`wild-${hourKey(now)}-${y}-${x}`;
+    const id=`wild-2d-v1-${hourKey(now)}-${y}-${x}`;
     const bytes=createHash('sha256').update(id).digest();
     if(bytes[0]>100) continue;
     const p={lat:(y+.5)*CELL_DEGREES,lng:(x+.5)*CELL_DEGREES};

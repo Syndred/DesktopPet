@@ -1,0 +1,20 @@
+Battle shared UI requirements under scope-2d-ui-first.txt (2026-10-24)
+
+Use foundation-owned shadcn/Radix components:
+- Tabs, TabsList, TabsTrigger: training / friends / reports, arrow-key navigation and controlled route value.
+- Select, SelectTrigger, SelectContent, SelectItem, SelectValue: independent battle pet and enemy element selection.
+- Dialog or AlertDialog: explicit leave/forfeit confirmation, focus trap, Escape, focus return.
+- Tooltip: action availability and locked original-round explanation.
+- ScrollArea: round selector, replay logs, long report and invitation lists.
+- Button, Card, Input, Badge: current public UI entry already used; migrate through foundation's final exports.
+
+Motion wrapper needed:
+- Feature/page entry and report-list item entry from the common Motion for React layer.
+- Shared animation enabled/reduced-motion state must also drive ResourceStage.playing.
+- No custom Motion provider, new animation engine, or local Radix copy is introduced by battle.
+
+2D assets already prepared:
+- battle/assets.cjs registers an original Shiba four-row atlas through the existing resource parser/repository.
+- BattlePortrait renders only resource.kind='spritesheet' through shared ResourceStage/PixiJS.
+- Night courtyard artwork is a background layer under the real battle status/actions, not a static UI screenshot.
+- Actor clips are chosen from actual resolved actions/hit events; replay uses the persisted round.
