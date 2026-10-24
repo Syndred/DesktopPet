@@ -13,6 +13,10 @@ EncounterView 仅传实际 sessionId 到 battle/BattleScreen；HUD、四行动�
 共享战场在1280×844、1440×900的 HUD / 技能栏几何一致（容许0.5 CSS像素舍入）；新回合使用独立动画键，恢复历史回合不重播。完整证据见 evidence/discovery/2026-10-24-unified。模块自验通过，主会话独立复验和最终四入口 U01—U08 仍待完成。
 用户开启系统位置后，本次原生重试成功返回 WiFi 位置，精度155米；未达到原80米门槛，因此未声称真实位置收服成功。QA source 始终 simulated，OS permission 仍为 unknown；真实定位与云端均按U06延后。
 
+生产原生入口补验（6bdd167，非收服验收）：
+physical-flow.mjs 已同步公共 BattleScreen 的真实 sessionId、四行动、收服弹层和 context 幂等确认；正向后半段核对同一 battleId 的只读 SQLite 凭据，重启后显式登录读回。旧独立战场选择器不再作为等待入口。
+--preflight 使用新建普通本机档案与真实 Windows provider，仅做一次前台、隐私允许且主动开启持续定位后的读取。生产 Electron 返回 source:os、permission:granted、WiFi114米，正确保留 imprecise，并实测停止持续定位；无 QA adapter、坐标、随机数或战果注入。完整真实收服仍未通过，不因本轮允许延后而改精度门槛或标记通过。去坐标证据见 evidence/discovery/2026-10-24-native-preflight。
+
 公开命令：snapshot、locate、watch、stopWatch、setDemo、setProvider、tile、setExploring。
 需要账号：begin、act、cancel、confirm、pokedex、memories。
 账号归属取 services.session；云端身份凭据只在主进程经 accounts.privateSession 取得，不发送给 renderer。

@@ -373,6 +373,11 @@
       "command": "node apps/pc-app/runtime/features/discovery/verification/unified-flow.mjs",
       "sourceCommit": "cd19fa1b145c20d0180fbc79eda2a62146b2207a",
       "result": "Passed all registered eight-role previews and production shared battle flow; independent module review remains pending"
+    },
+    {
+      "command": "node apps/pc-app/runtime/features/discovery/verification/physical-flow.mjs --preflight",
+      "sourceCommit": "6bdd16726c16ff58f566bc464339c984deace6dd",
+      "result": "Actual production Electron native-provider preflight verified: Windows WiFi fix114m, source os, permission granted, imprecise correctly retained, opt-in watch explicitly stopped, renderer errors[]. No full challenge/capture attempted."
     }
   ],
   "runtimeEvidence": {
@@ -420,14 +425,17 @@
     },
     "privateSystemMapScreenshotNotCommitted": "artifacts/discovery/2d-windows-1792847349359/real-system-location-private.png",
     "latestNativeDiagnostic": {
-      "at": "2026-10-24T15:09:22.659Z",
-      "adapter": "production WindowsLocationAdapter diagnostic after user enabled Windows location",
+      "at": "2026-10-24T15:28:28.474Z",
+      "adapter": "production Electron WindowsLocationAdapter; actual ordinary account, privacy setting and foreground watch",
+      "sourceCommit": "6bdd16726c16ff58f566bc464339c984deace6dd",
       "ok": true,
       "source": "os",
+      "permission": "granted",
       "provider": "windows-geolocator",
       "positionSource": "WiFi",
-      "accuracyMeters": 155,
-      "timestampMs": 1792854562659,
+      "accuracyMeters": 114,
+      "timestampMs": 1792855707831,
+      "coordinateHash": "03aab80cb8860712f78cd8536d4d35c1882993918e4a0cbb5e2b592be293ed51",
       "rawCoordinatesSaved": false,
       "systemPermissionDenialResolved": true,
       "physicalLocationAcceptance": false,
@@ -963,6 +971,34 @@
       "missingElements": [],
       "rendererErrors": [],
       "artifact": "docs/implementation/evidence/discovery/2026-10-24-unified/evidence.json"
+    },
+    "nativeProductionPreflight": {
+      "command": "node apps/pc-app/runtime/features/discovery/verification/physical-flow.mjs --preflight",
+      "sourceCommit": "6bdd16726c16ff58f566bc464339c984deace6dd",
+      "productionMain": true,
+      "controlledPosition": false,
+      "providerReadVerified": true,
+      "precise": false,
+      "physicalLocationAcceptance": false,
+      "watchStopped": true,
+      "sample": {
+        "phase": "production preflight",
+        "at": "2026-10-24T15:28:28.474Z",
+        "status": "imprecise",
+        "permission": "granted",
+        "provider": "windows-geolocator",
+        "source": "os",
+        "positionSource": "WiFi",
+        "accuracyMeters": 114,
+        "timestampMs": 1792855707831,
+        "coordinateHash": "03aab80cb8860712f78cd8536d4d35c1882993918e4a0cbb5e2b592be293ed51",
+        "error": {
+          "code": "LOCATION_IMPRECISE",
+          "message": "定位精度不足，请移动到信号较好的地方（需要 ≤ 80 米）"
+        }
+      },
+      "committedEvidence": "docs/implementation/evidence/discovery/2026-10-24-native-preflight/evidence.json",
+      "rendererErrors": []
     }
   },
   "dependencyManifest": "apps/pc-app/runtime/features/discovery/dependencies.json",
@@ -973,7 +1009,7 @@
     "Live cloud/precise physical capture remain deferred under U06"
   ],
   "realIncomplete": [
-    "Precise physical-position capture remains unaccepted; latest actual Windows adapter read returned155m and no accuracy threshold was relaxed.",
+    "Precise physical-position capture remains unaccepted and deferred under U06; latest actual production Electron native read returned114m with permission granted. The80m threshold is unchanged.",
     "Cloud deployment/live Supabase receipt remains deferred under U06; QA never claims cloud success.",
     "Tencent/Google provider credentials are not configured; coordinate adapter boundaries are retained.",
     "Main independent acceptance and final combined package remain pending; discovery self-check is complete."
@@ -985,7 +1021,7 @@
     "artifacts/discovery/windows/evidence.json (pre-2D scope; not current visual acceptance)"
   ],
   "dataPolicy": "Only discovery-owned source/docs were edited directly. Other features and foundation scripts arrived through committed foundation merges. QA uses newly created verified directories and namespaced local accounts; ordinary user saves, original profiles and historical evidence are preserved. No real coordinate, credential, production migration/deployment or external message was committed/sent. Live cloud and precise native capture are explicitly deferred, not inferred from simulated receipts.",
-  "updatedAt": "2026-10-24T15:23:01.413Z",
+  "updatedAt": "2026-10-24T15:30:55.820Z",
   "visualAudit": {
     "source": {
       "branch": "codex/lingjing-implementation-base",

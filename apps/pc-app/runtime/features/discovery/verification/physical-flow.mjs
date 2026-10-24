@@ -66,10 +66,13 @@ async function startChallenge(state, playerId) {
   const visibleIds = new Set(state.spawns.slice(0, 8).map(spawn => spawn.id));
   const options = state.spawns.filter(spawn => visibleIds.has(spawn.id) && spawn.inRange && spawn.captureState === 'available');
   const target = options.find(spawn => spawn.element === 'fire') || options[0]; assert.ok(target, 'Actual generated point must be within the OS-validated geofence');
+  await page.locator('.discovery-map[data-map-ready="true"]').waitFor();
   await page.getByRole('button', { name: '地图回到当前位置', exact: true }).click();
   await page.locator(`.discovery-pin-button[data-spawn-id="${target.id}"]`).click();
   await page.getByRole('button', { name: '和她打个招呼', exact: true }).click();
   await page.locator('.discovery-wild-view').waitFor();
+  await page.getByRole('combobox', { name: '当前挑战伙伴', exact: true }).click();
+  await page.getByRole('option').filter({ hasText: '原生定位出战伙伴' }).click();
   await page.getByRole('button', { name: '开始挑战', exact: true }).click();
   const screen = page.locator('[data-battle-screen="shared-v1"][data-battle-mode="wild"]'); await screen.waitFor();
   const linked = await until(value => value.encounters.some(item => item.status === 'challenging'), 'native encounter');
