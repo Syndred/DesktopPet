@@ -1,6 +1,6 @@
 import { _electron } from 'playwright';
 import assert from 'node:assert/strict';
-import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdtempSync } from 'node:fs';
 import { resolve, join } from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { setTimeout as delay } from 'node:timers/promises';
@@ -10,7 +10,7 @@ import { setTimeout as delay } from 'node:timers/promises';
 const previousFile = resolve(process.argv[2]);
 const previous = JSON.parse(readFileSync(previousFile, 'utf8'));
 assert.equal(previous.result, 'passed'); assert.equal(previous.scenario.isolated, true);
-const output = join(previous.output, 'native-correction'); mkdirSync(output, { recursive: true });
+const output = mkdtempSync(join(previous.output, 'native-validated-'));
 const env = { ...process.env, PET_USER_DATA_DIR: previous.profile, LINGJING_QA_SCENARIO: previous.scenario.id }; delete env.ELECTRON_RUN_AS_NODE;
 const evidence = { at: new Date().toISOString(), runtimeSourceSha: previous.source.sha, harnessSourceSha: execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(), previousEvidence: previousFile, scenario: previous.scenario, captures: [] };
 const app = await _electron.launch({ args: [resolve('.'), '--force-device-scale-factor=1'], env });
@@ -19,6 +19,12 @@ const invoke = (feature, command, payload) => main.evaluate(({ feature, command,
 try {
   for (let attempt = 0; attempt < 100; attempt++) { main = app.windows().find(page => page.url().includes('/dist/ui/index.html') && !page.url().includes('#/desktop/')); if (main) break; await delay(100); }
   assert.ok(main); await main.waitForFunction(() => Boolean(window.lingjing));
+  evidence.mainWindowForCapture = await app.evaluate(({ BrowserWindow, screen }) => {
+    const window = BrowserWindow.getAllWindows().find(window => !window.webContents.getURL().includes('#/desktop/'));
+    const area = screen.getPrimaryDisplay().workArea;
+    window.setBounds({ x: area.x + 40, y: area.y + 40, width: Math.min(960, area.width - 100), height: Math.min(700, area.height - 100) });
+    window.show(); window.focus(); return { workArea: area, bounds: window.getBounds(), purpose: 'Keep this isolated QA main window below fullscreen size while capturing companions' };
+  });
   const info = (await invoke('app', 'info')).data;
   assert.equal(info.build.sourceCommit, previous.source.sha); assert.equal(info.build.codeFingerprint, previous.build.codeFingerprint); assert.equal(info.build.compiledFingerprint, previous.build.compiledFingerprint);
   evidence.build = info.build;
@@ -35,6 +41,7 @@ try {
     }, pet.petId);
     try {
       await page.locator('.resource-stage[data-status="ready"] canvas').waitFor({ timeout: 15000 });
+      await page.waitForFunction(() => document.visibilityState === 'visible');
       await page.evaluate(async () => { await document.fonts.ready; await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))); });
       const stage = await page.locator('.resource-stage').evaluate(node => ({ petId: node.dataset.petId, resourceId: node.dataset.resourceId, action: node.dataset.action, status: node.dataset.status, frame: node.querySelector('[data-frame]')?.getAttribute('data-frame'), canvas: Boolean(node.querySelector('canvas')) }));
       assert.equal(stage.petId, pet.petId); assert.equal(stage.resourceId, pet.resource.resourceId); assert.equal(stage.status, 'ready'); assert.equal(stage.canvas, true);
@@ -47,6 +54,7 @@ try {
         } finally { clearTimeout(timer); }
       }, pet.petId);
       assert.ok(captured.visiblePixels > 2500, 'A loading star and name are insufficient sprite evidence');
+      assert.equal(captured.visible, true, 'The native QA companion must remain visible at capture time');
       const name = `desktop-${element}.png`; writeFileSync(join(output, name), Buffer.from(captured.png, 'base64'));
       const { png, ...pixels } = captured; void png;
       evidence.captures.push({ name, petId: pet.petId, resourceId: pet.resource.resourceId, element, stage, ...pixels, capturePolicy: 'actual-canvas-ready + two-animation-frames + temporary-unthrottled/front + restored', originalBackgroundThrottling: wasThrottled });
