@@ -92,6 +92,16 @@ test('cancelling an in-flight location request discards the late result',async()
   const pending=location.locate();location.setDemo(true);deliver({ok:true,...fixtureFix()});await pending;
   assert.equal(location.snapshot().mode,'demo');assert.equal(location.snapshot().fix.source,'demo');location.dispose();
 });
+
+test('leaving demo clears its sample before a native request and never treats the city change as drift',async()=>{
+  let finish;
+  const location=new LocationService({adapter:{getPosition:()=>new Promise(resolve=>{finish=resolve;})}});
+  location.setDemo(true);const pending=location.locate();
+  assert.equal(location.snapshot().mode,'real');assert.equal(location.snapshot().fix,null);
+  finish({ok:true,...fixtureFix(),lat:51.5074,lng:-.1278});await pending;
+  assert.equal(location.snapshot().status,'ready');assert.equal(location.snapshot().fix.source,'os');assert.equal(location.snapshot().fix.lat,51.5074);
+  location.dispose();
+});
 test('application privacy blocks native calls and discards a late fix after revocation',async()=>{
   let allowed=false,calls=0,deliver;
   const location=new LocationService({mayUseLocation:()=>allowed,adapter:{getPosition(){calls++;return new Promise(resolve=>{deliver=resolve;});}}});
