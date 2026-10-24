@@ -18,16 +18,18 @@ export interface ResourceStageProps {
   facing?: 'left' | 'right';
   playing?: boolean;
   motionEnabled?: boolean;
+  /** A new event key restarts the current clip without remounting the shared renderer. */
+  playbackKey?: string | number;
   assetUrl?: (resourceId: string, assetKey: string) => string;
   className?: string;
 }
 /** Pixi owns atlas parsing, texture cropping, animation frames, playback and rendering. */
-export function ResourceStage({ resource, petId, context = 'desktop', action = 'idle', facing = 'right', playing = true, motionEnabled = true, assetUrl = resourceAssetUrl, className = '' }: ResourceStageProps) {
+export function ResourceStage({ resource, petId, context = 'desktop', action = 'idle', facing = 'right', playing = true, motionEnabled = true, playbackKey, assetUrl = resourceAssetUrl, className = '' }: ResourceStageProps) {
   const host = useRef<HTMLDivElement>(null), engine = useRef<Engine | null>(null);
   const [status, setStatus] = useState<StageStatus>({ state: 'loading' }), [retry, setRetry] = useState(0);
   const { clip, fallback } = resolveResourceClip(resource, action);
   const calibration = resolveResourceCalibration(resource, context, facing);
-  const current = useRef({ clip, calibration, playing, motionEnabled }); current.current = { clip, calibration, playing, motionEnabled };
+  const current = useRef({ clip, calibration, playing, motionEnabled, playbackKey }); current.current = { clip, calibration, playing, motionEnabled, playbackKey };
   const url = assetUrl(resource.id, resource.entryAsset), cacheKey = `${url}:${resource.contentHash}`;
   useEffect(() => {
     if (resource.kind !== 'spritesheet' || resource.availability !== 'ready' || !resource.atlas || !host.current) return;
@@ -57,6 +59,7 @@ export function ResourceStage({ resource, petId, context = 'desktop', action = '
       const sprite = new pixi.AnimatedSprite({ textures: [first], autoPlay: false });
       const maxWidth = Math.max(...Object.values(sheet.textures).map(texture => texture.trim?.width ?? texture.orig.width)), maxHeight = Math.max(...Object.values(sheet.textures).map(texture => texture.trim?.height ?? texture.orig.height));
       let selectedClip = '';
+      let selectedPlaybackKey: string | number | undefined;
       const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
       // Foundation's Motion wrapper owns the app/system policy; this only bridges it to Pixi.
       const motionBoundary = element.closest('[data-motion]');
@@ -73,7 +76,11 @@ export function ResourceStage({ resource, petId, context = 'desktop', action = '
       sprite.onFrameChange = recordFrame;
       const update = () => {
         const value = current.current, selected = value.clip?.name ?? '';
-        if (selected !== selectedClip) { sprite.stop(); sprite.textures = sheet.animations[selected] ?? [first]; selectedClip = selected; sprite.gotoAndStop(0); }
+        if (selected !== selectedClip || value.playbackKey !== selectedPlaybackKey) {
+          sprite.stop();
+          if (selected !== selectedClip) { sprite.textures = sheet.animations[selected] ?? [first]; selectedClip = selected; }
+          selectedPlaybackKey = value.playbackKey; sprite.gotoAndStop(0);
+        }
         sprite.anchor.set(value.calibration.anchorX ?? 0.5, value.calibration.anchorY ?? 0.85);
         sprite.position.set(app.screen.width / 2, app.screen.height * 0.83);
         sprite.scale.set(Math.min(app.screen.width * 0.78 / maxWidth, app.screen.height * 0.78 / maxHeight));
@@ -105,9 +112,9 @@ export function ResourceStage({ resource, petId, context = 'desktop', action = '
       }
     };
   }, [url, cacheKey, resource.id, resource.name, resource.kind, resource.availability, retry]);
-  useEffect(() => { engine.current?.update(); }, [clip, calibration.anchorX, calibration.anchorY, calibration.fps, playing, motionEnabled]);
+  useEffect(() => { engine.current?.update(); }, [clip, calibration.anchorX, calibration.anchorY, calibration.fps, playing, motionEnabled, playbackKey]);
   const unsupported = resource.kind !== 'spritesheet';
-  return <div className={`resource-stage ${className}`} data-resource-id={resource.id} data-pet-id={petId} data-action={action} data-clip={clip?.name ?? 'idle'} data-fallback={fallback} data-status={unsupported || resource.availability !== 'ready' ? 'error' : status.state}>
+  return <div className={`resource-stage ${className}`} data-resource-id={resource.id} data-pet-id={petId} data-action={action} data-clip={clip?.name ?? 'idle'} data-playback-key={playbackKey} data-fallback={fallback} data-status={unsupported || resource.availability !== 'ready' ? 'error' : status.state}>
     {!unsupported && resource.availability === 'ready' ? <div className="resource-stage-transform" style={{ transform: resourceTransform(calibration, 'spritesheet') }}><div className="resource-sprite-host" ref={host} data-renderer="pixi-spritesheet" /></div> : null}
     {unsupported || resource.availability !== 'ready' || status.state === 'error' ? <div className="resource-stage-notice" role="status"><strong>{unsupported ? '请选择 2D 角色资源' : '暂时无法显示此角色'}</strong><p>{status.message || '历史记录与文件已保留；本版仅显示 2D 图集角色。'}</p>{!unsupported && resource.availability === 'ready' ? <button type="button" onClick={() => setRetry(value => value + 1)}>重新载入</button> : null}</div> : status.state === 'loading' ? <span className="resource-loading" role="status">正在唤醒角色…</span> : null}
     {fallback && status.state === 'ready' ? <span className="resource-fallback">该动作未提供 · 正在播放待机</span> : null}
