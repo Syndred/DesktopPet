@@ -3,11 +3,12 @@
 依据：维护者仓库、README、许可证文件与官方文档。已查看部分直接相关源文件。
 本轮没有安装候选依赖、复制候选项目源码、执行候选项目或完成 Electron 兼容性测试。
 以下“优先采用 / 适配 / 参考 / 备选”为面向本项目的工程判断。
+当前用户修订：仅实现 2D，以批准 UI 图验收；组件与动效必须实际采用成熟方案，不能停留在安装依赖或手写同名包装。当前实施约束见 ../../../implementation/scope-2d-ui-first.txt。
 
 一、建议保留的产品基础
 
-继续使用当前 DesktopPet 仓库。保留账号、养成、回合规则、联机协议、战报、捕捉、领地、模型导入与历史数据。
-桌面壳继续采用 Electron；界面改成 React + TypeScript；2D 舞台采用 PixiJS；既有 3D model-viewer 保留适配器。
+继续使用当前 DesktopPet 仓库。保留账号、养成、回合规则、联机协议、战报、捕捉、领地和历史数据；资源导入只实现 2D。
+桌面壳继续采用 Electron；界面采用 React + TypeScript、shadcn/ui（Radix）、Tailwind；界面动效采用 Motion for React，2D 舞台采用 PixiJS。不再兼容旧 3D，原始用户文件保留。
 Supabase 是现有账号与联机基础，先完善它，不同时引入另一套多人服务器。
 基础 UI、动画、状态、聊天和地图组件可以采用开源库；跨宠物 / 账号隔离、菜园经济和服务端结算需要自己的规则。
 
@@ -21,8 +22,32 @@ Supabase 是现有账号与联机基础，先完善它，不同时引入另一�
 2. 管理界面组件：shadcn-ui/ui
    主许可：MIT。适用：表单、Tabs、Dialog、Dropdown、Switch 等可定制 React 组件。
    接入点：组件行为和可访问性复用；颜色、排版、圆角与插画按本设计集重做，保持平面按钮。
+   本项目明确使用受支持的 Radix primitives 路线，统一公共 Dialog、Tabs、Select、Switch、Popover、Tooltip 等组件，不能只仿外观而重新编写基础交互。
+   注：2026-07 官方默认改为 Base UI，本项目不跟随 CLI 默认混搭另一套 primitives。
    https://github.com/shadcn-ui/ui
    https://github.com/shadcn-ui/ui/blob/main/LICENSE.md
+   https://ui.shadcn.com/docs/changelog/2026-07-base-ui-default
+
+2a. 交互基础：radix-ui/primitives
+   主许可：MIT（本轮核对维护者仓库许可元数据）。
+   用途：shadcn/ui 所选路线的焦点管理、键盘、弹层和可访问交互；由 foundation 统一引入，其他模块复用公共组件。
+   https://www.radix-ui.com/primitives/docs/overview/introduction
+   https://github.com/radix-ui/primitives
+
+2b. 主题与组件样式：tailwindlabs/tailwindcss
+   主许可：MIT（本轮核对维护者仓库许可元数据）。
+   用途：Vite 样式集成、公共设计变量和组件变体；依照图稿定制，不直接使用默认模板外观。
+   https://tailwindcss.com/docs/installation/using-vite
+   https://github.com/tailwindlabs/tailwindcss
+
+2c. 界面动效：motiondivision/motion（Motion for React）
+   主许可：MIT（本轮核对维护者仓库许可元数据）。
+   用途：页面切换、列表变化、弹层入场与退出；motion/react 提供 AnimatePresence、layout 和 reduced motion 等能力。
+   公共动效由 foundation 统一封装，尊重系统和应用动画开关；宠物逐帧渲染交给 PixiJS，不用 React 每帧更新全局状态。
+   https://motion.dev/docs/react-installation
+   https://motion.dev/docs/react-layout-animations
+   https://motion.dev/docs/react-animate-presence
+   https://github.com/motiondivision/motion
 
 3. 多宠物 / 菜园 2D 绘制：pixijs/pixijs
    主许可：MIT。适用：精灵图集、动画、场景、命中区域和批量渲染。
@@ -37,14 +62,12 @@ Supabase 是现有账号与联机基础，先完善它，不同时引入另一�
    https://github.com/statelyai/xstate
    https://stately.ai/docs/actors
 
-5. 现有 GLB 展示：google/model-viewer
-   主许可：Apache-2.0。仓库已经依赖该库，继续复用模型预览、动画与显示校准适配。
-   只有确需多角色共享 3D 场景时再评估 Three.js / React Three Fiber，避免同时维护两套不必要的渲染器。
+5. 历史 GLB 展示研究：google/model-viewer（本版范围外）
+   主许可：Apache-2.0。保留此前来源核对记录；按最新用户要求，不再兼容或接入新 2D 界面，不要求旧模型能够渲染。
    https://github.com/google/model-viewer
 
-6. 复杂 3D / VRM 备选：mrdoob/three.js、pmndrs/react-three-fiber、pixiv/three-vrm
-   三者维护者仓库标注 MIT。适用：3D 场景、React 场景绑定、VRM 角色。
-   角色模型文件的授权与渲染器代码许可分别核对。
+6. 历史 3D / VRM 研究：mrdoob/three.js、pmndrs/react-three-fiber、pixiv/three-vrm（本版范围外）
+   三者维护者仓库标注 MIT。保留研究来源，不作为本版依赖或验收项。
    https://github.com/mrdoob/three.js
    https://github.com/pmndrs/react-three-fiber
    https://github.com/pixiv/three-vrm
@@ -132,7 +155,7 @@ Supabase 是现有账号与联机基础，先完善它，不同时引入另一�
 
 19. Kenney Food Kit / Nature Kit
     官方页面标注 CC0。可用于食物、植物与场景原型；这两套主要是 3D 资源，不是本设计图的二次元角色或完整作物生长精灵图。
-    本项目最终二次元角色、表情与动画仍需自己的统一素材生产。
+    本版仅 2D，这两套 3D 资源不进入当前采用范围；角色、表情、作物与动画需统一的合规 2D 资产。
     https://kenney.nl/assets/food-kit
     https://kenney.nl/assets/nature-kit
 
@@ -148,13 +171,13 @@ https://github.com/BingyanStudio/robofarm
 种子来源、作物成熟、产量、食谱、食物效果、养成与对战经济平衡。
 收获、制作、喂养与背包的原子事务；actionId 幂等、版本冲突、跨设备重复领取防护。
 真实地理位置获取、坐标系转换、服务端距离与区域校验。
-已有账号和历史数据迁移、旧模型兼容、断线恢复、Windows 鼠标穿透和多屏验证。
+已有账号和历史数据迁移、断线恢复、Windows 鼠标穿透和多屏验证；旧 3D 文件保留，但无需兼容渲染。
 
 八、建议采用顺序
 
-第一批：Electron/Vite/React UI、PixiJS、现有 model-viewer、SQLite、现有 Supabase。
+第一批：Electron/Vite/React UI、shadcn/ui（Radix）、Tailwind、Motion、PixiJS、SQLite、现有 Supabase。
 第二批：菜园与背包事务、逐宠物状态，按复杂度决定引入 XState；先完整跑通收获 → 制作 → 指定伙伴喂食。
 第三批：assistant-ui / AI SDK 与独立人设记忆；需要语音时再评估 AIRI 或 Open-LLM-VTuber 的相关模块。
-第四批：针对真实瓶颈考虑 Three.js 共享场景或 Colyseus，不预先堆叠第二套引擎 / 服务器。
+第四批：针对真实瓶颈才评估新的多人后端，不预先堆叠第二套引擎 / 服务器；本轮不实施 3D。
 
 结论：有大量成熟开源组件可以复用；完整产品的价值在玩法规则、数据一致性、统一交互与原有能力的衔接。

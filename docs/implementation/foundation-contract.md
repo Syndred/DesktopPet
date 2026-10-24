@@ -1,5 +1,17 @@
 # Lingjing foundation contract v1
 
+## 2026-10-24 scope update: 2D and shared component kit
+
+Authoritative scope is `scope-2d-ui-first.txt` (shared source revision d6a1ab1). The new renderer ships 2D only. Original files/history remain archived; no new GLB/model-viewer path is required.
+
+Official shadcn/ui **Radix Nova** components are imported under `ui/src/components/ui/<name>.tsx`; `ui/components.json` fixes the Radix style. Provenance, source URLs and SHA256 hashes: `docs/implementation/shadcn-source-record.json`; MIT license is adjacent to the components. Components use Radix's interaction/focus/keyboard behavior. `ui/src/components/kit.ts` is the public barrel (Button, Card, AppDialog, Tabs, Select, NativeSelect, Switch, Tooltip, Popover, ScrollArea, Sheet, Input, Textarea, Checkbox, Label, Badge, Separator, Slider). Existing `components/ui.tsx` Button/Card wrappers now delegate to the imported library with Lingjing's flat theme. Prefer the public components over custom primitive interactions.
+
+Tailwind v4 uses the official `@tailwindcss/vite` plugin. Design tokens and theme are in `styles/tokens.css`, `styles/shadcn.css`, with complex feature-stage CSS remaining local. Buttons have no shadows or active/hover translation.
+
+`components/motion.tsx`: `AppMotionProvider` is already installed, `PageTransition` wraps routes, `MotionPanel` wraps the shared dialog, `AnimatedList` supplies layout/list movement, `AppPresence` exposes exit coordination. Reuse these, not a separate motion system. Timing: 180 ms enter/layout, 100 ms exit, 5 px route distance, easing [.22,1,.36,1]. System reduced motion and `desktop.animationsEnabled` are respected; the real desktop settings page persists the app toggle. No button hover movement.
+
+Installed shared dependencies include PixiJS 8, MapLibre GL and `@turf/distance` for the discovery migration; roots remain foundation-owned. New `companions:appearance` binds a registered 2D resource to a precise petId while preserving its growth, selections and messages.
+
 Feature entry points are discovered automatically, without editing root files.
 
 Renderer: `apps/pc-app/ui/src/features/<id>/index.tsx`, default export or named `feature`:

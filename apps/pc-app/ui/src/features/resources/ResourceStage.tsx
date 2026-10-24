@@ -62,51 +62,6 @@ function SpriteStage({ resource, clip, url, playing, onStatus }: { resource: Cha
   return <div className="resource-sprite-host" ref={host} data-renderer="pixi" />;
 }
 
-interface ModelElement extends HTMLElement {
-  availableAnimations: string[]; animationName: string; play(options?: { repetitions?: number }): void; pause(): void;
-}
-function ModelStage({ name, url, clip, playing, yaw, pitch, onStatus }: { name: string; url: string; clip: ResourceClip | null; playing: boolean; yaw: number; pitch: number; onStatus: StatusCallback }) {
-  const host = useRef<HTMLDivElement>(null), viewer = useRef<ModelElement | null>(null);
-  const current = useRef({ clip, playing, yaw, pitch }); current.current = { clip, playing, yaw, pitch };
-  const statusCallback = useRef(onStatus); statusCallback.current = onStatus;
-  const [loadedVersion, setLoadedVersion] = useState(0);
-  useEffect(() => {
-    let cancelled = false;
-    let remove: (() => void) | undefined;
-    statusCallback.current({ state: 'loading' });
-    void import('@google/model-viewer').then(() => {
-      if (cancelled || !host.current) return;
-      const element = document.createElement('model-viewer') as ModelElement;
-      element.setAttribute('src', url); element.setAttribute('alt', name);
-      element.setAttribute('camera-controls', ''); element.setAttribute('disable-pan', '');
-      element.setAttribute('interaction-prompt', 'none'); element.setAttribute('shadow-intensity', '0.5');
-      element.setAttribute('environment-image', 'neutral'); element.setAttribute('exposure', '1.1');
-      element.setAttribute('camera-orbit', '35deg 78deg 110%'); element.setAttribute('field-of-view', '32deg');
-      const onLoad = () => { window.clearTimeout(timer); if (!cancelled) { statusCallback.current({ state: 'ready' }); setLoadedVersion(value => value + 1); } };
-      const onError = () => { if (!cancelled) statusCallback.current({ state: 'error', message: '模型或贴图无法载入，原有导入记录仍保留。' }); };
-      const timer = window.setTimeout(() => { if (!cancelled && !element.hasAttribute('loaded')) statusCallback.current({ state: 'error', message: '模型载入超时，请检查贴图或重新尝试。' }); }, 30000);
-      element.addEventListener('load', onLoad); element.addEventListener('error', onError);
-      host.current.appendChild(element); viewer.current = element;
-      remove = () => { window.clearTimeout(timer); element.removeEventListener('load', onLoad); element.removeEventListener('error', onError); element.remove(); viewer.current = null; };
-    }).catch(() => { if (!cancelled) statusCallback.current({ state: 'error', message: '3D 显示组件暂时不可用。' }); });
-    return () => { cancelled = true; remove?.(); };
-  }, [url, name]);
-  useEffect(() => {
-    const element = viewer.current; if (!element) return;
-    const value = current.current;
-    element.setAttribute('orientation', `0deg ${value.pitch}deg ${value.yaw}deg`);
-    const requested = value.clip?.name;
-    element.animationName = requested && element.availableAnimations.includes(requested) ? requested : element.availableAnimations[0] ?? '';
-    const play = () => {
-      if (value.playing && !document.hidden && element.animationName && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) element.play({ repetitions: value.clip?.loop ? Infinity : 1 });
-      else element.pause();
-    };
-    play(); document.addEventListener('visibilitychange', play);
-    return () => document.removeEventListener('visibilitychange', play);
-  }, [loadedVersion, clip, playing, yaw, pitch]);
-  return <div className="resource-model-host" ref={host} data-renderer="model-viewer" />;
-}
-
 export interface ResourceStageProps {
   resource: CharacterResource;
   petId: string;
@@ -128,7 +83,7 @@ export function ResourceStage({ resource, petId, context = 'desktop', action = '
     {resource.availability === 'ready' ? <div className="resource-stage-transform" style={{ transform: resourceTransform(calibration, resource.kind) }} key={`${resource.id}:${retry}`}>
       {resource.kind === 'spritesheet'
         ? <SpriteStage resource={resource} clip={clip} url={url} playing={playing} onStatus={setStatus} />
-        : <ModelStage name={resource.name} url={url} clip={clip} playing={playing} yaw={calibration.yawDeg} pitch={calibration.pitchDeg} onStatus={setStatus} />}
+        : <span role="status">请选择 2D 角色包</span>}
     </div> : null}
     {resource.availability !== 'ready' || status.state === 'error' ? <div className="resource-stage-notice" role="status"><span className="resource-empty-star">✧</span><strong>{resource.availability === 'missing' ? '资源文件已缺失' : '暂时无法显示此角色'}</strong><p>{status.message || '资源与导入记录已保留，可重新导入完整文件。'}</p>{resource.availability === 'ready' ? <button type="button" onClick={() => { setStatus({ state: 'loading' }); setRetry(value => value + 1); }}>重新载入</button> : null}</div> : status.state === 'loading' ? <span className="resource-loading" role="status">正在唤醒角色…</span> : null}
     {fallback && status.state === 'ready' ? <span className="resource-fallback">{clip ? '该动作未提供 · 正在播放待机' : '静态模型 · 未提供动画'}</span> : null}
