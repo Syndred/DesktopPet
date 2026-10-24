@@ -11,6 +11,7 @@ const { BattleRuntimeService, createSession, executeRound } = require("../../ser
 const { OnlineDuelService } = require("../../services/online-duel-service.cjs");
 const { BattleFeatureService } = require("./service.cjs");
 const migrations = require("./migrations.cjs");
+const { createBattleBackupAdapter } = require("./backup.cjs");
 
 const companionsFile = process.env.LINGJING_COMPANIONS_MODULE || resolve(__dirname, "../companions/index.cjs");
 const hasCompanions = existsSync(companionsFile);
@@ -210,4 +211,57 @@ test("real accounts local-ID migration keeps pets reachable and logout revokes b
     await accounts.logout();
     assert.throws(() => f.service.overview({}, { ownerAccountId: owner }), error => error.code === 'AUTH_REQUIRED');
   } finally { accounts?.dispose(); f.close(); }
+});
+
+test("real garden adapter consumes the battle outcome and never repeats territory ownership or seed settlement", { skip: !hasCompanions || !existsSync(resolve(__dirname, '../garden/index.cjs')) }, async () => {
+  const f = setup();
+  try {
+    const gardenModule = require('../garden/index.cjs');
+    migrate(f.db, 'garden', gardenModule.migrations);
+    const entry = gardenModule.register(f.services);
+    f.services.provide('battle', {
+      beginTerritoryChallenge: input => f.service.beginTerritoryChallenge(input),
+      getOutcome: input => f.service.getOutcome(input)
+    });
+    // Explicit domain fixture, not a claim that Windows positioning was verified in this test.
+    const fix = { lat: 31.2304, lng: 121.4737, accuracyMeters: 10, timestampMs: Date.now(), source: 'os', coordinateSystem: 'wgs84' };
+    f.services.provide('discovery', { location: { snapshot: () => ({ fix: { ...fix, timestampMs: Date.now() } }) } });
+    const garden = f.services.get('garden');
+    const territory = garden.territories.discoverAtSystemFix(fix);
+    const before = garden.snapshot(f.context);
+    const petId = f.service.pets(f.owner)[0].petId;
+    const started = entry.commands.territoryChallenge({ actionId: 'territory-adapter-start', petId, territoryId: territory.id, expectedTerritoryRevision: territory.revision, expectedRevision: before.revision }, f.context);
+    assert.equal(started.ok, true, JSON.stringify(started));
+    let session = f.service.snapshot({ sessionId: started.data.sessionId }, f.context);
+    for (let n = 0; n < 150 && session.status === 'active'; n++) session = await f.service.act({ sessionId: session.id, actionId: `territory-round-${n}`, action: session.snapshot.player.anger >= 50 ? 'ultimate' : 'element_attack', expectedRound: session.snapshot.round + 1 }, f.context);
+    assert.equal(session.status, 'finished'); assert.equal(session.reward.applied, true);
+    assert.equal(session.reward.seeds.quantity, 2);
+    const settled = f.db.transaction(() => garden.territories.settleChallenge({ ownerAccountId: f.owner, sessionId: session.id }))();
+    assert.equal(settled.won, session.winner === 'player');
+    assert.equal(settled.ownerAccountId, settled.won ? f.owner : null);
+    assert.deepEqual(garden.territories.settleChallenge({ ownerAccountId: f.owner, sessionId: session.id }), settled);
+    await f.service.retrySettlement({ sessionId: session.id }, f.context);
+    assert.equal(f.db.prepare('SELECT COUNT(*) n FROM garden_reward_receipts WHERE receipt_id=?').get(session.id).n, 1);
+    assert.equal(f.db.prepare("SELECT COUNT(*) n FROM garden_territory_logs WHERE battle_id=? AND action IN ('occupy','defend')").get(session.id).n, 1);
+    assert.equal(garden.snapshot(f.context).data.plots.length, before.data.plots.length);
+  } finally { f.close(); }
+});
+
+test("battle backup keeps newer final state and cannot roll a reward ledger backward", { skip: !hasCompanions }, async () => {
+  const f = setup();
+  try {
+    const petId = f.service.pets(f.owner)[0].petId;
+    let session = await f.service.startTraining({ actionId: 'backup-start', petId, enemyElement: 'metal' }, f.context);
+    const backup = createBattleBackupAdapter(f.db);
+    const earlier = backup.export(f.owner);
+    for (let n = 0; n < 150 && session.status === 'active'; n++) session = await f.service.act({ sessionId: session.id, actionId: `backup-round-${n}`, action: session.snapshot.player.anger >= 50 ? 'ultimate' : 'element_attack', expectedRound: session.snapshot.round + 1 }, f.context);
+    assert.equal(session.status, 'finished');
+    const settled = backup.export(f.owner);
+    assert.throws(() => backup.restore(f.owner, earlier, 'replace'), error => error.code === 'BATTLE_BACKUP_CONFLICT');
+    backup.restore(f.owner, settled, 'merge'); backup.restore(f.owner, settled, 'replace');
+    assert.deepEqual(f.service.snapshot({ sessionId: session.id }, f.context), session);
+    const invalid = clone(settled); invalid.sessions[0].data_json = JSON.stringify({ ...JSON.parse(invalid.sessions[0].data_json), id: 'another-session' });
+    assert.throws(() => backup.validate(invalid), error => error.code === 'INVALID_BATTLE_BACKUP');
+    assert.equal(f.db.prepare('SELECT COUNT(*) n FROM battle_reward_receipts').get().n, 1);
+  } finally { f.close(); }
 });

@@ -1,7 +1,7 @@
 const { readFileSync, existsSync } = require("node:fs");
 const { join } = require("node:path");
 const { createHash } = require("node:crypto");
-const { AccountError, invariant } = require("./errors.cjs");
+const { invariant } = require("./errors.cjs");
 const { archiveOnce, transaction, checksum } = require("./util.cjs");
 
 /** Read raw legacy bytes before RuntimeDataStore normalizes (and rewrites) them. */
@@ -13,9 +13,15 @@ function importLegacy({ db, filePath, archiveDir }) {
   if (prior) return { ...JSON.parse(prior.details), duplicate: true };
   const archivePath = archiveOnce(join(archiveDir, `legacy-${hash}.json`), bytes);
   let source;
-  try { source = JSON.parse(bytes.toString("utf8")); }
-  catch { throw new AccountError("LEGACY_CORRUPT", "旧存档无法解析，已保留原文件和完整副本。", { archivePath }); }
-  invariant(source && typeof source === "object" && !Array.isArray(source), "LEGACY_CORRUPT", "旧存档结构无效，原文件已保留。");
+  try {
+    source = JSON.parse(bytes.toString("utf8"));
+    invariant(source && typeof source === "object" && !Array.isArray(source), "LEGACY_CORRUPT", "旧存档结构无效，原文件已保留。");
+  } catch {
+    const details = { imported: 0, status: "corrupt", unresolved: [{ reason: "LEGACY_CORRUPT" }], archivePath, sourceHash: hash };
+    db.prepare("INSERT OR IGNORE INTO account_migration_sources VALUES(?,?,?,?,?,?,?)")
+      .run(hash, filePath, archivePath, null, "corrupt", JSON.stringify(details), new Date().toISOString());
+    return details;
+  }
   const users = Array.isArray(source.users) ? source.users : [];
   const rawInventories = source.userInventories && typeof source.userInventories === "object" ? source.userInventories : {};
   const unresolved = [];
@@ -29,7 +35,8 @@ function importLegacy({ db, filePath, archiveDir }) {
       }
       const id = user.id.trim();
       // A remote session marker is evidence of the original provider, not permission to log in.
-      const provider = user.sessionToken ? "runtime" : "local";
+      const remotePlaceholder = createHash("sha256").update(`remote-session-${id}`).digest("hex");
+      const provider = user.sessionToken || user.passwordHash === remotePlaceholder ? "runtime" : "local";
       const key = user.account.trim().toLowerCase();
       if (seen.has(`${provider}:${key}`)) { unresolved.push({ legacyId: id, reason: "duplicate-account" }); continue; }
       seen.add(`${provider}:${key}`);

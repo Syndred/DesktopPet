@@ -1,11 +1,12 @@
 const { test } = require('node:test');
 const assert = require('node:assert/strict');
-const { mkdtempSync, readFileSync, renameSync, existsSync } = require('node:fs');
+const { mkdtempSync, readFileSync, renameSync, existsSync, mkdirSync, copyFileSync, writeFileSync, realpathSync } = require('node:fs');
 const { tmpdir } = require('node:os');
 const { join, resolve } = require('node:path');
 const { openDatabase, migrate } = require('../../apps/pc-app/runtime/core/database.cjs');
 const { migrations, ResourcesService } = require('../../apps/pc-app/runtime/features/resources/index.cjs');
 const { createResourceBackupAdapter } = require('../../apps/pc-app/runtime/core/resource-backup.cjs');
+const { parseCharacterFile } = require('../../apps/pc-app/runtime/features/resources/parser.cjs');
 
 test('resource backup restores actual 2D pack bytes to new managed paths and rejects a different owner', async () => {
   const root = mkdtempSync(join(tmpdir(), 'lingjing-resource-backup-'));
@@ -27,4 +28,36 @@ test('resource backup restores actual 2D pack bytes to new managed paths and rej
   assert.throws(() => adapter.validate(damaged, 'owner-a'), /完整性/);
   const count = (await resources.list('owner-b')).filter(r => r.origin === 'import').length;
   assert.equal(count, 0); db.close();
+});
+
+test('standard Pixi atlas survives backup restore and complete user-data relocation', async () => {
+  const root = mkdtempSync(join(tmpdir(), 'lingjing-atlas-backup-'));
+  const data = join(root, 'data'); mkdirSync(data);
+  const manifest = resolve('apps/pc-app/runtime/assets/illustrations/yuwan-character-v1.json');
+  const parsed = await parseCharacterFile(manifest);
+  const pack = join(root, 'pack'); mkdirSync(pack);
+  copyFileSync(resolve('apps/pc-app/runtime/assets/illustrations', parsed.resource.entryAsset), join(pack, parsed.resource.entryAsset));
+  writeFileSync(join(pack, 'atlas.json'), JSON.stringify({ ...parsed.resource.atlas, character: { name: '图集备份', provenance: parsed.resource.provenance } }));
+  let db = openDatabase(join(data, 'save.sqlite')); migrate(db, 'resources', migrations);
+  let resources = new ResourcesService({ db, storageRoot: join(data, 'managed') }); await resources.seed();
+  const imported = await resources.importFile('owner-atlas', join(pack, 'atlas.json'));
+  assert.equal(imported.resource.sheet, undefined);
+  let adapter = createResourceBackupAdapter({ db, get: () => resources });
+  const backup = adapter.export('owner-atlas'); adapter.validate(backup, 'owner-atlas');
+  const damaged = structuredClone(backup), document = JSON.parse(damaged.resources[0].row.document_json);
+  Object.values(document.atlas.frames)[0].frame.x = 999999;
+  damaged.resources[0].row.document_json = JSON.stringify(document);
+  assert.throws(() => adapter.validate(damaged, 'owner-atlas'), /图集帧/);
+  db.transaction(() => adapter.restore('owner-atlas', backup, 'replace'))();
+  const restoredPath = await resources.assetFile('owner-atlas', imported.resource.id, imported.resource.entryAsset);
+  const bytes = readFileSync(restoredPath); db.close();
+  const moved = join(root, 'moved'); renameSync(data, moved);
+  db = openDatabase(join(moved, 'save.sqlite'));
+  resources = new ResourcesService({ db, storageRoot: join(moved, 'managed') }); await resources.seed();
+  const relocatedPath = await resources.assetFile('owner-atlas', imported.resource.id, imported.resource.entryAsset);
+  assert.ok(relocatedPath.toLowerCase().startsWith(realpathSync.native(moved).toLowerCase()), `${relocatedPath} is outside ${moved}`); assert.deepEqual(readFileSync(relocatedPath), bytes);
+  assert.equal((await resources.get('owner-atlas', imported.resource.id)).availability, 'ready');
+  adapter = createResourceBackupAdapter({ db, get: () => resources });
+  adapter.validate(adapter.export('owner-atlas'), 'owner-atlas');
+  db.close();
 });

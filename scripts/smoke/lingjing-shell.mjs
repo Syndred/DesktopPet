@@ -16,10 +16,11 @@ try {
   const info = await page.evaluate(() => window.lingjing.invoke('app', 'info'));
   assert.equal(info.ok, true);
   if (info.data.features.some(feature => feature.id === 'accounts')) {
-    await page.getByRole('button', { name: '注册', exact: true }).waitFor();
+    await page.getByRole('tab', { name: '注册', exact: true }).waitFor();
     await page.screenshot({ path: resolve(output, 'login.png') });
-    await page.getByRole('button', { name: '注册', exact: true }).click();
-    await page.getByLabel('账号类型').selectOption('local');
+    await page.getByRole('tab', { name: '注册', exact: true }).click();
+    await page.getByRole('combobox', { name: '账号类型', exact: true }).click();
+    await page.getByRole('option', { name: '本机账号', exact: true }).click();
     await page.getByLabel('用户名', { exact: true }).fill('窗口验收');
     await page.getByLabel('账号', { exact: true }).fill('foundation_shell');
     await page.getByLabel('密码', { exact: true }).fill('LingjingShellQA2026!');
@@ -31,6 +32,8 @@ try {
   assert.equal(await page.evaluate(() => typeof window.lingjing.send), 'undefined');
   await page.locator('.sidebar').getByRole('button', { name: '设置', exact: true }).click();
   assert.equal(await page.evaluate(() => location.hash), '#/settings');
+  await page.getByRole('heading', { name: '按你的节奏，安静陪伴。', exact: true }).waitFor();
+  await page.waitForFunction(() => Number(getComputedStyle(document.querySelector('.app-page-motion')).opacity) > .99);
   await page.screenshot({ path: resolve(output, 'shell.png') });
   const windows = await application.evaluate(({ BrowserWindow }) => BrowserWindow.getAllWindows().map(w => ({ title: w.getTitle(), bounds: w.getBounds(), visible: w.isVisible(), sandbox: w.webContents.getLastWebPreferences().sandbox, contextIsolation: w.webContents.getLastWebPreferences().contextIsolation })));
   assert.equal(windows[0].visible, true);

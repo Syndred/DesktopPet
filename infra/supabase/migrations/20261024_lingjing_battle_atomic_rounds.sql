@@ -2,6 +2,8 @@
 -- Runtime account IDs intentionally remain TEXT (they are not auth.uid UUIDs).
 ALTER TABLE public.duel_rooms ADD COLUMN IF NOT EXISTS host_pet_id TEXT;
 ALTER TABLE public.duel_rooms ADD COLUMN IF NOT EXISTS guest_pet_id TEXT;
+ALTER TABLE public.duel_rooms ADD COLUMN IF NOT EXISTS host_resource_id TEXT;
+ALTER TABLE public.duel_rooms ADD COLUMN IF NOT EXISTS guest_resource_id TEXT;
 ALTER TABLE public.duel_rooms ADD COLUMN IF NOT EXISTS invitation_id TEXT;
 ALTER TABLE public.duel_rooms ADD COLUMN IF NOT EXISTS invited_user_id TEXT;
 CREATE UNIQUE INDEX IF NOT EXISTS duel_rooms_one_per_invitation
