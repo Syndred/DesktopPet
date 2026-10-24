@@ -63,7 +63,11 @@ module.exports = {
       },
       settleBattleContext: async ({ownerAccountId,sessionId,actionId}) => {
         if (services.session.getOwnerAccountId()!==ownerAccountId) return {ok:false,code:'SESSION_CHANGED',message:'账号已切换'};
-        const result=await services.invoke('garden','territorySettle',{sessionId,actionId,sessionOwnerAccountId:ownerAccountId});
+        const context={ownerAccountId};
+        if(cloud.isCloud(context)) return {ok:false,code:'CLOUD_TERRITORY_UNAVAILABLE',message:'云端领地暂不可用'};
+        // The saved challenge guards its territory revision. Unrelated inventory changes
+        // must not invalidate confirmation or alter a repeated action's request hash.
+        const result=service.command(context,'territorySettle',{sessionId,actionId},({owner})=>territories.settleChallenge({ownerAccountId:owner,sessionId}),{checkRevision:false});
         return result.ok?{...result,data:{...result.data,resultPath:'/garden'}}:result;
       },
       migrateOwnerAlias:context=>identity.migrate(context),

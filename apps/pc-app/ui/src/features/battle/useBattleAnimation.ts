@@ -35,7 +35,7 @@ export function useBattleAnimation(session: BattleSession) {
     if (phase === 'impact' && (round?.directDamage?.[side] || 0) > 0) return 'hit';
     if (selected === 'dodge') return 'walk';
     if (phase === 'windup') return selected === 'stunned' ? 'idle' : 'attack_windup';
-    if (interrupted(side)) return phase === 'release' ? 'hit' : 'idle';
+    if (interrupted(side)) return 'idle';
     if (phase === 'release') return selected === 'normal_attack' ? 'attack_release' : selected === 'element_attack' || selected === 'ultimate' ? 'skill' : 'idle';
     return 'idle';
   };
