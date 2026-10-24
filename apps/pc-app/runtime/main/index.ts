@@ -2,10 +2,11 @@ import { createRequire } from 'node:module';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { existsSync } from 'node:fs';
-import { app, BrowserWindow, ipcMain, Menu, nativeImage, safeStorage, screen, session, Tray } from 'electron';
+import { app, BrowserWindow, ipcMain, Menu, nativeImage, protocol, safeStorage, screen, session, Tray } from 'electron';
 
 const require = createRequire(import.meta.url);
 const runtime = resolve(dirname(fileURLToPath(import.meta.url)), '../../runtime');
+if (process.platform === 'win32') app.setAppUserModelId('com.lingjing.desktop');
 process.env.LINGJING_FOUNDATION = '1';
 // Retain the original app identity/path so existing accounts and history are found.
 if (process.env.PET_USER_DATA_DIR) app.setPath('userData', resolve(process.env.PET_USER_DATA_DIR));
@@ -16,6 +17,8 @@ else {
 const { openDatabase, backupLegacy } = require(join(runtime, 'core/database.cjs'));
 const { createServices, discoverFeatures } = require(join(runtime, 'core/services.cjs'));
 const { initializeLegacy } = require(join(runtime, 'main.cjs'));
+const resourceEntry = join(runtime, 'features/resources/index.cjs');
+if (existsSync(resourceEntry)) require(resourceEntry).registerResourceScheme(protocol);
 
 let window: BrowserWindow | null = null;
 let tray: Tray | null = null;
