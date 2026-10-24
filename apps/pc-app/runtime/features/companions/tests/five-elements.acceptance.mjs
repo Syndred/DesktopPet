@@ -21,18 +21,14 @@ const evidence = {
   at: new Date().toISOString(), output, profile,
   source: { sha: git(['rev-parse', 'HEAD']), dirty: git(['status', '--porcelain']), mainBundleSha256: digest(readFileSync(resolve('apps/pc-app/dist/main/index.cjs'))), uiEntrySha256: digest(readFileSync(resolve('apps/pc-app/dist/ui/index.html'))) },
   scenario: { id: scenario.scenario, runId: scenario.runId, provenance: 'simulated', isolated: true },
-  sources: { authentication: 'real-local-account', characters: 'registered-project-original-atlases', playback: 'production-IPC-and-Pixi', training: 'actual-local-authoritative-engine', territory: 'simulated-controlled-owned-record', garrison: 'production-command-against-controlled-territory', realCloudAcceptance: false, realGeographicAcceptance: false },
+  sources: { authentication: 'isolated-QA-local-account-through-actual-accounts-service', characters: 'registered-project-original-atlases', playback: 'production-IPC-and-Pixi', training: 'actual-local-authoritative-engine', territory: 'simulated-controlled-owned-record', garrison: 'production-command-against-controlled-territory', realCloudAcceptance: false, realGeographicAcceptance: false },
   scope: 'U02/U03 presentation/U05/U07 companions self-acceptance; four-mode/all-25 rules are separately owned by battle and central integration',
   inputs: [], characters: [], screenshots: [], errors: []
 };
-const { RuntimeDataStore } = require(resolve('apps/pc-app/runtime/services/runtime-data-store.cjs'));
 const legacyFile = join(profile, 'pet-runtime-data.json');
-const legacy = new RuntimeDataStore({ filePath: legacyFile, sessionFilePath: join(profile, 'pet-auth-session.json') });
 const account = 'companions_five', password = 'Local-five-proof-72!';
-legacy.registerUser(account, password, '五行伙伴自验'); legacy.loginUser(account, password);
-const original = readFileSync(legacyFile);
 const env = { ...process.env, ...scenario.env }; delete env.ELECTRON_RUN_AS_NODE;
-let app, page, owner, pets, representatives, expectedBeforeRestart;
+let app, page, owner, pets, representatives, expectedBeforeRestart, original;
 const invoke = (feature, command, payload) => page.evaluate(({ feature, command, payload }) => window.lingjing.invoke(feature, command, payload), { feature, command, payload });
 const input = (operation, detail) => evidence.inputs.push({ at: new Date().toISOString(), operation, ...detail });
 const success = result => { assert.equal(result.ok, true, JSON.stringify(result)); return result.data; };
@@ -113,12 +109,14 @@ async function play(pet, native, action, label) {
 try {
   assert.equal(evidence.source.dirty, '', 'Commit the source before recording a reviewable runtime SHA');
   await launch(); await size(1280, 844);
-  success(await invoke('accounts', 'login', { provider: 'local', account, password, rememberSession: true }));
+  original = readFileSync(legacyFile);
+  success(await invoke('accounts', 'register', { provider: 'local', account, password, confirmPassword: password, username: '五行伙伴自验', rememberSession: false }));
   const info = success(await invoke('app', 'info')); assert.equal(info.scenario.provenance, 'simulated'); assert.equal(info.scenario.runId, scenario.runId);
   evidence.build = info.build; assert.equal(info.build.sourceCommit, evidence.source.sha); assert.deepEqual(info.build.sourceDirtyFiles, []);
   evidence.runtime = await app.evaluate(({ app }) => ({ electron: process.versions.electron, chrome: process.versions.chrome, node: process.versions.node, version: app.getVersion(), userData: app.getPath('userData') }));
   assert.equal(resolve(evidence.runtime.userData), resolve(profile));
   const initial = success(await invoke('companions', 'list')); owner = initial.ownerAccountId;
+  assert.ok(owner.startsWith(`qa:${scenario.runId}:`));
   const templates = initial.templates; assert.equal(templates.length, 8); assert.equal(new Set(templates.map(template => template.resource.resourceId)).size, 8);
   assert.deepEqual([...new Set(templates.map(template => template.element))].sort(), ['earth', 'fire', 'metal', 'water', 'wood']);
   await route('/companions/adopt'); await settle('.cp-adoption-page');
@@ -150,6 +148,7 @@ try {
   const territory = { id: `qa:companions:${scenario.runId}`, name: '五行驻守验收庭院', regionName: '隔离 QA 场景', ownerAccountId: owner, revision: 1, captureMultiplier: 2, provenance: 'controlled-ui-fixture', scenarioId: scenario.scenario, runId: scenario.runId, boundary: [{ lat: 31, lng: 121 }, { lat: 31.006, lng: 121 }, { lat: 31.006, lng: 121.006 }, { lat: 31, lng: 121.006 }] };
   new TerritoryService({ db, get() { return null; } }).importRecord(territory); db.close(); evidence.territoryFixture = territory;
   await launch(); await size(1280, 844);
+  success(await invoke('accounts', 'login', { provider: 'local', account, password, rememberSession: false }));
   for (const pet of representatives) success(await invoke('companions', 'desktop', { actionId: `quiet-${pet.petId}`, petId: pet.petId, behavior: 'quiet', visible: true }));
   for (const pet of representatives) {
     const native = await desktop(pet); const detailIdentity = await detail(pet);
@@ -190,8 +189,9 @@ try {
   evidence.layouts = [];
   for (const [width, height] of [[1280, 844], [1440, 900]]) {
     await size(width, height); await detail(representatives.find(pet => pet.element === 'wood')); await shot(`${width}-detail.png`, '.cp-detail-page');
-    const metrics = await page.evaluate(() => { const rect = selector => { const value = document.querySelector(selector).getBoundingClientRect(); return { x: value.x, y: value.y, width: value.width, bottom: value.bottom }; }; const heading = getComputedStyle(document.querySelector('.cp-detail-left h1')); return { width: innerWidth, height: innerHeight, dpr: devicePixelRatio, title: rect('.cp-detail-left .page-header'), tabs: rect('.cp-detail-tabs'), right: rect('.cp-detail-body'), scene: rect('.cp-detail-hero'), heading: { size: heading.fontSize, weight: heading.fontWeight }, visibleCopy: document.querySelector('.cp-detail-content').innerText }; });
+    const metrics = await page.evaluate(() => { const rect = selector => { const value = document.querySelector(selector).getBoundingClientRect(); return { x: value.x, y: value.y, width: value.width, height: value.height, bottom: value.bottom }; }; const heading = getComputedStyle(document.querySelector('.cp-detail-left h1')); return { width: innerWidth, height: innerHeight, dpr: devicePixelRatio, title: rect('.cp-detail-left .page-header'), tabs: rect('.cp-detail-tabs'), right: rect('.cp-detail-body'), scene: rect('.cp-detail-hero'), hint: rect('.cp-growth-card .cp-hint'), meters: rect('.cp-growth-card .cp-meters'), heading: { size: heading.fontSize, weight: heading.fontWeight }, visibleCopy: document.querySelector('.cp-detail-content').innerText }; });
     assert.equal(metrics.heading.size, '28px'); assert.equal(metrics.heading.weight, '700'); assert.ok(Math.abs(metrics.title.y - metrics.tabs.y) <= 2); assert.ok(metrics.tabs.width >= metrics.right.width - 2); assert.ok(metrics.scene.bottom <= height);
+    assert.equal(metrics.hint.width, 24); assert.equal(metrics.hint.height, 24); assert.ok(metrics.meters.height <= 120, 'Compact status hints must not stretch the growth panel');
     assert.doesNotMatch(metrics.visibleCopy, /养成属性不直接代入|在桌面拖动伙伴|聊天、人设和记忆始终归属/);
     await route('/companions'); await shot(`${width}-overview.png`, '.cp-page');
     await page.getByRole('button', { name: '领养伙伴', exact: true }).click(); await shot(`${width}-adoption.png`, '.cp-adoption-page');
@@ -200,10 +200,11 @@ try {
   }
   expectedBeforeRestart = success(await invoke('companions', 'list'));
   await app.close(); app = null; await launch();
+  success(await invoke('accounts', 'login', { provider: 'local', account, password, rememberSession: false }));
   const restored = success(await invoke('companions', 'list'));
   for (const pet of expectedBeforeRestart.pets.filter(pet => pet.resource.kind === '2d')) { const actual = restored.pets.find(candidate => candidate.petId === pet.petId); assert.equal(actual.name, pet.name); assert.equal(actual.element, pet.element); assert.deepEqual(actual.resource, pet.resource); assert.deepEqual(actual.growth, pet.growth); assert.equal(actual.desktop.visible, pet.desktop.visible); }
   assert.deepEqual(restored.selections, expectedBeforeRestart.selections);
-  evidence.restart = { petCount: restored.pets.filter(pet => pet.resource.kind === '2d').length, selections: restored.selections };
+  evidence.restart = { petCount: restored.pets.filter(pet => pet.resource.kind === '2d').length, selections: restored.selections, reauthenticatedSameQaAccount: true, sessionPersistence: 'memory-only-by-QA-policy' };
   assert.equal(digest(readFileSync(legacyFile)), digest(original)); evidence.originalLegacySha256 = digest(original);
   assert.deepEqual(evidence.errors, []); await app.close(); app = null;
   const readback = new DatabaseSync(join(profile, 'lingjing.sqlite'), { readOnly: true });
