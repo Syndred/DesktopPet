@@ -5,6 +5,7 @@ import { Button } from '../../components/ui';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../../components/ui/select';
 import { Popover, PopoverContent, PopoverTrigger } from '../../components/ui/popover';
 import { ResourceStage } from './ResourceStage';
+import { ApplyToCompanion } from './ApplyToCompanion';
 import { ActionSelect, ResourceActionMapping, ResourceCalibrationControls, ResourceFrameRate } from './ResourceControls';
 
 export function ResourceEditor({ resource, client, mode, edit, dirty, saving, save, discard, motionEnabled = true }: { resource: CharacterResource; client: ResourcesClient; mode: string; edit(resource: CharacterResource): void; dirty: boolean; saving: boolean; save(): void; discard(): void; motionEnabled?: boolean }) {

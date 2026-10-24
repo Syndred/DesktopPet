@@ -13,5 +13,5 @@ for (const directory of ['brand', 'illustrations']) {
 export default defineConfig({
   main: { plugins: [externalizeDepsPlugin()], build: { outDir: 'apps/pc-app/dist/main', rollupOptions: { input: 'apps/pc-app/runtime/main/index.ts', output: { entryFileNames: 'index.cjs', format: 'cjs' } } } },
   preload: { plugins: [externalizeDepsPlugin()], build: { outDir: 'apps/pc-app/dist/preload', rollupOptions: { input: 'apps/pc-app/runtime/preload/index.ts', output: { entryFileNames: 'index.cjs', format: 'cjs' } } } },
-  renderer: { root: 'apps/pc-app/ui', publicDir: public2D, plugins: [react(), tailwindcss()], resolve: { alias: { '@': resolve('apps/pc-app/ui/src') } }, build: { minify: true, outDir: resolve('apps/pc-app/dist/ui'), rollupOptions: { input: 'apps/pc-app/ui/index.html' } } }
+  renderer: { root: 'apps/pc-app/ui', publicDir: public2D, plugins: [react(), tailwindcss()], resolve: { alias: { '@': resolve('apps/pc-app/ui/src') } }, build: { minify: true, emptyOutDir: true, outDir: resolve('apps/pc-app/dist/ui'), rollupOptions: { input: 'apps/pc-app/ui/index.html' } } }
 });

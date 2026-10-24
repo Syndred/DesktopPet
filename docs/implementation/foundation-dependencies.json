@@ -1,0 +1,199 @@
+{
+  "verifiedAt": "2026-10-24T13:03:13.272Z",
+  "records": [
+    {
+      "name": "electron",
+      "version": "36.9.5",
+      "license": "MIT",
+      "source": "https://www.npmjs.com/package/electron/v/36.9.5",
+      "repository": "https://github.com/electron/electron",
+      "usage": "Native sandboxed management/companion windows, tray, DPAPI and Windows host integration"
+    },
+    {
+      "name": "electron-vite",
+      "version": "4.0.1",
+      "license": "MIT",
+      "source": "https://www.npmjs.com/package/electron-vite/v/4.0.1",
+      "repository": "git+https://github.com/alex8088/electron-vite.git",
+      "usage": "Electron main/preload/React production build"
+    },
+    {
+      "name": "vite",
+      "version": "7.3.7",
+      "license": "MIT",
+      "source": "https://www.npmjs.com/package/vite/v/7.3.7",
+      "repository": "git+https://github.com/vitejs/vite.git",
+      "usage": "Production bundling"
+    },
+    {
+      "name": "typescript",
+      "version": "5.9.3",
+      "license": "Apache-2.0",
+      "source": "https://www.npmjs.com/package/typescript/v/5.9.3",
+      "repository": "https://github.com/microsoft/TypeScript.git",
+      "usage": "Typed renderer and preload contracts"
+    },
+    {
+      "name": "react",
+      "version": "19.3.1",
+      "license": "MIT",
+      "source": "https://www.npmjs.com/package/react/v/19.3.1",
+      "repository": "https://github.com/react/react.git",
+      "usage": "Modular feature pages and shared component tree"
+    },
+    {
+      "name": "react-dom",
+      "version": "19.3.1",
+      "license": "MIT",
+      "source": "https://www.npmjs.com/package/react-dom/v/19.3.1",
+      "repository": "https://github.com/react/react.git",
+      "usage": "React roots and portals"
+    },
+    {
+      "name": "shadcn",
+      "version": "4.22.1",
+      "license": "MIT",
+      "source": "https://www.npmjs.com/package/shadcn/v/4.22.1",
+      "repository": "https://github.com/shadcn-ui/ui.git",
+      "usage": "Official Radix Nova registry source imported into components/ui; source hashes and MIT notice retained"
+    },
+    {
+      "name": "radix-ui",
+      "version": "1.8.1",
+      "license": "MIT",
+      "source": "https://www.npmjs.com/package/radix-ui/v/1.8.1",
+      "repository": "git+https://github.com/radix-ui/primitives.git",
+      "usage": "Dialog, Select, Tabs, Switch, Slider, Popover, Tooltip, ScrollArea, Checkbox and keyboard/focus behavior"
+    },
+    {
+      "name": "tailwindcss",
+      "version": "4.3.3",
+      "license": "MIT",
+      "source": "https://www.npmjs.com/package/tailwindcss/v/4.3.3",
+      "repository": "https://github.com/tailwindlabs/tailwindcss.git",
+      "usage": "Shared theme and utility styling"
+    },
+    {
+      "name": "@tailwindcss/vite",
+      "version": "4.3.3",
+      "license": "MIT",
+      "source": "https://www.npmjs.com/package/@tailwindcss/vite/v/4.3.3",
+      "repository": "https://github.com/tailwindlabs/tailwindcss.git",
+      "usage": "Official Vite integration in electron.vite.config.ts"
+    },
+    {
+      "name": "motion",
+      "version": "14.6.0",
+      "license": "MIT",
+      "source": "https://www.npmjs.com/package/motion/v/14.6.0",
+      "repository": "https://github.com/motiondivision/motion",
+      "usage": "Motion for React route/dialog/list transitions and shared live system/app animation policy"
+    },
+    {
+      "name": "pixi.js",
+      "version": "8.22.0",
+      "license": "MIT",
+      "source": "https://www.npmjs.com/package/pixi.js/v/8.22.0",
+      "repository": "https://github.com/pixijs/pixijs.git",
+      "usage": "Assets/Spritesheet/AnimatedSprite/Ticker in real 2D resource, desktop and battle stages; garden rendering"
+    },
+    {
+      "name": "lucide-react",
+      "version": "1.61.0",
+      "license": "ISC",
+      "source": "https://www.npmjs.com/package/lucide-react/v/1.61.0",
+      "repository": "https://github.com/lucide-icons/lucide.git",
+      "usage": "Formal UI action and navigation icons"
+    },
+    {
+      "name": "maplibre-gl",
+      "version": "6.15.0",
+      "license": "BSD-3-Clause",
+      "source": "https://www.npmjs.com/package/maplibre-gl/v/6.15.0",
+      "repository": "https://github.com/maplibre/maplibre-gl-js",
+      "usage": "Shared discovery/garden map viewport, tiles, markers, gestures and GeoJSON overlays"
+    },
+    {
+      "name": "@turf/distance",
+      "version": "7.4.0",
+      "license": "MIT",
+      "source": "https://www.npmjs.com/package/@turf/distance/v/7.4.0",
+      "repository": "git://github.com/Turfjs/turf.git",
+      "usage": "WGS84 distance validation"
+    },
+    {
+      "name": "@turf/circle",
+      "version": "7.4.0",
+      "license": "MIT",
+      "source": "https://www.npmjs.com/package/@turf/circle/v/7.4.0",
+      "repository": "git://github.com/Turfjs/turf.git",
+      "usage": "Map uncertainty circle"
+    },
+    {
+      "name": "@turf/boolean-point-in-polygon",
+      "version": "7.4.0",
+      "license": "MIT",
+      "source": "https://www.npmjs.com/package/@turf/boolean-point-in-polygon/v/7.4.0",
+      "repository": "git://github.com/Turfjs/turf.git",
+      "usage": "Territory containment"
+    },
+    {
+      "name": "@turf/helpers",
+      "version": "7.4.0",
+      "license": "MIT",
+      "source": "https://www.npmjs.com/package/@turf/helpers/v/7.4.0",
+      "repository": "git://github.com/Turfjs/turf.git",
+      "usage": "GeoJSON points and polygons"
+    },
+    {
+      "name": "better-sqlite3",
+      "version": "12.11.1",
+      "license": "MIT",
+      "source": "https://www.npmjs.com/package/better-sqlite3/v/12.11.1",
+      "repository": "git://github.com/WiseLibs/better-sqlite3.git",
+      "usage": "One Electron SQLite connection, transactional domain persistence and migrations"
+    },
+    {
+      "name": "@supabase/supabase-js",
+      "version": "2.98.0",
+      "license": "MIT",
+      "source": "https://www.npmjs.com/package/@supabase/supabase-js/v/2.98.0",
+      "repository": "https://github.com/supabase/supabase-js.git",
+      "usage": "Retained multiplayer and reviewed cloud adapters; live backend validation remains separate"
+    },
+    {
+      "name": "ai",
+      "version": "7.0.152",
+      "license": "Apache-2.0",
+      "source": "https://www.npmjs.com/package/ai/v/7.0.152",
+      "repository": "https://github.com/vercel/ai",
+      "usage": "Main-process streamText/generateText, provider response parsing, abort and no automatic billable retries"
+    },
+    {
+      "name": "@ai-sdk/openai-compatible",
+      "version": "3.0.77",
+      "license": "Apache-2.0",
+      "source": "https://www.npmjs.com/package/@ai-sdk/openai-compatible/v/3.0.77",
+      "repository": "https://github.com/vercel/ai",
+      "usage": "Configured provider Chat Completions adapter in main"
+    },
+    {
+      "name": "@assistant-ui/react",
+      "version": "0.15.31",
+      "license": "MIT",
+      "source": "https://www.npmjs.com/package/@assistant-ui/react/v/0.15.31",
+      "repository": "git+https://github.com/assistant-ui/assistant-ui.git",
+      "usage": "Account/pet-scoped chat composer, messages, IME and scroll behavior over existing IPC store"
+    },
+    {
+      "name": "@electric-sql/pglite",
+      "version": "0.5.11",
+      "license": "Apache-2.0",
+      "source": "https://www.npmjs.com/package/@electric-sql/pglite/v/0.5.11",
+      "repository": "https://github.com/electric-sql/pglite",
+      "usage": "Development-only embedded PostgreSQL migration/RPC verification; no production service claim"
+    }
+  ],
+  "componentSources": "docs/implementation/shadcn-source-record.json",
+  "scope": "2D only; archived 3D source and original saves preserved"
+}
