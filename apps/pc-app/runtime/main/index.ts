@@ -126,7 +126,9 @@ app.whenReady().then(async () => {
   const userData = app.getPath('userData');
   const legacyDataFile = process.env.PET_RUNTIME_DATA_FILE || join(userData, 'pet-runtime-data.json');
   // Refuse invalid QA configuration before reading, backing up or opening saves.
-  const qaScenario = readQaScenario({ userData, legacyDataFile, productionDirectories: ['Lingjing', 'qingpet-desktop-runtime', 'qingpet-lord-3d'].map(name => join(app.getPath('appData'), name)) });
+  const qaScenario = readQaScenario({ userData });
+  const accountContext = qaScenario ? require(join(runtime, 'features/accounts/qa-scenario.cjs')).resolveQaScenario({ userData, legacyDataFile,
+    foundationScenario: qaScenario, productionDirectories: ['Lingjing', 'qingpet-desktop-runtime', 'qingpet-lord-3d'].map(name => join(app.getPath('appData'), name)) }) : null;
   const db = openDatabase(join(userData, 'lingjing.sqlite'));
   const sourceKey = `legacy-source:${legacyDataFile}`;
   const sourceMarker = db.prepare('SELECT value FROM lingjing_meta WHERE key=?').get(sourceKey);
@@ -135,7 +137,14 @@ app.whenReady().then(async () => {
   backupLegacy(legacyDataFile);
   const legacy = initializeLegacy();
   services = createServices({ db, legacy, paths: { userData, assets: join(runtime, 'assets'), legacyDataFile, legacyDataExisted }, windows, safeStorage });
-  if (qaScenario) services.provide('qaProfile', qaScenario);
+  if (qaScenario) {
+    services.provide('qaProfile', Object.freeze({ ...qaScenario, accountContext }));
+    services.provide('qaScenario', Object.freeze({ ...qaScenario, requireIdentity() {
+      const identity = services.get('qaIdentity');
+      if (!identity) throw Object.assign(new Error('验收身份尚未就绪。'), { code: 'QA_IDENTITY_UNAVAILABLE' });
+      return identity.requireIdentity();
+    } }));
+  }
   features = discoverFeatures(join(runtime, 'features'), services);
   await require(join(runtime, 'core/builtin-art.cjs')).registerBuiltinArt(services);
   if (services.get('backups') && services.get('resources')) services.get('backups').register(require(join(runtime, 'core/resource-backup.cjs')).createResourceBackupAdapter(services));

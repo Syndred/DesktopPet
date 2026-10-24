@@ -7,7 +7,7 @@ function appearance2d(pet = {}) {
   if (pet.resource?.kind === "2d" && pet.resource.resourceId) return pet.resource.resourceId;
   if (pet.appearance2d) return pet.appearance2d;
   if (pet.resourceRef) return pet.resourceRef;
-  return pet.element === "water" ? CANONICAL_YUWAN_RESOURCE : CANONICAL_SHIBA_RESOURCE;
+  return require('../resources/assets/roster-v2/catalog.json').characters.find(character => character.element === pet.element)?.resourceId;
 }
 async function registerBattleArt(services) {
   const resources = services.get("resources");

@@ -14,7 +14,7 @@ function within(root, file) {
 }
 
 /** Explicit main-process configuration only. A renderer request cannot enable QA. */
-function readQaScenario({ env = process.env, userData, legacyDataFile, productionDirectories = [] }) {
+function readQaScenario({ env = process.env, userData }) {
   if (!env.LINGJING_QA_SCENARIO) {
     if ([MARKER, 'lingjing-qa-profile.json'].some(name => existsSync(join(userData, name)))) throw Object.assign(new Error('请使用对应验收场景打开此目录。'), { code: 'QA_SCENARIO_REQUIRED' });
     return null;
@@ -30,10 +30,8 @@ function readQaScenario({ env = process.env, userData, legacyDataFile, productio
   try { marker = JSON.parse(readFileSync(markerPath, 'utf8')); } catch { reject('验收场景标记无法读取。'); }
   if (marker.schemaVersion !== 1 || marker.application !== 'lingjing' || marker.scenario !== SCENARIO || marker.isolated !== true || !/^[0-9a-f-]{36}$/i.test(marker.runId || '') || !isAbsolute(marker.profilePath || '') || !samePath(marker.profilePath, profile)) reject('验收场景不属于当前独立资料目录。');
   if (env.PET_RUNTIME_DATA_FILE && (!within(profile, resolve(env.PET_RUNTIME_DATA_FILE)) || (existsSync(env.PET_RUNTIME_DATA_FILE) && !within(profile, realpathSync(env.PET_RUNTIME_DATA_FILE))))) reject('验收场景不能读取独立目录以外的存档。');
-  const accountContext = require('../features/accounts/qa-scenario.cjs').resolveQaScenario({ env, userData: profile,
-    legacyDataFile: legacyDataFile || env.PET_RUNTIME_DATA_FILE || join(profile, 'pet-runtime-data.json'), productionDirectories });
   const descriptor = Object.freeze({ id: SCENARIO, runId: marker.runId, provenance: 'simulated', isolated: true });
-  return Object.freeze({ ...descriptor, profilePath: profile, descriptor, accountContext });
+  return Object.freeze({ ...descriptor, profilePath: profile, descriptor });
 }
 
 module.exports = { readQaScenario, MARKER, SCENARIO };
