@@ -1,13 +1,17 @@
-import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
-import { AnimatePresence, MotionConfig, motion, useReducedMotion } from 'motion/react';
+import { createContext, useContext, useEffect, useState, useSyncExternalStore, type ReactNode } from 'react';
+import { AnimatePresence, MotionConfig, motion } from 'motion/react';
 
 export const motionTokens = { duration: .18, exit: .1, ease: [.22, 1, .36, 1] as const, distance: 5 };
 const AnimationPreference = createContext(true);
+const readSystemPreference = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const listenSystemPreference = (update: () => void) => {
+  const query = window.matchMedia('(prefers-reduced-motion: reduce)');
+  query.addEventListener('change', update);
+  return () => query.removeEventListener('change', update);
+};
 export { AnimatePresence as AppPresence };
 export function useAppMotion() {
-  const allowed = useContext(AnimationPreference);
-  const reduced = useReducedMotion();
-  return allowed && !reduced;
+  return useContext(AnimationPreference);
 }
 export function MotionPanel({ children }: { children: ReactNode }) {
   const enabled = useAppMotion();
@@ -16,10 +20,13 @@ export function MotionPanel({ children }: { children: ReactNode }) {
 
 export function AppMotionProvider({ children }: { children: ReactNode }) {
   const [enabled, setEnabled] = useState(true);
-  const reduced = useReducedMotion();
+  // Motion 14's useReducedMotion snapshots the initial value. Keep the shared
+  // policy live when Windows changes its setting while the app stays open.
+  const reduced = useSyncExternalStore(listenSystemPreference, readSystemPreference, () => true);
+  const active = enabled && !reduced;
   useEffect(() => {
-    document.documentElement.dataset.motion = enabled && !reduced ? 'enabled' : 'reduced';
-  }, [enabled, reduced]);
+    document.documentElement.dataset.motion = active ? 'enabled' : 'reduced';
+  }, [active]);
   useEffect(() => {
     const refresh = async () => {
       const result = await window.lingjing.invoke<any>('accounts', 'settingsGet');
@@ -30,13 +37,11 @@ export function AppMotionProvider({ children }: { children: ReactNode }) {
     const offSession = window.lingjing.subscribe('accounts:session-changed', () => { void refresh(); });
     return () => { off(); offSession(); };
   }, []);
-  return <AnimationPreference.Provider value={enabled}><MotionConfig reducedMotion={enabled ? 'user' : 'always'}>{children}</MotionConfig></AnimationPreference.Provider>;
+  return <AnimationPreference.Provider value={active}><MotionConfig reducedMotion={active ? 'never' : 'always'}>{children}</MotionConfig></AnimationPreference.Provider>;
 }
 
 export function PageTransition({ routeKey, children }: { routeKey: string; children: ReactNode }) {
-  const allowed = useContext(AnimationPreference);
-  const reduced = useReducedMotion();
-  const enabled = allowed && !reduced;
+  const enabled = useAppMotion();
   return <AnimatePresence mode="wait" initial={false}><motion.div key={routeKey} data-motion={enabled ? 'enabled' : 'reduced'} className="app-page-motion" initial={enabled ? { opacity: 0, y: motionTokens.distance } : false} animate={{ opacity: 1, y: 0 }} exit={enabled ? { opacity: 0 } : undefined} transition={{ duration: enabled ? motionTokens.duration : 0, ease: motionTokens.ease }}>{children}</motion.div></AnimatePresence>;
 }
 

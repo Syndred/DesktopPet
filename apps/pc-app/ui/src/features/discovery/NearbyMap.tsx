@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { createRoot, type Root } from 'react-dom/client';
 import { Crosshair, Flag, PawPrint, RefreshCw } from 'lucide-react';
-import { Map as LibreMap, Marker, NavigationControl, AttributionControl, addProtocol, type GeoJSONSource, type StyleSpecification } from 'maplibre-gl';
+import { Map as LibreMap, LngLat, Marker, NavigationControl, AttributionControl, addProtocol, type GeoJSONSource, type StyleSpecification } from 'maplibre-gl';
 import { circle } from '@turf/circle';
 import type { FeatureCollection, Polygon } from 'geojson';
 import { request } from '../../app/bridge';
@@ -61,7 +61,7 @@ export function NearbyMap({ state, selectedId, onSelect, mini = false }: { state
       return { type: 'Feature', properties: { id: t.territoryId, name: t.name, owned: t.owned }, geometry: { type: 'Polygon', coordinates: [ring] } };
     }) };
     (instance.getSource('territories') as GeoJSONSource)?.setData(features);
-    if(instance.getCenter().distanceTo([center.lng,center.lat])>2000) instance.jumpTo({center:[center.lng,center.lat]});
+    if(instance.getCenter().distanceTo(LngLat.convert([center.lng,center.lat]))>2000) instance.jumpTo({center:[center.lng,center.lat]});
     const current = document.createElement('span'); current.className = `discovery-my-location ${state.location.mode === 'demo' ? 'demo' : ''}`;
     const locationMarker = new Marker({ element: current }).setLngLat([center.lng, center.lat]).addTo(instance);
     return () => { locationMarker.remove(); };
