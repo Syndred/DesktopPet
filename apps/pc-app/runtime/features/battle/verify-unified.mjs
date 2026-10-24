@@ -33,7 +33,7 @@ function profile(name) {
   const directory=join(output,name); mkdirSync(directory);
   writeFileSync(join(directory,MARKER),JSON.stringify({schemaVersion:1,application:'lingjing',scenario:SCENARIO,runId,isolated:true,profilePath:realpathSync(directory),createdAt:new Date().toISOString()},null,2),{flag:'wx'});
   writeFileSync(join(directory,'battle-transport.json'),JSON.stringify({runId,endpoint:server.endpoint,token,enemyActions:{training:['dodge'],wild:['dodge'],territory:['dodge']}}));
-  const account=`battle-qa-${name}-${Date.now()}`;
+  const account=`qa_${name}_${String(Date.now()).slice(-8)}`;
   profiles[name]={directory,account}; return profiles[name];
 }
 async function launch(name) {
@@ -144,6 +144,35 @@ async function verifyMatrix(host) {
   }
   evidence.elementPairs=pairs;assert.equal(pairs.length,25);record('25 real UI elemental pairings passed');
 }
+async function verifyGeometry(host) {
+  const initial=await startTraining(host.page,host.pets.find(pet=>pet.element==='water'),'wood');
+  await geometry(host.page,'entry-training-1280');
+  const window=await host.app.browserWindow(host.page);await window.evaluate(win=>win.setContentSize(1440,900,false));
+  await geometry(host.page,'entry-training-1440');await window.evaluate(win=>win.setContentSize(1280,844,false));
+  await abandon(host.page,initial);
+}
+async function verifyMotion(host) {
+  const page=host.page,initial=await startTraining(page,host.pets.find(pet=>pet.element==='wood'),'water'),before=await preset(page,initial,'charged','dodge');
+  await page.evaluate(()=>{window.__unifiedCanvases=[...document.querySelectorAll('.battle-stage canvas')];});
+  const first=await action(page,before,'element_attack','repeat-first',{screenshots:false});
+  const second=await action(page,first.after,'element_attack','repeat-second',{screenshots:false});
+  const release=frameRegion(before.player.resourceRef,'skill',-1);
+  for(const result of [first,second])assert.ok(result.samples.some(value=>value.phase==='release'&&value.actors[0].textureFrame===release));
+  assert.equal(await page.evaluate(()=>[...document.querySelectorAll('.battle-stage canvas')].every((canvas,index)=>canvas===window.__unifiedCanvases[index])),true);
+  await page.getByRole('button',{name:'普通攻击',exact:true}).click();await page.waitForFunction(()=>document.querySelector('.battle-live-layout')?.getAttribute('data-animation-phase')==='windup');
+  let settings=await api(page,'accounts','settingsGet');settings.document.desktop.animationsEnabled=false;
+  await api(page,'accounts','settingsSave',{actionId:randomUUID(),revision:settings.revision,document:settings.document});
+  await page.waitForFunction(()=>document.querySelector('.battle-live-layout')?.getAttribute('data-animation-phase')==='rest'&&document.querySelectorAll('.battle-stage .battle-portrait[data-animating="false"]').length===2);
+  assert.equal(await page.getByRole('button',{name:'普通攻击',exact:true}).isEnabled(),true);
+  const frames=[];for(let i=0;i<5;i++){await page.waitForTimeout(110);frames.push(await page.locator('.battle-stage .resource-sprite-host').evaluateAll(nodes=>nodes.map(node=>({frame:node.getAttribute('data-frame'),region:node.getAttribute('data-texture-frame')}))));}
+  assert.ok(frames.every(value=>JSON.stringify(value)===JSON.stringify(frames[0])));
+  await page.screenshot({path:join(output,'animations-off-terminal-snapshot.png')});
+  settings=await api(page,'accounts','settingsGet');settings.document.desktop.animationsEnabled=true;
+  await api(page,'accounts','settingsSave',{actionId:randomUUID(),revision:settings.revision,document:settings.document});await observe(page);await page.waitForTimeout(600);
+  const restored=await page.evaluate(()=>window.__unifiedSamples);assert.ok(restored.every(value=>value.phase==='rest'));
+  const after=await api(page,'battle','snapshot',{sessionId:before.id});record('same elemental action restarts real release texture without replacing canvases; motion off adopts final state, stops actual frames and unlocks controls; reenable does not replay history',{sessionId:before.id,frames,restored,beforeRound:before.snapshot.round,afterRound:after.snapshot.round});
+  await abandon(page,after);
+}
 async function verifyEntries(host) {
   const page=host.page;
   await route(page,'/discovery');await page.locator('.discovery-page').waitFor();
@@ -198,9 +227,12 @@ async function verifyFriends(host) {
   await host.page.locator('.battle-user-list .battle-small-action').click();
   await guest.page.locator('.battle-invitations').getByRole('button',{name:'刷新',exact:true}).click();
   await guest.page.getByRole('button',{name:'接受',exact:true}).click();
+  await guest.page.locator('.battle-waiting-peer').waitFor();assert.equal(await guest.page.locator('.battle-waiting-peer progress').count(),0);assert.equal(await guest.page.getByText('角色资源缺失',{exact:true}).count(),0);
+  await guest.page.screenshot({path:join(output,'friend-waiting-peer-is-unknown.png')});
   await host.page.locator('.battle-invitations').getByRole('button',{name:'刷新',exact:true}).click();
   await host.page.getByRole('button',{name:'进入房间',exact:true}).click();
   let hostSession=await screen(host.page), guestSession=await screen(guest.page);
+  await geometry(host.page,'entry-friend-1280');
   assert.equal(hostSession.room.id,guestSession.room.id);assert.equal(hostSession.player.petId,guestSession.enemy.petId);
   assert.equal(hostSession.context.authority,'simulated');assert.equal(guestSession.context.authority,'simulated');
   hostSession=await preset(host.page,hostSession,'charged');await guest.page.reload();guestSession=await screen(guest.page);
@@ -266,6 +298,8 @@ try {
     if(label==='ultimate'){assert.ok(!events.some(event=>event.kind==='dodge'));assert.equal(result.after.snapshot.player.hp,105);assert.equal(result.after.snapshot.player.anger,0);assert.equal(round.directDamage.enemy,24);assert.ok(result.samples.some(sample=>sample.phase==='impact'&&sample.actors[1].action==='hit'));}
     await abandon(host.page,result.after); record(`native interaction ${label} passed`);
   }
+  if(process.argv.includes('--geometry'))await verifyGeometry(host);
+  if(process.argv.includes('--motion'))await verifyMotion(host);
   if(process.argv.includes('--friends')||process.argv.includes('--friends-only')||process.argv.includes('--all'))host=await verifyFriends(host);
   if(process.argv.includes('--copy-only'))await verifyCopy(host);
   if(process.argv.includes('--entries')||process.argv.includes('--entries-only')||process.argv.includes('--all'))await verifyEntries(host);
