@@ -1,6 +1,6 @@
 const {BattleRuntimeService,getBattleRules}=require('../../services/battle-runtime.cjs');
-/** Retired compatibility helper for archived fixtures. Production DiscoveryService
- * requires the registered battle feature and never instantiates this fallback. */
+/** Compatibility helper for the separate server authority and archived fixtures.
+ * Desktop DiscoveryService requires the registered battle feature, with no fallback. */
 class LegacyWildBattleAdapter {
   begin({pet,spawn,battleId}) {
     const engine=new BattleRuntimeService(); engine.reset({playerElement:pet.element,enemyElement:spawn.element});
