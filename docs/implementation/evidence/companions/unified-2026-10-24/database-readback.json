@@ -1,0 +1,99 @@
+{
+  "at": "2026-10-24T15:45:40.434Z",
+  "sourceCommit": "4770aa1fd2abcca98a1986ccd0a7b38f7826049c",
+  "ownerAccountId": "qa:e76b97b2-a951-495d-8160-fc22ff12e2ac:local-db357544-91bf-46a2-93d4-1deeb3df064f",
+  "scenario": {
+    "id": "unified-battle",
+    "runId": "e76b97b2-a951-495d-8160-fc22ff12e2ac",
+    "provenance": "simulated",
+    "isolated": true
+  },
+  "petCount": 8,
+  "garrisonReceipts": [
+    {
+      "action_id": "22dad03a-9fe6-426c-87a3-f340c63606a3",
+      "kind": "garrison",
+      "created_at": 1792855973771,
+      "result": {
+        "ok": true,
+        "revision": 1,
+        "replayed": false,
+        "data": {
+          "territoryId": "qa:companions:e76b97b2-a951-495d-8160-fc22ff12e2ac",
+          "petId": "pet-28229917-cc30-423e-8a06-4582bf9f1e37"
+        }
+      }
+    },
+    {
+      "action_id": "5c970c0b-337e-4626-96da-cd0edb5e4603",
+      "kind": "garrison",
+      "created_at": 1792855985361,
+      "result": {
+        "ok": true,
+        "revision": 2,
+        "replayed": false,
+        "data": {
+          "territoryId": "qa:companions:e76b97b2-a951-495d-8160-fc22ff12e2ac",
+          "petId": "pet-ac56437b-f567-4478-b376-d9d7742d6e63"
+        }
+      }
+    },
+    {
+      "action_id": "eb8a7d9c-3c44-4aca-a764-d8bdbc75a2c3",
+      "kind": "garrison",
+      "created_at": 1792855995296,
+      "result": {
+        "ok": true,
+        "revision": 3,
+        "replayed": false,
+        "data": {
+          "territoryId": "qa:companions:e76b97b2-a951-495d-8160-fc22ff12e2ac",
+          "petId": "pet-676dc1d2-01dc-4aef-ad99-99bcd9d1c0ad"
+        }
+      }
+    },
+    {
+      "action_id": "38bf16cb-7957-4e00-a6b6-d9d4b5cb7cad",
+      "kind": "garrison",
+      "created_at": 1792856004942,
+      "result": {
+        "ok": true,
+        "revision": 4,
+        "replayed": false,
+        "data": {
+          "territoryId": "qa:companions:e76b97b2-a951-495d-8160-fc22ff12e2ac",
+          "petId": "pet-c44a894f-da55-4199-9ae9-0ba0d3354d57"
+        }
+      }
+    },
+    {
+      "action_id": "e34d6951-e880-4e08-9641-13e9fc331644",
+      "kind": "garrison",
+      "created_at": 1792856016488,
+      "result": {
+        "ok": true,
+        "revision": 5,
+        "replayed": false,
+        "data": {
+          "territoryId": "qa:companions:e76b97b2-a951-495d-8160-fc22ff12e2ac",
+          "petId": "pet-cffdaa10-9939-4e80-a135-ff802cf932f6"
+        }
+      }
+    }
+  ],
+  "currentGarrisons": [
+    {
+      "owner_account_id": "qa:e76b97b2-a951-495d-8160-fc22ff12e2ac:local-db357544-91bf-46a2-93d4-1deeb3df064f",
+      "territory_id": "qa:companions:e76b97b2-a951-495d-8160-fc22ff12e2ac",
+      "pet_id": "pet-cffdaa10-9939-4e80-a135-ff802cf932f6",
+      "territory_revision": 1,
+      "updated_at": 1792856016488
+    }
+  ],
+  "selections": {
+    "chatPetId": "pet-cffdaa10-9939-4e80-a135-ff802cf932f6",
+    "battlePetId": "pet-cffdaa10-9939-4e80-a135-ff802cf932f6",
+    "guardPetId": null
+  },
+  "meaningfulPetStateUnchangedAfterNativeCapture": true
+}
