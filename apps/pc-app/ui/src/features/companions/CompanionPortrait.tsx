@@ -1,4 +1,5 @@
-import { useEffect, useState, useSyncExternalStore } from 'react';
+import { useContext, useEffect, useState, useSyncExternalStore } from 'react';
+import { MotionConfigContext, useReducedMotion } from 'motion/react';
 import type { CompanionResourceRef } from '../../../../../../packages/shared-types/src/features/companions/index';
 import type { ResourceDisplay, ResourceAction } from '../../../../../../packages/shared-types/src/features/resources';
 import { ResourceStage } from '../resources/ResourceStage';
@@ -22,6 +23,9 @@ const getResourcesVersion = () => resourcesVersion;
 export function CompanionPortrait({ petId, resource, name, animate = false, action = 'idle' }: { petId: string; resource: CompanionResourceRef; name: string; animate?: boolean; action?: ResourceAction }) {
   const [display, setDisplay] = useState<ResourceDisplay | null>(null);
   const [error, setError] = useState('');
+  const { reducedMotion } = useContext(MotionConfigContext);
+  const systemReducedMotion = useReducedMotion();
+  const playing = animate && reducedMotion !== 'always' && !systemReducedMotion;
   const version = useSyncExternalStore(subscribeResources, getResourcesVersion);
   const [spriteRuntimeReady, setSpriteRuntimeReady] = useState(false);
   useEffect(() => {
@@ -34,13 +38,14 @@ export function CompanionPortrait({ petId, resource, name, animate = false, acti
   }, [animate, resource.kind]);
   useEffect(() => {
     let active = true; setDisplay(null); setError('');
+    if (resource.kind !== '2d') { setError('原始记录已保留'); return; }
     void window.lingjing.invoke<ResourceDisplay>('resources', 'resolve', { resourceId: resource.resourceId, petId, context: 'desktop', action }).then(result => {
       if (!active) return;
-      if (result.ok) setDisplay(result.data);
+      if (result.ok) { if (result.data.resource.kind !== 'spritesheet') setError('请选择 2D 角色资源'); else if (result.data.resource.availability !== 'ready') setError('角色文件需要检查'); else setDisplay(result.data); }
       else setError(result.message || '角色资源暂不可用');
     }).catch(() => { if (active) setError('角色资源暂不可用'); });
     return () => { active = false; };
-  }, [petId, resource.resourceId, action, version]);
+  }, [petId, resource.resourceId, resource.kind, action, version]);
   const sheet = display?.resource.sheet;
   // Static list thumbnails share the resource image, without one GPU context per card.
   const thumbnail = !animate && display?.resource.kind === 'spritesheet' && sheet && display.resource.availability === 'ready';
@@ -50,6 +55,6 @@ export function CompanionPortrait({ petId, resource, name, animate = false, acti
       backgroundImage: `url("${resourceAssetUrl(display.resource.id, display.resource.entryAsset)}")`,
       backgroundSize: `${sheet.columns * 100}% ${sheet.rows * 100}%`,
       backgroundPosition: `${sheet.columns > 1 ? frame % sheet.columns / (sheet.columns - 1) * 100 : 0}% ${sheet.rows > 1 ? Math.floor(frame / sheet.columns) / (sheet.rows - 1) * 100 : 0}%`
-    }}/> : display.resource.kind === 'spritesheet' && !spriteRuntimeReady ? <span className="cp-resource-loading">✧</span> : <ResourceStage petId={petId} resource={display.resource} context="desktop" action={action} playing={animate}/>}
+    }}/> : display.resource.kind === 'spritesheet' && !spriteRuntimeReady ? <span className="cp-resource-loading">✧</span> : <ResourceStage petId={petId} resource={display.resource} context="desktop" action={action} playing={playing}/>}
   </div>;
 }
