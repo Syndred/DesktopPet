@@ -21,6 +21,15 @@
       "review": "Viewed original artwork, actual Pixi 32-frame gallery and resource page. Reviewed two portraits, adoption/selection SQLite readback and eight repeated-action traces. Independently confirmed the original six PNGs/manifests have no Git diff.",
       "coverage": {"characters": 8, "elements": 5, "newActualFrames": 32, "newCanonicalActionMappings": 24},
       "integrationNote": "Battle/companions must pass actual event playback keys to the common renderer and retain canonical resource/element identity."
+    },
+    {
+      "module": "conversations",
+      "code": "d9e1b71",
+      "selfEvidenceCommit": "deda2f2",
+      "status": "feature scope accepted; external model service deferred",
+      "review": "Reviewed actual 1440 chat and 1280 AI-settings windows plus persisted results: eight canonical portraits, all five instance elements, saved persona/memory, real send/retry failures without fabricated assistant output, clear-history preserving memory/persona, no renderer key storage. Header control center differs by about 4px; no horizontal overflow.",
+      "evidence": "docs/implementation/evidence/conversations/unified-2026-10-24/",
+      "integrationNote": "Final shared typography and current-build route checks remain part of final integrated acceptance."
     }
   ],
   "openFindings": [
