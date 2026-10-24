@@ -19,6 +19,8 @@ function SpriteStage({ resource, clip, url, playing, onStatus }: { resource: Cha
     statusCallback.current({ state: 'loading' });
     async function mount() {
       const { Application, Assets, AnimatedSprite, Texture, Rectangle } = await import('pixi.js');
+      // Use Pixi's interpreted shader/uniform adapters under the app's strict CSP.
+      await import('pixi.js/unsafe-eval');
       const element = host.current;
       if (cancelled || !element) return;
       const app = new Application();
@@ -54,7 +56,7 @@ function SpriteStage({ resource, clip, url, playing, onStatus }: { resource: Cha
       };
       statusCallback.current({ state: 'ready' });
     }
-    void mount().catch(() => { if (!cancelled) { cleanup?.(); cleanup = undefined; statusCallback.current({ state: 'error', message: '精灵图无法载入或显卡暂不支持，请重试。' }); } });
+    void mount().catch(error => { if (!cancelled) { console.error('Sprite renderer failed', error); cleanup?.(); cleanup = undefined; statusCallback.current({ state: 'error', message: '精灵图无法载入或显卡暂不支持，请重试。' }); } });
     return () => { cancelled = true; cleanup?.(); };
   }, [url, resource.name, width, height, columns, frames, fps, loop, playing]);
   return <div className="resource-sprite-host" ref={host} data-renderer="pixi" />;

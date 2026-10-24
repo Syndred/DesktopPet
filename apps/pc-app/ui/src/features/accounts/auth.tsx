@@ -45,11 +45,11 @@ export function AuthPage({ session, onSignedIn }: { session: AccountsSession; on
   }
   return <div className="accounts ac-auth">
     <section className="ac-auth-scene" aria-label="灵境陪伴">
+      <img className="ac-auth-art" src="./illustrations/companionship-room-v1.png" alt="" />
       <span className="ac-brand-star" aria-hidden="true">✦</span>
       <p className="ac-eyebrow">灵境 · 陪伴从这里开始</p>
       <h1>有些陪伴，<br />一直都在。</h1>
       <p>登录，和你的伙伴再次相见。</p>
-      <div className="ac-scene-orbit" aria-hidden="true"><span>✦</span><i /><b>灵境</b><i /><span>✧</span></div>
       <p className="ac-scene-footer">陪伴 · 探索 · 并肩成长</p>
     </section>
     <section className="ac-auth-card">
