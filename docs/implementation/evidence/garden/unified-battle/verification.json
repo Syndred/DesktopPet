@@ -1,0 +1,1973 @@
+{
+  "capturedAt": "2026-10-24T15:25:01.983Z",
+  "scope": "unified-battle-goal U01/U04/U05/U06/U07; garden territory integration",
+  "source": {
+    "sha": "e90dcb9ad99ac43b03b50dde40e08865160f3763",
+    "dirty": "",
+    "hashes": {
+      "apps/pc-app/dist/main/index.cjs": "c7bad7ec905876fee122e0970b83b5ba9ddce61c4de715459e6050ffa49ab504",
+      "apps/pc-app/dist/ui/index.html": "b3eb25f4b959324dd279e86af8258d0c53f1f842074e44bb173e5d677ab2816b",
+      "apps/pc-app/runtime/features/garden/index.cjs": "84e3bbceadfb1703293c8c74c08e556f04d82b6f6a49824c821a1d3f39510d2e",
+      "apps/pc-app/runtime/features/garden/territories.cjs": "ba2c06f8b9ab930c84da218cddac3584537bdd02b570ed8005495a9ee33ad7d7",
+      "apps/pc-app/runtime/features/garden/qa-location.cjs": "ebba7c4b2782c496463c4bc2b3c349a5c83852fe7a48a7e5f44faa1d3711ef3f"
+    }
+  },
+  "readbackCaptureSource": {
+    "sha": "10dcb1dcb5ef337e61d37e9512a7cdba4a42ef89",
+    "dirty": "",
+    "hashes": {
+      "apps/pc-app/dist/main/index.cjs": "c7bad7ec905876fee122e0970b83b5ba9ddce61c4de715459e6050ffa49ab504",
+      "apps/pc-app/dist/ui/index.html": "b3eb25f4b959324dd279e86af8258d0c53f1f842074e44bb173e5d677ab2816b",
+      "apps/pc-app/runtime/features/garden/index.cjs": "84e3bbceadfb1703293c8c74c08e556f04d82b6f6a49824c821a1d3f39510d2e",
+      "apps/pc-app/runtime/features/garden/territories.cjs": "ba2c06f8b9ab930c84da218cddac3584537bdd02b570ed8005495a9ee33ad7d7",
+      "apps/pc-app/runtime/features/garden/qa-location.cjs": "ebba7c4b2782c496463c4bc2b3c349a5c83852fe7a48a7e5f44faa1d3711ef3f"
+    }
+  },
+  "runtime": {
+    "application": "0.1.8",
+    "electron": "36.9.5"
+  },
+  "mode": "simulated location + declared public QA prestate/enemy choice; actual shared Electron screen, original kernel, SQLite and explicit-login restart",
+  "cloudAcceptance": false,
+  "physicalGpsAcceptance": false,
+  "visual": {
+    "source": {
+      "sha": "e90dcb9ad99ac43b03b50dde40e08865160f3763",
+      "dirty": "",
+      "hashes": {
+        "apps/pc-app/dist/main/index.cjs": "c7bad7ec905876fee122e0970b83b5ba9ddce61c4de715459e6050ffa49ab504",
+        "apps/pc-app/dist/ui/index.html": "b3eb25f4b959324dd279e86af8258d0c53f1f842074e44bb173e5d677ab2816b",
+        "apps/pc-app/runtime/features/garden/index.cjs": "84e3bbceadfb1703293c8c74c08e556f04d82b6f6a49824c821a1d3f39510d2e",
+        "apps/pc-app/runtime/features/garden/territories.cjs": "ba2c06f8b9ab930c84da218cddac3584537bdd02b570ed8005495a9ee33ad7d7",
+        "apps/pc-app/runtime/features/garden/qa-location.cjs": "ebba7c4b2782c496463c4bc2b3c349a5c83852fe7a48a7e5f44faa1d3711ef3f"
+      }
+    },
+    "measurements": [
+      {
+        "viewport": {
+          "width": 1280,
+          "height": 844
+        },
+        "title": {
+          "size": "28px",
+          "weight": "700"
+        },
+        "cards": [
+          {
+            "box": {
+              "x": 224,
+              "y": 326.5,
+              "width": 135.9499969482422,
+              "height": 165.8000030517578,
+              "top": 326.5,
+              "right": 359.9499969482422,
+              "bottom": 492.3000030517578,
+              "left": 224
+            },
+            "art": {
+              "x": 230.8000030517578,
+              "y": 333.3000183105469,
+              "width": 122.3499984741211,
+              "height": 92,
+              "top": 333.3000183105469,
+              "right": 353.1500015258789,
+              "bottom": 425.3000183105469,
+              "left": 230.8000030517578
+            }
+          },
+          {
+            "box": {
+              "x": 370.95001220703125,
+              "y": 326.5,
+              "width": 135.9499969482422,
+              "height": 165.8000030517578,
+              "top": 326.5,
+              "right": 506.90000915527344,
+              "bottom": 492.3000030517578,
+              "left": 370.95001220703125
+            },
+            "art": {
+              "x": 377.75,
+              "y": 333.3000183105469,
+              "width": 122.3499984741211,
+              "height": 92,
+              "top": 333.3000183105469,
+              "right": 500.0999984741211,
+              "bottom": 425.3000183105469,
+              "left": 377.75
+            }
+          },
+          {
+            "box": {
+              "x": 517.9000244140625,
+              "y": 326.5,
+              "width": 135.9499969482422,
+              "height": 165.8000030517578,
+              "top": 326.5,
+              "right": 653.8500213623047,
+              "bottom": 492.3000030517578,
+              "left": 517.9000244140625
+            },
+            "art": {
+              "x": 524.7000122070312,
+              "y": 333.3000183105469,
+              "width": 122.3499984741211,
+              "height": 92,
+              "top": 333.3000183105469,
+              "right": 647.0500106811523,
+              "bottom": 425.3000183105469,
+              "left": 524.7000122070312
+            }
+          },
+          {
+            "box": {
+              "x": 664.8500366210938,
+              "y": 326.5,
+              "width": 135.9499969482422,
+              "height": 165.8000030517578,
+              "top": 326.5,
+              "right": 800.8000335693359,
+              "bottom": 492.3000030517578,
+              "left": 664.8500366210938
+            },
+            "art": {
+              "x": 671.6500244140625,
+              "y": 333.3000183105469,
+              "width": 122.3499984741211,
+              "height": 92,
+              "top": 333.3000183105469,
+              "right": 794.0000228881836,
+              "bottom": 425.3000183105469,
+              "left": 671.6500244140625
+            }
+          },
+          {
+            "box": {
+              "x": 224,
+              "y": 503.3000183105469,
+              "width": 135.9499969482422,
+              "height": 165.8000030517578,
+              "top": 503.3000183105469,
+              "right": 359.9499969482422,
+              "bottom": 669.1000213623047,
+              "left": 224
+            },
+            "art": {
+              "x": 230.8000030517578,
+              "y": 510.1000061035156,
+              "width": 122.3499984741211,
+              "height": 92,
+              "top": 510.1000061035156,
+              "right": 353.1500015258789,
+              "bottom": 602.1000061035156,
+              "left": 230.8000030517578
+            }
+          },
+          {
+            "box": {
+              "x": 370.95001220703125,
+              "y": 503.3000183105469,
+              "width": 135.9499969482422,
+              "height": 165.8000030517578,
+              "top": 503.3000183105469,
+              "right": 506.90000915527344,
+              "bottom": 669.1000213623047,
+              "left": 370.95001220703125
+            },
+            "art": {
+              "x": 377.75,
+              "y": 510.1000061035156,
+              "width": 122.3499984741211,
+              "height": 92,
+              "top": 510.1000061035156,
+              "right": 500.0999984741211,
+              "bottom": 602.1000061035156,
+              "left": 377.75
+            }
+          },
+          {
+            "box": {
+              "x": 517.9000244140625,
+              "y": 503.3000183105469,
+              "width": 135.9499969482422,
+              "height": 165.8000030517578,
+              "top": 503.3000183105469,
+              "right": 653.8500213623047,
+              "bottom": 669.1000213623047,
+              "left": 517.9000244140625
+            },
+            "art": {
+              "x": 524.7000122070312,
+              "y": 510.1000061035156,
+              "width": 122.3499984741211,
+              "height": 92,
+              "top": 510.1000061035156,
+              "right": 647.0500106811523,
+              "bottom": 602.1000061035156,
+              "left": 524.7000122070312
+            }
+          },
+          {
+            "box": {
+              "x": 664.8500366210938,
+              "y": 503.3000183105469,
+              "width": 135.9499969482422,
+              "height": 165.8000030517578,
+              "top": 503.3000183105469,
+              "right": 800.8000335693359,
+              "bottom": 669.1000213623047,
+              "left": 664.8500366210938
+            },
+            "art": {
+              "x": 671.6500244140625,
+              "y": 510.1000061035156,
+              "width": 122.3499984741211,
+              "height": 92,
+              "top": 510.1000061035156,
+              "right": 794.0000228881836,
+              "bottom": 602.1000061035156,
+              "left": 671.6500244140625
+            }
+          },
+          {
+            "box": {
+              "x": 224,
+              "y": 680.1000366210938,
+              "width": 135.9499969482422,
+              "height": 165.8000030517578,
+              "top": 680.1000366210938,
+              "right": 359.9499969482422,
+              "bottom": 845.9000396728516,
+              "left": 224
+            },
+            "art": {
+              "x": 230.8000030517578,
+              "y": 686.9000244140625,
+              "width": 122.3499984741211,
+              "height": 92,
+              "top": 686.9000244140625,
+              "right": 353.1500015258789,
+              "bottom": 778.9000244140625,
+              "left": 230.8000030517578
+            }
+          }
+        ],
+        "overlap": false,
+        "pets": [
+          {
+            "height": 123.5999984741211,
+            "scrollHeight": 122
+          },
+          {
+            "height": 123.5999984741211,
+            "scrollHeight": 122
+          },
+          {
+            "height": 123.5999984741211,
+            "scrollHeight": 122
+          }
+        ]
+      },
+      {
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "title": {
+          "size": "28px",
+          "weight": "700"
+        },
+        "cards": [
+          {
+            "box": {
+              "x": 224,
+              "y": 326.5,
+              "width": 159.27500915527344,
+              "height": 165.8000030517578,
+              "top": 326.5,
+              "right": 383.27500915527344,
+              "bottom": 492.3000030517578,
+              "left": 224
+            },
+            "art": {
+              "x": 230.8000030517578,
+              "y": 333.3000183105469,
+              "width": 145.6750030517578,
+              "height": 92,
+              "top": 333.3000183105469,
+              "right": 376.4750061035156,
+              "bottom": 425.3000183105469,
+              "left": 230.8000030517578
+            }
+          },
+          {
+            "box": {
+              "x": 394.2749938964844,
+              "y": 326.5,
+              "width": 159.28750610351562,
+              "height": 165.8000030517578,
+              "top": 326.5,
+              "right": 553.5625,
+              "bottom": 492.3000030517578,
+              "left": 394.2749938964844
+            },
+            "art": {
+              "x": 401.07501220703125,
+              "y": 333.3000183105469,
+              "width": 145.6875,
+              "height": 92,
+              "top": 333.3000183105469,
+              "right": 546.7625122070312,
+              "bottom": 425.3000183105469,
+              "left": 401.07501220703125
+            }
+          },
+          {
+            "box": {
+              "x": 564.5625,
+              "y": 326.5,
+              "width": 159.27500915527344,
+              "height": 165.8000030517578,
+              "top": 326.5,
+              "right": 723.8375091552734,
+              "bottom": 492.3000030517578,
+              "left": 564.5625
+            },
+            "art": {
+              "x": 571.3624877929688,
+              "y": 333.3000183105469,
+              "width": 145.6750030517578,
+              "height": 92,
+              "top": 333.3000183105469,
+              "right": 717.0374908447266,
+              "bottom": 425.3000183105469,
+              "left": 571.3624877929688
+            }
+          },
+          {
+            "box": {
+              "x": 734.8375244140625,
+              "y": 326.5,
+              "width": 159.28750610351562,
+              "height": 165.8000030517578,
+              "top": 326.5,
+              "right": 894.1250305175781,
+              "bottom": 492.3000030517578,
+              "left": 734.8375244140625
+            },
+            "art": {
+              "x": 741.6375122070312,
+              "y": 333.3000183105469,
+              "width": 145.6875,
+              "height": 92,
+              "top": 333.3000183105469,
+              "right": 887.3250122070312,
+              "bottom": 425.3000183105469,
+              "left": 741.6375122070312
+            }
+          },
+          {
+            "box": {
+              "x": 224,
+              "y": 503.3000183105469,
+              "width": 159.27500915527344,
+              "height": 165.8000030517578,
+              "top": 503.3000183105469,
+              "right": 383.27500915527344,
+              "bottom": 669.1000213623047,
+              "left": 224
+            },
+            "art": {
+              "x": 230.8000030517578,
+              "y": 510.1000061035156,
+              "width": 145.6750030517578,
+              "height": 92,
+              "top": 510.1000061035156,
+              "right": 376.4750061035156,
+              "bottom": 602.1000061035156,
+              "left": 230.8000030517578
+            }
+          },
+          {
+            "box": {
+              "x": 394.2749938964844,
+              "y": 503.3000183105469,
+              "width": 159.28750610351562,
+              "height": 165.8000030517578,
+              "top": 503.3000183105469,
+              "right": 553.5625,
+              "bottom": 669.1000213623047,
+              "left": 394.2749938964844
+            },
+            "art": {
+              "x": 401.07501220703125,
+              "y": 510.1000061035156,
+              "width": 145.6875,
+              "height": 92,
+              "top": 510.1000061035156,
+              "right": 546.7625122070312,
+              "bottom": 602.1000061035156,
+              "left": 401.07501220703125
+            }
+          },
+          {
+            "box": {
+              "x": 564.5625,
+              "y": 503.3000183105469,
+              "width": 159.27500915527344,
+              "height": 165.8000030517578,
+              "top": 503.3000183105469,
+              "right": 723.8375091552734,
+              "bottom": 669.1000213623047,
+              "left": 564.5625
+            },
+            "art": {
+              "x": 571.3624877929688,
+              "y": 510.1000061035156,
+              "width": 145.6750030517578,
+              "height": 92,
+              "top": 510.1000061035156,
+              "right": 717.0374908447266,
+              "bottom": 602.1000061035156,
+              "left": 571.3624877929688
+            }
+          },
+          {
+            "box": {
+              "x": 734.8375244140625,
+              "y": 503.3000183105469,
+              "width": 159.28750610351562,
+              "height": 165.8000030517578,
+              "top": 503.3000183105469,
+              "right": 894.1250305175781,
+              "bottom": 669.1000213623047,
+              "left": 734.8375244140625
+            },
+            "art": {
+              "x": 741.6375122070312,
+              "y": 510.1000061035156,
+              "width": 145.6875,
+              "height": 92,
+              "top": 510.1000061035156,
+              "right": 887.3250122070312,
+              "bottom": 602.1000061035156,
+              "left": 741.6375122070312
+            }
+          },
+          {
+            "box": {
+              "x": 224,
+              "y": 680.1000366210938,
+              "width": 159.27500915527344,
+              "height": 165.8000030517578,
+              "top": 680.1000366210938,
+              "right": 383.27500915527344,
+              "bottom": 845.9000396728516,
+              "left": 224
+            },
+            "art": {
+              "x": 230.8000030517578,
+              "y": 686.9000244140625,
+              "width": 145.6750030517578,
+              "height": 92,
+              "top": 686.9000244140625,
+              "right": 376.4750061035156,
+              "bottom": 778.9000244140625,
+              "left": 230.8000030517578
+            }
+          }
+        ],
+        "overlap": false,
+        "pets": [
+          {
+            "height": 123.5999984741211,
+            "scrollHeight": 122
+          },
+          {
+            "height": 123.5999984741211,
+            "scrollHeight": 122
+          },
+          {
+            "height": 123.5999984741211,
+            "scrollHeight": 122
+          }
+        ]
+      }
+    ],
+    "actorsActuallyReady": true,
+    "mapEngine": "shared MapLibre",
+    "qaMapViewportOnly": true
+  },
+  "ordinaryProfile": {
+    "noScenario": true,
+    "realLocationStillRequired": true,
+    "exactInventoryAndRevision": true,
+    "qaPresetDisabled": true
+  },
+  "checks": [
+    "Two fresh foundation-validated QA profiles preserve actual planted crops; simulated location creates only run-scoped territories",
+    "Actual 1280/1440 A04 cards and decoded actors pass; ordinary profile has no QA marker/adapter and cannot use simulated territory location",
+    "Actual 1280/1440 A04 cards and decoded actors pass; ordinary profile has no QA marker/adapter and cannot use simulated territory location",
+    "Both outcomes use the same shared battle screen; exact session route/page/restart recovery, public context confirmation and one seed receipt; repeat confirmation preserves all state",
+    "Read-only restart recapture waits for both exact canonical actors; confirmed state, stock, territory and pets remain unchanged"
+  ],
+  "scenes": {
+    "win": {
+      "runId": "d4366bb6-3067-4a1d-958d-44fc796056b7",
+      "ownerAccountId": "qa:d4366bb6-3067-4a1d-958d-44fc796056b7:local-9df28c75-62f2-42d9-9856-5bbfe792e9d8",
+      "provenance": "simulated",
+      "simulated": {
+        "location": true,
+        "prestate": {
+          "preset": "charged",
+          "enemyAction": "dodge"
+        },
+        "enemyChoice": true
+      },
+      "actualEngine": true,
+      "session": {
+        "id": "battle-2e979736-5a53-43a1-b24d-e0633a1fcc96",
+        "mode": "territory",
+        "status": "finished",
+        "startedAt": "2026-10-24T15:22:26.684Z",
+        "player": {
+          "petId": "pet-eabacd21-2314-4241-9130-0e4c59f7eaac",
+          "petName": "礼帽喵",
+          "element": "metal",
+          "level": 1,
+          "resourceRef": "builtin:lingjing-hatcat-v1",
+          "resource": {
+            "resourceId": "builtin:lingjing-hatcat-v1",
+            "kind": "2d"
+          },
+          "appearance2d": "builtin:lingjing-hatcat-v1"
+        },
+        "enemy": {
+          "petId": "guardian:qa:d4366bb6-3067-4a1d-958d-44fc796056b7:territory:5205:20245",
+          "petName": "青芽",
+          "element": "wood",
+          "level": 1,
+          "resource": {
+            "resourceId": "builtin:lingjing-qingya-v1",
+            "kind": "2d"
+          },
+          "appearance2d": "builtin:lingjing-qingya-v1"
+        },
+        "snapshot": {
+          "round": 5,
+          "player": {
+            "id": "player",
+            "element": "metal",
+            "hp": 105,
+            "maxHp": 120,
+            "anger": 60,
+            "freeDodgeUsed": false,
+            "statuses": []
+          },
+          "enemy": {
+            "id": "enemy",
+            "element": "wood",
+            "hp": 0,
+            "maxHp": 120,
+            "anger": 24,
+            "freeDodgeUsed": true,
+            "statuses": [
+              {
+                "type": "vulnerability",
+                "duration": 8,
+                "stacks": 4,
+                "stackable": true,
+                "sourceId": "player"
+              }
+            ]
+          }
+        },
+        "rounds": [
+          {
+            "round": 1,
+            "actions": {
+              "player": "normal_attack",
+              "enemy": "dodge"
+            },
+            "damageTaken": {
+              "player": 0,
+              "enemy": 0
+            },
+            "directDamage": {
+              "player": 0,
+              "enemy": 0
+            },
+            "dotDamageEvents": {
+              "player": [],
+              "enemy": []
+            },
+            "healEvents": {
+              "player": [],
+              "enemy": []
+            },
+            "hpAfter": {
+              "player": 85,
+              "enemy": 100
+            },
+            "angerAfter": {
+              "player": 50,
+              "enemy": 40
+            },
+            "statusesAfter": {
+              "player": [],
+              "enemy": []
+            },
+            "winner": null,
+            "notes": [
+              "enemy spends 20 anger on dodge",
+              "player action missed",
+              "enemy dodged normal attack and refunded 30 anger"
+            ],
+            "state": {
+              "round": 1,
+              "player": {
+                "id": "player",
+                "element": "metal",
+                "hp": 85,
+                "maxHp": 120,
+                "anger": 50,
+                "freeDodgeUsed": false,
+                "statuses": []
+              },
+              "enemy": {
+                "id": "enemy",
+                "element": "wood",
+                "hp": 100,
+                "maxHp": 120,
+                "anger": 40,
+                "freeDodgeUsed": true,
+                "statuses": []
+              }
+            },
+            "visualEvents": [
+              {
+                "id": "1:player:windup:action:0",
+                "side": "player",
+                "phase": "windup",
+                "kind": "action",
+                "action": "normal_attack"
+              },
+              {
+                "id": "1:player:release:action:1",
+                "side": "player",
+                "phase": "release",
+                "kind": "action",
+                "action": "normal_attack",
+                "element": "metal"
+              },
+              {
+                "id": "1:enemy:impact:dodge:2",
+                "side": "enemy",
+                "phase": "impact",
+                "kind": "dodge"
+              },
+              {
+                "id": "1:enemy:windup:action:3",
+                "side": "enemy",
+                "phase": "windup",
+                "kind": "action",
+                "action": "dodge"
+              },
+              {
+                "id": "1:enemy:release:action:4",
+                "side": "enemy",
+                "phase": "release",
+                "kind": "action",
+                "action": "dodge",
+                "element": "wood"
+              }
+            ]
+          },
+          {
+            "round": 2,
+            "actions": {
+              "player": "ultimate",
+              "enemy": "dodge"
+            },
+            "damageTaken": {
+              "player": 0,
+              "enemy": 24
+            },
+            "directDamage": {
+              "player": 0,
+              "enemy": 24
+            },
+            "dotDamageEvents": {
+              "player": [],
+              "enemy": []
+            },
+            "healEvents": {
+              "player": [
+                {
+                  "type": "ultimate",
+                  "amount": 20
+                }
+              ],
+              "enemy": []
+            },
+            "hpAfter": {
+              "player": 105,
+              "enemy": 76
+            },
+            "angerAfter": {
+              "player": 0,
+              "enemy": 32
+            },
+            "statusesAfter": {
+              "player": [],
+              "enemy": [
+                {
+                  "type": "vulnerability",
+                  "duration": 2,
+                  "stacks": 1,
+                  "stackable": true,
+                  "sourceId": "player"
+                }
+              ]
+            },
+            "winner": null,
+            "notes": [
+              "enemy spends 20 anger on dodge",
+              "enemy vulnerable x1",
+              "player healed by ultimate"
+            ],
+            "state": {
+              "round": 2,
+              "player": {
+                "id": "player",
+                "element": "metal",
+                "hp": 105,
+                "maxHp": 120,
+                "anger": 0,
+                "freeDodgeUsed": false,
+                "statuses": []
+              },
+              "enemy": {
+                "id": "enemy",
+                "element": "wood",
+                "hp": 76,
+                "maxHp": 120,
+                "anger": 32,
+                "freeDodgeUsed": true,
+                "statuses": [
+                  {
+                    "type": "vulnerability",
+                    "duration": 2,
+                    "stacks": 1,
+                    "stackable": true,
+                    "sourceId": "player"
+                  }
+                ]
+              }
+            },
+            "visualEvents": [
+              {
+                "id": "2:player:windup:action:0",
+                "side": "player",
+                "phase": "windup",
+                "kind": "action",
+                "action": "ultimate"
+              },
+              {
+                "id": "2:player:release:action:1",
+                "side": "player",
+                "phase": "release",
+                "kind": "action",
+                "action": "ultimate",
+                "element": "metal"
+              },
+              {
+                "id": "2:enemy:impact:damage:2",
+                "side": "enemy",
+                "phase": "impact",
+                "kind": "damage",
+                "amount": 24
+              },
+              {
+                "id": "2:player:effects:heal:3",
+                "side": "player",
+                "phase": "effects",
+                "kind": "heal",
+                "amount": 20,
+                "status": "ultimate"
+              },
+              {
+                "id": "2:enemy:effects:status:4",
+                "side": "enemy",
+                "phase": "effects",
+                "kind": "status",
+                "status": "vulnerability",
+                "element": "metal"
+              },
+              {
+                "id": "2:enemy:windup:action:5",
+                "side": "enemy",
+                "phase": "windup",
+                "kind": "action",
+                "action": "dodge"
+              },
+              {
+                "id": "2:enemy:release:action:6",
+                "side": "enemy",
+                "phase": "release",
+                "kind": "action",
+                "action": "dodge",
+                "element": "wood"
+              }
+            ]
+          },
+          {
+            "round": 3,
+            "actions": {
+              "player": "element_attack",
+              "enemy": "dodge"
+            },
+            "damageTaken": {
+              "player": 0,
+              "enemy": 22
+            },
+            "directDamage": {
+              "player": 0,
+              "enemy": 22
+            },
+            "dotDamageEvents": {
+              "player": [],
+              "enemy": []
+            },
+            "healEvents": {
+              "player": [],
+              "enemy": []
+            },
+            "hpAfter": {
+              "player": 105,
+              "enemy": 54
+            },
+            "angerAfter": {
+              "player": 20,
+              "enemy": 23
+            },
+            "statusesAfter": {
+              "player": [],
+              "enemy": [
+                {
+                  "type": "vulnerability",
+                  "duration": 4,
+                  "stacks": 2,
+                  "stackable": true,
+                  "sourceId": "player"
+                }
+              ]
+            },
+            "winner": null,
+            "notes": [
+              "enemy spends 20 anger on dodge",
+              "enemy vulnerable x2"
+            ],
+            "state": {
+              "round": 3,
+              "player": {
+                "id": "player",
+                "element": "metal",
+                "hp": 105,
+                "maxHp": 120,
+                "anger": 20,
+                "freeDodgeUsed": false,
+                "statuses": []
+              },
+              "enemy": {
+                "id": "enemy",
+                "element": "wood",
+                "hp": 54,
+                "maxHp": 120,
+                "anger": 23,
+                "freeDodgeUsed": true,
+                "statuses": [
+                  {
+                    "type": "vulnerability",
+                    "duration": 4,
+                    "stacks": 2,
+                    "stackable": true,
+                    "sourceId": "player"
+                  }
+                ]
+              }
+            },
+            "visualEvents": [
+              {
+                "id": "3:player:windup:action:0",
+                "side": "player",
+                "phase": "windup",
+                "kind": "action",
+                "action": "element_attack"
+              },
+              {
+                "id": "3:player:release:action:1",
+                "side": "player",
+                "phase": "release",
+                "kind": "action",
+                "action": "element_attack",
+                "element": "metal"
+              },
+              {
+                "id": "3:enemy:impact:damage:2",
+                "side": "enemy",
+                "phase": "impact",
+                "kind": "damage",
+                "amount": 22
+              },
+              {
+                "id": "3:enemy:effects:status:3",
+                "side": "enemy",
+                "phase": "effects",
+                "kind": "status",
+                "status": "vulnerability",
+                "element": "metal"
+              },
+              {
+                "id": "3:enemy:windup:action:4",
+                "side": "enemy",
+                "phase": "windup",
+                "kind": "action",
+                "action": "dodge"
+              },
+              {
+                "id": "3:enemy:release:action:5",
+                "side": "enemy",
+                "phase": "release",
+                "kind": "action",
+                "action": "dodge",
+                "element": "wood"
+              }
+            ]
+          },
+          {
+            "round": 4,
+            "actions": {
+              "player": "element_attack",
+              "enemy": "dodge"
+            },
+            "damageTaken": {
+              "player": 0,
+              "enemy": 32
+            },
+            "directDamage": {
+              "player": 0,
+              "enemy": 32
+            },
+            "dotDamageEvents": {
+              "player": [],
+              "enemy": []
+            },
+            "healEvents": {
+              "player": [],
+              "enemy": []
+            },
+            "hpAfter": {
+              "player": 105,
+              "enemy": 22
+            },
+            "angerAfter": {
+              "player": 40,
+              "enemy": 19
+            },
+            "statusesAfter": {
+              "player": [],
+              "enemy": [
+                {
+                  "type": "vulnerability",
+                  "duration": 6,
+                  "stacks": 3,
+                  "stackable": true,
+                  "sourceId": "player"
+                }
+              ]
+            },
+            "winner": null,
+            "notes": [
+              "enemy spends 20 anger on dodge",
+              "enemy vulnerable x3"
+            ],
+            "state": {
+              "round": 4,
+              "player": {
+                "id": "player",
+                "element": "metal",
+                "hp": 105,
+                "maxHp": 120,
+                "anger": 40,
+                "freeDodgeUsed": false,
+                "statuses": []
+              },
+              "enemy": {
+                "id": "enemy",
+                "element": "wood",
+                "hp": 22,
+                "maxHp": 120,
+                "anger": 19,
+                "freeDodgeUsed": true,
+                "statuses": [
+                  {
+                    "type": "vulnerability",
+                    "duration": 6,
+                    "stacks": 3,
+                    "stackable": true,
+                    "sourceId": "player"
+                  }
+                ]
+              }
+            },
+            "visualEvents": [
+              {
+                "id": "4:player:windup:action:0",
+                "side": "player",
+                "phase": "windup",
+                "kind": "action",
+                "action": "element_attack"
+              },
+              {
+                "id": "4:player:release:action:1",
+                "side": "player",
+                "phase": "release",
+                "kind": "action",
+                "action": "element_attack",
+                "element": "metal"
+              },
+              {
+                "id": "4:enemy:impact:damage:2",
+                "side": "enemy",
+                "phase": "impact",
+                "kind": "damage",
+                "amount": 32
+              },
+              {
+                "id": "4:enemy:effects:status:3",
+                "side": "enemy",
+                "phase": "effects",
+                "kind": "status",
+                "status": "vulnerability",
+                "element": "metal"
+              },
+              {
+                "id": "4:enemy:windup:action:4",
+                "side": "enemy",
+                "phase": "windup",
+                "kind": "action",
+                "action": "dodge"
+              },
+              {
+                "id": "4:enemy:release:action:5",
+                "side": "enemy",
+                "phase": "release",
+                "kind": "action",
+                "action": "dodge",
+                "element": "wood"
+              }
+            ]
+          },
+          {
+            "round": 5,
+            "actions": {
+              "player": "element_attack",
+              "enemy": "dodge"
+            },
+            "damageTaken": {
+              "player": 0,
+              "enemy": 49
+            },
+            "directDamage": {
+              "player": 0,
+              "enemy": 49
+            },
+            "dotDamageEvents": {
+              "player": [],
+              "enemy": []
+            },
+            "healEvents": {
+              "player": [],
+              "enemy": []
+            },
+            "hpAfter": {
+              "player": 105,
+              "enemy": 0
+            },
+            "angerAfter": {
+              "player": 60,
+              "enemy": 24
+            },
+            "statusesAfter": {
+              "player": [],
+              "enemy": [
+                {
+                  "type": "vulnerability",
+                  "duration": 8,
+                  "stacks": 4,
+                  "stackable": true,
+                  "sourceId": "player"
+                }
+              ]
+            },
+            "winner": "player",
+            "notes": [
+              "enemy spends 20 anger on dodge",
+              "enemy vulnerable x4"
+            ],
+            "state": {
+              "round": 5,
+              "player": {
+                "id": "player",
+                "element": "metal",
+                "hp": 105,
+                "maxHp": 120,
+                "anger": 60,
+                "freeDodgeUsed": false,
+                "statuses": []
+              },
+              "enemy": {
+                "id": "enemy",
+                "element": "wood",
+                "hp": 0,
+                "maxHp": 120,
+                "anger": 24,
+                "freeDodgeUsed": true,
+                "statuses": [
+                  {
+                    "type": "vulnerability",
+                    "duration": 8,
+                    "stacks": 4,
+                    "stackable": true,
+                    "sourceId": "player"
+                  }
+                ]
+              }
+            },
+            "visualEvents": [
+              {
+                "id": "5:player:windup:action:0",
+                "side": "player",
+                "phase": "windup",
+                "kind": "action",
+                "action": "element_attack"
+              },
+              {
+                "id": "5:player:release:action:1",
+                "side": "player",
+                "phase": "release",
+                "kind": "action",
+                "action": "element_attack",
+                "element": "metal"
+              },
+              {
+                "id": "5:enemy:impact:damage:2",
+                "side": "enemy",
+                "phase": "impact",
+                "kind": "damage",
+                "amount": 49
+              },
+              {
+                "id": "5:enemy:effects:status:3",
+                "side": "enemy",
+                "phase": "effects",
+                "kind": "status",
+                "status": "vulnerability",
+                "element": "metal"
+              },
+              {
+                "id": "5:enemy:windup:action:4",
+                "side": "enemy",
+                "phase": "windup",
+                "kind": "action",
+                "action": "dodge"
+              },
+              {
+                "id": "5:enemy:release:action:5",
+                "side": "enemy",
+                "phase": "release",
+                "kind": "action",
+                "action": "dodge",
+                "element": "wood"
+              }
+            ]
+          }
+        ],
+        "winner": "player",
+        "pendingAction": null,
+        "historyComplete": true,
+        "rules": {
+          "id": "five-elements-standard-v1",
+          "label": "标准五行对战",
+          "vitalPolicy": "normalized",
+          "maxHp": 120,
+          "maxAnger": 100,
+          "companionStatsApplied": false,
+          "baseDamage": {
+            "normal_attack": 10,
+            "element_attack": 12,
+            "dodge": 0,
+            "ultimate": 20
+          },
+          "ultimateAnger": 50,
+          "ultimateCost": 50,
+          "ultimateHeal": 20,
+          "dodgeMaxCost": 20,
+          "dodgeRefund": 30,
+          "advantage": {
+            "metal": "wood",
+            "wood": "earth",
+            "earth": "water",
+            "water": "fire",
+            "fire": "metal"
+          },
+          "elementEffects": {
+            "metal": {
+              "label": "易伤",
+              "description": "每层受伤×1.5，最多5层"
+            },
+            "wood": {
+              "label": "寄生",
+              "description": "每层回合末吸取2生命，最多5层"
+            },
+            "earth": {
+              "label": "迟钝",
+              "description": "每层伤害×0.5，最多5层"
+            },
+            "water": {
+              "label": "降怒",
+              "description": "命中后对方怒气向下取半，不增加受击怒气"
+            },
+            "fire": {
+              "label": "燃烧",
+              "description": "回合末按当前生命8%×层数伤害，最多5层"
+            }
+          }
+        },
+        "context": {
+          "id": "qa:d4366bb6-3067-4a1d-958d-44fc796056b7:territory:5205:20245:1",
+          "territoryId": "qa:d4366bb6-3067-4a1d-958d-44fc796056b7:territory:5205:20245",
+          "territoryRevision": 1,
+          "authority": "simulated",
+          "scenarioId": "d4366bb6-3067-4a1d-958d-44fc796056b7",
+          "qaPreset": "charged",
+          "qaEnemyAction": "dodge"
+        },
+        "updatedAt": "2026-10-24T15:22:37.373Z",
+        "revision": 7,
+        "endedAt": "2026-10-24T15:22:37.361Z",
+        "reward": {
+          "actionId": "battle:battle-2e979736-5a53-43a1-b24d-e0633a1fcc96:qa:d4366bb6-3067-4a1d-958d-44fc796056b7:local-9df28c75-62f2-42d9-9856-5bbfe792e9d8",
+          "petId": "pet-eabacd21-2314-4241-9130-0e4c59f7eaac",
+          "experience": 20,
+          "applied": true,
+          "previousExperience": 0,
+          "previousLevel": 1,
+          "currentExperience": 20,
+          "currentLevel": 1,
+          "seeds": {
+            "source": "battle",
+            "receiptId": "battle-2e979736-5a53-43a1-b24d-e0633a1fcc96",
+            "itemId": "seed:tomato",
+            "quantity": 2
+          }
+        },
+        "reportId": "battle-2e979736-5a53-43a1-b24d-e0633a1fcc96"
+      },
+      "actorIdentities": [
+        {
+          "petId": "pet-eabacd21-2314-4241-9130-0e4c59f7eaac",
+          "resourceId": "builtin:lingjing-hatcat-v1",
+          "status": "ready"
+        },
+        {
+          "petId": "guardian:qa:d4366bb6-3067-4a1d-958d-44fc796056b7:territory:5205:20245",
+          "resourceId": "builtin:lingjing-qingya-v1",
+          "status": "ready"
+        }
+      ],
+      "animation": [
+        {
+          "phase": "windup",
+          "key": "battle-2e979736-5a53-43a1-b24d-e0633a1fcc96:2"
+        },
+        {
+          "phase": "release",
+          "key": "battle-2e979736-5a53-43a1-b24d-e0633a1fcc96:2"
+        },
+        {
+          "phase": "impact",
+          "key": "battle-2e979736-5a53-43a1-b24d-e0633a1fcc96:2"
+        },
+        {
+          "phase": "effects",
+          "key": "battle-2e979736-5a53-43a1-b24d-e0633a1fcc96:2"
+        },
+        {
+          "phase": "rest",
+          "key": "battle-2e979736-5a53-43a1-b24d-e0633a1fcc96:2"
+        },
+        {
+          "phase": "windup",
+          "key": "battle-2e979736-5a53-43a1-b24d-e0633a1fcc96:3"
+        },
+        {
+          "phase": "release",
+          "key": "battle-2e979736-5a53-43a1-b24d-e0633a1fcc96:3"
+        },
+        {
+          "phase": "impact",
+          "key": "battle-2e979736-5a53-43a1-b24d-e0633a1fcc96:3"
+        },
+        {
+          "phase": "effects",
+          "key": "battle-2e979736-5a53-43a1-b24d-e0633a1fcc96:3"
+        },
+        {
+          "phase": "rest",
+          "key": "battle-2e979736-5a53-43a1-b24d-e0633a1fcc96:3"
+        },
+        {
+          "phase": "windup",
+          "key": "battle-2e979736-5a53-43a1-b24d-e0633a1fcc96:4"
+        },
+        {
+          "phase": "release",
+          "key": "battle-2e979736-5a53-43a1-b24d-e0633a1fcc96:4"
+        },
+        {
+          "phase": "impact",
+          "key": "battle-2e979736-5a53-43a1-b24d-e0633a1fcc96:4"
+        },
+        {
+          "phase": "effects",
+          "key": "battle-2e979736-5a53-43a1-b24d-e0633a1fcc96:4"
+        },
+        {
+          "phase": "rest",
+          "key": "battle-2e979736-5a53-43a1-b24d-e0633a1fcc96:4"
+        },
+        {
+          "phase": "windup",
+          "key": "battle-2e979736-5a53-43a1-b24d-e0633a1fcc96:5"
+        },
+        {
+          "phase": "release",
+          "key": "battle-2e979736-5a53-43a1-b24d-e0633a1fcc96:5"
+        },
+        {
+          "phase": "impact",
+          "key": "battle-2e979736-5a53-43a1-b24d-e0633a1fcc96:5"
+        },
+        {
+          "phase": "effects",
+          "key": "battle-2e979736-5a53-43a1-b24d-e0633a1fcc96:5"
+        },
+        {
+          "phase": "rest",
+          "key": "battle-2e979736-5a53-43a1-b24d-e0633a1fcc96:5"
+        }
+      ],
+      "midBattleRestartRecovered": true,
+      "explicitQaLogin": true,
+      "territory": {
+        "ownerAccountId": "qa:d4366bb6-3067-4a1d-958d-44fc796056b7:local-9df28c75-62f2-42d9-9856-5bbfe792e9d8",
+        "revision": 2,
+        "result": {
+          "territoryId": "qa:d4366bb6-3067-4a1d-958d-44fc796056b7:territory:5205:20245",
+          "won": true,
+          "ownerAccountId": "qa:d4366bb6-3067-4a1d-958d-44fc796056b7:local-9df28c75-62f2-42d9-9856-5bbfe792e9d8",
+          "territoryRevision": 2,
+          "captureMultiplier": 2
+        }
+      },
+      "seedReceipt": {
+        "owner_account_id": "qa:d4366bb6-3067-4a1d-958d-44fc796056b7:local-9df28c75-62f2-42d9-9856-5bbfe792e9d8",
+        "source": "battle",
+        "receipt_id": "battle-2e979736-5a53-43a1-b24d-e0633a1fcc96",
+        "action_id": "battle:battle-2e979736-5a53-43a1-b24d-e0633a1fcc96:qa:d4366bb6-3067-4a1d-958d-44fc796056b7:local-9df28c75-62f2-42d9-9856-5bbfe792e9d8:seeds",
+        "result_json": "{\"source\":\"battle\",\"receiptId\":\"battle-2e979736-5a53-43a1-b24d-e0633a1fcc96\",\"itemId\":\"seed:tomato\",\"quantity\":2}"
+      },
+      "rewardEvents": [
+        {
+          "item_id": "seed:tomato",
+          "delta": 2,
+          "balance": 4,
+          "kind": "reward"
+        }
+      ],
+      "confirmation": {
+        "action_id": "context:battle-2e979736-5a53-43a1-b24d-e0633a1fcc96",
+        "kind": "territorySettle",
+        "request_hash": "088e2c4a445c36ebed6aa8d0f566a1205ced6269d49dab2a0acf6f94a08b19ed",
+        "result_json": "{\"ok\":true,\"revision\":6,\"replayed\":false,\"data\":{\"territoryId\":\"qa:d4366bb6-3067-4a1d-958d-44fc796056b7:territory:5205:20245\",\"won\":true,\"ownerAccountId\":\"qa:d4366bb6-3067-4a1d-958d-44fc796056b7:local-9df28c75-62f2-42d9-9856-5bbfe792e9d8\",\"territoryRevision\":2,\"captureMultiplier\":2}}"
+      },
+      "inventory": [
+        {
+          "item_id": "seed:berry",
+          "quantity": 2
+        },
+        {
+          "item_id": "seed:carrot",
+          "quantity": 1
+        },
+        {
+          "item_id": "seed:rice",
+          "quantity": 2
+        },
+        {
+          "item_id": "seed:tomato",
+          "quantity": 4
+        }
+      ],
+      "crop": {
+        "owner_account_id": "qa:d4366bb6-3067-4a1d-958d-44fc796056b7:local-9df28c75-62f2-42d9-9856-5bbfe792e9d8",
+        "plot_id": "plot-1",
+        "crop_type": "carrot",
+        "planted_at": 1792853933525,
+        "matures_at": 1792854533525,
+        "yield_quantity": 3,
+        "revision": 1
+      },
+      "exactRestartAndReplay": true,
+      "confirmedResultUi": true,
+      "garrisonNoGrowthOrSelectionChange": true
+    },
+    "loss": {
+      "runId": "ea6d30f3-99fd-4a01-8e7a-f733dd5cb6b5",
+      "ownerAccountId": "qa:ea6d30f3-99fd-4a01-8e7a-f733dd5cb6b5:local-28262f0e-ddca-49d3-8013-42007d86323f",
+      "provenance": "simulated",
+      "simulated": {
+        "location": true,
+        "prestate": {
+          "preset": "defending",
+          "enemyAction": "element_attack"
+        },
+        "enemyChoice": true
+      },
+      "actualEngine": true,
+      "session": {
+        "id": "battle-146fe5a0-b24b-483d-ab3c-be821a442536",
+        "mode": "territory",
+        "status": "finished",
+        "startedAt": "2026-10-24T15:22:44.998Z",
+        "player": {
+          "petId": "pet-459c1177-a8e6-452e-b503-354c79d5a196",
+          "petName": "鱼丸",
+          "element": "water",
+          "level": 1,
+          "resourceRef": "builtin:lingjing-yuwan-v2",
+          "resource": {
+            "resourceId": "builtin:lingjing-yuwan-v2",
+            "kind": "2d"
+          },
+          "appearance2d": "builtin:lingjing-yuwan-v2"
+        },
+        "enemy": {
+          "petId": "guardian:qa:ea6d30f3-99fd-4a01-8e7a-f733dd5cb6b5:territory:5205:20245",
+          "petName": "青芽",
+          "element": "wood",
+          "level": 1,
+          "resource": {
+            "resourceId": "builtin:lingjing-qingya-v1",
+            "kind": "2d"
+          },
+          "appearance2d": "builtin:lingjing-qingya-v1"
+        },
+        "snapshot": {
+          "round": 2,
+          "player": {
+            "id": "player",
+            "element": "water",
+            "hp": 0,
+            "maxHp": 120,
+            "anger": 6,
+            "freeDodgeUsed": true,
+            "statuses": [
+              {
+                "type": "parasite",
+                "duration": 2,
+                "potency": 2,
+                "stacks": 1,
+                "stackable": true,
+                "sourceId": "enemy"
+              }
+            ]
+          },
+          "enemy": {
+            "id": "enemy",
+            "element": "wood",
+            "hp": 112,
+            "maxHp": 120,
+            "anger": 55,
+            "freeDodgeUsed": false,
+            "statuses": []
+          }
+        },
+        "rounds": [
+          {
+            "round": 1,
+            "actions": {
+              "player": "normal_attack",
+              "enemy": "element_attack"
+            },
+            "damageTaken": {
+              "player": 0,
+              "enemy": 10
+            },
+            "directDamage": {
+              "player": 0,
+              "enemy": 10
+            },
+            "dotDamageEvents": {
+              "player": [],
+              "enemy": []
+            },
+            "healEvents": {
+              "player": [],
+              "enemy": []
+            },
+            "hpAfter": {
+              "player": 12,
+              "enemy": 110
+            },
+            "angerAfter": {
+              "player": 0,
+              "enemy": 55
+            },
+            "statusesAfter": {
+              "player": [],
+              "enemy": []
+            },
+            "winner": null,
+            "notes": [
+              "enemy action missed"
+            ],
+            "state": {
+              "round": 1,
+              "player": {
+                "id": "player",
+                "element": "water",
+                "hp": 12,
+                "maxHp": 120,
+                "anger": 0,
+                "freeDodgeUsed": false,
+                "statuses": []
+              },
+              "enemy": {
+                "id": "enemy",
+                "element": "wood",
+                "hp": 110,
+                "maxHp": 120,
+                "anger": 55,
+                "freeDodgeUsed": false,
+                "statuses": []
+              }
+            },
+            "visualEvents": [
+              {
+                "id": "1:player:windup:action:0",
+                "side": "player",
+                "phase": "windup",
+                "kind": "action",
+                "action": "normal_attack"
+              },
+              {
+                "id": "1:player:release:action:1",
+                "side": "player",
+                "phase": "release",
+                "kind": "action",
+                "action": "normal_attack",
+                "element": "water"
+              },
+              {
+                "id": "1:enemy:impact:damage:2",
+                "side": "enemy",
+                "phase": "impact",
+                "kind": "damage",
+                "amount": 10
+              },
+              {
+                "id": "1:enemy:windup:action:3",
+                "side": "enemy",
+                "phase": "windup",
+                "kind": "action",
+                "action": "element_attack"
+              },
+              {
+                "id": "1:enemy:release:action:4",
+                "side": "enemy",
+                "phase": "release",
+                "kind": "action",
+                "action": "element_attack",
+                "element": "wood"
+              },
+              {
+                "id": "1:enemy:impact:interrupt:5",
+                "side": "enemy",
+                "phase": "impact",
+                "kind": "interrupt"
+              }
+            ]
+          },
+          {
+            "round": 2,
+            "actions": {
+              "player": "dodge",
+              "enemy": "element_attack"
+            },
+            "damageTaken": {
+              "player": 14,
+              "enemy": 0
+            },
+            "directDamage": {
+              "player": 12,
+              "enemy": 0
+            },
+            "dotDamageEvents": {
+              "player": [
+                {
+                  "type": "parasite",
+                  "amount": 2
+                }
+              ],
+              "enemy": []
+            },
+            "healEvents": {
+              "player": [],
+              "enemy": [
+                {
+                  "type": "parasite",
+                  "amount": 2
+                }
+              ]
+            },
+            "hpAfter": {
+              "player": 0,
+              "enemy": 112
+            },
+            "angerAfter": {
+              "player": 6,
+              "enemy": 55
+            },
+            "statusesAfter": {
+              "player": [
+                {
+                  "type": "parasite",
+                  "duration": 2,
+                  "potency": 2,
+                  "stacks": 1,
+                  "stackable": true,
+                  "sourceId": "enemy"
+                }
+              ],
+              "enemy": []
+            },
+            "winner": "enemy",
+            "notes": [
+              "player uses first free dodge",
+              "enemy parasitized x1",
+              "enemy healed by parasite",
+              "player takes parasite damage"
+            ],
+            "state": {
+              "round": 2,
+              "player": {
+                "id": "player",
+                "element": "water",
+                "hp": 0,
+                "maxHp": 120,
+                "anger": 6,
+                "freeDodgeUsed": true,
+                "statuses": [
+                  {
+                    "type": "parasite",
+                    "duration": 2,
+                    "potency": 2,
+                    "stacks": 1,
+                    "stackable": true,
+                    "sourceId": "enemy"
+                  }
+                ]
+              },
+              "enemy": {
+                "id": "enemy",
+                "element": "wood",
+                "hp": 112,
+                "maxHp": 120,
+                "anger": 55,
+                "freeDodgeUsed": false,
+                "statuses": []
+              }
+            },
+            "visualEvents": [
+              {
+                "id": "2:player:windup:action:0",
+                "side": "player",
+                "phase": "windup",
+                "kind": "action",
+                "action": "dodge"
+              },
+              {
+                "id": "2:player:release:action:1",
+                "side": "player",
+                "phase": "release",
+                "kind": "action",
+                "action": "dodge",
+                "element": "water"
+              },
+              {
+                "id": "2:player:effects:dot:2",
+                "side": "player",
+                "phase": "effects",
+                "kind": "dot",
+                "amount": 2,
+                "status": "parasite"
+              },
+              {
+                "id": "2:enemy:windup:action:3",
+                "side": "enemy",
+                "phase": "windup",
+                "kind": "action",
+                "action": "element_attack"
+              },
+              {
+                "id": "2:enemy:release:action:4",
+                "side": "enemy",
+                "phase": "release",
+                "kind": "action",
+                "action": "element_attack",
+                "element": "wood"
+              },
+              {
+                "id": "2:player:impact:damage:5",
+                "side": "player",
+                "phase": "impact",
+                "kind": "damage",
+                "amount": 12
+              },
+              {
+                "id": "2:enemy:effects:heal:6",
+                "side": "enemy",
+                "phase": "effects",
+                "kind": "heal",
+                "amount": 2,
+                "status": "parasite"
+              },
+              {
+                "id": "2:player:effects:status:7",
+                "side": "player",
+                "phase": "effects",
+                "kind": "status",
+                "status": "parasite",
+                "element": "wood"
+              }
+            ]
+          }
+        ],
+        "winner": "enemy",
+        "pendingAction": null,
+        "historyComplete": true,
+        "rules": {
+          "id": "five-elements-standard-v1",
+          "label": "标准五行对战",
+          "vitalPolicy": "normalized",
+          "maxHp": 120,
+          "maxAnger": 100,
+          "companionStatsApplied": false,
+          "baseDamage": {
+            "normal_attack": 10,
+            "element_attack": 12,
+            "dodge": 0,
+            "ultimate": 20
+          },
+          "ultimateAnger": 50,
+          "ultimateCost": 50,
+          "ultimateHeal": 20,
+          "dodgeMaxCost": 20,
+          "dodgeRefund": 30,
+          "advantage": {
+            "metal": "wood",
+            "wood": "earth",
+            "earth": "water",
+            "water": "fire",
+            "fire": "metal"
+          },
+          "elementEffects": {
+            "metal": {
+              "label": "易伤",
+              "description": "每层受伤×1.5，最多5层"
+            },
+            "wood": {
+              "label": "寄生",
+              "description": "每层回合末吸取2生命，最多5层"
+            },
+            "earth": {
+              "label": "迟钝",
+              "description": "每层伤害×0.5，最多5层"
+            },
+            "water": {
+              "label": "降怒",
+              "description": "命中后对方怒气向下取半，不增加受击怒气"
+            },
+            "fire": {
+              "label": "燃烧",
+              "description": "回合末按当前生命8%×层数伤害，最多5层"
+            }
+          }
+        },
+        "context": {
+          "id": "qa:ea6d30f3-99fd-4a01-8e7a-f733dd5cb6b5:territory:5205:20245:1",
+          "territoryId": "qa:ea6d30f3-99fd-4a01-8e7a-f733dd5cb6b5:territory:5205:20245",
+          "territoryRevision": 1,
+          "authority": "simulated",
+          "scenarioId": "ea6d30f3-99fd-4a01-8e7a-f733dd5cb6b5",
+          "qaPreset": "defending",
+          "qaEnemyAction": "element_attack"
+        },
+        "updatedAt": "2026-10-24T15:22:49.218Z",
+        "revision": 4,
+        "endedAt": "2026-10-24T15:22:49.206Z",
+        "reward": {
+          "actionId": "battle:battle-146fe5a0-b24b-483d-ab3c-be821a442536:qa:ea6d30f3-99fd-4a01-8e7a-f733dd5cb6b5:local-28262f0e-ddca-49d3-8013-42007d86323f",
+          "petId": "pet-459c1177-a8e6-452e-b503-354c79d5a196",
+          "experience": 5,
+          "applied": true,
+          "previousExperience": 0,
+          "previousLevel": 1,
+          "currentExperience": 5,
+          "currentLevel": 1,
+          "seeds": {
+            "source": "battle",
+            "receiptId": "battle-146fe5a0-b24b-483d-ab3c-be821a442536",
+            "itemId": "seed:tomato",
+            "quantity": 2
+          }
+        },
+        "reportId": "battle-146fe5a0-b24b-483d-ab3c-be821a442536"
+      },
+      "actorIdentities": [
+        {
+          "petId": "pet-459c1177-a8e6-452e-b503-354c79d5a196",
+          "resourceId": "builtin:lingjing-yuwan-v2",
+          "status": "ready"
+        },
+        {
+          "petId": "guardian:qa:ea6d30f3-99fd-4a01-8e7a-f733dd5cb6b5:territory:5205:20245",
+          "resourceId": "builtin:lingjing-qingya-v1",
+          "status": "ready"
+        }
+      ],
+      "animation": [
+        {
+          "phase": "windup",
+          "key": "battle-146fe5a0-b24b-483d-ab3c-be821a442536:2"
+        },
+        {
+          "phase": "release",
+          "key": "battle-146fe5a0-b24b-483d-ab3c-be821a442536:2"
+        },
+        {
+          "phase": "impact",
+          "key": "battle-146fe5a0-b24b-483d-ab3c-be821a442536:2"
+        },
+        {
+          "phase": "effects",
+          "key": "battle-146fe5a0-b24b-483d-ab3c-be821a442536:2"
+        },
+        {
+          "phase": "rest",
+          "key": "battle-146fe5a0-b24b-483d-ab3c-be821a442536:2"
+        }
+      ],
+      "midBattleRestartRecovered": true,
+      "explicitQaLogin": true,
+      "territory": {
+        "ownerAccountId": null,
+        "revision": 2,
+        "result": {
+          "territoryId": "qa:ea6d30f3-99fd-4a01-8e7a-f733dd5cb6b5:territory:5205:20245",
+          "won": false,
+          "ownerAccountId": null,
+          "territoryRevision": 2,
+          "captureMultiplier": 1
+        }
+      },
+      "seedReceipt": {
+        "owner_account_id": "qa:ea6d30f3-99fd-4a01-8e7a-f733dd5cb6b5:local-28262f0e-ddca-49d3-8013-42007d86323f",
+        "source": "battle",
+        "receipt_id": "battle-146fe5a0-b24b-483d-ab3c-be821a442536",
+        "action_id": "battle:battle-146fe5a0-b24b-483d-ab3c-be821a442536:qa:ea6d30f3-99fd-4a01-8e7a-f733dd5cb6b5:local-28262f0e-ddca-49d3-8013-42007d86323f:seeds",
+        "result_json": "{\"source\":\"battle\",\"receiptId\":\"battle-146fe5a0-b24b-483d-ab3c-be821a442536\",\"itemId\":\"seed:tomato\",\"quantity\":2}"
+      },
+      "rewardEvents": [
+        {
+          "item_id": "seed:tomato",
+          "delta": 2,
+          "balance": 4,
+          "kind": "reward"
+        }
+      ],
+      "confirmation": {
+        "action_id": "context:battle-146fe5a0-b24b-483d-ab3c-be821a442536",
+        "kind": "territorySettle",
+        "request_hash": "d067574ffe1735a3bcd5482f6d514dc0ee2b13a9e945084a5d526375ff3e85df",
+        "result_json": "{\"ok\":true,\"revision\":6,\"replayed\":false,\"data\":{\"territoryId\":\"qa:ea6d30f3-99fd-4a01-8e7a-f733dd5cb6b5:territory:5205:20245\",\"won\":false,\"ownerAccountId\":null,\"territoryRevision\":2,\"captureMultiplier\":1}}"
+      },
+      "inventory": [
+        {
+          "item_id": "seed:berry",
+          "quantity": 2
+        },
+        {
+          "item_id": "seed:carrot",
+          "quantity": 1
+        },
+        {
+          "item_id": "seed:rice",
+          "quantity": 2
+        },
+        {
+          "item_id": "seed:tomato",
+          "quantity": 4
+        }
+      ],
+      "crop": {
+        "owner_account_id": "qa:ea6d30f3-99fd-4a01-8e7a-f733dd5cb6b5:local-28262f0e-ddca-49d3-8013-42007d86323f",
+        "plot_id": "plot-1",
+        "crop_type": "carrot",
+        "planted_at": 1792853935812,
+        "matures_at": 1792854535812,
+        "yield_quantity": 3,
+        "revision": 1
+      },
+      "exactRestartAndReplay": true,
+      "confirmedResultUi": true,
+      "garrisonNoGrowthOrSelectionChange": false
+    }
+  },
+  "mainIndependentReview": "accepted-evidence-review",
+  "mainReview": {
+    "status": "accepted",
+    "kind": "main-chat-evidence-and-state-review",
+    "clientDate": "2026-10-24",
+    "timezone": "Asia/Shanghai",
+    "sourceThreadId": "01a16d86-7650-7871-8e27-5b65477a126e",
+    "reviewedDeliveryCommit": "ef01d4dc1d191a09dbeb14f1f3adc1503ba2b5fa",
+    "acceptedScope": [
+      "shared BattleScreen territory victory occupation and defeat confirmation",
+      "matching wood guardian Qingya identity",
+      "exact battle session recovery and SQLite/restart records",
+      "idempotent seed receipts, personal garden and garrison readback",
+      "explicit isolated simulated location and prestate provenance"
+    ],
+    "deferred": [
+      "Main chat independent public-scene verification on the final integrated build",
+      "Whole-product U08 acceptance"
+    ],
+    "repeatDomainTestsRequired": false,
+    "cloudAcceptance": false,
+    "physicalGpsAcceptance": false
+  }
+}

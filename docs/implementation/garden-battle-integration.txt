@@ -37,6 +37,8 @@ HTTPS/跨设备能力按用户最新要求暂缓，不再作为本轮阻塞。
 
 原生入口：node apps/pc-app/runtime/features/garden/verification/unified-territory.electron.mjs
 依次使用 prepare、visual、verify；最后 export-unified-evidence.mjs 导出已验证证据。
+readback 仅重开已完成档案，校验结果/库存/领地/伙伴不变，并等待两名真实角色就绪后拍摄；
+不再次开战或提交结算。导出证据要求确认页的两名角色均已解码就绪。
 脚本置于 verification/，消费公共打包排除规则；普通产品不携带测试启动器。
 旧版初始 QA 目录保留。最终使用新的 namespaced-v2 档案，凭据只留 ignored 目录，
 重启通过公共 accounts.login 重新登录同一 QA 身份，不模拟自动登录或安全凭据恢复。
