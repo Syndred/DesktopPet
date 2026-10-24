@@ -6,12 +6,13 @@
     "output": "artifacts/pc-beta"
   },
   "files": [
+    "apps/pc-app/dist/**/*",
     "apps/pc-app/runtime/**/*",
     "package.json"
   ],
   "asar": true,
   "extraMetadata": {
-    "main": "apps/pc-app/runtime/main.cjs"
+    "main": "apps/pc-app/dist/main/index.cjs"
   },
   "win": {
     "target": [
