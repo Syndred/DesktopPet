@@ -81,6 +81,20 @@ async function fixture(t) {
   };
 }
 
+test('snapshot projects only verified inventory elements and never guesses from names or payload', async t => {
+  const f = await fixture(t);
+  const elements = ['metal', 'wood', 'water', 'fire', 'earth'];
+  f.feature.service.listPets = owner => [
+    ...elements.map(element => ({ petId: `element-${element}`, ownerAccountId: owner, name: element, templateId: 'verified-template', element })),
+    { petId: 'unknown-element', ownerAccountId: owner, name: '木系伙伴', element: 'not-a-real-element' },
+    { petId: 'missing-element', ownerAccountId: owner, name: '火系伙伴' }
+  ];
+  const snapshot = await f.ok('snapshot', { ownerAccountId: 'forged-owner', element: 'fire' });
+  assert.equal(snapshot.accountId, 'account-A');
+  assert.deepEqual(snapshot.pets.map(pet => pet.element), [...elements, null, null]);
+  assert.equal(f.requests.length, 0);
+});
+
 test('account + pet instance isolates personas, notes, selections and durable history', async t => {
   const f = await fixture(t);
   await f.config();

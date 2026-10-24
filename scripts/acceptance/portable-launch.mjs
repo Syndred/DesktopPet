@@ -5,9 +5,13 @@ import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { resolve, join } from 'node:path';
 import assert from 'node:assert/strict';
 
-const executable=resolve(process.argv[2] || 'artifacts/pc-beta/Lingjing-0.1.8-portable-x64.exe');
+const builder=JSON.parse(readFileSync(resolve('scripts/release/electron-builder.pc.json'),'utf8'));
+const version=JSON.parse(readFileSync(resolve('package.json'),'utf8')).version;
+const executable=resolve(process.argv[2] || join(builder.directories.output,`Lingjing-${version}-portable-x64.exe`));
 const baseline=JSON.parse(readFileSync(resolve('artifacts/foundation/visual-recheck/evidence.json'),'utf8'));
-const output=resolve('artifacts/foundation/portable');mkdirSync(output,{recursive:true});
+const original=JSON.parse(readFileSync(resolve('docs/implementation/evidence/foundation/pre-unified-portable-launch.json'),'utf8'));
+const catalog=JSON.parse(readFileSync(resolve('apps/pc-app/runtime/features/resources/assets/roster-v2/catalog.json'),'utf8'));
+const output=resolve('artifacts/foundation/unified-battle/portable');mkdirSync(output,{recursive:true});
 const reservation=createServer();await new Promise(resolve=>reservation.listen(0,'127.0.0.1',resolve));
 const port=reservation.address().port;await new Promise(resolve=>reservation.close(resolve));
 const env={...process.env,PET_USER_DATA_DIR:baseline.profile};delete env.ELECTRON_RUN_AS_NODE;
@@ -32,9 +36,11 @@ try {
   const invoke=async(feature,command,payload={})=>{const result=await page.evaluate(({feature,command,payload})=>window.lingjing.invoke(feature,command,payload),{feature,command,payload});assert.equal(result.ok,true,JSON.stringify(result));return result.data;};
   proof.loadedUrl=page.url();assert.ok(!proof.loadedUrl.includes('win-unpacked'));
   proof.info=await invoke('app','info');assert.equal(proof.info.features.length,7);
-  const pets=await invoke('companions','list');assert.equal(pets.pets.length,6);assert.equal(new Set(pets.pets.map(p=>p.resource.resourceId)).size,6);
-  const resources=await invoke('resources','list');assert.equal(resources.filter(r=>r.origin==='builtin').length,6);assert.ok(resources.every(r=>r.availability==='ready'));
-  proof.checks.push('Actual portable SFX launched from its extracted ASAR, retaining the independent QA account and six canonical instances');
+  const pets=await invoke('companions','list');
+  for(const previous of original.pets){const pet=pets.pets.find(value=>value.petId===previous.petId);assert.ok(pet);assert.equal(pet.resource.resourceId,previous.resourceId);assert.deepEqual(pet.growth,previous.growth);}
+  const resources=await invoke('resources','list');
+  for(const character of catalog.characters)assert.equal(resources.find(resource=>resource.id===character.resourceId)?.availability,'ready');
+  proof.checks.push(`Actual portable SFX launched from its extracted ASAR; all ${original.pets.length} previous instances retain IDs, appearance and exact growth; ${catalog.characters.length} canonical resources are readable`);
   assert.equal(await page.evaluate(()=>typeof window.require),'undefined');assert.equal(await page.evaluate(()=>typeof window.lingjing.send),'undefined');
   await page.locator('.sidebar').getByRole('button',{name:'角色资源',exact:true}).click();
   await page.locator(`.resource-card[data-resource-id="${pets.pets[0].resource.resourceId}"]`).click();

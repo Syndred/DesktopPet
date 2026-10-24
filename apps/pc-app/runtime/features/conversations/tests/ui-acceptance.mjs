@@ -29,11 +29,11 @@ async function waitUntil(predicate, label) {
 }
 async function openChat() {
   await page.getByRole('navigation', { name: '主导航' }).getByRole('button', { name: '聊天', exact: true }).click();
-  await page.getByRole('heading', { name: '想说的话，我都在听。', exact: true }).waitFor();
+  await page.getByRole('heading', { name: '聊天', exact: true }).waitFor();
 }
 async function openSettings() {
   await page.getByRole('link', { name: '对话设置', exact: true }).click();
-  await page.getByRole('heading', { name: '给每位伙伴，不同的声音与性格。', exact: true }).waitFor();
+  await page.getByRole('heading', { name: 'AI 对话', exact: true }).waitFor();
 }
 async function select(name) {
   await page.locator('.cv-pet-option').filter({ has: page.locator('strong', { hasText: name }) }).click();
@@ -54,8 +54,8 @@ async function metrics(route) {
     const root = document.querySelector('.cv-root');
     const h1 = root.querySelector('h1');
     const title = getComputedStyle(h1);
-    const body = getComputedStyle(root.querySelector('.cv-page-header h1 + p'));
-    const caption = getComputedStyle(root.querySelector('.cv-caption'));
+    const body = getComputedStyle(root);
+    const caption = getComputedStyle(root.querySelector('.cv-caption, .cv-counter, .cv-composer-hint'));
     const grid = getComputedStyle(root.querySelector(route === 'chat' ? '.cv-chat-grid' : '.cv-settings-grid'));
     const tokens = getComputedStyle(document.documentElement);
     return { route, width: innerWidth, height: innerHeight, devicePixelRatio, title: { size: title.fontSize, weight: title.fontWeight, lineHeight: title.lineHeight },

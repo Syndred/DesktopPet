@@ -25,9 +25,10 @@ export function BattleMoves({ session, rules, busy, onAct }: { session: BattleSe
     {moves.map(move => {
       const lackingAnger = move.action === 'ultimate' && actor.anger < rules.ultimateAnger;
       const exhaustedDodge = move.action === 'dodge' && actor.freeDodgeUsed && actor.anger <= 0;
+      const dodgeCost = Math.min(actor.anger, rules.dodgeMaxCost);
       const disabled = busy || waiting || Boolean(session.pendingAction) || lackingAnger || exhaustedDodge;
-      const reason = busy ? '正在出招' : waiting ? '等待好友' : session.pendingAction ? '行动已锁定' : lackingAnger ? `需要至少 ${rules.ultimateAnger} 怒气` : exhaustedDodge ? '需要怒气' : move.action === 'element_attack' ? rules.elementEffects?.[actor.element]?.description || move.description : move.description;
-      const status = move.action === 'ultimate' ? `${actor.anger}/${rules.ultimateAnger}` : move.action === 'dodge' ? actor.freeDodgeUsed ? `≤${rules.dodgeMaxCost}` : '0' : String(rules.baseDamage[move.action]);
+      const reason = busy ? '正在出招' : waiting ? '等待好友' : session.pendingAction ? '行动已锁定' : lackingAnger ? `需要至少 ${rules.ultimateAnger} 怒气` : exhaustedDodge ? '需要怒气' : move.action === 'element_attack' ? `基础伤害 ${rules.baseDamage.element_attack} · ${rules.elementEffects?.[actor.element]?.description || move.description}` : move.action === 'dodge' ? `${dodgeCost ? `消耗 ${dodgeCost} 怒气` : '首次免费'} · 成功躲开普攻返还 ${rules.dodgeRefund ?? 30} 怒气` : move.action === 'ultimate' ? `必中 · 消耗 ${rules.ultimateCost} 怒气 · 回复 ${rules.ultimateHeal}` : `${move.description} · 基础伤害 ${rules.baseDamage.normal_attack}`;
+      const status = move.action === 'ultimate' ? `${actor.anger}/${rules.ultimateAnger}` : move.action === 'dodge' ? String(dodgeCost) : String(rules.baseDamage[move.action]);
       const Icon = move.action === 'element_attack' ? elementIcons[actor.element] : move.icon;
       return <Tooltip key={move.action}><TooltipTrigger asChild><span className="battle-move-tooltip" aria-label={`${actionLabels[move.action]}：${reason}`} tabIndex={disabled ? 0 : -1}>
         <Button variant="ghost" aria-label={actionLabels[move.action]} className={`battle-move ${move.action} element-${actor.element}`} aria-pressed={selected === move.action} disabled={disabled} onClick={() => onAct(move.action)}>

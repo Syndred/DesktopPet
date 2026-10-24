@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ArrowLeft, Flag, FlaskConical, Heart, MapPin, RefreshCw, Swords, UsersRound } from 'lucide-react';
+import { ArrowLeft, Check, Flag, FlaskConical, Heart, MapPin, RefreshCw, Swords, UsersRound } from 'lucide-react';
 import { request } from '../../app/bridge';
 import { navigate } from '../../app/navigation';
 import { AppDialog, Button, Card, EmptyState, ErrorNotice, Input, Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../../components/kit';
@@ -14,6 +14,12 @@ export function BattleScreen({ sessionId, returnTo }: { sessionId: string; retur
   const { data, session, context, error, busy, syncedAt } = controller;
   const [capturing, setCapturing] = useState(false), [name, setName] = useState('');
   useEffect(() => { document.querySelector('main')?.scrollTo({ top: 0, behavior: 'instant' }); }, [sessionId]);
+  const exploring = session?.mode === 'wild' || session?.mode === 'territory';
+  useEffect(() => {
+    if (!exploring) return;
+    void window.lingjing?.invoke('discovery', 'setExploring', { active: true });
+    return () => { void window.lingjing?.invoke('discovery', 'setExploring', { active: false }); };
+  }, [exploring]);
   if (!data || !session) return <div className="battle-page"><ErrorNotice message={error}/><EmptyState title={error ? '暂时无法打开对战' : '正在准备战场…'} action={<Button onClick={() => void controller.run(controller.reload)}><RefreshCw size={16}/>重试</Button>}/></div>;
   const rules = session.rules || data.rules;
   const ModeIcon = session.mode === 'friend' ? UsersRound : session.mode === 'wild' ? MapPin : session.mode === 'territory' ? Flag : Swords;
@@ -25,9 +31,9 @@ export function BattleScreen({ sessionId, returnTo }: { sessionId: string; retur
     }));
     if (result) { setCapturing(false); if (result.resultPath) navigate(result.resultPath); else await controller.reload(); }
   };
-  const settlement = context?.action && session.status === 'finished' && session.winner === 'player'
+  const settlement = context?.action && session.status === 'finished' && (context.action === 'territory' || session.winner === 'player')
     ? <Button disabled={busy || context.settled} onClick={() => { if (context.action === 'capture') { setName(context.name || session.enemy.petName); setCapturing(true); } else void settle(); }}>
-      {context.action === 'capture' ? <Heart size={18}/> : <Flag size={18}/>}{context.settled ? '已确认' : context.action === 'capture' ? '收服' : '占领'}
+      {context.action === 'capture' ? <Heart size={18}/> : session.winner === 'player' ? <Flag size={18}/> : <Check size={18}/>}{context.settled ? '已确认' : context.action === 'capture' ? '收服' : session.winner === 'player' ? '占领' : '确认结果'}
     </Button> : undefined;
   return <div className="battle-page battle-screen" data-battle-screen="shared-v1" data-battle-mode={session.mode} data-authority={String(session.context?.authority || 'local')} data-session-id={session.id}>
     <TooltipProvider><header className="battle-screen-toolbar"><Tooltip><TooltipTrigger asChild><Button variant="ghost" aria-label="返回" onClick={() => navigate(back)}><ArrowLeft size={20}/></Button></TooltipTrigger><TooltipContent>返回</TooltipContent></Tooltip>

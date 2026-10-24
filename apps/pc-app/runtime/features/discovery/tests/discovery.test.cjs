@@ -39,7 +39,7 @@ function fixture() {
   const battle=register(services,require(join(battleRoot,'index.cjs')));
   const garden=register(services,require('../../garden/index.cjs'));
   const discovery=register(services,discoveryModule);
-  const api=services.get('discovery');api.location.adapter={getPosition:async()=>({ok:true,...fixtureFix()})};
+  const api=services.get('discovery');api.location.adapter={scenario:'qa',getPosition:async()=>({ok:true,...fixtureFix()})};
   const owner=services.session.getOwnerAccountId();
   return {directory,legacy,db,services,api,owner,close(){discovery.dispose?.();garden.dispose?.();battle.dispose?.();companion.dispose?.();db.close();}};
 }
@@ -51,7 +51,7 @@ async function start(f) {
   let spawn=f.api.snapshot().data.spawns.find(s=>s.element==='water'&&s.inRange);
   if(!spawn) {
     const target=nearbySpawns(fixturePosition).find(s=>s.element==='water');assert.ok(target);
-    f.api.location.adapter={getPosition:async()=>({ok:true,...fixtureFix(),...target.position})};
+    f.api.location.adapter={scenario:'qa',getPosition:async()=>({ok:true,...fixtureFix(),...target.position})};
     f.api.location.fix=null;await f.api.location.locate();
     spawn=f.api.snapshot().data.spawns.find(s=>s.id===target.id);
   }
@@ -149,6 +149,10 @@ test('actual shared SQLite + companions + battle: map to victory, confirmation, 
     const {encounter,input,petId}=await start(f);
     assert.deepEqual(encounter.battle.rules,f.services.get('battle').getRules());
     assert.equal(encounter.battle.view.player.maxHp,encounter.battle.rules.maxHp);
+    const linked=f.services.get('battle').getOutcome({ownerAccountId:f.owner,sessionId:encounter.battle.battleId}).session;
+    assert.equal(linked.context.origin,'discovery');assert.equal(linked.context.encounterId,encounter.encounterId);
+    assert.equal(linked.context.scenario,'qa');
+    assert.equal(linked.context.returnPath,`/discovery/encounter/${encounter.encounterId}`);
     assert.notEqual(f.services.get('companions').getPet(f.owner,petId).growth.stats.hp,encounter.battle.rules.maxHp);
     const repeated=await f.services.invoke('discovery','begin',input);assert.equal(repeated.ok,true);assert.equal(repeated.duplicate,true);assert.equal(repeated.data.encounterId,encounter.encounterId);
     const premature=await f.services.invoke('discovery','confirm',{encounterId:encounter.encounterId,actionId:'premature'});assert.equal(premature.code,'VICTORY_REQUIRED');
@@ -160,7 +164,7 @@ test('actual shared SQLite + companions + battle: map to victory, confirmation, 
     const command={encounterId:victory.encounterId,expectedRevision:victory.revision,actionId:'confirm-test',name:'相遇的新伙伴',showOnDesktop:false};
     const results=await Promise.all([f.services.invoke('discovery','confirm',command),f.services.invoke('discovery','confirm',command)]);
     assert.equal(results[0].ok,true,JSON.stringify(results));assert.equal(results[1].ok,true);assert.equal(results[0].data.petId,results[1].data.petId);
-    const captured=results[0].data;assert.notEqual(captured.petId,petId);assert.equal(captured.validation,'local-os');
+    const captured=results[0].data;assert.notEqual(captured.petId,petId);assert.equal(captured.validation,'simulated');assert.equal(captured.scenario,'qa');
     const pets=f.services.get('companions').listPets(f.owner);assert.equal(pets.length,before+1);assert.equal(pets.find(p=>p.petId===captured.petId).origin.memoryTags.length,1);
     assert.equal(pets.find(p=>p.petId===captured.petId).resource.resourceId,encounter.spawn.resourceId);
     assert.equal(f.api.repo.captures(f.owner).length,1);assert.equal(f.api.memories({petId:captured.petId}).data.length,1);
@@ -172,6 +176,29 @@ test('actual shared SQLite + companions + battle: map to victory, confirmation, 
     assert.equal(reopened.prepare('SELECT COUNT(*) AS n FROM companion_pets WHERE owner_account_id=? AND pet_id=?').get(saved.ownerAccountId,captured.petId).n,1);reopened.close();
   } finally {if(f.db.open) f.close();}
 });
+test('shared battle commands finish the linked wild session and confirmation reads that authority',integrationOptions,async t=>{
+  t.mock.method(Math,'random',()=>.4);
+  const f=fixture();try {
+    const {encounter}=await start(f),sessionId=encounter.battle.battleId;
+    let session=f.services.get('battle').getOutcome({ownerAccountId:f.owner,sessionId}).session;
+    for(let turn=0;turn<60&&session.status==='active';turn++) {
+      const action=session.snapshot.player.anger>=session.rules.ultimateAnger?'ultimate':turn===0?'element_attack':'normal_attack';
+      const result=await f.services.invoke('battle','act',{sessionId,action,actionId:`shared-wild-${turn}`,expectedRound:session.snapshot.round+1});
+      assert.equal(result.ok,true,result.message);session=result.data;
+    }
+    assert.equal(session.winner,'player');assert.equal(session.status,'finished');
+    assert.equal(f.api.repo.get(f.owner,encounter.encounterId).status,'challenging','Discovery does not run or settle a second battle');
+    const context=f.api.getBattleContext({ownerAccountId:f.owner,sessionId});assert.equal(context.action,'capture');assert.equal(context.returnTo,'/discovery');
+    const result=await f.api.settleBattleContext({ownerAccountId:f.owner,sessionId,actionId:'shared-confirm',name:'共享战场伙伴'});
+    assert.equal(result.ok,true,result.message);assert.equal(f.api.repo.get(f.owner,encounter.encounterId).status,'captured');
+    assert.equal(result.data.resultPath,`/discovery/result/${encounter.encounterId}`);assert.equal(result.data.scenario,'qa');
+    const replay=await f.api.settleBattleContext({ownerAccountId:f.owner,sessionId,actionId:'shared-confirm',name:'共享战场伙伴'});assert.equal(replay.data.petId,result.data.petId);
+    assert.equal(f.api.getBattleContext({ownerAccountId:f.owner,sessionId}).settled,true);
+    assert.equal(f.db.prepare('SELECT COUNT(*) n FROM battle_reports_v2 WHERE owner_account_id=?').get(f.owner).n,1);
+    assert.equal(f.api.repo.captures(f.owner).length,1);assert.equal(f.api.repo.memories(f.owner,result.data.petId).length,1);
+  } finally {f.close();}
+});
+
 test('capture rolls back companion, pokedex and memory together when SQLite rejects the tag',integrationOptions,async t=>{
   t.mock.method(Math,'random',()=>.4);
   const f=fixture();try {

@@ -46,8 +46,8 @@ export async function observeBattleAction(page, action) {
     const sample = () => {
       const stage = root.querySelector('[data-animation-phase]');
       const value = { phase: stage?.getAttribute('data-animation-phase'), key: stage?.getAttribute('data-animation-key'),
-        actors: [...root.querySelectorAll('.battle-stage .resource-stage')].map(element => ({ resourceId: element.getAttribute('data-resource-id'), action: element.getAttribute('data-action'), clip: element.getAttribute('data-clip'), frame: element.querySelector('.resource-sprite-host')?.getAttribute('data-frame'), fallback: element.getAttribute('data-fallback') })),
-        events: [...root.querySelectorAll('[data-event-kind]')].map(element => ({ kind: element.getAttribute('data-event-kind'), id: element.getAttribute('data-event-id'), text: element.textContent })) };
+        actors: [...root.querySelectorAll('.battle-stage .resource-stage')].map(element => { const sprite = element.querySelector('.resource-sprite-host'); return { resourceId: element.getAttribute('data-resource-id'), action: element.getAttribute('data-action'), clip: element.getAttribute('data-clip'), frame: sprite?.getAttribute('data-frame'), frameTexture: sprite?.getAttribute('data-frame-texture'), textureFrame: sprite?.getAttribute('data-texture-frame'), contentBounds: sprite?.getAttribute('data-content-bounds'), fallback: element.getAttribute('data-fallback') }; }),
+        events: [...root.querySelectorAll('[data-event-kind]')].map(element => ({ kind: element.getAttribute('data-event-kind'), id: element.getAttribute('data-event-id'), text: element.textContent, icons: [...element.querySelectorAll('svg')].map(icon => icon.getAttribute('class')) })) };
       const key = JSON.stringify(value);
       if (key !== last && entries.length < 1000) { entries.push({ ms: performance.now() - start, ...value }); last = key; }
     };

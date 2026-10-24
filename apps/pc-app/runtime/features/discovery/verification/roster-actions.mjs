@@ -58,10 +58,10 @@ async function preview(template) {
     for (let offset = 0; offset < 20 && !target; offset++) target = nearbySpawns({ lat: 31.2304 + offset * .0006, lng: 121.4737 }, Date.now(), 450, templates).find(spawn => spawn.templateId === templateId);
     if (!target) throw new Error(`No actual generated encounter for ${templateId}`);
     discovery.location.suspend(); discovery.location.fix = null;
-    discovery.location.adapter = { getPosition: async () => ({ ok: true, ...target.position, accuracyMeters: 12, timestampMs: Date.now(), coordinateSystem: 'wgs84', source: 'os', provider: 'controlled-test-fixture', positionSource: 'test-fixture' }) };
+    discovery.location.adapter = { scenario: 'qa', getPosition: async () => ({ ok: true, ...target.position, accuracyMeters: 12, timestampMs: Date.now(), coordinateSystem: 'wgs84', source: 'os', provider: 'controlled-test-fixture', positionSource: 'test-fixture' }) };
     return target;
   }, template.templateId);
-  await page.getByRole('button', { name: '获取系统位置', exact: true }).click();
+  await page.getByRole('button', { name: /(?:获取系统位置|更新场景位置)/ }).click();
   const state = await until(value => value.location.status === 'ready' && value.spawns.some(spawn => spawn.id === target.id), 'canonical target visible');
   assert.equal(state.location.fix.provider, 'controlled-test-fixture');
   const spawn = state.spawns.find(spawn => spawn.id === target.id);
@@ -171,7 +171,7 @@ try {
   evidence.poses = await page.evaluate(() => window.__discoveryPoseEvidence);
   for (const action of ['skill', 'attack', 'hit', 'victory']) assert.ok(evidence.poses.some(pose => pose.action === action && pose.clip === action && pose.fallback === 'false'), `Real atlas clip ${action}`);
   await page.screenshot({ path: join(output, 'battle-victory.png') });
-  await page.getByRole('button', { name: '获取系统位置', exact: true }).click(); await until(state => state.location.status === 'ready', 'fresh controlled capture fix');
+  await page.getByRole('button', { name: /(?:获取系统位置|更新场景位置)/ }).click(); await until(state => state.location.status === 'ready', 'fresh controlled capture fix');
   await page.getByRole('button', { name: '邀请成为伙伴', exact: true }).click();
   await page.getByRole('textbox', { name: '昵称', exact: true }).fill('探索礼帽喵');
   await page.getByRole('button', { name: '确认收服', exact: true }).click();

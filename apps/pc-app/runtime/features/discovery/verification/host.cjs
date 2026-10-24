@@ -1,7 +1,7 @@
 // Isolated verification host. Loads the production UI, real registry and real
 // feature services. Only the explicitly labelled location fixture is injected.
 const {app,BrowserWindow,ipcMain,safeStorage,protocol}=require('electron');
-const {join,resolve}=require('node:path');
+const {join,resolve,relative,isAbsolute}=require('node:path');
 const {fileURLToPath}=require('node:url');
 const {randomUUID}=require('node:crypto');
 const {openDatabase}=require('../../../core/database.cjs');
@@ -11,6 +11,8 @@ const {nearbySpawns}=require('../spawns.cjs');
 const root=resolve(__dirname,'../../../../../..'),runtime=join(root,'apps/pc-app/runtime');
 const profile=process.env.PET_USER_DATA_DIR;
 if(!profile) throw new Error('An isolated PET_USER_DATA_DIR is required');
+const profileRelative=relative(join(root,'artifacts'),resolve(profile));
+if(!profileRelative||profileRelative.startsWith('..')||isAbsolute(profileRelative))throw new Error('QA profiles must stay inside this worktree artifacts directory');
 app.setPath('userData',resolve(profile));
 require('../../resources/index.cjs').registerResourceScheme(protocol);
 const uiFile=join(root,'apps/pc-app/dist/ui/index.html'),preload=join(root,'apps/pc-app/dist/preload/index.cjs');
@@ -30,13 +32,14 @@ app.whenReady().then(async()=>{
   db=openDatabase(join(profile,'shared.sqlite'));
   const legacyDataFile=join(profile,'legacy.json');
   const legacy=new RuntimeDataStore({filePath:legacyDataFile});
-  let login=legacy.loginUser('discovery_window_test','isolated-verification-only');
-  if(!login.ok)login=legacy.registerUser('discovery_window_test','isolated-verification-only','探索窗口验证');
+  const fixtureAccount=process.env.LINGJING_BATTLE_QA==='unified-v1'?'battle-qa-discovery':'discovery_window_test';
+  let login=legacy.loginUser(fixtureAccount,'isolated-verification-only');
+  if(!login.ok)login=legacy.registerUser(fixtureAccount,'isolated-verification-only','探索窗口验证');
   if(!login.ok)throw new Error('Cannot create isolated legacy migration fixture');
   const services=createServices({db,legacy:{runtimeDataStore:legacy},paths:{userData:profile,assets:join(runtime,'assets'),legacyDataFile,legacyDataExisted:true},windows,safeStorage});
   features=discoverFeatures(join(runtime,'features'),services);
   await services.get('accounts').ready;
-  const auth=await services.invoke('accounts','login',{provider:'local',account:'discovery_window_test',password:'isolated-verification-only',rememberSession:false});
+  const auth=await services.invoke('accounts','login',{provider:'local',account:fixtureAccount,password:'isolated-verification-only',rememberSession:false});
   if(!auth.ok)throw new Error(`Verified account login failed: ${auth.message}`);
   const owner=services.session.getOwnerAccountId();
   if(owner===null)throw new Error('Mapped account is required');
@@ -50,7 +53,7 @@ app.whenReady().then(async()=>{
   const discovery=services.get('discovery');
   if(process.env.LINGJING_CONTROLLED_LOCATION==='1') {
     const target=nearbySpawns({lat:31.2304,lng:121.4737}).find(spawn=>spawn.element==='water');
-    discovery.location.adapter={getPosition:async()=>({ok:true,...target.position,accuracyMeters:12,timestampMs:Date.now(),coordinateSystem:'wgs84',source:'os',provider:'controlled-test-fixture',positionSource:'test-fixture'})};
+    discovery.location.adapter={scenario:'qa',getPosition:async()=>({ok:true,...target.position,accuracyMeters:12,timestampMs:Date.now(),coordinateSystem:'wgs84',source:'os',provider:'controlled-test-fixture',positionSource:'test-fixture'})};
   }
   services.ipc.handle('app:info',()=>({features:features.map(f=>({id:f.id,commands:f.commands})),user:services.session.getCurrentUser()}),{public:true});
   main=new BrowserWindow({width:1320,height:900,show:true,frame:false,backgroundColor:'#fbfdff',title:'灵境 · 探索集成验证',webPreferences:{preload,contextIsolation:true,nodeIntegration:false,sandbox:true}});
