@@ -1,4 +1,4 @@
-const PREVIEW_ACTIONS = new Set(['wave', 'eat', 'hit', 'attack', 'skill', 'victory', 'walk', 'sleep', 'idle']);
+const PREVIEW_ACTIONS = new Set(['wave', 'eat', 'hit', 'attack', 'attack_windup', 'attack_release', 'skill', 'victory', 'walk', 'blink', 'sleep', 'idle']);
 
 function unavailable(message = '这个形象还没有提供该动作') {
   return Object.assign(new Error(message), { code: 'ACTION_UNAVAILABLE' });

@@ -7,7 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '.
 import { CompanionPortrait } from './CompanionPortrait';
 import type { Controller } from './components';
 
-const labels: Record<string, string> = { wave: '招手', eat: '吃饭', hit: '受击', attack: '普通攻击', skill: '元素技能', victory: '庆祝', walk: '行走', sleep: '休息' };
+const labels: Record<string, string> = { wave: '招手', eat: '吃饭', hit: '受击', attack: '普通攻击', attack_windup: '攻击起手', attack_release: '攻击释放', skill: '元素技能', victory: '庆祝', walk: '行走', blink: '眨眼', sleep: '休息' };
 
 export function ActionPreview({ pet, controller }: { pet: CompanionPet; controller: Controller }) {
   const [available, setAvailable] = useState<ResourceAction[]>([]);

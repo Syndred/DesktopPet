@@ -74,6 +74,32 @@ class CompanionsService {
     return { ok: true, data: { ownerAccountId, pets, selections: JSON.parse(account.selections_json), templates: this.templates(), revision: account.revision }, revision: account.revision };
   }
 
+  upgradeBuiltinResources(ownerAccountId, canonicalize) {
+    if (typeof canonicalize !== 'function') return [];
+    return atomic(this.db, () => {
+      const snapshot = this.snapshot(ownerAccountId).data;
+      const templates = new Map(snapshot.templates.map(template => [template.templateId, template]));
+      const bound = new Set(this.db.prepare("SELECT result_json FROM companion_actions WHERE owner_account_id=? AND operation='appearance'").all(ownerAccountId)
+        .map(row => JSON.parse(row.result_json).data?.pet?.petId).filter(Boolean));
+      const updated = [];
+      for (const pet of snapshot.pets) {
+        if (pet.resource.kind !== '2d') continue;
+        const previous = pet.resource.resourceId;
+        const canonical = canonicalize(previous);
+        // Only the resource registry's explicit built-in aliases can migrate.
+        // An imported/custom appearance is never inferred from its name/template.
+        if (canonical === previous) continue;
+        const defaultResource = templates.get(pet.templateId)?.resource;
+        const next = !bound.has(pet.petId) && defaultResource?.kind === '2d' ? canonicalize(defaultResource.resourceId) : canonical;
+        if (next === previous) continue;
+        pet.resource = { ...pet.resource, resourceId: next };
+        this.storePet(pet); updated.push(pet.petId);
+      }
+      if (updated.length) this.db.prepare('UPDATE companion_accounts SET revision=revision+1 WHERE owner_account_id=?').run(ownerAccountId);
+      return updated;
+    });
+  }
+
   storePet(pet, insert = false) {
     if (insert) {
       this.db.prepare('INSERT INTO companion_pets(owner_account_id, pet_id, template_id, revision, data_json, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?)')
