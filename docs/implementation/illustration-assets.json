@@ -1,0 +1,15 @@
+{
+  "tool": "built-in image_gen",
+  "date": "2026-10-24",
+  "assets": [{
+    "path": "apps/pc-app/runtime/assets/illustrations/companionship-room-v1.png",
+    "reference": "docs/design/2026-10-24/full-ui/01-companions-and-desktop.png",
+    "role": "Standalone artwork for companion overview, login and conversation panels; real state and buttons remain HTML",
+    "prompt": "Edit the approved UI design board into a standalone landscape anime illustration. Preserve the blue-haired chibi whale-girl visual identity: blue eyes, white sailor beret, navy and white frilly sailor outfit, blue whale tail accessory. Sunlit creamy white and mist blue lakeside room, small blue-and-white rice bowl, blue whale cushion, lake and pale mountains, plants and flowers. Character in right half, left third soft background for HTML overlay. Remove all UI chrome, text, buttons, status bars, logos, sidebars, cards and frame. Artwork only, no watermark or writing."
+  }, {
+    "path": "apps/pc-app/runtime/assets/illustrations/yuwan-sprites-v1.png",
+    "reference": "docs/design/2026-10-24/full-ui/03-pet-detail-and-adoption.png",
+    "role": "Transparent 4 by 2 character sprite atlas registered as builtin:lingjing-yuwan-v1; 1774 by 887 pixels, 443.5 pixel frame views",
+    "prompt": "Create a transparent 4-column, 2-row sprite grid of the approved blue-haired chibi whale girl, not a literal fish. Preserve blue eyes, white sailor beret, navy and white frilly sailor dress and whale tail. Eight full-body consistent-scale cells: idle, blink, walking right foot, walking left foot, wave, celebrate, curled sleeping, seated resting. Same costume and face. Painterly anime shading matching the reference. Real alpha, no text, grid, shadow, border, UI or other character."
+  }]
+}
