@@ -24,8 +24,14 @@ export function ResourcePortrait({ resourceId, instanceId, compact = false, anim
   const sheet = display?.resource.sheet;
   const frame = display?.clip?.frames?.[0] || 0;
   const projectBuiltin = resourceId === 'builtin:lingjing-yuwan-v1';
-  return <div className={`discovery-resource-portrait ${compact ? 'compact' : ''}`} role="img" aria-label="伙伴的 2D 形象" data-appearance="2d">
+  const atlas = display?.resource.atlas;
+  const frameName = display?.clip?.frameNames?.[0] || atlas?.animations[display?.clip?.name || '']?.[0] || Object.keys(atlas?.frames || {})[0];
+  const atlasFrame = atlas?.frames[frameName];
+  return <div className={`discovery-resource-portrait ${compact ? 'compact' : ''}`} role="img" aria-label="伙伴的 2D 形象" data-appearance="2d" data-resource-id={resourceId}>
     {display && !compact && animate ? <ResourceStage className="discovery-character-stage" resource={display.resource} petId={instanceId} context="battle" action={selectedAction} playing/>
+      : display && compact && display.resource.thumbnailAsset ? <img className="discovery-atlas-thumbnail" src={resourceAssetUrl(display.resource.id, display.resource.thumbnailAsset)} alt=""/>
+      : display && atlas && atlasFrame && !atlasFrame.rotated && !(projectBuiltin && compact && sheet) ? <svg className="discovery-atlas-thumbnail" viewBox={`${atlasFrame.frame.x} ${atlasFrame.frame.y} ${atlasFrame.frame.w} ${atlasFrame.frame.h}`} aria-hidden="true"><image href={resourceAssetUrl(display.resource.id, display.resource.entryAsset)} width={atlas.meta.size.w} height={atlas.meta.size.h}/></svg>
+      : display && atlasFrame?.rotated ? <ResourceStage className="discovery-character-stage" resource={display.resource} petId={instanceId} context="battle" action={selectedAction} playing={false}/>
       : display && sheet ? <div className="discovery-sheet-thumbnail" style={{
         backgroundImage: `url("${resourceAssetUrl(display.resource.id, display.resource.entryAsset)}")`,
         backgroundSize: `${sheet.columns * 100}% ${sheet.rows * 100}%`,

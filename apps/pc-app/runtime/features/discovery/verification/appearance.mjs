@@ -39,6 +39,7 @@ try {
   await page.getByRole('heading', { name: capture.name, exact: true }).click();
   await page.getByText('新伙伴已加入', { exact: true }).waitFor();
   await page.locator(`.discovery-postcard [data-resource-id="${next.id}"][data-status="ready"] canvas`).waitFor();
+  await page.locator(`.discovery-result-profile [data-resource-id="${next.id}"] .discovery-atlas-thumbnail`).waitFor();
   await page.waitForFunction(() => Number(getComputedStyle(document.querySelector('.app-page-motion')).opacity) === 1);
   const layout = await page.locator('.discovery-result-details').evaluate(element => ({ gap: getComputedStyle(element).rowGap, cards: [...element.querySelectorAll('.card')].map(card => ({ top: card.getBoundingClientRect().top, bottom: card.getBoundingClientRect().bottom, marginBottom: getComputedStyle(card).marginBottom })) }));
   assert.equal(layout.gap, '16px'); assert.ok(layout.cards.every(card => card.marginBottom === '0px'));
