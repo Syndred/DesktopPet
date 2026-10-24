@@ -97,6 +97,30 @@ try {
     const after=(await invoke({op:'snapshot'})).data.data.snapshot.items.filter(item=>item.category==='seed').reduce((sum,item)=>sum+item.quantity,0);assert.equal(after-before,2);
     assert.equal((await invoke({op:'claimReward',source:'battle',receiptId})).data.data.alreadyClaimed,true);evidence.checks.push('server-owned reward row + concurrent receipt deduplication');
   });
+  await test('first cloud open grants starters once on PostgreSQL and cannot mint a local fallback',async()=>{
+    const freshOwner='user-first-cloud-garden',freshToken='fresh-local-qa-session';
+    await pg.query('INSERT INTO public.runtime_accounts VALUES ($1,$2)',[freshOwner,freshToken]);
+    const fresh=structuredClone(envelope);fresh.ownerAccountId=freshOwner;fresh.identity.subjectId=freshOwner;
+    fresh.data.modules.garden.data=createGardenBackupAdapter(db).export(freshOwner);
+    for(const table of Object.values(fresh.data.tables))table.rows=[];
+    const {checksum:ignored,...document}=fresh;void ignored;fresh.checksum=await digest(document);
+    await pg.query('SELECT public.accounts_push_save($1,$2,$3,$4,$5::jsonb)',[freshOwner,freshToken,'first-empty-save:qa',0,JSON.stringify(fresh)]);
+    let activeToken='invalid-session';const providers=new Map();
+    const freshServices={...services,get:name=>name==='accounts'?{privateSession:()=>({id:freshOwner,ownerAccountId:freshOwner,provider:'runtime',sessionToken:activeToken})}:providers.get(name),provide:(name,value)=>providers.set(name,value),session:{getCurrentUser:()=>({id:freshOwner}),getOwnerAccountId:()=>freshOwner}};
+    const registered=require('./index.cjs').register(freshServices),freshContext={ownerAccountId:freshOwner};
+    try{
+      const denied=await registered.commands.snapshot(undefined,freshContext);assert.equal(denied.code,'SESSION_INVALIDATED');
+      assert.equal(db.prepare('SELECT 1 FROM garden_accounts WHERE owner_account_id=?').get(freshOwner),undefined);
+      activeToken=freshToken;
+      const simultaneous=await Promise.all([invoke({op:'snapshot',userId:freshOwner,sessionToken:freshToken}),invoke({op:'snapshot',userId:freshOwner,sessionToken:freshToken})]);
+      assert.equal(simultaneous.every(result=>result.data.ok),true);
+      const result=await registered.commands.snapshot(undefined,freshContext);assert.equal(result.ok,true);assert.equal(result.data.sync.mode,'cloud');
+      assert.equal(result.data.plots.length,6);assert.equal(result.data.items.filter(item=>item.category==='seed').reduce((sum,item)=>sum+item.quantity,0),8);
+      const receipts=(await pg.query('SELECT COUNT(*) n FROM public.runtime_garden_operations WHERE owner_account_id=$1',[freshOwner])).rows[0];assert.equal(Number(receipts.n),1);
+      assert.equal(db.prepare("SELECT COUNT(*) n FROM garden_events WHERE owner_account_id=? AND kind='starter'").get(freshOwner).n,4);
+      evidence.checks.push('concurrent first cloud open -> one PostgreSQL starter receipt; rejected session creates no local garden');
+    }finally{registered.dispose();}
+  });
   // Also validate that the pure reducer never alters its input after a failure.
   const original=JSON.stringify(envelope);assert.throws(()=>applyCloudCommand(envelope,owner,'craft',{actionId:'negative',expectedRevision:1,recipeId:'cooked_rice',quantity:-1},Date.now(),'a'.repeat(64)),{code:'INVALID_QUANTITY'});assert.equal(JSON.stringify(envelope),original);
   writeFileSync(resolve(output,'evidence.json'),JSON.stringify(evidence,null,2));console.log(`PostgreSQL evidence: ${output}`);

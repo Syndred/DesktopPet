@@ -72,12 +72,16 @@ module.exports = {
       if (cloud.isCloud(context)) {
         try { return await cloud.snapshot(context); }
         catch (error) {
+          if (services.session.getOwnerAccountId() !== context.ownerAccountId) return {ok:false,code:'SESSION_CHANGED',message:'账号已切换，请重新打开菜园'};
+          // A failed first cloud read cannot mint a local starter inventory.
+          if (!services.db.prepare('SELECT 1 FROM garden_accounts WHERE owner_account_id=?').get(context.ownerAccountId)) return service.failure(error,context.ownerAccountId);
           const cached = service.snapshot(context);
           if (cached.ok) cached.data.sync = { mode: 'cached', pending: 0, conflicts: error.code === 'CLOUD_LOCAL_CONFLICT' ? 1 : 0, issue: error.message || '云端菜园尚不可用' };
           return cached;
         }
       }
       await reconcileSeeds(services, service, context);
+      if (services.session.getOwnerAccountId() !== context.ownerAccountId) return {ok:false,code:'SESSION_CHANGED',message:'账号已切换，请重新打开菜园'};
       const snapshot = service.snapshot(context);
       if (snapshot.ok) {
         snapshot.data.remainingInvasions = territories.dailyRemaining?.(context.ownerAccountId) ?? 2;

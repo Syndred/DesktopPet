@@ -25,7 +25,7 @@ function createOwnerMigration(services,garden){
         const oldPets=companions?.listPets?.(source)||[];
         let newPets=companions?.listPets?.(target)||[];
         if(oldPets.some(old=>!newPets.some(pet=>pet.petId===old.petId&&JSON.stringify(pet.growth)===JSON.stringify(old.growth)))){
-          if(!companions?.migrateOwnerAlias)stop('账号归属已更新；旧菜园和伙伴已保留，等待伙伴归属迁移适配');
+          if(!companions?.migrateOwnerAlias)stop('账号归属已更新；旧菜园和伙伴已保留，等待旧伙伴存档核对');
           const result=companions.migrateOwnerAlias({sourceOwnerAccountId:source,targetOwnerAccountId:target,provider:alias.provider,subjectId:source});
           if(result?.then||result?.ok===false)stop(result?.message||'伙伴归属迁移尚未完成');
           newPets=companions.listPets(target);

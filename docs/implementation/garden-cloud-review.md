@@ -19,4 +19,6 @@
 
 本地验证入口：`apps/pc-app/runtime/features/garden/cloud.test.mjs`。测试工具 @electric-sql/pglite 安装在 ignored artifacts/garden/pg-qa，仅用于 SQL 审查，不是产品依赖。验证真实 HTTP handler → PostgreSQL CAS/RPC → 主进程适配 → SQLite，包含并发收获、重试、指定伙伴与失败回滚。
 
+首次云端打开也走同一 PostgreSQL CAS：已同步但尚未初始化的菜园模块，由服务端用固定 `cloud-garden-initialize:v1` 回执创建六块菜地和首次种子。两个客户端同时打开只提交一次，再读回同一存档；认证失败或端点不可用时，不在本机创建云端账号的首次库存。空模块之外的旧版本存档仍需在账号页面完成可审查的统一同步。
+
 回滚顺序：停用 garden-sync 入口，再停用功能注册；保留 runtime_garden_operations、runtime_account_save_actions 和本机流水。迁移文件不含 DROP/DELETE 生产数据。
