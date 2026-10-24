@@ -23,9 +23,23 @@ Motion 处理角色位移和真实数值反馈。HUD 只展示权威前态或后
 动画期间四技能锁定；应用关闭动画或 reduced motion 时立即采用最终权威状态，不播放动作。
 恢复页面不重播旧回合；新回合（包括连续同技能）使用 sessionId+round 的独立序列。
 
-QA 隔离：LINGJING_BATTLE_QA=unified-v1 且测试用户目录内存在匹配 marker 才可启用模拟 adapter。
-仅接受 loopback endpoint、对应 run token 和 battle-qa- 合成账号。普通用户档不得启用。
+QA 隔离：仅消费 foundation 验证并提供的 services.get('qaScenario')，不建立第二套 QA gate。
+使用 LINGJING_QA_SCENARIO=unified-battle 和新建目录的 .lingjing-qa-profile.json。
+该目录可增加 battle-transport.json（runId、loopback endpoint、至少32字符 token、enemyActions）。
+模拟好友只接受此验证目录、本地场景账号与 loopback 连接；无配置时拒绝，不回退成真实云。
 模拟好友保留 OnlineDuelService 协议与同一内核，证据标 authority:simulated 与 scenarioId；
 界面仅以小型场景图标和 tooltip 标识，不把模拟回执称作真实云端成功。
 
-接口是本轮实现目标；完成状态及源码 SHA 以 status/battle.json 和自验 manifest 为准。
+来源领域主进程 adapter（discovery service / services.get('garden')）：
+getBattleContext({ownerAccountId,sessionId}) -> BattleContext；由领域查回真实遭遇/领地记录。
+settleBattleContext({ownerAccountId,sessionId,actionId,name?,showOnDesktop?}) -> {ok,data:{resultPath,...}}。
+battle 不查询来源领域私有表，不接受 renderer 注入来源记录；两个 adapter 都复核当前 owner。
+
+反馈修正：水命中输出 kind:anger（目标权威回合后怒气），不创建 freeze/status。
+普攻对属性输出 kind:interrupt（被打断一方），该方不播 skill 释放；普攻对闪避才输出 kind:dodge。
+终结对闪避会命中并播放受击，不输出成功闪避事件。持续状态事件必须能在该回合 statusesAfter 找到。
+以上是 foundation/discovery/garden 共用事件契约；不得按选招补造状态或一律把 miss 画为闪避。
+qaPreset({sessionId,preset:'charged',enemyAction?}) 仅限验证 QA profile 的未出招本机会话；合法前态
+为我方HP85/怒气50、对方HP100/怒气30。明确保存 qaPreset/qaEnemyAction，规则仍由原内核执行。
+
+接口在实施与自验中；完成状态及源码 SHA 以 status/battle.json 和自验 manifest 为准。
