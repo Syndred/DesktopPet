@@ -1,0 +1,120 @@
+{
+  "at": "2026-10-24T15:45:40.490Z",
+  "module": "companions",
+  "status": "accepted-by-main-awaiting-final-integration",
+  "runtimeSourceSha": "4770aa1fd2abcca98a1986ccd0a7b38f7826049c",
+  "deliveryCodeHead": "deeebe0ba5af7823c68393533adfe7e4f7317a15",
+  "productCodeUnchangedSinceRuntimeProof": true,
+  "onlyChangedPathsSinceRuntime": [
+    "apps/pc-app/runtime/features/companions/tests/five-elements.acceptance.mjs",
+    "apps/pc-app/runtime/features/companions/tests/native-capture.acceptance.mjs"
+  ],
+  "build": {
+    "schemaVersion": 1,
+    "builtAt": "2026-10-24T15:32:35.349Z",
+    "sourceCommit": "4770aa1fd2abcca98a1986ccd0a7b38f7826049c",
+    "sourceDirtyFiles": [],
+    "codeFingerprint": "174c6ddb752052ef9c593b7b39acea245f81f44eb2250f917f3e7cb0293ef108",
+    "compiledFingerprint": "44991a5559b0cdf7f08f73174ce016c0cc2f0a30fa0bffd35a381ae9b2b2f5a0",
+    "codeFiles": 216,
+    "compiledFiles": 24
+  },
+  "scope": [
+    "U02 eight real adoptions, five-element instance identity across detail/desktop/chat/training/garrison",
+    "U03 public same-source skill/element presentation and authority-derived tooltips",
+    "U04 companion actionId -> public ResourceStage.playbackKey; two consecutive same-action restarts",
+    "U05 concise accessible controls and two viewport layouts",
+    "U07 real Electron self-acceptance with input log, screenshots and SQLite readback"
+  ],
+  "checks": {
+    "domainTests": 15,
+    "typecheck": "passed",
+    "targetedEslint": "passed",
+    "productionBuild": "passed",
+    "uiAdoptions": 8,
+    "elements": [
+      "metal",
+      "wood",
+      "water",
+      "fire",
+      "earth"
+    ],
+    "actualClipPlays": 25,
+    "sameActionReplays": 2,
+    "newCharacterTrainingTimelines": 2,
+    "garrisonCommandsAndDatabaseReceipts": 5,
+    "detailToBattleEntryUsesExactPet": 5,
+    "viewports": [
+      {
+        "width": 1280,
+        "height": 844,
+        "dpr": 1
+      },
+      {
+        "width": 1440,
+        "height": 900,
+        "dpr": 1
+      }
+    ],
+    "restart": {
+      "petCount": 8,
+      "selections": {
+        "chatPetId": "pet-cffdaa10-9939-4e80-a135-ff802cf932f6",
+        "battlePetId": "pet-cffdaa10-9939-4e80-a135-ff802cf932f6",
+        "guardPetId": null
+      },
+      "reauthenticatedSameQaAccount": true,
+      "sessionPersistence": "memory-only-by-QA-policy"
+    },
+    "architecture": "12 source guards passed; this is not four-mode runtime final acceptance"
+  },
+  "nativeVisualAcceptance": {
+    "authoritativeEvidence": "native/evidence.json",
+    "images": [
+      {
+        "file": "native/desktop-wood.png",
+        "element": "wood",
+        "petId": "pet-ac56437b-f567-4478-b376-d9d7742d6e63",
+        "resourceId": "builtin:lingjing-qingya-v1",
+        "visible": true,
+        "visiblePixels": 12671
+      },
+      {
+        "file": "native/desktop-earth.png",
+        "element": "earth",
+        "petId": "pet-cffdaa10-9939-4e80-a135-ff802cf932f6",
+        "resourceId": "builtin:lingjing-yantuan-v1",
+        "visible": true,
+        "visiblePixels": 12788
+      }
+    ],
+    "correction": "The initial raw-flow earth native image was a loading star and is excluded. Only native/evidence.json and the two canvas-ready, visible sprite images are accepted. No native images from the raw flow were copied into ui/.",
+    "displayLimit": "Existing product range 1-4 is unchanged. QA kept original limit 3, temporarily recalled three other instances and restored all settings and meaningful companion state."
+  },
+  "sources": {
+    "authentication": "isolated-QA-local-account-through-actual-accounts-service",
+    "characters": "registered-project-original-atlases",
+    "playback": "production-IPC-and-Pixi",
+    "training": "actual-local-authoritative-engine",
+    "territory": "simulated-controlled-owned-record",
+    "garrison": "production-command-against-controlled-territory",
+    "realCloudAcceptance": false,
+    "realGeographicAcceptance": false
+  },
+  "remaining": [
+    "Final integrated acceptance continues in the main chat"
+  ],
+  "upstream": {
+    "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086",
+    "lastFetchUtc": "2026-10-24T15:47:21.402Z",
+    "missingRemoteCommits": 0
+  },
+  "mainIndependentReview": {
+    "status": "accepted",
+    "receivedAt": "2026-10-24T15:49:03.414Z",
+    "sourceThreadId": "01a16d86-7650-7871-8e27-5b65477a126e",
+    "runtimeSourceSha": "4770aa1fd2abcca98a1986ccd0a7b38f7826049c",
+    "acceptedCodeHead": "deeebe0ba5af7823c68393533adfe7e4f7317a15",
+    "evidence": "Main independently viewed both real native sprite images, wood detail, earth skills, verification and SQLite readback; accepted canonical identity, pixels, original limit 3, restored settings/state, eight adoptions, five-element paths, 25 actions, replay and restart. No full rerun requested."
+  }
+}

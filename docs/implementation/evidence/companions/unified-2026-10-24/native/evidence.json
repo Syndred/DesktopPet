@@ -1,0 +1,114 @@
+{
+  "at": "2026-10-24T15:41:24.558Z",
+  "runtimeSourceSha": "4770aa1fd2abcca98a1986ccd0a7b38f7826049c",
+  "harnessSourceSha": "eadf61335cdf3f278c8ad7342c0cb1ea6e68a6ed",
+  "previousEvidence": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-companions\\DesktopPet\\artifacts\\companions\\five-elements-6VSkiC\\evidence.json",
+  "scenario": {
+    "id": "unified-battle",
+    "runId": "e76b97b2-a951-495d-8160-fc22ff12e2ac",
+    "provenance": "simulated",
+    "isolated": true
+  },
+  "captures": [
+    {
+      "name": "desktop-wood.png",
+      "petId": "pet-ac56437b-f567-4478-b376-d9d7742d6e63",
+      "resourceId": "builtin:lingjing-qingya-v1",
+      "element": "wood",
+      "stage": {
+        "petId": "pet-ac56437b-f567-4478-b376-d9d7742d6e63",
+        "resourceId": "builtin:lingjing-qingya-v1",
+        "action": "idle",
+        "status": "ready",
+        "frame": "1",
+        "canvas": true
+      },
+      "visiblePixels": 12671,
+      "size": {
+        "width": 230,
+        "height": 280
+      },
+      "bounds": {
+        "x": 320,
+        "y": 470,
+        "width": 230,
+        "height": 280
+      },
+      "visible": true,
+      "capturePolicy": "actual-canvas-ready + two-animation-frames + temporary-unthrottled/front + restored",
+      "originalBackgroundThrottling": true
+    },
+    {
+      "name": "desktop-earth.png",
+      "petId": "pet-cffdaa10-9939-4e80-a135-ff802cf932f6",
+      "resourceId": "builtin:lingjing-yantuan-v1",
+      "element": "earth",
+      "stage": {
+        "petId": "pet-cffdaa10-9939-4e80-a135-ff802cf932f6",
+        "resourceId": "builtin:lingjing-yantuan-v1",
+        "action": "idle",
+        "status": "ready",
+        "frame": "1",
+        "canvas": true
+      },
+      "visiblePixels": 12788,
+      "size": {
+        "width": 230,
+        "height": 280
+      },
+      "bounds": {
+        "x": 560,
+        "y": 470,
+        "width": 230,
+        "height": 280
+      },
+      "visible": true,
+      "capturePolicy": "actual-canvas-ready + two-animation-frames + temporary-unthrottled/front + restored",
+      "originalBackgroundThrottling": true
+    }
+  ],
+  "mainWindowForCapture": {
+    "workArea": {
+      "x": 0,
+      "y": 0,
+      "width": 2560,
+      "height": 1440
+    },
+    "bounds": {
+      "x": 40,
+      "y": 40,
+      "width": 960,
+      "height": 700
+    },
+    "purpose": "Keep this isolated QA main window below fullscreen size while capturing companions"
+  },
+  "build": {
+    "schemaVersion": 1,
+    "builtAt": "2026-10-24T15:32:35.349Z",
+    "sourceCommit": "4770aa1fd2abcca98a1986ccd0a7b38f7826049c",
+    "sourceDirtyFiles": [],
+    "codeFingerprint": "174c6ddb752052ef9c593b7b39acea245f81f44eb2250f917f3e7cb0293ef108",
+    "compiledFingerprint": "44991a5559b0cdf7f08f73174ce016c0cc2f0a30fa0bffd35a381ae9b2b2f5a0",
+    "codeFiles": 216,
+    "compiledFiles": 24
+  },
+  "captureSettings": {
+    "original": {
+      "companionLimit": 3,
+      "hideInFullscreen": true
+    },
+    "temporary": {
+      "companionLimit": 3,
+      "hideInFullscreen": false
+    },
+    "provenance": "explicit-isolated-QA-settings-command",
+    "temporarilyRecalled": [
+      "pet-676dc1d2-01dc-4aef-ad99-99bcd9d1c0ad",
+      "pet-c44a894f-da55-4199-9ae9-0ba0d3354d57",
+      "pet-28229917-cc30-423e-8a06-4582bf9f1e37"
+    ]
+  },
+  "stateUnchanged": true,
+  "result": "passed",
+  "settingsRestored": true
+}

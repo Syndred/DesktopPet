@@ -1,0 +1,2665 @@
+{
+  "at": "2026-10-24T15:32:35.837Z",
+  "output": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-companions\\DesktopPet\\artifacts\\companions\\five-elements-6VSkiC",
+  "profile": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-companions\\DesktopPet\\artifacts\\qa\\unified-battle\\qa-1792855955828-e76b97b2",
+  "source": {
+    "sha": "4770aa1fd2abcca98a1986ccd0a7b38f7826049c",
+    "dirty": "",
+    "mainBundleSha256": "c7bad7ec905876fee122e0970b83b5ba9ddce61c4de715459e6050ffa49ab504",
+    "uiEntrySha256": "1cf4ed9daeee57f61349fc200f9c0fd61f6867c12da72e6d8569bdf70de93566"
+  },
+  "scenario": {
+    "id": "unified-battle",
+    "runId": "e76b97b2-a951-495d-8160-fc22ff12e2ac",
+    "provenance": "simulated",
+    "isolated": true
+  },
+  "sources": {
+    "authentication": "isolated-QA-local-account-through-actual-accounts-service",
+    "characters": "registered-project-original-atlases",
+    "playback": "production-IPC-and-Pixi",
+    "training": "actual-local-authoritative-engine",
+    "territory": "simulated-controlled-owned-record",
+    "garrison": "production-command-against-controlled-territory",
+    "realCloudAcceptance": false,
+    "realGeographicAcceptance": false
+  },
+  "scope": "U02/U03 presentation/U05/U07 companions self-acceptance; four-mode/all-25 rules are separately owned by battle and central integration",
+  "inputs": [
+    {
+      "at": "2026-10-24T15:32:36.851Z",
+      "operation": "navigate",
+      "path": "/companions/adopt"
+    },
+    {
+      "at": "2026-10-24T15:32:38.136Z",
+      "operation": "adoption-element-filter",
+      "element": "metal",
+      "actualCards": 1
+    },
+    {
+      "at": "2026-10-24T15:32:38.240Z",
+      "operation": "adoption-element-filter",
+      "element": "wood",
+      "actualCards": 1
+    },
+    {
+      "at": "2026-10-24T15:32:38.394Z",
+      "operation": "adoption-element-filter",
+      "element": "water",
+      "actualCards": 4
+    },
+    {
+      "at": "2026-10-24T15:32:38.580Z",
+      "operation": "adoption-element-filter",
+      "element": "fire",
+      "actualCards": 1
+    },
+    {
+      "at": "2026-10-24T15:32:38.710Z",
+      "operation": "adoption-element-filter",
+      "element": "earth",
+      "actualCards": 1
+    },
+    {
+      "at": "2026-10-24T15:32:39.109Z",
+      "operation": "adopt-form",
+      "templateId": "big-fish-gentle",
+      "name": "鱼丸",
+      "element": "water"
+    },
+    {
+      "at": "2026-10-24T15:32:39.465Z",
+      "operation": "adopt-form",
+      "templateId": "big-fish-cheerful",
+      "name": "小蓝",
+      "element": "water"
+    },
+    {
+      "at": "2026-10-24T15:32:39.907Z",
+      "operation": "adopt-form",
+      "templateId": "big-fish-foodie",
+      "name": "饭团",
+      "element": "water"
+    },
+    {
+      "at": "2026-10-24T15:32:40.056Z",
+      "operation": "adopt-form",
+      "templateId": "animal-shiba",
+      "name": "焰柴",
+      "element": "fire"
+    },
+    {
+      "at": "2026-10-24T15:32:40.252Z",
+      "operation": "adopt-form",
+      "templateId": "animal-hat-cat",
+      "name": "礼帽喵",
+      "element": "metal"
+    },
+    {
+      "at": "2026-10-24T15:32:40.449Z",
+      "operation": "adopt-form",
+      "templateId": "animal-white-fox",
+      "name": "小狐",
+      "element": "water"
+    },
+    {
+      "at": "2026-10-24T15:32:40.609Z",
+      "operation": "adopt-form",
+      "templateId": "animal-wood-deer",
+      "name": "青芽",
+      "element": "wood"
+    },
+    {
+      "at": "2026-10-24T15:32:40.797Z",
+      "operation": "adopt-form",
+      "templateId": "animal-earth-pangolin",
+      "name": "岩团",
+      "element": "earth"
+    },
+    {
+      "at": "2026-10-24T15:32:43.376Z",
+      "operation": "navigate",
+      "path": "/companions/pet-28229917-cc30-423e-8a06-4582bf9f1e37"
+    },
+    {
+      "at": "2026-10-24T15:32:44.655Z",
+      "operation": "preview-button",
+      "petId": "pet-28229917-cc30-423e-8a06-4582bf9f1e37",
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "element": "metal",
+      "action": "wave"
+    },
+    {
+      "at": "2026-10-24T15:32:45.986Z",
+      "operation": "preview-button",
+      "petId": "pet-28229917-cc30-423e-8a06-4582bf9f1e37",
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "element": "metal",
+      "action": "eat"
+    },
+    {
+      "at": "2026-10-24T15:32:47.266Z",
+      "operation": "preview-button",
+      "petId": "pet-28229917-cc30-423e-8a06-4582bf9f1e37",
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "element": "metal",
+      "action": "attack"
+    },
+    {
+      "at": "2026-10-24T15:32:48.575Z",
+      "operation": "preview-button",
+      "petId": "pet-28229917-cc30-423e-8a06-4582bf9f1e37",
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "element": "metal",
+      "action": "hit"
+    },
+    {
+      "at": "2026-10-24T15:32:49.857Z",
+      "operation": "preview-button",
+      "petId": "pet-28229917-cc30-423e-8a06-4582bf9f1e37",
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "element": "metal",
+      "action": "skill"
+    },
+    {
+      "at": "2026-10-24T15:32:51.177Z",
+      "operation": "conversation-entry",
+      "petId": "pet-28229917-cc30-423e-8a06-4582bf9f1e37",
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "element": "metal"
+    },
+    {
+      "at": "2026-10-24T15:32:51.177Z",
+      "operation": "navigate",
+      "path": "/companions/pet-28229917-cc30-423e-8a06-4582bf9f1e37"
+    },
+    {
+      "at": "2026-10-24T15:32:51.700Z",
+      "operation": "detail-battle-entry-button",
+      "petId": "pet-28229917-cc30-423e-8a06-4582bf9f1e37",
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "element": "metal"
+    },
+    {
+      "at": "2026-10-24T15:32:52.345Z",
+      "operation": "training-start-button",
+      "sessionId": "battle-e47a6d31-3e08-406f-b15b-ec14f5e763d5",
+      "petId": "pet-28229917-cc30-423e-8a06-4582bf9f1e37",
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "element": "metal",
+      "authority": "simulated"
+    },
+    {
+      "at": "2026-10-24T15:32:52.743Z",
+      "operation": "navigate",
+      "path": "/garden"
+    },
+    {
+      "at": "2026-10-24T15:32:53.818Z",
+      "operation": "garrison-confirm-button",
+      "territoryId": "qa:companions:e76b97b2-a951-495d-8160-fc22ff12e2ac",
+      "petId": "pet-28229917-cc30-423e-8a06-4582bf9f1e37",
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "element": "metal",
+      "territoryProvenance": "controlled-ui-fixture"
+    },
+    {
+      "at": "2026-10-24T15:32:53.914Z",
+      "operation": "navigate",
+      "path": "/companions/pet-ac56437b-f567-4478-b376-d9d7742d6e63"
+    },
+    {
+      "at": "2026-10-24T15:32:55.014Z",
+      "operation": "preview-button",
+      "petId": "pet-ac56437b-f567-4478-b376-d9d7742d6e63",
+      "resourceId": "builtin:lingjing-qingya-v1",
+      "element": "wood",
+      "action": "wave"
+    },
+    {
+      "at": "2026-10-24T15:32:56.323Z",
+      "operation": "preview-button",
+      "petId": "pet-ac56437b-f567-4478-b376-d9d7742d6e63",
+      "resourceId": "builtin:lingjing-qingya-v1",
+      "element": "wood",
+      "action": "eat"
+    },
+    {
+      "at": "2026-10-24T15:32:57.560Z",
+      "operation": "preview-button",
+      "petId": "pet-ac56437b-f567-4478-b376-d9d7742d6e63",
+      "resourceId": "builtin:lingjing-qingya-v1",
+      "element": "wood",
+      "action": "attack"
+    },
+    {
+      "at": "2026-10-24T15:32:58.287Z",
+      "operation": "consecutive-same-action-button",
+      "petId": "pet-ac56437b-f567-4478-b376-d9d7742d6e63",
+      "action": "attack",
+      "firstKey": "f5ff14a8-2346-4c12-b6e2-3001cb4841ec",
+      "secondKey": "694f1aa6-9e4a-45f1-ac6b-30183b42b06d"
+    },
+    {
+      "at": "2026-10-24T15:32:59.186Z",
+      "operation": "preview-button",
+      "petId": "pet-ac56437b-f567-4478-b376-d9d7742d6e63",
+      "resourceId": "builtin:lingjing-qingya-v1",
+      "element": "wood",
+      "action": "hit"
+    },
+    {
+      "at": "2026-10-24T15:33:00.460Z",
+      "operation": "preview-button",
+      "petId": "pet-ac56437b-f567-4478-b376-d9d7742d6e63",
+      "resourceId": "builtin:lingjing-qingya-v1",
+      "element": "wood",
+      "action": "skill"
+    },
+    {
+      "at": "2026-10-24T15:33:01.459Z",
+      "operation": "conversation-entry",
+      "petId": "pet-ac56437b-f567-4478-b376-d9d7742d6e63",
+      "resourceId": "builtin:lingjing-qingya-v1",
+      "element": "wood"
+    },
+    {
+      "at": "2026-10-24T15:33:01.459Z",
+      "operation": "navigate",
+      "path": "/companions/pet-ac56437b-f567-4478-b376-d9d7742d6e63"
+    },
+    {
+      "at": "2026-10-24T15:33:01.963Z",
+      "operation": "detail-battle-entry-button",
+      "petId": "pet-ac56437b-f567-4478-b376-d9d7742d6e63",
+      "resourceId": "builtin:lingjing-qingya-v1",
+      "element": "wood"
+    },
+    {
+      "at": "2026-10-24T15:33:04.135Z",
+      "operation": "shared-normal-attack-button",
+      "sessionId": "battle-c0974391-d5da-48a1-bfd6-6596c295d0d5",
+      "petId": "pet-ac56437b-f567-4478-b376-d9d7742d6e63",
+      "resourceId": "builtin:lingjing-qingya-v1",
+      "element": "wood"
+    },
+    {
+      "at": "2026-10-24T15:33:04.135Z",
+      "operation": "training-start-button",
+      "sessionId": "battle-c0974391-d5da-48a1-bfd6-6596c295d0d5",
+      "petId": "pet-ac56437b-f567-4478-b376-d9d7742d6e63",
+      "resourceId": "builtin:lingjing-qingya-v1",
+      "element": "wood",
+      "authority": "simulated"
+    },
+    {
+      "at": "2026-10-24T15:33:04.520Z",
+      "operation": "navigate",
+      "path": "/garden"
+    },
+    {
+      "at": "2026-10-24T15:33:05.437Z",
+      "operation": "garrison-confirm-button",
+      "territoryId": "qa:companions:e76b97b2-a951-495d-8160-fc22ff12e2ac",
+      "petId": "pet-ac56437b-f567-4478-b376-d9d7742d6e63",
+      "resourceId": "builtin:lingjing-qingya-v1",
+      "element": "wood",
+      "territoryProvenance": "controlled-ui-fixture"
+    },
+    {
+      "at": "2026-10-24T15:33:05.652Z",
+      "operation": "navigate",
+      "path": "/companions/pet-676dc1d2-01dc-4aef-ad99-99bcd9d1c0ad"
+    },
+    {
+      "at": "2026-10-24T15:33:06.495Z",
+      "operation": "preview-button",
+      "petId": "pet-676dc1d2-01dc-4aef-ad99-99bcd9d1c0ad",
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "element": "water",
+      "action": "wave"
+    },
+    {
+      "at": "2026-10-24T15:33:07.784Z",
+      "operation": "preview-button",
+      "petId": "pet-676dc1d2-01dc-4aef-ad99-99bcd9d1c0ad",
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "element": "water",
+      "action": "eat"
+    },
+    {
+      "at": "2026-10-24T15:33:09.084Z",
+      "operation": "preview-button",
+      "petId": "pet-676dc1d2-01dc-4aef-ad99-99bcd9d1c0ad",
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "element": "water",
+      "action": "attack"
+    },
+    {
+      "at": "2026-10-24T15:33:10.335Z",
+      "operation": "preview-button",
+      "petId": "pet-676dc1d2-01dc-4aef-ad99-99bcd9d1c0ad",
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "element": "water",
+      "action": "hit"
+    },
+    {
+      "at": "2026-10-24T15:33:11.611Z",
+      "operation": "preview-button",
+      "petId": "pet-676dc1d2-01dc-4aef-ad99-99bcd9d1c0ad",
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "element": "water",
+      "action": "skill"
+    },
+    {
+      "at": "2026-10-24T15:33:12.926Z",
+      "operation": "conversation-entry",
+      "petId": "pet-676dc1d2-01dc-4aef-ad99-99bcd9d1c0ad",
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "element": "water"
+    },
+    {
+      "at": "2026-10-24T15:33:12.926Z",
+      "operation": "navigate",
+      "path": "/companions/pet-676dc1d2-01dc-4aef-ad99-99bcd9d1c0ad"
+    },
+    {
+      "at": "2026-10-24T15:33:13.419Z",
+      "operation": "detail-battle-entry-button",
+      "petId": "pet-676dc1d2-01dc-4aef-ad99-99bcd9d1c0ad",
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "element": "water"
+    },
+    {
+      "at": "2026-10-24T15:33:14.045Z",
+      "operation": "training-start-button",
+      "sessionId": "battle-3cc8e8a4-3941-4474-ae5f-32bb7852422c",
+      "petId": "pet-676dc1d2-01dc-4aef-ad99-99bcd9d1c0ad",
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "element": "water",
+      "authority": "simulated"
+    },
+    {
+      "at": "2026-10-24T15:33:14.470Z",
+      "operation": "navigate",
+      "path": "/garden"
+    },
+    {
+      "at": "2026-10-24T15:33:15.375Z",
+      "operation": "garrison-confirm-button",
+      "territoryId": "qa:companions:e76b97b2-a951-495d-8160-fc22ff12e2ac",
+      "petId": "pet-676dc1d2-01dc-4aef-ad99-99bcd9d1c0ad",
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "element": "water",
+      "territoryProvenance": "controlled-ui-fixture"
+    },
+    {
+      "at": "2026-10-24T15:33:15.414Z",
+      "operation": "navigate",
+      "path": "/companions/pet-c44a894f-da55-4199-9ae9-0ba0d3354d57"
+    },
+    {
+      "at": "2026-10-24T15:33:16.266Z",
+      "operation": "preview-button",
+      "petId": "pet-c44a894f-da55-4199-9ae9-0ba0d3354d57",
+      "resourceId": "builtin:lingjing-shiba-v2",
+      "element": "fire",
+      "action": "wave"
+    },
+    {
+      "at": "2026-10-24T15:33:17.550Z",
+      "operation": "preview-button",
+      "petId": "pet-c44a894f-da55-4199-9ae9-0ba0d3354d57",
+      "resourceId": "builtin:lingjing-shiba-v2",
+      "element": "fire",
+      "action": "eat"
+    },
+    {
+      "at": "2026-10-24T15:33:18.835Z",
+      "operation": "preview-button",
+      "petId": "pet-c44a894f-da55-4199-9ae9-0ba0d3354d57",
+      "resourceId": "builtin:lingjing-shiba-v2",
+      "element": "fire",
+      "action": "attack"
+    },
+    {
+      "at": "2026-10-24T15:33:20.116Z",
+      "operation": "preview-button",
+      "petId": "pet-c44a894f-da55-4199-9ae9-0ba0d3354d57",
+      "resourceId": "builtin:lingjing-shiba-v2",
+      "element": "fire",
+      "action": "hit"
+    },
+    {
+      "at": "2026-10-24T15:33:21.400Z",
+      "operation": "preview-button",
+      "petId": "pet-c44a894f-da55-4199-9ae9-0ba0d3354d57",
+      "resourceId": "builtin:lingjing-shiba-v2",
+      "element": "fire",
+      "action": "skill"
+    },
+    {
+      "at": "2026-10-24T15:33:22.721Z",
+      "operation": "conversation-entry",
+      "petId": "pet-c44a894f-da55-4199-9ae9-0ba0d3354d57",
+      "resourceId": "builtin:lingjing-shiba-v2",
+      "element": "fire"
+    },
+    {
+      "at": "2026-10-24T15:33:22.721Z",
+      "operation": "navigate",
+      "path": "/companions/pet-c44a894f-da55-4199-9ae9-0ba0d3354d57"
+    },
+    {
+      "at": "2026-10-24T15:33:23.196Z",
+      "operation": "detail-battle-entry-button",
+      "petId": "pet-c44a894f-da55-4199-9ae9-0ba0d3354d57",
+      "resourceId": "builtin:lingjing-shiba-v2",
+      "element": "fire"
+    },
+    {
+      "at": "2026-10-24T15:33:23.785Z",
+      "operation": "training-start-button",
+      "sessionId": "battle-0cf3af8d-ca35-4933-a1e3-ed7a8d2bb71e",
+      "petId": "pet-c44a894f-da55-4199-9ae9-0ba0d3354d57",
+      "resourceId": "builtin:lingjing-shiba-v2",
+      "element": "fire",
+      "authority": "simulated"
+    },
+    {
+      "at": "2026-10-24T15:33:24.120Z",
+      "operation": "navigate",
+      "path": "/garden"
+    },
+    {
+      "at": "2026-10-24T15:33:25.064Z",
+      "operation": "garrison-confirm-button",
+      "territoryId": "qa:companions:e76b97b2-a951-495d-8160-fc22ff12e2ac",
+      "petId": "pet-c44a894f-da55-4199-9ae9-0ba0d3354d57",
+      "resourceId": "builtin:lingjing-shiba-v2",
+      "element": "fire",
+      "territoryProvenance": "controlled-ui-fixture"
+    },
+    {
+      "at": "2026-10-24T15:33:25.111Z",
+      "operation": "navigate",
+      "path": "/companions/pet-cffdaa10-9939-4e80-a135-ff802cf932f6"
+    },
+    {
+      "at": "2026-10-24T15:33:26.227Z",
+      "operation": "preview-button",
+      "petId": "pet-cffdaa10-9939-4e80-a135-ff802cf932f6",
+      "resourceId": "builtin:lingjing-yantuan-v1",
+      "element": "earth",
+      "action": "wave"
+    },
+    {
+      "at": "2026-10-24T15:33:27.534Z",
+      "operation": "preview-button",
+      "petId": "pet-cffdaa10-9939-4e80-a135-ff802cf932f6",
+      "resourceId": "builtin:lingjing-yantuan-v1",
+      "element": "earth",
+      "action": "eat"
+    },
+    {
+      "at": "2026-10-24T15:33:28.826Z",
+      "operation": "preview-button",
+      "petId": "pet-cffdaa10-9939-4e80-a135-ff802cf932f6",
+      "resourceId": "builtin:lingjing-yantuan-v1",
+      "element": "earth",
+      "action": "attack"
+    },
+    {
+      "at": "2026-10-24T15:33:29.546Z",
+      "operation": "consecutive-same-action-button",
+      "petId": "pet-cffdaa10-9939-4e80-a135-ff802cf932f6",
+      "action": "attack",
+      "firstKey": "0e4efea9-6118-41bc-9685-a0451ff288d3",
+      "secondKey": "196ea56a-287e-472d-bd79-8dd8c59118ab"
+    },
+    {
+      "at": "2026-10-24T15:33:30.442Z",
+      "operation": "preview-button",
+      "petId": "pet-cffdaa10-9939-4e80-a135-ff802cf932f6",
+      "resourceId": "builtin:lingjing-yantuan-v1",
+      "element": "earth",
+      "action": "hit"
+    },
+    {
+      "at": "2026-10-24T15:33:31.699Z",
+      "operation": "preview-button",
+      "petId": "pet-cffdaa10-9939-4e80-a135-ff802cf932f6",
+      "resourceId": "builtin:lingjing-yantuan-v1",
+      "element": "earth",
+      "action": "skill"
+    },
+    {
+      "at": "2026-10-24T15:33:32.678Z",
+      "operation": "conversation-entry",
+      "petId": "pet-cffdaa10-9939-4e80-a135-ff802cf932f6",
+      "resourceId": "builtin:lingjing-yantuan-v1",
+      "element": "earth"
+    },
+    {
+      "at": "2026-10-24T15:33:32.678Z",
+      "operation": "navigate",
+      "path": "/companions/pet-cffdaa10-9939-4e80-a135-ff802cf932f6"
+    },
+    {
+      "at": "2026-10-24T15:33:33.162Z",
+      "operation": "detail-battle-entry-button",
+      "petId": "pet-cffdaa10-9939-4e80-a135-ff802cf932f6",
+      "resourceId": "builtin:lingjing-yantuan-v1",
+      "element": "earth"
+    },
+    {
+      "at": "2026-10-24T15:33:35.315Z",
+      "operation": "shared-normal-attack-button",
+      "sessionId": "battle-ac09acec-3c47-4069-9068-fa2696db6519",
+      "petId": "pet-cffdaa10-9939-4e80-a135-ff802cf932f6",
+      "resourceId": "builtin:lingjing-yantuan-v1",
+      "element": "earth"
+    },
+    {
+      "at": "2026-10-24T15:33:35.315Z",
+      "operation": "training-start-button",
+      "sessionId": "battle-ac09acec-3c47-4069-9068-fa2696db6519",
+      "petId": "pet-cffdaa10-9939-4e80-a135-ff802cf932f6",
+      "resourceId": "builtin:lingjing-yantuan-v1",
+      "element": "earth",
+      "authority": "simulated"
+    },
+    {
+      "at": "2026-10-24T15:33:35.663Z",
+      "operation": "navigate",
+      "path": "/garden"
+    },
+    {
+      "at": "2026-10-24T15:33:36.559Z",
+      "operation": "garrison-confirm-button",
+      "territoryId": "qa:companions:e76b97b2-a951-495d-8160-fc22ff12e2ac",
+      "petId": "pet-cffdaa10-9939-4e80-a135-ff802cf932f6",
+      "resourceId": "builtin:lingjing-yantuan-v1",
+      "element": "earth",
+      "territoryProvenance": "controlled-ui-fixture"
+    },
+    {
+      "at": "2026-10-24T15:33:36.764Z",
+      "operation": "navigate",
+      "path": "/companions/pet-ac56437b-f567-4478-b376-d9d7742d6e63"
+    },
+    {
+      "at": "2026-10-24T15:33:37.333Z",
+      "operation": "navigate",
+      "path": "/companions"
+    },
+    {
+      "at": "2026-10-24T15:33:38.960Z",
+      "operation": "navigate",
+      "path": "/companions/pet-ac56437b-f567-4478-b376-d9d7742d6e63"
+    },
+    {
+      "at": "2026-10-24T15:33:39.565Z",
+      "operation": "navigate",
+      "path": "/companions"
+    }
+  ],
+  "characters": [
+    {
+      "name": "礼帽喵",
+      "templateId": "animal-hat-cat",
+      "petId": "pet-28229917-cc30-423e-8a06-4582bf9f1e37",
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "element": "metal",
+      "actions": [
+        {
+          "action": "wave",
+          "frames": [
+            "0",
+            "0",
+            "1"
+          ],
+          "resourceId": "builtin:lingjing-hatcat-v1",
+          "nativeAction": "wave",
+          "otherWindows": [
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-ac56437b-f567-4478-b376-d9d7742d6e63",
+              "action": "idle"
+            },
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-c44a894f-da55-4199-9ae9-0ba0d3354d57",
+              "action": "idle"
+            },
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-cffdaa10-9939-4e80-a135-ff802cf932f6",
+              "action": "idle"
+            },
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-676dc1d2-01dc-4aef-ad99-99bcd9d1c0ad",
+              "action": "idle"
+            }
+          ]
+        },
+        {
+          "action": "eat",
+          "frames": [
+            "0",
+            "0",
+            "1"
+          ],
+          "resourceId": "builtin:lingjing-hatcat-v1",
+          "nativeAction": "eat",
+          "otherWindows": [
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-ac56437b-f567-4478-b376-d9d7742d6e63",
+              "action": "idle"
+            },
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-c44a894f-da55-4199-9ae9-0ba0d3354d57",
+              "action": "idle"
+            },
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-cffdaa10-9939-4e80-a135-ff802cf932f6",
+              "action": "idle"
+            },
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-676dc1d2-01dc-4aef-ad99-99bcd9d1c0ad",
+              "action": "idle"
+            }
+          ]
+        },
+        {
+          "action": "attack",
+          "frames": [
+            "0",
+            "0",
+            "1",
+            "2"
+          ],
+          "resourceId": "builtin:lingjing-hatcat-v1",
+          "nativeAction": "attack",
+          "otherWindows": [
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-ac56437b-f567-4478-b376-d9d7742d6e63",
+              "action": "idle"
+            },
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-c44a894f-da55-4199-9ae9-0ba0d3354d57",
+              "action": "idle"
+            },
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-cffdaa10-9939-4e80-a135-ff802cf932f6",
+              "action": "idle"
+            },
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-676dc1d2-01dc-4aef-ad99-99bcd9d1c0ad",
+              "action": "idle"
+            }
+          ]
+        },
+        {
+          "action": "hit",
+          "frames": [
+            "0",
+            "0",
+            "1",
+            "2"
+          ],
+          "resourceId": "builtin:lingjing-hatcat-v1",
+          "nativeAction": "hit",
+          "otherWindows": [
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-ac56437b-f567-4478-b376-d9d7742d6e63",
+              "action": "idle"
+            },
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-c44a894f-da55-4199-9ae9-0ba0d3354d57",
+              "action": "idle"
+            },
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-cffdaa10-9939-4e80-a135-ff802cf932f6",
+              "action": "idle"
+            },
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-676dc1d2-01dc-4aef-ad99-99bcd9d1c0ad",
+              "action": "idle"
+            }
+          ]
+        },
+        {
+          "action": "skill",
+          "frames": [
+            "0",
+            "0",
+            "1",
+            "2"
+          ],
+          "resourceId": "builtin:lingjing-hatcat-v1",
+          "nativeAction": "skill",
+          "otherWindows": [
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-ac56437b-f567-4478-b376-d9d7742d6e63",
+              "action": "idle"
+            },
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-c44a894f-da55-4199-9ae9-0ba0d3354d57",
+              "action": "idle"
+            },
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-cffdaa10-9939-4e80-a135-ff802cf932f6",
+              "action": "idle"
+            },
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-676dc1d2-01dc-4aef-ad99-99bcd9d1c0ad",
+              "action": "idle"
+            }
+          ]
+        }
+      ],
+      "chat": {
+        "petId": "pet-28229917-cc30-423e-8a06-4582bf9f1e37",
+        "resourceId": "builtin:lingjing-hatcat-v1",
+        "element": "metal"
+      },
+      "training": {
+        "sessionId": "battle-e47a6d31-3e08-406f-b15b-ec14f5e763d5",
+        "petId": "pet-28229917-cc30-423e-8a06-4582bf9f1e37",
+        "resourceId": "builtin:lingjing-hatcat-v1",
+        "element": "metal"
+      },
+      "garrison": {
+        "territoryId": "qa:companions:e76b97b2-a951-495d-8160-fc22ff12e2ac",
+        "petId": "pet-28229917-cc30-423e-8a06-4582bf9f1e37",
+        "resourceId": "builtin:lingjing-hatcat-v1",
+        "element": "metal"
+      },
+      "skillNames": [
+        "normal_attack",
+        "element_attack",
+        "dodge",
+        "ultimate"
+      ],
+      "skillPresentation": [
+        {
+          "action": "normal_attack",
+          "name": "普通攻击",
+          "caption": "打断",
+          "icon": "lucide lucide-feather battle-skill-icon size-8"
+        },
+        {
+          "action": "element_attack",
+          "name": "属性攻击",
+          "caption": "易伤",
+          "icon": "lucide lucide-gem battle-skill-icon size-8"
+        },
+        {
+          "action": "dodge",
+          "name": "闪避",
+          "caption": "回避",
+          "icon": "lucide lucide-footprints battle-skill-icon size-8"
+        },
+        {
+          "action": "ultimate",
+          "name": "大招",
+          "caption": "必中 · 回复",
+          "icon": "lucide lucide-zap battle-skill-icon size-8"
+        }
+      ],
+      "rulesId": "five-elements-standard-v1",
+      "elementHint": "每层受伤×1.5，最多5层；基础伤害 12"
+    },
+    {
+      "name": "青芽",
+      "templateId": "animal-wood-deer",
+      "petId": "pet-ac56437b-f567-4478-b376-d9d7742d6e63",
+      "resourceId": "builtin:lingjing-qingya-v1",
+      "element": "wood",
+      "actions": [
+        {
+          "action": "wave",
+          "frames": [
+            "0",
+            "0",
+            "1"
+          ],
+          "resourceId": "builtin:lingjing-qingya-v1",
+          "nativeAction": "wave",
+          "otherWindows": [
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-28229917-cc30-423e-8a06-4582bf9f1e37",
+              "action": "idle"
+            },
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-c44a894f-da55-4199-9ae9-0ba0d3354d57",
+              "action": "idle"
+            },
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-cffdaa10-9939-4e80-a135-ff802cf932f6",
+              "action": "idle"
+            },
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-676dc1d2-01dc-4aef-ad99-99bcd9d1c0ad",
+              "action": "idle"
+            }
+          ]
+        },
+        {
+          "action": "eat",
+          "frames": [
+            "0",
+            "0",
+            "1"
+          ],
+          "resourceId": "builtin:lingjing-qingya-v1",
+          "nativeAction": "eat",
+          "otherWindows": [
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-28229917-cc30-423e-8a06-4582bf9f1e37",
+              "action": "idle"
+            },
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-c44a894f-da55-4199-9ae9-0ba0d3354d57",
+              "action": "idle"
+            },
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-cffdaa10-9939-4e80-a135-ff802cf932f6",
+              "action": "idle"
+            },
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-676dc1d2-01dc-4aef-ad99-99bcd9d1c0ad",
+              "action": "idle"
+            }
+          ]
+        },
+        {
+          "action": "attack",
+          "frames": [
+            "0",
+            "0",
+            "1",
+            "2"
+          ],
+          "resourceId": "builtin:lingjing-qingya-v1",
+          "nativeAction": "attack",
+          "otherWindows": [
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-28229917-cc30-423e-8a06-4582bf9f1e37",
+              "action": "idle"
+            },
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-c44a894f-da55-4199-9ae9-0ba0d3354d57",
+              "action": "idle"
+            },
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-cffdaa10-9939-4e80-a135-ff802cf932f6",
+              "action": "idle"
+            },
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-676dc1d2-01dc-4aef-ad99-99bcd9d1c0ad",
+              "action": "idle"
+            }
+          ],
+          "replay": {
+            "firstKey": "f5ff14a8-2346-4c12-b6e2-3001cb4841ec",
+            "secondKey": "694f1aa6-9e4a-45f1-ac6b-30183b42b06d",
+            "frames": [
+              "3",
+              "0",
+              "1",
+              "2"
+            ],
+            "nativeKey": "694f1aa6-9e4a-45f1-ac6b-30183b42b06d"
+          }
+        },
+        {
+          "action": "hit",
+          "frames": [
+            "0",
+            "0",
+            "1",
+            "2"
+          ],
+          "resourceId": "builtin:lingjing-qingya-v1",
+          "nativeAction": "hit",
+          "otherWindows": [
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-28229917-cc30-423e-8a06-4582bf9f1e37",
+              "action": "idle"
+            },
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-c44a894f-da55-4199-9ae9-0ba0d3354d57",
+              "action": "idle"
+            },
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-cffdaa10-9939-4e80-a135-ff802cf932f6",
+              "action": "idle"
+            },
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-676dc1d2-01dc-4aef-ad99-99bcd9d1c0ad",
+              "action": "idle"
+            }
+          ]
+        },
+        {
+          "action": "skill",
+          "frames": [
+            "0",
+            "0",
+            "1",
+            "2"
+          ],
+          "resourceId": "builtin:lingjing-qingya-v1",
+          "nativeAction": "skill",
+          "otherWindows": [
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-28229917-cc30-423e-8a06-4582bf9f1e37",
+              "action": "idle"
+            },
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-c44a894f-da55-4199-9ae9-0ba0d3354d57",
+              "action": "idle"
+            },
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-cffdaa10-9939-4e80-a135-ff802cf932f6",
+              "action": "idle"
+            },
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-676dc1d2-01dc-4aef-ad99-99bcd9d1c0ad",
+              "action": "idle"
+            }
+          ]
+        }
+      ],
+      "chat": {
+        "petId": "pet-ac56437b-f567-4478-b376-d9d7742d6e63",
+        "resourceId": "builtin:lingjing-qingya-v1",
+        "element": "wood"
+      },
+      "training": {
+        "sessionId": "battle-c0974391-d5da-48a1-bfd6-6596c295d0d5",
+        "petId": "pet-ac56437b-f567-4478-b376-d9d7742d6e63",
+        "resourceId": "builtin:lingjing-qingya-v1",
+        "element": "wood",
+        "timeline": [
+          {
+            "phase": "windup",
+            "key": "battle-c0974391-d5da-48a1-bfd6-6596c295d0d5:1",
+            "stages": [
+              {
+                "petId": "pet-ac56437b-f567-4478-b376-d9d7742d6e63",
+                "resourceId": "builtin:lingjing-qingya-v1",
+                "action": "attack_windup"
+              },
+              {
+                "petId": "training-fire",
+                "resourceId": "builtin:lingjing-shiba-v2",
+                "action": "attack_windup"
+              }
+            ]
+          },
+          {
+            "phase": "release",
+            "key": "battle-c0974391-d5da-48a1-bfd6-6596c295d0d5:1",
+            "stages": [
+              {
+                "petId": "pet-ac56437b-f567-4478-b376-d9d7742d6e63",
+                "resourceId": "builtin:lingjing-qingya-v1",
+                "action": "attack_release"
+              },
+              {
+                "petId": "training-fire",
+                "resourceId": "builtin:lingjing-shiba-v2",
+                "action": "attack_release"
+              }
+            ]
+          },
+          {
+            "phase": "impact",
+            "key": "battle-c0974391-d5da-48a1-bfd6-6596c295d0d5:1",
+            "stages": [
+              {
+                "petId": "pet-ac56437b-f567-4478-b376-d9d7742d6e63",
+                "resourceId": "builtin:lingjing-qingya-v1",
+                "action": "hit"
+              },
+              {
+                "petId": "training-fire",
+                "resourceId": "builtin:lingjing-shiba-v2",
+                "action": "hit"
+              }
+            ]
+          },
+          {
+            "phase": "effects",
+            "key": "battle-c0974391-d5da-48a1-bfd6-6596c295d0d5:1",
+            "stages": [
+              {
+                "petId": "pet-ac56437b-f567-4478-b376-d9d7742d6e63",
+                "resourceId": "builtin:lingjing-qingya-v1",
+                "action": "idle"
+              },
+              {
+                "petId": "training-fire",
+                "resourceId": "builtin:lingjing-shiba-v2",
+                "action": "idle"
+              }
+            ]
+          },
+          {
+            "phase": "rest",
+            "key": "battle-c0974391-d5da-48a1-bfd6-6596c295d0d5:1",
+            "stages": [
+              {
+                "petId": "pet-ac56437b-f567-4478-b376-d9d7742d6e63",
+                "resourceId": "builtin:lingjing-qingya-v1",
+                "action": "idle"
+              },
+              {
+                "petId": "training-fire",
+                "resourceId": "builtin:lingjing-shiba-v2",
+                "action": "idle"
+              }
+            ]
+          }
+        ]
+      },
+      "garrison": {
+        "territoryId": "qa:companions:e76b97b2-a951-495d-8160-fc22ff12e2ac",
+        "petId": "pet-ac56437b-f567-4478-b376-d9d7742d6e63",
+        "resourceId": "builtin:lingjing-qingya-v1",
+        "element": "wood"
+      },
+      "skillNames": [
+        "normal_attack",
+        "element_attack",
+        "dodge",
+        "ultimate"
+      ],
+      "skillPresentation": [
+        {
+          "action": "normal_attack",
+          "name": "普通攻击",
+          "caption": "打断",
+          "icon": "lucide lucide-feather battle-skill-icon size-8"
+        },
+        {
+          "action": "element_attack",
+          "name": "属性攻击",
+          "caption": "寄生",
+          "icon": "lucide lucide-leaf battle-skill-icon size-8"
+        },
+        {
+          "action": "dodge",
+          "name": "闪避",
+          "caption": "回避",
+          "icon": "lucide lucide-footprints battle-skill-icon size-8"
+        },
+        {
+          "action": "ultimate",
+          "name": "大招",
+          "caption": "必中 · 回复",
+          "icon": "lucide lucide-zap battle-skill-icon size-8"
+        }
+      ],
+      "rulesId": "five-elements-standard-v1",
+      "elementHint": "每层回合末吸取2生命，最多5层；基础伤害 12"
+    },
+    {
+      "name": "鱼丸",
+      "templateId": "big-fish-gentle",
+      "petId": "pet-676dc1d2-01dc-4aef-ad99-99bcd9d1c0ad",
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "element": "water",
+      "actions": [
+        {
+          "action": "wave",
+          "frames": [
+            "0",
+            "0",
+            "1"
+          ],
+          "resourceId": "builtin:lingjing-yuwan-v2",
+          "nativeAction": "wave",
+          "otherWindows": [
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-28229917-cc30-423e-8a06-4582bf9f1e37",
+              "action": "idle"
+            },
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-ac56437b-f567-4478-b376-d9d7742d6e63",
+              "action": "idle"
+            },
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-c44a894f-da55-4199-9ae9-0ba0d3354d57",
+              "action": "idle"
+            },
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-cffdaa10-9939-4e80-a135-ff802cf932f6",
+              "action": "idle"
+            }
+          ]
+        },
+        {
+          "action": "eat",
+          "frames": [
+            "0",
+            "0",
+            "1"
+          ],
+          "resourceId": "builtin:lingjing-yuwan-v2",
+          "nativeAction": "eat",
+          "otherWindows": [
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-28229917-cc30-423e-8a06-4582bf9f1e37",
+              "action": "idle"
+            },
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-ac56437b-f567-4478-b376-d9d7742d6e63",
+              "action": "idle"
+            },
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-c44a894f-da55-4199-9ae9-0ba0d3354d57",
+              "action": "idle"
+            },
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-cffdaa10-9939-4e80-a135-ff802cf932f6",
+              "action": "idle"
+            }
+          ]
+        },
+        {
+          "action": "attack",
+          "frames": [
+            "0",
+            "0",
+            "1",
+            "2"
+          ],
+          "resourceId": "builtin:lingjing-yuwan-v2",
+          "nativeAction": "attack",
+          "otherWindows": [
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-28229917-cc30-423e-8a06-4582bf9f1e37",
+              "action": "idle"
+            },
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-ac56437b-f567-4478-b376-d9d7742d6e63",
+              "action": "idle"
+            },
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-c44a894f-da55-4199-9ae9-0ba0d3354d57",
+              "action": "idle"
+            },
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-cffdaa10-9939-4e80-a135-ff802cf932f6",
+              "action": "idle"
+            }
+          ]
+        },
+        {
+          "action": "hit",
+          "frames": [
+            "0",
+            "0",
+            "1",
+            "2"
+          ],
+          "resourceId": "builtin:lingjing-yuwan-v2",
+          "nativeAction": "hit",
+          "otherWindows": [
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-28229917-cc30-423e-8a06-4582bf9f1e37",
+              "action": "idle"
+            },
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-ac56437b-f567-4478-b376-d9d7742d6e63",
+              "action": "idle"
+            },
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-c44a894f-da55-4199-9ae9-0ba0d3354d57",
+              "action": "idle"
+            },
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-cffdaa10-9939-4e80-a135-ff802cf932f6",
+              "action": "idle"
+            }
+          ]
+        },
+        {
+          "action": "skill",
+          "frames": [
+            "0",
+            "0",
+            "1",
+            "2"
+          ],
+          "resourceId": "builtin:lingjing-yuwan-v2",
+          "nativeAction": "skill",
+          "otherWindows": [
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-28229917-cc30-423e-8a06-4582bf9f1e37",
+              "action": "idle"
+            },
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-ac56437b-f567-4478-b376-d9d7742d6e63",
+              "action": "idle"
+            },
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-c44a894f-da55-4199-9ae9-0ba0d3354d57",
+              "action": "idle"
+            },
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-cffdaa10-9939-4e80-a135-ff802cf932f6",
+              "action": "idle"
+            }
+          ]
+        }
+      ],
+      "chat": {
+        "petId": "pet-676dc1d2-01dc-4aef-ad99-99bcd9d1c0ad",
+        "resourceId": "builtin:lingjing-yuwan-v2",
+        "element": "water"
+      },
+      "training": {
+        "sessionId": "battle-3cc8e8a4-3941-4474-ae5f-32bb7852422c",
+        "petId": "pet-676dc1d2-01dc-4aef-ad99-99bcd9d1c0ad",
+        "resourceId": "builtin:lingjing-yuwan-v2",
+        "element": "water"
+      },
+      "garrison": {
+        "territoryId": "qa:companions:e76b97b2-a951-495d-8160-fc22ff12e2ac",
+        "petId": "pet-676dc1d2-01dc-4aef-ad99-99bcd9d1c0ad",
+        "resourceId": "builtin:lingjing-yuwan-v2",
+        "element": "water"
+      },
+      "skillNames": [
+        "normal_attack",
+        "element_attack",
+        "dodge",
+        "ultimate"
+      ],
+      "skillPresentation": [
+        {
+          "action": "normal_attack",
+          "name": "普通攻击",
+          "caption": "打断",
+          "icon": "lucide lucide-feather battle-skill-icon size-8"
+        },
+        {
+          "action": "element_attack",
+          "name": "属性攻击",
+          "caption": "降怒",
+          "icon": "lucide lucide-droplets battle-skill-icon size-8"
+        },
+        {
+          "action": "dodge",
+          "name": "闪避",
+          "caption": "回避",
+          "icon": "lucide lucide-footprints battle-skill-icon size-8"
+        },
+        {
+          "action": "ultimate",
+          "name": "大招",
+          "caption": "必中 · 回复",
+          "icon": "lucide lucide-zap battle-skill-icon size-8"
+        }
+      ],
+      "rulesId": "five-elements-standard-v1",
+      "elementHint": "命中后对方怒气向下取半，不增加受击怒气；基础伤害 12"
+    },
+    {
+      "name": "焰柴",
+      "templateId": "animal-shiba",
+      "petId": "pet-c44a894f-da55-4199-9ae9-0ba0d3354d57",
+      "resourceId": "builtin:lingjing-shiba-v2",
+      "element": "fire",
+      "actions": [
+        {
+          "action": "wave",
+          "frames": [
+            "0",
+            "0",
+            "1"
+          ],
+          "resourceId": "builtin:lingjing-shiba-v2",
+          "nativeAction": "wave",
+          "otherWindows": [
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-28229917-cc30-423e-8a06-4582bf9f1e37",
+              "action": "idle"
+            },
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-ac56437b-f567-4478-b376-d9d7742d6e63",
+              "action": "idle"
+            },
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-cffdaa10-9939-4e80-a135-ff802cf932f6",
+              "action": "idle"
+            },
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-676dc1d2-01dc-4aef-ad99-99bcd9d1c0ad",
+              "action": "idle"
+            }
+          ]
+        },
+        {
+          "action": "eat",
+          "frames": [
+            "0",
+            "0",
+            "1"
+          ],
+          "resourceId": "builtin:lingjing-shiba-v2",
+          "nativeAction": "eat",
+          "otherWindows": [
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-28229917-cc30-423e-8a06-4582bf9f1e37",
+              "action": "idle"
+            },
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-ac56437b-f567-4478-b376-d9d7742d6e63",
+              "action": "idle"
+            },
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-cffdaa10-9939-4e80-a135-ff802cf932f6",
+              "action": "idle"
+            },
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-676dc1d2-01dc-4aef-ad99-99bcd9d1c0ad",
+              "action": "idle"
+            }
+          ]
+        },
+        {
+          "action": "attack",
+          "frames": [
+            "0",
+            "0",
+            "1",
+            "2"
+          ],
+          "resourceId": "builtin:lingjing-shiba-v2",
+          "nativeAction": "attack",
+          "otherWindows": [
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-28229917-cc30-423e-8a06-4582bf9f1e37",
+              "action": "idle"
+            },
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-ac56437b-f567-4478-b376-d9d7742d6e63",
+              "action": "idle"
+            },
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-cffdaa10-9939-4e80-a135-ff802cf932f6",
+              "action": "idle"
+            },
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-676dc1d2-01dc-4aef-ad99-99bcd9d1c0ad",
+              "action": "idle"
+            }
+          ]
+        },
+        {
+          "action": "hit",
+          "frames": [
+            "0",
+            "0",
+            "1",
+            "2"
+          ],
+          "resourceId": "builtin:lingjing-shiba-v2",
+          "nativeAction": "hit",
+          "otherWindows": [
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-28229917-cc30-423e-8a06-4582bf9f1e37",
+              "action": "idle"
+            },
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-ac56437b-f567-4478-b376-d9d7742d6e63",
+              "action": "idle"
+            },
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-cffdaa10-9939-4e80-a135-ff802cf932f6",
+              "action": "idle"
+            },
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-676dc1d2-01dc-4aef-ad99-99bcd9d1c0ad",
+              "action": "idle"
+            }
+          ]
+        },
+        {
+          "action": "skill",
+          "frames": [
+            "0",
+            "0",
+            "1",
+            "2"
+          ],
+          "resourceId": "builtin:lingjing-shiba-v2",
+          "nativeAction": "skill",
+          "otherWindows": [
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-28229917-cc30-423e-8a06-4582bf9f1e37",
+              "action": "idle"
+            },
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-ac56437b-f567-4478-b376-d9d7742d6e63",
+              "action": "idle"
+            },
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-cffdaa10-9939-4e80-a135-ff802cf932f6",
+              "action": "idle"
+            },
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-676dc1d2-01dc-4aef-ad99-99bcd9d1c0ad",
+              "action": "idle"
+            }
+          ]
+        }
+      ],
+      "chat": {
+        "petId": "pet-c44a894f-da55-4199-9ae9-0ba0d3354d57",
+        "resourceId": "builtin:lingjing-shiba-v2",
+        "element": "fire"
+      },
+      "training": {
+        "sessionId": "battle-0cf3af8d-ca35-4933-a1e3-ed7a8d2bb71e",
+        "petId": "pet-c44a894f-da55-4199-9ae9-0ba0d3354d57",
+        "resourceId": "builtin:lingjing-shiba-v2",
+        "element": "fire"
+      },
+      "garrison": {
+        "territoryId": "qa:companions:e76b97b2-a951-495d-8160-fc22ff12e2ac",
+        "petId": "pet-c44a894f-da55-4199-9ae9-0ba0d3354d57",
+        "resourceId": "builtin:lingjing-shiba-v2",
+        "element": "fire"
+      },
+      "skillNames": [
+        "normal_attack",
+        "element_attack",
+        "dodge",
+        "ultimate"
+      ],
+      "skillPresentation": [
+        {
+          "action": "normal_attack",
+          "name": "普通攻击",
+          "caption": "打断",
+          "icon": "lucide lucide-feather battle-skill-icon size-8"
+        },
+        {
+          "action": "element_attack",
+          "name": "属性攻击",
+          "caption": "燃烧",
+          "icon": "lucide lucide-flame battle-skill-icon size-8"
+        },
+        {
+          "action": "dodge",
+          "name": "闪避",
+          "caption": "回避",
+          "icon": "lucide lucide-footprints battle-skill-icon size-8"
+        },
+        {
+          "action": "ultimate",
+          "name": "大招",
+          "caption": "必中 · 回复",
+          "icon": "lucide lucide-zap battle-skill-icon size-8"
+        }
+      ],
+      "rulesId": "five-elements-standard-v1",
+      "elementHint": "回合末按当前生命8%×层数伤害，最多5层；基础伤害 12"
+    },
+    {
+      "name": "岩团",
+      "templateId": "animal-earth-pangolin",
+      "petId": "pet-cffdaa10-9939-4e80-a135-ff802cf932f6",
+      "resourceId": "builtin:lingjing-yantuan-v1",
+      "element": "earth",
+      "actions": [
+        {
+          "action": "wave",
+          "frames": [
+            "0",
+            "0",
+            "1"
+          ],
+          "resourceId": "builtin:lingjing-yantuan-v1",
+          "nativeAction": "wave",
+          "otherWindows": [
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-28229917-cc30-423e-8a06-4582bf9f1e37",
+              "action": "idle"
+            },
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-ac56437b-f567-4478-b376-d9d7742d6e63",
+              "action": "idle"
+            },
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-c44a894f-da55-4199-9ae9-0ba0d3354d57",
+              "action": "idle"
+            },
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-676dc1d2-01dc-4aef-ad99-99bcd9d1c0ad",
+              "action": "idle"
+            }
+          ]
+        },
+        {
+          "action": "eat",
+          "frames": [
+            "0",
+            "0",
+            "1"
+          ],
+          "resourceId": "builtin:lingjing-yantuan-v1",
+          "nativeAction": "eat",
+          "otherWindows": [
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-28229917-cc30-423e-8a06-4582bf9f1e37",
+              "action": "idle"
+            },
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-ac56437b-f567-4478-b376-d9d7742d6e63",
+              "action": "idle"
+            },
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-c44a894f-da55-4199-9ae9-0ba0d3354d57",
+              "action": "idle"
+            },
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-676dc1d2-01dc-4aef-ad99-99bcd9d1c0ad",
+              "action": "idle"
+            }
+          ]
+        },
+        {
+          "action": "attack",
+          "frames": [
+            "0",
+            "0",
+            "1",
+            "2"
+          ],
+          "resourceId": "builtin:lingjing-yantuan-v1",
+          "nativeAction": "attack",
+          "otherWindows": [
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-28229917-cc30-423e-8a06-4582bf9f1e37",
+              "action": "idle"
+            },
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-ac56437b-f567-4478-b376-d9d7742d6e63",
+              "action": "idle"
+            },
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-c44a894f-da55-4199-9ae9-0ba0d3354d57",
+              "action": "idle"
+            },
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-676dc1d2-01dc-4aef-ad99-99bcd9d1c0ad",
+              "action": "idle"
+            }
+          ],
+          "replay": {
+            "firstKey": "0e4efea9-6118-41bc-9685-a0451ff288d3",
+            "secondKey": "196ea56a-287e-472d-bd79-8dd8c59118ab",
+            "frames": [
+              "0",
+              "1",
+              "2"
+            ],
+            "nativeKey": "196ea56a-287e-472d-bd79-8dd8c59118ab"
+          }
+        },
+        {
+          "action": "hit",
+          "frames": [
+            "0",
+            "0",
+            "1",
+            "2"
+          ],
+          "resourceId": "builtin:lingjing-yantuan-v1",
+          "nativeAction": "hit",
+          "otherWindows": [
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-28229917-cc30-423e-8a06-4582bf9f1e37",
+              "action": "idle"
+            },
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-ac56437b-f567-4478-b376-d9d7742d6e63",
+              "action": "idle"
+            },
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-c44a894f-da55-4199-9ae9-0ba0d3354d57",
+              "action": "idle"
+            },
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-676dc1d2-01dc-4aef-ad99-99bcd9d1c0ad",
+              "action": "idle"
+            }
+          ]
+        },
+        {
+          "action": "skill",
+          "frames": [
+            "0",
+            "0",
+            "1",
+            "2"
+          ],
+          "resourceId": "builtin:lingjing-yantuan-v1",
+          "nativeAction": "skill",
+          "otherWindows": [
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-28229917-cc30-423e-8a06-4582bf9f1e37",
+              "action": "idle"
+            },
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-ac56437b-f567-4478-b376-d9d7742d6e63",
+              "action": "idle"
+            },
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-c44a894f-da55-4199-9ae9-0ba0d3354d57",
+              "action": "idle"
+            },
+            {
+              "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-676dc1d2-01dc-4aef-ad99-99bcd9d1c0ad",
+              "action": "idle"
+            }
+          ]
+        }
+      ],
+      "chat": {
+        "petId": "pet-cffdaa10-9939-4e80-a135-ff802cf932f6",
+        "resourceId": "builtin:lingjing-yantuan-v1",
+        "element": "earth"
+      },
+      "training": {
+        "sessionId": "battle-ac09acec-3c47-4069-9068-fa2696db6519",
+        "petId": "pet-cffdaa10-9939-4e80-a135-ff802cf932f6",
+        "resourceId": "builtin:lingjing-yantuan-v1",
+        "element": "earth",
+        "timeline": [
+          {
+            "phase": "windup",
+            "key": "battle-ac09acec-3c47-4069-9068-fa2696db6519:1",
+            "stages": [
+              {
+                "petId": "pet-cffdaa10-9939-4e80-a135-ff802cf932f6",
+                "resourceId": "builtin:lingjing-yantuan-v1",
+                "action": "attack_windup"
+              },
+              {
+                "petId": "training-fire",
+                "resourceId": "builtin:lingjing-shiba-v2",
+                "action": "walk"
+              }
+            ]
+          },
+          {
+            "phase": "release",
+            "key": "battle-ac09acec-3c47-4069-9068-fa2696db6519:1",
+            "stages": [
+              {
+                "petId": "pet-cffdaa10-9939-4e80-a135-ff802cf932f6",
+                "resourceId": "builtin:lingjing-yantuan-v1",
+                "action": "attack_release"
+              },
+              {
+                "petId": "training-fire",
+                "resourceId": "builtin:lingjing-shiba-v2",
+                "action": "walk"
+              }
+            ]
+          },
+          {
+            "phase": "impact",
+            "key": "battle-ac09acec-3c47-4069-9068-fa2696db6519:1",
+            "stages": [
+              {
+                "petId": "pet-cffdaa10-9939-4e80-a135-ff802cf932f6",
+                "resourceId": "builtin:lingjing-yantuan-v1",
+                "action": "idle"
+              },
+              {
+                "petId": "training-fire",
+                "resourceId": "builtin:lingjing-shiba-v2",
+                "action": "walk"
+              }
+            ]
+          },
+          {
+            "phase": "effects",
+            "key": "battle-ac09acec-3c47-4069-9068-fa2696db6519:1",
+            "stages": [
+              {
+                "petId": "pet-cffdaa10-9939-4e80-a135-ff802cf932f6",
+                "resourceId": "builtin:lingjing-yantuan-v1",
+                "action": "idle"
+              },
+              {
+                "petId": "training-fire",
+                "resourceId": "builtin:lingjing-shiba-v2",
+                "action": "walk"
+              }
+            ]
+          },
+          {
+            "phase": "rest",
+            "key": "battle-ac09acec-3c47-4069-9068-fa2696db6519:1",
+            "stages": [
+              {
+                "petId": "pet-cffdaa10-9939-4e80-a135-ff802cf932f6",
+                "resourceId": "builtin:lingjing-yantuan-v1",
+                "action": "idle"
+              },
+              {
+                "petId": "training-fire",
+                "resourceId": "builtin:lingjing-shiba-v2",
+                "action": "idle"
+              }
+            ]
+          }
+        ]
+      },
+      "garrison": {
+        "territoryId": "qa:companions:e76b97b2-a951-495d-8160-fc22ff12e2ac",
+        "petId": "pet-cffdaa10-9939-4e80-a135-ff802cf932f6",
+        "resourceId": "builtin:lingjing-yantuan-v1",
+        "element": "earth"
+      },
+      "skillNames": [
+        "normal_attack",
+        "element_attack",
+        "dodge",
+        "ultimate"
+      ],
+      "skillPresentation": [
+        {
+          "action": "normal_attack",
+          "name": "普通攻击",
+          "caption": "打断",
+          "icon": "lucide lucide-feather battle-skill-icon size-8"
+        },
+        {
+          "action": "element_attack",
+          "name": "属性攻击",
+          "caption": "迟钝",
+          "icon": "lucide lucide-mountain battle-skill-icon size-8"
+        },
+        {
+          "action": "dodge",
+          "name": "闪避",
+          "caption": "回避",
+          "icon": "lucide lucide-footprints battle-skill-icon size-8"
+        },
+        {
+          "action": "ultimate",
+          "name": "大招",
+          "caption": "必中 · 回复",
+          "icon": "lucide lucide-zap battle-skill-icon size-8"
+        }
+      ],
+      "rulesId": "five-elements-standard-v1",
+      "elementHint": "每层伤害×0.5，最多5层；基础伤害 12"
+    }
+  ],
+  "screenshots": [
+    {
+      "name": "detail-metal.png",
+      "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/companions/pet-28229917-cc30-423e-8a06-4582bf9f1e37",
+      "viewport": {
+        "width": 1280,
+        "height": 844,
+        "dpr": 1
+      }
+    },
+    {
+      "name": "battle-metal.png",
+      "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/battle/session/battle-e47a6d31-3e08-406f-b15b-ec14f5e763d5",
+      "viewport": {
+        "width": 1280,
+        "height": 844,
+        "dpr": 1
+      }
+    },
+    {
+      "name": "detail-wood.png",
+      "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/companions/pet-ac56437b-f567-4478-b376-d9d7742d6e63",
+      "viewport": {
+        "width": 1280,
+        "height": 844,
+        "dpr": 1
+      }
+    },
+    {
+      "name": "skills-wood.png",
+      "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/companions/pet-ac56437b-f567-4478-b376-d9d7742d6e63",
+      "viewport": {
+        "width": 1280,
+        "height": 844,
+        "dpr": 1
+      }
+    },
+    {
+      "name": "battle-wood.png",
+      "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/battle/session/battle-c0974391-d5da-48a1-bfd6-6596c295d0d5",
+      "viewport": {
+        "width": 1280,
+        "height": 844,
+        "dpr": 1
+      }
+    },
+    {
+      "name": "garrison-wood.png",
+      "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/garden",
+      "viewport": {
+        "width": 1280,
+        "height": 844,
+        "dpr": 1
+      }
+    },
+    {
+      "name": "detail-water.png",
+      "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/companions/pet-676dc1d2-01dc-4aef-ad99-99bcd9d1c0ad",
+      "viewport": {
+        "width": 1280,
+        "height": 844,
+        "dpr": 1
+      }
+    },
+    {
+      "name": "battle-water.png",
+      "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/battle/session/battle-3cc8e8a4-3941-4474-ae5f-32bb7852422c",
+      "viewport": {
+        "width": 1280,
+        "height": 844,
+        "dpr": 1
+      }
+    },
+    {
+      "name": "detail-fire.png",
+      "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/companions/pet-c44a894f-da55-4199-9ae9-0ba0d3354d57",
+      "viewport": {
+        "width": 1280,
+        "height": 844,
+        "dpr": 1
+      }
+    },
+    {
+      "name": "battle-fire.png",
+      "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/battle/session/battle-0cf3af8d-ca35-4933-a1e3-ed7a8d2bb71e",
+      "viewport": {
+        "width": 1280,
+        "height": 844,
+        "dpr": 1
+      }
+    },
+    {
+      "name": "detail-earth.png",
+      "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/companions/pet-cffdaa10-9939-4e80-a135-ff802cf932f6",
+      "viewport": {
+        "width": 1280,
+        "height": 844,
+        "dpr": 1
+      }
+    },
+    {
+      "name": "skills-earth.png",
+      "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/companions/pet-cffdaa10-9939-4e80-a135-ff802cf932f6",
+      "viewport": {
+        "width": 1280,
+        "height": 844,
+        "dpr": 1
+      }
+    },
+    {
+      "name": "battle-earth.png",
+      "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/battle/session/battle-ac09acec-3c47-4069-9068-fa2696db6519",
+      "viewport": {
+        "width": 1280,
+        "height": 844,
+        "dpr": 1
+      }
+    },
+    {
+      "name": "garrison-earth.png",
+      "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/garden",
+      "viewport": {
+        "width": 1280,
+        "height": 844,
+        "dpr": 1
+      }
+    },
+    {
+      "name": "1280-detail.png",
+      "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/companions/pet-ac56437b-f567-4478-b376-d9d7742d6e63",
+      "viewport": {
+        "width": 1280,
+        "height": 844,
+        "dpr": 1
+      }
+    },
+    {
+      "name": "1280-overview.png",
+      "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/companions",
+      "viewport": {
+        "width": 1280,
+        "height": 844,
+        "dpr": 1
+      }
+    },
+    {
+      "name": "1280-adoption.png",
+      "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/companions/adopt",
+      "viewport": {
+        "width": 1280,
+        "height": 844,
+        "dpr": 1
+      }
+    },
+    {
+      "name": "1280-adoption-lower.png",
+      "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/companions/adopt",
+      "viewport": {
+        "width": 1280,
+        "height": 844,
+        "dpr": 1
+      }
+    },
+    {
+      "name": "1440-detail.png",
+      "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/companions/pet-ac56437b-f567-4478-b376-d9d7742d6e63",
+      "viewport": {
+        "width": 1440,
+        "height": 900,
+        "dpr": 1
+      }
+    },
+    {
+      "name": "1440-overview.png",
+      "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/companions",
+      "viewport": {
+        "width": 1440,
+        "height": 900,
+        "dpr": 1
+      }
+    },
+    {
+      "name": "1440-adoption.png",
+      "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/companions/adopt",
+      "viewport": {
+        "width": 1440,
+        "height": 900,
+        "dpr": 1
+      }
+    },
+    {
+      "name": "1440-adoption-lower.png",
+      "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/companions/adopt",
+      "viewport": {
+        "width": 1440,
+        "height": 900,
+        "dpr": 1
+      }
+    }
+  ],
+  "errors": [],
+  "build": {
+    "schemaVersion": 1,
+    "builtAt": "2026-10-24T15:32:35.349Z",
+    "sourceCommit": "4770aa1fd2abcca98a1986ccd0a7b38f7826049c",
+    "sourceDirtyFiles": [],
+    "codeFingerprint": "174c6ddb752052ef9c593b7b39acea245f81f44eb2250f917f3e7cb0293ef108",
+    "compiledFingerprint": "44991a5559b0cdf7f08f73174ce016c0cc2f0a30fa0bffd35a381ae9b2b2f5a0",
+    "codeFiles": 216,
+    "compiledFiles": 24
+  },
+  "runtime": {
+    "electron": "36.9.5",
+    "chrome": "136.0.7103.177",
+    "node": "22.19.0",
+    "version": "0.1.8",
+    "userData": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-companions\\DesktopPet\\artifacts\\qa\\unified-battle\\qa-1792855955828-e76b97b2"
+  },
+  "territoryFixture": {
+    "id": "qa:companions:e76b97b2-a951-495d-8160-fc22ff12e2ac",
+    "name": "五行驻守验收庭院",
+    "regionName": "隔离 QA 场景",
+    "ownerAccountId": "qa:e76b97b2-a951-495d-8160-fc22ff12e2ac:local-db357544-91bf-46a2-93d4-1deeb3df064f",
+    "revision": 1,
+    "captureMultiplier": 2,
+    "provenance": "controlled-ui-fixture",
+    "scenarioId": "unified-battle",
+    "runId": "e76b97b2-a951-495d-8160-fc22ff12e2ac",
+    "boundary": [
+      {
+        "lat": 31,
+        "lng": 121
+      },
+      {
+        "lat": 31.006,
+        "lng": 121
+      },
+      {
+        "lat": 31.006,
+        "lng": 121.006
+      },
+      {
+        "lat": 31,
+        "lng": 121.006
+      }
+    ]
+  },
+  "nativeCaptures": [
+    {
+      "name": "desktop-wood.png",
+      "petId": "pet-ac56437b-f567-4478-b376-d9d7742d6e63",
+      "resourceId": "builtin:lingjing-qingya-v1",
+      "element": "wood",
+      "method": "Electron.webContents.capturePage",
+      "size": {
+        "width": 230,
+        "height": 280
+      },
+      "visiblePixels": 12671,
+      "bounds": {
+        "x": 320,
+        "y": 470,
+        "width": 230,
+        "height": 280
+      },
+      "visible": true,
+      "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-ac56437b-f567-4478-b376-d9d7742d6e63",
+      "capturePolicy": "temporary-front-and-unthrottled-in-isolated-QA",
+      "originalBackgroundThrottling": true
+    },
+    {
+      "name": "desktop-earth.png",
+      "petId": "pet-cffdaa10-9939-4e80-a135-ff802cf932f6",
+      "resourceId": "builtin:lingjing-yantuan-v1",
+      "element": "earth",
+      "method": "Electron.webContents.capturePage",
+      "size": {
+        "width": 230,
+        "height": 280
+      },
+      "visiblePixels": 1213,
+      "bounds": {
+        "x": 560,
+        "y": 470,
+        "width": 230,
+        "height": 280
+      },
+      "visible": true,
+      "route": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/dist/ui/index.html#/desktop/pet-cffdaa10-9939-4e80-a135-ff802cf932f6",
+      "capturePolicy": "temporary-front-and-unthrottled-in-isolated-QA",
+      "originalBackgroundThrottling": true
+    }
+  ],
+  "layouts": [
+    {
+      "width": 1280,
+      "height": 844,
+      "dpr": 1,
+      "title": {
+        "x": 224,
+        "y": 78,
+        "width": 430,
+        "height": 98.984375,
+        "bottom": 176.984375
+      },
+      "tabs": {
+        "x": 678,
+        "y": 78,
+        "width": 570,
+        "height": 36,
+        "bottom": 114
+      },
+      "right": {
+        "x": 678,
+        "y": 78,
+        "width": 570,
+        "height": 703.546875,
+        "bottom": 781.546875
+      },
+      "scene": {
+        "x": 224,
+        "y": 200.984375,
+        "width": 430,
+        "height": 580,
+        "bottom": 780.984375
+      },
+      "hint": {
+        "x": 695,
+        "y": 222.703125,
+        "width": 24,
+        "height": 24,
+        "bottom": 246.703125
+      },
+      "meters": {
+        "x": 695,
+        "y": 214.703125,
+        "width": 321.25,
+        "height": 116,
+        "bottom": 330.703125
+      },
+      "heading": {
+        "size": "28px",
+        "weight": "700"
+      },
+      "visibleCopy": "Lv.01\n0 / 100 经验\n60 / 100\n60 / 100\n0 / 100\n养成属性\n130\n26\n26\n18\n技能\n普通攻击\n打断\n10\n属性攻击\n寄生\n12\n闪避\n回避\n≤20\n大招\n必中 · 回复\n50\n重要的回忆\n收回桌面\n第一次相遇\n\n你为它起了名字，一份新的陪伴开始了。\n\n2026/10/24"
+    },
+    {
+      "width": 1440,
+      "height": 900,
+      "dpr": 1,
+      "title": {
+        "x": 224,
+        "y": 78,
+        "width": 498.796875,
+        "height": 98.984375,
+        "bottom": 176.984375
+      },
+      "tabs": {
+        "x": 746.796875,
+        "y": 78,
+        "width": 661.203125,
+        "height": 36,
+        "bottom": 114
+      },
+      "right": {
+        "x": 746.796875,
+        "y": 78,
+        "width": 661.203125,
+        "height": 703.546875,
+        "bottom": 781.546875
+      },
+      "scene": {
+        "x": 224,
+        "y": 200.984375,
+        "width": 498.796875,
+        "height": 636,
+        "bottom": 836.984375
+      },
+      "hint": {
+        "x": 763.796875,
+        "y": 222.703125,
+        "width": 24,
+        "height": 24,
+        "bottom": 246.703125
+      },
+      "meters": {
+        "x": 763.796875,
+        "y": 214.703125,
+        "width": 378.25,
+        "height": 116,
+        "bottom": 330.703125
+      },
+      "heading": {
+        "size": "28px",
+        "weight": "700"
+      },
+      "visibleCopy": "Lv.01\n0 / 100 经验\n60 / 100\n60 / 100\n0 / 100\n养成属性\n130\n26\n26\n18\n技能\n普通攻击\n打断\n10\n属性攻击\n寄生\n12\n闪避\n回避\n≤20\n大招\n必中 · 回复\n50\n重要的回忆\n收回桌面\n第一次相遇\n\n你为它起了名字，一份新的陪伴开始了。\n\n2026/10/24"
+    }
+  ],
+  "restart": {
+    "petCount": 8,
+    "selections": {
+      "chatPetId": "pet-cffdaa10-9939-4e80-a135-ff802cf932f6",
+      "battlePetId": "pet-cffdaa10-9939-4e80-a135-ff802cf932f6",
+      "guardPetId": null
+    },
+    "reauthenticatedSameQaAccount": true,
+    "sessionPersistence": "memory-only-by-QA-policy"
+  },
+  "originalLegacySha256": "814413dca1032650bbb2acf47a51a950447bef4aa7b8ee56be5be20bfcf85bf7",
+  "database": {
+    "pets": [
+      {
+        "ownerAccountId": "qa:e76b97b2-a951-495d-8160-fc22ff12e2ac:local-db357544-91bf-46a2-93d4-1deeb3df064f",
+        "petId": "pet-cffdaa10-9939-4e80-a135-ff802cf932f6",
+        "templateId": "animal-earth-pangolin",
+        "name": "岩团",
+        "serial": "CFFDAA10",
+        "element": "earth",
+        "resource": {
+          "resourceId": "builtin:lingjing-yantuan-v1",
+          "kind": "2d"
+        },
+        "source": "adoption",
+        "origin": {},
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 142,
+            "atk": 24,
+            "def": 34,
+            "spd": 11
+          }
+        },
+        "desktop": {
+          "visible": true,
+          "behavior": "quiet",
+          "scale": 1,
+          "position": {
+            "x": 560,
+            "y": 470,
+            "displayId": "2568730015"
+          }
+        },
+        "revision": 3,
+        "createdAt": "2026-10-24T15:32:40.905Z",
+        "updatedAt": "2026-10-24T15:32:46.443Z"
+      },
+      {
+        "ownerAccountId": "qa:e76b97b2-a951-495d-8160-fc22ff12e2ac:local-db357544-91bf-46a2-93d4-1deeb3df064f",
+        "petId": "pet-28229917-cc30-423e-8a06-4582bf9f1e37",
+        "templateId": "animal-hat-cat",
+        "name": "礼帽喵",
+        "serial": "28229917",
+        "element": "metal",
+        "resource": {
+          "resourceId": "builtin:lingjing-hatcat-v1",
+          "kind": "2d"
+        },
+        "source": "adoption",
+        "origin": {},
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 136,
+            "atk": 30,
+            "def": 30,
+            "spd": 13
+          }
+        },
+        "desktop": {
+          "visible": true,
+          "behavior": "quiet",
+          "scale": 1,
+          "position": {
+            "x": 1040,
+            "y": 520,
+            "displayId": "2568730015"
+          }
+        },
+        "revision": 3,
+        "createdAt": "2026-10-24T15:32:40.349Z",
+        "updatedAt": "2026-10-24T15:32:46.443Z"
+      },
+      {
+        "ownerAccountId": "qa:e76b97b2-a951-495d-8160-fc22ff12e2ac:local-db357544-91bf-46a2-93d4-1deeb3df064f",
+        "petId": "pet-c44a894f-da55-4199-9ae9-0ba0d3354d57",
+        "templateId": "animal-shiba",
+        "name": "焰柴",
+        "serial": "C44A894F",
+        "element": "fire",
+        "resource": {
+          "resourceId": "builtin:lingjing-shiba-v2",
+          "kind": "2d"
+        },
+        "source": "adoption",
+        "origin": {},
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 118,
+            "atk": 33,
+            "def": 20,
+            "spd": 22
+          }
+        },
+        "desktop": {
+          "visible": true,
+          "behavior": "quiet",
+          "scale": 1,
+          "position": {
+            "x": 800,
+            "y": 520,
+            "displayId": "2568730015"
+          }
+        },
+        "revision": 3,
+        "createdAt": "2026-10-24T15:32:40.126Z",
+        "updatedAt": "2026-10-24T15:32:46.443Z"
+      },
+      {
+        "ownerAccountId": "qa:e76b97b2-a951-495d-8160-fc22ff12e2ac:local-db357544-91bf-46a2-93d4-1deeb3df064f",
+        "petId": "pet-3fd198ed-46b0-45b6-9ef1-b14d83383b0f",
+        "templateId": "animal-white-fox",
+        "name": "小狐",
+        "serial": "3FD198ED",
+        "element": "water",
+        "resource": {
+          "resourceId": "builtin:lingjing-xiaohu-v1",
+          "kind": "2d"
+        },
+        "source": "adoption",
+        "origin": {},
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        },
+        "desktop": {
+          "visible": false,
+          "behavior": "quiet",
+          "scale": 1,
+          "position": {
+            "x": 80,
+            "y": 470,
+            "displayId": null
+          }
+        },
+        "revision": 1,
+        "createdAt": "2026-10-24T15:32:40.525Z",
+        "updatedAt": "2026-10-24T15:32:40.525Z"
+      },
+      {
+        "ownerAccountId": "qa:e76b97b2-a951-495d-8160-fc22ff12e2ac:local-db357544-91bf-46a2-93d4-1deeb3df064f",
+        "petId": "pet-ac56437b-f567-4478-b376-d9d7742d6e63",
+        "templateId": "animal-wood-deer",
+        "name": "青芽",
+        "serial": "AC56437B",
+        "element": "wood",
+        "resource": {
+          "resourceId": "builtin:lingjing-qingya-v1",
+          "kind": "2d"
+        },
+        "source": "adoption",
+        "origin": {},
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 130,
+            "atk": 26,
+            "def": 26,
+            "spd": 18
+          }
+        },
+        "desktop": {
+          "visible": true,
+          "behavior": "quiet",
+          "scale": 1,
+          "position": {
+            "x": 320,
+            "y": 470,
+            "displayId": "2568730015"
+          }
+        },
+        "revision": 3,
+        "createdAt": "2026-10-24T15:32:40.682Z",
+        "updatedAt": "2026-10-24T15:32:46.443Z"
+      },
+      {
+        "ownerAccountId": "qa:e76b97b2-a951-495d-8160-fc22ff12e2ac:local-db357544-91bf-46a2-93d4-1deeb3df064f",
+        "petId": "pet-a516a422-3406-4890-87db-02e2c2246553",
+        "templateId": "big-fish-cheerful",
+        "name": "小蓝",
+        "serial": "A516A422",
+        "element": "water",
+        "resource": {
+          "resourceId": "builtin:lingjing-xiaolan-v1",
+          "kind": "2d"
+        },
+        "source": "adoption",
+        "origin": {},
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        },
+        "desktop": {
+          "visible": false,
+          "behavior": "quiet",
+          "scale": 1,
+          "position": {
+            "x": 320,
+            "y": 520,
+            "displayId": null
+          }
+        },
+        "revision": 1,
+        "createdAt": "2026-10-24T15:32:39.541Z",
+        "updatedAt": "2026-10-24T15:32:39.541Z"
+      },
+      {
+        "ownerAccountId": "qa:e76b97b2-a951-495d-8160-fc22ff12e2ac:local-db357544-91bf-46a2-93d4-1deeb3df064f",
+        "petId": "pet-670ba7cc-5ba3-4014-9618-14484c193164",
+        "templateId": "big-fish-foodie",
+        "name": "饭团",
+        "serial": "670BA7CC",
+        "element": "water",
+        "resource": {
+          "resourceId": "builtin:lingjing-fantuan-v1",
+          "kind": "2d"
+        },
+        "source": "adoption",
+        "origin": {},
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        },
+        "desktop": {
+          "visible": false,
+          "behavior": "quiet",
+          "scale": 1,
+          "position": {
+            "x": 560,
+            "y": 520,
+            "displayId": null
+          }
+        },
+        "revision": 1,
+        "createdAt": "2026-10-24T15:32:39.985Z",
+        "updatedAt": "2026-10-24T15:32:39.985Z"
+      },
+      {
+        "ownerAccountId": "qa:e76b97b2-a951-495d-8160-fc22ff12e2ac:local-db357544-91bf-46a2-93d4-1deeb3df064f",
+        "petId": "pet-676dc1d2-01dc-4aef-ad99-99bcd9d1c0ad",
+        "templateId": "big-fish-gentle",
+        "name": "鱼丸",
+        "serial": "676DC1D2",
+        "element": "water",
+        "resource": {
+          "resourceId": "builtin:lingjing-yuwan-v2",
+          "kind": "2d"
+        },
+        "source": "adoption",
+        "origin": {},
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        },
+        "desktop": {
+          "visible": true,
+          "behavior": "quiet",
+          "scale": 1,
+          "position": {
+            "x": 80,
+            "y": 520,
+            "displayId": "2568730015"
+          }
+        },
+        "revision": 3,
+        "createdAt": "2026-10-24T15:32:39.149Z",
+        "updatedAt": "2026-10-24T15:32:46.443Z"
+      }
+    ],
+    "selections": {
+      "selections_json": "{\"chatPetId\":\"pet-cffdaa10-9939-4e80-a135-ff802cf932f6\",\"battlePetId\":\"pet-cffdaa10-9939-4e80-a135-ff802cf932f6\",\"guardPetId\":null}"
+    },
+    "garrisons": [
+      {
+        "owner_account_id": "qa:e76b97b2-a951-495d-8160-fc22ff12e2ac:local-db357544-91bf-46a2-93d4-1deeb3df064f",
+        "territory_id": "qa:companions:e76b97b2-a951-495d-8160-fc22ff12e2ac",
+        "pet_id": "pet-cffdaa10-9939-4e80-a135-ff802cf932f6",
+        "territory_revision": 1,
+        "updated_at": 1792856016488
+      }
+    ],
+    "actions": [
+      {
+        "operation": "adopt",
+        "total": 8
+      },
+      {
+        "operation": "desktop",
+        "total": 5
+      },
+      {
+        "operation": "perform",
+        "total": 27
+      },
+      {
+        "operation": "select",
+        "total": 15
+      }
+    ],
+    "battleSessions": [
+      {
+        "id": "battle-0cf3af8d-ca35-4933-a1e3-ed7a8d2bb71e",
+        "status": "abandoned",
+        "player": {
+          "petId": "pet-c44a894f-da55-4199-9ae9-0ba0d3354d57",
+          "petName": "焰柴",
+          "element": "fire",
+          "level": 1,
+          "resourceRef": "builtin:lingjing-shiba-v2",
+          "resource": {
+            "resourceId": "builtin:lingjing-shiba-v2",
+            "kind": "2d"
+          },
+          "appearance2d": "builtin:lingjing-shiba-v2"
+        }
+      },
+      {
+        "id": "battle-3cc8e8a4-3941-4474-ae5f-32bb7852422c",
+        "status": "abandoned",
+        "player": {
+          "petId": "pet-676dc1d2-01dc-4aef-ad99-99bcd9d1c0ad",
+          "petName": "鱼丸",
+          "element": "water",
+          "level": 1,
+          "resourceRef": "builtin:lingjing-yuwan-v2",
+          "resource": {
+            "resourceId": "builtin:lingjing-yuwan-v2",
+            "kind": "2d"
+          },
+          "appearance2d": "builtin:lingjing-yuwan-v2"
+        }
+      },
+      {
+        "id": "battle-ac09acec-3c47-4069-9068-fa2696db6519",
+        "status": "abandoned",
+        "player": {
+          "petId": "pet-cffdaa10-9939-4e80-a135-ff802cf932f6",
+          "petName": "岩团",
+          "element": "earth",
+          "level": 1,
+          "resourceRef": "builtin:lingjing-yantuan-v1",
+          "resource": {
+            "resourceId": "builtin:lingjing-yantuan-v1",
+            "kind": "2d"
+          },
+          "appearance2d": "builtin:lingjing-yantuan-v1"
+        }
+      },
+      {
+        "id": "battle-c0974391-d5da-48a1-bfd6-6596c295d0d5",
+        "status": "abandoned",
+        "player": {
+          "petId": "pet-ac56437b-f567-4478-b376-d9d7742d6e63",
+          "petName": "青芽",
+          "element": "wood",
+          "level": 1,
+          "resourceRef": "builtin:lingjing-qingya-v1",
+          "resource": {
+            "resourceId": "builtin:lingjing-qingya-v1",
+            "kind": "2d"
+          },
+          "appearance2d": "builtin:lingjing-qingya-v1"
+        }
+      },
+      {
+        "id": "battle-e47a6d31-3e08-406f-b15b-ec14f5e763d5",
+        "status": "abandoned",
+        "player": {
+          "petId": "pet-28229917-cc30-423e-8a06-4582bf9f1e37",
+          "petName": "礼帽喵",
+          "element": "metal",
+          "level": 1,
+          "resourceRef": "builtin:lingjing-hatcat-v1",
+          "resource": {
+            "resourceId": "builtin:lingjing-hatcat-v1",
+            "kind": "2d"
+          },
+          "appearance2d": "builtin:lingjing-hatcat-v1"
+        }
+      }
+    ]
+  },
+  "result": "passed"
+}
