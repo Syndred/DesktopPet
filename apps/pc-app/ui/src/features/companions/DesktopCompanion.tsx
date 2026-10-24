@@ -36,7 +36,7 @@ export function DesktopCompanion() {
     return () => { document.removeEventListener('pointermove', move); document.removeEventListener('pointerleave', leave); };
   }, [input]);
   const start = (event: PointerEvent<HTMLDivElement>) => {
-    if (event.button !== 0) return; drag.current = true; event.currentTarget.setPointerCapture(event.pointerId);
+    if (event.button !== 0 || (event.target as Element).closest('button')) return; drag.current = true; event.currentTarget.setPointerCapture(event.pointerId);
     void input('drag-start', { screenX: event.screenX, screenY: event.screenY }).catch(() => { drag.current = false; });
   };
   const end = async (event: PointerEvent<HTMLDivElement>) => {

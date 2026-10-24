@@ -57,5 +57,10 @@
     "Provide approved 01/03 vs real Electron UI comparison evidence",
     "Foundation owns final complete integrated regression"
   ],
-  "dataPolicy": "Additive owner-scoped tables and raw legacy archive; original animals, JSON, histories and design images retained; no production migration/deployment"
+  "dataPolicy": "Additive owner-scoped tables and raw legacy archive; original animals, JSON, histories and design images retained; no production migration/deployment",
+  "publicComponentRequests": [
+    "Slider: forward accessible aria-label from public wrapper to each SliderPrimitive.Thumb; role=slider needs the selected pet name",
+    "MotionConfigContext from shared AppMotionProvider now controls Pixi playing; main desktop motion also stops for animationsEnabled=false",
+    "Pages now import public shadcn Dialog/Trigger/Close, Select, Tabs, Switch, Checkbox, Input, Slider, Tooltip plus AnimatedList/PageTransition; no feature-owned base primitives"
+  ]
 }

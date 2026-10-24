@@ -122,7 +122,7 @@ function createDesktopWindowManager({ services, service, ensureImported, changed
   }, 100);
   const syncTimer = setInterval(sync, 800);
   const saveTimer = setInterval(() => { for (const entry of entries.values()) if (!entry.drag) { try { persistPosition(entry); } catch (error) { console.error('[companions:save-position]', error); } } }, 5000);
-  const stopPolicy = services.events.on('accounts:behavior', policy => { quiet = Boolean(policy?.quiet || policy?.fullscreen); });
+  const stopPolicy = services.events.on('accounts:behavior', policy => { quiet = Boolean(policy?.quiet || policy?.fullscreen || policy?.settings?.desktop?.animationsEnabled === false); });
   for (const timer of [motionTimer, syncTimer, saveTimer]) timer.unref();
   return { sync, handleInput,
     inspect: () => [...entries.values()].map(entry => ({ petId: entry.pet.petId, ownerAccountId: entry.owner, windowId: entry.window.id, bounds: entry.window.getBounds(), visible: entry.window.isVisible() })),
