@@ -7,6 +7,7 @@
       "vitest/globals"
     ]
   },
+  "exclude": ["apps/pc-app/ui", "apps/pc-app/runtime/main", "apps/pc-app/runtime/preload"],
   "include": [
     "apps/**/*.ts",
     "packages/**/*.ts",

@@ -2,7 +2,21 @@
 const { join, resolve } = require("node:path");
 const { randomUUID } = require("node:crypto");
 
-const { app, BrowserWindow, Menu, Tray, ipcMain, nativeImage, screen } = require("electron");
+const { app, BrowserWindow, Menu, Tray, ipcMain: electronIpcMain, nativeImage, screen } = require("electron");
+const { fileURLToPath } = require('node:url');
+const legacyHandlers = new Map();
+function trustedLegacy(event) {
+  try {
+    return event.senderFrame === event.sender.mainFrame && [join(__dirname, 'renderer', 'index.html'), join(__dirname, 'auth', 'index.html')].includes(fileURLToPath(event.senderFrame.url.split('#')[0]));
+  } catch { return false; }
+}
+const ipcMain = {
+  handle(channel, handler) {
+    legacyHandlers.set(channel, handler);
+    electronIpcMain.handle(channel, (event, payload) => trustedLegacy(event) ? handler(event, payload) : { ok: false, code: 'UNTRUSTED_SENDER', message: '请求来源无效。' });
+  },
+  on(channel, handler) { electronIpcMain.on(channel, (event, payload) => { if (trustedLegacy(event)) handler(event, payload); }); }
+};
 const { BattleRuntimeService } = require("./services/battle-runtime.cjs");
 const { RuntimeDataStore } = require("./services/runtime-data-store.cjs");
 const { MapRuntimeService } = require("./services/map-runtime.cjs");
@@ -235,6 +249,7 @@ function createAuthWindow() {
 }
 
 function openRuntimeAfterAuth() {
+  if (process.env.LINGJING_FOUNDATION) { emitAuthState(); return; }
   if (!mainWindow || mainWindow.isDestroyed()) return;
   if (!hasAuthenticatedSession()) {
     openAuthGate();
@@ -251,6 +266,7 @@ function openRuntimeAfterAuth() {
 }
 
 function openAuthGate() {
+  if (process.env.LINGJING_FOUNDATION) { emitAuthState(); return; }
   if (mainWindow && !mainWindow.isDestroyed()) {
     mainWindow.hide();
   }
@@ -1765,7 +1781,27 @@ function getLayoutTargetSize(mode) {
   return { ...currentIdleBounds };
 }
 
-app.whenReady().then(() => {
+function initializeLegacy() {
+  if (!runtimeDataStore) {
+    runtimeDataStore = new RuntimeDataStore({ filePath: getRuntimeDataFilePath(), sessionFilePath: getSessionDataFilePath() });
+    const snapshot = runtimeDataStore.getInventorySnapshot();
+    wildPetService.seedSerialCounters?.(snapshot.pets || []);
+    registerIpcHandlers();
+    emitAuthState();
+  }
+  return {
+    runtimeDataStore, battleService, mapService, wildPetService, onlineDuelService,
+    invoke(channel, payload) {
+      const handler = legacyHandlers.get(channel);
+      if (!handler) throw new Error(`Unknown legacy channel: ${channel}`);
+      return handler({}, payload);
+    },
+    open() { if (!mainWindow || mainWindow.isDestroyed()) createMainWindow(); mainWindow.show(); mainWindow.focus(); }
+  };
+}
+module.exports = { initializeLegacy };
+
+if (!process.env.LINGJING_FOUNDATION) app.whenReady().then(() => {
   createMainWindow();
   createTray();
   onlineDuelService.onEvent((event) => {

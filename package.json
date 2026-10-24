@@ -2,7 +2,7 @@
   "name": "qingpet-lord-3d",
   "version": "0.1.8",
   "private": true,
-  "description": "Monorepo baseline for QingPet Lord 3D",
+  "description": "灵境 · 多宠物桌面伙伴",
   "workspaces": [
     "apps/pc-app",
     "apps/supabase-edge",
@@ -10,7 +10,7 @@
   ],
   "scripts": {
     "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
-    "typecheck": "tsc --noEmit -p tsconfig.typecheck.json",
+    "typecheck": "tsc --noEmit -p tsconfig.typecheck.json && tsc --noEmit -p apps/pc-app/tsconfig.desktop.json",
     "test": "vitest run",
     "test:unit": "vitest run -c vitest.unit.config.ts",
     "test:integration": "vitest run -c vitest.integration.config.ts",
@@ -22,31 +22,46 @@
     "release:build:pc": "node scripts/release/build-pc.mjs",
     "release:build:mobile": "node scripts/release/build-mobile.mjs",
     "release:build": "npm run release:build:pc && npm run release:build:mobile",
-    "package:pc:win": "npx electron-builder --config scripts/release/electron-builder.pc.json --win portable --x64",
+    "package:pc:win": "npm run build:pc && electron-builder --config scripts/release/electron-builder.pc.json --win portable --x64",
     "release:sign": "node scripts/release/sign-artifacts.mjs",
     "release:manifest": "node scripts/release/create-release-manifest.mjs",
     "release:prepare": "npm run release:build && npm run release:sign && npm run release:manifest",
     "release:rollback": "node scripts/release/rollback-release.mjs",
-    "dev:pc": "node scripts/desktop/run-electron.cjs apps/pc-app/runtime",
-    "start:pc": "node scripts/desktop/run-electron.cjs apps/pc-app/runtime",
+    "dev:pc": "node scripts/desktop/lingjing-launch.cjs dev",
+    "start:pc": "node scripts/desktop/lingjing-launch.cjs preview",
     "pc:smoke": "node scripts/smoke/check-pc-runtime.mjs",
     "dr:backup": "node scripts/dr/backup-state.mjs",
     "dr:restore": "node scripts/dr/restore-state.mjs",
     "perf:report": "node scripts/perf/generate-weekly-report.mjs",
     "test:watch": "vitest",
-    "verify": "npm run lint && npm run typecheck && npm run test:layers"
+    "verify": "npm run lint && npm run typecheck && npm run test:layers",
+    "build:pc": "electron-vite build",
+    "dev:pc:legacy": "node scripts/desktop/run-electron.cjs apps/pc-app/runtime",
+    "typecheck:ui": "tsc --noEmit -p apps/pc-app/ui/tsconfig.json",
+    "native:electron": "electron-rebuild -f -w better-sqlite3",
+    "package:pc:dir": "npm run build:pc && electron-builder --config scripts/release/electron-builder.pc.json --win --dir --x64",
+    "test:foundation": "node scripts/desktop/run-native-tests.cjs tests/foundation/services.test.cjs",
+    "pc:smoke:shell": "node scripts/smoke/lingjing-shell.mjs"
   },
   "config": {
     "electron_mirror": "https://npmmirror.com/mirrors/electron/"
   },
   "devDependencies": {
+    "@electron/rebuild": "^4.2.1",
     "@types/node": "^22.13.10",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
     "@typescript-eslint/eslint-plugin": "^8.26.1",
     "@typescript-eslint/parser": "^8.26.1",
+    "@vitejs/plugin-react": "^5.2.0",
     "@vitest/coverage-v8": "^3.0.9",
     "electron": "^36.9.5",
+    "electron-builder": "^26.18.0",
+    "electron-vite": "^4.0.1",
     "eslint": "^8.57.1",
+    "playwright": "^1.64.1",
     "typescript": "^5.8.2",
+    "vite": "^7.3.7",
     "vitest": "^3.0.9"
   },
   "engines": {
@@ -55,6 +70,12 @@
   "dependencies": {
     "@google/model-viewer": "^4.1.0",
     "@supabase/supabase-js": "^2.57.4",
+    "better-sqlite3": "^12.11.1",
+    "lucide-react": "^1.61.0",
+    "pixi.js": "^8.22.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
     "ws": "^8.19.0"
-  }
+  },
+  "main": "apps/pc-app/dist/main/index.cjs"
 }
