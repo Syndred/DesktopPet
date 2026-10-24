@@ -88,7 +88,7 @@ async function observe(page) {
   await page.evaluate(()=>{
     window.__unifiedSamples=[]; window.__unifiedObserver?.disconnect();
     const root=document.querySelector('.battle-live-layout');
-    const sample=()=>{const value={at:performance.now(),phase:root?.getAttribute('data-animation-phase'),actors:[...document.querySelectorAll('.battle-stage .resource-stage')].map(node=>({action:node.getAttribute('data-action'),clip:node.getAttribute('data-clip'),frame:node.querySelector('.resource-sprite-host')?.getAttribute('data-frame'),textureFrame:node.querySelector('.resource-sprite-host')?.getAttribute('data-texture-frame'),textureSource:node.querySelector('.resource-sprite-host')?.getAttribute('data-texture-source'),fallback:node.getAttribute('data-fallback')})),events:[...document.querySelectorAll('[data-event-kind]')].map(node=>node.getAttribute('data-event-kind'))};const last=window.__unifiedSamples.at(-1);if(JSON.stringify({...last,at:0})!==JSON.stringify({...value,at:0}))window.__unifiedSamples.push(value);};
+    const sample=()=>{const value={at:performance.now(),phase:root?.getAttribute('data-animation-phase'),actors:[...document.querySelectorAll('.battle-stage .resource-stage')].map(node=>({resourceId:node.getAttribute('data-resource-id'),action:node.getAttribute('data-action'),clip:node.getAttribute('data-clip'),frame:node.querySelector('.resource-sprite-host')?.getAttribute('data-frame'),textureFrame:node.querySelector('.resource-sprite-host')?.getAttribute('data-texture-frame'),textureSource:node.querySelector('.resource-sprite-host')?.getAttribute('data-texture-source'),fallback:node.getAttribute('data-fallback')})),events:[...document.querySelectorAll('[data-event-kind]')].map(node=>node.getAttribute('data-event-kind'))};const last=window.__unifiedSamples.at(-1);if(JSON.stringify({...last,at:0})!==JSON.stringify({...value,at:0}))window.__unifiedSamples.push(value);};
     window.__unifiedObserver=new MutationObserver(sample);window.__unifiedObserver.observe(root,{attributes:true,childList:true,subtree:true});sample();
   });
 }
@@ -110,6 +110,90 @@ async function action(page,session,action,label,{screenshots=true}={}) {
   const result={label,action,before:session,after,samples,screenshots:captures};cases.push(result);save(); return result;
 }
 async function abandon(page,session) { await api(page,'battle','leave',{sessionId:session.id}); }
+function frameRegion(resourceId,animation,frameIndex=0) {
+  const catalog=JSON.parse(readFileSync(join(runtime,'features/resources/assets/roster-v2/catalog.json'),'utf8'));
+  const role=catalog.characters.find(value=>value.resourceId===resourceId);assert.ok(role,`Unknown canonical resource ${resourceId}`);
+  const source=JSON.parse(readFileSync(join(runtime,'features/resources/assets/roster-v2',role.manifest),'utf8'));
+  const frames=source.animations[animation],selected=frameIndex<0?[...frames].reverse().find(value=>value!==source.animations.idle[0]):frames[frameIndex];
+  const frame=source.frames[selected].frame;
+  return [frame.x,frame.y,frame.w,frame.h].join(',');
+}
+async function geometry(page,label) {
+  await page.waitForTimeout(200);
+  const result=await page.evaluate(()=>{
+    const box=selector=>{const element=document.querySelector(selector),r=element.getBoundingClientRect();return {x:r.x,y:r.y,width:r.width,height:r.height};};
+    return {viewport:{width:innerWidth,height:innerHeight,dpr:devicePixelRatio},mode:document.querySelector('[data-battle-screen]').getAttribute('data-battle-mode'),
+      signature:['.battle-arena','.battle-stage','.battle-arena-top','.battle-moves','.battle-current-log'].map(selector=>({selector,count:document.querySelectorAll(selector).length,box:box(selector)})),
+      cards:[...document.querySelectorAll('.battle-move')].map(element=>{const r=element.getBoundingClientRect(),style=getComputedStyle(element);return {label:element.getAttribute('aria-label'),bottom:r.bottom,shadow:style.boxShadow,transform:style.transform};}),
+      portraitCount:document.querySelectorAll('.battle-portrait.small svg[data-framing="portrait"]').length};
+  });
+  assert.ok(result.signature.every(value=>value.count===1));assert.equal(result.cards.length,4);assert.ok(result.cards.every(value=>value.bottom<=result.viewport.height));
+  assert.ok(result.cards.every(value=>value.shadow==='none'&&value.transform==='none'));assert.equal(result.portraitCount,6);
+  await page.screenshot({path:join(output,`${label}.png`)});record(`shared geometry ${label}`,result);return result;
+}
+async function verifyMatrix(host) {
+  const pets=Object.fromEntries(host.pets.map(pet=>[pet.element,pet]));
+  for(const element of ['metal','wood','earth','water','fire'])assert.ok(pets[element],`Actual ${element} companion is required`);
+  const pairs=[];
+  for(const player of ['metal','wood','earth','water','fire'])for(const enemy of ['metal','wood','earth','water','fire']) {
+    const initial=await startTraining(host.page,pets[player],enemy),before=await preset(host.page,initial,'charged','dodge');
+    const result=await action(host.page,before,'element_attack',`matrix-${player}-${enemy}`,{screenshots:player===enemy});
+    const round=result.after.rounds.at(-1),multiplier=before.rules.advantage[player]===enemy?1.2:before.rules.advantage[enemy]===player?0.8:1;
+    assert.equal(round.directDamage.enemy,Math.round(12*multiplier));
+    assert.equal(result.after.player.element,player);assert.equal(result.after.enemy.element,enemy);
+    assert.ok(result.samples.some(sample=>sample.phase==='release'&&sample.actors[0].action==='skill'));
+    const releaseRegion=frameRegion(before.player.resourceRef,'skill',-1);
+    assert.ok(result.samples.some(sample=>sample.phase==='release'&&sample.actors[0].textureFrame===releaseRegion),'Real skill release texture must advance beyond charge');
+    const hitRegion=frameRegion(before.enemy.resourceRef||before.enemy.appearance2d,'hit');
+    assert.ok(result.samples.some(sample=>sample.phase==='impact'&&sample.actors[1].textureFrame===hitRegion),'Actual hit texture must be visible at impact');
+    if(player==='water'){assert.ok(round.visualEvents.some(event=>event.kind==='anger'));assert.ok(!round.visualEvents.some(event=>event.status==='freeze'));}
+    else {const type={metal:'vulnerability',wood:'parasite',earth:'petrify',fire:'burn'}[player];assert.ok(round.statusesAfter.enemy.some(status=>status.type===type));assert.ok(round.visualEvents.some(event=>event.kind==='status'&&event.status===type));}
+    pairs.push({player,enemy,sessionId:result.after.id,directDamage:round.directDamage.enemy,playerResource:result.after.player.resourceRef,enemyResource:result.after.enemy.resourceRef,events:round.visualEvents});
+    await abandon(host.page,result.after);if(pairs.length%5===0)record(`native ordered element pairs ${pairs.length}/25`);
+  }
+  evidence.elementPairs=pairs;assert.equal(pairs.length,25);record('25 real UI elemental pairings passed');
+}
+async function verifyEntries(host) {
+  const page=host.page;
+  await route(page,'/discovery');await page.locator('.discovery-page').waitFor();
+  await api(page,'discovery','setExploring',{active:true});await api(page,'discovery','locate');
+  let discovery=await api(page,'discovery','snapshot');
+  const spawn=discovery.spawns.find(value=>value.inRange&&!value.demo&&value.captureState==='available');assert.ok(spawn,'A nearby QA spawn must be in range');
+  await route(page,`/discovery/wild/${spawn.id}`);await page.getByRole('button',{name:'开始挑战',exact:true}).click();
+  let session=await screen(page);assert.equal(session.mode,'wild');await geometry(page,'entry-wild-1280');
+  session=await preset(page,session,'finisher','dodge');const win=await action(page,session,'ultimate','wild-win',{screenshots:false});
+  assert.equal(win.after.winner,'player');await page.getByRole('button',{name:'收服',exact:true}).click();await page.getByLabel('昵称',{exact:true}).fill('隔离收服伙伴');
+  const countBefore=(await api(page,'companions','list')).pets.length;
+  await page.getByRole('button',{name:'确认',exact:true}).click();await page.waitForFunction(()=>location.hash.startsWith('#/discovery/result/'));
+  discovery=await api(page,'discovery','snapshot');
+  const savedCapture=discovery.captures.find(value=>value.name==='隔离收服伙伴');assert.ok(savedCapture);assert.equal(savedCapture.validation,'simulated');
+  await page.waitForTimeout(250);await page.screenshot({path:join(output,'wild-captured-result.png')});
+  const first=await api(page,'battle','settleContext',{sessionId:session.id,actionId:`context:${session.id}`,name:'隔离收服伙伴'});
+  assert.ok(first.resultPath);const countAfter=(await api(page,'companions','list')).pets.length;assert.equal(countAfter,countBefore+1);
+  await api(page,'battle','settleContext',{sessionId:session.id,actionId:`context:${session.id}`,name:'隔离收服伙伴'});assert.equal((await api(page,'companions','list')).pets.length,countAfter);
+  record('wild entry uses shared battlefield; source capture receipt is simulated and duplicate confirmation adds no pet',{session:win.after,capture:savedCapture,countBefore,countAfter});
+  for(const [label,presetId,enemyAction] of [['win','finisher','dodge'],['loss','defending','ultimate']]) {
+    if(label==='loss'){writeFileSync(join(profiles.host.directory,'qa-location.json'),JSON.stringify({lat:31.2504,lng:121.4937}));await api(page,'discovery','setDemo',{enabled:false});}
+    await route(page,'/garden');await page.locator('.garden-map-locate').waitFor();await page.locator('.garden-map-locate').click();
+    await page.waitForFunction(()=>document.querySelectorAll('.garden-territory-list > button').length>0);
+    const garden=await api(page,'garden','snapshot'),target=garden.territories.find(value=>value.ownerAccountId!==garden.ownerAccountId&&value.boundary?.some(point=>Math.abs(point.lat-(label==='loss'?31.2504:31.2304))<.006));assert.ok(target);
+    const index=garden.territories.findIndex(value=>value.id===target.id);await page.locator('.garden-territory-list > button').nth(index).click();
+    await page.locator('.garden-territory-panel .garden-pet').first().click();await page.getByRole('button',{name:'发起领地挑战',exact:true}).click();
+    session=await screen(page);assert.equal(session.mode,'territory');assert.equal(session.context.territoryId,target.id);await geometry(page,`entry-territory-${label}-1280`);
+    session=await preset(page,session,presetId,enemyAction);const result=await action(page,session,label==='win'?'ultimate':'normal_attack',`territory-${label}`,{screenshots:false});
+    assert.equal(result.after.winner,label==='win'?'player':'enemy');
+    if(label==='loss')assert.equal(await page.getByRole('button',{name:'占领',exact:true}).count(),0);
+    await page.screenshot({path:join(output,`territory-${label}-shared-result.png`)});
+    await page.getByRole('button',{name:label==='win'?'占领':'确认结果',exact:true}).click();await page.waitForFunction(()=>location.hash==='#/garden');
+    const settled=await api(page,'garden','snapshot'),territory=settled.territories.find(value=>value.id===target.id);assert.equal(territory.ownerAccountId,label==='win'?settled.ownerAccountId:target.ownerAccountId);
+    const context=await api(page,'battle','context',{sessionId:session.id});assert.equal(context.settled,true);
+    const before={pets:(await api(page,'companions','list')).pets,garden:settled};
+    await api(page,'battle','settleContext',{sessionId:session.id,actionId:`context:${session.id}`});await api(page,'battle','retrySettlement',{sessionId:session.id});
+    const after={pets:(await api(page,'companions','list')).pets,garden:await api(page,'garden','snapshot')};assert.deepEqual(after.pets,before.pets);assert.deepEqual(after.garden.inventory,before.garden.inventory);
+    assert.equal(after.garden.territoryChallenges.some(value=>value.sessionId===session.id),false);
+    record(`territory ${label}: source confirmation, correct owner and no duplicate XP/inventory`,{session:result.after,target,territory,context});
+  }
+}
 async function friends(page,pet) {
   await api(page,'battle','selectPet',{petId:pet.petId,actionId:randomUUID()}); await route(page,'/battle/friends');
   await page.locator('.battle-friends-layout').waitFor();
@@ -164,20 +248,37 @@ async function verifyFriends(host) {
   record('friend simulated settlement and two retries preserve XP and inventory',{session:hostSession,peer:result.after,proof:server.state.claims[`${hostSession.room.id}:${hostSession.context.cloudUserId}`],unchangedPets:true,unchangedInventory:true});
   return host;
 }
+async function verifyCopy(host) {
+  const guest=await launch('guest');await friends(guest.page,guest.pets.find(pet=>pet.element==='metal'));await friends(host.page,host.pets.find(pet=>pet.element==='water'));
+  await host.page.getByLabel('搜索账号或用户名',{exact:true}).fill(profiles.guest.account);await host.page.getByRole('button',{name:'搜索',exact:true}).click();
+  await host.page.locator('.battle-user-list .battle-small-action').click();await guest.page.locator('.battle-invitations').getByRole('button',{name:'刷新',exact:true}).click();
+  const forbidden=['搜索结果来自当前联机服务','输入账号或昵称，找到想一起切磋的朋友','和朋友的伙伴','对方进入房间后','想和你的伙伴切磋一下'];
+  for(const page of [host.page,guest.page]){
+    const text=await page.locator('body').innerText();for(const copy of forbidden)assert.ok(!text.includes(copy),copy);
+    assert.ok(await page.getByRole('button',{name:'创建房间',exact:true}).isEnabled());assert.ok(await page.locator('#battle-room-code').isVisible());
+  }
+  assert.ok(await guest.page.getByRole('button',{name:'接受',exact:true}).isEnabled());assert.ok(await guest.page.getByRole('button',{name:'婉拒',exact:true}).isEnabled());
+  await host.page.screenshot({path:join(output,'friends-compact-selected.png')});await guest.page.screenshot({path:join(output,'friends-compact-invitation.png')});
+  record('friend lobby compact copy with real selected identity and pending invitation; all actions remain available',{forbiddenAbsent:forbidden,hostAccount:profiles.host.account,guestAccount:profiles.guest.account});
+}
 try {
   let host=await launch('host');const water=host.pets.find(pet=>pet.element==='water'); assert.ok(water);
   record('real local account and independent canonical adoptions',{petCount:host.pets.length});
   const interactions=[['interrupt','normal_attack','element_attack'],['dodge','dodge','normal_attack'],['water','element_attack','dodge'],['ultimate','ultimate','dodge']];
-  for(const [label,selected,enemyAction] of process.argv.includes('--friends-only')?[]:interactions) {
+  const only=process.argv.find(value=>['--friends-only','--entries-only','--matrix-only','--interrupt-only','--copy-only'].includes(value));
+  for(const [label,selected,enemyAction] of only&&only!=='--interrupt-only'?[]:only==='--interrupt-only'?interactions.slice(0,1):interactions) {
     const initial=await startTraining(host.page,water,'fire'), before=await preset(host.page,initial,'charged',enemyAction);
     const result=await action(host.page,before,selected,label), round=result.after.rounds.at(-1), events=round.visualEvents;
-    if(label==='interrupt'){assert.ok(events.some(event=>event.kind==='interrupt'&&event.side==='enemy'));assert.ok(!events.some(event=>event.kind==='dodge'));assert.ok(result.samples.filter(sample=>sample.phase==='release').every(sample=>sample.actors[1].action!=='skill'));}
+    if(label==='interrupt'){assert.ok(events.some(event=>event.kind==='interrupt'&&event.side==='enemy'));assert.ok(!events.some(event=>event.kind==='dodge'));assert.ok(result.samples.filter(sample=>sample.phase==='release').every(sample=>!['hit','skill'].includes(sample.actors[1].action)));const hit=frameRegion(before.enemy.resourceRef||before.enemy.appearance2d,'hit');assert.ok(result.samples.some(sample=>sample.phase==='impact'&&sample.actors[1].action==='hit'&&sample.actors[1].textureFrame===hit),'Impact must expose actual hit pixels');}
     if(label==='dodge'){assert.ok(events.some(event=>event.kind==='dodge'&&event.side==='player'));assert.equal(result.after.snapshot.player.hp,85);assert.equal(result.after.snapshot.player.anger,60);}
     if(label==='water'){assert.ok(events.some(event=>event.kind==='anger'));assert.ok(!events.some(event=>event.status==='freeze'));assert.equal(result.after.snapshot.enemy.anger,5);assert.ok(!result.after.snapshot.enemy.statuses.some(status=>status.type==='freeze'));}
     if(label==='ultimate'){assert.ok(!events.some(event=>event.kind==='dodge'));assert.equal(result.after.snapshot.player.hp,105);assert.equal(result.after.snapshot.player.anger,0);assert.equal(round.directDamage.enemy,24);assert.ok(result.samples.some(sample=>sample.phase==='impact'&&sample.actors[1].action==='hit'));}
     await abandon(host.page,result.after); record(`native interaction ${label} passed`);
   }
   if(process.argv.includes('--friends')||process.argv.includes('--friends-only')||process.argv.includes('--all'))host=await verifyFriends(host);
+  if(process.argv.includes('--copy-only'))await verifyCopy(host);
+  if(process.argv.includes('--entries')||process.argv.includes('--entries-only')||process.argv.includes('--all'))await verifyEntries(host);
+  if(process.argv.includes('--matrix')||process.argv.includes('--matrix-only')||process.argv.includes('--all'))await verifyMatrix(host);
   assert.deepEqual(errors,[]); evidence.passed=true; record('focused native interaction pass complete');
 } catch(error) { failure=error; evidence.passed=false; evidence.failure={message:error.message,stack:error.stack}; save(); }
 finally {
