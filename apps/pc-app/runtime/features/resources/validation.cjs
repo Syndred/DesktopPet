@@ -19,6 +19,7 @@ function numeric(value, fallback, min, max, field) {
 function calibration(value = {}) {
   if (!plain(value)) fail('INVALID_CALIBRATION', '校准参数格式错误');
   if (value.mirrorX !== undefined && typeof value.mirrorX !== 'boolean') fail('INVALID_CALIBRATION', '翻转参数格式错误');
+  if (typeof value.fps === 'number' && value.fps > 0 && value.fps < 1) fail('INVALID_CALIBRATION', '自定义帧率应为 1 到 60，或使用动作原始帧率');
   return {
     scale: numeric(value.scale, 1, 0.25, 3, '大小'),
     rotationDeg: numeric(value.rotationDeg ?? value.yawDeg, 0, -180, 180, '旋转'),

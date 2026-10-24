@@ -6,6 +6,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '.
 import { Popover, PopoverContent, PopoverTrigger } from '../../components/ui/popover';
 import { ResourceStage } from './ResourceStage';
 import { ActionSelect, ResourceActionMapping, ResourceCalibrationControls, ResourceFrameRate } from './ResourceControls';
+import { ApplyToCompanion } from './ApplyToCompanion';
 
 export function ResourceEditor({ resource, client, mode, edit, dirty, saving, save, discard, motionEnabled = true }: { resource: CharacterResource; client: ResourcesClient; mode: string; edit(resource: CharacterResource): void; dirty: boolean; saving: boolean; save(): void; discard(): void; motionEnabled?: boolean }) {
   const [context, setContext] = useState<ResourceContext>('desktop'), [action, setAction] = useState<ResourceAction>('idle');
@@ -19,7 +20,7 @@ export function ResourceEditor({ resource, client, mode, edit, dirty, saving, sa
       {comparison ? <ResourceStage resource={resource} petId="resource-preview-b" context={context} action={rightAction} facing="left" motionEnabled={motionEnabled} assetUrl={client.assetUrl} /> : null}
     </div>
     <div className="resource-preview-toolbar"><span>{Object.keys(resource.atlas?.frames ?? {}).length} 帧 · {resource.clips.length} 组动作</span><Button variant="ghost" aria-pressed={comparison} onClick={() => setComparison(value => !value)}><Copy size={12} />{comparison ? '收起双实例对照' : '双实例对照'}</Button>
-      <Select value={context} onValueChange={value => setContext(value as ResourceContext)}><SelectTrigger aria-label="显示场景"><SelectValue /></SelectTrigger><SelectContent><SelectItem value="desktop">桌面</SelectItem><SelectItem value="battle">战斗</SelectItem></SelectContent></Select>
+      <ApplyToCompanion key={resource.id} resource={resource} disabled={dirty || saving} /><Select value={context} onValueChange={value => setContext(value as ResourceContext)}><SelectTrigger aria-label="显示场景"><SelectValue /></SelectTrigger><SelectContent><SelectItem value="desktop">桌面</SelectItem><SelectItem value="battle">战斗</SelectItem></SelectContent></Select>
     </div>
     {comparison ? <div className="resource-comparison"><span>右侧实例独立播放</span><ActionSelect label="右侧独立动作" value={rightAction} onValueChange={setRightAction} resource={resource} /></div> : null}
     <div className="resources-controls"><ResourceCalibrationControls resource={resource} context={context} edit={edit} /><section className="resource-animation"><h3>预览动作</h3><div className="resource-play-row"><ActionSelect label="预览动作" value={action} onValueChange={setAction} resource={resource} /><Button variant="secondary" aria-label={playing ? '暂停动画' : '播放动画'} aria-pressed={playing} onClick={() => setPlaying(value => !value)}>{playing ? <Pause size={16} /> : <Play size={16} />}</Button></div><ResourceFrameRate resource={resource} context={context} action={action} edit={edit} />
