@@ -170,12 +170,14 @@ try {
   for (const pet of representatives) success(await invoke('companions', 'desktop', { actionId: `quiet-${pet.petId}`, petId: pet.petId, behavior: 'quiet', visible: true }));
   for (const pet of representatives) {
     const native = await desktop(pet); const detailIdentity = await detail(pet);
+    if (['wood', 'earth'].includes(pet.element)) await native.screenshot({ path: join(output, `desktop-${pet.element}.png`), omitBackground: true, timeout: 5000 });
     await shot(`detail-${pet.element}.png`, '.cp-detail-page');
     await page.getByRole('button', { name: '对战属性规则', exact: true }).focus();
     const hint = page.getByRole('tooltip'); await hint.waitFor(); assert.match(await hint.innerText(), /开场生命 120/);
     await page.keyboard.press('Escape'); await page.getByRole('tab', { name: '技能', exact: true }).click();
     const skillNames = await page.locator('.cp-skill-list [data-action]').evaluateAll(nodes => nodes.map(node => node.getAttribute('data-action')));
     assert.deepEqual(skillNames, ['normal_attack', 'element_attack', 'dodge', 'ultimate']);
+    if (['wood', 'earth'].includes(pet.element)) await shot(`skills-${pet.element}.png`, '.cp-detail-page');
     const skillPresentation = await page.locator('.cp-skill-list [data-action]').evaluateAll(nodes => nodes.map(node => ({ action: node.dataset.action, name: node.querySelector('strong').textContent, caption: node.querySelector('.battle-skill-copy small').textContent, icon: node.querySelector('.battle-skill-icon').getAttribute('class') })));
     assert.equal(await page.locator('.cp-skill-list [data-presentation="battle-shared-v1"]').count(), 1);
     const combatProfile = success(await invoke('companions', 'combatProfile', { petId: pet.petId }));
@@ -188,14 +190,15 @@ try {
     await page.getByRole('tab', { name: '外观', exact: true }).click();
     const actions = [];
     for (const [action, label] of [['wave', '招手'], ['eat', '吃饭'], ['attack', '普通攻击'], ['hit', '受击'], ['skill', '元素技能']]) actions.push(await play(pet, native, action, label));
-    const battleChoice = page.getByRole('button', { name: '设为出战伙伴', exact: true }); if (await battleChoice.count()) await battleChoice.click();
-    assert.equal(success(await invoke('companions', 'list')).selections.battlePetId, pet.petId);
     await page.getByRole('tab', { name: '回忆', exact: true }).click();
     await page.getByRole('button', { name: '打开它的聊天与记忆', exact: true }).click(); await page.waitForURL('**#/chat');
     const chat = success(await invoke('conversations', 'snapshot')); assert.equal(chat.petId, pet.petId);
     const chatPet = chat.pets.find(candidate => candidate.petId === pet.petId); assert.equal(chatPet.resource.resourceId, pet.resource.resourceId); assert.equal(chatPet.element, pet.element);
     input('conversation-entry', { petId: chat.petId, resourceId: chatPet.resource.resourceId, element: chatPet.element });
-    await route('/battle'); await page.getByRole('button', { name: '开始', exact: true }).waitFor();
+    await detail(pet); await page.getByRole('tab', { name: '技能', exact: true }).click();
+    await page.getByRole('button', { name: '前往对战中心', exact: true }).click(); await page.getByRole('button', { name: '开始', exact: true }).waitFor();
+    assert.equal(success(await invoke('companions', 'list')).selections.battlePetId, pet.petId);
+    input('detail-battle-entry-button', { petId: pet.petId, resourceId: pet.resource.resourceId, element: pet.element });
     await page.getByRole('button', { name: '开始', exact: true }).click();
     await page.locator('[data-battle-screen="shared-v1"]').waitFor();
     const overview = success(await invoke('battle', 'overview')), session = success(await invoke('battle', 'snapshot', { sessionId: overview.session.id }));
