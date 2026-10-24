@@ -12,6 +12,7 @@ export const statusLabels: Record<string, string> = { burn: '燃烧', freeze: '�
 export const modeLabels: Record<string, string> = { training: '训练', friend: '好友对战', wild: '野外挑战', territory: '领地挑战', duel: '旧版对战', capture: '旧版捕捉' };
 export const statusLabel = (status: BattleStatus) => `${statusLabels[status.type] || status.type}${(status.stacks || 1) > 1 ? ` ×${status.stacks}` : ''} · ${status.duration} 回合`;
 export function petName(pet: BattleParticipant | undefined) {
+  if (pet?.petId === 'waiting-peer') return '对手未加入';
   const name = pet?.petName as string | { zh: string } | undefined;
   return typeof name === 'object' ? name.zh : name || '伙伴';
 }
