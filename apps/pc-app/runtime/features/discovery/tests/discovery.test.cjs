@@ -109,6 +109,19 @@ test('generated encounters remain anchored while the user moves',()=>{
   const shared=a.find(s=>b.some(t=>s.id===t.id));assert.ok(shared);assert.deepEqual(shared.position,b.find(s=>s.id===shared.id).position);
 });
 
+test('encounters follow canonical 2D template resources and use a new generation after rebinding',()=>{
+  const templates=require('../../companions/templates.cjs').listTemplates(),now=Date.UTC(2026,9,24,4);
+  const original=nearbySpawns(fixturePosition,now),frozen=structuredClone(original);
+  assert.ok(original.length);
+  for(const spawn of original) assert.equal(spawn.resourceId,templates.find(template=>template.templateId===spawn.templateId).resource.resourceId);
+  const updated=templates.map(template=>({...template,resource:{...template.resource,resourceId:require('../../battle/assets.cjs').SHIBA_RESOURCE}}));
+  const next=nearbySpawns(fixturePosition,now,450,updated);
+  assert.ok(next.length);
+  assert.ok(next.every(spawn=>spawn.resourceId===require('../../battle/assets.cjs').SHIBA_RESOURCE));
+  assert.ok(next.every(spawn=>!original.some(previous=>previous.id===spawn.id)));
+  assert.deepEqual(original,frozen);
+});
+
 test('actual shared SQLite + companions + battle: map to victory, confirmation, pokedex, memory, idempotency and restart',integrationOptions,async t=>{
   t.mock.method(Math,'random',()=>.4); // Reproducible NPC decisions, not a forged victory.
   const f=fixture();
