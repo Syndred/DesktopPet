@@ -1,8 +1,13 @@
 {
   "scope": "U01-U08; final user goal supersedes the earlier six-character visual recheck",
-  "status": "in-progress",
+  "status": "runtime-accepted-packaging-pending",
   "rulesEvidence": "artifacts/ui-acceptance/2026-10-24/rules-v3/evidence.json",
-  "independentChecks": {"orderedElementPairs": 25, "actionCases": 75, "elementProperties": 9, "failures": 0},
+  "independentChecks": {
+    "orderedElementPairs": 25,
+    "actionCases": 75,
+    "elementProperties": 9,
+    "failures": 0
+  },
   "moduleReviews": [
     {
       "module": "accounts",
@@ -19,7 +24,12 @@
       "selfEvidenceCommit": "58c3a9d",
       "status": "asset and public renderer scope accepted; cross-feature consumers remain under integrated acceptance",
       "review": "Viewed original artwork, actual Pixi 32-frame gallery and resource page. Reviewed two portraits, adoption/selection SQLite readback and eight repeated-action traces. Independently confirmed the original six PNGs/manifests have no Git diff.",
-      "coverage": {"characters": 8, "elements": 5, "newActualFrames": 32, "newCanonicalActionMappings": 24},
+      "coverage": {
+        "characters": 8,
+        "elements": 5,
+        "newActualFrames": 32,
+        "newCanonicalActionMappings": 24
+      },
       "integrationNote": "Battle/companions must pass actual event playback keys to the common renderer and retain canonical resource/element identity."
     },
     {
@@ -57,40 +67,136 @@
       "review": "Reviewed wood detail, earth shared skill cards, real transparent native wood/earth windows, five garrison receipts and restart database readback. Eight adoptions, five elements and 25 actual clip plays are covered. Corrected native frames have 12671 and 12788 visible pixels; the original loading-star frame is explicitly excluded.",
       "evidence": "docs/implementation/evidence/companions/unified-2026-10-24/verification.json",
       "nativePolicy": "The legal product range remains 1-4. QA kept the original limit 3 and temporarily recalled three instances for capture, restoring all settings and meaningful pet state."
+    },
+    {
+      "module": "battle",
+      "code": "5ca0bc3",
+      "selfEvidenceCommit": "07bd49a",
+      "status": "accepted after main actual four-entry and old-save checks",
+      "review": "Reviewed 25 actual UI element pairs and focused animation/peer/motion self-evidence. Main independently verified all four entries, four actions and textures, two-process outcomes, contextual receipts and old-save read projection."
     }
   ],
-  "openFindings": [
+  "openFindings": [],
+  "deliveryGate": "Each module self-verifies real Electron, main chat independently reviews, concrete failures return to the owning chat. Final integrated acceptance and current-workspace delivery follow only after all required work passes.",
+  "provenance": "Controlled engine fixtures and isolated simulated transport/location are not live cloud or real GPS evidence.",
+  "reviewedAt": "2026-10-24T16:15:21.579Z",
+  "findings": [
     {
       "id": "U01-screen-reuse",
       "owner": "battle/discovery/garden/foundation",
       "finding": "Exploration previously owned a second arena/HUD/timer. Sharing BattleMoves alone does not satisfy reuse.",
-      "requiredEvidence": "All four actual entry paths render the same BattleScreen, controller, HUD, log and animation; contextual settlement keeps the originating session ID."
+      "requiredEvidence": "All four actual entry paths render the same BattleScreen, controller, HUD, log and animation; contextual settlement keeps the originating session ID.",
+      "status": "verified",
+      "resolution": "Closed by module self-verification plus independent actual Electron and public-rule evidence listed in finalIndependentAcceptance."
     },
     {
       "id": "U02-roster",
       "owner": "resources/companions",
       "finding": "The six-character roster has water, fire and metal only.",
-      "requiredEvidence": "Distinct wood and earth artwork and usable instances, with consistent resource/element identity in adoption, detail, desktop, chat, battle and territory."
+      "requiredEvidence": "Distinct wood and earth artwork and usable instances, with consistent resource/element identity in adoption, detail, desktop, chat, battle and territory.",
+      "status": "verified",
+      "resolution": "Closed by module self-verification plus independent actual Electron and public-rule evidence listed in finalIndependentAcceptance."
     },
     {
       "id": "U03-water-presentation",
       "owner": "battle",
       "finding": "presentation.cjs infers freeze from a successful water action although the engine applies immediate rage reduction without freeze.",
-      "requiredEvidence": "Actual water result shows rage reduction, no invented freeze/stun, no disabled turn."
+      "requiredEvidence": "Actual water result shows rage reduction, no invented freeze/stun, no disabled turn.",
+      "status": "verified",
+      "resolution": "Closed by module self-verification plus independent actual Electron and public-rule evidence listed in finalIndependentAcceptance."
     },
     {
       "id": "U04-interrupt-presentation",
       "owner": "battle",
       "finding": "The engine's action-missed note also covers normal interrupting element. The view currently renders every miss as successful dodge.",
-      "requiredEvidence": "Normal-vs-element interruption and dodge-vs-normal avoidance have distinct truthful animation and events."
+      "requiredEvidence": "Normal-vs-element interruption and dodge-vs-normal avoidance have distinct truthful animation and events.",
+      "status": "verified",
+      "resolution": "Closed by module self-verification plus independent actual Electron and public-rule evidence listed in finalIndependentAcceptance."
     },
     {
       "id": "U04-animation-and-controls",
       "owner": "battle/foundation",
       "finding": "Natural-gameplay attempts cannot provide deterministic ultimate coverage; earlier failed harness evidence is retained.",
-      "requiredEvidence": "A verified isolated QA profile supplies a legal charged state; all four controls, repeated actions, elemental effects, ultimate cost/heal/hit, restart and reduced motion are independently observed."
+      "requiredEvidence": "A verified isolated QA profile supplies a legal charged state; all four controls, repeated actions, elemental effects, ultimate cost/heal/hit, restart and reduced motion are independently observed.",
+      "status": "verified",
+      "resolution": "Closed by module self-verification plus independent actual Electron and public-rule evidence listed in finalIndependentAcceptance."
+    },
+    {
+      "id": "U03-legacy-rule-metadata",
+      "status": "verified",
+      "resolution": "5ca0bc3 additive same-version read projection; six actual old-profile assertions pass, including exact original session/report JSON preservation."
     }
   ],
-  "deliveryGate": "Each module self-verifies real Electron, main chat independently reviews, concrete failures return to the owning chat. Final integrated acceptance and current-workspace delivery follow only after all required work passes.",
-  "provenance": "Controlled engine fixtures and isolated simulated transport/location are not live cloud or real GPS evidence."
+  "finalIndependentAcceptance": {
+    "productIntegrator": "c4ac693",
+    "rootBuild": {
+      "schemaVersion": 1,
+      "builtAt": "2026-10-24T16:07:08.349Z",
+      "sourceCommit": "774afd71ec778d90b7d7d8e6a07873e38320819f",
+      "sourceDirtyFiles": [
+        "?? docs/design/2026-10-24/01-companions-and-desktop.png",
+        "?? docs/design/2026-10-24/02-exploration-and-battle.png",
+        "?? docs/design/2026-10-24/full-ui/05-territory-and-inventory.png",
+        "?? docs/design/2026-10-24/imagegen-prompts.txt",
+        "?? docs/design/2026-10-24/lingjing-designs-v2.zip",
+        "?? docs/design/2026-10-24/lingjing-designs-v3-garden.zip",
+        "?? docs/design/2026-10-24/stack-research.txt"
+      ],
+      "codeFingerprint": "7f40fe16a67c8555d0dbbc931623fad67544b8041d7cc444328a896fd9ddcd97",
+      "compiledFingerprint": "3fade55c68d0891b0005c6c12d8d298e840c35872ab63eeeb6d0c051f95ae91a",
+      "codeFiles": 216,
+      "compiledFiles": 24
+    },
+    "reviewHead": "f43d9659fd400492e762d641e3176784767ccc8c",
+    "native": [
+      {
+        "scope": "battle",
+        "file": "artifacts/ui-acceptance/2026-10-24/final-build-v3/battle/evidence.json",
+        "sourceCommit": "f43d9659fd400492e762d641e3176784767ccc8c",
+        "checks": 65,
+        "passed": true
+      },
+      {
+        "scope": "friend",
+        "file": "artifacts/ui-acceptance/2026-10-24/final-build-v3/friend/evidence.json",
+        "sourceCommit": "f43d9659fd400492e762d641e3176784767ccc8c",
+        "checks": 20,
+        "rounds": 11,
+        "passed": true
+      },
+      {
+        "scope": "contexts",
+        "file": "artifacts/ui-acceptance/2026-10-24/final-build-v3/contexts/evidence.json",
+        "sourceCommit": "f43d9659fd400492e762d641e3176784767ccc8c",
+        "checks": 11,
+        "passed": true
+      },
+      {
+        "scope": "rhythm",
+        "file": "artifacts/ui-acceptance/2026-10-24/final-rhythm-v3/evidence.json",
+        "sourceCommit": "07db4d9c6d8ebbcfa081ff2f5e62a15dd065145a",
+        "checks": 12,
+        "views": 15,
+        "passed": true
+      },
+      {
+        "scope": "legacy",
+        "file": "artifacts/ui-acceptance/2026-10-24/final-legacy-rules-v3/evidence.json",
+        "sourceCommit": "774afd71ec778d90b7d7d8e6a07873e38320819f",
+        "checks": 6,
+        "passed": true
+      }
+    ],
+    "platformFonts": "artifacts/ui-acceptance/2026-10-24/final-platform-fonts/evidence.json",
+    "rules": {
+      "file": "artifacts/ui-acceptance/2026-10-24/final-rules-v3/evidence.json",
+      "orderedPairs": 25,
+      "actions": 75,
+      "properties": 9,
+      "engineSha256": "0c7475da1cb6a7171d8dceca57e78dcf1ee28b2e46ac70957774d0dd86673b38",
+      "passed": true
+    },
+    "rendererErrors": 0,
+    "packageStatus": "pending foundation local portable delivery and main readback"
+  }
 }

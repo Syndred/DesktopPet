@@ -1,0 +1,75 @@
+{
+  "status": "runtime-accepted-packaging-pending",
+  "at": "2026-10-24T16:15:21.579Z",
+  "scope": "Latest unified-battle-goal.txt; cloud and physical capture explicitly deferred",
+  "productIntegrator": "c4ac693",
+  "rootBuild": {
+    "schemaVersion": 1,
+    "builtAt": "2026-10-24T16:07:08.349Z",
+    "sourceCommit": "774afd71ec778d90b7d7d8e6a07873e38320819f",
+    "sourceDirtyFiles": [
+      "?? docs/design/2026-10-24/01-companions-and-desktop.png",
+      "?? docs/design/2026-10-24/02-exploration-and-battle.png",
+      "?? docs/design/2026-10-24/full-ui/05-territory-and-inventory.png",
+      "?? docs/design/2026-10-24/imagegen-prompts.txt",
+      "?? docs/design/2026-10-24/lingjing-designs-v2.zip",
+      "?? docs/design/2026-10-24/lingjing-designs-v3-garden.zip",
+      "?? docs/design/2026-10-24/stack-research.txt"
+    ],
+    "codeFingerprint": "7f40fe16a67c8555d0dbbc931623fad67544b8041d7cc444328a896fd9ddcd97",
+    "compiledFingerprint": "3fade55c68d0891b0005c6c12d8d298e840c35872ab63eeeb6d0c051f95ae91a",
+    "codeFiles": 216,
+    "compiledFiles": 24
+  },
+  "reviewHead": "f43d9659fd400492e762d641e3176784767ccc8c",
+  "native": [
+    {
+      "scope": "battle",
+      "file": "artifacts/ui-acceptance/2026-10-24/final-build-v3/battle/evidence.json",
+      "sourceCommit": "f43d9659fd400492e762d641e3176784767ccc8c",
+      "checks": 65,
+      "passed": true
+    },
+    {
+      "scope": "friend",
+      "file": "artifacts/ui-acceptance/2026-10-24/final-build-v3/friend/evidence.json",
+      "sourceCommit": "f43d9659fd400492e762d641e3176784767ccc8c",
+      "checks": 20,
+      "rounds": 11,
+      "passed": true
+    },
+    {
+      "scope": "contexts",
+      "file": "artifacts/ui-acceptance/2026-10-24/final-build-v3/contexts/evidence.json",
+      "sourceCommit": "f43d9659fd400492e762d641e3176784767ccc8c",
+      "checks": 11,
+      "passed": true
+    },
+    {
+      "scope": "rhythm",
+      "file": "artifacts/ui-acceptance/2026-10-24/final-rhythm-v3/evidence.json",
+      "sourceCommit": "07db4d9c6d8ebbcfa081ff2f5e62a15dd065145a",
+      "checks": 12,
+      "views": 15,
+      "passed": true
+    },
+    {
+      "scope": "legacy",
+      "file": "artifacts/ui-acceptance/2026-10-24/final-legacy-rules-v3/evidence.json",
+      "sourceCommit": "774afd71ec778d90b7d7d8e6a07873e38320819f",
+      "checks": 6,
+      "passed": true
+    }
+  ],
+  "platformFonts": "artifacts/ui-acceptance/2026-10-24/final-platform-fonts/evidence.json",
+  "rules": {
+    "file": "artifacts/ui-acceptance/2026-10-24/final-rules-v3/evidence.json",
+    "orderedPairs": 25,
+    "actions": 75,
+    "properties": 9,
+    "engineSha256": "0c7475da1cb6a7171d8dceca57e78dcf1ee28b2e46ac70957774d0dd86673b38",
+    "passed": true
+  },
+  "rendererErrors": 0,
+  "packageStatus": "pending foundation local portable delivery and main readback"
+}
