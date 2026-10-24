@@ -1,0 +1,24 @@
+{
+  "at": "2026-10-24T13:50:51.474Z",
+  "ok": true,
+  "source": "os",
+  "provider": "windows-geolocator",
+  "positionSource": "WiFi",
+  "accuracyMeters": 138,
+  "timestampMs": 1792849851314,
+  "quality": {
+    "ok": false,
+    "code": "LOCATION_IMPRECISE",
+    "message": "定位精度不足，请移动到信号较好的地方（需要 ≤ 80 米）"
+  },
+  "encodedCommand": true,
+  "coordinateHash": "7c8cf2f42ef0617cc7c25deb52fab0d20d02865b2f4c243c94251941f7ab29a6",
+  "rawCoordinatesSaved": false,
+  "passed": true,
+  "loadedFromAsar": true,
+  "unpackedScript": false,
+  "asarVersion": "3.4.1",
+  "physicalLocationAcceptance": false,
+  "validationScope": "Actual Electron module loaded from ASAR; full installer validation belongs to foundation",
+  "output": "artifacts/discovery/asar-location-1792849846926"
+}

@@ -101,13 +101,26 @@ class CloudGardenAuthority {
   async command(context, kind, input) {
     const receipt = await this.request('command', context, { command: kind, input });
     if (receipt.actionId !== input.actionId || receipt.requestHash !== checksum({ kind,input }) || !receipt.result?.ok) problem('CLOUD_RECEIPT_MISMATCH', '云端回执与本次操作不一致');
+    let newlyApplied = false;
     try {
       const readback = await this.request('snapshot', context);
       if (readback.accountRevision < receipt.accountRevision) problem('CLOUD_STALE_READBACK', '云端尚未读回本次操作');
+      const action = readback.envelope?.data?.modules?.garden?.data?.tables?.garden_actions?.find(row => row.action_id === input.actionId);
+      if (!action || action.owner_account_id !== context.ownerAccountId || action.kind !== kind || action.request_hash !== receipt.requestHash) problem('CLOUD_RECEIPT_MISMATCH', '云端存档尚未包含本次操作的匹配回执');
+      // Check immediately before the synchronous restore, so concurrent retries
+      // cannot each animate the same first local application.
+      newlyApplied = !this.db.prepare('SELECT 1 FROM garden_actions WHERE owner_account_id=? AND action_id=?').get(context.ownerAccountId,input.actionId);
       this.applyReadback(context, readback);
     } catch { problem('CLOUD_APPLY_PENDING', '云端已受理，落盘读回尚待确认；请重试原操作，不会重复扣除或发放物品'); }
     this.services.events.emit('garden:changed', { ownerAccountId: context.ownerAccountId });
-    if (kind === 'feed') this.services.events.emit('companions:changed', { ownerAccountId: context.ownerAccountId, petId: input.petId });
+    if (kind === 'feed') {
+      this.services.events.emit('companions:changed', { ownerAccountId: context.ownerAccountId, petId: input.petId });
+      if (newlyApplied) {
+        // Playback is cosmetic and never writes another growth/action receipt.
+        // A missing resource must not turn a committed meal into a failed debit.
+        try { await this.services.get('companions')?.playAction?.(context.ownerAccountId, { petId: input.petId, action:'eat', actionId:`garden:${input.actionId}` }); } catch { /* Keep the verified inventory result. */ }
+      }
+    }
     return { ...receipt.result, replayed: receipt.replayed || receipt.result.replayed };
   }
 }

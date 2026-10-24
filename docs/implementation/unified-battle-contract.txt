@@ -1,0 +1,61 @@
+灵境唯一战场契约 v1 · 2026-10-24
+状态：新范围实施契约；完成与否以对应源码提交和真实 Electron 证据为准。
+
+唯一入口
+
+共享 React 页面：features/battle/BattleScreen.tsx
+调用：<BattleScreen sessionId={sessionId} returnTo={optionalReturnPath}/>
+统一路由：/battle/session/:sessionId
+共享控制器：features/battle/useBattleSession.ts
+共享动画：features/battle/useBattleAnimation.ts
+唯一呈现：BattleArena + CombatantStatus + BattleMoves + 公共 ResourceStage/ResourcePortrait。
+
+训练、好友、野外、领地的入口只创建/读取可信会话，然后跳转统一路由或直接渲染同一个 BattleScreen。
+不接受复制 arena/HUD/技能按钮/回合记录或保留第二个动画 hook 的实现。
+入口可提供 returnTo；mode、origin、opponent、authority、领域引用和结算上下文来自主进程保存的会话。
+returnTo 只是导航目标，不决定 owner、获胜、奖励、收服或归属。
+
+主进程与 renderer 的命令
+
+battle.overview -> rules、pets、当前 session、reports。
+battle.snapshot({sessionId}) -> BattleSession，含同一规则与回合快照/事件。
+battle.act({sessionId,actionId,action,expectedRound}) -> 新会话；四行动沿用实际规则。
+battle.retryAction({sessionId}) -> 使用已落盘的原 actionId/action/round，不能改招重试。
+battle.sync({sessionId}) / leave({sessionId}) -> 同一个会话控制器处理。
+battle.context({sessionId}) -> {returnTo,action?:'capture'|'territory',name?,settled?,resultPath?}。
+battle.settleContext({sessionId,actionId,name?}) -> {resultPath?}，由来源领域幂等执行。
+
+context/settleContext 由 battle 负责命令登记、当前账号校验和会话查找。
+discovery/garden 负责根据会话的真实领域引用查回 encounter/territory challenge，校验 owner、胜负、状态、修订与已有回执，并执行原领域事务。
+不接受 renderer 提供 encounter/opponent/winner/territory owner 来决定可信结果。
+野外收服确认和领地占领确认只占用共享结果动作区；训练/好友使用同一结果区查看战报/奖励。
+返回/重启后继续同一 sessionId；终局与领域操作重试都不能二次成长、发种子或收服/占领。
+具体 main-only 领域 adapter 方法由 battle 的正式交付契约固定，foundation 集成时核对，入口页面不绕过共享命令。
+
+规则和动画
+
+BattleSession.mode = training | friend | wild | territory。
+BattleRulesProfile 来自实际 battle-runtime getBattleRules；归一生命与成长属性沿用现有政策。
+BattleRound 的 state / directDamage / dotDamageEvents / healEvents / statusesAfter / notes 是已提交的权威结果。
+visualEvents 只解释实际结果，不能依据“选了元素招式”补造未发生的状态、命中或伤害。
+所有入口用同一个风格、时间轴和资源动作约定播放起手→释放→命中/闪避→效果→待机。
+同招连续发生必须重播；首次恢复旧回合不重播；动画关闭立即显示终态且不阻塞行动。
+五行标记、资源和技能效果使用同一 participant.element/resource 引用。
+
+隔离验收
+
+foundation 已提供 services.get('qaScenario')，只有验证独立资料目录后存在。
+创建目录：node scripts/acceptance/create-scenario-profile.mjs。
+环境：LINGJING_QA_SCENARIO=unified-battle + 返回的 PET_USER_DATA_DIR。
+公共 descriptor={id:'unified-battle',runId,provenance:'simulated',isolated:true}。
+主进程可同时获得 profilePath；renderer 只看到 app.info.scenario descriptor。
+只有该服务存在时才能注册/选择模拟好友、定位或领地 adapter；不能因普通云端请求失败自动切换。
+模拟会话 context.authority='simulated'，保存 scenarioId/runId；来源 UI 使用小图标/tooltip，完整诊断写证据。
+正式网络/系统定位证据记录 live，不能把 QA 的 simulated 记录写成云端或真实定位成功。
+
+验收锚点
+
+四模式同一个 data-battle-screen='shared-v1'、data-battle-mode、data-session-id；同一 HUD/技能/日志结构与动画事件。
+对同一最终构建操作四入口并留图、操作、状态、数据库回执和 source SHA。
+25 有序属性对阵与每类特性单独留规则证据；五行角色均真实可选，木/土新资源不能以旧图换名代替。
+本契约发布不代表 U01—U08 通过；模块自验、主会话逐项复验和最终集成验收继续进行。

@@ -1,0 +1,18 @@
+{
+  "at": "2026-10-24T14:20:24.940Z",
+  "scope": "read-only unauthenticated OPTIONS at configured endpoints",
+  "discoveryEnvironmentConfigured": false,
+  "tlsConfigured": false,
+  "requests": [
+    {
+      "function": "duel-online",
+      "ok": false,
+      "error": "UND_ERR_SOCKET"
+    },
+    {
+      "function": "discovery",
+      "ok": false,
+      "error": "UND_ERR_SOCKET"
+    }
+  ]
+}

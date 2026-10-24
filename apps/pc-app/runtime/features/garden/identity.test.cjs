@@ -4,19 +4,27 @@ const {DatabaseSync}=require('node:sqlite');
 const {GardenService}=require('./service.cjs');const {createOwnerMigration}=require('./identity.cjs');
 const {CompanionsService}=require('../companions/service.cjs');const {migrateCompanions}=require('../companions/migrations.cjs');
 const {migrations:accountMigrations}=require('../accounts/schema.cjs');
-function setup(){
+function setup({sharedProvider=false}={}){
  const db=new DatabaseSync(':memory:');db.exec('PRAGMA foreign_keys=ON');for(const migration of accountMigrations)db.exec(migration.sql);migrateCompanions(db);
  const source='legacy-garden-owner',target=`local:${source}`,companions=new CompanionsService({db});
  const pet=companions.adopt(source,{actionId:'adopt',templateId:'big-fish-gentle',name:'鱼丸',showOnDesktop:false}).data.pet;
  const garden=new GardenService({db});garden.snapshot({ownerAccountId:source});garden.plant({ownerAccountId:source},{actionId:'old-plant',expectedRevision:0,plotId:'plot-1',cropType:'rice'});
  db.prepare('INSERT INTO account_identities(owner_account_id,provider,subject_id,account,account_key,username,created_at,updated_at) VALUES (?,?,?,?,?,?,?,?)').run(target,'local',source,'garden-alias','garden-alias','迁移验证','2026-10-24','2026-10-24');
  db.prepare('INSERT INTO account_aliases VALUES (?,?,?,?,?)').run('local',source,target,'legacy-id','2026-10-24');
- const api={listPets:owner=>companions.snapshot(owner).data.pets};const services={db,get:name=>name==='companions'?api:name==='accounts'?{identity:owner=>db.prepare('SELECT * FROM account_identities WHERE owner_account_id=?').get(owner)}:null};
+ const api={listPets:owner=>companions.snapshot(owner).data.pets};const services={db,session:{getOwnerAccountId:()=>target},get:name=>name==='companions'?api:name==='accounts'?{identity:owner=>db.prepare('SELECT * FROM account_identities WHERE owner_account_id=?').get(owner)}:null};
+ if(sharedProvider){const migration=require('../companions/identity.cjs').createCompanionOwnerMigration(services,()=>{});api.migrateOwnerAlias=migration.migrate;api.listPets=owner=>{migration.ensure(owner);return companions.snapshot(owner).data.pets;};}
  return{db,source,target,pet,companions,garden,migration:createOwnerMigration(services,garden),prepareCompanions(){companions.account(target);companions.storePet({...structuredClone(pet),ownerAccountId:target},true);}};
 }
 test('verified alias without companion migration preserves old garden and refuses a second starter grant',()=>{
  const f=setup();assert.throws(()=>f.migration.migrate({ownerAccountId:f.target}),{code:'OWNER_MIGRATION_REQUIRED'});
  assert.equal(f.db.prepare('SELECT 1 FROM garden_accounts WHERE owner_account_id=?').get(f.target),undefined);assert.equal(f.garden.itemCount(f.source,'seed:rice'),1);assert.equal(f.garden.snapshot({ownerAccountId:f.source}).data.plots[0].cropType,'rice');f.db.close();
+});
+test('published companion owner adapter and garden migrate the real old graph once together',()=>{
+ const f=setup({sharedProvider:true});f.migration.migrate({ownerAccountId:f.target});f.migration.migrate({ownerAccountId:f.target});
+ assert.equal(f.db.prepare('SELECT COUNT(*) n FROM companion_identity_imports').get().n,1);assert.equal(f.db.prepare('SELECT COUNT(*) n FROM garden_identity_imports').get().n,1);
+ const pet=f.companions.requirePet(f.target,f.pet.petId);assert.equal(pet.ownerAccountId,f.target);assert.deepEqual(pet.growth,f.pet.growth);
+ const state=f.garden.snapshot({ownerAccountId:f.target});assert.equal(state.data.plots[0].cropType,'rice');assert.equal(state.data.items.find(item=>item.id==='seed:rice').quantity,1);assert.equal(state.data.ledger.filter(event=>event.kind==='starter').length,4);
+ assert.equal(f.db.prepare('SELECT COUNT(*) n FROM companion_pets WHERE owner_account_id=?').get(f.source).n,1);assert.equal(f.db.prepare('SELECT crop_type FROM garden_plots WHERE owner_account_id=? AND plot_id=?').get(f.source,'plot-1').crop_type,'rice');f.db.close();
 });
 test('once real companion rows match the alias, garden rekeys once and archives its exact old graph',()=>{
  const f=setup();f.prepareCompanions();f.migration.migrate({ownerAccountId:f.target});f.migration.migrate({ownerAccountId:f.target});
@@ -27,4 +35,11 @@ test('once real companion rows match the alias, garden rekeys once and archives 
 test('two progressed owner graphs cannot be merged by an alias',()=>{
  const f=setup();f.prepareCompanions();f.garden.snapshot({ownerAccountId:f.target});f.garden.plant({ownerAccountId:f.target},{actionId:'new-plant',expectedRevision:0,plotId:'plot-2',cropType:'carrot'});
  assert.throws(()=>f.migration.migrate({ownerAccountId:f.target}),{code:'OWNER_MIGRATION_REQUIRED'});assert.equal(f.garden.itemCount(f.source,'seed:rice'),1);assert.equal(f.garden.itemCount(f.target,'seed:carrot'),1);assert.equal(f.db.prepare('SELECT COUNT(*) n FROM garden_identity_imports').get().n,0);f.db.close();
+});
+test('a progressed target garden rolls back the shared companion migration in the same transaction',()=>{
+ const f=setup({sharedProvider:true});f.garden.snapshot({ownerAccountId:f.target});f.garden.plant({ownerAccountId:f.target},{actionId:'independent-target-plant',expectedRevision:0,plotId:'plot-2',cropType:'carrot'});
+ assert.throws(()=>f.migration.migrate({ownerAccountId:f.target}),{code:'OWNER_MIGRATION_REQUIRED'});
+ assert.equal(f.db.prepare('SELECT COUNT(*) n FROM companion_identity_imports').get().n,0);assert.equal(f.db.prepare('SELECT COUNT(*) n FROM garden_identity_imports').get().n,0);
+ assert.equal(f.db.prepare('SELECT COUNT(*) n FROM companion_pets WHERE owner_account_id=?').get(f.target).n,0);assert.deepEqual(f.companions.requirePet(f.source,f.pet.petId),f.pet);
+ assert.equal(f.garden.snapshot({ownerAccountId:f.source}).data.plots[0].cropType,'rice');assert.equal(f.garden.snapshot({ownerAccountId:f.target}).data.plots[1].cropType,'carrot');f.db.close();
 });

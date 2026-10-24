@@ -1,0 +1,20 @@
+{
+  "at": "2026-10-24T13:47:06.003Z",
+  "controlledPosition": true,
+  "physicalLocationAcceptance": false,
+  "checks": [
+    "opt-in watch survives map to encounter-preview navigation",
+    "real scheduled timer supplies a newer position sample while preview remains open",
+    "hiding the actual Electron window stops watch",
+    "minimizing also stops watch and restoring does not silently restart it",
+    "leaving discovery stops watch and blocks another native request",
+    "application permission revocation stops watch and clears its cached fix"
+  ],
+  "afterPreview": {
+    "watching": true,
+    "status": "ready"
+  },
+  "hiddenDocumentVisibility": "visible",
+  "passed": true,
+  "output": "artifacts/discovery/foreground-1792849625721"
+}

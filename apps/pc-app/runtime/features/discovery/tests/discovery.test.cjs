@@ -12,6 +12,8 @@ const {nearbySpawns}=require('../spawns.cjs');
 const discoveryModule=require('../index.cjs');
 const {createAuthorityHandler}=require('../server-authority.cjs');
 const {atomic}=require('../repository.cjs');
+const {publicEncounter}=require('../service.cjs');
+const {getBattleRules}=require('../../../services/battle-runtime.cjs');
 
 const companionRoot=process.env.LINGJING_COMPANIONS_RUNTIME || resolve(__dirname,'../../companions');
 const battleRoot=process.env.LINGJING_BATTLE_RUNTIME || resolve(__dirname,'../../battle');
@@ -132,11 +134,22 @@ test('encounters follow canonical 2D template resources and use a new generation
   assert.deepEqual(original,frozen);
 });
 
+test('old encounter readback exposes authoritative rules without rewriting history or leaking engine state',()=>{
+  const saved={battle:{engineState:{private:'not-for-renderer'},view:{round:3},rounds:[{round:3}]},cloudPermit:{id:'private-permit'}};
+  const original=structuredClone(saved),view=publicEncounter(saved);
+  assert.deepEqual(view.battle.rules,getBattleRules());
+  assert.equal(view.battle.engineState,undefined);assert.equal(view.cloudPermit,undefined);
+  assert.deepEqual(saved,original);
+});
+
 test('actual shared SQLite + companions + battle: map to victory, confirmation, pokedex, memory, idempotency and restart',integrationOptions,async t=>{
   t.mock.method(Math,'random',()=>.4); // Reproducible NPC decisions, not a forged victory.
   const f=fixture();
   try {
     const {encounter,input,petId}=await start(f);
+    assert.deepEqual(encounter.battle.rules,f.services.get('battle').getRules());
+    assert.equal(encounter.battle.view.player.maxHp,encounter.battle.rules.maxHp);
+    assert.notEqual(f.services.get('companions').getPet(f.owner,petId).growth.stats.hp,encounter.battle.rules.maxHp);
     const repeated=await f.services.invoke('discovery','begin',input);assert.equal(repeated.ok,true);assert.equal(repeated.duplicate,true);assert.equal(repeated.data.encounterId,encounter.encounterId);
     const premature=await f.services.invoke('discovery','confirm',{encounterId:encounter.encounterId,actionId:'premature'});assert.equal(premature.code,'VICTORY_REQUIRED');
     const firstInput={encounterId:encounter.encounterId,action:'element_attack',actionId:'first-round',expectedRevision:encounter.revision};

@@ -5,12 +5,13 @@ const {MapAdapter}=require('./map-adapter.cjs');
 const {nearbySpawns}=require('./spawns.cjs');
 const {LegacyWildBattleAdapter,RegisteredWildBattleAdapter}=require('./battle-adapter.cjs');
 const {checkFix,geofence,distanceMeters}=require('./coordinates.cjs');
+const {getBattleRules}=require('../../services/battle-runtime.cjs');
 function problem(code,message) {throw Object.assign(new Error(message),{code});}
 const ok=data=>({ok:true,data});
 const clone=value=>structuredClone(value);
 function publicEncounter(value) {
   if(!value) return null;
-  const result=clone(value); if(result.battle) delete result.battle.engineState;
+  const result=clone(value); if(result.battle) {delete result.battle.engineState;result.battle.rules ||= getBattleRules();}
   delete result.initialFix; delete result.cloudPermit;
   return result;
 }

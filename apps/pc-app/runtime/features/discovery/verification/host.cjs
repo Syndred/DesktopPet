@@ -61,7 +61,7 @@ app.whenReady().then(async()=>{
     return services.invoke(request.feature,request.command,request.payload);
   });
   const emit=services.events.emit;services.events.emit=(name,payload)=>{emit(name,payload);for(const win of BrowserWindow.getAllWindows())if(!win.isDestroyed())win.webContents.send('lingjing:event',{name,payload});};
-  global.__discoveryVerification={services,db,owner,controlled:process.env.LINGJING_CONTROLLED_LOCATION==='1',realRegistry:true};
+  global.__discoveryVerification={services,db,owner,nearbySpawns,controlled:process.env.LINGJING_CONTROLLED_LOCATION==='1',realRegistry:true};
   await main.loadFile(uiFile,{hash:'/discovery'});
 }).catch(error=>{console.error(error);app.exit(1);});
 app.on('before-quit',()=>{for(const feature of [...features].reverse())feature.dispose?.();db?.close();});

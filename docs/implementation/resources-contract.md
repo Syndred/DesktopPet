@@ -6,7 +6,7 @@
 
 `resources:list/import/save/resolve` 使用经过主进程验证的当前账号。导入仅由 Windows 原生文件选择器选择 JSON；renderer 不传文件路径或 owner。支持解压后的 `lingjing.character` v1 网格角色包，以及单图片的 PixiJS / TexturePacker JSON 图集。图片支持 PNG/WebP。网格数据转成标准 Spritesheet JSON；旋转帧、裁剪帧、原始尺寸和动画帧由 PixiJS `Spritesheet.parse()` 处理。
 
-项目角色示例为 `runtime/assets/illustrations/yuwan-character-v1.json` 及 `yuwan-sprites-v1.png`，使用项目图稿中的鱼丸二次元形象。旧测试鱼素材保留为历史文件，不作为新安装默认角色。常规注册由 foundation `registerBuiltinArt` 提供 `builtin:lingjing-yuwan-v1`，资源模块不另造默认角色或扫描模型目录。
+当前项目角色集合在 `runtime/features/resources/assets/roster-v2/catalog.json`：鱼丸、小蓝、饭团、焰柴、礼帽喵、小狐，各有 16 个独立姿势。资源模块 `registerRoster` 登记同一 canonical 集合，原有 v1 及 battle 专用 ID 保留为明确的读穿别名。旧测试鱼和旧位图文件继续保留，不作为当前默认角色。完整关联、兼容策略及 prompt 来源见 `roster-contract.md`。
 
 网格包字段：`format:'lingjing.character', version:1, kind:'spritesheet', name, image, sheet:{width,height,columns,rows}, clips:{name:{frames,fps,loop}}, actions, calibration, provenance`。标准图集字段：`frames, meta:{image,size,scale}, animations`，可选 `character:{name,fps,actions,calibration,provenance}`。来源、作者、许可及署名随记录保存；同哈希项目素材可以沿用明确登记的来源，不将任意用户素材标为已授权。
 
@@ -14,9 +14,11 @@
 
 ## 动作、显示与实例
 
-`resourceId` 标识共享形象，`petId` 标识独立伙伴。桌面和战斗分别保存 `scale, rotationDeg, verticalOffset, mirrorX, anchorX, anchorY, fps`；fps 为 0 时使用动作原始帧率。保存携带 `expectedRevision`；冲突返回 `REVISION_CONFLICT`。动作 `idle/walk/attack/hit/skill/victory/sleep` 缺失时回退映射待机或首个动画。
+`resourceId` 标识共享形象，`petId` 标识独立伙伴。桌面和战斗分别保存 `scale, rotationDeg, verticalOffset, mirrorX, anchorX, anchorY, fps`；fps 为 0 时使用动作原始帧率。保存携带 `expectedRevision`；冲突返回 `REVISION_CONFLICT`。公共动作包括 idle、blink、walk、wave、eat、attack_windup、attack_release、attack、hit、skill、victory、sleep，缺失时明确回退待机。标准图集 `character.clips` 可为每个动作分别指定 fps 和 loop。
 
-UI 共用 `ResourceStage`，传入 `resource, petId, context, action, facing, playing, motionEnabled`。同资源共享 Pixi Assets 纹理来源和图集，各实例持有独立 Application、AnimatedSprite、播放帧和生命周期；销毁实例不卸载其他实例使用的纹理。帧率、锚点和动作直接更新 Pixi 对象，没有自制帧循环、裁图或动画引擎。DOM 的 `data-texture-source` 是实际 TextureSource UID，可核验共享来源。
+UI 共用 `ResourceStage`，传入 `resource, petId, context, action, facing, playing, motionEnabled`。同资源共享 Pixi Assets 纹理来源和图集，各实例持有独立 Application、AnimatedSprite、播放帧和生命周期；销毁实例不卸载其他实例使用的纹理。帧率、锚点和动作直接更新 Pixi 对象，没有自制帧循环、裁图或动画引擎。DOM 的 `data-texture-source` 是实际 TextureSource UID，data-texture-frame 与 data-content-bounds 记录当前真实纹理区域和绘制边界供验收。内容拟合留出顶部空间，脚底基线不变，避免最大技能特效贴舞台边。
+
+头像与领养卡的上身近景使用公共 ResourcePortrait / resolveResourcePortrait；它从同一 canonical 待机帧的实际主体区域取景，不使用带透明边距的逻辑全帧。动态桌面和战斗舞台继续全身。使用方式见 `roster-contract.md`。
 
 主进程 `resolve(owner,{resourceId,petId,context,action,facing})` 返回资源、实际动作与独立校准副本。`resolveForPet(owner,pet)` 等待资源就绪，返回 `kind:'spritesheet',url,sheet,atlas,resource,clip,calibration,resourceRevision` 供桌面窗口适配，FPS 覆盖已应用到 clip。调用方确认 petId 属于当前账号。事务内可用无磁盘访问的 `getRecord`；异步磁盘检查在事务外调用。
 

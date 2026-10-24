@@ -1,19 +1,20 @@
 {
   "module": "companions",
   "branch": "codex/lingjing-companions",
-  "implementationCommit": "fced386a543b6dbc4933cff7f5aa4eb4e99ba442",
-  "status": "audit-implemented-portrait-followup-in-progress",
+  "implementationCommit": "e074faee62c34b0faa2a0e152feaed72e1662891",
+  "status": "complete-awaiting-central-visual-review",
   "updatedAt": "2026-10-24",
   "upstream": {
     "fetchedAgainBeforeDelivery": true,
     "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086",
     "baseline": "6c8ce65",
     "originMainIsAncestor": true,
-    "remoteCommitsMissingAtFinalFetch": 0
+    "remoteCommitsMissingAtFinalFetch": 0,
+    "finalFetchUtc": "2026-10-24T14:04:25.5623983Z"
   },
-  "foundationContractIntegrated": "5ad3220 via merge 5d3e57a",
+  "foundationContractIntegrated": "bbb4395 (includes public portrait 1dac04e)",
   "contract": "apps/pc-app/runtime/features/companions/INTEGRATION.md",
-  "verification": "docs/implementation/evidence/companions/verification.json",
+  "verification": "docs/implementation/evidence/companions/audit-2026-10-24/verification.json",
   "routes": [
     "/companions",
     "/companions/adopt",
@@ -71,13 +72,13 @@
       "project": "Motion for React",
       "version": "14.6.0",
       "license": "MIT",
-      "where": "Foundation route PageTransition, feature modal PageTransition and roster/template AnimatedList; application animation setting is consumed by Pixi portraits"
+      "where": "Public route/modal/list wrappers and live useAppMotion policy; controlled actions only select Pixi clips"
     },
     {
       "project": "PixiJS",
       "version": "8.22.0",
       "license": "MIT",
-      "where": "CompanionPortrait delegates actual animated native/detail/adoption drawing to resources/ResourceStage using registered approved atlas; shared static shader adapter supports strict CSP"
+      "where": "Shared ResourceStage for full-body desktop, action previews and large preview; public ResourcePortrait for same-atlas idle close-ups, no separate animation engine"
     },
     {
       "project": "Lucide React",
@@ -139,19 +140,19 @@
   },
   "uiComparisons": [
     {
+      "actual": "docs/implementation/evidence/companions/audit-2026-10-24/portrait/1280-overview.png",
       "reference": "docs/design/2026-10-24/full-ui/01-companions-and-desktop.png",
-      "actual": "docs/implementation/evidence/companions/overview.png",
-      "verified": "Room illustration hero, status/control panel, independent roster, public shell and flat Chinese actions"
+      "verified": "Shared title tokens, room hero, independent six-character close-up roster and true per-pet controls"
     },
     {
+      "actual": "docs/implementation/evidence/companions/audit-2026-10-24/portrait/1280-detail.png",
       "reference": "docs/design/2026-10-24/full-ui/03-pet-detail-and-adoption.png",
-      "actual": "docs/implementation/evidence/companions/detail.png",
-      "verified": "Large left character, growth/stats/skill summary, detail tabs, true per-pet values and source encounter"
+      "verified": "Parallel header/Tabs, actual scene overlays, growth/standard-rule meaning, close-up skill portraits and illustrated memory"
     },
     {
+      "actual": "docs/implementation/evidence/companions/audit-2026-10-24/portrait/1280-adoption.png",
       "reference": "docs/design/2026-10-24/full-ui/03-pet-detail-and-adoption.png",
-      "actual": "docs/implementation/evidence/companions/adoption.png",
-      "verified": "Category/template cards, owned filter, right character preview/nickname/desktop checkbox and actual adoption"
+      "verified": "Six portrait template cards; true shared canonical resource, full-body large preview and real adoption form"
     }
   ],
   "checks": {
@@ -163,8 +164,9 @@
     "realElectronLifecycle": "artifacts/companions/electron-4yE4tp/evidence.json: passed",
     "realNativeDrag": "artifacts/companions/electron-4yE4tp/native-drag.json: fish 8,8 to 85,62; other two saved positions unchanged",
     "realRadixKeyboardPersistence": "artifacts/companions/electron-4yE4tp/radix-ui.json: Switch Space and Slider arrows persist; final UI pass also verifies named Thumb",
-    "final2dUiAndChat": "artifacts/companions/roster-mM7aWp/evidence.json: six actors, 24 actual Pixi action plays, canonical identity across detail/desktop/chat/actual training, restart and original legacy bytes passed",
-    "correctedStaticCaptures": "artifacts/companions/capture-fdCznY/evidence.json: nonblank, loaded 1280x844 and 1440x900 views; retained action records"
+    "final2dUiAndChat": "Six canonical actors / 24 actual Pixi plays / detail-desktop-chat-training identity / restart and original bytes: passed, see audit verification",
+    "correctedStaticCaptures": "artifacts/companions/capture-fdCznY/evidence.json: nonblank, loaded 1280x844 and 1440x900 views; retained action records",
+    "portraitConsumer": "capture-UCPqyb: six adoption portraits at both sizes, same canonical idle frames, large preview and native full body preserved; images decoded and inspected"
   },
   "only2d": {
     "activeTemplatesAndConsumerList": "2D spritesheets only",
@@ -179,18 +181,16 @@
     "No root package/lock edits or unrelated feature-branch merges were made by this feature"
   ],
   "knownLimits": [
-    "A07/A12 follow-up: portrait framing for small thumbnails awaits the shared resources display helper; full-body stages remain unchanged",
-    "Central independent visual acceptance is owned by the main conversation; this branch does not declare final all-page visual approval",
-    "No online AI/cloud synchronization success is claimed by local acceptance"
+    "Central main conversation owns final integrated visual approval and other modules follow-up",
+    "Local acceptance does not assert online AI, cloud synchronization or production deployment success"
   ],
   "remaining": [
-    "Consume shared portrait framing for adoption/detail thumbnails, then run a small thumbnail-only check",
-    "Foundation collects the branch and the main conversation performs the concentrated visual review"
+    "Foundation collects e074fae and the main conversation performs the concentrated integrated visual review"
   ],
   "dataPolicy": "Only additive owner-scoped tables/raw archive; original JSON/animals/history/design files preserved; no production migration/deployment",
   "uiRefinement": {
     "scope": "Follow-up: approved 03 layout/font/card spacing, at least six distinct shared resource shapes, real wave/eat/hit actions, same resourceId in battle",
-    "foundationIntegrated": "5ad3220",
+    "foundationIntegrated": "bbb4395",
     "normalizedLayoutEvidence": "docs\\implementation\\evidence\\companions\\audit-2026-10-24\\pre-portrait\\capture-metadata.json",
     "normalizedViewport": "1280x844 and 1440x900 CSS px, actual DPR1 normalization recorded",
     "implemented": [
@@ -200,10 +200,8 @@
       "Aspect-preserving static atlas thumbnails; standard non-grid atlas uses shared Pixi",
       "Per-owner/pet transient action playback, preview and feeding-commit routing in progress"
     ],
-    "pendingResourceContract": [
-      "Shared portrait composition helper for upper-body/face thumbnails; resource owner implements it"
-    ],
-    "finalEvidencePending": true,
+    "pendingResourceContract": [],
+    "finalEvidencePending": false,
     "audit": "9915684: docs/implementation/acceptance/2026-10-24/visual-audit.txt",
     "auditItems": [
       "A01",
@@ -217,16 +215,8 @@
     "visualPass": false,
     "interimEvidence": "docs/implementation/evidence/companions/refinement-v1/evidence.json: geometry and one existing clip route passed; not final six-character visual acceptance",
     "combatAuthority": "Public battle.getRules / battle-runtime.getBattleRules; six actual training sessions match maxHP and canonical resourceId, growth values are labelled separately",
-    "completedAuditItems": [
-      "A01: consumes public font/page tokens, H1 28px/700",
-      "A02: compact common breadcrumb inside left column, right Tabs at top",
-      "A03: zero Card margins, parent gap from public layout tokens",
-      "A06: genuine scene + name/info/actions layers and illustrated memory",
-      "A11: actual training max HP equals unchanged authority read by detail; growth values labelled separately"
-    ],
     "pendingAuditItems": [
-      "A07/A12 portrait composition follow-up; no new image generation in this branch",
-      "Central independent final visual approval"
+      "Central independent integrated approval; this branch consumer implementation and targeted checks are complete"
     ],
     "directionChecks": [
       "13 actual SQLite/account/resource checks passed",
@@ -236,6 +226,29 @@
       "Actual training same pet/resource reads max HP120; persisted growth HP124 retained"
     ],
     "sixCharacterEvidence": "docs\\implementation\\evidence\\companions\\audit-2026-10-24\\pre-portrait\\roster-actions.json",
-    "canonicalMigration": "Only explicit registry aliases upgrade; default templates map to their own canonical resource, manual bindings and all instance data/history remain independent"
+    "canonicalMigration": "Only explicit registry aliases upgrade; default templates map to their own canonical resource, manual bindings and all instance data/history remain independent",
+    "portraitCompleted": {
+      "evidence": "docs/implementation/evidence/companions/audit-2026-10-24/portrait/evidence.json",
+      "fullBodyUnchanged": true,
+      "independentApprovalOwnedByMain": true,
+      "locations": [
+        "Adoption cards",
+        "Owned roster",
+        "Status avatar",
+        "Detail skill thumbnails"
+      ],
+      "sharedDependency": "1dac04e",
+      "code": "e074fae"
+    },
+    "completedAuditItems": [
+      "A01 shared font/page tokens, H1 28px/700",
+      "A02 compact left breadcrumb/header; full-width right Tabs at top",
+      "A03 zero Card margin and public layout rhythm",
+      "A06 actual scene, overlay information, real memory illustration and data",
+      "A07 six distinct canonical resources with close-up portraits",
+      "A08 actual owner/pet/resource-scoped actions; food playback only after commit",
+      "A11 public battle.getRules display and actual training equality",
+      "A07/A12 follow-up public ResourcePortrait consumer with full-body stages retained"
+    ]
   }
 }

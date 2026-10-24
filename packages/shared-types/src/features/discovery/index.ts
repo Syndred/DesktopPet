@@ -1,3 +1,5 @@
+import type { BattleActor, BattleRound, BattleRulesProfile, BattleSnapshot } from '../battle';
+
 export type CoordinateSystem = 'wgs84' | 'gcj02';
 export type LocationStatus = 'idle' | 'locating' | 'ready' | 'denied' | 'timeout' | 'unavailable' | 'imprecise' | 'stale' | 'demo' | 'privacy_disabled';
 export type DiscoveryElement = 'water' | 'fire' | 'wood' | 'metal' | 'earth';
@@ -7,8 +9,8 @@ export interface LocationState { mode: 'real' | 'demo'; status: LocationStatus; 
 export interface DiscoveryMap { id: string; name: string; coordinateSystem: CoordinateSystem; available: boolean; attribution: string; attributionUrl: string; maxZoom: number; providers: Array<{id: string; name: string; available: boolean}> }
 export interface WildSpawn { id: string; templateId: string; name: string; element: DiscoveryElement; description: string; resourceId: string; wildSerial: string; position: GeoPoint; mapPosition?: GeoPoint; coordinateSystem: 'wgs84'; rarity: 'common' | 'rare' | 'epic'; placeLabel: string; placeLabelSource: 'game'; expiresAt: number; distanceMeters: number; source: 'game-spawn'; demo: boolean; inRange: boolean; captureState: string }
 export interface DiscoveryPet { petId: string; name: string; element: DiscoveryElement; resource: {resourceId: string; kind: string}; level: number }
-export interface DiscoveryCombatant { hp: number; maxHp: number; anger: number; element: DiscoveryElement; statuses: Array<{type: string; duration: number}> }
-export interface WildBattle { battleId: string; petId: string; view: {round: number; player: DiscoveryCombatant; enemy: DiscoveryCombatant}; rounds: Array<{round: number; action: string; damageTaken: {player: number; enemy: number}; notes: string[]}>; winner: 'player' | 'enemy' | null; finished: boolean; adapter: string }
+export type DiscoveryCombatant = BattleActor;
+export interface WildBattle { battleId: string; petId: string; view: BattleSnapshot; rounds: Array<BattleRound & {action: string}>; rules: BattleRulesProfile; winner: 'player' | 'enemy' | null; finished: boolean; adapter: string }
 export interface WildEncounter { encounterId: string; ownerAccountId: string; spawn: WildSpawn; petId: string; battle: WildBattle; status: 'challenging' | 'won' | 'lost' | 'cancelled' | 'captured'; revision: number; createdAt: number; updatedAt: number; capturePetId?: string }
 export interface DiscoveryMemory { id: string; kind: 'first_meeting'; title: string; text: string; placeLabel: string; createdAt: string }
 export interface DiscoveryTerritory {territoryId: string; name: string; ownerAccountId: string | null; owned: boolean; boundary: GeoPoint[]; mapBoundary: GeoPoint[]; revision?: number; bonusMultiplier: number}

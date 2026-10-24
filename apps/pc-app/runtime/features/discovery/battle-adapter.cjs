@@ -1,23 +1,23 @@
-const {BattleRuntimeService}=require('../../services/battle-runtime.cjs');
+const {BattleRuntimeService,getBattleRules}=require('../../services/battle-runtime.cjs');
 /** Reuse the current combat engine unchanged. The saved state lives with its encounter. */
 class LegacyWildBattleAdapter {
   begin({pet,spawn,battleId}) {
     const engine=new BattleRuntimeService(); engine.reset({playerElement:pet.element,enemyElement:spawn.element});
-    return {battleId,petId:pet.petId,engineState:structuredClone(engine.session),view:engine.snapshot(),rounds:[],winner:null,finished:false,adapter:'battle-runtime'};
+    return {battleId,petId:pet.petId,engineState:structuredClone(engine.session),view:engine.snapshot(),rounds:[],winner:null,finished:false,adapter:'battle-runtime',rules:getBattleRules()};
   }
   act(battle,action) {
     if(!['normal_attack','element_attack','dodge','ultimate'].includes(action)) throw Object.assign(new Error('无效的战斗操作'),{code:'BATTLE_INVALID_ACTION'});
     if(battle.finished) throw Object.assign(new Error('本次挑战已结束'),{code:'BATTLE_FINISHED'});
     const engine=new BattleRuntimeService(); engine.session=structuredClone(battle.engineState);
     const result=engine.act(action);
-    return {...battle,engineState:structuredClone(engine.session),view:result.state,rounds:[...battle.rounds,{action,...result.roundResult}],
+    return {...battle,rules:battle.rules || getBattleRules(),engineState:structuredClone(engine.session),view:result.state,rounds:[...battle.rounds,{action,...result.roundResult}],
       winner:result.roundResult.winner || null,finished:Boolean(result.roundResult.winner),lastRound:result};
   }
 }
 function fromFeatureSession(session) {
   return {battleId:session.id,petId:session.player.petId,view:session.snapshot,
     rounds:session.rounds.map(round=>({...round,action:round.actions.player})),winner:session.winner || null,
-    finished:session.status==='finished' || session.status==='abandoned',adapter:'battle-feature',externalStatus:session.status};
+    finished:session.status==='finished' || session.status==='abandoned',adapter:'battle-feature',externalStatus:session.status,rules:session.rules || getBattleRules()};
 }
 class RegisteredWildBattleAdapter {
   constructor(api,invoke) {this.api=api;this.invoke=invoke;}
