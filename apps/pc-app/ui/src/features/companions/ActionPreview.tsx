@@ -7,7 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '.
 import { CompanionPortrait } from './CompanionPortrait';
 import type { Controller } from './components';
 
-const labels: Record<string, string> = { wave: '招手', eat: '吃饭', hit: '受击', attack: '普通攻击', skill: '元素技能', victory: '庆祝', walk: '行走', sleep: '休息' };
+const labels: Record<string, string> = { wave: '招手', eat: '吃饭', hit: '受击', attack: '普通攻击', attack_windup: '攻击起手', attack_release: '攻击释放', skill: '元素技能', victory: '庆祝', walk: '行走', blink: '眨眼', sleep: '休息' };
 
 export function ActionPreview({ pet, controller }: { pet: CompanionPet; controller: Controller }) {
   const [available, setAvailable] = useState<ResourceAction[]>([]);
@@ -26,6 +26,6 @@ export function ActionPreview({ pet, controller }: { pet: CompanionPet; controll
   }, [pet.ownerAccountId, pet.petId, pet.resource.resourceId]);
   const action = available.find(candidate => candidate === selected) || available[0];
   return <Card className="cp-action-preview"><h3>动作预览</h3><div className="cp-action-preview-layout"><div className="cp-action-preview-art"><CompanionPortrait ownerAccountId={pet.ownerAccountId} petId={pet.petId} resource={pet.resource} name={pet.name} animate/></div><div className="cp-action-preview-controls">
-    {action ? <><label htmlFor="cp-preview-action">想看它做什么</label><Select value={action} onValueChange={setSelected}><SelectTrigger id="cp-preview-action" aria-label={`${pet.name}的预览动作`}><SelectValue/></SelectTrigger><SelectContent>{available.map(value => <SelectItem key={value} value={value}>{labels[value]}</SelectItem>)}</SelectContent></Select><Button disabled={controller.busy} onClick={() => controller.petAction('perform', pet, { action })}><Play size={15}/>播放动作</Button><small>只预览动作。喂食请从背包选择食物。</small></> : <p className="muted">{error || '正在读取角色动作…'}</p>}
+    {action ? <><label htmlFor="cp-preview-action">想看它做什么</label><Select value={action} onValueChange={setSelected}><SelectTrigger id="cp-preview-action" aria-label={`${pet.name}的预览动作`}><SelectValue/></SelectTrigger><SelectContent>{available.map(value => <SelectItem key={value} value={value}>{labels[value]}</SelectItem>)}</SelectContent></Select><Button disabled={controller.busy} onClick={() => controller.mutate('perform', { petId: pet.petId, resourceId: pet.resource.resourceId, action })}><Play size={15}/>播放动作</Button><small>只预览动作。喂食请从背包选择食物。</small></> : <p className="muted">{error || '正在读取角色动作…'}</p>}
   </div></div></Card>;
 }

@@ -5,6 +5,7 @@ const {TileCache}=require('./tile-cache.cjs');
 const {join}=require('node:path');
 const {TerritoryMapAdapter}=require('./territory-adapter.cjs');
 const {LocationService}=require('./location-adapter.cjs');
+const {observeExplorationWindows}=require('./window-visibility.cjs');
 module.exports={
   id:'discovery',migrations,
   publicCommands:['snapshot','locate','watch','stopWatch','setDemo','setProvider','tile','setExploring'],
@@ -18,10 +19,12 @@ module.exports={
     discovery.stopLocationWatch=()=>discovery.location.suspend();
     // Chromium follows the desktop's existing system/session proxy settings.
     // Node-only integration hosts retain their injected/default fetcher.
-    const {net}=require('electron');
+    const electron=require('electron'),{net}=electron;
     const tiles=new TileCache(join(services.paths.userData,'cache','discovery','tiles'),{fetcher:net?.fetch ? net.fetch.bind(net) : fetch});
     const unsubscribe=discovery.location.subscribe(state=>services.events.emit('discovery:location',state));
-    const setExploring=active=>{services.get('privacy')?.setExploring(Boolean(active));services.events.emit('discovery:exploring',{active:Boolean(active)});if(!active)discovery.location.suspend();};
+    let windowVisibility;
+    const setExploring=requested=>{const active=Boolean(requested)&&(!windowVisibility||windowVisibility.isVisible());services.get('privacy')?.setExploring(active);services.events.emit('discovery:exploring',{active});if(!active)discovery.location.suspend();};
+    windowVisibility=observeExplorationWindows(electron,setExploring);
     const offSession=services.events.on('accounts:session-changed',()=>{setExploring(false);discovery.location.reset();});
     const offPrivacy=services.events.on('accounts:location-revoked',()=>discovery.location.blockByPolicy());
     return {commands:{
@@ -34,7 +37,7 @@ module.exports={
       setProvider:payload=>{const result=discovery.map.setProvider(payload.providerId); return result.ok ? discovery.snapshot() : {ok:false,code:result.error.code,message:result.error.message};},
       tile:async payload=>({ok:true,data:await tiles.get(discovery.map.snapshot(),payload.z,payload.x,payload.y)}),
       begin:payload=>discovery.begin(payload),act:payload=>discovery.act(payload),cancel:payload=>discovery.cancel(payload),confirm:payload=>discovery.confirm(payload),
-      pokedex:()=>({ok:true,data:discovery.repo.captures(discovery.owner())}),memories:payload=>discovery.memories(payload)
-    },dispose(){offSession();offPrivacy();unsubscribe();setExploring(false);discovery.dispose();}};
+      pokedex:()=>({ok:true,data:discovery.captureViews(discovery.owner())}),memories:payload=>discovery.memories(payload)
+    },dispose(){windowVisibility.dispose();offSession();offPrivacy();unsubscribe();setExploring(false);discovery.dispose();}};
   }
 };

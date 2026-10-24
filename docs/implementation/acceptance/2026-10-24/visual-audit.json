@@ -40,56 +40,80 @@
   "findings": [
     {
       "id": "A01",
-      "status": "open"
+      "status": "open",
+      "foundationStatus": "fixed-and-rechecked-pending-independent-visual-approval"
     },
     {
       "id": "A02",
-      "status": "open"
+      "status": "open",
+      "foundationStatus": "fixed-and-rechecked-pending-independent-visual-approval"
     },
     {
       "id": "A03",
-      "status": "open"
+      "status": "open",
+      "foundationStatus": "fixed-and-rechecked-pending-independent-visual-approval"
     },
     {
       "id": "A04",
-      "status": "open"
+      "status": "open",
+      "foundationStatus": "fixed-and-rechecked-pending-independent-visual-approval"
     },
     {
       "id": "A05",
-      "status": "open"
+      "status": "open",
+      "foundationStatus": "fixed-and-rechecked-pending-independent-visual-approval"
     },
     {
       "id": "A06",
-      "status": "open"
+      "status": "open",
+      "foundationStatus": "fixed-and-rechecked-pending-independent-visual-approval"
     },
     {
       "id": "A07",
-      "status": "open"
+      "status": "open",
+      "foundationStatus": "fixed-and-rechecked-pending-independent-visual-approval"
     },
     {
       "id": "A08",
-      "status": "open"
+      "status": "open",
+      "foundationStatus": "fixed-and-rechecked-pending-independent-visual-approval"
     },
     {
       "id": "A09",
-      "status": "open"
+      "status": "open",
+      "foundationStatus": "fixed-and-rechecked-pending-independent-visual-approval"
     },
     {
       "id": "A10",
-      "status": "open"
+      "status": "open",
+      "foundationStatus": "fixed-and-rechecked-pending-independent-visual-approval"
     },
     {
       "id": "A11",
-      "status": "open"
+      "status": "open",
+      "foundationStatus": "fixed-and-rechecked-pending-independent-visual-approval"
     },
     {
       "id": "A12",
-      "status": "open"
+      "status": "open",
+      "foundationStatus": "fixed-and-rechecked-pending-independent-visual-approval"
     }
   ],
   "scope": "Approved UI, 2D only, six distinct canonical character resources, real independent actions",
   "notes": [
     "Do not infer full 19-page or external-service acceptance from this capture set.",
     "Source worktree had ongoing uncommitted edits; screenshots and computed styles are authoritative baseline evidence."
-  ]
+  ],
+  "foundationRecheck": {
+    "at": "2026-10-24T13:46:32.612Z",
+    "status": "targeted-runtime-checks-passed-pending-independent-visual-approval",
+    "capture": "artifacts/foundation/visual-recheck/evidence.json",
+    "checks": "artifacts/foundation/visual-recheck/revision-checks.json",
+    "sizes": [
+      "1280x844",
+      "1440x900"
+    ],
+    "originalBaselinePreserved": true,
+    "scope": "20 actual captures plus targeted geometry, 72 authored action resolutions, 24 Pixi previews, real skill/ultimate/reward flow; external gates unchanged"
+  }
 }

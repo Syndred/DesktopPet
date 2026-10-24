@@ -10,11 +10,12 @@ describe("D-001 pc runnable runtime", () => {
     };
 
     expect(pkg.scripts["dev:pc"]).toBe(
-      "node scripts/desktop/run-electron.cjs apps/pc-app/runtime"
+      "node scripts/desktop/lingjing-launch.cjs dev"
     );
     expect(pkg.scripts["start:pc"]).toBe(
-      "node scripts/desktop/run-electron.cjs apps/pc-app/runtime"
+      "node scripts/desktop/lingjing-launch.cjs preview"
     );
+    expect(pkg.scripts["dev:pc:legacy"]).toBe("node scripts/desktop/run-electron.cjs apps/pc-app/runtime");
     expect(pkg.scripts["pc:smoke"]).toBe("node scripts/smoke/check-pc-runtime.mjs");
     expect(existsSync(join(process.cwd(), "scripts/desktop/start-online-instance.cmd"))).toBe(true);
     expect(existsSync(join(process.cwd(), "scripts/desktop/start-online-a.cmd"))).toBe(true);

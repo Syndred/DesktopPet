@@ -131,6 +131,35 @@ test('trusted capture creation is idempotent; distinct captures of one template 
   assert.throws(() => service.createCapturedInstance(owner, { ...input, actionId: 'missing-battle', origin: { wildPetId: 'wild-3' } }), error => error.code === 'INVALID_INPUT');
 });
 
+test('canonical builtin upgrade preserves each instance and custom bindings without converting archived 3D records', () => {
+  const legacyTemplates = service.templates().map(template => ({ ...template, resource: { kind: '2d', resourceId: 'builtin:lingjing-yuwan-v1' } }));
+  service = new CompanionsService({ db, templates: () => legacyTemplates, resolveTemplate: id => legacyTemplates.find(template => template.templateId === id) });
+  const first = adopt('保留名字').data.pet;
+  const second = adopt('手动绑定', { templateId: 'big-fish-cheerful' }).data.pet;
+  const custom = adopt('导入的外观').data.pet;
+  service.applyGrowthInTransaction(owner, { actionId: 'saved-growth', petId: first.petId, effect: { experience: 135, affinity: 18 } });
+  service.updateDesktop(owner, { actionId: 'saved-position', petId: first.petId, position: { x: -240, y: 88, displayId: 'left' }, visible: true, scale: 1.2 });
+  service.select(owner, { actionId: 'saved-selection', petId: first.petId, slot: 'chatPetId' });
+  service.action(owner, 'appearance', { actionId: 'explicit-appearance', petId: second.petId }, () => {
+    const pet = service.requirePet(owner, second.petId); pet.resource = { resourceId: 'builtin:lingjing-yuwan-v1', kind: '2d' }; service.storePet(pet); return { pet };
+  });
+  const imported = service.requirePet(owner, custom.petId); imported.resource = { resourceId: 'import:user-owned-atlas', kind: '2d' }; service.storePet(imported);
+  service.importLegacyInventory(owner, { pets: [{ id: 'old-3d', name: { zh: '旧动物' }, model: '../old.glb' }] });
+  const original = service.requirePet(owner, first.petId); const choices = service.selections(owner);
+  const nextTemplates = service.templates().map(template => ({ ...template, resource: { kind: '2d', resourceId: template.templateId === 'big-fish-cheerful' ? 'builtin:lingjing-xiaolan-v1' : 'builtin:lingjing-yuwan-v2' } }));
+  const upgraded = new CompanionsService({ db, templates: () => nextTemplates });
+  const canonicalize = id => id === 'builtin:lingjing-yuwan-v1' ? 'builtin:lingjing-yuwan-v2' : id;
+  assert.equal(upgraded.upgradeBuiltinResources(owner, canonicalize).length, 2);
+  const current = upgraded.requirePet(owner, first.petId);
+  assert.equal(current.resource.resourceId, 'builtin:lingjing-yuwan-v2');
+  assert.deepEqual(current.growth, original.growth); assert.deepEqual(current.desktop, original.desktop);
+  assert.equal(current.name, original.name); assert.equal(current.serial, original.serial); assert.deepEqual(upgraded.selections(owner), choices);
+  assert.equal(upgraded.requirePet(owner, second.petId).resource.resourceId, 'builtin:lingjing-yuwan-v2', 'Explicit appearance stays that identity rather than being inferred from the template');
+  assert.equal(upgraded.requirePet(owner, custom.petId).resource.resourceId, 'import:user-owned-atlas');
+  assert.equal(upgraded.requirePet(owner, 'old-3d').resource.kind, '3d');
+  assert.deepEqual(upgraded.upgradeBuiltinResources(owner, canonicalize), []);
+});
+
 test('growth retains current 100 XP / 10 percent rule and validates numerical effects', () => {
   const pet = adopt('鱼丸').data.pet;
   const result = service.applyGrowthInTransaction(owner, { actionId: 'win', petId: pet.petId, effect: { experience: 205, mood: 70, wins: 1 } });
