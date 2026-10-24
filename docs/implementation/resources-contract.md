@@ -24,7 +24,7 @@ UI 共用 `ResourceStage`，传入 `resource, petId, context, action, facing, pl
 
 ## 公共 UI 与动画
 
-正式页拆成 ResourceLibrary、ResourceEditor、ResourceControls、ResourceStage、ApplyToCompanion 和 useResources。沿用 foundation 官方 shadcn Radix Nova 的 Tabs、Select、Slider、Switch、ScrollArea、Popover、Input 与 Button，来源及哈希见 `shadcn-source-record.json`。选择器使用 Radix Portal、键盘导航及 Esc 焦点恢复，标签页使用实际 Tabs 状态。Slider 命名 group 标明用途，thumb 范围、数值及方向键行为由 Radix 提供；公共 Slider 的 thumb 命名改进由 foundation 维护。
+正式页拆成 ResourceLibrary、ResourceEditor、ResourceControls、ResourceStage、ApplyToCompanion 和 useResources。沿用 foundation 官方 shadcn Radix Nova 的 Tabs、Select、Slider、Switch、ScrollArea、Popover、Input 与 Button，来源及哈希见 `shadcn-source-record.json`。选择器使用 Radix Portal、键盘导航及 Esc 焦点恢复，标签页使用实际 Tabs 状态。Slider 命名 group 标明用途，公共 Slider 已将无障碍标签传给实际 thumb；范围、数值及方向键行为由 Radix 提供。已合入 foundation `7f0e896` 的公共无障碍及实时减少动画修正。
 
 列表用公共 AnimatedList，页面用 foundation Motion for React 的 PageTransition/AppMotionProvider。Pixi 监听系统减少动画、document visibility、playing/motionEnabled 和祖先 `data-motion` 策略，关闭动画时暂停精灵和 ticker。按钮无阴影或 hover 位移。图稿 07 下半部分保留左资源库、右预览和校准结构，按最新范围改成图集、FPS、锚点与动作配置。
 
