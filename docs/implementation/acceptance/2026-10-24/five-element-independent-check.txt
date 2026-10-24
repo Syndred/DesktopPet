@@ -1,0 +1,19 @@
+Independent five-element rules acceptance
+
+Script: scripts/acceptance/five-element-contract.mjs
+Engine: apps/pc-app/runtime/services/battle-runtime.cjs
+Evidence: artifacts/ui-acceptance/2026-10-24/rules-v3/evidence.json
+
+The public runtime engine passed 75 action cases across all 25 ordered element
+pairings, plus nine independent property checks. Expected matchup factors are
+defined by the existing product rule, independently of the engine helper under
+test. Each action case checks the direct damage produced by executeRound.
+
+Property coverage: fire current-health burn and stacking; wood parasite damage
+and source healing; metal vulnerability; earth outgoing-damage reduction; water
+rage reduction without stun; normal interrupts element; dodge refund; ultimate
+hit/cost/healing; status expiry. Battle health remains normalized at 120.
+
+This is deterministic domain evidence. It does not prove UI reuse, animation,
+real location, live PvP or cloud service availability. Those remain separate
+acceptance gates in unified-battle-goal.txt.
