@@ -180,8 +180,9 @@ try {
     assert.equal(await page.locator('.cp-skill-list [data-presentation="battle-shared-v1"]').count(), 1);
     const combatProfile = success(await invoke('companions', 'combatProfile', { petId: pet.petId }));
     assert.equal(combatProfile.petId, pet.petId); assert.equal(combatProfile.resourceId, pet.resource.resourceId);
-    await page.locator('.cp-skill-list button[data-action="element_attack"]').focus(); await page.getByRole('tooltip').waitFor();
-    const elementHint = await page.getByRole('tooltip').innerText(); assert.ok(elementHint.includes(combatProfile.rules.elementEffects[pet.element].description));
+    await page.locator('.cp-skill-list button[data-action="element_attack"]').focus();
+    const elementTooltip = page.getByRole('tooltip').filter({ hasText: combatProfile.rules.elementEffects[pet.element].description }); await elementTooltip.waitFor();
+    const elementHint = await elementTooltip.innerText();
     if (pet.element === 'water') assert.doesNotMatch(elementHint, /冻结|跳过行动|禁用按钮/);
     await page.keyboard.press('Escape');
     await page.getByRole('tab', { name: '外观', exact: true }).click();
@@ -194,8 +195,8 @@ try {
     const chat = success(await invoke('conversations', 'snapshot')); assert.equal(chat.petId, pet.petId);
     const chatPet = chat.pets.find(candidate => candidate.petId === pet.petId); assert.equal(chatPet.resource.resourceId, pet.resource.resourceId); assert.equal(chatPet.element, pet.element);
     input('conversation-entry', { petId: chat.petId, resourceId: chatPet.resource.resourceId, element: chatPet.element });
-    await route('/battle'); await page.getByRole('button', { name: '开始训练', exact: true }).waitFor();
-    await page.getByRole('button', { name: '开始训练', exact: true }).click();
+    await route('/battle'); await page.getByRole('button', { name: '开始', exact: true }).waitFor();
+    await page.getByRole('button', { name: '开始', exact: true }).click();
     await page.locator('[data-battle-screen="shared-v1"]').waitFor();
     const overview = success(await invoke('battle', 'overview')), session = success(await invoke('battle', 'snapshot', { sessionId: overview.session.id }));
     assert.equal(session.player.petId, pet.petId); assert.equal(session.player.resource.resourceId, pet.resource.resourceId); assert.equal(session.player.element, pet.element);
@@ -256,6 +257,7 @@ try {
   evidence.result = 'passed'; console.log(`REAL_FIVE_ELEMENTS_PASSED ${output}`);
 } catch (error) {
   evidence.result = 'failed'; evidence.error = error.stack; process.exitCode = 1;
+  if (page) evidence.failureDom = await page.evaluate(() => ({ url: location.href, viewport: { width: innerWidth, height: innerHeight }, text: document.querySelector('.main-content')?.innerText, motionRoots: [...document.querySelectorAll('.app-page-motion')].map(node => ({ opacity: getComputedStyle(node).opacity, text: node.innerText.slice(0, 120) })), stages: [...document.querySelectorAll('.resource-stage')].map(node => ({ petId: node.dataset.petId, resourceId: node.dataset.resourceId, action: node.dataset.action, status: node.dataset.status, text: node.innerText })) })).catch(() => null);
   if (page) await page.screenshot({ path: join(output, 'failure.png'), timeout: 5000 }).catch(() => {});
   console.error(`REAL_FIVE_ELEMENTS_FAILED ${output}`, error);
 } finally { writeFileSync(join(output, 'evidence.json'), JSON.stringify(evidence, null, 2)); await app?.close().catch(() => {}); }
