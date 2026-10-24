@@ -194,15 +194,15 @@ test('real territory battle ownership feeds the discovery map and capture proven
   const f=fixture();try {
     await f.api.location.locate();
     const pet=await f.services.invoke('companions','adopt',{actionId:'territory-pet',templateId:'big-fish-gentle',name:'领地伙伴',showOnDesktop:false});assert.equal(pet.ok,true,JSON.stringify(pet));
-    const locate=await f.services.invoke('garden','territoryLocate',{actionId:'territory-locate',expectedRevision:f.services.get('garden').service.revision(f.owner)});assert.equal(locate.ok,true,JSON.stringify(locate));
+    const locate=await f.services.invoke('garden','territoryLocate',{sessionOwnerAccountId:f.owner,actionId:'territory-locate',expectedRevision:f.services.get('garden').service.revision(f.owner)});assert.equal(locate.ok,true,JSON.stringify(locate));
     const territory=locate.data;
-    const begun=await f.services.invoke('garden','territoryChallenge',{actionId:'territory-challenge',expectedRevision:f.services.get('garden').service.revision(f.owner),petId:pet.data.pet.petId,territoryId:territory.id,expectedTerritoryRevision:territory.revision});assert.equal(begun.ok,true,JSON.stringify(begun));
+    const begun=await f.services.invoke('garden','territoryChallenge',{sessionOwnerAccountId:f.owner,actionId:'territory-challenge',expectedRevision:f.services.get('garden').service.revision(f.owner),petId:pet.data.pet.petId,territoryId:territory.id,expectedTerritoryRevision:territory.revision});assert.equal(begun.ok,true,JSON.stringify(begun));
     let battle=f.services.get('battle').getOutcome({ownerAccountId:f.owner,sessionId:begun.data.sessionId}).session;
     for(let i=0;i<60 && battle.status==='active';i++) {
       const result=await f.services.invoke('battle','act',{sessionId:battle.id,actionId:`territory-round-${i}`,expectedRound:battle.snapshot.round+1,action:battle.snapshot.player.anger>=50?'ultimate':'normal_attack'});assert.equal(result.ok,true);battle=result.data;
     }
     assert.equal(battle.winner,'player');
-    const settled=await f.services.invoke('garden','territorySettle',{actionId:'territory-settle',expectedRevision:f.services.get('garden').service.revision(f.owner),sessionId:battle.id});assert.equal(settled.ok,true,JSON.stringify(settled));
+    const settled=await f.services.invoke('garden','territorySettle',{sessionOwnerAccountId:f.owner,actionId:'territory-settle',expectedRevision:f.services.get('garden').service.revision(f.owner),sessionId:battle.id});assert.equal(settled.ok,true,JSON.stringify(settled));
     const overlay=f.api.snapshot().data.territories.find(item=>item.territoryId===territory.id);assert.ok(overlay);assert.equal(overlay.owned,true);assert.equal(overlay.bonusMultiplier,2);assert.equal(overlay.mapBoundary.length,4);
     const {encounter}=await start(f),won=await win(f,encounter);
     const captured=await f.services.invoke('discovery','confirm',{encounterId:won.encounterId,actionId:'territory-capture'});assert.equal(captured.ok,true,JSON.stringify(captured));assert.equal(captured.data.territoryId,territory.id);assert.equal(captured.data.captureMultiplier,2);
