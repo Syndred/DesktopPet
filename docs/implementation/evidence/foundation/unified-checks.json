@@ -1,0 +1,51 @@
+{
+  "at": "2026-10-24T15:36:42.258Z",
+  "verificationSource": "3bac49057fb75f318dad4064540839f4c7490213",
+  "upstream": "4786f97680679c2db0aa307fa5f67ec247f93086",
+  "layers": {
+    "unit": 141,
+    "integration": 1,
+    "e2e": 1,
+    "performance": 2,
+    "security": 2,
+    "total": 147,
+    "command": "npm run verify",
+    "exitCode": 0,
+    "log": "artifacts/foundation/final-checks/unified-verify.log"
+  },
+  "native": {
+    "unique": 131,
+    "initialPassed": 130,
+    "initialFailed": 1,
+    "recheckPassed": 1,
+    "result": "All 131 unique cases passed after the backup assertion was updated for the derived visualEvents DTO; exact raw backup equality is additionally asserted.",
+    "logs": [
+      "artifacts/foundation/final-checks/unified-native.log",
+      "artifacts/foundation/final-checks/unified-native-recheck.log"
+    ]
+  },
+  "postgres": {
+    "passed": 11,
+    "scope": "Local HTTP + PostgreSQL WASM only; no live cloud claim",
+    "log": "artifacts/foundation/final-checks/unified-postgres.log"
+  },
+  "hitFrame": {
+    "source": "f80026b0fe5fc4345abbfe1aec7a5a00c51c2cf9",
+    "passed": true,
+    "evidence": "docs/implementation/evidence/foundation/hit-frame-recheck/evidence.json",
+    "scope": "Only parent follow-up: two consecutive normal-versus-element rounds; actual Pixi hit texture within first 100ms of impact"
+  },
+  "wildPrior": {
+    "source": "f80026b0fe5fc4345abbfe1aec7a5a00c51c2cf9",
+    "evidence": "artifacts/discovery/unified-1792855650802/evidence.json",
+    "passed": true,
+    "scope": "Eight previews, shared battle, natural victory/capture, cancellation, wood/earth action, source receipt and restart"
+  },
+  "remaining": [
+    "Run territory win/loss/context/restart against the final common build",
+    "Run wild context flow against the same final build",
+    "Main chat independent five-element and two-peer friend UI acceptance",
+    "Final portable build, exact packaged-source/assets audit and SFX launch"
+  ],
+  "goalComplete": false
+}
