@@ -1,0 +1,59 @@
+{
+  "recordedAt": "2026-10-24T15:40:44.285Z",
+  "scope": "The discovery thread objective and its accepted unified-battle integration; product-wide final integration remains with the main chat",
+  "requirements": [
+    {
+      "requirement": "Actual native positioning and honest precision/permission handling",
+      "status": "proved",
+      "evidence": "../2026-10-24-native-preflight/evidence.json",
+      "detail": "Production Electron, no QA adapter, source os, permission granted, actual WiFi114m retained as imprecise; watch explicitly stopped. Precise capture is deferred, not claimed."
+    },
+    {
+      "requirement": "Nearby map and canonical wild encounter preview",
+      "status": "proved",
+      "evidence": "../2026-10-24-unified/evidence.json",
+      "detail": "Actual MapLibre pin/preview interaction with all eight canonical templates across five elements; real preview screenshots reviewed."
+    },
+    {
+      "requirement": "Account-owned instance and single battle integration",
+      "status": "proved",
+      "evidence": "../2026-10-24-unified/evidence.json",
+      "detail": "Same explicit sessionId survives return/resume; common BattleScreen/HUD/actions/controller/animation; no independent discovery arena."
+    },
+    {
+      "requirement": "Victory-gated challenge capture, result and memory",
+      "status": "proved",
+      "evidence": "../2026-10-24-unified/evidence.json",
+      "detail": "Actual engine victory and shared capture UI create exactly one instance/capture/memory with matching battle report and companion receipt. Duplicate context confirmation returns the same petId; restart readback agrees."
+    },
+    {
+      "requirement": "Real, permission failure, demo and simulated QA remain distinct",
+      "status": "proved",
+      "evidence": "../2026-10-24-unified/evidence.json",
+      "detail": "QA keeps simulated provenance and unknown OS permission; ordinary app exposes no qaTarget or scenario descriptor. Native errors/coarse positions and privacy gates are tested; demo cannot capture."
+    },
+    {
+      "requirement": "Domestic and international coordinate adaptation is retained",
+      "status": "proved",
+      "evidence": "coordinate-checks.txt",
+      "detail": "Three focused existing cases passed: China GCJ02 roundtrip/overseas preservation, source-preserving map provider changes, and geofence rejection of demo/stale/default/coarse/out-of-range fixes. Tencent/Google credentials are not claimed configured."
+    },
+    {
+      "requirement": "Current project contains accepted discovery implementation",
+      "status": "proved",
+      "evidence": "current-project-source.json",
+      "detail": "Current project includes the accepted candidate; all35 production discovery files match after text newline normalization. Its roster retains all eight templates. This is source integration evidence, not final runtime acceptance."
+    },
+    {
+      "requirement": "Main chat independent module acceptance",
+      "status": "proved",
+      "evidence": "acceptance.json",
+      "detail": "Main explicitly accepted module self-check and independent evidence review, and retained product-wide final integration responsibility."
+    }
+  ],
+  "allOwnedRequirementsProved": true,
+  "requiredModuleWorkRemaining": [],
+  "productWideAcceptanceClaimed": false,
+  "physicalCaptureClaimed": false,
+  "liveCloudClaimed": false
+}

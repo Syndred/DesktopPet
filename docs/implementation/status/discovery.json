@@ -1,17 +1,18 @@
 {
   "module": "discovery",
   "branch": "codex/lingjing-discovery",
-  "commit": "86907ee54a9e08f2b101251ab2c77d9d7ecfcf9e",
-  "status": "shared_battle_flow_passed_integrated_roster_pending",
-  "goalStatus": "active",
+  "commit": "79c7534",
+  "status": "module_complete_main_review_accepted",
+  "goalStatus": "complete",
   "workspace": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-discovery\\DesktopPet",
   "upstream": {
     "fetched": true,
     "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086",
-    "foundationMerged": "0ad9dc55961784249a1a43dab9849891ee4bfd9a",
-    "foundationMergeCommit": "99751b2",
+    "foundationMerged": "67d0d4df781d3eae7dd2a546b5d981107c45f737",
+    "foundationMergeCommit": "a78bfb704e9871d5e4d5f81ec0fa000b4e36e944",
     "originMainIsAncestor": true,
-    "sourceCheckoutModified": false
+    "sourceCheckoutModified": false,
+    "fetchedBeforeCompletion": "2026-10-24T15:40:44.285Z"
   },
   "scopeRevision": "docs/implementation/acceptance/2026-10-24/unified-battle-goal.txt",
   "contract": "docs/implementation/discovery-contract.txt",
@@ -202,7 +203,8 @@
       "Shared head-and-shoulders composition consumed by all six exploration portrait identities; static pokedex keeps shared full-body framing"
     ],
     "canonicalRosterEvidence": "docs/implementation/evidence/discovery/2026-10-24-roster",
-    "sharedPortraitEvidence": "docs/implementation/evidence/discovery/2026-10-24-location-portrait"
+    "sharedPortraitEvidence": "docs/implementation/evidence/discovery/2026-10-24-location-portrait",
+    "unifiedBattleEvidence": "docs/implementation/evidence/discovery/2026-10-24-unified"
   },
   "twoDimensionalOnly": {
     "passed": true,
@@ -216,8 +218,10 @@
       "big-fish-cheerful",
       "big-fish-foodie",
       "animal-shiba",
+      "animal-hat-cat",
       "animal-white-fox",
-      "animal-hat-cat"
+      "animal-wood-deer",
+      "animal-earth-pangolin"
     ],
     "historicalFilesPreserved": true,
     "audit": "Feature runtime/UI/shared types contain no new GLB/GLTF/VRM, model-viewer, Three, custom animation loop or HTML-string business UI",
@@ -239,12 +243,20 @@
         "resourceId": "builtin:lingjing-shiba-v2"
       },
       {
+        "templateId": "animal-hat-cat",
+        "resourceId": "builtin:lingjing-hatcat-v1"
+      },
+      {
         "templateId": "animal-white-fox",
         "resourceId": "builtin:lingjing-xiaohu-v1"
       },
       {
-        "templateId": "animal-hat-cat",
-        "resourceId": "builtin:lingjing-hatcat-v1"
+        "templateId": "animal-wood-deer",
+        "resourceId": "builtin:lingjing-qingya-v1"
+      },
+      {
+        "templateId": "animal-earth-pangolin",
+        "resourceId": "builtin:lingjing-yantuan-v1"
       }
     ]
   },
@@ -349,6 +361,24 @@
       "command": "node apps/pc-app/runtime/features/discovery/verification/unified-flow.mjs",
       "sourceCommit": "89e203a88f92122b13f9ec028637e56755b05b6b",
       "result": "Core flow passed and all current six-role previews passed; final assertion honestly records missing wood/earth and fullScopePassed=false. This is not full U01-U08 acceptance."
+    },
+    {
+      "command": "node --test apps/pc-app/runtime/features/discovery/tests/qa-location.test.cjs",
+      "result": "3 passed: verified scenario/current account, simulated source and unknown OS permission, ordinary-source rejection"
+    },
+    {
+      "command": "node scripts/desktop/run-native-tests.cjs --test-name-pattern=\"actual shared SQLite|shared battle commands|application privacy|real adapter errors\" apps/pc-app/runtime/features/discovery/tests/discovery.test.cjs",
+      "result": "4 passed: actual SQLite/registered battle/shared context settlement and native privacy. The full test file was not rerun."
+    },
+    {
+      "command": "node apps/pc-app/runtime/features/discovery/verification/unified-flow.mjs",
+      "sourceCommit": "cd19fa1b145c20d0180fbc79eda2a62146b2207a",
+      "result": "Passed all registered eight-role previews and production shared battle flow; independent module review remains pending"
+    },
+    {
+      "command": "node apps/pc-app/runtime/features/discovery/verification/physical-flow.mjs --preflight",
+      "sourceCommit": "6bdd16726c16ff58f566bc464339c984deace6dd",
+      "result": "Actual production Electron native-provider preflight verified: Windows WiFi fix114m, source os, permission granted, imprecise correctly retained, opt-in watch explicitly stopped, renderer errors[]. No full challenge/capture attempted."
     }
   ],
   "runtimeEvidence": {
@@ -396,14 +426,17 @@
     },
     "privateSystemMapScreenshotNotCommitted": "artifacts/discovery/2d-windows-1792847349359/real-system-location-private.png",
     "latestNativeDiagnostic": {
-      "at": "2026-10-24T15:09:22.659Z",
-      "adapter": "production WindowsLocationAdapter diagnostic after user enabled Windows location",
+      "at": "2026-10-24T15:28:28.474Z",
+      "adapter": "production Electron WindowsLocationAdapter; actual ordinary account, privacy setting and foreground watch",
+      "sourceCommit": "6bdd16726c16ff58f566bc464339c984deace6dd",
       "ok": true,
       "source": "os",
+      "permission": "granted",
       "provider": "windows-geolocator",
       "positionSource": "WiFi",
-      "accuracyMeters": 155,
-      "timestampMs": 1792854562659,
+      "accuracyMeters": 114,
+      "timestampMs": 1792855707831,
+      "coordinateHash": "03aab80cb8860712f78cd8536d4d35c1882993918e4a0cbb5e2b592be293ed51",
       "rawCoordinatesSaved": false,
       "systemPermissionDenialResolved": true,
       "physicalLocationAcceptance": false,
@@ -927,46 +960,73 @@
     "unifiedBattleFlow": {
       "command": "node apps/pc-app/runtime/features/discovery/verification/unified-flow.mjs",
       "flowPassed": true,
-      "fullScopePassed": false,
+      "fullScopePassed": true,
       "checks": [
         "Same saved battleId and round after return/resume; old round does not replay",
         "Shared result action creates one real instance, capture and memory; both duplicate confirmations return the same petId",
+        "Canonical wood/earth also enter the actual shared wild battle, render authored resources, execute a real element action and retain cancellation",
         "Training/wild use identical live HUD and move geometry at 1280/1440; encounter route preserves explicit sessionId after a newer session",
         "Explicit QA login restores the same capture and memory; location/watch are not restored",
         "Ordinary production startup exposes no QA descriptor or qaTarget command and no simulated position"
       ],
-      "missingElements": [
-        "wood",
-        "earth"
-      ],
+      "missingElements": [],
       "rendererErrors": [],
       "artifact": "docs/implementation/evidence/discovery/2026-10-24-unified/evidence.json"
+    },
+    "nativeProductionPreflight": {
+      "command": "node apps/pc-app/runtime/features/discovery/verification/physical-flow.mjs --preflight",
+      "sourceCommit": "6bdd16726c16ff58f566bc464339c984deace6dd",
+      "productionMain": true,
+      "controlledPosition": false,
+      "providerReadVerified": true,
+      "precise": false,
+      "physicalLocationAcceptance": false,
+      "watchStopped": true,
+      "sample": {
+        "phase": "production preflight",
+        "at": "2026-10-24T15:28:28.474Z",
+        "status": "imprecise",
+        "permission": "granted",
+        "provider": "windows-geolocator",
+        "source": "os",
+        "positionSource": "WiFi",
+        "accuracyMeters": 114,
+        "timestampMs": 1792855707831,
+        "coordinateHash": "03aab80cb8860712f78cd8536d4d35c1882993918e4a0cbb5e2b592be293ed51",
+        "error": {
+          "code": "LOCATION_IMPRECISE",
+          "message": "定位精度不足，请移动到信号较好的地方（需要 ≤ 80 米）"
+        }
+      },
+      "committedEvidence": "docs/implementation/evidence/discovery/2026-10-24-native-preflight/evidence.json",
+      "rendererErrors": []
+    },
+    "currentProjectSourceIntegration": {
+      "mainHead": "d1fa9a9b6deeb05a9c87ef631681af07fe95e087",
+      "includesCandidate": true,
+      "comparedFiles": 35,
+      "differences": [],
+      "evidence": "docs/implementation/evidence/discovery/2026-10-24-main-review/current-project-source.json"
     }
   },
   "dependencyManifest": "apps/pc-app/runtime/features/discovery/dependencies.json",
   "additionalFoundationPackages": [],
   "rootDependenciesConsumedFromFoundation": true,
   "integrationDependencies": [
-    "Canonical wood/earth resource integration through foundation; resource branch has delivered them",
-    "Main chat independent module review and foundation final combined build",
-    "Live cloud/precise physical capture remain deferred under U06"
+    "Product-wide final integration is owned by the main chat; discovery module acceptance is complete."
   ],
   "realIncomplete": [
-    "Precise physical-position capture remains unaccepted; latest actual Windows adapter read returned155m and no accuracy threshold was relaxed.",
+    "Precise physical-position capture remains unaccepted and deferred under U06; latest actual production Electron native read returned114m with permission granted. The80m threshold is unchanged.",
     "Cloud deployment/live Supabase receipt remains deferred under U06; QA never claims cloud success.",
     "Tencent/Google provider credentials are not configured; coordinate adapter boundaries are retained.",
-    "Five-element integration, main independent acceptance and final combined package remain pending; see current unifiedBattle evidence."
+    "Product-wide final integration remains with the main chat. It is not claimed complete by this module and does not hold this accepted module goal open."
   ],
-  "verificationPending": [
-    "Merge the committed eight-character roster through foundation and run the current production verifier on that exact candidate",
-    "Confirm current capture runId and matching battle report/companion receipt after the latest foundation context update",
-    "Main chat independent module acceptance and final combined U01-U08 review"
-  ],
+  "verificationPending": [],
   "historicalBaselineEvidence": [
     "artifacts/discovery/windows/evidence.json (pre-2D scope; not current visual acceptance)"
   ],
   "dataPolicy": "Only discovery-owned source/docs were edited directly. Other features and foundation scripts arrived through committed foundation merges. QA uses newly created verified directories and namespaced local accounts; ordinary user saves, original profiles and historical evidence are preserved. No real coordinate, credential, production migration/deployment or external message was committed/sent. Live cloud and precise native capture are explicitly deferred, not inferred from simulated receipts.",
-  "updatedAt": "2026-10-24T15:18:49.642Z",
+  "updatedAt": "2026-10-24T15:40:44.285Z",
   "visualAudit": {
     "source": {
       "branch": "codex/lingjing-implementation-base",
@@ -1039,7 +1099,7 @@
     "projectWideRegressionRepeated": false
   },
   "unifiedBattle": {
-    "readyForIndependentReview": false,
+    "readyForIndependentReview": true,
     "sharedScreen": "battle/BattleScreen(sessionId, returnTo) -> useBattleSession + BattleArena + useBattleAnimation",
     "sharedContract": "docs/implementation/battle-screen-contract.txt",
     "battleImplementationTarget": "57116dc",
@@ -1059,35 +1119,33 @@
     "electronSelfCheck": {
       "command": "node apps/pc-app/runtime/features/discovery/verification/unified-flow.mjs",
       "flowPassed": true,
-      "fullScopePassed": false,
+      "fullScopePassed": true,
       "checks": [
         "Same saved battleId and round after return/resume; old round does not replay",
         "Shared result action creates one real instance, capture and memory; both duplicate confirmations return the same petId",
+        "Canonical wood/earth also enter the actual shared wild battle, render authored resources, execute a real element action and retain cancellation",
         "Training/wild use identical live HUD and move geometry at 1280/1440; encounter route preserves explicit sessionId after a newer session",
         "Explicit QA login restores the same capture and memory; location/watch are not restored",
         "Ordinary production startup exposes no QA descriptor or qaTarget command and no simulated position"
       ],
-      "missingElements": [
-        "wood",
-        "earth"
-      ],
+      "missingElements": [],
       "rendererErrors": [],
       "artifact": "docs/implementation/evidence/discovery/2026-10-24-unified/evidence.json"
     },
-    "sourceCommit": "89e203a88f92122b13f9ec028637e56755b05b6b",
+    "sourceCommit": "cd19fa1b145c20d0180fbc79eda2a62146b2207a",
     "build": {
       "schemaVersion": 1,
-      "builtAt": "2026-10-24T15:14:54.789Z",
-      "sourceCommit": "89e203a88f92122b13f9ec028637e56755b05b6b",
+      "builtAt": "2026-10-24T15:19:58.923Z",
+      "sourceCommit": "cd19fa1b145c20d0180fbc79eda2a62146b2207a",
       "sourceDirtyFiles": [],
-      "codeFingerprint": "fa8f3ab7aa4baf3b6821e3b01481c5fc54ec685539f994bf6160e4772272920e",
-      "compiledFingerprint": "8890428753c4146103b942c180c52634723e84fd1db8d98bf5bea70bb4ae9abe",
-      "codeFiles": 217,
+      "codeFingerprint": "2bc3eb9702dfde6caa48dacd64b20a15fa9a638055e4eb7973e6b85ed5ae166a",
+      "compiledFingerprint": "21c7aef7d1db9288a68bc48d35c3bb202e85316124e2892e876f2d9919fbde45",
+      "codeFiles": 216,
       "compiledFiles": 24
     },
     "realRandomCombat": true,
-    "battleId": "battle-05c029df-3fd8-4e2b-9b30-f4e6f3d15552",
-    "capturePetId": "pet-c63a111c-2aaa-48f6-9b76-dbdf4620a04e",
+    "battleId": "battle-a0f38505-c934-40ab-89e9-eb1e5045dc74",
+    "capturePetId": "pet-4ac1d4c1-ab6a-47d6-bee5-2f8afc2a7a50",
     "fourActionAnimation": [
       {
         "action": "normal_attack",
@@ -1135,7 +1193,7 @@
       },
       {
         "action": "ultimate",
-        "round": 7,
+        "round": 6,
         "phases": [
           "rest",
           "windup",
@@ -1146,19 +1204,41 @@
       }
     ],
     "ledger": {
-      "ownerAccountId": "qa:2dcdcfa9-a624-4cbb-893b-5e222ded6bcd:local-66f21578-fba7-42ec-835d-ec83e87bb682",
+      "ownerAccountId": "qa:53aad687-0a35-46e9-bce6-fc9235d5e12c:local-a09c6b3a-f6f8-4679-ad40-b93d2f4d431b",
       "captures": 1,
       "ownedInstances": 1,
       "memories": 1,
-      "reports": 3,
-      "petId": "pet-c63a111c-2aaa-48f6-9b76-dbdf4620a04e",
+      "reports": 5,
+      "matchingBattleReports": 1,
+      "matchingCompanionReceipts": 1,
+      "encounterId": "encounter-dc2619b8-23af-4363-8cbe-c27b1e9b4fa7",
+      "battleId": "battle-a0f38505-c934-40ab-89e9-eb1e5045dc74",
+      "encounterStatus": "captured",
+      "capturePetId": "pet-4ac1d4c1-ab6a-47d6-bee5-2f8afc2a7a50",
+      "companionOriginBattleId": "battle-a0f38505-c934-40ab-89e9-eb1e5045dc74",
+      "petId": "pet-4ac1d4c1-ab6a-47d6-bee5-2f8afc2a7a50",
       "resourceId": "builtin:lingjing-shiba-v2",
-      "validation": "simulated"
+      "validation": "simulated",
+      "scenario": "qa",
+      "scenarioId": "53aad687-0a35-46e9-bce6-fc9235d5e12c",
+      "companionScenarioId": "53aad687-0a35-46e9-bce6-fc9235d5e12c"
     },
     "coreFlowStatus": "passed actual production Electron UI, explicit return/resume, capture/cancel, two sizes, restart and SQLite",
-    "independentAcceptance": "pending main chat; final combined U01-U08 remains separate"
+    "independentAcceptance": {
+      "status": "accepted",
+      "reviewerThreadId": "01a16d86-7650-7871-8e27-5b65477a126e",
+      "reviewedImplementationCommit": "cd19fa1b145c20d0180fbc79eda2a62146b2207a",
+      "reviewedDeliveryCommit": "79c7534",
+      "evidence": "docs/implementation/evidence/discovery/2026-10-24-main-review/acceptance.json"
+    }
   },
   "deferredVerification": [
     "Genuine precise OS-position capture and deployed live cloud/readback are retained as unverified history; latest user U06 allows isolated simulation and deferral for this round"
-  ]
+  ],
+  "overallFinalIntegration": {
+    "owner": "main chat",
+    "status": "continues separately",
+    "moduleGoalBlocker": false
+  },
+  "moduleCompletionAudit": "docs/implementation/evidence/discovery/2026-10-24-main-review/completion-audit.json"
 }
