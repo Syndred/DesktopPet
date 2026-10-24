@@ -65,8 +65,9 @@ export function useGarden() {
       // Persist the exact action before IPC. An interrupted reply must retry the same action.
       localStorage.setItem(pendingKey(action.owner), JSON.stringify(action)); setPending(action);
       const result = await api.invoke<unknown>("garden", action.command, action.input);
-      localStorage.removeItem(pendingKey(action.owner));
       if (!mounted.current || ownerRef.current !== action.owner) return false;
+      if (!result.ok && ['CLOUD_APPLY_PENDING','GARDEN_CLOUD_UNAVAILABLE'].includes(result.code)) { setError(result.message); return false; }
+      localStorage.removeItem(pendingKey(action.owner));
       setPending(null);
       if (!result.ok) {
         await refresh();
@@ -85,7 +86,7 @@ export function useGarden() {
   const mutate = useCallback((command: GardenCommand, payload: Record<string, unknown>, success: string) => {
     if (!snapshot || busy || locked.current) return Promise.resolve(false);
     if (readPending(snapshot.ownerAccountId)) { setError("上次操作的结果尚未确认，请先重试原操作"); return Promise.resolve(false); }
-    return execute({ owner: snapshot.ownerAccountId, command, input: { ...payload, actionId: crypto.randomUUID(), expectedRevision: revision } }, success);
+    return execute({ owner: snapshot.ownerAccountId, command, input: { ...payload, sessionOwnerAccountId: snapshot.ownerAccountId, actionId: crypto.randomUUID(), expectedRevision: revision } }, success);
   }, [snapshot, busy, execute, revision]);
   const retry = () => pending ? execute(pending, "原操作已确认保存。") : Promise.resolve(false);
   return { snapshot, revision, loading, busy, message, error, pending, now, refresh, mutate, retry };
