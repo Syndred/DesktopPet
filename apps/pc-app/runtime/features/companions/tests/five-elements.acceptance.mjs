@@ -101,6 +101,24 @@ async function play(pet, native, action, label) {
     const observed = await other.locator('.resource-stage').getAttribute('data-action'); assert.equal(observed, 'idle'); otherWindows.push({ route: other.url(), action: observed });
   }
   const result = { action, frames, resourceId: pet.resource.resourceId, nativeAction: await native.locator('.resource-stage').getAttribute('data-action'), otherWindows };
+  if (['wood', 'earth'].includes(pet.element) && action === 'attack') {
+    const firstKey = await stage.getAttribute('data-playback-key'); assert.ok(firstKey);
+    await page.evaluate(() => {
+      window.__replayFrames = []; const host = document.querySelector('.cp-action-preview [data-renderer^="pixi"]');
+      window.__replayObserver = new MutationObserver(() => window.__replayFrames.push(host.dataset.frame));
+      window.__replayObserver.observe(host, { attributes: true, attributeFilter: ['data-frame'] });
+    });
+    await page.getByRole('button', { name: '播放动作', exact: true }).click();
+    await page.waitForFunction(firstKey => document.querySelector('.cp-action-preview .resource-stage')?.dataset.playbackKey !== firstKey, firstKey);
+    const secondKey = await stage.getAttribute('data-playback-key'); assert.ok(secondKey); assert.notEqual(secondKey, firstKey);
+    await native.waitForFunction(secondKey => document.querySelector('.resource-stage')?.dataset.playbackKey === secondKey, secondKey);
+    await delay(300);
+    const replayFrames = await page.evaluate(() => { window.__replayObserver.disconnect(); return window.__replayFrames; });
+    assert.ok(replayFrames.includes('0'), `Same-action replay must restart the shared sprite: ${JSON.stringify(replayFrames)}`);
+    assert.ok(new Set(replayFrames).size > 1);
+    result.replay = { firstKey, secondKey, frames: replayFrames, nativeKey: await native.locator('.resource-stage').getAttribute('data-playback-key') };
+    input('consecutive-same-action-button', { petId: pet.petId, action, firstKey, secondKey });
+  }
   if (['wood', 'earth'].includes(pet.element) && action === 'skill') await page.screenshot({ path: join(output, `${pet.element}-skill-preview.png`), timeout: 5000 });
   await page.locator('.cp-action-preview .resource-stage[data-action="idle"]').waitFor();
   await native.locator('.resource-stage[data-action="idle"]').waitFor();
