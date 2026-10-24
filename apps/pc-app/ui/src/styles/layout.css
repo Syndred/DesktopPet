@@ -65,3 +65,4 @@ body { font-family: var(--font-ui); font-size: var(--text-body); font-weight: va
 @media (max-width: 760px) {
   :root { --text-title: 24px; --page-pad-inline: var(--space-4); --page-pad-block: var(--space-5); }
 }
+.scenario-indicator{display:inline-grid;place-items:center;width:28px;height:28px;margin-left:4px;padding:0;border:1px solid var(--line);border-radius:8px;color:var(--primary);background:#fff;-webkit-app-region:no-drag}

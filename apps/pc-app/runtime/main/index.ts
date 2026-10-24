@@ -17,6 +17,7 @@ else {
 }
 const { openDatabase, backupLegacy } = require(join(runtime, 'core/database.cjs'));
 const { createServices, discoverFeatures } = require(join(runtime, 'core/services.cjs'));
+const { readQaScenario } = require(join(runtime, 'core/qa-scenario.cjs'));
 const { initializeLegacy } = require(join(runtime, 'main.cjs'));
 const resourceEntry = join(runtime, 'features/resources/index.cjs');
 if (existsSync(resourceEntry)) require(resourceEntry).registerResourceScheme(protocol);
@@ -120,6 +121,8 @@ app.whenReady().then(async () => {
   Menu.setApplicationMenu(null);
   session.defaultSession.setPermissionRequestHandler((_contents, _permission, callback) => callback(false));
   const userData = app.getPath('userData');
+  // Refuse invalid QA configuration before reading, backing up or opening saves.
+  const qaScenario = readQaScenario({ userData });
   const legacyDataFile = process.env.PET_RUNTIME_DATA_FILE || join(userData, 'pet-runtime-data.json');
   const db = openDatabase(join(userData, 'lingjing.sqlite'));
   const sourceKey = `legacy-source:${legacyDataFile}`;
@@ -129,11 +132,12 @@ app.whenReady().then(async () => {
   backupLegacy(legacyDataFile);
   const legacy = initializeLegacy();
   services = createServices({ db, legacy, paths: { userData, assets: join(runtime, 'assets'), legacyDataFile, legacyDataExisted }, windows, safeStorage });
+  if (qaScenario) services.provide('qaScenario', qaScenario);
   features = discoverFeatures(join(runtime, 'features'), services);
   await require(join(runtime, 'core/builtin-art.cjs')).registerBuiltinArt(services);
   if (services.get('backups') && services.get('resources')) services.get('backups').register(require(join(runtime, 'core/resource-backup.cjs')).createResourceBackupAdapter(services));
   if (services.get('backups') && services.get('conversations')) services.get('backups').register(require(join(runtime, 'core/conversation-backup.cjs')).createConversationBackupAdapter(services));
-  services.ipc.handle('app:info', () => ({ version: app.getVersion(), platform: process.platform, features: features.map(x => ({ id: x.id, commands: x.commands })), user: services.session.getCurrentUser() }), { public: true });
+  services.ipc.handle('app:info', () => ({ version: app.getVersion(), platform: process.platform, features: features.map(x => ({ id: x.id, commands: x.commands })), user: services.session.getCurrentUser(), ...(qaScenario ? { scenario: qaScenario.descriptor } : {}) }), { public: true });
   ipcMain.handle('lingjing:invoke', async (event, request) => {
     if (!trusted(event)) return { ok: false, code: 'UNTRUSTED_SENDER', message: '请求来源无效。' };
     try {
