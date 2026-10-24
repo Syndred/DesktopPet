@@ -3,6 +3,7 @@ const path = require('node:path');
 const { randomUUID } = require('node:crypto');
 const { ResourcesRepository } = require('./repository.cjs');
 const { ResourceError, fail, plain, text, provenance, calibrations, actionMap, safeRelative, isWithin, parseCharacterFile, normalize2DResource, resolveAction } = require('./parser.cjs');
+const { canonicalResourceId } = require('./roster.cjs');
 
 class ResourcesService {
   constructor({ db, storageRoot, starterManifest = path.resolve(__dirname, '../../assets/illustrations/yuwan-character-v1.json'), starterId = 'builtin:lingjing-yuwan-v1', seedBuiltin = true }) {
@@ -18,6 +19,7 @@ class ResourcesService {
   // Only trusted main-process registration can extend built-in package roots.
   addBuiltinAssetRoot(root) { const resolved = path.resolve(root); if (!this.builtinAssetRoots.includes(resolved)) this.builtinAssetRoots.push(resolved); }
   owner(value) { if (typeof value !== 'string' || !value.trim() || value.length > 200) fail('AUTH_REQUIRED', '请先选择本机存档或登录账号'); return value; }
+  canonicalId(id) { const next = canonicalResourceId(id); return next !== id && this.repository.hasGlobal(next) ? next : id; }
   async seed() {
     await fs.mkdir(this.storageRoot, { recursive: true });
     if (!this.seedBuiltin) return;
@@ -37,11 +39,11 @@ class ResourcesService {
   }
   async list(owner) {
     this.owner(owner);
-    return Promise.all(this.repository.list(owner).filter(resource => resource.kind === 'spritesheet').map(resource => this.withAvailability(owner, resource)));
+    return Promise.all(this.repository.list(owner).filter(resource => resource.kind === 'spritesheet' && this.canonicalId(resource.id) === resource.id).map(resource => this.withAvailability(owner, resource)));
   }
-  async get(owner, id) { this.owner(owner); return this.withAvailability(owner, this.repository.get(owner, id)); }
+  async get(owner, id) { this.owner(owner); return this.withAvailability(owner, this.repository.get(owner, this.canonicalId(id))); }
   /** Synchronous adapters for callers already inside the shared SQLite transaction. */
-  getRecord(owner, id) { this.owner(owner); return normalize2DResource(this.repository.get(owner, id)); }
+  getRecord(owner, id) { this.owner(owner); return normalize2DResource(this.repository.get(owner, this.canonicalId(id))); }
   importFile(owner, filePath, metadata = {}) {
     const operation = this.importTail.then(() => this.importValidatedFile(owner, filePath, metadata));
     this.importTail = operation.catch(() => {});
@@ -133,7 +135,8 @@ class ResourcesService {
   }
   async assetFile(owner, id, key) {
     this.owner(owner); safeRelative(key);
-    const resource = this.getRecord(owner, id);
+    // Historical URLs continue to serve their registered bytes. Display resolution uses canonical IDs.
+    const resource = normalize2DResource(this.repository.get(owner, id));
     const filePath = this.currentFilePath(resource, key, this.repository.file(owner, id, key));
     const allowed = [this.storageRoot, path.dirname(this.starterManifest), ...this.builtinAssetRoots];
     const actual = await fs.realpath(filePath).catch(() => fail('MISSING_ASSET', '资源文件已缺失'));

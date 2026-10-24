@@ -1,229 +1,88 @@
 {
   "module": "resources",
   "branch": "codex/lingjing-resources",
-  "state": "completed_2d_module",
-  "scopeRevision": "d6a1ab1",
-  "scope": "2D character packages and PixiJS atlases only; historical 3D records and files retained, inactive",
-  "implementationCommits": [
-    "984e627",
-    "e44727a",
-    "a198283",
-    "4bde95b",
-    "7a50ef7"
+  "state": "roster_assets_ready_preview_pending",
+  "audit": [
+    "A07",
+    "A08",
+    "A12",
+    "A01 consumer"
   ],
-  "verifiedCodeCommit": "7a50ef7",
-  "foundationDependency": "7f0e896",
-  "sourceSync": {
-    "remote": "origin/main",
-    "revision": "4786f97680679c2db0aa307fa5f67ec247f93086",
-    "fetchedAt": "2026-10-24T12:58:11.105Z",
-    "ancestorOfHead": true,
-    "sourceCheckoutUntouched": true
-  },
-  "tests": [
+  "scope": "Six distinct canonical 2D companions with real daily and battle poses; production preview evidence pending",
+  "baselineAcceptanceCommit": "d7201a8",
+  "characters": [
     {
-      "command": "node scripts/desktop/run-native-tests.cjs apps/pc-app/runtime/features/resources/verification/resources.test.cjs tests/foundation/resource-backup.test.cjs",
-      "result": "10/10 passed",
-      "covers": [
-        "actual SQLite and file bytes",
-        "approved anime grid and standard Pixi atlas",
-        "trim and rotation bounds",
-        "calibration/FPS/actions/CAS",
-        "invalid inputs and safe paths",
-        "owner aliases and ambiguous providers",
-        "historical rows and files retained",
-        "deduplication/concurrent receipts/missing-file repair",
-        "backup restore and complete user-data relocation"
-      ]
+      "name": "鱼丸",
+      "templateId": "big-fish-gentle",
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "manifest": "apps/pc-app/runtime/features/resources/assets/roster-v2/yuwan/character.json",
+      "frames": 16,
+      "canonicalActions": 12
     },
     {
-      "command": "npm run typecheck:ui",
-      "result": "passed"
+      "name": "小蓝",
+      "templateId": "big-fish-cheerful",
+      "resourceId": "builtin:lingjing-xiaolan-v1",
+      "manifest": "apps/pc-app/runtime/features/resources/assets/roster-v2/xiaolan/character.json",
+      "frames": 16,
+      "canonicalActions": 12
     },
     {
-      "command": "npx eslint apps/pc-app/ui/src/features/resources packages/shared-types/src/features/resources",
-      "result": "passed"
+      "name": "饭团",
+      "templateId": "big-fish-foodie",
+      "resourceId": "builtin:lingjing-fantuan-v1",
+      "manifest": "apps/pc-app/runtime/features/resources/assets/roster-v2/fantuan/character.json",
+      "frames": 16,
+      "canonicalActions": 12
     },
     {
-      "command": "npm run build:pc",
-      "result": "passed",
-      "note": "Vite reports large bundle sizes; production build completed"
+      "name": "焰柴",
+      "templateId": "animal-shiba",
+      "resourceId": "builtin:lingjing-shiba-v2",
+      "manifest": "apps/pc-app/runtime/features/resources/assets/roster-v2/shiba/character.json",
+      "frames": 16,
+      "canonicalActions": 12
     },
     {
-      "command": "node apps/pc-app/runtime/features/resources/verification/smoke.electron.mjs",
-      "result": "passed",
-      "evidence": "docs/implementation/evidence/resources/2d/2d-replay-report.json",
-      "covers": [
-        "production Electron main/preload/React UI",
-        "real session and persisted native-import IDs",
-        "six named Radix sliders",
-        "Tabs ArrowRight/Home and Select/Popover Esc focus return",
-        "same actual Pixi TextureSource with independent AnimatedSprite frames",
-        "live shared reduced-motion boundary and paused Pixi frames",
-        "zero page/console errors"
-      ]
+      "name": "礼帽喵",
+      "templateId": "animal-hat-cat",
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "manifest": "apps/pc-app/runtime/features/resources/assets/roster-v2/hatcat/character.json",
+      "frames": 16,
+      "canonicalActions": 12
+    },
+    {
+      "name": "小狐",
+      "templateId": "animal-white-fox",
+      "resourceId": "builtin:lingjing-xiaohu-v1",
+      "manifest": "apps/pc-app/runtime/features/resources/assets/roster-v2/xiaohu/character.json",
+      "frames": 16,
+      "canonicalActions": 12
     }
   ],
-  "runtimeAcceptance": {
-    "profile": "isolated resource verification profile; no user profile mutated",
-    "nativeImports": {
-      "gridResourceId": "63a69a0b-f24f-4dab-9203-5185452c597f",
-      "pixiResourceId": "0fcadbc3-f320-4932-ad7b-9d3c2775e3d2",
-      "chooser": "Windows native file dialogs, operated through sky"
-    },
-    "invalidImport": {
-      "receipt": "资源描述不是有效的 JSON",
-      "libraryCount": 3,
-      "stages": [
-        "ready",
-        "ready"
-      ]
-    },
-    "savedAndRestarted": {
-      "at": "2026-10-24T12:52:09.160Z",
-      "resourceId": "0fcadbc3-f320-4932-ad7b-9d3c2775e3d2",
-      "revision": 1,
-      "calibration": {
-        "desktop": {
-          "scale": 1.12,
-          "rotationDeg": 3,
-          "verticalOffset": -0.05,
-          "mirrorX": true,
-          "anchorX": 0.46,
-          "anchorY": 0.9,
-          "fps": 10
-        },
-        "battle": {
-          "scale": 1,
-          "rotationDeg": 0,
-          "verticalOffset": 0,
-          "mirrorX": false,
-          "anchorX": 0.5,
-          "anchorY": 0.85,
-          "fps": 0
-        }
-      },
-      "actions": {
-        "idle": "idle",
-        "walk": "walk",
-        "attack": "wave",
-        "hit": "rest",
-        "skill": "wave",
-        "victory": "happy",
-        "sleep": "sleep"
-      },
-      "libraryCount": 3,
-      "stage": "ready",
-      "samePreferences": true
-    },
-    "actualTextureSources": [
-      "3",
-      "3"
-    ],
-    "appAnimations": {
-      "systemReduce": {
-        "media": true,
-        "frames": [
-          "0",
-          "0",
-          "0",
-          "0",
-          "0"
-        ],
-        "initialPageBoundary": "reduced"
-      },
-      "appDisabled": {
-        "settingsRevision": 1,
-        "frames": [
-          "0",
-          "0",
-          "0",
-          "0",
-          "0"
-        ]
-      },
-      "appRestored": {
-        "settingsRevision": 2,
-        "animationsEnabled": true
-      }
-    },
-    "finalLibrary": "2 foundation project builtins + 2 real native imports; earlier manual import phase had 3 resources before foundation added the second builtin",
-    "modelViewerElements": 0,
-    "screenshots": [
-      "docs/implementation/evidence/resources/2d/2d-final-after-restart.png",
-      "docs/implementation/evidence/resources/2d/2d-independent-instances.png",
-      "docs/implementation/evidence/resources/2d/2d-invalid-native-import.png",
-      "docs/implementation/evidence/resources/2d/2d-native-atlas-import.png"
-    ],
-    "sqliteEvidence": "docs/implementation/evidence/resources/2d/2d-before-restart.json",
-    "evidencePhases": {
-      "manualNative": "Before foundation added the second builtin: 3 resources, native grid/Pixi import, invalid JSON, saved settings and restart",
-      "finalReplay": "7a50ef7 with foundation 7f0e896: 4 resources, shared actual TextureSource, named thumbs, live system reduced motion, zero renderer errors"
-    }
+  "canonicalAliases": {
+    "builtin:lingjing-yuwan-v1": "builtin:lingjing-yuwan-v2",
+    "builtin:lingjing-battle-yuwan-v1": "builtin:lingjing-yuwan-v2",
+    "builtin:lingjing-battle-shiba-v1": "builtin:lingjing-shiba-v2"
   },
-  "reused": [
-    {
-      "project": "pixi.js",
-      "version": "8.22.0",
-      "license": "MIT",
-      "usage": "Assets, Spritesheet.parse, AnimatedSprite, built-in Ticker and renderer"
-    },
-    {
-      "project": "radix-ui",
-      "version": "1.8.1",
-      "license": "MIT",
-      "usage": "shared shadcn Tabs/Select/Slider/Switch/ScrollArea/Popover/Input/Button"
-    },
-    {
-      "project": "motion",
-      "version": "14.6.0",
-      "license": "MIT",
-      "usage": "foundation AppMotionProvider/PageTransition/AnimatedList; resource stage bridges policy"
-    },
-    {
-      "project": "tailwindcss",
-      "version": "4.3.3",
-      "license": "MIT",
-      "usage": "foundation shadcn utility styles"
-    },
-    {
-      "project": "react",
-      "version": "19.3.1",
-      "license": "MIT",
-      "usage": "modular React feature components"
-    },
-    {
-      "project": "electron",
-      "version": "36.9.5",
-      "license": "MIT",
-      "usage": "existing native shell, file chooser, preload and safe custom asset protocol"
-    },
-    {
-      "project": "better-sqlite3",
-      "version": "12.11.1",
-      "license": "MIT",
-      "usage": "existing injected SQLite and transactions"
-    }
+  "assetSource": "apps/pc-app/runtime/features/resources/assets/roster-v2/source-record.json",
+  "prompts": [
+    "apps/pc-app/runtime/features/resources/assets/roster-v2/generation-prompts.json",
+    "apps/pc-app/runtime/features/resources/assets/roster-v2/layout-refinement-prompts.json"
   ],
-  "publicComponentSource": {
-    "project": "shadcn/ui Radix Nova",
-    "license": "MIT",
-    "record": "docs/implementation/shadcn-source-record.json",
-    "foundationCommit": "7f0e896",
-    "localReimplementation": false
+  "assetChecks": {
+    "parsedPacks": 6,
+    "framesPerPack": 16,
+    "actionsPerPack": 12,
+    "independentAttackHitSkill": true,
+    "nonLoopingAttack": true,
+    "highAlphaAtlasSeamsClear": true,
+    "unchangedGeneratedPngBytes": true
   },
-  "materialProvenance": {
-    "defaultCharacter": "runtime/assets/illustrations/yuwan-character-v1.json",
-    "author": "灵境项目 / ImageGen",
-    "licenseRecord": "项目生成素材",
-    "sourceRecord": "docs/implementation/illustration-assets.json",
-    "separateFromRendererLicense": true
-  },
-  "designReference": "docs/design/2026-10-24/full-ui/07-battle-report-and-model-import.png (lower half / page 13)",
-  "uiComparison": "docs/implementation/evidence/resources/2d/ui-comparison.md",
-  "preservation": "Original model files, imported source files, resource rows, preferences and import history are retained; no active 3D loader, import, preview or migration; .codex/config.toml and original model asset directory unchanged",
-  "integrationDependencies": [
-    "foundation final whole-product desktop multi-companion and battle regression after merging this module; this evidence covers the resource module and shared integration contract"
-  ],
-  "remaining": []
+  "remaining": [
+    "Real production Pixi preview of every character and daily/battle action",
+    "Targeted canonical alias/preservation and backup checks",
+    "A12 1280 and 1440 screenshot/computed-style evidence",
+    "Final commit/status with integration contract"
+  ]
 }
