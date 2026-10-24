@@ -1,0 +1,56 @@
+export interface AccountUser {
+  id: string;
+  subjectId: string;
+  ownerAccountId: string;
+  provider: "local" | "runtime";
+  account: string;
+  username: string;
+  revision: number;
+  createdAt: string;
+  updatedAt: string;
+}
+export interface SettingsDocument {
+  desktop: {
+    alwaysOnTop: boolean; clickThrough: boolean; launchAtLogin: boolean; closeToTray: boolean;
+    companionLimit: number; interactionSounds: boolean; volume: number; hideInFullscreen: boolean;
+  };
+  notifications: {
+    enabled: boolean; companions: boolean; battles: boolean; garden: boolean;
+    quietEnabled: boolean; quietStart: string; quietEnd: string;
+  };
+  privacy: { locationAllowed: boolean; locationOnlyWhileExploring: boolean; emotionStatistics: boolean };
+  sync: { enabled: boolean };
+}
+export interface AccountsSession {
+  currentUser: AccountUser | null;
+  defaultProvider: "local" | "runtime";
+  secureStorageAvailable: boolean;
+  persistence: "none" | "memory" | "secure";
+  startupIssue: string | null;
+  migration: { status: string; imported: number; unresolved: Array<{ legacyId?: string; reason: string }> };
+}
+export interface DesktopHostStatus {
+  startup: boolean; fullscreenMonitor: boolean; foregroundFullscreen: boolean;
+  companionWindows: number; clickThroughWindows: number[];
+  windows: Array<{ id: number; alwaysOnTop: boolean; visible: boolean }>;
+  locationAllowed: boolean; emotionStatistics: boolean;
+  closeToTrayConnected: boolean; companionLimitConnected: boolean;
+}
+export interface SettingsSnapshot {
+  document: SettingsDocument; revision: number; updatedAt: string; host?: DesktopHostStatus;
+}
+export interface SyncStatus {
+  configured: boolean; cloudRevision: number; lastVerifiedAt: string | null;
+  lastError: string | null; pending: number; conflicts: number; localChanged: boolean; running: boolean;
+}
+export interface BackupPreview {
+  previewId: string; checksum: string; currentChecksum?: string; cloudRevision?: number;
+  createdAt: string; modules: string[]; tables: Array<{ name: string; count: number }>; excluded?: string[];
+}
+/** Main-process adapters are synchronous and run inside the common SQLite transaction. */
+export interface AccountBackupAdapter<Database = unknown, Data = unknown> {
+  id: string; version: number; tables?: string[];
+  export(ownerAccountId: string, db: Database): Data;
+  validate(data: Data, ownerAccountId: string, db: Database): void;
+  restore(ownerAccountId: string, data: Data, mode: "merge" | "replace", db: Database): void;
+}
