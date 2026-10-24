@@ -110,9 +110,8 @@ class DiscoveryService {
   }
   battleAdapter() {
     const battle=this.getBattle?.();
-    if(battle?.wildAdapter)return battle.wildAdapter;
-    if(battle?.beginWildChallenge&&this.invokeBattle)return new RegisteredWildBattleAdapter(battle,this.invokeBattle);
-    problem('BATTLE_UNAVAILABLE','战场暂不可用');
+    if (!battle?.beginWildChallenge || !this.invokeBattle) problem('BATTLE_UNAVAILABLE','对战服务尚未就绪');
+    return new RegisteredWildBattleAdapter(battle,this.invokeBattle);
   }
   syncExternal(encounter) {
     if(encounter.battle?.adapter!=='battle-feature' || !['challenging','won'].includes(encounter.status)) return encounter;
@@ -144,7 +143,8 @@ class DiscoveryService {
       if(encounter.status!=='challenging') problem('BATTLE_FINISHED','这场挑战已结束');
       this.pet(owner,encounter.petId);
       const previous=encounter.revision;
-      encounter.battle=battle || this.battleAdapter().act(encounter.battle,input.action);
+      if (!battle) problem('LEGACY_BATTLE_READ_ONLY','历史挑战已保留，请开始新的相遇');
+      encounter.battle=battle;
       if(encounter.battle?.then) problem('BATTLE_ADAPTER_INVALID','野外挑战适配器必须支持同步存档');
       if(encounter.battle.finished) encounter.status=encounter.battle.winner==='player' ? 'won' : 'lost';
       encounter.revision++; encounter.updatedAt=this.now(); this.repo.put(encounter,previous); this.notify(owner);

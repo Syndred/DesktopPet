@@ -47,6 +47,7 @@ export interface RoundResult {
   notes: string[];
 }
 
+/** @deprecated Historical prototype. Desktop's four battle modes execute runtime/services/battle-runtime.cjs. */
 export class BattleEngine {
   private readonly players: [Combatant, Combatant];
   private round = 0;

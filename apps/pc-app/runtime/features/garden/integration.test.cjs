@@ -87,9 +87,11 @@ test('public battle-context settlement keeps its original receipt after another 
     assert.equal(started.ok,true,JSON.stringify(started));
     await finishBattle(f,f.battle.snapshot({sessionId:started.data.sessionId},context));
     assert.equal(api.getBattleContext({...context,sessionId:started.data.sessionId}).settled,false);
-    assert.equal(api.getBattleContext({ownerAccountId:'another-owner',sessionId:started.data.sessionId}),null);
+    assert.equal(api.getBattleContext({...context,sessionId:started.data.sessionId}).action,'territory');assert.equal(api.getBattleContext({...context,sessionId:started.data.sessionId}).returnTo,'/garden');
+    assert.throws(()=>api.getBattleContext({ownerAccountId:'another-owner',sessionId:started.data.sessionId}),{code:'SESSION_CHANGED'});
     const input={...context,sessionId:started.data.sessionId,actionId:'shared-context-confirm'};
     const settled=await api.settleBattleContext(input);assert.equal(settled.ok,true,JSON.stringify(settled));
+    assert.equal(settled.data.resultPath,'/garden');
     assert.equal(api.getBattleContext({...context,sessionId:input.sessionId}).settled,true);
     const current=await registered.commands.snapshot({},context);
     const planted=await registered.commands.plant({actionId:'later-personal-plant',sessionOwnerAccountId:f.owner,expectedRevision:current.revision,plotId:'plot-1',cropType:'carrot'},context);assert.equal(planted.ok,true);
