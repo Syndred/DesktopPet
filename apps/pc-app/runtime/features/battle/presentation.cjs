@@ -1,4 +1,17 @@
 const { getBattleRules } = require('../../services/battle-runtime.cjs');
+/** Additive read projection only. Saved gameplay values remain authoritative. */
+function presentRules(saved) {
+  const current = getBattleRules();
+  if (!saved) return current;
+  if (saved.id !== current.id) return saved;
+  return { ...saved,
+    advantage: { ...current.advantage, ...saved.advantage },
+    elementEffects: Object.fromEntries(Object.entries(current.elementEffects).map(([element, metadata]) => [element, { ...metadata, ...saved.elementEffects?.[element] }]))
+  };
+}
+function presentReport(report) {
+  return report?.rules ? { ...report, rules: presentRules(report.rules) } : report;
+}
 /** Presentation events describe the committed result; they never resolve combat. */
 function visualEvents(round, participants) {
   const events = [];
@@ -28,6 +41,6 @@ function visualEvents(round, participants) {
 }
 function presentSession(session) {
   if (!session?.snapshot || !Array.isArray(session.rounds)) return session;
-  return { ...session, rules: session.rules || getBattleRules(), rounds: session.rounds.map(round => ({ ...round, visualEvents: visualEvents(round, session) })) };
+  return { ...session, rules: presentRules(session.rules), rounds: session.rounds.map(round => ({ ...round, visualEvents: visualEvents(round, session) })) };
 }
-module.exports = { visualEvents, presentSession };
+module.exports = { visualEvents, presentRules, presentReport, presentSession };
