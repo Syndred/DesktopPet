@@ -1,10 +1,10 @@
 灵境 discovery 模块交付与集成接口（2026-10-24，2D UI first）
 
-当前优先范围：acceptance/2026-10-24/unified-battle-goal.txt（U01—U08）。正在接入唯一 BattleScreen；本文件后半的旧独立战场截图与原生精度记录是历史证据，不代表本轮统一战场已验收。云端与精准位置可按最新用户要求延后，本轮使用隔离且明确标识的 QA 场景完成操作与存档闭环，不能伪称真实 GPS / 云成功。
+当前优先范围：acceptance/2026-10-24/unified-battle-goal.txt（U01—U08）。已接入唯一 BattleScreen；本文件后半的旧独立战场截图与原生精度记录是历史证据，不代表本轮全部目标已验收。云端与精准位置按最新用户要求延后，本轮使用隔离且明确标识的 QA 场景完成操作与存档闭环，不能伪称真实 GPS / 云成功。
 EncounterView 仅传实际 sessionId 到 battle/BattleScreen；HUD、四行动、动画、回合记录、结算弹层均由 battle 提供，探索不再保留另一套呈现或动画。getBattleContext / settleBattleContext 是主进程来源服务接口，按账号与 sessionId 查原遭遇并转交原 confirm 事务；不接受客户端胜负。QA scenario 随遭遇、伙伴来源和收服凭据持久保存。
 
-当前范围以 scope-2d-ui-first.txt 为准。正式实现采用 React / TypeScript 模块组件；新页面、遭遇、收服、头像均使用 2D 图集。保留历史文件，不实现旧 3D 渲染兼容。
-本分支已合入 foundation f734775（本工作树合并提交d5f7c64）；完成前已 git fetch origin，origin/main 为 4786f97。
+早期范围 scope-2d-ui-first.txt 的 2D 要求继续保留；最新统一战场目标优先。正式实现采用 React / TypeScript 模块组件；新页面、遭遇、收服、头像均使用 2D 图集。保留历史文件，不实现旧 3D 渲染兼容。
+本分支已合入 foundation 0ad9dc5（本工作树合并提交99751b2）；完成前已 git fetch origin，origin/main 为 4786f97。
 入口：runtime/features/discovery/index.cjs、ui/src/features/discovery/index.tsx，由 foundation 的模块注册与路由加载。
 
 公开命令：snapshot、locate、watch、stopWatch、setDemo、setProvider、tile、setExploring。
@@ -16,7 +16,7 @@ begin：{spawnId,petId,actionId}。
 act：{encounterId,action,expectedRevision,actionId}，四种 action 复用现有战斗内核。
 cancel：{encounterId,actionId}，保留记录。
 confirm：{encounterId,name?,showOnDesktop?,expectedRevision?,actionId}。
-确认需要权威战斗胜利、当前真实位置、隐私许可和围栏校验；返回真实 petId 独立实例。
+普通模式确认需要权威战斗胜利、当前真实位置、隐私许可和围栏校验；返回真实 petId 独立实例。已验证隔离 QA 档案使用 source:simulated 的位置，保留同样的时效、精度与围栏计算，不声称取得系统位置授权。
 memories：{petId}，只能读取本账号伙伴。
 返回统一 {ok:true,data,duplicate?} 或稳定 code / 中文 message。
 
@@ -30,7 +30,7 @@ origin.memoryTags 同步保存首次相遇标签，conversations 可按真实 pe
 复用 BattleRuntimeService 的五行、怒气、闪避、随机 NPC 和胜负规则，不修改战斗数值。
 桌面、聊天、出战选择互相独立；出战与捕获仅接受 2D / spritesheet 资源。
 游戏遭遇从 companions.listTemplates 读取 canonical 2D 模板，服务端使用同一模板目录；资源与属性变更生成新的 catalog 身份，旧遭遇继续保留。当前目录已接入鱼丸、小蓝、饭团、焰柴、礼帽喵、小狐的六个独立资源；每个角色都在真实探索预览中确认了共享 Pixi 与 atlas 缩略图。游戏点位按固定地理网格生成，不作为核实过的现实地标。
-野外战斗快照附带 battle 的 rules，并复用共享 BattleMoves 命令卡；大招门槛、怒气上限、首次免费闪避和禁用原因消费权威配置。明确显示标准生命归一与养成属性的区别，不改战斗数值。旧遭遇只在公开读回时补规则，既有存档与凭据不被重写。
+野外战斗快照附带 battle 的 rules，整个界面直接复用 BattleScreen / BattleArena / useBattleSession / useBattleAnimation；大招门槛、怒气上限、首次免费闪避和禁用原因消费权威配置。辅助规则使用公共图标与 tooltip，不添加探索专有说明或规则。旧遭遇只在公开读回时补规则，既有存档与凭据不被重写。
 攻击、属性/大招、受击与胜利姿态消费实际保存的双方回合；动作映射复用 battle，帧播放仍由 ResourceStage / Pixi 负责。资源元数据按身份读取，切换动作保留同一 canvas。应用或系统关闭动画时遵循共享 Motion 策略。
 
 定位：Windows PowerShell 5.1 调 Windows.Devices.Geolocation.Geolocator.GetGeopositionAsync，遵守 Windows 隐私权限。

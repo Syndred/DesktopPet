@@ -1,15 +1,15 @@
 {
   "module": "discovery",
   "branch": "codex/lingjing-discovery",
-  "commit": "fed3800d0a55a94f5568baa6c713a8add95e0e7d",
-  "status": "unified_battle_integration_in_progress",
+  "commit": "86907ee54a9e08f2b101251ab2c77d9d7ecfcf9e",
+  "status": "shared_battle_flow_passed_integrated_roster_pending",
   "goalStatus": "active",
   "workspace": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-discovery\\DesktopPet",
   "upstream": {
     "fetched": true,
     "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086",
-    "foundationMerged": "f73477589239c9c5ed76396126bd6d225a4d4df7",
-    "foundationMergeCommit": "d5f7c641f0b028f58683d71f7c24be435d739b2f",
+    "foundationMerged": "0ad9dc55961784249a1a43dab9849891ee4bfd9a",
+    "foundationMergeCommit": "99751b2",
     "originMainIsAncestor": true,
     "sourceCheckoutModified": false
   },
@@ -31,8 +31,9 @@
     "Windows script is read by Electron fs and delivered without external ASAR file-path dependence; actual archive execution verified",
     "Encounter metadata comes from canonical 2D templates; capture and pokedex views follow the current per-instance resource without rewriting the original receipt",
     "Six canonical resources verified in real exploration previews; actual random non-fish capture preserves the same petId/resource in result, backpack, pokedex, memories and restart",
-    "Battle rules and command cards come from battle.getRules/BattleMoves; actual persisted rounds select real attack/skill/hit/victory clips without rebuilding the Pixi canvas",
-    "Compact exploration portraits and static full-body pokedex images now delegate to resources.ResourcePortrait; duplicate atlas cropping and legacy image fallback removed"
+    "Wild encounters directly render the one BattleScreen, controller, arena, HUD, moves, log, animation and capture dialog; no discovery combat UI or local production battle fallback remains",
+    "Compact exploration portraits and static full-body pokedex images now delegate to resources.ResourcePortrait; duplicate atlas cropping and legacy image fallback removed",
+    "Verified isolated QA profile retains simulated location and namespaced capture provenance; production Electron start/resume/capture/cancel/restart and ordinary command isolation are self-tested"
   ],
   "openSource": [
     {
@@ -64,8 +65,8 @@
       "version": "14.6.0",
       "license": "MIT",
       "source": "https://motion.dev/docs/react",
-      "actualUsage": "Shared AppPresence, MotionPanel and AnimatedList",
-      "location": "apps/pc-app/ui/src/features/discovery/EncounterView.tsx"
+      "actualUsage": "Shared AnimatedList and common battle Motion controller; no discovery-owned combat animation timer",
+      "location": "apps/pc-app/ui/src/features/discovery/ExploreView.tsx"
     },
     {
       "project": "tailwindcss",
@@ -335,6 +336,19 @@
     {
       "command": "read-capture.cjs via actual Electron CLI, against the previous controlled-position profile",
       "result": "passed read-only matching capture/pet/resource/owner, counts1 capture +1 instance +1 memory +1 report; does not count as physical-location evidence"
+    },
+    {
+      "command": "node --test apps/pc-app/runtime/features/discovery/tests/qa-location.test.cjs",
+      "result": "3 passed: verified scenario/current account, simulated source and unknown OS permission, ordinary-source rejection"
+    },
+    {
+      "command": "node scripts/desktop/run-native-tests.cjs --test-name-pattern=\"actual shared SQLite|shared battle commands|application privacy|real adapter errors\" apps/pc-app/runtime/features/discovery/tests/discovery.test.cjs",
+      "result": "4 passed: actual SQLite/registered battle/shared context settlement and native privacy. The full test file was not rerun."
+    },
+    {
+      "command": "node apps/pc-app/runtime/features/discovery/verification/unified-flow.mjs",
+      "sourceCommit": "89e203a88f92122b13f9ec028637e56755b05b6b",
+      "result": "Core flow passed and all current six-role previews passed; final assertion honestly records missing wood/earth and fullScopePassed=false. This is not full U01-U08 acceptance."
     }
   ],
   "runtimeEvidence": {
@@ -382,20 +396,22 @@
     },
     "privateSystemMapScreenshotNotCommitted": "artifacts/discovery/2d-windows-1792847349359/real-system-location-private.png",
     "latestNativeDiagnostic": {
-      "at": "2026-10-24T14:11:27.798Z",
-      "adapter": "production WindowsLocationAdapter diagnostic",
+      "at": "2026-10-24T15:09:22.659Z",
+      "adapter": "production WindowsLocationAdapter diagnostic after user enabled Windows location",
       "ok": true,
       "source": "os",
       "provider": "windows-geolocator",
       "positionSource": "WiFi",
-      "accuracyMeters": 58,
-      "timestampMs": 1792851087652,
-      "quality": {
-        "ok": true
-      },
-      "coordinateHash": "9531055a98e4532a7a3b9ebe16c48d4d4384e73d9a6fb919cb209429b4b4d92e",
+      "accuracyMeters": 155,
+      "timestampMs": 1792854562659,
       "rawCoordinatesSaved": false,
-      "physicalLocationAcceptance": false
+      "systemPermissionDenialResolved": true,
+      "physicalLocationAcceptance": false,
+      "quality": {
+        "ok": false,
+        "code": "LOCATION_IMPRECISE",
+        "thresholdMeters": 80
+      }
     },
     "latestArchiveNative": {
       "at": "2026-10-24T13:50:51.474Z",
@@ -907,34 +923,50 @@
         }
       ],
       "transport": "Node fetch; no credentials; not an Electron proxy probe"
+    },
+    "unifiedBattleFlow": {
+      "command": "node apps/pc-app/runtime/features/discovery/verification/unified-flow.mjs",
+      "flowPassed": true,
+      "fullScopePassed": false,
+      "checks": [
+        "Same saved battleId and round after return/resume; old round does not replay",
+        "Shared result action creates one real instance, capture and memory; both duplicate confirmations return the same petId",
+        "Training/wild use identical live HUD and move geometry at 1280/1440; encounter route preserves explicit sessionId after a newer session",
+        "Explicit QA login restores the same capture and memory; location/watch are not restored",
+        "Ordinary production startup exposes no QA descriptor or qaTarget command and no simulated position"
+      ],
+      "missingElements": [
+        "wood",
+        "earth"
+      ],
+      "rendererErrors": [],
+      "artifact": "docs/implementation/evidence/discovery/2026-10-24-unified/evidence.json"
     }
   },
   "dependencyManifest": "apps/pc-app/runtime/features/discovery/dependencies.json",
   "additionalFoundationPackages": [],
   "rootDependenciesConsumedFromFoundation": true,
   "integrationDependencies": [
-    "BattleScreen / useBattleSession / context settlement implementation through foundation",
-    "Canonical resources and companions templates covering all five elements",
-    "Main chat independent acceptance; foundation final combined package",
-    "Live cloud and precise OS capture are deferred under latest U06 and are not used to block the isolated QA acceptance"
+    "Canonical wood/earth resource integration through foundation; resource branch has delivered them",
+    "Main chat independent module review and foundation final combined build",
+    "Live cloud/precise physical capture remain deferred under U06"
   ],
   "realIncomplete": [
-    "Physical-location capture remains unaccepted. The standalone native adapter returned one58m fix; subsequent production-window177m and bounded60s watch313m could not proceed. The native positive path is prepared but not passed; no accuracy threshold changed.",
-    "Cloud migration/function is reviewable and locally PostgreSQL-verified, but not deployed or live-Supabase-tested. Cloud mode fails closed while the battle authority adapter is missing.",
-    "Tencent/Google credentials are not configured; both coordinate adapters remain and OSM is verified.",
-    "Final combined packaging/regression remains foundation work.",
-    "Canonical six-character exploration and actual battle action integration are now locally verified. Foundation centralized visual review, full resource daily-action acceptance and installer verification remain separate."
+    "Precise physical-position capture remains unaccepted; latest actual Windows adapter read returned155m and no accuracy threshold was relaxed.",
+    "Cloud deployment/live Supabase receipt remains deferred under U06; QA never claims cloud success.",
+    "Tencent/Google provider credentials are not configured; coordinate adapter boundaries are retained.",
+    "Five-element integration, main independent acceptance and final combined package remain pending; see current unifiedBattle evidence."
   ],
   "verificationPending": [
-    "Integrated shared BattleScreen build and real Electron wild start/round/return/resume/capture/cancel/restart self-check",
-    "Canonical five-element role identity and common battlefield comparison at1280/1440",
-    "Main chat independent module acceptance and final combined U01–U08 review"
+    "Merge the committed eight-character roster through foundation and run the current production verifier on that exact candidate",
+    "Confirm current capture runId and matching battle report/companion receipt after the latest foundation context update",
+    "Main chat independent module acceptance and final combined U01-U08 review"
   ],
   "historicalBaselineEvidence": [
     "artifacts/discovery/windows/evidence.json (pre-2D scope; not current visual acceptance)"
   ],
-  "dataPolicy": "Only this managed worktree and discovery-owned implementation/status were changed directly; foundation changes came through its branch. User data and old files are preserved. No production migration, deployment, credential change, remote message or additional chat was performed. Goal remains active for unmet external acceptance. This continuation copied only a completed test profile for reversible appearance verification; original profiles and records were preserved. The native-helper archive probe uses its own isolated userData and saves no raw coordinates. This continuation merged foundation a930ebf only, consumed its actual six-character roster and shared rules/cards, and used isolated labelled profiles for real random combat. No native-accuracy threshold, battle formula, production migration or deployment was changed. This continuation used one standalone native read and two production-window attempts, the second bounded to60s native watch; these failed safely and are terminal. No raw system coordinates or private location screenshots were committed. Shared portrait changes arrived through foundation; no other module was edited directly. Latest unified-battle scope is explicit user steering from the main chat. Current integration is in progress; earlier local battle screenshots are historical. No production success is inferred from QA records.",
-  "updatedAt": "2026-10-24T14:57:22.427Z",
+  "dataPolicy": "Only discovery-owned source/docs were edited directly. Other features and foundation scripts arrived through committed foundation merges. QA uses newly created verified directories and namespaced local accounts; ordinary user saves, original profiles and historical evidence are preserved. No real coordinate, credential, production migration/deployment or external message was committed/sent. Live cloud and precise native capture are explicitly deferred, not inferred from simulated receipts.",
+  "updatedAt": "2026-10-24T15:18:49.642Z",
   "visualAudit": {
     "source": {
       "branch": "codex/lingjing-implementation-base",
@@ -1008,7 +1040,7 @@
   },
   "unifiedBattle": {
     "readyForIndependentReview": false,
-    "sharedScreen": "battle/BattleScreen(sessionId, returnTo)",
+    "sharedScreen": "battle/BattleScreen(sessionId, returnTo) -> useBattleSession + BattleArena + useBattleAnimation",
     "sharedContract": "docs/implementation/battle-screen-contract.txt",
     "battleImplementationTarget": "57116dc",
     "removed": [
@@ -1022,9 +1054,109 @@
       "getBattleContext",
       "settleBattleContext"
     ],
-    "qaSource": "Explicit scenario stored on encounter, captured companion origin and capture receipt; verification hosts require an artifacts profile",
-    "nativeChecks": "3 focused real SQLite integration cases passed before final shared battle dependency integration",
-    "electronSelfCheck": "pending the shared BattleScreen implementation in foundation and the integrated five-element assets"
+    "qaSource": "Foundation's verified qaScenario + namespaced account + discovery's explicit simulated location adapter; ordinary startup does not register qaTarget",
+    "nativeChecks": "4 focused actual Electron/SQLite integration cases and 3 QA provenance/permission cases passed; no full suite rerun claimed",
+    "electronSelfCheck": {
+      "command": "node apps/pc-app/runtime/features/discovery/verification/unified-flow.mjs",
+      "flowPassed": true,
+      "fullScopePassed": false,
+      "checks": [
+        "Same saved battleId and round after return/resume; old round does not replay",
+        "Shared result action creates one real instance, capture and memory; both duplicate confirmations return the same petId",
+        "Training/wild use identical live HUD and move geometry at 1280/1440; encounter route preserves explicit sessionId after a newer session",
+        "Explicit QA login restores the same capture and memory; location/watch are not restored",
+        "Ordinary production startup exposes no QA descriptor or qaTarget command and no simulated position"
+      ],
+      "missingElements": [
+        "wood",
+        "earth"
+      ],
+      "rendererErrors": [],
+      "artifact": "docs/implementation/evidence/discovery/2026-10-24-unified/evidence.json"
+    },
+    "sourceCommit": "89e203a88f92122b13f9ec028637e56755b05b6b",
+    "build": {
+      "schemaVersion": 1,
+      "builtAt": "2026-10-24T15:14:54.789Z",
+      "sourceCommit": "89e203a88f92122b13f9ec028637e56755b05b6b",
+      "sourceDirtyFiles": [],
+      "codeFingerprint": "fa8f3ab7aa4baf3b6821e3b01481c5fc54ec685539f994bf6160e4772272920e",
+      "compiledFingerprint": "8890428753c4146103b942c180c52634723e84fd1db8d98bf5bea70bb4ae9abe",
+      "codeFiles": 217,
+      "compiledFiles": 24
+    },
+    "realRandomCombat": true,
+    "battleId": "battle-05c029df-3fd8-4e2b-9b30-f4e6f3d15552",
+    "capturePetId": "pet-c63a111c-2aaa-48f6-9b76-dbdf4620a04e",
+    "fourActionAnimation": [
+      {
+        "action": "normal_attack",
+        "round": 1,
+        "phases": [
+          "rest",
+          "windup",
+          "release",
+          "impact",
+          "effects"
+        ]
+      },
+      {
+        "action": "normal_attack",
+        "round": 2,
+        "phases": [
+          "rest",
+          "windup",
+          "release",
+          "impact",
+          "effects"
+        ]
+      },
+      {
+        "action": "element_attack",
+        "round": 3,
+        "phases": [
+          "rest",
+          "windup",
+          "release",
+          "impact",
+          "effects"
+        ]
+      },
+      {
+        "action": "dodge",
+        "round": 4,
+        "phases": [
+          "rest",
+          "windup",
+          "release",
+          "impact",
+          "effects"
+        ]
+      },
+      {
+        "action": "ultimate",
+        "round": 7,
+        "phases": [
+          "rest",
+          "windup",
+          "release",
+          "impact",
+          "effects"
+        ]
+      }
+    ],
+    "ledger": {
+      "ownerAccountId": "qa:2dcdcfa9-a624-4cbb-893b-5e222ded6bcd:local-66f21578-fba7-42ec-835d-ec83e87bb682",
+      "captures": 1,
+      "ownedInstances": 1,
+      "memories": 1,
+      "reports": 3,
+      "petId": "pet-c63a111c-2aaa-48f6-9b76-dbdf4620a04e",
+      "resourceId": "builtin:lingjing-shiba-v2",
+      "validation": "simulated"
+    },
+    "coreFlowStatus": "passed actual production Electron UI, explicit return/resume, capture/cancel, two sizes, restart and SQLite",
+    "independentAcceptance": "pending main chat; final combined U01-U08 remains separate"
   },
   "deferredVerification": [
     "Genuine precise OS-position capture and deployed live cloud/readback are retained as unverified history; latest user U06 allows isolated simulation and deferral for this round"
