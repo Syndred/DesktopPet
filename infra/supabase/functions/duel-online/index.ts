@@ -479,6 +479,7 @@ async function handleJoinRoom(supabase, payload) {
     })
     .eq("id", room.id)
     .is("guest_user_id", null)
+    .eq("status", "waiting")
     .select("*")
     .single();
 

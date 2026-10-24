@@ -1,10 +1,12 @@
 const migrations = require("./migrations.cjs");
 const { BattleFeatureService, friendlyError } = require("./service.cjs");
+const { createBattleBackupAdapter } = require("./backup.cjs");
 
 module.exports = {
   id: "battle", migrations,
   register(services) {
     const service = new BattleFeatureService(services);
+    const removeBackup = services.get("backups")?.register(createBattleBackupAdapter(services.db));
     services.provide("battle", {
       beginWildChallenge: input => service.beginWildChallenge(input),
       beginTerritoryChallenge: input => service.beginTerritoryChallenge(input),
@@ -18,6 +20,6 @@ module.exports = {
         catch (error) { return { ok: false, code: error.code || "BATTLE_SERVICE_UNAVAILABLE", message: friendlyError(error) }; }
       };
     }
-    return { commands, dispose: () => service.dispose() };
+    return { commands, dispose: () => { removeBackup?.(); service.dispose(); } };
   }
 };

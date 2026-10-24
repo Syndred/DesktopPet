@@ -29,7 +29,7 @@ class BattleFeatureService {
   }
 
   owner(context) {
-    const owner = this.services.session.getOwnerAccountId();
+    const owner = this.verifiedOwner();
     if (!owner || (context?.ownerAccountId && owner !== context.ownerAccountId)) {
       throw fail("AUTH_REQUIRED", "请先登录当前账号");
     }
@@ -37,14 +37,20 @@ class BattleFeatureService {
   }
 
   user(owner) {
-    const user = this.services.session.getCurrentUser();
-    if (!user || user.id !== owner || !user.sessionToken) throw fail("ONLINE_LOGIN_REQUIRED", "请登录云端账号后使用好友对战");
+    const accounts = this.services.get("accounts");
+    const user = accounts?.requireRuntimeUser ? accounts.requireRuntimeUser() : this.services.session.getCurrentUser();
+    if (!user || (user.ownerAccountId || user.id) !== owner || !user.sessionToken) throw fail("ONLINE_LOGIN_REQUIRED", "请登录云端账号后使用好友对战");
     this.online.setCurrentUser(user);
     return user;
   }
 
   assertOwner(owner) {
-    if (this.services.session.getOwnerAccountId() !== owner) throw fail("AUTH_CHANGED", "账号已切换，请重新打开对战");
+    if (this.verifiedOwner() !== owner) throw fail("AUTH_CHANGED", "账号已切换，请重新打开对战");
+  }
+
+  verifiedOwner() {
+    const accounts = this.services.get("accounts");
+    return accounts?.getOwnerAccountId ? accounts.getOwnerAccountId() : this.services.session.getOwnerAccountId();
   }
 
   // Serialize commands per account, including ambiguous cloud responses.
@@ -59,6 +65,7 @@ class BattleFeatureService {
   ownedPet(owner, petId) {
     text(petId, "出战伙伴");
     const companions = this.services.get("companions");
+    this.importOwnedLegacy(owner, companions);
     let pet = companions?.getPet?.(owner, petId);
     if (!pet && companions?.getOwnedPet) pet = companions.getOwnedPet({ ownerAccountId: owner, petId });
     if (!pet) {
@@ -78,9 +85,27 @@ class BattleFeatureService {
 
   pets(owner) {
     const companions = this.services.get("companions");
+    this.importOwnedLegacy(owner, companions);
     const legacy = this.services.legacy?.runtimeDataStore;
     const pets = companions?.listPets?.(owner) || (legacy?.getAuthSession?.()?.currentUser?.id === owner ? legacy.getInventorySnapshot()?.pets : []) || [];
     return pets.map(pet => this.ownedPet(owner, pet.id || pet.petId));
+  }
+
+  ownedLegacy(owner) {
+    // Accounts maps old local IDs to local:<id>; read only its explicitly owned archive.
+    if (this.services.get("accounts") && this.services.db.prepare("SELECT 1 FROM sqlite_master WHERE type='table' AND name='account_legacy_data'").get()) {
+      const row = this.services.db.prepare("SELECT document FROM account_legacy_data WHERE owner_account_id=?").get(owner);
+      return row ? JSON.parse(row.document) : null;
+    }
+    const legacy = this.services.legacy?.runtimeDataStore;
+    if (legacy?.getAuthSession?.()?.currentUser?.id !== owner) return null;
+    return { ...legacy.getInventorySnapshot(), battleReports: legacy.listBattleReports(200) };
+  }
+
+  importOwnedLegacy(owner, companions) {
+    if (!companions?.importLegacyInventory) return;
+    const inventory = this.ownedLegacy(owner);
+    if (inventory?.pets) companions.importLegacyInventory(owner, inventory);
   }
 
   overview(_payload, context) {
@@ -171,10 +196,11 @@ class BattleFeatureService {
     const existing = this.store.reward(owner, session.id);
     if (existing) return this.applySeeds(owner, session, existing);
     const experience = session.winner === "player" ? 20 : 5;
-    const actionId = `battle:${session.room?.id || session.id}:${owner}`;
+    const cloudOwner = session.mode === "friend" ? session.context?.cloudUserId || owner : owner;
+    const actionId = `battle:${session.room?.id || session.id}:${cloudOwner}`;
     const reward = { actionId, petId: session.player.petId, experience, applied: false };
     if (session.mode === "friend" && !proof) return { ...reward, pendingReason: session.settlementError || "等待云端确认结算" };
-    if (session.mode === "friend" && (proof.owner_account_id !== owner || proof.room_id !== session.room.id ||
+    if (session.mode === "friend" && (proof.owner_account_id !== cloudOwner || proof.room_id !== session.room.id ||
         proof.pet_id !== session.player.petId || proof.action_id !== actionId ||
         proof.experience !== experience || proof.won !== (session.winner === "player"))) {
       throw fail("INVALID_SETTLEMENT_PROOF", "云端结算凭据与本场对战不一致");
@@ -202,13 +228,13 @@ class BattleFeatureService {
 
   applySeeds(owner, session, reward) {
     const garden = this.services.get("garden");
-    if (!reward.applied || reward.seeds || session.winner !== "player" || !garden?.grantSeeds) return reward;
+    if (!reward.applied || reward.seeds || !garden?.grantSeeds) return reward;
     const result = garden.grantSeeds({ ownerAccountId: owner },
       { actionId: `${reward.actionId}:seeds`, receiptId: session.id, source: "battle" },
       { ownerAccountId: owner, id: session.id, source: "battle", eligible: true });
     if (result?.then) throw fail("ASYNC_TRANSACTION_ADAPTER", "种子结算适配必须同步执行");
-    if (!result || result.ok === false) throw fail(result?.code || "SEED_REWARD_FAILED", result?.message || "种子奖励结算失败");
-    const next = { ...reward, seeds: result.data || result };
+    if (!result || (result.ok === false && result.code !== "REWARD_ALREADY_CLAIMED")) throw fail(result?.code || "SEED_REWARD_FAILED", result?.message || "种子奖励结算失败");
+    const next = { ...reward, seeds: result.code === "REWARD_ALREADY_CLAIMED" ? { alreadyClaimed: true } : result.data || result };
     this.services.db.prepare("UPDATE battle_reward_receipts SET data_json=? WHERE owner_account_id=? AND session_id=?").run(JSON.stringify(next), owner, session.id);
     return next;
   }
@@ -377,7 +403,8 @@ class BattleFeatureService {
     const existing = this.store.roomSession(owner, room.id);
     if (existing) return existing;
     const player = this.ownedPet(owner, petId);
-    const side = room.host_user_id === owner ? "host" : room.guest_user_id === owner ? "guest" : null;
+    const user = this.user(owner);
+    const side = room.host_user_id === user.id ? "host" : room.guest_user_id === user.id ? "guest" : null;
     if (!side) throw fail("ROOM_FORBIDDEN", "当前账号不是房间参与者");
     const peer = side === "host" ? "guest" : "host";
     if (room[`${side}_element`] !== player.element) throw fail("PET_ROOM_MISMATCH", "该伙伴五行与房间不一致，请使用原出战伙伴");
@@ -388,7 +415,7 @@ class BattleFeatureService {
       enemy: { petId: room[`${peer}_user_id`] || "waiting-peer", petName: room[`${peer}_pet_name`] || "等待好友", element: room[`${peer}_element`] || "wood" },
       snapshot: this.online.toBattleState(), room: copy(room), side,
       rounds: [], winner: null, pendingAction: null, historyComplete: true,
-      context: { authority: "supabase" }
+      context: { authority: "supabase", cloudUserId: user.id }
     };
     return this.store.save(owner, session);
   }
@@ -463,7 +490,7 @@ class BattleFeatureService {
     if (room.status === "finished" && session.winner && !this.store.reward(owner, session.id)) {
       const user = this.user(owner);
       try {
-        proof = await this.online.invoke("claim_battle_settlement", { userId: owner, sessionToken: user.sessionToken, roomId: room.id, petId: session.player.petId });
+        proof = await this.online.invoke("claim_battle_settlement", { userId: user.id, sessionToken: user.sessionToken, roomId: room.id, petId: session.player.petId });
         this.assertOwner(owner);
       } catch (error) {
         this.assertOwner(owner);
@@ -487,7 +514,7 @@ class BattleFeatureService {
       if (session.mode === "friend") {
         const user = this.user(owner);
         // Unlike the compatibility service's best-effort leave, require server acknowledgment.
-        const result = await this.online.invoke("leave_room", { userId: owner, sessionToken: user.sessionToken, roomId: session.room.id, reason: "user_leave" });
+        const result = await this.online.invoke("leave_room", { userId: user.id, sessionToken: user.sessionToken, roomId: session.room.id, reason: "user_leave" });
         this.assertOwner(owner);
         if (result.room?.status === "finished") return this.syncInternal(owner, session);
         session.room = result.room || session.room;
@@ -510,12 +537,12 @@ class BattleFeatureService {
   listReports(payload, context) {
     const owner = this.owner(context);
     const reports = this.store.reports(owner, payload.limit);
-    const legacyStore = this.services.legacy?.runtimeDataStore;
-    const legacy = legacyStore?.getAuthSession?.()?.currentUser?.id === owner ? legacyStore.listBattleReports(payload.limit || 60) : [];
+    const legacy = this.ownedLegacy(owner)?.battleReports || [];
     const known = new Set(reports.map(report => report.sessionId));
     for (const report of legacy) {
       if (!known.has(report.sessionId)) reports.push({ ...report, id: `legacy:${report.id}`, legacy: true, historyComplete: false,
-        rounds: report.rounds.map(round => ({ ...round, actions: { player: round.playerAction, enemy: round.enemyAction } }))
+        endedAt: report.endedAt || report.startedAt || '',
+        rounds: (report.rounds || []).map(round => ({ ...round, actions: round.actions || { player: round.playerAction, enemy: round.enemyAction } }))
       });
     }
     return reports.sort((a, b) => b.endedAt.localeCompare(a.endedAt)).slice(0, Math.max(1, Math.min(200, Number(payload.limit) || 60)));

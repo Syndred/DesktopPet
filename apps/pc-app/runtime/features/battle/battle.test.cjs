@@ -188,3 +188,26 @@ test("wild/territory adapters keep trusted challenge provenance and isolate owne
     assert.equal(f.service.listReports({}, other).length, 0);
   } finally { f.close(); }
 });
+
+test("real accounts local-ID migration keeps pets reachable and logout revokes battle access", { skip: !hasCompanions || !existsSync(resolve(__dirname, '../accounts/service.cjs')) }, async () => {
+  const f = setup(); let accounts;
+  try {
+    const { AccountsService } = require('../accounts/service.cjs');
+    const { migrations: accountMigrations } = require('../accounts/schema.cjs');
+    migrate(f.db, 'accounts', accountMigrations);
+    f.services.paths.legacyDataFile = join(f.folder, 'legacy.json');
+    // The real account service is used with cloud explicitly disabled, never a simulated cloud login.
+    accounts = new AccountsService({ services: f.services, remote: { enabled: false, setCurrentUser() {} } });
+    f.services.provide('accounts', accounts); f.services.session.setAdapter(accounts);
+    await accounts.ready;
+    assert.throws(() => f.service.overview({}, {}), error => error.code === 'AUTH_REQUIRED');
+    await accounts.authenticate({ provider: 'local', account: 'battle-local-test', password: 'battle-test-password', rememberSession: false });
+    const owner = accounts.getOwnerAccountId();
+    assert.notEqual(owner, f.owner);
+    assert.equal(f.service.overview({}, { ownerAccountId: owner }).pets.length, 6);
+    assert.equal(f.services.get('companions').listPets(owner).length, 6);
+    assert.throws(() => f.service.user(owner), /云端账号/);
+    await accounts.logout();
+    assert.throws(() => f.service.overview({}, { ownerAccountId: owner }), error => error.code === 'AUTH_REQUIRED');
+  } finally { accounts?.dispose(); f.close(); }
+});

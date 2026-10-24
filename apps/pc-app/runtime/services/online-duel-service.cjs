@@ -542,7 +542,8 @@ class OnlineDuelService {
     };
 
     const { data, error } = await this.client.functions.invoke(this.functionName, {
-      body: requestBody
+      body: requestBody,
+      timeout: 12000
     });
 
     if (error) {

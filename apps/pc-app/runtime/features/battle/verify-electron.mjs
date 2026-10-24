@@ -15,7 +15,7 @@ symlinkSync(join(runtime, 'assets'), join(overlayRuntime, 'assets'), 'junction')
 mkdirSync(join(overlayRuntime, 'features'));
 cpSync(join(runtime, 'features/battle'), join(overlayRuntime, 'features/battle'), { recursive: true });
 const dependencies = {};
-for (const id of ['companions', 'resources', 'garden']) {
+for (const id of ['accounts', 'companions', 'resources', 'garden']) {
   const file = process.env[`LINGJING_${id.toUpperCase()}_MODULE`] || join(runtime, 'features', id, 'index.cjs');
   if (existsSync(file)) {
     dependencies[id] = resolve(file);
@@ -24,13 +24,14 @@ for (const id of ['companions', 'resources', 'garden']) {
 }
 assert.ok(dependencies.companions, 'The real companions module is required for experience acceptance');
 cpSync(resolve('apps/pc-app/dist'), join(project, 'apps/pc-app/dist'), { recursive: true });
-const bootstrap = `${dependencies.resources ? `require(${JSON.stringify(dependencies.resources)}).registerResourceScheme(require('electron').protocol);\n` : ''}require('./apps/pc-app/dist/main/index.cjs');`;
+const bootstrap = `require('./apps/pc-app/dist/main/index.cjs');`;
 writeFileSync(join(project, 'bootstrap.cjs'), bootstrap);
 writeFileSync(join(project, 'package.json'), JSON.stringify({ name: 'lingjing-battle-verification', version: '0.0.0', main: 'bootstrap.cjs' }));
 const profile = join(output, 'profile');
 mkdirSync(profile);
 const legacy = new RuntimeDataStore({ filePath: join(profile, 'pet-runtime-data.json'), sessionFilePath: join(profile, 'pet-auth-session.json') });
-legacy.registerUser(`battle-ui-${Date.now()}`, 'isolated-local-verification', '并肩验证');
+const account = `battle-ui-${Date.now()}`;
+legacy.registerUser(account, 'isolated-local-verification', '并肩验证');
 const env = { ...process.env, PET_USER_DATA_DIR: profile };
 delete env.ELECTRON_RUN_AS_NODE;
 const checks = [], errors = [], logs = [];
@@ -43,6 +44,16 @@ async function launch() {
   app.process().stderr?.on('data', data => logs.push(String(data)));
   const page = await app.firstWindow();
   page.on('pageerror', error => errors.push(error.message));
+  await page.waitForFunction(() => Boolean(window.lingjing));
+  const login = await page.evaluate(account => window.lingjing.invoke('accounts', 'login', { provider: 'local', account, password: 'isolated-local-verification', rememberSession: true }), account);
+  if (!login.ok && login.code !== 'COMMAND_UNAVAILABLE') throw new Error(JSON.stringify(login));
+  // Use a real independently adopted 2D instance while foundation's existing GLB CSP issue is open.
+  if (process.env.LINGJING_BATTLE_VISUAL === '2d') {
+    const adopted = await page.evaluate(() => window.lingjing.invoke('companions', 'adopt', { actionId: 'battle-ui-adoption', templateId: 'big-fish-gentle', name: '鱼丸', showOnDesktop: false }));
+    assert.equal(adopted.ok, true, JSON.stringify(adopted));
+    const selected = await page.evaluate(petId => window.lingjing.invoke('companions', 'select', { actionId: 'battle-ui-party', petId, slot: 'battlePetId' }), adopted.data.pet.petId);
+    assert.equal(selected.ok, true);
+  }
   await page.getByRole('navigation', { name: '主导航' }).getByRole('button', { name: '对战中心', exact: true }).click();
   await page.getByRole('heading', { name: '和伙伴，并肩出战。' }).waitFor();
   return { app, page };
@@ -56,12 +67,19 @@ try {
   let instance = await launch(); application = instance.app; let page = instance.page;
   await page.getByRole('button', { name: '开始训练', exact: true }).waitFor();
   let overview = await api(page, 'overview');
-  const petId = overview.pets.find(pet => pet.element === 'fire')?.petId || overview.pets[0].petId;
+  const petId = process.env.LINGJING_BATTLE_VISUAL === '2d' ? overview.selectedPetId : overview.pets.find(pet => pet.element === 'fire')?.petId || overview.pets[0].petId;
   await page.getByLabel('选择出战伙伴').selectOption(petId);
   await page.getByLabel('训练对手五行').selectOption('metal');
   if (dependencies.resources) {
-    await page.locator('model-viewer[loaded]').first().waitFor({ timeout: 25000 });
-    checks.push('existing GLB rendered in the real Electron window through resources.resolve');
+    if (process.env.LINGJING_BATTLE_VISUAL === '2d') {
+      await page.locator('.battle-portrait .resource-stage[data-status="ready"] canvas').first().waitFor({ timeout: 25000 });
+      const bounds = await page.locator('.battle-portrait canvas').first().boundingBox();
+      assert.ok(bounds.width > 100 && bounds.height > 100, `Battle resource collapsed: ${JSON.stringify(bounds)}`);
+      checks.push('real adopted 2D instance rendered through the shared resources ResourceStage/Pixi adapter');
+    } else {
+      await page.locator('model-viewer[loaded]').first().waitFor({ timeout: 25000 });
+      checks.push('existing GLB rendered in the real Electron window through resources.resolve');
+    }
   }
   await page.screenshot({ path: join(output, '01-training.png') });
   const beforePets = await page.evaluate(() => window.lingjing.invoke('companions', 'list'));

@@ -31,7 +31,8 @@ class BattleStore {
     this.db.prepare("INSERT INTO battle_action_receipts(owner_account_id,action_id,session_id,command_json) VALUES(?,?,?,?)").run(owner, actionId, sessionId, JSON.stringify(command));
   }
   resolve(owner, actionId, result) {
-    this.db.prepare("UPDATE battle_action_receipts SET result_json=? WHERE owner_account_id=? AND action_id=?").run(JSON.stringify(result), owner, actionId);
+    const receipt = result?.snapshot ? { sessionId: result.id, revision: result.revision, resolvedRound: result.snapshot.round } : result;
+    this.db.prepare("UPDATE battle_action_receipts SET result_json=? WHERE owner_account_id=? AND action_id=?").run(JSON.stringify(receipt), owner, actionId);
   }
   report(owner, id) {
     const row = this.db.prepare("SELECT data_json FROM battle_reports_v2 WHERE owner_account_id=? AND id=?").get(owner, id);
