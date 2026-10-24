@@ -4,14 +4,17 @@
 
 一、已批准的设计与功能
 
+当前范围修订：scope-2d-ui-first.txt（用户最新要求：以 UI 图为准，仅 2D，组件库与动效采用主流开源方案）。与初始目标文字冲突时以这份修订为准。
+
 设计入口：docs/design/2026-10-24/full-ui/index.html
 页面与流程：docs/design/2026-10-24/full-ui/design-index.txt
 菜园规则：docs/design/2026-10-24/full-ui/garden-feature-plan.txt
 开源清单：docs/design/2026-10-24/full-ui/open-source-reuse.txt
 图稿来源：docs/design/2026-10-24/full-ui/generation-results.json
-19 个页面、10 张页面设计板、3 个 Logo 文件均为实施参考。图中数值是示例，现有规则优先。
+19 个页面、10 张页面设计板、3 个 Logo 文件均为界面验收依据。第 13 页沿用布局改成 2D 动画资源导入；图中数值是示例，现有规则优先。
 奶白与雾蓝、中文优先、平面按钮；品牌是对称四芒星 / 菱形，不使用鲸鱼 Logo。大肥鱼角色可保留鲸鱼娘形象。
-保留原有对战、联机、定位入口、捕捉、领地、背包、养成、账号、历史记录和 3D 模型导入。
+保留原有对战、联机、定位入口、捕捉、领地、背包、养成、账号和历史记录；本版只实现 2D，不兼容旧 3D 渲染与导入，原始用户文件保留。
+前端统一 React + TypeScript；公共组件采用 shadcn/ui 的 Radix 方案与 Tailwind；界面动效采用 Motion for React；角色舞台采用 PixiJS。不得另建单文件 HTML 业务界面或自行重写基础交互与动画引擎。
 
 二、运行设置与工作区
 
@@ -51,7 +54,7 @@
    拥有 ui/src/features/conversations、runtime/features/conversations、对应 shared-types/features/conversations。
    分支 codex/lingjing-conversations；工作树名称 lingjing-conversations。
 
-07 resources：角色资源库、2D 动画包、3D GLB/GLTF、校准与动画映射。
+07 resources：2D 角色资源库、动画包、图集、动作映射、锚点/缩放/帧率校准。
    拥有 ui/src/features/resources、runtime/features/resources、对应 shared-types/features/resources。
    分支 codex/lingjing-resources；工作树名称 lingjing-resources。
 
@@ -75,7 +78,7 @@ SQLite 连接与迁移事务由 foundation 提供；每功能自己的迁移放�
 喂养：garden 负责库存扣减与食品效果；companions 暴露对指定 petId 更新养成的事务适配，二者通过公共数据库服务原子提交。
 捕捉：discovery 发起现有 battle 挑战；胜利并确认后由 companions 创建实例，按 actionId 去重。
 领地：garden 保留既有归属和捕捉收益；不擅自改动对战公式。
-模型：resources 暴露资源解析 / 显示适配；companions 和 battle 使用同一资源引用，不各自复制模型库。
+2D 资源：resources 暴露统一资源解析 / 显示接口；companions 和 battle 使用同一资源引用与 PixiJS 舞台，不各自复制资源库或动画引擎。
 账号：accounts 提供旧 runtime_accounts 文本 ID 与新存档归属的稳定映射，不盲目套用旧 auth.uid UUID 表。
 
 五、功能约束
@@ -87,7 +90,7 @@ SQLite 连接与迁移事务由 foundation 提供；每功能自己的迁移放�
 定位：当前服务仍是 SimulatedMapProvider；需要接真实系统定位，并区分权限拒绝、不可用、精度不足与演示模式。
 对战：复用当前源代码规则；旧需求文档中部分数值可能过时，不能照图或旧文档改回旧公式。
 AI：密钥只走主进程 / 安全存储；单宠物记录、记忆删除与人设独立；不能把本地台词伪称在线模型回复。
-资源：保留既有 GLB 导入与 3D 模型；不用默认授权不清的桌宠角色素材；代码与素材许可分别记录。
+资源：本版仅接入 2D 动画；不再兼容 GLB/GLTF/VRM，不删除历史用户文件；不用授权不清的桌宠角色素材，代码与素材许可分别记录。
 
 六、依赖与集成
 
@@ -95,6 +98,7 @@ foundation 先交付最小可运行的新壳、公共契约和旧能力适配，
 其他会话先实现自己目录内的领域逻辑与组件；公共依赖未就绪时继续独立工作，不在共享源检出改动基础文件。
 可只读查看 foundation 分支与其他功能分支，必要时把 foundation 的基础提交合入自己的独立工作树。
 各功能会话提交代码和 docs/implementation/status/<module>.json，记录分支、提交、验证结果、实际运行证据与剩余依赖。
+交付记录同时列明真实采用的组件/动效/开源模块、版本与许可、使用位置、必要自研差异、UI 图稿对照和仅 2D 检查；只安装依赖不算采用完成。
 功能会话不相互合并功能分支；foundation 负责收集七个功能分支、解决冲突、补公共 wiring 和最终 Windows 全流程验收。
 会话标识保存在共享源检出的 docs/implementation/feature-chats.json；可通过 list_threads / read_thread / wait_threads 只读跟踪。
 创建会话不等于功能完成；静态 HTML、假 API、填好表单、源码字符串断言或纯 mock 测试都不能代替实际运行验收。

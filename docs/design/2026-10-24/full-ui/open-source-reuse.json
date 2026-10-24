@@ -24,7 +24,8 @@
       "defaultBranch": "main",
       "archived": false,
       "pushedAt": "2026-10-24T11:02:30Z",
-      "reviewType": "maintainer README / selected license files / selected source files / GitHub repository metadata; not integration-tested"
+      "reviewType": "maintainer README / selected license files / selected source files / GitHub repository metadata; not integration-tested",
+      "currentImplementation": "统一使用官方支持的 Radix 路线，按图定制公共组件，保留可访问交互"
     },
     {
       "repo": "pixijs/pixijs",
@@ -52,45 +53,53 @@
       "repo": "google/model-viewer",
       "url": "https://github.com/google/model-viewer",
       "license": "Apache-2.0",
-      "decision": "保留现有集成",
+      "decision": "本版不采用：用户要求仅 2D，不兼容旧 3D",
       "area": "GLB 模型",
       "defaultBranch": "master",
       "archived": false,
       "pushedAt": "2026-10-23T18:03:42Z",
-      "reviewType": "maintainer README / selected license files / selected source files / GitHub repository metadata; not integration-tested"
+      "reviewType": "maintainer README / selected license files / selected source files / GitHub repository metadata; not integration-tested",
+      "decisionBeforeScopeRevision": "保留现有集成",
+      "inCurrentScope": false
     },
     {
       "repo": "mrdoob/three.js",
       "url": "https://github.com/mrdoob/three.js",
       "license": "MIT",
-      "decision": "复杂场景备选",
+      "decision": "本版不采用：用户要求仅 2D，不兼容旧 3D",
       "area": "3D 场景",
       "defaultBranch": "dev",
       "archived": false,
       "pushedAt": "2026-10-24T08:36:41Z",
-      "reviewType": "maintainer README / selected license files / selected source files / GitHub repository metadata; not integration-tested"
+      "reviewType": "maintainer README / selected license files / selected source files / GitHub repository metadata; not integration-tested",
+      "decisionBeforeScopeRevision": "复杂场景备选",
+      "inCurrentScope": false
     },
     {
       "repo": "pmndrs/react-three-fiber",
       "url": "https://github.com/pmndrs/react-three-fiber",
       "license": "MIT",
-      "decision": "复杂场景备选",
+      "decision": "本版不采用：用户要求仅 2D，不兼容旧 3D",
       "area": "React 3D",
       "defaultBranch": "master",
       "archived": false,
       "pushedAt": "2026-10-21T15:24:39Z",
-      "reviewType": "maintainer README / selected license files / selected source files / GitHub repository metadata; not integration-tested"
+      "reviewType": "maintainer README / selected license files / selected source files / GitHub repository metadata; not integration-tested",
+      "decisionBeforeScopeRevision": "复杂场景备选",
+      "inCurrentScope": false
     },
     {
       "repo": "pixiv/three-vrm",
       "url": "https://github.com/pixiv/three-vrm",
       "license": "MIT",
-      "decision": "VRM 角色备选",
+      "decision": "本版不采用：用户要求仅 2D，不兼容旧 3D",
       "area": "VRM",
       "defaultBranch": "dev",
       "archived": false,
       "pushedAt": "2026-10-22T05:14:04Z",
-      "reviewType": "maintainer README / selected license files / selected source files / GitHub repository metadata; not integration-tested"
+      "reviewType": "maintainer README / selected license files / selected source files / GitHub repository metadata; not integration-tested",
+      "decisionBeforeScopeRevision": "VRM 角色备选",
+      "inCurrentScope": false
     },
     {
       "repo": "assistant-ui/assistant-ui",
@@ -234,6 +243,42 @@
       "archived": false,
       "pushedAt": "2026-10-21T15:46:42Z",
       "reviewType": "maintainer README / selected license files / selected source files / GitHub repository metadata; not integration-tested"
+    },
+    {
+      "repo": "radix-ui/primitives",
+      "url": "https://github.com/radix-ui/primitives",
+      "license": "MIT",
+      "decision": "优先采用，需实际接入验收",
+      "area": "Radix 交互基础",
+      "integration": "shadcn/ui 统一组件路线；焦点、键盘、弹层和 ARIA",
+      "defaultBranch": "main",
+      "archived": false,
+      "pushedAt": "2026-10-14T21:52:47Z",
+      "reviewType": "Official documentation and maintainer repository license metadata; implementation assigned to foundation; not integration-tested by this research pass"
+    },
+    {
+      "repo": "tailwindlabs/tailwindcss",
+      "url": "https://github.com/tailwindlabs/tailwindcss",
+      "license": "MIT",
+      "decision": "优先采用，需实际接入验收",
+      "area": "公共主题与样式",
+      "integration": "Vite 集成、设计变量和组件变体",
+      "defaultBranch": "main",
+      "archived": false,
+      "pushedAt": "2026-10-19T15:50:56Z",
+      "reviewType": "Official documentation and maintainer repository license metadata; implementation assigned to foundation; not integration-tested by this research pass"
+    },
+    {
+      "repo": "motiondivision/motion",
+      "url": "https://github.com/motiondivision/motion",
+      "license": "MIT",
+      "decision": "优先采用，需实际接入验收",
+      "area": "React 界面动效",
+      "integration": "统一页面/列表/弹层的入场退出与布局动画",
+      "defaultBranch": "main",
+      "archived": false,
+      "pushedAt": "2026-10-23T15:06:32Z",
+      "reviewType": "Official documentation and maintainer repository license metadata; implementation assigned to foundation; not integration-tested by this research pass"
     }
   ],
   "assetPacks": [
@@ -241,13 +286,17 @@
       "name": "Kenney Food Kit",
       "url": "https://kenney.nl/assets/food-kit",
       "license": "CC0",
-      "type": "3D food/kitchen assets"
+      "type": "3D food/kitchen assets",
+      "inCurrentScope": false,
+      "currentScopeReason": "此前核对的资源包为 3D，本版只做 2D；保留来源记录"
     },
     {
       "name": "Kenney Nature Kit",
       "url": "https://kenney.nl/assets/nature-kit",
       "license": "CC0",
-      "type": "3D nature assets"
+      "type": "3D nature assets",
+      "inCurrentScope": false,
+      "currentScopeReason": "此前核对的资源包为 3D，本版只做 2D；保留来源记录"
     }
   ],
   "primaryFilesReviewed": [
@@ -267,6 +316,25 @@
     "https://github.com/statelyai/xstate/blob/main/LICENSE",
     "https://github.com/assistant-ui/assistant-ui/blob/main/LICENSE",
     "https://github.com/boardgameio/boardgame.io/blob/main/README.md",
-    "https://github.com/colyseus/colyseus/blob/master/README.md"
-  ]
+    "https://github.com/colyseus/colyseus/blob/master/README.md",
+    "https://api.github.com/repos/radix-ui/primitives",
+    "https://api.github.com/repos/tailwindlabs/tailwindcss",
+    "https://api.github.com/repos/motiondivision/motion",
+    "https://ui.shadcn.com/docs/changelog/2026-07-base-ui-default",
+    "https://tailwindcss.com/docs/installation/using-vite",
+    "https://motion.dev/docs/react-installation",
+    "https://motion.dev/docs/react-layout-animations",
+    "https://motion.dev/docs/react-animate-presence"
+  ],
+  "currentImplementationScope": {
+    "revisedOn": "2026-10-24",
+    "uiAuthority": "Approved 19-page UI boards; page 13 layout adapted for 2D",
+    "rendering": "2D only; no GLB/GLTF/VRM compatibility",
+    "components": "shadcn/ui with Radix primitives",
+    "styling": "Tailwind CSS with shared design tokens",
+    "uiMotion": "Motion for React (motion/react)",
+    "characterAnimation": "PixiJS",
+    "implementationPlan": "../../../implementation/scope-2d-ui-first.txt",
+    "status": "Implementation requested in all 8 feature chats; this research record is not integration acceptance"
+  }
 }
