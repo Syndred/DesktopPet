@@ -15,7 +15,7 @@ symlinkSync(join(runtime, 'assets'), join(overlayRuntime, 'assets'), 'junction')
 mkdirSync(join(overlayRuntime, 'features'));
 cpSync(join(runtime, 'features/battle'), join(overlayRuntime, 'features/battle'), { recursive: true });
 const dependencies = {};
-for (const id of ['accounts', 'companions', 'resources', 'garden']) {
+for (const id of ['accounts', 'companions', 'resources', 'garden', 'discovery', 'conversations']) {
   const file = process.env[`LINGJING_${id.toUpperCase()}_MODULE`] || join(runtime, 'features', id, 'index.cjs');
   if (existsSync(file)) {
     dependencies[id] = resolve(file);
@@ -59,7 +59,8 @@ async function launch() {
   {
     const inventory = await page.evaluate(() => window.lingjing.invoke('companions', 'list'));
     assert.equal(inventory.ok, true);
-    const templates = inventory.data.templates.slice(0, 4);
+    const templates = inventory.data.templates.slice(0, 6);
+    assert.equal(templates.length, 6, 'The canonical roster must expose all six distinct companions');
     let chosen;
     for (const [index, template] of templates.entries()) {
       const adopted = await page.evaluate(({ template, index }) => window.lingjing.invoke('companions', 'adopt', { actionId: `battle-ui-adoption-${template.templateId}`, templateId: template.templateId, name: index === 0 ? '鱼丸' : template.name, showOnDesktop: false }), { template, index });
@@ -122,11 +123,12 @@ async function captureBattleLayout(page, name) {
   await captureSettledPage(page, `${name}.png`);
   const metrics = await page.evaluate(() => {
     const read = element => ({ rect: element.getBoundingClientRect().toJSON(), font: { family: getComputedStyle(element).fontFamily, size: getComputedStyle(element).fontSize, weight: getComputedStyle(element).fontWeight }, marginBottom: getComputedStyle(element).marginBottom });
-    return { viewport: { width: innerWidth, height: innerHeight, dpr: devicePixelRatio }, title: read(document.querySelector('.page-header h1')), tabs: read(document.querySelector('.battle-tabs')), arena: read(document.querySelector('.battle-arena')), sidebar: read(document.querySelector('.battle-side-panel')), cards: [...document.querySelectorAll('.battle-move')].map(element => ({ action: element.className, selected: element.getAttribute('aria-pressed'), ...read(element), art: read(element.querySelector('.battle-skill-art')), copy: read(element.querySelector('.battle-skill-copy')), status: read(element.querySelector('.battle-skill-status')) })), party: [...document.querySelectorAll('.battle-party-grid > div')].map(element => ({ name: element.textContent, petId: element.querySelector('[data-pet-id]')?.getAttribute('data-pet-id') })), resources: [...document.querySelectorAll('.battle-stage .resource-stage')].map(element => ({ petId: element.getAttribute('data-pet-id'), resourceId: element.getAttribute('data-resource-id'), action: element.getAttribute('data-action') })) };
+    return { viewport: { width: innerWidth, height: innerHeight, dpr: devicePixelRatio }, title: read(document.querySelector('.page-header h1')), tabs: read(document.querySelector('.battle-tabs')), arena: read(document.querySelector('.battle-arena')), sidebar: read(document.querySelector('.battle-side-panel')), hud: [...document.querySelectorAll('.battle-arena-top .combatant-status')].map(element => ({ enemy: element.classList.contains('enemy'), ...read(element), clip: getComputedStyle(element, '::before').clipPath, content: [...element.querySelectorAll('.combatant-title strong, .combatant-title > span, progress, .battle-meter-row b')].map(read) })), portraits: [...document.querySelectorAll('.battle-portrait.small svg[data-framing]')].map(element => ({ resourceId: element.getAttribute('data-resource-id'), framing: element.getAttribute('data-framing'), viewBox: element.getAttribute('viewBox') })), cards: [...document.querySelectorAll('.battle-move')].map(element => ({ action: element.className, selected: element.getAttribute('aria-pressed'), ...read(element), art: read(element.querySelector('.battle-skill-art')), copy: read(element.querySelector('.battle-skill-copy')), title: read(element.querySelector('strong')), description: read(element.querySelector('small')), status: read(element.querySelector('.battle-skill-status')) })), party: [...document.querySelectorAll('.battle-party-grid > div')].map(element => ({ name: element.textContent, petId: element.querySelector('[data-pet-id]')?.getAttribute('data-pet-id') })), resources: [...document.querySelectorAll('.battle-stage .resource-stage')].map(element => ({ petId: element.getAttribute('data-pet-id'), resourceId: element.getAttribute('data-resource-id'), action: element.getAttribute('data-action') })) };
   });
   writeFileSync(join(output, `${name}.json`), JSON.stringify(metrics, null, 2));
   assert.equal(metrics.cards.length, 4);
   assert.ok(Number(metrics.title.font.weight) >= 700);
+  assert.ok(metrics.title.rect.top >= 70, 'A new battle must not inherit a scrolled training header');
   for (const card of metrics.cards) {
     assert.ok(card.art.rect.width >= 44);
     assert.ok(card.copy.rect.left >= card.art.rect.right);
@@ -135,13 +137,45 @@ async function captureBattleLayout(page, name) {
   }
   assert.ok(Math.abs(metrics.arena.rect.top - metrics.sidebar.rect.top) <= 1);
   assert.ok(Math.abs(metrics.arena.rect.bottom - metrics.sidebar.rect.bottom) <= 2);
+  assert.equal(metrics.portraits.length, 6);
+  assert.ok(metrics.portraits.every(item => item.framing === 'portrait'));
+  for (const hud of metrics.hud) for (const content of hud.content) {
+    assert.ok(content.rect.left >= hud.rect.left + (hud.enemy ? 8 : 0));
+    assert.ok(content.rect.right <= hud.rect.right - (hud.enemy ? 0 : 8));
+    assert.ok(content.rect.top >= hud.rect.top);
+    assert.ok(content.rect.bottom <= hud.rect.bottom);
+  }
   return metrics;
+}
+async function captureCommandStates(page, rules) {
+  await page.locator('.battle-move.element_attack').hover();
+  await page.waitForTimeout(180);
+  const hover = await page.locator('.battle-move.element_attack').evaluate(element => ({ shadow: getComputedStyle(element).boxShadow, transform: getComputedStyle(element).transform }));
+  assert.equal(hover.shadow, 'none'); assert.equal(hover.transform, 'none');
+  await page.screenshot({ path: join(output, 'actions-hover.png') });
+  await page.locator('.battle-move.normal_attack').focus(); await page.keyboard.press('Tab');
+  const focusVisible = await page.evaluate(() => document.activeElement?.matches('.battle-move.element_attack:focus-visible'));
+  assert.equal(focusVisible, true);
+  await page.screenshot({ path: join(output, 'actions-keyboard-focus.png') });
+  await page.keyboard.press('Escape');
+  const unavailable = await page.locator('.battle-move.ultimate').isDisabled();
+  if (unavailable) {
+    await page.locator('.battle-move-tooltip').filter({ has: page.locator('.battle-move.ultimate') }).focus();
+    await page.getByRole('tooltip').filter({ hasText: `需要至少 ${rules.ultimateAnger} 怒气` }).waitFor();
+    await page.screenshot({ path: join(output, 'actions-unavailable-tooltip.png') });
+    await page.keyboard.press('Escape');
+  }
+  return { hover, focusVisible, ultimateDisabled: unavailable };
 }
 async function verify() {
   let instance = await launch(); application = instance.app; let page = instance.page;
   await page.getByRole('button', { name: '开始训练', exact: true }).waitFor();
   let overview = await api(page, 'overview');
   const petId = overview.selectedPetId;
+  const combatProfile = await page.evaluate(petId => window.lingjing.invoke('companions', 'combatProfile', { petId }), petId);
+  assert.equal(combatProfile.ok, true);
+  assert.equal(combatProfile.data.training.maxHp, overview.rules.maxHp);
+  assert.notEqual(combatProfile.data.growthStats.hp, overview.rules.maxHp);
   await page.getByRole('combobox', { name: '选择出战伙伴' }).click();
   await page.getByRole('option', { name: /^鱼丸 ·/ }).click();
   await page.getByRole('combobox', { name: '训练对手五行' }).click();
@@ -164,23 +198,47 @@ async function verify() {
   assert.equal(beforePets.ok, true);
   await page.getByRole('button', { name: '开始训练', exact: true }).click();
   await page.getByRole('region', { name: '当前对战' }).waitFor();
+  await page.locator('.battle-stage .resource-stage[data-status="ready"] canvas').nth(1).waitFor();
   overview = await api(page, 'overview'); sessionId = overview.session.id;
+  assert.equal(overview.session.snapshot.player.maxHp, combatProfile.data.training.maxHp);
   for (let i = 0; i < 3; i++) {
     await page.locator('.battle-move.element_attack').click();
     await page.waitForFunction(({ id, round }) => window.lingjing.invoke('battle', 'snapshot', { sessionId: id }).then(result => result.ok && result.data.snapshot.round >= round), { id: sessionId, round: i + 1 });
+    if (i === 2) {
+      await page.waitForFunction(() => {
+        const stage = document.querySelector('.battle-stage[data-round="3"]');
+        const host = stage?.querySelector('.battle-portrait:first-child [data-action="skill"][data-fallback="false"] .resource-sprite-host');
+        return host?.getAttribute('data-frame') === '0';
+      });
+      await page.waitForFunction(() => document.querySelector('.battle-stage > .battle-portrait:first-child [data-action="skill"] .resource-sprite-host')?.getAttribute('data-frame') === '1');
+      await page.screenshot({ path: join(output, 'action-skill-release.png') });
+      checks.push('third consecutive real elemental action restarts the canonical skill clip and advances from charge to its separate release frame');
+    }
   }
   const saved = await api(page, 'snapshot', { sessionId });
   assert.equal(await page.locator('.battle-page model-viewer').count(), 0);
   await page.locator('.battle-stage > .battle-portrait').nth(1).locator('.resource-stage[data-status="ready"]').waitFor();
   assert.equal(await page.locator('.battle-stage canvas').count(), 2);
   checks.push('both actors use real 2D sprite atlases; battlefield contains two live Pixi canvases and no 3D element');
+  await page.waitForFunction(() => [...document.querySelectorAll('.battle-party-grid .battle-portrait')].length === 4 && [...document.querySelectorAll('.battle-party-grid .battle-portrait')].every(element => element.getAttribute('data-resource-id')));
+  const identities = await page.locator('.battle-portrait').evaluateAll(elements => elements.map(element => ({ petId: element.getAttribute('data-pet-id'), resourceId: element.getAttribute('data-resource-id') })));
+  const playerResources = identities.filter(item => item.petId === petId).map(item => item.resourceId);
+  assert.ok(playerResources.length >= 3);
+  assert.equal(new Set(playerResources).size, 1);
+  assert.equal(playerResources[0], combatProfile.data.resourceId);
+  const partyResources = await page.locator('.battle-party-grid .battle-portrait').evaluateAll(elements => elements.map(element => element.getAttribute('data-resource-id')));
+  assert.equal(new Set(partyResources).size, 4);
+  checks.push('six real adoptions supply four distinct canonical party portraits; HUD, actor and party share the same pet resource');
+  checks.push('companion combatProfile, battle rules and actual HUD agree on normalized HP while original growth HP is preserved');
   if (visualOnly) {
     const standard = await captureBattleLayout(page, '02-live-1280');
+    const commandStates = await captureCommandStates(page, overview.rules);
     await sizeWindow(application, page, 1440, 900);
     const wide = await captureBattleLayout(page, '02-live-1440');
     const state = await api(page, 'snapshot', { sessionId });
-    writeFileSync(join(output, 'visual-preview.json'), JSON.stringify({ at: new Date().toISOString(), source: 'Real Electron and real adoptions; visual iteration only, not final integrated acceptance', standard, wide, state, checks, errors }, null, 2));
-    console.log(JSON.stringify({ output, passed: true, mode: 'visual-preview' }));
+    assert.deepEqual(errors, []);
+    writeFileSync(join(output, 'visual-recheck.json'), JSON.stringify({ at: new Date().toISOString(), source: 'Focused native HUD, command and canonical portrait recheck; not a full regression or cloud acceptance', standard, wide, state, combatProfile: combatProfile.data, identities, commandStates, checks, errors }, null, 2));
+    console.log(JSON.stringify({ output, passed: true, mode: 'targeted-visual-recheck' }));
     return;
   }
   await page.locator('.battle-move-tooltip').filter({ has: page.locator('.battle-move.ultimate') }).focus();
@@ -214,7 +272,21 @@ async function verify() {
     await page.emulateMedia({ reducedMotion: 'no-preference' });
     checks.push('app animation switch and OS reduced motion propagate through shared MotionConfig; actual sprite frames remain still (pixel comparison permits only one-level GPU rounding)');
   }
-  await captureSettledPage(page, '02-live.png');
+  await captureBattleLayout(page, '02-live-1280');
+  cpSync(join(output, '02-live-1280.png'), join(output, '02-live.png'));
+  await page.locator('.battle-move.element_attack').hover();
+  await page.waitForTimeout(200);
+  await page.locator('.battle-moves').screenshot({ path: join(output, 'actions-hover.png') });
+  const hover = await page.locator('.battle-move.element_attack').evaluate(element => ({ shadow: getComputedStyle(element).boxShadow, transform: getComputedStyle(element).transform, border: getComputedStyle(element).borderColor }));
+  assert.equal(hover.shadow, 'none'); assert.equal(hover.transform, 'none');
+  await page.locator('.battle-move.normal_attack').focus(); await page.keyboard.press('Tab');
+  assert.equal(await page.evaluate(() => document.activeElement?.matches('.battle-move.element_attack:focus-visible')), true);
+  await page.locator('.battle-moves').screenshot({ path: join(output, 'actions-keyboard-focus.png') });
+  await page.keyboard.press('Escape');
+  await sizeWindow(application, page, 1440, 900);
+  await captureBattleLayout(page, '02-live-1440');
+  await sizeWindow(application, page, 1280, 844);
+  checks.push('1280 and 1440 native windows preserve system DPI; four equal command cards, colored art, horizontal copy, aligned status strips and matching sidebar bounds verified');
   await application.close(); application = null;
   instance = await launch(); application = instance.app; page = instance.page;
   await page.getByRole('region', { name: '当前对战' }).waitFor();
@@ -224,6 +296,10 @@ async function verify() {
   let session = restored;
   for (let i = 0; i < 100 && session.status === 'active'; i++) {
     const action = session.snapshot.player.anger >= 50 ? 'ultimate' : 'element_attack';
+    if (action === 'ultimate' && !existsSync(join(output, 'actions-ultimate-ready.png'))) {
+      assert.equal(await page.locator('.battle-move.ultimate').isEnabled(), true);
+      await page.locator('.battle-moves').screenshot({ path: join(output, 'actions-ultimate-ready.png') });
+    }
     await page.locator(`.battle-move.${action}`).click();
     const previous = session.snapshot.round;
     await page.waitForFunction(({ id, round }) => window.lingjing.invoke('battle', 'snapshot', { sessionId: id }).then(result => result.ok && result.data.snapshot.round > round), { id: sessionId, round: previous });
@@ -237,11 +313,16 @@ async function verify() {
   assert.equal(await page.locator('.battle-timeline-scroll [data-slot="scroll-area-viewport"]').count(), 1);
   await captureSettledPage(page, '03-report.png');
   const report = await api(page, 'getReport', { reportId: sessionId });
+  assert.equal(report.rules.maxHp, combatProfile.data.training.maxHp);
+  const reportIdentities = await page.locator(`.battle-portrait[data-pet-id="${petId}"]`).evaluateAll(elements => elements.map(element => element.getAttribute('data-resource-id')));
+  assert.ok(reportIdentities.length >= 2);
+  assert.ok(reportIdentities.every(id => id === combatProfile.data.resourceId));
   assert.equal(report.rounds.length, session.snapshot.round);
   assert.deepEqual(report.rounds.at(-1).state, session.snapshot);
   const afterPets = await page.evaluate(() => window.lingjing.invoke('companions', 'list'));
   const before = beforePets.data.pets.find(pet => pet.petId === petId).growth;
   const after = afterPets.data.pets.find(pet => pet.petId === petId).growth;
+  assert.deepEqual(after.stats, before.stats);
   assert.equal((after.level - before.level) * 100 + after.experience - before.experience, session.winner === 'player' ? 20 : 5);
   for (const pet of beforePets.data.pets.filter(pet => pet.petId !== petId)) assert.deepEqual(afterPets.data.pets.find(other => other.petId === pet.petId), pet);
   await api(page, 'retrySettlement', { sessionId }); await api(page, 'retrySettlement', { sessionId });
@@ -265,7 +346,7 @@ async function verify() {
   assert.ok(overflow.scroll <= overflow.width + 2, JSON.stringify(overflow));
   assert.deepEqual(errors, []);
   assert.deepEqual(requested3dAssets, []);
-  writeFileSync(join(output, 'evidence.json'), JSON.stringify({ at: new Date().toISOString(), platform: process.platform, checks, dependencies, sessionId, rounds: session.snapshot.round, winner: session.winner, reward: session.reward, errors, requested3dAssets, onlineAcceptance: 'Not verified: deployed Supabase endpoint is unavailable; no simulated multiplayer success claimed' }, null, 2));
+  writeFileSync(join(output, 'evidence.json'), JSON.stringify({ at: new Date().toISOString(), platform: process.platform, checks, dependencies, sessionId, rounds: session.snapshot.round, winner: session.winner, reward: session.reward, combatProfile: combatProfile.data, rules: overview.rules, identities, reportIdentities, hover, errors, requested3dAssets, onlineAcceptance: 'Not verified: deployed Supabase endpoint is unavailable; no simulated multiplayer success claimed' }, null, 2));
   console.log(JSON.stringify({ output, passed: true, checks }, null, 2));
 }
 try { await verify(); } catch (error) {
