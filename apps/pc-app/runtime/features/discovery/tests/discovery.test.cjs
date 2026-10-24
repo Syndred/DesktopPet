@@ -92,6 +92,16 @@ test('cancelling an in-flight location request discards the late result',async()
   const pending=location.locate();location.setDemo(true);deliver({ok:true,...fixtureFix()});await pending;
   assert.equal(location.snapshot().mode,'demo');assert.equal(location.snapshot().fix.source,'demo');location.dispose();
 });
+
+test('leaving demo clears its sample before a native request and never treats the city change as drift',async()=>{
+  let finish;
+  const location=new LocationService({adapter:{getPosition:()=>new Promise(resolve=>{finish=resolve;})}});
+  location.setDemo(true);const pending=location.locate();
+  assert.equal(location.snapshot().mode,'real');assert.equal(location.snapshot().fix,null);
+  finish({ok:true,...fixtureFix(),lat:51.5074,lng:-.1278});await pending;
+  assert.equal(location.snapshot().status,'ready');assert.equal(location.snapshot().fix.source,'os');assert.equal(location.snapshot().fix.lat,51.5074);
+  location.dispose();
+});
 test('application privacy blocks native calls and discards a late fix after revocation',async()=>{
   let allowed=false,calls=0,deliver;
   const location=new LocationService({mayUseLocation:()=>allowed,adapter:{getPosition(){calls++;return new Promise(resolve=>{deliver=resolve;});}}});
@@ -107,6 +117,19 @@ test('map provider changes only projection, never system coordinates',()=>{
 test('generated encounters remain anchored while the user moves',()=>{
   const now=Date.now(),a=nearbySpawns(fixturePosition,now),b=nearbySpawns({lat:31.2305,lng:121.4738},now);
   const shared=a.find(s=>b.some(t=>s.id===t.id));assert.ok(shared);assert.deepEqual(shared.position,b.find(s=>s.id===shared.id).position);
+});
+
+test('encounters follow canonical 2D template resources and use a new generation after rebinding',()=>{
+  const templates=require('../../companions/templates.cjs').listTemplates(),now=Date.UTC(2026,9,24,4);
+  const original=nearbySpawns(fixturePosition,now),frozen=structuredClone(original);
+  assert.ok(original.length);
+  for(const spawn of original) assert.equal(spawn.resourceId,templates.find(template=>template.templateId===spawn.templateId).resource.resourceId);
+  const updated=templates.map(template=>({...template,resource:{...template.resource,resourceId:require('../../battle/assets.cjs').SHIBA_RESOURCE}}));
+  const next=nearbySpawns(fixturePosition,now,450,updated);
+  assert.ok(next.length);
+  assert.ok(next.every(spawn=>spawn.resourceId===require('../../battle/assets.cjs').SHIBA_RESOURCE));
+  assert.ok(next.every(spawn=>!original.some(previous=>previous.id===spawn.id)));
+  assert.deepEqual(original,frozen);
 });
 
 test('actual shared SQLite + companions + battle: map to victory, confirmation, pokedex, memory, idempotency and restart',integrationOptions,async t=>{

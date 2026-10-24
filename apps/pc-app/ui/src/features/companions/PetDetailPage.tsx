@@ -39,7 +39,7 @@ function GrowthDetail({ pet, controller }: { pet: CompanionPet; controller: Cont
   ];
   return <><Card className="cp-growth-card"><div className="cp-experience"><strong>Lv.{String(pet.growth.level).padStart(2, '0')}</strong><div><span>{pet.growth.experience} / 100 经验</span><progress max={100} value={pet.growth.experience} aria-label="本级经验"/></div></div>
     <div className="cp-growth-columns"><StateMeters pet={pet} showMax/><div className="cp-battle-stats"><strong>养成属性</strong>{stats.map(({ label, value, Icon }) => <div key={label}><span><Icon size={14}/>{label}</span><b>{value}</b></div>)}</div></div>
-    {combat?.petId === pet.petId && <p className="cp-training-rule"><Shield size={12}/>训练采用统一开场生命 {combat.training.maxHp}</p>}
+    {combat?.petId === pet.petId && <p className="cp-training-rule"><Shield size={12}/>{combat.rules.label}开场生命 {combat.rules.maxHp}，养成属性不直接代入。</p>}
     <div className="cp-growth-skills"><h3>技能</h3>{[
       { title: '普通攻击', text: '与伙伴并肩出击，进行一次基础攻击。', action: 'attack' as const },
       { title: '元素攻击', text: `${elements[pet.element]}属性攻击，与伙伴的元素一致。`, action: 'skill' as const },

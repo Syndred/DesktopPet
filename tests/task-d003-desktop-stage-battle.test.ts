@@ -131,13 +131,14 @@ describe("D-003 desktop stage battle UX", () => {
     expect(stylesCode).toContain(".battle-settlement");
     expect(stylesCode).toContain("z-index: 40");
     expect(stylesCode).toContain(".capture-decision");
-    expect(rendererCode).toContain("playerModel.orientation = \"0deg 0deg 0deg\";");
-    expect(rendererCode).toContain("enemyModel.orientation = \"0deg 0deg 0deg\";");
+    // Archived legacy views now share profile-aware framing; no new 3D path is enabled.
+    expect(rendererCode).toContain("setModelViewerOrientation(");
+    expect(rendererCode).toContain("applyModelViewerFrame(playerModel, {");
     expect(rendererCode).toContain("function applyBattleView() {");
-    expect(rendererCode).toContain("playerModel.cameraOrbit = `${playerAzimuth}deg ${pitch}deg auto`;");
-    expect(rendererCode).toContain("enemyModel.cameraOrbit = `${enemyAzimuth}deg ${pitch}deg auto`;");
+    expect(rendererCode).toContain("orbitDeg: playerAzimuth,");
+    expect(rendererCode).toContain("orbitDeg: enemyAzimuth,");
     expect(rendererCode).toContain("battleFacingOffsetDeg += deltaX * 0.45;");
-    expect(rendererCode).toContain("enemyModel.cameraOrbit = \"0deg 74deg auto\";");
+    expect(rendererCode).toContain("applyModelViewerFrame(enemyModel, {");
     expect(stylesCode).toContain("#battle-scene.panel-open {");
     expect(stylesCode).toContain("opacity: 0;");
     expect(stylesCode).toContain("top: var(--hud-top, 104px);");

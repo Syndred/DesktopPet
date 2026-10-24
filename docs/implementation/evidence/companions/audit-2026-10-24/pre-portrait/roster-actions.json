@@ -1,0 +1,656 @@
+{
+  "at": "2026-10-24T13:45:38.403Z",
+  "output": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-companions\\DesktopPet\\artifacts\\companions\\roster-mM7aWp",
+  "audit": [
+    "A01",
+    "A02",
+    "A03",
+    "A06",
+    "A07",
+    "A08",
+    "A11"
+  ],
+  "independentVisualApproval": "pending central review",
+  "checks": [
+    "Six actual UI adoptions have distinct canonical resources; detail, desktop, conversation and actual training preserve each pet/resource identity",
+    "All six characters play wave/eat/attack/hit through production IPC with actual changing Pixi frames; no attack-wave or hit-eat alias",
+    "1280x844 and 1440x900 CSS px: shared title tokens, zero Card margins, top-aligned full-width Tabs, loaded real scene and six-card adoption",
+    "Restart restores canonical identities, names/growth/visibility; original archived animals/legacy bytes remain unchanged"
+  ],
+  "characters": [
+    {
+      "name": "鱼丸",
+      "petId": "pet-e57ec312-f505-4e04-a761-bd41157ac84f",
+      "templateId": "big-fish-gentle",
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "actionFrames": {
+        "wave": [
+          "frame_4",
+          "frame_5",
+          "frame_4",
+          "frame_0"
+        ],
+        "eat": [
+          "frame_6",
+          "frame_7",
+          "frame_6",
+          "frame_7",
+          "frame_0"
+        ],
+        "attack": [
+          "frame_8",
+          "frame_9",
+          "frame_9",
+          "frame_0"
+        ],
+        "hit": [
+          "frame_10",
+          "frame_10",
+          "frame_0"
+        ],
+        "skill": [
+          "frame_11",
+          "frame_11",
+          "frame_12",
+          "frame_12",
+          "frame_0"
+        ]
+      },
+      "poses": [
+        {
+          "action": "wave",
+          "resourceId": "builtin:lingjing-yuwan-v2",
+          "frames": [
+            "0",
+            "0",
+            "1"
+          ]
+        },
+        {
+          "action": "eat",
+          "resourceId": "builtin:lingjing-yuwan-v2",
+          "frames": [
+            "0",
+            "0",
+            "1"
+          ]
+        },
+        {
+          "action": "attack",
+          "resourceId": "builtin:lingjing-yuwan-v2",
+          "frames": [
+            "0",
+            "0",
+            "1",
+            "2"
+          ]
+        },
+        {
+          "action": "hit",
+          "resourceId": "builtin:lingjing-yuwan-v2",
+          "frames": [
+            "0",
+            "0",
+            "1",
+            "2"
+          ]
+        }
+      ],
+      "growthHp": 124,
+      "trainingMaxHp": 120
+    },
+    {
+      "name": "小蓝",
+      "petId": "pet-b9159691-7c2a-4df8-b20d-e0b736b07118",
+      "templateId": "big-fish-cheerful",
+      "resourceId": "builtin:lingjing-xiaolan-v1",
+      "actionFrames": {
+        "wave": [
+          "frame_4",
+          "frame_5",
+          "frame_4",
+          "frame_0"
+        ],
+        "eat": [
+          "frame_6",
+          "frame_7",
+          "frame_6",
+          "frame_7",
+          "frame_0"
+        ],
+        "attack": [
+          "frame_8",
+          "frame_9",
+          "frame_9",
+          "frame_0"
+        ],
+        "hit": [
+          "frame_10",
+          "frame_10",
+          "frame_0"
+        ],
+        "skill": [
+          "frame_11",
+          "frame_11",
+          "frame_12",
+          "frame_12",
+          "frame_0"
+        ]
+      },
+      "poses": [
+        {
+          "action": "wave",
+          "resourceId": "builtin:lingjing-xiaolan-v1",
+          "frames": [
+            "0",
+            "0",
+            "1"
+          ]
+        },
+        {
+          "action": "eat",
+          "resourceId": "builtin:lingjing-xiaolan-v1",
+          "frames": [
+            "0",
+            "0",
+            "1"
+          ]
+        },
+        {
+          "action": "attack",
+          "resourceId": "builtin:lingjing-xiaolan-v1",
+          "frames": [
+            "0",
+            "0",
+            "1",
+            "2"
+          ]
+        },
+        {
+          "action": "hit",
+          "resourceId": "builtin:lingjing-xiaolan-v1",
+          "frames": [
+            "0",
+            "0",
+            "1",
+            "2"
+          ]
+        }
+      ],
+      "growthHp": 124,
+      "trainingMaxHp": 120
+    },
+    {
+      "name": "饭团",
+      "petId": "pet-cdb22f95-1ff5-4e64-b06f-379598e16e81",
+      "templateId": "big-fish-foodie",
+      "resourceId": "builtin:lingjing-fantuan-v1",
+      "actionFrames": {
+        "wave": [
+          "frame_4",
+          "frame_5",
+          "frame_4",
+          "frame_0"
+        ],
+        "eat": [
+          "frame_6",
+          "frame_7",
+          "frame_6",
+          "frame_7",
+          "frame_0"
+        ],
+        "attack": [
+          "frame_8",
+          "frame_9",
+          "frame_9",
+          "frame_0"
+        ],
+        "hit": [
+          "frame_10",
+          "frame_10",
+          "frame_0"
+        ],
+        "skill": [
+          "frame_11",
+          "frame_11",
+          "frame_12",
+          "frame_12",
+          "frame_0"
+        ]
+      },
+      "poses": [
+        {
+          "action": "wave",
+          "resourceId": "builtin:lingjing-fantuan-v1",
+          "frames": [
+            "0",
+            "0",
+            "1"
+          ]
+        },
+        {
+          "action": "eat",
+          "resourceId": "builtin:lingjing-fantuan-v1",
+          "frames": [
+            "0",
+            "0",
+            "1"
+          ]
+        },
+        {
+          "action": "attack",
+          "resourceId": "builtin:lingjing-fantuan-v1",
+          "frames": [
+            "0",
+            "0",
+            "1",
+            "2"
+          ]
+        },
+        {
+          "action": "hit",
+          "resourceId": "builtin:lingjing-fantuan-v1",
+          "frames": [
+            "0",
+            "0",
+            "1",
+            "2"
+          ]
+        }
+      ],
+      "growthHp": 124,
+      "trainingMaxHp": 120
+    },
+    {
+      "name": "焰柴",
+      "petId": "pet-624a5474-27f5-46aa-8c85-e60458ec7460",
+      "templateId": "animal-shiba",
+      "resourceId": "builtin:lingjing-shiba-v2",
+      "actionFrames": {
+        "wave": [
+          "frame_4",
+          "frame_5",
+          "frame_4",
+          "frame_0"
+        ],
+        "eat": [
+          "frame_6",
+          "frame_7",
+          "frame_6",
+          "frame_7",
+          "frame_0"
+        ],
+        "attack": [
+          "frame_8",
+          "frame_9",
+          "frame_9",
+          "frame_0"
+        ],
+        "hit": [
+          "frame_10",
+          "frame_10",
+          "frame_0"
+        ],
+        "skill": [
+          "frame_11",
+          "frame_11",
+          "frame_12",
+          "frame_12",
+          "frame_0"
+        ]
+      },
+      "poses": [
+        {
+          "action": "wave",
+          "resourceId": "builtin:lingjing-shiba-v2",
+          "frames": [
+            "0",
+            "0",
+            "1"
+          ]
+        },
+        {
+          "action": "eat",
+          "resourceId": "builtin:lingjing-shiba-v2",
+          "frames": [
+            "0",
+            "0",
+            "1"
+          ]
+        },
+        {
+          "action": "attack",
+          "resourceId": "builtin:lingjing-shiba-v2",
+          "frames": [
+            "0",
+            "0",
+            "1",
+            "2"
+          ]
+        },
+        {
+          "action": "hit",
+          "resourceId": "builtin:lingjing-shiba-v2",
+          "frames": [
+            "0",
+            "0",
+            "1",
+            "2"
+          ]
+        }
+      ],
+      "growthHp": 118,
+      "trainingMaxHp": 120
+    },
+    {
+      "name": "礼帽喵",
+      "petId": "pet-9970ffe4-f8b0-4b97-bc6d-19e4b47d82f6",
+      "templateId": "animal-hat-cat",
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "actionFrames": {
+        "wave": [
+          "frame_4",
+          "frame_5",
+          "frame_4",
+          "frame_0"
+        ],
+        "eat": [
+          "frame_6",
+          "frame_7",
+          "frame_6",
+          "frame_7",
+          "frame_0"
+        ],
+        "attack": [
+          "frame_8",
+          "frame_9",
+          "frame_9",
+          "frame_0"
+        ],
+        "hit": [
+          "frame_10",
+          "frame_10",
+          "frame_0"
+        ],
+        "skill": [
+          "frame_11",
+          "frame_11",
+          "frame_12",
+          "frame_12",
+          "frame_0"
+        ]
+      },
+      "poses": [
+        {
+          "action": "wave",
+          "resourceId": "builtin:lingjing-hatcat-v1",
+          "frames": [
+            "0",
+            "0",
+            "1"
+          ]
+        },
+        {
+          "action": "eat",
+          "resourceId": "builtin:lingjing-hatcat-v1",
+          "frames": [
+            "0",
+            "0",
+            "1"
+          ]
+        },
+        {
+          "action": "attack",
+          "resourceId": "builtin:lingjing-hatcat-v1",
+          "frames": [
+            "0",
+            "0",
+            "1",
+            "2"
+          ]
+        },
+        {
+          "action": "hit",
+          "resourceId": "builtin:lingjing-hatcat-v1",
+          "frames": [
+            "0",
+            "0",
+            "1",
+            "2"
+          ]
+        }
+      ],
+      "growthHp": 136,
+      "trainingMaxHp": 120
+    },
+    {
+      "name": "小狐",
+      "petId": "pet-7cf5d93d-1c52-4e81-99cd-1dfc360d8050",
+      "templateId": "animal-white-fox",
+      "resourceId": "builtin:lingjing-xiaohu-v1",
+      "actionFrames": {
+        "wave": [
+          "frame_4",
+          "frame_5",
+          "frame_4",
+          "frame_0"
+        ],
+        "eat": [
+          "frame_6",
+          "frame_7",
+          "frame_6",
+          "frame_7",
+          "frame_0"
+        ],
+        "attack": [
+          "frame_8",
+          "frame_9",
+          "frame_9",
+          "frame_0"
+        ],
+        "hit": [
+          "frame_10",
+          "frame_10",
+          "frame_0"
+        ],
+        "skill": [
+          "frame_11",
+          "frame_11",
+          "frame_12",
+          "frame_12",
+          "frame_0"
+        ]
+      },
+      "poses": [
+        {
+          "action": "wave",
+          "resourceId": "builtin:lingjing-xiaohu-v1",
+          "frames": [
+            "0",
+            "0",
+            "1"
+          ]
+        },
+        {
+          "action": "eat",
+          "resourceId": "builtin:lingjing-xiaohu-v1",
+          "frames": [
+            "0",
+            "0",
+            "1"
+          ]
+        },
+        {
+          "action": "attack",
+          "resourceId": "builtin:lingjing-xiaohu-v1",
+          "frames": [
+            "0",
+            "0",
+            "1",
+            "2"
+          ]
+        },
+        {
+          "action": "hit",
+          "resourceId": "builtin:lingjing-xiaohu-v1",
+          "frames": [
+            "0",
+            "0",
+            "1",
+            "2"
+          ]
+        }
+      ],
+      "growthHp": 124,
+      "trainingMaxHp": 120
+    }
+  ],
+  "screenshots": [
+    "1280-overview.png",
+    "detail-鱼丸.png",
+    "action-wave.png",
+    "action-eat.png",
+    "action-attack.png",
+    "action-hit.png",
+    "detail-小蓝.png",
+    "detail-饭团.png",
+    "detail-焰柴.png",
+    "detail-礼帽喵.png",
+    "detail-小狐.png",
+    "1280-detail.png",
+    "1280-adoption.png",
+    "1440-detail.png",
+    "1440-adoption.png"
+  ],
+  "errors": [],
+  "layouts": [
+    {
+      "viewport": {
+        "width": 1280,
+        "height": 844,
+        "dpr": 1
+      },
+      "title": {
+        "x": 224,
+        "y": 78,
+        "width": 430,
+        "height": 98.984375,
+        "bottom": 176.984375
+      },
+      "tabs": {
+        "x": 678,
+        "y": 78,
+        "width": 570,
+        "height": 36,
+        "bottom": 114
+      },
+      "right": {
+        "x": 678,
+        "y": 78,
+        "width": 570,
+        "height": 702.3125,
+        "bottom": 780.3125
+      },
+      "scene": {
+        "x": 224,
+        "y": 200.984375,
+        "width": 430,
+        "height": 580,
+        "bottom": 780.984375
+      },
+      "heading": {
+        "size": "28px",
+        "weight": "700",
+        "family": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif"
+      },
+      "cardMargins": [
+        "0px",
+        "0px"
+      ],
+      "scroll": {
+        "height": 790,
+        "content": 790
+      },
+      "adoption": {
+        "cards": 6,
+        "headerTop": 78.00296020507812,
+        "previewTop": 78.00296020507812,
+        "resourceIds": [
+          "builtin:lingjing-yuwan-v2",
+          "builtin:lingjing-xiaolan-v1",
+          "builtin:lingjing-fantuan-v1",
+          "builtin:lingjing-shiba-v2",
+          "builtin:lingjing-hatcat-v1",
+          "builtin:lingjing-xiaohu-v1"
+        ]
+      }
+    },
+    {
+      "viewport": {
+        "width": 1440,
+        "height": 900,
+        "dpr": 1
+      },
+      "title": {
+        "x": 224,
+        "y": 78,
+        "width": 498.796875,
+        "height": 98.984375,
+        "bottom": 176.984375
+      },
+      "tabs": {
+        "x": 746.796875,
+        "y": 78,
+        "width": 661.203125,
+        "height": 36,
+        "bottom": 114
+      },
+      "right": {
+        "x": 746.796875,
+        "y": 78,
+        "width": 661.203125,
+        "height": 702.3125,
+        "bottom": 780.3125
+      },
+      "scene": {
+        "x": 224,
+        "y": 200.984375,
+        "width": 498.796875,
+        "height": 636,
+        "bottom": 836.984375
+      },
+      "heading": {
+        "size": "28px",
+        "weight": "700",
+        "family": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif"
+      },
+      "cardMargins": [
+        "0px",
+        "0px"
+      ],
+      "scroll": {
+        "height": 846,
+        "content": 846
+      },
+      "adoption": {
+        "cards": 6,
+        "headerTop": 78,
+        "previewTop": 78,
+        "resourceIds": [
+          "builtin:lingjing-yuwan-v2",
+          "builtin:lingjing-xiaolan-v1",
+          "builtin:lingjing-fantuan-v1",
+          "builtin:lingjing-shiba-v2",
+          "builtin:lingjing-hatcat-v1",
+          "builtin:lingjing-xiaohu-v1"
+        ]
+      }
+    }
+  ],
+  "result": "passed",
+  "staticCaptureCorrection": {
+    "replacement": "capture-metadata.json",
+    "reason": "Original adoption captures sampled the route transition too early; corrected static screenshots are separate",
+    "originalActionRecordsUnchanged": true
+  }
+}

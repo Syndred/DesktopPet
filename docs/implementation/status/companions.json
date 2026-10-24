@@ -1,8 +1,8 @@
 {
   "module": "companions",
   "branch": "codex/lingjing-companions",
-  "implementationCommit": "1b07e6892b00002fba6ff4d19d2828f47ee02baa",
-  "status": "refining-ui-and-multi-character-actions",
+  "implementationCommit": "fced386a543b6dbc4933cff7f5aa4eb4e99ba442",
+  "status": "audit-implemented-portrait-followup-in-progress",
   "updatedAt": "2026-10-24",
   "upstream": {
     "fetchedAgainBeforeDelivery": true,
@@ -11,7 +11,7 @@
     "originMainIsAncestor": true,
     "remoteCommitsMissingAtFinalFetch": 0
   },
-  "foundationContractIntegrated": "f0af90f",
+  "foundationContractIntegrated": "5ad3220 via merge 5d3e57a",
   "contract": "apps/pc-app/runtime/features/companions/INTEGRATION.md",
   "verification": "docs/implementation/evidence/companions/verification.json",
   "routes": [
@@ -100,10 +100,42 @@
     "Accessible name is supplied to shared Slider Thumb; Radix owns all interaction"
   ],
   "artwork": {
-    "resourceId": "builtin:lingjing-yuwan-v1",
-    "provenance": "docs/implementation/illustration-assets.json",
+    "resourceId": "Six canonical resources from resources/roster.cjs",
+    "provenance": "apps/pc-app/runtime/features/resources/assets/roster-v2/source-record.json",
     "source": "Approved character board adapted into project-generated illustration and transparent sprite atlas",
-    "catalog": "Three big-fish personality templates share the approved whale-girl atlas; 2D animal category currently has no assets and shows an honest empty state"
+    "catalog": "Fish, Blue, Riceball, Shiba, Hat Cat, White Fox; distinct actual 2D atlases and 12 action mappings per character",
+    "characters": [
+      {
+        "name": "鱼丸",
+        "templateId": "big-fish-gentle",
+        "resourceId": "builtin:lingjing-yuwan-v2"
+      },
+      {
+        "name": "小蓝",
+        "templateId": "big-fish-cheerful",
+        "resourceId": "builtin:lingjing-xiaolan-v1"
+      },
+      {
+        "name": "饭团",
+        "templateId": "big-fish-foodie",
+        "resourceId": "builtin:lingjing-fantuan-v1"
+      },
+      {
+        "name": "焰柴",
+        "templateId": "animal-shiba",
+        "resourceId": "builtin:lingjing-shiba-v2"
+      },
+      {
+        "name": "礼帽喵",
+        "templateId": "animal-hat-cat",
+        "resourceId": "builtin:lingjing-hatcat-v1"
+      },
+      {
+        "name": "小狐",
+        "templateId": "animal-white-fox",
+        "resourceId": "builtin:lingjing-xiaohu-v1"
+      }
+    ]
   },
   "uiComparisons": [
     {
@@ -123,7 +155,7 @@
     }
   ],
   "checks": {
-    "sqliteAndAccountBoundary": "12 passed, 0 failed; includes real account aliases, conversation messages/memories scoped per pet and owner, rollback, reopen, stale revisions and capture replay",
+    "sqliteAndAccountBoundary": "14 passed, 0 failed; includes actual resources, canonical migration, per-owner poses, position-save concurrency, and food animation only after commit",
     "typescript": "passed",
     "featureEslint": "passed",
     "productionBuild": "passed; existing bundle-size/shared ResourceStage chunk warnings",
@@ -131,7 +163,8 @@
     "realElectronLifecycle": "artifacts/companions/electron-4yE4tp/evidence.json: passed",
     "realNativeDrag": "artifacts/companions/electron-4yE4tp/native-drag.json: fish 8,8 to 85,62; other two saved positions unchanged",
     "realRadixKeyboardPersistence": "artifacts/companions/electron-4yE4tp/radix-ui.json: Switch Space and Slider arrows persist; final UI pass also verifies named Thumb",
-    "final2dUiAndChat": "artifacts/companions/ui-2d-7ZlLnF/evidence.json: passed"
+    "final2dUiAndChat": "artifacts/companions/roster-mM7aWp/evidence.json: six actors, 24 actual Pixi action plays, canonical identity across detail/desktop/chat/actual training, restart and original legacy bytes passed",
+    "correctedStaticCaptures": "artifacts/companions/capture-fdCznY/evidence.json: nonblank, loaded 1280x844 and 1440x900 views; retained action records"
   },
   "only2d": {
     "activeTemplatesAndConsumerList": "2D spritesheets only",
@@ -146,19 +179,20 @@
     "No root package/lock edits or unrelated feature-branch merges were made by this feature"
   ],
   "knownLimits": [
-    "Counts and stats are real data rather than design-board example pets; separate 2D animal artwork is outside the current available catalog",
-    "Installed Motion useReducedMotion reads system preference on mount; app animation switch updates live and pauses actual desktop Pixi frames",
-    "No online AI response or cloud synchronization success is asserted by this feature's local acceptance"
+    "A07/A12 follow-up: portrait framing for small thumbnails awaits the shared resources display helper; full-body stages remain unchanged",
+    "Central independent visual acceptance is owned by the main conversation; this branch does not declare final all-page visual approval",
+    "No online AI/cloud synchronization success is claimed by local acceptance"
   ],
   "remaining": [
-    "Foundation owns collection of this branch, shared-contract conflict resolution and one final all-module Windows release regression"
+    "Consume shared portrait framing for adoption/detail thumbnails, then run a small thumbnail-only check",
+    "Foundation collects the branch and the main conversation performs the concentrated visual review"
   ],
   "dataPolicy": "Only additive owner-scoped tables/raw archive; original JSON/animals/history/design files preserved; no production migration/deployment",
   "uiRefinement": {
     "scope": "Follow-up: approved 03 layout/font/card spacing, at least six distinct shared resource shapes, real wave/eat/hit actions, same resourceId in battle",
-    "foundationIntegrated": "adf5664 via merge 43c5252",
-    "normalizedLayoutEvidence": "artifacts/companions/visual-L3Ys3d/evidence.json",
-    "normalizedViewport": "1280x844 CSS px, DPR1 normalized capture; final wide-window capture follows six-character integration",
+    "foundationIntegrated": "5ad3220",
+    "normalizedLayoutEvidence": "docs\\implementation\\evidence\\companions\\audit-2026-10-24\\pre-portrait\\capture-metadata.json",
+    "normalizedViewport": "1280x844 and 1440x900 CSS px, actual DPR1 normalization recorded",
     "implemented": [
       "Title and room scene in left column; right Tabs start at page top and span its width",
       "Real illustrated memory with actual source/date",
@@ -167,9 +201,7 @@
       "Per-owner/pet transient action playback, preview and feeding-commit routing in progress"
     ],
     "pendingResourceContract": [
-      "Six distinct public resource IDs and owned source atlas manifests",
-      "Public ResourceAction wave/eat mappings with genuine frame clips",
-      "Per-character scene/poster metadata if supplied; do not duplicate character generation here"
+      "Shared portrait composition helper for upper-body/face thumbnails; resource owner implements it"
     ],
     "finalEvidencePending": true,
     "audit": "9915684: docs/implementation/acceptance/2026-10-24/visual-audit.txt",
@@ -184,7 +216,7 @@
     ],
     "visualPass": false,
     "interimEvidence": "docs/implementation/evidence/companions/refinement-v1/evidence.json: geometry and one existing clip route passed; not final six-character visual acceptance",
-    "combatAuthority": "New companions.combatProfile/getCombatProfile derives training HP from existing battle-runtime.createSession; labels stored values as growth stats, no formula or UI constant change",
+    "combatAuthority": "Public battle.getRules / battle-runtime.getBattleRules; six actual training sessions match maxHP and canonical resourceId, growth values are labelled separately",
     "completedAuditItems": [
       "A01: consumes public font/page tokens, H1 28px/700",
       "A02: compact common breadcrumb inside left column, right Tabs at top",
@@ -193,9 +225,8 @@
       "A11: actual training max HP equals unchanged authority read by detail; growth values labelled separately"
     ],
     "pendingAuditItems": [
-      "A07: six distinct resource templates await resource roster commit through foundation",
-      "A08: expanded public clips await resource roster; routing and one native Pixi clip already exercised",
-      "Central independent visual approval remains pending"
+      "A07/A12 portrait composition follow-up; no new image generation in this branch",
+      "Central independent final visual approval"
     ],
     "directionChecks": [
       "13 actual SQLite/account/resource checks passed",
@@ -203,6 +234,8 @@
       "1280x844 real production Electron: scene/footer no vertical overflow; title/tabs alignment and Card margins passed",
       "Real native per-pet clip frames advanced 0/1/2 and returned to idle",
       "Actual training same pet/resource reads max HP120; persisted growth HP124 retained"
-    ]
+    ],
+    "sixCharacterEvidence": "docs\\implementation\\evidence\\companions\\audit-2026-10-24\\pre-portrait\\roster-actions.json",
+    "canonicalMigration": "Only explicit registry aliases upgrade; default templates map to their own canonical resource, manual bindings and all instance data/history remain independent"
   }
 }

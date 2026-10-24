@@ -1,4 +1,4 @@
-const PREVIEW_ACTIONS = new Set(['wave', 'eat', 'hit', 'attack', 'skill', 'victory', 'walk', 'sleep', 'idle']);
+const PREVIEW_ACTIONS = new Set(['wave', 'eat', 'hit', 'attack', 'attack_windup', 'attack_release', 'skill', 'victory', 'walk', 'blink', 'sleep', 'idle']);
 
 function unavailable(message = '这个形象还没有提供该动作') {
   return Object.assign(new Error(message), { code: 'ACTION_UNAVAILABLE' });
@@ -35,10 +35,14 @@ function createCompanionPlayback({ services, service }) {
       // The domain action runner validates the full hash even on a receipt replay.
       return service.action(owner, 'perform', payload, () => { throw new Error('Missing recorded action result'); });
     }
-    const pet = service.requirePet(owner, payload.petId, payload.expectedRevision);
+    const pet = service.requirePet(owner, payload.petId);
+    if (payload.resourceId !== undefined && payload.resourceId !== pet.resource.resourceId) throw unavailable('伙伴形象已改变，请重新选择动作');
     const display = await resolve(owner, pet, payload.action);
     const result = service.action(owner, 'perform', payload, () => {
-      const current = service.requirePet(owner, payload.petId, payload.expectedRevision);
+      // Preview does not mutate growth/position. A concurrent position save
+      // must not invalidate it; resource identity is the relevant stale guard.
+      const current = service.requirePet(owner, payload.petId);
+      if (current.resource.resourceId !== pet.resource.resourceId) throw unavailable('伙伴形象已改变，请重新选择动作');
       return { pet: current, selections: service.selections(owner) };
     });
     if (!result.duplicate) publish(owner, result.data.pet, display, payload.action, payload.actionId);

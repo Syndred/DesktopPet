@@ -37,12 +37,17 @@ class DiscoveryService {
     const location=this.location.snapshot(),fix=location.fix;
     if(!fix) return {spawns:[],territories:[],captureRadiusMeters:100};
     const owner=this.getOwner(),encounters=owner ? this.repo.list(owner) : [];
-    const spawns=nearbySpawns(fix,this.now()).map(spawn=>{
+    const spawns=nearbySpawns(fix,this.now(),450,this.getCompanions?.()?.listTemplates?.()).map(spawn=>{
       const existing=encounters.find(e=>e.spawn.id===spawn.id && !['lost','cancelled'].includes(e.status));
       const range=fix.source==='os' ? geofence(fix,spawn.position,100,this.now()) : {ok:false};
       return {...spawn,demo:location.mode==='demo',inRange:range.ok,captureState:existing?.status || 'available'};
     });
     return {spawns,territories:[],captureRadiusMeters:100};
+  }
+  captureViews(owner,owned) {
+    if(!owner)return [];
+    const pets=owned || this.getCompanions?.()?.listPets?.(owner) || [];
+    return this.repo.captures(owner).map(capture=>{const pet=pets.find(value=>value.petId===capture.petId);return {...capture,...(pet?{name:pet.name,resourceId:pet.resource.resourceId,showOnDesktop:Boolean(pet.desktop?.visible)}:{})};});
   }
   snapshot() {
     const owner=this.getOwner(),companion=this.getCompanions?.();
@@ -53,7 +58,7 @@ class DiscoveryService {
     const territories=this.territories?.nearby(owner,fix) || {available:false,items:[]};
     return ok({location:this.location.snapshot(),map:this.map.snapshot(),...nearby,
       mapLocation:fix ? this.map.project(fix) : null,spawns:nearby.spawns.map(s=>({...s,mapPosition:this.map.project(s.position)})),territories:territories.items,territoriesAvailable:territories.available,pets,
-      encounters:owner ? this.repo.list(owner).map(publicEncounter) : [],captures:owner ? this.repo.captures(owner).map(capture=>{const pet=owned.find(p=>p.petId===capture.petId);return {...capture,...(pet ? {name:pet.name,showOnDesktop:Boolean(pet.desktop?.visible)} : {})};}) : [],
+      encounters:owner ? this.repo.list(owner).map(publicEncounter) : [],captures:this.captureViews(owner,owned),
       signedIn:Boolean(owner),storage:'local',cloudConfigured:Boolean(this.authority?.url && this.authority?.anonKey),
       cloudStatus:!this.authority ? 'disabled' : !this.authority.url || !this.authority.anonKey ? 'not_configured' : !this.getBattle?.()?.supportsCloudWild ? 'battle_adapter_missing' : 'ready'});
   }
