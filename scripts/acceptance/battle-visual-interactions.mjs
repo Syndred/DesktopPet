@@ -51,19 +51,29 @@ try {
     if (session.status !== 'active') { evidence.earlyFinish = session.status; break; }
     const button = page.locator(`.battle-move.${action}`);
     if (action === 'ultimate') {
-      evidence.extraChargeSteps = [];
-      for (let attempt = 0; attempt < 4 && await button.isDisabled(); attempt++) {
-        const beforeRound = session.snapshot.round;
-        await page.locator('.battle-move.element_attack').click();
-        for (let poll = 0; poll < 150; poll++) {
-          session = await invoke('battle', 'snapshot', { sessionId: session.id });
-          if (session.status !== 'active' || session.snapshot.round > beforeRound) break;
-          await page.waitForTimeout(40);
+      evidence.ultimatePreparation = [];
+      let prepared = false;
+      // Use an actual neutral training configuration. Fire's damage-over-time can
+      // finish a battle before rage unlocks; no health/rage fixture is injected.
+      for (let trial = 0; trial < 3 && !prepared; trial++) {
+        if (session.status === 'active') await invoke('battle', 'leave', { sessionId: session.id, actionId: randomUUID() });
+        session = await invoke('battle', 'startTraining', { petId: pet.petId, enemyElement: 'metal', actionId: randomUUID() });
+        await page.waitForTimeout(800);
+        for (let step = 0; step < 24 && session.status === 'active'; step++) {
+          if (await button.isEnabled()) { prepared = true; break; }
+          const beforeRound = session.snapshot.round;
+          await page.locator('.battle-move.element_attack').click();
+          for (let poll = 0; poll < 150; poll++) {
+            session = await invoke('battle', 'snapshot', { sessionId: session.id });
+            if (session.status !== 'active' || session.snapshot.round > beforeRound) break;
+            await page.waitForTimeout(40);
+          }
+          evidence.ultimatePreparation.push({ trial, sessionId: session.id, round: session.snapshot.round, hp: session.snapshot.player.hp, anger: session.snapshot.player.anger, enemyHp: session.snapshot.enemy.hp, status: session.status });
+          await page.waitForTimeout(700);
         }
-        evidence.extraChargeSteps.push({ action: 'element_attack', round: session.snapshot.round, anger: session.snapshot.player.anger, status: session.status });
-        await page.waitForTimeout(700);
-        if (session.status !== 'active') break;
       }
+      assert.ok(prepared, 'Ultimate must unlock through actual gameplay in the bounded neutral training trials');
+      await capture('ultimate-ready.png', null, 50);
     }
     assert.equal(await button.isEnabled(), true, `${action} should be available in this actual state`);
     const before = { round: session.snapshot.round, hp: session.snapshot.player.hp, anger: session.snapshot.player.anger, enemyHp: session.snapshot.enemy.hp };
@@ -77,10 +87,10 @@ try {
     }
     assert.ok(session.status !== 'active' || session.snapshot.round > before.round, 'Actual rule snapshot must advance after the UI command');
     await page.waitForTimeout(700);
-    const selected = await button.getAttribute('aria-pressed').catch(() => null);
+    const selected = await button.count() ? await button.getAttribute('aria-pressed') : null;
     const stages = await page.locator('.resource-stage').evaluateAll(nodes => nodes.map(e => Object.fromEntries([...e.attributes].filter(a => a.name.startsWith('data-')).map(a => [a.name, a.value]))));
     const after = { round: session.snapshot.round, hp: session.snapshot.player.hp, anger: session.snapshot.player.anger, enemyHp: session.snapshot.enemy.hp, status: session.status };
-    evidence.actions.push({ action, input: action === 'normal_attack' ? 'keyboard Enter' : 'pointer', before, after, selected, stages });
+    evidence.actions.push({ action, sessionId: session.id, input: action === 'normal_attack' ? 'keyboard Enter' : 'pointer', before, after, selected, stages });
     await capture(`${evidence.actions.length}-${action}-result.png`, null, 100);
     console.log(`ACTION ${action}: round ${before.round} -> ${after.round}, anger ${before.anger} -> ${after.anger}`);
   }
