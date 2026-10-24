@@ -1,7 +1,7 @@
 灵境 discovery 模块交付与集成接口（2026-10-24，2D UI first）
 
 当前范围以 scope-2d-ui-first.txt 为准。正式实现采用 React / TypeScript 模块组件；新页面、遭遇、收服、头像均使用 2D 图集。保留历史文件，不实现旧 3D 渲染兼容。
-本分支已合入 foundation e69c377；完成前已 git fetch origin，origin/main 为 4786f97。
+本分支已合入 foundation a930ebf（本工作树合并提交114dbfa）；完成前已 git fetch origin，origin/main 为 4786f97。
 入口：runtime/features/discovery/index.cjs、ui/src/features/discovery/index.tsx，由 foundation 的模块注册与路由加载。
 
 公开命令：snapshot、locate、watch、stopWatch、setDemo、setProvider、tile、setExploring。
@@ -26,7 +26,9 @@ origin.memoryTags 同步保存首次相遇标签，conversations 可按真实 pe
 已落盘战斗回合在 snapshot 恢复，不重启战斗、不随机重放客户端动作。
 复用 BattleRuntimeService 的五行、怒气、闪避、随机 NPC 和胜负规则，不修改战斗数值。
 桌面、聊天、出战选择互相独立；出战与捕获仅接受 2D / spritesheet 资源。
-游戏遭遇从 companions.listTemplates 读取 canonical 2D 模板，服务端使用同一纯模板目录；资源与属性变更生成新的 catalog 身份，旧遭遇继续保留。当前本工作树的实际目录仍为三种模板，六角色与独立动作等待 resources / companions 的统一集成。游戏点位按固定地理网格生成，不作为核实过的现实地标。
+游戏遭遇从 companions.listTemplates 读取 canonical 2D 模板，服务端使用同一模板目录；资源与属性变更生成新的 catalog 身份，旧遭遇继续保留。当前目录已接入鱼丸、小蓝、饭团、焰柴、礼帽喵、小狐的六个独立资源；每个角色都在真实探索预览中确认了共享 Pixi 与 atlas 缩略图。游戏点位按固定地理网格生成，不作为核实过的现实地标。
+野外战斗快照附带 battle 的 rules，并复用共享 BattleMoves 命令卡；大招门槛、怒气上限、首次免费闪避和禁用原因消费权威配置。明确显示标准生命归一与养成属性的区别，不改战斗数值。旧遭遇只在公开读回时补规则，既有存档与凭据不被重写。
+攻击、属性/大招、受击与胜利姿态消费实际保存的双方回合；动作映射复用 battle，帧播放仍由 ResourceStage / Pixi 负责。资源元数据按身份读取，切换动作保留同一 canvas。应用或系统关闭动画时遵循共享 Motion 策略。
 
 定位：Windows PowerShell 5.1 调 Windows.Devices.Geolocation.Geolocator.GetGeopositionAsync，遵守 Windows 隐私权限。
 应用隐私关闭时不调用系统定位；撤销、切号、离开探索页和窗口隐藏会停止持续请求并丢弃迟到结果。探索内部切页在共享 Motion 的有限交接期内保留用户主动开启的监听；离开探索立即停止。Windows hide 可能仍让 document.visibilityState 报 visible，因此主进程额外监听真实窗口的 hide / minimize / close，并禁止隐藏窗口重新开启位置权限上下文。恢复窗口不会暗自恢复持续定位。
@@ -52,7 +54,7 @@ UI：页面拆分为 ExploreView、WildPreviewView、EncounterView、CaptureDial
 复用 foundation 的真实 shadcn Radix Button/Card/Select/Switch/Dialog/Popover/Tooltip/Input 和 Motion 包装。
 弹窗自动焦点、Esc 关闭和焦点返回、键盘 Select、动画开关冻结 Pixi 已在实际 Electron 窗口验证。
 大角色由共享 resources.ResourceStage / PixiJS 绘制；地图和列表只取同图集静态帧，不为每个标记开 WebGL 实例。
-素材来源与代码许可分开：项目生成的湖畔背景见 ui/src/features/discovery/assets/provenance.json；共享鱼丸图集见 runtime/assets/illustrations/yuwan-character-v1.json。
+素材来源与代码许可分开：项目生成的湖畔背景见 ui/src/features/discovery/assets/provenance.json；当前六角色图集及来源见 runtime/features/resources/assets/roster-v2/catalog.json 和 source-record.json。旧图集与收服记录保留。
 图稿对应 docs/design/2026-10-24/full-ui/02-exploration-and-battle.png、04-wild-encounter-and-capture.png。
 真实窗口证据、对照差异与许可证清单见 docs/implementation/evidence/discovery/2d 和 status/discovery.json。
 
@@ -75,6 +77,8 @@ UI：页面拆分为 ExploreView、WildPreviewView、EncounterView、CaptureDial
   node apps/pc-app/runtime/features/discovery/verification/appearance.mjs
   node scripts/desktop/run-native-tests.cjs apps/pc-app/runtime/features/discovery/verification/native-cancellation.cjs
   node apps/pc-app/runtime/features/discovery/verification/asar-location.mjs
+  node apps/pc-app/runtime/features/discovery/verification/roster-actions.mjs
+  node apps/pc-app/runtime/features/discovery/verification/roster-actions.mjs --arena-only
 PostgreSQL verifier 的 PGlite 只安装于忽略的 artifacts/discovery/sql-validation，或由 LINGJING_PGLITE_ROOT 指向已有开发安装，不增加运行时依赖。
 验证 host 使用独立 PET_USER_DATA_DIR、真实模块注册、真实账号/资源/伙伴/战斗/菜园服务；只替换明确标记的测试位置，生产入口不加载它。
 不运行生产迁移或发布，不修改原用户数据，最终整包回归和发布由 foundation 统一负责。
@@ -84,3 +88,9 @@ A01—A03 定向整改（提交 d4d8462、0156faf 及后续原生请求修正）
 1280×844 CSS 视口：主内容 x192/y54；标题 x224/y78，左右32px/上下24px边距，H1 28px/700。地图与标题同一左沿；空状态不伪造 GPS，演示图保留标识。
 结果右栏由父容器 gap=16px 控制，Card margin-bottom=0；真实计算样式与当前实例换装截图见 evidence/discovery/2026-10-24-audit。
 本轮只进行相关定向检查，最终集中视觉回验仍由 foundation 执行。
+
+六角色与战斗动作集成（4352336）：
+真实 Electron 窗口逐一显示六个 canonical 资源。受控位置明确标识，真实随机战斗第26回合获胜后收服金属性礼帽喵；结果、伙伴背包、图鉴、首次相遇记忆及重启后 petId / resourceId 一致。重复确认未产生新实例。
+实际 canvas 截图记录了独立技能和受击图像，回合观察包含 attack / skill / hit / victory 且无待机降级；首场26回合保留原 Pixi canvas。此证据只覆盖本次实际回合，不冒称所有角色的全部日常动作已被逐帧验收。
+最终生命条样式修改后只补跑 arena-only：实际回合生命110/120、四张公共命令卡、基于规则禁用的大招及取消保留记录。没有再次运行全项目或重复26回合。
+证据：evidence/discovery/2026-10-24-roster。CSS视口1280×844，Windows DPR1.25；六预览与收服结果为窗口截图，战斗命令区为真实元素截图。foundation 已提供并导入公共 layout.css，本模块不维护另一套全局 token；集中 A01—A12 视觉复核和安装包验收仍由 foundation 负责。

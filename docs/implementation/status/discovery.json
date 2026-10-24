@@ -1,15 +1,15 @@
 {
   "module": "discovery",
   "branch": "codex/lingjing-discovery",
-  "commit": "1ca1aeaacd79ea967fa92f45e7cf4abe3d66cce8",
-  "status": "2d_local_verified_a01_a03_ready_external_acceptance_pending",
+  "commit": "4352336aa74d52c9f93d8642e367e2936b19ac95",
+  "status": "2d_canonical_roster_and_live_battle_poses_verified_external_acceptance_pending",
   "goalStatus": "active",
   "workspace": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-discovery\\DesktopPet",
   "upstream": {
     "fetched": true,
     "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086",
-    "foundationMerged": "e69c377f606f01fed899602a5f37619047f2de79",
-    "foundationMergeCommit": "3ca5b2cbbc7e84c13a1e97711b46502e528eadbe",
+    "foundationMerged": "a930ebf8db6bb7c49ea9c6da9aa84f96f75a343a",
+    "foundationMergeCommit": "114dbfada6073c13a4e4c242ab304079488e6c3f",
     "originMainIsAncestor": true,
     "sourceCheckoutModified": false
   },
@@ -29,7 +29,9 @@
     "Opt-in watch survives bounded internal page transitions; native hide/minimize/close checks enforce foreground policy even when Chromium reports visible",
     "Pending native requests use AbortController and actually terminate the PowerShell helper on suspend or stopWatch",
     "Windows script is read by Electron fs and delivered without external ASAR file-path dependence; actual archive execution verified",
-    "Encounter metadata comes from canonical 2D templates; capture and pokedex views follow the current per-instance resource without rewriting the original receipt"
+    "Encounter metadata comes from canonical 2D templates; capture and pokedex views follow the current per-instance resource without rewriting the original receipt",
+    "Six canonical resources verified in real exploration previews; actual random non-fish capture preserves the same petId/resource in result, backpack, pokedex, memories and restart",
+    "Battle rules and command cards come from battle.getRules/BattleMoves; actual persisted rounds select real attack/skill/hit/victory clips without rebuilding the Pixi canvas"
   ],
   "openSource": [
     {
@@ -159,8 +161,9 @@
   "assets": {
     "codeAndArtLicensesSeparate": true,
     "scene": "apps/pc-app/ui/src/features/discovery/assets/provenance.json",
-    "actor": "apps/pc-app/runtime/assets/illustrations/yuwan-character-v1.json",
-    "type": "Project-generated art; library MIT/BSD licenses do not cover the art"
+    "actor": "apps/pc-app/runtime/features/resources/assets/roster-v2/catalog.json",
+    "type": "Project-generated art; library MIT/BSD licenses do not cover the art",
+    "actorProvenance": "apps/pc-app/runtime/features/resources/assets/roster-v2/source-record.json"
   },
   "uiComparison": {
     "references": [
@@ -191,8 +194,11 @@
     "additionalVerified": [
       "Exact1280x844 content gutter and typography",
       "Parent-controlled16px result-card gap without margin stacking",
-      "Current petId resource reflected in capture result and pokedex"
-    ]
+      "Current petId resource reflected in capture result and pokedex",
+      "Six distinct canonical exploration actors and actual non-fish capture",
+      "Shared battle action cards and independent attack/skill/hit/victory atlas clips; normalized rules do not overwrite growth stats"
+    ],
+    "canonicalRosterEvidence": "docs/implementation/evidence/discovery/2026-10-24-roster"
   },
   "twoDimensionalOnly": {
     "passed": true,
@@ -205,10 +211,39 @@
     "activeTemplates": [
       "big-fish-gentle",
       "big-fish-cheerful",
-      "big-fish-foodie"
+      "big-fish-foodie",
+      "animal-shiba",
+      "animal-white-fox",
+      "animal-hat-cat"
     ],
     "historicalFilesPreserved": true,
-    "audit": "Feature runtime/UI/shared types contain no new GLB/GLTF/VRM, model-viewer, Three, custom animation loop or HTML-string business UI"
+    "audit": "Feature runtime/UI/shared types contain no new GLB/GLTF/VRM, model-viewer, Three, custom animation loop or HTML-string business UI",
+    "canonicalResources": [
+      {
+        "templateId": "big-fish-gentle",
+        "resourceId": "builtin:lingjing-yuwan-v2"
+      },
+      {
+        "templateId": "big-fish-cheerful",
+        "resourceId": "builtin:lingjing-xiaolan-v1"
+      },
+      {
+        "templateId": "big-fish-foodie",
+        "resourceId": "builtin:lingjing-fantuan-v1"
+      },
+      {
+        "templateId": "animal-shiba",
+        "resourceId": "builtin:lingjing-shiba-v2"
+      },
+      {
+        "templateId": "animal-white-fox",
+        "resourceId": "builtin:lingjing-xiaohu-v1"
+      },
+      {
+        "templateId": "animal-hat-cat",
+        "resourceId": "builtin:lingjing-hatcat-v1"
+      }
+    ]
   },
   "tests": [
     {
@@ -274,6 +309,18 @@
     {
       "command": "node apps/pc-app/runtime/features/discovery/verification/map.mjs",
       "result": "passed exact1280x844 CSS viewport, A01/A02 computed geometry, empty/no-position state and explicitly labelled demo with 13 actual rendered tiles; warnings[]"
+    },
+    {
+      "command": "node scripts/desktop/run-native-tests.cjs --test-name-pattern=\"old encounter readback|actual shared SQLite|canonical 2D|server authority\" apps/pc-app/runtime/features/discovery/tests/discovery.test.cjs",
+      "result": "4 passed on merged canonical six-character foundation; rules match actual battle, old readback preserves stored history and private engine state stays hidden. The source defines15 cases; no full suite rerun claimed."
+    },
+    {
+      "command": "node apps/pc-app/runtime/features/discovery/verification/roster-actions.mjs",
+      "result": "passed six actual Pixi/atlas previews and one real random26-round metal hatcat capture, shared rules, independent action clips, retained canvas, duplicate confirmation, backpack/pokedex/memory agreement and restart; location explicitly controlled"
+    },
+    {
+      "command": "node apps/pc-app/runtime/features/discovery/verification/roster-actions.mjs --arena-only",
+      "result": "passed after final meter-only CSS change: four shared command cards, actual turn110/120, rule-based ultimate availability and preserved cancellation; no repeated full capture flow"
     }
   ],
   "runtimeEvidence": {
@@ -482,6 +529,170 @@
       "cachedPngTiles": 15,
       "warnings": [],
       "output": "artifacts/discovery/map-1792849188337"
+    },
+    "canonicalRoster": {
+      "at": "2026-10-24T14:03:25.597Z",
+      "controlledPosition": true,
+      "physicalLocationAcceptance": false,
+      "viewport": {
+        "nativeAfterResize": {
+          "width": 1280,
+          "height": 844
+        },
+        "cssViewportOverride": null,
+        "verification": {
+          "width": 1280,
+          "height": 844
+        }
+      },
+      "previews": [
+        {
+          "spawnId": "wild-2d-v2-e196afe1f4-498014-52052-202457",
+          "templateId": "big-fish-gentle",
+          "name": "鱼丸",
+          "resourceId": "builtin:lingjing-yuwan-v2",
+          "pixiReady": true,
+          "realAtlasThumbnail": true
+        },
+        {
+          "spawnId": "wild-2d-v2-e196afe1f4-498014-52050-202457",
+          "templateId": "big-fish-cheerful",
+          "name": "小蓝",
+          "resourceId": "builtin:lingjing-xiaolan-v1",
+          "pixiReady": true,
+          "realAtlasThumbnail": true
+        },
+        {
+          "spawnId": "wild-2d-v2-e196afe1f4-498014-52051-202456",
+          "templateId": "big-fish-foodie",
+          "name": "饭团",
+          "resourceId": "builtin:lingjing-fantuan-v1",
+          "pixiReady": true,
+          "realAtlasThumbnail": true
+        },
+        {
+          "spawnId": "wild-2d-v2-e196afe1f4-498014-52051-202454",
+          "templateId": "animal-shiba",
+          "name": "焰柴",
+          "resourceId": "builtin:lingjing-shiba-v2",
+          "pixiReady": true,
+          "realAtlasThumbnail": true
+        },
+        {
+          "spawnId": "wild-2d-v2-e196afe1f4-498014-52050-202454",
+          "templateId": "animal-white-fox",
+          "name": "小狐",
+          "resourceId": "builtin:lingjing-xiaohu-v1",
+          "pixiReady": true,
+          "realAtlasThumbnail": true
+        },
+        {
+          "spawnId": "wild-2d-v2-e196afe1f4-498014-52050-202456",
+          "templateId": "animal-hat-cat",
+          "name": "礼帽喵",
+          "resourceId": "builtin:lingjing-hatcat-v1",
+          "pixiReady": true,
+          "realAtlasThumbnail": true
+        }
+      ],
+      "capture": {
+        "petId": "pet-81360b28-beec-4655-885e-019843fe6904",
+        "templateId": "animal-hat-cat",
+        "resourceId": "builtin:lingjing-hatcat-v1",
+        "element": "metal",
+        "duplicateReturnsSamePet": true,
+        "backpackMatches": true,
+        "memoryCount": 1,
+        "pokedexMatches": true,
+        "randomAttempts": 1
+      },
+      "restart": {
+        "samePetId": true,
+        "canonicalResourceRetained": true,
+        "currentLocationNotPersisted": true
+      },
+      "independentClips": [
+        "attack",
+        "skill",
+        "hit",
+        "victory"
+      ],
+      "canvasPreservedFor26Rounds": true,
+      "rendererErrors": [],
+      "rawLocalArtifacts": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-discovery\\DesktopPet\\artifacts\\discovery\\roster-actions-1792850605419",
+      "committedEvidence": "docs/implementation/evidence/discovery/2026-10-24-roster/flow.json"
+    },
+    "sharedBattleArena": {
+      "at": "2026-10-24T14:07:47.034Z",
+      "viewport": {
+        "nativeAfterResize": {
+          "width": 1280,
+          "height": 844
+        },
+        "cssViewportOverride": null,
+        "verification": {
+          "width": 1280,
+          "height": 844
+        }
+      },
+      "layout": {
+        "width": 738.7999877929688,
+        "commands": [
+          {
+            "text": "普通攻击打断属性攻击无需冷却",
+            "width": 174.3000030517578,
+            "height": 112,
+            "disabled": false,
+            "shadow": "none"
+          },
+          {
+            "text": "属性攻击附加五行效果无需冷却",
+            "width": 174.3000030517578,
+            "height": 112,
+            "disabled": false,
+            "shadow": "none"
+          },
+          {
+            "text": "闪避躲开普通攻击首次免费",
+            "width": 174.3000030517578,
+            "height": 112,
+            "disabled": false,
+            "shadow": "none"
+          },
+          {
+            "text": "大招必定命中 · 治疗0/50 怒气",
+            "width": 174.3000030517578,
+            "height": 112,
+            "disabled": true,
+            "shadow": "none"
+          }
+        ],
+        "meters": [
+          {
+            "value": 120,
+            "max": 120,
+            "color": "rgb(116, 187, 160)"
+          },
+          {
+            "value": 120,
+            "max": 120,
+            "color": "rgb(116, 187, 160)"
+          },
+          {
+            "value": 0,
+            "max": 50,
+            "color": "auto"
+          }
+        ]
+      },
+      "afterActualAction": {
+        "round": 1,
+        "playerHp": 110,
+        "enemyHp": 120
+      },
+      "cancellationPreserved": true,
+      "rendererErrors": [],
+      "committedEvidence": "docs/implementation/evidence/discovery/2026-10-24-roster/arena.json"
     }
   },
   "dependencyManifest": "apps/pc-app/runtime/features/discovery/dependencies.json",
@@ -491,27 +702,26 @@
     "Cloud needs trusted companion battle-profile synchronization and battle supportsCloudWild/wildAdapter integration",
     "Cloud migration/function deployment and live runtime-account verification remain separate",
     "Foundation owns final combined regression and Windows packaging",
-    "Consume resources/companions canonical six-character/action contract during foundation integration; discovery no longer duplicates their template resource IDs",
-    "Foundation imports shared layout.css and performs the one centralized A01–A12 visual recheck"
+    "Foundation performs one centralized A01–A12 visual recheck; resources owns full daily-action asset acceptance"
   ],
   "realIncomplete": [
     "Physical-location capture remains unaccepted: latest ASAR/native WiFi accuracy138m and earlier standalone91m exceed the80m gate. The last production-window flow reported95m. Controlled captures are independent evidence.",
     "Cloud migration/function is reviewable and locally PostgreSQL-verified, but not deployed or live-Supabase-tested. Cloud mode fails closed while the battle authority adapter is missing.",
     "Tencent/Google credentials are not configured; both coordinate adapters remain and OSM is verified.",
     "Final combined packaging/regression remains foundation work.",
-    "A01–A03 require the foundation central visual recheck; the unified six-character and real-action resources have not been accepted in this discovery worktree."
+    "Canonical six-character exploration and actual battle action integration are now locally verified. Foundation centralized visual review, full resource daily-action acceptance and installer verification remain separate."
   ],
   "verificationPending": [
     "Genuine <=80m OS-fix capture",
     "Deployed cloud battle/profile integration and live runtime-account readback",
     "Foundation combined release verification",
-    "Canonical six-character/action integration and central A01–A12 visual acceptance"
+    "Central A01–A12 visual acceptance and full shared-resource action/release verification"
   ],
   "historicalBaselineEvidence": [
     "artifacts/discovery/windows/evidence.json (pre-2D scope; not current visual acceptance)"
   ],
-  "dataPolicy": "Only this managed worktree and discovery-owned implementation/status were changed directly; foundation changes came through its branch. User data and old files are preserved. No production migration, deployment, credential change, remote message or additional chat was performed. Goal remains active for unmet external acceptance. This continuation copied only a completed test profile for reversible appearance verification; original profiles and records were preserved. The native-helper archive probe uses its own isolated userData and saves no raw coordinates.",
-  "updatedAt": "2026-10-24T13:53:24.447Z",
+  "dataPolicy": "Only this managed worktree and discovery-owned implementation/status were changed directly; foundation changes came through its branch. User data and old files are preserved. No production migration, deployment, credential change, remote message or additional chat was performed. Goal remains active for unmet external acceptance. This continuation copied only a completed test profile for reversible appearance verification; original profiles and records were preserved. The native-helper archive probe uses its own isolated userData and saves no raw coordinates. This continuation merged foundation a930ebf only, consumed its actual six-character roster and shared rules/cards, and used isolated labelled profiles for real random combat. No native-accuracy threshold, battle formula, production migration or deployment was changed.",
+  "updatedAt": "2026-10-24T14:09:44.913Z",
   "visualAudit": {
     "source": {
       "branch": "codex/lingjing-implementation-base",
@@ -522,13 +732,14 @@
       "d4d8462",
       "0156faf",
       "9722659",
-      "1ca1aea"
+      "1ca1aea",
+      "4352336"
     ],
     "evidence": "docs/implementation/evidence/discovery/2026-10-24-audit",
     "items": [
       {
         "id": "A01",
-        "state": "discovery token references and fallback verified; foundation global import/central review pending",
+        "state": "foundation layout.css now imported; discovery token consumption verified locally; centralized review pending",
         "tokens": [
           "--font-ui",
           "--text-title",
@@ -575,8 +786,8 @@
       },
       {
         "id": "A07/A08",
-        "state": "canonical resource/template interoperability prepared; six characters and real action coverage require resources/companions/battle integration",
-        "verified": "Existing actual 2D resource rebound on one captured pet; snapshot/pokedex/rendered result follow it while other pets retain their resource IDs"
+        "state": "six canonical exploration actors and actual battle action integration verified locally; global asset/action and central visual acceptance remains separate",
+        "verified": "Six real Pixi previews and authored atlas thumbnails; actual26-round capture of metal hatcat; independent attack/skill/hit/victory observed without fallback; same canonical resource across result/backpack/pokedex and restart"
       }
     ],
     "centralVisualRerunOwner": "foundation",

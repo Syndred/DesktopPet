@@ -1,0 +1,87 @@
+{
+  "at": "2026-10-24T14:07:47.034Z",
+  "controlledPosition": true,
+  "physicalLocationAcceptance": false,
+  "previews": [
+    {
+      "spawnId": "wild-2d-v2-e196afe1f4-498014-52050-202456",
+      "templateId": "animal-hat-cat",
+      "name": "礼帽喵",
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "pixiReady": true,
+      "realAtlasThumbnail": true
+    }
+  ],
+  "animationSamples": [],
+  "rendererErrors": [],
+  "viewport": {
+    "nativeAfterResize": {
+      "width": 1280,
+      "height": 844
+    },
+    "cssViewportOverride": null,
+    "verification": {
+      "width": 1280,
+      "height": 844
+    }
+  },
+  "arenaLayout": {
+    "width": 738.7999877929688,
+    "commands": [
+      {
+        "text": "普通攻击打断属性攻击无需冷却",
+        "width": 174.3000030517578,
+        "height": 112,
+        "disabled": false,
+        "shadow": "none"
+      },
+      {
+        "text": "属性攻击附加五行效果无需冷却",
+        "width": 174.3000030517578,
+        "height": 112,
+        "disabled": false,
+        "shadow": "none"
+      },
+      {
+        "text": "闪避躲开普通攻击首次免费",
+        "width": 174.3000030517578,
+        "height": 112,
+        "disabled": false,
+        "shadow": "none"
+      },
+      {
+        "text": "大招必定命中 · 治疗0/50 怒气",
+        "width": 174.3000030517578,
+        "height": 112,
+        "disabled": true,
+        "shadow": "none"
+      }
+    ],
+    "meters": [
+      {
+        "value": 120,
+        "max": 120,
+        "color": "rgb(116, 187, 160)"
+      },
+      {
+        "value": 120,
+        "max": 120,
+        "color": "rgb(116, 187, 160)"
+      },
+      {
+        "value": 0,
+        "max": 50,
+        "color": "auto"
+      }
+    ]
+  },
+  "arenaAfterAction": {
+    "round": 1,
+    "playerHp": 110,
+    "enemyHp": 120
+  },
+  "arenaOnly": true,
+  "cancellationPreserved": true,
+  "passed": true,
+  "output": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-discovery\\DesktopPet\\artifacts\\discovery\\roster-actions-1792850866846"
+}
