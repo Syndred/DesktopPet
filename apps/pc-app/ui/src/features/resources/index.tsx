@@ -21,7 +21,7 @@ function ResourceThumbnail({ resource, client }: { resource: CharacterResource; 
       <img hidden alt="" src={client.assetUrl(resource.id, resource.entryAsset)} onError={() => setFailed(true)} />
     </div>;
   }
-  return <div className="resource-card-art resource-model-thumb" aria-hidden="true"><svg viewBox="0 0 120 100"><path d="M24 42 30 15 48 32 77 32 94 15 99 46Q109 82 65 86 20 84 24 42Z" fill="#bed2ee" stroke="#8da8d4" strokeWidth="2"/><ellipse cx="62" cy="66" rx="25" ry="16" fill="#f4f8ff"/><circle cx="47" cy="51" r="4" fill="#52638d"/><circle cx="78" cy="51" r="4" fill="#52638d"/><path d="m58 61 6 4 6-4" fill="none" stroke="#8da8d4" strokeWidth="2"/></svg><span>{resource.availability === 'ready' ? '3D 模型' : '文件待修复'}</span></div>;
+  return <div className="resource-card-art resource-model-thumb" aria-hidden="true"><svg viewBox="0 0 120 100"><path d="m60 14 35 20v39L60 93 25 73V34Z" fill="#dfebfa" stroke="#92acd5" strokeWidth="2"/><path d="m25 34 35 20 35-20M60 54v39" fill="none" stroke="#92acd5" strokeWidth="2"/><path d="m60 14 35 20-35 20-35-20Z" fill="#c3d6f1"/><path d="m60 54 35-20v39L60 93Z" fill="#a9c2e8" opacity=".5"/><path d="m60 24 3 7 7 3-7 3-3 7-3-7-7-3 7-3Z" fill="#f8fbff"/></svg><span>{resource.availability === 'ready' ? '3D 模型' : '文件待修复'}</span></div>;
 }
 export function ResourcesPage({ client = resourcesClient }: { client?: ResourcesClient }) {
   const [resources, setResources] = useState<CharacterResource[]>([]), [selectedId, setSelectedId] = useState('');
@@ -91,7 +91,7 @@ export function ResourcesPage({ client = resourcesClient }: { client?: Resources
       <section className="resources-library resources-panel" aria-labelledby="resources-library-title"><div className="resources-panel-heading"><h2 id="resources-library-title">我的角色资源</h2><span>{resources.length} 个形象</span></div>
         <label className="resource-search"><span className="resource-sr-only">搜索角色</span><input type="search" placeholder="搜索角色名称" value={search} onChange={event => setSearch(event.target.value)} /></label>
         <div className="resources-grid" aria-busy={loading}>
-          {visible.map(resource => <button type="button" key={resource.id} className={`resource-card ${selectedId === resource.id ? 'is-selected' : ''}`} aria-pressed={selectedId === resource.id} onClick={() => choose(resource)}>
+          {visible.map(resource => <button type="button" key={resource.id} data-resource-id={resource.id} className={`resource-card ${selectedId === resource.id ? 'is-selected' : ''}`} aria-pressed={selectedId === resource.id} onClick={() => choose(resource)}>
             <span className={`resource-dimension ${resource.kind === 'spritesheet' ? 'is-2d' : ''}`}>{resource.kind === 'spritesheet' ? '2D' : '3D'}</span>{selectedId === resource.id ? <span className="resource-selected-mark" aria-hidden="true">✓</span> : null}
             <ResourceThumbnail resource={resource} client={client} /><strong>{resource.name}</strong><span>{resource.kind === 'spritesheet' ? '动画角色包' : 'GLB / GLTF'} · {resource.origin === 'import' ? '本地导入' : resource.origin === 'legacy' ? '原有模型' : '项目原创'}</span>
           </button>)}
