@@ -1,5 +1,5 @@
 // Small real-Electron recheck for A07/A12 portrait composition only.
-// Uses the six canonical resources and empty local histories; no model requests.
+// Uses the current canonical resources and empty local histories; no model requests.
 import { _electron as electron } from 'playwright';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { resolve, join } from 'node:path';
@@ -54,7 +54,7 @@ try {
   }
   await page.getByRole('navigation', { name: '主导航' }).getByRole('button', { name: '聊天', exact: true }).click();
   await page.getByRole('heading', { name: '聊天', exact: true }).waitFor();
-  await waitUntil(async () => (await page.locator('.cv-pet-option .cv-avatar svg.resource-portrait[data-framing="portrait"] image').count()) === 6, 'six actual atlas portrait images');
+  await waitUntil(async () => (await page.locator('.cv-pet-option .cv-avatar svg.resource-portrait[data-framing="portrait"] image').count()) === pets.length, 'all canonical atlas portrait images');
   const portraits = await page.locator('.cv-pet-option .cv-avatar').evaluateAll(nodes => nodes.map(node => {
     const svg = node.querySelector('svg.resource-portrait[data-framing="portrait"]');
     return { petId: node.getAttribute('data-pet-id'), resourceId: node.getAttribute('data-resource-id'),
@@ -78,7 +78,7 @@ try {
   await page.locator('.cv-pet-list').screenshot({ path: join(output, 'six-portraits.png') });
   await page.getByRole('link', { name: '对话设置', exact: true }).click();
   await page.getByRole('heading', { name: 'AI 对话', exact: true }).waitFor();
-  await waitUntil(async () => (await page.locator('.cv-partners .cv-avatar svg.resource-portrait[data-framing="portrait"] image').count()) === 6, 'settings use the same portraits');
+  await waitUntil(async () => (await page.locator('.cv-partners .cv-avatar svg.resource-portrait[data-framing="portrait"] image').count()) === pets.length, 'settings use the same portraits');
   await settlePortraits();
   await page.screenshot({ path: join(output, 'ai-portraits-1280.png'), fullPage: true });
   await page.setViewportSize({ width: 1440, height: 900 });
@@ -92,7 +92,7 @@ try {
   const evidence = { at: new Date().toISOString(), status: 'passed', scope: 'A07/A12 conversation portraits only', realElectron: true,
     isolatedProfile: true, zoomFactor: 1, portraits, pets, modelRequests, fabricatedMessages: false, errors,
     viewports: [{ width: 1280, height: 844 }, { width: 1440, height: 900 }],
-    checks: ['Six canonical atlas identities remain unchanged.', 'Shared portrait viewports crop the subject with no extra feature CSS zoom.',
+    checks: ['Every canonical atlas identity remains unchanged.', 'Shared portrait viewports crop the subject with no extra feature CSS zoom.',
       'Hatcat list/header/empty-state and AI partner selector use close-up portraits.', 'Empty histories remain empty and no model endpoint is called.'] };
   writeFileSync(join(output, 'evidence.json'), JSON.stringify(evidence, null, 2));
   writeFileSync(resolve('artifacts/conversations/portrait/latest.txt'), output);
