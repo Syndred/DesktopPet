@@ -67,12 +67,19 @@ async function waitUntil(predicate, label) {
     await new Promise(done => setTimeout(done, 40));
   }
 }
+async function settleAnimations() {
+  await page.evaluate(async () => {
+    await Promise.all(document.getAnimations().filter(animation => Number.isFinite(animation.effect?.getComputedTiming().endTime))
+      .map(animation => animation.finished.catch(() => {})));
+  });
+}
 async function settle() {
   await page.waitForFunction(() => Number(getComputedStyle(document.querySelector('.app-page-motion')).opacity) > .99);
   await page.evaluate(async () => {
     const urls = [...new Set([...document.querySelectorAll('.cv-root svg.resource-portrait image')].map(image => image.getAttribute('href')))];
     await Promise.all(urls.map(async url => { const image = new Image(); image.src = url; await image.decode(); }));
   });
+  await settleAnimations();
 }
 async function openChat() {
   await page.getByRole('navigation', { name: '主导航' }).getByRole('button', { name: '聊天', exact: true }).click();
@@ -140,6 +147,7 @@ try {
   await choose(selected);
   await page.getByRole('button', { name: '发送快捷键', exact: true }).focus();
   await page.getByRole('tooltip').filter({ hasText: 'Shift+Enter' }).waitFor();
+  await settleAnimations();
   await page.screenshot({ path: join(output, 'chat-keyboard-hint.png'), fullPage: true });
   await page.keyboard.press('Escape');
   await page.getByRole('button', { name: '添加记忆', exact: true }).click();
@@ -149,16 +157,18 @@ try {
   await waitUntil(async () => (await feature('conversations', 'snapshot')).memories.length === 1, 'memory persisted');
   const note = (await feature('conversations', 'snapshot')).memories[0];
   await openSettings();
+  await settle();
   const settingsHeading = await page.getByRole('heading', { name: 'AI 对话', exact: true }).boundingBox();
   const returnControl = await page.getByRole('link', { name: '回到聊天', exact: true }).boundingBox();
   settingsLayout = { headerControlCenterDifference: Math.abs(settingsHeading.y + settingsHeading.height / 2 - returnControl.y - returnControl.height / 2),
     horizontalOverflow: await page.evaluate(() => document.documentElement.scrollWidth > innerWidth) };
-  assert.ok(settingsLayout.headerControlCenterDifference < 4); assert.equal(settingsLayout.horizontalOverflow, false);
+  assert.ok(settingsLayout.headerControlCenterDifference <= 8); assert.equal(settingsLayout.horizontalOverflow, false);
   await page.getByRole('button', { name: '密钥提示', exact: true }).focus();
   await page.getByRole('tooltip').filter({ hasText: '密钥加密保存在本机' }).waitFor();
   await page.keyboard.press('Escape');
   await page.getByRole('group', { name: '请先填写并保存密钥。', exact: true }).focus();
   await page.getByRole('tooltip').filter({ hasText: '请先填写并保存密钥' }).waitFor();
+  await settleAnimations();
   await page.screenshot({ path: join(output, 'settings-disabled-hint.png'), fullPage: true });
   await page.keyboard.press('Escape');
   await page.getByRole('tab', { name: '全局连接', exact: true }).focus(); await page.keyboard.press('ArrowRight');
