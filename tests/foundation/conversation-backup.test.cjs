@@ -1,0 +1,34 @@
+const { test } = require('node:test');
+const assert = require('node:assert/strict');
+const { mkdtempSync } = require('node:fs');
+const { tmpdir } = require('node:os');
+const { join } = require('node:path');
+const { openDatabase,migrate } = require('../../apps/pc-app/runtime/core/database.cjs');
+const { migrations } = require('../../apps/pc-app/runtime/features/conversations/schema.cjs');
+const { ConversationStore } = require('../../apps/pc-app/runtime/features/conversations/store.cjs');
+const { createConversationBackupAdapter } = require('../../apps/pc-app/runtime/core/conversation-backup.cjs');
+
+test('chat backup restores stable messages across sequence collisions and never exports a credential', () => {
+  const root = mkdtempSync(join(tmpdir(),'lingjing-chat-backup-'));
+  const original = openDatabase(join(root,'original.sqlite')); migrate(original,'conversations',migrations);
+  const source = new ConversationStore(original);
+  source.createTurn('owner-a','pet-a','turn-a','原来的消息',{provider:'openai_compatible',model:'configured-model'});
+  source.updateReply('owner-a','pet-a','turn-a','原来的回复','complete');
+  const settings = { provider:'openai_compatible',baseUrl:'https://example.invalid/v1',model:'configured-model',contextChars:24000,maxOutputTokens:512,encryptedKey:'DPAPI-PRIVATE-DO-NOT-EXPORT' };
+  source.saveConnection('owner-a',null,settings,0);
+  const adapterA = createConversationBackupAdapter({db:original,get:()=>null});
+  const data = adapterA.export('owner-a'); adapterA.validate(data,'owner-a');
+  assert.ok(!JSON.stringify(data).includes('DPAPI-PRIVATE')); assert.ok(!JSON.stringify(data).includes('encrypted_key')); assert.ok(!Object.hasOwn(data.tables.conversation_messages[0],'sequence'));
+  const db = openDatabase(join(root,'destination.sqlite')); migrate(db,'conversations',migrations);
+  const destination = new ConversationStore(db);
+  destination.createTurn('owner-b','pet-b','turn-b','其他账号原文',{provider:'openai_compatible',model:'configured-model'});
+  destination.saveConnection('owner-a',null,{...settings,encryptedKey:'THIS-MACHINES-KEY'},0);
+  let busy = false;
+  const adapterB = createConversationBackupAdapter({db,get:()=>({hasActive:()=>busy})});
+  db.transaction(()=>adapterB.restore('owner-a',data,'replace'))();
+  assert.equal(destination.history('owner-a','pet-a').messages.length,2); assert.equal(destination.history('owner-b','pet-b').messages[0].content,'其他账号原文');
+  assert.deepEqual(destination.history('owner-a','pet-a').messages.map(m=>m.id),data.tables.conversation_messages.map(m=>m.id));
+  assert.equal(destination.getConnection('owner-a',null,true).encryptedKey,'THIS-MACHINES-KEY');
+  busy = true; assert.throws(()=>adapterB.restore('owner-a',data,'replace'),/正在回复/);
+  assert.throws(()=>adapterB.validate(data,'owner-b'),/归属/); original.close(); db.close();
+});

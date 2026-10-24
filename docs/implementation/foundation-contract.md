@@ -14,6 +14,8 @@ Installed shared dependencies include PixiJS 8, MapLibre GL and `@turf/distance`
 
 Feature entry points are discovered automatically, without editing root files.
 
+Integration adapters added after the shared kit: `companions.migrateOwnerAlias({sourceOwnerAccountId,targetOwnerAccountId,provider,subjectId})` is synchronous, main-only, and checks the current verified Accounts alias. It imports a pre-Accounts SQLite save only into an empty/pristine legacy mirror, keeps original rows and a full archive, and rejects independently changed targets. `ensureImported` invokes it before falling back to the old JSON. Garden can use it inside its shared transaction. New backups use a conversations adapter that retains message IDs/order while regenerating local SQLite sequences, includes connection metadata without encrypted keys, preserves matching local credentials, and refuses restore while a reply is active.
+
 Renderer: `apps/pc-app/ui/src/features/<id>/index.tsx`, default export or named `feature`:
 
 ```tsx
