@@ -1,53 +1,86 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { Crosshair, Minus, Plus, RefreshCw } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+import { createRoot, type Root } from 'react-dom/client';
+import { Crosshair, Flag, PawPrint, RefreshCw } from 'lucide-react';
+import { Map as LibreMap, Marker, NavigationControl, AttributionControl, addProtocol, type GeoJSONSource, type StyleSpecification } from 'maplibre-gl';
+import { circle } from '@turf/circle';
+import type { FeatureCollection, Polygon } from 'geojson';
 import { request } from '../../app/bridge';
-import type { DiscoverySnapshot, GeoPoint, WildSpawn } from '../../../../../../packages/shared-types/src/features/discovery';
+import { Button } from '../../components/ui';
+import type { DiscoverySnapshot, WildSpawn } from '../../../../../../packages/shared-types/src/features/discovery';
+import { ResourcePortrait } from './ResourcePortrait';
+import 'maplibre-gl/dist/maplibre-gl.css';
 
-const SIZE = 256;
-function world(point: GeoPoint, zoom: number) {
-  const scale = SIZE * 2 ** zoom, lat = Math.max(-85.0511, Math.min(85.0511, point.lat)) * Math.PI / 180;
-  return { x: (point.lng + 180) / 360 * scale, y: (1 - Math.asinh(Math.tan(lat)) / Math.PI) / 2 * scale };
+// MapLibre owns tiles, projection, gestures and camera movement. This protocol
+// only routes visible tile requests through the existing main-process cache.
+addProtocol('lingjing-raster', async (parameters, controller) => {
+  const match = parameters.url.match(/^lingjing-raster:\/\/osm\/(\d+)\/(\d+)\/(\d+)$/);
+  if (!match) throw new Error('Invalid map tile');
+  if (controller.signal.aborted) throw new DOMException('Aborted', 'AbortError');
+  const tile = await request<{ dataUrl: string }>('discovery', 'tile', { z: Number(match[1]), x: Number(match[2]), y: Number(match[3]) });
+  if (controller.signal.aborted) throw new DOMException('Aborted', 'AbortError');
+  return { data: Uint8Array.from(atob(tile.dataUrl.split(',')[1]), value => value.charCodeAt(0)).buffer };
+});
+const empty: FeatureCollection<Polygon> = { type: 'FeatureCollection', features: [] };
+function mapStyle(state: DiscoverySnapshot): StyleSpecification {
+  return { version: 8, sources: {
+    osm: { type: 'raster', tiles: ['lingjing-raster://osm/{z}/{x}/{y}'], tileSize: 256, attribution: state.map.attribution, maxzoom: state.map.maxZoom },
+    accuracy: { type: 'geojson', data: empty }, territories: { type: 'geojson', data: empty }
+  }, layers: [
+    { id: 'base', type: 'raster', source: 'osm', paint: { 'raster-opacity': .86, 'raster-saturation': -.2 } },
+    { id: 'territories', type: 'fill', source: 'territories', paint: { 'fill-color': ['case', ['get', 'owned'], '#6592f7', '#e6a16e'], 'fill-opacity': .16 } },
+    { id: 'territory-lines', type: 'line', source: 'territories', paint: { 'line-color': ['case', ['get', 'owned'], '#5682ee', '#e29c67'], 'line-width': 2, 'line-dasharray': [2, 2] } },
+    { id: 'accuracy', type: 'fill', source: 'accuracy', paint: { 'fill-color': '#6394ff', 'fill-opacity': .15 } },
+    { id: 'accuracy-line', type: 'line', source: 'accuracy', paint: { 'line-color': '#7fa8ff', 'line-width': 1 } }
+  ] };
 }
-function Tile({ z, x, y, version }: { z: number; x: number; y: number; version: number }) {
-  const [url, setUrl] = useState(''), [failed, setFailed] = useState(false);
+export function NearbyMap({ state, selectedId, onSelect, mini = false }: { state: DiscoverySnapshot; selectedId?: string; onSelect?: (spawn: WildSpawn) => void; mini?: boolean }) {
+  const host = useRef<HTMLDivElement>(null), map = useRef<LibreMap | null>(null), latest = useRef(state), selection = useRef(onSelect);
+  const [ready, setReady] = useState(false), [error, setError] = useState(''), [retry, setRetry] = useState(0);
+  latest.current = state; selection.current = onSelect;
+  const center = state.mapLocation, canRender = Boolean(center && state.map.available);
   useEffect(() => {
-    let live = true; setFailed(false); setUrl('');
-    void request<{ dataUrl: string }>('discovery', 'tile', { z, x, y }).then(tile => { if (live) setUrl(tile.dataUrl); }).catch(() => { if (live) setFailed(true); });
-    return () => { live = false; };
-  }, [z, x, y, version]);
-  return url ? <img draggable={false} src={url} alt=""/> : <div className="discovery-tile-missing">{failed ? '底图暂不可用' : '加载地图…'}</div>;
-}
-export function NearbyMap({ state, selectedId, onSelect }: { state: DiscoverySnapshot; selectedId?: string; onSelect: (spawn: WildSpawn) => void }) {
-  const host = useRef<HTMLDivElement>(null), drag = useRef<{ x: number; y: number; ox: number; oy: number } | null>(null);
-  const [size, setSize] = useState({ width: 640, height: 550 }), [zoom, setZoom] = useState(17), [offset, setOffset] = useState({ x: 0, y: 0 });
-  const [tileVersion, setTileVersion] = useState(0);
-  const center = state.mapLocation;
-  useEffect(() => { const observer = new ResizeObserver(entries => { const rect = entries[0].contentRect; setSize({ width: rect.width, height: rect.height }); }); if (host.current) observer.observe(host.current); return () => observer.disconnect(); }, []);
-  useEffect(() => setOffset({ x: 0, y: 0 }), [state.map.id]);
-  const layout = useMemo(() => {
-    if (!center) return null;
-    const current = world(center, zoom), left = current.x - size.width / 2 - offset.x, top = current.y - size.height / 2 - offset.y;
-    const tiles: Array<{ x: number; y: number; tx: number; ty: number }> = [];
-    for (let y = Math.floor(top / SIZE); y <= Math.floor((top + size.height) / SIZE); y++) for (let x = Math.floor(left / SIZE); x <= Math.floor((left + size.width) / SIZE); x++) {
-      if (y >= 0 && y < 2 ** zoom) tiles.push({ x: ((x % 2 ** zoom) + 2 ** zoom) % 2 ** zoom, y, tx: x * SIZE - left, ty: y * SIZE - top });
+    if (!host.current || !canRender || !center) return;
+    setReady(false); setError('');
+    const instance = new LibreMap({ container: host.current, style: mapStyle(latest.current), center: [center.lng, center.lat], zoom: mini ? 14 : 16.8,
+      minZoom: 11, maxZoom: state.map.maxZoom, attributionControl: false, interactive: !mini, dragRotate: false, pitchWithRotate: false,
+      renderWorldCopies: false, fadeDuration: 0, maxTileCacheSize: 64 });
+    map.current = instance;
+    instance.addControl(new AttributionControl({ compact: false, customAttribution: '<a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">© OpenStreetMap contributors</a>' }), 'bottom-right');
+    if (!mini) instance.addControl(new NavigationControl({ showCompass: true }), 'top-right');
+    instance.on('load', () => setReady(true));
+    instance.on('error', () => setError('部分底图暂时无法加载，可稍后重试。'));
+    const observer = new ResizeObserver(() => instance.resize()); observer.observe(host.current);
+    return () => { observer.disconnect(); instance.remove(); map.current = null; };
+  }, [canRender, state.map.id, mini, retry]);
+  useEffect(() => {
+    const instance = map.current; if (!instance || !ready || !center) return;
+    const shape = circle([center.lng, center.lat], state.location.fix?.accuracyMeters || 1, { units: 'meters', steps: 48 });
+    (instance.getSource('accuracy') as GeoJSONSource)?.setData(shape);
+    const features: FeatureCollection<Polygon> = { type: 'FeatureCollection', features: state.territories.map(t => {
+      const ring = t.mapBoundary.map(p => [p.lng, p.lat]); ring.push([...ring[0]]);
+      return { type: 'Feature', properties: { id: t.territoryId, name: t.name, owned: t.owned }, geometry: { type: 'Polygon', coordinates: [ring] } };
+    }) };
+    (instance.getSource('territories') as GeoJSONSource)?.setData(features);
+    if(instance.getCenter().distanceTo([center.lng,center.lat])>2000) instance.jumpTo({center:[center.lng,center.lat]});
+    const current = document.createElement('span'); current.className = `discovery-my-location ${state.location.mode === 'demo' ? 'demo' : ''}`;
+    const locationMarker = new Marker({ element: current }).setLngLat([center.lng, center.lat]).addTo(instance);
+    return () => { locationMarker.remove(); };
+  }, [ready, center?.lat, center?.lng, state.location.mode, state.location.fix?.accuracyMeters, state.territories]);
+  useEffect(() => {
+    const instance = map.current; if (!instance || !ready || mini) return;
+    const entries: Array<{ marker: Marker; root: Root }> = [];
+    for (const spawn of state.spawns.slice(0, 8)) {
+      const element = document.createElement('div'), root = createRoot(element);
+      element.className = `discovery-marker ${spawn.id === selectedId ? 'selected' : ''}`;
+      root.render(<button className="discovery-pin-button" aria-label={`${spawn.name}，距离 ${spawn.distanceMeters} 米`} aria-pressed={spawn.id === selectedId} data-spawn-id={spawn.id} onClick={() => selection.current?.(spawn)}><ResourcePortrait resourceId={spawn.resourceId} instanceId={spawn.id} compact/><span className="discovery-marker-tail"/></button>);
+      const p = spawn.mapPosition || spawn.position;
+      entries.push({ marker: new Marker({ element, anchor: 'bottom' }).setLngLat([p.lng, p.lat]).addTo(instance), root });
     }
-    return { tiles, left, top, current };
-  }, [center?.lat, center?.lng, zoom, size.width, size.height, offset.x, offset.y]);
-  const changeZoom = (amount: number) => { setZoom(z => Math.min(state.map.maxZoom, Math.max(12, z + amount))); setOffset({ x: 0, y: 0 }); };
-  const metersPerPixel = center ? Math.cos(center.lat * Math.PI / 180) * 156543.03392 / 2 ** zoom : 1;
-  return <div className="discovery-map" ref={host} aria-label="附近探索地图"
-    onPointerDown={e => { if ((e.target as HTMLElement).closest('button,a')) return; drag.current = { x: e.clientX, y: e.clientY, ox: offset.x, oy: offset.y }; e.currentTarget.setPointerCapture(e.pointerId); }}
-    onPointerMove={e => { if (drag.current) setOffset({ x: drag.current.ox + e.clientX - drag.current.x, y: drag.current.oy + e.clientY - drag.current.y }); }}
-    onPointerUp={() => { drag.current = null; }} onPointerCancel={() => { drag.current = null; }}>
-    {layout && state.map.available ? <>
-      {layout.tiles.map(tile => <div className="discovery-tile" key={`${state.map.id}-${zoom}-${tile.x}-${tile.y}`} style={{ left: tile.tx, top: tile.ty }}><Tile z={zoom} x={tile.x} y={tile.y} version={tileVersion}/></div>)}
-      {state.territories.length ? <svg className="discovery-territories" width={size.width} height={size.height} aria-label="附近领地边界">{state.territories.map(territory => <polygon key={territory.territoryId} points={territory.mapBoundary.map(p => { const v = world(p, zoom); return `${v.x - layout.left},${v.y - layout.top}`; }).join(' ')} fill={territory.owned ? '#6698fa24' : '#f7a36c24'} stroke={territory.owned ? '#729af1' : '#e7a375'} strokeWidth="2" strokeDasharray="5 4"><title>{territory.name} · {territory.owned ? '我的领地' : territory.ownerAccountId ? '已有归属' : '中立'}</title></polygon>)}</svg> : null}
-      <div className="discovery-accuracy" style={{ left: layout.current.x - layout.left, top: layout.current.y - layout.top, width: Math.min(600, (state.location.fix?.accuracyMeters || 0) * 2 / metersPerPixel), height: Math.min(600, (state.location.fix?.accuracyMeters || 0) * 2 / metersPerPixel) }}/>
-      <span className={`discovery-my-pin ${state.location.mode === 'demo' ? 'demo' : ''}`} style={{ left: layout.current.x - layout.left, top: layout.current.y - layout.top }} title={state.location.mode === 'demo' ? '演示中心点' : '系统返回的位置'}/>
-      {state.spawns.map(spawn => { const position = world(spawn.mapPosition || spawn.position, zoom); return <button className={`discovery-map-pin element-${spawn.element} ${selectedId === spawn.id ? 'selected' : ''} ${spawn.captureState === 'captured' ? 'captured' : ''}`} key={spawn.id} onClick={() => onSelect(spawn)} style={{ left: position.x - layout.left, top: position.y - layout.top }} aria-label={`${spawn.name}，距离 ${spawn.distanceMeters} 米`} aria-pressed={selectedId === spawn.id}>{spawn.avatar}</button>; })}
-    </> : <div className="discovery-map-empty"><Crosshair size={38}/><strong>{center ? '当前底图尚未配置' : '让一次相遇，从这里开始。'}</strong><span>{center ? '可切换 OpenStreetMap 继续浏览。' : '点击“获取系统位置”，或明确进入演示模式。'}</span></div>}
-    <div className="discovery-map-legend"><span className="discovery-dot"/> {state.location.mode === 'demo' ? '演示中心' : '当前位置'} <span className="discovery-paw">✦</span> 可相遇的伙伴</div>
-    <div className="discovery-map-controls"><button aria-label="重新加载底图" onClick={() => setTileVersion(v => v + 1)}><RefreshCw size={18}/></button><button aria-label="地图回到当前位置" onClick={() => setOffset({ x: 0, y: 0 })}><Crosshair size={20}/></button><button aria-label="放大地图" onClick={() => changeZoom(1)}><Plus size={20}/></button><button aria-label="缩小地图" onClick={() => changeZoom(-1)}><Minus size={20}/></button></div>
-    {layout ? <a className="discovery-attribution" href={state.map.attributionUrl} target="_blank" rel="noreferrer">{state.map.attribution}</a> : null}
+    return () => { for (const entry of entries) { entry.marker.remove(); queueMicrotask(() => entry.root.unmount()); } };
+  }, [ready, mini, selectedId, state.spawns]);
+  return <div className={`discovery-map ${mini ? 'mini' : ''}`} data-map-engine="maplibre-gl" data-map-ready={ready} aria-label={mini ? '相遇位置小地图' : '附近探索地图'}>
+    <div className="discovery-map-canvas" ref={host}/>
+    {!canRender ? <div className="discovery-map-empty"><Crosshair size={30}/><strong>{center ? '当前底图尚未配置' : '让相遇，从这里开始。'}</strong><span>{center ? '请选择已配置的地图服务。' : '获取系统位置，或明确进入演示模式。'}</span></div> : null}
+    {!mini ? <><div className="discovery-map-legend"><PawPrint size={16}/>可相遇伙伴 <Flag size={15}/>领地</div><div className="discovery-map-controls"><Button variant="ghost" aria-label="地图回到当前位置" onClick={() => { if (center) map.current?.easeTo({ center: [center.lng, center.lat], duration: 0 }); }}><Crosshair size={19}/></Button><Button variant="ghost" aria-label="重新加载底图" onClick={() => setRetry(v => v + 1)}><RefreshCw size={17}/></Button></div>{error ? <span className="discovery-map-error" role="status">{error}</span> : null}</> : null}
   </div>;
 }

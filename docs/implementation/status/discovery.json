@@ -2,7 +2,7 @@
   "module": "discovery",
   "branch": "codex/lingjing-discovery",
   "commit": "0662b4f889a720e394fcca5636924a33925b7007",
-  "status": "ready_for_foundation_integration_with_explicit_acceptance_gaps",
+  "status": "2d_ui_first_migration_under_verification",
   "goalStatus": "active",
   "workspace": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-discovery\\DesktopPet",
   "upstream": {
@@ -26,12 +26,30 @@
     "Reviewable cloud authority, text runtime account session verification, server-owned random combat, distance/precision/expiry checks, locked settlement RPCs and restrictive RLS"
   ],
   "tests": [
-    { "command": "npm run typecheck:ui", "result": "passed" },
-    { "command": "npx eslint apps/pc-app/ui/src/features/discovery --ext .ts,.tsx", "result": "passed" },
-    { "command": "npm run build:pc", "result": "passed, actual Electron production build" },
-    { "command": "node scripts/desktop/run-native-tests.cjs apps/pc-app/runtime/features/discovery/tests/discovery.test.cjs", "result": "10 passed, 0 skipped; real shared SQLite and real companions/battle feature modules; fixture position and deterministic test NPC decisions are explicitly controlled" },
-    { "command": "node apps/pc-app/runtime/features/discovery/verification/windows-flow.mjs", "result": "passed: production runtime OS location, real map tiles, explicit demo and provider failure states; separately labelled controlled-position full clicks with actual random combat, confirmation deduplication, pokedex, visible independent desktop and application restart" },
-    { "check": "server-authority guard integration", "result": "passed against real SQLite in native tests: forged winner rejected, actual persisted server combat required, account-owned pet and action/capture deduplication; this does not verify deployed Supabase/PostgreSQL" }
+    {
+      "command": "npm run typecheck:ui",
+      "result": "passed"
+    },
+    {
+      "command": "npx eslint apps/pc-app/ui/src/features/discovery --ext .ts,.tsx",
+      "result": "passed"
+    },
+    {
+      "command": "npm run build:pc",
+      "result": "passed, actual Electron production build"
+    },
+    {
+      "command": "node scripts/desktop/run-native-tests.cjs apps/pc-app/runtime/features/discovery/tests/discovery.test.cjs",
+      "result": "10 passed, 0 skipped; real shared SQLite and real companions/battle feature modules; fixture position and deterministic test NPC decisions are explicitly controlled"
+    },
+    {
+      "command": "node apps/pc-app/runtime/features/discovery/verification/windows-flow.mjs",
+      "result": "passed: production runtime OS location, real map tiles, explicit demo and provider failure states; separately labelled controlled-position full clicks with actual random combat, confirmation deduplication, pokedex, visible independent desktop and application restart"
+    },
+    {
+      "check": "server-authority guard integration",
+      "result": "passed against real SQLite in native tests: forged winner rejected, actual persisted server combat required, account-owned pet and action/capture deduplication; this does not verify deployed Supabase/PostgreSQL"
+    }
   ],
   "runtimeEvidence": {
     "system": {
@@ -40,7 +58,10 @@
       "source": "os",
       "positionSource": "WiFi",
       "latestAccuracyMeters": 500,
-      "earlierAccuracyMeters": [213, 212],
+      "earlierAccuracyMeters": [
+        213,
+        212
+      ],
       "status": "imprecise",
       "code": "LOCATION_IMPRECISE",
       "initialDeniedHresultObservedBeforeUserEnabledPermission": "0x80070005",
@@ -84,5 +105,29 @@
     "Final combined feature/resource/chat/territory integration remains foundation work."
   ],
   "dependencies": [],
-  "dataPolicy": "Separate managed worktree; original source checkout, paused/history data and design images preserved; one host SQLite connection; no destructive production migration, credential change, production deployment or additional implementation chat. Goal not marked complete while acceptance gaps remain."
+  "dataPolicy": "Separate managed worktree; original source checkout, paused/history data and design images preserved; one host SQLite connection; no destructive production migration, credential change, production deployment or additional implementation chat. Goal not marked complete while acceptance gaps remain.",
+  "scopeRevision": "docs/implementation/scope-2d-ui-first.txt, user instruction 2026-10-24",
+  "verificationPending": [
+    "Rebuild with foundation shadcn/Radix, Tailwind and Motion",
+    "Actual 2D-only encounter/capture window evidence against approved design 02 and 04",
+    "MapLibre map tiles, camera, markers and Turf geometry",
+    "Accounts privacy, visible-only watch and private runtime identity mapping",
+    "Final targeted native checks after scope revision"
+  ],
+  "dependencyManifest": "apps/pc-app/runtime/features/discovery/dependencies.json",
+  "additionalFoundationPackages": [
+    "@turf/boolean-point-in-polygon@7.4.0",
+    "@turf/helpers@7.4.0",
+    "@turf/circle@7.4.0"
+  ],
+  "uiComponentsRequired": [
+    "shared Button/Card",
+    "ui/select (Radix)",
+    "ui/switch (Radix)",
+    "ui/dialog (Radix)",
+    "ui/popover (Radix)",
+    "ui/tooltip (Radix)",
+    "ui/input",
+    "shared components/motion"
+  ]
 }

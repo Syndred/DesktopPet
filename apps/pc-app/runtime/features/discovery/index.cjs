@@ -4,26 +4,34 @@ const {CloudDiscoveryAuthority}=require('./cloud-adapter.cjs');
 const {TileCache}=require('./tile-cache.cjs');
 const {join}=require('node:path');
 const {TerritoryMapAdapter}=require('./territory-adapter.cjs');
+const {LocationService}=require('./location-adapter.cjs');
 module.exports={
   id:'discovery',migrations,
-  publicCommands:['snapshot','locate','watch','stopWatch','setDemo','setProvider','tile'],
+  publicCommands:['snapshot','locate','watch','stopWatch','setDemo','setProvider','tile','setExploring'],
   register(services) {
-    const discovery=new DiscoveryService({db:services.db,getOwner:()=>services.session.getOwnerAccountId(),getCompanions:()=>services.get('companions'),getBattle:()=>services.get('battle'),invokeBattle:(command,payload)=>services.invoke('battle',command,payload),events:services.events,
-      authority:process.env.LINGJING_DISCOVERY_CLOUD==='1' ? new CloudDiscoveryAuthority({getUser:()=>services.session.getCurrentUser()}) : null});
+    const cloud=new CloudDiscoveryAuthority({getUser:()=>services.get('accounts')?.privateSession?.() || services.session.getCurrentUser()});
+    const location=new LocationService({mayUseLocation:()=>{const privacy=services.get('privacy');return privacy ? privacy.mayUseLocation() : true;}});
+    const discovery=new DiscoveryService({db:services.db,getOwner:()=>services.session.getOwnerAccountId(),getCompanions:()=>services.get('companions'),getBattle:()=>services.get('battle'),invokeBattle:(command,payload)=>services.invoke('battle',command,payload),events:services.events,location,
+      getAuthority:()=>process.env.LINGJING_DISCOVERY_CLOUD==='1' || services.get('accounts')?.privateSession?.()?.provider==='runtime' ? cloud : null});
     services.provide('discovery',discovery);
     discovery.territories=new TerritoryMapAdapter(()=>services.get('territories'),discovery.map);
+    discovery.stopLocationWatch=()=>discovery.location.suspend();
     const tiles=new TileCache(join(services.paths.userData,'cache','discovery','tiles'));
     const unsubscribe=discovery.location.subscribe(state=>services.events.emit('discovery:location',state));
+    const setExploring=active=>{services.get('privacy')?.setExploring(Boolean(active));services.events.emit('discovery:exploring',{active:Boolean(active)});if(!active)discovery.location.suspend();};
+    const offSession=services.events.on('accounts:session-changed',()=>{setExploring(false);discovery.location.reset();});
+    const offPrivacy=services.events.on('accounts:location-revoked',()=>discovery.location.blockByPolicy());
     return {commands:{
       snapshot:()=>discovery.snapshot(),
+      setExploring:payload=>{setExploring(payload.active===true);return discovery.snapshot();},
       locate:async()=>{const result=await discovery.location.locate(); if(!result.ok) return {ok:false,code:result.error.code,message:result.error.message,data:discovery.snapshot().data}; return discovery.snapshot();},
-      watch:async()=>{await discovery.location.startWatch(); return discovery.snapshot();},
+      watch:async()=>{const result=await discovery.location.startWatch();return result.ok ? discovery.snapshot() : {ok:false,code:result.error.code,message:result.error.message,data:discovery.snapshot().data};},
       stopWatch:()=>{discovery.location.stopWatch(); return discovery.snapshot();},
       setDemo:payload=>{discovery.location.setDemo(payload.enabled===true); return discovery.snapshot();},
       setProvider:payload=>{const result=discovery.map.setProvider(payload.providerId); return result.ok ? discovery.snapshot() : {ok:false,code:result.error.code,message:result.error.message};},
       tile:async payload=>({ok:true,data:await tiles.get(discovery.map.snapshot(),payload.z,payload.x,payload.y)}),
       begin:payload=>discovery.begin(payload),act:payload=>discovery.act(payload),cancel:payload=>discovery.cancel(payload),confirm:payload=>discovery.confirm(payload),
       pokedex:()=>({ok:true,data:discovery.repo.captures(discovery.owner())}),memories:payload=>discovery.memories(payload)
-    },dispose(){unsubscribe(); discovery.dispose();}};
+    },dispose(){offSession();offPrivacy();unsubscribe();setExploring(false);discovery.dispose();}};
   }
 };
