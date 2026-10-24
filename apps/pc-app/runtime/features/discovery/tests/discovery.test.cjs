@@ -164,7 +164,7 @@ test('actual shared SQLite + companions + battle: map to victory, confirmation, 
     const command={encounterId:victory.encounterId,expectedRevision:victory.revision,actionId:'confirm-test',name:'相遇的新伙伴',showOnDesktop:false};
     const results=await Promise.all([f.services.invoke('discovery','confirm',command),f.services.invoke('discovery','confirm',command)]);
     assert.equal(results[0].ok,true,JSON.stringify(results));assert.equal(results[1].ok,true);assert.equal(results[0].data.petId,results[1].data.petId);
-    const captured=results[0].data;assert.notEqual(captured.petId,petId);assert.equal(captured.validation,'local-os');assert.equal(captured.scenario,'qa');
+    const captured=results[0].data;assert.notEqual(captured.petId,petId);assert.equal(captured.validation,'simulated');assert.equal(captured.scenario,'qa');
     const pets=f.services.get('companions').listPets(f.owner);assert.equal(pets.length,before+1);assert.equal(pets.find(p=>p.petId===captured.petId).origin.memoryTags.length,1);
     assert.equal(pets.find(p=>p.petId===captured.petId).resource.resourceId,encounter.spawn.resourceId);
     assert.equal(f.api.repo.captures(f.owner).length,1);assert.equal(f.api.memories({petId:captured.petId}).data.length,1);
