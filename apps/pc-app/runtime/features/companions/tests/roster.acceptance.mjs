@@ -38,7 +38,7 @@ async function settle() {
     const expected = location.hash === '#/companions/adopt' ? '.cp-adoption-page' : location.hash.startsWith('#/companions/') ? '.cp-detail-page' : '.cp-page:not(.cp-detail-page):not(.cp-adoption-page)';
     const content = document.querySelector(expected), root = content?.closest('.app-page-motion');
     const stages = content ? [...content.querySelectorAll('.resource-stage')] : [];
-    return root && document.querySelectorAll('.main-content > .app-page-motion').length === 1 && Number(getComputedStyle(root).opacity) > .999 && stages.length > 0 && stages.every(stage => stage.getAttribute('data-status') === 'ready');
+    return root && document.querySelectorAll('.main-content > .app-page-motion').length === 1 && Number(getComputedStyle(root).opacity) > .999 && (stages.length > 0 || content.querySelector('.resource-portrait')) && stages.every(stage => stage.getAttribute('data-status') === 'ready');
   });
   await page.mouse.move(0, 0); await page.evaluate(() => { document.activeElement?.blur(); document.querySelector('.main-content')?.scrollTo({ top: 0 }); });
 }
@@ -113,7 +113,7 @@ try {
     });
     assert.equal(metrics.heading.size,'28px');assert.equal(metrics.heading.weight,'700');assert.ok(metrics.cardMargins.every(value=>value==='0px'));assert.ok(Math.abs(metrics.title.y-metrics.tabs.y)<=2);assert.ok(metrics.tabs.width>=metrics.right.width-2);assert.ok(metrics.scene.bottom<=height);
     await home();await page.getByRole('button',{name:'领养伙伴',exact:true}).click();await screenshot(`${width}-adoption.png`);
-    metrics.adoption=await page.evaluate(()=>({cards:document.querySelectorAll('.cp-template-card').length,headerTop:document.querySelector('.cp-adoption-main .page-header').getBoundingClientRect().y,previewTop:document.querySelector('.cp-adoption-preview').getBoundingClientRect().y,resourceIds:[...document.querySelectorAll('.cp-template-card .resource-stage')].map(stage=>stage.getAttribute('data-resource-id'))}));
+    metrics.adoption=await page.evaluate(()=>({cards:document.querySelectorAll('.cp-template-card').length,headerTop:document.querySelector('.cp-adoption-main .page-header').getBoundingClientRect().y,previewTop:document.querySelector('.cp-adoption-preview').getBoundingClientRect().y,resourceIds:[...document.querySelectorAll('.cp-template-card [data-resource-id]')].map(stage=>stage.getAttribute('data-resource-id'))}));
     assert.equal(metrics.adoption.cards,6);assert.equal(new Set(metrics.adoption.resourceIds).size,6);assert.ok(Math.abs(metrics.adoption.headerTop-metrics.adoption.previewTop)<=2);evidence.layouts.push(metrics);
   }
   const before=(await invoke('companions','list')).data.pets.filter(pet=>pet.resource.kind==='2d');await application.close();await launch();

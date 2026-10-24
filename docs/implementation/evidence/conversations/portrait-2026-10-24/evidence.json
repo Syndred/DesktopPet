@@ -1,0 +1,216 @@
+{
+  "at": "2026-10-24T13:59:01.590Z",
+  "status": "passed",
+  "scope": "A07/A12 conversation portraits only",
+  "realElectron": true,
+  "isolatedProfile": true,
+  "zoomFactor": 1,
+  "portraits": [
+    {
+      "petId": "pet-bfbbb8a5-5927-46e9-91dd-1154ce415e28",
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "viewBox": [
+        37.57,
+        0,
+        176.8,
+        165.66
+      ],
+      "image": "lingjing-resource://asset/builtin:lingjing-yuwan-v2/sprites.png",
+      "transform": "none",
+      "viewport": {
+        "width": 46,
+        "height": 46
+      }
+    },
+    {
+      "petId": "pet-78584ec4-ec6a-4b55-ab30-d2cc1ed1c477",
+      "resourceId": "builtin:lingjing-xiaolan-v1",
+      "viewBox": [
+        23.900000000000002,
+        0,
+        200.76,
+        179.84
+      ],
+      "image": "lingjing-resource://asset/builtin:lingjing-xiaolan-v1/sprites.png",
+      "transform": "none",
+      "viewport": {
+        "width": 46,
+        "height": 46
+      }
+    },
+    {
+      "petId": "pet-c52fab26-7b3e-4345-b573-fc5003f26881",
+      "resourceId": "builtin:lingjing-fantuan-v1",
+      "viewBox": [
+        11.05,
+        0,
+        198.9,
+        166.4
+      ],
+      "image": "lingjing-resource://asset/builtin:lingjing-fantuan-v1/sprites.png",
+      "transform": "none",
+      "viewport": {
+        "width": 46,
+        "height": 46
+      }
+    },
+    {
+      "petId": "pet-601a3513-335e-4bb1-a1c4-8f13bf961b73",
+      "resourceId": "builtin:lingjing-shiba-v2",
+      "viewBox": [
+        60.480000000000004,
+        0,
+        161.28,
+        167.17
+      ],
+      "image": "lingjing-resource://asset/builtin:lingjing-shiba-v2/sprites.png",
+      "transform": "none",
+      "viewport": {
+        "width": 46,
+        "height": 46
+      }
+    },
+    {
+      "petId": "pet-6bf7fd2c-a3c1-4757-8670-9e05cc50628d",
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "viewBox": [
+        41.6,
+        0,
+        162.24,
+        165.02
+      ],
+      "image": "lingjing-resource://asset/builtin:lingjing-hatcat-v1/sprites.png",
+      "transform": "none",
+      "viewport": {
+        "width": 46,
+        "height": 46
+      }
+    },
+    {
+      "petId": "pet-dd707dbe-f87e-4cab-9709-da6761ba2dfe",
+      "resourceId": "builtin:lingjing-xiaohu-v1",
+      "viewBox": [
+        58.24,
+        0,
+        163.51999999999998,
+        173.16
+      ],
+      "image": "lingjing-resource://asset/builtin:lingjing-xiaohu-v1/sprites.png",
+      "transform": "none",
+      "viewport": {
+        "width": 46,
+        "height": 46
+      }
+    }
+  ],
+  "pets": [
+    {
+      "petId": "pet-bfbbb8a5-5927-46e9-91dd-1154ce415e28",
+      "name": "鱼丸",
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "frame": {
+        "x": 59,
+        "y": 61,
+        "w": 221,
+        "h": 251
+      }
+    },
+    {
+      "petId": "pet-78584ec4-ec6a-4b55-ab30-d2cc1ed1c477",
+      "name": "小蓝",
+      "resourceId": "builtin:lingjing-xiaolan-v1",
+      "frame": {
+        "x": 59,
+        "y": 40,
+        "w": 239,
+        "h": 281
+      }
+    },
+    {
+      "petId": "pet-c52fab26-7b3e-4345-b573-fc5003f26881",
+      "name": "饭团",
+      "resourceId": "builtin:lingjing-fantuan-v1",
+      "frame": {
+        "x": 52,
+        "y": 65,
+        "w": 221,
+        "h": 256
+      }
+    },
+    {
+      "petId": "pet-601a3513-335e-4bb1-a1c4-8f13bf961b73",
+      "name": "焰柴",
+      "resourceId": "builtin:lingjing-shiba-v2",
+      "frame": {
+        "x": 40,
+        "y": 84,
+        "w": 224,
+        "h": 229
+      }
+    },
+    {
+      "petId": "pet-6bf7fd2c-a3c1-4757-8670-9e05cc50628d",
+      "name": "礼帽喵",
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "frame": {
+        "x": 51,
+        "y": 65,
+        "w": 208,
+        "h": 223
+      }
+    },
+    {
+      "petId": "pet-dd707dbe-f87e-4cab-9709-da6761ba2dfe",
+      "name": "小狐",
+      "resourceId": "builtin:lingjing-xiaohu-v1",
+      "frame": {
+        "x": 51,
+        "y": 72,
+        "w": 224,
+        "h": 222
+      }
+    }
+  ],
+  "modelRequests": 0,
+  "fabricatedMessages": false,
+  "errors": [],
+  "viewports": [
+    {
+      "width": 1280,
+      "height": 844
+    },
+    {
+      "width": 1440,
+      "height": 900
+    }
+  ],
+  "checks": [
+    "Six canonical atlas identities remain unchanged.",
+    "Shared portrait viewports crop the subject with no extra feature CSS zoom.",
+    "Hatcat list/header/empty-state and AI partner selector use close-up portraits.",
+    "Empty histories remain empty and no model endpoint is called."
+  ],
+  "sharedPortraitCommit": "1dac04e",
+  "buildBase": "bbb4395",
+  "parentRecheckSource": "3aef2bf",
+  "sourceRun": "run-1792850336736",
+  "sourceSha256": {
+    "apps/pc-app/ui/src/features/conversations/components.tsx": "d69e5039a61e043e7d31e99284f7dd2c8fd86bbfcda582cb569472efb6f6f98d",
+    "apps/pc-app/ui/src/features/conversations/styles.css": "632c43f036083996be80dc823689f3c5191ab6a5f0feb0dd9f7738ee54488307",
+    "apps/pc-app/runtime/features/conversations/tests/portrait-acceptance.mjs": "da1c3882caa779ea51fb2b41564006600b97083c9de51a013081af0baa29cc21",
+    "apps/pc-app/ui/src/features/resources/ResourcePortrait.tsx": "fb5bb11b7ae93155d00b89a7997caeb193d51cdda8850b0ca85ae00891582004",
+    "apps/pc-app/ui/src/features/resources/display.ts": "2c922b68bccd675533d235a4070515c62bab9ec9321b85136bfdc9abad7ca0db",
+    "apps/pc-app/ui/src/features/resources/portrait.css": "58317e1487e6f9a6a7994fa13f4a360ba65b0124040016858220cb86e553743d"
+  },
+  "canonicalAtlasSha256": {
+    "builtin:lingjing-yuwan-v2": "1ce64faec5553a9beca9780c06f1f3b701698a63c91a51a9b71ccd3e59aaa1c1",
+    "builtin:lingjing-xiaolan-v1": "ed3296108d762293a235010e7c6222ad69960d65bb035e309e251909df09a5fb",
+    "builtin:lingjing-fantuan-v1": "4b1eb6d06ba4c737a3cd2a10f567a2ff2af80bfec3be260e7df304af4bdb80f8",
+    "builtin:lingjing-shiba-v2": "d5d561c04f06018d185b2dc3807658f274420e033f0a28621bfdda70abae5fb5",
+    "builtin:lingjing-hatcat-v1": "c4490613eab58617c5b63293f637d8af3061dee101da12588f82bbff06045777",
+    "builtin:lingjing-xiaohu-v1": "df4ba559d509f72e48fd2beeea287668058de94f1853c70e26f5e0b298e277ae"
+  },
+  "newCharacterAssetsGenerated": false,
+  "stageScope": "Only chat avatar rendering changed; right-hand full preview and animated CompanionReaction retain CompanionPortrait/default full rendering.",
+  "correctionCommit": "0a1722033c209d0b8190b98ff3b5f80cdc20b550"
+}

@@ -1,5 +1,6 @@
-import { useState, type ReactNode } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 import type { ConversationMemory, ConversationPet } from '../../../../../../packages/shared-types/src/features/conversations';
+import type { ResourceDisplay } from '../../../../../../packages/shared-types/src/features/resources';
 import { Pencil, Trash2, Heart, Plus, X, ImageOff } from 'lucide-react';
 import { Dialog, DialogContent, DialogTitle } from '../../components/ui/dialog';
 import { Button } from '../../components/ui/button';
@@ -8,10 +9,22 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '.
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../../components/ui/tooltip';
 import { AnimatedList, MotionPanel } from '../../components/motion';
 import { CompanionPortrait } from '../companions/CompanionPortrait';
+import { ResourcePortrait } from '../resources/ResourcePortrait';
+import { useFeatureRequest } from '../../app/bridge';
+
+function AvatarResource({ petId, resourceId }: { petId: string; resourceId: string }) {
+  const { data, reload } = useFeatureRequest<ResourceDisplay>('resources', 'resolve', {
+    petId, resourceId, context: 'desktop', action: 'idle'
+  });
+  useEffect(() => window.lingjing.subscribe('resources:changed', value => {
+    if ((value as { resourceId?: string } | null)?.resourceId === resourceId) void reload();
+  }), [resourceId, reload]);
+  return data ? <ResourcePortrait resource={data.resource} framing="portrait" decorative/> : <ImageOff size={20}/>;
+}
 
 export function PetAvatar({ pet, large = false }: { pet: ConversationPet; large?: boolean }) {
   return <span className={`cv-avatar ${large ? 'cv-avatar-large' : ''}`} aria-hidden="true" data-pet-id={pet.petId} data-resource-id={pet.resource?.resourceId}>
-    {pet.resource ? <CompanionPortrait key={`${pet.petId}:${pet.resource.resourceId}`} petId={pet.petId} name={pet.name} resource={pet.resource}/> : <ImageOff size={20}/>}
+    {pet.resource?.kind === '2d' ? <AvatarResource key={`${pet.petId}:${pet.resource.resourceId}`} petId={pet.petId} resourceId={pet.resource.resourceId}/> : <ImageOff size={20}/>}
   </span>;
 }
 export function PetScene({ pet }: { pet: ConversationPet }) {

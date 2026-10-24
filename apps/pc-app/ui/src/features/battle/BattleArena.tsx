@@ -8,7 +8,7 @@ import { AppDialog, Button, Card, ScrollArea } from '../../components/kit';
 import { useAppMotion } from '../../components/motion';
 import { navigate } from '../../app/navigation';
 import { ResourceStage } from '../resources/ResourceStage';
-import { resourceAssetUrl } from '../resources/client';
+import { ResourcePortrait } from '../resources/ResourcePortrait';
 import { elements, modeLabels, petName, roundLines, statusLabel } from './presentation';
 import { BattleMoves, ElementMark } from './BattleMoves';
 
@@ -36,12 +36,8 @@ export function BattlePortrait({ pet, facing = 'right', small = false, action = 
     }).catch(() => { if (alive) setError('2D 角色资源暂未就绪'); });
     return () => { alive = false; };
   }, [pet.petId, pet.element, resourceId]);
-  const sheet = resource?.sheet;
-  return <div className={`battle-portrait ${small ? 'small' : ''} element-${pet.element}`} data-pet-id={pet.petId} data-resource-id={resource?.id} data-2d-only="true" data-animating={playing && motionAllowed}>
-    {resource && small && sheet ? <span className="battle-sprite-thumb" role="img" aria-label={petName(pet)} style={{
-      backgroundImage: `url("${resourceAssetUrl(resource.id, resource.entryAsset)}")`,
-      backgroundSize: `${sheet.columns * 100}% ${sheet.rows * 100}%`, backgroundPosition: '0 0'
-    }}/> : resource ? <ResourceStage resource={resource} petId={pet.petId} context="battle" action={action} facing={facing} playing={playing && motionAllowed}/> : <span className="battle-asset-state" role="status">{error || '正在唤醒伙伴…'}</span>}
+  return <div className={`battle-portrait ${small ? 'small' : ''} element-${pet.element}`} data-pet-id={pet.petId} data-resource-id={resource?.id} data-2d-only="true" data-animating={!small && playing && motionAllowed}>
+    {resource && small ? <ResourcePortrait resource={resource} framing="portrait" className="battle-sprite-thumb" label={petName(pet)}/> : resource ? <ResourceStage resource={resource} petId={pet.petId} context="battle" action={action} facing={facing} playing={playing} motionEnabled={motionAllowed}/> : <span className="battle-asset-state" role="status">{error || '正在唤醒伙伴…'}</span>}
   </div>;
 }
 
@@ -67,15 +63,20 @@ export function BattleArena({ session, rules, busy, onAct, onSync, onLeave, onRe
   const logTrigger = useRef<HTMLButtonElement | null>(null);
   const motionAllowed = useAppMotion();
   const [pose, setPose] = useState<{ player: ResourceAction; enemy: ResourceAction }>({ player: 'idle', enemy: 'idle' });
+  const animatedRound = useRef(`${session.id}:${session.snapshot.round}`);
   const current = session.rounds.at(-1);
   const complete = ['finished', 'abandoned'].includes(session.status);
   const waiting = session.status === 'waiting';
   useEffect(() => {
-    if (!current || !motionAllowed) { setPose({ player: 'idle', enemy: 'idle' }); return; }
-    setPose({ player: battleActionAnimation(current.actions.player), enemy: battleActionAnimation(current.actions.enemy) });
+    const key = `${session.id}:${current?.round ?? 0}`;
+    const rest = { player: complete && session.winner === 'player' ? 'victory' : 'idle', enemy: complete && session.winner === 'enemy' ? 'victory' : 'idle' } as const;
+    if (!current || !motionAllowed || animatedRound.current === key) { animatedRound.current = key; setPose(rest); return; }
+    animatedRound.current = key;
+    setPose({ player: 'idle', enemy: 'idle' });
+    const start = window.requestAnimationFrame(() => setPose({ player: battleActionAnimation(current.actions.player), enemy: battleActionAnimation(current.actions.enemy) }));
     const hit = window.setTimeout(() => setPose({ player: current.damageTaken.player > 0 ? 'hit' : 'idle', enemy: current.damageTaken.enemy > 0 ? 'hit' : 'idle' }), 650);
     const idle = window.setTimeout(() => setPose({ player: complete && session.winner === 'player' ? 'victory' : 'idle', enemy: complete && session.winner === 'enemy' ? 'victory' : 'idle' }), 1150);
-    return () => { window.clearTimeout(hit); window.clearTimeout(idle); };
+    return () => { window.cancelAnimationFrame(start); window.clearTimeout(hit); window.clearTimeout(idle); };
   }, [session.id, current?.round, motionAllowed, complete, session.winner]);
   const companions = [session.player, ...party.filter(pet => pet.petId !== session.player.petId)].slice(0, 4);
   const closeLeave = () => { setLeaveOpen(false); window.setTimeout(() => leaveTrigger.current?.focus(), 0); };
@@ -90,7 +91,7 @@ export function BattleArena({ session, rules, busy, onAct, onSync, onLeave, onRe
           <div className="battle-round-number"><span>{complete ? '对战结束' : waiting ? '等待好友' : `第 ${session.snapshot.round + 1} 回合`}</span><strong>{String(complete ? session.snapshot.round : session.snapshot.round + 1).padStart(2, '0')}</strong><small className="battle-affinity"><ElementMark element={session.player.element}/>{advantage}<ElementMark element={session.enemy.element}/></small></div>
           <CombatantStatus pet={session.enemy} actor={session.snapshot.enemy} rules={rules} enemy/>
         </div>
-        <div className="battle-stage"><BattlePortrait pet={session.player} action={pose.player}/><BattlePortrait pet={session.enemy} action={pose.enemy} facing="left"/></div>
+        <div className="battle-stage" data-round={current?.round || 0}><BattlePortrait pet={session.player} action={pose.player}/><BattlePortrait pet={session.enemy} action={pose.enemy} facing="left"/></div>
         <div className="battle-arena-message" role="status" aria-live="polite">{complete ? session.status === 'abandoned' ? '已离开对战，回合记录已保存' : session.winner === 'player' ? '并肩获胜，每一步都值得记住。' : '每一次并肩，都是成长。' : waiting ? '分享房间码，等待约好的好友进入。' : session.pendingAction ? `第 ${session.pendingAction.roundNo} 回合行动已锁定${session.pendingAction.uncertain ? '，等待确认' : '，等待对方行动'}` : '选择本回合行动，与伙伴并肩出战。'}</div>
       </div>
       {complete ? <div className="battle-complete-actions"><Button onClick={onReport}>查看战报与结算 <MoveRight size={16}/></Button></div> : <BattleMoves session={session} rules={rules} busy={busy} onAct={onAct}/>}

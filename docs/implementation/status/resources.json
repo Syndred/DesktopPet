@@ -80,9 +80,17 @@
     "unchangedGeneratedPngBytes": true
   },
   "remaining": [
-    "Real production Pixi preview of every character and daily/battle action",
-    "Targeted canonical alias/preservation and backup checks",
-    "A12 1280 and 1440 screenshot/computed-style evidence",
-    "Final commit/status with integration contract"
-  ]
+    "Corrected native-scale 96-frame Pixi captures and visual inspection",
+    "Portrait screenshot and computed-style evidence at 1280/1440",
+    "Final evidence/status commit"
+  ],
+  "assetCommit": "2d0b5c8",
+  "portraitContract": {
+    "component": "ResourcePortrait",
+    "helper": "resolveResourcePortrait",
+    "publicEntry": "apps/pc-app/ui/src/features/resources/index.tsx",
+    "documentation": "docs/implementation/roster-contract.md",
+    "source": "Same canonical idle texture, per-identity head/upper-body viewport; no new raster assets",
+    "consumers": "resources wired; companions, conversations and battle integrate via foundation"
+  }
 }

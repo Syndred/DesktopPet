@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Check, FileImage, FolderUp, Search } from 'lucide-react';
+import { Check, FolderUp, Search } from 'lucide-react';
 import type { CharacterResource, ResourcesClient } from '../../../../../../packages/shared-types/src/features/resources';
 import { Button } from '../../components/ui';
 import { AnimatedList } from '../../components/motion';
@@ -7,15 +7,10 @@ import { Input } from '../../components/ui/input';
 import { ScrollArea } from '../../components/ui/scroll-area';
 import { Popover, PopoverContent, PopoverTrigger } from '../../components/ui/popover';
 import type { ResourceProvenance } from '../../../../../../packages/shared-types/src/features/resources';
-import { resolveResourceClip } from './display';
+import { ResourcePortrait } from './ResourcePortrait';
 
 export function ResourceThumbnail({ resource, client }: { resource: CharacterResource; client: ResourcesClient }) {
-  const clip = resolveResourceClip(resource, 'idle').clip;
-  const frameName = resource.atlas?.animations[clip?.name ?? 'idle']?.[0];
-  const frame = frameName ? resource.atlas?.frames[frameName] : null;
-  return <div className="resource-card-art">
-    {frame && resource.atlas && resource.availability === 'ready' ? <svg viewBox={`${frame.frame.x} ${frame.frame.y} ${frame.rotated ? frame.frame.h : frame.frame.w} ${frame.rotated ? frame.frame.w : frame.frame.h}`} aria-hidden="true" style={{ transform: frame.rotated ? 'rotate(-90deg)' : undefined }}><image href={client.assetUrl(resource.id, resource.entryAsset)} width={resource.atlas.meta.size.w} height={resource.atlas.meta.size.h} /></svg> : <FileImage aria-hidden="true" />}
-  </div>;
+  return <div className="resource-card-art"><ResourcePortrait resource={resource} assetUrl={client.assetUrl} decorative /></div>;
 }
 export function ResourceLibrary({ resources, selectedId, choose, client, loading, importing, onImport }: { resources: CharacterResource[]; selectedId: string; choose(resource: CharacterResource): void; client: ResourcesClient; loading: boolean; importing: boolean; onImport(metadata: Partial<ResourceProvenance>): void }) {
   const [search, setSearch] = useState(''), [metadata, setMetadata] = useState<Partial<ResourceProvenance>>({});

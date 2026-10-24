@@ -21,7 +21,8 @@
     "components/ui/switch",
     "components/ui/tooltip",
     "components/ui/popover",
-    "components/motion AnimatedList"
+    "components/motion AnimatedList",
+    "features/resources/ResourcePortrait framing=portrait"
   ],
   "license": {
     "ai": "Apache-2.0",
@@ -35,6 +36,7 @@
     "Node >=22; tested with the existing Electron 36.9.5 Node runtime",
     "Main imports ai/provider lazily; renderer never imports model provider packages",
     "No new model-viewer, Three, VRM, Vue, Python, voice stack or proprietary character dependency",
-    "Use foundation shared shadcn/Radix and Motion entry points; no feature-local copies"
+    "Use foundation shared shadcn/Radix and Motion entry points; no feature-local copies",
+    "Static chat avatars use resources ResourcePortrait/resolveResourcePortrait on the canonical idle frame; no extra CSS zoom or regenerated character"
   ]
 }

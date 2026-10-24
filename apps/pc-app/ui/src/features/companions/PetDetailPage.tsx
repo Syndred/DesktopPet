@@ -44,7 +44,7 @@ function GrowthDetail({ pet, controller }: { pet: CompanionPet; controller: Cont
       { title: '普通攻击', text: '与伙伴并肩出击，进行一次基础攻击。', action: 'attack' as const },
       { title: '元素攻击', text: `${elements[pet.element]}属性攻击，与伙伴的元素一致。`, action: 'skill' as const },
       { title: '终极技能', text: '积蓄怒气，在合适的时机释放力量。', action: 'victory' as const }
-    ].map(skill => <div key={skill.title} className="cp-growth-skill"><div className="cp-growth-skill-art"><CompanionPortrait petId={pet.petId} resource={pet.resource} name={pet.name} action={skill.action}/></div><div><strong>{skill.title}</strong><p>{skill.text}</p></div></div>)}</div>
+    ].map(skill => <div key={skill.title} className="cp-growth-skill"><div className="cp-growth-skill-art"><CompanionPortrait petId={pet.petId} resource={pet.resource} name={pet.name} action={skill.action} framing="portrait"/></div><div><strong>{skill.title}</strong><p>{skill.text}</p></div></div>)}</div>
   </Card><OriginMemory pet={pet} controller={controller}/></>;
 }
 

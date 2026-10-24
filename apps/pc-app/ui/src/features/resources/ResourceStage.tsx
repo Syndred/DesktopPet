@@ -62,16 +62,25 @@ export function ResourceStage({ resource, petId, context = 'desktop', action = '
       const motionBoundary = element.closest('[data-motion]');
       app.stage.addChild(sprite); element.appendChild(app.canvas);
       app.canvas.setAttribute('aria-label', `${resource.name} · 2D 动画`);
-      sprite.onFrameChange = frame => { element.dataset.frame = String(frame); };
+      const recordFrame = (frame: number) => {
+        element.dataset.frame = String(frame);
+        element.dataset.frameTexture = String(sprite.texture.uid);
+        const region = sprite.texture.frame;
+        element.dataset.textureFrame = [region.x,region.y,region.width,region.height].join(',');
+        const trim = sprite.texture.trim ?? {x:0,y:0,width:sprite.texture.orig.width,height:sprite.texture.orig.height};
+        element.dataset.contentBounds = JSON.stringify({x:sprite.x+(trim.x-sprite.anchor.x*sprite.texture.orig.width)*sprite.scale.x,y:sprite.y+(trim.y-sprite.anchor.y*sprite.texture.orig.height)*sprite.scale.y,width:trim.width*sprite.scale.x,height:trim.height*sprite.scale.y,canvasWidth:app.screen.width,canvasHeight:app.screen.height});
+      };
+      sprite.onFrameChange = recordFrame;
       const update = () => {
         const value = current.current, selected = value.clip?.name ?? '';
         if (selected !== selectedClip) { sprite.stop(); sprite.textures = sheet.animations[selected] ?? [first]; selectedClip = selected; sprite.gotoAndStop(0); }
         sprite.anchor.set(value.calibration.anchorX ?? 0.5, value.calibration.anchorY ?? 0.85);
         sprite.position.set(app.screen.width / 2, app.screen.height * 0.83);
-        sprite.scale.set(Math.min(app.screen.width * 0.78 / maxWidth, app.screen.height * 0.88 / maxHeight));
+        sprite.scale.set(Math.min(app.screen.width * 0.78 / maxWidth, app.screen.height * 0.78 / maxHeight));
         sprite.animationSpeed = (value.calibration.fps || value.clip?.fps || 8) / 60; sprite.loop = value.clip?.loop ?? true;
         if (value.playing && value.motionEnabled && !document.hidden && !reduced.matches && motionBoundary?.getAttribute('data-motion') !== 'reduced') { sprite.play(); app.ticker.start(); }
         else { sprite.stop(); app.renderer.render(app.stage); app.ticker.stop(); }
+        recordFrame(sprite.currentFrame);
       };
       const resize = () => { app.renderer.resize(element.clientWidth || 200, element.clientHeight || 240); update(); };
       const observer = new ResizeObserver(resize); observer.observe(element);
@@ -79,7 +88,7 @@ export function ResourceStage({ resource, petId, context = 'desktop', action = '
       if (motionBoundary) policyObserver.observe(motionBoundary, { attributes: true, attributeFilter: ['data-motion'] });
       document.addEventListener('visibilitychange', update); reduced.addEventListener('change', update);
       engine.current = { app, sprite, update }; update();
-      element.dataset.textureKey = cacheKey; element.dataset.textureSource = String(first.source.uid); element.dataset.frame = String(sprite.currentFrame);
+      element.dataset.textureKey = cacheKey; element.dataset.textureSource = String(first.source.uid); recordFrame(sprite.currentFrame);
       destroy = () => { observer.disconnect(); policyObserver.disconnect(); document.removeEventListener('visibilitychange', update); reduced.removeEventListener('change', update); sprite.stop(); engine.current = null; app.destroy(true, { children: true, texture: false, textureSource: false }); };
       setStatus({ state: 'ready' });
     }
