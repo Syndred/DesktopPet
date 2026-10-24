@@ -600,6 +600,7 @@ class OnlineDuelService {
 
     const channelName = `duel-room-${room.id}`;
     const channel = this.client.channel(channelName);
+    const isCurrent = () => this.channel === channel && this.room?.id === room.id;
 
     channel.on(
       "postgres_changes",
@@ -610,7 +611,7 @@ class OnlineDuelService {
         filter: `id=eq.${room.id}`
       },
       (payload) => {
-        if (!payload?.new) return;
+        if (!payload?.new || !isCurrent() || payload.new.id !== room.id) return;
         this.applyRoom(payload.new);
         this.emit("room-updated", {
           room: this.room,
@@ -630,7 +631,7 @@ class OnlineDuelService {
       },
       (payload) => {
         const normalized = normalizeRound(payload?.new);
-        if (!normalized) return;
+        if (!normalized || !isCurrent() || normalized.room_id !== room.id) return;
         this.roundCache.set(normalized.round_no, normalized);
         this.emit("round-updated", {
           round: normalized,
@@ -641,11 +642,11 @@ class OnlineDuelService {
       }
     );
 
+    this.channel = channel;
     channel.subscribe((status) => {
+      if (!isCurrent()) return;
       this.emit("realtime-status", { status, roomId: room.id });
     });
-
-    this.channel = channel;
   }
 
   async waitForResolvedRound(roundNo, options = {}) {
