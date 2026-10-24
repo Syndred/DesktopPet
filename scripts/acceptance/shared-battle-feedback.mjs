@@ -36,7 +36,9 @@ try {
     { id: 'dodge-avoids-normal', player: 'dodge', enemy: 'normal_attack', expect: 'dodge' },
     { id: 'ultimate-hits-dodge', player: 'ultimate', enemy: 'dodge', expect: 'damage' }
   ];
-  for (const fixture of fixtures) {
+  const selected = fixtures.filter(fixture => !process.argv[2] || fixture.id === process.argv[2]);
+  assert.ok(selected.length, 'Unknown feedback case');
+  for (const fixture of selected) {
     await page.evaluate(() => { location.hash = '#/battle'; });
     await page.getByRole('combobox', { name: '训练对手五行', exact: true }).waitFor();
     await page.getByRole('combobox', { name: '训练对手五行', exact: true }).click();
@@ -45,19 +47,23 @@ try {
     const screen = page.locator('[data-battle-screen="shared-v1"]'); await screen.waitFor();
     const sessionId = await screen.getAttribute('data-session-id');
     const before = await invoke('battle', 'qaPreset', { sessionId, preset: 'charged', enemyAction: fixture.enemy });
+    const resolvedEnemy = await invoke('resources', 'resolve', { resourceId: before.enemy.resource?.resourceId || before.enemy.appearance2d || before.enemy.resourceRef, context: 'battle', action: 'hit' });
+    const hitName = resolvedEnemy.resource.atlas.animations.hit[0], hitRect = resolvedEnemy.resource.atlas.frames[hitName].frame;
+    const hitTexture = [hitRect.x, hitRect.y, hitRect.w, hitRect.h].join(',');
     await page.reload(); await screen.waitFor();
-    const result = { ...fixture, sessionId, before, sizes: [], actions: [] }; proof.cases.push(result);
+    const result = { ...fixture, sessionId, before, hitName, hitTexture, sizes: [], actions: [] }; proof.cases.push(result);
     for (const width of fixture.id === 'water-instant-anger' ? [1280, 1440] : [1280]) {
       await size(width, width === 1280 ? 844 : 900);
       const view = await inspectBattle(page, { session: before, screenshot: join(output, `${fixture.id}-${width}.png`) });
       assert.ok(!/归一|养成面板|选择本回合|电脑对手|SQLite|actionId/.test(view.displayedText)); result.sizes.push(view);
     }
     await size(1280, 844);
-    for (let attempt = 0; attempt < (fixture.repeat ? 2 : 1); attempt++) {
+    for (let attempt = 0; attempt < (fixture.repeat || process.argv.includes('--repeat') ? 2 : 1); attempt++) {
       const previous = await invoke('battle', 'snapshot', { sessionId }), expected = structuredClone(previous.snapshot);
       const engineResult = core.executeRound(expected, fixture.player, fixture.enemy);
       const observing = observeBattleAction(page, fixture.player);
       await page.waitForFunction(() => document.querySelector('[data-animation-phase]')?.getAttribute('data-animation-phase') === 'impact');
+      await page.waitForTimeout(50);
       await page.screenshot({ path: join(output, `${fixture.id}-${attempt + 1}-impact.png`) });
       const timeline = await observing;
       const after = await invoke('battle', 'snapshot', { sessionId });
@@ -73,6 +79,8 @@ try {
       if (fixture.id === 'normal-interrupts-element') {
         assert.ok(!events.some(event => event.kind === 'dodge'));
         assert.ok(!timeline.entries.some(entry => entry.phase === 'release' && entry.actors[1]?.action === 'skill'));
+        const impacts = timeline.entries.filter(entry => entry.phase === 'impact');
+        assert.ok(impacts.some(entry => entry.ms <= impacts[0].ms + 100 && entry.actors[1]?.textureFrame === hitTexture), 'Impact must show the actual authored hit texture immediately, not the idle tail of an earlier hit clip');
       }
       if (fixture.id === 'ultimate-hits-dodge') {
         assert.ok(!events.some(event => event.kind === 'dodge')); assert.equal(after.snapshot.player.hp, 105); assert.equal(after.snapshot.player.anger, 0);
