@@ -47,8 +47,8 @@ async function launch() {
   await page.waitForFunction(() => Boolean(window.lingjing));
   const login = await page.evaluate(account => window.lingjing.invoke('accounts', 'login', { provider: 'local', account, password: 'isolated-local-verification', rememberSession: true }), account);
   if (!login.ok && login.code !== 'COMMAND_UNAVAILABLE') throw new Error(JSON.stringify(login));
-  // Use a real independently adopted 2D instance while foundation's existing GLB CSP issue is open.
-  if (process.env.LINGJING_BATTLE_VISUAL === '2d') {
+  // Adopt and select a real independent 2D instance through the registered companions API.
+  {
     const adopted = await page.evaluate(() => window.lingjing.invoke('companions', 'adopt', { actionId: 'battle-ui-adoption', templateId: 'big-fish-gentle', name: '鱼丸', showOnDesktop: false }));
     assert.equal(adopted.ok, true, JSON.stringify(adopted));
     const selected = await page.evaluate(petId => window.lingjing.invoke('companions', 'select', { actionId: 'battle-ui-party', petId, slot: 'battlePetId' }), adopted.data.pet.petId);
@@ -63,23 +63,53 @@ const api = async (page, command, payload = {}) => {
   assert.equal(result.ok, true, `${command}: ${result.message}`);
   return result.data;
 };
+const motionEvidence = [];
+async function verifyStillStage(page, label) {
+  await page.locator('.battle-stage .battle-portrait[data-animating="false"]').nth(1).waitFor();
+  await page.waitForTimeout(350);
+  const first = await page.locator('.battle-stage').screenshot();
+  await page.waitForTimeout(400);
+  const second = await page.locator('.battle-stage').screenshot();
+  writeFileSync(join(output, `${label}-1.png`), first); writeFileSync(join(output, `${label}-2.png`), second);
+  const difference = await application.evaluate(({ nativeImage }, images) => {
+    const a = nativeImage.createFromBuffer(Buffer.from(images.first, 'base64'));
+    const b = nativeImage.createFromBuffer(Buffer.from(images.second, 'base64'));
+    const size = a.getSize(), other = b.getSize();
+    if (size.width !== other.width || size.height !== other.height) return { dimensionsChanged: true };
+    const left = a.toBitmap(), right = b.toBitmap();
+    let maxChannel = 0, changedPixels = 0, pixelsOverOne = 0;
+    for (let index = 0; index < left.length; index += 4) {
+      let pixelMax = 0;
+      for (let channel = 0; channel < 4; channel++) pixelMax = Math.max(pixelMax, Math.abs(left[index + channel] - right[index + channel]));
+      maxChannel = Math.max(maxChannel, pixelMax);
+      if (pixelMax) changedPixels++;
+      if (pixelMax > 1) pixelsOverOne++;
+    }
+    return { size, maxChannel, changedPixels, pixelsOverOne };
+  }, { first: first.toString('base64'), second: second.toString('base64') });
+  const actors = await page.locator('.battle-stage').evaluate(element => [...element.querySelectorAll('.battle-portrait')].map(actor => ({ animating: actor.getAttribute('data-animating'), action: actor.querySelector('.resource-stage')?.getAttribute('data-action') })));
+  motionEvidence.push({ label, difference, actors });
+  writeFileSync(join(output, 'motion-evidence.json'), JSON.stringify(motionEvidence, null, 2));
+  // Chromium's GPU compositing can round isolated channels by one; a changed atlas frame exceeds this bound.
+  assert.equal(difference.dimensionsChanged, undefined, `${label}: stage dimensions changed`);
+  assert.equal(difference.pixelsOverOne, 0, `${label}: sprite frame changed: ${JSON.stringify(difference)}`);
+}
 try {
   let instance = await launch(); application = instance.app; let page = instance.page;
   await page.getByRole('button', { name: '开始训练', exact: true }).waitFor();
   let overview = await api(page, 'overview');
-  const petId = process.env.LINGJING_BATTLE_VISUAL === '2d' ? overview.selectedPetId : overview.pets.find(pet => pet.element === 'fire')?.petId || overview.pets[0].petId;
-  await page.getByLabel('选择出战伙伴').selectOption(petId);
-  await page.getByLabel('训练对手五行').selectOption('metal');
+  const petId = overview.selectedPetId;
+  await page.getByRole('combobox', { name: '选择出战伙伴' }).click();
+  await page.getByRole('option', { name: /^鱼丸 ·/ }).click();
+  await page.getByRole('combobox', { name: '训练对手五行' }).click();
+  await page.getByRole('option', { name: /^金系/ }).click();
+  checks.push('real Radix Select portals selected the independent pet and element');
   if (dependencies.resources) {
-    if (process.env.LINGJING_BATTLE_VISUAL === '2d') {
+    {
       await page.locator('.battle-portrait .resource-stage[data-status="ready"] canvas').first().waitFor({ timeout: 25000 });
       const bounds = await page.locator('.battle-portrait canvas').first().boundingBox();
       assert.ok(bounds.width > 100 && bounds.height > 100, `Battle resource collapsed: ${JSON.stringify(bounds)}`);
       checks.push('real adopted 2D instance rendered through the shared resources ResourceStage/Pixi adapter');
-    } else {
-      await page.locator('.resource-stage[data-status="ready"] model-viewer').first().waitFor({ timeout: 25000 });
-      assert.equal(await page.locator('model-viewer').first().evaluate(element => element.loaded), true);
-      checks.push('existing GLB rendered in the real Electron window through resources.resolve');
     }
   }
   await page.screenshot({ path: join(output, '01-training.png') });
@@ -93,6 +123,36 @@ try {
     await page.waitForFunction(({ id, round }) => window.lingjing.invoke('battle', 'snapshot', { sessionId: id }).then(result => result.ok && result.data.snapshot.round >= round), { id: sessionId, round: i + 1 });
   }
   const saved = await api(page, 'snapshot', { sessionId });
+  assert.equal(await page.locator('.battle-page model-viewer').count(), 0);
+  await page.locator('.battle-stage [data-resource-id="builtin:lingjing-battle-shiba-v1"][data-status="ready"]').waitFor();
+  assert.equal(await page.locator('.battle-stage canvas').count(), 2);
+  checks.push('both actors use real 2D sprite atlases; battlefield contains two live Pixi canvases and no 3D element');
+  await page.getByRole('button', { name: '离开对战', exact: true }).click();
+  await page.getByRole('dialog', { name: '确认离开对战' }).waitFor();
+  await page.keyboard.press('Tab');
+  assert.equal(await page.evaluate(() => Boolean(document.activeElement?.closest('[role="dialog"]'))), true);
+  await page.keyboard.press('Escape');
+  await page.getByRole('dialog', { name: '确认离开对战' }).waitFor({ state: 'detached' });
+  await page.waitForFunction(() => document.activeElement?.textContent?.includes('离开对战'));
+  checks.push('Radix Dialog traps keyboard focus, Escape closes it and focus returns to the leave trigger');
+  const settings = await page.evaluate(() => window.lingjing.invoke('accounts', 'settingsGet'));
+  const setAnimations = async enabled => {
+    const current = await page.evaluate(() => window.lingjing.invoke('accounts', 'settingsGet'));
+    assert.equal(current.ok, true);
+    const result = await page.evaluate(({ current, enabled }) => window.lingjing.invoke('accounts', 'settingsSave', { actionId: crypto.randomUUID(), revision: current.revision, document: { ...current.document, desktop: { ...current.document.desktop, animationsEnabled: enabled } } }), { current: current.data, enabled });
+    assert.equal(result.ok, true, JSON.stringify(result));
+  };
+  if (settings.ok) {
+    await setAnimations(false);
+    await page.locator('[data-motion="reduced"] .battle-stage').waitFor();
+    await verifyStillStage(page, 'app-motion-off');
+    await setAnimations(true);
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.locator('[data-motion="reduced"] .battle-stage').waitFor();
+    await verifyStillStage(page, 'system-reduced-motion');
+    await page.emulateMedia({ reducedMotion: 'no-preference' });
+    checks.push('app animation switch and OS reduced motion propagate through shared MotionConfig; actual sprite frames remain still (pixel comparison permits only one-level GPU rounding)');
+  }
   await page.screenshot({ path: join(output, '02-live.png') });
   await application.close(); application = null;
   instance = await launch(); application = instance.app; page = instance.page;
