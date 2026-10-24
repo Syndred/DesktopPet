@@ -1,0 +1,40 @@
+TAP version 13
+# Subtest: eight distinct generated PNGs cover all elements with 16 bounded Pixi frames and dedicated poses
+ok 1 - eight distinct generated PNGs cover all elements with 16 bounded Pixi frames and dedicated poses
+  ---
+  duration_ms: 114.6606
+  type: 'test'
+  ...
+# Subtest: registration adds canonical resources without deleting old bytes, preferences or import receipts
+ok 2 - registration adds canonical resources without deleting old bytes, preferences or import receipts
+  ---
+  duration_ms: 158.916
+  type: 'test'
+  ...
+# Subtest: templates, legacy aliases, desktop and battle all resolve the same canonical appearance
+ok 3 - templates, legacy aliases, desktop and battle all resolve the same canonical appearance
+  ---
+  duration_ms: 97.0557
+  type: 'test'
+  ...
+# Subtest: Git LF/CRLF changes relocate registered packs without replacing canonical rows or preferences
+ok 4 - Git LF/CRLF changes relocate registered packs without replacing canonical rows or preferences
+  ---
+  duration_ms: 105.6878
+  type: 'test'
+  ...
+# Subtest: standard atlas per-clip FPS and loop metadata rejects invalid values before import
+ok 5 - standard atlas per-clip FPS and loop metadata rejects invalid values before import
+  ---
+  duration_ms: 14.3598
+  type: 'test'
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 5
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 636.0111

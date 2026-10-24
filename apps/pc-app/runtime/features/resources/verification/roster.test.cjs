@@ -18,11 +18,12 @@ before(async () => {
 });
 after(async () => { db?.close(); if (directory?.startsWith(os.tmpdir())) await fs.rm(directory,{recursive:true,force:true}); });
 
-test('six distinct generated PNGs have 16 bounded Pixi frames and dedicated battle/eating poses', async () => {
+test('eight distinct generated PNGs cover all elements with 16 bounded Pixi frames and dedicated poses', async () => {
   const sources = JSON.parse(await fs.readFile(path.join(ROOT,'source-record.json'),'utf8'));
-  assert.deepEqual(catalog.characters.map(c=>c.name),['鱼丸','小蓝','饭团','焰柴','礼帽喵','小狐']);
-  assert.equal(new Set(catalog.characters.map(c=>c.resourceId)).size,6);
-  assert.equal(new Set(sources.characters.map(c=>c.sha256)).size,6);
+  assert.deepEqual(catalog.characters.map(c=>c.name),['鱼丸','小蓝','饭团','焰柴','礼帽喵','小狐','青芽','岩团']);
+  assert.equal(new Set(catalog.characters.map(c=>c.resourceId)).size,8);
+  assert.equal(new Set(sources.characters.map(c=>c.sha256)).size,8);
+  assert.deepEqual([...new Set(catalog.characters.map(c=>c.element))].sort(),['earth','fire','metal','water','wood']);
   for (const character of catalog.characters) {
     const parsed = await parseCharacterFile(path.join(ROOT,character.manifest)), resource=parsed.resource;
     const source = sources.characters.find(c=>c.id===character.id);
@@ -32,7 +33,7 @@ test('six distinct generated PNGs have 16 bounded Pixi frames and dedicated batt
     for (const frame of Object.values(resource.atlas.frames)) {
       assert.deepEqual(frame.sourceSize,{w:512,h:512});
       assert.equal(frame.spriteSourceSize.y+frame.spriteSourceSize.h,435);
-      assert(frame.frame.x>=0 && frame.frame.y>=0 && frame.frame.x+frame.frame.w<=1254 && frame.frame.y+frame.frame.h<=1254);
+      assert(frame.frame.x>=0 && frame.frame.y>=0 && frame.frame.x+frame.frame.w<=source.actualImageSize[0] && frame.frame.y+frame.frame.h<=source.actualImageSize[1]);
     }
     assert.equal(resource.calibration.desktop.anchorY,435/512);
     for (const action of catalog.actionConvention) {
@@ -68,7 +69,7 @@ test('registration adds canonical resources without deleting old bytes, preferen
   assert.deepEqual(await fs.readFile(oldManifest),sourceBefore);
   assert.equal((await service.get('owner',imported.resource.id)).id,imported.resource.id);
   const visible=await service.list('owner');
-  assert.equal(visible.filter(r=>r.origin==='builtin').length,6);
+  assert.equal(visible.filter(r=>r.origin==='builtin').length,8);
   assert.deepEqual(visible.filter(r=>r.origin==='builtin').map(r=>r.name),catalog.characters.map(c=>c.name));
   assert.equal(visible.filter(r=>r.id===legacy).length,0);
   assert(visible.every(r=>r.availability==='ready'));
@@ -76,13 +77,14 @@ test('registration adds canonical resources without deleting old bytes, preferen
 });
 
 test('templates, legacy aliases, desktop and battle all resolve the same canonical appearance',async()=>{
-  const templates=listRosterTemplates(); assert.equal(templates.length,6);
-  assert.equal(new Set(templates.map(t=>t.resource.resourceId)).size,6);
+  const templates=listRosterTemplates(); assert.equal(templates.length,8);
+  assert.equal(new Set(templates.map(t=>t.resource.resourceId)).size,8);
   for (const template of templates) {
     const id=template.resource.resourceId, pet={petId:`pet-${template.templateId}`,ownerAccountId:'owner',resource:template.resource,desktop:{behavior:'quiet'}};
     const desktop=await service.resolveForPet('owner',pet);
     const battle=await service.resolve('owner',{resourceId:id,petId:pet.petId,context:'battle',action:'attack'});
     assert.equal(desktop.resource.id,id); assert.equal(battle.resource.id,id); assert.equal(desktop.resource.contentHash,battle.resource.contentHash);
+    assert.equal(desktop.resource.element,template.element); assert.equal(battle.resource.element,template.element);
     assert.equal(battle.fallback,false); assert.equal(battle.clip.name,'attack'); assert.equal(template.resource.kind,'2d');
     assert.equal(service.getRecord('owner',id).id,id);
   }
@@ -118,4 +120,7 @@ test('standard atlas per-clip FPS and loop metadata rejects invalid values befor
     await fs.writeFile(file,JSON.stringify(invalid));
     await assert.rejects(parseCharacterFile(file),error=>error.code==='INVALID_CLIPS');
   }
+  const invalidElement=structuredClone(original); invalidElement.character.element='ice';
+  await fs.writeFile(file,JSON.stringify(invalidElement));
+  await assert.rejects(parseCharacterFile(file),error=>error.code==='INVALID_ELEMENT');
 });

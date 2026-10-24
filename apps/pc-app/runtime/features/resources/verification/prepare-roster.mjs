@@ -5,6 +5,9 @@ import { createHash } from 'node:crypto';
 const root = process.cwd(), target = path.join(root, 'apps/pc-app/runtime/features/resources/assets/roster-v2');
 const catalog = JSON.parse(await fs.readFile(path.join(target, 'catalog.json'), 'utf8'));
 const qa = JSON.parse(await fs.readFile(path.resolve(process.argv[2] || 'artifacts/resources/roster-image-qa.json'), 'utf8'));
+const append = process.argv.includes('--append');
+const promptFile = process.argv.find(value => value.startsWith('--prompts='))?.slice(10);
+const previous = append ? JSON.parse(await fs.readFile(path.join(target,'source-record.json'),'utf8')) : null;
 const authored = {
   idle: { frames: [...Array(15).fill(0),1,0], fps: 8, loop: true },
   blink: { frames: [1,0], fps: 8, loop: false },
@@ -21,7 +24,8 @@ const authored = {
   sleep_seated: { frames: [14], fps: 1, loop: true },
 };
 const records = [];
-for (const character of catalog.characters) {
+for (const character of catalog.characters.filter(character => !append || qa.some(source => source.id === character.id))) {
+  if (append && previous.characters.some(source => source.id === character.id)) throw new Error(`Refusing to replace an existing character: ${character.id}`);
   const source = qa.find(item => item.id === character.id);
   if (!source?.allSeamsClear || source.uniqueFrames !== 16) throw new Error(`Image QA incomplete: ${character.id}`);
   const directory = path.join(target, character.id);
@@ -40,16 +44,17 @@ for (const character of catalog.characters) {
     animations: Object.fromEntries(Object.entries(authored).map(([name,clip]) => [name,clip.frames.map(index => `frame_${index}`)])),
     meta: { image: 'sprites.png', size: { w: source.width, h: source.height }, scale: '1', app: 'Lingjing / built-in ImageGen + standard Pixi trim metadata' },
     character: {
-      name: character.name, fps: 8,
+      name: character.name, fps: 8, ...(append ? {element:character.element} : {}),
       clips: Object.fromEntries(Object.entries(authored).map(([name,{fps,loop}]) => [name,{fps,loop}])),
       actions: Object.fromEntries(catalog.actionConvention.map(action => [action,action])),
       calibration: { desktop: calibration, battle: calibration },
-      provenance: { author: '灵境项目 / OpenAI 内置 ImageGen', source: '项目批准图稿 03 的角色身份；generation-prompts.json 与 layout-refinement-prompts.json 保存完整提示词及工具来源', license: '项目生成素材', attribution: '灵境原创 2D 伙伴；参考项目批准图稿生成，不使用 legacy 模型或外部角色包。' },
+      provenance: { author: '灵境项目 / OpenAI 内置 ImageGen', source: promptFile ? `灵境五行角色扩展；${promptFile} 保存完整提示词及工具来源` : '项目批准图稿 03 的角色身份；generation-prompts.json 与 layout-refinement-prompts.json 保存完整提示词及工具来源', license: '项目生成素材', attribution: '灵境原创 2D 伙伴；不使用 legacy 模型或外部角色包。' },
     },
   };
   await fs.writeFile(path.join(directory, 'character.json'), JSON.stringify(manifest,null,2)+'\n');
   records.push({ id: character.id, name: character.name, resourceId: character.resourceId, templateId: character.templateId,
     file: character.id+'/sprites.png', sha256: sha, generatedSource: source.source,
+    ...(append ? {element:character.element,promptFile} : {}),
     tool: 'built-in image_gen.imagegen', transparent_background: true, actualImageSize: [source.width,source.height],
     logicalFrameSize: [512,512], baseline: 435, anchor: [.5,435/512],
     bitmapBytesUnchanged: true, frames: 16, clips: authored, seamThreshold: 128, allHighAlphaSeamsClear: true,
@@ -57,6 +62,7 @@ for (const character of catalog.characters) {
     poseReview: 'Viewed all 16 generated poses; distinct idle/blink, stride pair, greeting pair, eating pair, attack windup/release, recoiling hit, skill charge/release, victory, and two sleeping postures. Attack/hit/skill do not alias greeting or rest.',
   });
 }
-await fs.writeFile(path.join(target, 'source-record.json'), JSON.stringify({ at:new Date().toISOString(), designReference:catalog.designReference,
-  tool:'built-in image_gen.imagegen', license:'项目生成素材', imageEditing:'All raster generation and padding revisions used the built-in image tool. Python only inspected alpha and exported rectangles; Node copied PNG bytes without modification. Pixi standard trim metadata provides the common logical frame and baseline.', characters:records },null,2)+'\n');
+const collection = previous ? {...previous,characters:[...previous.characters,...records],extensions:[...(previous.extensions ?? []),{at:new Date().toISOString(),characters:records.map(record=>record.id),promptFile}]} : { at:new Date().toISOString(), designReference:catalog.designReference,
+  tool:'built-in image_gen.imagegen', license:'项目生成素材', imageEditing:'All raster generation and padding revisions used the built-in image tool. Python only inspected alpha and exported rectangles; Node copied PNG bytes without modification. Pixi standard trim metadata provides the common logical frame and baseline.', characters:records };
+await fs.writeFile(path.join(target, 'source-record.json'), JSON.stringify(collection,null,2)+'\n');
 console.log(JSON.stringify(records.map(({id,frames,actualImageSize}) => ({id,frames,actualImageSize}))));

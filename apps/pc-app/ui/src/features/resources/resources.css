@@ -16,3 +16,7 @@
 .resource-save-row{margin-top:var(--space-4,16px)}
 .resources-page .resource-stage{height:210px}
 .resources-library-scroll{height:290px}
+.resource-dimension{display:inline-flex;align-items:center;gap:3px}
+.resource-dimension svg{width:10px;height:10px}
+.resource-play-row>button{min-height:0!important;height:28px;padding:4px 7px;flex-shrink:0}
+.resource-element-metal{background:#fff5db;color:#9b741b}.resource-element-wood{background:#eaf6e9;color:#43844b}.resource-element-water{background:#eaf3ff;color:#4b80c2}.resource-element-fire{background:#fff0e7;color:#c57348}.resource-element-earth{background:#f5eddf;color:#937344}
