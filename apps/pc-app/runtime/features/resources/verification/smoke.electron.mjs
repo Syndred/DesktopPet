@@ -36,6 +36,10 @@ try {
   assert.equal(resource.revision, preference.revision);
   assert.equal(await page.locator('model-viewer').count(), 0);
   report.checks.persisted = { resourceId: resource.id, revision: resource.revision, calibration: resource.calibration, actions: resource.actions };
+  for (const name of ['大小', '锚点 X', '锚点 Y', '垂直位置', '旋转', '播放帧率']) {
+    assert.equal(await page.getByRole('slider', { name, exact: true }).count(), 1);
+  }
+  report.checks.namedSliders = 6;
 
   await page.getByRole('tab', { name: '动作配置', exact: true }).focus();
   await page.getByRole('tab', { name: '动作配置', exact: true }).press('ArrowRight');
@@ -69,10 +73,12 @@ try {
   assert(samples.every(sample => sample[0].textureSource && sample[0].textureSource === sample[1].textureSource));
   assert(samples.every(sample => sample[0].petId !== sample[1].petId && sample[0].resourceId === sample[1].resourceId));
   report.checks.instances = { samples, sharedTextureSource: true, independentPlayback: true };
+  await page.locator('.resources-library-scroll [data-radix-scroll-area-viewport]').evaluate(element => { element.scrollTop = 0; });
   await page.screenshot({ path: path.join(artifactRoot, '2d-independent-instances.png') });
 
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.waitForFunction(() => matchMedia('(prefers-reduced-motion: reduce)').matches);
+  await page.locator('.app-page-motion[data-motion="reduced"]').waitFor();
   const reducedFrames = [];
   for (let i = 0; i < 5; i++) {
     reducedFrames.push(await page.locator('.resource-stage').nth(1).locator('.resource-sprite-host').getAttribute('data-frame'));
@@ -81,6 +87,7 @@ try {
   assert.equal(new Set(reducedFrames).size, 1);
   report.checks.systemReducedMotion = { frames: reducedFrames, paused: true };
   await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await page.locator('.app-page-motion[data-motion="enabled"]').waitFor();
   await page.getByRole('button', { name: '收起双实例对照', exact: true }).click();
   await page.getByRole('button', { name: '播放动画', exact: true }).click();
   await page.screenshot({ path: path.join(artifactRoot, '2d-final-after-restart.png') });
