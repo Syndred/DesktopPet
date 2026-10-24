@@ -1,34 +1,245 @@
 {
   "module": "battle",
   "branch": "codex/lingjing-battle",
-  "commit": "implementation commit containing this status; final verification update follows",
-  "status": "implementing_and_verifying",
-  "upstream": { "fetched": true, "originMain": "4786f97", "baseline": "6c8ce65", "originMainIsAncestor": true },
+  "commit": "3be08543765fcf2cf88d0920bc02682287896e57",
+  "status": "ready_for_foundation_integration_online_acceptance_pending",
+  "implementationReady": true,
+  "goalComplete": false,
+  "productionDeployed": false,
+  "scope": "docs/implementation/scope-2d-ui-first.txt",
+  "upstream": {
+    "fetched": true,
+    "fetchCheckedAt": "2026-10-24T12:55:38Z",
+    "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086",
+    "originMainIsAncestor": true,
+    "mergeOriginMainResult": "Already up to date"
+  },
+  "foundation": {
+    "mergedThrough": "d0488f0",
+    "mergeCommit": "5f7af41",
+    "publicKitSource": "f0af90f5a6eaf4b8e0bc686728ddc5af3e8584d9",
+    "liveMotionFix": "7f0e896"
+  },
   "contract": "docs/implementation/battle-contract.txt",
+  "uiComponents": "docs/implementation/battle-ui-components.txt",
+  "artAssets": "docs/implementation/battle-art-assets.json",
+  "completed": [
+    "接回原五行回合内核、怒气/免费闪避/叠层状态/治疗/终局，400 个元素与行动组合保持桌面和 edge 公式一致。",
+    "真实账号及独立 2D 宠物实例接入；出战选择不改变桌面或聊天选择，经验只写指定实例。",
+    "SQLite 持久化会话、原始待确认行动、逐回合完整状态、战报与奖励回执；真实 Electron 重启恢复已验证。",
+    "好友搜索、邀请、接受/拒绝/撤销、房间创建/加入、同步/重订阅与原行动重试使用现有 Supabase 协议。",
+    "房间版本单调更新、分页补齐历史缺口、原子 round RPC、不可覆盖的行动和绑定账号/房间/宠物的云端结算回执。",
+    "经验、战报、种子与奖励账本同库事务及幂等；真实 garden 领地适配器和 accounts 备份账本保护已接入。",
+    "依据批准原图实现 2D 庭院舞台、实际角色动作、状态栏、出战列表、行动卡、好友三栏和战报回顾。",
+    "正式使用公共 shadcn/Radix 与 Motion 接口，复用资源模块 PixiJS 舞台；应用和系统动画设置均实时生效。",
+    "无法联网时邀请数量显示未知，保存本地战报并说明云端账号/连接要求。"
+  ],
   "tests": [
-    { "check": "existing focused battle/room/friend/schema regressions", "result": "33 passed" },
-    { "check": "battle native SQLite tests with real companions module", "result": "8 passed, including all 400 desktop/edge formula pairs, restart, XP isolation, deduplication and transactional rollback" },
-    { "check": "embedded PostgreSQL migration execution", "result": "passed: atomic round commit, duplicate replay, rollback, participant/pet-bound settlement, denied anon RPC" },
-    { "check": "UI typecheck and feature lint", "result": "passed" },
-    { "check": "real Windows Electron UI", "result": "in progress; found existing GLB decoder WebAssembly blocked by foundation CSP" }
+    {
+      "check": "现有战斗/房间/好友/schema 定向回归",
+      "command": "npx vitest run tests/task-d002-pc-battle-runtime.test.ts tests/task-t103-battle-engine.test.ts tests/task-t104-realtime-room.test.ts tests/task-t202-friends-private-duel.test.ts tests/task-t206-online-duel-schema.test.ts",
+      "result": "33 passed"
+    },
+    {
+      "check": "原生 SQLite + 实际 companions/accounts/garden",
+      "command": "node scripts/desktop/run-native-tests.cjs apps/pc-app/runtime/features/battle/battle.test.cjs",
+      "result": "11 passed, 0 skipped; 含 400 公式组合、重启、并发回合、实例隔离、事务回滚、旧数据保留、账号退出、领地及备份去重"
+    },
+    {
+      "check": "嵌入式 PostgreSQL 实际执行",
+      "command": "node apps/pc-app/runtime/features/battle/verify-postgres.mjs",
+      "result": "passed; 原子提交、重复回执、事务回滚、参与者/宠物绑定与匿名 RPC 拒绝。未连接或部署生产 Supabase",
+      "evidence": "docs/implementation/evidence/battle/2026-10-24/postgres-evidence.json"
+    },
+    {
+      "check": "真实 Windows Electron 完整点击流程",
+      "command": "node apps/pc-app/runtime/features/battle/verify-electron.mjs",
+      "result": "passed; 训练→出招→真实进程重启恢复→终局→经验/种子/战报→重复结算；所有 renderer pageerror 为零",
+      "evidence": "docs/implementation/evidence/battle/2026-10-24/evidence.json"
+    },
+    {
+      "check": "公共无障碍交互",
+      "result": "passed; Radix Select 真实门户/Esc/焦点返回，Tabs 左右键切路由，禁用技能 Tooltip 可聚焦，Dialog 焦点约束/Tab/Esc/返回触发器，战报实际使用 ScrollArea"
+    },
+    {
+      "check": "动画开关",
+      "result": "passed; 应用关闭与系统 reduced motion 均让两角色停止帧变化；解码截图逐像素比较，仅容许 GPU 通道 1/255 舍入差",
+      "evidence": "docs/implementation/evidence/battle/2026-10-24/motion-evidence.json"
+    },
+    {
+      "check": "邀请不可用状态",
+      "result": "passed; 实际 Electron 本地账号提示云端登录，邀请状态为未知，不宣称 0 邀请",
+      "evidence": "docs/implementation/evidence/battle/2026-10-24/friends-capture.json"
+    },
+    {
+      "check": "UI 类型、功能 lint、正式打包",
+      "result": "npm run typecheck:ui; npx eslint apps/pc-app/ui/src/features/battle --ext .ts,.tsx; npm run build:pc 均通过。构建仍提示公共 bundle >500kB，与功能验证分开记录"
+    },
+    {
+      "check": "上游最新代码",
+      "result": "git fetch origin 成功，origin/main 已是 HEAD 祖先，合入检查 Already up to date"
+    }
   ],
+  "openSource": [
+    {
+      "name": "React / React DOM",
+      "version": "19.3.1",
+      "license": "MIT",
+      "source": "https://github.com/facebook/react",
+      "usage": "battle 功能 TSX 分组件、hooks、正式 Electron renderer"
+    },
+    {
+      "name": "TypeScript",
+      "version": "5.9.3",
+      "license": "Apache-2.0",
+      "source": "https://github.com/microsoft/TypeScript",
+      "usage": "packages/shared-types/src/features/battle 与正式 UI 类型检查"
+    },
+    {
+      "name": "shadcn/ui Radix Nova",
+      "version": "官方 registry 源码，foundation f0af90f；实际逐文件 hash 见 shadcn-source-record.json",
+      "license": "MIT",
+      "source": "https://ui.shadcn.com/r/styles/radix-nova",
+      "usage": "components/kit 的 Tabs/Select/AppDialog/Tooltip/ScrollArea/Button/Card/Input；没有复制本地弹层实现",
+      "record": "docs/implementation/shadcn-source-record.json"
+    },
+    {
+      "name": "radix-ui",
+      "version": "1.8.1",
+      "license": "MIT",
+      "source": "https://github.com/radix-ui/primitives",
+      "usage": "上述正式组件的门户、键盘、焦点与可访问状态"
+    },
+    {
+      "name": "Tailwind CSS",
+      "version": "4.3.3",
+      "license": "MIT",
+      "source": "https://github.com/tailwindlabs/tailwindcss",
+      "usage": "foundation Vite/主题及 shadcn 组件；复杂战斗舞台保留功能 CSS"
+    },
+    {
+      "name": "Motion for React",
+      "version": "14.6.0",
+      "license": "MIT",
+      "source": "https://github.com/motiondivision/motion",
+      "usage": "公共 PageTransition/MotionPanel/AnimatedList/useAppMotion，统一设置控制动作和 Pixi playing"
+    },
+    {
+      "name": "PixiJS",
+      "version": "8.22.0",
+      "license": "MIT",
+      "source": "https://github.com/pixijs/pixijs",
+      "usage": "公共 ResourceStage 的 Assets/Spritesheet/AnimatedSprite/Ticker 渲染战斗和战报角色；复用共享纹理"
+    },
+    {
+      "name": "Lucide React",
+      "version": "1.61.0",
+      "license": "ISC",
+      "source": "https://github.com/lucide-icons/lucide",
+      "usage": "行动、回顾、导航和状态图标；品牌复用公共四芒星"
+    },
+    {
+      "name": "better-sqlite3",
+      "version": "12.11.1",
+      "license": "MIT",
+      "source": "https://github.com/WiseLibs/better-sqlite3",
+      "usage": "同一个 services.db 保存会话、回合、报告、养成和种子事务"
+    },
+    {
+      "name": "Supabase JS",
+      "version": "2.98.0",
+      "license": "MIT",
+      "source": "https://github.com/supabase/supabase-js",
+      "usage": "保留 OnlineDuelService 的 Functions/Realtime，不引入第二套对战服务"
+    },
+    {
+      "name": "Electron / electron-vite",
+      "version": "36.9.5 / 4.0.1",
+      "license": "MIT",
+      "source": "https://github.com/electron/electron",
+      "usage": "现有桌面 IPC、独立验收用户目录、真实进程重启与正式构建"
+    },
+    {
+      "name": "PGlite",
+      "version": "0.5.11",
+      "license": "Apache-2.0",
+      "source": "https://github.com/electric-sql/pglite",
+      "usage": "仅 artifacts/battle/sql-validation 中的开发验证依赖，执行真实 PostgreSQL 迁移；不是联机验收"
+    }
+  ],
+  "customDifferences": [
+    {
+      "item": "自研领域适配",
+      "reason": "保留原五行规则与存档，为已验证 owner/独立实例、持久化原行动、同库奖励/备份事务增加必要适配；未重写动画、组件交互或网络协议"
+    },
+    {
+      "item": "boardgame.io / Colyseus 未引入",
+      "reason": "原 BattleRuntimeService 和 Supabase 房间/Realtime 已有规则及协议；整套替换会改变存量回合和房间契约"
+    },
+    {
+      "item": "XState 未引入",
+      "reason": "当前会话生命周期与原回合账本足够表达等待、活动、待确认和终局；无需另存一套并行状态机"
+    },
+    {
+      "item": "2D 艺术素材",
+      "reason": "项目原创生成庭院及两角色动作图集，经现有资源包 parser/repository 登记；素材来源单独记录，不宣称第三方 MIT/CC0 授权"
+    }
+  ],
+  "uiComparison": {
+    "review": "docs/implementation/evidence/battle/2026-10-24/README.txt",
+    "mappings": [
+      {
+        "design": "docs/design/2026-10-24/full-ui/02-exploration-and-battle.png",
+        "area": "03 对战中心",
+        "actual": "docs/implementation/evidence/battle/2026-10-24/02-live.png",
+        "matched": "庭院双角色、两侧状态栏、中间回合、右侧伙伴/回合记录、底部四行动卡、浅蓝选中线及平面按钮"
+      },
+      {
+        "design": "docs/design/2026-10-24/full-ui/06-chat-and-friend-duels.png",
+        "area": "好友约战",
+        "actual": "docs/implementation/evidence/battle/2026-10-24/04-friends.png",
+        "matched": "账号搜索、对方信息、我方独立出战宠物、待处理/已发邀请与房间码操作"
+      },
+      {
+        "design": "docs/design/2026-10-24/full-ui/07-battle-report-and-model-import.png",
+        "area": "战报部分",
+        "actual": "docs/implementation/evidence/battle/2026-10-24/03-report.png",
+        "matched": "最近战报、真实胜负/经验/种子、逐回合选择、状态回顾和可播放 2D 场景"
+      }
+    ],
+    "remainingDifferences": [
+      "庭院与可动画角色使用单独原创素材，角色姿态、服装细节与概念画不同，未声称像素一致。",
+      "好友页仅呈现实际账号状态；服务不可用且本地账号未云端登录，不填入概念稿的样例联系人、在线/就绪灯或邀请数量。",
+      "现有规则没有概念稿的技能冷却和倒计时，显示真实免费闪避/怒气门槛；结算经验沿用 20/5，不复制样例数值。",
+      "战报本次实际为失败，显示真实 5 经验；长回合记录可滚动查看。"
+    ]
+  },
+  "twoDOnly": {
+    "passed": true,
+    "checks": [
+      "BattlePortrait 只接收 spritesheet，复用 ResourceStage；不存在 model-viewer/Three 导入或 3D 分支",
+      "真实舞台有两张 Pixi canvas，整个验证过程未观察到 GLB/GLTF/VRM 请求",
+      "已移除战斗角色字母/几何占位样式；小头像使用实际图集帧",
+      "旧资源文件、账号归档、旧战报保留，没有执行旧数据删除或格式覆盖"
+    ],
+    "evidence": "docs/implementation/evidence/battle/2026-10-24/evidence.json"
+  },
   "runtimeEvidence": [
-    "artifacts/battle/postgres-evidence.json",
-    "artifacts/battle/windows-1792844099424/failure.json",
-    "artifacts/battle/windows-1792844099424/failure.png"
-  ],
-  "integrationDependencies": [
-    "companions synchronous growth/selection adapter on services.db (validated against real module)",
-    "resources shared ResourceStage and protocol scheme before app ready",
-    "foundation CSP must allow the existing GLB WebAssembly decoder without enabling JavaScript eval",
-    "garden grantSeeds adapter and territory ownership settlement",
-    "review/deploy additive Supabase migration and updated duel-online separately"
+    "docs/implementation/evidence/battle/2026-10-24/evidence.json",
+    "docs/implementation/evidence/battle/2026-10-24/motion-evidence.json",
+    "docs/implementation/evidence/battle/2026-10-24/postgres-evidence.json",
+    "docs/implementation/evidence/battle/2026-10-24/cloud-reachability.json"
   ],
   "realIncomplete": [
-    "Real friend invite/accept/room/Realtime/settlement acceptance cannot run: configured http://47.112.208.97:8000 endpoint returns 502; Node fetch also fails",
-    "No cloud migration or production function has been deployed",
-    "Real Windows complete training/restart/report click path still under verification after discovering root CSP decoder failure",
-    "Cross-device inventory convergence remains a foundation/accounts/companions integration check; server reward receipt uses a stable shared actionId"
+    "2026-10-24 20:55（Asia/Shanghai）再次探测配置端点 http://47.112.208.97:8000/functions/v1/duel-online，OPTIONS 仍返回 502；真实双实例邀请→接受→房间→Realtime→结算未通过验收。",
+    "增量 Supabase 迁移及 duel-online 更新尚未部署，需 foundation/用户审核发布；本任务不自动执行生产发布。",
+    "跨设备奖励与账号同步的最终收敛仍需服务恢复后的实际双端核对；稳定云端 actionId、奖励回执及本机备份账本保护不能替代该验收。"
   ],
-  "policy": "No root manifests/config/preload/shared source checkout modified by battle; legacy JSON/history/assets kept; no destructive production migrations or publication. Goal remains active until actual acceptance."
+  "integrationDependencies": [
+    "foundation 统一合并、打包与最终集成回归；无需八功能各自重复全量测试",
+    "需要当前 companions/resources/accounts/garden 同库适配和公共 useAppMotion（含 7f0e896 实时系统设置修复）",
+    "审核后先部署 infra/supabase/migrations/20261024_lingjing_battle_atomic_rounds.sql，再发布更新的 duel-online",
+    "服务恢复并具备两个隔离的真实云端账号后，完成好友双端联机与跨设备结算验收"
+  ],
+  "policy": "仅在独立 battle 工作树交付；根 manifests/config/共享 kit 的变动来自 foundation 合并。未新建会话、未发消息给其他会话、未操作真实用户个人目录、未删除历史数据、未部署生产。目标保持未完成，绝不把本机或嵌入式 SQL 验证当成真实好友联机成功。"
 }

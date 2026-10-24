@@ -21,22 +21,22 @@ function setup(folder = mkdtempSync(join(tmpdir(), "lingjing-battle-"))) {
   const legacy = new RuntimeDataStore({ filePath: join(folder, "legacy.json"), sessionFilePath: join(folder, "session.json") });
   if (!legacy.getAuthSession().currentUser) legacy.registerUser("battle-local-test", "battle-test-password", "实机验证伙伴");
   const services = createServices({ db, legacy: { runtimeDataStore: legacy }, paths: { userData: folder } });
+  let companionCommands;
   if (hasCompanions) {
     const module = require(companionsFile);
     migrate(db, "companions", module.migrations);
-    module.register(services);
-    const owner = services.session.getOwnerAccountId();
-    if (!services.get('companions').listPets(owner).length) {
-      const { CompanionsService } = require('../companions/service.cjs');
-      const domain = new CompanionsService({ db });
-      for (const [index,name] of ['训练伙伴甲','训练伙伴乙'].entries()) domain.adopt(owner, { templateId:'big-fish-gentle',name,showOnDesktop:false,actionId:`2d-fixture-${index}` });
+    companionCommands = module.register(services).commands;
+    // Current scope keeps archived 3D records but exposes only explicit 2D instances.
+    for (const [index, name] of ['鱼丸', '小蓝'].entries()) {
+      const adopted = companionCommands.adopt({ actionId: `battle-fixture-${index}`, templateId: 'big-fish-gentle', name, showOnDesktop: false }, { ownerAccountId: services.session.getOwnerAccountId() });
+      assert.equal(adopted.ok, true);
     }
   }
   migrate(db, "battle", migrations);
   const service = new BattleFeatureService(services);
   const owner = services.session.getOwnerAccountId();
   const context = { ownerAccountId: owner };
-  return { folder, db, legacy, services, service, owner, context, close() { service.dispose(); db.close(); } };
+  return { folder, db, legacy, services, service, owner, context, companionCommands, close() { service.dispose(); db.close(); } };
 }
 
 test("desktop and edge formulas agree for all 400 five-element/action pairs and stacked effects", () => {
@@ -196,7 +196,7 @@ test("wild/territory adapters keep trusted challenge provenance and isolate owne
   } finally { f.close(); }
 });
 
-test("real accounts local-ID migration keeps pets reachable and logout revokes battle access", { skip: !hasCompanions || !existsSync(resolve(__dirname, '../accounts/service.cjs')) }, async () => {
+test("real accounts local-ID mapping preserves legacy archives, isolates 2D ownership and revokes battle access on logout", { skip: !hasCompanions || !existsSync(resolve(__dirname, '../accounts/service.cjs')) }, async () => {
   const f = setup(); let accounts;
   try {
     const { AccountsService } = require('../accounts/service.cjs');
@@ -211,9 +211,12 @@ test("real accounts local-ID migration keeps pets reachable and logout revokes b
     await accounts.authenticate({ provider: 'local', account: 'battle-local-test', password: 'battle-test-password', rememberSession: false });
     const owner = accounts.getOwnerAccountId();
     assert.notEqual(owner, f.owner);
-    assert.equal(f.service.overview({}, { ownerAccountId: owner }).pets.length, 2);
-    assert.equal(f.services.get('companions').listPets(owner).length, 2);
-    assert.equal(f.db.prepare('SELECT COUNT(*) AS count FROM companion_legacy_archive WHERE owner_account_id=?').get(owner).count, 6);
+    assert.equal(accounts.getLegacyInventory(owner).pets.length, f.legacy.getInventorySnapshot().pets.length);
+    assert.equal(f.service.overview({}, { ownerAccountId: owner }).pets.length, 0);
+    const adopted = f.companionCommands.adopt({ actionId: 'mapped-owner-adoption', templateId: 'big-fish-gentle', name: '映射后的鱼丸', showOnDesktop: false }, { ownerAccountId: owner });
+    assert.equal(adopted.ok, true);
+    assert.equal(f.service.overview({}, { ownerAccountId: owner }).pets[0].petId, adopted.data.pet.petId);
+    assert.equal(f.services.get('companions').listPets(owner).length, 1);
     assert.throws(() => f.service.user(owner), /云端账号/);
     await accounts.logout();
     assert.throws(() => f.service.overview({}, { ownerAccountId: owner }), error => error.code === 'AUTH_REQUIRED');
@@ -237,7 +240,7 @@ test("real garden adapter consumes the battle outcome and never repeats territor
     const territory = garden.territories.discoverAtSystemFix(fix);
     const before = garden.snapshot(f.context);
     const petId = f.service.pets(f.owner)[0].petId;
-    const started = await entry.commands.territoryChallenge({ sessionOwnerAccountId:f.owner, actionId: 'territory-adapter-start', petId, territoryId: territory.id, expectedTerritoryRevision: territory.revision, expectedRevision: before.revision }, f.context);
+    const started = await entry.commands.territoryChallenge({ actionId: 'territory-adapter-start', sessionOwnerAccountId: f.owner, petId, territoryId: territory.id, expectedTerritoryRevision: territory.revision, expectedRevision: before.revision }, f.context);
     assert.equal(started.ok, true, JSON.stringify(started));
     let session = f.service.snapshot({ sessionId: started.data.sessionId }, f.context);
     for (let n = 0; n < 150 && session.status === 'active'; n++) session = await f.service.act({ sessionId: session.id, actionId: `territory-round-${n}`, action: session.snapshot.player.anger >= 50 ? 'ultimate' : 'element_attack', expectedRound: session.snapshot.round + 1 }, f.context);

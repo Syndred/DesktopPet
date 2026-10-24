@@ -1,19 +1,16 @@
 import { useEffect, useRef, useState } from 'react';
-import { useAppMotion } from '../../components/motion';
 import { Droplets, MoveRight, RefreshCw, Shield, Sparkles, Swords, Zap } from 'lucide-react';
 import type { BattleActor, BattleParticipant, BattleSession } from '../../../../../../packages/shared-types/src/features/battle';
 import type { BattleActionType } from '../../../../../../packages/shared-types/src/battle';
 import type { CharacterResource, ResourceAction } from '../../../../../../packages/shared-types/src/features/resources';
 import { request } from '../../app/bridge';
 import { AppDialog, Button, Card, Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../../components/kit';
+import { useAppMotion } from '../../components/motion';
 import { ResourceStage } from '../resources/ResourceStage';
 import { resourceAssetUrl } from '../resources/client';
 import { actionLabels, elements, modeLabels, petName, roundLines, statusLabel } from './presentation';
 
 const fallback2d = (pet: BattleParticipant) => pet.element === 'water' ? 'builtin:lingjing-battle-yuwan-v1' : 'builtin:lingjing-battle-shiba-v1';
-function useBattleMotionAllowed() {
-  return useAppMotion();
-}
 const publicResources = new Map<string, Promise<CharacterResource>>();
 async function resolve2d(petId: string, resourceId: string) {
   const load = async () => {
@@ -36,7 +33,7 @@ export function BattlePortrait({ pet, facing = 'right', small = false, action = 
 }) {
   const [resource, setResource] = useState<CharacterResource | null>(null);
   const [error, setError] = useState('');
-  const motionAllowed = useBattleMotionAllowed();
+  const motionAllowed = useAppMotion();
   const resourceId = pet.appearance2d || (pet.resource?.kind === '2d' ? pet.resource.resourceId : fallback2d(pet));
   useEffect(() => {
     let alive = true;
@@ -79,7 +76,7 @@ export function BattleArena({ session, busy, onAct, onSync, onLeave, onReport, s
 }) {
   const [leaveOpen, setLeaveOpen] = useState(false);
   const leaveTrigger = useRef<HTMLButtonElement | null>(null);
-  const motionAllowed = useBattleMotionAllowed();
+  const motionAllowed = useAppMotion();
   const [pose, setPose] = useState<{ player: ResourceAction; enemy: ResourceAction }>({ player: 'idle', enemy: 'idle' });
   const current = session.rounds.at(-1);
   const complete = ['finished', 'abandoned'].includes(session.status);

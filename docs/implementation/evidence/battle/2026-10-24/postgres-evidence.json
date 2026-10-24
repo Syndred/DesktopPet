@@ -1,0 +1,11 @@
+{
+  "at": "2026-10-24T12:11:46.508Z",
+  "backend": "PGlite embedded PostgreSQL, not the deployed Supabase service",
+  "checks": [
+    "existing room/account migrations and additive battle migration executed",
+    "duplicate round commit returns original round without overwriting newer state",
+    "failed state advance rolls back the round insert atomically",
+    "room/account settlement receipt is idempotent, pet-bound and participant-only",
+    "anon cannot invoke privileged settlement function"
+  ]
+}
