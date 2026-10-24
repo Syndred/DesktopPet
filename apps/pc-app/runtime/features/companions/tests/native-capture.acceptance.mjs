@@ -16,7 +16,15 @@ const env = { ...process.env, PET_USER_DATA_DIR: previous.profile, LINGJING_QA_S
 const evidence = { at: new Date().toISOString(), runtimeSourceSha: previous.source.sha, harnessSourceSha: execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(), previousEvidence: previousFile, scenario: previous.scenario, captures: [] };
 const app = await _electron.launch({ args: [resolve('.'), '--force-device-scale-factor=1'], env });
 let main, originalSettings;
+const recalled = [];
 const invoke = (feature, command, payload) => main.evaluate(({ feature, command, payload }) => window.lingjing.invoke(feature, command, payload), { feature, command, payload });
+async function restoreVisibility() {
+  while (recalled.length) {
+    const petId = recalled.at(-1);
+    assert.equal((await invoke('companions', 'desktop', { actionId: randomUUID(), petId, visible: true })).ok, true);
+    recalled.pop();
+  }
+}
 try {
   for (let attempt = 0; attempt < 100; attempt++) { main = app.windows().find(page => page.url().includes('/dist/ui/index.html') && !page.url().includes('#/desktop/')); if (main) break; await delay(100); }
   assert.ok(main); await main.waitForFunction(() => Boolean(window.lingjing));
@@ -32,9 +40,13 @@ try {
   assert.equal((await invoke('accounts', 'login', { provider: 'local', account: 'companions_five', password: 'Local-five-proof-72!', rememberSession: false })).ok, true);
   const before = (await invoke('companions', 'list')).data;
   const settings = (await invoke('accounts', 'settingsGet')).data; originalSettings = settings.document;
-  const captureSettings = structuredClone(originalSettings); captureSettings.desktop.companionLimit = 5; captureSettings.desktop.hideInFullscreen = false;
-  assert.equal((await invoke('accounts', 'settingsSave', { actionId: randomUUID(), revision: settings.revision, document: captureSettings })).ok, true);
-  evidence.captureSettings = { original: { companionLimit: originalSettings.desktop.companionLimit, hideInFullscreen: originalSettings.desktop.hideInFullscreen }, temporary: { companionLimit: 5, hideInFullscreen: false }, provenance: 'explicit-isolated-QA-settings-command' };
+  const captureSettings = structuredClone(originalSettings); captureSettings.desktop.hideInFullscreen = false;
+  const savedSettings = await invoke('accounts', 'settingsSave', { actionId: randomUUID(), revision: settings.revision, document: captureSettings }); assert.equal(savedSettings.ok, true, JSON.stringify(savedSettings));
+  evidence.captureSettings = { original: { companionLimit: originalSettings.desktop.companionLimit, hideInFullscreen: originalSettings.desktop.hideInFullscreen }, temporary: { companionLimit: originalSettings.desktop.companionLimit, hideInFullscreen: false }, provenance: 'explicit-isolated-QA-settings-command', temporarilyRecalled: [] };
+  for (const pet of before.pets.filter(pet => pet.desktop.visible && !['wood', 'earth'].includes(pet.element))) {
+    assert.equal((await invoke('companions', 'desktop', { actionId: randomUUID(), petId: pet.petId, visible: false })).ok, true);
+    recalled.push(pet.petId); evidence.captureSettings.temporarilyRecalled.push(pet.petId);
+  }
   for (const element of ['wood', 'earth']) {
     const pet = before.pets.find(pet => pet.element === element && pet.resource.kind === '2d'); assert.ok(pet);
     let page;
@@ -65,12 +77,14 @@ try {
       evidence.captures.push({ name, petId: pet.petId, resourceId: pet.resource.resourceId, element, stage, ...pixels, capturePolicy: 'actual-canvas-ready + two-animation-frames + temporary-unthrottled/front + restored', originalBackgroundThrottling: wasThrottled });
     } finally { await app.evaluate(({ BrowserWindow }, { petId, wasThrottled }) => { BrowserWindow.getAllWindows().find(window => window.webContents.getURL().includes(`#/desktop/${petId}`)).webContents.setBackgroundThrottling(wasThrottled); }, { petId: pet.petId, wasThrottled }); }
   }
+  await restoreVisibility();
   const after = (await invoke('companions', 'list')).data;
   assert.deepEqual(after.selections, before.selections);
   for (const pet of before.pets) { const actual = after.pets.find(candidate => candidate.petId === pet.petId); assert.equal(actual.name, pet.name); assert.deepEqual(actual.growth, pet.growth); assert.deepEqual(actual.resource, pet.resource); assert.deepEqual(actual.desktop, pet.desktop); }
   evidence.stateUnchanged = true; evidence.result = 'passed'; console.log(`REAL_NATIVE_CAPTURE_PASSED ${output}`);
 } catch (error) { evidence.result = 'failed'; evidence.error = error.stack; process.exitCode = 1; console.error(error); }
 finally {
+  await restoreVisibility();
   if (originalSettings) {
     const current = (await invoke('accounts', 'settingsGet')).data;
     const restored = await invoke('accounts', 'settingsSave', { actionId: randomUUID(), revision: current.revision, document: originalSettings });
