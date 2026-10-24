@@ -13,6 +13,9 @@ const require = createRequire(import.meta.url);
 const { GardenService } = require('./service.cjs'); const { createGardenBackupAdapter } = require('./backup.cjs'); const { CloudGardenAuthority } = require('./cloud-authority.cjs');
 const { BackupManager } = require('../accounts/backups.cjs');
 const { AccountSync } = require('../accounts/sync.cjs');
+const { createServices } = require('../../core/services.cjs');
+const { ResourcesService } = require('../resources/service.cjs');
+const { registerRoster } = require('../resources/roster.cjs');
 const companionRoot = process.env.GARDEN_COMPANIONS_DIR || resolve('apps/pc-app/runtime/features/companions');
 const { CompanionsService } = require(join(companionRoot,'service.cjs')); const { migrateCompanions } = require(join(companionRoot,'migrations.cjs'));
 const { PGlite } = process.env.GARDEN_PGLITE_MODULE ? await import(pathToFileURL(process.env.GARDEN_PGLITE_MODULE).href) : await import('@electric-sql/pglite');
@@ -27,6 +30,9 @@ await pg.query('INSERT INTO public.runtime_accounts VALUES ($1,$2)',[owner,token
 const db = new DatabaseSync(resolve(output,'local.sqlite'));
 for(const migration of require('../accounts/schema.cjs').migrations)db.exec(migration.sql);
 migrateCompanions(db);
+for(const migration of require('../resources/repository.cjs').migrations)db.exec(migration.sql);
+const resources=new ResourcesService({db,storageRoot:resolve(output,'resources'),seedBuiltin:false});
+await resources.seed();await registerRoster(resources);
 function addIdentity(who){db.prepare('INSERT INTO account_identities(owner_account_id,provider,subject_id,account,account_key,username,created_at,updated_at) VALUES(?,?,?,?,?,?,?,?)').run(who,'runtime',who,who,who,'云端联合验收','2026-10-24','2026-10-24');}
 addIdentity(owner);
 db.exec('CREATE TABLE test_notes(owner_account_id TEXT PRIMARY KEY,note TEXT)');db.prepare('INSERT INTO test_notes VALUES(?,?)').run(owner,'已有回忆');
@@ -77,7 +83,12 @@ const accountRemote={enabled:true,async cloudSave(op,current,payload={}){
 }};
 const sync=new AccountSync({db,backups,remote:accountRemote,getSession:()=>session,getSettings:()=>({document:{sync:{enabled:true}}})});
 const firstReadback=await accountRemote.cloudSave('read',session);sync.acceptAuthoritativeReadback(owner,{envelope:firstReadback.envelope,cloudRevision:firstReadback.revision});
-const services={db,get:name=>name==='accounts'?{privateSession:()=>session,sync}:null,session:{getCurrentUser:()=>({id:owner}),getOwnerAccountId:()=>owner},legacy:{onlineDuelService:online},events:{emit(){}}};
+const services=createServices({db,legacy:{onlineDuelService:online},paths:{userData:output},windows:{}});
+services.session.setAdapter({getCurrentUser:()=>({id:owner})});
+services.provide('accounts',{privateSession:()=>session,sync,identity:who=>db.prepare('SELECT * FROM account_identities WHERE owner_account_id=?').get(who)});
+services.provide('resources',resources);
+const companionRegistration=require(join(companionRoot,'index.cjs')).register(services);
+const playbackEvents=[];services.events.on('companions:action',event=>playbackEvents.push(event));
 const authority=new CloudGardenAuthority(services,garden); const context={ownerAccountId:owner};
 const evidence={at:new Date().toISOString(),mode:'local HTTP + real PostgreSQL WASM + SQLite; not a deployed Supabase receipt',checks:[]};
 try {
@@ -97,12 +108,15 @@ try {
     const craft={actionId:'cloud-craft-rice',expectedRevision:2,recipeId:'cooked_rice',quantity:1};assert.equal((await authority.command(context,'craft',craft)).ok,true);
     const before=companions.snapshot(owner).data.pets;
     const feed={actionId:'cloud-feed-fish',expectedRevision:3,expectedPetRevision:1,petId:pets[0].petId,itemId:'cooked_rice',quantity:1};
-    assert.equal((await authority.command(context,'feed',feed)).ok,true);assert.equal((await authority.command(context,'feed',feed)).replayed,true);
+    const concurrentFeeds=await Promise.all([authority.command(context,'feed',feed),authority.command(context,'feed',feed)]);
+    assert.ok(concurrentFeeds.every(result=>result.ok));assert.equal((await authority.command(context,'feed',feed)).replayed,true);
+    assert.equal(playbackEvents.length,1);assert.equal(playbackEvents[0].ownerAccountId,owner);assert.equal(playbackEvents[0].petId,feed.petId);assert.equal(playbackEvents[0].action,'eat');assert.equal(playbackEvents[0].resourceId,pets[0].resource.resourceId);
     const after=companions.snapshot(owner).data.pets;assert.equal(after.find(p=>p.name==='鱼丸').growth.satiety,80);assert.equal(after.find(p=>p.name==='鱼丸').growth.affinity,4);
     assert.deepEqual(after.filter(p=>p.name!=='鱼丸'),before.filter(p=>p.name!=='鱼丸'));assert.equal(garden.itemCount(owner,'cooked_rice'),0);assert.equal(garden.itemCount(owner,'rice'),1);
     const canonical=(await pg.query('SELECT envelope,revision FROM public.runtime_account_saves WHERE owner_account_id=$1',[owner])).rows[0];
     assert.equal(cloudSnapshot(canonical.envelope,owner,Date.now()).pets.find(p=>p.name==='鱼丸').growth.satiety,80);
     evidence.finalCloud=canonical;evidence.finalLocal={garden:garden.snapshot(context),companions:companions.snapshot(owner)};evidence.checks.push('one food debit + fish only + PostgreSQL and SQLite readback');
+    evidence.cloudPlayback={realCompanionProvider:true,realResourceResolution:true,events:playbackEvents.slice(),oneEventAfterExactReplay:true};
   });
   await test('PostgreSQL rejects reused actions, stale account CAS and partial failed writes',async()=>{
     const reused=await invoke({op:'command',command:'craft',input:{actionId:'cloud-craft-rice',expectedRevision:4,recipeId:'cooked_rice',quantity:2}});assert.equal(reused.data.code,'ACTION_ID_REUSED');
@@ -187,7 +201,37 @@ try {
     assert.equal(Number((await pg.query('SELECT COUNT(*) n FROM public.runtime_garden_operations WHERE owner_account_id=$1 AND action_id=$2',[owner,input.actionId])).rows[0].n),1);
     evidence.checks.push('unrelated offline notes preserved; local garden/checkpoint rollback; exact pending action replay never duplicates the committed server plant');
   });
+  await test('a pending cloud meal only animates after verified local readback and never on a repeat',async()=>{
+    const cloudBefore=(await invoke({op:'snapshot'})).data.data;
+    // The lost-reply craft above left one real meal in the canonical save.
+    assert.equal(cloudBefore.snapshot.items.find(item=>item.id==='cooked_rice').quantity,1);
+    const target=cloudBefore.snapshot.pets.find(pet=>pet.petId===pets[0].petId);
+    const input={actionId:'feed-with-pending-readback',expectedRevision:cloudBefore.envelope.data.modules.garden.data.tables.garden_accounts[0].revision,expectedPetRevision:target.revision,petId:target.petId,itemId:'cooked_rice',quantity:1};
+    const eventsBefore=playbackEvents.length,stockBefore=garden.snapshot(context).data.items;
+    await assert.rejects(authority.command(context,'feed',input),{code:'CLOUD_APPLY_PENDING'});
+    await assert.rejects(authority.command(context,'feed',input),{code:'CLOUD_APPLY_PENDING'});
+    assert.equal(playbackEvents.length,eventsBefore);assert.deepEqual(garden.snapshot(context).data.items,stockBefore);
+    assert.equal(Number((await pg.query('SELECT COUNT(*) n FROM public.runtime_garden_operations WHERE owner_account_id=$1 AND action_id=$2',[owner,input.actionId])).rows[0].n),1);
+    // Resolve only the deliberately edited QA note. The original cloud snapshot
+    // then matches all other local domains, allowing the public checkpoint gate.
+    db.prepare('UPDATE test_notes SET note=? WHERE owner_account_id=?').run('已有回忆',owner);
+    const saved=(await pg.query('SELECT envelope FROM public.runtime_account_saves WHERE owner_account_id=$1',[owner])).rows[0].envelope;
+    const missing=structuredClone(saved);
+    missing.data.modules.garden.data.tables.garden_actions=missing.data.modules.garden.data.tables.garden_actions.filter(row=>row.action_id!==input.actionId);
+    const {checksum:ignored,...wrongDocument}=missing;void ignored;missing.checksum=await digest(wrongDocument);
+    // Fault injection: a valid-checksum, current-version readback still must
+    // carry this exact action receipt before any local state or animation applies.
+    await pg.query('UPDATE public.runtime_account_saves SET envelope=$2::jsonb WHERE owner_account_id=$1',[owner,JSON.stringify(missing)]);
+    try{await assert.rejects(authority.command(context,'feed',input),{code:'CLOUD_APPLY_PENDING'});assert.equal(playbackEvents.length,eventsBefore);assert.deepEqual(garden.snapshot(context).data.items,stockBefore);}
+    finally{await pg.query('UPDATE public.runtime_account_saves SET envelope=$2::jsonb WHERE owner_account_id=$1',[owner,JSON.stringify(saved)]);}
+    assert.equal((await authority.command(context,'feed',input)).replayed,true);assert.equal(playbackEvents.length,eventsBefore+1);
+    assert.equal((await authority.command(context,'feed',input)).replayed,true);assert.equal(playbackEvents.length,eventsBefore+1);
+    assert.equal(companions.requirePet(owner,target.petId).growth.satiety,100);assert.equal(garden.itemCount(owner,'cooked_rice'),0);
+    evidence.cloudPlayback.pendingReadback={noActionWhilePending:true,oneServerReceipt:true,matchingReadbackReceiptRequired:true,oneEventAfterVerifiedRetry:true,noEventOnReplay:true};
+    evidence.checks.push('actual public playback resolves canonical eat clip once under concurrent feeds; pending readback never animates, verified retry animates once without another debit');
+  });
   // Also validate that the pure reducer never alters its input after a failure.
   const original=JSON.stringify(envelope);assert.throws(()=>applyCloudCommand(envelope,owner,'craft',{actionId:'negative',expectedRevision:1,recipeId:'cooked_rice',quantity:-1},Date.now(),'a'.repeat(64)),{code:'INVALID_QUANTITY'});assert.equal(JSON.stringify(envelope),original);
+  evidence.finalCloud=(await pg.query('SELECT revision,envelope FROM public.runtime_account_saves WHERE owner_account_id=$1',[owner])).rows[0];
   writeFileSync(resolve(output,'evidence.json'),JSON.stringify(evidence,null,2));console.log(`PostgreSQL evidence: ${output}`);
-} finally { await new Promise(done=>server.close(done));db.close();await pg.close(); }
+} finally { companionRegistration.dispose();await new Promise(done=>server.close(done));db.close();await pg.close(); }

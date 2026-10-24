@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import { RefreshCw } from 'lucide-react';
 import { Button } from '../../components/ui/button';
 import type { GardenTerritory } from '../../../../../../packages/shared-types/src/features/garden';
@@ -9,6 +10,7 @@ import { useDiscovery } from '../discovery/use-discovery';
  * Territory selection stays in the accessible list beside the shared map. */
 export function TerritoryMap({ territories, owner, onLocated }: { territories: GardenTerritory[]; owner?: string; onLocated: () => Promise<unknown> }) {
   const {data, error, pending, run} = useDiscovery();
+  const locating = useRef(false);
   const mapped = territories.map(territory=>({
     territoryId:territory.id,name:territory.name,ownerAccountId:territory.ownerAccountId,
     owned:territory.ownerAccountId===owner,boundary:territory.boundary||[],
@@ -16,8 +18,20 @@ export function TerritoryMap({ territories, owner, onLocated }: { territories: G
     bonusMultiplier:territory.captureMultiplier
   })).filter(territory=>territory.mapBoundary.length>=3);
   async function locate(){
-    const result = await run<DiscoverySnapshot>('locate');
-    if(result) await onLocated();
+    if(locating.current || document.hidden)return;
+    locating.current=true;
+    try {
+      // The shared hook maintains continuous leases only on discovery routes.
+      // Territory uses the same public policy for this explicit foreground read.
+      const lease=await window.lingjing.invoke('discovery','setExploring',{active:true}).catch(()=>null);
+      if(!lease?.ok)return;
+      const result = await run<DiscoverySnapshot>('locate');
+      if(result) await onLocated();
+    } finally {
+      locating.current=false;
+      // A navigation to discovery hands control to its own mounted hook.
+      if(!/^#\/discovery(?:\/|$|\?)/.test(window.location.hash))await window.lingjing.invoke('discovery','setExploring',{active:false}).catch(()=>{});
+    }
   }
   return <div className="garden-map garden-shared-map" aria-label="领地现实地图">
     {data ? <NearbyMap state={{...data,territories:mapped}} onSelect={()=>{window.location.hash='/discovery';}}/> : <div className="garden-map-empty" role="status">正在打开附近地图…</div>}

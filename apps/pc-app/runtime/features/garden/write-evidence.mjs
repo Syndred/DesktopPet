@@ -45,6 +45,8 @@ if(upgraded){
 }
 const sql=JSON.parse(readFileSync(sqlSource,'utf8'));
 assert.equal(sql.accountCoordination?.exactInventory,true,'Verify the shared AccountSync checkpoint and next full-save push first');
+assert.equal(sql.checks.length,11);assert.equal(sql.cloudPlayback?.pendingReadback?.matchingReadbackReceiptRequired,true);
+assert.equal(run.canonicalResources?.restartExact,true);assert.equal(run.map.privacyReleasedAfterRead,true);
 const rosterSource=resolve('artifacts/garden/roster-electron'),roster=JSON.parse(readFileSync(resolve(rosterSource,'run.json'),'utf8'));
 const rosterDb=new DatabaseSync(resolve(rosterSource,'profile/lingjing.sqlite'),{readOnly:true});
 assert.equal(roster.rosterFixture.cloudAcceptance,false);
@@ -57,11 +59,19 @@ assert.deepEqual(otherThanTarget(eat.before),otherThanTarget(eat.after));
 assert.equal(eat.stockBefore.data.items.find(item=>item.id==='tomato').quantity-eat.stockAfter.data.items.find(item=>item.id==='tomato').quantity,1);
 assert.equal(eat.repeated.replayed,true);assert.equal(eat.events.length,1);
 const rosterItems=rosterDb.prepare('SELECT item_id,quantity FROM garden_items WHERE owner_account_id=?').all(roster.ownerAccountId);
-assert.ok(eat.stockAfter.data.items.every(item=>(rosterItems.find(row=>row.item_id===item.id)?.quantity||0)===item.quantity));
+assert.ok((roster.realTerritory?.after||eat.stockAfter).data.items.every(item=>(rosterItems.find(row=>row.item_id===item.id)?.quantity||0)===item.quantity));
 assert.equal(eat.after.data.pets.find(pet=>pet.petId===eat.targetPetId).growth.satiety-eat.before.data.pets.find(pet=>pet.petId===eat.targetPetId).growth.satiety,10);
 assert.equal(eat.events[0].petId,eat.targetPetId);assert.equal(eat.events[0].ownerAccountId,roster.ownerAccountId);
 assert.equal(eat.events[0].action,'eat');
 assert.ok(new Set(eat.frames.filter(frame=>frame.action==='eat').map(frame=>frame.frame)).size>=2);
+const physical=roster.realTerritory;assert.equal(physical?.completed,true);assert.equal(physical.restartExact,true);
+assert.equal(physical.importedFixture,false);assert.equal(physical.location.fix.source,'os');assert.ok(physical.location.fix.accuracyMeters<=80);
+const physicalBattle=JSON.parse(rosterDb.prepare('SELECT data_json FROM battle_sessions WHERE owner_account_id=? AND id=?').get(roster.ownerAccountId,physical.sessionId).data_json);
+assert.equal(physicalBattle.mode,'territory');assert.equal(physicalBattle.status,'finished');assert.equal(physicalBattle.winner,'player');
+assert.equal(rosterDb.prepare('SELECT owner_account_id FROM garden_territory_records WHERE territory_id=?').get(physical.territoryId).owner_account_id,roster.ownerAccountId);
+assert.equal(rosterDb.prepare('SELECT pet_id FROM garden_garrisons WHERE owner_account_id=? AND territory_id=?').get(roster.ownerAccountId,physical.territoryId).pet_id,physical.garrisonPetId);
+const physicalSettlement=JSON.parse(rosterDb.prepare('SELECT result_json FROM garden_territory_challenges WHERE owner_account_id=? AND battle_id=? AND settled=1').get(roster.ownerAccountId,physical.sessionId).result_json);
+assert.equal(physicalSettlement.won,true);assert.equal(physical.garrisonChangesNoGrowthOrIndependentSelection,true);
 const territoryRun=JSON.parse(readFileSync(resolve('artifacts/garden/territory-electron/run.json'),'utf8'));
 assert.equal(territoryRun.territoryRestart.exactGarrisonAndIndependentSelections,true);
 const evidence={
@@ -76,16 +86,19 @@ const evidence={
   publicComponents:{...run.library,...run.motion},visualAudit:run.visualAudit,responsive:run.responsive,realLocation:run.map,
   oldOwnerSafety:ownerTransition,
   controlledTerritoryUI:{fixture:true,realGeographicAcceptance:false,actualIPCAndSqlite:true,garrisonOnly:territoryRun.territoryUI.garrisonOnly,restart:territoryRun.territoryRestart},
-  postgres:{mode:sql.mode,at:sql.at,checks:sql.checks,accountRevision:sql.finalCloud?.revision,accountCoordination:sql.accountCoordination},
+  physicalTerritory:{mode:'actual OS location + local account + actual native buttons/IPC/battle/SQLite/restart; no imported territory fixture',coordinatesOmitted:true,accuracyMeters:physical.location.fix.accuracyMeters,positionSource:physical.location.fix.positionSource,fixTimestampMs:physical.location.fix.timestampMs,attemptedAt:roster.realTerritoryAttempt.at,battle:{sessionId:physicalBattle.id,mode:physicalBattle.mode,winner:physicalBattle.winner,rounds:physicalBattle.rounds.length,reward:physicalBattle.reward},ownershipReadback:true,garrisonPetId:physical.garrisonPetId,garrisonChangesNoGrowthOrIndependentSelection:true,restartExact:true,cloudAcceptance:false,localProof:'artifacts/garden/roster-electron/run.json'},
+  postgres:{mode:sql.mode,at:sql.at,checks:sql.checks,accountRevision:sql.finalCloud?.revision,accountCoordination:sql.accountCoordination,cloudPlayback:sql.cloudPlayback},
+  canonicalResourceUpgrade:{...run.canonicalResources,fixtureRosterRestartExact:roster.canonicalResources?.restartExact===true},
   canonicalRoster:{fixture:roster.rosterFixture,assets:roster.roster.assets,targetPetId:roster.roster.targetPetId,onlyTargetChanged:true,restartExact:true},
   selectedPetAnimation:{fixture:true,cloudAcceptance:false,targetPetId:eat.targetPetId,before:eat.before.data.pets.map(petState),after:eat.after.data.pets.map(petState),events:eat.events,frames:eat.frames,foodConsumed:1,otherPetsUnchanged:true,replayed:eat.repeated.replayed,noSecondDebitOrAction:true,restartExact:true},
-  externalGaps:['Live HTTPS Supabase deployment and real-account two-device readback','Cloud territory challenge/garrison authority and shared battle integration',...(upgraded?[]:['Companions verified alias migration callback']),'Physical location precision <= 80m for actual capture/occupation','Central full-app A01-A12 visual acceptance and Windows packaging']
+  externalGaps:['Live HTTPS Supabase deployment and real-account two-device readback','Cloud territory challenge/garrison authority and shared battle integration',...(upgraded?[]:['Companions verified alias migration callback']),'Central full-app A01-A12 visual acceptance and Windows packaging']
 };
 mkdirSync(output,{recursive:true});
 for(const name of ['02a-2d-mature-garden.png','02-cooked-and-fed.png','05-radix-inventory.png','09a-reward-mature.png','11-kitchen-current.png','12-inventory-current.png','A04-1280x844-inventory.png','A04-1440x900-inventory.png'])copyFileSync(resolve(source,name),resolve(output,name));
 copyFileSync(resolve(oldSource,'identity-migration-preserved.png'),resolve(output,'identity-migration-preserved.png'));
 if(upgraded)copyFileSync(resolve(oldSource,'identity-upgraded-preserved.png'),resolve(output,'identity-upgraded-preserved.png'));
 for(const name of ['six-canonical-resources-and-selected-fox-feed.png','only-selected-fox-eating.png'])copyFileSync(resolve(rosterSource,name),resolve(output,name));
+copyFileSync(resolve(rosterSource,'real-territory-battle.png'),resolve(output,'real-territory-battle.png'));
 writeFileSync(resolve(output,'verification.json'),JSON.stringify(evidence,null,2)+'\n');
 nativeDb.close();oldDb.close();rosterDb.close();
-console.log(JSON.stringify({output,screenshots:upgraded?12:11,elapsedMs:elapsed,sqlEvidence:basename(sqlSource),canonicalResources:6,accountCoordination:true}));
+console.log(JSON.stringify({output,screenshots:upgraded?13:12,elapsedMs:elapsed,sqlEvidence:basename(sqlSource),canonicalResources:6,accountCoordination:true,physicalTerritory:true}));

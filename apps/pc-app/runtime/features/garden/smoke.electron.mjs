@@ -44,6 +44,22 @@ try {
     await page.evaluate(path => { location.hash = path; }, path);
     await page.waitForFunction(path=>document.querySelector('.garden-tabs a[aria-current="page"]')?.getAttribute('href')===`#${path}`,path);
   };
+  const locateByButton=async()=>{
+    await page.evaluate(()=>{
+      window.__gardenLocationAttempt={started:false,finished:false};
+      window.__gardenLocationStop=window.lingjing.subscribe('discovery:location',state=>{
+        if(state.status==='locating')window.__gardenLocationAttempt.started=true;
+        else if(window.__gardenLocationAttempt.started&&!['idle','locating'].includes(state.status))window.__gardenLocationAttempt.finished=true;
+      });
+    });
+    try{
+      await page.getByRole('button',{name:'获取系统位置',exact:true}).click();
+      await page.waitForFunction(()=>window.__gardenLocationAttempt.finished,undefined,{timeout:35000});
+      await page.getByRole('button',{name:'获取系统位置',exact:true}).waitFor({state:'visible',timeout:35000});
+      await page.waitForFunction(async()=>{const result=await window.lingjing.invoke('accounts','settingsGet');return result.ok&&result.data.host.locationAllowed===false;});
+      return await page.evaluate(()=>window.lingjing.invoke('discovery','snapshot'));
+    }finally{await page.evaluate(()=>window.__gardenLocationStop());}
+  };
   if (phase === 'plant') {
     const companions = await page.evaluate(() => window.lingjing.invoke('companions', 'list'));
     assert.equal(companions.ok, true, JSON.stringify(companions));
@@ -111,17 +127,31 @@ try {
         run.motion={actualAccountsSettingToggle:true,liveSystemReducedMotion:true,restoredOriginalSettings:true};
         await page.screenshot({path:resolve(output,'06-motion-settings.png'),fullPage:true});
       }else{
-        await save({...original,privacy:{...original.privacy,locationAllowed:true}});
+        await save({...original,privacy:{...original.privacy,locationAllowed:true,locationOnlyWhileExploring:true}});
         await route('/garden');await page.getByRole('heading',{name:'给伙伴，留一片小天地。'}).waitFor();
-        await page.getByRole('button',{name:'获取系统位置',exact:true}).click();
-        await page.getByRole('button',{name:'获取系统位置',exact:true}).waitFor({state:'visible',timeout:35000});
-        const snapshot=await page.evaluate(()=>window.lingjing.invoke('discovery','snapshot'));
+        const snapshot=await locateByButton();
         assert.equal(snapshot.ok,true);assert.equal(snapshot.data.location.mode,'real');
         assert.notEqual(snapshot.data.location.lastError?.code,'APP_LOCATION_DISABLED');
-        run.map={engine:await page.locator('[data-map-engine]').getAttribute('data-map-engine'),locationStatus:snapshot.data.location.status,systemError:snapshot.data.location.lastError?.code||null,positionSource:snapshot.data.location.fix?.positionSource||null,accuracyMeters:snapshot.data.location.fix?.accuracyMeters||null,successfulLocation:snapshot.data.location.status==='ready',coordinatesOmitted:true};
+        assert.equal(snapshot.data.location.watching,false);
+        run.map={engine:await page.locator('[data-map-engine]').getAttribute('data-map-engine'),locationStatus:snapshot.data.location.status,systemError:snapshot.data.location.lastError?.code||null,positionSource:snapshot.data.location.fix?.positionSource||null,accuracyMeters:snapshot.data.location.fix?.accuracyMeters||null,successfulLocation:snapshot.data.location.status==='ready',coordinatesOmitted:true,explicitForegroundRead:true,privacyReleasedAfterRead:true,continuousWatch:false};
         await page.screenshot({path:resolve(output,'07-real-location-result.png'),fullPage:true});
       }
     }finally{await save(original);}
+  } else if (phase === 'canonical-resources') {
+    const before=run.rosterAction?.after||run.roster?.after||run.rewardCycle?.finalPets||run.afterFeed;
+    assert.ok(before,'Use an existing completed feeding proof');
+    const pets=await page.evaluate(()=>window.lingjing.invoke('companions','list')),snapshot=await invoke('snapshot');assert.equal(pets.ok,true);assert.equal(snapshot.ok,true);
+    assert.equal(pets.data.pets.length,before.data.pets.length);assert.deepEqual(pets.data.selections,before.data.selections);
+    const stable=({resource,revision,updatedAt,...pet})=>{void resource;void revision;void updatedAt;return pet;};
+    for(const previous of before.data.pets){
+      const current=pets.data.pets.find(pet=>pet.petId===previous.petId);assert.deepEqual(stable(current),stable(previous));
+      if(current.resource.resourceId!==previous.resource.resourceId){
+        assert.ok(['builtin:lingjing-yuwan-v1','builtin:battle-yuwan-v1','builtin:battle-shiba-v1'].includes(previous.resource.resourceId));
+        assert.equal(current.resource.resourceId,pets.data.templates.find(template=>template.templateId===current.templateId).resource.resourceId);assert.equal(current.revision,previous.revision+1);
+      }else assert.deepEqual(current,previous);
+    }
+    assert.deepEqual(snapshot.data.items,(run.rosterAction?.stockAfter||run.roster?.stockAfter||run.rewardCycle?.final||run.final).data.items);
+    run.canonicalResources={pets,inventoryExact:true,allGrowthAndOtherFieldsExact:true,allowedBuiltinReferenceUpgradeOnly:true};
   } else if (phase === 'roster-action') {
     assert.ok(run.roster?.restartExact,'Complete and reopen the six-resource feeding proof first');
     assert.ok(!run.rosterAction,'The feed receipt already exists; run roster-readback instead of feeding again');
@@ -179,7 +209,7 @@ try {
       run.roster={assets,targetPetId:target.petId,before,after,stockBefore,stockAfter,onlyTargetChanged:true};
       await page.emulateMedia({reducedMotion:'reduce'});await page.waitForFunction(()=>document.documentElement.dataset.motion==='reduced');await page.screenshot({path:resolve(output,'six-canonical-resources-and-selected-fox-feed.png'),fullPage:true});
     }else{
-      const pets=await page.evaluate(()=>window.lingjing.invoke('companions','list')),snapshot=await invoke('snapshot'),expected=run.rosterAction||run.roster;assert.deepEqual(pets.data.pets,expected.after.data.pets);assert.deepEqual(snapshot.data.items,expected.stockAfter.data.items);run.roster.restartExact=true;if(run.rosterAction)run.rosterAction.restartExact=true;
+      const pets=await page.evaluate(()=>window.lingjing.invoke('companions','list')),snapshot=await invoke('snapshot'),expected=run.rosterAction||run.roster;assert.deepEqual(pets.data.pets,(run.canonicalResources?.pets||expected.after).data.pets);assert.deepEqual(snapshot.data.items,expected.stockAfter.data.items);run.roster.restartExact=true;if(run.rosterAction)run.rosterAction.restartExact=true;if(run.canonicalResources)run.canonicalResources.restartExact=true;
     }
   } else if (phase === 'audit') {
     const nativeWindow=await application.browserWindow(page),measurements=[];
@@ -202,6 +232,54 @@ try {
       }
     }
     run.visualAudit={source:'visual-audit.txt A04; follow A01/A03',fixCommits:['a79d9b9','155ac37'],measurements,readyForCentralRecheck:true};
+  } else if (phase === 'real-territory-readback') {
+    assert.ok(run.realTerritory?.completed,'Finish the actual-location challenge and garrison first');
+    const snapshot=await invoke('snapshot'),pets=await page.evaluate(()=>window.lingjing.invoke('companions','list'));
+    assert.deepEqual(snapshot.data.items,run.realTerritory.after.data.items);assert.deepEqual(pets.data,run.realTerritory.pets.data);
+    assert.equal(snapshot.data.territories.find(territory=>territory.id===run.realTerritory.territoryId).garrisonPetId,run.realTerritory.garrisonPetId);
+    run.realTerritory.restartExact=true;
+  } else if (phase === 'real-territory') {
+    assert.ok(run.rosterFixture&&!run.territoryFixture,'Use the separately labelled local roster QA profile, without an imported territory fixture');
+    assert.ok(!run.realTerritory,'Inspect the saved physical attempt before retrying any challenge');
+    const settings=await page.evaluate(()=>window.lingjing.invoke('accounts','settingsGet')),original=structuredClone(settings.data.document);
+    const save=async document=>{const current=await page.evaluate(()=>window.lingjing.invoke('accounts','settingsGet'));const result=await page.evaluate(input=>window.lingjing.invoke('accounts','settingsSave',input),{actionId:crypto.randomUUID(),revision:current.data.revision,document});assert.equal(result.ok,true,JSON.stringify(result));};
+    try{
+      await save({...original,privacy:{...original.privacy,locationAllowed:true,locationOnlyWhileExploring:true}});
+      await route('/garden');const discovery=await locateByButton();
+      run.realTerritoryAttempt={at:new Date().toISOString(),status:discovery.data.location.status,error:discovery.data.location.lastError,positionSource:discovery.data.location.fix?.positionSource||null,accuracyMeters:discovery.data.location.fix?.accuracyMeters||null,coordinatesOmitted:true,challengeStarted:false};
+      writeFileSync(runFile,JSON.stringify(run,null,2));console.log(JSON.stringify({physicalLocationAttempt:run.realTerritoryAttempt}));
+      assert.equal(discovery.data.location.status,'ready',JSON.stringify({status:discovery.data.location.status,error:discovery.data.location.lastError}));
+      assert.equal(discovery.data.location.fix.source,'os');assert.ok(discovery.data.location.fix.accuracyMeters<=80);
+      await page.getByRole('status').filter({hasText:'附近领地已更新'}).waitFor();
+      const before=await invoke('snapshot'),territory=before.data.territories.find(value=>value.provenance==='local-geographic'&&value.ownerAccountId===null);
+      assert.ok(territory);assert.equal(before.data.territoryChallenges.length,0);
+      const companions=await page.evaluate(()=>window.lingjing.invoke('companions','list')),chosen=companions.data.pets.find(pet=>pet.templateId==='animal-hat-cat');assert.ok(chosen);
+      run.realTerritory={stage:'before-challenge',localAccount:true,importedFixture:false,territoryId:territory.id,location:discovery.data.location,before,selectedPetId:chosen.petId};
+      writeFileSync(runFile,JSON.stringify(run,null,2));
+      await page.getByRole('button',{name:`${chosen.name} Lv.`,exact:false}).click();await page.getByRole('button',{name:'发起领地挑战',exact:true}).click();
+      await page.waitForFunction(()=>location.hash==='#/battle');
+      const started=await invoke('snapshot'),challenge=started.data.territoryChallenges.find(value=>value.territoryId===territory.id);assert.ok(challenge);
+      run.realTerritory.sessionId=challenge.sessionId;run.realTerritory.stage='battle';writeFileSync(runFile,JSON.stringify(run,null,2));
+      run.realTerritoryAttempt.challengeStarted=true;
+      let session=(await page.evaluate(sessionId=>window.lingjing.invoke('battle','snapshot',{sessionId}),challenge.sessionId)).data;
+      const rules=(await page.evaluate(()=>window.lingjing.invoke('battle','rules'))).data;assert.equal(session.mode,'territory');
+      for(let index=0;index<150&&session.status==='active';index++){
+        const action=session.snapshot.player.anger>=rules.ultimateAnger?'ultimate':'element_attack',round=session.snapshot.round;
+        await page.locator(`.battle-move.${action}`).click();
+        await page.waitForFunction(async({sessionId,round})=>{const result=await window.lingjing.invoke('battle','snapshot',{sessionId});return result.ok&&(result.data.status!=='active'||result.data.snapshot.round>round);},{sessionId:session.id,round});
+        session=(await page.evaluate(sessionId=>window.lingjing.invoke('battle','snapshot',{sessionId}),session.id)).data;
+      }
+      assert.equal(session.status,'finished');run.realTerritory.session=session;run.realTerritory.stage='battle-finished';writeFileSync(runFile,JSON.stringify(run,null,2));
+      await page.screenshot({path:resolve(output,'real-territory-battle.png'),fullPage:true});
+      await route('/garden');await page.getByRole('button',{name:'确认领地结算',exact:true}).click();await page.getByRole('status').filter({hasText:'领地挑战已结算'}).waitFor();
+      const settled=await invoke('snapshot'),claimed=settled.data.territories.find(value=>value.id===territory.id);assert.equal(claimed.ownerAccountId,run.ownerAccountId,'Actual battle must win before physical garrison acceptance');
+      const beforeGarrison=await page.evaluate(()=>window.lingjing.invoke('companions','list')),garrison=beforeGarrison.data.pets.find(pet=>pet.templateId==='big-fish-cheerful');assert.ok(garrison);
+      await page.getByRole('button',{name:`${garrison.name} Lv.`,exact:false}).click();await page.getByRole('button',{name:'确认驻守',exact:true}).click();await page.getByRole('status').filter({hasText:'驻守伙伴已更新'}).waitFor();
+      const after=await invoke('snapshot'),pets=await page.evaluate(()=>window.lingjing.invoke('companions','list'));assert.deepEqual(pets.data,beforeGarrison.data);assert.deepEqual(after.data.items,settled.data.items);
+      assert.equal(after.data.territories.find(value=>value.id===territory.id).garrisonPetId,garrison.petId);
+      Object.assign(run.realTerritory,{stage:'completed',completed:true,settled,after,pets,garrisonPetId:garrison.petId,garrisonChangesNoGrowthOrIndependentSelection:true});
+      await page.screenshot({path:resolve(output,'real-location-garrison.png'),fullPage:true});
+    }finally{await save(original);}
   } else if (phase === 'territory-ui' || phase === 'territory-readback') {
     assert.ok(run.territoryFixture,'Only run this phase in the explicitly labelled isolated territory fixture');
     const snapshot=await invoke('snapshot'),territory=snapshot.data.territories.find(t=>t.id===run.territoryFixture.id);assert.equal(territory.ownerAccountId,run.ownerAccountId);
@@ -358,11 +436,12 @@ try {
     const result = await invoke('snapshot'); assert.equal(result.ok, true);
     assert.deepEqual(result.data.items, (run.rewardCycle?.final||run.final).data.items);
     const pets = await page.evaluate(() => window.lingjing.invoke('companions', 'list'));
-    assert.deepEqual(pets.data.pets, (run.rewardCycle?.finalPets||run.afterFeed).data.pets);
+    assert.deepEqual(pets.data.pets, (run.canonicalResources?.pets||run.rewardCycle?.finalPets||run.afterFeed).data.pets);
     const repeatHarvest = await invoke('harvest', { actionId: 'after-restart-double-harvest', expectedRevision: result.revision, plotIds: ['plot-1'] });
     assert.equal(repeatHarvest.code, 'ALREADY_HARVESTED');
     const staleOwner=await page.evaluate(revision=>window.lingjing.invoke('garden','plant',{actionId:'stale-owner-view',expectedRevision:revision,sessionOwnerAccountId:'another-account',ownerAccountId:'forged-owner',plotId:'plot-1',cropType:'carrot'}),result.revision);assert.equal(staleOwner.code,'SESSION_CHANGED');
     run.readback = { result, pets, repeatHarvest,staleOwner };
+    if(run.canonicalResources)run.canonicalResources.restartExact=true;
   }
   assert.deepEqual(errors, []);
   run.phases.push({ phase, at: new Date().toISOString(), errors, electron: await application.evaluate(() => process.versions.electron) });
