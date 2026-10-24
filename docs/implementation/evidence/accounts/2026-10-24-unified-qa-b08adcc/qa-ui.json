@@ -1,0 +1,275 @@
+{
+  "at": "2026-10-24T14:53:11.813Z",
+  "sourceSha": "b08adcc89e4482bd6cbb1c7a1efc923a599a42fe",
+  "scope": "accounts QA boundary and unchanged backup implementation; not a simulated friend-PK or real-cloud success claim",
+  "marker": {
+    "schemaVersion": 1,
+    "application": "lingjing",
+    "scenario": "unified-battle",
+    "runId": "725b0856-dd58-422d-9906-573aa838bb44",
+    "isolated": true,
+    "profilePath": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-accounts\\DesktopPet\\artifacts\\accounts\\qa-ui-1792853591791\\qa-profile",
+    "createdAt": "2026-10-24T14:53:11.792Z"
+  },
+  "checks": [
+    {
+      "name": "real Electron registration yields a verified namespaced memory-only QA identity and a focusable scene tooltip",
+      "data": {
+        "currentUser": {
+          "id": "qa:725b0856-dd58-422d-9906-573aa838bb44:local-016e1dfd-4d4e-427d-a252-766d4a1e9411",
+          "subjectId": "qa:725b0856-dd58-422d-9906-573aa838bb44:local-016e1dfd-4d4e-427d-a252-766d4a1e9411",
+          "ownerAccountId": "qa:725b0856-dd58-422d-9906-573aa838bb44:local-016e1dfd-4d4e-427d-a252-766d4a1e9411",
+          "provider": "local",
+          "account": "qa_alice",
+          "username": "qa_alice",
+          "revision": 0,
+          "createdAt": "2026-10-24T14:53:13.102Z",
+          "updatedAt": "2026-10-24T14:53:13.102Z",
+          "dataMode": "simulated"
+        },
+        "defaultProvider": "local",
+        "dataMode": "simulated",
+        "scenario": {
+          "id": "unified-battle",
+          "runId": "725b0856-dd58-422d-9906-573aa838bb44",
+          "provenance": "simulated",
+          "isolated": true
+        },
+        "secureStorageAvailable": false,
+        "persistence": "memory",
+        "migration": {
+          "status": "review-required",
+          "imported": 0,
+          "unresolved": [
+            {
+              "reason": "unowned-global-history"
+            }
+          ]
+        },
+        "startupIssue": null
+      }
+    },
+    {
+      "name": "real cloud authentication is explicitly rejected without changing the active QA owner",
+      "data": {
+        "ok": false,
+        "code": "SIMULATED_SESSION_ONLY",
+        "message": "测试场景不连接真实云端。"
+      }
+    },
+    {
+      "name": "saved QA preferences cannot change OS startup, acquire real location or send a native notification",
+      "data": {
+        "startupBefore": false,
+        "prefs": {
+          "document": {
+            "desktop": {
+              "alwaysOnTop": true,
+              "clickThrough": true,
+              "launchAtLogin": true,
+              "closeToTray": true,
+              "companionLimit": 3,
+              "interactionSounds": true,
+              "volume": 31,
+              "hideInFullscreen": true,
+              "animationsEnabled": true
+            },
+            "notifications": {
+              "enabled": true,
+              "companions": true,
+              "battles": true,
+              "garden": true,
+              "quietEnabled": true,
+              "quietStart": "22:00",
+              "quietEnd": "08:00"
+            },
+            "privacy": {
+              "locationAllowed": true,
+              "locationOnlyWhileExploring": true,
+              "emotionStatistics": false
+            },
+            "sync": {
+              "enabled": false
+            }
+          },
+          "revision": 2,
+          "updatedAt": "2026-10-24T14:53:14.370Z",
+          "host": {
+            "startup": false,
+            "fullscreenMonitor": true,
+            "fullscreenMonitorReady": false,
+            "foregroundFullscreen": false,
+            "fullscreenSource": null,
+            "companionWindows": 0,
+            "clickThroughWindows": [],
+            "windows": [],
+            "locationAllowed": false,
+            "emotionStatistics": false,
+            "closeToTrayConnected": true,
+            "companionLimitConnected": true
+          }
+        },
+        "notification": {
+          "ok": true,
+          "data": {
+            "delivered": false,
+            "reason": "qa-scenario"
+          }
+        }
+      }
+    },
+    {
+      "name": "real native export/restore retains QA provenance, restores owner settings and preserves the before-restore save",
+      "data": {
+        "checksum": "ee9e87a59262f54e66a31a6ec151fb489cf63d89dae17e500311fa9ee92d9060",
+        "preserved": {
+          "id": "81c8c8ba-a499-47c4-be49-d5472412fe65",
+          "checksum": "655725af9aacec7fdbc7729a9ae067b9411d7630ba80b36a858346711ab85751",
+          "filePath": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-accounts\\DesktopPet\\artifacts\\accounts\\qa-ui-1792853591791\\qa-profile\\accounts\\backups\\before-restore-1792853676107-81c8c8ba-a499-47c4-be49-d5472412fe65.lingjing.json",
+          "reason": "before-restore",
+          "createdAt": "2026-10-24T14:54:36.117Z"
+        }
+      }
+    },
+    {
+      "name": "second real QA login keeps settings isolated and rejects the first owner's file",
+      "data": {
+        "sessionB": {
+          "currentUser": {
+            "id": "qa:725b0856-dd58-422d-9906-573aa838bb44:local-c70cab45-9e62-4bce-89be-81ca7908ea56",
+            "subjectId": "qa:725b0856-dd58-422d-9906-573aa838bb44:local-c70cab45-9e62-4bce-89be-81ca7908ea56",
+            "ownerAccountId": "qa:725b0856-dd58-422d-9906-573aa838bb44:local-c70cab45-9e62-4bce-89be-81ca7908ea56",
+            "provider": "local",
+            "account": "qa_bobby",
+            "username": "qa_bobby",
+            "revision": 0,
+            "createdAt": "2026-10-24T14:54:36.989Z",
+            "updatedAt": "2026-10-24T14:54:36.989Z",
+            "dataMode": "simulated"
+          },
+          "defaultProvider": "local",
+          "dataMode": "simulated",
+          "scenario": {
+            "id": "unified-battle",
+            "runId": "725b0856-dd58-422d-9906-573aa838bb44",
+            "provenance": "simulated",
+            "isolated": true
+          },
+          "secureStorageAvailable": false,
+          "persistence": "memory",
+          "migration": {
+            "status": "review-required",
+            "imported": 0,
+            "unresolved": [
+              {
+                "reason": "unowned-global-history"
+              }
+            ]
+          },
+          "startupIssue": null
+        },
+        "prefsB": {
+          "document": {
+            "desktop": {
+              "alwaysOnTop": true,
+              "clickThrough": true,
+              "launchAtLogin": false,
+              "closeToTray": true,
+              "companionLimit": 3,
+              "interactionSounds": true,
+              "volume": 70,
+              "hideInFullscreen": true,
+              "animationsEnabled": true
+            },
+            "notifications": {
+              "enabled": true,
+              "companions": true,
+              "battles": true,
+              "garden": true,
+              "quietEnabled": true,
+              "quietStart": "22:00",
+              "quietEnd": "08:00"
+            },
+            "privacy": {
+              "locationAllowed": false,
+              "locationOnlyWhileExploring": true,
+              "emotionStatistics": false
+            },
+            "sync": {
+              "enabled": false
+            }
+          },
+          "revision": 0,
+          "updatedAt": "2026-10-24T14:54:37.042Z",
+          "host": {
+            "startup": false,
+            "fullscreenMonitor": true,
+            "fullscreenMonitorReady": true,
+            "foregroundFullscreen": false,
+            "fullscreenSource": null,
+            "companionWindows": 0,
+            "clickThroughWindows": [],
+            "windows": [],
+            "locationAllowed": false,
+            "emotionStatistics": false,
+            "closeToTrayConnected": true,
+            "companionLimitConnected": true
+          }
+        }
+      }
+    },
+    {
+      "name": "QA execution leaves a separate ordinary-profile database byte-for-byte unchanged"
+    },
+    {
+      "name": "QA process restart does not resume a remembered or remote session"
+    },
+    {
+      "name": "ordinary account stays live, uses short shared-toolip status and rejects a simulated save through native file picking",
+      "data": {
+        "currentUser": {
+          "id": "local:legacy-alice",
+          "subjectId": "legacy-alice",
+          "ownerAccountId": "local:legacy-alice",
+          "provider": "local",
+          "account": "qa_alice",
+          "username": "云朵测试甲",
+          "revision": 2,
+          "createdAt": "2026-10-24T12:44:25.571Z",
+          "updatedAt": "2026-10-24T12:44:29.246Z",
+          "dataMode": "live"
+        },
+        "defaultProvider": "runtime",
+        "dataMode": "live",
+        "scenario": null,
+        "secureStorageAvailable": true,
+        "persistence": "secure",
+        "migration": {
+          "status": "imported",
+          "imported": 2,
+          "unresolved": []
+        },
+        "startupIssue": null
+      }
+    }
+  ],
+  "dialogs": [
+    {
+      "name": "qa-export",
+      "file": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-accounts\\DesktopPet\\artifacts\\accounts\\qa-ui-1792853591791\\qa-save.lingjing.json"
+    },
+    {
+      "name": "qa-restore",
+      "file": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-accounts\\DesktopPet\\artifacts\\accounts\\qa-ui-1792853591791\\qa-save.lingjing.json"
+    },
+    {
+      "name": "qa-reject-other-owner",
+      "file": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-accounts\\DesktopPet\\artifacts\\accounts\\qa-ui-1792853591791\\qa-save.lingjing.json"
+    },
+    {
+      "name": "normal-reject-qa",
+      "file": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-accounts\\DesktopPet\\artifacts\\accounts\\qa-ui-1792853591791\\qa-save.lingjing.json"
+    }
+  ],
+  "passed": true
+}
