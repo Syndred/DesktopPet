@@ -4,6 +4,7 @@ const { migrations } = require("./migrations.cjs");
 const { reconcileSeeds } = require("./settlements.cjs");
 const { TerritoryService } = require("./territories.cjs");
 const { createGardenBackupAdapter } = require('./backup.cjs');
+const { CloudGardenAuthority } = require('./cloud-authority.cjs');
 
 function companionAdapter(services) {
   const get = () => {
@@ -48,15 +49,30 @@ module.exports = {
     const territories = services.get('territories') || new TerritoryService(services);
     if (!services.get('territories')) services.provide('territories', territories);
     const removeBackupAdapter = services.get('backups')?.register(createGardenBackupAdapter(services.db));
+    const cloud = new CloudGardenAuthority(services, service);
     services.provide("garden", {
       service,
       snapshot: context => service.snapshot(context),
       territories,
       // Trusted callers can include this in their own synchronous settlement transaction.
-      grantSeeds: (context, input, verifiedReceipt) => service.grantSeeds(context, input, verifiedReceipt)
+      grantSeeds: (context, input, verifiedReceipt) => {
+        if (!cloud.isCloud(context)) return service.grantSeeds(context,input,verifiedReceipt);
+        if (!verifiedReceipt || verifiedReceipt.ownerAccountId!==context.ownerAccountId || verifiedReceipt.id!==input.receiptId || verifiedReceipt.source!==input.source || verifiedReceipt.eligible!==true) return {ok:false,code:'UNVERIFIED_REWARD',message:'需要已结算的主进程凭据'};
+        // The caller stores this pending marker in its settlement transaction.
+        // It is not an inventory grant; snapshot reconciles server receipts later.
+        return {ok:true,pending:true,data:{pending:true,status:'awaiting_server',source:input.source,receiptId:input.receiptId,message:'种子等待云端确认，未在本机重复发放'}};
+      }
     });
     const commands = Object.fromEntries(["plant", "harvest", "craft", "feed", "garrison"].map(command => [command, (payload, context) => service[command](context, payload)]));
     commands.snapshot = async (_payload, context) => {
+      if (cloud.isCloud(context)) {
+        try { return await cloud.snapshot(context); }
+        catch (error) {
+          const cached = service.snapshot(context);
+          if (cached.ok) cached.data.sync = { mode: 'cached', pending: 0, conflicts: error.code === 'CLOUD_LOCAL_CONFLICT' ? 1 : 0, issue: error.message || '云端菜园尚不可用' };
+          return cached;
+        }
+      }
       await reconcileSeeds(services, service, context);
       const snapshot = service.snapshot(context);
       if (snapshot.ok) {
@@ -70,6 +86,14 @@ module.exports = {
     commands.territoryLocate = (payload, context) => service.command(context, 'territoryLocate', payload, () => territories.discoverAtSystemFix(territories.currentFix()));
     commands.territoryChallenge = (payload, context) => service.command(context, 'territoryChallenge', payload, ({ owner, actionId }) => territories.startChallenge({ ...payload, ownerAccountId: owner, actionId }));
     commands.territorySettle = (payload, context) => service.command(context, 'territorySettle', payload, ({ owner }) => territories.settleChallenge({ ...payload, ownerAccountId: owner }));
+    for (const [kind, local] of Object.entries(commands)) if (kind !== 'snapshot') commands[kind] = async (payload, context) => {
+      // This value is a stale-view guard, never an authority source. The owner
+      // still comes solely from the verified main-process session context.
+      if (payload?.sessionOwnerAccountId !== context.ownerAccountId) return {ok:false,code:'SESSION_CHANGED',message:'账号已切换，请刷新菜园后再操作'};
+      if (!cloud.isCloud(context)) return local(payload, context);
+      if (!['plant','harvest','craft','feed'].includes(kind)) return { ok: false, code: 'CLOUD_TERRITORY_UNAVAILABLE', message: '云端领地权威服务尚未部署，本机存档已保留' };
+      try { return await cloud.command(context, kind, payload); } catch (error) { return service.failure(error,context.ownerAccountId); }
+    };
     return { commands, dispose() { removeBackupAdapter?.(); } };
   }
 };
