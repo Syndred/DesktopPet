@@ -135,6 +135,7 @@
 .cp-adoption-art { height: clamp(280px, 40vh, 400px); background: linear-gradient(155deg,#e2edff,#f2faff); border-radius: 10px; }
 .cp-adoption-caption h2 { display: flex; gap: 10px; align-items: center; margin: var(--space-4) 7px var(--space-2); font-size: var(--text-title); }
 .cp-adoption-caption p { font-size: var(--text-label); line-height: 1.8; margin: 0 7px var(--space-4); }
+.cp-name-count { color: var(--muted); font-size: var(--text-caption); text-align: right; margin-top: -4px; }
 .cp-adoption-preview form { margin: 0 7px 5px; display: grid; gap: 10px; }
 .cp-adoption-preview form > label:not(.cp-checkbox), .cp-modal label { font-size: 12px; font-weight: 600; color: #586f98; }
 .cp-adoption-preview input[type=text], .cp-adoption-preview input:not([type]), .cp-modal input { background: #fcfdff; border: 1px solid #d8e3f7; border-radius: 8px; padding: 10px 12px; color: #294775; font: inherit; width: 100%; }
