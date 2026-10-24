@@ -225,6 +225,10 @@
 .battle-move.button[aria-pressed="true"] { padding: 6px; border: 2px solid #4f89ff; outline: 2px solid #c6e7ff; outline-offset: 1px; background: #f7fbff; }
 .battle-move.button:disabled { opacity: .6; cursor: default; }
 .battle-move.button:focus-visible, .battle-move-tooltip:focus-visible { outline: 3px solid #244f9e; outline-offset: 3px; }
+.battle-skill-summary { grid-template-columns: repeat(2, minmax(0,1fr)); padding: 0; border: 0; background: transparent; }
+.battle-skill-summary.is-compact .battle-move.button { height: 88px; min-height: 88px; grid-template-columns: 44px minmax(0,1fr); grid-template-rows: minmax(40px,1fr) 18px; }
+.battle-skill-summary.is-compact .battle-skill-art { width: 42px; height: 42px; border-radius: 13px; }
+.battle-skill-summary.is-compact .battle-skill-art .battle-skill-icon { width: 27px; height: 27px; }
 .battle-skill-art { position: relative; display: grid; place-items: center; width: 56px; height: 56px; border: 1px solid #e2f0ff; border-radius: 18px; background: radial-gradient(circle at 30% 20%, #fbfeff, #dbeeff 75%); color: #4988ed; }
 .battle-skill-art .battle-skill-icon { width: 32px; height: 32px; stroke-width: 1.8; }
 .battle-skill-art .battle-skill-glint { position: absolute; top: -2px; left: -2px; width: 13px; height: 13px; color: #8bb6ff; stroke-width: 1.5; }

@@ -16,7 +16,6 @@ import { elements as battleElements } from '../battle/presentation';
 import type { useCompanions } from './client';
 
 export type Controller = ReturnType<typeof useCompanions>;
-export const elements = Object.fromEntries(Object.entries(battleElements).map(([element, display]) => [element, display.label]));
 export function CompanionElement({ element }: { element: ElementType }) {
   return <span className="cp-element" data-element={element}><ElementMark element={element}/>{battleElements[element].label}</span>;
 }

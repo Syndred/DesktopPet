@@ -176,6 +176,8 @@ try {
     await page.keyboard.press('Escape'); await page.getByRole('tab', { name: '技能', exact: true }).click();
     const skillNames = await page.locator('.cp-skill-list [data-action]').evaluateAll(nodes => nodes.map(node => node.getAttribute('data-action')));
     assert.deepEqual(skillNames, ['normal_attack', 'element_attack', 'dodge', 'ultimate']);
+    const skillPresentation = await page.locator('.cp-skill-list [data-action]').evaluateAll(nodes => nodes.map(node => ({ action: node.dataset.action, name: node.querySelector('strong').textContent, caption: node.querySelector('.battle-skill-copy small').textContent, icon: node.querySelector('.battle-skill-icon').getAttribute('class') })));
+    assert.equal(await page.locator('.cp-skill-list [data-presentation="battle-shared-v1"]').count(), 1);
     await page.getByRole('tab', { name: '外观', exact: true }).click();
     const actions = [];
     for (const [action, label] of [['wave', '招手'], ['eat', '吃饭'], ['attack', '普通攻击'], ['hit', '受击'], ['skill', '元素技能']]) actions.push(await play(pet, native, action, label));
@@ -191,6 +193,22 @@ try {
     await page.locator('[data-battle-screen="shared-v1"]').waitFor();
     const overview = success(await invoke('battle', 'overview')), session = success(await invoke('battle', 'snapshot', { sessionId: overview.session.id }));
     assert.equal(session.player.petId, pet.petId); assert.equal(session.player.resource.resourceId, pet.resource.resourceId); assert.equal(session.player.element, pet.element);
+    const livePresentation = await page.locator('[data-battle-screen] .battle-moves [data-action]').evaluateAll(nodes => nodes.map(node => ({ action: node.dataset.action, name: node.querySelector('strong').textContent, caption: node.querySelector('.battle-skill-copy small').textContent, icon: node.querySelector('.battle-skill-icon').getAttribute('class') })));
+    assert.deepEqual(livePresentation, skillPresentation, 'Detail and live skill cards must share exact names, captions and icons');
+    let timeline;
+    if (['wood', 'earth'].includes(pet.element)) {
+      await page.evaluate(() => {
+        const arena = document.querySelector('.battle-live-layout'); window.__battlePhases = [];
+        window.__battleObserver = new MutationObserver(() => window.__battlePhases.push({ phase: arena.dataset.animationPhase, key: arena.dataset.animationKey, stages: [...arena.querySelectorAll('.resource-stage')].map(stage => ({ petId: stage.dataset.petId, resourceId: stage.dataset.resourceId, action: stage.dataset.action })) }));
+        window.__battleObserver.observe(arena, { attributes: true, attributeFilter: ['data-animation-phase'] });
+      });
+      await page.locator('[data-battle-screen] button[data-action="normal_attack"]').click();
+      await page.waitForFunction(() => { const arena = document.querySelector('.battle-live-layout'); return arena?.dataset.animationKey?.endsWith(':1') && arena.dataset.animationPhase === 'rest'; });
+      timeline = await page.evaluate(() => { window.__battleObserver.disconnect(); return window.__battlePhases; });
+      assert.deepEqual(timeline.map(event => event.phase), ['windup', 'release', 'impact', 'effects', 'rest']);
+      const after = success(await invoke('battle', 'snapshot', { sessionId: session.id })); assert.equal(after.snapshot.round, 1); assert.equal(after.player.petId, pet.petId);
+      input('shared-normal-attack-button', { sessionId: session.id, petId: pet.petId, resourceId: pet.resource.resourceId, element: pet.element });
+    }
     input('training-start-button', { sessionId: session.id, petId: pet.petId, resourceId: session.player.resource.resourceId, element: session.player.element, authority: session.context?.authority || 'local' });
     await shot(`battle-${pet.element}.png`, '[data-battle-screen="shared-v1"]');
     success(await invoke('battle', 'leave', { sessionId: session.id }));
@@ -202,7 +220,7 @@ try {
     assert.equal(gardenPet.resource.resourceId, pet.resource.resourceId); assert.equal(gardenPet.element, pet.element);
     input('garrison-confirm-button', { territoryId: territory.id, petId: pet.petId, resourceId: gardenPet.resource.resourceId, element: gardenPet.element, territoryProvenance: 'controlled-ui-fixture' });
     if (['wood', 'earth'].includes(pet.element)) await shot(`garrison-${pet.element}.png`, '.garden-feature');
-    evidence.characters.push({ name: pet.name, templateId: pet.templateId, ...detailIdentity, actions, chat: { petId: chat.petId, resourceId: chatPet.resource.resourceId, element: chatPet.element }, training: { sessionId: session.id, petId: session.player.petId, resourceId: session.player.resource.resourceId, element: session.player.element }, garrison: { territoryId: territory.id, petId: garden.territories.find(value => value.id === territory.id).garrisonPetId, resourceId: gardenPet.resource.resourceId, element: gardenPet.element }, skillNames });
+    evidence.characters.push({ name: pet.name, templateId: pet.templateId, ...detailIdentity, actions, chat: { petId: chat.petId, resourceId: chatPet.resource.resourceId, element: chatPet.element }, training: { sessionId: session.id, petId: session.player.petId, resourceId: session.player.resource.resourceId, element: session.player.element, timeline }, garrison: { territoryId: territory.id, petId: garden.territories.find(value => value.id === territory.id).garrisonPetId, resourceId: gardenPet.resource.resourceId, element: gardenPet.element }, skillNames, skillPresentation });
   }
   evidence.layouts = [];
   for (const [width, height] of [[1280, 844], [1440, 900]]) {

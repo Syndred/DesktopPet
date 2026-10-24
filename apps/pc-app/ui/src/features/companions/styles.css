@@ -185,10 +185,6 @@
 .cp-rule-note { margin: 20px 0 0; font-size: 11px; color: #9aa8bf; }
 .cp-growth-skills { display: grid; gap: 6px; margin-top: 12px; padding-top: 10px; border-top: 1px dashed var(--line); }
 .cp-growth-skills > h3 { font-size: var(--text-card); margin: 0 0 var(--space-1); font-weight: var(--weight-section); }
-.cp-growth-skill { display: flex; gap: 12px; align-items: center; border: 1px solid var(--line); border-radius: 8px; padding: 0 10px 0 0; background: var(--cream); overflow: hidden; }
-.cp-growth-skill-art { width: 22%; min-width: 80px; height: 58px; flex-shrink: 0; overflow: hidden; background: linear-gradient(135deg,#dceaff,#f4f9ff); }
-.cp-growth-skill strong { font-size: var(--text-body); font-weight: var(--weight-section); }
-.cp-growth-skill p { margin: var(--space-1) 0 0; color: var(--muted); font-size: var(--text-caption); line-height: 1.5; }
 .cp-growth-card .cp-experience { padding-bottom: 14px; }
 .cp-growth-card .cp-growth-columns { margin-top: 14px; }
 .cp-growth-columns .cp-meters { align-self: center; width: 100%; }
@@ -197,7 +193,6 @@
 .cp-growth-card .cp-meter strong small { color: #8d9bbb; font-size: 10px; font-weight: 400; }
 .cp-growth-card .cp-battle-stats { gap: 6px; }
 .cp-growth-card .cp-rule-note { margin-top: 10px; font-size: 10px; }
-.cp-training-rule { display: flex; gap: 5px; align-items: center; color: #8596b3; font-size: 11px; line-height: 1.5; margin: 10px 0 0; }
 .cp-detail-body .cp-growth-card { padding: 16px; margin-bottom: 0; }
 .cp-detail-body .cp-origin { padding: 9px 10px 10px; margin-bottom: 0; }
 .cp-origin-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
@@ -212,11 +207,7 @@
 .cp-memory-meta > span { display: inline-flex; align-items: center; gap: 5px; }
 .cp-recall { justify-self: end; }
 .cp-mono { font-family: Consolas, monospace; color: #8a9cb9; overflow-wrap: anywhere; }
-.cp-skill-list { display: grid; gap: 10px; margin-bottom: 20px; }
-.cp-skill-list > div { display: flex; align-items: center; gap: 14px; padding: 12px; border: 1px solid #e5ecf8; border-radius: 9px; }
-.cp-skill-list > div > span { color: #8ea9e5; font-size: 25px; }
-.cp-skill-list strong { font-size: 13px; }
-.cp-skill-list p { font-size: 11px; margin: 5px 0 0; }
+.cp-skill-list { margin-bottom: 20px; }
 .cp-action-preview-layout { display: grid; grid-template-columns: minmax(120px,.8fr) minmax(0,1.2fr); gap: 18px; align-items: center; }
 .cp-action-preview-art { height: 180px; border-radius: 9px; background: var(--mist); overflow: hidden; }
 .cp-action-preview-controls { display: grid; gap: 10px; }
