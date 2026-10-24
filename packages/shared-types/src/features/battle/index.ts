@@ -2,6 +2,12 @@ import type { BattleActionType, ElementType } from "../../battle.js";
 
 export type BattleMode = "training" | "friend" | "wild" | "territory";
 export type BattleWinner = "player" | "enemy" | null;
+export interface BattleRulesProfile {
+  id: string; label: string; vitalPolicy: 'normalized'; maxHp: number; maxAnger: number;
+  companionStatsApplied: false;
+  baseDamage: Record<BattleActionType, number>;
+  ultimateAnger: number; ultimateCost: number; ultimateHeal: number; dodgeMaxCost: number;
+}
 export interface BattleStatus {
   type: "burn" | "freeze" | "parasite" | "vulnerability" | "petrify";
   duration: number; stacks?: number; potency?: number; sourceId?: string;
@@ -43,12 +49,14 @@ export interface BattleSession {
   side?: "host" | "guest";
   pendingAction?: { actionId: string; action: BattleActionType; roundNo: number; uncertain?: boolean } | null;
   reward?: BattleReward; reportId?: string; historyComplete?: boolean; context?: Record<string, unknown>;
+  rules?: BattleRulesProfile;
 }
 export interface BattleReport {
   id: string; sessionId: string; mode: BattleMode | "duel" | "capture";
   status: string; winner: BattleWinner; startedAt: string; endedAt: string;
   player: BattleParticipant; enemy: BattleParticipant; rounds: BattleRound[];
   reward?: BattleReward; legacy?: boolean; historyComplete?: boolean;
+  rules?: BattleRulesProfile;
 }
 export interface DuelUser { id: string; account: string; username: string }
 export interface DuelInvitation {
@@ -58,6 +66,7 @@ export interface DuelInvitation {
   createdAt: string; updatedAt: string;
 }
 export interface BattleFeatureAdapter {
+  getRules(): BattleRulesProfile;
   /** Main-process-only: verified challenge data, never a renderer supplied combatant. */
   beginWildChallenge(input: { ownerAccountId: string; petId: string; actionId: string; challenge: { id: string; opponent: BattleParticipant; [key: string]: unknown } }): BattleSession;
   beginTerritoryChallenge(input: { ownerAccountId: string; petId: string; actionId: string; challenge: { id: string; opponent: BattleParticipant; [key: string]: unknown } }): BattleSession;

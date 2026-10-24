@@ -1,3 +1,4 @@
+const BATTLE_RULES = require('./battle-runtime.cjs').getBattleRules();
 ﻿const { setTimeout: sleep } = require("node:timers/promises");
 
 const { existsSync, readFileSync } = require("node:fs");
@@ -704,18 +705,18 @@ class OnlineDuelService {
       player: {
         id: "player",
         element: normalizeElement(room[`${playerPrefix}_element`]) || "metal",
-        hp: clampInt(room[`${playerPrefix}_hp`], 0, 120, 120),
-        maxHp: 120,
-        anger: clampInt(room[`${playerPrefix}_anger`], 0, 100, 0),
+        hp: clampInt(room[`${playerPrefix}_hp`], 0, BATTLE_RULES.maxHp, BATTLE_RULES.maxHp),
+        maxHp: BATTLE_RULES.maxHp,
+        anger: clampInt(room[`${playerPrefix}_anger`], 0, BATTLE_RULES.maxAnger, 0),
         freeDodgeUsed: Boolean(room[`${playerPrefix}_free_dodge_used`]),
         statuses: normalizeStatusList(room[`${playerPrefix}_statuses`])
       },
       enemy: {
         id: "enemy",
         element: normalizeElement(room[`${enemyPrefix}_element`]) || "wood",
-        hp: clampInt(room[`${enemyPrefix}_hp`], 0, 120, 120),
-        maxHp: 120,
-        anger: clampInt(room[`${enemyPrefix}_anger`], 0, 100, 0),
+        hp: clampInt(room[`${enemyPrefix}_hp`], 0, BATTLE_RULES.maxHp, BATTLE_RULES.maxHp),
+        maxHp: BATTLE_RULES.maxHp,
+        anger: clampInt(room[`${enemyPrefix}_anger`], 0, BATTLE_RULES.maxAnger, 0),
         freeDodgeUsed: Boolean(room[`${enemyPrefix}_free_dodge_used`]),
         statuses: normalizeStatusList(room[`${enemyPrefix}_statuses`])
       }
@@ -879,10 +880,10 @@ function normalizeRoom(input) {
     guest_element: normalizeElement(input.guest_element) || null,
     current_round: toPositiveInt(input.current_round, 1),
     last_resolved_round: Math.max(0, toPositiveInt(input.last_resolved_round, 0)),
-    host_hp: clampInt(input.host_hp, 0, 120, 120),
-    guest_hp: clampInt(input.guest_hp, 0, 120, 120),
-    host_anger: clampInt(input.host_anger, 0, 100, 0),
-    guest_anger: clampInt(input.guest_anger, 0, 100, 0),
+    host_hp: clampInt(input.host_hp, 0, BATTLE_RULES.maxHp, BATTLE_RULES.maxHp),
+    guest_hp: clampInt(input.guest_hp, 0, BATTLE_RULES.maxHp, BATTLE_RULES.maxHp),
+    host_anger: clampInt(input.host_anger, 0, BATTLE_RULES.maxAnger, 0),
+    guest_anger: clampInt(input.guest_anger, 0, BATTLE_RULES.maxAnger, 0),
     host_free_dodge_used: Boolean(input.host_free_dodge_used),
     guest_free_dodge_used: Boolean(input.guest_free_dodge_used),
     host_statuses: normalizeStatusList(input.host_statuses),
@@ -905,12 +906,12 @@ function normalizeRound(input) {
     winner_side: normalizeWinnerSide(input.winner_side),
     round_result: {
       hp_after: {
-        host: clampInt(result.hp_after?.host, 0, 120, 120),
-        guest: clampInt(result.hp_after?.guest, 0, 120, 120)
+        host: clampInt(result.hp_after?.host, 0, BATTLE_RULES.maxHp, BATTLE_RULES.maxHp),
+        guest: clampInt(result.hp_after?.guest, 0, BATTLE_RULES.maxHp, BATTLE_RULES.maxHp)
       },
       anger_after: {
-        host: clampInt(result.anger_after?.host, 0, 100, 0),
-        guest: clampInt(result.anger_after?.guest, 0, 100, 0)
+        host: clampInt(result.anger_after?.host, 0, BATTLE_RULES.maxAnger, 0),
+        guest: clampInt(result.anger_after?.guest, 0, BATTLE_RULES.maxAnger, 0)
       },
       free_dodge_used: {
         host: Boolean(result.free_dodge_used?.host),

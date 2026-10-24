@@ -20,6 +20,16 @@ const ULTIMATE_ANGER_COST = 50;
 const ELEMENT_STATUS_DURATION = 3;
 const ULTIMATE_FIXED_HEAL = 20;
 const BURN_CURRENT_HP_RATIO_PER_STACK = 0.08;
+const STANDARD_MAX_HP = 120;
+const MAX_ANGER = 100;
+const DODGE_MAX_COST = 20;
+
+function getBattleRules() {
+  return { id: 'five-elements-standard-v1', label: '标准五行对战', vitalPolicy: 'normalized',
+    maxHp: STANDARD_MAX_HP, maxAnger: MAX_ANGER, companionStatsApplied: false,
+    baseDamage: { ...BASE_DAMAGE }, ultimateAnger: ULTIMATE_ANGER_THRESHOLD,
+    ultimateCost: ULTIMATE_ANGER_COST, ultimateHeal: ULTIMATE_FIXED_HEAL, dodgeMaxCost: DODGE_MAX_COST };
+}
 
 class BattleRuntimeService {
   constructor() {
@@ -52,7 +62,7 @@ class BattleRuntimeService {
     for (const actor of combatants) {
       if (!actor || !ELEMENTS.includes(actor.element) || !Number.isFinite(actor.hp) ||
           !Number.isFinite(actor.maxHp) || actor.maxHp <= 0 || actor.hp < 0 || actor.hp > actor.maxHp ||
-          !Number.isFinite(actor.anger) || actor.anger < 0 || actor.anger > 100 ||
+          !Number.isFinite(actor.anger) || actor.anger < 0 || actor.anger > MAX_ANGER ||
           !Array.isArray(actor.statuses)) {
         throw new Error("invalid battle combatant");
       }
@@ -95,8 +105,8 @@ function createCombatant(id, element) {
   return {
     id,
     element,
-    hp: 120,
-    maxHp: 120,
+    hp: STANDARD_MAX_HP,
+    maxHp: STANDARD_MAX_HP,
     anger: 0,
     freeDodgeUsed: false,
     statuses: []
@@ -250,7 +260,7 @@ function normalizeActionInput(action) {
 
 function chooseEnemyAction(session, playerAction) {
   const enemy = session.enemy;
-  if (enemy.anger >= 100 && Math.random() < 0.35) {
+  if (enemy.anger >= MAX_ANGER && Math.random() < 0.35) {
     return "ultimate";
   }
 
@@ -382,27 +392,27 @@ function applyAttackStatus(action, attacker, defender, notes) {
 }
 
 function gainAngerOnHurt(player, damage) {
-  player.anger = Math.min(100, player.anger + Math.floor(damage * 0.5));
+  player.anger = Math.min(MAX_ANGER, player.anger + Math.floor(damage * 0.5));
 }
 
 function gainAngerOnHit(player, attackerElement, defenderElement) {
   const advantage = getElementMultiplier(attackerElement, defenderElement) > 1;
   if (advantage) {
-    player.anger = Math.min(100, player.anger + 20);
+    player.anger = Math.min(MAX_ANGER, player.anger + 20);
   }
 }
 
 function spendDodgeAnger(player, notes) {
   if (player.anger > 0) {
-    player.anger = Math.max(0, player.anger - 20);
-    notes.push(`${player.id} spends 20 anger on dodge`);
+    player.anger = Math.max(0, player.anger - DODGE_MAX_COST);
+    notes.push(`${player.id} spends ${DODGE_MAX_COST} anger on dodge`);
     return;
   }
   notes.push(`${player.id} uses first free dodge`);
 }
 
 function refundDodgeAnger(player, notes) {
-  player.anger = Math.min(100, player.anger + 30);
+  player.anger = Math.min(MAX_ANGER, player.anger + 30);
   notes.push(`${player.id} dodged normal attack and refunded 30 anger`);
 }
 
@@ -524,6 +534,7 @@ function normalizeElement(element) {
 module.exports = {
   BattleRuntimeService,
   createSession,
+  getBattleRules,
   getElementMultiplier,
   executeRound
 };
