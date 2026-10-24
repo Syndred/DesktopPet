@@ -20,7 +20,9 @@
 
 已消费 foundation `b3c15a5` 的公开 `accounts.sync.acceptAuthoritativeReadback`。菜园二次读回落盘与公共版本 checkpoint 在同一 SQLite 事务中完成；接口要求完整账号存档校验和一致、当前云端身份匹配、版本不回退，并拒绝正在执行或待确认的整存档请求。下一次 accounts 推送直接沿用验证后的公共版本，不再使用旧 base revision。
 
-本轮 10 项本地检查使用真实 BackupManager、AccountSync、accounts-sync/garden-sync 两个 HTTP handler 与 PostgreSQL RPC。实际完成菜园读回版本 6 → accounts 整存档推送并二次读回版本 7，库存保持完全一致。另有离线笔记时返回 CLOUD_APPLY_PENDING：本机菜园与 checkpoint 一起回滚，原笔记保留；服务端已提交的种植即使重试也只有一份回执。这关闭了本地公共版本衔接缺口，线上部署和双设备验收仍未完成。
+本轮 11 项本地检查使用真实 BackupManager、AccountSync、accounts-sync/garden-sync 两个 HTTP handler 与 PostgreSQL RPC。实际完成菜园读回版本 6 → accounts 整存档推送并二次读回版本 7，库存保持完全一致。另有离线笔记时返回 CLOUD_APPLY_PENDING：本机菜园与 checkpoint 一起回滚，原笔记保留；服务端已提交的种植即使重试也只有一份回执。这关闭了本地公共版本衔接缺口，线上部署和双设备验收仍未完成。
+
+云端喂食已接公共 companions.playAction：仅首次成功落盘后播放 eat，并校验读回中确有本次 actionId/kind/hash。实际公共伙伴服务与六形象资源解析验证了并发相同喂食只一份扣减/通知、读回待确认不播放、验证后的原请求重试播放一次、后续重放不再播放。即使读回有当前版本和有效 checksum，缺少本次操作回执也拒绝落盘；故障注入后恢复原 PostgreSQL 文档，再完成正确读回。没有为动画补写另一条成长或消费流水。
 
 首次云端打开也走同一 PostgreSQL CAS：已同步但尚未初始化的菜园模块，由服务端用固定 `cloud-garden-initialize:v1` 回执创建六块菜地和首次种子。两个客户端同时打开只提交一次，再读回同一存档；认证失败或端点不可用时，不在本机创建云端账号的首次库存。空模块之外的旧版本存档仍需在账号页面完成可审查的统一同步。
 

@@ -1,6 +1,6 @@
 {
-  "capturedAt": "2026-10-24T13:56:54.181Z",
-  "commit": "3c6bba9705d848c5950797bbc27631e0c985d5ca",
+  "capturedAt": "2026-10-24T14:12:18.721Z",
+  "commit": "8dadfc27916bd04532996cc938373d6a1723c21c",
   "mode": "Actual Windows Electron + IPC + SQLite reopen. PostgreSQL checks use a local WASM server, not deployed Supabase.",
   "ownerAccountId": "local:user-8c0af433-aa89-44dd-b1ce-34872d297267",
   "electron": "36.9.5",
@@ -158,6 +158,48 @@
     {
       "phase": "screens",
       "at": "2026-10-24T13:53:04.014Z",
+      "errors": [],
+      "electron": "36.9.5"
+    },
+    {
+      "phase": "canonical-resources",
+      "at": "2026-10-24T14:01:11.891Z",
+      "errors": [],
+      "electron": "36.9.5"
+    },
+    {
+      "phase": "readback",
+      "at": "2026-10-24T14:01:13.654Z",
+      "errors": [],
+      "electron": "36.9.5"
+    },
+    {
+      "phase": "map",
+      "at": "2026-10-24T14:03:47.947Z",
+      "errors": [],
+      "electron": "36.9.5"
+    },
+    {
+      "phase": "map",
+      "at": "2026-10-24T14:05:04.276Z",
+      "errors": [],
+      "electron": "36.9.5"
+    },
+    {
+      "phase": "audit",
+      "at": "2026-10-24T14:05:07.752Z",
+      "errors": [],
+      "electron": "36.9.5"
+    },
+    {
+      "phase": "screens",
+      "at": "2026-10-24T14:05:11.051Z",
+      "errors": [],
+      "electron": "36.9.5"
+    },
+    {
+      "phase": "map",
+      "at": "2026-10-24T14:05:51.998Z",
       "errors": [],
       "electron": "36.9.5"
     }
@@ -1898,12 +1940,15 @@
   ],
   "realLocation": {
     "engine": "maplibre-gl",
-    "locationStatus": "imprecise",
-    "systemError": "LOCATION_IMPRECISE",
+    "locationStatus": "ready",
+    "systemError": null,
     "positionSource": "WiFi",
-    "accuracyMeters": 177,
-    "successfulLocation": false,
-    "coordinatesOmitted": true
+    "accuracyMeters": 58,
+    "successfulLocation": true,
+    "coordinatesOmitted": true,
+    "explicitForegroundRead": true,
+    "privacyReleasedAfterRead": true,
+    "continuousWatch": false
   },
   "oldOwnerSafety": {
     "source": "user-652fae86-f759-4dbc-9d52-4c5bf0868b57",
@@ -1940,9 +1985,45 @@
       "exactGarrisonAndIndependentSelections": true
     }
   },
+  "physicalTerritory": {
+    "mode": "actual OS location + local account + actual native buttons/IPC/battle/SQLite/restart; no imported territory fixture",
+    "coordinatesOmitted": true,
+    "accuracyMeters": 59,
+    "positionSource": "WiFi",
+    "fixTimestampMs": 1792850939315,
+    "attemptedAt": "2026-10-24T14:08:59.836Z",
+    "battle": {
+      "sessionId": "battle-c570a97f-8c10-47f3-a48b-7a82fe1a3091",
+      "mode": "territory",
+      "winner": "player",
+      "rounds": 9,
+      "reward": {
+        "actionId": "battle:battle-c570a97f-8c10-47f3-a48b-7a82fe1a3091:local:user-8c0af433-aa89-44dd-b1ce-34872d297267",
+        "petId": "pet-892af276-55fa-4e8b-8960-9ea5cbdf19cb",
+        "experience": 20,
+        "applied": true,
+        "previousExperience": 0,
+        "previousLevel": 1,
+        "currentExperience": 20,
+        "currentLevel": 1,
+        "seeds": {
+          "source": "battle",
+          "receiptId": "battle-c570a97f-8c10-47f3-a48b-7a82fe1a3091",
+          "itemId": "seed:tomato",
+          "quantity": 2
+        }
+      }
+    },
+    "ownershipReadback": true,
+    "garrisonPetId": "pet-dc123416-b8ef-47c2-96e1-a867a69b673a",
+    "garrisonChangesNoGrowthOrIndependentSelection": true,
+    "restartExact": true,
+    "cloudAcceptance": false,
+    "localProof": "artifacts/garden/roster-electron/run.json"
+  },
   "postgres": {
     "mode": "local HTTP + real PostgreSQL WASM + SQLite; not a deployed Supabase receipt",
-    "at": "2026-10-24T13:42:10.612Z",
+    "at": "2026-10-24T14:01:41.608Z",
     "checks": [
       "verified session and server-time maturity",
       "one credit under concurrent HTTP harvest + exact action replay",
@@ -1953,16 +2034,559 @@
       "real HTTP socket disconnect after PostgreSQL commit -> exact action replay -> one craft debit and one output after SQLite readback",
       "actual SQL roles: service receipt read allowed; anon/authenticated receipt read and settlement execution denied",
       "garden HTTP readback -> actual AccountSync checkpoint -> next full-save HTTP CAS push/readback succeeds with exact inventory",
-      "unrelated offline notes preserved; local garden/checkpoint rollback; exact pending action replay never duplicates the committed server plant"
+      "unrelated offline notes preserved; local garden/checkpoint rollback; exact pending action replay never duplicates the committed server plant",
+      "actual public playback resolves canonical eat clip once under concurrent feeds; pending readback never animates, verified retry animates once without another debit"
     ],
-    "accountRevision": 4,
+    "accountRevision": 9,
     "accountCoordination": {
       "realAccountsHandler": true,
       "realPostgreSql": true,
       "beforeRevision": 6,
       "nextFullSaveRevision": 7,
       "exactInventory": true
+    },
+    "cloudPlayback": {
+      "realCompanionProvider": true,
+      "realResourceResolution": true,
+      "events": [
+        {
+          "ownerAccountId": "user-cloud-garden-qa",
+          "petId": "pet-6a2c9f1c-f8f9-46c1-8114-386b9fff1212",
+          "resourceId": "builtin:lingjing-yuwan-v2",
+          "action": "eat",
+          "actionId": "garden:cloud-feed-fish",
+          "startedAt": 1792850501781,
+          "expiresAt": 1792850502781
+        }
+      ],
+      "oneEventAfterExactReplay": true,
+      "pendingReadback": {
+        "noActionWhilePending": true,
+        "oneServerReceipt": true,
+        "matchingReadbackReceiptRequired": true,
+        "oneEventAfterVerifiedRetry": true,
+        "noEventOnReplay": true
+      }
     }
+  },
+  "canonicalResourceUpgrade": {
+    "pets": {
+      "ok": true,
+      "data": {
+        "ownerAccountId": "local:user-8c0af433-aa89-44dd-b1ce-34872d297267",
+        "pets": [
+          {
+            "ownerAccountId": "local:user-8c0af433-aa89-44dd-b1ce-34872d297267",
+            "petId": "pet-001",
+            "templateId": "blaze-shiba",
+            "name": "焰柴",
+            "serial": "0019001",
+            "element": "fire",
+            "resource": {
+              "resourceId": "legacy:animateddogshibainu.glb",
+              "kind": "3d",
+              "legacyModel": "../assets/models/AnimatedDogShibaInu.glb"
+            },
+            "source": "legacy",
+            "origin": {
+              "legacyPetId": "pet-001",
+              "capturedAt": "2026-03-01 21:10"
+            },
+            "growth": {
+              "level": 1,
+              "experience": 0,
+              "mood": 60,
+              "satiety": 60,
+              "affinity": 0,
+              "winsTotal": 0,
+              "stats": {
+                "hp": 128,
+                "atk": 32,
+                "def": 20,
+                "spd": 18
+              }
+            },
+            "desktop": {
+              "visible": false,
+              "behavior": "quiet",
+              "scale": 1,
+              "position": {
+                "x": 80,
+                "y": 520,
+                "displayId": null
+              }
+            },
+            "revision": 1,
+            "createdAt": "2026-10-24T12:51:08.665Z",
+            "updatedAt": "2026-10-24T12:51:08.665Z"
+          },
+          {
+            "ownerAccountId": "local:user-8c0af433-aa89-44dd-b1ce-34872d297267",
+            "petId": "pet-002",
+            "templateId": "husky",
+            "name": "墨喵",
+            "serial": "0029001",
+            "element": "water",
+            "resource": {
+              "resourceId": "legacy:husky.glb",
+              "kind": "3d",
+              "legacyModel": "../assets/models/Husky.glb"
+            },
+            "source": "legacy",
+            "origin": {
+              "legacyPetId": "pet-002",
+              "capturedAt": "2026-03-02 09:35"
+            },
+            "growth": {
+              "level": 1,
+              "experience": 0,
+              "mood": 60,
+              "satiety": 60,
+              "affinity": 0,
+              "winsTotal": 0,
+              "stats": {
+                "hp": 122,
+                "atk": 28,
+                "def": 24,
+                "spd": 21
+              }
+            },
+            "desktop": {
+              "visible": false,
+              "behavior": "quiet",
+              "scale": 1,
+              "position": {
+                "x": 320,
+                "y": 520,
+                "displayId": null
+              }
+            },
+            "revision": 1,
+            "createdAt": "2026-10-24T12:51:08.665Z",
+            "updatedAt": "2026-10-24T12:51:08.665Z"
+          },
+          {
+            "ownerAccountId": "local:user-8c0af433-aa89-44dd-b1ce-34872d297267",
+            "petId": "pet-003",
+            "templateId": "tuxedo-cat",
+            "name": "礼帽喵",
+            "serial": "0039001",
+            "element": "wood",
+            "resource": {
+              "resourceId": "legacy:tuxedocatanimated.glb",
+              "kind": "3d",
+              "legacyModel": "../assets/models/TuxedoCatAnimated.glb"
+            },
+            "source": "legacy",
+            "origin": {
+              "legacyPetId": "pet-003",
+              "capturedAt": "2026-03-02 20:42"
+            },
+            "growth": {
+              "level": 1,
+              "experience": 0,
+              "mood": 60,
+              "satiety": 60,
+              "affinity": 0,
+              "winsTotal": 0,
+              "stats": {
+                "hp": 130,
+                "atk": 26,
+                "def": 26,
+                "spd": 17
+              }
+            },
+            "desktop": {
+              "visible": false,
+              "behavior": "quiet",
+              "scale": 1,
+              "position": {
+                "x": 560,
+                "y": 520,
+                "displayId": null
+              }
+            },
+            "revision": 1,
+            "createdAt": "2026-10-24T12:51:08.665Z",
+            "updatedAt": "2026-10-24T12:51:08.665Z"
+          },
+          {
+            "ownerAccountId": "local:user-8c0af433-aa89-44dd-b1ce-34872d297267",
+            "petId": "pet-004",
+            "templateId": "husky",
+            "name": "钢狼",
+            "serial": "0049001",
+            "element": "metal",
+            "resource": {
+              "resourceId": "legacy:husky.glb",
+              "kind": "3d",
+              "legacyModel": "../assets/models/Husky.glb"
+            },
+            "source": "legacy",
+            "origin": {
+              "legacyPetId": "pet-004",
+              "capturedAt": "2026-03-03 08:20"
+            },
+            "growth": {
+              "level": 1,
+              "experience": 0,
+              "mood": 60,
+              "satiety": 60,
+              "affinity": 0,
+              "winsTotal": 0,
+              "stats": {
+                "hp": 135,
+                "atk": 30,
+                "def": 30,
+                "spd": 12
+              }
+            },
+            "desktop": {
+              "visible": false,
+              "behavior": "quiet",
+              "scale": 1,
+              "position": {
+                "x": 800,
+                "y": 520,
+                "displayId": null
+              }
+            },
+            "revision": 1,
+            "createdAt": "2026-10-24T12:51:08.665Z",
+            "updatedAt": "2026-10-24T12:51:08.665Z"
+          },
+          {
+            "ownerAccountId": "local:user-8c0af433-aa89-44dd-b1ce-34872d297267",
+            "petId": "pet-005",
+            "templateId": "blaze-shiba",
+            "name": "赤柴",
+            "serial": "0059001",
+            "element": "earth",
+            "resource": {
+              "resourceId": "legacy:animateddogshibainu.glb",
+              "kind": "3d",
+              "legacyModel": "../assets/models/AnimatedDogShibaInu.glb"
+            },
+            "source": "legacy",
+            "origin": {
+              "legacyPetId": "pet-005",
+              "capturedAt": "2026-03-03 18:05"
+            },
+            "growth": {
+              "level": 1,
+              "experience": 0,
+              "mood": 60,
+              "satiety": 60,
+              "affinity": 0,
+              "winsTotal": 0,
+              "stats": {
+                "hp": 142,
+                "atk": 24,
+                "def": 34,
+                "spd": 10
+              }
+            },
+            "desktop": {
+              "visible": false,
+              "behavior": "quiet",
+              "scale": 1,
+              "position": {
+                "x": 1040,
+                "y": 520,
+                "displayId": null
+              }
+            },
+            "revision": 1,
+            "createdAt": "2026-10-24T12:51:08.665Z",
+            "updatedAt": "2026-10-24T12:51:08.665Z"
+          },
+          {
+            "ownerAccountId": "local:user-8c0af433-aa89-44dd-b1ce-34872d297267",
+            "petId": "pet-006",
+            "templateId": "blaze-shiba",
+            "name": "柴豆",
+            "serial": "0069001",
+            "element": "fire",
+            "resource": {
+              "resourceId": "legacy:animateddogshibainu.glb",
+              "kind": "3d",
+              "legacyModel": "../assets/models/AnimatedDogShibaInu.glb"
+            },
+            "source": "legacy",
+            "origin": {
+              "legacyPetId": "pet-006",
+              "capturedAt": "2026-03-04 12:11"
+            },
+            "growth": {
+              "level": 1,
+              "experience": 0,
+              "mood": 60,
+              "satiety": 60,
+              "affinity": 0,
+              "winsTotal": 0,
+              "stats": {
+                "hp": 118,
+                "atk": 33,
+                "def": 22,
+                "spd": 20
+              }
+            },
+            "desktop": {
+              "visible": false,
+              "behavior": "quiet",
+              "scale": 1,
+              "position": {
+                "x": 80,
+                "y": 520,
+                "displayId": null
+              }
+            },
+            "revision": 1,
+            "createdAt": "2026-10-24T12:51:08.665Z",
+            "updatedAt": "2026-10-24T12:51:08.665Z"
+          },
+          {
+            "ownerAccountId": "local:user-8c0af433-aa89-44dd-b1ce-34872d297267",
+            "petId": "pet-ef03204d-bbc6-4b2b-86b5-1b24c5cc9068",
+            "templateId": "big-fish-gentle",
+            "name": "鱼丸",
+            "serial": "EF03204D",
+            "element": "water",
+            "resource": {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "kind": "2d"
+            },
+            "source": "adoption",
+            "origin": {},
+            "growth": {
+              "level": 1,
+              "experience": 10,
+              "mood": 66,
+              "satiety": 90,
+              "affinity": 6,
+              "winsTotal": 0,
+              "stats": {
+                "hp": 124,
+                "atk": 28,
+                "def": 24,
+                "spd": 20
+              }
+            },
+            "desktop": {
+              "visible": false,
+              "behavior": "quiet",
+              "scale": 1,
+              "position": {
+                "x": 320,
+                "y": 470,
+                "displayId": null
+              }
+            },
+            "revision": 6,
+            "createdAt": "2026-10-24T12:51:08.723Z",
+            "updatedAt": "2026-10-24T14:01:11.755Z"
+          },
+          {
+            "ownerAccountId": "local:user-8c0af433-aa89-44dd-b1ce-34872d297267",
+            "petId": "pet-69a13dbc-02dc-447f-91fd-fe2812363c46",
+            "templateId": "big-fish-gentle",
+            "name": "小蓝",
+            "serial": "69A13DBC",
+            "element": "water",
+            "resource": {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "kind": "2d"
+            },
+            "source": "adoption",
+            "origin": {},
+            "growth": {
+              "level": 1,
+              "experience": 0,
+              "mood": 60,
+              "satiety": 60,
+              "affinity": 0,
+              "winsTotal": 0,
+              "stats": {
+                "hp": 124,
+                "atk": 28,
+                "def": 24,
+                "spd": 20
+              }
+            },
+            "desktop": {
+              "visible": false,
+              "behavior": "quiet",
+              "scale": 1,
+              "position": {
+                "x": 560,
+                "y": 470,
+                "displayId": null
+              }
+            },
+            "revision": 2,
+            "createdAt": "2026-10-24T12:51:08.729Z",
+            "updatedAt": "2026-10-24T14:01:11.755Z"
+          },
+          {
+            "ownerAccountId": "local:user-8c0af433-aa89-44dd-b1ce-34872d297267",
+            "petId": "pet-20ec2000-12a1-44f0-bf6f-95bb27f0c37a",
+            "templateId": "big-fish-gentle",
+            "name": "饭团",
+            "serial": "20EC2000",
+            "element": "water",
+            "resource": {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "kind": "2d"
+            },
+            "source": "adoption",
+            "origin": {},
+            "growth": {
+              "level": 1,
+              "experience": 0,
+              "mood": 60,
+              "satiety": 60,
+              "affinity": 0,
+              "winsTotal": 0,
+              "stats": {
+                "hp": 124,
+                "atk": 28,
+                "def": 24,
+                "spd": 20
+              }
+            },
+            "desktop": {
+              "visible": false,
+              "behavior": "quiet",
+              "scale": 1,
+              "position": {
+                "x": 800,
+                "y": 470,
+                "displayId": null
+              }
+            },
+            "revision": 2,
+            "createdAt": "2026-10-24T12:51:08.737Z",
+            "updatedAt": "2026-10-24T14:01:11.755Z"
+          }
+        ],
+        "selections": {
+          "chatPetId": null,
+          "battlePetId": "pet-ef03204d-bbc6-4b2b-86b5-1b24c5cc9068",
+          "guardPetId": null
+        },
+        "templates": [
+          {
+            "templateId": "big-fish-gentle",
+            "name": "鱼丸",
+            "category": "big-fish",
+            "element": "water",
+            "description": "安静温柔的鲸尾少女，喜欢陪你度过日常。",
+            "resource": {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "kind": "2d"
+            },
+            "baseStats": {
+              "hp": 124,
+              "atk": 28,
+              "def": 24,
+              "spd": 20
+            }
+          },
+          {
+            "templateId": "big-fish-cheerful",
+            "name": "小蓝",
+            "category": "big-fish",
+            "element": "water",
+            "description": "活泼的侧马尾伙伴，穿着宽松鲸鱼斗篷。",
+            "resource": {
+              "resourceId": "builtin:lingjing-xiaolan-v1",
+              "kind": "2d"
+            },
+            "baseStats": {
+              "hp": 124,
+              "atk": 28,
+              "def": 24,
+              "spd": 20
+            }
+          },
+          {
+            "templateId": "big-fish-foodie",
+            "name": "饭团",
+            "category": "big-fish",
+            "element": "water",
+            "description": "盘着双丸子头的美食家，认真珍惜每一顿饭。",
+            "resource": {
+              "resourceId": "builtin:lingjing-fantuan-v1",
+              "kind": "2d"
+            },
+            "baseStats": {
+              "hp": 124,
+              "atk": 28,
+              "def": 24,
+              "spd": 20
+            }
+          },
+          {
+            "templateId": "animal-shiba",
+            "name": "焰柴",
+            "category": "animal",
+            "element": "fire",
+            "description": "热情勇敢的柴犬，星星项圈总是闪闪发亮。",
+            "resource": {
+              "resourceId": "builtin:lingjing-shiba-v2",
+              "kind": "2d"
+            },
+            "baseStats": {
+              "hp": 118,
+              "atk": 33,
+              "def": 20,
+              "spd": 22
+            }
+          },
+          {
+            "templateId": "animal-hat-cat",
+            "name": "礼帽喵",
+            "category": "animal",
+            "element": "metal",
+            "description": "戴着礼帽的燕尾猫，擅长温柔的小魔术。",
+            "resource": {
+              "resourceId": "builtin:lingjing-hatcat-v1",
+              "kind": "2d"
+            },
+            "baseStats": {
+              "hp": 136,
+              "atk": 30,
+              "def": 30,
+              "spd": 13
+            }
+          },
+          {
+            "templateId": "animal-white-fox",
+            "name": "小狐",
+            "category": "animal",
+            "element": "water",
+            "description": "安静机灵的雪白小狐，像雪花一样轻盈。",
+            "resource": {
+              "resourceId": "builtin:lingjing-xiaohu-v1",
+              "kind": "2d"
+            },
+            "baseStats": {
+              "hp": 124,
+              "atk": 28,
+              "def": 24,
+              "spd": 20
+            }
+          }
+        ],
+        "revision": 11
+      },
+      "revision": 11
+    },
+    "inventoryExact": true,
+    "allGrowthAndOtherFieldsExact": true,
+    "allowedBuiltinReferenceUpgradeOnly": true,
+    "restartExact": true,
+    "fixtureRosterRestartExact": true
   },
   "canonicalRoster": {
     "fixture": {
@@ -2659,7 +3283,6 @@
   "externalGaps": [
     "Live HTTPS Supabase deployment and real-account two-device readback",
     "Cloud territory challenge/garrison authority and shared battle integration",
-    "Physical location precision <= 80m for actual capture/occupation",
     "Central full-app A01-A12 visual acceptance and Windows packaging"
   ]
 }
