@@ -20,7 +20,7 @@ class AccountsService {
     this.startupIssue = null;
     this.vault = new SessionVault({ userData: services.paths.userData, safeStorage: services.safeStorage });
     this.backups = new BackupManager({ db: this.db, directory: join(services.paths.userData, "accounts", "backups"),
-      getIdentity: owner => this.identity(owner), scenario: publicScenario(qaScenario) });
+      getIdentity: owner => this.identity(owner), scenario: qaScenario ? { mode: "simulated", scenarioId: qaScenario.id, runId: qaScenario.runId } : null });
     this.sync = new AccountSync({ db: this.db, backups: this.backups, remote, getSession: () => this.privateSession(), getSettings: owner => this.settings(owner),
       onInvalidSession: owner => this.invalidateSession(owner) });
     this.remoteUnsubscribe = remote.onInvalidated?.(({ userId }) => {
@@ -160,7 +160,7 @@ class AccountsService {
         row = this.db.prepare("SELECT * FROM account_identities WHERE provider='local' AND account_key=?").get(name.toLowerCase());
         if (register) {
           invariant(!row, "ACCOUNT_EXISTS", "本机账号已存在。");
-          const id = `${this.qaScenario ? `qa:${this.qaScenario.profileId}:` : ""}local-${randomUUID()}`, now = new Date().toISOString();
+          const id = `${this.qaScenario ? `qa:${this.qaScenario.runId}:` : ""}local-${randomUUID()}`, now = new Date().toISOString();
           transaction(this.db, () => {
             this.db.prepare(`INSERT INTO account_identities
               (owner_account_id,provider,subject_id,account,account_key,username,password_hash,created_at,updated_at)
@@ -281,10 +281,10 @@ class AccountsService {
     return row ? JSON.parse(row.document) : null;
   }
   requireScenarioIdentity(scenarioId) {
-    invariant(this.qaScenario && this.qaScenario.scenarioId === scenarioId, "QA_SCENARIO_REQUIRED", "当前未运行对应测试场景。");
+    invariant(this.qaScenario && this.qaScenario.id === scenarioId, "QA_SCENARIO_REQUIRED", "当前未运行对应测试场景。");
     const owner = this.requireOwner(), row = this.identity(owner);
-    invariant(row.provider === "local" && owner.startsWith(`qa:${this.qaScenario.profileId}:`), "QA_IDENTITY_MISMATCH", "测试身份归属不匹配。");
-    return Object.freeze({ ...publicScenario(this.qaScenario), id: row.subject_id, ownerAccountId: owner,
+    invariant(row.provider === "local" && owner.startsWith(`qa:${this.qaScenario.runId}:`), "QA_IDENTITY_MISMATCH", "测试身份归属不匹配。");
+    return Object.freeze({ authority: "simulated", scenarioId: this.qaScenario.id, runId: this.qaScenario.runId, id: row.subject_id, ownerAccountId: owner,
       provider: "qa", account: row.account, username: row.username });
   }
   async exportBackup() {

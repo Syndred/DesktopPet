@@ -10,7 +10,7 @@ module.exports = {
   id: "accounts", migrations, publicCommands: ["session", "login", "register", "logout"],
   register(services) {
     const electron = require("electron");
-    const qaScenario = resolveQaScenario({ userData: services.paths.userData, legacyDataFile: services.paths.legacyDataFile,
+    const qaScenario = resolveQaScenario({ userData: services.paths.userData, legacyDataFile: services.paths.legacyDataFile, foundationScenario: services.get?.("qaScenario"),
       productionDirectories: ["Lingjing", "qingpet-desktop-runtime", "qingpet-lord-3d"].map(name => join(electron.app.getPath("appData"), name)) });
     const host = createDesktopHost(services, electron);
     const accounts = new AccountsService({ services, host, qaScenario,
@@ -19,8 +19,11 @@ module.exports = {
     services.session.setAdapter(accounts);
     services.provide("accounts", accounts);
     services.provide("backups", accounts.backups);
-    if (qaScenario) services.provide("qaScenario", Object.freeze({ ...publicScenario(qaScenario),
-      requireIdentity: () => accounts.requireScenarioIdentity(qaScenario.scenarioId) }));
+    if (qaScenario) {
+      if (!services.get?.("qaScenario")) services.provide("qaScenario", qaScenario); // Older published shell compatibility.
+      services.provide("qaIdentity", Object.freeze({ descriptor: publicScenario(qaScenario),
+        requireIdentity: () => accounts.requireScenarioIdentity(qaScenario.id) }));
+    }
     services.provide("privacy", { mayUseLocation: () => activeHost.mayUseLocation(), mayCollectEmotion: () => activeHost.mayCollectEmotion(),
       setExploring: active => activeHost.setExploring(active) });
     services.provide("notifications", { notify: input => activeHost.notify(input) });

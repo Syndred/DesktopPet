@@ -1,27 +1,25 @@
 # Isolated QA identity contract
 
-For the unified battle goal (2026-10-24). This adds no battle engine, remote authentication, or simulated cloud synchronization.
+For the unified battle goal (2026-10-24). Accounts consumes foundation's public scenario guard from commit 4c05172; it adds no battle engine or simulated cloud sync.
 
-## Explicit launch
+## One shared scenario
 
-`qa-scenario.cjs` exports `provisionQaProfile(absoluteNewDirectory, scenarioId)` and `resolveQaScenario({env,userData,legacyDataFile,productionDirectories})`. Provisioning is an explicit harness/CLI step and refuses an existing directory. It writes `lingjing-qa-profile.json` with an independent UUID and `mode:simulated`.
+Use foundation's `node scripts/acceptance/create-scenario-profile.mjs`, or the test-only `provisionQaProfile(newAbsoluteDirectory)` helper which writes the same marker schema and refuses every existing directory. Launch with both `LINGJING_QA_SCENARIO=unified-battle` and the resulting `PET_USER_DATA_DIR`.
 
-Launch with both `PET_USER_DATA_DIR=<new QA directory>` and `LINGJING_QA_SCENARIO=friend-pk` (or another explicitly provisioned scenario ID). Renderer payloads, local logins and network failures never activate simulation. A marker without its matching flag fails closed. SQLite `account_qa_profile` must match the marker; existing normal identities/raw history cannot be adopted. QA owners are `qa:<profileId>:local-<uuid>`. Logins are memory-only and do not restore a secure session.
+The only marker is `.lingjing-qa-profile.json`; the public descriptor is `{id:'unified-battle',runId,provenance:'simulated',isolated:true}`. Foundation's `runtime/core/qa-scenario.cjs` validates directory binding, copied markers and scenario selection. Accounts reuses that exact guard, checks existing raw accounts, and binds SQLite `account_qa_profile` to `runId/id`. QA owners are `qa:<runId>:local-<uuid>`. No network failure, local login or renderer payload enables simulation. QA sessions are memory-only.
 
-## Foundation preflight
+## Main-process identity
 
-Call `resolveQaScenario` before `initializeLegacy` / `backupLegacy` / `openDatabase`, using final resolved paths and known production directories. Accounts also guards registration and validates the database before importing identities, but module discovery follows foundation's database open; this early preflight is required to reject an invalid launch before legacy initialization. Do not change ordinary profile selection or auto-provision markers on startup.
+Foundation retains ownership of `services.get('qaScenario')`. Accounts never replaces an existing descriptor. It registers a separate `services.get('qaIdentity')` with `{descriptor,requireIdentity()}` only in a verified QA profile. `requireIdentity()` accepts no renderer owner and returns the current verified account `{authority:'simulated',scenarioId:'unified-battle',runId,provider:'qa',id,ownerAccountId,account,username}`. It throws when signed out and contains no token or password. Battle may alternatively call `accounts.requireScenarioIdentity('unified-battle')`.
 
-## Battle adapter
+A simulated battle adapter may consume this identity. Real OnlineDuelService calls must continue using `accounts.requireRuntimeUser()`, which rejects QA. Peer context belongs to battle's explicit scenario adapter. Never synthesize cloud session tokens, route QA identities into a real client, or fall back to simulated results after a live failure.
 
-`services.get('qaScenario')` exists only after validated QA registration. It is a frozen main-only descriptor `{mode:'simulated',profileId,scenarioId,requireIdentity()}`. `requireIdentity()` accepts no renderer owner and returns the current verified local QA user `{mode,profileId,scenarioId,provider:'qa',id,ownerAccountId,account,username}`. It throws after logout and contains no session token.
+Foundation's early preflight must remain before legacy/database initialization (already published in its unified-battle main). Accounts' feature guard follows it and validates DB ownership before importing identities. The older public shell in this feature branch uses the same shared core guard at registration and only supplies `qaScenario` when the shell has not already registered it. Final integration uses foundation's early guard and descriptor.
 
-A scenario adapter may consume this identity. The real OnlineDuelService continues using `accounts.requireRuntimeUser()`, which explicitly rejects QA. Never pass a synthetic token/QA identity to a real remote client; never switch to simulation after a live request fails. Peer context belongs to the battle scenario adapter and must be explicitly simulated and bound to the selected scenario.
+## Data and visible evidence
 
-## Public evidence and data
+Accounts session/currentUser expose `dataMode:'simulated'` for QA (`'live'` for normal execution), and session.scenario is the canonical public descriptor. The small flask tooltip follows this descriptor; it never claims a normal local account is a live cloud service.
 
-`accounts.session()` and its `currentUser` report `dataMode:'simulated'` for QA, `'live'` for normal account execution. Session `scenario` contains the public descriptor. The UI shows a small flask icon with a focusable Radix tooltip. This describes execution source; a normal local account is not a cloud-service claim.
+QA host policy blocks real location/emotion gates, native notifications and system startup changes. Backup provenance is `{mode:'simulated',scenarioId,runId}` for QA and `{mode:'live'}` for ordinary execution. Cross-environment and cross-run restores fail before owner validation. Old version-1 live backups without provenance remain compatible. Native pickers, owner/integrity checks, transactional restore and before-restore preservation use the original backup implementation.
 
-QA host policy forces real location/emotion gates off, suppresses native notifications and never changes system startup, even if QA preferences save those toggles. QA backups carry `provenance:{mode:'simulated',profileId,scenarioId}`; normal backups carry `{mode:'live'}`. Validation rejects cross-environment/scenario imports before owner validation. Old version-1 live backups without provenance remain compatible. Native picking, integrity/owner checks, transactions and before-restore copies remain the original backup implementation.
-
-Unit boundary verification: `node --test apps/pc-app/runtime/features/accounts/tests/qa-scenario.test.cjs`. Real Electron evidence and source SHA are recorded in `docs/implementation/status/accounts.json`. Final combined friend-PK acceptance requires foundation's early preflight and battle's explicit scenario adapter.
+Verification: `node --test apps/pc-app/runtime/features/accounts/tests/qa-scenario.test.cjs`, plus `qa-ui.acceptance.mjs` for actual Electron/native picker/session/data evidence. Source SHA and screenshots are in `docs/implementation/status/accounts.json`. This verifies accounts boundaries; shared friend-PK completion still needs battle's scenario adapter and final integrated acceptance.

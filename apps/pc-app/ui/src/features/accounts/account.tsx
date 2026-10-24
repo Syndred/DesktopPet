@@ -76,7 +76,7 @@ function AccountDetails({ user, session, refreshSession }: { user: AccountUser; 
     });
   }
   return <div className="accounts ac-page">
-    <header className="ac-page-heading"><p className="ac-eyebrow">设置 / 账号与同步</p><div className="ac-title-row"><h1>把每一段陪伴，好好保存。</h1>{session.scenario && <AccountStatus icon={FlaskConical} label="测试场景" detail={`隔离测试 · ${session.scenario.scenarioId}`} iconOnly />}</div></header>
+    <header className="ac-page-heading"><p className="ac-eyebrow">设置 / 账号与同步</p><div className="ac-title-row"><h1>把每一段陪伴，好好保存。</h1>{session.scenario && <AccountStatus icon={FlaskConical} label="测试场景" detail={`隔离测试 · ${session.scenario.id}`} iconOnly />}</div></header>
     <div className="ac-settings-layout"><SettingsNavigation /><AnimatedList className="ac-account-grid">
       <div className="ac-stack">
         <Card className="ac-card"><h2><ClipboardPen size={18} />账号资料</h2>
@@ -100,7 +100,7 @@ function AccountDetails({ user, session, refreshSession }: { user: AccountUser; 
           <div className="ac-save-status" aria-label="存档状态">
             {user.provider === "local"
               ? <AccountStatus icon={HardDrive} label="本机存档" detail="存档保存在这台电脑，可导出备份。" />
-              : <AccountStatus icon={sync?.lastError ? CloudOff : CloudCheck} label={sync?.lastError ? "同步未完成" : sync?.lastVerifiedAt ? "已同步" : "尚未同步"} detail={sync?.lastError ? "暂时无法同步，存档仍保存在本机。" : sync?.lastVerifiedAt ? `上次同步：${dateText(sync.lastVerifiedAt)}` : "本机备份可随时导出。"} tone={sync?.lastError ? "warning" : sync?.lastVerifiedAt ? "success" : "muted"} />}
+              : <AccountStatus icon={sync?.lastError ? CloudOff : sync?.localChanged ? Cloud : CloudCheck} label={sync?.lastError ? "同步未完成" : sync?.localChanged ? "待同步" : sync?.lastVerifiedAt ? "已同步" : "尚未同步"} detail={sync?.lastError ? "暂时无法同步，存档仍保存在本机。" : sync?.localChanged ? "本机有更新，可立即同步或导出备份。" : sync?.lastVerifiedAt ? `上次同步：${dateText(sync.lastVerifiedAt)}` : "本机备份可随时导出。"} tone={sync?.lastError ? "warning" : sync?.lastVerifiedAt && !sync?.localChanged ? "success" : "muted"} />}
             {Boolean(sync?.pending) && <AccountStatus icon={RefreshCw} label={`待同步 ${sync?.pending}`} detail="联网后可重试，当前记录仍保存在本机。" />}
             {Boolean(sync?.conflicts) && <AccountStatus icon={AlertCircle} label="版本冲突" detail="先预览云端存档，再决定是否恢复。" tone="warning" />}
           </div>
@@ -136,7 +136,7 @@ function AccountDetails({ user, session, refreshSession }: { user: AccountUser; 
       <div className="ac-feedback"><p role="status" aria-live="polite" className="ac-notice">{notice}</p><p role="alert" className="ac-notice ac-error">{error}</p></div>
     </AnimatedList></div>
     {preview && <AppDialog title="预览恢复内容" busy={Boolean(pending)} onClose={closePreview}><section className="accounts ac-modal">
-      <p>{dateText(preview.createdAt)} · {preview.tables.reduce((n, t) => n + t.count, 0)} 条记录</p>
+      <h2>恢复备份</h2><p>{dateText(preview.createdAt)}</p><AccountStatus icon={HardDrive} label={`${preview.modules.length} 项内容`} detail={preview.modules.map(id => ({ settings: "设置", legacy: "历史记录", companions: "伙伴", battle: "战报", garden: "菜园", discovery: "探索", conversations: "聊天", resources: "角色资源" }[id] || "其他数据")).join("、")} />
       <label>恢复方式<AccountSelect label="恢复方式" value={restoreMode} onChange={value => setRestoreMode(value as "merge" | "replace")} disabled={Boolean(pending)} options={[{ value: "merge", label: "合并，保留本机现有记录" }, { value: "replace", label: "恢复到此备份版本" }]} /></label>
       <p className="ac-hint">恢复前会自动备份当前存档；账号资料和登录状态保持不变。</p>
       {restoreMode === "replace" && <p className="ac-error">当前存档将替换为此备份版本。</p>}
