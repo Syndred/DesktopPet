@@ -2,9 +2,10 @@ const { invariant } = require("./errors.cjs");
 const { actionId, checksum, transaction } = require("./util.cjs");
 
 class AccountSync {
-  constructor({ db, backups, remote, getSession, getSettings }) {
+  constructor({ db, backups, remote, getSession, getSettings, onInvalidSession }) {
     this.db = db; this.backups = backups; this.remote = remote;
     this.getSession = getSession; this.getSettings = getSettings; this.running = new Set();
+    this.onInvalidSession = onInvalidSession;
   }
   status(owner) {
     const state = this.db.prepare("SELECT * FROM account_sync_state WHERE owner_account_id=?").get(owner);
@@ -74,6 +75,7 @@ class AccountSync {
         this.db.prepare(`INSERT INTO account_sync_state(owner_account_id,last_error) VALUES(?,?)
           ON CONFLICT(owner_account_id) DO UPDATE SET last_error=excluded.last_error`).run(owner, error.code || "SYNC_UNAVAILABLE");
       });
+      if (error.code === "SESSION_INVALIDATED") this.onInvalidSession?.(owner);
       throw error;
     } finally { this.running.delete(owner); }
   }

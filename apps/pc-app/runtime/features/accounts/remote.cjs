@@ -22,7 +22,21 @@ function createRemoteAdapter(online) {
   const enabled = Boolean(online?.enabled);
   const invokeAuth = async (op, payload) => {
     invariant(enabled, "CLOUD_UNAVAILABLE", "云端账号服务未配置。");
-    try { return await online.invoke(op, payload); } catch (error) { throw cloudError(error); }
+    try {
+      // Same existing Edge function and protocol. Scope errors to this request, rather
+      // than allowing an old request to invalidate OnlineDuelService's new active user.
+      const response = await online.client.functions.invoke(online.functionName, { body: { op, ...payload } });
+      if (response.error) {
+        let body;
+        try { body = await response.error.context?.json?.(); } catch { /* Non-JSON network error. */ }
+        throw new Error(body?.error?.message || body?.message || response.error.message);
+      }
+      const body = response.data;
+      if (body?.ok === false) throw new Error(body.error?.message || "cloud request rejected");
+      const data = body?.ok === true ? body.data : body;
+      invariant(data && typeof data === "object", "CLOUD_UNAVAILABLE", "云端账号响应不完整。");
+      return data;
+    } catch (error) { throw cloudError(error); }
   };
   return {
     enabled,
@@ -37,7 +51,18 @@ function createRemoteAdapter(online) {
       return normalizeRemoteUser(result.currentUser);
     },
     setCurrentUser(user) { online?.setCurrentUser?.(user); },
-    async clear() { await online?.leaveRoom?.({ reason: "logout" }).catch(() => {}); online?.setCurrentUser?.(null); },
+    onInvalidated(listener) {
+      return online?.onEvent?.(event => { if (event.type === "session-invalidated") listener(event.payload); });
+    },
+    async signOut(session) {
+      const roomId = online?.room?.id;
+      online?.setCurrentUser?.(null);
+      if (roomId && session?.sessionToken && online.client) {
+        // Capture old credentials/room and never mutate the new connection on completion.
+        await online.client.functions.invoke(online.functionName, { body: { op: "leave_room", userId: session.id,
+          sessionToken: session.sessionToken, roomId, reason: "logout" } }).catch(() => {});
+      }
+    },
     async cloudSave(op, session, payload = {}) {
       invariant(enabled && online?.client, "SYNC_UNAVAILABLE", "云存档服务未配置。");
       let response;

@@ -1,7 +1,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const { createHash, randomUUID } = require('node:crypto');
-const { safeRelative } = require('../features/resources/parser.cjs');
+const { safeRelative, imageSize, normalizeAtlas, atlasFromGrid, calibrations, actionMap } = require('../features/resources/parser.cjs');
 
 const TABLES = ['lingjing_resources', 'lingjing_resource_imports', 'lingjing_resource_preferences'];
 const hash = bytes => createHash('sha256').update(bytes).digest('hex');
@@ -10,11 +10,12 @@ const reject = message => { throw Object.assign(new Error(message), { code: 'RES
 /** Owner imports include actual bytes; immutable shipped assets remain package resources. */
 function createResourceBackupAdapter(services) {
   const db = services.db;
-  const storage = services.get('resources').storageRoot;
+  const service = services.get('resources');
+  const storage = service.storageRoot;
   const owned = owner => db.prepare('SELECT * FROM lingjing_resources WHERE owner_account_id=? ORDER BY resource_id').all(owner);
   function exportData(owner) {
     const resources = owned(owner).map(row => ({ row, files: db.prepare('SELECT asset_key,file_path FROM lingjing_resource_files WHERE resource_id=? ORDER BY asset_key').all(row.resource_id).map(file => {
-      const bytes = fs.readFileSync(file.file_path);
+      const bytes = fs.readFileSync(service.currentFilePath(JSON.parse(row.document_json), file.asset_key, file.file_path));
       return { key: file.asset_key, sha256: hash(bytes), bytes: bytes.toString('base64') };
     }) }));
     return { ownerAccountId: owner, resources,
@@ -57,9 +58,13 @@ function createResourceBackupAdapter(services) {
           if (!files.has(safeRelative(item.uri))) reject('模型备份包含外部或缺失的关联文件。');
         }
       } else {
-        const sheet = document.sheet;
-        if (!sheet || !Number.isFinite(sheet.width) || !Number.isFinite(sheet.height) || !Number.isInteger(sheet.columns) || !Number.isInteger(sheet.rows) || sheet.width <= 0 || sheet.height <= 0 || sheet.columns < 1 || sheet.rows < 1 || sheet.columns * sheet.rows > 4096) reject('动画备份尺寸无效。');
         if (!/\.(png|webp)$/i.test(document.entryAsset)) reject('动画备份图片格式无效。');
+        const size = imageSize(entry, document.entryAsset);
+        const sheet = document.sheet;
+        if (!document.atlas && (!sheet || !Number.isFinite(sheet.width) || !Number.isFinite(sheet.height) || !Number.isInteger(sheet.columns) || !Number.isInteger(sheet.rows) || sheet.width <= 0 || sheet.height <= 0 || sheet.columns < 1 || sheet.rows < 1 || sheet.columns * sheet.rows > 4096 || Math.abs(sheet.width * sheet.columns - size.width) > .01 || Math.abs(sheet.height * sheet.rows - size.height) > .01)) reject('动画备份尺寸无效。');
+        if (!Array.isArray(document.clips) || !document.clips.length) reject('动画备份动作无效。');
+        normalizeAtlas(document.atlas ?? atlasFromGrid(sheet, document.clips, document.entryAsset), size);
+        calibrations(document.calibration); actionMap(document.actions, document.clips, true);
       }
     }
     for (const row of [...data.imports, ...data.preferences]) {

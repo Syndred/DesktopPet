@@ -20,14 +20,24 @@ const accountB = legacy.registerUser('companions_b', password, '伙伴验收 B')
 legacy.loginUser('companions_a', password);
 legacy.saveBattleReport({ id: 'preserved-report', status: 'finished', winner: 'player', mode: 'duel', totalRounds: 1, player: { petId: 'pet-001', petName: '焰柴', element: 'fire' }, enemy: { petName: '对手', element: 'wood' }, rounds: [] });
 const original = JSON.parse(readFileSync(legacyFile, 'utf8'));
+const hasAccounts = existsSync(resolve('apps/pc-app/runtime/features/accounts/index.cjs'));
 // A real planted crop with a historical plantedAt proves offline maturation on startup.
 const { GardenService } = require(resolve('apps/pc-app/runtime/features/garden/service.cjs'));
 const fixtureDb = new DatabaseSync(join(profile, 'lingjing.sqlite'));
+let ownerA = accountA.id; let ownerB = accountB.id;
+if (hasAccounts) {
+  const { migrations } = require(resolve('apps/pc-app/runtime/features/accounts/schema.cjs'));
+  for (const migration of migrations) fixtureDb.exec(migration.sql);
+  const { importLegacy } = require(resolve('apps/pc-app/runtime/features/accounts/legacy.cjs'));
+  importLegacy({ db: fixtureDb, filePath: legacyFile, archiveDir: join(profile, 'fixture-legacy-archives') });
+  ownerA = fixtureDb.prepare("SELECT owner_account_id FROM account_aliases WHERE provider='local' AND subject_id=?").get(accountA.id).owner_account_id;
+  ownerB = fixtureDb.prepare("SELECT owner_account_id FROM account_aliases WHERE provider='local' AND subject_id=?").get(accountB.id).owner_account_id;
+}
 const garden = new GardenService({ db: fixtureDb, clock: () => Date.now() - 26 * 60_000 });
-assert.equal(garden.plant({ ownerAccountId: accountA.id }, { actionId: 'offline-rice-seed', expectedRevision: 0, plotId: 'plot-1', cropType: 'rice' }).ok, true);
+assert.equal(garden.plant({ ownerAccountId: ownerA }, { actionId: 'offline-rice-seed', expectedRevision: 0, plotId: 'plot-1', cropType: 'rice' }).ok, true);
 fixtureDb.close();
 
-const errors = []; const evidence = { at: new Date().toISOString(), output, accountA: accountA.id, accountB: accountB.id, fixture: 'Two local test accounts; retained six legacy animals and one battle report; rice planted 26 minutes before startup by real GardenService.', checks: [] };
+const errors = []; const evidence = { at: new Date().toISOString(), output, accountA: accountA.id, accountB: accountB.id, ownerA, ownerB, fixture: 'Two local test accounts; retained six legacy animals and one battle report; rice planted 26 minutes before startup by real GardenService.', checks: [] };
 writeFileSync(join(outputRoot, 'latest.txt'), output);
 const env = { ...process.env, PET_USER_DATA_DIR: profile }; delete env.ELECTRON_RUN_AS_NODE;
 let application;
@@ -35,9 +45,17 @@ const invoke = (page, feature, command, payload) => page.evaluate(async ({ featu
 async function screenshot(page, name) { await page.screenshot({ path: join(output, `${name}.png`) }); }
 async function snapshot(page) { const result = await invoke(page, 'companions', 'list'); assert.equal(result.ok, true, JSON.stringify(result)); return result.data; }
 async function nativeWindows() { return application.evaluate(({ BrowserWindow }) => BrowserWindow.getAllWindows().map(win => ({ id: win.id, title: win.getTitle(), bounds: win.getBounds(), visible: win.isVisible(), url: win.webContents.getURL(), sandbox: win.webContents.getLastWebPreferences().sandbox, contextIsolation: win.webContents.getLastWebPreferences().contextIsolation }))); }
-async function mainPage() { return application.windows().find(page => !page.url().includes('features/companions/desktop.html')) || await application.firstWindow(); }
+async function mainPage() {
+  // Restored companion windows can be created before the main window, initially about:blank.
+  for (let i = 0; i < 150; i++) {
+    const page = application.windows().find(candidate => candidate.url().includes('/dist/ui/index.html') && !candidate.url().includes('#/desktop/'));
+    if (page) return page;
+    await delay(100);
+  }
+  throw new Error('The real management renderer did not open');
+}
 async function waitForCount(count) {
-  for (let i = 0; i < 60; i++) { const windows = await nativeWindows(); if (windows.filter(win => win.url.includes('/features/companions/desktop.html') && win.visible).length === count) return windows; await delay(100); }
+  for (let i = 0; i < 60; i++) { const windows = await nativeWindows(); if (windows.filter(win => win.url.includes('#/desktop/') && win.visible).length === count) return windows; await delay(100); }
   throw new Error(`Expected ${count} native companion windows: ${JSON.stringify(await nativeWindows())}`);
 }
 try {
@@ -47,7 +65,11 @@ try {
   const info = await invoke(page, 'app', 'info');
   assert.ok(info.data.features.some(feature => feature.id === 'resources'), 'resources must be registered in the real host');
   assert.ok(info.data.features.some(feature => feature.id === 'garden'), 'garden must be registered in the real host');
-  await page.getByRole('heading', { name: '今天，也有小家伙在等你。' }).waitFor();
+  if (hasAccounts) {
+    const loggedIn = await invoke(page, 'accounts', 'login', { account: 'companions_a', password, provider: 'local', rememberSession: true });
+    assert.equal(loggedIn.ok, true, JSON.stringify(loggedIn));
+  }
+  await page.getByRole('button', { name: '领养伙伴', exact: true }).waitFor();
   const initial = await snapshot(page); assert.equal(initial.pets.length, 6);
   assert.equal(initial.pets.find(pet => pet.petId === 'pet-001').growth.level, original.userInventories[accountA.id].pets[0].level);
   evidence.checks.push('legacy animals imported with original IDs and growth');
@@ -61,11 +83,10 @@ try {
   assert.equal(adopted.length, 3); assert.equal(new Set(adopted.map(pet => pet.petId)).size, 3); assert.equal(new Set(adopted.map(pet => pet.templateId)).size, 1);
   await waitForCount(3);
   evidence.adopted = adopted.map(pet => ({ petId: pet.petId, name: pet.name, templateId: pet.templateId }));
-  for (const companionPage of application.windows().filter(page => page.url().includes('features/companions/desktop.html'))) {
-    await companionPage.locator('#visual canvas').waitFor();
-    await companionPage.waitForFunction(() => { const canvas = document.querySelector('#visual canvas'); return canvas && canvas.getContext('2d').getImageData(0, 0, canvas.width, canvas.height).data.some(value => value > 0); });
-    assert.equal(await companionPage.locator('#status').innerText(), '');
-    await screenshot(companionPage, `desktop-${await companionPage.locator('#name').innerText()}`);
+  for (const companionPage of application.windows().filter(page => page.url().includes('#/desktop/'))) {
+    await companionPage.locator('.resource-stage[data-status="ready"] [data-renderer="pixi"] canvas').waitFor();
+    assert.equal(await companionPage.locator('model-viewer').count(), 0);
+    await screenshot(companionPage, `desktop-${await companionPage.locator('.cp-desktop-name').innerText()}`);
   }
   evidence.checks.push('three visible sandboxed Electron windows render three independently owned instances of one 2D template');
   await page.getByRole('button', { name: '我的灵宠', exact: true }).first().click();
@@ -103,8 +124,20 @@ try {
   evidence.fed = { petId: fish.petId, growthBefore: fish.growth, growthAfter: fed.pets.find(pet => pet.petId === fish.petId).growth };
   await page.getByRole('button', { name: '我的灵宠', exact: true }).click();
   await page.getByRole('button', { name: /选择伙伴 小蓝/ }).click();
-  await page.getByLabel('小蓝的行为模式').selectOption('sleep');
-  await page.waitForFunction(() => document.querySelector('select[aria-label="小蓝的行为模式"]')?.value === 'sleep');
+  const behavior = page.getByRole('combobox', { name: '小蓝的行为模式' });
+  if (await behavior.evaluate(element => element.tagName === 'SELECT')) await behavior.selectOption('sleep');
+  else { await behavior.click(); await page.getByRole('option', { name: '好好休息', exact: true }).click(); }
+  assert.equal((await snapshot(page)).pets.find(pet => pet.name === '小蓝').desktop.behavior, 'sleep');
+  assert.equal(await page.locator('model-viewer').count(), 0);
+  const blue = adopted.find(pet => pet.name === '小蓝');
+  await invoke(page, 'companions', 'select', { actionId: 'select-chat', petId: fish.petId, slot: 'chatPetId' });
+  await invoke(page, 'companions', 'select', { actionId: 'select-battle', petId: blue.petId, slot: 'battlePetId' });
+  const separated = await snapshot(page);
+  assert.equal(separated.selections.chatPetId, fish.petId);
+  assert.equal(separated.selections.battlePetId, blue.petId);
+  assert.equal(separated.selections.guardPetId, null);
+  assert.equal(separated.pets.filter(pet => pet.desktop.visible).length, 3);
+  evidence.checks.push('production IPC selects chat and battle independently without changing desktop or guard selection');
   // Native drag can be performed while this actual application remains open.
   evidence.windowsBeforeDrag = await waitForCount(3);
   if (process.env.COMPANIONS_NATIVE_PAUSE === '1') {
@@ -127,14 +160,20 @@ try {
   }
   evidence.checks.push('close/relaunch restores names, growth, independent behavior, desktop visibility and saved positions');
   // Switch through the real local RuntimeDataStore, not a mock session resolver.
-  await application.evaluate(async (_electron, { runtime, password }) => {
+  if (hasAccounts) {
+    const result = await invoke(page, 'accounts', 'login', { account: 'companions_b', password, provider: 'local', rememberSession: true });
+    assert.equal(result.ok, true, JSON.stringify(result));
+  } else await application.evaluate(async (_electron, { runtime, password }) => {
     const load = process.getBuiltinModule('module').createRequire(runtime);
     const { initializeLegacy } = load(runtime); initializeLegacy().runtimeDataStore.loginUser('companions_b', password);
   }, { runtime: resolve('apps/pc-app/runtime/main.cjs'), password });
   await waitForCount(0);
-  const other = await snapshot(page); assert.equal(other.ownerAccountId, accountB.id); assert.equal(other.pets.filter(pet => pet.source === 'adoption').length, 0);
-  const denied = await invoke(page, 'companions', 'rename', { actionId: 'foreign-pet', petId: fish.petId, name: '不能改名', ownerAccountId: accountA.id }); assert.equal(denied.code, 'PET_NOT_FOUND');
-  await application.evaluate(async (_electron, { runtime, password }) => { const load = process.getBuiltinModule('module').createRequire(runtime); const { initializeLegacy } = load(runtime); initializeLegacy().runtimeDataStore.loginUser('companions_a', password); }, { runtime: resolve('apps/pc-app/runtime/main.cjs'), password });
+  const other = await snapshot(page); assert.equal(other.ownerAccountId, ownerB); assert.equal(other.pets.filter(pet => pet.source === 'adoption').length, 0);
+  const denied = await invoke(page, 'companions', 'rename', { actionId: 'foreign-pet', petId: fish.petId, name: '不能改名', ownerAccountId: ownerA }); assert.equal(denied.code, 'PET_NOT_FOUND');
+  if (hasAccounts) {
+    const result = await invoke(page, 'accounts', 'login', { account: 'companions_a', password, provider: 'local', rememberSession: true });
+    assert.equal(result.ok, true, JSON.stringify(result));
+  } else await application.evaluate(async (_electron, { runtime, password }) => { const load = process.getBuiltinModule('module').createRequire(runtime); const { initializeLegacy } = load(runtime); initializeLegacy().runtimeDataStore.loginUser('companions_a', password); }, { runtime: resolve('apps/pc-app/runtime/main.cjs'), password });
   await waitForCount(3);
   assert.equal((await snapshot(page)).pets.find(pet => pet.petId === fish.petId).name, '鱼丸一号');
   evidence.checks.push('real local account switch removes previous account windows; foreign pet mutation denied even with forged renderer owner');

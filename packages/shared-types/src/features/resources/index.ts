@@ -5,10 +5,16 @@ export type ResourceContext = 'desktop' | 'battle';
 export type ResourceKind = 'spritesheet' | 'model3d';
 export interface ResourceCalibration {
   scale: number;
-  yawDeg: number;
-  pitchDeg: number;
+  rotationDeg?: number;
+  /** Read-only historical fields; no active 3D calibration UI. */
+  yawDeg?: number;
+  pitchDeg?: number;
   verticalOffset: number;
   mirrorX: boolean;
+  anchorX?: number;
+  anchorY?: number;
+  /** Zero follows the current clip's authored frame rate. */
+  fps?: number;
 }
 export interface ResourceProvenance {
   author: string;
@@ -21,6 +27,7 @@ export interface ResourceProvenance {
 export interface ResourceClip {
   name: string;
   frames?: number[];
+  frameNames?: string[];
   fps?: number;
   loop: boolean;
 }
@@ -36,6 +43,7 @@ export interface CharacterResource {
   entryAsset: string;
   thumbnailAsset?: string;
   sheet?: { width: number; height: number; columns: number; rows: number };
+  atlas?: { frames: Record<string, { frame: { x: number; y: number; w: number; h: number }; rotated?: boolean; trimmed?: boolean; sourceSize?: { w: number; h: number }; spriteSourceSize?: { x: number; y: number; w?: number; h?: number } }>; animations: Record<string, string[]>; meta: { image: string; scale: string; size: { w: number; h: number } } };
   clips: ResourceClip[];
   actions: Record<ResourceAction, string | null>;
   calibration: Record<ResourceContext, ResourceCalibration>;
@@ -77,5 +85,4 @@ export interface ResourcesClient {
   save(request: ResourceSaveRequest): Promise<ResourceResult<CharacterResource>>;
   resolve(request: ResourceDisplayRequest): Promise<ResourceResult<ResourceDisplay>>;
   assetUrl(resourceId: string, assetKey: string): string;
-  importLegacyCalibration?(profiles: Record<string, unknown>): Promise<ResourceResult<{ migrated: number }>>;
 }

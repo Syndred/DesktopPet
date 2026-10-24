@@ -12,9 +12,10 @@ export interface BattleActor {
 }
 export interface BattleSnapshot { round: number; player: BattleActor; enemy: BattleActor }
 export interface BattleParticipant {
-  petId: string; petName: string; element: ElementType; level?: number; model?: string;
+  petId: string; petName: string; element: ElementType; level?: number;
   resourceRef?: string; avatar?: string;
-  resource?: { resourceId: string; kind: "2d" | "3d"; legacyModel?: string };
+  appearance2d?: string;
+  resource?: { resourceId: string; kind: "2d" };
 }
 export interface BattleRound {
   round: number;
@@ -31,6 +32,7 @@ export interface BattleReward {
   actionId: string; experience: number; applied: boolean; petId: string;
   previousExperience?: number; currentExperience?: number; previousLevel?: number; currentLevel?: number;
   pendingReason?: string;
+  seeds?: { quantity?: number; itemId?: string; alreadyClaimed?: boolean };
 }
 export interface BattleSession {
   id: string; mode: BattleMode; status: "waiting" | "active" | "settling" | "finished" | "abandoned";

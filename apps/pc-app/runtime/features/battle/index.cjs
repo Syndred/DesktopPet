@@ -1,11 +1,14 @@
 const migrations = require("./migrations.cjs");
 const { BattleFeatureService, friendlyError } = require("./service.cjs");
 const { createBattleBackupAdapter } = require("./backup.cjs");
+const { registerBattleArt } = require("./assets.cjs");
 
 module.exports = {
   id: "battle", migrations,
   register(services) {
     const service = new BattleFeatureService(services);
+    const artReady = registerBattleArt(services);
+    void artReady.catch(() => {});
     const removeBackup = services.get("backups")?.register(createBattleBackupAdapter(services.db));
     services.provide("battle", {
       beginWildChallenge: input => service.beginWildChallenge(input),
@@ -16,7 +19,7 @@ module.exports = {
     const commands = {};
     for (const name of ["overview", "selectPet", "startTraining", "snapshot", "act", "retryAction", "search", "invitations", "invite", "respondInvite", "cancelInvite", "createRoom", "joinRoom", "sync", "leave", "listReports", "getReport", "retrySettlement"]) {
       commands[name] = async (payload = {}, context) => {
-        try { return { ok: true, data: await service[name](payload, context) }; }
+        try { await artReady; return { ok: true, data: await service[name](payload, context) }; }
         catch (error) { return { ok: false, code: error.code || "BATTLE_SERVICE_UNAVAILABLE", message: friendlyError(error) }; }
       };
     }

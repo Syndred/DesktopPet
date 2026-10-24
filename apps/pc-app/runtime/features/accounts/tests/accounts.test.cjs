@@ -64,6 +64,30 @@ test("legacy missing credentials cannot log in with the old default password", a
   assert.equal(f.accounts.getCurrentUser(), null);
 });
 
+test("remote placeholder hashes without tokens are never accepted as local credentials", async () => {
+  const f = fixture({ users: [{ ...legacyUser("remote-a", "alice"), passwordHash: hash("remote-session-remote-a") }], pets: [{ id: "remote-pet" }] });
+  await assert.rejects(() => login(f, "alice", "remote-session-remote-a"), { code: "INVALID_CREDENTIALS" });
+  assert.equal(f.accounts.identity("remote-a").provider, "runtime");
+  assert.equal(f.accounts.getLegacyInventory("remote-a").pets[0].id, "remote-pet");
+});
+
+test("corrupt legacy content stays archived without blocking the recoverable account UI", async () => {
+  const f = fixture("invalid legacy document shape");
+  assert.equal(f.accounts.migration.status, "corrupt");
+  assert.equal(readFileSync(f.accounts.migration.archivePath, "utf8"), readFileSync(f.file, "utf8"));
+  assert.equal(f.accounts.session().currentUser, null);
+  await register(f, "new-local"); assert.equal(f.accounts.getLegacyInventory(), null);
+});
+
+test("logout revokes persisted session resumption even when encrypted file removal fails", async () => {
+  const f = fixture(); await register(f, "alice");
+  f.accounts.vault.clear = () => { throw new Error("simulated read-only vault"); };
+  await f.accounts.logout(); assert.equal(f.accounts.getCurrentUser(), null);
+  assert.equal(f.db.prepare("SELECT blocked FROM account_session_control WHERE singleton=1").get().blocked, 1);
+  const restarted = new AccountsService({ services: f.services, remote: f.remote, host: f.host });
+  try { await restarted.ready; assert.equal(restarted.getCurrentUser(), null); } finally { restarted.dispose(); }
+});
+
 test("local login upgrades legacy SHA256, and nickname/password changes are atomic and readable", async () => {
   const f = fixture({ users: [legacyUser("a", "alice")], pets: [{ id: "old-pet" }] });
   await login(f, "alice"); const owner = f.accounts.requireOwner();
@@ -201,4 +225,18 @@ test("sync requires an exact receipt AND independent readback before being marke
   assert.equal(f.accounts.sync.status(owner).cloudRevision, 1);
   assert.equal(f.accounts.sync.status(owner).localChanged, false);
   assert.equal(checksum(stored.envelope.data), f.accounts.backups.dataChecksum(owner));
+});
+
+test("cloud session invalidation clears only that verified session and retains its outbox", async () => {
+  const f = fixture(null, { enabled: true,
+    async login() { return { id: "remote-alice", account: "alice", username: "Alice", sessionToken: "token-alice-123456789" }; },
+    async cloudSave() { throw Object.assign(new Error("登录已失效"), { code: "SESSION_INVALIDATED" }); }
+  });
+  await f.accounts.authenticate({ provider: "runtime", account: "alice", password: "secret123" });
+  const owner = f.accounts.requireOwner(), document = defaultSettings(); document.sync.enabled = true;
+  await f.accounts.saveSettings({ document, revision: 0, actionId: randomUUID() });
+  f.accounts.sync.enqueue(owner, randomUUID());
+  await assert.rejects(() => f.accounts.sync.flush(owner, true), { code: "SESSION_INVALIDATED" });
+  assert.equal(f.accounts.getCurrentUser(), null);
+  assert.equal(f.db.prepare("SELECT status FROM account_sync_outbox WHERE owner_account_id=?").get(owner).status, "retry");
 });
