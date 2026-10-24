@@ -26,8 +26,9 @@ function createQaOnline(config) {
   return online;
 }
 function qaUser(services, owner, config) {
+  const proof = services.get('qaIdentity')?.requireIdentity?.();
   const user = services.get('accounts')?.privateSession?.();
-  if (!config.endpoint || user?.provider !== 'local' || user.ownerAccountId !== owner) throw Object.assign(new Error('需要隔离模拟连接与本机场景账号'), { code: 'QA_TRANSPORT_REQUIRED' });
+  if (!config.endpoint || proof?.authority !== 'simulated' || proof.runId !== config.runId || proof.ownerAccountId !== owner || user?.provider !== 'local' || user.ownerAccountId !== owner) throw Object.assign(new Error('需要隔离模拟连接与本机场景账号'), { code: 'QA_TRANSPORT_REQUIRED' });
   return { ...user, id: owner, sessionToken: `qa:${config.runId}:${owner}` };
 }
 module.exports = { readQaProfile, createQaOnline, qaUser };
