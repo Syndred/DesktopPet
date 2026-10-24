@@ -1,0 +1,90 @@
+{
+  "at": "2026-10-24T15:07:23.061Z",
+  "dataSource": {
+    "mode": "local-qa",
+    "simulated": false,
+    "cloud": "not used",
+    "profile": "artifacts/resources/2d-profile"
+  },
+  "method": "Formal preload IPC in production Electron; selection receipt and list readback, not a claim of a played battle",
+  "before": {
+    "petCount": 6,
+    "selections": {
+      "chatPetId": null,
+      "battlePetId": "pet-001",
+      "guardPetId": null
+    }
+  },
+  "operations": [
+    {
+      "id": "qingya",
+      "adoption": {
+        "ok": true,
+        "reused": false,
+        "petId": "pet-e8f55346-9b99-498d-80b1-53d53bdb8e63",
+        "templateId": "animal-wood-deer",
+        "name": "青芽",
+        "element": "wood",
+        "resource": {
+          "resourceId": "builtin:lingjing-qingya-v1",
+          "kind": "2d"
+        },
+        "revision": 1
+      },
+      "battleSelection": {
+        "receipt": {
+          "chatPetId": null,
+          "battlePetId": "pet-e8f55346-9b99-498d-80b1-53d53bdb8e63",
+          "guardPetId": null
+        },
+        "readback": {
+          "chatPetId": null,
+          "battlePetId": "pet-e8f55346-9b99-498d-80b1-53d53bdb8e63",
+          "guardPetId": null
+        }
+      }
+    },
+    {
+      "id": "yantuan",
+      "adoption": {
+        "ok": true,
+        "reused": false,
+        "petId": "pet-24cea49e-6482-4925-8570-188e2cabe571",
+        "templateId": "animal-earth-pangolin",
+        "name": "岩团",
+        "element": "earth",
+        "resource": {
+          "resourceId": "builtin:lingjing-yantuan-v1",
+          "kind": "2d"
+        },
+        "revision": 1
+      },
+      "battleSelection": {
+        "receipt": {
+          "chatPetId": null,
+          "battlePetId": "pet-24cea49e-6482-4925-8570-188e2cabe571",
+          "guardPetId": null
+        },
+        "readback": {
+          "chatPetId": null,
+          "battlePetId": "pet-24cea49e-6482-4925-8570-188e2cabe571",
+          "guardPetId": null
+        }
+      }
+    }
+  ],
+  "restoredSelection": {
+    "chatPetId": null,
+    "battlePetId": "pet-001",
+    "guardPetId": null
+  },
+  "after": {
+    "petCount": 8,
+    "selections": {
+      "chatPetId": null,
+      "battlePetId": "pet-001",
+      "guardPetId": null
+    }
+  },
+  "passed": true
+}

@@ -35,7 +35,7 @@ export function ApplyToCompanion({ resource, disabled }: { resource: CharacterRe
       setBusy(true); setMessage('');
       try {
         await request('companions', 'appearance', { petId, resourceId: resource.id, expectedRevision: pet.revision, actionId: crypto.randomUUID() });
-        setMessage(`已为${pet.name}应用形象，成长和聊天记录继续保留。`); await reload();
+        setMessage(`已应用给${pet.name}。`); await reload();
       } catch (error) { setMessage(error instanceof Error ? error.message : '应用形象失败，请重试。'); await reload().catch(() => {}); }
       finally { setBusy(false); }
     }}>{busy ? '正在应用…' : `应用给${pet?.name || '伙伴'}`}</Button>

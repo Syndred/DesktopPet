@@ -112,6 +112,36 @@
         "蓝金宝石领结"
       ],
       "manifest": "xiaohu/character.json"
+    },
+    {
+      "id": "qingya",
+      "name": "青芽",
+      "templateId": "animal-wood-deer",
+      "category": "animal",
+      "element": "wood",
+      "resourceId": "builtin:lingjing-qingya-v1",
+      "description": "戴着枝叶小角的林间幼鹿，喜欢收集新芽。",
+      "identityFeatures": [
+        "枝角与嫩芽",
+        "斑点幼鹿",
+        "叶披肩与橡果吊坠"
+      ],
+      "manifest": "qingya/character.json"
+    },
+    {
+      "id": "yantuan",
+      "name": "岩团",
+      "templateId": "animal-earth-pangolin",
+      "category": "animal",
+      "element": "earth",
+      "resourceId": "builtin:lingjing-yantuan-v1",
+      "description": "披着暖褐鳞甲的小穿山甲，稳稳守住每一步。",
+      "identityFeatures": [
+        "暖褐鳞甲",
+        "卷曲鳞尾",
+        "琥珀矿石与掘土爪"
+      ],
+      "manifest": "yantuan/character.json"
     }
   ]
 }

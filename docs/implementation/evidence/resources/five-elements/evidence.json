@@ -1,0 +1,2096 @@
+{
+  "at": "2026-10-24T15:04:00.363Z",
+  "runtime": "production Electron / real Pixi / public resource UI",
+  "dataSource": {
+    "mode": "local-qa",
+    "simulated": false,
+    "cloud": "not used",
+    "profile": "artifacts\\resources\\2d-profile"
+  },
+  "errors": [],
+  "consoleErrors": [],
+  "characters": [
+    {
+      "id": "qingya",
+      "name": "青芽",
+      "element": "wood",
+      "resourceId": "builtin:lingjing-qingya-v1",
+      "contentHash": "94e0af4b98334788f9f2357fde6c84c70cc051684760d05c9ca4eebf97a3977a",
+      "frames": [
+        {
+          "index": 0,
+          "action": "idle",
+          "notes": "",
+          "screenshot": "qingya-frame-00.png",
+          "physicalPixels": [
+            726,
+            264
+          ],
+          "expectedRectangle": {
+            "x": 76,
+            "y": 63,
+            "w": 184,
+            "h": 261
+          },
+          "renderedBounds": {
+            "x": 235.89257142857142,
+            "y": 21.409142857142825,
+            "width": 106.61485714285716,
+            "height": 151.23085714285716,
+            "canvasWidth": 578.4,
+            "canvasHeight": 208
+          },
+          "actual": {
+            "renderer": "pixi-spritesheet",
+            "frame": "1",
+            "frameTexture": "20",
+            "textureFrame": "76,63,184,261",
+            "contentBounds": "{\"x\":235.89257142857142,\"y\":21.409142857142825,\"width\":106.61485714285716,\"height\":151.23085714285716,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+            "textureKey": "lingjing-resource://asset/builtin%3Alingjing-qingya-v1/sprites.png:94e0af4b98334788f9f2357fde6c84c70cc051684760d05c9ca4eebf97a3977a",
+            "textureSource": "3"
+          }
+        },
+        {
+          "index": 1,
+          "action": "blink",
+          "notes": "",
+          "screenshot": "qingya-frame-01.png",
+          "physicalPixels": [
+            726,
+            264
+          ],
+          "expectedRectangle": {
+            "x": 390,
+            "y": 64,
+            "w": 182,
+            "h": 260
+          },
+          "renderedBounds": {
+            "x": 236.47199999999998,
+            "y": 21.98857142857139,
+            "width": 105.45600000000002,
+            "height": 150.6514285714286,
+            "canvasWidth": 578.4,
+            "canvasHeight": 208
+          },
+          "actual": {
+            "renderer": "pixi-spritesheet",
+            "frame": "0",
+            "frameTexture": "21",
+            "textureFrame": "390,64,182,260",
+            "contentBounds": "{\"x\":236.47199999999998,\"y\":21.98857142857139,\"width\":105.45600000000002,\"height\":150.6514285714286,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+            "textureKey": "lingjing-resource://asset/builtin%3Alingjing-qingya-v1/sprites.png:94e0af4b98334788f9f2357fde6c84c70cc051684760d05c9ca4eebf97a3977a",
+            "textureSource": "3"
+          }
+        },
+        {
+          "index": 2,
+          "action": "walk",
+          "notes": "",
+          "screenshot": "qingya-frame-02.png",
+          "physicalPixels": [
+            726,
+            264
+          ],
+          "expectedRectangle": {
+            "x": 696,
+            "y": 65,
+            "w": 183,
+            "h": 258
+          },
+          "renderedBounds": {
+            "x": 236.47199999999998,
+            "y": 23.14742857142855,
+            "width": 106.03542857142858,
+            "height": 149.49257142857144,
+            "canvasWidth": 578.4,
+            "canvasHeight": 208
+          },
+          "actual": {
+            "renderer": "pixi-spritesheet",
+            "frame": "0",
+            "frameTexture": "22",
+            "textureFrame": "696,65,183,258",
+            "contentBounds": "{\"x\":236.47199999999998,\"y\":23.14742857142855,\"width\":106.03542857142858,\"height\":149.49257142857144,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+            "textureKey": "lingjing-resource://asset/builtin%3Alingjing-qingya-v1/sprites.png:94e0af4b98334788f9f2357fde6c84c70cc051684760d05c9ca4eebf97a3977a",
+            "textureSource": "3"
+          }
+        },
+        {
+          "index": 3,
+          "action": "walk",
+          "notes": "",
+          "screenshot": "qingya-frame-03.png",
+          "physicalPixels": [
+            726,
+            264
+          ],
+          "expectedRectangle": {
+            "x": 992,
+            "y": 64,
+            "w": 198,
+            "h": 260
+          },
+          "renderedBounds": {
+            "x": 231.8365714285714,
+            "y": 21.98857142857139,
+            "width": 114.72685714285716,
+            "height": 150.6514285714286,
+            "canvasWidth": 578.4,
+            "canvasHeight": 208
+          },
+          "actual": {
+            "renderer": "pixi-spritesheet",
+            "frame": "1",
+            "frameTexture": "23",
+            "textureFrame": "992,64,198,260",
+            "contentBounds": "{\"x\":231.8365714285714,\"y\":21.98857142857139,\"width\":114.72685714285716,\"height\":150.6514285714286,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+            "textureKey": "lingjing-resource://asset/builtin%3Alingjing-qingya-v1/sprites.png:94e0af4b98334788f9f2357fde6c84c70cc051684760d05c9ca4eebf97a3977a",
+            "textureSource": "3"
+          }
+        },
+        {
+          "index": 4,
+          "action": "wave",
+          "notes": "",
+          "screenshot": "qingya-frame-04.png",
+          "physicalPixels": [
+            726,
+            264
+          ],
+          "expectedRectangle": {
+            "x": 80,
+            "y": 360,
+            "w": 210,
+            "h": 260
+          },
+          "renderedBounds": {
+            "x": 228.35999999999999,
+            "y": 21.98857142857139,
+            "width": 121.68000000000002,
+            "height": 150.6514285714286,
+            "canvasWidth": 578.4,
+            "canvasHeight": 208
+          },
+          "actual": {
+            "renderer": "pixi-spritesheet",
+            "frame": "0",
+            "frameTexture": "24",
+            "textureFrame": "80,360,210,260",
+            "contentBounds": "{\"x\":228.35999999999999,\"y\":21.98857142857139,\"width\":121.68000000000002,\"height\":150.6514285714286,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+            "textureKey": "lingjing-resource://asset/builtin%3Alingjing-qingya-v1/sprites.png:94e0af4b98334788f9f2357fde6c84c70cc051684760d05c9ca4eebf97a3977a",
+            "textureSource": "3"
+          }
+        },
+        {
+          "index": 5,
+          "action": "wave",
+          "notes": "",
+          "screenshot": "qingya-frame-05.png",
+          "physicalPixels": [
+            726,
+            264
+          ],
+          "expectedRectangle": {
+            "x": 399,
+            "y": 357,
+            "w": 207,
+            "h": 262
+          },
+          "renderedBounds": {
+            "x": 229.51885714285712,
+            "y": 20.82971428571426,
+            "width": 119.9417142857143,
+            "height": 151.81028571428573,
+            "canvasWidth": 578.4,
+            "canvasHeight": 208
+          },
+          "actual": {
+            "renderer": "pixi-spritesheet",
+            "frame": "1",
+            "frameTexture": "25",
+            "textureFrame": "399,357,207,262",
+            "contentBounds": "{\"x\":229.51885714285712,\"y\":20.82971428571426,\"width\":119.9417142857143,\"height\":151.81028571428573,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+            "textureKey": "lingjing-resource://asset/builtin%3Alingjing-qingya-v1/sprites.png:94e0af4b98334788f9f2357fde6c84c70cc051684760d05c9ca4eebf97a3977a",
+            "textureSource": "3"
+          }
+        },
+        {
+          "index": 6,
+          "action": "eat",
+          "notes": "",
+          "screenshot": "qingya-frame-06.png",
+          "physicalPixels": [
+            726,
+            264
+          ],
+          "expectedRectangle": {
+            "x": 708,
+            "y": 360,
+            "w": 204,
+            "h": 254
+          },
+          "renderedBounds": {
+            "x": 230.09828571428568,
+            "y": 25.46514285714281,
+            "width": 118.20342857142859,
+            "height": 147.17485714285718,
+            "canvasWidth": 578.4,
+            "canvasHeight": 208
+          },
+          "actual": {
+            "renderer": "pixi-spritesheet",
+            "frame": "0",
+            "frameTexture": "26",
+            "textureFrame": "708,360,204,254",
+            "contentBounds": "{\"x\":230.09828571428568,\"y\":25.46514285714281,\"width\":118.20342857142859,\"height\":147.17485714285718,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+            "textureKey": "lingjing-resource://asset/builtin%3Alingjing-qingya-v1/sprites.png:94e0af4b98334788f9f2357fde6c84c70cc051684760d05c9ca4eebf97a3977a",
+            "textureSource": "3"
+          }
+        },
+        {
+          "index": 7,
+          "action": "eat",
+          "notes": "",
+          "screenshot": "qingya-frame-07.png",
+          "physicalPixels": [
+            726,
+            264
+          ],
+          "expectedRectangle": {
+            "x": 1024,
+            "y": 359,
+            "w": 190,
+            "h": 255
+          },
+          "renderedBounds": {
+            "x": 234.1542857142857,
+            "y": 24.885714285714243,
+            "width": 110.0914285714286,
+            "height": 147.75428571428574,
+            "canvasWidth": 578.4,
+            "canvasHeight": 208
+          },
+          "actual": {
+            "renderer": "pixi-spritesheet",
+            "frame": "1",
+            "frameTexture": "27",
+            "textureFrame": "1024,359,190,255",
+            "contentBounds": "{\"x\":234.1542857142857,\"y\":24.885714285714243,\"width\":110.0914285714286,\"height\":147.75428571428574,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+            "textureKey": "lingjing-resource://asset/builtin%3Alingjing-qingya-v1/sprites.png:94e0af4b98334788f9f2357fde6c84c70cc051684760d05c9ca4eebf97a3977a",
+            "textureSource": "3"
+          }
+        },
+        {
+          "index": 8,
+          "action": "attack_windup",
+          "notes": "",
+          "screenshot": "qingya-frame-08.png",
+          "physicalPixels": [
+            726,
+            264
+          ],
+          "expectedRectangle": {
+            "x": 40,
+            "y": 673,
+            "w": 243,
+            "h": 215
+          },
+          "renderedBounds": {
+            "x": 219.08914285714283,
+            "y": 48.06285714285711,
+            "width": 140.80114285714288,
+            "height": 124.57714285714287,
+            "canvasWidth": 578.4,
+            "canvasHeight": 208
+          },
+          "actual": {
+            "renderer": "pixi-spritesheet",
+            "frame": "0",
+            "frameTexture": "28",
+            "textureFrame": "40,673,243,215",
+            "contentBounds": "{\"x\":219.08914285714283,\"y\":48.06285714285711,\"width\":140.80114285714288,\"height\":124.57714285714287,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+            "textureKey": "lingjing-resource://asset/builtin%3Alingjing-qingya-v1/sprites.png:94e0af4b98334788f9f2357fde6c84c70cc051684760d05c9ca4eebf97a3977a",
+            "textureSource": "3"
+          }
+        },
+        {
+          "index": 9,
+          "action": "attack_release",
+          "notes": "",
+          "screenshot": "qingya-frame-09.png",
+          "physicalPixels": [
+            726,
+            264
+          ],
+          "expectedRectangle": {
+            "x": 355,
+            "y": 678,
+            "w": 304,
+            "h": 223
+          },
+          "renderedBounds": {
+            "x": 201.12685714285712,
+            "y": 43.42742857142855,
+            "width": 176.14628571428574,
+            "height": 129.21257142857144,
+            "canvasWidth": 578.4,
+            "canvasHeight": 208
+          },
+          "actual": {
+            "renderer": "pixi-spritesheet",
+            "frame": "0",
+            "frameTexture": "29",
+            "textureFrame": "355,678,304,223",
+            "contentBounds": "{\"x\":201.12685714285712,\"y\":43.42742857142855,\"width\":176.14628571428574,\"height\":129.21257142857144,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+            "textureKey": "lingjing-resource://asset/builtin%3Alingjing-qingya-v1/sprites.png:94e0af4b98334788f9f2357fde6c84c70cc051684760d05c9ca4eebf97a3977a",
+            "textureSource": "3"
+          }
+        },
+        {
+          "index": 10,
+          "action": "hit",
+          "notes": "",
+          "screenshot": "qingya-frame-10.png",
+          "physicalPixels": [
+            726,
+            264
+          ],
+          "expectedRectangle": {
+            "x": 692,
+            "y": 671,
+            "w": 280,
+            "h": 244
+          },
+          "renderedBounds": {
+            "x": 208.07999999999998,
+            "y": 31.259428571428543,
+            "width": 162.24000000000004,
+            "height": 141.38057142857144,
+            "canvasWidth": 578.4,
+            "canvasHeight": 208
+          },
+          "actual": {
+            "renderer": "pixi-spritesheet",
+            "frame": "0",
+            "frameTexture": "30",
+            "textureFrame": "692,671,280,244",
+            "contentBounds": "{\"x\":208.07999999999998,\"y\":31.259428571428543,\"width\":162.24000000000004,\"height\":141.38057142857144,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+            "textureKey": "lingjing-resource://asset/builtin%3Alingjing-qingya-v1/sprites.png:94e0af4b98334788f9f2357fde6c84c70cc051684760d05c9ca4eebf97a3977a",
+            "textureSource": "3"
+          }
+        },
+        {
+          "index": 11,
+          "action": "skill",
+          "notes": "",
+          "screenshot": "qingya-frame-11.png",
+          "physicalPixels": [
+            726,
+            264
+          ],
+          "expectedRectangle": {
+            "x": 1018,
+            "y": 659,
+            "w": 197,
+            "h": 260
+          },
+          "renderedBounds": {
+            "x": 232.416,
+            "y": 21.98857142857139,
+            "width": 114.14742857142859,
+            "height": 150.6514285714286,
+            "canvasWidth": 578.4,
+            "canvasHeight": 208
+          },
+          "actual": {
+            "renderer": "pixi-spritesheet",
+            "frame": "0",
+            "frameTexture": "31",
+            "textureFrame": "1018,659,197,260",
+            "contentBounds": "{\"x\":232.416,\"y\":21.98857142857139,\"width\":114.14742857142859,\"height\":150.6514285714286,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+            "textureKey": "lingjing-resource://asset/builtin%3Alingjing-qingya-v1/sprites.png:94e0af4b98334788f9f2357fde6c84c70cc051684760d05c9ca4eebf97a3977a",
+            "textureSource": "3"
+          }
+        },
+        {
+          "index": 12,
+          "action": "skill",
+          "notes": "",
+          "screenshot": "qingya-frame-12.png",
+          "physicalPixels": [
+            726,
+            264
+          ],
+          "expectedRectangle": {
+            "x": 35,
+            "y": 947,
+            "w": 300,
+            "h": 271
+          },
+          "renderedBounds": {
+            "x": 202.28571428571428,
+            "y": 15.614857142857119,
+            "width": 173.82857142857145,
+            "height": 157.02514285714287,
+            "canvasWidth": 578.4,
+            "canvasHeight": 208
+          },
+          "actual": {
+            "renderer": "pixi-spritesheet",
+            "frame": "2",
+            "frameTexture": "32",
+            "textureFrame": "35,947,300,271",
+            "contentBounds": "{\"x\":202.28571428571428,\"y\":15.614857142857119,\"width\":173.82857142857145,\"height\":157.02514285714287,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+            "textureKey": "lingjing-resource://asset/builtin%3Alingjing-qingya-v1/sprites.png:94e0af4b98334788f9f2357fde6c84c70cc051684760d05c9ca4eebf97a3977a",
+            "textureSource": "3"
+          }
+        },
+        {
+          "index": 13,
+          "action": "victory",
+          "notes": "",
+          "screenshot": "qingya-frame-13.png",
+          "physicalPixels": [
+            726,
+            264
+          ],
+          "expectedRectangle": {
+            "x": 387,
+            "y": 940,
+            "w": 262,
+            "h": 280
+          },
+          "renderedBounds": {
+            "x": 213.29485714285713,
+            "y": 10.399999999999949,
+            "width": 151.81028571428573,
+            "height": 162.24000000000004,
+            "canvasWidth": 578.4,
+            "canvasHeight": 208
+          },
+          "actual": {
+            "renderer": "pixi-spritesheet",
+            "frame": "0",
+            "frameTexture": "33",
+            "textureFrame": "387,940,262,280",
+            "contentBounds": "{\"x\":213.29485714285713,\"y\":10.399999999999949,\"width\":151.81028571428573,\"height\":162.24000000000004,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+            "textureKey": "lingjing-resource://asset/builtin%3Alingjing-qingya-v1/sprites.png:94e0af4b98334788f9f2357fde6c84c70cc051684760d05c9ca4eebf97a3977a",
+            "textureSource": "3"
+          }
+        },
+        {
+          "index": 14,
+          "action": "sleep",
+          "notes": "Temporary UI draft mapping to sleep_seated; not saved",
+          "screenshot": "qingya-frame-14.png",
+          "physicalPixels": [
+            726,
+            263
+          ],
+          "expectedRectangle": {
+            "x": 701,
+            "y": 983,
+            "w": 195,
+            "h": 208
+          },
+          "renderedBounds": {
+            "x": 232.99542857142856,
+            "y": 52.11885714285711,
+            "width": 112.98857142857145,
+            "height": 120.52114285714288,
+            "canvasWidth": 578.4,
+            "canvasHeight": 208
+          },
+          "actual": {
+            "renderer": "pixi-spritesheet",
+            "frame": "0",
+            "frameTexture": "34",
+            "textureFrame": "701,983,195,208",
+            "contentBounds": "{\"x\":232.99542857142856,\"y\":52.11885714285711,\"width\":112.98857142857145,\"height\":120.52114285714288,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+            "textureKey": "lingjing-resource://asset/builtin%3Alingjing-qingya-v1/sprites.png:94e0af4b98334788f9f2357fde6c84c70cc051684760d05c9ca4eebf97a3977a",
+            "textureSource": "3"
+          }
+        },
+        {
+          "index": 15,
+          "action": "sleep",
+          "notes": "",
+          "screenshot": "qingya-frame-15.png",
+          "physicalPixels": [
+            726,
+            263
+          ],
+          "expectedRectangle": {
+            "x": 977,
+            "y": 1013,
+            "w": 254,
+            "h": 171
+          },
+          "renderedBounds": {
+            "x": 215.6125714285714,
+            "y": 73.55771428571425,
+            "width": 147.17485714285718,
+            "height": 99.08228571428573,
+            "canvasWidth": 578.4,
+            "canvasHeight": 208
+          },
+          "actual": {
+            "renderer": "pixi-spritesheet",
+            "frame": "0",
+            "frameTexture": "35",
+            "textureFrame": "977,1013,254,171",
+            "contentBounds": "{\"x\":215.6125714285714,\"y\":73.55771428571425,\"width\":147.17485714285718,\"height\":99.08228571428573,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+            "textureKey": "lingjing-resource://asset/builtin%3Alingjing-qingya-v1/sprites.png:94e0af4b98334788f9f2357fde6c84c70cc051684760d05c9ca4eebf97a3977a",
+            "textureSource": "3"
+          }
+        }
+      ],
+      "actionCoverage": [
+        {
+          "action": "idle",
+          "clip": "idle",
+          "frames": [
+            "frame_0",
+            "frame_0",
+            "frame_0",
+            "frame_0",
+            "frame_0",
+            "frame_0",
+            "frame_0",
+            "frame_0",
+            "frame_0",
+            "frame_0",
+            "frame_0",
+            "frame_0",
+            "frame_0",
+            "frame_0",
+            "frame_0",
+            "frame_1",
+            "frame_0"
+          ],
+          "fps": 8,
+          "loop": true
+        },
+        {
+          "action": "blink",
+          "clip": "blink",
+          "frames": [
+            "frame_1",
+            "frame_0"
+          ],
+          "fps": 8,
+          "loop": false
+        },
+        {
+          "action": "walk",
+          "clip": "walk",
+          "frames": [
+            "frame_2",
+            "frame_3"
+          ],
+          "fps": 6,
+          "loop": true
+        },
+        {
+          "action": "wave",
+          "clip": "wave",
+          "frames": [
+            "frame_4",
+            "frame_5",
+            "frame_4",
+            "frame_0"
+          ],
+          "fps": 5,
+          "loop": false
+        },
+        {
+          "action": "eat",
+          "clip": "eat",
+          "frames": [
+            "frame_6",
+            "frame_7",
+            "frame_6",
+            "frame_7",
+            "frame_0"
+          ],
+          "fps": 5,
+          "loop": false
+        },
+        {
+          "action": "attack_windup",
+          "clip": "attack_windup",
+          "frames": [
+            "frame_8"
+          ],
+          "fps": 8,
+          "loop": false
+        },
+        {
+          "action": "attack_release",
+          "clip": "attack_release",
+          "frames": [
+            "frame_9"
+          ],
+          "fps": 8,
+          "loop": false
+        },
+        {
+          "action": "attack",
+          "clip": "attack",
+          "frames": [
+            "frame_8",
+            "frame_9",
+            "frame_9",
+            "frame_0"
+          ],
+          "fps": 8,
+          "loop": false
+        },
+        {
+          "action": "hit",
+          "clip": "hit",
+          "frames": [
+            "frame_10",
+            "frame_10",
+            "frame_0"
+          ],
+          "fps": 8,
+          "loop": false
+        },
+        {
+          "action": "skill",
+          "clip": "skill",
+          "frames": [
+            "frame_11",
+            "frame_11",
+            "frame_12",
+            "frame_12",
+            "frame_0"
+          ],
+          "fps": 8,
+          "loop": false
+        },
+        {
+          "action": "victory",
+          "clip": "victory",
+          "frames": [
+            "frame_13",
+            "frame_13",
+            "frame_0"
+          ],
+          "fps": 3,
+          "loop": false
+        },
+        {
+          "action": "sleep",
+          "clip": "sleep",
+          "frames": [
+            "frame_15"
+          ],
+          "fps": 1,
+          "loop": true
+        }
+      ],
+      "magnification": "native zoom 1 / unmodified element screenshots; inspected at original physical pixel size. Zoomed Electron clip captures were rejected.",
+      "consecutiveAttackReplays": [
+        {
+          "playbackKey": "1",
+          "samples": [
+            {
+              "renderer": "pixi-spritesheet",
+              "frame": "0",
+              "frameTexture": "28",
+              "textureFrame": "40,673,243,215",
+              "contentBounds": "{\"x\":219.08914285714283,\"y\":48.06285714285711,\"width\":140.80114285714288,\"height\":124.57714285714287,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+              "textureKey": "lingjing-resource://asset/builtin%3Alingjing-qingya-v1/sprites.png:94e0af4b98334788f9f2357fde6c84c70cc051684760d05c9ca4eebf97a3977a",
+              "textureSource": "3"
+            },
+            {
+              "renderer": "pixi-spritesheet",
+              "frame": "0",
+              "frameTexture": "28",
+              "textureFrame": "40,673,243,215",
+              "contentBounds": "{\"x\":219.08914285714283,\"y\":48.06285714285711,\"width\":140.80114285714288,\"height\":124.57714285714287,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+              "textureKey": "lingjing-resource://asset/builtin%3Alingjing-qingya-v1/sprites.png:94e0af4b98334788f9f2357fde6c84c70cc051684760d05c9ca4eebf97a3977a",
+              "textureSource": "3"
+            },
+            {
+              "renderer": "pixi-spritesheet",
+              "frame": "1",
+              "frameTexture": "29",
+              "textureFrame": "355,678,304,223",
+              "contentBounds": "{\"x\":201.12685714285712,\"y\":43.42742857142855,\"width\":176.14628571428574,\"height\":129.21257142857144,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+              "textureKey": "lingjing-resource://asset/builtin%3Alingjing-qingya-v1/sprites.png:94e0af4b98334788f9f2357fde6c84c70cc051684760d05c9ca4eebf97a3977a",
+              "textureSource": "3"
+            },
+            {
+              "renderer": "pixi-spritesheet",
+              "frame": "1",
+              "frameTexture": "29",
+              "textureFrame": "355,678,304,223",
+              "contentBounds": "{\"x\":201.12685714285712,\"y\":43.42742857142855,\"width\":176.14628571428574,\"height\":129.21257142857144,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+              "textureKey": "lingjing-resource://asset/builtin%3Alingjing-qingya-v1/sprites.png:94e0af4b98334788f9f2357fde6c84c70cc051684760d05c9ca4eebf97a3977a",
+              "textureSource": "3"
+            },
+            {
+              "renderer": "pixi-spritesheet",
+              "frame": "2",
+              "frameTexture": "29",
+              "textureFrame": "355,678,304,223",
+              "contentBounds": "{\"x\":201.12685714285712,\"y\":43.42742857142855,\"width\":176.14628571428574,\"height\":129.21257142857144,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+              "textureKey": "lingjing-resource://asset/builtin%3Alingjing-qingya-v1/sprites.png:94e0af4b98334788f9f2357fde6c84c70cc051684760d05c9ca4eebf97a3977a",
+              "textureSource": "3"
+            },
+            {
+              "renderer": "pixi-spritesheet",
+              "frame": "2",
+              "frameTexture": "29",
+              "textureFrame": "355,678,304,223",
+              "contentBounds": "{\"x\":201.12685714285712,\"y\":43.42742857142855,\"width\":176.14628571428574,\"height\":129.21257142857144,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+              "textureKey": "lingjing-resource://asset/builtin%3Alingjing-qingya-v1/sprites.png:94e0af4b98334788f9f2357fde6c84c70cc051684760d05c9ca4eebf97a3977a",
+              "textureSource": "3"
+            },
+            {
+              "renderer": "pixi-spritesheet",
+              "frame": "3",
+              "frameTexture": "20",
+              "textureFrame": "76,63,184,261",
+              "contentBounds": "{\"x\":235.89257142857142,\"y\":21.409142857142825,\"width\":106.61485714285716,\"height\":151.23085714285716,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+              "textureKey": "lingjing-resource://asset/builtin%3Alingjing-qingya-v1/sprites.png:94e0af4b98334788f9f2357fde6c84c70cc051684760d05c9ca4eebf97a3977a",
+              "textureSource": "3"
+            },
+            {
+              "renderer": "pixi-spritesheet",
+              "frame": "3",
+              "frameTexture": "20",
+              "textureFrame": "76,63,184,261",
+              "contentBounds": "{\"x\":235.89257142857142,\"y\":21.409142857142825,\"width\":106.61485714285716,\"height\":151.23085714285716,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+              "textureKey": "lingjing-resource://asset/builtin%3Alingjing-qingya-v1/sprites.png:94e0af4b98334788f9f2357fde6c84c70cc051684760d05c9ca4eebf97a3977a",
+              "textureSource": "3"
+            },
+            {
+              "renderer": "pixi-spritesheet",
+              "frame": "3",
+              "frameTexture": "20",
+              "textureFrame": "76,63,184,261",
+              "contentBounds": "{\"x\":235.89257142857142,\"y\":21.409142857142825,\"width\":106.61485714285716,\"height\":151.23085714285716,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+              "textureKey": "lingjing-resource://asset/builtin%3Alingjing-qingya-v1/sprites.png:94e0af4b98334788f9f2357fde6c84c70cc051684760d05c9ca4eebf97a3977a",
+              "textureSource": "3"
+            },
+            {
+              "renderer": "pixi-spritesheet",
+              "frame": "3",
+              "frameTexture": "20",
+              "textureFrame": "76,63,184,261",
+              "contentBounds": "{\"x\":235.89257142857142,\"y\":21.409142857142825,\"width\":106.61485714285716,\"height\":151.23085714285716,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+              "textureKey": "lingjing-resource://asset/builtin%3Alingjing-qingya-v1/sprites.png:94e0af4b98334788f9f2357fde6c84c70cc051684760d05c9ca4eebf97a3977a",
+              "textureSource": "3"
+            },
+            {
+              "renderer": "pixi-spritesheet",
+              "frame": "3",
+              "frameTexture": "20",
+              "textureFrame": "76,63,184,261",
+              "contentBounds": "{\"x\":235.89257142857142,\"y\":21.409142857142825,\"width\":106.61485714285716,\"height\":151.23085714285716,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+              "textureKey": "lingjing-resource://asset/builtin%3Alingjing-qingya-v1/sprites.png:94e0af4b98334788f9f2357fde6c84c70cc051684760d05c9ca4eebf97a3977a",
+              "textureSource": "3"
+            },
+            {
+              "renderer": "pixi-spritesheet",
+              "frame": "3",
+              "frameTexture": "20",
+              "textureFrame": "76,63,184,261",
+              "contentBounds": "{\"x\":235.89257142857142,\"y\":21.409142857142825,\"width\":106.61485714285716,\"height\":151.23085714285716,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+              "textureKey": "lingjing-resource://asset/builtin%3Alingjing-qingya-v1/sprites.png:94e0af4b98334788f9f2357fde6c84c70cc051684760d05c9ca4eebf97a3977a",
+              "textureSource": "3"
+            },
+            {
+              "renderer": "pixi-spritesheet",
+              "frame": "3",
+              "frameTexture": "20",
+              "textureFrame": "76,63,184,261",
+              "contentBounds": "{\"x\":235.89257142857142,\"y\":21.409142857142825,\"width\":106.61485714285716,\"height\":151.23085714285716,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+              "textureKey": "lingjing-resource://asset/builtin%3Alingjing-qingya-v1/sprites.png:94e0af4b98334788f9f2357fde6c84c70cc051684760d05c9ca4eebf97a3977a",
+              "textureSource": "3"
+            },
+            {
+              "renderer": "pixi-spritesheet",
+              "frame": "3",
+              "frameTexture": "20",
+              "textureFrame": "76,63,184,261",
+              "contentBounds": "{\"x\":235.89257142857142,\"y\":21.409142857142825,\"width\":106.61485714285716,\"height\":151.23085714285716,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+              "textureKey": "lingjing-resource://asset/builtin%3Alingjing-qingya-v1/sprites.png:94e0af4b98334788f9f2357fde6c84c70cc051684760d05c9ca4eebf97a3977a",
+              "textureSource": "3"
+            }
+          ]
+        },
+        {
+          "playbackKey": "2",
+          "samples": [
+            {
+              "renderer": "pixi-spritesheet",
+              "frame": "0",
+              "frameTexture": "28",
+              "textureFrame": "40,673,243,215",
+              "contentBounds": "{\"x\":219.08914285714283,\"y\":48.06285714285711,\"width\":140.80114285714288,\"height\":124.57714285714287,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+              "textureKey": "lingjing-resource://asset/builtin%3Alingjing-qingya-v1/sprites.png:94e0af4b98334788f9f2357fde6c84c70cc051684760d05c9ca4eebf97a3977a",
+              "textureSource": "3"
+            },
+            {
+              "renderer": "pixi-spritesheet",
+              "frame": "0",
+              "frameTexture": "28",
+              "textureFrame": "40,673,243,215",
+              "contentBounds": "{\"x\":219.08914285714283,\"y\":48.06285714285711,\"width\":140.80114285714288,\"height\":124.57714285714287,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+              "textureKey": "lingjing-resource://asset/builtin%3Alingjing-qingya-v1/sprites.png:94e0af4b98334788f9f2357fde6c84c70cc051684760d05c9ca4eebf97a3977a",
+              "textureSource": "3"
+            },
+            {
+              "renderer": "pixi-spritesheet",
+              "frame": "1",
+              "frameTexture": "29",
+              "textureFrame": "355,678,304,223",
+              "contentBounds": "{\"x\":201.12685714285712,\"y\":43.42742857142855,\"width\":176.14628571428574,\"height\":129.21257142857144,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+              "textureKey": "lingjing-resource://asset/builtin%3Alingjing-qingya-v1/sprites.png:94e0af4b98334788f9f2357fde6c84c70cc051684760d05c9ca4eebf97a3977a",
+              "textureSource": "3"
+            },
+            {
+              "renderer": "pixi-spritesheet",
+              "frame": "1",
+              "frameTexture": "29",
+              "textureFrame": "355,678,304,223",
+              "contentBounds": "{\"x\":201.12685714285712,\"y\":43.42742857142855,\"width\":176.14628571428574,\"height\":129.21257142857144,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+              "textureKey": "lingjing-resource://asset/builtin%3Alingjing-qingya-v1/sprites.png:94e0af4b98334788f9f2357fde6c84c70cc051684760d05c9ca4eebf97a3977a",
+              "textureSource": "3"
+            },
+            {
+              "renderer": "pixi-spritesheet",
+              "frame": "2",
+              "frameTexture": "29",
+              "textureFrame": "355,678,304,223",
+              "contentBounds": "{\"x\":201.12685714285712,\"y\":43.42742857142855,\"width\":176.14628571428574,\"height\":129.21257142857144,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+              "textureKey": "lingjing-resource://asset/builtin%3Alingjing-qingya-v1/sprites.png:94e0af4b98334788f9f2357fde6c84c70cc051684760d05c9ca4eebf97a3977a",
+              "textureSource": "3"
+            },
+            {
+              "renderer": "pixi-spritesheet",
+              "frame": "3",
+              "frameTexture": "20",
+              "textureFrame": "76,63,184,261",
+              "contentBounds": "{\"x\":235.89257142857142,\"y\":21.409142857142825,\"width\":106.61485714285716,\"height\":151.23085714285716,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+              "textureKey": "lingjing-resource://asset/builtin%3Alingjing-qingya-v1/sprites.png:94e0af4b98334788f9f2357fde6c84c70cc051684760d05c9ca4eebf97a3977a",
+              "textureSource": "3"
+            },
+            {
+              "renderer": "pixi-spritesheet",
+              "frame": "3",
+              "frameTexture": "20",
+              "textureFrame": "76,63,184,261",
+              "contentBounds": "{\"x\":235.89257142857142,\"y\":21.409142857142825,\"width\":106.61485714285716,\"height\":151.23085714285716,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+              "textureKey": "lingjing-resource://asset/builtin%3Alingjing-qingya-v1/sprites.png:94e0af4b98334788f9f2357fde6c84c70cc051684760d05c9ca4eebf97a3977a",
+              "textureSource": "3"
+            },
+            {
+              "renderer": "pixi-spritesheet",
+              "frame": "3",
+              "frameTexture": "20",
+              "textureFrame": "76,63,184,261",
+              "contentBounds": "{\"x\":235.89257142857142,\"y\":21.409142857142825,\"width\":106.61485714285716,\"height\":151.23085714285716,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+              "textureKey": "lingjing-resource://asset/builtin%3Alingjing-qingya-v1/sprites.png:94e0af4b98334788f9f2357fde6c84c70cc051684760d05c9ca4eebf97a3977a",
+              "textureSource": "3"
+            },
+            {
+              "renderer": "pixi-spritesheet",
+              "frame": "3",
+              "frameTexture": "20",
+              "textureFrame": "76,63,184,261",
+              "contentBounds": "{\"x\":235.89257142857142,\"y\":21.409142857142825,\"width\":106.61485714285716,\"height\":151.23085714285716,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+              "textureKey": "lingjing-resource://asset/builtin%3Alingjing-qingya-v1/sprites.png:94e0af4b98334788f9f2357fde6c84c70cc051684760d05c9ca4eebf97a3977a",
+              "textureSource": "3"
+            },
+            {
+              "renderer": "pixi-spritesheet",
+              "frame": "3",
+              "frameTexture": "20",
+              "textureFrame": "76,63,184,261",
+              "contentBounds": "{\"x\":235.89257142857142,\"y\":21.409142857142825,\"width\":106.61485714285716,\"height\":151.23085714285716,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+              "textureKey": "lingjing-resource://asset/builtin%3Alingjing-qingya-v1/sprites.png:94e0af4b98334788f9f2357fde6c84c70cc051684760d05c9ca4eebf97a3977a",
+              "textureSource": "3"
+            },
+            {
+              "renderer": "pixi-spritesheet",
+              "frame": "3",
+              "frameTexture": "20",
+              "textureFrame": "76,63,184,261",
+              "contentBounds": "{\"x\":235.89257142857142,\"y\":21.409142857142825,\"width\":106.61485714285716,\"height\":151.23085714285716,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+              "textureKey": "lingjing-resource://asset/builtin%3Alingjing-qingya-v1/sprites.png:94e0af4b98334788f9f2357fde6c84c70cc051684760d05c9ca4eebf97a3977a",
+              "textureSource": "3"
+            },
+            {
+              "renderer": "pixi-spritesheet",
+              "frame": "3",
+              "frameTexture": "20",
+              "textureFrame": "76,63,184,261",
+              "contentBounds": "{\"x\":235.89257142857142,\"y\":21.409142857142825,\"width\":106.61485714285716,\"height\":151.23085714285716,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+              "textureKey": "lingjing-resource://asset/builtin%3Alingjing-qingya-v1/sprites.png:94e0af4b98334788f9f2357fde6c84c70cc051684760d05c9ca4eebf97a3977a",
+              "textureSource": "3"
+            },
+            {
+              "renderer": "pixi-spritesheet",
+              "frame": "3",
+              "frameTexture": "20",
+              "textureFrame": "76,63,184,261",
+              "contentBounds": "{\"x\":235.89257142857142,\"y\":21.409142857142825,\"width\":106.61485714285716,\"height\":151.23085714285716,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+              "textureKey": "lingjing-resource://asset/builtin%3Alingjing-qingya-v1/sprites.png:94e0af4b98334788f9f2357fde6c84c70cc051684760d05c9ca4eebf97a3977a",
+              "textureSource": "3"
+            },
+            {
+              "renderer": "pixi-spritesheet",
+              "frame": "3",
+              "frameTexture": "20",
+              "textureFrame": "76,63,184,261",
+              "contentBounds": "{\"x\":235.89257142857142,\"y\":21.409142857142825,\"width\":106.61485714285716,\"height\":151.23085714285716,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+              "textureKey": "lingjing-resource://asset/builtin%3Alingjing-qingya-v1/sprites.png:94e0af4b98334788f9f2357fde6c84c70cc051684760d05c9ca4eebf97a3977a",
+              "textureSource": "3"
+            }
+          ]
+        }
+      ],
+      "portrait": {
+        "screenshot": "qingya-portrait.png",
+        "resourceId": "builtin:lingjing-qingya-v1",
+        "viewBox": "40.48 33.93 143.52 169.65",
+        "imageHref": "lingjing-resource://asset/builtin%3Alingjing-qingya-v1/sprites.png",
+        "imageTransform": "translate(-76 -63)"
+      },
+      "gallery": {
+        "html": "qingya-frames.html",
+        "screenshot": "qingya-frames.png",
+        "kind": "Layout of unmodified actual stage screenshots; no generated or substituted frames"
+      }
+    },
+    {
+      "id": "yantuan",
+      "name": "岩团",
+      "element": "earth",
+      "resourceId": "builtin:lingjing-yantuan-v1",
+      "contentHash": "d42afe48d784649dc62390533eb018bf4e4874a9b37016604bd040f47ceccb6b",
+      "frames": [
+        {
+          "index": 0,
+          "action": "idle",
+          "notes": "",
+          "screenshot": "yantuan-frame-00.png",
+          "physicalPixels": [
+            726,
+            264
+          ],
+          "expectedRectangle": {
+            "x": 34,
+            "y": 26,
+            "w": 248,
+            "h": 271
+          },
+          "renderedBounds": {
+            "x": 223.0231578947368,
+            "y": 28.011578947368378,
+            "width": 132.35368421052632,
+            "height": 144.6284210526316,
+            "canvasWidth": 578.4,
+            "canvasHeight": 208
+          },
+          "actual": {
+            "renderer": "pixi-spritesheet",
+            "frame": "0",
+            "frameTexture": "40",
+            "textureFrame": "34,26,248,271",
+            "contentBounds": "{\"x\":223.0231578947368,\"y\":28.011578947368378,\"width\":132.35368421052632,\"height\":144.6284210526316,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+            "textureKey": "lingjing-resource://asset/builtin%3Alingjing-yantuan-v1/sprites.png:d42afe48d784649dc62390533eb018bf4e4874a9b37016604bd040f47ceccb6b",
+            "textureSource": "7"
+          }
+        },
+        {
+          "index": 1,
+          "action": "blink",
+          "notes": "",
+          "screenshot": "yantuan-frame-01.png",
+          "physicalPixels": [
+            726,
+            264
+          ],
+          "expectedRectangle": {
+            "x": 338,
+            "y": 26,
+            "w": 256,
+            "h": 271
+          },
+          "renderedBounds": {
+            "x": 220.88842105263154,
+            "y": 28.011578947368378,
+            "width": 136.62315789473686,
+            "height": 144.6284210526316,
+            "canvasWidth": 578.4,
+            "canvasHeight": 208
+          },
+          "actual": {
+            "renderer": "pixi-spritesheet",
+            "frame": "0",
+            "frameTexture": "41",
+            "textureFrame": "338,26,256,271",
+            "contentBounds": "{\"x\":220.88842105263154,\"y\":28.011578947368378,\"width\":136.62315789473686,\"height\":144.6284210526316,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+            "textureKey": "lingjing-resource://asset/builtin%3Alingjing-yantuan-v1/sprites.png:d42afe48d784649dc62390533eb018bf4e4874a9b37016604bd040f47ceccb6b",
+            "textureSource": "7"
+          }
+        },
+        {
+          "index": 2,
+          "action": "walk",
+          "notes": "",
+          "screenshot": "yantuan-frame-02.png",
+          "physicalPixels": [
+            726,
+            264
+          ],
+          "expectedRectangle": {
+            "x": 655,
+            "y": 47,
+            "w": 279,
+            "h": 249
+          },
+          "renderedBounds": {
+            "x": 215.0178947368421,
+            "y": 39.75263157894733,
+            "width": 148.89789473684212,
+            "height": 132.88736842105266,
+            "canvasWidth": 578.4,
+            "canvasHeight": 208
+          },
+          "actual": {
+            "renderer": "pixi-spritesheet",
+            "frame": "0",
+            "frameTexture": "42",
+            "textureFrame": "655,47,279,249",
+            "contentBounds": "{\"x\":215.0178947368421,\"y\":39.75263157894733,\"width\":148.89789473684212,\"height\":132.88736842105266,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+            "textureKey": "lingjing-resource://asset/builtin%3Alingjing-yantuan-v1/sprites.png:d42afe48d784649dc62390533eb018bf4e4874a9b37016604bd040f47ceccb6b",
+            "textureSource": "7"
+          }
+        },
+        {
+          "index": 3,
+          "action": "walk",
+          "notes": "",
+          "screenshot": "yantuan-frame-03.png",
+          "physicalPixels": [
+            726,
+            264
+          ],
+          "expectedRectangle": {
+            "x": 962,
+            "y": 47,
+            "w": 264,
+            "h": 248
+          },
+          "renderedBounds": {
+            "x": 218.75368421052627,
+            "y": 40.28631578947366,
+            "width": 140.8926315789474,
+            "height": 132.35368421052632,
+            "canvasWidth": 578.4,
+            "canvasHeight": 208
+          },
+          "actual": {
+            "renderer": "pixi-spritesheet",
+            "frame": "1",
+            "frameTexture": "43",
+            "textureFrame": "962,47,264,248",
+            "contentBounds": "{\"x\":218.75368421052627,\"y\":40.28631578947366,\"width\":140.8926315789474,\"height\":132.35368421052632,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+            "textureKey": "lingjing-resource://asset/builtin%3Alingjing-yantuan-v1/sprites.png:d42afe48d784649dc62390533eb018bf4e4874a9b37016604bd040f47ceccb6b",
+            "textureSource": "7"
+          }
+        },
+        {
+          "index": 4,
+          "action": "wave",
+          "notes": "",
+          "screenshot": "yantuan-frame-04.png",
+          "physicalPixels": [
+            726,
+            264
+          ],
+          "expectedRectangle": {
+            "x": 29,
+            "y": 324,
+            "w": 284,
+            "h": 276
+          },
+          "renderedBounds": {
+            "x": 213.41684210526313,
+            "y": 25.343157894736805,
+            "width": 151.56631578947372,
+            "height": 147.29684210526318,
+            "canvasWidth": 578.4,
+            "canvasHeight": 208
+          },
+          "actual": {
+            "renderer": "pixi-spritesheet",
+            "frame": "0",
+            "frameTexture": "44",
+            "textureFrame": "29,324,284,276",
+            "contentBounds": "{\"x\":213.41684210526313,\"y\":25.343157894736805,\"width\":151.56631578947372,\"height\":147.29684210526318,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+            "textureKey": "lingjing-resource://asset/builtin%3Alingjing-yantuan-v1/sprites.png:d42afe48d784649dc62390533eb018bf4e4874a9b37016604bd040f47ceccb6b",
+            "textureSource": "7"
+          }
+        },
+        {
+          "index": 5,
+          "action": "wave",
+          "notes": "",
+          "screenshot": "yantuan-frame-05.png",
+          "physicalPixels": [
+            726,
+            264
+          ],
+          "expectedRectangle": {
+            "x": 340,
+            "y": 339,
+            "w": 272,
+            "h": 262
+          },
+          "renderedBounds": {
+            "x": 216.61894736842103,
+            "y": 32.81473684210522,
+            "width": 145.1621052631579,
+            "height": 139.82526315789477,
+            "canvasWidth": 578.4,
+            "canvasHeight": 208
+          },
+          "actual": {
+            "renderer": "pixi-spritesheet",
+            "frame": "1",
+            "frameTexture": "45",
+            "textureFrame": "340,339,272,262",
+            "contentBounds": "{\"x\":216.61894736842103,\"y\":32.81473684210522,\"width\":145.1621052631579,\"height\":139.82526315789477,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+            "textureKey": "lingjing-resource://asset/builtin%3Alingjing-yantuan-v1/sprites.png:d42afe48d784649dc62390533eb018bf4e4874a9b37016604bd040f47ceccb6b",
+            "textureSource": "7"
+          }
+        },
+        {
+          "index": 6,
+          "action": "eat",
+          "notes": "",
+          "screenshot": "yantuan-frame-06.png",
+          "physicalPixels": [
+            726,
+            264
+          ],
+          "expectedRectangle": {
+            "x": 657,
+            "y": 336,
+            "w": 246,
+            "h": 266
+          },
+          "renderedBounds": {
+            "x": 223.55684210526312,
+            "y": 30.67999999999998,
+            "width": 131.28631578947372,
+            "height": 141.96,
+            "canvasWidth": 578.4,
+            "canvasHeight": 208
+          },
+          "actual": {
+            "renderer": "pixi-spritesheet",
+            "frame": "0",
+            "frameTexture": "46",
+            "textureFrame": "657,336,246,266",
+            "contentBounds": "{\"x\":223.55684210526312,\"y\":30.67999999999998,\"width\":131.28631578947372,\"height\":141.96,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+            "textureKey": "lingjing-resource://asset/builtin%3Alingjing-yantuan-v1/sprites.png:d42afe48d784649dc62390533eb018bf4e4874a9b37016604bd040f47ceccb6b",
+            "textureSource": "7"
+          }
+        },
+        {
+          "index": 7,
+          "action": "eat",
+          "notes": "",
+          "screenshot": "yantuan-frame-07.png",
+          "physicalPixels": [
+            726,
+            264
+          ],
+          "expectedRectangle": {
+            "x": 973,
+            "y": 342,
+            "w": 239,
+            "h": 259
+          },
+          "renderedBounds": {
+            "x": 225.69157894736838,
+            "y": 34.415789473684185,
+            "width": 127.5505263157895,
+            "height": 138.2242105263158,
+            "canvasWidth": 578.4,
+            "canvasHeight": 208
+          },
+          "actual": {
+            "renderer": "pixi-spritesheet",
+            "frame": "1",
+            "frameTexture": "47",
+            "textureFrame": "973,342,239,259",
+            "contentBounds": "{\"x\":225.69157894736838,\"y\":34.415789473684185,\"width\":127.5505263157895,\"height\":138.2242105263158,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+            "textureKey": "lingjing-resource://asset/builtin%3Alingjing-yantuan-v1/sprites.png:d42afe48d784649dc62390533eb018bf4e4874a9b37016604bd040f47ceccb6b",
+            "textureSource": "7"
+          }
+        },
+        {
+          "index": 8,
+          "action": "attack_windup",
+          "notes": "",
+          "screenshot": "yantuan-frame-08.png",
+          "physicalPixels": [
+            726,
+            264
+          ],
+          "expectedRectangle": {
+            "x": 35,
+            "y": 638,
+            "w": 276,
+            "h": 251
+          },
+          "renderedBounds": {
+            "x": 215.5515789473684,
+            "y": 38.685263157894695,
+            "width": 147.29684210526318,
+            "height": 133.9547368421053,
+            "canvasWidth": 578.4,
+            "canvasHeight": 208
+          },
+          "actual": {
+            "renderer": "pixi-spritesheet",
+            "frame": "0",
+            "frameTexture": "48",
+            "textureFrame": "35,638,276,251",
+            "contentBounds": "{\"x\":215.5515789473684,\"y\":38.685263157894695,\"width\":147.29684210526318,\"height\":133.9547368421053,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+            "textureKey": "lingjing-resource://asset/builtin%3Alingjing-yantuan-v1/sprites.png:d42afe48d784649dc62390533eb018bf4e4874a9b37016604bd040f47ceccb6b",
+            "textureSource": "7"
+          }
+        },
+        {
+          "index": 9,
+          "action": "attack_release",
+          "notes": "",
+          "screenshot": "yantuan-frame-09.png",
+          "physicalPixels": [
+            726,
+            264
+          ],
+          "expectedRectangle": {
+            "x": 340,
+            "y": 638,
+            "w": 317,
+            "h": 266
+          },
+          "renderedBounds": {
+            "x": 204.87789473684208,
+            "y": 30.67999999999998,
+            "width": 169.17789473684212,
+            "height": 141.96,
+            "canvasWidth": 578.4,
+            "canvasHeight": 208
+          },
+          "actual": {
+            "renderer": "pixi-spritesheet",
+            "frame": "0",
+            "frameTexture": "49",
+            "textureFrame": "340,638,317,266",
+            "contentBounds": "{\"x\":204.87789473684208,\"y\":30.67999999999998,\"width\":169.17789473684212,\"height\":141.96,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+            "textureKey": "lingjing-resource://asset/builtin%3Alingjing-yantuan-v1/sprites.png:d42afe48d784649dc62390533eb018bf4e4874a9b37016604bd040f47ceccb6b",
+            "textureSource": "7"
+          }
+        },
+        {
+          "index": 10,
+          "action": "hit",
+          "notes": "",
+          "screenshot": "yantuan-frame-10.png",
+          "physicalPixels": [
+            726,
+            264
+          ],
+          "expectedRectangle": {
+            "x": 676,
+            "y": 641,
+            "w": 258,
+            "h": 261
+          },
+          "renderedBounds": {
+            "x": 220.35473684210524,
+            "y": 33.34842105263155,
+            "width": 137.6905263157895,
+            "height": 139.29157894736844,
+            "canvasWidth": 578.4,
+            "canvasHeight": 208
+          },
+          "actual": {
+            "renderer": "pixi-spritesheet",
+            "frame": "0",
+            "frameTexture": "50",
+            "textureFrame": "676,641,258,261",
+            "contentBounds": "{\"x\":220.35473684210524,\"y\":33.34842105263155,\"width\":137.6905263157895,\"height\":139.29157894736844,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+            "textureKey": "lingjing-resource://asset/builtin%3Alingjing-yantuan-v1/sprites.png:d42afe48d784649dc62390533eb018bf4e4874a9b37016604bd040f47ceccb6b",
+            "textureSource": "7"
+          }
+        },
+        {
+          "index": 11,
+          "action": "skill",
+          "notes": "",
+          "screenshot": "yantuan-frame-11.png",
+          "physicalPixels": [
+            726,
+            264
+          ],
+          "expectedRectangle": {
+            "x": 969,
+            "y": 631,
+            "w": 267,
+            "h": 274
+          },
+          "renderedBounds": {
+            "x": 218.21999999999997,
+            "y": 26.41052631578944,
+            "width": 142.49368421052634,
+            "height": 146.22947368421055,
+            "canvasWidth": 578.4,
+            "canvasHeight": 208
+          },
+          "actual": {
+            "renderer": "pixi-spritesheet",
+            "frame": "0",
+            "frameTexture": "51",
+            "textureFrame": "969,631,267,274",
+            "contentBounds": "{\"x\":218.21999999999997,\"y\":26.41052631578944,\"width\":142.49368421052634,\"height\":146.22947368421055,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+            "textureKey": "lingjing-resource://asset/builtin%3Alingjing-yantuan-v1/sprites.png:d42afe48d784649dc62390533eb018bf4e4874a9b37016604bd040f47ceccb6b",
+            "textureSource": "7"
+          }
+        },
+        {
+          "index": 12,
+          "action": "skill",
+          "notes": "",
+          "screenshot": "yantuan-frame-12.png",
+          "physicalPixels": [
+            726,
+            264
+          ],
+          "expectedRectangle": {
+            "x": 17,
+            "y": 910,
+            "w": 339,
+            "h": 304
+          },
+          "renderedBounds": {
+            "x": 199.0073684210526,
+            "y": 10.399999999999949,
+            "width": 180.91894736842107,
+            "height": 162.24000000000004,
+            "canvasWidth": 578.4,
+            "canvasHeight": 208
+          },
+          "actual": {
+            "renderer": "pixi-spritesheet",
+            "frame": "2",
+            "frameTexture": "52",
+            "textureFrame": "17,910,339,304",
+            "contentBounds": "{\"x\":199.0073684210526,\"y\":10.399999999999949,\"width\":180.91894736842107,\"height\":162.24000000000004,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+            "textureKey": "lingjing-resource://asset/builtin%3Alingjing-yantuan-v1/sprites.png:d42afe48d784649dc62390533eb018bf4e4874a9b37016604bd040f47ceccb6b",
+            "textureSource": "7"
+          }
+        },
+        {
+          "index": 13,
+          "action": "victory",
+          "notes": "",
+          "screenshot": "yantuan-frame-13.png",
+          "physicalPixels": [
+            726,
+            264
+          ],
+          "expectedRectangle": {
+            "x": 366,
+            "y": 929,
+            "w": 266,
+            "h": 274
+          },
+          "renderedBounds": {
+            "x": 218.21999999999997,
+            "y": 26.41052631578944,
+            "width": 141.96,
+            "height": 146.22947368421055,
+            "canvasWidth": 578.4,
+            "canvasHeight": 208
+          },
+          "actual": {
+            "renderer": "pixi-spritesheet",
+            "frame": "0",
+            "frameTexture": "53",
+            "textureFrame": "366,929,266,274",
+            "contentBounds": "{\"x\":218.21999999999997,\"y\":26.41052631578944,\"width\":141.96,\"height\":146.22947368421055,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+            "textureKey": "lingjing-resource://asset/builtin%3Alingjing-yantuan-v1/sprites.png:d42afe48d784649dc62390533eb018bf4e4874a9b37016604bd040f47ceccb6b",
+            "textureSource": "7"
+          }
+        },
+        {
+          "index": 14,
+          "action": "sleep",
+          "notes": "Temporary UI draft mapping to sleep_seated; not saved",
+          "screenshot": "yantuan-frame-14.png",
+          "physicalPixels": [
+            726,
+            263
+          ],
+          "expectedRectangle": {
+            "x": 657,
+            "y": 966,
+            "w": 278,
+            "h": 230
+          },
+          "renderedBounds": {
+            "x": 215.0178947368421,
+            "y": 49.89263157894733,
+            "width": 148.36421052631582,
+            "height": 122.74736842105266,
+            "canvasWidth": 578.4,
+            "canvasHeight": 208
+          },
+          "actual": {
+            "renderer": "pixi-spritesheet",
+            "frame": "0",
+            "frameTexture": "54",
+            "textureFrame": "657,966,278,230",
+            "contentBounds": "{\"x\":215.0178947368421,\"y\":49.89263157894733,\"width\":148.36421052631582,\"height\":122.74736842105266,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+            "textureKey": "lingjing-resource://asset/builtin%3Alingjing-yantuan-v1/sprites.png:d42afe48d784649dc62390533eb018bf4e4874a9b37016604bd040f47ceccb6b",
+            "textureSource": "7"
+          }
+        },
+        {
+          "index": 15,
+          "action": "sleep",
+          "notes": "",
+          "screenshot": "yantuan-frame-15.png",
+          "physicalPixels": [
+            726,
+            263
+          ],
+          "expectedRectangle": {
+            "x": 971,
+            "y": 985,
+            "w": 266,
+            "h": 211
+          },
+          "renderedBounds": {
+            "x": 218.21999999999997,
+            "y": 60.03263157894733,
+            "width": 141.96,
+            "height": 112.60736842105266,
+            "canvasWidth": 578.4,
+            "canvasHeight": 208
+          },
+          "actual": {
+            "renderer": "pixi-spritesheet",
+            "frame": "0",
+            "frameTexture": "55",
+            "textureFrame": "971,985,266,211",
+            "contentBounds": "{\"x\":218.21999999999997,\"y\":60.03263157894733,\"width\":141.96,\"height\":112.60736842105266,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+            "textureKey": "lingjing-resource://asset/builtin%3Alingjing-yantuan-v1/sprites.png:d42afe48d784649dc62390533eb018bf4e4874a9b37016604bd040f47ceccb6b",
+            "textureSource": "7"
+          }
+        }
+      ],
+      "actionCoverage": [
+        {
+          "action": "idle",
+          "clip": "idle",
+          "frames": [
+            "frame_0",
+            "frame_0",
+            "frame_0",
+            "frame_0",
+            "frame_0",
+            "frame_0",
+            "frame_0",
+            "frame_0",
+            "frame_0",
+            "frame_0",
+            "frame_0",
+            "frame_0",
+            "frame_0",
+            "frame_0",
+            "frame_0",
+            "frame_1",
+            "frame_0"
+          ],
+          "fps": 8,
+          "loop": true
+        },
+        {
+          "action": "blink",
+          "clip": "blink",
+          "frames": [
+            "frame_1",
+            "frame_0"
+          ],
+          "fps": 8,
+          "loop": false
+        },
+        {
+          "action": "walk",
+          "clip": "walk",
+          "frames": [
+            "frame_2",
+            "frame_3"
+          ],
+          "fps": 6,
+          "loop": true
+        },
+        {
+          "action": "wave",
+          "clip": "wave",
+          "frames": [
+            "frame_4",
+            "frame_5",
+            "frame_4",
+            "frame_0"
+          ],
+          "fps": 5,
+          "loop": false
+        },
+        {
+          "action": "eat",
+          "clip": "eat",
+          "frames": [
+            "frame_6",
+            "frame_7",
+            "frame_6",
+            "frame_7",
+            "frame_0"
+          ],
+          "fps": 5,
+          "loop": false
+        },
+        {
+          "action": "attack_windup",
+          "clip": "attack_windup",
+          "frames": [
+            "frame_8"
+          ],
+          "fps": 8,
+          "loop": false
+        },
+        {
+          "action": "attack_release",
+          "clip": "attack_release",
+          "frames": [
+            "frame_9"
+          ],
+          "fps": 8,
+          "loop": false
+        },
+        {
+          "action": "attack",
+          "clip": "attack",
+          "frames": [
+            "frame_8",
+            "frame_9",
+            "frame_9",
+            "frame_0"
+          ],
+          "fps": 8,
+          "loop": false
+        },
+        {
+          "action": "hit",
+          "clip": "hit",
+          "frames": [
+            "frame_10",
+            "frame_10",
+            "frame_0"
+          ],
+          "fps": 8,
+          "loop": false
+        },
+        {
+          "action": "skill",
+          "clip": "skill",
+          "frames": [
+            "frame_11",
+            "frame_11",
+            "frame_12",
+            "frame_12",
+            "frame_0"
+          ],
+          "fps": 8,
+          "loop": false
+        },
+        {
+          "action": "victory",
+          "clip": "victory",
+          "frames": [
+            "frame_13",
+            "frame_13",
+            "frame_0"
+          ],
+          "fps": 3,
+          "loop": false
+        },
+        {
+          "action": "sleep",
+          "clip": "sleep",
+          "frames": [
+            "frame_15"
+          ],
+          "fps": 1,
+          "loop": true
+        }
+      ],
+      "magnification": "native zoom 1 / unmodified element screenshots; inspected at original physical pixel size. Zoomed Electron clip captures were rejected.",
+      "consecutiveAttackReplays": [
+        {
+          "playbackKey": "1",
+          "samples": [
+            {
+              "renderer": "pixi-spritesheet",
+              "frame": "0",
+              "frameTexture": "48",
+              "textureFrame": "35,638,276,251",
+              "contentBounds": "{\"x\":215.5515789473684,\"y\":38.685263157894695,\"width\":147.29684210526318,\"height\":133.9547368421053,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+              "textureKey": "lingjing-resource://asset/builtin%3Alingjing-yantuan-v1/sprites.png:d42afe48d784649dc62390533eb018bf4e4874a9b37016604bd040f47ceccb6b",
+              "textureSource": "7"
+            },
+            {
+              "renderer": "pixi-spritesheet",
+              "frame": "0",
+              "frameTexture": "48",
+              "textureFrame": "35,638,276,251",
+              "contentBounds": "{\"x\":215.5515789473684,\"y\":38.685263157894695,\"width\":147.29684210526318,\"height\":133.9547368421053,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+              "textureKey": "lingjing-resource://asset/builtin%3Alingjing-yantuan-v1/sprites.png:d42afe48d784649dc62390533eb018bf4e4874a9b37016604bd040f47ceccb6b",
+              "textureSource": "7"
+            },
+            {
+              "renderer": "pixi-spritesheet",
+              "frame": "1",
+              "frameTexture": "49",
+              "textureFrame": "340,638,317,266",
+              "contentBounds": "{\"x\":204.87789473684208,\"y\":30.67999999999998,\"width\":169.17789473684212,\"height\":141.96,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+              "textureKey": "lingjing-resource://asset/builtin%3Alingjing-yantuan-v1/sprites.png:d42afe48d784649dc62390533eb018bf4e4874a9b37016604bd040f47ceccb6b",
+              "textureSource": "7"
+            },
+            {
+              "renderer": "pixi-spritesheet",
+              "frame": "1",
+              "frameTexture": "49",
+              "textureFrame": "340,638,317,266",
+              "contentBounds": "{\"x\":204.87789473684208,\"y\":30.67999999999998,\"width\":169.17789473684212,\"height\":141.96,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+              "textureKey": "lingjing-resource://asset/builtin%3Alingjing-yantuan-v1/sprites.png:d42afe48d784649dc62390533eb018bf4e4874a9b37016604bd040f47ceccb6b",
+              "textureSource": "7"
+            },
+            {
+              "renderer": "pixi-spritesheet",
+              "frame": "2",
+              "frameTexture": "49",
+              "textureFrame": "340,638,317,266",
+              "contentBounds": "{\"x\":204.87789473684208,\"y\":30.67999999999998,\"width\":169.17789473684212,\"height\":141.96,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+              "textureKey": "lingjing-resource://asset/builtin%3Alingjing-yantuan-v1/sprites.png:d42afe48d784649dc62390533eb018bf4e4874a9b37016604bd040f47ceccb6b",
+              "textureSource": "7"
+            },
+            {
+              "renderer": "pixi-spritesheet",
+              "frame": "2",
+              "frameTexture": "49",
+              "textureFrame": "340,638,317,266",
+              "contentBounds": "{\"x\":204.87789473684208,\"y\":30.67999999999998,\"width\":169.17789473684212,\"height\":141.96,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+              "textureKey": "lingjing-resource://asset/builtin%3Alingjing-yantuan-v1/sprites.png:d42afe48d784649dc62390533eb018bf4e4874a9b37016604bd040f47ceccb6b",
+              "textureSource": "7"
+            },
+            {
+              "renderer": "pixi-spritesheet",
+              "frame": "3",
+              "frameTexture": "40",
+              "textureFrame": "34,26,248,271",
+              "contentBounds": "{\"x\":223.0231578947368,\"y\":28.011578947368378,\"width\":132.35368421052632,\"height\":144.6284210526316,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+              "textureKey": "lingjing-resource://asset/builtin%3Alingjing-yantuan-v1/sprites.png:d42afe48d784649dc62390533eb018bf4e4874a9b37016604bd040f47ceccb6b",
+              "textureSource": "7"
+            },
+            {
+              "renderer": "pixi-spritesheet",
+              "frame": "3",
+              "frameTexture": "40",
+              "textureFrame": "34,26,248,271",
+              "contentBounds": "{\"x\":223.0231578947368,\"y\":28.011578947368378,\"width\":132.35368421052632,\"height\":144.6284210526316,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+              "textureKey": "lingjing-resource://asset/builtin%3Alingjing-yantuan-v1/sprites.png:d42afe48d784649dc62390533eb018bf4e4874a9b37016604bd040f47ceccb6b",
+              "textureSource": "7"
+            },
+            {
+              "renderer": "pixi-spritesheet",
+              "frame": "3",
+              "frameTexture": "40",
+              "textureFrame": "34,26,248,271",
+              "contentBounds": "{\"x\":223.0231578947368,\"y\":28.011578947368378,\"width\":132.35368421052632,\"height\":144.6284210526316,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+              "textureKey": "lingjing-resource://asset/builtin%3Alingjing-yantuan-v1/sprites.png:d42afe48d784649dc62390533eb018bf4e4874a9b37016604bd040f47ceccb6b",
+              "textureSource": "7"
+            },
+            {
+              "renderer": "pixi-spritesheet",
+              "frame": "3",
+              "frameTexture": "40",
+              "textureFrame": "34,26,248,271",
+              "contentBounds": "{\"x\":223.0231578947368,\"y\":28.011578947368378,\"width\":132.35368421052632,\"height\":144.6284210526316,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+              "textureKey": "lingjing-resource://asset/builtin%3Alingjing-yantuan-v1/sprites.png:d42afe48d784649dc62390533eb018bf4e4874a9b37016604bd040f47ceccb6b",
+              "textureSource": "7"
+            },
+            {
+              "renderer": "pixi-spritesheet",
+              "frame": "3",
+              "frameTexture": "40",
+              "textureFrame": "34,26,248,271",
+              "contentBounds": "{\"x\":223.0231578947368,\"y\":28.011578947368378,\"width\":132.35368421052632,\"height\":144.6284210526316,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+              "textureKey": "lingjing-resource://asset/builtin%3Alingjing-yantuan-v1/sprites.png:d42afe48d784649dc62390533eb018bf4e4874a9b37016604bd040f47ceccb6b",
+              "textureSource": "7"
+            },
+            {
+              "renderer": "pixi-spritesheet",
+              "frame": "3",
+              "frameTexture": "40",
+              "textureFrame": "34,26,248,271",
+              "contentBounds": "{\"x\":223.0231578947368,\"y\":28.011578947368378,\"width\":132.35368421052632,\"height\":144.6284210526316,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+              "textureKey": "lingjing-resource://asset/builtin%3Alingjing-yantuan-v1/sprites.png:d42afe48d784649dc62390533eb018bf4e4874a9b37016604bd040f47ceccb6b",
+              "textureSource": "7"
+            },
+            {
+              "renderer": "pixi-spritesheet",
+              "frame": "3",
+              "frameTexture": "40",
+              "textureFrame": "34,26,248,271",
+              "contentBounds": "{\"x\":223.0231578947368,\"y\":28.011578947368378,\"width\":132.35368421052632,\"height\":144.6284210526316,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+              "textureKey": "lingjing-resource://asset/builtin%3Alingjing-yantuan-v1/sprites.png:d42afe48d784649dc62390533eb018bf4e4874a9b37016604bd040f47ceccb6b",
+              "textureSource": "7"
+            },
+            {
+              "renderer": "pixi-spritesheet",
+              "frame": "3",
+              "frameTexture": "40",
+              "textureFrame": "34,26,248,271",
+              "contentBounds": "{\"x\":223.0231578947368,\"y\":28.011578947368378,\"width\":132.35368421052632,\"height\":144.6284210526316,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+              "textureKey": "lingjing-resource://asset/builtin%3Alingjing-yantuan-v1/sprites.png:d42afe48d784649dc62390533eb018bf4e4874a9b37016604bd040f47ceccb6b",
+              "textureSource": "7"
+            }
+          ]
+        },
+        {
+          "playbackKey": "2",
+          "samples": [
+            {
+              "renderer": "pixi-spritesheet",
+              "frame": "0",
+              "frameTexture": "48",
+              "textureFrame": "35,638,276,251",
+              "contentBounds": "{\"x\":215.5515789473684,\"y\":38.685263157894695,\"width\":147.29684210526318,\"height\":133.9547368421053,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+              "textureKey": "lingjing-resource://asset/builtin%3Alingjing-yantuan-v1/sprites.png:d42afe48d784649dc62390533eb018bf4e4874a9b37016604bd040f47ceccb6b",
+              "textureSource": "7"
+            },
+            {
+              "renderer": "pixi-spritesheet",
+              "frame": "0",
+              "frameTexture": "48",
+              "textureFrame": "35,638,276,251",
+              "contentBounds": "{\"x\":215.5515789473684,\"y\":38.685263157894695,\"width\":147.29684210526318,\"height\":133.9547368421053,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+              "textureKey": "lingjing-resource://asset/builtin%3Alingjing-yantuan-v1/sprites.png:d42afe48d784649dc62390533eb018bf4e4874a9b37016604bd040f47ceccb6b",
+              "textureSource": "7"
+            },
+            {
+              "renderer": "pixi-spritesheet",
+              "frame": "1",
+              "frameTexture": "49",
+              "textureFrame": "340,638,317,266",
+              "contentBounds": "{\"x\":204.87789473684208,\"y\":30.67999999999998,\"width\":169.17789473684212,\"height\":141.96,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+              "textureKey": "lingjing-resource://asset/builtin%3Alingjing-yantuan-v1/sprites.png:d42afe48d784649dc62390533eb018bf4e4874a9b37016604bd040f47ceccb6b",
+              "textureSource": "7"
+            },
+            {
+              "renderer": "pixi-spritesheet",
+              "frame": "1",
+              "frameTexture": "49",
+              "textureFrame": "340,638,317,266",
+              "contentBounds": "{\"x\":204.87789473684208,\"y\":30.67999999999998,\"width\":169.17789473684212,\"height\":141.96,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+              "textureKey": "lingjing-resource://asset/builtin%3Alingjing-yantuan-v1/sprites.png:d42afe48d784649dc62390533eb018bf4e4874a9b37016604bd040f47ceccb6b",
+              "textureSource": "7"
+            },
+            {
+              "renderer": "pixi-spritesheet",
+              "frame": "2",
+              "frameTexture": "49",
+              "textureFrame": "340,638,317,266",
+              "contentBounds": "{\"x\":204.87789473684208,\"y\":30.67999999999998,\"width\":169.17789473684212,\"height\":141.96,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+              "textureKey": "lingjing-resource://asset/builtin%3Alingjing-yantuan-v1/sprites.png:d42afe48d784649dc62390533eb018bf4e4874a9b37016604bd040f47ceccb6b",
+              "textureSource": "7"
+            },
+            {
+              "renderer": "pixi-spritesheet",
+              "frame": "3",
+              "frameTexture": "40",
+              "textureFrame": "34,26,248,271",
+              "contentBounds": "{\"x\":223.0231578947368,\"y\":28.011578947368378,\"width\":132.35368421052632,\"height\":144.6284210526316,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+              "textureKey": "lingjing-resource://asset/builtin%3Alingjing-yantuan-v1/sprites.png:d42afe48d784649dc62390533eb018bf4e4874a9b37016604bd040f47ceccb6b",
+              "textureSource": "7"
+            },
+            {
+              "renderer": "pixi-spritesheet",
+              "frame": "3",
+              "frameTexture": "40",
+              "textureFrame": "34,26,248,271",
+              "contentBounds": "{\"x\":223.0231578947368,\"y\":28.011578947368378,\"width\":132.35368421052632,\"height\":144.6284210526316,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+              "textureKey": "lingjing-resource://asset/builtin%3Alingjing-yantuan-v1/sprites.png:d42afe48d784649dc62390533eb018bf4e4874a9b37016604bd040f47ceccb6b",
+              "textureSource": "7"
+            },
+            {
+              "renderer": "pixi-spritesheet",
+              "frame": "3",
+              "frameTexture": "40",
+              "textureFrame": "34,26,248,271",
+              "contentBounds": "{\"x\":223.0231578947368,\"y\":28.011578947368378,\"width\":132.35368421052632,\"height\":144.6284210526316,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+              "textureKey": "lingjing-resource://asset/builtin%3Alingjing-yantuan-v1/sprites.png:d42afe48d784649dc62390533eb018bf4e4874a9b37016604bd040f47ceccb6b",
+              "textureSource": "7"
+            },
+            {
+              "renderer": "pixi-spritesheet",
+              "frame": "3",
+              "frameTexture": "40",
+              "textureFrame": "34,26,248,271",
+              "contentBounds": "{\"x\":223.0231578947368,\"y\":28.011578947368378,\"width\":132.35368421052632,\"height\":144.6284210526316,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+              "textureKey": "lingjing-resource://asset/builtin%3Alingjing-yantuan-v1/sprites.png:d42afe48d784649dc62390533eb018bf4e4874a9b37016604bd040f47ceccb6b",
+              "textureSource": "7"
+            },
+            {
+              "renderer": "pixi-spritesheet",
+              "frame": "3",
+              "frameTexture": "40",
+              "textureFrame": "34,26,248,271",
+              "contentBounds": "{\"x\":223.0231578947368,\"y\":28.011578947368378,\"width\":132.35368421052632,\"height\":144.6284210526316,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+              "textureKey": "lingjing-resource://asset/builtin%3Alingjing-yantuan-v1/sprites.png:d42afe48d784649dc62390533eb018bf4e4874a9b37016604bd040f47ceccb6b",
+              "textureSource": "7"
+            },
+            {
+              "renderer": "pixi-spritesheet",
+              "frame": "3",
+              "frameTexture": "40",
+              "textureFrame": "34,26,248,271",
+              "contentBounds": "{\"x\":223.0231578947368,\"y\":28.011578947368378,\"width\":132.35368421052632,\"height\":144.6284210526316,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+              "textureKey": "lingjing-resource://asset/builtin%3Alingjing-yantuan-v1/sprites.png:d42afe48d784649dc62390533eb018bf4e4874a9b37016604bd040f47ceccb6b",
+              "textureSource": "7"
+            },
+            {
+              "renderer": "pixi-spritesheet",
+              "frame": "3",
+              "frameTexture": "40",
+              "textureFrame": "34,26,248,271",
+              "contentBounds": "{\"x\":223.0231578947368,\"y\":28.011578947368378,\"width\":132.35368421052632,\"height\":144.6284210526316,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+              "textureKey": "lingjing-resource://asset/builtin%3Alingjing-yantuan-v1/sprites.png:d42afe48d784649dc62390533eb018bf4e4874a9b37016604bd040f47ceccb6b",
+              "textureSource": "7"
+            },
+            {
+              "renderer": "pixi-spritesheet",
+              "frame": "3",
+              "frameTexture": "40",
+              "textureFrame": "34,26,248,271",
+              "contentBounds": "{\"x\":223.0231578947368,\"y\":28.011578947368378,\"width\":132.35368421052632,\"height\":144.6284210526316,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+              "textureKey": "lingjing-resource://asset/builtin%3Alingjing-yantuan-v1/sprites.png:d42afe48d784649dc62390533eb018bf4e4874a9b37016604bd040f47ceccb6b",
+              "textureSource": "7"
+            },
+            {
+              "renderer": "pixi-spritesheet",
+              "frame": "3",
+              "frameTexture": "40",
+              "textureFrame": "34,26,248,271",
+              "contentBounds": "{\"x\":223.0231578947368,\"y\":28.011578947368378,\"width\":132.35368421052632,\"height\":144.6284210526316,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+              "textureKey": "lingjing-resource://asset/builtin%3Alingjing-yantuan-v1/sprites.png:d42afe48d784649dc62390533eb018bf4e4874a9b37016604bd040f47ceccb6b",
+              "textureSource": "7"
+            }
+          ]
+        }
+      ],
+      "portrait": {
+        "screenshot": "yantuan-portrait.png",
+        "resourceId": "builtin:lingjing-yantuan-v1",
+        "viewBox": "74.39999999999999 5.42 168.64000000000001 189.7",
+        "imageHref": "lingjing-resource://asset/builtin%3Alingjing-yantuan-v1/sprites.png",
+        "imageTransform": "translate(-34 -26)"
+      },
+      "gallery": {
+        "html": "yantuan-frames.html",
+        "screenshot": "yantuan-frames.png",
+        "kind": "Layout of unmodified actual stage screenshots; no generated or substituted frames"
+      }
+    }
+  ],
+  "views": [
+    {
+      "size": [
+        1280,
+        844
+      ],
+      "screenshot": "resource-layout-1280.png",
+      "metrics": {
+        "viewport": [
+          1280,
+          844
+        ],
+        "dpr": 1.25,
+        "title": {
+          "font": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+          "size": "28px",
+          "weight": "700",
+          "lineHeight": "39.2px"
+        },
+        "card": {
+          "font": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+          "size": "16px",
+          "weight": "600"
+        },
+        "namedSliders": [
+          {
+            "name": "大小",
+            "now": "1"
+          },
+          {
+            "name": "锚点 X",
+            "now": "0.5"
+          },
+          {
+            "name": "锚点 Y",
+            "now": "0.849609375"
+          },
+          {
+            "name": "垂直位置",
+            "now": "0"
+          },
+          {
+            "name": "旋转",
+            "now": "0"
+          },
+          {
+            "name": "播放帧率",
+            "now": "8"
+          }
+        ]
+      }
+    },
+    {
+      "size": [
+        1440,
+        900
+      ],
+      "screenshot": "resource-layout-1440.png",
+      "metrics": {
+        "viewport": [
+          1440,
+          900
+        ],
+        "dpr": 1.25,
+        "title": {
+          "font": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+          "size": "28px",
+          "weight": "700",
+          "lineHeight": "39.2px"
+        },
+        "card": {
+          "font": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+          "size": "16px",
+          "weight": "600"
+        },
+        "namedSliders": [
+          {
+            "name": "大小",
+            "now": "1"
+          },
+          {
+            "name": "锚点 X",
+            "now": "0.5"
+          },
+          {
+            "name": "锚点 Y",
+            "now": "0.849609375"
+          },
+          {
+            "name": "垂直位置",
+            "now": "0"
+          },
+          {
+            "name": "旋转",
+            "now": "0"
+          },
+          {
+            "name": "播放帧率",
+            "now": "8"
+          }
+        ]
+      }
+    }
+  ],
+  "templates": [
+    {
+      "templateId": "big-fish-gentle",
+      "name": "鱼丸",
+      "element": "water",
+      "resourceId": "builtin:lingjing-yuwan-v2"
+    },
+    {
+      "templateId": "big-fish-cheerful",
+      "name": "小蓝",
+      "element": "water",
+      "resourceId": "builtin:lingjing-xiaolan-v1"
+    },
+    {
+      "templateId": "big-fish-foodie",
+      "name": "饭团",
+      "element": "water",
+      "resourceId": "builtin:lingjing-fantuan-v1"
+    },
+    {
+      "templateId": "animal-shiba",
+      "name": "焰柴",
+      "element": "fire",
+      "resourceId": "builtin:lingjing-shiba-v2"
+    },
+    {
+      "templateId": "animal-hat-cat",
+      "name": "礼帽喵",
+      "element": "metal",
+      "resourceId": "builtin:lingjing-hatcat-v1"
+    },
+    {
+      "templateId": "animal-white-fox",
+      "name": "小狐",
+      "element": "water",
+      "resourceId": "builtin:lingjing-xiaohu-v1"
+    },
+    {
+      "templateId": "animal-wood-deer",
+      "name": "青芽",
+      "element": "wood",
+      "resourceId": "builtin:lingjing-qingya-v1"
+    },
+    {
+      "templateId": "animal-earth-pangolin",
+      "name": "岩团",
+      "element": "earth",
+      "resourceId": "builtin:lingjing-yantuan-v1"
+    }
+  ],
+  "elementCoverage": {
+    "metal": 1,
+    "wood": 1,
+    "water": 4,
+    "fire": 1,
+    "earth": 1
+  },
+  "passed": true
+}
