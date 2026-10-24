@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState, type ComponentType } from 'react';
-import { createElement } from 'react';
 import { Flame, MoveRight, RefreshCw, Shield, Sparkles, Swords, Zap } from 'lucide-react';
 import type { BattleActor, BattleParticipant, BattleSession } from '../../../../../../packages/shared-types/src/features/battle';
 import type { BattleActionType } from '../../../../../../packages/shared-types/src/battle';
@@ -23,19 +22,13 @@ export function BattlePortrait({ pet, facing = 'right', small = false }: { pet: 
         const key = resource?.entryAsset;
         const url = resolved.url || resource?.url || (key ? `lingjing-resource://asset/${encodeURIComponent(resource.id)}/${key.split('/').map(encodeURIComponent).join('/')}` : undefined);
         const module = sharedStages['../resources/ResourceStage.tsx'] ? await sharedStages['../resources/ResourceStage.tsx']() as { ResourceStage: ComponentType<any> } : null;
-        if (!module && kind === 'model3d') await import('@google/model-viewer');
         if (alive) setAsset({ url, kind, clip: resolved.clip?.name, scale: resolved.calibration?.scale, warning: resolved.warning, resource, Stage: module?.ResourceStage });
       }).catch(() => { if (alive) setAsset(null); });
     return () => { alive = false; };
   }, [pet.petId, resourceId, facing, small]);
   const element = elements[pet.element] || elements.water;
   return <div className={`battle-portrait ${small ? 'small' : ''} element-${pet.element}`}>
-    {asset?.Stage && asset.resource ? <asset.Stage resource={asset.resource} petId={pet.petId} context="battle" action="idle" facing={facing}/> : asset?.url && asset.kind === 'model3d' ? createElement('model-viewer', {
-      src: asset.url, alt: petName(pet), autoplay: true, 'animation-name': asset.clip,
-      'camera-orbit': facing === 'right' ? '35deg 80deg auto' : '-35deg 80deg auto',
-      'interaction-prompt': 'none', 'shadow-intensity': '0', exposure: '1',
-      style: { width: '100%', height: '100%', transform: `scale(${asset.scale || 1})` }
-    }) : <><span className="battle-sigil" aria-hidden="true">{element.symbol}</span><span className="battle-monogram">{[...petName(pet)][0]}</span></>}
+    {asset?.Stage && asset.resource ? <asset.Stage resource={asset.resource} petId={pet.petId} context="battle" action="idle" facing={facing}/> : <><span className="battle-sigil" aria-hidden="true">{element.symbol}</span><span className="battle-monogram">{[...petName(pet)][0]}</span></>}
     {!small && !asset?.url ? <span className="battle-resource-label">{resourceId ? '角色资源暂未加载' : `${element.label}系伙伴`}</span> : null}
   </div>;
 }

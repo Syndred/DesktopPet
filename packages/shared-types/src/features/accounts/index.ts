@@ -12,7 +12,7 @@ export interface AccountUser {
 export interface SettingsDocument {
   desktop: {
     alwaysOnTop: boolean; clickThrough: boolean; launchAtLogin: boolean; closeToTray: boolean;
-    companionLimit: number; interactionSounds: boolean; volume: number; hideInFullscreen: boolean;
+    companionLimit: number; interactionSounds: boolean; volume: number; hideInFullscreen: boolean; animationsEnabled: boolean;
   };
   notifications: {
     enabled: boolean; companions: boolean; battles: boolean; garden: boolean;
