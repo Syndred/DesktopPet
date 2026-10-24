@@ -67,7 +67,7 @@ export function useGarden() {
       localStorage.setItem(pendingKey(action.owner), JSON.stringify(action)); setPending(action);
       const result = await api.invoke<unknown>("garden", action.command, action.input);
       if (!mounted.current || ownerRef.current !== action.owner) return false;
-      if (!result.ok && ['CLOUD_APPLY_PENDING','GARDEN_CLOUD_UNAVAILABLE'].includes(result.code)) { setError(result.message); return false; }
+      if (!result.ok && ['CLOUD_APPLY_PENDING','GARDEN_CLOUD_UNAVAILABLE','CLOUD_RECEIPT_MISMATCH','CLOUD_STALE_READBACK'].includes(result.code)) { setError(result.message); return false; }
       localStorage.removeItem(pendingKey(action.owner));
       setPending(null);
       if (!result.ok) {

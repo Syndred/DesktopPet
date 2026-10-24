@@ -463,11 +463,7 @@ class BattleFeatureService {
     const response = await this.online.syncRoom({ roomId: session.room.id, roundsLimit: 50 });
     this.assertOwner(owner);
     session = this.requireSession(owner, session.id);
-    const room = response.room;
-    session.room = copy(room);
-    session.snapshot = this.online.toBattleState();
-    const peer = session.side === "host" ? "guest" : "host";
-    session.enemy = { ...session.enemy, petId: room[`${peer}_pet_id`] || room[`${peer}_user_id`] || "waiting-peer", petName: room[`${peer}_pet_name`] || "等待好友", element: room[`${peer}_element`] || "wood", appearance2d: room[`${peer}_resource_id`] || appearance2d({ element: room[`${peer}_element`] }) };
+    let room = response.room;
     const rounds = new Map(session.rounds.map(round => [round.round, round]));
     let page = response.rounds || [];
     for (let pageNo = 0; pageNo < 100; pageNo++) {
@@ -475,6 +471,10 @@ class BattleFeatureService {
         const mapped = this.online.mapRoundToBattleResult(round);
         rounds.set(round.round_no, { ...mapped.roundResult, state: mapped.state });
       }
+      // Pagination awaits can also receive a newer room through get_room or Realtime.
+      // Include its new rounds before declaring the saved history complete.
+      const liveRoom = this.online.getStatus().room;
+      if (liveRoom?.id === room.id) room = liveRoom;
       const last = Number(room.last_resolved_round || 0);
       let missing = 1;
       while (missing <= last && rounds.has(missing)) missing++;
@@ -485,6 +485,12 @@ class BattleFeatureService {
       page = (earlier.rounds || []).filter(round => round.round_no < before && !rounds.has(round.round_no));
       if (!page.length) break;
     }
+    const latestRoom = this.online.getStatus().room;
+    if (latestRoom?.id === room.id) room = latestRoom;
+    session.room = copy(room);
+    session.snapshot = this.online.toBattleState();
+    const peer = session.side === "host" ? "guest" : "host";
+    session.enemy = { ...session.enemy, petId: room[`${peer}_pet_id`] || room[`${peer}_user_id`] || "waiting-peer", petName: room[`${peer}_pet_name`] || "等待好友", element: room[`${peer}_element`] || "wood", appearance2d: room[`${peer}_resource_id`] || appearance2d({ element: room[`${peer}_element`] }) };
     session.rounds = [...rounds.values()].sort((a, b) => a.round - b.round);
     session.historyComplete = session.rounds.length === Number(room.last_resolved_round || 0) && session.rounds.every((round, index) => round.round === index + 1);
     const pending = session.pendingAction;

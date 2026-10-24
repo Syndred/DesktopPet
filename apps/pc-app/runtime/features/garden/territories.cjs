@@ -1,22 +1,16 @@
 "use strict";
 const { GardenError } = require('./service.cjs');
+const { checkFix } = require('../discovery/coordinates.cjs');
+const { contains: inside } = require('../discovery/territory-adapter.cjs');
 const problem = (code, message) => { throw new GardenError(code, message); };
 const EARTH_RADIUS = 6371000;
 const dayKey = now => new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Shanghai', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date(now));
 function validFix(fix, now) {
   if (!fix || fix.source !== 'os' || fix.coordinateSystem !== 'wgs84') problem('REAL_LOCATION_REQUIRED', '请在附近探索获取系统位置；演示位置不能改变领地归属');
+  const quality = checkFix(fix, now);
+  if (!quality.ok) problem(quality.code, quality.message);
   if (!Number.isFinite(fix.lat) || !Number.isFinite(fix.lng) || Math.abs(fix.lat) > 85 || Math.abs(fix.lng) > 180) problem('INVALID_COORDINATES', '系统位置无效');
-  if (!Number.isFinite(fix.timestampMs) || now - fix.timestampMs > 30_000 || fix.timestampMs - now > 5_000) problem('LOCATION_STALE', '位置已过期，请重新获取系统位置');
-  if (!Number.isFinite(fix.accuracyMeters) || fix.accuracyMeters <= 0 || fix.accuracyMeters > 80) problem('LOCATION_IMPRECISE', '需要精度在 80 米以内的系统位置');
   return fix;
-}
-function inside(point, boundary) {
-  let result = false;
-  for (let i = 0, j = boundary.length - 1; i < boundary.length; j = i++) {
-    const a = boundary[i], b = boundary[j];
-    if ((a.lat > point.lat) !== (b.lat > point.lat) && point.lng < (b.lng - a.lng) * (point.lat - a.lat) / (b.lat - a.lat) + a.lng) result = !result;
-  }
-  return result;
 }
 class TerritoryService {
   constructor(services, { now = Date.now } = {}) { this.services = services; this.db = services.db; this.now = now; }

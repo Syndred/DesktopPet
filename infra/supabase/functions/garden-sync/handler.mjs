@@ -25,7 +25,24 @@ export function createGardenHandler(createClient) {
       const envelope = saved.data.envelope;
       const { checksum, ...document } = envelope;
       if (await digest(document) !== checksum) fail('CLOUD_CHECKSUM_MISMATCH', '云端存档校验失败，未修改库存');
-      if (body.op === 'snapshot') return response({ ok: true, data: { snapshot: cloudSnapshot(envelope, owner, Date.now()), envelope, accountRevision: saved.data.revision } });
+      if (body.op === 'snapshot') {
+        if (!gardenDocument(envelope,owner).garden_accounts.length) {
+          // Empty canonical saves receive the first six plots/seeds on the
+          // server. Concurrent first opens share one immutable receipt.
+          const input={actionId:'cloud-garden-initialize:v1',expectedRevision:0};
+          const requestHash=await digest({kind:'initialize',input});
+          const initialized=applyCloudCommand(envelope,owner,'initialize',input,Date.now(),requestHash);
+          const {checksum:ignored,...nextDocument}=initialized.envelope;void ignored;
+          initialized.envelope.checksum=await digest(nextDocument);
+          const committed=await client.rpc('garden_commit_operation',{p_owner:owner,p_session_token:token,p_action_id:input.actionId,p_request_hash:requestHash,p_base_revision:saved.data.revision,p_envelope:initialized.envelope,p_result:initialized.result});check(committed.error);
+          const current=await client.from('runtime_account_saves').select('revision,envelope').eq('owner_account_id',owner).maybeSingle();check(current.error);
+          if (!current.data) fail('GARDEN_CLOUD_UNAVAILABLE','云端首次菜园尚未读回');
+          const {checksum:currentChecksum,...currentDocument}=current.data.envelope;
+          if(await digest(currentDocument)!==currentChecksum)fail('CLOUD_CHECKSUM_MISMATCH','云端首次菜园校验失败');
+          return response({ok:true,data:{snapshot:cloudSnapshot(current.data.envelope,owner,Date.now()),envelope:current.data.envelope,accountRevision:current.data.revision}});
+        }
+        return response({ ok: true, data: { snapshot: cloudSnapshot(envelope, owner, Date.now()), envelope, accountRevision: saved.data.revision } });
+      }
       let command = body.command, input = body.input, reward;
       if (body.op === 'claimReward') {
         if (!['battle','exploration'].includes(body.source) || typeof body.receiptId !== 'string' || !/^[0-9a-f-]{36}$/i.test(body.receiptId)) fail('UNVERIFIED_REWARD', '种子凭据无效');

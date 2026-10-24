@@ -49,7 +49,7 @@ function PetDetailContent({ pet, snapshot, controller }: { pet: CompanionPet; sn
   const [tab, setTab] = useState('growth');
   const template = snapshot.templates.find(candidate => candidate.templateId === pet.templateId);
   const openChat = async () => { if (await controller.petAction('select', pet, { slot: 'chatPetId' })) navigate('/chat'); };
-  return <div className="cp-detail-layout"><div className="cp-detail-left"><PageHeader eyebrow={`我的灵宠 / ${pet.name}`} title="每一份陪伴，都有回应。" description="和你在一起的每一天，都是特别的日常。"/>
+  return <div className="cp-detail-layout"><div className="cp-detail-left"><PageHeader back={{ label: '我的灵宠', onClick: () => navigate('/companions') }} eyebrow={pet.name} title="每一份陪伴，都有回应。" description="和你在一起的每一天，都是特别的日常。"/>
     <section className={`cp-detail-hero ${hasRoomArtwork(pet) ? 'cp-detail-room' : ''}`} aria-label={`${pet.name}的陪伴场景`}>
       {hasRoomArtwork(pet) ? <img className="cp-detail-scene-art" src={roomArtwork} alt={`${pet.name}在湖畔房间陪伴的插画`}/> : <CompanionPortrait ownerAccountId={pet.ownerAccountId} petId={pet.petId} resource={pet.resource} name={pet.name} animate/>}
       <div className="cp-detail-copy"><h2>{pet.name}<RenameControl pet={pet} controller={controller}/></h2><Badge>Lv.{String(pet.growth.level).padStart(2, '0')} · {elements[pet.element]}</Badge><p className="cp-serial">伙伴编号 {pet.serial}</p><div className="cp-detail-badges">{pet.desktop.visible && <Badge><Monitor size={13}/>桌面中</Badge>}{snapshot.selections.battlePetId === pet.petId && <Badge><Heart size={13}/>出战伙伴</Badge>}{snapshot.selections.guardPetId === pet.petId && <Badge><Shield size={13}/>驻守选择</Badge>}</div><p className="cp-detail-personality">{template?.description || '每一份陪伴，都有属于自己的故事。'}</p><PetActions pet={pet} controller={controller}/></div>

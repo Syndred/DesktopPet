@@ -1,5 +1,5 @@
-import { createContext, useContext, useEffect, useState, useSyncExternalStore, type ReactNode } from 'react';
-import { AnimatePresence, MotionConfig, motion } from 'motion/react';
+import { createContext, forwardRef, useContext, useEffect, useState, useSyncExternalStore, type ReactNode } from 'react';
+import { AnimatePresence, MotionConfig, motion, useIsPresent } from 'motion/react';
 
 export const motionTokens = { duration: .18, exit: .1, ease: [.22, 1, .36, 1] as const, distance: 5 };
 const AnimationPreference = createContext(true);
@@ -40,9 +40,13 @@ export function AppMotionProvider({ children }: { children: ReactNode }) {
   return <AnimationPreference.Provider value={active}><MotionConfig reducedMotion={active ? 'never' : 'always'}>{children}</MotionConfig></AnimationPreference.Provider>;
 }
 
-export function PageTransition({ routeKey, children }: { routeKey: string; children: ReactNode }) {
+const RouteFrame = forwardRef<HTMLDivElement, { routeKey: string; children: ReactNode }>(function RouteFrame({ routeKey, children }, ref) {
   const enabled = useAppMotion();
-  return <AnimatePresence mode="wait" initial={false}><motion.div key={routeKey} data-motion={enabled ? 'enabled' : 'reduced'} className="app-page-motion" initial={enabled ? { opacity: 0, y: motionTokens.distance } : false} animate={{ opacity: 1, y: 0 }} exit={enabled ? { opacity: 0 } : undefined} transition={{ duration: enabled ? motionTokens.duration : 0, ease: motionTokens.ease }}>{children}</motion.div></AnimatePresence>;
+  const present = useIsPresent();
+  return <motion.div ref={ref} data-route-key={routeKey} data-current-route={present} aria-hidden={!present} inert={!present} data-motion={enabled ? 'enabled' : 'reduced'} className="app-page-motion" initial={enabled ? { opacity: 0, y: motionTokens.distance } : false} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: enabled ? motionTokens.duration : 0, ease: motionTokens.ease }}>{children}</motion.div>;
+});
+export function PageTransition({ routeKey, children }: { routeKey: string; children: ReactNode }) {
+  return <AnimatePresence mode="wait" initial={false}><RouteFrame key={routeKey} routeKey={routeKey}>{children}</RouteFrame></AnimatePresence>;
 }
 
 export function AnimatedList({ children, className }: { children: ReactNode; className?: string }) {

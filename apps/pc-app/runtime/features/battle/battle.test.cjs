@@ -110,6 +110,125 @@ test("realtime does not regress a newer room or keep another room's cached round
   assert.equal(online.roundCache.size, 0);
 });
 
+// Scripted transport envelopes exercise recovery boundaries only. They are not a cloud login,
+// Realtime connection, or multiplayer acceptance; the SQLite and OnlineDuelService code are real.
+function protocolFixture(f, remote = {}) {
+  const pet = f.service.pets(f.owner)[0];
+  f.services.session.setAdapter({ getCurrentUser: () => ({ id: f.owner, sessionToken: 'unit-transport-proof' }) });
+  remote.room ||= { id: 'unit-room', room_code: 'UNIT01', status: 'active', host_user_id: f.owner, guest_user_id: 'unit-peer',
+    host_pet_id: pet.petId, guest_pet_id: 'unit-peer-pet', host_pet_name: pet.petName, guest_pet_name: '传输夹具对手',
+    host_element: pet.element, guest_element: 'metal', current_round: 1, last_resolved_round: 0,
+    host_hp: 120, guest_hp: 120, host_anger: 0, guest_anger: 0, updated_at: '2026-10-24T00:00:00Z' };
+  remote.rounds ||= []; remote.calls ||= [];
+  remote.advance = count => {
+    remote.rounds = Array.from({ length: count }, (_, index) => {
+      const round = index + 1;
+      return { id: `unit-round-${round}`, room_id: remote.room.id, round_no: round,
+        host_action: 'normal_attack', guest_action: 'normal_attack',
+        round_result: { hp_after: { host: 120 - round * 10, guest: 120 - round * 10 },
+          anger_after: { host: round * 5, guest: round * 5 }, statuses_after: { host: [], guest: [] },
+          free_dodge_used: { host: false, guest: false }, damage_taken: { host: 10, guest: 10 }, direct_damage: { host: 10, guest: 10 } } };
+    });
+    Object.assign(remote.room, { current_round: count + 1, last_resolved_round: count,
+      host_hp: 120 - count * 10, guest_hp: 120 - count * 10, host_anger: count * 5, guest_anger: count * 5,
+      updated_at: `2026-10-24T00:00:${String(count).padStart(2, '0')}Z` });
+  };
+  const online = f.service.online;
+  online.invoke = async (op, payload) => {
+    remote.calls.push({ op, payload: clone(payload) });
+    if (op === 'create_room') return { room: clone(remote.room) };
+    if (op === 'get_room') return remote.getRoom ? remote.getRoom(payload) : { room: clone(remote.room), rounds: clone(remote.rounds.filter(round => !payload.beforeRound || round.round_no < payload.beforeRound).slice(-50)) };
+    if (op === 'submit_action') return remote.submit ? remote.submit(payload) : { room: clone(remote.room) };
+    throw new Error(`Unexpected scripted transport operation: ${op}`);
+  };
+  online.subscribeRoom = async () => { online.channel = { unitTransport: true }; };
+  return { remote, online, petId: pet.petId };
+}
+
+test('scripted transport: uncertain original action survives SQLite restart and never spills into the next round', { skip: !hasCompanions }, async () => {
+  let f = setup(); const folder = f.folder;
+  try {
+    let fixture = protocolFixture(f);
+    const remote = fixture.remote;
+    const session = await f.service.createRoom({ petId: fixture.petId }, f.context);
+    remote.submit = async () => { throw new Error('connection reset after possible acceptance'); };
+    await assert.rejects(f.service.act({ sessionId: session.id, actionId: 'original-one', action: 'normal_attack', expectedRound: 1 }, f.context), error => error.code === 'ONLINE_ACTION_UNCERTAIN');
+    assert.deepEqual(f.service.snapshot({ sessionId: session.id }, f.context).pendingAction, { actionId: 'original-one', action: 'normal_attack', roundNo: 1, uncertain: true });
+    f.close(); f = setup(folder); fixture = protocolFixture(f, remote);
+    assert.equal(f.service.snapshot({ sessionId: session.id }, f.context).pendingAction.actionId, 'original-one');
+    remote.submit = null;
+    const pending = await f.service.retryAction({ sessionId: session.id }, f.context);
+    assert.equal(pending.pendingAction.roundNo, 1); assert.equal(pending.pendingAction.uncertain, false);
+    assert.deepEqual(remote.calls.filter(call => call.op === 'submit_action').map(call => [call.payload.roundNo, call.payload.action]), [[1, 'normal_attack'], [1, 'normal_attack']]);
+    remote.advance(1);
+    const recovered = await f.service.retryAction({ sessionId: session.id }, f.context);
+    assert.equal(recovered.pendingAction, null); assert.equal(recovered.snapshot.round, 1);
+    assert.equal(remote.calls.filter(call => call.op === 'submit_action').length, 2);
+    assert.equal(f.service.store.action(f.owner, 'original-one').result.resolvedRound, 1);
+  } finally { f.close(); }
+});
+
+test('scripted transport: history sync fills a missing middle page rather than only fetching before the oldest round', { skip: !hasCompanions }, async () => {
+  const f = setup();
+  try {
+    const { remote, online, petId } = protocolFixture(f);
+    let session = await f.service.createRoom({ petId }, f.context);
+    remote.advance(5); online.applyRoom(remote.room);
+    session.rounds = [remote.rounds[0], remote.rounds[2]].map(round => { const mapped = online.mapRoundToBattleResult(round); return { ...mapped.roundResult, state: mapped.state }; });
+    f.service.store.save(f.owner, session);
+    remote.getRoom = async payload => ({ room: clone(remote.room), rounds: clone(payload.beforeRound ? remote.rounds.filter(round => round.round_no < payload.beforeRound) : remote.rounds.slice(-2)) });
+    session = await f.service.sync({ sessionId: session.id }, f.context);
+    assert.deepEqual(session.rounds.map(round => round.round), [1, 2, 3, 4, 5]);
+    assert.equal(session.historyComplete, true);
+    assert.equal(remote.calls.find(call => call.op === 'get_room' && call.payload.beforeRound)?.payload.beforeRound, 3);
+  } finally { f.close(); }
+});
+
+test('scripted transport: a room advancing during history pagination cannot leave a stale snapshot marked complete', { skip: !hasCompanions }, async () => {
+  const f = setup();
+  try {
+    const { remote, petId } = protocolFixture(f);
+    let session = await f.service.createRoom({ petId }, f.context);
+    remote.advance(2);
+    remote.getRoom = async payload => {
+      if (payload.beforeRound === 2) remote.advance(3);
+      return { room: clone(remote.room), rounds: clone(payload.beforeRound ? remote.rounds.filter(round => round.round_no < payload.beforeRound) : remote.rounds.slice(-1)) };
+    };
+    session = await f.service.sync({ sessionId: session.id }, f.context);
+    assert.equal(session.room.last_resolved_round, 3);
+    assert.equal(session.snapshot.round, 3);
+    assert.deepEqual(session.rounds.map(round => round.round), [1, 2, 3]);
+    assert.equal(session.historyComplete, true);
+  } finally { f.close(); }
+});
+
+test('scripted realtime: callbacks from a removed room cannot replace the current room or restore cleared state', async () => {
+  const online = new OnlineDuelService();
+  const channels = [];
+  online.client = {
+    channel() {
+      const channel = { handlers: [], on(_event, filter, handler) { this.handlers.push({ table: filter.table, handler }); return this; }, subscribe(handler) { this.status = handler; return this; } };
+      channels.push(channel); return channel;
+    },
+    async removeChannel() {}
+  };
+  online.setCurrentUser({ id: 'unit-user', sessionToken: 'unit-transport-proof' });
+  const room = id => ({ id, host_user_id: 'unit-user', guest_user_id: 'unit-peer', current_round: 1, last_resolved_round: 0 });
+  online.applyRoom(room('first')); await online.subscribeRoom();
+  online.applyRoom(room('second')); await online.subscribeRoom();
+  const notifyRoom = (channel, value) => channel.handlers.find(entry => entry.table === 'duel_rooms').handler({ new: value });
+  const notifyRound = (channel, roomId, number) => channel.handlers.find(entry => entry.table === 'duel_rounds').handler({ new: { room_id: roomId, round_no: number } });
+  notifyRoom(channels[0], { ...room('first'), current_round: 9, last_resolved_round: 8 });
+  notifyRound(channels[0], 'first', 8);
+  assert.equal(online.room.id, 'second'); assert.equal(online.roundCache.has(8), false);
+  notifyRoom(channels[1], { ...room('second'), current_round: 2, last_resolved_round: 1 });
+  notifyRound(channels[1], 'second', 1);
+  assert.equal(online.room.last_resolved_round, 1); assert.equal(online.roundCache.has(1), true);
+  await online.clearRoomState();
+  notifyRoom(channels[1], room('second')); notifyRound(channels[1], 'second', 2);
+  assert.equal(online.room, null); assert.equal(online.roundCache.size, 0);
+});
+
 test("real SQLite and companions: full training awards only the selected instance once, and preserves legacy data", { skip: !hasCompanions }, async () => {
   const f = setup();
   try {
@@ -212,11 +331,14 @@ test("real accounts local-ID mapping preserves legacy archives, isolates 2D owne
     const owner = accounts.getOwnerAccountId();
     assert.notEqual(owner, f.owner);
     assert.equal(accounts.getLegacyInventory(owner).pets.length, f.legacy.getInventorySnapshot().pets.length);
-    assert.equal(f.service.overview({}, { ownerAccountId: owner }).pets.length, 0);
+    const mapped = f.service.overview({}, { ownerAccountId: owner }).pets;
+    assert.equal(mapped.length, 2);
+    assert.deepEqual(mapped.map(pet=>pet.petId).sort(), f.services.get('companions').listPets(f.owner).map(pet=>pet.petId).sort());
+    assert.equal(f.db.prepare('SELECT COUNT(*) AS count FROM companion_legacy_archive WHERE owner_account_id=?').get(owner).count, 6);
     const adopted = f.companionCommands.adopt({ actionId: 'mapped-owner-adoption', templateId: 'big-fish-gentle', name: '映射后的鱼丸', showOnDesktop: false }, { ownerAccountId: owner });
     assert.equal(adopted.ok, true);
-    assert.equal(f.service.overview({}, { ownerAccountId: owner }).pets[0].petId, adopted.data.pet.petId);
-    assert.equal(f.services.get('companions').listPets(owner).length, 1);
+    assert.ok(f.service.overview({}, { ownerAccountId: owner }).pets.some(pet=>pet.petId===adopted.data.pet.petId));
+    assert.equal(f.services.get('companions').listPets(owner).length, 3);
     assert.throws(() => f.service.user(owner), /云端账号/);
     await accounts.logout();
     assert.throws(() => f.service.overview({}, { ownerAccountId: owner }), error => error.code === 'AUTH_REQUIRED');
