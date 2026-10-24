@@ -1,7 +1,7 @@
 import { createRequire } from 'node:module';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { existsSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { randomUUID } from 'node:crypto';
 import { app, BrowserWindow, ipcMain, Menu, nativeImage, protocol, safeStorage, screen, session, Tray } from 'electron';
 
@@ -31,6 +31,9 @@ let closeToTray = true;
 const companionWindows = new Map<string, BrowserWindow>();
 const rendererFile = resolve(runtime, '../dist/ui/index.html');
 const preload = resolve(runtime, '../dist/preload/index.cjs');
+const manifestFile = resolve(runtime, '../dist/build-manifest.json');
+let build: Record<string, unknown> | undefined;
+try { if (existsSync(manifestFile)) build = JSON.parse(readFileSync(manifestFile, 'utf8')); } catch { /* Older builds have no provenance manifest. */ }
 
 function trusted(event: Electron.IpcMainEvent | Electron.IpcMainInvokeEvent) {
   try {
@@ -121,9 +124,9 @@ app.whenReady().then(async () => {
   Menu.setApplicationMenu(null);
   session.defaultSession.setPermissionRequestHandler((_contents, _permission, callback) => callback(false));
   const userData = app.getPath('userData');
-  // Refuse invalid QA configuration before reading, backing up or opening saves.
-  const qaScenario = readQaScenario({ userData });
   const legacyDataFile = process.env.PET_RUNTIME_DATA_FILE || join(userData, 'pet-runtime-data.json');
+  // Refuse invalid QA configuration before reading, backing up or opening saves.
+  const qaScenario = readQaScenario({ userData, legacyDataFile, productionDirectories: ['Lingjing', 'qingpet-desktop-runtime', 'qingpet-lord-3d'].map(name => join(app.getPath('appData'), name)) });
   const db = openDatabase(join(userData, 'lingjing.sqlite'));
   const sourceKey = `legacy-source:${legacyDataFile}`;
   const sourceMarker = db.prepare('SELECT value FROM lingjing_meta WHERE key=?').get(sourceKey);
@@ -132,12 +135,12 @@ app.whenReady().then(async () => {
   backupLegacy(legacyDataFile);
   const legacy = initializeLegacy();
   services = createServices({ db, legacy, paths: { userData, assets: join(runtime, 'assets'), legacyDataFile, legacyDataExisted }, windows, safeStorage });
-  if (qaScenario) services.provide('qaScenario', qaScenario);
+  if (qaScenario) services.provide('qaProfile', qaScenario);
   features = discoverFeatures(join(runtime, 'features'), services);
   await require(join(runtime, 'core/builtin-art.cjs')).registerBuiltinArt(services);
   if (services.get('backups') && services.get('resources')) services.get('backups').register(require(join(runtime, 'core/resource-backup.cjs')).createResourceBackupAdapter(services));
   if (services.get('backups') && services.get('conversations')) services.get('backups').register(require(join(runtime, 'core/conversation-backup.cjs')).createConversationBackupAdapter(services));
-  services.ipc.handle('app:info', () => ({ version: app.getVersion(), platform: process.platform, features: features.map(x => ({ id: x.id, commands: x.commands })), user: services.session.getCurrentUser(), ...(qaScenario ? { scenario: qaScenario.descriptor } : {}) }), { public: true });
+  services.ipc.handle('app:info', () => ({ version: app.getVersion(), platform: process.platform, build, features: features.map(x => ({ id: x.id, commands: x.commands })), user: services.session.getCurrentUser(), ...(qaScenario ? { scenario: qaScenario.descriptor } : {}) }), { public: true });
   ipcMain.handle('lingjing:invoke', async (event, request) => {
     if (!trusted(event)) return { ok: false, code: 'UNTRUSTED_SENDER', message: '请求来源无效。' };
     try {

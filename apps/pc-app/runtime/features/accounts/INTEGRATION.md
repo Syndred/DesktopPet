@@ -1,5 +1,7 @@
 # Accounts integration
 
+Isolated simulation/session boundary for the unified battle goal: [QA_CONTRACT.md](QA_CONTRACT.md). Normal account and backup behavior remains the default; QA never follows from a network error.
+
 Accounts uses one injected SQLite connection and automatic module discovery. Foundation base is `8f17aec`; public UI/config/2D illustration files are consumed verbatim from foundation `f0af90f` (no direct merges of other feature branches). No independently authored root dependency changes. Routes: `/account`, `/settings`, `/settings/privacy`.
 
 `services.session.setAdapter(accounts)` installs the verified session. `getCurrentUser().id` **is the storage owner**, equal to `ownerAccountId`. Cloud `subjectId` remains the original `runtime_accounts.id` text. Imported local owners are `local:<legacy-id>`; `account_aliases(provider, subject_id)` maps them without guessing from account names. New local accounts use `local-<uuid>`. `player_profiles` UUIDs are not inferred, merged or populated. Never pass a storage owner to cloud duels; use the main-only `accounts.requireRuntimeUser()` to obtain the verified runtime id and token. The token is absent from all renderer results, exports and sync envelopes.
