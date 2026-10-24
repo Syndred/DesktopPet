@@ -1,7 +1,7 @@
 {
   "module": "battle",
   "branch": "codex/lingjing-battle",
-  "commit": "3be08543765fcf2cf88d0920bc02682287896e57",
+  "commit": "12a6e7e31f828babcb968d95d8f7000f58b344f1",
   "status": "ready_for_foundation_integration_online_acceptance_pending",
   "implementationReady": true,
   "goalComplete": false,
@@ -9,7 +9,7 @@
   "scope": "docs/implementation/scope-2d-ui-first.txt",
   "upstream": {
     "fetched": true,
-    "fetchCheckedAt": "2026-10-24T12:55:38Z",
+    "fetchCheckedAt": "2026-10-24T13:03:39Z",
     "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086",
     "originMainIsAncestor": true,
     "mergeOriginMainResult": "Already up to date"
@@ -32,18 +32,19 @@
     "经验、战报、种子与奖励账本同库事务及幂等；真实 garden 领地适配器和 accounts 备份账本保护已接入。",
     "依据批准原图实现 2D 庭院舞台、实际角色动作、状态栏、出战列表、行动卡、好友三栏和战报回顾。",
     "正式使用公共 shadcn/Radix 与 Motion 接口，复用资源模块 PixiJS 舞台；应用和系统动画设置均实时生效。",
-    "无法联网时邀请数量显示未知，保存本地战报并说明云端账号/连接要求。"
+    "无法联网时邀请数量显示未知，保存本地战报并说明云端账号/连接要求。",
+    "修复分页同步期间房间推进仍标记旧快照完整、旧频道迟到回调覆盖新房间/恢复已清理房间两个竞态。"
   ],
   "tests": [
     {
       "check": "现有战斗/房间/好友/schema 定向回归",
       "command": "npx vitest run tests/task-d002-pc-battle-runtime.test.ts tests/task-t103-battle-engine.test.ts tests/task-t104-realtime-room.test.ts tests/task-t202-friends-private-duel.test.ts tests/task-t206-online-duel-schema.test.ts",
-      "result": "33 passed"
+      "result": "33 passed（前一轮）；本轮涉及的房间/好友 9 项复查通过"
     },
     {
       "check": "原生 SQLite + 实际 companions/accounts/garden",
       "command": "node scripts/desktop/run-native-tests.cjs apps/pc-app/runtime/features/battle/battle.test.cjs",
-      "result": "11 passed, 0 skipped; 含 400 公式组合、重启、并发回合、实例隔离、事务回滚、旧数据保留、账号退出、领地及备份去重"
+      "result": "15 passed, 0 skipped；含 400 公式组合及实际数据库/领域适配；其中 4 项明确使用脚本传输/回调验证恢复边界，不计为真实联机验收"
     },
     {
       "check": "嵌入式 PostgreSQL 实际执行",
@@ -78,6 +79,11 @@
     {
       "check": "上游最新代码",
       "result": "git fetch origin 成功，origin/main 已是 HEAD 祖先，合入检查 Already up to date"
+    },
+    {
+      "check": "同步与断线恢复竞态",
+      "result": "passed；已先复现分页快照滞后和旧频道回调覆盖两个失败，再修复；新增 4 项定向检查",
+      "evidence": "docs/implementation/evidence/battle/2026-10-24/network-recovery.json"
     }
   ],
   "openSource": [
@@ -228,10 +234,12 @@
     "docs/implementation/evidence/battle/2026-10-24/evidence.json",
     "docs/implementation/evidence/battle/2026-10-24/motion-evidence.json",
     "docs/implementation/evidence/battle/2026-10-24/postgres-evidence.json",
-    "docs/implementation/evidence/battle/2026-10-24/cloud-reachability.json"
+    "docs/implementation/evidence/battle/2026-10-24/cloud-reachability.json",
+    "docs/implementation/evidence/battle/2026-10-24/network-recovery.json",
+    "docs/implementation/evidence/battle/2026-10-24/cloud-reachability-2103.json"
   ],
   "realIncomplete": [
-    "2026-10-24 20:55（Asia/Shanghai）再次探测配置端点 http://47.112.208.97:8000/functions/v1/duel-online，OPTIONS 仍返回 502；真实双实例邀请→接受→房间→Realtime→结算未通过验收。",
+    "2026-10-24 21:03（Asia/Shanghai）再次探测配置端点 http://47.112.208.97:8000/functions/v1/duel-online，OPTIONS 仍返回 502；真实双实例邀请→接受→房间→Realtime→结算未通过验收。",
     "增量 Supabase 迁移及 duel-online 更新尚未部署，需 foundation/用户审核发布；本任务不自动执行生产发布。",
     "跨设备奖励与账号同步的最终收敛仍需服务恢复后的实际双端核对；稳定云端 actionId、奖励回执及本机备份账本保护不能替代该验收。"
   ],
@@ -241,5 +249,38 @@
     "审核后先部署 infra/supabase/migrations/20261024_lingjing_battle_atomic_rounds.sql，再发布更新的 duel-online",
     "服务恢复并具备两个隔离的真实云端账号后，完成好友双端联机与跨设备结算验收"
   ],
-  "policy": "仅在独立 battle 工作树交付；根 manifests/config/共享 kit 的变动来自 foundation 合并。未新建会话、未发消息给其他会话、未操作真实用户个人目录、未删除历史数据、未部署生产。目标保持未完成，绝不把本机或嵌入式 SQL 验证当成真实好友联机成功。"
+  "policy": "仅在独立 battle 工作树交付；根 manifests/config/共享 kit 的变动来自 foundation 合并。未新建会话、未发消息给其他会话、未操作真实用户个人目录、未删除历史数据、未部署生产。目标保持未完成，绝不把本机或嵌入式 SQL 验证当成真实好友联机成功。",
+  "blockedAudit": {
+    "condition": "Configured deployed duel-online unavailable; additive migration/function not deployed; real two-account acceptance cannot run",
+    "consecutiveObservedGoalTurns": 2,
+    "previousTurnClassification": "progress",
+    "currentTurnClassification": "progress",
+    "currentProgress": "Reproduced and fixed two synchronization races; added four focused recovery tests",
+    "goalStatus": "active",
+    "note": "Do not claim completion or mark blocked before the consecutive-turn threshold and an actual impasse are established."
+  },
+  "completionAudit": [
+    {
+      "requirement": "原五行回合、怒气与技能",
+      "state": "本机及公式一致性已验证",
+      "evidence": "15 项原生检查内含 400 desktop/edge 公式执行组合"
+    },
+    {
+      "requirement": "好友搜索约战、房间同步、断线恢复",
+      "state": "实现及本地边界已验证，真实云端闭环仍未验证",
+      "evidence": "docs/implementation/evidence/battle/2026-10-24/network-recovery.json",
+      "missing": "服务恢复并审核部署后，两个隔离真实云端账号完成邀请、接受、房间与 Realtime"
+    },
+    {
+      "requirement": "经验/种子结算与战报回顾",
+      "state": "真实本机 UI/事务已验证；跨设备和云端结算仍未验证",
+      "evidence": "docs/implementation/evidence/battle/2026-10-24/evidence.json",
+      "missing": "真实双端结算及账号同步收敛"
+    },
+    {
+      "requirement": "批准 UI 与本版 2D",
+      "state": "本机截图及公共交互已验证，已记录视觉差异",
+      "evidence": "docs/implementation/evidence/battle/2026-10-24/README.txt"
+    }
+  ]
 }
