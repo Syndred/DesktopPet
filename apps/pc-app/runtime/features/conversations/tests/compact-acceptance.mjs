@@ -27,6 +27,7 @@ const sourceFiles = ['apps/pc-app/runtime/features/conversations/service.cjs', '
   'apps/pc-app/runtime/features/resources/assets/roster-v2/catalog.json'];
 const sourceHashes = Object.fromEntries(sourceFiles.map(file => [file, createHash('sha256').update(readFileSync(resolve(file))).digest('hex')]));
 const buildProvenance = JSON.parse(readFileSync(resolve('apps/pc-app/dist/build-manifest.json'), 'utf8'));
+assert.equal(buildProvenance.sourceCommit, sourceCommit, 'Build the current source revision before acceptance.');
 async function readDatabase(petId) {
   return app.evaluate(({ app }, { output, petId, qaKey }) => {
     const req = process.getBuiltinModule('module').createRequire(app.getAppPath() + '/package.json');
@@ -73,6 +74,8 @@ async function choose(pet) {
   await page.locator('.cv-pet-option').filter({ has: page.locator(`.cv-avatar[data-pet-id="${pet.petId}"]`) }).click();
   await page.getByRole('region', { name: `与${pet.name}的聊天`, exact: true }).waitFor();
   await waitUntil(async () => (await page.locator('.cv-thread-header .cv-avatar').getAttribute('data-resource-id')) === pet.resource.resourceId, 'selected canonical identity');
+  await page.locator('.cv-thread-header .resource-portrait image').waitFor();
+  await page.locator('.cv-pet-scene .resource-portrait image').waitFor();
 }
 try {
   app = await electron.launch({ args: [resolve('.')], env });
@@ -92,6 +95,15 @@ try {
   assert.equal(snapshot.pets.length, catalog.characters.length);
   for (const pet of pets) assert.equal(snapshot.pets.find(item => item.petId === pet.petId).element, pet.element);
   await waitUntil(async () => (await page.locator('.cv-pet-option .cv-avatar svg[data-framing="portrait"] image').count()) === pets.length, 'all canonical portraits');
+  const portraitRows = await page.locator('.cv-pet-option').evaluateAll(rows => rows.map(row => ({
+    petId: row.querySelector('.cv-avatar').getAttribute('data-pet-id'), resourceId: row.querySelector('.cv-avatar').getAttribute('data-resource-id'),
+    element: row.querySelector('[data-element]').getAttribute('data-element'), image: decodeURIComponent(row.querySelector('.resource-portrait image').getAttribute('href'))
+  })));
+  for (const row of portraitRows) {
+    const pet = pets.find(pet => pet.petId === row.petId);
+    assert.equal(row.resourceId, pet.resource.resourceId); assert.equal(row.element, pet.element); assert.ok(row.image.includes(row.resourceId));
+  }
+  assert.equal(new Set(portraitRows.map(row => row.resourceId)).size, catalog.characters.length);
   const removedCopy = ['同样的形象，也有不同的小世界', '你们的故事，从这一句话开始', '仅当前实例', '实例 ·', 'DPAPI', '主进程', 'SSE'];
   const visibleCopy = await page.locator('.cv-root').innerText();
   for (const text of removedCopy) assert.equal(visibleCopy.includes(text), false);
@@ -116,6 +128,7 @@ try {
   await choose(selected);
   await page.getByRole('button', { name: '发送快捷键', exact: true }).focus();
   await page.getByRole('tooltip').filter({ hasText: 'Shift+Enter' }).waitFor();
+  await page.screenshot({ path: join(output, 'chat-keyboard-hint.png'), fullPage: true });
   await page.keyboard.press('Escape');
   await page.getByRole('button', { name: '添加记忆', exact: true }).click();
   await page.getByRole('dialog').getByLabel('记忆内容', { exact: true }).fill(`QA：仅${selected.name}保留的记忆`);
@@ -129,6 +142,7 @@ try {
   await page.keyboard.press('Escape');
   await page.getByRole('group', { name: '请先填写并保存密钥。', exact: true }).focus();
   await page.getByRole('tooltip').filter({ hasText: '请先填写并保存密钥' }).waitFor();
+  await page.screenshot({ path: join(output, 'settings-disabled-hint.png'), fullPage: true });
   await page.keyboard.press('Escape');
   await page.getByRole('tab', { name: '全局连接', exact: true }).focus(); await page.keyboard.press('ArrowRight');
   await waitUntil(async () => (await page.getByRole('tab', { name: '独立连接', exact: true }).getAttribute('aria-selected')) === 'true', 'Radix keyboard tab');
@@ -203,7 +217,7 @@ try {
   await page.screenshot({ path: join(output, 'chat-compact-1440.png'), fullPage: true });
   assert.deepEqual(errors, []);
   const evidence = { at: new Date().toISOString(), status: 'passed', sourceCommit, sourceHashes, buildProvenance, realElectron: true, isolatedQaProfile: true, simulation: 'none',
-    modelVerification: 'real local connection failure only; no mocked response and no external model', network, operations, projections,
+    modelVerification: 'real local connection failure only; no mocked response and no external model', network, operations, portraitRows, projections,
     sqliteReadback: { failed: failedDatabase, cleared: clearedDatabase },
     canonicalCount: catalog.characters.length, coveredElements: requiredElements, rendererErrors: errors,
     dataReadback: { selectedPetId: cleared.petId, historyAfterClear: cleared.messages.length, savedMemoryRetained: cleared.memories[0].id === note.id,
