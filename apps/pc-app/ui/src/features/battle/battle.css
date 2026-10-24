@@ -261,9 +261,10 @@
 .battle-actor-slot { position: relative; min-width: 0; height: 100%; }
 .battle-stage .battle-actor-slot > .battle-portrait { height: 100%; }
 .battle-hit-feedback { position: absolute; z-index: 4; top: 30%; left: 50%; display: grid; place-items: center; min-width: 30px; min-height: 30px; color: #fff3eb; text-shadow: 0 2px 3px #522f4c; font-size: 29px; font-weight: 800; pointer-events: none; }
-.battle-hit-feedback.heal { color: #b1f3b7; }
-.battle-hit-feedback.anger { display: flex; align-items: center; color: #bce9ff; font-size: 21px; }
-.battle-hit-feedback.status { width: 38px; height: 38px; border: 2px solid #fff8; border-radius: 50%; background: #d5eaffcf; color: #4e91d0; box-shadow: 0 0 25px #c2eaff90; }
+.battle-hit-feedback.heal { top: 20%; left: 43%; color: #b1f3b7; }
+.battle-hit-feedback.dot { top: 43%; }
+.battle-hit-feedback.anger { top: 18%; display: flex; align-items: center; color: #bce9ff; font-size: 21px; }
+.battle-hit-feedback.status { top: 18%; left: 60%; width: 38px; height: 38px; border: 2px solid #fff8; border-radius: 50%; background: #d5eaffcf; color: #4e91d0; box-shadow: 0 0 25px #c2eaff90; }
 .battle-hit-feedback.status > svg { width: 25px; height: 25px; }
 .battle-hit-feedback.status.element-fire { background: #ffe0b8d9; color: #e3814e; }
 .battle-hit-feedback.status.element-wood { background: #caf2d5d9; color: #4e9e71; }

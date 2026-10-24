@@ -23,12 +23,13 @@ const BURN_CURRENT_HP_RATIO_PER_STACK = 0.08;
 const STANDARD_MAX_HP = 120;
 const MAX_ANGER = 100;
 const DODGE_MAX_COST = 20;
+const DODGE_REFUND_ANGER = 30;
 
 function getBattleRules() {
   return { id: 'five-elements-standard-v1', label: '标准五行对战', vitalPolicy: 'normalized',
     maxHp: STANDARD_MAX_HP, maxAnger: MAX_ANGER, companionStatsApplied: false,
     baseDamage: { ...BASE_DAMAGE }, ultimateAnger: ULTIMATE_ANGER_THRESHOLD,
-    ultimateCost: ULTIMATE_ANGER_COST, ultimateHeal: ULTIMATE_FIXED_HEAL, dodgeMaxCost: DODGE_MAX_COST,
+    ultimateCost: ULTIMATE_ANGER_COST, ultimateHeal: ULTIMATE_FIXED_HEAL, dodgeMaxCost: DODGE_MAX_COST, dodgeRefund: DODGE_REFUND_ANGER,
     advantage: { ...ELEMENT_ADVANTAGE_CHAIN },
     elementEffects: {
       metal: { label: '易伤', description: '每层受伤×1.5，最多5层' },
@@ -420,8 +421,8 @@ function spendDodgeAnger(player, notes) {
 }
 
 function refundDodgeAnger(player, notes) {
-  player.anger = Math.min(MAX_ANGER, player.anger + 30);
-  notes.push(`${player.id} dodged normal attack and refunded 30 anger`);
+  player.anger = Math.min(MAX_ANGER, player.anger + DODGE_REFUND_ANGER);
+  notes.push(`${player.id} dodged normal attack and refunded ${DODGE_REFUND_ANGER} anger`);
 }
 
 function applyRoundEndStatusEffects(

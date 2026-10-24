@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useState } from 'react';
 import { AssistantRuntimeProvider, ComposerPrimitive, MessagePrimitive, ThreadPrimitive,
   useAuiState, useExternalStoreRuntime, type ThreadMessageLike } from '@assistant-ui/react';
-import { ArrowDown, RotateCcw, BookmarkPlus, Send, Square, Smile } from 'lucide-react';
+import { ArrowDown, RotateCcw, BookmarkPlus, Send, Square, Smile, Keyboard, Settings2 } from 'lucide-react';
 import type { ConversationMessage, ConversationPet } from '../../../../../../packages/shared-types/src/features/conversations';
-import { PetAvatar } from './components';
+import { PetAvatar, ActionHint, InfoHint } from './components';
 import { Button } from '../../components/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '../../components/ui/popover';
 import { AnimatedList } from '../../components/motion';
@@ -44,9 +44,9 @@ function Composer({ pet, busy, insertEmoji }: { pet: ConversationPet; busy: bool
     <label className="cv-sr-only" htmlFor="conversation-message">给{pet.name}发消息</label>
     <ComposerPrimitive.Input id="conversation-message" maxLength={8000} minRows={1} maxRows={4}
       placeholder={`和${pet.name}说点什么…`} aria-label={`给${pet.name}发消息`}/>
-    {busy ? <ComposerPrimitive.Cancel asChild><Button variant="secondary" className="cv-button secondary"><Square size={15}/>停止回复</Button></ComposerPrimitive.Cancel> :
-      <ComposerPrimitive.Send asChild><Button className="cv-button"><Send size={16}/>发送</Button></ComposerPrimitive.Send>}
-    <span className="cv-composer-hint">Enter 发送 · Shift+Enter 换行<span>{length}/8000</span></span>
+    {busy ? <ComposerPrimitive.Cancel asChild><Button variant="secondary" className="cv-button secondary" aria-label="停止回复" title="停止回复"><Square size={17} fill="currentColor"/></Button></ComposerPrimitive.Cancel> :
+      <ComposerPrimitive.Send asChild><Button className="cv-button" aria-label="发送" title="发送"><Send size={18}/></Button></ComposerPrimitive.Send>}
+    <span className="cv-composer-hint"><InfoHint label="发送快捷键" text="Enter 发送，Shift+Enter 换行。" icon={Keyboard}/>{length > 0 && <span>{length}/8000</span>}</span>
   </ComposerPrimitive.Root>;
 }
 
@@ -61,11 +61,11 @@ function StoredMessage({ message, pet, last, retry, remember }: { message: Conve
     <div className="cv-message-body"><div className="cv-message-meta">{assistant ? pet.name : '我'}
       <time dateTime={new Date(message.createdAt).toISOString()}>{new Date(message.createdAt).toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' })}</time></div>
       <div className={`cv-bubble ${failed ? 'interrupted' : ''}`}>
-        {message.content ? <MessagePrimitive.Parts/> : pending ? <span className="cv-pending-text">正在认真想怎么回应你<span className="cv-typing" aria-hidden="true">…</span></span> : '未收到完整回复'}
+        {message.content ? <MessagePrimitive.Parts/> : pending ? <span className="cv-pending-text" role="status" aria-label="回复中">…</span> : '回复未完成'}
       </div>
       <div className="cv-message-actions">{failed && <span>{errors[message.errorCode ?? ''] || '回复失败，可检查连接后重试'}</span>}
-        {failed && last && <Button variant="ghost" className="cv-link" onClick={retry}><RotateCcw size={12}/>重新回复</Button>}
-        {!pending && message.content && <Button variant="ghost" className="cv-link cv-remember-message" onClick={remember}><BookmarkPlus size={12}/>记住这件事</Button>}
+        {failed && last && <ActionHint text="重新回复"><Button variant="ghost" className="cv-icon" aria-label="重新回复" onClick={retry}><RotateCcw size={14}/></Button></ActionHint>}
+        {!pending && message.content && <ActionHint text="保存为记忆"><Button variant="ghost" className="cv-icon cv-remember-message" aria-label="记住这件事" onClick={remember}><BookmarkPlus size={14}/></Button></ActionHint>}
       </div>
     </div>
   </article></MessagePrimitive.Root>;
@@ -89,8 +89,8 @@ export function AssistantConversationThread({ pet, messages, busy, hasConnection
     <ThreadPrimitive.Root className="cv-thread-content" aria-label={`与${pet.name}的对话内容`}>
       <ThreadPrimitive.Viewport className="cv-message-list" role="log" aria-label="聊天记录" autoScroll turnAnchor="bottom">
         {nextCursor && <Button variant="ghost" className="cv-history-more cv-link" disabled={moreBusy} onClick={more}>{moreBusy ? '正在读取…' : '查看更早的消息'}</Button>}
-        {!messages.length && <div className="cv-thread-empty"><PetAvatar pet={pet} large/><h3>今天，有什么想和{pet.name}分享？</h3><p>你们的故事，从这一句话开始。</p>
-          {!hasConnection && <a className="cv-link" href="#/settings/ai">配置模型连接 →</a>}</div>}
+        {!messages.length && <div className="cv-thread-empty"><PetAvatar pet={pet} large/><h3>暂无消息</h3>
+          {!hasConnection && <a className="cv-link" href="#/settings/ai" aria-label="配置模型连接"><Settings2 size={14}/>设置连接</a>}</div>}
         <AnimatedList className="cv-thread-messages"><ThreadPrimitive.Messages>{({ message }) => {
           const stored = indexed.get(message.id);
           return stored ? <StoredMessage message={stored} pet={pet} last={message.id === messages.at(-1)?.id && !busy}

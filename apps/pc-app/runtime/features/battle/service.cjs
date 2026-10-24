@@ -206,15 +206,17 @@ class BattleFeatureService {
     if (this.services.get('accounts')?.privateSession?.()?.provider !== 'local') throw fail('QA_ACCOUNT_REQUIRED', '需要本机场景账号');
     return this.serial(owner, async () => {
       const session = this.requireSession(owner, payload.sessionId);
-      if (session.status !== 'active' || session.snapshot.round !== 0 || payload.preset !== 'charged') throw fail('QA_PRESET_INVALID', '仅支持未出招场景的合法充能前态');
+      const presets = { charged: { player: { hp: 85, anger: 50 }, enemy: { hp: 100, anger: 30 } }, finisher: { player: { hp: 120, anger: 50 }, enemy: { hp: 12, anger: 0 } }, defending: { player: { hp: 12, anger: 0 }, enemy: { hp: 120, anger: 50 } } };
+      if (session.status !== 'active' || session.snapshot.round !== 0 || !presets[payload.preset]) throw fail('QA_PRESET_INVALID', '仅支持未出招场景的合法前态');
       if (session.mode === 'friend') {
         const user = this.user(owner);
+        session.context.qaPreset = payload.preset; this.store.save(owner, session);
         await this.online.invoke('qa_set_state', { userId: user.id, sessionToken: user.sessionToken, roomId: session.room.id, preset: payload.preset });
         return this.syncInternal(owner, session);
       }
       const engine = new BattleRuntimeService();
-      engine.restore({ ...session.snapshot, player: { ...session.snapshot.player, hp: 85, anger: 50 }, enemy: { ...session.snapshot.enemy, hp: 100, anger: 30 } });
-      session.snapshot = engine.snapshot(); session.context.qaPreset = 'charged';
+      engine.restore({ ...session.snapshot, player: { ...session.snapshot.player, ...presets[payload.preset].player }, enemy: { ...session.snapshot.enemy, ...presets[payload.preset].enemy } });
+      session.snapshot = engine.snapshot(); session.context.qaPreset = payload.preset;
       if (payload.enemyAction != null) {
         if (!ACTIONS.has(payload.enemyAction)) throw fail('QA_PRESET_INVALID', '无效场景行动');
         session.context.qaEnemyAction = payload.enemyAction;
@@ -628,7 +630,7 @@ class BattleFeatureService {
     const owner = this.owner(context);
     return this.serial(owner, async () => {
       const session = this.requireSession(owner, payload.sessionId);
-      if (session.status !== 'finished' || session.winner !== 'player') throw fail('VICTORY_REQUIRED', '胜利后可确认');
+      if (session.status !== 'finished' || !session.winner || session.mode === 'wild' && session.winner !== 'player') throw fail('VICTORY_REQUIRED', session.mode === 'wild' ? '胜利后可收服' : '对战结束后可确认');
       const adapter = this.services.get(session.mode === 'wild' ? 'discovery' : session.mode === 'territory' ? 'garden' : '');
       if (!adapter?.settleBattleContext) throw fail('NO_CONTEXT_ACTION', '本场结算已自动保存');
       const result = await adapter.settleBattleContext({ ownerAccountId: owner, sessionId: session.id, actionId: text(payload.actionId, '操作编号'), name: payload.name, showOnDesktop: Boolean(payload.showOnDesktop) });
