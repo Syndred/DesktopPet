@@ -40,6 +40,7 @@ module.exports = {
         return pet;
       },
       getSelections(ownerAccountId) { return service.selections(ownerAccountId); },
+      listTemplates() { return service.templates(); },
       applyGrowthInTransaction(ownerAccountId, input) {
         const result = service.applyGrowthInTransaction(ownerAccountId, input);
         changed(ownerAccountId);

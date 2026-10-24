@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { Footprints, Heart, Maximize2, MessageCircle, Monitor, Pencil, Plus, Smile, Soup, Swords } from 'lucide-react';
+import { useCallback, useEffect, useState } from 'react';
+import { Footprints, Heart, Maximize2, MessageCircle, Monitor, Pencil, Plus, Smile, Soup, Swords, X } from 'lucide-react';
 import type { CompanionPet, CompanionsSnapshot } from '../../../../../../packages/shared-types/src/features/companions';
 import { navigate } from '../../app/navigation';
 import { Button, EmptyState, ErrorNotice } from '../../components/ui';
@@ -33,10 +33,10 @@ export function RenameControl({ pet, controller }: { pet: CompanionPet; controll
   const [open, setOpen] = useState(false); const [name, setName] = useState(pet.name);
   return <Dialog open={open} onOpenChange={next => { if (!controller.busy) { if (next) setName(pet.name); setOpen(next); } }}>
     <TooltipProvider delayDuration={350}><Tooltip><TooltipTrigger asChild><DialogTrigger asChild><Button variant="ghost" className="cp-icon-button" aria-label={`修改${pet.name}的名字`}><Pencil size={16}/></Button></DialogTrigger></TooltipTrigger><TooltipContent>给它起个独有的名字</TooltipContent></Tooltip></TooltipProvider>
-    <DialogContent className="cp-modal shadow-none" showCloseButton={!controller.busy} onEscapeKeyDown={event => { if (controller.busy) event.preventDefault(); }} onPointerDownOutside={event => { if (controller.busy) event.preventDefault(); }}>
-      <PageTransition routeKey={`rename:${pet.petId}`}><DialogHeader><DialogTitle>给伙伴起个名字</DialogTitle><DialogDescription>这是这只伙伴独有的名字。</DialogDescription></DialogHeader>
+    <DialogContent className="cp-modal shadow-none" showCloseButton={false} onEscapeKeyDown={event => { if (controller.busy) event.preventDefault(); }} onPointerDownOutside={event => { if (controller.busy) event.preventDefault(); }}>
+      <PageTransition routeKey={`rename:${pet.petId}`}><div className="cp-dialog-heading"><DialogHeader><DialogTitle>给伙伴起个名字</DialogTitle><DialogDescription>这是这只伙伴独有的名字。</DialogDescription></DialogHeader><DialogClose asChild><Button variant="ghost" className="cp-icon-button" aria-label="关闭改名" disabled={controller.busy}><X size={18}/></Button></DialogClose></div>
         <form onSubmit={async event => { event.preventDefault(); if (await controller.petAction('rename', pet, { name })) setOpen(false); }} className="cp-rename-form">
-          <label htmlFor="cp-new-name">伙伴名字</label><Input id="cp-new-name" value={name} onChange={event => setName(event.target.value)} maxLength={48} required/>
+          <label htmlFor="cp-new-name">伙伴名字</label><Input id="cp-new-name" autoFocus value={name} onChange={event => setName(event.target.value)} maxLength={48} required/>
           <small>1–24 个字符</small><ErrorNotice message={controller.error}/><DialogFooter className="cp-dialog-actions"><DialogClose asChild><Button type="button" variant="secondary" disabled={controller.busy}>取消</Button></DialogClose><Button disabled={controller.busy || !name.trim() || [...name.trim()].length > 24} type="submit">{controller.busy ? '正在保存…' : '保存名字'}</Button></DialogFooter>
         </form>
       </PageTransition>
@@ -50,10 +50,15 @@ export function PetActions({ pet, controller }: { pet: CompanionPet; controller:
 
 export function DesktopControls({ pet, controller }: { pet: CompanionPet; controller: Controller }) {
   const [scale, setScale] = useState(pet.desktop.scale);
+  // The shared shadcn Slider does not forward the author's label to its Thumb yet.
+  // Supply only that name; Radix continues to own focus, keyboard, values and gestures.
+  const labelScaleThumb = useCallback((node: HTMLSpanElement | null) => {
+    node?.querySelector('[role="slider"]')?.setAttribute('aria-label', `${pet.name}的外观大小`);
+  }, [pet.name]);
   useEffect(() => setScale(pet.desktop.scale), [pet.petId, pet.desktop.scale]);
   return <div className="cp-desktop-controls">
     <div className="cp-control-row"><span><Footprints size={16}/>行为模式</span><Select value={pet.desktop.behavior} disabled={controller.busy} onValueChange={behavior => { void controller.petAction('desktop', pet, { behavior }); }}><SelectTrigger aria-label={`${pet.name}的行为模式`} className="cp-behavior-select"><SelectValue/></SelectTrigger><SelectContent>{behaviors.map(item => <SelectItem key={item.value} value={item.value}>{item.label}</SelectItem>)}</SelectContent></Select></div>
-    <div className="cp-control-row"><span><Maximize2 size={16}/>外观大小</span><Slider className="cp-scale-slider" aria-label={`${pet.name}的外观大小`} value={[scale]} min={.5} max={2} step={.05} disabled={controller.busy} onValueChange={values => setScale(values[0])} onValueCommit={values => { if (values[0] !== pet.desktop.scale) void controller.petAction('desktop', pet, { scale: values[0] }); }}/><small>{Math.round(scale * 100)}%</small></div>
+    <div className="cp-control-row"><span><Maximize2 size={16}/>外观大小</span><Slider ref={labelScaleThumb} className="cp-scale-slider" aria-label={`${pet.name}的外观大小`} value={[scale]} min={.5} max={2} step={.05} disabled={controller.busy} onValueChange={values => setScale(values[0])} onValueCommit={values => { if (values[0] !== pet.desktop.scale) void controller.petAction('desktop', pet, { scale: values[0] }); }}/><small>{Math.round(scale * 100)}%</small></div>
     <div className="cp-control-row"><span><Monitor size={17}/>在桌面显示</span><Switch aria-label={`${pet.name}在桌面显示`} checked={pet.desktop.visible} disabled={controller.busy} onCheckedChange={visible => { void controller.petAction('desktop', pet, { visible }); }}/></div>
     <Button variant="secondary" disabled={controller.busy || controller.snapshot?.selections.battlePetId === pet.petId} onClick={() => controller.petAction('select', pet, { slot: 'battlePetId' })}><Swords size={17}/>{controller.snapshot?.selections.battlePetId === pet.petId ? '当前出战伙伴' : '设为出战伙伴'}</Button>
   </div>;

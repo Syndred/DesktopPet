@@ -119,13 +119,15 @@ test('second SQLite connection rejects a stale revision without losing a newer n
 });
 
 test('trusted capture creation is idempotent; distinct captures of one template remain distinct', () => {
-  const input = { actionId: 'capture-1', templateId: 'big-fish-gentle', name: '收服的伙伴', origin: { wildPetId: 'wild-1', wildSerial: '0019812', battleId: 'battle-1' }, showOnDesktop: false };
+  const input = { actionId: 'capture-1', templateId: 'big-fish-gentle', element: 'fire', name: '收服的伙伴', origin: { wildPetId: 'wild-1', wildSerial: '0019812', battleId: 'battle-1' }, showOnDesktop: false };
   const first = service.createCapturedInstance(owner, input);
   assert.equal(service.createCapturedInstance(owner, input).data.pet.petId, first.data.pet.petId);
   assert.equal(service.createCapturedInstance(owner, { ...input, actionId: 'same-encounter-new-request' }).data.pet.petId, first.data.pet.petId);
   assert.equal(first.data.pet.source, 'capture');
-  const next = service.createCapturedInstance(owner, { ...input, actionId: 'capture-2', origin: { wildPetId: 'wild-2', wildSerial: '0019813', battleId: 'battle-2' } });
+  assert.equal(first.data.pet.element, 'fire');
+  const next = service.createCapturedInstance(owner, { ...input, actionId: 'capture-2', stats: { hp: 200 }, origin: { wildPetId: 'wild-2', wildSerial: '0019813', battleId: 'battle-2' } });
   assert.notEqual(next.data.pet.petId, first.data.pet.petId);
+  assert.deepEqual(next.data.pet.growth.stats, { hp: 200, atk: 33, def: 20, spd: 22 });
   assert.throws(() => service.createCapturedInstance(owner, { ...input, actionId: 'missing-battle', origin: { wildPetId: 'wild-3' } }), error => error.code === 'INVALID_INPUT');
 });
 
