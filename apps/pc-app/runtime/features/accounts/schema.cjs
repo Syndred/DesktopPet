@@ -76,6 +76,12 @@ const migrations = [{
     cloud_revision INTEGER NOT NULL, envelope_checksum TEXT NOT NULL,
     data_checksum TEXT NOT NULL, verified_at TEXT NOT NULL
   );`
+}, {
+  id: "accounts-003-isolated-qa-profile",
+  sql: `CREATE TABLE IF NOT EXISTS account_qa_profile (
+    singleton INTEGER PRIMARY KEY CHECK(singleton=1),
+    profile_id TEXT NOT NULL, scenario_id TEXT NOT NULL
+  );`
 }];
 
 module.exports = { migrations };
