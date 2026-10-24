@@ -180,7 +180,9 @@ class AccountsService {
       this.db.prepare("INSERT INTO account_settings VALUES(?,0,?,?)").run(owner, JSON.stringify(document), new Date().toISOString());
       row = this.db.prepare("SELECT * FROM account_settings WHERE owner_account_id=?").get(owner);
     }
-    return { document: JSON.parse(row.document), revision: row.revision, updatedAt: row.updated_at };
+    const document = JSON.parse(row.document);
+    document.desktop.animationsEnabled ??= true;
+    return { document, revision: row.revision, updatedAt: row.updated_at };
   }
   async saveSettings(input) {
     invariant(!this.settingsBusy, "SETTINGS_BUSY", "正在保存设置，请稍候。");

@@ -3,10 +3,11 @@ import type { SettingsDocument, SettingsSnapshot, AccountsSession } from "../../
 import { errorText, newActionId, request, useAccountsSession } from "./api";
 import { AuthPage } from "./auth";
 import { SettingsNavigation } from "./account";
+import { Switch } from '../../components/ui/switch';
 
 function ToggleRow({ title, description, checked, onChange, children }: { title: string; description?: string; checked: boolean; onChange: (value: boolean) => void; children?: ReactNode }) {
   return <div className="ac-setting-row"><label><span><strong>{title}</strong>{description && <small>{description}</small>}</span>
-    <input className="ac-switch" type="checkbox" role="switch" checked={checked} onChange={event => onChange(event.target.checked)} aria-label={title} />
+    <Switch className="ac-radix-switch" checked={checked} onCheckedChange={onChange} aria-label={title} />
   </label>{children}</div>;
 }
 function SettingsForm({ privacy = false }: { privacy?: boolean; session: AccountsSession }) {
@@ -46,6 +47,7 @@ function SettingsForm({ privacy = false }: { privacy?: boolean; session: Account
             <label className="ac-volume">音量<input type="range" min={0} max={100} value={document.desktop.volume} onChange={e => edit("desktop", "volume", Number(e.target.value))} /><output>{document.desktop.volume}%</output></label>
           </ToggleRow>
           <ToggleRow title="全屏应用时暂时隐藏" description="进入全屏应用时暂时收起桌面伙伴，结束后恢复。" checked={document.desktop.hideInFullscreen} onChange={v => edit("desktop", "hideInFullscreen", v)} />
+          <ToggleRow title="界面动效" description="页面与弹层使用轻柔动效，同时遵循系统减少动态效果设置。" checked={document.desktop.animationsEnabled !== false} onChange={v => edit('desktop', 'animationsEnabled', v)}/>
         </section>}
         <section className="ac-card"><h2>{privacy ? "通知与安静时段" : "安静时段"}</h2>
           {privacy && <><ToggleRow title="桌面通知" checked={document.notifications.enabled} onChange={v => edit("notifications", "enabled", v)} />

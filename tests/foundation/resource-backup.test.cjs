@@ -7,11 +7,11 @@ const { openDatabase, migrate } = require('../../apps/pc-app/runtime/core/databa
 const { migrations, ResourcesService } = require('../../apps/pc-app/runtime/features/resources/index.cjs');
 const { createResourceBackupAdapter } = require('../../apps/pc-app/runtime/core/resource-backup.cjs');
 
-test('resource backup restores actual GLB bytes to new managed paths and rejects a different owner', async () => {
+test('resource backup restores actual 2D pack bytes to new managed paths and rejects a different owner', async () => {
   const root = mkdtempSync(join(tmpdir(), 'lingjing-resource-backup-'));
   const db = openDatabase(join(root, 'save.sqlite')); migrate(db, 'resources', migrations);
   const resources = new ResourcesService({ db, storageRoot: join(root, 'managed') }); await resources.seed();
-  const imported = await resources.importFile('owner-a', resolve('apps/pc-app/runtime/assets/models/AnimatedDogShibaInu.glb'));
+  const imported = await resources.importFile('owner-a', resolve('apps/pc-app/runtime/assets/illustrations/yuwan-character-v1.json'));
   const originalPath = await resources.assetFile('owner-a', imported.resource.id, imported.resource.entryAsset);
   const bytes = readFileSync(originalPath);
   const adapter = createResourceBackupAdapter({ db, get: () => resources });
