@@ -114,6 +114,7 @@ try {
   await launch(); await size(1280, 844);
   success(await invoke('accounts', 'login', { provider: 'local', account, password, rememberSession: true }));
   const info = success(await invoke('app', 'info')); assert.equal(info.scenario.provenance, 'simulated'); assert.equal(info.scenario.runId, scenario.runId);
+  evidence.build = info.build; assert.equal(info.build.sourceCommit, evidence.source.sha); assert.deepEqual(info.build.sourceDirtyFiles, []);
   evidence.runtime = await app.evaluate(({ app }) => ({ electron: process.versions.electron, chrome: process.versions.chrome, node: process.versions.node, version: app.getVersion(), userData: app.getPath('userData') }));
   assert.equal(resolve(evidence.runtime.userData), resolve(profile));
   const initial = success(await invoke('companions', 'list')); owner = initial.ownerAccountId;
@@ -175,7 +176,7 @@ try {
     const garden = success(await invoke('garden', 'snapshot')), gardenPet = garden.pets.find(candidate => candidate.petId === pet.petId);
     assert.equal(gardenPet.resource.resourceId, pet.resource.resourceId); assert.equal(gardenPet.element, pet.element);
     input('garrison-confirm-button', { territoryId: territory.id, petId: pet.petId, resourceId: gardenPet.resource.resourceId, element: gardenPet.element, territoryProvenance: 'controlled-ui-fixture' });
-    if (['wood', 'earth'].includes(pet.element)) await shot(`garrison-${pet.element}.png`, '.garden-page');
+    if (['wood', 'earth'].includes(pet.element)) await shot(`garrison-${pet.element}.png`, '.garden-feature');
     evidence.characters.push({ name: pet.name, templateId: pet.templateId, ...detailIdentity, actions, chat: { petId: chat.petId, resourceId: chatPet.resource.resourceId, element: chatPet.element }, training: { sessionId: session.id, petId: session.player.petId, resourceId: session.player.resource.resourceId, element: session.player.element }, garrison: { territoryId: territory.id, petId: garden.territories.find(value => value.id === territory.id).garrisonPetId, resourceId: gardenPet.resource.resourceId, element: gardenPet.element }, skillNames });
   }
   evidence.layouts = [];

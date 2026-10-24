@@ -6,6 +6,8 @@ const { tmpdir } = require('node:os');
 const { join } = require('node:path');
 const { migrateCompanions } = require('../migrations.cjs');
 const { CompanionsService, atomic, toLegacyPet } = require('../service.cjs');
+const { listTemplates, BASE_STATS } = require('../templates.cjs');
+const { companionCombatProfile } = require('../combat-profile.cjs');
 let folder, file, db, service, milliseconds;
 const owner = 'runtime-user-text-001';
 const another = 'runtime-user-text-002';
@@ -17,6 +19,37 @@ beforeEach(() => {
   service = new CompanionsService({ db, now: () => new Date(milliseconds) });
 });
 afterEach(() => { db.close(); rmSync(folder, { recursive: true, force: true }); });
+
+test('the complete five-element roster survives adoption, selection and reopen without replacing instance identity', () => {
+  const templates = listTemplates();
+  assert.equal(templates.length, 8);
+  assert.deepEqual([...new Set(templates.map(template => template.element))].sort(), ['earth', 'fire', 'metal', 'water', 'wood']);
+  const pets = templates.map(template => service.adopt(owner, { actionId: `roster:${template.templateId}`, templateId: template.templateId, name: template.name, showOnDesktop: false }).data.pet);
+  assert.equal(new Set(pets.map(pet => pet.petId)).size, 8);
+  assert.equal(new Set(pets.map(pet => pet.resource.resourceId)).size, 8);
+  for (const [index, pet] of pets.entries()) {
+    assert.equal(pet.element, templates[index].element);
+    assert.deepEqual(pet.resource, templates[index].resource);
+    assert.deepEqual(pet.growth.stats, BASE_STATS[pet.element]);
+    assert.equal(toLegacyPet(pet).id, pet.petId); assert.equal(toLegacyPet(pet).element, pet.element);
+    const combat = companionCombatProfile(pet);
+    assert.equal(combat.petId, pet.petId); assert.equal(combat.resourceId, pet.resource.resourceId);
+    assert.deepEqual(combat.growthStats, pet.growth.stats); assert.equal(combat.training.maxHp, combat.rules.maxHp);
+  }
+  const wood = pets.find(pet => pet.element === 'wood'), earth = pets.find(pet => pet.element === 'earth');
+  const twin = service.adopt(owner, { actionId: 'wood:second', templateId: wood.templateId, name: '木系第二只', showOnDesktop: false }).data.pet;
+  assert.notEqual(twin.petId, wood.petId); assert.deepEqual(twin.resource, wood.resource);
+  service.rename(owner, { actionId: 'wood:rename', petId: wood.petId, name: '木系第一只' });
+  service.applyGrowthInTransaction(owner, { actionId: 'wood:food', petId: wood.petId, effect: { satiety: 12 } });
+  assert.equal(service.requirePet(owner, twin.petId).name, '木系第二只'); assert.equal(service.requirePet(owner, twin.petId).growth.satiety, 60);
+  service.select(owner, { actionId: 'wood:chat', petId: wood.petId, slot: 'chatPetId' });
+  service.select(owner, { actionId: 'earth:battle', petId: earth.petId, slot: 'battlePetId' });
+  service.select(owner, { actionId: 'twin:guard', petId: twin.petId, slot: 'guardPetId' });
+  const before = service.snapshot(owner);
+  db.close(); db = new DatabaseSync(file); service = new CompanionsService({ db });
+  assert.deepEqual(service.snapshot(owner), before);
+  assert.deepEqual(service.selections(owner), { chatPetId: wood.petId, battlePetId: earth.petId, guardPetId: twin.petId });
+});
 
 test('three identical templates retain independent names, growth, desktop modes and positions after reopening SQLite', () => {
   const pets = ['鱼丸', '小蓝', '饭团'].map(name => adopt(name).data.pet);
