@@ -426,7 +426,7 @@
     "doNotClaimOverallVisualPass": true
   },
   "previousImplementationCommit": "0a1722033c209d0b8190b98ff3b5f80cdc20b550",
-  "updatedAt": "2026-10-24T15:02:46.348Z",
+  "updatedAt": "2026-10-24T15:16:22.999Z",
   "portraitAudit": {
     "items": [
       "A07",
@@ -487,7 +487,7 @@
       "U05",
       "U07"
     ],
-    "status": "awaiting_canonical_five_element_roster_for_real_electron_check",
+    "status": "awaiting_foundation_five_element_merge",
     "implementationCommit": "eb50973",
     "foundationBase": "3db8d97",
     "implementation": [
@@ -525,9 +525,11 @@
       }
     ],
     "remaining": [
-      "资源模块交付木/土并由 foundation 汇总后执行真实 Electron 自验，提交截图、源版本和 SQLite 证据。",
+      "等待 foundation 合入已交付的 f4c210d / 58c3a9d，再执行已备好的 compact-acceptance.mjs；本分支不直接合入其他业务分支。",
       "主会话独立复验。"
     ],
-    "doNotClaimOverallGoalComplete": true
+    "doNotClaimOverallGoalComplete": true,
+    "resourceImplementationCommit": "f4c210d",
+    "resourceEvidenceCommit": "58c3a9d"
   }
 }
