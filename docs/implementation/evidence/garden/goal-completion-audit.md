@@ -31,3 +31,5 @@
 - [最终集成领地胜负原生记录](../foundation/final-unified/territory/evidence.json)
 
 复现只读审计：`node apps/pc-app/runtime/features/garden/verification/audit-goal-closure.mjs`。需要保留的原生档案位于 ignored 的 `artifacts/garden/integrated-electron` 和基础模块 QA 目录；审计不会修改这些档案。
+
+当前工作树已用干净源码 6f4e334b6962b88997c10b2c6911a3701af23eb4 重新构建，运行源码指纹与本次审计一致。[构建记录](goal-completion-build.json)及[实际日志](goal-completion-build.log)保留，未重复领域回归。
