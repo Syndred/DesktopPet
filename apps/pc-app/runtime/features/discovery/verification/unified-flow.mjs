@@ -26,8 +26,9 @@ const proof = { at: new Date().toISOString(), sourceCommit: git('rev-parse', 'HE
   liveCloudVerified: false, physicalCaptureVerified: false, checks: [], roster: [], actions: [], errors: [] };
 const save = label => { proof.phase = label; writeFileSync(join(output, 'evidence.json'), JSON.stringify(proof, null, 2)); console.log(label); };
 let app, page, capture, encounter, qaLogin;
-async function launch() {
-  app = await electron.launch({ args: [source], cwd: source, env });
+async function launch(profile = scenario.profilePath, simulated = true) {
+  const launchEnv = { ...env, PET_USER_DATA_DIR: profile }; if (!simulated) delete launchEnv.LINGJING_QA_SCENARIO;
+  app = await electron.launch({ args: [source], cwd: source, env: launchEnv });
   page = await app.firstWindow(); page.on('pageerror', error => proof.errors.push(error.message));
   await page.waitForFunction(() => Boolean(window.lingjing));
   await size(1280, 844);
@@ -39,6 +40,12 @@ async function invoke(feature, command, payload = {}) {
 async function size(width, height) { await app.evaluate(({ BrowserWindow }, dimensions) => BrowserWindow.getAllWindows()[0].setSize(...dimensions), [width, height]); }
 async function navigate(path) { await page.evaluate(value => { location.hash = `#${value}`; }, path); }
 const snapshot = () => invoke('discovery', 'snapshot');
+function aligned(actual, expected, label) {
+  assert.equal(actual.length, expected.length, label);
+  for (let index = 0; index < actual.length; index++) for (const key of ['x', 'y', 'width', 'height']) {
+    assert.ok(Math.abs(actual[index][key] - expected[index][key]) <= .5, `${label}[${index}].${key}: ${actual[index][key]} vs ${expected[index][key]}`);
+  }
+}
 async function until(predicate, label, timeout = 15000) {
   const end = Date.now() + timeout;
   while (Date.now() < end) { const state = await snapshot(); if (predicate(state)) return state; await page.waitForTimeout(100); }
@@ -197,8 +204,7 @@ try {
     const view = await inspectBattle(page, { session: training, screenshot: join(output, `training-${width}.png`) });
     proof.trainingGeometry.push(view);
     const wild = proof.wildGeometry.find(value => value.viewport.width === view.viewport.width);
-    assert.deepEqual(view.moves.map(value => [value.x, value.y, value.width, value.height]), wild.moves.map(value => [value.x, value.y, value.width, value.height]));
-    assert.deepEqual(view.hud.map(value => [value.x, value.y, value.width, value.height]), wild.hud.map(value => [value.x, value.y, value.width, value.height]));
+    aligned(view.moves, wild.moves, 'Shared move geometry'); aligned(view.hud, wild.hud, 'Shared HUD geometry');
   }
   await navigate(`/discovery/encounter/${encounter.encounterId}`);
   await page.locator(`[data-battle-screen="shared-v1"][data-session-id="${session.id}"]`).waitFor();
@@ -225,6 +231,13 @@ try {
   proof.ledger = JSON.parse(execFileSync(require('electron'), [resolve('apps/pc-app/runtime/features/discovery/verification/read-capture.cjs'), database, capture.petId, capture.encounterId], { env: { ...env, ELECTRON_RUN_AS_NODE: '1' }, encoding: 'utf8' }));
   assert.equal(proof.ledger.ownerAccountId, proof.owner); assert.equal(proof.ledger.captures, 1);
   assert.equal(proof.ledger.ownedInstances, 1); assert.equal(proof.ledger.memories, 1); assert.equal(proof.ledger.validation, 'simulated');
+  await launch(join(output, 'ordinary-profile'), false);
+  assert.equal((await invoke('app', 'info')).scenario, undefined);
+  const unavailable = await page.evaluate(() => window.lingjing.invoke('discovery', 'qaTarget', { templateId: 'animal-shiba' }));
+  assert.equal(unavailable.ok, false); assert.equal(unavailable.code, 'COMMAND_UNAVAILABLE');
+  assert.equal((await snapshot()).location.fix, null);
+  proof.checks.push('Ordinary production startup exposes no QA descriptor or qaTarget command and no simulated position');
+  await app.close(); app = null;
   assert.deepEqual(proof.errors, []); proof.flowPassed = true;
   proof.rosterComplete = proof.missingElements.length === 0 && proof.roster.length === templates.length; proof.passed = proof.flowPassed && proof.rosterComplete;
   save(proof.passed ? 'passed' : 'flow passed; five-element roster pending');
