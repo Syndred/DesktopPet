@@ -19,8 +19,9 @@ class WindowsLocationAdapter {
 }
 
 class LocationService {
-  constructor({ adapter = new WindowsLocationAdapter(), now = Date.now } = {}) {
+  constructor({ adapter = new WindowsLocationAdapter(), now = Date.now, mayUseLocation = () => true } = {}) {
     this.adapter=adapter; this.now=now; this.fix=null; this.lastError=null; this.status='idle'; this.permission='unknown';
+    this.mayUseLocation=mayUseLocation;
     this.pending=null; this.mode='real'; this.timer=null; this.listeners=new Set(); this.generation=0;
   }
   snapshot() {
@@ -30,7 +31,16 @@ class LocationService {
   }
   subscribe(listener) { this.listeners.add(listener); return () => this.listeners.delete(listener); }
   emit() { const state=this.snapshot(); for (const listener of this.listeners) { try { listener(state); } catch { /* isolate listeners */ } } }
+  policyAllowed() {try{return this.mayUseLocation() === true;}catch{return false;}}
+  blockByPolicy() {
+    this.suspend(); this.fix=null; this.mode='real'; this.status='privacy_disabled';this.permission='unknown';
+    this.lastError={code:'APP_LOCATION_DISABLED',message:'应用内定位尚未开启，或当前不在可定位的探索页面。请检查设置中的位置隐私选项。'};
+    this.emit();return {ok:false,error:this.lastError,state:this.snapshot()};
+  }
+  suspend() {if(this.timer)clearInterval(this.timer);this.timer=null;++this.generation;this.pending=null;if(this.status==='locating') this.status='idle';this.emit();}
+  reset() {this.suspend();this.fix=null;this.mode='real';this.status='idle';this.permission='unknown';this.lastError=null;this.emit();}
   locate() {
+    if(!this.policyAllowed()) return Promise.resolve(this.blockByPolicy());
     if (this.pending) return this.pending;
     this.mode='real'; this.status='locating'; this.lastError=null; this.emit();
     const generation=++this.generation;
@@ -42,6 +52,7 @@ class LocationService {
     try { result=await this.adapter.getPosition(); }
     catch(error) { result={ok:false,code:'LOCATION_UNAVAILABLE',message:error.message}; }
     if (generation!==this.generation) return {ok:false,error:{code:'LOCATION_CANCELLED',message:'定位已取消'},state:this.snapshot()};
+    if(!this.policyAllowed()) return this.blockByPolicy();
     if (!result.ok) {
       this.fix=null; this.status=result.code === 'LOCATION_PERMISSION_DENIED' ? 'denied' : result.code === 'LOCATION_TIMEOUT' ? 'timeout' : 'unavailable';
       const messages={LOCATION_PERMISSION_DENIED:'Windows 未授权访问位置，请检查系统定位与桌面应用权限。',LOCATION_TIMEOUT:'Windows 定位超时，请稍后重试。',LOCATION_UNAVAILABLE:'Windows 暂时无法提供位置，请检查设备信号与定位服务。'};
@@ -64,7 +75,7 @@ class LocationService {
     this.fix=enabled ? {lat:31.2304,lng:121.4737,accuracyMeters:15,timestampMs:this.now(),source:'demo',coordinateSystem:'wgs84',provider:'explicit-demo'} : null;
     this.status=enabled ? 'demo' : 'idle'; this.permission='unknown'; this.emit(); return {ok:true,state:this.snapshot()};
   }
-  startWatch() { if(!this.timer) {this.timer=setInterval(()=>void this.locate(),15000); this.timer.unref?.();} return this.locate(); }
+  startWatch() { if(!this.policyAllowed()) return Promise.resolve(this.blockByPolicy()); if(!this.timer) {this.timer=setInterval(()=>void this.locate(),15000); this.timer.unref?.();} return this.locate(); }
   stopWatch() { if(this.timer) clearInterval(this.timer); this.timer=null; this.emit(); return {ok:true,state:this.snapshot()}; }
   dispose() { this.stopWatch(); ++this.generation; this.listeners.clear(); }
 }
