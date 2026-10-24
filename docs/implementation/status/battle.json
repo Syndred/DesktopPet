@@ -1,0 +1,34 @@
+{
+  "module": "battle",
+  "branch": "codex/lingjing-battle",
+  "commit": "implementation commit containing this status; final verification update follows",
+  "status": "implementing_and_verifying",
+  "upstream": { "fetched": true, "originMain": "4786f97", "baseline": "6c8ce65", "originMainIsAncestor": true },
+  "contract": "docs/implementation/battle-contract.txt",
+  "tests": [
+    { "check": "existing focused battle/room/friend/schema regressions", "result": "33 passed" },
+    { "check": "battle native SQLite tests with real companions module", "result": "8 passed, including all 400 desktop/edge formula pairs, restart, XP isolation, deduplication and transactional rollback" },
+    { "check": "embedded PostgreSQL migration execution", "result": "passed: atomic round commit, duplicate replay, rollback, participant/pet-bound settlement, denied anon RPC" },
+    { "check": "UI typecheck and feature lint", "result": "passed" },
+    { "check": "real Windows Electron UI", "result": "in progress; found existing GLB decoder WebAssembly blocked by foundation CSP" }
+  ],
+  "runtimeEvidence": [
+    "artifacts/battle/postgres-evidence.json",
+    "artifacts/battle/windows-1792844099424/failure.json",
+    "artifacts/battle/windows-1792844099424/failure.png"
+  ],
+  "integrationDependencies": [
+    "companions synchronous growth/selection adapter on services.db (validated against real module)",
+    "resources shared ResourceStage and protocol scheme before app ready",
+    "foundation CSP must allow the existing GLB WebAssembly decoder without enabling JavaScript eval",
+    "garden grantSeeds adapter and territory ownership settlement",
+    "review/deploy additive Supabase migration and updated duel-online separately"
+  ],
+  "realIncomplete": [
+    "Real friend invite/accept/room/Realtime/settlement acceptance cannot run: configured http://47.112.208.97:8000 endpoint returns 502; Node fetch also fails",
+    "No cloud migration or production function has been deployed",
+    "Real Windows complete training/restart/report click path still under verification after discovering root CSP decoder failure",
+    "Cross-device inventory convergence remains a foundation/accounts/companions integration check; server reward receipt uses a stable shared actionId"
+  ],
+  "policy": "No root manifests/config/preload/shared source checkout modified by battle; legacy JSON/history/assets kept; no destructive production migrations or publication. Goal remains active until actual acceptance."
+}

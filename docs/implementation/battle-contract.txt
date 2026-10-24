@@ -1,0 +1,65 @@
+Battle feature integration contract
+2026-10-24
+
+Runtime entry: apps/pc-app/runtime/features/battle/index.cjs
+Renderer entry: apps/pc-app/ui/src/features/battle/index.tsx
+Routes: /battle, /battle/friends, /battle/session/:sessionId, /battle/reports, /battle/reports/:reportId
+All renderer commands use window.lingjing.invoke('battle', command, payload).
+Returned shape: {ok:true,data} or {ok:false,code,message}. Owner comes from services.session.
+
+Commands
+overview; selectPet({petId,actionId}); startTraining({petId,enemyElement,actionId});
+snapshot({sessionId}); act({sessionId,actionId,action,expectedRound}); retryAction({sessionId});
+search({keyword}); invitations(); invite({targetAccount,petId,allowResend?});
+respondInvite({requestId,decision:'accept'|'reject',petId}); cancelInvite({requestId});
+createRoom({petId}); joinRoom({roomCode,petId,requestId?}); sync({sessionId}); leave({sessionId});
+listReports({limit?}); getReport({reportId}); retrySettlement({sessionId}).
+
+Main-process-only battle service (services.get('battle'))
+beginWildChallenge({ownerAccountId,petId,actionId,challenge:{id,opponent:{petId,petName,element,level?,resourceRef?},...provenance}})
+beginTerritoryChallenge(same input, challenge.territoryId recommended)
+getOutcome({ownerAccountId,sessionId}) -> {session,won,settled}
+settleTerritoryChallenge({ownerAccountId,sessionId}) -> {session,won,settled,receipt}
+The challenge provider validates location, spawn, defender and ownership first. Renderer cannot inject a challenge or opponent.
+Wild/territory sessions currently execute the retained local BattleRuntimeService, labelled authority:'local'.
+Do not represent these as authoritative remote PvP; remote territory PvP must join a Supabase room.
+Discovery's RegisteredWildBattleAdapter can use the provided methods and the act/leave commands directly.
+The returned session.snapshot and every session.rounds[n].state contain actual HP, anger, statuses and free dodge.
+
+Companions adapters (same synchronous shared SQLite connection)
+getPet(owner,petId), listPets(owner), getSelections(owner), select(owner,{petId,slot:'battlePetId',actionId})
+applyGrowthInTransaction(owner,{petId,actionId,effect:{experience,wins}})
+Battle uses exactly the existing win=20 XP / loss=5 XP and 100 XP level rule supplied by companions.
+An optional awardBattleResult(input) is also supported. No parallel inventory or pet state is maintained by battle.
+
+Garden adapter
+grantSeeds({ownerAccountId},{actionId,receiptId,source:'battle'},verifiedReceipt)
+Called once for a completed win, in the same transaction as XP, report and battle reward receipt.
+verifiedReceipt={ownerAccountId,id:session.id,source:'battle',eligible:true}; garden owns seed type and quantity.
+If garden registers later, retrySettlement safely delivers the still-unclaimed seed receipt.
+Territory ownership writes remain garden's responsibility; consume settleTerritoryChallenge's trusted receipt.
+
+Resources adapter
+Battle resolves the same resourceId via resources.resolve, context:'battle'; it stores no duplicate model library.
+When the resources UI is present it uses that module's ResourceStage for both 2D and 3D, via a build-time optional glob.
+The retained model-viewer renderer supports the standalone module before full integration.
+
+Cloud changes (NOT deployed)
+Apply additive infra/supabase/migrations/20261024_lingjing_battle_atomic_rounds.sql before updating duel-online.
+Adds immutable per-invitation room binding, instance pet IDs, atomic round commit and server-only settlement receipts.
+Updated edge: immutable action upsert, atomic RPC commit, paginated history, validated invitation room, claim_battle_settlement.
+The room protocol and Supabase Realtime remain unchanged. Do not auto-deploy this migration.
+Rollback: roll back the edge function first; leave the additive tables, columns and receipt history intact.
+Never delete reward receipts when rolling back, and do not execute a production DROP or data reset.
+
+Validation commands
+node scripts/desktop/run-native-tests.cjs apps/pc-app/runtime/features/battle/battle.test.cjs
+Optional LINGJING_COMPANIONS_MODULE points at a read-only real companion module when that branch is not merged.
+node apps/pc-app/runtime/features/battle/verify-electron.mjs (real Windows Electron + restart + click/IPC/SQLite/XP/report)
+Optional LINGJING_RESOURCES_MODULE / LINGJING_GARDEN_MODULE provide read-only actual modules for isolated integration.
+node apps/pc-app/runtime/features/battle/verify-postgres.mjs (development-only @electric-sql/pglite under artifacts/battle/sql-validation)
+
+Observed foundation boundary, still needs integration resolution:
+Existing GLB load reaches model-viewer, then WebAssembly decoder initialization is rejected by public script-src 'self'.
+The real failure is saved under artifacts/battle/windows-1792844099424/failure.json and failure.png.
+Foundation owns the root CSP and resource decoder policy; battle does not disable web security or widen renderer permissions.

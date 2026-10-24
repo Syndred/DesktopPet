@@ -103,6 +103,14 @@ Deno.serve(async (request) => {
     if (op === "leave_room") {
       return jsonResponse({ ok: true, data: await handleLeaveRoom(supabase, payload) });
     }
+    if (op === "claim_battle_settlement") {
+      const user = await requireRuntimeSessionUser(supabase, payload);
+      const { data, error } = await supabase.rpc("lingjing_claim_battle_settlement", {
+        p_owner: user.id, p_room: normalizeString(payload?.roomId), p_pet: normalizeString(payload?.petId)
+      });
+      if (error) throw new Error(error.message || "failed to claim battle settlement");
+      return jsonResponse({ ok: true, data });
+    }
 
     return jsonResponse(
       {
@@ -274,13 +282,15 @@ async function getRoomByCodeOrThrow(supabase, roomCode) {
   return room;
 }
 
-async function listRoundsByRoomId(supabase, roomId, limit = 20) {
-  const { data, error } = await supabase
+async function listRoundsByRoomId(supabase, roomId, limit = 20, beforeRound = null) {
+  let query = supabase
     .from("duel_rounds")
     .select("*")
     .eq("room_id", roomId)
     .order("round_no", { ascending: false })
     .limit(limit);
+  if (beforeRound) query = query.lt("round_no", beforeRound);
+  const { data, error } = await query;
   if (error) {
     throw new Error(error.message || "failed to query rounds");
   }
@@ -328,6 +338,10 @@ function normalizeRoom(input) {
     host_account: normalizeString(input.host_account) || "",
     guest_user_id: normalizeString(input.guest_user_id) || null,
     guest_account: normalizeString(input.guest_account) || null,
+    host_pet_id: normalizeString(input.host_pet_id),
+    guest_pet_id: normalizeString(input.guest_pet_id),
+    invitation_id: normalizeString(input.invitation_id),
+    invited_user_id: normalizeString(input.invited_user_id),
     host_pet_name: normalizePetName(input.host_pet_name),
     guest_pet_name: normalizeString(input.guest_pet_name) || null,
     host_element: normalizeElement(input.host_element) || "metal",
@@ -371,6 +385,18 @@ async function handleCreateRoom(supabase, payload) {
   });
   const hostElement = normalizeElement(payload?.petElement) || "metal";
   const hostPetName = normalizePetName(payload?.petName);
+  const invitationId = normalizeString(payload?.requestId);
+  let invitedUserId = null;
+  if (invitationId) {
+    const { data: invitation, error } = await supabase.from("runtime_duel_requests").select("*").eq("id", invitationId).maybeSingle();
+    if (error || !invitation || invitation.to_user_id !== user.id || !["pending", "accepted"].includes(invitation.status)) {
+      throw new Error("invalid inbound duel request");
+    }
+    invitedUserId = invitation.from_user_id;
+    const { data: existing, error: existingError } = await supabase.from("duel_rooms").select("*").eq("invitation_id", invitationId).maybeSingle();
+    if (existingError) throw new Error(existingError.message);
+    if (existing) return { room: normalizeRoom(existing) };
+  }
 
   let lastError = null;
   for (let attempt = 0; attempt < 6; attempt += 1) {
@@ -382,6 +408,9 @@ async function handleCreateRoom(supabase, payload) {
         host_user_id: user.id,
         host_account: user.account,
         host_pet_name: hostPetName,
+        host_pet_id: normalizeString(payload?.petId),
+        invitation_id: invitationId,
+        invited_user_id: invitedUserId,
         host_element: hostElement,
         current_round: 1,
         last_resolved_round: 0
@@ -397,6 +426,10 @@ async function handleCreateRoom(supabase, payload) {
 
     if (error?.code !== "23505") {
       throw new Error(error?.message || "failed to create room");
+    }
+    if (invitationId) {
+      const { data: existing } = await supabase.from("duel_rooms").select("*").eq("invitation_id", invitationId).maybeSingle();
+      if (existing) return { room: normalizeRoom(existing) };
     }
 
     lastError = error;
@@ -432,6 +465,7 @@ async function handleJoinRoom(supabase, payload) {
   if (room.guest_user_id && room.guest_user_id !== user.id) {
     throw new Error("room is full");
   }
+  if (room.invited_user_id && room.invited_user_id !== user.id) throw new Error("room is reserved for invited user");
 
   const { data, error } = await supabase
     .from("duel_rooms")
@@ -439,10 +473,12 @@ async function handleJoinRoom(supabase, payload) {
       guest_user_id: user.id,
       guest_account: user.account,
       guest_pet_name: guestPetName,
+      guest_pet_id: normalizeString(payload?.petId),
       guest_element: guestElement,
       status: "active"
     })
     .eq("id", room.id)
+    .is("guest_user_id", null)
     .select("*")
     .single();
 
@@ -479,7 +515,7 @@ async function handleGetRoom(supabase, payload) {
 
   return {
     room,
-    rounds: await listRoundsByRoomId(supabase, room.id, roundsLimit)
+    rounds: await listRoundsByRoomId(supabase, room.id, roundsLimit, toPositiveInt(payload?.beforeRound, 0) || null)
   };
 }
 
@@ -945,6 +981,9 @@ async function handleSubmitAction(supabase, payload) {
     throw new Error("user is not room participant");
   }
 
+  const priorRound = await getRoundByRoomAndNo(supabase, room.id, roundNo);
+  if (priorRound) return { room, round: priorRound, accepted: true, waiting: false };
+
   if (room.status === "finished" || room.status === "abandoned") {
     throw new Error("room already finished");
   }
@@ -977,7 +1016,8 @@ async function handleSubmitAction(supabase, payload) {
         action_type: actionType
       },
       {
-        onConflict: "room_id,round_no,actor_user_id"
+        onConflict: "room_id,round_no,actor_user_id",
+        ignoreDuplicates: true
       }
     );
 
@@ -1010,58 +1050,13 @@ async function handleSubmitAction(supabase, payload) {
 
   const resolved = resolveRound(room, hostAction, guestAction);
 
-  const { data: insertedRound, error: roundError } = await supabase
-    .from("duel_rounds")
-    .insert({
-      room_id: room.id,
-      round_no: roundNo,
-      host_action: resolved.actions.host,
-      guest_action: resolved.actions.guest,
-      winner_side: resolved.winner_side,
-      round_result: resolved
-    })
-    .select("*")
-    .single();
-
-  if (roundError && roundError.code !== "23505") {
-    throw new Error(roundError.message || "failed to persist resolved round");
-  }
-
-  const updatePayload = {
-    host_hp: resolved.hp_after.host,
-    guest_hp: resolved.hp_after.guest,
-    host_anger: resolved.anger_after.host,
-    guest_anger: resolved.anger_after.guest,
-    host_statuses: resolved.statuses_after.host,
-    guest_statuses: resolved.statuses_after.guest,
-    host_free_dodge_used: resolved.free_dodge_used.host,
-    guest_free_dodge_used: resolved.free_dodge_used.guest,
-    last_resolved_round: roundNo,
-    current_round: roundNo + 1,
-    winner_side: resolved.winner_side,
-    status: resolved.winner_side ? "finished" : "active"
-  };
-
-  const { error: roomUpdateError } = await supabase
-    .from("duel_rooms")
-    .update(updatePayload)
-    .eq("id", room.id);
-
-  if (roomUpdateError) {
-    throw new Error(roomUpdateError.message || "failed to update room");
-  }
-
-  const latestRoom = await getRoomByIdOrThrow(supabase, room.id);
-  const latestRound = insertedRound
-    ? normalizeRound(insertedRound)
-    : await getRoundByRoomAndNo(supabase, room.id, roundNo);
-
-  return {
-    room: latestRoom,
-    round: latestRound,
-    accepted: true,
-    waiting: false
-  };
+  // Round insert + room state advance must commit together under the room row lock.
+  const { data, error } = await supabase.rpc("lingjing_commit_duel_round", {
+    p_room_id: room.id, p_round_no: roundNo,
+    p_host_action: resolved.actions.host, p_guest_action: resolved.actions.guest, p_result: resolved
+  });
+  if (error || !data) throw new Error(error?.message || "failed to commit resolved round");
+  return { ...data, room: normalizeRoom(data.room), round: normalizeRound(data.round) };
 }
 
 async function handleLeaveRoom(supabase, payload) {
@@ -1415,12 +1410,22 @@ async function handleRespondDuelRequest(supabase, payload) {
   if (String(request.to_user_id || "") !== userId) {
     throw new Error("request is not inbound");
   }
+  const desiredStatus = decision === "accept" ? "accepted" : "rejected";
+  if (request.status === desiredStatus) return { request: normalizeRuntimeDuelRequest(request) };
   if (String(request.status || "") !== "pending") {
     throw new Error("duel request already resolved");
   }
 
   const now = new Date().toISOString();
   const status = decision === "accept" ? "accepted" : "rejected";
+  if (status === "accepted") {
+    const linkedRoom = await getRoomByIdOrThrow(supabase, normalizeString(payload?.roomId));
+    if (linkedRoom.host_user_id !== userId || linkedRoom.room_code !== normalizeRoomCode(payload?.roomCode) ||
+        (linkedRoom.invited_user_id && linkedRoom.invited_user_id !== request.from_user_id) ||
+        (linkedRoom.invitation_id && linkedRoom.invitation_id !== request.id)) {
+      throw new Error("duel request room does not belong to recipient");
+    }
+  }
   const patch =
     status === "accepted"
       ? {
@@ -1442,6 +1447,7 @@ async function handleRespondDuelRequest(supabase, payload) {
     .from("runtime_duel_requests")
     .update(patch)
     .eq("id", request.id)
+    .eq("status", "pending")
     .select("*")
     .single();
   if (updateError || !updated) {
