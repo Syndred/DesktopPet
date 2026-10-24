@@ -1,14 +1,14 @@
 {
   "feature": "conversations",
   "branch": "codex/lingjing-conversations",
-  "commit": "2fe1060aa5b4093e46e704076fcb2e4555fa64b7",
-  "status": "ready_for_concentrated_visual_review",
+  "commit": "0a1722033c209d0b8190b98ff3b5f80cdc20b550",
+  "status": "ready_for_portrait_integration",
   "date": "2026-10-24",
   "timezone": "Asia/Shanghai",
   "workspace": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-conversations\\DesktopPet",
   "scopeRevision": "docs/implementation/scope-2d-ui-first.txt",
   "base": {
-    "foundationBaseCommit": "adf5664",
+    "foundationBaseCommit": "bbb43958d59d856b9af5d88f509025b8fd8f089a",
     "integrationMerge": "b92366decd9fd98ffef7983f2669186077134788",
     "originMainFetched": true,
     "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086",
@@ -16,7 +16,8 @@
     "sharedCheckoutModified": false,
     "requestedModelAndGoalSettingsPreserved": true,
     "originMainCheckedAgainBeforeCommit": true,
-    "foundationLastIncludedTypographyCommit": "50f6cad"
+    "foundationLastIncludedTypographyCommit": "50f6cad",
+    "sharedPortraitCommit": "1dac04e"
   },
   "implemented": [
     "正式 React /chat 与 /settings/ai 按 06 上半、08 下半布局，使用公共 shadcn/Radix、Motion、Lucide 与动漫 2D 素材。",
@@ -203,7 +204,8 @@
     "rootManifestIncludesRequestedAiPackages": true,
     "artProvenance": "docs/implementation/illustration-assets.json",
     "artLicenseNote": "foundation 用内置 image_gen 依据批准角色生成；代码许可证不冒充第三方角色素材许可。未新增或搬用外部角色素材。",
-    "controlledDialog": "Shared DialogContent.onCloseAutoFocus restores the invoking button after Radix unmounts its focus scope; no feature-local focus trap."
+    "controlledDialog": "Shared DialogContent.onCloseAutoFocus restores the invoking button after Radix unmounts its focus scope; no feature-local focus trap.",
+    "staticPortrait": "resources/ResourcePortrait -> resolveResourcePortrait, framing=portrait; canonical idle atlas frame"
   },
   "uiComparison": {
     "boards": [
@@ -224,7 +226,7 @@
       "记忆为手动保存；未提供图片附件/语音假按钮。表情选择可实际输入。",
       "窗口尺寸/Windows 缩放不同，AI 设置较长区域纵向滚动，980x750 无横向溢出。"
     ],
-    "currentVisualEvidence": "docs/implementation/evidence/conversations/audit-2026-10-24/index.html",
+    "currentVisualEvidence": "docs/implementation/evidence/conversations/portrait-2026-10-24/index.html",
     "latestEmptyHistoryScreenshots": [
       "docs/implementation/evidence/conversations/audit-2026-10-24/chat-shiba.png",
       "docs/implementation/evidence/conversations/audit-2026-10-24/ai-settings-shiba.png",
@@ -356,7 +358,7 @@
     "sourceCommit": "9915684",
     "correctionCommit": "2fe1060aa5b4093e46e704076fcb2e4555fa64b7",
     "sharedTypographyCommit": "50f6cad",
-    "status": "own_fixes_verified_pending_concentrated_review",
+    "status": "parent_recheck_passed_portrait_refinement_recorded_separately",
     "items": [
       {
         "id": "A01",
@@ -370,8 +372,8 @@
       },
       {
         "id": "A07",
-        "status": "conversation_adapter_ready",
-        "detail": "头像按当前 pet.resource 经共享 CompanionPortrait 解析；资源绑定事件刷新快照。六个正式形象与动作由 resources/companions 统一交付，待集成后集中复验。"
+        "status": "canonical_roster_integrated",
+        "detail": "主会话 source3aef2bf 已验证六个正式资源及礼帽喵跨页身份一致；当前 portraitAudit 再验证同图集近景头像。"
       },
       {
         "id": "A12",
@@ -419,11 +421,64 @@
       }
     ],
     "remaining": [
-      "六个正式资源与模板绑定由 resources/companions 交付后，主会话按固定A01-A12清单做一次集中视觉回验。",
-      "本轮只做聊天字体、间距和身份定向检查，未运行全仓全量回归。"
+      "头像/HUD 的最后小范围回验由 foundation 汇总；聊天近景接入及本轮4项定向检查见 portraitAudit。"
     ],
     "doNotClaimOverallVisualPass": true
   },
-  "previousImplementationCommit": "c08e6851fe611c0a5cce7765f16acb9a810c8df8",
-  "updatedAt": "2026-10-24T13:34:29.785Z"
+  "previousImplementationCommit": "2fe1060aa5b4093e46e704076fcb2e4555fa64b7",
+  "updatedAt": "2026-10-24T14:03:15.201Z",
+  "portraitAudit": {
+    "items": [
+      "A07",
+      "A12"
+    ],
+    "status": "targeted_checks_passed",
+    "correctionCommit": "0a1722033c209d0b8190b98ff3b5f80cdc20b550",
+    "sharedPortraitCommit": "1dac04e",
+    "base": "bbb4395",
+    "parentRecheck": {
+      "source": "3aef2bf",
+      "screenshots": 15,
+      "metrics": 12,
+      "result": "passed_before_portrait_refinement",
+      "sourceFile": "artifacts/ui-acceptance/2026-10-24/recheck-1/evidence.json"
+    },
+    "implementation": "PetAvatar resolves its current canonical resource and uses resources/ResourcePortrait framing=portrait; the common resolveResourcePortrait computes the viewport from the actual first idle frame. Removed feature CSS scale(1.8).",
+    "unchangedScope": [
+      "Same canonical atlas, resourceId and petId; no regenerated portrait asset.",
+      "PetScene and CompanionReaction retain existing full-body display.",
+      "No model transport, credentials, histories or memories changed."
+    ],
+    "evidence": "docs/implementation/evidence/conversations/portrait-2026-10-24/evidence.json",
+    "comparison": "docs/implementation/evidence/conversations/portrait-2026-10-24/index.html",
+    "screenshots": [
+      "docs/implementation/evidence/conversations/portrait-2026-10-24/six-portraits.png",
+      "docs/implementation/evidence/conversations/portrait-2026-10-24/chat-hatcat-1280.png",
+      "docs/implementation/evidence/conversations/portrait-2026-10-24/chat-hatcat-1440.png",
+      "docs/implementation/evidence/conversations/portrait-2026-10-24/ai-portraits-1280.png"
+    ],
+    "tests": [
+      {
+        "command": "node apps/pc-app/runtime/features/conversations/tests/portrait-acceptance.mjs",
+        "status": "passed",
+        "checks": 4,
+        "canonicalResources": 6,
+        "modelRequests": 0
+      },
+      {
+        "command": "npm run typecheck:ui",
+        "status": "passed"
+      },
+      {
+        "command": "feature-scoped eslint",
+        "status": "passed"
+      },
+      {
+        "command": "npm run build:pc",
+        "status": "passed",
+        "note": "Existing bundle-size warning only."
+      }
+    ],
+    "remaining": "foundation merges the consumers and performs the requested narrow portrait/HUD visual recheck; no full regression was repeated in this round."
+  }
 }

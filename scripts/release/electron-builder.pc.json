@@ -21,7 +21,10 @@
     "!apps/pc-app/runtime/features/resources/legacy/**/*",
     "!apps/pc-app/runtime/renderer/**/*",
     "!apps/pc-app/runtime/auth/**/*",
-    "package.json"
+    "package.json",
+    "!**/verify-*.mjs",
+    "!**/write-evidence.mjs",
+    "!**/prepare-territory-fixture.mjs"
   ],
   "asar": true,
   "extraFiles": [
