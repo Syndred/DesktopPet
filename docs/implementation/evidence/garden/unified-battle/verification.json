@@ -1947,5 +1947,27 @@
       "garrisonNoGrowthOrSelectionChange": false
     }
   },
-  "mainIndependentReview": "pending"
+  "mainIndependentReview": "accepted-evidence-review",
+  "mainReview": {
+    "status": "accepted",
+    "kind": "main-chat-evidence-and-state-review",
+    "clientDate": "2026-10-24",
+    "timezone": "Asia/Shanghai",
+    "sourceThreadId": "01a16d86-7650-7871-8e27-5b65477a126e",
+    "reviewedDeliveryCommit": "ef01d4dc1d191a09dbeb14f1f3adc1503ba2b5fa",
+    "acceptedScope": [
+      "shared BattleScreen territory victory occupation and defeat confirmation",
+      "matching wood guardian Qingya identity",
+      "exact battle session recovery and SQLite/restart records",
+      "idempotent seed receipts, personal garden and garrison readback",
+      "explicit isolated simulated location and prestate provenance"
+    ],
+    "deferred": [
+      "Main chat independent public-scene verification on the final integrated build",
+      "Whole-product U08 acceptance"
+    ],
+    "repeatDomainTestsRequired": false,
+    "cloudAcceptance": false,
+    "physicalGpsAcceptance": false
+  }
 }

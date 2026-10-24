@@ -2,13 +2,13 @@
   "module": "garden",
   "branch": "codex/lingjing-garden",
   "commit": "see git log for this file",
-  "status": "self-verified-awaiting-main-independent-review",
+  "status": "module-evidence-review-accepted-final-integration-pending",
   "upstream": {
     "fetched": true,
     "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086",
     "baseline": "6c8ce65",
     "originMainIsAncestor": true,
-    "recheckedAt": "2026-10-24T15:23:48.926Z",
+    "recheckedAt": "2026-10-24T15:30:44.354Z",
     "behindOriginMain": 0
   },
   "foundationRequired": "45477b0 consumed through foundation; shared BattleScreen/territory defeat confirmation, verified QA identity/location, all eight canonical resources including wood and earth",
@@ -200,8 +200,7 @@
     "Garden QA location delegates to the shared discovery adapter, explicit foreground lease and quality/identity checks; no second coordinate generator or normal-profile toggle"
   ],
   "remaining": [
-    "Main chat independent garden module review and any requested rework",
-    "Foundation final whole-product U08 acceptance on one final build"
+    "Main/foundation final whole-product U08 acceptance, including independent public-scenario runtime verification on one final build"
   ],
   "cloudReview": "docs/implementation/garden-cloud-review.md",
   "dataPolicy": "additive migrations; original history/designs/models retained; no production deployment, destructive migration or user-data reset",
@@ -319,7 +318,7 @@
     "Live cloud territory authority"
   ],
   "unifiedBattle": {
-    "stage": "self-verified-awaiting-main-independent-review",
+    "stage": "main-evidence-review-accepted",
     "sourceSha": "e90dcb9ad99ac43b03b50dde40e08865160f3763",
     "foundation": "45477b0",
     "runtime": {
@@ -419,9 +418,31 @@
     },
     "contract": "docs/implementation/garden-battle-integration.txt",
     "evidence": "docs/implementation/evidence/garden/unified-battle/verification.json",
-    "mainIndependentReview": "pending",
+    "mainIndependentReview": "accepted-evidence-review",
     "readbackCaptureSourceSha": "10dcb1dcb5ef337e61d37e9512a7cdba4a42ef89",
     "confirmedActorsReady": true,
-    "readback": "Second actual full app restart; two exact actors ready before confirmed screenshot; no action/settlement submitted and SQLite state unchanged"
+    "readback": "Second actual full app restart; two exact actors ready before confirmed screenshot; no action/settlement submitted and SQLite state unchanged",
+    "mainReview": {
+      "status": "accepted",
+      "kind": "main-chat-evidence-and-state-review",
+      "clientDate": "2026-10-24",
+      "timezone": "Asia/Shanghai",
+      "sourceThreadId": "01a16d86-7650-7871-8e27-5b65477a126e",
+      "reviewedDeliveryCommit": "ef01d4dc1d191a09dbeb14f1f3adc1503ba2b5fa",
+      "acceptedScope": [
+        "shared BattleScreen territory victory occupation and defeat confirmation",
+        "matching wood guardian Qingya identity",
+        "exact battle session recovery and SQLite/restart records",
+        "idempotent seed receipts, personal garden and garrison readback",
+        "explicit isolated simulated location and prestate provenance"
+      ],
+      "deferred": [
+        "Main chat independent public-scene verification on the final integrated build",
+        "Whole-product U08 acceptance"
+      ],
+      "repeatDomainTestsRequired": false,
+      "cloudAcceptance": false,
+      "physicalGpsAcceptance": false
+    }
   }
 }
