@@ -1,0 +1,30 @@
+const { test } = require('node:test');
+const assert = require('node:assert/strict');
+const { mkdtempSync, readFileSync, renameSync, existsSync } = require('node:fs');
+const { tmpdir } = require('node:os');
+const { join, resolve } = require('node:path');
+const { openDatabase, migrate } = require('../../apps/pc-app/runtime/core/database.cjs');
+const { migrations, ResourcesService } = require('../../apps/pc-app/runtime/features/resources/index.cjs');
+const { createResourceBackupAdapter } = require('../../apps/pc-app/runtime/core/resource-backup.cjs');
+
+test('resource backup restores actual GLB bytes to new managed paths and rejects a different owner', async () => {
+  const root = mkdtempSync(join(tmpdir(), 'lingjing-resource-backup-'));
+  const db = openDatabase(join(root, 'save.sqlite')); migrate(db, 'resources', migrations);
+  const resources = new ResourcesService({ db, storageRoot: join(root, 'managed') }); await resources.seed();
+  const imported = await resources.importFile('owner-a', resolve('apps/pc-app/runtime/assets/models/AnimatedDogShibaInu.glb'));
+  const originalPath = await resources.assetFile('owner-a', imported.resource.id, imported.resource.entryAsset);
+  const bytes = readFileSync(originalPath);
+  const adapter = createResourceBackupAdapter({ db, get: () => resources });
+  const backup = adapter.export('owner-a'); adapter.validate(backup, 'owner-a');
+  assert.throws(() => adapter.validate(backup, 'owner-b'), /归属/);
+  renameSync(originalPath, `${originalPath}.preserved`);
+  db.transaction(() => adapter.restore('owner-a', backup, 'replace'))();
+  const restored = await resources.assetFile('owner-a', imported.resource.id, imported.resource.entryAsset);
+  assert.notEqual(restored, originalPath);
+  assert.deepEqual(readFileSync(restored), bytes);
+  assert.ok(existsSync(`${originalPath}.preserved`));
+  const damaged = structuredClone(backup); damaged.resources[0].files[0].bytes = 'AAAA';
+  assert.throws(() => adapter.validate(damaged, 'owner-a'), /完整性/);
+  const count = (await resources.list('owner-b')).filter(r => r.origin === 'import').length;
+  assert.equal(count, 0); db.close();
+});
