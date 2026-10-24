@@ -77,7 +77,8 @@ try {
       assert.ok(bounds.width > 100 && bounds.height > 100, `Battle resource collapsed: ${JSON.stringify(bounds)}`);
       checks.push('real adopted 2D instance rendered through the shared resources ResourceStage/Pixi adapter');
     } else {
-      await page.locator('model-viewer[loaded]').first().waitFor({ timeout: 25000 });
+      await page.locator('.resource-stage[data-status="ready"] model-viewer').first().waitFor({ timeout: 25000 });
+      assert.equal(await page.locator('model-viewer').first().evaluate(element => element.loaded), true);
       checks.push('existing GLB rendered in the real Electron window through resources.resolve');
     }
   }

@@ -2,6 +2,7 @@ const { randomUUID } = require("node:crypto");
 const { BattleRuntimeService } = require("../../services/battle-runtime.cjs");
 const { OnlineDuelService } = require("../../services/online-duel-service.cjs");
 const { BattleStore, copy } = require("./store.cjs");
+const { appearance2d, SHIBA_RESOURCE } = require("./assets.cjs");
 
 const ACTIONS = new Set(["normal_attack", "element_attack", "dodge", "ultimate"]);
 const ELEMENTS = new Set(["metal", "wood", "earth", "water", "fire"]);
@@ -79,6 +80,7 @@ class BattleFeatureService {
       element: ELEMENTS.has(pet.element) ? pet.element : "metal", level: pet.growth?.level || pet.level || 1,
       model: pet.model || pet.modelPath || pet.resource?.legacyModel,
       resourceRef: pet.resource?.resourceId || pet.resourceRef || pet.resourceId, resource: pet.resource,
+      appearance2d: appearance2d(pet),
       avatar: pet.avatar
     };
   }
@@ -138,6 +140,7 @@ class BattleFeatureService {
     const player = this.ownedPet(owner, input.petId);
     const opponent = copy(challenge.opponent);
     if (!opponent?.petId || !ELEMENTS.has(opponent.element)) throw fail("INVALID_OPPONENT", "挑战对象信息不完整");
+    opponent.appearance2d = appearance2d(opponent);
     const engine = new BattleRuntimeService();
     const session = {
       id: `battle-${randomUUID()}`, mode, status: "active", startedAt: new Date().toISOString(),
@@ -146,6 +149,7 @@ class BattleFeatureService {
       context: { ...copy(challenge), authority: "local", opponent: undefined }
     };
     return this.services.db.transaction(() => {
+      if (this.store.latest(owner)) throw fail("BATTLE_IN_PROGRESS", "当前账号已有进行中的对战");
       this.selectPet({ petId: player.petId, actionId: `${actionId}:selection` }, { ownerAccountId: owner });
       this.store.reserve(owner, actionId, session.id, { type: `start:${mode}`, petId: player.petId, challengeId: challenge.id });
       const saved = this.store.save(owner, session);
@@ -159,7 +163,7 @@ class BattleFeatureService {
     if (!ELEMENTS.has(payload.enemyElement)) throw fail("INVALID_ELEMENT", "请选择训练对手的五行");
     return this.serial(owner, () => this.startLocal(owner, payload, "training", {
       id: `training:${payload.enemyElement}`,
-      opponent: { petId: `training-${payload.enemyElement}`, petName: `${ELEMENT_NAMES[payload.enemyElement]}系训练对手`, element: payload.enemyElement, level: 1 }
+      opponent: { petId: `training-${payload.enemyElement}`, petName: "焰柴", element: payload.enemyElement, level: 1, appearance2d: SHIBA_RESOURCE }
     }));
   }
 
@@ -472,11 +476,14 @@ class BattleFeatureService {
         const mapped = this.online.mapRoundToBattleResult(round);
         rounds.set(round.round_no, { ...mapped.roundResult, state: mapped.state });
       }
-      const first = Math.min(...rounds.keys());
-      if (!rounds.size || first <= 1 || rounds.size >= Number(room.last_resolved_round || 0)) break;
-      const earlier = await this.online.syncRoom({ roomId: room.id, roundsLimit: 50, beforeRound: first });
+      const last = Number(room.last_resolved_round || 0);
+      let missing = 1;
+      while (missing <= last && rounds.has(missing)) missing++;
+      if (missing > last) break;
+      const before = Math.min(last + 1, ...[...rounds.keys()].filter(number => number > missing));
+      const earlier = await this.online.syncRoom({ roomId: room.id, roundsLimit: 50, beforeRound: before });
       this.assertOwner(owner);
-      page = (earlier.rounds || []).filter(round => round.round_no < first);
+      page = (earlier.rounds || []).filter(round => round.round_no < before && !rounds.has(round.round_no));
       if (!page.length) break;
     }
     session.rounds = [...rounds.values()].sort((a, b) => a.round - b.round);

@@ -14,6 +14,7 @@ export interface BattleSnapshot { round: number; player: BattleActor; enemy: Bat
 export interface BattleParticipant {
   petId: string; petName: string; element: ElementType; level?: number; model?: string;
   resourceRef?: string; avatar?: string;
+  appearance2d?: string;
   resource?: { resourceId: string; kind: "2d" | "3d"; legacyModel?: string };
 }
 export interface BattleRound {
