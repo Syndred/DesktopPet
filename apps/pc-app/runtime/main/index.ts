@@ -115,7 +115,7 @@ const windows = {
   emit
 };
 
-app.whenReady().then(() => {
+app.whenReady().then(async () => {
   Menu.setApplicationMenu(null);
   session.defaultSession.setPermissionRequestHandler((_contents, _permission, callback) => callback(false));
   const userData = app.getPath('userData');
@@ -125,6 +125,7 @@ app.whenReady().then(() => {
   const db = openDatabase(join(userData, 'lingjing.sqlite'));
   services = createServices({ db, legacy, paths: { userData, assets: join(runtime, 'assets'), legacyDataFile }, windows, safeStorage });
   features = discoverFeatures(join(runtime, 'features'), services);
+  await require(join(runtime, 'core/builtin-art.cjs')).registerBuiltinArt(services);
   services.ipc.handle('app:info', () => ({ version: app.getVersion(), platform: process.platform, features: features.map(x => ({ id: x.id, commands: x.commands })), user: services.session.getCurrentUser() }), { public: true });
   services.ipc.handle('app:legacy', () => { legacy.open(); return { opened: true }; });
   ipcMain.handle('lingjing:invoke', async (event, request) => {
