@@ -6,6 +6,7 @@
   "unifiedBattleScope": {
     "required": ["U02 complete five-element roster and stable instance identity", "U03 consume battle public action/element presentation", "U05 concise labels and keyboard-accessible Radix hints", "U07 real Electron self-acceptance with source SHA"],
     "pending": ["resources canonical wood/earth characters via foundation", "battle shared skill presentation export via foundation", "merge conversations snapshot.pets.element contract (already visible in its WIP)", "five-element real Electron identity/action/garrison verification"],
+    "publicPresentationContractNeeded": { "file": "ui/src/features/battle/BattleMoves.tsx", "currentlyExports": ["ElementMark", "BattleMoves"], "needed": "A read-only skill summary component or an exported same-source move/icon/rule-hint presenter for PetDetailPage. BattleMoves itself requires a real session and remains the unique combat command bar; companions will not fabricate a session to render a detail summary.", "consumerReady": true },
     "previousAcceptance": "The six-character portrait audit below is preserved historical evidence, not completion of the expanded goal."
   },
   "updatedAt": "2026-10-24",
