@@ -1,5 +1,7 @@
 # 菜园云端审查与集成
 
+2026-10-25 最新状态：桌面领地/菜园完整目标与主会话最终集成验收均已完成，见[完成审计](evidence/garden/goal-completion-audit.md)。以下保留原阶段的实测和条件记录；其中集中视觉/打包等待已由最终交付关闭，实时云与双设备按用户范围暂缓。
+
 本记录是审查材料，不代表已部署或取得线上回执。禁止自动执行生产迁移或发布。
 
 先部署 accounts 的 `20261024_accounts_save_sync.sql`，再审查本模块 `infra/supabase/migrations/20261024_garden_authority.sql` 与 `functions/garden-sync`。菜园与伙伴仍在同一个 `runtime_account_saves.envelope` 中，不新建第二套库存、宠物或身份数据库。云端入口验证 runtime_accounts 文本 ID / 当前 session_token；数据库再次锁定同一账号，检查 account revision 与 action hash，再一次提交库存及指定伙伴的养成。
