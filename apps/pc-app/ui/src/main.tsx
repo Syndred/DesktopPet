@@ -1,4 +1,5 @@
 import { createRoot } from 'react-dom/client';
 import App from './app/App';
 import './styles/global.css';
-createRoot(document.getElementById('root')!).render(<App/>);
+import { AppMotionProvider } from './components/motion';
+createRoot(document.getElementById('root')!).render(<AppMotionProvider><App/></AppMotionProvider>);
