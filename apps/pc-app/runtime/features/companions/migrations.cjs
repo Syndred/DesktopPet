@@ -53,6 +53,12 @@ const migrations = [{
     PRIMARY KEY(owner_account_id, battle_id, wild_pet_id),
     FOREIGN KEY(owner_account_id, pet_id) REFERENCES companion_pets(owner_account_id, pet_id)
   );`
+}, {
+  id: 'companions-003-verified-owner-alias',
+  sql: `CREATE TABLE IF NOT EXISTS companion_identity_imports (
+    source_owner_account_id TEXT PRIMARY KEY, target_owner_account_id TEXT NOT NULL,
+    archive_json TEXT NOT NULL, created_at TEXT NOT NULL
+  );`
 }];
 
 function migrateCompanions(db) {

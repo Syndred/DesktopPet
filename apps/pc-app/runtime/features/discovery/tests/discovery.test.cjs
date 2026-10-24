@@ -35,19 +35,20 @@ function fixture() {
   const services=createServices({db,legacy:{runtimeDataStore:legacy},paths:{userData:directory},windows:{}});
   const companion=register(services,require(join(companionRoot,'index.cjs')));
   const battle=register(services,require(join(battleRoot,'index.cjs')));
+  const garden=register(services,require('../../garden/index.cjs'));
   const discovery=register(services,discoveryModule);
   const api=services.get('discovery');api.location.adapter={getPosition:async()=>({ok:true,...fixtureFix()})};
   const owner=services.session.getOwnerAccountId();
-  return {directory,legacy,db,services,api,owner,close(){discovery.dispose?.();battle.dispose?.();companion.dispose?.();db.close();}};
+  return {directory,legacy,db,services,api,owner,close(){discovery.dispose?.();garden.dispose?.();battle.dispose?.();companion.dispose?.();db.close();}};
 }
 async function start(f) {
   await f.api.location.locate();
-  const adopted=await f.services.invoke('companions','adopt',{actionId:'adopt-test',templateId:'husky',name:'实战伙伴',showOnDesktop:false});assert.equal(adopted.ok,true);
+  const adopted=await f.services.invoke('companions','adopt',{actionId:'adopt-test',templateId:'big-fish-gentle',name:'实战伙伴',showOnDesktop:false});assert.equal(adopted.ok,true);
   const petId=adopted.data.pet.petId;
-  // Pick a real generated wood encounter. Coordinates remain explicitly controlled fixtures.
-  let spawn=f.api.snapshot().data.spawns.find(s=>s.element==='wood'&&s.inRange);
+  // Pick a real generated 2D encounter. Coordinates remain controlled fixtures.
+  let spawn=f.api.snapshot().data.spawns.find(s=>s.element==='water'&&s.inRange);
   if(!spawn) {
-    const target=nearbySpawns(fixturePosition).find(s=>s.element==='wood');assert.ok(target);
+    const target=nearbySpawns(fixturePosition).find(s=>s.element==='water');assert.ok(target);
     f.api.location.adapter={getPosition:async()=>({ok:true,...fixtureFix(),...target.position})};
     f.api.location.fix=null;await f.api.location.locate();
     spawn=f.api.snapshot().data.spawns.find(s=>s.id===target.id);
@@ -90,6 +91,13 @@ test('cancelling an in-flight location request discards the late result',async()
   let deliver;const location=new LocationService({adapter:{getPosition:()=>new Promise(resolve=>{deliver=resolve;})}});
   const pending=location.locate();location.setDemo(true);deliver({ok:true,...fixtureFix()});await pending;
   assert.equal(location.snapshot().mode,'demo');assert.equal(location.snapshot().fix.source,'demo');location.dispose();
+});
+test('application privacy blocks native calls and discards a late fix after revocation',async()=>{
+  let allowed=false,calls=0,deliver;
+  const location=new LocationService({mayUseLocation:()=>allowed,adapter:{getPosition(){calls++;return new Promise(resolve=>{deliver=resolve;});}}});
+  assert.equal((await location.locate()).error.code,'APP_LOCATION_DISABLED');assert.equal(calls,0);
+  allowed=true;const pending=location.startWatch();assert.equal(calls,1);allowed=false;location.blockByPolicy();deliver({ok:true,...fixtureFix()});await pending;
+  assert.equal(location.snapshot().status,'privacy_disabled');assert.equal(location.snapshot().fix,null);assert.equal(location.snapshot().watching,false);location.dispose();
 });
 test('map provider changes only projection, never system coordinates',()=>{
   const map=new MapAdapter();const fix=fixtureFix();map.setProvider('tencent');assert.equal(map.snapshot().coordinateSystem,'gcj02');assert.equal(map.snapshot().available,false);
@@ -167,7 +175,7 @@ test('server authority persists random outcomes and rejects forged victories, fo
       async claim(receipt){f.db.prepare('INSERT INTO proof_captures VALUES(?,?,?)').run(receipt.owner,receipt.permitId,JSON.stringify(receipt));return receipt;}
     };
     const handler=createAuthorityHandler({authenticate:async()=>f.services.session.getOwnerAccountId(),store});
-    const fix=f.api.location.snapshot().fix,target=nearbySpawns(fix).find(spawn=>spawn.element==='wood'&&geofence(fix,spawn.position).ok);
+    const fix=f.api.location.snapshot().fix,target=nearbySpawns(fix).find(spawn=>spawn.element==='water'&&geofence(fix,spawn.position).ok);
     assert.ok(target);
     await assert.rejects(handler({op:'reserve',fix,spawnId:target.id,petId:'foreign-pet'}),{code:'CLOUD_PET_NOT_SYNCED'});
     const permit=await handler({op:'reserve',fix,spawnId:target.id,petId});
@@ -179,5 +187,25 @@ test('server authority persists random outcomes and rejects forged victories, fo
     const captured=await handler({op:'confirm',fix,spawnId:target.id,permitId:permit.id});
     const again=await handler({op:'confirm',fix,spawnId:target.id,permitId:permit.id});assert.equal(again.id,captured.id);assert.equal(again.duplicate,true);
     assert.equal(f.db.prepare('SELECT COUNT(*) AS n FROM proof_captures').get().n,1);
+  } finally {f.close();}
+});
+test('real territory battle ownership feeds the discovery map and capture provenance without changing combat stats',integrationOptions,async t=>{
+  t.mock.method(Math,'random',()=>.4);
+  const f=fixture();try {
+    await f.api.location.locate();
+    const pet=await f.services.invoke('companions','adopt',{actionId:'territory-pet',templateId:'big-fish-gentle',name:'领地伙伴',showOnDesktop:false});assert.equal(pet.ok,true,JSON.stringify(pet));
+    const locate=await f.services.invoke('garden','territoryLocate',{sessionOwnerAccountId:f.owner,actionId:'territory-locate',expectedRevision:f.services.get('garden').service.revision(f.owner)});assert.equal(locate.ok,true,JSON.stringify(locate));
+    const territory=locate.data;
+    const begun=await f.services.invoke('garden','territoryChallenge',{sessionOwnerAccountId:f.owner,actionId:'territory-challenge',expectedRevision:f.services.get('garden').service.revision(f.owner),petId:pet.data.pet.petId,territoryId:territory.id,expectedTerritoryRevision:territory.revision});assert.equal(begun.ok,true,JSON.stringify(begun));
+    let battle=f.services.get('battle').getOutcome({ownerAccountId:f.owner,sessionId:begun.data.sessionId}).session;
+    for(let i=0;i<60 && battle.status==='active';i++) {
+      const result=await f.services.invoke('battle','act',{sessionId:battle.id,actionId:`territory-round-${i}`,expectedRound:battle.snapshot.round+1,action:battle.snapshot.player.anger>=50?'ultimate':'normal_attack'});assert.equal(result.ok,true);battle=result.data;
+    }
+    assert.equal(battle.winner,'player');
+    const settled=await f.services.invoke('garden','territorySettle',{sessionOwnerAccountId:f.owner,actionId:'territory-settle',expectedRevision:f.services.get('garden').service.revision(f.owner),sessionId:battle.id});assert.equal(settled.ok,true,JSON.stringify(settled));
+    const overlay=f.api.snapshot().data.territories.find(item=>item.territoryId===territory.id);assert.ok(overlay);assert.equal(overlay.owned,true);assert.equal(overlay.bonusMultiplier,2);assert.equal(overlay.mapBoundary.length,4);
+    const {encounter}=await start(f),won=await win(f,encounter);
+    const captured=await f.services.invoke('discovery','confirm',{encounterId:won.encounterId,actionId:'territory-capture'});assert.equal(captured.ok,true,JSON.stringify(captured));assert.equal(captured.data.territoryId,territory.id);assert.equal(captured.data.captureMultiplier,2);
+    const owned=f.services.get('companions').getPet(f.owner,captured.data.petId);assert.equal(owned.growth.stats.hp,124);assert.equal(owned.origin.territoryId,territory.id);
   } finally {f.close();}
 });

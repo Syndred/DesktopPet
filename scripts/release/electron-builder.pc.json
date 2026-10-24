@@ -9,15 +9,26 @@
     "apps/pc-app/dist/**/*",
     "apps/pc-app/runtime/**/*",
     "!**/*.test.cjs",
+    "!**/*.test.mjs",
+    "!**/tests/**/*",
     "!**/verification/**/*",
+    "!**/smoke.electron.mjs",
+    "!**/verify-electron.mjs",
     "!**/testing-adapter.cjs",
     "!**/generate-fish.cjs",
     "!**/assets/models/**/*",
+    "!apps/pc-app/dist/ui/models/**/*",
+    "!apps/pc-app/runtime/features/resources/legacy/**/*",
     "!apps/pc-app/runtime/renderer/**/*",
     "!apps/pc-app/runtime/auth/**/*",
     "package.json"
   ],
   "asar": true,
+  "extraFiles": [
+    { "from": "apps/pc-app/ui/src/components/ui/LICENSE.shadcn", "to": "licenses/shadcn-ui.txt" },
+    { "from": "docs/implementation/foundation-dependencies.json", "to": "licenses/dependencies.json" },
+    { "from": "docs/implementation/illustration-assets.json", "to": "licenses/generated-illustrations.json" }
+  ],
   "extraMetadata": {
     "main": "apps/pc-app/dist/main/index.cjs"
   },

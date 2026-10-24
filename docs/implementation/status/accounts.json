@@ -1,25 +1,270 @@
 {
   "module": "accounts",
   "branch": "codex/lingjing-accounts",
-  "status": "verifying",
-  "implementationCommit": "see git log for the accounts implementation commit",
+  "status": "ready-for-integration",
+  "implementationCommit": "7df45969de287c01842a3038139b803c4672fb40",
+  "worktree": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-accounts\\DesktopPet",
   "foundationBase": "8f17aec",
-  "upstream": { "fetched": true, "originMain": "4786f97", "originMainIsAncestor": true },
+  "publicFoundationSnapshot": "f0af90f",
+  "publicSnapshotPolicy": "Public config/components/assets copied verbatim from foundation; equality checked. Other feature branches were not merged.",
+  "upstream": {
+    "fetched": true,
+    "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086",
+    "originMainIsAncestor": true,
+    "finalFetchDateAsiaShanghai": "2026-10-24"
+  },
+  "requestedModelSettingsPreserved": true,
+  "implemented": [
+    "Verified local and existing Supabase runtime account flows; registration/profile/password and secure opt-in session resumption",
+    "Stable provider+subject identity aliases; runtime text IDs stay separate from player_profiles UUIDs; same-name local/cloud users do not merge",
+    "Content-addressed raw legacy archives and idempotent owner-scoped migration; ambiguous/corrupt history stays preserved and explicitly unresolved",
+    "Shared-connection SQLite settings, actionId/revision checks, desktop native policy, quiet notifications, location/emotion privacy gates and animation preference",
+    "Versioned/checksummed owner-scoped backups, native file dialogs, stale preview detection, atomic merge/replace, before-restore preservation",
+    "Owner-scoped durable cloud outbox/retries, CAS conflict handling and independent exact-action readback before verified status; reviewable Edge/SQL implementation"
+  ],
   "dependencies": [],
   "integrationContract": "apps/pc-app/runtime/features/accounts/INTEGRATION.md",
+  "runtimeEvidence": "docs/implementation/status/accounts-evidence.json",
   "tests": [
-    { "command": "node --test apps/pc-app/runtime/features/accounts/tests/accounts.test.cjs", "result": "13 passed; real SQLite files, account isolation, raw migration, backup/restore rollback and reopen, offline outbox; cloud-success path is explicitly a protocol unit test" },
-    { "command": "npm run typecheck:ui", "result": "passed" },
-    { "command": "npm exec eslint -- apps/pc-app/ui/src/features/accounts packages/shared-types/src/features/accounts --ext .ts,.tsx", "result": "passed" },
-    { "command": "npm run build:pc", "result": "passed" }
+    {
+      "command": "node --test apps/pc-app/runtime/features/accounts/tests/accounts.test.cjs",
+      "result": "passed",
+      "passed": 17,
+      "scope": "Real SQLite files and reopen/rollback; network-refusal persistence. Cloud success is explicitly only a protocol unit test."
+    },
+    {
+      "command": "npm run typecheck:ui",
+      "result": "passed"
+    },
+    {
+      "command": "npm exec eslint -- apps/pc-app/ui/src/features/accounts packages/shared-types/src/features/accounts --ext .ts,.tsx",
+      "result": "passed"
+    },
+    {
+      "command": "npm run build:pc",
+      "result": "passed"
+    },
+    {
+      "command": "node apps/pc-app/runtime/features/accounts/tests/settings-layout.acceptance.mjs",
+      "result": "passed",
+      "evidence": "artifacts/accounts/settings-layout-1792848528037/evidence.json",
+      "scope": "A05/A12 only: actual 1280x844 and 1440x900 Electron layouts, all 11 settings switches in both states with real thumb/track bounds and vertical centering, 1024x700 scroll, notification/privacy page; no settings submit or machine permission changes"
+    },
+    {
+      "command": "node apps/pc-app/runtime/features/accounts/tests/electron.acceptance.mjs",
+      "result": "Real shared-UI workflow passed through native export/restore and second-account isolation. Restart launcher selector corrected; targeted restart passed separately. Original full-run failure log is retained, not reported as an all-green run."
+    },
+    {
+      "command": "node apps/pc-app/runtime/features/accounts/tests/restart-controls.acceptance.mjs",
+      "result": "passed",
+      "evidence": "artifacts/accounts/restart-controls-1792846645295/evidence.json",
+      "scope": "Actual restart, DPAPI session, saved Motion preference, reduced motion at load, slider accessible name, dialog centering/Tab trap/Escape/opener focus"
+    },
+    {
+      "command": "node scripts/desktop/run-electron.cjs apps/pc-app/runtime/features/accounts/tests/electron-host.acceptance.cjs",
+      "result": "passed",
+      "evidence": "artifacts/accounts/host-1792844565312/evidence.json",
+      "scope": "Actual native topmost/count/pointer/close-to-tray/fullscreen windows; startup unchanged without explicit opt-in"
+    },
+    {
+      "command": "node apps/pc-app/runtime/features/accounts/tests/fullscreen-monitor.acceptance.mjs",
+      "result": "passed",
+      "evidence": "artifacts/accounts/win32-fullscreen-1792844685194/evidence.json",
+      "scope": "Actual Win32 foreground/DWM detector observed false, true, false with an independent fullscreen window"
+    },
+    {
+      "command": "git diff --check; public snapshot equality; executable 3D reference audit",
+      "result": "passed"
+    }
   ],
-  "runtimeEvidence": [],
+  "openSourceReuse": [
+    {
+      "project": "Electron",
+      "version": "36.9.5",
+      "license": "MIT",
+      "source": "https://github.com/electron/electron",
+      "usedAt": "desktop-host.cjs, vault.cjs; native windows/dialogs/login item/safeStorage; existing runtime shell"
+    },
+    {
+      "project": "React",
+      "version": "19.3.1",
+      "license": "MIT",
+      "source": "https://github.com/facebook/react",
+      "usedAt": "ui/src/features/accounts; controlled forms and scoped account lifecycle"
+    },
+    {
+      "project": "electron-vite",
+      "version": "4.0.1",
+      "license": "MIT",
+      "source": "https://github.com/alex8088/electron-vite",
+      "usedAt": "Published foundation build configuration; no separate renderer/build stack"
+    },
+    {
+      "project": "shadcn/ui Radix Nova",
+      "version": "official registry source snapshot in foundation f0af90f",
+      "license": "MIT",
+      "source": "docs/implementation/shadcn-source-record.json",
+      "usedAt": "Shared Button/Card/Input, auth Tabs, account/restore Select, settings Switch, auth Checkbox, volume Slider and AppDialog"
+    },
+    {
+      "project": "Radix UI",
+      "version": "1.8.1",
+      "license": "MIT",
+      "source": "https://github.com/radix-ui/primitives",
+      "usedAt": "Shared shadcn primitive keyboard/focus/ARIA/modal/select behavior; no feature-local primitive engine"
+    },
+    {
+      "project": "Motion for React",
+      "version": "14.6.0",
+      "license": "MIT",
+      "source": "https://github.com/motiondivision/motion",
+      "usedAt": "Shared PageTransition/AppMotionProvider, account AnimatedList, AppDialog -> MotionPanel"
+    },
+    {
+      "project": "Tailwind CSS",
+      "version": "4.3.3",
+      "license": "MIT",
+      "source": "https://github.com/tailwindlabs/tailwindcss",
+      "usedAt": "Foundation Vite integration, official shared component classes and theme tokens; accounts scoped CSS customizes approved board layout"
+    },
+    {
+      "project": "Lucide React",
+      "version": "1.61.0",
+      "license": "ISC",
+      "source": "https://github.com/lucide-icons/lucide",
+      "usedAt": "Navigation, account, sync, device, password visibility and desktop icons"
+    },
+    {
+      "project": "better-sqlite3",
+      "version": "12.11.1",
+      "license": "MIT",
+      "source": "https://github.com/WiseLibs/better-sqlite3",
+      "usedAt": "Foundation single injected connection; accounts migrations, action receipts, settings, backups and outbox"
+    },
+    {
+      "project": "supabase-js",
+      "version": "2.98.0 in Electron; existing Edge import 2.57.4",
+      "license": "MIT",
+      "source": "https://github.com/supabase/supabase-js",
+      "usedAt": "Existing duel-online runtime account protocol and accounts-sync Edge client; no second cloud identity/backend"
+    }
+  ],
+  "assetReuse": [
+    {
+      "source": "docs/design/2026-10-24/full-ui/09-login-and-account.png",
+      "license": "User-approved project concept artwork; no third-party stock license assumed",
+      "use": "Artwork-only hero/default portrait/sync illustration regions; forms and data are live React"
+    },
+    {
+      "source": "docs/design/2026-10-24/full-ui/08-desktop-and-ai-settings.png",
+      "license": "User-approved project concept artwork",
+      "use": "Desktop scene illustration within the functional settings preview"
+    },
+    {
+      "source": "foundation f0af90f shared brand/illustration assets",
+      "license": "Project-generated; provenance retained in yuwan-character-v1.json and foundation illustration record",
+      "use": "Shared four-point brand and existing shell background; no 3D renderer"
+    }
+  ],
+  "selfDevelopedDifferences": [
+    "Provider+subject mapping, legacy ownership ambiguity and existing runtime-account protocol are project-specific; adopting auth.uid-based UUID tables would attach the wrong save.",
+    "Owner/revision/action transactions, consistent backup adapter registration and readback verification are project data rules; a SQLite driver alone does not provide them.",
+    "Small read-only Win32/DWM monitor fills the missing external-foreground fullscreen adapter in Electron; native window/rendering/focus controls stay Electron and Radix.",
+    "XState is unnecessary for these simple controlled forms; PixiJS remains the shared 2D stage owner rather than introducing a second animation engine in accounts."
+  ],
+  "uiComparison": [
+    {
+      "reference": "09-login-and-account.png",
+      "actual": [
+        "artifacts/accounts/electron-1792845865236/01-login.png",
+        "artifacts/accounts/restart-controls-1792846645295/account.png"
+      ],
+      "matched": [
+        "Two-column login and real login/register tabs",
+        "Approved anime artwork/default portrait and four-point brand",
+        "Profile/password and sync/device card hierarchy",
+        "Cream/mist-blue surfaces and flat buttons"
+      ],
+      "intentionalDifferences": [
+        "Explicit local/cloud provider and secure-session opt-in reflect actual auth behavior",
+        "Only the actual current device is shown; no fabricated phone/device inventory",
+        "Sync counters and dates use real state instead of design example values"
+      ]
+    },
+    {
+      "reference": "08-desktop-and-ai-settings.png",
+      "actual": [
+        "artifacts/accounts/settings-layout-1792848528037/desktop-1280x844.png",
+        "artifacts/accounts/settings-layout-1792848528037/wide-1440x900.png",
+        "artifacts/accounts/settings-layout-1792848528037/compact-1024x700-save.png",
+        "artifacts/accounts/settings-layout-1792848528037/notification-and-privacy-1280x844.png"
+      ],
+      "matched": [
+        "Secondary settings navigation",
+        "Desktop controls beside approved 2D preview; privacy section and save actions",
+        "Lucide icons, shared Radix switches/selects and flat button styling",
+        "Compact desktop rows and horizontal privacy copy; standard-window save remains visible without scaling or scrolling",
+        "Shared Chinese font stack and global page/card heading sizes; no private 30px page-title size or 750 weight"
+      ],
+      "remainingVisualDifferences": []
+    }
+  ],
+  "visualAudit20261024": {
+    "checklist": "docs/implementation/acceptance/2026-10-24/visual-audit.txt in shared implementation-base commit 9915684",
+    "codeCommit": "7df45969de287c01842a3038139b803c4672fb40",
+    "items": {
+      "A05": "Fixed in accounts branch: one CSS translate mechanism, geometry derived from track/thumb/inset variables; complete white thumb in checked/unchecked states. Compact cards, bounded proportional illustration, inline privacy rows and visible save at 1280x844.",
+      "A01": "Accounts now inherits public global H1/H2 sizes and Chinese font stack; removed private H1 30px/750 overrides. Foundation owns the final shared typography tokens and cross-module comparison.",
+      "A03": "Settings cards have no implicit margin; form fieldset and desktop parent grid own their 12px gaps.",
+      "A12": "Settings density aligned while retaining actual shared Radix Switch/Select/Slider, accessible names and Motion route integration. Footer button dimensions target Button slots so they cannot stretch Switch tracks."
+    },
+    "computedSwitch": {
+      "track": "38x22 CSS pixels",
+      "thumb": "16x16 CSS pixels",
+      "inset": "3 CSS pixels on both vertical edges and the selected horizontal end",
+      "translateUnchecked": "0px",
+      "translateChecked": "16px",
+      "transformBothStates": "none"
+    },
+    "standardWindow": {
+      "viewport": "1280x844, DPR 1.25, zoom 1",
+      "mainClientHeight": 790,
+      "mainScrollHeight": 790,
+      "saveTop": 730.725,
+      "saveBottom": 766.725,
+      "privacyBottom": 718.725
+    },
+    "evidence": "artifacts/accounts/settings-layout-1792848528037/evidence.json",
+    "baselinePreserved": "Parent baseline plus own pre-layout capture artifacts/accounts/settings-layout-1792848273882 retained",
+    "verificationPolicy": "Targeted UI check only; no full regression repeated. Final combined visual recheck remains foundation-owned.",
+    "settingsAndMachinePolicy": "Independent copied synthetic QA profile; form never submitted; settings document and revision read back unchanged. No system permission/privacy settings were opened or changed."
+  },
+  "twoDOnly": {
+    "newUiOnly2D": true,
+    "noNew3DDependency": true,
+    "no3DImportCalibrationRenderingOrMigrationExecution": true,
+    "opaqueHistoricalDataPreserved": true,
+    "executableReferenceAudit": "No model-viewer, .glb/.gltf, three.js, VRM or WebGL references in accounts executable code"
+  },
   "integrationDependencies": [
-    "Companions/battle/conversations import raw owner data with accounts.getLegacyInventory(mappedOwner), not the old runtime global mirror",
-    "Discovery gates acquisition/watch with privacy.mayUseLocation and reports exploration state",
-    "Audio/proactive behavior and emotion collectors consume accounts behavior/privacy policies",
-    "Resource file assets and tables without owner_account_id register explicit backup adapters"
+    "Foundation performs the final combined 19-page/gameplay/Windows package regression; this branch contains account-scoped and native-adapter verification only.",
+    "Companions/battle/conversations consume accounts.getLegacyInventory(mappedOwner), and cloud callers use requireRuntimeUser() rather than assuming storage owner is an auth UUID.",
+    "Discovery acquisition/watch and any emotion collector must consume the provided privacy gates; audio/proactive behavior consumes accounts:behavior.",
+    "Each custom backup adapter with consistency-specific restore must explicitly declare its tables, avoiding a second generic-table restore; verify external 2D file adapters in combined app."
   ],
-  "remaining": ["Real Windows Electron account/settings/backup UI acceptance in progress", "Cloud migration and accounts-sync deployment are not performed; real cloud save readback remains unverified"],
-  "dataPolicy": "Original source and JSON preserved; backups are versioned, owner-scoped, checksummed and non-overwriting; restore saves current data first; no production migration or release"
+  "externalVerification": {
+    "cloudAuthenticatedReadbackVerified": false,
+    "readinessEvidence": "artifacts/accounts/cloud-readiness.json",
+    "observedErrors": [
+      "duel-online: UND_ERR_SOCKET",
+      "accounts-sync: UND_ERR_SOCKET"
+    ],
+    "productionMigrationExecuted": false,
+    "productionDeploymentExecuted": false
+  },
+  "remaining": [
+    "Authenticated two-account/two-device cloud push/readback when the configured service is available; no cloud success is claimed",
+    "Final combined module/packaging regression belongs to foundation"
+  ],
+  "dataPolicy": "Original source/user data/history and model files retained; no production data used for acceptance; no destructive production migration, deletion or release"
 }

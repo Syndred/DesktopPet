@@ -339,11 +339,14 @@ test("real accounts local-ID mapping preserves legacy archives, isolates 2D owne
     const owner = accounts.getOwnerAccountId();
     assert.notEqual(owner, f.owner);
     assert.equal(accounts.getLegacyInventory(owner).pets.length, f.legacy.getInventorySnapshot().pets.length);
-    assert.equal(f.service.overview({}, { ownerAccountId: owner }).pets.length, 0);
+    const mapped = f.service.overview({}, { ownerAccountId: owner }).pets;
+    assert.equal(mapped.length, 2);
+    assert.deepEqual(mapped.map(pet=>pet.petId).sort(), f.services.get('companions').listPets(f.owner).map(pet=>pet.petId).sort());
+    assert.equal(f.db.prepare('SELECT COUNT(*) AS count FROM companion_legacy_archive WHERE owner_account_id=?').get(owner).count, 6);
     const adopted = f.companionCommands.adopt({ actionId: 'mapped-owner-adoption', templateId: 'big-fish-gentle', name: '映射后的鱼丸', showOnDesktop: false }, { ownerAccountId: owner });
     assert.equal(adopted.ok, true);
-    assert.equal(f.service.overview({}, { ownerAccountId: owner }).pets[0].petId, adopted.data.pet.petId);
-    assert.equal(f.services.get('companions').listPets(owner).length, 1);
+    assert.ok(f.service.overview({}, { ownerAccountId: owner }).pets.some(pet=>pet.petId===adopted.data.pet.petId));
+    assert.equal(f.services.get('companions').listPets(owner).length, 3);
     assert.throws(() => f.service.user(owner), /云端账号/);
     await accounts.logout();
     assert.throws(() => f.service.overview({}, { ownerAccountId: owner }), error => error.code === 'AUTH_REQUIRED');

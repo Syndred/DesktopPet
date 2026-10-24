@@ -46,7 +46,9 @@ class GardenService {
   }
   owner(context) {
     // context is created by the main process, never from a renderer payload.
-    return identifier(context?.ownerAccountId, "已验证账号");
+    const owner=identifier(context?.ownerAccountId, "已验证账号");
+    if(this.db.prepare('SELECT 1 FROM garden_identity_imports WHERE source_owner_account_id=? AND target_owner_account_id<>?').get(owner,owner))reject('OWNER_MIGRATED','旧归属已完成迁移，请使用已验证的新账号身份');
+    return owner;
   }
   ensureAccount(owner, now) {
     if (this.db.prepare("SELECT 1 FROM garden_accounts WHERE owner_account_id = ?").get(owner)) return;

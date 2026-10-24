@@ -16,7 +16,10 @@ module.exports={
     services.provide('discovery',discovery);
     discovery.territories=new TerritoryMapAdapter(()=>services.get('territories'),discovery.map);
     discovery.stopLocationWatch=()=>discovery.location.suspend();
-    const tiles=new TileCache(join(services.paths.userData,'cache','discovery','tiles'));
+    // Chromium follows the desktop's existing system/session proxy settings.
+    // Node-only integration hosts retain their injected/default fetcher.
+    const {net}=require('electron');
+    const tiles=new TileCache(join(services.paths.userData,'cache','discovery','tiles'),{fetcher:net?.fetch ? net.fetch.bind(net) : fetch});
     const unsubscribe=discovery.location.subscribe(state=>services.events.emit('discovery:location',state));
     const setExploring=active=>{services.get('privacy')?.setExploring(Boolean(active));services.events.emit('discovery:exploring',{active:Boolean(active)});if(!active)discovery.location.suspend();};
     const offSession=services.events.on('accounts:session-changed',()=>{setExploring(false);discovery.location.reset();});

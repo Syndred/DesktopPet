@@ -128,7 +128,7 @@ class ResourcesService {
     return {
       kind: 'spritesheet',
       url: `lingjing-resource://asset/${encodeURIComponent(display.resource.id)}/${display.resource.entryAsset.split('/').map(encodeURIComponent).join('/')}`,
-      sheet: display.resource.sheet, clip: display.clip, calibration: display.calibration, resourceRevision: display.resource.revision,
+      sheet: display.resource.sheet, atlas: display.resource.atlas, resource: display.resource, clip: display.clip, calibration: display.calibration, resourceRevision: display.resource.revision,
     };
   }
   async assetFile(owner, id, key) {

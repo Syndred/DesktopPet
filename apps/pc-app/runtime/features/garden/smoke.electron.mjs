@@ -8,7 +8,7 @@ import assert from 'node:assert/strict';
 const require = createRequire(import.meta.url);
 const root = process.cwd();
 const phase = process.argv[2] || 'plant';
-const output = resolve('artifacts/garden/electron');
+const output = resolve(process.env.GARDEN_SMOKE_OUTPUT || 'artifacts/garden/electron');
 const profile = resolve(output, 'profile');
 mkdirSync(profile, { recursive: true });
 const runFile = resolve(output, 'run.json');
@@ -28,9 +28,22 @@ const errors = [];
 try {
   const page = await application.firstWindow();
   page.on('pageerror', error => errors.push(error.message));
+  await page.waitForFunction(()=>Boolean(window.lingjing));
+  const accounts=await page.evaluate(()=>window.lingjing.invoke('accounts','session'));
+  if(accounts.ok && !accounts.data.currentUser){
+    const legacy=JSON.parse(readFileSync(resolve(profile,'pet-runtime-data.json'),'utf8'));
+    const account=legacy.users.find(user=>user.id===(run.legacyOwnerAccountId||run.ownerAccountId))?.account;
+    const login=await page.evaluate(account=>window.lingjing.invoke('accounts','login',{provider:'local',account,password:'garden-local-acceptance-926',rememberSession:false}),account);
+    assert.equal(login.ok,true,JSON.stringify(login));
+    run.storageOwnerAccountId=login.data.currentUser.ownerAccountId;
+    if(!run.planted){run.legacyOwnerAccountId||=run.ownerAccountId;run.ownerAccountId=run.storageOwnerAccountId;}
+  }
   await page.getByRole('navigation', { name: '主导航' }).waitFor();
   const invoke = async (command, payload) => page.evaluate(({ command, payload }) => window.lingjing.invoke('garden', command, payload), { command, payload: payload ? {...payload,sessionOwnerAccountId:run.ownerAccountId} : undefined });
-  const route = async path => { await page.evaluate(path => { location.hash = path; }, path); };
+  const route = async path => {
+    await page.evaluate(path => { location.hash = path; }, path);
+    await page.waitForFunction(path=>document.querySelector('.garden-tabs a[aria-current="page"]')?.getAttribute('href')===`#${path}`,path);
+  };
   if (phase === 'plant') {
     const companions = await page.evaluate(() => window.lingjing.invoke('companions', 'list'));
     assert.equal(companions.ok, true, JSON.stringify(companions));
@@ -54,6 +67,119 @@ try {
     assert.equal(snapshot.data.plots[0].cropType, 'rice'); assert.equal(snapshot.data.plots[1].cropType, 'carrot');
     run.planted = snapshot;
     await page.screenshot({ path: resolve(output, '01-planted.png'), fullPage: true });
+  } else if (phase === 'identity') {
+    const failure=await invoke('snapshot');assert.equal(failure.code,'OWNER_MIGRATION_REQUIRED');run.identity={source:run.ownerAccountId,target:run.storageOwnerAccountId,result:failure};
+    await route('/garden/plots');await page.getByRole('heading',{name:'旧菜园还在，正在等待存档衔接'}).waitFor();await page.screenshot({path:resolve(output,'identity-migration-preserved.png'),fullPage:true});
+  } else if (phase === 'motion' || phase === 'map') {
+    const settings=await page.evaluate(()=>window.lingjing.invoke('accounts','settingsGet'));
+    assert.equal(settings.ok,true);const original=structuredClone(settings.data.document);
+    const save=async document=>{
+      const current=await page.evaluate(()=>window.lingjing.invoke('accounts','settingsGet'));
+      const result=await page.evaluate(input=>window.lingjing.invoke('accounts','settingsSave',input),{actionId:crypto.randomUUID(),revision:current.data.revision,document});
+      assert.equal(result.ok,true,JSON.stringify(result));return result;
+    };
+    try{
+      if(phase==='motion'){
+        await page.emulateMedia({reducedMotion:'no-preference'});
+        await save({...original,desktop:{...original.desktop,animationsEnabled:true}});
+        await route('/inventory');await page.getByRole('tablist',{name:'背包分类'}).waitFor();
+        await page.waitForFunction(()=>document.documentElement.dataset.motion==='enabled');
+        await save({...original,desktop:{...original.desktop,animationsEnabled:false}});
+        await page.waitForFunction(()=>document.documentElement.dataset.motion==='reduced');
+        await route('/garden/kitchen');await page.getByRole('combobox',{name:'选择食物'}).waitFor();
+        await page.waitForFunction(()=>document.querySelector('.app-page-motion')?.getAttribute('data-motion')==='reduced');
+        await save({...original,desktop:{...original.desktop,animationsEnabled:true}});
+        await page.waitForFunction(()=>document.documentElement.dataset.motion==='enabled');
+        await page.emulateMedia({reducedMotion:'reduce'});
+        await page.waitForFunction(()=>document.documentElement.dataset.motion==='reduced');
+        await route('/inventory');await page.getByRole('tablist',{name:'背包分类'}).waitFor();
+        await page.waitForFunction(()=>document.querySelector('.app-page-motion')?.getAttribute('data-motion')==='reduced');
+        await page.emulateMedia({reducedMotion:'no-preference'});
+        await page.waitForFunction(()=>document.documentElement.dataset.motion==='enabled');
+        run.motion={actualAccountsSettingToggle:true,liveSystemReducedMotion:true,restoredOriginalSettings:true};
+        await page.screenshot({path:resolve(output,'06-motion-settings.png'),fullPage:true});
+      }else{
+        await save({...original,privacy:{...original.privacy,locationAllowed:true}});
+        await route('/garden');await page.getByRole('heading',{name:'给伙伴，留一片小天地。'}).waitFor();
+        await page.getByRole('button',{name:'获取系统位置',exact:true}).click();
+        await page.getByRole('button',{name:'获取系统位置',exact:true}).waitFor({state:'visible',timeout:35000});
+        const snapshot=await page.evaluate(()=>window.lingjing.invoke('discovery','snapshot'));
+        assert.equal(snapshot.ok,true);assert.equal(snapshot.data.location.mode,'real');
+        assert.notEqual(snapshot.data.location.lastError?.code,'APP_LOCATION_DISABLED');
+        run.map={engine:await page.locator('[data-map-engine]').getAttribute('data-map-engine'),locationStatus:snapshot.data.location.status,systemError:snapshot.data.location.lastError?.code||null,positionSource:snapshot.data.location.fix?.positionSource||null,accuracyMeters:snapshot.data.location.fix?.accuracyMeters||null,successfulLocation:snapshot.data.location.status==='ready',coordinatesOmitted:true};
+        await page.screenshot({path:resolve(output,'07-real-location-result.png'),fullPage:true});
+      }
+    }finally{await save(original);}
+  } else if (phase === 'audit') {
+    const nativeWindow=await application.browserWindow(page),measurements=[];
+    await page.emulateMedia({reducedMotion:'reduce'});await page.waitForFunction(()=>document.documentElement.dataset.motion==='reduced');
+    for(const [width,height] of [[1280,844],[1440,900]]){
+      await nativeWindow.evaluate((win,{width,height})=>win.setContentSize(width,height),{width,height});
+      for(const path of ['/inventory','/garden/kitchen']){
+        await route(path);await page.locator('.garden-pet-picker .cp-sheet-thumbnail').first().waitFor();
+        const result=await page.evaluate(()=>{
+          const rect=e=>e.getBoundingClientRect().toJSON(),style=e=>({fontSize:getComputedStyle(e).fontSize,fontWeight:getComputedStyle(e).fontWeight,lineHeight:getComputedStyle(e).lineHeight,marginBottom:getComputedStyle(e).marginBottom});
+          const cards=[...document.querySelectorAll('.garden-item')],pets=[...document.querySelectorAll('.garden-pet')];
+          const boxes=cards.map(rect),overlap=boxes.some((a,i)=>boxes.some((b,j)=>i!==j&&Math.min(a.right,b.right)-Math.max(a.left,b.left)>.5&&Math.min(a.bottom,b.bottom)-Math.max(a.top,b.top)>.5));
+          return {viewport:{width:innerWidth,height:innerHeight,dpr:devicePixelRatio},heading:{...style(document.querySelector('.garden-feature h1')),...rect(document.querySelector('.garden-feature h1'))},pagePadding:getComputedStyle(document.querySelector('.garden-feature')).padding,cards:cards.map(card=>({rect:rect(card),art:rect(card.querySelector('.garden-item-art'))})),petCards:pets.map(card=>({height:card.clientHeight,scrollHeight:card.scrollHeight})),overlap,cardsSpacing:[...document.querySelectorAll('.garden-card')].map(card=>({marginBottom:getComputedStyle(card).marginBottom,parentGap:getComputedStyle(card.parentElement).gap}))};
+        });
+        assert.equal(result.overlap,false);assert.equal(result.heading.fontSize,'29px');assert.equal(result.heading.fontWeight,'700');
+        assert.equal(result.cards.every(card=>card.art.top>=card.rect.top&&card.art.bottom<=card.rect.bottom),true);
+        assert.equal(result.petCards.every(card=>card.height>=100&&card.scrollHeight<=card.height),true);
+        assert.equal(result.cardsSpacing.every(card=>card.marginBottom==='0px'),true);
+        measurements.push({path,...result});await page.screenshot({path:resolve(output,`A04-${width}x${height}-${path.split('/').at(-1)}.png`),fullPage:true});
+      }
+    }
+    run.visualAudit={source:'visual-audit.txt A04; follow A01/A03',fixCommits:['a79d9b9','155ac37'],measurements,readyForCentralRecheck:true};
+  } else if (phase === 'territory-ui' || phase === 'territory-readback') {
+    assert.ok(run.territoryFixture,'Only run this phase in the explicitly labelled isolated territory fixture');
+    const snapshot=await invoke('snapshot'),territory=snapshot.data.territories.find(t=>t.id===run.territoryFixture.id);assert.equal(territory.ownerAccountId,run.ownerAccountId);
+    if(phase==='territory-ui'){
+      const before=await page.evaluate(()=>window.lingjing.invoke('companions','list'));
+      await route('/garden');await page.getByRole('heading',{name:run.territoryFixture.name,exact:true}).waitFor();
+      await page.getByRole('button',{name:'鱼丸 Lv.',exact:false}).click();await page.getByRole('button',{name:'确认驻守',exact:true}).click();await page.getByRole('status').filter({hasText:'驻守伙伴已更新'}).waitFor();
+      const first=await invoke('snapshot');assert.equal(first.data.territories.find(t=>t.id===territory.id).garrisonPetId,run.petIds['鱼丸']);
+      await page.getByRole('button',{name:'小蓝 Lv.',exact:false}).click();await page.getByRole('button',{name:'确认驻守',exact:true}).click();await page.getByRole('status').filter({hasText:'驻守伙伴已更新'}).waitFor();
+      const after=await invoke('snapshot'),pets=await page.evaluate(()=>window.lingjing.invoke('companions','list'));
+      assert.equal(after.data.territories.find(t=>t.id===territory.id).garrisonPetId,run.petIds['小蓝']);assert.deepEqual(pets.data,before.data);
+      run.territoryUI={fixture:true,realGeographicAcceptance:false,before,after,pets,garrisonOnly:true};
+      await page.emulateMedia({reducedMotion:'reduce'});await page.screenshot({path:resolve(output,'territory-ui-garrison.png'),fullPage:true});
+    }else{
+      assert.equal(territory.garrisonPetId,run.petIds['小蓝']);assert.deepEqual(snapshot.data.items,run.territoryUI.after.data.items);
+      const pets=await page.evaluate(()=>window.lingjing.invoke('companions','list'));assert.deepEqual(pets.data,run.territoryUI.pets.data);run.territoryRestart={exactGarrisonAndIndependentSelections:true};
+    }
+  } else if (phase === 'screens') {
+    const window=await application.browserWindow(page);await window.evaluate(win=>win.setContentSize(1320,1000));
+    await page.emulateMedia({reducedMotion:'reduce'});await page.waitForFunction(()=>document.documentElement.dataset.motion==='reduced');
+    for(const [path,name] of [['/garden/plots','10-garden-current.png'],['/garden/kitchen','11-kitchen-current.png'],['/inventory','12-inventory-current.png']]){
+      await route(path);await page.locator('.garden-feature').waitFor();
+      if(path==='/garden/plots')await page.locator('.garden-pixi-scene canvas').waitFor();
+      else {await page.locator('.garden-pet-picker .cp-sheet-thumbnail').first().waitFor();await page.getByRole('button',{name:'鱼丸 Lv.',exact:false}).click();}
+      await page.evaluate(()=>{for(const element of document.querySelectorAll('*'))if(element.scrollHeight>element.clientHeight&&['auto','scroll'].includes(getComputedStyle(element).overflowY))element.scrollTop=0;document.activeElement?.blur();});
+      await page.screenshot({path:resolve(output,name),fullPage:true});
+    }
+    run.screens={nativeWindow:true,contentSize:{width:1320,height:1000},reducedMotionForStableComparison:true};
+  } else if (phase === 'responsive') {
+    const window=await application.browserWindow(page);await window.evaluate(win=>win.setContentSize(1100,800));
+    await page.emulateMedia({reducedMotion:'reduce'});await page.waitForFunction(()=>document.documentElement.dataset.motion==='reduced');
+    const screens=[];
+    for(const path of ['/garden/plots','/garden/kitchen','/inventory']){
+      await route(path);await page.locator('.garden-feature').waitFor();
+      const geometry=await page.evaluate(()=>({width:innerWidth,height:innerHeight,scrollWidth:document.documentElement.scrollWidth,content:document.querySelector('.garden-feature').getBoundingClientRect().toJSON()}));
+      assert.ok(geometry.scrollWidth<=geometry.width,JSON.stringify({path,...geometry}));screens.push({path,...geometry});
+      await page.screenshot({path:resolve(output,`responsive-${path.split('/').at(-1)}.png`),fullPage:true});
+    }
+    run.responsive=screens;
+  } else if (phase === 'rewardplant') {
+    const receipt=run.battle.session.reward.seeds;assert.equal(receipt.quantity,2);
+    const before=await invoke('snapshot'),crop=before.data.crops.find(crop=>crop.seedItemId===receipt.itemId);
+    assert.ok(crop);await route('/garden/plots');await page.getByRole('heading',{name:'把小日子，种成好收成。'}).waitFor();
+    await page.locator('[data-plot-id="plot-3"]').click();
+    await page.getByRole('button',{name:`${crop.name} 种子`,exact:false}).click();
+    await page.getByRole('button',{name:'播种',exact:true}).click();await page.getByRole('status').filter({hasText:`${crop.name}已播种`}).waitFor();
+    const after=await invoke('snapshot');assert.equal(after.data.items.find(item=>item.id===receipt.itemId).quantity,before.data.items.find(item=>item.id===receipt.itemId).quantity-1);
+    run.rewardPlant={receipt,crop:crop.id,before,after,plotId:'plot-3'};
+    await page.screenshot({path:resolve(output,'08-battle-reward-planted.png'),fullPage:true});
   } else if (phase === 'carrot') {
     await route('/garden/plots');
     await page.getByRole('heading', { name: '把小日子，种成好收成。' }).waitFor();
@@ -105,10 +231,12 @@ try {
     await route('/inventory'); await page.getByRole('heading', { name: '把喜欢的，都留给你。' }).waitFor();
     await page.screenshot({ path: resolve(output, '03-inventory.png'), fullPage: true });
   } else if (phase === 'library') {
+    const nativeWindow=await application.browserWindow(page);await nativeWindow.evaluate(win=>win.setContentSize(1280,844));
     await route('/garden/kitchen');await page.getByRole('heading',{name:'这一口，是亲手种下的喜欢。'}).waitFor();
     const select=page.getByRole('combobox',{name:'选择食物'});await select.focus();await select.press('Enter');await page.getByRole('listbox').waitFor();await page.keyboard.press('Escape');
     await page.getByRole('listbox').waitFor({state:'hidden'});await page.waitForFunction(()=>document.activeElement?.getAttribute('role')==='combobox');assert.equal(await select.evaluate(element=>element===document.activeElement),true);
-    await select.click();await page.getByRole('option',{name:'胡萝卜 × 3',exact:true}).click();assert.match(await select.innerText(),/胡萝卜/);
+    await select.click();await page.getByRole('option',{name:/^胡萝卜 × \d+$/}).click();assert.match(await select.innerText(),/胡萝卜/);
+    await page.locator('.garden-pet-picker .cp-sheet-thumbnail').first().waitFor();
     await page.screenshot({path:resolve(output,'04-radix-kitchen.png'),fullPage:true});
     await route('/inventory');await page.getByRole('tablist',{name:'背包分类'}).waitFor();
     const all=page.getByRole('tab',{name:'全部',exact:true});await all.focus();await all.press('ArrowRight');
@@ -116,17 +244,54 @@ try {
     assert.equal(await page.getByRole('tab',{name:'食物',exact:true}).getAttribute('aria-selected'),'true');assert.equal(await page.locator('.garden-item-grid .garden-item').count(),4);
     await page.getByRole('tab',{name:'食物',exact:true}).press('End');await page.waitForFunction(()=>document.querySelector('[role="tab"][data-state="active"]')?.textContent==='道具');assert.equal(await page.getByRole('tab',{name:'道具',exact:true}).getAttribute('aria-selected'),'true');assert.equal(await page.locator('.garden-item-grid .garden-item').count(),5);
     await page.getByRole('tab',{name:'道具',exact:true}).press('Home');await page.waitForFunction(()=>document.querySelector('[role="tab"][data-state="active"]')?.textContent==='全部');assert.equal(await all.getAttribute('aria-selected'),'true');
+    await page.emulateMedia({reducedMotion:'reduce'});
+    await page.waitForFunction(()=>document.documentElement.dataset.motion==='reduced'&&getComputedStyle(document.querySelector('.garden-item-grid')).transform==='none');
+    const headingMetrics=await page.locator('.garden-feature h1').evaluate(element=>({fontSize:getComputedStyle(element).fontSize,fontWeight:getComputedStyle(element).fontWeight}));assert.equal(headingMetrics.fontSize,'29px');assert.equal(headingMetrics.fontWeight,'700');
+    const cardGeometry=await page.locator('.garden-item-grid .garden-item').evaluateAll(cards=>cards.map(card=>{
+      const outer=card.getBoundingClientRect(),art=card.querySelector('.garden-item-art').getBoundingClientRect();
+      return {height:outer.height,artHeight:art.height,contained:art.top>=outer.top&&art.bottom<=outer.bottom};
+    }));assert.equal(cardGeometry.every(card=>card.height>120&&card.contained),true,JSON.stringify(cardGeometry));
+    const petGeometry=await page.locator('.garden-pet-picker .garden-pet').evaluateAll(cards=>cards.map(card=>({height:card.getBoundingClientRect().height,content:card.scrollHeight})));assert.equal(petGeometry.every(card=>card.height>=100&&card.height>=card.content),true,JSON.stringify(petGeometry));
     await page.getByRole('searchbox',{name:'搜索物品名称'}).fill('米饭');assert.equal(await page.locator('.garden-item-grid .garden-item').count(),1);
-    run.library={radixSelectEscFocus:true,radixTabsArrowHomeEnd:true,search:true,shadcnSelectSlot:await select.count()>0?'tested-on-kitchen':'tested-on-kitchen',motionList:await page.locator('.garden-item-grid').evaluate(element=>({projection:element.getAttribute('data-projection-id'),style:element.getAttribute('style')}))};
+    run.library={viewport:await page.evaluate(()=>({width:innerWidth,height:innerHeight})),radixSelectEscFocus:true,radixTabsArrowHomeEnd:true,search:true,sharedCompanionPortrait:true,headingMetrics,cardGeometry,petGeometry,shadcnSelectSlot:'tested-on-kitchen',motionList:await page.locator('.garden-item-grid').evaluate(element=>({projection:element.getAttribute('data-projection-id'),style:element.getAttribute('style')}))};
     await page.getByRole('searchbox',{name:'搜索物品名称'}).fill('');await page.screenshot({path:resolve(output,'05-radix-inventory.png'),fullPage:true});
+    await page.emulateMedia({reducedMotion:'no-preference'});
+  } else if (phase === 'rewardfinish') {
+    assert.ok(run.afterFeed,'Finish the rice recipe and feed proof first');
+    const before=await invoke('snapshot'),plot=before.data.plots.find(plot=>plot.plotId===run.rewardPlant.plotId),crop=before.data.crops.find(crop=>crop.id===run.rewardPlant.crop);
+    assert.equal(plot.stage,'mature');assert.equal(plot.plantedAt,run.rewardPlant.after.data.plots.find(p=>p.plotId===plot.plotId).plantedAt);
+    await route('/garden/plots');await page.getByRole('heading',{name:'把小日子，种成好收成。'}).waitFor();
+    await page.locator(`[data-plot-id="${plot.plotId}"]`).click();await page.locator('.garden-pixi-scene canvas').waitFor();await page.screenshot({path:resolve(output,'09a-reward-mature.png'),fullPage:true});
+    await page.getByRole('button',{name:'收获',exact:true}).click();await page.getByRole('status').filter({hasText:`${crop.name}已放入背包`}).waitFor();
+    const harvested=await invoke('snapshot');assert.equal(harvested.data.items.find(item=>item.id===crop.harvestItemId).quantity-before.data.items.find(item=>item.id===crop.harvestItemId).quantity,plot.yieldQuantity);
+    const beforeFeed=await page.evaluate(()=>window.lingjing.invoke('companions','list'));
+    await route('/inventory');await page.getByRole('tablist',{name:'背包分类'}).waitFor();
+    await page.locator('.garden-item').filter({has:page.getByText(crop.name,{exact:true})}).click();
+    await page.getByRole('button',{name:'鱼丸 Lv.',exact:false}).click();await page.getByRole('button',{name:'喂给鱼丸',exact:true}).click();await page.getByRole('status').filter({hasText:`已给鱼丸喂食 1 份${crop.name}`}).waitFor();
+    const afterFeed=await page.evaluate(()=>window.lingjing.invoke('companions','list')),fed=await invoke('snapshot');
+    assert.equal(harvested.data.items.find(item=>item.id===crop.harvestItemId).quantity-fed.data.items.find(item=>item.id===crop.harvestItemId).quantity,1);
+    for(const name of ['小蓝','饭团'])assert.deepEqual(afterFeed.data.pets.find(p=>p.name===name),beforeFeed.data.pets.find(p=>p.name===name));
+    const fishBefore=beforeFeed.data.pets.find(p=>p.name==='鱼丸'),fishAfter=afterFeed.data.pets.find(p=>p.name==='鱼丸'),effects=fed.data.items.find(item=>item.id===crop.harvestItemId).effects;
+    assert.equal(fishAfter.growth.satiety,Math.min(100,fishBefore.growth.satiety+effects.satiety));assert.equal(fishAfter.growth.affinity,fishBefore.growth.affinity+effects.intimacy);
+    const start=await page.evaluate(petId=>window.lingjing.invoke('battle','startTraining',{actionId:'garden-reward-cycle-training',petId,enemyElement:'fire'}),run.petIds['鱼丸']);assert.equal(start.ok,true,JSON.stringify(start));
+    let session=start.data;
+    for(let i=0;i<150&&session.status==='active';i++){
+      const result=await page.evaluate(input=>window.lingjing.invoke('battle','act',input),{sessionId:session.id,actionId:`garden-reward-cycle-action:${i}`,expectedRound:session.snapshot.round+1,action:session.snapshot.player.anger>=50?'ultimate':'element_attack'});assert.equal(result.ok,true,JSON.stringify(result));session=result.data;
+    }
+    assert.equal(session.status,'finished');assert.equal(session.reward.applied,true);
+    const final=await invoke('snapshot'),finalPets=await page.evaluate(()=>window.lingjing.invoke('companions','list'));
+    const total=data=>data.items.filter(item=>item.category==='seed').reduce((sum,item)=>sum+item.quantity,0);assert.equal(total(final.data)-total(fed.data),2);
+    run.rewardCycle={before,harvested,beforeFeed,afterFeed,fed,nextBattle:session,final,finalPets};
+    await page.emulateMedia({reducedMotion:'reduce'});await page.waitForFunction(()=>document.documentElement.dataset.motion==='reduced');await page.screenshot({path:resolve(output,'09-reward-grown-fed-and-explored.png'),fullPage:true});
   } else if (phase === 'readback') {
     const result = await invoke('snapshot'); assert.equal(result.ok, true);
-    assert.deepEqual(result.data.items, run.final.data.items);
+    assert.deepEqual(result.data.items, (run.rewardCycle?.final||run.final).data.items);
     const pets = await page.evaluate(() => window.lingjing.invoke('companions', 'list'));
-    assert.deepEqual(pets.data.pets, run.afterFeed.data.pets);
+    assert.deepEqual(pets.data.pets, (run.rewardCycle?.finalPets||run.afterFeed).data.pets);
     const repeatHarvest = await invoke('harvest', { actionId: 'after-restart-double-harvest', expectedRevision: result.revision, plotIds: ['plot-1'] });
     assert.equal(repeatHarvest.code, 'ALREADY_HARVESTED');
-    run.readback = { result, pets, repeatHarvest };
+    const staleOwner=await page.evaluate(revision=>window.lingjing.invoke('garden','plant',{actionId:'stale-owner-view',expectedRevision:revision,sessionOwnerAccountId:'another-account',ownerAccountId:'forged-owner',plotId:'plot-1',cropType:'carrot'}),result.revision);assert.equal(staleOwner.code,'SESSION_CHANGED');
+    run.readback = { result, pets, repeatHarvest,staleOwner };
   }
   assert.deepEqual(errors, []);
   run.phases.push({ phase, at: new Date().toISOString(), errors, electron: await application.evaluate(() => process.versions.electron) });

@@ -14,6 +14,8 @@ Installed shared dependencies include PixiJS 8, MapLibre GL and `@turf/distance`
 
 Feature entry points are discovered automatically, without editing root files.
 
+Integration adapters added after the shared kit: `companions.migrateOwnerAlias({sourceOwnerAccountId,targetOwnerAccountId,provider,subjectId})` is synchronous, main-only, and checks the current verified Accounts alias. It imports a pre-Accounts SQLite save only into an empty/pristine legacy mirror, keeps original rows and a full archive, and rejects independently changed targets. `ensureImported` invokes it before falling back to the old JSON. Garden can use it inside its shared transaction. New backups use a conversations adapter that retains message IDs/order while regenerating local SQLite sequences, includes connection metadata without encrypted keys, preserves matching local credentials, and refuses restore while a reply is active.
+
 Renderer: `apps/pc-app/ui/src/features/<id>/index.tsx`, default export or named `feature`:
 
 ```tsx
@@ -50,3 +52,9 @@ Accounts commands `session`, `login`, `register` can declare `publicCommands` on
 Registration order: accounts, resources, companions, battle, garden, discovery, conversations. Use lazy `services.get()` lookups inside commands when dependencies register later. Cross-module transaction adapters must be synchronous; asynchronous network calls stay outside SQLite transactions. The foundation preserves the original JSON files and legacy renderer under an explicit compatibility entry; no data is deleted.
 
 Dependencies: only foundation edits root manifests and lockfile. Declare additional dependency requirements in your status JSON. Publish feature code and `docs/implementation/status/<id>.json` on your own branch; foundation collects branches read-only and performs final integration.
+
+### Authoritative garden readback and account CAS
+
+`accounts.sync.acceptAuthoritativeReadback(owner, {envelope, cloudRevision})` is main-only. Garden calls it inside the same SQLite readback transaction. The complete envelope is validated against current identity/adapters; local domain data must match. Pending, in-flight, stale or conflicting account saves stop adoption and roll back the local garden readback. SQL table row order is ignored for the data fingerprint; conversation message/history array order stays significant. The public cloud revision and a durable content checkpoint advance together. No pending action is superseded automatically and no production deployment is implied. Verified legacy owner aliases now migrate garden and companions using the actual registered services on the same connection.
+
+Focused evidence: 10 foundation SQLite tests, 17 account cases (one fixed-case recheck after the final guard correction), and 8 garden HTTP/PostgreSQL WASM checks passed on 2026-10-24. Real remote service and two-device acceptance remain pending.

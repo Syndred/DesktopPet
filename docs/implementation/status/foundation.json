@@ -1,19 +1,92 @@
 {
   "module": "foundation",
   "branch": "codex/lingjing-foundation",
-  "commit": "see git log for this file; initial shell follows contract 613e87a",
-  "status": "integrating",
-  "upstream": { "fetched": true, "originMain": "4786f97", "baseline": "6c8ce65", "originMainIsAncestor": true },
+  "commit": "138b35eddb0ee7f9aeb0407c99c7998dbe9e9a96",
+  "status": "integrating-visual-revision",
+  "upstream": {
+    "fetched": true,
+    "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086",
+    "baseline": "6c8ce65",
+    "originMainIsAncestor": true
+  },
   "contract": "docs/implementation/foundation-contract.md",
   "tests": [
-    { "command": "npm run build:pc", "result": "passed" },
-    { "command": "npm run typecheck", "result": "passed" },
-    { "command": "npm run lint", "result": "passed" },
-    { "command": "npm run test:foundation", "result": "2 passed; actual Electron SQLite connection, rollback and owner verification" },
-    { "command": "npm run pc:smoke:shell", "result": "passed; actual Windows Electron 36.9.5, navigation, isolated sandbox bridge, visible native window" }
+    {
+      "command": "npm run test:foundation",
+      "result": "10 passed on actual Electron SQLite"
+    },
+    {
+      "command": "accounts/tests/accounts.test.cjs",
+      "result": "17 cases passed; one corrected guard case rechecked separately"
+    },
+    {
+      "command": "garden/cloud.test.mjs",
+      "result": "8 passed local HTTP + PostgreSQL WASM; not deployed service"
+    },
+    {
+      "command": "lingjing-pages.mjs",
+      "result": "Actual local training loss, 13 rounds, pet A +5 XP only, 2 seeds once; report/chat routing passed"
+    },
+    {
+      "command": "shared typography check",
+      "result": "30 actual native route/size cases passed; this is only A01-A03 verification"
+    }
   ],
-  "evidence": ["artifacts/foundation/shell/evidence.json", "artifacts/foundation/shell/shell.png"],
-  "integrationDependencies": ["companions", "discovery", "battle", "garden", "conversations", "resources", "accounts"],
-  "remaining": ["Merge seven feature deliveries and complete service adapters", "Verify 19 pages and all gameplay in actual Electron", "Verify account isolation, import, restart recovery and online service", "Run final complete regression once", "Create and launch Windows package"],
-  "dataPolicy": "Original JSON/history retained with one-time backup before opening; one SQLite connection and transactional migration ledger; no destructive production migration or production release"
+  "evidence": [
+    "artifacts/foundation/pages/evidence.json",
+    "artifacts/foundation/resource-art/evidence.json",
+    "artifacts/foundation/shared-rhythm/evidence.json",
+    "docs/implementation/evidence/garden/verification.json",
+    "docs/implementation/acceptance/2026-10-24/visual-audit.txt"
+  ],
+  "integrationDependencies": [
+    "companions",
+    "discovery",
+    "battle",
+    "garden",
+    "conversations",
+    "resources",
+    "accounts"
+  ],
+  "remaining": [
+    "Merge final A04-A12 module refinements and canonical six-resource actions",
+    "One concentrated UI review at standard/wide sizes against approved boards",
+    "One final combined regression and Windows portable build/launch",
+    "External: deployed HTTPS cloud friend/sync/territory service, genuine two-account/two-device readback, precise location acceptance, configured live AI provider"
+  ],
+  "dataPolicy": "Original JSON/history retained with one-time backup before opening; one SQLite connection and transactional migration ledger; no destructive production migration or production release",
+  "updatedAt": "2026-10-24T13:34:43.457Z",
+  "integratedModules": [
+    "accounts",
+    "resources",
+    "companions",
+    "battle",
+    "garden",
+    "discovery",
+    "conversations"
+  ],
+  "publicUi": {
+    "fixCommit": "50f6cad",
+    "audit": [
+      "A01",
+      "A02",
+      "A03"
+    ],
+    "tokens": "apps/pc-app/ui/src/styles/tokens.css",
+    "layout": "apps/pc-app/ui/src/styles/layout.css",
+    "h1": "28px / 700 / 1.4",
+    "pagePadding": "24px block / 32px inline; responsive spacing tokens",
+    "cardMargins": 0,
+    "targetedResult": "1280 and 1440, 15 routes each; actual computed styles passed",
+    "fullVisualAcceptance": "pending A01-A12 concentrated review after final feature merges"
+  },
+  "integrationClosure": {
+    "route": "92c6f0e route-scoped location snapshots; actual report/chat exit cleanup verified",
+    "ownerAlias": "registered garden and companions migrate verified raw-ID save together; same petId, exact growth/crop timestamps, original archive, no second starter",
+    "cloudCheckpoint": "b3c15a5 authoritative full-save readback updates account CAS only after complete local domain equality; pending/in-flight/stale/conflicting states retained",
+    "conversationBackup": "stable IDs and message order across SQLite sequence collisions; encrypted credentials excluded",
+    "resourceBackup": "grid + Pixi atlas bytes restored and relocated; original files retained"
+  },
+  "visualAcceptance": "pending-independent-review",
+  "goalComplete": false
 }

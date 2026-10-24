@@ -1,5 +1,6 @@
 import { ArrowRight, BookOpen, ChevronRight, Compass, MapPin, PawPrint } from 'lucide-react';
 import { Button } from '../../components/ui';
+import { AnimatedList } from '../../components/motion';
 import { navigate } from '../../app/navigation';
 import type { DiscoverySnapshot, WildSpawn } from '../../../../../../packages/shared-types/src/features/discovery';
 import { NearbyMap } from './NearbyMap';
@@ -16,9 +17,9 @@ export function ExploreView({ state, selected, select }: { state: DiscoverySnaps
         </> : <div className="discovery-empty"><Compass size={35}/><h2>附近的相遇，正在等你</h2><p>先获取位置，再看看身边的游戏伙伴。</p></div>}
         <Button variant="ghost" className="discovery-full discovery-pokedex-button" onClick={() => navigate('/discovery/pokedex')}><BookOpen size={17}/>查看相遇图鉴</Button>
         <div className="discovery-nearby-heading"><h3>附近发现</h3><span>{state.spawns.length} 位伙伴</span></div>
-        <div className="discovery-nearby-list">{state.spawns.filter(spawn => spawn.id !== selected?.id).slice(0, 3).map(spawn => <button key={spawn.id} className="discovery-nearby-row" onClick={() => select(spawn.id)}>
+        <AnimatedList className="discovery-nearby-list">{state.spawns.filter(spawn => spawn.id !== selected?.id).slice(0, 3).map(spawn => <button key={spawn.id} className="discovery-nearby-row" onClick={() => select(spawn.id)}>
           <ResourcePortrait resourceId={spawn.resourceId} instanceId={spawn.id} compact/><span><strong>{spawn.name}</strong><small>Lv.01 · {elements[spawn.element]}</small></span><span>{spawn.distanceMeters} m</span><ChevronRight size={15}/>
-        </button>)}</div>
+        </button>)}</AnimatedList>
         <p className="discovery-walk-note"><PawPrint size={17}/>移动到附近，和伙伴打个招呼。</p>
       </aside>
     </div>

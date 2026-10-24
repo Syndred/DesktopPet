@@ -25,7 +25,7 @@ async function fixture(t) {
     requests.push({ body, authorization: req.headers.authorization });
     if (behavior === 'auth') { res.writeHead(401); res.end(JSON.stringify({ error: { message: req.headers.authorization + raw } })); return; }
     if (behavior === 'rate') { res.writeHead(429); res.end('{}'); return; }
-    if (behavior === 'json') { res.writeHead(200, { 'content-type': 'application/json' }); res.end(JSON.stringify({ choices: [{ message: { content: 'JSON text' } }] })); return; }
+    if (behavior === 'json') { res.writeHead(200, { 'content-type': 'application/json' }); res.end(JSON.stringify({ id: 'fixture', created: 1, model: 'fixture-model', choices: [{ index: 0, message: { role: 'assistant', content: 'JSON text' }, finish_reason: 'stop' }] })); return; }
     res.writeHead(200, { 'content-type': 'text/event-stream' });
     const emit = value => res.write(`data: ${JSON.stringify({ choices: [{ delta: { content: value } }] })}\r\n\r\n`);
     // Chinese UTF-8 and CRLF boundaries exercise the actual fetch reader/parser.
@@ -33,7 +33,7 @@ async function fixture(t) {
     if (behavior === 'truncate') { res.end(); return; }
     if (behavior === 'wait') { res.on('close', () => { closedWhileStreaming++; }); return; }
     emit('，这是协议测试响应。');
-    res.end('data: [DONE]\r\n\r\n');
+    res.end('data: {"choices":[{"index":0,"delta":{},"finish_reason":"stop"}]}\r\n\r\ndata: [DONE]\r\n\r\n');
   });
   await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
   const baseUrl = `http://127.0.0.1:${server.address().port}/v1`;

@@ -1,0 +1,536 @@
+{
+  "at": "2026-10-24T12:48:50.521Z",
+  "scopeRevision": "d6a1ab1",
+  "runtime": "production Electron, isolated native test profile",
+  "nativeImports": {
+    "gridResourceId": "63a69a0b-f24f-4dab-9203-5185452c597f",
+    "pixiResourceId": "0fcadbc3-f320-4932-ad7b-9d3c2775e3d2",
+    "chooser": "Windows native file dialogs, operated through sky"
+  },
+  "keyboard": {
+    "tabArrowRight": "动作校准 activated",
+    "tabHome": "角色资源 activated",
+    "selectEscapeReturnsFocus": true,
+    "popoverEscapeReturnsFocus": true
+  },
+  "instances": {
+    "samples": [
+      [
+        {
+          "resourceId": "0fcadbc3-f320-4932-ad7b-9d3c2775e3d2",
+          "petId": "resource-preview-a",
+          "action": "idle",
+          "status": "ready",
+          "textureKey": "lingjing-resource://asset/0fcadbc3-f320-4932-ad7b-9d3c2775e3d2/yuwan-sprites-v1.png:33ce5111e830913c9078be38f871f8a875301d5c2744bd24cfeb0b2f16c716be",
+          "textureSource": "3",
+          "frame": "1"
+        },
+        {
+          "resourceId": "0fcadbc3-f320-4932-ad7b-9d3c2775e3d2",
+          "petId": "resource-preview-b",
+          "action": "walk",
+          "status": "ready",
+          "textureKey": "lingjing-resource://asset/0fcadbc3-f320-4932-ad7b-9d3c2775e3d2/yuwan-sprites-v1.png:33ce5111e830913c9078be38f871f8a875301d5c2744bd24cfeb0b2f16c716be",
+          "textureSource": "3",
+          "frame": "1"
+        }
+      ],
+      [
+        {
+          "resourceId": "0fcadbc3-f320-4932-ad7b-9d3c2775e3d2",
+          "petId": "resource-preview-a",
+          "action": "idle",
+          "status": "ready",
+          "textureKey": "lingjing-resource://asset/0fcadbc3-f320-4932-ad7b-9d3c2775e3d2/yuwan-sprites-v1.png:33ce5111e830913c9078be38f871f8a875301d5c2744bd24cfeb0b2f16c716be",
+          "textureSource": "3",
+          "frame": "1"
+        },
+        {
+          "resourceId": "0fcadbc3-f320-4932-ad7b-9d3c2775e3d2",
+          "petId": "resource-preview-b",
+          "action": "walk",
+          "status": "ready",
+          "textureKey": "lingjing-resource://asset/0fcadbc3-f320-4932-ad7b-9d3c2775e3d2/yuwan-sprites-v1.png:33ce5111e830913c9078be38f871f8a875301d5c2744bd24cfeb0b2f16c716be",
+          "textureSource": "3",
+          "frame": "1"
+        }
+      ],
+      [
+        {
+          "resourceId": "0fcadbc3-f320-4932-ad7b-9d3c2775e3d2",
+          "petId": "resource-preview-a",
+          "action": "idle",
+          "status": "ready",
+          "textureKey": "lingjing-resource://asset/0fcadbc3-f320-4932-ad7b-9d3c2775e3d2/yuwan-sprites-v1.png:33ce5111e830913c9078be38f871f8a875301d5c2744bd24cfeb0b2f16c716be",
+          "textureSource": "3",
+          "frame": "1"
+        },
+        {
+          "resourceId": "0fcadbc3-f320-4932-ad7b-9d3c2775e3d2",
+          "petId": "resource-preview-b",
+          "action": "walk",
+          "status": "ready",
+          "textureKey": "lingjing-resource://asset/0fcadbc3-f320-4932-ad7b-9d3c2775e3d2/yuwan-sprites-v1.png:33ce5111e830913c9078be38f871f8a875301d5c2744bd24cfeb0b2f16c716be",
+          "textureSource": "3",
+          "frame": "0"
+        }
+      ],
+      [
+        {
+          "resourceId": "0fcadbc3-f320-4932-ad7b-9d3c2775e3d2",
+          "petId": "resource-preview-a",
+          "action": "idle",
+          "status": "ready",
+          "textureKey": "lingjing-resource://asset/0fcadbc3-f320-4932-ad7b-9d3c2775e3d2/yuwan-sprites-v1.png:33ce5111e830913c9078be38f871f8a875301d5c2744bd24cfeb0b2f16c716be",
+          "textureSource": "3",
+          "frame": "1"
+        },
+        {
+          "resourceId": "0fcadbc3-f320-4932-ad7b-9d3c2775e3d2",
+          "petId": "resource-preview-b",
+          "action": "walk",
+          "status": "ready",
+          "textureKey": "lingjing-resource://asset/0fcadbc3-f320-4932-ad7b-9d3c2775e3d2/yuwan-sprites-v1.png:33ce5111e830913c9078be38f871f8a875301d5c2744bd24cfeb0b2f16c716be",
+          "textureSource": "3",
+          "frame": "1"
+        }
+      ],
+      [
+        {
+          "resourceId": "0fcadbc3-f320-4932-ad7b-9d3c2775e3d2",
+          "petId": "resource-preview-a",
+          "action": "idle",
+          "status": "ready",
+          "textureKey": "lingjing-resource://asset/0fcadbc3-f320-4932-ad7b-9d3c2775e3d2/yuwan-sprites-v1.png:33ce5111e830913c9078be38f871f8a875301d5c2744bd24cfeb0b2f16c716be",
+          "textureSource": "3",
+          "frame": "1"
+        },
+        {
+          "resourceId": "0fcadbc3-f320-4932-ad7b-9d3c2775e3d2",
+          "petId": "resource-preview-b",
+          "action": "walk",
+          "status": "ready",
+          "textureKey": "lingjing-resource://asset/0fcadbc3-f320-4932-ad7b-9d3c2775e3d2/yuwan-sprites-v1.png:33ce5111e830913c9078be38f871f8a875301d5c2744bd24cfeb0b2f16c716be",
+          "textureSource": "3",
+          "frame": "1"
+        }
+      ],
+      [
+        {
+          "resourceId": "0fcadbc3-f320-4932-ad7b-9d3c2775e3d2",
+          "petId": "resource-preview-a",
+          "action": "idle",
+          "status": "ready",
+          "textureKey": "lingjing-resource://asset/0fcadbc3-f320-4932-ad7b-9d3c2775e3d2/yuwan-sprites-v1.png:33ce5111e830913c9078be38f871f8a875301d5c2744bd24cfeb0b2f16c716be",
+          "textureSource": "3",
+          "frame": "1"
+        },
+        {
+          "resourceId": "0fcadbc3-f320-4932-ad7b-9d3c2775e3d2",
+          "petId": "resource-preview-b",
+          "action": "walk",
+          "status": "ready",
+          "textureKey": "lingjing-resource://asset/0fcadbc3-f320-4932-ad7b-9d3c2775e3d2/yuwan-sprites-v1.png:33ce5111e830913c9078be38f871f8a875301d5c2744bd24cfeb0b2f16c716be",
+          "textureSource": "3",
+          "frame": "0"
+        }
+      ]
+    ],
+    "leftFrames": [
+      "1"
+    ],
+    "rightFrames": [
+      "1",
+      "0"
+    ],
+    "sharedTextureKey": true,
+    "sharedTextureSource": true,
+    "independentPetIds": true
+  },
+  "motion": {
+    "systemReduce": {
+      "media": true,
+      "frames": [
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "initialPageBoundary": "reduced"
+    },
+    "appDisabled": {
+      "settingsRevision": 1,
+      "frames": [
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ]
+    },
+    "appRestored": {
+      "settingsRevision": 2,
+      "animationsEnabled": true
+    }
+  },
+  "modelViewerElements": 0,
+  "errors": [],
+  "consoleErrors": [],
+  "invalidImport": {
+    "receipt": "资源描述不是有效的 JSON",
+    "libraryCount": 3,
+    "stages": [
+      "ready",
+      "ready"
+    ]
+  },
+  "savedResource": {
+    "name": "鱼丸 · Pixi 图集",
+    "kind": "spritesheet",
+    "origin": "import",
+    "provenance": {
+      "author": "灵境项目 / ImageGen",
+      "source": "按用户批准的 2026-10-24 设计图生成，提示词见 docs/implementation/illustration-assets.json",
+      "license": "项目生成素材",
+      "licenseUrl": "",
+      "attribution": "灵境 · 鱼丸；生成原图与使用记录随项目保存",
+      "status": "unverified"
+    },
+    "entryAsset": "yuwan-sprites-v1.png",
+    "atlas": {
+      "frames": {
+        "frame_0": {
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "w": 443.5,
+            "h": 443.5
+          },
+          "sourceSize": {
+            "w": 443.5,
+            "h": 443.5
+          },
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 443.5,
+            "h": 443.5
+          },
+          "rotated": false,
+          "trimmed": false
+        },
+        "frame_1": {
+          "frame": {
+            "x": 443.5,
+            "y": 0,
+            "w": 443.5,
+            "h": 443.5
+          },
+          "sourceSize": {
+            "w": 443.5,
+            "h": 443.5
+          },
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 443.5,
+            "h": 443.5
+          },
+          "rotated": false,
+          "trimmed": false
+        },
+        "frame_2": {
+          "frame": {
+            "x": 887,
+            "y": 0,
+            "w": 443.5,
+            "h": 443.5
+          },
+          "sourceSize": {
+            "w": 443.5,
+            "h": 443.5
+          },
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 443.5,
+            "h": 443.5
+          },
+          "rotated": false,
+          "trimmed": false
+        },
+        "frame_3": {
+          "frame": {
+            "x": 1330.5,
+            "y": 0,
+            "w": 443.5,
+            "h": 443.5
+          },
+          "sourceSize": {
+            "w": 443.5,
+            "h": 443.5
+          },
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 443.5,
+            "h": 443.5
+          },
+          "rotated": false,
+          "trimmed": false
+        },
+        "frame_4": {
+          "frame": {
+            "x": 0,
+            "y": 443.5,
+            "w": 443.5,
+            "h": 443.5
+          },
+          "sourceSize": {
+            "w": 443.5,
+            "h": 443.5
+          },
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 443.5,
+            "h": 443.5
+          },
+          "rotated": false,
+          "trimmed": false
+        },
+        "frame_5": {
+          "frame": {
+            "x": 443.5,
+            "y": 443.5,
+            "w": 443.5,
+            "h": 443.5
+          },
+          "sourceSize": {
+            "w": 443.5,
+            "h": 443.5
+          },
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 443.5,
+            "h": 443.5
+          },
+          "rotated": false,
+          "trimmed": false
+        },
+        "frame_6": {
+          "frame": {
+            "x": 887,
+            "y": 443.5,
+            "w": 443.5,
+            "h": 443.5
+          },
+          "sourceSize": {
+            "w": 443.5,
+            "h": 443.5
+          },
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 443.5,
+            "h": 443.5
+          },
+          "rotated": false,
+          "trimmed": false
+        },
+        "frame_7": {
+          "frame": {
+            "x": 1330.5,
+            "y": 443.5,
+            "w": 443.5,
+            "h": 443.5
+          },
+          "sourceSize": {
+            "w": 443.5,
+            "h": 443.5
+          },
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 443.5,
+            "h": 443.5
+          },
+          "rotated": false,
+          "trimmed": false
+        }
+      },
+      "animations": {
+        "idle": [
+          "frame_0",
+          "frame_0",
+          "frame_0",
+          "frame_0",
+          "frame_0",
+          "frame_1"
+        ],
+        "walk": [
+          "frame_2",
+          "frame_3"
+        ],
+        "wave": [
+          "frame_0",
+          "frame_4",
+          "frame_4",
+          "frame_0"
+        ],
+        "happy": [
+          "frame_4",
+          "frame_5"
+        ],
+        "sleep": [
+          "frame_6"
+        ],
+        "rest": [
+          "frame_7"
+        ]
+      },
+      "meta": {
+        "image": "yuwan-sprites-v1.png",
+        "scale": "1",
+        "size": {
+          "w": 1774,
+          "h": 887
+        }
+      }
+    },
+    "clips": [
+      {
+        "name": "idle",
+        "frameNames": [
+          "frame_0",
+          "frame_0",
+          "frame_0",
+          "frame_0",
+          "frame_0",
+          "frame_1"
+        ],
+        "fps": 6,
+        "loop": true
+      },
+      {
+        "name": "walk",
+        "frameNames": [
+          "frame_2",
+          "frame_3"
+        ],
+        "fps": 6,
+        "loop": true
+      },
+      {
+        "name": "wave",
+        "frameNames": [
+          "frame_0",
+          "frame_4",
+          "frame_4",
+          "frame_0"
+        ],
+        "fps": 6,
+        "loop": true
+      },
+      {
+        "name": "happy",
+        "frameNames": [
+          "frame_4",
+          "frame_5"
+        ],
+        "fps": 6,
+        "loop": true
+      },
+      {
+        "name": "sleep",
+        "frameNames": [
+          "frame_6"
+        ],
+        "fps": 6,
+        "loop": true
+      },
+      {
+        "name": "rest",
+        "frameNames": [
+          "frame_7"
+        ],
+        "fps": 6,
+        "loop": true
+      }
+    ],
+    "actions": {
+      "idle": "idle",
+      "walk": "walk",
+      "attack": "wave",
+      "hit": "rest",
+      "skill": "wave",
+      "victory": "happy",
+      "sleep": "sleep"
+    },
+    "calibration": {
+      "desktop": {
+        "scale": 1.12,
+        "rotationDeg": 3,
+        "verticalOffset": -0.05,
+        "mirrorX": true,
+        "anchorX": 0.46,
+        "anchorY": 0.9,
+        "fps": 10
+      },
+      "battle": {
+        "scale": 1,
+        "rotationDeg": 0,
+        "verticalOffset": 0,
+        "mirrorX": false,
+        "anchorX": 0.5,
+        "anchorY": 0.85,
+        "fps": 0
+      }
+    },
+    "contentHash": "33ce5111e830913c9078be38f871f8a875301d5c2744bd24cfeb0b2f16c716be",
+    "warnings": [],
+    "availability": "ready",
+    "id": "0fcadbc3-f320-4932-ad7b-9d3c2775e3d2",
+    "revision": 1,
+    "importedAt": "2026-10-24T12:43:24.740Z"
+  },
+  "restart": {
+    "at": "2026-10-24T12:52:09.160Z",
+    "resourceId": "0fcadbc3-f320-4932-ad7b-9d3c2775e3d2",
+    "revision": 1,
+    "calibration": {
+      "desktop": {
+        "scale": 1.12,
+        "rotationDeg": 3,
+        "verticalOffset": -0.05,
+        "mirrorX": true,
+        "anchorX": 0.46,
+        "anchorY": 0.9,
+        "fps": 10
+      },
+      "battle": {
+        "scale": 1,
+        "rotationDeg": 0,
+        "verticalOffset": 0,
+        "mirrorX": false,
+        "anchorX": 0.5,
+        "anchorY": 0.85,
+        "fps": 0
+      }
+    },
+    "actions": {
+      "idle": "idle",
+      "walk": "walk",
+      "attack": "wave",
+      "hit": "rest",
+      "skill": "wave",
+      "victory": "happy",
+      "sleep": "sleep"
+    },
+    "libraryCount": 3,
+    "stage": "ready",
+    "samePreferences": true
+  }
+}

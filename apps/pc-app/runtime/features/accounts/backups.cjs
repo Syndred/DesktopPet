@@ -2,7 +2,7 @@ const { randomUUID } = require("node:crypto");
 const { readFileSync, statSync } = require("node:fs");
 const { join } = require("node:path");
 const { invariant } = require("./errors.cjs");
-const { checksum, canonical, writeNew, transaction, actionId } = require("./util.cjs");
+const { checksum, saveDataChecksum, canonical, writeNew, transaction, actionId } = require("./util.cjs");
 const { validateSettings } = require("./settings.cjs");
 const { createLegacyBackupAdapter } = require("./legacy.cjs");
 
@@ -91,7 +91,7 @@ class BackupManager {
       return envelope;
     });
   }
-  dataChecksum(owner) { return checksum(this.snapshot(owner).data); }
+  dataChecksum(owner) { return saveDataChecksum(this.snapshot(owner).data); }
   validate(envelope, owner) {
     invariant(envelope?.format === "lingjing-account-save" && envelope.version === 1, "BACKUP_VERSION_UNSUPPORTED", "备份版本不兼容，请使用匹配版本的灵境。");
     const { checksum: digest, ...body } = envelope;
@@ -108,7 +108,9 @@ class BackupManager {
       invariant(!adapter.validate(module.data, owner, this.db)?.then, "ASYNC_BACKUP_ADAPTER", "存档验证适配器必须同步执行。");
     }
     const available = new Map(liveTables(this.db).map(t => [t.name, t]));
+    const claimed = new Set([...this.adapters.values()].flatMap(adapter => adapter.tables || []));
     for (const [name, table] of Object.entries(body.data.tables)) {
+      invariant(!claimed.has(name), "BACKUP_MODULE_UNSUPPORTED", `模块 ${name} 需要专用存档格式；原备份文件已保留，请使用创建它的版本导出。`);
       const live = available.get(name);
       invariant(live && !live.columns.some(c => secretColumn.test(c.name)) && checksum(table?.schema) === checksum(tableSchema(live.columns)),
         "BACKUP_SCHEMA_MISMATCH", `模块 ${name} 的数据版本不兼容。`);

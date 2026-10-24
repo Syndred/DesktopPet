@@ -51,15 +51,19 @@ export function applyCloudCommand(source, owner, kind, input, now, requestHash, 
     if (item) item.quantity = balance; else { item = { owner_account_id: owner, item_id: itemId, quantity: balance }; tables.garden_items.push(item); }
     tables.garden_events.push({ owner_account_id: owner, event_id: uuid(), action_id: actionId, kind: eventKind, item_id: itemId, delta, balance, pet_id: petId, created_at: now });
   }
-  if (!tables.garden_accounts.length) {
+  const initializing = !tables.garden_accounts.length;
+  if (initializing) {
     tables.garden_accounts.push({ owner_account_id: owner, revision: 0, initialized_at: now });
     for (let i = 1; i <= BASE_PLOTS; i++) tables.garden_plots.push({ owner_account_id: owner, plot_id: `plot-${i}`, crop_type: null, planted_at: null, matures_at: null, yield_quantity: 0, revision: 0 });
     for (const crop of Object.values(CROPS)) change(crop.seedItemId, STARTER_SEEDS, null, 'starter');
   }
   const account = tables.garden_accounts[0];
+  if (kind === 'initialize' && !initializing) return {envelope,result:{ok:true,data:{initialized:true},revision:account.revision,replayed:true},changed:false};
   if (kind !== 'reward' && (!Number.isSafeInteger(input.expectedRevision) || input.expectedRevision !== account.revision)) problem('REVISION_CONFLICT', '另一台设备已更新菜园，请刷新');
   let receipt;
-  if (kind === 'plant') {
+  if (kind === 'initialize') {
+    receipt = {initialized:true,plots:BASE_PLOTS};
+  } else if (kind === 'plant') {
     const crop = CROPS[input.cropType]; if (!crop) problem('INVALID_CROP', '种子无效');
     const plot = tables.garden_plots.find(row => row.plot_id === input.plotId); if (!plot) problem('PLOT_NOT_FOUND', '找不到这块菜地'); if (plot.crop_type) problem('PLOT_OCCUPIED', '请先收获');
     change(crop.seedItemId, -1);

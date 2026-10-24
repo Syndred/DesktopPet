@@ -77,8 +77,9 @@ class AccountsService {
       if (["SESSION_INVALIDATED", "SESSION_EXPIRED"].includes(error.code)) this.vault.clear();
     }
   }
-  emitSession() {
+  emitSession({ notifyApp = true } = {}) {
     const session = this.session();
+    if (notifyApp) this.services.events?.emit("app:session", session.currentUser);
     this.services.events?.emit("accounts:session-changed", session);
     this.services.events?.emit("session:changed", session.currentUser);
     return session;
@@ -93,7 +94,7 @@ class AccountsService {
     this.remote.setCurrentUser(row.provider === "runtime" ? this.privateSession() : null);
     await this.host?.apply?.(this.settings(row.owner_account_id).document);
     invariant(this.epoch === epoch && this.current?.ownerAccountId === row.owner_account_id, "SESSION_CHANGED", "账号状态已改变，请重新登录。");
-    return this.emitSession();
+    return this.emitSession({ notifyApp: false });
   }
   persistSession(rememberSession) {
     this.db.prepare("INSERT INTO account_session_control VALUES(1,1) ON CONFLICT(singleton) DO UPDATE SET blocked=1").run();
@@ -180,7 +181,7 @@ class AccountsService {
     if (prior?.provider === "local") this.db.prepare("DELETE FROM account_login_sessions WHERE proof_hash=?").run(checksum(prior.proof));
     if (this.remote.signOut) void this.remote.signOut(previousCloudSession).catch(() => {});
     else this.remote.setCurrentUser(null);
-    this.emitSession();
+    this.emitSession({ notifyApp: false });
     return { currentUser: null };
   }
   invalidateSession(owner) {

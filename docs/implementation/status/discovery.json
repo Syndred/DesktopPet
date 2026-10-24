@@ -1,34 +1,208 @@
 {
   "module": "discovery",
   "branch": "codex/lingjing-discovery",
-  "commit": "0662b4f889a720e394fcca5636924a33925b7007",
-  "status": "2d_ui_first_migration_under_verification",
+  "commit": "543d75ee744ca9535ec96bed021cd9287e6d875e",
+  "status": "2d_local_verified_external_acceptance_pending",
   "goalStatus": "active",
   "workspace": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-discovery\\DesktopPet",
   "upstream": {
     "fetched": true,
-    "originMain": "4786f97",
-    "baseline": "6c8ce65",
-    "foundationMerged": "8f17aec",
+    "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086",
+    "foundationMerged": "e69c377f606f01fed899602a5f37619047f2de79",
+    "foundationMergeCommit": "3ca5b2cbbc7e84c13a1e97711b46502e528eadbe",
     "originMainIsAncestor": true,
     "sourceCheckoutModified": false
   },
+  "scopeRevision": "docs/implementation/scope-2d-ui-first.txt",
   "contract": "docs/implementation/discovery-contract.txt",
   "implemented": [
-    "Windows native Geolocator, explicit permission/timeout/unavailable/coarse/stale/default-location states, cancellable in-flight requests and foreground-only opt-in watch",
-    "Separate LocationAdapter and MapAdapter; canonical WGS84, GCJ02 map conversion, native fix never changes when providers switch",
-    "Real OSM raster viewport, attribution, main-process User-Agent/cache/concurrency, pan/zoom/recenter/retry; unavailable commercial providers stay visibly unavailable",
-    "Explicit demo coordinates and game-generated geographically anchored encounters; demo cannot challenge, capture or grant rewards",
-    "Owned pet instance selection, actual registered battle challenge/actions/outcome/leave, persisted encounters, cancel and restart recovery",
-    "Victory plus confirmation plus fresh precise position; companion/pokedex/memory/capture receipts share a SQLite transaction, duplicate confirmation returns the same petId",
-    "Capture result, nickname, optional independent desktop presence, shared resource rendering adapter and per-pet first-meeting tags",
-    "Shared territory authority adapter and real-geometry map overlay; no fabricated ownership or polygon when authority is absent",
-    "Reviewable cloud authority, text runtime account session verification, server-owned random combat, distance/precision/expiry checks, locked settlement RPCs and restrictive RLS"
+    "Native Windows Geolocator with honest permission, coarse/stale/default-position, timeout and unavailable states; no fake fallback",
+    "Accounts privacy policy prevents OS calls and drops late fixes; foreground-only opt-in watch stops on exit, hide, revoke or account switch",
+    "Separate WGS84 location and WGS84/GCJ02 map adapters; provider changes never rewrite the system fix",
+    "Actual MapLibre GL JS raster map, separately bundled v6 worker, Turf geometry, main-process Chromium network/cache and real attribution",
+    "Versioned geographically fixed game encounters from registered 2D templates; demo never challenges, captures or grants rewards",
+    "Verified owned pet selection; actual battle begin/actions/leave/outcome, preserved encounter state, resume and restart",
+    "Victory and fresh precise fix required; companion/capture/memory/action receipt commit atomically and duplicate confirmation returns the same petId",
+    "2D preview, portrait selection cards, battle, Radix capture dialog, capture result, nickname, pokedex and independent desktop presence",
+    "Real garden territory challenge/ownership adapter, Turf boundary containment and saved capture provenance without changing combat stats",
+    "Reviewable server-owned random battle and PostgreSQL row-locked claim artifact; deployed cloud success is not claimed"
   ],
+  "openSource": [
+    {
+      "project": "react",
+      "version": "19.3.1",
+      "license": "MIT",
+      "source": "https://react.dev/",
+      "actualUsage": "React components and hooks",
+      "location": "apps/pc-app/ui/src/features/discovery/"
+    },
+    {
+      "project": "react-dom",
+      "version": "19.3.1",
+      "license": "MIT",
+      "source": "https://react.dev/reference/react-dom",
+      "actualUsage": "React roots for MapLibre DOM markers",
+      "location": "apps/pc-app/ui/src/features/discovery/NearbyMap.tsx"
+    },
+    {
+      "project": "radix-ui",
+      "version": "1.8.1",
+      "license": "MIT",
+      "source": "https://www.radix-ui.com/primitives",
+      "actualUsage": "Shared real Select, Switch, Dialog, Popover and Tooltip primitives",
+      "location": "apps/pc-app/ui/src/features/discovery/"
+    },
+    {
+      "project": "motion",
+      "version": "14.6.0",
+      "license": "MIT",
+      "source": "https://motion.dev/docs/react",
+      "actualUsage": "Shared AppPresence, MotionPanel and AnimatedList",
+      "location": "apps/pc-app/ui/src/features/discovery/EncounterView.tsx"
+    },
+    {
+      "project": "tailwindcss",
+      "version": "4.3.3",
+      "license": "MIT",
+      "source": "https://tailwindcss.com/docs/installation/using-vite",
+      "actualUsage": "Foundation Tailwind design tokens and imported component styles",
+      "location": "apps/pc-app/ui/src/components/ui"
+    },
+    {
+      "project": "pixi.js",
+      "version": "8.22.0",
+      "license": "MIT",
+      "source": "https://pixijs.com/8.x/guides",
+      "actualUsage": "Shared ResourceStage atlas textures, playback and rendering",
+      "location": "apps/pc-app/ui/src/features/discovery/ResourcePortrait.tsx"
+    },
+    {
+      "project": "lucide-react",
+      "version": "1.61.0",
+      "license": "ISC",
+      "source": "https://lucide.dev/",
+      "actualUsage": "Shared outline icons",
+      "location": "apps/pc-app/ui/src/features/discovery/"
+    },
+    {
+      "project": "maplibre-gl",
+      "version": "6.15.0",
+      "license": "BSD-3-Clause",
+      "source": "https://maplibre.org/maplibre-gl-js/docs/",
+      "actualUsage": "Actual raster viewport, camera, gestures, markers, GeoJSON and bundled v6 worker",
+      "location": "apps/pc-app/ui/src/features/discovery/NearbyMap.tsx"
+    },
+    {
+      "project": "@turf/distance",
+      "version": "7.4.0",
+      "license": "MIT",
+      "source": "https://turfjs.org/docs/api/distance",
+      "actualUsage": "WGS84 fence and query distance",
+      "location": "apps/pc-app/runtime/features/discovery/coordinates.cjs"
+    },
+    {
+      "project": "@turf/boolean-point-in-polygon",
+      "version": "7.4.0",
+      "license": "MIT",
+      "source": "https://turfjs.org/docs/api/booleanPointInPolygon",
+      "actualUsage": "Authoritative territory containment",
+      "location": "apps/pc-app/runtime/features/discovery/territory-adapter.cjs"
+    },
+    {
+      "project": "@turf/helpers",
+      "version": "7.4.0",
+      "license": "MIT",
+      "source": "https://turfjs.org/docs/api/polygon",
+      "actualUsage": "Territory GeoJSON construction",
+      "location": "apps/pc-app/runtime/features/discovery/territory-adapter.cjs"
+    },
+    {
+      "project": "@turf/circle",
+      "version": "7.4.0",
+      "license": "MIT",
+      "source": "https://turfjs.org/docs/api/circle",
+      "actualUsage": "Reported OS uncertainty circle",
+      "location": "apps/pc-app/ui/src/features/discovery/NearbyMap.tsx"
+    },
+    {
+      "project": "shadcn/ui Radix Nova",
+      "version": "registry snapshot 2026-10-24T12:33:22.227Z",
+      "license": "MIT",
+      "source": "https://ui.shadcn.com/docs/components",
+      "sourceRecord": "docs/implementation/shadcn-source-record.json",
+      "actualUsage": "Foundation Button/Card/Input plus accessible Radix controls in the production pages"
+    }
+  ],
+  "applicationSpecificCode": {
+    "items": [
+      "OS privacy and precision policy",
+      "WGS84/GCJ02 provider boundary",
+      "Account-owned encounter/capture receipts and SQLite transactions",
+      "Thin MapLibre IPC tile protocol and resource adapter"
+    ],
+    "reason": "These are project rules and integration boundaries, while mature libraries own maps, geometry, accessible controls, animation and 2D rendering."
+  },
+  "notAdopted": [
+    {
+      "project": "XState",
+      "reason": "Persisted encounter transitions already compose with the existing battle and SQLite transaction owner; a second state owner would duplicate recovery logic."
+    },
+    {
+      "project": "second map or animation engine",
+      "reason": "MapLibre, shared Pixi ResourceStage and shared Motion already own these responsibilities."
+    }
+  ],
+  "assets": {
+    "codeAndArtLicensesSeparate": true,
+    "scene": "apps/pc-app/ui/src/features/discovery/assets/provenance.json",
+    "actor": "apps/pc-app/runtime/assets/illustrations/yuwan-character-v1.json",
+    "type": "Project-generated art; library MIT/BSD licenses do not cover the art"
+  },
+  "uiComparison": {
+    "references": [
+      "docs/design/2026-10-24/full-ui/02-exploration-and-battle.png",
+      "docs/design/2026-10-24/full-ui/04-wild-encounter-and-capture.png"
+    ],
+    "evidence": "docs/implementation/evidence/discovery/2d",
+    "productionScreenshots": [
+      "02-exploration.png",
+      "04-wild-preview.png",
+      "04-capture-result.png",
+      "pokedex.png",
+      "desktop-pixi.png"
+    ],
+    "verified": [
+      "Map/detail two-column layout",
+      "Large wild actor with smaller current companion and real mini-map",
+      "Right-side traits and bottom portrait cards with current selection",
+      "Capture postcard, instance details, name, desktop switch and memory card",
+      "Flat buttons, shared Radix focus/keyboard/Escape and shared Motion/Pixi preferences"
+    ],
+    "differences": [
+      "OSM uses current real map content rather than a painted sample map",
+      "Generated game place labels replace unverified sample landmarks",
+      "Shared atlas poses and simplified postcard decoration differ from the design still illustration"
+    ]
+  },
+  "twoDimensionalOnly": {
+    "passed": true,
+    "newModel3dCode": false,
+    "activeRenderers": [
+      "resources.ResourceStage / PixiJS",
+      "static atlas frame for map and list thumbnails"
+    ],
+    "activeTemplates": [
+      "big-fish-gentle",
+      "big-fish-cheerful",
+      "big-fish-foodie"
+    ],
+    "historicalFilesPreserved": true,
+    "audit": "Feature runtime/UI/shared types contain no new GLB/GLTF/VRM, model-viewer, Three, custom animation loop or HTML-string business UI"
+  },
   "tests": [
     {
       "command": "npm run typecheck:ui",
-      "result": "passed"
+      "result": "passed after latest foundation and portrait-card changes"
     },
     {
       "command": "npx eslint apps/pc-app/ui/src/features/discovery --ext .ts,.tsx",
@@ -36,41 +210,62 @@
     },
     {
       "command": "npm run build:pc",
-      "result": "passed, actual Electron production build"
+      "result": "passed; emitted local maplibre-gl-worker asset; remaining shared chunk-size warnings are recorded"
     },
     {
       "command": "node scripts/desktop/run-native-tests.cjs apps/pc-app/runtime/features/discovery/tests/discovery.test.cjs",
-      "result": "10 passed, 0 skipped; real shared SQLite and real companions/battle feature modules; fixture position and deterministic test NPC decisions are explicitly controlled"
+      "result": "12 passed before foundation refresh; merged run passed 11 and identified the new garden stale-session payload requirement"
+    },
+    {
+      "command": "node scripts/desktop/run-native-tests.cjs --test-name-pattern=\"real territory battle\" apps/pc-app/runtime/features/discovery/tests/discovery.test.cjs",
+      "result": "passed after updating the fixture to the garden sessionOwnerAccountId guard; all 12 current cases covered; no project-wide suite repeated"
     },
     {
       "command": "node apps/pc-app/runtime/features/discovery/verification/windows-flow.mjs",
-      "result": "passed: production runtime OS location, real map tiles, explicit demo and provider failure states; separately labelled controlled-position full clicks with actual random combat, confirmation deduplication, pokedex, visible independent desktop and application restart"
+      "result": "passed on latest foundation: production OS request, application privacy, real random combat with controlled position, Radix focus/Escape, duplicate confirmation, SQL readback, pokedex, actual desktop and restart; renderer errors []"
     },
     {
-      "check": "server-authority guard integration",
-      "result": "passed against real SQLite in native tests: forged winner rejected, actual persisted server combat required, account-owned pet and action/capture deduplication; this does not verify deployed Supabase/PostgreSQL"
+      "command": "node apps/pc-app/runtime/features/discovery/verification/map.mjs",
+      "result": "passed: production main, 12 rendered raster tiles, 14 cached PNG files, worker warnings []"
+    },
+    {
+      "command": "node apps/pc-app/runtime/features/discovery/verification/postgres.mjs",
+      "result": "passed seven guard/transaction/permission checks in PGlite 0.5.11 embedded PostgreSQL, not deployed Supabase"
+    },
+    {
+      "check": "final visual review on persisted fixture data",
+      "result": "passed; 2 actual 2D pet cards, one selected card, Radix keyboard selection, real mini-map tiles and shared Pixi stage"
     }
   ],
   "runtimeEvidence": {
     "system": {
-      "at": "2026-10-24T12:20:19.455Z",
-      "provider": "windows-geolocator",
-      "source": "os",
-      "positionSource": "WiFi",
-      "latestAccuracyMeters": 500,
-      "earlierAccuracyMeters": [
-        213,
-        212
-      ],
+      "productionMain": true,
       "status": "imprecise",
-      "code": "LOCATION_IMPRECISE",
-      "initialDeniedHresultObservedBeforeUserEnabledPermission": "0x80070005",
-      "preciseCoordinateHash": "63dddc36ef356c58b2c34514a82bb38d5a0856570a1634460ac6de021faf54dd",
-      "preciseCoordinatesCommitted": false
+      "source": "os",
+      "provider": "windows-geolocator",
+      "positionSource": "WiFi",
+      "accuracyMeters": 95,
+      "timestampMs": 1792847355601,
+      "coordinateHash": "92942c0c9628c06b29b000d2e6d2aae367e27de922d8fc19d8e4972e065f5514",
+      "error": {
+        "code": "LOCATION_IMPRECISE",
+        "message": "定位精度不足，请移动到信号较好的地方（需要 ≤ 80 米）"
+      },
+      "preciseCoordinatesCommitted": false,
+      "earlierAccuracyMeters": [
+        81,
+        91,
+        212,
+        213,
+        500
+      ],
+      "initialDeniedHresultBeforeUserEnabledLocation": "0x80070005",
+      "physicalCaptureAccepted": false
     },
     "controlledClickFlow": {
-      "isRealLocationAcceptance": false,
+      "realLocationAcceptance": false,
       "realRandomCombat": true,
+      "attempts": 1,
       "capturesInSqlite": 1,
       "memoryTagsInSqlite": 1,
       "battleReportsInSqlite": 1,
@@ -79,55 +274,35 @@
       "currentLocationPersisted": false,
       "rendererErrors": []
     },
-    "localArtifacts": [
-      "artifacts/discovery/native-tests.log",
-      "artifacts/discovery/windows/evidence.json",
-      "artifacts/discovery/windows/explicit-demo-map.png",
-      "artifacts/discovery/windows/controlled-victory.png",
-      "artifacts/discovery/windows/controlled-capture-result.png",
-      "artifacts/discovery/windows/controlled-pokedex.png"
-    ],
-    "privateSystemMapScreenshotNotCommitted": "artifacts/discovery/windows/real-system-location-private.png"
+    "committedEvidence": "docs/implementation/evidence/discovery/2d/evidence.json",
+    "rawLocalArtifacts": {
+      "flow": "artifacts/discovery/2d-windows-1792847349359",
+      "map": "artifacts/discovery/map-1792847383583",
+      "review": "artifacts/discovery/review-1792847693443"
+    },
+    "privateSystemMapScreenshotNotCommitted": "artifacts/discovery/2d-windows-1792847349359/real-system-location-private.png"
   },
+  "dependencyManifest": "apps/pc-app/runtime/features/discovery/dependencies.json",
+  "additionalFoundationPackages": [],
+  "rootDependenciesConsumedFromFoundation": true,
   "integrationDependencies": [
-    "Register companions and battle in foundation; tested read-only from their real feature directories, without merging or copying another feature branch",
-    "ResourceStage is loaded when resources is present; NPC and captured companion IDs use the same builtin:lingjing-yuwan-v1 / legacy model resource namespace",
-    "Conversations may read companion origin.memoryTags or discovery.memories; displaying these in chat remains the conversations/foundation integration step",
-    "A registered territories authority must supply real WGS84 boundaries and ownership; garden and discovery already share its adapter",
-    "Cloud requires reviewed migration/function deployment, trusted companion battle-profile synchronization, HTTPS configuration and battle supportsCloudWild/authoritative wild-round integration",
-    "Final complete integration regression and Windows package belong to foundation"
+    "Cloud needs trusted companion battle-profile synchronization and battle supportsCloudWild/wildAdapter integration",
+    "Cloud migration/function deployment and live runtime-account verification remain separate",
+    "Foundation owns final combined regression and Windows packaging"
   ],
   "realIncomplete": [
-    "A physical-location capture has not been accepted: Windows now returns actual WiFi fixes but reports 212–500m uncertainty, exceeding the 80m precision gate for the 100m interaction fence. Controlled fixture captures are not presented as physical-location acceptance.",
-    "Cloud discovery has not been deployed or tested against live Supabase/PostgreSQL; its current battle integration dependency is explicit and cloud mode fails closed with CLOUD_BATTLE_INTEGRATION_REQUIRED.",
-    "No commercial Tencent/Google tile credentials have been configured; coordinate adapters remain and OSM is live.",
-    "Real territory overlays/ownership require the shared territory authority; no invented territory was used for acceptance.",
-    "Final combined feature/resource/chat/territory integration remains foundation work."
+    "Physical-location capture is not accepted: latest native Windows WiFi accuracy is 95m, above the 80m gate for the 100m interaction fence. Controlled captures are separate evidence.",
+    "Cloud migration/function is reviewable and locally PostgreSQL-verified, but not deployed or live-Supabase-tested. Cloud mode fails closed while the battle authority adapter is missing.",
+    "Tencent/Google credentials are not configured; both coordinate adapters remain and OSM is verified.",
+    "Final combined packaging/regression remains foundation work."
   ],
-  "dependencies": [],
-  "dataPolicy": "Separate managed worktree; original source checkout, paused/history data and design images preserved; one host SQLite connection; no destructive production migration, credential change, production deployment or additional implementation chat. Goal not marked complete while acceptance gaps remain.",
-  "scopeRevision": "docs/implementation/scope-2d-ui-first.txt, user instruction 2026-10-24",
   "verificationPending": [
-    "Rebuild with foundation shadcn/Radix, Tailwind and Motion",
-    "Actual 2D-only encounter/capture window evidence against approved design 02 and 04",
-    "MapLibre map tiles, camera, markers and Turf geometry",
-    "Accounts privacy, visible-only watch and private runtime identity mapping",
-    "Final targeted native checks after scope revision"
+    "Genuine <=80m OS-fix capture",
+    "Deployed cloud battle/profile integration and live runtime-account readback",
+    "Foundation combined release verification"
   ],
-  "dependencyManifest": "apps/pc-app/runtime/features/discovery/dependencies.json",
-  "additionalFoundationPackages": [
-    "@turf/boolean-point-in-polygon@7.4.0",
-    "@turf/helpers@7.4.0",
-    "@turf/circle@7.4.0"
+  "historicalBaselineEvidence": [
+    "artifacts/discovery/windows/evidence.json (pre-2D scope; not current visual acceptance)"
   ],
-  "uiComponentsRequired": [
-    "shared Button/Card",
-    "ui/select (Radix)",
-    "ui/switch (Radix)",
-    "ui/dialog (Radix)",
-    "ui/popover (Radix)",
-    "ui/tooltip (Radix)",
-    "ui/input",
-    "shared components/motion"
-  ]
+  "dataPolicy": "Only this managed worktree and discovery-owned implementation/status were changed directly; foundation changes came through its branch. User data and old files are preserved. No production migration, deployment, credential change, remote message or additional chat was performed. Goal remains active for unmet external acceptance."
 }

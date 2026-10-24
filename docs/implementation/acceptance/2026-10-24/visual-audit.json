@@ -1,0 +1,95 @@
+{
+  "date": "2026-10-24",
+  "status": "requires_revision",
+  "baselineCommit": "e69c377f606f01fed899602a5f37619047f2de79",
+  "sourceDirtyFiles": [
+    "M apps/pc-app/runtime/features/battle/battle.test.cjs",
+    " M apps/pc-app/ui/src/components/motion.tsx",
+    " M apps/pc-app/ui/src/styles/global.css",
+    "?? docs/implementation/acceptance-baseline.json",
+    "?? scripts/smoke/lingjing-pages.mjs"
+  ],
+  "evidenceDirectory": "artifacts/ui-acceptance/2026-10-24/baseline",
+  "capturedViews": 20,
+  "designPagesCaptured": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    8,
+    9,
+    10,
+    11,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19
+  ],
+  "dpr": 1.25,
+  "nativeAction": {
+    "method": "Computer Use sky click in isolated local training",
+    "action": "element_attack",
+    "beforeRound": 1,
+    "afterRound": 2,
+    "hudAndRoundLogUpdated": true
+  },
+  "findings": [
+    {
+      "id": "A01",
+      "status": "open"
+    },
+    {
+      "id": "A02",
+      "status": "open"
+    },
+    {
+      "id": "A03",
+      "status": "open"
+    },
+    {
+      "id": "A04",
+      "status": "open"
+    },
+    {
+      "id": "A05",
+      "status": "open"
+    },
+    {
+      "id": "A06",
+      "status": "open"
+    },
+    {
+      "id": "A07",
+      "status": "open"
+    },
+    {
+      "id": "A08",
+      "status": "open"
+    },
+    {
+      "id": "A09",
+      "status": "open"
+    },
+    {
+      "id": "A10",
+      "status": "open"
+    },
+    {
+      "id": "A11",
+      "status": "open"
+    },
+    {
+      "id": "A12",
+      "status": "open"
+    }
+  ],
+  "scope": "Approved UI, 2D only, six distinct canonical character resources, real independent actions",
+  "notes": [
+    "Do not infer full 19-page or external-service acceptance from this capture set.",
+    "Source worktree had ongoing uncommitted edits; screenshots and computed styles are authoritative baseline evidence."
+  ]
+}

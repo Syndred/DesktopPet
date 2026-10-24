@@ -1,1 +1,25 @@
 :root{--cream:#fbfcff;--mist:#edf5ff;--ink:#192f61;--muted:#8a96b0;--line:#e3eaf8;--primary:#5278ff;--primary-soft:#e8eeff;--mint:#9bd4ba;--peach:#ffaf83;--rose:#ff8fa8;color-scheme:light}
+
+:root {
+  --font-ui: 'Microsoft YaHei UI', 'Microsoft YaHei', system-ui, sans-serif;
+  --text-title: 28px;
+  --text-section: 18px;
+  --text-card: 16px;
+  --text-body: 14px;
+  --text-label: 12px;
+  --text-caption: 11px;
+  --weight-body: 400;
+  --weight-label: 500;
+  --weight-section: 600;
+  --weight-title: 700;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --page-pad-block: var(--space-6);
+  --page-pad-inline: var(--space-8);
+}
+

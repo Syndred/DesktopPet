@@ -1,0 +1,1905 @@
+{
+  "capturedAt": "2026-10-24T13:25:35.471Z",
+  "commit": "155ac37224efa3010071297077208a1deeb3c5c4",
+  "mode": "Actual Windows Electron + IPC + SQLite reopen. PostgreSQL checks use a local WASM server, not deployed Supabase.",
+  "ownerAccountId": "local:user-8c0af433-aa89-44dd-b1ce-34872d297267",
+  "electron": "36.9.5",
+  "phases": [
+    {
+      "phase": "plant",
+      "at": "2026-10-24T12:51:09.986Z",
+      "errors": [],
+      "electron": "36.9.5"
+    },
+    {
+      "phase": "motion",
+      "at": "2026-10-24T12:57:31.500Z",
+      "errors": [],
+      "electron": "36.9.5"
+    },
+    {
+      "phase": "map",
+      "at": "2026-10-24T12:57:41.120Z",
+      "errors": [],
+      "electron": "36.9.5"
+    },
+    {
+      "phase": "library",
+      "at": "2026-10-24T12:57:47.222Z",
+      "errors": [],
+      "electron": "36.9.5"
+    },
+    {
+      "phase": "battle",
+      "at": "2026-10-24T12:58:09.749Z",
+      "errors": [],
+      "electron": "36.9.5"
+    },
+    {
+      "phase": "carrot",
+      "at": "2026-10-24T13:02:14.634Z",
+      "errors": [],
+      "electron": "36.9.5"
+    },
+    {
+      "phase": "library",
+      "at": "2026-10-24T13:02:40.106Z",
+      "errors": [],
+      "electron": "36.9.5"
+    },
+    {
+      "phase": "rewardplant",
+      "at": "2026-10-24T13:06:49.768Z",
+      "errors": [],
+      "electron": "36.9.5"
+    },
+    {
+      "phase": "responsive",
+      "at": "2026-10-24T13:08:43.622Z",
+      "errors": [],
+      "electron": "36.9.5"
+    },
+    {
+      "phase": "library",
+      "at": "2026-10-24T13:12:26.644Z",
+      "errors": [],
+      "electron": "36.9.5"
+    },
+    {
+      "phase": "motion",
+      "at": "2026-10-24T13:12:28.564Z",
+      "errors": [],
+      "electron": "36.9.5"
+    },
+    {
+      "phase": "harvest",
+      "at": "2026-10-24T13:16:24.483Z",
+      "errors": [],
+      "electron": "36.9.5"
+    },
+    {
+      "phase": "readback",
+      "at": "2026-10-24T13:16:25.716Z",
+      "errors": [],
+      "electron": "36.9.5"
+    },
+    {
+      "phase": "screens",
+      "at": "2026-10-24T13:17:33.499Z",
+      "errors": [],
+      "electron": "36.9.5"
+    },
+    {
+      "phase": "library",
+      "at": "2026-10-24T13:20:15.399Z",
+      "errors": [],
+      "electron": "36.9.5"
+    },
+    {
+      "phase": "rewardfinish",
+      "at": "2026-10-24T13:22:05.120Z",
+      "errors": [],
+      "electron": "36.9.5"
+    },
+    {
+      "phase": "readback",
+      "at": "2026-10-24T13:22:06.382Z",
+      "errors": [],
+      "electron": "36.9.5"
+    },
+    {
+      "phase": "screens",
+      "at": "2026-10-24T13:22:08.952Z",
+      "errors": [],
+      "electron": "36.9.5"
+    },
+    {
+      "phase": "audit",
+      "at": "2026-10-24T13:25:08.124Z",
+      "errors": [],
+      "electron": "36.9.5"
+    }
+  ],
+  "productionGrowth": {
+    "crop": "rice",
+    "plantedAt": 1792846269487,
+    "maturesAt": 1792847769487,
+    "harvestedAt": 1792847783222,
+    "elapsedMs": 1513735,
+    "appRestarts": true,
+    "clockOrDatabaseGrowthEdits": false
+  },
+  "inventory": [
+    {
+      "item_id": "carrot",
+      "quantity": 3
+    },
+    {
+      "item_id": "cooked_rice",
+      "quantity": 0
+    },
+    {
+      "item_id": "rice",
+      "quantity": 1
+    },
+    {
+      "item_id": "seed:berry",
+      "quantity": 4
+    },
+    {
+      "item_id": "seed:carrot",
+      "quantity": 1
+    },
+    {
+      "item_id": "seed:rice",
+      "quantity": 1
+    },
+    {
+      "item_id": "seed:tomato",
+      "quantity": 3
+    },
+    {
+      "item_id": "tomato",
+      "quantity": 2
+    }
+  ],
+  "battle": {
+    "sessionId": "battle-d17a0da8-fd2b-4cf7-98cd-88afb0cebec2",
+    "winner": "enemy",
+    "reward": {
+      "actionId": "battle:battle-d17a0da8-fd2b-4cf7-98cd-88afb0cebec2:local:user-8c0af433-aa89-44dd-b1ce-34872d297267",
+      "petId": "pet-ef03204d-bbc6-4b2b-86b5-1b24c5cc9068",
+      "experience": 5,
+      "applied": true,
+      "previousExperience": 0,
+      "previousLevel": 1,
+      "currentExperience": 5,
+      "currentLevel": 1,
+      "seeds": {
+        "source": "battle",
+        "receiptId": "battle-d17a0da8-fd2b-4cf7-98cd-88afb0cebec2",
+        "itemId": "seed:tomato",
+        "quantity": 2
+      }
+    },
+    "seedDelta": 2,
+    "repeatedSnapshotAddsNothing": true
+  },
+  "selectedPetFeed": {
+    "before": [
+      {
+        "petId": "pet-001",
+        "name": "焰柴",
+        "revision": 1,
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 128,
+            "atk": 32,
+            "def": 20,
+            "spd": 18
+          }
+        }
+      },
+      {
+        "petId": "pet-002",
+        "name": "墨喵",
+        "revision": 1,
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 122,
+            "atk": 28,
+            "def": 24,
+            "spd": 21
+          }
+        }
+      },
+      {
+        "petId": "pet-003",
+        "name": "礼帽喵",
+        "revision": 1,
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 130,
+            "atk": 26,
+            "def": 26,
+            "spd": 17
+          }
+        }
+      },
+      {
+        "petId": "pet-004",
+        "name": "钢狼",
+        "revision": 1,
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 135,
+            "atk": 30,
+            "def": 30,
+            "spd": 12
+          }
+        }
+      },
+      {
+        "petId": "pet-005",
+        "name": "赤柴",
+        "revision": 1,
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 142,
+            "atk": 24,
+            "def": 34,
+            "spd": 10
+          }
+        }
+      },
+      {
+        "petId": "pet-006",
+        "name": "柴豆",
+        "revision": 1,
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 118,
+            "atk": 33,
+            "def": 22,
+            "spd": 20
+          }
+        }
+      },
+      {
+        "petId": "pet-ef03204d-bbc6-4b2b-86b5-1b24c5cc9068",
+        "name": "鱼丸",
+        "revision": 2,
+        "growth": {
+          "level": 1,
+          "experience": 5,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        }
+      },
+      {
+        "petId": "pet-69a13dbc-02dc-447f-91fd-fe2812363c46",
+        "name": "小蓝",
+        "revision": 1,
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        }
+      },
+      {
+        "petId": "pet-20ec2000-12a1-44f0-bf6f-95bb27f0c37a",
+        "name": "饭团",
+        "revision": 1,
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        }
+      }
+    ],
+    "after": [
+      {
+        "petId": "pet-001",
+        "name": "焰柴",
+        "revision": 1,
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 128,
+            "atk": 32,
+            "def": 20,
+            "spd": 18
+          }
+        }
+      },
+      {
+        "petId": "pet-002",
+        "name": "墨喵",
+        "revision": 1,
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 122,
+            "atk": 28,
+            "def": 24,
+            "spd": 21
+          }
+        }
+      },
+      {
+        "petId": "pet-003",
+        "name": "礼帽喵",
+        "revision": 1,
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 130,
+            "atk": 26,
+            "def": 26,
+            "spd": 17
+          }
+        }
+      },
+      {
+        "petId": "pet-004",
+        "name": "钢狼",
+        "revision": 1,
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 135,
+            "atk": 30,
+            "def": 30,
+            "spd": 12
+          }
+        }
+      },
+      {
+        "petId": "pet-005",
+        "name": "赤柴",
+        "revision": 1,
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 142,
+            "atk": 24,
+            "def": 34,
+            "spd": 10
+          }
+        }
+      },
+      {
+        "petId": "pet-006",
+        "name": "柴豆",
+        "revision": 1,
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 118,
+            "atk": 33,
+            "def": 22,
+            "spd": 20
+          }
+        }
+      },
+      {
+        "petId": "pet-ef03204d-bbc6-4b2b-86b5-1b24c5cc9068",
+        "name": "鱼丸",
+        "revision": 3,
+        "growth": {
+          "level": 1,
+          "experience": 5,
+          "mood": 63,
+          "satiety": 80,
+          "affinity": 4,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        }
+      },
+      {
+        "petId": "pet-69a13dbc-02dc-447f-91fd-fe2812363c46",
+        "name": "小蓝",
+        "revision": 1,
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        }
+      },
+      {
+        "petId": "pet-20ec2000-12a1-44f0-bf6f-95bb27f0c37a",
+        "name": "饭团",
+        "revision": 1,
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        }
+      }
+    ],
+    "onlyFishChanged": true,
+    "cookedRiceConsumed": 1,
+    "riceRemaining": 1
+  },
+  "rewardedSeedCycle": {
+    "receipt": {
+      "source": "battle",
+      "receiptId": "battle-d17a0da8-fd2b-4cf7-98cd-88afb0cebec2",
+      "itemId": "seed:tomato",
+      "quantity": 2
+    },
+    "planted": {
+      "plotId": "plot-3",
+      "cropType": "tomato",
+      "plantedAt": 1792847209420,
+      "maturesAt": 1792848109420,
+      "yieldQuantity": 3,
+      "revision": 1,
+      "stage": "growing"
+    },
+    "harvested": {
+      "id": "8ffe810d-921b-4150-afe0-8add2638b5b2",
+      "actionId": "78f867c5-39c0-472e-9887-d0a3ff33ddc9",
+      "kind": "harvest",
+      "itemId": "tomato",
+      "delta": 3,
+      "balance": 3,
+      "petId": null,
+      "createdAt": 1792848124191
+    },
+    "foodConsumed": 1,
+    "before": [
+      {
+        "petId": "pet-001",
+        "name": "焰柴",
+        "revision": 1,
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 128,
+            "atk": 32,
+            "def": 20,
+            "spd": 18
+          }
+        }
+      },
+      {
+        "petId": "pet-002",
+        "name": "墨喵",
+        "revision": 1,
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 122,
+            "atk": 28,
+            "def": 24,
+            "spd": 21
+          }
+        }
+      },
+      {
+        "petId": "pet-003",
+        "name": "礼帽喵",
+        "revision": 1,
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 130,
+            "atk": 26,
+            "def": 26,
+            "spd": 17
+          }
+        }
+      },
+      {
+        "petId": "pet-004",
+        "name": "钢狼",
+        "revision": 1,
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 135,
+            "atk": 30,
+            "def": 30,
+            "spd": 12
+          }
+        }
+      },
+      {
+        "petId": "pet-005",
+        "name": "赤柴",
+        "revision": 1,
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 142,
+            "atk": 24,
+            "def": 34,
+            "spd": 10
+          }
+        }
+      },
+      {
+        "petId": "pet-006",
+        "name": "柴豆",
+        "revision": 1,
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 118,
+            "atk": 33,
+            "def": 22,
+            "spd": 20
+          }
+        }
+      },
+      {
+        "petId": "pet-ef03204d-bbc6-4b2b-86b5-1b24c5cc9068",
+        "name": "鱼丸",
+        "revision": 3,
+        "growth": {
+          "level": 1,
+          "experience": 5,
+          "mood": 63,
+          "satiety": 80,
+          "affinity": 4,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        }
+      },
+      {
+        "petId": "pet-69a13dbc-02dc-447f-91fd-fe2812363c46",
+        "name": "小蓝",
+        "revision": 1,
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        }
+      },
+      {
+        "petId": "pet-20ec2000-12a1-44f0-bf6f-95bb27f0c37a",
+        "name": "饭团",
+        "revision": 1,
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        }
+      }
+    ],
+    "after": [
+      {
+        "petId": "pet-001",
+        "name": "焰柴",
+        "revision": 1,
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 128,
+            "atk": 32,
+            "def": 20,
+            "spd": 18
+          }
+        }
+      },
+      {
+        "petId": "pet-002",
+        "name": "墨喵",
+        "revision": 1,
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 122,
+            "atk": 28,
+            "def": 24,
+            "spd": 21
+          }
+        }
+      },
+      {
+        "petId": "pet-003",
+        "name": "礼帽喵",
+        "revision": 1,
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 130,
+            "atk": 26,
+            "def": 26,
+            "spd": 17
+          }
+        }
+      },
+      {
+        "petId": "pet-004",
+        "name": "钢狼",
+        "revision": 1,
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 135,
+            "atk": 30,
+            "def": 30,
+            "spd": 12
+          }
+        }
+      },
+      {
+        "petId": "pet-005",
+        "name": "赤柴",
+        "revision": 1,
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 142,
+            "atk": 24,
+            "def": 34,
+            "spd": 10
+          }
+        }
+      },
+      {
+        "petId": "pet-006",
+        "name": "柴豆",
+        "revision": 1,
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 118,
+            "atk": 33,
+            "def": 22,
+            "spd": 20
+          }
+        }
+      },
+      {
+        "petId": "pet-ef03204d-bbc6-4b2b-86b5-1b24c5cc9068",
+        "name": "鱼丸",
+        "revision": 4,
+        "growth": {
+          "level": 1,
+          "experience": 5,
+          "mood": 66,
+          "satiety": 90,
+          "affinity": 6,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        }
+      },
+      {
+        "petId": "pet-69a13dbc-02dc-447f-91fd-fe2812363c46",
+        "name": "小蓝",
+        "revision": 1,
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        }
+      },
+      {
+        "petId": "pet-20ec2000-12a1-44f0-bf6f-95bb27f0c37a",
+        "name": "饭团",
+        "revision": 1,
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        }
+      }
+    ],
+    "nextBattle": {
+      "sessionId": "battle-2c15fc38-a347-44a7-a37f-95b2f251b3e2",
+      "winner": "enemy",
+      "reward": {
+        "actionId": "battle:battle-2c15fc38-a347-44a7-a37f-95b2f251b3e2:local:user-8c0af433-aa89-44dd-b1ce-34872d297267",
+        "petId": "pet-ef03204d-bbc6-4b2b-86b5-1b24c5cc9068",
+        "experience": 5,
+        "applied": true,
+        "previousExperience": 5,
+        "previousLevel": 1,
+        "currentExperience": 10,
+        "currentLevel": 1,
+        "seeds": {
+          "source": "battle",
+          "receiptId": "battle-2c15fc38-a347-44a7-a37f-95b2f251b3e2",
+          "itemId": "seed:berry",
+          "quantity": 2
+        }
+      }
+    },
+    "finalPets": [
+      {
+        "petId": "pet-001",
+        "name": "焰柴",
+        "revision": 1,
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 128,
+            "atk": 32,
+            "def": 20,
+            "spd": 18
+          }
+        }
+      },
+      {
+        "petId": "pet-002",
+        "name": "墨喵",
+        "revision": 1,
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 122,
+            "atk": 28,
+            "def": 24,
+            "spd": 21
+          }
+        }
+      },
+      {
+        "petId": "pet-003",
+        "name": "礼帽喵",
+        "revision": 1,
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 130,
+            "atk": 26,
+            "def": 26,
+            "spd": 17
+          }
+        }
+      },
+      {
+        "petId": "pet-004",
+        "name": "钢狼",
+        "revision": 1,
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 135,
+            "atk": 30,
+            "def": 30,
+            "spd": 12
+          }
+        }
+      },
+      {
+        "petId": "pet-005",
+        "name": "赤柴",
+        "revision": 1,
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 142,
+            "atk": 24,
+            "def": 34,
+            "spd": 10
+          }
+        }
+      },
+      {
+        "petId": "pet-006",
+        "name": "柴豆",
+        "revision": 1,
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 118,
+            "atk": 33,
+            "def": 22,
+            "spd": 20
+          }
+        }
+      },
+      {
+        "petId": "pet-ef03204d-bbc6-4b2b-86b5-1b24c5cc9068",
+        "name": "鱼丸",
+        "revision": 5,
+        "growth": {
+          "level": 1,
+          "experience": 10,
+          "mood": 66,
+          "satiety": 90,
+          "affinity": 6,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        }
+      },
+      {
+        "petId": "pet-69a13dbc-02dc-447f-91fd-fe2812363c46",
+        "name": "小蓝",
+        "revision": 1,
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        }
+      },
+      {
+        "petId": "pet-20ec2000-12a1-44f0-bf6f-95bb27f0c37a",
+        "name": "饭团",
+        "revision": 1,
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        }
+      }
+    ]
+  },
+  "restart": {
+    "exactItemsAndPets": true,
+    "duplicateHarvest": {
+      "ok": false,
+      "code": "ALREADY_HARVESTED",
+      "message": "这块菜地已收获",
+      "revision": 11
+    },
+    "staleAccount": {
+      "ok": false,
+      "code": "SESSION_CHANGED",
+      "message": "账号已切换，请刷新菜园后再操作"
+    }
+  },
+  "publicComponents": {
+    "viewport": {
+      "width": 1280,
+      "height": 844
+    },
+    "radixSelectEscFocus": true,
+    "radixTabsArrowHomeEnd": true,
+    "search": true,
+    "sharedCompanionPortrait": true,
+    "headingMetrics": {
+      "fontSize": "29px",
+      "fontWeight": "700"
+    },
+    "cardGeometry": [
+      {
+        "height": 163.4499969482422,
+        "artHeight": 92,
+        "contained": true
+      },
+      {
+        "height": 163.4499969482422,
+        "artHeight": 92,
+        "contained": true
+      },
+      {
+        "height": 163.4499969482422,
+        "artHeight": 92,
+        "contained": true
+      },
+      {
+        "height": 163.4499969482422,
+        "artHeight": 92,
+        "contained": true
+      },
+      {
+        "height": 163.4499969482422,
+        "artHeight": 92,
+        "contained": true
+      },
+      {
+        "height": 163.4499969482422,
+        "artHeight": 92,
+        "contained": true
+      },
+      {
+        "height": 163.4499969482422,
+        "artHeight": 92,
+        "contained": true
+      },
+      {
+        "height": 163.4499969482422,
+        "artHeight": 92,
+        "contained": true
+      },
+      {
+        "height": 163.4499969482422,
+        "artHeight": 92,
+        "contained": true
+      }
+    ],
+    "petGeometry": [
+      {
+        "height": 123.5999984741211,
+        "content": 122
+      },
+      {
+        "height": 123.5999984741211,
+        "content": 122
+      },
+      {
+        "height": 123.5999984741211,
+        "content": 122
+      }
+    ],
+    "shadcnSelectSlot": "tested-on-kitchen",
+    "motionList": {
+      "projection": null,
+      "style": "transform: none; transform-origin: 50% 50% 0px;"
+    },
+    "actualAccountsSettingToggle": true,
+    "liveSystemReducedMotion": true,
+    "restoredOriginalSettings": true
+  },
+  "visualAudit": {
+    "source": "visual-audit.txt A04; follow A01/A03",
+    "fixCommits": [
+      "a79d9b9",
+      "155ac37"
+    ],
+    "measurements": [
+      {
+        "path": "/inventory",
+        "viewport": {
+          "width": 1280,
+          "height": 844,
+          "dpr": 1.25
+        },
+        "heading": {
+          "fontSize": "29px",
+          "fontWeight": "700",
+          "lineHeight": "39.15px",
+          "marginBottom": "0px",
+          "x": 222,
+          "y": 114.4000015258789,
+          "width": 308,
+          "height": 39.150001525878906,
+          "top": 114.4000015258789,
+          "right": 530,
+          "bottom": 153.5500030517578,
+          "left": 222
+        },
+        "pagePadding": "30px",
+        "cards": [
+          {
+            "rect": {
+              "x": 222,
+              "y": 330.5500183105469,
+              "width": 136.52500915527344,
+              "height": 163.4499969482422,
+              "top": 330.5500183105469,
+              "right": 358.52500915527344,
+              "bottom": 494.00001525878906,
+              "left": 222
+            },
+            "art": {
+              "x": 228.8000030517578,
+              "y": 337.3500061035156,
+              "width": 122.92500305175781,
+              "height": 92,
+              "top": 337.3500061035156,
+              "right": 351.7250061035156,
+              "bottom": 429.3500061035156,
+              "left": 228.8000030517578
+            }
+          },
+          {
+            "rect": {
+              "x": 369.5249938964844,
+              "y": 330.5500183105469,
+              "width": 136.53750610351562,
+              "height": 163.4499969482422,
+              "top": 330.5500183105469,
+              "right": 506.0625,
+              "bottom": 494.00001525878906,
+              "left": 369.5249938964844
+            },
+            "art": {
+              "x": 376.32501220703125,
+              "y": 337.3500061035156,
+              "width": 122.9375,
+              "height": 92,
+              "top": 337.3500061035156,
+              "right": 499.26251220703125,
+              "bottom": 429.3500061035156,
+              "left": 376.32501220703125
+            }
+          },
+          {
+            "rect": {
+              "x": 517.0625,
+              "y": 330.5500183105469,
+              "width": 136.52500915527344,
+              "height": 163.4499969482422,
+              "top": 330.5500183105469,
+              "right": 653.5875091552734,
+              "bottom": 494.00001525878906,
+              "left": 517.0625
+            },
+            "art": {
+              "x": 523.8624877929688,
+              "y": 337.3500061035156,
+              "width": 122.92500305175781,
+              "height": 92,
+              "top": 337.3500061035156,
+              "right": 646.7874908447266,
+              "bottom": 429.3500061035156,
+              "left": 523.8624877929688
+            }
+          },
+          {
+            "rect": {
+              "x": 664.5875244140625,
+              "y": 330.5500183105469,
+              "width": 136.53750610351562,
+              "height": 163.4499969482422,
+              "top": 330.5500183105469,
+              "right": 801.1250305175781,
+              "bottom": 494.00001525878906,
+              "left": 664.5875244140625
+            },
+            "art": {
+              "x": 671.3875122070312,
+              "y": 337.3500061035156,
+              "width": 122.9375,
+              "height": 92,
+              "top": 337.3500061035156,
+              "right": 794.3250122070312,
+              "bottom": 429.3500061035156,
+              "left": 671.3875122070312
+            }
+          },
+          {
+            "rect": {
+              "x": 222,
+              "y": 505,
+              "width": 136.52500915527344,
+              "height": 163.4499969482422,
+              "top": 505,
+              "right": 358.52500915527344,
+              "bottom": 668.4499969482422,
+              "left": 222
+            },
+            "art": {
+              "x": 228.8000030517578,
+              "y": 511.8000183105469,
+              "width": 122.92500305175781,
+              "height": 92,
+              "top": 511.8000183105469,
+              "right": 351.7250061035156,
+              "bottom": 603.8000183105469,
+              "left": 228.8000030517578
+            }
+          },
+          {
+            "rect": {
+              "x": 369.5249938964844,
+              "y": 505,
+              "width": 136.53750610351562,
+              "height": 163.4499969482422,
+              "top": 505,
+              "right": 506.0625,
+              "bottom": 668.4499969482422,
+              "left": 369.5249938964844
+            },
+            "art": {
+              "x": 376.32501220703125,
+              "y": 511.8000183105469,
+              "width": 122.9375,
+              "height": 92,
+              "top": 511.8000183105469,
+              "right": 499.26251220703125,
+              "bottom": 603.8000183105469,
+              "left": 376.32501220703125
+            }
+          },
+          {
+            "rect": {
+              "x": 517.0625,
+              "y": 505,
+              "width": 136.52500915527344,
+              "height": 163.4499969482422,
+              "top": 505,
+              "right": 653.5875091552734,
+              "bottom": 668.4499969482422,
+              "left": 517.0625
+            },
+            "art": {
+              "x": 523.8624877929688,
+              "y": 511.8000183105469,
+              "width": 122.92500305175781,
+              "height": 92,
+              "top": 511.8000183105469,
+              "right": 646.7874908447266,
+              "bottom": 603.8000183105469,
+              "left": 523.8624877929688
+            }
+          },
+          {
+            "rect": {
+              "x": 664.5875244140625,
+              "y": 505,
+              "width": 136.53750610351562,
+              "height": 163.4499969482422,
+              "top": 505,
+              "right": 801.1250305175781,
+              "bottom": 668.4499969482422,
+              "left": 664.5875244140625
+            },
+            "art": {
+              "x": 671.3875122070312,
+              "y": 511.8000183105469,
+              "width": 122.9375,
+              "height": 92,
+              "top": 511.8000183105469,
+              "right": 794.3250122070312,
+              "bottom": 603.8000183105469,
+              "left": 671.3875122070312
+            }
+          },
+          {
+            "rect": {
+              "x": 222,
+              "y": 679.4500122070312,
+              "width": 136.52500915527344,
+              "height": 163.4499969482422,
+              "top": 679.4500122070312,
+              "right": 358.52500915527344,
+              "bottom": 842.9000091552734,
+              "left": 222
+            },
+            "art": {
+              "x": 228.8000030517578,
+              "y": 686.25,
+              "width": 122.92500305175781,
+              "height": 92,
+              "top": 686.25,
+              "right": 351.7250061035156,
+              "bottom": 778.25,
+              "left": 228.8000030517578
+            }
+          }
+        ],
+        "petCards": [
+          {
+            "height": 122,
+            "scrollHeight": 122
+          },
+          {
+            "height": 122,
+            "scrollHeight": 122
+          },
+          {
+            "height": 122,
+            "scrollHeight": 122
+          }
+        ],
+        "overlap": false,
+        "cardsSpacing": [
+          {
+            "marginBottom": "0px",
+            "parentGap": "normal"
+          }
+        ]
+      },
+      {
+        "path": "/garden/kitchen",
+        "viewport": {
+          "width": 1280,
+          "height": 844,
+          "dpr": 1.25
+        },
+        "heading": {
+          "fontSize": "29px",
+          "fontWeight": "700",
+          "lineHeight": "39.15px",
+          "marginBottom": "0px",
+          "x": 222,
+          "y": 114.4000015258789,
+          "width": 380.8999938964844,
+          "height": 39.150001525878906,
+          "top": 114.4000015258789,
+          "right": 602.8999938964844,
+          "bottom": 153.5500030517578,
+          "left": 222
+        },
+        "pagePadding": "30px",
+        "cards": [],
+        "petCards": [
+          {
+            "height": 122,
+            "scrollHeight": 122
+          },
+          {
+            "height": 122,
+            "scrollHeight": 122
+          },
+          {
+            "height": 122,
+            "scrollHeight": 122
+          }
+        ],
+        "overlap": false,
+        "cardsSpacing": [
+          {
+            "marginBottom": "0px",
+            "parentGap": "16px"
+          },
+          {
+            "marginBottom": "0px",
+            "parentGap": "16px"
+          },
+          {
+            "marginBottom": "0px",
+            "parentGap": "16px"
+          }
+        ]
+      },
+      {
+        "path": "/inventory",
+        "viewport": {
+          "width": 1440,
+          "height": 900,
+          "dpr": 1.25
+        },
+        "heading": {
+          "fontSize": "29px",
+          "fontWeight": "700",
+          "lineHeight": "39.15px",
+          "marginBottom": "0px",
+          "x": 222,
+          "y": 114.4000015258789,
+          "width": 308,
+          "height": 39.150001525878906,
+          "top": 114.4000015258789,
+          "right": 530,
+          "bottom": 153.5500030517578,
+          "left": 222
+        },
+        "pagePadding": "30px",
+        "cards": [
+          {
+            "rect": {
+              "x": 222,
+              "y": 330.5500183105469,
+              "width": 159.8625030517578,
+              "height": 163.4499969482422,
+              "top": 330.5500183105469,
+              "right": 381.8625030517578,
+              "bottom": 494.00001525878906,
+              "left": 222
+            },
+            "art": {
+              "x": 228.8000030517578,
+              "y": 337.3500061035156,
+              "width": 146.2624969482422,
+              "height": 92,
+              "top": 337.3500061035156,
+              "right": 375.0625,
+              "bottom": 429.3500061035156,
+              "left": 228.8000030517578
+            }
+          },
+          {
+            "rect": {
+              "x": 392.8625183105469,
+              "y": 330.5500183105469,
+              "width": 159.8625030517578,
+              "height": 163.4499969482422,
+              "top": 330.5500183105469,
+              "right": 552.7250213623047,
+              "bottom": 494.00001525878906,
+              "left": 392.8625183105469
+            },
+            "art": {
+              "x": 399.6625061035156,
+              "y": 337.3500061035156,
+              "width": 146.2624969482422,
+              "height": 92,
+              "top": 337.3500061035156,
+              "right": 545.9250030517578,
+              "bottom": 429.3500061035156,
+              "left": 399.6625061035156
+            }
+          },
+          {
+            "rect": {
+              "x": 563.7250366210938,
+              "y": 330.5500183105469,
+              "width": 159.8625030517578,
+              "height": 163.4499969482422,
+              "top": 330.5500183105469,
+              "right": 723.5875396728516,
+              "bottom": 494.00001525878906,
+              "left": 563.7250366210938
+            },
+            "art": {
+              "x": 570.5250244140625,
+              "y": 337.3500061035156,
+              "width": 146.2624969482422,
+              "height": 92,
+              "top": 337.3500061035156,
+              "right": 716.7875213623047,
+              "bottom": 429.3500061035156,
+              "left": 570.5250244140625
+            }
+          },
+          {
+            "rect": {
+              "x": 734.5875244140625,
+              "y": 330.5500183105469,
+              "width": 159.875,
+              "height": 163.4499969482422,
+              "top": 330.5500183105469,
+              "right": 894.4625244140625,
+              "bottom": 494.00001525878906,
+              "left": 734.5875244140625
+            },
+            "art": {
+              "x": 741.3875122070312,
+              "y": 337.3500061035156,
+              "width": 146.27500915527344,
+              "height": 92,
+              "top": 337.3500061035156,
+              "right": 887.6625213623047,
+              "bottom": 429.3500061035156,
+              "left": 741.3875122070312
+            }
+          },
+          {
+            "rect": {
+              "x": 222,
+              "y": 505,
+              "width": 159.8625030517578,
+              "height": 163.4499969482422,
+              "top": 505,
+              "right": 381.8625030517578,
+              "bottom": 668.4499969482422,
+              "left": 222
+            },
+            "art": {
+              "x": 228.8000030517578,
+              "y": 511.8000183105469,
+              "width": 146.2624969482422,
+              "height": 92,
+              "top": 511.8000183105469,
+              "right": 375.0625,
+              "bottom": 603.8000183105469,
+              "left": 228.8000030517578
+            }
+          },
+          {
+            "rect": {
+              "x": 392.8625183105469,
+              "y": 505,
+              "width": 159.8625030517578,
+              "height": 163.4499969482422,
+              "top": 505,
+              "right": 552.7250213623047,
+              "bottom": 668.4499969482422,
+              "left": 392.8625183105469
+            },
+            "art": {
+              "x": 399.6625061035156,
+              "y": 511.8000183105469,
+              "width": 146.2624969482422,
+              "height": 92,
+              "top": 511.8000183105469,
+              "right": 545.9250030517578,
+              "bottom": 603.8000183105469,
+              "left": 399.6625061035156
+            }
+          },
+          {
+            "rect": {
+              "x": 563.7250366210938,
+              "y": 505,
+              "width": 159.8625030517578,
+              "height": 163.4499969482422,
+              "top": 505,
+              "right": 723.5875396728516,
+              "bottom": 668.4499969482422,
+              "left": 563.7250366210938
+            },
+            "art": {
+              "x": 570.5250244140625,
+              "y": 511.8000183105469,
+              "width": 146.2624969482422,
+              "height": 92,
+              "top": 511.8000183105469,
+              "right": 716.7875213623047,
+              "bottom": 603.8000183105469,
+              "left": 570.5250244140625
+            }
+          },
+          {
+            "rect": {
+              "x": 734.5875244140625,
+              "y": 505,
+              "width": 159.875,
+              "height": 163.4499969482422,
+              "top": 505,
+              "right": 894.4625244140625,
+              "bottom": 668.4499969482422,
+              "left": 734.5875244140625
+            },
+            "art": {
+              "x": 741.3875122070312,
+              "y": 511.8000183105469,
+              "width": 146.27500915527344,
+              "height": 92,
+              "top": 511.8000183105469,
+              "right": 887.6625213623047,
+              "bottom": 603.8000183105469,
+              "left": 741.3875122070312
+            }
+          },
+          {
+            "rect": {
+              "x": 222,
+              "y": 679.4500122070312,
+              "width": 159.8625030517578,
+              "height": 163.4499969482422,
+              "top": 679.4500122070312,
+              "right": 381.8625030517578,
+              "bottom": 842.9000091552734,
+              "left": 222
+            },
+            "art": {
+              "x": 228.8000030517578,
+              "y": 686.25,
+              "width": 146.2624969482422,
+              "height": 92,
+              "top": 686.25,
+              "right": 375.0625,
+              "bottom": 778.25,
+              "left": 228.8000030517578
+            }
+          }
+        ],
+        "petCards": [
+          {
+            "height": 122,
+            "scrollHeight": 122
+          },
+          {
+            "height": 122,
+            "scrollHeight": 122
+          },
+          {
+            "height": 122,
+            "scrollHeight": 122
+          }
+        ],
+        "overlap": false,
+        "cardsSpacing": [
+          {
+            "marginBottom": "0px",
+            "parentGap": "normal"
+          }
+        ]
+      },
+      {
+        "path": "/garden/kitchen",
+        "viewport": {
+          "width": 1440,
+          "height": 900,
+          "dpr": 1.25
+        },
+        "heading": {
+          "fontSize": "29px",
+          "fontWeight": "700",
+          "lineHeight": "39.15px",
+          "marginBottom": "0px",
+          "x": 222,
+          "y": 114.4000015258789,
+          "width": 380.8999938964844,
+          "height": 39.150001525878906,
+          "top": 114.4000015258789,
+          "right": 602.8999938964844,
+          "bottom": 153.5500030517578,
+          "left": 222
+        },
+        "pagePadding": "30px",
+        "cards": [],
+        "petCards": [
+          {
+            "height": 122,
+            "scrollHeight": 122
+          },
+          {
+            "height": 122,
+            "scrollHeight": 122
+          },
+          {
+            "height": 122,
+            "scrollHeight": 122
+          }
+        ],
+        "overlap": false,
+        "cardsSpacing": [
+          {
+            "marginBottom": "0px",
+            "parentGap": "16px"
+          },
+          {
+            "marginBottom": "0px",
+            "parentGap": "16px"
+          },
+          {
+            "marginBottom": "0px",
+            "parentGap": "16px"
+          }
+        ]
+      }
+    ],
+    "readyForCentralRecheck": true
+  },
+  "responsive": [
+    {
+      "path": "/garden/plots",
+      "width": 1100,
+      "height": 800,
+      "scrollWidth": 1100,
+      "content": {
+        "x": 166,
+        "y": 54,
+        "width": 918.7999877929688,
+        "height": 933.2625122070312,
+        "top": 54,
+        "right": 1084.7999877929688,
+        "bottom": 987.2625122070312,
+        "left": 166
+      }
+    },
+    {
+      "path": "/garden/kitchen",
+      "width": 1100,
+      "height": 800,
+      "scrollWidth": 1100,
+      "content": {
+        "x": 166,
+        "y": 54,
+        "width": 918.7999877929688,
+        "height": 1049.862548828125,
+        "top": 54,
+        "right": 1084.7999877929688,
+        "bottom": 1103.862548828125,
+        "left": 166
+      }
+    },
+    {
+      "path": "/inventory",
+      "width": 1100,
+      "height": 800,
+      "scrollWidth": 1100,
+      "content": {
+        "x": 166,
+        "y": 54,
+        "width": 918.7999877929688,
+        "height": 896.8624877929688,
+        "top": 54,
+        "right": 1084.7999877929688,
+        "bottom": 950.8624877929688,
+        "left": 166
+      }
+    }
+  ],
+  "realLocation": {
+    "engine": "maplibre-gl",
+    "locationStatus": "imprecise",
+    "systemError": "LOCATION_IMPRECISE",
+    "positionSource": "WiFi",
+    "accuracyMeters": 212,
+    "successfulLocation": false,
+    "coordinatesOmitted": true
+  },
+  "oldOwnerSafety": {
+    "source": "user-652fae86-f759-4dbc-9d52-4c5bf0868b57",
+    "target": "local:user-652fae86-f759-4dbc-9d52-4c5bf0868b57",
+    "code": "OWNER_MIGRATION_REQUIRED",
+    "oldInventoryExactlyPreserved": true,
+    "newGardenNotCreated": true,
+    "providerMigrationStillRequired": true
+  },
+  "controlledTerritoryUI": {
+    "fixture": true,
+    "realGeographicAcceptance": false,
+    "actualIPCAndSqlite": true,
+    "garrisonOnly": true,
+    "restart": {
+      "exactGarrisonAndIndependentSelections": true
+    }
+  },
+  "postgres": {
+    "mode": "local HTTP + real PostgreSQL WASM + SQLite; not a deployed Supabase receipt",
+    "at": "2026-10-24T13:14:35.711Z",
+    "checks": [
+      "verified session and server-time maturity",
+      "one credit under concurrent HTTP harvest + exact action replay",
+      "one food debit + fish only + PostgreSQL and SQLite readback",
+      "immutable action hash + account CAS + failed debit leaves cloud state unchanged",
+      "server-owned reward row + concurrent receipt deduplication",
+      "concurrent first cloud open -> one PostgreSQL starter receipt; rejected session creates no local garden",
+      "real HTTP socket disconnect after PostgreSQL commit -> exact action replay -> one craft debit and one output after SQLite readback",
+      "actual SQL roles: service receipt read allowed; anon/authenticated receipt read and settlement execution denied"
+    ],
+    "accountRevision": 4
+  },
+  "externalGaps": [
+    "Live HTTPS Supabase deployment and real-account two-device readback",
+    "Cloud territory challenge/garrison authority and shared battle integration",
+    "Companions verified alias migration callback",
+    "Common accounts save-version reconciliation after garden operations",
+    "Physical location precision <= 80m for actual capture/occupation"
+  ]
+}

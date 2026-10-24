@@ -7,7 +7,7 @@ export type CompanionSource = 'adoption' | 'capture' | 'legacy';
 export interface CompanionResourceRef {
   resourceId: string;
   kind: '2d' | '3d';
-  /** Kept for old imported models; resolved by the resources service in main. */
+  /** Raw historical metadata only. The new renderer and active roster use 2D. */
   legacyModel?: string;
 }
 
@@ -89,7 +89,7 @@ export interface CompanionGrowthEffect {
 export type CompanionErrorCode =
   | 'AUTH_REQUIRED' | 'PET_NOT_FOUND' | 'TEMPLATE_NOT_FOUND'
   | 'INVALID_INPUT' | 'REVISION_CONFLICT' | 'ACTION_ID_CONFLICT'
-  | 'RATE_LIMITED' | 'RESOURCE_UNAVAILABLE' | 'INTERNAL_ERROR';
+  | 'RATE_LIMITED' | 'RESOURCE_UNAVAILABLE' | 'ACTION_UNAVAILABLE' | 'SESSION_CHANGED' | 'INTERNAL_ERROR';
 
 export type CompanionResult<T> =
   | { ok: true; data: T; revision: number; duplicate?: boolean }
@@ -99,6 +99,13 @@ export interface CompanionMutation {
   pet: CompanionPet;
   selections: CompanionSelections;
 }
+export interface CompanionCombatProfile {
+  petId: PetId;
+  resourceId: string;
+  growthStats: CompanionPet['growth']['stats'];
+  training: { initialHp: number; maxHp: number; initialAnger: number; normalized: boolean };
+  authority: string;
+}
 
 export interface CompanionsClient {
   list(): Promise<CompanionResult<CompanionsSnapshot>>;
@@ -107,5 +114,7 @@ export interface CompanionsClient {
   desktop(input: CompanionAction & { visible?: boolean; behavior?: CompanionBehavior; scale?: number; position?: CompanionPosition }): Promise<CompanionResult<CompanionMutation>>;
   select(input: CompanionAction & { slot: keyof CompanionSelections }): Promise<CompanionResult<CompanionMutation>>;
   interact(input: CompanionAction): Promise<CompanionResult<CompanionMutation>>;
+  perform(input: CompanionAction & { action: string }): Promise<CompanionResult<CompanionMutation>>;
+  combatProfile(input: { petId: PetId }): Promise<CompanionResult<CompanionCombatProfile>>;
   subscribe(listener: () => void): () => void;
 }

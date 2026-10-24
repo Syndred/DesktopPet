@@ -40,6 +40,14 @@ export function useCompanions() {
     mutationLock.current = true; setBusy(true); setError('');
     try {
       const result = await companionsRequest<CompanionMutation>(command, { actionId: actionId(), ...payload });
+      if (command === 'select' && payload.slot === 'chatPetId') {
+        // The conversation feature persists its own selected instance. Finish
+        // that verified-owner selection before either chat entry can navigate.
+        const selected = await window.lingjing.invoke('conversations', 'select', {
+          petId: result.pet.petId, expectedAccountId: result.pet.ownerAccountId
+        });
+        if (!selected.ok) throw Object.assign(new Error(selected.message), { code: selected.code });
+      }
       await reload(); return result;
     } catch (failure) {
       await reload();

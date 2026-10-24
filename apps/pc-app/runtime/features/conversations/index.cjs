@@ -53,6 +53,7 @@ function register(services) {
     publish: (value) => services.events.emit("conversations:changed", value),
     setChatActivity: (value) => services.events.emit("conversations:activity", value) });
   services.provide("conversations", {
+    hasActive: owner => [...feature.service.active.values()].some(active => active.session.owner === owner),
     getProfile: (ownerAccountId, petId) => feature.service.store.getProfile(ownerAccountId, petId),
     isChatting: (ownerAccountId, petId) => feature.service.active.has(JSON.stringify([ownerAccountId, "chat", petId])),
     // Optional ASR/TTS adapters consume text through commands; no audio data is stored yet.

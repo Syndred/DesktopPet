@@ -1,5 +1,5 @@
 const { invariant } = require("./errors.cjs");
-const { actionId, checksum, transaction } = require("./util.cjs");
+const { actionId, saveDataChecksum, transaction } = require("./util.cjs");
 
 class AccountSync {
   constructor({ db, backups, remote, getSession, getSettings, onInvalidSession }) {
@@ -13,7 +13,9 @@ class AccountSync {
       WHERE owner_account_id=? AND status IN ('pending','retry','conflict') GROUP BY status`).all(owner);
     const receipt = this.db.prepare(`SELECT document FROM account_sync_outbox WHERE owner_account_id=?
       AND status='verified' ORDER BY verified_at DESC LIMIT 1`).get(owner);
-    const savedChecksum = receipt ? checksum(JSON.parse(receipt.document).data) : null;
+    const checkpoint = this.db.prepare('SELECT * FROM account_sync_checkpoints WHERE owner_account_id=?').get(owner);
+    const savedChecksum = checkpoint && state && checkpoint.cloud_revision === state.cloud_revision && checkpoint.envelope_checksum === state.last_checksum
+      ? checkpoint.data_checksum : receipt ? saveDataChecksum(JSON.parse(receipt.document).data) : null;
     return { configured: Boolean(this.remote.enabled), cloudRevision: state?.cloud_revision || 0,
       lastVerifiedAt: state?.last_verified_at || null, lastError: state?.last_error || null,
       pending: counts.reduce((n, c) => n + c.count, 0), conflicts: counts.find(c => c.status === "conflict")?.count || 0,
@@ -101,6 +103,34 @@ class AccountSync {
         ON CONFLICT(owner_account_id) DO UPDATE SET cloud_revision=excluded.cloud_revision,last_checksum=excluded.last_checksum,last_error=NULL`)
         .run(owner, preview.cloudRevision, preview.envelope.checksum);
     });
+  }
+  /** Main-only bridge for another authoritative module. Advance the shared CAS
+   * base only after its complete verified save exactly matches local domain data.
+   * Pending/in-flight saves are retained and must be reconciled explicitly. */
+  acceptAuthoritativeReadback(owner, { envelope, cloudRevision }) {
+    const session = this.getSession();
+    invariant(session?.ownerAccountId === owner && session.provider === 'runtime', 'CLOUD_LOGIN_REQUIRED', '请重新登录云端账号。');
+    invariant(Number.isSafeInteger(cloudRevision) && cloudRevision >= 0, 'SYNC_RECEIPT_MISMATCH', '云端存档版本无效。');
+    this.backups.validate(envelope, owner);
+    invariant(!this.running.has(owner), 'SYNC_BUSY', '账号存档正在同步，请稍后重试菜园读回。');
+    const pending = this.db.prepare("SELECT 1 FROM account_sync_outbox WHERE owner_account_id=? AND status IN ('pending','retry','conflict') LIMIT 1").get(owner);
+    invariant(!pending, 'SYNC_PENDING', '已有待确认的账号存档，请先重试或预览该记录。');
+    const current = this.db.prepare('SELECT * FROM account_sync_state WHERE owner_account_id=?').get(owner);
+    invariant(!current || cloudRevision >= current.cloud_revision, 'SYNC_STALE_READBACK', '云端存档读回版本较旧。');
+    invariant(!current || cloudRevision !== current.cloud_revision || !current.last_checksum || current.last_checksum === envelope.checksum,
+      'SYNC_RECEIPT_MISMATCH', '同一云端版本返回了不同的存档。');
+    const digest = saveDataChecksum(envelope.data);
+    invariant(this.backups.dataChecksum(owner) === digest, 'CLOUD_LOCAL_CONFLICT', '其他本机进度尚未与完整云端存档一致，已保留原数据。');
+    transaction(this.db, () => {
+      const at = new Date().toISOString();
+      this.db.prepare(`INSERT INTO account_sync_state VALUES(?,?,?,?,NULL) ON CONFLICT(owner_account_id)
+        DO UPDATE SET cloud_revision=excluded.cloud_revision,last_checksum=excluded.last_checksum,last_verified_at=excluded.last_verified_at,last_error=NULL`)
+        .run(owner, cloudRevision, envelope.checksum, at);
+      this.db.prepare(`INSERT INTO account_sync_checkpoints VALUES(?,?,?,?,?) ON CONFLICT(owner_account_id)
+        DO UPDATE SET cloud_revision=excluded.cloud_revision,envelope_checksum=excluded.envelope_checksum,data_checksum=excluded.data_checksum,verified_at=excluded.verified_at`)
+        .run(owner, cloudRevision, envelope.checksum, digest, at);
+    });
+    return { verified: true, revision: cloudRevision };
   }
 }
 module.exports = { AccountSync };

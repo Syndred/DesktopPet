@@ -9,7 +9,16 @@ export const desktopConversationClient: ConversationClient = {
     return api.invoke<ConversationCommands[K]['output']>('conversations', command, payload);
   },
   subscribe(listener) {
-    return bridge()?.subscribe('conversations:changed', data => listener(data as ConversationEvent)) ?? (() => {});
+    const api = bridge();
+    if (!api) return () => {};
+    const offConversation = api.subscribe('conversations:changed', data => listener(data as ConversationEvent));
+    const offCompanions = api.subscribe('companions:changed', data => {
+      const owner = (data as { ownerAccountId?: unknown }).ownerAccountId;
+      // Appearance binding/name changes must refresh the real pet snapshot too.
+      // The hook still rejects events for a different verified account.
+      if (typeof owner === 'string') listener({ type: 'changed', accountId: owner, petId: null });
+    });
+    return () => { offConversation(); offCompanions(); };
   },
   onSessionChanged(listener) { return bridge()?.subscribe('conversations:session', listener) ?? (() => {}); }
 };
