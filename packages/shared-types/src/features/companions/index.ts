@@ -7,7 +7,7 @@ export type CompanionSource = 'adoption' | 'capture' | 'legacy';
 export interface CompanionResourceRef {
   resourceId: string;
   kind: '2d' | '3d';
-  /** Kept for old imported models; resolved by the resources service in main. */
+  /** Raw historical metadata only. The new renderer and active roster use 2D. */
   legacyModel?: string;
 }
 

@@ -34,7 +34,7 @@ const account = `battle-ui-${Date.now()}`;
 legacy.registerUser(account, 'isolated-local-verification', '并肩验证');
 const env = { ...process.env, PET_USER_DATA_DIR: profile };
 delete env.ELECTRON_RUN_AS_NODE;
-const checks = [], errors = [], logs = [];
+const checks = [], errors = [], logs = [], requested3dAssets = [];
 let application;
 let sessionId;
 async function launch() {
@@ -44,11 +44,12 @@ async function launch() {
   app.process().stderr?.on('data', data => logs.push(String(data)));
   const page = await app.firstWindow();
   page.on('pageerror', error => errors.push(error.message));
+  page.on('request', request => { if (/\.(glb|gltf|vrm)(?:[?#]|$)/i.test(request.url())) requested3dAssets.push(request.url()); });
   await page.waitForFunction(() => Boolean(window.lingjing));
   const login = await page.evaluate(account => window.lingjing.invoke('accounts', 'login', { provider: 'local', account, password: 'isolated-local-verification', rememberSession: true }), account);
   if (!login.ok && login.code !== 'COMMAND_UNAVAILABLE') throw new Error(JSON.stringify(login));
-  // Use a real independently adopted 2D instance while foundation's existing GLB CSP issue is open.
-  if (process.env.LINGJING_BATTLE_VISUAL === '2d') {
+  // Adopt and select a real independent 2D instance through the registered companions API.
+  {
     const adopted = await page.evaluate(() => window.lingjing.invoke('companions', 'adopt', { actionId: 'battle-ui-adoption', templateId: 'big-fish-gentle', name: '鱼丸', showOnDesktop: false }));
     assert.equal(adopted.ok, true, JSON.stringify(adopted));
     const selected = await page.evaluate(petId => window.lingjing.invoke('companions', 'select', { actionId: 'battle-ui-party', petId, slot: 'battlePetId' }), adopted.data.pet.petId);
@@ -63,25 +64,69 @@ const api = async (page, command, payload = {}) => {
   assert.equal(result.ok, true, `${command}: ${result.message}`);
   return result.data;
 };
+const motionEvidence = [];
+async function verifyStillStage(page, label) {
+  await page.locator('.battle-stage .battle-portrait[data-animating="false"]').nth(1).waitFor();
+  await page.waitForTimeout(350);
+  const first = await page.locator('.battle-stage').screenshot();
+  await page.waitForTimeout(400);
+  const second = await page.locator('.battle-stage').screenshot();
+  writeFileSync(join(output, `${label}-1.png`), first); writeFileSync(join(output, `${label}-2.png`), second);
+  const difference = await application.evaluate(({ nativeImage }, images) => {
+    const a = nativeImage.createFromBuffer(Buffer.from(images.first, 'base64'));
+    const b = nativeImage.createFromBuffer(Buffer.from(images.second, 'base64'));
+    const size = a.getSize(), other = b.getSize();
+    if (size.width !== other.width || size.height !== other.height) return { dimensionsChanged: true };
+    const left = a.toBitmap(), right = b.toBitmap();
+    let maxChannel = 0, changedPixels = 0, pixelsOverOne = 0;
+    for (let index = 0; index < left.length; index += 4) {
+      let pixelMax = 0;
+      for (let channel = 0; channel < 4; channel++) pixelMax = Math.max(pixelMax, Math.abs(left[index + channel] - right[index + channel]));
+      maxChannel = Math.max(maxChannel, pixelMax);
+      if (pixelMax) changedPixels++;
+      if (pixelMax > 1) pixelsOverOne++;
+    }
+    return { size, maxChannel, changedPixels, pixelsOverOne };
+  }, { first: first.toString('base64'), second: second.toString('base64') });
+  const actors = await page.locator('.battle-stage').evaluate(element => [...element.querySelectorAll('.battle-portrait')].map(actor => ({ animating: actor.getAttribute('data-animating'), action: actor.querySelector('.resource-stage')?.getAttribute('data-action') })));
+  motionEvidence.push({ label, difference, actors });
+  writeFileSync(join(output, 'motion-evidence.json'), JSON.stringify(motionEvidence, null, 2));
+  // Chromium's GPU compositing can round isolated channels by one; a changed atlas frame exceeds this bound.
+  assert.equal(difference.dimensionsChanged, undefined, `${label}: stage dimensions changed`);
+  assert.equal(difference.pixelsOverOne, 0, `${label}: sprite frame changed: ${JSON.stringify(difference)}`);
+}
+async function captureSettledPage(page, name) {
+  // AnimatePresence may still expose outgoing content while its route is fading.
+  await page.waitForTimeout(350);
+  await page.waitForFunction(() => {
+    const pages = [...document.querySelectorAll('.app-page-motion')];
+    return pages.length === 1 && Number(getComputedStyle(pages[0]).opacity) >= .999;
+  });
+  await page.screenshot({ path: join(output, name) });
+}
 try {
   let instance = await launch(); application = instance.app; let page = instance.page;
   await page.getByRole('button', { name: '开始训练', exact: true }).waitFor();
   let overview = await api(page, 'overview');
-  const petId = process.env.LINGJING_BATTLE_VISUAL === '2d' ? overview.selectedPetId : overview.pets.find(pet => pet.element === 'fire')?.petId || overview.pets[0].petId;
-  await page.getByLabel('选择出战伙伴').selectOption(petId);
-  await page.getByLabel('训练对手五行').selectOption('metal');
+  const petId = overview.selectedPetId;
+  await page.getByRole('combobox', { name: '选择出战伙伴' }).click();
+  await page.getByRole('option', { name: /^鱼丸 ·/ }).click();
+  await page.getByRole('combobox', { name: '训练对手五行' }).click();
+  await page.getByRole('option', { name: /^金系/ }).click();
+  await page.getByRole('combobox', { name: '训练对手五行' }).click();
+  await page.keyboard.press('Escape');
+  await page.getByRole('listbox').waitFor({ state: 'detached' });
+  assert.equal(await page.getByRole('combobox', { name: '训练对手五行' }).evaluate(element => document.activeElement === element), true);
+  checks.push('real Radix Select portals selected the independent pet and element; Escape closes the list and restores trigger focus');
   if (dependencies.resources) {
-    if (process.env.LINGJING_BATTLE_VISUAL === '2d') {
+    {
       await page.locator('.battle-portrait .resource-stage[data-status="ready"] canvas').first().waitFor({ timeout: 25000 });
       const bounds = await page.locator('.battle-portrait canvas').first().boundingBox();
       assert.ok(bounds.width > 100 && bounds.height > 100, `Battle resource collapsed: ${JSON.stringify(bounds)}`);
       checks.push('real adopted 2D instance rendered through the shared resources ResourceStage/Pixi adapter');
-    } else {
-      await page.locator('model-viewer[loaded]').first().waitFor({ timeout: 25000 });
-      checks.push('existing GLB rendered in the real Electron window through resources.resolve');
     }
   }
-  await page.screenshot({ path: join(output, '01-training.png') });
+  await captureSettledPage(page, '01-training.png');
   const beforePets = await page.evaluate(() => window.lingjing.invoke('companions', 'list'));
   assert.equal(beforePets.ok, true);
   await page.getByRole('button', { name: '开始训练', exact: true }).click();
@@ -92,7 +137,42 @@ try {
     await page.waitForFunction(({ id, round }) => window.lingjing.invoke('battle', 'snapshot', { sessionId: id }).then(result => result.ok && result.data.snapshot.round >= round), { id: sessionId, round: i + 1 });
   }
   const saved = await api(page, 'snapshot', { sessionId });
-  await page.screenshot({ path: join(output, '02-live.png') });
+  assert.equal(await page.locator('.battle-page model-viewer').count(), 0);
+  await page.locator('.battle-stage [data-resource-id="builtin:lingjing-battle-shiba-v1"][data-status="ready"]').waitFor();
+  assert.equal(await page.locator('.battle-stage canvas').count(), 2);
+  checks.push('both actors use real 2D sprite atlases; battlefield contains two live Pixi canvases and no 3D element');
+  await page.locator('.battle-move-tooltip').filter({ has: page.locator('.battle-move.ultimate') }).focus();
+  await page.getByRole('tooltip').filter({ hasText: '需要至少 50 怒气' }).waitFor();
+  await page.keyboard.press('Escape');
+  await page.getByRole('tooltip').waitFor({ state: 'detached' });
+  checks.push('disabled ultimate exposes its actual anger requirement through a keyboard-focusable Radix Tooltip');
+  await page.getByRole('button', { name: '离开对战', exact: true }).click();
+  await page.getByRole('dialog', { name: '确认离开对战' }).waitFor();
+  await page.keyboard.press('Tab');
+  assert.equal(await page.evaluate(() => Boolean(document.activeElement?.closest('[role="dialog"]'))), true);
+  await page.keyboard.press('Escape');
+  await page.getByRole('dialog', { name: '确认离开对战' }).waitFor({ state: 'detached' });
+  await page.waitForFunction(() => document.activeElement?.textContent?.includes('离开对战'));
+  checks.push('Radix Dialog traps keyboard focus, Escape closes it and focus returns to the leave trigger');
+  const settings = await page.evaluate(() => window.lingjing.invoke('accounts', 'settingsGet'));
+  const setAnimations = async enabled => {
+    const current = await page.evaluate(() => window.lingjing.invoke('accounts', 'settingsGet'));
+    assert.equal(current.ok, true);
+    const result = await page.evaluate(({ current, enabled }) => window.lingjing.invoke('accounts', 'settingsSave', { actionId: crypto.randomUUID(), revision: current.revision, document: { ...current.document, desktop: { ...current.document.desktop, animationsEnabled: enabled } } }), { current: current.data, enabled });
+    assert.equal(result.ok, true, JSON.stringify(result));
+  };
+  if (settings.ok) {
+    await setAnimations(false);
+    await page.locator('[data-motion="reduced"] .battle-stage').waitFor();
+    await verifyStillStage(page, 'app-motion-off');
+    await setAnimations(true);
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.locator('[data-motion="reduced"] .battle-stage').waitFor();
+    await verifyStillStage(page, 'system-reduced-motion');
+    await page.emulateMedia({ reducedMotion: 'no-preference' });
+    checks.push('app animation switch and OS reduced motion propagate through shared MotionConfig; actual sprite frames remain still (pixel comparison permits only one-level GPU rounding)');
+  }
+  await captureSettledPage(page, '02-live.png');
   await application.close(); application = null;
   instance = await launch(); application = instance.app; page = instance.page;
   await page.getByRole('region', { name: '当前对战' }).waitFor();
@@ -112,7 +192,8 @@ try {
   await page.getByRole('region', { name: '战报详情' }).waitFor();
   await page.getByRole('button', { name: '回顾这一回合' }).click();
   await page.locator('.battle-replay-timeline li.current').first().waitFor();
-  await page.screenshot({ path: join(output, '03-report.png') });
+  assert.equal(await page.locator('.battle-timeline-scroll [data-slot="scroll-area-viewport"]').count(), 1);
+  await captureSettledPage(page, '03-report.png');
   const report = await api(page, 'getReport', { reportId: sessionId });
   assert.equal(report.rounds.length, session.snapshot.round);
   assert.deepEqual(report.rounds.at(-1).state, session.snapshot);
@@ -129,12 +210,20 @@ try {
   assert.deepEqual(errors, []);
   await page.getByRole('tab', { name: '好友对战', exact: true }).click();
   await page.getByPlaceholder('搜索账号或用户名…').waitFor();
-  await page.screenshot({ path: join(output, '04-friends.png') });
+  await page.getByRole('tab', { name: '好友对战', exact: true }).focus();
+  await page.keyboard.press('ArrowLeft');
+  await page.waitForFunction(() => document.querySelector('[role="tab"][aria-selected="true"]')?.textContent === '训练');
+  await page.keyboard.press('ArrowRight');
+  await page.getByPlaceholder('搜索账号或用户名…').waitFor();
+  checks.push('Radix Tabs arrow keys navigate actual feature routes; report logs use the shared Radix ScrollArea');
+  await captureSettledPage(page, '04-friends.png');
   checks.push('friend invitation UI opens; this isolated local account correctly requires cloud login');
   await page.setViewportSize({ width: 960, height: 700 });
   const overflow = await page.evaluate(() => { const el = document.querySelector('.main-content'); return { width: el.clientWidth, scroll: el.scrollWidth }; });
   assert.ok(overflow.scroll <= overflow.width + 2, JSON.stringify(overflow));
-  writeFileSync(join(output, 'evidence.json'), JSON.stringify({ at: new Date().toISOString(), platform: process.platform, checks, dependencies, sessionId, rounds: session.snapshot.round, winner: session.winner, reward: session.reward, errors, onlineAcceptance: 'Not verified: deployed Supabase endpoint is unavailable; no simulated multiplayer success claimed' }, null, 2));
+  assert.deepEqual(errors, []);
+  assert.deepEqual(requested3dAssets, []);
+  writeFileSync(join(output, 'evidence.json'), JSON.stringify({ at: new Date().toISOString(), platform: process.platform, checks, dependencies, sessionId, rounds: session.snapshot.round, winner: session.winner, reward: session.reward, errors, requested3dAssets, onlineAcceptance: 'Not verified: deployed Supabase endpoint is unavailable; no simulated multiplayer success claimed' }, null, 2));
   console.log(JSON.stringify({ output, passed: true, checks }, null, 2));
 } catch (error) {
   if (application) {

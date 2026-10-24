@@ -38,9 +38,11 @@ class TerritoryService {
   /** Trusted authoritative import only; not an IPC command. No account UUID conversion. */
   importRecord(record) {
     if (!record || typeof record.id !== 'string' || typeof record.name !== 'string' || !Number.isSafeInteger(record.revision) || record.revision < 1 || !Array.isArray(record.boundary) || record.boundary.length < 3 || record.boundary.some(p => !Number.isFinite(p.lat) || !Number.isFinite(p.lng)) || !Number.isFinite(record.captureMultiplier) || record.captureMultiplier < 1) problem('INVALID_TERRITORY', '领地记录无效');
+    const previous = this.get(record.id);
     this.db.prepare(`INSERT INTO garden_territory_records VALUES(?,?,?,?,?) ON CONFLICT(territory_id) DO UPDATE SET
       owner_account_id=excluded.owner_account_id,revision=excluded.revision,data_json=excluded.data_json,updated_at=excluded.updated_at
       WHERE garden_territory_records.revision<excluded.revision`).run(record.id, record.ownerAccountId || null, record.revision, JSON.stringify(record), this.now());
+    if (previous && previous.revision < record.revision && previous.ownerAccountId !== record.ownerAccountId) this.db.prepare('DELETE FROM garden_garrisons WHERE territory_id=?').run(record.id);
     return this.get(record.id);
   }
   /** Local world cells are deterministic geographic regions, never sample places. */
@@ -50,7 +52,7 @@ class TerritoryService {
     const id = `territory:${latIndex}:${lngIndex}`;
     if (!this.get(id)) {
       const south = latIndex * step, west = lngIndex * step;
-      this.importRecord({ id, name: '附近的庭院', regionName: `${fix.lat.toFixed(3)}° N · ${fix.lng.toFixed(3)}° E`, ownerAccountId: null, revision: 1, captureMultiplier: 2, provenance: 'local-geographic', boundary: [{ lat: south, lng: west }, { lat: south + step, lng: west }, { lat: south + step, lng: west + step }, { lat: south, lng: west + step }] });
+      this.importRecord({ id, name: '附近的庭院', regionName: `${Math.abs(fix.lat).toFixed(3)}° ${fix.lat >= 0 ? 'N' : 'S'} · ${Math.abs(fix.lng).toFixed(3)}° ${fix.lng >= 0 ? 'E' : 'W'}`, ownerAccountId: null, revision: 1, captureMultiplier: 2, provenance: 'local-geographic', boundary: [{ lat: south, lng: west }, { lat: south + step, lng: west }, { lat: south + step, lng: west + step }, { lat: south, lng: west + step }] });
     }
     return this.get(id);
   }
@@ -97,6 +99,7 @@ class TerritoryService {
     const nextOwner = outcome.won ? ownerAccountId : territory.ownerAccountId;
     const next = { ...territory, ownerAccountId: nextOwner, revision: territory.revision + 1, occupiedAt: outcome.won ? new Date(this.now()).toISOString() : territory.occupiedAt };
     this.db.prepare('UPDATE garden_territory_records SET owner_account_id=?,revision=?,data_json=?,updated_at=? WHERE territory_id=? AND revision=?').run(nextOwner, next.revision, JSON.stringify(next), this.now(), territory.id, territory.revision);
+    if (nextOwner !== territory.ownerAccountId) this.db.prepare('DELETE FROM garden_garrisons WHERE territory_id=?').run(territory.id);
     this.db.prepare('INSERT INTO garden_territory_logs(territory_id,owner_account_id,action,old_owner_id,new_owner_id,battle_id,created_at) VALUES (?,?,?,?,?,?,?)').run(territory.id, ownerAccountId, outcome.won ? 'occupy' : 'defend', territory.ownerAccountId, nextOwner, sessionId, this.now());
     const result = { territoryId: territory.id, won: outcome.won, ownerAccountId: nextOwner, territoryRevision: next.revision, captureMultiplier: outcome.won ? territory.captureMultiplier : 1 };
     this.db.prepare('UPDATE garden_territory_challenges SET settled=1,result_json=? WHERE owner_account_id=? AND battle_id=?').run(JSON.stringify(result), ownerAccountId, sessionId);

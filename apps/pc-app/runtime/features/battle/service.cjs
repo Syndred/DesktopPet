@@ -2,6 +2,7 @@ const { randomUUID } = require("node:crypto");
 const { BattleRuntimeService } = require("../../services/battle-runtime.cjs");
 const { OnlineDuelService } = require("../../services/online-duel-service.cjs");
 const { BattleStore, copy } = require("./store.cjs");
+const { appearance2d, SHIBA_RESOURCE } = require("./assets.cjs");
 
 const ACTIONS = new Set(["normal_attack", "element_attack", "dodge", "ultimate"]);
 const ELEMENTS = new Set(["metal", "wood", "earth", "water", "fire"]);
@@ -77,8 +78,8 @@ class BattleFeatureService {
     return {
       petId: pet.id || pet.petId, petName: typeof pet.name === "object" ? pet.name.zh : pet.name || pet.petName,
       element: ELEMENTS.has(pet.element) ? pet.element : "metal", level: pet.growth?.level || pet.level || 1,
-      model: pet.model || pet.modelPath || pet.resource?.legacyModel,
-      resourceRef: pet.resource?.resourceId || pet.resourceRef || pet.resourceId, resource: pet.resource,
+      resourceRef: appearance2d(pet), resource: { resourceId: appearance2d(pet), kind: "2d" },
+      appearance2d: appearance2d(pet),
       avatar: pet.avatar
     };
   }
@@ -138,6 +139,7 @@ class BattleFeatureService {
     const player = this.ownedPet(owner, input.petId);
     const opponent = copy(challenge.opponent);
     if (!opponent?.petId || !ELEMENTS.has(opponent.element)) throw fail("INVALID_OPPONENT", "挑战对象信息不完整");
+    opponent.appearance2d = appearance2d(opponent);
     const engine = new BattleRuntimeService();
     const session = {
       id: `battle-${randomUUID()}`, mode, status: "active", startedAt: new Date().toISOString(),
@@ -146,6 +148,7 @@ class BattleFeatureService {
       context: { ...copy(challenge), authority: "local", opponent: undefined }
     };
     return this.services.db.transaction(() => {
+      if (this.store.latest(owner)) throw fail("BATTLE_IN_PROGRESS", "当前账号已有进行中的对战");
       this.selectPet({ petId: player.petId, actionId: `${actionId}:selection` }, { ownerAccountId: owner });
       this.store.reserve(owner, actionId, session.id, { type: `start:${mode}`, petId: player.petId, challengeId: challenge.id });
       const saved = this.store.save(owner, session);
@@ -159,7 +162,7 @@ class BattleFeatureService {
     if (!ELEMENTS.has(payload.enemyElement)) throw fail("INVALID_ELEMENT", "请选择训练对手的五行");
     return this.serial(owner, () => this.startLocal(owner, payload, "training", {
       id: `training:${payload.enemyElement}`,
-      opponent: { petId: `training-${payload.enemyElement}`, petName: `${ELEMENT_NAMES[payload.enemyElement]}系训练对手`, element: payload.enemyElement, level: 1 }
+      opponent: { petId: `training-${payload.enemyElement}`, petName: "焰柴", element: payload.enemyElement, level: 1, appearance2d: SHIBA_RESOURCE }
     }));
   }
 
@@ -385,7 +388,7 @@ class BattleFeatureService {
       const key = `accept:${requestId}`;
       let pending = this.store.action(owner, key)?.result;
       if (!pending) {
-        const created = await this.online.createRoom({ petId: pet.petId, requestId, petName: pet.petName, petElement: pet.element });
+        const created = await this.online.createRoom({ petId: pet.petId, requestId, petResourceId: pet.appearance2d, petName: pet.petName, petElement: pet.element });
         this.assertOwner(owner);
         pending = { room: created.room };
         if (!this.store.action(owner, key)) this.store.reserve(owner, key, key, { petId: payload.petId, type: "accept" });
@@ -412,7 +415,7 @@ class BattleFeatureService {
     const session = {
       id: `online-${room.id}`, mode: "friend", status: room.status === "waiting" ? "waiting" : "active",
       startedAt: room.created_at || new Date().toISOString(), player,
-      enemy: { petId: room[`${peer}_user_id`] || "waiting-peer", petName: room[`${peer}_pet_name`] || "等待好友", element: room[`${peer}_element`] || "wood" },
+      enemy: { petId: room[`${peer}_pet_id`] || room[`${peer}_user_id`] || "waiting-peer", petName: room[`${peer}_pet_name`] || "等待好友", element: room[`${peer}_element`] || "wood", appearance2d: room[`${peer}_resource_id`] || appearance2d({ element: room[`${peer}_element`] }) },
       snapshot: this.online.toBattleState(), room: copy(room), side,
       rounds: [], winner: null, pendingAction: null, historyComplete: true,
       context: { authority: "supabase", cloudUserId: user.id }
@@ -426,7 +429,7 @@ class BattleFeatureService {
       this.user(owner);
       if (this.store.latest(owner)) throw fail("BATTLE_IN_PROGRESS", "已有待完成的对战，请先恢复或离开");
       const pet = this.ownedPet(owner, payload.petId);
-      const created = await this.online.createRoom({ petId: pet.petId, petName: pet.petName, petElement: pet.element });
+      const created = await this.online.createRoom({ petId: pet.petId, petResourceId: pet.appearance2d, petName: pet.petName, petElement: pet.element });
       this.assertOwner(owner);
       return this.bindRoom(owner, created.room, pet.petId);
     });
@@ -444,7 +447,7 @@ class BattleFeatureService {
     if (active && active.room?.room_code !== roomCode) throw fail("BATTLE_IN_PROGRESS", "请先完成或离开当前对战");
     const petId = payload.requestId ? this.store.action(owner, `invite:${payload.requestId}`)?.command.petId || payload.petId : payload.petId;
     const pet = this.ownedPet(owner, petId);
-    const joined = await this.online.joinRoom({ roomCode, petId: pet.petId, petName: pet.petName, petElement: pet.element });
+    const joined = await this.online.joinRoom({ roomCode, petId: pet.petId, petResourceId: pet.appearance2d, petName: pet.petName, petElement: pet.element });
     this.assertOwner(owner);
     return this.syncInternal(owner, this.bindRoom(owner, joined.room, pet.petId));
   }
@@ -464,7 +467,7 @@ class BattleFeatureService {
     session.room = copy(room);
     session.snapshot = this.online.toBattleState();
     const peer = session.side === "host" ? "guest" : "host";
-    session.enemy = { ...session.enemy, petId: room[`${peer}_user_id`] || "waiting-peer", petName: room[`${peer}_pet_name`] || "等待好友", element: room[`${peer}_element`] || "wood" };
+    session.enemy = { ...session.enemy, petId: room[`${peer}_pet_id`] || room[`${peer}_user_id`] || "waiting-peer", petName: room[`${peer}_pet_name`] || "等待好友", element: room[`${peer}_element`] || "wood", appearance2d: room[`${peer}_resource_id`] || appearance2d({ element: room[`${peer}_element`] }) };
     const rounds = new Map(session.rounds.map(round => [round.round, round]));
     let page = response.rounds || [];
     for (let pageNo = 0; pageNo < 100; pageNo++) {
@@ -472,11 +475,14 @@ class BattleFeatureService {
         const mapped = this.online.mapRoundToBattleResult(round);
         rounds.set(round.round_no, { ...mapped.roundResult, state: mapped.state });
       }
-      const first = Math.min(...rounds.keys());
-      if (!rounds.size || first <= 1 || rounds.size >= Number(room.last_resolved_round || 0)) break;
-      const earlier = await this.online.syncRoom({ roomId: room.id, roundsLimit: 50, beforeRound: first });
+      const last = Number(room.last_resolved_round || 0);
+      let missing = 1;
+      while (missing <= last && rounds.has(missing)) missing++;
+      if (missing > last) break;
+      const before = Math.min(last + 1, ...[...rounds.keys()].filter(number => number > missing));
+      const earlier = await this.online.syncRoom({ roomId: room.id, roundsLimit: 50, beforeRound: before });
       this.assertOwner(owner);
-      page = (earlier.rounds || []).filter(round => round.round_no < first);
+      page = (earlier.rounds || []).filter(round => round.round_no < before && !rounds.has(round.round_no));
       if (!page.length) break;
     }
     session.rounds = [...rounds.values()].sort((a, b) => a.round - b.round);

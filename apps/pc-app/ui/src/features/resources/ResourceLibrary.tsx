@@ -14,7 +14,7 @@ export function ResourceThumbnail({ resource, client }: { resource: CharacterRes
   const frameName = resource.atlas?.animations[clip?.name ?? 'idle']?.[0];
   const frame = frameName ? resource.atlas?.frames[frameName] : null;
   return <div className="resource-card-art">
-    {frame && resource.atlas && resource.availability === 'ready' ? <svg viewBox={`${frame.frame.x} ${frame.frame.y} ${frame.frame.w} ${frame.frame.h}`} aria-hidden="true" style={{ transform: frame.rotated ? 'rotate(-90deg)' : undefined }}><image href={client.assetUrl(resource.id, resource.entryAsset)} width={resource.atlas.meta.size.w} height={resource.atlas.meta.size.h} /></svg> : <FileImage aria-hidden="true" />}
+    {frame && resource.atlas && resource.availability === 'ready' ? <svg viewBox={`${frame.frame.x} ${frame.frame.y} ${frame.rotated ? frame.frame.h : frame.frame.w} ${frame.rotated ? frame.frame.w : frame.frame.h}`} aria-hidden="true" style={{ transform: frame.rotated ? 'rotate(-90deg)' : undefined }}><image href={client.assetUrl(resource.id, resource.entryAsset)} width={resource.atlas.meta.size.w} height={resource.atlas.meta.size.h} /></svg> : <FileImage aria-hidden="true" />}
   </div>;
 }
 export function ResourceLibrary({ resources, selectedId, choose, client, loading, importing, onImport }: { resources: CharacterResource[]; selectedId: string; choose(resource: CharacterResource): void; client: ResourcesClient; loading: boolean; importing: boolean; onImport(metadata: Partial<ResourceProvenance>): void }) {

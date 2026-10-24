@@ -11,7 +11,7 @@ function fixture() {
   db.transaction = fn => (...args) => { const key = `test_${randomUUID().replaceAll('-', '')}`; db.exec(`SAVEPOINT ${key}`); try { const result = fn(...args); db.exec(`RELEASE ${key}`); return result; } catch (error) { db.exec(`ROLLBACK TO ${key}; RELEASE ${key}`); throw error; } };
   migrateCompanions(db); for (const migration of battleMigrations) db.exec(migration.sql);
   const companions = new CompanionsService({ db }); const owner = 'territory-check';
-  const pet = companions.adopt(owner, { actionId: 'adopt-metal', name: '守护伙伴', templateId: 'husky', showOnDesktop: false }).data.pet;
+  const pet = companions.adopt(owner, { actionId: 'adopt-2d', name: '守护伙伴', templateId: 'big-fish-gentle', showOnDesktop: false }).data.pet;
   const registry = new Map(); const services = { db, session: { getOwnerAccountId: () => owner, getCurrentUser: () => ({ id: owner }) }, get: name => registry.get(name), events: { emit() {} }, legacy: {} };
   const companionsApi = { db, getPet: (who, id) => companions.requirePet(who, id), listPets: who => companions.snapshot(who).data.pets, applyGrowthInTransaction: (who, input) => companions.applyGrowthInTransaction(who, input) };
   registry.set('companions', companionsApi);

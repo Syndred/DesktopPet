@@ -31,6 +31,7 @@ export interface AccountsSession {
 }
 export interface DesktopHostStatus {
   startup: boolean; fullscreenMonitor: boolean; foregroundFullscreen: boolean;
+  fullscreenMonitorReady: boolean; fullscreenSource: "win32" | "electron" | null;
   companionWindows: number; clickThroughWindows: number[];
   windows: Array<{ id: number; alwaysOnTop: boolean; visible: boolean }>;
   locationAllowed: boolean; emotionStatistics: boolean;

@@ -1,0 +1,176 @@
+{
+  "at": "2026-10-24T12:56:47.659Z",
+  "profile": "artifacts\\resources\\2d-profile",
+  "errors": [],
+  "consoleErrors": [],
+  "checks": {
+    "persisted": {
+      "resourceId": "0fcadbc3-f320-4932-ad7b-9d3c2775e3d2",
+      "revision": 1,
+      "calibration": {
+        "desktop": {
+          "scale": 1.12,
+          "rotationDeg": 3,
+          "verticalOffset": -0.05,
+          "mirrorX": true,
+          "anchorX": 0.46,
+          "anchorY": 0.9,
+          "fps": 10
+        },
+        "battle": {
+          "scale": 1,
+          "rotationDeg": 0,
+          "verticalOffset": 0,
+          "mirrorX": false,
+          "anchorX": 0.5,
+          "anchorY": 0.85,
+          "fps": 0
+        }
+      },
+      "actions": {
+        "idle": "idle",
+        "walk": "walk",
+        "attack": "wave",
+        "hit": "rest",
+        "skill": "wave",
+        "victory": "happy",
+        "sleep": "sleep"
+      }
+    },
+    "namedSliders": 6,
+    "radix": {
+      "tabArrowAndHome": true,
+      "selectEscapeFocus": true,
+      "popoverEscapeFocus": true
+    },
+    "instances": {
+      "samples": [
+        [
+          {
+            "resourceId": "0fcadbc3-f320-4932-ad7b-9d3c2775e3d2",
+            "petId": "resource-preview-a",
+            "action": "idle",
+            "frame": "5",
+            "textureSource": "3"
+          },
+          {
+            "resourceId": "0fcadbc3-f320-4932-ad7b-9d3c2775e3d2",
+            "petId": "resource-preview-b",
+            "action": "walk",
+            "frame": "1",
+            "textureSource": "3"
+          }
+        ],
+        [
+          {
+            "resourceId": "0fcadbc3-f320-4932-ad7b-9d3c2775e3d2",
+            "petId": "resource-preview-a",
+            "action": "idle",
+            "frame": "5",
+            "textureSource": "3"
+          },
+          {
+            "resourceId": "0fcadbc3-f320-4932-ad7b-9d3c2775e3d2",
+            "petId": "resource-preview-b",
+            "action": "walk",
+            "frame": "0",
+            "textureSource": "3"
+          }
+        ],
+        [
+          {
+            "resourceId": "0fcadbc3-f320-4932-ad7b-9d3c2775e3d2",
+            "petId": "resource-preview-a",
+            "action": "idle",
+            "frame": "5",
+            "textureSource": "3"
+          },
+          {
+            "resourceId": "0fcadbc3-f320-4932-ad7b-9d3c2775e3d2",
+            "petId": "resource-preview-b",
+            "action": "walk",
+            "frame": "1",
+            "textureSource": "3"
+          }
+        ],
+        [
+          {
+            "resourceId": "0fcadbc3-f320-4932-ad7b-9d3c2775e3d2",
+            "petId": "resource-preview-a",
+            "action": "idle",
+            "frame": "5",
+            "textureSource": "3"
+          },
+          {
+            "resourceId": "0fcadbc3-f320-4932-ad7b-9d3c2775e3d2",
+            "petId": "resource-preview-b",
+            "action": "walk",
+            "frame": "1",
+            "textureSource": "3"
+          }
+        ],
+        [
+          {
+            "resourceId": "0fcadbc3-f320-4932-ad7b-9d3c2775e3d2",
+            "petId": "resource-preview-a",
+            "action": "idle",
+            "frame": "5",
+            "textureSource": "3"
+          },
+          {
+            "resourceId": "0fcadbc3-f320-4932-ad7b-9d3c2775e3d2",
+            "petId": "resource-preview-b",
+            "action": "walk",
+            "frame": "0",
+            "textureSource": "3"
+          }
+        ],
+        [
+          {
+            "resourceId": "0fcadbc3-f320-4932-ad7b-9d3c2775e3d2",
+            "petId": "resource-preview-a",
+            "action": "idle",
+            "frame": "5",
+            "textureSource": "3"
+          },
+          {
+            "resourceId": "0fcadbc3-f320-4932-ad7b-9d3c2775e3d2",
+            "petId": "resource-preview-b",
+            "action": "walk",
+            "frame": "0",
+            "textureSource": "3"
+          }
+        ],
+        [
+          {
+            "resourceId": "0fcadbc3-f320-4932-ad7b-9d3c2775e3d2",
+            "petId": "resource-preview-a",
+            "action": "idle",
+            "frame": "5",
+            "textureSource": "3"
+          },
+          {
+            "resourceId": "0fcadbc3-f320-4932-ad7b-9d3c2775e3d2",
+            "petId": "resource-preview-b",
+            "action": "walk",
+            "frame": "1",
+            "textureSource": "3"
+          }
+        ]
+      ],
+      "sharedTextureSource": true,
+      "independentPlayback": true
+    },
+    "systemReducedMotion": {
+      "frames": [
+        "1",
+        "1",
+        "1",
+        "1",
+        "1"
+      ],
+      "paused": true
+    }
+  },
+  "passed": true
+}

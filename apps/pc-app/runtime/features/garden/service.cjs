@@ -46,7 +46,9 @@ class GardenService {
   }
   owner(context) {
     // context is created by the main process, never from a renderer payload.
-    return identifier(context?.ownerAccountId, "已验证账号");
+    const owner=identifier(context?.ownerAccountId, "已验证账号");
+    if(this.db.prepare('SELECT 1 FROM garden_identity_imports WHERE source_owner_account_id=? AND target_owner_account_id<>?').get(owner,owner))reject('OWNER_MIGRATED','旧归属已完成迁移，请使用已验证的新账号身份');
+    return owner;
   }
   ensureAccount(owner, now) {
     if (this.db.prepare("SELECT 1 FROM garden_accounts WHERE owner_account_id = ?").get(owner)) return;
@@ -115,7 +117,7 @@ class GardenService {
         const items = Object.values(ITEMS).map(item => ({ ...item, quantity: this.itemCount(owner, item.id) }));
         const pending = this.db.prepare("SELECT status,COUNT(*) count FROM garden_outbox WHERE owner_account_id=? GROUP BY status").all(owner);
         const ledger = this.db.prepare("SELECT event_id id,action_id actionId,kind,item_id itemId,delta,balance,pet_id petId,created_at createdAt FROM garden_events WHERE owner_account_id=? ORDER BY created_at DESC,event_id DESC LIMIT 60").all(owner);
-        const pets = this.companions?.listForOwner?.({ db: this.db, ownerAccountId: owner }) || [];
+        const pets = (this.companions?.listForOwner?.({ db: this.db, ownerAccountId: owner }) || []).filter(pet => !['3d','model3d'].includes(pet.resource?.kind));
         const territories = this.listTerritories(owner);
         return { ok: true, revision: this.revision(owner), data: { ownerAccountId: owner, serverTime: now, plots, items, crops: Object.values(CROPS), recipes: Object.values(RECIPES), pets, territories, ledger, sync: { mode: this.cloud ? "available" : "local", pending: pending.find(p => p.status === "pending")?.count || 0, conflicts: pending.find(p => p.status === "conflict")?.count || 0 } } };
       });

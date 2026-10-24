@@ -1,0 +1,25 @@
+Battle 正式界面公共组件使用记录 · 2026-10-24
+
+统一入口 components/kit：
+- index.tsx: 实际 Radix Tabs/TabsList/TabsTrigger/TabsContent 控制训练、好友、战报路由；Select 控制独立出战实例与对手五行。
+- BattleArena.tsx: AppDialog 处理离开确认；Tooltip 解释怒气不足、等待对方、原回合锁定等真实限制。
+- ReportsPanel.tsx: ScrollArea 承载战报列表与回合日志，不额外实现滚动条。
+- FriendsPanel.tsx: Input、Button、Card 承载真实账号搜索、邀请、房间与云端登录提示。
+- PageHeader、ErrorNotice、EmptyState、Button、Card 复用公共 shadcn 包装。
+这些组件的交互来自官方 shadcn/Radix 源码，没有局部复制基础交互实现。
+
+统一动画入口 components/motion：
+- foundation PageTransition 处理路由，AppDialog 内 MotionPanel 处理弹层。
+- FriendsPanel 与 ReportsPanel 实际使用 AnimatedList。
+- BattlePortrait 与 BattleArena 使用公共 useAppMotion；不维护另一套设置订阅或 MotionConfig。
+- 实际出招→受击→待机依据已结算回合，播放由共享 PixiJS ResourceStage 完成。
+- 应用关闭动画或系统减少动态效果均实时停止角色帧；已用真实 Electron 截图像素比较验证。
+
+实际键盘验证：
+Select 门户选择/Esc/焦点返回；Tabs 左右键切路由；怒气不足的 Tooltip 可聚焦；
+Dialog Tab 焦点约束/Esc/焦点返回。真实回合日志存在 Radix ScrollArea 视口。
+
+2D 原创素材：
+夜庭背景、鱼丸水系战斗图集、焰柴图集，提示词与存储位置见 battle-art-assets.json。
+没有字母、几何符号或 Emoji 替代正式战斗角色。应用品牌复用 foundation 四芒星资源。
+所有按钮平面化；无 hover/active 位移。对照证据和仍有差异见 status/battle.json。

@@ -1,5 +1,6 @@
 const { migrations } = require('./migrations.cjs');
 const { CompanionsService, toLegacyPet } = require('./service.cjs');
+const { createCompanionOwnerMigration } = require('./identity.cjs');
 
 module.exports = {
   id: 'companions', migrations,
@@ -17,7 +18,9 @@ module.exports = {
         desktop?.sync();
       });
     }
+    const ownerMigration = createCompanionOwnerMigration(services, changed);
     function ensureImported(ownerAccountId) {
+      ownerMigration.ensure(ownerAccountId);
       if (service.account(ownerAccountId).legacy_imported_at) return;
       const accounts = services.get('accounts');
       if (accounts?.getLegacyInventory) {
@@ -33,6 +36,7 @@ module.exports = {
     }
     const api = {
       db: services.db,
+      migrateOwnerAlias: ownerMigration.migrate,
       listPets(ownerAccountId) { ensureImported(ownerAccountId); return service.snapshot(ownerAccountId).data.pets.filter(pet => pet.resource.kind === '2d'); },
       getPet(ownerAccountId, petId) {
         ensureImported(ownerAccountId); const pet = service.requirePet(ownerAccountId, petId);
@@ -40,6 +44,7 @@ module.exports = {
         return pet;
       },
       getSelections(ownerAccountId) { return service.selections(ownerAccountId); },
+      listTemplates() { return service.templates(); },
       applyGrowthInTransaction(ownerAccountId, input) {
         const result = service.applyGrowthInTransaction(ownerAccountId, input);
         changed(ownerAccountId);

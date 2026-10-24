@@ -9,7 +9,13 @@ import { CompanionPortrait } from './CompanionPortrait';
 import { DesktopControls, elements, LoadingOrEmpty, PetActions, RenameControl, StateMeters, usePageScroll, type Controller } from './components';
 
 function GrowthDetail({ pet }: { pet: CompanionPet }) {
-  return <><Card><div className="cp-experience"><strong>Lv.{String(pet.growth.level).padStart(2, '0')}</strong><div><span>{pet.growth.experience} / 100 经验</span><progress max={100} value={pet.growth.experience} aria-label="本级经验"/></div></div><div className="cp-growth-columns"><StateMeters pet={pet}/><div className="cp-battle-stats"><strong>战斗属性</strong>{[['生命', pet.growth.stats.hp], ['攻击', pet.growth.stats.atk], ['防御', pet.growth.stats.def], ['速度', pet.growth.stats.spd]].map(([label, value]) => <div key={label}><span>{label}</span><b>{value}</b></div>)}</div></div><p className="cp-rule-note">延续现有成长规则：每 100 经验升一级，战斗属性随等级成长。</p></Card><Card className="cp-origin"><h3>属于它的第一次相遇</h3><p>{pet.source === 'legacy' ? '从原有存档来到灵境，往日的陪伴继续保存。' : pet.source === 'capture' ? '探索途中相遇，从此一起出发。' : '你为它起了名字，一份新的陪伴开始了。'}</p><small>{new Date(pet.createdAt).toLocaleDateString('zh-CN')} · 伙伴编号 {pet.serial}</small></Card></>;
+  return <><Card className="cp-growth-card"><div className="cp-experience"><strong>Lv.{String(pet.growth.level).padStart(2, '0')}</strong><div><span>{pet.growth.experience} / 100 经验</span><progress max={100} value={pet.growth.experience} aria-label="本级经验"/></div></div><div className="cp-growth-columns"><StateMeters pet={pet}/><div className="cp-battle-stats"><strong>战斗属性</strong>{[['生命', pet.growth.stats.hp], ['攻击', pet.growth.stats.atk], ['防御', pet.growth.stats.def], ['速度', pet.growth.stats.spd]].map(([label, value]) => <div key={label}><span>{label}</span><b>{value}</b></div>)}</div></div>
+    <div className="cp-growth-skills"><h3>技能</h3>{[
+      { title: '普通攻击', text: '与伙伴并肩出击，进行一次基础攻击。', action: 'attack' as const },
+      { title: '元素攻击', text: `${elements[pet.element]}属性攻击，效果延续现有对战规则。`, action: 'skill' as const },
+      { title: '终极技能', text: '积蓄怒气，在合适的时机释放力量。', action: 'victory' as const }
+    ].map(skill => <div key={skill.title} className="cp-growth-skill"><div className="cp-growth-skill-art"><CompanionPortrait petId={pet.petId} resource={pet.resource} name={pet.name} action={skill.action}/></div><div><strong>{skill.title}</strong><p>{skill.text}</p></div></div>)}</div><p className="cp-rule-note">每 100 经验升一级，养成与对战延续现有规则。</p></Card>
+    <Card className="cp-origin"><h3>属于它的第一次相遇</h3><p>{pet.source === 'legacy' ? '从原有存档来到灵境，往日的陪伴继续保存。' : pet.source === 'capture' ? '探索途中相遇，从此一起出发。' : '你为它起了名字，一份新的陪伴开始了。'}</p><small>{new Date(pet.createdAt).toLocaleDateString('zh-CN')} · 伙伴编号 {pet.serial}</small></Card></>;
 }
 
 function PetDetailContent({ pet, snapshot, controller }: { pet: CompanionPet; snapshot: CompanionsSnapshot; controller: Controller }) {

@@ -4,8 +4,12 @@ const { dirname } = require("node:path");
 const { invariant } = require("./errors.cjs");
 
 function canonical(value) {
+  invariant(value !== undefined && !["function", "symbol", "bigint"].includes(typeof value)
+    && !(typeof value === "number" && !Number.isFinite(value)), "NON_JSON_DOCUMENT", "存档包含不能保存的字段类型。");
   if (value === null || typeof value !== "object") return JSON.stringify(value);
   if (Array.isArray(value)) return `[${value.map(canonical).join(",")}]`;
+  invariant(Object.getPrototypeOf(value) === Object.prototype || Object.getPrototypeOf(value) === null,
+    "NON_JSON_DOCUMENT", "存档适配器需返回普通 JSON 数据。");
   return `{${Object.keys(value).sort().map(key => `${JSON.stringify(key)}:${canonical(value[key])}`).join(",")}}`;
 }
 function checksum(value) { return createHash("sha256").update(canonical(value)).digest("hex"); }

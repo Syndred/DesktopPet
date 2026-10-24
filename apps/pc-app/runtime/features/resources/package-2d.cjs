@@ -16,8 +16,8 @@ function normalizeAtlas(data, size) {
   const frames = {};
   for (const [name, value] of Object.entries(data.frames)) {
     const r = value?.frame;
-    if (!validName(name) || !plain(r) || ['x','y','w','h'].some(key => !Number.isFinite(r[key])) || r.x < 0 || r.y < 0 || r.w <= 0 || r.h <= 0 || r.x + r.w > size.width || r.y + r.h > size.height) fail('INVALID_ATLAS', '图集帧名称、尺寸或边界无效');
-    const source = value.sourceSize ?? { w: value.rotated ? r.h : r.w, h: value.rotated ? r.w : r.h }, trim = value.spriteSourceSize ?? { x: 0, y: 0, w: source.w, h: source.h };
+    if (!validName(name) || !plain(r) || ['x','y','w','h'].some(key => !Number.isFinite(r[key])) || r.x < 0 || r.y < 0 || r.w <= 0 || r.h <= 0 || r.x + (value.rotated ? r.h : r.w) > size.width || r.y + (value.rotated ? r.w : r.h) > size.height) fail('INVALID_ATLAS', '图集帧名称、尺寸或边界无效');
+    const source = value.sourceSize ?? { w: r.w, h: r.h }, trim = value.spriteSourceSize ?? { x: 0, y: 0, w: source.w, h: source.h };
     if (['w','h'].some(key => !Number.isFinite(source[key]) || source[key] <= 0 || source[key] > 8192) || ['x','y','w','h'].some(key => !Number.isFinite(trim[key]) || trim[key] < 0) || trim.x + trim.w > source.w || trim.y + trim.h > source.h) fail('INVALID_ATLAS', '裁剪帧或原始尺寸无效');
     frames[name] = { frame: r, sourceSize: source, spriteSourceSize: trim, rotated: value.rotated === true, trimmed: value.trimmed === true };
   }
@@ -71,4 +71,4 @@ function resolveAction(resource, action = 'idle') {
   const direct = resource.clips.find(clip => clip.name === resource.actions[action]), fallback = resource.clips.find(clip => clip.name === resource.actions.idle) ?? resource.clips[0] ?? null;
   return { clip: direct ?? fallback, fallback: !direct, warning: direct ? undefined : '该动作不可用，已回退待机动画' };
 }
-module.exports = { ...guards, parseCharacterFile, normalize2DResource, atlasFromGrid, resolveAction };
+module.exports = { ...guards, parseCharacterFile, normalize2DResource, normalizeAtlas, atlasFromGrid, resolveAction };

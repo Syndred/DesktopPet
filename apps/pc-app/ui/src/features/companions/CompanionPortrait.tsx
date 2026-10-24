@@ -1,5 +1,5 @@
-import { useContext, useEffect, useState, useSyncExternalStore } from 'react';
-import { MotionConfigContext, useReducedMotion } from 'motion/react';
+import { useEffect, useState, useSyncExternalStore } from 'react';
+import { useAppMotion } from '../../components/motion';
 import type { CompanionResourceRef } from '../../../../../../packages/shared-types/src/features/companions/index';
 import type { ResourceDisplay, ResourceAction } from '../../../../../../packages/shared-types/src/features/resources';
 import { ResourceStage } from '../resources/ResourceStage';
@@ -23,9 +23,8 @@ const getResourcesVersion = () => resourcesVersion;
 export function CompanionPortrait({ petId, resource, name, animate = false, action = 'idle' }: { petId: string; resource: CompanionResourceRef; name: string; animate?: boolean; action?: ResourceAction }) {
   const [display, setDisplay] = useState<ResourceDisplay | null>(null);
   const [error, setError] = useState('');
-  const { reducedMotion } = useContext(MotionConfigContext);
-  const systemReducedMotion = useReducedMotion();
-  const playing = animate && reducedMotion !== 'always' && !systemReducedMotion;
+  const motionAllowed = useAppMotion();
+  const playing = animate && motionAllowed;
   const version = useSyncExternalStore(subscribeResources, getResourcesVersion);
   const [spriteRuntimeReady, setSpriteRuntimeReady] = useState(false);
   useEffect(() => {
