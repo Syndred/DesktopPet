@@ -195,7 +195,8 @@ try {
     assert.doesNotMatch(metrics.visibleCopy, /养成属性不直接代入|在桌面拖动伙伴|聊天、人设和记忆始终归属/);
     await route('/companions'); await shot(`${width}-overview.png`, '.cp-page');
     await page.getByRole('button', { name: '领养伙伴', exact: true }).click(); await shot(`${width}-adoption.png`, '.cp-adoption-page');
-    assert.equal(await page.locator('.cp-template-card [data-framing="portrait"]').count(), 8); evidence.layouts.push(metrics);
+    assert.equal(await page.locator('.cp-template-card [data-framing="portrait"]').count(), 8);
+    await page.locator('.cp-template-card').last().scrollIntoViewIfNeeded(); await shot(`${width}-adoption-lower.png`, '.cp-adoption-page'); evidence.layouts.push(metrics);
   }
   expectedBeforeRestart = success(await invoke('companions', 'list'));
   await app.close(); app = null; await launch();

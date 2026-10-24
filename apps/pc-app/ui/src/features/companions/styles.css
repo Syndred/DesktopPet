@@ -54,7 +54,7 @@
 .cp-icon-button { display: inline-grid; place-items: center; background: transparent; border: none; color: #6177a4; padding: 4px; cursor: pointer; }
 .cp-meters { display: grid; gap: 14px; padding: 8px 0; }
 .cp-meter { display: grid; grid-template-columns: 26px minmax(0,1fr) 28px; gap: 7px; align-items: center; font-size: 12px; color: #67799b; }
-.cp-hint { display: inline-flex; width: 26px; min-width: 26px; height: 26px; min-height: 26px; padding: 3px; color: var(--muted); border: 0; background: transparent; }
+.cp-page .button.cp-hint { display: inline-flex; width: 24px; min-width: 24px; max-width: 24px; height: 24px; min-height: 24px; padding: 2px; color: var(--muted); border: 0; border-radius: 6px; background: transparent; box-shadow: none; }
 .cp-hint svg { flex-shrink: 0; }
 .cp-element { display: inline-flex; gap: 4px; align-items: center; white-space: nowrap; }
 .cp-identity-line { display: flex; gap: 5px; align-items: center; }
@@ -190,6 +190,7 @@
 .cp-growth-skill p { margin: var(--space-1) 0 0; color: var(--muted); font-size: var(--text-caption); line-height: 1.5; }
 .cp-growth-card .cp-experience { padding-bottom: 14px; }
 .cp-growth-card .cp-growth-columns { margin-top: 14px; }
+.cp-growth-columns .cp-meters { align-self: center; width: 100%; }
 .cp-growth-card .cp-meter { grid-template-columns: 26px minmax(0,1fr) 53px; gap: 6px; }
 .cp-growth-card .cp-meter strong { white-space: nowrap; font-size: 11px; }
 .cp-growth-card .cp-meter strong small { color: #8d9bbb; font-size: 10px; font-weight: 400; }
