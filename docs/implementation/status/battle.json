@@ -2,14 +2,14 @@
   "module": "battle",
   "branch": "codex/lingjing-battle",
   "commit": "12a6e7e31f828babcb968d95d8f7000f58b344f1",
-  "status": "ready_for_foundation_integration_online_acceptance_pending",
+  "status": "blocked_external_service",
   "implementationReady": true,
   "goalComplete": false,
   "productionDeployed": false,
   "scope": "docs/implementation/scope-2d-ui-first.txt",
   "upstream": {
     "fetched": true,
-    "fetchCheckedAt": "2026-10-24T13:03:39Z",
+    "fetchCheckedAt": "2026-10-24T13:11:01Z",
     "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086",
     "originMainIsAncestor": true,
     "mergeOriginMainResult": "Already up to date"
@@ -236,11 +236,12 @@
     "docs/implementation/evidence/battle/2026-10-24/postgres-evidence.json",
     "docs/implementation/evidence/battle/2026-10-24/cloud-reachability.json",
     "docs/implementation/evidence/battle/2026-10-24/network-recovery.json",
-    "docs/implementation/evidence/battle/2026-10-24/cloud-reachability-2103.json"
+    "docs/implementation/evidence/battle/2026-10-24/cloud-reachability-2103.json",
+    "docs/implementation/evidence/battle/2026-10-24/cloud-reachability-2111.json"
   ],
   "realIncomplete": [
-    "2026-10-24 21:03（Asia/Shanghai）再次探测配置端点 http://47.112.208.97:8000/functions/v1/duel-online，OPTIONS 仍返回 502；真实双实例邀请→接受→房间→Realtime→结算未通过验收。",
-    "增量 Supabase 迁移及 duel-online 更新尚未部署，需 foundation/用户审核发布；本任务不自动执行生产发布。",
+    "2026-10-24 21:11（Asia/Shanghai）第三轮复查：实际配置端点的 OPTIONS 仍返回 502，无可用替代配置；真实双实例邀请→接受→房间→Realtime→结算无法验收。",
+    "本会话没有部署增量 Supabase 迁移或 duel-online 更新；服务不可用时也无法核实当前服务器版本。需按 scope-2d-ui-first.txt 审核云端变更，不自动执行生产发布。",
     "跨设备奖励与账号同步的最终收敛仍需服务恢复后的实际双端核对；稳定云端 actionId、奖励回执及本机备份账本保护不能替代该验收。"
   ],
   "integrationDependencies": [
@@ -251,13 +252,16 @@
   ],
   "policy": "仅在独立 battle 工作树交付；根 manifests/config/共享 kit 的变动来自 foundation 合并。未新建会话、未发消息给其他会话、未操作真实用户个人目录、未删除历史数据、未部署生产。目标保持未完成，绝不把本机或嵌入式 SQL 验证当成真实好友联机成功。",
   "blockedAudit": {
-    "condition": "Configured deployed duel-online unavailable; additive migration/function not deployed; real two-account acceptance cannot run",
-    "consecutiveObservedGoalTurns": 2,
+    "condition": "Configured deployed duel-online unavailable; real two-account acceptance cannot run",
+    "consecutiveObservedGoalTurns": 3,
     "previousTurnClassification": "progress",
-    "currentTurnClassification": "progress",
-    "currentProgress": "Reproduced and fixed two synchronization races; added four focused recovery tests",
-    "goalStatus": "active",
-    "note": "Do not claim completion or mark blocked before the consecutive-turn threshold and an actual impasse are established."
+    "currentTurnClassification": "no_progress_after_revalidation",
+    "currentOutcome": "Endpoint remains 502; actual runtime configuration has no alternate endpoint; no confirmed live repair/deploy handle is available in this chat",
+    "goalStatus": "blocked",
+    "goalStatusConfirmedByTool": true,
+    "confirmedAt": "2026-10-24T13:12:27Z",
+    "evidence": "docs/implementation/evidence/battle/2026-10-24/cloud-reachability-2111.json",
+    "note": "Completion is not claimed. All delivered code, local verification and unresolved cloud acceptance remain preserved."
   },
   "completionAudit": [
     {
@@ -282,5 +286,10 @@
       "state": "本机截图及公共交互已验证，已记录视觉差异",
       "evidence": "docs/implementation/evidence/battle/2026-10-24/README.txt"
     }
+  ],
+  "resumeRequirements": [
+    "恢复配置中的 duel-online 服务，或提供已验证的可用环境配置",
+    "审核并核实增量迁移及更新 edge 功能的发布状态",
+    "使用两个隔离的真实云端账号完成邀请、接受、房间、Realtime、重连和结算/跨设备收敛验收"
   ]
 }
