@@ -8,7 +8,7 @@ import assert from 'node:assert/strict';
 const require = createRequire(import.meta.url);
 const root = process.cwd();
 const phase = process.argv[2] || 'plant';
-const output = resolve('artifacts/garden/electron');
+const output = resolve(process.env.GARDEN_SMOKE_OUTPUT || 'artifacts/garden/electron');
 const profile = resolve(output, 'profile');
 mkdirSync(profile, { recursive: true });
 const runFile = resolve(output, 'run.json');
@@ -28,6 +28,16 @@ const errors = [];
 try {
   const page = await application.firstWindow();
   page.on('pageerror', error => errors.push(error.message));
+  await page.waitForFunction(()=>Boolean(window.lingjing));
+  const accounts=await page.evaluate(()=>window.lingjing.invoke('accounts','session'));
+  if(accounts.ok && !accounts.data.currentUser){
+    const legacy=JSON.parse(readFileSync(resolve(profile,'pet-runtime-data.json'),'utf8'));
+    const account=legacy.users.find(user=>user.id===(run.legacyOwnerAccountId||run.ownerAccountId))?.account;
+    const login=await page.evaluate(account=>window.lingjing.invoke('accounts','login',{provider:'local',account,password:'garden-local-acceptance-926',rememberSession:false}),account);
+    assert.equal(login.ok,true,JSON.stringify(login));
+    run.storageOwnerAccountId=login.data.currentUser.ownerAccountId;
+    if(!run.planted){run.legacyOwnerAccountId||=run.ownerAccountId;run.ownerAccountId=run.storageOwnerAccountId;}
+  }
   await page.getByRole('navigation', { name: '主导航' }).waitFor();
   const invoke = async (command, payload) => page.evaluate(({ command, payload }) => window.lingjing.invoke('garden', command, payload), { command, payload: payload ? {...payload,sessionOwnerAccountId:run.ownerAccountId} : undefined });
   const route = async path => { await page.evaluate(path => { location.hash = path; }, path); };
@@ -54,6 +64,9 @@ try {
     assert.equal(snapshot.data.plots[0].cropType, 'rice'); assert.equal(snapshot.data.plots[1].cropType, 'carrot');
     run.planted = snapshot;
     await page.screenshot({ path: resolve(output, '01-planted.png'), fullPage: true });
+  } else if (phase === 'identity') {
+    const failure=await invoke('snapshot');assert.equal(failure.code,'OWNER_MIGRATION_REQUIRED');run.identity={source:run.ownerAccountId,target:run.storageOwnerAccountId,result:failure};
+    await route('/garden/plots');await page.screenshot({path:resolve(output,'identity-migration-preserved.png'),fullPage:true});
   } else if (phase === 'carrot') {
     await route('/garden/plots');
     await page.getByRole('heading', { name: '把小日子，种成好收成。' }).waitFor();
@@ -126,7 +139,8 @@ try {
     assert.deepEqual(pets.data.pets, run.afterFeed.data.pets);
     const repeatHarvest = await invoke('harvest', { actionId: 'after-restart-double-harvest', expectedRevision: result.revision, plotIds: ['plot-1'] });
     assert.equal(repeatHarvest.code, 'ALREADY_HARVESTED');
-    run.readback = { result, pets, repeatHarvest };
+    const staleOwner=await page.evaluate(revision=>window.lingjing.invoke('garden','plant',{actionId:'stale-owner-view',expectedRevision:revision,sessionOwnerAccountId:'another-account',ownerAccountId:'forged-owner',plotId:'plot-1',cropType:'carrot'}),result.revision);assert.equal(staleOwner.code,'SESSION_CHANGED');
+    run.readback = { result, pets, repeatHarvest,staleOwner };
   }
   assert.deepEqual(errors, []);
   run.phases.push({ phase, at: new Date().toISOString(), errors, electron: await application.evaluate(() => process.versions.electron) });

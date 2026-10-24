@@ -174,5 +174,20 @@
     "Final updated UI comparison and application animation toggle validation in progress"
   ],
   "cloudReview": "docs/implementation/garden-cloud-review.md",
-  "dataPolicy": "additive migrations; original history/designs/models retained; no production deployment, destructive migration or user-data reset"
+  "dataPolicy": "additive migrations; original history/designs/models retained; no production deployment, destructive migration or user-data reset",
+  "identityMigration": {
+    "status": "guarded-provider-adapter-required",
+    "source": "Accounts verified legacy-id alias",
+    "result": "15 focused SQLite checks passed including 3 real companion migration safety tests",
+    "required": "companions.migrateOwnerAlias synchronous same-connection adapter; exact same petId and growth readback",
+    "preserved": "Old graph archived after successful migration; source becomes read-only; no starter grant on incomplete migration; two progressed graphs rejected"
+  },
+  "integratedRevalidation": {
+    "foundation": "f0af90f consumed in 9b6fe47",
+    "profile": "artifacts/garden/integrated-electron",
+    "ricePlanted": "2026-10-24T12:51:09.487Z",
+    "riceMatures": "2026-10-24T13:16:09.487Z",
+    "realTimeGrowth": "production 25-minute duration, no clock or database edits",
+    "focusedChecks": "15 SQLite + 5 PostgreSQL checks passed; root UI typecheck and garden ESLint passed"
+  }
 }

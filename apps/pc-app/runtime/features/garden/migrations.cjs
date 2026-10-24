@@ -129,6 +129,7 @@ CREATE INDEX IF NOT EXISTS garden_events_time ON garden_events(owner_account_id,
 INSERT OR IGNORE INTO garden_events SELECT owner_account_id,'legacy:'||id,action_id,kind,item_id,delta,balance,pet_id,created_at FROM garden_ledger;
 ` };
 const cloudMigration = { id: 'garden-20261024-cloud-checkpoint-v1', sql: `CREATE TABLE IF NOT EXISTS garden_cloud_state(owner_account_id TEXT PRIMARY KEY,account_revision INTEGER NOT NULL,checksum TEXT NOT NULL,server_time INTEGER NOT NULL);` };
-const migrations = [migration, territoryMigration, eventMigration, cloudMigration];
+const identityMigration = {id:'garden-20261024-verified-owner-alias-v1',sql:`CREATE TABLE IF NOT EXISTS garden_identity_imports(source_owner_account_id TEXT PRIMARY KEY,target_owner_account_id TEXT NOT NULL,archive_json TEXT NOT NULL,created_at INTEGER NOT NULL);`};
+const migrations = [migration, territoryMigration, eventMigration, cloudMigration, identityMigration];
 function migrate(db) { for (const item of migrations) db.exec(item.sql); }
 module.exports = { migration, migrations, migrate };

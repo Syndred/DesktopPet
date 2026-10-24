@@ -5,6 +5,7 @@ const { reconcileSeeds } = require("./settlements.cjs");
 const { TerritoryService } = require("./territories.cjs");
 const { createGardenBackupAdapter } = require('./backup.cjs');
 const { CloudGardenAuthority } = require('./cloud-authority.cjs');
+const { createOwnerMigration } = require('./identity.cjs');
 
 function companionAdapter(services) {
   const get = () => {
@@ -50,10 +51,12 @@ module.exports = {
     if (!services.get('territories')) services.provide('territories', territories);
     const removeBackupAdapter = services.get('backups')?.register(createGardenBackupAdapter(services.db));
     const cloud = new CloudGardenAuthority(services, service);
+    const identity = createOwnerMigration(services,service);
     services.provide("garden", {
       service,
       snapshot: context => service.snapshot(context),
       territories,
+      migrateOwnerAlias:context=>identity.migrate(context),
       // Trusted callers can include this in their own synchronous settlement transaction.
       grantSeeds: (context, input, verifiedReceipt) => {
         if (!cloud.isCloud(context)) return service.grantSeeds(context,input,verifiedReceipt);
@@ -65,6 +68,7 @@ module.exports = {
     });
     const commands = Object.fromEntries(["plant", "harvest", "craft", "feed", "garrison"].map(command => [command, (payload, context) => service[command](context, payload)]));
     commands.snapshot = async (_payload, context) => {
+      try{identity.migrate(context);}catch(error){return service.failure(error,context.ownerAccountId);}
       if (cloud.isCloud(context)) {
         try { return await cloud.snapshot(context); }
         catch (error) {
@@ -90,6 +94,7 @@ module.exports = {
       // This value is a stale-view guard, never an authority source. The owner
       // still comes solely from the verified main-process session context.
       if (payload?.sessionOwnerAccountId !== context.ownerAccountId) return {ok:false,code:'SESSION_CHANGED',message:'账号已切换，请刷新菜园后再操作'};
+      try{identity.migrate(context);}catch(error){return service.failure(error,context.ownerAccountId);}
       if (!cloud.isCloud(context)) return local(payload, context);
       if (!['plant','harvest','craft','feed'].includes(kind)) return { ok: false, code: 'CLOUD_TERRITORY_UNAVAILABLE', message: '云端领地权威服务尚未部署，本机存档已保留' };
       try { return await cloud.command(context, kind, payload); } catch (error) { return service.failure(error,context.ownerAccountId); }
