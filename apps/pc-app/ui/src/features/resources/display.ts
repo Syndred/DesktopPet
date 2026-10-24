@@ -10,5 +10,5 @@ export function resolveResourceCalibration(resource: CharacterResource, context:
   return calibration;
 }
 export function resourceTransform(calibration: ResourceCalibration, kind: CharacterResource['kind']) {
-  return `translateY(${calibration.verticalOffset * 100}%) scale(${calibration.scale * (calibration.mirrorX ? -1 : 1)}, ${calibration.scale})${kind === 'spritesheet' ? ` rotate(${calibration.yawDeg}deg)` : ''}`;
+  return `translateY(${calibration.verticalOffset * 100}%) scale(${calibration.scale * (calibration.mirrorX ? -1 : 1)}, ${calibration.scale})${kind === 'spritesheet' ? ` rotate(${calibration.rotationDeg ?? calibration.yawDeg ?? 0}deg)` : ''}`;
 }

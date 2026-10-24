@@ -1,10 +1,11 @@
 import { useEffect, useId, useRef, useState, type ReactNode } from 'react';
 import type { ConversationMemory, ConversationPet } from '../../../../../../packages/shared-types/src/features/conversations';
+import { CompanionPortrait } from '../companions/CompanionPortrait';
 
 export function PetAvatar({ pet, large = false }: { pet: ConversationPet; large?: boolean }) {
   const [failed, setFailed] = useState(false);
   return <span className={`cv-avatar ${large ? 'cv-avatar-large' : ''}`} aria-hidden="true">
-    {pet.avatarUrl && !failed ? <img src={pet.avatarUrl} alt="" onError={() => setFailed(true)}/> : <span>{[...pet.name][0]}</span>}
+    {pet.resource?.kind === '2d' ? <CompanionPortrait resource={pet.resource} petId={pet.petId} name={pet.name}/> : pet.avatarUrl && !failed ? <img src={pet.avatarUrl} alt="" onError={() => setFailed(true)}/> : <span>{[...pet.name][0]}</span>}
   </span>;
 }
 export function Modal({ title, children, close }: { title: string; children: ReactNode; close: () => void }) {

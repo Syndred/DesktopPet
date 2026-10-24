@@ -12,6 +12,7 @@ export interface ConnectionSettings {
 export interface PublicConnection extends ConnectionSettings { hasKey: boolean; revision: number }
 export interface ConversationPet {
   petId: string; name: string; templateId: string | null; avatarUrl: string | null; level: number;
+  resource?: { resourceId: string; kind: '2d' | '3d' };
 }
 export type MessageStatus = 'complete' | 'pending' | 'streaming' | 'failed' | 'cancelled';
 export interface ConversationMessage {

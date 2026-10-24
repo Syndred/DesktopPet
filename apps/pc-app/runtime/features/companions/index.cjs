@@ -33,8 +33,12 @@ module.exports = {
     }
     const api = {
       db: services.db,
-      listPets(ownerAccountId) { ensureImported(ownerAccountId); return service.snapshot(ownerAccountId).data.pets; },
-      getPet(ownerAccountId, petId) { ensureImported(ownerAccountId); return service.requirePet(ownerAccountId, petId); },
+      listPets(ownerAccountId) { ensureImported(ownerAccountId); return service.snapshot(ownerAccountId).data.pets.filter(pet => pet.resource.kind === '2d'); },
+      getPet(ownerAccountId, petId) {
+        ensureImported(ownerAccountId); const pet = service.requirePet(ownerAccountId, petId);
+        if (pet.resource.kind !== '2d') throw Object.assign(new Error('旧伙伴原始记录已保留，本版使用 2D 伙伴'), { code: 'RESOURCE_UNAVAILABLE' });
+        return pet;
+      },
       getSelections(ownerAccountId) { return service.selections(ownerAccountId); },
       applyGrowthInTransaction(ownerAccountId, input) {
         const result = service.applyGrowthInTransaction(ownerAccountId, input);
@@ -78,8 +82,27 @@ module.exports = {
     return {
       commands: {
         list(_payload, context) { ensureImported(context.ownerAccountId); desktop?.sync(); return service.snapshot(context.ownerAccountId); },
+        get(payload, context) { const pet = api.getPet(context.ownerAccountId, payload.petId); return { ok: true, data: pet, revision: pet.revision }; },
+        desktopInput(payload, context) {
+          if (!desktop) return { ok: false, code: 'DESKTOP_UNAVAILABLE', message: '请在灵境桌面应用中操作伙伴' };
+          return desktop.handleInput(context.ownerAccountId, payload);
+        },
         adopt: execute('adopt'), rename: execute('rename'), desktop: execute('updateDesktop'),
-        select: execute('select'), interact: execute('interact')
+        select: execute('select'), interact: execute('interact'),
+        async appearance(payload, context) {
+          ensureImported(context.ownerAccountId);
+          const resource = await services.get('resources').get(context.ownerAccountId, payload.resourceId);
+          if (resource.availability !== 'ready') throw Object.assign(new Error('角色文件暂不可用。'), { code: 'RESOURCE_UNAVAILABLE' });
+          if (resource.kind !== 'spritesheet') throw Object.assign(new Error('本版请选择 2D 角色资源。'), { code: 'RESOURCE_UNAVAILABLE' });
+          if (services.session.getOwnerAccountId() !== context.ownerAccountId) throw Object.assign(new Error('账号已切换。'), { code: 'SESSION_CHANGED' });
+          const result = service.action(context.ownerAccountId, 'appearance', payload, () => {
+            const pet = service.requirePet(context.ownerAccountId, payload.petId, payload.expectedRevision);
+            pet.resource = { resourceId: resource.id, kind: '2d' };
+            service.storePet(pet);
+            return { pet, selections: service.selections(context.ownerAccountId) };
+          });
+          changed(context.ownerAccountId); return result;
+        }
       },
       dispose() { for (const dispose of disposers) dispose(); desktop?.dispose(); }
     };
