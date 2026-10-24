@@ -28,7 +28,21 @@ const oldDb=new DatabaseSync(resolve(oldSource,'profile/lingjing.sqlite'),{readO
 assert.equal(old.identity.result.code,'OWNER_MIGRATION_REQUIRED');
 const oldItems=oldDb.prepare('SELECT item_id,quantity FROM garden_items WHERE owner_account_id=?').all(old.ownerAccountId);
 assert.ok(old.final.data.items.every(item=>(oldItems.find(row=>row.item_id===item.id)?.quantity||0)===item.quantity));
-assert.equal(oldDb.prepare('SELECT 1 FROM garden_accounts WHERE owner_account_id=?').get(old.storageOwnerAccountId),undefined);
+const upgraded=old.identityUpgrade?.restartExact===true;
+const ownerTransition={source:old.ownerAccountId,target:old.storageOwnerAccountId,beforeAdapterCode:old.identity.result.code,oldInventoryExactlyPreserved:true,status:upgraded?'verified-native-upgrade':'guarded-provider-adapter-required',providerMigrationStillRequired:!upgraded};
+if(upgraded){
+  const targetItems=oldDb.prepare('SELECT item_id,quantity FROM garden_items WHERE owner_account_id=?').all(old.storageOwnerAccountId);
+  assert.ok(old.final.data.items.every(item=>(targetItems.find(row=>row.item_id===item.id)?.quantity||0)===item.quantity));
+  for(const pet of old.afterFeed.data.pets)assert.deepEqual(JSON.parse(oldDb.prepare('SELECT data_json FROM companion_pets WHERE owner_account_id=? AND pet_id=?').get(old.ownerAccountId,pet.petId).data_json),pet);
+  const starterCount=owner=>oldDb.prepare("SELECT COUNT(*) n FROM garden_events WHERE owner_account_id=? AND kind='starter'").get(owner).n;
+  assert.equal(starterCount(old.storageOwnerAccountId),starterCount(old.ownerAccountId));
+  ownerTransition.gardenArchive=oldDb.prepare('SELECT source_owner_account_id,target_owner_account_id,created_at,LENGTH(archive_json) archiveBytes FROM garden_identity_imports WHERE source_owner_account_id=?').get(old.ownerAccountId);
+  ownerTransition.companionArchive=oldDb.prepare('SELECT source_owner_account_id,target_owner_account_id,created_at,LENGTH(archive_json) archiveBytes FROM companion_identity_imports WHERE source_owner_account_id=?').get(old.ownerAccountId);
+  assert.equal(ownerTransition.gardenArchive.target_owner_account_id,old.storageOwnerAccountId);assert.equal(ownerTransition.companionArchive.target_owner_account_id,old.storageOwnerAccountId);
+  Object.assign(ownerTransition,{targetInventoryExact:true,sourcePetRecordsExact:true,targetPetGrowthExact:true,noStarterRegrant:true,secondReadSame:true,restartExact:true});
+}else{
+  assert.equal(oldDb.prepare('SELECT 1 FROM garden_accounts WHERE owner_account_id=?').get(old.storageOwnerAccountId),undefined);ownerTransition.newGardenNotCreated=true;
+}
 const sql=JSON.parse(readFileSync(sqlSource,'utf8'));
 const territoryRun=JSON.parse(readFileSync(resolve('artifacts/garden/territory-electron/run.json'),'utf8'));
 assert.equal(territoryRun.territoryRestart.exactGarrisonAndIndependentSelections,true);
@@ -42,14 +56,15 @@ const evidence={
   rewardedSeedCycle:{receipt:run.rewardPlant.receipt,planted:run.rewardPlant.after.data.plots.find(plot=>plot.plotId===run.rewardPlant.plotId),harvested:run.rewardCycle.harvested.data.ledger.find(entry=>entry.kind==='harvest'&&entry.itemId===run.rewardPlant.crop),foodConsumed:1,before:run.rewardCycle.beforeFeed.data.pets.map(petState),after:run.rewardCycle.afterFeed.data.pets.map(petState),nextBattle:{sessionId:run.rewardCycle.nextBattle.id,winner:run.rewardCycle.nextBattle.winner,reward:run.rewardCycle.nextBattle.reward},finalPets:run.rewardCycle.finalPets.data.pets.map(petState)},
   restart:{exactItemsAndPets:true,duplicateHarvest:run.readback.repeatHarvest,staleAccount:run.readback.staleOwner},
   publicComponents:{...run.library,...run.motion},visualAudit:run.visualAudit,responsive:run.responsive,realLocation:run.map,
-  oldOwnerSafety:{source:old.ownerAccountId,target:old.storageOwnerAccountId,code:old.identity.result.code,oldInventoryExactlyPreserved:true,newGardenNotCreated:true,providerMigrationStillRequired:true},
+  oldOwnerSafety:ownerTransition,
   controlledTerritoryUI:{fixture:true,realGeographicAcceptance:false,actualIPCAndSqlite:true,garrisonOnly:territoryRun.territoryUI.garrisonOnly,restart:territoryRun.territoryRestart},
   postgres:{mode:sql.mode,at:sql.at,checks:sql.checks,accountRevision:sql.finalCloud?.revision},
-  externalGaps:['Live HTTPS Supabase deployment and real-account two-device readback','Cloud territory challenge/garrison authority and shared battle integration','Companions verified alias migration callback','Common accounts save-version reconciliation after garden operations','Physical location precision <= 80m for actual capture/occupation']
+  externalGaps:['Live HTTPS Supabase deployment and real-account two-device readback','Cloud territory challenge/garrison authority and shared battle integration',...(upgraded?[]:['Companions verified alias migration callback']),'Common accounts save-version reconciliation after garden operations','Physical location precision <= 80m for actual capture/occupation']
 };
 mkdirSync(output,{recursive:true});
 for(const name of ['02a-2d-mature-garden.png','02-cooked-and-fed.png','05-radix-inventory.png','09a-reward-mature.png','11-kitchen-current.png','12-inventory-current.png','A04-1280x844-inventory.png','A04-1440x900-inventory.png'])copyFileSync(resolve(source,name),resolve(output,name));
 copyFileSync(resolve(oldSource,'identity-migration-preserved.png'),resolve(output,'identity-migration-preserved.png'));
+if(upgraded)copyFileSync(resolve(oldSource,'identity-upgraded-preserved.png'),resolve(output,'identity-upgraded-preserved.png'));
 writeFileSync(resolve(output,'verification.json'),JSON.stringify(evidence,null,2)+'\n');
 nativeDb.close();oldDb.close();
-console.log(JSON.stringify({output,screenshots:9,elapsedMs:elapsed,sqlEvidence:basename(sqlSource)}));
+console.log(JSON.stringify({output,screenshots:upgraded?10:9,elapsedMs:elapsed,sqlEvidence:basename(sqlSource)}));

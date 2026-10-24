@@ -55,3 +55,12 @@ this integration requirement.
 The full integrated smoke accepts canonical account IDs from the actual login
 response. Its earlier raw-ID profile remains intact as a migration regression
 fixture; a new profile is not presented as proof that the old profile migrated.
+
+Foundation `7aa6f3b` now supplies the companion adapter. It was consumed and
+verified in the original raw-ID native profile using `identity-upgrade` followed
+by a full application restart and `identity-upgrade-readback`. The target garden
+and per-pet growth match the old receipt exactly; original pet rows are compared
+without rewriting, both full archives exist, and starter events are not repeated.
+The real shared adapter also participates in garden's outer transaction: a
+progressed target garden rejects the merge and rolls back companion imports and
+receipts together. The unavailable-adapter guard remains for older integrations.

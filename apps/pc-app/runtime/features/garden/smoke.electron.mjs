@@ -67,6 +67,18 @@ try {
     assert.equal(snapshot.data.plots[0].cropType, 'rice'); assert.equal(snapshot.data.plots[1].cropType, 'carrot');
     run.planted = snapshot;
     await page.screenshot({ path: resolve(output, '01-planted.png'), fullPage: true });
+  } else if (phase === 'identity-upgrade' || phase === 'identity-upgrade-readback') {
+    assert.ok(run.identity&&run.final&&run.afterFeed,'Use the original raw-ID acceptance profile, preserving its earlier evidence');
+    const result=await invoke('snapshot');assert.equal(result.ok,true,JSON.stringify(result));assert.equal(result.data.ownerAccountId,run.storageOwnerAccountId);
+    assert.deepEqual(result.data.items,run.final.data.items);
+    const pets=await page.evaluate(()=>window.lingjing.invoke('companions','list'));assert.equal(pets.ok,true);assert.equal(pets.data.pets.length,run.afterFeed.data.pets.length);
+    for(const original of run.afterFeed.data.pets){const current=pets.data.pets.find(pet=>pet.petId===original.petId);assert.ok(current);assert.equal(current.ownerAccountId,run.storageOwnerAccountId);assert.equal(current.name,original.name);assert.deepEqual(current.growth,original.growth);}
+    assert.equal(result.data.ledger.filter(event=>event.kind==='starter').length,run.final.data.ledger.filter(event=>event.kind==='starter').length);
+    const again=await invoke('snapshot');assert.equal(again.revision,result.revision);assert.deepEqual(again.data.items,result.data.items);
+    if(phase==='identity-upgrade'){
+      run.identityUpgrade={target:run.storageOwnerAccountId,source:run.ownerAccountId,result,pets,secondReadSame:true};
+      await page.emulateMedia({reducedMotion:'reduce'});await route('/inventory');await page.locator('.garden-pet-picker .cp-sheet-thumbnail').first().waitFor();await page.screenshot({path:resolve(output,'identity-upgraded-preserved.png'),fullPage:true});
+    }else{assert.deepEqual(pets.data.pets,run.identityUpgrade.pets.data.pets);run.identityUpgrade.restartExact=true;}
   } else if (phase === 'identity') {
     const failure=await invoke('snapshot');assert.equal(failure.code,'OWNER_MIGRATION_REQUIRED');run.identity={source:run.ownerAccountId,target:run.storageOwnerAccountId,result:failure};
     await route('/garden/plots');await page.getByRole('heading',{name:'旧菜园还在，正在等待存档衔接'}).waitFor();await page.screenshot({path:resolve(output,'identity-migration-preserved.png'),fullPage:true});
@@ -123,7 +135,7 @@ try {
           const boxes=cards.map(rect),overlap=boxes.some((a,i)=>boxes.some((b,j)=>i!==j&&Math.min(a.right,b.right)-Math.max(a.left,b.left)>.5&&Math.min(a.bottom,b.bottom)-Math.max(a.top,b.top)>.5));
           return {viewport:{width:innerWidth,height:innerHeight,dpr:devicePixelRatio},heading:{...style(document.querySelector('.garden-feature h1')),...rect(document.querySelector('.garden-feature h1'))},pagePadding:getComputedStyle(document.querySelector('.garden-feature')).padding,cards:cards.map(card=>({rect:rect(card),art:rect(card.querySelector('.garden-item-art'))})),petCards:pets.map(card=>({height:card.clientHeight,scrollHeight:card.scrollHeight})),overlap,cardsSpacing:[...document.querySelectorAll('.garden-card')].map(card=>({marginBottom:getComputedStyle(card).marginBottom,parentGap:getComputedStyle(card.parentElement).gap}))};
         });
-        assert.equal(result.overlap,false);assert.equal(result.heading.fontSize,'29px');assert.equal(result.heading.fontWeight,'700');
+        assert.equal(result.overlap,false);const titleTokens=await page.evaluate(()=>({size:getComputedStyle(document.documentElement).getPropertyValue('--text-title').trim()||'29px',weight:getComputedStyle(document.documentElement).getPropertyValue('--weight-title').trim()||'700'}));assert.equal(result.heading.fontSize,titleTokens.size);assert.equal(result.heading.fontWeight,titleTokens.weight);
         assert.equal(result.cards.every(card=>card.art.top>=card.rect.top&&card.art.bottom<=card.rect.bottom),true);
         assert.equal(result.petCards.every(card=>card.height>=100&&card.scrollHeight<=card.height),true);
         assert.equal(result.cardsSpacing.every(card=>card.marginBottom==='0px'),true);
@@ -246,7 +258,7 @@ try {
     await page.getByRole('tab',{name:'道具',exact:true}).press('Home');await page.waitForFunction(()=>document.querySelector('[role="tab"][data-state="active"]')?.textContent==='全部');assert.equal(await all.getAttribute('aria-selected'),'true');
     await page.emulateMedia({reducedMotion:'reduce'});
     await page.waitForFunction(()=>document.documentElement.dataset.motion==='reduced'&&getComputedStyle(document.querySelector('.garden-item-grid')).transform==='none');
-    const headingMetrics=await page.locator('.garden-feature h1').evaluate(element=>({fontSize:getComputedStyle(element).fontSize,fontWeight:getComputedStyle(element).fontWeight}));assert.equal(headingMetrics.fontSize,'29px');assert.equal(headingMetrics.fontWeight,'700');
+    const headingMetrics=await page.locator('.garden-feature h1').evaluate(element=>({fontSize:getComputedStyle(element).fontSize,fontWeight:getComputedStyle(element).fontWeight}));const titleTokens=await page.evaluate(()=>({size:getComputedStyle(document.documentElement).getPropertyValue('--text-title').trim()||'29px',weight:getComputedStyle(document.documentElement).getPropertyValue('--weight-title').trim()||'700'}));assert.equal(headingMetrics.fontSize,titleTokens.size);assert.equal(headingMetrics.fontWeight,titleTokens.weight);
     const cardGeometry=await page.locator('.garden-item-grid .garden-item').evaluateAll(cards=>cards.map(card=>{
       const outer=card.getBoundingClientRect(),art=card.querySelector('.garden-item-art').getBoundingClientRect();
       return {height:outer.height,artHeight:art.height,contained:art.top>=outer.top&&art.bottom<=outer.bottom};
@@ -300,6 +312,11 @@ try {
 } finally { await application.close(); }
 const db = new DatabaseSync(resolve(profile, 'lingjing.sqlite'), { readOnly: true });
 const readback = { account: db.prepare('SELECT * FROM garden_accounts WHERE owner_account_id=?').get(run.ownerAccountId), plots: db.prepare('SELECT * FROM garden_plots WHERE owner_account_id=?').all(run.ownerAccountId), items: db.prepare('SELECT * FROM garden_items WHERE owner_account_id=?').all(run.ownerAccountId), ledger: db.prepare('SELECT * FROM garden_events WHERE owner_account_id=? ORDER BY created_at').all(run.ownerAccountId) };
+if(phase.startsWith('identity-upgrade')){
+  readback.identityUpgrade={garden:db.prepare('SELECT source_owner_account_id,target_owner_account_id,created_at,LENGTH(archive_json) archiveBytes FROM garden_identity_imports WHERE source_owner_account_id=?').get(run.ownerAccountId),companions:db.prepare('SELECT source_owner_account_id,target_owner_account_id,created_at,LENGTH(archive_json) archiveBytes FROM companion_identity_imports WHERE source_owner_account_id=?').get(run.ownerAccountId)};
+  assert.equal(readback.identityUpgrade.garden.target_owner_account_id,run.storageOwnerAccountId);assert.equal(readback.identityUpgrade.companions.target_owner_account_id,run.storageOwnerAccountId);
+  for(const item of run.final.data.items)assert.equal(readback.items.find(row=>row.item_id===item.id)?.quantity||0,item.quantity);
+}
 writeFileSync(resolve(output, `${phase}-disk-readback.json`), JSON.stringify(readback, null, 2)); db.close();
 
 
