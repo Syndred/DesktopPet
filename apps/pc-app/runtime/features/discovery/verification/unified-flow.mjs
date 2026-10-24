@@ -56,6 +56,8 @@ async function target(templateId) {
   assert.equal(state.cloudStatus, 'disabled');
   const spawn = state.spawns.find(value => value.templateId === templateId && value.inRange && value.captureState === 'available');
   assert.ok(spawn, `Canonical ${templateId} must exist in the trusted QA geofence`);
+  await page.locator('.discovery-map[data-map-ready="true"]').waitFor();
+  await page.getByRole('button', { name: '地图回到当前位置', exact: true }).click();
   await page.locator(`.discovery-pin-button[data-spawn-id="${spawn.id}"]`).click();
   await page.getByRole('button', { name: '和她打个招呼', exact: true }).click();
   await page.locator('.discovery-wild-view').waitFor();
@@ -118,7 +120,7 @@ try {
   const pet = adopted.pet; assert.ok(pet?.petId); proof.player = { petId: pet.petId, resourceId: pet.resource.resourceId, element: pet.element };
   save('production QA identity and registered companion');
 
-  for (const template of templates) {
+  for (const template of process.argv.includes('--flow-only') ? [] : templates) {
     await map(); const spawn = await target(template.templateId);
     assert.equal(spawn.resourceId, template.resource.resourceId); assert.equal(spawn.element, template.element);
     await page.screenshot({ path: join(output, `preview-${template.templateId}.png`) });
@@ -224,7 +226,7 @@ try {
   assert.equal(proof.ledger.ownerAccountId, proof.owner); assert.equal(proof.ledger.captures, 1);
   assert.equal(proof.ledger.ownedInstances, 1); assert.equal(proof.ledger.memories, 1); assert.equal(proof.ledger.validation, 'simulated');
   assert.deepEqual(proof.errors, []); proof.flowPassed = true;
-  proof.rosterComplete = proof.missingElements.length === 0; proof.passed = proof.flowPassed && proof.rosterComplete;
+  proof.rosterComplete = proof.missingElements.length === 0 && proof.roster.length === templates.length; proof.passed = proof.flowPassed && proof.rosterComplete;
   save(proof.passed ? 'passed' : 'flow passed; five-element roster pending');
   console.log(JSON.stringify({ passed: proof.passed, flowPassed: proof.flowPassed, missingElements: proof.missingElements, evidence: join(output, 'evidence.json') }));
 } catch (error) {
