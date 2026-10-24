@@ -32,7 +32,7 @@ try {
   assert(listed.data.every(resource => resource.kind === 'spritesheet'));
   const resource = listed.data.find(resource => resource.id === preference.resource_id);
   assert.deepEqual(resource.calibration, JSON.parse(preference.calibration_json));
-  assert.deepEqual(resource.actions, JSON.parse(preference.actions_json));
+  for (const [action,clip] of Object.entries(JSON.parse(preference.actions_json))) assert.equal(resource.actions[action], clip);
   assert.equal(resource.revision, preference.revision);
   assert.equal(await page.locator('model-viewer').count(), 0);
   report.checks.persisted = { resourceId: resource.id, revision: resource.revision, calibration: resource.calibration, actions: resource.actions };

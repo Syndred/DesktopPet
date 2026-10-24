@@ -3,7 +3,8 @@ const path = require('node:path');
 const { randomUUID } = require('node:crypto');
 const { ResourcesRepository } = require('./repository.cjs');
 const { ResourceError, fail, plain, text, provenance, calibrations, actionMap, safeRelative, isWithin, parseCharacterFile, normalize2DResource, resolveAction } = require('./parser.cjs');
-const { canonicalResourceId } = require('./roster.cjs');
+const { canonicalResourceId, catalog } = require('./roster.cjs');
+const ROSTER_ORDER = new Map(catalog.characters.map((entry,index) => [entry.resourceId,index]));
 
 class ResourcesService {
   constructor({ db, storageRoot, starterManifest = path.resolve(__dirname, '../../assets/illustrations/yuwan-character-v1.json'), starterId = 'builtin:lingjing-yuwan-v1', seedBuiltin = true }) {
@@ -39,7 +40,9 @@ class ResourcesService {
   }
   async list(owner) {
     this.owner(owner);
-    return Promise.all(this.repository.list(owner).filter(resource => resource.kind === 'spritesheet' && this.canonicalId(resource.id) === resource.id).map(resource => this.withAvailability(owner, resource)));
+    const resources = this.repository.list(owner).filter(resource => resource.kind === 'spritesheet' && this.canonicalId(resource.id) === resource.id);
+    resources.sort((a,b) => (ROSTER_ORDER.get(a.id) ?? Number.MAX_SAFE_INTEGER) - (ROSTER_ORDER.get(b.id) ?? Number.MAX_SAFE_INTEGER));
+    return Promise.all(resources.map(resource => this.withAvailability(owner, resource)));
   }
   async get(owner, id) { this.owner(owner); return this.withAvailability(owner, this.repository.get(owner, this.canonicalId(id))); }
   /** Synchronous adapters for callers already inside the shared SQLite transaction. */
