@@ -78,7 +78,7 @@ try {
   evidence.templates = snapshot.templates; evidence.pets = snapshot.pets;
   const resources = await invoke('resources', 'list'); evidence.resources = resources;
   const ids = new Set(snapshot.templates.map(t => t.resource.resourceId));
-  check('A07-six-distinct-template-resources', ids.size >= 6, { templates: snapshot.templates.length, distinct: ids.size });
+  check('A07-eight-distinct-five-element-resources', ids.size >= 8 && ['metal', 'wood', 'water', 'fire', 'earth'].every(element => snapshot.templates.some(template => template.element === element)), { templates: snapshot.templates.length, distinct: ids.size });
   const first = snapshot.pets[0];
   await capture('01-overview', '/companions');
   await capture('04-detail', `/companions/${first.petId}`);
@@ -109,8 +109,8 @@ try {
   check('A03-battle-card-gap', combat.battleCardGap === null || combat.battleCardGap <= 20, combat.battleCardGap);
   check('A09-core-skills-visible', combat.skills.length === 4 && combat.skills.every(x => x.rect.bottom <= combat.viewport.height && x.rect.y >= 0), combat.skills);
   const maxHp = battle.snapshot?.player?.maxHp;
-  const explained = combat.statRuleExplanations.some(t => t.includes(String(maxHp)));
-  check('A11-combat-hp-derivation', first.growth?.stats?.hp === maxHp || explained, { companionHp: first.growth?.stats?.hp, actor: battle.snapshot?.player, explanation: combat.statRuleExplanations });
+  const rules = await invoke('battle', 'rules');
+  check('A11-combat-hp-derivation', rules.vitalPolicy === 'normalized' && maxHp === rules.maxHp && battle.snapshot.enemy.maxHp === rules.maxHp, { companionHp: first.growth?.stats?.hp, actor: battle.snapshot?.player, rules, note: 'The latest concise battlefield uses the authoritative normalized policy; explanatory prose is available through the training rule tooltip instead of a permanent rules panel.' });
   await size(1440, 900); await capture('03-battle-1440', '/battle'); await capture('04-detail-1440', `/companions/${first.petId}`);
   const primaryTitles = evidence.views.filter(v => !v.label.includes('1440')).map(v => ({ page: v.label, fontSize: v.metrics.title?.style.fontSize, weight: v.metrics.title?.style.weight }));
   const mainTitleSizes = primaryTitles.filter(x => !['14-settings', '15-ai-settings'].includes(x.page)).map(x => Number.parseFloat(x.fontSize));
@@ -134,7 +134,8 @@ try {
     check('A08-alternate-pet-battle-identity', alternateBattle.player.petId === alternate.petId && alternateView.stageResources.some(r => r.resourceId === expected && r.status === 'ready'), { expected, player: alternateBattle.player, stages: alternateView.stageResources });
   }
   check('runtime-no-page-errors', evidence.errors.length === 0, evidence.errors);
-  evidence.completedAt = new Date().toISOString(); save();
+  evidence.completedAt = new Date().toISOString(); evidence.passed = evidence.checks.every(check => check.passed); save();
+  if (!evidence.passed) process.exitCode = 1;
   console.log(JSON.stringify(evidence.checks.map(x => ({ id: x.id, passed: x.passed })), null, 2));
 } catch (error) {
   evidence.failure = String(error); save();
