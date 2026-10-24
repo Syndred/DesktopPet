@@ -8,3 +8,5 @@
 :root{--muted:#8a96b0}.button,[data-slot=button]{box-shadow:none!important;transform:none!important}.app-page-motion{min-width:0}.ac-radix-switch{min-width:36px;box-shadow:none!important}
 
 html[data-motion="reduced"] *,html[data-motion="reduced"] *::before,html[data-motion="reduced"] *::after{animation-duration:0s!important;transition-duration:0s!important}
+
+.main-content{position:relative}
