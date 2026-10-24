@@ -12,7 +12,7 @@ module.exports={
   register(services) {
     const cloud=new CloudDiscoveryAuthority({getUser:()=>services.get('accounts')?.privateSession?.() || services.session.getCurrentUser()});
     const location=new LocationService({mayUseLocation:()=>{const privacy=services.get('privacy');return privacy ? privacy.mayUseLocation() : true;}});
-    const discovery=new DiscoveryService({db:services.db,getOwner:()=>services.session.getOwnerAccountId(),getCompanions:()=>services.get('companions'),getBattle:()=>services.get('battle'),invokeBattle:(command,payload)=>services.invoke('battle',command,payload),events:services.events,location,
+    const discovery=new DiscoveryService({db:services.db,getOwner:()=>services.session.getOwnerAccountId(),getCompanions:()=>services.get('companions'),getBattle:()=>services.get('battle'),invokeBattle:(command,payload)=>services.invoke('battle',command,payload),scenario:services.get('qaScenario')?.descriptor,events:services.events,location,
       getAuthority:()=>process.env.LINGJING_DISCOVERY_CLOUD==='1' || services.get('accounts')?.privateSession?.()?.provider==='runtime' ? cloud : null});
     services.provide('discovery',discovery);
     discovery.territories=new TerritoryMapAdapter(()=>services.get('territories'),discovery.map);

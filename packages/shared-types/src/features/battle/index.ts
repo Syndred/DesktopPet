@@ -7,6 +7,7 @@ export interface BattleRulesProfile {
   companionStatsApplied: false;
   baseDamage: Record<BattleActionType, number>;
   ultimateAnger: number; ultimateCost: number; ultimateHeal: number; dodgeMaxCost: number;
+  dodgeRefund?: number;
   advantage?: Record<ElementType, ElementType>;
   elementEffects?: Record<ElementType, { label: string; description: string }>;
 }
