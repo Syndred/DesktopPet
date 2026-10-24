@@ -243,5 +243,11 @@
     "A07A08": "consumes canonical pet.resource through shared CompanionPortrait; resource production remains resources-owned",
     "centralFullAppAcceptance": "pending"
   },
-  "goalComplete": false
+  "goalComplete": false,
+  "foundationClosure": {
+    "commit": "b3c15a5",
+    "ownerAlias": "Actual registered service migration now verified on one SQLite connection",
+    "accountCloudRevision": "Guarded authoritative checkpoint bridge implemented and tested; real deployed readback still pending",
+    "evidence": "tests/foundation/owner-alias.test.cjs and cloud-checkpoint.test.cjs"
+  }
 }
