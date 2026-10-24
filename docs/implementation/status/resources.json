@@ -15,6 +15,7 @@
       "reason": "PixiJS and model-viewer fetch registered keys through lingjing-resource://asset; filesystem paths are never sent to the renderer.",
       "verificationWrapper": "apps/pc-app/runtime/features/resources/verification/bootstrap.cjs"
     },
+    { "owner": "foundation", "requirement": "Add lingjing-resource: to img-src, media-src and connect-src in ui/index.html CSP. Real Electron currently rejects texture fetches without these directives." },
     { "owner": "companions and battle", "requirement": "Render shared resources through exported ResourceStage with resource, independent petId, context and action; resolve descriptors from services.get('resources').resolve(ownerAccountId, request)." }
   ],
   "remaining": ["Native dialog imports, visible 2D/3D preview, save/restart persistence and independent multi-instance rendering are being verified; no completion claim yet."],
