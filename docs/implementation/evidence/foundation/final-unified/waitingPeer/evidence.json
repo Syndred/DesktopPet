@@ -1,0 +1,563 @@
+{
+  "at": "2026-10-24T16:04:28.622Z",
+  "scenario": {
+    "schemaVersion": 1,
+    "application": "lingjing",
+    "scenario": "unified-battle",
+    "runId": "b1ed89c1-3f0c-46de-9e96-6b054565e46e",
+    "isolated": true,
+    "profilePath": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\artifacts\\qa\\unified-battle\\qa-1792857868606-b1ed89c1",
+    "createdAt": "2026-10-24T16:04:28.606Z",
+    "env": {
+      "LINGJING_QA_SCENARIO": "unified-battle",
+      "PET_USER_DATA_DIR": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\artifacts\\qa\\unified-battle\\qa-1792857868606-b1ed89c1"
+    }
+  },
+  "sourceCommit": "c4ac69369d01786549dc55ac0bc76c98c930445d",
+  "scope": "Actual production Electron, explicit loopback simulation, one unjoined friend room only; no live-cloud claim or repeated battle suite.",
+  "checks": [
+    {
+      "id": "waiting-room",
+      "state": {
+        "id": "online-ee946a2e-6ca1-47fa-9285-399c36d1d3a9",
+        "mode": "friend",
+        "status": "waiting",
+        "startedAt": "2026-10-24T16:04:30.474Z",
+        "player": {
+          "petId": "pet-c3ffcd28-2c13-4b1e-9223-3e505c6ebb98",
+          "petName": "鱼丸",
+          "element": "water",
+          "level": 1,
+          "resourceRef": "builtin:lingjing-yuwan-v2",
+          "resource": {
+            "resourceId": "builtin:lingjing-yuwan-v2",
+            "kind": "2d"
+          },
+          "appearance2d": "builtin:lingjing-yuwan-v2"
+        },
+        "enemy": {
+          "petId": "waiting-peer",
+          "petName": "等待好友",
+          "element": "wood"
+        },
+        "snapshot": {
+          "round": 0,
+          "player": {
+            "id": "player",
+            "element": "water",
+            "hp": 120,
+            "maxHp": 120,
+            "anger": 0,
+            "freeDodgeUsed": false,
+            "statuses": []
+          },
+          "enemy": {
+            "id": "enemy",
+            "element": "wood",
+            "hp": 120,
+            "maxHp": 120,
+            "anger": 0,
+            "freeDodgeUsed": false,
+            "statuses": []
+          }
+        },
+        "room": {
+          "id": "ee946a2e-6ca1-47fa-9285-399c36d1d3a9",
+          "room_code": "787313",
+          "status": "waiting",
+          "host_user_id": "qa:b1ed89c1-3f0c-46de-9e96-6b054565e46e:local-8db52d53-d54f-44d4-a472-76fb194b23af",
+          "host_account": "waiting_1792857869340",
+          "guest_user_id": null,
+          "guest_account": null,
+          "host_pet_id": "pet-c3ffcd28-2c13-4b1e-9223-3e505c6ebb98",
+          "guest_pet_id": null,
+          "host_resource_id": "builtin:lingjing-yuwan-v2",
+          "guest_resource_id": null,
+          "invitation_id": null,
+          "invited_user_id": null,
+          "host_pet_name": "鱼丸",
+          "guest_pet_name": null,
+          "host_element": "water",
+          "guest_element": null,
+          "current_round": 1,
+          "last_resolved_round": 0,
+          "host_hp": 120,
+          "guest_hp": 120,
+          "host_anger": 0,
+          "guest_anger": 0,
+          "host_free_dodge_used": false,
+          "guest_free_dodge_used": false,
+          "host_statuses": [],
+          "guest_statuses": [],
+          "winner_side": null,
+          "created_at": "2026-10-24T16:04:30.474Z",
+          "updated_at": "2026-10-24T16:04:30.474Z"
+        },
+        "side": "host",
+        "rounds": [],
+        "winner": null,
+        "pendingAction": null,
+        "historyComplete": true,
+        "rules": {
+          "id": "five-elements-standard-v1",
+          "label": "标准五行对战",
+          "vitalPolicy": "normalized",
+          "maxHp": 120,
+          "maxAnger": 100,
+          "companionStatsApplied": false,
+          "baseDamage": {
+            "normal_attack": 10,
+            "element_attack": 12,
+            "dodge": 0,
+            "ultimate": 20
+          },
+          "ultimateAnger": 50,
+          "ultimateCost": 50,
+          "ultimateHeal": 20,
+          "dodgeMaxCost": 20,
+          "dodgeRefund": 30,
+          "advantage": {
+            "metal": "wood",
+            "wood": "earth",
+            "earth": "water",
+            "water": "fire",
+            "fire": "metal"
+          },
+          "elementEffects": {
+            "metal": {
+              "label": "易伤",
+              "description": "每层受伤×1.5，最多5层"
+            },
+            "wood": {
+              "label": "寄生",
+              "description": "每层回合末吸取2生命，最多5层"
+            },
+            "earth": {
+              "label": "迟钝",
+              "description": "每层伤害×0.5，最多5层"
+            },
+            "water": {
+              "label": "降怒",
+              "description": "命中后对方怒气向下取半，不增加受击怒气"
+            },
+            "fire": {
+              "label": "燃烧",
+              "description": "回合末按当前生命8%×层数伤害，最多5层"
+            }
+          }
+        },
+        "context": {
+          "authority": "simulated",
+          "cloudUserId": "qa:b1ed89c1-3f0c-46de-9e96-6b054565e46e:local-8db52d53-d54f-44d4-a472-76fb194b23af",
+          "scenarioId": "b1ed89c1-3f0c-46de-9e96-6b054565e46e"
+        },
+        "updatedAt": "2026-10-24T16:04:30.697Z",
+        "revision": 2
+      },
+      "view": {
+        "affinity": 0,
+        "enemyBars": 0,
+        "enemyResources": 0,
+        "enemyCanvases": 0,
+        "placeholder": "等待好友加入",
+        "hud": "等待好友加入"
+      }
+    },
+    {
+      "id": "left-before-peer-joined",
+      "state": {
+        "id": "online-ee946a2e-6ca1-47fa-9285-399c36d1d3a9",
+        "mode": "friend",
+        "status": "abandoned",
+        "startedAt": "2026-10-24T16:04:30.474Z",
+        "player": {
+          "petId": "pet-c3ffcd28-2c13-4b1e-9223-3e505c6ebb98",
+          "petName": "鱼丸",
+          "element": "water",
+          "level": 1,
+          "resourceRef": "builtin:lingjing-yuwan-v2",
+          "resource": {
+            "resourceId": "builtin:lingjing-yuwan-v2",
+            "kind": "2d"
+          },
+          "appearance2d": "builtin:lingjing-yuwan-v2"
+        },
+        "enemy": {
+          "petId": "waiting-peer",
+          "petName": "等待好友",
+          "element": "wood"
+        },
+        "snapshot": {
+          "round": 0,
+          "player": {
+            "id": "player",
+            "element": "water",
+            "hp": 120,
+            "maxHp": 120,
+            "anger": 0,
+            "freeDodgeUsed": false,
+            "statuses": []
+          },
+          "enemy": {
+            "id": "enemy",
+            "element": "wood",
+            "hp": 120,
+            "maxHp": 120,
+            "anger": 0,
+            "freeDodgeUsed": false,
+            "statuses": []
+          }
+        },
+        "room": {
+          "id": "ee946a2e-6ca1-47fa-9285-399c36d1d3a9",
+          "room_code": "787313",
+          "status": "abandoned",
+          "host_user_id": "qa:b1ed89c1-3f0c-46de-9e96-6b054565e46e:local-8db52d53-d54f-44d4-a472-76fb194b23af",
+          "host_account": "waiting_1792857869340",
+          "host_pet_id": "pet-c3ffcd28-2c13-4b1e-9223-3e505c6ebb98",
+          "host_pet_name": "鱼丸",
+          "host_resource_id": "builtin:lingjing-yuwan-v2",
+          "host_element": "water",
+          "guest_user_id": null,
+          "guest_element": null,
+          "invitation_id": null,
+          "invited_user_id": null,
+          "current_round": 1,
+          "last_resolved_round": 0,
+          "host_hp": 120,
+          "guest_hp": 120,
+          "host_anger": 0,
+          "guest_anger": 0,
+          "host_statuses": [],
+          "guest_statuses": [],
+          "host_free_dodge_used": false,
+          "guest_free_dodge_used": false,
+          "winner_side": null,
+          "created_at": "2026-10-24T16:04:30.474Z",
+          "updated_at": "2026-10-24T16:04:30.474Z"
+        },
+        "side": "host",
+        "rounds": [],
+        "winner": null,
+        "pendingAction": null,
+        "historyComplete": true,
+        "rules": {
+          "id": "five-elements-standard-v1",
+          "label": "标准五行对战",
+          "vitalPolicy": "normalized",
+          "maxHp": 120,
+          "maxAnger": 100,
+          "companionStatsApplied": false,
+          "baseDamage": {
+            "normal_attack": 10,
+            "element_attack": 12,
+            "dodge": 0,
+            "ultimate": 20
+          },
+          "ultimateAnger": 50,
+          "ultimateCost": 50,
+          "ultimateHeal": 20,
+          "dodgeMaxCost": 20,
+          "dodgeRefund": 30,
+          "advantage": {
+            "metal": "wood",
+            "wood": "earth",
+            "earth": "water",
+            "water": "fire",
+            "fire": "metal"
+          },
+          "elementEffects": {
+            "metal": {
+              "label": "易伤",
+              "description": "每层受伤×1.5，最多5层"
+            },
+            "wood": {
+              "label": "寄生",
+              "description": "每层回合末吸取2生命，最多5层"
+            },
+            "earth": {
+              "label": "迟钝",
+              "description": "每层伤害×0.5，最多5层"
+            },
+            "water": {
+              "label": "降怒",
+              "description": "命中后对方怒气向下取半，不增加受击怒气"
+            },
+            "fire": {
+              "label": "燃烧",
+              "description": "回合末按当前生命8%×层数伤害，最多5层"
+            }
+          }
+        },
+        "context": {
+          "authority": "simulated",
+          "cloudUserId": "qa:b1ed89c1-3f0c-46de-9e96-6b054565e46e:local-8db52d53-d54f-44d4-a472-76fb194b23af",
+          "scenarioId": "b1ed89c1-3f0c-46de-9e96-6b054565e46e"
+        },
+        "updatedAt": "2026-10-24T16:04:31.676Z",
+        "revision": 3,
+        "endedAt": "2026-10-24T16:04:31.676Z",
+        "reportId": "online-ee946a2e-6ca1-47fa-9285-399c36d1d3a9"
+      },
+      "view": {
+        "affinity": 0,
+        "enemyBars": 0,
+        "enemyResources": 0,
+        "enemyCanvases": 0,
+        "placeholder": "对手未加入",
+        "hud": "对手未加入"
+      }
+    },
+    {
+      "id": "report-has-no-invented-peer",
+      "unknownPortraits": 3,
+      "report": {
+        "id": "online-ee946a2e-6ca1-47fa-9285-399c36d1d3a9",
+        "sessionId": "online-ee946a2e-6ca1-47fa-9285-399c36d1d3a9",
+        "mode": "friend",
+        "status": "abandoned",
+        "winner": null,
+        "player": {
+          "petId": "pet-c3ffcd28-2c13-4b1e-9223-3e505c6ebb98",
+          "petName": "鱼丸",
+          "element": "water",
+          "level": 1,
+          "resourceRef": "builtin:lingjing-yuwan-v2",
+          "resource": {
+            "resourceId": "builtin:lingjing-yuwan-v2",
+            "kind": "2d"
+          },
+          "appearance2d": "builtin:lingjing-yuwan-v2"
+        },
+        "enemy": {
+          "petId": "waiting-peer",
+          "petName": "等待好友",
+          "element": "wood"
+        },
+        "startedAt": "2026-10-24T16:04:30.474Z",
+        "endedAt": "2026-10-24T16:04:31.676Z",
+        "rounds": [],
+        "reward": null,
+        "historyComplete": true,
+        "context": {
+          "authority": "simulated",
+          "cloudUserId": "qa:b1ed89c1-3f0c-46de-9e96-6b054565e46e:local-8db52d53-d54f-44d4-a472-76fb194b23af",
+          "scenarioId": "b1ed89c1-3f0c-46de-9e96-6b054565e46e"
+        },
+        "rules": {
+          "id": "five-elements-standard-v1",
+          "label": "标准五行对战",
+          "vitalPolicy": "normalized",
+          "maxHp": 120,
+          "maxAnger": 100,
+          "companionStatsApplied": false,
+          "baseDamage": {
+            "normal_attack": 10,
+            "element_attack": 12,
+            "dodge": 0,
+            "ultimate": 20
+          },
+          "ultimateAnger": 50,
+          "ultimateCost": 50,
+          "ultimateHeal": 20,
+          "dodgeMaxCost": 20,
+          "dodgeRefund": 30,
+          "advantage": {
+            "metal": "wood",
+            "wood": "earth",
+            "earth": "water",
+            "water": "fire",
+            "fire": "metal"
+          },
+          "elementEffects": {
+            "metal": {
+              "label": "易伤",
+              "description": "每层受伤×1.5，最多5层"
+            },
+            "wood": {
+              "label": "寄生",
+              "description": "每层回合末吸取2生命，最多5层"
+            },
+            "earth": {
+              "label": "迟钝",
+              "description": "每层伤害×0.5，最多5层"
+            },
+            "water": {
+              "label": "降怒",
+              "description": "命中后对方怒气向下取半，不增加受击怒气"
+            },
+            "fire": {
+              "label": "燃烧",
+              "description": "回合末按当前生命8%×层数伤害，最多5层"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "errors": [],
+  "runtime": {
+    "version": "0.1.8",
+    "platform": "win32",
+    "build": {
+      "schemaVersion": 1,
+      "builtAt": "2026-10-24T16:04:17.893Z",
+      "sourceCommit": "c4ac69369d01786549dc55ac0bc76c98c930445d",
+      "sourceDirtyFiles": [],
+      "codeFingerprint": "0e78fde20d39557ef89bff8914470d6e8c08166b8b340b63b430e85aa936a380",
+      "compiledFingerprint": "2d1b1bdfa86cf6defd54bf676a44ed1473fc2b0f86c199dbd8abd4ee4412d791",
+      "codeFiles": 216,
+      "compiledFiles": 25
+    },
+    "features": [
+      {
+        "id": "accounts",
+        "commands": [
+          "session",
+          "login",
+          "register",
+          "logout",
+          "profileSave",
+          "passwordChange",
+          "settingsGet",
+          "settingsDefaults",
+          "settingsSave",
+          "backupList",
+          "backupExport",
+          "backupPreview",
+          "backupRestore",
+          "syncStatus",
+          "syncNow",
+          "syncRetry",
+          "cloudPreview",
+          "testNotification",
+          "pointer"
+        ]
+      },
+      {
+        "id": "resources",
+        "commands": [
+          "list",
+          "resolve",
+          "save",
+          "import"
+        ]
+      },
+      {
+        "id": "companions",
+        "commands": [
+          "list",
+          "get",
+          "combatProfile",
+          "desktopInput",
+          "adopt",
+          "rename",
+          "desktop",
+          "select",
+          "interact",
+          "perform",
+          "appearance"
+        ]
+      },
+      {
+        "id": "battle",
+        "commands": [
+          "overview",
+          "rules",
+          "context",
+          "settleContext",
+          "selectPet",
+          "startTraining",
+          "snapshot",
+          "act",
+          "retryAction",
+          "search",
+          "invitations",
+          "invite",
+          "respondInvite",
+          "cancelInvite",
+          "createRoom",
+          "joinRoom",
+          "sync",
+          "leave",
+          "listReports",
+          "getReport",
+          "retrySettlement",
+          "qaPreset"
+        ]
+      },
+      {
+        "id": "garden",
+        "commands": [
+          "plant",
+          "harvest",
+          "craft",
+          "feed",
+          "garrison",
+          "snapshot",
+          "territoryLocate",
+          "territoryChallenge",
+          "territorySettle"
+        ]
+      },
+      {
+        "id": "discovery",
+        "commands": [
+          "snapshot",
+          "setExploring",
+          "locate",
+          "watch",
+          "stopWatch",
+          "setDemo",
+          "setProvider",
+          "tile",
+          "qaTarget",
+          "begin",
+          "act",
+          "cancel",
+          "confirm",
+          "pokedex",
+          "memories"
+        ]
+      },
+      {
+        "id": "conversations",
+        "commands": [
+          "snapshot",
+          "select",
+          "history",
+          "profile.save",
+          "connection.save",
+          "connection.test",
+          "connection.cancel",
+          "memory.save",
+          "memory.delete",
+          "send",
+          "retry",
+          "cancel",
+          "history.clear"
+        ]
+      }
+    ],
+    "user": {
+      "id": "qa:b1ed89c1-3f0c-46de-9e96-6b054565e46e:local-8db52d53-d54f-44d4-a472-76fb194b23af",
+      "subjectId": "qa:b1ed89c1-3f0c-46de-9e96-6b054565e46e:local-8db52d53-d54f-44d4-a472-76fb194b23af",
+      "ownerAccountId": "qa:b1ed89c1-3f0c-46de-9e96-6b054565e46e:local-8db52d53-d54f-44d4-a472-76fb194b23af",
+      "provider": "local",
+      "account": "waiting_1792857869340",
+      "username": "等待呈现复验",
+      "revision": 0,
+      "createdAt": "2026-10-24T16:04:29.375Z",
+      "updatedAt": "2026-10-24T16:04:29.375Z",
+      "dataMode": "simulated"
+    },
+    "scenario": {
+      "id": "unified-battle",
+      "runId": "b1ed89c1-3f0c-46de-9e96-6b054565e46e",
+      "provenance": "simulated",
+      "isolated": true
+    }
+  },
+  "sessionId": "online-ee946a2e-6ca1-47fa-9285-399c36d1d3a9",
+  "passed": true
+}

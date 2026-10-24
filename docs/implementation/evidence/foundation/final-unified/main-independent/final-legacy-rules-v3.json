@@ -1,0 +1,220 @@
+{
+  "at": "2026-10-24T16:09:33.631Z",
+  "sourceCommit": "774afd71ec778d90b7d7d8e6a07873e38320819f",
+  "profile": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\ui-acceptance\\2026-10-24\\baseline\\profile-1792847694527",
+  "ordinaryHistoricalFixture": true,
+  "sessionId": "battle-42197dda-d37f-47f3-9771-80a7b25e084e",
+  "reportId": "battle-ccfa03b6-be27-4a8b-8e5e-b91bb8629926",
+  "checks": [
+    {
+      "id": "legacy-same-version-display-metadata",
+      "passed": true,
+      "detail": {
+        "id": "five-elements-standard-v1",
+        "label": "标准五行对战",
+        "vitalPolicy": "normalized",
+        "maxHp": 120,
+        "maxAnger": 100,
+        "companionStatsApplied": false,
+        "baseDamage": {
+          "normal_attack": 10,
+          "element_attack": 12,
+          "dodge": 0,
+          "ultimate": 20
+        },
+        "ultimateAnger": 50,
+        "ultimateCost": 50,
+        "ultimateHeal": 20,
+        "dodgeMaxCost": 20,
+        "advantage": {
+          "metal": "wood",
+          "wood": "earth",
+          "earth": "water",
+          "water": "fire",
+          "fire": "metal"
+        },
+        "elementEffects": {
+          "metal": {
+            "label": "易伤",
+            "description": "每层受伤×1.5，最多5层"
+          },
+          "wood": {
+            "label": "寄生",
+            "description": "每层回合末吸取2生命，最多5层"
+          },
+          "earth": {
+            "label": "迟钝",
+            "description": "每层伤害×0.5，最多5层"
+          },
+          "water": {
+            "label": "降怒",
+            "description": "命中后对方怒气向下取半，不增加受击怒气"
+          },
+          "fire": {
+            "label": "燃烧",
+            "description": "回合末按当前生命8%×层数伤害，最多5层"
+          }
+        }
+      }
+    },
+    {
+      "id": "legacy-numbers-and-outcome-preserved",
+      "passed": true,
+      "detail": {
+        "status": "abandoned",
+        "round": 3,
+        "before": {
+          "round": 3,
+          "player": {
+            "id": "player",
+            "element": "metal",
+            "hp": 98,
+            "maxHp": 120,
+            "anger": 7,
+            "freeDodgeUsed": true,
+            "statuses": [
+              {
+                "type": "burn",
+                "duration": 2,
+                "stacks": 1,
+                "stackable": true,
+                "sourceId": "enemy"
+              }
+            ]
+          },
+          "enemy": {
+            "id": "enemy",
+            "element": "fire",
+            "hp": 110,
+            "maxHp": 120,
+            "anger": 35,
+            "freeDodgeUsed": true,
+            "statuses": [
+              {
+                "type": "vulnerability",
+                "duration": 2,
+                "stacks": 1,
+                "stackable": true,
+                "sourceId": "player"
+              }
+            ]
+          }
+        },
+        "after": {
+          "round": 3,
+          "player": {
+            "id": "player",
+            "element": "metal",
+            "hp": 98,
+            "maxHp": 120,
+            "anger": 7,
+            "freeDodgeUsed": true,
+            "statuses": [
+              {
+                "type": "burn",
+                "duration": 2,
+                "stacks": 1,
+                "stackable": true,
+                "sourceId": "enemy"
+              }
+            ]
+          },
+          "enemy": {
+            "id": "enemy",
+            "element": "fire",
+            "hp": 110,
+            "maxHp": 120,
+            "anger": 35,
+            "freeDodgeUsed": true,
+            "statuses": [
+              {
+                "type": "vulnerability",
+                "duration": 2,
+                "stacks": 1,
+                "stackable": true,
+                "sourceId": "player"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "legacy-visible-affinity-correct",
+      "passed": true,
+      "detail": {
+        "affinity": "受制 ×0.8"
+      }
+    },
+    {
+      "id": "legacy-report-display-metadata",
+      "passed": true,
+      "detail": {
+        "rules": {
+          "id": "five-elements-standard-v1",
+          "label": "标准五行对战",
+          "vitalPolicy": "normalized",
+          "maxHp": 120,
+          "maxAnger": 100,
+          "companionStatsApplied": false,
+          "baseDamage": {
+            "normal_attack": 10,
+            "element_attack": 12,
+            "dodge": 0,
+            "ultimate": 20
+          },
+          "ultimateAnger": 50,
+          "ultimateCost": 50,
+          "ultimateHeal": 20,
+          "dodgeMaxCost": 20,
+          "advantage": {
+            "metal": "wood",
+            "wood": "earth",
+            "earth": "water",
+            "water": "fire",
+            "fire": "metal"
+          },
+          "elementEffects": {
+            "metal": {
+              "label": "易伤",
+              "description": "每层受伤×1.5，最多5层"
+            },
+            "wood": {
+              "label": "寄生",
+              "description": "每层回合末吸取2生命，最多5层"
+            },
+            "earth": {
+              "label": "迟钝",
+              "description": "每层伤害×0.5，最多5层"
+            },
+            "water": {
+              "label": "降怒",
+              "description": "命中后对方怒气向下取半，不增加受击怒气"
+            },
+            "fire": {
+              "label": "燃烧",
+              "description": "回合末按当前生命8%×层数伤害，最多5层"
+            }
+          }
+        },
+        "rounds": 8
+      }
+    },
+    {
+      "id": "read-projection-does-not-rewrite-history",
+      "passed": true,
+      "detail": {
+        "sessionCount": 7,
+        "reportCount": 6
+      }
+    },
+    {
+      "id": "no-renderer-errors",
+      "passed": true,
+      "detail": []
+    }
+  ],
+  "errors": [],
+  "passed": true,
+  "completedAt": "2026-10-24T16:09:36.024Z"
+}

@@ -1,0 +1,175 @@
+{
+  "at": "2026-10-24T16:10:07.658Z",
+  "source": "c4ac69369d01786549dc55ac0bc76c98c930445d",
+  "build": {
+    "schemaVersion": 1,
+    "builtAt": "2026-10-24T16:05:32.523Z",
+    "sourceCommit": "c4ac69369d01786549dc55ac0bc76c98c930445d",
+    "sourceDirtyFiles": [],
+    "codeFingerprint": "0e78fde20d39557ef89bff8914470d6e8c08166b8b340b63b430e85aa936a380",
+    "compiledFingerprint": "2d1b1bdfa86cf6defd54bf676a44ed1473fc2b0f86c199dbd8abd4ee4412d791",
+    "codeFiles": 216,
+    "compiledFiles": 25
+  },
+  "package": {
+    "path": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\artifacts\\pc-beta-unified\\Lingjing-0.1.8-portable-x64.exe",
+    "sha256": "605c5ee6f943b1be235bb5a839b11572dd4e227c3cc25adbcf320cbee6b000b9",
+    "bytes": 146009889,
+    "passed": true,
+    "files": 161,
+    "characters": 8,
+    "licenses": 9
+  },
+  "portable": {
+    "passed": true,
+    "normalProfile": true,
+    "scenario": null,
+    "preservedPets": 6,
+    "errors": []
+  },
+  "contexts": {
+    "wild": {
+      "source": "fd0f81a84b1aedbcadab69dd5bbb0badff05c3c6",
+      "flowPassed": true,
+      "fullRosterSkipped": true,
+      "note": "--flow-only intentionally skips the prior accepted full gallery; aggregate passed=false is retained in the unmodified evidence."
+    },
+    "territory": {
+      "source": "fd0f81a84b1aedbcadab69dd5bbb0badff05c3c6",
+      "passed": true,
+      "scenarios": {
+        "win": {
+          "preset": {
+            "preset": "charged",
+            "enemyAction": "dodge"
+          },
+          "rounds": 5,
+          "winner": "player",
+          "reward": {
+            "actionId": "battle:battle-b1ee641f-5004-495b-87dc-37223ecae4df:qa:dfca3ded-e050-4c74-9193-60478c55ccbb:local-5bc68bcf-17f4-4f02-aabb-db045ebb4bd2",
+            "petId": "pet-611ca2da-70a9-4781-a89b-97872b125c86",
+            "experience": 20,
+            "applied": true,
+            "previousExperience": 0,
+            "previousLevel": 1,
+            "currentExperience": 20,
+            "currentLevel": 1,
+            "seeds": {
+              "source": "battle",
+              "receiptId": "battle-b1ee641f-5004-495b-87dc-37223ecae4df",
+              "itemId": "seed:carrot",
+              "quantity": 2
+            }
+          },
+          "restartRecovered": true,
+          "completed": true
+        },
+        "loss": {
+          "preset": {
+            "preset": "defending",
+            "enemyAction": "element_attack"
+          },
+          "rounds": 2,
+          "winner": "enemy",
+          "reward": {
+            "actionId": "battle:battle-354aa139-a005-4dd5-96fd-8c046e24b4ba:qa:37c878e7-2790-4ead-89a0-ef596b024537:local-319a5867-d2fc-473c-981b-a00f90479ee3",
+            "petId": "pet-6f284114-8f72-4180-9d18-2f2556989632",
+            "experience": 5,
+            "applied": true,
+            "previousExperience": 0,
+            "previousLevel": 1,
+            "currentExperience": 5,
+            "currentLevel": 1,
+            "seeds": {
+              "source": "battle",
+              "receiptId": "battle-354aa139-a005-4dd5-96fd-8c046e24b4ba",
+              "itemId": "seed:tomato",
+              "quantity": 2
+            }
+          },
+          "restartRecovered": true,
+          "completed": true
+        }
+      }
+    }
+  },
+  "upstream": "4786f97680679c2db0aa307fa5f67ec247f93086",
+  "cloud": "Deferred by current scope. QA adapters, controlled enemy and legal prestate are explicitly simulated; no live cloud or physical location receipt claimed.",
+  "remaining": [],
+  "mainIndependent": [
+    {
+      "name": "final-rules-v3",
+      "source": "1b1b699c68ccef46e349384fbba280f484002b37",
+      "passed": true,
+      "matrix": 25,
+      "matrixDamageCases": 75,
+      "properties": 9,
+      "evidence": "docs/implementation/evidence/foundation/final-unified/main-independent/final-rules-v3.json",
+      "sha256": "f7cabd0b71c064bb79caab82fb32e1206f77a311d977dc7be897c326995b5921"
+    },
+    {
+      "name": "final-battle-v3",
+      "source": "7cdcfdc9d022bb646c20bb2e96f90f03b6f5a3a1",
+      "passed": true,
+      "checks": 65,
+      "evidence": "docs/implementation/evidence/foundation/final-unified/main-independent/final-battle-v3.json",
+      "sha256": "ce34cdfec8076fb51014147449423568b12e290d28c46b513c277486c9bfeff9"
+    },
+    {
+      "name": "final-friend-v3",
+      "source": "7cdcfdc9d022bb646c20bb2e96f90f03b6f5a3a1",
+      "passed": true,
+      "checks": 20,
+      "evidence": "docs/implementation/evidence/foundation/final-unified/main-independent/final-friend-v3.json",
+      "sha256": "f63f967214926decb073ff227ec05059082da12808beb4fa7ad18fa1831856c1"
+    },
+    {
+      "name": "final-context-v3",
+      "source": "07db4d9c6d8ebbcfa081ff2f5e62a15dd065145a",
+      "passed": true,
+      "checks": 11,
+      "evidence": "docs/implementation/evidence/foundation/final-unified/main-independent/final-context-v3.json",
+      "sha256": "b24c96eb3556fef7c1ea9c1c7923c6ee26b5f87bda1d13647fa97e85f2f086a9"
+    },
+    {
+      "name": "final-rhythm-v3",
+      "source": "07db4d9c6d8ebbcfa081ff2f5e62a15dd065145a",
+      "passed": true,
+      "checks": 12,
+      "evidence": "docs/implementation/evidence/foundation/final-unified/main-independent/final-rhythm-v3.json",
+      "sha256": "a9cebfaab4ca3b7cdfb6a301acf01fec12df62baf767fa4d97770732e4b5991a"
+    },
+    {
+      "name": "final-legacy-rules-v3",
+      "source": "774afd71ec778d90b7d7d8e6a07873e38320819f",
+      "passed": true,
+      "checks": 6,
+      "evidence": "docs/implementation/evidence/foundation/final-unified/main-independent/final-legacy-rules-v3.json",
+      "sha256": "21df10034dac3cb12bfaf76c91b5f1a1c33060832a1bc6ac57901f9122193712"
+    }
+  ],
+  "goalComplete": true,
+  "lastCodeDelta": {
+    "from": "fd0f81a84b1aedbcadab69dd5bbb0badff05c3c6",
+    "to": "c4ac69369d01786549dc55ac0bc76c98c930445d",
+    "changes": [
+      "Same-ruleId read projection adds missing battle display metadata; unknown historical rule IDs and all stored gameplay values retained.",
+      "Unknown friend peer stays neutral in waiting, abandoned and reports."
+    ],
+    "targetedChecks": {
+      "legacyAndBackup": 2,
+      "unknownPeerRealElectron": 3,
+      "uiTypesPassed": true,
+      "changedUiLintPassed": true
+    },
+    "scope": "No battle engine, rewards, domain settlement, ownership or persistence changes after accepted shared-context build."
+  },
+  "evidence": {
+    "packageAudit": "docs/implementation/evidence/foundation/final-unified/package-audit.json",
+    "portable": "docs/implementation/evidence/foundation/final-unified/portable/evidence.json",
+    "waitingPeer": "docs/implementation/evidence/foundation/final-unified/waitingPeer/evidence.json",
+    "wild": "docs/implementation/evidence/foundation/final-unified/wild/evidence.json",
+    "territory": "docs/implementation/evidence/foundation/final-unified/territory/evidence.json",
+    "build": "docs/implementation/evidence/foundation/final-unified/build-manifest.json"
+  }
+}
