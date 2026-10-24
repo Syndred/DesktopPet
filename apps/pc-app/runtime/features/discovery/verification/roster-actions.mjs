@@ -12,6 +12,7 @@ const env = { ...process.env, PET_USER_DATA_DIR: join(output, 'profile'), LINGJI
 delete env.ELECTRON_RUN_AS_NODE; delete env.LINGJING_DISCOVERY_CLOUD;
 const host = resolve('apps/pc-app/runtime/features/discovery/verification/host.cjs');
 const arenaOnly = process.argv.includes('--arena-only');
+const portraitsOnly = process.argv.includes('--portraits-only');
 let app = await electron.launch({ args: [host], env }), page;
 const evidence = { at: new Date().toISOString(), controlledPosition: true, physicalLocationAcceptance: false, previews: [], animationSamples: [], rendererErrors: [] };
 const invoke = (feature, command, payload = {}) => page.evaluate(({ feature, command, payload }) => window.lingjing.invoke(feature, command, payload), { feature, command, payload });
@@ -73,6 +74,8 @@ async function preview(template) {
   assert.equal(await stage.getAttribute('data-fallback'), 'false');
   const thumbnail = page.locator('.discovery-profile-top svg.discovery-atlas-thumbnail');
   await thumbnail.waitFor(); assert.ok(await thumbnail.getAttribute('viewBox'));
+  assert.equal(await thumbnail.getAttribute('data-framing'), 'portrait');
+  assert.equal(await thumbnail.getAttribute('data-resource-id'), template.resource.resourceId);
   await settled(); await page.screenshot({ path: join(output, `preview-${template.templateId}.png`) });
   console.log(`Verified preview ${template.name} / ${spawn.resourceId}`);
   return { spawnId: target.id, templateId: template.templateId, name: template.name, resourceId: spawn.resourceId, pixiReady: true, realAtlasThumbnail: true };
@@ -98,6 +101,7 @@ try {
   // driven by its canonical template rather than a water/fish default.
   templates.sort((a, b) => (a.templateId === 'animal-hat-cat' ? 1 : 0) - (b.templateId === 'animal-hat-cat' ? 1 : 0));
   for (const template of (arenaOnly ? [templates.at(-1)] : templates)) evidence.previews.push(await preview(template));
+  if (!portraitsOnly) {
   const target = evidence.previews.at(-1), before = await snapshot();
   await page.getByRole('button', { name: '开始挑战', exact: true }).click();
   await page.locator('.discovery-arena').waitFor();
@@ -190,9 +194,11 @@ try {
   assert.equal(restored.captures[0].petId, capture.petId); assert.equal(restored.captures[0].resourceId, target.resourceId); assert.equal(restored.location.fix, null);
   evidence.restart = { samePetId: true, canonicalResourceRetained: true, currentLocationNotPersisted: true };
   }
+  }
+  evidence.portraitsOnly = portraitsOnly;
   assert.deepEqual(evidence.rendererErrors, []); evidence.passed = true;
   writeFileSync(join(output, 'evidence.json'), JSON.stringify(evidence, null, 2));
-  writeFileSync(resolve(`artifacts/discovery/latest-${arenaOnly ? 'arena' : 'roster-actions'}-evidence.json`), JSON.stringify({ ...evidence, output }, null, 2));
+  writeFileSync(resolve(`artifacts/discovery/latest-${portraitsOnly ? 'portraits' : arenaOnly ? 'arena' : 'roster-actions'}-evidence.json`), JSON.stringify({ ...evidence, output }, null, 2));
   console.log(JSON.stringify({ passed: true, output, previews: evidence.previews.length, capture: evidence.capture, rendererErrors: evidence.rendererErrors }, null, 2));
 } catch (error) {
   if (page && !page.isClosed()) evidence.poses = await page.evaluate(() => window.__discoveryPoseEvidence || []).catch(() => []);
