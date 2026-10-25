@@ -1,0 +1,28 @@
+{
+  "recordedAt": "2026-10-25T05:56:06.540Z",
+  "source": "f36d344971423286c8040eb1f341ed692ec7cad8",
+  "scope": "Sanitized focused real HTTPS evidence; no vault/JWT/password copied",
+  "digestPolicy": "PNG exact bytes; JSON UTF-8 with CRLF normalized to LF",
+  "files": [
+    {
+      "file": "evidence.json",
+      "sha256": "86e81a6c7bb5d9935bbff4ab028eab6930c260ef74a889a070c27a48bb37c0c3"
+    },
+    {
+      "file": "sqlite-readback.json",
+      "sha256": "8fe1aeef9da22dc110871e4878ef1c29613f62fc42ae4117669e1f89943ff916"
+    },
+    {
+      "file": "device-b-account.png",
+      "sha256": "38ceb6c4c38af45c3d3dd9f33753884dd81cfd472c967b209032344d88977678"
+    },
+    {
+      "file": "build-manifest.json",
+      "sha256": "3dbeaa5acd38f7b6785a1b9a7ce9b22f0b4e7cf1437d6217aac2f5bd83e5500b"
+    },
+    {
+      "file": "targeted-checks.json",
+      "sha256": "f336ec36855b7a06a543eb1f682b2d68531e852ea7f5c4e18825db28c729fbca"
+    }
+  ]
+}
