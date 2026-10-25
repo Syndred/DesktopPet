@@ -3,6 +3,7 @@ const { CompanionsService, toLegacyPet } = require('./service.cjs');
 const { createCompanionOwnerMigration } = require('./identity.cjs');
 const { createCompanionPlayback } = require('./playback.cjs');
 const { companionCombatProfile } = require('./combat-profile.cjs');
+const { createCompanionBackupAdapter } = require('./backup.cjs');
 
 module.exports = {
   id: 'companions', migrations,
@@ -45,6 +46,8 @@ module.exports = {
     }
     const api = {
       db: services.db,
+      // Accounts owns registration/legacy-envelope normalization and transport.
+      backupAdapter: createCompanionBackupAdapter(services.db),
       migrateOwnerAlias: ownerMigration.migrate,
       listPets(ownerAccountId) { ensureImported(ownerAccountId); return service.snapshot(ownerAccountId).data.pets.filter(pet => pet.resource.kind === '2d'); },
       getPet(ownerAccountId, petId) {
@@ -83,6 +86,9 @@ module.exports = {
       getDesktopWindows: () => desktop?.inspect() || []
     };
     services.provide('companions', api);
+    disposers.push(services.events.on('accounts:save-restored', event => {
+      if (event?.ownerAccountId === services.session.getOwnerAccountId()) changed(event.ownerAccountId);
+    }));
     // Electron is required lazily, so domain/migration checks also run under Node.
     if (process.versions.electron && process.type === 'browser') {
       const { createDesktopWindowManager } = require('./windows.cjs');

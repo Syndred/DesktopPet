@@ -1,0 +1,61 @@
+{
+  "module": "companions",
+  "scope": "Cloud-upgrade 2026-10-25: preserve companion consistency units through Accounts identity/save sync and Garden transactions",
+  "branch": "codex/lingjing-companions",
+  "commit": "46abf416e0500b53ef32fc29b441d923ef5a6a80",
+  "goalStatus": "active",
+  "contracts": {
+    "baseline": "docs/implementation/cloud-upgrade-2026-10-25.md",
+    "sharedSave": "Consume services.get('backups') and Accounts sync; no second account, inventory, reward or transport",
+    "companionUnit": "docs/implementation/cloud-companions-contract.md",
+    "accountsIntegrationNeed": "Current BackupManager rejects old generic tables when a new adapter claims them. Need a verified-envelope legacy-table conversion hook before claiming companion tables, so existing version-1 archives remain restorable. Companion adapter will provide fromLegacyTables(tables,owner) for the complete existing table set.",
+    "gardenIntegrationNeed": "Current garden/cloud-domain.mjs reads envelope.data.tables.companion_pets/accounts; new companion module data.tables must be supported in the same save/locked inventory transaction, preserving old generic format reads.",
+    "identityIntegrationNeed": "Await Accounts verified Auth UID -> stable legacy text-owner/alias contract. No renderer-supplied UUID/owner migration will be trusted.",
+    "mainOnlyAdapter": "services.get('companions').backupAdapter; registration pending Accounts verified legacy-envelope normalization"
+  },
+  "migrations": [],
+  "checks": {
+    "sourceFetched": true,
+    "publicBaselineMerged": true,
+    "companionUnit": "4 local real-SQLite cases passed: two client files/reopen, original IDs and receipts, merge conflict/rollback, full old-table conversion, raw archived animal history"
+  },
+  "realCloudEvidence": {
+    "project": "jbvrdmrkwpznbrvteive",
+    "projectName": "Text Comparision",
+    "projectStatus": "ACTIVE_HEALTHY",
+    "inspection": "Read-only schema inspection returned no runtime/account_save/companion/lingjing tables at start",
+    "applicationChainVerified": false,
+    "remoteMutations": false
+  },
+  "preservation": [
+    "original petId/name/growth/serial/origin/history",
+    "same-template independent instances",
+    "desktop visibility/position/behavior/scale per pet",
+    "chat/battle/guard independent selection",
+    "idempotent action and capture receipts",
+    "legacy raw archives and identity migration history",
+    "2D runtime and existing 1-4 display range",
+    "Alias migration now archives target-before rows as well as original source",
+    "Opening/clamping a restored desktop on another monitor no longer marks the saved position dirty"
+  ],
+  "cleanupCandidates": [
+    {
+      "path": "runtime/features/companions/index.cjs anonymous-fallback legacy import",
+      "consumer": "fallback only when Accounts adapter unavailable",
+      "decision": "candidate after verified Accounts importer is the sole startup path; retain current data-preservation adapter until integrated"
+    },
+    {
+      "path": "runtime/features/companions/service.cjs toLegacyPet",
+      "consumer": "exported main API and historical tests; full consumer audit ongoing",
+      "decision": "candidate only after active consumers are proven absent or migrated; no deletion yet"
+    }
+  ],
+  "remaining": [
+    "publish and integrate Accounts identity/save contract",
+    "atomic companion restore and old-envelope conversion",
+    "Garden same-save inventory integration",
+    "two-client/alias/restart/conflict tests",
+    "real HTTPS old-save restoration and independent client readback after coordinated deployment",
+    "consumer audit and final source fetch"
+  ]
+}

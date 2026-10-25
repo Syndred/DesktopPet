@@ -46,7 +46,9 @@ function createDesktopWindowManager({ services, service, ensureImported, changed
     const bounds = boundsFor(pet, screen);
     const window = services.windows.create(pet.petId, { x: bounds.x, y: bounds.y, width: bounds.width, height: bounds.height });
     const entry = { window, pet, owner: pet.ownerAccountId, drag: null, tick: 0,
-      positionDirty: bounds.x !== pet.desktop.position.x || bounds.y !== pet.desktop.position.y || bounds.displayId !== pet.desktop.position.displayId };
+      // A second device may clamp a restored position to its own monitors.
+      // Persist only actual drag/movement, never overwrite the original on open.
+      positionDirty: false };
     entries.set(pet.petId, entry);
     window.setIgnoreMouseEvents(true, { forward: true });
     window.on('closed', () => { if (entries.get(pet.petId) === entry) entries.delete(pet.petId); notifyWindows(); });
