@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-25T10:12:26.384Z",
+  "sourceCommit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+  "scope": "Local integration checks only; actual user acceptance still pending",
+  "actualUserAcceptancePassed": false,
+  "checks": [
+    {
+      "name": "verify",
+      "exitCode": 0,
+      "unitFiles": 10,
+      "unitTests": 46,
+      "lint": true,
+      "desktopTypes": true,
+      "uiTypes": true
+    },
+    {
+      "name": "native-cjs",
+      "exitCode": 0,
+      "passed": 353,
+      "failed": 0
+    },
+    {
+      "name": "cloud-source",
+      "exitCode": 0,
+      "strictMigrations": 22,
+      "nodeFiles": 22,
+      "nodeTests": 66,
+      "denoValidators": 5,
+      "generatedSourcesVerified": true
+    },
+    {
+      "name": "discovery-identity-mjs",
+      "exitCode": 0,
+      "passed": 2
+    }
+  ],
+  "outputNotes": "Initial verify/native/cloud output was limited by the first tool budget; saved logs contain the available initial output and complete subsequent buffered output. Exit status and final summaries are preserved; expected rejection diagnostics in release negative tests are not failures.",
+  "privateLogs": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/integration-gates-312e5fe"
+}

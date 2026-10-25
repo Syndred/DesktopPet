@@ -1,8 +1,7 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-25T09:23:06.780Z",
-  "phase": "full-user-acceptance-reopened",
-  "goalStatus": "complete",
+  "updatedAt": "2026-10-25T10:15:02.280Z",
+  "phase": "full-user-acceptance-new-candidate-building",
   "deployed": {
     "projectRef": "jbvrdmrkwpznbrvteive",
     "migrations": 22,
@@ -152,7 +151,7 @@
     "fullLocalSupabasePostgisReset": false,
     "dockerOrPodmanAvailable": false
   },
-  "releaseStatus": "Prior portable retained as user-reported defect baseline; fresh complete user acceptance and corrected candidate required",
+  "releaseStatus": "Frozen corrected source passed local technical gates; candidate building; full user acceptance pending",
   "priorFailedEvidenceRetained": true,
   "module": "coordinator",
   "clientDate": "2026-10-25",
@@ -255,13 +254,16 @@
       "review": "Legacy normalization is internal view only; original envelope/checksum/files retained. Root8 targeted native restore/provider cases and original signed expired HTTPS denial passed."
     }
   ],
-  "status": "full-user-acceptance-reopened",
+  "status": "full-user-acceptance-new-candidate-building",
   "remaining": [
-    "QA-001 Login checkbox/text/lock icon alignment",
-    "QA-002 Replace fish/animal categories with five-element icon filters",
-    "QA-003 Fixed canonical names with stable unique per-instance identifiers",
-    "QA-004 Desktop pet grows during repeated native dragging",
-    "Complete actual user scenario matrix and resolve/retest every discovered release blocker on the same final portable"
+    "QA-001 登录页保持登录复选框文字与锁图标未对齐; source fixed, actual corrected-portable retest pending",
+    "QA-002 领养分类仍为大肥鱼/动物伙伴，需改为属性图标; source fixed, actual corrected-portable retest pending",
+    "QA-003 角色必须固定标准名与每实例唯一稳定编号; source fixed, actual corrected-portable retest pending",
+    "QA-004 桌面宠物连续拖动逐渐变大; source fixed, actual corrected-portable retest pending",
+    "QA-005 主窗口最小尺寸固定960×700可能超过高缩放小屏工作区; source fixed, actual corrected-portable retest pending",
+    "QA-006 同一档案重复启动会生成第二主进程与登录窗口; source fixed, actual corrected-portable retest pending",
+    "QA-007 便携版开机启动默认路径指向SFX临时解压exe; source fixed, actual corrected-portable retest pending",
+    "Complete all actual user scenarios on one final corrected portable; preserve pass/fail/blocked distinctions"
   ],
   "engineering": {
     "historicalEngineeringCheckpoints": {
@@ -330,10 +332,13 @@
     "evidence": "docs/implementation/evidence/cloud/2026-10-25/final-regression.json"
   },
   "productFreeze": {
-    "commit": "a9acd7f6f1920c541d429fa26d1f054b1427cd95",
+    "commit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
     "sourceHeld": true,
-    "actualPortableBusinessAccepted": true,
-    "productionCodeChangedAfterFreeze": false
+    "actualPortableBusinessAccepted": false,
+    "fullUserAcceptancePassed": false,
+    "productionCodeChangedAfterFreeze": false,
+    "reason": "User-reported defects and full actual-user acceptance reopening",
+    "frozenAt": "2026-10-25T10:15:02.280Z"
   },
   "finalPortableFirstAttempt": {
     "passed": false,
@@ -480,7 +485,8 @@
     "originalOfflineReceipt": 102,
     "allPending": 0,
     "physicalMachines": 1,
-    "fullUserAcceptancePassed": false
+    "fullUserAcceptancePassed": false,
+    "scope": "Historical final-a9acd7f selected technical paths only; not current full user acceptance"
   },
   "fastMode": {
     "globalDefault": true,
@@ -506,7 +512,7 @@
     "page": "Cloud account login"
   },
   "userAcceptance": {
-    "status": "in-progress",
+    "status": "candidate-building",
     "startedAt": "2026-10-25T09:23:06.780Z",
     "threadId": "01a1725c-d59c-7620-9bb6-1c0d4e0fb3a3",
     "threadTitle": "灵境 09｜完整用户功能验收与缺陷闭环",
@@ -517,6 +523,31 @@
     "tsMigrationPaused": true,
     "legacyServerExcluded": true,
     "previousCloudChecksRemainHistorical": true,
-    "fullUserAcceptancePassed": false
+    "fullUserAcceptancePassed": false,
+    "matrixCases": 94,
+    "candidate": {
+      "status": "building",
+      "sourceCommit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+      "buildOwner": "01",
+      "actualUserAcceptancePassed": false,
+      "technicalGates": "docs/implementation/qa/2026-10-25-user-acceptance/integration-gates-312e5fe.json"
+    },
+    "knownIssues": [
+      "QA-001",
+      "QA-002",
+      "QA-003",
+      "QA-004",
+      "QA-005",
+      "QA-006",
+      "QA-007"
+    ]
+  },
+  "previousCloudGoalStatus": "complete",
+  "workflowStatus": "in-progress",
+  "historicalProductFreeze": {
+    "commit": "a9acd7f6f1920c541d429fa26d1f054b1427cd95",
+    "sourceHeld": true,
+    "actualPortableBusinessAccepted": true,
+    "productionCodeChangedAfterFreeze": false
   }
 }
