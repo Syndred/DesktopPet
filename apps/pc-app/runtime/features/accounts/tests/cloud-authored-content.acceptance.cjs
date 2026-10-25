@@ -1,6 +1,6 @@
 const assert=require('node:assert/strict');const {randomUUID,randomBytes,createHash}=require('node:crypto');const {mkdirSync,writeFileSync}=require('node:fs');const {resolve,join}=require('node:path');const {execFileSync}=require('node:child_process');const {DatabaseSync}=require('node:sqlite');
 const {SupabaseRemote}=require('../supabase-remote.cjs'),{cloudProjection}=require('../cloud-projection.cjs'),{checksum}=require('../util.cjs'),{defaultSettings}=require('../settings.cjs');
-const {createConversationBackupAdapter}=require('../../../core/conversation-backup.cjs');const {migrations}=require('../../conversations/schema.cjs');
+const {createConversationBackupAdapter}=require('../../conversations/backup.cjs');const {migrations}=require('../../conversations/schema.cjs');
 const output=resolve(`artifacts/accounts/cloud-authored-content-${Date.now()}`);mkdirSync(output,{recursive:true});const remote=new SupabaseRemote({userData:join(output,'profile')}),db=new DatabaseSync(':memory:');migrations.forEach(m=>db.exec(m.sql));
 const text='{"password":"EXAMPLE_PLACEHOLDER","enabled":true}';const evidence={at:new Date().toISOString(),sourceSha:execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8',windowsHide:true}).trim(),kind:'Actual HTTPS controlled cloud adoption, production conversation backup schema, personal CAS and independent Data API content/checksum readback; synthetic example text only'};
 (async()=>{
@@ -19,7 +19,7 @@ const text='{"password":"EXAMPLE_PLACEHOLDER","enabled":true}';const evidence={a
  const context=await remote.cloudContext(session),read=await context.client.from('lingjing_saves').select('revision,checksum,envelope').single();assert.equal(read.error,null);assert.equal(read.data.checksum,source.checksum);assert.equal(receipt.checksum,source.checksum);
  const tables=read.data.envelope.data.modules.conversations.data.tables;
  assert.equal(tables.conversation_messages.find(row=>row.id===message).content,text);assert.equal(tables.conversation_memories[0].content,text);assert.equal(tables.conversation_profiles[0].persona,text);assert.equal(tables.conversation_profiles[0].reply_style,text);
- evidence.passed=true;evidence.owner=user.id;evidence.petId=petId;evidence.messageId=message;evidence.messageSha256=createHash('sha256').update(text).digest('hex');evidence.schemaSource='production core/conversation-backup.cjs';
+ evidence.passed=true;evidence.owner=user.id;evidence.petId=petId;evidence.messageId=message;evidence.messageSha256=createHash('sha256').update(text).digest('hex');evidence.schemaSource='production features/conversations/backup.cjs';
  evidence.sameSourceAndCloudChecksum=true;evidence.unchangedFields=['message content','memory content','persona','reply_style'];evidence.revision=read.data.revision;evidence.checksum=read.data.checksum;
  writeFileSync(join(output,'evidence.json'),JSON.stringify(evidence,null,2));console.log('CLOUD_AUTHORED_CONTENT_PASSED',output);
 })().catch(error=>{evidence.error={code:error.code,message:error.message};writeFileSync(join(output,'failure.json'),JSON.stringify(evidence,null,2));console.error(error.code||'',error.message);process.exitCode=1;}).finally(()=>{remote.dispose();db.close();});
