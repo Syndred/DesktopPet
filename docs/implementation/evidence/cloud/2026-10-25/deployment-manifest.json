@@ -1,0 +1,144 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-25T02:47:39.057Z",
+  "projectRef": "jbvrdmrkwpznbrvteive",
+  "url": "https://jbvrdmrkwpznbrvteive.supabase.co",
+  "plan": "free",
+  "migrations": [
+    {
+      "version": "20261025015911",
+      "name": "preserve_comparisontext_before_lingjing",
+      "source": "infra/supabase/migrations/20261025015844_preserve_comparisontext_before_lingjing.sql",
+      "bookkeepingAligned": false
+    },
+    {
+      "version": "20261025021620",
+      "name": "lingjing_identity_actor_contract",
+      "source": "infra/supabase/migrations/20261025020314_lingjing_identity_actor_contract.sql",
+      "bookkeepingAligned": false
+    },
+    {
+      "version": "20261025022918",
+      "name": "lingjing_auth_bridge",
+      "source": "infra/supabase/migrations/20261025021755_lingjing_auth_bridge.sql",
+      "bookkeepingAligned": false
+    },
+    {
+      "version": "20261025023614",
+      "name": "lingjing_private_resource_storage",
+      "source": "infra/supabase/migrations/20261025020942_lingjing_private_resource_storage.sql",
+      "bookkeepingAligned": false
+    },
+    {
+      "version": "20261025024615",
+      "name": "lingjing_protected_save_cas",
+      "source": "infra/supabase/migrations/20261025021759_lingjing_protected_save_cas.sql",
+      "bookkeepingAligned": false
+    }
+  ],
+  "functions": [
+    {
+      "id": "69ecdbd1-ee0f-45e8-9cc7-d69fb224d1c3",
+      "slug": "lingjing-auth",
+      "name": "lingjing-auth",
+      "status": "ACTIVE",
+      "version": 2,
+      "created_at": 1792895361305,
+      "updated_at": 1792895861420,
+      "verify_jwt": false,
+      "import_map": false,
+      "entrypoint_path": "file:///tmp/user_fn_jbvrdmrkwpznbrvteive_69ecdbd1-ee0f-45e8-9cc7-d69fb224d1c3_2/source/infra/supabase/functions/lingjing-auth/index.ts",
+      "ezbr_sha256": "80434bb2511e8403255afad38eb189bae3efdfc1d4b172fc2ecdba0b489f8fe1",
+      "source": {
+        "function": "lingjing-auth",
+        "entrypoint": "infra/supabase/functions/lingjing-auth/index.ts",
+        "sourceCommit": "df9f00a847adecfd3fb6e591a7a951a362b7e83e",
+        "sourceSha256": "4610880718ca892affd4ab1b86fb3c0bebe91fc1b4ed553bc863b72191ae4fd9",
+        "files": [
+          {
+            "name": "infra/supabase/functions/_shared/lingjing-auth.ts",
+            "bytes": 7618
+          },
+          {
+            "name": "infra/supabase/functions/_shared/lingjing-json.ts",
+            "bytes": 967
+          },
+          {
+            "name": "infra/supabase/functions/lingjing-auth/index.ts",
+            "bytes": 8119
+          }
+        ],
+        "external": [
+          "npm:@supabase/supabase-js@2.98.0"
+        ],
+        "warnings": []
+      }
+    },
+    {
+      "id": "1c6202a1-213d-4531-bf2a-1e853de7c000",
+      "slug": "lingjing-save",
+      "name": "lingjing-save",
+      "status": "ACTIVE",
+      "version": 1,
+      "created_at": 1792896380373,
+      "updated_at": 1792896380373,
+      "verify_jwt": false,
+      "import_map": false,
+      "entrypoint_path": "file:///tmp/user_fn_jbvrdmrkwpznbrvteive_1c6202a1-213d-4531-bf2a-1e853de7c000_1/source/infra/supabase/functions/lingjing-save/index.ts",
+      "ezbr_sha256": "308252c2e54b2ccd6a88b39d552ab5ce1a995686cd2ac3277a8ee7557efca95a",
+      "source": {
+        "function": "lingjing-save",
+        "entrypoint": "infra/supabase/functions/lingjing-save/index.ts",
+        "sourceCommit": "347490588ae1adb79f6a5e21b4e686384f09a6dd",
+        "sourceSha256": "3b503c4ae50cd515ed779646c5a48b1300538342c47005173f59f2f0eef2c3b4",
+        "files": [
+          {
+            "name": "infra/supabase/functions/_shared/lingjing-auth.ts",
+            "bytes": 7618
+          },
+          {
+            "name": "infra/supabase/functions/_shared/lingjing-json.ts",
+            "bytes": 967
+          },
+          {
+            "name": "infra/supabase/functions/lingjing-save/index.ts",
+            "bytes": 2975
+          }
+        ],
+        "external": [
+          "npm:@supabase/supabase-js@2.98.0"
+        ],
+        "warnings": []
+      }
+    }
+  ],
+  "storage": {
+    "bucket": "lingjing-resources-v1",
+    "private": true,
+    "maxObjectBytes": 4194304,
+    "ownerPolicy": "Fresh Auth session, active device and AuthUID-bound path",
+    "actualLiveAcceptance": "pending"
+  },
+  "securityAdvisors": [
+    {
+      "name": "rls_enabled_no_policy",
+      "level": "INFO",
+      "count": 23,
+      "remediation": "https://supabase.com/docs/guides/database/database-linter?lint=0008_rls_enabled_no_policy",
+      "disposition": "Intentional deny-all on private archive/server-only tables"
+    },
+    {
+      "name": "auth_leaked_password_protection",
+      "level": "WARN",
+      "count": 1,
+      "remediation": "https://supabase.com/docs/guides/auth/password-security#password-strength-and-leaked-password-protection",
+      "disposition": "Free plan lacks this Pro-only feature; no paid upgrade authorized"
+    }
+  ],
+  "limitations": {
+    "legacySource": "Old self-hosted instance unavailable; user has no SSH or backup. No all-account migration claim.",
+    "topology": "Actual HTTPS clients on one Windows host; full dual-Electron and physical-second-device results separate."
+  },
+  "credentialsIncluded": false,
+  "fullAcceptancePassed": false
+}
