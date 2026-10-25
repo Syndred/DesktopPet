@@ -28,9 +28,19 @@ snapshot明确定义的字段不含 sequence、encrypted_key、API key或token�
 apps/pc-app/runtime/main/index.ts:151 -> 改用 services.get('conversations').createBackupAdapter()；注册仍由公共启动器统一执行一次。
 tests/foundation/conversation-backup.test.cjs -> 改为导入 features/conversations/backup.cjs。
 完成以上两处替换后可删除 core/conversation-backup.cjs 兼容转发器。该转发器当前只有require转发，没有旧领域实现。
-旧 main.cjs / preload.cjs / renderer/renderer.mjs / renderer/index.html 的AI路径正在逐项清理，待交付最终消费者清单。
+旧 main.cjs 的16项AI声明/处理器、preload aiChat方法、renderer的125项AI声明/文案/调用和旧AI设置HTML面板已实际删除。
+恢复快照、逐文件哈希、替代入口与移除项见 evidence/conversations/cloud-2026-10-25/cleanup-manifest.json。
+原 localStorage/旧JSON及用户密钥数据未被删除或上传；正式历史导入改用当前已归属账号的 account_legacy_data 归档。
+旧renderer保留的通用气泡/命中测试由01在整体替换旧renderer时清理，不含模型网络请求或假回复。
 本模块不修改battle UI，不改变04工作树；真实Supabase写入/部署由主协调统一执行。
 
 首轮定向验证
 archive.test.cjs 8项通过；原 runtime.test.cjs 12项通过。均为本机SQLite/协议验收，不算真实云端成功。
 真实HTTPS A/B与现有安全BYOK凭据验证将在08公共契约及主协调部署后执行，结果单独记录。
+
+旧历史正式入口
+AI设置的“导入旧记录”图标 -> legacy.preview / legacy.import，来源仅当前owner的 account_legacy_data。
+支持 messages/chatHistory、按petId分组chats、pets附属messages/memories和profiles；原始消息ID优先保留，无ID时使用来源/归属/位置的稳定摘要。
+无法确认发送者、伙伴或格式的记录不猜测，保留原档并显示未决数；无时间记录显示“旧记录”。
+未归属但发送者明确的记录，必须由用户明确勾选归到当前已拥有伙伴；个人BYOK旧键及token字段不进入导入结果。
+完整保存仍复用08 CAS；本模块没有Supabase迁移或领域函数，也不自行部署。

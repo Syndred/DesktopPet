@@ -6,7 +6,7 @@ const { createElectronSecretCodec } = require("./secrets.cjs");
 const { createConversationBackupAdapter } = require("./backup.cjs");
 
 const commands = ["snapshot", "select", "history", "profile.save", "connection.save", "connection.test", "connection.cancel",
-  "memory.save", "memory.delete", "send", "retry", "cancel", "history.clear"];
+  "memory.save", "memory.delete", "send", "retry", "cancel", "history.clear", "legacy.preview", "legacy.import"];
 
 // The feature never opens a second database or reads renderer-supplied account IDs.
 function createConversationsFeature(services) {

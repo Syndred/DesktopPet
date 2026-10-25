@@ -91,9 +91,7 @@ contextBridge.exposeInMainWorld("petApi", {
   updatePetMood(petId, delta) {
     return ipcRenderer.invoke("pet:update-pet-mood", { petId, delta });
   },
-  aiChat(payload) {
-    return ipcRenderer.invoke("pet:ai-chat", payload ?? {});
-  },
+
   releasePet(petId) {
     return ipcRenderer.invoke("pet:release-pet", { petId });
   },

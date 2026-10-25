@@ -139,23 +139,23 @@ const hoverTrainBtn = document.getElementById("btn-hover-train");
 const hoverInteractBtn = document.getElementById("btn-hover-interact");
 const petChatBubbleElement = document.getElementById("pet-chat-bubble");
 const showPetBtn = document.getElementById("btn-show-pet");
-const aiSettingsTitleElement = document.getElementById("ai-settings-title");
-const aiSettingsTipElement = document.getElementById("ai-settings-tip");
-const aiProviderLabelElement = document.getElementById("ai-provider-label");
-const aiFrequencyLabelElement = document.getElementById("ai-frequency-label");
-const aiApiKeyLabelElement = document.getElementById("ai-api-key-label");
-const aiCustomMinutesLabelElement = document.getElementById("ai-custom-minutes-label");
-const aiBaseUrlLabelElement = document.getElementById("ai-base-url-label");
-const aiModelLabelElement = document.getElementById("ai-model-label");
-const aiProviderSelect = document.getElementById("ai-provider-select");
-const aiFrequencySelect = document.getElementById("ai-frequency-select");
-const aiApiKeyInput = document.getElementById("ai-api-key-input");
-const aiCustomMinutesInput = document.getElementById("ai-custom-minutes-input");
-const aiBaseUrlInput = document.getElementById("ai-base-url-input");
-const aiModelInput = document.getElementById("ai-model-input");
-const aiSettingsStatusElement = document.getElementById("ai-settings-status");
-const aiSettingsTestBtn = document.getElementById("btn-ai-settings-test");
-const aiSettingsSaveBtn = document.getElementById("btn-ai-settings-save");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 const i18n = {
   zh: {
@@ -237,28 +237,28 @@ const i18n = {
     moodPassiveExpLog: "{petName} 心情稳定，在线陪伴奖励 +{exp} 经验（{current}/{required}）。",
     petHiddenLog: "灵宠已隐藏，点击“显示灵宠”可恢复。",
     petShownLog: "灵宠已恢复显示。",
-    aiSettingsTitle: "AI互动设置",
-    aiSettingsTip: "配置厂商、Key 与频率；可用于互动按钮与定时气泡。",
-    aiProviderLabel: "大模型厂商",
-    aiApiKeyLabel: "API Key",
-    aiBaseUrlLabel: "Base URL",
-    aiModelLabel: "模型名",
-    aiFrequencyLabel: "互动频率",
-    aiCustomMinutesLabel: "自定义分钟",
-    aiFrequency30: "每30分钟",
-    aiFrequency60: "每1小时",
-    aiFrequencyCustom: "自定义",
-    aiSettingsTestBtn: "测试连接",
-    aiSettingsSaveBtn: "保存设置",
-    aiSettingsTesting: "正在测试连接...",
-    aiSettingsTestSuccess: "连接成功：AI 服务可用。",
-    aiSettingsTestFail: "连接失败：{message}",
-    aiSettingsStatusNoKey: "未配置 AI Key 时将使用本地文案兜底。",
-    aiSettingsStatusSaved: "AI 设置已保存。",
-    aiBubbleFallbackIdle: "{petName} 想和你说说话：主人，忙完记得休息一下。",
-    aiBubbleFallbackFocus: "{petName} 提醒：主人你好像很忙，再忙也别忘了喝水。",
-    aiBubbleFallbackSlack: "{petName} 嘀咕：主人你是不是在偷偷摸鱼呀？",
-    aiRequestFailedLog: "AI互动请求失败，已使用本地文案：{message}",
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     actionSent: "已提交本回合动作。",
     battleLevelUpLog: "{petName} 升级到 Lv.{level}，属性已提升。",
     battleExpGainLog: "{petName} 获得经验：{exp}/{required}。",
@@ -589,28 +589,28 @@ const i18n = {
       "{petName} is in a good mood. Online companion bonus +{exp} EXP ({current}/{required}).",
     petHiddenLog: "Spirit pet hidden. Click \"Show Pet\" to restore.",
     petShownLog: "Spirit pet is visible again.",
-    aiSettingsTitle: "AI Interaction Settings",
-    aiSettingsTip: "Configure provider, key and frequency for manual and timed bubbles.",
-    aiProviderLabel: "Provider",
-    aiApiKeyLabel: "API Key",
-    aiBaseUrlLabel: "Base URL",
-    aiModelLabel: "Model",
-    aiFrequencyLabel: "Frequency",
-    aiCustomMinutesLabel: "Custom Minutes",
-    aiFrequency30: "Every 30 min",
-    aiFrequency60: "Every 1 hour",
-    aiFrequencyCustom: "Custom",
-    aiSettingsTestBtn: "Test Connection",
-    aiSettingsSaveBtn: "Save Settings",
-    aiSettingsTesting: "Testing connection...",
-    aiSettingsTestSuccess: "Connection succeeded: AI service is available.",
-    aiSettingsTestFail: "Connection failed: {message}",
-    aiSettingsStatusNoKey: "No API key configured. Local fallback lines will be used.",
-    aiSettingsStatusSaved: "AI settings saved.",
-    aiBubbleFallbackIdle: "{petName}: Hey, remember to take a break after work.",
-    aiBubbleFallbackFocus: "{petName}: You look busy. Please remember to drink some water.",
-    aiBubbleFallbackSlack: "{petName}: Are you secretly slacking off, human?",
-    aiRequestFailedLog: "AI request failed, switched to local fallback: {message}",
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     actionSent: "Battle action sent.",
     battleLevelUpLog: "{petName} reached Lv.{level}; stats upgraded.",
     battleExpGainLog: "{petName} gained EXP: {exp}/{required}.",
@@ -1215,16 +1215,16 @@ const PET_INTERACT_MOOD_BOOST = 8;
 const MOOD_PASSIVE_EXP_HOURLY = 10;
 const MOOD_PASSIVE_TICK_MS = 60 * 1000;
 const MOOD_PASSIVE_INTERVAL_MS = 60 * 60 * 1000;
-const AI_BUBBLE_SHOW_MS = 6200;
-const AI_BUBBLE_HIDE_GUARD_MS = 400;
-const AI_MANUAL_MIN_INTERVAL_MS = 3500;
-const AI_ACTIVITY_IDLE_MS = 90 * 1000;
-const AI_ACTIVITY_BUSY_EVENTS = 20;
-const AI_CUSTOM_FREQ_MIN_MINUTES = 5;
-const AI_CUSTOM_FREQ_MAX_MINUTES = 720;
-const AI_DEFAULT_BASE_URL_DEEPSEEK = "https://api.deepseek.com/v1";
-const AI_DEFAULT_BASE_URL_OPENAI = "https://api.openai.com/v1";
-const AI_SETTINGS_STORAGE_KEY = "qp_ai_settings_v1";
+
+const PET_CHAT_BUBBLE_HIDE_GUARD_MS = 400;
+
+
+
+
+
+
+
+
 const PET_HOVER_HIDE_DELAY_MS = 220;
 const IDLE_OVERLAY_HEADROOM_PX = 72;
 const IDLE_WINDOW_SCALE_STEP = 0.04;
@@ -1321,12 +1321,12 @@ let chatBubbleHideAt = 0;
 let chatBubbleHoverPinned = false;
 let moodPassiveTickTimer = null;
 let lastMoodPassiveExpAt = Date.now();
-let aiSettings = null;
-let aiSchedulerTimer = null;
-let lastAiBubbleAt = 0;
-let lastAiManualRequestAt = 0;
-let aiRequestInFlight = false;
-let aiTopicCursor = 0;
+
+
+
+
+
+
 let interactionActivity = {
   lastMouseAt: Date.now(),
   lastKeyboardAt: Date.now(),
@@ -1347,25 +1347,9 @@ const MAP_DEMO_TARGET = {
   google: { lat: 37.7769, lng: -122.4177 }
 };
 
-const AI_TOPIC_HINTS_ZH = Object.freeze([
-  "回忆第一次认识主人的时刻",
-  "讲一个短小冷笑话",
-  "可爱地抱怨一下今天的小挫折",
-  "点评上一场对战的操作",
-  "给主人一句轻松打气",
-  "提醒主人喝水和活动颈肩",
-  "结合一条今日新闻给出灵宠视角感想"
-]);
 
-const AI_TOPIC_HINTS_EN = Object.freeze([
-  "Recall the first day you met your owner",
-  "Tell one tiny joke",
-  "Give a playful complaint about today's setback",
-  "Comment on the last duel in-character",
-  "Give a short encouragement line",
-  "Remind the owner to hydrate and stretch",
-  "Mention one current headline with a pet-like opinion"
-]);
+
+
 
 function getInitialLanguage() {
   const stored = localStorage.getItem(LANG_STORAGE_KEY);
@@ -1431,126 +1415,21 @@ function sanitizeMoodValue(value) {
   return clampInt(value, PET_MOOD_MIN, PET_MOOD_MAX);
 }
 
-function getDefaultAiSettings() {
-  return {
-    provider: "deepseek",
-    apiKey: "",
-    baseUrl: AI_DEFAULT_BASE_URL_DEEPSEEK,
-    model: "deepseek-chat",
-    frequencyMode: "60",
-    customMinutes: 60
-  };
-}
 
-function getAiSettingsStorageKeyForSession() {
-  const account = authSession?.currentUser?.account;
-  if (typeof account === "string" && account.trim().length > 0) {
-    return `${AI_SETTINGS_STORAGE_KEY}:${account.trim().toLowerCase()}`;
-  }
-  return AI_SETTINGS_STORAGE_KEY;
-}
 
-function normalizeAiSettings(input) {
-  const fallback = getDefaultAiSettings();
-  const providerRaw = typeof input?.provider === "string" ? input.provider.trim().toLowerCase() : "";
-  const provider =
-    providerRaw === "openai" || providerRaw === "openai_compatible" || providerRaw === "deepseek"
-      ? providerRaw
-      : fallback.provider;
-  const apiKey =
-    typeof input?.apiKey === "string" && input.apiKey.trim().length > 0 ? input.apiKey.trim() : "";
-  const baseUrlRaw = typeof input?.baseUrl === "string" ? input.baseUrl.trim() : "";
-  const defaultBase = provider === "openai" ? AI_DEFAULT_BASE_URL_OPENAI : AI_DEFAULT_BASE_URL_DEEPSEEK;
-  const baseUrl = baseUrlRaw.length > 0 ? baseUrlRaw.replace(/\/+$/, "") : defaultBase;
-  const modelRaw = typeof input?.model === "string" ? input.model.trim() : "";
-  const model = modelRaw.length > 0 ? modelRaw : provider === "openai" ? "gpt-4o-mini" : "deepseek-chat";
-  const frequencyRaw = typeof input?.frequencyMode === "string" ? input.frequencyMode.trim() : "";
-  const frequencyMode =
-    frequencyRaw === "30" || frequencyRaw === "60" || frequencyRaw === "custom" ? frequencyRaw : "60";
-  const customMinutes = clampInt(
-    input?.customMinutes,
-    AI_CUSTOM_FREQ_MIN_MINUTES,
-    AI_CUSTOM_FREQ_MAX_MINUTES
-  );
-  return {
-    provider,
-    apiKey,
-    baseUrl,
-    model,
-    frequencyMode,
-    customMinutes
-  };
-}
 
-function loadAiSettings() {
-  try {
-    const key = getAiSettingsStorageKeyForSession();
-    const raw = localStorage.getItem(key);
-    if (!raw) return getDefaultAiSettings();
-    const parsed = JSON.parse(raw);
-    return normalizeAiSettings(parsed);
-  } catch {
-    return getDefaultAiSettings();
-  }
-}
 
-function saveAiSettings(silent = false) {
-  aiSettings = normalizeAiSettings(aiSettings);
-  try {
-    const key = getAiSettingsStorageKeyForSession();
-    localStorage.setItem(key, JSON.stringify(aiSettings));
-    if (!silent) {
-      setAiSettingsStatus(currentI18n().aiSettingsStatusSaved, "success");
-    }
-  } catch {
-    if (!silent) {
-      setAiSettingsStatus(currentI18n().aiSettingsStatusNoKey, "error");
-    }
-  }
-  renderAiSettingsPanel();
-  restartAiBubbleScheduler();
-}
 
-function setAiSettingsStatus(text, tone = "normal") {
-  if (!aiSettingsStatusElement) return;
-  aiSettingsStatusElement.textContent = text;
-  aiSettingsStatusElement.classList.remove("error", "success");
-  if (tone === "error") aiSettingsStatusElement.classList.add("error");
-  if (tone === "success") aiSettingsStatusElement.classList.add("success");
-}
 
-function renderAiSettingsPanel() {
-  if (!aiSettings) {
-    aiSettings = getDefaultAiSettings();
-  }
-  if (aiProviderSelect) aiProviderSelect.value = aiSettings.provider;
-  if (aiApiKeyInput) aiApiKeyInput.value = aiSettings.apiKey || "";
-  if (aiBaseUrlInput) aiBaseUrlInput.value = aiSettings.baseUrl || "";
-  if (aiModelInput) aiModelInput.value = aiSettings.model || "";
-  if (aiFrequencySelect) aiFrequencySelect.value = aiSettings.frequencyMode;
-  if (aiCustomMinutesInput) aiCustomMinutesInput.value = String(aiSettings.customMinutes);
-  const showCustom = aiSettings.frequencyMode === "custom";
-  if (aiCustomMinutesInput) {
-    aiCustomMinutesInput.disabled = !showCustom;
-  }
-  setAiSettingsStatus(
-    aiSettings.apiKey ? currentI18n().aiSettingsStatusSaved : currentI18n().aiSettingsStatusNoKey,
-    aiSettings.apiKey ? "success" : "normal"
-  );
-}
 
-function getAiFrequencyMs() {
-  if (!aiSettings) return 60 * 60 * 1000;
-  if (aiSettings.frequencyMode === "30") return 30 * 60 * 1000;
-  if (aiSettings.frequencyMode === "custom") {
-    return clampInt(
-      aiSettings.customMinutes,
-      AI_CUSTOM_FREQ_MIN_MINUTES,
-      AI_CUSTOM_FREQ_MAX_MINUTES
-    ) * 60 * 1000;
-  }
-  return 60 * 60 * 1000;
-}
+
+
+
+
+
+
+
+
 
 function pushActivityEvent(list, timestamp) {
   list.push(timestamp);
@@ -1560,18 +1439,7 @@ function pushActivityEvent(list, timestamp) {
   }
 }
 
-function getActivityHint() {
-  const now = Date.now();
-  const lastInputAt = Math.max(interactionActivity.lastMouseAt, interactionActivity.lastKeyboardAt);
-  if (now - lastInputAt >= AI_ACTIVITY_IDLE_MS) {
-    return "idle";
-  }
-  const recentInputCount = interactionActivity.mouseEvents.length + interactionActivity.keyEvents.length;
-  if (recentInputCount >= AI_ACTIVITY_BUSY_EVENTS) {
-    return "busy";
-  }
-  return "normal";
-}
+
 
 function normalizeModelViewCalibrationEntry(entry) {
   if (!entry || typeof entry !== "object") return {};
@@ -3736,183 +3604,30 @@ function getFirstCompanionMomentText() {
   return language === "zh" ? "刚刚认识" : "just met";
 }
 
-function pickAiTopicHint() {
-  const pool = language === "zh" ? AI_TOPIC_HINTS_ZH : AI_TOPIC_HINTS_EN;
-  if (!Array.isArray(pool) || pool.length === 0) {
-    return language === "zh" ? "日常陪伴聊天" : "daily companion chat";
-  }
-  const hint = pool[aiTopicCursor % pool.length];
-  aiTopicCursor += 1;
-  return hint;
-}
 
-function buildAiPrompt(reason, activityHint) {
-  const activePet = getActivePet();
-  const petName = getPetDisplayName(activePet);
-  const elementName = getElementText(activePet?.element || "metal");
-  const moodValue = getPetMood(activePet);
-  const firstMeetTime = getFirstCompanionMomentText();
-  const topicHint = pickAiTopicHint();
-  const reasonText = reason === "manual" ? "主动互动" : "定时陪伴";
-  const activityText =
-    activityHint === "busy"
-      ? "主人看起来很忙碌。"
-      : activityHint === "idle"
-        ? "主人有一阵没和你互动了。"
-        : "主人状态正常，可轻松闲聊。";
-  const recentBattle = lastBattleState
-    ? `最近一局结果：${
-        lastBattleState.enemy?.hp <= 0 ? "赢了" : lastBattleState.player?.hp <= 0 ? "输了" : "未结束"
-      }。`
-    : "最近还没对战记录。";
-  const localeHint =
-    language === "zh"
-      ? "请只用中文输出，1-2句，口吻可爱，有灵宠人设，避免长段落。"
-      : "Please answer in English only, 1-2 short playful sentences with pet persona.";
-  return [
-    `你是桌宠《灵境》的灵宠：${petName}（属性：${elementName}）。`,
-    `灵宠状态：心情 ${moodValue}/100，累计胜场 ${toNonNegativeInt(activePet?.winsTotal, 0)}。`,
-    `你和主人的第一次相识时间：${firstMeetTime}。`,
-    `触发来源：${reasonText}。`,
-    activityText,
-    recentBattle,
-    `建议话题：${topicHint}。`,
-    "如果系统提供了新闻标题，可自然地提及其中一条，不要像播报列表。",
-    localeHint,
-    "可参考语气：上一场没打赢好气哦；讲个冷笑话；吐槽一下今天；关心主人喝水休息。"
-  ].join("\n");
-}
 
-function getAiFallbackBubble(activityHint) {
-  const petName = getPetDisplayName(getActivePet());
-  const firstMeetTime = getFirstCompanionMomentText();
-  const linesZh = [
-    `${petName}：我们从 ${firstMeetTime} 就认识啦，今天也一起加油。`,
-    `${petName}：冷笑话时间到，为什么灵宠不怕冷？因为有灵气护体。`,
-    `${petName}：刚才那局我有点不服气，下次我要帅气翻盘。`,
-    `${petName}：主人，忙归忙，水杯先喝两口再冲。`
-  ];
-  const linesEn = [
-    `${petName}: We've been partners since ${firstMeetTime}. Let's do great today.`,
-    `${petName}: Tiny joke time - why don't spirit pets panic? We keep our aura cool.`,
-    `${petName}: I'm still salty about that last round, but we'll bounce back.`,
-    `${petName}: Busy is fine, but drink some water first, human.`
-  ];
-  if (activityHint === "busy") {
-    return t("aiBubbleFallbackFocus", { petName });
-  }
-  if (activityHint === "idle") {
-    return t("aiBubbleFallbackSlack", { petName });
-  }
-  const pool = language === "zh" ? linesZh : linesEn;
-  if (pool.length === 0) {
-    return t("aiBubbleFallbackIdle", { petName });
-  }
-  const line = pool[aiTopicCursor % pool.length];
-  aiTopicCursor += 1;
-  return line;
-}
 
-function getAiManualCooldownBubble(seconds) {
-  const remain = Math.max(1, Math.ceil(Number(seconds) || 1));
-  const petName = getPetDisplayName(getActivePet());
-  if (language === "zh") {
-    return `${petName}：等等我，${remain}秒后再聊一条。`;
-  }
-  return `${petName}: Give me ${remain}s, then we can chat again.`;
-}
 
-async function triggerAiBubble(reason = "timer") {
-  if (aiRequestInFlight) return;
-  if (petHiddenByDoubleClick) return;
-  const now = Date.now();
-  if (reason === "manual") {
-    const elapsed = now - lastAiManualRequestAt;
-    if (elapsed < AI_MANUAL_MIN_INTERVAL_MS) {
-      const remainSec = Math.ceil((AI_MANUAL_MIN_INTERVAL_MS - elapsed) / 1000);
-      showPetChatBubble(getAiManualCooldownBubble(remainSec), { durationMs: 1800 });
-      return;
-    }
-    lastAiManualRequestAt = now;
-  }
-  const activityHint = getActivityHint();
-  const fallbackText = getAiFallbackBubble(activityHint);
-  if (!aiSettings || !aiSettings.apiKey) {
-    showPetChatBubble(fallbackText, { durationMs: AI_BUBBLE_SHOW_MS });
-    lastAiBubbleAt = Date.now();
-    return;
-  }
 
-  aiRequestInFlight = true;
-  try {
-    const response = await window.petApi.aiChat({
-      provider: aiSettings.provider,
-      apiKey: aiSettings.apiKey,
-      baseUrl: aiSettings.baseUrl,
-      model: aiSettings.model,
-      includeNews: true,
-      locale: language,
-      prompt: buildAiPrompt(reason, activityHint),
-      temperature: 0.9,
-      maxTokens: 140
-    });
-    if (!response?.ok || typeof response.text !== "string" || response.text.trim().length === 0) {
-      appendLog(
-        t("aiRequestFailedLog", {
-          message: localizeAuthErrorMessage(response?.error || "ai request failed")
-        })
-      );
-      showPetChatBubble(fallbackText, { durationMs: AI_BUBBLE_SHOW_MS });
-      lastAiBubbleAt = Date.now();
-      return;
-    }
-    showPetChatBubble(response.text.trim(), { durationMs: AI_BUBBLE_SHOW_MS });
-    lastAiBubbleAt = Date.now();
-  } catch (error) {
-    appendLog(
-      t("aiRequestFailedLog", {
-        message: localizeAuthErrorMessage(error instanceof Error ? error.message : "ai request failed")
-      })
-    );
-    showPetChatBubble(fallbackText, { durationMs: AI_BUBBLE_SHOW_MS });
-    lastAiBubbleAt = Date.now();
-  } finally {
-    aiRequestInFlight = false;
-  }
-}
 
-function restartAiBubbleScheduler() {
-  if (aiSchedulerTimer) {
-    clearInterval(aiSchedulerTimer);
-    aiSchedulerTimer = null;
-  }
-  const intervalMs = getAiFrequencyMs();
-  aiSchedulerTimer = setInterval(() => {
-    const now = Date.now();
-    if (now - lastAiBubbleAt < intervalMs) return;
-    if (!panelElement.classList.contains("hidden")) return;
-    if (battleMode || petHiddenByDoubleClick) return;
-    if (isPetChatBubbleVisible()) return;
-    void triggerAiBubble("timer");
-  }, 15 * 1000);
-}
 
-function stopAiBubbleScheduler() {
-  if (!aiSchedulerTimer) return;
-  clearInterval(aiSchedulerTimer);
-  aiSchedulerTimer = null;
-}
+
+
+
+
+
+
 
 function refreshCompanionRuntimeByAuth() {
-  aiSettings = loadAiSettings();
-  renderAiSettingsPanel();
+
+
   if (isCompanionOnlineAvailable()) {
     ensureMoodPassiveTimer();
-    restartAiBubbleScheduler();
+
     return;
   }
   clearMoodPassiveTimer();
-  stopAiBubbleScheduler();
+
   hidePetChatBubble();
 }
 
@@ -5276,26 +4991,17 @@ function applyLanguage() {
   }
   if (showPetBtn) showPetBtn.textContent = currentI18n().showPetBtn;
   refreshHoverMoodText();
-  if (aiSettingsTitleElement) aiSettingsTitleElement.textContent = currentI18n().aiSettingsTitle;
-  if (aiSettingsTipElement) aiSettingsTipElement.textContent = currentI18n().aiSettingsTip;
-  if (aiProviderLabelElement) aiProviderLabelElement.textContent = currentI18n().aiProviderLabel;
-  if (aiFrequencyLabelElement) aiFrequencyLabelElement.textContent = currentI18n().aiFrequencyLabel;
-  if (aiApiKeyLabelElement) aiApiKeyLabelElement.textContent = currentI18n().aiApiKeyLabel;
-  if (aiCustomMinutesLabelElement) {
-    aiCustomMinutesLabelElement.textContent = currentI18n().aiCustomMinutesLabel;
-  }
-  if (aiBaseUrlLabelElement) aiBaseUrlLabelElement.textContent = currentI18n().aiBaseUrlLabel;
-  if (aiModelLabelElement) aiModelLabelElement.textContent = currentI18n().aiModelLabel;
-  if (aiSettingsTestBtn) aiSettingsTestBtn.textContent = currentI18n().aiSettingsTestBtn;
-  if (aiSettingsSaveBtn) aiSettingsSaveBtn.textContent = currentI18n().aiSettingsSaveBtn;
-  if (aiFrequencySelect) {
-    const option30 = aiFrequencySelect.querySelector('option[value="30"]');
-    const option60 = aiFrequencySelect.querySelector('option[value="60"]');
-    const optionCustom = aiFrequencySelect.querySelector('option[value="custom"]');
-    if (option30) option30.textContent = currentI18n().aiFrequency30;
-    if (option60) option60.textContent = currentI18n().aiFrequency60;
-    if (optionCustom) optionCustom.textContent = currentI18n().aiFrequencyCustom;
-  }
+
+
+
+
+
+
+
+
+
+
+
   captureBtn.textContent = currentI18n().captureTest;
   occupyBtn.textContent = currentI18n().occupyTest;
   mapPermissionBtn.textContent = currentI18n().mapRequestPermission;
@@ -5319,12 +5025,7 @@ function applyLanguage() {
     profileModalStatusElement.textContent = currentI18n().profileHint;
     profileModalStatusElement.classList.remove("error", "success");
   }
-  if (aiSettingsStatusElement && aiSettingsStatusElement.classList.contains("error") === false) {
-    setAiSettingsStatus(
-      aiSettings?.apiKey ? currentI18n().aiSettingsStatusSaved : currentI18n().aiSettingsStatusNoKey,
-      aiSettings?.apiKey ? "success" : "normal"
-    );
-  }
+
   if (duelSearchBtn) duelSearchBtn.textContent = currentI18n().authSearchBtn;
   if (duelSearchKeywordInput) {
     duelSearchKeywordInput.placeholder = currentI18n().authSearchPlaceholder;
@@ -7685,7 +7386,7 @@ function setupMouseTracking() {
     setBurstInteraction(t("petInteract"));
     try {
       await applyPetMoodDelta(PET_INTERACT_MOOD_BOOST);
-      await triggerAiBubble("manual");
+
     } finally {
       hoverInteractBtn.disabled = false;
       syncPetHoverByPointer(Number(window.__lastMouseX || -1), Number(window.__lastMouseY || -1));
@@ -7751,135 +7452,18 @@ function setupButtons() {
     toggleLanguage();
   });
 
-  const readAiSettingsDraft = (options = {}) => {
-    if (!aiSettings) {
-      aiSettings = getDefaultAiSettings();
-    }
-    const previousProvider = aiSettings.provider;
-    const provider = aiProviderSelect?.value || aiSettings.provider;
-    const apiKey = aiApiKeyInput?.value?.trim() || "";
-    const baseUrl = aiBaseUrlInput?.value?.trim() || "";
-    const model = aiModelInput?.value?.trim() || "";
-    const freqMode = aiFrequencySelect?.value || aiSettings.frequencyMode;
-    const frequencyMode = freqMode === "30" || freqMode === "custom" ? freqMode : "60";
-    const customMinutes = clampInt(
-      aiCustomMinutesInput?.value,
-      AI_CUSTOM_FREQ_MIN_MINUTES,
-      AI_CUSTOM_FREQ_MAX_MINUTES
-    );
-    const defaultBaseUrl = provider === "openai" ? AI_DEFAULT_BASE_URL_OPENAI : AI_DEFAULT_BASE_URL_DEEPSEEK;
-    const defaultModel = provider === "openai" ? "gpt-4o-mini" : "deepseek-chat";
-    let nextBaseUrl = baseUrl;
-    let nextModel = model;
-    if (!baseUrl || (options.applyProviderDefault && provider !== previousProvider)) {
-      nextBaseUrl = defaultBaseUrl;
-    } else {
-      nextBaseUrl = baseUrl.replace(/\/+$/, "");
-    }
-    if (!model || (options.applyProviderDefault && provider !== previousProvider)) {
-      nextModel = defaultModel;
-    } else {
-      nextModel = model;
-    }
-    if (options.syncForm !== false) {
-      if (aiBaseUrlInput) aiBaseUrlInput.value = nextBaseUrl;
-      if (aiModelInput) aiModelInput.value = nextModel;
-      if (aiCustomMinutesInput) aiCustomMinutesInput.disabled = frequencyMode !== "custom";
-    }
-    return normalizeAiSettings({
-      ...aiSettings,
-      provider,
-      apiKey,
-      baseUrl: nextBaseUrl,
-      model: nextModel,
-      frequencyMode,
-      customMinutes
-    });
-  };
 
-  const commitAiSettings = (options = {}) => {
-    aiSettings = readAiSettingsDraft(options);
-    if (options.persist === false) {
-      setAiSettingsStatus(
-        aiSettings.apiKey ? currentI18n().aiSettingsStatusSaved : currentI18n().aiSettingsStatusNoKey,
-        aiSettings.apiKey ? "success" : "normal"
-      );
-      return aiSettings;
-    }
-    saveAiSettings(Boolean(options.silent));
-    return aiSettings;
-  };
 
-  aiProviderSelect?.addEventListener("change", () => {
-    commitAiSettings({ applyProviderDefault: true, persist: false, silent: true });
-  });
-  aiFrequencySelect?.addEventListener("change", () => {
-    commitAiSettings({ persist: false, silent: true });
-  });
-  aiApiKeyInput?.addEventListener("change", () => {
-    commitAiSettings({ persist: false, silent: true, syncForm: false });
-  });
-  aiBaseUrlInput?.addEventListener("change", () => {
-    commitAiSettings({ persist: false, silent: true, syncForm: false });
-  });
-  aiModelInput?.addEventListener("change", () => {
-    commitAiSettings({ persist: false, silent: true, syncForm: false });
-  });
-  aiCustomMinutesInput?.addEventListener("change", () => {
-    commitAiSettings({ persist: false, silent: true, syncForm: false });
-  });
-  aiSettingsSaveBtn?.addEventListener("click", () => {
-    commitAiSettings({ persist: true });
-    if (!setPanelSectionExpandedByKey("ai-settings", false, { persist: true })) {
-      setPanelSectionExpandedByKey("ai-settings-title", false, { persist: true });
-    }
-  });
-  aiSettingsTestBtn?.addEventListener("click", async () => {
-    const draft = readAiSettingsDraft({ syncForm: false });
-    if (!draft.apiKey) {
-      setAiSettingsStatus(currentI18n().aiSettingsStatusNoKey, "error");
-      return;
-    }
-    aiSettingsTestBtn.disabled = true;
-    setAiSettingsStatus(currentI18n().aiSettingsTesting, "normal");
-    try {
-      const response = await window.petApi.aiChat({
-        provider: draft.provider,
-        apiKey: draft.apiKey,
-        baseUrl: draft.baseUrl,
-        model: draft.model,
-        includeNews: true,
-        locale: language,
-        prompt:
-          language === "zh"
-            ? "请只返回一句中文：连接测试成功。"
-            : "Reply with one short sentence: connection test passed.",
-        temperature: 0.2,
-        maxTokens: 80
-      });
-      if (!response?.ok || typeof response.text !== "string" || response.text.trim().length === 0) {
-        setAiSettingsStatus(
-          t("aiSettingsTestFail", {
-            message: localizeAuthErrorMessage(response?.error || "ai request failed")
-          }),
-          "error"
-        );
-        return;
-      }
-      setAiSettingsStatus(currentI18n().aiSettingsTestSuccess, "success");
-      showPetChatBubble(response.text.trim(), { durationMs: AI_BUBBLE_SHOW_MS });
-      lastAiBubbleAt = Date.now();
-    } catch (error) {
-      setAiSettingsStatus(
-        t("aiSettingsTestFail", {
-          message: localizeAuthErrorMessage(error instanceof Error ? error.message : "ai request failed")
-        }),
-        "error"
-      );
-    } finally {
-      aiSettingsTestBtn.disabled = false;
-    }
-  });
+
+
+
+
+
+
+
+
+
+
 
   runtimeElement?.addEventListener("click", () => {
     setVersionHistoryVisible(true);
@@ -8364,8 +7948,8 @@ async function bootstrap() {
   applyEnemyIdleOrbit();
 
   setupPanelSectionToggles();
-  aiSettings = loadAiSettings();
-  renderAiSettingsPanel();
+
+
   applyLanguage();
   await refreshBattleReports();
   await refreshAuthSession();
@@ -8380,11 +7964,11 @@ async function bootstrap() {
   setupModelDefaults();
   startDuelSyncPolling();
   ensureMoodPassiveTimer();
-  restartAiBubbleScheduler();
+
   window.addEventListener("beforeunload", () => {
     stopDuelSyncPolling();
     clearMoodPassiveTimer();
-    stopAiBubbleScheduler();
+
     hidePetChatBubble();
   });
   window.addEventListener("resize", () => {
@@ -8428,7 +8012,7 @@ async function bootstrap() {
       isPetChatBubbleVisible() &&
       chatBubbleHideAt > 0 &&
       !chatBubbleHoverPinned &&
-      now >= chatBubbleHideAt + AI_BUBBLE_HIDE_GUARD_MS
+      now >= chatBubbleHideAt + PET_CHAT_BUBBLE_HIDE_GUARD_MS
     ) {
       hidePetChatBubble();
     }

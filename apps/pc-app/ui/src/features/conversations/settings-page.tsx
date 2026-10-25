@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import type { ConnectionSettings, ConversationClient, ConversationCommands, ConversationMemory, ConversationPet, ConversationProfile, PublicConnection } from '../../../../../../packages/shared-types/src/features/conversations';
 import { MemoryEditor, MemoryPanel, PetAvatar, PetScene, PetElement, petElementLabel, FormSelect, InfoHint, ActionHint } from './components';
-import { Monitor, Bell, MessageCircle, Box, UserRound, ChevronLeft, ShieldCheck, PlugZap, Save, Square } from 'lucide-react';
+import { Monitor, Bell, MessageCircle, Box, UserRound, ChevronLeft, ShieldCheck, PlugZap, Save, Square, History } from 'lucide-react';
 import { Button } from '../../components/ui/button';
 import { Input } from '../../components/ui/input';
 import { Textarea } from '../../components/ui/textarea';
@@ -9,6 +9,7 @@ import { Checkbox } from '../../components/ui/checkbox';
 import { Switch } from '../../components/ui/switch';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../components/ui/tabs';
 import { useConversations } from './use-conversations';
+import { LegacyImportDialog } from './legacy-import';
 
 type Request = <K extends keyof ConversationCommands>(command: K, payload: ConversationCommands[K]['input']) => Promise<ConversationCommands[K]['output']>;
 const blank: ConnectionSettings = { provider: 'deepseek', baseUrl: 'https://api.deepseek.com/v1', model: '', contextChars: 24000, maxOutputTokens: 512 };
@@ -108,6 +109,8 @@ export function ConversationSettingsPage({ client }: { client?: ConversationClie
   const chat = useConversations(client);
   const [tab, setTab] = useState<'global' | 'pet'>('global');
   const [editor, setEditor] = useState<{ scope: string; memory?: ConversationMemory } | null>(null);
+  const [legacyScope, setLegacyScope] = useState<string | null>(null);
+  const [importNotice, setImportNotice] = useState<{scope: string; text: string} | null>(null);
   const data = chat.data;
   const scope = JSON.stringify([data?.accountId, data?.sessionRevision, data?.petId]);
   const pet = data?.pets.find(item => item.petId === data.petId);
@@ -119,22 +122,26 @@ export function ConversationSettingsPage({ client }: { client?: ConversationClie
     <div className="cv-settings-grid"><div className="cv-settings-main"><Tabs value={tab} onValueChange={value => setTab(value as 'global' | 'pet')}>
       <TabsList className="cv-tabs" aria-label="AI 设置范围"><TabsTrigger value="global">全局连接</TabsTrigger><TabsTrigger value="pet" disabled={!pet}>独立连接</TabsTrigger></TabsList>
       <TabsContent value={tab}>
-        {tab === 'global' ? <ConnectionForm key={`${data.accountId}:global:${data.globalConnection?.revision ?? 0}`} connection={data.globalConnection} petId={null} label="模型连接"
+        {tab === 'global' ? <ConnectionForm key={`${data.accountId}:${data.sessionRevision}:global:${data.globalConnection?.revision ?? 0}`} connection={data.globalConnection} petId={null} label="模型连接"
           secure={data.secureStorageAvailable} request={chat.request} refresh={refresh}/> : pet && <>
-          <ConnectionForm key={`${data.accountId}:${pet.petId}:${data.connection?.revision ?? 0}`} connection={data.connection ?? null} petId={pet.petId} label={`${pet.name}的独立连接`}
+          <ConnectionForm key={`${data.accountId}:${data.sessionRevision}:${pet.petId}:${data.connection?.revision ?? 0}`} connection={data.connection ?? null} petId={pet.petId} label={`${pet.name}的独立连接`}
             secure={data.secureStorageAvailable} request={chat.request} refresh={refresh} scope={{ enabled: data.profile?.useOverride === true, hint: '需要自己的密钥；保存后，在右侧开启独立连接。' }}/></>}
       </TabsContent></Tabs>
-      <section className="cv-card cv-partners"><h2>伙伴 <small>{data.pets.length}</small></h2><div>
+      <section className="cv-card cv-partners"><header className="cv-section-heading"><h2>伙伴 <small>{data.pets.length}</small></h2><ActionHint text="导入旧记录"><Button type="button" variant="ghost" className="cv-icon" aria-label="导入旧记录" onClick={() => {setEditor(null);setLegacyScope(scope);}}><History size={16}/></Button></ActionHint></header>
+      {importNotice?.scope === scope && <p className="cv-success" role="status">{importNotice.text}</p>}<div>
         {data.pets.map(item => <ActionHint key={item.petId} text={[item.name, petElementLabel(item), item.petId.slice(-8)].filter(Boolean).join(' · ')}><Button className={item.petId === pet?.petId ? 'selected' : ''} aria-pressed={item.petId === pet?.petId} aria-label={`${item.name}，${petElementLabel(item)}，伙伴 ${item.petId.slice(-8)}`}
           onClick={() => { setEditor(null); void chat.choose(item.petId); }}><PetAvatar pet={item}/><strong>{item.name}<PetElement pet={item} hint={false}/></strong></Button></ActionHint>)}
       </div></section>
     </div>
     <aside className="cv-settings-side">{pet && data.profile ? <>
-      <PersonaForm key={`${data.accountId}:${pet.petId}:${data.profile.revision}`} pet={pet} profile={data.profile} request={chat.request} refresh={refresh}/>
-      <MemoryPanel key={`${data.accountId}:${pet.petId}`} pet={pet} memories={data.memories ?? []} enabled={data.profile.memoryEnabled}
+      <PersonaForm key={`${data.accountId}:${data.sessionRevision}:${pet.petId}:${data.profile.revision}`} pet={pet} profile={data.profile} request={chat.request} refresh={refresh}/>
+      <MemoryPanel key={`${data.accountId}:${data.sessionRevision}:${pet.petId}`} pet={pet} memories={data.memories ?? []} enabled={data.profile.memoryEnabled}
         add={() => setEditor({ scope })} edit={memory => setEditor({ scope, memory })} remove={async memory => { await chat.request('memory.delete', { petId: pet.petId, id: memory.id, revision: memory.revision }); await refresh(); }}/>
     </> : <section className="cv-card cv-empty"><h2>还没有伙伴</h2><a href="#/companions" className="cv-link">先领养一只灵宠 →</a></section>}</aside></div></div>
     {editor?.scope === scope && pet && <MemoryEditor key={scope} pet={pet} memory={editor.memory} close={() => setEditor(null)}
       save={async content => { await chat.request('memory.save', { petId: pet.petId, memory: { content, ...(editor.memory ? { id: editor.memory.id, revision: editor.memory.revision } : {}) } }); await refresh(); }}/>}
+    {legacyScope === scope && <LegacyImportDialog key={scope} pet={pet} request={chat.request} close={() => setLegacyScope(null)} done={async result => {
+      await refresh();setImportNotice({scope,text:`已合并 ${result.messages} 条消息、${result.memories} 条记忆`});setLegacyScope(null);
+    }}/>}
   </div>;
 }
