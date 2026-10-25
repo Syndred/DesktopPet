@@ -31,7 +31,7 @@ function fixture() {
   const authority = createWildAuthority({ store, now: () => clock, uuid: () => `c1ed72dc-bf3d-44f4-9e6b-${String(++serial).padStart(12, '0')}`, projectRef: 'local-unit-not-cloud' });
   const issue = (purpose, reference, who = actor) => { const id = `proof-${proofs.size}`; proofs.set(id, { ...who, id, purpose, reference, source: 'simulated', fix: clone(fix), expiresAt: clock + 15000 }); return id; };
   const call = (input, who = actor) => authority({ actor: who, input });
-  return { call, issue, spawn, pet, actions, captures, permits, rewardCommits, instanceCommits };
+  return { call, issue, spawn, pet, actions, captures, permits, rewardCommits, instanceCommits, store };
 }
 test('actual server kernel refuses forged victory/foreign ownership, replays original actions, and returns one capture across same-owner devices', async t => {
   t.mock.method(Math, 'random', () => .5); // Unit-only deterministic NPC, never an HTTP input or production preset.
@@ -54,4 +54,14 @@ test('actual server kernel refuses forged victory/foreign ownership, replays ori
   const duplicate = await f.call({ ...confirm, name: '不能用重复确认改名', actionId: 'capture-b' }, second); assert.equal(duplicate.petId, captured.petId); assert.equal(duplicate.name, '新伙伴');
   await assert.rejects(f.call({ op: 'cancel', permitId: permit.id, actionId: 'capture-b' }, second), { code: 'ACTION_ID_CONFLICT' });
   assert.equal(f.instanceCommits.size, 1); assert.equal(f.captures.size, 1); assert.equal((await f.call({ op: 'captures' }, second))[0].petId, captured.petId);
+});
+
+test('a delayed identical request recovers a receipt committed after its first optimistic read',async t=>{
+  t.mock.method(Math,'random',()=>.5);
+  const f=fixture(),permit=await f.call({op:'reserve',spawnId:f.spawn.id,petId:f.pet.petId,proofId:f.issue('begin',f.spawn.id),actionId:'race-begin'});
+  let release,entered;const waiting=new Promise(done=>{entered=done;}),gate=new Promise(done=>{release=done;});
+  const read=f.store.action;let delayed=true;
+  f.store.action=async(who,id)=>{const value=await read(who,id);if(id==='same-action-race'&&delayed){delayed=false;entered();await gate;}return value;};
+  const input={op:'act',permitId:permit.id,action:'normal_attack',expectedRound:1,actionId:'same-action-race'};
+  const late=f.call(input);await waiting;const committed=await f.call(input);release();assert.deepEqual(await late,committed);assert.equal(f.permits.get(permit.id).session.snapshot.round,1);
 });
