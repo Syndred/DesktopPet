@@ -84,6 +84,8 @@ JSON SHA256 和现有备份保持兼容，SQL 处理 UTF-16 键排序及 ECMAScr
 
 `20261025025906_lingjing_cloud_secret_guard.sql` 与客户端使用一致的schema边界：`conversations.data.tables.conversation_messages.content`、`conversation_memories.content`、`conversation_profiles.persona/reply_style` 的字符串是用户正文，逐字保留，即使正文是 `{"password":"EXAMPLE_PLACEHOLDER","enabled":true}`。只有这些明确字段免于字符串JSON配置解析；其他位置的nested/serialized credential继续拒绝。通用表的对应正文叶子也使用完整路径判断，不能通过带点的伪造key名绕过。公开业务 `proof`（例如捕捉回执）不视为登录密钥，`cloudProof/sessionProof/authProof` 才是账号私密字段。
 
+02 的 `6435a13` 已合入并解决sync冲突。`BackupManager.normalizeData(data,owner)` 可通过已注册adapter的 `legacyTables/fromLegacyTables` 在验证后生成通用表→正式模块的恢复/指纹视图，原envelope和checksum不改。受保护同步仅用该视图比较归属及差异，上传CAS仍原样携带服务器权威片段，不能用转换生成自报玩法状态。显式云恢复新增对应checksum/revision checkpoint，避免恢复成功后因旧回执被误报为待同步。
+
 ## 当前验证和来源
 
 ## 旧源恢复后的准备工具

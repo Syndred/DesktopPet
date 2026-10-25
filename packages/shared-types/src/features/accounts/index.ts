@@ -58,6 +58,9 @@ export interface BackupPreview {
 /** Main-process adapters are synchronous and run inside the common SQLite transaction. */
 export interface AccountBackupAdapter<Database = unknown, Data = unknown> {
   id: string; version: number; tables?: string[];
+  /** Conversion is a verified restore/fingerprint view; never rewrites the source envelope. */
+  legacyTables?: string[];
+  fromLegacyTables?(tables: Record<string, { schema: unknown[]; rows: Array<Record<string, unknown>> }>, ownerAccountId: string): Data | null;
   export(ownerAccountId: string, db: Database): Data;
   validate(data: Data, ownerAccountId: string, db: Database): void;
   restore(ownerAccountId: string, data: Data, mode: "merge" | "replace", db: Database): void;
