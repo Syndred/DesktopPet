@@ -9,6 +9,7 @@ module.exports = {
   id: 'companions', migrations,
   register(services) {
     const service = new CompanionsService({ db: services.db });
+    const backupAdapter=createCompanionBackupAdapter(services.db);
     const playback = createCompanionPlayback({ services, service });
     const disposers = [];
     let desktop;
@@ -47,7 +48,7 @@ module.exports = {
     const api = {
       db: services.db,
       // Accounts owns registration/legacy-envelope normalization and transport.
-      backupAdapter: createCompanionBackupAdapter(services.db),
+      backupAdapter,
       migrateOwnerAlias: ownerMigration.migrate,
       listPets(ownerAccountId) { ensureImported(ownerAccountId); return service.snapshot(ownerAccountId).data.pets.filter(pet => pet.resource.kind === '2d'); },
       getPet(ownerAccountId, petId) {
@@ -86,6 +87,8 @@ module.exports = {
       getDesktopWindows: () => desktop?.inspect() || []
     };
     services.provide('companions', api);
+    const backups=services.get('backups')||services.get('accounts')?.backups;
+    if(backups?.normalizeData)disposers.push(backups.register(backupAdapter));
     disposers.push(services.events.on('accounts:save-restored', event => {
       if (event?.ownerAccountId === services.session.getOwnerAccountId()) changed(event.ownerAccountId);
     }));

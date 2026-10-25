@@ -15,10 +15,8 @@ class AccountSync {
     this.getSession = getSession; this.getSettings = getSettings; this.running = new Set();
     this.onInvalidSession = onInvalidSession;
   }
-  dataChecksum(data,owner){
-    const view=owner&&this.backups.normalizeData?this.backups.normalizeData(data,owner):data;
-    return saveDataChecksum(this.remote.authKind==='supabase'?meaningfulData(view):view);
-  }
+  normalizeData(data,owner=this.getSession()?.ownerAccountId){return this.backups.normalizeData&&typeof owner==='string'?this.backups.normalizeData(data,owner):data;}
+  dataChecksum(data,owner=this.getSession()?.ownerAccountId){const normalized=this.normalizeData(data,owner);return saveDataChecksum(this.remote.authKind==='supabase'?meaningfulData(normalized):normalized);}
   status(owner) {
     const state = this.db.prepare("SELECT * FROM account_sync_state WHERE owner_account_id=?").get(owner);
     const counts = this.db.prepare(`SELECT status,COUNT(*) AS count FROM account_sync_outbox
