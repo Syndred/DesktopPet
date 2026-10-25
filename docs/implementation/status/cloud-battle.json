@@ -2,22 +2,28 @@
   "module": "battle",
   "scope": "2026-10-25 real Supabase JWT-bound friend duels, shared versioned rules, participant Realtime/RLS, restart recovery and idempotent settlement; preserve approved V3",
   "branch": "codex/lingjing-battle-v3",
-  "commit": "4d2968411959ec5e0d41cf23d40cf8810cb5072c",
+  "commit": "4969eac",
   "goalStatus": "in_progress_under_existing_unfinished_goal",
   "goalLifecycle": "get_goal returned the older blocked full battle/online objective, which still includes the not-yet-verified real-cloud loop. It cannot truthfully be marked complete merely to create a replacement. Continue authorized work; no token budget or model changes.",
   "contracts": {
     "scope": "docs/implementation/cloud-upgrade-2026-10-25.md",
     "battle": "docs/implementation/cloud-battle-contract-2026-10-25.md",
-    "identityCommit": "ee36030",
+    "identityCommit": "4ef97fd (identity ee36030, Auth bridge5607dfa/refresh320cafd, protected save4ef97fd)",
     "identity": "infra/supabase/functions/_shared/lingjing-auth.ts: requireActor, ActorContext.client, stable ownerAccountId/authUserId/deviceId/sessionId; 08 owns mapping and auth helper",
-    "rls": "Participant Auth UID AND 08 header-free fresh session_owner. No auth.uid-only REST/Realtime bypass after logout/account lock",
+    "rls": "Participant Auth UID + private battle_viewer_owner(): consumes08 fresh session_owner/live_session_id and reads only same owner/session non-revoked device binding without header-RLS recursion. No service_role auth.users grant.",
     "authority": "Service-only invoker RPCs with fixed empty search_path; renderer cannot write rooms, actions, results or reward values",
     "core": "infra/supabase/functions/_shared/battle-core.js, version five-elements-standard-v1/2026-10-25; generated desktop CJS checked by source SHA256",
     "pending": [
-      "08 main-process Auth SDK/refresh/device transport",
-      "08 protected save/authority fragment transaction and verified companion query",
-      "02 companion preservation adapter integration"
-    ]
+      "08 main-process SDK adapter connects the transport seam",
+      "02 canonical cloud growth reducer",
+      "same-transaction battle/companions authority fragments via08 commit_authority"
+    ],
+    "mainTransport": {
+      "entry": "OnlineDuelService.useCloudTransport(provider)",
+      "providerResult": "{url:httpsProjectOrigin, client:stable main-process Supabase SDK with account-owned accessToken refresh/device header, actor:08 public ActorContext sans client}",
+      "integration": "08 can configure the existing legacy.onlineDuelService before battle registration; setCurrentUser uses stable text owner, no sessionToken needed on this transport",
+      "tokenBoundary": "No access/refresh/service keys in getStatus; actor is safe metadata only. JWT route strips body owner/sessionToken and untrusted pet facts. Credentials never travel to legacy HTTP."
+    }
   },
   "migrations": [
     {
@@ -53,6 +59,17 @@
       "passed": true,
       "cases": 16,
       "scope": "existing runtime/real SQLite regression; explicitly scripted network cases are not live-cloud proof"
+    },
+    {
+      "command": "Deno2.9.6 check infra/supabase/functions/duel-online/handler.ts",
+      "passed": true,
+      "scope": "prepared JWT handler; final authority resolver/entrypoint pending"
+    },
+    {
+      "command": "node --test apps/pc-app/runtime/features/battle/tests/jwt-transport.test.cjs",
+      "passed": true,
+      "cases": 4,
+      "scope": "explicitly SCRIPTED SDK boundary tests, not live cloud"
     }
   ],
   "realCloudEvidence": {
@@ -96,6 +113,13 @@
     "cross-device report and settlement readback",
     "final upstream fetch/pull and cleanup audit"
   ],
-  "stage": "phase_one_protocol_core_sql_ready_for_review",
-  "productionReady": false
+  "stage": "jwt_handler_transport_and_device_rls_checkpoint",
+  "productionReady": false,
+  "liveVerifier": {
+    "path": "apps/pc-app/runtime/features/battle/verify-live-cloud.mjs",
+    "configured": false,
+    "executed": false,
+    "description": "Two fresh path-bound profiles, real HTTPS provenance tracing, original-action response interruption, actual SDK channel reconnect, native process restart with persisted Auth, reports and read-only SQLite. Uses two authorized accounts/server-owned pets supplied by coordinator; no fake QA transport or fabricated actors.",
+    "physicalDeviceClaim": "One Windows host, two independent Electron processes. Two physical devices unverified."
+  }
 }
