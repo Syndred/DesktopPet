@@ -39,6 +39,15 @@ global.__cloudGameProbe=async({op,...args})=>{
   const c=await s.get('cloudActor').requireActor(),owner=c.ownerAccountId;
   return{owner,pets:s.db.prepare('select pet_id from companion_pets where owner_account_id=? order by pet_id').all(owner),captures:s.db.prepare('select pet_id,data_json from discovery_captures where owner_account_id=?').all(owner).map(row=>({petId:row.pet_id,battleId:JSON.parse(row.data_json).battleId})),memories:s.db.prepare('select pet_id,count(*) count from discovery_memory_tags where owner_account_id=? group by pet_id').all(owner)};
  }
+ if(op==='readbackThroughProduct'){
+  let restored;
+  for(let attempt=0;attempt<3;attempt++){
+   const preview=await s.invoke('accounts','cloudPreview');if(!preview.ok)throw Object.assign(new Error(preview.message),{code:preview.code});
+   restored=await s.invoke('accounts','backupRestore',{previewId:preview.data.previewId,actionId:requireProbe('node:crypto').randomUUID(),mode:'replace'});
+   if(restored.ok)break;if(restored.code!=='SAVE_CHANGED'||attempt===2)throw Object.assign(new Error(restored.message),{code:restored.code});
+  }
+  return{...await global.__cloudGameProbe({op:'inspectSqlite'}),restore:{restored:restored.data.restored,mode:restored.data.mode,preservedBeforeRestore:Boolean(restored.data.preservedBackup)},localRestoreScope:'Actual accounts cloudPreview/backupRestore IPC and registered adapters/resource hydration; before-restore archive preserved'};
+ }
  if(op==='readbackToFreshSqlite'){
   const c=await s.get('cloudActor').requireActor(),head=await c.invoke('lingjing-save',{op:'read'}),owner=c.ownerAccountId,unit=head.envelope.data.modules.companions;
   const api=s.get('companions').backupAdapter;api.validate(unit.data,owner);
@@ -117,7 +126,7 @@ try{
  const duplicate=await invoke(a,'discovery',{...confirmation,name:'重复确认不能改名',proofId:randomUUID(),actionId:'cloud-duplicate-'+randomUUID()});assert.equal(duplicate.petId,capture.petId);assert.equal(duplicate.name,capture.name);
  const readB=await invoke(b,'discovery',{op:'captures'});assert.equal(readB.filter(p=>p.permitId===permit.id).length,1);proof.capture={petId:capture.petId,battleId:capture.battleId,permitId:permit.id,validation:capture.validation,scenarioId:capture.scenarioId,resourceId:capture.resourceId,templateId:capture.templateId};
  const deviceC=await launch('fresh-device-c');assert.equal(deviceC.actor.ownerAccountId,a.actor.ownerAccountId);assert.notEqual(deviceC.actor.deviceId,a.actor.deviceId);const cRead=await invoke(deviceC,'discovery',{op:'captures'});assert.equal(cRead.find(p=>p.permitId===permit.id).petId,capture.petId);
- const local=await main(deviceC,'readbackToFreshSqlite');assert.equal(local.captures.find(p=>p.petId===capture.petId).battleId,won.id);assert.equal(local.memories.find(p=>p.pet_id===capture.petId).count,1);assert.equal(local.pets.find(p=>p.petId===capture.petId).originBattleId,won.id);proof.newDeviceSqlite=local;
+ const local=await main(deviceC,'readbackThroughProduct');assert.equal(local.captures.find(p=>p.petId===capture.petId).battleId,won.id);assert.equal(local.memories.find(p=>p.pet_id===capture.petId).count,1);assert.ok(local.pets.some(p=>p.pet_id===capture.petId));assert.equal(local.restore.preservedBeforeRestore,true);proof.newDeviceSqlite=local;
  await deviceC.app.close();const reopened=await launch('fresh-device-c');const reopenedCloud=await invoke(reopened,'discovery',{op:'captures'});assert.equal(reopenedCloud.find(p=>p.permitId===permit.id).petId,capture.petId);proof.restartCloudReadback=true;proof.restartSqlite=await main(reopened,'inspectSqlite');assert.equal(proof.restartSqlite.captures.length,1);assert.equal(proof.restartSqlite.captures[0].petId,capture.petId);assert.equal(proof.restartSqlite.memories.find(p=>p.pet_id===capture.petId).count,1);
  const head=await invoke(b,'lingjing-save',{op:'read'}),tables=head.envelope.data.modules.companions.data.tables,stored=JSON.parse(tables.companion_pets.find(p=>p.pet_id===pet.petId).data_json);assert.equal(stored.growth.experience,proof.attempts.reduce((n,p)=>n+p.reward.experience,0));
  assert.equal(tables.companion_pets.length,2);assert.equal(tables.companion_capture_receipts.length,1);assert.equal(head.envelope.data.modules.garden.data.tables.garden_reward_receipts.filter(p=>p.source==='battle').length,proof.attempts.length);
