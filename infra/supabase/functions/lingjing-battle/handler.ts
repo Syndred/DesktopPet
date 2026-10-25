@@ -15,7 +15,7 @@ type Row = Record<string, any>;
 const table={rooms:'lingjing_battle_rooms',invites:'lingjing_battle_invites',actions:'lingjing_battle_actions',rounds:'lingjing_battle_rounds',commands:'lingjing_battle_commands',members:'lingjing_battle_members'};
 const moves=new Set(['normal_attack','element_attack','dodge','ultimate']);
 const elements=new Set(['metal','wood','earth','water','fire']);
-const denied=new Set(['ROOM_FORBIDDEN','INVITE_FORBIDDEN','SELF_DUEL_FORBIDDEN','PET_OWNER_MISMATCH','PET_ROOM_MISMATCH','ACTOR_OWNER_MISMATCH','TARGET_OWNER_MISMATCH','OWNER_MISMATCH']);
+const denied=new Set(['ROOM_FORBIDDEN','INVITE_FORBIDDEN','SELF_DUEL_FORBIDDEN','PET_OWNER_MISMATCH','PET_ROOM_MISMATCH','ACTOR_OWNER_MISMATCH','TARGET_OWNER_MISMATCH','OWNER_MISMATCH','GLOBAL_SERIAL_SCOPE_REVOKED','GLOBAL_SERIAL_SCOPE_CONFLICT']);
 const conflicts=new Set(['ACTION_ID_REUSED','ACTION_LOCKED','INVITE_CONFLICT','INVITE_ALREADY_RECEIVED','ROOM_FULL','ROOM_NOT_WAITING','ROUND_CONFLICT','BATTLE_IN_PROGRESS','BATTLE_UNFINISHED','BATTLE_RULES_UNSUPPORTED']);
 const authCodes=new Set(['AUTH_REQUIRED','AUTH_INVALID','SESSION_REVOKED','DEVICE_SESSION_REQUIRED','DEVICE_REQUIRED','IDENTITY_REQUIRED']);
 const codeOf=(error:unknown)=>{
@@ -42,6 +42,18 @@ export function createBattleHandler(deps:BattleDependencies) {
     const result=await deps.admin.rpc(name,input);
     if(result.error){const code=codeOf(result.error);fail(code,authCodes.has(code)?401:denied.has(code)?403:conflicts.has(code)?409:503);}
     return result.data as Row;
+  };
+  const displayMetadata=async(actor:ActorContext,roomIds:string[])=>rpc('lingjing_battle_serial_views',{
+    // Explicit projection keeps the SDK client, headers and future actor fields
+    // out of RPC JSON. Only the existing server-verified caller is accepted.
+    p_actor:{schemaVersion:actor.schemaVersion,authority:actor.authority,authKind:actor.authKind,
+      authUserId:actor.authUserId,ownerAccountId:actor.ownerAccountId,deviceId:actor.deviceId,sessionId:actor.sessionId},
+    p_room_ids:roomIds,
+  });
+  const optionalDisplayMetadata=async(actor:ActorContext,roomId:string)=>{
+    // A display read after a committed action must never turn that action into
+    // a reported failure or invite a duplicate submission. Null means pending.
+    try{return await displayMetadata(actor,[roomId]);}catch{return null;}
   };
   const pet=async(actor:ActorContext,id:string)=>{
     const value=await deps.resolvePet(actor,id);
@@ -86,7 +98,7 @@ export function createBattleHandler(deps:BattleDependencies) {
     if(input.beforeRound)query=query.lt('round_no',integer(input.beforeRound));
     const rounds=await must(query) as Row[];
     const pending=room.status==='active'?await must(deps.admin.from(table.actions).select('action_id,action_type,round_no').eq('room_id',room.id).eq('round_no',room.current_round).eq('actor_auth_uid',actor.authUserId).eq('owner_account_id',actor.ownerAccountId).maybeSingle()) as Row|null:null;
-    return {room:roomDto(room),rounds:rounds.sort((a,b)=>a.round_no-b.round_no),pendingAction:pending?{actionId:pending.action_id,action:pending.action_type,roundNo:pending.round_no,uncertain:false}:null};
+    return {room:roomDto(room),rounds:rounds.sort((a,b)=>a.round_no-b.round_no),pendingAction:pending?{actionId:pending.action_id,action:pending.action_type,roundNo:pending.round_no,uncertain:false}:null,displayMetadata:await optionalDisplayMetadata(actor,room.id)};
   }
   async function invitations(actor:ActorContext) {
     const rows=await must(actor.client.from(table.invites).select('*').order('created_at',{ascending:false}).limit(100)) as Row[];
@@ -102,7 +114,13 @@ export function createBattleHandler(deps:BattleDependencies) {
     if(['userId','ownerAccountId','sessionToken','actor','authUserId'].some(key=>Object.hasOwn(input,key)))fail('LEGACY_IDENTITY_REJECTED',400);
     let data:unknown;
     if(['start_training','get_training','get_active_training','training_action','leave_training'].includes(op))data=await deps.training(actor,input);
-    else if(op==='search_accounts') {
+    else if(op==='get_display_metadata') {
+      if(Object.keys(input).some(key=>!['op','roomIds'].includes(key))||!Array.isArray(input.roomIds)
+        ||input.roomIds.length<1||input.roomIds.length>20)fail('INVALID_COMMAND');
+      const roomIds=input.roomIds.map(id=>identifier(id).toLowerCase());
+      if(new Set(roomIds).size!==roomIds.length)fail('INVALID_COMMAND');
+      data=await displayMetadata(actor,roomIds);
+    } else if(op==='search_accounts') {
       const keyword=text(input.keyword??input.query,64),pattern=`%${keyword.toLowerCase().replace(/[\\%_]/g,'\\$&')}%`,limit=input.limit?integer(input.limit,1,20):20;
       if(keyword.length<2)fail('SEARCH_TOO_SHORT');
       const base=()=>deps.admin.from('lingjing_accounts').select('owner_id,account,username').eq('status','active').neq('owner_id',actor.ownerAccountId).limit(limit);
@@ -145,7 +163,7 @@ export function createBattleHandler(deps:BattleDependencies) {
       const roomId=identifier(input.roomId);await roomFor(actor,{roomId});await command(actor,'leave_room',input.actionId,{roomId},async()=>({roomId}));data=await snapshot(actor,{roomId});
     } else if(op==='claim_battle_settlement') {
       const roomId=identifier(input.roomId),petId=text(input.petId),room=await resolved(actor,await roomFor(actor,{roomId}));
-      data=await deps.settle(actor,room,petId);
+      data={...await deps.settle(actor,room,petId),displayMetadata:await optionalDisplayMetadata(actor,room.id)};
     } else fail('UNSUPPORTED_OP',400);
     return jsonResponse({ok:true,data});
   };

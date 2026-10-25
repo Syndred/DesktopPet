@@ -92,6 +92,7 @@ const tests = [
   'apps/pc-app/runtime/features/discovery/tests/cloud-runtime.test.mjs',
   'apps/pc-app/runtime/features/discovery/tests/global-serial.test.mjs',
   'apps/pc-app/runtime/features/battle/tests/cloud-battle-sql.test.mjs',
+  'apps/pc-app/runtime/features/battle/tests/serial-views-sql.test.mjs',
   'apps/pc-app/runtime/features/battle/tests/authority-save.test.mjs',
   'apps/pc-app/runtime/features/battle/tests/trusted-pet.test.mjs',
   'apps/pc-app/runtime/features/resources/verification/storage-rls-sql.test.mjs',
@@ -117,8 +118,13 @@ try {
     'deno', 'test', '--no-config', '--node-modules-dir=none',
     '--lock=infra/supabase/functions/lingjing-resources/deno.lock', '--frozen', '--no-prompt', `--allow-read=${root}`,
     'infra/supabase/functions/lingjing-resources/package.test.ts']);
+  await run('battle-display-deno', process.execPath, [npmCli, 'exec', '--yes', '--package=deno@2.9.6', '--',
+    'deno', 'test', '--no-config', '--node-modules-dir=none',
+    '--lock=infra/supabase/functions/_shared/deno.lock', '--frozen', '--no-prompt',
+    'infra/supabase/functions/lingjing-battle/handler.test.ts',
+    'infra/supabase/functions/lingjing-battle/serial-views.test.ts']);
   report.passed = true;
-  console.log(`Cloud source checks passed (${tests.length} Node test files and 5 local Deno validators; strict migrations: ${!allowLegacyDrafts}).`);
+  console.log(`Cloud source checks passed (${tests.length} Node test files and local Deno validators; strict migrations: ${!allowLegacyDrafts}).`);
 } catch (error) {
   report.error = error.message;
   console.error(error.message);
