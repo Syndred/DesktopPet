@@ -8,7 +8,7 @@ let store: ReturnType<typeof createDiscoveryStore> | undefined;
 Deno.serve(withActor(async (request, actor) => {
   store ??= createDiscoveryStore(createAdminClient());
   const policy = await store.location(actor, 'policy', {});
-  const effectiveActor = Object.freeze({ ...actor, allowSimulatedLocation: policy.allowSimulatedLocation === true,
-    ...(policy.allowSimulatedLocation === true ? { scenarioId: policy.scenarioId } : {}) });
+  const effectiveActor = Object.freeze(Object.defineProperty({ ...actor, allowSimulatedLocation: policy.allowSimulatedLocation === true,
+    ...(policy.allowSimulatedLocation === true ? { scenarioId: policy.scenarioId } : {}) }, 'client', { value: actor.client, enumerable: false }));
   return createDiscoveryHandler({ requireActor: async () => effectiveActor, store })(request);
 }));
