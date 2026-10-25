@@ -216,6 +216,7 @@ class BattleFeatureService {
     if (!opponent) throw fail('ELEMENT_ROSTER_MISSING', `${ELEMENT_NAMES[payload.enemyElement]}系伙伴尚未就绪`);
     if(this.isCloud(owner))return this.serial(owner,async()=>{
       this.user(owner);this.ownedPet(owner,payload.petId);
+      await this.selectPet({petId:payload.petId,actionId:`${text(payload.actionId,'操作编号')}:selection`},{ownerAccountId:owner});this.assertOwner(owner);
       const response=await this.cloudCommand(owner,'training-start',{petId:payload.petId,enemyElement:payload.enemyElement},actionId=>this.online.invoke('start_training',{actionId,petId:payload.petId,enemyElement:payload.enemyElement}),payload.actionId);
       const current=await this.online.invoke('get_training',{sessionId:response.session.id});return this.saveCloudTraining(owner,current);
     });
@@ -274,7 +275,7 @@ class BattleFeatureService {
     const companions = this.services.get("companions");
     if (companions?.select) {
       const result = companions.select(owner, { actionId: text(payload.actionId, "操作编号"), petId: pet.petId, slot: "battlePetId" });
-      if(result?.then)return result.then(value=>{if(value?.ok===false)throw fail(value.code,value.message);return pet;});
+      if(result?.then)return result.then(value=>{this.assertOwner(owner);if(value?.ok===false)throw fail(value.code,value.message);return this.ownedPet(owner,payload.petId);});
       if (result?.ok === false) throw fail(result.code, result.message);
     }
     return pet;

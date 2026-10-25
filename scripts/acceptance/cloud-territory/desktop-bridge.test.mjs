@@ -17,7 +17,7 @@ function open(path,invoke){
   const db=new DatabaseSync(path);db.exec('PRAGMA journal_mode=WAL');migrateCompanions(db);for(const migration of battleMigrations)db.exec(migration.sql);
   const garden=new GardenService({db}),companions=new CompanionsService({db}),registry=new Map();
   const actor={schemaVersion:1,authority:'live',authKind:'supabase',ownerAccountId:owner,authUserId:'591f7b3d-fefb-443f-bb54-987a48d99da5',deviceId:'a0f012bb-86dd-4970-993b-e51405d71142',sessionId:'927a6c28-1639-4e0a-9a25-333ebc509598',url:'https://jbvrdmrkwpznbrvteive.supabase.co',publishableKey:'sb_publishable_fixture',invoke};
-  let plays=0;const services={db,get:name=>registry.get(name),provide:(name,value)=>registry.set(name,value),session:{getOwnerAccountId:()=>owner},events:{emit(){}},legacy:{onlineDuelService:{onEvent:()=>()=>{}}}};
+  let plays=0;const services={db,get:name=>registry.get(name),provide:(name,value)=>registry.set(name,value),session:{getOwnerAccountId:()=>owner},events:{emit(){},on:()=>()=>{}},legacy:{onlineDuelService:{onEvent:()=>()=>{},useCloudTransport(){}}}};
   registry.set('accounts',{privateSession:()=>({provider:'runtime',authKind:'supabase',ownerAccountId:owner})});registry.set('cloudActor',{requireActor:async()=>actor});registry.set('companions',{playAction:()=>{plays++;}});
   const cloud=new CloudGardenAuthority(services,garden);registry.set('garden',{cloudBattles:{owns:(payload,ctx)=>cloud.ownsBattle(payload,ctx),invoke:(name,payload,ctx)=>cloud.battleCommand(name,payload,ctx)}});
   return {db,garden,companions,registry,services,cloud,plays:()=>plays};
@@ -75,12 +75,14 @@ test('runtime fixture: existing battle command wrapper routes cloud sessions rem
   try{
     const input={actionId:'runtime:challenge',sessionOwnerAccountId:owner,petId:data.pets[0].petId,territoryId:region.id,expectedTerritoryRevision:1,expectedRevision:0};
     const start=await f.cloud.command(context,'territoryChallenge',input);assert.equal(start.ok,true);assert.equal(proofs[0].purpose,'territory:challenge');assert.equal(proofs[0].reference,region.id);
+    const originalSession=structuredClone(battle);
     await f.cloud.command(context,'territoryChallenge',input);assert.equal(proofs.length,1);
     const originalGrowth=JSON.stringify(data.pets.map(p=>p.growth));
     for(let i=0;i<150&&battle.status==='active';i++){
       const response=await feature.commands.act({sessionId:battle.id,actionId:`runtime:act:${i}`,expectedRound:battle.snapshot.round+1,action:battle.snapshot.player.anger>=50?'ultimate':'normal_attack'},context);assert.equal(response.ok,true);assert.equal(response.data.context.authority,'cloud');
     }
     assert.equal(battle.status,'finished');assert.equal(f.db.prepare('select count(*) count from battle_reward_receipts').get().count,0);assert.equal(JSON.stringify(f.companions.snapshot(owner).data.pets.map(p=>p.growth)),originalGrowth);
+    assert.equal(f.cloud.cache(context,originalSession,'active').snapshot.round,battle.snapshot.round,'an earlier concurrent read cannot roll back committed server rounds');
     const final=await feature.commands.settleContext({sessionId:battle.id,actionId:'runtime:confirm'},context);assert.equal(final.ok,true);assert.equal(final.data.resultPath,'/garden');assert.equal(proofs.length,battle.winner==='player'?2:1);
     assert.equal(f.db.prepare('select count(*) count from garden_reward_receipts').get().count,1);assert.equal(f.db.prepare('select count(*) count from battle_reward_receipts').get().count,0);
     const updated=JSON.stringify(createCompanionBackupAdapter(f.db).export(owner));await feature.commands.settleContext({sessionId:battle.id,actionId:'runtime:confirm'},context);assert.equal(JSON.stringify(createCompanionBackupAdapter(f.db).export(owner)),updated);

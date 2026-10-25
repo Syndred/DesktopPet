@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "at": "2026-10-25T03:44:42.649Z",
+  "at": "2026-10-25T03:52:55.355Z",
   "projectRef": "jbvrdmrkwpznbrvteive",
   "url": "https://jbvrdmrkwpznbrvteive.supabase.co",
   "plan": "free",
@@ -106,6 +106,18 @@
       "name": "lingjing_territory_receipt_operator",
       "source": "infra/supabase/migrations/20261025034225_lingjing_territory_receipt_operator.sql",
       "bookkeepingAligned": false
+    },
+    {
+      "version": "20261025034744",
+      "name": "lingjing_battle_jwt_rooms",
+      "source": "infra/supabase/migrations/20261025020540_lingjing_battle_jwt_rooms.sql",
+      "bookkeepingAligned": false
+    },
+    {
+      "version": "20261025034748",
+      "name": "lingjing_battle_authority_save",
+      "source": "infra/supabase/migrations/20261025024552_lingjing_battle_authority_save.sql",
+      "bookkeepingAligned": false
     }
   ],
   "functions": [
@@ -188,18 +200,18 @@
       "slug": "discovery",
       "name": "discovery",
       "status": "ACTIVE",
-      "version": 2,
+      "version": 3,
       "created_at": 1792897606497,
-      "updated_at": 1792899698808,
+      "updated_at": 1792900256491,
       "verify_jwt": false,
       "import_map": false,
-      "entrypoint_path": "file:///tmp/user_fn_jbvrdmrkwpznbrvteive_c233809a-4db5-4a8a-a515-ff17934dfcd0_2/source/infra/supabase/functions/discovery/index.ts",
-      "ezbr_sha256": "6a7331007d8b96176a732e914b1c4dd1574016f99ce99236d2b219b6f0b6af0a",
+      "entrypoint_path": "file:///tmp/user_fn_jbvrdmrkwpznbrvteive_c233809a-4db5-4a8a-a515-ff17934dfcd0_3/source/infra/supabase/functions/discovery/index.ts",
+      "ezbr_sha256": "8aff9535f9931e3606f846d1c8ffb3ffb85703e12304b3a97c89a23d17df715c",
       "source": {
         "function": "discovery",
         "entrypoint": "infra/supabase/functions/discovery/index.ts",
-        "sourceCommit": "088dbbe17b6251c33816b41f808f8f4d46dd147c",
-        "sourceSha256": "468cf25b4941af5abc1b68bd97caab3f14d76d2717507cc591f5ea1f11edd899",
+        "sourceCommit": "b1d6b8c2111328a37377d0ff493575ade3b8097c",
+        "sourceSha256": "e78ac6da349b4c0c4ed3519b5ac5dc03b1af8ff44fab5b07a32b9015aa43f78e",
         "files": [
           {
             "name": "infra/supabase/functions/_shared/battle-core.js",
@@ -215,7 +227,7 @@
           },
           {
             "name": "infra/supabase/functions/discovery/authority.mjs",
-            "bytes": 11585
+            "bytes": 12121
           },
           {
             "name": "infra/supabase/functions/discovery/deno.json",
@@ -231,7 +243,7 @@
           },
           {
             "name": "infra/supabase/functions/discovery/handler.mjs",
-            "bytes": 5295
+            "bytes": 5455
           },
           {
             "name": "infra/supabase/functions/discovery/index.ts",
@@ -243,7 +255,7 @@
           },
           {
             "name": "infra/supabase/functions/discovery/store.mjs",
-            "bytes": 7528
+            "bytes": 8021
           }
         ],
         "external": [
@@ -446,6 +458,43 @@
         ],
         "warnings": []
       }
+    },
+    {
+      "id": "e86dccfa-a9a9-4a27-b914-33472c1331d1",
+      "slug": "lingjing-battle",
+      "name": "lingjing-battle",
+      "status": "ACTIVE",
+      "version": 1,
+      "created_at": 1792900070663,
+      "updated_at": 1792900070663,
+      "verify_jwt": false,
+      "import_map": false,
+      "entrypoint_path": "file:///tmp/user_fn_jbvrdmrkwpznbrvteive_e86dccfa-a9a9-4a27-b914-33472c1331d1_1/source/infra/supabase/functions/lingjing-battle/index.ts",
+      "ezbr_sha256": "288ca3d32680ad98bae3e437c7926e825d679efc725c068001f6cc7adc6c2f56",
+      "source": {
+        "function": "lingjing-battle",
+        "entrypoint": "infra/supabase/functions/lingjing-battle/index.ts",
+        "sourceCommit": "dec7bea828d18bfc87941ff1aaebeff87e4e9601",
+        "sourceSha256": "c055bddff1900d17ec320395c9fe3934c993faa01f5d9c15dc2ad344e9a1d25d",
+        "files": [
+          {
+            "name": "infra/supabase/functions/_shared/lingjing-auth.ts",
+            "bytes": 7618
+          },
+          {
+            "name": "infra/supabase/functions/lingjing-battle/index.ts",
+            "bytes": 286
+          },
+          {
+            "name": "infra/supabase/functions/lingjing-battle/runtime.generated.mjs",
+            "bytes": 84602
+          }
+        ],
+        "external": [
+          "npm:@supabase/supabase-js@2.98.0"
+        ],
+        "warnings": []
+      }
     }
   ],
   "storage": {
@@ -488,12 +537,20 @@
     "garden": "Actual HTTPS planting/replay/stale-revision/reward-denial and B readback passed",
     "territory": "Deployed; full signed-location/concurrency/native acceptance pending",
     "immutableSessionRevocation": "Actual managed-valid old SID remains denied after replacement; B remains live",
-    "verifiedResources": "Service-side private bytes verifier and atomic v2 reference registration deployed; actual publish/native hydration verification in progress",
-    "freshActor": "Canonical owner lock, managed Auth/user/session rows, immutable revoked SID and exact device binding rechecked in domain transaction; no extra Auth-table grants"
+    "verifiedResources": "Actual server publish/replay/other-account404/fake-index422/revoked401 passed; v2 adapter compatible and root11 native checks passed; preferences/native full sync in progress",
+    "freshActor": "Canonical owner lock, managed Auth/user/session rows, immutable revoked SID and exact device binding rechecked in domain transaction; no extra Auth-table grants",
+    "battle": "Deployed-v1: guarded friend rooms, server training and common-save settlement; unresolved choices private; actual Realtime/native acceptance in progress"
   },
   "acceptanceEvidence": {
     "serviceGuard": "docs/implementation/evidence/cloud/2026-10-25/service-actor-deployment.json",
     "companionCommands": "docs/implementation/evidence/cloud/2026-10-25/companion-full-http-independent.json",
-    "expiredSignedJwt": "docs/implementation/evidence/cloud/2026-10-25/expired-signed-jwt-http.json"
+    "expiredSignedJwt": "docs/implementation/evidence/cloud/2026-10-25/expired-signed-jwt-http.json",
+    "resources": "docs/implementation/evidence/resources/cloud-upgrade/live-authority/evidence.json",
+    "customAppearance": "docs/implementation/evidence/resources/cloud-upgrade/live-authority/companion-joint.json"
+  },
+  "publicBoundary": {
+    "passed": 14,
+    "total": 14,
+    "evidence": "docs/implementation/evidence/cloud/2026-10-25/public-boundary-http.json"
   }
 }

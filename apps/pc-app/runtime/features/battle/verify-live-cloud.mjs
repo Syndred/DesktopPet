@@ -8,8 +8,11 @@ import { DatabaseSync } from 'node:sqlite';
 
 // Credentials are an ignored, coordinator-controlled input file, never CLI literals/evidence.
 const input=process.env.LINGJING_CLOUD_BATTLE_INPUT;
+const friendsOnly=process.argv.includes('--friends-only');
 assert.ok(input,'Set LINGJING_CLOUD_BATTLE_INPUT to the private acceptance input file');
-const config=JSON.parse(readFileSync(resolve(input),'utf8'));assert.equal(config.testOnly,true,'Designated test accounts only');
+const inputBytes=readFileSync(resolve(input),'utf8');
+const decoded=input.endsWith('.dpapi')?execFileSync('powershell.exe',['-NoProfile','-NonInteractive','-Command',"[Console]::InputEncoding=[Text.Encoding]::UTF8;[Console]::OutputEncoding=[Text.UTF8Encoding]::new($false);Add-Type -AssemblyName System.Security;[Text.Encoding]::UTF8.GetString([Security.Cryptography.ProtectedData]::Unprotect([Convert]::FromBase64String([Console]::In.ReadToEnd()),$null,[Security.Cryptography.DataProtectionScope]::CurrentUser))"],{input:inputBytes,encoding:'utf8',windowsHide:true}):inputBytes;
+const config=JSON.parse(decoded);assert.equal(config.testOnly,true,'Designated test accounts only');
 assert.equal(config.projectRef,'jbvrdmrkwpznbrvteive');
 assert.equal(config.url,'https://jbvrdmrkwpznbrvteive.supabase.co');
 assert.ok(config.publishableKey?.startsWith('sb_publishable_'),'Only the verified modern publishable key is accepted');
@@ -46,7 +49,7 @@ OnlineDuelService.prototype.subscribeRoom=async function(...args){globalThis.__l
 require('./apps/pc-app/dist/main/index.cjs');
 `);
 const apps=new Map(),profiles={},errors=[],steps=[];
-const proof={runId,at:new Date().toISOString(),provenance:'real-HTTPS-and-Realtime-acceptance',projectRef:config.projectRef,origin:config.url,machineCount:1,physicalDevices:1,concurrentDuelPlayers:2,independentProfiles:3,statement:'Two isolated duel clients plus a fresh same-account recovery client on the same Windows host; not two physical devices. Test faults cancel a real response read and close the real SDK socket; no mock authority or simulated location is used.',sourceCommit:execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim(),sourceDirty:execFileSync('git',['status','--short'],{encoding:'utf8'}).trim(),build:JSON.parse(readFileSync('apps/pc-app/dist/build-manifest.json','utf8')),steps,errors};
+const proof={runId,at:new Date().toISOString(),provenance:'real-HTTPS-and-Realtime-acceptance',scope:friendsOnly?'friend-duel-only; training/device-revoke remain pending':'friend-duel, training, recovery and device-revoke',projectRef:config.projectRef,origin:config.url,machineCount:1,physicalDevices:1,concurrentDuelPlayers:2,independentProfiles:friendsOnly?2:3,statement:'Two isolated duel clients plus an optional fresh same-account recovery client on the same Windows host; not two physical devices. Test faults cancel a real response read and close the real SDK socket; no mock authority or simulated location is used.',sourceCommit:execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim(),sourceDirty:execFileSync('git',['status','--short'],{encoding:'utf8'}).trim(),build:JSON.parse(readFileSync('apps/pc-app/dist/build-manifest.json','utf8')),steps,errors};
 const save=()=>writeFileSync(join(output,'evidence.json'),JSON.stringify(proof,null,2));
 const record=(name,details={})=>{steps.push({at:new Date().toISOString(),name,...details});save();console.log(name);};
 const api=async(page,feature,command,payload={})=>{const result=await page.evaluate(({feature,command,payload})=>window.lingjing.invoke(feature,command,payload),{feature,command,payload});assert.equal(result.ok,true,`${feature}.${command}: ${result.code} ${result.message}`);return result.data;};
@@ -70,7 +73,7 @@ async function screen(page,waiting=false) {
   await page.waitForFunction(count=>document.querySelectorAll('.battle-stage .resource-stage[data-status="ready"]').length===count,waiting?1:2);
   const id=await page.locator('[data-battle-screen]').getAttribute('data-session-id'),session=await api(page,'battle','snapshot',{sessionId:id});assert.equal(session.mode,'friend');assert.notEqual(session.context?.authority,'simulated');return session;
 }
-async function friendLobby(client){await api(client.page,'battle','selectPet',{petId:config.accounts[client.accountIndex].petId,actionId:randomUUID()});await route(client.page,'/battle/friends');await client.page.locator('.battle-friends-layout').waitFor();await client.page.locator('.battle-invitations').getByRole('button',{name:'刷新',exact:true}).click();}
+async function friendLobby(client){const overview=await api(client.page,'battle','overview');assert.equal(overview.selectedPetId,config.accounts[client.accountIndex].petId,'Use the existing legitimately cloud-selected pet; no local-only selection is injected');await route(client.page,'/battle/friends');await client.page.locator('.battle-friends-layout').waitFor();await client.page.locator('.battle-invitations').getByRole('button',{name:'刷新',exact:true}).click();}
 async function connection(client) {
   const result=await client.app.evaluate(()=>{const online=globalThis.__liveBattle||globalThis.__liveBattleServices?.legacy?.onlineDuelService;if(!online)throw new Error('No actual OnlineDuelService observed');const value=online.getStatus();return {origin:online.supabaseUrl,authKind:value.authKind,actor:value.actor?{authority:value.actor.authority,authUserId:value.actor.authUserId,ownerAccountId:value.actor.ownerAccountId,deviceId:value.actor.deviceId,sessionId:value.actor.sessionId}:null,socket:online.client.realtime.connectionState(),channel:online.channel?.state,manualToken:online.client.realtime._isManualToken()};});
   assert.equal(result.origin,config.url);assert.equal(result.authKind,'supabase');assert.equal(result.actor.authority,'live');assert.equal(result.actor.ownerAccountId,client.profile.owner);assert.equal(result.manualToken,false);return result;
@@ -151,6 +154,7 @@ try {
   assert.equal(observed[0].length,round);assert.equal(observed[1].length,round);record('two completed cloud reports survive native restart; repeated settlement leaves both inventories/growth unchanged',{rounds:round,leftReward:left.reward,rightReward:right.reward});
   // The third isolated profile is the first player's account, used only for
   // recovery/growth readback. It never becomes an opponent for that owner.
+  if(!friendsOnly) {
   host={app:apps.get(0),page:await apps.get(0).firstWindow(),index:0,accountIndex:0,profile:profiles[0]};
   const guestApp=apps.get(1);if(guestApp){await guestApp.close();apps.delete(1);}
   let training=await api(host.page,'battle','startTraining',{actionId:randomUUID(),petId:config.accounts[0].petId,enemyElement:'fire'});
@@ -172,6 +176,7 @@ try {
   const trainingReport=await api(host.page,'battle','getReport',{reportId:training.reportId});assert.deepEqual(await api(recovery.page,'battle','getReport',{reportId:training.reportId}),trainingReport);
   await screenshot(host.page,'cloud-training-finished');record('actual cloud training and a second same-owner native client share canonical growth and complete report',{sessionId:training.id,rounds:count,reward:training.reward,deviceIds:[hostActor.actor.deviceId,recoveryActor.actor.deviceId]});
   await revokeAndVerify(host,recovery,left.room.id);
+  }
   assert.deepEqual(errors,[]);proof.passed=true;
 } catch(error){failure=error;proof.passed=false;proof.failure={message:error.message,stack:error.stack};for(const [index,app] of apps)try{await screenshot(await app.firstWindow(),`failure-${index+1}`);}catch{}}
 finally {

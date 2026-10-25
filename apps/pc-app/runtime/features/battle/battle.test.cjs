@@ -40,6 +40,30 @@ function setup(folder = mkdtempSync(join(tmpdir(), "lingjing-battle-"))) {
   return { folder, db, legacy, services, service, owner, context, companionCommands, close() { service.dispose(); db.close(); } };
 }
 
+test('SCRIPTED cloud selection: training waits for delayed canonical selection before any start request or battle write',async()=>{
+  const f=setup();try {
+    const companions=f.services.get('companions'),pet=companions.listPets(f.owner)[0],calls=[];let finishSelection;
+    f.services.provide('accounts',{identity:()=>null,getOwnerAccountId:()=>f.owner,privateSession:()=>({id:f.owner,ownerAccountId:f.owner,authKind:'supabase',account:'scripted-selection'})});
+    f.service.online.cloudProvider=async()=>{};companions.select=()=>new Promise(resolve=>{finishSelection=resolve;});
+    const player=f.service.ownedPet(f.owner,pet.petId),session={id:'battle-scripted-delayed-selection',mode:'training',status:'active',startedAt:new Date().toISOString(),player,enemy:{...player,petId:'training-fire',element:'fire'},snapshot:createSession('water','fire'),rounds:[],winner:null,pendingAction:null,historyComplete:true,context:{authority:'supabase',cloudUserId:f.owner}};
+    f.service.online.invoke=async op=>{calls.push(op);return {session};};
+    const pending=f.service.startTraining({petId:pet.petId,enemyElement:'fire',actionId:'scripted-delayed-cloud-start'},f.context);
+    await new Promise(resolve=>setImmediate(resolve));assert.equal(typeof finishSelection,'function');assert.deepEqual(calls,[]);assert.equal(f.service.store.latest(f.owner),null);
+    finishSelection({ok:true});const started=await pending;assert.equal(started.id,session.id);assert.deepEqual(calls,['start_training','get_training']);
+  } finally{f.close();}
+});
+
+test('SCRIPTED cloud selection: delayed rejection leaves no cloud start request or battle/action receipt',async()=>{
+  const f=setup();try {
+    const companions=f.services.get('companions'),pet=companions.listPets(f.owner)[0];let rejectSelection,requests=0;
+    f.services.provide('accounts',{identity:()=>null,getOwnerAccountId:()=>f.owner,privateSession:()=>({id:f.owner,ownerAccountId:f.owner,authKind:'supabase',account:'scripted-rejection'})});
+    f.service.online.cloudProvider=async()=>{};companions.select=()=>new Promise(resolve=>{rejectSelection=resolve;});f.service.online.invoke=async()=>{requests++;throw new Error('Must not request a training');};
+    const pending=f.service.startTraining({petId:pet.petId,enemyElement:'fire',actionId:'scripted-rejected-cloud-start'},f.context);
+    await new Promise(resolve=>setImmediate(resolve));rejectSelection({ok:false,code:'CLOUD_SELECTION_REJECTED',message:'原选择未确认'});await assert.rejects(pending,error=>error.code==='CLOUD_SELECTION_REJECTED');
+    assert.equal(requests,0);assert.equal(f.service.store.latest(f.owner),null);assert.equal(f.db.prepare('SELECT count(*) n FROM battle_action_receipts WHERE owner_account_id=?').get(f.owner).n,0);
+  } finally{f.close();}
+});
+
 test("desktop and edge formulas agree for all 400 five-element/action pairs and stacked effects", () => {
   const source = readFileSync(resolve(__dirname, "../../../../../infra/supabase/functions/duel-online/index.ts"), "utf8").trimStart().replace(/^import[^\n]+\n/, "");
   const scope = { Deno: { serve() {} }, console, crypto: globalThis.crypto };

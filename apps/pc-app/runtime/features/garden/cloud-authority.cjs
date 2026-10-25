@@ -70,7 +70,7 @@ class CloudGardenAuthority{
       // Only08 can advance the complete-save CAS base. A domain readback may
       // retain unrelated local chat/settings work without pretending it synced.
       try{this.services.get('accounts')?.sync?.acceptAuthoritativeReadback?.(owner,{envelope,cloudRevision:remote.accountRevision});}
-      catch(error){if(!['CLOUD_LOCAL_CONFLICT','SYNC_PENDING','SYNC_BUSY'].includes(error.code))throw error;}
+      catch(error){if(!['CLOUD_LOCAL_CONFLICT','SYNC_PENDING','SYNC_BUSY','BACKUP_MODULE_UNSUPPORTED'].includes(error.code))throw error;}
       return remote.snapshot;
     });
   }
@@ -118,9 +118,11 @@ class CloudGardenAuthority{
   cache(context,session,status){
     if(!session)return null;const owner=context.ownerAccountId;
     if(session.mode!=='territory'||session.context?.authority!=='cloud'||session.context.ownerAccountId!==owner||!session.id?.startsWith('btl-'))problem('CLOUD_RECEIPT_MISMATCH','云端战斗归属不一致');
-    const previous=this.battles.session(owner,session.id),pending=previous?.pendingAction;
+    const previous=this.battles.session(owner,session.id),pending=previous?.pendingAction,cloudRevision=session.cloudRevision??session.revision;
+    const incomingStatus=status||session.cloudSettlementStatus||'active',rank=value=>({active:0,finished:1,settled:2,superseded:2}[value]??0);
+    if(previous&&((previous.cloudRevision||0)>cloudRevision||previous.cloudRevision===cloudRevision&&rank(previous.cloudSettlementStatus)>rank(incomingStatus)))return previous;
     const request=pending&&this.db.prepare('SELECT status FROM garden_cloud_requests WHERE owner_account_id=? AND action_id=?').get(owner,pending.actionId);
-    const value={...session,cloudSettlementStatus:status||session.cloudSettlementStatus||'active',pendingAction:pending&&request?.status!=='conflict'&&session.snapshot.round<pending.roundNo?pending:session.pendingAction};
+    const value={...session,cloudRevision,cloudSettlementStatus:incomingStatus,pendingAction:pending&&request?.status!=='conflict'&&session.snapshot.round<pending.roundNo?pending:session.pendingAction};
     return this.garden.transaction(()=>{const saved=this.battles.save(owner,value);
       if(saved.status==='finished')this.battles.saveReport(owner,{...saved,id:saved.id,sessionId:saved.id,endedAt:saved.endedAt||saved.updatedAt});
       return saved;});
