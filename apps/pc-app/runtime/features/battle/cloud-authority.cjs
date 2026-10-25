@@ -47,6 +47,7 @@ class BattleCloudAuthority {
       // battle's pending settlement, so replace exactly its matching projection.
       this.db.prepare('UPDATE battle_sessions SET room_id=?,status=?,data_json=?,revision=?,updated_at=? WHERE owner_account_id=? AND id=?').run(session.room_id,session.status,session.data_json,session.revision,session.updated_at,owner,session.id);
       this.db.prepare('UPDATE battle_reports_v2 SET data_json=?,ended_at=? WHERE owner_account_id=? AND id=?').run(report.data_json,report.ended_at,owner,report.id);
+      battle.acceptAuthorityProjection?.(owner,b,{sessionId:session.id,actionId:receiptKey,revision:remote.revision,checksum:remote.checksum});
     };
     // The shared connection exposes better-sqlite3 transactions in production.
     // SAVEPOINT also composes with supported node:sqlite acceptance fixtures.
