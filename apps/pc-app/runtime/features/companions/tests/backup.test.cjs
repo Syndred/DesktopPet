@@ -116,3 +116,21 @@ test('verified alias migration retains source and target-before history, stable 
     assert.deepEqual(b.adapter.export(target),migrated);
   }finally{a.db.close();b.db.close();cleanup(folder);}
 });
+
+test('two old accounts can restore the same original pet ID without renaming, collision or cross-account receipts',()=>{
+  const folder=mkdtempSync(join(tmpdir(),'companion-cloud-owner-pair-')),a=client(folder,'a'),b=client(folder,'b');
+  try{
+    const first='original-owner-a',second='original-owner-b';
+    for(const[who,name,level]of[[first,'A账号原宠物',8],[second,'B账号原宠物',4]])a.service.importLegacyInventory(who,{pets:[{id:'pet-001',name:{zh:name},model:'retained-old-model.glb',level,experience:31,chats:[{id:'same-old-message-id',content:name+'的历史'}]}]});
+    for(const who of[first,second])b.adapter.restore(who,a.adapter.export(who),'merge');
+    assert.equal(b.service.requirePet(first,'pet-001').growth.level,8);assert.equal(b.service.requirePet(second,'pet-001').growth.level,4);
+    for(const[who,name]of[[first,'A单独的新名字'],[second,'B单独的新名字']]){
+      const input={actionId:'same-action-different-owner',petId:'pet-001',name};
+      assert.equal(b.service.rename(who,input).data.pet.ownerAccountId,who);
+      assert.equal(b.service.rename(who,input).duplicate,true);
+    }
+    assert.equal(b.service.requirePet(first,'pet-001').name,'A单独的新名字');assert.equal(b.service.requirePet(second,'pet-001').name,'B单独的新名字');
+    assert.equal(b.db.prepare('SELECT COUNT(*) n FROM companion_pets WHERE pet_id=?').get('pet-001').n,2);
+    const kept=b.adapter.export(second);assert.throws(()=>b.adapter.restore(second,a.adapter.export(first),'replace'),error=>error.code==='COMPANION_BACKUP_INVALID');assert.deepEqual(b.adapter.export(second),kept);
+  }finally{a.db.close();b.db.close();cleanup(folder);}
+});

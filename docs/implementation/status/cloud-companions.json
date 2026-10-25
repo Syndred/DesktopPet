@@ -13,6 +13,7 @@
     "gardenIntegrationNeed": "Current garden/cloud-domain.mjs reads envelope.data.tables.companion_pets/accounts; new companion module data.tables must be supported in the same save/locked inventory transaction, preserving old generic format reads.",
     "identityCheckpoint": "Approved f81008c / implementation ee36030 merged. Stable text actor.ownerAccountId, authUserId and deviceId remain separate; no UUID/petId rewrite.",
     "identityIntegrationNeed": "Existing verified pre-Accounts aliases remain supported. Await explicit Accounts authorization hook if a linked legacy alias differs from the new Auth identity subject; no username or renderer owner matching.",
+    "criticalOwnerPetPair": "Old ownerA and ownerB can both own original pet-001. Draft08 20261025021759_lingjing_protected_save_cas.sql owned_pet_ids currently has global pet_id PK and commit_authority rejects same ID under another owner. Must use (owner_id,pet_id) composite ownership and owner-specific lookups before deployment; never rename legacy IDs. Two-owner actual SQLite backup regression added.",
     "protectedPersonalFieldsNeed": "Accounts shared CAS must permit validated names/desktop settings/independent selections while retaining authoritative pet identity/growth/capture/adoption receipts; checksum alone is not gameplay permission.",
     "mainOnlyAdapter": "services.get('companions').backupAdapter; registration pending Accounts verified legacy-envelope normalization"
   },
@@ -22,12 +23,13 @@
     "sourceFetchedAt": "2026-10-25T02:27:35Z",
     "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086; fully included; 0 commits behind after git fetch origin",
     "publicBaselineMerged": true,
-    "companionUnit": "6 local real-SQLite cases passed: two client files/reopen, original IDs and receipts, merge conflict/rollback, full old-table conversion, pre-module raw archives, raw archived animal history, verified alias source/target-before preservation",
+    "companionUnit": "7 local real-SQLite cases: two client files/reopen, original IDs and receipts, merge conflict/rollback, full old-table conversion, pre-module raw archives, raw archived animal history, verified alias source/target-before preservation, two owners retaining identical original pet IDs",
     "completeSaveInventory": "1 local actual BackupManager/Garden integration case passed: two client files, one food debit/one grown pet, replay and late-adapter failure rollback; explicit test registration only",
     "nativeCompatibility": "native:check passed Electron44.9.3/Node24 + better-sqlite3 13.0.3 N-API on same shared database; no shared node_modules rebuild",
     "nativeRestore": "Actual Electron44/production IPC restores same-revision off-screen coordinates, retains them across save timer/restart, and persists intentional drag; local marked QA, not HTTPS cloud",
     "focusedRegression": "23/23 passed on ca0c733: node --test apps/pc-app/runtime/features/companions/tests/*.test.cjs tests/foundation/owner-alias.test.cjs; later backup changes have their own targeted 7/7 checks",
     "latestBackupChecks": "7/7 targeted backup + actual complete-save/Garden integration checks passed after pre-module archive and locale-independent ordering support",
+    "ownerPairRegression": "7/7 backup.test.cjs passed after adding two original owners with pet-001 and separate growth/names/action receipts; foreign-owner restore rejected without changes",
     "nativeEvidence": "docs/implementation/evidence/companions/cloud-2026-10-25/native-restore.json (clean source ca0c733; run 3VhIVU)",
     "build": "npm run build:pc passed"
   },
@@ -71,6 +73,7 @@
   "remaining": [
     "production adapter registration after08 verified old-envelope normalization",
     "Accounts protected personal-field and verified alias integration",
+    "08 cloud owned-pet ownership must use owner+petId; global legacy petId uniqueness is incompatible",
     "Garden same-save inventory integration",
     "new Accounts real-HTTPS two-client conflict/offline/restart tests",
     "real HTTPS old-save restoration and independent client readback after coordinated deployment",
