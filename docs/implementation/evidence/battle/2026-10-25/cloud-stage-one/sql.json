@@ -1,0 +1,60 @@
+{
+  "at": "2026-10-25T02:16:07.679Z",
+  "provenance": "local-embedded-PostgreSQL-only",
+  "realCloudVerified": false,
+  "checks": [
+    "actual PostgreSQL invitation, acceptance, reserved membership, same-owner refusal and stable command receipt",
+    "RLS denies anonymous/nonparticipants, pending choices, direct client mutations, spoofed RPC actors and private-topic outsiders",
+    "shared versioned core resolves 8 immutable rounds, atomic rollback, duplicate commits and two pet-bound receipts",
+    "direct room/round REST-equivalent RLS and Realtime SELECT reject still-unexpired JWT claims after session revocation or account lock",
+    "all authority RPCs use fixed empty search_path, security invoker and service-only execution"
+  ],
+  "functions": [
+    {
+      "proname": "lingjing_battle_command",
+      "prosecdef": false,
+      "auth": false,
+      "anon": false
+    },
+    {
+      "proname": "lingjing_battle_commit_round",
+      "prosecdef": false,
+      "auth": false,
+      "anon": false
+    },
+    {
+      "proname": "lingjing_battle_claim_settlement",
+      "prosecdef": false,
+      "auth": false,
+      "anon": false
+    }
+  ],
+  "rounds": 8,
+  "rewards": [
+    {
+      "won": true,
+      "pet_id": "original-pet-a",
+      "room_id": "7bcfc683-e30a-4de0-8c46-05a312d20eb3",
+      "action_id": "battle:7bcfc683-e30a-4de0-8c46-05a312d20eb3:legacy-text-a",
+      "created_at": "2026-10-25T10:16:07.663+08:00",
+      "experience": 20,
+      "core_version": "five-elements-standard-v1/2026-10-25",
+      "rules_version": "five-elements-standard-v1",
+      "actor_auth_uid": "ddb1e8a0-8eb1-4236-9069-3b1f81a57101",
+      "owner_account_id": "legacy-text-a"
+    },
+    {
+      "won": false,
+      "pet_id": "original-pet-b",
+      "room_id": "7bcfc683-e30a-4de0-8c46-05a312d20eb3",
+      "action_id": "battle:7bcfc683-e30a-4de0-8c46-05a312d20eb3:legacy-text-b",
+      "created_at": "2026-10-25T10:16:07.665+08:00",
+      "experience": 5,
+      "core_version": "five-elements-standard-v1/2026-10-25",
+      "rules_version": "five-elements-standard-v1",
+      "actor_auth_uid": "b0c0279b-ba83-4e64-ba82-fa012a818a42",
+      "owner_account_id": "legacy-text-b"
+    }
+  ],
+  "passed": true
+}
