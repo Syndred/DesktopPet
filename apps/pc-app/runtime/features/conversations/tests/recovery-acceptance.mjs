@@ -35,7 +35,7 @@ try{
   await call('conversations','select',{petId:petOne.petId});
   await call('conversations','connection.save',{petId:null,connection:{provider:'openai_compatible',baseUrl,model:'qa-unavailable-local',contextChars:24000,maxOutputTokens:64},apiKey:'LOCAL-ONLY-QA-KEY',revision:0});
   await app.evaluate((_electron,baseUrl)=>{const original=globalThis.fetch;globalThis.__recoveryAttempts=0;globalThis.fetch=(...args)=>{if(String(typeof args[0]==='string'?args[0]:args[0]?.url).startsWith(baseUrl+'/'))globalThis.__recoveryAttempts++;return original(...args);};},baseUrl);
-  await chat();await page.getByLabel('给原伙伴发消息',{exact:true}).fill('QA：实际本机连接失败后的原消息');await page.getByRole('button',{name:'发送',exact:true}).click();
+  await chat();await page.locator(`#conversation-message[data-pet-id="${petOne.petId}"]`).fill('QA：实际本机连接失败后的原消息');await page.getByRole('button',{name:'发送',exact:true}).click();
   await waitUntil(async()=>(await call('conversations','snapshot')).messages.at(-1)?.status==='failed','actual local failure');
   await page.getByRole('button',{name:'重新回复',exact:true}).click();
   await waitUntil(async()=>(await call('conversations','snapshot')).messages.at(-1)?.attempt===2 && (await call('conversations','snapshot')).messages.at(-1)?.status==='failed','actual retry');

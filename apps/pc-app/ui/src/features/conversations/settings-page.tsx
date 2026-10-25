@@ -10,12 +10,14 @@ import { Switch } from '../../components/ui/switch';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../components/ui/tabs';
 import { useConversations } from './use-conversations';
 import { LegacyImportDialog } from './legacy-import';
+import { PetIdentity, petIdentityHint, petIdentityLabel } from './identity';
 
 type Request = <K extends keyof ConversationCommands>(command: K, payload: ConversationCommands[K]['input']) => Promise<ConversationCommands[K]['output']>;
 const blank: ConnectionSettings = { provider: 'deepseek', baseUrl: 'https://api.deepseek.com/v1', model: '', contextChars: 24000, maxOutputTokens: 512 };
 
-function ConnectionForm({ connection, petId, label, secure, request, refresh, scope }: {
+function ConnectionForm({ connection, petId, label, subject, secure, request, refresh, scope }: {
   connection: PublicConnection | null; petId: string | null; label: string; secure: boolean; request: Request; refresh: () => Promise<void>;
+  subject?: ConversationPet;
   scope?: { enabled: boolean; hint: string };
 }) {
   const initial: ConnectionSettings = connection ? { provider: connection.provider, baseUrl: connection.baseUrl, model: connection.model,
@@ -30,7 +32,7 @@ function ConnectionForm({ connection, petId, label, secure, request, refresh, sc
   const endpointChanged = connection && (form.provider !== connection.provider || form.baseUrl.replace(/\/+$/, '') !== connection.baseUrl.replace(/\/+$/, ''));
   const testHint = busy === 'test' ? '测试中，可停止本次测试。' : busy === 'save' ? '保存中。' : dirty ? '请先保存修改。' : !connection?.hasKey ? '请先填写并保存密钥。' : '测试会向所选模型发送一条简短消息。';
   const change = (value: Partial<ConnectionSettings>) => { setForm(current => ({ ...current, ...value })); setNotice(''); setError(''); };
-  return <section className="cv-card cv-connection"><div className="cv-section-heading"><h2>{label}</h2><div className="cv-card-tools">
+  return <section className="cv-card cv-connection" aria-label={subject ? `${petIdentityLabel(subject)}的独立连接` : label}><div className="cv-section-heading"><h2>{subject ? <PetIdentity pet={subject} historical><span className="cv-identity-context">独立连接</span></PetIdentity> : label}</h2><div className="cv-card-tools">
     {scope && <ActionHint text={scope.hint}><span className="cv-scope-state" tabIndex={0}>{scope.enabled ? '已启用' : '未启用'}</span></ActionHint>}
     <InfoHint label="连接提示" text={scope?.hint || '本账号默认使用这组连接。测试会发送一条简短消息。'}/>
   </div></div>
@@ -74,7 +76,7 @@ function PersonaForm({ pet, profile, request, refresh }: { pet: ConversationPet;
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
   const [saved, setSaved] = useState(false);
-  return <section className="cv-card cv-persona"><div className="cv-section-heading"><h2>{pet.name}<PetElement pet={pet}/></h2><InfoHint label="伙伴设置提示" text="人设、记忆和独立连接只应用于这位伙伴。"/></div>
+  return <section className="cv-card cv-persona"><div className="cv-section-heading"><h2><PetIdentity pet={pet} historical><PetElement pet={pet}/></PetIdentity></h2><InfoHint label="伙伴设置提示" text="人设、记忆和独立连接只应用于这位伙伴。"/></div>
     <PetScene pet={pet}/>
     <form onSubmit={event => { event.preventDefault(); setBusy(true); setError('');
       void request('profile.save', { petId: pet.petId, profile: form, revision: profile.revision })
@@ -124,13 +126,13 @@ export function ConversationSettingsPage({ client }: { client?: ConversationClie
       <TabsContent value={tab}>
         {tab === 'global' ? <ConnectionForm key={`${data.accountId}:${data.sessionRevision}:global:${data.globalConnection?.revision ?? 0}`} connection={data.globalConnection} petId={null} label="模型连接"
           secure={data.secureStorageAvailable} request={chat.request} refresh={refresh}/> : pet && <>
-          <ConnectionForm key={`${data.accountId}:${data.sessionRevision}:${pet.petId}:${data.connection?.revision ?? 0}`} connection={data.connection ?? null} petId={pet.petId} label={`${pet.name}的独立连接`}
+          <ConnectionForm key={`${data.accountId}:${data.sessionRevision}:${pet.petId}:${data.connection?.revision ?? 0}`} connection={data.connection ?? null} petId={pet.petId} label="独立连接" subject={pet}
             secure={data.secureStorageAvailable} request={chat.request} refresh={refresh} scope={{ enabled: data.profile?.useOverride === true, hint: '需要自己的密钥；保存后，在右侧开启独立连接。' }}/></>}
       </TabsContent></Tabs>
       <section className="cv-card cv-partners"><header className="cv-section-heading"><h2>伙伴 <small>{data.pets.length}</small></h2><ActionHint text="导入旧记录"><Button type="button" variant="ghost" className="cv-icon" aria-label="导入旧记录" onClick={() => {setEditor(null);setLegacyScope(scope);}}><History size={16}/></Button></ActionHint></header>
       {importNotice?.scope === scope && <p className="cv-success" role="status">{importNotice.text}</p>}<div>
-        {data.pets.map(item => <ActionHint key={item.petId} text={[item.name, petElementLabel(item), item.petId.slice(-8)].filter(Boolean).join(' · ')}><Button className={item.petId === pet?.petId ? 'selected' : ''} aria-pressed={item.petId === pet?.petId} aria-label={`${item.name}，${petElementLabel(item)}，伙伴 ${item.petId.slice(-8)}`}
-          onClick={() => { setEditor(null); void chat.choose(item.petId); }}><PetAvatar pet={item}/><strong>{item.name}<PetElement pet={item} hint={false}/></strong></Button></ActionHint>)}
+        {data.pets.map(item => <ActionHint key={item.petId} text={[petIdentityHint(item), petElementLabel(item)].filter(Boolean).join(' · ')}><Button className={item.petId === pet?.petId ? 'selected' : ''} data-pet-id={item.petId} aria-pressed={item.petId === pet?.petId} aria-label={`${petIdentityLabel(item)}，${petElementLabel(item)}`}
+          onClick={() => { setEditor(null); void chat.choose(item.petId); }}><PetAvatar pet={item}/><PetIdentity pet={item}><PetElement pet={item} hint={false}/></PetIdentity></Button></ActionHint>)}
       </div></section>
     </div>
     <aside className="cv-settings-side">{pet && data.profile ? <>
@@ -140,7 +142,7 @@ export function ConversationSettingsPage({ client }: { client?: ConversationClie
     </> : <section className="cv-card cv-empty"><h2>还没有伙伴</h2><a href="#/companions" className="cv-link">先领养一只灵宠 →</a></section>}</aside></div></div>
     {editor?.scope === scope && pet && <MemoryEditor key={scope} pet={pet} memory={editor.memory} close={() => setEditor(null)}
       save={async content => { await chat.request('memory.save', { petId: pet.petId, memory: { content, ...(editor.memory ? { id: editor.memory.id, revision: editor.memory.revision } : {}) } }); await refresh(); }}/>}
-    {legacyScope === scope && <LegacyImportDialog key={scope} pet={pet} request={chat.request} close={() => setLegacyScope(null)} done={async result => {
+    {legacyScope === scope && <LegacyImportDialog key={scope} pet={pet} pets={data.pets} request={chat.request} close={() => setLegacyScope(null)} done={async result => {
       await refresh();setImportNotice({scope,text:`已合并 ${result.messages} 条消息、${result.memories} 条记忆`});setLegacyScope(null);
     }}/>}
   </div>;

@@ -5,6 +5,7 @@ import assert from 'node:assert/strict';
 import { readFileSync, mkdirSync, writeFileSync } from 'node:fs';
 import { resolve, join } from 'node:path';
 import { execFileSync } from 'node:child_process';
+import { companionIdentity } from '../../companions/display-identity.mjs';
 const source=readFileSync(resolve('artifacts/conversations/cloud-recovery/latest.txt'),'utf8').trim();
 const profile=join(source,'qa-profile'),marker=JSON.parse(readFileSync(join(profile,'.lingjing-qa-profile.json'),'utf8'));
 assert.equal(resolve(marker.profilePath).toLowerCase(),resolve(profile).toLowerCase());
@@ -36,7 +37,9 @@ try{
   await page.waitForFunction(()=>document.activeElement?.getAttribute('aria-label')==='导入旧记录');
   assert.equal(await importButton.evaluate(node=>node===document.activeElement),true);
   const memoryButton=page.getByRole('button',{name:'添加记忆',exact:true});await memoryButton.click();await page.getByRole('dialog').getByLabel('记忆内容',{exact:true}).fill('QA：本次不保存的草稿');
-  await review('原伙伴的记忆','保存记忆','memory-dialog-1280.png');await page.keyboard.press('Escape');await page.getByRole('dialog').waitFor({state:'hidden'});
+  const current=await page.evaluate(()=>window.lingjing.invoke('conversations','snapshot'));assert.equal(current.ok,true);
+  const identity=companionIdentity(current.data.pets.find(pet=>pet.petId===current.data.petId));
+  await review(`${identity.roleName}，编号 ${identity.instanceNumber}的记忆`,'保存记忆','memory-dialog-1280.png');await page.keyboard.press('Escape');await page.getByRole('dialog').waitFor({state:'hidden'});
   await page.waitForFunction(()=>document.activeElement?.getAttribute('aria-label')==='添加记忆');
   assert.equal(await memoryButton.evaluate(node=>node===document.activeElement),true);
   const snapshot=await page.evaluate(()=>window.lingjing.invoke('conversations','snapshot'));assert.equal(snapshot.ok,true);assert.equal(snapshot.data.memories.length,1);
