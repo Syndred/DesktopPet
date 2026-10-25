@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "updatedAt": "2026-10-25T09:23:06.780Z",
+  "status": "in-progress",
+  "qaThreadId": "01a1725c-d59c-7620-9bb6-1c0d4e0fb3a3",
+  "soleNativeInputOwner": "01a1725c-d59c-7620-9bb6-1c0d4e0fb3a3",
+  "ordinaryUserProfileProtected": true,
+  "tsMigrationPaused": true,
+  "legacyServerExcluded": true,
+  "userScreenshots": [
+    {
+      "path": "docs/implementation/qa/2026-10-25-user-acceptance/user-reports/QA-002-003-adoption-user.png",
+      "sha256": "4b89d2afe1f8544c340d3a396a9c233052d4a6428dc02d4621efd592fcf00821",
+      "provenance": "Actual user screenshot; reproduction by QA pending"
+    },
+    {
+      "path": "docs/implementation/qa/2026-10-25-user-acceptance/user-reports/QA-001-login-user.png",
+      "sha256": "839dd37ca5be78cf03c07bd9c78396698bb69e001cef4b4306c664bce270a298",
+      "provenance": "Actual user screenshot; reproduction by QA pending"
+    },
+    {
+      "path": "docs/implementation/qa/2026-10-25-user-acceptance/user-reports/QA-004-desktop-user.png",
+      "sha256": "62772318662422598d83f7715ca7f1753951a12113a7ab2f51cf6e2f7737d77b",
+      "provenance": "Actual user screenshot; reproduction by QA pending"
+    }
+  ],
+  "assignments": [
+    {
+      "issueId": "QA-001",
+      "owner": "08",
+      "threadId": "01a16dc5-cc18-7da0-9c80-2b3ede0154ec",
+      "status": "reported-user; assigned; independent reproduction pending"
+    },
+    {
+      "issueId": "QA-002",
+      "owner": "02",
+      "threadId": "01a16dc5-b72d-78d0-9bd8-50bfe70cec63",
+      "status": "reported-user; assigned; independent reproduction pending"
+    },
+    {
+      "issueId": "QA-003",
+      "owner": "02",
+      "threadId": "01a16dc5-b72d-78d0-9bd8-50bfe70cec63",
+      "status": "reported-user; assigned; independent reproduction pending"
+    },
+    {
+      "issueId": "QA-004",
+      "owner": "02",
+      "threadId": "01a16dc5-b72d-78d0-9bd8-50bfe70cec63",
+      "status": "reported-user; assigned; independent reproduction pending"
+    }
+  ],
+  "integrationOwner": "01",
+  "sourceAtReopen": "6d4df8fdbf102e185cfc9c022bcdddf4601aac82",
+  "releaseGate": "All release blockers fixed and independently retested; full scenario matrix reports actual pass/fail/blocked per same final portable; no mock-only full acceptance claims"
+}

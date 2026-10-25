@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-25T09:05:10.109Z",
-  "phase": "new-cloud-final-sfx-accepted-legacy-excluded-by-user",
+  "updatedAt": "2026-10-25T09:23:06.780Z",
+  "phase": "full-user-acceptance-reopened",
   "goalStatus": "complete",
   "deployed": {
     "projectRef": "jbvrdmrkwpznbrvteive",
@@ -152,7 +152,7 @@
     "fullLocalSupabasePostgisReset": false,
     "dockerOrPodmanAvailable": false
   },
-  "releaseStatus": "Unsigned local portable fully accepted on the same actual SFX; public Release not published",
+  "releaseStatus": "Prior portable retained as user-reported defect baseline; fresh complete user acceptance and corrected candidate required",
   "priorFailedEvidenceRetained": true,
   "module": "coordinator",
   "clientDate": "2026-10-25",
@@ -255,8 +255,14 @@
       "review": "Legacy normalization is internal view only; original envelope/checksum/files retained. Root8 targeted native restore/provider cases and original signed expired HTTPS denial passed."
     }
   ],
-  "status": "new-cloud-final-sfx-accepted-legacy-excluded-by-user",
-  "remaining": [],
+  "status": "full-user-acceptance-reopened",
+  "remaining": [
+    "QA-001 Login checkbox/text/lock icon alignment",
+    "QA-002 Replace fish/animal categories with five-element icon filters",
+    "QA-003 Fixed canonical names with stable unique per-instance identifiers",
+    "QA-004 Desktop pet grows during repeated native dragging",
+    "Complete actual user scenario matrix and resolve/retest every discovered release blocker on the same final portable"
+  ],
   "engineering": {
     "historicalEngineeringCheckpoints": {
       "electron": "44.9.3",
@@ -473,7 +479,8 @@
     "originalOfflineBase": 101,
     "originalOfflineReceipt": 102,
     "allPending": 0,
-    "physicalMachines": 1
+    "physicalMachines": 1,
+    "fullUserAcceptancePassed": false
   },
   "fastMode": {
     "globalDefault": true,
@@ -481,7 +488,7 @@
     "featureChats01to08": true,
     "modelAndReasoningUnchanged": true
   },
-  "currentUserScopeAccepted": true,
+  "currentUserScopeAccepted": false,
   "scopeChange": {
     "at": "2026-10-25T09:05:10.109Z",
     "userInstruction": "启动刚验收通过的最新版给我看看，旧服的不用管",
@@ -497,5 +504,19 @@
     "windowTitle": "灵境 · 桌面伙伴",
     "windowObserved": true,
     "page": "Cloud account login"
+  },
+  "userAcceptance": {
+    "status": "in-progress",
+    "startedAt": "2026-10-25T09:23:06.780Z",
+    "threadId": "01a1725c-d59c-7620-9bb6-1c0d4e0fb3a3",
+    "threadTitle": "灵境 09｜完整用户功能验收与缺陷闭环",
+    "productionBaseline": "a9acd7f6f1920c541d429fa26d1f054b1427cd95",
+    "originalPortableSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+    "matrix": "docs/implementation/qa/2026-10-25-user-acceptance/matrix.md",
+    "issues": "docs/implementation/qa/2026-10-25-user-acceptance/issues.json",
+    "tsMigrationPaused": true,
+    "legacyServerExcluded": true,
+    "previousCloudChecksRemainHistorical": true,
+    "fullUserAcceptancePassed": false
   }
 }
