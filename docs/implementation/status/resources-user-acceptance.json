@@ -1,0 +1,84 @@
+{
+  "module": "resources",
+  "updatedAt": "2026-10-25T17:48:03.8704673+08:00",
+  "integrationBase": "9e57de1d210376ce679168eb1acbff8e37cff1cd",
+  "branch": "codex/lingjing-resources",
+  "overallStatus": "fixed-awaiting-independent-qa",
+  "completeUserAcceptancePassed": false,
+  "issues": [
+    {
+      "id": "QA-003",
+      "scope": "Resource ApplyToCompanion selector, selected target/action label and success feedback",
+      "problem": "Historical name/serial could collide and mutable appearances must not define companion identity.",
+      "status": "fixed-awaiting-independent-qa",
+      "changes": [
+        "Use the shared companionIdentity projection on the full CompanionPet DTO, keyed by immutable templateId.",
+        "Display roleName and the entire original petId in options, selected value, apply button and success feedback.",
+        "Wrap full instance numbers in the scoped Radix select/button/status styles, overriding default single-line clamping."
+      ],
+      "files": [
+        "apps/pc-app/ui/src/features/resources/ApplyToCompanion.tsx",
+        "apps/pc-app/ui/src/features/resources/binding.css"
+      ],
+      "identityContract": "docs/implementation/companions-display-identity-contract.json"
+    }
+  ],
+  "preservation": {
+    "projectionReadOnly": true,
+    "originalPetIdIsSelectionAndCommandKey": true,
+    "appearanceMutationSourceUnchanged": true,
+    "resourcePreferencesImportsAndFilesUntouched": true,
+    "genericPixiAnimationAndStorageUntouched": true,
+    "tsMigrationOrModelSettingsChanged": false
+  },
+  "checks": [
+    {
+      "command": "npm run typecheck:ui",
+      "exitCode": 0,
+      "kind": "static typecheck"
+    },
+    {
+      "command": "node node_modules/eslint/bin/eslint.js apps/pc-app/ui/src/features/resources/ApplyToCompanion.tsx",
+      "exitCode": 0,
+      "kind": "targeted lint"
+    },
+    {
+      "command": "git diff --check",
+      "exitCode": 0,
+      "kind": "patch whitespace"
+    },
+    {
+      "check": "Compare appearance request source with integration base",
+      "passed": true,
+      "kind": "static source equality, not runtime acceptance"
+    }
+  ],
+  "sourceFiles": [
+    {
+      "path": "apps/pc-app/ui/src/features/resources/ApplyToCompanion.tsx",
+      "sha256": "9e266e84506b41d7e04b2294e1a8931ebbbfa3bb02c7bd011f54ccb6823877e3"
+    },
+    {
+      "path": "apps/pc-app/ui/src/features/resources/binding.css",
+      "sha256": "58a015a175acf9453e15d15361308143b5dc0ba2f74a52c25af25a5f0adc6197"
+    }
+  ],
+  "independentQa": {
+    "threadId": "01a1725c-d59c-7620-9bb6-1c0d4e0fb3a3",
+    "status": "pending coordinator merge and QA09 real input",
+    "cases": [
+      "Same-template instances with duplicate historical names/serials show distinct complete original petIds.",
+      "Changing an instance appearance leaves its standard role name and original instance number intact.",
+      "Select the second same-name instance and apply: only that original petId receives the resource; feedback identifies the exact target.",
+      "Long original identifiers remain fully visible by wrapping in both open options and selected/action/status text."
+    ],
+    "realDesktopInputRunHere": false,
+    "packagingRunHere": false,
+    "processesClosedHere": false
+  },
+  "remoteSync": {
+    "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086",
+    "originMainIncluded": true,
+    "integrationBaseIncluded": true
+  }
+}
