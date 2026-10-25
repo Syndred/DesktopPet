@@ -14,6 +14,10 @@
 
 [真实服务层证据](live-service/evidence.json) 已证明实际 Supabase A→B 哈希与原 resourceId 一致、OTHER Storage404/index0、一次明确网络故障后关闭重开 SQLite 续传。这个结果属于存储层；受保护 refs 注册和真实双 Electron 单独验收。[早期 SQLITE_ERROR](retained-failures/initial-sqlite-ledger.json) 保留，修正为使用正式 openDatabase 初始化迁移台账后重新运行，没有把失败改成成功。[旧模拟双 Electron](native-simulated/evidence.json) 仍标 simulated/cloudVerified=false，实际使用 Electron36.9.5/SQLite12.11.1，不改写成升级后的44版本。
 
+[真实双 Electron](live-dual-electron/evidence.json) 已通过：production typed main/preload、Electron44.9.3 / Node24.22.0 / ABI149、两个实际 PID 和设备 UUID、两份独立 userData、正式 accounts 登录/资源同步/完整存档预览和 replace 恢复。A 实际改校准与 wave→idle 映射，新 B 读回同值、同原 resourceId、同两文件 SHA256 和原 import_id；原本机 v1 备份均保留。两边都恢复同一个原 petId 的私有外观，成长不变。非空偏好的 cloudModule 均为 v2，[独立根存档读回](live-dual-electron/independent-root-readback.json) 与两边语义逐字节 canonical 比对一致。两个实际截图已检查角色完整可见，Pixi contentBounds 在实际 canvas 内，无加载占位图。这是同机双进程，不能宣称两台实体设备。
+
+[真实偏好服务](live-preferences/evidence.json) 已证明原 action 重试不增量、旧偏好 revision409、未知 clip422、未经核验索引/其他账号404、撤销 SID401、客户端直调写 RPC42501，失败保持当次 Root checksum/revision。[伙伴外观服务联验](live-authority/companion-joint.json) 只认 verified references。完整恢复首轮因尚未消费主协调的伙伴适配注册而拒绝，随后正常 merge 保护拒绝不同初始化伙伴进度；两份[失败一](retained-failures/native-before-companion-registration.json)、[失败二](retained-failures/native-merge-conflict-preserved.json) 均保留。最终使用已批准的正式注册和明确完整恢复入口，没有放宽合并或身份权限。
+
 ## 本机验证与真实云端边界
 
 原生 SQLite/资源领域检查与官方 SDK 的本机 HTTP 协议夹具覆盖 A 上传、B 恢复、他账号拒绝、丢失上传回执、关闭重开数据库后续传、下载块缓存复用、路径/大小/哈希/密钥字段拒绝、同内容不同 ID 以及 5 MiB 模型档案分块。**HTTP 夹具不是 Supabase RLS 或真实云端证据**。

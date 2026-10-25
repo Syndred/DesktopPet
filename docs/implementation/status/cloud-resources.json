@@ -2,7 +2,7 @@
   "module": "resources",
   "scope": "Private Supabase Storage packages, owner/Auth UID boundary, durable resume, new-client preservation and legacy archive cleanup",
   "branch": "codex/lingjing-resources",
-  "commit": "e275ae65c9b798aeb9c54e1e529c567e3df7446b",
+  "commit": "4a3b79e002c0a8fc604c3b4420ad4e6275a5a78a",
   "baselineCommit": "46abf416e0500b53ef32fc29b441d923ef5a6a80",
   "goalStatus": "active",
   "contracts": {
@@ -78,10 +78,13 @@
       "manifestStableAcrossRetry": true,
       "failedAttempts": 1
     },
-    "topology": "Two isolated SQLite client roots in one validator process; not dual Electron or two physical devices",
+    "topology": "Two separate actual Electron44.9.3 processes/userData/device IDs on one physical machine; actual main Auth, private HTTPS, full v2 restore and Pixi; not two physical devices",
     "protectedAuthorityRegistered": true,
     "authorityProof": "docs/implementation/evidence/resources/cloud-upgrade/live-authority/evidence.json",
-    "companionAppearanceProof": "docs/implementation/evidence/resources/cloud-upgrade/live-authority/companion-joint.json"
+    "companionAppearanceProof": "docs/implementation/evidence/resources/cloud-upgrade/live-authority/companion-joint.json",
+    "liveDualElectronProof": "docs/implementation/evidence/resources/cloud-upgrade/live-dual-electron/evidence.json",
+    "livePreferenceProof": "docs/implementation/evidence/resources/cloud-upgrade/live-preferences/evidence.json",
+    "independentRootMatch": "docs/implementation/evidence/resources/cloud-upgrade/live-dual-electron/independent-root-readback.json"
   },
   "preservation": {
     "originalOwnerAndResourceIds": true,
@@ -97,13 +100,10 @@
     "sharedEngineeringFollowup": "01 may remove obsolete release exclusion; root config/dependencies untouched by resource changes"
   },
   "remaining": [
-    "Coordinator applies 20261025035333_lingjing_verified_resource_preferences.sql and deploys latest lingjing-resources graph",
-    "Real HTTPS preference command/readback plus two-Electron full-save/custom-pet/file/Pixi restoration",
-    "Verify normal modified preference can normalize to protected v2 rather than remaining authorityPending",
-    "Old-source migration and two physical devices remain separate coordinator acceptance conditions"
+    "Consume approved final integration4830619 including actual-ledger migration filenames; focused final compatibility check"
   ],
   "identityCheckpoint": "f81008ce1f88c2b6c11d0bb05122d5afb5891039",
-  "phase": "PREFERENCE SERVER CHECKPOINT e275ae6 ready for coordinator apply/deploy; source-built Electron44 ready for actual dual-client preferences/full-save/native checks",
+  "phase": "real dual Electron44/full-save/custom-pet/original-file/history/modified-preferences passed; independent common protected v2 match; consuming final approved4830619 integration baseline next",
   "functions": [
     {
       "name": "lingjing-resources",
@@ -119,11 +119,16 @@
         "../../../../apps/pc-app/runtime/features/resources/assets/roster-v2/catalog.json",
         "8 canonical roster-v2/*/character.json metadata imports; no PNGs"
       ],
-      "deployment": "ACTIVE v1 accepted; preference command source and migration ready for coordinator increment"
+      "deployment": "coordinator deployed ACTIVE v2; reviewed server SQL2725fb3 consumed asd138677; no schema/functions deployed by resources chat"
     }
   ],
   "serverDependencies": [
     "infra/supabase/migrations/20261025031842_lingjing_session_revocation_ledger.sql",
     "infra/supabase/migrations/20261025033602_lingjing_transaction_actor_guard.sql"
+  ],
+  "coordinatorConditions": [
+    "Verified original external-source migration/export",
+    "Two physical devices",
+    "All-domain final packaging/retirement/freeze"
   ]
 }

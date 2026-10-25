@@ -1,13 +1,13 @@
-✔ LOCAL SQL: private bucket and immutable index permit same-account separate sessions only (20.8365ms)
-✔ LOCAL SQL: spoofed owner/UID/path and oversized index are rejected (8.7873ms)
-✔ LOCAL SQL: anonymous, missing/revoked sessions and wrong device are denied (5.5323ms)
-✔ LOCAL SQL: immutable objects/index cannot be replaced or deleted through client permissions (4.6861ms)
-✔ LOCAL SQL: only service-verified receipts can register protected resource references atomically (27.1867ms)
-✔ LOCAL SQL: personal CAS cannot invent a private resource reference; a failed ledger write rolls back the save too (28.7231ms)
-✔ LOCAL SQL: validated resource preferences commit once with shared protected save, reject direct writes, invalid refs and stale edits (31.5163ms)
-✔ LOCAL SQL: late preference receipt failure rolls back both preference and common save; new packages preserve committed preferences (25.0965ms)
-✔ LOCAL SQL: privileged registration rechecks real session, expiry, anonymous status and exact device before replay (10.8021ms)
-✔ LOCAL SQL: single-device revocation blocks both Storage/index while other same-account device survives (14.7101ms)
+✔ LOCAL SQL: private bucket and immutable index permit same-account separate sessions only (26.8129ms)
+✔ LOCAL SQL: spoofed owner/UID/path and oversized index are rejected (13.9532ms)
+✔ LOCAL SQL: anonymous, missing/revoked sessions and wrong device are denied (8.2164ms)
+✔ LOCAL SQL: immutable objects/index cannot be replaced or deleted through client permissions (5.856ms)
+✔ LOCAL SQL: only service-verified receipts can register protected resource references atomically (37.2102ms)
+✔ LOCAL SQL: personal CAS cannot invent a private resource reference; a failed ledger write rolls back the save too (39.8342ms)
+✔ LOCAL SQL: validated resource preferences commit once with shared protected save, reject direct writes, invalid refs and stale edits (53.385ms)
+✔ LOCAL SQL: late preference receipt failure rolls back both preference and common save; new packages preserve committed preferences (38.6992ms)
+✔ LOCAL SQL: privileged registration rechecks real session, expiry, anonymous status and exact device before replay (17.5876ms)
+✔ LOCAL SQL: single-device revocation blocks both Storage/index while other same-account device survives (16.3566ms)
 ℹ tests 10
 ℹ suites 0
 ℹ pass 10
@@ -15,4 +15,4 @@
 ℹ cancelled 0
 ℹ skipped 0
 ℹ todo 0
-ℹ duration_ms 1629.0101
+ℹ duration_ms 1936.0292

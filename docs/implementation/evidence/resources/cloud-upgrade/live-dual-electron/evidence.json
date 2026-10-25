@@ -1,0 +1,506 @@
+{
+  "at": "2026-10-25T04:21:51.442Z",
+  "runtimeSourceCommit": "4a3b79e002c0a8fc604c3b4420ad4e6275a5a78a",
+  "dataSource": {
+    "mode": "live",
+    "simulated": false,
+    "topology": "Two independent production Electron processes and userData roots on one physical machine",
+    "physicalDevices": 1
+  },
+  "views": [
+    {
+      "label": "A",
+      "pid": 31316,
+      "profile": "artifacts\\resources\\cloud-real-electron-1792902111442\\A",
+      "owner": "account:2851a984-dacc-4548-865e-1810bc3ab384",
+      "authUserId": "ecf7ccab-f4b2-4cb5-b0ab-a4613fe28886",
+      "device": {
+        "version": 1,
+        "deviceId": "ea97934c-0b24-4c7c-a844-1767c3602745"
+      },
+      "resourceId": "ea939131-eb50-4cde-adcc-c51241100c34",
+      "contentHash": "94e0af4b98334788f9f2357fde6c84c70cc051684760d05c9ca4eebf97a3977a",
+      "host": {
+        "renderer": "pixi-spritesheet",
+        "frame": "2",
+        "frameTexture": "3",
+        "textureFrame": "76,63,184,261",
+        "contentBounds": "{\"x\":235.89257142857142,\"y\":21.409142857142825,\"width\":106.61485714285716,\"height\":151.23085714285716,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+        "textureKey": "lingjing-resource://asset/ea939131-eb50-4cde-adcc-c51241100c34/sprites.png:94e0af4b98334788f9f2357fde6c84c70cc051684760d05c9ca4eebf97a3977a",
+        "textureSource": "2"
+      },
+      "cloudStatus": {
+        "enabled": true,
+        "uploads": [],
+        "downloads": [
+          {
+            "status": "verified",
+            "count": 1
+          }
+        ],
+        "lastVerifiedAt": "2026-10-25T04:22:09.321Z",
+        "lastStorageVerifiedAt": "2026-10-25T04:22:09.321Z",
+        "preferenceUploads": [
+          {
+            "status": "verified",
+            "count": 1
+          }
+        ],
+        "lastPreferenceVerifiedAt": "2026-10-25T04:22:20.318Z",
+        "running": true,
+        "dataMode": "live",
+        "bucket": "lingjing-resources-v1"
+      },
+      "preferences": {
+        "calibration": {
+          "desktop": {
+            "scale": 1.18,
+            "rotationDeg": 3,
+            "verticalOffset": 0.03,
+            "mirrorX": true,
+            "anchorX": 0.5,
+            "anchorY": 0.849609375,
+            "fps": 0
+          },
+          "battle": {
+            "scale": 1.2,
+            "rotationDeg": 0,
+            "verticalOffset": 0,
+            "mirrorX": false,
+            "anchorX": 0.5,
+            "anchorY": 0.849609375,
+            "fps": 0
+          }
+        },
+        "actions": {
+          "idle": "idle",
+          "blink": "blink",
+          "walk": "walk",
+          "wave": "idle",
+          "eat": "eat",
+          "attack_windup": "attack_windup",
+          "attack_release": "attack_release",
+          "attack": "attack",
+          "hit": "hit",
+          "skill": "skill",
+          "victory": "victory",
+          "sleep": "sleep"
+        }
+      },
+      "inspection": {
+        "files": [
+          {
+            "key": "character.json",
+            "bytes": 8897,
+            "sha256": "ac176d23703fd8d9de97a23574966b44728657ceb7c32bb3fcea80469cfa9954"
+          },
+          {
+            "key": "sprites.png",
+            "bytes": 1802491,
+            "sha256": "aa59df3af26d4f7faf9272193b7d1d35ed6d2f22ebb6b294a5a2853f0539f693"
+          }
+        ],
+        "imports": [
+          {
+            "import_id": "6b09d9a3-aa7b-464c-ad1d-90b4761d6435",
+            "resource_id": "ea939131-eb50-4cde-adcc-c51241100c34",
+            "owner_account_id": "account:2851a984-dacc-4548-865e-1810bc3ab384"
+          }
+        ],
+        "preferenceState": {
+          "resource_id": "ea939131-eb50-4cde-adcc-c51241100c34",
+          "cloud_revision": 4,
+          "local_revision": 2,
+          "authority_action_id": "resource-pref:8277a70b-bd12-4d71-93ee-e0f9f63cc4ac",
+          "authority_revision": 7,
+          "authority_checksum": "e89982fdbf371b1276969119d2c20bea51a5bcfc79be3458988d78699ce888f7"
+        },
+        "resourceCloudView": {
+          "version": 2,
+          "data": {
+            "format": "lingjing-resource-references",
+            "ownerAccountId": "account:2851a984-dacc-4548-865e-1810bc3ab384",
+            "references": [
+              {
+                "authUserId": "ecf7ccab-f4b2-4cb5-b0ab-a4613fe28886",
+                "resourceId": "ea939131-eb50-4cde-adcc-c51241100c34",
+                "manifestSha256": "227446e353d0eefbd752ce7feafaa2e185f83ef8c2e2e7546fdfa7b70d13ea01",
+                "contentHash": "94e0af4b98334788f9f2357fde6c84c70cc051684760d05c9ca4eebf97a3977a",
+                "manifestPath": "ecf7ccab-f4b2-4cb5-b0ab-a4613fe28886/ea939131-eb50-4cde-adcc-c51241100c34/227446e353d0eefbd752ce7feafaa2e185f83ef8c2e2e7546fdfa7b70d13ea01/manifest.json",
+                "manifestBytes": 7237,
+                "totalBytes": 1811388,
+                "kind": "spritesheet"
+              }
+            ],
+            "preferences": [
+              {
+                "resourceId": "ea939131-eb50-4cde-adcc-c51241100c34",
+                "revision": 4,
+                "actions": {
+                  "attack": "attack",
+                  "attack_release": "attack_release",
+                  "attack_windup": "attack_windup",
+                  "blink": "blink",
+                  "eat": "eat",
+                  "hit": "hit",
+                  "idle": "idle",
+                  "skill": "skill",
+                  "sleep": "sleep",
+                  "victory": "victory",
+                  "walk": "walk",
+                  "wave": "idle"
+                },
+                "calibration": {
+                  "battle": {
+                    "anchorX": 0.5,
+                    "anchorY": 0.849609375,
+                    "fps": 0,
+                    "mirrorX": false,
+                    "rotationDeg": 0,
+                    "scale": 1.2,
+                    "verticalOffset": 0
+                  },
+                  "desktop": {
+                    "anchorX": 0.5,
+                    "anchorY": 0.849609375,
+                    "fps": 0,
+                    "mirrorX": true,
+                    "rotationDeg": 3,
+                    "scale": 1.18,
+                    "verticalOffset": 0.03
+                  }
+                }
+              }
+            ]
+          }
+        }
+      },
+      "customPet": {
+        "petId": "pet-fe5f48d3-7262-4562-9f5a-dab51f8d1319",
+        "resource": {
+          "resourceId": "ea939131-eb50-4cde-adcc-c51241100c34",
+          "kind": "2d"
+        },
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 130,
+            "atk": 26,
+            "def": 26,
+            "spd": 18
+          }
+        }
+      },
+      "versions": {
+        "node": "24.22.0",
+        "acorn": "8.18.0",
+        "ada": "4.0.0",
+        "amaro": "1.1.11",
+        "ares": "1.34.8",
+        "brotli": "1.2.0",
+        "cldr": "48.0",
+        "icu": "78.2",
+        "llhttp": "9.4.3",
+        "merve": "1.2.2",
+        "modules": "149",
+        "napi": "10",
+        "nbytes": "0.1.4",
+        "ncrypto": "0.0.1",
+        "nghttp2": "1.70.0",
+        "nghttp3": "",
+        "ngtcp2": "",
+        "openssl": "0.0.0",
+        "simdjson": "4.6.11",
+        "simdutf": "7.7.0",
+        "sqlite": "3.53.4",
+        "tz": "2026d",
+        "undici": "7.29.1",
+        "unicode": "17.0",
+        "uv": "1.52.1",
+        "uvwasi": "0.0.23",
+        "v8": "15.2.124.43-electron.0",
+        "zlib": "1.3.2.1-motley",
+        "zstd": "1.6.0",
+        "electron": "44.9.3",
+        "chrome": "152.0.7977.167"
+      },
+      "cloudRestore": {
+        "restored": true,
+        "cloudRevision": 7,
+        "modules": [
+          "companions",
+          "character-resources"
+        ],
+        "preservedLocalResourceBackupVersion": 1
+      },
+      "startupBefore": false,
+      "startupAfter": false,
+      "screenshot": "client-A.png"
+    },
+    {
+      "label": "B",
+      "pid": 18640,
+      "profile": "artifacts\\resources\\cloud-real-electron-1792902111442\\B",
+      "owner": "account:2851a984-dacc-4548-865e-1810bc3ab384",
+      "authUserId": "ecf7ccab-f4b2-4cb5-b0ab-a4613fe28886",
+      "device": {
+        "version": 1,
+        "deviceId": "66cd929d-c791-48db-9cca-4c70d66a2719"
+      },
+      "resourceId": "ea939131-eb50-4cde-adcc-c51241100c34",
+      "contentHash": "94e0af4b98334788f9f2357fde6c84c70cc051684760d05c9ca4eebf97a3977a",
+      "host": {
+        "renderer": "pixi-spritesheet",
+        "frame": "1",
+        "frameTexture": "3",
+        "textureFrame": "76,63,184,261",
+        "contentBounds": "{\"x\":235.89257142857142,\"y\":21.409142857142825,\"width\":106.61485714285716,\"height\":151.23085714285716,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+        "textureKey": "lingjing-resource://asset/ea939131-eb50-4cde-adcc-c51241100c34/sprites.png:94e0af4b98334788f9f2357fde6c84c70cc051684760d05c9ca4eebf97a3977a",
+        "textureSource": "2"
+      },
+      "cloudStatus": {
+        "enabled": true,
+        "uploads": [],
+        "downloads": [
+          {
+            "status": "verified",
+            "count": 1
+          }
+        ],
+        "lastVerifiedAt": "2026-10-25T04:22:47.340Z",
+        "lastStorageVerifiedAt": "2026-10-25T04:22:47.340Z",
+        "preferenceUploads": [],
+        "lastPreferenceVerifiedAt": "2026-10-25T04:22:51.326Z",
+        "running": false,
+        "dataMode": "live",
+        "bucket": "lingjing-resources-v1"
+      },
+      "preferences": {
+        "calibration": {
+          "desktop": {
+            "scale": 1.18,
+            "rotationDeg": 3,
+            "verticalOffset": 0.03,
+            "mirrorX": true,
+            "anchorX": 0.5,
+            "anchorY": 0.849609375,
+            "fps": 0
+          },
+          "battle": {
+            "scale": 1.2,
+            "rotationDeg": 0,
+            "verticalOffset": 0,
+            "mirrorX": false,
+            "anchorX": 0.5,
+            "anchorY": 0.849609375,
+            "fps": 0
+          }
+        },
+        "actions": {
+          "idle": "idle",
+          "blink": "blink",
+          "walk": "walk",
+          "wave": "idle",
+          "eat": "eat",
+          "attack_windup": "attack_windup",
+          "attack_release": "attack_release",
+          "attack": "attack",
+          "hit": "hit",
+          "skill": "skill",
+          "victory": "victory",
+          "sleep": "sleep"
+        }
+      },
+      "inspection": {
+        "files": [
+          {
+            "key": "character.json",
+            "bytes": 8897,
+            "sha256": "ac176d23703fd8d9de97a23574966b44728657ceb7c32bb3fcea80469cfa9954"
+          },
+          {
+            "key": "sprites.png",
+            "bytes": 1802491,
+            "sha256": "aa59df3af26d4f7faf9272193b7d1d35ed6d2f22ebb6b294a5a2853f0539f693"
+          }
+        ],
+        "imports": [
+          {
+            "import_id": "6b09d9a3-aa7b-464c-ad1d-90b4761d6435",
+            "resource_id": "ea939131-eb50-4cde-adcc-c51241100c34",
+            "owner_account_id": "account:2851a984-dacc-4548-865e-1810bc3ab384"
+          }
+        ],
+        "preferenceState": {
+          "resource_id": "ea939131-eb50-4cde-adcc-c51241100c34",
+          "cloud_revision": 4,
+          "local_revision": 1,
+          "authority_action_id": "resource-pref:8277a70b-bd12-4d71-93ee-e0f9f63cc4ac",
+          "authority_revision": 7,
+          "authority_checksum": "e89982fdbf371b1276969119d2c20bea51a5bcfc79be3458988d78699ce888f7"
+        },
+        "resourceCloudView": {
+          "version": 2,
+          "data": {
+            "format": "lingjing-resource-references",
+            "ownerAccountId": "account:2851a984-dacc-4548-865e-1810bc3ab384",
+            "references": [
+              {
+                "authUserId": "ecf7ccab-f4b2-4cb5-b0ab-a4613fe28886",
+                "resourceId": "ea939131-eb50-4cde-adcc-c51241100c34",
+                "manifestSha256": "227446e353d0eefbd752ce7feafaa2e185f83ef8c2e2e7546fdfa7b70d13ea01",
+                "contentHash": "94e0af4b98334788f9f2357fde6c84c70cc051684760d05c9ca4eebf97a3977a",
+                "manifestPath": "ecf7ccab-f4b2-4cb5-b0ab-a4613fe28886/ea939131-eb50-4cde-adcc-c51241100c34/227446e353d0eefbd752ce7feafaa2e185f83ef8c2e2e7546fdfa7b70d13ea01/manifest.json",
+                "manifestBytes": 7237,
+                "totalBytes": 1811388,
+                "kind": "spritesheet"
+              }
+            ],
+            "preferences": [
+              {
+                "resourceId": "ea939131-eb50-4cde-adcc-c51241100c34",
+                "revision": 4,
+                "actions": {
+                  "attack": "attack",
+                  "attack_release": "attack_release",
+                  "attack_windup": "attack_windup",
+                  "blink": "blink",
+                  "eat": "eat",
+                  "hit": "hit",
+                  "idle": "idle",
+                  "skill": "skill",
+                  "sleep": "sleep",
+                  "victory": "victory",
+                  "walk": "walk",
+                  "wave": "idle"
+                },
+                "calibration": {
+                  "battle": {
+                    "anchorX": 0.5,
+                    "anchorY": 0.849609375,
+                    "fps": 0,
+                    "mirrorX": false,
+                    "rotationDeg": 0,
+                    "scale": 1.2,
+                    "verticalOffset": 0
+                  },
+                  "desktop": {
+                    "anchorX": 0.5,
+                    "anchorY": 0.849609375,
+                    "fps": 0,
+                    "mirrorX": true,
+                    "rotationDeg": 3,
+                    "scale": 1.18,
+                    "verticalOffset": 0.03
+                  }
+                }
+              }
+            ]
+          }
+        }
+      },
+      "customPet": {
+        "petId": "pet-fe5f48d3-7262-4562-9f5a-dab51f8d1319",
+        "resource": {
+          "resourceId": "ea939131-eb50-4cde-adcc-c51241100c34",
+          "kind": "2d"
+        },
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 130,
+            "atk": 26,
+            "def": 26,
+            "spd": 18
+          }
+        }
+      },
+      "versions": {
+        "node": "24.22.0",
+        "acorn": "8.18.0",
+        "ada": "4.0.0",
+        "amaro": "1.1.11",
+        "ares": "1.34.8",
+        "brotli": "1.2.0",
+        "cldr": "48.0",
+        "icu": "78.2",
+        "llhttp": "9.4.3",
+        "merve": "1.2.2",
+        "modules": "149",
+        "napi": "10",
+        "nbytes": "0.1.4",
+        "ncrypto": "0.0.1",
+        "nghttp2": "1.70.0",
+        "nghttp3": "",
+        "ngtcp2": "",
+        "openssl": "0.0.0",
+        "simdjson": "4.6.11",
+        "simdutf": "7.7.0",
+        "sqlite": "3.53.4",
+        "tz": "2026d",
+        "undici": "7.29.1",
+        "unicode": "17.0",
+        "uv": "1.52.1",
+        "uvwasi": "0.0.23",
+        "v8": "15.2.124.43-electron.0",
+        "zlib": "1.3.2.1-motley",
+        "zstd": "1.6.0",
+        "electron": "44.9.3",
+        "chrome": "152.0.7977.167"
+      },
+      "cloudRestore": {
+        "restored": true,
+        "cloudRevision": 7,
+        "modules": [
+          "companions",
+          "character-resources"
+        ],
+        "preservedLocalResourceBackupVersion": 1
+      },
+      "startupBefore": false,
+      "startupAfter": false,
+      "screenshot": "client-B.png"
+    }
+  ],
+  "errors": [],
+  "passed": true,
+  "buildProvenance": {
+    "schemaVersion": 2,
+    "builtAt": "2026-10-25T04:19:55.735Z",
+    "sourceCommit": "4a3b79e002c0a8fc604c3b4420ad4e6275a5a78a",
+    "sourceTree": "91056d885cd02f554b38cace51bad462299ab52e",
+    "sourceDirtyFiles": [],
+    "codeFingerprint": "fa7b2cceeab3ec0e5ac99d4f31965ee8e5f9c5669133955a8d4d0b8289b4ef58",
+    "canonicalSourceFingerprint": "b85ab88417bcc6a0710b8c87a51683fdbc9b63c4459c3a45782c710ebb0175eb",
+    "canonicalPolicy": "Repository-relative paths; CRLF normalized to LF for source text only. Packaged/compiled bytes remain exact.",
+    "compiledFingerprint": "18aea931ab0b81bc37f5141901190f10f59bdd8745365d7f3268fc17628731ae",
+    "codeFiles": 288,
+    "compiledFiles": 84,
+    "toolchain": {
+      "node": "24.21.0",
+      "electron": "44.9.3",
+      "sqlite": "13.0.3",
+      "vite": "7.3.7",
+      "typescript": "5.9.3",
+      "platform": "win32",
+      "arch": "x64"
+    },
+    "entrypoints": {
+      "main": "main/index.cjs",
+      "app": "ui/index.html",
+      "desktop": "ui/desktop.html",
+      "preload": "preload/index.cjs"
+    }
+  },
+  "verificationSourceCommit": "7755e09188a9219ea21c570910a29ba13be2f7b5"
+}

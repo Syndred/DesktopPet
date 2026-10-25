@@ -1,0 +1,45 @@
+{
+  "at": "2026-10-25T04:20:28.313Z",
+  "runtimeSourceCommit": "4a3b79e002c0a8fc604c3b4420ad4e6275a5a78a",
+  "dataSource": {
+    "mode": "live",
+    "simulated": false,
+    "topology": "Two independent production Electron processes and userData roots on one physical machine",
+    "physicalDevices": 1
+  },
+  "views": [],
+  "errors": [],
+  "passed": false,
+  "buildProvenance": {
+    "schemaVersion": 2,
+    "builtAt": "2026-10-25T04:19:55.735Z",
+    "sourceCommit": "4a3b79e002c0a8fc604c3b4420ad4e6275a5a78a",
+    "sourceTree": "91056d885cd02f554b38cace51bad462299ab52e",
+    "sourceDirtyFiles": [],
+    "codeFingerprint": "fa7b2cceeab3ec0e5ac99d4f31965ee8e5f9c5669133955a8d4d0b8289b4ef58",
+    "canonicalSourceFingerprint": "b85ab88417bcc6a0710b8c87a51683fdbc9b63c4459c3a45782c710ebb0175eb",
+    "canonicalPolicy": "Repository-relative paths; CRLF normalized to LF for source text only. Packaged/compiled bytes remain exact.",
+    "compiledFingerprint": "18aea931ab0b81bc37f5141901190f10f59bdd8745365d7f3268fc17628731ae",
+    "codeFiles": 288,
+    "compiledFiles": 84,
+    "toolchain": {
+      "node": "24.21.0",
+      "electron": "44.9.3",
+      "sqlite": "13.0.3",
+      "vite": "7.3.7",
+      "typescript": "5.9.3",
+      "platform": "win32",
+      "arch": "x64"
+    },
+    "entrypoints": {
+      "main": "main/index.cjs",
+      "app": "ui/index.html",
+      "desktop": "ui/desktop.html",
+      "preload": "preload/index.cjs"
+    }
+  },
+  "failure": {
+    "code": "ERR_ASSERTION",
+    "message": "accounts:backupRestore: COMPANION_BACKUP_CONFLICT 两份伙伴存档存在不同进度，已保留；请预览完整恢复，不能逐行拼接"
+  }
+}
