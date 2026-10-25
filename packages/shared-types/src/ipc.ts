@@ -1,7 +1,7 @@
 import type { FeatureId } from './app.js';
 import type { AccountsSession, SettingsSnapshot, SettingsDocument, SyncStatus, BackupPreview } from './features/accounts/index.js';
 import type { CompanionsClient, CompanionPet, CompanionMutation } from './features/companions/index.js';
-import type { CharacterResource, ResourceDisplay, ResourceDisplayRequest, ResourceSaveRequest, ResourceProvenance } from './features/resources/index.js';
+import type { ResourcesClient } from './features/resources/index.js';
 import type { BattleSession, BattleReport, BattleRulesProfile, DuelUser, DuelInvitation } from './features/battle/index.js';
 import type { BattleActionType, ElementType } from './battle.js';
 import type { GardenSnapshot, PlantInput, HarvestInput, CraftInput, FeedInput, GarrisonInput, ActionInput, TerritoryChallengeReceipt } from './features/garden/index.js';
@@ -47,11 +47,8 @@ export interface CompanionsCommands extends ClientMethods<CompanionsClient> {
   desktopInput: IpcMethod<{ petId: string; action: 'hit' | 'miss' | 'drag-start' | 'drag-move' | 'drag-end'; screenX?: number; screenY?: number }, { petId: string }>;
   appearance: IpcMethod<Action & { petId: string; resourceId: string }, CompanionMutation>;
 }
-export interface ResourcesCommands {
-  list: IpcMethod<void, CharacterResource[]>;
-  resolve: IpcMethod<ResourceDisplayRequest, ResourceDisplay>;
-  save: IpcMethod<ResourceSaveRequest, CharacterResource>;
-  import: IpcMethod<Partial<ResourceProvenance> | undefined, { resource: CharacterResource; duplicate: boolean } | null>;
+export interface ResourcesCommands extends Omit<ClientMethods<Required<ResourcesClient>>, 'importResource'> {
+  import: MethodOf<ResourcesClient['importResource']>;
 }
 export interface BattleCommands {
   overview: IpcMethod<void, unknown>;
