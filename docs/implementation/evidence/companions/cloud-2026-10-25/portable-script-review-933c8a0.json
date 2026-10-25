@@ -1,0 +1,82 @@
+{
+  "reviewedCommit": "933c8a0",
+  "mode": "read-only source review",
+  "scriptBlobs": {
+    "scripts/acceptance/cloud-integrated-portable.mjs": "1f36c301037c4d6470ee258e78b849685573837e",
+    "scripts/acceptance/portable-session.mjs": "7342a3056e72b02f69f101b130f0c258842c74eb"
+  },
+  "productSourceChanged": false,
+  "portableBusinessAcceptanceRun": false,
+  "fullSuiteRun": false,
+  "apiResolverReproduction": {
+    "method": "ConversationService.prototype.effectiveConnection",
+    "sourceBlobAt933AndCurrent": "9ac999b9b5377990353be6a2e91ab42f0dadb8d3",
+    "scope": "Pure local read-only fixture; no Auth/model/Storage request and no product data mutation",
+    "defaultUseOverride": false,
+    "configuredConnectionScope": "pet",
+    "actuallyRequestedScope": null,
+    "observedCode": "CONNECTION_REQUIRED",
+    "scriptExpectedCode": "NETWORK_ERROR"
+  },
+  "findings": [
+    {
+      "id": "portable-pet-connection-scope",
+      "priority": 1,
+      "file": "scripts/acceptance/cloud-integrated-portable.mjs",
+      "start": 51,
+      "end": 54,
+      "problem": "The newly adopted pet retains profile.useOverride=false, but connection.save supplies petId and therefore creates only a pet-scoped connection. send chooses the account connection at service.cjs63-68 and fails before createTurn. On a clean profile the actual code is CONNECTION_REQUIRED, not the expected NETWORK_ERROR; a restored account configuration without a private key can instead yield KEY_REQUIRED.",
+      "reproduce": "Use defaultProfile() with only a pet-scoped encrypted connection; call the existing effectiveConnection method. It requests scope=null. The method blob is identical at933c8a0 and the reviewed worktree.",
+      "suggestion": "Set useOverride:true in the profile.save input, or deliberately save the account connection with its global revision. Then verify the actual failed user/assistant turn exists; do not manufacture the model reply."
+    },
+    {
+      "id": "portable-complete-data-equality",
+      "priority": 1,
+      "file": "scripts/acceptance/cloud-integrated-portable.mjs",
+      "start": 84,
+      "end": 88,
+      "problem": "readDomain at40 contains pets, memories, selected message fields, resource preferences and inventory only. It omits account_settings, conversation_profiles/persona, companion_accounts independent selections and historical action/capture/archive units. The final check compares only A with B and checkpoint metadata, not these actual fields with the independent cloud envelope. This cannot substantiate the stated complete-save equality or directly catch the already observed stale disk volume case.",
+      "reproduce": "The SQL read list never queries account_settings or conversation_profiles. A different desktop.volume or a reverted final persona/selection leaves domainChecksum unchanged. The independent cloud envelope is retrieved at84 but never compared with these local units.",
+      "suggestion": "Read and compare the intended nonsecret settings/profile/selection/history units from both SQLite files against their corresponding canonical cloud modules. Bind the original offline action receipt actionId and checksum to the matching verified outbox/document, rather than printing its fields only. Exclude intentionally device-private credentials from equality."
+    },
+    {
+      "id": "portable-stop-idempotency",
+      "priority": 2,
+      "file": "scripts/acceptance/portable-session.mjs",
+      "start": 33,
+      "end": 34,
+      "problem": "stop has no stopped/stopPromise guard. The old A is stopped explicitly at integrated77 and stopped again from models at finally92. If runtime.pid differs from the SFX launcher, every stop unconditionally issues taskkill /PID runtime.pid /T /F, including after the owned runtime has already exited. PID reuse can therefore target an unrelated process. Only the launcher exit is awaited, not independently proven runtime termination.",
+      "reproduce": "Follow integrated77 then finally92 for the same model: portable-session34 is executed twice whenever runtime.pid!==child.pid, irrespective of its first termination or inspector disconnection.",
+      "suggestion": "Make stop idempotent with a retained promise/terminal state. Only force terminate a currently verified owned runtime with matching executable/profile/process creation identity, and confirm termination before relaunching that profile."
+    },
+    {
+      "id": "portable-seed-inventory-delta",
+      "priority": 2,
+      "file": "scripts/acceptance/cloud-integrated-portable.mjs",
+      "start": 71,
+      "end": 74,
+      "problem": "The assertion checks reward.seeds.quantity===2 in returned metadata and the pet XP delta, but never checks the actual garden_items delta or the unique reward receipt. Final A/B inventory equality still passes if both inventories are unchanged despite returned seed metadata.",
+      "reproduce": "before.inventory and grown.inventory are collected but no assertion compares them. A missing item debit/credit cannot be distinguished from a successful one merely by equal peers.",
+      "suggestion": "For reward.seeds.itemId, assert the actual before/after quantity delta equals the returned quantity, all unrelated items stay unchanged, and exactly one domain reward/authority receipt exists and is present in the independently read cloud garden fragment."
+    },
+    {
+      "id": "portable-requested-resource-preferences",
+      "priority": 2,
+      "file": "scripts/acceptance/cloud-integrated-portable.mjs",
+      "start": 65,
+      "end": 67,
+      "problem": "The script sets desktop.scale=1.25, battle.mirrorX=true and a changed wave clip, but only waits for resource availability and compares eventual peer rows with each other. It never asserts the stored values equal the requested calibration/actions. Equal unchanged defaults could pass the claimed preference restoration check.",
+      "reproduce": "calibration and actions from59-60 are not used in any subsequent assertion. The publication poll checks package authority receipts, not that the independently read preference document equals these intended values.",
+      "suggestion": "Compare A and B preference rows to the exact calibration/actions values and bind them to the verified resource-preference receipt/cloud document before emitting the successful preference check."
+    }
+  ],
+  "confirmedApiUsage": [
+    "Adoption label '给它起个昵称', aria checkbox '领养后放到桌面', exact submit '领养这位伙伴' and cp-success match the real AdoptionPage at933c8a0.",
+    "Adoption count+original petId retention uses instance IDs, without replacing them with template or resource IDs.",
+    "ResourceClip.name, calibration.desktop.scale, calibration.battle.mirrorX, actions.wave, resourceId and expectedRevision match the resource contracts.",
+    "Native pages are scoped to each owned CDP connection and wait for exact petId route, ready resourceId canvas and captured visible pixels.",
+    "waitClean uses actual syncStatus fields. Source binding, isolated profile override and post-ready userData checks are appropriate; the engineering driver probe is not business acceptance."
+  ],
+  "externalPrecondition": "08 bidirectional automatic push/pull must first be integrated.933's flush retry timer alone cannot establish the automatic peer application claimed by this script. The coordinator already identified this dependency; no portable business pass is claimed here.",
+  "priorProbe": "Before the read-only review request, an existing isolated live account's garden snapshot was inspected through production Electron IPC: one naturally mature carrot plot and zero food. No harvest, feed, clock change or product source edit was performed; further business acceptance remains deferred."
+}
