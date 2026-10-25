@@ -133,9 +133,12 @@ function createConversationBackupAdapter(services) {
       const ordered = mode === 'replace' ? incomingMessages : mergeOrder(localMessages,incomingMessages,[...merged.values()]);
       // Keep every device's credential vault even if the cloud has no connection.
       // Endpoint matching is exact; an old key cannot be sent to a new host.
-      db.prepare(`INSERT OR IGNORE INTO conversation_credentials
+      db.prepare(`DELETE FROM conversation_credentials WHERE owner_account_id=? AND (scope,scope_id,provider,base_url) IN
+        (SELECT scope,scope_id,provider,base_url FROM conversation_connections WHERE owner_account_id=? AND encrypted_key IS NULL)`).run(owner,owner);
+      db.prepare(`INSERT INTO conversation_credentials
         SELECT owner_account_id,scope,scope_id,provider,base_url,encrypted_key,updated_at
-        FROM conversation_connections WHERE owner_account_id=? AND encrypted_key IS NOT NULL`).run(owner);
+        FROM conversation_connections WHERE owner_account_id=? AND encrypted_key IS NOT NULL
+        ON CONFLICT(owner_account_id,scope,scope_id,provider,base_url) DO UPDATE SET encrypted_key=excluded.encrypted_key,updated_at=excluded.updated_at`).run(owner);
       for (const name of names.filter(name => name !== 'conversation_messages')) {
         if (mode === 'replace') db.prepare(`DELETE FROM ${name} WHERE owner_account_id=?`).run(owner);
         for (const source of data.tables[name]) {

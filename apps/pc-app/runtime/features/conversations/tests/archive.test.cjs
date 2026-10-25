@@ -62,6 +62,22 @@ test('running replies export as interrupted projections without changing the sen
   assert.equal(a.store.history('owner-a','pet-one').messages[1].status,'cancelled');
 });
 
+test('an older client key edit or clear is not resurrected by the local vault during cloud restore', t => {
+  const a=fixture(t),b=fixture(t);
+  a.store.saveConnection('owner-a',null,{...config,encryptedKey:'SOURCE-DEVICE-KEY'},0);
+  const snapshot=a.adapter.export('owner-a');
+  b.store.saveConnection('owner-a',null,{...config,encryptedKey:'ORIGINAL-LOCAL-KEY'},0);
+  // The pre-vault client still updates only the original connection column.
+  b.db.prepare('UPDATE conversation_connections SET encrypted_key=?,revision=revision+1 WHERE owner_account_id=?').run('NEWER-OLD-CLIENT-KEY','owner-a');
+  assert.equal(b.store.getConnection('owner-a',null,true).encryptedKey,'NEWER-OLD-CLIENT-KEY');
+  b.adapter.restore('owner-a',snapshot,'replace');
+  assert.equal(b.store.getConnection('owner-a',null,true).encryptedKey,'NEWER-OLD-CLIENT-KEY');
+  b.db.prepare('UPDATE conversation_connections SET encrypted_key=NULL,revision=revision+1 WHERE owner_account_id=?').run('owner-a');
+  assert.equal(b.store.getConnection('owner-a').hasKey,false);
+  b.adapter.restore('owner-a',snapshot,'replace');assert.equal(b.store.getConnection('owner-a').hasKey,false);
+  assert.equal(b.db.prepare('SELECT COUNT(*) AS n FROM conversation_credentials WHERE owner_account_id=?').get('owner-a').n,0);
+});
+
 test('old history prefixes merge before existing tails while stable IDs and pagination survive sequence collisions', t => {
   const a=fixture(t),b=fixture(t);
   turn(a,'owner-a','pet-one','old-first');turn(a,'owner-a','pet-one','known-tail');

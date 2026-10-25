@@ -13,10 +13,10 @@ const env={...process.env,PET_USER_DATA_DIR:profile,LINGJING_QA_SCENARIO:'unifie
 const app=await electron.launch({args:[resolve('.')],env}),checks=[];
 try{
   const page=await app.firstWindow();await page.setViewportSize({width:1280,height:844});await page.waitForFunction(()=>Boolean(window.lingjing));
-  async function settle(){await page.evaluate(async()=>{await Promise.all(document.getAnimations().filter(animation=>Number.isFinite(animation.effect?.getComputedTiming().endTime)).map(animation=>animation.finished.catch(()=>{})));});}
+  const settle=async()=>{await page.evaluate(async()=>{await Promise.all(document.getAnimations().filter(animation=>Number.isFinite(animation.effect?.getComputedTiming().endTime)).map(animation=>animation.finished.catch(()=>{})));});};
   const loggedIn=await page.evaluate(()=>window.lingjing.invoke('accounts','login',{provider:'local',account:'qa_chat_recovery',password:'isolated-recovery-qa'}));assert.equal(loggedIn.ok,true);
   await page.evaluate(()=>{location.hash='#/settings/ai';});await page.getByRole('heading',{name:'AI 对话',exact:true}).waitFor();
-  async function review(title,primary,file){
+  const review=async(title,primary,file)=>{
     const dialog=page.getByRole('dialog');await dialog.locator('.cv-dialog h2').waitFor();assert.equal(await dialog.locator('.cv-dialog h2').innerText(),title);
     await page.evaluate(async()=>{await Promise.all(document.getAnimations().filter(animation=>Number.isFinite(animation.effect?.getComputedTiming().endTime)).map(animation=>animation.finished.catch(()=>{})));});
     const metrics=await dialog.evaluate(root=>{const box=root.getBoundingClientRect(),style=getComputedStyle(root),title=root.querySelector('.cv-dialog h2').getBoundingClientRect();return{dialog:{x:box.x,y:box.y,width:box.width,height:box.height},title:{x:title.x,y:title.y,width:title.width,height:title.height},translate:style.translate,viewport:{width:innerWidth,height:innerHeight}};});
@@ -30,7 +30,7 @@ try{
     assert.equal(await dialog.evaluate(root=>root.contains(document.activeElement)),true);
     await dialog.getByRole('button',{name:'取消',exact:true}).focus();await settle();
     await page.screenshot({path:join(output,file),fullPage:true});checks.push({title,metrics,primary:colors,focusContained:true});
-  }
+  };
   const importButton=page.getByRole('button',{name:'导入旧记录',exact:true});await importButton.click();await page.locator('.cv-import-counts').waitFor();
   await review('导入旧记录','导入','legacy-dialog-1280.png');await page.keyboard.press('Escape');await page.getByRole('dialog').waitFor({state:'hidden'});
   await page.waitForFunction(()=>document.activeElement?.getAttribute('aria-label')==='导入旧记录');

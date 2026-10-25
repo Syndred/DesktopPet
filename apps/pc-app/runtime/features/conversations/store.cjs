@@ -53,11 +53,10 @@ class ConversationStore {
     });
   }
   getConnection(owner, petId = null, includeSecret = false) {
-    return connection(this.db.prepare(`SELECT c.*,COALESCE(k.encrypted_key,c.encrypted_key) AS encrypted_key
-      FROM conversation_connections c LEFT JOIN conversation_credentials k
-      ON k.owner_account_id=c.owner_account_id AND k.scope=c.scope AND k.scope_id=c.scope_id
-      AND k.provider=c.provider AND k.base_url=c.base_url
-      WHERE c.owner_account_id=? AND c.scope=? AND c.scope_id=?`).get(owner, petId === null ? "account" : "pet", petId ?? ""), includeSecret);
+    // The live row remains authoritative for older clients that can edit/clear
+    // keys. The vault is consulted only by an explicit archive restoration.
+    return connection(this.db.prepare(`SELECT * FROM conversation_connections
+      WHERE owner_account_id=? AND scope=? AND scope_id=?`).get(owner, petId === null ? "account" : "pet", petId ?? ""), includeSecret);
   }
   saveConnection(owner, petId, value, revision) {
     return this.transaction(() => {
