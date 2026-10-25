@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-25T15:43:24.0386811Z",
+  "updatedAt": "2026-10-25T16:20:31.073Z",
   "status": "in-progress",
   "qaThreadId": "01a172b4-d7f0-7213-9a40-092418ee776b",
   "soleNativeInputOwner": "01a172b4-d7f0-7213-9a40-092418ee776b",
@@ -407,9 +407,26 @@
     }
   ],
   "remoteRefresh": {
-    "checkedAt": "2026-10-25T14:20:56.3587879Z",
+    "checkedAt": "2026-10-25T16:20:31.073Z",
     "command": "git fetch origin main; git pull --ff-only origin main",
-    "result": "Already up to date",
+    "result": "Already up to date.",
     "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086"
+  },
+  "globalSerialAllocationAcceptance": {
+    "status": "A1-C2-B3-verified",
+    "verifiedAt": "2026-10-25T16:20:31.073Z",
+    "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+    "sequence": [
+      "A native UI adopts fox1",
+      "C actual backend observes original fox2 with explicit simulated coordinates",
+      "B native UI adopts fox3"
+    ],
+    "proof": "docs/implementation/evidence/cloud/2026-10-25/global-serial-live-fox-sequence.json",
+    "proofSha256": "f4cce9fb8208d1ee420d2170258f27d7460ee1cfffb622df06f493a941de009e",
+    "nativeActor": "09",
+    "rootIndependentPgReadback": true,
+    "entireC11Passed": false,
+    "fullFunctionalAcceptancePassed": false,
+    "pending": "Continue all remaining matrix operations, cross-view identity, restart, sync, battle and capture acceptance on the frozen candidate; actual A1-C2-B3 evidence remains immutable."
   }
 }

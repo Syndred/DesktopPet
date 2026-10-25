@@ -1,0 +1,172 @@
+{
+  "format": "lingjing.actual-fox-observe-two-evidence/v1",
+  "verifiedAt": "2026-10-25T16:11:18.976Z",
+  "projectRef": "jbvrdmrkwpznbrvteive",
+  "namespace": "qa:user-acceptance-790f5b6d-a900-4c6f-bb3f-e32237136ed1",
+  "templateId": "animal-white-fox",
+  "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+  "rootCoordinatorCommit": "b31617ade6a4ec87318a792880d74d736f19bf40",
+  "a1": {
+    "nativeUi": true,
+    "petId": "pet-3b746d1a-d968-42e1-9c13-73fd35a45273",
+    "ownerAccountId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+    "inputActionId": "18a25316-26ac-453e-a34a-ab44ed3f7055",
+    "canonicalActionId": "companions:18a25316-26ac-453e-a34a-ab44ed3f7055",
+    "globalSerial": "1",
+    "displayedNumber": "0001",
+    "authorityRevision": 9,
+    "authorityChecksum": "79a18ba375d3cd56cd00386032c46a9f082085d12a8bb3962a5ebbf8a99b1d38",
+    "originalReceiptBytesPreserved": true,
+    "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+    "asarSha256": "d1d2e2e9ce5f50e3eaa54dc857012ff5704411effb50dfc44e50a1cf30ee8fba",
+    "nativeImageSha256": "abc7009ed64c71fef789c4c8d5d38f60fbe46300fe2e18b85a5686e89aa27f30"
+  },
+  "c2": {
+    "accountLabel": "C",
+    "ownerAccountId": "account:0521a3e5-adf4-4b0b-9c0b-0923a7b63fe9",
+    "runId": "c03-fox-two-20261025-790f5b6d-v1",
+    "attemptId": "fox2-attempt-001",
+    "spawnId": "wild-2d-v2-f3621dbe19-498040-51998-202333",
+    "globalSerial": "2",
+    "sameSpawnReentrySerial": "2",
+    "nearbyReadbackSerial": "2",
+    "capturedPetId": null,
+    "realHttps": true,
+    "simulatedPosition": true,
+    "nativeUi": false,
+    "physicalGps": false,
+    "allocationGate": {
+      "freshPgCounterBeforeObserve": "1",
+      "pgCheckedAt": "2026-10-25T16:08:27.117Z",
+      "firstObserveSentAt": "2026-10-25T16:08:27.510Z",
+      "freshPgAgeAtSendMs": 393,
+      "originalProofExpiresAt": "2026-10-25T16:08:37.924Z",
+      "readySha256": "85d8e35de31d060f7f861c9dd79b4f4dec569ef9e19eed60cc6fab545e9f7716",
+      "approvalSha256": "90a3bf1ea6b74b5ca42b7a3354e862eaeca79f54fbfb6231c92804592a4a0833"
+    },
+    "requests": [
+      {
+        "operation": "actor",
+        "status": 200,
+        "sentAt": "2026-10-25T16:08:08.403Z",
+        "requestId": "01a173d1-c41d-7649-ba79-c90de7417bfe"
+      },
+      {
+        "operation": "protocol",
+        "status": 200,
+        "sentAt": "2026-10-25T16:08:10.532Z",
+        "requestId": "01a173d1-cb02-77f3-9966-7f1a3f0a760b"
+      },
+      {
+        "operation": "protocol",
+        "status": 200,
+        "sentAt": "2026-10-25T16:08:12.182Z",
+        "requestId": "01a173d1-d097-7837-aaad-a60ce609df89"
+      },
+      {
+        "operation": "device.register",
+        "status": 200,
+        "sentAt": "2026-10-25T16:08:13.265Z",
+        "requestId": "01a173d1-d4d6-73dd-ae8e-d28b886285e9"
+      },
+      {
+        "operation": "location.challenge",
+        "status": 200,
+        "sentAt": "2026-10-25T16:08:14.991Z",
+        "requestId": "01a173d1-db90-7554-9ce4-ab8272017e9a"
+      },
+      {
+        "operation": "location.prove",
+        "status": 200,
+        "sentAt": "2026-10-25T16:08:16.336Z",
+        "requestId": "01a173d1-e0db-78ed-8076-5dde2c81ca4a"
+      },
+      {
+        "operation": "nearby",
+        "status": 200,
+        "sentAt": "2026-10-25T16:08:18.084Z",
+        "requestId": "01a173d1-e7a2-716e-a73a-45e96bd87277"
+      },
+      {
+        "operation": "location.challenge",
+        "status": 200,
+        "sentAt": "2026-10-25T16:08:19.714Z",
+        "requestId": "01a173d1-ee03-75bb-ad67-ac8c96f20cf0"
+      },
+      {
+        "operation": "location.prove",
+        "status": 200,
+        "sentAt": "2026-10-25T16:08:20.999Z",
+        "requestId": "01a173d1-f306-7bdc-85ea-960d695e5a88"
+      },
+      {
+        "operation": "nearby",
+        "status": 200,
+        "sentAt": "2026-10-25T16:08:22.778Z",
+        "requestId": "01a173d1-f9f9-7473-945f-9afc6a279452"
+      },
+      {
+        "operation": "observe",
+        "status": 200,
+        "sentAt": "2026-10-25T16:08:27.510Z",
+        "requestId": "01a173d2-0c77-7df1-a4c6-8efa2c5349b3"
+      },
+      {
+        "operation": "location.challenge",
+        "status": 200,
+        "sentAt": "2026-10-25T16:08:29.967Z",
+        "requestId": "01a173d2-1635-7c63-bebb-d431560bf83f"
+      },
+      {
+        "operation": "location.prove",
+        "status": 200,
+        "sentAt": "2026-10-25T16:08:31.298Z",
+        "requestId": "01a173d2-1b40-769f-aaa7-ea0799dc2381"
+      },
+      {
+        "operation": "observe",
+        "status": 200,
+        "sentAt": "2026-10-25T16:08:32.990Z",
+        "requestId": "01a173d2-21dd-7d36-a704-55465375dd76"
+      },
+      {
+        "operation": "nearby",
+        "status": 200,
+        "sentAt": "2026-10-25T16:08:34.504Z",
+        "requestId": "01a173d2-27c9-75d7-b1dc-c4ca612e502f"
+      }
+    ],
+    "evidenceSha256": "e54c4c4b780ccfc0d290554262c286e25b92177cd86f8d0191b3ceb6e3c01635",
+    "backendProcessExitCode": 0,
+    "rootObservedCompletionSha256": "81006262b10c40e8ce69af67bc473b10d21f1dd5ee0d9eb933c4f33481f877ba"
+  },
+  "independentPgAfterC2": {
+    "checkedAt": "2026-10-25T16:08:58.072Z",
+    "counterLastSerial": "2",
+    "registryRows": [
+      {
+        "petId": "pet-3b746d1a-d968-42e1-9c13-73fd35a45273",
+        "spawnId": null,
+        "namespace": "qa:user-acceptance-790f5b6d-a900-4c6f-bb3f-e32237136ed1",
+        "templateId": "animal-white-fox",
+        "globalSerial": "1",
+        "ownerAccountId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630"
+      },
+      {
+        "petId": null,
+        "spawnId": "wild-2d-v2-f3621dbe19-498040-51998-202333",
+        "namespace": "qa:user-acceptance-790f5b6d-a900-4c6f-bb3f-e32237136ed1",
+        "templateId": "animal-white-fox",
+        "globalSerial": "2",
+        "ownerAccountId": "account:0521a3e5-adf4-4b0b-9c0b-0923a7b63fe9"
+      }
+    ],
+    "aOwnedPetStillPresent": true,
+    "queryEvidenceSha256": "180dc9be7a564104cc259c9c56e235c3832fb8dadb6f7c67fb090f5486ba0c8c"
+  },
+  "boundary": "A1 is native UI on the frozen candidate; C2 is actual published backend/SDK HTTPS with explicitly simulated coordinates. It is not native GPS or a native UI wild encounter test. The PG preflight is independent and fresh, not a server-side expected-counter CAS. Other fox allocators were operationally frozen.",
+  "b3": {
+    "status": "authorized-native-ui-pending-independent-readback"
+  },
+  "fullFunctionalAcceptancePassed": false
+}
