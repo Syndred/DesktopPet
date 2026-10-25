@@ -2,9 +2,9 @@
   "module": "companions",
   "scope": "Cloud-upgrade 2026-10-25: preserve companion consistency units through Accounts identity/save sync and Garden transactions",
   "branch": "codex/lingjing-companions",
-  "commit": "230e9b6",
+  "commit": "13cb925a0bde3b50b39de1f120d4f2842069aa8f",
   "goalStatus": "active",
-  "phase": "controlled cloud command server ready for coordinator review/deployment; main IPC/native/cloud readback integration continuing",
+  "phase": "coordinator-deployed commands passed real HTTPS two-deviceId/independent-process checks; main IPC/native/cloud readback integration continuing",
   "contracts": {
     "baseline": "docs/implementation/cloud-upgrade-2026-10-25.md",
     "sharedSave": "Consume services.get('backups') and Accounts sync; no second account, inventory, reward or transport",
@@ -25,7 +25,7 @@
   "migrations": [{"file":"infra/supabase/migrations/20261025025515_lingjing_companion_commands.sql","generatedBy":"Supabase CLI2.122.0 migration new lingjing_companion_commands --workdir infra","remoteAppliedByThisChat":false}],
   "checks": {
     "sourceFetched": true,
-    "sourceFetchedAt": "2026-10-25T02:27:35Z",
+    "sourceFetchedAt": "2026-10-25T03:27:54Z",
     "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086; fully included; 0 commits behind after git fetch origin",
     "publicBaselineMerged": true,
     "companionUnit": "7 local real-SQLite cases: two client files/reopen, original IDs and receipts, merge conflict/rollback, full old-table conversion, pre-module raw archives, raw archived animal history, verified alias source/target-before preservation, two owners retaining identical original pet IDs",
@@ -41,7 +41,10 @@
     "cloudCommandSql": "3 LOCAL PGlite tests passed: original generated pet replay/CAS and compound ownership, ordinary-role/foreign/revoked denial with no Auth grant expansion, whole transaction rollback",
     "cloudCommandTypes": "Deno2.9.6 check --no-config --lock=infra/supabase/functions/_shared/deno.lock infra/supabase/functions/companions-sync/index.ts passed",
     "cloudGrowthAndGarden": "shared growth local parity16/16; exact committed05 53732f4 engine/domain +02 canonical award adapter + actual BackupManager two SQLite clients passed; local only, no HTTPS claim",
-    "httpVerifier": "cloud-http.acceptance.mjs syntax checked; requires coordinator-approved deployment and designated credentials before execution"
+    "httpVerifier": "REAL HTTPS7 checks passed using coordinator-created DPAPI test accounts; independent deviceIds + a restarted Node process, not Electron or physical second machine; evidence/companions/cloud-2026-10-25/real-https.json",
+    "liveWorkerPermissions": "Independent read-only real SQL: anon/authenticated cannot execute worker; service_role can; service_role still cannot SELECT auth.users; worker-acl.json",
+    "sharedHookAlignment": "After merging8e5c735 and preserving safety projection/authority_pending,11 focused shared/Accounts/legacy normalization checks passed",
+    "latestGardenContract": "Current13cb925 runtime code with exact05 53732f4 passed canonical-engine settlement, complete-save clientB restore and stale-preview conflict; artifacts/companions/garden-contract-VkP9ws (local only)"
   },
   "realCloudEvidence": {
     "project": "jbvrdmrkwpznbrvteive",
@@ -50,7 +53,16 @@
     "inspection": "2026-10-25T02:20:55Z independent read-only SQL verified lingjing_accounts and lingjing_devices exist with RLS enabled after coordinator deployment",
     "coordinatorReported": "Identity migration deployed; four real anonymous/forged-JWT/privileged-RPC denials passed. Not this module's independent functional evidence.",
     "applicationChainVerified": false,
-    "remoteMutations": false
+    "httpsCommandsVerified": true,
+    "httpsEvidence": "docs/implementation/evidence/companions/cloud-2026-10-25/real-https.json",
+    "realRunId": "40bf5871-eddf-4605-96d2-59a7a3451acb",
+    "evidenceScope": "Actual Supabase HTTPS+Accounts SupabaseRemote, same-machine deviceIds and independent restarted Node process; Electron/native integration and legacy cloud source migration not yet verified",
+    "customAppearanceVerified": false,
+    "customAppearanceState": "07 service-verified references table unavailable at this run; custom denied503, builtin2D succeeded; no packages-index fallback",
+    "remoteSchemaMutationsByThisChat": false,
+    "remoteFunctionDeploymentsByThisChat": false,
+    "testAccountApplicationWrites": true,
+    "mutationScope": "Coordinator explicitly authorized verification after deployment; only coordinator-created test accounts used through deployed command API; no ordinary user credentials read"
   },
   "preservation": [
     "original petId/name/growth/serial/origin/history",
@@ -90,12 +102,12 @@
     {"action":"food/XP/seeds","server":"05 transaction +02 shared growth; local contract integration passed","runtime":"05/04 authority paths pending integration; no client chosen rewards"}
   ],
   "remaining": [
-    "Coordinator deploys reviewed67546f5 companion SQL/Edge and runs designated-account HTTPS verifier",
     "Main cloudActor IPC routing, native position write routing, durable common action intents and safe same-unit readback",
     "Latest Accounts safety projection + companion registration final targeted verification",
     "Garden same-save inventory integration",
     "new Accounts real-HTTPS two-client conflict/offline/restart tests",
     "real HTTPS old-save restoration and independent client readback after coordinated deployment",
+    "07 protected reference positive custom2D appearance and new-client resource availability after coordinated deployment",
     "final source fetch and coordinator integration acceptance"
   ]
 }
