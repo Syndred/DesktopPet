@@ -1,0 +1,198 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-25T19:09:00Z",
+  "candidateSource": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+  "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+  "asarSha256": "d1d2e2e9ce5f50e3eaa54dc857012ff5704411effb50dfc44e50a1cf30ee8fba",
+  "classification": {
+    "actualNativeOperator": "09",
+    "ordinaryCloudProfile": true,
+    "realSupabaseHttps": true,
+    "independentPostgresReadback": true,
+    "actualLocalReadOnlySqlite": true,
+    "actualNormalUiBackupExport": true,
+    "modelUpstreamSimulated": true,
+    "externalModelSuccess": false,
+    "tlsPayloadCaptured": false
+  },
+  "scope": {
+    "projectRef": "jbvrdmrkwpznbrvteive",
+    "ownerAccountId": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+    "petId": "pet-74c6a89c-63e6-461a-8583-e591cf440e75",
+    "helperRunId": "b272bb70-7b19-47e4-8d01-30ed0ce64e97",
+    "approvedConnectionScope": "pet-and-account"
+  },
+  "firstPush": {
+    "actionId": "41777b34-8b8f-47a9-9631-8c87af62a8ae",
+    "baseRevision": 0,
+    "status": "conflict",
+    "serverActionRows": 0,
+    "serverHeadAtConflict": {
+      "checksum": "453027fd3dee382de82bbf51d4c900c800c3ec6835131cb8226ffcfc64fafd91",
+      "owner_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+      "revision": 4,
+      "action_id": "companions:1eec55c0-8531-4f14-a3de-1c4bb7f5131f",
+      "updated_at": "2026-10-25T18:49:18.732839+00:00",
+      "config_rows": 0,
+      "envelope_owner": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+      "has_secret_fields": false,
+      "has_generated_dummy_prefix": false
+    },
+    "preserved": true,
+    "syncSuccessClaimed": false
+  },
+  "nativePreservingMerge": {
+    "actionId": "0bbb39b8-07ad-4835-a61b-ab791f24524b",
+    "mode": "merge",
+    "beforeRestoreBackupId": "01bf9659-2438-4841-8f27-443f3b84214b",
+    "supersededOriginalOutboxRetained": true,
+    "originalBPetRows": 3,
+    "originalBPetRowsShaBefore": "319e96266f9e5750fe17b63a764ff5dcd7b41aa3fd1b63934fc046976dcac723",
+    "originalBPetRowsShaAfter": "319e96266f9e5750fe17b63a764ff5dcd7b41aa3fd1b63934fc046976dcac723"
+  },
+  "successfulPush": {
+    "independentReadAt": "2026-10-25 19:07:48.05708+00",
+    "exactServerActionRows": 1,
+    "receipt": {
+      "kind": "personal",
+      "configs": [
+        {
+          "owner": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+          "scope": "account",
+          "columns": [
+            "base_url",
+            "context_chars",
+            "max_output_tokens",
+            "model",
+            "owner_account_id",
+            "provider",
+            "revision",
+            "scope",
+            "scope_id",
+            "updated_at"
+          ],
+          "revision": 1,
+          "scope_id": "",
+          "forbidden_columns": false
+        },
+        {
+          "owner": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+          "scope": "pet",
+          "columns": [
+            "base_url",
+            "context_chars",
+            "max_output_tokens",
+            "model",
+            "owner_account_id",
+            "provider",
+            "revision",
+            "scope",
+            "scope_id",
+            "updated_at"
+          ],
+          "revision": 1,
+          "scope_id": "pet-74c6a89c-63e6-461a-8583-e591cf440e75",
+          "forbidden_columns": false
+        }
+      ],
+      "checksum": "d4d280f9c20065b9cce78895c6ba36a08b10e2633c0a51fe8b545e1927bc3b16",
+      "owner_id": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+      "revision": 5,
+      "action_id": "auto:f229a446-b520-4316-b126-ecd2c4de1903",
+      "created_at": "2026-10-25T19:05:16.153486+00:00",
+      "input_hash": "2cf5fa7ba80b26204c01e1ec2003f08305d1da43a5d9302bc952804a57bac56f",
+      "base_revision": 4,
+      "envelope_owner": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6",
+      "vault_in_module": false,
+      "envelope_checksum": "d4d280f9c20065b9cce78895c6ba36a08b10e2633c0a51fe8b545e1927bc3b16",
+      "has_secret_fields": false,
+      "vault_in_generic_tables": false,
+      "has_generated_dummy_prefix": false
+    },
+    "currentSaveAtRead": {
+      "checksum": "d4d280f9c20065b9cce78895c6ba36a08b10e2633c0a51fe8b545e1927bc3b16",
+      "revision": 5,
+      "action_id": "auto:f229a446-b520-4316-b126-ecd2c4de1903",
+      "updated_at": "2026-10-25T19:05:16.153486+00:00",
+      "has_secret_fields": false,
+      "has_generated_dummy_prefix": false
+    },
+    "localOutboxStatus": "verified",
+    "localVerifiedAt": "2026-10-25T19:05:16.998Z",
+    "noExtraManualPushAfterAutomaticSuccess": true
+  },
+  "keyExclusion": {
+    "bothNewKeysStillPresentInMatchingLocalVaultsBeforeAndAfter": true,
+    "bothConnectionRevisions": 1,
+    "localOutboxExactDummyMatches": 0,
+    "localOutboxExactCipherMatches": 0,
+    "sourceOriginalExactDummyMatches": 0,
+    "sourceOriginalExactCipherMatches": 0,
+    "reconstructedSerializerBodyExactDummyMatches": 0,
+    "reconstructedSerializerBodyExactCipherMatches": 0,
+    "reconstructionClassification": "Derived from frozen actual serializer and stored outbox; not a TLS capture",
+    "cloudHasGeneratedDummyPrefix": false,
+    "cloudHasSecretFields": false,
+    "cloudVaultTablePresent": false,
+    "cloudConnectionsOnlyAllowedMetadataColumns": true
+  },
+  "backup": {
+    "id": "6ea8919d-b9b7-4914-b07c-5f33e0f41d42",
+    "reason": "export",
+    "createdAt": "2026-10-25T19:01:27.578Z",
+    "envelopeChecksum": "49bb56b9d4290d108101df581f1d278b358be1a6624e4803c4363b3bb3612fe9",
+    "fileSha256": "f7260fdb7fcdf376841881d0f502e516e6ccccea4c2b64c378e23ba2e14aafd1",
+    "bytes": 18612,
+    "ownerAndCanonicalChecksumVerified": true,
+    "exactDummyMatches": 0,
+    "exactLocalCipherMatches": 0,
+    "vaultTablePresent": false
+  },
+  "serialRegistryAfterSync": {
+    "checkedAt": "2026-10-25T19:08:56.571Z",
+    "namespace": "qa:user-acceptance-790f5b6d-a900-4c6f-bb3f-e32237136ed1",
+    "projectRef": "jbvrdmrkwpznbrvteive",
+    "templateId": "animal-white-fox",
+    "registryRows": [
+      {
+        "petId": "pet-3b746d1a-d968-42e1-9c13-73fd35a45273",
+        "spawnId": null,
+        "namespace": "qa:user-acceptance-790f5b6d-a900-4c6f-bb3f-e32237136ed1",
+        "templateId": "animal-white-fox",
+        "globalSerial": "1",
+        "ownerAccountId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630"
+      },
+      {
+        "petId": "pet-5a242002-0e1d-41ad-a0d9-ec3ec97659ee",
+        "spawnId": "wild-2d-v2-f3621dbe19-498040-51998-202333",
+        "namespace": "qa:user-acceptance-790f5b6d-a900-4c6f-bb3f-e32237136ed1",
+        "templateId": "animal-white-fox",
+        "globalSerial": "2",
+        "ownerAccountId": "account:0521a3e5-adf4-4b0b-9c0b-0923a7b63fe9"
+      },
+      {
+        "petId": "pet-74c6a89c-63e6-461a-8583-e591cf440e75",
+        "spawnId": null,
+        "namespace": "qa:user-acceptance-790f5b6d-a900-4c6f-bb3f-e32237136ed1",
+        "templateId": "animal-white-fox",
+        "globalSerial": "3",
+        "ownerAccountId": "account:e1c9004a-2b10-4ff0-8d9e-b338d49ad3d6"
+      }
+    ],
+    "counterLastSerial": "3",
+    "aOwnedPetStillPresent": true,
+    "cOwnerExistingFoxRows": 1
+  },
+  "evidence": {
+    "nativeDirectory": "docs/implementation/qa/2026-10-25-user-acceptance/rounds/candidate-dc7aee3-1b1afdd1/evidence",
+    "rootConfigured": "artifacts/qa/user-acceptance/global-serial/t06-b-key-audit-20261026/root-configured-key-present.json",
+    "rootConflict": "artifacts/qa/user-acceptance/global-serial/t06-b-key-audit-20261026/root-first-conflict-key-present.json",
+    "rootBackup": "artifacts/qa/user-acceptance/global-serial/t06-b-key-audit-20261026/root-pre-merge-key-present-backup.json",
+    "rootComposite": "artifacts/qa/user-acceptance/global-serial/t06-b-key-audit-20261026/root-synced-and-exported-key-present.json"
+  },
+  "limitations": [
+    "Credential sync/export subflow verified; full T06 still needs the QA017 new-candidate native retest.",
+    "This record does not pass all 98 acceptance cases or claim a real external model success.",
+    "The backup was exported while keys were present before the preserving cloud merge; the same key ciphers and revisions remained exact through the successful push."
+  ]
+}

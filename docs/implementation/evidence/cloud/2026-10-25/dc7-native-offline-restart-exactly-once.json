@@ -1,0 +1,202 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-25T19:41:55.723Z",
+  "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+  "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+  "asarSha256": "d1d2e2e9ce5f50e3eaa54dc857012ff5704411effb50dfc44e50a1cf30ee8fba",
+  "roundId": "candidate-dc7aee3-1b1afdd1",
+  "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+  "evidenceKind": "real-native-ui-with-live-cloud-authority-and-read-only-independent-readback",
+  "cases": [
+    "S03",
+    "S06",
+    "G07-offline-write-branch"
+  ],
+  "scopeLimit": "S04 dual-device concurrent conflict remains separate and unverified by this episode.",
+  "action": {
+    "id": "b913c10c-7b1d-45a5-9e8e-e2bd058f5550",
+    "command": "harvest",
+    "plotId": "plot-1",
+    "originalExpectedRevision": 6,
+    "requestHash": "8b286f1d575a52b14b74b87cb3f90c9a45062b224daed3179ea0235e8fed201b",
+    "wireRawSha256": "0fae9e520726d55c04c8bcfd9db8d736a2fc27f64d3702fb37e89623e19aa81a",
+    "pendingRawSha256": "99c906f89b7f22b837f8283cf1463827d297d205aff6793608ea212fb709ca86"
+  },
+  "realFlow": {
+    "seed": {
+      "mainPid": 4364,
+      "wrapperPid": 25052,
+      "sfxRoot": "nsd7622",
+      "pendingRawSha256": "99c906f89b7f22b837f8283cf1463827d297d205aff6793608ea212fb709ca86"
+    },
+    "resume": {
+      "mainPid": 3640,
+      "wrapperPid": 13896,
+      "sfxRoot": "nsx360E",
+      "checks": {
+        "at": "2026-10-25T19:26:31.452Z",
+        "mainPid": 3640,
+        "wrapperPid": 13896,
+        "mainWindowId": 11407708,
+        "seedRoot": "nsd7622",
+        "resumeRoot": "nsx360E",
+        "appInfoUser": null,
+        "pendingActionId": "b913c10c-7b1d-45a5-9e8e-e2bd058f5550",
+        "pendingRawExact": true,
+        "journalLogicalExact": true,
+        "journalRequestExact": true,
+        "journalWireExact": true,
+        "lsExact": true,
+        "idbExact": true,
+        "proxyPid": 25336,
+        "proxyPort": 59084,
+        "proxyMode": "deny",
+        "environmentProvenance": "explicit-child-launch-configuration-not-main-environment-readback",
+        "mainEnvironmentReadbackVerified": false
+      }
+    },
+    "ordinaryFinalReopen": {
+      "mainPid": 13892,
+      "wrapperPid": 23112,
+      "mainWindowId": 3016904,
+      "sfxRoot": "nsmD7AB",
+      "proxy": false,
+      "checks": {
+        "sourceExact": true,
+        "ownerSame": true,
+        "noScenario": true,
+        "allSettingsRestored": true,
+        "petsExact": true,
+        "plotsExact": true,
+        "itemsExact": true,
+        "pendingNull": true,
+        "lsExact": true,
+        "idbExact": true,
+        "originalJournalCommitted": true,
+        "originalWireExact": true
+      }
+    },
+    "networkControl": {
+      "ownedProxyPid": 25336,
+      "port": 59084,
+      "allowSequence": 0,
+      "denySequence": 1,
+      "explicitRestoreAllowSequence": 2,
+      "stopSequence": 3,
+      "defaultFailOpen": false,
+      "systemProxyChanged": false,
+      "parentEnvironmentChanged": false,
+      "normalNativeReadProvedRoute": {
+        "at": "2026-10-25T19:20:01.960Z",
+        "before": {
+          "accepted": 7,
+          "upBytes": 35559,
+          "downBytes": 68431
+        },
+        "after": {
+          "accepted": 10,
+          "upBytes": 60719,
+          "downBytes": 122390,
+          "mode": "allow",
+          "active": 0
+        },
+        "trigger": "native left navigation garden overview only; no health probe or injected business mutation",
+        "acceptedIncreased": true,
+        "upIncreased": true,
+        "downIncreased": true,
+        "mainPid": 4364
+      }
+    },
+    "environmentProvenance": "explicit-child-launch-configuration-not-main-environment-readback",
+    "mainEnvironmentReadbackVerified": false,
+    "onlyOriginalPendingRetriedOnce": true,
+    "newEconomicActionCreatedOnRetry": false
+  },
+  "authoritativeReadback": {
+    "before": {
+      "checkedAt": "2026-10-25 19:23:51.21631+00",
+      "exactOperationRows": 0,
+      "saveRevision": 14,
+      "gardenRevision": 6,
+      "carrotQuantity": 0
+    },
+    "after": {
+      "checkedAt": "2026-10-25 19:31:46.712331+00",
+      "exactOperationRows": 1,
+      "accountRevision": 15,
+      "saveRevision": 15,
+      "saveChecksum": "b90821ec607ff58675438e9e3b70d9405dcd02b769bc0593bced89175f8d3d89",
+      "gardenRevision": 7,
+      "carrotQuantity": 3,
+      "authorityReceiptId": "garden:8b286f1d575a52b14b74b87cb3f90c9a45062b224daed3179ea0235e8fed201b",
+      "replayed": false,
+      "event": {
+        "id": "cf1b870e-3471-4471-899e-d12adc2eed23",
+        "kind": "harvest",
+        "itemId": "carrot",
+        "delta": 3,
+        "balance": 3
+      },
+      "dedicatedGardenRewardReceiptRows": 0
+    },
+    "otherFivePlotsExact": true,
+    "allPriorSeedRowsExact": true,
+    "localJournalStatus": "committed",
+    "serverCanonicalResponseSha256": "e528edecc55fcaeeebe3cf2a655c671919fb257a0a9a2570448ccf855521e13c",
+    "localCanonicalResponseSha256": "e528edecc55fcaeeebe3cf2a655c671919fb257a0a9a2570448ccf855521e13c",
+    "canonicalResponseExact": true,
+    "localReadbackFieldIsWrapperMetadata": true
+  },
+  "preservation": {
+    "sourceExact": true,
+    "ownerSame": true,
+    "noScenario": true,
+    "allSettingsRestored": true,
+    "petsExact": true,
+    "plotsExact": true,
+    "itemsExact": true,
+    "pendingNull": true,
+    "lsExact": true,
+    "idbExact": true,
+    "originalJournalCommitted": true,
+    "originalWireExact": true
+  },
+  "cleanup": {
+    "ownedProxyPidAbsent": true,
+    "ownedProxyListenerAbsent": true,
+    "status": "stopped",
+    "active": 0,
+    "sequence": 3,
+    "allSettingsRestored": true,
+    "systemProxyChanged": false,
+    "parentEnvironmentChanged": false,
+    "ordinaryActualPayloadMatchesFrozenDc7": true,
+    "rootDidNotOperateProductUi": true
+  },
+  "evidence": [
+    {
+      "path": "docs/implementation/qa/2026-10-25-user-acceptance/rounds/candidate-dc7aee3-1b1afdd1/evidence/s03-complete-native-offline-restart.json",
+      "sha256": "284a08e4260f68f86f91f9a388cfc6cb12b81b5bba7a506618cfce6bf9db0a69"
+    },
+    {
+      "path": "docs/implementation/qa/2026-10-25-user-acceptance/rounds/candidate-dc7aee3-1b1afdd1/evidence/s03-final-ordinary-reopen-and-restored-settings.json",
+      "sha256": "cd6188f51ef00bd568498386c75fb7751a809ad6f2fcb9d598bf00f7674cf4ef"
+    },
+    {
+      "path": "docs/implementation/qa/2026-10-25-user-acceptance/rounds/candidate-dc7aee3-1b1afdd1/evidence/s03-original-retry-confirmed-readback.json",
+      "sha256": "ef7142d46c775dfd7b25c21387e58557f6faa9302ae00ee348f080842269b7a1"
+    },
+    {
+      "path": "artifacts/qa/user-acceptance/global-serial/dc7-s03-connect-20261026-v2/root-pg-original-harvest-receipt-after.json",
+      "sha256": "680afe052123d5a8aed912c4a456d7311077afb17ed188abefa7ad645b175153"
+    },
+    {
+      "path": "artifacts/qa/user-acceptance/global-serial/dc7-s03-connect-20261026-v2/root-canonical-harvest-receipt-readback.json",
+      "sha256": "6315b86b1220634267baa339a6d574d02e7204afad058a917f24032b92e8a65a"
+    },
+    {
+      "path": "artifacts/qa/user-acceptance/global-serial/dc7-s03-connect-20261026-v2/root-normal-restored-main-and-proxy-stop.json",
+      "sha256": "7ae937d3e9aa77f701fc810da76ee4aae7fb26343f65b71a0023cdebec3aecb6"
+    }
+  ]
+}
