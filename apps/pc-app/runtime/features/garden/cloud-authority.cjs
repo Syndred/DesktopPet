@@ -79,7 +79,7 @@ class CloudGardenAuthority{
     await this.request('garden-sync',{op:'snapshot'},context);
     const remote=await this.request('territory-sync',{op:'snapshot'},context);this.applyReadback(context,remote);
     const pending=this.db.prepare("SELECT count(*) count FROM garden_cloud_requests WHERE owner_account_id=? AND status='pending'").get(context.ownerAccountId).count;
-    return {ok:true,data:this.project({...remote.snapshot,sync:{mode:'cloud',pending,conflicts:0}})};
+    return {ok:true,revision:remote.snapshot.revision,data:this.project({...remote.snapshot,sync:{mode:'cloud',pending,conflicts:0}})};
   }
   serial(owner,task){const before=this.locks.get(owner)||Promise.resolve(),next=before.catch(()=>{}).then(task);this.locks.set(owner,next);return next.finally(()=>{if(this.locks.get(owner)===next)this.locks.delete(owner);});}
   async journal(context,endpoint,op,kind,input){

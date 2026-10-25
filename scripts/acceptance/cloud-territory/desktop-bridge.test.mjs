@@ -50,6 +50,7 @@ test('runtime fixture: persisted original request survives SQLite reopen after l
     const after={...f.db.prepare('select * from garden_cloud_requests').get()};assert.equal(after.wire_input_json,pending.wire_input_json);assert.equal(after.request_hash,pending.request_hash);assert.equal(after.status,'committed');
     assert.equal(f.garden.snapshot(context).data.items.find(i=>i.id==='carrot').quantity,0);assert.deepEqual(createCompanionBackupAdapter(f.db).export(owner),envelope.data.modules.companions.data);assert.equal(f.db.prepare('select content from retained_chat').get().content,'原对话保持');
     await f.cloud.command(context,'feed',input);assert.equal(f.plays(),1);assert.equal(receipts.size,1);
+    const view=await f.cloud.snapshot(context);assert.equal(view.revision,view.data.revision,'renderer mutation revision uses the public result envelope');
     assert.deepEqual(bodies.filter(b=>b.body.op==='command').map(b=>b.body),[0,1,2].map(()=>({op:'command',command:'feed',input})));
     f.companions.rename(owner,{actionId:'runtime:offline:rename',petId:data.pets[1].petId,name:'离线原名字'});const kept=createCompanionBackupAdapter(f.db).export(owner);
     assert.throws(()=>f.cloud.applyReadback(context,readback(envelope,revision)),{code:'CLOUD_LOCAL_CONFLICT'});assert.deepEqual(createCompanionBackupAdapter(f.db).export(owner),kept);
