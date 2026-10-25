@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-25T07:16:26.728Z",
-  "phase": "final-row-order-fix-accepted-rebuilding-actual-portable",
+  "updatedAt": "2026-10-25T07:29:58.745Z",
+  "phase": "final-real-sfx-report-version-and-personal-sync-fixes",
   "goalStatus": "active",
   "deployed": {
     "projectRef": "jbvrdmrkwpznbrvteive",
@@ -125,8 +125,9 @@
     }
   },
   "fixedRemainingWork": [
-    "Audit rebuilt actual portable SFX at exact new freeze",
-    "Finish real SFX business acceptance including authoritative training convergence, original report replay, offline original-action restart and final independent full-save equality"
+    "Fix battle report cloud-v1/local-v2 consumer compatibility with original economic ledgers unchanged",
+    "Fix verified own-authority readback racing local personal edits without weakening real dual-device conflicts",
+    "Build the combined immutable SFX and complete root/04 actual business acceptance"
   ],
   "cleanup": {
     "completedCodeRetirement": true,
@@ -258,10 +259,11 @@
       "review": "Legacy normalization is internal view only; original envelope/checksum/files retained. Root8 targeted native restore/provider cases and original signed expired HTTPS denial passed."
     }
   ],
-  "status": "final-journal-fix-accepted-rebuilding-actual-portable",
+  "status": "final-real-sfx-report-version-and-personal-sync-fixes",
   "remaining": [
-    "Audit rebuilt actual portable SFX at exact new freeze",
-    "Finish real SFX business acceptance including authoritative training convergence, original report replay, offline original-action restart and final independent full-save equality"
+    "Fix battle report cloud-v1/local-v2 consumer compatibility with original economic ledgers unchanged",
+    "Fix verified own-authority readback racing local personal edits without weakening real dual-device conflicts",
+    "Build the combined immutable SFX and complete root/04 actual business acceptance"
   ],
   "engineering": {
     "historicalEngineeringCheckpoints": {
@@ -382,5 +384,14 @@
     "command": "git fetch origin; git pull --ff-only origin main",
     "result": "Already up to date",
     "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086"
+  },
+  "finalPortableD376b76": {
+    "source": "d376b76a01dd8e450d28bab4479bbe2581ae39c4",
+    "sha256": "6e9cdb2aac621b490b09f530870ab7569858e66a4cb7b352bae81aa997fccaf2",
+    "bytes": 169185444,
+    "engineeringPassed": true,
+    "businessPassed": false,
+    "originalFailure": "docs/implementation/evidence/cloud/2026-10-25/final-portable-d376b76-business-second/evidence.json",
+    "readOnlyBaseline": "docs/implementation/evidence/cloud/2026-10-25/final-portable-d376b76-business-second/baseline-personal-read-only.json"
   }
 }
