@@ -57,3 +57,23 @@ test('PROTOCOL UNIT simulated: a refresh finishing after logout cannot restore m
  await assert.rejects(pending,{code:'SESSION_CHANGED'});assert.equal(f.accounts.getCurrentUser(),null);assert.equal(f.remote.active,null);
  assert.equal(f.db.prepare('select blocked from account_session_control').get().blocked,1);
 });
+test('PROTOCOL UNIT simulated: protected sync archives the original and reports partial synchronization honestly',async()=>{
+ let current,cloud,received,archive;
+ const f=fixture(async(url,options)=>{const body=JSON.parse(options.body);
+  if(url.endsWith('lingjing-auth')){if(body.op==='login'){current=bundle(options.headers['X-Lingjing-Device-Id']);return response(current);}return response({actor:current.actor});}
+  if(body.op==='archive'){archive=body.envelope;return response({id:randomUUID(),checksum:archive.checksum,promoted:false});}
+  if(body.op==='push'){received=body.envelope;cloud={actionId:body.actionId,revision:2,checksum:received.checksum,envelope:received};return response(cloud);}return response(cloud);
+ });
+ await f.accounts.authenticate({provider:'runtime',account:'alice',password:'secret123'});
+ f.accounts.backups.register({id:'garden',version:1,export:()=>({coins:999}),validate(){},restore(){}});
+ const owner=f.accounts.requireOwner(),settings=f.accounts.settings();settings.document.sync.enabled=true;await f.accounts.saveSettings({...settings,actionId:randomUUID()});
+ const original=f.accounts.backups.snapshot(owner),{checksum:discarded,...body}=original;body.data.modules.garden.data.coins=7;
+ cloud={revision:1,envelope:{...body,checksum:require('../util.cjs').checksum(body)}};
+ f.db.prepare('insert into account_sync_state(owner_account_id,cloud_revision) values(?,1)').run(owner);
+ const action=randomUUID();f.accounts.sync.enqueue(owner,action);const result=await f.accounts.sync.flush(owner,true);
+ assert.equal(archive.data.modules.garden.data.coins,999);assert.equal(received.data.modules.garden.data.coins,7);
+ assert.equal(f.accounts.backups.snapshot(owner).data.modules.garden.data.coins,999);
+ assert.equal(result.personalVerified,true);assert.equal(result.verified,false);assert.equal(result.requiresAuthority,true);
+ assert.equal(f.accounts.sync.status(owner).unverifiedLocal,1);
+ const source=f.db.prepare('select * from account_sync_sources').get();assert.equal(JSON.parse(source.original_document).data.modules.garden.data.coins,999);assert.ok(source.cloud_archive_id);
+});

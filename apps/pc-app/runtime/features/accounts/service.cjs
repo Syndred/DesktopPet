@@ -279,7 +279,7 @@ class AccountsService {
     const label = changePassword ? row.username : username(input.username);
     const newSecret = changePassword ? password(input.newPassword) : null;
     if (changePassword) invariant(newSecret === password(input.confirmPassword), "PASSWORD_MISMATCH", "两次输入的新密码不一致。");
-    const oldSecret = changePassword || row.provider === "runtime" ? password(input.oldPassword) : null;
+    const oldSecret = changePassword || (row.provider === "runtime"&&this.current.authKind!=='supabase') ? password(input.oldPassword) : null;
     this.profileBusy = true;
     try {
       let updatedUser;
