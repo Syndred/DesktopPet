@@ -1,0 +1,52 @@
+{
+  "generator": "apps/pc-app/runtime/features/discovery/verification/build-cloud.mjs",
+  "sourceFiles": {
+    "apps/pc-app/runtime/services/battle-runtime.cjs": "d608a19e5bfd773d815973c129a294f3591411409158a53ce413240e388cf5c8",
+    "apps/pc-app/runtime/features/battle/presentation.cjs": "24b6ba3d7c5c4ab1e0b93c4e0358696bc2d7bbf08ecc1b44652b3fb5e431865f",
+    "apps/pc-app/runtime/features/discovery/coordinates.cjs": "0cf629d1c1c35a848ae03f5633492dbf94d4478687c839da0677ce3f18843077",
+    "apps/pc-app/runtime/features/discovery/spawns.cjs": "756da390303cb42d09a7de9498da14a6a56a4788faa9e59bc15ad56407e6a291"
+  },
+  "catalog": [
+    {
+      "templateId": "animal-earth-pangolin",
+      "resourceId": "builtin:lingjing-yantuan-v1",
+      "element": "earth"
+    },
+    {
+      "templateId": "animal-hat-cat",
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "element": "metal"
+    },
+    {
+      "templateId": "animal-shiba",
+      "resourceId": "builtin:lingjing-shiba-v2",
+      "element": "fire"
+    },
+    {
+      "templateId": "animal-white-fox",
+      "resourceId": "builtin:lingjing-xiaohu-v1",
+      "element": "water"
+    },
+    {
+      "templateId": "animal-wood-deer",
+      "resourceId": "builtin:lingjing-qingya-v1",
+      "element": "wood"
+    },
+    {
+      "templateId": "big-fish-cheerful",
+      "resourceId": "builtin:lingjing-xiaolan-v1",
+      "element": "water"
+    },
+    {
+      "templateId": "big-fish-foodie",
+      "resourceId": "builtin:lingjing-fantuan-v1",
+      "element": "water"
+    },
+    {
+      "templateId": "big-fish-gentle",
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "element": "water"
+    }
+  ],
+  "runtimeSha256": "a248be89e648288f97048c2ec996f5c93dc6468429e18add897938940dc26a02"
+}
