@@ -8,7 +8,7 @@ import {generateKeyPairSync,randomUUID} from 'node:crypto';
 import {applyCompanionCommand,companionUnit} from '../../companions/cloud-domain.mjs';
 import {createCapture} from '../../../../../../infra/supabase/functions/discovery/domain.mjs';
 import {nearbySpawns} from '../../../../../../infra/supabase/functions/discovery/_generated/runtime.mjs';
-const migration='20261025105253_lingjing_global_pet_serials.sql';
+const migration='20261025115122_lingjing_global_pet_serials.sql';
 const source=name=>readFileSync('infra/supabase/migrations/'+name,'utf8');
 async function fixture(){
  const db=new PGlite();

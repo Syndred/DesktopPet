@@ -1,6 +1,6 @@
 # globalSerial sidecar：08 交付与部署顺序
 
-本实现依据 `globalSerial-20261025-v1`。SQL 尚未上线。所有新编号只保存在
+本实现依据 `globalSerial-20261025-v1`。SQL 已实际部署，云端版本为 20261025115122（2026-10-25）；本地文件已按真实账本改名。原 CLI 创建文件名为 20261025105253_lingjing_global_pet_serials.sql，SQL 正文字节保持。companions-sync v2 与 discovery v6 已部署并逐文件回读一致；最终应用验收仍待完成。详细事实见 evidence/cloud/2026-10-25/global-serial-deployment.json。所有新编号只保存在
 `lingjing_private.global_pet_serials`，按 namespace + canonical templateId 的可回滚
 numeric 计数器分配，通过 `::text` 输出，永不经过 JavaScript Number。原 owner、petId、
 名字、legacy serial、资源、pet data_json、保存 envelope、action receipt 和 archive 不回填号码。
@@ -37,7 +37,7 @@ ensure 野外号。claim 插入原 captures 后，共同 commit 的 `register_ow
    没有该 scope 的有效独立 grant 就拒绝，不能开新设备回落 live。
    同一账号若有多个历史 QA namespace，明确报 SCOPE_CONFLICT，使用专用新 QA 身份，
    不根据用户名/user_metadata 分类。不要删旧 grant 试图恢复 live；scope 墓碑不覆盖或删除。
-3. 总协调通过受控 SQL 部署 `20261025105253_lingjing_global_pet_serials.sql`。
+3. 总协调通过受控 SQL 部署 `20261025115122_lingjing_global_pet_serials.sql`。
    事务先短暂阻塞 owner 写锁，历史 permits 按 os/live、simulated/qa:scenario 分号，再给当前
    保存里的旧宠补 sidecar；已捕获 pet 绑定其 permit 的同号。过期授权只允许迁移内部回填，
    运行时分号明确报 `GLOBAL_SERIAL_SCOPE_REVOKED`。此步不修改任何原记录。

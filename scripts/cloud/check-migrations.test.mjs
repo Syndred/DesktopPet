@@ -32,7 +32,7 @@ test('reviewed promotion accepts 22 deployed plus 1 pending and 23 deployed with
   const historicalEvidence='docs/implementation/evidence/cloud/2026-10-25/migration-ledger-alignment.json';
   const historicalLedger=JSON.parse(readFileSync(new URL(`../../${historicalEvidence}`,import.meta.url),'utf8'));
   const historicalFiles=historicalLedger.entries.map(entry=>entry.target.split('/').at(-1)).sort();
-  const candidate='20261025105253_lingjing_global_pet_serials.sql';
+  const candidate='20261025115122_lingjing_global_pet_serials.sql';
   const reviewFiles=[...historicalFiles,candidate];
   const beforePromotion={schemaVersion:1,expectedDeployedCount:22,files:historicalFiles,pendingReviewFiles:[candidate],ledgerEvidence:historicalEvidence};
   const old=checkMigrationNames(reviewFiles,{approvedManifest:beforePromotion});

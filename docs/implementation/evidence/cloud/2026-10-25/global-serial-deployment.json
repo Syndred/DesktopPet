@@ -1,0 +1,199 @@
+{
+  "schemaVersion": 1,
+  "format": "lingjing.global-serial.live-deployment",
+  "decisionId": "globalSerial-20261025-v1",
+  "recordedAt": "2026-10-25 12:11:12 UTC",
+  "projectRef": "jbvrdmrkwpznbrvteive",
+  "migration": {
+    "version": "20261025115122",
+    "name": "lingjing_global_pet_serials",
+    "sourcePath": "infra/supabase/migrations/20261025115122_lingjing_global_pet_serials.sql",
+    "originalCreationPath": "infra/supabase/migrations/20261025105253_lingjing_global_pet_serials.sql",
+    "deployedFromCommit": "087ea3992028ac14cb5e9e31fdc8ded548bec274",
+    "sqlSha256": "49bf4db3bf6d4b9b3bec3de80b2c145d7c6abe8068fa98b1e06e2ef97be32350"
+  },
+  "preservation": {
+    "stage": "Immediately after migration and before numbered gameplay test commands",
+    "originalRows": 636,
+    "missingRows": 0,
+    "changedRows": 0,
+    "newKnownQaAccountRows": 1,
+    "tables": [
+      {
+        "table": "public.lingjing_accounts",
+        "before": 55,
+        "after": 56,
+        "missing": 0,
+        "changed": 0,
+        "added": 1
+      },
+      {
+        "table": "public.lingjing_saves",
+        "before": 40,
+        "after": 40,
+        "missing": 0,
+        "changed": 0,
+        "added": 0
+      },
+      {
+        "table": "public.lingjing_save_actions",
+        "before": 322,
+        "after": 322,
+        "missing": 0,
+        "changed": 0,
+        "added": 0
+      },
+      {
+        "table": "public.lingjing_save_archives",
+        "before": 24,
+        "after": 24,
+        "missing": 0,
+        "changed": 0,
+        "added": 0
+      },
+      {
+        "table": "lingjing_private.owned_pet_ids",
+        "before": 62,
+        "after": 62,
+        "missing": 0,
+        "changed": 0,
+        "added": 0
+      },
+      {
+        "table": "lingjing_private.authority_fragments",
+        "before": 67,
+        "after": 67,
+        "missing": 0,
+        "changed": 0,
+        "added": 0
+      },
+      {
+        "table": "lingjing_discovery.permits",
+        "before": 2,
+        "after": 2,
+        "missing": 0,
+        "changed": 0,
+        "added": 0
+      },
+      {
+        "table": "lingjing_discovery.captures",
+        "before": 1,
+        "after": 1,
+        "missing": 0,
+        "changed": 0,
+        "added": 0
+      },
+      {
+        "table": "lingjing_discovery.location_proofs",
+        "before": 56,
+        "after": 56,
+        "missing": 0,
+        "changed": 0,
+        "added": 0
+      },
+      {
+        "table": "lingjing_discovery.location_test_grants",
+        "before": 7,
+        "after": 7,
+        "missing": 0,
+        "changed": 0,
+        "added": 0
+      }
+    ],
+    "privateFullProof": "artifacts/qa/user-acceptance/global-serial/after-migration-preservation.json"
+  },
+  "privileges": [
+    {
+      "anon": false,
+      "name": "lingjing_global_serial_owned",
+      "service": true,
+      "authenticated": false
+    },
+    {
+      "anon": false,
+      "name": "lingjing_global_serial_wild_ensure",
+      "service": true,
+      "authenticated": false
+    },
+    {
+      "anon": false,
+      "name": "lingjing_global_serial_wild_lookup",
+      "service": true,
+      "authenticated": false
+    }
+  ],
+  "privateTables": [
+    {
+      "rls": true,
+      "name": "global_pet_serials",
+      "anonSelect": false,
+      "authenticatedSelect": false
+    },
+    {
+      "rls": true,
+      "name": "global_serial_counters",
+      "anonSelect": false,
+      "authenticatedSelect": false
+    },
+    {
+      "rls": true,
+      "name": "global_serial_qa_scopes",
+      "anonSelect": false,
+      "authenticatedSelect": false
+    },
+    {
+      "rls": true,
+      "name": "global_serial_templates",
+      "anonSelect": false,
+      "authenticatedSelect": false
+    }
+  ],
+  "historicalCaptureBinding": {
+    "captures": 1,
+    "receiptHasNumber": 0,
+    "sameRegistryRows": 1
+  },
+  "qaReadback": {
+    "namespace": "qa:user-acceptance-790f5b6d-a900-4c6f-bb3f-e32237136ed1",
+    "petCount": 1,
+    "firstGlobalSerial": "1",
+    "originalPetIdMatched": true,
+    "actualAuthValidatedAgainstServerDeviceAndSession": true,
+    "clientMetadataUsedForScope": false
+  },
+  "functions": [
+    {
+      "name": "companions-sync",
+      "version": 2,
+      "status": "ACTIVE",
+      "bundleSha256": "4cd7fd44a332f855041b02fee4c3313e0e041305f7953df8005dedc39d729b42",
+      "readbackRuntimeFiles": 6,
+      "mismatches": [],
+      "extra": [],
+      "missingRuntime": [],
+      "passed": true
+    },
+    {
+      "name": "discovery",
+      "version": 6,
+      "status": "ACTIVE",
+      "bundleSha256": "3008e9093b28f522faa0588a61b6cc8e5681649de9f80ae37ca46b1c3be0a27a",
+      "readbackRuntimeFiles": 10,
+      "mismatches": [],
+      "extra": [],
+      "missingRuntime": [],
+      "passed": true
+    }
+  ],
+  "otherSixFunctionBundlesUnchanged": true,
+  "nativeStorage": {
+    "realWindowsSafeStoragePassed": true,
+    "isolatedProcesses": 2,
+    "metadataSource": "explicit fixture, not actual server allocation",
+    "privateProof": "artifacts/qa/user-acceptance/global-serial/native-safe-storage/result.json",
+    "finalCandidateUiAcceptance": false
+  },
+  "cloudDeploymentVerified": true,
+  "actualUserAcceptancePassed": false,
+  "nextCandidateRequired": true
+}

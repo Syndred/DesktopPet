@@ -9,9 +9,9 @@ npm run verify:cloud
 
 入口不读取云端配置、凭据或用户档案，不需要 Docker。它检查：
 
-- 与实际迁移账本对齐的 22 个 SQL 文件名；缺失、旧草稿或新增未审核文件都会失败。
+- 与实际迁移账本对齐的 23 个 SQL 文件名；缺失、旧草稿或新增未审核文件都会失败，原 22 条账本证据保留。
 - battle core、battle cloud、garden 和 discovery 分发的 `--check`；只比较现有文件并核对字节和修改时间未变。
-- 现代账号、伙伴、探索、对局、资源和花园的 21 份本地 SQL/authority 测试，以及迁移文件门禁的回归测试。PGlite 串行运行，防止并发 WASM 内存膨胀。
+- 现代账号、伙伴、探索、对局、资源和花园的 24 份 Node 测试文件，包含全局编号 SQL、相遇投影与迁移文件门禁。PGlite 串行运行，防止并发 WASM 内存膨胀。
 - 固定 Deno 2.9.6 的 5 个私有资源包/偏好共享验证器；使用 `--no-config` 避开 Electron 根 tsconfig，锁文件冻结，不写根 node_modules。
 
 输出在 `artifacts/foundation/cloud-engineering/cloud-source-check.json` 及同名目录按 `run-时间戳` 隔离的日志中。PGlite 使用显式 Auth/Storage 平台 fixture；结果不代表真实 Supabase HTTPS、真实 Storage、物理定位或完整 PostGIS 建库验收。
