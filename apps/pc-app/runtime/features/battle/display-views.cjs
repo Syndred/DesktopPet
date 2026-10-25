@@ -6,6 +6,10 @@ const identifier = value => typeof value === 'string' && value.length > 0 && val
 const roomId = value => typeof value === 'string' && /^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/iu.test(value) ? value.toLowerCase() : null;
 const namespace = value => value === 'live' || typeof value === 'string' && /^qa:[a-zA-Z0-9][a-zA-Z0-9:_-]{0,179}$/u.test(value);
 const clone = value => structuredClone(value);
+function identityView(source) {
+  const name = typeof source.name === 'string' ? source.name : source.name?.zh;
+  return companionIdentity({ ...source, name: typeof name === 'string' ? name : '' });
+}
 function friendRoom(document) {
   if (document?.mode !== 'friend') return null;
   const direct = roomId(document.room?.id);
@@ -170,31 +174,31 @@ function createBattleDisplayViews({ services, online, prepareOnline, waitMs = 75
   function ownIdentity(owner, participant) {
     try {
       const pet = services.get('companions')?.readIdentityPet?.(owner, participant.petId);
-      if (pet?.ownerAccountId === owner && pet.petId === participant.petId) return companionIdentity(pet);
+      if (pet?.ownerAccountId === owner && pet.petId === participant.petId) return identityView(pet);
     } catch { /* Deleted/unavailable historical entities remain pending. */ }
     return null;
   }
   function participantView(owner, participant, document, side) {
     if (!participant) return participant;
     const result = { ...participant }; delete result.globalSerial; delete result.displayIdentity; delete result.displayKind;
-    let identity = companionIdentity({ name: participant.petName }), kind = participant.petId === 'waiting-peer' ? 'waiting' : 'instance';
+    let identity = identityView({ name: participant.petName }), kind = participant.petId === 'waiting-peer' ? 'waiting' : 'instance';
     if (side === 'player') identity = ownIdentity(owner, participant) || identity;
     if (document.mode === 'friend') {
       const entry = binding(document, owner)?.[side === 'player' ? 'own' : 'peer'];
-      if (entry && (side === 'enemy' || identity.instanceNumber === '待同步')) identity = companionIdentity({ ...entry, name: participant.petName });
+      if (entry && (side === 'enemy' || identity.instanceNumber === '待同步')) identity = identityView({ ...entry, name: participant.petName });
     } else if (side === 'enemy' && document.mode === 'training' && participant.petId === `training-${participant.element}`) {
       const practice = catalog.characters.find(character => character.element === participant.element);
-      if (practice) { identity = companionIdentity({ templateId: practice.templateId, name: participant.petName }); kind = 'practice'; }
+      if (practice) { identity = identityView({ templateId: practice.templateId, name: participant.petName }); kind = 'practice'; }
     } else if (side === 'enemy' && document.mode === 'wild') {
       const discovery = services.get('discovery')?.cloudRuntime, id = document.sessionId || document.id;
       const trusted = discovery?.handlesSession?.(id) ? discovery.peek(owner, id) : null;
       if (trusted?.mode === 'wild' && trusted.context?.cloudAuthority === 'discovery' && trusted.player?.petId === document.player?.petId
         && trusted.enemy?.petId === participant.petId && templates.has(trusted.enemy.templateId) && number(trusted.enemy.globalSerial)) {
-        identity = companionIdentity({ templateId: trusted.enemy.templateId, globalSerial: trusted.enemy.globalSerial, name: participant.petName });
+        identity = identityView({ templateId: trusted.enemy.templateId, globalSerial: trusted.enemy.globalSerial, name: participant.petName });
       }
     } else if (document.mode === 'territory') {
       const view = territoryBinding(document, owner), entry = view?.[side];
-      if (entry && (side === 'enemy' || identity.instanceNumber === '待同步')) identity = companionIdentity({ ...entry, name: participant.petName });
+      if (entry && (side === 'enemy' || identity.instanceNumber === '待同步')) identity = identityView({ ...entry, name: participant.petName });
       if (side === 'enemy' && view?.enemyKind === 'guardian') kind = 'guardian';
     }
     return { ...result, displayKind: kind, displayIdentity: identity };

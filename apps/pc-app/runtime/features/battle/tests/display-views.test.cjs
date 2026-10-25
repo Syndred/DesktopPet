@@ -33,6 +33,25 @@ function fixture(options = {}) {
   return { views, registry, services, online, calls, receivers, switchOwner(value) { owner = value; bus.emit('accounts:session-changed', {}); } };
 }
 
+test('legacy zh names remain readable strings in actual identity tooltip and preserve original bytes', async () => {
+  const f = fixture(); try {
+    const raw = document(); raw.mode = 'duel'; raw.enemy.petName = { zh: '旧报告对手名', en: 'Archived peer' };
+    const before = bytes(raw), view = await f.views.project(raw, ownerA);
+    assert.deepEqual(view.enemy.petName, raw.enemy.petName);
+    assert.equal(view.enemy.displayIdentity.historicalNickname, '旧报告对手名');
+    assert.equal(typeof view.enemy.displayIdentity.historicalNickname, 'string');
+    const built = require('esbuild').buildSync({ entryPoints: [require('node:path').resolve(__dirname, '../../../../ui/src/features/battle/identity.tsx')],
+      bundle: true, write: false, format: 'cjs', platform: 'node', packages: 'external', jsx: 'automatic', loader: { '.css': 'empty' }, logLevel: 'silent' });
+    const component = { exports: {} };
+    new Function('require', 'module', 'exports', built.outputFiles[0].text)(require, component, component.exports);
+    const html = require('react-dom/server').renderToStaticMarkup(require('react').createElement(component.exports.ParticipantIdentity, { pet: view.enemy }));
+    assert.ok(html.includes('<strong>旧报告对手名</strong>'));
+    assert.ok(html.includes('title="历史昵称：旧报告对手名"'));
+    assert.equal(html.includes('[object Object]'), false);
+    assert.equal(bytes(raw), before);
+  } finally { f.views.dispose(); }
+});
+
 test('trusted friend sides use owner+petId, preserve long text and ignore stored number fields; all result shapes are cloned', async () => {
   const f = fixture(); try {
     const raw = document(), before = bytes(raw), result = await f.views.project({ session: raw, reports: [raw] }, ownerA);
