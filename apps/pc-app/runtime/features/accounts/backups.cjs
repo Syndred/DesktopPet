@@ -212,6 +212,14 @@ class BackupManager {
     invariant(preview && preview.owner === owner && preview.expiresAt > Date.now(), "BACKUP_PREVIEW_EXPIRED", "恢复预览已过期，请重新选择备份。");
     invariant(mode === "merge" || mode === "replace", "INVALID_RESTORE_MODE", "恢复方式无效。");
     this.validate(preview.envelope, owner);
+    // This metadata exists only on the main-process preview created from a
+    // verified SDK read. A file's provenance or renderer input cannot set it.
+    const cloudContext = preview.cloudRevision === undefined || preview.cloudRevision === 0 ? null : Object.freeze({
+      kind: 'verified-cloud-preview', ownerAccountId: owner,
+      revision: preview.cloudRevision, checksum: preview.envelope.checksum
+    });
+    invariant(!cloudContext || Number.isSafeInteger(cloudContext.revision) && cloudContext.revision > 0,
+      'SYNC_RECEIPT_MISMATCH', '云端预览版本无效，请重新预览。');
     invariant(this.dataChecksum(owner) === preview.currentChecksum, "SAVE_CHANGED", "存档在预览后发生变化，请重新预览。");
     const preserved = this.save(owner, null, "before-restore");
     const result = transaction(this.db, () => {
@@ -230,7 +238,9 @@ class BackupManager {
         this.db.prepare(`DELETE FROM ${identifier(name)} WHERE owner_account_id=?`).run(owner);
       }
       for (const [moduleId, data] of Object.entries(modules)) {
-        const value = this.adapters.get(moduleId).restore(owner, data.data, mode, this.db);
+        const adapter = this.adapters.get(moduleId);
+        const restore = cloudContext && typeof adapter.restoreCloud === 'function' ? adapter.restoreCloud : adapter.restore;
+        const value = restore.call(adapter, owner, data.data, mode, this.db, cloudContext);
         invariant(!value?.then, "ASYNC_BACKUP_ADAPTER", "存档恢复适配器必须同步执行。");
       }
       for (const name of ordered) {
