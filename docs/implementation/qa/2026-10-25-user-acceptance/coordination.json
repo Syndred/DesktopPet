@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-25T15:21:05.4758826Z",
+  "updatedAt": "2026-10-25T15:43:24.0386811Z",
   "status": "in-progress",
   "qaThreadId": "01a172b4-d7f0-7213-9a40-092418ee776b",
   "soleNativeInputOwner": "01a172b4-d7f0-7213-9a40-092418ee776b",
@@ -170,54 +170,21 @@
   "integrationOwner": "01",
   "sourceAtReopen": "6d4df8fdbf102e185cfc9c022bcdddf4601aac82",
   "releaseGate": "All release blockers fixed and independently retested; full scenario matrix reports actual pass/fail/blocked per same final portable; no mock-only full acceptance claims",
-  "productionFreeze": "e875febf3430be341191a639668d43e7f09826dc",
+  "productionFreeze": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
   "candidate": {
-    "status": "All e875 critical startup/storage and real-cloud garden outage recovery gates passed; QA013/QA014 absent, final98 still pending",
-    "sourceCommit": "e875febf3430be341191a639668d43e7f09826dc",
-    "path": "releases/user-acceptance-e875feb/Lingjing-0.1.8-portable-x64.exe",
-    "bytes": 169213223,
-    "sha256": "3e1bac39b805486aca8e9118444c352c8eab8777fb24409b2ed60108810ed3f9",
-    "appAsarSha256": "993a2b91463223fd0c12e4c596459a6bde46d250baff9a2267c8fc2a66c8871d",
-    "signature": "NotSigned",
-    "runtimeClosureFiles": 116,
-    "actualUserAcceptancePassed": false,
-    "engineeringEvidence": "docs/implementation/evidence/foundation/user-acceptance-e875feb/candidate-manifest.json",
-    "rootCopyReadback": "docs/implementation/evidence/foundation/user-acceptance-e875feb/root-copy-readback.json",
-    "knownUnfixed": [
-      "QA013",
-      "QA014"
-    ],
-    "criticalNativeResults": {
-      "coldSingle": true,
-      "hotSameProfile": true,
-      "mainPid": 26956,
-      "wrapperPid": 26024,
-      "originalWindowRestored": true,
-      "secondProfile": true,
-      "coldPair": true,
-      "crossRootPersistence": true,
-      "rendererStorageAcrossRoots": true,
-      "gardenOutboxAcrossRoots": true,
-      "lastObservedLocalMainPid": 12988
-    },
-    "startupDiagnostic": {
-      "firstAttempt": "rounds/candidate-e875feb-50e52249/evidence/cold-single-1/summary.json",
-      "wrapperPid": 3512,
-      "observedChildPid": 19940,
-      "exitCode": 9,
-      "productSourceChanged": false,
-      "original67TablesUnchanged": true,
-      "diagnostic": "PowerShell 7.6.5 on .NET10 SetEnvironmentVariable(name,$null) leaves an existing empty environment key. Bare Electron with empty ELECTRON_RUN_AS_NODE executes Node and rejects remote-debugging-port with9; absent key uses Electron44.9.3 and accepts the flag.",
-      "privateNonProductProof": "artifacts/qa/user-acceptance/global-serial/qa009-empty-environment-diagnostic.json",
-      "nativeCauseConfirmed": true,
-      "helperVersion": 2,
-      "helperSha256": "e1aed2926c6ec3049476acccc2da3147f461b578ae6d94f6274d2feb3e704bc4",
-      "controlledSameBinarySuccess": "rounds/candidate-e875feb-50e52249/evidence/cold-single-2-env-v2/summary.json",
-      "helperFixOwner": "01",
-      "soleNextProductLaunchOwner": "09",
-      "retestRequiresFreshEvidenceDirectory": true
-    },
-    "cloudGardenOutageReadback": "docs/implementation/evidence/foundation/user-acceptance-e875feb/cloud-garden-outage.json"
+    "status": "Unique dc7 candidate copied/independently extracted and delivered to09; final98 native acceptance in progress",
+    "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+    "sourceTree": "1b6b47b23a93bf505c92bb1ff9af5dead75d6273",
+    "path": "releases/user-acceptance-dc7aee3/Lingjing-0.1.8-portable-x64.exe",
+    "bytes": 169233443,
+    "sha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+    "asarBytes": 267512721,
+    "asarSha256": "d1d2e2e9ce5f50e3eaa54dc857012ff5704411effb50dfc44e50a1cf30ee8fba",
+    "runtimeClosureSha256": "4f04d46f3443f8d45b6b1dfeffdeb5d6e46569546cdae4c5b33e43d04e5b0b6f",
+    "candidateManifest": "docs/implementation/evidence/foundation/user-acceptance-dc7aee3/candidate-manifest.json",
+    "rootCopyReadback": "docs/implementation/evidence/foundation/user-acceptance-dc7aee3/root-copy-readback.json",
+    "fullFunctionalAcceptancePassed": false,
+    "nativeAcceptanceOwner": "09"
   },
   "identityConsumerCommits": {
     "companions": "ad20468b38c89a79090de435a2cfcf8d2e928ec7",
@@ -274,7 +241,7 @@
     }
   },
   "nextCandidate": {
-    "status": "All source gates passed; QA014 readonly SQL/Edge deployed and exact-read-back; ready for unique final packaging and 09 final98 native acceptance",
+    "status": "dc7 delivered to09; collect complete real defect list before any additional build",
     "requiredContract": "docs/implementation/companions-global-serial-contract.json",
     "sourceFixes": {
       "QA008": "02ea2dac317b3aaaee12cf9517b456450391cf9c",
@@ -389,6 +356,54 @@
       "actualUserAcceptancePassed": false,
       "engineeringEvidence": "docs/implementation/evidence/foundation/user-acceptance-312e5fe/handoff.json",
       "rootCopyReadback": "docs/implementation/evidence/foundation/user-acceptance-312e5fe/root-copy-readback.json"
+    },
+    {
+      "status": "All e875 critical startup/storage and real-cloud garden outage recovery gates passed; QA013/QA014 absent, final98 still pending",
+      "sourceCommit": "e875febf3430be341191a639668d43e7f09826dc",
+      "path": "releases/user-acceptance-e875feb/Lingjing-0.1.8-portable-x64.exe",
+      "bytes": 169213223,
+      "sha256": "3e1bac39b805486aca8e9118444c352c8eab8777fb24409b2ed60108810ed3f9",
+      "appAsarSha256": "993a2b91463223fd0c12e4c596459a6bde46d250baff9a2267c8fc2a66c8871d",
+      "signature": "NotSigned",
+      "runtimeClosureFiles": 116,
+      "actualUserAcceptancePassed": false,
+      "engineeringEvidence": "docs/implementation/evidence/foundation/user-acceptance-e875feb/candidate-manifest.json",
+      "rootCopyReadback": "docs/implementation/evidence/foundation/user-acceptance-e875feb/root-copy-readback.json",
+      "knownUnfixed": [
+        "QA013",
+        "QA014"
+      ],
+      "criticalNativeResults": {
+        "coldSingle": true,
+        "hotSameProfile": true,
+        "mainPid": 26956,
+        "wrapperPid": 26024,
+        "originalWindowRestored": true,
+        "secondProfile": true,
+        "coldPair": true,
+        "crossRootPersistence": true,
+        "rendererStorageAcrossRoots": true,
+        "gardenOutboxAcrossRoots": true,
+        "lastObservedLocalMainPid": 12988
+      },
+      "startupDiagnostic": {
+        "firstAttempt": "rounds/candidate-e875feb-50e52249/evidence/cold-single-1/summary.json",
+        "wrapperPid": 3512,
+        "observedChildPid": 19940,
+        "exitCode": 9,
+        "productSourceChanged": false,
+        "original67TablesUnchanged": true,
+        "diagnostic": "PowerShell 7.6.5 on .NET10 SetEnvironmentVariable(name,$null) leaves an existing empty environment key. Bare Electron with empty ELECTRON_RUN_AS_NODE executes Node and rejects remote-debugging-port with9; absent key uses Electron44.9.3 and accepts the flag.",
+        "privateNonProductProof": "artifacts/qa/user-acceptance/global-serial/qa009-empty-environment-diagnostic.json",
+        "nativeCauseConfirmed": true,
+        "helperVersion": 2,
+        "helperSha256": "e1aed2926c6ec3049476acccc2da3147f461b578ae6d94f6274d2feb3e704bc4",
+        "controlledSameBinarySuccess": "rounds/candidate-e875feb-50e52249/evidence/cold-single-2-env-v2/summary.json",
+        "helperFixOwner": "01",
+        "soleNextProductLaunchOwner": "09",
+        "retestRequiresFreshEvidenceDirectory": true
+      },
+      "cloudGardenOutageReadback": "docs/implementation/evidence/foundation/user-acceptance-e875feb/cloud-garden-outage.json"
     }
   ],
   "remoteRefresh": {

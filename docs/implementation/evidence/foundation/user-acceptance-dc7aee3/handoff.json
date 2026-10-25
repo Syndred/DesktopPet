@@ -1,0 +1,65 @@
+{
+  "at": "2026-10-25T15:29:34.360Z",
+  "status": "candidate-awaiting-root-copy-and09",
+  "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+  "sourceTree": "1b6b47b23a93bf505c92bb1ff9af5dead75d6273",
+  "sourceDirtyFiles": [],
+  "executable": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet-build-066f61d\\releases\\user-acceptance-dc7aee3\\Lingjing-0.1.8-portable-x64.exe",
+  "bytes": 169233443,
+  "sha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+  "authenticode": {
+    "thumbprint": null,
+    "subject": null,
+    "validUntil": null,
+    "signed": false,
+    "kind": "Authenticode",
+    "status": "NotSigned"
+  },
+  "candidateManifest": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet-build-066f61d\\releases\\user-acceptance-dc7aee3\\candidate-manifest.json",
+  "candidateManifestSha256": "84eebcea6f52e0395ec3939164d9ed88f312b2e13378e8b8e679637feb745425",
+  "packageAudit": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet-build-066f61d\\releases\\user-acceptance-dc7aee3\\package-audit.json",
+  "offlineSfxAudit": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet-build-066f61d\\releases\\user-acceptance-dc7aee3\\offline-extraction.json",
+  "appAsar": {
+    "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet-build-066f61d\\artifacts\\foundation\\user-acceptance\\user-acceptance-dc7aee3\\sfx-audit\\win-unpacked\\resources\\app.asar",
+    "sha256": "d1d2e2e9ce5f50e3eaa54dc857012ff5704411effb50dfc44e50a1cf30ee8fba",
+    "bytes": 267512721,
+    "identicalToBuilderOutput": true
+  },
+  "runtimeClosure": {
+    "files": 118,
+    "edges": 203,
+    "sha256": "4f04d46f3443f8d45b6b1dfeffdeb5d6e46569546cdae4c5b33e43d04e5b0b6f",
+    "jsAndMjs": [
+      "apps/pc-app/runtime/features/companions/cloud-domain.mjs",
+      "apps/pc-app/runtime/features/companions/display-identity.mjs",
+      "apps/pc-app/runtime/features/companions/growth.mjs",
+      "apps/pc-app/runtime/features/companions/instance.mjs",
+      "apps/pc-app/runtime/features/resources/preferences.mjs"
+    ]
+  },
+  "packagedDependencies": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet-build-066f61d\\releases\\user-acceptance-dc7aee3\\packaged-dependencies.json",
+  "perLaunchPackaging": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet-build-066f61d\\releases\\user-acceptance-dc7aee3\\per-launch-packaging.json",
+  "characterAtlases": 8,
+  "archivedCopyHashMatchesInput": true,
+  "buildExitCode": 0,
+  "offlineAuditExitCode": 0,
+  "fullFunctionalAcceptancePassed": false,
+  "visibleProductLaunches": 0,
+  "publicReleasePublished": false,
+  "tagCreated": false,
+  "pushed": false,
+  "packagedElectronDependencies": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet-build-066f61d\\releases\\user-acceptance-dc7aee3\\packaged-electron-dependencies.json",
+  "frozenProvenance": {
+    "file": "provenance-readback.json",
+    "sha256": "9a307bca0e2e1f2c21d6b1ac09a63e28b6ddaf3d4f3bedfe5ae13e192adff5c9",
+    "appInfoStaticOnly": true,
+    "actualAppInfoReadBy01": false
+  },
+  "publicCloud": {
+    "projectRef": "jbvrdmrkwpznbrvteive",
+    "sha256": "c1625c63f1d959f92b3392b47f2fb492452803eedf1c0d1ebc68a1168ab64eda",
+    "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet-build-066f61d\\artifacts\\foundation\\user-acceptance\\user-acceptance-dc7aee3\\sfx-audit\\win-unpacked\\resources\\lingjing-cloud-public.json"
+  },
+  "latestOriginMainReconfirmed": "4786f97680679c2db0aa307fa5f67ec247f93086",
+  "acceptanceScope": "Final dc7 candidate with QA013 and QA014 source fixes; native product retest by root/09 still pending."
+}

@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-25T15:37:23.248Z",
+  "passed": true,
+  "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+  "sourceTree": "1b6b47b23a93bf505c92bb1ff9af5dead75d6273",
+  "rootTrackedSourceClean": true,
+  "untrackedUserDesignAndQaEvidencePreserved": true,
+  "copiedIndexFiles": 20,
+  "exe": {
+    "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\releases\\user-acceptance-dc7aee3\\Lingjing-0.1.8-portable-x64.exe",
+    "bytes": 169233443,
+    "sha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d"
+  },
+  "asar": {
+    "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\global-serial\\dc7aee3-root-sfx\\unpacked\\resources\\app.asar",
+    "bytes": 267512721,
+    "sha256": "d1d2e2e9ce5f50e3eaa54dc857012ff5704411effb50dfc44e50a1cf30ee8fba"
+  },
+  "manifestSha256": "16de8f28dfac812ac61c60fb43c098f92564b0a6cadaf9f8838178ec9e2ebccb",
+  "runtimeClosure": {
+    "files": 118,
+    "edges": 203,
+    "sha256": "4f04d46f3443f8d45b6b1dfeffdeb5d6e46569546cdae4c5b33e43d04e5b0b6f",
+    "allFilesMatchFrozenGitBlobs": true
+  },
+  "compiled": {
+    "files": 89,
+    "fingerprint": "680068ce6f201848b7d443b230debd650a2cdb66c8c6432ee3c772999c8a4b5c"
+  },
+  "publicConfigSha256": "c1625c63f1d959f92b3392b47f2fb492452803eedf1c0d1ebc68a1168ab64eda",
+  "commands": [
+    {
+      "phase": "extract-outer",
+      "executable": "C:/Users/Administrator/Desktop/project/DesktopPet-build-066f61d/node_modules/electron-winstaller/vendor/7z-x64.exe",
+      "args": [
+        "x",
+        "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\releases\\user-acceptance-dc7aee3\\Lingjing-0.1.8-portable-x64.exe",
+        "-oC:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\global-serial\\dc7aee3-root-sfx\\outer",
+        "-y",
+        "-bd"
+      ],
+      "exitCode": 0
+    },
+    {
+      "phase": "extract-payload",
+      "executable": "C:/Users/Administrator/AppData/Local/electron-builder/Cache/7zip@1.0.0/7zip-win-x64-a34pt/bin/7za.exe",
+      "args": [
+        "x",
+        "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\global-serial\\dc7aee3-root-sfx\\outer\\$PLUGINSDIR\\app-64.7z",
+        "-oC:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\qa\\user-acceptance\\global-serial\\dc7aee3-root-sfx\\unpacked",
+        "-y",
+        "-bd"
+      ],
+      "exitCode": 0
+    }
+  ],
+  "actualProductLaunches": 0,
+  "actualAppInfoRpcVerified": false,
+  "fullUserAcceptancePassed": false,
+  "fullSourceFileReadback": "artifacts/qa/user-acceptance/global-serial/dc7aee3-root-sfx/root-copy-readback.json"
+}
