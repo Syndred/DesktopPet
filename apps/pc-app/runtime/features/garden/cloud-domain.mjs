@@ -1,7 +1,11 @@
 import catalog from './catalog.json' with { type: 'json' };
+import {applyGrowthEffect} from '../companions/growth.mjs';
 const { CROPS, ITEMS, RECIPES, BASE_PLOTS, STARTER_SEEDS, MAX_QUANTITY } = catalog;
 const problem = (code, message) => { throw Object.assign(new Error(message), { code }); };
 const copy = value => structuredClone(value);
+export const GARDEN_TABLES=['garden_accounts','garden_plots','garden_items','garden_actions','garden_events','garden_reward_receipts','garden_garrisons','garden_outbox','garden_territory_attempts','garden_territory_challenges'];
+const COMPANION_TABLES=['companion_accounts','companion_pets','companion_actions','companion_legacy_archive','companion_interactions','companion_capture_receipts'];
+export function emptyGarden(owner){return {version:1,data:{ownerAccountId:owner,tables:Object.fromEntries(GARDEN_TABLES.map(name=>[name,[]])),territoryArchive:{territories:[],logs:[]}}};}
 export function canonical(value) {
   if (Array.isArray(value)) return value.map(canonical);
   if (value && typeof value === 'object') return Object.fromEntries(Object.keys(value).sort().filter(key => value[key] !== undefined).map(key => [key, canonical(value[key])]));
@@ -16,7 +20,8 @@ export function gardenDocument(envelope, owner) {
   const module = envelope?.data?.modules?.garden;
   if (envelope?.ownerAccountId !== owner || module?.version !== 1 || module.data?.ownerAccountId !== owner || !module.data.tables) problem('CLOUD_GARDEN_NOT_INITIALIZED', '请先在账号页面同步包含菜园的完整存档');
   const tables = module.data.tables;
-  for (const name of ['garden_accounts','garden_plots','garden_items','garden_actions','garden_events','garden_reward_receipts','garden_outbox']) if (!Array.isArray(tables[name]) || tables[name].some(row => row.owner_account_id !== owner)) problem('INVALID_CLOUD_SAVE', '云端菜园归属校验失败');
+  if(Object.keys(tables).sort().join()!==[...GARDEN_TABLES].sort().join())problem('INVALID_CLOUD_SAVE','云端菜园存档不完整');
+  for (const name of GARDEN_TABLES) if (!Array.isArray(tables[name]) || tables[name].some(row => !row||row.owner_account_id !== owner)) problem('INVALID_CLOUD_SAVE', '云端菜园归属校验失败');
   return tables;
 }
 /**02 owns the companion consistency unit. Read a complete new module or the
@@ -24,18 +29,22 @@ export function gardenDocument(envelope, owner) {
 export function cloudCompanions(envelope,owner){
   const unit=envelope?.data?.modules?.companions;
   let tables;
-  if(unit!==undefined){if(unit.version!==1||unit.data?.ownerAccountId!==owner||!unit.data.tables)problem('INVALID_CLOUD_SAVE','伙伴模块归属或版本无效');tables=unit.data.tables;}
-  else tables=Object.fromEntries(['companion_pets','companion_accounts','companion_actions'].map(name=>[name,envelope?.data?.tables?.[name]?.rows]));
-  for(const name of ['companion_pets','companion_accounts','companion_actions'])if(!Array.isArray(tables[name])||tables[name].some(row=>row.owner_account_id!==owner))problem('COMPANIONS_UNAVAILABLE','伙伴存档不完整或归属不一致');
+  if(unit!==undefined){
+    if(unit?.version!==1||unit.data?.ownerAccountId!==owner||!unit.data.tables||!Array.isArray(unit.data.identityImports)||COMPANION_TABLES.some(name=>Object.hasOwn(envelope.data.tables||{},name)))problem('INVALID_CLOUD_SAVE','伙伴模块归属或版本无效，或包含两份状态');
+    tables=unit.data.tables;
+    if(Object.keys(tables).sort().join()!==[...COMPANION_TABLES].sort().join())problem('INVALID_CLOUD_SAVE','伙伴存档不完整');
+  } else tables=Object.fromEntries(COMPANION_TABLES.map(name=>[name,envelope?.data?.tables?.[name]?.rows]));
+  for(const name of COMPANION_TABLES)if(!Array.isArray(tables[name])||tables[name].some(row=>!row||row.owner_account_id!==owner))problem('COMPANIONS_UNAVAILABLE','伙伴存档不完整或归属不一致');
+  if(tables.companion_accounts.length!==1||!Number.isSafeInteger(tables.companion_accounts[0].revision))problem('INVALID_CLOUD_SAVE','伙伴账号版本无效');
   return {pets:tables.companion_pets,accounts:tables.companion_accounts,actions:tables.companion_actions};
 }
 export function cloudSnapshot(envelope, owner, now) {
   const tables = gardenDocument(envelope, owner);
   const items = Object.values(ITEMS).map(item => ({ ...item, quantity: tables.garden_items.find(row => row.item_id === item.id)?.quantity || 0 }));
-  return { ownerAccountId: owner, serverTime: now,
+  return { ownerAccountId: owner, serverTime: now, revision:tables.garden_accounts[0]?.revision||0,
     plots: tables.garden_plots.map(row => ({ plotId: row.plot_id, cropType: row.crop_type, plantedAt: row.planted_at, maturesAt: row.matures_at, yieldQuantity: row.yield_quantity, revision: row.revision, stage: !row.crop_type ? 'empty' : now >= row.matures_at ? 'mature' : 'growing' })),
     items, crops: Object.values(CROPS), recipes: Object.values(RECIPES),
-    pets: cloudCompanions(envelope,owner).pets.map(row => JSON.parse(row.data_json)),
+    pets: (envelope.data.modules.companions!==undefined||COMPANION_TABLES.some(name=>Object.hasOwn(envelope.data.tables,name))?cloudCompanions(envelope,owner).pets:[]).map(row => JSON.parse(row.data_json)),
     territories: [], ledger: tables.garden_events.slice(-60).reverse().map(row => ({ id: row.event_id, actionId: row.action_id, kind: row.kind, itemId: row.item_id, delta: row.delta, balance: row.balance, petId: row.pet_id, createdAt: row.created_at })),
     sync: { mode: 'cloud', pending: 0, conflicts: 0 }
   };
@@ -101,7 +110,7 @@ export function applyCloudCommand(source, owner, kind, input, now, requestHash, 
     if (!Number.isSafeInteger(input.expectedPetRevision) || petRow.revision !== input.expectedPetRevision) problem('REVISION_CONFLICT', '伙伴状态已更新，请刷新');
     const pet = JSON.parse(petRow.data_json); if (pet.ownerAccountId !== owner || pet.petId !== input.petId) problem('PET_NOT_FOUND', '伙伴归属不一致');
     change(item.id, -count, pet.petId);
-    for (const [effect, target] of [['satiety','satiety'],['mood','mood'],['intimacy','affinity']]) pet.growth[target] = Math.min(100, Math.max(0, pet.growth[target] + item.effects[effect] * count));
+    pet.growth=applyGrowthEffect(pet.growth,{satiety:item.effects.satiety*count,mood:item.effects.mood*count,affinity:item.effects.intimacy*count});
     pet.revision++; pet.updatedAt = new Date(now).toISOString(); petRow.revision = pet.revision; petRow.updated_at = pet.updatedAt; petRow.data_json = JSON.stringify(pet);
     const companionAccount = cloudCompanions(envelope,owner).accounts.find(row => row.owner_account_id === owner); if (companionAccount) companionAccount.revision++;
     receipt = { petId: pet.petId, itemId: item.id, quantity: count, effects: Object.fromEntries(Object.entries(item.effects).map(([key,value]) => [key,value * count])), pet };

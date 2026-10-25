@@ -1,4 +1,4 @@
-import core from '../_shared/battle-core.generated.mjs';
+import * as core from '../_shared/battle-core.js';
 import {applyCloudCommand,gardenDocument,cloudCompanions,digest,canonical} from '../../../../apps/pc-app/runtime/features/garden/cloud-domain.mjs';
 import gardenCatalog from '../../../../apps/pc-app/runtime/features/garden/catalog.json' with {type:'json'};
 import roster from '../../../../apps/pc-app/runtime/features/resources/assets/roster-v2/catalog.json' with {type:'json'};
@@ -17,8 +17,9 @@ export function beginTerritoryBattle(owner,envelope,region,input,now,id=crypto.r
   const guardian=roster.characters.find(character=>character.element==='wood');if(!guardian)fail('ELEMENT_ROSTER_MISSING');
   const enemy=region.defender||{petId:`guardian:${region.id}`,petName:guardian.name,element:'wood',level:1,resource:{resourceId:guardian.resourceId,kind:'2d'},resourceRef:guardian.resourceId,appearance2d:guardian.resourceId};
   const engine=new BattleRuntimeService();engine.reset({playerElement:player.element,enemyElement:enemy.element});
-  return {id:`battle-territory-${id}`,mode:'territory',status:'active',startedAt:new Date(now).toISOString(),player,enemy,snapshot:engine.snapshot(),rounds:[],winner:null,pendingAction:null,historyComplete:true,rules:getBattleRules(),revision:1,
-    context:{authority:'cloud',territoryId:region.id,territoryRevision:region.revision,origin:'garden',returnTo:'/garden',resultPath:'/garden',ownerAccountId:owner},updatedAt:new Date(now).toISOString()};
+  const compact=/^[0-9a-f-]{36}$/i.test(id)?btoa(String.fromCharCode(...id.replaceAll('-','').match(/../g).map(byte=>parseInt(byte,16)))).replaceAll('+','-').replaceAll('/','_').replaceAll('=',''):id;
+  return {id:`btl-${compact}`,mode:'territory',status:'active',startedAt:new Date(now).toISOString(),player,enemy,snapshot:engine.snapshot(),rounds:[],winner:null,pendingAction:null,historyComplete:true,rules:getBattleRules(),revision:1,
+    context:{authority:'cloud',territoryId:region.id,territoryRevision:region.revision,locationProvenance:region.worldMode==='simulated'?'simulated':'os',scenarioId:region.scenarioId||null,origin:'garden',returnTo:'/garden',resultPath:'/garden',ownerAccountId:owner},updatedAt:new Date(now).toISOString()};
 }
 export function advanceTerritoryBattle(battle,input,now){
   if(battle.status!=='active')fail('BATTLE_NOT_ACTIVE');
@@ -58,7 +59,7 @@ export async function applyTerritoryCommand(source,owner,kind,input,now,requestH
     const cropId=Object.keys(crops)[parseInt(seedHash.slice(0,8),16)%Object.keys(crops).length];
     const rewarded=applyCloudCommand(working,owner,'reward',seedInput,now,await digest({kind:'reward',input:seedInput}),undefined,{ownerAccountId:owner,id:battle.id,source:'battle',cropId});working=rewarded.envelope;
     settledBattle={...copy(battle),reward:{...award.reward,seeds:rewarded.result.data}};
-    resultData={territoryId:region.id,sessionId:battle.id,won:battle.winner==='player',ownerAccountId:battle.winner==='player'?owner:region.ownerAccountId,territoryRevision:region.revision+1,captureMultiplier:battle.winner==='player'?region.captureMultiplier:1,resultPath:'/garden'};
+    resultData={territoryId:region.id,sessionId:battle.id,petId:battle.player.petId,won:battle.winner==='player',ownerAccountId:battle.winner==='player'?owner:region.ownerAccountId,territoryRevision:region.revision+(battle.winner==='player'?1:0),captureMultiplier:battle.winner==='player'?region.captureMultiplier:1,resultPath:'/garden'};
   }else if(kind==='garrison'){
     const region=verified?.region;if(!region||region.ownerAccountId!==owner)fail('TERRITORY_NOT_OWNED');if(input.expectedTerritoryRevision!==region.revision)fail('TERRITORY_CONFLICT');
     if(input.petId!==null)ownedPet(working,owner,input.petId);

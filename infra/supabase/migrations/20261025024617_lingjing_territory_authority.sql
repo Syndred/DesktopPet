@@ -1,13 +1,18 @@
+begin;
 -- Generated with Supabase CLI migration new. Deploy ONLY through the coordinator.
--- Requires08's runtime accounts/save baseline. Original text owner IDs remain.
+-- Requires08 identity20314/protectedCAS21759 and03 location20719. Text owners remain.
 -- Auth UID/device/owner come exclusively from08's verified Edge actor context.
 -- No client role can call these internal RPCs or write shared-world records.
 create schema if not exists extensions;
 create extension if not exists postgis with schema extensions;
+grant usage on schema extensions to service_role;
 
 create table if not exists public.runtime_territory_regions (
   id text primary key,
   name text not null,
+  world_mode text not null default 'live' check(world_mode in ('live','simulated')),
+  scenario_id text,
+  check ((world_mode='live' and scenario_id is null) or (world_mode='simulated' and length(scenario_id)>0)),
   owner_account_id text references public.lingjing_accounts(owner_id),
   revision bigint not null default 1 check (revision > 0),
   boundary extensions.geometry(Polygon,4326) not null,
@@ -40,6 +45,7 @@ create table if not exists public.runtime_territory_challenges (
   territory_id text not null references public.runtime_territory_regions(id),
   territory_revision bigint not null,
   pet_id text not null,
+  location_receipt_id text not null,
   revision bigint not null default 1,
   battle_json jsonb not null,
   status text not null check (status in ('active','finished','settled','superseded')),
@@ -91,7 +97,7 @@ returns jsonb language sql stable security invoker set search_path='' as $$
   select jsonb_build_object('id',p_region.id,'name',p_region.name,'regionName','附近领地',
     'ownerAccountId',p_region.owner_account_id,'revision',p_region.revision,
     'captureMultiplier',p_region.capture_multiplier,'garrisonPetId',p_region.garrison_pet_id,
-    'occupiedAt',p_region.occupied_at,'provenance','cloud-geographic',
+    'occupiedAt',p_region.occupied_at,'provenance',case when p_region.world_mode='simulated' then 'cloud-simulated-geographic' else 'cloud-geographic' end,'worldMode',p_region.world_mode,'scenarioId',p_region.scenario_id,
     'logs',(select coalesce(jsonb_agg(entry),'[]'::jsonb) from (
       select jsonb_build_object('id',l.id,'action',case l.action when 'challenge' then '发起入侵' when 'occupy' then '占领成功' when 'defend' then '守住领地' else '驻守更新' end,'actorName',coalesce(a.username,'旅人'),'createdAt',l.created_at) as entry
       from public.runtime_territory_logs l left join public.lingjing_accounts a on a.owner_id=l.actor_owner_id where l.territory_id=p_region.id order by l.created_at desc limit 20
@@ -118,45 +124,76 @@ revoke all on function public.runtime_territory_check_actor(text,uuid,text,uuid)
 grant execute on function public.runtime_territory_check_actor(text,uuid,text,uuid) to service_role;
 
 -- Private full-save commit reused by garden and territory. This transaction has
--- the same runtime account lock as08's save CAS. Preserve identity and unrelated
+-- the same account lock as08's save CAS. Preserve identity and unrelated
 -- module data; only garden and the canonical companion tables may change.
+create table if not exists public.lingjing_garden_operations (
+  owner_account_id text not null references public.lingjing_accounts(owner_id),
+  action_id text not null, request_hash text not null check(request_hash ~ '^[0-9a-f]{64}$'),
+  account_revision bigint not null, response_json jsonb not null,
+  created_at timestamptz not null default now(),primary key(owner_account_id,action_id)
+);
+alter table public.lingjing_garden_operations enable row level security;
+revoke all on public.lingjing_garden_operations from public,anon,authenticated;
+grant select,insert on public.lingjing_garden_operations to service_role;
+
 create or replace function public.runtime_garden_commit_authoritative(
   p_owner text,p_actor_uid uuid,p_device_id text,p_actor_session uuid,p_action_id text,p_request_hash text,p_base_revision bigint,p_envelope jsonb,p_result jsonb
 ) returns jsonb language plpgsql security invoker set search_path='' as $$
 declare
-  current_save public.runtime_account_saves%rowtype;
-  prior public.runtime_garden_operations%rowtype;
-  response jsonb;
-  protected_old jsonb;
-  protected_new jsonb;
+  current_save public.lingjing_saves%rowtype;
+  prior public.lingjing_garden_operations%rowtype;
+  response jsonb; committed jsonb; fragments jsonb;
+  protected_old jsonb; protected_new jsonb; pet_tables jsonb;
+  old_pets jsonb; new_pets jsonb; old_others jsonb; new_others jsonb;
+  operation text; target_pet text;
 begin
+  perform lingjing_private.lock_save_owner(p_owner);
   perform public.runtime_territory_check_actor(p_owner,p_actor_uid,p_device_id,p_actor_session);
-  perform 1 from public.lingjing_accounts where owner_id=p_owner for update;
-  if not found then raise exception 'OWNER_NOT_MAPPED'; end if;
   if p_action_id is null or p_action_id !~ '^[a-zA-Z0-9:_-]{1,160}$' or p_request_hash is null or p_request_hash !~ '^[a-f0-9]{64}$' then raise exception 'INVALID_ACTION'; end if;
-  select * into prior from public.runtime_garden_operations where owner_account_id=p_owner and action_id=p_action_id;
+  select * into prior from public.lingjing_garden_operations where owner_account_id=p_owner and action_id=p_action_id;
   if found then
     if prior.request_hash<>p_request_hash then raise exception 'ACTION_ID_REUSED'; end if;
     return prior.response_json||jsonb_build_object('replayed',true);
   end if;
-  select * into current_save from public.runtime_account_saves where owner_account_id=p_owner for update;
-  if not found then raise exception 'CLOUD_GARDEN_NOT_INITIALIZED'; end if;
-  if p_base_revision is null or current_save.revision<>p_base_revision then raise exception 'SYNC_CONFLICT'; end if;
+  select * into current_save from public.lingjing_saves where owner_id=p_owner for update;
+  if p_base_revision is null or coalesce(current_save.revision,0)<>p_base_revision then raise exception 'SYNC_CONFLICT'; end if;
   if p_envelope->>'ownerAccountId' is distinct from p_owner
-    or p_envelope->'identity' is distinct from current_save.envelope->'identity'
     or p_envelope#>>'{data,modules,garden,data,ownerAccountId}' is distinct from p_owner
-    or p_envelope->>'checksum' is null or p_envelope->>'checksum' !~ '^[a-f0-9]{64}$'
-    or octet_length(p_envelope::text)>26214400 or p_result->>'ok' is distinct from 'true'
-    then raise exception 'INVALID_SAVE'; end if;
-  protected_old=(current_save.envelope-'checksum'-'createdAt')#-'{data,modules,garden}'#-'{data,tables,companion_pets}'#-'{data,tables,companion_actions}'#-'{data,tables,companion_accounts}'#-'{data,modules,companions,data,tables,companion_pets}'#-'{data,modules,companions,data,tables,companion_actions}'#-'{data,modules,companions,data,tables,companion_accounts}';
-  protected_new=(p_envelope-'checksum'-'createdAt')#-'{data,modules,garden}'#-'{data,tables,companion_pets}'#-'{data,tables,companion_actions}'#-'{data,tables,companion_accounts}'#-'{data,modules,companions,data,tables,companion_pets}'#-'{data,modules,companions,data,tables,companion_actions}'#-'{data,modules,companions,data,tables,companion_accounts}';
-  if protected_old is distinct from protected_new then raise exception 'UNRELATED_SAVE_CHANGED'; end if;
-  response=jsonb_build_object('actionId',p_action_id,'requestHash',p_request_hash,'accountRevision',current_save.revision+1,'result',p_result,'replayed',false);
-  insert into public.runtime_account_save_actions(owner_account_id,action_id,base_revision,revision,checksum,envelope)
-    values(p_owner,'garden:'||p_action_id,current_save.revision,current_save.revision+1,p_envelope->>'checksum',p_envelope);
-  update public.runtime_account_saves set revision=current_save.revision+1,action_id='garden:'||p_action_id,checksum=p_envelope->>'checksum',envelope=p_envelope,updated_at=now() where owner_account_id=p_owner;
-  insert into public.runtime_garden_operations(owner_account_id,action_id,request_hash,account_revision,response_json)
-    values(p_owner,p_action_id,p_request_hash,current_save.revision+1,response);
+    or p_result->>'ok' is distinct from 'true' or octet_length(p_envelope::text)>26214400 then raise exception 'INVALID_SAVE'; end if;
+  perform lingjing_private.validate_envelope(p_owner,p_envelope);
+  select entry->>'kind' into operation from jsonb_array_elements(p_envelope#>'{data,modules,garden,data,tables,garden_actions}') entry
+    where entry->>'owner_account_id'=p_owner and entry->>'action_id'=p_action_id and entry->>'request_hash'=p_request_hash;
+  if operation is null or operation not in ('initialize','plant','harvest','craft','feed','reward','territorySettle','garrison') then raise exception 'INVALID_ACTION'; end if;
+  new_pets=coalesce(case when p_envelope#>'{data,modules,companions}' is not null then p_envelope#>'{data,modules,companions,data,tables,companion_pets}' else p_envelope#>'{data,tables,companion_pets,rows}' end,'[]'::jsonb);
+  if current_save.owner_id is null then
+    if operation<>'initialize' or new_pets<>'[]'::jsonb then raise exception 'CLOUD_GARDEN_NOT_INITIALIZED'; end if;
+  else
+    if p_envelope->'identity' is distinct from current_save.envelope->'identity' then raise exception 'INVALID_SAVE'; end if;
+    protected_old=(current_save.envelope-'checksum'-'createdAt')#-'{data,modules,garden}'#-'{data,tables,companion_pets}'#-'{data,tables,companion_actions}'#-'{data,tables,companion_accounts}'#-'{data,modules,companions,data,tables,companion_pets}'#-'{data,modules,companions,data,tables,companion_actions}'#-'{data,modules,companions,data,tables,companion_accounts}';
+    protected_new=(p_envelope-'checksum'-'createdAt')#-'{data,modules,garden}'#-'{data,tables,companion_pets}'#-'{data,tables,companion_actions}'#-'{data,tables,companion_accounts}'#-'{data,modules,companions,data,tables,companion_pets}'#-'{data,modules,companions,data,tables,companion_actions}'#-'{data,modules,companions,data,tables,companion_accounts}';
+    if protected_old is distinct from protected_new then raise exception 'UNRELATED_SAVE_CHANGED'; end if;
+    old_pets=coalesce(case when current_save.envelope#>'{data,modules,companions}' is not null then current_save.envelope#>'{data,modules,companions,data,tables,companion_pets}' else current_save.envelope#>'{data,tables,companion_pets,rows}' end,'[]'::jsonb);
+    if (select coalesce(jsonb_agg(entry->>'pet_id' order by entry->>'pet_id'),'[]') from jsonb_array_elements(old_pets) entry) is distinct from (select coalesce(jsonb_agg(entry->>'pet_id' order by entry->>'pet_id'),'[]') from jsonb_array_elements(new_pets) entry) then raise exception 'UNRELATED_PET_CHANGED'; end if;
+    target_pet=case when operation in ('feed','territorySettle') then p_result#>>'{data,petId}' else null end;
+    select coalesce(jsonb_agg(entry order by entry->>'pet_id'),'[]') into old_others from jsonb_array_elements(old_pets) entry where target_pet is null or entry->>'pet_id'<>target_pet;
+    select coalesce(jsonb_agg(entry order by entry->>'pet_id'),'[]') into new_others from jsonb_array_elements(new_pets) entry where target_pet is null or entry->>'pet_id'<>target_pet;
+    if old_others is distinct from new_others then raise exception 'UNRELATED_PET_CHANGED'; end if;
+  end if;
+  if exists(select 1 from jsonb_array_elements(new_pets) entry where entry->>'owner_account_id' is distinct from p_owner or not exists(select 1 from lingjing_private.owned_pet_ids ids where ids.owner_id=p_owner and ids.pet_id=entry->>'pet_id')) then raise exception 'PET_NOT_OWNED'; end if;
+  fragments=jsonb_build_object('garden',jsonb_build_object('module',p_envelope#>'{data,modules,garden}'));
+  if p_envelope#>'{data,modules,companions}' is not null then
+    fragments=fragments||jsonb_build_object('companions',jsonb_build_object('module',p_envelope#>'{data,modules,companions}'));
+  else
+    select coalesce(jsonb_object_agg(key,value),'{}') into pet_tables from jsonb_each(coalesce(p_envelope#>'{data,tables}','{}')) where key in ('companion_accounts','companion_pets','companion_actions','companion_legacy_archive','companion_interactions','companion_capture_receipts');
+    if pet_tables<>'{}'::jsonb then fragments=fragments||jsonb_build_object('companions',jsonb_build_object('tables',pet_tables)); end if;
+  end if;
+  -- The authority helper updates all protected fragments + the unified save
+  -- revision HERE, within this same world/inventory SQL transaction. No second
+  -- SDK request, no direct save-table write, no new pet registration by05.
+  committed=lingjing_private.commit_authority(p_owner,'garden:'||p_request_hash,fragments,p_base_revision);
+  response=jsonb_build_object('actionId',p_action_id,'requestHash',p_request_hash,'accountRevision',(committed->>'revision')::bigint,'authorityReceiptId',committed->>'actionId','result',p_result,'replayed',false);
+  insert into public.lingjing_garden_operations(owner_account_id,action_id,request_hash,account_revision,response_json)
+    values(p_owner,p_action_id,p_request_hash,(committed->>'revision')::bigint,response);
   return response;
 end;
 $$;
@@ -165,9 +202,9 @@ grant execute on function public.runtime_garden_commit_authoritative(text,uuid,t
 
 create or replace function public.runtime_territory_read(p_owner text,p_session_id text default null,p_territory_id text default null)
 returns jsonb language plpgsql security invoker set search_path='' as $$
-declare saved public.runtime_account_saves%rowtype; challenge public.runtime_territory_challenges%rowtype; region public.runtime_territory_regions%rowtype; world jsonb;
+declare saved public.lingjing_saves%rowtype; challenge public.runtime_territory_challenges%rowtype; region public.runtime_territory_regions%rowtype; world jsonb;
 begin
-  select * into saved from public.runtime_account_saves where owner_account_id=p_owner;
+  select * into saved from public.lingjing_saves where owner_id=p_owner;
   if not found then raise exception 'CLOUD_GARDEN_NOT_INITIALIZED'; end if;
   if p_session_id is not null then
     select * into challenge from public.runtime_territory_challenges where session_id=p_session_id and owner_account_id=p_owner;
@@ -189,39 +226,36 @@ revoke all on function public.runtime_territory_read(text,text,text) from public
 grant execute on function public.runtime_territory_read(text,text,text) to service_role;
 
 -- A shared region lock serializes capture context with ownership settlement.
-create or replace function public.runtime_territory_capture_context(p_owner text,p_lat double precision,p_lng double precision)
+create or replace function public.runtime_territory_capture_context(p_owner text,p_lat double precision,p_lng double precision,p_scenario_id text default null)
 returns jsonb language plpgsql volatile security invoker set search_path='' as $$
 declare region public.runtime_territory_regions%rowtype;
 begin
+  perform lingjing_private.lock_save_owner(p_owner);
   --03 calls this INSIDE its capture commit transaction, holding the region lock
   -- through reward creation. An HTTP preview alone cannot authorize a bonus.
-  select * into region from public.runtime_territory_regions where extensions.st_covers(boundary,extensions.st_setsrid(extensions.st_makepoint(p_lng,p_lat),4326)) order by id limit 1 for share;
+  select * into region from public.runtime_territory_regions where scenario_id is not distinct from p_scenario_id and extensions.st_covers(boundary,extensions.st_setsrid(extensions.st_makepoint(p_lng,p_lat),4326)) order by id limit 1 for share;
   if not found then return jsonb_build_object('territoryId',null,'captureMultiplier',1); end if;
   return jsonb_build_object('territoryId',region.id,'territoryRevision',region.revision,'captureMultiplier',case when region.owner_account_id=p_owner then region.capture_multiplier else 1 end);
 end;
 $$;
-revoke all on function public.runtime_territory_capture_context(text,double precision,double precision) from public,anon,authenticated;
-grant execute on function public.runtime_territory_capture_context(text,double precision,double precision) to service_role;
+revoke all on function public.runtime_territory_capture_context(text,double precision,double precision,text) from public,anon,authenticated;
+grant execute on function public.runtime_territory_capture_context(text,double precision,double precision,text) to service_role;
 
 -- A location object is supplied ONLY by03's verified server permit adapter,
 -- never copied from the HTTP body. Client roles cannot execute this function.
-create or replace function public.runtime_territory_verified_point(p_owner text,p_device text,p_location jsonb)
-returns extensions.geometry language plpgsql volatile security invoker set search_path='' as $$
-declare now_ms bigint=floor(extract(epoch from now())*1000); lat double precision; lng double precision;
+create or replace function public.runtime_territory_verified_point(p_owner text,p_device text,p_permit jsonb)
+returns extensions.geometry language plpgsql immutable security invoker set search_path='' as $$
+declare fix jsonb=p_permit->'fix';lat double precision;lng double precision;
 begin
-  if p_location->>'ownerAccountId' is distinct from p_owner or p_location->>'deviceId' is distinct from p_device
-    or p_location->>'authority' is distinct from 'live' or p_location->>'verified' is distinct from 'true'
-    or coalesce(length(p_location->>'receiptId'),0)<8 or p_location->>'source' is distinct from 'os'
-    then raise exception 'LOCATION_PERMIT_REQUIRED'; end if;
-  if jsonb_typeof(p_location->'issuedAtMs') is distinct from 'number' or jsonb_typeof(p_location->'expiresAtMs') is distinct from 'number'
-    or jsonb_typeof(p_location->'timestampMs') is distinct from 'number' or jsonb_typeof(p_location->'accuracyMeters') is distinct from 'number'
-    or jsonb_typeof(p_location->'lat') is distinct from 'number' or jsonb_typeof(p_location->'lng') is distinct from 'number' then raise exception 'INVALID_COORDINATES'; end if;
-  if (p_location->>'issuedAtMs')::bigint>now_ms+5000 or (p_location->>'expiresAtMs')::bigint<now_ms
-    or now_ms-(p_location->>'timestampMs')::bigint not between -5000 and 30000
-    then raise exception 'LOCATION_STALE'; end if;
-  if (p_location->>'accuracyMeters')::numeric not between 0 and 80 then raise exception 'LOCATION_IMPRECISE'; end if;
-  lat=(p_location->>'lat')::double precision; lng=(p_location->>'lng')::double precision;
-  if lat not between -85 and 85 or lng not between -180 and 180 or lat is null or lng is null then raise exception 'INVALID_COORDINATES'; end if;
+  --03 take_location already verified signature, actor, current key, 30s/80m,
+  -- nonce purpose/reference/consumer,15s expiry and coordinator-only QA grants.
+  if p_permit->>'ownerAccountId' is distinct from p_owner or p_permit->>'deviceId' is distinct from p_device
+    or p_permit->>'source' not in ('os','simulated') then raise exception 'LOCATION_PERMIT_REQUIRED'; end if;
+  if p_permit->>'source'='simulated' and coalesce(length(fix->>'scenarioId'),0)=0 then raise exception 'LOCATION_SCENARIO_MISMATCH';end if;
+  if jsonb_typeof(fix->'lat') is distinct from 'number' or jsonb_typeof(fix->'lng') is distinct from 'number' then raise exception 'INVALID_COORDINATES';end if;
+  lat=(fix->>'lat')::double precision;lng=(fix->>'lng')::double precision;
+  if lat not between -85 and 85 or lng not between -180 and 180 then raise exception 'INVALID_COORDINATES';end if;
+  if lng=180 then lng=-180;end if;
   return extensions.st_setsrid(extensions.st_makepoint(lng,lat),4326);
 end;
 $$;
@@ -235,8 +269,9 @@ declare
   prior public.runtime_territory_actions%rowtype;
   region public.runtime_territory_regions%rowtype;
   challenge public.runtime_territory_challenges%rowtype;
-  saved public.runtime_account_saves%rowtype;
+  saved public.lingjing_saves%rowtype;
   pt extensions.geometry;
+  actor jsonb;permit jsonb;scenario text;location_world_mode text;
   lat_index integer; lng_index integer; region_id text;
   current_day date=(now() at time zone 'Asia/Shanghai')::date;
   attempts integer;
@@ -245,8 +280,9 @@ declare
   committed jsonb;
   winner text;
   old_owner text;
-  session_id text;
+  new_session_id text;
 begin
+  perform lingjing_private.lock_save_owner(p_owner);
   perform public.runtime_territory_check_actor(p_owner,p_actor_uid,p_device_id,p_actor_session);
   if p_actor_uid is null or p_device_id is null or length(p_device_id)>160 or p_owner is null
     or p_action_id is null or p_action_id !~ '^[a-zA-Z0-9:_-]{1,160}$'
@@ -261,16 +297,19 @@ begin
     if prior.kind<>p_kind or prior.request_hash<>p_request_hash then raise exception 'ACTION_ID_REUSED'; end if;
     return prior.result_json||jsonb_build_object('replayed',true);
   end if;
+  actor=jsonb_build_object('schemaVersion',1,'authority','live','authKind','supabase','authUserId',p_actor_uid,'ownerAccountId',p_owner,'deviceId',p_device_id,'sessionId',p_actor_session);
   if p_kind='locate' then
-    pt=public.runtime_territory_verified_point(p_owner,p_device_id,p_payload->'location');
+    permit=public.lingjing_discovery_take_location(actor,(p_input->>'locationReceiptId')::uuid,'territory:read','','territory:'||p_request_hash);
+    pt=public.runtime_territory_verified_point(p_owner,p_device_id,permit);
+    scenario=case when permit->>'source'='simulated' then permit#>>'{fix,scenarioId}' else null end;location_world_mode=case when scenario is null then 'live' else 'simulated' end;
     lat_index=floor(extensions.st_y(pt)/0.006); lng_index=floor(extensions.st_x(pt)/0.006);
-    region_id='territory:'||lat_index||':'||lng_index;
-    insert into public.runtime_territory_regions(id,name,boundary,center) values(region_id,'附近的庭院',
+    region_id=case when scenario is null then '' else 'qa:'||scenario||':' end||'territory:'||lat_index||':'||lng_index;
+    insert into public.runtime_territory_regions(id,name,world_mode,scenario_id,boundary,center) values(region_id,'附近的庭院',location_world_mode,scenario,
       extensions.st_makeenvelope(lng_index*.006,lat_index*.006,(lng_index+1)*.006,(lat_index+1)*.006,4326),
       extensions.st_setsrid(extensions.st_makepoint((lng_index+.5)*.006,(lat_index+.5)*.006),4326)::extensions.geography)
       on conflict(id) do nothing;
     insert into public.runtime_territory_views(owner_account_id,territory_id,last_seen_at)
-      select p_owner,id,now() from public.runtime_territory_regions where extensions.st_dwithin(center,pt::extensions.geography,1000)
+      select p_owner,id,now() from public.runtime_territory_regions where scenario_id is not distinct from scenario and extensions.st_dwithin(center,pt::extensions.geography,1000)
       on conflict(owner_account_id,territory_id) do update set last_seen_at=excluded.last_seen_at;
     select * into region from public.runtime_territory_regions where id=region_id;
     result=jsonb_build_object('ok',true,'data',public.runtime_territory_view(region),'serverTime',floor(extract(epoch from now())*1000));
@@ -279,7 +318,7 @@ begin
       select territory_id into region_id from public.runtime_territory_challenges where session_id=p_input->>'sessionId' and owner_account_id=p_owner;
       if not found then raise exception 'NOT_PARTICIPANT'; end if;
     else region_id=p_input->>'territoryId'; end if;
-    -- Every ownership mutation takes region -> challenge -> account locks.
+    -- The account lock is already held: owner -> region -> challenge ordering.
     select * into region from public.runtime_territory_regions where id=region_id for update;
     if not found then raise exception 'TERRITORY_NOT_FOUND'; end if;
     if p_kind in ('act','settle') then
@@ -292,12 +331,14 @@ begin
       elsif p_kind='act' and challenge.expires_at<now() then raise exception 'CHALLENGE_EXPIRED'; end if;
     end if;
     if result is null and p_kind='challenge' then
-      pt=public.runtime_territory_verified_point(p_owner,p_device_id,p_payload->'location');
+      permit=public.lingjing_discovery_take_location(actor,(p_input->>'locationReceiptId')::uuid,'territory:challenge',region.id,'territory:'||p_request_hash);
+      pt=public.runtime_territory_verified_point(p_owner,p_device_id,permit);
+      if region.scenario_id is distinct from case when permit->>'source'='simulated' then permit#>>'{fix,scenarioId}' else null end then raise exception 'LOCATION_SCENARIO_MISMATCH';end if;
       if not extensions.st_covers(region.boundary,pt) then raise exception 'OUT_OF_TERRITORY_RANGE'; end if;
       if region.owner_account_id=p_owner then raise exception 'ALREADY_OWNED'; end if;
       if (p_input->>'expectedTerritoryRevision')::bigint is distinct from region.revision then raise exception 'TERRITORY_CONFLICT'; end if;
       perform 1 from public.lingjing_accounts where owner_id=p_owner for update;
-      select * into saved from public.runtime_account_saves where owner_account_id=p_owner;
+      select * into saved from public.lingjing_saves where owner_id=p_owner;
       if not found then raise exception 'CLOUD_GARDEN_NOT_INITIALIZED'; end if;
       if (p_payload->>'accountRevision')::bigint is distinct from saved.revision then raise exception 'SYNC_CONFLICT'; end if;
       select value into pet_row from jsonb_array_elements(case when saved.envelope#>'{data,modules,companions}' is not null then saved.envelope#>'{data,modules,companions,data,tables,companion_pets}' else saved.envelope#>'{data,tables,companion_pets,rows}' end) where value->>'owner_account_id'=p_owner and value->>'pet_id'=p_input->>'petId';
@@ -311,13 +352,14 @@ begin
       insert into public.runtime_territory_attempts values(p_owner,current_day,0) on conflict do nothing;
       select count into attempts from public.runtime_territory_attempts where owner_account_id=p_owner and day_key=current_day for update;
       if attempts>=2 then raise exception 'DAILY_INVASIONS_USED'; end if;
-      session_id=p_payload#>>'{battle,id}';
-      if session_id is null or length(session_id)>160 then raise exception 'INVALID_BATTLE_RECEIPT'; end if;
-      insert into public.runtime_territory_challenges(session_id,owner_account_id,actor_uid,device_id,territory_id,territory_revision,pet_id,battle_json,status)
-        values(session_id,p_owner,p_actor_uid,p_device_id,region.id,region.revision,pet_row->>'pet_id',p_payload->'battle','active');
+      new_session_id=p_payload#>>'{battle,id}';
+      if new_session_id is null or length(new_session_id)>160 then raise exception 'INVALID_BATTLE_RECEIPT'; end if;
+      if p_input->>'locationReceiptId' is distinct from permit->>'id' then raise exception 'LOCATION_PERMIT_REQUIRED'; end if;
+      insert into public.runtime_territory_challenges(session_id,owner_account_id,actor_uid,device_id,territory_id,territory_revision,pet_id,location_receipt_id,battle_json,status)
+        values(new_session_id,p_owner,p_actor_uid,p_device_id,region.id,region.revision,pet_row->>'pet_id',p_input->>'locationReceiptId',p_payload->'battle','active');
       update public.runtime_territory_attempts set count=count+1 where owner_account_id=p_owner and day_key=current_day;
-      insert into public.runtime_territory_logs(territory_id,actor_owner_id,action,old_owner_id,new_owner_id,session_id) values(region.id,p_owner,'challenge',region.owner_account_id,region.owner_account_id,session_id);
-      result=jsonb_build_object('ok',true,'data',jsonb_build_object('sessionId',session_id,'territoryId',region.id,'remainingAttempts',1-attempts),'battle',p_payload->'battle');
+      insert into public.runtime_territory_logs(territory_id,actor_owner_id,action,old_owner_id,new_owner_id,session_id) values(region.id,p_owner,'challenge',region.owner_account_id,region.owner_account_id,new_session_id);
+      result=jsonb_build_object('ok',true,'data',jsonb_build_object('sessionId',new_session_id,'territoryId',region.id,'remainingAttempts',1-attempts),'battle',p_payload->'battle');
     elsif result is null and p_kind='act' then
       if challenge.status<>'active' then raise exception 'BATTLE_NOT_ACTIVE'; end if;
       if (p_payload->>'challengeRevision')::bigint is distinct from challenge.revision
@@ -343,11 +385,18 @@ begin
         result=jsonb_build_object('ok',false,'code','TERRITORY_CONFLICT','message','领地归属已更新，请重新查看','data',jsonb_build_object('sessionId',challenge.session_id,'territoryId',region.id));
         update public.runtime_territory_challenges set status='superseded',result_json=result,updated_at=now() where session_id=challenge.session_id;
       else
-        if p_payload#>>'{result,data,territoryId}' is distinct from region.id or p_payload#>>'{result,data,won}' is distinct from (winner='player')::text then raise exception 'INVALID_SETTLEMENT_PROOF'; end if;
+        if winner='player' then
+          permit=public.lingjing_discovery_take_location(actor,(p_input->>'locationReceiptId')::uuid,'territory:settle',challenge.session_id,'territory:'||p_request_hash);
+          pt=public.runtime_territory_verified_point(p_owner,p_device_id,permit);
+          if region.scenario_id is distinct from case when permit->>'source'='simulated' then permit#>>'{fix,scenarioId}' else null end then raise exception 'LOCATION_SCENARIO_MISMATCH';end if;
+          if not extensions.st_covers(region.boundary,pt) then raise exception 'OUT_OF_TERRITORY_RANGE';end if;
+        end if;
+        if p_payload#>>'{result,data,territoryId}' is distinct from region.id or p_payload#>>'{result,data,petId}' is distinct from challenge.pet_id or p_payload#>>'{result,data,won}' is distinct from (winner='player')::text
+          or (p_payload->'settledBattle'-'reward') is distinct from challenge.battle_json then raise exception 'INVALID_SETTLEMENT_PROOF'; end if;
         committed=public.runtime_garden_commit_authoritative(p_owner,p_actor_uid,p_device_id,p_actor_session,p_action_id,p_request_hash,(p_payload->>'accountRevision')::bigint,p_payload->'envelope',p_payload->'result');
         old_owner=region.owner_account_id;
         update public.runtime_territory_regions set owner_account_id=case when winner='player' then p_owner else owner_account_id end,
-          revision=revision+1,garrison_pet_id=case when winner='player' then null else garrison_pet_id end,
+          revision=revision+case when winner='player' then 1 else 0 end,garrison_pet_id=case when winner='player' then null else garrison_pet_id end,
           defender_json=case when winner='player' then null else defender_json end,
           occupied_at=case when winner='player' then now() else occupied_at end,updated_at=now() where id=region.id returning * into region;
         result=jsonb_build_object('ok',true,'data',(p_payload#>'{result,data}')||jsonb_build_object('territoryRevision',region.revision,'ownerAccountId',region.owner_account_id),'receipt',committed,'battle',p_payload->'settledBattle','territory',public.runtime_territory_view(region));
@@ -358,7 +407,7 @@ begin
       if region.owner_account_id is distinct from p_owner then raise exception 'TERRITORY_NOT_OWNED'; end if;
       if (p_input->>'expectedTerritoryRevision')::bigint is distinct from region.revision then raise exception 'TERRITORY_CONFLICT'; end if;
       if p_input->>'petId' is not null then
-        select * into saved from public.runtime_account_saves where owner_account_id=p_owner;
+        select * into saved from public.lingjing_saves where owner_id=p_owner;
         select value into pet_row from jsonb_array_elements(case when saved.envelope#>'{data,modules,companions}' is not null then saved.envelope#>'{data,modules,companions,data,tables,companion_pets}' else saved.envelope#>'{data,tables,companion_pets,rows}' end) where value->>'owner_account_id'=p_owner and value->>'pet_id'=p_input->>'petId';
         if pet_row is null or p_payload#>>'{defender,petId}' is distinct from pet_row->>'pet_id' then raise exception 'PET_NOT_OWNED'; end if;
       end if;
@@ -380,3 +429,5 @@ end;
 $$;
 revoke all on function public.runtime_territory_write(text,uuid,text,uuid,text,text,text,jsonb,jsonb) from public,anon,authenticated;
 grant execute on function public.runtime_territory_write(text,uuid,text,uuid,text,text,text,jsonb,jsonb) to service_role;
+
+commit;

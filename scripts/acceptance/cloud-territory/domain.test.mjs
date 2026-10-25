@@ -4,31 +4,32 @@ import {createRequire} from 'node:module';
 import {readFileSync} from 'node:fs';
 import {createHash,randomUUID} from 'node:crypto';
 import {DatabaseSync} from 'node:sqlite';
-import generated from '../../../infra/supabase/functions/_shared/battle-core.generated.mjs';
+import * as generated from '../../../infra/supabase/functions/_shared/battle-core.js';
 import {digest,cloudSnapshot,cloudCompanions,applyCloudCommand} from '../../../apps/pc-app/runtime/features/garden/cloud-domain.mjs';
 import {beginTerritoryBattle,advanceTerritoryBattle,ownedPet,applyTerritoryCommand,sealEnvelope} from '../../../infra/supabase/functions/territory-sync/domain.mjs';
 import {createTerritoryService} from '../../../infra/supabase/functions/territory-sync/handler.mjs';
+import {awardBattleResult} from '../../../apps/pc-app/runtime/features/companions/cloud-growth.mjs';
 const require=createRequire(import.meta.url),canonical=require('../../../apps/pc-app/runtime/services/battle-runtime.cjs');
 const {GardenService}=require('../../../apps/pc-app/runtime/features/garden/service.cjs');
 const {createGardenBackupAdapter}=require('../../../apps/pc-app/runtime/features/garden/backup.cjs');
 const {CompanionsService}=require('../../../apps/pc-app/runtime/features/companions/service.cjs');
 const {migrateCompanions}=require('../../../apps/pc-app/runtime/features/companions/migrations.cjs');
 const owner='legacy:territory-owner',other='legacy:another-owner',now=Date.now();
-async function fixture(moduleFormat=false){
+export async function fixture(moduleFormat=false,ownerId=owner){
+  const owner=ownerId;
   const db=new DatabaseSync(':memory:');migrateCompanions(db);const companions=new CompanionsService({db});
   const pets=['alpha','beta'].map((name,index)=>companions.adopt(owner,{actionId:`adopt:${index}`,templateId:index?'animal-hat-cat':'big-fish-gentle',name,showOnDesktop:false}).data.pet);
   const garden=new GardenService({db});garden.snapshot({ownerAccountId:owner});
   const data={tables:{},modules:{garden:{version:1,data:createGardenBackupAdapter(db).export(owner)}}};
   const tables=Object.fromEntries(['companion_accounts','companion_pets','companion_actions','companion_legacy_archive','companion_interactions','companion_capture_receipts'].map(name=>[name,db.prepare(`SELECT * FROM ${name} WHERE owner_account_id=?`).all(owner)]));
   if(moduleFormat)data.modules.companions={version:1,data:{ownerAccountId:owner,tables,identityImports:[]}};
-  else for(const [name,rows]of Object.entries(tables))data.tables[name]={rows};
-  const envelope=await sealEnvelope(JSON.parse(JSON.stringify({format:'lingjing-account-save',version:1,ownerAccountId:owner,identity:{provider:'runtime',subjectId:owner},createdAt:new Date(now).toISOString(),data})));
+  else for(const [name,rows]of Object.entries(tables))data.tables[name]={schema:db.prepare(`PRAGMA table_info(${name})`).all(),rows};
+  const envelope=await sealEnvelope(JSON.parse(JSON.stringify({format:'lingjing-account-save',version:1,ownerAccountId:owner,identity:{provider:'runtime',subjectId:owner},provenance:{mode:'live'},createdAt:new Date(now).toISOString(),data})));
   return {db,pets,envelope};
 }
-test('deployment bundle has the canonical source hash and matches all25 ordered pairs and16 action pairs',()=>{
-  const provenance=JSON.parse(readFileSync('infra/supabase/functions/_shared/battle-core.provenance.json','utf8'));
-  assert.equal(createHash('sha256').update(readFileSync(provenance.source)).digest('hex'),provenance.sourceSha256);
-  assert.equal(createHash('sha256').update(readFileSync(provenance.output)).digest('hex'),provenance.outputSha256);
+test('shared source matches the desktop distribution hash and all25 ordered pairs and16 action pairs',()=>{
+  const hash=createHash('sha256').update(readFileSync('infra/supabase/functions/_shared/battle-core.js','utf8').replaceAll('\r\n','\n')).digest('hex');
+  assert.ok(readFileSync('apps/pc-app/runtime/features/battle/core.generated.cjs','utf8').includes(`SHA256: ${hash}`));
   assert.deepEqual(generated.getBattleRules(),canonical.getBattleRules());
   let cases=0;for(const player of ['metal','wood','water','fire','earth'])for(const enemy of ['metal','wood','water','fire','earth'])for(const pa of ['normal_attack','element_attack','dodge','ultimate'])for(const ea of ['normal_attack','element_attack','dodge','ultimate']){
     const a=canonical.createSession(player,enemy),b=generated.createSession(player,enemy);a.player.anger=a.enemy.anger=b.player.anger=b.enemy.anger=100;
@@ -86,6 +87,26 @@ test('privileged worker is never reached for actor/body authority forgery or an 
   const actor={schemaVersion:1,authority:'live',authKind:'supabase',authUserId:randomUUID(),ownerAccountId:owner,deviceId:randomUUID(),sessionId:randomUUID()};let called=0;
   const service=createTerritoryService({actor,worker:{rpc(){called++;throw Error('unexpected');}}});
   for(const body of [{op:'snapshot',ownerAccountId:other},{op:'act',input:{winner:'player'}},{op:'snapshot',sessionToken:'old'},{op:'snapshot',input:{sessionOwnerAccountId:other}}])await assert.rejects(service.handle(body));
-  await assert.rejects(service.handle({op:'captureContext'}),{code:'LOCATION_PERMIT_REQUIRED'});
+  await assert.rejects(service.handle({op:'captureContext'}),{code:'INVALID_TERRITORY_COMMAND'});
   assert.equal(called,0);assert.throws(()=>createTerritoryService({actor:{...actor,authority:'simulated'},worker:{}}),{code:'ACTOR_REQUIRED'});
+});
+
+test('actual02 growth adapter settles the same pet and garden once, with160-character legacy owner',async()=>{
+  const legacyOwner='legacy:'+('x'.repeat(153)),f=await fixture(true,legacyOwner);
+  try{
+    const region={id:'territory:1:2',revision:1,ownerAccountId:null,captureMultiplier:2};
+    const battle=beginTerritoryBattle(legacyOwner,f.envelope,region,{petId:f.pets[0].petId},now);
+    assert.equal(battle.id.length,26);assert.ok(`battle:${battle.id}:${legacyOwner}`.length<=200);
+    const state=generated.createSession(battle.player.element,battle.enemy.element);
+    for(let i=0;i<100&&!battle.winner;i++){const round=generated.executeRound(state,'normal_attack','element_attack');battle.snapshot=structuredClone(state);battle.rounds.push({...round,state:structuredClone(state)});battle.winner=round.winner;}
+    battle.status='finished';assert.equal(battle.winner,'player');
+    const input={actionId:'settle:canonical',sessionId:battle.id,expectedRevision:0},hash=await digest({kind:'territorySettle',input});
+    const applied=await applyTerritoryCommand(f.envelope,legacyOwner,'territorySettle',input,now,hash,{region,battle},{awardBattleResult});
+    const rows=applied.envelope.data.modules.companions.data.tables.companion_pets;
+    assert.equal(JSON.parse(rows.find(row=>row.pet_id===f.pets[0].petId).data_json).growth.experience,f.pets[0].growth.experience+20);
+    assert.deepEqual(rows.find(row=>row.pet_id===f.pets[1].petId),f.envelope.data.modules.companions.data.tables.companion_pets.find(row=>row.pet_id===f.pets[1].petId));
+    assert.equal(applied.envelope.data.modules.garden.data.tables.garden_reward_receipts.length,1);
+    const replay=await applyTerritoryCommand(applied.envelope,legacyOwner,'territorySettle',input,now+1,hash,{region,battle},{awardBattleResult});
+    assert.equal(replay.changed,false);assert.deepEqual(replay.envelope,applied.envelope);
+  }finally{f.db.close();}
 });
