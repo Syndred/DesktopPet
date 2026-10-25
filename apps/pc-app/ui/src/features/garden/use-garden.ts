@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { GardenCommand, GardenResult, GardenSnapshot } from "../../../../../../packages/shared-types/src/features/garden";
-import { companionIdentity } from '../companions/identity';
+import { gardenPetIdentity, petIdentityLabel } from './PetIdentity';
 
 interface Bridge {
   invoke<T>(feature: string, command: string, payload?: unknown): Promise<GardenResult<T>>;
@@ -50,12 +50,16 @@ export function useGarden() {
   useEffect(() => {
     mounted.current = true; void refresh();
     const stop = bridge()?.subscribe?.("garden:changed", () => { void refresh(); });
+    const stopCompanions = bridge()?.subscribe?.("companions:changed", event => {
+      if (event && typeof event === 'object' && 'ownerAccountId' in event
+        && typeof event.ownerAccountId === 'string' && event.ownerAccountId === ownerRef.current) void refresh();
+    });
     const reset = () => { setSnapshot(null); setPending(null); ownerRef.current = null; void refresh(); };
     const sessionStops = ['accounts:changed', 'app:session', 'accounts:session-changed'].map(name => bridge()?.subscribe?.(name, reset));
     const clock = window.setInterval(() => { setNow(Date.now() + offset.current); }, 1000);
     const focus = () => { void refresh(); };
     window.addEventListener("focus", focus);
-    return () => { mounted.current = false; stop?.(); sessionStops.forEach(stop => stop?.()); clearInterval(clock); window.removeEventListener("focus", focus); };
+    return () => { mounted.current = false; stop?.(); stopCompanions?.(); sessionStops.forEach(stop => stop?.()); clearInterval(clock); window.removeEventListener("focus", focus); };
   }, [refresh]);
   const execute = useCallback(async (action: Pending, success: string) => {
     if (locked.current) return false;
@@ -93,9 +97,9 @@ export function useGarden() {
   const retry = () => {
     if (!pending) return Promise.resolve(false);
     const originalPetId = pending.input.petId;
-    const originalPet = snapshot?.ownerAccountId === pending.owner ? snapshot.pets.find(pet => pet.petId === originalPetId) : undefined;
-    const roleName = originalPet?.templateId ? companionIdentity(originalPet).roleName : '伙伴';
-    const target = typeof originalPetId === 'string' ? `${roleName}（编号 ${originalPetId}）` : '';
+    const originalPet = snapshot?.ownerAccountId === pending.owner ? snapshot.pets.find(pet => pet.petId === originalPetId && pet.ownerAccountId === pending.owner) : undefined;
+    const identity = originalPet?.templateId ? gardenPetIdentity(originalPet) : null;
+    const target = typeof originalPetId === 'string' ? petIdentityLabel(identity) : '';
     const message = pending.command === 'feed' && target ? `已确认${target}的原喂养操作。`
       : pending.command === 'garrison' && target ? `已确认${target}的原驻守操作。` : '原操作已确认保存。';
     return execute(pending, message);
