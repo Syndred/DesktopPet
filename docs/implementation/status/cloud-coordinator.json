@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-25T06:18:05.634Z",
-  "phase": "actual-final-exe-revealed-battle-journal-convergence-gap",
+  "updatedAt": "2026-10-25T06:57:13.986Z",
+  "phase": "final-journal-fix-accepted-rebuilding-actual-portable",
   "goalStatus": "active",
   "deployed": {
     "projectRef": "jbvrdmrkwpznbrvteive",
@@ -125,9 +125,8 @@
     }
   },
   "fixedRemainingWork": [
-    "Correct battle transport journal/canonical full-save boundary while preserving original local receipts and pending retry IDs",
-    "Rebuild only if product source changes and rerun actual final portable business acceptance",
-    "Finish original report replay, offline original-action restart and final independent full-save equality checks"
+    "Audit rebuilt actual portable SFX at exact new freeze",
+    "Finish real SFX business acceptance including authoritative training convergence, original report replay, offline original-action restart and final independent full-save equality"
   ],
   "cleanup": {
     "completedCodeRetirement": true,
@@ -259,11 +258,10 @@
       "review": "Legacy normalization is internal view only; original envelope/checksum/files retained. Root8 targeted native restore/provider cases and original signed expired HTTPS denial passed."
     }
   ],
-  "status": "actual-final-exe-revealed-battle-journal-convergence-gap",
+  "status": "final-journal-fix-accepted-rebuilding-actual-portable",
   "remaining": [
-    "Correct battle transport journal/canonical full-save boundary while preserving original local receipts and pending retry IDs",
-    "Rebuild only if product source changes and rerun actual final portable business acceptance",
-    "Finish original report replay, offline original-action restart and final independent full-save equality checks"
+    "Audit rebuilt actual portable SFX at exact new freeze",
+    "Finish real SFX business acceptance including authoritative training convergence, original report replay, offline original-action restart and final independent full-save equality"
   ],
   "engineering": {
     "historicalEngineeringCheckpoints": {
@@ -331,7 +329,7 @@
     },
     "evidence": "docs/implementation/evidence/cloud/2026-10-25/final-regression.json"
   },
-  "productFreeze": "2e13487f73396ebad981ff703b4377f403e214e0",
+  "productFreeze": "7051ce308a55f1a8b426f0290eb79162ce94a634",
   "finalPortableFirstAttempt": {
     "passed": false,
     "completedBusinessChecks": 3,
@@ -343,5 +341,16 @@
     "causeUnderReview": "Locally durable live transport intents share protected battle actions; A has 21 local action receipts while canonical B/cloud have zero",
     "originalFailureEvidence": "docs/implementation/evidence/cloud/2026-10-25/final-portable-2e13487-first/evidence.json",
     "originalProfileDirectory": "artifacts/cloud-upgrade/2026-10-25/final-portable-Fbu6gW"
-  }
+  },
+  "journalFix": {
+    "source": "c82380fc9f9535bfe9fa37f87dbf08c6e24d2eca",
+    "schemaGuard": "5fb3c9be1b87146a7c201a963e2bc062659ec21a",
+    "rootPreviewHook": "695007e4c7bf583673f63b5d39e4172a28b2d692",
+    "localBattleBackupVersion": 2,
+    "cloudBattleModuleVersion": 1,
+    "originalRowsRetained": true,
+    "unknownBusinessStillProtected": true,
+    "evidence": "docs/implementation/evidence/battle/2026-10-25/portable-journal-gap/evidence.json"
+  },
+  "finalRegressionAfterJournal": "docs/implementation/evidence/cloud/2026-10-25/final-journal-regression.json"
 }
