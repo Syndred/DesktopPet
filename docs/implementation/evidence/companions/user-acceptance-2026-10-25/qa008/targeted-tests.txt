@@ -1,0 +1,32 @@
+✔ PROTOCOL SIMULATION: offline-before-send intent is durable and restart sends its original request exactly once (196.0945ms)
+✔ PROTOCOL SIMULATION: an uncertain committed adoption reads its immutable receipt after restart without creating another same-template pet (168.1467ms)
+✔ PROTOCOL SIMULATION: consecutive offline positions retain immutable unknown requests and coalesce only drafts that were never sent (223.0822ms)
+✔ PROTOCOL SIMULATION: unknown local progress and account switches preserve both owner namespaces instead of overwriting cached pets (133.507ms)
+✔ PROTOCOL SIMULATION: verified companion readback preserves unrelated offline data and the original common-save request without advancing its base (189.5291ms)
+✔ PROTOCOL SIMULATION: a cached original-action replay queued behind a network read cannot return an old-owner pet after account switch (96.5006ms)
+✔ PROTOCOL SIMULATION: automatic readback preserves capture bindings, original owner archives and monotonic interaction history (137.9105ms)
+✔ natural-position commit publishes the new CAS revision after commit, allowing the existing UI refresh subscription to receive current behavior state (79.5948ms)
+✔ stationary checkpoints do not publish, increment revisions or create refresh loops (77.3679ms)
+✔ a failed position transaction publishes no event and retains dirty state for recovery (71.9864ms)
+✔ refresh notifications never relax CAS or overwrite a genuinely concurrent behavior/scale edit (78.6758ms)
+✔ the complete five-element roster survives adoption, selection and reopen without replacing instance identity (130.3899ms)
+✔ three identical templates retain independent names, growth, desktop modes and positions after reopening SQLite (83.7625ms)
+✔ garden inventory debit and one pet growth update commit or roll back together (83.8681ms)
+✔ action IDs bind the operation and full payload, including target pet; retry after restart is idempotent (53.4321ms)
+✔ main-derived account ownership isolates reads, edits, selections, actions and identical legacy IDs (67.8279ms)
+✔ legacy migration preserves raw records, original JSON/history, IDs, stats and does not overwrite later progress (65.358ms)
+✔ migration failure rolls back all pets and can be retried after source repair (54.1377ms)
+✔ desktop, chat, battle and guard choices are independent and never inferred from a template (74.8894ms)
+✔ second SQLite connection rejects a stale revision without losing a newer name (59.1487ms)
+✔ trusted capture creation is idempotent; distinct captures of one template remain distinct (60.453ms)
+✔ canonical builtin upgrade preserves each instance and custom bindings without converting archived 3D records (90.9476ms)
+✔ growth retains current 100 XP / 10 percent rule and validates numerical effects (54.3809ms)
+✔ touch cooldown belongs to each pet and persists; invalid positions and names do not write (67.33ms)
+ℹ tests 24
+ℹ suites 0
+ℹ pass 24
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1274.8451

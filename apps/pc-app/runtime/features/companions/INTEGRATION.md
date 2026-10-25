@@ -16,6 +16,8 @@ The feature consumes the public shadcn Radix Dialog, Tabs, Select, Slider, Switc
 
 Small adoption cards, roster cards and status avatars explicitly use `CompanionPortrait framing="portrait"`, which delegates to the resources module's public `ResourcePortrait` / `resolveResourcePortrait`. It crops the actual canonical idle frame's authored subject area as a head/upper-body composition. It does not generate another image, change the resource binding or scale the whole app. The default remains full framing; native windows, action previews and large resource stages continue to use full-body Pixi. Capture waits for decoded registered images and the actual incoming route, then records both CSS viewport dimensions and framing/resource attributes.
 
+QA-008: a successful local natural-position checkpoint now publishes the new revision through `changed(owner)` after SQLite commits, so the existing page subscription refreshes. Stationary and rolled-back checkpoints publish nothing. Whole-pet CAS stays strict; genuine concurrent user edits still fail and require an explicit choice after refresh. This is covered by four focused real-SQLite cases, including a second query-only connection observing the committed revision. Real UI recovery remains09 acceptance.
+
 ## IPC and ownership
 
 Commands: `list`, `get`, `identity`, `adopt`, `rename`, `desktop`, `select`, `interact`, `appearance`, `desktopInput`, `perform`, `combatProfile`. Main derives owner from the verified request context. Renderer owner fields never authorize access. `appearance` accepts only a registered, ready spritesheet resource and preserves the pet's identity/growth. `desktopInput` checks the current verified owner and that exact native window entry; it accepts hit-region and drag events only.

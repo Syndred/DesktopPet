@@ -1,7 +1,7 @@
 {
   "module": "companions",
   "branch": "codex/lingjing-companions",
-  "updatedAt": "2026-10-25T09:43:56.364Z",
+  "updatedAt": "2026-10-25T10:42:51.069Z",
   "status": "implementation-ready-awaiting-coordinator-integration-and-09-retest",
   "implementationCommit": "ad20468b38c89a79090de435a2cfcf8d2e928ec7",
   "userAcceptancePassed": false,
@@ -75,6 +75,15 @@
       },
       "nativeEvidence": "docs/implementation/evidence/companions/user-acceptance-2026-10-25/native-geometry-summary.json",
       "realOriginalPackageBaseline": "docs/implementation/evidence/companions/user-acceptance-2026-10-25/09-original-package-baseline-reference.json"
+    },
+    "QA-008": {
+      "status": "source-fixed-awaiting-09-retest",
+      "classification": "Intermittent stale-page revision conflict; normal page re-entry recovers, not inability to change behavior.",
+      "rootCause": "Local natural-position checkpoint increments pet/account revision every5s but did not call changed(owner), leaving the existing UI subscription without the updated CAS revision.",
+      "change": "Publish changed(owner) after an actual position transaction commits. Stationary checkpoints and rolled-back writes publish nothing.",
+      "concurrencyProtection": "Whole-pet expectedRevision, actionId ledger and rollback semantics are unchanged. No blind retry, revision bypass, independent field overwrite or new cloud protocol is introduced. Existing UI conflict handling reloads and asks the user to choose again.",
+      "evidence": "docs/implementation/evidence/companions/user-acceptance-2026-10-25/qa008/verification.json",
+      "retest": "09 rechecks a page left open while wander/follow persists positions, then chooses another mode normally; genuine concurrent edits must still conflict."
     }
   },
   "validation": {
