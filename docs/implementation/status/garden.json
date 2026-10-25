@@ -2,16 +2,16 @@
   "module": "garden",
   "branch": "codex/lingjing-garden",
   "commit": "see git log for this file",
-  "status": "module-evidence-review-accepted-final-integration-pending",
+  "status": "completed-desktop-garden-loop-and-final-unified-acceptance",
   "upstream": {
     "fetched": true,
     "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086",
     "baseline": "6c8ce65",
     "originMainIsAncestor": true,
-    "recheckedAt": "2026-10-24T15:30:44.354Z",
+    "recheckedAt": "2026-10-24T23:08:46.897Z",
     "behindOriginMain": 0
   },
-  "foundationRequired": "45477b0 consumed through foundation; shared BattleScreen/territory defeat confirmation, verified QA identity/location, all eight canonical resources including wood and earth",
+  "foundationRequired": "731cf25 consumed; final accepted build c4ac693, eight canonical resources and shared four-entry battle",
   "contract": "docs/implementation/garden-contract.md",
   "scope": "docs/implementation/scope-2d-ui-first.txt",
   "routes": [
@@ -151,6 +151,10 @@
     {
       "command": "unified-territory.electron.mjs visual + verify; export-unified-evidence.mjs",
       "result": "Electron36.9.5 actual UI: win5 rounds and loss2 rounds through one shared battle screen; five animation phases; exact route/page and full restart recovery; public confirmation; SQLite one +2 seed receipt per session; replay exact; non-target pets and planted crop timestamps unchanged; win garrison changes no growth/independent selection; ordinary profile QA disabled; 1280x844 and1440x900 A04 geometry and decoded actors; cloud/GPS simulated, original engine"
+    },
+    {
+      "command": "npm run build:pc after consuming final foundation731cf25",
+      "result": "passed on clean source 6f4e334b6962b88997c10b2c6911a3701af23eb4; actual source fingerprint matches completion audit; no repeated domain tests"
     }
   ],
   "evidence": [
@@ -167,7 +171,10 @@
     "docs/implementation/evidence/garden/only-selected-fox-eating.png",
     "docs/implementation/evidence/garden/real-territory-battle.png",
     "docs/implementation/evidence/garden/unified-battle/README.md",
-    "docs/implementation/evidence/garden/unified-battle/verification.json"
+    "docs/implementation/evidence/garden/unified-battle/verification.json",
+    "docs/implementation/evidence/garden/goal-completion-audit.json",
+    "docs/implementation/evidence/garden/goal-completion-audit.md",
+    "docs/implementation/evidence/foundation/final-unified/delivery.json"
   ],
   "uiComparison": {
     "references": [
@@ -175,7 +182,7 @@
       "10-garden-harvest-and-feeding.png"
     ],
     "implemented": "milk-white/mist-blue panels, garden 3x2 scene, side crop/seed controls, three-column kitchen, four-column inventory and explicit pet picker, approved whale-girl and original detailed 2D foods",
-    "remaining": "A04 fixed and native measurements passed at1280x844 and1440x900; foundation central A01-A12 visual recheck remains pending"
+    "remaining": "None in current desktop scope; live external services remain deferred"
   },
   "twoDOnly": {
     "implemented": true,
@@ -188,7 +195,7 @@
     "assets": "project-generated background and transparent atlas; no GPL sample tiles; shared character is not copied into a second resource library"
   },
   "integrationDependencies": [
-    "Foundation45477b0 consumed; original battle kernel, shared screen/context/animation, namespaced QA accounts/location, full eight-resource roster; final garden source e90dcb9 self-verified",
+    "Foundation731cf25 consumed; final desktop package c4ac693 accepted by main, with exact public source content apart from checkout line endings",
     "Garden directly reuses CompanionPortrait, NearbyMap and useDiscovery; Turf/quality checks come from discovery",
     "Accounts verified legacy-id alias and companions.migrateOwnerAlias consumed; original raw-ID profile upgraded and restarted with exact inventory/pet preservation and no starter regrant",
     "Canonical garden/companion cloud save uses existing runtime TEXT IDs and accounts CAS; no new inventory or identity store",
@@ -199,9 +206,7 @@
     "Cloud feed uses public companions.playAction after exact action receipt/readback/checkpoint; a concurrent replay cannot emit twice",
     "Garden QA location delegates to the shared discovery adapter, explicit foreground lease and quality/identity checks; no second coordinate generator or normal-profile toggle"
   ],
-  "remaining": [
-    "Main/foundation final whole-product U08 acceptance, including independent public-scenario runtime verification on one final build"
-  ],
+  "remaining": [],
   "cloudReview": "docs/implementation/garden-cloud-review.md",
   "dataPolicy": "additive migrations; original history/designs/models retained; no production deployment, destructive migration or user-data reset",
   "identityMigration": {
@@ -217,7 +222,8 @@
     "ricePlanted": "2026-10-24T12:51:09.487Z",
     "riceMatures": "2026-10-24T13:16:09.487Z",
     "realTimeGrowth": "25m13.735s rice and 15m rewarded tomato through actual UI, no clock edits; exact restart readback complete",
-    "focusedChecks": "18 SQLite/domain/integration +11 PostgreSQL/HTTP; actual public companion/resource cloud playback; canonical resource upgrade and restart; explicit territory foreground privacy lease; current build/typecheck/ESLint and A04 geometry; actual59m geographic occupation/garrison and full restart"
+    "focusedChecks": "18 SQLite/domain/integration +11 PostgreSQL/HTTP; actual public companion/resource cloud playback; canonical resource upgrade and restart; explicit territory foreground privacy lease; current build/typecheck/ESLint and A04 geometry; actual59m geographic occupation/garrison and full restart",
+    "historical": true
   },
   "testTool": {
     "project": "@electric-sql/pglite",
@@ -241,7 +247,7 @@
   "visualAudit": {
     "reference": "codex/lingjing-implementation-base@9915684:docs/implementation/acceptance/2026-10-24/visual-audit.txt",
     "A04": {
-      "status": "fixed-ready-for-central-recheck",
+      "status": "accepted-in-final-integrated-visual-review",
       "fixCommits": [
         "a79d9b9",
         "155ac37"
@@ -255,9 +261,9 @@
     "A01": "follows public --font-ui/--text-title/--weight-title and page spacing tokens; no feature vw clamp",
     "A03": "native card margin-bottom0; parent owns gaps",
     "A07A08": "six actual canonical assets consumed through CompanionPortrait/ResourceStage; selected fox eat event/frames0->1 and unchanged other pets verified; central all-page review remains foundation-owned",
-    "centralFullAppAcceptance": "pending"
+    "centralFullAppAcceptance": "accepted in final foundation delivery and main independent receipts"
   },
-  "goalComplete": false,
+  "goalComplete": true,
   "foundationClosure": {
     "commit": "b3c15a5",
     "ownerAlias": "Actual registered service migration now verified on one SQLite connection",
@@ -318,7 +324,7 @@
     "Live cloud territory authority"
   ],
   "unifiedBattle": {
-    "stage": "main-evidence-review-accepted",
+    "stage": "accepted-final-integrated-runtime",
     "sourceSha": "e90dcb9ad99ac43b03b50dde40e08865160f3763",
     "foundation": "45477b0",
     "runtime": {
@@ -418,7 +424,7 @@
     },
     "contract": "docs/implementation/garden-battle-integration.txt",
     "evidence": "docs/implementation/evidence/garden/unified-battle/verification.json",
-    "mainIndependentReview": "accepted-evidence-review",
+    "mainIndependentReview": "accepted-final-integrated-runtime",
     "readbackCaptureSourceSha": "10dcb1dcb5ef337e61d37e9512a7cdba4a42ef89",
     "confirmedActorsReady": true,
     "readback": "Second actual full app restart; two exact actors ready before confirmed screenshot; no action/settlement submitted and SQLite state unchanged",
@@ -443,6 +449,25 @@
       "repeatDomainTestsRequired": false,
       "cloudAcceptance": false,
       "physicalGpsAcceptance": false
+    },
+    "finalIntegratedAcceptance": {
+      "source": "c4ac69369d01786549dc55ac0bc76c98c930445d",
+      "delivery": "docs/implementation/evidence/foundation/final-unified/delivery.json",
+      "context": "docs/implementation/evidence/foundation/final-unified/main-independent/final-context-v3.json",
+      "territory": "docs/implementation/evidence/foundation/final-unified/territory/evidence.json",
+      "actualPortableSha256": "605c5ee6f943b1be235bb5a839b11572dd4e227c3cc25adbcf320cbee6b000b9",
+      "remaining": []
     }
+  },
+  "goalCompletion": {
+    "clientDate": "2026-10-25",
+    "scope": "Complete original garden/territory/inventory/selected-pet local data loop; final unified desktop integration accepted; live external services explicitly deferred by user",
+    "audit": "docs/implementation/evidence/garden/goal-completion-audit.json",
+    "requirementsProven": 11,
+    "readOnly": true,
+    "domainTestsRepeated": false,
+    "acceptedDelivery": "docs/implementation/evidence/foundation/final-unified/delivery.json",
+    "currentBuild": "docs/implementation/evidence/garden/goal-completion-build.json",
+    "currentBuildSourceSha": "6f4e334b6962b88997c10b2c6911a3701af23eb4"
   }
 }

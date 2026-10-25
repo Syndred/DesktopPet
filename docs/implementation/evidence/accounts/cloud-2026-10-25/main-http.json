@@ -1,0 +1,94 @@
+{
+  "at": "2026-10-25T02:50:51.252Z",
+  "projectRef": "jbvrdmrkwpznbrvteive",
+  "sourceSha": "4eb735e04a68c2846b34916f23681353a7f68771",
+  "kind": "Actual HTTPS Supabase + production AccountsService/SupabaseRemote + independent SQLite profiles in one Node process. Not Electron or two physical devices.",
+  "credentialsPersisted": false,
+  "checks": [
+    {
+      "name": "actual main-process Auth, same stable owner, distinct device/session, no renderer token",
+      "data": {
+        "owner": "account:5a520512-f600-437a-ac68-a7c1f87ca860",
+        "deviceA": "ad4be772-11c9-4faf-8c3a-1b006dac9077",
+        "deviceB": "6fb12166-159f-41e5-bd93-7310393f3565",
+        "sessionA": "982b60e2-cbe2-4218-9aa9-884788ce3d72",
+        "sessionB": "a64ac2b2-c559-444b-99eb-0d78a1c02012"
+      }
+    },
+    {
+      "name": "anonymous and forged save HTTP rejected",
+      "data": {
+        "anonymous": 401,
+        "forged": 401
+      }
+    },
+    {
+      "name": "device A CAS receipt independently read by actual device B HTTPS",
+      "data": {
+        "actionId": "880bfe6d-b8a3-49f0-b5c7-1b6698e554b3",
+        "revision": 1,
+        "checksum": "281de19d1c591f57d31def424cab5b0595554dfffda81574e2c9311881bea200"
+      }
+    },
+    {
+      "name": "stale second-device CAS retains its actual SQLite outbox and local settings",
+      "data": {
+        "actionId": "6043dc46-b834-48aa-8694-16152019f575",
+        "status": "conflict"
+      }
+    },
+    {
+      "name": "explicit verified cloud restore preserves old file, then advances common CAS",
+      "data": {
+        "revision": 2,
+        "backup": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-accounts\\DesktopPet\\artifacts\\accounts\\cloud-main-http-1792896651252\\device-b\\accounts\\backups\\before-restore-1792896675927-cef79c4e-baf1-47c9-9bce-7921584699b2.lingjing.json"
+      }
+    },
+    {
+      "name": "real Data API RLS and grants block cross-owner/read/write",
+      "data": {
+        "rows": 0,
+        "directWriteCode": "42501"
+      }
+    },
+    {
+      "name": "valid checksums cannot forge economic state or reuse an action ID",
+      "data": {
+        "headRevision": 2
+      }
+    },
+    {
+      "name": "actual old-style archive keeps original pet/progress without elevating inventory",
+      "data": {
+        "archiveId": "45adec5a-393c-4e48-955a-e0b3951ae34d",
+        "promoted": false,
+        "headRevision": 2
+      }
+    },
+    {
+      "name": "actual committed response loss retries same prepared action once",
+      "data": {
+        "actionId": "b1d3bb06-4e22-4842-bd15-36c01bdc90d2",
+        "revision": 3,
+        "lossInjectedAfterActualHttpsCommit": true
+      }
+    },
+    {
+      "name": "controlled real connection refusal retains SQLite queue and reconnect readback",
+      "data": {
+        "actionId": "900967f2-ed11-47fb-a49a-4e7c5818f83e",
+        "statusDuringFailure": "retry",
+        "revision": 4,
+        "scope": "per-request closed localhost TLS socket; host network was not disabled"
+      }
+    },
+    {
+      "name": "main logout revokes A while same-account B retains actual cloud access",
+      "data": {
+        "a": 401,
+        "b": "live"
+      }
+    }
+  ],
+  "passed": true
+}

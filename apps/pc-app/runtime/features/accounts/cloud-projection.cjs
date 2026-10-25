@@ -31,7 +31,9 @@ function cloudProjection(envelope){
  const {checksum:sourceChecksum,...body}=envelope;
  const data={modules:{},tables:{}};
  for(const [name,record]of Object.entries(body.data.modules)){
-  if(name==='legacy'){if(record.data!==null)excluded.push('data.modules.legacy');continue;}
+  if(name==='legacy'){
+   if(record.data!==null)excluded.push('data.modules.legacy');else data.modules[name]={version:record.version,data:null};continue;
+  }
   data.modules[name]=scrub(record,['data','modules',name]);
  }
  for(const [name,record]of Object.entries(body.data.tables)){
@@ -42,6 +44,6 @@ function cloudProjection(envelope){
  }
  const projected={...body,data,excluded:[...new Set([...(body.excluded||[]),...excluded])]};
  const projectedEnvelope={...projected,checksum:checksum(projected)};
- return{envelope:projectedEnvelope,sourceChecksum,projectedChecksum:projectedEnvelope.checksum,excluded,originalCloudComplete:excluded.length===0};
+ return{envelope:projectedEnvelope,sourceChecksum,projectedChecksum:projectedEnvelope.checksum,excluded,originalCloudComplete:projectedEnvelope.checksum===sourceChecksum};
 }
 module.exports={cloudProjection};
