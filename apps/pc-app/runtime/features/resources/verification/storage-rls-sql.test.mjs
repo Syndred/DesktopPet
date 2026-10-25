@@ -136,6 +136,11 @@ test('LOCAL SQL: late preference receipt failure rolls back both preference and 
   await db.exec('drop trigger fixture_preference_failure on public.lingjing_resource_preference_actions;drop function public.fixture_preference_failure();');
   const refs=(await db.query('select lingjing_private.resource_module($1) module',[ownerA])).rows[0].module;
   assert.equal(refs.data.references.length,2);assert.equal(refs.data.preferences[0].calibration.desktop.scale,1.35);
+  const id='40000000-0000-4000-8000-000000000003',digest='c'.repeat(64),target=`${uidA}/${id}/${digest}/manifest.json`;
+  await as(uidA,sessionA,deviceA,"insert into public.lingjing_resource_packages(auth_user_id,resource_id,owner_account_id,manifest_sha256,content_hash,manifest_path,manifest_bytes,total_bytes,resource_kind) values($1,$2,$3,$4,$4,$5,100,1000,'spritesheet')",[uidA,id,ownerA,digest,target]);
+  const next=(await as(null,null,null,'select public.lingjing_register_resource_receipt($1,$2,$3,$4,$5,$6) receipt',[ownerA,uidA,id,digest,deviceA,sessionA],'service_role'))[0].receipt;assert.equal(next.revision,4);
+  const after=(await db.query('select envelope from public.lingjing_saves where owner_id=$1',[ownerA])).rows[0].envelope.data.modules['character-resources'].data;
+  assert.equal(after.references.length,3);assert.equal(after.preferences[0].calibration.desktop.scale,1.35);
 });
 test('LOCAL SQL: privileged registration rechecks real session, expiry, anonymous status and exact device before replay',async()=>{
   const before=(await db.query('select revision,envelope from public.lingjing_saves where owner_id=$1',[ownerA])).rows[0];
@@ -164,6 +169,6 @@ test('LOCAL SQL: single-device revocation blocks both Storage/index while other 
   await assert.rejects(as(null,null,null,'select public.lingjing_register_resource_receipt($1,$2,$3,$4,$5,$6)',[ownerA,uidA,resourceId,sha,deviceA2,sessionA2],'service_role'),/REVOKED|ACTOR|DEVICE|SESSION/);
   assert.deepEqual((await db.query('select revision,envelope from public.lingjing_saves where owner_id=$1',[ownerA])).rows[0],before);
   assert.equal((await db.query('select count(*) n from public.lingjing_save_actions where owner_id=$1',[ownerA])).rows[0].n,actions);
-  assert.equal((await db.query('select count(*) n from public.lingjing_resource_references where owner_account_id=$1',[ownerA])).rows[0].n,2);
+  assert.equal((await db.query('select count(*) n from public.lingjing_resource_references where owner_account_id=$1',[ownerA])).rows[0].n,3);
   assert.deepEqual((await db.query('select data from public.legacy_fixture')).rows,[{data:{history:true}}]);
 });

@@ -11,6 +11,8 @@ create table public.lingjing_resource_preference_actions (
  request_hash text not null,preference_revision bigint not null,authority_action_id text not null,
  primary key(owner_account_id,action_id),foreign key(owner_account_id,authority_action_id) references public.lingjing_save_actions(owner_id,action_id)
 );
+create index lingjing_resource_preferences_authority_fk on public.lingjing_resource_preferences(owner_account_id,authority_action_id);
+create index lingjing_resource_preference_actions_authority_fk on public.lingjing_resource_preference_actions(owner_account_id,authority_action_id);
 alter table public.lingjing_resource_preferences enable row level security;
 alter table public.lingjing_resource_preference_actions enable row level security;
 revoke all on public.lingjing_resource_preferences,public.lingjing_resource_preference_actions from public,anon,authenticated;

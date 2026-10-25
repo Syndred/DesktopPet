@@ -2,7 +2,7 @@
   "module": "resources",
   "scope": "Private Supabase Storage packages, owner/Auth UID boundary, durable resume, new-client preservation and legacy archive cleanup",
   "branch": "codex/lingjing-resources",
-  "commit": "e193f6fec62fbcd94c4c56df532c82402bd5f0c5",
+  "commit": "e275ae65c9b798aeb9c54e1e529c567e3df7446b",
   "baselineCommit": "46abf416e0500b53ef32fc29b441d923ef5a6a80",
   "goalStatus": "active",
   "contracts": {
@@ -103,7 +103,7 @@
     "Old-source migration and two physical devices remain separate coordinator acceptance conditions"
   ],
   "identityCheckpoint": "f81008ce1f88c2b6c11d0bb05122d5afb5891039",
-  "phase": "preference authority command, durable queue, v2 hydration/fingerprint implemented; 10 SQL +5 Edge +7 focused native checks passed; coordinator deployment and real dual Electron pending",
+  "phase": "PREFERENCE SERVER CHECKPOINT e275ae6 ready for coordinator apply/deploy; source-built Electron44 ready for actual dual-client preferences/full-save/native checks",
   "functions": [
     {
       "name": "lingjing-resources",
