@@ -89,17 +89,30 @@ REVOKE ALL ON public.lingjing_battle_invites,public.lingjing_battle_rooms,public
 GRANT SELECT ON public.lingjing_battle_invites,public.lingjing_battle_rooms,public.lingjing_battle_members,public.lingjing_battle_rounds,public.lingjing_battle_settlements TO authenticated;
 GRANT ALL ON public.lingjing_battle_invites,public.lingjing_battle_rooms,public.lingjing_battle_members,public.lingjing_battle_actions,public.lingjing_battle_rounds,public.lingjing_battle_commands,public.lingjing_battle_settlements TO service_role;
 -- Realtime does not forward custom WebSocket headers. Consume 08's header-free fresh
--- session/owner guard, not its HTTP device-header helper and not auth.uid() alone.
--- Direct Data API SELECT therefore also rejects revoked/expired/anonymous/locked sessions.
+-- session/owner guard, plus the domain's header-free device binding predicate. The
+-- private definer is needed solely to read devices without its HTTP-header RLS recursion.
+CREATE FUNCTION lingjing_private.battle_viewer_owner() RETURNS text
+LANGUAGE plpgsql STABLE SECURITY DEFINER SET search_path='' AS $$
+DECLARE v_owner text:=lingjing_private.session_owner(); v_session uuid:=lingjing_private.live_session_id();
+BEGIN
+  IF NOT EXISTS(SELECT 1 FROM public.lingjing_devices WHERE owner_id=v_owner AND auth_session_id=v_session AND revoked_at IS NULL) THEN
+    RAISE EXCEPTION USING errcode='28000',message='LJ_DEVICE_SESSION_REQUIRED';
+  END IF;
+  RETURN v_owner;
+END $$;
+REVOKE ALL ON FUNCTION lingjing_private.battle_viewer_owner() FROM PUBLIC,anon,authenticated;
+GRANT EXECUTE ON FUNCTION lingjing_private.battle_viewer_owner() TO authenticated;
+-- Direct Data API / per-row Realtime SELECT rejects an otherwise-live JWT after
+-- a device-only revocation, as well as expired/deleted Auth sessions and locked accounts.
 CREATE POLICY lingjing_battle_invite_participant ON public.lingjing_battle_invites FOR SELECT TO authenticated USING(
-  ((select auth.uid())=from_auth_uid AND (select lingjing_private.session_owner())=from_user_id)
-  OR ((select auth.uid())=to_auth_uid AND (select lingjing_private.session_owner())=to_user_id));
+  ((select auth.uid())=from_auth_uid AND (select lingjing_private.battle_viewer_owner())=from_user_id)
+  OR ((select auth.uid())=to_auth_uid AND (select lingjing_private.battle_viewer_owner())=to_user_id));
 CREATE POLICY lingjing_battle_room_participant ON public.lingjing_battle_rooms FOR SELECT TO authenticated USING(
-  ((select auth.uid())=host_auth_uid AND (select lingjing_private.session_owner())=host_user_id)
-  OR ((select auth.uid())=guest_auth_uid AND (select lingjing_private.session_owner())=guest_user_id));
-CREATE POLICY lingjing_battle_member_self ON public.lingjing_battle_members FOR SELECT TO authenticated USING((select auth.uid())=auth_uid AND (select lingjing_private.session_owner())=owner_account_id);
+  ((select auth.uid())=host_auth_uid AND (select lingjing_private.battle_viewer_owner())=host_user_id)
+  OR ((select auth.uid())=guest_auth_uid AND (select lingjing_private.battle_viewer_owner())=guest_user_id));
+CREATE POLICY lingjing_battle_member_self ON public.lingjing_battle_members FOR SELECT TO authenticated USING((select auth.uid())=auth_uid AND (select lingjing_private.battle_viewer_owner())=owner_account_id);
 CREATE POLICY lingjing_battle_round_participant ON public.lingjing_battle_rounds FOR SELECT TO authenticated USING(EXISTS(SELECT 1 FROM public.lingjing_battle_rooms r WHERE r.id=room_id AND ((select auth.uid())=r.host_auth_uid OR (select auth.uid())=r.guest_auth_uid)));
-CREATE POLICY lingjing_battle_settlement_self ON public.lingjing_battle_settlements FOR SELECT TO authenticated USING((select auth.uid())=actor_auth_uid AND (select lingjing_private.session_owner())=owner_account_id);
+CREATE POLICY lingjing_battle_settlement_self ON public.lingjing_battle_settlements FOR SELECT TO authenticated USING((select auth.uid())=actor_auth_uid AND (select lingjing_private.battle_viewer_owner())=owner_account_id);
 
 -- Private Realtime topic joins are participant-bound, with no client Broadcast INSERT policy.
 -- Postgres Changes independently applies the room/round SELECT RLS for every delivered row.

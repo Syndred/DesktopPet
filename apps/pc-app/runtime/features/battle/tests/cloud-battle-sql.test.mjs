@@ -67,6 +67,14 @@ try {
   const rewardA=await claim(a,room),rewardB=await claim(b,room);assert.equal(rewardA.experience+rewardB.experience,25);assert.deepEqual(await claim(a,room),rewardA);await assert.rejects(claim(c,room),/ROOM_FORBIDDEN/);await assert.rejects(claim(a,room,'another-pet'),/PET_ROOM_MISMATCH/);
   assert.equal((await db.query('SELECT count(*)::int n FROM public.lingjing_battle_settlements')).rows[0].n,2);
   record(`shared versioned core resolves ${number} immutable rounds, atomic rollback, duplicate commits and two pet-bound receipts`);
+  const second={...a,sid:randomUUID(),device:randomUUID()};await db.query('INSERT INTO auth.sessions(id,user_id) VALUES($1,$2)',[second.sid,a.uid]);await query('authenticated',"SELECT public.lingjing_register_device($1,'second device')",[second.device],second);
+  await query('authenticated','SELECT public.lingjing_revoke_device($1)',[a.device],second);
+  assert.equal((await db.query('SELECT count(*)::int n FROM auth.sessions WHERE id=$1',[a.sid])).rows[0].n,1);
+  await assert.rejects(query('authenticated','SELECT * FROM public.lingjing_battle_rooms',[],a),/LJ_DEVICE_SESSION_REQUIRED/);
+  await assert.rejects(query('authenticated','SELECT * FROM public.lingjing_battle_rounds',[],a),/LJ_DEVICE_SESSION_REQUIRED/);
+  await assert.rejects(query('authenticated','SELECT * FROM realtime.messages',[],a,`lingjing:battle:${room.id}`),/LJ_DEVICE_SESSION_REQUIRED/);
+  assert.equal((await query('authenticated','SELECT * FROM public.lingjing_battle_rooms',[],second)).length,1);
+  record('actual revoke_device RPC blocks direct room/round/Realtime SELECT while original Auth session still exists; same-owner second device stays authorized');
   await db.query('DELETE FROM auth.sessions WHERE id=$1',[a.sid]);
   await assert.rejects(query('authenticated','SELECT * FROM public.lingjing_battle_rooms',[],a),/LJ_SESSION_REVOKED/);
   await assert.rejects(query('authenticated','SELECT * FROM public.lingjing_battle_rounds',[],a),/LJ_SESSION_REVOKED/);

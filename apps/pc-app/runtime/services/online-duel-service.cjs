@@ -3,6 +3,7 @@ const BATTLE_RULES = require('./battle-runtime.cjs').getBattleRules();
 
 const { existsSync, readFileSync } = require("node:fs");
 const { dirname, resolve } = require("node:path");
+const { randomUUID } = require('node:crypto');
 
 let createClient = null;
 let createClientLoadError = null;
@@ -60,6 +61,9 @@ class OnlineDuelService {
     this.room = null;
     this.side = null;
     this.roundCache = new Map();
+    this.cloudProvider = null;
+    this.cloudActor = null;
+    this.authGeneration = 0;
 
     if (this.enabled) {
       const realtimeOptions = {};
@@ -76,6 +80,43 @@ class OnlineDuelService {
         realtime: realtimeOptions
       });
     }
+    if (options.cloudProvider) this.useCloudTransport(options.cloudProvider);
+  }
+
+  /** Main-process accounts owns SDK sessions/refresh/device credentials. This class only
+   * consumes the verified transport; no new password/JWT store or renderer token channel. */
+  useCloudTransport(provider) {
+    if (typeof provider !== 'function') throw new Error('Cloud transport provider is required');
+    this.authGeneration++;
+    void this.clearRoomState({ notify: true, reason: 'transport-changed' });
+    this.client?.realtime?.disconnect?.();
+    this.client = null;
+    this.cloudProvider = provider;
+    this.cloudActor = null;
+    this.available = true; this.configured = true; this.enabled = true;
+  }
+
+  async refreshCloudTransport() {
+    if (!this.cloudProvider) return;
+    const generation = this.authGeneration, owner = this.currentUser?.id;
+    const transport = await this.cloudProvider();
+    const actor = transport?.actor;
+    if (generation !== this.authGeneration || owner !== this.currentUser?.id) throw Object.assign(new Error('账号已切换'), { code: 'AUTH_CHANGED' });
+    if (!owner || actor?.schemaVersion !== 1 || actor.authority !== 'live' || actor.authKind !== 'supabase' || actor.ownerAccountId !== owner || !actor.authUserId || !actor.deviceId || !actor.sessionId || !transport.client?.functions?.invoke || !transport.client?.realtime?.setAuth) throw Object.assign(new Error('云端身份尚未就绪'), { code: 'CLOUD_AUTH_UNAVAILABLE' });
+    const endpoint = new URL(transport.url);
+    if (endpoint.protocol !== 'https:') throw Object.assign(new Error('云端连接必须使用 HTTPS'), { code: 'CLOUD_HTTPS_REQUIRED' });
+    if (this.client !== transport.client) {
+      const previous = this.client, channel = this.channel; this.channel = null;
+      if (previous && channel) await previous.removeChannel(channel).catch(() => {});
+      if (generation !== this.authGeneration) throw Object.assign(new Error('账号已切换'), { code: 'AUTH_CHANGED' });
+      this.client = transport.client;
+    }
+    this.supabaseUrl = endpoint.origin;
+    this.cloudActor = Object.freeze({ schemaVersion: 1, authority: 'live', authKind: 'supabase', authUserId: actor.authUserId, ownerAccountId: owner, deviceId: actor.deviceId, sessionId: actor.sessionId, account: actor.account, username: actor.username });
+    // SDK's accessToken callback is refreshed by accounts. setAuth() reauthorizes all
+    // existing subscriptions and does not expose an access/refresh token to the caller.
+    await this.client.realtime.setAuth();
+    if (generation !== this.authGeneration) throw Object.assign(new Error('账号已切换'), { code: 'AUTH_CHANGED' });
   }
 
   onEvent(listener) {
@@ -113,7 +154,9 @@ class OnlineDuelService {
       hasSupabaseAnonKey: Boolean(this.supabaseAnonKey),
       room: this.room ? { ...this.room } : null,
       side: this.side,
-      currentUser: this.currentUser ? { ...this.currentUser } : null
+      currentUser: this.currentUser ? { id: this.currentUser.id, account: this.currentUser.account, username: this.currentUser.username } : null,
+      authKind: this.cloudProvider ? 'supabase' : 'legacy',
+      actor: this.cloudActor ? { ...this.cloudActor } : null
     };
   }
 
@@ -125,8 +168,11 @@ class OnlineDuelService {
     const normalized = normalizeUser(user);
     const prevUserId = this.currentUser?.id || null;
     this.currentUser = normalized;
+    if (prevUserId !== normalized?.id) this.authGeneration++;
 
     if (!normalized) {
+      this.cloudActor = null;
+      if (this.cloudProvider) this.client?.realtime?.disconnect?.();
       void this.clearRoomState({ notify: true, reason: "user-cleared" });
       return;
     }
@@ -146,6 +192,7 @@ class OnlineDuelService {
     const user = this.requireUser();
 
     const response = await this.invoke("create_room", {
+      actionId: normalizeString(payload.actionId) || randomUUID(),
       userId: user.id,
       sessionToken: user.sessionToken,
       userAccount: user.account,
@@ -179,6 +226,7 @@ class OnlineDuelService {
     }
 
     const response = await this.invoke("join_room", {
+      actionId: normalizeString(payload.actionId) || randomUUID(),
       roomCode,
       userId: user.id,
       sessionToken: user.sessionToken,
@@ -234,6 +282,7 @@ class OnlineDuelService {
       ok: true,
       room: this.room,
       side: this.side,
+      pendingAction: response.pendingAction || null,
       rounds: Array.isArray(response.rounds) ? response.rounds.map(normalizeRound) : []
     };
   }
@@ -262,6 +311,7 @@ class OnlineDuelService {
     // An ambiguous network response must retry the original round, never the next one.
     const roundNo = Number(input.roundNo || room.current_round);
     const response = await this.invoke("submit_action", {
+      actionId: normalizeString(input.actionId) || randomUUID(),
       roomId: room.id,
       userId: user.id,
       sessionToken: user.sessionToken,
@@ -385,6 +435,7 @@ class OnlineDuelService {
     const targetAccount = normalizeString(payload.targetAccount) || "";
     const allowResend = Boolean(payload.allowResend);
     const response = await this.invoke("send_duel_request", {
+      actionId: normalizeString(payload.actionId) || randomUUID(),
       userId: user.id,
       sessionToken: user.sessionToken,
       targetAccount,
@@ -434,6 +485,7 @@ class OnlineDuelService {
     const requestId = normalizeString(payload.requestId) || "";
     const decision = normalizeString(payload.decision) || "";
     const response = await this.invoke("respond_duel_request", {
+      actionId: normalizeString(payload.actionId) || `${decision}:${requestId}`,
       userId: user.id,
       sessionToken: user.sessionToken,
       requestId,
@@ -453,6 +505,7 @@ class OnlineDuelService {
     const user = this.requireUser();
     const requestId = normalizeString(payload.requestId) || "";
     const response = await this.invoke("cancel_duel_request", {
+      actionId: normalizeString(payload.actionId) || `cancel:${requestId}`,
       userId: user.id,
       sessionToken: user.sessionToken,
       requestId
@@ -470,6 +523,7 @@ class OnlineDuelService {
     if (this.enabled && room?.id && user?.id) {
       try {
         await this.invoke("leave_room", {
+          actionId: normalizeString(options.actionId) || `leave:${room.id}`,
           roomId: room.id,
           userId: user.id,
           sessionToken: user.sessionToken,
@@ -515,7 +569,7 @@ class OnlineDuelService {
     if (!this.configured) {
       throw new Error("SUPABASE_URL and SUPABASE_ANON_KEY are required");
     }
-    if (!this.client) {
+    if (!this.client && !this.cloudProvider) {
       throw new Error("supabase client not initialized");
     }
   }
@@ -524,7 +578,7 @@ class OnlineDuelService {
     if (!this.currentUser?.id) {
       throw new Error("login required");
     }
-    if (!this.currentUser?.sessionToken) {
+    if (!this.currentUser?.sessionToken && !this.cloudProvider) {
       throw new Error("session invalidated");
     }
     return this.currentUser;
@@ -539,6 +593,7 @@ class OnlineDuelService {
 
   async invoke(op, payload = {}) {
     this.ensureEnabled();
+    if (this.cloudProvider) return this.invokeCloud(op, payload);
     const requestBody = {
       op,
       ...payload
@@ -570,15 +625,40 @@ class OnlineDuelService {
     return body;
   }
 
+  async invokeCloud(op, payload) {
+    if (['register_account','login_account','update_account'].includes(op)) throw Object.assign(new Error('账号操作由统一 Auth 服务处理'), { code: 'USE_SHARED_AUTH_BRIDGE' });
+    await this.refreshCloudTransport();
+    const generation = this.authGeneration;
+    const requestBody = { ...payload, op };
+    // Authorization comes only from accounts' SDK JWT/device headers.
+    for (const key of ['userId', 'userAccount', 'sessionToken', 'ownerAccountId', 'authUserId', 'actor', 'petElement', 'petResourceId', 'petName']) delete requestBody[key];
+    const { data, error } = await this.client.functions.invoke(this.functionName, { body: requestBody, timeout: 12000 });
+    if (generation !== this.authGeneration) throw Object.assign(new Error('账号已切换'), { code: 'AUTH_CHANGED' });
+    let failed = data;
+    if (error) { try { failed = await error.context?.clone?.().json(); } catch { /* network/response-read interruption */ } }
+    if (error || failed?.ok === false) {
+      const code = failed?.code || failed?.error?.code || 'BATTLE_CLOUD_UNAVAILABLE';
+      const message = failed?.message || failed?.error?.message || (error ? await resolveFunctionErrorMessage(error, '云端对战请求未完成') : '云端对战请求未完成');
+      await this.handleSessionInvalidatedIfNeeded(code);
+      throw Object.assign(new Error(message), { code });
+    }
+    const value = data?.ok === true ? data.data : data;
+    if (!value || typeof value !== 'object') throw new Error('云端对战响应无效');
+    return value;
+  }
+
   async handleSessionInvalidatedIfNeeded(message) {
     const lower = typeof message === "string" ? message.toLowerCase() : "";
     const invalidated =
+      /auth_required|auth_invalid|session_revoked|device_session_required|device_required|identity_required|actor_invalid/.test(lower) ||
       lower.includes("session invalidated") ||
       lower.includes("session token is required") ||
       lower.includes("invalid session token");
     if (!invalidated || !this.currentUser) return;
     const previousUser = this.currentUser;
     this.currentUser = null;
+    this.authGeneration++; this.cloudActor = null;
+    if (this.cloudProvider) this.client?.realtime?.disconnect?.();
     await this.clearRoomState({ notify: true, reason: "session-invalidated" });
     this.emit("session-invalidated", {
       userId: previousUser.id,
@@ -588,6 +668,7 @@ class OnlineDuelService {
 
   async subscribeRoom() {
     this.ensureEnabled();
+    if (this.cloudProvider) await this.refreshCloudTransport();
     const room = this.requireRoom();
 
     if (this.channel) {
@@ -599,8 +680,8 @@ class OnlineDuelService {
       this.channel = null;
     }
 
-    const channelName = `duel-room-${room.id}`;
-    const channel = this.client.channel(channelName);
+    const channelName = this.cloudProvider ? `lingjing:battle:${room.id}` : `duel-room-${room.id}`;
+    const channel = this.client.channel(channelName, this.cloudProvider ? { config: { private: true } } : undefined);
     const isCurrent = () => this.channel === channel && this.room?.id === room.id;
 
     channel.on(
@@ -608,7 +689,7 @@ class OnlineDuelService {
       {
         event: "UPDATE",
         schema: "public",
-        table: "duel_rooms",
+        table: this.cloudProvider ? 'lingjing_battle_rooms' : 'duel_rooms',
         filter: `id=eq.${room.id}`
       },
       (payload) => {
@@ -627,7 +708,7 @@ class OnlineDuelService {
       {
         event: "INSERT",
         schema: "public",
-        table: "duel_rounds",
+        table: this.cloudProvider ? 'lingjing_battle_rounds' : 'duel_rounds',
         filter: `room_id=eq.${room.id}`
       },
       (payload) => {

@@ -339,7 +339,7 @@ class BattleFeatureService {
     session.pendingAction = { actionId: payload.actionId, action: payload.action, roundNo, uncertain: true };
     this.store.save(owner, session);
     try {
-      await this.online.submitAction({ action: payload.action, roundNo, waitForResolution: false });
+      await this.online.submitAction({ actionId: payload.actionId, action: payload.action, roundNo, waitForResolution: false });
       this.assertOwner(owner);
       session = this.requireSession(owner, session.id);
       if (session.pendingAction) session.pendingAction.uncertain = false;
