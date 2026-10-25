@@ -1,0 +1,21 @@
+{
+  "at": "2026-10-25 08:15:07 UTC",
+  "projectRef": "jbvrdmrkwpznbrvteive",
+  "method": "Independent read-only management SQL after both actual SFX processes exited",
+  "scope": "Targeted remaining-flow acceptance on 2cafccd; not a single uninterrupted full business run",
+  "rows": [
+    {
+      "owner_id": "account:470a41d4-3cf7-4a7d-8b1e-32e276d2a719",
+      "revision": 91,
+      "checksum": "49d28813f8ef3504f777c94d8fa3c1b7b3a30ff4b5d8044fc585d3d81a09951f",
+      "action_id": "companions:9751bead-718d-46ac-a134-59decf566c36",
+      "original_action": {
+        "kind": "personal",
+        "actionId": "auto:8f808dea-e37e-44ba-b24e-ca8a709ea521",
+        "checksum": "1b7d6128bfc8c96dc38e07728a9b055047f49d9b7c91645003dea09f8ddf05bd",
+        "revision": 90,
+        "baseRevision": 89
+      }
+    }
+  ]
+}

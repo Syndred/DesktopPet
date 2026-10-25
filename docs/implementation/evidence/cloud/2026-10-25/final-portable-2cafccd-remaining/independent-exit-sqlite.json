@@ -1,0 +1,33 @@
+{
+  "at": "2026-10-25T08:14:55.262Z",
+  "scope": "Targeted continuation of remaining training UI/report/offline-restart checks on the same immutable SFX. Earlier three live groups are separately retained; this is not a single uninterrupted full-business acceptance.",
+  "source": "2cafccd6871403f69ae8a5bb17dbd658b5a48272",
+  "records": [
+    {
+      "device": "A",
+      "queryOnly": true,
+      "quickCheck": "ok",
+      "state": {
+        "cloud_revision": 91,
+        "last_checksum": "49d28813f8ef3504f777c94d8fa3c1b7b3a30ff4b5d8044fc585d3d81a09951f"
+      },
+      "originalAction": {
+        "action_id": "auto:8f808dea-e37e-44ba-b24e-ca8a709ea521",
+        "base_revision": 89,
+        "status": "verified",
+        "checksum": "1b7d6128bfc8c96dc38e07728a9b055047f49d9b7c91645003dea09f8ddf05bd",
+        "sourceSha256": "ece1e3b8e556999b6db2de9252fe4717b0099b5913a8f252d44e89a5e50e65d6"
+      }
+    },
+    {
+      "device": "B",
+      "queryOnly": true,
+      "quickCheck": "ok",
+      "state": {
+        "cloud_revision": 91,
+        "last_checksum": "49d28813f8ef3504f777c94d8fa3c1b7b3a30ff4b5d8044fc585d3d81a09951f"
+      },
+      "originalAction": null
+    }
+  ]
+}

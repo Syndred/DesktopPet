@@ -1,0 +1,273 @@
+{
+  "at": "2026-10-25T08:03:03.811Z",
+  "sourceCommit": "2cafccd6871403f69ae8a5bb17dbd658b5a48272",
+  "executable": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\releases\\final-2cafccd\\Lingjing-0.1.8-portable-x64.exe",
+  "executableSha256": "af75c5a8ace15a4a924e71a24fd258df80a459648a1c1ab8d795b1da6e43837e",
+  "projectRef": "jbvrdmrkwpznbrvteive",
+  "actualPortable": true,
+  "simulatedProvider": false,
+  "physicalMachines": 1,
+  "checks": [
+    {
+      "name": "Targeted continuation uses fresh actual SFX profiles and the exact original cloud pet/resource history",
+      "owner": "account:470a41d4-3cf7-4a7d-8b1e-32e276d2a719",
+      "petId": "pet-ded4e993-44c1-41a4-ae7e-2e275d3725c0",
+      "resourceId": "74f5d8ff-ffa6-4f40-8e41-39f80b33acf3",
+      "priorEvidence": {
+        "file": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\cloud-upgrade\\2026-10-25\\final-portable-Iuabeu\\evidence.json",
+        "sha256": "aefbcdc5617b37822740c4c3dc063d6309d114965ad08100ec8667449f28023d",
+        "completedGroups": 3
+      }
+    },
+    {
+      "name": "Shared V3 screen completes natural authoritative cloud training and transfers one canonical growth/seed/report settlement without changing other pets",
+      "sessionId": "battle-ad86793c-2822-4da2-b28e-6fd788f34ff2",
+      "rounds": 14,
+      "reward": {
+        "actionId": "battle:battle-ad86793c-2822-4da2-b28e-6fd788f34ff2:account:470a41d4-3cf7-4a7d-8b1e-32e276d2a719",
+        "petId": "pet-ded4e993-44c1-41a4-ae7e-2e275d3725c0",
+        "sessionId": "battle-ad86793c-2822-4da2-b28e-6fd788f34ff2",
+        "mode": "training",
+        "won": true,
+        "experience": 20,
+        "applied": true,
+        "duplicate": false,
+        "previousExperience": 5,
+        "previousLevel": 1,
+        "currentExperience": 25,
+        "currentLevel": 1,
+        "seeds": {
+          "source": "battle",
+          "receiptId": "battle-ad86793c-2822-4da2-b28e-6fd788f34ff2",
+          "itemId": "seed:tomato",
+          "quantity": 2
+        }
+      },
+      "seedReceiptAction": "battle-seeds:training:battle-ad86793c-2822-4da2-b28e-6fd788f34ff2"
+    },
+    {
+      "name": "Actual portable report UI loads and replays the original settled rounds with no renderer error",
+      "reportId": "battle-ad86793c-2822-4da2-b28e-6fd788f34ff2",
+      "sessionId": "battle-ad86793c-2822-4da2-b28e-6fd788f34ff2",
+      "rounds": 14
+    },
+    {
+      "name": "A-only real TLS interruption retains the original automatic action/source through actual SFX restart, and clean B automatically applies it",
+      "actionId": "auto:8f808dea-e37e-44ba-b24e-ca8a709ea521",
+      "sourceHash": "ece1e3b8e556999b6db2de9252fe4717b0099b5913a8f252d44e89a5e50e65d6",
+      "priorPid": 19780,
+      "newPid": 17092,
+      "device": "4ed4b6df-0967-4a65-a8db-92137ad7a91e",
+      "refusedConnections": 2
+    },
+    {
+      "name": "Restarted custom native pixels remain valid and final own-pet cleanup is included in peer equality",
+      "restartedFrames": [
+        {
+          "windowId": 3,
+          "visible": true,
+          "size": {
+            "width": 230,
+            "height": 280
+          },
+          "visiblePixels": 17118,
+          "coloredPixels": 13564,
+          "file": "portable-restarted-A.png",
+          "sha256": "5a5b0514436de2d7cf1f9ec1d10f635a8517fe46dcdb287105ef7969a3fab358"
+        },
+        {
+          "windowId": 2,
+          "visible": true,
+          "size": {
+            "width": 230,
+            "height": 280
+          },
+          "visiblePixels": 17118,
+          "coloredPixels": 13564,
+          "file": "portable-restarted-B.png",
+          "sha256": "5a5b0514436de2d7cf1f9ec1d10f635a8517fe46dcdb287105ef7969a3fab358"
+        }
+      ],
+      "onlyThisRunsPetHidden": "pet-ded4e993-44c1-41a4-ae7e-2e275d3725c0"
+    },
+    {
+      "name": "Independent HTTPS receipt plus query-only SQLite prove final domain, actual resource bytes/history and exact preference equality; original v1 local export excludes credentials",
+      "owner": "account:470a41d4-3cf7-4a7d-8b1e-32e276d2a719",
+      "petId": "pet-ded4e993-44c1-41a4-ae7e-2e275d3725c0",
+      "resourceId": "74f5d8ff-ffa6-4f40-8e41-39f80b33acf3",
+      "revision": 91,
+      "checksum": "49d28813f8ef3504f777c94d8fa3c1b7b3a30ff4b5d8044fc585d3d81a09951f",
+      "originalActionId": "auto:8f808dea-e37e-44ba-b24e-ca8a709ea521",
+      "receiptRevision": 90,
+      "receiptChecksum": "1b7d6128bfc8c96dc38e07728a9b055047f49d9b7c91645003dea09f8ddf05bd",
+      "domainChecksum": "a745aebcec6114644dbb13b4e146018cba637219b8dcf62481f35ddd3d35bdc2",
+      "peerEquality": true,
+      "cloudSqlUnits": [
+        {
+          "label": "A",
+          "tables": [
+            "settings",
+            "companion_pets",
+            "companion_actions",
+            "companion_accounts",
+            "companion_interactions",
+            "companion_legacy_archive",
+            "companion_capture_receipts",
+            "garden_items",
+            "garden_plots",
+            "garden_events",
+            "garden_outbox",
+            "garden_actions",
+            "garden_accounts",
+            "garden_garrisons",
+            "garden_reward_receipts",
+            "garden_territory_attempts",
+            "garden_territory_challenges",
+            "conversation_memories",
+            "conversation_messages",
+            "conversation_profiles",
+            "conversation_connections",
+            "conversation_preferences",
+            "battle_sessions",
+            "battle_action_receipts",
+            "battle_reports_v2",
+            "battle_reward_receipts"
+          ]
+        },
+        {
+          "label": "B",
+          "tables": [
+            "settings",
+            "companion_pets",
+            "companion_actions",
+            "companion_accounts",
+            "companion_interactions",
+            "companion_legacy_archive",
+            "companion_capture_receipts",
+            "garden_items",
+            "garden_plots",
+            "garden_events",
+            "garden_outbox",
+            "garden_actions",
+            "garden_accounts",
+            "garden_garrisons",
+            "garden_reward_receipts",
+            "garden_territory_attempts",
+            "garden_territory_challenges",
+            "conversation_memories",
+            "conversation_messages",
+            "conversation_profiles",
+            "conversation_connections",
+            "conversation_preferences",
+            "battle_sessions",
+            "battle_action_receipts",
+            "battle_reports_v2",
+            "battle_reward_receipts"
+          ]
+        }
+      ],
+      "encryptedSessionResumed": true,
+      "resourceBytesAndHistoryPreserved": true,
+      "resourceCloudVersion": 2,
+      "resourceLocalBackupVersion": 1,
+      "preferenceCloudRevision": 2,
+      "readerDevice": "3f370d40-6725-445a-b260-012e5c9e77ab"
+    }
+  ],
+  "errors": [],
+  "passed": true,
+  "scope": "Targeted continuation of remaining training UI/report/offline-restart checks on the same immutable SFX. Earlier three live groups are separately retained; this is not a single uninterrupted full-business acceptance.",
+  "verification": {
+    "gitCommit": "d4bb134c4e4d12d71243b4b0a0402ff7ff00fe6a",
+    "scriptSha256": "6c927cf41f3659a61d59018db545a06fa7c6595980818f34092d6b9a676e8d60",
+    "driverSha256": "ba495ffbaf8e5c7b7868c57a2176b5ab8b239b5a311941f88c7084e1c067225e"
+  },
+  "priorEvidence": {
+    "file": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\cloud-upgrade\\2026-10-25\\final-portable-Iuabeu\\evidence.json",
+    "sha256": "aefbcdc5617b37822740c4c3dc063d6309d114965ad08100ec8667449f28023d",
+    "completedGroups": 3
+  },
+  "final": {
+    "owner": "account:470a41d4-3cf7-4a7d-8b1e-32e276d2a719",
+    "petId": "pet-ded4e993-44c1-41a4-ae7e-2e275d3725c0",
+    "resourceId": "74f5d8ff-ffa6-4f40-8e41-39f80b33acf3",
+    "revision": 91,
+    "checksum": "49d28813f8ef3504f777c94d8fa3c1b7b3a30ff4b5d8044fc585d3d81a09951f",
+    "originalActionId": "auto:8f808dea-e37e-44ba-b24e-ca8a709ea521",
+    "receiptRevision": 90,
+    "receiptChecksum": "1b7d6128bfc8c96dc38e07728a9b055047f49d9b7c91645003dea09f8ddf05bd",
+    "domainChecksum": "a745aebcec6114644dbb13b4e146018cba637219b8dcf62481f35ddd3d35bdc2",
+    "peerEquality": true,
+    "cloudSqlUnits": [
+      {
+        "label": "A",
+        "tables": [
+          "settings",
+          "companion_pets",
+          "companion_actions",
+          "companion_accounts",
+          "companion_interactions",
+          "companion_legacy_archive",
+          "companion_capture_receipts",
+          "garden_items",
+          "garden_plots",
+          "garden_events",
+          "garden_outbox",
+          "garden_actions",
+          "garden_accounts",
+          "garden_garrisons",
+          "garden_reward_receipts",
+          "garden_territory_attempts",
+          "garden_territory_challenges",
+          "conversation_memories",
+          "conversation_messages",
+          "conversation_profiles",
+          "conversation_connections",
+          "conversation_preferences",
+          "battle_sessions",
+          "battle_action_receipts",
+          "battle_reports_v2",
+          "battle_reward_receipts"
+        ]
+      },
+      {
+        "label": "B",
+        "tables": [
+          "settings",
+          "companion_pets",
+          "companion_actions",
+          "companion_accounts",
+          "companion_interactions",
+          "companion_legacy_archive",
+          "companion_capture_receipts",
+          "garden_items",
+          "garden_plots",
+          "garden_events",
+          "garden_outbox",
+          "garden_actions",
+          "garden_accounts",
+          "garden_garrisons",
+          "garden_reward_receipts",
+          "garden_territory_attempts",
+          "garden_territory_challenges",
+          "conversation_memories",
+          "conversation_messages",
+          "conversation_profiles",
+          "conversation_connections",
+          "conversation_preferences",
+          "battle_sessions",
+          "battle_action_receipts",
+          "battle_reports_v2",
+          "battle_reward_receipts"
+        ]
+      }
+    ],
+    "encryptedSessionResumed": true,
+    "resourceBytesAndHistoryPreserved": true,
+    "resourceCloudVersion": 2,
+    "resourceLocalBackupVersion": 1,
+    "preferenceCloudRevision": 2,
+    "readerDevice": "3f370d40-6725-445a-b260-012e5c9e77ab"
+  },
+  "completedAt": "2026-10-25T08:11:53.153Z"
+}
