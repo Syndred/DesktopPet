@@ -36,7 +36,9 @@ Deno.serve(async request=>{
       return jsonResponse({ok:true,data:{signedOut:true,deviceId:device}});
     }
     if(op==="refresh") {
-      const token=text(body.refreshToken,16,4096),client=userClient(device);
+      // Refresh tokens are opaque; hosted Auth may issue short tokens.
+      if(typeof body.refreshToken!=="string"||!body.refreshToken.trim()||body.refreshToken.length>4096)failure("INVALID_REQUEST");
+      const token=body.refreshToken as string,client=userClient(device);
       const result=await client.auth.refreshSession({refresh_token:token});
       if(result.error||!result.data.session||result.data.user?.is_anonymous)failure("AUTH_INVALID",401);
       return jsonResponse({ok:true,data:await signedIn(request,result.data.session,device,text(body.deviceLabel||"Windows PC",1,80))});

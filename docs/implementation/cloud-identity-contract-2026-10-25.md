@@ -50,7 +50,21 @@ type LingjingActor = {
 
 结构正确、owner 正确和 checksum 正确不构成改写玩法状态的权限。`garden / discovery / battle / companions / resources / legacy` 模块及其 SQL 表默认受保护；个人设置/聊天等白名单部分可走用户 CAS。已成为云端权威的库存、奖励、捕捉、领地、成长和战报，只能由对应受控事务从真实数据生成 authority fragment。完整存档 push 必须与该受保护片段一致；首次迁移没有可信源时保存原档为未授权迁移档案，不能凭本地 JSON 自动生成云端经济/胜利。其他域必须在同一事务提交权威片段和统一存档 revision，避免先发奖再补存档的分叉。
 
-CAS / 幂等 / 断网恢复的具体 RPC 和客户端接口将在后续提交固定，现阶段不能部署旧 `accounts-sync` 的 runtime session_token 实现作为新权限模型。
+## 完整存档与领域事务接口
+
+`20261025021759_lingjing_protected_save_cas.sql` 提供 `lingjing-save` 自验证 Edge 入口（`verify_jwt=false`）。`POST {op:'push',actionId,baseRevision,envelope}` 使用用户 JWT 和设备头，只能修改 `settings` / `conversations`；所有受保护模块及通用表必须与服务器片段完全一致。`read` 无 actionId 读当前完整头，带 actionId 独立读回不可变操作回执；`archive` 保存原始本地档案并返回 `promoted:false`，不生成库存或奖励。所有公开表仅允许本人 SELECT，写入必须经过受限 RPC。冲突 `SYNC_CONFLICT` / 标识复用 `ACTION_ID_REUSED` 为409，不能自动强推。
+
+领域 SQL 受控函数在同一事务中按以下顺序执行：
+
+1. 从统一 actor 验证 owner、petId、参与者和经济权限。调用 `lingjing_private.lock_save_owner(owner)` 后再锁领域行；跨两个 owner 时按 owner 文本排序锁定，避免互相等待。
+2. 执行领域变更，使用 actionId 幂等回执。只有成功的变化能够进入下一步。
+3. 从已验证的服务端行生成完整领域片段，调用 `lingjing_private.commit_authority(owner, 'garden:<actionId>', fragments, expectedRevision或null)`。必须在同一个数据库事务中；不得在已发奖后另发第二个 SDK 请求补存档。发生异常整个事务回滚。
+
+`fragments` 示例：`{"garden":{"module":{"version":1,"data":领域备份适配器原格式},"tables":{}},"companions":{"module":{"version":1,"data":伙伴备份原格式},"petIds":["保持原始petId"]}}`。module 和 tables 可省略其中一项，省略的领域 module 表示该域只维护表片段。tables 的每个值必须是正式 SQLite 备份的 `{schema:[...],rows:[...]}`，每一行 `owner_account_id` 必须是目标 owner。应由领域部署代码固定结构生成，不接收客户端自报 schema、余额、经验或胜负。petIds 仅 companions 的可信事务可登记，不能抢占其他 owner 的 petId；不因退役删除历史聊天的归属记录。
+
+可用受保护模块名：`garden`、`discovery`、`battle`、`companions`、`resources`、`character-resources`、`legacy`。不同领域不得同时声明同一张表。该函数重建所有领域的受保护层并保留个人设置/聊天，统一版本只增一次；重复相同 actionId 返回原回执。`public.lingjing_commit_authority` 仅 service_role 可用，供经服务端验证的 Storage/可信旧源收据导入；它不对普通客户端开放。领域数据库事务直接调用 private helper，无需服务密钥。
+
+JSON SHA256 和现有备份保持兼容，SQL 处理 UTF-16 键排序及 ECMAScript 最短数字串（包括1e23、subnormal），不能用 PostgreSQL 默认 JSONB 文本替代。归档保留未验证玩法数据但不会变成权威头；旧源仍需可信数据与凭据验证。不能部署旧 `accounts-sync` 的 runtime session_token 实现作为新权限模型。
 
 ## 当前验证和来源
 
