@@ -1,0 +1,44 @@
+{
+  "module": "garden",
+  "issue": "QA-010",
+  "priority": "P2",
+  "date": "2026-10-25",
+  "phase": "implemented-targeted-render-check-passed-awaiting-09-candidate-recheck",
+  "sourceCandidate": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+  "sourceEvidence": "docs/implementation/qa/2026-10-25-user-acceptance/rounds/candidate-312e5fe-524fd56d/evidence/fresh09-bag-portrait-clipping.json",
+  "baseCheckpoint": "ff8f824cd7988228efeddf0e8ba70f6f385a9ed5",
+  "cause": "The garden override forced the shared portrait to an auto-height square sized by card width while its overflow-hidden parent remained 68px tall, leaving only the upper ear tips visible.",
+  "change": "Keep the existing 68px preview slot; use its actual width and height for the shared portrait, remove its forced square aspect ratio, and permit the renderer to shrink to the slot.",
+  "files": [
+    "apps/pc-app/ui/src/features/garden/garden.css",
+    "docs/implementation/status/garden-qa010-portrait.json"
+  ],
+  "preservation": {
+    "actorAndPetIdSelectionSourceUnchanged": true,
+    "resourceRendererAndCalibrationUnchanged": true,
+    "resourceBytesUnchanged": true,
+    "mutationActionIdEconomyAndPersistenceUnchanged": true,
+    "protectedPathsComparedTo": "ff8f824cd7988228efeddf0e8ba70f6f385a9ed5"
+  },
+  "validation": {
+    "scope": "Isolated headless React/Pixi/WebGL renderer with original parsed resource bytes and simulated IPC; not native Electron acceptance",
+    "deviceScaleFactor": 1.25,
+    "resource": "builtin:lingjing-xiaohu-v1",
+    "renderers": "Both canonical ready, fallback=false; original resource image and manifest hashes match before and after",
+    "baselineVisibleContentRatio": 0.0687867354534021,
+    "fixedVisibleContentRatio": 1,
+    "slotWidthsChecked": [120, 244.6, 400],
+    "slotHeight": 68,
+    "selectedAndUnselected": "passed",
+    "minimumVisibleAlphaPixelsFromActualCompositedScreenshots": 2391,
+    "browserErrors": 0,
+    "diffCheck": "passed",
+    "evidenceDirectory": "artifacts/qa/garden-qa010-portrait/",
+    "evidenceFiles": ["verify.mjs", "result.json", "before.png", "after.png"]
+  },
+  "nativeRecheck": {
+    "ownerThread": "01a172b4-d7f0-7213-9a40-092418ee776b",
+    "status": "pending the same final candidate from root; issue is not marked accepted by this implementation check",
+    "nativeInputBy05": false
+  }
+}
