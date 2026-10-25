@@ -27,6 +27,7 @@ function createCompanionOwnerMigration(services, changed) {
         if (value && typeof value === 'object') return Object.fromEntries(Object.entries(value).map(([key,item]) => [key, key === 'ownerAccountId' && item === source ? target : rewrite(item)]));
         return value;
       };
+      const targetBefore = Object.fromEntries(tables.map(table => [table, db.prepare(`SELECT * FROM ${table} WHERE owner_account_id=?`).all(target)]));
       for (const table of [...tables].reverse()) db.prepare(`DELETE FROM ${table} WHERE owner_account_id=?`).run(target);
       for (const table of tables) {
         const columns = db.prepare(`PRAGMA table_info(${table})`).all().map(column => column.name);
@@ -38,7 +39,7 @@ function createCompanionOwnerMigration(services, changed) {
           insert.run(...columns.map(column => next[column]));
         }
       }
-      db.prepare('INSERT INTO companion_identity_imports VALUES(?,?,?,?)').run(source, target, JSON.stringify(original), new Date().toISOString());
+      db.prepare('INSERT INTO companion_identity_imports VALUES(?,?,?,?)').run(source, target, JSON.stringify({ ...original, targetBefore }), new Date().toISOString());
       changed(target); return { ok: true, imported: original.companion_pets.length };
     });
   }

@@ -15,6 +15,7 @@ await db.exec(`create role anon; create role authenticated; create role service_
 `);
 await db.exec(readFileSync("infra/supabase/migrations/20261025020314_lingjing_identity_actor_contract.sql", "utf8"));
 await db.exec(readFileSync("infra/supabase/migrations/20261025021755_lingjing_auth_bridge.sql", "utf8"));
+await db.exec(readFileSync('infra/supabase/migrations/20261025031842_lingjing_session_revocation_ledger.sql','utf8'));
 await db.query("insert into auth.users(id) values($1),($2)", [a,b]);
 await db.query("insert into auth.sessions(id,user_id) values($1,$2),($3,$2),($4,$5)", [sa,a,sa2,sb,b]);
 await db.query("insert into lingjing_private.legacy_account_claims(source_instance,legacy_subject,owner_id,account_key,account,username,password_hash,source_record_checksum,source_manifest_checksum,created_at) values('old-runtime','legacy-a','user-original-text','alice','alice','Alice',repeat('a',64),repeat('b',64),repeat('c',64),now())");
@@ -54,16 +55,30 @@ test("LOCAL PGlite only: RLS denies cross owner, client writes, wrong device and
 });
 test("LOCAL PGlite only: revoking device A leaves same-account device B active", async () => {
   await as(a,sa,da,"select public.lingjing_revoke_device($1)",[da]);
-  await assert.rejects(as(a,sa,da,"select public.lingjing_actor_context($1)",[da]),/LJ_DEVICE_SESSION_REQUIRED/);
+  await assert.rejects(as(a,sa,da,"select public.lingjing_actor_context($1)",[da]),/LJ_SESSION_REVOKED/);
   assert.equal((await as(a,sa2,da2,"select public.lingjing_actor_context($1) actor",[da2]))[0].actor.ownerAccountId,linkedA.owner_id);
 });
 test("LOCAL PGlite only: revoked refresh cannot re-register, fresh Auth session can rebind one device", async () => {
-  await assert.rejects(as(a,sa,da,"select public.lingjing_register_device($1,'refresh')",[da]),/LJ_DEVICE_SESSION_REQUIRED/);
+  await assert.rejects(as(a,sa,da,"select public.lingjing_register_device($1,'refresh')",[da]),/LJ_SESSION_REVOKED/);
   const sa3="20000000-0000-4000-8000-000000000004";
   await db.query("insert into auth.sessions(id,user_id) values($1,$2)",[sa3,a]);
   assert.equal((await as(a,sa3,da,"select public.lingjing_register_device($1,'new login') actor",[da]))[0].actor.sessionId,sa3);
   await assert.rejects(as(a,sa3,"30000000-0000-4000-8000-000000000099","select public.lingjing_register_device($1,'copy')",["30000000-0000-4000-8000-000000000099"]),/LJ_DEVICE_SESSION_BOUND/);
   assert.equal((await as(a,sa2,da2,"select public.lingjing_current_owner() owner"))[0].owner,linkedA.owner_id);
+});
+test('LOCAL PGlite only: revoke/new-login cannot resurrect an old SID, and replacement revokes previous SID permanently',async()=>{
+ const old='20000000-0000-4000-8000-000000000004',next='20000000-0000-4000-8000-000000000005',latest='20000000-0000-4000-8000-000000000006';
+ await db.query('insert into auth.sessions(id,user_id) values($1,$2),($3,$2)',[next,a,latest]);
+ await as(a,old,da,'select public.lingjing_revoke_device($1)',[da]);
+ await as(a,next,da,'select public.lingjing_register_device($1)',[da]);
+ await assert.rejects(as(a,old,da,'select public.lingjing_register_device($1)',[da]),/LJ_SESSION_REVOKED/);
+ await assert.rejects(as(a,old,da,'select * from public.lingjing_accounts'),/LJ_SESSION_REVOKED/);
+ await as(a,latest,da,'select public.lingjing_register_device($1)',[da]);
+ await assert.rejects(as(a,next,da,'select public.lingjing_register_device($1)',[da]),/LJ_SESSION_REVOKED/);
+ assert.equal((await as(a,sa2,da2,'select public.lingjing_current_owner() owner'))[0].owner,linkedA.owner_id);
+ assert.equal((await db.query('select count(*) n from auth.sessions where id in ($1,$2)',[old,next])).rows[0].n,2); // Managed Auth is still live; the ledger is decisive.
+ await assert.rejects(as(a,latest,da,'delete from lingjing_private.revoked_auth_sessions'),/permission denied/);
+ await assert.rejects(db.query('delete from lingjing_private.revoked_auth_sessions where auth_session_id=$1',[old]),/LJ_REVOCATION_IMMUTABLE/);
 });
 test("LOCAL PGlite only: auth directory, staged reservation and rate limits are service-only", async () => {
   const record=(await as(null,null,null,"select public.lingjing_auth_reserve('charlie','Charlie') item",[],"service_role"))[0].item;

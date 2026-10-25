@@ -4,6 +4,8 @@ export interface AccountUser {
   ownerAccountId: string;
   provider: "local" | "runtime";
   dataMode?: "live" | "simulated";
+  authKind?: 'supabase';
+  authUserId?: string;
   account: string;
   username: string;
   revision: number;
@@ -46,6 +48,8 @@ export interface SettingsSnapshot {
 export interface SyncStatus {
   configured: boolean; cloudRevision: number; lastVerifiedAt: string | null;
   lastError: string | null; pending: number; conflicts: number; localChanged: boolean; running: boolean;
+  unverifiedLocal?: number;
+  privacyRedactions?: number;
 }
 export interface BackupPreview {
   previewId: string; checksum: string; currentChecksum?: string; cloudRevision?: number;
@@ -54,6 +58,9 @@ export interface BackupPreview {
 /** Main-process adapters are synchronous and run inside the common SQLite transaction. */
 export interface AccountBackupAdapter<Database = unknown, Data = unknown> {
   id: string; version: number; tables?: string[];
+  /** Conversion is a verified restore/fingerprint view; never rewrites the source envelope. */
+  legacyTables?: string[];
+  fromLegacyTables?(tables: Record<string, { schema: unknown[]; rows: Array<Record<string, unknown>> }>, ownerAccountId: string): Data | null;
   export(ownerAccountId: string, db: Database): Data;
   validate(data: Data, ownerAccountId: string, db: Database): void;
   restore(ownerAccountId: string, data: Data, mode: "merge" | "replace", db: Database): void;

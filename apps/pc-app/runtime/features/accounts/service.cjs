@@ -220,7 +220,7 @@ class AccountsService {
     try { this.vault.clear(); } catch { this.startupIssue = "SECURE_SESSION_CLEAR_FAILED"; }
     this.host?.clear?.();
     if (prior?.provider === "local") this.db.prepare("DELETE FROM account_login_sessions WHERE proof_hash=?").run(checksum(prior.proof));
-    if (this.remote.signOut) void this.remote.signOut(previousCloudSession).catch(() => {});
+    if (this.remote.signOut) this.signOutPending=this.remote.signOut(previousCloudSession).then(()=>({confirmed:true}),()=>({confirmed:false}));
     else this.remote.setCurrentUser(null);
     this.emitSession({ notifyApp: false });
     return { currentUser: null };
@@ -279,7 +279,7 @@ class AccountsService {
     const label = changePassword ? row.username : username(input.username);
     const newSecret = changePassword ? password(input.newPassword) : null;
     if (changePassword) invariant(newSecret === password(input.confirmPassword), "PASSWORD_MISMATCH", "两次输入的新密码不一致。");
-    const oldSecret = changePassword || row.provider === "runtime" ? password(input.oldPassword) : null;
+    const oldSecret = changePassword || (row.provider === "runtime"&&this.current.authKind!=='supabase') ? password(input.oldPassword) : null;
     this.profileBusy = true;
     try {
       let updatedUser;
@@ -344,6 +344,6 @@ class AccountsService {
     this.services.events?.emit("accounts:save-restored", { ownerAccountId: owner });
     return restored;
   }
-  dispose() { clearInterval(this.retryTimer); this.remoteUnsubscribe?.(); this.proofUnsubscribe?.(); this.host?.dispose?.(); }
+  dispose() { clearInterval(this.retryTimer); this.remoteUnsubscribe?.(); this.proofUnsubscribe?.(); this.remote.dispose?.(); this.host?.dispose?.(); }
 }
 module.exports = { AccountsService };
