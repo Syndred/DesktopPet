@@ -1,0 +1,197 @@
+{
+  "at": "2026-10-25T03:18:17.261Z",
+  "sourceCommit": "4ee7240bc6a501ce29c0c015e617dc9751115419",
+  "productionMain": true,
+  "registryObserverOnly": true,
+  "network": "real HTTPS",
+  "projectRef": "jbvrdmrkwpznbrvteive",
+  "rawCoordinatesSaved": false,
+  "tokensSaved": false,
+  "accounts": [
+    {
+      "label": "device-a",
+      "actor": {
+        "account": "cd03_1792897943500",
+        "authKind": "supabase",
+        "deviceId": "359d4b0f-1967-47a1-9f0e-cb59cd8e37b9",
+        "username": "探索云端验证",
+        "authority": "live",
+        "sessionId": "723a3f7e-14ba-4a01-8b9c-2470103c81f3",
+        "authUserId": "83270acc-8ac0-439d-889d-d12d61d648df",
+        "schemaVersion": 1,
+        "ownerAccountId": "account:ea9e6ecd-e251-41ad-9b50-dcad2d96f7b7"
+      },
+      "electron": "44.9.3",
+      "safeStorage": true,
+      "qaScenarioPresent": false
+    },
+    {
+      "label": "device-b",
+      "actor": {
+        "account": "cd03_1792897943500",
+        "authKind": "supabase",
+        "deviceId": "71fd3ebe-06f4-4e76-8183-732e1db58094",
+        "username": "探索云端验证",
+        "authority": "live",
+        "sessionId": "01b69ce5-46b3-41f5-a736-7ff3ef194d53",
+        "authUserId": "83270acc-8ac0-439d-889d-d12d61d648df",
+        "schemaVersion": 1,
+        "ownerAccountId": "account:ea9e6ecd-e251-41ad-9b50-dcad2d96f7b7"
+      },
+      "electron": "44.9.3",
+      "safeStorage": true,
+      "qaScenarioPresent": false
+    },
+    {
+      "label": "foreign-owner",
+      "actor": {
+        "account": "cf03_1792898328713",
+        "authKind": "supabase",
+        "deviceId": "15117866-18fc-48b5-81d5-fa2e84c2111c",
+        "username": "探索云端验证",
+        "authority": "live",
+        "sessionId": "eba73868-fadc-4ba4-9749-dc510efd8801",
+        "authUserId": "c5ecd5cb-2ce1-43a3-a2ea-054f54d69ea4",
+        "schemaVersion": 1,
+        "ownerAccountId": "account:f3e9a5d1-46d8-4885-84d2-a9561942a6be"
+      },
+      "electron": "44.9.3",
+      "safeStorage": true,
+      "qaScenarioPresent": false
+    }
+  ],
+  "checks": [
+    {
+      "label": "missing JWT",
+      "status": 401,
+      "rejected": true
+    },
+    {
+      "label": "forged JWT",
+      "status": 401,
+      "rejected": true
+    },
+    {
+      "label": "real Auth two same-owner device sessions, protocol and public-key registration",
+      "passed": true
+    },
+    {
+      "label": "server nonce binds auth UID, preserved owner, device, session and discover purpose",
+      "passed": true,
+      "challengeId": "6f811750-a1ad-47ad-a40c-8a1fe15bac31"
+    },
+    {
+      "label": "body authority",
+      "code": "CLIENT_AUTHORITY_FORBIDDEN",
+      "rejected": true
+    },
+    {
+      "label": "other device cannot use A nonce",
+      "code": "LOCATION_CHALLENGE_INVALID",
+      "rejected": true
+    },
+    {
+      "label": "invalid signed coordinates",
+      "code": "INVALID_COORDINATES",
+      "rejected": true
+    },
+    {
+      "label": "cross-owner nonce denied",
+      "code": "LOCATION_CHALLENGE_INVALID",
+      "rejected": true
+    },
+    {
+      "label": "signed coarse sample",
+      "code": "LOCATION_IMPRECISE",
+      "rejected": true
+    },
+    {
+      "label": "signed stale sample",
+      "code": "LOCATION_STALE",
+      "rejected": true
+    },
+    {
+      "label": "signed default position",
+      "code": "LOCATION_DEFAULT_POSITION",
+      "rejected": true
+    },
+    {
+      "label": "unauthorized simulated input",
+      "code": "REAL_LOCATION_REQUIRED",
+      "rejected": true
+    },
+    {
+      "label": "revoked A rejected while independent same-owner B remains active",
+      "code": "SESSION_INVALIDATED",
+      "passed": true
+    }
+  ],
+  "native": [
+    {
+      "status": "imprecise",
+      "permission": "granted",
+      "accuracyMeters": 124,
+      "source": "os",
+      "provider": "windows-geolocator",
+      "timestampMs": 1792898344125,
+      "coordinateHash": "2890ee5c8fe0b016f0a6187d7b940827b1a3ac821a288a27b20cad3b14a0f56a",
+      "error": {
+        "code": "LOCATION_IMPRECISE",
+        "message": "定位精度不足，请移动到信号较好的地方（需要 ≤ 80 米）"
+      }
+    },
+    {
+      "status": "locating",
+      "permission": "granted",
+      "accuracyMeters": 124,
+      "source": "os",
+      "provider": "windows-geolocator",
+      "timestampMs": 1792898344125,
+      "coordinateHash": "2890ee5c8fe0b016f0a6187d7b940827b1a3ac821a288a27b20cad3b14a0f56a",
+      "error": null
+    },
+    {
+      "status": "imprecise",
+      "permission": "granted",
+      "accuracyMeters": 124,
+      "source": "os",
+      "provider": "windows-geolocator",
+      "timestampMs": 1792898356352,
+      "coordinateHash": "2890ee5c8fe0b016f0a6187d7b940827b1a3ac821a288a27b20cad3b14a0f56a",
+      "error": {
+        "code": "LOCATION_IMPRECISE",
+        "message": "定位精度不足，请移动到信号较好的地方（需要 ≤ 80 米）"
+      }
+    },
+    {
+      "status": "locating",
+      "permission": "granted",
+      "accuracyMeters": 124,
+      "source": "os",
+      "provider": "windows-geolocator",
+      "timestampMs": 1792898356352,
+      "coordinateHash": "2890ee5c8fe0b016f0a6187d7b940827b1a3ac821a288a27b20cad3b14a0f56a",
+      "error": null
+    },
+    {
+      "status": "imprecise",
+      "permission": "granted",
+      "accuracyMeters": 124,
+      "source": "os",
+      "provider": "windows-geolocator",
+      "timestampMs": 1792898371371,
+      "coordinateHash": "2890ee5c8fe0b016f0a6187d7b940827b1a3ac821a288a27b20cad3b14a0f56a",
+      "error": {
+        "code": "LOCATION_IMPRECISE",
+        "message": "定位精度不足，请移动到信号较好的地方（需要 ≤ 80 米）"
+      }
+    }
+  ],
+  "errors": [],
+  "cloudProofVerified": false,
+  "passed": true,
+  "fullCaptureVerified": false,
+  "verifierSha256": "8c3b2fc736af0d5b318e772c65347ac9dd75e6d267f369e699b6137fe06f86a6",
+  "deployedComponentCommit": "ca981f5ed8e62d5dabc3e090310a2ba40889ab31",
+  "validationScope": "Real HTTPS Auth and production Electron44.9.3 with an observer-only registry bootstrap;13 component checks; imprecise physical samples124m; no cloud precision proof or full capture success"
+}

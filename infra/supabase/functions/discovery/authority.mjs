@@ -48,6 +48,7 @@ export function createWildAuthority({ store, now = Date.now, uuid = () => crypto
     if (input.op === 'session') return presentSession((await permit(actor, input.permitId)).session);
     if (input.op === 'action') { const value = await store.action(actor, identifier(input.actionId, 'actionId')); requireValue(value, 'ACTION_NOT_FOUND', '找不到操作回执', 404); return value; }
     if (input.op === 'captures') return store.captures(actor);
+    if (input.op === 'permits') return store.permits(actor);
     if (input.op === 'act') {
       requireValue(ACTIONS.has(input.action) && Number.isSafeInteger(input.expectedRound) && input.expectedRound >= 1, 'INVALID_BATTLE_ACTION', '行动或回合无效');
       const request = { op: 'act', permitId: identifier(input.permitId, 'permitId'), action: input.action, expectedRound: input.expectedRound };
@@ -84,6 +85,7 @@ export function createWildAuthority({ store, now = Date.now, uuid = () => crypto
         requireValue(current.status === 'won' && current.session.status === 'finished' && current.session.winner === 'player', 'VICTORY_REQUIRED', '云端尚未确认胜利');
         requireValue(current.expiresAt > now(), 'ENCOUNTER_EXPIRED', '云端相遇已过期');
         const location = await proof(actor, request.proofId, 'capture', current.id), range = inRange(location, current.spawn);
+        requireValue(current.source === location.source && (current.scenarioId || null) === (location.fix.scenarioId || null), 'LOCATION_SCENARIO_MISMATCH', '请在本次相遇的同一位置场景完成收服', 403);
         const petId = `pet-${current.id}`, capturedAt = new Date(now()).toISOString();
         const memory = { id: `encounter-${current.id}:first-meeting`, kind: 'first_meeting', title: '我们的第一次见面',
           text: `在${current.spawn.placeLabel}相遇，赢得挑战后成为了伙伴。`, placeLabel: current.spawn.placeLabel, createdAt: capturedAt };
