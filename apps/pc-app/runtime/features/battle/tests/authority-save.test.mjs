@@ -14,7 +14,8 @@ const {migrateCompanions}=require('../../companions/migrations.cjs'),{Companions
 const {createCompanionBackupAdapter}=require('../../companions/backup.cjs'),{createGardenBackupAdapter}=require('../../garden/backup.cjs');
 const {GardenService}=require('../../garden/service.cjs'),{BackupManager}=require('../../accounts/backups.cjs');
 const {BattleCloudAuthority}=require('../cloud-authority.cjs');
-const {saveDataChecksum}=require('../../accounts/util.cjs');
+const {saveDataChecksum,checksum}=require('../../accounts/util.cjs');
+const {AccountSync}=require('../../accounts/sync.cjs');
 const users=['host','guest'].map((name,index)=>({uid:randomUUID(),owner:index===1?'o'.repeat(160):randomUUID(),account:name,device:randomUUID(),sid:randomUUID()}));
 const record=name=>{checks.push(name);console.log(name);};
 await db.exec(`CREATE ROLE anon;CREATE ROLE authenticated;CREATE ROLE service_role BYPASSRLS;
@@ -42,7 +43,10 @@ function fixture(user,templateId) {
   const garden=new GardenService({db:sqlite});garden.snapshot({ownerAccountId:user.owner});
   const companion=createCompanionBackupAdapter(sqlite),gardenBackup=createGardenBackupAdapter(sqlite),battle=require('../backup.cjs').createBattleBackupAdapter(sqlite);
   const backups=new BackupManager({db:sqlite,directory:`artifacts/battle/cloud/readback-${user.uid}`,getIdentity:owner=>sqlite.prepare('SELECT * FROM account_identities WHERE owner_account_id=?').get(owner)});backups.register(companion);backups.register(gardenBackup);backups.register(battle);
-  const envelope=backups.snapshot(user.owner);return {sqlite,pet,other,envelope,companion,gardenBackup,battle,backups,companions};
+  // This SQL fixture provisions only domain authority, not a personal settings
+  // save. Keep the registered backup surface identical to its actual cloud head.
+  backups.adapters.delete('settings');
+  const {checksum:discard,...body}=backups.snapshot(user.owner);void discard;body.data=backups.cloudData(body.data,user.owner);const envelope={...body,checksum:checksum(body)};return {sqlite,pet,other,envelope,companion,gardenBackup,battle,backups,companions};
 }
 const binding=user=>[user.uid,user.owner,user.device,user.sid];
 const command=(user,op,input,id=randomUUID())=>rpc('lingjing_battle_command',[...binding(user),op,id,input]);
@@ -88,16 +92,24 @@ try {
     // Scripted transport to the actual action-specific Postgres save. This tests
     // the real SQLite adapter path, and is explicitly not HTTPS/Auth evidence.
     const readback=async()=>({actionId:proof.authority.actionId,revision:current.revision,checksum:current.checksum,envelope:current.envelope});
-    const services={db:user.local.sqlite,get:name=>name==='backups'?user.local.backups:name==='accounts'?{getOwnerAccountId:()=>user.owner}:name==='cloudActor'?{requireActor:async()=>({invoke:readback})}:undefined};
+    // The host separately covers first-ever cloud garden initialization. The
+    // guest starts with the complete confirmed save, matching the SFX scenario.
+    const sync=index===1?new AccountSync({db:user.local.sqlite,backups:user.local.backups,remote:{enabled:true,authKind:'supabase'},getSession:()=>({ownerAccountId:user.owner,provider:'runtime',authKind:'supabase',sessionId:user.sid,deviceId:user.device}),getSettings:()=>({document:{sync:{enabled:true}}})}):null;
+    if(sync)sync.acceptAuthoritativeReadback(user.owner,{envelope:previous.envelope,cloudRevision:previous.revision});
+    const services={db:user.local.sqlite,get:name=>name==='backups'?user.local.backups:name==='accounts'?{getOwnerAccountId:()=>user.owner,...(sync?{sync}:{})}:name==='cloudActor'?{requireActor:async()=>({invoke:readback})}:undefined};
     const store=new (require('../store.cjs').BattleStore)(user.local.sqlite),pendingSession={...session,reward:{...proof.reward,applied:false,pendingReason:'intentional lost readback'},reportId:session.id};
+    const start=store.pendingCommand(user.owner,'create',{petId:user.pet.petId});store.resolve(user.owner,start,{session:{...session,status:'active',snapshot:{...session.snapshot,round:0},rounds:[]}});
+    for(let n=1;n<=session.snapshot.round;n++){store.reserveTransport(user.owner,`local-round-${n}`,session.id,{action:'normal_attack',roundNo:n});if(n<session.snapshot.round)store.resolve(user.owner,`local-round-${n}`,{...session,revision:n*2+1,snapshot:{...session.snapshot,round:n}});}
     store.save(user.owner,pendingSession);store.saveReport(user.owner,{...proof.report,reward:pendingSession.reward});
     const authority=new BattleCloudAuthority(services),localBefore=user.local.backups.dataChecksum(user.owner),restore=user.local.battle.restore;
     user.local.battle.restore=()=>{throw new Error('intentional final adapter failure');};
     await assert.rejects(authority.apply(user.owner,proof),/intentional final adapter failure/);assert.equal(user.local.backups.dataChecksum(user.owner),localBefore);
     user.local.battle.restore=restore;await authority.apply(user.owner,proof);await authority.apply(user.owner,proof);
+    if(sync){assert.equal(sync.status(user.owner).cloudRevision,current.revision);assert.equal(sync.status(user.owner).localChanged,false);}
+    store.resolve(user.owner,`local-round-${session.snapshot.round}`,store.session(user.owner,session.id));if(sync)assert.equal(sync.status(user.owner).localChanged,false,'The service final resolve after authority.apply cannot dirty the canonical checkpoint');
     assert.deepEqual(user.local.companion.export(user.owner),modules.companions.data);
     const gardenHash=data=>saveDataChecksum({modules:{garden:{version:1,data}},tables:{}});assert.equal(gardenHash(user.local.gardenBackup.export(user.owner)),gardenHash(modules.garden.data));
-    assert.deepEqual(JSON.parse(JSON.stringify(user.local.battle.export(user.owner))),modules.battle.data);
+    assert.deepEqual(JSON.parse(JSON.stringify(user.local.battle.cloudModule(user.owner,{version:2,data:user.local.battle.export(user.owner)}))),modules.battle);
     user.authority=authority;user.proof=proof;
   }
   assert.equal(reports[0].endedAt,reports[1].endedAt);assert.equal(reports[0].rounds.length,reports[1].rounds.length);
@@ -106,6 +118,7 @@ try {
   for(let i=0;i<reports[0].rounds.length;i++){assert.equal(reports[0].rounds[i].hpAfter.player,reports[1].rounds[i].hpAfter.enemy);assert.equal(reports[0].rounds[i].actions.player,reports[1].rounds[i].actions.enemy);}
   record('both owners receive exactly one canonical growth + two seeds + mirrored complete report, with original other-pet state preserved');
   record('actual SQLite readback completes a finished-but-pending report idempotently; late adapter failure rolls back companion/garden restore together');
+  record('formal Supabase AccountSync/BackupManager: pre-battle baseline, durable start/round journal, actual SQL authority readback and final resolve advance the baseline and remain clean');
   host.local.companions.rename(host.owner,{actionId:'unverified-local-rename',petId:host.local.other.petId,name:'本机独立原名'});
   const kept=host.local.backups.dataChecksum(host.owner);await assert.rejects(host.authority.apply(host.owner,host.proof),error=>error.code==='CLOUD_LOCAL_CONFLICT');assert.equal(host.local.backups.dataChecksum(host.owner),kept);
   record('an independent unverified local operation is preserved and reported as a conflict, never silently replaced');

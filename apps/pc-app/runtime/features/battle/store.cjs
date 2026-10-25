@@ -1,7 +1,8 @@
 const copy = (value) => value == null ? value : JSON.parse(JSON.stringify(value));
+const {upgradeTransportJournal}=require('./transport-journal.cjs');
 
 class BattleStore {
-  constructor(db) { this.db = db; }
+  constructor(db) { this.db = db; upgradeTransportJournal(db); }
   session(owner, id) {
     const row = this.db.prepare("SELECT data_json, revision FROM battle_sessions WHERE owner_account_id=? AND id=?").get(owner, id);
     return row ? { ...JSON.parse(row.data_json), revision: row.revision } : null;
@@ -24,21 +25,26 @@ class BattleStore {
     return this.session(owner, next.id);
   }
   action(owner, actionId) {
-    const row = this.db.prepare("SELECT * FROM battle_action_receipts WHERE owner_account_id=? AND action_id=?").get(owner, actionId);
+    const row = this.db.prepare("SELECT * FROM battle_transport_journal WHERE owner_account_id=? AND action_id=?").get(owner, actionId)
+      ||this.db.prepare("SELECT * FROM battle_action_receipts WHERE owner_account_id=? AND action_id=?").get(owner, actionId);
     return row ? { sessionId: row.session_id, command: JSON.parse(row.command_json), result: row.result_json ? JSON.parse(row.result_json) : null } : null;
   }
   reserve(owner, actionId, sessionId, command) {
     this.db.prepare("INSERT INTO battle_action_receipts(owner_account_id,action_id,session_id,command_json) VALUES(?,?,?,?)").run(owner, actionId, sessionId, JSON.stringify(command));
   }
+  reserveTransport(owner,actionId,sessionId,command){
+    this.db.prepare('INSERT INTO battle_transport_journal(owner_account_id,action_id,session_id,command_json) VALUES(?,?,?,?)').run(owner,actionId,sessionId,JSON.stringify(command));
+  }
   pendingCommand(owner, type, input) {
-    const rows=this.db.prepare("SELECT action_id,command_json FROM battle_action_receipts WHERE owner_account_id=? AND result_json IS NULL").all(owner);
+    const rows=this.db.prepare("SELECT action_id,command_json FROM battle_transport_journal WHERE owner_account_id=? AND result_json IS NULL").all(owner);
     for(const row of rows){const command=JSON.parse(row.command_json);if(command.type===`cloud:${type}`&&JSON.stringify(command.input)===JSON.stringify(input))return row.action_id;}
     const actionId=`cloud:${type}:${require('node:crypto').randomUUID()}`;
-    this.reserve(owner,actionId,actionId,{type:`cloud:${type}`,input});return actionId;
+    this.reserveTransport(owner,actionId,actionId,{type:`cloud:${type}`,input});return actionId;
   }
   resolve(owner, actionId, result) {
     const receipt = result?.snapshot ? { sessionId: result.id, revision: result.revision, resolvedRound: result.snapshot.round } : result;
-    this.db.prepare("UPDATE battle_action_receipts SET result_json=? WHERE owner_account_id=? AND action_id=?").run(JSON.stringify(receipt), owner, actionId);
+    const journal=this.db.prepare('SELECT 1 FROM battle_transport_journal WHERE owner_account_id=? AND action_id=?').get(owner,actionId);
+    this.db.prepare(`UPDATE ${journal?'battle_transport_journal':'battle_action_receipts'} SET result_json=? WHERE owner_account_id=? AND action_id=?`).run(JSON.stringify(receipt), owner, actionId);
   }
   report(owner, id) {
     const row = this.db.prepare("SELECT data_json FROM battle_reports_v2 WHERE owner_account_id=? AND id=?").get(owner, id);

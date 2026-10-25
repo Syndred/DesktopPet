@@ -40,4 +40,22 @@ module.exports = [{
       UNIQUE (owner_account_id, action_id)
     );
   `
+}, {
+  id: 'battle-002-local-transport-journal',
+  sql: `CREATE TABLE IF NOT EXISTS battle_transport_journal (
+    owner_account_id TEXT NOT NULL,
+    action_id TEXT NOT NULL,
+    session_id TEXT NOT NULL,
+    command_json TEXT NOT NULL,
+    result_json TEXT,
+    legacy_row_json TEXT,
+    projection_origin TEXT CHECK(projection_origin IS NULL OR projection_origin IN ('upgrade','readback')),
+    authority_json TEXT,
+    PRIMARY KEY(owner_account_id,action_id)
+  );
+  CREATE TRIGGER IF NOT EXISTS battle_transport_origin_immutable
+  BEFORE UPDATE OF legacy_row_json ON battle_transport_journal
+  WHEN OLD.legacy_row_json IS NOT NEW.legacy_row_json
+  BEGIN SELECT RAISE(ABORT,'BATTLE_JOURNAL_HISTORY_IMMUTABLE'); END;`,
+  up:db=>require('./transport-journal.cjs').upgradeTransportJournal(db)
 }];

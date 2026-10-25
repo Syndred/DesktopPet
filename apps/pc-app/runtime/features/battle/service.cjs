@@ -150,7 +150,7 @@ class BattleFeatureService {
   async cloudCommand(owner,type,input,invoke,inputActionId) {
     if(!this.isCloud(owner))return invoke(undefined);
     const actionId=inputActionId||this.store.pendingCommand(owner,type,input),prior=this.store.action(owner,actionId);
-    if(inputActionId){if(prior&&(prior.command.type!==`cloud:${type}`||JSON.stringify(prior.command.input)!==JSON.stringify(input)))throw fail('ACTION_CONFLICT','操作编号与原请求不一致');if(prior?.result)return prior.result;if(!prior)this.store.reserve(owner,actionId,actionId,{type:`cloud:${type}`,input});}
+    if(inputActionId){if(prior&&(prior.command.type!==`cloud:${type}`||JSON.stringify(prior.command.input)!==JSON.stringify(input)))throw fail('ACTION_CONFLICT','操作编号与原请求不一致');if(prior?.result)return prior.result;if(!prior)this.store.reserveTransport(owner,actionId,actionId,{type:`cloud:${type}`,input});}
     const result=await invoke(actionId);this.assertOwner(owner);this.store.resolve(owner,actionId,result);return result;
   }
 
@@ -360,7 +360,7 @@ class BattleFeatureService {
       if (session.pendingAction && session.pendingAction.actionId !== actionId) throw fail("ACTION_PENDING", "本回合行动已锁定，请等待对手或重新同步");
       if(session.mode==='training'&&session.context?.authority==='supabase') {
         this.user(owner);const roundNo=receipt?.command.roundNo||session.snapshot.round+1;
-        if(!receipt)this.store.reserve(owner,actionId,session.id,{action:payload.action,roundNo});
+        if(!receipt)this.store.reserveTransport(owner,actionId,session.id,{action:payload.action,roundNo});
         session.pendingAction={actionId,action:payload.action,roundNo,uncertain:true};this.store.save(owner,session);
         try {const response=await this.online.invoke('training_action',{sessionId:session.id,actionId,action:payload.action,roundNo});const saved=await this.saveCloudTraining(owner,response);this.store.resolve(owner,actionId,saved);return saved;}
         catch(error){this.assertOwner(owner);throw fail('ONLINE_ACTION_UNCERTAIN',`训练结果待云端确认，请同步原回合。${friendlyError(error)}`);}
@@ -387,7 +387,7 @@ class BattleFeatureService {
     if (this.online.getStatus().room?.id !== session.room.id) await this.online.syncRoom({ roomId: session.room.id, roundsLimit: 50 });
     this.assertOwner(owner);
     const roundNo = receipt?.command.roundNo || session.room.current_round;
-    if (!receipt) this.store.reserve(owner, payload.actionId, session.id, { action: payload.action, roundNo });
+    if (!receipt) (this.isCloud(owner)?this.store.reserveTransport:this.store.reserve).call(this.store,owner,payload.actionId,session.id,{action:payload.action,roundNo});
     session.pendingAction = { actionId: payload.actionId, action: payload.action, roundNo, uncertain: true };
     this.store.save(owner, session);
     try {
@@ -601,7 +601,7 @@ class BattleFeatureService {
       const own=response.pendingAction;
       if(pending&&pending.roundNo===own.roundNo&&(pending.actionId!==own.actionId||pending.action!==own.action))this.store.resolve(owner,pending.actionId,{sessionId:session.id,supersededBy:own.actionId,reason:'server-locked-original'});
       session.pendingAction={...own,uncertain:false};
-      if(!this.store.action(owner,own.actionId))this.store.reserve(owner,own.actionId,session.id,{action:own.action,roundNo:own.roundNo});
+      if(!this.store.action(owner,own.actionId))(this.isCloud(owner)?this.store.reserveTransport:this.store.reserve).call(this.store,owner,own.actionId,session.id,{action:own.action,roundNo:own.roundNo});
     }
     if (pending && rounds.has(pending.roundNo)) {
       session.pendingAction = null;
