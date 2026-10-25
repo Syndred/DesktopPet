@@ -2,13 +2,19 @@ import { _electron as electron } from 'playwright';
 import assert from 'node:assert/strict';
 import { cpSync, existsSync, mkdirSync, readFileSync, realpathSync, symlinkSync, writeFileSync } from 'node:fs';
 import { resolve, join } from 'node:path';
-import { randomUUID } from 'node:crypto';
+import { randomUUID, createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { DatabaseSync } from 'node:sqlite';
 
 // Credentials are an ignored, coordinator-controlled input file, never CLI literals/evidence.
 const input=process.env.LINGJING_CLOUD_BATTLE_INPUT;
 const friendsOnly=process.argv.includes('--friends-only');
+const reopenIndex=process.argv.indexOf('--reopen-proof'),reopenPath=reopenIndex>=0?process.argv[reopenIndex+1]:null;
+const reopenProof=reopenPath?JSON.parse(readFileSync(resolve(reopenPath),'utf8')):null;
+if(reopenIndex>=0){assert.ok(reopenPath);assert.equal(reopenProof?.passed,true);assert.equal(reopenProof.projectRef,'jbvrdmrkwpznbrvteive');assert.equal(reopenProof.provenance,'real-HTTPS-and-Realtime-acceptance');}
+const resumeIndex=process.argv.indexOf('--resume-duel-proof'),resumePath=resumeIndex>=0?process.argv[resumeIndex+1]:null;
+const resumeProof=resumePath?JSON.parse(readFileSync(resolve(resumePath),'utf8')):null;
+if(resumeIndex>=0){assert.ok(resumePath);assert.ok(!reopenProof);assert.equal(resumeProof?.projectRef,'jbvrdmrkwpznbrvteive');assert.equal(resumeProof.provenance,'real-HTTPS-and-Realtime-acceptance');const pushes=resumeProof.steps.find(step=>step.name==='both actual private channels delivered server round/room pushes');assert.equal(pushes?.pushes?.length,2);assert.ok(pushes.pushes.every(value=>value.events.some(event=>event.type==='round-updated')));const terminal=resumeProof.steps.findLast(step=>/^real HTTPS round \d+ matches on both clients$/.test(step.name));assert.ok(terminal&&(terminal.playerHp===0||terminal.enemyHp===0));}
 assert.ok(input,'Set LINGJING_CLOUD_BATTLE_INPUT to the private acceptance input file');
 const inputBytes=readFileSync(resolve(input),'utf8');
 const decoded=input.endsWith('.dpapi')?execFileSync('powershell.exe',['-NoProfile','-NonInteractive','-Command',"[Console]::InputEncoding=[Text.Encoding]::UTF8;[Console]::OutputEncoding=[Text.UTF8Encoding]::new($false);Add-Type -AssemblyName System.Security;[Text.Encoding]::UTF8.GetString([Security.Cryptography.ProtectedData]::Unprotect([Convert]::FromBase64String([Console]::In.ReadToEnd()),$null,[Security.Cryptography.DataProtectionScope]::CurrentUser))"],{input:inputBytes,encoding:'utf8',windowsHide:true}):inputBytes;
@@ -51,6 +57,8 @@ require('./apps/pc-app/dist/main/index.cjs');
 `);
 const apps=new Map(),profiles={},errors=[],steps=[];
 const proof={runId,at:new Date().toISOString(),provenance:'real-HTTPS-and-Realtime-acceptance',scope:friendsOnly?'friend-duel-only; training/device-revoke remain pending':'friend-duel, training, recovery and device-revoke',projectRef:config.projectRef,origin:config.url,machineCount:1,physicalDevices:1,concurrentDuelPlayers:2,independentProfiles:friendsOnly?2:3,statement:'Two isolated duel clients plus an optional fresh same-account recovery client on the same Windows host; not two physical devices. Test faults cancel a real response read and close the real SDK socket; no mock authority or simulated location is used.',sourceCommit:execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim(),sourceDirty:execFileSync('git',['status','--short'],{encoding:'utf8'}).trim(),build:JSON.parse(readFileSync('apps/pc-app/dist/build-manifest.json','utf8')),steps,errors};
+if(reopenProof)Object.assign(proof,{scope:'after-retirement: real Auth/HTTPS/private-channel and persisted completed report reopen only',priorFullAcceptance:resolve(reopenPath),concurrentDuelPlayers:0,independentProfiles:1,statement:'One fresh isolated native profile reopens the prior fully accepted cloud battle using the final retired transport, then restarts with persisted Auth. This scoped check does not claim another complete duel/training/revocation run.'});
+if(resumeProof)Object.assign(proof,{scope:'resume immutable completed cloud duel: report/reward restart, natural training takeover and device-only revoke',priorDuelProof:{path:resolve(resumePath),sha256:createHash('sha256').update(readFileSync(resolve(resumePath))).digest('hex'),runId:resumeProof.runId,sourceCommit:resumeProof.sourceCommit,fullRunPassed:resumeProof.passed,priorFailure:resumeProof.failure?.message,completedScope:'actual invite/join, response loss, refresh/reconnect, pending-action native restart, ten natural immutable rounds and actual private-channel pushes'},statement:'Continue the same designated owners and completed cloud room through fresh isolated native profiles. Earlier duel phases retain their original failed-run proof and source commit; this run independently rereads the actual terminal room/rewards, then checks the remaining report/training/revocation flow. One Windows host, not two physical devices.'});
 const save=()=>writeFileSync(join(output,'evidence.json'),JSON.stringify(proof,null,2));
 const record=(name,details={})=>{steps.push({at:new Date().toISOString(),name,...details});save();console.log(name);};
 const api=async(page,feature,command,payload={})=>{const result=await page.evaluate(({feature,command,payload})=>window.lingjing.invoke(feature,command,payload),{feature,command,payload});assert.equal(result.ok,true,`${feature}.${command}: ${result.code} ${result.message}`);return result.data;};
@@ -141,14 +149,27 @@ async function revokeAndVerify(revoked,other,roomId) {
 }
 let failure;
 try {
-  let host=await launch(0);const guest=await launch(1);assert.notEqual(host.profile.owner,guest.profile.owner);await friendLobby(guest);await friendLobby(host);
+  if(reopenProof){
+    const client=await launch(0),roomId=reopenProof.steps.find(step=>step.roomId)?.roomId;
+    assert.ok(roomId);const prior=reopenProof.sqlite.find(value=>value.owner===client.profile.owner),saved=prior?.reports.find(value=>value.session_id===`online-${roomId}`);assert.ok(saved,'The designated account must own the prior accepted report');
+    const report=await api(client.page,'battle','getReport',{reportId:saved.id});await route(client.page,`/battle/session/${saved.session_id}`);await screen(client.page);const session=await api(client.page,'battle','sync',{sessionId:saved.session_id});assert.equal(session.status,'finished');assert.equal(session.reward.applied,true);assert.equal(session.pendingAction,null);
+    const authorized=await joined(client),retired=await client.app.evaluate(()=>{const online=globalThis.__liveBattle;return {functionName:online.functionName,legacyPasswordMethods:['registerAccount','loginAccount','updateAccount'].filter(name=>typeof online[name]==='function'),hasLegacyKeyField:Object.hasOwn(online,'supabaseAnonKey')};});assert.equal(retired.functionName,'lingjing-battle');assert.deepEqual(retired.legacyPasswordMethods,[]);assert.equal(retired.hasLegacyKeyField,false);await screenshot(client.page,'after-retirement-completed-battle');
+    await client.app.close();apps.delete(0);const restarted=await launch(0);assert.deepEqual(await api(restarted.page,'battle','getReport',{reportId:saved.id}),report);record('final retired transport reopened the actual completed cloud battle/private channel and preserved report/Auth across native restart',{roomId,reportId:saved.id,authorized,retired});
+  } else {
+  let host=await launch(0);const guest=await launch(1);assert.notEqual(host.profile.owner,guest.profile.owner);let left,right,round=0;const observed=[[],[]];
+  if(resumeProof){
+    const prior=resumeProof.steps.find(step=>step.roomId),terminal=resumeProof.steps.findLast(step=>/^real HTTPS round \d+ matches on both clients$/.test(step.name)),sessionId=`online-${prior.roomId}`;
+    assert.equal(host.profile.owner,prior.a.actor.ownerAccountId);assert.equal(guest.profile.owner,prior.b.actor.ownerAccountId);
+    for(const client of [host,guest]){await route(client.page,`/battle/session/${sessionId}`);await screen(client.page);}
+    left=await api(host.page,'battle','sync',{sessionId});right=await api(guest.page,'battle','sync',{sessionId});assert.equal(left.snapshot.player.hp,terminal.playerHp);assert.equal(left.snapshot.enemy.hp,terminal.enemyHp);assert.equal(left.snapshot.player.hp,right.snapshot.enemy.hp);assert.equal(left.snapshot.enemy.hp,right.snapshot.player.hp);round=left.snapshot.round;assert.ok(round>2);assert.equal(right.snapshot.round,round);
+    const a=await joined(host),b=await joined(guest);profiles[0].deviceId=a.actor.deviceId;profiles[1].deviceId=b.actor.deviceId;record('fresh actual native clients reread the original immutable completed cloud duel and both pet-bound applied rewards',{roomId:prior.roomId,rounds:round,a,b,priorDuelRunId:resumeProof.runId});
+  } else {
+  await friendLobby(guest);await friendLobby(host);
   await host.page.getByLabel('搜索账号或用户名',{exact:true}).fill(config.accounts[1].account);await host.page.getByRole('button',{name:'搜索',exact:true}).click();await host.page.locator('.battle-user-list .battle-small-action').click();
   await guest.page.locator('.battle-invitations').getByRole('button',{name:'刷新',exact:true}).click();await guest.page.getByRole('button',{name:'接受',exact:true}).click();await screen(guest.page,true);await screenshot(guest.page,'accepted-waiting');
-  await host.page.locator('.battle-invitations').getByRole('button',{name:'刷新',exact:true}).click();await host.page.getByRole('button',{name:'进入房间',exact:true}).click();let left=await screen(host.page),right=await screen(guest.page);assert.equal(left.room.id,right.room.id);assert.equal(left.player.petId,right.enemy.petId);
+  await host.page.locator('.battle-invitations').getByRole('button',{name:'刷新',exact:true}).click();await host.page.getByRole('button',{name:'进入房间',exact:true}).click();left=await screen(host.page);right=await screen(guest.page);assert.equal(left.room.id,right.room.id);assert.equal(left.player.petId,right.enemy.petId);
   const a=await joined(host),b=await joined(guest);assert.notEqual(a.actor.authUserId,b.actor.authUserId);assert.notEqual(a.actor.deviceId,b.actor.deviceId);profiles[0].deviceId=a.actor.deviceId;profiles[1].deviceId=b.actor.deviceId;record('two real JWT/device clients invited, accepted and joined one authorized Realtime room',{roomId:left.room.id,a,b});
-  const observed=[[],[]];
   for(const client of [host,guest])await client.page.evaluate(()=>{window.__liveBattleEvents=[];window.lingjing.subscribe('battle:online',value=>window.__liveBattleEvents.push(value));});
-  let round=0;
   while(left.status!=='finished'&&round<30) {
     const next=left.snapshot.round+1;for(const client of [host,guest])await client.page.waitForFunction(round=>document.querySelector('.battle-live-layout')?.getAttribute('data-animation-phase')==='rest'&&document.querySelector('.battle-round-number > span')?.textContent?.trim()===`回合 ${round}`,next);
     if(round===0)await host.app.evaluate(()=>{globalThis.__dropBattleResponseOnce=true;});
@@ -166,6 +187,8 @@ try {
   }
   assert.equal(left.status,'finished');assert.equal(right.status,'finished');assert.ok(round>2);assert.equal(left.reward.applied,true);assert.equal(right.reward.applied,true);assert.notEqual(left.winner,right.winner);
   const pushes=[];for(const client of [host,guest]){const delivered=await client.app.evaluate(()=>globalThis.__liveBattlePushes||[]);assert.ok(delivered.some(event=>event.type==='round-updated'&&event.roomId),`Player ${client.index+1} must receive actual private-channel Postgres round events, beyond HTTPS readback`);pushes.push({device:client.index+1,events:delivered});}record('both actual private channels delivered server round/room pushes', {pushes});
+  }
+  assert.equal(left.status,'finished');assert.equal(right.status,'finished');assert.equal(left.reward.applied,true);assert.equal(right.reward.applied,true);assert.notEqual(left.winner,right.winner);
   const before=[(await api(host.page,'companions','list')).pets,(await api(guest.page,'companions','list')).pets];for(const client of [host,guest]){const session=client.index===0?left:right;await api(client.page,'battle','retrySettlement',{sessionId:session.id});await api(client.page,'battle','retrySettlement',{sessionId:session.id});assert.deepEqual((await api(client.page,'companions','list')).pets,before[client.index]);}
   await screenshot(host.page,'finished-host');await screenshot(guest.page,'finished-guest');
   for(const client of [host,guest]) {
@@ -200,6 +223,7 @@ try {
   const trainingReport=await api(host.page,'battle','getReport',{reportId:training.reportId});assert.deepEqual(await api(recovery.page,'battle','getReport',{reportId:training.reportId}),trainingReport);
   await recovery.page.waitForFunction(()=>document.querySelector('.battle-live-layout')?.getAttribute('data-animation-phase')==='rest');await screenshot(recovery.page,'cloud-training-finished');record('second same-owner native client naturally resumed cloud training through actual UI moves; both share canonical growth/inventory/report',{sessionId:training.id,rounds:count,reward:training.reward,deviceIds:[hostActor.actor.deviceId,recoveryActor.actor.deviceId]});
   await revokeAndVerify(host,recovery,left.room.id);
+  }
   }
   assert.deepEqual(errors,[]);proof.passed=true;
 } catch(error){failure=error;proof.passed=false;proof.failure={message:error.message,stack:error.stack};for(const [index,app] of apps)try{await screenshot(await app.firstWindow(),`failure-${index+1}`);}catch{}}
