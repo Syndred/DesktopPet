@@ -1,0 +1,65 @@
+{
+  "format": "lingjing.global-serial.contract",
+  "version": 1,
+  "status": "approved-by-root-for-current-user-request",
+  "decisionId": "globalSerial-20261025-v1",
+  "source": "Direct human request; numeric per-species global sequence and no desktop name/number",
+  "field": {
+    "name": "globalSerial",
+    "type": "optional canonical positive decimal string",
+    "examples": [
+      "1",
+      "9999",
+      "10000"
+    ],
+    "storedPadding": false,
+    "uiMinimumDigits": 4,
+    "uiMissing": "待同步",
+    "noNumberConversion": true
+  },
+  "scope": {
+    "counter": "independent per immutable canonical original templateId across all users",
+    "internalIdentity": "existing ownerAccountId + petId remain unchanged",
+    "deletedNumbers": "permanent; never reused"
+  },
+  "wild": {
+    "model": "preserve existing per-account encounter/capture semantics",
+    "entityKey": "server-validated world/scenario + ownerAccountId + stable spawnId; not client nickname, resourceId or transient permitId",
+    "acrossUsers": "different owner-scoped wild instances at same map cell receive different numbers",
+    "allocation": "Nearby map points remain candidates until the user opens an encounter. A server-validated observe operation assigns the number before battle/capture, using the existing location and interaction-range policy. Refresh, reserve, re-entry and retry reuse it; do not batch-allocate numbers on every nearby refresh.",
+    "capture": "bind captured ownerAccountId + existing petId to the SAME allocated wild globalSerial; never allocate again"
+  },
+  "preservation": {
+    "storage": "Authoritative sidecar registry and a non-backup main-process cache. Project confirmed numbers into read-only DTOs; never embed them retroactively in original pet data_json, immutable action receipts or archived envelopes.",
+    "historicalNames": true,
+    "legacySerial": true,
+    "internalPetId": true,
+    "owner": true,
+    "immutableActionReceipts": true,
+    "archivedSaveBytes": true,
+    "offline": "no local fabricated global number; unconfirmed number stays absent/pending",
+    "untrustedImport": "unverified client/imported numeric metadata cannot assert authority"
+  },
+  "namespace": {
+    "production": "live",
+    "qa": "qa:<scenarioId>; only server service-owned authorization grants select this scope, never editable usernames or user_metadata",
+    "revocation": "Expired or revoked QA authorization cannot silently fall back to allocating production numbers"
+  },
+  "desktop": {
+    "visibleName": false,
+    "visibleNumber": false,
+    "keepPetInteractions": true,
+    "accessibilityMetadataAllowed": true
+  },
+  "responsibilities": {
+    "02": "shared types, companion DTO/display helper, no desktop visible labels; coordinate local authoritative cache with 08",
+    "03": "discovery nearby/encounter/capture same-number UI and server integration; no competing registry SQL",
+    "08": "private atomic registry, transactional numbering/backfill, trusted sync/readback, incremental migration; deploy only after root review",
+    "09": "independent real application scenarios, concurrency/identity/readback proofs"
+  },
+  "integration": {
+    "previousCandidate": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+    "nextCandidateRequired": true,
+    "fullAcceptancePassed": false
+  }
+}

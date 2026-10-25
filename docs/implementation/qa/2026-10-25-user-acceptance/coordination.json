@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-25T10:42:36.812Z",
+  "updatedAt": "2026-10-25T10:47:52.153Z",
   "status": "in-progress",
   "qaThreadId": "01a1725c-d59c-7620-9bb6-1c0d4e0fb3a3",
   "soleNativeInputOwner": "01a1725c-d59c-7620-9bb6-1c0d4e0fb3a3",
@@ -86,6 +86,14 @@
       "fixCommit": "f0da7e1077edc634132e53d582c584efcd564ce7",
       "status": "source-fix-integrated; actual-candidate-independent-retest-pending",
       "actualUiRetestPassed": false
+    },
+    {
+      "issueId": "QA-008",
+      "owner": "02",
+      "threadId": "01a16dc5-b72d-78d0-9bd8-50bfe70cec63",
+      "fixCommit": "02ea2dac317b3aaaee12cf9517b456450391cf9c",
+      "status": "source-integrated; next-candidate actual UI retest pending",
+      "actualUiRetestPassed": false
     }
   ],
   "integrationOwner": "01",
@@ -93,7 +101,7 @@
   "releaseGate": "All release blockers fixed and independently retested; full scenario matrix reports actual pass/fail/blocked per same final portable; no mock-only full acceptance claims",
   "productionFreeze": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
   "candidate": {
-    "status": "candidate-delivered-awaiting-actual-retest",
+    "status": "historical-candidate; new numbering rules and additional fixes require next build",
     "sourceCommit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
     "path": "releases/user-acceptance-312e5fe/Lingjing-0.1.8-portable-x64.exe",
     "bytes": 169197132,
@@ -153,5 +161,25 @@
       "independentAcceptance": "09"
     },
     "status": "implementation-in-progress; not accepted in candidate 312e5fe"
+  },
+  "nextCandidate": {
+    "status": "source-integration-in-progress",
+    "requiredContract": "docs/implementation/companions-global-serial-contract.json",
+    "sourceFixes": {
+      "QA008": "02ea2dac317b3aaaee12cf9517b456450391cf9c",
+      "perLaunchPortableExtraction": "a4ae503b3520ec8742dceb4ba4189be0addde35e"
+    },
+    "rootTargetedVerification": {
+      "QA008": {
+        "passed": 4,
+        "realSqlite": true,
+        "actualUi": false
+      },
+      "portableExtraction": {
+        "passed": 3,
+        "actualProductLaunch": false
+      }
+    },
+    "fullAcceptancePassed": false
   }
 }

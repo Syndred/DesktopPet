@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-25T10:42:36.813Z",
-  "phase": "full-user-acceptance-candidate-delivered",
+  "updatedAt": "2026-10-25T10:47:52.155Z",
+  "phase": "full-user-acceptance-additional-fixes-and-numeric-identity",
   "deployed": {
     "projectRef": "jbvrdmrkwpznbrvteive",
     "migrations": 22,
@@ -333,11 +333,11 @@
   },
   "productFreeze": {
     "commit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
-    "sourceHeld": true,
+    "sourceHeld": false,
     "actualPortableBusinessAccepted": false,
     "fullUserAcceptancePassed": false,
-    "productionCodeChangedAfterFreeze": false,
-    "reason": "User-reported defects and full actual-user acceptance reopening",
+    "productionCodeChangedAfterFreeze": true,
+    "reason": "312e5fe artifact preserved; integration source now advancing for QA008, safe portable extraction and numeric identity rules",
     "frozenAt": "2026-10-25T10:15:02.280Z"
   },
   "finalPortableFirstAttempt": {
@@ -591,5 +591,25 @@
     },
     "status": "implementation-in-progress; not accepted in candidate 312e5fe"
   },
-  "fullUserAcceptancePassed": false
+  "fullUserAcceptancePassed": false,
+  "nextCandidate": {
+    "status": "source-integration-in-progress",
+    "requiredContract": "docs/implementation/companions-global-serial-contract.json",
+    "sourceFixes": {
+      "QA008": "02ea2dac317b3aaaee12cf9517b456450391cf9c",
+      "perLaunchPortableExtraction": "a4ae503b3520ec8742dceb4ba4189be0addde35e"
+    },
+    "rootTargetedVerification": {
+      "QA008": {
+        "passed": 4,
+        "realSqlite": true,
+        "actualUi": false
+      },
+      "portableExtraction": {
+        "passed": 3,
+        "actualProductLaunch": false
+      }
+    },
+    "fullAcceptancePassed": false
+  }
 }
