@@ -70,7 +70,7 @@ class DiscoveryService {
   captureViews(owner,owned) {
     if(!owner)return [];
     const pets=owned || this.getCompanions?.()?.listPets?.(owner) || [];
-    return this.repo.captures(owner).map(capture=>{const pet=pets.find(value=>value.petId===capture.petId);return {...capture,...(pet?{name:pet.name,resourceId:pet.resource.resourceId,showOnDesktop:Boolean(pet.desktop?.visible)}:{})};});
+    return this.repo.captures(owner).map(capture=>{const pet=pets.find(value=>value.petId===capture.petId);return {...capture,...(pet?{name:pet.name,serial:pet.serial,resourceId:pet.resource.resourceId,showOnDesktop:Boolean(pet.desktop?.visible)}:{})};});
   }
   snapshot() {
     if(this.getOwner()&&this.authority&&this.cloudRuntime)return this.cloudRuntime.refresh().then(()=>this.snapshotLocal());

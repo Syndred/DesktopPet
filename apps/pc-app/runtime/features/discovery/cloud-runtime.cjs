@@ -17,7 +17,7 @@ class CloudDiscoveryRuntime {
     this.assertOwner(owner);
     if(!this.handlesSession(session?.id)||session.mode!=='wild'||session.context?.cloudAuthority!=='discovery'||!session.snapshot||!Array.isArray(session.rounds))fail('CLOUD_RESPONSE_INVALID','云端对战回执无效');
     const old=this.peek(owner,session.id);if(old&&(old.revision>session.revision||old.snapshot.round>session.snapshot.round))return old;
-    const saved=clone(session),pending=this.pending(owner,session.id);saved.pendingAction=pending?{actionId:pending.request.actionId,action:pending.request.action,roundNo:pending.request.expectedRound,uncertain:true}:null;
+    const saved=clone(session),pending=this.pending(owner,session.id);saved.player.level??=saved.player.growth?.level||1;saved.player.resourceRef??=saved.player.resource?.resourceId;saved.pendingAction=pending?{actionId:pending.request.actionId,action:pending.request.action,roundNo:pending.request.expectedRound,uncertain:true}:null;
     this.sessions.set(this.key(owner,session.id),saved);return saved;
   }
   intent(owner,actionId){const row=this.db.prepare('SELECT * FROM account_actions WHERE owner_account_id=? AND action_id=?').get(owner,'discovery-client:'+actionId);return row&&row.kind==='discovery-cloud-command'?{row,...JSON.parse(row.result)}:null;}
@@ -116,7 +116,7 @@ class CloudDiscoveryRuntime {
   getOutcome(input){const owner=this.owner();if(input.ownerAccountId!==owner)fail('AUTH_CHANGED','账号已切换');const session=this.peek(owner,input.sessionId);if(!session)fail('CLOUD_SESSION_SYNC_REQUIRED','请先同步云端对局');return{session,won:session.status==='finished'&&session.winner==='player',settled:session.status==='finished'};}
   async resolvePending(owner,id){const pending=this.pending(owner,id);if(!pending)return;try{const receipt=await this.authority().action(pending.request.actionId);const{actionId,...request}=pending.request;void actionId;if(receipt.requestHash!==checksum({protocol:PROTOCOL,...request}))fail('CLOUD_RECEIPT_MISMATCH','原行动回执不匹配');this.assertOwner(owner);this.saveIntent(owner,pending.request,'verified',{sessionId:id,result:receipt.result});}catch(error){if(error.code!=='ACTION_NOT_FOUND')throw error;}}
   handlesReport(id){return typeof id==='string'&&/^report-cloud-[a-f0-9-]{36}$/i.test(id);}
-  report(session){return{id:session.reportId||'report-cloud-'+this.permitId(session.id),sessionId:session.id,mode:'wild',player:session.player,enemy:session.enemy,winner:session.winner,rounds:session.rounds,rules:session.rules,reward:session.reward,context:session.context,historyComplete:true,startedAt:session.startedAt,endedAt:session.endedAt||session.startedAt};}
+  report(session){return{id:session.reportId||'report-cloud-'+this.permitId(session.id),sessionId:session.id,mode:'wild',status:session.status,player:session.player,enemy:session.enemy,winner:session.winner,rounds:session.rounds,rules:session.rules,reward:session.reward,context:session.context,historyComplete:true,startedAt:session.startedAt,endedAt:session.endedAt||session.startedAt};}
   async listReports(owner){if(!this.discovery.authority)return[];this.assertOwner(owner);try{await this.refresh();}catch(error){if(!['CLOUD_UNAVAILABLE','DISCOVERY_UNAVAILABLE','DISCOVERY_STORAGE_UNAVAILABLE'].includes(error.code))throw error;}return[...this.sessions.entries()].filter(([key,s])=>key.startsWith(owner+'\0')&&['finished','abandoned'].includes(s.status)).map(([,s])=>this.report(s));}
   async command(name,payload,context){
     const owner=this.owner();if(context.ownerAccountId!==owner)fail('AUTH_CHANGED','账号已切换');
