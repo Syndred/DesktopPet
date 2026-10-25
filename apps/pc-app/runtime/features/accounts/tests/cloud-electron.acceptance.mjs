@@ -7,7 +7,7 @@ const requireFull=process.env.ACCOUNTS_REQUIRE_FULL_SYNC==='1';
 const account=`nativeqa_${Date.now().toString(36)}`,password=`Aa9!${randomBytes(18).toString('base64url')}`;
 const evidence={at:new Date().toISOString(),sourceSha:execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8',windowsHide:true}).trim(),
  kind:'Two actual Electron44 processes on one Windows host, isolated profiles, production TypeScript main/preload and React renderer, actual Supabase HTTPS. Not two physical machines.',
- credentialsPersisted:'Windows safeStorage ciphertext only; no password or token in evidence',checks:[],errors:[]};
+ requireCompleteDomainSave:requireFull,credentialsPersisted:'Windows safeStorage ciphertext only; no password or token in evidence',checks:[],errors:[]};
 const models=[];let activeA,activeB;
 function pass(name,data){evidence.checks.push({name,data});console.log('PASS',name);writeFileSync(join(output,'progress.json'),JSON.stringify(evidence,null,2));}
 const invoke=async(model,command,payload={},expectOk=true)=>{
@@ -78,6 +78,7 @@ try{
  const restored=await restore(activeB);assert.equal((await invoke(activeB,'settingsGet')).document.desktop.volume,31);assert.ok(restored.preservedBackup.filePath);
  assert.equal(JSON.parse(readFileSync(restored.preservedBackup.filePath,'utf8')).data.modules.settings.data.desktop.volume,42);
  await settings(activeB,43);const second=await invoke(activeB,'syncNow',{actionId:randomUUID()});assert.equal(second.revision,first.revision+1);
+ if(requireFull)assert.equal(second.verified,true,'Second-client full save remained partial');
  pass('real IPC conflict preserves B state; explicit cloud restore keeps original backup before next CAS',{conflict:conflict.code,backup:restored.preservedBackup.filePath,revision:second.revision});
  const sdk=await activeB.app.evaluate(async()=>{
   const accounts=globalThis.__accountsCloudAcceptanceServices.get('accounts'),first=await accounts.requireCloudActor(),client=first.client,prior=accounts.remote.active.accessToken;
@@ -98,6 +99,7 @@ try{
  await activeA.page.getByRole('button',{name:'重试同步',exact:true}).click();
  await activeA.page.waitForFunction(async()=>{const r=await window.lingjing.invoke('accounts','syncStatus');return r.ok&&r.data.pending===0;});
  const retryStatus=await invoke(activeA,'syncStatus');const retried={revision:retryStatus.cloudRevision};assert.equal(retried.revision,second.revision+1);assert.equal((await invoke(activeA,'settingsGet')).document.desktop.volume,54);
+ if(requireFull){assert.equal(retryStatus.localChanged,false);assert.equal(retryStatus.unverifiedLocal,0);}
  pass('real Electron restart resumes encrypted session and durable queue after controlled connection refusal',{oldPid,newPid:activeA.pid,deviceId:afterRestart.deviceId,sessionId:afterRestart.sessionId,revision:retried.revision,scope:'per-request closed TLS socket; host network was not disabled'});
  for(const model of [activeA,activeB]){await model.page.evaluate(()=>{location.hash='#/account';});await model.page.getByRole('heading',{name:'把每一段陪伴，好好保存。',exact:true}).waitFor();await model.page.screenshot({path:join(output,`${model.name}.png`)});}
  const secretBoundary=await activeA.app.evaluate(()=>{const a=globalThis.__accountsCloudAcceptanceServices.get('accounts'),text=JSON.stringify(a.session()),fs=globalThis.__accountsCloudAcceptanceRequire('node:fs');
