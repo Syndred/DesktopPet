@@ -1,0 +1,38 @@
+// Supplemental post-completion native restart. The original main run must pass.
+import assert from 'node:assert/strict';
+import {readFileSync,writeFileSync} from 'node:fs';
+import {join,resolve} from 'node:path';
+import {createHash} from 'node:crypto';
+import {createRequire} from 'node:module';
+import {pathToFileURL} from 'node:url';
+const driverPath='C:/Users/Administrator/Desktop/project/DesktopPet/scripts/acceptance/portable-session.mjs';
+const {launchPortableSession}=await import(pathToFileURL(driverPath).href);
+const {pollState}=await import(pathToFileURL('C:/Users/Administrator/Desktop/project/DesktopPet/scripts/acceptance/poll-state.mjs').href);
+const require=createRequire(import.meta.url),Database=require('better-sqlite3'),directory=resolve(process.argv[2]);
+const original=JSON.parse(readFileSync(join(directory,'evidence.json'),'utf8'));
+assert.equal(original.passed,true,'Refuse to proceed past a failed main acceptance');
+assert.equal(original.sourceCommit,'a9acd7f6f1920c541d429fa26d1f054b1427cd95');
+const sha=bytes=>createHash('sha256').update(bytes).digest('hex');
+assert.equal(sha(readFileSync(original.executable.path)),original.executable.sha256);
+const proof={at:new Date().toISOString(),scope:'Actual same-SFX restart after completed duel; encrypted sessions, original device/action IDs, raw business history and clean authority checkpoints',originalRunId:original.runId,roomId:original.roomId,sessionId:original.sessionId,sourceCommit:original.sourceCommit,executable:original.executable,helperSha256:sha(readFileSync(new URL(import.meta.url))),driver:{path:driverPath,sha256:sha(readFileSync(driverPath))},owners:[],passed:false};
+const save=()=>writeFileSync(join(directory,'restart-evidence.json'),JSON.stringify(proof,null,2));
+function sql(profile,owner){const db=new Database(join(profile,'lingjing.sqlite'),{readonly:true,fileMustExist:true});db.pragma('query_only=ON');try{assert.equal(db.pragma('quick_check',{simple:true}),'ok');const business=Object.fromEntries(['companion_pets','companion_actions','garden_items','garden_actions','garden_reward_receipts','battle_sessions','battle_action_receipts','battle_reports_v2','battle_reward_receipts'].map(table=>[table,db.prepare(`SELECT * FROM ${table} WHERE owner_account_id=?`).all(owner)])),journal=db.prepare('SELECT action_id,session_id,command_json,result_json,legacy_row_json FROM battle_transport_journal WHERE owner_account_id=? ORDER BY action_id').all(owner),checkpoint=db.prepare('SELECT cloud_revision,last_checksum FROM account_sync_state WHERE owner_account_id=?').get(owner);return {business,journal,checkpoint};}finally{db.close();}}
+const clean=model=>pollState(()=>model.call('accounts','syncStatus'),s=>!s.running&&!s.pending&&!s.conflicts&&!s.localChanged&&!s.unverifiedLocal&&!s.privacyRedactions,{timeoutMs:120000,intervalMs:800,label:'Restarted actual native process did not remain clean'});
+let model;
+try{
+ for(const profile of original.profiles){
+  const {label,owner}=profile,before=sql(profile.profile,owner),device=JSON.parse(readFileSync(join(profile.profile,'accounts/device.json'),'utf8')).deviceId,old=original.results.find(result=>result.label===label),cloud=original.cloud.find(result=>result.label===label);
+  assert.notEqual(owner,'account:470a41d4-3cf7-4a7d-8b1e-32e276d2a719');assert.equal(before.checkpoint.cloud_revision,cloud.revision);assert.equal(before.checkpoint.last_checksum,cloud.checksum);
+  console.log('RESTART',label);
+  model=await launchPortableSession({executable:original.executable.path,profile:profile.profile,expectedSource:original.sourceCommit,label:'restart-'+label});assert.notEqual(model.runtime.pid,profile.runtime.pid);const identity=await model.call('accounts','session');assert.equal(identity.currentUser.id,owner);assert.equal(identity.currentUser.authKind,'supabase');assert.equal(identity.persistence,'secure');assert.equal(JSON.parse(readFileSync(join(profile.profile,'accounts/device.json'),'utf8')).deviceId,device);
+  await model.main(({BrowserWindow},url)=>{BrowserWindow.getAllWindows().find(window=>window.webContents.getURL()===url).setContentSize(1280,844,false);return true;},model.page.url());
+  await model.page.evaluate(id=>{location.hash=`#/battle/session/${id}`;},original.sessionId);await model.page.locator('[data-battle-screen="shared-v1"]').waitFor();await model.page.waitForFunction(()=>document.querySelectorAll('.battle-stage .resource-stage[data-status="ready"] canvas').length===2);
+  const session=await model.call('battle','sync',{sessionId:original.sessionId});assert.equal(session.status,'finished');assert.equal(session.reward.actionId,old.reward.actionId);assert.equal(session.reward.applied,true);assert.equal(session.snapshot.round,10);await model.call('battle','retrySettlement',{sessionId:original.sessionId});const report=await model.call('battle','getReport',{reportId:old.reportId});assert.equal(report.rounds.length,10);
+  await model.page.waitForFunction(()=>document.querySelector('.battle-live-layout')?.getAttribute('data-animation-phase')==='rest');await model.page.getByRole('button',{name:'战报',exact:true}).click();await model.page.getByRole('region',{name:'战报详情'}).waitFor();await model.page.waitForFunction(()=>document.querySelectorAll('.battle-replay-scene .resource-stage[data-status="ready"] canvas').length===2);
+  const image=await model.main(async({BrowserWindow},url)=>{const window=BrowserWindow.getAllWindows().find(window=>window.webContents.getURL()===url),image=await window.capturePage(),bitmap=image.toBitmap();let visiblePixels=0,coloredPixels=0;for(let i=0;i<bitmap.length;i+=4){if(bitmap[i+3]>10)visiblePixels++;if(bitmap[i+3]>10&&Math.max(bitmap[i],bitmap[i+1],bitmap[i+2])-Math.min(bitmap[i],bitmap[i+1],bitmap[i+2])>20)coloredPixels++;}return {visible:window.isVisible(),size:image.getSize(),visiblePixels,coloredPixels,png:image.toPNG().toString('base64')};},model.page.url());const png=Buffer.from(image.png,'base64');delete image.png;assert.ok(image.visible&&image.visiblePixels>10000&&image.coloredPixels>1000);writeFileSync(join(directory,`restart-report-${label}.png`),png);await model.page.screenshot({path:join(directory,`restart-report-${label}-renderer.png`),fullPage:true});
+  const status=await clean(model),after=sql(profile.profile,owner);assert.deepEqual(after,before,'Restart and repeated settlement must retain every original business row and original protocol request/result byte');const pid=model.runtime.pid;await model.stop();model=null;assert.deepEqual(sql(profile.profile,owner),before,'Exit readback must retain exact completed history and operation IDs');
+  proof.owners.push({label,owner,deviceId:device,originalPid:profile.runtime.pid,restartedPid:pid,reportId:old.reportId,rewardActionId:session.reward.actionId,status,checkpoint:after.checkpoint,originalProtocolActionIds:after.journal.map(row=>row.action_id),rawBusinessAndJournalUnchanged:true,nativeFrame:{...image,file:`restart-report-${label}.png`,sha256:sha(png)}});save();console.log('PASS restart',label,'exact history/IDs and clean checkpoint');
+ }
+ proof.passed=true;save();
+}catch(error){proof.failure={message:error.message,stack:error.stack};save();process.exitCode=1;console.error('FAIL restart',error.message);}
+finally{if(model)await model.stop().catch(()=>{});proof.completedAt=new Date().toISOString();save();console.log(JSON.stringify({directory,passed:proof.passed,owners:proof.owners.length,failure:proof.failure?.message}));}

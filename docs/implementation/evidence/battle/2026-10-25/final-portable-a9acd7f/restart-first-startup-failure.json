@@ -1,0 +1,25 @@
+{
+  "at": "2026-10-25T08:40:05.945Z",
+  "scope": "Actual same-SFX restart after completed duel; encrypted sessions, original device/action IDs, raw business history and clean authority checkpoints",
+  "originalRunId": "b5253a3c-1d11-4135-9a95-295f21025059",
+  "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+  "sessionId": "online-d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+  "sourceCommit": "a9acd7f6f1920c541d429fa26d1f054b1427cd95",
+  "executable": {
+    "path": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\artifacts\\pc-cloud-upgrade-final-a9acd7f\\Lingjing-0.1.8-portable-x64.exe",
+    "size": 169196329,
+    "sha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289"
+  },
+  "helperSha256": "f479783445e3d02da17009a91d5d9b4257dc409555e2e6e03d88324186c84820",
+  "driver": {
+    "path": "C:/Users/Administrator/Desktop/project/DesktopPet/scripts/acceptance/portable-session.mjs",
+    "sha256": "ba495ffbaf8e5c7b7868c57a2176b5ab8b239b5a311941f88c7084e1c067225e"
+  },
+  "owners": [],
+  "passed": false,
+  "failure": {
+    "message": "Real portable did not expose its owned main inspector",
+    "stack": "Error: Real portable did not expose its owned main inspector\n    at pollState (file:///C:/Users/Administrator/Desktop/project/DesktopPet/scripts/acceptance/poll-state.mjs:8:9)\n    at async launchPortableSession (file:///C:/Users/Administrator/Desktop/project/DesktopPet/scripts/acceptance/portable-session.mjs:43:19)\n    at async file:///C:/Users/Administrator/.codex/worktrees/lingjing-battle/DesktopPet/artifacts/battle/verify-final-friend-restart.mjs:27:9"
+  },
+  "completedAt": "2026-10-25T08:41:06.118Z"
+}

@@ -1,0 +1,342 @@
+{
+  "at": "2026-10-25T08:49:26.776Z",
+  "passed": true,
+  "sourceCommit": "a9acd7f6f1920c541d429fa26d1f054b1427cd95",
+  "executable": {
+    "path": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\artifacts\\pc-cloud-upgrade-final-a9acd7f\\Lingjing-0.1.8-portable-x64.exe",
+    "size": 169196329,
+    "sha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289"
+  },
+  "runId": "b5253a3c-1d11-4135-9a95-295f21025059",
+  "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+  "sessionId": "online-d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+  "invitationId": "401868b4-5783-4236-868c-a0252579b308",
+  "rounds": 10,
+  "actualNativeProcessesExited": true,
+  "firstSupplement": {
+    "passed": false,
+    "failure": "Real portable did not expose its owned main inspector",
+    "businessIpcCalls": 0,
+    "preserved": true,
+    "cause": "Unproven inspector-startup timeout; no production regression is inferred."
+  },
+  "secondSupplement": {
+    "passed": true,
+    "startedAt": "2026-10-25T08:43:50.535Z",
+    "completedAt": "2026-10-25T08:45:39.863Z",
+    "coordinatorReportedOtherRunClosedAt": "2026-10-25T08:43:39.933Z",
+    "startedAfterReportedOtherRunExit": true,
+    "sameByteExe": true,
+    "sameProfiles": true,
+    "defaultTemporaryEnvironment": true,
+    "noProcessTerminated": true
+  },
+  "owners": [
+    {
+      "label": "A",
+      "owner": "account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+      "petId": "pet-2d660416-db18-44a1-8392-74f235484151",
+      "profile": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\final-portable-friend-a9acd7f-1792917183061\\profile-A",
+      "mainPid": 19488,
+      "restartedPid": 16312,
+      "deviceId": "c32b659e-df8b-4008-9669-2a440f3aba8a",
+      "asarSha256": "c5d76b7b4966f241a7de8657c88ec2e309d41ff8fd62a6ed44d6c3ebc3c48f7e",
+      "revision": 9,
+      "checksum": "6c41d531f2499efc34116665d2d99b516c7014eeee29c579a6ac3a34f65a1c4d",
+      "checkpoint": {
+        "cloud_revision": 9,
+        "last_checksum": "6c41d531f2499efc34116665d2d99b516c7014eeee29c579a6ac3a34f65a1c4d"
+      },
+      "xp": 20,
+      "seeds": {
+        "source": "battle",
+        "receiptId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+        "itemId": "seed:rice",
+        "quantity": 2
+      },
+      "growthReceipt": "battle:d9f43966-a27c-476a-80f8-0ee7927a3ab7:account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+      "seedReceiptActionId": "battle-seeds:friend:d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+      "authorityReceipt": "battle-authority:friend:d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+      "reportId": "online-d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+      "uniqueGrowthBattleSeedRows": [
+        1,
+        1,
+        1
+      ],
+      "nativeRealtimeRoundPushes": 10,
+      "protocolChoiceId": "invite:401868b4-5783-4236-868c-a0252579b308",
+      "protocolRoundActions": [
+        {
+          "actionId": "74fe2ccf-0474-4fd8-9bea-686ba72d3fc6",
+          "round": 8,
+          "commandSha256": "0ce6508e18edb42a263d0c77b95e37961dbfb59739fcdba71d9071573fdfb1ac",
+          "resultSha256": "3bea823b73d75a1757440ab1290cbc473c0991f208b81b0df3002b756f704423"
+        },
+        {
+          "actionId": "956305e0-ac3c-482b-a018-a2a627a3a135",
+          "round": 6,
+          "commandSha256": "cce97ea6ef80e687efa70b2d5e6fa1fd75580233461564bbabdc7ccddfb446a2",
+          "resultSha256": "c6754617f0f70b853e616aa839bf579d8cecc7d62c24133ec814d39a23354d7e"
+        },
+        {
+          "actionId": "972454c0-cde2-4d84-8414-f5c2970cd879",
+          "round": 10,
+          "commandSha256": "1ed5659de07a83e37cb904e999249fb867d6e06651e45547af47aedd27705a13",
+          "resultSha256": "73f536e6e0506e7728b8c0bdfeac327e7f151bbdabb0f006751c006b79b9ac5f"
+        },
+        {
+          "actionId": "a38d9d51-5dc5-4c51-9607-1b7d93cd8747",
+          "round": 9,
+          "commandSha256": "3127954591c790d623ee600b9cfc7daaf501d2f40189116ef800eed8be8cb96a",
+          "resultSha256": "6a6e414488b8ebb1a7e0ba6efdccf985321806d119ca5b8b70c43116358036b4"
+        },
+        {
+          "actionId": "a6cec328-bcb6-417b-bf31-0b4f90847859",
+          "round": 3,
+          "commandSha256": "ebd8a11c8004ad36aeaf1a3ff69d7e80100531615999357532fbd60babe3c8c2",
+          "resultSha256": "8271254047523d9e5c39740a459288504ff4637286f62a6d9f2e6cba8343fafa"
+        },
+        {
+          "actionId": "ba0b261b-dcac-42ef-b437-42e7ef042e1d",
+          "round": 7,
+          "commandSha256": "3a3ceb19a61751570c737dbbe96d5d439b02e1c9ecda5e69b246de0e9ae7ee31",
+          "resultSha256": "50967fe77d2033273386f74aae83a6ca6ccc1caa942383f1f57625df965e9014"
+        },
+        {
+          "actionId": "c230baa5-485f-4665-ae36-af9448bd5ffe",
+          "round": 2,
+          "commandSha256": "9543ee8e55d7a686e9e6144b196dceeb5f310dc86870c8e1d4715574ffb407fa",
+          "resultSha256": "3d9cd633d9dbf8c8d41d0442b50f30a5d49eb388ca97de6281b84f32dc83ca83"
+        },
+        {
+          "actionId": "ca9a6f4d-8025-4dc8-bf0d-cf050ddd81ca",
+          "round": 5,
+          "commandSha256": "83ceb62a982cce690768c3fef5346377f7f98b7cab2c3c216ca0bf653281390f",
+          "resultSha256": "800a7c7cd9960891f5e041d4d5dae244cad70314e3b8d0c8f8ebfbae7d5f315a"
+        },
+        {
+          "actionId": "d3eafda7-3820-410f-b99a-c9f34b43a374",
+          "round": 4,
+          "commandSha256": "2d287590fe6d59022ff7ac1bf3bc2626d1f18483cd0ea4be6c3a8bbd147f71ea",
+          "resultSha256": "4487090e42c2562c8d7361626918ed2d69e7fca8e0aaf3258fdedc498bf0ef23"
+        },
+        {
+          "actionId": "dda73f1e-9f98-4ba1-affd-d35f814fa9fa",
+          "round": 1,
+          "commandSha256": "62cc7945e0641b062dcddfb4de40d15b2239ffaa0fce74896f7295225cee6ed6",
+          "resultSha256": "fd9c3a611f2e26ab4b7a3ea4f83b3519e453a93b342ba0bdbc6c3cdc271f565a"
+        }
+      ],
+      "protocolJournalRows": 14,
+      "canonicalBusinessActionRows": 0,
+      "canonicalRawRowsMatchIndependentHttps": true,
+      "originalHistoryAndJournalSurviveRestart": true,
+      "sqlitePath": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\final-portable-friend-a9acd7f-1792917183061\\profile-A\\lingjing.sqlite",
+      "sqliteSha256": "2d4183ffed7060c44afd264c2eec3bbf1747e28939a67fecb7b6ad89882d6175"
+    },
+    {
+      "label": "B",
+      "owner": "account:9e230794-470b-45be-9a18-a2564c88ba35",
+      "petId": "pet-7374c520-8730-45ca-a419-227e60a2fa81",
+      "profile": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\final-portable-friend-a9acd7f-1792917183061\\profile-B",
+      "mainPid": 24924,
+      "restartedPid": 11484,
+      "deviceId": "6da20636-85c0-4228-9196-016706f4d2d7",
+      "asarSha256": "c5d76b7b4966f241a7de8657c88ec2e309d41ff8fd62a6ed44d6c3ebc3c48f7e",
+      "revision": 7,
+      "checksum": "0676ef7a4ee7866b5ec831ef76814f73fc4674d24dcf7f6f4bec262c3f8c39b1",
+      "checkpoint": {
+        "cloud_revision": 7,
+        "last_checksum": "0676ef7a4ee7866b5ec831ef76814f73fc4674d24dcf7f6f4bec262c3f8c39b1"
+      },
+      "xp": 5,
+      "seeds": {
+        "source": "battle",
+        "receiptId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+        "itemId": "seed:rice",
+        "quantity": 2
+      },
+      "growthReceipt": "battle:d9f43966-a27c-476a-80f8-0ee7927a3ab7:account:9e230794-470b-45be-9a18-a2564c88ba35",
+      "seedReceiptActionId": "battle-seeds:friend:d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+      "authorityReceipt": "battle-authority:friend:d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+      "reportId": "online-d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+      "uniqueGrowthBattleSeedRows": [
+        1,
+        1,
+        1
+      ],
+      "nativeRealtimeRoundPushes": 10,
+      "protocolChoiceId": "accept:401868b4-5783-4236-868c-a0252579b308",
+      "protocolRoundActions": [
+        {
+          "actionId": "04032e90-6b44-4fcb-83cf-2b5b338e75f9",
+          "round": 2,
+          "commandSha256": "9543ee8e55d7a686e9e6144b196dceeb5f310dc86870c8e1d4715574ffb407fa",
+          "resultSha256": "4880a9b1de0e1ce8e9485386b61b985d2e9604deac874becb95ff8605bec51ff"
+        },
+        {
+          "actionId": "1dfdf515-eecd-4152-966b-d40584303d6a",
+          "round": 1,
+          "commandSha256": "62cc7945e0641b062dcddfb4de40d15b2239ffaa0fce74896f7295225cee6ed6",
+          "resultSha256": "ed4b592c5e577d1160d8b5d733d8b0e48831cf2102ac0d2952fcf325899ed891"
+        },
+        {
+          "actionId": "2f9cc6fa-b224-43d1-8802-bc3707d2a0b4",
+          "round": 5,
+          "commandSha256": "83ceb62a982cce690768c3fef5346377f7f98b7cab2c3c216ca0bf653281390f",
+          "resultSha256": "20a9e351dc49b5f8c76a7724c0f58502cb12a9769923dcae6b64175b5e6c6763"
+        },
+        {
+          "actionId": "49393477-685d-4577-9120-d125b5e64db4",
+          "round": 10,
+          "commandSha256": "1ed5659de07a83e37cb904e999249fb867d6e06651e45547af47aedd27705a13",
+          "resultSha256": "73f536e6e0506e7728b8c0bdfeac327e7f151bbdabb0f006751c006b79b9ac5f"
+        },
+        {
+          "actionId": "8ca388f5-a06e-4e88-bbed-669015716857",
+          "round": 4,
+          "commandSha256": "2d287590fe6d59022ff7ac1bf3bc2626d1f18483cd0ea4be6c3a8bbd147f71ea",
+          "resultSha256": "9b051c5bc90cbc8a2a4b75cf515f2ac8ab6b8b776650815af9c274ee328d6ed3"
+        },
+        {
+          "actionId": "92d19e49-ff02-4975-a703-17e6fac9f141",
+          "round": 8,
+          "commandSha256": "0ce6508e18edb42a263d0c77b95e37961dbfb59739fcdba71d9071573fdfb1ac",
+          "resultSha256": "16a86c54af7d056c6d521500e95598cd293dc13b59e2f6c69244f2543255dae5"
+        },
+        {
+          "actionId": "937dc20e-0a37-40b6-a87c-37cf432525ba",
+          "round": 9,
+          "commandSha256": "3127954591c790d623ee600b9cfc7daaf501d2f40189116ef800eed8be8cb96a",
+          "resultSha256": "3879681164048d38dc61b5db9429a9eddaac1659cf474049ddb732c257b12b2a"
+        },
+        {
+          "actionId": "bab7804a-4bd7-4803-bfab-57b4a09906d5",
+          "round": 3,
+          "commandSha256": "ebd8a11c8004ad36aeaf1a3ff69d7e80100531615999357532fbd60babe3c8c2",
+          "resultSha256": "e611e0da7017127cacb5aff2d719942c9158044ad528c99df25dd64a8a90da3a"
+        },
+        {
+          "actionId": "d47c03fc-6891-4ca9-9e3f-b0e55e886b3f",
+          "round": 7,
+          "commandSha256": "3a3ceb19a61751570c737dbbe96d5d439b02e1c9ecda5e69b246de0e9ae7ee31",
+          "resultSha256": "87ee8c10d5fe7cdcdcf5b81f0b2bd49e4b486685d706a22e1b75bb06db451ea4"
+        },
+        {
+          "actionId": "f49ab0af-25d3-44e4-ac7c-fd1299988326",
+          "round": 6,
+          "commandSha256": "cce97ea6ef80e687efa70b2d5e6fa1fd75580233461564bbabdc7ccddfb446a2",
+          "resultSha256": "ed4f4742b438a98fa974bbbf0a0ec023e7032d1b7363ee1650cb1ba39f012ca8"
+        }
+      ],
+      "protocolJournalRows": 13,
+      "canonicalBusinessActionRows": 0,
+      "canonicalRawRowsMatchIndependentHttps": true,
+      "originalHistoryAndJournalSurviveRestart": true,
+      "sqlitePath": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\final-portable-friend-a9acd7f-1792917183061\\profile-B\\lingjing.sqlite",
+      "sqliteSha256": "5fea804d9cc6465e8852be75ebec3437e714a13136d04ad4cf24580d2f8c204e"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\final-portable-friend-a9acd7f-1792917183061\\evidence.json",
+      "bytes": 55556,
+      "sha256": "7ebb06edd80402a251b06a11685c4d63d2f142780ffa32043798611f3c246acf"
+    },
+    {
+      "path": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\final-portable-friend-a9acd7f-1792917183061\\restart-evidence.json",
+      "bytes": 1669,
+      "sha256": "160dcebd531a67b29205c5add6b37fd36721fb8755e2003d806c49a608154718"
+    },
+    {
+      "path": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\final-portable-friend-a9acd7f-1792917183061\\restart-evidence-r2.json",
+      "bytes": 5322,
+      "sha256": "933b310984db1d54bdd29bc3ea63681b6f29449264dab073a1eb0378c5a15247"
+    },
+    {
+      "path": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\final-portable-friend-a9acd7f-1792917183061\\restart-r2-clarification.json",
+      "bytes": 760,
+      "sha256": "d7d4ad4f65b0b964215efb8c0306e054a26cf1b3be3fa83858f9ce5aee563724"
+    },
+    {
+      "path": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\final-portable-friend-a9acd7f-1792917183061\\restart-startup-process-diagnostic.json",
+      "bytes": 235,
+      "sha256": "29ab2b4d3bd2dac31e332a058532ce5682ed849b7ac4ca1f5e3ee5324a9b37aa"
+    },
+    {
+      "path": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\final-portable-friend-a9acd7f-1792917183061\\restart-r2-interrupted.json",
+      "bytes": 1490,
+      "sha256": "30b63098c77a8461b062ecaedcba09d083b0078c6987b5c520b4998eef90045a"
+    },
+    {
+      "path": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\final-portable-friend-a9acd7f-1792917183061\\cloud-A.json",
+      "bytes": 150886,
+      "sha256": "b023e410644e727ab444f698f1b6ce2b3af8d6a646d9339318b6b038a014038a"
+    },
+    {
+      "path": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\final-portable-friend-a9acd7f-1792917183061\\cloud-B.json",
+      "bytes": 106825,
+      "sha256": "a8eb49d6e0f7680e6f34703896b175d171a45ace2844f1c00ddb53e74e473d27"
+    },
+    {
+      "path": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\final-portable-friend-a9acd7f-1792917183061\\baseline-A.json",
+      "bytes": 85648,
+      "sha256": "2f3e2a42e63dd45f4f07daa4297f4bf686332ef914f0544748549dd477ac94a7"
+    },
+    {
+      "path": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\final-portable-friend-a9acd7f-1792917183061\\baseline-B.json",
+      "bytes": 46787,
+      "sha256": "acf6180821ee7c3cd7bf46072e5123a7738112c47443c15cf6e41975d54df314"
+    },
+    {
+      "path": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\final-portable-friend-a9acd7f-1792917183061\\result-A.json",
+      "bytes": 155396,
+      "sha256": "36648467b5562c4fbb5889542ca8bba7b96559da0c0a83232d519fd10d632458"
+    },
+    {
+      "path": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\final-portable-friend-a9acd7f-1792917183061\\result-B.json",
+      "bytes": 116473,
+      "sha256": "6a4e4b3ec75c4b689aef57c85030f86871c068a9a1ccbf21cc656e2b8c2c74b2"
+    },
+    {
+      "path": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\final-portable-friend-a9acd7f-1792917183061\\joined-A.png",
+      "bytes": 1350679,
+      "sha256": "8f33905c0a1d7a2a0c9543a31e897bbb79c9a49e806324aca6abbf7593c53603"
+    },
+    {
+      "path": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\final-portable-friend-a9acd7f-1792917183061\\joined-B.png",
+      "bytes": 1347582,
+      "sha256": "efb2f11d7a708b76e09668028b26df77650927df6524a629ec77b41ebd7fabb5"
+    },
+    {
+      "path": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\final-portable-friend-a9acd7f-1792917183061\\report-A.png",
+      "bytes": 357436,
+      "sha256": "f878bc5765583bc7f442e3d47547d116ad504b4bcad8f8c8504bfc063767ac75"
+    },
+    {
+      "path": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\final-portable-friend-a9acd7f-1792917183061\\report-B.png",
+      "bytes": 349558,
+      "sha256": "b76189e52391f9e9f81e0249eac32e8c092025413a42c3bd5614ff83c1fddc12"
+    },
+    {
+      "path": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\final-portable-friend-a9acd7f-1792917183061\\sync-clean-A.png",
+      "bytes": 105963,
+      "sha256": "e2425ec50763398722e3135b66e6f9ff2c88074b5f419fe332b90eac2e71a4ba"
+    },
+    {
+      "path": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\final-portable-friend-a9acd7f-1792917183061\\sync-clean-B.png",
+      "bytes": 105408,
+      "sha256": "cad4f130c7d87bd6b0fe072996870f77c927bd160f3ea8238694f568e0fd2424"
+    },
+    {
+      "path": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\final-portable-friend-a9acd7f-1792917183061\\restart-r2-report-A.png",
+      "bytes": 296780,
+      "sha256": "61b421494ea10ea509c82f23b756fdacc252fefbbc86968ca744983ddc96e7dd"
+    },
+    {
+      "path": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\final-portable-friend-a9acd7f-1792917183061\\restart-r2-report-B.png",
+      "bytes": 349820,
+      "sha256": "a0899849c72ce7ddbf4c28404d942f68c51137f2ca1b9c90664da7cff6bbb26c"
+    }
+  ]
+}
