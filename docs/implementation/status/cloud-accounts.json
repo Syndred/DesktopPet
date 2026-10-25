@@ -5,7 +5,7 @@
   "commit": "7a6b04a0cc83f84143c42af71d4947ce9f7ce4cb",
   "worktree": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-accounts\\DesktopPet",
   "goalStatus": "complete",
-  "phase": "Own Auth/actor/CAS implementation and real HTTPS/native acceptance complete: approved coordinator831e483 merged; 7a6b04a expires issued previews across session changes; full dual Electron9/9 and final accounts54/54 passed. Coordinator retains final release/legacy-retirement ownership.",
+  "phase": "Own Auth/actor/CAS implementation and real HTTPS/native acceptance complete: approved coordinator4830619 merged; 7a6b04a expires issued previews across session changes; full dual Electron9/9 and final accounts54/54 passed. Coordinator retains final release/legacy-retirement ownership.",
   "baseline": "46abf416e0500b53ef32fc29b441d923ef5a6a80",
   "dependencyCheckpoint": "b40af0efcf6062ddc2e8c360523c996fc91ebc0a",
   "contracts": {
@@ -284,6 +284,11 @@
       "command": "npm run typecheck:ui && npm run build:pc",
       "result": "Passed; production closure106 files/181 edges/4 JS-MJS dependencies",
       "source": "7a6b04a0cc83f84143c42af71d4947ce9f7ce4cb"
+    },
+    {
+      "command": "node --test cloud-identity-sql cloud-save-sql cloud-service-actor-sql cloud-session-upgrade-sql migration-preservation-replay",
+      "result": "23 passed,0 failed,0 skipped after4830619 migration path alignment",
+      "kind": "Local PGlite actual SQL, not a new cloud deployment"
     }
   ],
   "realCloudEvidence": {
@@ -351,7 +356,7 @@
       "checks": 2
     },
     "remoteLatest": {
-      "at": "2026-10-25T04:23:43.298Z",
+      "at": "2026-10-25T04:26:12.0329645Z",
       "command": "git pull --no-rebase --no-edit origin main",
       "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086",
       "result": "Already up to date"
@@ -428,5 +433,13 @@
     "originalFilesPreserved": true,
     "test": "real SQLite with simulated Auth: issued restore previews expire across session transitions, same-SID refresh remains usable",
     "result": "All local/cloud stale previews rejected after same-owner new SID with unchanged fingerprint and no restore writes; original backup bytes retained"
+  },
+  "integrationCheckpoint": {
+    "coordinator": "4830619cba23a37fa2c30b19f3a656bdee0a23ec",
+    "mergedAs": "660bf3249c2083a80c5bcd7a2804eac73e662a61",
+    "productionRuntimeDiffAgainstNativeSource": "empty",
+    "migrationPaths": "Aligned by coordinator to actual hosted ledger; historical evidence unchanged",
+    "checks": "23 targeted SQL/account and preservation-replay checks passed after merge; no second full native rerun because production runtime unchanged",
+    "cloudDeploymentsByThisWorktree": 0
   }
 }
