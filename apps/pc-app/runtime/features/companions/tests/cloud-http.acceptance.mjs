@@ -10,9 +10,14 @@ const require=createRequire(import.meta.url),{SupabaseRemote,publicConfig,decode
 // Coordinator-run REAL HTTPS verifier. Requires two explicitly designated test
 // accounts in an ignored credentials file; never writes tokens/passwords/logins
 // to evidence. Node processes are not Electron or two physical machines.
-const credentialsFile=process.env.LINGJING_COMPANION_VERIFY_CREDENTIALS;
+const credentialsFile=process.env.LINGJING_COMPANION_VERIFY_CREDENTIALS_DPAPI||process.env.LINGJING_COMPANION_VERIFY_CREDENTIALS;
 assert.ok(credentialsFile,'Set LINGJING_COMPANION_VERIFY_CREDENTIALS to coordinator-owned ignored JSON');
-const credentials=JSON.parse(readFileSync(credentialsFile,'utf8'));assert.equal(credentials.testOnly,true);
+let credentialBytes=readFileSync(credentialsFile);
+if(process.env.LINGJING_COMPANION_VERIFY_CREDENTIALS_DPAPI||credentialsFile.toLowerCase().endsWith('.dpapi')){
+  const decrypt=`Add-Type -AssemblyName System.Security; $bytes=[Convert]::FromBase64String([Console]::In.ReadToEnd()); $clear=[Security.Cryptography.ProtectedData]::Unprotect($bytes,$null,[Security.Cryptography.DataProtectionScope]::CurrentUser); [Console]::Out.Write([Convert]::ToBase64String($clear))`;
+  credentialBytes=Buffer.from(execFileSync('powershell.exe',['-NoProfile','-NonInteractive','-Command',decrypt],{input:credentialBytes.toString('base64'),encoding:'utf8',windowsHide:true}).trim(),'base64');
+}
+const credentials=JSON.parse(credentialBytes.toString('utf8'));credentialBytes.fill(0);assert.equal(credentials.testOnly,true);
 assert.ok(credentials.a?.account&&credentials.a?.password&&credentials.b?.account&&credentials.b?.password);
 const config=publicConfig();assert.ok(config);assert.equal(new URL(config.url).hostname,'jbvrdmrkwpznbrvteive.supabase.co');
 async function login(profile,credential){mkdirSync(profile,{recursive:true});const remote=new SupabaseRemote({userData:profile,config}),user=await remote.login(credential.account,credential.password),session={...user,ownerAccountId:user.id,cloudProof:user.proof};remote.setCurrentUser(session);return{remote,session,actor:decodeProof(user.proof).actor};}
@@ -59,8 +64,8 @@ try{
   const growthDenied=await denied(()=>a.remote.invoke(a.session,'companions-sync',{op:'command',command:'adopt',input:{...firstInput,actionId:action(),growth:{experience:999}}}),['INVALID_INPUT']);
   const foreign=await denied(()=>other.remote.invoke(other.session,'companions-sync',{op:'command',command:'rename',input:{actionId:action(),petId:firstPet.petId,name:'不应串号'}}),['PET_NOT_FOUND']);
   const ownerSpoof=await denied(()=>other.remote.invoke(other.session,'companions-sync',{op:'snapshot',ownerAccountId:a.actor.ownerAccountId}),['OWNER_MISMATCH']);
-  await denied(()=>a.remote.invoke(a.session,'companions-sync',{op:'command',command:'appearance',input:{actionId:action(),petId:firstPet.petId,resourceId:randomUUID()}}),['RESOURCE_UNAVAILABLE']);
-  record('Client growth injection, foreign pet/owner and unverified custom appearance are denied',{growthDenied,foreign,ownerSpoof});
+  const customAppearance=await denied(()=>a.remote.invoke(a.session,'companions-sync',{op:'command',command:'appearance',input:{actionId:action(),petId:firstPet.petId,resourceId:randomUUID()}}),['RESOURCE_UNAVAILABLE','COMPANION_CLOUD_UNAVAILABLE']);
+  record('Client growth injection and foreign pet/owner are denied; custom appearance stays unavailable until server reference exists',{growthDenied,foreign,ownerSpoof,customAppearance,customReferenceConfigured:customAppearance.code==='RESOURCE_UNAVAILABLE'});
   const head=await a.remote.invoke(a.session,'lingjing-save',{op:'read'}),forged=structuredClone(head.envelope),row=forged.data.modules.companions.data.tables.companion_pets.find(row=>row.pet_id===firstPet.petId),pet=JSON.parse(row.data_json);pet.growth.experience=999;row.data_json=JSON.stringify(pet);const{checksum:old,...body}=forged;void old;forged.checksum=checksum(body);
   const protectedWrite=await denied(()=>a.remote.invoke(a.session,'lingjing-save',{op:'push',actionId:action(),baseRevision:head.revision,envelope:forged}),['PROTECTED_STATE_MISMATCH','PROTECTED_STATE_REQUIRES_AUTHORITY']);record('Valid-checksum full-save growth forgery is denied by08 protected CAS',protectedWrite);
   const child=JSON.parse(execFileSync(process.execPath,[fileURLToPath(import.meta.url),'--read-child',join(output,'client-b'),JSON.stringify([firstPet.petId,secondPet.petId])],{encoding:'utf8',windowsHide:true,env:process.env}));

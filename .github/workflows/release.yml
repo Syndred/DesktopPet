@@ -13,33 +13,70 @@ on:
         type: boolean
         default: true
 
+permissions:
+  contents: read
+
 jobs:
-  build-sign-manifest:
-    runs-on: ubuntu-latest
+  build-verified-release:
+    runs-on: windows-latest
+    timeout-minutes: 30
+    env:
+      RELEASE_VERSION: ${{ inputs.release_version }}
+      # electron-builder signs only when a real Authenticode certificate is configured.
+      CSC_LINK: ${{ secrets.WINDOWS_CSC_LINK }}
+      CSC_KEY_PASSWORD: ${{ secrets.WINDOWS_CSC_KEY_PASSWORD }}
+      REQUIRE_SIGNED: ${{ inputs.dry_run == false && '1' || '0' }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-node@v7.1.0
         with:
           node-version: 24
           cache: npm
+      - name: Validate the requested immutable version
+        run: node --input-type=module -e "import {releaseVersion} from './scripts/release/release-store.mjs'; releaseVersion(process.env.RELEASE_VERSION)"
       - run: npm ci
       - run: npm run verify
-      - run: npm run release:build
-      - run: npm run release:sign
-      - run: npm run release:manifest -- --version=${{ inputs.release_version }}
-      - uses: actions/upload-artifact@v4
+      - run: npm run test:native
+      - run: npm run release:prepare
+      - uses: actions/upload-artifact@v7.0.2
         with:
           name: release-${{ inputs.release_version }}
           path: |
-            artifacts/**
-            releases/${{ inputs.release_version }}/manifest.json
-            release-state/current.json
+            releases/${{ inputs.release_version }}/*.exe
+            releases/${{ inputs.release_version }}/*.sha256
+            releases/${{ inputs.release_version }}/*.json
+          if-no-files-found: error
+          retention-days: 90
 
   publish:
-    needs: [build-sign-manifest]
+    needs: [build-verified-release]
     if: ${{ inputs.dry_run == false }}
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
+    permissions:
+      contents: write
+    env:
+      RELEASE_VERSION: ${{ inputs.release_version }}
+      GH_TOKEN: ${{ github.token }}
     steps:
-      - name: Publish placeholder
-        run: echo "Publish step placeholder for version ${{ inputs.release_version }}"
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/download-artifact@v8.0.2
+        with:
+          name: release-${{ inputs.release_version }}
+          path: release-download
+      - name: Recheck real signature and publish the immutable binary and manifest
+        shell: pwsh
+        run: |
+          if ($env:RELEASE_VERSION -notmatch '^[A-Za-z0-9][A-Za-z0-9._+-]{0,79}$') { throw 'Invalid release version' }
+          $releaseManifest = Get-Content -LiteralPath 'release-download/manifest.json' -Raw | ConvertFrom-Json
+          if ($releaseManifest.source.sourceCommit -ne $env:GITHUB_SHA) { throw 'Manifest source differs from workflow commit' }
+          git fetch --no-tags origin "refs/tags/$($env:RELEASE_VERSION):refs/tags/$($env:RELEASE_VERSION)"
+          if ($LASTEXITCODE -ne 0) { throw 'The reviewed release tag must already exist on origin' }
+          $releaseTagCommit = git rev-parse "$($env:RELEASE_VERSION)^{commit}"
+          if ($LASTEXITCODE -ne 0 -or $releaseTagCommit.Trim() -ne $releaseManifest.source.sourceCommit) { throw 'Release tag, manifest source and workflow commit must match' }
+          $releaseExe = Join-Path 'release-download' $releaseManifest.executable.file
+          if ((Get-FileHash -LiteralPath $releaseExe -Algorithm SHA256).Hash.ToLowerInvariant() -ne $releaseManifest.executable.sha256) { throw 'Executable hash mismatch' }
+          if ((Get-AuthenticodeSignature -LiteralPath $releaseExe).Status -ne 'Valid') { throw 'A valid Authenticode certificate is required for publication' }
+          $releaseFiles = Get-ChildItem -LiteralPath 'release-download' -File | Select-Object -ExpandProperty FullName
+          gh release create $env:RELEASE_VERSION @releaseFiles --target $env:GITHUB_SHA --verify-tag --title $env:RELEASE_VERSION --generate-notes
+          if ($LASTEXITCODE -ne 0) { throw 'GitHub release publication failed' }
 

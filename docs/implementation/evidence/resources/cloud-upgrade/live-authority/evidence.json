@@ -1,0 +1,79 @@
+{
+  "at": "2026-10-25T03:42:58.912Z",
+  "mode": "live",
+  "simulated": false,
+  "projectRef": "jbvrdmrkwpznbrvteive",
+  "resourceId": "ea939131-eb50-4cde-adcc-c51241100c34",
+  "manifestSha256": "227446e353d0eefbd752ce7feafaa2e185f83ef8c2e2e7546fdfa7b70d13ea01",
+  "serverSourceCommit": "088dbbe17b6251c33816b41f808f8f4d46dd147c",
+  "serverGraphSha256": "909842543abc21152086788e3381121829a7262a5a7a68db49afc907f8df2b97",
+  "checks": [
+    "Existing immutable Storage package published without re-upload",
+    "Same action replay returned identical protected revision/checksum",
+    "Independent B read of verified reference and common protected save v2",
+    "Different account cannot publish/read the private reference",
+    "Client-writable fake package index cannot register a protected reference or advance the common save",
+    "Actual explicit B-device revocation denies replay of the already published action without changing the save"
+  ],
+  "passed": true,
+  "receipt": {
+    "checksum": "bc39b8bad2bc5ba9ec44c570d24226b15f9bb84963183dec0071977b35f33f8f",
+    "revision": 1,
+    "duplicate": false,
+    "resourceId": "ea939131-eb50-4cde-adcc-c51241100c34",
+    "manifestSha256": "227446e353d0eefbd752ce7feafaa2e185f83ef8c2e2e7546fdfa7b70d13ea01",
+    "authorityActionId": "resources:ea939131-eb50-4cde-adcc-c51241100c34:227446e353d0eefbd752ce7feafaa2e185f83ef8c2e2e7546fdfa7b70d13ea01"
+  },
+  "independentB": {
+    "owner_account_id": "account:2851a984-dacc-4548-865e-1810bc3ab384",
+    "auth_user_id": "ecf7ccab-f4b2-4cb5-b0ab-a4613fe28886",
+    "resource_id": "ea939131-eb50-4cde-adcc-c51241100c34",
+    "manifest_sha256": "227446e353d0eefbd752ce7feafaa2e185f83ef8c2e2e7546fdfa7b70d13ea01",
+    "content_hash": "94e0af4b98334788f9f2357fde6c84c70cc051684760d05c9ca4eebf97a3977a",
+    "authority_action_id": "resources:ea939131-eb50-4cde-adcc-c51241100c34:227446e353d0eefbd752ce7feafaa2e185f83ef8c2e2e7546fdfa7b70d13ea01",
+    "authority_revision": 1,
+    "authority_checksum": "bc39b8bad2bc5ba9ec44c570d24226b15f9bb84963183dec0071977b35f33f8f"
+  },
+  "rootSave": {
+    "revision": 1,
+    "checksum": "bc39b8bad2bc5ba9ec44c570d24226b15f9bb84963183dec0071977b35f33f8f",
+    "module": {
+      "data": {
+        "format": "lingjing-resource-references",
+        "references": [
+          {
+            "kind": "spritesheet",
+            "authUserId": "ecf7ccab-f4b2-4cb5-b0ab-a4613fe28886",
+            "resourceId": "ea939131-eb50-4cde-adcc-c51241100c34",
+            "totalBytes": 1811388,
+            "contentHash": "94e0af4b98334788f9f2357fde6c84c70cc051684760d05c9ca4eebf97a3977a",
+            "manifestPath": "ecf7ccab-f4b2-4cb5-b0ab-a4613fe28886/ea939131-eb50-4cde-adcc-c51241100c34/227446e353d0eefbd752ce7feafaa2e185f83ef8c2e2e7546fdfa7b70d13ea01/manifest.json",
+            "manifestBytes": 7237,
+            "manifestSha256": "227446e353d0eefbd752ce7feafaa2e185f83ef8c2e2e7546fdfa7b70d13ea01"
+          }
+        ],
+        "ownerAccountId": "account:2851a984-dacc-4548-865e-1810bc3ab384"
+      },
+      "version": 2
+    }
+  },
+  "crossAccount": {
+    "publishStatus": 404,
+    "visibleReferences": 0
+  },
+  "unverifiedIndex": {
+    "resourceId": "65ce7ebb-fe5c-46c5-8186-97ec5a7777e8",
+    "indexInserted": true,
+    "publishStatus": 422,
+    "verifiedReferences": 0,
+    "rootRevisionUnchanged": true,
+    "rootChecksumUnchanged": true
+  },
+  "revokedDevice": {
+    "deviceId": "1f941766-a026-463e-a64e-a8d585db1d00",
+    "revoked": true,
+    "replayStatus": 401,
+    "rootRevisionUnchanged": true,
+    "rootChecksumUnchanged": true
+  }
+}

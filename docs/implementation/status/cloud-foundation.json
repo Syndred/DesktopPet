@@ -2,9 +2,9 @@
   "module": "foundation",
   "scope": "Public engineering, staged runtime extraction, typed IPC, lazy routes/desktop entry, Windows native/EXE CI and verifiable release/rollback. Battle UI and production Supabase writes remain with their owners.",
   "branch": "codex/lingjing-foundation",
-  "commit": "8242a4c251cdd2d7c92e395bf99e1d3098d6d070",
+  "commit": "73639b6da9a71e3068d1de35dc363d170a3a516b",
   "goalStatus": "active",
-  "stage": "public-runtime-and-native-ui-passed-ci-release-in-progress",
+  "stage": "strict-real-portable-candidate-archived-rollback-rehearsal-in-progress",
   "contracts": [
     "docs/implementation/cloud-upgrade-2026-10-25.md",
     "https://www.electronjs.org/docs/latest/tutorial/electron-timelines",
@@ -71,6 +71,62 @@
         }
       ],
       "cloud": "Explicit isolated QA identity, no live-cloud claim"
+    },
+    {
+      "name": "SQLite-only old profile discovery across real Windows Electron restart",
+      "passed": true,
+      "evidence": "docs/implementation/evidence/foundation/cloud-engineering/profile-discovery.json",
+      "checks": 2
+    },
+    {
+      "name": "Release binary selection and tamper refusal",
+      "passed": true,
+      "cases": 3,
+      "scope": "Artifact-format fixture checks; actual EXE rehearsal follows package build."
+    },
+    {
+      "name": "Official GitHub action version metadata and workflow syntax",
+      "passed": true,
+      "scope": "Workflow authored/parsed locally; no hosted GitHub run or publication claim"
+    },
+    {
+      "name": "Fresh Windows npm ci after unused workspace removal and exact Supabase SDK pin",
+      "passed": true,
+      "evidence": "docs/implementation/evidence/foundation/cloud-engineering/clean-install-workspace-cleanup.json",
+      "policy": "Separate new directory, no shared node_modules changes, both Node and Electron N-API probe passed"
+    },
+    {
+      "name": "Actual packaged Windows EXE runs ASAR-contained native fullscreen script",
+      "passed": false,
+      "evidence": "docs/implementation/evidence/foundation/cloud-engineering/packaged-fullscreen-monitor.json",
+      "source": "73639b6da9a71e3068d1de35dc363d170a3a516b",
+      "scope": "Actual unpacked EXE, embedded ASAR, explicit fresh QA profile; final portable test also requires this ready signal.",
+      "status": "rejected-original-verdict",
+      "correction": "Actual ready:false retained. Replacement requires explicit awaited main-process snapshots and strict true assertions."
+    },
+    {
+      "name": "Corrected actual packaged Windows EXE fullscreen readiness and stability",
+      "passed": true,
+      "evidence": "docs/implementation/evidence/foundation/cloud-engineering/packaged-fullscreen-monitor-verified.json",
+      "source": "09af97f0a92677f417b3e33aa352d7ad018eb08e",
+      "strictAssertions": true,
+      "observations": 10,
+      "stableSamples": 3,
+      "replacesRejectedEvidence": "docs/implementation/evidence/foundation/cloud-engineering/packaged-fullscreen-monitor.json"
+    },
+    {
+      "name": "Real portable SFX: ordinary config + strict native monitor + roster + actual atlas frames + training",
+      "passed": true,
+      "cases": 6,
+      "evidence": "docs/implementation/evidence/foundation/cloud-engineering/candidate-09af97f/portable-smoke.json",
+      "source": "09af97f0a92677f417b3e33aa352d7ad018eb08e"
+    },
+    {
+      "name": "Windows Get-AuthenticodeSignature on actual portable EXE",
+      "passed": true,
+      "status": "NotSigned",
+      "signed": false,
+      "scope": "Unsigned candidate explicitly recorded. No certificate purchase or publication."
     }
   ],
   "realCloudEvidence": {
@@ -96,7 +152,9 @@
     ],
     "battleUiTouched": false,
     "readOnlyLegacyArchive": true,
-    "corruptAndMissingArchiveProtected": true
+    "corruptAndMissingArchiveProtected": true,
+    "battleUiEditsByFoundation": false,
+    "approvedBattleUiIntegration": "0ddda2a"
   },
   "cleanupCandidates": "docs/implementation/cleanup/cloud-foundation-inventory.json",
   "sharedDependencies": {
@@ -112,9 +170,41 @@
     "cleanInstallFixCommit": "e294f2235297c406429c05cd6847daa74ed6dd79"
   },
   "remaining": [
-    "Windows native/CJS/real-EXE CI and actual Authenticode/release rollback",
-    "Main-approved business checkpoints and final consumer audit, including obsolete 3D/prototypes",
-    "One justified final integrated regression and exact final EXE/source/readback"
+    "Actual binary rollback selection/launch/readback rehearsal",
+    "Main coordinator owns remaining business freeze, full integrated regression, final package and old cloud SQL/function retirement"
   ],
-  "updatedAt": "2026-10-25T02:41:28.003Z"
+  "updatedAt": "2026-10-25T03:44:18.708Z",
+  "approvedIntegrations": {
+    "accounts": "45b857d",
+    "resources": "4e8fdf8",
+    "battleV3": "0ddda2a",
+    "conversations": "543b71f",
+    "publicCloudConfig": "3c791c2",
+    "accountsPrivacy": "8e5c735",
+    "discoveryLocation": "4ee7240",
+    "publicEngineering": "a92394d",
+    "packagedMonitorAndTagSource": "82dfa2e"
+  },
+  "cleanupCompleted": {
+    "obsoletePrototypeSourceFiles": 19,
+    "obsoletePrototypeAndRemovedRendererTests": 24,
+    "individuallyInventoriedFilesRemoved": 68,
+    "oldBundled3DAssetsRemoved": true,
+    "originalAttributionPreserved": "docs/implementation/legacy-model-attribution.json",
+    "qualityGates": "One maintained CI workflow with current domain native and actual GUI/EXE gates; retired in-memory/static prototype counts."
+  },
+  "packageCandidate": {
+    "version": "engineering-rc-09af97f",
+    "source": "09af97f0a92677f417b3e33aa352d7ad018eb08e",
+    "sha256": "2f6eb365d9ee18d09da3a6d9723ff7103754c6f0b1d8ce8def1005ce12570f7f",
+    "bytes": 169148687,
+    "authenticode": "NotSigned",
+    "final": false,
+    "auditPassed": true,
+    "smokePassed": true,
+    "monitorReady": true,
+    "ordinaryCloudConfigSha": "c1625c63f1d959f92b3392b47f2fb492452803eedf1c0d1ebc68a1168ab64eda",
+    "evidence": "docs/implementation/evidence/foundation/cloud-engineering/candidate-09af97f/manifest.json",
+    "scope": "Public engineering candidate; final business freeze/package is owned by main coordinator."
+  }
 }

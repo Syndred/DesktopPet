@@ -2,10 +2,10 @@
   "module": "accounts",
   "scope": "2026-10-25 Supabase Auth/JWT, stable legacy owner mapping, per-device sessions, full-save CAS/idempotency/conflict/offline recovery",
   "branch": "codex/lingjing-accounts",
-  "commit": "fe97318117bbf773548d9f028ec67b8e96155b28",
+  "commit": "08088e7e3208cc414aa7a0dbdc2009d5ecd57097",
   "worktree": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-accounts\\DesktopPet",
   "goalStatus": "active",
-  "phase": "Urgent immutable SID ledgerb21410e ready for review/deploy, actual HTTP verifierfe97318 ready. Concurrent real HTTPS CAS2/2 passed. Waiting02 normalization hook.",
+  "phase": "Urgent service actor guard and03/05/02 adoption READY;3 actual local SQL checks passed. Immediate independent deployment checkpoint, no GUI dependency.",
   "baseline": "46abf416e0500b53ef32fc29b441d923ef5a6a80",
   "dependencyCheckpoint": "b40af0efcf6062ddc2e8c360523c996fc91ebc0a",
   "contracts": {
@@ -126,9 +126,37 @@
       "authTableGrantsExpanded": false,
       "ledger": "private immutable revoked_auth_sessions; explicit revoke AND replacement retain SID forever",
       "existingSessions": "backfill revoked devices and already unbound Auth sessions of linked Lingjing users only; preserve every currently bound active device",
-      "realHttpsPendingCentralDeployment": true,
+      "realHttpsPendingCentralDeployment": false,
       "httpVerifier": "apps/pc-app/runtime/features/accounts/tests/cloud-session-revoke.acceptance.cjs",
-      "implementation": "b21410e"
+      "implementation": "b21410e",
+      "coordinatorDeployment": "Coordinated actual apply completed; preflight19 linked owners/20 active bound sessions/1 Lingjing unbound old Auth session; active devices retained."
+    },
+    "legacyNormalization": {
+      "restoreCheckpoint": "Verified cloud restore records normalized data checksum with original envelope checksum/revision",
+      "checkpoint": "6435a13",
+      "tests": "25 targeted passed accounts/supabase-main/companion-backup-integration",
+      "merge": "72986c1",
+      "safeCas": "Use normalized view only for fingerprints/protected-state equality; never rewrite original envelope/checksum or upload client-normalized authority",
+      "api": "backups.normalizeData(data,owner), adapter legacyTables/fromLegacyTables"
+    },
+    "transactionActorGuard": {
+      "test": "node --test apps/pc-app/runtime/features/accounts/tests/cloud-service-actor-sql.test.mjs 3 passed (actual PGlite SQL, not real cloud)",
+      "helper": "lingjing_private.assert_service_actor(p_owner text,p_uid uuid,p_device uuid,p_sid uuid) returns void",
+      "scope": "owner FOR UPDATE first, real Auth user and session FOR SHARE, nonanonymous/not_after by clock_timestamp, immutable ledger, active device/SID; holds locks to transaction end",
+      "consumersPending": [
+        "04/07 pass verified owner/UID/device/SID to helper in same business transaction"
+      ],
+      "readyForCoordinatorDeployment": true,
+      "migrations": [
+        "20261025033602_lingjing_transaction_actor_guard.sql",
+        "20261025033734_lingjing_domain_actor_guard_adoption.sql"
+      ],
+      "permissions": "Private SECURITY DEFINER search_path empty, onlyservice_role execute; no new Auth-table SELECT grants",
+      "adopted": [
+        "03 lingjing_discovery.live_actor(jsonb) same signature/invoker/grants",
+        "05 public.runtime_territory_check_actor(text,uuid,text,uuid) same signature/invoker/grants",
+        "02 private commit_companion_command same signature/definer/grants/business body, old guard only replaced"
+      ]
     }
   },
   "migrations": [
@@ -173,6 +201,18 @@
       "generatedBy": "Supabase CLI2.122.0 migration new lingjing_session_revocation_ledger",
       "remoteAppliedByThisChat": false,
       "file": "infra/supabase/migrations/20261025031842_lingjing_session_revocation_ledger.sql"
+    },
+    {
+      "readyForCoordinatorReview": true,
+      "file": "infra/supabase/migrations/20261025033602_lingjing_transaction_actor_guard.sql",
+      "generatedBy": "Supabase CLI2.122.0 migration new lingjing_transaction_actor_guard",
+      "remoteAppliedByThisChat": false
+    },
+    {
+      "readyForCoordinatorReview": true,
+      "file": "infra/supabase/migrations/20261025033734_lingjing_domain_actor_guard_adoption.sql",
+      "generatedBy": "Supabase CLI2.122.0 migration new lingjing_domain_actor_guard_adoption",
+      "remoteAppliedByThisChat": false
     }
   ],
   "checks": [
@@ -286,6 +326,12 @@
       "source": "03dce6a",
       "evidence": "docs/implementation/evidence/accounts/cloud-2026-10-25/cas-concurrency.json",
       "checks": 2
+    },
+    "remoteLatest": {
+      "at": "2026-10-25T03:23:26Z",
+      "command": "git pull --no-rebase --no-edit origin main",
+      "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086",
+      "result": "Already up to date"
     }
   },
   "preservation": {
@@ -299,11 +345,12 @@
     "Old runtime single session_token cloud adapter only after new Auth path and all domain consumers are migrated; preserve source-import reader and user files"
   ],
   "remaining": [
-    "True dual isolated Electron + Windows safeStorage/restart + actual HTTPS sync/conflict/recovery",
-    "Actual SDK refresh/realtime reconnect in new Auth lifecycle; domain04 owns private channels",
-    "Legacy source staging/import tool and old source external availability",
-    "Converge domain fragments with02/03/04/05/07 and coordinator final integration",
-    "Signed already-expired JWT rejection evidence distinct from forged-exp payload",
-    "Final fetch/pull remote verification and coordinator independent acceptance"
+    "Coordinator result of actual managed-valid oldSID revoke/rebind/refresh negatives",
+    "Signed unchanged provider JWT expiration03:30:55UTC actual HTTP proof pending; retained encrypted fixture only",
+    "Integrate final02 main cloud adapter and full domain authority snapshots; native8 checks currently personal sync with authorityPending true",
+    "Domain04 private Realtime reconnect and full two-account gameplay integration remains its owner",
+    "Coordinator independent actual privacy SQL readback result",
+    "Old full cloud account/data migration EXTERNAL: original server export/SSH unavailable; preparation tool does not count as migration",
+    "One final account-targeted regression and actual dual Electron recheck when domain integration changes justify it"
   ]
 }

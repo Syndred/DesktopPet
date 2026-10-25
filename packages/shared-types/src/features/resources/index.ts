@@ -93,10 +93,11 @@ export interface ResourcesClient {
   cloudPull?(input?: {offset?:number;limit?:number;resourceIds?:string[]}): Promise<ResourceResult<{busy:true}|{restored:ResourceCloudReceipt[];nextOffset:number|null}>>;
   history?(): Promise<ResourceResult<ResourceArchiveSummary[]>>;
 }
-export interface ResourceCloudReceipt {resourceId:string;manifestSha256:string;verified:boolean;archiveOnly?:boolean}
+export interface ResourceCloudReceipt {resourceId:string;manifestSha256:string;verified:boolean;archiveOnly?:boolean;authority?:{actionId:string;revision:number;checksum:string}}
 export interface ResourceCloudStatus {
   enabled:boolean; uploads:{status:string;count:number}[]; downloads:{status:string;count:number}[];
   lastVerifiedAt:string|null;running:boolean;dataMode:'live'|'simulated';bucket:string;
+  lastStorageVerifiedAt?:string|null;
 }
 export interface ResourceArchiveSummary {
   id:string;name:string;kind:'model3d';archiveOnly:true;origin:CharacterResource['origin'];
