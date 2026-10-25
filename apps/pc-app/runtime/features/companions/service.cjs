@@ -1,5 +1,6 @@
 const { createHash, randomUUID } = require('node:crypto');
 const { listTemplates, findTemplate, BASE_STATS } = require('./templates.cjs');
+const { applyGrowthEffect } = require('./growth.mjs');
 
 class CompanionError extends Error {
   constructor(code, message, revision) { super(message); this.code = code; this.revision = revision; }
@@ -223,24 +224,7 @@ class CompanionsService {
   }
 
   applyEffect(pet, effect) {
-    for (const key of Object.keys(effect)) if (!['mood', 'satiety', 'affinity', 'experience', 'wins'].includes(key)) invalid('不支持的养成效果');
-    for (const key of ['mood', 'satiety', 'affinity', 'experience', 'wins']) {
-      if (effect[key] !== undefined && (!Number.isSafeInteger(effect[key]) || Math.abs(effect[key]) > 10000)) invalid('养成效果无效');
-    }
-    for (const key of ['mood', 'satiety', 'affinity']) pet.growth[key] = clamp(pet.growth[key] + (effect[key] || 0), 0, 100);
-    if ((effect.experience || 0) < 0 || (effect.wins || 0) < 0) invalid('经验与胜场不能减少');
-    let experience = pet.growth.experience + (effect.experience || 0);
-    // Existing runtime rule: 100 XP per level, every stat +10% (at least +1).
-    while (experience >= 100) {
-      experience -= 100;
-      pet.growth.level += 1;
-      for (const key of ['hp', 'atk', 'def', 'spd']) {
-        const value = pet.growth.stats[key];
-        pet.growth.stats[key] = value <= 0 ? 0 : Math.max(value + 1, Math.round(value * 1.1));
-      }
-    }
-    pet.growth.experience = experience;
-    pet.growth.winsTotal += effect.wins || 0;
+    pet.growth = applyGrowthEffect(pet.growth, effect, invalid);
     this.storePet(pet);
   }
 
