@@ -1,0 +1,13 @@
+✔ LOCAL SQL: private bucket and immutable index permit same-account separate sessions only (27.4265ms)
+✔ LOCAL SQL: spoofed owner/UID/path and oversized index are rejected (11.8505ms)
+✔ LOCAL SQL: anonymous, missing/revoked sessions and wrong device are denied (9.4975ms)
+✔ LOCAL SQL: immutable objects/index cannot be replaced or deleted through client permissions (8.6086ms)
+✔ LOCAL SQL: single-device revocation blocks both Storage/index while other same-account device survives (14.6398ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2168.0239

@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-25T02:17:19.789Z",
+  "sourceCommit": "fb83211ec4ca2aa975f3749bd293121eaae53dae",
+  "projectRef": "jbvrdmrkwpznbrvteive",
+  "transport": "real HTTPS fetch using active publishable key; no mock",
+  "scope": "Identity schema anonymous/forged-token access checks. Valid-user and dual-device tests await account bridge.",
+  "checks": [
+    {
+      "id": "anonymous-accounts-denied",
+      "status": 401,
+      "code": "42501",
+      "passed": true
+    },
+    {
+      "id": "anonymous-devices-denied",
+      "status": 401,
+      "code": "42501",
+      "passed": true
+    },
+    {
+      "id": "anonymous-link-rpc-denied",
+      "status": 401,
+      "code": "42501",
+      "passed": true
+    },
+    {
+      "id": "forged-jwt-denied",
+      "status": 401,
+      "code": "PGRST301",
+      "passed": true
+    }
+  ],
+  "passed": true
+}

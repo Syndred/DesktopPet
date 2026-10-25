@@ -23,8 +23,13 @@ class AccountsService {
       getIdentity: owner => this.identity(owner), scenario: qaScenario ? { mode: "simulated", scenarioId: qaScenario.id, runId: qaScenario.runId } : null });
     this.sync = new AccountSync({ db: this.db, backups: this.backups, remote, getSession: () => this.privateSession(), getSettings: owner => this.settings(owner),
       onInvalidSession: owner => this.invalidateSession(owner) });
-    this.remoteUnsubscribe = remote.onInvalidated?.(({ userId }) => {
+    this.remoteUnsubscribe = remote.onInvalidated?.(({ userId,sessionId }) => {
+      if(sessionId&&this.privateSession()?.sessionId!==sessionId)return;
       if (this.current?.provider === "runtime" && this.identity(this.current.ownerAccountId)?.subject_id === userId) this.invalidateSession(this.current.ownerAccountId);
+    });
+    this.proofUnsubscribe=remote.onProofChanged?.(({ownerAccountId,previousProof,proof})=>{
+      if(this.current?.ownerAccountId!==ownerAccountId||this.current.proof!==previousProof)return;
+      this.current.proof=proof;this.persistSession(this.current.rememberSession);
     });
     const file = services.paths.legacyDataExisted === false ? null : services.paths.legacyDataFile;
     this.migration = importLegacy({ db: this.db, filePath: file && existsSync(`${file}.before-lingjing.bak`) ? `${file}.before-lingjing.bak` : file,
@@ -38,21 +43,37 @@ class AccountsService {
     this.retryTimer.unref?.();
   }
   identity(owner) { return this.db.prepare("SELECT * FROM account_identities WHERE owner_account_id=?").get(owner); }
-  getCurrentUser() { return this.current ? { ...publicIdentity(this.identity(this.current.ownerAccountId)), dataMode: this.qaScenario ? "simulated" : "live" } : null; }
+  getCurrentUser() {
+    if(!this.current)return null;
+    const link=this.current.authKind==='supabase'?this.db.prepare('SELECT auth_user_id FROM account_cloud_links WHERE owner_account_id=?').get(this.current.ownerAccountId):null;
+    return {...publicIdentity(this.identity(this.current.ownerAccountId)),dataMode:this.qaScenario?'simulated':'live',
+      ...(link?{authKind:'supabase',authUserId:link.auth_user_id}:{})};
+  }
   getOwnerAccountId() { return this.current?.ownerAccountId || null; }
   requireOwner() { const id = this.getOwnerAccountId(); invariant(id, "LOGIN_REQUIRED", "请先登录。"); return id; }
   privateSession() {
     if (!this.current) return null;
     const row = this.identity(this.current.ownerAccountId);
-    return { ownerAccountId: row.owner_account_id, provider: row.provider, id: row.subject_id,
-      account: row.account, username: row.username, sessionToken: row.provider === "runtime" ? this.current.proof : null };
+    const cloud=this.current.authKind==='supabase',actor=cloud?require('./supabase-remote.cjs').decodeProof(this.current.proof).actor:null;
+    return {ownerAccountId:row.owner_account_id,provider:row.provider,id:row.subject_id,account:row.account,username:row.username,
+      authKind:cloud?'supabase':row.provider,sessionToken:row.provider==='runtime'&&!cloud?this.current.proof:null,
+      ...(cloud?{cloudProof:this.current.proof,authUserId:actor.authUserId,deviceId:actor.deviceId,sessionId:actor.sessionId}:{})};
   }
   requireRuntimeUser() {
     invariant(!this.qaScenario, "SIMULATED_SESSION_ONLY", "测试场景不连接真实云端。");
     const session = this.privateSession();
     invariant(session?.provider === "runtime", "CLOUD_LOGIN_REQUIRED", "此功能需要云端账号。");
+    invariant(session.authKind!=='supabase','CLOUD_PROTOCOL_UPGRADE_REQUIRED','该模块需要使用新的云端身份接口。');
     return session;
   }
+  async requireCloudActor(){
+    invariant(!this.qaScenario,'SIMULATED_SESSION_ONLY','测试场景不连接真实云端。');
+    const session=this.privateSession();
+    invariant(session?.authKind==='supabase'&&this.remote.cloudContext,'CLOUD_LOGIN_REQUIRED','请登录升级后的云端账号。');
+    const epoch=this.epoch,context=await this.remote.cloudContext(session);
+    invariant(this.epoch===epoch&&this.current?.ownerAccountId===session.ownerAccountId,'SESSION_CHANGED','账号已切换，请重试。');return context;
+  }
+  async cloudInvoke(name,body){const actor=await this.requireCloudActor();return actor.invoke(name,body);}
   session() {
     return { currentUser: this.getCurrentUser(), defaultProvider: !this.qaScenario && this.remote.enabled ? "runtime" : "local",
       dataMode: this.qaScenario ? "simulated" : "live", scenario: publicScenario(this.qaScenario),
@@ -70,7 +91,10 @@ class AccountsService {
     const epoch = this.epoch;
     try {
       if (row.provider === "runtime") {
-        await this.remote.verify({ id: row.subject_id, account: row.account, username: row.username, sessionToken: saved.proof });
+        const verified=await this.remote.verify({id:row.subject_id,ownerAccountId:row.owner_account_id,account:row.account,username:row.username,sessionToken:saved.proof,cloudProof:saved.proof});
+        if(verified?.proof)saved.proof=verified.proof;
+        invariant(epoch===this.epoch,'SESSION_CHANGED','账号状态已变化。');
+        if(verified?.authKind==='supabase')this.remoteIdentity(verified);
       } else {
         const proof = this.db.prepare("SELECT * FROM account_login_sessions WHERE proof_hash=? AND owner_account_id=? AND expires_at>?")
           .get(checksum(saved.proof), row.owner_account_id, Date.now());
@@ -94,7 +118,8 @@ class AccountsService {
   async adopt(row, proof, rememberSession) {
     this.epoch++;
     const epoch = this.epoch;
-    this.current = { ownerAccountId: row.owner_account_id, provider: row.provider, proof, persistence: "memory", rememberSession };
+    this.current = { ownerAccountId: row.owner_account_id, provider: row.provider, proof, persistence: "memory", rememberSession,
+      authKind:row.provider==='runtime'&&this.remote.authKind==='supabase'?'supabase':row.provider };
     this.startupIssue = null;
     this.settings(row.owner_account_id);
     this.persistSession(rememberSession);
@@ -136,6 +161,14 @@ class AccountsService {
         DO UPDATE SET username=excluded.username,updated_at=excluded.updated_at`)
         .run(owner, user.id, user.account, user.account.toLowerCase(), user.username, user.createdAt || now, now);
       this.db.prepare("INSERT OR IGNORE INTO account_aliases VALUES('runtime',?,?,?,?)").run(user.id, owner, "verified-runtime-session", now);
+      if(user.authKind==='supabase'){
+        const existing=this.db.prepare('SELECT * FROM account_cloud_links WHERE owner_account_id=? OR auth_user_id=?').all(owner,user.authUserId);
+        const project=this.remote.config?.url;
+        invariant(typeof project==='string'&&existing.every(link=>link.owner_account_id===owner&&link.auth_user_id===user.authUserId&&link.project_url===project),
+          'IDENTITY_CONFLICT','云端映射与原账号不同，原存档已保留。');
+        this.db.prepare(`INSERT INTO account_cloud_links VALUES(?,?,?,?,?) ON CONFLICT(owner_account_id)
+          DO UPDATE SET updated_at=excluded.updated_at`).run(owner,user.authUserId,project,now,now);
+      }
     });
     return this.identity(owner);
   }
@@ -155,7 +188,7 @@ class AccountsService {
       if (provider === "runtime") {
         const remoteUser = register ? await this.remote.register(name, secret, label) : await this.remote.login(name, secret);
         invariant(this.epoch === epoch, "SESSION_CHANGED", "登录状态已改变，请重试。");
-        row = this.remoteIdentity(remoteUser); proof = remoteUser.sessionToken;
+        row = this.remoteIdentity(remoteUser); proof = remoteUser.proof||remoteUser.sessionToken;
       } else {
         row = this.db.prepare("SELECT * FROM account_identities WHERE provider='local' AND account_key=?").get(name.toLowerCase());
         if (register) {
@@ -266,7 +299,7 @@ class AccountsService {
         if (changePassword && row.provider === "local") this.db.prepare("DELETE FROM account_login_sessions WHERE owner_account_id=?").run(owner);
       });
       if (changePassword && row.provider === "local") this.current.proof = this.localProof(owner);
-      if (updatedUser) this.current.proof = updatedUser.sessionToken;
+      if (updatedUser) this.current.proof = updatedUser.proof||updatedUser.sessionToken;
       this.persistSession(this.current.rememberSession);
       this.remote.setCurrentUser(row.provider === "runtime" ? this.privateSession() : null);
       this.emitSession();
@@ -311,6 +344,6 @@ class AccountsService {
     this.services.events?.emit("accounts:save-restored", { ownerAccountId: owner });
     return restored;
   }
-  dispose() { clearInterval(this.retryTimer); this.remoteUnsubscribe?.(); this.host?.dispose?.(); }
+  dispose() { clearInterval(this.retryTimer); this.remoteUnsubscribe?.(); this.proofUnsubscribe?.(); this.host?.dispose?.(); }
 }
 module.exports = { AccountsService };

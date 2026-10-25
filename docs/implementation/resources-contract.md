@@ -1,6 +1,6 @@
 # 2D 角色资源模块
 
-以 `scope-2d-ui-first.txt`（d6a1ab1）为当前范围。入口为 `ui/src/features/resources/index.tsx`、`runtime/features/resources/index.cjs`；数据表使用 foundation 注入的同一 SQLite 连接。本版导入、列表、预览、动作映射、校准及资源访问只处理 2D 图集。旧 3D 实现封存在资源模块的 `legacy/`，不进入活动链路；原模型文件、历史数据库行、偏好与导入流水保留，也不迁移旧 3D localStorage 校准。
+以 `scope-2d-ui-first.txt`（d6a1ab1）与 `cloud-upgrade-2026-10-25.md` 为当前范围。入口为 `ui/src/features/resources/index.tsx`、`runtime/features/resources/index.cjs`；数据表使用 foundation 注入的同一 SQLite 连接。本版导入、列表、预览、动作映射、校准及资源访问只处理 2D 图集。确认无消费者的旧 3D 运行/导入源码已清理；正式 `history.cjs` 保留已有模型档案的只读查询、安全文件验证与云端档案恢复。原模型文件、历史数据库行、偏好与导入流水保留，也不执行旧 3D localStorage 校准。清理快照与恢复方法见 cloud resources 验收目录。
 
 ## 导入与存储
 
