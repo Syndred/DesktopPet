@@ -1,23 +1,24 @@
 {
   "module": "discovery",
   "issue": "QA-003",
-  "updatedAt": "2026-10-25T09:50:45.430Z",
-  "status": "source-ready_waiting-09-real-user-acceptance",
-  "branch": "codex/lingjing-discovery",
+  "updatedAt": "2026-10-25T11:28:21.473Z",
+  "status": "global-serial-source-complete_pending-coordinator-live-and-09-acceptance",
+  "branch": "codex/lingjing-03-fresh-20261025",
   "coordinatorBaseline": "9e57de1d210376ce679168eb1acbff8e37cff1cd",
   "baselineIntegration": "Clean fast-forward; no local source changes existed before integration. Ignored profiles, existing data and design files preserved.",
   "remoteCode": {
-    "command": "git fetch origin main",
+    "command": "git fetch origin main; git pull --ff-only origin main",
     "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086",
     "latestIncluded": true
   },
-  "identityContract": "docs/implementation/companions-display-identity-contract.json",
+  "identityContract": "docs/implementation/companions-global-serial-contract.json",
   "scope": [
-    "PetPicker selected value, dropdown options and quick cards: canonical roleName and complete original petId, wrapping without ellipsis",
-    "Capture result: canonical current role and complete petId; original capture name/serial explicitly historical; nickname editing removed from this current-identity view",
-    "Pokedex: current instance identity and complete petId alongside original encounter history, with existing petId/capture/encounter links retained",
-    "Read-only DiscoveryPet DTO gains immutable original templateId; appearance/resource is never used to guess identity",
-    "captureViews preserves stored name/serial instead of overwriting them from current pets, and joins current appearance/desktop state by owner plus petId"
+    "nearby lookup only; open in-range cloud wild preview observes before battle",
+    "runtime/service/IPC forwards fresh discover proof and verifies owner,spawnId,templateId,source",
+    "Edge uses08 ensure/lookup/owned RPCs; reserve fallback/capture bind remain in08 SQL",
+    "read-only projection for session/permit/capture/receipt and local discovery DTOs",
+    "numeric helper on nearby/encounter/result/pokedex; missing means待同步; old D/hex labels removed from current UI only",
+    "old petId, history, resource, location policy, combat and capture semantics preserved"
   ],
   "preservation": {
     "savedCaptureNamesSerialsMemoryUnchanged": true,
@@ -32,6 +33,158 @@
     "packagedOrLaunchedApps": false
   },
   "verification": [
+    {
+      "name": "Targeted discovery/account SQL, HTTP, signature, runtime, SQLite, identity and geofence group",
+      "command": "node --test --test-concurrency=1 apps/pc-app/runtime/features/discovery/tests/global-serial.test.mjs apps/pc-app/runtime/features/discovery/tests/display-identity.test.mjs apps/pc-app/runtime/features/discovery/tests/cloud-authority.test.mjs apps/pc-app/runtime/features/discovery/tests/cloud-protocol.test.mjs apps/pc-app/runtime/features/discovery/tests/cloud-transport.test.cjs apps/pc-app/runtime/features/discovery/tests/cloud-game-sql.test.mjs apps/pc-app/runtime/features/discovery/tests/cloud-handler.test.mjs apps/pc-app/runtime/features/discovery/tests/cloud-runtime.test.mjs apps/pc-app/runtime/features/discovery/tests/discovery.test.cjs apps/pc-app/runtime/features/discovery/tests/qa-location.test.cjs apps/pc-app/runtime/features/accounts/tests/global-serial-sql.test.mjs",
+      "passed": true,
+      "tests": 50,
+      "failed": 0,
+      "skipped": 0,
+      "log": "artifacts/discovery/global-serial-fresh-03/targeted-tests.log"
+    },
+    {
+      "name": "Combination after consuming08 trusted cache",
+      "command": "node --test apps/pc-app/runtime/features/companions/tests/global-serial-cache.test.cjs apps/pc-app/runtime/features/discovery/tests/global-serial.test.mjs apps/pc-app/runtime/features/discovery/tests/discovery.test.cjs",
+      "passed": true,
+      "tests": 27,
+      "newDistinctCases": 3,
+      "overlapWithPriorRun": 24
+    },
+    {
+      "name": "Additional capture counter assertion on final SQL fixture",
+      "command": "node --test apps/pc-app/runtime/features/discovery/tests/cloud-game-sql.test.mjs",
+      "passed": true,
+      "tests": 1,
+      "assertions": "capture and injected rollback preserve last_serial; no second increment"
+    },
+    {
+      "name": "npm run typecheck:ui",
+      "passed": true
+    },
+    {
+      "name": "Targeted UI/ESM/new helper lint and git diff --check",
+      "passed": true
+    },
+    {
+      "name": "Deno2.9.6 frozen discovery entry check",
+      "command": "deno check --no-config --node-modules-dir=none --lock=infra/supabase/functions/discovery/deno.lock --frozen --cached-only infra/supabase/functions/discovery/index.ts",
+      "passed": true
+    },
+    {
+      "name": "Discovery generated source check and unchanged checked-in distribution",
+      "passed": true,
+      "generatedBytes": 74398,
+      "sourceFiles": 11,
+      "templates": 8,
+      "generatedFilesChanged": false,
+      "preserveSymlinks": true
+    },
+    {
+      "name": "Production runtime static closure",
+      "passed": true,
+      "files": 113,
+      "newMainSerialHelperIncluded": true
+    }
+  ],
+  "reactReview": {
+    "keysAndSelections": "Original petId/spawnId retained; sessionEpoch remounts preview on account changes",
+    "hooks": "One guarded observe per eligible preview mount, waits while another command is pending; retry button after failure",
+    "accessibility": "Existing controls/labels retained; new number has aria-live polite",
+    "performance": "No request per render; nearby lookup batches at most100 entities; no new package"
+  },
+  "handoff": {
+    "coordinator": "01a172b5-e59a-7c53-a67c-8fc53e6f61cd",
+    "nativeInputOwner": "01a172b4-d7f0-7213-9a40-092418ee776b",
+    "requires": "Coordinator reviews/deploys08 migration plus discovery and companions-sync, freezes candidate;09 verifies actual rendered entry/capture/retry/account-switch and independent cloud readback.",
+    "nativeAcceptanceCompletedHere": false,
+    "requestedChecks": [
+      "real candidate encounter number before battle",
+      "re-entry and lost-response retry keep same number",
+      "observed number equals captured pet/result/pokedex number; counter unchanged",
+      "same-role twins keep distinct petId actions; account switching cannot reuse another owner response",
+      "independent live SQL/sidecar readback; old receipt/archive hashes preserved"
+    ]
+  },
+  "previousIdentityUiCheckpoint": "e74a9aa",
+  "globalNumberingChange": {
+    "requestedDisplay": "Per immutable templateId across users: server positive decimal globalSerial, UI minimum4 digits; desktop has no label (02 owner)",
+    "phase": "Implemented and locally verified; migration deployment and native/cloud acceptance owned by new coordinator/09",
+    "fieldAgreement": {
+      "field": "globalSerial",
+      "type": "optional positive integer string without padding",
+      "displayOwner": "02 shared helper pads to at least4 digits; missing means pending sync",
+      "status": "root accepted;08 proposed same field"
+    },
+    "facts": {
+      "nearby": "handler.mjs computes up to16 candidate spawns, currently without persisted entity registration",
+      "spawnKey": "spawns.cjs: wild-2d-v2-<catalog-generation>-<hour>-<latCell>-<lngCell>",
+      "permit": "authority.reserve creates per-owner permit UUID and session",
+      "ownedId": "authority.confirm creates original pet-<committed permit UUID>",
+      "captureUniqueness": "20261025034132: UNIQUE(owner_account_id,spawn_id) WHERE status=captured; current game permits different owners to capture their own same-point encounter"
+    },
+    "recommendation": {
+      "entitySemantics": "Per-owner encounter entities, preserving existing capture rules; global counter still shared across all live owners of the same templateId",
+      "entityKeyTuple": [
+        "discovery",
+        "live or qa:<scenarioId>",
+        "verified canonical ownerAccountId",
+        "original spawnId"
+      ],
+      "encoding": "Canonical tuple/opaque registry key owned by08; never ambiguous string concatenation and never derive from device/session/actionId/permit retry/position refresh",
+      "allocationPoint": "First opened actual target encounter after original verified location/range checks, before its globalSerial is shown. Nearby map candidates remain unallocated placeholders.",
+      "lightweightEntry": "Future discovery observe endpoint validates server-generated target and signed discovery proof; does not start a battle or grant capture/XP/seeds",
+      "reserveCompatibility": "Reuse the same registered entity; legacy clients may ensure it at reserve. Original stable entity registration survives new permit UUID, cancel/retry/restart.",
+      "capture": "Within the existing capture transaction bind the same wild entity/serial to the original owner+petId.08 owned allocator must recognize this binding and skip increment.",
+      "expiry": "Old entity numbers never recycled; new hourly/catalog generation is a different candidate, not a renumbering of old captured/permit history",
+      "qa": "Explicit server scenario namespace;08 determines counter namespace. Do not infer QA from nickname or alter historical owners."
+    },
+    "alternativeNotImplicitlyAuthorized": {
+      "globalSharedSpawn": "If the same spawn is one global animal for all owners, a global single-capture claim is required. Otherwise two different owned pets would inherit one public number. This changes existing multiplayer capture semantics and needs root decision.",
+      "batchNearbyAllocation": "If every map candidate must already show a real number, ensure all returned new entities before nearby response and accept that scanning multiple same-type candidates consumes their numbers. Do not promise B0003 after a whole unobserved batch."
+    },
+    "interfacesRequestedFrom08": [
+      {
+        "proposed": "ensureWildSerial",
+        "meaning": "Atomic idempotent registration of verified templateId+wild entity key; returns existing or new globalSerial"
+      },
+      {
+        "proposed": "bindWildSerial",
+        "meaning": "Atomic linking of the pre-numbered entity to original owner+petId within authoritative capture save; never allocate again"
+      }
+    ],
+    "preservation": [
+      "Keep original petId, name, legacy serial, capture and immutable receipt bytes",
+      "Use sidecar registration/read-only DTO for old data; no rewrite of old captures or account histories",
+      "Owner and all commands remain authenticated canonical owner+original petId, never public number lookup",
+      "No change to original80m/30s/100m gates, battle engine, growth or inventory"
+    ],
+    "coordination": {
+      "accountsThread": "01a172b4-d081-7f53-bbda-0987e5a4c7ac",
+      "rootThread": "01a172b5-e59a-7c53-a67c-8fc53e6f61cd",
+      "accountsConfirmation": "Exact RPC signatures and independent serialRegistry confirmed",
+      "sqlOwner": "08 only",
+      "discoverySourceOwner": "fresh03",
+      "nativeAcceptanceOwner": "fresh09 only",
+      "frozenCandidate": "312e5fe unchanged"
+    },
+    "futureAcceptance": [
+      "A adopts typeX0001; a selected actual wild encounter gets0002; B adopts typeX0003 (no other same-type entity allocated in this controlled sequence)",
+      "Repeated observe/refresh, cross-device same owner and permit retry return the same wild serial",
+      "Capture and duplicate confirm inherit the observed number; no new counter increment",
+      "Different owners same map point remain distinct entities/numbers unless root explicitly changes capture semantics",
+      "Concurrent adoption/encounter registration is unique and idempotent; mutable appearance never changes type or number",
+      "Canceled/expired entity numbers not reused; unknown/offline states never locally invent a number"
+    ],
+    "sourceCommit": "e74a9aaea264f50b7539714b31b25038c0716212"
+  },
+  "previousIdentityUiScope": [
+    "PetPicker selected value, dropdown options and quick cards: canonical roleName and complete original petId, wrapping without ellipsis",
+    "Capture result: canonical current role and complete petId; original capture name/serial explicitly historical; nickname editing removed from this current-identity view",
+    "Pokedex: current instance identity and complete petId alongside original encounter history, with existing petId/capture/encounter links retained",
+    "Read-only DiscoveryPet DTO gains immutable original templateId; appearance/resource is never used to guess identity",
+    "captureViews preserves stored name/serial instead of overwriting them from current pets, and joins current appearance/desktop state by owner plus petId"
+  ],
+  "previousIdentityUiVerification": [
     {
       "name": "npm run typecheck:ui",
       "passed": true
@@ -65,20 +218,71 @@
       "note": "No rule suppression or unrelated TS migration performed."
     }
   ],
-  "reactReview": {
-    "keysAndSelections": "Original petId; no name-based lookup",
-    "hooks": "No added fetch/effect or conditional hook",
-    "accessibility": "Distinct full-id card labels; original select label preserved; full-id text not truncated",
-    "performance": "Shared pure catalog projection, no identity IPC per render"
-  },
-  "handoff": {
-    "realInputOwner": "09 / 01a1725c-d59c-7620-9bb6-1c0d4e0fb3a3",
-    "nativeAcceptanceCompletedHere": false,
-    "requestedChecks": [
-      "Same-role twins show two complete distinct ids in picker and select the exact petId",
-      "Result and pokedex show fixed role + full id even after mutable appearance/history nickname differ",
-      "Historical nickname/serial and memory text remain original; details/capture links stay on the same instance",
-      "Narrow viewport wraps full ids rather than clipping or ellipsis"
-    ]
+  "globalSerialImplementation": {
+    "decisionId": "globalSerial-20261025-v1",
+    "evidence": "docs/implementation/evidence/discovery/global-serial-fresh-03/checks.json",
+    "inheritedWipFiles": [
+      "apps/pc-app/runtime/features/discovery/cloud-adapter.cjs",
+      "infra/supabase/functions/discovery/authority.mjs",
+      "infra/supabase/functions/discovery/handler.mjs",
+      "infra/supabase/functions/discovery/protocol.mjs",
+      "infra/supabase/functions/discovery/global-serial.mjs"
+    ],
+    "sourceFilesVerified": [
+      "apps/pc-app/runtime/features/discovery/cloud-adapter.cjs",
+      "apps/pc-app/runtime/features/discovery/cloud-runtime.cjs",
+      "apps/pc-app/runtime/features/discovery/global-serial.cjs",
+      "apps/pc-app/runtime/features/discovery/index.cjs",
+      "apps/pc-app/runtime/features/discovery/service.cjs",
+      "apps/pc-app/runtime/features/discovery/tests/cloud-authority.test.mjs",
+      "apps/pc-app/runtime/features/discovery/tests/cloud-game-sql.test.mjs",
+      "apps/pc-app/runtime/features/discovery/tests/cloud-protocol.test.mjs",
+      "apps/pc-app/runtime/features/discovery/tests/cloud-transport.test.cjs",
+      "apps/pc-app/runtime/features/discovery/tests/display-identity.test.mjs",
+      "apps/pc-app/runtime/features/discovery/tests/global-serial.test.mjs",
+      "apps/pc-app/runtime/features/discovery/verification/build-cloud.mjs",
+      "apps/pc-app/ui/src/features/discovery/CaptureResultView.tsx",
+      "apps/pc-app/ui/src/features/discovery/ExploreView.tsx",
+      "apps/pc-app/ui/src/features/discovery/PokedexView.tsx",
+      "apps/pc-app/ui/src/features/discovery/WildPreviewView.tsx",
+      "apps/pc-app/ui/src/features/discovery/index.tsx",
+      "apps/pc-app/ui/src/features/discovery/use-discovery.ts",
+      "infra/supabase/functions/discovery/authority.mjs",
+      "infra/supabase/functions/discovery/global-serial.mjs",
+      "infra/supabase/functions/discovery/handler.mjs",
+      "infra/supabase/functions/discovery/protocol.mjs",
+      "infra/supabase/functions/discovery/store.mjs"
+    ],
+    "sourceFilesUncommittedAtVerification": [
+      "apps/pc-app/runtime/features/discovery/cloud-adapter.cjs",
+      "apps/pc-app/runtime/features/discovery/cloud-runtime.cjs",
+      "apps/pc-app/runtime/features/discovery/global-serial.cjs",
+      "apps/pc-app/runtime/features/discovery/index.cjs",
+      "apps/pc-app/runtime/features/discovery/service.cjs",
+      "apps/pc-app/runtime/features/discovery/tests/cloud-authority.test.mjs",
+      "apps/pc-app/runtime/features/discovery/tests/cloud-game-sql.test.mjs",
+      "apps/pc-app/runtime/features/discovery/tests/cloud-protocol.test.mjs",
+      "apps/pc-app/runtime/features/discovery/tests/cloud-transport.test.cjs",
+      "apps/pc-app/runtime/features/discovery/tests/display-identity.test.mjs",
+      "apps/pc-app/runtime/features/discovery/tests/global-serial.test.mjs",
+      "apps/pc-app/runtime/features/discovery/verification/build-cloud.mjs",
+      "apps/pc-app/ui/src/features/discovery/CaptureResultView.tsx",
+      "apps/pc-app/ui/src/features/discovery/ExploreView.tsx",
+      "apps/pc-app/ui/src/features/discovery/PokedexView.tsx",
+      "apps/pc-app/ui/src/features/discovery/WildPreviewView.tsx",
+      "apps/pc-app/ui/src/features/discovery/index.tsx",
+      "apps/pc-app/ui/src/features/discovery/use-discovery.ts",
+      "infra/supabase/functions/discovery/authority.mjs",
+      "infra/supabase/functions/discovery/global-serial.mjs",
+      "infra/supabase/functions/discovery/handler.mjs",
+      "infra/supabase/functions/discovery/protocol.mjs",
+      "infra/supabase/functions/discovery/store.mjs"
+    ],
+    "pendingDocumentationFiles": [
+      "docs/implementation/status/discovery-user-acceptance.json",
+      "docs/implementation/evidence/discovery/global-serial-fresh-03/checks.json"
+    ],
+    "sourceReviewedBeforeCommit": true,
+    "realCloudAndNativeAcceptancePending": true
   }
 }

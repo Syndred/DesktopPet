@@ -72,7 +72,7 @@ export async function verifySignedLocation({ actor, challenge, device, fix: inpu
 }
 export function rejectClientAuthority(payload) {
   requireValue(payload && typeof payload === 'object' && !Array.isArray(payload), 'INVALID_REQUEST');
-  for (const field of ['actor', 'authUserId', 'owner', 'ownerAccountId', 'deviceId', 'sessionId', 'allowSimulatedLocation', 'userId', 'sessionToken', 'session_token', 'winner', 'battle', 'pet', 'reward', 'rewards', 'experience', 'captureMultiplier']) {
+  for (const field of ['actor', 'authUserId', 'owner', 'ownerAccountId', 'deviceId', 'sessionId', 'allowSimulatedLocation', 'userId', 'sessionToken', 'session_token', 'winner', 'battle', 'pet', 'reward', 'rewards', 'experience', 'captureMultiplier', 'globalSerial', 'namespace', 'entityKey', 'templateId']) {
     requireValue(!Object.hasOwn(payload, field), 'CLIENT_AUTHORITY_FORBIDDEN', `请求不能指定${field}`, 403);
   }
 }

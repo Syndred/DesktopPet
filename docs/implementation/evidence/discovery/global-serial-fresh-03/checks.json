@@ -1,0 +1,137 @@
+{
+  "format": "lingjing.discovery.global-serial.source-checks",
+  "version": 1,
+  "at": "2026-10-25T11:28:21.473Z",
+  "decisionId": "globalSerial-20261025-v1",
+  "branch": "codex/lingjing-03-fresh-20261025",
+  "base": "ca7127470298fc307b9260143a5fcbc3bca57cb9",
+  "dependencies": {
+    "companions": "a528ebcf90e33491364a606747727f7f28f46457",
+    "sql": "e97d01ecb395ce12ad4b1a93fb105b84f9dd33a7",
+    "sqlQaScope": "3dd85d6",
+    "trustedCache": "96da941c598d613d03d2ea6cc0afd3902735b1a5"
+  },
+  "recovery": {
+    "oldHead": "63af4da8dc7603a43e80dfa9ccd3f6e580aa0fcb",
+    "snapshot": "6b7887fb58419e1209f78bf5ed20d41440a33cb1",
+    "originalWipFiles": [
+      "apps/pc-app/runtime/features/discovery/cloud-adapter.cjs",
+      "infra/supabase/functions/discovery/authority.mjs",
+      "infra/supabase/functions/discovery/handler.mjs",
+      "infra/supabase/functions/discovery/protocol.mjs",
+      "infra/supabase/functions/discovery/global-serial.mjs"
+    ],
+    "originalFilesMatchedSha256BeforeRecovery": 5,
+    "resetOrClean": false
+  },
+  "remoteCode": {
+    "command": "git fetch origin main; git pull --ff-only origin main",
+    "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086",
+    "latestIncluded": true
+  },
+  "sourceFiles": {
+    "apps/pc-app/runtime/features/discovery/cloud-adapter.cjs": "de845d3d33d7b4afa17d962ea690da22c9eb769c14ea9e3eb43008a9dd519db3",
+    "apps/pc-app/runtime/features/discovery/cloud-runtime.cjs": "97fca550babc74f9abe5a765fa14a21fb2dab8c1839462f5140c1fd37e8caf6a",
+    "apps/pc-app/runtime/features/discovery/global-serial.cjs": "fc148ca6046d75b63bf1e839f64e14e104c1cec8dc4e4dfe74ff87d9b0d44ddd",
+    "apps/pc-app/runtime/features/discovery/index.cjs": "a01ae3c37c05d31af3c95ed255ae8a32597d31164281a66331746eea2838c8ad",
+    "apps/pc-app/runtime/features/discovery/service.cjs": "71117db3e8b4644e67145a8ebfa1260849aea368ecfd5cffb35fc9e67ae71275",
+    "apps/pc-app/runtime/features/discovery/tests/cloud-authority.test.mjs": "8d791ace8d7972477f995f010e7738096cc5e24a409fa421ee860adae8f45bdf",
+    "apps/pc-app/runtime/features/discovery/tests/cloud-game-sql.test.mjs": "0eb48cc0a470dbda6508bd126fd63d12f8b2e0b34631375b6f29d59505828862",
+    "apps/pc-app/runtime/features/discovery/tests/cloud-protocol.test.mjs": "94ab6769faff0943d78ac7ea3bd3f07bbf2f9d11ba3599f3e3f6948524e2c2e5",
+    "apps/pc-app/runtime/features/discovery/tests/cloud-transport.test.cjs": "d047645e90724a6e81d8993c056b7678d5d7f696cd2939cbe11ab00aa5b12ce1",
+    "apps/pc-app/runtime/features/discovery/tests/display-identity.test.mjs": "175a5603a9559590f62e59187bf2ff9897169ddcdc2c579dd522bf673625f610",
+    "apps/pc-app/runtime/features/discovery/tests/global-serial.test.mjs": "c2cbb6affde7f0f17c9b89c2039ca70301fe6b2b19d5bb4b14f36a52280913ac",
+    "apps/pc-app/runtime/features/discovery/verification/build-cloud.mjs": "3ac63429a01cc93fe02ceb5e2f0f3a058fb01e6b87410428e2c0f5040598ae81",
+    "apps/pc-app/ui/src/features/discovery/CaptureResultView.tsx": "89516a1f40ee3fe3f4dbcc3c228c83c213b5c3c193d220672382f3d94b699037",
+    "apps/pc-app/ui/src/features/discovery/ExploreView.tsx": "3e52795f94141dca7f8cdf8d3fedae68ce16a3f7b844867b4cba15b917139744",
+    "apps/pc-app/ui/src/features/discovery/PokedexView.tsx": "6f1172a7a04c4284b0574dbb41f49e9de605fce5deb83a1e6cae68e7436d8305",
+    "apps/pc-app/ui/src/features/discovery/WildPreviewView.tsx": "dc277609e2232427b1edf0640a09feeb012cdbd9227276ced57b04420f02a047",
+    "apps/pc-app/ui/src/features/discovery/index.tsx": "d01ac6dbba9386a04399663a21356aa12a7a3b45139baacbd1928ece1c65de71",
+    "apps/pc-app/ui/src/features/discovery/use-discovery.ts": "d82da5fb7beb557f500646d309976bc0d2e95f8eee2bdb25af0652abea5c3718",
+    "infra/supabase/functions/discovery/authority.mjs": "f4424ea0e9c69699e75d8a5f887fb9ada829cd3ab37a6f90c614a56fcf8ca776",
+    "infra/supabase/functions/discovery/global-serial.mjs": "d5d724d33960ba615690bd5f831a91e20da4fe3c10454a1b22aeb9d8afba9522",
+    "infra/supabase/functions/discovery/handler.mjs": "aedc81c278219a7c1c04e74c1eeb4cfe0306c8e220836dd6d732c2d91a96f9aa",
+    "infra/supabase/functions/discovery/protocol.mjs": "7428c3fb6418c7fb29e672d56353d3e78e1cd2b336a7ea10aa601294ba4b4004",
+    "infra/supabase/functions/discovery/store.mjs": "05e662cb0293b4c605d1e1e04b222127ce03c0caec27ca6175b7f7971a2f8a0c"
+  },
+  "checks": [
+    {
+      "name": "Targeted discovery/account SQL, HTTP, signature, runtime, SQLite, identity and geofence group",
+      "command": "node --test --test-concurrency=1 apps/pc-app/runtime/features/discovery/tests/global-serial.test.mjs apps/pc-app/runtime/features/discovery/tests/display-identity.test.mjs apps/pc-app/runtime/features/discovery/tests/cloud-authority.test.mjs apps/pc-app/runtime/features/discovery/tests/cloud-protocol.test.mjs apps/pc-app/runtime/features/discovery/tests/cloud-transport.test.cjs apps/pc-app/runtime/features/discovery/tests/cloud-game-sql.test.mjs apps/pc-app/runtime/features/discovery/tests/cloud-handler.test.mjs apps/pc-app/runtime/features/discovery/tests/cloud-runtime.test.mjs apps/pc-app/runtime/features/discovery/tests/discovery.test.cjs apps/pc-app/runtime/features/discovery/tests/qa-location.test.cjs apps/pc-app/runtime/features/accounts/tests/global-serial-sql.test.mjs",
+      "passed": true,
+      "tests": 50,
+      "failed": 0,
+      "skipped": 0,
+      "log": "artifacts/discovery/global-serial-fresh-03/targeted-tests.log"
+    },
+    {
+      "name": "Combination after consuming08 trusted cache",
+      "command": "node --test apps/pc-app/runtime/features/companions/tests/global-serial-cache.test.cjs apps/pc-app/runtime/features/discovery/tests/global-serial.test.mjs apps/pc-app/runtime/features/discovery/tests/discovery.test.cjs",
+      "passed": true,
+      "tests": 27,
+      "newDistinctCases": 3,
+      "overlapWithPriorRun": 24
+    },
+    {
+      "name": "Additional capture counter assertion on final SQL fixture",
+      "command": "node --test apps/pc-app/runtime/features/discovery/tests/cloud-game-sql.test.mjs",
+      "passed": true,
+      "tests": 1,
+      "assertions": "capture and injected rollback preserve last_serial; no second increment"
+    },
+    {
+      "name": "npm run typecheck:ui",
+      "passed": true
+    },
+    {
+      "name": "Targeted UI/ESM/new helper lint and git diff --check",
+      "passed": true
+    },
+    {
+      "name": "Deno2.9.6 frozen discovery entry check",
+      "command": "deno check --no-config --node-modules-dir=none --lock=infra/supabase/functions/discovery/deno.lock --frozen --cached-only infra/supabase/functions/discovery/index.ts",
+      "passed": true
+    },
+    {
+      "name": "Discovery generated source check and unchanged checked-in distribution",
+      "passed": true,
+      "generatedBytes": 74398,
+      "sourceFiles": 11,
+      "templates": 8,
+      "generatedFilesChanged": false,
+      "preserveSymlinks": true
+    },
+    {
+      "name": "Production runtime static closure",
+      "passed": true,
+      "files": 113,
+      "newMainSerialHelperIncluded": true
+    }
+  ],
+  "distinctLocalCases": 53,
+  "provenLocally": [
+    "nearby performs lookup only",
+    "observe retains80m/30s/100m checks and uses a fresh discover proof",
+    "same owner across devices/re-entry keeps the stable wild number",
+    "capture keeps the same globalSerial and species counter; original petId remains unchanged",
+    "immutable receipt and save envelope hashes are unchanged by serial projection",
+    "foreign/unverified/imported number metadata cannot assert authority",
+    "old captured names, legacy serials, memory bytes and resources are retained",
+    "main command intents do not persist serial projection; trusted cache stays separate"
+  ],
+  "uiSourceReview": "Session epoch remount and guarded effect reviewed and type/lint checked; actual rendered account-switch/entry behavior requires09 native acceptance.",
+  "boundary": {
+    "localFixturesOnly": true,
+    "realCloudVerified": false,
+    "physicalGpsVerified": false,
+    "nativeUiAcceptance": false,
+    "published": false,
+    "dependenciesInstalledOrRebuilt": false,
+    "sharedRootIndexTouched": false
+  },
+  "handoff": {
+    "coordinator": "01a172b5-e59a-7c53-a67c-8fc53e6f61cd",
+    "nativeInputOwner": "01a172b4-d7f0-7213-9a40-092418ee776b",
+    "requires": "Coordinator reviews/deploys08 migration plus discovery and companions-sync, freezes candidate;09 verifies actual rendered entry/capture/retry/account-switch and independent cloud readback."
+  }
+}

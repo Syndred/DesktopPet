@@ -6,12 +6,13 @@ const {nearbySpawns}=require('./spawns.cjs');
 const {RegisteredWildBattleAdapter}=require('./battle-adapter.cjs');
 const {checkFix,geofence,distanceMeters}=require('./coordinates.cjs');
 const {getBattleRules}=require('../../services/battle-runtime.cjs');
+const {confirmedSerial,withoutGlobalSerials}=require('./global-serial.cjs');
 function problem(code,message) {throw Object.assign(new Error(message),{code});}
 const ok=data=>({ok:true,data});
 const clone=value=>structuredClone(value);
 function publicEncounter(value) {
   if(!value) return null;
-  const result=clone(value); if(result.battle) {delete result.battle.engineState;result.battle.rules ||= getBattleRules();}
+  const result=withoutGlobalSerials(value); if(result.battle) {delete result.battle.engineState;result.battle.rules ||= getBattleRules();}
   delete result.initialFix; delete result.cloudPermit;
   return result;
 }
@@ -76,7 +77,11 @@ class DiscoveryService {
   captureViews(owner,owned) {
     if(!owner)return [];
     const pets=owned || this.getCompanions?.()?.listPets?.(owner) || [];
-    return this.repo.captures(owner).map(capture=>{const pet=pets.find(value=>value.ownerAccountId===owner&&value.petId===capture.petId);return {...capture,...(pet?{resourceId:pet.resource.resourceId,showOnDesktop:Boolean(pet.desktop?.visible)}:{})};});
+    return this.repo.captures(owner).map(capture=>{
+      const pet=pets.find(value=>value.ownerAccountId===owner&&value.petId===capture.petId&&value.templateId===capture.templateId);
+      const globalSerial=confirmedSerial(pet?.globalSerial)||(this.authority?this.cloudRuntime?.numberForEncounter(owner,this.repo.get(owner,capture.encounterId)):undefined);
+      return {...withoutGlobalSerials(capture),...(pet?{resourceId:pet.resource.resourceId,showOnDesktop:Boolean(pet.desktop?.visible)}:{}),...(globalSerial?{globalSerial}:{})};
+    });
   }
   snapshot() {
     if(this.getOwner()&&this.authority&&this.cloudRuntime)return this.cloudRuntime.refresh().then(()=>this.snapshotLocal());
@@ -85,15 +90,21 @@ class DiscoveryService {
   snapshotLocal() {
     const owner=this.getOwner(),companion=this.getCompanions?.();
     const owned=owner ? (companion?.listPets?.(owner) || companion?.snapshot?.(owner)?.data?.pets || []) : [];
-    const pets=owned.map(p=>({petId:p.petId,templateId:p.templateId,name:p.name,element:p.element,resource:p.resource,level:p.growth?.level || 1}));
+    const pets=owned.map(p=>({petId:p.petId,templateId:p.templateId,name:p.name,element:p.element,resource:p.resource,level:p.growth?.level || 1,...(confirmedSerial(p.globalSerial)?{globalSerial:p.globalSerial}:{})}));
     if(owner) for(const encounter of this.repo.list(owner)) this.syncExternal(encounter);
     const nearby=this.nearby(),fix=this.location.snapshot().fix;
     const territories=this.territories?.nearby(owner,fix) || {available:false,items:[]};
     return ok({scenario:this.scenario(),location:this.location.snapshot(),map:this.map.snapshot(),...nearby,
       mapLocation:fix ? this.map.project(fix) : null,spawns:nearby.spawns.map(s=>({...s,mapPosition:this.map.project(s.position)})),territories:territories.items,territoriesAvailable:territories.available,pets,
-      encounters:owner ? this.repo.list(owner).map(publicEncounter) : [],captures:this.captureViews(owner,owned),
+      encounters:owner ? this.repo.list(owner).map(value=>this.authority&&this.cloudRuntime?this.cloudRuntime.encounterView(owner,value):publicEncounter(value)) : [],captures:this.captureViews(owner,owned),
       signedIn:Boolean(owner),storage:this.authority?'cloud':'local',cloudConfigured:Boolean(this.authority),
       cloudStatus:!this.authority ? 'disabled' : !this.getBattle?.()?.supportsCloudWild ? 'battle_adapter_missing' : 'ready'});
+  }
+  async observe(input) {
+    if(this.authority&&this.cloudRuntime)return this.cloudRuntime.observe(input);
+    this.owner();const spawn=this.nearby().spawns.find(value=>value.id===input.spawnId);
+    if(!spawn)problem('SPAWN_EXPIRED','附近伙伴已刷新，请重新查看地图');
+    this.requireFix(spawn);return ok({spawnId:spawn.id,templateId:spawn.templateId});
   }
   async begin(input) {
     if(this.authority&&this.cloudRuntime)return this.cloudRuntime.begin(input);

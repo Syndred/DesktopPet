@@ -1,6 +1,7 @@
 // Server-only state machine. Store writes are transactions, not client save JSON.
 import { BattleRuntimeService, getBattleRules, presentSession, nearbySpawns, geofence } from './_generated/runtime.mjs';
 import { ACTIONS, PROTOCOL, canonical, checkedFix, identifier, rejectClientAuthority, requireValue, verifiedActor } from './protocol.mjs';
+import { confirmedGlobalSerial, serialProjection } from './global-serial.mjs';
 const clone = value => structuredClone(value);
 const hash = async value => Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(canonical(value))))).map(b => b.toString(16).padStart(2, '0')).join('');
 const cleanName = value => { requireValue(typeof value === 'string' && value.trim() && [...value.trim()].length <= 24 && !/[\u0000-\u001f]/u.test(value), 'INVALID_NAME', '昵称需为1–24个字符'); return value.trim(); };
@@ -32,6 +33,16 @@ export function createWildAuthority({ store, now = Date.now, uuid = () => crypto
   const inRange = (value, spawn) => { const range = geofence({ ...value.fix, source: 'os' }, spawn.position, 100, now()); requireValue(range.ok, range.code || 'OUT_OF_CAPTURE_RANGE', range.message); return range; };
   return async ({ actor, input }) => {
     verifiedActor(actor); rejectClientAuthority(input);
+    if (input.op === 'observe') {
+      const spawnId = identifier(input.spawnId, 'spawnId');
+      const location = await proof(actor, input.proofId, 'discover', '');
+      const spawn = nearbySpawns(location.fix, now()).find(value => value.id === spawnId);
+      requireValue(spawn, 'SPAWN_EXPIRED', '附近伙伴已刷新'); inRange(location, spawn);
+      requireValue(typeof store.ensureWildSerial === 'function', 'GLOBAL_SERIAL_UNAVAILABLE', '编号服务尚未就绪', 503);
+      const identity = await store.ensureWildSerial(actor, spawn, location);
+      return { ownerAccountId: actor.ownerAccountId, namespace: identity.namespace, spawnId: spawn.id, templateId: spawn.templateId, globalSerial: confirmedGlobalSerial(identity.globalSerial),
+        source: location.source, ...(location.fix.scenarioId ? { scenarioId: location.fix.scenarioId } : {}) };
+    }
     if (input.op === 'reserve') {
       const request = { op: 'reserve', spawnId: identifier(input.spawnId, 'spawnId'), petId: identifier(input.petId, 'petId'), proofId: identifier(input.proofId, 'proofId') };
       return result(actor, input.actionId, request, async operation => {
@@ -39,8 +50,10 @@ export function createWildAuthority({ store, now = Date.now, uuid = () => crypto
         const spawn = nearbySpawns(location.fix, now()).find(value => value.id === request.spawnId); requireValue(spawn, 'SPAWN_EXPIRED', '附近伙伴已刷新'); inRange(location, spawn);
         const pet = await store.ownedPet(actor, request.petId); requireValue(pet && pet.ownerAccountId === actor.ownerAccountId, 'CLOUD_PET_NOT_SYNCED', '出战伙伴尚无可信云端记录');
         requireValue(['metal', 'wood', 'water', 'fire', 'earth'].includes(pet.element) && ['2d', 'spritesheet'].includes(pet.resource?.kind), 'PET_2D_REQUIRED', '请选择可信2D出战伙伴');
+        // 08 ensures legacy reserve requests inside the original SQL transaction
+        // using its begin proof. The observe RPC accepts discover proofs only.
         const id = uuid(), sessionId = `battle-cloud-${id}`, engine = new BattleRuntimeService();
-        const player = { ...clone(pet), petName: pet.name, appearance2d: pet.resource.resourceId };
+        const player = { ...serialProjection(clone(pet)), petName: pet.name, appearance2d: pet.resource.resourceId };
         const enemy = { petId: spawn.id, petName: spawn.name, name: spawn.name, templateId: spawn.templateId, element: spawn.element, level: 1,
           resource: { resourceId: spawn.resourceId, kind: '2d' }, appearance2d: spawn.resourceId, combatStats: clone(spawn.stats) };
         const session = { id: sessionId, mode: 'wild', status: 'active', player, enemy,

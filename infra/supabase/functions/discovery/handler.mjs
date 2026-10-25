@@ -25,7 +25,7 @@ export function createDiscoveryHandler({ requireActor, store, now = Date.now, au
       const input = await readBody(request); rejectClientAuthority(input);
       let data;
       if (input.op === 'protocol') data = { protocol: PROTOCOL, locationPolicy: '80m/30s/100m', serverTime: now(),
-        wildAuthority: Boolean(authority), receiptRecovery: Boolean(authority), ...(actor.allowSimulatedLocation === true ? { scenarioId: actor.scenarioId, simulatedLocationAllowed: true } : {}) };
+        wildAuthority: Boolean(authority), receiptRecovery: Boolean(authority), wildObserve: Boolean(authority && store.ensureWildSerial), ...(actor.allowSimulatedLocation === true ? { scenarioId: actor.scenarioId, simulatedLocationAllowed: true } : {}) };
       else if (input.op === 'device.register') {
         const jwk = publicJwk(input.publicJwk), keyFingerprint = await digest(canonical(jwk));
         data = await store.location(actor, 'register_device', { publicJwk: jwk, keyFingerprint });
@@ -47,11 +47,15 @@ export function createDiscoveryHandler({ requireActor, store, now = Date.now, au
         const proof = await store.location(actor, 'read_proof', { proofId: identifier(input.proofId, 'proofId') });
         requireValue(proof.purpose === 'discover' && proof.reference === '' && proof.expiresAt > now(), 'LOCATION_PROOF_EXPIRED', '请更新位置');
         const fix = checkedFix(proof.fix, actor, now()), metricFix = { ...fix, source: 'os' };
-        data = { source: fix.source, scenarioId: fix.scenarioId, serverTime: now(), spawns: nearbySpawns(fix, now()).map(spawn => ({ ...spawn, inRange: geofence(metricFix, spawn.position, 100, now()).ok })) };
+        const spawns = nearbySpawns(fix, now()).map(spawn => ({ ...spawn, inRange: geofence(metricFix, spawn.position, 100, now()).ok }));
+        data = { source: fix.source, scenarioId: fix.scenarioId, serverTime: now(), spawns: store.projectNearby ? await store.projectNearby(actor, spawns, fix) : spawns };
       } else {
         requireValue(authority, 'CLOUD_AUTHORITY_NOT_READY', '云端权威接口尚未接入', 503);
         data = await authority({ actor, input, now: now() });
       }
+      // Registry metadata is appended AFTER mutation receipts have committed.
+      // It never changes stored game JSON, old receipt bytes or save checksums.
+      if (store.projectGlobalSerials && !['protocol','observe','nearby','device.register','location.challenge','location.prove'].includes(input.op)) data = await store.projectGlobalSerials(actor, data);
       return reply({ ok: true, protocol: PROTOCOL, data: presentSession(data) });
     } catch (error) {
       // Internal DB errors never leak SQL, JWTs, raw request bodies or key data.

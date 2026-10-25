@@ -27,5 +27,5 @@ test('only server-authorized scenario actors can retain simulated provenance; re
   const fix = { ...fixture().fix, source: 'simulated', provider: 'qa-discovery', scenarioId: 'qa-run' };
   assert.throws(() => checkedFix(fix, actor, now), { code: 'REAL_LOCATION_REQUIRED' });
   assert.equal(checkedFix(fix, { ...actor, allowSimulatedLocation: true, scenarioId: 'qa-run' }, now).source, 'simulated');
-  for (const field of ['ownerAccountId', 'userId', 'sessionToken', 'winner', 'battle', 'pet', 'reward']) assert.throws(() => rejectClientAuthority({ op: 'act', [field]: 'client-value' }), { code: 'CLIENT_AUTHORITY_FORBIDDEN' });
+  for (const field of ['ownerAccountId', 'userId', 'sessionToken', 'winner', 'battle', 'pet', 'reward', 'globalSerial', 'namespace', 'entityKey', 'templateId']) assert.throws(() => rejectClientAuthority({ op: 'act', [field]: 'client-value' }), { code: 'CLIENT_AUTHORITY_FORBIDDEN' });
 });

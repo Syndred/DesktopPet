@@ -2,6 +2,7 @@ const {checksum}=require('../accounts/util.cjs');
 const {PROTOCOL}=require('./cloud-adapter.cjs');
 const fail=(code,message)=>{throw Object.assign(new Error(message),{code});};
 const clone=value=>structuredClone(value);
+const {confirmedSerial,withoutGlobalSerials}=require('./global-serial.cjs');
 const sessionPattern=/^battle-cloud-([a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})$/i;
 const TABLES=['discovery_encounters','discovery_actions','discovery_captures','discovery_memory_tags'];
 class CloudDiscoveryRuntime {
@@ -26,6 +27,8 @@ class CloudDiscoveryRuntime {
     const id='discovery-client:'+request.actionId,hash=checksum(request),prior=this.db.prepare('SELECT kind,input_hash,result FROM account_actions WHERE owner_account_id=? AND action_id=?').get(owner,id);
     if(prior&&(prior.kind!=='discovery-cloud-command'||prior.input_hash!==hash))fail('ACTION_ID_CONFLICT','操作编号已用于其他请求');
     const value={...(prior?JSON.parse(prior.result):{}),request,status,...extra};
+    // Main command intents are part of backup state; display metadata is not.
+    if(Object.hasOwn(value,'result'))value.result=withoutGlobalSerials(value.result);
     this.db.prepare('INSERT INTO account_actions(owner_account_id,action_id,kind,input_hash,result,created_at) VALUES(?,?,?,?,?,?) ON CONFLICT(owner_account_id,action_id) DO UPDATE SET result=excluded.result').run(owner,id,'discovery-cloud-command',hash,JSON.stringify(value),new Date().toISOString());return value;
   }
   async serial(owner,work){const previous=this.locks.get(owner)||Promise.resolve(),next=previous.catch(()=>{}).then(()=>{this.assertOwner(owner);return work();});this.locks.set(owner,next);try{return await next;}finally{if(this.locks.get(owner)===next)this.locks.delete(owner);}}
@@ -33,7 +36,7 @@ class CloudDiscoveryRuntime {
     if(typeof body.actionId!=='string'||!/^[a-zA-Z0-9][a-zA-Z0-9:_-]{0,179}$/.test(body.actionId))fail('ACTION_ID_REQUIRED','需要有效操作编号');
     this.assertOwner(owner);const prior=this.intent(owner,body.actionId),authority=this.authority();
     if(prior&&prior.row.input_hash!==checksum(body))fail('ACTION_ID_CONFLICT','操作编号已用于其他请求');
-    if(prior?.status==='verified')return prior.result;
+    if(prior?.status==='verified')return withoutGlobalSerials(prior.result);
     this.saveIntent(owner,body,'pending',{sessionId});
     try{
       let data;
@@ -42,13 +45,13 @@ class CloudDiscoveryRuntime {
       this.assertOwner(owner);this.saveIntent(owner,body,'verified',{sessionId:sessionId||data.sessionId,result:data,verifiedAt:new Date().toISOString()});return data;
     }catch(error){this.assertOwner(owner);const terminal=/CONFLICT|INVALID_|FINISHED|VICTORY_REQUIRED|EXPIRED|CANCELLED/.test(error.code||'');this.saveIntent(owner,body,terminal?'conflict':'retry',{sessionId,error:error.code||'CLOUD_UNAVAILABLE'});throw error;}
   }
-  async head(owner){const result=await this.services.get('cloudActor').invoke('lingjing-save',{op:'read'});this.assertOwner(owner);if(!result?.envelope||result.envelope.ownerAccountId!==owner)fail('CLOUD_RESPONSE_INVALID','云端存档归属不一致');const{checksum:digest,...body}=result.envelope;if(checksum(body)!==digest)fail('CLOUD_RESPONSE_INVALID','云端存档完整性校验失败');return result;}
+  async head(owner){const result=await this.services.get('cloudActor').invoke('companions-sync',{op:'snapshot'});this.assertOwner(owner);if(result?.authority!=='live'||result.ownerAccountId!==owner||!result.envelope||result.envelope.ownerAccountId!==owner)fail('CLOUD_RESPONSE_INVALID','云端存档归属不一致');const{checksum:digest,...body}=result.envelope;if(checksum(body)!==digest)fail('CLOUD_RESPONSE_INVALID','云端存档完整性校验失败');return result;}
   apply(owner,head){
     this.assertOwner(owner);const envelope=head.envelope,records=envelope.data.tables;
     // Existing02/05 adapters own their complete units and reject unsynced local
     // progress. All domain restores share this outer SQLite transaction.
     this.db.transaction(()=>{
-      const companions=this.services.get('companions');companions.applyCloudReadback(owner,{authority:'live',ownerAccountId:owner,revision:head.revision,envelope,module:envelope.data.modules.companions});
+      const companions=this.services.get('companions');companions.applyCloudReadback(owner,{authority:'live',ownerAccountId:owner,revision:head.revision,envelope,module:envelope.data.modules.companions,serialRegistry:head.serialRegistry});
       this.services.get('garden').applyCloudReadback(owner,{envelope,accountRevision:head.revision,serverTime:Date.now()});
       for(const name of TABLES){
         const record=records[name];if(!record)continue;
@@ -86,6 +89,30 @@ class CloudDiscoveryRuntime {
     })();this.pendingRefresh=task;try{return await task;}finally{if(this.pendingRefresh===task)this.pendingRefresh=null;}
   }
   async read(owner,id){const session=await this.authority().sessionFor(this.permitId(id));this.assertOwner(owner);return this.remember(owner,session);}
+  numberForEncounter(owner,encounter){
+    if(!encounter||encounter.ownerAccountId!==owner)return undefined;
+    const enemy=this.peek(owner,encounter.battle?.battleId)?.enemy;
+    return enemy?.petId===encounter.spawn?.id&&enemy.templateId===encounter.spawn.templateId?confirmedSerial(enemy.globalSerial):undefined;
+  }
+  encounterView(owner,encounter){
+    const value=require('./service.cjs').publicEncounter(encounter);if(!value)return value;
+    delete value.spawn.globalSerial;const serial=this.numberForEncounter(owner,encounter);if(serial!==undefined)value.spawn.globalSerial=serial;return value;
+  }
+  async observe(input){
+    const owner=this.owner();
+    const spawn=this.discovery.nearby().spawns.find(value=>value.id===input.spawnId);
+    if(!spawn)fail('SPAWN_EXPIRED','附近伙伴已刷新，请重新查看地图');
+    this.discovery.requireFix(spawn);
+    // A new signed discover proof per attempt preserves proof-consumer scope.
+    // The server's stable owner/world/spawn identity handles lost responses.
+    const proof=await this.proofs.prove('discover','');
+    const data=await this.authority().observe({spawnId:spawn.id,proofId:proof.id});this.assertOwner(owner);
+    if(data?.ownerAccountId!==owner||data.spawnId!==spawn.id||data.templateId!==spawn.templateId||!confirmedSerial(data.globalSerial)
+      ||typeof data.namespace!=='string'||!(data.namespace==='live'||/^qa:.+/.test(data.namespace))
+      ||data.source!==proof.fix.source||(data.scenarioId||null)!==(proof.fix.scenarioId||null))fail('CLOUD_RESPONSE_INVALID','相遇编号读回不一致');
+    if(this.nearbyState?.source===data.source&&(this.nearbyState.scenarioId||null)===(data.scenarioId||null))this.nearbyState={...this.nearbyState,spawns:this.nearbyState.spawns.map(value=>value.id===spawn.id&&value.templateId===spawn.templateId?{...value,globalSerial:data.globalSerial}:value)};
+    this.discovery.notify(owner);return{ok:true,data};
+  }
   async begin(input){
     const owner=this.owner();return this.serial(owner,async()=>{
       const original=this.intent(owner,input.actionId);
@@ -102,10 +129,10 @@ class CloudDiscoveryRuntime {
       }
       const body=original?.request||{op:'reserve',spawnId:input.spawnId,petId:input.petId,proofId:(await this.proofs.prove('begin',input.spawnId)).id,actionId:input.actionId};
       const permit=await this.request(owner,body);
-      await this.refresh(true);const encounter=this.discovery.repo.get(owner,'encounter-'+permit.id);if(!encounter)fail('CLOUD_APPLY_PENDING','云端相遇已保存，本机读回待确认');return{ok:true,data:require('./service.cjs').publicEncounter(encounter)};
+      await this.refresh(true);const encounter=this.discovery.repo.get(owner,'encounter-'+permit.id);if(!encounter)fail('CLOUD_APPLY_PENDING','云端相遇已保存，本机读回待确认');return{ok:true,data:this.encounterView(owner,encounter)};
     });
   }
-  async cancel(input){const owner=this.owner(),encounter=this.discovery.currentEncounter(owner,input.encounterId);return this.serial(owner,async()=>{await this.request(owner,{op:'cancel',permitId:encounter.cloudPermit.id,actionId:input.actionId},encounter.battle.battleId);await this.refresh(true);return{ok:true,data:require('./service.cjs').publicEncounter(this.discovery.repo.get(owner,input.encounterId))};});}
+  async cancel(input){const owner=this.owner(),encounter=this.discovery.currentEncounter(owner,input.encounterId);return this.serial(owner,async()=>{await this.request(owner,{op:'cancel',permitId:encounter.cloudPermit.id,actionId:input.actionId},encounter.battle.battleId);await this.refresh(true);return{ok:true,data:this.encounterView(owner,this.discovery.repo.get(owner,input.encounterId))};});}
   async confirm(input){
     const owner=this.owner();return this.serial(owner,async()=>{
       const encounter=this.discovery.currentEncounter(owner,input.encounterId),permitId=encounter.cloudPermit.id;
@@ -115,7 +142,8 @@ class CloudDiscoveryRuntime {
       const receipt=await this.request(owner,body,encounter.battle.battleId);
       this.apply(owner,await this.head(owner));await this.refresh(true);
       if(input.showOnDesktop){const displayed=await this.services.invoke('companions','desktop',{actionId:'capture-desktop:'+permitId,petId:receipt.petId,visible:true});if(!displayed.ok)fail(displayed.code,'伙伴已收服，桌面显示待确认：'+displayed.message);}
-      return{ok:true,data:{...receipt,resultPath:'/discovery/result/'+input.encounterId}};
+      const current=this.discovery.captureViews(owner).find(value=>value.petId===receipt.petId&&value.encounterId===input.encounterId);
+      return{ok:true,data:{...receipt,...(current?.globalSerial?{globalSerial:current.globalSerial}:{}),resultPath:'/discovery/result/'+input.encounterId}};
     });
   }
   getOutcome(input){const owner=this.owner();if(input.ownerAccountId!==owner)fail('AUTH_CHANGED','账号已切换');const session=this.peek(owner,input.sessionId);if(!session)fail('CLOUD_SESSION_SYNC_REQUIRED','请先同步云端对局');return{session,won:session.status==='finished'&&session.winner==='player',settled:session.status==='finished'};}

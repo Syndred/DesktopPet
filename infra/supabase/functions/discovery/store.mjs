@@ -1,11 +1,13 @@
 import { DiscoveryError, requireValue } from './protocol.mjs';
+import { confirmedGlobalSerial, serialProjection, withoutGlobalSerials } from './global-serial.mjs';
 const exposed = new Set(['AUTH_REQUIRED','DEVICE_KEY_INVALID','DEVICE_KEY_REQUIRED','DEVICE_KEY_CHANGED','DEVICE_OWNER_MISMATCH',
   'LOCATION_PURPOSE_INVALID','LOCATION_CHALLENGE_INVALID','LOCATION_CHALLENGE_EXPIRED','LOCATION_SIGNATURE_INVALID','LOCATION_NONCE_REPLAY',
   'LOCATION_PROOF_INVALID','LOCATION_PROOF_USED','LOCATION_PROOF_SCOPE_MISMATCH','LOCATION_PROOF_EXPIRED','LOCATION_RATE_LIMITED',
   'INVALID_COORDINATES','LOCATION_STALE','LOCATION_IMPRECISE','REAL_LOCATION_REQUIRED','INVALID_CONSUMER','UNSUPPORTED_OP',
   'ACTION_ID_CONFLICT','INVALID_ACTION','PERMIT_NOT_FOUND','ROUND_CONFLICT','REVISION_CONFLICT','SYNC_CONFLICT','BATTLE_FINISHED',
   'ENCOUNTER_PENDING','ENCOUNTER_EXPIRED','SPAWN_ALREADY_CAPTURED','CLOUD_PET_NOT_SYNCED','VICTORY_REQUIRED','CAPTURE_ALREADY_CONFIRMED',
-  'COMPANIONS_AUTHORITY_REQUIRED','CLOUD_REWARD_ADAPTER_REQUIRED','TERRITORY_CONFLICT','DISCOVERY_SCHEMA_CONFLICT','INVALID_CAPTURE_RECEIPT','LOCATION_SCENARIO_MISMATCH']);
+  'COMPANIONS_AUTHORITY_REQUIRED','CLOUD_REWARD_ADAPTER_REQUIRED','TERRITORY_CONFLICT','DISCOVERY_SCHEMA_CONFLICT','INVALID_CAPTURE_RECEIPT','LOCATION_SCENARIO_MISMATCH',
+  'GLOBAL_SERIAL_SCOPE_REVOKED','GLOBAL_SERIAL_SCOPE_CONFLICT','GLOBAL_SERIAL_INVALID','GLOBAL_SERIAL_UNAVAILABLE','GLOBAL_SERIAL_CONFLICT','GLOBAL_SERIAL_TEMPLATE_MISMATCH']);
 export function actorDto(actor) {
   return { authUserId: actor.authUserId, ownerAccountId: actor.ownerAccountId, deviceId: actor.deviceId, sessionId: actor.sessionId,
     ...(actor.allowSimulatedLocation === true ? { allowSimulatedLocation: true, scenarioId: actor.scenarioId } : {}) };
@@ -21,8 +23,9 @@ export function createDiscoveryStore(admin, { awardBattle, createCapture, now = 
     if (error) {
       const message = (error.message || '').replace(/\bLJ_/g, '');
       const code = [...exposed].find(code => new RegExp(`\\b${code}\\b`).test(message));
-      const status = code === 'LOCATION_RATE_LIMITED' ? 429 : /CONFLICT|REPLAY|USED|PENDING/.test(code || '') ? 409 : code === 'AUTH_REQUIRED' ? 401 : code ? 403 : 503;
-      throw new DiscoveryError(code || 'DISCOVERY_STORAGE_UNAVAILABLE', code || '云端探索存储暂不可用', status);
+      const status = code === 'LOCATION_RATE_LIMITED' ? 429 : /CONFLICT|REPLAY|USED|PENDING/.test(code || '') ? 409 : code === 'AUTH_REQUIRED' ? 401 : ['GLOBAL_SERIAL_INVALID','GLOBAL_SERIAL_UNAVAILABLE'].includes(code) ? 503 : code ? 403 : 503;
+      const serialMessage = { GLOBAL_SERIAL_SCOPE_REVOKED: '当前场景编号授权已失效，等待重新授权', GLOBAL_SERIAL_SCOPE_CONFLICT: '当前账号的场景编号授权冲突，请联系支持核对' }[code];
+      throw new DiscoveryError(code || 'DISCOVERY_STORAGE_UNAVAILABLE', serialMessage || code || '云端探索存储暂不可用', status);
     }
     return data;
   }
@@ -36,10 +39,101 @@ export function createDiscoveryStore(admin, { awardBattle, createCapture, now = 
   }
   const read = (actor, op, key = null) => rpc('lingjing_discovery_game_read', { p_actor: actorDto(actor), p_op: op, p_key: key });
   const write = (actor, op, operation, revision, fragments = {}) => rpc('lingjing_discovery_game_write', {
-    p_actor: actorDto(actor), p_op: op, p_operation: operation, p_expected_save_revision: revision, p_fragments: fragments
+    p_actor: actorDto(actor), p_op: op, p_operation: withoutGlobalSerials(operation), p_expected_save_revision: revision, p_fragments: fragments
   });
+  const entityKey = value => JSON.stringify([value.id, value.templateId]);
+  const validNamespace = value => value === 'live' || typeof value === 'string' && /^qa:.+/.test(value);
+  function checkedIdentity(actor, value) {
+    requireValue(value?.ownerAccountId === actor.ownerAccountId && validNamespace(value.namespace), 'GLOBAL_SERIAL_INVALID', '云端编号归属不一致', 503);
+    confirmedGlobalSerial(value.globalSerial); return value;
+  }
+  async function wildSerials(actor, spawns) {
+    const entities = [...new Map(spawns.map(value => [entityKey(value), { id: value.id, templateId: value.templateId }])).values()];
+    if (!entities.length) return new Map();
+    const batches = []; for (let offset = 0; offset < entities.length; offset += 100) batches.push(entities.slice(offset, offset + 100));
+    const results = await Promise.all(batches.map(p_spawns => rpc('lingjing_global_serial_wild_lookup', { p_actor: actorDto(actor), p_spawns })));
+    requireValue(results.every(Array.isArray), 'GLOBAL_SERIAL_INVALID', '云端编号读回无效', 503);
+    const rows = results.flat();
+    requireValue(Array.isArray(rows), 'GLOBAL_SERIAL_INVALID', '云端编号读回无效', 503);
+    const expected = new Set(entities.map(entityKey)), result = new Map();
+    for (const row of rows) {
+      checkedIdentity(actor, row); const key = entityKey({ id: row.spawnId, templateId: row.templateId });
+      requireValue(expected.has(key) && !result.has(key), 'GLOBAL_SERIAL_INVALID', '云端编号对象不一致', 503); result.set(key, row.globalSerial);
+    }
+    return result;
+  }
+  async function ownedSerials(actor, revision) {
+    const value = await rpc('lingjing_global_serial_owned', { p_actor: actorDto(actor), p_expected_revision: revision });
+    requireValue(value?.format === 'lingjing.global-serial.readback' && value.version === 1 && value.ownerAccountId === actor.ownerAccountId
+      && validNamespace(value.namespace) && value.revision === revision && Array.isArray(value.pets), 'GLOBAL_SERIAL_INVALID', '伙伴编号读回不一致', 503);
+    const result = new Map();
+    for (const row of value.pets) {
+      checkedIdentity(actor, row);
+      requireValue(typeof row.petId === 'string' && typeof row.templateId === 'string' && !result.has(row.petId), 'GLOBAL_SERIAL_INVALID', '伙伴编号对象不一致', 503);
+      result.set(row.petId, row);
+    }
+    return result;
+  }
+  async function projectNearby(actor, spawns) {
+    // Lookup only: map refreshes never allocate candidate wild numbers.
+    const records = await wildSerials(actor, spawns);
+    return spawns.map(spawn => serialProjection(spawn, records.get(entityKey(spawn))));
+  }
+  async function projectGlobalSerials(actor, input) {
+    const value = withoutGlobalSerials(input), wild = [], owned = [], permits = new Map(), deferred = [];
+    const addWild = (target, spawn) => {
+      if (typeof spawn?.id === 'string' && typeof spawn.templateId === 'string') wild.push({ target, spawn });
+    };
+    const visit = node => {
+      if (!node || typeof node !== 'object') return;
+      if (Array.isArray(node)) { node.forEach(visit); return; }
+      if (node.spawn && node.session) {
+        requireValue(node.ownerAccountId === actor.ownerAccountId, 'GLOBAL_SERIAL_INVALID', '相遇编号归属不一致', 503);
+        permits.set(node.id, node); addWild(node.spawn, node.spawn);
+      }
+      if (node.mode === 'wild' && node.enemy && node.player) {
+        addWild(node.enemy, { id: node.enemy.petId, templateId: node.enemy.templateId });
+        if (node.player.petId && node.player.templateId) owned.push(node.player);
+      }
+      if (node.petId && node.templateId && node.encounterId) {
+        requireValue(node.ownerAccountId === actor.ownerAccountId, 'GLOBAL_SERIAL_INVALID', '捕获编号归属不一致', 503);
+        owned.push(node);
+        const permitId = node.permitId || (node.encounterId.startsWith('encounter-') ? node.encounterId.slice(10) : null);
+        if (permitId) deferred.push({ target: node, permitId });
+      } else if (node.id && node.sessionId === `battle-cloud-${node.id}` && !node.spawn) deferred.push({ target: node, permitId: node.id });
+      Object.values(node).forEach(visit);
+    };
+    visit(value);
+    await Promise.all([...new Set(deferred.map(item => item.permitId))].map(async id => {
+      if (!permits.has(id)) permits.set(id, await read(actor, 'permit', id));
+    }));
+    for (const item of deferred) {
+      const permit = permits.get(item.permitId);
+      if (permit) {
+        requireValue(permit.ownerAccountId === actor.ownerAccountId && (!item.target.templateId || item.target.templateId === permit.spawn?.templateId), 'GLOBAL_SERIAL_INVALID', '相遇编号对象不一致', 503);
+        addWild(item.target, permit.spawn);
+      }
+    }
+    const records = await wildSerials(actor, wild.map(item => item.spawn));
+    for (const item of wild) { const serial = records.get(entityKey(item.spawn)); if (serial !== undefined) item.target.globalSerial = serial; }
+    if (owned.length) {
+      const current = await head(actor), records = await ownedSerials(actor, current.revision);
+      for (const target of owned) {
+        const record = records.get(target.petId);
+        if (record?.templateId === target.templateId) {
+          requireValue(target.globalSerial === undefined || target.globalSerial === record.globalSerial, 'GLOBAL_SERIAL_CONFLICT', '相遇与捕获编号不一致', 503);
+          target.globalSerial = record.globalSerial;
+        }
+      }
+    }
+    return value;
+  }
   return {
-    head,
+    head, projectNearby, projectGlobalSerials,
+    async ensureWildSerial(actor, spawn, location) {
+      const value = checkedIdentity(actor, await rpc('lingjing_global_serial_wild_ensure', { p_actor: actorDto(actor), p_spawn: spawn, p_proof_id: location.id }));
+      requireValue(value.spawnId === spawn.id && value.templateId === spawn.templateId, 'GLOBAL_SERIAL_INVALID', '相遇编号对象不一致', 503); return value;
+    },
     location: (actor, op, input) => rpc('lingjing_discovery_location', { p_actor: actorDto(actor), p_op: op, p_input: input }),
     takeLocation: (actor, proofId, purpose, reference, consumer) => rpc('lingjing_discovery_take_location', {
       p_actor: actorDto(actor), p_proof_id: proofId, p_purpose: purpose, p_reference: reference, p_consumer: consumer
@@ -50,7 +144,7 @@ export function createDiscoveryStore(admin, { awardBattle, createCapture, now = 
     capture: (actor, id) => read(actor, 'capture', id),
     captures: actor => read(actor, 'captures'),
     async ownedPet(actor, id) {
-      const { envelope } = await head(actor), module = envelope.data?.modules?.companions;
+      const { envelope, revision } = await head(actor), module = envelope.data?.modules?.companions;
       requireValue(module === undefined || module?.version === 1 && module.data?.ownerAccountId === actor.ownerAccountId, 'CLOUD_PET_NOT_SYNCED');
       // Once the canonical module exists never blend/fall back to generic rows.
       const rows = module === undefined ? envelope.data?.tables?.companion_pets?.rows : module.data?.tables?.companion_pets;
@@ -59,7 +153,8 @@ export function createDiscoveryStore(admin, { awardBattle, createCapture, now = 
       requireValue(matches.length === 1, 'CLOUD_PET_NOT_SYNCED');
       let pet; try { pet = JSON.parse(matches[0].data_json); } catch { throw new DiscoveryError('CLOUD_PET_NOT_SYNCED'); }
       requireValue(pet.ownerAccountId === actor.ownerAccountId && pet.petId === id && pet.revision === matches[0].revision, 'CLOUD_PET_NOT_SYNCED');
-      return pet;
+      const record = (await ownedSerials(actor, revision)).get(id);
+      return serialProjection(pet, record?.templateId === pet.templateId ? record.globalSerial : undefined);
     },
     async reserve(actor, operation) { return write(actor, 'reserve', operation, (await head(actor)).revision); },
     async advance(actor, operation) {

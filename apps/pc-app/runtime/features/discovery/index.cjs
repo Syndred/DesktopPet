@@ -47,7 +47,7 @@ module.exports={
       setProvider:payload=>{const result=discovery.map.setProvider(payload.providerId); return result.ok ? discovery.snapshot() : {ok:false,code:result.error.code,message:result.error.message};},
       tile:async payload=>({ok:true,data:await tiles.get(discovery.map.snapshot(),payload.z,payload.x,payload.y)}),
       ...(qaLocation?{qaTarget:async payload=>{qaLocation.selectTemplate(payload.templateId);location.reset();const result=await location.locate();return result.ok?discovery.snapshot():{ok:false,code:result.error.code,message:result.error.message};}}:{}),
-      begin:payload=>discovery.begin(payload),act:payload=>discovery.act(payload),cancel:payload=>discovery.cancel(payload),confirm:payload=>discovery.confirm(payload),
+      observe:payload=>discovery.observe(payload),begin:payload=>discovery.begin(payload),act:payload=>discovery.act(payload),cancel:payload=>discovery.cancel(payload),confirm:payload=>discovery.confirm(payload),
       pokedex:()=>({ok:true,data:discovery.captureViews(discovery.owner())}),memories:payload=>discovery.memories(payload)
     },dispose(){windowVisibility.dispose();offSession();offPrivacy();unsubscribe();removeCloudContext?.();proofs.clear();cloud.clear();cloudRuntime.clear();setExploring(false);discovery.dispose();}};
   }

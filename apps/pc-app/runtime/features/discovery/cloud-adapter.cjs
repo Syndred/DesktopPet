@@ -30,13 +30,14 @@ class CloudDiscoveryAuthority {
   }
   async invoke(op,input={}) {
     // No owner, old session_token or service credential is serialized in bodies.
-    for(const field of ['actor','authUserId','authUid','owner','ownerAccountId','deviceId','sessionId','userId','sessionToken','session_token','allowSimulatedLocation','winner','battle','pet','reward','rewards','experience','captureMultiplier'])if(Object.hasOwn(input,field))fail('CLIENT_AUTHORITY_FORBIDDEN','请求包含不受信任的权威字段');
+    for(const field of ['actor','authUserId','authUid','owner','ownerAccountId','deviceId','sessionId','userId','sessionToken','session_token','allowSimulatedLocation','winner','battle','pet','reward','rewards','experience','captureMultiplier','globalSerial','namespace','entityKey','templateId'])if(Object.hasOwn(input,field))fail('CLIENT_AUTHORITY_FORBIDDEN','请求包含不受信任的权威字段');
     const {context,actor}=await this.session();
     const protocol=await this.checkProtocol(context,actor);
     const data=op==='protocol'?protocol:await context.invoke('discovery',{...input,op});
     if(sameActor((await this.session()).actor)!==sameActor(actor))fail('AUTH_CHANGED','账号已切换，原请求可在原账号读回',{uncertain:true});
     return data;
   }
+  observe({spawnId,proofId}){return this.invoke('observe',{spawnId,proofId});}
   reserve({spawnId,petId,proofId,actionId}){return this.invoke('reserve',{spawnId,petId,proofId,actionId});}
   act({permitId,action,expectedRound,actionId}){return this.invoke('act',{permitId,action,expectedRound,actionId});}
   confirm({permitId,proofId,name,actionId}){return this.invoke('confirm',{permitId,proofId,name,actionId});}

@@ -31,7 +31,7 @@ function fixture() {
   const authority = createWildAuthority({ store, now: () => clock, uuid: () => `c1ed72dc-bf3d-44f4-9e6b-${String(++serial).padStart(12, '0')}`, projectRef: 'local-unit-not-cloud' });
   const issue = (purpose, reference, who = actor) => { const id = `proof-${proofs.size}`; proofs.set(id, { ...who, id, purpose, reference, source: 'simulated', fix: clone(fix), expiresAt: clock + 15000 }); return id; };
   const call = (input, who = actor) => authority({ actor: who, input });
-  return { call, issue, spawn, pet, actions, captures, permits, rewardCommits, instanceCommits, store };
+  return { call, issue, spawn, pet, actions, captures, permits, proofs, rewardCommits, instanceCommits, store };
 }
 test('actual server kernel refuses forged victory/foreign ownership, replays original actions, and returns one capture across same-owner devices', async t => {
   t.mock.method(Math, 'random', () => .5); // Unit-only deterministic NPC, never an HTTP input or production preset.
@@ -48,6 +48,10 @@ test('actual server kernel refuses forged victory/foreign ownership, replays ori
   await assert.rejects(f.call({ ...first, actionId: 'stale' }), { code: 'ROUND_CONFLICT' });
   for (let round = 0; round < 40 && session.status === 'active'; round++) session = await f.call({ op: 'act', permitId: permit.id, actionId: `round-${round}`, action: session.snapshot.player.anger >= session.rules.ultimateAnger ? 'ultimate' : 'normal_attack', expectedRound: session.snapshot.round + 1 });
   assert.equal(session.status, 'finished'); assert.equal(session.winner, 'player'); assert.equal(f.rewardCommits.size, 1);
+  const crossId = f.issue('capture', permit.id, second), crossProof = f.proofs.get(crossId);
+  crossProof.source = 'os'; crossProof.fix = { ...crossProof.fix, source: 'os', provider: 'windows-geolocator' }; delete crossProof.fix.scenarioId;
+  await assert.rejects(f.call({ op: 'confirm', permitId: permit.id, proofId: crossId, name: '不能跨世界收服', actionId: 'cross-scenario-capture' }, second), { code: 'LOCATION_SCENARIO_MISMATCH' });
+  assert.equal(crossProof.consumedAt, undefined);
   const confirm = { op: 'confirm', permitId: permit.id, proofId: f.issue('capture', permit.id, second), name: '新伙伴', actionId: 'capture-a' };
   const captured = await f.call(confirm, second); assert.equal(captured.petId, `pet-${permit.id}`); assert.equal(captured.battleId, permit.sessionId); assert.equal(captured.validation, 'simulated');
   assert.deepEqual(await f.call(confirm, second), captured);

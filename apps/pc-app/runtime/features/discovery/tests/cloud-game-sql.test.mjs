@@ -10,6 +10,7 @@ import {BattleRuntimeService,getBattleRules} from '../../../../../../infra/supab
 import {companionUnit,createCompanionInstance,listBuiltinTemplates,nearbySpawns,applyCloudCommand,emptyGarden} from '../../../../../../infra/supabase/functions/discovery/_generated/runtime.mjs';
 import {createDiscoveryStore} from '../../../../../../infra/supabase/functions/discovery/store.mjs';
 import {createWildAuthority} from '../../../../../../infra/supabase/functions/discovery/authority.mjs';
+import {createDiscoveryHandler} from '../../../../../../infra/supabase/functions/discovery/handler.mjs';
 import {awardBattle,createCapture} from '../../../../../../infra/supabase/functions/discovery/domain.mjs';
 const require=createRequire(import.meta.url),{checksum}=require('../../accounts/util.cjs');
 test('wild writes atomically consume proof and commit protected save, preserving history and replay across devices',async t=>{
@@ -21,7 +22,7 @@ test('wild writes atomically consume proof and commit protected save, preserving
       create table auth.users(id uuid primary key,is_anonymous boolean not null default false);create table auth.sessions(id uuid primary key,user_id uuid,not_after timestamptz);
       create function auth.jwt() returns jsonb language sql stable as $$select coalesce(nullif(current_setting('request.jwt.claims',true),''),'{}')::jsonb$$;
       create function auth.uid() returns uuid language sql stable as $$select (auth.jwt()->>'sub')::uuid$$;`);
-    for(const name of ['20261025021620_lingjing_identity_actor_contract.sql','20261025022918_lingjing_auth_bridge.sql','20261025024615_lingjing_protected_save_cas.sql','20261025030635_lingjing_discovery_cloud_authority.sql','20261025030639_lingjing_discovery_live_actor_guard.sql','20261025034132_lingjing_discovery_wild_transactions.sql','20261025034136_lingjing_discovery_capture_scenarios.sql'])await db.exec(readFileSync('infra/supabase/migrations/'+name,'utf8'));
+    for(const name of ['20261025021620_lingjing_identity_actor_contract.sql','20261025022918_lingjing_auth_bridge.sql','20261025024615_lingjing_protected_save_cas.sql','20261025030635_lingjing_discovery_cloud_authority.sql','20261025030639_lingjing_discovery_live_actor_guard.sql','20261025034132_lingjing_discovery_wild_transactions.sql','20261025034136_lingjing_discovery_capture_scenarios.sql','20261025105253_lingjing_global_pet_serials.sql'])await db.exec(readFileSync('infra/supabase/migrations/'+name,'utf8'));
     await db.query('insert into auth.users(id) values($1)',[uid]);await db.query('insert into auth.sessions(id,user_id) values($1,$2)',[sid,uid]);
     const owner=(await db.query("select public.lingjing_link_auth_user($1,'localgame','Local Game') v",[uid])).rows[0].v.owner_id;
     await db.query("select set_config('request.jwt.claims',$1,false),set_config('request.headers',$2,false)",[JSON.stringify({sub:uid,session_id:sid,role:'authenticated'}),JSON.stringify({'x-lingjing-device-id':device})]);
@@ -38,10 +39,11 @@ test('wild writes atomically consume proof and commit protected save, preserving
     await db.query("select public.lingjing_commit_authority($1,'unit-trusted-source-001',$2)",[owner,{companions:{module:{version:1,data:companion},petIds:[pet.petId]},garden:{module:initialized.envelope.data.modules.garden},discovery:{tables:discoveryTables}}]);
     const location=async(op,input,who=actor)=>(await db.query('select public.lingjing_discovery_location($1::jsonb,$2,$3::jsonb) v',[JSON.stringify(who),op,JSON.stringify(input)])).rows[0].v;
     const key=generateKeyPairSync('ec',{namedCurve:'prime256v1'}).publicKey.export({format:'jwk'});await location('register_device',{publicJwk:key,keyFingerprint:'a'.repeat(64)});
-    const nonce=await location('issue_nonce',{purpose:'begin',reference:'unit-spawn'});
-    const proof=await location('accept_nonce',{challengeId:nonce.id,signatureHash:'a'.repeat(64),fix:{lat:31.2,lng:121.4,accuracyMeters:5,timestampMs:Date.now(),source:'os',provider:'windows-geolocator',positionSource:'WiFi',coordinateSystem:'wgs84'}});
-    const engine=new BattleRuntimeService(),session={id:'battle-cloud-'+id,mode:'wild',status:'active',player:pet,enemy:{petId:'unit-spawn',element:'fire'},snapshot:engine.reset({playerElement:'water',enemyElement:'fire'}),rules:getBattleRules(),rounds:[],winner:null,revision:1,context:{origin:'discovery',cloudAuthority:'discovery',permitId:id}};
-    const operation={id,actionId:'begin-game-0001',requestHash:'a'.repeat(64),petId:pet.petId,expectedPetRevision:7,locationProofId:proof.id,spawn:{id:'unit-spawn'},session};
+    const unitSpawn=nearbySpawns({lat:31.2,lng:121.4},Date.now()).find(value=>value.element==='fire');
+    const nonce=await location('issue_nonce',{purpose:'begin',reference:unitSpawn.id});
+    const proof=await location('accept_nonce',{challengeId:nonce.id,signatureHash:'a'.repeat(64),fix:{...unitSpawn.position,accuracyMeters:5,timestampMs:Date.now(),source:'os',provider:'windows-geolocator',positionSource:'WiFi',coordinateSystem:'wgs84'}});
+    const engine=new BattleRuntimeService(),session={id:'battle-cloud-'+id,mode:'wild',status:'active',player:pet,enemy:{petId:unitSpawn.id,templateId:unitSpawn.templateId,element:'fire'},snapshot:engine.reset({playerElement:'water',enemyElement:'fire'}),rules:getBattleRules(),rounds:[],winner:null,revision:1,context:{origin:'discovery',cloudAuthority:'discovery',permitId:id}};
+    const operation={id,actionId:'begin-game-0001',requestHash:'a'.repeat(64),petId:pet.petId,expectedPetRevision:7,locationProofId:proof.id,spawn:unitSpawn,session};
     const write=async(op,data,rev,fragments={})=>(await db.query('select public.lingjing_discovery_game_write($1::jsonb,$2,$3::jsonb,$4,$5::jsonb) v',[JSON.stringify(actor),op,JSON.stringify(data),rev,JSON.stringify(fragments)])).rows[0].v;
     const head=async()=>(await db.query('select revision,envelope from public.lingjing_saves where owner_id=$1',[owner])).rows[0];
     await db.exec('set role service_role');
@@ -70,27 +72,31 @@ test('wild writes atomically consume proof and commit protected save, preserving
     await db.exec(`reset role;create function public.runtime_territory_capture_context(text,double precision,double precision,text default null) returns jsonb language sql as $$select '{"territoryId":null,"captureMultiplier":1}'::jsonb$$;
       revoke all on function public.runtime_territory_capture_context(text,double precision,double precision,text) from public,anon,authenticated;
       grant execute on function public.runtime_territory_capture_context(text,double precision,double precision,text) to service_role;set role service_role;`);
-    const rpcNames={lingjing_discovery_location:['p_actor','p_op','p_input'],lingjing_discovery_game_read:['p_actor','p_op','p_key'],lingjing_discovery_game_write:['p_actor','p_op','p_operation','p_expected_save_revision','p_fragments'],runtime_territory_capture_context:['p_owner','p_lat','p_lng','p_scenario_id']};
+    const rpcNames={lingjing_discovery_location:['p_actor','p_op','p_input'],lingjing_discovery_game_read:['p_actor','p_op','p_key'],lingjing_discovery_game_write:['p_actor','p_op','p_operation','p_expected_save_revision','p_fragments'],runtime_territory_capture_context:['p_owner','p_lat','p_lng','p_scenario_id'],lingjing_global_serial_owned:['p_actor','p_expected_revision'],lingjing_global_serial_wild_lookup:['p_actor','p_spawns'],lingjing_global_serial_wild_ensure:['p_actor','p_spawn','p_proof_id']};
     const admin={async rpc(name,args){try{const fields=rpcNames[name];assert.ok(fields);const values=fields.map(key=>typeof args[key]==='object'?JSON.stringify(args[key]):args[key]);const result=await db.query('select public.'+name+'('+fields.map((_,i)=>'$'+(i+1)).join(',')+') v',values);return{data:result.rows[0].v,error:null};}catch(e){return{data:null,error:{message:e.message}};}}};
     const userClient={from(name){assert.equal(name,'lingjing_saves');return{select(){return this;},eq(field,value){assert.equal(field,'owner_id');assert.equal(value,owner);return this;},async maybeSingle(){return{data:await head(),error:null};}};}};
     const verified={...actor,schemaVersion:1,authority:'live',authKind:'supabase',client:userClient};
     const store=createDiscoveryStore(admin,{awardBattle,createCapture}),id2='d0000000-0000-4000-8000-000000000002';
     const authority=createWildAuthority({store,uuid:()=>id2,projectRef:'explicit-local-unit'}),call=input=>authority({actor:verified,input});
+    const handler=createDiscoveryHandler({requireActor:async()=>verified,store,authority});
+    const http=async input=>{const response=await handler(new Request('https://explicit-local.invalid',{method:'POST',body:JSON.stringify(input)}));const body=await response.json();assert.equal(body.ok,true,JSON.stringify(body));return body.data;};
     const spawn=nearbySpawns({lat:31.2,lng:121.4},Date.now()).find(p=>p.element==='fire');assert.ok(spawn);
     const issue=async(purpose,reference)=>{const n=await location('issue_nonce',{purpose,reference});return location('accept_nonce',{challengeId:n.id,signatureHash:'d'.repeat(64),fix:{...spawn.position,accuracyMeters:5,timestampMs:Date.now(),source:'os',provider:'windows-geolocator',coordinateSystem:'wgs84',positionSource:'WiFi'}});};
+    const discoverProof=await issue('discover',''),countRows=async()=>(await db.query('select count(*)::int n from lingjing_private.global_pet_serials')).rows[0].n;
+    const beforeNearby=await countRows();await http({op:'nearby',proofId:discoverProof.id});assert.equal(await countRows(),beforeNearby,'nearby never allocates candidate numbers');
+    const observed=await http({op:'observe',spawnId:spawn.id,proofId:discoverProof.id});assert.match(observed.globalSerial,/^[1-9][0-9]*$/);assert.equal(observed.ownerAccountId,owner);
+    const afterObserve=await countRows();assert.ok(afterObserve>=beforeNearby&&afterObserve<=beforeNearby+1);
+    const repeatedObserve=await http({op:'observe',spawnId:spawn.id,proofId:(await issue('discover','')).id});assert.equal(repeatedObserve.globalSerial,observed.globalSerial);assert.equal(await countRows(),afterObserve);
     const beginProof=await issue('begin',spawn.id),begin={op:'reserve',spawnId:spawn.id,petId:pet.petId,proofId:beginProof.id,actionId:'full-game-begin'};
     const reserved=await call(begin);assert.equal(reserved.id,id2);let current=await call({op:'session',permitId:id2});
     for(let n=0;n<80&&current.status==='active';n++)current=await call({op:'act',permitId:id2,actionId:'full-turn-'+n,expectedRound:current.snapshot.round+1,action:current.snapshot.player.anger>=current.rules.ultimateAnger?'ultimate':'normal_attack'});
     assert.equal(current.status,'finished');assert.equal(current.winner,'player');assert.equal(current.reward.applied,true);assert.equal(current.reward.experience,20);
     const wonHead=await head(),beforeCapture=wonHead.revision,captureProof=await issue('capture',id2);
-    await db.exec('reset role');
-    await db.query("insert into lingjing_discovery.location_test_grants(auth_uid,device_id,scenario_id,expires_at) values($1,$2,'explicit-unit-qa',clock_timestamp()+interval '2 minutes')",[uid,device]);
-    await db.exec('set role service_role');
-    const qaActor={...actor,allowSimulatedLocation:true,scenarioId:'explicit-unit-qa'};
-    const qaNonce=await location('issue_nonce',{purpose:'capture',reference:id2},qaActor);
-    const qaProof=await location('accept_nonce',{challengeId:qaNonce.id,signatureHash:'e'.repeat(64),fix:{...spawn.position,accuracyMeters:5,timestampMs:Date.now(),source:'simulated',provider:'qa-discovery',coordinateSystem:'wgs84',scenarioId:'explicit-unit-qa'}},qaActor);
-    await assert.rejects(authority({actor:{...verified,allowSimulatedLocation:true,scenarioId:'explicit-unit-qa'},input:{op:'confirm',permitId:id2,proofId:qaProof.id,name:'不能跨世界收服',actionId:'cross-scenario-capture'}}),{code:'LOCATION_SCENARIO_MISMATCH'});
-    assert.equal((await location('read_proof',{proofId:qaProof.id})).consumedAt,null);
+    const counter=async()=>(await db.query('select last_serial::text value from lingjing_private.global_serial_counters where namespace=$1 and template_id=$2',[observed.namespace,spawn.templateId])).rows[0].value;
+    const beforeCaptureCounter=await counter();
+    // QA grants now permanently scope the whole account. Cross-world capture
+    // rejection stays in cloud-authority.test.mjs; account-scope/revocation
+    // behavior is covered by08's real SQL tests, using separate QA accounts.
     const confirmation={op:'confirm',permitId:id2,proofId:captureProof.id,name:'云端规范新伙伴',actionId:'full-game-capture'};
     // Failure after domain rows but before save revision must roll back proof,
     // canonical instance/registry, capture receipt and the action receipt.
@@ -99,8 +105,17 @@ test('wild writes atomically consume proof and commit protected save, preserving
     await assert.rejects(call(confirmation),{code:'DISCOVERY_STORAGE_UNAVAILABLE'});
     assert.equal((await head()).revision,beforeCapture);assert.equal((await location('read_proof',{proofId:captureProof.id})).consumedAt,null);
     assert.equal((await db.query('select count(*)::int n from lingjing_discovery.captures')).rows[0].n,0);
+    assert.equal(await counter(),beforeCaptureCounter);
     await db.exec('reset role;drop trigger unit_fail_discovery_commit on public.lingjing_saves;set role service_role');
     const capture=await call(confirmation);assert.equal(capture.petId,'pet-'+id2);assert.deepEqual(await call(confirmation),capture);
+    const immutableBefore=await db.query('select (select md5(envelope::text) from public.lingjing_saves where owner_id=$1) save,(select md5(result_json::text) from lingjing_discovery.game_actions where owner_account_id=$1 and action_id=$2) action',[owner,confirmation.actionId]);
+    const projectedCapture=await http(confirmation);assert.equal(projectedCapture.globalSerial,observed.globalSerial);assert.equal(projectedCapture.petId,capture.petId);
+    assert.equal((await http({op:'session',permitId:id2})).enemy.globalSerial,observed.globalSerial);
+    assert.equal((await http({op:'captures'}))[0].globalSerial,observed.globalSerial);
+    const projectedAction=await http({op:'action',actionId:confirmation.actionId});assert.equal(projectedAction.result.globalSerial,observed.globalSerial);
+    assert.deepEqual(await db.query('select (select md5(envelope::text) from public.lingjing_saves where owner_id=$1) save,(select md5(result_json::text) from lingjing_discovery.game_actions where owner_account_id=$1 and action_id=$2) action',[owner,confirmation.actionId]),immutableBefore);
+    assert.equal(capture.globalSerial,undefined);assert.equal(await countRows(),afterObserve,'capture binds the observed wild number instead of allocating a new one');
+    assert.equal(await counter(),beforeCaptureCounter,'capture does not increment the species counter again');
     const originalAction=await store.action(verified,confirmation.actionId);
     assert.deepEqual(await store.recordExistingCapture(verified,{actionId:confirmation.actionId,requestHash:originalAction.requestHash,permitId:id2}),capture,'A delayed concurrent confirm sees the same atomic claim receipt');
     const final=await head(),pets=final.envelope.data.modules.companions.data.tables.companion_pets;

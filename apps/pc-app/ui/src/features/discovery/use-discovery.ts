@@ -31,6 +31,7 @@ export function useDiscovery() {
   const [data, setData] = useState<DiscoverySnapshot | null>(null);
   const [error, setError] = useState('');
   const [pending, setPending] = useState(false);
+  const [sessionEpoch, setSessionEpoch] = useState(0);
   const alive = useRef(true), generation = useRef(0), locked = useRef(false);
   const refresh = useCallback(async () => {
     const current = ++generation.current;
@@ -43,7 +44,7 @@ export function useDiscovery() {
     void refresh();
     const subscriptions = ['discovery:changed', 'discovery:location', 'companions:changed', 'garden:changed'].map(event => window.lingjing?.subscribe(event, () => void refresh()));
     for (const event of ['app:session','accounts:session-changed']) subscriptions.push(window.lingjing?.subscribe(event, () => {
-      ++generation.current; setData(null); setError('');
+      ++generation.current; setSessionEpoch(value => value + 1); setData(null); setError('');
       setExploring(inExploration() && document.visibilityState === 'visible'); void refresh();
     }));
     const timer = setInterval(() => { if(document.visibilityState === 'visible') void refresh(); }, 15000);
@@ -56,6 +57,6 @@ export function useDiscovery() {
     catch (e) { if (alive.current) setError(e instanceof Error ? e.message : String(e)); await refresh(); return undefined; }
     finally { locked.current = false; if (alive.current) setPending(false); }
   }, [refresh]);
-  return { data, error, pending, run, refresh };
+  return { data, error, pending, run, refresh, sessionEpoch };
 }
 export const actionId = () => crypto.randomUUID();

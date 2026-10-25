@@ -16,7 +16,7 @@ import './styles.css';
 import './identity.css';
 
 function DiscoveryPage() {
-  const { data: state, pending, error, run, refresh } = useDiscovery();
+  const { data: state, pending, error, run, refresh, sessionEpoch } = useDiscovery();
   const path = usePath(), [selectedId, setSelectedId] = useState(''), [petId, setPetId] = useState('');
   const id = path.split('/')[3] || '';
   if (!state) return <div className="discovery-page"><h1>附近探索</h1><p role="status">{error || '正在读取探索进度…'}</p><Button variant="ghost" onClick={() => void refresh()}>重新连接</Button></div>;
@@ -35,7 +35,7 @@ function DiscoveryPage() {
     {path === '/discovery' ? <header className="discovery-main-heading"><div><h1>下楼走走，遇见新伙伴。</h1><p>附近伙伴 · 捕捉 · 领地</p></div>{controls}</header> : <div className="discovery-sub-controls">{controls}</div>}
     {error ? <div className="discovery-alert" role="alert"><ShieldAlert size={17}/>{error}</div> : null}
     {path.startsWith('/discovery/result/') ? capture ? <CaptureResultView key={capture.petId} capture={capture} state={state}/> : missing
-      : path.startsWith('/discovery/wild/') ? spawn ? <WildPreviewView state={state} spawn={spawn} pet={pet} selectPet={setPetId} pending={pending} begin={() => void begin()}/> : missing
+      : path.startsWith('/discovery/wild/') ? spawn ? <WildPreviewView key={`${sessionEpoch}:${spawn.id}`} state={state} spawn={spawn} pet={pet} selectPet={setPetId} pending={pending} observe={() => run('observe', { spawnId: spawn.id })} begin={() => void begin()}/> : missing
       : path === '/discovery/pokedex' ? <PokedexView state={state}/>
       : <ExploreView state={state} selected={selected} select={setSelectedId}/>}
   </div>;
