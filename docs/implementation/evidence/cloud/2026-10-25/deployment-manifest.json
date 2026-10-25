@@ -654,5 +654,35 @@
     "legacyDraftRetirementPending": false,
     "legacyDraftRetirementEvidence": "docs/implementation/cleanup/cloud-coordinator-retirement.json"
   },
-  "authStaticCorrection": "docs/implementation/evidence/cloud/2026-10-25/auth-static-correction-deployment.json"
+  "authStaticCorrection": "docs/implementation/evidence/cloud/2026-10-25/auth-static-correction-deployment.json",
+  "finalClientSource": "a9acd7f6f1920c541d429fa26d1f054b1427cd95",
+  "newCloudAndPortableAcceptancePassed": true,
+  "fullAcceptanceBlockedReason": "Unavailable original DesktopPet server/database; user has no SSH alias or backup",
+  "finalAcceptance": {
+    "newCloudAndPortablePassed": true,
+    "rootWholeBusinessChecks": 8,
+    "singleUninterruptedRootRun": true,
+    "actualFriendMainChecks": 6,
+    "actualFriendPostFinishRestartChecks": 2,
+    "sourceCommit": "a9acd7f6f1920c541d429fa26d1f054b1427cd95",
+    "executable": "releases/final-a9acd7f/Lingjing-0.1.8-portable-x64.exe",
+    "bytes": 169196329,
+    "sha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+    "signature": "NotSigned",
+    "rootEvidence": "docs/implementation/evidence/cloud/2026-10-25/final-portable-a9acd7f/evidence.json",
+    "friendEvidence": "docs/implementation/evidence/battle/2026-10-25/final-portable-a9acd7f/evidence.json",
+    "rootIndependentSqlite": "docs/implementation/evidence/cloud/2026-10-25/final-canonical-sqlite-readback.json",
+    "canonicalProfiles": 4,
+    "unitsPerProfile": 27,
+    "rootVersion": 103,
+    "friendVersions": [
+      9,
+      7
+    ],
+    "originalOfflineActionId": "auto:ce8b2ab8-a9d0-4130-8dce-c9a639b0c0a4",
+    "originalOfflineBase": 101,
+    "originalOfflineReceipt": 102,
+    "allPending": 0,
+    "physicalMachines": 1
+  }
 }

@@ -1,67 +1,53 @@
 # 灵境云端升级验收 · 2026-10-25
 
-当前阶段：云端和各功能专项通过；完整好友生命周期修复已完成，311 项原生 CJS 检查及独立完整云端校验通过。旧包的账号、个人自动同步、私有资源、训练画面和断网重启已分别实际验证；联合修复源的新整包正在构建，仍待同一新包总验收。
+新云端与最终 Windows 便携包已完成真实验收。整体目标仍有一项外部阻塞：旧 DesktopPet 服务器不可达、暂无 SSH 或数据库备份，因此不能宣称该实例的全部原云端账号已迁移。
 
-应用冻结提交：`a9acd7f6f1920c541d429fa26d1f054b1427cd95`。后续仅归档证据的提交与此应用来源分别记录。
+应用来源：`a9acd7f6f1920c541d429fa26d1f054b1427cd95`。此后只归档证据，生产代码与样式未改。完成前已再次 fetch 并 pull 最新 origin/main，结果 Already up to date，远端提交 `4786f97680679c2db0aa307fa5f67ec247f93086`。
 
-## 已部署能力
+## 技术栈与部署
 
-复用 comparisontext 的 Supabase Free 实例 `jbvrdmrkwpznbrvteive`，未升级付费方案，GraffitiName 未改动。实际部署 22 个数据库迁移与 8 个 ACTIVE Edge Functions。
+复用 comparisontext 的 Supabase Free 实例 `jbvrdmrkwpznbrvteive`，实际部署 22 个迁移和 8 个 ACTIVE Edge Functions。最终再次核对全部函数版本及部署包哈希一致；GraffitiName 未改动，未升级付费方案。
 
-| 范围 | 使用的成熟技术 | 已验证的行为 |
-| --- | --- | --- |
-| 身份和权限 | Supabase Auth、PostgreSQL RLS、服务端事务身份检查 | 账号和设备会话隔离；旧 JWT 被撤销后不能读写业务或加入私有频道；另一设备保持有效 |
-| 完整存档同步 | SQLite、本机持久 outbox、Postgres CAS 和不可变回执 | 正常后台自动上传/接收；本机脏修改阻止覆盖；断网任务原 actionId 重启后恢复 |
-| 领地与菜园 | PostGIS、Postgres 事务和幂等经济账本 | 抢占竞争、驻守、种植/收获/制作/指定宠物喂养；真实等待成熟与重复请求无额外收益 |
-| 联机与战报 | Supabase Private Realtime、服务端权威回合、共享 2D 战斗核心 | 原生邀请/接受、10 回合好友战、20 回合训练、刷新/断线恢复及设备撤销；经验和种子只结算一次 |
-| 资源和外观 | 私有 Storage、分块 SHA256、已验证资源引用和偏好版本 | 两端实际文件与原导入 ID 一致；自定义角色、校准和动作偏好可恢复；合法资源下载能进入自动完整存档同步 |
-| 桌面应用 | Electron 44.9.3、React、TypeScript、better-sqlite3、PixiJS、MapLibre | 多实例独立宠物选择；原生角色像素、系统窗口和实际 OSM 瓦片已核对 |
-| 聊天 | AI SDK、assistant-ui、本机加密连接凭据、按 petId 归属 | 人设、记忆、原消息顺序和实际失败/取消状态跨端保存；连接密钥不会上传或进入普通备份 |
+| 范围 | 技术与当前能力 |
+| --- | --- |
+| 账号权限 | Supabase Auth、PostgreSQL RLS、事务内 owner/device/SID 校验；撤销会话立即阻止业务与私有频道访问 |
+| 完整同步 | 本地 SQLite、持久 outbox、Postgres CAS、不可变操作回执；自动推送与接收、冲突保护、原请求重启恢复 |
+| 领地菜园 | PostGIS、Supabase Edge Functions、事务经济账本；竞争抢占、驻守、种植、收获、制作和指定宠物喂养 |
+| 联机战报 | Supabase Private Realtime、服务端权威回合、共用原有战斗核心；邀请至终局、回合镜像、幂等结算、历史回顾 |
+| 资源偏好 | 私有 Storage、SHA256 分块校验、已验证资源引用与版本化偏好；保留导入历史和实际文件字节 |
+| 桌面界面 | Electron 44.9.3、React、TypeScript、better-sqlite3、PixiJS、MapLibre、Vite、Tailwind/Radix |
+| 聊天 | AI SDK、assistant-ui、本机加密凭据；按 petId 保存人设、记忆与消息，密钥不上传 |
 
-云函数在入口及数据库事务中核验 managed Auth、owner、device 和 SID；桌面只包含 publishable 配置，服务密钥留在云端。函数平台 `verify_jwt=false` 与函数自身完整鉴权配套使用。
+桌面仅包含 publishable 配置。云函数入口自行核验 managed Auth，数据库事务再次校验身份；平台 `verify_jwt=false` 与这套完整鉴权配套使用。
 
-## 独立核对与数据保全
+## 最终实际验收
 
-- comparisontext 原来的 18 张表、100 行数据完整保存在不公开的归档 schema；全部内容哈希与替换前加密导出相同，另有 DPAPI 保护的双份加密备份。
-- 总协调重新只读打开原生验收档案，直接计算已登记资源文件 SHA、比对原导入记录，并独立从 Supabase 读取最终存档和经济回执。
-- 同步专项中 A/B/云端版本 6 和校验和相同，原断网自动任务保留；新增私有资源专项中 A/B/云端版本 5 和校验和相同，原生导入的原始 JSON 保留。
-- 好友战和训练证据为分阶段的真实原生链路；中间失败原记录保留，不能称为一次不中断的全通过运行。
+- **同一最终 EXE 的完整业务链 8/8 通过**：原 15 个宠物 ID 保留、正常界面领养、个人自动同步、私有资源与偏好、实际按钮自然训练、战报回顾、单端真实 TLS 断网、原请求跨 EXE 重启及双端原生渲染。没有拼接此前失败运行。
+- 最终同步 A/B/独立云端均为版本 **103**，校验和 `324bd218a312baecc38aebcb3e4c9fdfa72fd08893c416c83d0bd945d0b65e5c`。原自动请求保留 base **101**、回执版本 **102** 和原始正文 SHA；本次 12 回合训练的 XP 5、种子 2 各一条回执。
+- **真实好友主链 6/6、终局后双端实际 EXE 重启 2/2 通过**：自然 10 回合，双方各收到 10 次 Realtime 回合推送，XP 20/5、稻种 2/2 各只结算一次；重复同步和结算未改写权威原文。双方最终分别为版本 **9/7**、clean。
+- 总协调独立获取实际云端完整原文，再只读打开四份退出后的 SQLite。每份 **27 个数据单元**与云端逐行一致，待确认队列均为 0；两份同步档案各 169 行，好友档案分别 55/46 行。实际资源文件字节、偏好版本 3、旧导入记录也已复核。
 
-当前汇总与证据索引：[`status/cloud-coordinator.json`](status/cloud-coordinator.json)。
+核心证据：[完整业务](/C:/Users/Administrator/Desktop/project/DesktopPet/docs/implementation/evidence/cloud/2026-10-25/final-portable-a9acd7f/evidence.json)、[真实好友与重启](/C:/Users/Administrator/Desktop/project/DesktopPet/docs/implementation/evidence/battle/2026-10-25/final-portable-a9acd7f/evidence.json)、[总协调独立云端/SQLite 核对](/C:/Users/Administrator/Desktop/project/DesktopPet/docs/implementation/evidence/cloud/2026-10-25/final-canonical-sqlite-readback.json)。
 
-## 回归结果
+回归：311/311 原生 CJS 检查、总协调独立 12 项好友生命周期检查、22 个 Node 云端测试文件、5 项 Deno 校验及严格迁移检查通过；lint、TypeScript/UI 类型检查和 46 项单元检查通过。原生 CJS 数量不含另行验证的 MJS 事务用例。
 
-lint、TypeScript、UI 类型检查和 46 项单元检查通过；好友生命周期修复后 Electron 原生 CJS 集成 311/311 通过，root 独立复核新增生命周期 12 项通过。完整严格云端检查另行通过，覆盖 22 个迁移文件名、4 份生成分发的哈希/mtime 不变、22 个 Node SQL/authority 测试文件和 Deno 2.9.6 的 5 个资源验证用例；MJS 事务用例不包含在原生 CJS 数量中。
+前期候选、旧夹具失败及首次附加重启控制端口等待失败均保留原结果。附加重启第二轮在原业务验收进程自然退出后完成，没有放宽生产校验或修改样式；不将首轮失败重写为成功。
 
-初次总回归中的 14 项 lint 问题和 6 项测试夹具失败另行保留。夹具修正使用正式事件总线、权威伙伴选择，并加强恢复 epoch/历史断言，没有添加生产 fallback。云端身份函数的 `let` → `const` 静态修正已实际部署为 v3。
+## 数据保全与旧代码清理
 
-这些本地检查不等于 GitHub 托管 CI 成功，也不等于完整本地 Supabase/PostGIS reset。最终整包业务验收将在实际 SFX EXE 上单独记录。
+comparisontext 原 18 张表、100 行数据完整移入私有归档 schema，另有 DPAPI 保护的双份加密备份。全内容哈希已与替换前导出核对；终验再次确认精确行数、18 表 RLS 及 anon/authenticated 无读取权限。旧 DesktopPet 的必要本机读取、宠物 ID、历史、用户资源与设计源文件保留。
 
-## 旧内容退役
+已退役旧明文 HTTP、硬编码客户端/旧会话字段链路、旧 accounts-sync/duel-online Edge、旧迁移草稿、旧直连验证器、孤立探索 authority 及已替换原型内容。最终 ASAR 审计通过，清理清单 remaining 为空；保留的旧读取代码承担数据兼容职责。可恢复原代码 Git bundle 已验证，未删除原始档案或设计素材。
 
-旧明文 HTTP/硬编码客户端/旧会话字段链路、旧 accounts-sync/duel-online Edge、旧迁移草稿、旧 PostgreSQL 直连验证器与孤立探索 authority 已退役。旧原型说明已替换为当前实现与验证指引。原始账号/存档读取、宠物 ID、历史、用户资源和设计源素材保留。
+清理与完整证据索引：[清理审计](/C:/Users/Administrator/Desktop/project/DesktopPet/docs/implementation/cleanup/cloud-coordinator-retirement.json)、[总协调状态](/C:/Users/Administrator/Desktop/project/DesktopPet/docs/implementation/status/cloud-coordinator.json)。
 
-可恢复 Git bundle 已完整验证，位于 `C:/Users/Administrator/.codex/backups/DesktopPet/2026-10-25/cloud-upgrade-pre-retirement.bundle`。当前清理审计：[`cleanup/cloud-coordinator-retirement.json`](cleanup/cloud-coordinator-retirement.json)。
+## 交付物与边界
 
-## 尚未覆盖的外部边界
+最终成品：[灵境 0.1.8 Windows x64 便携版](/C:/Users/Administrator/Desktop/project/DesktopPet/releases/final-a9acd7f/Lingjing-0.1.8-portable-x64.exe)。169196329 字节，SHA256 `5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289`，签名状态 **NotSigned**。主项目副本、实际验收输入和工程归档逐字节一致；未创建公开正式 Release，未宣称 GitHub 托管 CI 已运行成功。
 
-1. 旧服务器 `47.112.208.97:8000` 不可达，用户暂无 SSH 或数据库备份；无法核实并迁移该实例的全部原云端账号。未按用户名猜测归属，也未重置原密码；已有本机原数据读取和增量迁移路径保留。
-2. 实际双端证据来自同一 Windows 主机的两个独立生产进程、档案和设备会话，未称为两台异地实体电脑验收。
-3. Electron 44 系统定位已实际授权，但本机当前精度未满足原有 80 米准入。未放宽位置门槛，未把受控定位用例称为真实精确 GPS 成功。
-4. 没有签名证书，便携版将如实记录 NotSigned；尚未创建公开正式 Release。外部 LLM 的付费成功调用不属于当前已验证范围。
+1. **旧云端账号迁移阻塞**：`47.112.208.97:8000` 不可达，用户回复暂无 SSH/备份。未按用户名猜测归属、重置原密码或用新账号冒充迁移；原源库恢复可用后才能完成全量迁移。
+2. 双端实际验收来自同一 Windows 主机的独立生产进程、档案、加密会话和设备 ID；未声称已在两台异地实体电脑验收。
+3. 当前主机定位精度未达到原有 80 米准入，未放宽门槛。真实 PostGIS、原生 OSM 与领地/菜园链路已验证，精确 OS 定位正向准入仍需合格硬件环境。
+4. 本机无 Docker/Podman，未声称完成完整本地 Supabase/PostGIS reset；外部 LLM 的付费成功调用未纳入已验证范围。
 
-## 最终成品
-
-候选 `2cafccd` 已生成并完成工程验收，主项目内保存为 `releases/final-2cafccd/Lingjing-0.1.8-portable-x64.exe`，169188376 字节，SHA256 `af75c5a8ace15a4a924e71a24fd258df80a459648a1c1ab8d795b1da6e43837e`，NotSigned。之前所有候选及失败记录均保留。当前包仍不能称为完整业务验收通过的最终版本。
-
-首轮 EXE 已完成真实账号、原 11 个宠物 ID 保全、个人自动同步、私有资源偏好、双端原生角色渲染和 20 回合自然训练，但 A 的本机传输请求被误算入受保护业务存档。现已增量分离本地 journal，原请求原文与操作编号保留；只有主进程核验的云端终局读回能确认投影，导入文件不能伪造此来源。
-
-第二候选好友验收准备又发现奖励行顺序差异：SQLite 选择操作编号索引，云端按对局编号排序。现在仅在计算派生指纹时，按服务端相同主键规范四组 battle SQL 行的集合顺序；原始 envelope checksum、JSON 字节、回合顺序和本机 journal 不改变。对原失败档案只读核对，旧 baseline 与修复后本地、云端的指纹完全相同。该候选的选宠忙碌失败也保留，未将领养编号冒充原选宠编号重试；新验收会等待同步空闲、记录并保留单一选宠编号，只对已证实未写入 intent 的忙碌拒绝做有限重试。
-
-`d376b76` 实际包确认旧存档已恢复 clean、选宠一次成功后，暴露两项集成缺口。战报读取现按注册版本合约接收正式云端 v1，拒绝本地 v2、未知版本或夹带 journal 的伪造内容，只更新报告缓存，不改 XP、种子与原流水。自己的权威选择与后台同步重叠时，只有云端个人数据与原始已确认云档一致、本机受保护数据严格等于新云档、且没有待确认队列，才能推进基线并保留本机个人编辑继续自动上传；未知受保护修改、真实双端个人冲突、会话变化和已发送原请求仍受保护。原失败档案与只读诊断保留，实际新包验证尚未通过。
-
-`2cafccd` 已在实际包中确认上述个人同步修复生效，原资源、导入历史及偏好在双端相同。自然训练 10 回合结束，A/B 版本 85 均 clean，独立管理 SQL 读回确认 XP 5、种子 2 各一条回执。训练画面验证此前直接通过 IPC 推进，没有更新 React 控制器，现将验收脚本改为实际按钮逐回合操作并等待渲染确认，不改产品样式。好友也自然完成 10 回合，但终局完整同步被本机邀请／接受的选宠关联日志阻止；这些映射需要本地持久保留供重启加入使用，正在按严格类型与来源纳入 journal，未知业务记录和伪造导入不能被豁免。
-
-随后在同一字节 EXE 上，用两份全新隔离档案进行了后半段定向验收，6 项全部通过：实际按钮自然训练 14 回合、战报原回合回顾、A 单端真实 TLS 中断、原自动请求跨实际 EXE 重启、B 自动接收、自定义角色重启渲染和完整只读核对。A/B 与独立 HTTPS、管理 SQL 最终均为版本 91／`49d28813…a09951f`；原请求 `auto:8f808dea-e37e-44ba-b24e-ca8a709ea521` 保持 base 89、回执版本 90 与原始正文 SHA 不变。本轮明确是后半段定向运行，不能与前三段拼称一次不中断的整包全通过。好友修复与最终新源整包验收仍待完成。
-
-好友生命周期修复现已固定：本机邀请／接受选宠映射、待完成房间和未结算显示快照存入本地 journal；旧 raw 记录按原字节保留，正式四组业务数组保持权威原文。旧邀请默认参数沿用原请求 ID，拒绝／取消／过期／退出均覆盖重启路径；generic v1/v2 文件缺失映射也不能在重启后取得本机来源权限。已知旧终局显示元数据投影只在新的匹配权威回执下修复，并先保全原备份；真实 HP、奖励或未知业务编辑仍拒绝。MJS 旧夹具曾把 create 返回伪造成 session，现改用正式 Online DTO 与协议缓存，生产校验未放宽；独立全套云端校验已通过。最终新源实际 SFX 验收仍未完成。
+全局默认、总协调与 01–08 会话的快速模式配置已统一开启，模型与推理设置保持原值。

@@ -1,0 +1,202 @@
+{
+  "at": "2026-10-25 08:55:52 UTC",
+  "projectRef": "jbvrdmrkwpznbrvteive",
+  "clientSource": "a9acd7f6f1920c541d429fa26d1f054b1427cd95",
+  "scope": "Post-acceptance read-only deployment inventory; original DesktopPet remote account migration remains blocked by unavailable source",
+  "functions": [
+    {
+      "id": "69ecdbd1-ee0f-45e8-9cc7-d69fb224d1c3",
+      "slug": "lingjing-auth",
+      "name": "lingjing-auth",
+      "status": "ACTIVE",
+      "version": 3,
+      "created_at": 1792895361305,
+      "updated_at": 1792907904251,
+      "verify_jwt": false,
+      "import_map": false,
+      "entrypoint_path": "file:///tmp/user_fn_jbvrdmrkwpznbrvteive_69ecdbd1-ee0f-45e8-9cc7-d69fb224d1c3_3/source/infra/supabase/functions/lingjing-auth/index.ts",
+      "ezbr_sha256": "fdfed66567b2b8bd1876856a9fd68b8f94282256a562495ec49e1bee9887b3ec"
+    },
+    {
+      "id": "1c6202a1-213d-4531-bf2a-1e853de7c000",
+      "slug": "lingjing-save",
+      "name": "lingjing-save",
+      "status": "ACTIVE",
+      "version": 1,
+      "created_at": 1792896380373,
+      "updated_at": 1792896380373,
+      "verify_jwt": false,
+      "import_map": false,
+      "entrypoint_path": "file:///tmp/user_fn_jbvrdmrkwpznbrvteive_1c6202a1-213d-4531-bf2a-1e853de7c000_1/source/infra/supabase/functions/lingjing-save/index.ts",
+      "ezbr_sha256": "308252c2e54b2ccd6a88b39d552ab5ce1a995686cd2ac3277a8ee7557efca95a"
+    },
+    {
+      "id": "c233809a-4db5-4a8a-a515-ff17934dfcd0",
+      "slug": "discovery",
+      "name": "discovery",
+      "status": "ACTIVE",
+      "version": 5,
+      "created_at": 1792897606497,
+      "updated_at": 1792901727015,
+      "verify_jwt": false,
+      "import_map": false,
+      "entrypoint_path": "file:///tmp/user_fn_jbvrdmrkwpznbrvteive_c233809a-4db5-4a8a-a515-ff17934dfcd0_5/source/infra/supabase/functions/discovery/index.ts",
+      "ezbr_sha256": "4d1242990da2a4ee0835be15c43972a41951dd282774b5c17ae7342edc3ddf08"
+    },
+    {
+      "id": "0b1554b0-54bf-46c8-8849-0c90b2166adb",
+      "slug": "companions-sync",
+      "name": "companions-sync",
+      "status": "ACTIVE",
+      "version": 1,
+      "created_at": 1792898325173,
+      "updated_at": 1792898325173,
+      "verify_jwt": false,
+      "import_map": false,
+      "entrypoint_path": "file:///tmp/user_fn_jbvrdmrkwpznbrvteive_0b1554b0-54bf-46c8-8849-0c90b2166adb_1/source/infra/supabase/functions/companions-sync/index.ts",
+      "ezbr_sha256": "ed7bb3e618548d3bf8ab75583154fa871cbcf42d07e6d48f1f2218f23e3bd6d1"
+    },
+    {
+      "id": "f99744d5-6104-48a0-8034-7a5f65288af8",
+      "slug": "garden-sync",
+      "name": "garden-sync",
+      "status": "ACTIVE",
+      "version": 2,
+      "created_at": 1792899045335,
+      "updated_at": 1792901269826,
+      "verify_jwt": false,
+      "import_map": false,
+      "entrypoint_path": "file:///tmp/user_fn_jbvrdmrkwpznbrvteive_f99744d5-6104-48a0-8034-7a5f65288af8_2/source/infra/supabase/functions/garden-sync/index.ts",
+      "ezbr_sha256": "e3e2cd877a721629686a9fc33cb00f8bd63fe337e803283d7b799975db06b546"
+    },
+    {
+      "id": "66a0c082-da96-4ed8-acb7-dd7f92b9907b",
+      "slug": "territory-sync",
+      "name": "territory-sync",
+      "status": "ACTIVE",
+      "version": 2,
+      "created_at": 1792899052591,
+      "updated_at": 1792901271966,
+      "verify_jwt": false,
+      "import_map": false,
+      "entrypoint_path": "file:///tmp/user_fn_jbvrdmrkwpznbrvteive_66a0c082-da96-4ed8-acb7-dd7f92b9907b_2/source/infra/supabase/functions/territory-sync/index.ts",
+      "ezbr_sha256": "8d427a84ae9512eaac59ce1ff758ea7e6709b84f162f307eb9d3d725357a99d6"
+    },
+    {
+      "id": "b811e1eb-1a35-4f1f-b092-c501738a8612",
+      "slug": "lingjing-resources",
+      "name": "lingjing-resources",
+      "status": "ACTIVE",
+      "version": 2,
+      "created_at": 1792899684823,
+      "updated_at": 1792901538972,
+      "verify_jwt": false,
+      "import_map": false,
+      "entrypoint_path": "file:///tmp/user_fn_jbvrdmrkwpznbrvteive_b811e1eb-1a35-4f1f-b092-c501738a8612_2/source/infra/supabase/functions/lingjing-resources/index.ts",
+      "ezbr_sha256": "9566fadfa78048de3ba8e9287a4a6f481c19041feac2f55037ddfdfbbcb30c20"
+    },
+    {
+      "id": "e86dccfa-a9a9-4a27-b914-33472c1331d1",
+      "slug": "lingjing-battle",
+      "name": "lingjing-battle",
+      "status": "ACTIVE",
+      "version": 2,
+      "created_at": 1792900070663,
+      "updated_at": 1792901262074,
+      "verify_jwt": false,
+      "import_map": false,
+      "entrypoint_path": "file:///tmp/user_fn_jbvrdmrkwpznbrvteive_e86dccfa-a9a9-4a27-b914-33472c1331d1_2/source/infra/supabase/functions/lingjing-battle/index.ts",
+      "ezbr_sha256": "1bb7c77c2844ef33606527d2286b5e53e69a7b39dd6a53d410ff845458c60385"
+    }
+  ],
+  "migrations": [
+    {
+      "version": "20261025015911",
+      "name": "preserve_comparisontext_before_lingjing"
+    },
+    {
+      "version": "20261025021620",
+      "name": "lingjing_identity_actor_contract"
+    },
+    {
+      "version": "20261025022918",
+      "name": "lingjing_auth_bridge"
+    },
+    {
+      "version": "20261025023614",
+      "name": "lingjing_private_resource_storage"
+    },
+    {
+      "version": "20261025024615",
+      "name": "lingjing_protected_save_cas"
+    },
+    {
+      "version": "20261025030635",
+      "name": "lingjing_discovery_cloud_authority"
+    },
+    {
+      "version": "20261025030639",
+      "name": "lingjing_discovery_live_actor_guard"
+    },
+    {
+      "version": "20261025030859",
+      "name": "lingjing_cloud_secret_guard"
+    },
+    {
+      "version": "20261025031842",
+      "name": "lingjing_companion_commands"
+    },
+    {
+      "version": "20261025032327",
+      "name": "lingjing_session_revocation_ledger"
+    },
+    {
+      "version": "20261025033032",
+      "name": "lingjing_territory_authority"
+    },
+    {
+      "version": "20261025034106",
+      "name": "lingjing_transaction_actor_guard"
+    },
+    {
+      "version": "20261025034110",
+      "name": "lingjing_domain_actor_guard_adoption"
+    },
+    {
+      "version": "20261025034122",
+      "name": "lingjing_verified_resource_authority"
+    },
+    {
+      "version": "20261025034132",
+      "name": "lingjing_discovery_wild_transactions"
+    },
+    {
+      "version": "20261025034136",
+      "name": "lingjing_discovery_capture_scenarios"
+    },
+    {
+      "version": "20261025034313",
+      "name": "lingjing_territory_receipt_operator"
+    },
+    {
+      "version": "20261025034744",
+      "name": "lingjing_battle_jwt_rooms"
+    },
+    {
+      "version": "20261025034748",
+      "name": "lingjing_battle_authority_save"
+    },
+    {
+      "version": "20261025040739",
+      "name": "lingjing_battle_scoped_authority_receipt"
+    },
+    {
+      "version": "20261025040946",
+      "name": "lingjing_live_foreign_key_indexes"
+    },
+    {
+      "version": "20261025041216",
+      "name": "lingjing_verified_resource_preferences"
+    }
+  ]
+}
