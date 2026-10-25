@@ -130,6 +130,12 @@ INSERT OR IGNORE INTO garden_events SELECT owner_account_id,'legacy:'||id,action
 ` };
 const cloudMigration = { id: 'garden-20261024-cloud-checkpoint-v1', sql: `CREATE TABLE IF NOT EXISTS garden_cloud_state(owner_account_id TEXT PRIMARY KEY,account_revision INTEGER NOT NULL,checksum TEXT NOT NULL,server_time INTEGER NOT NULL);` };
 const identityMigration = {id:'garden-20261024-verified-owner-alias-v1',sql:`CREATE TABLE IF NOT EXISTS garden_identity_imports(source_owner_account_id TEXT PRIMARY KEY,target_owner_account_id TEXT NOT NULL,archive_json TEXT NOT NULL,created_at INTEGER NOT NULL);`};
-const migrations = [migration, territoryMigration, eventMigration, cloudMigration, identityMigration];
+const requestMigration={id:'garden-20261025-cloud-request-journal-v1',sql:`CREATE TABLE IF NOT EXISTS garden_cloud_requests(
+ owner_account_id TEXT NOT NULL,action_id TEXT NOT NULL,endpoint TEXT NOT NULL,op TEXT NOT NULL,kind TEXT NOT NULL,
+ logical_hash TEXT NOT NULL,input_json TEXT NOT NULL,wire_input_json TEXT NOT NULL,request_hash TEXT NOT NULL,
+ status TEXT NOT NULL CHECK(status IN ('pending','committed','conflict')),response_json TEXT,error_code TEXT,
+ created_at INTEGER NOT NULL,updated_at INTEGER NOT NULL,PRIMARY KEY(owner_account_id,action_id));
+ CREATE INDEX IF NOT EXISTS garden_cloud_requests_pending ON garden_cloud_requests(owner_account_id,status,updated_at);`};
+const migrations = [migration, territoryMigration, eventMigration, cloudMigration, identityMigration,requestMigration];
 function migrate(db) { for (const item of migrations) db.exec(item.sql); }
 module.exports = { migration, migrations, migrate };
