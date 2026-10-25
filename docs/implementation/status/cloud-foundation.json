@@ -1,0 +1,120 @@
+{
+  "module": "foundation",
+  "scope": "Public engineering, staged runtime extraction, typed IPC, lazy routes/desktop entry, Windows native/EXE CI and verifiable release/rollback. Battle UI and production Supabase writes remain with their owners.",
+  "branch": "codex/lingjing-foundation",
+  "commit": "8242a4c251cdd2d7c92e395bf99e1d3098d6d070",
+  "goalStatus": "active",
+  "stage": "public-runtime-and-native-ui-passed-ci-release-in-progress",
+  "contracts": [
+    "docs/implementation/cloud-upgrade-2026-10-25.md",
+    "https://www.electronjs.org/docs/latest/tutorial/electron-timelines",
+    "https://releases.electronjs.org/release/v44.9.3",
+    "https://github.com/WiseLibs/better-sqlite3/releases/tag/v13.0.0",
+    "packages/shared-types/src/ipc.ts"
+  ],
+  "migrations": [],
+  "checks": [
+    {
+      "name": "Node/Electron shared SQLite cross-read",
+      "passed": true,
+      "evidence": "docs/implementation/evidence/foundation/cloud-engineering/native-shared.json",
+      "electron": "44.9.3",
+      "electronNode": "24.22.0",
+      "electronModuleAbi": "149",
+      "napi": "10",
+      "sqlite": "13.0.3",
+      "nativeRebuild": "Not required: bundled N-API binary loaded under Node 24.21.0 and Electron 44.9.3; same persisted database and integrity check passed."
+    },
+    {
+      "name": "Actual Electron CJS service transaction/owner checks",
+      "passed": true,
+      "cases": 2
+    },
+    {
+      "name": "Independent empty-directory npm ci on Windows without compiler",
+      "passed": true,
+      "npm": "11.19.0",
+      "evidence": "docs/implementation/evidence/foundation/cloud-engineering/clean-install.json",
+      "policy": "Only published gypfile:false restored in the lockfile. No global ignore-scripts or bootstrap."
+    },
+    {
+      "name": "Typed IPC and obsolete shell extraction",
+      "passed": true,
+      "nativeCases": 5,
+      "typesPassed": true,
+      "lintPassed": true,
+      "obsoleteSourceLinesRemoved": 15106
+    },
+    {
+      "name": "Production Electron44 native windows/tray/lazy graph/IPC",
+      "passed": true,
+      "evidence": "docs/implementation/evidence/foundation/cloud-engineering/electron/evidence.json",
+      "checks": 5,
+      "graphs": [
+        {
+          "id": "app-entry-lazy-and-supported",
+          "requests": 33,
+          "uniqueScripts": 31,
+          "uniqueScriptBytes": 647180
+        },
+        {
+          "id": "native-wood-desktop",
+          "requests": 12,
+          "uniqueScripts": 12,
+          "uniqueScriptBytes": 1339970
+        },
+        {
+          "id": "native-earth-desktop",
+          "requests": 12,
+          "uniqueScripts": 12,
+          "uniqueScriptBytes": 1339970
+        }
+      ],
+      "cloud": "Explicit isolated QA identity, no live-cloud claim"
+    }
+  ],
+  "realCloudEvidence": {
+    "status": "not-run",
+    "reason": "No remote deployment/database writes performed by foundation. Main coordinator owns deployment; real-service checks follow approved integration.",
+    "identityContract": {
+      "commit": "f81008c",
+      "deployment": "Main coordinator reports deployed identity migration and four real HTTPS denial checks; foundation performed no remote writes."
+    }
+  },
+  "preservation": {
+    "snapshot": {
+      "path": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\artifacts\\recovery\\cloud-foundation-2026-10-25\\pre-cleanup.bundle",
+      "source": "46abf416e0500b53ef32fc29b441d923ef5a6a80",
+      "bytes": 289898098,
+      "sha256": "5be81cad2baabcf8d57776e97d75b068052086341140476fb7578b09ee41d9e5",
+      "verified": true
+    },
+    "userDataModified": false,
+    "protectedCloudBackups": [
+      "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/cloud-upgrade/2026-10-25/comparisontext-backup",
+      "C:/Users/Administrator/.codex/backups/DesktopPet/2026-10-25/comparisontext"
+    ],
+    "battleUiTouched": false,
+    "readOnlyLegacyArchive": true,
+    "corruptAndMissingArchiveProtected": true
+  },
+  "cleanupCandidates": "docs/implementation/cleanup/cloud-foundation-inventory.json",
+  "sharedDependencies": {
+    "checkpointCommit": "b40af0efcf6062ddc2e8c360523c996fc91ebc0a",
+    "consumers": [
+      "accounts",
+      "garden",
+      "companions"
+    ],
+    "command": "npm ci && npm run native:check",
+    "policy": "Merge the common manifest/lock before using the shared junction. Do not npm ci/rebuild this shared tree from an older lock/ABI.",
+    "installIssue": "npm/cli#9837 reproduced without stale hasInstallScript; corrected missing gypfile metadata and verified plain npm ci",
+    "cleanInstallFixCommit": "e294f2235297c406429c05cd6847daa74ed6dd79"
+  },
+  "remaining": [
+    "Windows native/CJS/real-EXE CI and actual Authenticode/release rollback",
+    "Main-approved business checkpoints and final consumer audit, including obsolete 3D/prototypes",
+    "One justified final integrated regression and exact final EXE/source/readback"
+  ],
+  "updatedAt": "2026-10-25T02:41:28.003Z"
+}

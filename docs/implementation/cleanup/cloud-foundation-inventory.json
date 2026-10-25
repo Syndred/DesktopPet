@@ -1,0 +1,927 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-25T02:05:18.702Z",
+  "source": "0b80bd09f9da29048d77c216bebab41ed48f7e9d",
+  "snapshot": "artifacts/recovery/cloud-foundation-2026-10-25/pre-cleanup.bundle",
+  "policy": "Only listed code/build/test consumers are candidates. User profiles, history, design sources and recovery backups are excluded. Runtime source removal follows service extraction; business-owner replacements wait for coordinator approval.",
+  "protected": [
+    "docs/design/",
+    "artifacts/cloud-upgrade/2026-10-25/comparisontext-backup",
+    "C:/Users/Administrator/.codex/backups/DesktopPet/2026-10-25/comparisontext",
+    "User AppData and all save/profile/history/resource paths"
+  ],
+  "entries": [
+    {
+      "oldFile": "apps/pc-app/runtime/main.cjs",
+      "bytes": 60744,
+      "sha256": "890f8b984faaa26a7a5bd9b1f1a9f536cbdd1991d44bf68c7ee78fdf6b7bf1b2",
+      "replacement": "apps/pc-app/runtime/main/index.ts + core/runtime-compat.cjs",
+      "consumers": [
+        "apps/pc-app/runtime/features/companions/tests/electron.acceptance.mjs",
+        "apps/pc-app/runtime/features/discovery/verification/asar-location.mjs",
+        "apps/pc-app/runtime/main/index.ts",
+        "apps/pc-app/runtime/package.json",
+        "docs/prd-traceability-audit.md",
+        "docs/project-structure-and-file-map.md",
+        "docs/runtime-config.md",
+        "scripts/smoke/check-pc-runtime.mjs",
+        "tests/task-d001-pc-runnable-runtime.test.ts",
+        "tests/task-d008-pc-online-duel-runtime.test.ts"
+      ],
+      "decision": "extract-required-services-then-delete"
+    },
+    {
+      "oldFile": "apps/pc-app/runtime/main.mjs",
+      "bytes": 6323,
+      "sha256": "af0aa88a6dabd0017d162c91cdab0de70be35c96958c5103b1ea0f6191e6ada3",
+      "replacement": "root package main -> dist/main/index.cjs; runtime/preload/index.ts",
+      "consumers": [
+        "apps/pc-app/runtime/features/garden/cloud.test.mjs",
+        "infra/supabase/functions/garden-sync/handler.mjs",
+        "package.json",
+        "scripts/smoke/check-pc-runtime.mjs",
+        "tests/foundation/cloud-checkpoint.test.cjs",
+        "tests/task-d001-pc-runnable-runtime.test.ts",
+        "tests/task-d008-pc-online-duel-runtime.test.ts"
+      ],
+      "decision": "delete-obsolete-alternate-entry"
+    },
+    {
+      "oldFile": "apps/pc-app/runtime/package.json",
+      "bytes": 109,
+      "sha256": "ae31d3d70703928af490b5e7c30d4ab7cdeb7fb4e89a367f6453e3c26f0ec5fe",
+      "replacement": "root package main -> dist/main/index.cjs; runtime/preload/index.ts",
+      "consumers": [
+        "apps/pc-app/runtime/features/battle/verify-electron.mjs",
+        "apps/pc-app/runtime/features/battle/verify-postgres.mjs",
+        "apps/pc-app/runtime/features/battle/verify-unified.mjs",
+        "apps/pc-app/runtime/features/conversations/tests/compact-acceptance.mjs",
+        "apps/pc-app/runtime/features/conversations/tests/electron-flow.mjs",
+        "apps/pc-app/runtime/features/discovery/verification/asar-location.mjs",
+        "apps/pc-app/runtime/features/discovery/verification/postgres.mjs",
+        "apps/pc-app/runtime/features/resources/verification/roster-preview.electron.mjs",
+        "apps/pc-app/runtime/features/resources/verification/roster-replay.electron.mjs",
+        "apps/pc-app/runtime/features/resources/verification/smoke.electron.mjs",
+        "docs/design/2026-10-24/full-ui/open-source-reuse.json",
+        "docs/design/2026-10-24/full-ui/open-source-reuse.txt",
+        "docs/implementation/acceptance/2026-10-24/package-source-comparison.json",
+        "docs/implementation/parallel-plan.txt",
+        "docs/implementation/scope-2d-ui-first.txt",
+        "docs/project-structure-and-file-map.md",
+        "package.json",
+        "scripts/acceptance/audit-portable.mjs",
+        "scripts/acceptance/battle-independent.mjs",
+        "scripts/acceptance/battle-visual-interactions.mjs",
+        "scripts/acceptance/context-independent.mjs",
+        "scripts/acceptance/five-element-contract.mjs",
+        "scripts/acceptance/friend-independent.mjs",
+        "scripts/acceptance/legacy-rules-independent.mjs",
+        "scripts/acceptance/portable-launch.mjs",
+        "scripts/acceptance/typography-platform.mjs",
+        "scripts/acceptance/visual-baseline.mjs",
+        "scripts/acceptance/visual-recheck.mjs",
+        "scripts/desktop/dependency-record.mjs",
+        "scripts/desktop/verify-native.cjs",
+        "scripts/desktop/write-build-manifest.mjs",
+        "scripts/release/build-pc.mjs",
+        "scripts/release/electron-builder.pc.json",
+        "scripts/smoke/check-pc-runtime.mjs",
+        "tests/task-d001-pc-runnable-runtime.test.ts",
+        "tests/task-d008-pc-online-duel-runtime.test.ts",
+        "tests/task-t301-testing-pipeline.test.ts"
+      ],
+      "decision": "delete-obsolete-alternate-entry"
+    },
+    {
+      "oldFile": "apps/pc-app/runtime/preload.cjs",
+      "bytes": 5796,
+      "sha256": "8c3540a7483716fb068c1b43a194979dac8a83ee3332f9567382f300ee90c89a",
+      "replacement": "root package main -> dist/main/index.cjs; runtime/preload/index.ts",
+      "consumers": [
+        "apps/pc-app/runtime/main.cjs",
+        "docs/project-structure-and-file-map.md",
+        "docs/runtime-config.md",
+        "package.json",
+        "scripts/smoke/check-pc-runtime.mjs",
+        "tests/task-d001-pc-runnable-runtime.test.ts",
+        "tests/task-d008-pc-online-duel-runtime.test.ts"
+      ],
+      "decision": "delete-obsolete-alternate-entry"
+    },
+    {
+      "oldFile": "apps/pc-app/runtime/preload.mjs",
+      "bytes": 849,
+      "sha256": "4631a60d0d498d1c5d9f231d3387b781d81e5d1e9bf7435f6814c3d0d3ad1d4a",
+      "replacement": "root package main -> dist/main/index.cjs; runtime/preload/index.ts",
+      "consumers": [
+        "apps/pc-app/runtime/main.mjs",
+        "package.json",
+        "scripts/smoke/check-pc-runtime.mjs",
+        "tests/task-d001-pc-runnable-runtime.test.ts",
+        "tests/task-d008-pc-online-duel-runtime.test.ts"
+      ],
+      "decision": "delete-obsolete-alternate-entry"
+    },
+    {
+      "oldFile": "scripts/desktop/run-electron.cjs",
+      "bytes": 551,
+      "sha256": "e34093f0d42b1a870e666bb20987be604bf8e1335e01cad3324a27eede67ea9b",
+      "replacement": "root package main -> dist/main/index.cjs; runtime/preload/index.ts",
+      "consumers": [
+        "docs/implementation/status/accounts.json",
+        "package.json",
+        "scripts/smoke/check-pc-runtime.mjs",
+        "tests/task-d001-pc-runnable-runtime.test.ts",
+        "tests/task-d008-pc-online-duel-runtime.test.ts"
+      ],
+      "decision": "delete-obsolete-alternate-entry"
+    },
+    {
+      "oldFile": "apps/pc-app/runtime/auth/index.html",
+      "bytes": 2059,
+      "sha256": "a422d3af34a1d1a1b846cb41d7446a04ab4f63d049ed6b9325f04e1e13f83c7e",
+      "replacement": "apps/pc-app/ui/index.html + ui/src/app + registered feature routes",
+      "consumers": [
+        "apps/pc-app/runtime/main.cjs",
+        "apps/pc-app/runtime/main.mjs",
+        "docs/project-structure-and-file-map.md",
+        "docs/runtime-config.md",
+        "scripts/smoke/check-pc-runtime.mjs",
+        "tests/task-d001-pc-runnable-runtime.test.ts",
+        "tests/task-d008-pc-online-duel-runtime.test.ts"
+      ],
+      "decision": "delete-obsolete-html-renderer"
+    },
+    {
+      "oldFile": "apps/pc-app/runtime/auth/renderer.mjs",
+      "bytes": 13373,
+      "sha256": "ba806207309bbb26abfe313ae19643433d488ca9e72dc0ebf5fae5feeb248838",
+      "replacement": "apps/pc-app/ui/index.html + ui/src/app + registered feature routes",
+      "consumers": [
+        "apps/pc-app/runtime/main.cjs",
+        "apps/pc-app/runtime/main.mjs",
+        "docs/project-structure-and-file-map.md",
+        "docs/runtime-config.md",
+        "scripts/smoke/check-pc-runtime.mjs",
+        "tests/task-d001-pc-runnable-runtime.test.ts",
+        "tests/task-d008-pc-online-duel-runtime.test.ts"
+      ],
+      "decision": "delete-obsolete-html-renderer"
+    },
+    {
+      "oldFile": "apps/pc-app/runtime/auth/styles.css",
+      "bytes": 2482,
+      "sha256": "bcbb848ac5237dbc64e6f6144f3270a32b6766832bc0089a5765aa2fe63b3326",
+      "replacement": "apps/pc-app/ui/index.html + ui/src/app + registered feature routes",
+      "consumers": [
+        "apps/pc-app/runtime/main.cjs",
+        "apps/pc-app/runtime/main.mjs",
+        "docs/project-structure-and-file-map.md",
+        "docs/runtime-config.md",
+        "scripts/smoke/check-pc-runtime.mjs",
+        "tests/task-d001-pc-runnable-runtime.test.ts",
+        "tests/task-d008-pc-online-duel-runtime.test.ts"
+      ],
+      "decision": "delete-obsolete-html-renderer"
+    },
+    {
+      "oldFile": "apps/pc-app/runtime/renderer/index.html",
+      "bytes": 26289,
+      "sha256": "5fc984fb139442ddcbf30f6a7ea5f9b33a85e87171d16c9984d1a24f698739d6",
+      "replacement": "apps/pc-app/ui/index.html + ui/src/app + registered feature routes",
+      "consumers": [
+        "apps/pc-app/runtime/main.cjs",
+        "apps/pc-app/runtime/main.mjs",
+        "docs/project-structure-and-file-map.md",
+        "docs/runtime-config.md",
+        "scripts/smoke/check-pc-runtime.mjs",
+        "tests/task-d001-pc-runnable-runtime.test.ts",
+        "tests/task-d003-desktop-stage-battle.test.ts",
+        "tests/task-d008-pc-online-duel-runtime.test.ts"
+      ],
+      "decision": "delete-obsolete-html-renderer"
+    },
+    {
+      "oldFile": "apps/pc-app/runtime/renderer/renderer.mjs",
+      "bytes": 324037,
+      "sha256": "eace959f3ec0b3269e8ccf3c824757a92ea7a3b82d26edb9abdb13f4f6ca3794",
+      "replacement": "apps/pc-app/ui/index.html + ui/src/app + registered feature routes",
+      "consumers": [
+        "apps/pc-app/runtime/main.cjs",
+        "apps/pc-app/runtime/main.mjs",
+        "docs/design/2026-10-24/full-ui/stack-research.txt",
+        "docs/prd-traceability-audit.md",
+        "docs/project-structure-and-file-map.md",
+        "docs/runtime-config.md",
+        "scripts/smoke/check-pc-runtime.mjs",
+        "tests/task-d001-pc-runnable-runtime.test.ts",
+        "tests/task-d003-desktop-stage-battle.test.ts",
+        "tests/task-d008-pc-online-duel-runtime.test.ts"
+      ],
+      "decision": "delete-obsolete-html-renderer"
+    },
+    {
+      "oldFile": "apps/pc-app/runtime/renderer/styles.css",
+      "bytes": 54902,
+      "sha256": "157b3e63f06fde6d0ecc566690c662ed3ad8a43b288f5579c32bd0a18d95fdd5",
+      "replacement": "apps/pc-app/ui/index.html + ui/src/app + registered feature routes",
+      "consumers": [
+        "apps/pc-app/runtime/main.cjs",
+        "apps/pc-app/runtime/main.mjs",
+        "docs/project-structure-and-file-map.md",
+        "docs/runtime-config.md",
+        "scripts/smoke/check-pc-runtime.mjs",
+        "tests/task-d001-pc-runnable-runtime.test.ts",
+        "tests/task-d003-desktop-stage-battle.test.ts",
+        "tests/task-d008-pc-online-duel-runtime.test.ts"
+      ],
+      "decision": "delete-obsolete-html-renderer"
+    },
+    {
+      "oldFile": "apps/pc-app/runtime/assets/models/AnimatedDogShibaInu.glb",
+      "bytes": 10096888,
+      "sha256": "964e627aacc18b0fc7c6429e8ccc0f8bd90b8ded4f2f636803340c95b585953b",
+      "replacement": "Canonical roster-v2 sprites; preserve original model strings only as historical aliases",
+      "consumers": [
+        "apps/pc-app/runtime/features/companions/tests/service.test.cjs",
+        "apps/pc-app/runtime/features/resources/service.cjs",
+        "apps/pc-app/runtime/renderer/renderer.mjs",
+        "apps/pc-app/runtime/services/runtime-data-store.cjs",
+        "apps/pc-app/runtime/services/wild-pet-runtime.cjs",
+        "tests/task-d001-pc-runnable-runtime.test.ts"
+      ],
+      "decision": "resources-owner-delivery-required-before-final-deletion"
+    },
+    {
+      "oldFile": "apps/pc-app/runtime/assets/models/Astronaut.glb",
+      "bytes": 2869044,
+      "sha256": "313d48882e2ba7bb25a340dbfd3d6f9bbc7f012372d54f518dc52e4299e3a24e",
+      "replacement": "Canonical roster-v2 sprites; preserve original model strings only as historical aliases",
+      "consumers": [
+        "apps/pc-app/runtime/features/resources/service.cjs",
+        "apps/pc-app/runtime/services/runtime-data-store.cjs",
+        "apps/pc-app/runtime/services/wild-pet-runtime.cjs",
+        "tests/task-d001-pc-runnable-runtime.test.ts"
+      ],
+      "decision": "resources-owner-delivery-required-before-final-deletion"
+    },
+    {
+      "oldFile": "apps/pc-app/runtime/assets/models/BeaglePoly.glb",
+      "bytes": 49652,
+      "sha256": "04d8ea35984d34921e39a983ce5951960af65f2ac85998fa40cae6398e647d47",
+      "replacement": "Canonical roster-v2 sprites; preserve original model strings only as historical aliases",
+      "consumers": [
+        "apps/pc-app/runtime/features/resources/service.cjs",
+        "apps/pc-app/runtime/services/runtime-data-store.cjs",
+        "apps/pc-app/runtime/services/wild-pet-runtime.cjs",
+        "docs/model-sourcing-and-import.md",
+        "tests/task-d001-pc-runnable-runtime.test.ts"
+      ],
+      "decision": "resources-owner-delivery-required-before-final-deletion"
+    },
+    {
+      "oldFile": "apps/pc-app/runtime/assets/models/CatPoly.glb",
+      "bytes": 43432,
+      "sha256": "9301389d2b7352dfbd12ebf60b382fe30442ea7fcab75a0a0ab728dc3fa1f88c",
+      "replacement": "Canonical roster-v2 sprites; preserve original model strings only as historical aliases",
+      "consumers": [
+        "apps/pc-app/runtime/features/resources/service.cjs",
+        "apps/pc-app/runtime/services/runtime-data-store.cjs",
+        "apps/pc-app/runtime/services/wild-pet-runtime.cjs",
+        "docs/model-sourcing-and-import.md",
+        "tests/task-d001-pc-runnable-runtime.test.ts"
+      ],
+      "decision": "resources-owner-delivery-required-before-final-deletion"
+    },
+    {
+      "oldFile": "apps/pc-app/runtime/assets/models/CatQuaterniusA.glb",
+      "bytes": 238672,
+      "sha256": "842c5f96c480b9a7800994345ed83be5e9ba5fc8e18be633f2b7cfe09cf8fef7",
+      "replacement": "Canonical roster-v2 sprites; preserve original model strings only as historical aliases",
+      "consumers": [
+        "apps/pc-app/runtime/features/resources/service.cjs",
+        "apps/pc-app/runtime/services/runtime-data-store.cjs",
+        "apps/pc-app/runtime/services/wild-pet-runtime.cjs",
+        "tests/task-d001-pc-runnable-runtime.test.ts"
+      ],
+      "decision": "resources-owner-delivery-required-before-final-deletion"
+    },
+    {
+      "oldFile": "apps/pc-app/runtime/assets/models/CatQuaterniusB.glb",
+      "bytes": 111948,
+      "sha256": "aa098d43c1006110d5a4fa3a6e6d4c843c8d8d90ffccc48f5bf32e3aadf7a3a9",
+      "replacement": "Canonical roster-v2 sprites; preserve original model strings only as historical aliases",
+      "consumers": [
+        "apps/pc-app/runtime/features/resources/service.cjs",
+        "apps/pc-app/runtime/services/runtime-data-store.cjs",
+        "apps/pc-app/runtime/services/wild-pet-runtime.cjs",
+        "tests/task-d001-pc-runnable-runtime.test.ts"
+      ],
+      "decision": "resources-owner-delivery-required-before-final-deletion"
+    },
+    {
+      "oldFile": "apps/pc-app/runtime/assets/models/CesiumMan.glb",
+      "bytes": 438044,
+      "sha256": "b7001eaeea8254bd44773bcd247e78696d94169388fbb2a1800fc69434e777d9",
+      "replacement": "Canonical roster-v2 sprites; preserve original model strings only as historical aliases",
+      "consumers": [
+        "apps/pc-app/runtime/features/resources/service.cjs",
+        "apps/pc-app/runtime/services/runtime-data-store.cjs",
+        "apps/pc-app/runtime/services/wild-pet-runtime.cjs",
+        "scripts/smoke/check-pc-runtime.mjs",
+        "tests/task-d001-pc-runnable-runtime.test.ts"
+      ],
+      "decision": "resources-owner-delivery-required-before-final-deletion"
+    },
+    {
+      "oldFile": "apps/pc-app/runtime/assets/models/Fox.glb",
+      "bytes": 162852,
+      "sha256": "d97044e701822bac5a62696459b27d7b375aada5de8574ed4362edbba94771f7",
+      "replacement": "Canonical roster-v2 sprites; preserve original model strings only as historical aliases",
+      "consumers": [
+        "apps/pc-app/runtime/features/resources/service.cjs",
+        "apps/pc-app/runtime/services/runtime-data-store.cjs",
+        "apps/pc-app/runtime/services/wild-pet-runtime.cjs",
+        "scripts/smoke/check-pc-runtime.mjs",
+        "tests/task-d001-pc-runnable-runtime.test.ts"
+      ],
+      "decision": "resources-owner-delivery-required-before-final-deletion"
+    },
+    {
+      "oldFile": "apps/pc-app/runtime/assets/models/Horse.glb",
+      "bytes": 181792,
+      "sha256": "cc033dc5a9dd46de001803277c53c75cf4a47fb57e90c028e9a678437d725bb1",
+      "replacement": "Canonical roster-v2 sprites; preserve original model strings only as historical aliases",
+      "consumers": [
+        "apps/pc-app/runtime/features/resources/service.cjs",
+        "apps/pc-app/runtime/services/runtime-data-store.cjs",
+        "apps/pc-app/runtime/services/wild-pet-runtime.cjs",
+        "tests/task-d001-pc-runnable-runtime.test.ts"
+      ],
+      "decision": "resources-owner-delivery-required-before-final-deletion"
+    },
+    {
+      "oldFile": "apps/pc-app/runtime/assets/models/Husky.glb",
+      "bytes": 927536,
+      "sha256": "a1e107ec4c2c62ce8cad86f750a7f6f9f2065c691dc6f88fce39667d3f4877eb",
+      "replacement": "Canonical roster-v2 sprites; preserve original model strings only as historical aliases",
+      "consumers": [
+        "apps/pc-app/runtime/features/resources/service.cjs",
+        "apps/pc-app/runtime/renderer/renderer.mjs",
+        "apps/pc-app/runtime/services/runtime-data-store.cjs",
+        "apps/pc-app/runtime/services/wild-pet-runtime.cjs",
+        "docs/model-sourcing-and-import.md",
+        "tests/task-d001-pc-runnable-runtime.test.ts"
+      ],
+      "decision": "resources-owner-delivery-required-before-final-deletion"
+    },
+    {
+      "oldFile": "apps/pc-app/runtime/assets/models/KittenPoly.glb",
+      "bytes": 47348,
+      "sha256": "40da59dc72841c7d010f9d8a81435a49b07343600e5809ec7e63c435cf0bd76e",
+      "replacement": "Canonical roster-v2 sprites; preserve original model strings only as historical aliases",
+      "consumers": [
+        "apps/pc-app/runtime/features/resources/service.cjs",
+        "apps/pc-app/runtime/services/runtime-data-store.cjs",
+        "apps/pc-app/runtime/services/wild-pet-runtime.cjs",
+        "docs/model-sourcing-and-import.md",
+        "tests/task-d001-pc-runnable-runtime.test.ts"
+      ],
+      "decision": "resources-owner-delivery-required-before-final-deletion"
+    },
+    {
+      "oldFile": "apps/pc-app/runtime/assets/models/NeilArmstrong.glb",
+      "bytes": 8947140,
+      "sha256": "3acbcab4fc849afb342ac6b64ac44fe6203ef9324a531d22eda045068a7e9359",
+      "replacement": "Canonical roster-v2 sprites; preserve original model strings only as historical aliases",
+      "consumers": [
+        "apps/pc-app/runtime/features/resources/service.cjs",
+        "apps/pc-app/runtime/services/runtime-data-store.cjs",
+        "apps/pc-app/runtime/services/wild-pet-runtime.cjs",
+        "tests/task-d001-pc-runnable-runtime.test.ts"
+      ],
+      "decision": "resources-owner-delivery-required-before-final-deletion"
+    },
+    {
+      "oldFile": "apps/pc-app/runtime/assets/models/PoodlePoly.glb",
+      "bytes": 60976,
+      "sha256": "5d0ed3d37389d2912935bc058808bbdf5062544b2fc34ce5be4e24f147cf645a",
+      "replacement": "Canonical roster-v2 sprites; preserve original model strings only as historical aliases",
+      "consumers": [
+        "apps/pc-app/runtime/features/resources/service.cjs",
+        "apps/pc-app/runtime/services/runtime-data-store.cjs",
+        "apps/pc-app/runtime/services/wild-pet-runtime.cjs",
+        "docs/model-sourcing-and-import.md",
+        "tests/task-d001-pc-runnable-runtime.test.ts"
+      ],
+      "decision": "resources-owner-delivery-required-before-final-deletion"
+    },
+    {
+      "oldFile": "apps/pc-app/runtime/assets/models/PuppyPoly.glb",
+      "bytes": 47768,
+      "sha256": "551e525b2e3b4dff368511c20067e426ede8fdfee57ef57d1c48da17bb78012f",
+      "replacement": "Canonical roster-v2 sprites; preserve original model strings only as historical aliases",
+      "consumers": [
+        "apps/pc-app/runtime/features/resources/service.cjs",
+        "apps/pc-app/runtime/services/runtime-data-store.cjs",
+        "apps/pc-app/runtime/services/wild-pet-runtime.cjs",
+        "docs/model-sourcing-and-import.md",
+        "tests/task-d001-pc-runnable-runtime.test.ts"
+      ],
+      "decision": "resources-owner-delivery-required-before-final-deletion"
+    },
+    {
+      "oldFile": "apps/pc-app/runtime/assets/models/RobotExpressive.glb",
+      "bytes": 463988,
+      "sha256": "047f5e5fb3bb6d378bd1df16ca6137f2a596c99b3a1b5690b4020c05aaf6f319",
+      "replacement": "Canonical roster-v2 sprites; preserve original model strings only as historical aliases",
+      "consumers": [
+        "apps/pc-app/runtime/features/resources/service.cjs",
+        "apps/pc-app/runtime/services/runtime-data-store.cjs",
+        "apps/pc-app/runtime/services/wild-pet-runtime.cjs",
+        "tests/task-d001-pc-runnable-runtime.test.ts"
+      ],
+      "decision": "resources-owner-delivery-required-before-final-deletion"
+    },
+    {
+      "oldFile": "apps/pc-app/runtime/assets/models/ShibaInu.glb",
+      "bytes": 851196,
+      "sha256": "9cbd4f1e12f85024126eab6a2c5706c099196df1a10db74e6c8b67bac3fff54a",
+      "replacement": "Canonical roster-v2 sprites; preserve original model strings only as historical aliases",
+      "consumers": [
+        "apps/pc-app/runtime/features/resources/service.cjs",
+        "apps/pc-app/runtime/services/runtime-data-store.cjs",
+        "apps/pc-app/runtime/services/wild-pet-runtime.cjs",
+        "tests/task-d001-pc-runnable-runtime.test.ts"
+      ],
+      "decision": "resources-owner-delivery-required-before-final-deletion"
+    },
+    {
+      "oldFile": "apps/pc-app/runtime/assets/models/TuxedoCatAnimated.glb",
+      "bytes": 580884,
+      "sha256": "6552df4d41178715850d87060dbff5b281279fa9f102ff4abf9d6c9cc6669c8c",
+      "replacement": "Canonical roster-v2 sprites; preserve original model strings only as historical aliases",
+      "consumers": [
+        "apps/pc-app/runtime/features/resources/service.cjs",
+        "apps/pc-app/runtime/renderer/renderer.mjs",
+        "apps/pc-app/runtime/services/runtime-data-store.cjs",
+        "apps/pc-app/runtime/services/wild-pet-runtime.cjs",
+        "tests/task-d001-pc-runnable-runtime.test.ts"
+      ],
+      "decision": "resources-owner-delivery-required-before-final-deletion"
+    },
+    {
+      "oldFile": "apps/pc-app/runtime/assets/models/catalog.json",
+      "bytes": 2846,
+      "sha256": "72c04c820f5685a4bc478e5dd85467b624888b8a37023b7fb4c0b1aa88b5dae1",
+      "replacement": "Canonical roster-v2 sprites; preserve original model strings only as historical aliases",
+      "consumers": [
+        "apps/pc-app/runtime/features/resources/assets/fat-fish/LICENSE.txt",
+        "apps/pc-app/runtime/features/resources/service.cjs",
+        "apps/pc-app/runtime/services/runtime-data-store.cjs",
+        "apps/pc-app/runtime/services/wild-pet-runtime.cjs",
+        "docs/model-sourcing-and-import.md",
+        "docs/project-structure-and-file-map.md",
+        "docs/runtime-config.md",
+        "tests/task-d001-pc-runnable-runtime.test.ts"
+      ],
+      "decision": "resources-owner-delivery-required-before-final-deletion"
+    },
+    {
+      "oldFile": "apps/pc-app/runtime/features/resources/legacy/README.txt",
+      "bytes": 389,
+      "sha256": "cd84b5ea992ef749bd712a7d016285daa38a18b1a929cf38ad0ad53355f721c8",
+      "replacement": "Canonical roster-v2 sprites; preserve original model strings only as historical aliases",
+      "consumers": [
+        "apps/pc-app/runtime/features/resources/service.cjs",
+        "apps/pc-app/runtime/services/runtime-data-store.cjs",
+        "apps/pc-app/runtime/services/wild-pet-runtime.cjs",
+        "tests/task-d001-pc-runnable-runtime.test.ts"
+      ],
+      "decision": "resources-owner-delivery-required-before-final-deletion"
+    },
+    {
+      "oldFile": "apps/pc-app/runtime/features/resources/legacy/ResourceStage-3d.tsx.txt",
+      "bytes": 10745,
+      "sha256": "1129981a5e9796736b8ea3386b2bd22d03c28908478a1222b8233889ec37f506",
+      "replacement": "Canonical roster-v2 sprites; preserve original model strings only as historical aliases",
+      "consumers": [
+        "apps/pc-app/runtime/features/resources/service.cjs",
+        "apps/pc-app/runtime/services/runtime-data-store.cjs",
+        "apps/pc-app/runtime/services/wild-pet-runtime.cjs",
+        "tests/task-d001-pc-runnable-runtime.test.ts"
+      ],
+      "decision": "resources-owner-delivery-required-before-final-deletion"
+    },
+    {
+      "oldFile": "apps/pc-app/runtime/features/resources/legacy/parser-3d.cjs",
+      "bytes": 16134,
+      "sha256": "748d0e76a15133588ec00f9efa8b44d1470fc6132f987c6bd9582dcdc1f0cf48",
+      "replacement": "Canonical roster-v2 sprites; preserve original model strings only as historical aliases",
+      "consumers": [
+        "apps/pc-app/runtime/features/resources/service.cjs",
+        "apps/pc-app/runtime/services/runtime-data-store.cjs",
+        "apps/pc-app/runtime/services/wild-pet-runtime.cjs",
+        "tests/task-d001-pc-runnable-runtime.test.ts"
+      ],
+      "decision": "resources-owner-delivery-required-before-final-deletion"
+    },
+    {
+      "oldFile": "apps/pc-app/runtime/features/resources/legacy/resources-3d.test.cjs.txt",
+      "bytes": 14639,
+      "sha256": "7ab9ac6170c4da5c20996001d3dceee083f324d3647ded65177ed5969ba1c2b3",
+      "replacement": "Canonical roster-v2 sprites; preserve original model strings only as historical aliases",
+      "consumers": [
+        "apps/pc-app/runtime/features/resources/service.cjs",
+        "apps/pc-app/runtime/services/runtime-data-store.cjs",
+        "apps/pc-app/runtime/services/wild-pet-runtime.cjs",
+        "tests/task-d001-pc-runnable-runtime.test.ts"
+      ],
+      "decision": "resources-owner-delivery-required-before-final-deletion"
+    },
+    {
+      "oldFile": "apps/pc-app/runtime/features/resources/legacy/smoke-3d.mjs.txt",
+      "bytes": 6662,
+      "sha256": "9b2ddb282e404493f18ce334c05f2666fb7b4da5860c8fadf6fbe62493365c9b",
+      "replacement": "Canonical roster-v2 sprites; preserve original model strings only as historical aliases",
+      "consumers": [
+        "apps/pc-app/runtime/features/resources/service.cjs",
+        "apps/pc-app/runtime/services/runtime-data-store.cjs",
+        "apps/pc-app/runtime/services/wild-pet-runtime.cjs",
+        "tests/task-d001-pc-runnable-runtime.test.ts"
+      ],
+      "decision": "resources-owner-delivery-required-before-final-deletion"
+    },
+    {
+      "oldFile": "apps/pc-app/runtime/services/runtime-data-store.cjs",
+      "bytes": 59302,
+      "sha256": "4d8b4f9be57786f7a2f48814fdded339afa9f9493847f649ebe18e780473533f",
+      "replacement": "Retained formal compatibility capability, consumed by account archive/import adapters",
+      "consumers": [
+        "apps/pc-app/runtime/core/runtime-compat.cjs",
+        "apps/pc-app/runtime/features/accounts/legacy.cjs",
+        "apps/pc-app/runtime/features/battle/battle.test.cjs",
+        "apps/pc-app/runtime/features/battle/service.cjs",
+        "apps/pc-app/runtime/features/battle/verify-electron.mjs",
+        "apps/pc-app/runtime/features/battle/verify-report-portraits.mjs",
+        "apps/pc-app/runtime/features/companions/index.cjs",
+        "apps/pc-app/runtime/features/companions/tests/accounts-boundary.test.cjs",
+        "apps/pc-app/runtime/features/companions/tests/electron.acceptance.mjs",
+        "apps/pc-app/runtime/features/companions/tests/roster.acceptance.mjs",
+        "apps/pc-app/runtime/features/conversations/index.cjs",
+        "apps/pc-app/runtime/features/discovery/tests/discovery.test.cjs",
+        "apps/pc-app/runtime/features/discovery/verification/host.cjs",
+        "apps/pc-app/runtime/features/garden/smoke.electron.mjs",
+        "apps/pc-app/runtime/main.cjs",
+        "docs/project-structure-and-file-map.md",
+        "docs/runtime-config.md",
+        "scripts/smoke/check-pc-runtime.mjs",
+        "tests/task-d004-pc-persistence-reporting.test.ts",
+        "tests/task-d006-pc-wild-capture-flow.test.ts",
+        "tests/task-d007-pc-user-auth-duel-request.test.ts"
+      ],
+      "decision": "retain-required-data-reader"
+    },
+    {
+      "oldFile": "apps/pc-app/runtime/services/map-runtime.cjs",
+      "bytes": 7165,
+      "sha256": "e03be31b2f5cc8adda1e8e0b64017b727c75b3473dffed259f54646690b16509",
+      "replacement": "Required map/online/domain services until approved cloud owners replace consumers",
+      "consumers": [
+        "apps/pc-app/runtime/features/accounts/remote.cjs",
+        "apps/pc-app/runtime/features/battle/service.cjs",
+        "apps/pc-app/runtime/features/discovery/map-adapter.cjs",
+        "apps/pc-app/runtime/features/discovery/server-authority.cjs",
+        "apps/pc-app/runtime/features/garden/cloud-authority.cjs",
+        "apps/pc-app/runtime/main.cjs",
+        "docs/project-structure-and-file-map.md",
+        "docs/runtime-config.md",
+        "scripts/smoke/check-pc-runtime.mjs",
+        "tests/task-d005-pc-map-runtime.test.ts"
+      ],
+      "decision": "retain-required-domain-services"
+    },
+    {
+      "oldFile": "apps/pc-app/runtime/services/online-duel-service.cjs",
+      "bytes": 37759,
+      "sha256": "6f1a15883ed79060f170ee2c754dfcd09dd076726efc0d2ceb6d94b377fe16b0",
+      "replacement": "Required map/online/domain services until approved cloud owners replace consumers",
+      "consumers": [
+        "apps/pc-app/runtime/features/accounts/remote.cjs",
+        "apps/pc-app/runtime/features/battle/battle.test.cjs",
+        "apps/pc-app/runtime/features/battle/qa-adapter.cjs",
+        "apps/pc-app/runtime/features/battle/service.cjs",
+        "apps/pc-app/runtime/features/discovery/map-adapter.cjs",
+        "apps/pc-app/runtime/features/discovery/server-authority.cjs",
+        "apps/pc-app/runtime/features/garden/cloud-authority.cjs",
+        "apps/pc-app/runtime/main.cjs",
+        "docs/project-structure-and-file-map.md",
+        "docs/task-progress.md",
+        "tests/task-d008-pc-online-duel-runtime.test.ts"
+      ],
+      "decision": "retain-required-domain-services"
+    },
+    {
+      "oldFile": "apps/pc-app/runtime/services/wild-pet-runtime.cjs",
+      "bytes": 13078,
+      "sha256": "b951dc95a1434a0eea68f3bfe93dac33c396f8f0dff6df9e21b71e73601fff5b",
+      "replacement": "Required map/online/domain services until approved cloud owners replace consumers",
+      "consumers": [
+        "apps/pc-app/runtime/features/accounts/remote.cjs",
+        "apps/pc-app/runtime/features/battle/service.cjs",
+        "apps/pc-app/runtime/features/discovery/map-adapter.cjs",
+        "apps/pc-app/runtime/features/discovery/server-authority.cjs",
+        "apps/pc-app/runtime/features/garden/cloud-authority.cjs",
+        "apps/pc-app/runtime/main.cjs",
+        "docs/project-structure-and-file-map.md",
+        "docs/runtime-config.md",
+        "scripts/smoke/check-pc-runtime.mjs",
+        "tests/task-d006-pc-wild-capture-flow.test.ts"
+      ],
+      "decision": "retain-required-domain-services"
+    },
+    {
+      "oldFile": "apps/pc-app/src/index.ts",
+      "bytes": 427,
+      "sha256": "432b4a5b7fff3a5d0eff6f6917b7f3f02fb27ab88c5bff69ef45c4b029af83d0",
+      "replacement": "Formal desktop features and reviewed cloud functions/release pipeline",
+      "consumers": [
+        ".github/workflows/release.yml",
+        "apps/supabase-edge/src/",
+        "packages/game-engine/src/",
+        "scripts/release/build-pc.mjs",
+        "tests/",
+        "tsconfig.json"
+      ],
+      "decision": "audit-consumers-and-await-domain-replacement-before-deletion"
+    },
+    {
+      "oldFile": "apps/pc-app/src/interaction.ts",
+      "bytes": 977,
+      "sha256": "3c0108287e351f26c110da519d9d876e84762c1e2478ee7f242bc297f2fc7fc5",
+      "replacement": "Formal desktop features and reviewed cloud functions/release pipeline",
+      "consumers": [
+        ".github/workflows/release.yml",
+        "apps/supabase-edge/src/",
+        "packages/game-engine/src/",
+        "scripts/release/build-pc.mjs",
+        "tests/"
+      ],
+      "decision": "audit-consumers-and-await-domain-replacement-before-deletion"
+    },
+    {
+      "oldFile": "apps/pc-app/src/window.ts",
+      "bytes": 2472,
+      "sha256": "89d4fdb0d889fcca9c809c74af4363409402a5b5449ec92fcd3e156ecc55a92d",
+      "replacement": "Formal desktop features and reviewed cloud functions/release pipeline",
+      "consumers": [
+        ".github/workflows/release.yml",
+        "apps/supabase-edge/src/",
+        "packages/game-engine/src/",
+        "scripts/release/build-pc.mjs",
+        "tests/"
+      ],
+      "decision": "audit-consumers-and-await-domain-replacement-before-deletion"
+    },
+    {
+      "oldFile": "apps/supabase-edge/src/anti-cheat.ts",
+      "bytes": 1831,
+      "sha256": "71a519ce64de03bc9b3cbda53f24c6522cf6e78a8604a740b199bbc42686c54d",
+      "replacement": "Formal desktop features and reviewed cloud functions/release pipeline",
+      "consumers": [
+        ".github/workflows/release.yml",
+        "apps/supabase-edge/src/",
+        "packages/game-engine/src/",
+        "scripts/release/build-pc.mjs",
+        "tests/"
+      ],
+      "decision": "audit-consumers-and-await-domain-replacement-before-deletion"
+    },
+    {
+      "oldFile": "apps/supabase-edge/src/appearance.ts",
+      "bytes": 2440,
+      "sha256": "c3ff10755c921e20abfe37e18eee40dd3ad0669fd0336f65a589e9ad86a9867f",
+      "replacement": "Formal desktop features and reviewed cloud functions/release pipeline",
+      "consumers": [
+        ".github/workflows/release.yml",
+        "apps/supabase-edge/src/",
+        "docs/prd-traceability-audit.md",
+        "packages/game-engine/src/",
+        "scripts/release/build-pc.mjs",
+        "tests/"
+      ],
+      "decision": "audit-consumers-and-await-domain-replacement-before-deletion"
+    },
+    {
+      "oldFile": "apps/supabase-edge/src/capture.ts",
+      "bytes": 5451,
+      "sha256": "af97f9d7a0162c930a1f40425f4bb89cfd242302df7edfe15b5a90e55d94ce06",
+      "replacement": "Formal desktop features and reviewed cloud functions/release pipeline",
+      "consumers": [
+        ".github/workflows/release.yml",
+        "apps/supabase-edge/src/",
+        "docs/prd-traceability-audit.md",
+        "packages/game-engine/src/",
+        "scripts/release/build-pc.mjs",
+        "tests/"
+      ],
+      "decision": "audit-consumers-and-await-domain-replacement-before-deletion"
+    },
+    {
+      "oldFile": "apps/supabase-edge/src/config-center.ts",
+      "bytes": 2341,
+      "sha256": "cc27520a46dd637f3878131e73d906885e3baee4c7dfcd4dcbea1974cdf75e3b",
+      "replacement": "Formal desktop features and reviewed cloud functions/release pipeline",
+      "consumers": [
+        ".github/workflows/release.yml",
+        "apps/supabase-edge/src/",
+        "packages/game-engine/src/",
+        "scripts/release/build-pc.mjs",
+        "tests/"
+      ],
+      "decision": "audit-consumers-and-await-domain-replacement-before-deletion"
+    },
+    {
+      "oldFile": "apps/supabase-edge/src/core-loop.ts",
+      "bytes": 4700,
+      "sha256": "667942fa8d4fbbcd5b9834721250eb5f38c9ef76017479610693bde9a4396f4b",
+      "replacement": "Formal desktop features and reviewed cloud functions/release pipeline",
+      "consumers": [
+        ".github/workflows/release.yml",
+        "apps/supabase-edge/src/",
+        "docs/prd-traceability-audit.md",
+        "packages/game-engine/src/",
+        "scripts/release/build-pc.mjs",
+        "tests/"
+      ],
+      "decision": "audit-consumers-and-await-domain-replacement-before-deletion"
+    },
+    {
+      "oldFile": "apps/supabase-edge/src/emotion.ts",
+      "bytes": 4030,
+      "sha256": "7981eb8aba8d62c01c9295b0b4cb8d8b8a11894c4ad0e84538db836c1e5b15b3",
+      "replacement": "Formal desktop features and reviewed cloud functions/release pipeline",
+      "consumers": [
+        ".github/workflows/release.yml",
+        "apps/supabase-edge/src/",
+        "docs/prd-traceability-audit.md",
+        "packages/game-engine/src/",
+        "scripts/release/build-pc.mjs",
+        "tests/"
+      ],
+      "decision": "audit-consumers-and-await-domain-replacement-before-deletion"
+    },
+    {
+      "oldFile": "apps/supabase-edge/src/friends.ts",
+      "bytes": 3708,
+      "sha256": "f163b5ec87400186f31c272041975a1ca446ecc9bd3435cd014fd8857e14ff12",
+      "replacement": "Formal desktop features and reviewed cloud functions/release pipeline",
+      "consumers": [
+        ".github/workflows/release.yml",
+        "apps/supabase-edge/src/",
+        "docs/prd-traceability-audit.md",
+        "packages/game-engine/src/",
+        "scripts/release/build-pc.mjs",
+        "tests/"
+      ],
+      "decision": "audit-consumers-and-await-domain-replacement-before-deletion"
+    },
+    {
+      "oldFile": "apps/supabase-edge/src/index.ts",
+      "bytes": 1616,
+      "sha256": "0aa1a0f061cdae189aee3bdb4ec0ab651ea075312cbf127150aebdc641094a89",
+      "replacement": "Formal desktop features and reviewed cloud functions/release pipeline",
+      "consumers": [
+        ".github/workflows/release.yml",
+        "apps/supabase-edge/src/",
+        "packages/game-engine/src/",
+        "scripts/release/build-pc.mjs",
+        "tests/",
+        "tsconfig.json"
+      ],
+      "decision": "audit-consumers-and-await-domain-replacement-before-deletion"
+    },
+    {
+      "oldFile": "apps/supabase-edge/src/lbs.ts",
+      "bytes": 5083,
+      "sha256": "6a145f2d90d458096d54491fd3903c4146c4456d5c5b307bace1d55051a6b169",
+      "replacement": "Formal desktop features and reviewed cloud functions/release pipeline",
+      "consumers": [
+        ".github/workflows/release.yml",
+        "apps/supabase-edge/src/",
+        "docs/prd-traceability-audit.md",
+        "packages/game-engine/src/",
+        "scripts/release/build-pc.mjs",
+        "tests/"
+      ],
+      "decision": "audit-consumers-and-await-domain-replacement-before-deletion"
+    },
+    {
+      "oldFile": "apps/supabase-edge/src/realtime-room.ts",
+      "bytes": 4468,
+      "sha256": "9de244041fa2e6d392e7f2d40ed9a4386e7232b9a24356d72917ab493232bee1",
+      "replacement": "Formal desktop features and reviewed cloud functions/release pipeline",
+      "consumers": [
+        ".github/workflows/release.yml",
+        "apps/supabase-edge/src/",
+        "docs/prd-traceability-audit.md",
+        "packages/game-engine/src/",
+        "scripts/release/build-pc.mjs",
+        "tests/"
+      ],
+      "decision": "audit-consumers-and-await-domain-replacement-before-deletion"
+    },
+    {
+      "oldFile": "apps/supabase-edge/src/social.ts",
+      "bytes": 2179,
+      "sha256": "239d17c5aec636a7f9722182e14be7ade3ef831875c913ce5b5cf097c81fc50f",
+      "replacement": "Formal desktop features and reviewed cloud functions/release pipeline",
+      "consumers": [
+        ".github/workflows/release.yml",
+        "apps/supabase-edge/src/",
+        "docs/prd-traceability-audit.md",
+        "packages/game-engine/src/",
+        "scripts/release/build-pc.mjs",
+        "tests/"
+      ],
+      "decision": "audit-consumers-and-await-domain-replacement-before-deletion"
+    },
+    {
+      "oldFile": "apps/supabase-edge/src/territory.ts",
+      "bytes": 3952,
+      "sha256": "ffd509a3c9e33cda3490abea0a64666b4227d96ad786011d4cbc82d780c327bf",
+      "replacement": "Formal desktop features and reviewed cloud functions/release pipeline",
+      "consumers": [
+        ".github/workflows/release.yml",
+        "apps/supabase-edge/src/",
+        "docs/prd-traceability-audit.md",
+        "packages/game-engine/src/",
+        "scripts/release/build-pc.mjs",
+        "tests/"
+      ],
+      "decision": "audit-consumers-and-await-domain-replacement-before-deletion"
+    },
+    {
+      "oldFile": "packages/game-engine/package.json",
+      "bytes": 220,
+      "sha256": "c4597c22976215dab3a5adf55459ad0674e8a1f424183f691367eb0f345f0b6c",
+      "replacement": "Formal desktop features and reviewed cloud functions/release pipeline",
+      "consumers": [
+        ".github/workflows/release.yml",
+        "apps/supabase-edge/src/",
+        "packages/game-engine/src/",
+        "scripts/release/build-pc.mjs",
+        "tests/"
+      ],
+      "decision": "audit-consumers-and-await-domain-replacement-before-deletion"
+    },
+    {
+      "oldFile": "packages/game-engine/src/index.ts",
+      "bytes": 9482,
+      "sha256": "80de6c0a00689af0ec538f3e409dafe67729de0ebfa7d8dc609c61fc9af7481f",
+      "replacement": "Formal desktop features and reviewed cloud functions/release pipeline",
+      "consumers": [
+        ".github/workflows/release.yml",
+        "apps/supabase-edge/src/",
+        "docs/implementation/battle-five-elements.txt",
+        "docs/prd-traceability-audit.md",
+        "packages/game-engine/src/",
+        "scripts/release/build-pc.mjs",
+        "tests/",
+        "tsconfig.json"
+      ],
+      "decision": "audit-consumers-and-await-domain-replacement-before-deletion"
+    },
+    {
+      "oldFile": "packages/game-engine/src/progression.ts",
+      "bytes": 2110,
+      "sha256": "a1d87adba2d6d36212f704c038f6e27b473701c7d51f84fccdd7001d803f3963",
+      "replacement": "Formal desktop features and reviewed cloud functions/release pipeline",
+      "consumers": [
+        ".github/workflows/release.yml",
+        "apps/supabase-edge/src/",
+        "docs/prd-traceability-audit.md",
+        "packages/game-engine/src/",
+        "scripts/release/build-pc.mjs",
+        "tests/"
+      ],
+      "decision": "audit-consumers-and-await-domain-replacement-before-deletion"
+    },
+    {
+      "oldFile": "scripts/release/build-mobile.mjs",
+      "bytes": 846,
+      "sha256": "be56debe2762ca54038ca23257571b15901126a2c4938baf8c95afd0074dddb3",
+      "replacement": "Formal desktop features and reviewed cloud functions/release pipeline",
+      "consumers": [
+        ".github/workflows/release.yml",
+        "apps/supabase-edge/src/",
+        "package.json",
+        "packages/game-engine/src/",
+        "scripts/release/build-pc.mjs",
+        "tests/",
+        "tests/task-t302-release-pipeline.test.ts"
+      ],
+      "decision": "audit-consumers-and-await-domain-replacement-before-deletion"
+    }
+  ]
+}

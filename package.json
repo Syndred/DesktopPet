@@ -1,5 +1,5 @@
 {
-  "name": "qingpet-lord-3d",
+  "name": "lingjing-desktop",
   "version": "0.1.8",
   "private": true,
   "description": "灵境 · 多宠物桌面伙伴",
@@ -36,13 +36,14 @@
     "test:watch": "vitest",
     "verify": "npm run lint && npm run typecheck && npm run test:layers",
     "build:pc": "electron-vite build && node scripts/desktop/write-build-manifest.mjs",
-    "dev:pc:legacy": "node scripts/desktop/run-electron.cjs apps/pc-app/runtime",
     "typecheck:ui": "tsc --noEmit -p apps/pc-app/ui/tsconfig.json",
     "native:electron": "node scripts/desktop/verify-native.cjs",
     "package:pc:dir": "npm run build:pc && electron-builder --config scripts/release/electron-builder.pc.json --win --dir --x64",
     "test:foundation": "node scripts/desktop/run-native-tests.cjs tests/foundation/services.test.cjs tests/foundation/resource-backup.test.cjs tests/foundation/conversation-backup.test.cjs tests/foundation/owner-alias.test.cjs tests/foundation/cloud-checkpoint.test.cjs tests/foundation/qa-scenario.test.cjs",
     "pc:smoke:shell": "node scripts/smoke/lingjing-shell.mjs",
-    "native:check": "node scripts/desktop/verify-native.cjs"
+    "native:check": "node scripts/desktop/verify-native.cjs",
+    "verify:install": "node scripts/acceptance/clean-desktop-install.mjs",
+    "deps:lock": "node scripts/desktop/normalize-native-lock.mjs"
   },
   "config": {
     "electron_mirror": "https://npmmirror.com/mirrors/electron/"
