@@ -2,9 +2,9 @@
   "module": "conversations",
   "scope": "cloud-upgrade-2026-10-25",
   "branch": "codex/lingjing-conversations",
-  "commit": "543b71fe6868",
+  "commit": "44e63cc",
   "goalStatus": "active",
-  "status": "checkpoint_ready_awaiting_cloud_projection_and_legal_pet",
+  "status": "live_auth_boundary_passed_waiting_personal_projection_and_pet",
   "contracts": {
     "identity": "08 accounts: verified owner mapping, complete-save CAS and account save-restored events",
     "backup": "conversations version 1 adapter; stable IDs and array order, no sequence or encrypted_key",
@@ -74,6 +74,24 @@
     {
       "command": "feature scoped ESLint / production build",
       "status": "passed"
+    },
+    {
+      "command": "node apps/pc-app/runtime/features/conversations/tests/cloud-boundary.acceptance.mjs",
+      "status": "passed",
+      "checks": 6,
+      "realCloud": true,
+      "realElectron": true,
+      "scope": "actual HTTPS Auth/actor and rejected pet SQL; full chat CAS not claimed",
+      "runtimeCommit": "a2c794b",
+      "harnessCommit": "44e63cc",
+      "evidence": "docs/implementation/evidence/conversations/cloud-2026-10-25/live-boundary.json"
+    },
+    {
+      "command": "coordinator independent archive + legacy-import + runtime combined",
+      "checks": 26,
+      "status": "passed",
+      "reportedBy": "main coordinator user delegation",
+      "source": "543b71f"
     }
   ],
   "realCloudEvidence": {
@@ -89,7 +107,9 @@
     "legacyPrivacyGate": {
       "status": "confirmed_not_filtered_in45b857d_client",
       "detail": "AccountSync.enqueue uses backups.snapshot(owner), and legacy adapter returns raw account_legacy_data.document unchanged. SQL rejects secret keys after transmission; it is not a client privacy filter. Do not upload a legacy archive containing opaque apiKey/sessionToken. Await08 cloud projection, retain original local raw archive."
-    }
+    },
+    "ownLiveAuthAndPetBoundary": true,
+    "boundary": "Two actual Electron44.9.3 processes, one real Supabase owner, distinct devices/sessions, public IPC and archive no proof/key/cipher, unregistered pet SQL403 PET_OWNER_MISMATCH, logoutA retainsB."
   },
   "preservation": [
     "Existing owner/petId/message IDs, history, profiles and memories retained.",
@@ -128,7 +148,7 @@
     "Real two Electron A/B chat/persona/memory CAS, conflicts/offline/restart checks.",
     "Coordinator deployment/integration and independent acceptance; original legacy server migration remains08 condition."
   ],
-  "updatedAt": "2026-10-25T02:54:16.928Z",
+  "updatedAt": "2026-10-25T02:56:29.164Z",
   "cleanupManifest": "docs/implementation/evidence/conversations/cloud-2026-10-25/cleanup-manifest.json",
   "installation": {
     "workspaceNodeModulesIndependent": true,
