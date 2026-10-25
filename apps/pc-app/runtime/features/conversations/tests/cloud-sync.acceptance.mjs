@@ -56,7 +56,7 @@ async function restore(c, mode = 'replace') {
 }
 async function enableSync(c) {
   const settings = await call(c, 'accounts', 'settingsGet'); settings.document.sync.enabled = true;
-  await call(c, 'accounts', 'settingsSave', { document: settings.document, revision: settings.revision });
+  await call(c, 'accounts', 'settingsSave', { document: settings.document, revision: settings.revision, actionId: randomUUID() });
 }
 async function observePushPrivacy(c) {
   await c.app.evaluate((_electron, localKeys) => {

@@ -148,7 +148,7 @@
     "Real two Electron A/B chat/persona/memory CAS, conflicts/offline/restart checks.",
     "Coordinator deployment/integration and independent acceptance; original legacy server migration remains08 condition."
   ],
-  "updatedAt": "2026-10-25T02:56:29.164Z",
+  "updatedAt": "2026-10-25T03:00:01.038Z",
   "cleanupManifest": "docs/implementation/evidence/conversations/cloud-2026-10-25/cleanup-manifest.json",
   "installation": {
     "workspaceNodeModulesIndependent": true,
@@ -164,5 +164,24 @@
     "fetchedAt": "2026-10-25T02:54:16.927Z",
     "originMain": "4786f97",
     "included": true
+  },
+  "preparedAcceptance": {
+    "script": "apps/pc-app/runtime/features/conversations/tests/cloud-sync.acceptance.mjs",
+    "status": "prepared_not_run",
+    "prerequisites": [
+      "approved08 client personal cloud projection",
+      "approved02 public legal cloud adoption deployed"
+    ],
+    "covers": [
+      "real two Electron one owner",
+      "original petId and stable message IDs/order",
+      "actual model transport failure and cancellation without fake replies",
+      "persona/memory and deletion",
+      "concurrent CAS conflict and atomic merge conflict",
+      "explicit restore and safety backup",
+      "process restart and exact-action outbox retry",
+      "all observed push bodies exclude local keys/ciphers/Auth proof"
+    ],
+    "injectedStep": "Only one offline cloud push uses explicit actual loopback-refusal fault injection; subsequent retry/readback uses real HTTPS."
   }
 }
