@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-25T08:15:59.415Z",
-  "phase": "actual-sfx-friend-lifecycle-journal-audit",
+  "updatedAt": "2026-10-25T08:27:58.424Z",
+  "phase": "complete-friend-lifecycle-audit-accepted-rebuilding-actual-portable",
   "goalStatus": "active",
   "deployed": {
     "projectRef": "jbvrdmrkwpznbrvteive",
@@ -125,8 +125,8 @@
     }
   },
   "fixedRemainingWork": [
-    "Finish the complete friend lifecycle journal/provenance repair and its legacy/import/restart audit",
-    "Freeze the repaired source, build once and pass full UI-driven root SFX acceptance plus actual friend convergence"
+    "Audit final SFX on exact repaired source a9acd7f",
+    "Pass complete UI-driven root business acceptance and actual friend lifecycle convergence on that same SFX"
   ],
   "cleanup": {
     "completedCodeRetirement": true,
@@ -258,10 +258,10 @@
       "review": "Legacy normalization is internal view only; original envelope/checksum/files retained. Root8 targeted native restore/provider cases and original signed expired HTTPS denial passed."
     }
   ],
-  "status": "actual-sfx-friend-lifecycle-journal-audit",
+  "status": "complete-friend-lifecycle-audit-accepted-rebuilding-actual-portable",
   "remaining": [
-    "Finish the complete friend lifecycle journal/provenance repair and its legacy/import/restart audit",
-    "Freeze the repaired source, build once and pass full UI-driven root SFX acceptance plus actual friend convergence"
+    "Audit final SFX on exact repaired source a9acd7f",
+    "Pass complete UI-driven root business acceptance and actual friend lifecycle convergence on that same SFX"
   ],
   "engineering": {
     "historicalEngineeringCheckpoints": {
@@ -330,7 +330,7 @@
     "evidence": "docs/implementation/evidence/cloud/2026-10-25/final-regression.json"
   },
   "productFreeze": {
-    "commit": "2cafccd6871403f69ae8a5bb17dbd658b5a48272",
+    "commit": "a9acd7f6f1920c541d429fa26d1f054b1427cd95",
     "sourceHeld": true,
     "actualPortableBusinessAccepted": false
   },
@@ -439,5 +439,18 @@
     "originalActionId": "auto:8f808dea-e37e-44ba-b24e-ca8a709ea521",
     "originalBase": 89,
     "originalReceiptRevision": 90
+  },
+  "finalFriendLifecycle": {
+    "productionCommit": "9623873b7acc1bd6352b3a5f0afbbfc1bedab856",
+    "fixtureOnlyCommit": "96f310914e09b1b7a8119c22302db44e7864a1b0",
+    "evidenceCommit": "b347a2202ccb2f77df279b90a176a97837ed27d6",
+    "nativeCjsPassed": 311,
+    "rootLifecyclePassed": 12,
+    "rootCloudNodeFilesPassed": 22,
+    "rootDenoValidatorsPassed": 5,
+    "strictMigrations": true,
+    "evidence": "docs/implementation/evidence/battle/2026-10-25/friend-lifecycle-boundary/evidence.json",
+    "rootEvidence": "docs/implementation/evidence/cloud/2026-10-25/final-friend-root-checks.json",
+    "actualNewSfxPassed": false
   }
 }
