@@ -16,6 +16,7 @@ const {GardenService}=require('../../garden/service.cjs'),{BackupManager}=requir
 const {BattleCloudAuthority}=require('../cloud-authority.cjs');
 const {saveDataChecksum,checksum}=require('../../accounts/util.cjs');
 const {AccountSync}=require('../../accounts/sync.cjs');
+const {OnlineDuelService}=require('../../../services/online-duel-service.cjs');
 const users=['host','guest'].map((name,index)=>({uid:randomUUID(),owner:index===1?'o'.repeat(160):randomUUID(),account:name,device:randomUUID(),sid:randomUUID()}));
 const record=name=>{checks.push(name);console.log(name);};
 await db.exec(`CREATE ROLE anon;CREATE ROLE authenticated;CREATE ROLE service_role BYPASSRLS;
@@ -60,7 +61,8 @@ try {
     await rpc('lingjing_commit_authority',[user.owner,'verified-initial-authority',fragments,0]);
   }
   const [host,guest]=users;
-  let {room}=await command(host,'create_room',{account:host.account,pet:host.pet});({room}=await command(guest,'join_room',{account:guest.account,pet:guest.pet,roomCode:room.room_code}));
+  let {room}=await command(host,'create_room',{account:host.account,pet:host.pet});const createdRoom=structuredClone(room);
+  ({room}=await command(guest,'join_room',{account:guest.account,pet:guest.pet,roomCode:room.room_code}));const joinedRoom=structuredClone(room);
   while(room.status==='active') {
     const h=room.host_anger>=50?'ultimate':'element_attack',g=room.guest_anger>=50?'ultimate':'normal_attack';
     await command(host,'submit_action',{roomId:room.id,roundNo:room.current_round,action:h});await command(guest,'submit_action',{roomId:room.id,roundNo:room.current_round,action:g});
@@ -98,9 +100,13 @@ try {
     if(sync)sync.acceptAuthoritativeReadback(user.owner,{envelope:previous.envelope,cloudRevision:previous.revision});
     const services={db:user.local.sqlite,get:name=>name==='backups'?user.local.backups:name==='accounts'?{getOwnerAccountId:()=>user.owner,...(sync?{sync}:{})}:name==='cloudActor'?{requireActor:async()=>({invoke:readback})}:undefined};
     const store=new (require('../store.cjs').BattleStore)(user.local.sqlite),pendingSession={...session,reward:{...proof.reward,applied:false,pendingReason:'intentional lost readback'},reportId:session.id};
-    const start=store.pendingCommand(user.owner,'create',{petId:user.pet.petId});store.resolve(user.owner,start,{session:{...session,status:'active',snapshot:{...session.snapshot,round:0},rounds:[]}});
+    // Match the actual Online return contract, not an invented {session} DTO.
+    // Creation belongs to the host; the other original owner has a join intent.
+    const online=new OnlineDuelService();online.setCurrentUser({id:user.owner,account:user.account});online.applyRoom(index===0?createdRoom:joinedRoom);
+    const start=store.pendingCommand(user.owner,index===0?'create':'join',{...(index===1?{roomCode:joinedRoom.room_code}:{}),petId:user.pet.petId});
+    store.resolve(user.owner,start,{ok:true,room:online.room,side:online.side});assert.equal(online.side,index===0?'host':'guest');
     for(let n=1;n<=session.snapshot.round;n++){store.reserveTransport(user.owner,`local-round-${n}`,session.id,{action:'normal_attack',roundNo:n});if(n<session.snapshot.round)store.resolve(user.owner,`local-round-${n}`,{...session,revision:n*2+1,snapshot:{...session.snapshot,round:n}});}
-    store.save(user.owner,pendingSession);store.saveReport(user.owner,{...proof.report,reward:pendingSession.reward});
+    store.save(user.owner,pendingSession);store.saveReport(user.owner,{...proof.report,reward:pendingSession.reward},{protocol:true});
     const authority=new BattleCloudAuthority(services),localBefore=user.local.backups.dataChecksum(user.owner),restore=user.local.battle.restore;
     user.local.battle.restore=()=>{throw new Error('intentional final adapter failure');};
     await assert.rejects(authority.apply(user.owner,proof),/intentional final adapter failure/);assert.equal(user.local.backups.dataChecksum(user.owner),localBefore);
