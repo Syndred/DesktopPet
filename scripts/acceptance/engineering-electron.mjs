@@ -5,10 +5,16 @@ import { resolve, join } from 'node:path';
 import { randomUUID } from 'node:crypto';
 import assert from 'node:assert/strict';
 
-const root = resolve('.'), output = resolve(`artifacts/foundation/cloud-engineering/electron/run-${Date.now()}`); mkdirSync(output, { recursive: true });
+const root = resolve('.');
+const sourceCommit = execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
+const expectedBuild = JSON.parse(readFileSync('apps/pc-app/dist/build-manifest.json', 'utf8'));
+assert.equal(expectedBuild.sourceCommit, sourceCommit, 'Build the current committed source before native engineering acceptance');
+assert.deepEqual(expectedBuild.sourceDirtyFiles, [], 'Native acceptance requires a clean committed build');
+assert.equal(execFileSync('git', ['status', '--porcelain'], { encoding: 'utf8' }).trim(), '', 'Commit source changes and rebuild before native acceptance');
+const output = resolve(`artifacts/foundation/cloud-engineering/electron/run-${Date.now()}`); mkdirSync(output, { recursive: true });
 const scenario = JSON.parse(execFileSync(process.execPath, ['scripts/acceptance/create-scenario-profile.mjs'], { encoding: 'utf8' }));
 const manifest = JSON.parse(readFileSync('apps/pc-app/dist/ui/.vite/manifest.json', 'utf8'));
-const proof = { at: new Date().toISOString(), sourceCommit: execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(), scenario,
+const proof = { at: new Date().toISOString(), sourceCommit, scenario,
   scope: 'Real production Electron/native windows/tray/IPC/Pixi and request graph. Explicit isolated simulated account; no cloud-service receipt.', checks: [], errors: [] };
 const env = { ...process.env, ...scenario.env }; delete env.ELECTRON_RUN_AS_NODE; delete env.PET_RUNTIME_DATA_FILE;
 const app = await electron.launch({ args: [root], cwd: root, env });
@@ -40,6 +46,9 @@ try {
   await page.getByRole('navigation', { name: '主导航' }).waitFor();
   await page.locator('.companions-page, .cp-page').first().waitFor();
   proof.info = await invoke(page, 'app', 'info'); assert.equal(proof.info.runtime.electron, '44.9.3'); assert.ok(proof.info.runtime.tray.active);
+  assert.equal(proof.info.build.sourceCommit, sourceCommit);
+  for (const key of ['canonicalSourceFingerprint', 'compiledFingerprint']) assert.equal(proof.info.build[key], expectedBuild[key]);
+  assert.equal(proof.info.build.runtimeClosure.sha256, expectedBuild.runtimeClosure.sha256);
   const initialGraph = await graph(page); absent(initialGraph, ['discovery', 'garden', 'conversations']);
   proof.checks.push({ id: 'app-entry-lazy-and-supported', requests: initialGraph, runtime: proof.info.runtime });
   await page.getByRole('button', { name: '设置', exact: true }).click(); await page.getByRole('heading', { name: '按你的节奏，安静陪伴。', exact: true }).waitFor();
