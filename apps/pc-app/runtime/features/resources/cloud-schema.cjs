@@ -22,4 +22,19 @@ const migrations = [{ id: 'resources-002-cloud-packages', sql: `
     status TEXT NOT NULL DEFAULT 'pending', last_error TEXT, verified_at TEXT,
     PRIMARY KEY(owner_account_id,resource_id,auth_user_id,manifest_sha256)
   );` }];
+migrations.push({id:'resources-003-cloud-proof-source',sql:`
+  ALTER TABLE lingjing_resource_cloud_outbox ADD COLUMN data_mode TEXT NOT NULL DEFAULT 'unverified';
+  ALTER TABLE lingjing_resource_cloud_downloads ADD COLUMN data_mode TEXT NOT NULL DEFAULT 'unverified';
+  ALTER TABLE lingjing_resource_cloud_receipts ADD COLUMN data_mode TEXT NOT NULL DEFAULT 'unverified';
+`});
+migrations.push({id:'resources-004-authority-stage',sql:`
+  ALTER TABLE lingjing_resource_cloud_outbox ADD COLUMN storage_verified INTEGER NOT NULL DEFAULT 0;
+  ALTER TABLE lingjing_resource_cloud_outbox ADD COLUMN storage_verified_at TEXT;
+  ALTER TABLE lingjing_resource_cloud_outbox ADD COLUMN authority_registered INTEGER NOT NULL DEFAULT 0;
+  ALTER TABLE lingjing_resource_cloud_downloads ADD COLUMN authority_registered INTEGER NOT NULL DEFAULT 0;
+  ALTER TABLE lingjing_resource_cloud_receipts ADD COLUMN authority_action_id TEXT;
+  ALTER TABLE lingjing_resource_cloud_receipts ADD COLUMN authority_revision INTEGER;
+  ALTER TABLE lingjing_resource_cloud_receipts ADD COLUMN authority_checksum TEXT;
+  UPDATE lingjing_resource_cloud_outbox SET storage_verified=1,storage_verified_at=verified_at WHERE status='verified';
+`});
 module.exports = { migrations };

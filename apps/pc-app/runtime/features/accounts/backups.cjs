@@ -107,6 +107,18 @@ class BackupManager {
     }
     return {...data,modules,tables};
   }
+  /** Cloud assets are hydrated additively before retaining a restore preview;
+   * the synchronous restore transaction never performs network I/O. */
+  async prepareCloud(envelope,owner) {
+    this.validate(envelope,owner);
+    for(const [id,module]of Object.entries(envelope.data.modules))await this.adapters.get(id)?.prepareCloud?.(owner,module);
+    this.validate(envelope,owner);
+  }
+  cloudData(data,owner) {
+    const modules={...data.modules};
+    for(const [id,module]of Object.entries(modules))if(this.adapters.get(id)?.cloudModule)modules[id]=this.adapters.get(id).cloudModule(owner,module);
+    return {...data,modules};
+  }
   validate(envelope, owner) {
     invariant(envelope?.format === "lingjing-account-save" && envelope.version === 1, "BACKUP_VERSION_UNSUPPORTED", "备份版本不兼容，请使用匹配版本的灵境。");
     const { checksum: digest, ...body } = envelope;
@@ -138,8 +150,9 @@ class BackupManager {
     }
     for (const [id, module] of Object.entries(this.normalizeData(body.data,owner).modules)) {
       const adapter = this.adapters.get(id);
-      invariant(adapter && module?.version === adapter.version, "BACKUP_MODULE_UNSUPPORTED", `无法恢复模块 ${id}，请安装对应模块版本。`);
-      invariant(!adapter.validate(module.data, owner, this.db)?.then, "ASYNC_BACKUP_ADAPTER", "存档验证适配器必须同步执行。");
+      invariant(adapter && (module?.version === adapter.version || adapter.versions?.includes(module?.version)), "BACKUP_MODULE_UNSUPPORTED", `无法恢复模块 ${id}，请安装对应模块版本。`);
+      const validated=adapter.validateModule?adapter.validateModule(module,owner):adapter.validate(module.data, owner, this.db);
+      invariant(!validated?.then, "ASYNC_BACKUP_ADAPTER", "存档验证适配器必须同步执行。");
     }
     invariant(Buffer.byteLength(canonical(envelope)) <= MAX_BACKUP_BYTES, "BACKUP_TOO_LARGE", "备份超过 25 MB 限制。");
     return envelope;

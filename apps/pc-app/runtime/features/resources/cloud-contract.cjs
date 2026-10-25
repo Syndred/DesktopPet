@@ -2,6 +2,7 @@ const { createHash } = require('node:crypto');
 const { ResourceError, safeRelative, plain, LIMITS } = require('./parser.cjs');
 const BUCKET = 'lingjing-resources-v1';
 const TABLE = 'lingjing_resource_packages';
+const REFERENCES = 'lingjing_resource_references';
 const CHUNK_BYTES = 4 * 1024 * 1024;
 const MANIFEST_BYTES = 1024 * 1024;
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
@@ -72,4 +73,4 @@ function validateIndex(row, owner, uid) {
   if (!row || row.auth_user_id !== uid || row.owner_account_id !== owner || !UUID.test(row.resource_id) || !SHA.test(row.manifest_sha256) || !SHA.test(row.content_hash) || row.manifest_path !== manifestPath(uid, row.resource_id, row.manifest_sha256) || !Number.isSafeInteger(row.manifest_bytes) || row.manifest_bytes < 1 || row.manifest_bytes > MANIFEST_BYTES || !Number.isSafeInteger(row.total_bytes) || row.total_bytes < 1 || row.total_bytes > LIMITS.total || !['spritesheet','model3d-archive'].includes(row.resource_kind)) reject('RESOURCE_CLOUD_OWNER_MISMATCH', '云端资源索引归属或路径无效');
   return row;
 }
-module.exports = { BUCKET, TABLE, CHUNK_BYTES, MANIFEST_BYTES, UUID, SHA, hash, canonical, noCredentials, identity, manifestPath, chunkPath, validateManifest, validateIndex, reject };
+module.exports = { BUCKET, TABLE, REFERENCES, CHUNK_BYTES, MANIFEST_BYTES, UUID, SHA, hash, canonical, noCredentials, identity, manifestPath, chunkPath, validateManifest, validateIndex, reject };

@@ -5,6 +5,7 @@ const {cloudProjection}=require('./cloud-projection.cjs');
 const personalModules=new Set(['settings','conversations']);
 function meaningfulData(data){
   const modules={...data.modules};if(modules.legacy?.data===null)delete modules.legacy;
+  if(modules['character-resources']?.version===2&&modules['character-resources'].data.references?.length===0)delete modules['character-resources'];
   return {...data,modules,tables:Object.fromEntries(Object.entries(data.tables).filter(([,table])=>table.rows?.length))};
 }
 function protectedData(data){const copy=meaningfulData(data);return {...copy,modules:Object.fromEntries(Object.entries(copy.modules).filter(([key])=>!personalModules.has(key)))};}
@@ -15,9 +16,12 @@ class AccountSync {
     this.getSession = getSession; this.getSettings = getSettings; this.running = new Set();
     this.onInvalidSession = onInvalidSession;
   }
-  dataChecksum(data,owner){
+  cloudView(data,owner){
     const view=owner&&this.backups.normalizeData?this.backups.normalizeData(data,owner):data;
-    return saveDataChecksum(this.remote.authKind==='supabase'?meaningfulData(view):view);
+    return owner&&this.remote.authKind==='supabase'&&this.backups.cloudData?this.backups.cloudData(view,owner):view;
+  }
+  dataChecksum(data,owner){
+    const view=this.cloudView(data,owner);return saveDataChecksum(this.remote.authKind==='supabase'?meaningfulData(view):view);
   }
   status(owner) {
     const state = this.db.prepare("SELECT * FROM account_sync_state WHERE owner_account_id=?").get(owner);
@@ -75,7 +79,7 @@ class AccountSync {
     const cloud=await this.remote.cloudSave('read',session);
     if(cloud?.envelope)this.backups.validate(cloud.envelope,owner);
     const protectedCloud=cloud?.envelope?.data||{modules:{},tables:{}};
-    const localView=this.backups.normalizeData(local.data,owner),cloudView=this.backups.normalizeData(protectedCloud,owner);
+    const localView=this.cloudView(local.data,owner),cloudView=this.cloudView(protectedCloud,owner);
     const different=saveDataChecksum(protectedData(localView))!==saveDataChecksum(protectedData(cloudView));
     const conflict=(cloud?.revision||0)!==row.base_revision;
     if(different||conflict||!projection.originalCloudComplete){
@@ -153,6 +157,8 @@ class AccountSync {
     const remote = await this.remote.cloudSave("read", session);
     invariant(remote?.envelope, "CLOUD_SAVE_NOT_FOUND", "云端还没有此账号的存档。");
     this.backups.validate(remote.envelope, owner);
+    await this.backups.prepareCloud?.(remote.envelope,owner);
+    invariant(this.getSession()?.ownerAccountId===owner,"SESSION_CHANGED","账号已切换，请重新预览云端存档。");
     const id = require("node:crypto").randomUUID();
     this.backups.previews.set(id, { owner, envelope: remote.envelope, currentChecksum: this.backups.dataChecksum(owner),
       expiresAt: Date.now() + 10 * 60 * 1000, cloudRevision: remote.revision });
