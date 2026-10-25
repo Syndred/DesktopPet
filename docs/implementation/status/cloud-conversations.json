@@ -2,9 +2,9 @@
   "module": "conversations",
   "scope": "cloud-upgrade-2026-10-25",
   "branch": "codex/lingjing-conversations",
-  "commit": "44e63cc",
+  "commit": "79801a2",
   "goalStatus": "active",
-  "status": "live_auth_boundary_passed_waiting_personal_projection_and_pet",
+  "status": "awaiting08_authored_text_preservation_fix_and02_legal_pet",
   "contracts": {
     "identity": "08 accounts: verified owner mapping, complete-save CAS and account save-restored events",
     "backup": "conversations version 1 adapter; stable IDs and array order, no sequence or encrypted_key",
@@ -148,7 +148,7 @@
     "Real two Electron A/B chat/persona/memory CAS, conflicts/offline/restart checks.",
     "Coordinator deployment/integration and independent acceptance; original legacy server migration remains08 condition."
   ],
-  "updatedAt": "2026-10-25T03:08:06.908Z",
+  "updatedAt": "2026-10-25T03:09:25.881Z",
   "cleanupManifest": "docs/implementation/evidence/conversations/cloud-2026-10-25/cleanup-manifest.json",
   "installation": {
     "workspaceNodeModulesIndependent": true,
@@ -197,5 +197,6 @@
       }
     },
     "harnessCommit": "79801a2"
-  }
+  },
+  "checkpoint": "a2664ad"
 }
