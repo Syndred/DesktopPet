@@ -1,0 +1,89 @@
+{
+  "at": "2026-10-25T10:04:21.195Z",
+  "issueId": "QA-007",
+  "issueAssignedBy": "09 independent acceptance",
+  "severity": "P2-source-risk",
+  "reproduced": false,
+  "sourceCommit": "f0da7e1077edc634132e53d582c584efcd564ce7",
+  "integrationBase": "9e4007bc4fae37799253b01466a55ae3d8bd3969",
+  "scope": "Accounts runtime only. All login-item API calls are mocked, or scoped to synthetic SQLite/filesystem fixtures. No actual OS startup modification, user settings change, visible desktop control, new portable execution or OS reboot.",
+  "runtimeEvidenceSuppliedByQa": {
+    "runningChildSuffix": "AppData\\Local\\Temp\\3LBAQALUKgWr1yvvvscHsCaqSpQ\\Lingjing.exe",
+    "ownProcessInspectionPerformed": false
+  },
+  "sources": [
+    {
+      "title": "Electron app login item API",
+      "url": "https://www.electronjs.org/docs/latest/api/app/#appsetloginitemsettingssettings-macos-windows",
+      "verifiedClaims": [
+        "Windows path defaults to process.execPath.",
+        "getLoginItemSettings must receive the same path/args used for setLoginItemSettings.",
+        "openAtLogin=false removes the application login item."
+      ]
+    },
+    {
+      "title": "electron-builder NSIS portable environment",
+      "url": "https://www.electron.build/nsis/#portable",
+      "verifiedClaims": [
+        "PORTABLE_EXECUTABLE_FILE is the portable executable path; DIR is its containing directory."
+      ]
+    },
+    {
+      "title": "Installed electron-builder portable launcher template",
+      "path": "node_modules/app-builder-lib/templates/nsis/portable.nsi",
+      "packageVersion": "26.18.0",
+      "sha256": "80fa75cf8cb68f4999eb92afc9f37f8e5b605cb1c3a077821bbc350a9b907a48",
+      "verifiedClaims": [
+        "Template sets PORTABLE_EXECUTABLE_FILE from outer $EXEPATH and DIR from $EXEDIR.",
+        "ExecWait launches extracted child; the template then removes $INSTDIR."
+      ]
+    }
+  ],
+  "change": {
+    "portableTarget": "Validated absolute PORTABLE_EXECUTABLE_FILE, regular EXE, outside canonical OS TEMP roots.",
+    "installedFallback": "Existing non-temporary process.execPath when no portable metadata is present.",
+    "arguments": [],
+    "readback": "Same path/args for setLoginItemSettings and getLoginItemSettings.",
+    "unknownOrDeletedPortable": "Reject enabling before settings are committed; explicit disabling remains possible.",
+    "automaticOSWrites": false,
+    "existingStartupItemsAutomaticallyMigrated": false
+  },
+  "checks": {
+    "directedNodeCases": 17,
+    "targetedElectronCases": 39,
+    "failed": 0,
+    "command": "node scripts/desktop/run-native-tests.cjs apps/pc-app/runtime/features/accounts/tests/startup.test.cjs apps/pc-app/runtime/features/accounts/tests/accounts.test.cjs apps/pc-app/runtime/features/accounts/tests/qa-scenario.test.cjs",
+    "electronVersion": "44.9.3",
+    "osLoginItemApi": "mock only",
+    "syntaxChecksPassed": true,
+    "diffCheckPassed": true,
+    "packagingClosureIncludesStartup": true
+  },
+  "covered": [
+    "Unicode/spaces and UNC target preserve empty arguments; pure runtime mocks perform no filesystem/network lookup.",
+    "Installed Program Files and per-user Programs fallback.",
+    "Missing/relative/quoted/non-executable/directory/deleted/temporary launcher rejected; no child fallback.",
+    "Canonical Windows short-path TEMP aliases rejected.",
+    "No writes for host apply without explicitStartupChange, restored settings, unrelated edits or duplicate action.",
+    "Explicit on/off and status reads agree on the target.",
+    "Real isolated AccountsService SQLite retains previous document/revision after enabling failure.",
+    "Moved/deleted launcher does not auto-change existing startup entries; explicit off still works."
+  ],
+  "pendingQa": [
+    "09 checks the rebuilt final portable package metadata, original EXE existence and selected path/args.",
+    "Mock API success is not actual Windows startup registration or OS reboot acceptance."
+  ],
+  "realOsStartupModified": false,
+  "actualOsRestartPassed": false,
+  "files": {
+    "directed.txt": {
+      "sha256": "00f7aa7b33c7c43b3616b59b6b575d39d19032d23042eedc932e130bf6a10535"
+    },
+    "targeted-electron.txt": {
+      "sha256": "b2c3b66da1530a7a7930a97feb9ff5922a5ef643238a6218b43928e95e4eaaee"
+    },
+    "closure.json": {
+      "sha256": "d0ff8f6a6d3d35678d7548f024b4796f5de73446856ada1887e6a78d0b27bbcd"
+    }
+  }
+}

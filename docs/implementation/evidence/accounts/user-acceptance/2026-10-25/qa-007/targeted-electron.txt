@@ -1,0 +1,48 @@
+✔ raw legacy migration preserves bytes, isolates explicit inventories and is idempotent (445.8826ms)
+✔ ambiguous global history is archived instead of cloned into every missing inventory (209.3675ms)
+✔ legacy missing credentials cannot log in with the old default password (180.307ms)
+✔ remote placeholder hashes without tokens are never accepted as local credentials (235.7699ms)
+✔ corrupt legacy content stays archived without blocking the recoverable account UI (301.5008ms)
+✔ logout revokes persisted session resumption even when encrypted file removal fails (290.5047ms)
+✔ local login upgrades legacy SHA256, and nickname/password changes are atomic and readable (721.7137ms)
+✔ settings are owner-scoped, revision-aware and actionId-idempotent across account switches (335.8353ms)
+✔ cloud and local users with the same account name keep distinct stable owners (239.4505ms)
+✔ a late cloud login cannot resurrect a logged-out session (137.319ms)
+✔ quiet hours cross midnight and gate notification sound without reading input (0.4874ms)
+✔ real SQLite backup/replace preserves original data, rejects tampering and other accounts, survives reopening (471.2934ms)
+✔ restoring a failed feature adapter rolls back all rows and leaves before-restore backup (245.6335ms)
+✔ backup previews become stale when domain data changes, before writing any restore (238.5738ms)
+✔ offline sync queues remain owner-scoped and retryable after a real network refusal (283.7352ms)
+✔ sync requires an exact receipt AND independent readback before being marked verified (protocol unit) (184.4298ms)
+✔ cloud session invalidation clears only that verified session and retains its outbox (169.7891ms)
+✔ QA requires explicit flag, fresh marker and matching directory/scenario; normal profiles never fall back (503.0885ms)
+✔ QA refuses existing accounts/raw history and cannot reopen its database as a normal profile (699.9038ms)
+✔ verified QA identities are namespaced, memory-only, owner-scoped and rejected by live cloud paths (430.51ms)
+✔ QA backups retain provenance, restore with preservation, and reject every normal/other-scenario envelope (642.7774ms)
+✔ QA host never enables system startup, location, emotion collection or native notifications (288.2699ms)
+✔ mock Windows runtime: portable target is the absolute outer EXE with empty arguments, preserving spaces and Chinese characters (3.2454ms)
+✔ mock Windows runtime: installed application keeps its stable process executable (0.4638ms)
+▶ mock Windows runtime: missing, relative, quoted, deleted, directory and extracted-child portable paths never fall back to the temporary executable
+  ✔ missing FILE (0.1262ms)
+  ✔ relative (0.0999ms)
+  ✔ rooted without drive (0.0631ms)
+  ✔ drive-relative (0.0846ms)
+  ✔ quoted (0.0465ms)
+  ✔ non-executable (0.0502ms)
+  ✔ child (0.1308ms)
+  ✔ case-insensitive TEMP (0.1719ms)
+  ✔ dot traversal into TEMP (0.0561ms)
+✔ mock Windows runtime: missing, relative, quoted, deleted, directory and extracted-child portable paths never fall back to the temporary executable (1.9038ms)
+✔ isolated files only: executable existence/type is checked and removed portable files are not registered (5.5785ms)
+✔ mock Electron only: no startup writes without explicit user change; on/off and readback use exactly the same stable path/args (1.7254ms)
+✔ mock Electron only: unresolvable launcher rejects enabling with zero writes; explicit disabling is still available without registering the child (0.6382ms)
+✔ mock desktop host: opening settings, account restore and unrelated edits do not touch OS login items; only explicit toggles reach the mock (2.6942ms)
+✔ real isolated SQLite + mock OS only: AccountsService writes startup solely on a saved explicit toggle and retains settings on failure (78.3785ms)
+ℹ tests 39
+ℹ suites 0
+ℹ pass 39
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4812.1869

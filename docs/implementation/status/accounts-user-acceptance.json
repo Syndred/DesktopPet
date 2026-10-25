@@ -1,8 +1,8 @@
 {
   "module": "accounts",
-  "updatedAt": "2026-10-25T09:27:01.667Z",
-  "integrationBase": "6d4df8fdbf102e185cfc9c022bcdddf4601aac82",
-  "sourceCommit": "c83d3b5746d692707aec51fdac3dbb24fae2bff8",
+  "updatedAt": "2026-10-25T10:04:21.198Z",
+  "integrationBase": "9e4007bc4fae37799253b01466a55ae3d8bd3969",
+  "sourceCommit": "f0da7e1077edc634132e53d582c584efcd564ce7",
   "overallStatus": "fixed-awaiting-independent-qa",
   "completeUserAcceptancePassed": false,
   "independentQa": {
@@ -91,6 +91,48 @@
         "真实登录、DPAPI 与会话保持仍由09验收；本次仅确认其源码逻辑未改，不宣称行为验收通过。"
       ],
       "evidence": "docs/implementation/evidence/accounts/user-acceptance/2026-10-25/qa-001/layout.json"
+    },
+    {
+      "id": "QA-007",
+      "assignedBy": "09 independent acceptance",
+      "severity": "P2-source-risk",
+      "reproduced": false,
+      "status": "fixed-awaiting-package-review",
+      "problem": "便携版开机启动省略 path，会默认指向退出后被清理的临时解压 Electron 子程序。",
+      "rootCause": "原 desktop-host 调用 setLoginItemSettings 没有 path。官方 Electron 默认 process.execPath；实际 SFX 子进程位于 Temp。electron-builder 的外层 PORTABLE_EXECUTABLE_FILE 才是可持续使用的启动入口。",
+      "files": [
+        "apps/pc-app/runtime/features/accounts/desktop-host.cjs",
+        "apps/pc-app/runtime/features/accounts/startup.cjs",
+        "apps/pc-app/runtime/features/accounts/tests/startup.test.cjs"
+      ],
+      "commit": "f0da7e1077edc634132e53d582c584efcd564ce7",
+      "changes": {
+        "portableTarget": "Validated absolute PORTABLE_EXECUTABLE_FILE, regular EXE, outside canonical OS TEMP roots.",
+        "installedFallback": "Existing non-temporary process.execPath when no portable metadata is present.",
+        "arguments": [],
+        "readback": "Same path/args for setLoginItemSettings and getLoginItemSettings.",
+        "unknownOrDeletedPortable": "Reject enabling before settings are committed; explicit disabling remains possible.",
+        "automaticOSWrites": false,
+        "existingStartupItemsAutomaticallyMigrated": false
+      },
+      "verified": {
+        "directedNodeCases": 17,
+        "targetedElectronCases": 39,
+        "failed": 0,
+        "command": "node scripts/desktop/run-native-tests.cjs apps/pc-app/runtime/features/accounts/tests/startup.test.cjs apps/pc-app/runtime/features/accounts/tests/accounts.test.cjs apps/pc-app/runtime/features/accounts/tests/qa-scenario.test.cjs",
+        "electronVersion": "44.9.3",
+        "osLoginItemApi": "mock only",
+        "syntaxChecksPassed": true,
+        "diffCheckPassed": true,
+        "packagingClosureIncludesStartup": true
+      },
+      "pendingQa": [
+        "09 checks the rebuilt final portable package metadata, original EXE existence and selected path/args.",
+        "Mock API success is not actual Windows startup registration or OS reboot acceptance."
+      ],
+      "realOsStartupModified": false,
+      "actualOsRestartPassed": false,
+      "evidence": "docs/implementation/evidence/accounts/user-acceptance/2026-10-25/qa-007/evidence.json"
     }
   ],
   "outOfScope": [
