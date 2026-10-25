@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-25T05:52:20.889Z",
-  "phase": "awaiting-real-resource-hydration-and-final-source-freeze",
+  "updatedAt": "2026-10-25T05:54:42.949Z",
+  "phase": "final-source-freeze-and-unified-verification",
   "goalStatus": "active",
   "deployed": {
     "projectRef": "jbvrdmrkwpznbrvteive",
@@ -109,11 +109,22 @@
       "passed": true,
       "scope": "Independent coordinator targeted resource guard/automatic sync/shared checkpoints: actual SQLite and production adapters with simulated provider; not actual HTTPS or native GUI evidence",
       "evidence": "docs/implementation/evidence/cloud/2026-10-25/resource-hydration-root-targeted.json",
-      "actualHttpsPending": true
+      "actualHttpsPending": false,
+      "actualHttps": {
+        "sourceCommit": "f36d344971423286c8040eb1f341ed692ec7cad8",
+        "revision": 5,
+        "checksum": "9a53b6c361d05052cc4f539a27610a8acebd113a46f56f0dea393e34978c3fff",
+        "automaticPeerFullRestore": true,
+        "queryOnlyActualFilesAndImportIdsEqual": true,
+        "originalSourceRawJsonUnchanged": true,
+        "evidence": [
+          "docs/implementation/evidence/cloud/2026-10-25/resource-hydration-independent-cloud.json",
+          "docs/implementation/evidence/cloud/2026-10-25/resource-hydration-independent-sqlite.json"
+        ]
+      }
     }
   },
   "fixedRemainingWork": [
-    "Complete actual HTTPS two-client private resource automatic hydration proof for the merged strict guard",
     "Freeze common source after the fix; run one final integrated verify, native and strict cloud source regression",
     "Build the actual final portable SFX at that freeze; independently run complete normal IPC/React/HTTPS/SQLite/native business acceptance"
   ],
@@ -247,9 +258,8 @@
       "review": "Legacy normalization is internal view only; original envelope/checksum/files retained. Root8 targeted native restore/provider cases and original signed expired HTTPS denial passed."
     }
   ],
-  "status": "awaiting-real-resource-hydration-and-final-source-freeze",
+  "status": "final-source-freeze-and-unified-verification",
   "remaining": [
-    "Complete actual HTTPS two-client private resource automatic hydration proof for the merged strict guard",
     "Freeze common source after the fix; run one final integrated verify, native and strict cloud source regression",
     "Build the actual final portable SFX at that freeze; independently run complete normal IPC/React/HTTPS/SQLite/native business acceptance"
   ],
@@ -282,5 +292,6 @@
       }
     },
     "finalBusinessPortablePending": true
-  }
+  },
+  "freezePolicy": "No further product edits without a concrete verification failure; one common verify/native/strict-cloud regression and actual final portable business acceptance. Later evidence-only commits do not replace the exact packaged source identity."
 }

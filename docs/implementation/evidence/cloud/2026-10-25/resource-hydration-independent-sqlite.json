@@ -1,0 +1,78 @@
+{
+  "at": "2026-10-25T05:54:27.694Z",
+  "scope": "Coordinator independently reopened the original two actual HTTPS Electron profiles using readOnly/query_only SQLite and hashed actual registered files, after both processes exited",
+  "owner": "account:9e13c307-0f02-4038-a9f9-369ccb813238",
+  "source": "f36d344971423286c8040eb1f341ed692ec7cad8",
+  "head": {
+    "revision": 5,
+    "checksum": "9a53b6c361d05052cc4f539a27610a8acebd113a46f56f0dea393e34978c3fff"
+  },
+  "queryOnly": true,
+  "originalSourceRawJsonUnchanged": true,
+  "localDataEqual": true,
+  "devices": [
+    {
+      "device": "device-a",
+      "profile": "C:/Users/Administrator/.codex/worktrees/lingjing-accounts/DesktopPet/artifacts/accounts/resource-hydration-live-1792907463192/device-a",
+      "state": {
+        "cloud_revision": 5,
+        "last_checksum": "9a53b6c361d05052cc4f539a27610a8acebd113a46f56f0dea393e34978c3fff"
+      },
+      "petId": "pet-1e3139a6-2bfa-4e59-a290-021fc43b5b66",
+      "appearance": "54d7336b-797b-45d2-8ff7-19e7799290e8",
+      "resourceId": "54d7336b-797b-45d2-8ff7-19e7799290e8",
+      "contentHash": "6c68bf2b4bcdb9e26b54b84a08bf9eecaafd277993efaff9524b8bd5f48500e4",
+      "rawDocumentSha256": "e481b6b01daea38ef03744311e99a17b984c78d4829cb53caf5d271b80e9615e",
+      "files": [
+        {
+          "key": "character.json",
+          "bytes": 4787,
+          "sha256": "4fd14adc3ad76f69e00d80c2ab9db460363d1eae85450ee8b1cb735e154acdda"
+        },
+        {
+          "key": "sprites.png",
+          "bytes": 1802491,
+          "sha256": "aa59df3af26d4f7faf9272193b7d1d35ed6d2f22ebb6b294a5a2853f0539f693"
+        }
+      ],
+      "imports": [
+        {
+          "import_id": "359ac621-d387-43e0-83f9-5a5a94216008",
+          "source_filename": "character.json"
+        }
+      ]
+    },
+    {
+      "device": "device-b",
+      "profile": "C:/Users/Administrator/.codex/worktrees/lingjing-accounts/DesktopPet/artifacts/accounts/resource-hydration-live-1792907463192/device-b",
+      "state": {
+        "cloud_revision": 5,
+        "last_checksum": "9a53b6c361d05052cc4f539a27610a8acebd113a46f56f0dea393e34978c3fff"
+      },
+      "petId": "pet-1e3139a6-2bfa-4e59-a290-021fc43b5b66",
+      "appearance": "54d7336b-797b-45d2-8ff7-19e7799290e8",
+      "resourceId": "54d7336b-797b-45d2-8ff7-19e7799290e8",
+      "contentHash": "6c68bf2b4bcdb9e26b54b84a08bf9eecaafd277993efaff9524b8bd5f48500e4",
+      "rawDocumentSha256": "b227791e140f4046fb563398a3522af345a73303fed182b77dc4c4e7d439a565",
+      "files": [
+        {
+          "key": "character.json",
+          "bytes": 4787,
+          "sha256": "4fd14adc3ad76f69e00d80c2ab9db460363d1eae85450ee8b1cb735e154acdda"
+        },
+        {
+          "key": "sprites.png",
+          "bytes": 1802491,
+          "sha256": "aa59df3af26d4f7faf9272193b7d1d35ed6d2f22ebb6b294a5a2853f0539f693"
+        }
+      ],
+      "imports": [
+        {
+          "import_id": "359ac621-d387-43e0-83f9-5a5a94216008",
+          "source_filename": "character.json"
+        }
+      ]
+    }
+  ],
+  "passed": true
+}
