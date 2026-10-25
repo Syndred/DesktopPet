@@ -1,10 +1,11 @@
 {
   "module": "garden",
-  "phase": "native-actual-battle-rendered;original-lost-response-recovery-in-progress",
+  "phase": "module-acceptance-passed-awaiting-independent-coordinator-review",
   "coordinatorNextAction": {
-    "kind": "native grants received; continue module acceptance and coordinator final review",
-    "grantAppliedBy": "coordinator",
-    "scope": "native-4b474857 only"
+    "kind": "Review final source, SQL readback, HTTP and native evidence, then integrate and release",
+    "baseline": "4830619",
+    "evidence": "docs/implementation/evidence/garden/cloud-2026-10-25/evidence.json",
+    "remoteMutationAuthority": "coordinator only"
   },
   "branch": "codex/lingjing-garden",
   "commit": "see git log for this file",
@@ -32,8 +33,8 @@
     }
   ],
   "checks": [
-    "origin fetched; origin/main4786f97 is included",
-    "10 local domain and real08 identity/CAS non-spatial PostgreSQL checks passed; no PostGIS substitute used",
+    "Final git fetch origin and git pull --ff-only origin main returned Already up to date; origin/main4786f97 and approved4830619 included",
+    "Current cloud aggregate13/13 passed: canonical domain, real08 identity/CAS non-spatial PostgreSQL, SQLite bridge and deployed SQL expression; no PostGIS substitute used",
     "400 ordered element/action-pair parity cases and canonical04 source SHA verified",
     "Deno2.9.6 check --no-config passed for both complete Edge entrypoints",
     "Actual02 awardBattleResult and applyGrowthEffect consumed; long160-character owner supported",
@@ -42,7 +43,9 @@
     "native dependency checkpoint retained; no shared node_modules rebuild",
     "Two isolated normal product-Auth accounts and third independent same-account device prepared without remote SQL writes",
     "2 runtime-fixture checks passed: SQLite reopen exact original request, whole companion unit/chat preservation, shared battle wrapper with no local reward before confirmation",
-    "Final own-module regression34/34 passed; current production TypeScript/desktop typecheck passed"
+    "Final own-module regression34/34 passed; current production TypeScript/desktop typecheck passed",
+    "Final production main/desktop TypeScript and UI typecheck passed after direct-entry stylesheet imports",
+    "Actual native composited-window avatar ink2819/2434 each client; loaded tiles and confirmed13-round winner rendered"
   ],
   "realCloudEvidence": {
     "projectRef": "jbvrdmrkwpznbrvteive",
@@ -50,13 +53,13 @@
     "deployedByThisModule": false,
     "territoryAcceptance": true,
     "functions": {
-      "garden": "ACTIVE v1",
-      "territory": "ACTIVE v1"
+      "garden": "ACTIVE v2",
+      "territory": "ACTIVE v2"
     },
     "spatialBoundaryAndRlsCheckedByCoordinator": true,
     "liveSameAccountGardenCas": true,
-    "liveServerBattles": 2,
-    "realDefeatsPendingConfirmation": true,
+    "liveServerBattles": 4,
+    "realDefeatsPendingConfirmation": false,
     "transactionRollbackVerified": {
       "sqlState": "42725",
       "where": "runtime_territory_write IF settlement identity comparison",
@@ -92,7 +95,8 @@
       ],
       "physicalTwoDeviceAcceptance": false,
       "locationSource": "simulated/coordinator-granted",
-      "riceMaturesAt": "2026-10-25T04:01:09.873Z"
+      "riceMaturesAt": "2026-10-25T04:01:09.873Z",
+      "riceMaturityCompleted": true
     },
     "liveSecurity": {
       "expiredProof": {
@@ -373,6 +377,77 @@
       "woodGuardianVisiblePixels": 36027,
       "resourceReady": true,
       "textureFramesRecorded": true
+    },
+    "metadata": "docs/implementation/evidence/garden/cloud-2026-10-25/deployment-readback.json",
+    "restartReadback": {
+      "passed": true,
+      "at": "2026-10-25T04:03:50.239Z",
+      "clients": [
+        {
+          "pid": 23456,
+          "actor": {
+            "account": "gardenqa_4b474857_0",
+            "authKind": "supabase",
+            "deviceId": "c99f5ada-1db8-4462-8fd0-5e58e9b5562b",
+            "username": "园地验收甲",
+            "authority": "live",
+            "sessionId": "c30976aa-bd3c-4265-b410-66e16a431e6a",
+            "authUserId": "ea7bddfc-7769-4935-8234-181a07f92383",
+            "schemaVersion": 1,
+            "ownerAccountId": "account:9f591ede-bc87-4aa3-af70-084189dfae9e"
+          }
+        },
+        {
+          "pid": 4048,
+          "actor": {
+            "account": "gardenqa_4b474857_1",
+            "authKind": "supabase",
+            "deviceId": "3a1cc414-8fa3-40d5-9ad3-165fa93d6a9c",
+            "username": "园地验收乙",
+            "authority": "live",
+            "sessionId": "e1829aed-df50-4616-9ee0-b3b5ab68be62",
+            "authUserId": "052aa033-e5fb-4b55-8445-792233733417",
+            "schemaVersion": 1,
+            "ownerAccountId": "account:5c7620b5-0802-4667-94b9-6284bd459841"
+          }
+        },
+        {
+          "pid": 24608,
+          "actor": {
+            "account": "gardenqa_4b474857_0",
+            "authKind": "supabase",
+            "deviceId": "69d3aefb-1289-4546-bbaf-6da5d6c6da65",
+            "username": "园地验收甲",
+            "authority": "live",
+            "sessionId": "5356856f-34aa-4fba-b483-693c111ba8ef",
+            "authUserId": "ea7bddfc-7769-4935-8234-181a07f92383",
+            "schemaVersion": 1,
+            "ownerAccountId": "account:9f591ede-bc87-4aa3-af70-084189dfae9e"
+          }
+        }
+      ]
+    },
+    "native": {
+      "passed": true,
+      "backendPassed": true,
+      "visualPassed": true,
+      "uiPlant": {
+        "passed": true,
+        "through": "actual rendered plot/seed/播种 controls -> IPC -> shared actor -> cloud CAS",
+        "plotId": "plot-6",
+        "gardenRevision": 4,
+        "peerReadback": true
+      },
+      "sessionId": "btl-2DAeKwYZRNq1kg7FIBQIzA",
+      "rounds": 13,
+      "originalPendingActionRecovered": true,
+      "duplicateReward": false,
+      "otherPetUnchanged": true,
+      "physicalTwoDeviceAcceptance": false,
+      "samePhysicalHost": true,
+      "locationSource": "coordinator-granted simulated; no physical GPS claim",
+      "transportFault": "HTTPS response body cancelled after headers; physical host network unchanged",
+      "rendererErrors": []
     }
   },
   "preservation": {
@@ -397,9 +472,7 @@
     }
   ],
   "remaining": [
-    "Finish existing native battle original-request restart, two-client continuation and original confirmation without new challenge",
-    "Publish combined passed evidence and fetch remote",
-    "Independent coordinator final review"
+    "Independent coordinator final review and unified release"
   ],
   "dependencyCheckpoint": "b40af0efcf6062ddc2e8c360523c996fc91ebc0a",
   "identityCheckpoint": "ee36030ad37614ac321b94ae4ee4169d705f1165",
@@ -418,8 +491,8 @@
     "discovery03": "Consumed live03 take_location schema+guard; purpose read/challenge/settle and reference bound in same transaction. Main locationProofs.prove supplies opaque proofs.03 capture should call4-argument capture_context inside its own commit."
   },
   "serverDeployable": true,
-  "desktopCheckpoint": "6295fa0 (scoped territory dispatch); e20b3a2 current integrated baseline",
-  "coordinatorDeploymentCheckpoint": "40941f2",
+  "desktopCheckpoint": "7cbd06a (cloud snapshot revision and direct garden entry styles), approved4830619 integrated",
+  "coordinatorDeploymentCheckpoint": "4830619",
   "locationTestGrantRequest": {
     "file": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-garden\\DesktopPet\\artifacts\\garden\\cloud\\live-4b474857-e93b-4354-a119-a21157984812/electron/location-grant-request.json",
     "purpose": "coordinator-only discovery location_test_grants",
@@ -449,7 +522,8 @@
     "output": "artifacts/garden/cloud/live-4b474857-e93b-4354-a119-a21157984812",
     "realClockRiceMaturesAt": "2026-10-25T04:01:09.873Z",
     "physicalLocationProof": false,
-    "locationSource": "coordinator-granted simulated"
+    "locationSource": "coordinator-granted simulated",
+    "phase": "all-HTTP-and-native-phases-passed"
   },
   "nativeLocationTestGrantRequest": {
     "file": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-garden\\DesktopPet\\artifacts\\garden\\cloud\\live-4b474857-e93b-4354-a119-a21157984812/electron/location-grant-request.json",
@@ -479,7 +553,15 @@
     "failed": 0,
     "typecheck": true,
     "native": "Electron44.9.3 N-API10 / better-sqlite3 13.0.3",
-    "uiModifiedByGarden": false
+    "uiModifiedByGarden": [
+      "apps/pc-app/ui/src/features/garden/index.tsx (shared CSS dependencies only)"
+    ],
+    "currentCloudAggregate": {
+      "passed": 13,
+      "failed": 0
+    },
+    "uiTypecheck": true,
+    "battleUiTouched": false
   },
   "completedLocationTestGrants": {
     "file": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-garden\\DesktopPet\\artifacts\\garden\\cloud\\live-4b474857-e93b-4354-a119-a21157984812/location-grant-request.json",
@@ -503,5 +585,7 @@
       }
     ],
     "requestedDurationMinutes": 90
-  }
+  },
+  "moduleWorkComplete": true,
+  "independentCoordinatorAcceptance": "pending"
 }
