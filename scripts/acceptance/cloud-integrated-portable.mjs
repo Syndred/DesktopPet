@@ -44,7 +44,7 @@ function readResource(model,id){
   return {resourceId:id,contentHash:row.content_hash,document:JSON.parse(row.document_json),files,imports};
 }
 function readDomain(model){const pets=query(model,'select pet_id,data_json from companion_pets where owner_account_id=? order by pet_id',[owner]).map(row=>({id:row.pet_id,data:JSON.parse(row.data_json)}));const memories=query(model,'select id,pet_id,content from conversation_memories where owner_account_id=? order by id',[owner]);const messages=query(model,'select id,pet_id,role,status,content,error_code from conversation_messages where owner_account_id=? order by pet_id,sequence',[owner]);const profiles=query(model,'select pet_id,persona,reply_style,memory_enabled,pause_while_chatting,use_override from conversation_profiles where owner_account_id=? order by pet_id',[owner]);const preferences=query(model,'select resource_id,calibration_json,actions_json from lingjing_resource_preferences where owner_account_id=? order by resource_id',[owner]).map(row=>({resourceId:row.resource_id,calibration:JSON.parse(row.calibration_json),actions:JSON.parse(row.actions_json)}));const inventory=query(model,'select item_id,quantity from garden_items where owner_account_id=? order by item_id',[owner]);const resources=query(model,'select resource_id from lingjing_resources where owner_account_id=? order by resource_id',[owner]).map(row=>readResource(model,row.resource_id));return {pets,memories,messages,profiles,preferences,inventory,resources};}
-function verifyCloudSqlUnits(model,modules){
+function verifyCloudSqlUnits(model,modules,unclaimedTables){
   const rowsEqual=(actual,expected,label)=>assert.deepEqual(actual.map(row=>checksum(row)).sort(),expected.map(row=>checksum(row)).sort(),label);
   const identifier=name=>{assert.match(name,/^[a-z][a-z0-9_]*$/);return `"${name}"`;},checked=[];
   const settings=JSON.parse(query(model,'select document from account_settings where owner_account_id=?',[owner])[0].document);assert.deepEqual(settings,modules.settings.data);checked.push('settings');
@@ -53,12 +53,19 @@ function verifyCloudSqlUnits(model,modules){
     for(const [table,rows]of Object.entries(data.tables)){
       assert.ok(table.startsWith(name==='companions'?'companion_':name==='garden'?'garden_':'conversation_'));
       const columns=data.schema?.[table]?.split('|');const selected=columns?columns.map(identifier).join(','):'*';
-      rowsEqual(query(model,`select ${selected} from ${identifier(table)} where owner_account_id=?`,[owner]),rows,`${model.label} cloud ${table}`);checked.push(table);
+      const actual=query(model,`select ${selected} from ${identifier(table)} where owner_account_id=?${table==='conversation_messages'?' order by sequence':''}`,[owner]);rowsEqual(actual,rows,`${model.label} cloud ${table}`);
+      if(table==='conversation_messages')for(const id of new Set(rows.map(row=>row.pet_id)))assert.deepEqual(actual.filter(row=>row.pet_id===id),rows.filter(row=>row.pet_id===id),`${model.label} exact original message order for ${id}`);
+      checked.push(table);
     }
     if(name==='companions')rowsEqual(query(model,'select * from companion_identity_imports where target_owner_account_id=?',[owner]),data.identityImports,'Original companion identity import history');
   }
   const battleTables={sessions:['battle_sessions','id','room_id','status','data_json','revision','updated_at'],actions:['battle_action_receipts','action_id','session_id','command_json','result_json'],reports:['battle_reports_v2','id','session_id','data_json','ended_at'],rewards:['battle_reward_receipts','session_id','action_id','pet_id','data_json']};
   for(const [key,[table,...columns]]of Object.entries(battleTables)){rowsEqual(query(model,`select ${columns.map(identifier).join(',')} from ${identifier(table)} where owner_account_id=?`,[owner]),modules.battle.data[key],`${model.label} cloud battle ${key}`);checked.push(table);}
+  for(const [table,unit]of Object.entries(unclaimedTables)){
+    assert.ok(unit.schema.some(column=>column.name==='owner_account_id'));const columns=unit.schema.map(column=>identifier(column.name)).join(',');
+    const actual=query(model,`select ${columns} from ${identifier(table)} where owner_account_id=?`,[owner]).map(row=>Object.fromEntries(Object.entries(row).map(([key,value])=>[key,value instanceof Uint8Array?{$binary:Buffer.from(value).toString('base64')}:typeof value==='bigint'?{$integer:String(value)}:value])));
+    rowsEqual(actual,unit.rows,`${model.label} original complete-save unit ${table}`);checked.push(table);
+  }
   return checked;
 }
 try{
@@ -123,7 +130,7 @@ try{
   const directory=join(output,'independent-reader');mkdirSync(directory);const remote=new SupabaseRemote({userData:directory,config}),user=await remote.login(credentials.a.account,credentials.a.password),session={...user,ownerAccountId:user.id,cloudProof:user.proof};remote.setCurrentUser(session);reader={remote,session};const cloud=await remote.invoke(session,'lingjing-save',{op:'read'}),receipt=await remote.invoke(session,'lingjing-save',{op:'read',actionId});
   for(const model of[a,b]){const s=await status(model);assert.equal(s.cloudRevision,cloud.revision);assert.equal(s.localChanged,false);const state=query(model,'select cloud_revision,last_checksum from account_sync_state where owner_account_id=?',[owner])[0];assert.equal(state.cloud_revision,cloud.revision);assert.equal(state.last_checksum,cloud.checksum);}
   const domainA=readDomain(a),domainB=readDomain(b);assert.deepEqual(domainA,domainB);assert.ok(domainA.memories.some(row=>row.content===offlineMemory));assert.ok(originals.every(id=>domainA.pets.some(row=>row.id===id)));
-  const cloudUnits=[{label:a.label,tables:verifyCloudSqlUnits(a,cloud.envelope.data.modules)},{label:b.label,tables:verifyCloudSqlUnits(b,cloud.envelope.data.modules)}];
+  const cloudUnits=[{label:a.label,tables:verifyCloudSqlUnits(a,cloud.envelope.data.modules,cloud.envelope.data.tables)},{label:b.label,tables:verifyCloudSqlUnits(b,cloud.envelope.data.modules,cloud.envelope.data.tables)}];
   const cloudResources=cloud.envelope.data.modules['character-resources'];assert.equal(cloudResources.version,2);assert.equal(cloudResources.data.format,'lingjing-resource-references');
   const cloudPreference=cloudResources.data.preferences.find(row=>row.resourceId===resourceId);assert.ok(cloudPreference);assert.deepEqual(cloudPreference.calibration,calibration);assert.deepEqual(cloudPreference.actions,actions);
   for(const model of[a,b]){const pref=query(model,'select cloud_revision,document_json from lingjing_resource_preference_state where owner_account_id=? and resource_id=?',[owner,resourceId])[0];assert.equal(pref.cloud_revision,cloudPreference.revision);assert.deepEqual(JSON.parse(pref.document_json),{calibration,actions});}
