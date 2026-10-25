@@ -16,7 +16,7 @@ try{
   const loggedIn=await page.evaluate(()=>window.lingjing.invoke('accounts','login',{provider:'local',account:'qa_chat_recovery',password:'isolated-recovery-qa'}));assert.equal(loggedIn.ok,true);
   await page.evaluate(()=>{location.hash='#/settings/ai';});await page.getByRole('heading',{name:'AI 对话',exact:true}).waitFor();
   async function review(title,primary,file){
-    const dialog=page.getByRole('dialog');await dialog.getByRole('heading',{name:title,exact:true}).waitFor();
+    const dialog=page.getByRole('dialog');await dialog.locator('.cv-dialog h2').waitFor();assert.equal(await dialog.locator('.cv-dialog h2').innerText(),title);
     await page.evaluate(async()=>{await Promise.all(document.getAnimations().filter(animation=>Number.isFinite(animation.effect?.getComputedTiming().endTime)).map(animation=>animation.finished.catch(()=>{})));});
     const metrics=await dialog.evaluate(root=>{const box=root.getBoundingClientRect(),style=getComputedStyle(root),title=root.querySelector('.cv-dialog h2').getBoundingClientRect();return{dialog:{x:box.x,y:box.y,width:box.width,height:box.height},title:{x:title.x,y:title.y,width:title.width,height:title.height},translate:style.translate,viewport:{width:innerWidth,height:innerHeight}};});
     const button=dialog.getByRole('button',{name:primary,exact:true});
@@ -31,9 +31,11 @@ try{
   }
   const importButton=page.getByRole('button',{name:'导入旧记录',exact:true});await importButton.click();await page.locator('.cv-import-counts').waitFor();
   await review('导入旧记录','导入','legacy-dialog-1280.png');await page.keyboard.press('Escape');await page.getByRole('dialog').waitFor({state:'hidden'});
+  await page.waitForFunction(()=>document.activeElement?.getAttribute('aria-label')==='导入旧记录');
   assert.equal(await importButton.evaluate(node=>node===document.activeElement),true);
   const memoryButton=page.getByRole('button',{name:'添加记忆',exact:true});await memoryButton.click();await page.getByRole('dialog').getByLabel('记忆内容',{exact:true}).fill('QA：本次不保存的草稿');
   await review('原伙伴的记忆','保存记忆','memory-dialog-1280.png');await page.keyboard.press('Escape');await page.getByRole('dialog').waitFor({state:'hidden'});
+  await page.waitForFunction(()=>document.activeElement?.getAttribute('aria-label')==='添加记忆');
   assert.equal(await memoryButton.evaluate(node=>node===document.activeElement),true);
   const snapshot=await page.evaluate(()=>window.lingjing.invoke('conversations','snapshot'));assert.equal(snapshot.ok,true);assert.equal(snapshot.data.memories.length,1);
   const evidence={at:new Date().toISOString(),sourceCommit:execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim(),build:JSON.parse(readFileSync('apps/pc-app/dist/build-manifest.json','utf8')),status:'passed',realElectron:true,realCloud:false,syntheticQaFixture:true,
