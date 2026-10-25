@@ -1,0 +1,54 @@
+{
+  "at": "2026-10-25T03:44:42.649Z",
+  "projectRef": "jbvrdmrkwpznbrvteive",
+  "sourceCommit": "088dbbe17b6251c33816b41f808f8f4d46dd147c",
+  "scope": "Actual deployed SQL guard privileges/adoption and managed-existing revoked Auth session denial; local11 targeted SQL cases separately passed",
+  "privilegeAudit": [
+    {
+      "guard_audit": {
+        "guard": {
+          "anon": false,
+          "worker": true,
+          "definer": true,
+          "searchPath": [
+            "search_path=\"\""
+          ],
+          "authenticated": false
+        },
+        "wrappers": [
+          {
+            "name": "commit_companion_command",
+            "usesSharedGuard": true
+          },
+          {
+            "name": "live_actor",
+            "usesSharedGuard": true
+          },
+          {
+            "name": "runtime_territory_check_actor",
+            "usesSharedGuard": true
+          }
+        ],
+        "authUserRead": false,
+        "authSessionRead": false
+      }
+    }
+  ],
+  "revokedActorReadback": [
+    {
+      "owner_id": "account:0fad4255-31ec-44b6-b2b0-1914fc5368b0",
+      "auth_user_id": "828a0a3e-53ce-48dc-8861-979b09bfc7bc",
+      "device_id": "9f1696f9-d7ad-43db-85a5-92590bffe423",
+      "auth_session_id": "8e470d43-7ebd-4ab5-a15c-59d4162cfba9",
+      "reason": "explicit-device-revoke",
+      "managedsessionexists": true
+    }
+  ],
+  "negative": {
+    "result": "LJ_SESSION_REVOKED",
+    "managedSessionStillExists": true,
+    "statement": "Nested PLpgSQL call asserted that assert_service_actor rejects the canonical revoked actor with SQLSTATE28000; any success or wrong error would fail the probe",
+    "businessWrites": false
+  },
+  "passed": true
+}

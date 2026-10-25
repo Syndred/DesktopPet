@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "at": "2026-10-25T03:33:38.786Z",
+  "at": "2026-10-25T03:44:42.649Z",
   "projectRef": "jbvrdmrkwpznbrvteive",
   "url": "https://jbvrdmrkwpznbrvteive.supabase.co",
   "plan": "free",
@@ -69,6 +69,42 @@
       "version": "20261025033032",
       "name": "lingjing_territory_authority",
       "source": "infra/supabase/migrations/20261025024617_lingjing_territory_authority.sql",
+      "bookkeepingAligned": false
+    },
+    {
+      "version": "20261025034106",
+      "name": "lingjing_transaction_actor_guard",
+      "source": "infra/supabase/migrations/20261025033602_lingjing_transaction_actor_guard.sql",
+      "bookkeepingAligned": false
+    },
+    {
+      "version": "20261025034110",
+      "name": "lingjing_domain_actor_guard_adoption",
+      "source": "infra/supabase/migrations/20261025033734_lingjing_domain_actor_guard_adoption.sql",
+      "bookkeepingAligned": false
+    },
+    {
+      "version": "20261025034122",
+      "name": "lingjing_verified_resource_authority",
+      "source": "infra/supabase/migrations/20261025024855_lingjing_verified_resource_authority.sql",
+      "bookkeepingAligned": false
+    },
+    {
+      "version": "20261025034132",
+      "name": "lingjing_discovery_wild_transactions",
+      "source": "infra/supabase/migrations/20261025030459_lingjing_discovery_wild_transactions.sql",
+      "bookkeepingAligned": false
+    },
+    {
+      "version": "20261025034136",
+      "name": "lingjing_discovery_capture_scenarios",
+      "source": "infra/supabase/migrations/20261025033352_lingjing_discovery_capture_scenarios.sql",
+      "bookkeepingAligned": false
+    },
+    {
+      "version": "20261025034313",
+      "name": "lingjing_territory_receipt_operator",
+      "source": "infra/supabase/migrations/20261025034225_lingjing_territory_receipt_operator.sql",
       "bookkeepingAligned": false
     }
   ],
@@ -152,18 +188,18 @@
       "slug": "discovery",
       "name": "discovery",
       "status": "ACTIVE",
-      "version": 1,
+      "version": 2,
       "created_at": 1792897606497,
-      "updated_at": 1792897606497,
+      "updated_at": 1792899698808,
       "verify_jwt": false,
       "import_map": false,
-      "entrypoint_path": "file:///tmp/user_fn_jbvrdmrkwpznbrvteive_c233809a-4db5-4a8a-a515-ff17934dfcd0_1/source/infra/supabase/functions/discovery/index.ts",
-      "ezbr_sha256": "d42352b64e3ad75f722a4aaf190d3877c5caf228cf8f5de46a73794f1a123629",
+      "entrypoint_path": "file:///tmp/user_fn_jbvrdmrkwpznbrvteive_c233809a-4db5-4a8a-a515-ff17934dfcd0_2/source/infra/supabase/functions/discovery/index.ts",
+      "ezbr_sha256": "6a7331007d8b96176a732e914b1c4dd1574016f99ce99236d2b219b6f0b6af0a",
       "source": {
         "function": "discovery",
         "entrypoint": "infra/supabase/functions/discovery/index.ts",
-        "sourceCommit": "267306c5d311f2b342a89dcb1f44630fe0f07884",
-        "sourceSha256": "2b816d7178da57a7cb4c5b7d4de553f5b081bf2b690173f6bea1991019a72f6b",
+        "sourceCommit": "088dbbe17b6251c33816b41f808f8f4d46dd147c",
+        "sourceSha256": "468cf25b4941af5abc1b68bd97caab3f14d76d2717507cc591f5ea1f11edd899",
         "files": [
           {
             "name": "infra/supabase/functions/_shared/battle-core.js",
@@ -175,7 +211,11 @@
           },
           {
             "name": "infra/supabase/functions/discovery/_generated/runtime.mjs",
-            "bytes": 35437
+            "bytes": 75775
+          },
+          {
+            "name": "infra/supabase/functions/discovery/authority.mjs",
+            "bytes": 11585
           },
           {
             "name": "infra/supabase/functions/discovery/deno.json",
@@ -186,12 +226,16 @@
             "bytes": 3993
           },
           {
+            "name": "infra/supabase/functions/discovery/domain.mjs",
+            "bytes": 4508
+          },
+          {
             "name": "infra/supabase/functions/discovery/handler.mjs",
-            "bytes": 5115
+            "bytes": 5295
           },
           {
             "name": "infra/supabase/functions/discovery/index.ts",
-            "bytes": 973
+            "bytes": 1266
           },
           {
             "name": "infra/supabase/functions/discovery/protocol.mjs",
@@ -199,7 +243,7 @@
           },
           {
             "name": "infra/supabase/functions/discovery/store.mjs",
-            "bytes": 2017
+            "bytes": 7528
           }
         ],
         "external": [
@@ -213,9 +257,18 @@
         "device.register",
         "location.challenge",
         "location.prove",
-        "nearby"
+        "nearby",
+        "reserve",
+        "permits",
+        "session",
+        "act",
+        "cancel",
+        "confirm",
+        "captures",
+        "action"
       ],
-      "fullCaptureReady": false
+      "fullCaptureReady": true,
+      "fullCaptureVerified": false
     },
     {
       "id": "0b1554b0-54bf-46c8-8849-0c90b2166adb",
@@ -347,6 +400,52 @@
         ],
         "warnings": []
       }
+    },
+    {
+      "id": "b811e1eb-1a35-4f1f-b092-c501738a8612",
+      "slug": "lingjing-resources",
+      "name": "lingjing-resources",
+      "status": "ACTIVE",
+      "version": 1,
+      "created_at": 1792899684823,
+      "updated_at": 1792899684823,
+      "verify_jwt": false,
+      "import_map": false,
+      "entrypoint_path": "file:///tmp/user_fn_jbvrdmrkwpznbrvteive_b811e1eb-1a35-4f1f-b092-c501738a8612_1/source/infra/supabase/functions/lingjing-resources/index.ts",
+      "ezbr_sha256": "6f676f1927f7b8fa9f6c47d820370853dcdce327f707a3047621d7ac1d448ad3",
+      "source": {
+        "function": "lingjing-resources",
+        "entrypoint": "infra/supabase/functions/lingjing-resources/index.ts",
+        "sourceCommit": "088dbbe17b6251c33816b41f808f8f4d46dd147c",
+        "sourceSha256": "909842543abc21152086788e3381121829a7262a5a7a68db49afc907f8df2b97",
+        "files": [
+          {
+            "name": "infra/supabase/functions/_shared/lingjing-auth.ts",
+            "bytes": 7618
+          },
+          {
+            "name": "infra/supabase/functions/_shared/lingjing-json.ts",
+            "bytes": 967
+          },
+          {
+            "name": "infra/supabase/functions/lingjing-resources/deno.lock",
+            "bytes": 3993
+          },
+          {
+            "name": "infra/supabase/functions/lingjing-resources/index.ts",
+            "bytes": 2791
+          },
+          {
+            "name": "infra/supabase/functions/lingjing-resources/package.ts",
+            "bytes": 6892
+          }
+        ],
+        "external": [
+          "node:crypto",
+          "npm:@supabase/supabase-js@2.98.0"
+        ],
+        "warnings": []
+      }
     }
   ],
   "storage": {
@@ -385,9 +484,16 @@
     "permissionEvidence": "docs/implementation/evidence/cloud/2026-10-25/world-spatial-permissions.json"
   },
   "authority": {
-    "companions": "Legal adoption and exact B readback passed; complete main/native flow pending",
+    "companions": "Root real HTTPS7 checks passed after shared transaction guard and verified references schema; native/full sync pending",
     "garden": "Actual HTTPS planting/replay/stale-revision/reward-denial and B readback passed",
     "territory": "Deployed; full signed-location/concurrency/native acceptance pending",
-    "immutableSessionRevocation": "Actual managed-valid old SID remains denied after replacement; B remains live"
+    "immutableSessionRevocation": "Actual managed-valid old SID remains denied after replacement; B remains live",
+    "verifiedResources": "Service-side private bytes verifier and atomic v2 reference registration deployed; actual publish/native hydration verification in progress",
+    "freshActor": "Canonical owner lock, managed Auth/user/session rows, immutable revoked SID and exact device binding rechecked in domain transaction; no extra Auth-table grants"
+  },
+  "acceptanceEvidence": {
+    "serviceGuard": "docs/implementation/evidence/cloud/2026-10-25/service-actor-deployment.json",
+    "companionCommands": "docs/implementation/evidence/cloud/2026-10-25/companion-full-http-independent.json",
+    "expiredSignedJwt": "docs/implementation/evidence/cloud/2026-10-25/expired-signed-jwt-http.json"
   }
 }
