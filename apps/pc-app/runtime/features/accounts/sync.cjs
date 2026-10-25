@@ -9,11 +9,11 @@ function meaningfulData(data){
   const battle=modules.battle;
   if(battle?.version===1&&battle.data&&Object.keys(battle.data).sort().join('|')==='actions|reports|rewards|sessions'
     &&Object.values(battle.data).every(rows=>Array.isArray(rows)&&rows.length===0))delete modules.battle;
-  const garden=modules.garden,data=garden?.data;
-  if(garden?.version===1&&data&&Object.keys(data).every(key=>['ownerAccountId','tables','territoryArchive'].includes(key))
-    &&data.tables&&Object.values(data.tables).every(rows=>Array.isArray(rows)&&rows.length===0)
-    &&(!data.territoryArchive||Object.keys(data.territoryArchive).sort().join('|')==='logs|territories'
-      &&data.territoryArchive.logs?.length===0&&data.territoryArchive.territories?.length===0))delete modules.garden;
+  const garden=modules.garden,gardenData=garden?.data;
+  if(garden?.version===1&&gardenData&&Object.keys(gardenData).every(key=>['ownerAccountId','tables','territoryArchive'].includes(key))
+    &&gardenData.tables&&Object.values(gardenData.tables).every(rows=>Array.isArray(rows)&&rows.length===0)
+    &&(!gardenData.territoryArchive||Object.keys(gardenData.territoryArchive).sort().join('|')==='logs|territories'
+      &&gardenData.territoryArchive.logs?.length===0&&gardenData.territoryArchive.territories?.length===0))delete modules.garden;
   return {...data,modules,tables:Object.fromEntries(Object.entries(data.tables).filter(([,table])=>table.rows?.length))};
 }
 function protectedData(data){const copy=meaningfulData(data);return {...copy,modules:Object.fromEntries(Object.entries(copy.modules).filter(([key])=>!personalModules.has(key)))};}
