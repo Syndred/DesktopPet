@@ -3,3 +3,4 @@
 import '../../../../../scripts/acceptance/cloud-territory/domain.test.mjs';
 import '../../../../../scripts/acceptance/cloud-territory/save-cas.test.mjs';
 import '../../../../../scripts/acceptance/cloud-territory/desktop-bridge.test.mjs';
+import '../../../../../scripts/acceptance/cloud-territory/receipt-expression.test.mjs';
