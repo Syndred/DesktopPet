@@ -79,11 +79,13 @@ try{
  await activeA.page.getByRole('heading',{name:'把每一段陪伴，好好保存。',exact:true}).waitFor();
  const resumed=await invoke(activeA,'session');assert.equal(resumed.currentUser.id,a.currentUser.id);assert.equal(resumed.persistence,'secure');
  const afterRestart=await vaultProof(activeA);assert.equal(afterRestart.deviceId,beforeRestart.deviceId);assert.equal(afterRestart.sessionId,beforeRestart.sessionId);assert.notEqual(activeA.pid,oldPid);
- const retried=await invoke(activeA,'syncRetry');assert.equal(retried.personalVerified,true);assert.equal(retried.revision,second.revision+1);assert.equal((await invoke(activeA,'settingsGet')).document.desktop.volume,54);
+ await activeA.page.getByRole('button',{name:'重试同步',exact:true}).click();
+ await activeA.page.waitForFunction(async()=>{const r=await window.lingjing.invoke('accounts','syncStatus');return r.ok&&r.data.pending===0;});
+ const retryStatus=await invoke(activeA,'syncStatus');const retried={revision:retryStatus.cloudRevision};assert.equal(retried.revision,second.revision+1);assert.equal((await invoke(activeA,'settingsGet')).document.desktop.volume,54);
  pass('real Electron restart resumes encrypted session and durable queue after controlled connection refusal',{oldPid,newPid:activeA.pid,deviceId:afterRestart.deviceId,sessionId:afterRestart.sessionId,revision:retried.revision,scope:'per-request closed TLS socket; host network was not disabled'});
  for(const model of [activeA,activeB]){await model.page.evaluate(()=>{location.hash='#/account';});await model.page.getByRole('heading',{name:'把每一段陪伴，好好保存。',exact:true}).waitFor();await model.page.screenshot({path:join(output,`${model.name}.png`)});}
  const secretBoundary=await activeA.app.evaluate(()=>{const a=globalThis.__accountsCloudAcceptanceServices.get('accounts'),text=JSON.stringify(a.session()),fs=globalThis.__accountsCloudAcceptanceRequire('node:fs');
-  const matches=[a.remote.active.accessToken,a.remote.active.refreshToken];const bytes=fs.readFileSync(a.services.db.name);
+  const matches=[a.remote.active.accessToken,a.remote.active.refreshToken];const bytes=Buffer.concat([a.services.db.name,`${a.services.db.name}-wal`].filter(file=>fs.existsSync(file)).map(file=>fs.readFileSync(file)));
   return{sessionExcludesTokens:matches.every(t=>!text.includes(t)),sqliteExcludesTokens:matches.every(t=>!bytes.includes(Buffer.from(t)))};});
  assert.ok(secretBoundary.sessionExcludesTokens&&secretBoundary.sqliteExcludesTokens);pass('actual public session and SQLite omit access/refresh tokens',secretBoundary);
  await invoke(activeA,'logout');const signedOut=await activeA.app.evaluate(async()=>await globalThis.__accountsCloudAcceptanceServices.get('accounts').signOutPending);assert.equal(signedOut.confirmed,true);
