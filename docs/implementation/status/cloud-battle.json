@@ -2,7 +2,7 @@
   "module": "battle",
   "scope": "2026-10-25 real Supabase JWT-bound friend duels, shared versioned rules, participant Realtime/RLS, restart recovery and idempotent settlement; preserve approved V3",
   "branch": "codex/lingjing-battle-v3",
-  "commit": "65e4210 final runtime source; cb3dc88 actual device arguments; 746ca66 report TooltipProvider; b413835 installed SDK stale-topic fix; 15e21c7 subscription serialization; b178db8 original UI action round; approved4830619 baseline included",
+  "commit": "c82380fc9f9535bfe9fa37f87dbf08c6e24d2eca",
   "contracts": {
     "scope": "docs/implementation/cloud-upgrade-2026-10-25.md",
     "battle": "docs/implementation/cloud-battle-contract-2026-10-25.md",
@@ -145,7 +145,7 @@
     }
   ],
   "remaining": [],
-  "stage": "04_source_and_phased_real_native_evidence_complete; ready_for_coordinator_merge_and_final_product_acceptance",
+  "stage": "journal_correction_integrated_by_coordinator; final_affected_regression_and_rebuilt_SFX_pending",
   "productionReady": false,
   "readyForCoordinatorDeployment": false,
   "serverBundle": {
@@ -186,14 +186,13 @@
     "evidence": "docs/implementation/evidence/battle/2026-10-25/cloud-native-v2/evidence.json",
     "details": "docs/implementation/evidence/battle/2026-10-25/cloud-native-v2/README.md"
   },
-  "sourceCheckpoint": "65e42105687ef38bdc97450f006d0415aec9a6ac",
+  "sourceCheckpoint": "c82380fc9f9535bfe9fa37f87dbf08c6e24d2eca",
   "coordinatorRemaining": [
-    "finish08 hydration/raw fingerprint guard integration",
-    "freeze integrated source and perform final whole-product acceptance",
-    "own final old Edge/SQL retirement and deployment"
+    "final affected native regressions",
+    "01 rebuilt actual SFX verification"
   ],
-  "moduleAcceptanceComplete": true,
-  "productionReadinessReason": "04 scope completed; coordinator has not yet frozen the pending08 integration or accepted the final integrated product.",
+  "moduleAcceptanceComplete": false,
+  "productionReadinessReason": "Coordinator reports source and private-preview-hook integration plus16 passing targeted checks; actual rebuilt SFX remains pending.",
   "readyForCoordinatorMerge": true,
   "readyForCoordinatorAcceptance": true,
   "upstream": {
@@ -201,6 +200,60 @@
     "mergeCommand": "git merge --ff-only origin/main",
     "result": "Already up to date.",
     "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086",
-    "verifiedAt": "2026-10-25T05:27:20.626Z"
-  }
+    "verifiedAt": "2026-10-25T06:46:23.644Z",
+    "approvedIntegratedBaseline": "2e13487f73396ebad981ff703b4377f403e214e0"
+  },
+  "portableJournalCorrection": {
+    "at": "2026-10-25T06:45:14.316Z",
+    "sourceCheckpoint": "c82380fc9f9535bfe9fa37f87dbf08c6e24d2eca",
+    "initialCorrection": "8c3fb942876654111c208707025488128f7dff47",
+    "approvedBaseline": "2e13487f73396ebad981ff703b4377f403e214e0",
+    "failedPortableSha256": "90dc58a18487825ec86b943a11c1deeb927cd97ff4a75e280b673487dc583070",
+    "scope": "local journal/canonical projection, existing-profile and v1 backup upgrade only",
+    "newActualSfxPassed": false,
+    "requiresCloudDeployment": false,
+    "accountCoreChanged": false,
+    "uiChanged": false,
+    "originalFailureFilesUnchanged": true,
+    "targetedJournalCases": 10,
+    "localAtomicAuthorityChecks": 9,
+    "rootPrivatePreviewHook": "695007e4c7bf583673f63b5d39e4172a28b2d692",
+    "coordinatorNext": [
+      "final affected native regressions",
+      "01 rebuilt actual SFX verification"
+    ],
+    "files": {
+      "upgrade-copies.json": "b4667bfac7ca87ad374d6fa3b4d58ba6080cdfc72fbc2df16d14d36ecdf004bf",
+      "journal-tests.txt": "35cfe6864670ae9931fdff620c7b120859a909dfe4e117a89cdb19b7e553346f",
+      "authority-readback.txt": "a7065652a9bbe6f799d8b094894e9382a3d6206e627402a00eced9161cd4ceaf",
+      "authority-readback.json": "313f987cdcbe1b7db8e7a390d11b790dd8abac1cfb9f31dfc4c9c9fd592ba4ee",
+      "cloud-readback-69.json": "a1c93d2d7a240eae24c7504741016080c826aeeda7905516fb35bb0e606894e3"
+    },
+    "evidence": "docs/implementation/evidence/battle/2026-10-25/portable-journal-gap/README.md",
+    "rootCause": "Local durable start/round intents were serialized as protected battle.actions; post-readback resolve used local cache revisions.",
+    "boundary": "local v2 complete history+journal; strict cloud v1 four-array snapshot; byte-bound main-only origin/readback seals; v1/v2 file input is never authority",
+    "originalPortableFailure": "A settlement did not settle",
+    "coordinatorIntegration": {
+      "recordedAt": "2026-10-25T06:49:44.635Z",
+      "source": "coordinator delegation from01a1704b-e200-7090-9d17-958218c80f42",
+      "independentlyRerunByThisChat": false,
+      "mergedSource": [
+        "8c3fb94",
+        "c82380f"
+      ],
+      "privatePreviewHook": "695007e4c7bf583673f63b5d39e4172a28b2d692",
+      "targetedCasesPassed": 16,
+      "verifiedRoute": "BackupManager private preview map -> battle.restoreCloud -> AccountSync.acceptCloudRestore",
+      "fileAndInputClaimsStayDirty": true,
+      "verifiedMainMetadataCanClean": true,
+      "originalRawBytesPreserved": true,
+      "newActualSfxPassed": false,
+      "pending": [
+        "final affected native regressions",
+        "01 rebuilt actual SFX verification"
+      ]
+    },
+    "upgradedCopiesManifest": "docs/implementation/evidence/battle/2026-10-25/portable-journal-gap/upgrade-copy-locations.json"
+  },
+  "sourceMergeComplete": true
 }

@@ -1,0 +1,45 @@
+{
+  "at": "2026-10-25T06:43:48.184Z",
+  "scope": "directed copies of actual failed SFX SQLite; local incremental upgrade and projection only, no live provider test",
+  "sourceFailure": "final-portable-Fbu6gW",
+  "sourceCommit": "2e13487f73396ebad981ff703b4377f403e214e0",
+  "sourceHashes": {
+    "A": "746b6d22e5f740a8e5634a23a0a89f1a0d6c4b003cbb41e187babef73f684b87",
+    "B": "2e668f82504a42927354dd68359590bc0dcc3df06b0b571f1d87a195456151c7"
+  },
+  "originalFilesUnchanged": true,
+  "cloudReadComparison": "Independent current rev69 SELECT has same session/report/reward MD5 as original B rev68; latest legal companion visibility command does not alter these rows",
+  "results": [
+    {
+      "device": "A",
+      "owner": "account:470a41d4-3cf7-4a7d-8b1e-32e276d2a719",
+      "originalActions": 21,
+      "journalRows": 21,
+      "cloudActions": 0,
+      "projectionSha256": "9979cc9872f390ab468c5cee7715d170886240a03bc215861b1e0a7c8cf8960a",
+      "originalActionRowsSha256": "0439c1e8f42f2a3059ee2df408d6b6424f6d7980d2501fb7e0aaef879ed2e6c6",
+      "originalActionsUnchanged": true,
+      "sessionReportRewardRowsUnchanged": true,
+      "sessionRawMd5": "6a30dc45d5a16f4bafc057365bef8315",
+      "reportRawMd5": "f7e6470329eafe8283f8cc81310ba458",
+      "rewardRawMd5": "aae3ae3f844c67ffa488a89e789e5d95"
+    },
+    {
+      "device": "B",
+      "owner": "account:470a41d4-3cf7-4a7d-8b1e-32e276d2a719",
+      "originalActions": 0,
+      "journalRows": 0,
+      "cloudActions": 0,
+      "projectionSha256": "9979cc9872f390ab468c5cee7715d170886240a03bc215861b1e0a7c8cf8960a",
+      "originalActionRowsSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "originalActionsUnchanged": true,
+      "sessionReportRewardRowsUnchanged": true,
+      "sessionRawMd5": "6a30dc45d5a16f4bafc057365bef8315",
+      "reportRawMd5": "f7e6470329eafe8283f8cc81310ba458",
+      "rewardRawMd5": "aae3ae3f844c67ffa488a89e789e5d95"
+    }
+  ],
+  "postCheckpointResolveDoesNotChangeCloudProjection": true,
+  "modifiedBusinessRowRemainsProtected": true,
+  "passed": true
+}
