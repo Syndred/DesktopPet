@@ -1,51 +1,37 @@
-# Accounts integration
+# Accounts 当前集成契约
 
-Isolated simulation/session boundary for the unified battle goal: [QA_CONTRACT.md](QA_CONTRACT.md). Normal account and backup behavior remains the default; QA never follows from a network error.
+更新于 2026-10-25。本页取代旧 duel-online/sessionToken 集成说明。生产部署、迁移历史和最终业务验收由主协调统一处理，见 docs/implementation/cloud-upgrade-2026-10-25.md 与 docs/implementation/status/cloud-accounts.json。
 
-Accounts uses one injected SQLite connection and automatic module discovery. Foundation base is `8f17aec`; public UI/config/2D illustration files are consumed verbatim from foundation `f0af90f` (no direct merges of other feature branches). No independently authored root dependency changes. Routes: `/account`, `/settings`, `/settings/privacy`.
+## 身份与云传输
 
-`services.session.setAdapter(accounts)` installs the verified session. `getCurrentUser().id` **is the storage owner**, equal to `ownerAccountId`. Cloud `subjectId` remains the original `runtime_accounts.id` text. Imported local owners are `local:<legacy-id>`; `account_aliases(provider, subject_id)` maps them without guessing from account names. New local accounts use `local-<uuid>`. `player_profiles` UUIDs are not inferred, merged or populated. Never pass a storage owner to cloud duels; use the main-only `accounts.requireRuntimeUser()` to obtain the verified runtime id and token. The token is absent from all renderer results, exports and sync envelopes.
+正常云端路径为 Supabase Auth + lingjing-auth + lingjing-save。公开配置从受审 public JSON 读取，只有 HTTPS URL 与 sb_publishable_ 公钥；桌面和 renderer 不包含 secret/service role。网络失败不自动降级成本机身份。
 
-The existing Supabase `duel-online` login/register/update protocol is retained. Users choose a cloud or local account explicitly. Network failure never silently creates a local identity. Legacy SHA256 credentials upgrade to salted scrypt on successful local login. Missing hashes have no fallback password. Cloud profile updates still request the current password because the deployed account endpoint requires it. The encrypted session vault uses Electron safeStorage and is opt-in; account hints never store passwords. Cloud session restore is checked against the existing authenticated `search_accounts` endpoint before use. No old plain id-only session is promoted to verified login.
+services.session 的 getCurrentUser().id 是原有存储 ownerAccountId，不能把它替换为 Auth UUID。新协议显式携带 authUserId、ownerAccountId、deviceId、sessionId，主进程通过 accounts.requireCloudActor() 或 services.get('cloudActor').requireActor()/invoke() 获取受验证 actor。旧 owner 文本、account_aliases、petId 和完整历史保留；不用账号名称猜测或合并身份。
 
-## Migration and feature data
+云域必须使用当前 actor 的 JWT/设备会话。SupabaseRemote.cloudContext 的访问令牌回调在每次请求时重查 owner/SID；账号变化、logout 和凭据刷新不能复用旧身份或清掉新账号的连接。正常传输明确拒绝 duel-online/accounts-sync。旧 token 和 id-only proof 不能升级成当前登录证明；加密存储仅是凭据保管，不代表云端授权成立。
 
-Before opening RuntimeDataStore, foundation already copies `<legacyDataFile>.before-lingjing.bak`. Accounts imports that raw copy preferentially and also retains a content-addressed archive under `userData/accounts/legacy-archives`. Import is idempotent by file digest and owner alias. Explicit per-user inventories are preserved byte-for-byte as JSON data. A single user's global inventory can be assigned to that user. Global history with multiple possible owners remains in the archive with `review-required`; it is never cloned into all accounts. Original files are not written by this module.
+同一账号可在独立 deviceId 上同步，退出只撤销本设备会话。账号、设备和 SID 的服务端检查仍是权限依据；一个账号不能冒充双方对战玩家。
 
-Use `services.get('accounts').getLegacyInventory(ownerAccountId)` for a verified owner's raw inventory (pets, capture records, battle reports, and any existing chat data). `companions.importLegacyInventory(owner, inventory)` can consume that object. Do not use RuntimeDataStore's global mirror or require its old current user id to equal the new mapped local owner. Battle and conversations can similarly import their own raw history. Returning accounts repeatedly must not overwrite later module changes.
+## 原档与本机边界
 
-Public commands: `session`, `login`, `register`, `logout` (idempotent sign-out). Protected commands: `profileSave`, `passwordChange`, `settingsGet`, `settingsDefaults`, `settingsSave`, `backupList`, `backupExport`, `backupPreview`, `backupRestore`, `syncStatus`, `syncNow`, `syncRetry`, `cloudPreview`, `testNotification`, `pointer`. Settings, restores and sync mutations use `actionId`; settings/profile use expected `revision`. Native dialogs select paths in main. Renderer payload owner ids and backup file paths are never accepted.
+正式目录优先显式 PET_USER_DATA_DIR，其次当前/已知旧目录 canonical SQLite，再查旧 JSON。目录发现不造空 JSON、不移动原文件。旧 JSON 首次导入前保留 .before-lingjing.bak，并保存内容寻址档案；读入使用只读兼容能力。损坏旧档不能被默认状态覆盖。
 
-## Desktop and privacy
+getLegacyInventory(ownerAccountId) 提供经过归属映射的原始库存/历史给各域迁移。不能从全局 active pet、匿名镜像或旧 currentUserId 推断新账号归属。跨 owner 不能复制历史；不明确的历史保留待核，不强行派给所有账号。
 
-Host policy applies to foundation `windows.all()` and companions `getDesktopWindows()` metadata via `BrowserWindow.fromId`. Topmost, mouse forwarding, saved close-to-tray behavior, window count, a Windows foreground-fullscreen monitor and notification quiet hours bind to real Electron APIs. The pointer wrapper ensures companions' `hit/miss` cannot override a disabled click-through preference. Startup is only changed on an explicit saved toggle; merely registering the feature, opening settings, logging in or restoring another device's backup does not enable startup.
+本机明确选择的账户可保留原密码验证和独立存档；不会因云端离线自动产生。独立 QA 必须新建路径绑定 marker，同时提供 LINGJING_QA_SCENARIO 和绝对 PET_USER_DATA_DIR，遵守 QA_CONTRACT.md，显示模拟身份，不调用真实云端。
 
-`services.get('privacy')`: `mayUseLocation()`, `mayCollectEmotion()`, `setExploring(active)`. Discovery should set exploration state on entry/exit and call `mayUseLocation()` before acquiring/watching a position. Permission handlers independently enforce that gate. Revoking permission stops the legacy map watch and calls discovery's `stopLocationWatch()` when offered. Emit `discovery:exploring` with `{active}` as an alternative.
+## 备份、隐私和 CAS
 
-`services.get('notifications').notify({kind:'companions'|'battles'|'garden',title,body})` gates native notifications and sound. `accounts:behavior` supplies `{settings,quiet,fullscreen,soundsAllowed,volume,companionLimit}`. Companions/conversations should consult this for proactive motion and audio. Emotion collectors must call `privacy.mayCollectEmotion()` before storing interaction counts; no keyboard or input-content collection is introduced here.
+完整存档通过各模块 backup adapter 注册到同一 BackupManager。跨端写入使用 expected revision + actionId + 校验和，冲突先保留当前本机档案和待同步记录。资源、聊天、宠物和成长分别保留其归属和完整性，不建立第二套库存或奖励入口。
 
-## Backup and cloud
+Windows safeStorage 保管登录凭据与个人 BYOK；密钥不进入 renderer、普通 SQLite 明文、云存档、导出或日志。云投影按已知 schema 去除配置凭据，同时保留用户创作的 JSON/消息内容，不能简单按字段名删掉正常对话。服务端继续检查完整 actor、受保护状态及拒绝不合法投影。
 
-Backup version 1 carries owner/provider/subject, each registered adapter's version, live SQLite table schemas and SHA256 over canonical JSON. Every live feature table with `owner_account_id` is exported and restored through the shared connection; credential-bearing tables are excluded and reported. Tables without an owner column and external 2D asset files need a feature adapter, not a global unfiltered DB dump. Register adapters with `services.get('backups').register({id,version,tables?,export,validate,restore})`; all adapter methods are synchronous and validate full domain ownership. `tables` prevents generic duplication of claimed tables. Never export credentials/API keys in an adapter. Historical opaque files/data remain preserved; no 3D renderer, importer or 3D migration execution is introduced by accounts.
+## 桌面宿主与验证
 
-Restore preview checks version, owner, table schema and checksum, and captures current data checksum. A stale preview fails. Restore creates a non-overwriting before-restore backup, then runs atomically. Default merge retains existing rows; replace imports only after that backup. Another account's backup fails before any write. Account credentials/profile are never restored from a save. Native save refuses to overwrite an existing backup even if a picker confirms overwrite.
+close-to-tray、窗口数量、置顶、穿透、安静时段和定位权限接正式 Electron API。启动项仅在用户显式保存开关时修改。全屏检测从 ASAR 用 Node 读取脚本后运行 PowerShell，fullscreenMonitorReady 必须等到协议输出，不能以子进程存在代替。专项证据保留 false 样本并严格断言就绪。
 
-Cloud files are reviewable, **not deployed**: `infra/supabase/migrations/20261024_accounts_save_sync.sql` and `infra/supabase/functions/accounts-sync`. Use the existing Supabase service role only in Edge; no service key enters Electron. Apply SQL separately, deploy `accounts-sync`, then validate with two real runtime accounts. The SQL locks the verified runtime account, checks its current session token again inside the write transaction, and performs actionId+revision CAS. Readback requests target the exact action receipt. No `auth.uid()` / UUID conversion. Both new tables enable RLS and deny anon/authenticated direct access.
+公开 session/login/register/logout 与受保护设置/备份/同步命令继续由统一 IPC 注册；renderer 不传可信 owner、JWT、任意备份文件路径。安全 session 事件由统一 app/accounts 通知刷新界面。退出释放本账户的频道和托管连接，保留其他设备与其他账号。
 
-Outbox remains keyed to the original owner and action across restarts and failed readback. Automatic retries only run for the active verified cloud owner with sync enabled. Revision conflicts stop retries. Choosing a cloud restore preserves the local save first and archives old pending actions as superseded before accepting the read revision. Client data is not silently rebased over newer cloud data.
+## 旧入口退役
 
-Rollback: stop routing to `accounts-sync` and run the prior app. Keep additive tables, migration ledger, raw JSON archives and userData intact. Do not drop save tables or remap identities as a rollback. No destructive migration or production release is included.
-
-## Approved UI and shared component stack
-
-Scope follows `docs/implementation/scope-2d-ui-first.txt`; boards 08 and 09 were viewed and compared with real Electron captures. Login uses approved 2D character artwork, actual Radix Tabs and the verified account service. Settings keeps the secondary navigation, desktop controls/preview and privacy panel. The account page keeps profile/password cards, sync/backup and the real current device. Illustrations are clipped regions of approved artwork, not a screenshot substituted for a functional page. Example device lists/counts are not fabricated.
-
-All basic controls import foundation's shadcn/Radix components: Button/Card, Input, Tabs, Select, Switch, Checkbox and Slider. `controls.tsx` only translates domain values and supplies names/styles. The registry Slider puts attributes on Root, so accounts labels the actual Thumb through its ref; its focus and keyboard behavior remain Radix. `AppDialog` owns the modal, focus trap and Escape; accounts returns focus to the actual opener after pending work finishes. The backdrop is not a separately implemented modal.
-
-Motion is foundation's `PageTransition`, `AnimatedList`, and `AppDialog` → `MotionPanel`, with global `AppMotionProvider`. `desktop.animationsEnabled` defaults to true, remains compatible with old v1 documents, is exposed in the settings footer and emits through `accounts:behavior`. The saved switch and system reduced motion at page load were checked in the real app. Buttons remain flat with no hover translation. Icons use Lucide. No 3D UI/import/runtime dependency is added by this module.
-
-Migration 002 adds a local secure-session revocation flag. Logging out blocks encrypted session resumption even if removing the vault file fails. Cloud auth calls use the existing `duel-online` protocol directly through its Supabase client, scoping a stale response to its original request. Sign-out captures old room credentials and never clears a new user's connection when old cleanup finishes.
-
-Session events: `accounts:session-changed` carries the safe account view; profile and asynchronous invalidation also emit `app:session`. IPC login/logout owner changes are broadcast by foundation after their handlers finish. Renderer forms follow that app-level gate, so an outgoing account page cannot briefly mount a second login form during route motion.
-
-Run evidence and reuse/license details are in `docs/implementation/status/accounts.json` and `accounts-evidence.json`. Data/host tests use isolated userData under artifacts; original userData, source checkout and original browser are not used for acceptance. Full combined gameplay/packaging regression remains foundation's integration responsibility. Cloud authenticated push/readback remains explicitly unverified because both configured endpoint readiness probes failed with `UND_ERR_SOCKET`; this task did not deploy them.
+当前分支仍有 LINGJING_LEGACY_AUTH 的显式旧适配分支和对局 QA/历史消费者；它们不是新协议示例。待主协调完成新 04/08 验收后统一退役旧函数/SQL及其测试。精确消费者与端口替换见 docs/implementation/cleanup/cloud-retirement-consumers.json。不得通过旧 SQL 的 db push/reset、repair 历史或删除原档来完成退役。
