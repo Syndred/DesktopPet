@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-25T08:58:48.303Z",
-  "phase": "new-cloud-final-sfx-accepted-legacy-source-blocked",
-  "goalStatus": "blocked",
+  "updatedAt": "2026-10-25T09:05:10.109Z",
+  "phase": "new-cloud-final-sfx-accepted-legacy-excluded-by-user",
+  "goalStatus": "complete",
   "deployed": {
     "projectRef": "jbvrdmrkwpznbrvteive",
     "migrations": 22,
@@ -255,10 +255,8 @@
       "review": "Legacy normalization is internal view only; original envelope/checksum/files retained. Root8 targeted native restore/provider cases and original signed expired HTTPS denial passed."
     }
   ],
-  "status": "new-cloud-final-sfx-accepted-legacy-source-blocked",
-  "remaining": [
-    "Original DesktopPet remote accounts cannot be fully migrated until the unavailable legacy server/database source is recovered"
-  ],
+  "status": "new-cloud-final-sfx-accepted-legacy-excluded-by-user",
+  "remaining": [],
   "engineering": {
     "historicalEngineeringCheckpoints": {
       "electron": "44.9.3",
@@ -482,5 +480,22 @@
     "root": true,
     "featureChats01to08": true,
     "modelAndReasoningUnchanged": true
+  },
+  "currentUserScopeAccepted": true,
+  "scopeChange": {
+    "at": "2026-10-25T09:05:10.109Z",
+    "userInstruction": "启动刚验收通过的最新版给我看看，旧服的不用管",
+    "excluded": [
+      "Original DesktopPet server recovery and full remote-account migration"
+    ],
+    "originalRemoteAccountsFullyMigrated": false
+  },
+  "normalLaunch": {
+    "at": "2026-10-25T09:05:10.109Z",
+    "executable": "releases/final-a9acd7f/Lingjing-0.1.8-portable-x64.exe",
+    "sha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+    "windowTitle": "灵境 · 桌面伙伴",
+    "windowObserved": true,
+    "page": "Cloud account login"
   }
 }
