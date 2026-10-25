@@ -8,12 +8,9 @@ import { app, BrowserWindow, ipcMain, Menu, nativeImage, protocol, safeStorage, 
 const require = createRequire(import.meta.url);
 const runtime = resolve(dirname(fileURLToPath(import.meta.url)), '../../runtime');
 if (process.platform === 'win32') app.setAppUserModelId('com.lingjing.desktop');
-// Retain the original app identity/path so existing accounts and history are found.
-if (process.env.PET_USER_DATA_DIR) app.setPath('userData', resolve(process.env.PET_USER_DATA_DIR));
-else {
-  const candidates = [app.getPath('userData'), join(app.getPath('appData'), 'Lingjing'), join(app.getPath('appData'), 'qingpet-desktop-runtime'), join(app.getPath('appData'), 'qingpet-lord-3d')];
-  app.setPath('userData', candidates.find(path => existsSync(join(path, 'pet-runtime-data.json'))) || join(app.getPath('appData'), 'Lingjing'));
-}
+// Prefer canonical SQLite before legacy JSON; preserve each archive in place.
+const { resolveProfilePath } = require(join(runtime, 'core/profile-path.cjs'));
+app.setPath('userData', resolveProfilePath({ current: app.getPath('userData'), appData: app.getPath('appData'), override: process.env.PET_USER_DATA_DIR }));
 const { openDatabase, backupLegacy } = require(join(runtime, 'core/database.cjs'));
 const { createServices, discoverFeatures } = require(join(runtime, 'core/services.cjs'));
 const { readQaScenario } = require(join(runtime, 'core/qa-scenario.cjs'));
@@ -158,8 +155,9 @@ app.whenReady().then(async () => {
   }
   features = discoverFeatures(join(runtime, 'features'), services);
   await require(join(runtime, 'core/builtin-art.cjs')).registerBuiltinArt(services);
+  if (services.get('backups') && services.get('companions')?.backupAdapter && !services.get('backups').adapters.has('companions')) services.get('backups').register(services.get('companions').backupAdapter);
   if (services.get('backups') && services.get('resources')) services.get('backups').register(require(join(runtime, 'core/resource-backup.cjs')).createResourceBackupAdapter(services));
-  if (services.get('backups') && services.get('conversations')) services.get('backups').register(require(join(runtime, 'core/conversation-backup.cjs')).createConversationBackupAdapter(services));
+  if (services.get('backups') && services.get('conversations')) services.get('backups').register(services.get('conversations').createBackupAdapter());
   services.ipc.handle('app:info', () => ({ version: app.getVersion(), platform: process.platform, build,
     runtime: { electron: process.versions.electron, node: process.versions.node, modules: process.versions.modules, napi: process.versions.napi, arch: process.arch,
       tray: { active: Boolean(tray && !tray.isDestroyed()), ...(tray && !tray.isDestroyed() && process.platform === 'win32' ? { bounds: tray.getBounds() } : {}) } },

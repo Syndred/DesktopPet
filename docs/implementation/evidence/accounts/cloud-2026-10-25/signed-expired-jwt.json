@@ -1,0 +1,20 @@
+{
+  "at": "2026-10-25T03:32:33.268Z",
+  "kind": "Actual provider-issued signed JWT from coordinator DPAPI fixture; no JWT edits/signing/mocks",
+  "sourceSha": "6781996a69e5b472fb83905deed0bd5a43937dc2",
+  "credentialsLogged": false,
+  "fixtureChecksum": "78ad4bdf8b71d266b00761568fc792d07359de2beef8d7e48a95e5663306683d",
+  "expiresAt": "2026-10-25T03:30:55.000Z",
+  "expiredAtRequest": true,
+  "provider": {
+    "status": 403,
+    "code": "bad_jwt",
+    "serverDate": "Sun, 25 Oct 2026 03:32:37 GMT",
+    "expirationConfirmed": true
+  },
+  "save": {
+    "status": 401,
+    "code": "AUTH_INVALID"
+  },
+  "passed": true
+}

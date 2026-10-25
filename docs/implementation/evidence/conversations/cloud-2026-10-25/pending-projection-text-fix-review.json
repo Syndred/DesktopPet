@@ -1,0 +1,23 @@
+{
+  "at": "2026-10-25T03:10:37.152Z",
+  "reviewedRef": "8e5c735",
+  "mode": "read-only committed code in same Node realm; synthetic ordinary JSON text; no cloud or pet/database writes",
+  "status": "passed",
+  "checks": [
+    {
+      "table": "conversation_messages",
+      "authoredTextUnchanged": true
+    },
+    {
+      "table": "conversation_profiles",
+      "authoredTextUnchanged": true
+    },
+    {
+      "table": "conversation_memories",
+      "authoredTextUnchanged": true
+    }
+  ],
+  "redactedPaths": [],
+  "realCloud": false,
+  "approvalOrDeploymentClaimed": false
+}

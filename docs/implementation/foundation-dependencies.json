@@ -1,11 +1,11 @@
 {
-  "verifiedAt": "2026-10-24T13:03:13.272Z",
+  "verifiedAt": "2026-10-25T03:20:15.300Z",
   "records": [
     {
       "name": "electron",
-      "version": "36.9.5",
+      "version": "44.9.3",
       "license": "MIT",
-      "source": "https://www.npmjs.com/package/electron/v/36.9.5",
+      "source": "https://www.npmjs.com/package/electron/v/44.9.3",
       "repository": "https://github.com/electron/electron",
       "usage": "Native sandboxed management/companion windows, tray, DPAPI and Windows host integration"
     },
@@ -147,11 +147,11 @@
     },
     {
       "name": "better-sqlite3",
-      "version": "12.11.1",
+      "version": "13.0.3",
       "license": "MIT",
-      "source": "https://www.npmjs.com/package/better-sqlite3/v/12.11.1",
+      "source": "https://www.npmjs.com/package/better-sqlite3/v/13.0.3",
       "repository": "git://github.com/WiseLibs/better-sqlite3.git",
-      "usage": "One Electron SQLite connection, transactional domain persistence and migrations"
+      "usage": "Shared Node/Electron N-API binary; transactional domain persistence and migrations without force rebuild"
     },
     {
       "name": "@supabase/supabase-js",
@@ -159,7 +159,7 @@
       "license": "MIT",
       "source": "https://www.npmjs.com/package/@supabase/supabase-js/v/2.98.0",
       "repository": "https://github.com/supabase/supabase-js.git",
-      "usage": "Retained multiplayer and reviewed cloud adapters; live backend validation remains separate"
+      "usage": "Reviewed main-process cloud actor, Auth proof and Storage adapters; public key only in desktop configuration"
     },
     {
       "name": "ai",

@@ -19,7 +19,9 @@ function cloudProjection(envelope){
   if(Array.isArray(value))return value.map((item,index)=>scrub(item,[...path,String(index)],depth+1));
   if(value&&typeof value==='object'){
    const clean=Object.create(null);for(const [key,item]of Object.entries(value)){
-    if(secretKey(key)||opaqueKeys.has(normalize(key))||/(sourcejson|rawjson|rawdocument|legacyarchive)$/.test(normalize(key))){excluded.push([...path,key].join('.'));continue;}
+    const opaque=opaqueKeys.has(normalize(key))||/(sourcejson|rawjson|rawdocument|legacyarchive)$/.test(normalize(key));
+    const empty=item===null||item===''||Array.isArray(item)&&item.length===0;
+    if(secretKey(key)||opaque&&!empty){excluded.push([...path,key].join('.'));continue;}
     clean[key]=scrub(item,[...path,key],depth+1);
    }return clean;
   }

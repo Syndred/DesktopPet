@@ -93,6 +93,32 @@ class BackupManager {
     });
   }
   dataChecksum(owner) { return saveDataChecksum(this.snapshot(owner).data); }
+  /** Internal restore/fingerprint view. Call validate first for external input;
+   * the original envelope/checksum/file is never rewritten by normalization. */
+  normalizeData(data, owner) {
+    const modules={...data.modules},tables={...data.tables};
+    for(const adapter of this.adapters.values()) {
+      if(Object.hasOwn(modules,adapter.id)||!Array.isArray(adapter.legacyTables)||typeof adapter.fromLegacyTables!=="function")continue;
+      const converted=adapter.fromLegacyTables(tables,owner);
+      invariant(!converted?.then,"ASYNC_BACKUP_ADAPTER","旧存档转换必须同步执行。");
+      if(converted===null||converted===undefined)continue;
+      modules[adapter.id]={version:adapter.version,data:converted};
+      for(const name of adapter.legacyTables)delete tables[name];
+    }
+    return {...data,modules,tables};
+  }
+  /** Cloud assets are hydrated additively before retaining a restore preview;
+   * the synchronous restore transaction never performs network I/O. */
+  async prepareCloud(envelope,owner) {
+    this.validate(envelope,owner);
+    for(const [id,module]of Object.entries(envelope.data.modules))await this.adapters.get(id)?.prepareCloud?.(owner,module);
+    this.validate(envelope,owner);
+  }
+  cloudData(data,owner) {
+    const modules={...data.modules};
+    for(const [id,module]of Object.entries(modules))if(this.adapters.get(id)?.cloudModule)modules[id]=this.adapters.get(id).cloudModule(owner,module);
+    return {...data,modules};
+  }
   validate(envelope, owner) {
     invariant(envelope?.format === "lingjing-account-save" && envelope.version === 1, "BACKUP_VERSION_UNSUPPORTED", "备份版本不兼容，请使用匹配版本的灵境。");
     const { checksum: digest, ...body } = envelope;
@@ -106,15 +132,11 @@ class BackupManager {
       "BACKUP_OWNER_MISMATCH", "备份身份与当前账号不一致。");
     invariant(body.data?.modules && body.data?.tables && typeof body.data.modules === "object" && !Array.isArray(body.data.modules)
       && typeof body.data.tables === "object" && !Array.isArray(body.data.tables), "INVALID_BACKUP", "备份内容不完整。");
-    for (const [id, module] of Object.entries(body.data.modules)) {
-      const adapter = this.adapters.get(id);
-      invariant(adapter && module?.version === adapter.version, "BACKUP_MODULE_UNSUPPORTED", `无法恢复模块 ${id}，请安装对应模块版本。`);
-      invariant(!adapter.validate(module.data, owner, this.db)?.then, "ASYNC_BACKUP_ADAPTER", "存档验证适配器必须同步执行。");
-    }
     const available = new Map(liveTables(this.db).map(t => [t.name, t]));
-    const claimed = new Set([...this.adapters.values()].flatMap(adapter => adapter.tables || []));
+    const claimed = new Map([...this.adapters.values()].flatMap(adapter => (adapter.tables || []).map(name=>[name,adapter])));
     for (const [name, table] of Object.entries(body.data.tables)) {
-      invariant(!claimed.has(name), "BACKUP_MODULE_UNSUPPORTED", `模块 ${name} 需要专用存档格式；原备份文件已保留，请使用创建它的版本导出。`);
+      const adapter=claimed.get(name);
+      invariant(!adapter||(!Object.hasOwn(body.data.modules,adapter.id)&&adapter.legacyTables?.includes(name)&&typeof adapter.fromLegacyTables==="function"), "BACKUP_MODULE_UNSUPPORTED", `模块 ${name} 的备份格式冲突，原始文件已保留。`);
       const live = available.get(name);
       invariant(live && !live.columns.some(c => secretColumn.test(c.name)) && checksum(table?.schema) === checksum(tableSchema(live.columns)),
         "BACKUP_SCHEMA_MISMATCH", `模块 ${name} 的数据版本不兼容。`);
@@ -125,6 +147,12 @@ class BackupManager {
           "BACKUP_OWNER_MISMATCH", "备份中包含归属不匹配或无效的记录。");
         Object.values(row).forEach(decodeCell);
       }
+    }
+    for (const [id, module] of Object.entries(this.normalizeData(body.data,owner).modules)) {
+      const adapter = this.adapters.get(id);
+      invariant(adapter && (module?.version === adapter.version || adapter.versions?.includes(module?.version)), "BACKUP_MODULE_UNSUPPORTED", `无法恢复模块 ${id}，请安装对应模块版本。`);
+      const validated=adapter.validateModule?adapter.validateModule(module,owner):adapter.validate(module.data, owner, this.db);
+      invariant(!validated?.then, "ASYNC_BACKUP_ADAPTER", "存档验证适配器必须同步执行。");
     }
     invariant(Buffer.byteLength(canonical(envelope)) <= MAX_BACKUP_BYTES, "BACKUP_TOO_LARGE", "备份超过 25 MB 限制。");
     return envelope;
@@ -169,7 +197,7 @@ class BackupManager {
     invariant(this.dataChecksum(owner) === preview.currentChecksum, "SAVE_CHANGED", "存档在预览后发生变化，请重新预览。");
     const preserved = this.save(owner, null, "before-restore");
     const result = transaction(this.db, () => {
-      const { modules, tables } = preview.envelope.data;
+      const { modules, tables } = this.normalizeData(preview.envelope.data,owner);
       const names = Object.keys(tables);
       const ordered = [], visiting = new Set(), visited = new Set();
       const visit = name => {

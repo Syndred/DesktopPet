@@ -1,0 +1,17 @@
+✔ actual official SDK protocol: A upload, distinct-client B hydrate preserves IDs/history and independent same-content imports (712.7818ms)
+✔ production adapter rejects a simulated actor/HTTP client before any transfer (164.4487ms)
+✔ verified old owner aliases keep their original owner text in the immutable package without rewriting local history (191.9394ms)
+✔ lost upload receipt survives reopen and resumes immutable chunks with independent readback (225.0055ms)
+✔ offline intent is durable before Auth and session switch never applies a downloaded package (358.5962ms)
+✔ tampered manifest/size/path and credential-bearing descriptors fail before publication (193.2265ms)
+✔ historical GLB archive is readable/restorable but never appears in 2D list or import (472.9072ms)
+✔ interrupted new-client download resumes verified disk chunks after reopening SQLite (422.6258ms)
+✔ corrupt downloaded bytes are never registered and preserve an existing missing local reference (431.981ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3323.8923

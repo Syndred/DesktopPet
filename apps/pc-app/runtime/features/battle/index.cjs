@@ -40,7 +40,11 @@ module.exports = {
         try {
           await artReady;
           const external=externalFor(payload);
-          let data = external ? await external.command(name,payload,context) : await service[name](payload, context);
+          // Cloud territory sessions use the same screen/presenter. Their
+          // commands stay on the authoritative backend and never run local
+          // finish/applyReward. Other modes retain their existing adapters.
+          const territory=services.get('garden')?.cloudBattles;
+          let data = external ? await external.command(name,payload,context) : territory?.owns(payload,context) ? await territory.invoke(name,payload,context) : await service[name](payload, context);
           if (data?.snapshot) data = presentSession(data);
           else if (data?.session) data = { ...data, session: presentSession(data.session) };
           return { ok: true, data };

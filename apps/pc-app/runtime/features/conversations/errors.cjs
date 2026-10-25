@@ -1,6 +1,7 @@
 const messages = {
   AUTH_REQUIRED: "请先登录账号。", SESSION_CHANGED: "账号已切换，本次请求已停止。",
   PET_NOT_FOUND: "找不到这只伙伴，请重新选择。", INVALID_INPUT: "请检查输入内容。",
+  SELECTION_FAILED: "伙伴切换暂未确认，请稍后重试。原选择已保留。",
   REVISION_CONFLICT: "内容已发生变化，请刷新后重新编辑。", CONNECTION_REQUIRED: "请先保存模型连接设置。",
   KEY_REQUIRED: "请为此连接保存 API Key。", SECURE_STORAGE_UNAVAILABLE: "系统安全存储暂不可用，密钥未保存。",
   KEY_UNAVAILABLE: "无法解密此连接的密钥，请重新填写。", CONNECTION_INVALID: "请输入有效的 HTTPS 接口地址；本机服务可使用 HTTP。",

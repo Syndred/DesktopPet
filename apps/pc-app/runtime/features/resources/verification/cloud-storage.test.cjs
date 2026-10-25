@@ -15,6 +15,7 @@ const OWNER='runtime:preserved-old-subject';
 const UID='11111111-1111-4111-8111-111111111111';
 const OTHER='22222222-2222-4222-8222-222222222222';
 async function fixture(t){
+  await fs.mkdir(path.join(ROOT,'artifacts/resources'),{recursive:true});
   const directory=await fs.mkdtemp(path.join(ROOT,'artifacts/resources/cloud-'));
   const http=await storageFixture(),clients=[];
   t.after(async()=>{for(const c of clients)if(c.db.open)c.db.close();await http.close();});
@@ -45,6 +46,7 @@ test('actual official SDK protocol: A upload, distinct-client B hydrate preserve
   assert.equal(b.db.prepare('select count(*) n from lingjing_resource_imports where resource_id=?').get(id).n,1);
   await b.cloud.pull(OWNER);assert.equal(b.db.prepare('select count(*) n from lingjing_resource_imports').get().n,2);
   const originalPng=await fs.readFile(path.join(f.source,'sprites.png')),receivedPng=await fs.readFile(await b.service.assetFile(OWNER,id,'sprites.png'));assert.equal(hash(originalPng),hash(receivedPng));
+  assert.equal(new ResourceCloudSync({service:a.service,getActor:()=>a.actor}).status(OWNER).lastVerifiedAt,null,'A fixture verification must never become a production cloud receipt');
   // Explicit local HTTP fixture denial, not a claim that deployed Supabase RLS was tested.
   const c=await f.local('other',OTHER,'runtime:other');assert.equal((await c.cloud.pull('runtime:other')).restored.length,0);
   const denied=await c.actor.client.storage.from(BUCKET).download(f.http.state.rows[0].manifest_path);assert(denied.error);
@@ -53,6 +55,15 @@ test('production adapter rejects a simulated actor/HTTP client before any transf
   const f=await fixture(t),a=await f.local('a'),imported=await a.service.importFile(OWNER,path.join(f.source,'character.json'));
   const production=new ResourceCloudSync({service:a.service,getActor:async()=>a.actor});production.enqueue(OWNER,randomUUID(),[imported.resource.id]);
   const result=await production.flush(OWNER);assert.equal(result.verified.length,0);assert.equal(result.errors[0].code,'RESOURCE_CLOUD_AUTH_REQUIRED');assert.equal(f.http.state.requests.length,0);assert.equal(a.cloud.status(OWNER).dataMode,'simulated');
+});
+test('verified old owner aliases keep their original owner text in the immutable package without rewriting local history',async t=>{
+  const f=await fixture(t),a=await f.local('a'),imported=await a.service.importFile(OWNER,path.join(f.source,'character.json'));
+  a.db.exec('create table account_aliases(provider text,subject_id text,owner_account_id text)');a.db.prepare('insert into account_aliases values(?,?,?)').run('runtime','legacy-original-subject',OWNER);
+  a.db.prepare('update lingjing_resources set owner_account_id=? where resource_id=?').run('legacy-original-subject',imported.resource.id);
+  a.db.prepare('update lingjing_resource_imports set owner_account_id=? where resource_id=?').run('legacy-original-subject',imported.resource.id);
+  const packet=await buildPackage(a.service,OWNER,UID,imported.resource.id);
+  assert.equal(packet.manifest.sourceOwnerAccountId,'legacy-original-subject');assert.equal(packet.manifest.imports[0].source_owner_account_id,'legacy-original-subject');assert.equal(packet.manifest.ownerAccountId,OWNER);
+  assert.equal(a.db.prepare('select owner_account_id from lingjing_resources where resource_id=?').get(imported.resource.id).owner_account_id,'legacy-original-subject');
 });
 test('lost upload receipt survives reopen and resumes immutable chunks with independent readback',async t=>{
   const f=await fixture(t),a=await f.local('a'),imported=await a.service.importFile(OWNER,path.join(f.source,'character.json'));
