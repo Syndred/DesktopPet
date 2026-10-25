@@ -3,28 +3,36 @@
   "productName": "Lingjing",
   "icon": "build/icon.png",
   "directories": {
-    "output": "artifacts/pc-beta-unified"
+    "output": "artifacts/pc-cloud-upgrade"
   },
   "files": [
     "apps/pc-app/dist/**/*",
-    "apps/pc-app/runtime/**/*",
+    "apps/pc-app/runtime/core/**/*.cjs",
+    "apps/pc-app/runtime/features/**/*.cjs",
+    "apps/pc-app/runtime/features/**/*.json",
+    "apps/pc-app/runtime/features/*/assets/**/*",
+    "apps/pc-app/runtime/services/**/*.cjs",
+    "apps/pc-app/runtime/assets/brand/**/*",
+    "apps/pc-app/runtime/assets/illustrations/**/*",
     "!**/*.test.cjs",
     "!**/*.test.mjs",
     "!**/tests/**/*",
     "!**/verification/**/*",
     "!**/*.electron.mjs",
-    "!**/verify-electron.mjs",
+    "!**/verify-*.mjs",
     "!**/testing-adapter.cjs",
     "!**/generate-fish.cjs",
-    "!**/assets/models/**/*",
-    "!apps/pc-app/dist/ui/models/**/*",
-    "!apps/pc-app/runtime/features/resources/legacy/**/*",
-    "!apps/pc-app/runtime/renderer/**/*",
-    "!apps/pc-app/runtime/auth/**/*",
-    "package.json",
-    "!**/verify-*.mjs",
     "!**/write-evidence.mjs",
-    "!**/prepare-*-fixture.mjs"
+    "!**/prepare-*-fixture.mjs",
+    "!**/assets/models/**/*",
+    "!apps/pc-app/runtime/features/resources/legacy/**/*",
+    "!node_modules/better-sqlite3/prebuilds/linux*.node",
+    "!node_modules/better-sqlite3/prebuilds/darwin*.node",
+    "!node_modules/better-sqlite3/prebuilds/win32-arm64.node",
+    "!node_modules/better-sqlite3/src/**/*",
+    "!node_modules/better-sqlite3/deps/**/*",
+    "!node_modules/better-sqlite3/binding.gyp",
+    "package.json"
   ],
   "asar": true,
   "extraFiles": [
@@ -79,5 +87,9 @@
     ],
     "icon": "build/icon.png",
     "artifactName": "Lingjing-${version}-portable-${arch}.${ext}"
-  }
+  },
+  "npmRebuild": false,
+  "asarUnpack": [
+    "node_modules/better-sqlite3/prebuilds/win32-x64.node"
+  ]
 }
