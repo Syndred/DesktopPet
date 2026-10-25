@@ -31,3 +31,7 @@ test('SCRIPTED SDK lifecycle: callback auth is retained and a coded shared-invok
   f.transport.invoke=async()=>{throw Object.assign(new Error('revoked'),{code:'SESSION_REVOKED'});};
   await assert.rejects(f.online.invoke('get_room',{roomId:f.room.id}),error=>error.code==='SESSION_REVOKED');assert.equal(f.online.channel,null);assert.equal(f.online.getStatus().actor,null);assert.ok(f.state.disconnects>0);
 });
+test('SCRIPTED SDK lifecycle: a real-sync path replaces a closed private channel after socket reconnect without changing the room or pending action',async()=>{
+  const f=fixture();await f.online.createRoom({actionId:'reconnect-original-room',petId:'pet'});const old=f.online.channel;old.state='closed';
+  const value=await f.online.syncRoom({roomId:f.room.id});assert.equal(old.removed,true);assert.notEqual(f.online.channel,old);assert.equal(f.online.channel.state,'joined');assert.equal(f.online.channel.name,`lingjing:battle:${f.room.id}`);assert.equal(value.pendingAction.actionId,'original-action');assert.deepEqual(f.online.channel.config,{config:{private:true}});
+});

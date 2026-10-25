@@ -25,6 +25,7 @@ cpSync(resolve('apps/pc-app/dist'),join(project,'apps/pc-app/dist'),{recursive:t
 writeFileSync(join(project,'package.json'),JSON.stringify({name:'lingjing-real-cloud-battle-acceptance',version:'0.0.0',main:'bootstrap.cjs'}));
 writeFileSync(join(project,'bootstrap.cjs'),`
 const fs=require('node:fs');
+globalThis.__liveBattleRequire=require;
 const trace=process.env.LINGJING_BATTLE_TRACE,origin=${JSON.stringify(config.url)};
 globalThis.__liveBattleTrace=[];
 const originalFetch=globalThis.fetch;
@@ -78,6 +79,18 @@ async function connection(client) {
   const result=await client.app.evaluate(()=>{const online=globalThis.__liveBattle||globalThis.__liveBattleServices?.legacy?.onlineDuelService;if(!online)throw new Error('No actual OnlineDuelService observed');const value=online.getStatus();return {origin:online.supabaseUrl,authKind:value.authKind,actor:value.actor?{authority:value.actor.authority,authUserId:value.actor.authUserId,ownerAccountId:value.actor.ownerAccountId,deviceId:value.actor.deviceId,sessionId:value.actor.sessionId}:null,socket:online.client.realtime.connectionState(),channel:online.channel?.state,manualToken:online.client.realtime._isManualToken()};});
   assert.equal(result.origin,config.url);assert.equal(result.authKind,'supabase');assert.equal(result.actor.authority,'live');assert.equal(result.actor.ownerAccountId,client.profile.owner);assert.equal(result.manualToken,false);return result;
 }
+async function joined(client) {
+  let state;for(let attempt=0;attempt<60;attempt++){state=await connection(client);if(state.socket==='open'&&state.channel==='joined')return state;await new Promise(resolve=>setTimeout(resolve,250));}
+  assert.fail(`Real private Realtime channel did not join: ${JSON.stringify(state)}`);
+}
+async function pendingAction(client,sessionId,roundNo) {
+  for(let attempt=0;attempt<150;attempt++){const value=await api(client.page,'battle','snapshot',{sessionId});if(value.pendingAction?.roundNo===roundNo)return value;await client.page.waitForTimeout(200);}
+  assert.fail('The actual queued action never reached a durable pending receipt');
+}
+async function resolvedRound(client,sessionId,roundNo) {
+  for(let attempt=0;attempt<20;attempt++){const value=await api(client.page,'battle','sync',{sessionId});if(value.snapshot.round>=roundNo)return value;await client.page.waitForTimeout(200);}
+  assert.fail('Both immutable cloud actions did not resolve their original round');
+}
 const screenshot=async(page,name)=>page.screenshot({path:join(output,`${name}.png`)});
 async function refreshAndDisconnect(client) {
   const refreshed=await client.app.evaluate(async()=>{
@@ -93,7 +106,7 @@ async function revokeAndVerify(revoked,other,roomId) {
   const descriptor=await revoked.app.evaluate(async()=>{
     const services=globalThis.__liveBattleServices,accounts=services.get('accounts'),actor=await services.get('cloudActor').requireActor();
     // Main-memory only. No token/client object reaches the renderer or evidence.
-    globalThis.__revokedBattleRead={client:actor.client,token:accounts.remote.active.accessToken,url:actor.url,key:actor.publishableKey};
+    globalThis.__revokedBattleRead={token:accounts.remote.active.accessToken,url:actor.url,key:actor.publishableKey,deviceId:actor.deviceId};
     return {deviceId:actor.deviceId,sessionId:actor.sessionId,ownerAccountId:actor.ownerAccountId};
   });
   await other.app.evaluate(async({deviceId})=>{const actor=await globalThis.__liveBattleServices.get('cloudActor').requireActor();const value=await actor.client.rpc('lingjing_revoke_device',{p_device_id:deviceId});if(value.error)throw new Error(value.error.message);},descriptor);
@@ -101,10 +114,15 @@ async function revokeAndVerify(revoked,other,roomId) {
     const state=globalThis.__revokedBattleRead,headers={apikey:state.key,Authorization:'Bearer '+state.token};
     const paths=[`/rest/v1/lingjing_battle_rooms?id=eq.${roomId}&select=id`,`/rest/v1/lingjing_battle_rounds?room_id=eq.${roomId}&select=round_no`];
     const rest=[];for(const path of paths){const response=await fetch(state.url+path,{headers});const body=await response.json();rest.push({status:response.status,code:body.code,message:body.message});}
-    const authResponse=await fetch(state.url+'/auth/v1/user',{headers}),auth=await authResponse.json();await state.client.removeAllChannels();
-    const topic=state.client.channel('lingjing:battle:'+roomId,{config:{private:true}});
+    const authResponse=await fetch(state.url+'/auth/v1/user',{headers}),auth=await authResponse.json();
+    const {createClient}=globalThis.__liveBattleRequire('@supabase/supabase-js');
+    // Independent real SDK probe keeps the captured valid-but-revoked JWT in a
+    // callback; production account SDK refresh/logout behavior remains intact.
+    const probe=createClient(state.url,state.key,{accessToken:async()=>state.token,global:{headers:{'X-Lingjing-Device-Id':state.deviceId}}});
+    await new Promise(resolve=>setImmediate(resolve));await probe.realtime.setAuth();
+    const topic=probe.channel('lingjing:battle:'+roomId,{config:{private:true}});
     const realtime=await new Promise(resolve=>{const timer=setTimeout(()=>resolve('TIMEOUT'),15000);topic.subscribe(status=>{if(['SUBSCRIBED','CHANNEL_ERROR','TIMED_OUT','CLOSED'].includes(status)){clearTimeout(timer);resolve(status);}});});
-    await state.client.removeChannel(topic);delete globalThis.__revokedBattleRead;
+    await probe.removeChannel(topic);probe.realtime.disconnect();delete globalThis.__revokedBattleRead;
     return {rest,authJwtStillValid:authResponse.status===200&&Boolean(auth.id),realtime};
   },{roomId});
   assert.equal(denied.authJwtStillValid,true,'Test device-only revocation while the original JWT is still valid');
@@ -126,22 +144,22 @@ try {
   await host.page.getByLabel('搜索账号或用户名',{exact:true}).fill(config.accounts[1].account);await host.page.getByRole('button',{name:'搜索',exact:true}).click();await host.page.locator('.battle-user-list .battle-small-action').click();
   await guest.page.locator('.battle-invitations').getByRole('button',{name:'刷新',exact:true}).click();await guest.page.getByRole('button',{name:'接受',exact:true}).click();await screen(guest.page,true);await screenshot(guest.page,'accepted-waiting');
   await host.page.locator('.battle-invitations').getByRole('button',{name:'刷新',exact:true}).click();await host.page.getByRole('button',{name:'进入房间',exact:true}).click();let left=await screen(host.page),right=await screen(guest.page);assert.equal(left.room.id,right.room.id);assert.equal(left.player.petId,right.enemy.petId);
-  const a=await connection(host),b=await connection(guest);assert.notEqual(a.actor.authUserId,b.actor.authUserId);assert.notEqual(a.actor.deviceId,b.actor.deviceId);profiles[0].deviceId=a.actor.deviceId;profiles[1].deviceId=b.actor.deviceId;record('two real JWT/device clients invited, accepted and joined one authorized Realtime room',{roomId:left.room.id,a,b});
+  const a=await joined(host),b=await joined(guest);assert.notEqual(a.actor.authUserId,b.actor.authUserId);assert.notEqual(a.actor.deviceId,b.actor.deviceId);profiles[0].deviceId=a.actor.deviceId;profiles[1].deviceId=b.actor.deviceId;record('two real JWT/device clients invited, accepted and joined one authorized Realtime room',{roomId:left.room.id,a,b});
   const observed=[[],[]];
   for(const client of [host,guest])await client.page.evaluate(()=>{window.__liveBattleEvents=[];window.lingjing.subscribe('battle:online',value=>window.__liveBattleEvents.push(value));});
   let round=0;
   while(left.status!=='finished'&&round<30) {
-    const next=left.snapshot.round+1;await host.page.waitForFunction(()=>document.querySelector('.battle-live-layout').getAttribute('data-animation-phase')==='rest');await guest.page.waitForFunction(()=>document.querySelector('.battle-live-layout').getAttribute('data-animation-phase')==='rest');
+    const next=left.snapshot.round+1;for(const client of [host,guest])await client.page.waitForFunction(round=>document.querySelector('.battle-live-layout')?.getAttribute('data-animation-phase')==='rest'&&document.querySelector('.battle-round-number > span')?.textContent?.trim()===`回合 ${round}`,next);
     if(round===0)await host.app.evaluate(()=>{globalThis.__dropBattleResponseOnce=true;});
     if(round===1){await refreshAndDisconnect(host);record('real SDK WebSocket deliberately disconnected after Auth refresh');}
     await host.page.locator('.battle-command[data-action="normal_attack"]').click();
-    const pending=await api(host.page,'battle','snapshot',{sessionId:left.id});assert.equal(pending.pendingAction.roundNo,next);assert.equal(pending.pendingAction.action,'normal_attack');
-    if(round===0)assert.equal(pending.pendingAction.uncertain,true,'The real HTTPS response-read interruption must remain an original uncertain action');
-    if(round===1){await host.app.evaluate(()=>globalThis.__liveBattle.client.realtime.connect());let reconnected;for(let attempt=0;attempt<30;attempt++){reconnected=await connection(host);if(reconnected.socket==='open'&&reconnected.channel==='joined')break;await new Promise(resolve=>setTimeout(resolve,300));}assert.equal(reconnected.socket,'open');assert.equal(reconnected.channel,'joined');record('same native process reconnected its actual authorized SDK channel',reconnected);}
+    let pending=await pendingAction(host,left.id,next);assert.equal(pending.pendingAction.action,'normal_attack');
+    if(round===0){const original=pending.pendingAction.actionId;for(let attempt=0;attempt<100;attempt++){if(await host.app.evaluate(()=>globalThis.__dropBattleResponseOnce===false))break;await host.page.waitForTimeout(200);}assert.equal(await host.app.evaluate(()=>globalThis.__dropBattleResponseOnce),false,'A real HTTPS response must have reached the interrupted read');pending=await api(host.page,'battle','snapshot',{sessionId:left.id});assert.equal(pending.pendingAction.actionId,original);assert.equal(pending.pendingAction.roundNo,next);record('actual submit response was interrupted after HTTPS receipt; original pending action retained',{actionId:original,roundNo:next,reconciledByReadback:!pending.pendingAction.uncertain});}
+    if(round===1){await host.app.evaluate(()=>globalThis.__liveBattle.client.realtime.connect());await api(host.page,'battle','sync',{sessionId:left.id});const reconnected=await joined(host);record('same native process recreated its authorized private channel through normal sync after reconnect',reconnected);}
     if(round===2){await screenshot(host.page,'pending-before-native-restart');await host.app.close();apps.delete(0);}
     await guest.page.locator('.battle-command[data-action="normal_attack"]').click();
-    if(round===2){host=await launch(0);await route(host.page,`/battle/session/${left.id}`);await screen(host.page);const reconnected=await connection(host);assert.equal(reconnected.actor.deviceId,profiles[0].deviceId);record('native process restart restored original device/Auth and pending round',reconnected);}
-    left=await api(host.page,'battle','sync',{sessionId:left.id});right=await api(guest.page,'battle','sync',{sessionId:right.id});assert.equal(left.snapshot.round,next);assert.equal(right.snapshot.round,next);assert.equal(left.snapshot.player.hp,right.snapshot.enemy.hp);assert.equal(left.snapshot.enemy.hp,right.snapshot.player.hp);assert.equal(left.pendingAction,null);assert.equal(right.pendingAction,null);
+    if(round===2){host=await launch(0);await route(host.page,`/battle/session/${left.id}`);await screen(host.page);await api(host.page,'battle','sync',{sessionId:left.id});const reconnected=await joined(host);assert.equal(reconnected.actor.deviceId,profiles[0].deviceId);record('native process restart restored original device/Auth and pending round',reconnected);}
+    left=await resolvedRound(host,left.id,next);right=await resolvedRound(guest,right.id,next);assert.equal(left.snapshot.round,next);assert.equal(right.snapshot.round,next);assert.equal(left.snapshot.player.hp,right.snapshot.enemy.hp);assert.equal(left.snapshot.enemy.hp,right.snapshot.player.hp);assert.equal(left.pendingAction,null);assert.equal(right.pendingAction,null);
     await assert.rejects(api(host.page,'battle','retryAction',{sessionId:left.id}),/没有待确认/);assert.equal((await api(host.page,'battle','sync',{sessionId:left.id})).snapshot.round,next);round++;
     record(`real HTTPS round ${next} matches on both clients`,{roomId:left.room.id,playerHp:left.snapshot.player.hp,enemyHp:left.snapshot.enemy.hp,actions:left.rounds.at(-1).actions});
   }
@@ -161,12 +179,16 @@ try {
   assert.equal(training.context.authority,'supabase');await route(host.page,`/battle/session/${training.id}`);await host.page.locator('[data-battle-screen="shared-v1"]').waitFor();
   const recovery=await launch(2,0);assert.equal(recovery.profile.owner,host.profile.owner);
   const overview=await api(recovery.page,'battle','overview');assert.equal(overview.session.id,training.id);assert.equal(overview.session.context.authority,'supabase');
+  await route(recovery.page,`/battle/session/${training.id}`);await recovery.page.locator('[data-battle-screen="shared-v1"]').waitFor();await recovery.page.locator('.battle-stage .resource-stage[data-status="ready"] canvas').first().waitFor();await screenshot(recovery.page,'training-recovered-on-second-device');
   const recoveryActor=await connection(recovery),hostActor=await connection(host);assert.notEqual(recoveryActor.actor.deviceId,hostActor.actor.deviceId);assert.equal(recoveryActor.actor.authUserId,hostActor.actor.authUserId);
   recovery.profile.deviceId=recoveryActor.actor.deviceId;
   let count=0;
   while(training.status==='active'&&count<100) {
-    training=await api(host.page,'battle','act',{sessionId:training.id,actionId:randomUUID(),expectedRound:training.snapshot.round+1,action:training.snapshot.player.anger>=50?'ultimate':'element_attack'});
-    const synced=await api(recovery.page,'battle','sync',{sessionId:training.id});assert.deepEqual(synced.snapshot,training.snapshot);count++;
+    const next=training.snapshot.round+1,action=training.snapshot.player.anger>=50?'ultimate':'element_attack';
+    await recovery.page.waitForFunction(round=>document.querySelector('.battle-live-layout')?.getAttribute('data-animation-phase')==='rest'&&document.querySelector('.battle-round-number > span')?.textContent?.trim()===`回合 ${round}`,next);
+    await recovery.page.locator(`.battle-command[data-action="${action}"]`).click();
+    for(let attempt=0;attempt<150;attempt++){training=await api(recovery.page,'battle','snapshot',{sessionId:training.id});if(training.snapshot.round>=next)break;await recovery.page.waitForTimeout(200);}assert.equal(training.snapshot.round,next);
+    const synced=await api(host.page,'battle','sync',{sessionId:training.id});assert.deepEqual(synced.snapshot,training.snapshot);count++;
   }
   assert.equal(training.status,'finished');assert.equal(training.reward.applied,true);assert.ok(count>1);
   const grown=(await api(host.page,'companions','list')).pets,otherGrown=(await api(recovery.page,'companions','list')).pets;assert.deepEqual(otherGrown,grown);
@@ -174,7 +196,7 @@ try {
   const inventory=async client=>client.app.evaluate(()=>{const services=globalThis.__liveBattleServices,owner=services.get('accounts').getOwnerAccountId();return {items:services.db.prepare('SELECT item_id,quantity FROM garden_items WHERE owner_account_id=? ORDER BY item_id').all(owner),receipts:services.db.prepare('SELECT source,receipt_id,action_id FROM garden_reward_receipts WHERE owner_account_id=? ORDER BY source,receipt_id').all(owner)};});
   const inventoryA=await inventory(host);assert.deepEqual(await inventory(recovery),inventoryA);assert.ok(inventoryA.receipts.some(row=>row.receipt_id===training.id));assert.equal(training.reward.seeds.quantity,2);
   const trainingReport=await api(host.page,'battle','getReport',{reportId:training.reportId});assert.deepEqual(await api(recovery.page,'battle','getReport',{reportId:training.reportId}),trainingReport);
-  await screenshot(host.page,'cloud-training-finished');record('actual cloud training and a second same-owner native client share canonical growth and complete report',{sessionId:training.id,rounds:count,reward:training.reward,deviceIds:[hostActor.actor.deviceId,recoveryActor.actor.deviceId]});
+  await recovery.page.waitForFunction(()=>document.querySelector('.battle-live-layout')?.getAttribute('data-animation-phase')==='rest');await screenshot(recovery.page,'cloud-training-finished');record('second same-owner native client naturally resumed cloud training through actual UI moves; both share canonical growth/inventory/report',{sessionId:training.id,rounds:count,reward:training.reward,deviceIds:[hostActor.actor.deviceId,recoveryActor.actor.deviceId]});
   await revokeAndVerify(host,recovery,left.room.id);
   }
   assert.deepEqual(errors,[]);proof.passed=true;
