@@ -4,7 +4,7 @@
 
 ## 可独立部署的定位检查点
 
-主协调可立即按以下依赖顺序集中部署，无需等待完整捕捉事务：08已部署统一身份及 Auth bridge → `20261025020719_lingjing_discovery_cloud_authority.sql` → `20261025025641_lingjing_discovery_live_actor_guard.sql` → `discovery` 函数（`verify_jwt=false`，随目录包含 `_shared/lingjing-auth.ts`、`_shared/battle-core.js` 及函数自己的文件）。本会话没有远程写入、迁移或部署。
+主协调可立即按以下依赖顺序集中部署，无需等待完整捕捉事务：08已部署统一身份及 Auth bridge → `20261025030635_lingjing_discovery_cloud_authority.sql` → `20261025030639_lingjing_discovery_live_actor_guard.sql` → `discovery` 函数（`verify_jwt=false`，随目录包含 `_shared/lingjing-auth.ts`、`_shared/battle-core.js` 及函数自己的文件）。本会话没有远程写入、迁移或部署。
 
 这个入口当前开放 `protocol/device.register/location.challenge/location.prove/nearby`；reserve/session/act/cancel/confirm/captures/action 仍返回明确的 `CLOUD_AUTHORITY_NOT_READY`，不能把位置组件上线当作完整捕捉上线。第二份迁移为所有定位调用增加当前08账号和设备/session/撤销状态校验，以 `FOR SHARE` 锁定统一映射至本次事务完成，不增加 auth.users/auth.sessions 权限。
 
@@ -57,9 +57,9 @@ select public.lingjing_discovery_take_location(
 
 ## 游戏 SQL 与函数下一检查点
 
-`20261025030459_lingjing_discovery_wild_transactions.sql` 已通过实际PGlite/共享规则/规范02实例与成长/05库存 reducer 的贯通检查。它新增私有permits、game_actions和captures，普通客户端无表或RPC权限；同一owner锁序串行化回合、准入和收服。`game_write` 在同一事务消费位置、核对实例原revision、写服务端会话/不可变回执，并提交统一08 authority fragment。公开 HTTP 只接收动作/回合/permitId/actionId，特权payload完全由验证后的Edge生成。
+`20261025034132_lingjing_discovery_wild_transactions.sql` 已通过实际PGlite/共享规则/规范02实例与成长/05库存 reducer 的贯通检查。它新增私有permits、game_actions和captures，普通客户端无表或RPC权限；同一owner锁序串行化回合、准入和收服。`game_write` 在同一事务消费位置、核对实例原revision、写服务端会话/不可变回执，并提交统一08 authority fragment。公开 HTTP 只接收动作/回合/permitId/actionId，特权payload完全由验证后的Edge生成。
 
-依赖：已部署08身份/受保护CAS、上述03位置迁移、已批准02 `67546f5+d7b4b07` 的可信 companions module，以及05 `40941f2` 已部署的 `public.runtime_territory_capture_context(text,double precision,double precision,text)`。先通过合法garden-sync snapshot初始化规范garden模块。追加CLI迁移 `20261025033352_lingjing_discovery_capture_scenarios.sql` 对齐第四个scenarioId参数；先应用游戏基础迁移，再应用此追加迁移，不改已发布历史。普通位置传null；受控模拟传本次相遇的原scenarioId，位置source/scenario变更直接拒绝。捕捉事务内重算05上下文并以FOR SHARE保持区域，预览若变化则整体冲突重试，不发放旧HTTP倍率。
+依赖：已部署08身份/受保护CAS、上述03位置迁移、已批准02 `67546f5+d7b4b07` 的可信 companions module，以及05 `40941f2` 已部署的 `public.runtime_territory_capture_context(text,double precision,double precision,text)`。先通过合法garden-sync snapshot初始化规范garden模块。追加CLI迁移 `20261025034136_lingjing_discovery_capture_scenarios.sql` 对齐第四个scenarioId参数；先应用游戏基础迁移，再应用此追加迁移，不改已发布历史。普通位置传null；受控模拟传本次相遇的原scenarioId，位置source/scenario变更直接拒绝。捕捉事务内重算05上下文并以FOR SHARE保持区域，预览若变化则整体冲突重试，不发放旧HTTP倍率。
 
 游戏入口在本检查点接入 `authority.mjs/store.mjs/domain.mjs`。`domain.mjs`只拼装共享规范函数：02的 `createCompanionInstance/companionUnit/awardBattleResult`、05的 `applyCloudCommand`；不复制构造器、成长公式或奖励数量。捕捉petId固定为 `pet-<server permit UUID>`，新实例及 `(owner,petId)` 注册、位置消费、discovery回执和统一存档revision同一SQL提交。新旧伙伴/独立选择/历史行保留；当前服务器discovery片段使用原SQLite通用表schema，12项专项检查包含真实SQLite导入和旧历史保留。
 

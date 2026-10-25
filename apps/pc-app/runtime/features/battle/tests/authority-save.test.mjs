@@ -26,7 +26,7 @@ CREATE FUNCTION auth.uid() RETURNS uuid LANGUAGE sql STABLE AS $$SELECT (auth.jw
 CREATE SCHEMA realtime;CREATE TABLE realtime.messages(topic text,extension text);ALTER TABLE realtime.messages ENABLE ROW LEVEL SECURITY;
 CREATE FUNCTION realtime.topic() RETURNS text LANGUAGE sql STABLE AS $$SELECT current_setting('request.topic',true)$$;`);
 await loadSharedActorGuard(db);
-for(const name of ['20261025020540_lingjing_battle_jwt_rooms','20261025024552_lingjing_battle_authority_save'])await db.exec(readFileSync(`infra/supabase/migrations/${name}.sql`,'utf8'));
+for(const name of ['20261025034744_lingjing_battle_jwt_rooms','20261025034748_lingjing_battle_authority_save'])await db.exec(readFileSync(`infra/supabase/migrations/${name}.sql`,'utf8'));
 async function rpc(name,args,role='service_role') {
   await db.exec(`BEGIN;SET LOCAL ROLE ${role}`);
   try {const result=await db.query(`SELECT public.${name}(${args.map((_,i)=>`$${i+1}`).join(',')}) value`,args);await db.exec('COMMIT');return result.rows[0].value;}
@@ -72,7 +72,7 @@ try {
   await assert.rejects(settle(host,'friend',room.id,host.pet.petId,0,prepared),/LJ_SYNC_CONFLICT/);assert.deepEqual(await head(host),before);
   const reports=[];
   for(const [index,user] of users.entries()) {
-    if(index===1)await db.exec(readFileSync('infra/supabase/migrations/20261025035820_lingjing_battle_scoped_authority_receipt.sql','utf8'));
+    if(index===1)await db.exec(readFileSync('infra/supabase/migrations/20261025040739_lingjing_battle_scoped_authority_receipt.sql','utf8'));
     const previous=await head(user),session=friendSession(room,rounds,user.owner,{}),p=await prepareBattleSettlement({envelope:previous.envelope,owner:user.owner,session});
     const proof=await settle(user,'friend',room.id,user.pet.petId,previous.revision,p),again=await settle(user,'friend',room.id,user.pet.petId,0,p),current=await head(user);
     assert.equal(proof.authority.actionId,index===0?proof.action_id:`battle-authority:friend:${room.id}`);

@@ -15,7 +15,7 @@ await db.exec(`create role anon;create role authenticated;create role service_ro
  create table auth.sessions(id uuid primary key,user_id uuid not null references auth.users(id),not_after timestamptz);
  create function auth.jwt() returns jsonb language sql stable as $$select coalesce(nullif(current_setting('request.jwt.claims',true),''),'{}')::jsonb$$;
  create function auth.uid() returns uuid language sql stable as $$select (auth.jwt()->>'sub')::uuid$$;`);
-for(const file of ['20261025020314_lingjing_identity_actor_contract.sql','20261025021755_lingjing_auth_bridge.sql','20261025021759_lingjing_protected_save_cas.sql','20261025025906_lingjing_cloud_secret_guard.sql'])await db.exec(readFileSync(`infra/supabase/migrations/${file}`,'utf8'));
+for(const file of ['20261025021620_lingjing_identity_actor_contract.sql','20261025022918_lingjing_auth_bridge.sql','20261025024615_lingjing_protected_save_cas.sql','20261025030859_lingjing_cloud_secret_guard.sql'])await db.exec(readFileSync(`infra/supabase/migrations/${file}`,'utf8'));
 await db.query('insert into auth.users(id) values($1),($2)',[uidA,uidB]);
 await db.query('insert into auth.sessions(id,user_id) values($1,$2),($3,$2),($4,$5)',[sidA,uidA,sidA2,sidB,uidB]);
 async function as(uid,sid,device,sql,params=[],role='authenticated'){

@@ -20,7 +20,7 @@ test('local main signer, HTTP handler and SQL retain the original owner, persist
   const directory = mkdtempSync(join(parent, 'signer-unit-')), safeStorage = vault();
   try {
     await db.exec(`create role anon; create role authenticated; create role service_role bypassrls; create schema auth; create table auth.users(id uuid primary key);insert into auth.users values('${actor.authUserId}');`);
-    await db.exec(readFileSync('infra/supabase/migrations/20261025020719_lingjing_discovery_cloud_authority.sql', 'utf8'));
+    await db.exec(readFileSync('infra/supabase/migrations/20261025030635_lingjing_discovery_cloud_authority.sql', 'utf8'));
     await db.exec('set role service_role');
     const store = { location: async (who, op, input) => (await db.query('select public.lingjing_discovery_location($1::jsonb,$2,$3::jsonb) value', [JSON.stringify(who), op, JSON.stringify(input)])).rows[0].value };
     const handler = createDiscoveryHandler({ requireActor: async () => actor, store });

@@ -8,7 +8,7 @@ await db.exec(`create role anon;create role authenticated;create role service_ro
  create table auth.sessions(id uuid primary key,user_id uuid not null references auth.users(id),not_after timestamptz);
  create function auth.jwt() returns jsonb language sql stable as $$select coalesce(nullif(current_setting('request.jwt.claims',true),''),'{}')::jsonb$$;
  create function auth.uid() returns uuid language sql stable as $$select (auth.jwt()->>'sub')::uuid$$;`);
-for(const file of ['20261025020314_lingjing_identity_actor_contract.sql','20261025021755_lingjing_auth_bridge.sql'])await db.exec(readFileSync(`infra/supabase/migrations/${file}`,'utf8'));
+for(const file of ['20261025021620_lingjing_identity_actor_contract.sql','20261025022918_lingjing_auth_bridge.sql'])await db.exec(readFileSync(`infra/supabase/migrations/${file}`,'utf8'));
 async function as(sid,dev,sql,params=[],role='authenticated'){
  await db.exec(`begin;set local role ${role}`);try{await db.query("select set_config('request.jwt.claims',$1,true),set_config('request.headers',$2,true)",[
   JSON.stringify({sub:uid,session_id:sid,role}),JSON.stringify({'x-lingjing-device-id':dev})]);const r=await db.query(sql,params);await db.exec('commit');return r.rows;
@@ -19,7 +19,7 @@ await as(null,null,"select public.lingjing_link_auth_user($1,'upgrade_fixture','
 await as(old,device,'select public.lingjing_register_device($1)',[device]);
 await as(current,device,'select public.lingjing_register_device($1)',[device]); // Reproduce overwritten history before the fix.
 await as(second,device2,'select public.lingjing_register_device($1)',[device2]);
-await db.exec(readFileSync('infra/supabase/migrations/20261025031842_lingjing_session_revocation_ledger.sql','utf8'));
+await db.exec(readFileSync('infra/supabase/migrations/20261025032327_lingjing_session_revocation_ledger.sql','utf8'));
 after(()=>db.close());
 test('LOCAL PGlite upgrade only: backfill retires overwritten SID but keeps both live devices and unrelated Auth users',async()=>{
  await assert.rejects(as(old,device,'select public.lingjing_register_device($1)',[device]),/LJ_SESSION_REVOKED/);
