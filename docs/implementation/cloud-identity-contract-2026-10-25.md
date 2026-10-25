@@ -74,11 +74,15 @@ JSON SHA256 和现有备份保持兼容，SQL 处理 UTF-16 键排序及 ECMAScr
 
 领域从 `services.get('cloudActor')` 取得主进程能力：`await requireActor()` 或 `await invoke('lingjing-领域函数', body)`。也可调用 `accounts.requireCloudActor()` / `accounts.cloudInvoke(name,body)`。前者返回公开 actor 字段以及非枚举的 `.client`（官方 Supabase SDK，含用户 JWT/设备头）、`.invoke(name,body)`（会刷新令牌）、`.accessToken`、`.url` 和 `.publishableKey`。资源模块每次 Storage 操作重新取得 context；不要长期缓存 SDK 对象或转发到 renderer。`JSON.stringify(context)` 不含这些字段。领域还应在异步结果应用本地前核对 owner/会话，统一 invoke 已阻止退出/切号后的旧结果生效。
 
+07已发布的 `services.get('cloudAuth')` 是同一个 `cloudActor` 对象的兼容名称，无第二套身份或会话；`requireActor(expectedOwner?)` 在返回前再验证显式目标owner。新领域统一使用cloudActor。
+
 旧 `requireRuntimeUser()` 对新 Auth 返回 `CLOUD_PROTOCOL_UPGRADE_REQUIRED`，`privateSession().sessionToken` 为null，JWT不会误发到原HTTP。新 Auth证明仅在主进程的 `cloudProof`，包含Auth SDK签发的access/refresh；既有 `SessionVault` 用Windows safeStorage加密保存证明。SQLite仅追加 `account_cloud_links` 记录稳定 owner 与Auth UID，不保存令牌。刷新合并并发请求，成功后同步更新加密凭据；退出/切号epoch与旧proof检查阻止迟到刷新恢复登录。
 
 同一个 owner/device/Auth session 取得的 `.client` 是同一个官方 SDK 实例。SDK 使用 `accessToken` 异步 callback，由账号模块在每次 Data API/Storage 请求及 Realtime callback/heartbeat/reconnect 时取得仍有效的 access JWT；没有固定 Authorization header。刷新后账号模块调用 `client.realtime.setAuth()` 更新现有频道，并保持callback模式。消费者不得手动 `setAuth(token)` 固定令牌；SDK的 `.auth` 不对领域开放，密码/刷新由账号模块独占。退出、失效、切账号或Auth session更换时取消频道并断开连接，旧SDK回调不再提供该账号JWT。`.accessToken` 是兼容的瞬时值，长期任务必须使用SDK callback或 `.invoke()`，不可缓存该字符串。
 
 `20261025031842_lingjing_session_revocation_ledger.sql` 追加私有、禁止UPDATE/DELETE的 `revoked_auth_sessions`，永久记录显式撤销和被新登录替换的SID。register/revoke按owner行锁序列化，等锁后再查SID。`live_session_id()` 共用检查使直接authenticated RPC、actor、session和RLS均拒绝旧SID，不能只依赖当前device行或Edge。升级时保留全部当前有效设备绑定，只补记已撤销行及已关联灵境账号当前未绑定的旧Auth sessions，以关闭旧实现已丢失的替换历史；不改Auth表数据，不扩大service_role对auth表读取权限。迁移瞬间尚未完成设备绑定的登录可能需要重新登录一次，原密码和存档不变。
+
+所有service-role业务提交在同一事务先调用 `lingjing_private.assert_service_actor(owner,authUid,deviceUuid,sessionUuid)`：取得owner `FOR UPDATE`规范锁后，锁住真实Auth用户/session `FOR SHARE`，复核activeowner、nonanonymous、实际not_after/clock_timestamp、immutable撤销账本和当前device/SID。锁保留到业务提交结束，把退出/撤销与提交线性化；没有新Auth表读取授权。helper私有definer、空search_path、仅service_role可EXEC。`20261025033602` 提供helper，`20261025033734` 保持03 discovery live_actor、05 territory_check_actor和02 companion command签名/授权及业务内容，替换其重复身份检查；04/07新RPC应直接调用同一helper并传四个已验证身份字段。
 
 主进程受保护同步先完整保存 `account_sync_sources.original_document`，再按已确认的 cloudRevision 拼合个人设置/聊天与当前服务端权威片段。缺少可信来源的本机玩法差异只上传 `promoted:false` 安全投影，不会覆盖云库存。`cloud-projection.cjs` 排除旧legacy原文、raw/source_json、凭据字段及配置JSON内嵌的凭据，单列 `original_checksum` 与 `cloud_projection_checksum` 和排除项；不能把安全投影称为完整原档云备份。本机旧源原件、原始快照和备份保留。同步结果 `requiresAuthority:true` / `privacyRedactions:true` 时只声明可同步内容成功，UI显示核验/私密字段留在本机。冲突不会重定基准版本；显式云恢复前生成原档备份。已经准备的CAS输入在网络/响应丢失后原样重试，不能重新读取新版头覆盖原action内容。
 
@@ -94,6 +98,8 @@ JSON SHA256 和现有备份保持兼容，SQL 处理 UTF-16 键排序及 ECMAScr
 
 输出仅 `claims.dpapi`（Windows当前用户加密，entropy为公开字符串 `LINGJING_LEGACY_CLAIMS_V1`）与不含用户名/密码摘要的audit.json；不覆盖原导出或旧输出。每条claim保持原TEXT owner、用户名、原SHA256密码语义及创建时间，关联源record/manifest摘要。主协调后续在安全内存中解密、复核来源后才能阶段性写私有claims表；登录端验证原密码后才创建并绑定Auth身份。该工具的3个合成用例不代表已经拿到旧服务器数据。宠物/成长/库存/消息/资源的旧源导入仍需各域核对，audit明确 `cloudMigrationCompleted:false`。
 
-真实Auth由主协调部署并HTTPS8/8验收；CAS部署后的本会话主进程HTTPS11/11证据为 `artifacts/accounts/cloud-main-http-1792896651252/evidence.json`。实际双Electron44.9.3、Windows safeStorage、同账号双会话、跨进程个人存档读回/冲突/加密重启与持久队列、SDK实际令牌轮转8项通过：`artifacts/accounts/cloud-electron-1792897321861/evidence.json`。后一证据明确 `fullSaveVerified:false` / `authorityPending:true`：当前完整域初始化/权威片段仍由02/03/04/05/07整合，不能冒称全域存档已完成；同机双进程也不能冒称两台实体设备。secret guard修订待集中部署和真实隐私HTTPS读回，不以本地8个SQL/6个协议测试代替。
+真实Auth由主协调部署并HTTPS8/8验收；CAS部署后的本会话主进程HTTPS11/11证据为 `artifacts/accounts/cloud-main-http-1792896651252/evidence.json`。实际双Electron44.9.3、Windows safeStorage、同账号双会话、跨进程个人存档读回/冲突/加密重启与持久队列、SDK实际令牌轮转8项通过：`artifacts/accounts/cloud-electron-1792897321861/evidence.json`。后一证据明确 `fullSaveVerified:false` / `authorityPending:true`：当前完整域初始化/权威片段仍由02/03/04/05/07整合，不能冒称全域存档已完成；同机双进程也不能冒称两台实体设备。secret guard及事务内actor guard均已由主协调集中部署，真实隐私/原文/失效会话证据见下。
+
+后续已验证且提交到 `docs/implementation/evidence/accounts/cloud-2026-10-25/`：实际并发CAS两种竞争均正确；主协调managed-valid旧SID重绑/refresh拒绝且独立设备继续有效；嵌套/serialized假凭据5种拒绝且安全投影独立DB读回无假标记；原签发JWT自然过期被Auth403 bad_jwt(expired)及save401拒绝；生产聊天adapter生成的消息/记忆/人设JSON示例经过合法云领养、CAS及独立Data API读回逐字一致且整包checksum不变。完整云端存档与最新全域双Electron仍待各域主进程入口/权威初始化齐备。
 
 官方资料（2026-10-25 已核对）：[Auth sessions](https://supabase.com/docs/guides/auth/sessions)、[Sign out scopes](https://supabase.com/docs/guides/auth/signout)、[Edge secrets](https://supabase.com/docs/guides/functions/secrets)、[新 API keys](https://supabase.com/docs/guides/getting-started/migrating-to-new-api-keys)、[RLS](https://supabase.com/docs/guides/database/postgres/row-level-security)。已检查最新 changelog，Node/Electron 使用现代 TLS；未引入自造 JWT 或第二套认证密码系统。

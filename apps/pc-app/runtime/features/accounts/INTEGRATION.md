@@ -24,6 +24,8 @@ getLegacyInventory(ownerAccountId) 提供经过归属映射的原始库存/历�
 
 完整存档通过各模块 backup adapter 注册到同一 BackupManager。跨端写入使用 expected revision + actionId + 校验和，冲突先保留当前本机档案和待同步记录。资源、聊天、宠物和成长分别保留其归属和完整性，不建立第二套库存或奖励入口。
 
+资源引用 v2 与受验证偏好先异步下载、检查实际私有文件和权威回执，再进入同步 SQLite 恢复事务。预览保留原始 envelope/checksum，内部规范视图只用于比较；异步等待后必须仍是原 owner/device/SID，同 SID 的令牌刷新可以继续，退出后同账号重新登录须重新预览。只有完整本机视图与独立云端读回相同，才推进公共同步基线。
+
 Windows safeStorage 保管登录凭据与个人 BYOK；密钥不进入 renderer、普通 SQLite 明文、云存档、导出或日志。云投影按已知 schema 去除配置凭据，同时保留用户创作的 JSON/消息内容，不能简单按字段名删掉正常对话。服务端继续检查完整 actor、受保护状态及拒绝不合法投影。
 
 ## 桌面宿主与验证
