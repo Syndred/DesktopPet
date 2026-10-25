@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-25T07:40:08.285Z",
-  "phase": "final-combined-fixes-accepted-rebuilding-actual-portable",
+  "updatedAt": "2026-10-25T07:57:28.819Z",
+  "phase": "actual-sfx-friend-lifecycle-journal-audit",
   "goalStatus": "active",
   "deployed": {
     "projectRef": "jbvrdmrkwpznbrvteive",
@@ -125,8 +125,8 @@
     }
   },
   "fixedRemainingWork": [
-    "Audit rebuilt actual portable SFX at combined source 2cafccd",
-    "Complete root actual SFX full business flow and 04 actual friend duel, then independent cloud/SQLite acceptance"
+    "Finish complete friend protocol/journal boundary audit and strict provenance migration for local invite/accept pet bindings",
+    "Build the fully audited source and complete UI-driven training/report/offline-restart plus actual friend full-save convergence"
   ],
   "cleanup": {
     "completedCodeRetirement": true,
@@ -258,10 +258,10 @@
       "review": "Legacy normalization is internal view only; original envelope/checksum/files retained. Root8 targeted native restore/provider cases and original signed expired HTTPS denial passed."
     }
   ],
-  "status": "final-combined-fixes-accepted-rebuilding-actual-portable",
+  "status": "actual-sfx-friend-lifecycle-journal-audit",
   "remaining": [
-    "Audit rebuilt actual portable SFX at combined source 2cafccd",
-    "Complete root actual SFX full business flow and 04 actual friend duel, then independent cloud/SQLite acceptance"
+    "Finish complete friend protocol/journal boundary audit and strict provenance migration for local invite/accept pet bindings",
+    "Build the fully audited source and complete UI-driven training/report/offline-restart plus actual friend full-save convergence"
   ],
   "engineering": {
     "historicalEngineeringCheckpoints": {
@@ -410,5 +410,19 @@
     "log": "artifacts/cloud-upgrade/2026-10-25/final-native-authority-personal.log",
     "logSha256": "17e2f701b62cec951dc518ebaafa65520126ba3511c29282cb0ac8d5c2d9be7a",
     "scope": "Complete native regression after cloud-v1 report contract and strict concurrent authority/personal sync recovery. New actual portable business acceptance remains pending."
+  },
+  "finalPortable2cafFirst": {
+    "source": "2cafccd6871403f69ae8a5bb17dbd658b5a48272",
+    "sha256": "af75c5a8ace15a4a924e71a24fd258df80a459648a1c1ab8d795b1da6e43837e",
+    "engineeringPassed": true,
+    "businessPassed": false,
+    "completedGroups": 3,
+    "evidence": "docs/implementation/evidence/cloud/2026-10-25/final-portable-2cafccd-first/evidence.json",
+    "independentTraining": "docs/implementation/evidence/cloud/2026-10-25/final-portable-2cafccd-first/independent-training-cloud.json",
+    "trainingBothCleanRevision": 85,
+    "trainingUniqueExperience": 5,
+    "trainingUniqueSeeds": 2,
+    "actualFriendFinishedRounds": 10,
+    "actualFriendFinalSyncAccepted": false
   }
 }
