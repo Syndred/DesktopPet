@@ -39,6 +39,7 @@ try {
   let {room}=await command(b,'accept_invite',{account:b.account,requestId:invited.request.id,pet:b.pet});
   assert.equal(room.invited_user_id,a.owner);await assert.rejects(command(c,'join_room',{account:c.account,roomCode:room.room_code,pet:c.pet}),/ROOM_FORBIDDEN/);
   ({room}=await command(a,'join_room',{account:a.account,roomCode:room.room_code,pet:a.pet}));assert.equal(room.status,'active');
+  assert.equal((await command(a,'create_room',{account:a.account,pet:a.pet})).room.id,room.id);
   await assert.rejects(command(b,'join_room',{account:b.account,roomCode:room.room_code,pet:b.pet}),/SELF_DUEL_FORBIDDEN/);
   record('actual PostgreSQL invitation, acceptance, reserved membership, same-owner refusal and stable command receipt');
   assert.equal((await query('authenticated','SELECT id FROM public.lingjing_battle_rooms',[],a)).length,1);

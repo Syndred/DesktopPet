@@ -158,13 +158,18 @@ BEGIN
       IF invitation.status='accepted' AND invitation.room_id IS NOT NULL THEN
         SELECT * INTO STRICT room FROM public.lingjing_battle_rooms WHERE id=invitation.room_id;
       ELSIF invitation.status<>'pending' THEN RAISE EXCEPTION 'INVITE_CONFLICT'; END IF;
+    ELSE
+      -- A new device (or a new id after an unknown create response) resumes its existing
+      -- membership instead of creating another cloud room. The pet binding stays immutable.
+      SELECT r.* INTO room FROM public.lingjing_battle_rooms r JOIN public.lingjing_battle_members m ON m.room_id=r.id
+        WHERE m.auth_uid=p_actor AND m.owner_account_id=p_owner AND m.active FOR UPDATE OF r;
     END IF;
     IF room.id IS NULL THEN
       INSERT INTO public.lingjing_battle_rooms(host_auth_uid,host_user_id,host_account,host_pet_id,host_pet_name,host_resource_id,host_element,invitation_id,invited_auth_uid,invited_user_id)
       VALUES(p_actor,p_owner,p_input->>'account',pet->>'petId',pet->>'name',pet->>'resourceId',pet->>'element',invitation.id,invitation.from_auth_uid,invitation.from_user_id) RETURNING * INTO room;
       INSERT INTO public.lingjing_battle_members(room_id,auth_uid,owner_account_id,side) VALUES(room.id,p_actor,p_owner,'host');
       IF invitation.id IS NOT NULL THEN UPDATE public.lingjing_battle_invites SET status='accepted',room_id=room.id,updated_at=now() WHERE id=invitation.id RETURNING * INTO invitation; END IF;
-    ELSIF room.host_pet_id<>pet->>'petId' THEN RAISE EXCEPTION 'PET_ROOM_MISMATCH'; END IF;
+    ELSIF (CASE WHEN room.host_auth_uid=p_actor THEN room.host_pet_id ELSE room.guest_pet_id END) IS DISTINCT FROM pet->>'petId' THEN RAISE EXCEPTION 'PET_ROOM_MISMATCH'; END IF;
     result:=jsonb_build_object('room',to_jsonb(room),'request',CASE WHEN invitation.id IS NOT NULL THEN to_jsonb(invitation) ELSE NULL END);
   ELSE
     SELECT * INTO STRICT room FROM public.lingjing_battle_rooms WHERE (p_input->>'roomId' IS NOT NULL AND id=(p_input->>'roomId')::uuid) OR (p_input->>'roomId' IS NULL AND room_code=p_input->>'roomCode') FOR UPDATE;
@@ -240,6 +245,7 @@ CREATE FUNCTION public.lingjing_battle_claim_settlement(p_actor uuid,p_owner tex
 RETURNS jsonb LANGUAGE plpgsql SECURITY INVOKER SET search_path='' AS $$
 DECLARE room public.lingjing_battle_rooms%ROWTYPE; receipt public.lingjing_battle_settlements%ROWTYPE; side text; bound_pet text;
 BEGIN
+  IF NOT EXISTS(SELECT 1 FROM public.lingjing_accounts WHERE auth_user_id=p_actor AND owner_id=p_owner AND status='active') THEN RAISE EXCEPTION 'ACTOR_OWNER_MISMATCH'; END IF;
   SELECT * INTO STRICT room FROM public.lingjing_battle_rooms WHERE id=p_room FOR UPDATE;
   side:=CASE WHEN room.host_auth_uid=p_actor AND room.host_user_id=p_owner THEN 'host' WHEN room.guest_auth_uid=p_actor AND room.guest_user_id=p_owner THEN 'guest' END;
   IF side IS NULL THEN RAISE EXCEPTION 'ROOM_FORBIDDEN'; END IF;
