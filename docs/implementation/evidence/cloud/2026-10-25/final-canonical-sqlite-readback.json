@@ -1,0 +1,598 @@
+{
+  "at": "2026-10-25T08:52:23.233Z",
+  "sourceCommit": "a9acd7f6f1920c541d429fa26d1f054b1427cd95",
+  "executableSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+  "method": "Root read-only SQLite after exit versus full actual canonical envelopes retrieved independently through Supabase management SQL; validates every captured envelope checksum",
+  "rawReadback": "artifacts/cloud-upgrade/2026-10-25/final-canonical-envelope-readback.json",
+  "rawReadbackSha256": "25cdf3496c868845b17d5cfccc18a4cbcceb59af7473dfde4793498f1f5fd5b9",
+  "results": [
+    {
+      "label": "sync-A",
+      "profile": "artifacts/cloud-upgrade/2026-10-25/final-portable-JU5SCf/A",
+      "owner": "account:470a41d4-3cf7-4a7d-8b1e-32e276d2a719",
+      "queryOnly": true,
+      "quickCheck": "ok",
+      "revision": 103,
+      "checksum": "324bd218a312baecc38aebcb3e4c9fdfa72fd08893c416c83d0bd945d0b65e5c",
+      "pending": 0,
+      "checked": [
+        {
+          "table": "companion_pets",
+          "rows": 16,
+          "sha256": "b1a865bb940bd95d42b3d067b6390e94b89dacdb331b433e4da98fc65855bf7f"
+        },
+        {
+          "table": "companion_actions",
+          "rows": 82,
+          "sha256": "40b6d8dcbb4d0c8c980b203611b4cb718eaf3f84c4dbf3a4d0748251176e9b1d"
+        },
+        {
+          "table": "companion_accounts",
+          "rows": 1,
+          "sha256": "8af933bbca05eaa67cf2ae2d7e178d1b4d2c73aecf4792527b20d9d50a0b2a48"
+        },
+        {
+          "table": "companion_interactions",
+          "rows": 3,
+          "sha256": "7999a5cb54e703f03a4405447dd3be80de4a7957d22d77b6701811f6153b3f15"
+        },
+        {
+          "table": "companion_legacy_archive",
+          "rows": 0,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "table": "companion_capture_receipts",
+          "rows": 0,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "table": "companion_identity_imports",
+          "rows": 0,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "table": "garden_items",
+          "rows": 4,
+          "sha256": "c414ff34684b2e1401b6a9b89c498e176c42fe5aa0757421ce6fce9570dfcac2"
+        },
+        {
+          "table": "garden_plots",
+          "rows": 6,
+          "sha256": "0e4051635caed28055f74efa52a83af648cfc634654444c807924c2d289506e3"
+        },
+        {
+          "table": "garden_events",
+          "rows": 9,
+          "sha256": "9bfcf8274a22bfcd1b538643ce1669111a13cb113c103d0cebfbd04874a5dd61"
+        },
+        {
+          "table": "garden_outbox",
+          "rows": 6,
+          "sha256": "e5b85815567dbcf54e97222e525f496d05dcd76e024b552b0eb005f29b42d4f2"
+        },
+        {
+          "table": "garden_actions",
+          "rows": 6,
+          "sha256": "87a0890a402fc4f6564b8c1f6096450333560bfd317be20f503186c024c947f2"
+        },
+        {
+          "table": "garden_accounts",
+          "rows": 1,
+          "sha256": "0b52f1b965a2eee993848c74ef1d0215c764b2428679ed717ffb8758d7f076e6"
+        },
+        {
+          "table": "garden_garrisons",
+          "rows": 0,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "table": "garden_reward_receipts",
+          "rows": 4,
+          "sha256": "b428fd74f2dd3566bde115d981e86b8c1c1ea8d2be7cab250ae89cfaf53e19f6"
+        },
+        {
+          "table": "garden_territory_attempts",
+          "rows": 0,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "table": "garden_territory_challenges",
+          "rows": 0,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "table": "conversation_memories",
+          "rows": 5,
+          "sha256": "eaacb22edb88e471a6744ae9e7ef9938689203deb8596ffac8d69ee42356344c"
+        },
+        {
+          "table": "conversation_messages",
+          "rows": 6,
+          "sha256": "ac7f373ca9c464e105f689a1a2a7c62358acc8e428a03221b9913985bb6dfa15"
+        },
+        {
+          "table": "conversation_profiles",
+          "rows": 3,
+          "sha256": "fbd87676475a26add9d72e75c63dc09d714fe54140c8649e91abe64e5bf9f283"
+        },
+        {
+          "table": "conversation_connections",
+          "rows": 3,
+          "sha256": "f23c47a24cd04cde31aed50d6408b4f5c80ddd5d9e5d17fd9a94bfd8496bbd31"
+        },
+        {
+          "table": "conversation_preferences",
+          "rows": 1,
+          "sha256": "dd7e78b7fd7591399bc83f3e9a715ffbc89eb63f45e107c8df55487196b2ab56"
+        },
+        {
+          "table": "battle_sessions",
+          "rows": 4,
+          "sha256": "1d9ef9ba25d0c08adcde30808a2bbd871057e88c019906ebd0070966b2584e21"
+        },
+        {
+          "table": "battle_action_receipts",
+          "rows": 0,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "table": "battle_reports_v2",
+          "rows": 4,
+          "sha256": "03f6583058ffb8ca4689fb492ce0603b04a175132be48d6b4e1d5c68c01d6d5c"
+        },
+        {
+          "table": "battle_reward_receipts",
+          "rows": 4,
+          "sha256": "d11d2444c5f956699cbb237b8687cf9d71388b10673fd8c2aa00b013f06f6d31"
+        },
+        {
+          "table": "settings",
+          "rows": 1,
+          "sha256": "9fa867daf5505f79ca63f075d643733acd1bcc83940fdf7e8bee853d7c5dae4a"
+        }
+      ]
+    },
+    {
+      "label": "sync-B",
+      "profile": "artifacts/cloud-upgrade/2026-10-25/final-portable-JU5SCf/B",
+      "owner": "account:470a41d4-3cf7-4a7d-8b1e-32e276d2a719",
+      "queryOnly": true,
+      "quickCheck": "ok",
+      "revision": 103,
+      "checksum": "324bd218a312baecc38aebcb3e4c9fdfa72fd08893c416c83d0bd945d0b65e5c",
+      "pending": 0,
+      "checked": [
+        {
+          "table": "companion_pets",
+          "rows": 16,
+          "sha256": "b1a865bb940bd95d42b3d067b6390e94b89dacdb331b433e4da98fc65855bf7f"
+        },
+        {
+          "table": "companion_actions",
+          "rows": 82,
+          "sha256": "40b6d8dcbb4d0c8c980b203611b4cb718eaf3f84c4dbf3a4d0748251176e9b1d"
+        },
+        {
+          "table": "companion_accounts",
+          "rows": 1,
+          "sha256": "8af933bbca05eaa67cf2ae2d7e178d1b4d2c73aecf4792527b20d9d50a0b2a48"
+        },
+        {
+          "table": "companion_interactions",
+          "rows": 3,
+          "sha256": "7999a5cb54e703f03a4405447dd3be80de4a7957d22d77b6701811f6153b3f15"
+        },
+        {
+          "table": "companion_legacy_archive",
+          "rows": 0,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "table": "companion_capture_receipts",
+          "rows": 0,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "table": "companion_identity_imports",
+          "rows": 0,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "table": "garden_items",
+          "rows": 4,
+          "sha256": "c414ff34684b2e1401b6a9b89c498e176c42fe5aa0757421ce6fce9570dfcac2"
+        },
+        {
+          "table": "garden_plots",
+          "rows": 6,
+          "sha256": "0e4051635caed28055f74efa52a83af648cfc634654444c807924c2d289506e3"
+        },
+        {
+          "table": "garden_events",
+          "rows": 9,
+          "sha256": "9bfcf8274a22bfcd1b538643ce1669111a13cb113c103d0cebfbd04874a5dd61"
+        },
+        {
+          "table": "garden_outbox",
+          "rows": 6,
+          "sha256": "e5b85815567dbcf54e97222e525f496d05dcd76e024b552b0eb005f29b42d4f2"
+        },
+        {
+          "table": "garden_actions",
+          "rows": 6,
+          "sha256": "87a0890a402fc4f6564b8c1f6096450333560bfd317be20f503186c024c947f2"
+        },
+        {
+          "table": "garden_accounts",
+          "rows": 1,
+          "sha256": "0b52f1b965a2eee993848c74ef1d0215c764b2428679ed717ffb8758d7f076e6"
+        },
+        {
+          "table": "garden_garrisons",
+          "rows": 0,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "table": "garden_reward_receipts",
+          "rows": 4,
+          "sha256": "b428fd74f2dd3566bde115d981e86b8c1c1ea8d2be7cab250ae89cfaf53e19f6"
+        },
+        {
+          "table": "garden_territory_attempts",
+          "rows": 0,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "table": "garden_territory_challenges",
+          "rows": 0,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "table": "conversation_memories",
+          "rows": 5,
+          "sha256": "eaacb22edb88e471a6744ae9e7ef9938689203deb8596ffac8d69ee42356344c"
+        },
+        {
+          "table": "conversation_messages",
+          "rows": 6,
+          "sha256": "ac7f373ca9c464e105f689a1a2a7c62358acc8e428a03221b9913985bb6dfa15"
+        },
+        {
+          "table": "conversation_profiles",
+          "rows": 3,
+          "sha256": "fbd87676475a26add9d72e75c63dc09d714fe54140c8649e91abe64e5bf9f283"
+        },
+        {
+          "table": "conversation_connections",
+          "rows": 3,
+          "sha256": "f23c47a24cd04cde31aed50d6408b4f5c80ddd5d9e5d17fd9a94bfd8496bbd31"
+        },
+        {
+          "table": "conversation_preferences",
+          "rows": 1,
+          "sha256": "dd7e78b7fd7591399bc83f3e9a715ffbc89eb63f45e107c8df55487196b2ab56"
+        },
+        {
+          "table": "battle_sessions",
+          "rows": 4,
+          "sha256": "1d9ef9ba25d0c08adcde30808a2bbd871057e88c019906ebd0070966b2584e21"
+        },
+        {
+          "table": "battle_action_receipts",
+          "rows": 0,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "table": "battle_reports_v2",
+          "rows": 4,
+          "sha256": "03f6583058ffb8ca4689fb492ce0603b04a175132be48d6b4e1d5c68c01d6d5c"
+        },
+        {
+          "table": "battle_reward_receipts",
+          "rows": 4,
+          "sha256": "d11d2444c5f956699cbb237b8687cf9d71388b10673fd8c2aa00b013f06f6d31"
+        },
+        {
+          "table": "settings",
+          "rows": 1,
+          "sha256": "9fa867daf5505f79ca63f075d643733acd1bcc83940fdf7e8bee853d7c5dae4a"
+        }
+      ]
+    },
+    {
+      "label": "friend-A",
+      "profile": "C:/Users/Administrator/.codex/worktrees/lingjing-battle/DesktopPet/artifacts/battle/final-portable-friend-a9acd7f-1792917183061/profile-A",
+      "owner": "account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+      "queryOnly": true,
+      "quickCheck": "ok",
+      "revision": 9,
+      "checksum": "6c41d531f2499efc34116665d2d99b516c7014eeee29c579a6ac3a34f65a1c4d",
+      "pending": 0,
+      "checked": [
+        {
+          "table": "companion_pets",
+          "rows": 1,
+          "sha256": "300bddddc2e2cd16ea74833957c057ee8f3e08891b4b4620a9776970f3c64533"
+        },
+        {
+          "table": "companion_actions",
+          "rows": 7,
+          "sha256": "9f00e66c9a6b81830451ce7e081142cfe608867e922b03b1f0c53103f05ed6bc"
+        },
+        {
+          "table": "companion_accounts",
+          "rows": 1,
+          "sha256": "f8ad6ef5d7c0b86c375e4e6285a627f159fd525bfefa5451e235560d05954e5d"
+        },
+        {
+          "table": "companion_interactions",
+          "rows": 0,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "table": "companion_legacy_archive",
+          "rows": 0,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "table": "companion_capture_receipts",
+          "rows": 0,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "table": "companion_identity_imports",
+          "rows": 0,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "table": "garden_items",
+          "rows": 4,
+          "sha256": "384bfbb6d25addadf4d3a6808bef5445d875625438f6c25660309e00cbe9986e"
+        },
+        {
+          "table": "garden_plots",
+          "rows": 6,
+          "sha256": "35b7c95aba8b1165b66a3fbc42347a97d9c1603880cfe79e9d9a983d64d40770"
+        },
+        {
+          "table": "garden_events",
+          "rows": 8,
+          "sha256": "e8311a62d9284eec6b0837dc2aa3edf0f12f82f86a238fbdb9c8f395d36a125a"
+        },
+        {
+          "table": "garden_outbox",
+          "rows": 5,
+          "sha256": "0328372e1cb966c44c0b2618b0d3ba4045f30d5b0d05f27477d24f39346425d1"
+        },
+        {
+          "table": "garden_actions",
+          "rows": 5,
+          "sha256": "afed73c46604706c9e38e6c1e2178eb2d1f76444da1fab9de22de7ad6215cde8"
+        },
+        {
+          "table": "garden_accounts",
+          "rows": 1,
+          "sha256": "f29dc2c29f1c8e7dc756c00313a6cb1cc6266121133780f31bb4a4fb57ab3a32"
+        },
+        {
+          "table": "garden_garrisons",
+          "rows": 0,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "table": "garden_reward_receipts",
+          "rows": 4,
+          "sha256": "ff2aed442a98d0f9ca59e55a6f27035d81fd563e148e904b41b31722200067fa"
+        },
+        {
+          "table": "garden_territory_attempts",
+          "rows": 0,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "table": "garden_territory_challenges",
+          "rows": 0,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "table": "conversation_memories",
+          "rows": 0,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "table": "conversation_messages",
+          "rows": 0,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "table": "conversation_profiles",
+          "rows": 0,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "table": "conversation_connections",
+          "rows": 0,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "table": "conversation_preferences",
+          "rows": 0,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "table": "battle_sessions",
+          "rows": 4,
+          "sha256": "017befa64599dba0d8f7fb84b7a1c180771282d722a2172b2a8d39bbb379d4cf"
+        },
+        {
+          "table": "battle_action_receipts",
+          "rows": 0,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "table": "battle_reports_v2",
+          "rows": 4,
+          "sha256": "34afcd9d717aa9e49e66b54f85d3a53ea2f88b223344fa033d40ba0f3fa5f737"
+        },
+        {
+          "table": "battle_reward_receipts",
+          "rows": 4,
+          "sha256": "7efbcc81c83bb84ee098bb06b3e762007427b6fed233c704a39f98a35cb17306"
+        },
+        {
+          "table": "settings",
+          "rows": 1,
+          "sha256": "9fa867daf5505f79ca63f075d643733acd1bcc83940fdf7e8bee853d7c5dae4a"
+        }
+      ]
+    },
+    {
+      "label": "friend-B",
+      "profile": "C:/Users/Administrator/.codex/worktrees/lingjing-battle/DesktopPet/artifacts/battle/final-portable-friend-a9acd7f-1792917183061/profile-B",
+      "owner": "account:9e230794-470b-45be-9a18-a2564c88ba35",
+      "queryOnly": true,
+      "quickCheck": "ok",
+      "revision": 7,
+      "checksum": "0676ef7a4ee7866b5ec831ef76814f73fc4674d24dcf7f6f4bec262c3f8c39b1",
+      "pending": 0,
+      "checked": [
+        {
+          "table": "companion_pets",
+          "rows": 1,
+          "sha256": "5d550ac7a49eac1ce1404f0497eff9c134d7731f5239ad5d5943cafb7d56a33c"
+        },
+        {
+          "table": "companion_actions",
+          "rows": 5,
+          "sha256": "e74e8f46c078304b2dea47d6d930bdd89ec6c13186c80a82911eeb810562597a"
+        },
+        {
+          "table": "companion_accounts",
+          "rows": 1,
+          "sha256": "bff44fd0c85ee3198e003d24c696a58ea4f4564ed58dd198355aedcd31f8afea"
+        },
+        {
+          "table": "companion_interactions",
+          "rows": 0,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "table": "companion_legacy_archive",
+          "rows": 0,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "table": "companion_capture_receipts",
+          "rows": 0,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "table": "companion_identity_imports",
+          "rows": 0,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "table": "garden_items",
+          "rows": 4,
+          "sha256": "19519cc9f5056b6ddf2890938fe1516859e745384d2415e6566d554d67b1c0ca"
+        },
+        {
+          "table": "garden_plots",
+          "rows": 6,
+          "sha256": "0cfa1c73a2d142a838087a3fdb3d4ce9cce2e0c7adeebb24fd434c41ed39e96e"
+        },
+        {
+          "table": "garden_events",
+          "rows": 7,
+          "sha256": "075c68dfd89fc075fc086eb8b00d879c491c8df45d40b73ccbf3ffa2fd098692"
+        },
+        {
+          "table": "garden_outbox",
+          "rows": 4,
+          "sha256": "70f67b4a108289e0a8be89bb219cc2d1414d29f552df58e82cc8350b828b75ca"
+        },
+        {
+          "table": "garden_actions",
+          "rows": 4,
+          "sha256": "0d07cece5ae311b9c2842297ada5983b0717e447577c43afcc7c27742f0bbb81"
+        },
+        {
+          "table": "garden_accounts",
+          "rows": 1,
+          "sha256": "8bd93159161b0632a3d11c6aea12653b8e262c635ba539d04e828ab052adda4b"
+        },
+        {
+          "table": "garden_garrisons",
+          "rows": 0,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "table": "garden_reward_receipts",
+          "rows": 3,
+          "sha256": "b567465706a7d7e050b448dc437be81719a5bc3d4d6976d00ad79a7e39120810"
+        },
+        {
+          "table": "garden_territory_attempts",
+          "rows": 0,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "table": "garden_territory_challenges",
+          "rows": 0,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "table": "conversation_memories",
+          "rows": 0,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "table": "conversation_messages",
+          "rows": 0,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "table": "conversation_profiles",
+          "rows": 0,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "table": "conversation_connections",
+          "rows": 0,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "table": "conversation_preferences",
+          "rows": 0,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "table": "battle_sessions",
+          "rows": 3,
+          "sha256": "1250c26c08f669abaf8bd10221b7c5bc2c427578e559140374f92867b3138ecd"
+        },
+        {
+          "table": "battle_action_receipts",
+          "rows": 0,
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "table": "battle_reports_v2",
+          "rows": 3,
+          "sha256": "367b51a8c9d22338a6888324aaa5def7f1fdfef7363e4f56b6c657648bb4d4be"
+        },
+        {
+          "table": "battle_reward_receipts",
+          "rows": 3,
+          "sha256": "78f51a11177669b581cf88f11cbe56f2a634b8b7893eaec5f7cade164f980aae"
+        },
+        {
+          "table": "settings",
+          "rows": 1,
+          "sha256": "9fa867daf5505f79ca63f075d643733acd1bcc83940fdf7e8bee853d7c5dae4a"
+        }
+      ]
+    }
+  ]
+}
