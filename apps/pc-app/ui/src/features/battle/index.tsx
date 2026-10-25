@@ -9,7 +9,7 @@ import { BattlePortrait } from './BattleArena';
 import { BattleScreen } from './BattleScreen';
 import { FriendsPanel } from './FriendsPanel';
 import { ReportsPanel } from './ReportsPanel';
-import { elements } from './presentation';
+import { elements, modeLabels } from './presentation';
 import { useBattleSession } from './useBattleSession';
 import './battle.css';
 
@@ -21,7 +21,6 @@ function BattleLobby() {
   const { data, session, error, busy, run, reload } = controller;
   const [petId, setPetId] = useState(''), [enemyElement, setEnemyElement] = useState<ElementType>('fire');
   useEffect(() => { if (data) setPetId(previous => data.pets.some(pet => pet.petId === previous) ? previous : data.selectedPetId || data.pets[0]?.petId || ''); }, [data]);
-  if (session && tab !== 'reports') return <ResumeBattle sessionId={session.id}/>;
   const pet = data?.pets.find(pet => pet.petId === petId);
   const start = async () => {
     const next = await run(() => request<BattleSession>('battle', 'startTraining', { petId, enemyElement, actionId: crypto.randomUUID() }));
@@ -33,6 +32,7 @@ function BattleLobby() {
         : tab === 'reports' ? <ReportsPanel rules={data.rules} reports={data.reports} selectedId={reportId} busy={busy} onSelect={id => navigate(`/battle/reports/${encodeURIComponent(id)}`)} onBack={() => navigate('/battle')}
           onAgain={report => { void run(async () => { await request('battle', 'selectPet', { petId: report.player.petId, actionId: crypto.randomUUID() }); navigate(report.mode === 'friend' ? '/battle/friends' : '/battle'); }); }}
           onRetry={id => void run(async () => { await request('battle', 'retrySettlement', { sessionId: id }); await reload(); })}/>
+        : session ? <Card className="space-y-4 p-5" aria-label="已保留的对局"><div><h2 className="font-semibold">当前对局已保留</h2><p className="muted">可继续{modeLabels[session.mode]}，或查看历史战报。</p></div><Button onClick={() => navigate(`/battle/session/${encodeURIComponent(session.id)}`)}><Swords size={18}/>{session.status === 'finished' || session.status === 'abandoned' ? '查看对局' : '继续本场'}</Button></Card>
         : !data.pets.length ? <EmptyState title="选择一位伙伴" action={<Button onClick={() => navigate('/companions/adopt')}>领养</Button>}/>
           : <><Card className="battle-party-picker"><strong>出战伙伴</strong><Select value={petId} onValueChange={selected => { setPetId(selected); void run(async () => { await request('battle', 'selectPet', { petId: selected, actionId: crypto.randomUUID() }); }); }} disabled={busy}><SelectTrigger aria-label="选择出战伙伴" className="battle-pet-select data-[size=default]:h-auto min-h-8 flex-1 min-w-0! whitespace-normal *:data-[slot=select-value]:line-clamp-none *:data-[slot=select-value]:block *:data-[slot=select-value]:min-w-0 *:data-[slot=select-value]:text-left"><SelectValue/></SelectTrigger><SelectContent position="popper" className="max-w-[calc(100vw-32px)]">{data.pets.map(pet => <SelectItem key={pet.petId} value={pet.petId}><span className="block min-w-0 whitespace-normal [overflow-wrap:anywhere]">{pet.displayIdentity.roleName} · 编号 {pet.displayIdentity.instanceNumber} · Lv.{pet.level || 1} · {elements[pet.element].label}</span></SelectItem>)}</SelectContent></Select></Card>
             {tab === 'friends' ? <FriendsPanel pet={pet} busy={busy} run={run} onSession={next => navigate(`/battle/session/${encodeURIComponent(next.id)}`)}/>
@@ -42,10 +42,6 @@ function BattleLobby() {
           </>}
     </TabsContent></Tabs>
   </div>;
-}
-function ResumeBattle({ sessionId }: { sessionId: string }) {
-  useEffect(() => navigate(`/battle/session/${encodeURIComponent(sessionId)}`), [sessionId]);
-  return null;
 }
 function BattlePage() {
   const path = usePath();

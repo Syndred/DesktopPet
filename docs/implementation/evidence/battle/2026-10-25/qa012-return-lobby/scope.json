@@ -1,0 +1,50 @@
+{
+  "baseline": "51ec072294f819eea397ad3063fb59cd854a39b5",
+  "productChanged": [
+    "apps/pc-app/ui/src/features/battle/index.tsx"
+  ],
+  "unchanged": [
+    {
+      "path": "apps/pc-app/ui/src/features/battle/BattleScreen.tsx",
+      "expectedGitBlob": "35e9785e4d37c52722fdedd671d0d86523d9b0ca",
+      "actualGitBlob": "35e9785e4d37c52722fdedd671d0d86523d9b0ca",
+      "unchanged": true
+    },
+    {
+      "path": "apps/pc-app/ui/src/features/battle/BattleArena.tsx",
+      "expectedGitBlob": "a77e3022f9e19b7d231dc9d4ab8a005fb48fd235",
+      "actualGitBlob": "a77e3022f9e19b7d231dc9d4ab8a005fb48fd235",
+      "unchanged": true
+    },
+    {
+      "path": "apps/pc-app/ui/src/features/battle/battle.css",
+      "expectedGitBlob": "9adff27970194b7e022dd1276fcdf7075ad20fe2",
+      "actualGitBlob": "9adff27970194b7e022dd1276fcdf7075ad20fe2",
+      "unchanged": true
+    },
+    {
+      "path": "apps/pc-app/ui/src/features/battle/battle-v3.css",
+      "expectedGitBlob": "7e174d1fcb0f01ba7f7566f342174d12b217b2d5",
+      "actualGitBlob": "7e174d1fcb0f01ba7f7566f342174d12b217b2d5",
+      "unchanged": true
+    },
+    {
+      "path": "apps/pc-app/ui/src/features/battle/useBattleSession.ts",
+      "expectedGitBlob": "68cdaddcb212b81a85faa25ce89a8a98b7f874db",
+      "actualGitBlob": "68cdaddcb212b81a85faa25ce89a8a98b7f874db",
+      "unchanged": true
+    },
+    {
+      "path": "apps/pc-app/runtime/features/battle/service.cjs",
+      "expectedGitBlob": "d923da36a90573a19a7eb81e948a083c85eb8d0d",
+      "actualGitBlob": "d923da36a90573a19a7eb81e948a083c85eb8d0d",
+      "unchanged": true
+    },
+    {
+      "path": "apps/pc-app/runtime/services/battle-runtime.cjs",
+      "expectedGitBlob": "f700ab55f646878d56f3d942e229a4b9c9d19d90",
+      "actualGitBlob": "f700ab55f646878d56f3d942e229a4b9c9d19d90",
+      "unchanged": true
+    }
+  ]
+}

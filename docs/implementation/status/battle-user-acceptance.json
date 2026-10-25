@@ -1,19 +1,19 @@
 {
   "module": "battle",
-  "updatedAt": "2026-10-25T10:49:22.6713786Z",
-  "integrationBase": "9e57de1d210376ce679168eb1acbff8e37cff1cd",
+  "updatedAt": "2026-10-25T12:38:46.000Z",
+  "integrationBase": "51ec072294f819eea397ad3063fb59cd854a39b5",
   "overallStatus": "fixed-awaiting-independent-qa",
   "completeUserAcceptancePassed": false,
   "upstream": {
     "fetched": true,
-    "fetchCheckedAt": "2026-10-25T10:49:22.6713786Z",
+    "fetchCheckedAt": "2026-10-25T12:34:45.000Z",
     "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086",
     "pullCommand": "git pull --ff-only origin main",
     "pullResult": "Already up to date"
   },
   "independentQa": {
-    "threadId": "01a1725c-d59c-7620-9bb6-1c0d4e0fb3a3",
-    "title": "灵境 09｜完整用户功能验收与缺陷闭环",
+    "threadId": "01a172b4-d7f0-7213-9a40-092418ee776b",
+    "title": "灵境 09（新）｜完整用户功能验收",
     "role": "Sole actual mouse/keyboard verifier after coordinator integration and packaging.",
     "status": "pending"
   },
@@ -111,6 +111,58 @@
         "合入 02/08 后，训练和好友大厅同角色实例显示云端确认的数字号，至少四位；缺值只显示待同步，不公开 UUID。",
         "好友大厅我方出战伙伴摘要显示固定角色名及数字号，窄窗口中可换行。",
         "选择不同实例后，实际训练或好友流程仍归属所选原 petId；历史战报保持原文字。"
+      ]
+    },
+    {
+      "id": "QA-012",
+      "severity": "P2",
+      "status": "fixed-awaiting-independent-qa",
+      "problem": "对局左上返回导航到大厅后，大厅的 ResumeBattle effect 立即导航回同一对局，导致可用返回按钮视觉上没有响应。",
+      "actualReproduction": {
+        "sourceCommit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+        "exeSha256": "01b8993f4464a8d2a19ceb906d0b1875b702e17777fbb7aec88738a6a63307da",
+        "evidence": "docs/implementation/qa/2026-10-25-user-acceptance/rounds/candidate-312e5fe-524fd56d/evidence/fresh09-active-battle-back-noop.json",
+        "nativeClickAt": 1792930596524,
+        "sessionId": "battle-5f702c9e-6ccb-4086-b09a-72061424139f",
+        "currentSourceAlsoAffected": "51ec072294f819eea397ad3063fb59cd854a39b5"
+      },
+      "files": ["apps/pc-app/ui/src/features/battle/index.tsx"],
+      "changes": [
+        "移除大厅自动跳回对局的 ResumeBattle effect。",
+        "已有对局时保留对战中心及标签导航，显示继续本场入口；点击后使用原 session.id 恢复。",
+        "保持已有对局时不开放新训练或好友建局入口，战报仍可访问。",
+        "已结束状态显示查看对局；野外和领地的原 context.returnTo 路径保持不变。"
+      ],
+      "sourceReview": {
+        "battleScreenUnchanged": true,
+        "arenaStylesAndAnimationsUnchanged": true,
+        "battleCoreProtocolRewardsAndHistoryUnchanged": true,
+        "runtimeAndPersistenceChanges": false,
+        "accountOrPetIdentityChanges": false,
+        "reactChecklist": "All existing hooks remain unconditional; no new navigation effects or persisted state; the resume click reads the existing session.id."
+      },
+      "verified": {
+        "headlessNavigationRegression": {
+          "command": "node docs/implementation/evidence/battle/2026-10-25/qa012-return-lobby/verify-navigation.cjs",
+          "passed": 8,
+          "failed": 0,
+          "beforeFixLoopReproduced": true,
+          "actualModules": "BattlePage/BattleLobby, BattleScreen toolbar, useBattleSession, bridge, hash navigation and kit controls",
+          "fixtures": "Scripted IPC/session; arena, friends and reports content; CSS omitted. This is not native application acceptance.",
+          "evidence": "docs/implementation/evidence/battle/2026-10-25/qa012-return-lobby/navigation-checks.json"
+        },
+        "uiTypecheck": { "command": "npm run typecheck:ui", "exitCode": 0 },
+        "targetedLint": { "command": "node node_modules/eslint/bin/eslint.js apps/pc-app/ui/src/features/battle/index.tsx", "exitCode": 0 },
+        "diffCheck": { "command": "git diff --check", "exitCode": 0 },
+        "fullSuiteRun": false,
+        "nativeProductLaunched": false,
+        "actualInputAcceptancePerformed": false,
+        "packageBuilt": false
+      },
+      "pendingIndependentQa": [
+        "09 在下一冻结候选完成训练一回合后点返回，确认停留对战中心且继续本场可操作。",
+        "继续本场恢复相同 sessionId、回合、HP、怒气及原行动记录，不创建新对局或重复奖励。",
+        "好友等待/进行中返回后可恢复同一房间，战报标签正常，野外与领地返回各自原页面。"
       ]
     }
   ]
