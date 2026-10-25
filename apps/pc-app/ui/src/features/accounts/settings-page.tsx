@@ -9,6 +9,14 @@ import { AuthPage } from "./auth";
 import { SettingsNavigation } from "./account";
 import { AccountStatus } from "./status";
 
+const notificationReasonText = new Map<string, string>([
+  ["qa-scenario", "当前为演练场景，不发送系统通知"],
+  ["unsupported", "当前系统不支持桌面通知"],
+  ["signed-out", "请先登录账号"],
+  ["disabled", "桌面通知或此类提醒已关闭"],
+  ["quiet-hours", "正处于安静时段"],
+]);
+
 function ToggleRow({ title, description, checked, onChange, children }: { title: string; description?: string; checked: boolean; onChange: (value: boolean) => void; children?: ReactNode }) {
   return <div className="ac-setting-row"><label><span className="ac-setting-copy"><strong>{title}</strong>{description && <small>{description}</small>}</span>
     <AccountSwitch label={title} checked={checked} onChange={onChange} />
@@ -68,7 +76,7 @@ function SettingsForm({ privacy = false, session }: { privacy?: boolean; session
           <ToggleRow title="情绪统计" description="仅记录互动统计，不读取聊天内容。" checked={document.privacy.emotionStatistics} onChange={v => edit("privacy", "emotionStatistics", v)} />
         </Card>
         <div className="ac-settings-footer"><Button type="button" className="ac-text-button" onClick={() => { void request<SettingsDocument>("settingsDefaults").then(value => { setDocument(value); setNotice("已填入默认设置，保存后生效。"); }).catch(e => setError(errorText(e))); }}><RefreshCw size={16} />恢复默认设置</Button><label className="ac-animation-preference"><AccountSwitch label="界面动效" checked={document.desktop.animationsEnabled} onChange={value => edit("desktop", "animationsEnabled", value)} disabled={pending} />界面动效</label><Button type="submit" className="ac-primary">{pending ? "正在保存…" : "保存设置"}</Button></div>
-        {privacy && <Button type="button" className="ac-secondary" onClick={() => { void request<{ delivered: boolean; reason?: string }>("testNotification").then(value => setNotice(value.delivered ? "已发送测试通知。" : `当前未发送通知：${value.reason === "quiet-hours" ? "正处于安静时段" : "通知已关闭或系统不支持"}。`)).catch(e => setError(errorText(e))); }}>测试已保存的通知设置</Button>}
+        {privacy && <Button type="button" className="ac-secondary" onClick={() => { void request<{ delivered: boolean; reason?: string }>("testNotification").then(value => setNotice(value.delivered ? "已发送测试通知。" : `当前未发送通知：${notificationReasonText.get(value.reason || "") || "暂时无法发送，请稍后重试"}。`)).catch(e => setError(errorText(e))); }}>测试已保存的通知设置</Button>}
       </fieldset>}
       <p role="status" aria-live="polite" className="ac-notice">{notice}</p><p role="alert" className="ac-notice ac-error">{error}</p>
     </form></div></div>
