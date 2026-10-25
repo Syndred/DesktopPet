@@ -1,6 +1,11 @@
 import type { BattleParticipant, BattleRound, BattleRulesProfile, BattleStatus } from '../../../../../../packages/shared-types/src/features/battle';
 import type { ElementType } from '../../../../../../packages/shared-types/src/battle';
 import type { BattleParticipantView } from '../../../../../../packages/shared-types/src/features/battle/views';
+import gardenCatalog from '../../../../runtime/features/garden/catalog.json';
+
+// Static item names only; importing catalog JSON does not register the garden domain.
+const seedNames = new Map(Object.values(gardenCatalog.ITEMS).filter(item => item.category === 'seed').map(item => [item.id, item.name]));
+export const seedRewardName = (itemId?: string) => itemId ? seedNames.get(itemId) || '种子' : '种子';
 
 export const elements = {
   metal: { label: '金', symbol: '✦', color: '#a28a3e', hint: '易伤：受到的伤害每层 ×1.5' },
