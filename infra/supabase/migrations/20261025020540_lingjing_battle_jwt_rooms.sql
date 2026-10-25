@@ -20,6 +20,7 @@ CREATE TABLE public.lingjing_battle_rooms (
   host_user_id text NOT NULL, guest_user_id text, host_account text NOT NULL, guest_account text,
   host_pet_id text NOT NULL, guest_pet_id text, host_pet_name text NOT NULL, guest_pet_name text,
   host_resource_id text NOT NULL, guest_resource_id text,
+  host_pet_level integer NOT NULL DEFAULT 1 CHECK(host_pet_level>0), guest_pet_level integer CHECK(guest_pet_level>0),
   host_element text NOT NULL CHECK(host_element IN ('metal','wood','earth','water','fire')),
   guest_element text CHECK(guest_element IN ('metal','wood','earth','water','fire')),
   host_hp integer NOT NULL DEFAULT 120 CHECK(host_hp BETWEEN 0 AND 120), guest_hp integer NOT NULL DEFAULT 120 CHECK(guest_hp BETWEEN 0 AND 120),
@@ -137,6 +138,7 @@ DECLARE
   result jsonb; pet jsonb:=p_input->'pet'; v_side text; requested_round integer; target_auth uuid;
 BEGIN
   IF p_actor IS NULL OR p_owner IS NULL OR length(p_owner) NOT BETWEEN 1 AND 160 OR p_action_id IS NULL OR p_action_id !~ '^[A-Za-z0-9][A-Za-z0-9:_-]{7,127}$' OR jsonb_typeof(p_input)<>'object' THEN RAISE EXCEPTION 'INVALID_COMMAND'; END IF;
+  PERFORM 1 FROM public.lingjing_accounts WHERE owner_id=p_owner FOR UPDATE;
   IF NOT EXISTS(SELECT 1 FROM public.lingjing_accounts WHERE auth_user_id=p_actor AND owner_id=p_owner AND status='active') THEN RAISE EXCEPTION 'ACTOR_OWNER_MISMATCH'; END IF;
   INSERT INTO public.lingjing_battle_commands(actor_auth_uid,action_id,owner_account_id,operation,input_json)
     VALUES(p_actor,p_action_id,p_owner,p_op,p_input) ON CONFLICT DO NOTHING;
@@ -178,8 +180,8 @@ BEGIN
         WHERE m.auth_uid=p_actor AND m.owner_account_id=p_owner AND m.active FOR UPDATE OF r;
     END IF;
     IF room.id IS NULL THEN
-      INSERT INTO public.lingjing_battle_rooms(host_auth_uid,host_user_id,host_account,host_pet_id,host_pet_name,host_resource_id,host_element,invitation_id,invited_auth_uid,invited_user_id)
-      VALUES(p_actor,p_owner,p_input->>'account',pet->>'petId',pet->>'name',pet->>'resourceId',pet->>'element',invitation.id,invitation.from_auth_uid,invitation.from_user_id) RETURNING * INTO room;
+      INSERT INTO public.lingjing_battle_rooms(host_auth_uid,host_user_id,host_account,host_pet_id,host_pet_name,host_resource_id,host_element,host_pet_level,invitation_id,invited_auth_uid,invited_user_id)
+      VALUES(p_actor,p_owner,p_input->>'account',pet->>'petId',pet->>'name',pet->>'resourceId',pet->>'element',coalesce((pet->>'level')::integer,1),invitation.id,invitation.from_auth_uid,invitation.from_user_id) RETURNING * INTO room;
       INSERT INTO public.lingjing_battle_members(room_id,auth_uid,owner_account_id,side) VALUES(room.id,p_actor,p_owner,'host');
       IF invitation.id IS NOT NULL THEN UPDATE public.lingjing_battle_invites SET status='accepted',room_id=room.id,updated_at=now() WHERE id=invitation.id RETURNING * INTO invitation; END IF;
     ELSIF (CASE WHEN room.host_auth_uid=p_actor THEN room.host_pet_id ELSE room.guest_pet_id END) IS DISTINCT FROM pet->>'petId' THEN RAISE EXCEPTION 'PET_ROOM_MISMATCH'; END IF;
@@ -196,7 +198,7 @@ BEGIN
         IF room.guest_pet_id<>pet->>'petId' THEN RAISE EXCEPTION 'PET_ROOM_MISMATCH'; END IF;
       ELSE
         IF room.status<>'waiting' THEN RAISE EXCEPTION 'ROOM_NOT_WAITING'; END IF;
-        UPDATE public.lingjing_battle_rooms SET guest_auth_uid=p_actor,guest_user_id=p_owner,guest_account=p_input->>'account',guest_pet_id=pet->>'petId',guest_pet_name=pet->>'name',guest_resource_id=pet->>'resourceId',guest_element=pet->>'element',status='active',revision=revision+1,updated_at=now() WHERE id=room.id RETURNING * INTO room;
+        UPDATE public.lingjing_battle_rooms SET guest_auth_uid=p_actor,guest_user_id=p_owner,guest_account=p_input->>'account',guest_pet_id=pet->>'petId',guest_pet_name=pet->>'name',guest_resource_id=pet->>'resourceId',guest_element=pet->>'element',guest_pet_level=coalesce((pet->>'level')::integer,1),status='active',revision=revision+1,updated_at=now() WHERE id=room.id RETURNING * INTO room;
         INSERT INTO public.lingjing_battle_members(room_id,auth_uid,owner_account_id,side) VALUES(room.id,p_actor,p_owner,'guest');
       END IF;
       result:=jsonb_build_object('room',to_jsonb(room));

@@ -2,7 +2,7 @@ import { PGlite } from '@electric-sql/pglite';
 import assert from 'node:assert/strict';
 import { readFileSync, mkdirSync, writeFileSync } from 'node:fs';
 import { randomUUID } from 'node:crypto';
-import { resolveRoomRound } from '../../../../../../infra/supabase/functions/duel-online/room-core.js';
+import { resolveRoomRound } from '../../../../../../infra/supabase/functions/lingjing-battle/room-core.js';
 const db=new PGlite(),checks=[];
 const users=Object.fromEntries(['a','b','c'].map(name=>[name,{uid:randomUUID(),sid:randomUUID(),device:randomUUID(),owner:`legacy-text-${name}`,account:`battle_${name}`,pet:{ownerId:`legacy-text-${name}`,petId:`original-pet-${name}`,resourceId:name==='b'?'builtin:lingjing-shiba-v2':'builtin:lingjing-yuwan-v2',name:`伙伴${name}`,element:name==='b'?'fire':'water'}}]));
 await db.exec(`CREATE ROLE anon; CREATE ROLE authenticated; CREATE ROLE service_role BYPASSRLS;

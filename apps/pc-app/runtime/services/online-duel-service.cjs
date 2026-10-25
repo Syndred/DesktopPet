@@ -120,7 +120,7 @@ class OnlineDuelService {
     this.cloudActor = Object.freeze({ schemaVersion: 1, authority: 'live', authKind: 'supabase', authUserId: actor.authUserId, ownerAccountId: owner, deviceId: actor.deviceId, sessionId: actor.sessionId, account: actor.account, username: actor.username });
     // SDK's accessToken callback is refreshed by accounts. setAuth() reauthorizes all
     // existing subscriptions and does not expose an access/refresh token to the caller.
-    await this.client.realtime.setAuth(transport.accessToken || undefined);
+    await this.client.realtime.setAuth();
     if (generation !== this.authGeneration) throw Object.assign(new Error('账号已切换'), { code: 'AUTH_CHANGED' });
   }
 
@@ -644,7 +644,7 @@ class OnlineDuelService {
     } else ({ data, error } = await this.client.functions.invoke(this.functionName, { body: requestBody, timeout: 12000 }));
     if (generation !== this.authGeneration) throw Object.assign(new Error('账号已切换'), { code: 'AUTH_CHANGED' });
     let failed = data;
-    if (error) { try { failed = await error.context?.clone?.().json(); } catch { /* network/response-read interruption */ } }
+    if (error) { try { const parsed=await error.context?.clone?.().json();if(parsed)failed=parsed; } catch { /* network/response-read interruption */ } }
     if (error || failed?.ok === false) {
       const code = failed?.code || failed?.error?.code || 'BATTLE_CLOUD_UNAVAILABLE';
       const message = failed?.message || failed?.error?.message || (error ? await resolveFunctionErrorMessage(error, '云端对战请求未完成') : '云端对战请求未完成');
@@ -960,6 +960,8 @@ function normalizeRoom(input) {
     guest_account: normalizeString(input.guest_account) || null,
     host_pet_id: normalizeString(input.host_pet_id) || null,
     guest_pet_id: normalizeString(input.guest_pet_id) || null,
+    host_pet_level: toPositiveInt(input.host_pet_level,1),
+    guest_pet_level: input.guest_pet_level==null?null:toPositiveInt(input.guest_pet_level,1),
     host_resource_id: normalizeString(input.host_resource_id) || null,
     guest_resource_id: normalizeString(input.guest_resource_id) || null,
     invitation_id: normalizeString(input.invitation_id) || null,

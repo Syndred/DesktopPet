@@ -25,3 +25,9 @@ test('SCRIPTED SDK boundary only: HTTP credentials and legacy password ops are r
 test('SCRIPTED SDK boundary only: revoked JWT response and logout disconnect/remove channels without exposing tokens',async()=>{
   const f=fixture();await f.online.createRoom({actionId:'create-for-revoke',petId:'pet'});f.state.response={data:{ok:false,code:'SESSION_REVOKED',message:'请重新登录'},error:null};await assert.rejects(f.online.invoke('get_room',{roomId:f.room.id}),error=>error.code==='SESSION_REVOKED');assert.equal(f.online.getStatus().currentUser,null);assert.equal(f.online.getStatus().actor,null);assert.equal(f.online.channel,null);assert.ok(f.channels[0].removed);assert.ok(f.state.disconnects>0);
 });
+test('SCRIPTED SDK lifecycle: callback auth is retained and a coded shared-invoker revocation closes the channel',async()=>{
+  const f=fixture(),args=[];f.transport.accessToken='must-not-pin-this-token';f.client.realtime.setAuth=async(...input)=>{args.push(input);};
+  await f.online.createRoom({actionId:'callback-mode-original',petId:'pet'});assert.ok(args.length>=2);assert.ok(args.every(input=>input.length===0));
+  f.transport.invoke=async()=>{throw Object.assign(new Error('revoked'),{code:'SESSION_REVOKED'});};
+  await assert.rejects(f.online.invoke('get_room',{roomId:f.room.id}),error=>error.code==='SESSION_REVOKED');assert.equal(f.online.channel,null);assert.equal(f.online.getStatus().actor,null);assert.ok(f.state.disconnects>0);
+});

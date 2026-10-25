@@ -3,7 +3,7 @@ import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { createRequire } from 'node:module';
 import { BattleRuntimeService, executeRound, getBattleRules, BATTLE_CORE_VERSION } from '../../../../../infra/supabase/functions/_shared/battle-core.js';
-import { resolveRoomRound } from '../../../../../infra/supabase/functions/duel-online/room-core.js';
+import { resolveRoomRound } from '../../../../../infra/supabase/functions/lingjing-battle/room-core.js';
 const require=createRequire(import.meta.url),desktop=require('../../services/battle-runtime.cjs');
 const golden=JSON.parse(readFileSync(new URL('./tests/fixtures/core-v1.json',import.meta.url),'utf8'));
 assert.deepEqual(getBattleRules(),golden.rules);assert.deepEqual(desktop.getBattleRules(),golden.rules);assert.equal(desktop.BATTLE_CORE_VERSION,BATTLE_CORE_VERSION);

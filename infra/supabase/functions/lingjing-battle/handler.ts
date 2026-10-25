@@ -2,12 +2,14 @@ import { type ActorContext, LingjingAuthError, readJson, jsonResponse, uuid } fr
 import { resolveRoomRound } from './room-core.js';
 
 type Db = ActorContext['client'];
-export type TrustedBattlePet = Readonly<{ownerId:string;petId:string;name:string;resourceId:string;element:string}>;
+export type TrustedBattlePet = Readonly<{ownerId:string;petId:string;name:string;resourceId:string;element:string;level:number}>;
 export type BattleDependencies = {
   /** Service client is confined to authority RPCs / verified directory and pending-choice reads. */
   admin: Db;
   /** Must read a protected authority fragment, never an unverified client/import envelope. */
   resolvePet(actor:ActorContext,petId:string):Promise<TrustedBattlePet>;
+  settle(actor:ActorContext,room:Row,petId:string):Promise<Row>;
+  training(actor:ActorContext,input:Row):Promise<Row>;
 };
 type Row = Record<string, any>;
 const table={rooms:'lingjing_battle_rooms',invites:'lingjing_battle_invites',actions:'lingjing_battle_actions',rounds:'lingjing_battle_rounds',commands:'lingjing_battle_commands',members:'lingjing_battle_members'};
@@ -98,7 +100,8 @@ export function createBattleHandler(deps:BattleDependencies) {
     const input=await readJson(request,16*1024),op=text(input.op,40);
     if(['userId','ownerAccountId','sessionToken','actor','authUserId'].some(key=>Object.hasOwn(input,key)))fail('LEGACY_IDENTITY_REJECTED',400);
     let data:unknown;
-    if(op==='search_accounts') {
+    if(['start_training','get_training','get_active_training','training_action','leave_training'].includes(op))data=await deps.training(actor,input);
+    else if(op==='search_accounts') {
       const keyword=text(input.keyword??input.query,64),pattern=`%${keyword.toLowerCase().replace(/[\\%_]/g,'\\$&')}%`,limit=input.limit?integer(input.limit,1,20):20;
       if(keyword.length<2)fail('SEARCH_TOO_SHORT');
       const base=()=>deps.admin.from('lingjing_accounts').select('owner_id,account,username').eq('status','active').neq('owner_id',actor.ownerAccountId).limit(limit);
@@ -140,8 +143,8 @@ export function createBattleHandler(deps:BattleDependencies) {
     } else if(op==='leave_room') {
       const roomId=identifier(input.roomId);await roomFor(actor,{roomId});await command(actor,'leave_room',input.actionId,{roomId},async()=>({roomId}));data=await snapshot(actor,{roomId});
     } else if(op==='claim_battle_settlement') {
-      const roomId=identifier(input.roomId),petId=text(input.petId);await roomFor(actor,{roomId});
-      data=await rpc('lingjing_battle_claim_settlement',{p_actor:actor.authUserId,p_owner:actor.ownerAccountId,p_room:roomId,p_pet:petId});
+      const roomId=identifier(input.roomId),petId=text(input.petId),room=await resolved(actor,await roomFor(actor,{roomId}));
+      data=await deps.settle(actor,room,petId);
     } else fail('UNSUPPORTED_OP',400);
     return jsonResponse({ok:true,data});
   };
