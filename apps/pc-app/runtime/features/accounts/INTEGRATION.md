@@ -42,6 +42,8 @@ Windows safeStorage 保管登录凭据与个人 BYOK；密钥不进入 renderer�
 
 close-to-tray、窗口数量、置顶、穿透、安静时段和定位权限接正式 Electron API。启动项仅在用户显式保存开关时修改。全屏检测从 ASAR 用 Node 读取脚本后运行 PowerShell，fullscreenMonitorReady 必须等到协议输出，不能以子进程存在代替。专项证据保留 false 样本并严格断言就绪。
 
+Windows 便携版启动项优先使用 electron-builder 提供的 PORTABLE_EXECUTABLE_FILE，必须是存在的绝对 EXE 文件且不在临时解压目录；目录短路径别名经 realpath 核对。正常安装版保留稳定 process.execPath；不能从便携目录和清理后的临时子程序猜启动入口。开启、关闭及 getLoginItemSettings 使用同一 path/args，参数固定为空，不保存检查器或临时启动参数。找不到稳定入口时拒绝开启并保留原设置；用户明确关闭仍可移除本应用启动项。登录、恢复、无关设置或路径失效均不自动修复、迁移或删除既有 OS 启动项。QA-007 的 mock/隔离样例只核验参数与显式写入边界，不作为真实系统重启通过。
+
 公开 session/login/register/logout 与受保护设置/备份/同步命令继续由统一 IPC 注册；renderer 不传可信 owner、JWT、任意备份文件路径。安全 session 事件由统一 app/accounts 通知刷新界面。退出释放本账户的频道和托管连接，保留其他设备与其他账号。
 
 ## 旧入口退役

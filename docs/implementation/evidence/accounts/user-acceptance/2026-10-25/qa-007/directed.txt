@@ -1,0 +1,26 @@
+✔ mock Windows runtime: portable target is the absolute outer EXE with empty arguments, preserving spaces and Chinese characters (2.0008ms)
+✔ mock Windows runtime: installed application keeps its stable process executable (0.2811ms)
+▶ mock Windows runtime: missing, relative, quoted, deleted, directory and extracted-child portable paths never fall back to the temporary executable
+  ✔ missing FILE (0.1326ms)
+  ✔ relative (0.0973ms)
+  ✔ rooted without drive (0.0686ms)
+  ✔ drive-relative (0.0767ms)
+  ✔ quoted (0.051ms)
+  ✔ non-executable (0.0706ms)
+  ✔ child (0.1314ms)
+  ✔ case-insensitive TEMP (0.1378ms)
+  ✔ dot traversal into TEMP (0.1187ms)
+✔ mock Windows runtime: missing, relative, quoted, deleted, directory and extracted-child portable paths never fall back to the temporary executable (1.7241ms)
+✔ isolated files only: executable existence/type is checked and removed portable files are not registered (3.9512ms)
+✔ mock Electron only: no startup writes without explicit user change; on/off and readback use exactly the same stable path/args (0.6311ms)
+✔ mock Electron only: unresolvable launcher rejects enabling with zero writes; explicit disabling is still available without registering the child (0.5923ms)
+✔ mock desktop host: opening settings, account restore and unrelated edits do not touch OS login items; only explicit toggles reach the mock (2.6719ms)
+✔ real isolated SQLite + mock OS only: AccountsService writes startup solely on a saved explicit toggle and retains settings on failure (37.8198ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 17
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 132.5354

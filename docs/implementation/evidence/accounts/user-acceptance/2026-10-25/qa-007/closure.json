@@ -1,0 +1,13 @@
+{
+  "packagingClosureIncludesStartup": true,
+  "file": {
+    "path": "apps/pc-app/runtime/features/accounts/startup.cjs",
+    "sha256": "9271d40e0992f7e58e69d4210d2130c640ec5851f3f224b5a649ca28db71fc28",
+    "bytes": 2863
+  },
+  "edge": {
+    "from": "apps/pc-app/runtime/features/accounts/desktop-host.cjs",
+    "specifier": "./startup.cjs",
+    "to": "apps/pc-app/runtime/features/accounts/startup.cjs"
+  }
+}
