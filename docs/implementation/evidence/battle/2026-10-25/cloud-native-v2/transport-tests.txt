@@ -1,0 +1,20 @@
+✔ retired transport: old constructor URL/key/function options cannot create a client or activate password identity (1.9908ms)
+✔ SCRIPTED SDK boundary only: cloud operations omit legacy identity and untrusted pet facts, keep original actionId and private authorized topic (2.4107ms)
+✔ SCRIPTED SDK boundary only: auth owner changes during refresh cannot invoke the old client (0.2055ms)
+✔ SCRIPTED SDK boundary only: HTTP credentials and legacy password ops are refused before network calls (0.213ms)
+✔ SCRIPTED SDK boundary only: revoked JWT response and logout disconnect/remove channels without exposing tokens (0.5357ms)
+✔ SCRIPTED SDK lifecycle: callback auth is retained and a coded shared-invoker revocation closes the channel (0.5028ms)
+✔ SCRIPTED SDK lifecycle: a real-sync path replaces a closed private channel after socket reconnect without changing the room or pending action (0.416ms)
+✔ SCRIPTED SDK lifecycle: overlapping readbacks replace a disconnected subscription once and never remove its replacement (2.8871ms)
+✔ actual installed SDK lifecycle: disconnect teardown cannot retain the old room topic; unrelated subscriptions survive (no network/Auth) (41.2887ms)
+✔ SIMULATED loopback only: explicit QA adapter owns scenario identity and pet facts without a Supabase fallback client (34.0814ms)
+✔ an interrupted original move retains its ID until that same round resolves; the next same move gets a new ID (0.7087ms)
+✔ a receipt from another session cannot be reused or cleared by the wrong session (0.1292ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 168.4706

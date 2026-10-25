@@ -1,0 +1,34 @@
+{
+  "at": "2026-10-25T05:19:16.467Z",
+  "provenance": "local-actual-modern-JWT-PGlite-and-canonical-SQLite-only",
+  "realCloudVerified": false,
+  "archivedProtocolLoaded": false,
+  "checks": [
+    "actual PostgreSQL invitation, acceptance, reserved membership, same-owner refusal and stable command receipt",
+    "RLS denies anonymous/nonparticipants, pending choices, direct client mutations, spoofed RPC actors and private-topic outsiders",
+    "shared versioned core resolves 8 immutable rounds, atomic rollback, duplicate commits and two pet-bound receipts",
+    "shared08 transaction guard denies revoked original SID for commands/rounds/receipt replay without mutations; same-owner second device can write",
+    "actual revoke_device RPC blocks direct room/round/Realtime SELECT while original Auth session still exists; same-owner second device stays authorized",
+    "direct room/round REST-equivalent RLS and Realtime SELECT reject still-unexpired JWT claims after session revocation or account lock",
+    "all authority RPCs use fixed empty search_path, security invoker and service-only execution",
+    "actual Postgres rollback after protected commit: missing report leaves growth, inventory, head revision and receipt unchanged",
+    "160-character original owner completes Postgres settlement and SQLite replay using a short CAS key while retaining its original long domain receipt; an existing legacy receipt replays unchanged",
+    "both owners receive exactly one canonical growth + two seeds + mirrored complete report, with original other-pet state preserved",
+    "actual SQLite readback completes a finished-but-pending report idempotently; late adapter failure rolls back companion/garden restore together",
+    "an independent unverified local operation is preserved and reported as a conflict, never silently replaced",
+    "authenticated settlement forgery and obsolete receipt-only service path are denied",
+    "server training state machine uses the same core and atomically awards canonical growth/inventory/report with immutable per-round replay",
+    "shared08 guard rechecks stale original device/SID before training/settlement replay, rolls back without mutation, and permits another same-owner device"
+  ],
+  "suites": [
+    {
+      "file": "artifacts/battle/cloud/sql-evidence.json",
+      "checks": 7
+    },
+    {
+      "file": "artifacts/battle/cloud/authority-save-evidence.json",
+      "checks": 8
+    }
+  ],
+  "passed": true
+}

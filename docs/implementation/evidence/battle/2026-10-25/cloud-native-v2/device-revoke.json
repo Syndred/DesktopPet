@@ -1,0 +1,206 @@
+{
+  "runId": "04be08e6-b950-4476-b965-bb630ff2a7e1",
+  "at": "2026-10-25T05:14:06.891Z",
+  "provenance": "real-HTTPS-and-Realtime-acceptance",
+  "scope": "remaining device-only revoke stage on actual completed duel/training owners",
+  "projectRef": "jbvrdmrkwpznbrvteive",
+  "origin": "https://jbvrdmrkwpznbrvteive.supabase.co",
+  "machineCount": 1,
+  "physicalDevices": 1,
+  "concurrentDuelPlayers": 0,
+  "independentProfiles": 2,
+  "statement": "Two fresh native profiles of the same designated owner reread its completed training/report. One revokes the other actual device, then the captured still-valid JWT must fail REST/private Realtime while the remaining device succeeds. Earlier duel/training phases keep their original proofs and commits. One Windows host.",
+  "sourceCommit": "cb3dc88366ec02932f6d7b3244c2455db366b089",
+  "sourceDirty": "",
+  "build": {
+    "schemaVersion": 2,
+    "builtAt": "2026-10-25T05:08:20.703Z",
+    "sourceCommit": "746ca6662d7c31c9bcafa1ce9d17198250db9fa2",
+    "sourceTree": "bea417bcafe1c2eda9a69b1159a48f4994198542",
+    "sourceDirtyFiles": [],
+    "codeFingerprint": "42f4bfa9f7be9ea272b8772f494b99e72950e7b8eaf202cd1d49eff1ccd7d79a",
+    "canonicalSourceFingerprint": "22d16764c14b1273fe9cacbb2ed224e5ce180fcbd43a68ee6035c3579bc101f9",
+    "canonicalPolicy": "Repository-relative paths; CRLF normalized to LF for source text only. Packaged/compiled bytes remain exact.",
+    "compiledFingerprint": "2b13399130cbdd807a668a9c03b5a3da71f7e853ed312c9bf382764d6f341657",
+    "codeFiles": 299,
+    "compiledFiles": 87,
+    "toolchain": {
+      "node": "24.21.0",
+      "electron": "44.9.3",
+      "sqlite": "13.0.3",
+      "vite": "7.3.7",
+      "typescript": "5.9.3",
+      "platform": "win32",
+      "arch": "x64"
+    },
+    "entrypoints": {
+      "main": "main/index.cjs",
+      "app": "ui/index.html",
+      "desktop": "ui/desktop.html",
+      "preload": "preload/index.cjs"
+    },
+    "publicCloud": {
+      "projectRef": "jbvrdmrkwpznbrvteive",
+      "url": "https://jbvrdmrkwpznbrvteive.supabase.co",
+      "sha256": "c1625c63f1d959f92b3392b47f2fb492452803eedf1c0d1ebc68a1168ab64eda",
+      "resourcePath": "lingjing-cloud-public.json"
+    },
+    "packageName": "lingjing-desktop",
+    "runtimeClosure": {
+      "manifest": "runtime-closure.json",
+      "files": 106,
+      "edges": 181,
+      "sha256": "b56c25dbfb2ef15790be7ed6cb805e6fa135d3564be290b59853525e248d27fa"
+    }
+  },
+  "steps": [
+    {
+      "at": "2026-10-25T05:14:35.489Z",
+      "name": "same-owner native devices reread the prior accepted cloud training/report before device-only revoke",
+      "roomId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+      "trainingSessionId": "battle-8a87db17-8b9f-40c2-b198-b85780b86e4b",
+      "authorized": {
+        "origin": "https://jbvrdmrkwpznbrvteive.supabase.co",
+        "authKind": "supabase",
+        "actor": {
+          "authority": "live",
+          "authUserId": "091c28e8-e7e1-43e8-a79f-b9b132fd9346",
+          "ownerAccountId": "account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+          "deviceId": "29e7c85d-3e06-42f3-82b1-ffa1fc657fdd",
+          "sessionId": "68c8e775-2a5b-427d-b53a-8cd974a86449"
+        },
+        "socket": "open",
+        "channel": "joined",
+        "manualToken": false
+      },
+      "otherDevice": {
+        "ownerAccountId": "account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+        "deviceId": "f81e2d00-c565-403e-b4b3-43df86418e0c"
+      }
+    },
+    {
+      "at": "2026-10-25T05:14:48.038Z",
+      "name": "actual device-only revoke denies old JWT REST/private Realtime while another same-owner device stays authorized",
+      "roomId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+      "revoked": {
+        "deviceId": "29e7c85d-3e06-42f3-82b1-ffa1fc657fdd",
+        "sessionId": "68c8e775-2a5b-427d-b53a-8cd974a86449",
+        "ownerAccountId": "account:3423cecd-2b9e-4987-bd84-c616eee15d10"
+      },
+      "denied": {
+        "rest": [
+          {
+            "status": 403,
+            "code": "28000",
+            "message": "LJ_SESSION_REVOKED"
+          },
+          {
+            "status": 403,
+            "code": "28000",
+            "message": "LJ_SESSION_REVOKED"
+          }
+        ],
+        "authJwtStillValid": true,
+        "realtime": "CHANNEL_ERROR"
+      },
+      "allowed": {
+        "roomCount": 1,
+        "realtime": "SUBSCRIBED",
+        "deviceId": "f81e2d00-c565-403e-b4b3-43df86418e0c"
+      }
+    }
+  ],
+  "errors": [],
+  "priorTrainingProof": {
+    "path": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\live-1792904902772-33218d1e\\evidence.json",
+    "sha256": "219ab61737e174b2aefbd2ead5a094bad3ea2685eef3676b8b1d24a35c468dda",
+    "runId": "33218d1e-488f-486c-ad56-502cb458a9b0",
+    "sourceCommit": "746ca6662d7c31c9bcafa1ce9d17198250db9fa2",
+    "fullRunPassed": false,
+    "priorFailure": "electronApplication.evaluate: Error: Could not find the function public.lingjing_revoke_device without parameters in the schema cache\n    at eval (eval at evaluate (:370:30), <anonymous>:1:209)\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at async <anonymous>:396:30",
+    "priorDuelProof": {
+      "path": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\live-1792904347214-4d2d7db8\\evidence.json",
+      "sha256": "207d1c5361fe99ba6540693a8e2450ec2725ec9423cfb154c2fb0d7869d0735d",
+      "runId": "4d2d7db8-596d-4397-844b-243e8600f14e",
+      "sourceCommit": "8ab812554261bf960d43602470b30e64444a74aa",
+      "fullRunPassed": false,
+      "priorFailure": "locator.waitFor: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('region', { name: '战报详情' }) to be visible\u001b[22m\n",
+      "completedScope": "actual invite/join, response loss, refresh/reconnect, pending-action native restart, ten natural immutable rounds and actual private-channel pushes"
+    }
+  },
+  "passed": true,
+  "profiles": [
+    {
+      "index": "0",
+      "profilePath": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\live-1792905246701-04be08e6\\device-1",
+      "owner": "account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+      "deviceId": "29e7c85d-3e06-42f3-82b1-ffa1fc657fdd"
+    },
+    {
+      "index": "1",
+      "profilePath": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\live-1792905246701-04be08e6\\device-2",
+      "owner": "account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+      "deviceId": "f81e2d00-c565-403e-b4b3-43df86418e0c"
+    }
+  ],
+  "sqlite": [
+    {
+      "owner": "account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+      "rewards": [
+        {
+          "owner_account_id": "account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+          "session_id": "battle-8a87db17-8b9f-40c2-b198-b85780b86e4b",
+          "pet_id": "pet-2d660416-db18-44a1-8392-74f235484151",
+          "action_id": "battle:battle-8a87db17-8b9f-40c2-b198-b85780b86e4b:account:3423cecd-2b9e-4987-bd84-c616eee15d10"
+        },
+        {
+          "owner_account_id": "account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+          "session_id": "online-355f4104-85cf-4ca4-8e27-321f0638e376",
+          "pet_id": "pet-2d660416-db18-44a1-8392-74f235484151",
+          "action_id": "battle:355f4104-85cf-4ca4-8e27-321f0638e376:account:3423cecd-2b9e-4987-bd84-c616eee15d10"
+        }
+      ],
+      "reports": [
+        {
+          "id": "battle-8a87db17-8b9f-40c2-b198-b85780b86e4b",
+          "session_id": "battle-8a87db17-8b9f-40c2-b198-b85780b86e4b",
+          "owner_account_id": "account:3423cecd-2b9e-4987-bd84-c616eee15d10"
+        },
+        {
+          "id": "online-355f4104-85cf-4ca4-8e27-321f0638e376",
+          "session_id": "online-355f4104-85cf-4ca4-8e27-321f0638e376",
+          "owner_account_id": "account:3423cecd-2b9e-4987-bd84-c616eee15d10"
+        }
+      ]
+    },
+    {
+      "owner": "account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+      "rewards": [
+        {
+          "owner_account_id": "account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+          "session_id": "battle-8a87db17-8b9f-40c2-b198-b85780b86e4b",
+          "pet_id": "pet-2d660416-db18-44a1-8392-74f235484151",
+          "action_id": "battle:battle-8a87db17-8b9f-40c2-b198-b85780b86e4b:account:3423cecd-2b9e-4987-bd84-c616eee15d10"
+        },
+        {
+          "owner_account_id": "account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+          "session_id": "online-355f4104-85cf-4ca4-8e27-321f0638e376",
+          "pet_id": "pet-2d660416-db18-44a1-8392-74f235484151",
+          "action_id": "battle:355f4104-85cf-4ca4-8e27-321f0638e376:account:3423cecd-2b9e-4987-bd84-c616eee15d10"
+        }
+      ],
+      "reports": [
+        {
+          "id": "battle-8a87db17-8b9f-40c2-b198-b85780b86e4b",
+          "session_id": "battle-8a87db17-8b9f-40c2-b198-b85780b86e4b",
+          "owner_account_id": "account:3423cecd-2b9e-4987-bd84-c616eee15d10"
+        },
+        {
+          "id": "online-355f4104-85cf-4ca4-8e27-321f0638e376",
+          "session_id": "online-355f4104-85cf-4ca4-8e27-321f0638e376",
+          "owner_account_id": "account:3423cecd-2b9e-4987-bd84-c616eee15d10"
+        }
+      ]
+    }
+  ]
+}
