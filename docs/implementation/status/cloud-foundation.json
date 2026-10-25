@@ -1,0 +1,72 @@
+{
+  "module": "foundation",
+  "scope": "Public engineering, staged runtime extraction, typed IPC, lazy routes/desktop entry, Windows native/EXE CI and verifiable release/rollback. Battle UI and production Supabase writes remain with their owners.",
+  "branch": "codex/lingjing-foundation",
+  "commit": "b40af0efcf6062ddc2e8c360523c996fc91ebc0a",
+  "goalStatus": "active",
+  "stage": "supported-engine-dependency-checkpoint",
+  "contracts": [
+    "docs/implementation/cloud-upgrade-2026-10-25.md",
+    "https://www.electronjs.org/docs/latest/tutorial/electron-timelines",
+    "https://releases.electronjs.org/release/v44.9.3",
+    "https://github.com/WiseLibs/better-sqlite3/releases/tag/v13.0.0"
+  ],
+  "migrations": [],
+  "checks": [
+    {
+      "name": "Node/Electron shared SQLite cross-read",
+      "passed": true,
+      "evidence": "docs/implementation/evidence/foundation/cloud-engineering/native-shared.json",
+      "electron": "44.9.3",
+      "electronNode": "24.22.0",
+      "electronModuleAbi": "149",
+      "napi": "10",
+      "sqlite": "13.0.3",
+      "nativeRebuild": "Not required: bundled N-API binary loaded under Node 24.21.0 and Electron 44.9.3; same persisted database and integrity check passed."
+    },
+    {
+      "name": "Actual Electron CJS service transaction/owner checks",
+      "passed": true,
+      "cases": 2
+    }
+  ],
+  "realCloudEvidence": {
+    "status": "not-run",
+    "reason": "No remote deployment/database writes performed by foundation. Main coordinator owns deployment; real-service checks follow approved integration."
+  },
+  "preservation": {
+    "snapshot": {
+      "path": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\artifacts\\recovery\\cloud-foundation-2026-10-25\\pre-cleanup.bundle",
+      "source": "46abf416e0500b53ef32fc29b441d923ef5a6a80",
+      "bytes": 289898098,
+      "sha256": "5be81cad2baabcf8d57776e97d75b068052086341140476fb7578b09ee41d9e5",
+      "verified": true
+    },
+    "userDataModified": false,
+    "protectedCloudBackups": [
+      "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/cloud-upgrade/2026-10-25/comparisontext-backup",
+      "C:/Users/Administrator/.codex/backups/DesktopPet/2026-10-25/comparisontext"
+    ],
+    "battleUiTouched": false
+  },
+  "cleanupCandidates": [],
+  "sharedDependencies": {
+    "checkpointCommit": "b40af0efcf6062ddc2e8c360523c996fc91ebc0a",
+    "consumers": [
+      "accounts",
+      "garden",
+      "companions"
+    ],
+    "command": "npm run native:check",
+    "policy": "Merge the common manifest/lock before using the shared junction. Do not npm ci/rebuild this shared tree from an older lock/ABI."
+  },
+  "remaining": [
+    "Complete old-file/replacement/consumer inventory before deletion",
+    "Extract required compatibility services and remove obsolete main/preload/HTML source",
+    "Typed IPC contract and runtime guard",
+    "Lazy app routes and dedicated desktop entry with real request-graph proof",
+    "Windows CJS/native/EXE CI; actual signing status and reproducible release rollback",
+    "Integrate only main-approved business deliveries and run the justified final regression"
+  ],
+  "updatedAt": "2026-10-25T02:04:29.941Z"
+}
