@@ -10,6 +10,7 @@ import { AnimatedList } from '../../components/motion';
 import { CompanionPortrait } from '../companions/CompanionPortrait';
 import { useFeatureRequest } from '../../app/bridge';
 import type { SettingsSnapshot } from '../../../../../../packages/shared-types/src/features/accounts';
+import { conversationIdentity, PetIdentity, petIdentityLabel } from './identity';
 
 const errors: Record<string, string> = { CANCELLED: '已停止回复', INTERRUPTED: '上次回复因退出而中断', SESSION_CHANGED: '账号切换，回复已停止',
   TIMEOUT: '模型响应超时', INVALID_RESPONSE: '模型连接中断', RATE_LIMITED: '请求过于频繁', NETWORK_ERROR: '连接失败',
@@ -29,8 +30,8 @@ function CompanionReaction({ pet }: { pet: ConversationPet }) {
     if (settings) setPreference(settings.desktop.animationsEnabled !== false);
   }), []);
   if (pet.resource?.kind !== '2d') return null;
-  return <div className="cv-companion-reaction" aria-label={`${pet.name}的陪伴动作`}>
-    <CompanionPortrait petId={pet.petId} name={pet.name} resource={pet.resource} action="victory" animate={preference ?? data?.document.desktop.animationsEnabled === true}/>
+  return <div className="cv-companion-reaction" aria-label={`${petIdentityLabel(pet)}的陪伴动作`}>
+    <CompanionPortrait petId={pet.petId} name={petIdentityLabel(pet)} resource={pet.resource} action="victory" animate={preference ?? data?.document.desktop.animationsEnabled === true}/>
   </div>;
 }
 
@@ -41,9 +42,9 @@ function Composer({ pet, busy, insertEmoji }: { pet: ConversationPet; busy: bool
     <Popover open={emojiOpen} onOpenChange={setEmojiOpen}><PopoverTrigger asChild><Button type="button" variant="ghost" className="cv-icon cv-emoji-trigger" aria-label="选择表情"><Smile size={19}/></Button></PopoverTrigger>
       <PopoverContent className="cv-emoji-picker" side="top" align="start" aria-label="常用聊天表情">{['😊','💙','🌷','✨','🍚','☀️','🌙','🤗'].map(emoji =>
         <Button key={emoji} type="button" variant="ghost" onClick={() => { insertEmoji(emoji); setEmojiOpen(false); }}>{emoji}</Button>)}</PopoverContent></Popover>
-    <label className="cv-sr-only" htmlFor="conversation-message">给{pet.name}发消息</label>
-    <ComposerPrimitive.Input id="conversation-message" maxLength={8000} minRows={1} maxRows={4}
-      placeholder={`和${pet.name}说点什么…`} aria-label={`给${pet.name}发消息`}/>
+    <label className="cv-sr-only" htmlFor="conversation-message">给{petIdentityLabel(pet)}发消息</label>
+    <ComposerPrimitive.Input id="conversation-message" data-pet-id={pet.petId} maxLength={8000} minRows={1} maxRows={4}
+      placeholder={`和${conversationIdentity(pet).roleName}说点什么…`} aria-label={`给${petIdentityLabel(pet)}发消息`}/>
     {busy ? <ComposerPrimitive.Cancel asChild><Button variant="secondary" className="cv-button secondary" aria-label="停止回复" title="停止回复"><Square size={17} fill="currentColor"/></Button></ComposerPrimitive.Cancel> :
       <ComposerPrimitive.Send asChild><Button className="cv-button" aria-label="发送" title="发送"><Send size={18}/></Button></ComposerPrimitive.Send>}
     <span className="cv-composer-hint"><InfoHint label="发送快捷键" text="Enter 发送，Shift+Enter 换行。" icon={Keyboard}/>{length > 0 && <span>{length}/8000</span>}</span>
@@ -56,9 +57,9 @@ function StoredMessage({ message, pet, last, retry, remember }: { message: Conve
   const assistant = message.role === 'assistant';
   const pending = message.status === 'pending' || message.status === 'streaming';
   const failed = message.status === 'failed' || message.status === 'cancelled';
-  return <MessagePrimitive.Root asChild><article className={`cv-message ${assistant ? 'assistant' : 'user'}`} aria-label={assistant ? `${pet.name}的回复` : '我的消息'}>
+  return <MessagePrimitive.Root asChild><article className={`cv-message ${assistant ? 'assistant' : 'user'}`} aria-label={assistant ? `${petIdentityLabel(pet)}的回复` : '我的消息'}>
     {assistant && <PetAvatar pet={pet}/>}
-    <div className="cv-message-body"><div className="cv-message-meta">{assistant ? pet.name : '我'}
+    <div className="cv-message-body"><div className="cv-message-meta">{assistant ? <PetIdentity pet={pet}/> : '我'}
       {message.createdAt > 0 ? <><time dateTime={new Date(message.createdAt).toISOString()}>{new Date(message.createdAt).toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' })}</time>
         {assistant && !pending && message.provider === null && message.model === null && <span>旧记录</span>}</> : <span>旧记录</span>}</div>
       <div className={`cv-bubble ${failed ? 'interrupted' : ''}`}>
@@ -87,7 +88,7 @@ export function AssistantConversationThread({ pet, messages, busy, hasConnection
       if (!recorded) runtime.thread.composer.setText(text);
     }, onCancel: cancel });
   return <AssistantRuntimeProvider runtime={runtime}>
-    <ThreadPrimitive.Root className="cv-thread-content" aria-label={`与${pet.name}的对话内容`}>
+    <ThreadPrimitive.Root className="cv-thread-content" aria-label={`与${petIdentityLabel(pet)}的对话内容`}>
       <ThreadPrimitive.Viewport className="cv-message-list" role="log" aria-label="聊天记录" autoScroll turnAnchor="bottom">
         {nextCursor && <Button variant="ghost" className="cv-history-more cv-link" disabled={moreBusy} onClick={more}>{moreBusy ? '正在读取…' : '查看更早的消息'}</Button>}
         {!messages.length && <div className="cv-thread-empty"><PetAvatar pet={pet} large/><h3>暂无消息</h3>

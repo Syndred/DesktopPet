@@ -91,7 +91,7 @@ async function openSettings() {
 }
 async function choose(pet) {
   await page.locator('.cv-pet-option').filter({ has: page.locator(`.cv-avatar[data-pet-id="${pet.petId}"]`) }).click();
-  await page.getByRole('region', { name: `与${pet.name}的聊天`, exact: true }).waitFor();
+  await page.locator(`.cv-thread[data-pet-id="${pet.petId}"]`).waitFor();
   await waitUntil(async () => (await page.locator('.cv-thread-header .cv-avatar').getAttribute('data-resource-id')) === pet.resource.resourceId, 'selected canonical identity');
   await page.locator('.cv-thread-header .resource-portrait image').waitFor();
   await page.locator('.cv-pet-scene .resource-portrait image').waitFor();
@@ -211,7 +211,7 @@ try {
     };
   }, { needle: note.content, baseUrl: unavailableBaseUrl });
   await openChat();
-  await page.getByLabel(`给${selected.name}发消息`, { exact: true }).fill('QA：验证真实本机连接失败状态');
+  await page.locator(`#conversation-message[data-pet-id="${selected.petId}"]`).fill('QA：验证真实本机连接失败状态');
   await page.getByRole('button', { name: '发送', exact: true }).click();
   await waitUntil(async () => (await feature('conversations', 'snapshot')).messages.at(-1)?.status === 'failed', 'real local failure');
   await page.getByRole('button', { name: '重新回复', exact: true }).click();
