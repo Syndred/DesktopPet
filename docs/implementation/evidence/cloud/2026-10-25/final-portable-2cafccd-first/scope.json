@@ -1,0 +1,15 @@
+{
+  "at": "2026-10-25T07:54:44.018Z",
+  "source": "2cafccd6871403f69ae8a5bb17dbd658b5a48272",
+  "businessPassed": false,
+  "completedGroups": 3,
+  "trainingBackend": {
+    "sessionId": "battle-fdc85261-5915-44ce-8c66-343d150a09ea",
+    "rounds": 10,
+    "experience": 5,
+    "seeds": 2,
+    "bothProfilesCleanAtRevision": 85
+  },
+  "uiVerifierIssue": "The API-only training loop did not update React controller state; future acceptance clicks actual UI buttons and waits for the confirmed rendered round. Product UI/style unchanged.",
+  "originalProfilesPreserved": true
+}

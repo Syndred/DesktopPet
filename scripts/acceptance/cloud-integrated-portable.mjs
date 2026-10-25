@@ -131,7 +131,14 @@ try{
   await a.call('garden','snapshot');await waitClean(a,'Verified garden baseline did not settle');
   const before=readDomain(a),training=await a.call('battle','startTraining',{actionId:randomUUID(),petId,enemyElement:'fire'});assert.equal(training.context.authority,'supabase');let game=training;
   await a.page.evaluate(id=>{location.hash=`#/battle/session/${id}`;},game.id);await a.page.locator('[data-battle-screen="shared-v1"]').waitFor();
-  for(let count=0;game.status==='active'&&count<100;count++)game=await a.call('battle','act',{sessionId:game.id,actionId:randomUUID(),expectedRound:game.snapshot.round+1,action:game.snapshot.player.anger>=50?'ultimate':'element_attack'});
+  for(let count=0;game.status==='active'&&count<100;count++){
+    const action=game.snapshot.player.anger>=50?'ultimate':'element_attack',round=game.snapshot.round;
+    const move=a.page.locator(`.battle-command-group button[data-action="${action}"]`);
+    await pollState(()=>move.isEnabled(),Boolean,{timeoutMs:30000,intervalMs:100,label:'The actual battle command did not become ready'});
+    await move.click();
+    game=await pollState(()=>a.call('battle','snapshot',{sessionId:game.id}),s=>s.snapshot.round>round||s.status!=='active',{timeoutMs:90000,intervalMs:200,label:'The actual UI command did not produce an authoritative round'});
+    await pollState(()=>a.page.locator('.battle-live-layout').getAttribute('data-animation-key'),key=>key===`${game.id}:${game.snapshot.round}`,{timeoutMs:30000,intervalMs:100,label:'The battle controller did not render its confirmed round'});
+  }
   assert.equal(game.status,'finished');assert.equal(game.reward.applied,true);assert.equal(game.reward.seeds.quantity,2);await waitClean(a,'A settlement did not settle');await waitClean(b,'B settlement did not settle');
   await pollState(()=>query(b,'select data_json from battle_reports_v2 where owner_account_id=? and id=?',[owner,game.reportId]),rows=>rows.length===1,{timeoutMs:120000,intervalMs:900,label:'B did not receive the authoritative report'});
   const grown=readDomain(a),old=before.pets.find(row=>row.id===petId).data,newPet=grown.pets.find(row=>row.id===petId).data;assert.equal(newPet.growth.experience-old.growth.experience,game.reward.experience);assert.deepEqual(grown.pets.filter(row=>row.id!==petId),before.pets.filter(row=>row.id!==petId));
@@ -171,6 +178,10 @@ try{
       return{device:model.label,data};
     }catch(observation){return{device:model.label,error:safe(observation.message)};}
     finally{clearTimeout(timer);}
+  }));
+  proof.failureUi=await Promise.all([a,b].filter(Boolean).map(async model=>{
+    try{const file=`failure-${model.label}.png`;await model.page.screenshot({path:join(output,file),fullPage:true,timeout:5000});return{device:model.label,url:model.page.url(),file,sha256:await fileHash(join(output,file)),text:safe((await model.page.locator('body').innerText({timeout:3000})).slice(0,6000))};}
+    catch(observation){return{device:model.label,error:safe(observation.message)};}
   }));
 }
 finally{online=true;if(!proof.passed&&petId&&a)try{await a.call('companions','desktop',{actionId:randomUUID(),petId,visible:false});}catch{}if(reader)await reader.remote.signOut(reader.session).catch(()=>{});for(const model of models)await model.stop().catch(()=>{});for(const socket of sockets)socket.destroy();await new Promise(done=>proxy.close(done));proof.completedAt=new Date().toISOString();save();console.log(JSON.stringify({output,passed:proof.passed,checks:proof.checks.length,failure:proof.failure?.message}));}
