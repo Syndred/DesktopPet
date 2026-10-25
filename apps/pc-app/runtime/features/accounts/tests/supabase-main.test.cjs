@@ -78,3 +78,18 @@ test('PROTOCOL UNIT simulated: protected sync archives the original and reports 
  assert.equal(f.accounts.sync.status(owner).unverifiedLocal,1);
  const source=f.db.prepare('select * from account_sync_sources').get();assert.equal(JSON.parse(source.original_document).data.modules.garden.data.coins,999);assert.ok(source.cloud_archive_id);
 });
+test('PROTOCOL UNIT simulated: one session SDK reads current token after refresh and removes channels on logout',async()=>{
+ const device=randomUUID(),start=Date.now();let clock=start,current=bundle(device,'original-text-owner',randomUUID(),start/1000+90),lastAuthorization;
+ const remote=new SupabaseRemote({deviceId:device,config,now:()=>clock,fetcher:async(url,options)=>{
+  if(String(url).includes('/rest/v1/')){lastAuthorization=new Headers(options.headers).get('authorization');return new Response('[]',{status:200,headers:{'content-type':'application/json'}});}
+  const body=JSON.parse(options.body);if(body.op==='refresh'){current={...current,tokens:{...current.tokens,accessToken:'updated.protocol.jwt',expiresAt:clock/1000+3600}};return response(current);}return response({actor:current.actor});
+ }});
+ const proof=require('../supabase-remote.cjs').normalized(current).proof,session={id:current.currentUser.id,cloudProof:proof};remote.setCurrentUser(session);
+ const first=await remote.cloudContext(session),second=await remote.cloudContext(session);assert.equal(first.client,second.client);
+ await first.client.from('lingjing_accounts').select('owner_id');assert.equal(lastAuthorization,`Bearer ${current.tokens.accessToken}`);
+ clock+=60_000;await first.client.from('lingjing_accounts').select('owner_id');assert.equal(lastAuthorization,'Bearer updated.protocol.jwt');
+ await first.client.realtime.setAuth();assert.equal(first.client.realtime.accessTokenValue,'updated.protocol.jwt');
+ first.client.channel('unjoined-owner-channel');assert.equal(first.client.getChannels().length,1);remote.setCurrentUser(null);
+ await new Promise(r=>setImmediate(r));assert.equal(first.client.getChannels().length,0);
+ await first.client.from('lingjing_accounts').select('owner_id');assert.notEqual(lastAuthorization,'Bearer updated.protocol.jwt');remote.dispose();
+});
