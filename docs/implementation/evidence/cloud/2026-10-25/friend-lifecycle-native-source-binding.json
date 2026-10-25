@@ -1,0 +1,35 @@
+{
+  "at": "2026-10-25T08:23:43.802Z",
+  "source": "9623873b7acc1bd6352b3a5f0afbbfc1bedab856",
+  "runtimeTree": "42bbc4a91ab300494c9b591d39bc2b3ddfd39fb3",
+  "mergedRuntimeTree": "42bbc4a91ab300494c9b591d39bc2b3ddfd39fb3",
+  "nativeCjs": {
+    "tests": 311,
+    "passed": 311,
+    "failed": 0,
+    "scope": "run-native-tests --all enumerates .test.cjs only",
+    "log": "C:/Users/Administrator/.codex/worktrees/lingjing-battle/DesktopPet/artifacts/battle/friend-lifecycle-boundary-2cafccd/native-all-final.log",
+    "sha256": "ee58a87c42a6daa653534c54ad9a35947d23e828e4d90df2746989e75de4ea83"
+  },
+  "rootIndependent": {
+    "friendLifecyclePassed": 12,
+    "extraAuthorityMjsPassed": true,
+    "issue": "The old fixture resolved a create command with an invented session response. It now uses the actual Online return and typed protocol cache; production validation unchanged.",
+    "log": "artifacts/cloud-upgrade/2026-10-25/final-friend-root-directed.log",
+    "previousFailureRetained": true,
+    "finalCloudVerification": {
+      "command": "npm run verify:cloud",
+      "exitCode": 0,
+      "nodeFiles": 22,
+      "denoValidators": 5,
+      "strictMigrations": true,
+      "log": "artifacts/cloud-upgrade/2026-10-25/final-friend-cloud-regression.log"
+    }
+  },
+  "fullNewSfxAccepted": false,
+  "updatedAt": "2026-10-25T08:26:33.610Z",
+  "extraAuthorityMjsFixtureCommit": "96f310914e09b1b7a8119c22302db44e7864a1b0",
+  "runtimeChangesAfterNative": [
+    "apps/pc-app/runtime/features/battle/tests/authority-save.test.mjs"
+  ]
+}
