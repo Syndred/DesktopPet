@@ -1,6 +1,14 @@
 # 云端探索与定位许可契约
 
-本轮目标在原 discovery 工作树实施，已合入公共基线 `46abf41` 与经主协调批准的身份检查点 `f81008c`。状态：实施中，当前定位层和规则分发已实现；野外会话、统一存档事务、桌面接入与真实 HTTPS 验收仍待完成，不能部署为整项交付。04 对局 UI 未修改，也未读取/触碰其工作树。
+本轮目标在原 discovery 工作树实施，已合入公共基线 `46abf41`、身份检查点 `f81008c` 和统一 Auth/受保护 CAS `3474905`。当前签名定位层可独立部署，野外会话状态机已实现，游戏 SQL/统一存档事务及真实 HTTPS 验收仍在实施。04 对局 UI 未修改，也未读取/触碰其工作树。
+
+## 可独立部署的定位检查点
+
+主协调可立即按以下依赖顺序集中部署，无需等待完整捕捉事务：08已部署统一身份及 Auth bridge → `20261025020719_lingjing_discovery_cloud_authority.sql` → `20261025025641_lingjing_discovery_live_actor_guard.sql` → `discovery` 函数（`verify_jwt=false`，随目录包含 `_shared/lingjing-auth.ts`、`_shared/battle-core.js` 及函数自己的文件）。本会话没有远程写入、迁移或部署。
+
+这个入口当前开放 `protocol/device.register/location.challenge/location.prove/nearby`；reserve/session/act/cancel/confirm/captures/action 仍返回明确的 `CLOUD_AUTHORITY_NOT_READY`，不能把位置组件上线当作完整捕捉上线。第二份迁移为所有定位调用增加当前08账号和设备/session/撤销状态校验，以 `FOR SHARE` 锁定统一映射至本次事务完成，不增加 auth.users/auth.sessions 权限。
+
+05直接依赖上述两份迁移的 `public.lingjing_discovery_take_location`。桌面私有能力为 `services.get('locationProofs').prove(purpose,reference)`；它从原位置隐私/前台/80米质量闭包读取 fix，只返回服务端许可，不接受坐标且没有 renderer IPC。请求通过 `services.get('cloudActor').requireActor()` 返回的 `.invoke('discovery',body)`，令牌刷新和设备会话检查完全复用08。由于08 invoke只返回data，适配器先调用该组件的 protocol 操作协商版本，再在同一已验证 actor/session 内消费具体操作。
 
 ## 同一身份与本地数据
 
@@ -41,14 +49,16 @@ select public.lingjing_discovery_take_location(
 
 ## 规则和后续数据事务
 
-`verification/build-cloud.mjs` 从现有 `battle-runtime.cjs`、battle只读presenter、discovery坐标/格点代码及8角色目录生成函数内 `_generated/runtime.mjs`，记录源哈希。规则不复制手写，发布时源漂移会使检查失败；Deno已实际执行该包。未修改04 UI、技能样式或原始战斗公式。
+`verification/build-cloud.mjs` 生成只读presenter、discovery坐标/格点及8角色目录的适配包。战斗直接导入04已经批准的 `_shared/battle-core.js`（检查点 `4969eac`），presenter原CJS规则引用也重定向到该核心；生成包不再携带一份桌面内核。源哈希和单一导入均受专项检查。未修改04 UI、技能样式或原始战斗公式。
 
-后续 reserve/act/capture 只接受操作ID、轮次与动作选择；服务器随机推进原内核，保存自己的会话和不可变回执。捕捉必须使用该服务器会话的胜利记录、当前定位许可与原 owned pet，不能根据renderer胜者重算或接受一份客户端battle。
+`authority.mjs` 已实现 reserve/act/capture 状态机，只接受操作ID、轮次与动作选择；服务器随机推进共享内核，保存自己的会话和不可变回执。捕捉必须使用该服务器会话的胜利记录、当前定位许可与原 owned pet，不能根据renderer胜者重算或接受一份客户端battle。当前事务store尚未接入，因此入口不会调用未完成的游戏写入。
 
-08的authority fragment / 全存档revision事务与02实例写入契约尚在发布。本域不会另建云库存/成长通道，不会用完整存档checksum充当改经济权限，也不会先发奖励再补存档。跨端恢复必须采用服务端同一个petId与奖励凭据；真实链路未验收前不置完成。
+08的authority fragment/全存档revision已合入；后续游戏事务按 `lock_save_owner → 领域行 → commit_authority` 同一SQL提交。02登记合法宠物、05统一经济和规范成长，本域不会另建库存/成长通道。跨端恢复必须采用服务端同一个petId与奖励凭据；真实链路未验收前不置完成。
 
 ## 验证状态
 
-当前7个专项检查通过：真实ECDSA篡改/重放、主进程加密测试vault与HTTP/SQL贯通、嵌入PostgreSQL权限/nonce/消费、25有序属性对阵共100次分发一致性、源哈希和8角色目录。嵌入PostgreSQL/测试vault/注入actor仅是本地检查，明确不是Supabase Auth、云端部署或硬件定位证据。
+当前11个本地专项检查通过：真实ECDSA篡改/重放、加密测试vault与handler/SQL贯通、嵌入PostgreSQL权限/nonce/消费和统一设备撤销、共享核心100次分发一致性、源哈希/8角色目录、状态机回执与共享Auth主进程能力消费。嵌入PostgreSQL/测试vault/注入actor仅是本地检查，不是Supabase Auth或云端部署证据。
+
+2026-10-25用户开启Windows位置权限后另行通过真实实地验收：生产Electron36.9.5、普通隔离账户、Windows WiFi78米、20回合自然胜利、local-os收服、唯一petId/回执/SQLite及重启恢复。证据见 `evidence/discovery/2026-10-25-native-permission-retry/evidence.json`。这份旧实际运行版本证据保留原标注；最终云端Electron将按批准依赖切换44.9.3/13.0.3后复验。只提交坐标hash，不提交真实坐标。
 
 官方依据：[Edge auth headers](https://supabase.com/docs/guides/functions/auth-headers)、[RLS](https://supabase.com/docs/guides/database/postgres/row-level-security)、[API keys](https://supabase.com/docs/guides/getting-started/api-keys)。已读取2026-10-25 changelog；[TLS CBC弃用](https://supabase.com/changelog/cbc-tls-ciphers-deprecated)不通过恢复旧TLS来规避。

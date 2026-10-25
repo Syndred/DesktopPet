@@ -20,6 +20,10 @@ test('self-contained cloud distribution matches the current authoritative rules,
 });
 test('cloud bundle records exact source hashes and all eight canonical resources', () => {
   const proof = JSON.parse(readFileSync('infra/supabase/functions/discovery/_generated/provenance.json', 'utf8'));
+  const code = readFileSync('infra/supabase/functions/discovery/_generated/runtime.mjs', 'utf8');
+  assert.equal(proof.coreImport, '../../_shared/battle-core.js');
+  assert.match(code, /from "\.\.\/\.\.\/_shared\/battle-core\.js"/);
+  assert.doesNotMatch(code, /function executeRound|class BattleRuntimeService|BASE_DAMAGE\s*=/);
   for (const [file, expected] of Object.entries(proof.sourceFiles)) assert.equal(createHash('sha256').update(readFileSync(file, 'utf8').replace(/\r\n/g, '\n')).digest('hex'), expected);
   assert.equal(proof.catalog.length, 8); assert.equal(new Set(proof.catalog.map(t => t.element)).size, 5);
 });
