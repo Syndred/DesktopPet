@@ -22,4 +22,4 @@ npm run verify:cloud
 npm run verify:cloud -- --allow-legacy-drafts
 ```
 
-该结果明确记录 `strictMigrationGate: false`。CI 永远运行无此参数的严格入口，草稿退役后任何一份被重新放回 migrations 都会被拒绝。
+该结果明确记录 `strictMigrationGate: false`。CI 和 release workflow 永远运行无此参数的严格入口，草稿退役后任何一份被重新放回 migrations 都会被拒绝。

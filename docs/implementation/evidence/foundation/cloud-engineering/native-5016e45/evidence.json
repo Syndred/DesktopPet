@@ -1,0 +1,475 @@
+{
+  "at": "2026-10-25T04:46:54.673Z",
+  "sourceCommit": "5016e4504916620f6529571455291a455817e7e7",
+  "scenario": {
+    "schemaVersion": 1,
+    "application": "lingjing",
+    "scenario": "unified-battle",
+    "runId": "06ad9453-0c42-471c-bc6b-7e0400e60acb",
+    "isolated": true,
+    "profilePath": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\artifacts\\qa\\unified-battle\\qa-1792903614662-06ad9453",
+    "createdAt": "2026-10-25T04:46:54.663Z",
+    "env": {
+      "LINGJING_QA_SCENARIO": "unified-battle",
+      "PET_USER_DATA_DIR": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\artifacts\\qa\\unified-battle\\qa-1792903614662-06ad9453"
+    }
+  },
+  "scope": "Real production Electron/native windows/tray/IPC/Pixi and request graph. Explicit isolated simulated account; no cloud-service receipt.",
+  "checks": [
+    {
+      "id": "app-entry-lazy-and-supported",
+      "requests": [
+        "file:///C:/Users/Administrator/.codex/worktrees/lingjing-foundation/DesktopPet/apps/pc-app/dist/ui/assets/app-DaA6qFsw.js",
+        "file:///C:/Users/Administrator/.codex/worktrees/lingjing-foundation/DesktopPet/apps/pc-app/dist/ui/assets/motion-BlyJPngK.js",
+        "file:///C:/Users/Administrator/.codex/worktrees/lingjing-foundation/DesktopPet/apps/pc-app/dist/ui/assets/app-DaA6qFsw.js",
+        "file:///C:/Users/Administrator/.codex/worktrees/lingjing-foundation/DesktopPet/apps/pc-app/dist/ui/assets/motion-BlyJPngK.js",
+        "file:///C:/Users/Administrator/.codex/worktrees/lingjing-foundation/DesktopPet/apps/pc-app/dist/ui/assets/index-B9szCstu.js",
+        "file:///C:/Users/Administrator/.codex/worktrees/lingjing-foundation/DesktopPet/apps/pc-app/dist/ui/assets/tabs-CpcV7aM4.js",
+        "file:///C:/Users/Administrator/.codex/worktrees/lingjing-foundation/DesktopPet/apps/pc-app/dist/ui/assets/select-4PmlQZ5o.js",
+        "file:///C:/Users/Administrator/.codex/worktrees/lingjing-foundation/DesktopPet/apps/pc-app/dist/ui/assets/switch-BUbUrTGo.js",
+        "file:///C:/Users/Administrator/.codex/worktrees/lingjing-foundation/DesktopPet/apps/pc-app/dist/ui/assets/checkbox-Zc-E6ELO.js",
+        "file:///C:/Users/Administrator/.codex/worktrees/lingjing-foundation/DesktopPet/apps/pc-app/dist/ui/assets/slider-CUtRaIiv.js",
+        "file:///C:/Users/Administrator/.codex/worktrees/lingjing-foundation/DesktopPet/apps/pc-app/dist/ui/assets/hard-drive-QlZEuoPc.js",
+        "file:///C:/Users/Administrator/.codex/worktrees/lingjing-foundation/DesktopPet/apps/pc-app/dist/ui/assets/dialog-Cf5tDY0b.js",
+        "file:///C:/Users/Administrator/.codex/worktrees/lingjing-foundation/DesktopPet/apps/pc-app/dist/ui/assets/dialog-DYEmeFZW.js",
+        "file:///C:/Users/Administrator/.codex/worktrees/lingjing-foundation/DesktopPet/apps/pc-app/dist/ui/assets/cloud-Bd_tVMVq.js",
+        "file:///C:/Users/Administrator/.codex/worktrees/lingjing-foundation/DesktopPet/apps/pc-app/dist/ui/assets/cloud-check-BXpIzebn.js",
+        "file:///C:/Users/Administrator/.codex/worktrees/lingjing-foundation/DesktopPet/apps/pc-app/dist/ui/assets/refresh-cw-0Jux4V6K.js",
+        "file:///C:/Users/Administrator/.codex/worktrees/lingjing-foundation/DesktopPet/apps/pc-app/dist/ui/assets/monitor-BZXfi9MT.js",
+        "file:///C:/Users/Administrator/.codex/worktrees/lingjing-foundation/DesktopPet/apps/pc-app/dist/ui/assets/bell-BPOMYUOy.js",
+        "file:///C:/Users/Administrator/.codex/worktrees/lingjing-foundation/DesktopPet/apps/pc-app/dist/ui/assets/index-lKQ2lW4K.js",
+        "file:///C:/Users/Administrator/.codex/worktrees/lingjing-foundation/DesktopPet/apps/pc-app/dist/ui/assets/DesktopCompanion-6KQoc2x-.js",
+        "file:///C:/Users/Administrator/.codex/worktrees/lingjing-foundation/DesktopPet/apps/pc-app/dist/ui/assets/CompanionPortrait-D51Wd-Zy.js",
+        "file:///C:/Users/Administrator/.codex/worktrees/lingjing-foundation/DesktopPet/apps/pc-app/dist/ui/assets/ResourcePortrait-D7R5J3Y1.js",
+        "file:///C:/Users/Administrator/.codex/worktrees/lingjing-foundation/DesktopPet/apps/pc-app/dist/ui/assets/index-CZB9Gpnt.js",
+        "file:///C:/Users/Administrator/.codex/worktrees/lingjing-foundation/DesktopPet/apps/pc-app/dist/ui/assets/heart-BarczO9q.js",
+        "file:///C:/Users/Administrator/.codex/worktrees/lingjing-foundation/DesktopPet/apps/pc-app/dist/ui/assets/BattleMoves-DJLkZ8IU.js",
+        "file:///C:/Users/Administrator/.codex/worktrees/lingjing-foundation/DesktopPet/apps/pc-app/dist/ui/assets/mountain-Cn371NBk.js",
+        "file:///C:/Users/Administrator/.codex/worktrees/lingjing-foundation/DesktopPet/apps/pc-app/dist/ui/assets/clock-3-2f7nrMCT.js",
+        "file:///C:/Users/Administrator/.codex/worktrees/lingjing-foundation/DesktopPet/apps/pc-app/dist/ui/assets/plus-IZEFYs6U.js",
+        "file:///C:/Users/Administrator/.codex/worktrees/lingjing-foundation/DesktopPet/apps/pc-app/dist/ui/assets/info-BfIbHRXm.js",
+        "file:///C:/Users/Administrator/.codex/worktrees/lingjing-foundation/DesktopPet/apps/pc-app/dist/ui/assets/pencil-C97DlLVC.js",
+        "file:///C:/Users/Administrator/.codex/worktrees/lingjing-foundation/DesktopPet/apps/pc-app/dist/ui/assets/face-slightly-smiling-BTrbMDUV.js",
+        "file:///C:/Users/Administrator/.codex/worktrees/lingjing-foundation/DesktopPet/apps/pc-app/dist/ui/assets/arrow-right-BUSpYPP4.js",
+        "file:///C:/Users/Administrator/.codex/worktrees/lingjing-foundation/DesktopPet/apps/pc-app/dist/ui/assets/play-xVpXyh9P.js",
+        "file:///C:/Users/Administrator/.codex/worktrees/lingjing-foundation/DesktopPet/apps/pc-app/dist/ui/assets/map-pin-52IdKeUa.js"
+      ],
+      "runtime": {
+        "electron": "44.9.3",
+        "node": "24.22.0",
+        "modules": "149",
+        "napi": "10",
+        "arch": "x64",
+        "tray": {
+          "active": true,
+          "bounds": {
+            "x": 1775,
+            "y": 1104,
+            "width": 33,
+            "height": 48
+          }
+        }
+      }
+    },
+    {
+      "id": "lazy-navigation-and-eight-assets",
+      "resources": [
+        {
+          "id": "builtin:lingjing-yuwan-v2",
+          "kind": "spritesheet",
+          "availability": "ready"
+        },
+        {
+          "id": "builtin:lingjing-xiaolan-v1",
+          "kind": "spritesheet",
+          "availability": "ready"
+        },
+        {
+          "id": "builtin:lingjing-fantuan-v1",
+          "kind": "spritesheet",
+          "availability": "ready"
+        },
+        {
+          "id": "builtin:lingjing-shiba-v2",
+          "kind": "spritesheet",
+          "availability": "ready"
+        },
+        {
+          "id": "builtin:lingjing-hatcat-v1",
+          "kind": "spritesheet",
+          "availability": "ready"
+        },
+        {
+          "id": "builtin:lingjing-xiaohu-v1",
+          "kind": "spritesheet",
+          "availability": "ready"
+        },
+        {
+          "id": "builtin:lingjing-qingya-v1",
+          "kind": "spritesheet",
+          "availability": "ready"
+        },
+        {
+          "id": "builtin:lingjing-yantuan-v1",
+          "kind": "spritesheet",
+          "availability": "ready"
+        }
+      ]
+    },
+    {
+      "id": "native-wood-desktop",
+      "petId": "pet-ce4a5eb8-fad9-4210-9c69-383dede3a9de",
+      "resourceId": "builtin:lingjing-qingya-v1",
+      "requests": [
+        "file:///C:/Users/Administrator/.codex/worktrees/lingjing-foundation/DesktopPet/apps/pc-app/dist/ui/assets/desktop-yym5Ia5_.js",
+        "file:///C:/Users/Administrator/.codex/worktrees/lingjing-foundation/DesktopPet/apps/pc-app/dist/ui/assets/motion-BlyJPngK.js",
+        "file:///C:/Users/Administrator/.codex/worktrees/lingjing-foundation/DesktopPet/apps/pc-app/dist/ui/assets/ResourcePortrait-D7R5J3Y1.js",
+        "file:///C:/Users/Administrator/.codex/worktrees/lingjing-foundation/DesktopPet/apps/pc-app/dist/ui/assets/index-CZB9Gpnt.js",
+        "file:///C:/Users/Administrator/.codex/worktrees/lingjing-foundation/DesktopPet/apps/pc-app/dist/ui/assets/CompanionPortrait-D51Wd-Zy.js",
+        "file:///C:/Users/Administrator/.codex/worktrees/lingjing-foundation/DesktopPet/apps/pc-app/dist/ui/assets/heart-BarczO9q.js",
+        "file:///C:/Users/Administrator/.codex/worktrees/lingjing-foundation/DesktopPet/apps/pc-app/dist/ui/assets/DesktopCompanion-6KQoc2x-.js",
+        "file:///C:/Users/Administrator/.codex/worktrees/lingjing-foundation/DesktopPet/apps/pc-app/dist/ui/assets/index-BKovLdae.js",
+        "file:///C:/Users/Administrator/.codex/worktrees/lingjing-foundation/DesktopPet/apps/pc-app/dist/ui/assets/ParticleBuffer-nTZ-MFRd.js",
+        "file:///C:/Users/Administrator/.codex/worktrees/lingjing-foundation/DesktopPet/apps/pc-app/dist/ui/assets/init-CigAU1T6.js",
+        "file:///C:/Users/Administrator/.codex/worktrees/lingjing-foundation/DesktopPet/apps/pc-app/dist/ui/assets/browserAll-BJeBzKWp.js",
+        "file:///C:/Users/Administrator/.codex/worktrees/lingjing-foundation/DesktopPet/apps/pc-app/dist/ui/assets/webworkerAll-DTu3OtSB.js"
+      ],
+      "native": {
+        "visible": 21035,
+        "clear": 80465,
+        "characterPixels": 14366,
+        "size": {
+          "width": 290,
+          "height": 350
+        },
+        "url": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-foundation/DesktopPet/apps/pc-app/dist/ui/desktop.html#/desktop/pet-ce4a5eb8-fad9-4210-9c69-383dede3a9de",
+        "bounds": {
+          "x": 80,
+          "y": 520,
+          "width": 232,
+          "height": 280
+        },
+        "background": "#000000",
+        "visibleWindow": true,
+        "alwaysOnTop": true,
+        "resizable": false,
+        "focusable": false,
+        "webPreferences": {
+          "allowRunningInsecureContent": false,
+          "contextIsolation": true,
+          "disableDialogs": false,
+          "disablePopups": false,
+          "enableBlinkFeatures": "",
+          "experimentalFeatures": false,
+          "javascript": true,
+          "nodeIntegration": false,
+          "nodeIntegrationInSubFrames": false,
+          "nodeIntegrationInWorker": false,
+          "safeDialogs": false,
+          "safeDialogsMessage": "",
+          "sandbox": true,
+          "webSecurity": true,
+          "webviewTag": false
+        }
+      },
+      "otherPetDenied": "WINDOW_SCOPE_VIOLATION",
+      "logoutDenied": "WINDOW_SCOPE_VIOLATION",
+      "interactionMood": 62
+    },
+    {
+      "id": "native-earth-desktop",
+      "petId": "pet-c79a395c-2277-4d0a-88c4-f3ac6cf963eb",
+      "resourceId": "builtin:lingjing-yantuan-v1",
+      "requests": [
+        "file:///C:/Users/Administrator/.codex/worktrees/lingjing-foundation/DesktopPet/apps/pc-app/dist/ui/assets/desktop-yym5Ia5_.js",
+        "file:///C:/Users/Administrator/.codex/worktrees/lingjing-foundation/DesktopPet/apps/pc-app/dist/ui/assets/motion-BlyJPngK.js",
+        "file:///C:/Users/Administrator/.codex/worktrees/lingjing-foundation/DesktopPet/apps/pc-app/dist/ui/assets/ResourcePortrait-D7R5J3Y1.js",
+        "file:///C:/Users/Administrator/.codex/worktrees/lingjing-foundation/DesktopPet/apps/pc-app/dist/ui/assets/index-CZB9Gpnt.js",
+        "file:///C:/Users/Administrator/.codex/worktrees/lingjing-foundation/DesktopPet/apps/pc-app/dist/ui/assets/CompanionPortrait-D51Wd-Zy.js",
+        "file:///C:/Users/Administrator/.codex/worktrees/lingjing-foundation/DesktopPet/apps/pc-app/dist/ui/assets/heart-BarczO9q.js",
+        "file:///C:/Users/Administrator/.codex/worktrees/lingjing-foundation/DesktopPet/apps/pc-app/dist/ui/assets/DesktopCompanion-6KQoc2x-.js",
+        "file:///C:/Users/Administrator/.codex/worktrees/lingjing-foundation/DesktopPet/apps/pc-app/dist/ui/assets/index-BKovLdae.js",
+        "file:///C:/Users/Administrator/.codex/worktrees/lingjing-foundation/DesktopPet/apps/pc-app/dist/ui/assets/ParticleBuffer-nTZ-MFRd.js",
+        "file:///C:/Users/Administrator/.codex/worktrees/lingjing-foundation/DesktopPet/apps/pc-app/dist/ui/assets/init-CigAU1T6.js",
+        "file:///C:/Users/Administrator/.codex/worktrees/lingjing-foundation/DesktopPet/apps/pc-app/dist/ui/assets/browserAll-BJeBzKWp.js",
+        "file:///C:/Users/Administrator/.codex/worktrees/lingjing-foundation/DesktopPet/apps/pc-app/dist/ui/assets/webworkerAll-DTu3OtSB.js"
+      ],
+      "native": {
+        "visible": 21209,
+        "clear": 80291,
+        "characterPixels": 16590,
+        "size": {
+          "width": 290,
+          "height": 350
+        },
+        "url": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-foundation/DesktopPet/apps/pc-app/dist/ui/desktop.html#/desktop/pet-c79a395c-2277-4d0a-88c4-f3ac6cf963eb",
+        "bounds": {
+          "x": 320,
+          "y": 520,
+          "width": 232,
+          "height": 280
+        },
+        "background": "#000000",
+        "visibleWindow": true,
+        "alwaysOnTop": true,
+        "resizable": false,
+        "focusable": false,
+        "webPreferences": {
+          "allowRunningInsecureContent": false,
+          "contextIsolation": true,
+          "disableDialogs": false,
+          "disablePopups": false,
+          "enableBlinkFeatures": "",
+          "experimentalFeatures": false,
+          "javascript": true,
+          "nodeIntegration": false,
+          "nodeIntegrationInSubFrames": false,
+          "nodeIntegrationInWorker": false,
+          "safeDialogs": false,
+          "safeDialogsMessage": "",
+          "sandbox": true,
+          "webSecurity": true,
+          "webviewTag": false
+        }
+      },
+      "otherPetDenied": "WINDOW_SCOPE_VIOLATION",
+      "logoutDenied": "WINDOW_SCOPE_VIOLATION",
+      "interactionMood": 62
+    },
+    {
+      "id": "unregistered-window-rejected",
+      "code": "UNTRUSTED_SENDER"
+    }
+  ],
+  "errors": [],
+  "info": {
+    "version": "0.1.8",
+    "platform": "win32",
+    "build": {
+      "schemaVersion": 2,
+      "builtAt": "2026-10-25T04:46:53.639Z",
+      "sourceCommit": "5016e4504916620f6529571455291a455817e7e7",
+      "sourceTree": "03e641d7990155d9e8c7ee09064cd18633b2ea12",
+      "sourceDirtyFiles": [],
+      "codeFingerprint": "277b06f427f43ba2daa43f6c96ea90a023a79e7a2e1cab3b885964cfbaf8f779",
+      "canonicalSourceFingerprint": "7a16fb2258c897b5800462ee10851aaa50288b4198cf63840e124b126b3a08b1",
+      "canonicalPolicy": "Repository-relative paths; CRLF normalized to LF for source text only. Packaged/compiled bytes remain exact.",
+      "compiledFingerprint": "89baa5e89293e4503ff5605b1ce83b99d24265be12d2d252fbcd905817dab1b6",
+      "codeFiles": 299,
+      "compiledFiles": 87,
+      "toolchain": {
+        "node": "24.21.0",
+        "electron": "44.9.3",
+        "sqlite": "13.0.3",
+        "vite": "7.3.7",
+        "typescript": "5.9.3",
+        "platform": "win32",
+        "arch": "x64"
+      },
+      "entrypoints": {
+        "main": "main/index.cjs",
+        "app": "ui/index.html",
+        "desktop": "ui/desktop.html",
+        "preload": "preload/index.cjs"
+      },
+      "publicCloud": {
+        "projectRef": "jbvrdmrkwpznbrvteive",
+        "url": "https://jbvrdmrkwpznbrvteive.supabase.co",
+        "sha256": "c1625c63f1d959f92b3392b47f2fb492452803eedf1c0d1ebc68a1168ab64eda",
+        "resourcePath": "lingjing-cloud-public.json"
+      },
+      "packageName": "lingjing-desktop",
+      "runtimeClosure": {
+        "manifest": "runtime-closure.json",
+        "files": 107,
+        "edges": 181,
+        "sha256": "67cdeff183b37298d3d5c3069c139c2f600d18c3ac5b0a08b54be7f9ab0ce939"
+      }
+    },
+    "runtime": {
+      "electron": "44.9.3",
+      "node": "24.22.0",
+      "modules": "149",
+      "napi": "10",
+      "arch": "x64",
+      "tray": {
+        "active": true,
+        "bounds": {
+          "x": 1775,
+          "y": 1104,
+          "width": 33,
+          "height": 48
+        }
+      }
+    },
+    "features": [
+      {
+        "id": "accounts",
+        "commands": [
+          "session",
+          "login",
+          "register",
+          "logout",
+          "profileSave",
+          "passwordChange",
+          "settingsGet",
+          "settingsDefaults",
+          "settingsSave",
+          "backupList",
+          "backupExport",
+          "backupPreview",
+          "backupRestore",
+          "syncStatus",
+          "syncNow",
+          "syncRetry",
+          "cloudPreview",
+          "testNotification",
+          "pointer"
+        ]
+      },
+      {
+        "id": "resources",
+        "commands": [
+          "list",
+          "history",
+          "cloudStatus",
+          "cloudSync",
+          "cloudPull",
+          "resolve",
+          "save",
+          "import"
+        ]
+      },
+      {
+        "id": "companions",
+        "commands": [
+          "list",
+          "get",
+          "combatProfile",
+          "desktopInput",
+          "adopt",
+          "rename",
+          "desktop",
+          "select",
+          "interact",
+          "perform",
+          "appearance"
+        ]
+      },
+      {
+        "id": "battle",
+        "commands": [
+          "overview",
+          "rules",
+          "context",
+          "settleContext",
+          "selectPet",
+          "startTraining",
+          "snapshot",
+          "act",
+          "retryAction",
+          "search",
+          "invitations",
+          "invite",
+          "respondInvite",
+          "cancelInvite",
+          "createRoom",
+          "joinRoom",
+          "sync",
+          "leave",
+          "listReports",
+          "getReport",
+          "retrySettlement",
+          "qaPreset"
+        ]
+      },
+      {
+        "id": "garden",
+        "commands": [
+          "plant",
+          "harvest",
+          "craft",
+          "feed",
+          "garrison",
+          "snapshot",
+          "territoryLocate",
+          "territoryChallenge",
+          "territorySettle"
+        ]
+      },
+      {
+        "id": "discovery",
+        "commands": [
+          "snapshot",
+          "setExploring",
+          "locate",
+          "watch",
+          "stopWatch",
+          "setDemo",
+          "setProvider",
+          "tile",
+          "qaTarget",
+          "begin",
+          "act",
+          "cancel",
+          "confirm",
+          "pokedex",
+          "memories"
+        ]
+      },
+      {
+        "id": "conversations",
+        "commands": [
+          "snapshot",
+          "select",
+          "history",
+          "profile.save",
+          "connection.save",
+          "connection.test",
+          "connection.cancel",
+          "memory.save",
+          "memory.delete",
+          "send",
+          "retry",
+          "cancel",
+          "history.clear",
+          "legacy.preview",
+          "legacy.import"
+        ]
+      }
+    ],
+    "user": {
+      "id": "qa:06ad9453-0c42-471c-bc6b-7e0400e60acb:local-7bf703f3-47e8-4d4b-8062-b556efffa7b6",
+      "subjectId": "qa:06ad9453-0c42-471c-bc6b-7e0400e60acb:local-7bf703f3-47e8-4d4b-8062-b556efffa7b6",
+      "ownerAccountId": "qa:06ad9453-0c42-471c-bc6b-7e0400e60acb:local-7bf703f3-47e8-4d4b-8062-b556efffa7b6",
+      "provider": "local",
+      "account": "qa_engine_1792903615266",
+      "username": "公共工程验收",
+      "revision": 0,
+      "createdAt": "2026-10-25T04:46:55.269Z",
+      "updatedAt": "2026-10-25T04:46:55.269Z",
+      "dataMode": "simulated"
+    },
+    "scenario": {
+      "id": "unified-battle",
+      "runId": "06ad9453-0c42-471c-bc6b-7e0400e60acb",
+      "provenance": "simulated",
+      "isolated": true
+    }
+  },
+  "passed": true,
+  "completedAt": "2026-10-25T04:47:21.169Z",
+  "visualReview": {
+    "wood": "Visible deer character and name badge on transparent native window.",
+    "earth": "Visible pangolin character and name badge on transparent native window."
+  },
+  "preflightNegativeControl": {
+    "observedHead": "3a99ddca71c6d4c9b5654f4d1f433e0779c75ce8",
+    "observedCompiledSource": "5db06628ac3729db54ff7938a250d88aaf225034",
+    "rejectedBeforeLaunch": true,
+    "noQaProfileCreated": true
+  },
+  "finalBusinessFreeze": false,
+  "portableBuildPerformed": false,
+  "realCloudVerified": false
+}
