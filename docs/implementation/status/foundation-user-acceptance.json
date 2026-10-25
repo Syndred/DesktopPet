@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-25T09:46:57.141Z",
+  "updatedAt": "2026-10-25T10:02:26.074Z",
   "owner": "01 foundation/integration",
   "phase": "reopened-complete-user-acceptance",
   "status": "source-fix-ready-awaiting-09-and-coordinator-candidate",
@@ -11,7 +11,7 @@
   "authorization": {
     "humanThread": "01a1704b-e200-7090-9d17-958218c80f42",
     "humanMessage": "01a1725b-4da0-7b13-86ec-0d4935596ccb",
-    "scope": "User requested complete real-user acceptance and direct routing of defects to the responsible chats. Coordinator separately authorized only the public main-window work-area fix.",
+    "scope": "User requested complete real-user acceptance and direct routing of defects to the responsible chats. Coordinator authorized the public main-window work-area fix and QA-006 profile-scoped single-instance startup boundary; 09 remains the sole desktop operator.",
     "soleMouseKeyboardOperator": {
       "threadId": "01a1725c-d59c-7620-9bb6-1c0d4e0fb3a3",
       "title": "灵境 09｜完整用户功能验收与缺陷闭环"
@@ -362,6 +362,49 @@
       "status": "running-a9-source-confirmed-path-selection-contract-recorded",
       "summary": "当前两主进程10392/23668的实际ASAR只读核实均为a9acd7f；两次启动SFX输入SHA均匹配5fb591f…，没有发现本次用户用错版本的证据。多个版本和默认输出路径并存，后续验收必须钉住明确EXE/完整SHA/ASAR来源。",
       "next": "不得因review HEAD为6d4就宣称现运行a9已变成新包；等root给唯一已集成来源后再制作新候选，不覆盖旧包。"
+    },
+    {
+      "key": "canonical-profile-single-instance",
+      "issueId": "QA-006",
+      "owner": "01",
+      "severity": "P1-release-blocker",
+      "status": "source-fix-ready-independent-native-retest-pending",
+      "reproducedBy": "09",
+      "independentlyReproducedHere": false,
+      "evidence": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\implementation\\qa\\2026-10-25-user-acceptance\\evidence\\QA-006-duplicate-profile.json",
+      "baseline": {
+        "sourceCommit": "a9acd7f6f1920c541d429fa26d1f054b1427cd95",
+        "first": {
+          "launcherPid": 17140,
+          "mainPid": 23668,
+          "windowId": 787934
+        },
+        "second": {
+          "launcherPid": 16196,
+          "mainPid": 18500,
+          "windowId": 13832364
+        },
+        "scenarioRunId": "54f0fb7d-bc8a-45cd-8896-754333d59d31",
+        "sameAbsoluteProfile": true,
+        "secondStayedSignedOut": true
+      },
+      "sourceCause": "Main previously had no requestSingleInstanceLock call; each same-profile launch registered runtime startup and could independently open SQLite/services.",
+      "sourceFix": {
+        "commit": "8e5e2a61c23e6ecbcdbf115d76e414e0f7de63d1",
+        "files": [
+          "apps/pc-app/runtime/main/index.ts",
+          "apps/pc-app/runtime/core/profile-instance.cjs"
+        ],
+        "contract": [
+          "Resolve the selected profile to an absolute realpath (including Windows casing, namespaced path and junction aliases), then set userData before requesting the Electron native lock.",
+          "Lock rejection exits with code0 and never registers whenReady startup; no SQLite, feature services, tray or companion windows initialize in that process.",
+          "Real app second-instance events queue until the primary runtime and main window are initialized; a pending request coalesces, then restores a minimized main window, shows it and focuses it.",
+          "Different profile paths keep independent native singleton identities. Do not introduce an application-wide singleton or change the app name per profile.",
+          "Disposal ignores further activation but retains the native lock through database shutdown until process exit.",
+          "Canonicalization creates the profile directory if absent; it does not migrate, rewrite, delete or open saved files."
+        ]
+      },
+      "next": "09 must retest two executions of the same integrated new candidate, including same profile, startup race, tray-hidden/minimized original main window and two distinct profile roots. The old a9 executable is reproduction evidence only."
     }
   ],
   "simulatedVerification": {
@@ -419,10 +462,20 @@
       "reproduced": false,
       "hardware": "09 current125% large display cannot reproduce small-workarea case",
       "independent09Retest": "pending integrated candidate; minimize/maximize/restore on available hardware"
+    },
+    "QA-006": {
+      "owner": "01",
+      "severity": "P1-release-blocker",
+      "reproduced": true,
+      "reproducedBy": "09",
+      "sourceFixCommit": "8e5e2a61c23e6ecbcdbf115d76e414e0f7de63d1",
+      "sourceChecksPassed": 10,
+      "status": "source-fix-ready-awaiting-coordinator-and09",
+      "independent09Retest": "pending unique integrated candidate; do not mark issue closed from simulated tests"
     }
   },
   "publicChangeCoordination": {
-    "approvedOnly": "Initial/restored main window bounds and minimum sizing; implemented in commit above.",
+    "approvedOnly": "Initial/restored main-window bounds/minimum sizing (QA-005), plus canonical-profile singleton ownership and main-window activation startup/shutdown boundary (QA-006). No business domain or desktop companion creation changes.",
     "notChanged": [
       "transparent companion create adapter",
       "accounts domain",
@@ -457,7 +510,9 @@
     "真实长距离/反复拖动与quiet/wander/follow分别检查尺寸和scale不累计。",
     "记录DWM物理矩形、Electron getBounds/getContentBounds、renderer zoom/DPR，不能混当同一种坐标。",
     "先确认原用户实例归属，按root允许的产品正常退出处理遮挡；不杀进程、不改原档。",
-    "桌面工具按钮命中区域、账号锁图标、属性分类、固定角色名和稳定编号均以同一新候选实测。"
+    "桌面工具按钮命中区域、账号锁图标、属性分类、固定角色名和稳定编号均以同一新候选实测。",
+    "QA-006：同一新候选、同一绝对profile重复启动，第二进程退出，仅原main窗口显示/聚焦；原窗口最小化、托盘隐藏、首进程尚在初始化时分别核实。",
+    "QA-006：两个不同绝对profile仍能并行运行，原账号/灵宠/历史保持各自归属。路径大小写、斜杠/点段、目录联接别名应归为同一目录。"
   ],
   "safety": {
     "inputActions": 0,
@@ -494,6 +549,18 @@
     {
       "url": "https://raw.githubusercontent.com/NousResearch/hermes-agent/main/apps/desktop/electron/hud-ipc.ts",
       "use": "External primary implementation documents a similar setPosition growth workaround; investigation lead only, not proof for this product/Electron44."
+    },
+    {
+      "url": "https://raw.githubusercontent.com/electron/electron/v44.9.3/docs/api/app.md",
+      "use": "Official second-instance event lifecycle and native single-instance/exit API contract."
+    },
+    {
+      "url": "https://raw.githubusercontent.com/electron/electron/v44.9.3/shell/browser/api/electron_api_app.cc",
+      "use": "Pinned Electron implementation selects DIR_USER_DATA for ProcessSingleton before NotifyOtherProcessOrCreate."
+    },
+    {
+      "url": "https://raw.githubusercontent.com/chromium/chromium/152.0.7977.167/chrome/browser/process_singleton_win.cc",
+      "use": "Underlying Windows profile-specific singleton/window lookup; no added application-wide mutex in our code."
     }
   ],
   "coordinatorIntegrationNotification": {
@@ -504,5 +571,72 @@
     ],
     "checkedOutHere": false,
     "newCandidateAuthorized": false
-  }
+  },
+  "sourceFixCommits": [
+    {
+      "issueId": "QA-005",
+      "commit": "da330a3214ffff83be749f20a75d4c06fa7976cf"
+    },
+    {
+      "issueId": "QA-006",
+      "commit": "8e5e2a61c23e6ecbcdbf115d76e414e0f7de63d1"
+    }
+  ],
+  "singleInstanceVerification": {
+    "sourceFixCommit": "8e5e2a61c23e6ecbcdbf115d76e414e0f7de63d1",
+    "label": "Real temporary Windows filesystem checks plus SIMULATED Electron locks/events/main bootstrap. Not native EXE or live-cloud acceptance.",
+    "command": "node --test --test-reporter=tap tests/foundation/profile-instance.test.cjs tests/foundation/profile-path.test.cjs",
+    "tests": 10,
+    "passed": 10,
+    "failed": 0,
+    "skipped": 0,
+    "scope": {
+      "realFilesystem": 4,
+      "simulatedElectron": 5,
+      "existingProfileDiscovery": 1
+    },
+    "evidence": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\artifacts\\foundation\\user-acceptance\\profile-instance-targeted.tap",
+    "cases": [
+      "relative/dot/junction aliases",
+      "Windows casing and namespaced aliases",
+      "existing save bytes remain unchanged",
+      "invalid profile fails before lock selection",
+      "canonical userData precedes mocked lock; distinct profile remains primary",
+      "early second-instance events coalesce; disposal stops activation",
+      "actual main source with simulated Electron: rejected duplicate has zero ready/DB/services/tray/windows",
+      "actual main source with simulated Electron: async startup race creates only one main window",
+      "actual main source with simulated Electron: restore/show/focus with one service instance",
+      "existing override/SQLite/legacy JSON discovery precedence"
+    ],
+    "typescriptDesktop": {
+      "command": "tsc --noEmit -p apps/pc-app/tsconfig.desktop.json",
+      "exitCode": 0
+    },
+    "mainEslint": {
+      "command": "eslint apps/pc-app/runtime/main/index.ts",
+      "exitCode": 0
+    },
+    "cjsSyntax": {
+      "command": "node --check apps/pc-app/runtime/core/profile-instance.cjs; node --check tests/foundation/profile-instance.test.cjs",
+      "exitCode": 0
+    },
+    "cjsEslint": {
+      "exitCode": 0,
+      "exception": "Only no-require-imports disabled for native CommonJS files; normal repository lint excludes .cjs. An initial explicit invocation without that format exception reported require-style imports only.",
+      "command": "eslint apps/pc-app/runtime/core/profile-instance.cjs tests/foundation/profile-instance.test.cjs --rule @typescript-eslint/no-require-imports:off"
+    },
+    "readOnlyRuntimeClosure": {
+      "passed": true,
+      "files": 112,
+      "edges": 193,
+      "profileInstanceIncluded": true,
+      "mainGeometryHelperIncluded": true,
+      "buildRun": false
+    },
+    "nativeProfileLockVerified": false,
+    "nativeFocusVerified": false,
+    "twoProfileExeParallelVerified": false,
+    "buildOrPackageRun": false
+  },
+  "latestSourceFixCommit": "8e5e2a61c23e6ecbcdbf115d76e414e0f7de63d1"
 }
