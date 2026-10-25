@@ -11,6 +11,7 @@ import { ShoppingBasket as Basket, Beaker, Check, CircleCheck, Clock3, Cloud, Co
 import { Tooltip, TooltipProvider, TooltipTrigger, TooltipContent } from '../../components/kit';
 import { TerritoryMap } from './TerritoryMap';
 import { PetPortrait } from './PetPortrait';
+import { PetIdentity, usePetIdentity } from './PetIdentity';
 import { useGarden, type GardenState } from "./use-garden";
 // Shared components must have their styles on a direct garden entry as well.
 import "../companions/styles.css";
@@ -49,10 +50,15 @@ function Frame({ state, page, title, subtitle, children, action }: { state: Gard
 }
 function PetPicker({ pets, selected, onSelect, disabled }: { pets: GardenPet[]; selected: string; onSelect: (id: string) => void; disabled?: boolean }) {
   return <div className="garden-pet-picker" role="group" aria-label="指定伙伴">
-    {pets.length === 0 ? <p className="garden-help">还没有伙伴，先去<a href="#/companions/adopt">领养一只</a>吧。</p> : pets.map(pet => <Button variant="ghost" type="button" key={pet.petId} className={`garden-pet ${selected === pet.petId ? 'is-selected' : ''}`} aria-pressed={selected === pet.petId} onClick={() => onSelect(pet.petId)} disabled={disabled}>
-      <span className="garden-pet-portrait" aria-hidden="true"><PetPortrait pet={pet} animate={selected === pet.petId} /><i>{selected === pet.petId ? <Check size={12}/> : <Sprout size={12}/>}</i></span><strong>{pet.name}</strong><small>Lv.{String(pet.growth.level).padStart(2, '0')}</small>
-    </Button>)}
+    {pets.length === 0 ? <p className="garden-help">还没有伙伴，先去<a href="#/companions/adopt">领养一只</a>吧。</p> : pets.map(pet => <PetOption key={pet.petId} pet={pet} selected={selected === pet.petId} onSelect={onSelect} disabled={disabled} />)}
   </div>;
+}
+function PetOption({ pet, selected, onSelect, disabled }: { pet: GardenPet; selected: boolean; onSelect: (id: string) => void; disabled?: boolean }) {
+  const identity = usePetIdentity(pet);
+  return <Button variant="ghost" type="button" className={`garden-pet ${selected ? 'is-selected' : ''}`} data-pet-id={pet.petId} aria-pressed={selected} onClick={() => onSelect(pet.petId)} disabled={disabled}>
+    <span className="garden-pet-portrait" aria-hidden="true"><PetPortrait pet={pet} animate={selected} /><i>{selected ? <Check size={12}/> : <Sprout size={12}/>}</i></span>
+    <PetIdentity identity={identity} petId={pet.petId} /><small>Lv.{String(pet.growth.level).padStart(2, '0')}</small>
+  </Button>;
 }
 function Quantity({ value, setValue, max, disabled, label }: { value: number; setValue: (value: number) => void; max: number; disabled: boolean; label: string }) {
   return <div className="garden-quantity" aria-label={label}>
@@ -96,6 +102,8 @@ function Feeding({ state, selectedItem, compact = false }: { state: GardenState;
   const data = state.snapshot;
   const item = selectedItem || data?.items.find(i => i.id === foodId);
   const pet = data?.pets.find(p => p.petId === petId);
+  const identity = usePetIdentity(pet, data?.ownerAccountId, pet?.petId || '');
+  const recipient = pet ? `${identity?.roleName || '伙伴'}（编号 ${pet.petId}）` : '';
   const disabled = state.busy || Boolean(state.pending);
   useEffect(() => { setPetId(''); }, [data?.ownerAccountId]);
   useEffect(() => { setCount(1); }, [item?.id]);
@@ -105,8 +113,8 @@ function Feeding({ state, selectedItem, compact = false }: { state: GardenState;
     {!selectedItem && <div className="garden-field"><span id="garden-food-label">选择食物</span><Select value={foodId} onValueChange={setFoodId} disabled={disabled}><SelectTrigger aria-labelledby="garden-food-label" className="garden-food-select"><SelectValue placeholder="选择食物"/></SelectTrigger><SelectContent className="garden-select-popover" position="popper">{data?.items.filter(i => i.effects).map(i => <SelectItem key={i.id} value={i.id}>{i.name} × {i.quantity}</SelectItem>)}</SelectContent></Select></div>}
     {item && <><div className="garden-food-selected"><CropArt crop={item.id as CropId | 'cooked_rice'} /><div><strong>{item.name} × {item.quantity}</strong><small>{item.effects ? `饱食 +${item.effects.satiety} · 心情 +${item.effects.mood} · 亲密 +${item.effects.intimacy}` : item.id === 'rice' ? '稻米需要先制作成米饭' : '种子用来播种'}</small></div></div>
     <div className="garden-row"><span>喂养数量</span><Quantity label="喂养数量" value={effectiveCount} setValue={setCount} max={max} disabled={disabled} /></div>
-    <div className="garden-feed-preview"><span>预计饱食变化{pet ? ` · ${pet.name}` : ''}</span><strong>{pet ? `${pet.growth.satiety} → ${Math.min(100, pet.growth.satiety + (item.effects?.satiety || 0) * effectiveCount)}` : '请先选择伙伴'}</strong>{pet && <progress value={Math.min(100, pet.growth.satiety + (item.effects?.satiety || 0) * effectiveCount)} max={100} aria-label="喂食后饱食度" />}</div>
-    <Button variant="ghost" className="garden-primary garden-wide" disabled={disabled || !pet || !item.effects || max < effectiveCount} onClick={() => { if (pet && item) void state.mutate('feed', { petId: pet.petId, expectedPetRevision: pet.revision, itemId: item.id, quantity: effectiveCount }, `已给${pet.name}喂食 ${effectiveCount} 份${item.name}。`); }}><Heart size={16} /> {pet ? `喂给${pet.name}` : '选择一只伙伴'}</Button></>}
+    <div className="garden-feed-preview">{pet && <div className="garden-selected-identity" aria-live="polite"><span>喂养对象</span><PetIdentity identity={identity} petId={pet.petId} showNickname /></div>}<span>预计饱食变化</span><strong>{pet ? `${pet.growth.satiety} → ${Math.min(100, pet.growth.satiety + (item.effects?.satiety || 0) * effectiveCount)}` : '请先选择伙伴'}</strong>{pet && <progress value={Math.min(100, pet.growth.satiety + (item.effects?.satiety || 0) * effectiveCount)} max={100} aria-label={`${recipient}喂食后饱食度`} />}</div>
+    <Button variant="ghost" className="garden-primary garden-wide" aria-label={pet && item ? `喂给${recipient} ${effectiveCount} 份${item.name}` : undefined} disabled={disabled || !pet || !item.effects || max < effectiveCount} onClick={() => { if (pet && item) void state.mutate('feed', { petId: pet.petId, expectedPetRevision: pet.revision, itemId: item.id, quantity: effectiveCount }, `已给${recipient}喂食 ${effectiveCount} 份${item.name}。`); }}><Heart size={16} /> {pet ? `喂给${identity?.roleName || '所选伙伴'}` : '选择一只伙伴'}</Button></>}
     <HelpTip label="饱食上限">100</HelpTip>
   </div>;
 }
@@ -140,9 +148,17 @@ export function InventoryPage() {
 function TerritoryPanel({ territory, state }: { territory: GardenTerritory; state: GardenState }) {
   const [petId, setPetId] = useState(territory.garrisonPetId || ''); const [showLogs, setShowLogs] = useState(false);
   const mine = territory.ownerAccountId === state.snapshot?.ownerAccountId;
+  const selectedPet = state.snapshot?.pets.find(pet => pet.petId === petId);
+  const guardId = mine ? territory.garrisonPetId || '' : '';
+  const guard = state.snapshot?.pets.find(pet => pet.petId === guardId);
+  const identity = usePetIdentity(selectedPet, state.snapshot?.ownerAccountId, selectedPet?.petId || '');
+  const guardIdentity = usePetIdentity(guard, state.snapshot?.ownerAccountId, guardId);
+  const selectedLabel = `${identity?.roleName || '伙伴'}（编号 ${petId}）`;
+  const guardLabel = `${guardIdentity?.roleName || '伙伴'}（编号 ${guardId}）`;
+  useEffect(() => { setPetId(mine ? territory.garrisonPetId || '' : ''); }, [state.snapshot?.ownerAccountId, territory.id, territory.garrisonPetId, mine]);
   const challenge = state.snapshot?.territoryChallenges?.find(c => c.territoryId === territory.id);
-  return <div className="garden-card garden-territory-panel"><span className={`garden-pill ${mine ? 'green' : ''}`}>{mine ? '我的领地' : territory.ownerAccountId ? `${territory.ownerName || '其他玩家'}的领地` : '未占领'}</span><h2><Flag size={19} /> {territory.name}</h2><p className="garden-help">{territory.regionName || '区域信息尚未提供'}</p><div className="garden-inset"><small>区域捕捉收益</small><strong>✧ × {mine ? territory.captureMultiplier : 1}</strong></div>{mine && <><h3>驻守伙伴</h3><PetPicker pets={state.snapshot?.pets || []} selected={petId} onSelect={setPetId} disabled={state.busy} /><div className="garden-row"><Button variant="ghost" className="garden-primary" disabled={state.busy || !petId || Boolean(state.pending)} onClick={() => { void state.mutate('garrison', { territoryId: territory.id, petId, expectedTerritoryRevision: territory.revision }, '驻守伙伴已更新。'); }}>确认驻守</Button><Button variant="ghost" className="garden-secondary" disabled={state.busy || !territory.garrisonPetId} onClick={() => { void state.mutate('garrison', { territoryId: territory.id, petId: null, expectedTerritoryRevision: territory.revision }, '伙伴已结束驻守。'); }}>结束驻守</Button></div></>}
-  {!mine && !challenge && <><h3>选择出战伙伴</h3><PetPicker pets={state.snapshot?.pets || []} selected={petId} onSelect={setPetId} disabled={state.busy} /><Button variant="ghost" className="garden-primary garden-wide" disabled={state.busy || !petId || Boolean(state.pending) || state.snapshot?.remainingInvasions === 0} onClick={async () => { const result = await state.mutate('territoryChallenge', { territoryId: territory.id, expectedTerritoryRevision: territory.revision, petId }, '挑战已开始。'); if (result && typeof result === 'object') { const receipt=result.data as TerritoryChallengeReceipt; go(`/battle/session/${encodeURIComponent(receipt.sessionId)}`); } }}><Swords size={16} /> 发起领地挑战</Button><p className="garden-help garden-fineprint"><HelpTip label="挑战条件">位于区域内 · 每天 2 次</HelpTip></p></>}
+  return <div className="garden-card garden-territory-panel"><span className={`garden-pill ${mine ? 'green' : ''}`}>{mine ? '我的领地' : territory.ownerAccountId ? `${territory.ownerName || '其他玩家'}的领地` : '未占领'}</span><h2><Flag size={19} /> {territory.name}</h2><p className="garden-help">{territory.regionName || '区域信息尚未提供'}</p><div className="garden-inset"><small>区域捕捉收益</small><strong>✧ × {mine ? territory.captureMultiplier : 1}</strong></div>{mine && <><h3>驻守伙伴</h3>{guardId && <div className="garden-selected-identity"><span>当前驻守</span><PetIdentity identity={guardIdentity} petId={guardId} /></div>}<PetPicker pets={state.snapshot?.pets || []} selected={petId} onSelect={setPetId} disabled={state.busy} />{selectedPet && <div className="garden-selected-identity" aria-live="polite"><span>待确认驻守</span><PetIdentity identity={identity} petId={selectedPet.petId} /></div>}<div className="garden-row"><Button variant="ghost" className="garden-primary" aria-label={selectedPet ? `确认${selectedLabel}驻守` : undefined} disabled={state.busy || !selectedPet || Boolean(state.pending)} onClick={() => { void state.mutate('garrison', { territoryId: territory.id, petId, expectedTerritoryRevision: territory.revision }, `已确认${selectedLabel}驻守${territory.name}。`); }}>确认驻守</Button><Button variant="ghost" className="garden-secondary" aria-label={guardId ? `结束${guardLabel}驻守` : undefined} disabled={state.busy || !territory.garrisonPetId} onClick={() => { void state.mutate('garrison', { territoryId: territory.id, petId: null, expectedTerritoryRevision: territory.revision }, `已结束${guardLabel}在${territory.name}的驻守。`); }}>结束驻守</Button></div></>}
+  {!mine && !challenge && <><h3>选择出战伙伴</h3><PetPicker pets={state.snapshot?.pets || []} selected={petId} onSelect={setPetId} disabled={state.busy} />{selectedPet && <div className="garden-selected-identity" aria-live="polite"><span>出战对象</span><PetIdentity identity={identity} petId={selectedPet.petId} /></div>}<Button variant="ghost" className="garden-primary garden-wide" aria-label={selectedPet ? `使用${selectedLabel}发起领地挑战` : undefined} disabled={state.busy || !selectedPet || Boolean(state.pending) || state.snapshot?.remainingInvasions === 0} onClick={async () => { const result = await state.mutate('territoryChallenge', { territoryId: territory.id, expectedTerritoryRevision: territory.revision, petId }, `${selectedLabel}的挑战已开始。`); if (result && typeof result === 'object') { const receipt=result.data as TerritoryChallengeReceipt; go(`/battle/session/${encodeURIComponent(receipt.sessionId)}`); } }}><Swords size={16} /> 发起领地挑战</Button><p className="garden-help garden-fineprint"><HelpTip label="挑战条件">位于区域内 · 每天 2 次</HelpTip></p></>}
   {challenge && <div className="garden-challenge-pending"><a className="garden-secondary garden-wide" href={`#/battle/session/${encodeURIComponent(challenge.sessionId)}`}><Swords size={16}/>{challenge.status === 'finished' ? '查看结果' : '继续挑战'}</a></div>}
   <Button variant="ghost" className="garden-text-button" onClick={() => setShowLogs(!showLogs)} aria-expanded={showLogs}>占领记录 {showLogs ? '⌃' : '⌄'}</Button>{showLogs && <div className="garden-territory-logs">{territory.logs?.length ? territory.logs.map(log => <p key={log.id}>{log.actorName} · {log.action}<small>{new Date(log.createdAt).toLocaleString('zh-CN')}</small></p>) : <p className="garden-help">暂无可显示的占领记录。</p>}</div>}</div>;
 }
