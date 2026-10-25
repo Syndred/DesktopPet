@@ -1,27 +1,10 @@
 {
   "module": "garden",
-  "phase": "WAITING_COORDINATOR_NATIVE_LOCATION_GRANTS",
+  "phase": "native-actual-battle-rendered;original-lost-response-recovery-in-progress",
   "coordinatorNextAction": {
-    "kind": "Two actual normal-Auth Electron device grants in the designated native QA scenario",
-    "requestJson": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-garden\\DesktopPet\\artifacts\\garden\\cloud\\live-4b474857-e93b-4354-a119-a21157984812/electron/location-grant-request.json",
-    "preparedSql": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-garden\\DesktopPet\\artifacts\\garden\\cloud\\live-4b474857-e93b-4354-a119-a21157984812\\electron\\coordinator-location-grant.sql",
-    "executedByGarden": false,
-    "actualDenial": "REAL_LOCATION_REQUIRED at2026-10-25T04:11:40.987Z",
-    "actors": [
-      {
-        "authUserId": "c2f1198b-f1b4-4212-8488-7f86e683f4a0",
-        "ownerAccountId": "account:9695104c-0fe6-41c5-829f-0442c502c641",
-        "deviceId": "c07c9d75-e896-4b07-b436-a3a960c235e6",
-        "sessionId": "ad2c8091-e50a-44c3-8ff0-4f9407c453ef"
-      },
-      {
-        "authUserId": "c2f1198b-f1b4-4212-8488-7f86e683f4a0",
-        "ownerAccountId": "account:9695104c-0fe6-41c5-829f-0442c502c641",
-        "deviceId": "e768a904-9103-4369-b707-124c2b11b12e",
-        "sessionId": "acd5402a-4229-4fc3-b3ac-579edf38d044"
-      }
-    ],
-    "scenarioId": "native-4b474857"
+    "kind": "native grants received; continue module acceptance and coordinator final review",
+    "grantAppliedBy": "coordinator",
+    "scope": "native-4b474857 only"
   },
   "branch": "codex/lingjing-garden",
   "commit": "see git log for this file",
@@ -384,6 +367,12 @@
       "authorityLength": 71,
       "duplicateAcrossDevice": true,
       "sqlProof": "docs/implementation/evidence/garden/cloud-2026-10-25/sql-readback.json"
+    },
+    "nativeActualRenderedActors": {
+      "hatcatVisiblePixels": 48821,
+      "woodGuardianVisiblePixels": 36027,
+      "resourceReady": true,
+      "textureFramesRecorded": true
     }
   },
   "preservation": {
@@ -408,9 +397,9 @@
     }
   ],
   "remaining": [
-    "Coordinator applies prepared grants for native AuthUID c2f1198b-f1b4-4212-8488-7f86e683f4a0 device c07c9d75... and e768a904... under native-4b474857; actual native request currently correctly denies ungranted simulation",
-    "Complete prepared real dual-Electron battle/restart/confirmation and inspect actual rendered actor pixels",
-    "Publish final combined proof; independent coordinator review"
+    "Finish existing native battle original-request restart, two-client continuation and original confirmation without new challenge",
+    "Publish combined passed evidence and fetch remote",
+    "Independent coordinator final review"
   ],
   "dependencyCheckpoint": "b40af0efcf6062ddc2e8c360523c996fc91ebc0a",
   "identityCheckpoint": "ee36030ad37614ac321b94ae4ee4169d705f1165",
@@ -453,7 +442,7 @@
       }
     ],
     "requestedDurationMinutes": 90,
-    "status": "REQUESTED;two normal secure Electron profiles active;no cloud writes by05"
+    "status": "granted by coordinator,90min;actual native frame visible"
   },
   "liveVerifier": {
     "privateConfig": "artifacts/garden/cloud/private-clients.json",
