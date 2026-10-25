@@ -1,0 +1,97 @@
+{
+  "at": "2026-10-25T02:44:26.836Z",
+  "sourceCommit": "f82b117779558e3a0d7d9bf8dbbc86188bcdeb44",
+  "harnessSourceCommit": "58e319b919dab4d335eee59147041937bf85a68c",
+  "productionSourceUnchangedSinceBuild": true,
+  "build": {
+    "schemaVersion": 1,
+    "builtAt": "2026-10-25T02:42:24.865Z",
+    "sourceCommit": "f82b117779558e3a0d7d9bf8dbbc86188bcdeb44",
+    "sourceDirtyFiles": [],
+    "codeFingerprint": "7391850c8c91f7ddcc81c62a8998a8c9a05869a97d66c80a873d35214e879ba6",
+    "compiledFingerprint": "a71e6f07aa0bcf4aca48ccbcff6047532bd2b1a1444529b08bb464d9f1b548b4",
+    "codeFiles": 219,
+    "compiledFiles": 24
+  },
+  "status": "passed",
+  "realElectron": true,
+  "realCloud": false,
+  "syntheticQaFixture": true,
+  "versions": {
+    "electron": "44.9.3",
+    "node": "24.22.0"
+  },
+  "checks": [
+    {
+      "title": "导入旧记录",
+      "metrics": {
+        "dialog": {
+          "x": 380,
+          "y": 166.4875030517578,
+          "width": 520,
+          "height": 511.0249938964844
+        },
+        "title": {
+          "x": 404.8000183105469,
+          "y": 192,
+          "width": 100,
+          "height": 28.5625
+        },
+        "translate": "none",
+        "viewport": {
+          "width": 1280,
+          "height": 844
+        }
+      },
+      "primary": {
+        "background": "rgb(82, 120, 255)",
+        "color": "rgb(255, 255, 255)",
+        "blue": "#5278ff",
+        "rect": {
+          "x": 805.6000366210938,
+          "y": 620.7125244140625,
+          "width": 69.5999984741211,
+          "height": 32
+        }
+      },
+      "focusContained": true
+    },
+    {
+      "title": "原伙伴的记忆",
+      "metrics": {
+        "dialog": {
+          "x": 380,
+          "y": 303.25,
+          "width": 520,
+          "height": 237.5
+        },
+        "title": {
+          "x": 404.8000183105469,
+          "y": 328.76251220703125,
+          "width": 120,
+          "height": 28.5625
+        },
+        "translate": "none",
+        "viewport": {
+          "width": 1280,
+          "height": 844
+        }
+      },
+      "primary": {
+        "background": "rgb(82, 120, 255)",
+        "color": "rgb(255, 255, 255)",
+        "blue": "#5278ff",
+        "rect": {
+          "x": 777.6000366210938,
+          "y": 483.95001220703125,
+          "width": 97.5999984741211,
+          "height": 32
+        }
+      },
+      "focusContained": true
+    }
+  ],
+  "escapeRestoresTriggerFocus": true,
+  "unsavedMemoryNotPersisted": true,
+  "sourceRecoveryRun": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-conversations\\DesktopPet\\artifacts\\conversations\\cloud-recovery\\run-1792895710184"
+}
