@@ -29,11 +29,21 @@ export interface CompanionPosition {
   displayId: string | null;
 }
 
+/** Display only; canonical names, serials and saved pet identifiers stay intact. */
+export interface CompanionDisplayIdentity {
+  readonly roleName: string;
+  /** The complete original petId. Ownership remains (ownerAccountId, petId). */
+  readonly instanceNumber: PetId;
+  readonly historicalNickname: string | null;
+}
+
 export interface CompanionPet {
   petId: PetId;
   ownerAccountId: string;
   templateId: string;
+  /** Original persisted name. UI role names come from CompanionDisplayIdentity. */
   name: string;
+  /** Historical receipt/encounter serial; not a unique display identifier. */
   serial: string;
   element: CompanionElement;
   resource: CompanionResourceRef;
@@ -121,6 +131,7 @@ export interface CompanionCombatProfile {
 
 export interface CompanionsClient {
   list(): Promise<CompanionResult<CompanionsSnapshot>>;
+  identity(input: { petId: PetId }): Promise<CompanionResult<CompanionDisplayIdentity>>;
   adopt(input: { actionId: string; templateId: string; name: string; showOnDesktop: boolean }): Promise<CompanionResult<CompanionMutation>>;
   rename(input: CompanionAction & { name: string }): Promise<CompanionResult<CompanionMutation>>;
   desktop(input: CompanionAction & { visible?: boolean; behavior?: CompanionBehavior; scale?: number; position?: CompanionPosition }): Promise<CompanionResult<CompanionMutation>>;
