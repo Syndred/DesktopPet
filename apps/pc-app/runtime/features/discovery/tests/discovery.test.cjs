@@ -11,6 +11,7 @@ const {MapAdapter}=require('../map-adapter.cjs');
 const {nearbySpawns}=require('../spawns.cjs');
 const discoveryModule=require('../index.cjs');
 const {publicEncounter}=require('../service.cjs');
+const {contains}=require('../territory-adapter.cjs');
 const {getBattleRules}=require('../../../services/battle-runtime.cjs');
 
 const companionRoot=process.env.LINGJING_COMPANIONS_RUNTIME || resolve(__dirname,'../../companions');
@@ -41,14 +42,14 @@ function fixture() {
   const owner=services.session.getOwnerAccountId();
   return {directory,legacy,db,services,api,owner,close(){discovery.dispose?.();garden.dispose?.();battle.dispose?.();companion.dispose?.();db.close();}};
 }
-async function start(f) {
+async function start(f,preferredSpawn) {
   await f.api.location.locate();
   const adopted=await f.services.invoke('companions','adopt',{actionId:'adopt-test',templateId:'big-fish-gentle',name:'实战伙伴',showOnDesktop:false});assert.equal(adopted.ok,true);
   const petId=adopted.data.pet.petId;
   // Pick a real generated 2D encounter. Coordinates remain controlled fixtures.
-  let spawn=f.api.snapshot().data.spawns.find(s=>s.element==='water'&&s.inRange);
+  let spawn=f.api.snapshot().data.spawns.find(s=>s.inRange&&(preferredSpawn?s.id===preferredSpawn.id:s.element==='water'));
   if(!spawn) {
-    const target=nearbySpawns(fixturePosition).find(s=>s.element==='water');assert.ok(target);
+    const target=preferredSpawn||nearbySpawns(fixturePosition).find(s=>s.element==='water');assert.ok(target);
     f.api.location.adapter={scenario:'qa',getPosition:async()=>({ok:true,...fixtureFix(),...target.position})};
     f.api.location.fix=null;await f.api.location.locate();
     spawn=f.api.snapshot().data.spawns.find(s=>s.id===target.id);
@@ -235,8 +236,15 @@ test('real territory battle ownership feeds the discovery map and capture proven
     assert.equal(battle.winner,'player');
     const settled=await f.services.invoke('garden','territorySettle',{sessionOwnerAccountId:f.owner,actionId:'territory-settle',expectedRevision:f.services.get('garden').service.revision(f.owner),sessionId:battle.id});assert.equal(settled.ok,true,JSON.stringify(settled));
     const overlay=f.api.snapshot().data.territories.find(item=>item.territoryId===territory.id);assert.ok(overlay);assert.equal(overlay.owned,true);assert.equal(overlay.bonusMultiplier,2);assert.equal(overlay.mapBoundary.length,4);
-    const {encounter}=await start(f),won=await win(f,encounter);
+    // Hourly spawns can move the generic water-target helper over a cell edge.
+    // This case asserts an owned-region bonus, so select a real generated water
+    // point inside that exact region rather than assuming the helper stays in it.
+    const center=territory.boundary.reduce((p,v)=>({lat:p.lat+v.lat/territory.boundary.length,lng:p.lng+v.lng/territory.boundary.length}),{lat:0,lng:0});
+    const target=nearbySpawns(center).find(spawn=>spawn.element==='water'&&contains(spawn.position,territory.boundary));assert.ok(target,'Owned region must contain the chosen canonical fixture spawn');
+    const {encounter}=await start(f,target);assert.equal(contains(f.api.location.snapshot().fix,territory.boundary),true);assert.equal(f.api.territories.captureContext(f.owner,f.api.location.snapshot().fix).territoryId,territory.id);
+    const won=await win(f,encounter);
     const captured=await f.services.invoke('discovery','confirm',{encounterId:won.encounterId,actionId:'territory-capture'});assert.equal(captured.ok,true,JSON.stringify(captured));assert.equal(captured.data.territoryId,territory.id);assert.equal(captured.data.captureMultiplier,2);
     const owned=f.services.get('companions').getPet(f.owner,captured.data.petId);assert.equal(owned.growth.stats.hp,124);assert.equal(owned.origin.territoryId,territory.id);
+    const outside={...f.api.location.snapshot().fix,lat:Math.min(...territory.boundary.map(p=>p.lat))-.001,lng:center.lng};assert.equal(f.api.territories.captureContext(f.owner,outside).territoryId,null,'An outside position must keep the ordinary no-territory result');
   } finally {f.close();}
 });
