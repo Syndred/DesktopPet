@@ -33,10 +33,12 @@ create table lingjing_private.global_pet_serials(
 create table lingjing_private.global_serial_qa_scopes(
  auth_uid uuid not null references auth.users(id) on delete restrict,device_id text not null,
  namespace text not null check(namespace~'^qa:[a-zA-Z0-9][a-zA-Z0-9:_-]{0,179}$'),
- primary key(auth_uid,device_id)
+ primary key(auth_uid,device_id,namespace)
 );
 insert into lingjing_private.global_serial_qa_scopes
- select auth_uid,device_id,'qa:'||scenario_id from lingjing_discovery.location_test_grants;
+ select auth_uid,device_id,'qa:'||scenario_id from lingjing_discovery.location_test_grants
+ union select auth_uid,device_id,'qa:'||(fix->>'scenarioId') from lingjing_discovery.location_proofs where source='simulated'
+ union select auth_uid,'permit-history:'||id,'qa:'||scenario_id from lingjing_discovery.permits where source='simulated';
 alter table lingjing_private.global_serial_templates enable row level security;
 alter table lingjing_private.global_serial_counters enable row level security;
 alter table lingjing_private.global_pet_serials enable row level security;
@@ -44,15 +46,15 @@ alter table lingjing_private.global_serial_qa_scopes enable row level security;
 revoke all on lingjing_private.global_serial_templates,lingjing_private.global_serial_counters,
  lingjing_private.global_pet_serials,lingjing_private.global_serial_qa_scopes from public,anon,authenticated,service_role;
 grant select on lingjing_private.global_serial_templates to service_role;
-grant select,insert,update on lingjing_private.global_serial_counters,lingjing_private.global_pet_serials,
- lingjing_private.global_serial_qa_scopes to service_role;
+grant select,insert,update on lingjing_private.global_serial_counters,lingjing_private.global_pet_serials to service_role;
+grant select,insert on lingjing_private.global_serial_qa_scopes to service_role;
 
 create function lingjing_private.remember_global_serial_qa_scope() returns trigger
 language plpgsql security invoker set search_path='' as $$
 begin
  insert into lingjing_private.global_serial_qa_scopes(auth_uid,device_id,namespace)
  values(new.auth_uid,new.device_id,'qa:'||new.scenario_id)
- on conflict(auth_uid,device_id) do update set namespace=excluded.namespace;
+ on conflict(auth_uid,device_id,namespace) do nothing;
  return new;
 end $$;
 create trigger global_serial_remember_qa after insert or update on lingjing_discovery.location_test_grants
@@ -86,15 +88,17 @@ language plpgsql security definer set search_path='' as $$
 declare v_grant lingjing_discovery.location_test_grants;v_scope text;
 begin
  perform lingjing_discovery.live_actor(p_actor);
+ -- Scope is account-wide. A new device without an explicit active grant cannot
+ -- escape an expired/deleted grant held by any device of this same owner.
+ v_scope:=lingjing_private.global_serial_owner_namespace(p_actor->>'ownerAccountId',true);
  select * into v_grant from lingjing_discovery.location_test_grants
   where auth_uid=(p_actor->>'authUserId')::uuid and device_id=p_actor->>'deviceId' for share;
  if found then
   if v_grant.expires_at<=clock_timestamp() then raise exception 'LJ_GLOBAL_SERIAL_SCOPE_REVOKED';end if;
-  return 'qa:'||v_grant.scenario_id;
+  if v_scope is distinct from 'qa:'||v_grant.scenario_id then raise exception 'LJ_GLOBAL_SERIAL_SCOPE_CONFLICT';end if;
+  return v_scope;
  end if;
- select namespace into v_scope from lingjing_private.global_serial_qa_scopes
-  where auth_uid=(p_actor->>'authUserId')::uuid and device_id=p_actor->>'deviceId';
- if found or p_actor->>'allowSimulatedLocation'='true' then raise exception 'LJ_GLOBAL_SERIAL_SCOPE_REVOKED';end if;
+ if v_scope<>'live' or p_actor->>'allowSimulatedLocation'='true' then raise exception 'LJ_GLOBAL_SERIAL_SCOPE_REVOKED';end if;
  return 'live';
 end $$;
 create function lingjing_private.global_serial_owner_namespace(p_owner text,p_allow_expired boolean default false) returns text

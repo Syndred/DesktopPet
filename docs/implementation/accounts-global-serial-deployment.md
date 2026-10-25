@@ -32,9 +32,11 @@ ensure 野外号。claim 插入原 captures 后，共同 commit 的 `register_ow
    先记录 accounts/saves/save_actions/save_archives/owned_pet_ids/authority_fragments 既有行
    的主键+原行哈希和 counts，并保留。不能把既有 QA-007 结果当编号证据。
 2. 只读审核服务端 `location_test_grants` 与 permits.source/scenario_id。2026-10-25 接手时
-   有6条过期 grant，不能按过期状态当作 live；服务端 shadow scope 会保留这些 namespace。
-   同一账号若有多个不同 QA namespace，先使用专用新 QA 身份或由协调明确处理服务端授权，
-   不根据用户名/user_metadata 分类。不要删旧 grant 试图恢复 live。
+   有6条过期 grant，不能按过期状态当作 live；shadow scope 同时从当前 grants、历史 simulated
+   proofs 和 permits 初始化，即使授权在迁移前已删除也保留。scope 统一按账号确定；新设备
+   没有该 scope 的有效独立 grant 就拒绝，不能开新设备回落 live。
+   同一账号若有多个历史 QA namespace，明确报 SCOPE_CONFLICT，使用专用新 QA 身份，
+   不根据用户名/user_metadata 分类。不要删旧 grant 试图恢复 live；scope 墓碑不覆盖或删除。
 3. 总协调通过受控 SQL 部署 `20261025105253_lingjing_global_pet_serials.sql`。
    事务先短暂阻塞 owner 写锁，历史 permits 按 os/live、simulated/qa:scenario 分号，再给当前
    保存里的旧宠补 sidecar；已捕获 pet 绑定其 permit 的同号。过期授权只允许迁移内部回填，
@@ -42,6 +44,9 @@ ensure 野外号。claim 插入原 captures 后，共同 commit 的 `register_ow
 4. 立即对步骤1既有行逐主键比对原哈希/数量，查所有新表 RLS/函数 grants，运行 security advisors。
    私有 namespace resolver 是 definer，先复核 canonical actor 并锁服务端 grant，避免给
    worker 授予 QA grant UPDATE。其他新增 RPC 是 invoker、仅 service_role 可执行。
+   保存一份新的23条迁移 ledger 证据后，将 manifest.pendingReviewFiles 提升到 files，
+   expectedDeployedCount 更新为23并指向新 ledgerEvidence；原22条历史证据不改。门禁已分别
+   验证22+1 pending和23 deployed的推广形式。
 5. 部署新 companions-sync，再部署03 discovery；companions snapshot 的独立 `serialRegistry`
    位于 envelope/module 之外。原 checksum/receipt 保持。旧 app/Edge 可继续用原保存协议，
    新客户端缺独立字段时只显示已有可信缓存或待同步。
@@ -56,11 +61,15 @@ ownerAccountId、sessionId，核对设备绑定有效。总协调以受控数据
 
 ```sql
 -- 两个身份各执行一次。参数值通过受控客户端绑定，秘密和令牌不入 Git。
+begin;
+-- 与运行时相同的 owner -> grant 锁顺序。
+select lingjing_private.lock_save_owner(:verified_owner_account_id);
 insert into lingjing_discovery.location_test_grants(auth_uid,device_id,scenario_id,expires_at)
 values (:verified_auth_uid, :verified_device_id, :same_qa_scenario_id,
         clock_timestamp()+interval '30 minutes')
 on conflict(auth_uid,device_id) do update set
  scenario_id=excluded.scenario_id,expires_at=excluded.expires_at;
+commit;
 ```
 
 触发器自动记录持久 QA scope；无需单独登记墓碑。两个用户使用相同 scenario 和同一 template
@@ -71,6 +80,7 @@ on conflict(auth_uid,device_id) do update set
 ## 验证边界
 
 `global-serial-sql.test.mjs` 在 LOCAL PGlite 执行真实 PostgreSQL SQL 和权限/事务检查，
-包括6张既有表的完整行哈希保留、claim 中途故障回滚、旧 reserve 兼容和超出2^53号码。
+包括10张既有表的完整行哈希保留、迁移前删除grant后的proof/permit墓碑、同owner新device
+拒绝生产号、claim 中途故障回滚、旧 reserve 兼容和超出2^53号码。
 WASM 会串行排队事务；其并发发起检查仅证明该执行器无碰撞，不能证明真实云多连接锁竞争、
 Auth、PostGIS 或原生UI通过。真实云并发和09验收仍待总协调部署后完成。

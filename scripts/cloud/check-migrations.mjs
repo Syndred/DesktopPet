@@ -15,10 +15,11 @@ export const legacyDrafts = [
   '20261024_lingjing_battle_atomic_rounds.sql',
 ];
 
-export function checkMigrationNames(files, { allowLegacyDrafts = false } = {}) {
-  const deployed = manifest.files, pendingReview = manifest.pendingReviewFiles || [];
+export function checkMigrationNames(files, { allowLegacyDrafts = false, approvedManifest = manifest } = {}) {
+  const deployed = approvedManifest.files, pendingReview = approvedManifest.pendingReviewFiles || [];
   const expected = [...deployed, ...pendingReview];
-  if (manifest.schemaVersion !== 1 || deployed.length !== 22 || new Set(expected).size !== expected.length ||
+  if (approvedManifest.schemaVersion !== 1 || !Number.isSafeInteger(approvedManifest.expectedDeployedCount)
+    || approvedManifest.expectedDeployedCount < 1 || deployed.length !== approvedManifest.expectedDeployedCount || new Set(expected).size !== expected.length ||
     expected.some(name => !/^\d{14}_[a-z0-9_]+\.sql$/.test(name)) ||
     new Set(expected.map(name => name.slice(0, 14))).size !== expected.length ||
     expected.join('\n') !== [...expected].sort().join('\n')) throw new Error('Invalid approved migration manifest');

@@ -27,7 +27,7 @@ async function fixture(){
  const value=async(sql,args=[])=>(await db.query(sql,args)).rows[0]?.v;
  const as=(role,sql,args=[])=>db.transaction(async tx=>{await tx.exec('set local role '+role);return(await tx.query(sql,args)).rows[0]?.v;});
  const actors=[];
- for(let n=1;n<=3;n++){
+ for(let n=1;n<=5;n++){
   const uid=`10000000-0000-4000-8000-00000000000${n}`,sid=`20000000-0000-4000-8000-00000000000${n}`,device=`30000000-0000-4000-8000-00000000000${n}`;
   await db.query('insert into auth.users(id) values($1)',[uid]);await db.query('insert into auth.sessions(id,user_id) values($1,$2)',[sid,uid]);
   await value('select public.lingjing_link_auth_user($1,$2,$2) v',[uid,'serial-owner-'+n]);
@@ -43,7 +43,17 @@ async function fixture(){
  }
  const seeds=[];for(const a of actors)seeds.push(await adopt(a));
  await db.query("insert into lingjing_discovery.location_test_grants(auth_uid,device_id,scenario_id,expires_at) values($1,$2,'serial-fixture',clock_timestamp()-interval '1 minute')",[actors[2].authUserId,actors[2].deviceId]);
- const tables=['public.lingjing_accounts','public.lingjing_saves','public.lingjing_save_actions','public.lingjing_save_archives','lingjing_private.owned_pet_ids','lingjing_private.authority_fragments'];
+ // Pre-migration deleted-grant fixtures: one leaves a simulated signed-proof
+ // row; another leaves only the service-written simulated permit history.
+ const historic=actors[3],permitActor=actors[4];
+ for(const [who,scenario]of [[historic,'serial-history'],[permitActor,'serial-permit-history']])await db.query("insert into lingjing_discovery.location_test_grants(auth_uid,device_id,scenario_id,expires_at) values($1,$2,$3,clock_timestamp()+interval '1 minute')",[who.authUserId,who.deviceId,scenario]);
+ const historicalLocation=(op,input)=>as('service_role','select public.lingjing_discovery_location($1,$2,$3) v',[{...historic,allowSimulatedLocation:true,scenarioId:'serial-history'},op,input]);
+ await historicalLocation('register_device',{publicJwk:generateKeyPairSync('ec',{namedCurve:'prime256v1'}).publicKey.export({format:'jwk'}),keyFingerprint:'a'.repeat(64)});
+ const nonce=await historicalLocation('issue_nonce',{purpose:'discover',reference:''});
+ await historicalLocation('accept_nonce',{challengeId:nonce.id,signatureHash:'a'.repeat(64),fix:{lat:31.2,lng:121.4,accuracyMeters:5,timestampMs:Date.now(),source:'simulated',provider:'qa-discovery',coordinateSystem:'wgs84',scenarioId:'serial-history'}});
+ await db.query("insert into lingjing_discovery.permits(id,owner_account_id,auth_uid,pet_id,spawn_id,spawn_json,session_json,status,source,scenario_id,expires_at) values($1,$2,$3,$4,'historical-qa-spawn',$5,'{}','lost','simulated','serial-permit-history',clock_timestamp()-interval '1 minute')",[randomUUID(),permitActor.ownerAccountId,permitActor.authUserId,seeds[4].receipt.result.data.pet.petId,{id:'historical-qa-spawn',templateId:'animal-shiba'}]);
+ await db.query('delete from lingjing_discovery.location_test_grants where auth_uid in($1,$2)',[historic.authUserId,permitActor.authUserId]);
+ const tables=['public.lingjing_accounts','public.lingjing_saves','public.lingjing_save_actions','public.lingjing_save_archives','lingjing_private.owned_pet_ids','lingjing_private.authority_fragments','lingjing_discovery.location_proofs','lingjing_discovery.permits','lingjing_discovery.captures','lingjing_discovery.game_actions'];
  const hashes=async()=>Object.fromEntries(await Promise.all(tables.map(async name=>[name,await value('select md5(coalesce(jsonb_agg(r order by r::text)::text,\'null\')) v from (select to_jsonb(t) r from '+name+' t) q')])));
  const before=await hashes();await db.exec(source(migration));
  const owned=(a,revision=null)=>as('service_role','select public.lingjing_global_serial_owned($1,$2) v',[a,revision]);
@@ -64,6 +74,21 @@ test('LOCAL globalSerial migration, private registry, authority hooks and proof 
    const first=await f.owned(a),second=await f.owned(b);assert.deepEqual([first.pets[0].globalSerial,second.pets[0].globalSerial].sort(),['1','2']);
    assert.equal(await scalar("(select global_serial::text from lingjing_private.global_pet_serials where namespace='qa:serial-fixture')"),'1');
    await assert.rejects(f.owned(q),/GLOBAL_SERIAL_SCOPE_REVOKED/);
+  });
+  await t.test('pre-migration deleted grants retain proof/permit QA scopes and an ungranted new device cannot escape its owner scope',async()=>{
+   for(const who of f.actors.slice(3)){
+    await assert.rejects(f.owned({...who,username:'plain-name',allowSimulatedLocation:false}),/SCOPE_REVOKED/);
+    await assert.rejects(lookup(who,[]),/SCOPE_REVOKED/);
+   }
+   const sid=randomUUID(),device=randomUUID();await f.db.query('insert into auth.sessions(id,user_id) values($1,$2)',[sid,q.authUserId]);
+   await f.db.query("select set_config('request.jwt.claims',$1,false),set_config('request.headers',$2,false)",[JSON.stringify({sub:q.authUserId,session_id:sid,role:'authenticated'}),JSON.stringify({'x-lingjing-device-id':device})]);
+   const next=await f.as('authenticated','select public.lingjing_register_device($1) v',[device]);
+   await assert.rejects(f.owned(next),/SCOPE_REVOKED/);await assert.rejects(lookup(next,[]),/SCOPE_REVOKED/);
+   const before=await counters();await assert.rejects(ensure(next,{id:'new-device-cannot-allocate',templateId:'animal-shiba',position:{lat:31.2,lng:121.4}},{id:randomUUID()}),/SCOPE_REVOKED/);assert.deepEqual(await counters(),before);
+   await f.db.query("insert into lingjing_discovery.location_test_grants(auth_uid,device_id,scenario_id,expires_at) values($1,$2,'serial-fixture',clock_timestamp()+interval '3 minutes')",[q.authUserId,device]);
+   assert.equal((await f.owned(next)).namespace,'qa:serial-fixture');
+   const historic=f.actors[3];await f.db.query("insert into lingjing_discovery.location_test_grants(auth_uid,device_id,scenario_id,expires_at) values($1,$2,'another-history',clock_timestamp()+interval '3 minutes')",[historic.authUserId,historic.deviceId]);
+   await assert.rejects(f.owned(historic),/SCOPE_CONFLICT/);
   });
   await t.test('cross-owner same-type sequence, separate types, request replay and stale-CAS isolation',async()=>{
    const added=await f.adopt(b),serials=await f.owned(b);assert.equal(serials.pets.find(p=>p.petId===added.receipt.result.data.pet.petId).globalSerial,'3');

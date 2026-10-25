@@ -1,5 +1,6 @@
 {
   "schemaVersion": 1,
+  "expectedDeployedCount": 22,
   "ledgerEvidence": "docs/implementation/evidence/cloud/2026-10-25/migration-ledger-alignment.json",
   "scope": "files are aligned to the actual ledger; pendingReviewFiles are local review candidates, not deployed migrations or a full PostGIS reset assertion.",
   "pendingReviewFiles": ["20261025105253_lingjing_global_pet_serials.sql"],
