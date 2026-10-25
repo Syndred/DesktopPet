@@ -1,0 +1,66 @@
+{
+  "module": "conversations",
+  "scope": "cloud-upgrade-2026-10-25",
+  "branch": "codex/lingjing-conversations",
+  "commit": "b809116ab88ca25f26806734898ead5b7ac4d145",
+  "goalStatus": "active",
+  "status": "implementing",
+  "contracts": {
+    "identity": "08 accounts: verified owner mapping, complete-save CAS and account save-restored events",
+    "backup": "conversations version 1 adapter; stable IDs and array order, no sequence or encrypted_key",
+    "entry": "core/conversation-backup.cjs -> feature-owned adapter compatibility entry planned",
+    "sharedBaseline": "46abf416e0500b53ef32fc29b441d923ef5a6a80",
+    "coordinationNeeds": [
+      "08保持统一完整存档CAS与并发冲突，无需新建聊天云表。",
+      "完整存档legacy模块须审核递归敏感字段；account_legacy_data原始归档不能将BYOK/apiKey/token随云存档导出。",
+      "云恢复后继续发accounts:save-restored(ownerAccountId)，用于刷新聊天状态与拒绝恢复前旧界面写入。"
+    ],
+    "conversationConsumer": "docs/implementation/cloud-conversations-contract.txt"
+  },
+  "migrations": {
+    "remote": [],
+    "local": "conversations-002-local-credentials-and-imports (additive SQLite; no remote schema change)"
+  },
+  "checks": [
+    {
+      "command": "node --test apps/pc-app/runtime/features/conversations/tests/archive.test.cjs",
+      "status": "passed",
+      "checks": 8,
+      "scope": "local SQLite, not cloud"
+    },
+    {
+      "command": "node --test apps/pc-app/runtime/features/conversations/tests/runtime.test.cjs",
+      "status": "passed",
+      "checks": 12,
+      "scope": "existing local runtime/HTTP protocol fixture, not external model"
+    }
+  ],
+  "realCloudEvidence": {
+    "status": "not_deployed",
+    "projectRef": "jbvrdmrkwpznbrvteive",
+    "readOnlyInspection": "18 original public tables; RLS disabled; central coordinator owns preservation/isolation and deployment",
+    "writeActions": 0
+  },
+  "preservation": [
+    "Existing owner/petId/message IDs, history, profiles and memories retained.",
+    "API keys remain main-process safeStorage; no key, encrypted blob or token in conversation snapshots."
+  ],
+  "cleanupCandidates": [
+    {
+      "path": "apps/pc-app/runtime/main.cjs old AI handler",
+      "replacement": "features/conversations transport/service",
+      "decision": "consumer inventory in progress; root changes owned by01"
+    },
+    {
+      "path": "apps/pc-app/runtime/core/conversation-backup.cjs",
+      "replacement": "features/conversations/backup.cjs",
+      "decision": "retain compatibility forwarder until01 updates consumers"
+    }
+  ],
+  "remaining": [
+    "Legacy history import and old AI consumer cleanup.",
+    "Real Electron A/B integration and stable-order/state readback.",
+    "08 identity/CAS consumer final contract and coordinator deployment, then real HTTPS A/B readback."
+  ],
+  "updatedAt": "2026-10-25T02:07:42.572Z"
+}
