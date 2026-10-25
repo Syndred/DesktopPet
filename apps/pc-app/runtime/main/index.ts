@@ -17,6 +17,7 @@ const { readQaScenario } = require(join(runtime, 'core/qa-scenario.cjs'));
 const { createRuntimeCompatibility } = require(join(runtime, 'core/runtime-compat.cjs'));
 const { validateIpcRequest, desktopEventAllowed } = require(join(runtime, 'core/ipc-guard.cjs'));
 const { recallDesktopCompanions } = require(join(runtime, 'core/tray-recall.cjs'));
+const { mainWindowDisplayProbe, fitMainWindowBounds } = require(join(runtime, 'core/main-window-geometry.cjs'));
 const resourceEntry = join(runtime, 'features/resources/index.cjs');
 if (existsSync(resourceEntry)) require(resourceEntry).registerResourceScheme(protocol);
 
@@ -66,11 +67,10 @@ function load(win: BrowserWindow, route = '/companions') {
 function createWindow() {
   let restored: any = {};
   try { restored = JSON.parse(services.db.prepare('SELECT value FROM lingjing_meta WHERE key=?').get('main-window-bounds')?.value || '{}'); } catch { /* Use default geometry if older settings are invalid. */ }
-  const area = screen.getDisplayMatching({ x: Number(restored.x) || 0, y: Number(restored.y) || 0, width: 100, height: 100 }).workArea;
-  const width = Math.min(area.width, Math.max(960, Number(restored.width) || 1320));
-  const height = Math.min(area.height, Math.max(700, Number(restored.height) || 900));
-  const position = Number.isFinite(restored.x) && Number.isFinite(restored.y) ? { x: Math.max(area.x, Math.min(area.x + area.width - width, restored.x)), y: Math.max(area.y, Math.min(area.y + area.height - height, restored.y)) } : {};
-  window = new BrowserWindow({ ...position, width, height, minWidth: 960, minHeight: 700,
+  const probe = mainWindowDisplayProbe(restored);
+  const area = (probe ? screen.getDisplayMatching(probe) : screen.getPrimaryDisplay()).workArea;
+  const geometry = fitMainWindowBounds(restored, area);
+  window = new BrowserWindow({ ...geometry,
     show: false, frame: false, backgroundColor: '#f8fbff', title: '灵境',
     icon: join(runtime, 'assets/brand/app-icon.png'),
     webPreferences: { preload, contextIsolation: true, nodeIntegration: false, sandbox: true } });
