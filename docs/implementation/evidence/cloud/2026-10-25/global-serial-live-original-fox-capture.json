@@ -1,0 +1,428 @@
+{
+  "format": "lingjing.actual-original-fox-capture-number-inheritance/v1",
+  "verifiedAt": "2026-10-25T16:50:52.527Z",
+  "projectRef": "jbvrdmrkwpznbrvteive",
+  "namespace": "qa:user-acceptance-790f5b6d-a900-4c6f-bb3f-e32237136ed1",
+  "sourceAnchor": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+  "coordinatorSourceCommit": "6e1903f754e045f077457f951ad144ffc9c80ef4",
+  "runtimeSdkSourceHashes": {
+    "apps/pc-app/runtime/features/accounts/supabase-remote.cjs": "b63d1d5ae7d94c4abf26a50999198282374e9763c0870926b734916a2210994d",
+    "apps/pc-app/runtime/features/discovery/cloud-adapter.cjs": "be8bce573ab2df1f2d7d7e84a63eb63a1d2a8073ac4b90eac8f5cee7def59c3d",
+    "apps/pc-app/runtime/features/discovery/cloud-location.cjs": "b8e32cb9abddd85f15d6e62d029ca9ec9e7a3e2631dcbf4a7b3a0c07214dc163",
+    "infra/supabase/functions/discovery/protocol.mjs": "48ed9843c554217a859013cfd35d6bc0f216ebe9774b9eb8194e337eddba246c",
+    "infra/supabase/functions/discovery/handler.mjs": "5b3d2fbb23ada125614cc4399c89982850166b2e88fce5bdbca7a265662e4731",
+    "infra/supabase/functions/discovery/authority.mjs": "643ca0be5f5b02318b7cf86bc9d547cdaa72baa9f2786947ffc2b13e62ac2709",
+    "infra/supabase/functions/discovery/store.mjs": "2fb25572810fafdd974e11fb6b79cd647be2c126d5c478f7b133046c525d232e",
+    "infra/supabase/migrations/20261025115122_lingjing_global_pet_serials.sql": "49bf4db3bf6d4b9b3bec3de80b2c145d7c6abe8068fa98b1e06e2ef97be32350",
+    "apps/pc-app/runtime/features/accounts/util.cjs": "11ec3c905a9fe940e8e9e7512cd063edc490bd90feeaa9b311e74fba88431d75",
+    "infra/supabase/functions/companions-sync/index.ts": "189373e3908238583ffb4b8166c9ba6f9a80f0a9761b6f1c77d0a6fd301344d1",
+    "infra/supabase/functions/garden-sync/index.ts": "05beb9c4f3d1d27b0236d1f4e0d48b6a1ede01f6ce4c6d00482a510ac212bcd8",
+    "infra/supabase/functions/_shared/garden-runtime.bundle.mjs": "7105830439da4d30a3480bdc04063bc41b49f4e29b69136168f3ca1970094961",
+    "infra/supabase/functions/discovery/domain.mjs": "07202939f1702961ac653e2d534939db135333b47493605a1a7cb2eacb6c444f"
+  },
+  "originalTarget": {
+    "spawnId": "wild-2d-v2-f3621dbe19-498040-51998-202333",
+    "templateId": "animal-white-fox",
+    "ownerAccountId": "account:0521a3e5-adf4-4b0b-9c0b-0923a7b63fe9",
+    "globalSerial": "2"
+  },
+  "battle": {
+    "sessionId": "battle-cloud-5a242002-0e1d-41ad-a0d9-ec3ec97659ee",
+    "status": "finished",
+    "winner": "player",
+    "rounds": 19,
+    "permitId": "5a242002-0e1d-41ad-a0d9-ec3ec97659ee",
+    "playerPetId": "pet-83debfa4-25be-425e-b8c7-bc0405ee7e9f",
+    "playerOriginalTemplate": "animal-earth-pangolin",
+    "naturalServerVictory": true,
+    "statsOrClockOverride": false
+  },
+  "backendReentry": {
+    "permitId": "5a242002-0e1d-41ad-a0d9-ec3ec97659ee",
+    "sessionId": "battle-cloud-5a242002-0e1d-41ad-a0d9-ec3ec97659ee",
+    "round": 1,
+    "snapshotAndHistorySha256": "fd224469d3fc2f3a82135d1a3745bd77ca99654394667317e4560a8f52329a23",
+    "clientSdkRecreated": true,
+    "transportDisposedAndRecreated": true,
+    "cancelOrLeaveSent": false,
+    "nativeUi": false,
+    "actualRouteNavigation": false
+  },
+  "capture": {
+    "petId": "pet-5a242002-0e1d-41ad-a0d9-ec3ec97659ee",
+    "permitId": "5a242002-0e1d-41ad-a0d9-ec3ec97659ee",
+    "receiptId": "capture-5a242002-0e1d-41ad-a0d9-ec3ec97659ee",
+    "inputActionId": "c03-original-fox-two-capture-20261026-v1:capture",
+    "canonicalActionId": "discovery:encounter-5a242002-0e1d-41ad-a0d9-ec3ec97659ee",
+    "globalSerial": "2",
+    "originalActionRequestHash": "8a9beca332eea407ef7a696cf724893b8f0d4ab7c45680652580a8d250526f79",
+    "uniqueCaptureRows": 1,
+    "uniqueFirstMeetingMemoryRows": 1
+  },
+  "independentPg": {
+    "beforeCheckedAt": "2026-10-25T16:45:03.045822+00:00",
+    "afterCheckedAt": "2026-10-25T16:48:10.86069+00:00",
+    "counterBefore": "3",
+    "counterAfter": "3",
+    "beforeTarget": {
+      "petId": null,
+      "spawnId": "wild-2d-v2-f3621dbe19-498040-51998-202333",
+      "templateId": "animal-white-fox",
+      "globalSerial": "2",
+      "ownerAccountId": "account:0521a3e5-adf4-4b0b-9c0b-0923a7b63fe9"
+    },
+    "afterTarget": {
+      "petId": "pet-5a242002-0e1d-41ad-a0d9-ec3ec97659ee",
+      "spawnId": "wild-2d-v2-f3621dbe19-498040-51998-202333",
+      "templateId": "animal-white-fox",
+      "globalSerial": "2",
+      "ownerAccountId": "account:0521a3e5-adf4-4b0b-9c0b-0923a7b63fe9"
+    },
+    "beforeQueryEvidenceSha256": "98a3ec48d366497430bd492d801d6b0d71ff28276e635cef13208bf16d55ee33",
+    "afterQueryEvidenceSha256": "1456ddd237a7fd3281a15a19916484fc81b0baf313ef381c788aaf50102605d1",
+    "originalA1AndB3Unchanged": true,
+    "finalPermit": {
+      "id": "5a242002-0e1d-41ad-a0d9-ec3ec97659ee",
+      "petId": "pet-83debfa4-25be-425e-b8c7-bc0405ee7e9f",
+      "round": 19,
+      "status": "captured",
+      "winner": "player",
+      "spawnId": "wild-2d-v2-f3621dbe19-498040-51998-202333",
+      "revision": 21,
+      "sessionId": "battle-cloud-5a242002-0e1d-41ad-a0d9-ec3ec97659ee"
+    }
+  },
+  "preservation": {
+    "oldCCompanionCount": 4,
+    "newCCompanionCount": 5,
+    "unrelatedOriginalPetsByteIdentical": 3,
+    "playerBefore": {
+      "petId": "pet-83debfa4-25be-425e-b8c7-bc0405ee7e9f",
+      "growth": {
+        "mood": 60,
+        "level": 1,
+        "stats": {
+          "hp": 142,
+          "atk": 24,
+          "def": 34,
+          "spd": 11
+        },
+        "satiety": 60,
+        "affinity": 0,
+        "winsTotal": 0,
+        "experience": 0
+      },
+      "element": "earth",
+      "revision": 1,
+      "templateId": "animal-earth-pangolin",
+      "ownerAccountId": "account:0521a3e5-adf4-4b0b-9c0b-0923a7b63fe9"
+    },
+    "playerAfter": {
+      "petId": "pet-83debfa4-25be-425e-b8c7-bc0405ee7e9f",
+      "growth": {
+        "mood": 60,
+        "level": 1,
+        "stats": {
+          "hp": 142,
+          "atk": 24,
+          "def": 34,
+          "spd": 11
+        },
+        "satiety": 60,
+        "affinity": 0,
+        "winsTotal": 1,
+        "experience": 20
+      },
+      "element": "earth",
+      "revision": 2,
+      "templateId": "animal-earth-pangolin",
+      "ownerAccountId": "account:0521a3e5-adf4-4b0b-9c0b-0923a7b63fe9"
+    },
+    "rawFoxAndCaptureHaveNoGlobalSerial": true,
+    "originalPetIdsRetained": true
+  },
+  "actualTransport": {
+    "httpRequests": 44,
+    "allResponses200": true,
+    "requests": [
+      {
+        "step": "auth",
+        "status": 200,
+        "sentAt": "2026-10-25T16:45:03.714Z",
+        "requestId": "01a173f3-9331-7ac4-a4f1-061269abf796"
+      },
+      {
+        "step": "protocol:protocol",
+        "status": 200,
+        "sentAt": "2026-10-25T16:45:05.728Z",
+        "requestId": "01a173f3-977f-7ef1-83de-6a5ff993c144"
+      },
+      {
+        "step": "raw-head",
+        "status": 200,
+        "sentAt": "2026-10-25T16:45:07.111Z",
+        "requestId": "01a173f3-9ce6-78cb-89ba-672bdb538b4d"
+      },
+      {
+        "step": "existing-permits:permits",
+        "status": 200,
+        "sentAt": "2026-10-25T16:45:08.921Z",
+        "requestId": "01a173f3-a3fb-761b-8e43-d809a5c6616e"
+      },
+      {
+        "step": "target-proof:device.register",
+        "status": 200,
+        "sentAt": "2026-10-25T16:45:12.141Z",
+        "requestId": "01a173f3-b091-7a7e-8888-3c314e188d3e"
+      },
+      {
+        "step": "target-proof:location.challenge",
+        "status": 200,
+        "sentAt": "2026-10-25T16:45:13.811Z",
+        "requestId": "01a173f3-b714-7261-b7e3-c6a4745be2df"
+      },
+      {
+        "step": "target-proof:location.prove",
+        "status": 200,
+        "sentAt": "2026-10-25T16:45:15.956Z",
+        "requestId": "01a173f3-bf74-75ea-a152-fd850666db66"
+      },
+      {
+        "step": "target-nearby:nearby",
+        "status": 200,
+        "sentAt": "2026-10-25T16:45:18.143Z",
+        "requestId": "01a173f3-c800-7d42-a6e6-085a1992231a"
+      },
+      {
+        "step": "original-observe:observe",
+        "status": 200,
+        "sentAt": "2026-10-25T16:45:20.090Z",
+        "requestId": "01a173f3-cf9d-7216-94b8-b7ac1cefe1a8"
+      },
+      {
+        "step": "observe-reentry-proof:location.challenge",
+        "status": 200,
+        "sentAt": "2026-10-25T16:45:21.786Z",
+        "requestId": "01a173f3-d637-7715-b631-686aed3461c2"
+      },
+      {
+        "step": "observe-reentry-proof:location.prove",
+        "status": 200,
+        "sentAt": "2026-10-25T16:45:23.452Z",
+        "requestId": "01a173f3-dcba-754c-af07-a061071f9862"
+      },
+      {
+        "step": "original-observe-reentry:observe",
+        "status": 200,
+        "sentAt": "2026-10-25T16:45:25.244Z",
+        "requestId": "01a173f3-e3bd-7888-aaaf-475ca42f1312"
+      },
+      {
+        "step": "begin-proof:location.challenge",
+        "status": 200,
+        "sentAt": "2026-10-25T16:45:26.843Z",
+        "requestId": "01a173f3-e9f9-72dd-abcf-36a9367f5ab5"
+      },
+      {
+        "step": "begin-proof:location.prove",
+        "status": 200,
+        "sentAt": "2026-10-25T16:45:28.617Z",
+        "requestId": "01a173f3-f0e8-7ffc-ae47-8185fde2f9d3"
+      },
+      {
+        "step": "reserve:reserve",
+        "status": 200,
+        "sentAt": "2026-10-25T16:45:30.568Z",
+        "requestId": "01a173f3-f888-73e2-9143-20155c94ba5f"
+      },
+      {
+        "step": "initial-session:session",
+        "status": 200,
+        "sentAt": "2026-10-25T16:45:36.828Z",
+        "requestId": "01a173f4-1105-7e44-bade-c3ca4127cfe3"
+      },
+      {
+        "step": "round-001:act",
+        "status": 200,
+        "sentAt": "2026-10-25T16:45:39.630Z",
+        "requestId": "01a173f4-1bf3-7e9e-be86-3ddac81dfbb9"
+      },
+      {
+        "step": "same-battle-reentry:protocol",
+        "status": 200,
+        "sentAt": "2026-10-25T16:45:44.885Z",
+        "requestId": "01a173f4-3143-792d-838c-415a3e946b73"
+      },
+      {
+        "step": "same-battle-reentry:session",
+        "status": 200,
+        "sentAt": "2026-10-25T16:45:46.176Z",
+        "requestId": "01a173f4-3581-71c5-bc43-18c3103603c0"
+      },
+      {
+        "step": "round-002:act",
+        "status": 200,
+        "sentAt": "2026-10-25T16:45:48.647Z",
+        "requestId": "01a173f4-3f28-7420-b675-05fb36af2c9a"
+      },
+      {
+        "step": "round-003:act",
+        "status": 200,
+        "sentAt": "2026-10-25T16:45:53.498Z",
+        "requestId": "01a173f4-521a-7615-b984-16d9af7013c6"
+      },
+      {
+        "step": "round-004:act",
+        "status": 200,
+        "sentAt": "2026-10-25T16:45:58.458Z",
+        "requestId": "01a173f4-657c-70aa-bccc-e33011f3cada"
+      },
+      {
+        "step": "round-005:act",
+        "status": 200,
+        "sentAt": "2026-10-25T16:46:03.267Z",
+        "requestId": "01a173f4-7842-7387-9831-5afd27ebbabe"
+      },
+      {
+        "step": "round-006:act",
+        "status": 200,
+        "sentAt": "2026-10-25T16:46:09.546Z",
+        "requestId": "01a173f4-90d4-7f52-ac79-d98d720b4711"
+      },
+      {
+        "step": "round-007:act",
+        "status": 200,
+        "sentAt": "2026-10-25T16:46:15.048Z",
+        "requestId": "01a173f4-a71e-7292-85ef-679bf2e927f8"
+      },
+      {
+        "step": "round-008:act",
+        "status": 200,
+        "sentAt": "2026-10-25T16:46:20.108Z",
+        "requestId": "01a173f4-ba0a-7668-a92c-5551950d7dab"
+      },
+      {
+        "step": "round-009:act",
+        "status": 200,
+        "sentAt": "2026-10-25T16:46:25.506Z",
+        "requestId": "01a173f4-cf24-7d61-a8a7-51f5b8fa7573"
+      },
+      {
+        "step": "round-010:act",
+        "status": 200,
+        "sentAt": "2026-10-25T16:46:30.853Z",
+        "requestId": "01a173f4-e405-7ab8-96b7-61e7dbcbe2fa"
+      },
+      {
+        "step": "round-011:act",
+        "status": 200,
+        "sentAt": "2026-10-25T16:46:35.999Z",
+        "requestId": "01a173f4-f820-7ab0-b476-384385b8d6fc"
+      },
+      {
+        "step": "round-012:act",
+        "status": 200,
+        "sentAt": "2026-10-25T16:46:41.097Z",
+        "requestId": "01a173f5-0c0b-758e-940c-9ea9e026f272"
+      },
+      {
+        "step": "round-013:act",
+        "status": 200,
+        "sentAt": "2026-10-25T16:46:46.462Z",
+        "requestId": "01a173f5-20fe-7b39-9a4b-6338493c123d"
+      },
+      {
+        "step": "round-014:act",
+        "status": 200,
+        "sentAt": "2026-10-25T16:46:52.052Z",
+        "requestId": "01a173f5-36d4-77e7-ae75-57c71a434de5"
+      },
+      {
+        "step": "round-015:act",
+        "status": 200,
+        "sentAt": "2026-10-25T16:46:57.939Z",
+        "requestId": "01a173f5-4dd3-73e5-b533-e615eb5ea21f"
+      },
+      {
+        "step": "round-016:act",
+        "status": 200,
+        "sentAt": "2026-10-25T16:47:04.009Z",
+        "requestId": "01a173f5-658e-7162-93e4-8e97c4315a40"
+      },
+      {
+        "step": "round-017:act",
+        "status": 200,
+        "sentAt": "2026-10-25T16:47:10.624Z",
+        "requestId": "01a173f5-7f68-7a8b-a9d2-d6163d35e0f5"
+      },
+      {
+        "step": "round-018:act",
+        "status": 200,
+        "sentAt": "2026-10-25T16:47:16.451Z",
+        "requestId": "01a173f5-9627-79ac-b9df-927a6e3e9d08"
+      },
+      {
+        "step": "round-019:act",
+        "status": 200,
+        "sentAt": "2026-10-25T16:47:22.454Z",
+        "requestId": "01a173f5-ada1-7023-9b3d-74f14eb3f4a4"
+      },
+      {
+        "step": "capture-proof:device.register",
+        "status": 200,
+        "sentAt": "2026-10-25T16:47:28.746Z",
+        "requestId": "01a173f5-c631-718f-a59f-2746f226007d"
+      },
+      {
+        "step": "capture-proof:location.challenge",
+        "status": 200,
+        "sentAt": "2026-10-25T16:47:30.389Z",
+        "requestId": "01a173f5-cc9c-7b91-90f2-bd4c84093506"
+      },
+      {
+        "step": "capture-proof:location.prove",
+        "status": 200,
+        "sentAt": "2026-10-25T16:47:31.729Z",
+        "requestId": "01a173f5-d1d5-7e27-8b37-f6dc2c6407b8"
+      },
+      {
+        "step": "capture:confirm",
+        "status": 200,
+        "sentAt": "2026-10-25T16:47:33.685Z",
+        "requestId": "01a173f5-d979-777d-97d2-1d10d88a4d64"
+      },
+      {
+        "step": "capture-original-action:action",
+        "status": 200,
+        "sentAt": "2026-10-25T16:47:41.194Z",
+        "requestId": "01a173f5-f6ce-7c4c-a236-e088fb09fe98"
+      },
+      {
+        "step": "captures-readback:captures",
+        "status": 200,
+        "sentAt": "2026-10-25T16:47:44.055Z",
+        "requestId": "01a173f6-01fd-7d43-a5e0-25c350301b01"
+      },
+      {
+        "step": "raw-final-head",
+        "status": 200,
+        "sentAt": "2026-10-25T16:47:47.554Z",
+        "requestId": "01a173f6-0fa7-70ef-9d06-416a587ca0b4"
+      }
+    ],
+    "stateEvidenceSha256": "3c2c7183c5e2a2c3827961bf50d0d204e283825c3c7b1fe22d5fc4729732112c",
+    "processPid": 22400,
+    "processExitCode": 0,
+    "completedAt": "2026-10-25T16:47:50.9101011Z"
+  },
+  "boundaries": {
+    "realPublishedHttps": true,
+    "simulatedCoordinates": true,
+    "nativeUi": false,
+    "physicalGps": false,
+    "actualNativeRouteNavigation": false,
+    "productBrowserWindowsCreated": 0
+  },
+  "entireC11Passed": false,
+  "fullFunctionalAcceptancePassed": false
+}

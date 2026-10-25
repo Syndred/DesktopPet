@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-25T16:20:31.073Z",
+  "updatedAt": "2026-10-25T16:55:20.962Z",
   "status": "in-progress",
   "qaThreadId": "01a172b4-d7f0-7213-9a40-092418ee776b",
   "soleNativeInputOwner": "01a172b4-d7f0-7213-9a40-092418ee776b",
@@ -427,6 +427,18 @@
     "rootIndependentPgReadback": true,
     "entireC11Passed": false,
     "fullFunctionalAcceptancePassed": false,
-    "pending": "Continue all remaining matrix operations, cross-view identity, restart, sync, battle and capture acceptance on the frozen candidate; actual A1-C2-B3 evidence remains immutable."
+    "pending": "Continue all remaining matrix operations, cross-view identity, restart, sync, battle and capture acceptance on the frozen candidate; actual A1-C2-B3 evidence remains immutable.",
+    "originalFoxCapture": {
+      "status": "actual-backend-verified",
+      "proof": "docs/implementation/evidence/cloud/2026-10-25/global-serial-live-original-fox-capture.json",
+      "proofSha256": "e8fd073cd2e8a767ad1d4d37fe68756206f1a7809bb1cd2229c9fdead50645a9",
+      "globalSerial": "2",
+      "counterBefore": "3",
+      "counterAfter": "3",
+      "naturalRounds": 19,
+      "backendLifecycleReentryVerified": true,
+      "nativeUi": false,
+      "physicalGps": false
+    }
   }
 }

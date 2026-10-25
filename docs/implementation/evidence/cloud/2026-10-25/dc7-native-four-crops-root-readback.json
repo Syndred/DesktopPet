@@ -1,0 +1,165 @@
+{
+  "format": "lingjing.dc7.native-four-crops-independent-readback/v1",
+  "checkedAt": "2026-10-25T16:54:47.826571+00:00",
+  "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+  "nativeOperator": "09",
+  "ownerAccountId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+  "actualNativeOperations": 4,
+  "actualPublishedBackend": true,
+  "receipts": [
+    {
+      "actionId": "31ff0257-310d-46df-a334-22ea0014567e",
+      "requestHash": "150c7b08ad516b2bec8e9e58d154439d4e5399d9838de28c7fd494815dc1aa4c",
+      "accountRevision": 10,
+      "createdAt": "2026-10-25 16:24:36.989794+00",
+      "result": {
+        "ok": true,
+        "data": {
+          "plotId": "plot-2",
+          "cropType": "carrot",
+          "maturesAt": 1792946076909,
+          "plantedAt": 1792945476909,
+          "yieldQuantity": 3
+        },
+        "replayed": false,
+        "revision": 3
+      }
+    },
+    {
+      "actionId": "7d0d8105-09bd-499a-baa0-0f55e27fb084",
+      "requestHash": "028613168581dec7fec8312fe153378636556ba1db17f2a4df9a5f820dba5ae9",
+      "accountRevision": 11,
+      "createdAt": "2026-10-25 16:26:47.678465+00",
+      "result": {
+        "ok": true,
+        "data": {
+          "plotId": "plot-3",
+          "cropType": "tomato",
+          "maturesAt": 1792946507587,
+          "plantedAt": 1792945607587,
+          "yieldQuantity": 3
+        },
+        "replayed": false,
+        "revision": 4
+      }
+    },
+    {
+      "actionId": "d139a362-d9b4-4cb8-8df8-56db2592ef17",
+      "requestHash": "e73777f6d28bd7a4610fdd055aa51764b0275fb3675e27ed45979d0dc97724c9",
+      "accountRevision": 12,
+      "createdAt": "2026-10-25 16:28:09.898208+00",
+      "result": {
+        "ok": true,
+        "data": {
+          "plotId": "plot-4",
+          "cropType": "berry",
+          "maturesAt": 1792946889779,
+          "plantedAt": 1792945689779,
+          "yieldQuantity": 4
+        },
+        "replayed": false,
+        "revision": 5
+      }
+    },
+    {
+      "actionId": "c661f63c-dc98-4566-93d1-a37f257012dc",
+      "requestHash": "650b9185a22c55b396d9edd371c469557aa715de50d6bfc04647aba5c9637756",
+      "accountRevision": 13,
+      "createdAt": "2026-10-25 16:29:31.678035+00",
+      "result": {
+        "ok": true,
+        "data": {
+          "plotId": "plot-5",
+          "cropType": "rice",
+          "maturesAt": 1792947271574,
+          "plantedAt": 1792945771574,
+          "yieldQuantity": 2
+        },
+        "replayed": false,
+        "revision": 6
+      }
+    }
+  ],
+  "seedDeductionEvents": [
+    {
+      "kind": "plant",
+      "delta": -1,
+      "pet_id": null,
+      "balance": 0,
+      "item_id": "seed:carrot",
+      "event_id": "25ebba88-a937-486a-a937-432991f5e01d",
+      "action_id": "31ff0257-310d-46df-a334-22ea0014567e",
+      "created_at": 1792945476909,
+      "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630"
+    },
+    {
+      "kind": "plant",
+      "delta": -1,
+      "pet_id": null,
+      "balance": 1,
+      "item_id": "seed:tomato",
+      "event_id": "e1c3bc95-4045-4374-be2e-5dbde5cad1d7",
+      "action_id": "7d0d8105-09bd-499a-baa0-0f55e27fb084",
+      "created_at": 1792945607587,
+      "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630"
+    },
+    {
+      "kind": "plant",
+      "delta": -1,
+      "pet_id": null,
+      "balance": 1,
+      "item_id": "seed:berry",
+      "event_id": "5b618053-119c-4954-b4fd-0d25bdc43b4d",
+      "action_id": "d139a362-d9b4-4cb8-8df8-56db2592ef17",
+      "created_at": 1792945689779,
+      "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630"
+    },
+    {
+      "kind": "plant",
+      "delta": -1,
+      "pet_id": null,
+      "balance": 1,
+      "item_id": "seed:rice",
+      "event_id": "da17846c-9aa5-4ed9-b725-59a9d2bb90a1",
+      "action_id": "c661f63c-dc98-4566-93d1-a37f257012dc",
+      "created_at": 1792945771574,
+      "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630"
+    }
+  ],
+  "seedStock": [
+    {
+      "item_id": "seed:carrot",
+      "quantity": 0,
+      "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630"
+    },
+    {
+      "item_id": "seed:tomato",
+      "quantity": 1,
+      "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630"
+    },
+    {
+      "item_id": "seed:berry",
+      "quantity": 1,
+      "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630"
+    },
+    {
+      "item_id": "seed:rice",
+      "quantity": 1,
+      "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630"
+    }
+  ],
+  "originalPlot1Preserved": true,
+  "plot6StillEmpty": true,
+  "naturalMaturityMinutes": [
+    10,
+    15,
+    20,
+    25
+  ],
+  "clockOrGrowthSpeedOverridden": false,
+  "readOnlyRootQueries": true,
+  "receiptQueryEvidenceSha256": "ca783b41fb09e226a1baefc25af8647cd9f87f0412436d2044a99501df1ab05b",
+  "stateQueryEvidenceSha256": "faa0402ca94f5e25307917c70a60499602391b83defdd27fd99886ec84fcc673",
+  "harvestAcceptancePassed": false,
+  "fullFunctionalAcceptancePassed": false
+}
