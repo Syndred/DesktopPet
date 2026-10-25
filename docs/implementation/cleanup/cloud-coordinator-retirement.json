@@ -129,6 +129,56 @@
       "replacement": "credential-free modern SQL/domain fixtures in npm run verify:cloud",
       "reason": "Superseded undeployed prototype; exact tracked bytes verified against complete recovery bundle before removal",
       "dataDeleted": false
+    },
+    {
+      "file": "docs/task-progress.md",
+      "bytes": 14482,
+      "sha256": "decd3f355dff4b2401412f9c57784b2db3ae27e89c34832875fa57b203dc6727",
+      "replacement": "Current 2026-10-25 cloud/native delivery guidance in the same document",
+      "reason": "Remove superseded prototype tasks, fake-service completion claims and dead SQL/startup references from active documentation",
+      "originalContentInVerifiedBundle": true,
+      "contentReplacement": true,
+      "dataDeleted": false
+    },
+    {
+      "file": "docs/tasks.md",
+      "bytes": 10620,
+      "sha256": "c9271c68b5aae0ab93d89d6c4994e12769c0bd30790d14a2e9c961823d307469",
+      "replacement": "Current 2026-10-25 cloud/native delivery guidance in the same document",
+      "reason": "Remove superseded prototype tasks, fake-service completion claims and dead SQL/startup references from active documentation",
+      "originalContentInVerifiedBundle": true,
+      "contentReplacement": true,
+      "dataDeleted": false
+    },
+    {
+      "file": "docs/testing-strategy.md",
+      "bytes": 2038,
+      "sha256": "fc5759a1c90a6db9baa5eca5201ee0264afab5c5677cf61fbe02b00fa66a0da1",
+      "replacement": "Current 2026-10-25 cloud/native delivery guidance in the same document",
+      "reason": "Remove superseded prototype tasks, fake-service completion claims and dead SQL/startup references from active documentation",
+      "originalContentInVerifiedBundle": true,
+      "contentReplacement": true,
+      "dataDeleted": false
+    },
+    {
+      "file": "docs/project-delivery-tasks.md",
+      "bytes": 6498,
+      "sha256": "b7ed53b06bcfea7fd6ac5603af8c6c79b5c55cc0e63647e6de8bb8b39813c42e",
+      "replacement": "Current 2026-10-25 cloud/native delivery guidance in the same document",
+      "reason": "Remove superseded prototype tasks, fake-service completion claims and dead SQL/startup references from active documentation",
+      "originalContentInVerifiedBundle": true,
+      "contentReplacement": true,
+      "dataDeleted": false
+    },
+    {
+      "file": "docs/prd-traceability-audit.md",
+      "bytes": 8364,
+      "sha256": "7175229d025266755757c21fe3d1194d13da2f418d75bcbd013f8ef02ae1b05f",
+      "replacement": "Current 2026-10-25 cloud/native delivery guidance in the same document",
+      "reason": "Remove superseded prototype tasks, fake-service completion claims and dead SQL/startup references from active documentation",
+      "originalContentInVerifiedBundle": true,
+      "contentReplacement": true,
+      "dataDeleted": false
     }
   ],
   "checks": {
@@ -141,5 +191,5 @@
     "04 old duel transport and duel-online VM consumer; retire after current real native acceptance",
     "03 obsolete standalone server authority consumers; retain required location/map and original data readers"
   ],
-  "updatedAt": "2026-10-25T04:57:55.375Z"
+  "updatedAt": "2026-10-25T05:04:23.953Z"
 }

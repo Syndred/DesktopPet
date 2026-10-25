@@ -1,0 +1,40 @@
+{
+  "at": "2026-10-25T05:03:42.741Z",
+  "owner": "account:6cfcec97-b88e-44de-883e-649355a365a7",
+  "method": "Coordinator independently reopens both original completed native profiles read-only; no application launch, no writes",
+  "passed": true,
+  "devices": [
+    {
+      "label": "device-a",
+      "profile": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-accounts\\DesktopPet\\artifacts\\accounts\\cloud-auto-electron-1792903638505\\device-a",
+      "queryOnly": true,
+      "quickCheck": "ok",
+      "cloud_revision": 6,
+      "last_checksum": "d2cfa0ddb6eb76fd7e18d61c3c62e6d194372aee22bd52d122ef1bf8b8f6ff89",
+      "volume": 54,
+      "syncEnabled": true,
+      "originalAction": {
+        "action_id": "auto:72f3e76a-4cd5-4d96-b374-6aabc95f8b36",
+        "base_revision": 5,
+        "status": "verified"
+      },
+      "petIds": [
+        "pet-a548e041-ab66-4251-9249-a7dc1035fbbe"
+      ]
+    },
+    {
+      "label": "device-b",
+      "profile": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-accounts\\DesktopPet\\artifacts\\accounts\\cloud-auto-electron-1792903638505\\device-b",
+      "queryOnly": true,
+      "quickCheck": "ok",
+      "cloud_revision": 6,
+      "last_checksum": "d2cfa0ddb6eb76fd7e18d61c3c62e6d194372aee22bd52d122ef1bf8b8f6ff89",
+      "volume": 54,
+      "syncEnabled": true,
+      "originalAction": null,
+      "petIds": [
+        "pet-a548e041-ab66-4251-9249-a7dc1035fbbe"
+      ]
+    }
+  ]
+}

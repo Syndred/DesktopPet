@@ -1,0 +1,22 @@
+{
+  "at": "2026-10-25T05:04:24.001Z",
+  "projectRef": "jbvrdmrkwpznbrvteive",
+  "method": "Coordinator independent Supabase SELECT only; no provider write; exact own QA owner/action filter",
+  "result": {
+    "head": {
+      "volume": "54",
+      "actionId": "auto:72f3e76a-4cd5-4d96-b374-6aabc95f8b36",
+      "checksum": "d2cfa0ddb6eb76fd7e18d61c3c62e6d194372aee22bd52d122ef1bf8b8f6ff89",
+      "revision": 6
+    },
+    "originalAction": {
+      "kind": "personal",
+      "checksum": "d2cfa0ddb6eb76fd7e18d61c3c62e6d194372aee22bd52d122ef1bf8b8f6ff89",
+      "revision": 6,
+      "baseRevision": 5
+    }
+  },
+  "expectedRevision": 6,
+  "passed": true,
+  "sqliteEvidence": "docs/implementation/evidence/cloud/2026-10-25/automatic-sync-independent-sqlite.json"
+}
