@@ -5,6 +5,7 @@ const { randomUUID, createHash } = require('node:crypto');
 const { DatabaseSync } = require('node:sqlite');
 const { createBattleDisplayViews, checkedMetadata } = require('../display-views.cjs');
 const { OnlineDuelService } = require('../../../services/online-duel-service.cjs');
+const { reportFor } = require('../../../../../../infra/supabase/functions/lingjing-battle/projection.js');
 const ownerA = 'view-owner-a', ownerB = 'view-owner-b', templateId = 'animal-white-fox';
 const longNumber = '900719925474099312345678901234567890123456789012345678901234567890';
 const copy = value => structuredClone(value), bytes = value => JSON.stringify(value);
@@ -135,6 +136,54 @@ test('slow optional metadata does not hold a successful read and emits a later o
     const events = []; f.services.events.on('battle:online', event => events.push(event)); resolve(); await new Promise(done => setImmediate(done));
     assert.equal(events[0].ownerAccountId, ownerA); assert.equal((await f.views.project(raw, ownerA)).enemy.displayIdentity.instanceNumber, longNumber);
   } finally { f.views.dispose(); }
+});
+
+test('SCRIPTED expired positive identity cache wakes authority-report views after identical late metadata, without duplicate fresh notifications', async t => {
+  let now = Date.now();
+  t.mock.method(Date, 'now', () => now); // Test-process clock only; no product or database time changes.
+  for (const viewer of [ownerA, ownerB]) await t.test(viewer, async () => {
+    let finishLookup;
+    const f = fixture({ waitMs: 1, lookup: (_op, input, who) => new Promise(done => { finishLookup = () => done(metadata(input.roomIds, who)); }) });
+    try {
+      f.switchOwner(viewer);
+      const session = document(), id = session.room.id;
+      session.context = { authority: 'supabase', cloudUserId: viewer };
+      session.status = 'finished'; session.winner = 'player';
+      delete session.player.globalSerial; delete session.player.displayIdentity; delete session.enemy.globalSerial;
+      const raw = reportFor(session), original = digest(raw), trusted = metadata([id], viewer);
+      assert.equal(Object.hasOwn(raw, 'room'), false); assert.equal(Object.hasOwn(raw, 'side'), false);
+      assert.equal(Object.hasOwn(raw.enemy, 'displayIdentity'), false);
+      const receive = value => { for (const listener of f.receivers) listener(copy(value), viewer); };
+      receive(trusted);
+      const events = []; let refreshed;
+      f.services.events.on('battle:online', event => {
+        if (event.type !== 'display-identities') return;
+        events.push(event); refreshed = f.views.project({ reports: [raw] }, viewer);
+      });
+      const expected = viewer === ownerA ? longNumber : '0007';
+      receive(trusted);
+      assert.equal(events.length, 0, 'identical fresh metadata must not cause a reload loop');
+      now += 15000;
+      assert.equal((await f.views.project(raw, viewer)).enemy.displayIdentity.instanceNumber, expected);
+      assert.equal(f.calls.length, 0, 'the existing fifteen-second cache boundary remains inclusive');
+      now++;
+      const pending = await f.views.project({ reports: [raw] }, viewer);
+      assert.equal(pending.reports[0].enemy.displayIdentity.instanceNumber, '待同步');
+      assert.equal(f.calls.length, 1); assert.equal(events.length, 0);
+      assert.deepEqual(f.calls[0], { op: 'get_display_metadata', input: { roomIds: [id] }, owner: viewer });
+      finishLookup(); await new Promise(done => setImmediate(done));
+      assert.equal(events.length, 1, 'restoring expired positive data must wake the previously pending report');
+      assert.equal(events[0].ownerAccountId, viewer);
+      assert.equal((await refreshed).reports[0].enemy.displayIdentity.instanceNumber, expected);
+      assert.equal(f.calls.length, 1, 'event-driven reprojection reuses the newly validated cache');
+      receive(trusted);
+      assert.equal(events.length, 1, 'another identical fresh sidecar must not trigger an extra refresh');
+      assert.equal(digest(raw), original);
+      console.log('QA023_FRESHNESS ' + bytes({ provenance: 'scripted-metadata-and-test-process-clock-only', viewer,
+        authorityReportShape: true, initialPending: true, lateRefreshEvents: events.length, unchangedFreshDuplicate: true,
+        rawReportSha256: original, liveJwtVerified: false, nativeAcceptance: false }));
+    } finally { f.views.dispose(); }
+  });
 });
 
 test('training NPC is a practice role without an issued number; wild only consumes the trusted current-owner encounter cache', async () => {

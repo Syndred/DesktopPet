@@ -1,0 +1,198 @@
+{
+  "at": "2026-10-25T22:09:42.229Z",
+  "base": "32b62eb560e886f3131666afe908c37c64b5a587",
+  "branch": "codex/lingjing-battle-report-freshness-qa023-20261026",
+  "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086",
+  "cloudMainPulled": "Already up to date",
+  "sourceFix": {
+    "file": "apps/pc-app/runtime/features/battle/display-views.cjs",
+    "normalizedBeforeSha256": "2b580e12925523d72ab8f96f505fffe7b6d3787e25b3e5044d1a505b14a4e1fe",
+    "normalizedAfterSha256": "bca010fe8e57da548f1cad909f41169741d55349384fa2e221e853c36a369601",
+    "onlyFreshnessNotificationChanged": true,
+    "unchangedWaitBudgetMs": 750,
+    "unchangedPositiveCacheMs": 15000,
+    "unchangedBindingsAndGenerationGuards": true
+  },
+  "regression": {
+    "provenance": "scripted-metadata-and-test-process-Date.now-only; real production reportFor shape",
+    "oldCode": {
+      "command": "node --test --test-name-pattern='SCRIPTED expired positive' apps/pc-app/runtime/features/battle/tests/display-views.test.cjs",
+      "exitCode": 1,
+      "viewers": [
+        "view-owner-a",
+        "view-owner-b"
+      ],
+      "expectedLateRefreshEvents": 1,
+      "actualLateRefreshEvents": 0
+    },
+    "fixedCode": {
+      "command": "node --test apps/pc-app/runtime/features/battle/tests/display-views.test.cjs",
+      "exitCode": 0,
+      "passed": 14,
+      "eachViewerLateRefreshEvents": 1,
+      "freshSameMetadataExtraEvents": 0,
+      "exactFifteenSecondBoundaryStillFresh": true,
+      "eventDrivenAuthorityReportReprojection": true,
+      "originalReportHashUnchanged": true,
+      "sourceOnlyReportHashes": [
+        "fb31ee2ae2537bc1eae0d7937e05ee51430d0f96b9d914709fc66fc000277dc2",
+        "c745c33f404b34258752503c712d6de6331eb2517a3ac9ec7ce1f5b8d3024902"
+      ]
+    },
+    "includesExistingActualMainQueryOnlySqlitePreservation": true
+  },
+  "serialSql": {
+    "command": "node --test apps/pc-app/runtime/features/battle/tests/serial-views-sql.test.mjs",
+    "exitCode": 0,
+    "passed": 11,
+    "provenance": "local-PostgreSQL-WASM-fixtures",
+    "checks": [
+      "candidate DDL changes no preexisting table rows, JSON, counters or receipts",
+      "READ ONLY service lookup binds both owners even with identical petIds and preserves arbitrary precision",
+      "unknown, outsiders, invitation-only access and mismatched membership reject the whole batch identically",
+      "missing registry, absent guest, different QA scope and live/QA mixing are omitted without allocation",
+      "1..20 unique UUID rooms are bounded, ordered and historical inactive membership remains readable",
+      "canonical actor validation matches current Auth/session/device and revocation refusal conditions",
+      "QA tombstones survive grant expiry/deletion and a new ungranted device cannot fall back to live",
+      "caller expiry uses current statement time even inside a preexisting transaction",
+      "only service_role executes invoker RPC/private STABLE guard, without new Auth table privileges",
+      "all successful lookups leave every existing row and counter untouched"
+    ],
+    "realCloudVerified": false
+  },
+  "syntaxCheck": true,
+  "diffCheck": true,
+  "unchanged": [
+    {
+      "path": "apps/pc-app/runtime/features/battle/service.cjs",
+      "sameAsBase": true,
+      "normalizedSha256": "6d17852976572693e16e7e6c9e7fab12fcc064aeb9f7ae2a499df5d16cd36124"
+    },
+    {
+      "path": "apps/pc-app/runtime/features/battle/store.cjs",
+      "sameAsBase": true,
+      "normalizedSha256": "5e8066dc2cacf5f2a098d584a749f9fa4544ee9eb92aefd50aafced76c731531"
+    },
+    {
+      "path": "apps/pc-app/runtime/features/battle/index.cjs",
+      "sameAsBase": true,
+      "normalizedSha256": "eae601918d4978e5f9093b76ede6aa16a6359e7faa204248c27f06ae046216c0"
+    },
+    {
+      "path": "apps/pc-app/runtime/features/battle/backup.cjs",
+      "sameAsBase": true,
+      "normalizedSha256": "945fe6a775077b5c94d9339a41f132ae83af595a48e6996de1a48a25cc964095"
+    },
+    {
+      "path": "apps/pc-app/runtime/services/battle-runtime.cjs",
+      "sameAsBase": true,
+      "normalizedSha256": "add99b96ef7531150ad440707c4a0c251d69f2c1dd5b6b4b3aa4929f77daa38e"
+    },
+    {
+      "path": "apps/pc-app/runtime/services/online-duel-service.cjs",
+      "sameAsBase": true,
+      "normalizedSha256": "65f9faf5230cedee43286a18558cb56775ef4e12cb5e40935a10602d4085e54b"
+    },
+    {
+      "path": "apps/pc-app/ui/src/features/battle/useBattleSession.ts",
+      "sameAsBase": true,
+      "normalizedSha256": "b40e6e89803c15aeb04b98b0f662fa03847606489cf6fea60ca28f3437027f4b"
+    },
+    {
+      "path": "apps/pc-app/ui/src/features/battle/ReportsPanel.tsx",
+      "sameAsBase": true,
+      "normalizedSha256": "ed559adc66d693e7801ec5b45f2ccbedb21601264bc3078359dded22d332d562"
+    },
+    {
+      "path": "apps/pc-app/ui/src/features/battle/BattleScreen.tsx",
+      "sameAsBase": true,
+      "normalizedSha256": "eaef32cef25829e13bd4b2bf73bc9ac2c8c726226c2a5dc978eca7d6c3b9b40f"
+    },
+    {
+      "path": "apps/pc-app/ui/src/features/battle/battle.css",
+      "sameAsBase": true,
+      "normalizedSha256": "88e15a6b16512125519703e6a5e133c4325ed9ea50b529e772e576c4bd050834"
+    },
+    {
+      "path": "apps/pc-app/ui/src/features/battle/battle-v3.css",
+      "sameAsBase": true,
+      "normalizedSha256": "ce7321530372a9005fcb02989475181da69b1c1b0c0ad3b76446b2db5982accb"
+    },
+    {
+      "path": "infra/supabase/functions/lingjing-battle/handler.ts",
+      "sameAsBase": true,
+      "normalizedSha256": "904b589c6ab0716f85bdefb13778da2617d789e0cd4ebff1f645b47fd8da36c2"
+    },
+    {
+      "path": "infra/supabase/functions/lingjing-battle/runtime.generated.mjs",
+      "sameAsBase": true,
+      "normalizedSha256": "487012fbf985eb5491039f02cf88da3530def4b6069ac7b581c44296df4f45b5"
+    },
+    {
+      "path": "infra/supabase/functions/lingjing-battle/projection.js",
+      "sameAsBase": true,
+      "normalizedSha256": "19eb314c030beb5fecf9de6058350989697657fc86557187294ab080d3c7579c"
+    },
+    {
+      "path": "infra/supabase/migrations/20261025151136_lingjing_battle_serial_views.sql",
+      "sameAsBase": true,
+      "normalizedSha256": "99ab99a5f55397f5325e90d19e376a8aa9fdd2f33e59ebd4d347521cce5c86ec"
+    },
+    {
+      "path": "infra/supabase/migrations/20261025034744_lingjing_battle_jwt_rooms.sql",
+      "sameAsBase": true,
+      "normalizedSha256": "93f1908ac7f8878a0cc8beced8fb0dc4d05a3c835db90dac2bff59ba97e7a216"
+    },
+    {
+      "path": "package.json",
+      "sameAsBase": true,
+      "normalizedSha256": "db1b8c108a0f6c6381fe5a885da0f8eb8abd6457e0d0dc83a9930b903f5d1355"
+    },
+    {
+      "path": "package-lock.json",
+      "sameAsBase": true,
+      "normalizedSha256": "e195cb9811a73f4044b7b3ff1cc4202ae3f1adff5d761c79c1a2e50f8a0d206b"
+    }
+  ],
+  "deploymentObservation": {
+    "method": "read-only Supabase get_edge_function",
+    "function": "lingjing-battle",
+    "version": 3,
+    "getDisplayMetadataOperationPresent": true,
+    "liveMetadataInvocationPerformed": false
+  },
+  "existingNativeColdControl": {
+    "reportedBy": "Root/09",
+    "candidate": "DC7",
+    "newMainPid": 32748,
+    "opponentSerial": "0004",
+    "locations": [
+      "list",
+      "main card",
+      "replay"
+    ],
+    "originalReportAndTenBusinessTablesExactReported": true,
+    "evidence": "central QA evidence/qa023-b-normal-cold-restart-report-identity.json",
+    "newCandidateWarmAcceptance": false,
+    "helperSessionLoadObstacleIsNotAnApiFailure": true
+  },
+  "constraints": {
+    "sourcePreparationOnly": true,
+    "realJwtMetadataSuccessProven": false,
+    "nativeQA023Closed": false,
+    "ddlOrDatabaseChanged": false,
+    "rawReportOrReceiptChanged": false,
+    "vaultRead": false,
+    "realUserMetadataHttpSent": false,
+    "productStarted": false,
+    "nativeInputDriven": false,
+    "deployed": false,
+    "packaged": false,
+    "pushed": false
+  },
+  "pending": [
+    "optional Root-owned normal-user read-only metadata probe",
+    "new-candidate native warm terminal report list/detail/replay verification"
+  ],
+  "passed": true
+}

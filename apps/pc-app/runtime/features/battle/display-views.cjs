@@ -57,7 +57,10 @@ function createBattleDisplayViews({ services, online, prepareOnline, waitMs = 75
       })) return false;
       // An empty/missing side is never a negative cache entry.
       if (!room.participants.length) { changed ||= Boolean(before); cache.delete(key(owner, id)); continue; }
-      changed ||= JSON.stringify(before?.room.participants) !== JSON.stringify(room.participants) || before?.room.namespace !== room.namespace;
+      // A stale positive entry may already have been rendered as pending.
+      // Restoring freshness must wake that view even when its identity is unchanged.
+      changed ||= Boolean(before && Date.now() - before.at > cacheMs)
+        || JSON.stringify(before?.room.participants) !== JSON.stringify(room.participants) || before?.room.namespace !== room.namespace;
       cache.set(key(owner, id), { room, at: Date.now() });
     }
     while (cache.size > 200) cache.delete(cache.keys().next().value);
