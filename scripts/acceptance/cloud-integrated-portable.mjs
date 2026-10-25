@@ -38,7 +38,7 @@ const status=model=>model.call('accounts','syncStatus');
 async function restore(model){const preview=await model.call('accounts','cloudPreview');return model.call('accounts','backupRestore',{previewId:preview.previewId,mode:'replace',actionId:randomUUID()});}
 async function waitClean(model,label){return pollState(()=>status(model),s=>!s.pending&&!s.conflicts&&!s.localChanged&&!s.unverifiedLocal&&!s.running,{timeoutMs:120000,intervalMs:700,label});}
 async function selectAfterSync(model,id){
-  const actionId=randomUUID();proof.selectionAttempts=[];
+  const actionId=randomUUID();proof.selectionActionId=actionId;proof.selectionAttempts=[];save();
   for(let attempt=1;attempt<=3;attempt++){
     await waitClean(model,'Selection must wait for the prior complete-save check');
     const before=await status(model),selection=query(model,'select selections_json from companion_accounts where owner_account_id=?',[owner])[0].selections_json;
