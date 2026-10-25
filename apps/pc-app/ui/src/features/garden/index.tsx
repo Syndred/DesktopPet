@@ -11,7 +11,7 @@ import { ShoppingBasket as Basket, Beaker, Check, CircleCheck, Clock3, Cloud, Co
 import { Tooltip, TooltipProvider, TooltipTrigger, TooltipContent } from '../../components/kit';
 import { TerritoryMap } from './TerritoryMap';
 import { PetPortrait } from './PetPortrait';
-import { PetIdentity, usePetIdentity } from './PetIdentity';
+import { PetIdentity, petIdentityLabel, usePetIdentity } from './PetIdentity';
 import { useGarden, type GardenState } from "./use-garden";
 // Shared components must have their styles on a direct garden entry as well.
 import "../companions/styles.css";
@@ -103,7 +103,7 @@ function Feeding({ state, selectedItem, compact = false }: { state: GardenState;
   const item = selectedItem || data?.items.find(i => i.id === foodId);
   const pet = data?.pets.find(p => p.petId === petId);
   const identity = usePetIdentity(pet, data?.ownerAccountId, pet?.petId || '');
-  const recipient = pet ? `${identity?.roleName || '伙伴'}（编号 ${pet.petId}）` : '';
+  const recipient = pet ? petIdentityLabel(identity) : '';
   const disabled = state.busy || Boolean(state.pending);
   useEffect(() => { setPetId(''); }, [data?.ownerAccountId]);
   useEffect(() => { setCount(1); }, [item?.id]);
@@ -153,8 +153,8 @@ function TerritoryPanel({ territory, state }: { territory: GardenTerritory; stat
   const guard = state.snapshot?.pets.find(pet => pet.petId === guardId);
   const identity = usePetIdentity(selectedPet, state.snapshot?.ownerAccountId, selectedPet?.petId || '');
   const guardIdentity = usePetIdentity(guard, state.snapshot?.ownerAccountId, guardId);
-  const selectedLabel = `${identity?.roleName || '伙伴'}（编号 ${petId}）`;
-  const guardLabel = `${guardIdentity?.roleName || '伙伴'}（编号 ${guardId}）`;
+  const selectedLabel = petIdentityLabel(identity);
+  const guardLabel = petIdentityLabel(guardIdentity);
   useEffect(() => { setPetId(mine ? territory.garrisonPetId || '' : ''); }, [state.snapshot?.ownerAccountId, territory.id, territory.garrisonPetId, mine]);
   const challenge = state.snapshot?.territoryChallenges?.find(c => c.territoryId === territory.id);
   return <div className="garden-card garden-territory-panel"><span className={`garden-pill ${mine ? 'green' : ''}`}>{mine ? '我的领地' : territory.ownerAccountId ? `${territory.ownerName || '其他玩家'}的领地` : '未占领'}</span><h2><Flag size={19} /> {territory.name}</h2><p className="garden-help">{territory.regionName || '区域信息尚未提供'}</p><div className="garden-inset"><small>区域捕捉收益</small><strong>✧ × {mine ? territory.captureMultiplier : 1}</strong></div>{mine && <><h3>驻守伙伴</h3>{guardId && <div className="garden-selected-identity"><span>当前驻守</span><PetIdentity identity={guardIdentity} petId={guardId} /></div>}<PetPicker pets={state.snapshot?.pets || []} selected={petId} onSelect={setPetId} disabled={state.busy} />{selectedPet && <div className="garden-selected-identity" aria-live="polite"><span>待确认驻守</span><PetIdentity identity={identity} petId={selectedPet.petId} /></div>}<div className="garden-row"><Button variant="ghost" className="garden-primary" aria-label={selectedPet ? `确认${selectedLabel}驻守` : undefined} disabled={state.busy || !selectedPet || Boolean(state.pending)} onClick={() => { void state.mutate('garrison', { territoryId: territory.id, petId, expectedTerritoryRevision: territory.revision }, `已确认${selectedLabel}驻守${territory.name}。`); }}>确认驻守</Button><Button variant="ghost" className="garden-secondary" aria-label={guardId ? `结束${guardLabel}驻守` : undefined} disabled={state.busy || !territory.garrisonPetId} onClick={() => { void state.mutate('garrison', { territoryId: territory.id, petId: null, expectedTerritoryRevision: territory.revision }, `已结束${guardLabel}在${territory.name}的驻守。`); }}>结束驻守</Button></div></>}

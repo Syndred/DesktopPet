@@ -1,10 +1,25 @@
 {
   "module": "garden",
-  "request": "QA-003 fixed standard role names and complete stable instance numbers",
-  "phase": "implemented-static-checks-passed-awaiting-09-live-acceptance",
-  "baseCheckpoint": "9e57de1d210376ce679168eb1acbff8e37cff1cd",
+  "request": "Global numeric serial display and explicit ownerAccountId/petId response ownership",
+  "phase": "implemented-component-checks-passed-awaiting-root-integration-and-09-live-acceptance",
+  "baseCheckpoint": "12ab032f95bc048ac7f03c5602a062331ef72cfe",
   "date": "2026-10-25",
-  "identityContract": "docs/implementation/companions-display-identity-contract.json",
+  "identityContract": "docs/implementation/companions-global-serial-contract.json",
+  "decisionId": "globalSerial-20261025-v1",
+  "dependencies": {
+    "publicHelperCommit02": "a528ebcf90e33491364a606747727f7f28f46457",
+    "helperApi": "companionIdentity(pet); no local formatter or UUID/legacy-serial fallback",
+    "authority08": "Trusted non-backup sidecar projection through companion service reads; implementation/deployment acceptance belongs to 08 and root",
+    "integrationOrder": "Integrate 02 helper before this garden change; confirm 08 trusted projection before full live acceptance"
+  },
+  "files": [
+    "apps/pc-app/ui/src/features/garden/PetIdentity.tsx",
+    "apps/pc-app/ui/src/features/garden/PetPortrait.tsx",
+    "apps/pc-app/ui/src/features/garden/index.tsx",
+    "apps/pc-app/ui/src/features/garden/use-garden.ts",
+    "packages/shared-types/src/features/garden/index.ts",
+    "docs/implementation/status/garden-user-acceptance.json"
+  ],
   "scope": [
     "Territory challenge owned-pet picker",
     "Current garrison and pending-garrison confirmation",
@@ -16,18 +31,24 @@
     "source": "../companions/identity companionIdentity(pet)",
     "fields": [
       "roleName",
-      "complete original petId as instanceNumber",
+      "confirmed canonical positive decimal globalSerial, padded to at least four digits as instanceNumber",
       "historicalNickname explicitly secondary"
     ],
+    "missingOrInvalidNumber": "待同步; never display petId or legacy serial as a replacement",
+    "largeIntegers": "Preserved as decimal strings without Number conversion",
     "fullNumberWrapping": true,
     "appearanceUsedToInferIdentity": false,
-    "missingTemplate": "Authenticated read-only companions.identity IPC; owner and petId scoped; late replies discarded"
+    "missingMetadata": "Authenticated read-only companions.get IPC; both returned ownerAccountId and petId must match the requested pair; late replies discarded",
+    "inputOwnership": "Project an existing GardenPet only when its ownerAccountId and petId match the explicit requested pair",
+    "inflightDeduplication": "Owner plus original petId; request-only and removed on settlement",
+    "backgroundConfirmation": "Subscribe to companions:changed only for the explicit current owner, refresh the read-only snapshot, and clean up the subscription on unmount"
   },
   "bindings": {
     "selection": "existing original petId",
     "ownership": "existing ownerAccountId + petId",
     "mutationPayloadsChanged": false,
     "commandPayloadExpressionsPreserved": 9,
+    "pendingAndIpcExpressionsPreserved": 12,
     "canonicalWritesAdded": false,
     "persistedNameSerialTemplatePetIdGrowthHistoryChanged": false,
     "economyTerritoryCloudRulesChanged": false
@@ -35,19 +56,57 @@
   "checks": {
     "uiTypecheck": "passed",
     "targetedGardenEslint": "passed",
-    "originalMutationAstComparison": "passed",
-    "reactReview": "Hoisted picker option, stable primitive effect dependencies, cancelled owner/id lookups, no identity persistence, wrapped full IDs and accessible target labels"
+    "originalMutationAstComparison": "passed: all nine command/payload pairs and twelve pending/storage/IPC/actionId expressions match baseCheckpoint",
+    "combinedUiTypecheck": "passed with in-memory 02 helper declaration and public DTO overlays; other worktrees were not modified",
+    "componentChecks": {
+      "passed": 26,
+      "scope": "Real React DOM in isolated headless Chrome with simulated IPC; not native application, persistence or cloud acceptance",
+      "coverage": [
+        "Four-digit minimum and larger serials, including values above Number precision",
+        "Missing and invalid metadata remain pending without UUID fallback",
+        "Foreign owner/petId responses and mismatched input projections are rejected",
+        "Missing template is resolved through owned companion get",
+        "Prior-owner/prior-pet and unmounted responses are discarded",
+        "Concurrent picker/portrait reads deduplicate only within the same owner/petId pair",
+        "Background serial confirmation refreshes only the current owner and subscriptions are cleaned up"
+      ]
+    },
+    "evidenceDirectory": "artifacts/qa/garden-global-serial-20261025/",
+    "evidenceFiles": [
+      "component-check.mjs",
+      "component-check.json",
+      "mutation-check.cjs",
+      "mutation-check.json",
+      "combined-typecheck.cjs",
+      "combined-typecheck.json"
+    ],
+    "reactReview": "Hoisted picker option, cancelled owner/id/snapshot lookups, request deduplication, explicit-owner event filtering, subscription cleanup, no identity persistence, accessible numeric labels"
   },
   "liveAcceptance": {
-    "ownerThread": "01a1725c-d59c-7620-9bb6-1c0d4e0fb3a3",
-    "status": "pending09 designated-pet feeding and garrison",
+    "ownerThread": "01a172b4-d7f0-7213-9a40-092418ee776b",
+    "status": "pending root-integrated candidate and 09 designated-pet feeding/garrison with persistence and independent cloud readback",
+    "fullAcceptancePassed": false,
     "visibleAutomationStartedByThisChat": false,
     "applicationRepackaged": false,
     "userApplicationClosed": false
   },
   "tsMigration": "paused; existing UI only",
   "oldServer": "excluded",
+  "recovery": {
+    "worktree": "C:/Users/Administrator/Desktop/project/DesktopPet-fresh-worktrees/05",
+    "branch": "codex/lingjing-05-fresh-20261025",
+    "takeoverWipFilesPreserved": 5,
+    "restoredContent": "All five files match the external backup after newline normalization; original-byte backup retained",
+    "originalByteBackup": "C:/Users/Administrator/.codex/worktrees/lingjing-garden/garden-takeover-20261025-185813",
+    "sharedRootIndexTouched": false
+  },
+  "remoteSync": {
+    "command": "git pull --ff-only origin main",
+    "result": "Already up to date",
+    "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086"
+  },
   "remaining": [
-    "09 real input and persistence readback for the selected original petId"
+    "Root integrates 02 helper and 08 trusted projection with this garden commit",
+    "09 real input and persistence/cloud readback for the selected original petId; verify original pending action retry remains idempotent"
   ]
 }
