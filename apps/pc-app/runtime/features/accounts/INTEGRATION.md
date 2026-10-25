@@ -26,6 +26,8 @@ getLegacyInventory(ownerAccountId) 提供经过归属映射的原始库存/历�
 
 资源引用 v2 与受验证偏好先异步下载、检查实际私有文件和权威回执，再进入同步 SQLite 恢复事务。预览保留原始 envelope/checksum，内部规范视图只用于比较；异步等待后必须仍是原 owner/device/SID，同 SID 的令牌刷新可以继续，退出后同账号重新登录须重新预览。只有完整本机视图与独立云端读回相同，才推进公共同步基线。
 
+已生成的本地/云端预览也只在当前登录会话内有效：adopt、logout 和当前 owner 会话失效时清空内存预览；同 SID 自动刷新不清空。原备份、下载缓存、待重试任务不随预览清理删除。
+
 Windows safeStorage 保管登录凭据与个人 BYOK；密钥不进入 renderer、普通 SQLite 明文、云存档、导出或日志。云投影按已知 schema 去除配置凭据，同时保留用户创作的 JSON/消息内容，不能简单按字段名删掉正常对话。服务端继续检查完整 actor、受保护状态及拒绝不合法投影。
 
 ## 桌面宿主与验证
@@ -37,3 +39,7 @@ close-to-tray、窗口数量、置顶、穿透、安静时段和定位权限接�
 ## 旧入口退役
 
 当前分支仍有 LINGJING_LEGACY_AUTH 的显式旧适配分支和对局 QA/历史消费者；它们不是新协议示例。待主协调完成新 04/08 验收后统一退役旧函数/SQL及其测试。精确消费者与端口替换见 docs/implementation/cleanup/cloud-retirement-consumers.json。不得通过旧 SQL 的 db push/reset、repair 历史或删除原档来完成退役。
+
+## 已完成验证
+
+7a6b04a 在真实 Supabase HTTPS 和两个独立 Electron44.9.3 进程完成 9 项检查：正式领养与标准菜园初始化、同 petId 双端恢复、完整存档校验、CAS 冲突保档、SDK 令牌轮转、加密重启、原任务断网重试到版本5、令牌边界和单设备退出。证据为 docs/implementation/evidence/accounts/cloud-2026-10-25/dual-electron-full.json，明确 fullSaveVerified=true、authorityPending=false。本机双进程未声明两台实体设备或私有 Realtime 频道重连；旧服务器数据仍缺可信来源。最终账号回归54项、UI类型检查和生产构建通过。

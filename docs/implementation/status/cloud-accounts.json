@@ -2,10 +2,10 @@
   "module": "accounts",
   "scope": "2026-10-25 Supabase Auth/JWT, stable legacy owner mapping, per-device sessions, full-save CAS/idempotency/conflict/offline recovery",
   "branch": "codex/lingjing-accounts",
-  "commit": "f47b1ed45bb045918a59d93163b833cc897ffb57",
+  "commit": "7a6b04a0cc83f84143c42af71d4947ce9f7ce4cb",
   "worktree": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-accounts\\DesktopPet",
-  "goalStatus": "active",
-  "phase": "Shared transaction guard deployed; signed expired JWT and production adapter JSON chat/memory/persona actual HTTPS passed; approved root00afefd merged; full-domain native still waits02 main and remaining adapters.",
+  "goalStatus": "complete",
+  "phase": "Own Auth/actor/CAS implementation and real HTTPS/native acceptance complete: approved coordinator831e483 merged; 7a6b04a expires issued previews across session changes; full dual Electron9/9 and final accounts54/54 passed. Coordinator retains final release/legacy-retirement ownership.",
   "baseline": "46abf416e0500b53ef32fc29b441d923ef5a6a80",
   "dependencyCheckpoint": "b40af0efcf6062ddc2e8c360523c996fc91ebc0a",
   "contracts": {
@@ -273,6 +273,17 @@
       "command": "node --test legacy-claims.test.cjs",
       "result": "3 synthetic checks passed incl Windows DPAPI roundtrip Chinese nickname, originalowner/hash/date preserved; no cloud writes",
       "kind": "LOCAL preparation only; actual old source still absent"
+    },
+    {
+      "command": "node --test <all eight accounts *.test.cjs/mjs files>",
+      "result": "54 passed,0 failed,0 skipped",
+      "source": "7a6b04a0cc83f84143c42af71d4947ce9f7ce4cb",
+      "kind": "Local real SQLite/PGlite, Windows DPAPI and explicitly simulated protocol cases; distinct from live HTTP evidence"
+    },
+    {
+      "command": "npm run typecheck:ui && npm run build:pc",
+      "result": "Passed; production closure106 files/181 edges/4 JS-MJS dependencies",
+      "source": "7a6b04a0cc83f84143c42af71d4947ce9f7ce4cb"
     }
   ],
   "realCloudEvidence": {
@@ -280,8 +291,8 @@
     "readOnlyInspected": true,
     "authOrSyncLiveVerified": true,
     "identitySchemaLiveRejection": "Coordinator actual HTTPS passes registration/stable owner, same-account two Auth sessions, cross-owner Data API RLS, wrong device rejection, logout A leaves B active. Refresh 400 traced to min-length16; 320cafd removes the false assumption and retains4096 upper bound.",
-    "deploymentByCoordinatorPending": true,
-    "publicKeyConfig": "Shared ignored artifacts/cloud-upgrade/2026-10-25/public-runtime-config.json; no keys included here",
+    "deploymentByCoordinatorPending": false,
+    "publicKeyConfig": "Verified tracked config/lingjing-cloud-public.json, packaged resources/lingjing-cloud-public.json; publishable public config only",
     "legacyProbe": [
       {
         "at": "2026-10-25T02:00:58.619Z",
@@ -313,13 +324,24 @@
       "passed": true
     },
     "dualElectron": {
-      "evidence": "artifacts/accounts/cloud-electron-1792897321861/evidence.json",
-      "scope": "Two real Electron44.9.3 Windows processes; main/preload/renderer production entry; actual HTTPS; DPAPI/vault reload; actor refresh; controlled connection refusal + process restart +SQLite outbox; same host only",
-      "source": "7784f8a3cfefb84a3ab6285d121166caeea9a03a",
-      "authorityPending": true,
-      "fullSaveVerified": false,
-      "passedChecks": 8,
-      "privateRealtimeReconnectVerified": false
+      "evidence": "docs/implementation/evidence/accounts/cloud-2026-10-25/dual-electron-full.json",
+      "source": "7a6b04a0cc83f84143c42af71d4947ce9f7ce4cb",
+      "passed": true,
+      "passedChecks": 9,
+      "fullSaveVerified": true,
+      "authorityPending": false,
+      "scope": "Two actual Electron44 processes on one Windows host, isolated profiles, production TypeScript main/preload and React renderer, actual Supabase HTTPS. Not two physical machines.",
+      "petId": "pet-bc320c7d-8a0a-49e9-aa5d-c974f12276a1",
+      "owner": "account:bb3a94fa-1490-47d8-bb2b-4476eee6c766",
+      "originalRetryActionId": "087172dc-e60f-45aa-bb0d-19e98456dedd",
+      "retryRevision": 5,
+      "privateRealtimeReconnectVerified": false,
+      "physicalTwoMachinesVerified": false,
+      "screenshots": [
+        "docs/implementation/evidence/accounts/cloud-2026-10-25/dual-electron-full-a.png",
+        "docs/implementation/evidence/accounts/cloud-2026-10-25/dual-electron-full-b.png"
+      ],
+      "visualInspection": "A shows actual completed synchronization; additional real B process resumed its encrypted session and rerendered actual enabled-sync setting before B screenshot. Initial B image reflected stale in-memory UI after acceptance-driver direct IPC and is not the canonical B image."
     },
     "casConcurrency": {
       "passed": true,
@@ -329,7 +351,7 @@
       "checks": 2
     },
     "remoteLatest": {
-      "at": "2026-10-25T03:23:26Z",
+      "at": "2026-10-25T04:23:43.298Z",
       "command": "git pull --no-rebase --no-edit origin main",
       "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086",
       "result": "Already up to date"
@@ -360,6 +382,15 @@
       "by": "coordinator",
       "passed": true,
       "evidence": "docs/implementation/evidence/accounts/cloud-2026-10-25/session-revocation-coordinator.json"
+    },
+    "dualElectronPartialHistorical": {
+      "evidence": "artifacts/accounts/cloud-electron-1792897321861/evidence.json",
+      "scope": "Two real Electron44.9.3 Windows processes; main/preload/renderer production entry; actual HTTPS; DPAPI/vault reload; actor refresh; controlled connection refusal + process restart +SQLite outbox; same host only",
+      "source": "7784f8a3cfefb84a3ab6285d121166caeea9a03a",
+      "authorityPending": true,
+      "fullSaveVerified": false,
+      "passedChecks": 8,
+      "privateRealtimeReconnectVerified": false
     }
   },
   "preservation": {
@@ -373,11 +404,9 @@
     "Old runtime single session_token cloud adapter only after new Auth path and all domain consumers are migrated; preserve source-import reader and user files"
   ],
   "remaining": [
-    "Integrate final02 main cloud adapter and07 refs,05 main transport for complete domain authority state",
-    "Real full-domain dual Electron native rerun after final adapters; current8 native checks are personal/partial only",
-    "04 private realtime full two-account gameplay integration belongs04/coordinator; stable SDK/Auth refresh is ready",
-    "Old complete cloud account/data migration EXTERNAL: no verified old export/SSH; DPAPI preparation is not actual migration",
-    "One final account-targeted regression and final origin/main pull confirmation"
+    "Actual complete old-server migration remains external: no independently verified old export/SSH. Staged DPAPI preparation is not completed cloud migration.",
+    "Final mainline integration, release build and retired legacy fallback/function/SQL consumer removal remain coordinator-owned; no production SQL deployment was performed from this worktree.",
+    "Private Realtime gameplay/reconnect acceptance belongs04/coordinator; own native evidence proves SDK token rotation only and explicitly uses two processes on one host."
   ],
   "resourceHydrationReadOnlyReview": {
     "accepted": "Validate external original checksum/owner/schema before hydration and validate again after; additive download cache before synchronous atomic restore; normalized/cloud refs fingerprint only; no rewrite original envelope",
@@ -385,6 +414,19 @@
     "api": "07 WIP backups.prepareCloud(envelope,owner), adapter.prepareCloud(owner,module), backups.cloudData +adapter.cloudModule; sync.previewCloud awaits hydrate outside SQLite restore",
     "sharedFilesNotEdited": "accounts/backups.cjs andsync.cjs left to07 WIP until its checkpoint",
     "finding": "Observed previewCloud only rechecks owner after prepareCloud await. Capture and recheck original SID or Accounts epoch as well, so same-owner logout/relogin/password newSID cannot return a stale preview. Keep additive cache, but reject stale preview token asSESSION_CHANGED.",
-    "readOnly": true
+    "readOnly": true,
+    "resolution": "Same owner+Supabase SID checked after await in faabda3; all issued previews cleared on adopt/logout/invalidation in7a6b04a; final9-case protocol suite and54-case account regression passed. Additive cache/files retained."
+  },
+  "previewLifecycle": {
+    "source": "7a6b04a0cc83f84143c42af71d4947ce9f7ce4cb",
+    "clearOn": [
+      "adopt",
+      "logout",
+      "matching-owner invalidation"
+    ],
+    "sameSidAutomaticRefresh": "Retained and actual restore verified in real SQLite protocol regression",
+    "originalFilesPreserved": true,
+    "test": "real SQLite with simulated Auth: issued restore previews expire across session transitions, same-SID refresh remains usable",
+    "result": "All local/cloud stale previews rejected after same-owner new SID with unchanged fingerprint and no restore writes; original backup bytes retained"
   }
 }

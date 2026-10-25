@@ -1,0 +1,36 @@
+{
+  "at": "2026-10-25T04:23:43.299Z",
+  "source": "7a6b04a0cc83f84143c42af71d4947ce9f7ce4cb",
+  "scope": "Sanitized real native evidence only; no vault ciphertext, password or JWT copied",
+  "files": [
+    {
+      "file": "dual-electron-full.json",
+      "sha256": "1c22a94d5cfa823447d2c06f231fb53f15fc42c45d70835176d3fb7e6f2987a8"
+    },
+    {
+      "file": "dual-electron-full-a-sqlite.json",
+      "sha256": "9f5d1e24a6c5343593bb3a8e120a591d3a03efa96da7b364a6947a9cd5b54963"
+    },
+    {
+      "file": "dual-electron-full-b-sqlite.json",
+      "sha256": "0639e901a1fc27ed6480b6ecfe8e5bfc804b287516712817f812e0821b3bb97b"
+    },
+    {
+      "file": "dual-electron-full-a.png",
+      "sha256": "c7c4622927fed7ec5973df80f27439bb383753371d00b0650b867fb8e5d1a2a4"
+    },
+    {
+      "file": "dual-electron-full-b.png",
+      "sha256": "4faf41ff5b70786f640b4c08f7b18343820a2c6be80c3b4e59241a9359fb8b95"
+    },
+    {
+      "file": "dual-electron-full-b-resume.json",
+      "sha256": "1dd6cb28bff0cb681cd70a97db0d2d86140eef2590246830f2e6d98ea95b8d21"
+    },
+    {
+      "file": "dual-electron-full-build.json",
+      "sha256": "2f0c61ae116b5f81d26d74068c8447a5b6a806bfd0de20c4028e2732431e1479"
+    }
+  ],
+  "digestPolicy": "PNG exact bytes; JSON UTF-8 with CRLF normalized to LF for Git checkout portability"
+}
