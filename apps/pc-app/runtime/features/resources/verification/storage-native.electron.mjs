@@ -46,6 +46,8 @@ try{
     const resource=(await current.invoke('resources','list')).find(r=>r.id===report.transfer.resourceId);assert(resource);assert.equal(resource.contentHash,report.transfer.contentHash);assert.equal(resource.availability,'ready');
     await current.page.locator(`.resource-card[data-resource-id="${resource.id}"]`).click();
     const stage=current.page.locator(`.resource-stage[data-resource-id="${resource.id}"]`).first();await stage.locator('[data-renderer="pixi-spritesheet"][data-texture-frame]').waitFor();
+    await current.page.waitForFunction(id=>document.querySelector(`.resource-stage[data-resource-id="${id}"]`)?.dataset.status==='ready',resource.id);
+    await current.page.waitForTimeout(150);
     const host=await stage.locator('.resource-sprite-host').evaluate(element=>({...element.dataset}));assert.equal(host.renderer,'pixi-spritesheet');
     const cloudStatus=await current.invoke('resources','cloudStatus');assert.equal(cloudStatus.enabled,false);assert.equal(cloudStatus.lastVerifiedAt,null,'The fixture receipt must never be presented as live cloud verification');
     const screenshot=`client-${index?'B':'A'}.png`;await current.page.screenshot({path:path.join(directory,screenshot)});
