@@ -7,6 +7,7 @@ const fail = message => { throw new CompanionError('COMPANION_BACKUP_INVALID', m
 const conflict = message => { throw new CompanionError('COMPANION_BACKUP_CONFLICT', message); };
 const object = value => value && typeof value === 'object' && !Array.isArray(value);
 const id = value => typeof value === 'string' && value.trim() === value && value.length > 0 && value.length <= 200 && !/[\u0000-\u001f\u007f]/u.test(value);
+const receiptId = value => typeof value === 'string' && value.trim() === value && value.length > 0 && value.length <= 512 && !/[\u0000-\u001f\u007f]/u.test(value);
 const integer = value => Number.isSafeInteger(value) && value >= 0;
 const compare = (left, right) => left < right ? -1 : left > right ? 1 : 0;
 function parse(value, label) { try { return JSON.parse(value); } catch { fail(`${label}已损坏，原存档已保留`); } }
@@ -54,7 +55,7 @@ function createCompanionBackupAdapter(db) {
     }
     const actionIds = new Set();
     for (const row of data.tables.companion_actions) {
-      if (!id(row.action_id) || actionIds.has(row.action_id) || !id(row.operation) || !/^[0-9a-f]{64}$/.test(row.request_hash)) fail('伙伴操作回执无效');
+      if (!receiptId(row.action_id) || actionIds.has(row.action_id) || !id(row.operation) || !/^[0-9a-f]{64}$/.test(row.request_hash)) fail('伙伴操作回执无效');
       const result = parse(row.result_json, '伙伴操作回执');
       if (!object(result) || result.ok !== true || !integer(result.revision)) fail('伙伴操作结果无效');
       const pet = result.data?.pet;
