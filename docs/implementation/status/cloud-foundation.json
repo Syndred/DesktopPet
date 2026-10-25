@@ -4,7 +4,7 @@
   "branch": "codex/lingjing-foundation",
   "commit": "8242a4c251cdd2d7c92e395bf99e1d3098d6d070",
   "goalStatus": "active",
-  "stage": "public-runtime-and-native-ui-passed-ci-release-in-progress",
+  "stage": "approved-business-integrated-profile-path-fixed-release-ci-ready-for-package-proof",
   "contracts": [
     "docs/implementation/cloud-upgrade-2026-10-25.md",
     "https://www.electronjs.org/docs/latest/tutorial/electron-timelines",
@@ -71,6 +71,18 @@
         }
       ],
       "cloud": "Explicit isolated QA identity, no live-cloud claim"
+    },
+    {
+      "name": "SQLite-only old profile discovery across real Windows Electron restart",
+      "passed": true,
+      "evidence": "docs/implementation/evidence/foundation/cloud-engineering/profile-discovery.json",
+      "checks": 2
+    },
+    {
+      "name": "Release binary selection and tamper refusal",
+      "passed": true,
+      "cases": 3,
+      "scope": "Artifact-format fixture checks; actual EXE rehearsal follows package build."
     }
   ],
   "realCloudEvidence": {
@@ -112,9 +124,16 @@
     "cleanInstallFixCommit": "e294f2235297c406429c05cd6847daa74ed6dd79"
   },
   "remaining": [
-    "Windows native/CJS/real-EXE CI and actual Authenticode/release rollback",
-    "Main-approved business checkpoints and final consumer audit, including obsolete 3D/prototypes",
-    "One justified final integrated regression and exact final EXE/source/readback"
+    "Actual portable EXE build/audit/smoke and binary rollback rehearsal, actual Authenticode status",
+    "Main-approved remaining business checkpoints and cloud retirement/consumer audit",
+    "One justified final integrated regression and final exact EXE/source/readback"
   ],
-  "updatedAt": "2026-10-25T02:41:28.003Z"
+  "updatedAt": "2026-10-25T03:06:40.122Z",
+  "approvedIntegrations": {
+    "accounts": "45b857d",
+    "resources": "4e8fdf8",
+    "battleV3": "0ddda2a",
+    "conversations": "543b71f",
+    "publicCloudConfig": "3c791c2"
+  }
 }

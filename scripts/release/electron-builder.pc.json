@@ -7,11 +7,7 @@
   },
   "files": [
     "apps/pc-app/dist/**/*",
-    "apps/pc-app/runtime/core/**/*.cjs",
-    "apps/pc-app/runtime/features/**/*.cjs",
-    "apps/pc-app/runtime/features/**/*.json",
     "apps/pc-app/runtime/features/*/assets/**/*",
-    "apps/pc-app/runtime/services/**/*.cjs",
     "apps/pc-app/runtime/assets/brand/**/*",
     "apps/pc-app/runtime/assets/illustrations/**/*",
     "!**/*.test.cjs",
@@ -91,5 +87,11 @@
   "npmRebuild": false,
   "asarUnpack": [
     "node_modules/better-sqlite3/prebuilds/win32-x64.node"
+  ],
+  "extraResources": [
+    {
+      "from": "config/lingjing-cloud-public.json",
+      "to": "lingjing-cloud-public.json"
+    }
   ]
 }

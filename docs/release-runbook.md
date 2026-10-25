@@ -1,61 +1,49 @@
-# 发布与回滚 Runbook（T-302）
+# 灵境 Windows 发布与回滚
 
-文档版本：v1.0  
-更新时间：2026-03-04
+更新于 2026-10-25。正式发布链路只生成 Windows x64 便携 EXE；源码入口见 README。旧移动端占位产物、按哈希冒充签名的脚本以及独立构建缓存已退役。
 
-## 1. 发布前检查（Go/No-Go）
+## 安装和构建
 
-Go/No-Go 清单：
-1. `npm run verify` 全绿。
-2. `npm run test:coverage` 覆盖率门槛通过。
-3. 关键任务进度已记录到 `docs/task-progress.md`。
-4. 本次版本号已冻结（示例：`v1.0.0`）。
-5. 回滚目标版本可用（至少最近一个稳定版本）。
+使用 Node 24 / Windows x64，执行 `npm ci`、`npm run native:check`。安装保留正常生命周期脚本；better-sqlite3 13 使用上游 N-API 二进制。更新锁文件后执行 `npm run deps:lock`。
 
-## 2. 本地发布演练
+在干净、已提交的检出中执行 `npm run release:prepare`。该命令依次构建实际 EXE、审计 ASAR、启动实际便携程序，再生成不可覆盖的版本目录。可先设置 `RELEASE_VERSION`，或单独使用 `npm run release:manifest -- --version=<version>` 归档已经通过审计和烟雾检查的同一 EXE。
 
-按顺序执行：
-1. `npm run release:build`
-2. `npm run release:sign`
-3. `npm run release:manifest -- --version=vX.Y.Z`
+产物位于 `artifacts/pc-cloud-upgrade/`。版本归档在 `releases/<version>/`，包括真实 EXE、独立 SHA256 文件、manifest.json、包审计及便携程序验收记录。版本目录存在时拒绝覆盖；生成清单默认不切换正在使用的版本。
 
-产物检查：
-1. `artifacts/pc/pc-build.json`
-2. `artifacts/mobile/mobile-build.json`
-3. `artifacts/signatures/signatures.json`
-4. `releases/vX.Y.Z/manifest.json`
-5. `release-state/current.json`
+## 来源和依赖闭包
 
-## 3. CI 发布流程
+构建清单记录 sourceCommit/sourceTree、工作区脏文件、原始及 CRLF 规范化源码指纹、实际编译字节指纹、Electron/SQLite 版本、独立主窗口和桌宠入口、公开云配置 SHA/projectRef。
 
-触发入口：
-1. GitHub Actions -> `Release Pipeline`
+`runtime-closure.mjs` 从正式核心及七个注册模块追踪相对 require/import，并纳入定位及前台检测 PowerShell 文件。所需 .cjs、.js、.mjs、JSON 都按实际依赖进入包；未知动态导入、缺失依赖、测试或服务端权威实现会阻止打包。builder 的 CJS 配置重新核对每个源码哈希，ASAR 审计逐文件复核。
 
-输入参数：
-1. `release_version`: 目标版本号
-2. `dry_run`: 是否仅演练不发布
+公开配置只包含 Supabase URL、projectRef、publishable key，位于资源目录 `lingjing-cloud-public.json`。secret/service role、用户数据库、私钥、恢复备份、开发/测试脚本不得进入包。便携测试先在无云配置环境变量的普通隔离档案中确认云账号入口可用，再在明确 QA 场景下检查角色、行走纹理和训练；这不代表真实云端业务或第二台实体设备验收。
 
-执行阶段：
-1. `build-sign-manifest`: 构建、签名、生成清单并归档
-2. `publish`: 非 dry-run 时执行发布步骤
+## Windows 签名
 
-## 4. 回滚流程
+SHA256 仅用于完整性校验。真实签名由 electron-builder 使用 `CSC_LINK` / `CSC_KEY_PASSWORD` 配置的 Authenticode 证书完成；本地不落入源码。使用 `npm run release:verify-signature -- --executable=<path>` 调用 Windows Get-AuthenticodeSignature。
 
-本地回滚：
-1. `npm run release:rollback -- --target=vX.Y.Z`
-2. 检查 `release-state/current.json` 与 `release-state/last-rollback.json`
+没有证书时，候选包允许以 `NotSigned` 状态归档，明确记录未签名。`--require-signed` 或 `REQUIRE_SIGNED=1` 要求 Valid 签名。失效、被改动或无法检查的签名不能成为可发布版本。
 
-CI 回滚：
-1. GitHub Actions -> `Release Rollback`
-2. 输入 `target_version`
+## CI 和发布
 
-回滚后检查：
-1. 版本指针已指向目标版本。
-2. 核心烟雾测试通过（构建、核心链路、关键 API）。
+CI 包含 Linux 类型/分层回归，以及 Windows 普通 npm ci、Node/Electron 共用 SQLite、全部 CJS/native 测试、实际 EXE 构建、旧 SQLite 档案发现、原生窗口/托盘/IPC/延迟加载、包审计及便携 EXE smoke。只上传 EXE 与选定 JSON/PNG 证据，不上传用户档案、加密凭据或 artifacts 全目录。
 
-## 5. 数据兼容策略
+Release Pipeline 默认 dry_run。正式发布要求已有审核过的 Git tag、真实证书、实际 EXE smoke 与匹配哈希；随后创建 GitHub Release，上传同一不可变二进制和清单。未运行 GitHub 托管 workflow 时，不能把本地等价检查写成托管 CI 成功。
 
-1. 数据库变更优先采用向后兼容迁移。
-2. 非兼容变更必须附带反向迁移脚本或影子字段方案。
-3. 回滚时不得依赖人工数据修复作为唯一手段。
+工作流使用已核对的官方版本：[checkout v7.0.1](https://github.com/actions/checkout/releases/tag/v7.0.1)、[setup-node v7.1.0](https://github.com/actions/setup-node/releases/tag/v7.1.0)、[upload-artifact v7.0.2](https://github.com/actions/upload-artifact/releases/tag/v7.0.2)、[download-artifact v8.0.2](https://github.com/actions/download-artifact/releases/tag/v8.0.2)。
 
+## 真实二进制回滚
+
+保留目标版本完整目录后执行：
+
+```powershell
+npm run release:rollback -- --target=<verified-version>
+npm run release:launch -- --verify-only
+npm run release:launch
+```
+
+回滚会先复核版本目录边界、manifest、真实 EXE 哈希，再原子切换 release-state/current.json；失败保留原指针。launch 每次重新验证，实际启动指针选中的 EXE。已在运行的旧进程应先正常退出；指针切换不会强杀用户程序。
+
+Release Rollback workflow 需要 target_version 与保存该版本的成功 release workflow run ID，下载完整二进制归档后执行同样校验，输出可检查的选版指针。它不是远端自动更新服务，不宣称已经切换用户设备上的运行程序。
+
+回滚只选择程序二进制，不回退/删除用户 SQLite、资源、聊天、成长或云数据库。云端使用兼容的追加迁移；远端迁移历史和 comparisontext 保全重放由主协调统一处理，不从旧 authority SQL、旧 accounts-sync/duel-online 入口恢复部署。

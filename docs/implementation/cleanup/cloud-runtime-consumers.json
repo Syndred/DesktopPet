@@ -1,0 +1,76 @@
+{
+  "at": "2026-10-25T02:50:26.987Z",
+  "source": "8242a4c251cdd2d7c92e395bf99e1d3098d6d070",
+  "reviewedCheckpoints": {
+    "accounts": "45b857d",
+    "resources": "4e8fdf8",
+    "battleV3": "0ddda2a",
+    "conversations": "543b71f",
+    "publicCloudConfig": "3c791c2"
+  },
+  "retainedServices": [
+    "services.legacy.runtimeDataStore (read-only archive capability)",
+    "services.legacy.mapService",
+    "services.legacy.onlineDuelService"
+  ],
+  "consumers": [
+    {
+      "file": "apps/pc-app/runtime/features/accounts/index.cjs",
+      "line": 20,
+      "surface": "services.legacy?.onlineDuelService for explicit old-runtime fallback",
+      "changeRequired": false,
+      "decision": "Retained until cloud owner retires the compatibility transport."
+    },
+    {
+      "file": "apps/pc-app/runtime/features/accounts/desktop-host.cjs",
+      "line": 123,
+      "surface": "services.legacy?.mapService?.stopWatch()",
+      "changeRequired": false
+    },
+    {
+      "file": "apps/pc-app/runtime/features/accounts/legacy.cjs",
+      "surface": "Original JSON path/archive import",
+      "changeRequired": false,
+      "protection": "Runtime constructor no longer rewrites the archive before import."
+    },
+    {
+      "file": "apps/pc-app/runtime/features/resources/index.cjs",
+      "surface": "Formal service registry, resource scheme/protocol, verified owner and cloudActor",
+      "changeRequired": false,
+      "protection": "Protocol registration stays before app readiness; managed paths and window/session APIs preserved."
+    },
+    {
+      "file": "apps/pc-app/runtime/features/companions/tests/electron.acceptance.mjs",
+      "surface": "Old main.cjs initializeLegacy login fallback",
+      "changeRequired": true,
+      "decision": "Updated to registered production accounts login; no private legacy-window loader."
+    },
+    {
+      "file": "tests/task-d001-pc-runnable-runtime.test.ts + task-d008-pc-online-duel-runtime.test.ts",
+      "surface": "Assertions requiring removed HTML/preload/main source",
+      "changeRequired": true,
+      "decision": "Retired with their implementation; actual IPC/window/SQLite/native tests replace them."
+    }
+  ],
+  "bridge": {
+    "legacyFacade": "invoke remains source-compatible on the same guarded dispatcher; no raw Electron IPC is exported.",
+    "typedFacade": "call(feature,command,payload) / shared-types/src/ipc.ts",
+    "desktopAllowed": [
+      "app:info",
+      "accounts:settingsGet",
+      "companions:get",
+      "companions:desktopInput",
+      "companions:interact",
+      "companions:desktop",
+      "resources:resolve"
+    ],
+    "scope": "Pet-bound desktop requests; new desktop-only capabilities need explicit review.",
+    "payload": "Plain data object, bounded encoded size/depth, prototype/function/cycle rejection; native file import/upload stays in main, not arbitrary renderer paths or binary objects."
+  },
+  "protected": [
+    "battle UI and all in-progress business worktrees",
+    "comparisontext encrypted backups and user data"
+  ],
+  "integration": "Coordinator-approved identity, accounts/resources/public-config, battle V3 and conversations checkpoints are merged. Growth/cloud battle/garden/discovery remain pending approval.",
+  "profilePath": "Explicit override > current canonical SQLite > known old canonical SQLite > legacy JSON; actual two-launch Electron proof passed without JSON creation."
+}

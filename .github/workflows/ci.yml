@@ -5,15 +5,18 @@ on:
     branches: ["main", "master"]
   pull_request:
 
+permissions:
+  contents: read
+
 jobs:
   verify:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7.0.1
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7.1.0
         with:
           node-version: 24
           cache: npm
@@ -23,4 +26,47 @@ jobs:
 
       - name: Verify workspace
         run: npm run verify
+
+      - name: Check renderer types
+        run: npm run typecheck:ui
+
+  windows-desktop:
+    runs-on: windows-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-node@v7.1.0
+        with:
+          node-version: 24
+          cache: npm
+      - name: Ordinary clean install with native lifecycle enabled
+        run: npm ci
+      - name: Node and Electron share the installed SQLite N-API binary
+        run: npm run native:check
+      - name: All CJS and SQLite domain checks on actual Electron
+        run: npm run test:native
+      - name: Build the actual Windows portable executable
+        run: npm run package:pc:win
+      - name: SQLite-only old profile survives ordinary startup and restart
+        run: npm run pc:smoke:profile
+      - name: Native windows, lazy module graph, tray and IPC security
+        run: npm run pc:smoke:engineering
+      - name: Verify ASAR source, dependency closure, native bytes and public config
+        run: npm run release:audit
+      - name: Launch and exercise the actual portable SFX executable
+        run: npm run pc:smoke:portable
+      - name: Keep only executable and review evidence
+        if: always()
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: windows-desktop-${{ github.sha }}
+          if-no-files-found: warn
+          retention-days: 14
+          path: |
+            artifacts/pc-cloud-upgrade/*.exe
+            apps/pc-app/dist/build-manifest.json
+            apps/pc-app/dist/runtime-closure.json
+            artifacts/foundation/cloud-engineering/package-audit.json
+            artifacts/foundation/cloud-engineering/*/run-*/evidence.json
+            artifacts/foundation/cloud-engineering/*/run-*/*.png
 

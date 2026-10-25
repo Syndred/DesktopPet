@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "at": "2026-10-25T02:05:18.702Z",
+  "at": "2026-10-25T03:06:40.120Z",
   "source": "0b80bd09f9da29048d77c216bebab41ed48f7e9d",
   "snapshot": "artifacts/recovery/cloud-foundation-2026-10-25/pre-cleanup.bundle",
   "policy": "Only listed code/build/test consumers are candidates. User profiles, history, design sources and recovery backups are excluded. Runtime source removal follows service extraction; business-owner replacements wait for coordinator approval.",
@@ -921,7 +921,102 @@
         "tests/",
         "tests/task-t302-release-pipeline.test.ts"
       ],
-      "decision": "audit-consumers-and-await-domain-replacement-before-deletion"
+      "decision": "audit-consumers-and-await-domain-replacement-before-deletion",
+      "completed": "Source removed; formal consumers migrated"
+    },
+    {
+      "oldFile": "scripts/release/sign-artifacts.mjs",
+      "bytes": 893,
+      "sha256": "dde51423d7bba271b119375c0514425be6824cadcac12202237825f11c784eaa",
+      "replacement": "scripts/release/authenticode.mjs + verify-authenticode.ps1",
+      "consumers": [
+        "package.json",
+        ".github/workflows/release.yml",
+        "tests/task-t302-release-pipeline.test.ts"
+      ],
+      "decision": "replace-sha-label-with-real-Authenticode",
+      "completed": "Source removed; formal consumers migrated"
+    },
+    {
+      "oldFile": "scripts/release/build-pc.mjs",
+      "bytes": 2208,
+      "sha256": "f510ee906a7763b00c31f9a94f898167a468fff2519a8846d3b6fbb042103a11",
+      "replacement": "Formal Vite build and build-manifest schema 2",
+      "consumers": [
+        "package.json",
+        ".github/workflows/release.yml",
+        "tests/task-t302-release-pipeline.test.ts"
+      ],
+      "decision": "replace-incomplete-build-cache",
+      "completed": "Source removed; formal consumers migrated"
+    },
+    {
+      "oldFile": "scripts/release/create-release-manifest.mjs",
+      "bytes": 1396,
+      "sha256": "9545ab9e034afc49cf50c9447939e4b734414bbf36376bf0a6d3158b5cb71c0e",
+      "replacement": "Immutable EXE/source/smoke/signature manifest",
+      "consumers": [
+        "package.json",
+        ".github/workflows/release.yml",
+        "tests/task-t302-release-pipeline.test.ts"
+      ],
+      "decision": "replace-json-only-release"
+    },
+    {
+      "oldFile": "tests/task-d001-pc-runnable-runtime.test.ts",
+      "bytes": 11061,
+      "sha256": "d62b0b8e3288ded1fa5df11a0f43050fc77ff2c1f54e3fc68663e8eb894d035c",
+      "replacement": "Actual native engineering smoke + current-entry check",
+      "consumers": [
+        "package.json",
+        ".github/workflows/release.yml",
+        "tests/task-t302-release-pipeline.test.ts"
+      ],
+      "decision": "retire-deleted-html-source-string-test",
+      "completed": "Source removed; formal consumers migrated"
+    },
+    {
+      "oldFile": "tests/task-d008-pc-online-duel-runtime.test.ts",
+      "bytes": 3709,
+      "sha256": "9f82f2ea68de7e66ccb1882f4ca93ae29747c6176c8195cd4c7aa6fa94113456",
+      "replacement": "Shared battle CJS/real UI/cloud-owner verification",
+      "consumers": [
+        "package.json",
+        ".github/workflows/release.yml",
+        "tests/task-t302-release-pipeline.test.ts"
+      ],
+      "decision": "retire-deleted-bridge-source-string-test",
+      "completed": "Source removed; formal consumers migrated"
+    },
+    {
+      "oldFile": "apps/pc-app/runtime/core/conversation-backup.cjs",
+      "bytes": 407,
+      "sha256": "10afa13a92a55f306e2c3162d7c4b72dc24132a29cfc713aacea3c065e42e473",
+      "replacement": "features/conversations/index.cjs createBackupAdapter() + features/conversations/backup.cjs",
+      "consumers": [
+        "runtime/main/index.ts",
+        "tests/foundation/conversation-backup.test.cjs"
+      ],
+      "decision": "delete-forwarder-after-approved-543b71f-and-consumers-migrated",
+      "completed": "Source removed; formal consumers migrated"
     }
-  ]
+  ],
+  "supplementAt": "2026-10-25T02:50:26.978Z",
+  "cloudRetirement": {
+    "policy": "Inventory only until domain switch and main coordinator approval. No remote repair, migration renaming, deployment or data changes by foundation.",
+    "candidates": [
+      "infra/supabase/migrations/0004_runtime_cloud_auth_duel_requests.sql",
+      "infra/supabase/migrations/0005_runtime_single_login_session.sql",
+      "infra/supabase/migrations/20261024_accounts_save_sync.sql",
+      "infra/supabase/migrations/20261024_discovery_authority.sql",
+      "infra/supabase/migrations/20261024_garden_authority.sql",
+      "infra/supabase/migrations/20261024_lingjing_battle_atomic_rounds.sql"
+    ],
+    "functions": [
+      "infra/supabase/functions/accounts-sync",
+      "infra/supabase/functions/duel-online"
+    ],
+    "migrationHistoryOwner": "01a1704b-e200-7090-9d17-958218c80f42",
+    "snapshot": "artifacts/recovery/cloud-foundation-2026-10-25/pre-cleanup.bundle"
+  }
 }
