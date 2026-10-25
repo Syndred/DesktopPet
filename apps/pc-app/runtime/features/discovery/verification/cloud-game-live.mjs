@@ -50,7 +50,7 @@ global.__cloudGameProbe=async({op,...args})=>{
  throw Error('Unknown probe operation');
 };
 requireProbe(${JSON.stringify(join(root,'apps/pc-app/dist/main/index.cjs'))});\n`);
-async function main(client,op,args={}){return client.app.evaluate(async(_electron,input)=>global.__cloudGameProbe(input),{op,...args});}
+async function main(client,op,args={}){const reply=await client.app.evaluate(async(_electron,input)=>{try{return{ok:true,data:await global.__cloudGameProbe(input)};}catch(e){return{ok:false,code:e.code||'PROBE_FAILED',message:e.message};}},{op,...args});if(!reply.ok)throw Object.assign(new Error(reply.code+': '+reply.message),{code:reply.code});return reply.data;}
 const invoke=(client,name,body)=>main(client,'invoke',{name,body});
 async function launch(label,register=false){
  const env={...process.env,PET_USER_DATA_DIR:join(output,label),LINGJING_PUBLIC_CONFIG:publicConfig};
