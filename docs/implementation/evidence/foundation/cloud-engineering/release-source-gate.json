@@ -1,0 +1,18 @@
+{
+  "at": "2026-10-25T04:08:52.430Z",
+  "scope": "Three actual local Git repository tests, isolated local bare origin. No GitHub publish/deploy or hosted CI claim.",
+  "command": "npx vitest run tests/task-release-source.test.ts",
+  "exitCode": 0,
+  "tests": 3,
+  "passed": true,
+  "cases": [
+    "Remote annotated tag dereferences to workflow commit even with same-named local branch",
+    "Existing remote tag at another commit rejected",
+    "Manifest from another workflow source rejected"
+  ],
+  "sourceHashes": {
+    "tests/task-release-source.test.ts": "bf3400308179ff19deeec0d969fc47f41864957b2e35c35d52f188207d24a1fa",
+    "scripts/release/verify-publish-source.mjs": "4749d75bb0dcfe0a5c3325f363a8a4e284171f0db0876ced6475c9a7003956f8"
+  },
+  "workflow": ".github/workflows/release.yml"
+}

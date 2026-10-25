@@ -1,4 +1,5 @@
 const { spawn } = require("node:child_process");
+const { readFileSync } = require("node:fs");
 const { join } = require("node:path");
 const { isQuiet, notificationPolicy } = require("./settings.cjs");
 
@@ -92,7 +93,11 @@ function createDesktopHost(services, electron) {
   electron.app.on("browser-window-created", onWindow);
   cleanups.push(() => electron.app.removeListener("browser-window-created", onWindow));
   if (process.platform === "win32") {
-    monitor = spawn("powershell.exe", ["-NoProfile", "-NonInteractive", "-ExecutionPolicy", "Bypass", "-File", join(__dirname, "foreground-fullscreen.ps1")],
+    // Node reads inside ASAR; PowerShell cannot address an ASAR virtual path via -File.
+    const script = readFileSync(join(__dirname, "foreground-fullscreen.ps1"), "utf8").replace(/^\uFEFF/, "");
+    const command = Buffer.from(script, "utf16le").toString("base64");
+    const powershell = join(process.env.SystemRoot || "C:\\Windows", "System32", "WindowsPowerShell", "v1.0", "powershell.exe");
+    monitor = spawn(powershell, ["-NoLogo", "-NoProfile", "-NonInteractive", "-ExecutionPolicy", "Bypass", "-EncodedCommand", command],
       { windowsHide: true, stdio: ["ignore", "pipe", "ignore"] });
     monitor.stdout.on("data", chunk => {
       stdout += chunk.toString();
@@ -103,7 +108,7 @@ function createDesktopHost(services, electron) {
       }
     });
     monitor.on("error", () => services.events?.emit("accounts:host-warning", { code: "FULLSCREEN_MONITOR_UNAVAILABLE" }));
-    monitor.on("exit", () => { monitor = null; });
+    monitor.on("exit", () => { monitor = null; monitorReady = false; });
   }
   const everyMinute = setInterval(publish, 30_000);
   everyMinute.unref?.();

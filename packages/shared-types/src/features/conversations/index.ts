@@ -32,13 +32,20 @@ export interface ConversationSnapshot {
   messages?: ConversationMessage[]; nextCursor?: number | null;
 }
 export interface ConnectionTest { provider: Provider; model: string; elapsedMs: number; receivedText: true; testedAt: number }
+export interface LegacyConversationPreview {
+  sourceHash: string | null; messages: number; memories: number; profiles: number;
+  unresolved: number; unassigned: number; unknownDates: number; alreadyImported: boolean;
+  pets: { petId: string; name: string }[];
+  samples: { petId: string; role: 'user' | 'assistant'; content: string }[];
+}
+export interface LegacyConversationImportResult extends LegacyConversationPreview { imported: true; includeSettings: boolean }
 export interface ConversationEvent {
   type: 'reply' | 'changed'; accountId: string; petId: string | null;
   actionId?: string; content?: string; status?: MessageStatus; errorCode?: string;
 }
 export interface ConversationCommands {
   snapshot: { input: { petId?: string }; output: ConversationSnapshot };
-  select: { input: { petId: string }; output: ConversationSnapshot };
+  select: { input: { petId: string; actionId?: string }; output: ConversationSnapshot };
   history: { input: { petId: string; before?: number }; output: HistoryPage };
   'profile.save': { input: { petId: string; profile: Omit<ConversationProfile, 'revision'>; revision: number }; output: ConversationProfile };
   'connection.save': { input: { petId: string | null; connection: ConnectionSettings; apiKey?: string; clearKey?: boolean; revision: number }; output: PublicConnection };
@@ -50,6 +57,8 @@ export interface ConversationCommands {
   retry: { input: { petId: string; actionId: string }; output: { messages: ConversationMessage[] } };
   cancel: { input: { petId: string | null }; output: { cancelled: true } };
   'history.clear': { input: { petId: string }; output: { cleared: true } };
+  'legacy.preview': { input: { unassignedPetId?: string | null }; output: LegacyConversationPreview };
+  'legacy.import': { input: { sourceHash: string; includeSettings?: boolean; unassignedPetId?: string | null }; output: LegacyConversationImportResult };
 }
 export interface ConversationClient {
   invoke<K extends keyof ConversationCommands>(command: K, payload: ConversationCommands[K]['input'] & {

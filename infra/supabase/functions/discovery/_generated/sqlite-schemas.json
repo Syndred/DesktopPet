@@ -1,0 +1,150 @@
+{
+  "discovery_actions": [
+    {
+      "name": "owner_account_id",
+      "type": "TEXT",
+      "notnull": 1,
+      "pk": 1,
+      "dflt_value": null
+    },
+    {
+      "name": "action_id",
+      "type": "TEXT",
+      "notnull": 1,
+      "pk": 2,
+      "dflt_value": null
+    },
+    {
+      "name": "request_hash",
+      "type": "TEXT",
+      "notnull": 1,
+      "pk": 0,
+      "dflt_value": null
+    },
+    {
+      "name": "result_json",
+      "type": "TEXT",
+      "notnull": 1,
+      "pk": 0,
+      "dflt_value": null
+    }
+  ],
+  "discovery_captures": [
+    {
+      "name": "owner_account_id",
+      "type": "TEXT",
+      "notnull": 1,
+      "pk": 1,
+      "dflt_value": null
+    },
+    {
+      "name": "encounter_id",
+      "type": "TEXT",
+      "notnull": 1,
+      "pk": 2,
+      "dflt_value": null
+    },
+    {
+      "name": "pet_id",
+      "type": "TEXT",
+      "notnull": 1,
+      "pk": 0,
+      "dflt_value": null
+    },
+    {
+      "name": "action_id",
+      "type": "TEXT",
+      "notnull": 1,
+      "pk": 0,
+      "dflt_value": null
+    },
+    {
+      "name": "data_json",
+      "type": "TEXT",
+      "notnull": 1,
+      "pk": 0,
+      "dflt_value": null
+    },
+    {
+      "name": "captured_at",
+      "type": "INTEGER",
+      "notnull": 1,
+      "pk": 0,
+      "dflt_value": null
+    }
+  ],
+  "discovery_encounters": [
+    {
+      "name": "owner_account_id",
+      "type": "TEXT",
+      "notnull": 1,
+      "pk": 1,
+      "dflt_value": null
+    },
+    {
+      "name": "encounter_id",
+      "type": "TEXT",
+      "notnull": 1,
+      "pk": 2,
+      "dflt_value": null
+    },
+    {
+      "name": "status",
+      "type": "TEXT",
+      "notnull": 1,
+      "pk": 0,
+      "dflt_value": null
+    },
+    {
+      "name": "revision",
+      "type": "INTEGER",
+      "notnull": 1,
+      "pk": 0,
+      "dflt_value": null
+    },
+    {
+      "name": "data_json",
+      "type": "TEXT",
+      "notnull": 1,
+      "pk": 0,
+      "dflt_value": null
+    },
+    {
+      "name": "updated_at",
+      "type": "INTEGER",
+      "notnull": 1,
+      "pk": 0,
+      "dflt_value": null
+    }
+  ],
+  "discovery_memory_tags": [
+    {
+      "name": "owner_account_id",
+      "type": "TEXT",
+      "notnull": 1,
+      "pk": 1,
+      "dflt_value": null
+    },
+    {
+      "name": "pet_id",
+      "type": "TEXT",
+      "notnull": 1,
+      "pk": 2,
+      "dflt_value": null
+    },
+    {
+      "name": "tag_id",
+      "type": "TEXT",
+      "notnull": 1,
+      "pk": 3,
+      "dflt_value": null
+    },
+    {
+      "name": "data_json",
+      "type": "TEXT",
+      "notnull": 1,
+      "pk": 0,
+      "dflt_value": null
+    }
+  ]
+}

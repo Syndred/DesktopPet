@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "generator": "scripts/battle/build-cloud.mjs",
+  "lineEndings": "source CRLF normalized to LF",
+  "sourceDigest": "91e51dbe5712967dbdad9ad56e2f0f7711a762c022203f5bf48795ffb3cf8a17",
+  "files": [
+    {
+      "path": "apps/pc-app/runtime/features/companions/cloud-growth.mjs",
+      "sha256": "e8b5c929a842d7786c4ae2b7fb608836252d4722f63ed0f600245a37005d5807"
+    },
+    {
+      "path": "apps/pc-app/runtime/features/companions/growth.mjs",
+      "sha256": "e2239549f38a5df3b8911406c69d3a3c4c0ac655061cb219966716fb85c28255"
+    },
+    {
+      "path": "apps/pc-app/runtime/features/companions/instance.mjs",
+      "sha256": "814049b4e678cf52ce9aa63e695fdc89293dd6da9bd0bee72deb86986f10bf45"
+    },
+    {
+      "path": "apps/pc-app/runtime/features/garden/catalog.json",
+      "sha256": "4f87be75b43692f0271e3c472e2558fa9ab0f60f41c5f37fa419aad542cd59fa"
+    },
+    {
+      "path": "apps/pc-app/runtime/features/garden/cloud-domain.mjs",
+      "sha256": "c0c7c7e15b71f91ccd24c7eaffb09c4137f148166f5b38014aa2d3fcfd19cf41"
+    },
+    {
+      "path": "apps/pc-app/runtime/features/resources/assets/roster-v2/catalog.json",
+      "sha256": "7910fbc82b93957047a1767ae1f09f6431877f5a9ac4df59f30c1b48049b3ef8"
+    },
+    {
+      "path": "infra/supabase/functions/_shared/battle-core.js",
+      "sha256": "67225069e3542668b6c7316e4f35a545cb3892754ca1fb3af8efd3c2bef3e885"
+    },
+    {
+      "path": "infra/supabase/functions/_shared/lingjing-json.ts",
+      "sha256": "49ec47a698dbd9bf01bd0cbdbe247618bd96b64c187cd17659d7b2444edf6d09"
+    },
+    {
+      "path": "infra/supabase/functions/lingjing-battle/authority.ts",
+      "sha256": "c8a1f70d1142513093f6d7288cf5e95ecad3c5f2e5ba4d246057733b13b2c78d"
+    },
+    {
+      "path": "infra/supabase/functions/lingjing-battle/handler.ts",
+      "sha256": "e7417045d72d711fe9c9c6eba837fe98ba2c460427f1f1141cadf398b0675b0b"
+    },
+    {
+      "path": "infra/supabase/functions/lingjing-battle/pet.js",
+      "sha256": "a260f5d16bb07ee26dc17af92b2d9cb4f29cef0a3d141933d5ccfbc408130d34"
+    },
+    {
+      "path": "infra/supabase/functions/lingjing-battle/projection.js",
+      "sha256": "19eb314c030beb5fecf9de6058350989697657fc86557187294ab080d3c7579c"
+    },
+    {
+      "path": "infra/supabase/functions/lingjing-battle/room-core.js",
+      "sha256": "ff11c8793f10363b10b1e701770f35c0f1caea9d8da4d913baed651ec72f679e"
+    },
+    {
+      "path": "infra/supabase/functions/lingjing-battle/settlement.js",
+      "sha256": "1df31d1d372b0611281f35e7d691af58000e3ee9100f226d3a3f5b69cfc2fbe2"
+    },
+    {
+      "path": "scripts/battle/build-cloud.mjs",
+      "sha256": "993666432424d203b69d9d945ccf723b62e55977952b7996e68ce0a82f126e3a"
+    }
+  ]
+}

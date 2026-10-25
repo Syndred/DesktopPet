@@ -1,7 +1,7 @@
-import { createClient } from 'npm:@supabase/supabase-js@2.57.4';
-import { createGardenHandler } from './handler.mjs';
-Deno.serve(createGardenHandler(() => {
-  const url = Deno.env.get('SUPABASE_URL'), key = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
-  if (!url || !key) throw new Error('Service configuration unavailable');
-  return createClient(url, key, { auth: { persistSession: false, autoRefreshToken: false } });
+import {withActor,readJson,jsonResponse,createAdminClient} from '../_shared/lingjing-auth.ts';
+import {createGardenService,territoryError} from '../_shared/garden-runtime.bundle.mjs';
+Deno.serve(withActor(async(request,actor)=>{
+  const body=await readJson(request);
+  try{return jsonResponse({ok:true,data:await createGardenService({actor,worker:createAdminClient()}).handle(body)});}
+  catch(error){const failure=territoryError(error);return jsonResponse(failure.body,failure.status);}
 }));

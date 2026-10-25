@@ -1,0 +1,103 @@
+{
+  "at": "2026-10-25T02:37:41.800Z",
+  "kind": "actual HTTPS Supabase; same host HTTP clients, not two physical machines",
+  "projectRef": "jbvrdmrkwpznbrvteive",
+  "sourceSha": "df9f00a847adecfd3fb6e591a7a951a362b7e83e",
+  "checks": [
+    {
+      "name": "anonymous actor denied",
+      "data": {
+        "status": 401,
+        "code": "AUTH_REQUIRED"
+      }
+    },
+    {
+      "name": "forged JWT denied",
+      "data": {
+        "status": 401,
+        "code": "AUTH_INVALID"
+      }
+    },
+    {
+      "name": "named account created by actual Supabase Auth and stable text mapping",
+      "data": {
+        "actor": {
+          "account": "cloudqa_mvn7wkrr",
+          "authKind": "supabase",
+          "deviceId": "65096266-398c-414d-a54d-f7c6000cd6ea",
+          "username": "云端验收甲",
+          "authority": "live",
+          "sessionId": "fa61a3a4-f5ae-444a-9d8d-aeff5cbad389",
+          "authUserId": "5eccf376-fb2c-4ff4-ab3c-e3917756063b",
+          "schemaVersion": 1,
+          "ownerAccountId": "account:cf095cae-ceb3-479c-86f3-926d373d7dd2"
+        }
+      }
+    },
+    {
+      "name": "same account keeps two independent real Auth sessions",
+      "data": {
+        "first": {
+          "account": "cloudqa_mvn7wkrr",
+          "authKind": "supabase",
+          "deviceId": "65096266-398c-414d-a54d-f7c6000cd6ea",
+          "username": "云端验收甲",
+          "authority": "live",
+          "sessionId": "fa61a3a4-f5ae-444a-9d8d-aeff5cbad389",
+          "authUserId": "5eccf376-fb2c-4ff4-ab3c-e3917756063b",
+          "schemaVersion": 1,
+          "ownerAccountId": "account:cf095cae-ceb3-479c-86f3-926d373d7dd2"
+        },
+        "second": {
+          "account": "cloudqa_mvn7wkrr",
+          "authKind": "supabase",
+          "deviceId": "fcbdeba9-42c9-4af6-a439-6b8535519276",
+          "username": "云端验收甲",
+          "authority": "live",
+          "sessionId": "30580d90-937a-473c-a416-d387777f854f",
+          "authUserId": "5eccf376-fb2c-4ff4-ab3c-e3917756063b",
+          "schemaVersion": 1,
+          "ownerAccountId": "account:cf095cae-ceb3-479c-86f3-926d373d7dd2"
+        }
+      }
+    },
+    {
+      "name": "actual Data API RLS hides another account",
+      "data": {
+        "status": 200
+      }
+    },
+    {
+      "name": "valid JWT with another device binding denied",
+      "data": {
+        "status": 401,
+        "code": "DEVICE_SESSION_REQUIRED"
+      }
+    },
+    {
+      "name": "local sign-out revokes A while same-account B remains live",
+      "data": {
+        "revoked": 401,
+        "otherDevice": 200
+      }
+    },
+    {
+      "name": "real refresh rotates credentials and retains its device/session mapping",
+      "data": {
+        "actor": {
+          "account": "cloudqa_mvn7wkrr",
+          "authKind": "supabase",
+          "deviceId": "fcbdeba9-42c9-4af6-a439-6b8535519276",
+          "username": "云端验收甲",
+          "authority": "live",
+          "sessionId": "30580d90-937a-473c-a416-d387777f854f",
+          "authUserId": "5eccf376-fb2c-4ff4-ab3c-e3917756063b",
+          "schemaVersion": 1,
+          "ownerAccountId": "account:cf095cae-ceb3-479c-86f3-926d373d7dd2"
+        }
+      }
+    }
+  ],
+  "credentialsPersisted": false,
+  "passed": true
+}

@@ -2,10 +2,10 @@
   "module": "accounts",
   "scope": "2026-10-25 Supabase Auth/JWT, stable legacy owner mapping, per-device sessions, full-save CAS/idempotency/conflict/offline recovery",
   "branch": "codex/lingjing-accounts",
-  "commit": "72986c1",
+  "commit": "f47b1ed45bb045918a59d93163b833cc897ffb57",
   "worktree": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-accounts\\DesktopPet",
   "goalStatus": "active",
-  "phase": "Immutable revocation ledger deployed by coordinator, real negative verifier running there; normalized legacy hook6435a13 merged72986c1 with safe CAS preserved;25 focused tests passed.",
+  "phase": "Shared transaction guard deployed; signed expired JWT and production adapter JSON chat/memory/persona actual HTTPS passed; approved root00afefd merged; full-domain native still waits02 main and remaining adapters.",
   "baseline": "46abf416e0500b53ef32fc29b441d923ef5a6a80",
   "dependencyCheckpoint": "b40af0efcf6062ddc2e8c360523c996fc91ebc0a",
   "contracts": {
@@ -96,7 +96,7 @@
         "push",
         "archive"
       ],
-      "migration": "20261025021759_lingjing_protected_save_cas.sql",
+      "migration": "20261025024615_lingjing_protected_save_cas.sql",
       "domainSql": "lingjing_private.lock_save_owner(owner) FIRST; commit_authority(owner,actionId,fragments,expectedRevision|null) in SAME domain transaction",
       "petRegistration": "d57d383 compound(owner_id,pet_id); same historical ID under two owners retained and tested; 02 must register via controlled initialization/adoption/verified migration"
     },
@@ -116,11 +116,11 @@
       "cloudArchive": "safe projection only, legacy module and raw archive/credential schema excluded, normalized sensitive keys and nested/serialized JSON stripped",
       "server": "8e5c735 path-aware guard preserves authored message/memory/persona JSON string byte-for-byte, checks nested/serialized config credentials. Public business proof retained; cloudProof/sessionProof/authProof private. SQL8 cases +protocol6 passed.",
       "localOriginal": "account_sync_sources.original_document/original_checksum retains local snapshot; existing raw sources/backup files never deleted",
-      "migration": "20261025025906_lingjing_cloud_secret_guard.sql",
+      "migration": "20261025030859_lingjing_cloud_secret_guard.sql",
       "implementation": "apps/pc-app/runtime/features/accounts/cloud-projection.cjs"
     },
     "sessionRevocation": {
-      "migration": "20261025031842_lingjing_session_revocation_ledger.sql",
+      "migration": "20261025032327_lingjing_session_revocation_ledger.sql",
       "deployedByThisChat": false,
       "guard": "live_session_id shared by direct RPC/actor/session/RLS",
       "authTableGrantsExpanded": false,
@@ -138,11 +138,31 @@
       "merge": "72986c1",
       "safeCas": "Use normalized view only for fingerprints/protected-state equality; never rewrite original envelope/checksum or upload client-normalized authority",
       "api": "backups.normalizeData(data,owner), adapter legacyTables/fromLegacyTables"
+    },
+    "transactionActorGuard": {
+      "test": "node --test apps/pc-app/runtime/features/accounts/tests/cloud-service-actor-sql.test.mjs 3 passed (actual PGlite SQL, not real cloud)",
+      "helper": "lingjing_private.assert_service_actor(p_owner text,p_uid uuid,p_device uuid,p_sid uuid) returns void",
+      "scope": "owner FOR UPDATE first, real Auth user and session FOR SHARE, nonanonymous/not_after by clock_timestamp, immutable ledger, active device/SID; holds locks to transaction end",
+      "consumersPending": [
+        "04/07 pass verified owner/UID/device/SID to helper in same business transaction"
+      ],
+      "readyForCoordinatorDeployment": false,
+      "migrations": [
+        "20261025034106_lingjing_transaction_actor_guard.sql",
+        "20261025034110_lingjing_domain_actor_guard_adoption.sql"
+      ],
+      "permissions": "Private SECURITY DEFINER search_path empty, onlyservice_role execute; no new Auth-table SELECT grants",
+      "adopted": [
+        "03 lingjing_discovery.live_actor(jsonb) same signature/invoker/grants",
+        "05 public.runtime_territory_check_actor(text,uuid,text,uuid) same signature/invoker/grants",
+        "02 private commit_companion_command same signature/definer/grants/business body, old guard only replaced"
+      ],
+      "coordinatorDeployment": "Actual helper+03/05/02 migrations applied;11 independent guard/resource SQL checks passed; readonly confirmed3 wrappers +service-only EXEC +noAuth SELECT grant"
     }
   },
   "migrations": [
     {
-      "file": "infra/supabase/migrations/20261025020314_lingjing_identity_actor_contract.sql",
+      "file": "infra/supabase/migrations/20261025021620_lingjing_identity_actor_contract.sql",
       "generatedBy": "Supabase CLI 2.122.0 migration new lingjing_identity_actor_contract",
       "touches": [
         "public.lingjing_accounts",
@@ -154,7 +174,7 @@
       "coordinatorAppliedVersion": "20261025021620"
     },
     {
-      "file": "infra/supabase/migrations/20261025021755_lingjing_auth_bridge.sql",
+      "file": "infra/supabase/migrations/20261025022918_lingjing_auth_bridge.sql",
       "generatedBy": "Supabase CLI 2.122.0 migration new lingjing_auth_bridge",
       "touches": [
         "private auth directory/reservations/rate buckets",
@@ -168,11 +188,11 @@
     {
       "remoteAppliedByThisChat": false,
       "generatedBy": "Supabase CLI2.122.0 migration new lingjing_protected_save_cas",
-      "file": "infra/supabase/migrations/20261025021759_lingjing_protected_save_cas.sql",
+      "file": "infra/supabase/migrations/20261025024615_lingjing_protected_save_cas.sql",
       "readyForCoordinatorReview": true
     },
     {
-      "file": "infra/supabase/migrations/20261025025906_lingjing_cloud_secret_guard.sql",
+      "file": "infra/supabase/migrations/20261025030859_lingjing_cloud_secret_guard.sql",
       "remoteAppliedByThisChat": false,
       "readyForCoordinatorReview": true,
       "generatedBy": "Supabase CLI2.122.0 migration new lingjing_cloud_secret_guard"
@@ -181,7 +201,19 @@
       "readyForCoordinatorReview": true,
       "generatedBy": "Supabase CLI2.122.0 migration new lingjing_session_revocation_ledger",
       "remoteAppliedByThisChat": false,
-      "file": "infra/supabase/migrations/20261025031842_lingjing_session_revocation_ledger.sql"
+      "file": "infra/supabase/migrations/20261025032327_lingjing_session_revocation_ledger.sql"
+    },
+    {
+      "readyForCoordinatorReview": true,
+      "file": "infra/supabase/migrations/20261025034106_lingjing_transaction_actor_guard.sql",
+      "generatedBy": "Supabase CLI2.122.0 migration new lingjing_transaction_actor_guard",
+      "remoteAppliedByThisChat": false
+    },
+    {
+      "readyForCoordinatorReview": true,
+      "file": "infra/supabase/migrations/20261025034110_lingjing_domain_actor_guard_adoption.sql",
+      "generatedBy": "Supabase CLI2.122.0 migration new lingjing_domain_actor_guard_adoption",
+      "remoteAppliedByThisChat": false
     }
   ],
   "checks": [
@@ -301,6 +333,33 @@
       "command": "git pull --no-rebase --no-edit origin main",
       "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086",
       "result": "Already up to date"
+    },
+    "privacyActual": {
+      "scope": "5 fake credential cases rejected; safe projection/actual cloud DB readback/real personal CAS",
+      "by": "coordinator",
+      "passed": true,
+      "evidence": "docs/implementation/evidence/accounts/cloud-2026-10-25/privacy-http-coordinator.json"
+    },
+    "authoredContentActual": {
+      "source": "6e44e36",
+      "scope": "Production new06 backup adapter and valid reply-style enum; legal server cloud adoption; JSON example messages/memory/persona byte-exact; whole submitted envelope matches independently read cloud checksum",
+      "passed": true,
+      "evidence": "docs/implementation/evidence/accounts/cloud-2026-10-25/authored-content-http.json"
+    },
+    "signedExpiredActual": {
+      "evidence": "docs/implementation/evidence/accounts/cloud-2026-10-25/signed-expired-jwt.json",
+      "save": "401 AUTH_INVALID",
+      "provider": "403 bad_jwt with actual expiration confirmation",
+      "tokenEdited": false,
+      "passed": true,
+      "tokenLogged": false
+    },
+    "sessionRevocationActual": {
+      "assertionFix": "2ab3b7b cherry-picked7423ab0; direct RPC actual403 SQLSTATE28000 +LJ_SESSION_REVOKED, refresh401",
+      "scope": "Actual managedAuth200 oldJWT cannot rebind same/newdevice afterfreshlogin; replacement oldSID alsoblocked; newAandB live",
+      "by": "coordinator",
+      "passed": true,
+      "evidence": "docs/implementation/evidence/accounts/cloud-2026-10-25/session-revocation-coordinator.json"
     }
   },
   "preservation": {
@@ -314,12 +373,18 @@
     "Old runtime single session_token cloud adapter only after new Auth path and all domain consumers are migrated; preserve source-import reader and user files"
   ],
   "remaining": [
-    "Coordinator result of actual managed-valid oldSID revoke/rebind/refresh negatives",
-    "Signed unchanged provider JWT expiration03:30:55UTC actual HTTP proof pending; retained encrypted fixture only",
-    "Integrate final02 main cloud adapter and full domain authority snapshots; native8 checks currently personal sync with authorityPending true",
-    "Domain04 private Realtime reconnect and full two-account gameplay integration remains its owner",
-    "Coordinator independent actual privacy SQL readback result",
-    "Old full cloud account/data migration EXTERNAL: original server export/SSH unavailable; preparation tool does not count as migration",
-    "One final account-targeted regression and actual dual Electron recheck when domain integration changes justify it"
-  ]
+    "Integrate final02 main cloud adapter and07 refs,05 main transport for complete domain authority state",
+    "Real full-domain dual Electron native rerun after final adapters; current8 native checks are personal/partial only",
+    "04 private realtime full two-account gameplay integration belongs04/coordinator; stable SDK/Auth refresh is ready",
+    "Old complete cloud account/data migration EXTERNAL: no verified old export/SSH; DPAPI preparation is not actual migration",
+    "One final account-targeted regression and final origin/main pull confirmation"
+  ],
+  "resourceHydrationReadOnlyReview": {
+    "accepted": "Validate external original checksum/owner/schema before hydration and validate again after; additive download cache before synchronous atomic restore; normalized/cloud refs fingerprint only; no rewrite original envelope",
+    "otherWorktreeEdited": false,
+    "api": "07 WIP backups.prepareCloud(envelope,owner), adapter.prepareCloud(owner,module), backups.cloudData +adapter.cloudModule; sync.previewCloud awaits hydrate outside SQLite restore",
+    "sharedFilesNotEdited": "accounts/backups.cjs andsync.cjs left to07 WIP until its checkpoint",
+    "finding": "Observed previewCloud only rechecks owner after prepareCloud await. Capture and recheck original SID or Accounts epoch as well, so same-owner logout/relogin/password newSID cannot return a stale preview. Keep additive cache, but reject stale preview token asSESSION_CHANGED.",
+    "readOnly": true
+  }
 }

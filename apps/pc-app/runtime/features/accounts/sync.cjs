@@ -6,9 +6,22 @@ const personalModules=new Set(['settings','conversations']);
 function meaningfulData(data){
   const modules={...data.modules};if(modules.legacy?.data===null)delete modules.legacy;
   if(modules['character-resources']?.version===2&&modules['character-resources'].data.references?.length===0&&!(modules['character-resources'].data.preferences||[]).length)delete modules['character-resources'];
+  const battle=modules.battle;
+  if(battle?.version===1&&battle.data&&Object.keys(battle.data).sort().join('|')==='actions|reports|rewards|sessions'
+    &&Object.values(battle.data).every(rows=>Array.isArray(rows)&&rows.length===0))delete modules.battle;
+  const garden=modules.garden,gardenData=garden?.data;
+  if(garden?.version===1&&gardenData&&Object.keys(gardenData).every(key=>['ownerAccountId','tables','territoryArchive'].includes(key))
+    &&gardenData.tables&&Object.values(gardenData.tables).every(rows=>Array.isArray(rows)&&rows.length===0)
+    &&(!gardenData.territoryArchive||Object.keys(gardenData.territoryArchive).sort().join('|')==='logs|territories'
+      &&gardenData.territoryArchive.logs?.length===0&&gardenData.territoryArchive.territories?.length===0))delete modules.garden;
   return {...data,modules,tables:Object.fromEntries(Object.entries(data.tables).filter(([,table])=>table.rows?.length))};
 }
 function protectedData(data){const copy=meaningfulData(data);return {...copy,modules:Object.fromEntries(Object.entries(copy.modules).filter(([key])=>!personalModules.has(key)))};}
+function sameSession(current,expected){
+  if(!current||current.ownerAccountId!==expected.ownerAccountId||current.provider!==expected.provider)return false;
+  if(expected.authKind==='supabase')return current.authKind==='supabase'&&typeof expected.sessionId==='string'&&current.sessionId===expected.sessionId;
+  return current.sessionToken===expected.sessionToken;
+}
 
 class AccountSync {
   constructor({ db, backups, remote, getSession, getSettings, onInvalidSession }) {
@@ -16,11 +29,12 @@ class AccountSync {
     this.getSession = getSession; this.getSettings = getSettings; this.running = new Set();
     this.onInvalidSession = onInvalidSession;
   }
-  cloudView(data,owner){
-    const view=owner&&this.backups.normalizeData?this.backups.normalizeData(data,owner):data;
+  normalizeData(data,owner=this.getSession()?.ownerAccountId){return this.backups.normalizeData&&typeof owner==='string'?this.backups.normalizeData(data,owner):data;}
+  cloudView(data,owner=this.getSession()?.ownerAccountId){
+    const view=this.normalizeData(data,owner);
     return owner&&this.remote.authKind==='supabase'&&this.backups.cloudData?this.backups.cloudData(view,owner):view;
   }
-  dataChecksum(data,owner){
+  dataChecksum(data,owner=this.getSession()?.ownerAccountId){
     const view=this.cloudView(data,owner);return saveDataChecksum(this.remote.authKind==='supabase'?meaningfulData(view):view);
   }
   status(owner) {
@@ -158,7 +172,7 @@ class AccountSync {
     invariant(remote?.envelope, "CLOUD_SAVE_NOT_FOUND", "云端还没有此账号的存档。");
     this.backups.validate(remote.envelope, owner);
     await this.backups.prepareCloud?.(remote.envelope,owner);
-    invariant(this.getSession()?.ownerAccountId===owner,"SESSION_CHANGED","账号已切换，请重新预览云端存档。");
+    invariant(sameSession(this.getSession(),session),"SESSION_CHANGED","登录状态已变化，请重新预览云端存档。");
     const id = require("node:crypto").randomUUID();
     this.backups.previews.set(id, { owner, envelope: remote.envelope, currentChecksum: this.backups.dataChecksum(owner),
       expiresAt: Date.now() + 10 * 60 * 1000, cloudRevision: remote.revision });

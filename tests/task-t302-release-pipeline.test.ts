@@ -1,80 +1,19 @@
-import { execSync } from "node:child_process";
-import { existsSync, mkdtempSync, readFileSync, rmSync } from "node:fs";
-import { join } from "node:path";
-import { tmpdir } from "node:os";
+import { execFileSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { describe, expect, it } from 'vitest';
 
-import { describe, expect, it } from "vitest";
-
-function runReleaseCommand(command: string, env: Record<string, string>): void {
-  execSync(command, {
-    cwd: process.cwd(),
-    env: {
-      ...process.env,
-      ...env
-    },
-    stdio: "pipe"
-  });
+// Artifact-format unit fixtures are deliberately not executable smoke evidence.
+function fixture() {
+ const root=mkdtempSync(join(tmpdir(),'lingjing-release-format-')), releases=join(root,'releases'), state=join(root,'state');
+ for(const version of ['previous','candidate']){const directory=join(releases,version);mkdirSync(directory,{recursive:true});const bytes=Buffer.from('format-only-fixture:'+version);writeFileSync(join(directory,'fixture.exe'),bytes);writeFileSync(join(directory,'manifest.json'),JSON.stringify({schemaVersion:2,version,executable:{file:'fixture.exe',sha256:createHash('sha256').update(bytes).digest('hex')}}));}
+ const run=(script:string,args:string[]=[])=>execFileSync(process.execPath,['scripts/release/'+script,...args],{cwd:process.cwd(),env:{...process.env,RELEASES_DIR:releases,STATE_DIR:state},encoding:'utf8'});
+ return {root,releases,state,run};
 }
-
-describe("T-302 release pipeline and rollback", () => {
-  it("runs release rehearsal and rollback rehearsal", () => {
-    const sandbox = mkdtempSync(join(tmpdir(), "qp-release-"));
-    const env = {
-      ROOT_DIR: process.cwd(),
-      ARTIFACTS_DIR: join(sandbox, "artifacts"),
-      RELEASES_DIR: join(sandbox, "releases"),
-      STATE_DIR: join(sandbox, "release-state")
-    };
-
-    try {
-      runReleaseCommand("node scripts/release/build-pc.mjs", env);
-      runReleaseCommand("node scripts/release/build-mobile.mjs", env);
-      runReleaseCommand("node scripts/release/sign-artifacts.mjs", env);
-      runReleaseCommand(
-        "node scripts/release/create-release-manifest.mjs --version=v0.9.0",
-        env
-      );
-
-      runReleaseCommand("node scripts/release/build-pc.mjs", env);
-      runReleaseCommand("node scripts/release/build-mobile.mjs", env);
-      runReleaseCommand("node scripts/release/sign-artifacts.mjs", env);
-      runReleaseCommand(
-        "node scripts/release/create-release-manifest.mjs --version=v1.0.0",
-        env
-      );
-
-      runReleaseCommand("node scripts/release/rollback-release.mjs --target=v0.9.0", env);
-
-      expect(existsSync(join(sandbox, "artifacts/pc/pc-build.json"))).toBe(true);
-      expect(existsSync(join(sandbox, "artifacts/mobile/mobile-build.json"))).toBe(true);
-      expect(existsSync(join(sandbox, "artifacts/signatures/signatures.json"))).toBe(true);
-      expect(existsSync(join(sandbox, "releases/v1.0.0/manifest.json"))).toBe(true);
-
-      const current = JSON.parse(
-        readFileSync(join(sandbox, "release-state/current.json"), "utf8")
-      ) as { version: string };
-      expect(current.version).toBe("v0.9.0");
-    } finally {
-      rmSync(sandbox, { recursive: true, force: true });
-    }
-  }, 30000);
-
-  it("contains release and rollback workflows plus runbook", () => {
-    const releaseWorkflow = readFileSync(
-      join(process.cwd(), ".github/workflows/release.yml"),
-      "utf8"
-    );
-    const rollbackWorkflow = readFileSync(
-      join(process.cwd(), ".github/workflows/rollback.yml"),
-      "utf8"
-    );
-    const runbook = readFileSync(join(process.cwd(), "docs/release-runbook.md"), "utf8");
-
-    expect(releaseWorkflow).toContain("workflow_dispatch");
-    expect(releaseWorkflow).toContain("release_version");
-    expect(rollbackWorkflow).toContain("target_version");
-    expect(runbook).toContain("Go/No-Go");
-    expect(runbook).toContain("回滚流程");
-  });
+describe('verified desktop release selection',()=>{
+ it('selects an existing verified EXE and launch resolver follows that exact release',()=>{const f=fixture();f.run('rollback-release.mjs',['--target=candidate']);f.run('rollback-release.mjs',['--target=previous']);const current=JSON.parse(readFileSync(join(f.state,'current.json'),'utf8'));expect(current.version).toBe('previous');expect(current.rollback).toBe(true);const launch=JSON.parse(f.run('launch-release.mjs',['--verify-only']));expect(launch.executable).toBe(join(f.releases,'previous','fixture.exe'));expect(launch.passed).toBe(true);});
+ it('refuses tampered bytes before changing the selected release',()=>{const f=fixture();f.run('rollback-release.mjs',['--target=previous']);const before=readFileSync(join(f.state,'current.json'),'utf8');writeFileSync(join(f.releases,'candidate','fixture.exe'),'tampered');expect(()=>f.run('rollback-release.mjs',['--target=candidate'])).toThrow();expect(readFileSync(join(f.state,'current.json'),'utf8')).toBe(before);});
+ it('rejects traversal versions and unverified legacy manifests without producing a pointer',()=>{const f=fixture();expect(()=>f.run('rollback-release.mjs',['--target=../../other'])).toThrow();writeFileSync(join(f.releases,'candidate','manifest.json'),JSON.stringify({version:'candidate'}));expect(()=>f.run('rollback-release.mjs',['--target=candidate'])).toThrow();expect(existsSync(join(f.state,'current.json'))).toBe(false);});
 });
-

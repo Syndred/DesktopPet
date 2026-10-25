@@ -1,0 +1,517 @@
+{
+  "auditedAt": "2026-10-24T23:08:46.897Z",
+  "clientDate": "2026-10-25",
+  "timezone": "Asia/Shanghai",
+  "objective": "实现领地总览、驻守、菜园种植、离线生长、收获入库、配方制作、背包与指定宠物喂养；完成探索/对战得种子→种植→收获→制作食物→喂养→养成与继续探索的真实数据闭环，所有库存事务幂等且不串宠物。",
+  "source": "731cf2532dccdb1d844d8d79774a87871897ca95",
+  "upstream": "4786f97680679c2db0aa307fa5f67ec247f93086",
+  "behindOriginMain": 0,
+  "readOnlyAudit": true,
+  "newDomainTestRuns": 0,
+  "requirements": [
+    {
+      "id": "G01",
+      "requirement": "领地总览、真实归属与共享战场胜负结果",
+      "evidence": [
+        "docs/implementation/evidence/foundation/final-unified/territory/evidence.json",
+        "docs/implementation/evidence/foundation/final-unified/main-independent/final-context-v3.json"
+      ],
+      "result": "proven"
+    },
+    {
+      "id": "G02",
+      "requirement": "指定实例驻守，驻守不改变成长或独立选择",
+      "evidence": [
+        "docs/implementation/evidence/garden/unified-battle/verification.json",
+        "docs/implementation/evidence/foundation/final-unified/territory/evidence.json"
+      ],
+      "result": "proven"
+    },
+    {
+      "id": "G03",
+      "requirement": "六块独立菜地、种子扣减与正常时长离线生长",
+      "evidence": [
+        "docs/implementation/evidence/garden/verification.json#/productionGrowth"
+      ],
+      "result": "proven"
+    },
+    {
+      "id": "G04",
+      "requirement": "成熟作物收获入库，重复收获被拒绝",
+      "evidence": [
+        "docs/implementation/evidence/garden/verification.json#/inventory",
+        "docs/implementation/evidence/garden/verification.json#/restart"
+      ],
+      "result": "proven"
+    },
+    {
+      "id": "G05",
+      "requirement": "米饭配方按1份稻米转1份食物，不能直接喂生米",
+      "evidence": [
+        "docs/implementation/evidence/garden/verification.json#/selectedPetFeed",
+        "docs/implementation/evidence/garden/unified-battle/unified-domain-final.log"
+      ],
+      "result": "proven"
+    },
+    {
+      "id": "G06",
+      "requirement": "背包、搜索分类、制作与指定宠物喂食实际交互",
+      "evidence": [
+        "docs/implementation/evidence/garden/verification.json#/publicComponents",
+        "docs/implementation/evidence/garden/unified-battle/README.md"
+      ],
+      "result": "proven"
+    },
+    {
+      "id": "G07",
+      "requirement": "实际食物扣减只改变目标伙伴，其他伙伴不变",
+      "evidence": [
+        "docs/implementation/evidence/garden/verification.json#/selectedPetFeed",
+        "docs/implementation/evidence/garden/verification.json#/rewardedSeedCycle"
+      ],
+      "result": "proven"
+    },
+    {
+      "id": "G08",
+      "requirement": "探索野外战和普通对战的权威结算发种子并去重",
+      "evidence": [
+        "docs/implementation/evidence/foundation/final-unified/main-independent/final-context-v3.json",
+        "docs/implementation/evidence/garden/verification.json#/battle"
+      ],
+      "result": "proven"
+    },
+    {
+      "id": "G09",
+      "requirement": "奖励种子种植、收获、喂养、养成后继续实际对战",
+      "evidence": [
+        "docs/implementation/evidence/garden/verification.json#/rewardedSeedCycle"
+      ],
+      "result": "proven"
+    },
+    {
+      "id": "G10",
+      "requirement": "库存事务、失败回滚、版本、账号与宠物边界、并发及重启幂等",
+      "evidence": [
+        "docs/implementation/evidence/garden/unified-battle/unified-domain-final.log",
+        "docs/implementation/evidence/garden/unified-battle/verification.json",
+        "docs/implementation/evidence/garden/verification.json#/restart"
+      ],
+      "result": "proven"
+    },
+    {
+      "id": "G11",
+      "requirement": "统一战场、原始数据保留与主会话最终集成验收",
+      "evidence": [
+        "docs/implementation/evidence/foundation/final-unified/delivery.json",
+        "docs/implementation/evidence/foundation/final-unified/portable/evidence.json",
+        "docs/implementation/evidence/garden/verification.json#/oldOwnerSafety"
+      ],
+      "result": "proven"
+    }
+  ],
+  "sourceContinuity": {
+    "unchangedDomain": [
+      {
+        "path": "apps/pc-app/runtime/features/garden/service.cjs",
+        "gitBlob": "234d2490ef10a4767813ec2a0f4a52499b6705c0",
+        "unchangedSince": "8dadfc27916bd04532996cc938373d6a1723c21c"
+      },
+      {
+        "path": "apps/pc-app/runtime/features/garden/catalog.cjs",
+        "gitBlob": "153b3c3e5bd1d577bba35f4821fecf1d401f7398",
+        "unchangedSince": "8dadfc27916bd04532996cc938373d6a1723c21c"
+      },
+      {
+        "path": "apps/pc-app/runtime/features/garden/catalog.json",
+        "gitBlob": "ebd934069443c4aec5a3bbf9eb6d5b4f64304bd7",
+        "unchangedSince": "8dadfc27916bd04532996cc938373d6a1723c21c"
+      },
+      {
+        "path": "apps/pc-app/runtime/features/garden/settlements.cjs",
+        "gitBlob": "3dfd43d8fd75497fe0e0c2ca13ff85519ef172c3",
+        "unchangedSince": "8dadfc27916bd04532996cc938373d6a1723c21c"
+      }
+    ],
+    "codeFiles": 216,
+    "currentRawFingerprint": "7c3c3de90ebed7595f5dbeae5caca9a8e1dd8c1c1aea197544919eb4436cf6aa",
+    "acceptedRawFingerprint": "0e78fde20d39557ef89bff8914470d6e8c08166b8b340b63b430e85aa936a380",
+    "normalizedSourceEqual": true,
+    "lineEndingOnlyDifferences": [
+      "apps/pc-app/runtime/core/builtin-art.cjs",
+      "apps/pc-app/runtime/core/conversation-backup.cjs",
+      "apps/pc-app/runtime/core/database.cjs",
+      "apps/pc-app/runtime/core/qa-scenario.cjs",
+      "apps/pc-app/runtime/core/resource-backup.cjs",
+      "apps/pc-app/runtime/core/services.cjs",
+      "apps/pc-app/runtime/features/accounts/index.cjs",
+      "apps/pc-app/runtime/features/accounts/qa-scenario.cjs",
+      "apps/pc-app/runtime/features/companions/identity.cjs",
+      "apps/pc-app/runtime/features/discovery/index.cjs",
+      "apps/pc-app/runtime/features/discovery/service.cjs",
+      "apps/pc-app/runtime/features/garden/backup.cjs",
+      "apps/pc-app/runtime/features/garden/catalog.cjs",
+      "apps/pc-app/runtime/features/garden/cloud-domain.mjs",
+      "apps/pc-app/runtime/features/garden/identity.cjs",
+      "apps/pc-app/runtime/features/garden/migrations.cjs",
+      "apps/pc-app/runtime/features/garden/qa-location.cjs",
+      "apps/pc-app/runtime/features/garden/service.cjs",
+      "apps/pc-app/runtime/features/garden/settlements.cjs",
+      "apps/pc-app/runtime/features/garden/territories.cjs",
+      "apps/pc-app/runtime/features/garden/testing-adapter.cjs",
+      "apps/pc-app/runtime/main/index.ts",
+      "apps/pc-app/runtime/preload/index.ts",
+      "apps/pc-app/ui/src/app/App.tsx",
+      "apps/pc-app/ui/src/app/bridge.ts",
+      "apps/pc-app/ui/src/app/navigation.ts",
+      "apps/pc-app/ui/src/app/registry.ts",
+      "apps/pc-app/ui/src/app/types.ts",
+      "apps/pc-app/ui/src/components/dialog.tsx",
+      "apps/pc-app/ui/src/components/kit.ts",
+      "apps/pc-app/ui/src/components/motion.tsx",
+      "apps/pc-app/ui/src/components/ui.tsx",
+      "apps/pc-app/ui/src/components/ui/badge.tsx",
+      "apps/pc-app/ui/src/components/ui/button.tsx",
+      "apps/pc-app/ui/src/components/ui/card.tsx",
+      "apps/pc-app/ui/src/components/ui/checkbox.tsx",
+      "apps/pc-app/ui/src/components/ui/dialog.tsx",
+      "apps/pc-app/ui/src/components/ui/input.tsx",
+      "apps/pc-app/ui/src/components/ui/label.tsx",
+      "apps/pc-app/ui/src/components/ui/native-select.tsx",
+      "apps/pc-app/ui/src/components/ui/popover.tsx",
+      "apps/pc-app/ui/src/components/ui/scroll-area.tsx",
+      "apps/pc-app/ui/src/components/ui/select.tsx",
+      "apps/pc-app/ui/src/components/ui/separator.tsx",
+      "apps/pc-app/ui/src/components/ui/sheet.tsx",
+      "apps/pc-app/ui/src/components/ui/slider.tsx",
+      "apps/pc-app/ui/src/components/ui/switch.tsx",
+      "apps/pc-app/ui/src/components/ui/tabs.tsx",
+      "apps/pc-app/ui/src/components/ui/textarea.tsx",
+      "apps/pc-app/ui/src/components/ui/tooltip.tsx",
+      "apps/pc-app/ui/src/features/garden/GardenScene.tsx",
+      "apps/pc-app/ui/src/features/garden/PetPortrait.tsx",
+      "apps/pc-app/ui/src/features/garden/TerritoryMap.tsx",
+      "apps/pc-app/ui/src/features/garden/art.tsx",
+      "apps/pc-app/ui/src/features/garden/garden.css",
+      "apps/pc-app/ui/src/features/garden/index.tsx",
+      "apps/pc-app/ui/src/features/garden/pixi.d.ts",
+      "apps/pc-app/ui/src/features/garden/use-garden.ts",
+      "apps/pc-app/ui/src/features/resources/binding.css",
+      "apps/pc-app/ui/src/lib/utils.ts",
+      "apps/pc-app/ui/src/main.tsx",
+      "apps/pc-app/ui/src/styles/global.css",
+      "apps/pc-app/ui/src/styles/layout.css",
+      "apps/pc-app/ui/src/styles/shadcn.css",
+      "apps/pc-app/ui/src/styles/tokens.css",
+      "apps/pc-app/ui/src/vite-env.d.ts",
+      "electron.vite.config.ts",
+      "package-lock.json",
+      "package.json",
+      "packages/shared-types/src/app.ts",
+      "packages/shared-types/src/features/discovery/index.ts",
+      "packages/shared-types/src/features/garden/index.ts",
+      "scripts/desktop/write-build-manifest.mjs"
+    ]
+  },
+  "actualPortable": {
+    "path": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\artifacts\\pc-beta-unified\\Lingjing-0.1.8-portable-x64.exe",
+    "sha256": "605c5ee6f943b1be235bb5a839b11572dd4e227c3cc25adbcf320cbee6b000b9",
+    "bytes": 146009889,
+    "source": "c4ac69369d01786549dc55ac0bc76c98c930445d"
+  },
+  "independent": [
+    {
+      "name": "final-rules-v3",
+      "source": "1b1b699c68ccef46e349384fbba280f484002b37",
+      "evidence": "docs/implementation/evidence/foundation/final-unified/main-independent/final-rules-v3.json",
+      "sha256": "f7cabd0b71c064bb79caab82fb32e1206f77a311d977dc7be897c326995b5921",
+      "checkedOriginalPath": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\docs\\implementation\\evidence\\foundation\\final-unified\\main-independent\\final-rules-v3.json",
+      "localRawSha256": "2806b103ee1d0c2fb71000978d9144367fe2f6caf39e1870e1ec642887eb7ae9",
+      "localJsonEqual": true,
+      "passed": true
+    },
+    {
+      "name": "final-battle-v3",
+      "source": "7cdcfdc9d022bb646c20bb2e96f90f03b6f5a3a1",
+      "evidence": "docs/implementation/evidence/foundation/final-unified/main-independent/final-battle-v3.json",
+      "sha256": "ce34cdfec8076fb51014147449423568b12e290d28c46b513c277486c9bfeff9",
+      "checkedOriginalPath": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\docs\\implementation\\evidence\\foundation\\final-unified\\main-independent\\final-battle-v3.json",
+      "localRawSha256": "4dcacddb6a42cf8c6deece73178111a441dd738857737cc2ceea0122006242d2",
+      "localJsonEqual": true,
+      "passed": true
+    },
+    {
+      "name": "final-friend-v3",
+      "source": "7cdcfdc9d022bb646c20bb2e96f90f03b6f5a3a1",
+      "evidence": "docs/implementation/evidence/foundation/final-unified/main-independent/final-friend-v3.json",
+      "sha256": "f63f967214926decb073ff227ec05059082da12808beb4fa7ad18fa1831856c1",
+      "checkedOriginalPath": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\docs\\implementation\\evidence\\foundation\\final-unified\\main-independent\\final-friend-v3.json",
+      "localRawSha256": "aedfbf8c9af33e3ee3a9be970d1a063e773d950bf1a3c048957a5a5873b7d825",
+      "localJsonEqual": true,
+      "passed": true
+    },
+    {
+      "name": "final-context-v3",
+      "source": "07db4d9c6d8ebbcfa081ff2f5e62a15dd065145a",
+      "evidence": "docs/implementation/evidence/foundation/final-unified/main-independent/final-context-v3.json",
+      "sha256": "b24c96eb3556fef7c1ea9c1c7923c6ee26b5f87bda1d13647fa97e85f2f086a9",
+      "checkedOriginalPath": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\docs\\implementation\\evidence\\foundation\\final-unified\\main-independent\\final-context-v3.json",
+      "localRawSha256": "679f7b224ea27e5148eb83fd9e7d9a4cba2a6c64bbed7ce75a75c30d351c1b0d",
+      "localJsonEqual": true,
+      "passed": true
+    },
+    {
+      "name": "final-rhythm-v3",
+      "source": "07db4d9c6d8ebbcfa081ff2f5e62a15dd065145a",
+      "evidence": "docs/implementation/evidence/foundation/final-unified/main-independent/final-rhythm-v3.json",
+      "sha256": "a9cebfaab4ca3b7cdfb6a301acf01fec12df62baf767fa4d97770732e4b5991a",
+      "checkedOriginalPath": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\docs\\implementation\\evidence\\foundation\\final-unified\\main-independent\\final-rhythm-v3.json",
+      "localRawSha256": "cdaee31a1960f00b885d252cf8ebf6ca49a467e45f97bdc708e9d57da70c3e2a",
+      "localJsonEqual": true,
+      "passed": true
+    },
+    {
+      "name": "final-legacy-rules-v3",
+      "source": "774afd71ec778d90b7d7d8e6a07873e38320819f",
+      "evidence": "docs/implementation/evidence/foundation/final-unified/main-independent/final-legacy-rules-v3.json",
+      "sha256": "21df10034dac3cb12bfaf76c91b5f1a1c33060832a1bc6ac57901f9122193712",
+      "checkedOriginalPath": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\docs\\implementation\\evidence\\foundation\\final-unified\\main-independent\\final-legacy-rules-v3.json",
+      "localRawSha256": "18d2905fa2f11b64b93946c7c23bc492dd09ab7120f9690f27e28d7dd61fe94e",
+      "localJsonEqual": true,
+      "passed": true
+    }
+  ],
+  "local": {
+    "ownerAccountId": "local:user-8c0af433-aa89-44dd-b1ce-34872d297267",
+    "plots": 6,
+    "inventory": [
+      {
+        "item_id": "carrot",
+        "quantity": 3
+      },
+      {
+        "item_id": "cooked_rice",
+        "quantity": 0
+      },
+      {
+        "item_id": "rice",
+        "quantity": 1
+      },
+      {
+        "item_id": "seed:berry",
+        "quantity": 4
+      },
+      {
+        "item_id": "seed:carrot",
+        "quantity": 1
+      },
+      {
+        "item_id": "seed:rice",
+        "quantity": 1
+      },
+      {
+        "item_id": "seed:tomato",
+        "quantity": 3
+      },
+      {
+        "item_id": "tomato",
+        "quantity": 2
+      }
+    ],
+    "ledgerConserved": true,
+    "rice": {
+      "elapsedMs": 1513735,
+      "harvest": {
+        "action_id": "66f9590f-89b5-4110-938e-031c9bbce4ec",
+        "kind": "harvest",
+        "item_id": "rice",
+        "delta": 2,
+        "balance": 2,
+        "pet_id": null,
+        "created_at": 1792847783222
+      },
+      "craft": [
+        {
+          "action_id": "8d9207be-96c4-4a07-a02a-10f8f18f7d90",
+          "kind": "craft",
+          "item_id": "rice",
+          "delta": -1,
+          "balance": 1,
+          "pet_id": null,
+          "created_at": 1792847783806
+        },
+        {
+          "action_id": "8d9207be-96c4-4a07-a02a-10f8f18f7d90",
+          "kind": "craft",
+          "item_id": "cooked_rice",
+          "delta": 1,
+          "balance": 1,
+          "pet_id": null,
+          "created_at": 1792847783806
+        }
+      ]
+    },
+    "feeds": [
+      {
+        "action_id": "23d29c95-f67c-4585-b248-c7f29b0c9af2",
+        "kind": "feed",
+        "item_id": "cooked_rice",
+        "delta": -1,
+        "balance": 0,
+        "pet_id": "pet-ef03204d-bbc6-4b2b-86b5-1b24c5cc9068",
+        "created_at": 1792847783921
+      },
+      {
+        "action_id": "ec6057db-d294-42de-b7ee-e2825224b181",
+        "kind": "feed",
+        "item_id": "tomato",
+        "delta": -1,
+        "balance": 2,
+        "pet_id": "pet-ef03204d-bbc6-4b2b-86b5-1b24c5cc9068",
+        "created_at": 1792848124760
+      }
+    ],
+    "allCurrentPetGrowthMatchesRecordedRestart": true,
+    "nonTargetPetsUnchanged": true,
+    "rewardReceipts": [
+      {
+        "source": "battle",
+        "receipt_id": "battle-2c15fc38-a347-44a7-a37f-95b2f251b3e2",
+        "action_id": "battle:battle-2c15fc38-a347-44a7-a37f-95b2f251b3e2:local:user-8c0af433-aa89-44dd-b1ce-34872d297267:seeds",
+        "result": {
+          "source": "battle",
+          "receiptId": "battle-2c15fc38-a347-44a7-a37f-95b2f251b3e2",
+          "itemId": "seed:berry",
+          "quantity": 2
+        }
+      },
+      {
+        "source": "battle",
+        "receipt_id": "battle-d17a0da8-fd2b-4cf7-98cd-88afb0cebec2",
+        "action_id": "battle:battle-d17a0da8-fd2b-4cf7-98cd-88afb0cebec2:local:user-8c0af433-aa89-44dd-b1ce-34872d297267:seeds",
+        "result": {
+          "source": "battle",
+          "receiptId": "battle-d17a0da8-fd2b-4cf7-98cd-88afb0cebec2",
+          "itemId": "seed:tomato",
+          "quantity": 2
+        }
+      }
+    ],
+    "sessions": [
+      {
+        "sessionId": "battle-d17a0da8-fd2b-4cf7-98cd-88afb0cebec2",
+        "mode": "training",
+        "winner": "enemy",
+        "playerPetId": "pet-ef03204d-bbc6-4b2b-86b5-1b24c5cc9068",
+        "reward": {
+          "actionId": "battle:battle-d17a0da8-fd2b-4cf7-98cd-88afb0cebec2:local:user-8c0af433-aa89-44dd-b1ce-34872d297267",
+          "petId": "pet-ef03204d-bbc6-4b2b-86b5-1b24c5cc9068",
+          "experience": 5,
+          "applied": true,
+          "previousExperience": 0,
+          "previousLevel": 1,
+          "currentExperience": 5,
+          "currentLevel": 1,
+          "seeds": {
+            "source": "battle",
+            "receiptId": "battle-d17a0da8-fd2b-4cf7-98cd-88afb0cebec2",
+            "itemId": "seed:tomato",
+            "quantity": 2
+          }
+        }
+      },
+      {
+        "sessionId": "battle-2c15fc38-a347-44a7-a37f-95b2f251b3e2",
+        "mode": "training",
+        "winner": "enemy",
+        "playerPetId": "pet-ef03204d-bbc6-4b2b-86b5-1b24c5cc9068",
+        "reward": {
+          "actionId": "battle:battle-2c15fc38-a347-44a7-a37f-95b2f251b3e2:local:user-8c0af433-aa89-44dd-b1ce-34872d297267",
+          "petId": "pet-ef03204d-bbc6-4b2b-86b5-1b24c5cc9068",
+          "experience": 5,
+          "applied": true,
+          "previousExperience": 5,
+          "previousLevel": 1,
+          "currentExperience": 10,
+          "currentLevel": 1,
+          "seeds": {
+            "source": "battle",
+            "receiptId": "battle-2c15fc38-a347-44a7-a37f-95b2f251b3e2",
+            "itemId": "seed:berry",
+            "quantity": 2
+          }
+        }
+      }
+    ],
+    "seedCrop": {
+      "plotId": "plot-3",
+      "cropType": "tomato",
+      "plantedAt": 1792847209420,
+      "maturesAt": 1792848109420,
+      "yieldQuantity": 3,
+      "revision": 1,
+      "stage": "growing"
+    },
+    "rewardCropHarvest": {
+      "id": "8ffe810d-921b-4150-afe0-8add2638b5b2",
+      "actionId": "78f867c5-39c0-472e-9887-d0a3ff33ddc9",
+      "kind": "harvest",
+      "itemId": "tomato",
+      "delta": 3,
+      "balance": 3,
+      "petId": null,
+      "createdAt": 1792848124191
+    },
+    "duplicateHarvestDenied": "ALREADY_HARVESTED",
+    "staleAccountDenied": "SESSION_CHANGED"
+  },
+  "exploration": {
+    "sessionId": "battle-ae1f8743-4e7c-4f95-873a-2c0d9269a4ff",
+    "authority": "simulated",
+    "actualEngine": true,
+    "reward": {
+      "actionId": "battle:battle-ae1f8743-4e7c-4f95-873a-2c0d9269a4ff:qa:db33edf8-68c2-40c2-b9fd-81bc875a3d75:local-0b463a96-18ae-4f03-aea8-d0bfc53f4c88",
+      "petId": "pet-3b186864-e719-42da-af38-016d0c87db66",
+      "experience": 20,
+      "applied": true,
+      "previousExperience": 0,
+      "previousLevel": 1,
+      "currentExperience": 20,
+      "currentLevel": 1,
+      "seeds": {
+        "source": "battle",
+        "receiptId": "battle-ae1f8743-4e7c-4f95-873a-2c0d9269a4ff",
+        "itemId": "seed:carrot",
+        "quantity": 2
+      }
+    }
+  },
+  "territory": {
+    "win": {
+      "sessionId": "battle-b1ee641f-5004-495b-87dc-37223ecae4df",
+      "winner": "player",
+      "ownerAccountId": "qa:dfca3ded-e050-4c74-9193-60478c55ccbb:local-5bc68bcf-17f4-4f02-aabb-db045ebb4bd2",
+      "revision": 2,
+      "exactRestartAndReplay": true,
+      "oneSeedReceipt": true,
+      "personalCropTimestampsPreserved": true,
+      "garrisonInvariant": true
+    },
+    "loss": {
+      "sessionId": "battle-354aa139-a005-4dd5-96fd-8c046e24b4ba",
+      "winner": "enemy",
+      "ownerAccountId": null,
+      "revision": 2,
+      "exactRestartAndReplay": true,
+      "oneSeedReceipt": true,
+      "personalCropTimestampsPreserved": true,
+      "garrisonInvariant": null
+    }
+  },
+  "remaining": [],
+  "deferredByUser": [
+    "Live HTTPS cloud deployment, real two-device readback and cloud territorial authority",
+    "Precise physical location is not re-claimed by this unified QA acceptance"
+  ],
+  "simulationBoundary": "Existing real-duration local growth and SQLite loops are retained. Final wild/territory QA location, legal prestate and controlled opponent are explicitly simulated; no live cloud or physical GPS success is inferred.",
+  "passed": true
+}

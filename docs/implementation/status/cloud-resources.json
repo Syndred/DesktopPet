@@ -19,9 +19,9 @@
     "saveIntegration": "Server-only character-resources v2 refs via common commit_authority; hydrateReferences before applying dependent cloud fragments; local backup v1 retained"
   },
   "migrations": [
-    "infra/supabase/migrations/20261025020942_lingjing_private_resource_storage.sql",
-    "infra/supabase/migrations/20261025024855_lingjing_verified_resource_authority.sql",
-    "infra/supabase/migrations/20261025035333_lingjing_verified_resource_preferences.sql"
+    "infra/supabase/migrations/20261025023614_lingjing_private_resource_storage.sql",
+    "infra/supabase/migrations/20261025034122_lingjing_verified_resource_authority.sql",
+    "infra/supabase/migrations/20261025041216_lingjing_verified_resource_preferences.sql"
   ],
   "checks": [
     {
@@ -103,7 +103,7 @@
     "Consume approved final integration4830619 including actual-ledger migration filenames; focused final compatibility check"
   ],
   "identityCheckpoint": "f81008ce1f88c2b6c11d0bb05122d5afb5891039",
-  "phase": "real dual Electron44/full-save/custom-pet/original-file/history/modified-preferences passed; independent common protected v2 match; consuming final approved4830619 integration baseline next",
+  "phase": "approved final integration4830619 consumed; previous real dual Electron evidence retained; final dependency/runtime closure compatibility check follows",
   "functions": [
     {
       "name": "lingjing-resources",
@@ -123,12 +123,13 @@
     }
   ],
   "serverDependencies": [
-    "infra/supabase/migrations/20261025031842_lingjing_session_revocation_ledger.sql",
-    "infra/supabase/migrations/20261025033602_lingjing_transaction_actor_guard.sql"
+    "infra/supabase/migrations/20261025032327_lingjing_session_revocation_ledger.sql",
+    "infra/supabase/migrations/20261025034106_lingjing_transaction_actor_guard.sql"
   ],
   "coordinatorConditions": [
     "Verified original external-source migration/export",
     "Two physical devices",
     "All-domain final packaging/retirement/freeze"
-  ]
+  ],
+  "integrationBaseline": "4830619cba23a37fa2c30b19f3a656bdee0a23ec"
 }

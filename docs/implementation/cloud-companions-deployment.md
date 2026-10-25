@@ -1,8 +1,10 @@
 #02 伙伴云端命令部署检查点
 
-由主协调审查和部署；02没有写远端数据库或覆盖函数。依赖已批准08检查点 `45b857d` 及共享 `lingjing-auth.ts` / `lingjing-json.ts`，同一 `lingjing_private.commit_authority`、完整存档与 `(owner_id,pet_id)` 注册。自定义外观需要07的 `lingjing_resource_packages` 迁移；内置2D外观不依赖自定义包存在。
+HTTP凭据支持CurrentUser DPAPI加密的相同JSON，扩展名`.dpapi`。仅在验证器进程内解密，不写明文临时文件；`testOnly:true`和a/b指定验收账号格式相同。references未上线时，HTTP证据明确记录custom不可用，不宣称自定义外观上传/恢复成功。
 
-迁移由CLI2.122.0实际执行 `migration new lingjing_companion_commands --workdir infra` 生成：`infra/supabase/migrations/20261025025515_lingjing_companion_commands.sql`。它只增加私有worker和public包装函数，不新建伙伴、账号、库存或奖励表。仅service_role可调用，普通客户端不能提交任意module；私有definer重新核对08账号、device/session及Auth会话，固定空search_path，没有向service_role新增auth表读取权限。owner锁、统一CAS、不可变回执、完整companion fragment和petIds注册在一次SQL事务内。
+由主协调审查和部署；02没有写远端数据库或覆盖函数。依赖已批准08检查点 `45b857d` 及共享 `lingjing-auth.ts` / `lingjing-json.ts`，同一 `lingjing_private.commit_authority`、完整存档与 `(owner_id,pet_id)` 注册。已消费协调会话 `d7b4b07`：自定义外观只读取07服务端登记的 `lingjing_resource_references`，客户端可写的packages索引不能授权。references未部署或无回执时custom拒绝，内置2D继续可用。
+
+迁移由CLI2.122.0实际执行 `migration new lingjing_companion_commands --workdir infra` 生成：`infra/supabase/migrations/20261025031842_lingjing_companion_commands.sql`。它只增加私有worker和public包装函数，不新建伙伴、账号、库存或奖励表。仅service_role可调用，普通客户端不能提交任意module；私有definer重新核对08账号、device/session及Auth会话，固定空search_path，没有向service_role新增auth表读取权限。owner锁、统一CAS、不可变回执、完整companion fragment和petIds注册在一次SQL事务内。
 
 Edge入口：`infra/supabase/functions/companions-sync/index.ts`，部署 `verify_jwt=false`，每次由08 `withActor` 实际验证。可审查依赖位于同一仓库相对路径：
 

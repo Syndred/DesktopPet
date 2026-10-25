@@ -1,0 +1,518 @@
+{
+  "module": "garden",
+  "phase": "WAITING_COORDINATOR_NATIVE_LOCATION_GRANTS",
+  "coordinatorNextAction": {
+    "kind": "Two actual normal-Auth Electron device grants in the designated native QA scenario",
+    "requestJson": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-garden\\DesktopPet\\artifacts\\garden\\cloud\\live-4b474857-e93b-4354-a119-a21157984812/electron/location-grant-request.json",
+    "preparedSql": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-garden\\DesktopPet\\artifacts\\garden\\cloud\\live-4b474857-e93b-4354-a119-a21157984812\\electron\\coordinator-location-grant.sql",
+    "executedByGarden": false,
+    "actualDenial": "REAL_LOCATION_REQUIRED at2026-10-25T04:11:40.987Z",
+    "actors": [
+      {
+        "authUserId": "c2f1198b-f1b4-4212-8488-7f86e683f4a0",
+        "ownerAccountId": "account:9695104c-0fe6-41c5-829f-0442c502c641",
+        "deviceId": "c07c9d75-e896-4b07-b436-a3a960c235e6",
+        "sessionId": "ad2c8091-e50a-44c3-8ff0-4f9407c453ef"
+      },
+      {
+        "authUserId": "c2f1198b-f1b4-4212-8488-7f86e683f4a0",
+        "ownerAccountId": "account:9695104c-0fe6-41c5-829f-0442c502c641",
+        "deviceId": "e768a904-9103-4369-b707-124c2b11b12e",
+        "sessionId": "acd5402a-4229-4fc3-b3ac-579edf38d044"
+      }
+    ],
+    "scenarioId": "native-4b474857"
+  },
+  "branch": "codex/lingjing-garden",
+  "commit": "see git log for this file",
+  "goalStatus": "active",
+  "scope": "Cloud territorial authority, canonical garden economy and atomic per-pet inventory integration",
+  "baseline": "46abf416e0500b53ef32fc29b441d923ef5a6a80",
+  "contracts": [
+    "docs/implementation/cloud-upgrade-2026-10-25.md",
+    "docs/implementation/cloud-garden-contract.md",
+    "docs/implementation/cloud-identity-contract-2026-10-25.md"
+  ],
+  "migrations": [
+    {
+      "path": "infra/supabase/migrations/20261025033032_lingjing_territory_authority.sql",
+      "generatedBy": "Supabase CLI 2.122.0 migration new",
+      "status": "applied-by-coordinator;PostGIS3.3.7",
+      "deployed": true,
+      "replacesUndeployedDraft": "20261025020010"
+    },
+    {
+      "path": "infra/supabase/migrations/20261025034313_lingjing_territory_receipt_operator.sql",
+      "generatedBy": "Supabase CLI2.122.0 migration new",
+      "status": "applied-by-coordinator;12701d4",
+      "deployed": true
+    }
+  ],
+  "checks": [
+    "origin fetched; origin/main4786f97 is included",
+    "10 local domain and real08 identity/CAS non-spatial PostgreSQL checks passed; no PostGIS substitute used",
+    "400 ordered element/action-pair parity cases and canonical04 source SHA verified",
+    "Deno2.9.6 check --no-config passed for both complete Edge entrypoints",
+    "Actual02 awardBattleResult and applyGrowthEffect consumed; long160-character owner supported",
+    "03 take_location consumed inside owner-first world SQL transaction, per-purpose proof, isolated QA world namespace",
+    "Unified lingjing_saves/commit_authority consumed in the same transaction; no05 new-pet registration",
+    "native dependency checkpoint retained; no shared node_modules rebuild",
+    "Two isolated normal product-Auth accounts and third independent same-account device prepared without remote SQL writes",
+    "2 runtime-fixture checks passed: SQLite reopen exact original request, whole companion unit/chat preservation, shared battle wrapper with no local reward before confirmation",
+    "Final own-module regression34/34 passed; current production TypeScript/desktop typecheck passed"
+  ],
+  "realCloudEvidence": {
+    "projectRef": "jbvrdmrkwpznbrvteive",
+    "readOnlyMetadata": true,
+    "deployedByThisModule": false,
+    "territoryAcceptance": true,
+    "functions": {
+      "garden": "ACTIVE v1",
+      "territory": "ACTIVE v1"
+    },
+    "spatialBoundaryAndRlsCheckedByCoordinator": true,
+    "liveSameAccountGardenCas": true,
+    "liveServerBattles": 2,
+    "realDefeatsPendingConfirmation": true,
+    "transactionRollbackVerified": {
+      "sqlState": "42725",
+      "where": "runtime_territory_write IF settlement identity comparison",
+      "noSeedOrGrowthApplied": true,
+      "challengeState": "finished",
+      "fix": "((p_payload->'settledBattle')-'reward')",
+      "readOnlyRemoteInspection": true
+    },
+    "live": {
+      "contest": {
+        "passed": true,
+        "exactlyOneOccupation": true,
+        "loserCode": "TERRITORY_CONFLICT",
+        "recovery": "original actionId/hash/proof replay after real response-stream loss"
+      },
+      "defeat": {
+        "passed": true,
+        "sessions": [
+          "btl-nkgUd5R3SrSC6-OhzL_PZw",
+          "btl-KDeeidcWQ5K1sRRVR3CaYg"
+        ],
+        "worldRevisionUnchanged": true,
+        "onlyLegalParticipationReward": true
+      },
+      "garrison": {
+        "passed": true,
+        "foreignDenied": "TERRITORY_NOT_OWNED"
+      },
+      "pids": [
+        28436,
+        22020,
+        24652
+      ],
+      "physicalTwoDeviceAcceptance": false,
+      "locationSource": "simulated/coordinator-granted",
+      "riceMaturesAt": "2026-10-25T04:01:09.873Z"
+    },
+    "liveSecurity": {
+      "expiredProof": {
+        "passed": true,
+        "code": "LOCATION_PROOF_EXPIRED"
+      },
+      "immatureHarvest": {
+        "passed": true,
+        "code": "CROP_NOT_MATURE"
+      },
+      "passed": true,
+      "wrongScope": "LOCATION_PROOF_SCOPE_MISMATCH",
+      "foreignProof": "LOCATION_PROOF_INVALID",
+      "forgedWinner": "UNTRUSTED_AUTHORITY_FIELD",
+      "missingProof": "LOCATION_PERMIT_REQUIRED",
+      "noEconomicChange": true
+    },
+    "httpOverallPassed": true,
+    "liveEconomy": {
+      "plotId": "plot-3",
+      "startedAt": 1792899369873,
+      "maturesAt": 1792900869873,
+      "growMs": 1500000,
+      "passed": true,
+      "before": {
+        "ownerAccountId": "account:9f591ede-bc87-4aa3-af70-084189dfae9e",
+        "gardenRevision": 5,
+        "accountRevision": 7,
+        "checksum": "ad49d0f66db0d076e7793e43a8c9493f78221b211ef4ee4018f4bfc39129173a",
+        "inventory": [
+          {
+            "id": "seed:carrot",
+            "quantity": 1
+          },
+          {
+            "id": "seed:tomato",
+            "quantity": 2
+          },
+          {
+            "id": "seed:berry",
+            "quantity": 2
+          },
+          {
+            "id": "seed:rice",
+            "quantity": 3
+          },
+          {
+            "id": "carrot",
+            "quantity": 0
+          },
+          {
+            "id": "tomato",
+            "quantity": 0
+          },
+          {
+            "id": "berry",
+            "quantity": 0
+          },
+          {
+            "id": "rice",
+            "quantity": 0
+          },
+          {
+            "id": "cooked_rice",
+            "quantity": 0
+          }
+        ],
+        "plots": [
+          {
+            "plotId": "plot-1",
+            "cropType": "carrot",
+            "plantedAt": 1792899362086,
+            "maturesAt": 1792899962086,
+            "yieldQuantity": 3,
+            "revision": 1
+          },
+          {
+            "plotId": "plot-2",
+            "cropType": null,
+            "plantedAt": null,
+            "maturesAt": null,
+            "yieldQuantity": 0,
+            "revision": 0
+          },
+          {
+            "plotId": "plot-3",
+            "cropType": "rice",
+            "plantedAt": 1792899369873,
+            "maturesAt": 1792900869873,
+            "yieldQuantity": 2,
+            "revision": 1
+          },
+          {
+            "plotId": "plot-4",
+            "cropType": null,
+            "plantedAt": null,
+            "maturesAt": null,
+            "yieldQuantity": 0,
+            "revision": 0
+          },
+          {
+            "plotId": "plot-5",
+            "cropType": null,
+            "plantedAt": null,
+            "maturesAt": null,
+            "yieldQuantity": 0,
+            "revision": 0
+          },
+          {
+            "plotId": "plot-6",
+            "cropType": null,
+            "plantedAt": null,
+            "maturesAt": null,
+            "yieldQuantity": 0,
+            "revision": 0
+          }
+        ],
+        "pets": [
+          {
+            "petId": "pet-20ab05c4-7915-437b-99cb-af5abb07226f",
+            "revision": 2,
+            "growth": {
+              "level": 1,
+              "experience": 5,
+              "mood": 60,
+              "satiety": 60,
+              "affinity": 0,
+              "winsTotal": 0,
+              "stats": {
+                "hp": 118,
+                "atk": 33,
+                "def": 20,
+                "spd": 22
+              }
+            }
+          },
+          {
+            "petId": "pet-5186de54-7212-4b87-8548-32938c495d4e",
+            "revision": 1,
+            "growth": {
+              "level": 1,
+              "experience": 0,
+              "mood": 60,
+              "satiety": 60,
+              "affinity": 0,
+              "winsTotal": 0,
+              "stats": {
+                "hp": 124,
+                "atk": 28,
+                "def": 24,
+                "spd": 20
+              }
+            }
+          },
+          {
+            "petId": "pet-8ff77358-cc5d-4dbd-9c3d-5c6f15aa4c1c",
+            "revision": 1,
+            "growth": {
+              "level": 1,
+              "experience": 0,
+              "mood": 60,
+              "satiety": 60,
+              "affinity": 0,
+              "winsTotal": 0,
+              "stats": {
+                "hp": 136,
+                "atk": 30,
+                "def": 30,
+                "spd": 13
+              }
+            }
+          }
+        ],
+        "territories": [
+          {
+            "id": "qa:garden-4b474857:territory:7582:11683",
+            "logs": [
+              {
+                "id": "503207af-9ac8-45f7-92ca-7c553aa8460a",
+                "action": "驻守更新",
+                "actorName": "园地验收乙",
+                "createdAt": "2026-10-25T03:49:06.597182+00:00"
+              },
+              {
+                "id": "c2a81236-cfe2-48ed-8cd7-4249c9dda32e",
+                "action": "占领成功",
+                "actorName": "园地验收乙",
+                "createdAt": "2026-10-25T03:48:55.94388+00:00"
+              },
+              {
+                "id": "da9b840d-5a01-417f-8419-225bed24047e",
+                "action": "发起入侵",
+                "actorName": "园地验收乙",
+                "createdAt": "2026-10-25T03:47:52.698944+00:00"
+              },
+              {
+                "id": "9c49b707-e10a-475d-9b74-1c0e001190ba",
+                "action": "发起入侵",
+                "actorName": "园地验收甲",
+                "createdAt": "2026-10-25T03:47:52.53346+00:00"
+              },
+              {
+                "id": "811948d3-8cf7-4145-b389-afe4543aaebd",
+                "action": "守住领地",
+                "actorName": "园地验收乙",
+                "createdAt": "2026-10-25T03:47:36.464681+00:00"
+              },
+              {
+                "id": "47dab393-6a77-4b4e-824e-a232ea8391fc",
+                "action": "守住领地",
+                "actorName": "园地验收甲",
+                "createdAt": "2026-10-25T03:47:29.96707+00:00"
+              },
+              {
+                "id": "70b77654-48b3-435c-a2cf-d7b6abe85f56",
+                "action": "发起入侵",
+                "actorName": "园地验收甲",
+                "createdAt": "2026-10-25T03:37:43.85553+00:00"
+              },
+              {
+                "id": "82b6dc69-97dd-4f4f-a25c-213dbfe1b65f",
+                "action": "发起入侵",
+                "actorName": "园地验收乙",
+                "createdAt": "2026-10-25T03:37:43.289581+00:00"
+              }
+            ],
+            "name": "附近的庭院",
+            "boundary": [
+              {
+                "lat": 45.492,
+                "lng": 70.098
+              },
+              {
+                "lat": 45.498,
+                "lng": 70.098
+              },
+              {
+                "lat": 45.498,
+                "lng": 70.104
+              },
+              {
+                "lat": 45.492,
+                "lng": 70.104
+              },
+              {
+                "lat": 45.492,
+                "lng": 70.098
+              }
+            ],
+            "revision": 3,
+            "worldMode": "simulated",
+            "occupiedAt": "2026-10-25T03:48:55.94388+00:00",
+            "provenance": "cloud-simulated-geographic",
+            "regionName": "附近领地",
+            "scenarioId": "garden-4b474857",
+            "garrisonPetId": "pet-453144ca-f618-4cb6-94fd-44c962c1ce71",
+            "ownerAccountId": "account:5c7620b5-0802-4667-94b9-6284bd459841",
+            "captureMultiplier": 2
+          }
+        ]
+      },
+      "finishedAt": "2026-10-25T04:03:36.635Z",
+      "actualElapsedMs": 1641470,
+      "harvested": 2,
+      "crafted": 1,
+      "fedTo": "pet-20ab05c4-7915-437b-99cb-af5abb07226f",
+      "repeatAcrossDevice": true
+    },
+    "independentRestartPassed": true,
+    "longActionVerified": {
+      "domainLength": 160,
+      "authorityLength": 71,
+      "duplicateAcrossDevice": true,
+      "sqlProof": "docs/implementation/evidence/garden/cloud-2026-10-25/sql-readback.json"
+    }
+  },
+  "preservation": {
+    "legacyOwnerTextIds": true,
+    "secondInventoryStore": false,
+    "privateGardenUnaffectedByWorldOwnership": true,
+    "existingProductionDataModified": false,
+    "isolatedTestDataWrittenThroughProductApis": true,
+    "remoteSqlWritesByGarden": false,
+    "battleUiTouched": false
+  },
+  "cleanupCandidates": [
+    {
+      "path": "Old garden-sync body session_token authentication",
+      "replacement": "08 withActor and narrow server-only authority RPC",
+      "status": "replaced-in-new-entrypoint"
+    },
+    {
+      "path": "Initial generated battle-core.mjs copy",
+      "replacement": "04 shared battle-core.js direct import; desktop generatedCJS",
+      "status": "removed"
+    }
+  ],
+  "remaining": [
+    "Coordinator applies prepared grants for native AuthUID c2f1198b-f1b4-4212-8488-7f86e683f4a0 device c07c9d75... and e768a904... under native-4b474857; actual native request currently correctly denies ungranted simulation",
+    "Complete prepared real dual-Electron battle/restart/confirmation and inspect actual rendered actor pixels",
+    "Publish final combined proof; independent coordinator review"
+  ],
+  "dependencyCheckpoint": "b40af0efcf6062ddc2e8c360523c996fc91ebc0a",
+  "identityCheckpoint": "ee36030ad37614ac321b94ae4ee4169d705f1165",
+  "code": {
+    "territoryDomain": "infra/supabase/functions/territory-sync/domain.mjs",
+    "territoryHandler": "infra/supabase/functions/territory-sync/handler.mjs",
+    "canonicalEngine": "infra/supabase/functions/_shared/battle-core.js",
+    "engineDeploymentAdapter": "scripts/battle/build-core.mjs",
+    "edgeDistribution": "scripts/acceptance/cloud-territory/build-edge.mjs",
+    "newKernelWritten": false,
+    "battleUiTouched": false
+  },
+  "integrationRequests": {
+    "accounts08": "Consumed deployed protected CAS3474905; lock_save_owner -> domain rows -> commit_authority. No runtime_account_saves or body session_token in new entrypoints. Optional full-save checkpoint stays unchanged when Accounts has not registered the published02 companion backup adapter;05 restores only its verified domain units and retains unrelated local data.",
+    "companions02": "Consumed9497e8d pure adapter and canonical growth. Use deployed67546f5/d7b4b07 companions-sync for normal live adoption;05 never registers pets.",
+    "discovery03": "Consumed live03 take_location schema+guard; purpose read/challenge/settle and reference bound in same transaction. Main locationProofs.prove supplies opaque proofs.03 capture should call4-argument capture_context inside its own commit."
+  },
+  "serverDeployable": true,
+  "desktopCheckpoint": "6295fa0 (scoped territory dispatch); e20b3a2 current integrated baseline",
+  "coordinatorDeploymentCheckpoint": "40941f2",
+  "locationTestGrantRequest": {
+    "file": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-garden\\DesktopPet\\artifacts\\garden\\cloud\\live-4b474857-e93b-4354-a119-a21157984812/electron/location-grant-request.json",
+    "purpose": "coordinator-only discovery location_test_grants",
+    "scenarioId": "native-4b474857",
+    "projectRef": "jbvrdmrkwpznbrvteive",
+    "source": "simulated",
+    "worldNamespace": "qa:native-4b474857:territory:",
+    "actors": [
+      {
+        "authUserId": "c2f1198b-f1b4-4212-8488-7f86e683f4a0",
+        "ownerAccountId": "account:9695104c-0fe6-41c5-829f-0442c502c641",
+        "deviceId": "c07c9d75-e896-4b07-b436-a3a960c235e6",
+        "sessionId": "ad2c8091-e50a-44c3-8ff0-4f9407c453ef"
+      },
+      {
+        "authUserId": "c2f1198b-f1b4-4212-8488-7f86e683f4a0",
+        "ownerAccountId": "account:9695104c-0fe6-41c5-829f-0442c502c641",
+        "deviceId": "e768a904-9103-4369-b707-124c2b11b12e",
+        "sessionId": "acd5402a-4229-4fc3-b3ac-579edf38d044"
+      }
+    ],
+    "requestedDurationMinutes": 90,
+    "status": "REQUESTED;two normal secure Electron profiles active;no cloud writes by05"
+  },
+  "liveVerifier": {
+    "privateConfig": "artifacts/garden/cloud/private-clients.json",
+    "output": "artifacts/garden/cloud/live-4b474857-e93b-4354-a119-a21157984812",
+    "realClockRiceMaturesAt": "2026-10-25T04:01:09.873Z",
+    "physicalLocationProof": false,
+    "locationSource": "coordinator-granted simulated"
+  },
+  "nativeLocationTestGrantRequest": {
+    "file": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-garden\\DesktopPet\\artifacts\\garden\\cloud\\live-4b474857-e93b-4354-a119-a21157984812/electron/location-grant-request.json",
+    "purpose": "coordinator-only discovery location_test_grants",
+    "scenarioId": "native-4b474857",
+    "projectRef": "jbvrdmrkwpznbrvteive",
+    "source": "simulated",
+    "worldNamespace": "qa:native-4b474857:territory:",
+    "actors": [
+      {
+        "authUserId": "c2f1198b-f1b4-4212-8488-7f86e683f4a0",
+        "ownerAccountId": "account:9695104c-0fe6-41c5-829f-0442c502c641",
+        "deviceId": "c07c9d75-e896-4b07-b436-a3a960c235e6",
+        "sessionId": "ad2c8091-e50a-44c3-8ff0-4f9407c453ef"
+      },
+      {
+        "authUserId": "c2f1198b-f1b4-4212-8488-7f86e683f4a0",
+        "ownerAccountId": "account:9695104c-0fe6-41c5-829f-0442c502c641",
+        "deviceId": "e768a904-9103-4369-b707-124c2b11b12e",
+        "sessionId": "acd5402a-4229-4fc3-b3ac-579edf38d044"
+      }
+    ],
+    "requestedDurationMinutes": 90
+  },
+  "ownModuleRegression": {
+    "passed": 34,
+    "failed": 0,
+    "typecheck": true,
+    "native": "Electron44.9.3 N-API10 / better-sqlite3 13.0.3",
+    "uiModifiedByGarden": false
+  },
+  "completedLocationTestGrants": {
+    "file": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-garden\\DesktopPet\\artifacts\\garden\\cloud\\live-4b474857-e93b-4354-a119-a21157984812/location-grant-request.json",
+    "purpose": "coordinator-only discovery location_test_grants",
+    "scenarioId": "garden-4b474857",
+    "projectRef": "jbvrdmrkwpznbrvteive",
+    "source": "simulated",
+    "worldNamespace": "qa:garden-4b474857:territory:",
+    "actors": [
+      {
+        "authUserId": "ea7bddfc-7769-4935-8234-181a07f92383",
+        "ownerAccountId": "account:9f591ede-bc87-4aa3-af70-084189dfae9e",
+        "deviceId": "c99f5ada-1db8-4462-8fd0-5e58e9b5562b",
+        "sessionId": "c30976aa-bd3c-4265-b410-66e16a431e6a"
+      },
+      {
+        "authUserId": "052aa033-e5fb-4b55-8445-792233733417",
+        "ownerAccountId": "account:5c7620b5-0802-4667-94b9-6284bd459841",
+        "deviceId": "3a1cc414-8fa3-40d5-9ad3-165fa93d6a9c",
+        "sessionId": "e1829aed-df50-4616-9ee0-b3b5ab68be62"
+      }
+    ],
+    "requestedDurationMinutes": 90
+  }
+}

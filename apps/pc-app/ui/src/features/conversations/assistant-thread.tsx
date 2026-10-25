@@ -59,7 +59,8 @@ function StoredMessage({ message, pet, last, retry, remember }: { message: Conve
   return <MessagePrimitive.Root asChild><article className={`cv-message ${assistant ? 'assistant' : 'user'}`} aria-label={assistant ? `${pet.name}的回复` : '我的消息'}>
     {assistant && <PetAvatar pet={pet}/>}
     <div className="cv-message-body"><div className="cv-message-meta">{assistant ? pet.name : '我'}
-      <time dateTime={new Date(message.createdAt).toISOString()}>{new Date(message.createdAt).toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' })}</time></div>
+      {message.createdAt > 0 ? <><time dateTime={new Date(message.createdAt).toISOString()}>{new Date(message.createdAt).toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' })}</time>
+        {assistant && !pending && message.provider === null && message.model === null && <span>旧记录</span>}</> : <span>旧记录</span>}</div>
       <div className={`cv-bubble ${failed ? 'interrupted' : ''}`}>
         {message.content ? <MessagePrimitive.Parts/> : pending ? <span className="cv-pending-text" role="status" aria-label="回复中">…</span> : '回复未完成'}
       </div>
@@ -96,7 +97,7 @@ export function AssistantConversationThread({ pet, messages, busy, hasConnection
           return stored ? <StoredMessage message={stored} pet={pet} last={message.id === messages.at(-1)?.id && !busy}
             retry={() => retry(stored.actionId)} remember={() => remember(stored.content.slice(0, 1000))}/> : null;
         }}</ThreadPrimitive.Messages></AnimatedList>
-        {!busy && messages.at(-1)?.role === 'assistant' && messages.at(-1)?.status === 'complete' && <CompanionReaction pet={pet}/>}
+        {!busy && messages.at(-1)?.role === 'assistant' && messages.at(-1)?.status === 'complete' && messages.at(-1)?.provider != null && <CompanionReaction pet={pet}/>}
       </ThreadPrimitive.Viewport>
       <ThreadPrimitive.ScrollToBottom asChild><Button variant="ghost" className="cv-scroll-bottom" aria-label="回到最新消息"><ArrowDown size={16}/></Button></ThreadPrimitive.ScrollToBottom>
       <Composer pet={pet} busy={busy} insertEmoji={emoji => runtime.thread.composer.setText(runtime.thread.composer.getState().text + emoji)}/>

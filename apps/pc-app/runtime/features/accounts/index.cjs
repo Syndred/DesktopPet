@@ -21,7 +21,13 @@ module.exports = {
     const activeHost = accounts.host;
     services.session.setAdapter(accounts);
     services.provide("accounts", accounts);
-    services.provide('cloudActor',Object.freeze({requireActor:()=>accounts.requireCloudActor(),invoke:(name,body)=>accounts.cloudInvoke(name,body)}));
+    const cloudActor=Object.freeze({requireActor:async expectedOwner=>{
+      const actor=await accounts.requireCloudActor();
+      if(expectedOwner&&actor.ownerAccountId!==expectedOwner)throw Object.assign(new Error('账号已切换，请重新操作。'),{code:'SESSION_CHANGED'});
+      return actor;
+    },invoke:(name,body)=>accounts.cloudInvoke(name,body)});
+    services.provide('cloudActor',cloudActor);
+    services.provide('cloudAuth',cloudActor); // Published07 capability name; exactly the same verified actor/SDK/session.
     services.provide("backups", accounts.backups);
     if (qaScenario) {
       if (!services.get?.("qaScenario")) services.provide("qaScenario", qaScenario); // Older published shell compatibility.

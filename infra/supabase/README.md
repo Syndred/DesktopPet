@@ -1,3 +1,5 @@
+> 历史基线说明：下列 0001..0005、20261024 authority SQL 与旧 token/duel-online 路径不代表本轮现行部署。不要按本页直接 db push/reset 或恢复旧权限。当前身份、域部署、迁移历史和 comparisontext 保全重放由主协调统一处理，见 docs/implementation/cloud-upgrade-2026-10-25.md 与各模块 status；旧入口在新域验收后按清单退役。
+
 # Supabase Schema Baseline
 
 This folder contains SQL migrations for core game data.

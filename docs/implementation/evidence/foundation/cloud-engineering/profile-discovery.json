@@ -1,0 +1,22 @@
+{
+  "at": "2026-10-25T03:01:25.690Z",
+  "scope": "Actual Windows Electron; locally registered isolated account and SQLite-only old profile. No production account, cloud or physical second device claim.",
+  "original": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\artifacts\\foundation\\cloud-engineering\\profile-discovery\\run-1792897285689\\isolated-appdata\\qingpet-desktop-runtime",
+  "checks": [
+    {
+      "id": "explicit-override-seeds-real-sqlite-without-json",
+      "ownerAccountId": "local-ebec3af9-cd19-41fd-8254-74d5323cdafb",
+      "petId": "pet-a29cd2cb-c9ff-4d25-99e9-dbfac7fd49ab"
+    },
+    {
+      "id": "ordinary-start-discovers-old-sqlite-and-reads-same-account-pet",
+      "ownerAccountId": "local-ebec3af9-cd19-41fd-8254-74d5323cdafb",
+      "petId": "pet-a29cd2cb-c9ff-4d25-99e9-dbfac7fd49ab",
+      "secureSessionRestored": false
+    }
+  ],
+  "ownerAccountId": "local-ebec3af9-cd19-41fd-8254-74d5323cdafb",
+  "petId": "pet-a29cd2cb-c9ff-4d25-99e9-dbfac7fd49ab",
+  "passed": true,
+  "completedAt": "2026-10-25T03:01:27.101Z"
+}

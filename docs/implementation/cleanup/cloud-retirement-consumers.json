@@ -1,0 +1,521 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-25T03:55:24.676Z",
+  "source": "7d5ef74cf55b4257e0072c2c1a4e81663db84ea6",
+  "scope": "Exact tracked-source consumer search on foundation checkpoint; coordinator main has additional approved/WIP domain replacements. Matrix is retirement planning, not permission to delete live migrations or history.",
+  "snapshot": "artifacts/recovery/cloud-foundation-2026-10-25/pre-cleanup.bundle",
+  "entries": [
+    {
+      "kind": "migration",
+      "path": "infra/supabase/migrations/0001_core_schema.sql",
+      "needle": "0001_core_schema.sql",
+      "sha256": "7e446af31a67dafa19c5f7a70bad8bd7bc885bfd55c8db9ea849b6676b375c6e",
+      "decision": "Coordinator-owned retirement after new Auth/CAS/04 domain acceptance and actual remote version alignment. No delete/deploy/repair by foundation.",
+      "consumers": [
+        {
+          "file": "docs/prd-traceability-audit.md",
+          "line": 54,
+          "category": "documentation",
+          "excerpt": "| 4. Supabase 表结构与索引 SQL | `[DONE]` | `infra/supabase/migrations/0001_core_schema.sql`。 |"
+        },
+        {
+          "file": "docs/task-progress.md",
+          "line": 50,
+          "category": "documentation",
+          "excerpt": "- `0001_core_schema.sql`"
+        },
+        {
+          "file": "infra/supabase/README.md",
+          "line": 9,
+          "category": "documentation",
+          "excerpt": "1. `migrations/0001_core_schema.sql`"
+        }
+      ]
+    },
+    {
+      "kind": "migration",
+      "path": "infra/supabase/migrations/0002_pet_inventory_battle_reports.sql",
+      "needle": "0002_pet_inventory_battle_reports.sql",
+      "sha256": "4a1e7353820e3fb19be18c695786ed1e2077eb7f24394e7b01eec106844a9995",
+      "decision": "Coordinator-owned retirement after new Auth/CAS/04 domain acceptance and actual remote version alignment. No delete/deploy/repair by foundation.",
+      "consumers": [
+        {
+          "file": "docs/task-progress.md",
+          "line": 51,
+          "category": "documentation",
+          "excerpt": "- `0002_pet_inventory_battle_reports.sql`"
+        },
+        {
+          "file": "infra/supabase/README.md",
+          "line": 13,
+          "category": "documentation",
+          "excerpt": "2. `migrations/0002_pet_inventory_battle_reports.sql`"
+        }
+      ]
+    },
+    {
+      "kind": "migration",
+      "path": "infra/supabase/migrations/0003_duel_realtime_schema.sql",
+      "needle": "0003_duel_realtime_schema.sql",
+      "sha256": "2d4fba5e218c6b831b979af5786b969813a67aa39cbc3db2f833f7a57ce776f9",
+      "decision": "Coordinator-owned retirement after new Auth/CAS/04 domain acceptance and actual remote version alignment. No delete/deploy/repair by foundation.",
+      "consumers": [
+        {
+          "file": "apps/pc-app/runtime/features/battle/verify-postgres.mjs",
+          "line": 12,
+          "category": "test-or-verifier",
+          "excerpt": "for (const file of ['0003_duel_realtime_schema.sql', '0004_runtime_cloud_auth_duel_requests.sql', '0005_runtime_single_login_session.sql', '20261024_lingjing_battle_atomic_rounds.sql']) {"
+        },
+        {
+          "file": "apps/pc-app/runtime/features/discovery/verification/postgres.mjs",
+          "line": 16,
+          "category": "test-or-verifier",
+          "excerpt": "for (const migration of ['0003_duel_realtime_schema.sql', '0004_runtime_cloud_auth_duel_requests.sql', '0005_runtime_single_login_session.sql', '20261024_discovery_authority.sql']) {"
+        },
+        {
+          "file": "docs/task-progress.md",
+          "line": 41,
+          "category": "documentation",
+          "excerpt": "- 在迁移 `0003_duel_realtime_schema.sql` 增加 `supabase_realtime` publication 绑定，"
+        },
+        {
+          "file": "docs/task-progress.md",
+          "line": 52,
+          "category": "documentation",
+          "excerpt": "- `0003_duel_realtime_schema.sql`"
+        },
+        {
+          "file": "docs/task-progress.md",
+          "line": 68,
+          "category": "documentation",
+          "excerpt": "- 新增迁移 `infra/supabase/migrations/0003_duel_realtime_schema.sql`："
+        },
+        {
+          "file": "infra/supabase/README.md",
+          "line": 16,
+          "category": "documentation",
+          "excerpt": "3. `migrations/0003_duel_realtime_schema.sql`"
+        }
+      ]
+    },
+    {
+      "kind": "migration",
+      "path": "infra/supabase/migrations/0004_runtime_cloud_auth_duel_requests.sql",
+      "needle": "0004_runtime_cloud_auth_duel_requests.sql",
+      "sha256": "b95a8b743e08906a96ccc06fb93e24589d952052959bfdf728114f848a3d2d0d",
+      "decision": "Coordinator-owned retirement after new Auth/CAS/04 domain acceptance and actual remote version alignment. No delete/deploy/repair by foundation.",
+      "consumers": [
+        {
+          "file": "apps/pc-app/runtime/features/battle/verify-postgres.mjs",
+          "line": 12,
+          "category": "test-or-verifier",
+          "excerpt": "for (const file of ['0003_duel_realtime_schema.sql', '0004_runtime_cloud_auth_duel_requests.sql', '0005_runtime_single_login_session.sql', '20261024_lingjing_battle_atomic_rounds.sql']) {"
+        },
+        {
+          "file": "apps/pc-app/runtime/features/discovery/verification/postgres.mjs",
+          "line": 16,
+          "category": "test-or-verifier",
+          "excerpt": "for (const migration of ['0003_duel_realtime_schema.sql', '0004_runtime_cloud_auth_duel_requests.sql', '0005_runtime_single_login_session.sql', '20261024_discovery_authority.sql']) {"
+        },
+        {
+          "file": "infra/supabase/README.md",
+          "line": 19,
+          "category": "documentation",
+          "excerpt": "4. `migrations/0004_runtime_cloud_auth_duel_requests.sql`"
+        }
+      ]
+    },
+    {
+      "kind": "migration",
+      "path": "infra/supabase/migrations/0005_runtime_single_login_session.sql",
+      "needle": "0005_runtime_single_login_session.sql",
+      "sha256": "2dec4daa3e60c5f2a8ff3cf61a45606574de65a858630bbc5b64d59a823579d5",
+      "decision": "Coordinator-owned retirement after new Auth/CAS/04 domain acceptance and actual remote version alignment. No delete/deploy/repair by foundation.",
+      "consumers": [
+        {
+          "file": "apps/pc-app/runtime/features/battle/verify-postgres.mjs",
+          "line": 12,
+          "category": "test-or-verifier",
+          "excerpt": "for (const file of ['0003_duel_realtime_schema.sql', '0004_runtime_cloud_auth_duel_requests.sql', '0005_runtime_single_login_session.sql', '20261024_lingjing_battle_atomic_rounds.sql']) {"
+        },
+        {
+          "file": "apps/pc-app/runtime/features/discovery/verification/postgres.mjs",
+          "line": 16,
+          "category": "test-or-verifier",
+          "excerpt": "for (const migration of ['0003_duel_realtime_schema.sql', '0004_runtime_cloud_auth_duel_requests.sql', '0005_runtime_single_login_session.sql', '20261024_discovery_authority.sql']) {"
+        },
+        {
+          "file": "infra/supabase/README.md",
+          "line": 23,
+          "category": "documentation",
+          "excerpt": "5. `migrations/0005_runtime_single_login_session.sql`"
+        }
+      ]
+    },
+    {
+      "kind": "migration",
+      "path": "infra/supabase/migrations/20261024_accounts_save_sync.sql",
+      "needle": "20261024_accounts_save_sync.sql",
+      "sha256": "b6b4a2ca4f3f3b679ec8ee65b17d72d56c4013013eb49394d5705e458142aca0",
+      "decision": "Coordinator-owned retirement after new Auth/CAS/04 domain acceptance and actual remote version alignment. No delete/deploy/repair by foundation.",
+      "consumers": [
+        {
+          "file": "apps/pc-app/runtime/features/garden/cloud.test.mjs",
+          "line": 25,
+          "category": "test-or-verifier",
+          "excerpt": "const accountsMigration = process.env.GARDEN_ACCOUNTS_MIGRATION || resolve('infra/supabase/migrations/20261024_accounts_save_sync.sql');"
+        },
+        {
+          "file": "docs/implementation/garden-cloud-review.md",
+          "line": 5,
+          "category": "documentation",
+          "excerpt": "先部署 accounts 的 `20261024_accounts_save_sync.sql`，再审查本模块 `infra/supabase/migrations/20261024_garden_authority.sql` 与 `functions/garden-sync`。菜园与伙伴仍在同一个 `runtime_account_saves.envelope` 中，不新建第二套库存、宠物或身份数据库。云端入口验证 runtime_accounts 文本 ID / 当前 session_token；数据库再次锁定"
+        },
+        {
+          "file": "infra/supabase/migrations/20261024_garden_authority.sql",
+          "line": 1,
+          "category": "server-code",
+          "excerpt": "-- Additive. Review/deploy after 20261024_accounts_save_sync.sql."
+        }
+      ]
+    },
+    {
+      "kind": "migration",
+      "path": "infra/supabase/migrations/20261024_discovery_authority.sql",
+      "needle": "20261024_discovery_authority.sql",
+      "sha256": "7180474e9ca40c0d363b89e8f7baa625cd4f7c592681ba0aa945d5232963e9be",
+      "decision": "Coordinator-owned retirement after new Auth/CAS/04 domain acceptance and actual remote version alignment. No delete/deploy/repair by foundation.",
+      "consumers": [
+        {
+          "file": "apps/pc-app/runtime/features/discovery/verification/postgres.mjs",
+          "line": 16,
+          "category": "test-or-verifier",
+          "excerpt": "for (const migration of ['0003_duel_realtime_schema.sql', '0004_runtime_cloud_auth_duel_requests.sql', '0005_runtime_single_login_session.sql', '20261024_discovery_authority.sql']) {"
+        }
+      ]
+    },
+    {
+      "kind": "migration",
+      "path": "infra/supabase/migrations/20261024_garden_authority.sql",
+      "needle": "20261024_garden_authority.sql",
+      "sha256": "9fbe947fe7d24a6439168dbd7befb603dfcc3408ad766000696bb5435d94526e",
+      "decision": "Coordinator-owned retirement after new Auth/CAS/04 domain acceptance and actual remote version alignment. No delete/deploy/repair by foundation.",
+      "consumers": [
+        {
+          "file": "apps/pc-app/runtime/features/garden/cloud.test.mjs",
+          "line": 27,
+          "category": "test-or-verifier",
+          "excerpt": "await pg.exec(readFileSync(resolve('infra/supabase/migrations/20261024_garden_authority.sql'),'utf8'));"
+        },
+        {
+          "file": "docs/implementation/garden-cloud-review.md",
+          "line": 5,
+          "category": "documentation",
+          "excerpt": "先部署 accounts 的 `20261024_accounts_save_sync.sql`，再审查本模块 `infra/supabase/migrations/20261024_garden_authority.sql` 与 `functions/garden-sync`。菜园与伙伴仍在同一个 `runtime_account_saves.envelope` 中，不新建第二套库存、宠物或身份数据库。云端入口验证 runtime_accounts 文本 ID / 当前 session_token；数据库再次锁定"
+        }
+      ]
+    },
+    {
+      "kind": "migration",
+      "path": "infra/supabase/migrations/20261024_lingjing_battle_atomic_rounds.sql",
+      "needle": "20261024_lingjing_battle_atomic_rounds.sql",
+      "sha256": "56aa9706dbb0cc22d14a1aa80c02c6e97b43d262ddac9b6edb4eb73876775a7e",
+      "decision": "Coordinator-owned retirement after new Auth/CAS/04 domain acceptance and actual remote version alignment. No delete/deploy/repair by foundation.",
+      "consumers": [
+        {
+          "file": "apps/pc-app/runtime/features/battle/verify-postgres.mjs",
+          "line": 12,
+          "category": "test-or-verifier",
+          "excerpt": "for (const file of ['0003_duel_realtime_schema.sql', '0004_runtime_cloud_auth_duel_requests.sql', '0005_runtime_single_login_session.sql', '20261024_lingjing_battle_atomic_rounds.sql']) {"
+        },
+        {
+          "file": "docs/implementation/status/battle.json",
+          "line": 445,
+          "category": "engineering",
+          "excerpt": "\"审核后先部署 infra/supabase/migrations/20261024_lingjing_battle_atomic_rounds.sql，再发布更新的 duel-online\","
+        }
+      ]
+    },
+    {
+      "kind": "function",
+      "path": "infra/supabase/functions/accounts-sync",
+      "needle": "accounts-sync",
+      "decision": "Coordinator-owned retirement after new Auth/CAS/04 domain acceptance and actual remote version alignment. No delete/deploy/repair by foundation.",
+      "consumers": [
+        {
+          "file": "apps/pc-app/runtime/features/accounts/INTEGRATION.md",
+          "line": 11,
+          "category": "documentation",
+          "excerpt": "云域必须使用当前 actor 的 JWT/设备会话。SupabaseRemote.cloudContext 的访问令牌回调在每次请求时重查 owner/SID；账号变化、logout 和凭据刷新不能复用旧身份或清掉新账号的连接。正常传输明确拒绝 duel-online/accounts-sync。旧 token 和 id-only proof 不能升级成当前登录证明；加密存储仅是凭据保管，不代表云端授权成立。"
+        },
+        {
+          "file": "apps/pc-app/runtime/features/accounts/remote.cjs",
+          "line": 70,
+          "category": "runtime-code",
+          "excerpt": "response = await online.client.functions.invoke(process.env.SUPABASE_ACCOUNTS_FUNCTION || \"accounts-sync\", {"
+        },
+        {
+          "file": "apps/pc-app/runtime/features/accounts/supabase-remote.cjs",
+          "line": 63,
+          "category": "rejection-guard-keep",
+          "excerpt": "invariant(/^[a-z][a-z0-9-]{0,62}$/.test(name)&&!['duel-online','accounts-sync'].includes(name),'CLOUD_PROTOCOL_UPGRADE_REQUIRED','该模块需要升级后的云端接口。');"
+        },
+        {
+          "file": "apps/pc-app/runtime/features/garden/cloud.test.mjs",
+          "line": 11,
+          "category": "test-or-verifier",
+          "excerpt": "import { createAccountsHandler } from '../../../../../infra/supabase/functions/accounts-sync/handler.ts';"
+        },
+        {
+          "file": "apps/pc-app/runtime/features/garden/cloud.test.mjs",
+          "line": 70,
+          "category": "test-or-verifier",
+          "excerpt": "const selected=request.url==='/accounts-sync'?accountsHandler:handler;"
+        },
+        {
+          "file": "apps/pc-app/runtime/features/garden/cloud.test.mjs",
+          "line": 81,
+          "category": "test-or-verifier",
+          "excerpt": "const response=await fetch(url.replace('/garden-sync','/accounts-sync'),{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({...payload,op,userId:current.id,sessionToken:current.sessionToken})});const result=await response.json();"
+        },
+        {
+          "file": "docs/implementation/cloud-identity-contract-2026-10-25.md",
+          "line": 69,
+          "category": "documentation",
+          "excerpt": "JSON SHA256 和现有备份保持兼容，SQL 处理 UTF-16 键排序及 ECMAScript 最短数字串（包括1e23、subnormal），不能用 PostgreSQL 默认 JSONB 文本替代。归档保留未验证玩法数据但不会变成权威头；旧源仍需可信数据与凭据验证。不能部署旧 `accounts-sync` 的 runtime session_token 实现作为新权限模型。"
+        },
+        {
+          "file": "docs/implementation/garden-cloud-review.md",
+          "line": 23,
+          "category": "documentation",
+          "excerpt": "本轮 11 项本地检查使用真实 BackupManager、AccountSync、accounts-sync/garden-sync 两个 HTTP handler 与 PostgreSQL RPC。实际完成菜园读回版本 6 → accounts 整存档推送并二次读回版本 7，库存保持完全一致。另有离线笔记时返回 CLOUD_APPLY_PENDING：本机菜园与 checkpoint 一起回滚，原笔记保留；服务端已提交的种植即使重试也只有一份回执。这关闭了本地公共版本衔接缺口，线上部署和双设备验收仍未完成。"
+        },
+        {
+          "file": "docs/implementation/status/accounts-evidence.json",
+          "line": 72,
+          "category": "engineering",
+          "excerpt": "\"endpoint\": \"accounts-sync\","
+        },
+        {
+          "file": "docs/implementation/status/accounts.json",
+          "line": 162,
+          "category": "engineering",
+          "excerpt": "\"usedAt\": \"Existing duel-online runtime account protocol and accounts-sync Edge client; no second cloud identity/backend\""
+        },
+        {
+          "file": "docs/implementation/status/accounts.json",
+          "line": 274,
+          "category": "engineering",
+          "excerpt": "\"accounts-sync: UND_ERR_SOCKET\""
+        },
+        {
+          "file": "docs/implementation/status/cloud-accounts.json",
+          "line": 66,
+          "category": "engineering",
+          "excerpt": "\"deployment\": \"Coordinator only. verify_jwt=false for these self-authenticating Edge entrypoints; every protected path strictly uses fresh getUser plus actor RPC. Do not deploy old runtime session_token accounts-sync as the new service.\","
+        },
+        {
+          "file": "docs/release-runbook.md",
+          "line": 53,
+          "category": "documentation",
+          "excerpt": "回滚只选择程序二进制，不回退/删除用户 SQLite、资源、聊天、成长或云数据库。云端使用兼容的追加迁移；远端迁移历史和 comparisontext 保全重放由主协调统一处理，不从旧 authority SQL、旧 accounts-sync/duel-online 入口恢复部署。"
+        }
+      ]
+    },
+    {
+      "kind": "function",
+      "path": "infra/supabase/functions/duel-online",
+      "needle": "duel-online",
+      "decision": "Coordinator-owned retirement after new Auth/CAS/04 domain acceptance and actual remote version alignment. No delete/deploy/repair by foundation.",
+      "consumers": [
+        {
+          "file": "apps/pc-app/runtime/features/accounts/INTEGRATION.md",
+          "line": 3,
+          "category": "documentation",
+          "excerpt": "更新于 2026-10-25。本页取代旧 duel-online/sessionToken 集成说明。生产部署、迁移历史和最终业务验收由主协调统一处理，见 docs/implementation/cloud-upgrade-2026-10-25.md 与 docs/implementation/status/cloud-accounts.json。"
+        },
+        {
+          "file": "apps/pc-app/runtime/features/accounts/INTEGRATION.md",
+          "line": 11,
+          "category": "documentation",
+          "excerpt": "云域必须使用当前 actor 的 JWT/设备会话。SupabaseRemote.cloudContext 的访问令牌回调在每次请求时重查 owner/SID；账号变化、logout 和凭据刷新不能复用旧身份或清掉新账号的连接。正常传输明确拒绝 duel-online/accounts-sync。旧 token 和 id-only proof 不能升级成当前登录证明；加密存储仅是凭据保管，不代表云端授权成立。"
+        },
+        {
+          "file": "apps/pc-app/runtime/features/accounts/supabase-remote.cjs",
+          "line": 63,
+          "category": "rejection-guard-keep",
+          "excerpt": "invariant(/^[a-z][a-z0-9-]{0,62}$/.test(name)&&!['duel-online','accounts-sync'].includes(name),'CLOUD_PROTOCOL_UPGRADE_REQUIRED','该模块需要升级后的云端接口。');"
+        },
+        {
+          "file": "apps/pc-app/runtime/features/battle/battle.test.cjs",
+          "line": 44,
+          "category": "test-or-verifier",
+          "excerpt": "const source = readFileSync(resolve(__dirname, \"../../../../../infra/supabase/functions/duel-online/index.ts\"), \"utf8\").trimStart().replace(/^import[^\\n]+\\n/, \"\");"
+        },
+        {
+          "file": "apps/pc-app/runtime/services/online-duel-service.cjs",
+          "line": 23,
+          "category": "runtime-code",
+          "excerpt": "const DEFAULT_FUNCTION_NAME = \"duel-online\";"
+        },
+        {
+          "file": "docs/implementation/status/accounts-evidence.json",
+          "line": 68,
+          "category": "engineering",
+          "excerpt": "\"endpoint\": \"duel-online\","
+        },
+        {
+          "file": "docs/implementation/status/accounts.json",
+          "line": 162,
+          "category": "engineering",
+          "excerpt": "\"usedAt\": \"Existing duel-online runtime account protocol and accounts-sync Edge client; no second cloud identity/backend\""
+        },
+        {
+          "file": "docs/implementation/status/accounts.json",
+          "line": 273,
+          "category": "engineering",
+          "excerpt": "\"duel-online: UND_ERR_SOCKET\","
+        },
+        {
+          "file": "docs/implementation/status/battle.json",
+          "line": 341,
+          "category": "engineering",
+          "excerpt": "\"condition\": \"Configured deployed duel-online unavailable; real two-account acceptance cannot run\","
+        },
+        {
+          "file": "docs/implementation/status/battle.json",
+          "line": 378,
+          "category": "engineering",
+          "excerpt": "\"恢复配置中的 duel-online 服务，或提供已验证的可用环境配置\","
+        },
+        {
+          "file": "docs/implementation/status/battle.json",
+          "line": 445,
+          "category": "engineering",
+          "excerpt": "\"审核后先部署 infra/supabase/migrations/20261024_lingjing_battle_atomic_rounds.sql，再发布更新的 duel-online\","
+        },
+        {
+          "file": "docs/implementation/status/cloud-accounts.json",
+          "line": 226,
+          "category": "engineering",
+          "excerpt": "\"path\": \"http://47.112.208.97:8000/functions/v1/duel-online\","
+        },
+        {
+          "file": "docs/implementation/status/discovery.json",
+          "line": 950,
+          "category": "engineering",
+          "excerpt": "\"function\": \"duel-online\","
+        },
+        {
+          "file": "docs/lingjing-pc-config-usage.md",
+          "line": 9,
+          "category": "documentation",
+          "excerpt": "普通构建自带 config/lingjing-cloud-public.json 公开配置，无需填旧 anon token 或 duel-online 名称。单独环境只能配置 LINGJING_PUBLIC_CONFIG，或 HTTPS URL 与 sb_publishable_ 公钥。服务端 secret/service role 不进入桌面配置。"
+        },
+        {
+          "file": "docs/release-runbook.md",
+          "line": 53,
+          "category": "documentation",
+          "excerpt": "回滚只选择程序二进制，不回退/删除用户 SQLite、资源、聊天、成长或云数据库。云端使用兼容的追加迁移；远端迁移历史和 comparisontext 保全重放由主协调统一处理，不从旧 authority SQL、旧 accounts-sync/duel-online 入口恢复部署。"
+        },
+        {
+          "file": "docs/task-progress.md",
+          "line": 53,
+          "category": "documentation",
+          "excerpt": "- 已上传并启用 Edge Function：`duel-online`（路径：`/opt/supabase/volumes/functions/duel-online/index.ts`）。"
+        },
+        {
+          "file": "docs/task-progress.md",
+          "line": 64,
+          "category": "documentation",
+          "excerpt": "- 外网 `POST /functions/v1/duel-online`（`create_room`）返回 `200` + `ok=true`。"
+        },
+        {
+          "file": "docs/task-progress.md",
+          "line": 72,
+          "category": "documentation",
+          "excerpt": "- 新增 Edge Function `infra/supabase/functions/duel-online/index.ts`："
+        },
+        {
+          "file": "docs/task-progress.md",
+          "line": 79,
+          "category": "documentation",
+          "excerpt": "- 新增 IPC：`pet:duel-online-*`；"
+        },
+        {
+          "file": "infra/supabase/README.md",
+          "line": 1,
+          "category": "documentation",
+          "excerpt": "> 历史基线说明：下列 0001..0005、20261024 authority SQL 与旧 token/duel-online 路径不代表本轮现行部署。不要按本页直接 db push/reset 或恢复旧权限。当前身份、域部署、迁移历史和 comparisontext 保全重放由主协调统一处理，见 docs/implementation/cloud-upgrade-2026-10-25.md 与各模块 status；旧入口在新域验收后按清单退役。"
+        },
+        {
+          "file": "infra/supabase/README.md",
+          "line": 26,
+          "category": "documentation",
+          "excerpt": "6. `functions/duel-online/index.ts`"
+        },
+        {
+          "file": "infra/supabase/migrations/20261024_lingjing_battle_atomic_rounds.sql",
+          "line": 1,
+          "category": "server-code",
+          "excerpt": "-- Additive migration. Review/deploy before the updated duel-online function."
+        }
+      ]
+    }
+  ],
+  "requiredPorts": [
+    {
+      "file": "apps/pc-app/runtime/features/battle/battle.test.cjs",
+      "current": "VM reads old duel-online/index.ts",
+      "replacement": "04 current shared battle core and guarded cloud contract tests; keep historical rule interpretation coverage",
+      "owner": "04/main"
+    },
+    {
+      "file": "apps/pc-app/runtime/features/battle/verify-postgres.mjs",
+      "current": "PGlite executes 0003/0004/0005 + 20261024 atomic rounds",
+      "replacement": "04 current migrations/transactions after approved checkpoint",
+      "owner": "04/main"
+    },
+    {
+      "file": "apps/pc-app/runtime/features/discovery/verification/postgres.mjs",
+      "current": "PGlite old duel auth and discovery authority fixture",
+      "replacement": "03 current live actor/location/wild contract checks",
+      "owner": "03/main"
+    },
+    {
+      "file": "apps/pc-app/runtime/features/garden/cloud.test.mjs",
+      "current": "Old accounts-sync handler, token body, 20261024 accounts/garden fixture",
+      "replacement": "05 reviewed cloud actor/CAS/territory tests after approved checkpoint",
+      "owner": "05/main"
+    },
+    {
+      "file": "apps/pc-app/runtime/features/accounts/index.cjs + remote.cjs",
+      "current": "Explicit LINGJING_LEGACY_AUTH fallback remains; modern default already rejects old names",
+      "replacement": "08 modern SupabaseRemote only after coordinator retires fallback",
+      "owner": "08/main"
+    },
+    {
+      "file": "apps/pc-app/runtime/services/online-duel-service.cjs",
+      "current": "Legacy and explicit QA transport still used by current battle service/QA adapter",
+      "replacement": "04 approved modern cloud adapter; retain only proven QA and historical functionality if still needed",
+      "owner": "04/main"
+    }
+  ],
+  "preserve": [
+    "core read-only JSON/archive import and original SQLite data",
+    "services/map-runtime.cjs until actual map consumers retire",
+    "services/battle-runtime.cjs historical rules/read explanation",
+    "all user profiles, original backups and docs/design"
+  ],
+  "retiredStaticTests": [
+    "tests/task-t003-supabase-migration.test.ts",
+    "tests/task-t205-persistence-schema.test.ts",
+    "tests/task-t206-online-duel-schema.test.ts"
+  ],
+  "scanIncludesPendingChanges": [
+    "New current accounts INTEGRATION.md",
+    "Three obsolete SQL source-text tests retired"
+  ],
+  "retiredStaticTestsStatus": "Deleted in this checkpoint; original hashes in cloud-foundation-inventory and Git snapshot.",
+  "currentRemainingReferences": 60
+}

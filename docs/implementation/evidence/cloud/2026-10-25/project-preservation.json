@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "projectRef": "jbvrdmrkwpznbrvteive",
+  "displayName": "Text Comparision",
+  "clientDate": "2026-10-25",
+  "authorization": "User authorized reuse of comparisontext if free-project quota is full; Free org has two active projects",
+  "originalTables": 18,
+  "originalRows": 100,
+  "originalAuthUsers": 0,
+  "preservation": {
+    "encryptedExportVerified": true,
+    "sourceAndArchiveFingerprintsCheckedInTransaction": true,
+    "plaintextSha256": "ec2a0d2f910b507b599739d56925683556318f538013f2a5633e2e82db7e05ff",
+    "encryptedSha256": "a11567dfef11ab5165918fe5e8b10a7f1f03c908f485d06e4886873a90155e41",
+    "externalRecoveryDirectory": "C:\\Users\\Administrator\\.codex\\backups\\DesktopPet\\2026-10-25\\comparisontext",
+    "privateArchiveSchema": "comparisontext_archive_20261025",
+    "clientGrants": 0,
+    "anonSchemaUsage": false,
+    "authenticatedSchemaUsage": false,
+    "allArchiveTablesRlsEnabled": true
+  },
+  "migration": "infra/supabase/migrations/20261025015844_preserve_comparisontext_before_lingjing.sql",
+  "advisors": {
+    "previousErrors": "18 public tables with RLS disabled",
+    "after": "Only intentional INFO notices: private archive tables have no client policies"
+  },
+  "scope": "Preserves original comparisontext data; this does not constitute DesktopPet account migration or gameplay acceptance."
+}

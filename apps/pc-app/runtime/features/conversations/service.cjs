@@ -3,6 +3,7 @@ const { randomUUID } = require("node:crypto");
 const { fail, publicError, ConversationError } = require("./errors.cjs");
 const { normalizeConnection, requestCompletion } = require("./transport.cjs");
 const { buildContext, styles } = require("./context.cjs");
+const { buildLegacyConversationImport, importLegacyConversations } = require("./legacy-import.cjs");
 
 function string(value, max, optional = false) {
   if (optional && value === "") return "";
@@ -13,9 +14,10 @@ function revision(value) { if (!Number.isSafeInteger(value) || value < 0) fail("
 function scopeKey(owner, petId, kind = "chat") { return JSON.stringify([owner, kind, petId]); }
 
 class ConversationService {
-  constructor({ store, secrets, getSession, listPets, onSessionChanged, publish = () => {}, setChatActivity = () => {}, transport = requestCompletion }) {
+  constructor({ store, secrets, getSession, listPets, getChatSelection, selectChatPet, onSessionChanged, publish = () => {}, setChatActivity = () => {}, transport = requestCompletion }) {
     this.store = store; this.secrets = secrets; this.getSession = getSession; this.listPets = listPets;
     this.publish = publish; this.setChatActivity = setChatActivity; this.transport = transport; this.active = new Map(); this.epoch = 0; this.disposed = false;
+    this.getChatSelection = getChatSelection; this.selectChatPet = selectChatPet;
     this.store.recoverInterrupted();
     this.unsubscribe = onSessionChanged?.(() => { this.epoch++; this.abortAll("SESSION_CHANGED"); });
   }
@@ -71,7 +73,9 @@ class ConversationService {
       templateId: pet.templateId ?? null, avatarUrl: pet.avatarUrl ?? pet.resource?.thumbnailUrl ?? null, level: pet.level ?? pet.growth?.level ?? 1,
       element: ["metal", "wood", "earth", "water", "fire"].includes(pet.element) ? pet.element : null,
       ...(pet.resource ? { resource: { resourceId: pet.resource.resourceId, kind: pet.resource.kind } } : {}) }));
-    const selected = payload.petId ?? this.store.getSelectedPet(session.owner);
+    // The shared companion chat slot is authoritative when integrated. A local
+    // preference from an older client is only a compatibility hint.
+    const selected = payload.petId ?? (this.getChatSelection ? this.getChatSelection(session.owner) : this.store.getSelectedPet(session.owner));
     const petId = pets.some((pet) => pet.petId === selected) ? selected : pets[0]?.petId ?? null;
     return { accountId: session.owner, sessionRevision: session.epoch, pets, petId, summaries: this.store.summaries(session.owner, pets.map((p) => p.petId)),
       globalConnection: this.store.getConnection(session.owner), secureStorageAvailable: this.secrets.available(),
@@ -204,6 +208,12 @@ class ConversationService {
         case "snapshot": data = this.snapshot(session, payload); break;
         case "select": {
           const petId = string(payload.petId, 160); this.pet(session, petId);
+          if (this.selectChatPet) {
+            try { await this.selectChatPet(session.owner, petId, payload.actionId == null ? randomUUID() : string(payload.actionId, 160)); }
+            catch (error) { if (!this.current(session)) fail('SESSION_CHANGED'); if (error instanceof ConversationError) throw error; fail('SELECTION_FAILED'); }
+            if (!this.current(session)) fail('SESSION_CHANGED');
+            if (this.getChatSelection && this.getChatSelection(session.owner) !== petId) fail('REVISION_CONFLICT');
+          }
           this.store.selectPet(session.owner, petId); data = this.snapshot(session, { petId }); break;
         }
         case "history": {
@@ -249,6 +259,23 @@ class ConversationService {
           const petId = string(payload.petId, 160); this.pet(session, petId);
           this.abort(session.owner, petId); this.store.clearHistory(session.owner, petId);
           data = { cleared: true }; this.emit(session, { type: "changed", petId }); break;
+        }
+        case "legacy.preview": case "legacy.import": {
+          if (payload.includeSettings != null && typeof payload.includeSettings !== "boolean") fail("INVALID_INPUT");
+          const options = { db:this.store.db, owner:session.owner, pets:this.pets(session).map(pet=>({...pet,petId:pet.petId ?? pet.id,name:typeof pet.name === "string" ? pet.name : pet.name?.zh || "伙伴"})),store:this.store,
+            unassignedPetId:payload.unassignedPetId == null ? null : string(payload.unassignedPetId,160) };
+          try {
+            if (command === "legacy.preview") data = buildLegacyConversationImport(options).preview;
+            else {
+              data = importLegacyConversations({...options,sourceHash:string(payload.sourceHash,160),includeSettings:payload.includeSettings !== false,
+                hasActive:[...this.active.values()].some(active=>active.session.owner === session.owner)});
+              this.emit(session,{type:"changed",petId:null});
+            }
+          } catch (error) {
+            if (error instanceof ConversationError) throw error;
+            fail(error.code === "CONVERSATION_BUSY" ? "BUSY" : error.code === "CONVERSATION_MERGE_CONFLICT" || error.code === "CONVERSATION_ORDER_CONFLICT" ? "LEGACY_CONFLICT" : "LEGACY_INVALID");
+          }
+          break;
         }
         default: fail("INVALID_INPUT");
       }
