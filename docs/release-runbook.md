@@ -46,6 +46,8 @@ npm run release:launch
 
 回滚会先复核版本目录边界、manifest、真实 EXE 哈希，再原子切换 release-state/current.json；失败保留原指针。launch 每次重新验证，实际启动指针选中的 EXE。已在运行的旧进程应先正常退出；指针切换不会强杀用户程序。
 
+Windows 启动器使用同一套只读存档发现规则，并显式传入 PET_USER_DATA_DIR，避免旧二进制只查 JSON 时漏掉已有 SQLite。使用非默认档案时提前设置该变量；verify-only 会显示最终路径，不会移动或创建存档。
+
 Release Rollback workflow 需要 target_version 与保存该版本的成功 release workflow run ID，下载完整二进制归档后执行同样校验，输出可检查的选版指针。它不是远端自动更新服务，不宣称已经切换用户设备上的运行程序。
 
 回滚只选择程序二进制，不回退/删除用户 SQLite、资源、聊天、成长或云数据库。云端使用兼容的追加迁移；远端迁移历史和 comparisontext 保全重放由主协调统一处理，不从旧 authority SQL、旧 accounts-sync/duel-online 入口恢复部署。
