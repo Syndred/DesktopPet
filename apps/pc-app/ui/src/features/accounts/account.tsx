@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState, type FormEvent } from "react";
 import { Monitor, Bell, MessageCircle, Box, RefreshCw, Cloud, CloudCheck, CloudOff, HardDrive, AlertCircle, FlaskConical, ClipboardPen, LockKeyhole, Download, LogOut } from "lucide-react";
 import type { AccountUser, AccountsSession, BackupPreview, SettingsSnapshot, SyncStatus } from "../../../../../../packages/shared-types/src/features/accounts";
-import { errorText, newActionId, request, useAccountsSession } from "./api";
+import { bridge, errorText, newActionId, request, useAccountsSession } from "./api";
 import { AuthPage } from "./auth";
 import { Button, Card } from "../../components/ui";
 import { Input } from "../../components/ui/input";
@@ -48,12 +48,22 @@ function AccountDetails({ user, session, refreshSession }: { user: AccountUser; 
     setSync(nextSync); setSettings(nextSettings);
   }, []);
   useEffect(() => {
-    let active = true;
-    void Promise.all([request<SyncStatus>("syncStatus"), request<SettingsSnapshot>("settingsGet")]).then(([s, prefs]) => {
-      if (active) { setSync(s); setSettings(prefs); }
-    }).catch(e => { if (active) setError(errorText(e)); });
-    return () => { active = false; };
-  }, []);
+    let active = true, generation = 0;
+    const reload = () => {
+      const current = ++generation;
+      void Promise.all([request<SyncStatus>("syncStatus"), request<SettingsSnapshot>("settingsGet")]).then(([s, prefs]) => {
+        if (active && current === generation) { setSync(s); setSettings(prefs); }
+      }).catch(e => { if (active && current === generation) setError(errorText(e)); });
+    };
+    reload();
+    const disposers = ["accounts:sync-changed", "accounts:settings-changed", "accounts:save-restored"].map(name => bridge()?.subscribe(name, value => {
+      const event = value as { ownerAccountId?: string; automatic?: boolean };
+      if (!active || event.ownerAccountId !== user.id) return;
+      if (event.automatic) { setNotice("已自动同步其他设备的更新。"); setError(""); }
+      reload();
+    }));
+    return () => { active = false; disposers.forEach(dispose => dispose?.()); };
+  }, [user.id]);
   async function run(name: string, task: () => Promise<string | void>) {
     if (pending) return;
     setPending(name); setNotice(""); setError("");
@@ -97,10 +107,13 @@ function AccountDetails({ user, session, refreshSession }: { user: AccountUser; 
       <div className="ac-stack">
         <Card className="ac-card ac-save-card"><h2><Cloud size={20} />伙伴与记录</h2>
           <div className="ac-save-art ac-save-art-illustrated" aria-hidden="true" />
-          <div className="ac-save-status" aria-label="存档状态">
+          <div className="ac-save-status" aria-label="存档状态" data-cloud-revision={sync?.cloudRevision} data-local-changed={sync?.localChanged}>
             {user.provider === "local"
               ? <AccountStatus icon={HardDrive} label="本机存档" detail="存档保存在这台电脑，可导出备份。" />
-              : <AccountStatus icon={sync?.lastError ? CloudOff : sync?.localChanged ? Cloud : CloudCheck} label={sync?.lastError ? "同步未完成" : sync?.localChanged ? "待同步" : sync?.lastVerifiedAt ? "已同步" : "尚未同步"} detail={sync?.lastError ? "暂时无法同步，存档仍保存在本机。" : sync?.localChanged ? "本机有更新，可立即同步或导出备份。" : sync?.lastVerifiedAt ? `上次同步：${dateText(sync.lastVerifiedAt)}` : "本机备份可随时导出。"} tone={sync?.lastError ? "warning" : sync?.lastVerifiedAt && !sync?.localChanged ? "success" : "muted"} />}
+              : <AccountStatus icon={sync?.lastError ? CloudOff : sync?.running ? RefreshCw : sync?.localChanged || sync?.remoteChanged ? Cloud : CloudCheck}
+                label={sync?.running ? "正在同步" : sync?.remoteChanged ? "云端有更新" : sync?.lastError ? "同步未完成" : sync?.unverifiedLocal || sync?.privacyRedactions ? "部分内容已同步" : sync?.localChanged || sync?.pending ? "待同步" : sync?.lastVerifiedAt ? sync.lastCloudCheckedAt ? "已同步" : "本机已确认" : "尚未同步"}
+                detail={sync?.running ? "正在核对两端存档，本机改动会继续保留。" : sync?.remoteChanged ? "云端有较新存档；本机有改动或待处理记录时，请先预览再决定恢复。" : sync?.lastError ? "暂时无法同步，存档仍保存在本机。" : sync?.localChanged ? "本机有更新，开启同步后会自动保存，也可立即同步或导出备份。" : sync?.lastVerifiedAt ? `上次同步：${dateText(sync.lastVerifiedAt)}` : "本机备份可随时导出。"}
+                tone={sync?.lastError || sync?.remoteChanged || sync?.unverifiedLocal || sync?.privacyRedactions ? "warning" : sync?.lastVerifiedAt && !sync?.localChanged && !sync?.pending && !sync?.running && sync.lastCloudCheckedAt ? "success" : "muted"} />}
             {Boolean(sync?.pending) && <AccountStatus icon={RefreshCw} label={`待同步 ${sync?.pending}`} detail="联网后可重试，当前记录仍保存在本机。" />}
             {Boolean(sync?.conflicts) && <AccountStatus icon={AlertCircle} label="版本冲突" detail="先预览云端存档，再决定是否恢复。" tone="warning" />}
             {Boolean(sync?.unverifiedLocal) && <AccountStatus icon={AlertCircle} label="原始进度已保留" detail="本机历史进度仍需核验来源，可同步的内容会独立保存。" tone="warning" />}
@@ -114,7 +127,7 @@ function AccountDetails({ user, session, refreshSession }: { user: AccountUser; 
             }); }} />开启存档同步</label>
           }
           <div className="ac-actions">
-            {user.provider === "runtime" && <Button className="ac-primary" disabled={Boolean(pending) || !settings?.document.sync.enabled} onClick={() => void run("sync", async () => {
+            {user.provider === "runtime" && <Button className="ac-primary" disabled={Boolean(pending) || sync?.running || !settings?.document.sync.enabled} onClick={() => void run("sync", async () => {
               const result = await request<{ verified?: boolean; personalVerified?: boolean; requiresAuthority?: boolean; privacyRedactions?: boolean }>(sync?.pending ? "syncRetry" : "syncNow", { actionId: newActionId() });
               await refresh(); return result.privacyRedactions ? "可同步内容已保存，私密字段与原始历史仍在本机保留。" : result.requiresAuthority ? "设置与聊天已同步，本机历史进度等待来源核验。" : result.verified ? "同步完成。" : "暂无待同步内容。";
             })}>{pending === "sync" ? "同步中…" : sync?.pending ? "重试同步" : "立即同步"}</Button>}

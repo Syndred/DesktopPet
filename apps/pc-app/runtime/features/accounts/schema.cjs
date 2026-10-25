@@ -102,6 +102,13 @@ const migrations = [{
   id:'accounts-006-cloud-projection-audit',
   sql:`ALTER TABLE account_sync_sources ADD COLUMN cloud_projection_checksum TEXT;
     ALTER TABLE account_sync_sources ADD COLUMN cloud_excluded TEXT NOT NULL DEFAULT '[]';`
+}, {
+  id:'accounts-007-automatic-sync-baselines',
+  sql:`CREATE TABLE IF NOT EXISTS account_sync_baselines (
+    owner_account_id TEXT PRIMARY KEY REFERENCES account_identities(owner_account_id),
+    cloud_revision INTEGER NOT NULL, envelope_checksum TEXT NOT NULL,
+    data_checksum TEXT NOT NULL, personal_checksum TEXT NOT NULL, protected_checksum TEXT NOT NULL
+  );`
 }];
 
 module.exports = { migrations };

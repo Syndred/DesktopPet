@@ -19,15 +19,15 @@ function meaningfulData(data){
 function protectedData(data){const copy=meaningfulData(data);return {...copy,modules:Object.fromEntries(Object.entries(copy.modules).filter(([key])=>!personalModules.has(key)))};}
 function sameSession(current,expected){
   if(!current||current.ownerAccountId!==expected.ownerAccountId||current.provider!==expected.provider)return false;
-  if(expected.authKind==='supabase')return current.authKind==='supabase'&&typeof expected.sessionId==='string'&&current.sessionId===expected.sessionId;
+  if(expected.authKind==='supabase')return current.authKind==='supabase'&&typeof expected.sessionId==='string'&&current.sessionId===expected.sessionId&&current.deviceId===expected.deviceId;
   return current.sessionToken===expected.sessionToken;
 }
 
 class AccountSync {
-  constructor({ db, backups, remote, getSession, getSettings, onInvalidSession }) {
+  constructor({ db, backups, remote, getSession, getSettings, onInvalidSession, getEpoch = () => 0 }) {
     this.db = db; this.backups = backups; this.remote = remote;
     this.getSession = getSession; this.getSettings = getSettings; this.running = new Set();
-    this.onInvalidSession = onInvalidSession;
+    this.onInvalidSession = onInvalidSession;this.getEpoch=getEpoch;this.observations=new Map();
   }
   normalizeData(data,owner=this.getSession()?.ownerAccountId){return this.backups.normalizeData&&typeof owner==='string'?this.backups.normalizeData(data,owner):data;}
   cloudView(data,owner=this.getSession()?.ownerAccountId){
@@ -37,25 +37,49 @@ class AccountSync {
   dataChecksum(data,owner=this.getSession()?.ownerAccountId){
     const view=this.cloudView(data,owner);return saveDataChecksum(this.remote.authKind==='supabase'?meaningfulData(view):view);
   }
+  fingerprints(data,owner){
+    const normalized=this.cloudView(data,owner),view=this.remote.authKind==='supabase'?meaningfulData(normalized):normalized;
+    return{data:saveDataChecksum(view),personal:saveDataChecksum({modules:Object.fromEntries(Object.entries(view.modules).filter(([key])=>personalModules.has(key))),tables:{}}),protected:saveDataChecksum(protectedData(view))};
+  }
+  recordBaseline(owner,envelope,revision){
+    const digest=this.fingerprints(envelope.data,owner);
+    this.db.prepare(`INSERT INTO account_sync_baselines VALUES(?,?,?,?,?,?) ON CONFLICT(owner_account_id)
+      DO UPDATE SET cloud_revision=excluded.cloud_revision,envelope_checksum=excluded.envelope_checksum,
+      data_checksum=excluded.data_checksum,personal_checksum=excluded.personal_checksum,protected_checksum=excluded.protected_checksum`)
+      .run(owner,revision,envelope.checksum,digest.data,digest.personal,digest.protected);
+  }
+  confirmed(owner,state=this.db.prepare('SELECT * FROM account_sync_state WHERE owner_account_id=?').get(owner)){
+    if(!state?.last_checksum||!state.last_verified_at)return null;
+    const baseline=this.db.prepare('SELECT * FROM account_sync_baselines WHERE owner_account_id=? AND cloud_revision=? AND envelope_checksum=?')
+      .get(owner,state.cloud_revision,state.last_checksum);
+    if(baseline)return baseline;
+    const checkpoint=this.db.prepare('SELECT * FROM account_sync_checkpoints WHERE owner_account_id=? AND cloud_revision=? AND envelope_checksum=?')
+      .get(owner,state.cloud_revision,state.last_checksum);
+    if(checkpoint)return checkpoint;
+    const receipt=this.db.prepare("SELECT document FROM account_sync_outbox WHERE owner_account_id=? AND status='verified' AND base_revision+1=? AND checksum=? LIMIT 1")
+      .get(owner,state.cloud_revision,state.last_checksum);
+    if(!receipt)return null;
+    const digest=this.fingerprints(JSON.parse(receipt.document).data,owner);
+    return{cloud_revision:state.cloud_revision,envelope_checksum:state.last_checksum,data_checksum:digest.data,personal_checksum:digest.personal,protected_checksum:digest.protected};
+  }
   status(owner) {
     const state = this.db.prepare("SELECT * FROM account_sync_state WHERE owner_account_id=?").get(owner);
     const counts = this.db.prepare(`SELECT status,COUNT(*) AS count FROM account_sync_outbox
       WHERE owner_account_id=? AND status IN ('pending','retry','conflict') GROUP BY status`).all(owner);
-    const receipt = this.db.prepare(`SELECT document FROM account_sync_outbox WHERE owner_account_id=?
-      AND status='verified' ORDER BY verified_at DESC LIMIT 1`).get(owner);
-    const checkpoint = this.db.prepare('SELECT * FROM account_sync_checkpoints WHERE owner_account_id=?').get(owner);
-    const savedChecksum = checkpoint && state && checkpoint.cloud_revision === state.cloud_revision && checkpoint.envelope_checksum === state.last_checksum
-      ? checkpoint.data_checksum : receipt ? this.dataChecksum(JSON.parse(receipt.document).data,owner) : null;
+    const savedChecksum=this.confirmed(owner,state)?.data_checksum;
+    const observation=this.observations.get(owner);
     const unresolved=this.db.prepare('SELECT count(*) count FROM account_sync_sources WHERE owner_account_id=? AND authority_pending=1').get(owner).count;
     const projections=this.db.prepare("SELECT cloud_excluded FROM account_sync_sources WHERE owner_account_id=? AND cloud_excluded<>'[]'").all(owner);
     return { configured: Boolean(this.remote.enabled), cloudRevision: state?.cloud_revision || 0,
-      lastVerifiedAt: state?.last_verified_at || null, lastError: state?.last_error || null,
+      lastVerifiedAt: state?.last_verified_at || null, lastError: state?.last_error || observation?.error || null,
       pending: counts.reduce((n, c) => n + c.count, 0), conflicts: counts.find(c => c.status === "conflict")?.count || 0,
       localChanged:savedChecksum!==this.dataChecksum(this.backups.snapshot(owner).data,owner),unverifiedLocal:unresolved,
       privacyRedactions:projections.length,
-      running: this.running.has(owner) };
+      running: this.running.has(owner),observedCloudRevision:observation?.revision??null,lastCloudCheckedAt:observation?.checkedAt||null,
+      remoteChanged:Boolean(observation&&observation.revision>(state?.cloud_revision||0)) };
   }
   enqueue(owner, inputId) {
+    invariant(!this.running.has(owner),'SYNC_BUSY','存档正在核对，请稍后重试。');
     const id = actionId(inputId);
     const session = this.getSession();
     invariant(session?.ownerAccountId === owner && session.provider === "runtime", "CLOUD_LOGIN_REQUIRED", "请使用云端账号登录后同步。本机账号可导出备份。");
@@ -146,6 +170,7 @@ class AccountSync {
         this.db.prepare(`INSERT INTO account_sync_state VALUES(?,?,?,?,NULL) ON CONFLICT(owner_account_id)
           DO UPDATE SET cloud_revision=excluded.cloud_revision,last_checksum=excluded.last_checksum,last_verified_at=excluded.last_verified_at,last_error=NULL`)
           .run(owner, receipt.revision, row.checksum, at);
+        this.recordBaseline(owner,readback.envelope,receipt.revision);
       });
       const unresolved=this.db.prepare('SELECT authority_pending FROM account_sync_sources WHERE owner_account_id=? AND action_id=?').get(owner,row.action_id)?.authority_pending===1;
       const redacted=this.db.prepare('SELECT cloud_excluded FROM account_sync_sources WHERE owner_account_id=? AND action_id=?').get(owner,row.action_id)?.cloud_excluded;
@@ -180,6 +205,83 @@ class AccountSync {
       createdAt: remote.envelope.createdAt, modules: Object.keys(remote.envelope.data.modules),
       tables: Object.entries(remote.envelope.data.tables).map(([name, table]) => ({ name, count: table.rows.length })) };
   }
+  /** Automatic reconciliation never changes an outbox action's original base.
+   * Personal-only local edits are durable before I/O; protected changes require
+   * a verified domain readback or an explicit, preserving restore. */
+  async reconcile(owner,onProgress=()=>{}){
+    const session=this.getSession(),epoch=this.getEpoch();
+    const active=()=>this.getEpoch()===epoch&&sameSession(this.getSession(),session);
+    invariant(session?.ownerAccountId===owner&&session.authKind==='supabase','CLOUD_LOGIN_REQUIRED','请登录云端账号。');
+    if(!this.getSettings(owner).document.sync.enabled||this.running.has(owner))return{skipped:true};
+    let status=this.status(owner),baseline=this.confirmed(owner);
+    if(!status.pending&&!status.unverifiedLocal&&!status.privacyRedactions&&baseline&&status.localChanged){
+      const local=this.fingerprints(this.backups.snapshot(owner).data,owner);
+      if(baseline.protected_checksum&&local.protected===baseline.protected_checksum&&local.personal!==baseline.personal_checksum){
+        this.enqueue(owner,`auto:${randomUUID()}`);status=this.status(owner);
+      }
+    }
+    if(status.pending){
+      if(status.conflicts)return{blocked:true,reason:'SYNC_CONFLICT'};
+      const result=await this.flush(owner);onProgress();
+      if(!active()||this.status(owner).pending)return{pending:true};
+      if(result.personalVerified&&(!result.verified))return{blocked:true,reason:'UNVERIFIED_LOCAL'};
+    }
+    invariant(active(),'SESSION_CHANGED','登录状态已变化。');
+    status=this.status(owner);baseline=this.confirmed(owner);
+    if(status.pending||status.unverifiedLocal||status.privacyRedactions)return{blocked:true,reason:'UNVERIFIED_LOCAL'};
+    const originalFingerprint=this.backups.dataChecksum(owner),originalRevision=status.cloudRevision;
+    const originalEnvelope=baseline?.envelope_checksum;
+    const unchanged=()=>{
+      invariant(active(),'SESSION_CHANGED','登录状态已变化。');
+      const now=this.status(owner),confirmed=this.confirmed(owner);
+      invariant(this.getSettings(owner).document.sync.enabled&&this.backups.dataChecksum(owner)===originalFingerprint
+        &&now.cloudRevision===originalRevision&&confirmed?.envelope_checksum===originalEnvelope&&!now.pending&&!now.unverifiedLocal&&!now.privacyRedactions,
+        'SAVE_CHANGED','核对期间本机存档已变化，原数据已保留，请重新同步。');
+    };
+    this.running.add(owner);onProgress();let previewId;
+    try{
+      const cloud=await this.remote.cloudSave('read',session);unchanged();
+      if(!cloud?.envelope)return{idle:true};
+      this.backups.validate(cloud.envelope,owner);
+      invariant(Number.isSafeInteger(cloud.revision)&&cloud.revision>=originalRevision&&cloud.checksum===cloud.envelope.checksum,
+        'SYNC_RECEIPT_MISMATCH','云端存档版本或校验不一致。');
+      if(cloud.revision===originalRevision&&originalEnvelope)invariant(cloud.checksum===originalEnvelope,'SYNC_RECEIPT_MISMATCH','同一云端版本返回了不同的存档。');
+      this.observations.set(owner,{revision:cloud.revision,checkedAt:new Date().toISOString(),error:null});
+      const local=this.fingerprints(this.backups.snapshot(owner).data,owner),remote=this.fingerprints(cloud.envelope.data,owner);
+      if(local.data===remote.data){
+        // Other domains may have already applied their authoritative snapshot.
+        // Confirm exact full-view equality without overwriting any local row.
+        transaction(this.db,()=>{unchanged();this.acceptCloudRestore(owner,{envelope:cloud.envelope,cloudRevision:cloud.revision});});
+        return{verified:true,revision:cloud.revision,readbackOnly:true};
+      }
+      if(!baseline){this.observations.get(owner).error='SYNC_BASELINE_REQUIRED';return{blocked:true,reason:'SYNC_BASELINE_REQUIRED'};}
+      if(cloud.revision===originalRevision){
+        // Upgrade pre-automatic checkpoints using their exact confirmed cloud
+        // envelope. Queue only unchanged protected data, never local authority.
+        if(remote.data===baseline.data_checksum&&local.protected===remote.protected&&local.personal!==remote.personal){
+          transaction(this.db,()=>{unchanged();this.recordBaseline(owner,cloud.envelope,cloud.revision);});
+          return{retryNextCycle:true};
+        }
+        this.observations.get(owner).error='PROTECTED_LOCAL_CHANGED';return{blocked:true,reason:'PROTECTED_LOCAL_CHANGED'};
+      }
+      invariant(!status.localChanged,'SYNC_REMOTE_CONFLICT','云端和本机都有更新，原存档已保留，请先预览云端版本。');
+      unchanged();await this.backups.prepareCloud?.(cloud.envelope,owner);unchanged();
+      previewId=randomUUID();
+      const preview={owner,envelope:cloud.envelope,currentChecksum:originalFingerprint,cloudRevision:cloud.revision,expiresAt:Date.now()+60_000};
+      this.backups.previews.set(previewId,preview);
+      const restored=transaction(this.db,()=>{
+        unchanged();const result=this.backups.restore(owner,{previewId,actionId:`auto-restore:${randomUUID()}`,mode:'replace'});
+        invariant(active()&&this.fingerprints(this.backups.snapshot(owner).data,owner).data===remote.data,
+          'SYNC_READBACK_MISMATCH','恢复后的完整存档不一致，原数据已保留。');
+        this.acceptCloudRestore(owner,preview);return result;
+      });
+      return{verified:true,applied:true,revision:cloud.revision,checksum:cloud.checksum,preservedBackup:restored.preservedBackup};
+    }catch(error){
+      if(active())this.observations.set(owner,{...this.observations.get(owner),error:error.code||'SYNC_UNAVAILABLE'});
+      if(error.code==='SESSION_INVALIDATED')this.onInvalidSession?.(owner);
+      throw error;
+    }finally{if(previewId)this.backups.previews.delete(previewId);this.running.delete(owner);}
+  }
   acceptCloudRestore(owner, preview) {
     if (!Number.isInteger(preview?.cloudRevision)) return;
     // Superseded pending local data remains archived in the outbox; never rebase and push it blindly.
@@ -192,6 +294,7 @@ class AccountSync {
       this.db.prepare(`INSERT INTO account_sync_checkpoints VALUES(?,?,?,?,?) ON CONFLICT(owner_account_id)
         DO UPDATE SET cloud_revision=excluded.cloud_revision,envelope_checksum=excluded.envelope_checksum,data_checksum=excluded.data_checksum,verified_at=excluded.verified_at`)
         .run(owner,preview.cloudRevision,preview.envelope.checksum,digest,at);
+      this.recordBaseline(owner,preview.envelope,preview.cloudRevision);
       if(this.dataChecksum(this.backups.snapshot(owner).data,owner)===digest)
         this.db.prepare('UPDATE account_sync_sources SET authority_pending=0 WHERE owner_account_id=?').run(owner);
     });
@@ -221,6 +324,7 @@ class AccountSync {
       this.db.prepare(`INSERT INTO account_sync_checkpoints VALUES(?,?,?,?,?) ON CONFLICT(owner_account_id)
         DO UPDATE SET cloud_revision=excluded.cloud_revision,envelope_checksum=excluded.envelope_checksum,data_checksum=excluded.data_checksum,verified_at=excluded.verified_at`)
         .run(owner, cloudRevision, envelope.checksum, digest, at);
+      this.recordBaseline(owner,envelope,cloudRevision);
       this.db.prepare('UPDATE account_sync_sources SET authority_pending=0 WHERE owner_account_id=?').run(owner);
     });
     return { verified: true, revision: cloudRevision };
