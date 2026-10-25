@@ -60,7 +60,18 @@ try {
     const stage = page.locator('.resources-preview .resource-stage[data-status="ready"][data-action="walk"][data-fallback="false"]'); await stage.waitFor();
     assert.equal(await stage.locator('canvas').count(), 1); await page.waitForTimeout(300);
     const identity = await stage.evaluate(element => ({ id: element.getAttribute('data-resource-id'), clip: element.getAttribute('data-clip'), texture: element.querySelector('.resource-sprite-host')?.getAttribute('data-texture-key') }));
-    assert.equal(identity.id, pet.resource.resourceId); assert.ok(identity.texture); proof.checks.push({ id: `packaged-${pet.element}-walk`, petId: pet.petId, identity });
+    assert.equal(identity.id, pet.resource.resourceId); assert.ok(identity.texture);
+    const frames = await stage.locator('.resource-sprite-host').evaluate(async element => {
+      const samples = [];
+      for (let count = 0; count < 7; count++) {
+        samples.push({ at: performance.now(), frame: element.dataset.frame, texture: element.dataset.frameTexture, region: element.dataset.textureFrame });
+        await new Promise(done => setTimeout(done, 120));
+      }
+      return samples;
+    });
+    assert.ok(new Set(frames.map(frame => frame.texture)).size > 1 && new Set(frames.map(frame => frame.region)).size > 1, 'Walking must advance actual atlas texture regions');
+    await stage.locator('canvas').screenshot({ path: join(output, `${pet.element}-walk-canvas.png`) });
+    proof.checks.push({ id: `packaged-${pet.element}-walk`, petId: pet.petId, identity, frames });
     await page.screenshot({ path: join(output, `${pet.element}-walk.png`) });
   }
   await invoke('battle', 'selectPet', { actionId: randomUUID(), petId: selected.petId });
