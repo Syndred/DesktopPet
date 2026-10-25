@@ -1,0 +1,53 @@
+{
+  "module": "garden",
+  "request": "QA-003 fixed standard role names and complete stable instance numbers",
+  "phase": "implemented-static-checks-passed-awaiting-09-live-acceptance",
+  "baseCheckpoint": "9e57de1d210376ce679168eb1acbff8e37cff1cd",
+  "date": "2026-10-25",
+  "identityContract": "docs/implementation/companions-display-identity-contract.json",
+  "scope": [
+    "Territory challenge owned-pet picker",
+    "Current garrison and pending-garrison confirmation",
+    "Kitchen and inventory feeding target, progress preview and feedback",
+    "Original-action retry feedback",
+    "Garden portrait accessible identity"
+  ],
+  "projection": {
+    "source": "../companions/identity companionIdentity(pet)",
+    "fields": [
+      "roleName",
+      "complete original petId as instanceNumber",
+      "historicalNickname explicitly secondary"
+    ],
+    "fullNumberWrapping": true,
+    "appearanceUsedToInferIdentity": false,
+    "missingTemplate": "Authenticated read-only companions.identity IPC; owner and petId scoped; late replies discarded"
+  },
+  "bindings": {
+    "selection": "existing original petId",
+    "ownership": "existing ownerAccountId + petId",
+    "mutationPayloadsChanged": false,
+    "commandPayloadExpressionsPreserved": 9,
+    "canonicalWritesAdded": false,
+    "persistedNameSerialTemplatePetIdGrowthHistoryChanged": false,
+    "economyTerritoryCloudRulesChanged": false
+  },
+  "checks": {
+    "uiTypecheck": "passed",
+    "targetedGardenEslint": "passed",
+    "originalMutationAstComparison": "passed",
+    "reactReview": "Hoisted picker option, stable primitive effect dependencies, cancelled owner/id lookups, no identity persistence, wrapped full IDs and accessible target labels"
+  },
+  "liveAcceptance": {
+    "ownerThread": "01a1725c-d59c-7620-9bb6-1c0d4e0fb3a3",
+    "status": "pending09 designated-pet feeding and garrison",
+    "visibleAutomationStartedByThisChat": false,
+    "applicationRepackaged": false,
+    "userApplicationClosed": false
+  },
+  "tsMigration": "paused; existing UI only",
+  "oldServer": "excluded",
+  "remaining": [
+    "09 real input and persistence readback for the selected original petId"
+  ]
+}

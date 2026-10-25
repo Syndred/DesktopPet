@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { GardenCommand, GardenResult, GardenSnapshot } from "../../../../../../packages/shared-types/src/features/garden";
+import { companionIdentity } from '../companions/identity';
 
 interface Bridge {
   invoke<T>(feature: string, command: string, payload?: unknown): Promise<GardenResult<T>>;
@@ -76,7 +77,7 @@ export function useGarden() {
       }
       succeeded = result;
       await refresh();
-      setMessage(result.replayed ? "已确认。" : success);
+      setMessage(result.replayed ? `${success}（原操作已确认）` : success);
     } catch (failure) {
       if (mounted.current) setError(`${failure instanceof Error ? failure.message : "连接中断"}。可安全重试原操作。`);
     } finally {
@@ -89,7 +90,16 @@ export function useGarden() {
     if (readPending(snapshot.ownerAccountId)) { setError("上次操作的结果尚未确认，请先重试原操作"); return Promise.resolve(false); }
     return execute({ owner: snapshot.ownerAccountId, command, input: { ...payload, sessionOwnerAccountId: snapshot.ownerAccountId, actionId: crypto.randomUUID(), expectedRevision: revision } }, success);
   }, [snapshot, busy, execute, revision]);
-  const retry = () => pending ? execute(pending, "原操作已确认保存。") : Promise.resolve(false);
+  const retry = () => {
+    if (!pending) return Promise.resolve(false);
+    const originalPetId = pending.input.petId;
+    const originalPet = snapshot?.ownerAccountId === pending.owner ? snapshot.pets.find(pet => pet.petId === originalPetId) : undefined;
+    const roleName = originalPet?.templateId ? companionIdentity(originalPet).roleName : '伙伴';
+    const target = typeof originalPetId === 'string' ? `${roleName}（编号 ${originalPetId}）` : '';
+    const message = pending.command === 'feed' && target ? `已确认${target}的原喂养操作。`
+      : pending.command === 'garrison' && target ? `已确认${target}的原驻守操作。` : '原操作已确认保存。';
+    return execute(pending, message);
+  };
   return { snapshot, revision, loading, busy, message, error, errorCode, pending, now, refresh, mutate, retry };
 }
 export type GardenState = ReturnType<typeof useGarden>;

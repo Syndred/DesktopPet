@@ -33,3 +33,12 @@
 .garden-save-note>span{display:inline-flex;gap:4px;align-items:center;color:var(--g-muted)}
 .garden-save-note svg{flex-shrink:0}
 .garden-item .garden-source{display:inline-flex;width:max-content;align-items:center;justify-content:center;min-height:20px}
+.garden-feature .garden-pet{min-width:132px}
+.garden-pet-identity{display:grid;gap:4px;min-width:0;width:100%;text-align:left}
+.garden-feature .garden-pet-identity strong{max-width:none;white-space:normal;overflow:visible;text-overflow:clip;overflow-wrap:anywhere;font-size:13px}
+.garden-feature .garden-instance-number{display:block;white-space:normal;overflow:visible;text-overflow:clip;overflow-wrap:anywhere;word-break:break-all;line-height:1.6;font-size:11px;font-variant-numeric:tabular-nums;color:var(--g-muted)}
+.garden-historical-name{white-space:normal;overflow-wrap:anywhere;font-size:11px;color:var(--g-muted)}
+.garden-selected-identity{display:grid;gap:6px;margin:10px 0;padding:10px;border:1px solid var(--g-border);border-radius:8px;background:#f8faff}
+.garden-selected-identity>span:first-child{font-size:11px;color:var(--g-muted)}
+.garden-notice>span{min-width:0;overflow-wrap:anywhere}
+.garden-notice{overflow-wrap:anywhere}
