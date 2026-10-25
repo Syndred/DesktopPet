@@ -18,9 +18,11 @@ function checksum(value) { return createHash("sha256").update(canonical(value)).
 function saveDataChecksum(data) {
   const sortRows = rows => [...rows].sort((a,b) => { const left=canonical(a),right=canonical(b); return left < right ? -1 : left > right ? 1 : 0; });
   const modules = { ...data.modules };
-  const garden = modules.garden;
-  if (garden?.data?.tables) modules.garden = { ...garden, data: { ...garden.data,
-    tables: Object.fromEntries(Object.entries(garden.data.tables).map(([name,rows]) => [name, sortRows(rows)])) } };
+  for(const id of ['garden','companions']) {
+    const module=modules[id];
+    if (module?.data?.tables) modules[id] = { ...module, data: { ...module.data,
+      tables: Object.fromEntries(Object.entries(module.data.tables).map(([name,rows]) => [name, sortRows(rows)])) } };
+  }
   const tables = Object.fromEntries(Object.entries(data.tables).map(([name,table]) => [name, { ...table, rows: sortRows(table.rows) }]));
   return checksum({ ...data, modules, tables });
 }

@@ -15,7 +15,7 @@ class AccountSync {
       AND status='verified' ORDER BY verified_at DESC LIMIT 1`).get(owner);
     const checkpoint = this.db.prepare('SELECT * FROM account_sync_checkpoints WHERE owner_account_id=?').get(owner);
     const savedChecksum = checkpoint && state && checkpoint.cloud_revision === state.cloud_revision && checkpoint.envelope_checksum === state.last_checksum
-      ? checkpoint.data_checksum : receipt ? saveDataChecksum(JSON.parse(receipt.document).data) : null;
+      ? checkpoint.data_checksum : receipt ? saveDataChecksum(this.backups.normalizeData(JSON.parse(receipt.document).data,owner)) : null;
     return { configured: Boolean(this.remote.enabled), cloudRevision: state?.cloud_revision || 0,
       lastVerifiedAt: state?.last_verified_at || null, lastError: state?.last_error || null,
       pending: counts.reduce((n, c) => n + c.count, 0), conflicts: counts.find(c => c.status === "conflict")?.count || 0,
@@ -119,7 +119,7 @@ class AccountSync {
     invariant(!current || cloudRevision >= current.cloud_revision, 'SYNC_STALE_READBACK', '云端存档读回版本较旧。');
     invariant(!current || cloudRevision !== current.cloud_revision || !current.last_checksum || current.last_checksum === envelope.checksum,
       'SYNC_RECEIPT_MISMATCH', '同一云端版本返回了不同的存档。');
-    const digest = saveDataChecksum(envelope.data);
+    const digest = saveDataChecksum(this.backups.normalizeData(envelope.data,owner));
     invariant(this.backups.dataChecksum(owner) === digest, 'CLOUD_LOCAL_CONFLICT', '其他本机进度尚未与完整云端存档一致，已保留原数据。');
     transaction(this.db, () => {
       const at = new Date().toISOString();
