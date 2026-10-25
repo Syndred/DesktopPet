@@ -2,7 +2,7 @@
   "module": "resources",
   "scope": "Private Supabase Storage packages, owner/Auth UID boundary, durable resume, new-client preservation and legacy archive cleanup",
   "branch": "codex/lingjing-resources",
-  "commit": "bae0ea2f17978ff68bc42aabaa7ad8d9c1a2cbca",
+  "commit": "c02b20c05d4b09452873ee6570b8cd9df9f977e9",
   "baselineCommit": "46abf416e0500b53ef32fc29b441d923ef5a6a80",
   "goalStatus": "active",
   "contracts": {
@@ -30,7 +30,7 @@
     },
     {
       "command": "node --test apps/pc-app/runtime/features/resources/verification/storage-rls-sql.test.mjs",
-      "result": "7/7 passed, including service-only authority/idempotency, forged personal CAS rejection and transactional rollback",
+      "result": "8/8 passed with actual08 transaction guard source, including revoked/deleted/expired/anonymous SID rejection before replay and atomic no changes",
       "kind": "LOCAL PGlite 0.5.11 using approved 08 identity migration; not real cloud"
     },
     {
@@ -100,7 +100,7 @@
     "Old-source migration and two physical devices remain separate coordinator acceptance conditions"
   ],
   "identityCheckpoint": "f81008ce1f88c2b6c11d0bb05122d5afb5891039",
-  "phase": "server authority checkpoint ready for coordinator review/apply/deploy; client exact cloudActor and v2 restore implemented; real dual Electron pending",
+  "phase": "server guard increment ready: verified with08 actual guard SQL; deploy08 session ledger and assert_service_actor before resource authority registration",
   "functions": [
     {
       "name": "lingjing-resources",
@@ -114,5 +114,9 @@
       ],
       "deployment": "coordinator-only, pending"
     }
+  ],
+  "serverDependencies": [
+    "infra/supabase/migrations/20261025031842_lingjing_session_revocation_ledger.sql",
+    "infra/supabase/migrations/20261025033602_lingjing_transaction_actor_guard.sql"
   ]
 }

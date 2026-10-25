@@ -1,15 +1,16 @@
-✔ LOCAL SQL: private bucket and immutable index permit same-account separate sessions only (21.6586ms)
-✔ LOCAL SQL: spoofed owner/UID/path and oversized index are rejected (19.2725ms)
-✔ LOCAL SQL: anonymous, missing/revoked sessions and wrong device are denied (7.6731ms)
-✔ LOCAL SQL: immutable objects/index cannot be replaced or deleted through client permissions (5.2238ms)
-✔ LOCAL SQL: only service-verified receipts can register protected resource references atomically (29.122ms)
-✔ LOCAL SQL: personal CAS cannot invent a private resource reference; a failed ledger write rolls back the save too (33.1691ms)
-✔ LOCAL SQL: single-device revocation blocks both Storage/index while other same-account device survives (12.3877ms)
-ℹ tests 7
+✔ LOCAL SQL: private bucket and immutable index permit same-account separate sessions only (17.2364ms)
+✔ LOCAL SQL: spoofed owner/UID/path and oversized index are rejected (8.2774ms)
+✔ LOCAL SQL: anonymous, missing/revoked sessions and wrong device are denied (5.6525ms)
+✔ LOCAL SQL: immutable objects/index cannot be replaced or deleted through client permissions (4.6912ms)
+✔ LOCAL SQL: only service-verified receipts can register protected resource references atomically (26.4309ms)
+✔ LOCAL SQL: personal CAS cannot invent a private resource reference; a failed ledger write rolls back the save too (36.233ms)
+✔ LOCAL SQL: privileged registration rechecks real session, expiry, anonymous status and exact device before replay (11.0796ms)
+✔ LOCAL SQL: single-device revocation blocks both Storage/index while other same-account device survives (12.5891ms)
+ℹ tests 8
 ℹ suites 0
-ℹ pass 7
+ℹ pass 8
 ℹ fail 0
 ℹ cancelled 0
 ℹ skipped 0
 ℹ todo 0
-ℹ duration_ms 1767.9793
+ℹ duration_ms 1675.6311
