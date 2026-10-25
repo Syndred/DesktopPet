@@ -1,0 +1,30 @@
+{
+  "issue": "QA-008",
+  "status": "source-fixed-awaiting-09-retest",
+  "baselineCommit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+  "reportedCandidate": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+  "reportedBy": "09",
+  "classification": "Intermittent stale-page revision conflict; normal page re-entry recovers, not inability to change behavior.",
+  "rootCause": "Local natural-position checkpoint increments pet/account revision every5s but did not call changed(owner), leaving the existing UI subscription without the updated CAS revision.",
+  "fix": "Publish changed(owner) after an actual position transaction commits. Stationary checkpoints and rolled-back writes publish nothing.",
+  "concurrencyProtection": "Whole-pet expectedRevision, actionId ledger and rollback semantics are unchanged. No blind retry, revision bypass, independent field overwrite or new cloud protocol is introduced. Existing UI conflict handling reloads and asks the user to choose again.",
+  "validation": {
+    "passed": 24,
+    "failed": 0,
+    "newCases": 4,
+    "actualSQLite": true,
+    "separateQueryOnlyCommitObserver": true,
+    "protocolSimulations": 7,
+    "realUI": false,
+    "realMouseKeyboard": false,
+    "fullPackageBuilds": 0,
+    "scope": [
+      "post-commit revision notification",
+      "stationary no-op",
+      "rolled-back position update",
+      "genuine concurrent behavior/scale edit remains protected"
+    ]
+  },
+  "windowsWorkingTreeSha256": "77c54d70f639cb2fc77344e236af3eb0a1a2f083874d7fe7722697ccaff22613",
+  "nextStep": "09 rechecks a page left open while wander/follow persists positions, then chooses another mode normally; genuine concurrent edits must still conflict."
+}

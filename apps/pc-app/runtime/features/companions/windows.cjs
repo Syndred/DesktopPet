@@ -22,6 +22,27 @@ function placeDesktopWindow(window, pet, screen, position) {
   return bounds;
 }
 
+function persistLocalDesktopPosition({ entry, service, bounds, displayId, changed }) {
+  const committed = atomic(service.db, () => {
+    const pet = service.requirePet(entry.owner, entry.pet.petId);
+    const previous = pet.desktop.position;
+    const moved = previous.x !== bounds.x || previous.y !== bounds.y || previous.displayId !== displayId;
+    if (moved) {
+      pet.desktop.position = { x: bounds.x, y: bounds.y, displayId };
+      service.storePet(pet);
+      service.db.prepare('UPDATE companion_accounts SET revision = revision + 1 WHERE owner_account_id = ?').run(entry.owner);
+      entry.pet = pet;
+    }
+    // Do not rewrite stationary saved coordinates for Windows fractional-DPI rounding on every restart.
+    entry.positionDirty = false;
+    return moved;
+  });
+  // The renderer caches per-pet CAS revisions. Publish only after the SQLite
+  // savepoint commits; otherwise natural movement silently leaves an open UI stale.
+  if (committed) changed(entry.owner);
+  return committed;
+}
+
 /** Window policy belongs to foundation/accounts; the same React/Pixi resource stage renders every 2D pet. */
 function createDesktopWindowManager({ services, service, ensureImported, changed }) {
   const { screen } = require('electron');
@@ -56,18 +77,7 @@ function createDesktopWindowManager({ services, service, ensureImported, changed
       }).finally(()=>{if(entry.positionPromise===promise)entry.positionPromise=null;});
       entry.positionPromise=promise;return promise;
     }
-    atomic(service.db, () => {
-      const pet = service.requirePet(entry.owner, entry.pet.petId);
-      const previous = pet.desktop.position;
-      if (previous.x !== bounds.x || previous.y !== bounds.y || previous.displayId !== String(display.id)) {
-        pet.desktop.position = { x: bounds.x, y: bounds.y, displayId: String(display.id) };
-        service.storePet(pet);
-        service.db.prepare('UPDATE companion_accounts SET revision = revision + 1 WHERE owner_account_id = ?').run(entry.owner);
-        entry.pet = pet;
-      }
-      // Do not rewrite stationary saved coordinates for Windows fractional-DPI rounding on every restart.
-      entry.positionDirty = false;
-    });
+    return persistLocalDesktopPosition({ entry, service, bounds, displayId: String(display.id), changed });
   }
   function destroy(entry, persist = true) {
     if (entry.window.isDestroyed()) return;
@@ -180,4 +190,4 @@ function createDesktopWindowManager({ services, service, ensureImported, changed
     dispose() { disposed = true; stopPolicy(); for (const timer of [motionTimer, syncTimer, saveTimer]) clearInterval(timer); for (const entry of [...entries.values()]) destroy(entry); }
   };
 }
-module.exports = { createDesktopWindowManager, boundsFor, placeDesktopWindow };
+module.exports = { createDesktopWindowManager, boundsFor, placeDesktopWindow, persistLocalDesktopPosition };
