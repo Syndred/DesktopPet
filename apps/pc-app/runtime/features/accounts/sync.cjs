@@ -282,6 +282,19 @@ class AccountSync {
         return{verified:true,revision:cloud.revision,readbackOnly:true};
       }
       if(!baseline){this.observations.get(owner).error='SYNC_BASELINE_REQUIRED';return{blocked:true,reason:'SYNC_BASELINE_REQUIRED'};}
+      if(cloud.revision>originalRevision&&local.protected===remote.protected&&local.personal!==remote.personal
+        &&remote.personal===baseline.personal_checksum){
+        // A domain readback may apply its authority while this reconciler owns
+        // the shared sync lock. Personal edits can then follow that readback.
+        // Confirm the unchanged server personal branch against the exact old
+        // envelope, and adopt only the already-applied protected head. Keep all
+        // local rows; a later cycle queues the personal edits at this new base.
+        const original=await this.confirmedDocument(owner,baseline,session,unchanged);unchanged();
+        invariant(this.fingerprints(original.data,owner).personal===remote.personal,
+          'SYNC_READBACK_MISMATCH','已确认版本的个人存档校验不一致，原数据已保留。');
+        transaction(this.db,()=>{unchanged();this.acceptCloudRestore(owner,{envelope:cloud.envelope,cloudRevision:cloud.revision});});
+        return{verified:true,revision:cloud.revision,readbackOnly:true,personalPending:true};
+      }
       if(cloud.revision===originalRevision){
         // Upgrade pre-automatic checkpoints using their exact confirmed cloud
         // envelope. Queue only unchanged protected data, never local authority.
