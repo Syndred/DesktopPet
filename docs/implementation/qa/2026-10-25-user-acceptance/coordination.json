@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-25T14:20:56.3544663Z",
+  "updatedAt": "2026-10-25T14:50:38.1869046Z",
   "status": "in-progress",
   "qaThreadId": "01a172b4-d7f0-7213-9a40-092418ee776b",
   "soleNativeInputOwner": "01a172b4-d7f0-7213-9a40-092418ee776b",
@@ -154,11 +154,12 @@
     },
     {
       "issueId": "QA-014",
-      "owner": "04+08",
+      "owner": "04+05+08",
       "severity": "P2",
-      "status": "confirmed display gap; trusted read-only battle serial metadata and IPC view implementation in progress",
+      "status": "Main view/friend RPC integrated; territory read-only source under independent scope review; same-final-candidate native retest pending",
       "activeResponsibleThreadIds": [
         "01a172b4-bb6d-7061-882f-48af515b9bdc",
+        "01a172b5-695c-7712-9047-53a020eae0c0",
         "01a172b4-d081-7f53-bbda-0987e5a4c7ac"
       ],
       "sourceBaseline": "1346f07ac907a0a249d28e760077a98ab49da0c8",
@@ -171,7 +172,7 @@
   "releaseGate": "All release blockers fixed and independently retested; full scenario matrix reports actual pass/fail/blocked per same final portable; no mock-only full acceptance claims",
   "productionFreeze": "e875febf3430be341191a639668d43e7f09826dc",
   "candidate": {
-    "status": "cold/hot, two profiles, cold-pair and renderer storage passed; cloud garden transport-outage recovery pending",
+    "status": "All e875 critical startup/storage and real-cloud garden outage recovery gates passed; QA013/QA014 absent, final98 still pending",
     "sourceCommit": "e875febf3430be341191a639668d43e7f09826dc",
     "path": "releases/user-acceptance-e875feb/Lingjing-0.1.8-portable-x64.exe",
     "bytes": 169213223,
@@ -194,9 +195,9 @@
       "originalWindowRestored": true,
       "secondProfile": true,
       "coldPair": true,
-      "crossRootPersistence": false,
+      "crossRootPersistence": true,
       "rendererStorageAcrossRoots": true,
-      "gardenOutboxAcrossRoots": false,
+      "gardenOutboxAcrossRoots": true,
       "lastObservedLocalMainPid": 12988
     },
     "startupDiagnostic": {
@@ -215,7 +216,8 @@
       "helperFixOwner": "01",
       "soleNextProductLaunchOwner": "09",
       "retestRequiresFreshEvidenceDirectory": true
-    }
+    },
+    "cloudGardenOutageReadback": "docs/implementation/evidence/foundation/user-acceptance-e875feb/cloud-garden-outage.json"
   },
   "identityConsumerCommits": {
     "companions": "ad20468b38c89a79090de435a2cfcf8d2e928ec7",
@@ -272,7 +274,7 @@
     }
   },
   "nextCandidate": {
-    "status": "Build held pending actual cloud garden outage recovery and QA014 trusted battle serial views; QA013 source verified",
+    "status": "QA013 integrated; QA014 main/friend source integrated, awaiting territory scope-review closure and unified final checks before unique build",
     "requiredContract": "docs/implementation/companions-global-serial-contract.json",
     "sourceFixes": {
       "QA008": "02ea2dac317b3aaaee12cf9517b456450391cf9c",
@@ -282,7 +284,12 @@
       "QA012": "0ef2443",
       "notificationFeedback": "e875feb",
       "QA013": "4405a2e",
-      "QA013NodeNext": "a594f09"
+      "QA013NodeNext": "a594f09",
+      "QA014": {
+        "main": "c21eb0c23e8e9fb6148ddf98344921dfeb3f611c",
+        "friendRpc": "e73e733ead340f4bdd37b9bb65b30cef7435d349",
+        "territoryRpc": "pending final review"
+      }
     },
     "rootTargetedVerification": {
       "QA008": {
@@ -343,9 +350,10 @@
     "liveCapture": "docs/implementation/evidence/cloud/2026-10-25/global-serial-live-capture.json",
     "temporaryQaGrantRenewal": {
       "namespaceUnchanged": true,
-      "expiresAt": "2026-10-25T15:00:00Z",
+      "expiresAt": "2026-10-25T17:00:00Z",
       "restoreManifest": "artifacts/qa/user-acceptance/global-serial/grants-renewal-active.json",
-      "restoreAfterAcceptance": true
+      "restoreAfterAcceptance": true,
+      "currentRestoreScript": "artifacts/qa/user-acceptance/global-serial/restore-original-qa-grant-expiries-from-1700.sql"
     }
   },
   "activeTeam": {
