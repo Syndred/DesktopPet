@@ -1,0 +1,57 @@
+{
+  "format": "lingjing.resources.fixture-sqlite-readback",
+  "version": 1,
+  "readAt": "2026-10-25T11:33:44.759Z",
+  "readOnly": true,
+  "queryOnly": true,
+  "fixtureOnly": true,
+  "runId": "1dab5c8f-9c2c-434e-b1fd-b27bb5cac42f",
+  "pets": [
+    {
+      "owner_account_id": "qa_resources_consumer_20261025",
+      "pet_id": "pet-resource-fixture-01",
+      "revision": 1,
+      "templateId": "big-fish-gentle",
+      "originalName": "相同历史昵称",
+      "historicalSerial": "相同历史编号",
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "rawUntrustedSerial": "777777777"
+    },
+    {
+      "owner_account_id": "qa_resources_consumer_20261025",
+      "pet_id": "pet-resource-fixture-02",
+      "revision": 2,
+      "templateId": "big-fish-gentle",
+      "originalName": "相同历史昵称",
+      "historicalSerial": "相同历史编号",
+      "resourceId": "builtin:lingjing-shiba-v2",
+      "rawUntrustedSerial": "777777777"
+    },
+    {
+      "owner_account_id": "qa_resources_consumer_20261025",
+      "pet_id": "pet-resource-fixture-03",
+      "revision": 1,
+      "templateId": "big-fish-gentle",
+      "originalName": "相同历史昵称",
+      "historicalSerial": "相同历史编号",
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "rawUntrustedSerial": "777777777"
+    }
+  ],
+  "actions": [
+    {
+      "operation": "adopt",
+      "n": 3
+    },
+    {
+      "operation": "appearance",
+      "n": 1
+    }
+  ],
+  "appearanceReceipt": {
+    "owner_account_id": "qa_resources_consumer_20261025",
+    "action_id": "c308a2df-32f5-4a94-a6b8-d51981dc6cb2",
+    "operation": "appearance",
+    "result_json": "{\"ok\":true,\"data\":{\"pet\":{\"ownerAccountId\":\"qa_resources_consumer_20261025\",\"petId\":\"pet-resource-fixture-02\",\"templateId\":\"big-fish-gentle\",\"name\":\"相同历史昵称\",\"serial\":\"相同历史编号\",\"element\":\"water\",\"resource\":{\"resourceId\":\"builtin:lingjing-shiba-v2\",\"kind\":\"2d\"},\"source\":\"adoption\",\"origin\":{},\"growth\":{\"level\":1,\"experience\":0,\"mood\":60,\"satiety\":60,\"affinity\":0,\"winsTotal\":0,\"stats\":{\"hp\":124,\"atk\":28,\"def\":24,\"spd\":20}},\"desktop\":{\"visible\":false,\"behavior\":\"quiet\",\"scale\":1,\"position\":{\"x\":320,\"y\":520,\"displayId\":null}},\"revision\":2,\"createdAt\":\"2026-10-25T11:32:07.713Z\",\"updatedAt\":\"2026-10-25T11:32:09.065Z\",\"globalSerial\":\"777777777\"},\"selections\":{\"chatPetId\":null,\"battlePetId\":null,\"guardPetId\":null}},\"revision\":4,\"duplicate\":false}"
+  }
+}

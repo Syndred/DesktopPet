@@ -1,0 +1,121 @@
+{
+  "format": "lingjing.resources.global-serial.consumer-closure",
+  "version": 1,
+  "updatedAt": "2026-10-25T11:33:44.770Z",
+  "role": "07",
+  "branch": "codex/lingjing-07-fresh-20261025",
+  "approvedBase": "85321dc2b2837e261d159ef136bcf52d855d6207",
+  "displayInterfaceCommit": "a528ebcf90e33491364a606747727f7f28f46457",
+  "trustedProjectionCommit": "96da941c598d613d03d2ea6cc0afd3902735b1a5",
+  "result": "directed-consumer-check-passed-no-product-patch",
+  "completeUserAcceptancePassed": false,
+  "checks": [
+    {
+      "command": "node docs/implementation/evidence/resources/global-serial-2026-10-25/consumer-check.cjs",
+      "exitCode": 0,
+      "runId": "1dab5c8f-9c2c-434e-b1fd-b27bb5cac42f",
+      "passedChecks": 6,
+      "kind": "actual component, actual IPC and file SQLite with synthetic authority/resource metadata"
+    },
+    {
+      "command": "npm run typecheck:ui",
+      "exitCode": 0,
+      "kind": "UI static typecheck"
+    },
+    {
+      "command": "node node_modules/eslint/bin/eslint.js apps/pc-app/ui/src/features/resources/ApplyToCompanion.tsx",
+      "exitCode": 0,
+      "kind": "targeted resource component lint"
+    },
+    {
+      "command": "git diff --check",
+      "exitCode": 0,
+      "kind": "whitespace"
+    },
+    {
+      "command": "git diff --quiet e6dd93c HEAD -- apps/pc-app/ui/src/features/resources apps/pc-app/runtime/features/resources packages/shared-types/src/features/resources",
+      "exitCode": 0,
+      "kind": "resource source bytes preserved"
+    },
+    {
+      "check": "independent reopen of fixture.sqlite with readOnly:true and PRAGMA query_only=ON",
+      "passed": true,
+      "evidence": "sqlite-readback.json"
+    }
+  ],
+  "evidence": {
+    "report": "consumer-check.json",
+    "sqliteReadback": "sqlite-readback.json",
+    "headlessScreenshots": [
+      "pending-headless-fixture.png",
+      "applied-headless-fixture.png",
+      "long-label-headless-fixture.png"
+    ],
+    "runner": "consumer-check.cjs"
+  },
+  "sourceFiles": [
+    {
+      "path": "apps/pc-app/ui/src/features/resources/ApplyToCompanion.tsx",
+      "sha256": "9e266e84506b41d7e04b2294e1a8931ebbbfa3bb02c7bd011f54ccb6823877e3"
+    },
+    {
+      "path": "apps/pc-app/ui/src/features/resources/binding.css",
+      "sha256": "58a015a175acf9453e15d15361308143b5dc0ba2f74a52c25af25a5f0adc6197"
+    },
+    {
+      "path": "apps/pc-app/runtime/features/companions/index.cjs",
+      "sha256": "f43d83190ca342cd378cde58f29376b34f24467ca5eab5535bcbc0c5edc80274"
+    },
+    {
+      "path": "apps/pc-app/runtime/features/companions/service.cjs",
+      "sha256": "bea795c2f9e6093ded571bd71911a15b3fe31268acda080508e254d8def83e61"
+    },
+    {
+      "path": "apps/pc-app/runtime/features/companions/global-serial-cache.cjs",
+      "sha256": "2458fc010d9db74d2e944ad4339fafe7939ed64516e7c74f670faf9a53f4112c"
+    },
+    {
+      "path": "apps/pc-app/runtime/features/companions/display-identity.mjs",
+      "sha256": "fdeb282ec4d0efbde116563824585a1b52174d7767a511a5ea4ce77d6e2578e5"
+    }
+  ],
+  "fixtureBoundary": {
+    "cloudRegistry": "Synthetic qa:resource-consumer-fixture values; no provider allocation or SQL/Edge deployment",
+    "resourceMetadata": "Synthetic ready spritesheet metadata for an existing roster resource; resource byte/license loading is outside this directed check",
+    "browser": "Original React component, real bridge and Radix controls in isolated headless Chromium; fixture width/base page styling is supplemental and does not prove native product layout",
+    "sqlite": "New namespaced local file; no normal account/profile accessed",
+    "safeStorage": "No OS safeStorage exercised; in-memory verified cache is sufficient for this consumer check",
+    "initialHarnessFailure": {
+      "runId": "92ecff30-8e8d-4b6d-9123-d4ab576b60d3",
+      "reason": "Fixture omitted accounts.identity; fixed fixture adapter only",
+      "productCodeChanged": false,
+      "preservedUnder": "artifacts/qa/resources-serial-consumer/92ecff30-8e8d-4b6d-9123-d4ab576b60d3"
+    }
+  },
+  "preservation": {
+    "resourceBytesPrefsLicenseAndRenderingProtocolUntouched": true,
+    "originalOwnerPetIdNicknameLegacySerialAndOldReceiptsRetained": true,
+    "noProjectionWrittenIntoRawPetJson": true,
+    "onlyIntendedAppearanceActionChangedSelectedFixturePet": true,
+    "noNativeInputOrExistingProcessTouched": true,
+    "noDependencyInstallRebuildOrDeletion": true,
+    "noPublishTagOrPush": true
+  },
+  "remoteSync": {
+    "command": "git pull --ff-only origin main",
+    "result": "Already up to date",
+    "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086",
+    "originMainIncluded": true,
+    "approvedBaseIncluded": true
+  },
+  "independentAcceptance": {
+    "ownerThread": "01a172b4-d7f0-7213-9a40-092418ee776b",
+    "status": "pending coordinator deployment and new candidate native acceptance",
+    "cases": [
+      "Duplicate historical nicknames/serials: confirmed numeric labels distinguish instances in resource selector/button/feedback.",
+      "Unconfirmed metadata shows 待同步; no UUID or imported numeric fallback.",
+      "Applying a new appearance to the second same-template instance affects only its original petId; original role and confirmed number remain.",
+      "At least four digits and long numbers remain fully visible in native options, selected value, action button and feedback."
+    ]
+  }
+}

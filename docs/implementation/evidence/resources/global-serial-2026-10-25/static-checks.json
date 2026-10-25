@@ -1,0 +1,16 @@
+{
+  "source": "85321dc2b2837e261d159ef136bcf52d855d6207",
+  "workingDirectory": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet-fresh-worktrees\\07",
+  "checks": [
+    {
+      "command": "npm run typecheck:ui",
+      "exitCode": 0,
+      "output": "\n> lingjing-desktop@0.1.8 typecheck:ui\n> tsc --noEmit -p apps/pc-app/ui/tsconfig.json\n\n"
+    },
+    {
+      "command": "node node_modules/eslint/bin/eslint.js apps/pc-app/ui/src/features/resources/ApplyToCompanion.tsx",
+      "exitCode": 0,
+      "output": ""
+    }
+  ]
+}

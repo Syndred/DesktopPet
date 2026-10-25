@@ -1,0 +1,153 @@
+{
+  "format": "lingjing.resources.global-serial.consumer-check",
+  "version": 1,
+  "runId": "1dab5c8f-9c2c-434e-b1fd-b27bb5cac42f",
+  "startedAt": "2026-10-25T11:32:07.484Z",
+  "source": "85321dc2b2837e261d159ef136bcf52d855d6207",
+  "evidenceKind": "local fixture: headless Chromium + actual React component + actual IPC + file SQLite",
+  "nativeDesktopInput": false,
+  "liveCloudNumberAllocation": false,
+  "cloudDeployedHere": false,
+  "checks": [
+    {
+      "name": "Unverified saved numeric metadata displays pending",
+      "passed": true,
+      "evidence": {
+        "label": "鱼丸\n编号 待同步",
+        "originalPetIds": [
+          "pet-resource-fixture-01",
+          "pet-resource-fixture-02",
+          "pet-resource-fixture-03"
+        ]
+      }
+    },
+    {
+      "name": "Actual component consumes IPC globalSerial labels without truncation",
+      "passed": true,
+      "evidence": {
+        "options": [
+          "鱼丸编号 0001",
+          "鱼丸编号 10000",
+          "鱼丸编号 900719925474099312345678901234567890123456789012345678901234567890123456789"
+        ],
+        "from": "actual companions:list / get and main listPets / getPet",
+        "syntheticRegistry": {
+          "format": "lingjing.global-serial.readback",
+          "version": 1,
+          "ownerAccountId": "qa_resources_consumer_20261025",
+          "namespace": "qa:resource-consumer-fixture",
+          "revision": 3,
+          "pets": [
+            {
+              "ownerAccountId": "qa_resources_consumer_20261025",
+              "petId": "pet-resource-fixture-01",
+              "templateId": "big-fish-gentle",
+              "namespace": "qa:resource-consumer-fixture",
+              "globalSerial": "1"
+            },
+            {
+              "ownerAccountId": "qa_resources_consumer_20261025",
+              "petId": "pet-resource-fixture-02",
+              "templateId": "big-fish-gentle",
+              "namespace": "qa:resource-consumer-fixture",
+              "globalSerial": "10000"
+            },
+            {
+              "ownerAccountId": "qa_resources_consumer_20261025",
+              "petId": "pet-resource-fixture-03",
+              "templateId": "big-fish-gentle",
+              "namespace": "qa:resource-consumer-fixture",
+              "globalSerial": "900719925474099312345678901234567890123456789012345678901234567890123456789"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Actual selection sends only the original petId to actual appearance IPC",
+      "passed": true,
+      "evidence": {
+        "feature": "companions",
+        "command": "appearance",
+        "payload": {
+          "petId": "pet-resource-fixture-02",
+          "resourceId": "builtin:lingjing-shiba-v2",
+          "expectedRevision": 1,
+          "actionId": "c308a2df-32f5-4a94-a6b8-d51981dc6cb2"
+        },
+        "ok": true
+      }
+    },
+    {
+      "name": "SQLite changes only the selected appearance; original identity and prior receipts are retained",
+      "passed": true,
+      "evidence": {
+        "selectedPetId": "pet-resource-fixture-02",
+        "originalTemplate": "big-fish-gentle",
+        "newAppearance": "builtin:lingjing-shiba-v2",
+        "otherPetJsonBytesUnchanged": true,
+        "projectedNumbersWrittenIntoRawJson": false
+      }
+    },
+    {
+      "name": "Numbers above JS precision remain exact text in selected label",
+      "passed": true,
+      "evidence": {
+        "serial": "900719925474099312345678901234567890123456789012345678901234567890123456789",
+        "selectedLabel": "鱼丸\n编号 900719925474099312345678901234567890123456789012345678901234567890123456789"
+      }
+    },
+    {
+      "name": "Product source files unchanged during fixture verification",
+      "passed": true,
+      "evidence": {
+        "apps/pc-app/ui/src/features/resources/ApplyToCompanion.tsx": "9e266e84506b41d7e04b2294e1a8931ebbbfa3bb02c7bd011f54ccb6823877e3",
+        "apps/pc-app/ui/src/features/resources/binding.css": "58a015a175acf9453e15d15361308143b5dc0ba2f74a52c25af25a5f0adc6197",
+        "apps/pc-app/runtime/features/companions/index.cjs": "f43d83190ca342cd378cde58f29376b34f24467ca5eab5535bcbc0c5edc80274",
+        "apps/pc-app/runtime/features/companions/service.cjs": "bea795c2f9e6093ded571bd71911a15b3fe31268acda080508e254d8def83e61",
+        "apps/pc-app/runtime/features/companions/global-serial-cache.cjs": "2458fc010d9db74d2e944ad4339fafe7939ed64516e7c74f670faf9a53f4112c",
+        "apps/pc-app/runtime/features/companions/display-identity.mjs": "fdeb282ec4d0efbde116563824585a1b52174d7767a511a5ea4ce77d6e2578e5"
+      }
+    }
+  ],
+  "files": {
+    "apps/pc-app/ui/src/features/resources/ApplyToCompanion.tsx": "9e266e84506b41d7e04b2294e1a8931ebbbfa3bb02c7bd011f54ccb6823877e3",
+    "apps/pc-app/ui/src/features/resources/binding.css": "58a015a175acf9453e15d15361308143b5dc0ba2f74a52c25af25a5f0adc6197",
+    "apps/pc-app/runtime/features/companions/index.cjs": "f43d83190ca342cd378cde58f29376b34f24467ca5eab5535bcbc0c5edc80274",
+    "apps/pc-app/runtime/features/companions/service.cjs": "bea795c2f9e6093ded571bd71911a15b3fe31268acda080508e254d8def83e61",
+    "apps/pc-app/runtime/features/companions/global-serial-cache.cjs": "2458fc010d9db74d2e944ad4339fafe7939ed64516e7c74f670faf9a53f4112c",
+    "apps/pc-app/runtime/features/companions/display-identity.mjs": "fdeb282ec4d0efbde116563824585a1b52174d7767a511a5ea4ce77d6e2578e5"
+  },
+  "passed": true,
+  "browser": {
+    "executablePath": "C:/Program Files/Google/Chrome/Application/chrome.exe",
+    "version": "155.0.8059.86",
+    "headless": true,
+    "newIsolatedProfile": true
+  },
+  "sqlite": {
+    "file": "artifacts\\qa\\resources-serial-consumer\\1dab5c8f-9c2c-434e-b1fd-b27bb5cac42f\\fixture.sqlite",
+    "fixtureOnly": true,
+    "priorCompanionModuleSha256": "b502ce339d1d591d93f011a3b7553ed1af3bffef098a40b44292114595046b41",
+    "finalPetJsonSha256": [
+      {
+        "petId": "pet-resource-fixture-01",
+        "sha256": "98f5ddeebe3722c4485c6440407083f3b1def1f397e918eb09b47d59ab22ee60"
+      },
+      {
+        "petId": "pet-resource-fixture-02",
+        "sha256": "63b13c9ff88004001c8286f25dcc39e680774ad1a0546bc681d89ee9741a51f3"
+      },
+      {
+        "petId": "pet-resource-fixture-03",
+        "sha256": "624ec83ed79f1d94bb46082125d3487d9e44c5647a15da86badfa3aaf743d4c5"
+      }
+    ]
+  },
+  "artifacts": [
+    "pending-headless-fixture.png",
+    "applied-headless-fixture.png",
+    "long-label-headless-fixture.png"
+  ],
+  "finishedAt": "2026-10-25T11:32:09.394Z"
+}

@@ -1,26 +1,30 @@
 {
   "module": "resources",
-  "updatedAt": "2026-10-25T17:48:03.8704673+08:00",
-  "integrationBase": "9e57de1d210376ce679168eb1acbff8e37cff1cd",
-  "branch": "codex/lingjing-resources",
-  "overallStatus": "fixed-awaiting-independent-qa",
+  "updatedAt": "2026-10-25T11:33:44.770Z",
+  "integrationBase": "85321dc2b2837e261d159ef136bcf52d855d6207",
+  "branch": "codex/lingjing-07-fresh-20261025",
+  "overallStatus": "directed-consumer-check-passed-awaiting-independent-qa",
   "completeUserAcceptancePassed": false,
   "issues": [
     {
       "id": "QA-003",
       "scope": "Resource ApplyToCompanion selector, selected target/action label and success feedback",
-      "problem": "Historical name/serial could collide and mutable appearances must not define companion identity.",
-      "status": "fixed-awaiting-independent-qa",
+      "problem": "Duplicate historical nicknames/serials require the approved canonical role and trusted numeric globalSerial while original petId remains the command key.",
+      "status": "directed-consumer-check-passed-awaiting-independent-qa",
       "changes": [
-        "Use the shared companionIdentity projection on the full CompanionPet DTO, keyed by immutable templateId.",
-        "Display roleName and the entire original petId in options, selected value, apply button and success feedback.",
-        "Wrap full instance numbers in the scoped Radix select/button/status styles, overriding default single-line clamping."
+        "Consume the full CompanionPet DTO from trusted list/get outlets using the shared companionIdentity helper.",
+        "Display confirmed globalSerial padded to at least four digits; unconfirmed imported metadata displays 待同步.",
+        "Retain original petId as the Select value and appearance command key; keep existing numeric label wrapping."
       ],
       "files": [
         "apps/pc-app/ui/src/features/resources/ApplyToCompanion.tsx",
         "apps/pc-app/ui/src/features/resources/binding.css"
       ],
-      "identityContract": "docs/implementation/companions-display-identity-contract.json"
+      "identityContract": "docs/implementation/companions-global-serial-contract.json",
+      "previousDisplayContract": {
+        "commit": "e6dd93ce1b2b94c8a16ab8d07dca87f04122934c",
+        "note": "Original full-petId display was superseded by the approved globalSerial contract. The original petId remains the internal selection/action identity."
+      }
     }
   ],
   "preservation": {
@@ -33,24 +37,36 @@
   },
   "checks": [
     {
+      "command": "node docs/implementation/evidence/resources/global-serial-2026-10-25/consumer-check.cjs",
+      "exitCode": 0,
+      "runId": "1dab5c8f-9c2c-434e-b1fd-b27bb5cac42f",
+      "passedChecks": 6,
+      "kind": "actual component, actual IPC and file SQLite with synthetic authority/resource metadata"
+    },
+    {
       "command": "npm run typecheck:ui",
       "exitCode": 0,
-      "kind": "static typecheck"
+      "kind": "UI static typecheck"
     },
     {
       "command": "node node_modules/eslint/bin/eslint.js apps/pc-app/ui/src/features/resources/ApplyToCompanion.tsx",
       "exitCode": 0,
-      "kind": "targeted lint"
+      "kind": "targeted resource component lint"
     },
     {
       "command": "git diff --check",
       "exitCode": 0,
-      "kind": "patch whitespace"
+      "kind": "whitespace"
     },
     {
-      "check": "Compare appearance request source with integration base",
+      "command": "git diff --quiet e6dd93c HEAD -- apps/pc-app/ui/src/features/resources apps/pc-app/runtime/features/resources packages/shared-types/src/features/resources",
+      "exitCode": 0,
+      "kind": "resource source bytes preserved"
+    },
+    {
+      "check": "independent reopen of fixture.sqlite with readOnly:true and PRAGMA query_only=ON",
       "passed": true,
-      "kind": "static source equality, not runtime acceptance"
+      "evidence": "sqlite-readback.json"
     }
   ],
   "sourceFiles": [
@@ -61,24 +77,54 @@
     {
       "path": "apps/pc-app/ui/src/features/resources/binding.css",
       "sha256": "58a015a175acf9453e15d15361308143b5dc0ba2f74a52c25af25a5f0adc6197"
+    },
+    {
+      "path": "apps/pc-app/runtime/features/companions/index.cjs",
+      "sha256": "f43d83190ca342cd378cde58f29376b34f24467ca5eab5535bcbc0c5edc80274"
+    },
+    {
+      "path": "apps/pc-app/runtime/features/companions/service.cjs",
+      "sha256": "bea795c2f9e6093ded571bd71911a15b3fe31268acda080508e254d8def83e61"
+    },
+    {
+      "path": "apps/pc-app/runtime/features/companions/global-serial-cache.cjs",
+      "sha256": "2458fc010d9db74d2e944ad4339fafe7939ed64516e7c74f670faf9a53f4112c"
+    },
+    {
+      "path": "apps/pc-app/runtime/features/companions/display-identity.mjs",
+      "sha256": "fdeb282ec4d0efbde116563824585a1b52174d7767a511a5ea4ce77d6e2578e5"
     }
   ],
   "independentQa": {
-    "threadId": "01a1725c-d59c-7620-9bb6-1c0d4e0fb3a3",
-    "status": "pending coordinator merge and QA09 real input",
+    "threadId": "01a172b4-d7f0-7213-9a40-092418ee776b",
+    "ownerThread": "01a172b4-d7f0-7213-9a40-092418ee776b",
+    "status": "pending coordinator deployment and new candidate native acceptance",
     "cases": [
-      "Same-template instances with duplicate historical names/serials show distinct complete original petIds.",
-      "Changing an instance appearance leaves its standard role name and original instance number intact.",
-      "Select the second same-name instance and apply: only that original petId receives the resource; feedback identifies the exact target.",
-      "Long original identifiers remain fully visible by wrapping in both open options and selected/action/status text."
+      "Duplicate historical nicknames/serials: confirmed numeric labels distinguish instances in resource selector/button/feedback.",
+      "Unconfirmed metadata shows 待同步; no UUID or imported numeric fallback.",
+      "Applying a new appearance to the second same-template instance affects only its original petId; original role and confirmed number remain.",
+      "At least four digits and long numbers remain fully visible in native options, selected value, action button and feedback."
     ],
     "realDesktopInputRunHere": false,
     "packagingRunHere": false,
-    "processesClosedHere": false
+    "processesClosedHere": false,
+    "nativeProcessesTouchedHere": false
   },
   "remoteSync": {
+    "command": "git pull --ff-only origin main",
+    "result": "Already up to date",
     "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086",
     "originMainIncluded": true,
-    "integrationBaseIncluded": true
+    "integrationBaseIncluded": true,
+    "approvedBaseIncluded": true
+  },
+  "globalSerialConsumerReview": {
+    "approvedBase": "85321dc2b2837e261d159ef136bcf52d855d6207",
+    "runId": "1dab5c8f-9c2c-434e-b1fd-b27bb5cac42f",
+    "result": "directed-consumer-check-passed-no-product-patch",
+    "evidence": "docs/implementation/evidence/resources/global-serial-2026-10-25/closure.json",
+    "productCodeChanged": false,
+    "fixtureOnly": true,
+    "liveCloudNumberAllocation": false
   }
 }
