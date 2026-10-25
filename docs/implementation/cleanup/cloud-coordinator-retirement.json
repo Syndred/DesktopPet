@@ -189,16 +189,25 @@
       "originalBytesMatchedVerifiedBundleBeforeMerge": true,
       "retirementCommit": "ee6681a0bea8b60f6a746ddccedf1e76ec7c8b5e",
       "dataDeleted": false
+    },
+    {
+      "file": "infra/supabase/functions/duel-online/index.ts",
+      "bytes": 55298,
+      "sha256": "4419b4415ebf81a0388fbf06d878e42f5374129e00cde615cef5ad3b834868fa",
+      "replacement": "lingjing-auth + lingjing-battle and shared versioned room/core adapter",
+      "reason": "Final active runtime and VM/formula consumer removed by65e4210; current room DTO/core400 combinations and source guards accepted",
+      "originalBytesMatchedVerifiedBundleBeforeRemoval": true,
+      "dataDeleted": false
     }
   ],
   "checks": {
     "localOriginalAccountsBoundary": "passed actual SQLite/original JSON preservation with modern disabled network wrapper",
     "legacyObjects": "Live readback: runtime_accounts, duel_rooms and runtime_account_saves absent; actual deployed migration ledger remains 22",
     "migrationFilenameGate": "passed strict 22 deployed files; legacyDrafts=[]",
-    "recoveryContent": "git diff --exit-code 39fb4608554918cc087acedb17a1294eeaa071ca HEAD -- all 13 retired paths passed before removal"
+    "recoveryContent": "git diff --exit-code 39fb4608554918cc087acedb17a1294eeaa071ca HEAD -- all 13 retired paths passed before removal",
+    "modernConsumerRegression": "42 targeted current battle/SDK/discovery SQLite/logic cases passed, including400 element/action pairs; Node fixture checks, not live cloud evidence",
+    "legacyLiveDeployment": "Only eight current deployed function names; old prototype cloud SQL never applied to this project"
   },
-  "remaining": [
-    "04 old duel transport and duel-online VM consumer; retire after current real native acceptance"
-  ],
-  "updatedAt": "2026-10-25T05:08:58.460Z"
+  "remaining": [],
+  "updatedAt": "2026-10-25T05:24:53.578Z"
 }
