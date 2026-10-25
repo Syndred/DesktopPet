@@ -46,7 +46,7 @@ const {OnlineDuelService}=require('./apps/pc-app/runtime/services/online-duel-se
 const servicesModule=require('./apps/pc-app/runtime/core/services.cjs'),createServices=servicesModule.createServices;
 servicesModule.createServices=options=>{const services=createServices(options);globalThis.__liveBattleServices=services;return services;};
 const subscribe=OnlineDuelService.prototype.subscribeRoom;
-OnlineDuelService.prototype.subscribeRoom=async function(...args){globalThis.__liveBattle=this;return subscribe.apply(this,args);};
+OnlineDuelService.prototype.subscribeRoom=async function(...args){globalThis.__liveBattle=this;if(!this.__acceptanceObserved){this.__acceptanceObserved=true;this.onEvent(event=>{if(event.type==='realtime-status'){globalThis.__liveBattleStatuses??=[];globalThis.__liveBattleStatuses.push(event);}if(event.payload?.source==='realtime'){globalThis.__liveBattlePushes??=[];globalThis.__liveBattlePushes.push({type:event.type,at:event.at,roomId:event.payload.room?.id,round:event.payload.round?.round_no});}});}return subscribe.apply(this,args);};
 require('./apps/pc-app/dist/main/index.cjs');
 `);
 const apps=new Map(),profiles={},errors=[],steps=[];
@@ -81,7 +81,8 @@ async function connection(client) {
 }
 async function joined(client) {
   let state;for(let attempt=0;attempt<60;attempt++){state=await connection(client);if(state.socket==='open'&&state.channel==='joined')return state;await new Promise(resolve=>setTimeout(resolve,250));}
-  assert.fail(`Real private Realtime channel did not join: ${JSON.stringify(state)}`);
+  const events=await client.app.evaluate(()=>globalThis.__liveBattleStatuses?.slice(-10)||[]);
+  assert.fail(`Real private Realtime channel did not join: ${JSON.stringify({state,events})}`);
 }
 async function pendingAction(client,sessionId,roundNo) {
   for(let attempt=0;attempt<150;attempt++){const value=await api(client.page,'battle','snapshot',{sessionId});if(value.pendingAction?.roundNo===roundNo)return value;await client.page.waitForTimeout(200);}
@@ -158,12 +159,13 @@ try {
     if(round===1){await host.app.evaluate(()=>globalThis.__liveBattle.client.realtime.connect());await api(host.page,'battle','sync',{sessionId:left.id});const reconnected=await joined(host);record('same native process recreated its authorized private channel through normal sync after reconnect',reconnected);}
     if(round===2){await screenshot(host.page,'pending-before-native-restart');await host.app.close();apps.delete(0);}
     await guest.page.locator('.battle-command[data-action="normal_attack"]').click();
-    if(round===2){host=await launch(0);await route(host.page,`/battle/session/${left.id}`);await screen(host.page);await api(host.page,'battle','sync',{sessionId:left.id});const reconnected=await joined(host);assert.equal(reconnected.actor.deviceId,profiles[0].deviceId);record('native process restart restored original device/Auth and pending round',reconnected);}
+    if(round===2){host=await launch(0);await route(host.page,`/battle/session/${left.id}`);await screen(host.page);const recovered=await api(host.page,'battle','sync',{sessionId:left.id});const reconnected=await joined(host);assert.equal(reconnected.actor.deviceId,profiles[0].deviceId);let retriedOriginal=false;if(recovered.pendingAction){assert.equal(recovered.pendingAction.actionId,pending.pendingAction.actionId);assert.equal(recovered.pendingAction.roundNo,next);if(recovered.pendingAction.uncertain){await host.page.getByRole('button',{name:'重试',exact:true}).click();retriedOriginal=true;}}record('native process restart restored original device/Auth and original action; unresolved delivery retried through the UI',{...reconnected,actionId:pending.pendingAction.actionId,retriedOriginal});}
     left=await resolvedRound(host,left.id,next);right=await resolvedRound(guest,right.id,next);assert.equal(left.snapshot.round,next);assert.equal(right.snapshot.round,next);assert.equal(left.snapshot.player.hp,right.snapshot.enemy.hp);assert.equal(left.snapshot.enemy.hp,right.snapshot.player.hp);assert.equal(left.pendingAction,null);assert.equal(right.pendingAction,null);
     await assert.rejects(api(host.page,'battle','retryAction',{sessionId:left.id}),/没有待确认/);assert.equal((await api(host.page,'battle','sync',{sessionId:left.id})).snapshot.round,next);round++;
     record(`real HTTPS round ${next} matches on both clients`,{roomId:left.room.id,playerHp:left.snapshot.player.hp,enemyHp:left.snapshot.enemy.hp,actions:left.rounds.at(-1).actions});
   }
   assert.equal(left.status,'finished');assert.equal(right.status,'finished');assert.ok(round>2);assert.equal(left.reward.applied,true);assert.equal(right.reward.applied,true);assert.notEqual(left.winner,right.winner);
+  const pushes=[];for(const client of [host,guest]){const delivered=await client.app.evaluate(()=>globalThis.__liveBattlePushes||[]);assert.ok(delivered.some(event=>event.type==='round-updated'&&event.roomId),`Player ${client.index+1} must receive actual private-channel Postgres round events, beyond HTTPS readback`);pushes.push({device:client.index+1,events:delivered});}record('both actual private channels delivered server round/room pushes', {pushes});
   const before=[(await api(host.page,'companions','list')).pets,(await api(guest.page,'companions','list')).pets];for(const client of [host,guest]){const session=client.index===0?left:right;await api(client.page,'battle','retrySettlement',{sessionId:session.id});await api(client.page,'battle','retrySettlement',{sessionId:session.id});assert.deepEqual((await api(client.page,'companions','list')).pets,before[client.index]);}
   await screenshot(host.page,'finished-host');await screenshot(guest.page,'finished-guest');
   for(const client of [host,guest]) {
