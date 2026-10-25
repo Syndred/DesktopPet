@@ -1,0 +1,11 @@
+✔ LOCAL PGlite: controlled adoption registers compound ownership, same-request races replay the original generated pet, stale writes conflict (1890.8052ms)
+✔ LOCAL PGlite: ordinary users cannot call the worker or write growth; foreign owner/device/revoked session is rejected without adding Auth table grants (1325.2802ms)
+✔ LOCAL PGlite: later transaction failure rolls back companion, shared save, pet registry and immutable receipt together (1435.3373ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4822.1774

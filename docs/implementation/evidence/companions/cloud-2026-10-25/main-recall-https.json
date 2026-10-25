@@ -1,0 +1,21 @@
+{
+  "at": "2026-10-25T04:34:29.41Z",
+  "sourceCommit": "9a18511e79c46e06619383e82b2dc24e32dabbcb",
+  "mode": "live",
+  "simulatedProvider": false,
+  "scope": "Actual registered main companion capability and real SQLite in a lightweight Node host;08 SupabaseRemote HTTPS and independent device receipt reader. No Electron tray or full-save advancement claim.",
+  "checks": [
+    {
+      "name": "Actual main recallAll uses one immutable live receipt and preserves original pet/growth",
+      "owner": "account:470a41d4-3cf7-4a7d-8b1e-32e276d2a719",
+      "petId": "pet-3eea8bca-f04f-4f64-9a04-603f36596890",
+      "actionId": "companions:302d3d87-e2d7-4dac-9294-e361e2142746",
+      "revision": 58,
+      "checksum": "4c910348ceb711e415d5376558942e27ea58ac77b925f2487c77d0ff9b876489",
+      "sharedSavePending": true
+    }
+  ],
+  "passed": true,
+  "verificationScript": "apps/pc-app/runtime/features/companions/tests/cloud-recall.acceptance.mjs",
+  "verificationScriptSha256": "181b708d8b16bd6d7896573e798658d8287f7f8fa3afabb1c5e778ca9949716e"
+}

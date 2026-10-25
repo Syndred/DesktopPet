@@ -1,0 +1,55 @@
+{
+  "scope": "Retained failed verifier runs; never substituted for passing native reports",
+  "failures": [
+    {
+      "run": "cloud-native-66J1F5",
+      "sourceCommit": "4a0966b6eca76e01e2448089b85607f541f35cd5",
+      "passed": false,
+      "completedCheckGroups": 7,
+      "failure": {
+        "code": "ACCEPTANCE_CLEANUP_METHOD",
+        "message": "Seven functional groups completed, then verifier used nonexistent remote.logout; retained as failed overall run."
+      },
+      "cleanup": {
+        "at": "2026-10-25T04:11:32.688Z",
+        "onlyThisRunsVisiblePetHidden": "pet-68c19bde-6ac8-4a7a-b65b-75b91c360d33",
+        "authorityActionId": "companions:8b55e2b1-1363-4b36-bf36-0ef2dba89664",
+        "historyAndResourcesRetained": true
+      }
+    },
+    {
+      "run": "cloud-native-SBM0qB",
+      "sourceCommit": "a6a6031110b5d678c693473a5045b783c1e884b0",
+      "passed": false,
+      "completedCheckGroups": 2,
+      "failure": {
+        "name": "AssertionError",
+        "message": "Expected values to be strictly equal:\n\n0 !== 1\n",
+        "stack": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n0 !== 1\n\n    at file:///C:/Users/Administrator/.codex/worktrees/lingjing-companions/DesktopPet/apps/pc-app/runtime/features/companions/tests/cloud-native.acceptance.mjs:99:10"
+      },
+      "cleanup": null
+    },
+    {
+      "run": "guard-native-lHeA6g",
+      "sourceCommit": "657eb79126dbea30e2fe9732a4153a69a0747400",
+      "passed": false,
+      "completedCheckGroups": 0,
+      "failure": {
+        "name": "Error",
+        "message": "electronApplication.evaluate: TypeError: Cannot read properties of undefined (reading 'endsWith')\n    at eval (eval at evaluate (:370:30), <anonymous>:1:95)\n    at Array.find (<anonymous>)\n    at eval (eval at evaluate (:370:30), <anonymous>:1:76)\n    at UtilityScript.evaluate (<anonymous>:372:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)"
+      },
+      "cleanup": null
+    },
+    {
+      "run": "recall-live-4BkOBU",
+      "sourceCommit": "9a18511e79c46e06619383e82b2dc24e32dabbcb",
+      "passed": false,
+      "completedCheckGroups": 0,
+      "failure": {
+        "code": "TypeError",
+        "message": "Acceptance assertion failed"
+      },
+      "cleanup": null
+    }
+  ]
+}

@@ -1,0 +1,160 @@
+{
+  "at": "2026-10-25T04:18:58.378Z",
+  "runId": "9d8fe784-40da-456d-b8eb-cebc165f726e",
+  "output": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-companions\\DesktopPet\\artifacts\\companions\\cloud-native-dMcc2o",
+  "sourceCommit": "55d6b240f6bb4e4aa608218bab8b40a110345d6e",
+  "dirty": "",
+  "mode": "live",
+  "simulatedProvider": false,
+  "entrypoint": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-companions\\DesktopPet",
+  "defaultProductionEntrypoint": true,
+  "physicalDevices": 1,
+  "topology": "Two independent production Electron processes and SQLite/userData roots on one Windows host; independent Node HTTPS receipt reader",
+  "networkInterruption": "Only A uses a TLS CONNECT proxy; refusing/destroying A tunnels does not disable the host network or change HTTPS responses",
+  "checks": [
+    {
+      "name": "Two default production Electron processes authenticate via actual HTTPS and retain separate encrypted device sessions",
+      "owner": "account:470a41d4-3cf7-4a7d-8b1e-32e276d2a719",
+      "pids": [
+        30256,
+        6944
+      ],
+      "devices": [
+        "5d27637f-f187-4f42-a0b8-9e2ab1964fd9",
+        "c368e074-7821-4ac0-b57e-3ba4657d95f8"
+      ],
+      "proxyConnections": 1
+    },
+    {
+      "name": "Real production IPC adopts independent same-template pets, replays one original action and preserves three independent selections",
+      "petIds": [
+        "pet-3eea8bca-f04f-4f64-9a04-603f36596890",
+        "pet-f2355af5-3004-4e72-b1d4-0f47dba601c0"
+      ],
+      "originalActionId": "0a1b93b9-bb69-4500-a9bb-7534501487ba",
+      "preservedExistingIds": 9
+    },
+    {
+      "name": "Actual concurrent stale-revision rename has one winner and a visible conflict",
+      "results": [
+        "ok",
+        "SYNC_CONFLICT"
+      ]
+    },
+    {
+      "name": "Real native 2D pixels render and drag traverses renderer IPC, cloud receipt and independent client readback",
+      "position": {
+        "x": 215,
+        "y": 200,
+        "displayId": "2568730015"
+      },
+      "frame": {
+        "windowId": 2,
+        "visible": true,
+        "bounds": {
+          "x": 215,
+          "y": 200,
+          "width": 230,
+          "height": 280
+        },
+        "size": {
+          "width": 230,
+          "height": 280
+        },
+        "visiblePixels": 13030,
+        "coloredPixels": 9165,
+        "file": "native-builtin.png",
+        "sha256": "5cd846b0d3345d265080cf4a299e43c3c78992b593befd8e0fdbaaef3dbc0efc"
+      }
+    },
+    {
+      "name": "A-only TLS interruption preserves the original position intent across actual process restart while B stays online",
+      "oldPid": 30256,
+      "newPid": 3456,
+      "deviceId": "5d27637f-f187-4f42-a0b8-9e2ab1964fd9",
+      "actionId": "companions:desktop-position-228f9498-ce9b-4c15-9d35-a0711dd06202",
+      "inputHash": "2bed5539457ecfc9beadf602adb432a6287d88585acdfcfef54e593fb1c9d72d",
+      "position": {
+        "x": 260,
+        "y": 230,
+        "displayId": "2568730015"
+      },
+      "refusedConnections": 35,
+      "proxyConnections": 4
+    },
+    {
+      "name": "Actual private resource upload/reference authorizes custom 2D appearance and a fresh second-client resource becomes ready",
+      "resourceId": "74f5d8ff-ffa6-4f40-8e41-39f80b33acf3",
+      "contentHash": "1cd0626ea29767476b371519ec4dc00fc43c528bfcd92627166275b937db2060",
+      "frame": {
+        "windowId": 3,
+        "visible": true,
+        "bounds": {
+          "x": 260,
+          "y": 230,
+          "width": 230,
+          "height": 280
+        },
+        "size": {
+          "width": 230,
+          "height": 280
+        },
+        "visiblePixels": 11418,
+        "coloredPixels": 8727,
+        "file": "native-custom.png",
+        "sha256": "359aa51b9d1300705e3dd1561b23670d4b7d3ef0830f89c9d2e59068d516381e"
+      },
+      "secondFrame": {
+        "windowId": 2,
+        "visible": true,
+        "bounds": {
+          "x": 260,
+          "y": 230,
+          "width": 230,
+          "height": 280
+        },
+        "size": {
+          "width": 230,
+          "height": 280
+        },
+        "visiblePixels": 11418,
+        "coloredPixels": 8727,
+        "file": "native-custom-B.png",
+        "sha256": "359aa51b9d1300705e3dd1561b23670d4b7d3ef0830f89c9d2e59068d516381e"
+      }
+    },
+    {
+      "name": "Independent actual HTTPS receipt reader and query-only SQLite confirm one original position action, stable pet IDs and rendered restart state",
+      "actionId": "companions:desktop-position-228f9498-ce9b-4c15-9d35-a0711dd06202",
+      "revision": 50,
+      "checksum": "0b30f92855e9a0afa83cd8afc0a675818ae1e2c7ef9564736d2e4f6ea10b3c32",
+      "readerDevice": "831bd561-a068-42ff-abac-1e56b9c456a9",
+      "frame": {
+        "windowId": 3,
+        "visible": true,
+        "bounds": {
+          "x": 260,
+          "y": 230,
+          "width": 230,
+          "height": 280
+        },
+        "size": {
+          "width": 230,
+          "height": 280
+        },
+        "visiblePixels": 11418,
+        "coloredPixels": 8727,
+        "file": "native-after-restart.png",
+        "sha256": "359aa51b9d1300705e3dd1561b23670d4b7d3ef0830f89c9d2e59068d516381e"
+      }
+    }
+  ],
+  "errors": [],
+  "passed": true,
+  "cleanup": {
+    "onlyThisRunsVisiblePetHidden": "pet-3eea8bca-f04f-4f64-9a04-603f36596890",
+    "historyAndResourcesRetained": true
+  },
+  "pidNote": "Full-run pids are Playwright Windows launcher PIDs; final-guard-native.json records actual Electron process.pid values",
+  "runtimeSourceNote": "Started clean at55d6b24. Restarted A loaded the CJS authority before original position was verified at04:21:19Z; the queue guard edit was later at04:21:44Z. No hot reload. New guard is independently verified in final-guard-native.json at9a18511."
+}
