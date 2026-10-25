@@ -18,6 +18,8 @@ try {
   proof.entries = entries.length;
   proof.forbidden = entries.filter(path => /\.(?:glb|gltf|vrm|sqlite|pfx|pem|bundle)$/i.test(path) || /(?:^|\/)(?:artifacts|backups|\.env)(?:\/|$)/.test(path) || /^apps\/pc-app\/runtime\/(?:renderer|auth)\//.test(path) || /^apps\/pc-app\/runtime\//.test(path) && (/(?:^|\/)(?:tests|verification|legacy)\//.test(path) || /\.(?:test|acceptance)\.[cm]?js$/.test(path) || /(?:verify-.*\.mjs|.*\.electron\.mjs|prepare-.*-fixture\.mjs|write-evidence\.mjs|testing-adapter\.cjs|generate-fish\.cjs|server-authority\.cjs)$/.test(path)));
   assert.deepEqual(proof.forbidden, []);
+  const retiredWorkspaces = entries.filter(path => /^node_modules\/@qingpet\/(?:game-engine|supabase-edge|observability|pc-app)\//.test(path));
+  assert.deepEqual(retiredWorkspaces, [], 'Unused workspace prototypes must not enter the desktop package');
   const manifest = JSON.parse(extract('apps/pc-app/dist/build-manifest.json').toString('utf8'));
   proof.build = manifest;
   assert.deepEqual(manifest.sourceDirtyFiles, [], 'Final package must originate from a committed clean build');

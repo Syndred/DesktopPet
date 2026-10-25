@@ -5,19 +5,15 @@
   "description": "灵境 · 多宠物桌面伙伴",
   "workspaces": [
     "apps/pc-app",
-    "apps/supabase-edge",
-    "packages/*"
+    "packages/observability",
+    "packages/shared-types"
   ],
   "scripts": {
     "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
     "typecheck": "tsc --noEmit -p tsconfig.typecheck.json && tsc --noEmit -p apps/pc-app/tsconfig.desktop.json",
     "test": "vitest run",
     "test:unit": "vitest run -c vitest.unit.config.ts",
-    "test:integration": "vitest run -c vitest.integration.config.ts",
-    "test:e2e": "vitest run -c vitest.e2e.config.ts",
-    "test:performance": "vitest run -c vitest.performance.config.ts",
-    "test:security": "vitest run -c vitest.security.config.ts",
-    "test:layers": "npm run test:unit && npm run test:integration && npm run test:e2e && npm run test:performance && npm run test:security",
+    "test:layers": "npm run test:unit && npm run test:native",
     "test:coverage": "vitest run --coverage",
     "release:build:pc": "npm run build:pc",
     "release:build": "npm run package:pc:win",
@@ -32,7 +28,7 @@
     "dr:restore": "node scripts/dr/restore-state.mjs",
     "perf:report": "node scripts/perf/generate-weekly-report.mjs",
     "test:watch": "vitest",
-    "verify": "npm run lint && npm run typecheck && npm run test:layers",
+    "verify": "npm run lint && npm run typecheck && npm run typecheck:ui && npm run test:unit",
     "build:pc": "electron-vite build && node scripts/desktop/runtime-closure.mjs && node scripts/desktop/write-build-manifest.mjs",
     "typecheck:ui": "tsc --noEmit -p apps/pc-app/ui/tsconfig.json",
     "native:electron": "node scripts/desktop/verify-native.cjs",
@@ -55,7 +51,6 @@
   },
   "devDependencies": {
     "@electric-sql/pglite": "^0.5.11",
-    "@electron/rebuild": "^4.2.1",
     "@types/node": "^22.13.10",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
@@ -79,7 +74,7 @@
   "dependencies": {
     "@ai-sdk/openai-compatible": "3.0.77",
     "@assistant-ui/react": "0.15.31",
-    "@supabase/supabase-js": "^2.57.4",
+    "@supabase/supabase-js": "2.98.0",
     "@tailwindcss/vite": "^4.3.3",
     "@turf/boolean-point-in-polygon": "^7.4.0",
     "@turf/circle": "^7.4.0",

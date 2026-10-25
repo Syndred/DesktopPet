@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "at": "2026-10-25T03:06:40.120Z",
+  "at": "2026-10-25T03:16:54.248Z",
   "source": "0b80bd09f9da29048d77c216bebab41ed48f7e9d",
   "snapshot": "artifacts/recovery/cloud-foundation-2026-10-25/pre-cleanup.bundle",
   "policy": "Only listed code/build/test consumers are candidates. User profiles, history, design sources and recovery backups are excluded. Runtime source removal follows service extraction; business-owner replacements wait for coordinator approval.",
@@ -250,7 +250,13 @@
         "apps/pc-app/runtime/services/wild-pet-runtime.cjs",
         "tests/task-d001-pc-runnable-runtime.test.ts"
       ],
-      "decision": "resources-owner-delivery-required-before-final-deletion"
+      "decision": "resources-owner-delivery-required-before-final-deletion",
+      "consumerAudit": {
+        "runtimeClosureImports": false,
+        "at": "2026-10-25T03:16:54.247Z",
+        "note": "Remaining path strings are historical aliases, not 3D file reads. Generated roster and archive metadata remain."
+      },
+      "completed": "Deleted from tracked source; consumers and workspace/CI references migrated in the same checkpoint"
     },
     {
       "oldFile": "apps/pc-app/runtime/assets/models/Astronaut.glb",
@@ -263,7 +269,13 @@
         "apps/pc-app/runtime/services/wild-pet-runtime.cjs",
         "tests/task-d001-pc-runnable-runtime.test.ts"
       ],
-      "decision": "resources-owner-delivery-required-before-final-deletion"
+      "decision": "resources-owner-delivery-required-before-final-deletion",
+      "consumerAudit": {
+        "runtimeClosureImports": false,
+        "at": "2026-10-25T03:16:54.247Z",
+        "note": "Remaining path strings are historical aliases, not 3D file reads. Generated roster and archive metadata remain."
+      },
+      "completed": "Deleted from tracked source; consumers and workspace/CI references migrated in the same checkpoint"
     },
     {
       "oldFile": "apps/pc-app/runtime/assets/models/BeaglePoly.glb",
@@ -277,7 +289,13 @@
         "docs/model-sourcing-and-import.md",
         "tests/task-d001-pc-runnable-runtime.test.ts"
       ],
-      "decision": "resources-owner-delivery-required-before-final-deletion"
+      "decision": "resources-owner-delivery-required-before-final-deletion",
+      "consumerAudit": {
+        "runtimeClosureImports": false,
+        "at": "2026-10-25T03:16:54.247Z",
+        "note": "Remaining path strings are historical aliases, not 3D file reads. Generated roster and archive metadata remain."
+      },
+      "completed": "Deleted from tracked source; consumers and workspace/CI references migrated in the same checkpoint"
     },
     {
       "oldFile": "apps/pc-app/runtime/assets/models/CatPoly.glb",
@@ -291,7 +309,13 @@
         "docs/model-sourcing-and-import.md",
         "tests/task-d001-pc-runnable-runtime.test.ts"
       ],
-      "decision": "resources-owner-delivery-required-before-final-deletion"
+      "decision": "resources-owner-delivery-required-before-final-deletion",
+      "consumerAudit": {
+        "runtimeClosureImports": false,
+        "at": "2026-10-25T03:16:54.247Z",
+        "note": "Remaining path strings are historical aliases, not 3D file reads. Generated roster and archive metadata remain."
+      },
+      "completed": "Deleted from tracked source; consumers and workspace/CI references migrated in the same checkpoint"
     },
     {
       "oldFile": "apps/pc-app/runtime/assets/models/CatQuaterniusA.glb",
@@ -304,7 +328,13 @@
         "apps/pc-app/runtime/services/wild-pet-runtime.cjs",
         "tests/task-d001-pc-runnable-runtime.test.ts"
       ],
-      "decision": "resources-owner-delivery-required-before-final-deletion"
+      "decision": "resources-owner-delivery-required-before-final-deletion",
+      "consumerAudit": {
+        "runtimeClosureImports": false,
+        "at": "2026-10-25T03:16:54.247Z",
+        "note": "Remaining path strings are historical aliases, not 3D file reads. Generated roster and archive metadata remain."
+      },
+      "completed": "Deleted from tracked source; consumers and workspace/CI references migrated in the same checkpoint"
     },
     {
       "oldFile": "apps/pc-app/runtime/assets/models/CatQuaterniusB.glb",
@@ -317,7 +347,13 @@
         "apps/pc-app/runtime/services/wild-pet-runtime.cjs",
         "tests/task-d001-pc-runnable-runtime.test.ts"
       ],
-      "decision": "resources-owner-delivery-required-before-final-deletion"
+      "decision": "resources-owner-delivery-required-before-final-deletion",
+      "consumerAudit": {
+        "runtimeClosureImports": false,
+        "at": "2026-10-25T03:16:54.247Z",
+        "note": "Remaining path strings are historical aliases, not 3D file reads. Generated roster and archive metadata remain."
+      },
+      "completed": "Deleted from tracked source; consumers and workspace/CI references migrated in the same checkpoint"
     },
     {
       "oldFile": "apps/pc-app/runtime/assets/models/CesiumMan.glb",
@@ -331,7 +367,13 @@
         "scripts/smoke/check-pc-runtime.mjs",
         "tests/task-d001-pc-runnable-runtime.test.ts"
       ],
-      "decision": "resources-owner-delivery-required-before-final-deletion"
+      "decision": "resources-owner-delivery-required-before-final-deletion",
+      "consumerAudit": {
+        "runtimeClosureImports": false,
+        "at": "2026-10-25T03:16:54.247Z",
+        "note": "Remaining path strings are historical aliases, not 3D file reads. Generated roster and archive metadata remain."
+      },
+      "completed": "Deleted from tracked source; consumers and workspace/CI references migrated in the same checkpoint"
     },
     {
       "oldFile": "apps/pc-app/runtime/assets/models/Fox.glb",
@@ -345,7 +387,13 @@
         "scripts/smoke/check-pc-runtime.mjs",
         "tests/task-d001-pc-runnable-runtime.test.ts"
       ],
-      "decision": "resources-owner-delivery-required-before-final-deletion"
+      "decision": "resources-owner-delivery-required-before-final-deletion",
+      "consumerAudit": {
+        "runtimeClosureImports": false,
+        "at": "2026-10-25T03:16:54.247Z",
+        "note": "Remaining path strings are historical aliases, not 3D file reads. Generated roster and archive metadata remain."
+      },
+      "completed": "Deleted from tracked source; consumers and workspace/CI references migrated in the same checkpoint"
     },
     {
       "oldFile": "apps/pc-app/runtime/assets/models/Horse.glb",
@@ -358,7 +406,13 @@
         "apps/pc-app/runtime/services/wild-pet-runtime.cjs",
         "tests/task-d001-pc-runnable-runtime.test.ts"
       ],
-      "decision": "resources-owner-delivery-required-before-final-deletion"
+      "decision": "resources-owner-delivery-required-before-final-deletion",
+      "consumerAudit": {
+        "runtimeClosureImports": false,
+        "at": "2026-10-25T03:16:54.247Z",
+        "note": "Remaining path strings are historical aliases, not 3D file reads. Generated roster and archive metadata remain."
+      },
+      "completed": "Deleted from tracked source; consumers and workspace/CI references migrated in the same checkpoint"
     },
     {
       "oldFile": "apps/pc-app/runtime/assets/models/Husky.glb",
@@ -373,7 +427,13 @@
         "docs/model-sourcing-and-import.md",
         "tests/task-d001-pc-runnable-runtime.test.ts"
       ],
-      "decision": "resources-owner-delivery-required-before-final-deletion"
+      "decision": "resources-owner-delivery-required-before-final-deletion",
+      "consumerAudit": {
+        "runtimeClosureImports": false,
+        "at": "2026-10-25T03:16:54.247Z",
+        "note": "Remaining path strings are historical aliases, not 3D file reads. Generated roster and archive metadata remain."
+      },
+      "completed": "Deleted from tracked source; consumers and workspace/CI references migrated in the same checkpoint"
     },
     {
       "oldFile": "apps/pc-app/runtime/assets/models/KittenPoly.glb",
@@ -387,7 +447,13 @@
         "docs/model-sourcing-and-import.md",
         "tests/task-d001-pc-runnable-runtime.test.ts"
       ],
-      "decision": "resources-owner-delivery-required-before-final-deletion"
+      "decision": "resources-owner-delivery-required-before-final-deletion",
+      "consumerAudit": {
+        "runtimeClosureImports": false,
+        "at": "2026-10-25T03:16:54.247Z",
+        "note": "Remaining path strings are historical aliases, not 3D file reads. Generated roster and archive metadata remain."
+      },
+      "completed": "Deleted from tracked source; consumers and workspace/CI references migrated in the same checkpoint"
     },
     {
       "oldFile": "apps/pc-app/runtime/assets/models/NeilArmstrong.glb",
@@ -400,7 +466,13 @@
         "apps/pc-app/runtime/services/wild-pet-runtime.cjs",
         "tests/task-d001-pc-runnable-runtime.test.ts"
       ],
-      "decision": "resources-owner-delivery-required-before-final-deletion"
+      "decision": "resources-owner-delivery-required-before-final-deletion",
+      "consumerAudit": {
+        "runtimeClosureImports": false,
+        "at": "2026-10-25T03:16:54.247Z",
+        "note": "Remaining path strings are historical aliases, not 3D file reads. Generated roster and archive metadata remain."
+      },
+      "completed": "Deleted from tracked source; consumers and workspace/CI references migrated in the same checkpoint"
     },
     {
       "oldFile": "apps/pc-app/runtime/assets/models/PoodlePoly.glb",
@@ -414,7 +486,13 @@
         "docs/model-sourcing-and-import.md",
         "tests/task-d001-pc-runnable-runtime.test.ts"
       ],
-      "decision": "resources-owner-delivery-required-before-final-deletion"
+      "decision": "resources-owner-delivery-required-before-final-deletion",
+      "consumerAudit": {
+        "runtimeClosureImports": false,
+        "at": "2026-10-25T03:16:54.247Z",
+        "note": "Remaining path strings are historical aliases, not 3D file reads. Generated roster and archive metadata remain."
+      },
+      "completed": "Deleted from tracked source; consumers and workspace/CI references migrated in the same checkpoint"
     },
     {
       "oldFile": "apps/pc-app/runtime/assets/models/PuppyPoly.glb",
@@ -428,7 +506,13 @@
         "docs/model-sourcing-and-import.md",
         "tests/task-d001-pc-runnable-runtime.test.ts"
       ],
-      "decision": "resources-owner-delivery-required-before-final-deletion"
+      "decision": "resources-owner-delivery-required-before-final-deletion",
+      "consumerAudit": {
+        "runtimeClosureImports": false,
+        "at": "2026-10-25T03:16:54.247Z",
+        "note": "Remaining path strings are historical aliases, not 3D file reads. Generated roster and archive metadata remain."
+      },
+      "completed": "Deleted from tracked source; consumers and workspace/CI references migrated in the same checkpoint"
     },
     {
       "oldFile": "apps/pc-app/runtime/assets/models/RobotExpressive.glb",
@@ -441,7 +525,13 @@
         "apps/pc-app/runtime/services/wild-pet-runtime.cjs",
         "tests/task-d001-pc-runnable-runtime.test.ts"
       ],
-      "decision": "resources-owner-delivery-required-before-final-deletion"
+      "decision": "resources-owner-delivery-required-before-final-deletion",
+      "consumerAudit": {
+        "runtimeClosureImports": false,
+        "at": "2026-10-25T03:16:54.247Z",
+        "note": "Remaining path strings are historical aliases, not 3D file reads. Generated roster and archive metadata remain."
+      },
+      "completed": "Deleted from tracked source; consumers and workspace/CI references migrated in the same checkpoint"
     },
     {
       "oldFile": "apps/pc-app/runtime/assets/models/ShibaInu.glb",
@@ -454,7 +544,13 @@
         "apps/pc-app/runtime/services/wild-pet-runtime.cjs",
         "tests/task-d001-pc-runnable-runtime.test.ts"
       ],
-      "decision": "resources-owner-delivery-required-before-final-deletion"
+      "decision": "resources-owner-delivery-required-before-final-deletion",
+      "consumerAudit": {
+        "runtimeClosureImports": false,
+        "at": "2026-10-25T03:16:54.247Z",
+        "note": "Remaining path strings are historical aliases, not 3D file reads. Generated roster and archive metadata remain."
+      },
+      "completed": "Deleted from tracked source; consumers and workspace/CI references migrated in the same checkpoint"
     },
     {
       "oldFile": "apps/pc-app/runtime/assets/models/TuxedoCatAnimated.glb",
@@ -468,7 +564,13 @@
         "apps/pc-app/runtime/services/wild-pet-runtime.cjs",
         "tests/task-d001-pc-runnable-runtime.test.ts"
       ],
-      "decision": "resources-owner-delivery-required-before-final-deletion"
+      "decision": "resources-owner-delivery-required-before-final-deletion",
+      "consumerAudit": {
+        "runtimeClosureImports": false,
+        "at": "2026-10-25T03:16:54.247Z",
+        "note": "Remaining path strings are historical aliases, not 3D file reads. Generated roster and archive metadata remain."
+      },
+      "completed": "Deleted from tracked source; consumers and workspace/CI references migrated in the same checkpoint"
     },
     {
       "oldFile": "apps/pc-app/runtime/assets/models/catalog.json",
@@ -638,7 +740,13 @@
         "scripts/smoke/check-pc-runtime.mjs",
         "tests/task-d006-pc-wild-capture-flow.test.ts"
       ],
-      "decision": "retain-required-domain-services"
+      "decision": "retain-required-domain-services",
+      "consumerAudit": {
+        "runtimeClosureImports": false,
+        "at": "2026-10-25T03:16:54.247Z",
+        "note": "Static production graph has no import; own prototype test consumers retired together."
+      },
+      "completed": "Deleted from tracked source; consumers and workspace/CI references migrated in the same checkpoint"
     },
     {
       "oldFile": "apps/pc-app/src/index.ts",
@@ -653,7 +761,13 @@
         "tests/",
         "tsconfig.json"
       ],
-      "decision": "audit-consumers-and-await-domain-replacement-before-deletion"
+      "decision": "audit-consumers-and-await-domain-replacement-before-deletion",
+      "consumerAudit": {
+        "runtimeClosureImports": false,
+        "at": "2026-10-25T03:16:54.242Z",
+        "note": "Static production graph has no import; own prototype test consumers retired together."
+      },
+      "completed": "Deleted from tracked source; consumers and workspace/CI references migrated in the same checkpoint"
     },
     {
       "oldFile": "apps/pc-app/src/interaction.ts",
@@ -667,7 +781,13 @@
         "scripts/release/build-pc.mjs",
         "tests/"
       ],
-      "decision": "audit-consumers-and-await-domain-replacement-before-deletion"
+      "decision": "audit-consumers-and-await-domain-replacement-before-deletion",
+      "consumerAudit": {
+        "runtimeClosureImports": false,
+        "at": "2026-10-25T03:16:54.243Z",
+        "note": "Static production graph has no import; own prototype test consumers retired together."
+      },
+      "completed": "Deleted from tracked source; consumers and workspace/CI references migrated in the same checkpoint"
     },
     {
       "oldFile": "apps/pc-app/src/window.ts",
@@ -681,7 +801,13 @@
         "scripts/release/build-pc.mjs",
         "tests/"
       ],
-      "decision": "audit-consumers-and-await-domain-replacement-before-deletion"
+      "decision": "audit-consumers-and-await-domain-replacement-before-deletion",
+      "consumerAudit": {
+        "runtimeClosureImports": false,
+        "at": "2026-10-25T03:16:54.243Z",
+        "note": "Static production graph has no import; own prototype test consumers retired together."
+      },
+      "completed": "Deleted from tracked source; consumers and workspace/CI references migrated in the same checkpoint"
     },
     {
       "oldFile": "apps/supabase-edge/src/anti-cheat.ts",
@@ -695,7 +821,13 @@
         "scripts/release/build-pc.mjs",
         "tests/"
       ],
-      "decision": "audit-consumers-and-await-domain-replacement-before-deletion"
+      "decision": "audit-consumers-and-await-domain-replacement-before-deletion",
+      "consumerAudit": {
+        "runtimeClosureImports": false,
+        "at": "2026-10-25T03:16:54.243Z",
+        "note": "Static production graph has no import; own prototype test consumers retired together."
+      },
+      "completed": "Deleted from tracked source; consumers and workspace/CI references migrated in the same checkpoint"
     },
     {
       "oldFile": "apps/supabase-edge/src/appearance.ts",
@@ -710,7 +842,13 @@
         "scripts/release/build-pc.mjs",
         "tests/"
       ],
-      "decision": "audit-consumers-and-await-domain-replacement-before-deletion"
+      "decision": "audit-consumers-and-await-domain-replacement-before-deletion",
+      "consumerAudit": {
+        "runtimeClosureImports": false,
+        "at": "2026-10-25T03:16:54.243Z",
+        "note": "Static production graph has no import; own prototype test consumers retired together."
+      },
+      "completed": "Deleted from tracked source; consumers and workspace/CI references migrated in the same checkpoint"
     },
     {
       "oldFile": "apps/supabase-edge/src/capture.ts",
@@ -725,7 +863,13 @@
         "scripts/release/build-pc.mjs",
         "tests/"
       ],
-      "decision": "audit-consumers-and-await-domain-replacement-before-deletion"
+      "decision": "audit-consumers-and-await-domain-replacement-before-deletion",
+      "consumerAudit": {
+        "runtimeClosureImports": false,
+        "at": "2026-10-25T03:16:54.243Z",
+        "note": "Static production graph has no import; own prototype test consumers retired together."
+      },
+      "completed": "Deleted from tracked source; consumers and workspace/CI references migrated in the same checkpoint"
     },
     {
       "oldFile": "apps/supabase-edge/src/config-center.ts",
@@ -739,7 +883,13 @@
         "scripts/release/build-pc.mjs",
         "tests/"
       ],
-      "decision": "audit-consumers-and-await-domain-replacement-before-deletion"
+      "decision": "audit-consumers-and-await-domain-replacement-before-deletion",
+      "consumerAudit": {
+        "runtimeClosureImports": false,
+        "at": "2026-10-25T03:16:54.243Z",
+        "note": "Static production graph has no import; own prototype test consumers retired together."
+      },
+      "completed": "Deleted from tracked source; consumers and workspace/CI references migrated in the same checkpoint"
     },
     {
       "oldFile": "apps/supabase-edge/src/core-loop.ts",
@@ -754,7 +904,13 @@
         "scripts/release/build-pc.mjs",
         "tests/"
       ],
-      "decision": "audit-consumers-and-await-domain-replacement-before-deletion"
+      "decision": "audit-consumers-and-await-domain-replacement-before-deletion",
+      "consumerAudit": {
+        "runtimeClosureImports": false,
+        "at": "2026-10-25T03:16:54.243Z",
+        "note": "Static production graph has no import; own prototype test consumers retired together."
+      },
+      "completed": "Deleted from tracked source; consumers and workspace/CI references migrated in the same checkpoint"
     },
     {
       "oldFile": "apps/supabase-edge/src/emotion.ts",
@@ -769,7 +925,13 @@
         "scripts/release/build-pc.mjs",
         "tests/"
       ],
-      "decision": "audit-consumers-and-await-domain-replacement-before-deletion"
+      "decision": "audit-consumers-and-await-domain-replacement-before-deletion",
+      "consumerAudit": {
+        "runtimeClosureImports": false,
+        "at": "2026-10-25T03:16:54.243Z",
+        "note": "Static production graph has no import; own prototype test consumers retired together."
+      },
+      "completed": "Deleted from tracked source; consumers and workspace/CI references migrated in the same checkpoint"
     },
     {
       "oldFile": "apps/supabase-edge/src/friends.ts",
@@ -784,7 +946,13 @@
         "scripts/release/build-pc.mjs",
         "tests/"
       ],
-      "decision": "audit-consumers-and-await-domain-replacement-before-deletion"
+      "decision": "audit-consumers-and-await-domain-replacement-before-deletion",
+      "consumerAudit": {
+        "runtimeClosureImports": false,
+        "at": "2026-10-25T03:16:54.243Z",
+        "note": "Static production graph has no import; own prototype test consumers retired together."
+      },
+      "completed": "Deleted from tracked source; consumers and workspace/CI references migrated in the same checkpoint"
     },
     {
       "oldFile": "apps/supabase-edge/src/index.ts",
@@ -799,7 +967,13 @@
         "tests/",
         "tsconfig.json"
       ],
-      "decision": "audit-consumers-and-await-domain-replacement-before-deletion"
+      "decision": "audit-consumers-and-await-domain-replacement-before-deletion",
+      "consumerAudit": {
+        "runtimeClosureImports": false,
+        "at": "2026-10-25T03:16:54.243Z",
+        "note": "Static production graph has no import; own prototype test consumers retired together."
+      },
+      "completed": "Deleted from tracked source; consumers and workspace/CI references migrated in the same checkpoint"
     },
     {
       "oldFile": "apps/supabase-edge/src/lbs.ts",
@@ -814,7 +988,13 @@
         "scripts/release/build-pc.mjs",
         "tests/"
       ],
-      "decision": "audit-consumers-and-await-domain-replacement-before-deletion"
+      "decision": "audit-consumers-and-await-domain-replacement-before-deletion",
+      "consumerAudit": {
+        "runtimeClosureImports": false,
+        "at": "2026-10-25T03:16:54.243Z",
+        "note": "Static production graph has no import; own prototype test consumers retired together."
+      },
+      "completed": "Deleted from tracked source; consumers and workspace/CI references migrated in the same checkpoint"
     },
     {
       "oldFile": "apps/supabase-edge/src/realtime-room.ts",
@@ -829,7 +1009,13 @@
         "scripts/release/build-pc.mjs",
         "tests/"
       ],
-      "decision": "audit-consumers-and-await-domain-replacement-before-deletion"
+      "decision": "audit-consumers-and-await-domain-replacement-before-deletion",
+      "consumerAudit": {
+        "runtimeClosureImports": false,
+        "at": "2026-10-25T03:16:54.243Z",
+        "note": "Static production graph has no import; own prototype test consumers retired together."
+      },
+      "completed": "Deleted from tracked source; consumers and workspace/CI references migrated in the same checkpoint"
     },
     {
       "oldFile": "apps/supabase-edge/src/social.ts",
@@ -844,7 +1030,13 @@
         "scripts/release/build-pc.mjs",
         "tests/"
       ],
-      "decision": "audit-consumers-and-await-domain-replacement-before-deletion"
+      "decision": "audit-consumers-and-await-domain-replacement-before-deletion",
+      "consumerAudit": {
+        "runtimeClosureImports": false,
+        "at": "2026-10-25T03:16:54.243Z",
+        "note": "Static production graph has no import; own prototype test consumers retired together."
+      },
+      "completed": "Deleted from tracked source; consumers and workspace/CI references migrated in the same checkpoint"
     },
     {
       "oldFile": "apps/supabase-edge/src/territory.ts",
@@ -859,7 +1051,13 @@
         "scripts/release/build-pc.mjs",
         "tests/"
       ],
-      "decision": "audit-consumers-and-await-domain-replacement-before-deletion"
+      "decision": "audit-consumers-and-await-domain-replacement-before-deletion",
+      "consumerAudit": {
+        "runtimeClosureImports": false,
+        "at": "2026-10-25T03:16:54.243Z",
+        "note": "Static production graph has no import; own prototype test consumers retired together."
+      },
+      "completed": "Deleted from tracked source; consumers and workspace/CI references migrated in the same checkpoint"
     },
     {
       "oldFile": "packages/game-engine/package.json",
@@ -873,7 +1071,13 @@
         "scripts/release/build-pc.mjs",
         "tests/"
       ],
-      "decision": "audit-consumers-and-await-domain-replacement-before-deletion"
+      "decision": "audit-consumers-and-await-domain-replacement-before-deletion",
+      "consumerAudit": {
+        "runtimeClosureImports": false,
+        "at": "2026-10-25T03:16:54.243Z",
+        "note": "Static production graph has no import; own prototype test consumers retired together."
+      },
+      "completed": "Deleted from tracked source; consumers and workspace/CI references migrated in the same checkpoint"
     },
     {
       "oldFile": "packages/game-engine/src/index.ts",
@@ -890,7 +1094,13 @@
         "tests/",
         "tsconfig.json"
       ],
-      "decision": "audit-consumers-and-await-domain-replacement-before-deletion"
+      "decision": "audit-consumers-and-await-domain-replacement-before-deletion",
+      "consumerAudit": {
+        "runtimeClosureImports": false,
+        "at": "2026-10-25T03:16:54.243Z",
+        "note": "Static production graph has no import; own prototype test consumers retired together."
+      },
+      "completed": "Deleted from tracked source; consumers and workspace/CI references migrated in the same checkpoint"
     },
     {
       "oldFile": "packages/game-engine/src/progression.ts",
@@ -905,7 +1115,13 @@
         "scripts/release/build-pc.mjs",
         "tests/"
       ],
-      "decision": "audit-consumers-and-await-domain-replacement-before-deletion"
+      "decision": "audit-consumers-and-await-domain-replacement-before-deletion",
+      "consumerAudit": {
+        "runtimeClosureImports": false,
+        "at": "2026-10-25T03:16:54.243Z",
+        "note": "Static production graph has no import; own prototype test consumers retired together."
+      },
+      "completed": "Deleted from tracked source; consumers and workspace/CI references migrated in the same checkpoint"
     },
     {
       "oldFile": "scripts/release/build-mobile.mjs",
@@ -999,12 +1215,695 @@
       ],
       "decision": "delete-forwarder-after-approved-543b71f-and-consumers-migrated",
       "completed": "Source removed; formal consumers migrated"
+    },
+    {
+      "oldFile": "apps/supabase-edge/package.json",
+      "bytes": 258,
+      "sha256": "3c80ee533cb8e353e748bcd30284d0613bed166983b3d307522e773461225a7c",
+      "replacement": "Formal features/cloud authorities and their native/Electron checks",
+      "consumers": [
+        "tests/e2e/player-journey.e2e.test.ts",
+        "tests/integration/core-loop.integration.test.ts",
+        "tests/performance/runtime.performance.test.ts",
+        "tests/security/access-control.security.test.ts",
+        "tests/task-s01-config-center.test.ts",
+        "tests/task-s03-anti-cheat.test.ts",
+        "tests/task-t001-monorepo.test.ts",
+        "tests/task-t002-shared-contracts.test.ts",
+        "tests/task-t101-pc-window.test.ts",
+        "tests/task-t102-interaction.test.ts",
+        "tests/task-t103-battle-engine.test.ts",
+        "tests/task-t104-realtime-room.test.ts",
+        "tests/task-t105-lbs.test.ts",
+        "tests/task-t106-capture-pokedex.test.ts",
+        "tests/task-t107-emotion-engine.test.ts",
+        "tests/task-t108-territory.test.ts",
+        "tests/task-t109-core-loop.test.ts",
+        "tests/task-t201-light-social.test.ts",
+        "tests/task-t202-friends-private-duel.test.ts",
+        "tests/task-t203-progression.test.ts",
+        "tests/task-t204-appearance.test.ts"
+      ],
+      "decision": "delete-confirmed-unused-prototype-or-obsolete-test-after-consumer-audit",
+      "consumerAudit": {
+        "runtimeClosureImports": false,
+        "at": "2026-10-25T03:16:54.243Z",
+        "note": "Static production graph has no import; own prototype test consumers retired together."
+      },
+      "completed": "Deleted from tracked source; consumers and workspace/CI references migrated in the same checkpoint"
+    },
+    {
+      "oldFile": "tests/e2e/player-journey.e2e.test.ts",
+      "bytes": 2098,
+      "sha256": "4448871efb1fb2ddb000974fa65cc9324628797b988c1143d8b92515931308b2",
+      "replacement": "Formal features/cloud authorities and their native/Electron checks",
+      "consumers": [
+        "Retired implementation only"
+      ],
+      "decision": "delete-confirmed-unused-prototype-or-obsolete-test-after-consumer-audit",
+      "consumerAudit": {
+        "runtimeClosureImports": false,
+        "at": "2026-10-25T03:16:54.244Z",
+        "note": "Static production graph has no import; own prototype test consumers retired together."
+      },
+      "completed": "Deleted from tracked source; consumers and workspace/CI references migrated in the same checkpoint"
+    },
+    {
+      "oldFile": "tests/integration/core-loop.integration.test.ts",
+      "bytes": 1484,
+      "sha256": "d8d0ebc8a61d7191ac907fc324aa06ba7235a89a3fdb7eafbbf9195a0e6e37c0",
+      "replacement": "Formal features/cloud authorities and their native/Electron checks",
+      "consumers": [
+        "Retired implementation only"
+      ],
+      "decision": "delete-confirmed-unused-prototype-or-obsolete-test-after-consumer-audit",
+      "consumerAudit": {
+        "runtimeClosureImports": false,
+        "at": "2026-10-25T03:16:54.244Z",
+        "note": "Static production graph has no import; own prototype test consumers retired together."
+      },
+      "completed": "Deleted from tracked source; consumers and workspace/CI references migrated in the same checkpoint"
+    },
+    {
+      "oldFile": "tests/performance/runtime.performance.test.ts",
+      "bytes": 1417,
+      "sha256": "22749233b548ac81ca6d212f7a269c6f027b66e13d6b6d8848c71d5f8ff523ea",
+      "replacement": "Formal features/cloud authorities and their native/Electron checks",
+      "consumers": [
+        "Retired implementation only"
+      ],
+      "decision": "delete-confirmed-unused-prototype-or-obsolete-test-after-consumer-audit",
+      "consumerAudit": {
+        "runtimeClosureImports": false,
+        "at": "2026-10-25T03:16:54.244Z",
+        "note": "Static production graph has no import; own prototype test consumers retired together."
+      },
+      "completed": "Deleted from tracked source; consumers and workspace/CI references migrated in the same checkpoint"
+    },
+    {
+      "oldFile": "tests/security/access-control.security.test.ts",
+      "bytes": 1348,
+      "sha256": "3fef26df4bfe1a011e047a0a87b0008e82f5e9f804feda8636b71db4c605d209",
+      "replacement": "Formal features/cloud authorities and their native/Electron checks",
+      "consumers": [
+        "Retired implementation only"
+      ],
+      "decision": "delete-confirmed-unused-prototype-or-obsolete-test-after-consumer-audit",
+      "consumerAudit": {
+        "runtimeClosureImports": false,
+        "at": "2026-10-25T03:16:54.244Z",
+        "note": "Static production graph has no import; own prototype test consumers retired together."
+      },
+      "completed": "Deleted from tracked source; consumers and workspace/CI references migrated in the same checkpoint"
+    },
+    {
+      "oldFile": "tests/task-s01-config-center.test.ts",
+      "bytes": 1908,
+      "sha256": "994869e1137fbc72c650b08ac183407df48127909f48478eb3c6001784617865",
+      "replacement": "Formal features/cloud authorities and their native/Electron checks",
+      "consumers": [
+        "Retired implementation only"
+      ],
+      "decision": "delete-confirmed-unused-prototype-or-obsolete-test-after-consumer-audit",
+      "consumerAudit": {
+        "runtimeClosureImports": false,
+        "at": "2026-10-25T03:16:54.244Z",
+        "note": "Static production graph has no import; own prototype test consumers retired together."
+      },
+      "completed": "Deleted from tracked source; consumers and workspace/CI references migrated in the same checkpoint"
+    },
+    {
+      "oldFile": "tests/task-s03-anti-cheat.test.ts",
+      "bytes": 1380,
+      "sha256": "6fbb65385ca7cd6f490a082d8501ff0ffe99495f06de13bb636ecf820a11d2ae",
+      "replacement": "Formal features/cloud authorities and their native/Electron checks",
+      "consumers": [
+        "Retired implementation only"
+      ],
+      "decision": "delete-confirmed-unused-prototype-or-obsolete-test-after-consumer-audit",
+      "consumerAudit": {
+        "runtimeClosureImports": false,
+        "at": "2026-10-25T03:16:54.244Z",
+        "note": "Static production graph has no import; own prototype test consumers retired together."
+      },
+      "completed": "Deleted from tracked source; consumers and workspace/CI references migrated in the same checkpoint"
+    },
+    {
+      "oldFile": "tests/task-t001-monorepo.test.ts",
+      "bytes": 1675,
+      "sha256": "48c0915464f528c6cf5d47f98b90e3c02bcd752791c370fb179a52153910829f",
+      "replacement": "Formal features/cloud authorities and their native/Electron checks",
+      "consumers": [
+        "Retired implementation only"
+      ],
+      "decision": "delete-confirmed-unused-prototype-or-obsolete-test-after-consumer-audit",
+      "consumerAudit": {
+        "runtimeClosureImports": false,
+        "at": "2026-10-25T03:16:54.245Z",
+        "note": "Static production graph has no import; own prototype test consumers retired together."
+      },
+      "completed": "Deleted from tracked source; consumers and workspace/CI references migrated in the same checkpoint"
+    },
+    {
+      "oldFile": "tests/task-t002-shared-contracts.test.ts",
+      "bytes": 1851,
+      "sha256": "fc3013aa039d16100551e612eec5e0ed5c26d3623b1ac2a5bc39a5ef295b063d",
+      "replacement": "Formal features/cloud authorities and their native/Electron checks",
+      "consumers": [
+        "Retired implementation only"
+      ],
+      "decision": "delete-confirmed-unused-prototype-or-obsolete-test-after-consumer-audit",
+      "consumerAudit": {
+        "runtimeClosureImports": false,
+        "at": "2026-10-25T03:16:54.245Z",
+        "note": "Static production graph has no import; own prototype test consumers retired together."
+      },
+      "completed": "Deleted from tracked source; consumers and workspace/CI references migrated in the same checkpoint"
+    },
+    {
+      "oldFile": "tests/task-t101-pc-window.test.ts",
+      "bytes": 1554,
+      "sha256": "f2c1b6dd149cefe27cc56828811535996d91648a1c9119f0fa1d4158a4542c44",
+      "replacement": "Formal features/cloud authorities and their native/Electron checks",
+      "consumers": [
+        "Retired implementation only"
+      ],
+      "decision": "delete-confirmed-unused-prototype-or-obsolete-test-after-consumer-audit",
+      "consumerAudit": {
+        "runtimeClosureImports": false,
+        "at": "2026-10-25T03:16:54.245Z",
+        "note": "Static production graph has no import; own prototype test consumers retired together."
+      },
+      "completed": "Deleted from tracked source; consumers and workspace/CI references migrated in the same checkpoint"
+    },
+    {
+      "oldFile": "tests/task-t102-interaction.test.ts",
+      "bytes": 1236,
+      "sha256": "b87afdb5e63b8d0c8935ad55145d91f1603dbb85917414be9d7778be7f827b9c",
+      "replacement": "Formal features/cloud authorities and their native/Electron checks",
+      "consumers": [
+        "Retired implementation only"
+      ],
+      "decision": "delete-confirmed-unused-prototype-or-obsolete-test-after-consumer-audit",
+      "consumerAudit": {
+        "runtimeClosureImports": false,
+        "at": "2026-10-25T03:16:54.245Z",
+        "note": "Static production graph has no import; own prototype test consumers retired together."
+      },
+      "completed": "Deleted from tracked source; consumers and workspace/CI references migrated in the same checkpoint"
+    },
+    {
+      "oldFile": "tests/task-t103-battle-engine.test.ts",
+      "bytes": 3383,
+      "sha256": "97bc76bcd122281cbdc3efd78d09a36a757a0f52e1b57973f1c553f1f958b371",
+      "replacement": "Formal features/cloud authorities and their native/Electron checks",
+      "consumers": [
+        "Retired implementation only"
+      ],
+      "decision": "delete-confirmed-unused-prototype-or-obsolete-test-after-consumer-audit",
+      "consumerAudit": {
+        "runtimeClosureImports": false,
+        "at": "2026-10-25T03:16:54.245Z",
+        "note": "Static production graph has no import; own prototype test consumers retired together."
+      },
+      "completed": "Deleted from tracked source; consumers and workspace/CI references migrated in the same checkpoint"
+    },
+    {
+      "oldFile": "tests/task-t104-realtime-room.test.ts",
+      "bytes": 3029,
+      "sha256": "ff398bbe00cdc39c9c1d0e9a9f737ca1dde420938b5d37aa49484b3f66c15e77",
+      "replacement": "Formal features/cloud authorities and their native/Electron checks",
+      "consumers": [
+        "Retired implementation only"
+      ],
+      "decision": "delete-confirmed-unused-prototype-or-obsolete-test-after-consumer-audit",
+      "consumerAudit": {
+        "runtimeClosureImports": false,
+        "at": "2026-10-25T03:16:54.245Z",
+        "note": "Static production graph has no import; own prototype test consumers retired together."
+      },
+      "completed": "Deleted from tracked source; consumers and workspace/CI references migrated in the same checkpoint"
+    },
+    {
+      "oldFile": "tests/task-t105-lbs.test.ts",
+      "bytes": 2987,
+      "sha256": "9ae96cd9f8f41c8c8e0f9f1f5a36ac798407c26bdf695f3b12c2c769ff0b1967",
+      "replacement": "Formal features/cloud authorities and their native/Electron checks",
+      "consumers": [
+        "Retired implementation only"
+      ],
+      "decision": "delete-confirmed-unused-prototype-or-obsolete-test-after-consumer-audit",
+      "consumerAudit": {
+        "runtimeClosureImports": false,
+        "at": "2026-10-25T03:16:54.245Z",
+        "note": "Static production graph has no import; own prototype test consumers retired together."
+      },
+      "completed": "Deleted from tracked source; consumers and workspace/CI references migrated in the same checkpoint"
+    },
+    {
+      "oldFile": "tests/task-t106-capture-pokedex.test.ts",
+      "bytes": 3525,
+      "sha256": "d2fb0e22c84151763d281b81b7087a3577987bf3a32cc249ffc7a4cca3af2c43",
+      "replacement": "Formal features/cloud authorities and their native/Electron checks",
+      "consumers": [
+        "Retired implementation only"
+      ],
+      "decision": "delete-confirmed-unused-prototype-or-obsolete-test-after-consumer-audit",
+      "consumerAudit": {
+        "runtimeClosureImports": false,
+        "at": "2026-10-25T03:16:54.245Z",
+        "note": "Static production graph has no import; own prototype test consumers retired together."
+      },
+      "completed": "Deleted from tracked source; consumers and workspace/CI references migrated in the same checkpoint"
+    },
+    {
+      "oldFile": "tests/task-t107-emotion-engine.test.ts",
+      "bytes": 3186,
+      "sha256": "97043b6828f700a2481f35d53840d2c37a2aed126baf22fc7fe06a2d7471f7a1",
+      "replacement": "Formal features/cloud authorities and their native/Electron checks",
+      "consumers": [
+        "Retired implementation only"
+      ],
+      "decision": "delete-confirmed-unused-prototype-or-obsolete-test-after-consumer-audit",
+      "consumerAudit": {
+        "runtimeClosureImports": false,
+        "at": "2026-10-25T03:16:54.245Z",
+        "note": "Static production graph has no import; own prototype test consumers retired together."
+      },
+      "completed": "Deleted from tracked source; consumers and workspace/CI references migrated in the same checkpoint"
+    },
+    {
+      "oldFile": "tests/task-t108-territory.test.ts",
+      "bytes": 3648,
+      "sha256": "3e52cba97e2b9abb060e9f6dc4603b999305f2a427b8a06d4661f37bf590e37c",
+      "replacement": "Formal features/cloud authorities and their native/Electron checks",
+      "consumers": [
+        "Retired implementation only"
+      ],
+      "decision": "delete-confirmed-unused-prototype-or-obsolete-test-after-consumer-audit",
+      "consumerAudit": {
+        "runtimeClosureImports": false,
+        "at": "2026-10-25T03:16:54.245Z",
+        "note": "Static production graph has no import; own prototype test consumers retired together."
+      },
+      "completed": "Deleted from tracked source; consumers and workspace/CI references migrated in the same checkpoint"
+    },
+    {
+      "oldFile": "tests/task-t109-core-loop.test.ts",
+      "bytes": 1748,
+      "sha256": "fee9883d2b55416f0948bf5fac7af197ea47f7ff3c9ad64905522e16141109fc",
+      "replacement": "Formal features/cloud authorities and their native/Electron checks",
+      "consumers": [
+        "Retired implementation only"
+      ],
+      "decision": "delete-confirmed-unused-prototype-or-obsolete-test-after-consumer-audit",
+      "consumerAudit": {
+        "runtimeClosureImports": false,
+        "at": "2026-10-25T03:16:54.246Z",
+        "note": "Static production graph has no import; own prototype test consumers retired together."
+      },
+      "completed": "Deleted from tracked source; consumers and workspace/CI references migrated in the same checkpoint"
+    },
+    {
+      "oldFile": "tests/task-t201-light-social.test.ts",
+      "bytes": 1507,
+      "sha256": "67b8f3cbfe0e8e7ebfe9343df3086e0226bd29ae814a81f73f33b862b19c9062",
+      "replacement": "Formal features/cloud authorities and their native/Electron checks",
+      "consumers": [
+        "Retired implementation only"
+      ],
+      "decision": "delete-confirmed-unused-prototype-or-obsolete-test-after-consumer-audit",
+      "consumerAudit": {
+        "runtimeClosureImports": false,
+        "at": "2026-10-25T03:16:54.246Z",
+        "note": "Static production graph has no import; own prototype test consumers retired together."
+      },
+      "completed": "Deleted from tracked source; consumers and workspace/CI references migrated in the same checkpoint"
+    },
+    {
+      "oldFile": "tests/task-t202-friends-private-duel.test.ts",
+      "bytes": 2087,
+      "sha256": "d15a57a940a1eb6186ff89849ee564d57289827a92864459501bd9ac24215498",
+      "replacement": "Formal features/cloud authorities and their native/Electron checks",
+      "consumers": [
+        "Retired implementation only"
+      ],
+      "decision": "delete-confirmed-unused-prototype-or-obsolete-test-after-consumer-audit",
+      "consumerAudit": {
+        "runtimeClosureImports": false,
+        "at": "2026-10-25T03:16:54.246Z",
+        "note": "Static production graph has no import; own prototype test consumers retired together."
+      },
+      "completed": "Deleted from tracked source; consumers and workspace/CI references migrated in the same checkpoint"
+    },
+    {
+      "oldFile": "tests/task-t203-progression.test.ts",
+      "bytes": 1560,
+      "sha256": "3d1237ebd597c1b3700935d489eacf663dd5167e1260c5ffc84a6ff0568326d3",
+      "replacement": "Formal features/cloud authorities and their native/Electron checks",
+      "consumers": [
+        "Retired implementation only"
+      ],
+      "decision": "delete-confirmed-unused-prototype-or-obsolete-test-after-consumer-audit",
+      "consumerAudit": {
+        "runtimeClosureImports": false,
+        "at": "2026-10-25T03:16:54.246Z",
+        "note": "Static production graph has no import; own prototype test consumers retired together."
+      },
+      "completed": "Deleted from tracked source; consumers and workspace/CI references migrated in the same checkpoint"
+    },
+    {
+      "oldFile": "tests/task-t204-appearance.test.ts",
+      "bytes": 1903,
+      "sha256": "501b81ac4e562f778cb6e0de807bcfa8f0c48ffa067fa7fecf9517af360f0abf",
+      "replacement": "Formal features/cloud authorities and their native/Electron checks",
+      "consumers": [
+        "Retired implementation only"
+      ],
+      "decision": "delete-confirmed-unused-prototype-or-obsolete-test-after-consumer-audit",
+      "consumerAudit": {
+        "runtimeClosureImports": false,
+        "at": "2026-10-25T03:16:54.246Z",
+        "note": "Static production graph has no import; own prototype test consumers retired together."
+      },
+      "completed": "Deleted from tracked source; consumers and workspace/CI references migrated in the same checkpoint"
+    },
+    {
+      "oldFile": "tests/task-d003-desktop-stage-battle.test.ts",
+      "bytes": 8857,
+      "sha256": "5f458a96e76f8a5ab278432ff3ea71f3c9844065828de77a65bb582e4937ac82",
+      "replacement": "Formal features/cloud authorities and their native/Electron checks",
+      "consumers": [
+        "Retired implementation only"
+      ],
+      "decision": "delete-confirmed-unused-prototype-or-obsolete-test-after-consumer-audit",
+      "consumerAudit": {
+        "runtimeClosureImports": false,
+        "at": "2026-10-25T03:16:54.246Z",
+        "note": "Static production graph has no import; own prototype test consumers retired together."
+      },
+      "completed": "Deleted from tracked source; consumers and workspace/CI references migrated in the same checkpoint"
+    },
+    {
+      "oldFile": "tests/task-d006-pc-wild-capture-flow.test.ts",
+      "bytes": 7817,
+      "sha256": "ec4a30d78225bd9442255ca42b2e52091096e1dd51fa5d1a6f2dda03b3609665",
+      "replacement": "Formal features/cloud authorities and their native/Electron checks",
+      "consumers": [
+        "Retired implementation only"
+      ],
+      "decision": "delete-confirmed-unused-prototype-or-obsolete-test-after-consumer-audit",
+      "consumerAudit": {
+        "runtimeClosureImports": false,
+        "at": "2026-10-25T03:16:54.247Z",
+        "note": "Static production graph has no import; own prototype test consumers retired together."
+      },
+      "completed": "Deleted from tracked source; consumers and workspace/CI references migrated in the same checkpoint"
+    },
+    {
+      "oldFile": "tests/task-t301-testing-pipeline.test.ts",
+      "bytes": 1632,
+      "sha256": "2bd8c56e84c09ae5c6ed3a76ea745f9f27f249d329cc9cfe7bbebdd0f247a48c",
+      "replacement": "Formal features/cloud authorities and their native/Electron checks",
+      "consumers": [
+        "Retired implementation only"
+      ],
+      "decision": "delete-confirmed-unused-prototype-or-obsolete-test-after-consumer-audit",
+      "consumerAudit": {
+        "runtimeClosureImports": false,
+        "at": "2026-10-25T03:16:54.247Z",
+        "note": "Static production graph has no import; own prototype test consumers retired together."
+      },
+      "completed": "Deleted from tracked source; consumers and workspace/CI references migrated in the same checkpoint"
+    },
+    {
+      "oldFile": ".github/workflows/quality-gates.yml",
+      "bytes": 1213,
+      "sha256": "93fe2774439d872ac4695852a4923a689708876de887ccf16ae250c0efeaac29",
+      "replacement": "ci.yml: Linux static/unit + Windows CJS/native/real EXE gates",
+      "consumers": [
+        "tests/e2e/player-journey.e2e.test.ts",
+        "tests/integration/core-loop.integration.test.ts",
+        "tests/performance/runtime.performance.test.ts",
+        "tests/security/access-control.security.test.ts",
+        "tests/task-s01-config-center.test.ts",
+        "tests/task-s03-anti-cheat.test.ts",
+        "tests/task-t001-monorepo.test.ts",
+        "tests/task-t002-shared-contracts.test.ts",
+        "tests/task-t101-pc-window.test.ts",
+        "tests/task-t102-interaction.test.ts",
+        "tests/task-t103-battle-engine.test.ts",
+        "tests/task-t104-realtime-room.test.ts",
+        "tests/task-t105-lbs.test.ts",
+        "tests/task-t106-capture-pokedex.test.ts",
+        "tests/task-t107-emotion-engine.test.ts",
+        "tests/task-t108-territory.test.ts",
+        "tests/task-t109-core-loop.test.ts",
+        "tests/task-t201-light-social.test.ts",
+        "tests/task-t202-friends-private-duel.test.ts",
+        "tests/task-t203-progression.test.ts",
+        "tests/task-t204-appearance.test.ts"
+      ],
+      "decision": "delete-confirmed-unused-prototype-or-obsolete-test-after-consumer-audit",
+      "consumerAudit": {
+        "runtimeClosureImports": false,
+        "at": "2026-10-25T03:16:54.247Z",
+        "note": "Static production graph has no import; own prototype test consumers retired together."
+      },
+      "completed": "Deleted from tracked source; consumers and workspace/CI references migrated in the same checkpoint"
+    },
+    {
+      "oldFile": "vitest.integration.config.ts",
+      "bytes": 152,
+      "sha256": "473d62ef60713cd89601a824310266015123e27795b0a6c7b7b45c9342a533e9",
+      "replacement": "ci.yml: Linux static/unit + Windows CJS/native/real EXE gates",
+      "consumers": [
+        "tests/e2e/player-journey.e2e.test.ts",
+        "tests/integration/core-loop.integration.test.ts",
+        "tests/performance/runtime.performance.test.ts",
+        "tests/security/access-control.security.test.ts",
+        "tests/task-s01-config-center.test.ts",
+        "tests/task-s03-anti-cheat.test.ts",
+        "tests/task-t001-monorepo.test.ts",
+        "tests/task-t002-shared-contracts.test.ts",
+        "tests/task-t101-pc-window.test.ts",
+        "tests/task-t102-interaction.test.ts",
+        "tests/task-t103-battle-engine.test.ts",
+        "tests/task-t104-realtime-room.test.ts",
+        "tests/task-t105-lbs.test.ts",
+        "tests/task-t106-capture-pokedex.test.ts",
+        "tests/task-t107-emotion-engine.test.ts",
+        "tests/task-t108-territory.test.ts",
+        "tests/task-t109-core-loop.test.ts",
+        "tests/task-t201-light-social.test.ts",
+        "tests/task-t202-friends-private-duel.test.ts",
+        "tests/task-t203-progression.test.ts",
+        "tests/task-t204-appearance.test.ts"
+      ],
+      "decision": "delete-confirmed-unused-prototype-or-obsolete-test-after-consumer-audit",
+      "consumerAudit": {
+        "runtimeClosureImports": false,
+        "at": "2026-10-25T03:16:54.247Z",
+        "note": "Static production graph has no import; own prototype test consumers retired together."
+      },
+      "completed": "Deleted from tracked source; consumers and workspace/CI references migrated in the same checkpoint"
+    },
+    {
+      "oldFile": "vitest.e2e.config.ts",
+      "bytes": 144,
+      "sha256": "462d6083d20eaf47ced15f29beea311d45b3fb96c80ccc30a75034f1c3e4d28c",
+      "replacement": "ci.yml: Linux static/unit + Windows CJS/native/real EXE gates",
+      "consumers": [
+        "tests/e2e/player-journey.e2e.test.ts",
+        "tests/integration/core-loop.integration.test.ts",
+        "tests/performance/runtime.performance.test.ts",
+        "tests/security/access-control.security.test.ts",
+        "tests/task-s01-config-center.test.ts",
+        "tests/task-s03-anti-cheat.test.ts",
+        "tests/task-t001-monorepo.test.ts",
+        "tests/task-t002-shared-contracts.test.ts",
+        "tests/task-t101-pc-window.test.ts",
+        "tests/task-t102-interaction.test.ts",
+        "tests/task-t103-battle-engine.test.ts",
+        "tests/task-t104-realtime-room.test.ts",
+        "tests/task-t105-lbs.test.ts",
+        "tests/task-t106-capture-pokedex.test.ts",
+        "tests/task-t107-emotion-engine.test.ts",
+        "tests/task-t108-territory.test.ts",
+        "tests/task-t109-core-loop.test.ts",
+        "tests/task-t201-light-social.test.ts",
+        "tests/task-t202-friends-private-duel.test.ts",
+        "tests/task-t203-progression.test.ts",
+        "tests/task-t204-appearance.test.ts"
+      ],
+      "decision": "delete-confirmed-unused-prototype-or-obsolete-test-after-consumer-audit",
+      "consumerAudit": {
+        "runtimeClosureImports": false,
+        "at": "2026-10-25T03:16:54.247Z",
+        "note": "Static production graph has no import; own prototype test consumers retired together."
+      },
+      "completed": "Deleted from tracked source; consumers and workspace/CI references migrated in the same checkpoint"
+    },
+    {
+      "oldFile": "vitest.performance.config.ts",
+      "bytes": 152,
+      "sha256": "1c262f7371be65ecf459661bb95c00ba75a9854061d666f44afd25428e9b1243",
+      "replacement": "ci.yml: Linux static/unit + Windows CJS/native/real EXE gates",
+      "consumers": [
+        "tests/e2e/player-journey.e2e.test.ts",
+        "tests/integration/core-loop.integration.test.ts",
+        "tests/performance/runtime.performance.test.ts",
+        "tests/security/access-control.security.test.ts",
+        "tests/task-s01-config-center.test.ts",
+        "tests/task-s03-anti-cheat.test.ts",
+        "tests/task-t001-monorepo.test.ts",
+        "tests/task-t002-shared-contracts.test.ts",
+        "tests/task-t101-pc-window.test.ts",
+        "tests/task-t102-interaction.test.ts",
+        "tests/task-t103-battle-engine.test.ts",
+        "tests/task-t104-realtime-room.test.ts",
+        "tests/task-t105-lbs.test.ts",
+        "tests/task-t106-capture-pokedex.test.ts",
+        "tests/task-t107-emotion-engine.test.ts",
+        "tests/task-t108-territory.test.ts",
+        "tests/task-t109-core-loop.test.ts",
+        "tests/task-t201-light-social.test.ts",
+        "tests/task-t202-friends-private-duel.test.ts",
+        "tests/task-t203-progression.test.ts",
+        "tests/task-t204-appearance.test.ts"
+      ],
+      "decision": "delete-confirmed-unused-prototype-or-obsolete-test-after-consumer-audit",
+      "consumerAudit": {
+        "runtimeClosureImports": false,
+        "at": "2026-10-25T03:16:54.247Z",
+        "note": "Static production graph has no import; own prototype test consumers retired together."
+      },
+      "completed": "Deleted from tracked source; consumers and workspace/CI references migrated in the same checkpoint"
+    },
+    {
+      "oldFile": "vitest.security.config.ts",
+      "bytes": 149,
+      "sha256": "47fe13862f9cd109179c4094b73d7beb65008fd790e4ac777d1646f63586c5e7",
+      "replacement": "ci.yml: Linux static/unit + Windows CJS/native/real EXE gates",
+      "consumers": [
+        "tests/e2e/player-journey.e2e.test.ts",
+        "tests/integration/core-loop.integration.test.ts",
+        "tests/performance/runtime.performance.test.ts",
+        "tests/security/access-control.security.test.ts",
+        "tests/task-s01-config-center.test.ts",
+        "tests/task-s03-anti-cheat.test.ts",
+        "tests/task-t001-monorepo.test.ts",
+        "tests/task-t002-shared-contracts.test.ts",
+        "tests/task-t101-pc-window.test.ts",
+        "tests/task-t102-interaction.test.ts",
+        "tests/task-t103-battle-engine.test.ts",
+        "tests/task-t104-realtime-room.test.ts",
+        "tests/task-t105-lbs.test.ts",
+        "tests/task-t106-capture-pokedex.test.ts",
+        "tests/task-t107-emotion-engine.test.ts",
+        "tests/task-t108-territory.test.ts",
+        "tests/task-t109-core-loop.test.ts",
+        "tests/task-t201-light-social.test.ts",
+        "tests/task-t202-friends-private-duel.test.ts",
+        "tests/task-t203-progression.test.ts",
+        "tests/task-t204-appearance.test.ts"
+      ],
+      "decision": "delete-confirmed-unused-prototype-or-obsolete-test-after-consumer-audit",
+      "consumerAudit": {
+        "runtimeClosureImports": false,
+        "at": "2026-10-25T03:16:54.247Z",
+        "note": "Static production graph has no import; own prototype test consumers retired together."
+      },
+      "completed": "Deleted from tracked source; consumers and workspace/CI references migrated in the same checkpoint"
+    },
+    {
+      "oldFile": "apps/pc-app/runtime/assets/icons/app.ico",
+      "bytes": 2686,
+      "sha256": "8a884445f47688fd97454648d7c7ba78411019a6717a319aedbf490408317315",
+      "replacement": "roster-v2 2D sprites + runtime/assets/brand; model identifiers retained as history metadata",
+      "consumers": [
+        "tests/e2e/player-journey.e2e.test.ts",
+        "tests/integration/core-loop.integration.test.ts",
+        "tests/performance/runtime.performance.test.ts",
+        "tests/security/access-control.security.test.ts",
+        "tests/task-s01-config-center.test.ts",
+        "tests/task-s03-anti-cheat.test.ts",
+        "tests/task-t001-monorepo.test.ts",
+        "tests/task-t002-shared-contracts.test.ts",
+        "tests/task-t101-pc-window.test.ts",
+        "tests/task-t102-interaction.test.ts",
+        "tests/task-t103-battle-engine.test.ts",
+        "tests/task-t104-realtime-room.test.ts",
+        "tests/task-t105-lbs.test.ts",
+        "tests/task-t106-capture-pokedex.test.ts",
+        "tests/task-t107-emotion-engine.test.ts",
+        "tests/task-t108-territory.test.ts",
+        "tests/task-t109-core-loop.test.ts",
+        "tests/task-t201-light-social.test.ts",
+        "tests/task-t202-friends-private-duel.test.ts",
+        "tests/task-t203-progression.test.ts",
+        "tests/task-t204-appearance.test.ts"
+      ],
+      "decision": "delete-confirmed-unused-prototype-or-obsolete-test-after-consumer-audit",
+      "consumerAudit": {
+        "runtimeClosureImports": false,
+        "at": "2026-10-25T03:16:54.248Z",
+        "note": "Static production graph has no import; own prototype test consumers retired together."
+      },
+      "completed": "Deleted from tracked source; consumers and workspace/CI references migrated in the same checkpoint"
+    },
+    {
+      "oldFile": "apps/pc-app/runtime/assets/icons/tray.png",
+      "bytes": 1255,
+      "sha256": "eec02f32fefb2bc326595dfd7f326b893f8f7150f1c943856361328a5bc91873",
+      "replacement": "roster-v2 2D sprites + runtime/assets/brand; model identifiers retained as history metadata",
+      "consumers": [
+        "tests/e2e/player-journey.e2e.test.ts",
+        "tests/integration/core-loop.integration.test.ts",
+        "tests/performance/runtime.performance.test.ts",
+        "tests/security/access-control.security.test.ts",
+        "tests/task-s01-config-center.test.ts",
+        "tests/task-s03-anti-cheat.test.ts",
+        "tests/task-t001-monorepo.test.ts",
+        "tests/task-t002-shared-contracts.test.ts",
+        "tests/task-t101-pc-window.test.ts",
+        "tests/task-t102-interaction.test.ts",
+        "tests/task-t103-battle-engine.test.ts",
+        "tests/task-t104-realtime-room.test.ts",
+        "tests/task-t105-lbs.test.ts",
+        "tests/task-t106-capture-pokedex.test.ts",
+        "tests/task-t107-emotion-engine.test.ts",
+        "tests/task-t108-territory.test.ts",
+        "tests/task-t109-core-loop.test.ts",
+        "tests/task-t201-light-social.test.ts",
+        "tests/task-t202-friends-private-duel.test.ts",
+        "tests/task-t203-progression.test.ts",
+        "tests/task-t204-appearance.test.ts"
+      ],
+      "decision": "delete-confirmed-unused-prototype-or-obsolete-test-after-consumer-audit",
+      "consumerAudit": {
+        "runtimeClosureImports": false,
+        "at": "2026-10-25T03:16:54.248Z",
+        "note": "Static production graph has no import; own prototype test consumers retired together."
+      },
+      "completed": "Deleted from tracked source; consumers and workspace/CI references migrated in the same checkpoint"
+    },
+    {
+      "oldFile": "apps/pc-app/runtime/assets/models/catalog.json",
+      "replacement": "docs/implementation/legacy-model-attribution.json",
+      "consumers": [
+        "Historical model attribution and fat-fish license"
+      ],
+      "decision": "Move attribution metadata to documentation; preserve original content without bundled 3D files"
     }
   ],
   "supplementAt": "2026-10-25T02:50:26.978Z",
   "cloudRetirement": {
     "policy": "Inventory only until domain switch and main coordinator approval. No remote repair, migration renaming, deployment or data changes by foundation.",
     "candidates": [
+      "infra/supabase/migrations/0001_core_schema.sql",
+      "infra/supabase/migrations/0002_pet_inventory_battle_reports.sql",
+      "infra/supabase/migrations/0003_duel_realtime_schema.sql",
       "infra/supabase/migrations/0004_runtime_cloud_auth_duel_requests.sql",
       "infra/supabase/migrations/0005_runtime_single_login_session.sql",
       "infra/supabase/migrations/20261024_accounts_save_sync.sql",
@@ -1018,5 +1917,6 @@
     ],
     "migrationHistoryOwner": "01a1704b-e200-7090-9d17-958218c80f42",
     "snapshot": "artifacts/recovery/cloud-foundation-2026-10-25/pre-cleanup.bundle"
-  }
+  },
+  "testingPolicy": "Retire test-only in-memory prototypes and static assertions for removed HTML. Linux verifies current TS/unit; Windows runs all domain CJS/native + actual GUI/EXE. Do not present old prototype test counts as current product acceptance."
 }

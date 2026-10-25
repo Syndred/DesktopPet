@@ -27,9 +27,6 @@ jobs:
       - name: Verify workspace
         run: npm run verify
 
-      - name: Check renderer types
-        run: npm run typecheck:ui
-
   windows-desktop:
     runs-on: windows-latest
     timeout-minutes: 25

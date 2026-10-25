@@ -36,7 +36,6 @@ jobs:
         run: node --input-type=module -e "import {releaseVersion} from './scripts/release/release-store.mjs'; releaseVersion(process.env.RELEASE_VERSION)"
       - run: npm ci
       - run: npm run verify
-      - run: npm run typecheck:ui
       - run: npm run test:native
       - run: npm run release:prepare
       - uses: actions/upload-artifact@v7.0.2

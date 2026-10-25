@@ -26,7 +26,7 @@ SHA256 仅用于完整性校验。真实签名由 electron-builder 使用 `CSC_L
 
 ## CI 和发布
 
-CI 包含 Linux 类型/分层回归，以及 Windows 普通 npm ci、Node/Electron 共用 SQLite、全部 CJS/native 测试、实际 EXE 构建、旧 SQLite 档案发现、原生窗口/托盘/IPC/延迟加载、包审计及便携 EXE smoke。只上传 EXE 与选定 JSON/PNG 证据，不上传用户档案、加密凭据或 artifacts 全目录。
+CI 包含 Linux 类型与单元检查，以及 Windows 普通 npm ci、Node/Electron 共用 SQLite、全部 CJS/native 测试、实际 EXE 构建、旧 SQLite 档案发现、原生窗口/托盘/IPC/延迟加载、包审计及便携 EXE smoke。只上传 EXE 与选定 JSON/PNG 证据，不上传用户档案、加密凭据或 artifacts 全目录。
 
 Release Pipeline 默认 dry_run。正式发布要求已有审核过的 Git tag、真实证书、实际 EXE smoke 与匹配哈希；随后创建 GitHub Release，上传同一不可变二进制和清单。未运行 GitHub 托管 workflow 时，不能把本地等价检查写成托管 CI 成功。
 

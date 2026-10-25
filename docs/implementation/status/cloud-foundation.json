@@ -4,7 +4,7 @@
   "branch": "codex/lingjing-foundation",
   "commit": "8242a4c251cdd2d7c92e395bf99e1d3098d6d070",
   "goalStatus": "active",
-  "stage": "approved-business-integrated-profile-path-fixed-release-ci-ready-for-package-proof",
+  "stage": "approved-08-03-integrated-source-prototypes-retired-final-domain-checkpoints-pending",
   "contracts": [
     "docs/implementation/cloud-upgrade-2026-10-25.md",
     "https://www.electronjs.org/docs/latest/tutorial/electron-timelines",
@@ -83,6 +83,17 @@
       "passed": true,
       "cases": 3,
       "scope": "Artifact-format fixture checks; actual EXE rehearsal follows package build."
+    },
+    {
+      "name": "Official GitHub action version metadata and workflow syntax",
+      "passed": true,
+      "scope": "Workflow authored/parsed locally; no hosted GitHub run or publication claim"
+    },
+    {
+      "name": "Fresh Windows npm ci after unused workspace removal and exact Supabase SDK pin",
+      "passed": true,
+      "evidence": "docs/implementation/evidence/foundation/cloud-engineering/clean-install-workspace-cleanup.json",
+      "policy": "Separate new directory, no shared node_modules changes, both Node and Electron N-API probe passed"
     }
   ],
   "realCloudEvidence": {
@@ -124,16 +135,37 @@
     "cleanInstallFixCommit": "e294f2235297c406429c05cd6847daa74ed6dd79"
   },
   "remaining": [
-    "Actual portable EXE build/audit/smoke and binary rollback rehearsal, actual Authenticode status",
-    "Main-approved remaining business checkpoints and cloud retirement/consumer audit",
-    "One justified final integrated regression and final exact EXE/source/readback"
+    "Approved growth, garden and cloud battle/discovery final checkpoints",
+    "Fresh isolated install after workspace/lock cleanup; final all-domain regression once integration is frozen",
+    "Final actual EXE audit/ordinary config/fullscreen monitor/native training smoke and verified binary rollback rehearsal",
+    "Coordinator-approved old cloud SQL/function retirement; no remote migration history changes by foundation"
   ],
-  "updatedAt": "2026-10-25T03:06:40.122Z",
+  "updatedAt": "2026-10-25T03:18:28.308Z",
   "approvedIntegrations": {
     "accounts": "45b857d",
     "resources": "4e8fdf8",
     "battleV3": "0ddda2a",
     "conversations": "543b71f",
-    "publicCloudConfig": "3c791c2"
+    "publicCloudConfig": "3c791c2",
+    "accountsPrivacy": "8e5c735",
+    "discoveryLocation": "4ee7240",
+    "publicEngineering": "a92394d",
+    "packagedMonitorAndTagSource": "82dfa2e"
+  },
+  "cleanupCompleted": {
+    "obsoletePrototypeSourceFiles": 19,
+    "obsoletePrototypeAndRemovedRendererTests": 24,
+    "individuallyInventoriedFilesRemoved": 68,
+    "oldBundled3DAssetsRemoved": true,
+    "originalAttributionPreserved": "docs/implementation/legacy-model-attribution.json",
+    "qualityGates": "One maintained CI workflow with current domain native and actual GUI/EXE gates; retired in-memory/static prototype counts."
+  },
+  "packageCandidate": {
+    "source": "6e6dbe64aeb1d547ea9411319a9b5e0369a7becd",
+    "sha256": "948e7e6abd85a7c01cbdd2b4e4c05803292ec32fe66abeac00c0f0d0ff67dbb0",
+    "auditPassed": true,
+    "final": false,
+    "smoke": "Early CDP attachment race found and fixed in verifier; first verification interrupted. Ordinary startup subsequently reached matching source and runtime account provider. Final rebuilt monitor-ready smoke remains required.",
+    "authenticode": "No certificate configured; unsigned. Final status will use Get-AuthenticodeSignature."
   }
 }

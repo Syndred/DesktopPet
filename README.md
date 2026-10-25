@@ -22,6 +22,7 @@ better-sqlite3 13 使用发布包内的 N-API 预编译文件。普通安装不�
 - npm run package:pc:win 生成 artifacts/pc-cloud-upgrade 下的 Windows 便携 EXE。
 - npm run typecheck、npm run typecheck:ui、npm run test:native 检查类型及实际 Electron/SQLite；pc:smoke:profile、pc:smoke:engineering 和 pc:smoke:portable 分别验证档案发现、原生窗口和真实 EXE。
 - 业务模块通过 [工程契约](docs/implementation/foundation-contract.md) 注册。旧 HTML renderer/preload/main 已移除。
+- Linux CI 检查正式类型及单元逻辑，Windows CI 执行全部域 CJS/native、真实窗口和 EXE；旧内存版业务原型及其测试已退役，验收数量以本轮证据为准。
 
 ## 数据与恢复
 
