@@ -9,7 +9,15 @@ export function createWildAuthority({ store, now = Date.now, uuid = () => crypto
     identifier(actionId, 'actionId'); const requestHash = await hash({ protocol: PROTOCOL, ...request });
     const old = await store.action(actor, actionId);
     if (old) { requireValue(old.requestHash === requestHash, 'ACTION_ID_CONFLICT', '操作编号已用于其他请求', 409); return old.result; }
-    return execute({ actionId, requestHash });
+    try { return await execute({ actionId, requestHash }); }
+    catch (error) {
+      // Another identical request can commit between the optimistic action read
+      // and a later round/proof/revision check. Recover its immutable receipt;
+      // never turn that same successful action into a fresh round or conflict.
+      const committed = await store.action(actor, actionId);
+      if (committed) { requireValue(committed.requestHash === requestHash, 'ACTION_ID_CONFLICT', '操作编号已用于其他请求', 409); return committed.result; }
+      throw error;
+    }
   };
   const permit = async (actor, id) => {
     const value = await store.permit(actor, identifier(id, 'permitId')); requireValue(value, 'PERMIT_NOT_FOUND', '找不到这次云端相遇', 404);
