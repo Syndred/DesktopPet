@@ -1,0 +1,17 @@
+{
+  "at": "2026-10-25T04:38:00Z",
+  "scope": "Acceptance-driver engineering probe only. This older engineering binary is not the final upgraded business release.",
+  "binary": "C:/Users/Administrator/.codex/worktrees/lingjing-foundation/DesktopPet/releases/engineering-rc-09af97f/Lingjing-0.1.8-portable-x64.exe",
+  "binarySource": "09af97f0a92677f417b3e33aa352d7ad018eb08e",
+  "runtimePid": 18576,
+  "electron": "44.9.3",
+  "node": "24.22.0",
+  "profile": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/cloud-upgrade/2026-10-25/portable-inspector-probe",
+  "actualSfxMainAndRenderer": true,
+  "loopbackInspector": true,
+  "initialPrematureReadAccepted": false,
+  "correction": "Inspector appears before app module sets userData. Exact env override is checked first; then actual app readiness and matching userData are awaited before any observation hook or command.",
+  "profileOverrideAndLoadedSourceMatched": true,
+  "businessCloudCommandsRun": false,
+  "passed": true
+}
