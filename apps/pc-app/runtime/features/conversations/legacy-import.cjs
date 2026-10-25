@@ -59,10 +59,10 @@ function buildLegacyConversationImport({ db, owner, pets, store, unassignedPetId
         provider:null,model:null,attempt:Number.isSafeInteger(row.attempt) && row.attempt > 0 ? row.attempt : 1,
         created_at:created,updated_at:timestamp(row.updatedAt ?? row.updated_at) || created};
       const prior = db.prepare('SELECT * FROM conversation_messages WHERE id=?').get(messageId);
-      if (prior && prior.owner_account_id === owner && prior.pet_id === pet && prior.role === row.role && prior.content === body)
-        messages.push(Object.fromEntries(envelope.schema.conversation_messages.split('|').map(field=>[field,prior[field]])));
-      else messages.push(next);
-      previous = {pet,action,role:row.role};
+      const chosen = prior && prior.owner_account_id === owner && prior.pet_id === pet && prior.role === row.role && prior.content === body
+        ? Object.fromEntries(envelope.schema.conversation_messages.split('|').map(field=>[field,prior[field]])) : next;
+      messages.push(chosen);
+      previous = {pet,action:chosen.action_id,role:row.role};
     });
   }
   function addMemories(rows,inherited,ref) {
