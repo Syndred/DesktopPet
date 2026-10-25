@@ -1,0 +1,15 @@
+COMPANION_OUTLETS_INDEPENDENT {"kind":"real-SQLite-and-main-IPC-with-controlled-provider","owners":2,"samePetIdsAcrossOwners":true,"pets":6,"rawModuleHashes":["c3482dec3ba03d131f8e76e868b2d44c3f572ce67adc4901b251b38fef63a616","b8cd6947ed3501b598372ba601d24c099e492fab77415301da7233eac5aa44d3"],"archiveHash":"11f7ecebfb26a74ea165ae86a702aa8aad89ec163ab1b3cbafe8a99c99bfa124","exactOriginalBytesRetained":true,"queryOnlyReopen":true,"allocationVerified":false,"nativeSafeStorageVerified":false,"nativeUiOperated":false}
+▶ independent main/IPC projection isolates shared petIds and never promotes imported receipt metadata
+  ✔ an in-flight read loses authority when its session changes (20.5455ms)
+  ✔ all main and IPC read outlets bind exact owner, pet and original template (152.8757ms)
+  ✔ IPC mutation retries retain raw imported receipt bytes while reads retain verified numbers (16.2242ms)
+  ✔ backup-only profiles stay pending; confirmed sealed-cache restart restores only the original bindings (37.076ms)
+✔ independent main/IPC projection isolates shared petIds and never promotes imported receipt metadata (567.1304ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 661.2899

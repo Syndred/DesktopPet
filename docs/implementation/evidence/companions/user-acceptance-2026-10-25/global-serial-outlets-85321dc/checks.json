@@ -1,0 +1,124 @@
+{
+  "format": "lingjing.companions.independent-global-serial-outlets",
+  "version": 1,
+  "decisionId": "globalSerial-20261025-v1",
+  "at": "2026-10-25T11:35:42.8554776Z",
+  "approvedSourceBase": "85321dc2b2837e261d159ef136bcf52d855d6207",
+  "authorityImplementation": "96da941c598d613d03d2ea6cc0afd3902735b1a5",
+  "publicDisplayDependency": "a528ebcf90e33491364a606747727f7f28f46457",
+  "worktree": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet-fresh-worktrees\\02",
+  "branch": "codex/lingjing-02-fresh-20261025",
+  "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086",
+  "originMainMissingCommits": 0,
+  "scope": "Independent local read outlets plus a narrow adoption UI boundary fix; 08 authority/mutation/backup source unchanged.",
+  "mainIpc": {
+    "passed": 5,
+    "failed": 0,
+    "kind": "Actual service registration and core services.invoke with real SQLite, controlled provider and AES-GCM safeStorage fixture",
+    "coverage": [
+      "Two owners share the same three petIds without cross-owner numbering",
+      "In-flight session switch returns SESSION_CHANGED and admits no metadata",
+      "Main get/list/identity and IPC get/list(snapshot)/identity preserve large decimal strings and per-template labels",
+      "IPC mutation retry retains imported raw receipt metadata while read DTOs remain authoritative",
+      "Backup-only profile returns pending; confirmed cache profile reopens offline with original bindings"
+    ],
+    "readback": {
+      "kind": "real-SQLite-and-main-IPC-with-controlled-provider",
+      "owners": 2,
+      "samePetIdsAcrossOwners": true,
+      "pets": 6,
+      "rawModuleHashes": [
+        "c3482dec3ba03d131f8e76e868b2d44c3f572ce67adc4901b251b38fef63a616",
+        "b8cd6947ed3501b598372ba601d24c099e492fab77415301da7233eac5aa44d3"
+      ],
+      "archiveHash": "11f7ecebfb26a74ea165ae86a702aa8aad89ec163ab1b3cbafe8a99c99bfa124",
+      "exactOriginalBytesRetained": true,
+      "queryOnlyReopen": true,
+      "allocationVerified": false,
+      "nativeSafeStorageVerified": false,
+      "nativeUiOperated": false
+    }
+  },
+  "adoption": {
+    "kind": "Actual React DOM and AdoptionPage with controlled controller/portrait ports; isolated headless Chrome",
+    "passed": 6,
+    "failed": 0,
+    "preFixPassed": 4,
+    "preFixFailed": 2,
+    "before": "adoption-before.json",
+    "after": "adoption-after.json",
+    "defect": "Receipt fallback exposed an imported number when the read target was absent; lookup by petId alone accepted a foreign-owner row.",
+    "fix": "Match ownerAccountId and petId; clone any receipt fallback with globalSerial undefined.",
+    "rawReceiptNeverMutated": true,
+    "mutationNeverSubmitsGlobalSerial": true
+  },
+  "typecheckUi": "passed",
+  "targetedLint": "passed: AdoptionPage.tsx and adoption-display.acceptance.mjs",
+  "sourceFiles": [
+    {
+      "path": "apps/pc-app/runtime/features/companions/global-serial-cache.cjs",
+      "gitBlob": "a37f6ec2bcf73690f05ec5585663fa7855e006db"
+    },
+    {
+      "path": "apps/pc-app/runtime/features/companions/service.cjs",
+      "gitBlob": "2a902da4f370df7ec57faad189a65e9b7435315e"
+    },
+    {
+      "path": "apps/pc-app/runtime/features/companions/index.cjs",
+      "gitBlob": "c3222f27e547390ed91beed67ad23e698fa94937"
+    },
+    {
+      "path": "apps/pc-app/runtime/features/companions/cloud-authority.cjs",
+      "gitBlob": "68100a2f697daeffe9a4af10985522fc3aa9a35b"
+    },
+    {
+      "path": "apps/pc-app/runtime/features/companions/display-identity.mjs",
+      "gitBlob": "2eea42574959727859725ceb388d17f45f18098d"
+    },
+    {
+      "path": "apps/pc-app/runtime/features/companions/tests/global-serial-outlets.test.cjs",
+      "gitBlob": "196b4fd918bd7afd390c358153928f9a0864b2cb"
+    },
+    {
+      "path": "apps/pc-app/runtime/features/companions/tests/adoption-display.acceptance.mjs",
+      "gitBlob": "3d7bd1552f8fd5d81e6368aa77027195c0a0a3f5"
+    },
+    {
+      "path": "apps/pc-app/ui/src/features/companions/AdoptionPage.tsx",
+      "gitBlob": "1351d3e31b572293c58fe257d7c5b4e377720355"
+    }
+  ],
+  "logs": [
+    {
+      "path": "artifacts/companions/user-qa/global-serial/outlets-85321dc/main-ipc-final.log",
+      "sha256": "893d2bbb9f360a5cf7815cdc5f1f40c993e3af1a6edbc8e8665e055752f18d43"
+    },
+    {
+      "path": "artifacts/companions/user-qa/global-serial/outlets-85321dc/adoption-before.log",
+      "sha256": "f2f1c9be136b588d835589632e857bfe648d03a4a212a8868f1cc892baaf01c3"
+    },
+    {
+      "path": "artifacts/companions/user-qa/global-serial/outlets-85321dc/adoption-after.log",
+      "sha256": "8259fdc65e98ddb0c513fb0827493c61785ebdc08d767ae434559c4e1497019e"
+    },
+    {
+      "path": "artifacts/companions/user-qa/global-serial/outlets-85321dc/typecheck-ui.log",
+      "sha256": "fe461f1dccc328285132a3ca0d1d09e7278c8413c08c9292d228b3dd04f39dc7"
+    },
+    {
+      "path": "artifacts/companions/user-qa/global-serial/outlets-85321dc/lint-adoption.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "previous28Tests": "Preserved; not repeated for this verification",
+  "liveAllocationVerified": false,
+  "liveProviderReadbackVerified": false,
+  "nativeSafeStorageVerified": false,
+  "nativeProductUiVerified": false,
+  "fullAcceptancePassed": false,
+  "remaining": [
+    "Root deployment and independent real-cloud allocation/readback",
+    "03 encounter/capture same-number acceptance",
+    "09 acceptance against one frozen new EXE, including offline/restart and no desktop labels"
+  ]
+}

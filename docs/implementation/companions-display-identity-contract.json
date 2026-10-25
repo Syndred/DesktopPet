@@ -92,7 +92,7 @@
     "source": "DesktopCompanion.tsx renders the shared portrait and interaction controls, with no visible name/number element; original internal data-pet-id remains technical metadata."
   },
   "adoption": {
-    "newUi": "Submit the selected catalog role name; no arbitrary-name input or role rename control. Success uses the current verified snapshot for the same owner/petId so a historical receipt cannot hide newer confirmed metadata.",
+    "newUi": "Submit the selected catalog role name; no arbitrary-name input or role rename control. Success uses the current verified snapshot matching both ownerAccountId and petId. A historical receipt fallback is cloned without globalSerial and remains pending; it cannot assert authority or hide newer confirmed metadata.",
     "legacyCompatibility": "Original stored names, raw serials, IDs and old rename/adoption receipts remain unchanged."
   },
   "dto": {

@@ -1,0 +1,61 @@
+{
+  "format": "lingjing.companions.adoption-display-boundary",
+  "version": 1,
+  "at": "2026-10-25T11:33:38.247Z",
+  "kind": "Actual React DOM and AdoptionPage with controlled controller/portrait ports; isolated headless Chrome",
+  "source": {
+    "adoptionPage": "5cf91f7d795dc80e785c626678625e498e60490b349c365e5d8d6e8cf6d35f1b",
+    "helper": "fdeb282ec4d0efbde116563824585a1b52174d7767a511a5ea4ce77d6e2578e5"
+  },
+  "rawReceiptNeverMutated": true,
+  "mutationNeverSubmitsGlobalSerial": true,
+  "liveIpcVerified": false,
+  "serverAllocationVerified": false,
+  "nativeUiVerified": false,
+  "passed": 4,
+  "failed": 2,
+  "results": [
+    {
+      "name": "matching-confirmed-read-wins-over-raw-receipt",
+      "expected": "0007",
+      "observed": "0007",
+      "passed": true,
+      "text": "小狐 已加入你的灵境。编号 0007去看它"
+    },
+    {
+      "name": "matching-unconfirmed-read-stays-pending",
+      "expected": "待同步",
+      "observed": "待同步",
+      "passed": true,
+      "text": "小狐 已加入你的灵境。编号 待同步去看它"
+    },
+    {
+      "name": "missing-read-never-promotes-raw-receipt-number",
+      "expected": "待同步",
+      "observed": "666666666666",
+      "passed": false,
+      "text": "小狐 已加入你的灵境。编号 666666666666去看它"
+    },
+    {
+      "name": "foreign-owner-with-same-petId-never-supplies-number",
+      "expected": "待同步",
+      "observed": "0042",
+      "passed": false,
+      "text": "小狐 已加入你的灵境。编号 0042去看它"
+    },
+    {
+      "name": "changed-owner-hides-old-adoption-confirmation",
+      "expected": null,
+      "observed": null,
+      "passed": true,
+      "text": null
+    },
+    {
+      "name": "confirmed-large-number-keeps-every-digit",
+      "expected": "9007199254740993",
+      "observed": "9007199254740993",
+      "passed": true,
+      "text": "小狐 已加入你的灵境。编号 9007199254740993去看它"
+    }
+  ]
+}

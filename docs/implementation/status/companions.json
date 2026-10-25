@@ -2,7 +2,7 @@
   "module": "companions",
   "branch": "codex/lingjing-02-fresh-20261025",
   "implementationCommit": "deeebe0ba5af7823c68393533adfe7e4f7317a15",
-  "status": "numeric-presentation-ready-awaiting-authority-and-integrated-acceptance",
+  "status": "numeric-presentation-source-verified-awaiting-live-authority-and-integrated-acceptance",
   "globalSerialPresentation": {
     "decisionId": "globalSerial-20261025-v1",
     "contract": "docs/implementation/companions-display-identity-contract.json",
@@ -11,11 +11,20 @@
     "authority": "08 owns registry, trusted cache and read-only service projection. The formatter neither authenticates metadata nor allocates numbers.",
     "preservation": "Original ownerAccountId, petId, legacy serial, nickname, raw JSON, immutable receipts and archived bytes remain unchanged.",
     "pending": [
-      "08 trusted get/list/snapshot/identity projection and independent authoritative readback",
+      "08 live registry/Edge deployment and independent real-provider number readback",
       "03 encounter observe and capture inheritance of the same globalSerial",
       "09 real application acceptance against the next frozen candidate"
     ],
     "historicalValidation": "Existing validation and independent review below retain their original 2026-10-24 scope. They do not certify the new numeric-numbering or desktop-no-label request."
+  },
+  "independentSerialOutlets": {
+    "approvedSourceBase": "85321dc2b2837e261d159ef136bcf52d855d6207",
+    "evidence": "docs/implementation/evidence/companions/user-acceptance-2026-10-25/global-serial-outlets-85321dc/checks.json",
+    "mainAndIpc": "5 checks passed using actual service registration, IPC dispatch, SQLite and query_only reopen; provider metadata is controlled.",
+    "adoptionDom": "6 checks passed using the actual AdoptionPage/React DOM and controlled controller/portrait ports in isolated headless Chrome. Two failing pre-fix cases are retained.",
+    "boundaryFix": "Match ownerAccountId plus petId. A receipt-only adoption confirmation strips globalSerial and shows 待同步; matching current read metadata wins.",
+    "preservation": "Raw imported mutation receipts, original pet JSON, companion exports, full backup modules and archived bytes remain unchanged.",
+    "limitations": "This is local source verification. Live number allocation, Windows DPAPI and native product UI are not claimed by these checks."
   },
   "unifiedBattleScope": {
     "required": [
@@ -43,7 +52,7 @@
     "nativeVisualProof": "docs/implementation/evidence/companions/unified-2026-10-24/native/evidence.json",
     "ruleScope": "Companions consumes the actual rules and compares five UI element hints; battle/main own the complete 25-matchup numeric and four-mode acceptance."
   },
-  "updatedAt": "2026-10-25T11:05:40.000Z",
+  "updatedAt": "2026-10-25T11:34:39.947Z",
   "upstream": {
     "fetchedAgainBeforeDelivery": true,
     "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086",

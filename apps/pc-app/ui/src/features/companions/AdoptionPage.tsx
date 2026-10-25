@@ -26,7 +26,11 @@ export function AdoptionPage() {
   for (const pet of snapshot.pets) counts.set(pet.templateId, (counts.get(pet.templateId) || 0) + 1);
   const templates = snapshot.templates.filter(template => (elementFilter === 'all' || template.element === elementFilter) && (!ownedOnly || counts.has(template.templateId)));
   const selected = templates.find(template => template.templateId === selectedId) || templates[0];
-  const welcomed = adopted?.ownerAccountId === snapshot.ownerAccountId ? snapshot.pets.find(pet => pet.petId === adopted.petId) || adopted : null;
+  // Mutation receipts remain immutable historical data. Only the matching read
+  // projection may supply an authoritative number; a receipt alone is pending.
+  const welcomed = adopted?.ownerAccountId === snapshot.ownerAccountId
+    ? snapshot.pets.find(pet => pet.ownerAccountId === adopted.ownerAccountId && pet.petId === adopted.petId) || { ...adopted, globalSerial: undefined }
+    : null;
 
   return <div className="cp-page cp-adoption-page"><CompanionCloudNotice controller={controller}/><ErrorNotice message={controller.error}/>
     {welcomed && <div className="cp-success" role="status"><Check size={18}/><span>{companionIdentity(welcomed).roleName} 已加入你的灵境。<CompanionInstanceNumber pet={welcomed}/></span><Button variant="ghost" onClick={() => navigate(`/companions/${encodeURIComponent(welcomed.petId)}`)}>去看它<ArrowRight size={16}/></Button></div>}
