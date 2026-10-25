@@ -3,7 +3,7 @@
 -- one transaction. No authenticated client may supply fragments or outcomes.
 ALTER TABLE public.lingjing_battle_settlements ADD COLUMN authority_revision bigint,
   ADD COLUMN result_json jsonb;
-REVOKE ALL ON FUNCTION public.lingjing_battle_claim_settlement(uuid,text,uuid,text) FROM service_role;
+REVOKE ALL ON FUNCTION public.lingjing_battle_claim_settlement(uuid,text,uuid,uuid,uuid,text) FROM service_role;
 
 CREATE TABLE public.lingjing_battle_training (
   id uuid PRIMARY KEY, actor_auth_uid uuid NOT NULL REFERENCES auth.users(id), owner_account_id text NOT NULL,
@@ -40,12 +40,12 @@ REVOKE ALL ON FUNCTION lingjing_private.battle_member_without_training() FROM PU
 GRANT EXECUTE ON FUNCTION lingjing_private.battle_member_without_training() TO service_role;
 CREATE TRIGGER lingjing_battle_member_without_training BEFORE INSERT ON public.lingjing_battle_members FOR EACH ROW EXECUTE FUNCTION lingjing_private.battle_member_without_training();
 
-CREATE FUNCTION public.lingjing_battle_training_command(p_actor uuid,p_owner text,p_id uuid,p_action_id text,p_input jsonb,p_revision bigint,p_session jsonb)
+CREATE FUNCTION public.lingjing_battle_training_command(p_actor uuid,p_owner text,p_device uuid,p_actor_session uuid,p_id uuid,p_action_id text,p_input jsonb,p_revision bigint,p_session jsonb)
 RETURNS jsonb LANGUAGE plpgsql SECURITY INVOKER SET search_path='' AS $$
 DECLARE prior public.lingjing_battle_training_commands%ROWTYPE; game public.lingjing_battle_training%ROWTYPE; operation text:=p_input->>'operation';
 BEGIN
   -- Consistent lock order with protected save commits and friend settlements.
-  PERFORM lingjing_private.lock_save_owner(p_owner);
+  PERFORM lingjing_private.assert_service_actor(p_owner,p_actor,p_device,p_actor_session);
   IF NOT EXISTS(SELECT 1 FROM public.lingjing_accounts WHERE owner_id=p_owner AND auth_user_id=p_actor AND status='active') THEN RAISE EXCEPTION 'ACTOR_OWNER_MISMATCH'; END IF;
   IF p_action_id IS NULL OR p_action_id !~ '^[A-Za-z0-9][A-Za-z0-9:_-]{7,127}$' THEN RAISE EXCEPTION 'INVALID_COMMAND'; END IF;
   SELECT * INTO prior FROM public.lingjing_battle_training_commands WHERE owner_account_id=p_owner AND action_id=p_action_id;
@@ -75,15 +75,15 @@ BEGIN
   INSERT INTO public.lingjing_battle_training_commands VALUES(p_owner,p_action_id,p_id,p_input,to_jsonb(game));
   RETURN to_jsonb(game);
 END $$;
-REVOKE ALL ON FUNCTION public.lingjing_battle_training_command(uuid,text,uuid,text,jsonb,bigint,jsonb) FROM PUBLIC,anon,authenticated;
-GRANT EXECUTE ON FUNCTION public.lingjing_battle_training_command(uuid,text,uuid,text,jsonb,bigint,jsonb) TO service_role;
+REVOKE ALL ON FUNCTION public.lingjing_battle_training_command(uuid,text,uuid,uuid,uuid,text,jsonb,bigint,jsonb) FROM PUBLIC,anon,authenticated;
+GRANT EXECUTE ON FUNCTION public.lingjing_battle_training_command(uuid,text,uuid,uuid,uuid,text,jsonb,bigint,jsonb) TO service_role;
 
-CREATE FUNCTION public.lingjing_battle_settle_authority(p_actor uuid,p_owner text,p_mode text,p_id uuid,p_pet text,p_base_revision bigint,p_fragments jsonb,p_reward jsonb)
+CREATE FUNCTION public.lingjing_battle_settle_authority(p_actor uuid,p_owner text,p_device uuid,p_session uuid,p_mode text,p_id uuid,p_pet text,p_base_revision bigint,p_fragments jsonb,p_reward jsonb)
 RETURNS jsonb LANGUAGE plpgsql SECURITY INVOKER SET search_path='' AS $$
 DECLARE room public.lingjing_battle_rooms%ROWTYPE; game public.lingjing_battle_training%ROWTYPE; prior jsonb; logical_id text;
   side text; won boolean; action_id text; receipt jsonb; result jsonb; revision bigint; report jsonb;
 BEGIN
-  PERFORM lingjing_private.lock_save_owner(p_owner);
+  PERFORM lingjing_private.assert_service_actor(p_owner,p_actor,p_device,p_session);
   IF NOT EXISTS(SELECT 1 FROM public.lingjing_accounts WHERE owner_id=p_owner AND auth_user_id=p_actor AND status='active') THEN RAISE EXCEPTION 'ACTOR_OWNER_MISMATCH'; END IF;
   IF p_mode='friend' THEN
     SELECT * INTO STRICT room FROM public.lingjing_battle_rooms WHERE id=p_id FOR UPDATE;
@@ -125,5 +125,5 @@ BEGIN
   END IF;
   RETURN result;
 END $$;
-REVOKE ALL ON FUNCTION public.lingjing_battle_settle_authority(uuid,text,text,uuid,text,bigint,jsonb,jsonb) FROM PUBLIC,anon,authenticated;
-GRANT EXECUTE ON FUNCTION public.lingjing_battle_settle_authority(uuid,text,text,uuid,text,bigint,jsonb,jsonb) TO service_role;
+REVOKE ALL ON FUNCTION public.lingjing_battle_settle_authority(uuid,text,uuid,uuid,text,uuid,text,bigint,jsonb,jsonb) FROM PUBLIC,anon,authenticated;
+GRANT EXECUTE ON FUNCTION public.lingjing_battle_settle_authority(uuid,text,uuid,uuid,text,uuid,text,bigint,jsonb,jsonb) TO service_role;

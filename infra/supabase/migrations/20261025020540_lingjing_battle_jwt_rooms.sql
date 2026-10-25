@@ -130,7 +130,7 @@ END $$;
 
 -- All write RPCs are invoker functions executable ONLY by service_role. Actor arguments must be
 -- derived by 08's verified Auth/JWT context, never copied from request JSON or user_metadata.
-CREATE FUNCTION public.lingjing_battle_command(p_actor uuid,p_owner text,p_op text,p_action_id text,p_input jsonb)
+CREATE FUNCTION public.lingjing_battle_command(p_actor uuid,p_owner text,p_device uuid,p_session uuid,p_op text,p_action_id text,p_input jsonb)
 RETURNS jsonb LANGUAGE plpgsql SECURITY INVOKER SET search_path='' AS $$
 DECLARE
   cmd public.lingjing_battle_commands%ROWTYPE; invitation public.lingjing_battle_invites%ROWTYPE;
@@ -138,7 +138,7 @@ DECLARE
   result jsonb; pet jsonb:=p_input->'pet'; v_side text; requested_round integer; target_auth uuid;
 BEGIN
   IF p_actor IS NULL OR p_owner IS NULL OR length(p_owner) NOT BETWEEN 1 AND 160 OR p_action_id IS NULL OR p_action_id !~ '^[A-Za-z0-9][A-Za-z0-9:_-]{7,127}$' OR jsonb_typeof(p_input)<>'object' THEN RAISE EXCEPTION 'INVALID_COMMAND'; END IF;
-  PERFORM 1 FROM public.lingjing_accounts WHERE owner_id=p_owner FOR UPDATE;
+  PERFORM lingjing_private.assert_service_actor(p_owner,p_actor,p_device,p_session);
   IF NOT EXISTS(SELECT 1 FROM public.lingjing_accounts WHERE auth_user_id=p_actor AND owner_id=p_owner AND status='active') THEN RAISE EXCEPTION 'ACTOR_OWNER_MISMATCH'; END IF;
   INSERT INTO public.lingjing_battle_commands(actor_auth_uid,action_id,owner_account_id,operation,input_json)
     VALUES(p_actor,p_action_id,p_owner,p_op,p_input) ON CONFLICT DO NOTHING;
@@ -227,14 +227,16 @@ BEGIN
   UPDATE public.lingjing_battle_commands SET result_json=result WHERE actor_auth_uid=p_actor AND action_id=p_action_id;
   RETURN result;
 END $$;
-REVOKE ALL ON FUNCTION public.lingjing_battle_command(uuid,text,text,text,jsonb) FROM PUBLIC,anon,authenticated;
-GRANT EXECUTE ON FUNCTION public.lingjing_battle_command(uuid,text,text,text,jsonb) TO service_role;
+REVOKE ALL ON FUNCTION public.lingjing_battle_command(uuid,text,uuid,uuid,text,text,jsonb) FROM PUBLIC,anon,authenticated;
+GRANT EXECUTE ON FUNCTION public.lingjing_battle_command(uuid,text,uuid,uuid,text,text,jsonb) TO service_role;
 
-CREATE FUNCTION public.lingjing_battle_commit_round(p_room uuid,p_round integer,p_revision bigint,p_host_action text,p_guest_action text,p_result jsonb)
+CREATE FUNCTION public.lingjing_battle_commit_round(p_actor uuid,p_owner text,p_device uuid,p_session uuid,p_room uuid,p_round integer,p_revision bigint,p_host_action text,p_guest_action text,p_result jsonb)
 RETURNS jsonb LANGUAGE plpgsql SECURITY INVOKER SET search_path='' AS $$
 DECLARE room public.lingjing_battle_rooms%ROWTYPE; saved public.lingjing_battle_rounds%ROWTYPE;
 BEGIN
+  PERFORM lingjing_private.assert_service_actor(p_owner,p_actor,p_device,p_session);
   SELECT * INTO STRICT room FROM public.lingjing_battle_rooms WHERE id=p_room FOR UPDATE;
+  IF NOT ((room.host_auth_uid=p_actor AND room.host_user_id=p_owner) OR (room.guest_auth_uid=p_actor AND room.guest_user_id=p_owner)) THEN RAISE EXCEPTION 'ROOM_FORBIDDEN'; END IF;
   SELECT * INTO saved FROM public.lingjing_battle_rounds WHERE room_id=p_room AND round_no=p_round;
   IF FOUND THEN RETURN jsonb_build_object('room',to_jsonb(room),'round',to_jsonb(saved)); END IF;
   IF room.status<>'active' OR room.current_round<>p_round OR room.revision<>p_revision THEN RAISE EXCEPTION 'ROUND_CONFLICT'; END IF;
@@ -253,13 +255,14 @@ BEGIN
   IF room.status='finished' THEN UPDATE public.lingjing_battle_members SET active=false WHERE room_id=p_room; END IF;
   RETURN jsonb_build_object('room',to_jsonb(room),'round',to_jsonb(saved));
 END $$;
-REVOKE ALL ON FUNCTION public.lingjing_battle_commit_round(uuid,integer,bigint,text,text,jsonb) FROM PUBLIC,anon,authenticated;
-GRANT EXECUTE ON FUNCTION public.lingjing_battle_commit_round(uuid,integer,bigint,text,text,jsonb) TO service_role;
+REVOKE ALL ON FUNCTION public.lingjing_battle_commit_round(uuid,text,uuid,uuid,uuid,integer,bigint,text,text,jsonb) FROM PUBLIC,anon,authenticated;
+GRANT EXECUTE ON FUNCTION public.lingjing_battle_commit_round(uuid,text,uuid,uuid,uuid,integer,bigint,text,text,jsonb) TO service_role;
 
-CREATE FUNCTION public.lingjing_battle_claim_settlement(p_actor uuid,p_owner text,p_room uuid,p_pet text)
+CREATE FUNCTION public.lingjing_battle_claim_settlement(p_actor uuid,p_owner text,p_device uuid,p_session uuid,p_room uuid,p_pet text)
 RETURNS jsonb LANGUAGE plpgsql SECURITY INVOKER SET search_path='' AS $$
 DECLARE room public.lingjing_battle_rooms%ROWTYPE; receipt public.lingjing_battle_settlements%ROWTYPE; side text; bound_pet text;
 BEGIN
+  PERFORM lingjing_private.assert_service_actor(p_owner,p_actor,p_device,p_session);
   IF NOT EXISTS(SELECT 1 FROM public.lingjing_accounts WHERE auth_user_id=p_actor AND owner_id=p_owner AND status='active') THEN RAISE EXCEPTION 'ACTOR_OWNER_MISMATCH'; END IF;
   SELECT * INTO STRICT room FROM public.lingjing_battle_rooms WHERE id=p_room FOR UPDATE;
   side:=CASE WHEN room.host_auth_uid=p_actor AND room.host_user_id=p_owner THEN 'host' WHEN room.guest_auth_uid=p_actor AND room.guest_user_id=p_owner THEN 'guest' END;
@@ -274,5 +277,5 @@ BEGIN
   IF receipt.owner_account_id<>p_owner OR receipt.pet_id<>p_pet THEN RAISE EXCEPTION 'SETTLEMENT_OWNER_MISMATCH'; END IF;
   RETURN to_jsonb(receipt);
 END $$;
-REVOKE ALL ON FUNCTION public.lingjing_battle_claim_settlement(uuid,text,uuid,text) FROM PUBLIC,anon,authenticated;
-GRANT EXECUTE ON FUNCTION public.lingjing_battle_claim_settlement(uuid,text,uuid,text) TO service_role;
+REVOKE ALL ON FUNCTION public.lingjing_battle_claim_settlement(uuid,text,uuid,uuid,uuid,text) FROM PUBLIC,anon,authenticated;
+GRANT EXECUTE ON FUNCTION public.lingjing_battle_claim_settlement(uuid,text,uuid,uuid,uuid,text) TO service_role;

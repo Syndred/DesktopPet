@@ -21,7 +21,8 @@ class BattleCloudAuthority {
     const c=modules.companions.data,g=modules.garden.data,b=modules.battle.data;
     companions.validate(c,owner);garden.validate(g,owner);battle.validate(b,owner);
     const report=b.reports.find(row=>row.id===proof.report?.id);
-    if(!report||hash(JSON.parse(report.data_json))!==hash(proof.report)||!b.rewards.some(row=>row.action_id===proof.action_id&&row.pet_id===proof.pet_id))fail('INVALID_SETTLEMENT_PROOF','战报与存档中的结算记录不一致');
+    const session=b.sessions.find(row=>row.id===proof.report?.sessionId);
+    if(!report||!session||session.status!=='finished'||JSON.parse(session.data_json).reward?.actionId!==proof.action_id||hash(JSON.parse(report.data_json))!==hash(proof.report)||!b.rewards.some(row=>row.action_id===proof.action_id&&row.pet_id===proof.pet_id))fail('INVALID_SETTLEMENT_PROOF','战报与存档中的结算记录不一致');
     // Keep every independent local operation. Never silently discard an offline
     // branch just because a later cloud battle has a valid reward receipt.
     for(const [name,rows] of [['companion_actions',c.tables.companion_actions],['garden_actions',g.tables.garden_actions]]) {
@@ -31,6 +32,8 @@ class BattleCloudAuthority {
     const remotePets=new Map(c.tables.companion_pets.map(row=>[row.pet_id,row]));
     for(const row of this.db.prepare('SELECT * FROM companion_pets WHERE owner_account_id=?').all(owner)) {
       const next=remotePets.get(row.pet_id);if(!next||next.revision<row.revision)fail('CLOUD_LOCAL_CONFLICT','本机伙伴进度较新，已保留原存档');
+      const metadata=({growth,revision,updatedAt,...value})=>{void growth;void revision;void updatedAt;return value;};
+      if(hash(metadata(JSON.parse(row.data_json)))!==hash(metadata(JSON.parse(next.data_json))))fail('CLOUD_LOCAL_CONFLICT','伙伴名称或桌面状态存在不同进度，已保留原存档');
       if(next.revision===row.revision&&hash(JSON.parse(next.data_json))!==hash(JSON.parse(row.data_json)))fail('CLOUD_LOCAL_CONFLICT','伙伴存在不同进度，请先处理账号存档冲突');
     }
     const gardenHash=data=>saveDataChecksum({modules:{garden:{version:1,data}},tables:{}});
@@ -38,6 +41,11 @@ class BattleCloudAuthority {
     if(changed)backups.save(owner,null,'before-cloud-battle-readback');
     const restore=()=>{
       this.owner(owner);companions.restore(owner,c,'replace');garden.restore(owner,g,'replace');battle.restore(owner,b,'replace');
+      // The generic historical importer deliberately never overwrites a finished
+      // local battle. A fresh verified authority receipt may finish that same
+      // battle's pending settlement, so replace exactly its matching projection.
+      this.db.prepare('UPDATE battle_sessions SET room_id=?,status=?,data_json=?,revision=?,updated_at=? WHERE owner_account_id=? AND id=?').run(session.room_id,session.status,session.data_json,session.revision,session.updated_at,owner,session.id);
+      this.db.prepare('UPDATE battle_reports_v2 SET data_json=?,ended_at=? WHERE owner_account_id=? AND id=?').run(report.data_json,report.ended_at,owner,report.id);
     };
     // The shared connection exposes better-sqlite3 transactions in production.
     // SAVEPOINT also composes with supported node:sqlite acceptance fixtures.

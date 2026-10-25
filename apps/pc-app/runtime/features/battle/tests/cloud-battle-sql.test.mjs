@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync, mkdirSync, writeFileSync } from 'node:fs';
 import { randomUUID } from 'node:crypto';
 import { resolveRoomRound } from '../../../../../../infra/supabase/functions/lingjing-battle/room-core.js';
+import {loadSharedActorGuard} from './shared-actor-sql.mjs';
 const db=new PGlite(),checks=[];
 const users=Object.fromEntries(['a','b','c'].map(name=>[name,{uid:randomUUID(),sid:randomUUID(),device:randomUUID(),owner:`legacy-text-${name}`,account:`battle_${name}`,pet:{ownerId:`legacy-text-${name}`,petId:`original-pet-${name}`,resourceId:name==='b'?'builtin:lingjing-shiba-v2':'builtin:lingjing-yuwan-v2',name:`伙伴${name}`,element:name==='b'?'fire':'water'}}]));
 await db.exec(`CREATE ROLE anon; CREATE ROLE authenticated; CREATE ROLE service_role BYPASSRLS;
@@ -14,7 +15,7 @@ CREATE FUNCTION auth.uid() RETURNS uuid LANGUAGE sql STABLE AS $$SELECT (auth.jw
 CREATE SCHEMA realtime; GRANT USAGE ON SCHEMA realtime TO authenticated,service_role;
 CREATE TABLE realtime.messages(topic text,extension text); ALTER TABLE realtime.messages ENABLE ROW LEVEL SECURITY; GRANT SELECT ON realtime.messages TO authenticated;
 CREATE FUNCTION realtime.topic() RETURNS text LANGUAGE sql STABLE AS $$SELECT current_setting('request.topic',true)$$;`);
-await db.exec(readFileSync('infra/supabase/migrations/20261025020314_lingjing_identity_actor_contract.sql','utf8'));
+await loadSharedActorGuard(db);
 await db.exec(readFileSync('infra/supabase/migrations/20261025020540_lingjing_battle_jwt_rooms.sql','utf8'));
 for(const u of Object.values(users)){
   await db.query('INSERT INTO auth.users(id) VALUES($1)',[u.uid]);await db.query('INSERT INTO auth.sessions(id,user_id) VALUES($1,$2)',[u.sid,u.uid]);
@@ -25,9 +26,10 @@ async function query(role,sql,args=[],user,topic='') {
   try {await db.query("SELECT set_config('request.jwt.claims',$1,true),set_config('request.headers',$2,true),set_config('request.topic',$3,true)",[JSON.stringify(user?{sub:user.uid,session_id:user.sid,role:'authenticated'}:{}),JSON.stringify(user?{'x-lingjing-device-id':user.device}:{}),topic]);const result=await db.query(sql,args);await db.exec('COMMIT');return result.rows;}
   catch(error){await db.exec('ROLLBACK');throw error;}
 }
-const command=async(user,op,input,id=randomUUID())=>(await query('service_role','SELECT public.lingjing_battle_command($1,$2,$3,$4,$5::jsonb) value',[user.uid,user.owner,op,id,JSON.stringify(input)]))[0].value;
-const commit=async(room,host,guest,result=resolveRoomRound(room,host,guest))=>(await query('service_role','SELECT public.lingjing_battle_commit_round($1,$2,$3,$4,$5,$6::jsonb) value',[room.id,room.current_round,room.revision,host,guest,JSON.stringify(result)]))[0].value;
-const claim=async(user,room,pet=user.pet.petId)=>(await query('service_role','SELECT public.lingjing_battle_claim_settlement($1,$2,$3,$4) value',[user.uid,user.owner,room.id,pet]))[0].value;
+const binding=user=>[user.uid,user.owner,user.device,user.sid];
+const command=async(user,op,input,id=randomUUID())=>(await query('service_role','SELECT public.lingjing_battle_command($1,$2,$3,$4,$5,$6,$7::jsonb) value',[...binding(user),op,id,JSON.stringify(input)]))[0].value;
+const commit=async(room,host,guest,result=resolveRoomRound(room,host,guest),actor=users.b)=>(await query('service_role','SELECT public.lingjing_battle_commit_round($1,$2,$3,$4,$5,$6,$7,$8,$9,$10::jsonb) value',[...binding(actor),room.id,room.current_round,room.revision,host,guest,JSON.stringify(result)]))[0].value;
+const claim=async(user,room,pet=user.pet.petId)=>(await query('service_role','SELECT public.lingjing_battle_claim_settlement($1,$2,$3,$4,$5,$6) value',[...binding(user),room.id,pet]))[0].value;
 const record=name=>{checks.push(name);console.log(name);};
 try {
   for(const user of Object.values(users))await query('authenticated',"SELECT public.lingjing_register_device($1,'battle fixture')",[user.device],user);
@@ -47,7 +49,7 @@ try {
   await assert.rejects(query('anon','SELECT * FROM public.lingjing_battle_rooms'),/permission denied/);
   await assert.rejects(query('authenticated','SELECT * FROM public.lingjing_battle_actions',[],a),/permission denied/);
   await assert.rejects(query('authenticated',"UPDATE public.lingjing_battle_rooms SET host_hp=1",[],a),/permission denied/);
-  await assert.rejects(query('authenticated',"SELECT public.lingjing_battle_command($1,$2,'leave_room',$3,'{}')",[b.uid,b.owner,randomUUID()],a),/permission denied/);
+  await assert.rejects(query('authenticated',"SELECT public.lingjing_battle_command($1,$2,$3,$4,'leave_room',$5,'{}')",[...binding(b),randomUUID()],a),/permission denied/);
   await db.query("INSERT INTO realtime.messages(topic,extension) VALUES($1,'broadcast')",[`lingjing:battle:${room.id}`]);
   assert.equal((await query('authenticated','SELECT * FROM realtime.messages',[],a,`lingjing:battle:${room.id}`)).length,1);
   assert.equal((await query('authenticated','SELECT * FROM realtime.messages',[],c,`lingjing:battle:${room.id}`)).length,0);
@@ -70,10 +72,17 @@ try {
   const second={...a,sid:randomUUID(),device:randomUUID()};await db.query('INSERT INTO auth.sessions(id,user_id) VALUES($1,$2)',[second.sid,a.uid]);await query('authenticated',"SELECT public.lingjing_register_device($1,'second device')",[second.device],second);
   await query('authenticated','SELECT public.lingjing_revoke_device($1)',[a.device],second);
   assert.equal((await db.query('SELECT count(*)::int n FROM auth.sessions WHERE id=$1',[a.sid])).rows[0].n,1);
-  await assert.rejects(query('authenticated','SELECT * FROM public.lingjing_battle_rooms',[],a),/LJ_DEVICE_SESSION_REQUIRED/);
-  await assert.rejects(query('authenticated','SELECT * FROM public.lingjing_battle_rounds',[],a),/LJ_DEVICE_SESSION_REQUIRED/);
-  await assert.rejects(query('authenticated','SELECT * FROM realtime.messages',[],a,`lingjing:battle:${room.id}`),/LJ_DEVICE_SESSION_REQUIRED/);
+  await assert.rejects(query('authenticated','SELECT * FROM public.lingjing_battle_rooms',[],a),/LJ_(DEVICE_SESSION_REQUIRED|SESSION_REVOKED)/);
+  await assert.rejects(query('authenticated','SELECT * FROM public.lingjing_battle_rounds',[],a),/LJ_(DEVICE_SESSION_REQUIRED|SESSION_REVOKED)/);
+  await assert.rejects(query('authenticated','SELECT * FROM realtime.messages',[],a,`lingjing:battle:${room.id}`),/LJ_(DEVICE_SESSION_REQUIRED|SESSION_REVOKED)/);
   assert.equal((await query('authenticated','SELECT * FROM public.lingjing_battle_rooms',[],second)).length,1);
+  const beforeRevoked=JSON.stringify((await db.query('SELECT (SELECT count(*) FROM public.lingjing_battle_commands) commands,(SELECT count(*) FROM public.lingjing_battle_rounds) rounds,(SELECT count(*) FROM public.lingjing_battle_settlements) settlements')).rows);
+  await assert.rejects(command(a,'leave_room',{roomId:room.id}),/LJ_(SESSION_REVOKED|DEVICE_SESSION_REQUIRED)/);
+  await assert.rejects(commit(room,'normal_attack','normal_attack',{},a),/LJ_(SESSION_REVOKED|DEVICE_SESSION_REQUIRED)/);
+  await assert.rejects(claim(a,room),/LJ_(SESSION_REVOKED|DEVICE_SESSION_REQUIRED)/);
+  assert.equal(JSON.stringify((await db.query('SELECT (SELECT count(*) FROM public.lingjing_battle_commands) commands,(SELECT count(*) FROM public.lingjing_battle_rounds) rounds,(SELECT count(*) FROM public.lingjing_battle_settlements) settlements')).rows),beforeRevoked);
+  const resumed=await command(second,'create_room',{account:a.account,pet:a.pet});assert.equal(resumed.room.host_user_id,a.owner);await command(second,'leave_room',{roomId:resumed.room.id});
+  record('shared08 transaction guard denies revoked original SID for commands/rounds/receipt replay without mutations; same-owner second device can write');
   record('actual revoke_device RPC blocks direct room/round/Realtime SELECT while original Auth session still exists; same-owner second device stays authorized');
   await db.query('DELETE FROM auth.sessions WHERE id=$1',[a.sid]);
   await assert.rejects(query('authenticated','SELECT * FROM public.lingjing_battle_rooms',[],a),/LJ_SESSION_REVOKED/);

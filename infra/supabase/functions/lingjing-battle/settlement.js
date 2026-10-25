@@ -1,5 +1,5 @@
 import { awardBattleResult } from '../../../../apps/pc-app/runtime/features/companions/cloud-growth.mjs';
-import { applyCloudCommand, digest } from '../../../../apps/pc-app/runtime/features/garden/cloud-domain.mjs';
+import { applyCloudCommand, digest, emptyGarden } from '../../../../apps/pc-app/runtime/features/garden/cloud-domain.mjs';
 import catalog from '../../../../apps/pc-app/runtime/features/garden/catalog.json' with {type:'json'};
 import { battleFragment } from './projection.js';
 
@@ -19,7 +19,8 @@ export async function prepareBattleSettlement({envelope,owner,session,actions=[]
   const receiptId=sessionId,input={actionId:`${actionId}:seeds`,source:'battle',receiptId};
   const seedHash=await digest({source:'battle',receipt:receiptId}),cropIds=Object.keys(catalog.CROPS);
   const verified={ownerAccountId:owner,id:receiptId,source:'battle',cropId:cropIds[parseInt(seedHash.slice(0,8),16)%cropIds.length]};
-  const seeds=applyCloudCommand(growth.envelope,owner,'reward',input,now,await digest({kind:'reward',input}),undefined,verified);
+  const source=structuredClone(growth.envelope);source.data.modules.garden??=emptyGarden(owner);
+  const seeds=applyCloudCommand(source,owner,'reward',input,now,await digest({kind:'reward',input}),undefined,verified);
   const reward={...growth.reward,seeds:seeds.result.data},next={...session,reward},companions=companionDocument(seeds.envelope,owner);
   return {reward,session:next,fragments:{companions:{module:{version:1,data:companions},tables:{},petIds:companions.tables.companion_pets.map(row=>row.pet_id)},garden:{module:seeds.envelope.data.modules.garden,tables:{}},battle:battleFragment(seeds.envelope,next,actions)}};
 }

@@ -15,11 +15,12 @@ type Row = Record<string, any>;
 const table={rooms:'lingjing_battle_rooms',invites:'lingjing_battle_invites',actions:'lingjing_battle_actions',rounds:'lingjing_battle_rounds',commands:'lingjing_battle_commands',members:'lingjing_battle_members'};
 const moves=new Set(['normal_attack','element_attack','dodge','ultimate']);
 const elements=new Set(['metal','wood','earth','water','fire']);
-const denied=new Set(['ROOM_FORBIDDEN','INVITE_FORBIDDEN','SELF_DUEL_FORBIDDEN','PET_OWNER_MISMATCH','PET_ROOM_MISMATCH','ACTOR_OWNER_MISMATCH','TARGET_OWNER_MISMATCH']);
+const denied=new Set(['ROOM_FORBIDDEN','INVITE_FORBIDDEN','SELF_DUEL_FORBIDDEN','PET_OWNER_MISMATCH','PET_ROOM_MISMATCH','ACTOR_OWNER_MISMATCH','TARGET_OWNER_MISMATCH','OWNER_MISMATCH']);
 const conflicts=new Set(['ACTION_ID_REUSED','ACTION_LOCKED','INVITE_CONFLICT','INVITE_ALREADY_RECEIVED','ROOM_FULL','ROOM_NOT_WAITING','ROUND_CONFLICT','BATTLE_IN_PROGRESS','BATTLE_UNFINISHED','BATTLE_RULES_UNSUPPORTED']);
+const authCodes=new Set(['AUTH_REQUIRED','AUTH_INVALID','SESSION_REVOKED','DEVICE_SESSION_REQUIRED','DEVICE_REQUIRED','IDENTITY_REQUIRED']);
 const codeOf=(error:unknown)=>{
   const message=String((error as {message?:string})?.message||'');
-  for(const code of [...denied,...conflicts,'INVALID_COMMAND','ACTIONS_REQUIRED','BATTLE_RULES_MISMATCH'])if(message.includes(code))return code;
+  for(const code of [...authCodes,...denied,...conflicts,'INVALID_COMMAND','ACTIONS_REQUIRED','BATTLE_RULES_MISMATCH'])if(message.includes(code))return code;
   if(message.includes('lingjing_battle_one_active_'))return 'BATTLE_IN_PROGRESS';
   if(message.includes('lingjing_battle_pending_pair'))return 'INVITE_ALREADY_RECEIVED';
   return 'BATTLE_CLOUD_UNAVAILABLE';
@@ -34,12 +35,12 @@ function roomDto(row:Row):Row {
   const {host_auth_uid:_host,guest_auth_uid:_guest,invited_auth_uid:_invited,...safe}=row;
   return {...safe,authority:'live',protocolVersion:2};
 }
-async function must<T>(operation:PromiseLike<{data:T;error:any}>):Promise<T> {const result=await operation;if(result.error)fail(codeOf(result.error),503);return result.data;}
+async function must<T>(operation:PromiseLike<{data:T;error:any}>):Promise<T> {const result=await operation;if(result.error){const code=codeOf(result.error);fail(code,authCodes.has(code)?401:503);}return result.data;}
 
 export function createBattleHandler(deps:BattleDependencies) {
   const rpc=async(name:string,input:Row)=>{
     const result=await deps.admin.rpc(name,input);
-    if(result.error){const code=codeOf(result.error);fail(code,denied.has(code)?403:conflicts.has(code)?409:503);}
+    if(result.error){const code=codeOf(result.error);fail(code,authCodes.has(code)?401:denied.has(code)?403:conflicts.has(code)?409:503);}
     return result.data as Row;
   };
   const pet=async(actor:ActorContext,id:string)=>{
@@ -60,8 +61,8 @@ export function createBattleHandler(deps:BattleDependencies) {
     // Resolve a lost response before re-reading mutable pet names/resources. Logical input is
     // immutable; server-derived presentation metadata changing cannot create a second command.
     const cached=await must(deps.admin.from(table.commands).select('owner_account_id,operation,input_json,result_json').eq('actor_auth_uid',actor.authUserId).eq('action_id',id).maybeSingle()) as Row|null;
-    if(cached){if(cached.owner_account_id!==actor.ownerAccountId||cached.operation!==op||canonical(cached.input_json?.request)!==canonical(logical))fail('ACTION_ID_REUSED');if(cached.result_json)return cached.result_json as Row;}
-    return rpc('lingjing_battle_command',{p_actor:actor.authUserId,p_owner:actor.ownerAccountId,p_op:op,p_action_id:id,p_input:{...await build(),request:logical}});
+    if(cached){if(cached.owner_account_id!==actor.ownerAccountId||cached.operation!==op||canonical(cached.input_json?.request)!==canonical(logical))fail('ACTION_ID_REUSED');if(cached.result_json)return rpc('lingjing_battle_command',{p_actor:actor.authUserId,p_owner:actor.ownerAccountId,p_device:actor.deviceId,p_session:actor.sessionId,p_op:op,p_action_id:id,p_input:cached.input_json});}
+    return rpc('lingjing_battle_command',{p_actor:actor.authUserId,p_owner:actor.ownerAccountId,p_device:actor.deviceId,p_session:actor.sessionId,p_op:op,p_action_id:id,p_input:{...await build(),request:logical}});
   }
   async function resolved(actor:ActorContext,initial:Row) {
     let room=initial;
@@ -71,9 +72,9 @@ export function createBattleHandler(deps:BattleDependencies) {
       const host=actions.find(row=>row.actor_side==='host')?.action_type,guest=actions.find(row=>row.actor_side==='guest')?.action_type;
       if(!host||!guest)return room;
       const result=resolveRoomRound(room,host,guest);
-      const value=await deps.admin.rpc('lingjing_battle_commit_round',{p_room:room.id,p_round:room.current_round,p_revision:room.revision,p_host_action:host,p_guest_action:guest,p_result:result});
+      const value=await deps.admin.rpc('lingjing_battle_commit_round',{p_actor:actor.authUserId,p_owner:actor.ownerAccountId,p_device:actor.deviceId,p_session:actor.sessionId,p_room:room.id,p_round:room.current_round,p_revision:room.revision,p_host_action:host,p_guest_action:guest,p_result:result});
       if(!value.error)return value.data.room as Row;
-      if(codeOf(value.error)!=='ROUND_CONFLICT')fail(codeOf(value.error),503);
+      if(codeOf(value.error)!=='ROUND_CONFLICT')fail(codeOf(value.error),authCodes.has(codeOf(value.error))?401:503);
       room=await roomFor(actor,{roomId:room.id});
     }
     fail('ROUND_CONFLICT');

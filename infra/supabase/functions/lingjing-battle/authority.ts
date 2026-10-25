@@ -3,16 +3,18 @@ import { canonical, sha256 } from '../_shared/lingjing-json.ts';
 import roster from '../../../../apps/pc-app/runtime/features/resources/assets/roster-v2/catalog.json' with {type:'json'};
 import { BattleRuntimeService, getBattleRules, BATTLE_CORE_VERSION } from '../_shared/battle-core.js';
 import { friendSession } from './projection.js';
-import { companionDocument, prepareBattleSettlement } from './settlement.js';
+import { prepareBattleSettlement } from './settlement.js';
+import { trustedBattlePet } from './pet.js';
 import type { TrustedBattlePet } from './handler.ts';
 
 type Row=Record<string,any>;
 function fail(code:string,status=400):never {throw new LingjingAuthError(code,status);}
 function sqlCode(error:unknown) {
   const message=String((error as Row)?.message||'');
-  return /(?:LJ_)?(SYNC_CONFLICT|ROUND_CONFLICT|ACTION_ID_REUSED|BATTLE_IN_PROGRESS|PET_OWNER_MISMATCH|PET_ROOM_MISMATCH|ROOM_FORBIDDEN|BATTLE_UNFINISHED|INVALID_SETTLEMENT_PROOF)/.exec(message)?.[1]||'BATTLE_CLOUD_UNAVAILABLE';
+  return /(?:LJ_)?(AUTH_REQUIRED|AUTH_INVALID|SESSION_REVOKED|DEVICE_SESSION_REQUIRED|DEVICE_REQUIRED|IDENTITY_REQUIRED|SYNC_CONFLICT|ROUND_CONFLICT|ACTION_ID_REUSED|BATTLE_IN_PROGRESS|PET_OWNER_MISMATCH|PET_ROOM_MISMATCH|ROOM_FORBIDDEN|BATTLE_UNFINISHED|INVALID_SETTLEMENT_PROOF|OWNER_MISMATCH)/.exec(message)?.[1]||'BATTLE_CLOUD_UNAVAILABLE';
 }
-async function must(query:PromiseLike<{data:any;error:any}>) {const {data,error}=await query;if(error)fail(sqlCode(error),503);return data;}
+const statusFor=(code:string)=>/AUTH_|SESSION_|DEVICE_|IDENTITY_REQUIRED/.test(code)?401:/FORBIDDEN|MISMATCH/.test(code)?403:/CONFLICT|IN_PROGRESS/.test(code)?409:503;
+async function must(query:PromiseLike<{data:any;error:any}>) {const {data,error}=await query;if(error){const code=sqlCode(error);fail(code,statusFor(code));}return data;}
 export function createBattleAuthority(admin:ActorContext['client']) {
   async function head(actor:ActorContext) {
     const saved=await must(actor.client.from('lingjing_saves').select('revision,envelope').eq('owner_id',actor.ownerAccountId).maybeSingle());
@@ -22,29 +24,31 @@ export function createBattleAuthority(admin:ActorContext['client']) {
     return saved as {revision:number;envelope:Row};
   }
   async function resolvePet(actor:ActorContext,petId:string):Promise<TrustedBattlePet> {
-    const {envelope}=await head(actor),{tables}=companionDocument(envelope,actor.ownerAccountId);
-    const matches=tables.companion_pets.filter((row:Row)=>row.pet_id===petId);if(matches.length!==1)fail('PET_NOT_FOUND',404);
-    const row=matches[0];let pet:Row;try{pet=JSON.parse(row.data_json);}catch{fail('INVALID_CLOUD_SAVE');}
-    if(pet.ownerAccountId!==actor.ownerAccountId||pet.petId!==petId||pet.revision!==row.revision||pet.templateId!==row.template_id||pet.resource?.kind!=='2d'||!Number.isSafeInteger(pet.growth?.level)||pet.growth.level<1)fail('PET_OWNER_MISMATCH',403);
-    if(!roster.characters.some(value=>value.resourceId===pet.resource.resourceId&&value.element===pet.element))fail('RESOURCE_UNAVAILABLE',409);
-    return {ownerId:actor.ownerAccountId,petId,name:pet.name,resourceId:pet.resource.resourceId,element:pet.element,level:pet.growth.level};
+    const {envelope}=await head(actor);
+    try{return await trustedBattlePet(envelope,actor,petId,async(resourceId:string)=>await must(actor.client.from('lingjing_resource_references').select('auth_user_id,owner_account_id,resource_id,resource_kind').eq('auth_user_id',actor.authUserId).eq('owner_account_id',actor.ownerAccountId).eq('resource_id',resourceId).order('created_at',{ascending:false}).limit(1).maybeSingle()));}
+    catch(error){const code=(error as Row)?.code||'INVALID_CLOUD_SAVE';fail(code,code==='PET_NOT_FOUND'?404:code==='RESOURCE_UNAVAILABLE'?409:statusFor(code));}
   }
   async function settleGame(actor:ActorContext,mode:'friend'|'training',id:string,petId:string,build:(reward:Row)=>Promise<Row>) {
     const sourceTable=mode==='friend'?'lingjing_battle_settlements':'lingjing_battle_training_settlements';
     const prior=await must(admin.from(sourceTable).select('pet_id,result_json').eq('owner_account_id',actor.ownerAccountId).eq(mode==='friend'?'room_id':'session_id',id).maybeSingle());
-    if(prior?.result_json) {if(prior.pet_id!==petId)fail('PET_ROOM_MISMATCH',403);return {...prior.result_json,duplicate:true};}
+    if(prior?.result_json) {
+      if(prior.pet_id!==petId)fail('PET_ROOM_MISMATCH',403);
+      const result=await admin.rpc('lingjing_battle_settle_authority',{p_actor:actor.authUserId,p_owner:actor.ownerAccountId,p_device:actor.deviceId,p_session:actor.sessionId,p_mode:mode,p_id:id,p_pet:petId,p_base_revision:0,p_fragments:{},p_reward:{}});
+      if(result.error){const code=sqlCode(result.error);fail(code,statusFor(code));}return result.data as Row;
+    }
     for(let attempt=0;attempt<4;attempt++) {
       const saved=await head(actor),initial=await build({});
       if(initial.status!=='finished'||!initial.winner)fail('BATTLE_UNFINISHED',409);
       if(initial.player.petId!==petId)fail('PET_ROOM_MISMATCH',403);
       const {reward,fragments}=await prepareBattleSettlement({envelope:saved.envelope,owner:actor.ownerAccountId,session:initial});
-      const result=await admin.rpc('lingjing_battle_settle_authority',{p_actor:actor.authUserId,p_owner:actor.ownerAccountId,p_mode:mode,p_id:id,p_pet:petId,p_base_revision:saved.revision,p_fragments:fragments,p_reward:reward});
+      const result=await admin.rpc('lingjing_battle_settle_authority',{p_actor:actor.authUserId,p_owner:actor.ownerAccountId,p_device:actor.deviceId,p_session:actor.sessionId,p_mode:mode,p_id:id,p_pet:petId,p_base_revision:saved.revision,p_fragments:fragments,p_reward:reward});
       if(!result.error)return result.data as Row;
-      const code=sqlCode(result.error);if(code!=='SYNC_CONFLICT')fail(code,/FORBIDDEN|MISMATCH/.test(code)?403:503);
+      const code=sqlCode(result.error);if(code!=='SYNC_CONFLICT')fail(code,statusFor(code));
     }
     fail('SYNC_CONFLICT',409);
   }
   async function settle(actor:ActorContext,room:Row,petId:string) {
+    if(room.rules_version!==getBattleRules().id||room.core_version!==BATTLE_CORE_VERSION)fail('BATTLE_RULES_UNSUPPORTED',409);
     const rounds=await must(actor.client.from('lingjing_battle_rounds').select('*').eq('room_id',room.id).order('round_no')) as Row[];
     if(rounds.length!==room.last_resolved_round||rounds.some((row,index)=>row.round_no!==index+1))fail('BATTLE_HISTORY_INCOMPLETE',409);
     return settleGame(actor,'friend',room.id,petId,async reward=>friendSession(room,rounds,actor.ownerAccountId,reward));
@@ -54,6 +58,7 @@ export function createBattleAuthority(admin:ActorContext['client']) {
     if(!row)fail('BATTLE_NOT_FOUND',404);return row as Row;
   }
   async function trainingState(actor:ActorContext,row:Row) {
+    if(row.rules_version!==getBattleRules().id||row.core_version!==BATTLE_CORE_VERSION)fail('BATTLE_RULES_UNSUPPORTED',409);
     const session={...row.session_json,revision:row.revision};
     if(row.status==='finished') {
       const proof=await settleGame(actor,'training',row.id,row.pet_id,async reward=>({...session,reward}));
@@ -91,8 +96,8 @@ export function createBattleAuthority(admin:ActorContext['client']) {
       } else {session.status='abandoned';session.endedAt=new Date().toISOString();session.reportId=session.id;}
       session.updatedAt=new Date().toISOString();
     }
-    const result=await admin.rpc('lingjing_battle_training_command',{p_actor:actor.authUserId,p_owner:owner,p_id:id,p_action_id:actionId,p_input:logical,p_revision:revision,p_session:session});
-    if(result.error)fail(sqlCode(result.error),409);
+    const result=await admin.rpc('lingjing_battle_training_command',{p_actor:actor.authUserId,p_owner:owner,p_device:actor.deviceId,p_actor_session:actor.sessionId,p_id:id,p_action_id:actionId,p_input:logical,p_revision:revision,p_session:session});
+    if(result.error)fail(sqlCode(result.error),statusFor(sqlCode(result.error)));
     return trainingState(actor,result.data);
   }
   return {resolvePet,settle,training};
