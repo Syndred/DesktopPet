@@ -2,10 +2,10 @@
   "module": "accounts",
   "scope": "2026-10-25 Supabase Auth/JWT, stable legacy owner mapping, per-device sessions, full-save CAS/idempotency/conflict/offline recovery",
   "branch": "codex/lingjing-accounts",
-  "commit": "320cafd",
+  "commit": "ae563bf44c75994ee6a841b364dfd7727b829617",
   "worktree": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-accounts\\DesktopPet",
   "goalStatus": "active",
-  "phase": "Auth bridge deployed by coordinator; hosted 12-character opaque refresh-token fix ready for immediate redeployment; protected CAS/client continuing",
+  "phase": "Auth real HTTPS8/8 passed by coordinator; CAS pet compound key fixd57d383 ready; main Auth bridgeae563bf ready for domain consumption",
   "baseline": "46abf416e0500b53ef32fc29b441d923ef5a6a80",
   "dependencyCheckpoint": "b40af0efcf6062ddc2e8c360523c996fc91ebc0a",
   "contracts": {
@@ -72,7 +72,44 @@
       "07 Storage owner path policy using common owner",
       "02 petId preservation",
       "06 owner/pet-specific personal history and no BYOK secrets"
-    ]
+    ],
+    "protectedCas": {
+      "authorityPlayerWrite": false,
+      "function": "lingjing-save",
+      "verify_jwt": false,
+      "modules": [
+        "garden",
+        "discovery",
+        "battle",
+        "companions",
+        "resources",
+        "character-resources",
+        "legacy"
+      ],
+      "personalModules": [
+        "settings",
+        "conversations"
+      ],
+      "contractDocument": "docs/implementation/cloud-identity-contract-2026-10-25.md",
+      "ops": [
+        "read",
+        "push",
+        "archive"
+      ],
+      "migration": "20261025021759_lingjing_protected_save_cas.sql",
+      "domainSql": "lingjing_private.lock_save_owner(owner) FIRST; commit_authority(owner,actionId,fragments,expectedRevision|null) in SAME domain transaction",
+      "petRegistration": "d57d383 compound(owner_id,pet_id); same historical ID under two owners retained and tested; 02 must register via controlled initialization/adoption/verified migration"
+    },
+    "mainProcess": {
+      "accounts": "accounts.requireCloudActor()/cloudInvoke(functionName,body)",
+      "persistence": "safeStorage encrypted v2 proof; additive SQLite account_cloud_links; no token columns",
+      "service": "services.get(cloudActor).requireActor()/invoke(functionName,body)",
+      "context": "public actor + non-enumerable client/invoke/accessToken/url/publishableKey; MAIN ONLY",
+      "config": "LINGJING_PUBLIC_CONFIG or LINGJING_SUPABASE_URL+LINGJING_SUPABASE_PUBLISHABLE_KEY; packaged resources/lingjing-cloud-public.json",
+      "device": "current userData/accounts/device.json",
+      "entry": "apps/pc-app/runtime/features/accounts/supabase-remote.cjs",
+      "oldHttp": "default disabled; explicit LINGJING_LEGACY_AUTH=1 only; new privateSession.sessionToken=null and requireRuntimeUser blocked"
+    }
   },
   "migrations": [
     {
@@ -98,6 +135,12 @@
       ],
       "remoteAppliedByThisChat": false,
       "coordinatorAppliedVersion": "20261025022918"
+    },
+    {
+      "remoteAppliedByThisChat": false,
+      "generatedBy": "Supabase CLI2.122.0 migration new lingjing_protected_save_cas",
+      "file": "infra/supabase/migrations/20261025021759_lingjing_protected_save_cas.sql",
+      "readyForCoordinatorReview": true
     }
   ],
   "checks": [
@@ -119,12 +162,30 @@
     {
       "kind": "Supabase plugin read-only",
       "result": "Target healthy PostgreSQL17.6.1.104; service_role has auth schema USAGE but no auth.users SELECT. Provision RPC uses FK + server Auth API validation; no grant expansion."
+    },
+    {
+      "kind": "LOCAL PGlite only, not cloud",
+      "command": "node --test apps/pc-app/runtime/features/accounts/tests/cloud-save-sql.test.mjs",
+      "result": "6 passed: 300 random finite floats and Unicode SQL/JS checksum, personal CAS/idempotence/device conflict, forged inventory rejection, atomic authority common revision, pet ownership/RLS, non-promoted archive"
+    },
+    {
+      "result": "passed",
+      "command": "Deno2.9.6 check lingjing-save/index.ts --no-config shared lock"
+    },
+    {
+      "result": "22 passed existing SQLite/account/QA isolation",
+      "command": "node --test accounts.test.cjs qa-scenario.test.cjs"
+    },
+    {
+      "result": "4 passed: stable per-profile device, additive old owner mapping/no renderer tokens, refresh singleflight with12-char opaque token, late refresh after logout blocked",
+      "kind": "simulated protocol unit, not cloud",
+      "command": "node --test supabase-main.test.cjs"
     }
   ],
   "realCloudEvidence": {
     "project": "jbvrdmrkwpznbrvteive",
     "readOnlyInspected": true,
-    "authOrSyncLiveVerified": false,
+    "authOrSyncLiveVerified": true,
     "identitySchemaLiveRejection": "Coordinator actual HTTPS passes registration/stable owner, same-account two Auth sessions, cross-owner Data API RLS, wrong device rejection, logout A leaves B active. Refresh 400 traced to min-length16; 320cafd removes the false assumption and retains4096 upper bound.",
     "deploymentByCoordinatorPending": true,
     "publicKeyConfig": "Shared ignored artifacts/cloud-upgrade/2026-10-25/public-runtime-config.json; no keys included here",
@@ -141,7 +202,13 @@
         "result": "UND_ERR_SOCKET",
         "credentialSent": false
       }
-    ]
+    ],
+    "auth8Passed": {
+      "evidence": "shared artifacts/accounts/cloud-auth-http-1792895861799/evidence.json",
+      "source": "df9f00a",
+      "scope": "Actual HTTPS Auth8/8, not Electron/full-sync or two physical devices",
+      "by": "coordinator"
+    }
   },
   "preservation": {
     "comparisontext": "Coordinator independently archived/verified all18 tables; its4 users/4 accounts/9 sessions are not DesktopPet accounts and are never imported by this contract.",
