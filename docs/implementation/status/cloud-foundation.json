@@ -133,6 +133,13 @@
       "passed": true,
       "cases": 4,
       "evidence": "docs/implementation/evidence/foundation/cloud-engineering/real-binary-rollback.json"
+    },
+    {
+      "name": "Real local Git annotated tag/source mismatch gates",
+      "passed": true,
+      "cases": 3,
+      "evidence": "docs/implementation/evidence/foundation/cloud-engineering/release-source-gate.json",
+      "scope": "Three actual local Git repository tests, isolated local bare origin. No GitHub publish/deploy or hosted CI claim."
     }
   ],
   "realCloudEvidence": {
@@ -180,7 +187,7 @@
     "Main-coordinator final business freeze/integration, one full combined regression and final portable package",
     "Coordinator-owned retirement of old SQL/function entry points after 04/08 acceptance and MCP version alignment"
   ],
-  "updatedAt": "2026-10-25T04:05:14.112Z",
+  "updatedAt": "2026-10-25T04:08:52.430Z",
   "approvedIntegrations": {
     "accounts": "45b857d",
     "resources": "4e8fdf8",
