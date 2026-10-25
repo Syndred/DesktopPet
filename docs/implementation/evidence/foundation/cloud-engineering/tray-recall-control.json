@@ -1,0 +1,21 @@
+{
+  "at": "2026-10-25T04:18:43.753Z",
+  "scope": "Async service/control fixtures run on the actual Electron Node test runner. No live cloud/native-menu/portable acceptance claim; final integrated native flow waits for approved business freeze.",
+  "command": "node scripts/desktop/run-native-tests.cjs tests/foundation/tray-recall.test.cjs",
+  "exitCode": 0,
+  "passed": true,
+  "groups": 4,
+  "cases": [
+    "Await original recall acknowledgement; close only captured owner/window identities",
+    "Rejected promise or ok:false keeps windows and emits fixed safe warning code without provider details",
+    "Changed owner or replaced window while pending cannot close new-session windows",
+    "Synchronous local result remains compatible; warning-listener failure cannot reject menu handler"
+  ],
+  "typesPassed": true,
+  "mainLintPassed": true,
+  "sourceHashes": {
+    "apps/pc-app/runtime/core/tray-recall.cjs": "ca0aab78ca8767b5c3b539f956515d50419d581067227d3fc9de907357c04eb9",
+    "apps/pc-app/runtime/main/index.ts": "2f7c24838abfd9845497676f98ade91752b13daf6874e33e5ee837cea7a8d79e",
+    "tests/foundation/tray-recall.test.cjs": "84589cd4db31de80a973132838db7672f0c6ee12c3c39544c495dede4bc7105d"
+  }
+}
