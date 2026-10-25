@@ -17,7 +17,7 @@ function open(path,invoke){
   const db=new DatabaseSync(path);db.exec('PRAGMA journal_mode=WAL');migrateCompanions(db);for(const migration of battleMigrations)db.exec(migration.sql);
   const garden=new GardenService({db}),companions=new CompanionsService({db}),registry=new Map();
   const actor={schemaVersion:1,authority:'live',authKind:'supabase',ownerAccountId:owner,authUserId:'591f7b3d-fefb-443f-bb54-987a48d99da5',deviceId:'a0f012bb-86dd-4970-993b-e51405d71142',sessionId:'927a6c28-1639-4e0a-9a25-333ebc509598',url:'https://jbvrdmrkwpznbrvteive.supabase.co',publishableKey:'sb_publishable_fixture',invoke};
-  let plays=0;const services={db,get:name=>registry.get(name),provide:(name,value)=>registry.set(name,value),session:{getOwnerAccountId:()=>owner},events:{emit(){}},legacy:{onlineDuelService:{onEvent:()=>()=>{}}}};
+  let plays=0;const services={db,get:name=>registry.get(name),provide:(name,value)=>registry.set(name,value),session:{getOwnerAccountId:()=>owner},events:{emit(){}},legacy:{onlineDuelService:{onEvent:()=>()=>{},useCloudTransport(){}}}};
   registry.set('accounts',{privateSession:()=>({provider:'runtime',authKind:'supabase',ownerAccountId:owner})});registry.set('cloudActor',{requireActor:async()=>actor});registry.set('companions',{playAction:()=>{plays++;}});
   const cloud=new CloudGardenAuthority(services,garden);registry.set('garden',{cloudBattles:{owns:(payload,ctx)=>cloud.ownsBattle(payload,ctx),invoke:(name,payload,ctx)=>cloud.battleCommand(name,payload,ctx)}});
   return {db,garden,companions,registry,services,cloud,plays:()=>plays};
