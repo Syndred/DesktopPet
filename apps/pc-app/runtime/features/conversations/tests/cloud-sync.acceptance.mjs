@@ -184,6 +184,13 @@ try {
   const sentB = await call(b, 'accounts', 'syncNow', { actionId: randomUUID() }); assert.equal(sentB.personalVerified, true);
   const conflicted = await invoke(a, 'accounts', 'syncNow', { actionId: randomUUID() }); assert.equal(conflicted.code, 'SYNC_CONFLICT');
   assert.equal((await call(a, 'accounts', 'syncStatus')).conflicts, 1);
+  const staleSql = await a.app.evaluate(async (_electron, { actionId, staleAction, baseRevision }) => {
+    const ctx = await globalThis.__conversationCloudAccounts.requireCloudActor();
+    const source = await ctx.invoke('lingjing-save', { op: 'read', actionId: staleAction });
+    try { await ctx.invoke('lingjing-save', { op: 'push', actionId, baseRevision, envelope: source.envelope }); return { accepted: true, actionId }; }
+    catch (error) { return { accepted: false, actionId, code: error.code, httpStatus: error.httpStatus }; }
+  }, { actionId: randomUUID(), staleAction: sentA.actionId, baseRevision: sentA.revision });
+  assert.equal(staleSql.accepted, false); assert.equal(staleSql.code, 'SYNC_CONFLICT'); assert.equal(staleSql.httpStatus, 409);
   const preview = await call(a, 'accounts', 'cloudPreview');
   const merge = await invoke(a, 'accounts', 'backupRestore', { previewId: preview.previewId, mode: 'merge', actionId: randomUUID() });
   assert.equal(merge.code, 'CONVERSATION_MERGE_CONFLICT'); assert.equal((await snapshot(a, petId)).profile.persona, 'A 未同步的人设冲突');
@@ -193,7 +200,7 @@ try {
   assert.deepEqual(comparableMessages((await snapshot(a, secondPetId)).messages), comparableMessages(secondBefore.messages));
   assert.deepEqual((await snapshot(a, secondPetId)).memories, secondBefore.memories);
   assert.ok((await call(a, 'accounts', 'backupList')).length > 0);
-  record('Real stale CAS is rejected; conflicting merge rolls back, explicit replace restores B and memory deletion with a local safety backup', { bReceipt: sentB, casCode: conflicted.code, mergeCode: merge.code });
+  record('Client preflight preserves conflict outbox and real SQL CAS returns409; conflicting merge rolls back, explicit replace restores B and memory deletion with a local safety backup', { bReceipt: sentB, preflightCode: conflicted.code, directSqlCas: staleSql, mergeCode: merge.code });
   await sendFailed(a, petId, '断网待重试的用户消息'); await call(a, 'conversations', 'memory.save', { petId, memory: { content: '重启后应读回的记忆' } });
   const offlineAction = randomUUID(), beforeRestart = await snapshot(a, petId);
   await a.app.evaluate((_electron, closedBase) => {
@@ -228,7 +235,10 @@ try {
   evidence.sqliteReadback = { a: nativeA, b: nativeB, previousPidA: previousPid };
   record('A persists the failed cloud outbox and local key across process restart; exact action retries through real HTTPS and B independently reads it back', { injectedFailure: offline.code, retry: retried, finalIds: stateB.messages.map(row => row.id) });
   for (const c of [a, b]) { observedPushes.push(...await c.app.evaluate(() => globalThis.__conversationCloudPushes)); assert.equal(await c.page.evaluate(() => localStorage.length), 0); }
-  assert.ok(observedPushes.filter(row => row.op === 'push').length >= 4 && observedPushes.every(row => row.safe)); assert.deepEqual(errors, []);
+  evidence.privacyChecks = observedPushes;
+  const requiredPushes = [sentA.actionId, sentB.actionId, staleSql.actionId, offlineAction];
+  assert.ok(requiredPushes.every(actionId => observedPushes.some(row => row.op === 'push' && row.actionId === actionId)));
+  assert.ok(observedPushes.every(row => row.safe)); assert.deepEqual(errors, []);
   evidence.privacyChecks = observedPushes; evidence.owner = owner; evidence.petIds = [petId, secondPetId]; evidence.fullChatSync = true; evidence.status = 'passed';
   evidence.runtime = (await call(b, 'app', 'info')).runtime;
   await b.page.evaluate(() => { location.hash = '#/chat'; });
