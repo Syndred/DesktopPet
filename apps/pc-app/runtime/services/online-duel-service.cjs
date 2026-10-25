@@ -85,7 +85,7 @@ class OnlineDuelService {
 
   /** Main-process accounts owns SDK sessions/refresh/device credentials. This class only
    * consumes the verified transport; no new password/JWT store or renderer token channel. */
-  useCloudTransport(provider) {
+  useCloudTransport(provider, options = {}) {
     if (typeof provider !== 'function') throw new Error('Cloud transport provider is required');
     this.authGeneration++;
     void this.clearRoomState({ notify: true, reason: 'transport-changed' });
@@ -93,6 +93,8 @@ class OnlineDuelService {
     this.client = null;
     this.cloudProvider = provider;
     this.cloudActor = null;
+    this.cloudIdentity = null; this.cloudInvoker = null;
+    this.functionName = options.functionName || 'lingjing-battle';
     this.available = true; this.configured = true; this.enabled = true;
   }
 
@@ -105,17 +107,20 @@ class OnlineDuelService {
     if (!owner || actor?.schemaVersion !== 1 || actor.authority !== 'live' || actor.authKind !== 'supabase' || actor.ownerAccountId !== owner || !actor.authUserId || !actor.deviceId || !actor.sessionId || !transport.client?.functions?.invoke || !transport.client?.realtime?.setAuth) throw Object.assign(new Error('云端身份尚未就绪'), { code: 'CLOUD_AUTH_UNAVAILABLE' });
     const endpoint = new URL(transport.url);
     if (endpoint.protocol !== 'https:') throw Object.assign(new Error('云端连接必须使用 HTTPS'), { code: 'CLOUD_HTTPS_REQUIRED' });
-    if (this.client !== transport.client) {
+    const identity = [endpoint.origin, owner, actor.deviceId, actor.sessionId].join('|');
+    if (!this.client || this.cloudIdentity !== identity) {
       const previous = this.client, channel = this.channel; this.channel = null;
       if (previous && channel) await previous.removeChannel(channel).catch(() => {});
       if (generation !== this.authGeneration) throw Object.assign(new Error('账号已切换'), { code: 'AUTH_CHANGED' });
       this.client = transport.client;
+      this.cloudIdentity = identity;
     }
+    this.cloudInvoker = typeof transport.invoke === 'function' ? transport.invoke : null;
     this.supabaseUrl = endpoint.origin;
     this.cloudActor = Object.freeze({ schemaVersion: 1, authority: 'live', authKind: 'supabase', authUserId: actor.authUserId, ownerAccountId: owner, deviceId: actor.deviceId, sessionId: actor.sessionId, account: actor.account, username: actor.username });
     // SDK's accessToken callback is refreshed by accounts. setAuth() reauthorizes all
     // existing subscriptions and does not expose an access/refresh token to the caller.
-    await this.client.realtime.setAuth();
+    await this.client.realtime.setAuth(transport.accessToken || undefined);
     if (generation !== this.authGeneration) throw Object.assign(new Error('账号已切换'), { code: 'AUTH_CHANGED' });
   }
 
@@ -632,7 +637,11 @@ class OnlineDuelService {
     const requestBody = { ...payload, op };
     // Authorization comes only from accounts' SDK JWT/device headers.
     for (const key of ['userId', 'userAccount', 'sessionToken', 'ownerAccountId', 'authUserId', 'actor', 'petElement', 'petResourceId', 'petName']) delete requestBody[key];
-    const { data, error } = await this.client.functions.invoke(this.functionName, { body: requestBody, timeout: 12000 });
+    let data, error;
+    if (this.cloudInvoker) {
+      try { data = { ok: true, data: await this.cloudInvoker(this.functionName, requestBody) }; }
+      catch (failure) { error = failure; data = { ok: false, code: failure.code, message: failure.message }; }
+    } else ({ data, error } = await this.client.functions.invoke(this.functionName, { body: requestBody, timeout: 12000 }));
     if (generation !== this.authGeneration) throw Object.assign(new Error('账号已切换'), { code: 'AUTH_CHANGED' });
     let failed = data;
     if (error) { try { failed = await error.context?.clone?.().json(); } catch { /* network/response-read interruption */ } }

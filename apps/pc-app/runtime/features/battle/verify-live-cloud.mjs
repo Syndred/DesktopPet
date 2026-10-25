@@ -51,7 +51,7 @@ const api=async(page,feature,command,payload={})=>{const result=await page.evalu
 async function launch(index) {
   let profile=profiles[index];
   if(!profile){const directory=join(output,`device-${index+1}`);mkdirSync(directory);profile=profiles[index]={directory};writeFileSync(join(directory,'.lingjing-live-battle-profile.json'),JSON.stringify({schemaVersion:1,runId,profilePath:realpathSync(directory),purpose:'real-cloud-battle-acceptance',simulated:false}),{flag:'wx'});}
-  const env={...process.env,PET_USER_DATA_DIR:profile.directory,SUPABASE_URL:config.url,SUPABASE_PUBLISHABLE_KEY:config.publishableKey,SUPABASE_ANON_KEY:config.publishableKey,LINGJING_BATTLE_TRACE:join(output,`device-${index+1}-https.jsonl`)};
+  const env={...process.env,PET_USER_DATA_DIR:profile.directory,LINGJING_SUPABASE_URL:config.url,LINGJING_SUPABASE_PUBLISHABLE_KEY:config.publishableKey,SUPABASE_URL:config.url,SUPABASE_PUBLISHABLE_KEY:config.publishableKey,SUPABASE_ANON_KEY:config.publishableKey,LINGJING_BATTLE_TRACE:join(output,`device-${index+1}-https.jsonl`)};
   delete env.LINGJING_QA_SCENARIO;delete env.ELECTRON_RUN_AS_NODE;
   const app=await electron.launch({args:[project],env});apps.set(index,app);const page=await app.firstWindow();const window=await app.browserWindow(page);await window.evaluate(win=>win.setContentSize(1280,844,false));page.on('pageerror',error=>errors.push({device:index+1,message:error.message}));await page.waitForFunction(()=>Boolean(window.lingjing));
   const existing=await api(page,'accounts','session');

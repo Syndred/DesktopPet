@@ -21,6 +21,11 @@ class BattleFeatureService {
     this.store = new BattleStore(services.db);
     this.qa = readQaProfile(services);
     this.online = this.qa?.endpoint ? createQaOnline(this.qa) : services.legacy?.onlineDuelService || new OnlineDuelService();
+    const cloudActor = services.get('cloudActor');
+    if (!this.qa && cloudActor?.requireActor) this.online.useCloudTransport(async () => {
+      const context = await cloudActor.requireActor();
+      return { url: context.url, actor: context, client: context.client, accessToken: context.accessToken, invoke: context.invoke };
+    });
     this.locks = new Map();
     this.unsubscribe = this.online.onEvent(event => {
       // Network notifications trigger a verified sync; their payload is never a settlement.
@@ -29,6 +34,10 @@ class BattleFeatureService {
         roomId: event.payload?.roomId || event.payload?.room?.id || null,
         status: event.payload?.status || null
       });
+    });
+    this.stopSession = services.events?.on('accounts:session-changed', value => {
+      const user = value?.currentUser;
+      if (!user || (this.online.currentUser && this.online.currentUser.id !== (user.ownerAccountId || user.id))) this.online.setCurrentUser(null);
     });
   }
 
@@ -42,8 +51,8 @@ class BattleFeatureService {
 
   user(owner) {
     const accounts = this.services.get("accounts");
-    const user = this.qa ? qaUser(this.services, owner, this.qa) : accounts?.requireRuntimeUser ? accounts.requireRuntimeUser() : this.services.session.getCurrentUser();
-    if (!user || (user.ownerAccountId || user.id) !== owner || !user.sessionToken) throw fail("ONLINE_LOGIN_REQUIRED", "请登录云端账号后使用好友对战");
+    const user = this.qa ? qaUser(this.services, owner, this.qa) : this.online.cloudProvider ? accounts?.privateSession?.() : accounts?.requireRuntimeUser ? accounts.requireRuntimeUser() : this.services.session.getCurrentUser();
+    if (!user || (user.ownerAccountId || user.id) !== owner || (this.online.cloudProvider ? user.authKind !== 'supabase' : !user.sessionToken)) throw fail("ONLINE_LOGIN_REQUIRED", "请登录云端账号后使用好友对战");
     this.online.setCurrentUser(user);
     return user;
   }
@@ -650,7 +659,7 @@ class BattleFeatureService {
     } };
   }
 
-  dispose() { this.unsubscribe?.(); }
+  dispose() { this.unsubscribe?.(); this.stopSession?.(); }
 }
 
 function friendlyError(error) {
