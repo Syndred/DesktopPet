@@ -2,9 +2,11 @@ const { spawn } = require("node:child_process");
 const { readFileSync } = require("node:fs");
 const { join } = require("node:path");
 const { isQuiet, notificationPolicy } = require("./settings.cjs");
+const { createLoginItemController } = require("./startup.cjs");
 
 /** Electron bindings live here; domain services never import Electron in Node tests. */
 function createDesktopHost(services, electron) {
+  const startup = createLoginItemController(electron.app);
   let settings = null, foregroundFullscreen = false, nativeFullscreen = false, exploring = false;
   let monitor = null, monitorReady = false, stdout = "", permissionInstalled = false;
   const ignored = new Set(), hiddenByFullscreen = new Set(), hiddenByLimit = new Set();
@@ -120,7 +122,7 @@ function createDesktopHost(services, electron) {
   return {
     async apply(next, { explicitStartupChange = false } = {}) {
       // Merely opening settings or logging in must not enable a machine startup task.
-      if (explicitStartupChange) electron.app.setLoginItemSettings({ openAtLogin: next.desktop.launchAtLogin, enabled: next.desktop.launchAtLogin });
+      startup.apply(next.desktop.launchAtLogin, { explicitStartupChange });
       settings = next;
       if (!next.privacy.locationAllowed) {
         exploring = false;
@@ -164,7 +166,7 @@ function createDesktopHost(services, electron) {
     },
     status() {
       const windows = getPetWindows();
-      return { startup: electron.app.getLoginItemSettings?.().openAtLogin ?? false,
+      return { startup: startup.status(),
         fullscreenMonitor: Boolean(monitor && !monitor.killed), fullscreenMonitorReady: monitorReady, foregroundFullscreen,
         fullscreenSource: foregroundFullscreen ? nativeFullscreen ? "win32" : "electron" : null,
         companionWindows: windows.length, clickThroughWindows: [...ignored],
