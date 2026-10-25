@@ -1,0 +1,17 @@
+✔ SDK wraps successful HTTP200 reader failure with statusCode200; no network is performed (174.1544ms)
+ℹ {"sdkErrorMetadata":{"name":"AI_APICallError","statusCode":200,"causeName":"TypeError","nestedCode":"UND_ERR_SOCKET"},"partialChars":14,"memoryFetchCalls":1}
+✔ HTTP200 SSE partial reader failure is incomplete response, not provider rejection (28.9965ms)
+✔ HTTP200 reader failure before text remains a network error (31.5907ms)
+✔ explicit HTTP401/403/429/4xx/5xx retain their public provider classifications and redaction (23.8183ms)
+✔ explicit finish refusal, clean truncation and empty response remain distinct (11.5592ms)
+✔ caller cancellation and timeout retain priority over a successful-response reader error (41.9676ms)
+✔ text and wire limits retain priority over HTTP200 wrapper metadata (9.1852ms)
+✔ memory SQLite keeps partial text and the same owner/pet/action/assistant while retry advances one attempt (54.1523ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 472.3953

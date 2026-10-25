@@ -1,0 +1,58 @@
+✔ SDK wraps successful HTTP200 reader failure with statusCode200; no network is performed (160.8507ms)
+ℹ {"sdkErrorMetadata":{"name":"AI_APICallError","statusCode":200,"causeName":"TypeError","nestedCode":"UND_ERR_SOCKET"},"partialChars":14,"memoryFetchCalls":1}
+✖ HTTP200 SSE partial reader failure is incomplete response, not provider rejection (28.7678ms)
+✔ HTTP200 reader failure before text remains a network error (30.3933ms)
+✔ explicit HTTP401/403/429/4xx/5xx retain their public provider classifications and redaction (23.0661ms)
+✔ explicit finish refusal, clean truncation and empty response remain distinct (11.9681ms)
+✔ caller cancellation and timeout retain priority over a successful-response reader error (41.1974ms)
+✔ text and wire limits retain priority over HTTP200 wrapper metadata (9.1956ms)
+✖ memory SQLite keeps partial text and the same owner/pet/action/assistant while retry advances one attempt (36.5236ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 6
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 428.6234
+
+✖ failing tests:
+
+test at apps\pc-app\runtime\features\conversations\tests\transport-errors.test.cjs:72:1
+✖ HTTP200 SSE partial reader failure is incomplete response, not provider rejection (28.7678ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+
+  + 'NETWORK_ERROR'
+  - 'INVALID_RESPONSE'
+
+      at expectCode (C:\Users\Administrator\Desktop\project\DesktopPet-fresh-worktrees\06\apps\pc-app\runtime\features\conversations\tests\transport-errors.test.cjs:55:10)
+      at async TestContext.<anonymous> (C:\Users\Administrator\Desktop\project\DesktopPet-fresh-worktrees\06\apps\pc-app\runtime\features\conversations\tests\transport-errors.test.cjs:74:17)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'NETWORK_ERROR',
+    expected: 'INVALID_RESPONSE',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at apps\pc-app\runtime\features\conversations\tests\transport-errors.test.cjs:102:1
+✖ memory SQLite keeps partial text and the same owner/pet/action/assistant while retry advances one attempt (36.5236ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+
+  + 'NETWORK_ERROR'
+  - 'INVALID_RESPONSE'
+
+      at TestContext.<anonymous> (C:\Users\Administrator\Desktop\project\DesktopPet-fresh-worktrees\06\apps\pc-app\runtime\features\conversations\tests\transport-errors.test.cjs:111:90)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'NETWORK_ERROR',
+    expected: 'INVALID_RESPONSE',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

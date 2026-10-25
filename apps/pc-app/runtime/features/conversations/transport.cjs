@@ -85,9 +85,11 @@ async function requestCompletion({ connection, apiKey, messages, signal, onDelta
     if (error instanceof ConversationError) throw error;
     // Never forward SDK errors: APICallError may contain URL, request and body.
     const code = error?.statusCode ?? error?.cause?.statusCode;
-    if (code) fail(code === 401 || code === 403 ? "PROVIDER_AUTH" : code === 429 ? "RATE_LIMITED" :
+    // SDK reader failures can retain HTTP 200; only HTTP errors imply rejection.
+    if (Number.isInteger(code) && code >= 400 && code <= 599) fail(code === 401 || code === 403 ? "PROVIDER_AUTH" : code === 429 ? "RATE_LIMITED" :
       code >= 500 ? "PROVIDER_UNAVAILABLE" : "PROVIDER_REJECTED");
-    if (text && streamError) fail("INVALID_RESPONSE");
+    // A reader can throw after partial text without triggering the SDK onError.
+    if (text) fail("INVALID_RESPONSE");
     if (["AI_TypeValidationError", "AI_JSONParseError", "AI_NoOutputGeneratedError"].includes(error?.name)) fail("INVALID_RESPONSE");
     fail("NETWORK_ERROR");
   } finally {

@@ -1,0 +1,177 @@
+{
+  "format": "lingjing.conversations.qa017.minimal-transport-fix",
+  "verifiedOn": "2026-10-26",
+  "timezone": "Asia/Shanghai",
+  "ownerRole": "06",
+  "status": "source_candidate_verified_in_memory_native_retest_pending",
+  "issue": "QA-017",
+  "sourceBase": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+  "productChange": {
+    "path": "apps/pc-app/runtime/features/conversations/transport.cjs",
+    "conditions": [
+      "Only explicit integer HTTP statusCode 400..599 maps to provider HTTP errors.",
+      "After higher-priority abort/timeout/guard/public/HTTP errors, any received text maps a reader failure to existing INVALID_RESPONSE, including direct fullStream throws without onError."
+    ],
+    "publicCode": "INVALID_RESPONSE",
+    "publicMessage": "模型响应不完整或格式不受支持，请重试。",
+    "unchanged": [
+      "errors.cjs",
+      "service.cjs",
+      "store.cjs",
+      "context.cjs",
+      "UI",
+      "preload",
+      "frozen DC7 provider"
+    ]
+  },
+  "rootCause": {
+    "sdkErrorMetadata": {
+      "name": "AI_APICallError",
+      "statusCode": 200,
+      "causeName": "TypeError",
+      "nestedCode": "UND_ERR_SOCKET"
+    },
+    "original": "The SDK preserves successful HTTP200 in its reader-error wrapper. The original truthy status check classified it as PROVIDER_REJECTED before the partial-response branch.",
+    "intermediate": "Restricting HTTP mapping alone exposed a direct stream throw without streamError being set; the existing text && streamError condition then returned NETWORK_ERROR.",
+    "fixed": "Both minimal conditions are required; partial text now reaches INVALID_RESPONSE.",
+    "sdkSource": {
+      "path": "node_modules/@ai-sdk/provider-utils/src/response-handler.ts",
+      "sha256": "867e9c7790efffc986f4ae583027316ca9dea8d7fdb11d539357a0cf5b306ea7"
+    },
+    "installed": {
+      "ai": "7.0.152",
+      "@ai-sdk/openai-compatible": "3.0.77",
+      "@ai-sdk/provider-utils": "5.0.67"
+    },
+    "node": "v24.21.0"
+  },
+  "originalNativeEvidence": {
+    "candidateSource": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+    "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+    "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+    "actionId": "24477032-2651-4990-abfc-91785d4997d0",
+    "assistantId": "6e9fc9ca-f669-4113-9609-cb4f26fd3f22",
+    "disconnectAttempt": 5,
+    "partialChars": 14,
+    "observedCode": "PROVIDER_REJECTED",
+    "evidenceRoot": "docs/implementation/qa/2026-10-25-user-acceptance/rounds/candidate-dc7aee3-1b1afdd1/evidence",
+    "fileHashes": {
+      "t06-disconnect-native.jpg": {
+        "bytes": 100351,
+        "sha256": "0f0167e6617dd7838e3fa9bad93ce22e52836c60cd767857c0881f1442368230"
+      },
+      "t06-disconnect-original-round-readback.json": {
+        "bytes": 1050,
+        "sha256": "d608f2784fe22d9ac763caa8a1a93d05f1dd374e6f0bdecf2a5ab3dfa4c7b356"
+      },
+      "t06-real-http-errors-and-original-json-recovery.json": {
+        "bytes": 17325,
+        "sha256": "d9fffbb3a5e4316d92b6482d7ab8efebfb9be125f5f6e3c83626adc79af50489"
+      }
+    },
+    "role06OnlyReadEvidence": true,
+    "existingCandidateUnchanged": true,
+    "nativePatchedCandidateExecuted": false
+  },
+  "checks": {
+    "method": "Actual installed AI SDK parses synthetic Response/ReadableStream values via mocked fetch; SQLite is :memory:. HTTP listeners and socket connections throw if attempted.",
+    "testPath": "apps/pc-app/runtime/features/conversations/tests/transport-errors.test.cjs",
+    "old": {
+      "command": "node --test --test-name-pattern 'SDK wraps|HTTP200 SSE partial' apps/pc-app/runtime/features/conversations/tests/transport-errors.test.cjs",
+      "exitCode": 1,
+      "passed": 1,
+      "failed": 1,
+      "expectedFailure": "PROVIDER_REJECTED !== INVALID_RESPONSE",
+      "output": "old-source-memory.txt"
+    },
+    "intermediate": {
+      "command": "node --test apps/pc-app/runtime/features/conversations/tests/transport-errors.test.cjs",
+      "exitCode": 1,
+      "passed": 6,
+      "failed": 2,
+      "expectedFailure": "NETWORK_ERROR !== INVALID_RESPONSE for partial transport and persistence",
+      "output": "intermediate-status-only-memory.txt"
+    },
+    "fixed": {
+      "command": "node --test apps/pc-app/runtime/features/conversations/tests/transport-errors.test.cjs",
+      "exitCode": 0,
+      "passed": 8,
+      "failed": 0,
+      "output": "fixed-source-memory.txt"
+    },
+    "verified": [
+      "HTTP200 + 14 partial characters -> INVALID_RESPONSE with existing Chinese public message",
+      "HTTP200 reader failure before text -> NETWORK_ERROR",
+      "401/403 -> PROVIDER_AUTH; 429 -> RATE_LIMITED; 400/422 -> PROVIDER_REJECTED; 503/504 -> PROVIDER_UNAVAILABLE",
+      "Explicit content_filter refusal -> PROVIDER_REJECTED; missing finish -> INVALID_RESPONSE; empty -> EMPTY_RESPONSE",
+      "Caller cancellation and timeout remain CANCELLED/TIMEOUT before wrapper classification",
+      "Text and wire limits retain RESPONSE_TOO_LARGE",
+      "Synthetic owner/pet original action persists one user and one assistant, 14 partial characters, failed attempt 1",
+      "JSON retry retains action/assistant/user IDs and owner/pet, advances only to attempt 2, completes with one fetch per send/retry"
+    ],
+    "outputNormalization": "Log text preserves tool output with LF newlines and trailing whitespace removed for git diff --check.",
+    "targetedLint": "passed",
+    "syntax": "passed",
+    "diffWhitespace": "passed",
+    "realHttpRequests": 0,
+    "realSocketListeners": 0,
+    "externalModelSuccess": false,
+    "originalProfileOrCredentialsRead": false,
+    "productLaunchedByRole06": false,
+    "broadRegressionOrNativeRunByRole06": false
+  },
+  "provenance": {
+    "oldGitBlob": "5445aa043e8165e77a49d03bcf09b77ac09e3df8",
+    "oldGitBlobSha256": "c57284cf951a2197e87a1db69ce8a1fd5cceb976991609db419f4b677014f463",
+    "oldEqualsHeadBeforePatch": true,
+    "newGitBlob": "d199343bc31a240e8fac61939acb28c35dc5ec1e",
+    "newGitBlobSha256": "cfa944308837a1b0857773d2c382bbcff5244dff0d7ead7aa2a7295f469f8782",
+    "newWorkingTreeRawSha256": "eaa4b42e5b98cbfe7156037233c28db582a45d122664ec74ae7f74bce6518cca",
+    "hashScheme": "Git blob SHA1 and SHA256 of exact Git blob; working-tree raw SHA is separate because checkout uses CRLF.",
+    "serviceStoreErrorsContextUnchangedFromSource": true
+  },
+  "frozenHelper": {
+    "path": "tools/qa/dc7-chat-provider",
+    "freezeSha256NormalizedLf": "2db88b9e3efb7bb2fd239f01749c5c9c29fe31ae6ab8bd4316bbc03392357590",
+    "expectedFreezeSha256NormalizedLf": "2db88b9e3efb7bb2fd239f01749c5c9c29fe31ae6ab8bd4316bbc03392357590",
+    "files": {
+      "provider.cjs": {
+        "expected": "68e3b7d750e0f6cb9cd41389f5fe36c6654a3d05678942724a721fe01e188af2",
+        "actual": "68e3b7d750e0f6cb9cd41389f5fe36c6654a3d05678942724a721fe01e188af2",
+        "matched": true
+      },
+      "cli.cjs": {
+        "expected": "c8461668708facc9c28b1a8a079ba50dbd0146fb733e6d473ccca27931fc2d11",
+        "actual": "c8461668708facc9c28b1a8a079ba50dbd0146fb733e6d473ccca27931fc2d11",
+        "matched": true
+      },
+      "provider.test.cjs": {
+        "expected": "8d029d2d40e30e982c8ec10a3d0459f15b60559100e4afa1be742cdfe4e8fd06",
+        "actual": "8d029d2d40e30e982c8ec10a3d0459f15b60559100e4afa1be742cdfe4e8fd06",
+        "matched": true
+      },
+      "binding.example.json": {
+        "expected": "78a614ae81d62d5229cb109843042029285b7f5c3fa03fb5577a35a055945981",
+        "actual": "78a614ae81d62d5229cb109843042029285b7f5c3fa03fb5577a35a055945981",
+        "matched": true
+      },
+      "PLAN.txt": {
+        "expected": "93a0e0e5e538fca285f84f175a926acd2571cc9d5a1a0062b0dff378bb73533f",
+        "actual": "93a0e0e5e538fca285f84f175a926acd2571cc9d5a1a0062b0dff378bb73533f",
+        "matched": true
+      }
+    },
+    "gitDiffFromHead": "empty",
+    "controlledOrStartedByRole06": false,
+    "scope": "This record concerns role06 checks only. Role09's separately approved active helper was not contacted, restarted or stopped."
+  },
+  "cloudSync": {
+    "command": "git fetch origin main; git pull --ff-only origin main",
+    "exitCode": 0,
+    "result": "Already up to date.",
+    "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086",
+    "originMainIsAncestorOfRole06Head": true,
+    "pushPerformed": false
+  },
+  "pending": "Root integrates this independent candidate after the frozen DC7 native round; role09 alone packages/executes the patched candidate native check under Root coordination. QA matrix is not changed by this source-only evidence."
+}
