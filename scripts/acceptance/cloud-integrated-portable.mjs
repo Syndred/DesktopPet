@@ -73,7 +73,8 @@ try{
   await a.call('conversations','select',{petId,actionId:randomUUID()});const chat=await a.call('conversations','snapshot',{petId}),persona='{"password":"EXAMPLE_PLACEHOLDER","kind":"authored persona '+short+'"}',memory='原账号联合验收记忆 '+short;
   await a.call('conversations','profile.save',{petId,revision:chat.profile.revision,profile:{...chat.profile,persona,useOverride:true}});await a.call('conversations','memory.save',{petId,memory:{content:memory}});
   const closed=netServer();await new Promise(done=>closed.listen(0,'127.0.0.1',done));const modelPort=closed.address().port;await new Promise(done=>closed.close(done));
-  await a.call('conversations','connection.save',{petId,revision:chat.connection?.revision||0,connection:{provider:'openai_compatible',baseUrl:`http://127.0.0.1:${modelPort}`,model:'no-fake-reply',contextChars:24000,maxOutputTokens:64},apiKey:fixtureKey});
+  const overrideChat=await a.call('conversations','snapshot',{petId});assert.equal(overrideChat.profile.useOverride,true);
+  await a.call('conversations','connection.save',{petId,revision:overrideChat.connection?.revision||0,connection:{provider:'openai_compatible',baseUrl:`http://127.0.0.1:${modelPort}`,model:'no-fake-reply',contextChars:24000,maxOutputTokens:64},apiKey:fixtureKey});
   const failed=await a.page.evaluate(async payload=>window.lingjing.invoke('conversations','send',payload),{petId,actionId:randomUUID(),text:'联合验收原始用户消息 '+short});assert.equal(failed.code,'NETWORK_ERROR');
   await waitClean(a,'Personal authored changes were not automatically uploaded');await waitClean(b,'Clean peer did not automatically receive the newer personal save');
   await pollState(()=>b.call('conversations','snapshot',{petId}),s=>s.profile.persona===persona&&s.memories.some(row=>row.content===memory),{timeoutMs:120000,intervalMs:700,label:'B did not apply exact authored content'});
