@@ -1,0 +1,1138 @@
+{
+  "format": "lingjing.conversations.qa011.component-verification",
+  "at": "2026-10-25T12:36:50.697Z",
+  "issue": "QA011",
+  "status": "source-fix-verified-native-pending",
+  "scope": "Actual canonical ResourcePortrait and CSS in headless Chromium; measured native wide slot replay plus smaller component slots. No actual app route, account, database, provider or native input.",
+  "baseline": "066f61df2d9b6ef8977756c8b0700c1ba5b01681",
+  "browser": "155.0.8059.86",
+  "headless": true,
+  "deviceScaleFactor": 1.25,
+  "cases": 24,
+  "rows": [
+    {
+      "character": "yuwan",
+      "slot": "wide-native",
+      "before": {
+        "slot": {
+          "width": 407.390625,
+          "height": 225
+        },
+        "svg": {
+          "width": 407.390625,
+          "height": 225
+        },
+        "viewBox": "37.57 0 176.8 165.66",
+        "resourceId": "builtin:lingjing-yuwan-v2",
+        "frame": "frame_0",
+        "framing": "portrait",
+        "preserveAspectRatio": "xMidYMid slice",
+        "visibleViewBoxFraction": 0.5894352290931817,
+        "referenceForegroundPixels": 210853,
+        "visibleForegroundFraction": 0.675167059515397,
+        "cssTransform": "none",
+        "figureCpPortraitCount": 0,
+        "figureCanvasCount": 0
+      },
+      "after": {
+        "slot": {
+          "width": 407.390625,
+          "height": 225
+        },
+        "svg": {
+          "width": 240.125,
+          "height": 225
+        },
+        "viewBox": "37.57 0 176.8 165.66",
+        "resourceId": "builtin:lingjing-yuwan-v2",
+        "frame": "frame_0",
+        "framing": "portrait",
+        "preserveAspectRatio": "xMidYMid slice",
+        "visibleViewBoxFraction": 0.9999775689475593,
+        "referenceForegroundPixels": 210853,
+        "visibleForegroundFraction": 1,
+        "cssTransform": "none",
+        "figureCpPortraitCount": 0,
+        "figureCanvasCount": 0
+      }
+    },
+    {
+      "character": "yuwan",
+      "slot": "narrow-chat",
+      "before": {
+        "slot": {
+          "width": 193,
+          "height": 210
+        },
+        "svg": {
+          "width": 193,
+          "height": 210
+        },
+        "viewBox": "37.57 0 176.8 165.66",
+        "resourceId": "builtin:lingjing-yuwan-v2",
+        "frame": "frame_0",
+        "framing": "portrait",
+        "preserveAspectRatio": "xMidYMid slice",
+        "visibleViewBoxFraction": 0.8611393060469054,
+        "referenceForegroundPixels": 210853,
+        "visibleForegroundFraction": 0.92706293009822,
+        "cssTransform": "none",
+        "figureCpPortraitCount": 0,
+        "figureCanvasCount": 0
+      },
+      "after": {
+        "slot": {
+          "width": 193,
+          "height": 210
+        },
+        "svg": {
+          "width": 192.984375,
+          "height": 180.828125
+        },
+        "viewBox": "37.57 0 176.8 165.66",
+        "resourceId": "builtin:lingjing-yuwan-v2",
+        "frame": "frame_0",
+        "framing": "portrait",
+        "preserveAspectRatio": "xMidYMid slice",
+        "visibleViewBoxFraction": 0.9999805825901359,
+        "referenceForegroundPixels": 210853,
+        "visibleForegroundFraction": 1,
+        "cssTransform": "none",
+        "figureCpPortraitCount": 0,
+        "figureCanvasCount": 0
+      }
+    },
+    {
+      "character": "yuwan",
+      "slot": "narrow-settings",
+      "before": {
+        "slot": {
+          "width": 193,
+          "height": 190
+        },
+        "svg": {
+          "width": 193,
+          "height": 190
+        },
+        "viewBox": "37.57 0 176.8 165.66",
+        "resourceId": "builtin:lingjing-yuwan-v2",
+        "frame": "frame_0",
+        "framing": "portrait",
+        "preserveAspectRatio": "xMidYMid slice",
+        "visibleViewBoxFraction": 0.9517855487886848,
+        "referenceForegroundPixels": 210853,
+        "visibleForegroundFraction": 0.9788098817659696,
+        "cssTransform": "none",
+        "figureCpPortraitCount": 0,
+        "figureCanvasCount": 0
+      },
+      "after": {
+        "slot": {
+          "width": 193,
+          "height": 190
+        },
+        "svg": {
+          "width": 192.984375,
+          "height": 180.828125
+        },
+        "viewBox": "37.57 0 176.8 165.66",
+        "resourceId": "builtin:lingjing-yuwan-v2",
+        "frame": "frame_0",
+        "framing": "portrait",
+        "preserveAspectRatio": "xMidYMid slice",
+        "visibleViewBoxFraction": 0.9999805825901359,
+        "referenceForegroundPixels": 210853,
+        "visibleForegroundFraction": 1,
+        "cssTransform": "none",
+        "figureCpPortraitCount": 0,
+        "figureCanvasCount": 0
+      }
+    },
+    {
+      "character": "xiaolan",
+      "slot": "wide-native",
+      "before": {
+        "slot": {
+          "width": 407.390625,
+          "height": 225
+        },
+        "svg": {
+          "width": 407.390625,
+          "height": 225
+        },
+        "viewBox": "23.900000000000002 0 200.76 179.84",
+        "resourceId": "builtin:lingjing-xiaolan-v1",
+        "frame": "frame_0",
+        "framing": "portrait",
+        "preserveAspectRatio": "xMidYMid slice",
+        "visibleViewBoxFraction": 0.6165415892097926,
+        "referenceForegroundPixels": 267387,
+        "visibleForegroundFraction": 0.689046213914663,
+        "cssTransform": "none",
+        "figureCpPortraitCount": 0,
+        "figureCanvasCount": 0
+      },
+      "after": {
+        "slot": {
+          "width": 407.390625,
+          "height": 225
+        },
+        "svg": {
+          "width": 251.171875,
+          "height": 225
+        },
+        "viewBox": "23.900000000000002 0 200.76 179.84",
+        "resourceId": "builtin:lingjing-xiaolan-v1",
+        "frame": "frame_0",
+        "framing": "portrait",
+        "preserveAspectRatio": "xMidYMid slice",
+        "visibleViewBoxFraction": 0.9999944724742911,
+        "referenceForegroundPixels": 267387,
+        "visibleForegroundFraction": 1,
+        "cssTransform": "none",
+        "figureCpPortraitCount": 0,
+        "figureCanvasCount": 0
+      }
+    },
+    {
+      "character": "xiaolan",
+      "slot": "narrow-chat",
+      "before": {
+        "slot": {
+          "width": 193,
+          "height": 210
+        },
+        "svg": {
+          "width": 193,
+          "height": 210
+        },
+        "viewBox": "23.900000000000002 0 200.76 179.84",
+        "resourceId": "builtin:lingjing-xiaolan-v1",
+        "frame": "frame_0",
+        "framing": "portrait",
+        "preserveAspectRatio": "xMidYMid slice",
+        "visibleViewBoxFraction": 0.8232791640081613,
+        "referenceForegroundPixels": 267387,
+        "visibleForegroundFraction": 0.8750163620520071,
+        "cssTransform": "none",
+        "figureCpPortraitCount": 0,
+        "figureCanvasCount": 0
+      },
+      "after": {
+        "slot": {
+          "width": 193,
+          "height": 210
+        },
+        "svg": {
+          "width": 192.984375,
+          "height": 172.875
+        },
+        "viewBox": "23.900000000000002 0 200.76 179.84",
+        "resourceId": "builtin:lingjing-xiaolan-v1",
+        "frame": "frame_0",
+        "framing": "portrait",
+        "preserveAspectRatio": "xMidYMid slice",
+        "visibleViewBoxFraction": 0.9999978460130261,
+        "referenceForegroundPixels": 267387,
+        "visibleForegroundFraction": 1,
+        "cssTransform": "none",
+        "figureCpPortraitCount": 0,
+        "figureCanvasCount": 0
+      }
+    },
+    {
+      "character": "xiaolan",
+      "slot": "narrow-settings",
+      "before": {
+        "slot": {
+          "width": 193,
+          "height": 190
+        },
+        "svg": {
+          "width": 193,
+          "height": 190
+        },
+        "viewBox": "23.900000000000002 0 200.76 179.84",
+        "resourceId": "builtin:lingjing-xiaolan-v1",
+        "frame": "frame_0",
+        "framing": "portrait",
+        "preserveAspectRatio": "xMidYMid slice",
+        "visibleViewBoxFraction": 0.9099401286405993,
+        "referenceForegroundPixels": 267387,
+        "visibleForegroundFraction": 0.9432395741004611,
+        "cssTransform": "none",
+        "figureCpPortraitCount": 0,
+        "figureCanvasCount": 0
+      },
+      "after": {
+        "slot": {
+          "width": 193,
+          "height": 190
+        },
+        "svg": {
+          "width": 192.984375,
+          "height": 172.875
+        },
+        "viewBox": "23.900000000000002 0 200.76 179.84",
+        "resourceId": "builtin:lingjing-xiaolan-v1",
+        "frame": "frame_0",
+        "framing": "portrait",
+        "preserveAspectRatio": "xMidYMid slice",
+        "visibleViewBoxFraction": 0.9999978460130261,
+        "referenceForegroundPixels": 267387,
+        "visibleForegroundFraction": 1,
+        "cssTransform": "none",
+        "figureCpPortraitCount": 0,
+        "figureCanvasCount": 0
+      }
+    },
+    {
+      "character": "fantuan",
+      "slot": "wide-native",
+      "before": {
+        "slot": {
+          "width": 407.390625,
+          "height": 225
+        },
+        "svg": {
+          "width": 407.390625,
+          "height": 225
+        },
+        "viewBox": "11.05 0 198.9 166.4",
+        "resourceId": "builtin:lingjing-fantuan-v1",
+        "frame": "frame_0",
+        "framing": "portrait",
+        "preserveAspectRatio": "xMidYMid slice",
+        "visibleViewBoxFraction": 0.6601656926000802,
+        "referenceForegroundPixels": 245399,
+        "visibleForegroundFraction": 0.771205261635133,
+        "cssTransform": "none",
+        "figureCpPortraitCount": 0,
+        "figureCanvasCount": 0
+      },
+      "after": {
+        "slot": {
+          "width": 407.390625,
+          "height": 225
+        },
+        "svg": {
+          "width": 268.9375,
+          "height": 225
+        },
+        "viewBox": "11.05 0 198.9 166.4",
+        "resourceId": "builtin:lingjing-fantuan-v1",
+        "frame": "frame_0",
+        "framing": "portrait",
+        "preserveAspectRatio": "xMidYMid slice",
+        "visibleViewBoxFraction": 0.999970945350246,
+        "referenceForegroundPixels": 245399,
+        "visibleForegroundFraction": 1,
+        "cssTransform": "none",
+        "figureCpPortraitCount": 0,
+        "figureCanvasCount": 0
+      }
+    },
+    {
+      "character": "fantuan",
+      "slot": "narrow-chat",
+      "before": {
+        "slot": {
+          "width": 193,
+          "height": 210
+        },
+        "svg": {
+          "width": 193,
+          "height": 210
+        },
+        "viewBox": "11.05 0 198.9 166.4",
+        "resourceId": "builtin:lingjing-fantuan-v1",
+        "frame": "frame_0",
+        "framing": "portrait",
+        "preserveAspectRatio": "xMidYMid slice",
+        "visibleViewBoxFraction": 0.7688764348564687,
+        "referenceForegroundPixels": 245399,
+        "visibleForegroundFraction": 0.8272690597761198,
+        "cssTransform": "none",
+        "figureCpPortraitCount": 0,
+        "figureCanvasCount": 0
+      },
+      "after": {
+        "slot": {
+          "width": 193,
+          "height": 210
+        },
+        "svg": {
+          "width": 192.984375,
+          "height": 161.453125
+        },
+        "viewBox": "11.05 0 198.9 166.4",
+        "resourceId": "builtin:lingjing-fantuan-v1",
+        "frame": "frame_0",
+        "framing": "portrait",
+        "preserveAspectRatio": "xMidYMid slice",
+        "visibleViewBoxFraction": 0.9999867108457143,
+        "referenceForegroundPixels": 245399,
+        "visibleForegroundFraction": 1,
+        "cssTransform": "none",
+        "figureCpPortraitCount": 0,
+        "figureCanvasCount": 0
+      }
+    },
+    {
+      "character": "fantuan",
+      "slot": "narrow-settings",
+      "before": {
+        "slot": {
+          "width": 193,
+          "height": 190
+        },
+        "svg": {
+          "width": 193,
+          "height": 190
+        },
+        "viewBox": "11.05 0 198.9 166.4",
+        "resourceId": "builtin:lingjing-fantuan-v1",
+        "frame": "frame_0",
+        "framing": "portrait",
+        "preserveAspectRatio": "xMidYMid slice",
+        "visibleViewBoxFraction": 0.8498107964203077,
+        "referenceForegroundPixels": 245399,
+        "visibleForegroundFraction": 0.9003011422214434,
+        "cssTransform": "none",
+        "figureCpPortraitCount": 0,
+        "figureCanvasCount": 0
+      },
+      "after": {
+        "slot": {
+          "width": 193,
+          "height": 190
+        },
+        "svg": {
+          "width": 192.984375,
+          "height": 161.453125
+        },
+        "viewBox": "11.05 0 198.9 166.4",
+        "resourceId": "builtin:lingjing-fantuan-v1",
+        "frame": "frame_0",
+        "framing": "portrait",
+        "preserveAspectRatio": "xMidYMid slice",
+        "visibleViewBoxFraction": 0.9999867108457143,
+        "referenceForegroundPixels": 245399,
+        "visibleForegroundFraction": 1,
+        "cssTransform": "none",
+        "figureCpPortraitCount": 0,
+        "figureCanvasCount": 0
+      }
+    },
+    {
+      "character": "shiba",
+      "slot": "wide-native",
+      "before": {
+        "slot": {
+          "width": 407.390625,
+          "height": 225
+        },
+        "svg": {
+          "width": 407.390625,
+          "height": 225
+        },
+        "viewBox": "60.480000000000004 0 161.28 167.17",
+        "resourceId": "builtin:lingjing-shiba-v2",
+        "frame": "frame_0",
+        "framing": "portrait",
+        "preserveAspectRatio": "xMidYMid slice",
+        "visibleViewBoxFraction": 0.5328361249406615,
+        "referenceForegroundPixels": 194590,
+        "visibleForegroundFraction": 0.6082378333932884,
+        "cssTransform": "none",
+        "figureCpPortraitCount": 0,
+        "figureCanvasCount": 0
+      },
+      "after": {
+        "slot": {
+          "width": 407.390625,
+          "height": 225
+        },
+        "svg": {
+          "width": 217.0625,
+          "height": 225
+        },
+        "viewBox": "60.480000000000004 0 161.28 167.17",
+        "resourceId": "builtin:lingjing-shiba-v2",
+        "frame": "frame_0",
+        "framing": "portrait",
+        "preserveAspectRatio": "xMidYMid slice",
+        "visibleViewBoxFraction": 0.9999541997958642,
+        "referenceForegroundPixels": 194590,
+        "visibleForegroundFraction": 1,
+        "cssTransform": "none",
+        "figureCpPortraitCount": 0,
+        "figureCanvasCount": 0
+      }
+    },
+    {
+      "character": "shiba",
+      "slot": "narrow-chat",
+      "before": {
+        "slot": {
+          "width": 193,
+          "height": 210
+        },
+        "svg": {
+          "width": 193,
+          "height": 210
+        },
+        "viewBox": "60.480000000000004 0 161.28 167.17",
+        "resourceId": "builtin:lingjing-shiba-v2",
+        "frame": "frame_0",
+        "framing": "portrait",
+        "preserveAspectRatio": "xMidYMid slice",
+        "visibleViewBoxFraction": 0.952611544867435,
+        "referenceForegroundPixels": 194590,
+        "visibleForegroundFraction": 0.9827740377203351,
+        "cssTransform": "none",
+        "figureCpPortraitCount": 0,
+        "figureCanvasCount": 0
+      },
+      "after": {
+        "slot": {
+          "width": 193,
+          "height": 210
+        },
+        "svg": {
+          "width": 192.984375,
+          "height": 200.046875
+        },
+        "viewBox": "60.480000000000004 0 161.28 167.17",
+        "resourceId": "builtin:lingjing-shiba-v2",
+        "frame": "frame_0",
+        "framing": "portrait",
+        "preserveAspectRatio": "xMidYMid slice",
+        "visibleViewBoxFraction": 0.9999267861192324,
+        "referenceForegroundPixels": 194590,
+        "visibleForegroundFraction": 1,
+        "cssTransform": "none",
+        "figureCpPortraitCount": 0,
+        "figureCanvasCount": 0
+      }
+    },
+    {
+      "character": "shiba",
+      "slot": "narrow-settings",
+      "before": {
+        "slot": {
+          "width": 193,
+          "height": 190
+        },
+        "svg": {
+          "width": 193,
+          "height": 190
+        },
+        "viewBox": "60.480000000000004 0 161.28 167.17",
+        "resourceId": "builtin:lingjing-shiba-v2",
+        "frame": "frame_0",
+        "framing": "portrait",
+        "preserveAspectRatio": "xMidYMid slice",
+        "visibleViewBoxFraction": 0.9497700396732133,
+        "referenceForegroundPixels": 194590,
+        "visibleForegroundFraction": 0.970234852767357,
+        "cssTransform": "none",
+        "figureCpPortraitCount": 0,
+        "figureCanvasCount": 0
+      },
+      "after": {
+        "slot": {
+          "width": 193,
+          "height": 190
+        },
+        "svg": {
+          "width": 183.296875,
+          "height": 190
+        },
+        "viewBox": "60.480000000000004 0 161.28 167.17",
+        "resourceId": "builtin:lingjing-shiba-v2",
+        "frame": "frame_0",
+        "framing": "portrait",
+        "preserveAspectRatio": "xMidYMid slice",
+        "visibleViewBoxFraction": 0.999952305570108,
+        "referenceForegroundPixels": 194590,
+        "visibleForegroundFraction": 1,
+        "cssTransform": "none",
+        "figureCpPortraitCount": 0,
+        "figureCanvasCount": 0
+      }
+    },
+    {
+      "character": "hatcat",
+      "slot": "wide-native",
+      "before": {
+        "slot": {
+          "width": 407.390625,
+          "height": 225
+        },
+        "svg": {
+          "width": 407.390625,
+          "height": 225
+        },
+        "viewBox": "41.6 0 162.24 165.02",
+        "resourceId": "builtin:lingjing-hatcat-v1",
+        "frame": "frame_0",
+        "framing": "portrait",
+        "preserveAspectRatio": "xMidYMid slice",
+        "visibleViewBoxFraction": 0.5429912681963721,
+        "referenceForegroundPixels": 189658,
+        "visibleForegroundFraction": 0.6085427453627055,
+        "cssTransform": "none",
+        "figureCpPortraitCount": 0,
+        "figureCanvasCount": 0
+      },
+      "after": {
+        "slot": {
+          "width": 407.390625,
+          "height": 225
+        },
+        "svg": {
+          "width": 221.203125,
+          "height": 225
+        },
+        "viewBox": "41.6 0 162.24 165.02",
+        "resourceId": "builtin:lingjing-hatcat-v1",
+        "frame": "frame_0",
+        "framing": "portrait",
+        "preserveAspectRatio": "xMidYMid slice",
+        "visibleViewBoxFraction": 0.9999709455581773,
+        "referenceForegroundPixels": 189658,
+        "visibleForegroundFraction": 1,
+        "cssTransform": "none",
+        "figureCpPortraitCount": 0,
+        "figureCanvasCount": 0
+      }
+    },
+    {
+      "character": "hatcat",
+      "slot": "narrow-chat",
+      "before": {
+        "slot": {
+          "width": 193,
+          "height": 210
+        },
+        "svg": {
+          "width": 193,
+          "height": 210
+        },
+        "viewBox": "41.6 0 162.24 165.02",
+        "resourceId": "builtin:lingjing-hatcat-v1",
+        "frame": "frame_0",
+        "framing": "portrait",
+        "preserveAspectRatio": "xMidYMid slice",
+        "visibleViewBoxFraction": 0.9347955922512796,
+        "referenceForegroundPixels": 189658,
+        "visibleForegroundFraction": 0.982853346550106,
+        "cssTransform": "none",
+        "figureCpPortraitCount": 0,
+        "figureCanvasCount": 0
+      },
+      "after": {
+        "slot": {
+          "width": 193,
+          "height": 210
+        },
+        "svg": {
+          "width": 192.984375,
+          "height": 196.296875
+        },
+        "viewBox": "41.6 0 162.24 165.02",
+        "resourceId": "builtin:lingjing-hatcat-v1",
+        "frame": "frame_0",
+        "framing": "portrait",
+        "preserveAspectRatio": "xMidYMid slice",
+        "visibleViewBoxFraction": 0.9999709961598997,
+        "referenceForegroundPixels": 189658,
+        "visibleForegroundFraction": 1,
+        "cssTransform": "none",
+        "figureCpPortraitCount": 0,
+        "figureCanvasCount": 0
+      }
+    },
+    {
+      "character": "hatcat",
+      "slot": "narrow-settings",
+      "before": {
+        "slot": {
+          "width": 193,
+          "height": 190
+        },
+        "svg": {
+          "width": 193,
+          "height": 190
+        },
+        "viewBox": "41.6 0 162.24 165.02",
+        "resourceId": "builtin:lingjing-hatcat-v1",
+        "frame": "frame_0",
+        "framing": "portrait",
+        "preserveAspectRatio": "xMidYMid slice",
+        "visibleViewBoxFraction": 0.967871385211558,
+        "referenceForegroundPixels": 189658,
+        "visibleForegroundFraction": 0.97987430005589,
+        "cssTransform": "none",
+        "figureCpPortraitCount": 0,
+        "figureCanvasCount": 0
+      },
+      "after": {
+        "slot": {
+          "width": 193,
+          "height": 190
+        },
+        "svg": {
+          "width": 186.796875,
+          "height": 190
+        },
+        "viewBox": "41.6 0 162.24 165.02",
+        "resourceId": "builtin:lingjing-hatcat-v1",
+        "frame": "frame_0",
+        "framing": "portrait",
+        "preserveAspectRatio": "xMidYMid slice",
+        "visibleViewBoxFraction": 0.9999876747539073,
+        "referenceForegroundPixels": 189658,
+        "visibleForegroundFraction": 1,
+        "cssTransform": "none",
+        "figureCpPortraitCount": 0,
+        "figureCanvasCount": 0
+      }
+    },
+    {
+      "character": "xiaohu",
+      "slot": "wide-native",
+      "before": {
+        "slot": {
+          "width": 407.390625,
+          "height": 225
+        },
+        "svg": {
+          "width": 407.390625,
+          "height": 225
+        },
+        "viewBox": "58.24 0 163.51999999999998 173.16",
+        "resourceId": "builtin:lingjing-xiaohu-v1",
+        "frame": "frame_0",
+        "framing": "portrait",
+        "preserveAspectRatio": "xMidYMid slice",
+        "visibleViewBoxFraction": 0.5215486083706448,
+        "referenceForegroundPixels": 191676,
+        "visibleForegroundFraction": 0.6338560904860285,
+        "cssTransform": "none",
+        "figureCpPortraitCount": 0,
+        "figureCanvasCount": 0
+      },
+      "after": {
+        "slot": {
+          "width": 407.390625,
+          "height": 225
+        },
+        "svg": {
+          "width": 212.46875,
+          "height": 225
+        },
+        "viewBox": "58.24 0 163.51999999999998 173.16",
+        "resourceId": "builtin:lingjing-xiaohu-v1",
+        "frame": "frame_0",
+        "framing": "portrait",
+        "preserveAspectRatio": "xMidYMid slice",
+        "visibleViewBoxFraction": 0.9999752274082383,
+        "referenceForegroundPixels": 191676,
+        "visibleForegroundFraction": 1,
+        "cssTransform": "none",
+        "figureCpPortraitCount": 0,
+        "figureCanvasCount": 0
+      }
+    },
+    {
+      "character": "xiaohu",
+      "slot": "narrow-chat",
+      "before": {
+        "slot": {
+          "width": 193,
+          "height": 210
+        },
+        "svg": {
+          "width": 193,
+          "height": 210
+        },
+        "viewBox": "58.24 0 163.51999999999998 173.16",
+        "resourceId": "builtin:lingjing-xiaohu-v1",
+        "frame": "frame_0",
+        "framing": "portrait",
+        "preserveAspectRatio": "xMidYMid slice",
+        "visibleViewBoxFraction": 0.9732282590622486,
+        "referenceForegroundPixels": 191676,
+        "visibleForegroundFraction": 0.9852511529873328,
+        "cssTransform": "none",
+        "figureCpPortraitCount": 0,
+        "figureCanvasCount": 0
+      },
+      "after": {
+        "slot": {
+          "width": 193,
+          "height": 210
+        },
+        "svg": {
+          "width": 192.984375,
+          "height": 204.375
+        },
+        "viewBox": "58.24 0 163.51999999999998 173.16",
+        "resourceId": "builtin:lingjing-xiaohu-v1",
+        "frame": "frame_0",
+        "framing": "portrait",
+        "preserveAspectRatio": "xMidYMid slice",
+        "visibleViewBoxFraction": 0.9999333982239011,
+        "referenceForegroundPixels": 191676,
+        "visibleForegroundFraction": 1,
+        "cssTransform": "none",
+        "figureCpPortraitCount": 0,
+        "figureCanvasCount": 0
+      }
+    },
+    {
+      "character": "xiaohu",
+      "slot": "narrow-settings",
+      "before": {
+        "slot": {
+          "width": 193,
+          "height": 190
+        },
+        "svg": {
+          "width": 193,
+          "height": 190
+        },
+        "viewBox": "58.24 0 163.51999999999998 173.16",
+        "resourceId": "builtin:lingjing-xiaohu-v1",
+        "frame": "frame_0",
+        "framing": "portrait",
+        "preserveAspectRatio": "xMidYMid slice",
+        "visibleViewBoxFraction": 0.9296502607041904,
+        "referenceForegroundPixels": 191676,
+        "visibleForegroundFraction": 0.9586959243723784,
+        "cssTransform": "none",
+        "figureCpPortraitCount": 0,
+        "figureCanvasCount": 0
+      },
+      "after": {
+        "slot": {
+          "width": 193,
+          "height": 190
+        },
+        "svg": {
+          "width": 179.421875,
+          "height": 190
+        },
+        "viewBox": "58.24 0 163.51999999999998 173.16",
+        "resourceId": "builtin:lingjing-xiaohu-v1",
+        "frame": "frame_0",
+        "framing": "portrait",
+        "preserveAspectRatio": "xMidYMid slice",
+        "visibleViewBoxFraction": 0.999996514841184,
+        "referenceForegroundPixels": 191676,
+        "visibleForegroundFraction": 1,
+        "cssTransform": "none",
+        "figureCpPortraitCount": 0,
+        "figureCanvasCount": 0
+      }
+    },
+    {
+      "character": "qingya",
+      "slot": "wide-native",
+      "before": {
+        "slot": {
+          "width": 407.390625,
+          "height": 225
+        },
+        "svg": {
+          "width": 407.390625,
+          "height": 225
+        },
+        "viewBox": "40.48 33.93 143.52 169.65",
+        "resourceId": "builtin:lingjing-qingya-v1",
+        "frame": "frame_0",
+        "framing": "portrait",
+        "preserveAspectRatio": "xMidYMid slice",
+        "visibleViewBoxFraction": 0.4672293087271135,
+        "referenceForegroundPixels": 181804,
+        "visibleForegroundFraction": 0.4463763173527535,
+        "cssTransform": "none",
+        "figureCpPortraitCount": 0,
+        "figureCanvasCount": 0
+      },
+      "after": {
+        "slot": {
+          "width": 407.390625,
+          "height": 225
+        },
+        "svg": {
+          "width": 190.34375,
+          "height": 225
+        },
+        "viewBox": "40.48 33.93 143.52 169.65",
+        "resourceId": "builtin:lingjing-qingya-v1",
+        "frame": "frame_0",
+        "framing": "portrait",
+        "preserveAspectRatio": "xMidYMid slice",
+        "visibleViewBoxFraction": 0.9999942730222883,
+        "referenceForegroundPixels": 181804,
+        "visibleForegroundFraction": 1,
+        "cssTransform": "none",
+        "figureCpPortraitCount": 0,
+        "figureCanvasCount": 0
+      }
+    },
+    {
+      "character": "qingya",
+      "slot": "narrow-chat",
+      "before": {
+        "slot": {
+          "width": 193,
+          "height": 210
+        },
+        "svg": {
+          "width": 193,
+          "height": 210
+        },
+        "viewBox": "40.48 33.93 143.52 169.65",
+        "resourceId": "builtin:lingjing-qingya-v1",
+        "frame": "frame_0",
+        "framing": "portrait",
+        "preserveAspectRatio": "xMidYMid slice",
+        "visibleViewBoxFraction": 0.9204931818339187,
+        "referenceForegroundPixels": 181804,
+        "visibleForegroundFraction": 0.9274823436228026,
+        "cssTransform": "none",
+        "figureCpPortraitCount": 0,
+        "figureCanvasCount": 0
+      },
+      "after": {
+        "slot": {
+          "width": 193,
+          "height": 210
+        },
+        "svg": {
+          "width": 177.640625,
+          "height": 210
+        },
+        "viewBox": "40.48 33.93 143.52 169.65",
+        "resourceId": "builtin:lingjing-qingya-v1",
+        "frame": "frame_0",
+        "framing": "portrait",
+        "preserveAspectRatio": "xMidYMid slice",
+        "visibleViewBoxFraction": 0.9999180485837184,
+        "referenceForegroundPixels": 181804,
+        "visibleForegroundFraction": 1,
+        "cssTransform": "none",
+        "figureCpPortraitCount": 0,
+        "figureCanvasCount": 0
+      }
+    },
+    {
+      "character": "qingya",
+      "slot": "narrow-settings",
+      "before": {
+        "slot": {
+          "width": 193,
+          "height": 190
+        },
+        "svg": {
+          "width": 193,
+          "height": 190
+        },
+        "viewBox": "40.48 33.93 143.52 169.65",
+        "resourceId": "builtin:lingjing-qingya-v1",
+        "frame": "frame_0",
+        "framing": "portrait",
+        "preserveAspectRatio": "xMidYMid slice",
+        "visibleViewBoxFraction": 0.8328271645164027,
+        "referenceForegroundPixels": 181804,
+        "visibleForegroundFraction": 0.8421541880266661,
+        "cssTransform": "none",
+        "figureCpPortraitCount": 0,
+        "figureCanvasCount": 0
+      },
+      "after": {
+        "slot": {
+          "width": 193,
+          "height": 190
+        },
+        "svg": {
+          "width": 160.734375,
+          "height": 190
+        },
+        "viewBox": "40.48 33.93 143.52 169.65",
+        "resourceId": "builtin:lingjing-qingya-v1",
+        "frame": "frame_0",
+        "framing": "portrait",
+        "preserveAspectRatio": "xMidYMid slice",
+        "visibleViewBoxFraction": 0.9999921128155275,
+        "referenceForegroundPixels": 181804,
+        "visibleForegroundFraction": 1,
+        "cssTransform": "none",
+        "figureCpPortraitCount": 0,
+        "figureCanvasCount": 0
+      }
+    },
+    {
+      "character": "yantuan",
+      "slot": "wide-native",
+      "before": {
+        "slot": {
+          "width": 407.390625,
+          "height": 225
+        },
+        "svg": {
+          "width": 407.390625,
+          "height": 225
+        },
+        "viewBox": "74.39999999999999 5.42 168.64000000000001 189.7",
+        "resourceId": "builtin:lingjing-yantuan-v1",
+        "frame": "frame_0",
+        "framing": "portrait",
+        "preserveAspectRatio": "xMidYMid slice",
+        "visibleViewBoxFraction": 0.49098107846495787,
+        "referenceForegroundPixels": 242520,
+        "visibleForegroundFraction": 0.5187778327560614,
+        "cssTransform": "none",
+        "figureCpPortraitCount": 0,
+        "figureCanvasCount": 0
+      },
+      "after": {
+        "slot": {
+          "width": 407.390625,
+          "height": 225
+        },
+        "svg": {
+          "width": 200.015625,
+          "height": 225
+        },
+        "viewBox": "74.39999999999999 5.42 168.64000000000001 189.7",
+        "resourceId": "builtin:lingjing-yantuan-v1",
+        "frame": "frame_0",
+        "framing": "portrait",
+        "preserveAspectRatio": "xMidYMid slice",
+        "visibleViewBoxFraction": 0.9999726857850018,
+        "referenceForegroundPixels": 242520,
+        "visibleForegroundFraction": 1,
+        "cssTransform": "none",
+        "figureCpPortraitCount": 0,
+        "figureCanvasCount": 0
+      }
+    },
+    {
+      "character": "yantuan",
+      "slot": "narrow-chat",
+      "before": {
+        "slot": {
+          "width": 193,
+          "height": 210
+        },
+        "svg": {
+          "width": 193,
+          "height": 210
+        },
+        "viewBox": "74.39999999999999 5.42 168.64000000000001 189.7",
+        "resourceId": "builtin:lingjing-yantuan-v1",
+        "frame": "frame_0",
+        "framing": "portrait",
+        "preserveAspectRatio": "xMidYMid slice",
+        "visibleViewBoxFraction": 0.9672867833734666,
+        "referenceForegroundPixels": 242520,
+        "visibleForegroundFraction": 0.9765627577107042,
+        "cssTransform": "none",
+        "figureCpPortraitCount": 0,
+        "figureCanvasCount": 0
+      },
+      "after": {
+        "slot": {
+          "width": 193,
+          "height": 210
+        },
+        "svg": {
+          "width": 186.671875,
+          "height": 210
+        },
+        "viewBox": "74.39999999999999 5.42 168.64000000000001 189.7",
+        "resourceId": "builtin:lingjing-yantuan-v1",
+        "frame": "frame_0",
+        "framing": "portrait",
+        "preserveAspectRatio": "xMidYMid slice",
+        "visibleViewBoxFraction": 0.9999224678657984,
+        "referenceForegroundPixels": 242520,
+        "visibleForegroundFraction": 1,
+        "cssTransform": "none",
+        "figureCpPortraitCount": 0,
+        "figureCanvasCount": 0
+      }
+    },
+    {
+      "character": "yantuan",
+      "slot": "narrow-settings",
+      "before": {
+        "slot": {
+          "width": 193,
+          "height": 190
+        },
+        "svg": {
+          "width": 193,
+          "height": 190
+        },
+        "viewBox": "74.39999999999999 5.42 168.64000000000001 189.7",
+        "resourceId": "builtin:lingjing-yantuan-v1",
+        "frame": "frame_0",
+        "framing": "portrait",
+        "preserveAspectRatio": "xMidYMid slice",
+        "visibleViewBoxFraction": 0.8751642325759936,
+        "referenceForegroundPixels": 242520,
+        "visibleForegroundFraction": 0.895959096157018,
+        "cssTransform": "none",
+        "figureCpPortraitCount": 0,
+        "figureCanvasCount": 0
+      },
+      "after": {
+        "slot": {
+          "width": 193,
+          "height": 190
+        },
+        "svg": {
+          "width": 168.90625,
+          "height": 190
+        },
+        "viewBox": "74.39999999999999 5.42 168.64000000000001 189.7",
+        "resourceId": "builtin:lingjing-yantuan-v1",
+        "frame": "frame_0",
+        "framing": "portrait",
+        "preserveAspectRatio": "xMidYMid slice",
+        "visibleViewBoxFraction": 0.9999973542365401,
+        "referenceForegroundPixels": 242520,
+        "visibleForegroundFraction": 1,
+        "cssTransform": "none",
+        "figureCpPortraitCount": 0,
+        "figureCanvasCount": 0
+      }
+    }
+  ],
+  "protectedHashes": {
+    "apps/pc-app/ui/src/features/resources/ResourcePortrait.tsx": "fb5bb11b7ae93155d00b89a7997caeb193d51cdda8850b0ca85ae00891582004",
+    "apps/pc-app/ui/src/features/resources/display.ts": "238f9e33e436ea90060c4ca8e27e7afde765c27e0c763c4c6053a8c507645bf0",
+    "apps/pc-app/ui/src/features/resources/portrait.css": "58317e1487e6f9a6a7994fa13f4a360ba65b0124040016858220cb86e553743d",
+    "apps/pc-app/ui/src/features/companions/styles.css": "72e2427e6ad41c3b1eeb8912dc8c753df9d81c4d050d54b8fe71a947cf0e03b9"
+  },
+  "canonicalPngSha256": {
+    "builtin:lingjing-yuwan-v2": "1ce64faec5553a9beca9780c06f1f3b701698a63c91a51a9b71ccd3e59aaa1c1",
+    "builtin:lingjing-xiaolan-v1": "ed3296108d762293a235010e7c6222ad69960d65bb035e309e251909df09a5fb",
+    "builtin:lingjing-fantuan-v1": "4b1eb6d06ba4c737a3cd2a10f567a2ff2af80bfec3be260e7df304af4bdb80f8",
+    "builtin:lingjing-shiba-v2": "d5d561c04f06018d185b2dc3807658f274420e033f0a28621bfdda70abae5fb5",
+    "builtin:lingjing-hatcat-v1": "c4490613eab58617c5b63293f637d8af3061dee101da12588f82bbff06045777",
+    "builtin:lingjing-xiaohu-v1": "df4ba559d509f72e48fd2beeea287668058de94f1853c70e26f5e0b298e277ae",
+    "builtin:lingjing-qingya-v1": "aa59df3af26d4f7faf9272193b7d1d35ed6d2f22ebb6b294a5a2853f0539f693",
+    "builtin:lingjing-yantuan-v1": "f03bc1b8cd1c20c5ef6d466d20db9fb7f9584b7739f21414d22fc2c91c01d886"
+  },
+  "beforeCssSha256": "d6f2bdeef990cf036ea89b50adb66674add6b8fc803cc54ee8d6f74b70832ab9",
+  "afterCssSha256": "5cc42d090b6e0626ab2ccc0f55adffe7c714fce6d8e3fe61813a24147f7786b0",
+  "nativeAcceptance": "Pending 09 on the final integrated executable. Earlier 312 failure and native evidence remain unchanged.",
+  "errors": []
+}

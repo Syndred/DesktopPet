@@ -1,0 +1,39 @@
+{
+  "module": "conversations",
+  "issue": "QA011",
+  "severity": "P2",
+  "sourceFixCommit": "46e647367960f5f31f58855ed00d2bdadc689b30",
+  "baselineSource": "066f61df2d9b6ef8977756c8b0700c1ba5b01681",
+  "sourceStatus": "fixed_and_component_verified",
+  "nativeUserAcceptance": "pending_09_final_package",
+  "completeUserAcceptancePassed": false,
+  "cause": "The chat scene forced a portrait SVG to fill both dimensions of a wide 407.4x225 slot. Its existing xMidYMid slice policy enlarged the authored viewBox to roughly 407.4x431.4 and clipped almost half its height.",
+  "fix": "Center the chat scene content and preserve the SVG intrinsic aspect ratio with automatic width/height plus maximum bounds on both dimensions.",
+  "changedProductFiles": ["apps/pc-app/ui/src/features/conversations/styles.css"],
+  "preserved": [
+    "Shared .cp-portrait and other modules",
+    "ResourcePortrait default slice policy, authored close-up viewBox, frame and asset bytes",
+    "CompanionReaction animation node",
+    "Original ownerAccountId/petId, messages, prompt, persona, memory, keys and backup contracts"
+  ],
+  "verification": {
+    "command": "node apps/pc-app/runtime/features/conversations/tests/portrait-layout.acceptance.cjs",
+    "passed": 24,
+    "failed": 0,
+    "scope": "8 actual canonical characters x 3 measured/component scene slots, using actual ResourcePortrait and parser in headless Chromium",
+    "minimumVisibleViewBoxFraction": 0.9999180485837184,
+    "minimumVisibleForegroundFraction": 1,
+    "foregroundMeasurement": "Actual canonical alpha-mask pixels mapped through the measured slice transform; rectangular viewport coverage, not a native full-window capture",
+    "targetedLint": "passed",
+    "publicSourceAndCanonicalAssetHashesUnchanged": true,
+    "visibleNativeApplicationStarted": false,
+    "actualUserProfileOrDatabaseOpened": false,
+    "modelOrCloudRequests": 0,
+    "evidence": "docs/implementation/evidence/conversations/qa011-2026-10-25/index.json"
+  },
+  "pendingQa": [
+    "09 checks the single final integrated executable at wide and narrow windows with the current selected pet",
+    "Confirm complete readable face, unchanged role/resource identity, working selector and unchanged reaction node",
+    "Keep the original 312 failure evidence; close QA011 only after native final-package confirmation"
+  ]
+}

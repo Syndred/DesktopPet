@@ -1,0 +1,44 @@
+{
+  "format": "lingjing.conversations.qa011.source-delivery",
+  "sourceFixCommit": "46e647367960f5f31f58855ed00d2bdadc689b30",
+  "baselineSource": "066f61df2d9b6ef8977756c8b0700c1ba5b01681",
+  "productScope": "Only conversations/styles.css; preserve public ResourcePortrait, shared .cp-portrait, viewBox, atlas bytes, resource identity and gameplay/data contracts.",
+  "harness": "apps/pc-app/runtime/features/conversations/tests/portrait-layout.acceptance.cjs",
+  "harnessSha256": "fd7bc90c6d78dd27eb7e9991cbcffa97c0ae332cf3c003ff1f988132f3d4c40a",
+  "command": "node apps/pc-app/runtime/features/conversations/tests/portrait-layout.acceptance.cjs",
+  "passed": 24,
+  "failed": 0,
+  "minimumVisibleViewBoxFraction": 0.9999180485837184,
+  "minimumVisibleForegroundFraction": 1.0,
+  "canonicalAssetHashesMatchProductionSourceRecord": true,
+  "targetedLintExitCode": 0,
+  "nativeFailureEvidence": "docs/implementation/qa/2026-10-25-user-acceptance/rounds/candidate-312e5fe-524fd56d/evidence/fresh09-chat-portrait-clipping.json",
+  "nativeFailureScreenshot": "docs/implementation/qa/2026-10-25-user-acceptance/rounds/candidate-312e5fe-524fd56d/evidence/fresh09-chat-portrait-clipping-native.jpg",
+  "nativeAcceptance": "pending_09_final_package",
+  "files": [
+    {
+      "file": "verification.json",
+      "sha256": "b7bf1a329eeeda83ff4364bbef71a24ac437bd6c9619389c94c2faee0bb41b45"
+    },
+    {
+      "file": "fox-before-wide.png",
+      "sha256": "f095fd6536f957c2bf27b1a20ae33eba1552ba64d0d6d48900ed564147fb65a7"
+    },
+    {
+      "file": "fox-after-wide-native.png",
+      "sha256": "77f2c206cc0d5bdb5fecaa783ad5d6a4a62079c79412f8dc0fe61caab16877f9"
+    },
+    {
+      "file": "fox-after-narrow-chat.png",
+      "sha256": "6befbc7d3cc621d7b61e531bc07b0c6256fa1e366373cd74721bd330ceed502d"
+    },
+    {
+      "file": "fox-after-narrow-settings.png",
+      "sha256": "d7259901557f6b6732b60ed5e4d15630852baf8f78ece16218552de98228c421"
+    },
+    {
+      "file": "eight-canonical-portraits-after.png",
+      "sha256": "4b11466febcc4adda43f0c779e99ebc808a10321032e82cd783c1443a76896c7"
+    }
+  ]
+}
