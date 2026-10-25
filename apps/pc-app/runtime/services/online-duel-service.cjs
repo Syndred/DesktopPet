@@ -274,7 +274,7 @@ class OnlineDuelService {
       ...(options.beforeRound ? { beforeRound: options.beforeRound } : {})
     });
 
-    const needsSubscription = !this.channel || this.room?.id !== response.room?.id;
+    const needsSubscription = !this.channel || this.room?.id !== response.room?.id || ['closed','errored'].includes(this.channel.state);
     this.applyRoom(response.room);
     this.cacheRounds(response.rounds);
     if (needsSubscription && this.side) await this.subscribeRoom();
