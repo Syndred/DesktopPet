@@ -32,8 +32,8 @@ export interface CompanionPosition {
 /** Display only; canonical names, serials and saved pet identifiers stay intact. */
 export interface CompanionDisplayIdentity {
   readonly roleName: string;
-  /** The complete original petId. Ownership remains (ownerAccountId, petId). */
-  readonly instanceNumber: PetId;
+  /** globalSerial padded to at least four digits, or 待同步. Never an instance key. */
+  readonly instanceNumber: string;
   readonly historicalNickname: string | null;
 }
 
@@ -45,6 +45,8 @@ export interface CompanionPet {
   name: string;
   /** Historical receipt/encounter serial; not a unique display identifier. */
   serial: string;
+  /** Server-assigned global sequence per original templateId, canonical positive decimal text without leading zeros. Never accept from a renderer mutation. */
+  globalSerial?: string;
   element: CompanionElement;
   resource: CompanionResourceRef;
   source: CompanionSource;

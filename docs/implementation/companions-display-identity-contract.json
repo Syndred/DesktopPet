@@ -1,69 +1,117 @@
 {
   "format": "lingjing.companions.display-identity",
-  "version": 1,
-  "purpose": "QA-003: fixed catalog role name plus complete original petId; presentation only",
+  "version": 2,
+  "decisionId": "globalSerial-20261025-v1",
+  "authorityContract": "docs/implementation/companions-global-serial-contract.json",
+  "supersedes": "Version1 UUID-as-display-number policy is superseded by the direct human numeric-numbering and desktop-no-label request.",
   "implementation": {
     "pureRuntime": "apps/pc-app/runtime/features/companions/display-identity.mjs",
     "uiExport": "apps/pc-app/ui/src/features/companions/identity.ts",
     "types": "packages/shared-types/src/features/companions/index.ts#CompanionDisplayIdentity",
-    "mainApi": "services.get(\"companions\").getDisplayIdentity(ownerAccountId, petId)",
+    "mainApi": "services.get(\"companions\").getDisplayIdentity(ownerAccountId,petId)",
     "ipc": {
       "feature": "companions",
       "command": "identity",
       "input": {
-        "petId": "original petId"
+        "petId": "original internal petId"
       },
       "output": "CompanionResult<CompanionDisplayIdentity>"
     }
   },
-  "fields": {
-    "roleName": "Catalog character.name looked up by immutable original templateId, independent of mutable appearance/resourceId and stored name.",
-    "instanceNumber": "Complete original petId, case-sensitive and untruncated. Never regenerate, hash, slice, replace or persist it as another identifier.",
-    "historicalNickname": "Original stored pet.name when different from roleName; otherwise null. Unknown historical templates use roleName=历史伙伴 and retain their original name here."
-  },
-  "example": {
-    "input": {
-      "ownerAccountId": "existing-owner",
-      "templateId": "animal-hat-cat",
-      "petId": "pet-11111111-0000-4000-8000-000000000001",
-      "name": "原昵称",
-      "serial": "11111111"
-    },
-    "output": {
-      "roleName": "礼帽喵",
-      "instanceNumber": "pet-11111111-0000-4000-8000-000000000001",
-      "historicalNickname": "原昵称"
-    }
-  },
-  "invariants": [
-    "Ownership and every command/selection remain keyed by (ownerAccountId, petId). Display text never selects an instance.",
-    "Do not mutate canonical pet.name, pet.serial, templateId, resource, owner, petId, growth, origin, revisions, history or receipts to add this view.",
-    "Do not put the projection into SQLite data_json, immutable action results, backup units or cloud envelopes. Their original byte content and checksums remain compatible.",
-    "Render roleName and full instanceNumber together; wrap the full number, with no ellipsis or short-prefix substitution.",
-    "The same-template twins may share historical serials, names or resources, but their full petIds remain distinct. Equal historical petIds in different owners retain separate namespaces."
-  ],
-  "adoption": {
-    "newUi": "Submit the selected current template.name; no arbitrary role-name input or rename control.",
-    "legacyCompatibility": "Existing stored names and old rename/adoption APIs remain compatible historical data. No cloud migration or server redeployment is required."
-  },
-  "companionsCoverage": [
-    "/companions overview/status/roster",
-    "/companions/:petId detail and historical nickname",
-    "/companions/adopt confirmation",
-    "/desktop/:petId role name plus full number"
-  ],
-  "coordinatorRouting": {
-    "status": "ready-for-consumer-integration",
-    "owners": [
-      "conversations/chat",
-      "battle display only",
-      "garden owned pet selectors",
-      "discovery owned pet results",
-      "resources ApplyToCompanion"
+  "authoritativeMetadata": {
+    "field": "globalSerial",
+    "type": "optional canonical positive decimal string without leading zero",
+    "examples": [
+      "1",
+      "9999",
+      "10000",
+      "9007199254740993"
     ],
-    "request": "Use the shared projection for labels and full number while retaining each domain's existing explicit petId and independent selection. This branch intentionally does not edit their UIs or battle core.",
-    "dtoWithoutTemplateId": "Do not infer a role from resourceId or a mutable display name. Add templateId/identity to the read-only DTO, or use the already-authenticated companions.identity({petId}) IPC / main getDisplayIdentity(owner,petId). Keep stored messages and authoritative battle reports verbatim."
+    "typeKey": "immutable canonical original templateId",
+    "scope": "global independent sequence per type across all users",
+    "source": "08 service-only atomic registry and confirmed read projection; original raw pet JSON, old serial, immutable receipts and archive bytes are not rewritten.",
+    "trust": "The UI formatter does not authenticate an imported or claimed number.08 must strip/reject unverified numeric metadata before exposing the trusted canonical DTO.",
+    "offline": "Only service-confirmed metadata from the non-backup main-process cache may be projected. Absent or unconfirmed metadata stays absent; never allocate locally or fall back to a UUID, old serial or unverified cache value."
   },
-  "uiExample": "import { companionIdentity } from \"../companions/identity\"; const { roleName, instanceNumber, historicalNickname } = companionIdentity(pet);",
-  "sharedLayerChangesRequired": false
+  "fields": {
+    "roleName": "Catalog character.name by immutable original templateId, independent of mutable appearance/resourceId and stored historical nickname.",
+    "instanceNumber": "Only a canonical globalSerial string matching /^[1-9][0-9]*$/ is formatted with padStart(4,\"0\"). Never convert through JS Number, truncate, wrap or regenerate. Missing/invalid metadata displays 待同步.",
+    "historicalNickname": "Original stored pet.name when different from roleName; otherwise null. Unknown historical templates use 历史伙伴 and retain their original nickname."
+  },
+  "examples": [
+    {
+      "templateId": "animal-white-fox",
+      "internalPetId": "existing-owner-a-pet-id",
+      "globalSerial": "1",
+      "roleName": "小狐",
+      "instanceNumber": "0001"
+    },
+    {
+      "templateId": "animal-white-fox",
+      "wildEntity": "server world/scenario+ownerA+stableSpawnId",
+      "globalSerial": "2",
+      "instanceNumber": "0002",
+      "afterCapture": "Keep2 when binding to the original owned petId."
+    },
+    {
+      "templateId": "animal-white-fox",
+      "internalPetId": "existing-owner-b-pet-id",
+      "globalSerial": "3",
+      "instanceNumber": "0003"
+    },
+    {
+      "templateId": "animal-hat-cat",
+      "globalSerial": "1",
+      "roleName": "礼帽喵",
+      "instanceNumber": "0001"
+    },
+    {
+      "templateId": "animal-white-fox",
+      "globalSerial": null,
+      "instanceNumber": "待同步"
+    }
+  ],
+  "invariants": [
+    "Commands, ownership, action idempotency, selection, history and resource rendering still use original ownerAccountId+petId or the existing wild spawn key. Display text never selects an instance.",
+    "Do not write the projection or globalSerial into old companion data_json, old action results or old archived envelopes.08 keeps authority metadata in a private sidecar and projects only after verification.",
+    "Keep fixed roleName and numeric display label together in public selectors/details. Never expose UUID or old serial as the public number.",
+    "Equal numeric labels across different types are valid. Same-type authoritative registry numbers are globally distinct. Pending text is not an instance identifier.",
+    "No renderer mutation grants, replaces or increments globalSerial. Existing adoption/capture inputs and original petId are not changed to fabricate allocation."
+  ],
+  "wild": {
+    "entityKey": "server-validated world/scenario + ownerAccountId + stable spawnId",
+    "allocation": "Number on the first validated observe when a user opens the target encounter. Nearby map refresh alone must not batch-allocate.",
+    "retries": "Observe/reserve/re-entry/retry retain the same number; capture binds that original number to the original new owned petId.",
+    "policy": "Preserve per-account wild-instance semantics and existing location/range/capture rules; do not make a map cell globally exclusive."
+  },
+  "desktop": {
+    "visibleName": false,
+    "visibleNumber": false,
+    "interactionsPreserved": true,
+    "accessibilityMetadataAllowed": true,
+    "source": "DesktopCompanion.tsx renders the shared portrait and interaction controls, with no visible name/number element; original internal data-pet-id remains technical metadata."
+  },
+  "adoption": {
+    "newUi": "Submit the selected catalog role name; no arbitrary-name input or role rename control. Success uses the current verified snapshot for the same owner/petId so a historical receipt cannot hide newer confirmed metadata.",
+    "legacyCompatibility": "Original stored names, raw serials, IDs and old rename/adoption receipts remain unchanged."
+  },
+  "dto": {
+    "owned": "CompanionPet adds globalSerial?:string. IPC list/get and main listPets/getPet must carry only08 verified sidecar projection, with no backup mutation.",
+    "wildAndDiscovery": "DiscoveryPet,WildSpawn,DiscoveryCapture add the same optional field.03 owns their trusted mapping, observe and capture inheritance.",
+    "sourceType": "CompanionIdentitySource requires templateId/name and optional globalSerial; petId is optional for projection only. Rendering/actions still retain the original proper key.",
+    "missingTemplateId": "Do not guess a role from resourceId. Read the current authenticated owned get/identity API or add original templateId/identity to the read-only DTO."
+  },
+  "coordinatorRouting": {
+    "status": "consumer-contract-ready; server numbering/cache and integrated acceptance pending",
+    "owners": [
+      "08 atomic registry/trusted read cache",
+      "03 discovery observe/capture and DTOs",
+      "06 conversation DTO and helper forwarding",
+      "05 garden number labels and async ownership checks",
+      "04/root battle fallback labels",
+      "07 resources consumers"
+    ],
+    "request": "Consume the same helper/identity API, preserve raw history and action IDs, and use 待同步 for unknown metadata. Each domain owns its DTO propagation."
+  },
+  "validationBoundary": "02 tests prove formatting, missing-field behavior, immutable source/SQLite preservation and type/bundle compatibility. They do not allocate numbers or prove live global concurrency/capture authority.08/03 and09 own those proofs."
 }
