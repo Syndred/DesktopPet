@@ -18,9 +18,11 @@ const evidence={at:new Date().toISOString(),kind:'Actual provider-issued signed 
  const device=find(value,(key,item)=>/^(device_?id|device)$/i.test(key)&&typeof item==='string'&&/^[0-9a-f-]{36}$/i.test(item))||randomUUID();
  const headers={apikey:config.key,Authorization:`Bearer ${token}`,'X-Lingjing-Device-Id':device};
  const auth=await fetch(`${config.url}/auth/v1/user`,{headers,signal:AbortSignal.timeout(30_000)}),authData=await auth.json();
- if(auth.status!==401||!/expir/i.test(authData.msg||authData.message||authData.error_description||''))throw Object.assign(new Error(),{code:'PROVIDER_DID_NOT_CONFIRM_EXPIRATION'});
+ const expirationConfirmed=/expir/i.test([authData.msg,authData.message,authData.error_description,authData.error_code,authData.code].filter(Boolean).join(' '));
+ evidence.provider={status:auth.status,code:authData.error_code||authData.code,serverDate:auth.headers.get('date'),expirationConfirmed};
+ if(auth.status!==401||!expirationConfirmed)throw Object.assign(new Error(),{code:'PROVIDER_DID_NOT_CONFIRM_EXPIRATION'});
  const save=await fetch(`${config.url}/functions/v1/lingjing-save`,{method:'POST',headers:{...headers,'content-type':'application/json'},body:JSON.stringify({op:'read'}),signal:AbortSignal.timeout(30_000)}),saveData=await save.json();
  if(save.status!==401)throw Object.assign(new Error(),{code:'EXPIRED_SAVE_ACCESS_WAS_NOT_REJECTED'});
- evidence.provider={status:auth.status,code:authData.error_code||authData.code,expirationConfirmed:true};evidence.save={status:save.status,code:saveData.code};evidence.passed=true;
+ evidence.save={status:save.status,code:saveData.code};evidence.passed=true;
  writeFileSync(join(output,'evidence.json'),JSON.stringify(evidence,null,2));console.log('CLOUD_SIGNED_EXPIRED_HTTP_PASSED',output);
 })().catch(error=>{evidence.error={code:error.code||'EXPIRED_HTTP_VERIFICATION_INCOMPLETE'};writeFileSync(join(output,'failure.json'),JSON.stringify(evidence,null,2));console.error(evidence.error.code);process.exitCode=1;});
