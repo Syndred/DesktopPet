@@ -1,0 +1,44 @@
+{
+  "passed": true,
+  "at": "2026-10-25T02:03:41.592Z",
+  "directory": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\artifacts\\foundation\\cloud-engineering\\native\\probe-cVKypE",
+  "node": {
+    "runtime": "node",
+    "versions": {
+      "node": "24.21.0",
+      "electron": null,
+      "modules": "137",
+      "napi": "10"
+    },
+    "sqlitePackage": "13.0.3",
+    "sqliteEngine": "3.53.4",
+    "rows": [
+      {
+        "runtime": "node",
+        "version": "24.21.0"
+      }
+    ]
+  },
+  "electron": {
+    "runtime": "electron",
+    "versions": {
+      "node": "24.22.0",
+      "electron": "44.9.3",
+      "modules": "149",
+      "napi": "10"
+    },
+    "sqlitePackage": "13.0.3",
+    "sqliteEngine": "3.53.4",
+    "rows": [
+      {
+        "runtime": "electron",
+        "version": "44.9.3"
+      },
+      {
+        "runtime": "node",
+        "version": "24.21.0"
+      }
+    ]
+  },
+  "nativePolicy": "better-sqlite3 13 uses bundled N-API prebuilds. Do not rebuild a shared node_modules tree for an older Electron ABI."
+}

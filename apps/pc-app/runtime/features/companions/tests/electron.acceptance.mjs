@@ -159,21 +159,19 @@ try {
     assert.deepEqual(after.desktop.position, before.desktop.position);
   }
   evidence.checks.push('close/relaunch restores names, growth, independent behavior, desktop visibility and saved positions');
-  // Switch through the real local RuntimeDataStore, not a mock session resolver.
-  if (hasAccounts) {
+  // Account changes use the registered production command; there is no legacy window.
+  assert.ok(hasAccounts, 'The production accounts feature is required');
+  {
     const result = await invoke(page, 'accounts', 'login', { account: 'companions_b', password, provider: 'local', rememberSession: true });
     assert.equal(result.ok, true, JSON.stringify(result));
-  } else await application.evaluate(async (_electron, { runtime, password }) => {
-    const load = process.getBuiltinModule('module').createRequire(runtime);
-    const { initializeLegacy } = load(runtime); initializeLegacy().runtimeDataStore.loginUser('companions_b', password);
-  }, { runtime: resolve('apps/pc-app/runtime/main.cjs'), password });
+  }
   await waitForCount(0);
   const other = await snapshot(page); assert.equal(other.ownerAccountId, ownerB); assert.equal(other.pets.filter(pet => pet.source === 'adoption').length, 0);
   const denied = await invoke(page, 'companions', 'rename', { actionId: 'foreign-pet', petId: fish.petId, name: '不能改名', ownerAccountId: ownerA }); assert.equal(denied.code, 'PET_NOT_FOUND');
-  if (hasAccounts) {
+  {
     const result = await invoke(page, 'accounts', 'login', { account: 'companions_a', password, provider: 'local', rememberSession: true });
     assert.equal(result.ok, true, JSON.stringify(result));
-  } else await application.evaluate(async (_electron, { runtime, password }) => { const load = process.getBuiltinModule('module').createRequire(runtime); const { initializeLegacy } = load(runtime); initializeLegacy().runtimeDataStore.loginUser('companions_a', password); }, { runtime: resolve('apps/pc-app/runtime/main.cjs'), password });
+  }
   await waitForCount(3);
   assert.equal((await snapshot(page)).pets.find(pet => pet.petId === fish.petId).name, '鱼丸一号');
   evidence.checks.push('real local account switch removes previous account windows; foreign pet mutation denied even with forged renderer owner');
