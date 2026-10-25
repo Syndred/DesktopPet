@@ -2,9 +2,9 @@
   "module": "conversations",
   "scope": "cloud-upgrade-2026-10-25",
   "branch": "codex/lingjing-conversations",
-  "commit": "886fe05c1ffbf40f67a13094b33f3708c1fd6eea",
+  "commit": "de1a2d36915af3f61465ef0d724e923574b8ffd9",
   "goalStatus": "complete",
-  "status": "complete_for_coordinator_review",
+  "status": "complete_on_review_baseline4830619",
   "contracts": {
     "identity": "08 accounts: verified owner mapping, complete-save CAS and account save-restored events",
     "backup": "conversations version 1 adapter; stable IDs and array order, no sequence or encrypted_key",
@@ -16,7 +16,7 @@
     "backupEntry": "production main and foundation tests use the feature-owned adapter; core forwarder deleted",
     "approvedFullSaveCheckpoint": "45b857d",
     "approvedShellCheckpoint": "ced8e5e",
-    "approvedIntegrationCheckpoint": "fd932fd via5ea113e; normal live acceptance source886fe05",
+    "approvedIntegrationCheckpoint": "4830619 viade1a2d36915af3f61465ef0d724e923574b8ffd9",
     "sharedChatSelection": "getSelections(owner).chatPetId is authority; await companions.select(chatPetId) before compatibility preference mutation; reject/late session does not update selection",
     "approvedCurrentFullSaveCheckpoint": "f47b1ed, retained in normalized/hydrated fd932fd merge"
   },
@@ -123,6 +123,28 @@
       "command": "final feature/main ESLint; typecheck:ui; production build",
       "status": "passed",
       "sourceCommit": "886fe05c1ffbf40f67a13094b33f3708c1fd6eea"
+    },
+    {
+      "command": "node --test --test-name-pattern=\"async asset hydration|untouched empty\" apps/pc-app/runtime/features/accounts/tests/supabase-main.test.cjs",
+      "status": "passed",
+      "checks": 2,
+      "scope": "PROTOCOL UNIT simulated; actual local SQLite and asynchronous guards",
+      "sourceCommit": "de1a2d36915af3f61465ef0d724e923574b8ffd9"
+    },
+    {
+      "command": "cloud-sync.acceptance.mjs + matching post-exit cloud-sqlite-readback.mjs",
+      "status": "passed",
+      "checks": 6,
+      "postExitChecks": 5,
+      "realCloud": true,
+      "sourceCommit": "de1a2d36915af3f61465ef0d724e923574b8ffd9",
+      "runId": "286aea84-cbe7-4f77-9d14-9cc6fd249476",
+      "evidence": "docs/implementation/evidence/conversations/cloud-2026-10-25/baseline4830619/live-sync.json"
+    },
+    {
+      "command": "baseline4830619 production build and typecheck:ui",
+      "status": "passed",
+      "sourceCommit": "de1a2d36915af3f61465ef0d724e923574b8ffd9"
     }
   ],
   "realCloudEvidence": {
@@ -162,6 +184,31 @@
       "status": "passed",
       "checks": 6,
       "fullChatSync": true,
+      "evidence": "docs/implementation/evidence/conversations/cloud-2026-10-25/baseline4830619/live-sync.json",
+      "sourceCommit": "de1a2d36915af3f61465ef0d724e923574b8ffd9",
+      "buildCommit": "de1a2d36915af3f61465ef0d724e923574b8ffd9",
+      "runId": "286aea84-cbe7-4f77-9d14-9cc6fd249476",
+      "taskId": "01a16dc5-c418-7372-ac4b-1d9abb116865",
+      "owner": "account:fced51d4-f4bb-48ef-9073-eea9d93cf3b3",
+      "petIds": [
+        "pet-801cfd4c-29a3-4b0e-98fd-3d11d104cc5a",
+        "pet-9d792824-56eb-4ccd-9418-c260d60c497a"
+      ],
+      "scope": "normal production companions IPC/cloud router, actual React chat selection and public Accounts cloudPreview/backupRestore; companion adoption form clicks are not claimed",
+      "sameHost": true,
+      "externalModelSuccessClaimed": false
+    },
+    "postExitSqlite": {
+      "status": "passed",
+      "checks": 5,
+      "evidence": "docs/implementation/evidence/conversations/cloud-2026-10-25/baseline4830619/live-sqlite-readback.json",
+      "runId": "286aea84-cbe7-4f77-9d14-9cc6fd249476",
+      "rowsPerDevice": 8
+    },
+    "normalPathPrevious": {
+      "status": "passed",
+      "checks": 6,
+      "fullChatSync": true,
       "evidence": "docs/implementation/evidence/conversations/cloud-2026-10-25/live-sync.json",
       "sourceCommit": "886fe05c1ffbf40f67a13094b33f3708c1fd6eea",
       "buildCommit": "886fe05c1ffbf40f67a13094b33f3708c1fd6eea",
@@ -176,7 +223,7 @@
       "sameHost": true,
       "externalModelSuccessClaimed": false
     },
-    "postExitSqlite": {
+    "postExitSqlitePrevious": {
       "status": "passed",
       "checks": 5,
       "evidence": "docs/implementation/evidence/conversations/cloud-2026-10-25/live-sqlite-readback.json",
@@ -217,7 +264,7 @@
     }
   ],
   "remaining": [],
-  "updatedAt": "2026-10-25T04:18:04.564Z",
+  "updatedAt": "2026-10-25T04:31:25.306Z",
   "cleanupManifest": "docs/implementation/evidence/conversations/cloud-2026-10-25/cleanup-manifest.json",
   "installation": {
     "workspaceNodeModulesIndependent": true,
@@ -258,10 +305,10 @@
       "pendingApproval": false,
       "textFidelityGate": "passed exact actual HTTPS message/persona/memory JSON roundtrip"
     },
-    "harnessCommit": "886fe05c1ffbf40f67a13094b33f3708c1fd6eea",
+    "harnessCommit": "de1a2d36915af3f61465ef0d724e923574b8ffd9",
     "adoptionScope": "normal production companions IPC/cloud router, actual React chat selection and public Accounts cloudPreview/backupRestore; companion adoption form clicks are not claimed"
   },
-  "checkpoint": "886fe05c1ffbf40f67a13094b33f3708c1fd6eea",
+  "checkpoint": "de1a2d36915af3f61465ef0d724e923574b8ffd9",
   "goalAudit": {
     "scope": "06 conversations upgrade; global release and other domains belong to coordinator",
     "completed": [
@@ -292,7 +339,22 @@
     "verifiedBy": "Final normal IPC/React6 checks and post-exit SQLite5 checks; existing companion unit registered in production"
   },
   "handoff": {
-    "state": "ready for coordinator independent integration/release review",
-    "globalReleaseNotClaimed": true
+    "state": "ready for coordinator review on4830619; no chat blocker found",
+    "globalReleaseNotClaimed": true,
+    "finalPackagingFreeze": false
+  },
+  "integrationBaselineVerification": {
+    "baseline": "4830619",
+    "sourceCommit": "de1a2d36915af3f61465ef0d724e923574b8ffd9",
+    "liveGroups": 6,
+    "postExitSqliteGroups": 5,
+    "targetedProtocolUnitChecks": 2,
+    "productionBuild": "passed",
+    "uiTypecheck": "passed",
+    "blockingDefectsFound": [],
+    "cloudProtocolOrMigrationChangesBy06": 0,
+    "privilegedDeploymentBy06": false,
+    "previousEvidenceUntouched": true,
+    "finalPackagingFreeze": false
   }
 }

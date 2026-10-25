@@ -22,3 +22,5 @@ cleanup-manifest.json保留旧AI源码移除清单与哈希；恢复源码快照
 
 复现命令和消费者合同见 docs/implementation/cloud-conversations-contract.txt。
 数据库、原始备份、解密凭据不提交。全项目发布包和其他领域的最终验收由主协调执行。
+
+补充整合基线4830619：源码及构建de1a2d36915af3f61465ef0d724e923574b8ffd9，运行286aea84-cbe7-4f77-9d14-9cc6fd249476。实际双Electron/HTTPS6组、退出后SQLite5组、定向会话/校验和守卫2项、构建与UI类型检查均通过。新增记录位于baseline4830619/，此前证据文件未改。此基线尚非最终打包冻结；06没有修改云端协议或迁移，也没有部署。
