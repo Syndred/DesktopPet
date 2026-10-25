@@ -71,9 +71,11 @@ try {
   record('actual Postgres rollback after protected commit: missing report leaves growth, inventory, head revision and receipt unchanged');
   await assert.rejects(settle(host,'friend',room.id,host.pet.petId,0,prepared),/LJ_SYNC_CONFLICT/);assert.deepEqual(await head(host),before);
   const reports=[];
-  for(const user of users) {
+  for(const [index,user] of users.entries()) {
+    if(index===1)await db.exec(readFileSync('infra/supabase/migrations/20261025035820_lingjing_battle_scoped_authority_receipt.sql','utf8'));
     const previous=await head(user),session=friendSession(room,rounds,user.owner,{}),p=await prepareBattleSettlement({envelope:previous.envelope,owner:user.owner,session});
     const proof=await settle(user,'friend',room.id,user.pet.petId,previous.revision,p),again=await settle(user,'friend',room.id,user.pet.petId,0,p),current=await head(user);
+    assert.equal(proof.authority.actionId,index===0?proof.action_id:`battle-authority:friend:${room.id}`);
     assert.equal(again.duplicate,true);assert.deepEqual({...again,duplicate:false},proof);assert.equal(current.revision,previous.revision+1);
     const modules=current.envelope.data.modules,originalPets=previous.envelope.data.modules.companions.data.tables.companion_pets;
     const pets=modules.companions.data.tables.companion_pets,pet=JSON.parse(pets.find(row=>row.pet_id===user.pet.petId).data_json),old=JSON.parse(originalPets.find(row=>row.pet_id===user.pet.petId).data_json);
@@ -84,7 +86,7 @@ try {
     assert.equal(proof.authority.checksum,current.envelope.checksum);assert.deepEqual(proof.report,JSON.parse(modules.battle.data.reports[0].data_json));reports.push(proof.report);
     // Scripted transport to the actual action-specific Postgres save. This tests
     // the real SQLite adapter path, and is explicitly not HTTPS/Auth evidence.
-    const readback=async()=>({actionId:proof.action_id,revision:current.revision,checksum:current.checksum,envelope:current.envelope});
+    const readback=async()=>({actionId:proof.authority.actionId,revision:current.revision,checksum:current.checksum,envelope:current.envelope});
     const services={db:user.local.sqlite,get:name=>name==='backups'?user.local.backups:name==='accounts'?{getOwnerAccountId:()=>user.owner}:name==='cloudActor'?{requireActor:async()=>({invoke:readback})}:undefined};
     const store=new (require('../store.cjs').BattleStore)(user.local.sqlite),pendingSession={...session,reward:{...proof.reward,applied:false,pendingReason:'intentional lost readback'},reportId:session.id};
     store.save(user.owner,pendingSession);store.saveReport(user.owner,{...proof.report,reward:pendingSession.reward});
@@ -98,6 +100,8 @@ try {
     user.authority=authority;user.proof=proof;
   }
   assert.equal(reports[0].endedAt,reports[1].endedAt);assert.equal(reports[0].rounds.length,reports[1].rounds.length);
+  const oldHead=await head(host),oldAgain=await settle(host,'friend',room.id,host.pet.petId,0,prepared);assert.equal(oldAgain.authority.actionId,host.proof.action_id);assert.deepEqual(oldAgain.authority,host.proof.authority);assert.deepEqual(await head(host),oldHead);
+  record('additive CAS-key migration uses a short owner-scoped key for new receipts and replays an existing original domain-key receipt unchanged');
   for(let i=0;i<reports[0].rounds.length;i++){assert.equal(reports[0].rounds[i].hpAfter.player,reports[1].rounds[i].hpAfter.enemy);assert.equal(reports[0].rounds[i].actions.player,reports[1].rounds[i].actions.enemy);}
   record('both owners receive exactly one canonical growth + two seeds + mirrored complete report, with original other-pet state preserved');
   record('actual SQLite readback completes a finished-but-pending report idempotently; late adapter failure rolls back companion/garden restore together');
