@@ -58,9 +58,11 @@
       "conversations/chat",
       "battle display only",
       "garden owned pet selectors",
-      "discovery owned pet results"
+      "discovery owned pet results",
+      "resources ApplyToCompanion"
     ],
-    "request": "Use the shared projection for labels and full number while retaining each domain's existing explicit petId and independent selection. This branch intentionally does not edit their UIs or battle core."
+    "request": "Use the shared projection for labels and full number while retaining each domain's existing explicit petId and independent selection. This branch intentionally does not edit their UIs or battle core.",
+    "dtoWithoutTemplateId": "Do not infer a role from resourceId or a mutable display name. Add templateId/identity to the read-only DTO, or use the already-authenticated companions.identity({petId}) IPC / main getDisplayIdentity(owner,petId). Keep stored messages and authoritative battle reports verbatim."
   },
   "uiExample": "import { companionIdentity } from \"../companions/identity\"; const { roleName, instanceNumber, historicalNickname } = companionIdentity(pet);",
   "sharedLayerChangesRequired": false

@@ -1,0 +1,33 @@
+{
+  "sourceOperator": "09",
+  "evidenceOf": "Original package baseline only; not acceptance of this fix",
+  "provenance": "Actual native CUA drag, 10 pointerdown/up pairs isTrusted; no desktopInput mutation or scripted move",
+  "path": "docs/implementation/qa/2026-10-25-user-acceptance/evidence/QA-004-drag-series.json",
+  "localPath": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\implementation\\qa\\2026-10-25-user-acceptance\\evidence\\QA-004-drag-series.json",
+  "sha256": "18d1ab81349b75d560d310a7133e46a0cd7f652ee68c5a7ffb08f0aeebc567cc",
+  "sampleCount": 11,
+  "firstWindow": {
+    "screenX": 80,
+    "screenY": 520,
+    "innerWidth": 232,
+    "innerHeight": 280,
+    "outerWidth": 232,
+    "outerHeight": 280
+  },
+  "lastWindow": {
+    "screenX": 80,
+    "screenY": 520,
+    "innerWidth": 252,
+    "innerHeight": 300,
+    "outerWidth": 252,
+    "outerHeight": 300
+  },
+  "savedScaleValues": [
+    1
+  ],
+  "suppliedRelatedEvidence": [
+    "QA-004-drag-events.json",
+    "QA-004-drag-00.png",
+    "QA-004-drag-10.png"
+  ]
+}

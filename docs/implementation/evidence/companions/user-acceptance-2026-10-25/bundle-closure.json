@@ -1,0 +1,39 @@
+{
+  "kind": "focused-companions-browser-bundle-and-runtime-closure",
+  "productPackageBuilt": false,
+  "rendererEntries": [
+    "adoption",
+    "overview",
+    "detail",
+    "desktop"
+  ],
+  "bundleOutputs": [
+    "assets/overview-CNML2gch.js",
+    "assets/adoption-23W1qQSC.js",
+    "assets/desktop-Do01pKDj.js",
+    "assets/detail-BjKXrriW.js",
+    "assets/arrow-right-7jmx38uI.js",
+    "assets/artwork-Dq7pdPxk.js",
+    "assets/browserAll-Cq5R-HHw.js",
+    "assets/tabs-CVScbOd7.js",
+    "assets/init-D96Q5U66.js",
+    "assets/components-DPE9215e.js",
+    "assets/ParticleBuffer-BLYCqR3T.js",
+    "assets/display-identity-BgPo3BoX.js",
+    "assets/index-zm7HNKY8.js",
+    "assets/webworkerAll-Zme2hAqm.js",
+    "assets/companionship-room-v1-DVsfRJRu.png",
+    "assets/night-courtyard-v1-DYpzU6pT.png",
+    "assets/desktop-B1XK8CPz.css",
+    "assets/components-DknZ5B7_.css",
+    "assets/display-identity-BtVfzUjW.css"
+  ],
+  "runtimeClosure": {
+    "identity": {
+      "path": "apps/pc-app/runtime/features/companions/display-identity.mjs",
+      "sha256": "b9cc92878cc958abe43a5a9d7492e30fd18121ea07743ef5ecda4fb27e46230e",
+      "bytes": 693
+    },
+    "catalogIncluded": true
+  }
+}

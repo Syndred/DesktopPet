@@ -1,0 +1,12 @@
+COMPANION_IDENTITY_DB {"kind":"isolated-real-SQLite-readback","owner":"existing-identity-owner","numbers":["pet-11111111-0000-4000-8000-000000000001","pet-11111111-0000-4000-8000-000000000002"],"roleNames":["礼帽喵","礼帽喵"],"legacySerials":["11111111","11111111"],"historicalNicknames":["旧昵称一","旧昵称二"],"selections":{"chatPetId":"pet-11111111-0000-4000-8000-000000000001","battlePetId":"pet-11111111-0000-4000-8000-000000000002","guardPetId":"pet-11111111-0000-4000-8000-000000000002"},"savedScale":1.35,"savedPosition":{"x":137,"y":293,"displayId":"old-monitor"},"backupChecksumBefore":"f585b080e6cf6ff1966f4a103cb8b7cbe8b14fc36e3a96b8cc6fd8ffd71af640","backupChecksumAfterReopen":"f585b080e6cf6ff1966f4a103cb8b7cbe8b14fc36e3a96b8cc6fd8ffd71af640","exactExportUnchanged":true,"reopenedQueryOnly":true,"originalReceiptCount":7}
+✔ display identity uses the original template and the full case-sensitive petId, even with colliding old serials or changed appearances (1.1065ms)
+✔ identity API and repeated presentation reads preserve original SQLite bytes, cloud backup checksum, receipts, owner, growth, resource and independent selections across reopen (293.3733ms)
+✔ geometry policy uses saved logical scale across mixed-DPI and negative-origin display fixtures without reading a native size back (1.0378ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 380.7417

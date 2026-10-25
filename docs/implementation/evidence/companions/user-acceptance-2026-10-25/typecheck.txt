@@ -1,0 +1,3 @@
+
+> lingjing-desktop@0.1.8 typecheck
+> tsc --noEmit -p tsconfig.typecheck.json && tsc --noEmit -p apps/pc-app/tsconfig.desktop.json
