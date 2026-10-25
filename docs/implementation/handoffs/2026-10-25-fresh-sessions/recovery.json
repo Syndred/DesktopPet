@@ -1,0 +1,285 @@
+{
+  "format": "lingjing.fresh-session-recovery",
+  "verifiedAt": "2026-10-25T11:03:57.669Z",
+  "worktreesRestored": 8,
+  "wipFilesVerified": 22,
+  "keptOriginalHeads": true,
+  "wipRemainsUncommitted": true,
+  "oldPathsDeleted": false,
+  "records": [
+    {
+      "role": "01",
+      "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet-fresh-worktrees\\01",
+      "branch": "codex/lingjing-01-fresh-20261025",
+      "base": "a4ae503b3520ec8742dceb4ba4189be0addde35e",
+      "snapshot": "a4ae503b3520ec8742dceb4ba4189be0addde35e",
+      "head": "a4ae503b3520ec8742dceb4ba4189be0addde35e",
+      "restoredFiles": [],
+      "status": [],
+      "dependencyJunction": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\node_modules",
+      "oldPathsDeleted": false,
+      "wipCommitted": false,
+      "passed": true
+    },
+    {
+      "role": "02",
+      "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet-fresh-worktrees\\02",
+      "branch": "codex/lingjing-02-fresh-20261025",
+      "base": "02ea2dac317b3aaaee12cf9517b456450391cf9c",
+      "snapshot": "b9a97aa63de16c7bc81b36b1f933ea271db06e3c",
+      "head": "02ea2dac317b3aaaee12cf9517b456450391cf9c",
+      "restoredFiles": [
+        {
+          "path": "apps/pc-app/runtime/features/companions/INTEGRATION.md",
+          "expectedGitBlob": "d0f6a44c934d331936e81bc479c2f0115aa8b8f1",
+          "actualGitBlob": "d0f6a44c934d331936e81bc479c2f0115aa8b8f1",
+          "passed": true
+        },
+        {
+          "path": "apps/pc-app/runtime/features/companions/display-identity.d.mts",
+          "expectedGitBlob": "1cc176b2c9221d8418e42c2d5c6714c93998e9d2",
+          "actualGitBlob": "1cc176b2c9221d8418e42c2d5c6714c93998e9d2",
+          "passed": true
+        },
+        {
+          "path": "apps/pc-app/runtime/features/companions/display-identity.mjs",
+          "expectedGitBlob": "2eea42574959727859725ceb388d17f45f18098d",
+          "actualGitBlob": "2eea42574959727859725ceb388d17f45f18098d",
+          "passed": true
+        },
+        {
+          "path": "apps/pc-app/runtime/features/companions/tests/display-identity.test.cjs",
+          "expectedGitBlob": "e5a8f65a09b573a698708e0d9275d8720b7bb80d",
+          "actualGitBlob": "e5a8f65a09b573a698708e0d9275d8720b7bb80d",
+          "passed": true
+        },
+        {
+          "path": "apps/pc-app/ui/src/features/companions/AdoptionPage.tsx",
+          "expectedGitBlob": "6c731510cd6f6c63931ec9c6bb409b13469c1b3f",
+          "actualGitBlob": "6c731510cd6f6c63931ec9c6bb409b13469c1b3f",
+          "passed": true
+        },
+        {
+          "path": "apps/pc-app/ui/src/features/companions/CompanionsPage.tsx",
+          "expectedGitBlob": "6ec3a75441dedf91e5d55d77c4cd7272482cf50f",
+          "actualGitBlob": "6ec3a75441dedf91e5d55d77c4cd7272482cf50f",
+          "passed": true
+        },
+        {
+          "path": "apps/pc-app/ui/src/features/companions/DesktopCompanion.tsx",
+          "expectedGitBlob": "1f344c5ab4476044a9989ed9d1f5ad2bc0430822",
+          "actualGitBlob": "1f344c5ab4476044a9989ed9d1f5ad2bc0430822",
+          "passed": true
+        },
+        {
+          "path": "apps/pc-app/ui/src/features/companions/desktop.css",
+          "expectedGitBlob": "27351bf7b2dd1fea300a0c9f3066828b7f847a0e",
+          "actualGitBlob": "27351bf7b2dd1fea300a0c9f3066828b7f847a0e",
+          "passed": true
+        },
+        {
+          "path": "docs/implementation/companions-display-identity-contract.json",
+          "expectedGitBlob": "54aa262669f62d6e75a4e31c2ac99a8f22edda9f",
+          "actualGitBlob": "54aa262669f62d6e75a4e31c2ac99a8f22edda9f",
+          "passed": true
+        },
+        {
+          "path": "packages/shared-types/src/features/companions/index.ts",
+          "expectedGitBlob": "2c32c8f555be150a90aaf578b9b5d5134a5a4d11",
+          "actualGitBlob": "2c32c8f555be150a90aaf578b9b5d5134a5a4d11",
+          "passed": true
+        },
+        {
+          "path": "packages/shared-types/src/features/discovery/index.ts",
+          "expectedGitBlob": "05f4969725ed5ddeb3168b57fc1a14c9cf3f7634",
+          "actualGitBlob": "05f4969725ed5ddeb3168b57fc1a14c9cf3f7634",
+          "passed": true
+        }
+      ],
+      "status": [
+        " M apps/pc-app/runtime/features/companions/INTEGRATION.md",
+        " M apps/pc-app/runtime/features/companions/display-identity.d.mts",
+        " M apps/pc-app/runtime/features/companions/display-identity.mjs",
+        " M apps/pc-app/runtime/features/companions/tests/display-identity.test.cjs",
+        " M apps/pc-app/ui/src/features/companions/AdoptionPage.tsx",
+        " M apps/pc-app/ui/src/features/companions/CompanionsPage.tsx",
+        " M apps/pc-app/ui/src/features/companions/DesktopCompanion.tsx",
+        " M apps/pc-app/ui/src/features/companions/desktop.css",
+        " M docs/implementation/companions-display-identity-contract.json",
+        " M packages/shared-types/src/features/companions/index.ts",
+        " M packages/shared-types/src/features/discovery/index.ts"
+      ],
+      "dependencyJunction": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\node_modules",
+      "oldPathsDeleted": false,
+      "wipCommitted": false,
+      "passed": true
+    },
+    {
+      "role": "03",
+      "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet-fresh-worktrees\\03",
+      "branch": "codex/lingjing-03-fresh-20261025",
+      "base": "63af4da8dc7603a43e80dfa9ccd3f6e580aa0fcb",
+      "snapshot": "6b7887fb58419e1209f78bf5ed20d41440a33cb1",
+      "head": "63af4da8dc7603a43e80dfa9ccd3f6e580aa0fcb",
+      "restoredFiles": [
+        {
+          "path": "apps/pc-app/runtime/features/discovery/cloud-adapter.cjs",
+          "expectedGitBlob": "7a663c96378e30cf56a7e71d6f2c168c736caa1a",
+          "actualGitBlob": "7a663c96378e30cf56a7e71d6f2c168c736caa1a",
+          "passed": true
+        },
+        {
+          "path": "infra/supabase/functions/discovery/authority.mjs",
+          "expectedGitBlob": "4feca727609db66c85c7b2103be8e26f5c7d1745",
+          "actualGitBlob": "4feca727609db66c85c7b2103be8e26f5c7d1745",
+          "passed": true
+        },
+        {
+          "path": "infra/supabase/functions/discovery/global-serial.mjs",
+          "expectedGitBlob": "90c591e8c8bbbf7ba3958885341ab252f4e0a8f8",
+          "actualGitBlob": "90c591e8c8bbbf7ba3958885341ab252f4e0a8f8",
+          "passed": true
+        },
+        {
+          "path": "infra/supabase/functions/discovery/handler.mjs",
+          "expectedGitBlob": "397edc16cc0332de2c4f879f6a2b7fda02b8004c",
+          "actualGitBlob": "397edc16cc0332de2c4f879f6a2b7fda02b8004c",
+          "passed": true
+        },
+        {
+          "path": "infra/supabase/functions/discovery/protocol.mjs",
+          "expectedGitBlob": "fb40eaa3cbf3a766829cb9de60d362ca9ebffe24",
+          "actualGitBlob": "fb40eaa3cbf3a766829cb9de60d362ca9ebffe24",
+          "passed": true
+        }
+      ],
+      "status": [
+        " M apps/pc-app/runtime/features/discovery/cloud-adapter.cjs",
+        " M infra/supabase/functions/discovery/authority.mjs",
+        " M infra/supabase/functions/discovery/handler.mjs",
+        " M infra/supabase/functions/discovery/protocol.mjs",
+        "?? infra/supabase/functions/discovery/global-serial.mjs"
+      ],
+      "dependencyJunction": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\node_modules",
+      "oldPathsDeleted": false,
+      "wipCommitted": false,
+      "passed": true
+    },
+    {
+      "role": "04",
+      "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet-fresh-worktrees\\04",
+      "branch": "codex/lingjing-04-fresh-20261025",
+      "base": "8cff955f52b908163a70aa5f4b8e3ca68ffb1536",
+      "snapshot": "8cff955f52b908163a70aa5f4b8e3ca68ffb1536",
+      "head": "8cff955f52b908163a70aa5f4b8e3ca68ffb1536",
+      "restoredFiles": [],
+      "status": [],
+      "dependencyJunction": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\node_modules",
+      "oldPathsDeleted": false,
+      "wipCommitted": false,
+      "passed": true
+    },
+    {
+      "role": "05",
+      "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet-fresh-worktrees\\05",
+      "branch": "codex/lingjing-05-fresh-20261025",
+      "base": "12ab032f95bc048ac7f03c5602a062331ef72cfe",
+      "snapshot": "2e9f407f6635293091b8a0e4ba52b10f454e23bf",
+      "head": "12ab032f95bc048ac7f03c5602a062331ef72cfe",
+      "restoredFiles": [
+        {
+          "path": "apps/pc-app/ui/src/features/garden/PetIdentity.tsx",
+          "expectedGitBlob": "edfe3ebc88f9e1275f6da2af3161659bac096c27",
+          "actualGitBlob": "edfe3ebc88f9e1275f6da2af3161659bac096c27",
+          "passed": true
+        },
+        {
+          "path": "apps/pc-app/ui/src/features/garden/PetPortrait.tsx",
+          "expectedGitBlob": "3143c5f9f50e877fa2d5e86ac09f5560d6590578",
+          "actualGitBlob": "3143c5f9f50e877fa2d5e86ac09f5560d6590578",
+          "passed": true
+        },
+        {
+          "path": "apps/pc-app/ui/src/features/garden/index.tsx",
+          "expectedGitBlob": "20c0530ad35f994a1067c3e6b01e1085d356a2ff",
+          "actualGitBlob": "20c0530ad35f994a1067c3e6b01e1085d356a2ff",
+          "passed": true
+        },
+        {
+          "path": "apps/pc-app/ui/src/features/garden/use-garden.ts",
+          "expectedGitBlob": "c6e9e9eb7f8f2ce58c657ade45a4e7d1ca172f0b",
+          "actualGitBlob": "c6e9e9eb7f8f2ce58c657ade45a4e7d1ca172f0b",
+          "passed": true
+        },
+        {
+          "path": "packages/shared-types/src/features/garden/index.ts",
+          "expectedGitBlob": "640d0374563da11b5a73c173de8cf28731a09492",
+          "actualGitBlob": "640d0374563da11b5a73c173de8cf28731a09492",
+          "passed": true
+        }
+      ],
+      "status": [
+        " M apps/pc-app/ui/src/features/garden/PetIdentity.tsx",
+        " M apps/pc-app/ui/src/features/garden/PetPortrait.tsx",
+        " M apps/pc-app/ui/src/features/garden/index.tsx",
+        " M apps/pc-app/ui/src/features/garden/use-garden.ts",
+        " M packages/shared-types/src/features/garden/index.ts"
+      ],
+      "dependencyJunction": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\node_modules",
+      "oldPathsDeleted": false,
+      "wipCommitted": false,
+      "passed": true
+    },
+    {
+      "role": "06",
+      "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet-fresh-worktrees\\06",
+      "branch": "codex/lingjing-06-fresh-20261025",
+      "base": "64e9cdb09c38158e544cc433bbeef354140ac358",
+      "snapshot": "64e9cdb09c38158e544cc433bbeef354140ac358",
+      "head": "64e9cdb09c38158e544cc433bbeef354140ac358",
+      "restoredFiles": [],
+      "status": [],
+      "dependencyJunction": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\node_modules",
+      "oldPathsDeleted": false,
+      "wipCommitted": false,
+      "passed": true
+    },
+    {
+      "role": "07",
+      "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet-fresh-worktrees\\07",
+      "branch": "codex/lingjing-07-fresh-20261025",
+      "base": "3465bccc2488b0fc273e290623811bd8156534d1",
+      "snapshot": "3465bccc2488b0fc273e290623811bd8156534d1",
+      "head": "3465bccc2488b0fc273e290623811bd8156534d1",
+      "restoredFiles": [],
+      "status": [],
+      "dependencyJunction": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\node_modules",
+      "oldPathsDeleted": false,
+      "wipCommitted": false,
+      "passed": true
+    },
+    {
+      "role": "08",
+      "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet-fresh-worktrees\\08",
+      "branch": "codex/lingjing-08-fresh-20261025",
+      "base": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+      "snapshot": "e25a037d956cb1d226d2288b912adf8c94d19033",
+      "head": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+      "restoredFiles": [
+        {
+          "path": "infra/supabase/migrations/20261025105253_lingjing_global_pet_serials.sql",
+          "expectedGitBlob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+          "actualGitBlob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+          "passed": true
+        }
+      ],
+      "status": [
+        "?? infra/supabase/migrations/20261025105253_lingjing_global_pet_serials.sql"
+      ],
+      "dependencyJunction": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\node_modules",
+      "oldPathsDeleted": false,
+      "wipCommitted": false,
+      "passed": true
+    }
+  ]
+}
