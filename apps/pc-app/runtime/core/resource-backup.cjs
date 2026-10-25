@@ -105,6 +105,6 @@ function createResourceBackupAdapter(services) {
       for (const row of rows) statement.run(...fields.map(column => row[column]));
     }
   }
-  return { id: 'character-resources', version: 1, tables: TABLES, export: exportData, validate, restore };
+  return require('../features/resources/cloud-backup.cjs').attachCloudBackup({ id: 'character-resources', version: 1, tables: TABLES, export: exportData, validate, restore },services);
 }
 module.exports = { createResourceBackupAdapter };

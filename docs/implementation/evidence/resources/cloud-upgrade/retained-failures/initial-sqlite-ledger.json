@@ -1,0 +1,39 @@
+{
+  "at": "2026-10-25T02:44:36.989Z",
+  "runtimeSourceCommit": "8b610bf75d7b7f73f15a440b24174aec54d2cb74",
+  "projectRef": "jbvrdmrkwpznbrvteive",
+  "dataSource": {
+    "authority": "live",
+    "simulated": false,
+    "transport": "actual Supabase HTTPS with official SDK",
+    "topology": "Two isolated SQLite client roots in one validator process; not dual Electron or two physical devices"
+  },
+  "clients": [
+    {
+      "label": "A",
+      "ownerAccountId": "account:2851a984-dacc-4548-865e-1810bc3ab384",
+      "authUserId": "ecf7ccab-f4b2-4cb5-b0ab-a4613fe28886",
+      "deviceId": "0875b3b5-ba44-4f77-a6bb-c42df672e801",
+      "sessionId": "50280ab0-8271-4a3f-8789-5dd8f4e95533"
+    },
+    {
+      "label": "B",
+      "ownerAccountId": "account:2851a984-dacc-4548-865e-1810bc3ab384",
+      "authUserId": "ecf7ccab-f4b2-4cb5-b0ab-a4613fe28886",
+      "deviceId": "1f941766-a026-463e-a64e-a8d585db1d00",
+      "sessionId": "1aed22ea-b907-4cf6-911f-1d8b9b071b61"
+    },
+    {
+      "label": "OTHER",
+      "ownerAccountId": "account:36de5656-7f93-4def-9a5e-68cc4b43e27f",
+      "authUserId": "401cdef0-f4e1-470a-bc89-789f92dd242f",
+      "deviceId": "a6d691c5-0511-4687-90f8-83f4a2ef2b8e",
+      "sessionId": "09ee0c50-3129-4bd0-868d-30de6e9ce138"
+    }
+  ],
+  "passed": false,
+  "failure": {
+    "code": "SQLITE_ERROR",
+    "name": "SqliteError"
+  }
+}

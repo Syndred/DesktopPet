@@ -2,10 +2,10 @@
   "module": "accounts",
   "scope": "2026-10-25 Supabase Auth/JWT, stable legacy owner mapping, per-device sessions, full-save CAS/idempotency/conflict/offline recovery",
   "branch": "codex/lingjing-accounts",
-  "commit": "fe56957",
+  "commit": "72986c1",
   "worktree": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-accounts\\DesktopPet",
   "goalStatus": "active",
-  "phase": "Privacy hotfixfe56957 ready for immediate centralized SQL migration; real dual Electron in progress, first attempt Auth passed but fixture require scope fixed",
+  "phase": "Immutable revocation ledger deployed by coordinator, real negative verifier running there; normalized legacy hook6435a13 merged72986c1 with safe CAS preserved;25 focused tests passed.",
   "baseline": "46abf416e0500b53ef32fc29b441d923ef5a6a80",
   "dependencyCheckpoint": "b40af0efcf6062ddc2e8c360523c996fc91ebc0a",
   "contracts": {
@@ -114,10 +114,30 @@
     "cloudPrivacy": {
       "proof": "sourceChecksum and cloud projectionChecksum distinct; excluded paths recorded without values; never claim full original uploaded",
       "cloudArchive": "safe projection only, legacy module and raw archive/credential schema excluded, normalized sensitive keys and nested/serialized JSON stripped",
-      "server": "has_secret normalizes case/separators and recursively inspects JSON strings, including encryptedSecret/openai_api_key; no existing migration edited",
+      "server": "8e5c735 path-aware guard preserves authored message/memory/persona JSON string byte-for-byte, checks nested/serialized config credentials. Public business proof retained; cloudProof/sessionProof/authProof private. SQL8 cases +protocol6 passed.",
       "localOriginal": "account_sync_sources.original_document/original_checksum retains local snapshot; existing raw sources/backup files never deleted",
       "migration": "20261025025906_lingjing_cloud_secret_guard.sql",
       "implementation": "apps/pc-app/runtime/features/accounts/cloud-projection.cjs"
+    },
+    "sessionRevocation": {
+      "migration": "20261025031842_lingjing_session_revocation_ledger.sql",
+      "deployedByThisChat": false,
+      "guard": "live_session_id shared by direct RPC/actor/session/RLS",
+      "authTableGrantsExpanded": false,
+      "ledger": "private immutable revoked_auth_sessions; explicit revoke AND replacement retain SID forever",
+      "existingSessions": "backfill revoked devices and already unbound Auth sessions of linked Lingjing users only; preserve every currently bound active device",
+      "realHttpsPendingCentralDeployment": false,
+      "httpVerifier": "apps/pc-app/runtime/features/accounts/tests/cloud-session-revoke.acceptance.cjs",
+      "implementation": "b21410e",
+      "coordinatorDeployment": "Coordinated actual apply completed; preflight19 linked owners/20 active bound sessions/1 Lingjing unbound old Auth session; active devices retained."
+    },
+    "legacyNormalization": {
+      "restoreCheckpoint": "Verified cloud restore records normalized data checksum with original envelope checksum/revision",
+      "checkpoint": "6435a13",
+      "tests": "25 targeted passed accounts/supabase-main/companion-backup-integration",
+      "merge": "72986c1",
+      "safeCas": "Use normalized view only for fingerprints/protected-state equality; never rewrite original envelope/checksum or upload client-normalized authority",
+      "api": "backups.normalizeData(data,owner), adapter legacyTables/fromLegacyTables"
     }
   },
   "migrations": [
@@ -156,6 +176,12 @@
       "remoteAppliedByThisChat": false,
       "readyForCoordinatorReview": true,
       "generatedBy": "Supabase CLI2.122.0 migration new lingjing_cloud_secret_guard"
+    },
+    {
+      "readyForCoordinatorReview": true,
+      "generatedBy": "Supabase CLI2.122.0 migration new lingjing_session_revocation_ledger",
+      "remoteAppliedByThisChat": false,
+      "file": "infra/supabase/migrations/20261025031842_lingjing_session_revocation_ledger.sql"
     }
   ],
   "checks": [
@@ -205,6 +231,16 @@
       "kind": "local PGlite/protocol only; real privacy HTTP verifier next",
       "result": "13 passed including fake nested and serialized BYOK guard/safe projection and dynamic SDK lifecycle",
       "command": "node --test cloud-save-sql.test.mjs supabase-main.test.cjs"
+    },
+    {
+      "command": "node --test cloud-identity-sql.test.mjs",
+      "result": "7 passed including managed-live revokedSID->freshSID->oldSID directRPC/RLS rejection, replacement revocation, other device stays active",
+      "kind": "LOCAL PGlite only"
+    },
+    {
+      "command": "node --test legacy-claims.test.cjs",
+      "result": "3 synthetic checks passed incl Windows DPAPI roundtrip Chinese nickname, originalowner/hash/date preserved; no cloud writes",
+      "kind": "LOCAL preparation only; actual old source still absent"
     }
   ],
   "realCloudEvidence": {
@@ -243,6 +279,28 @@
       "evidence": "artifacts/accounts/cloud-main-http-1792896651252/evidence.json",
       "expiredSignedJwtVerified": false,
       "passed": true
+    },
+    "dualElectron": {
+      "evidence": "artifacts/accounts/cloud-electron-1792897321861/evidence.json",
+      "scope": "Two real Electron44.9.3 Windows processes; main/preload/renderer production entry; actual HTTPS; DPAPI/vault reload; actor refresh; controlled connection refusal + process restart +SQLite outbox; same host only",
+      "source": "7784f8a3cfefb84a3ab6285d121166caeea9a03a",
+      "authorityPending": true,
+      "fullSaveVerified": false,
+      "passedChecks": 8,
+      "privateRealtimeReconnectVerified": false
+    },
+    "casConcurrency": {
+      "passed": true,
+      "scope": "Actual parallel HTTPS same base different actions exactly1 winner, same action replay exactly1 revision and2 durable total action rows; same host",
+      "source": "03dce6a",
+      "evidence": "docs/implementation/evidence/accounts/cloud-2026-10-25/cas-concurrency.json",
+      "checks": 2
+    },
+    "remoteLatest": {
+      "at": "2026-10-25T03:23:26Z",
+      "command": "git pull --no-rebase --no-edit origin main",
+      "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086",
+      "result": "Already up to date"
     }
   },
   "preservation": {
@@ -256,11 +314,12 @@
     "Old runtime single session_token cloud adapter only after new Auth path and all domain consumers are migrated; preserve source-import reader and user files"
   ],
   "remaining": [
-    "True dual isolated Electron + Windows safeStorage/restart + actual HTTPS sync/conflict/recovery",
-    "Actual SDK refresh/realtime reconnect in new Auth lifecycle; domain04 owns private channels",
-    "Legacy source staging/import tool and old source external availability",
-    "Converge domain fragments with02/03/04/05/07 and coordinator final integration",
-    "Signed already-expired JWT rejection evidence distinct from forged-exp payload",
-    "Final fetch/pull remote verification and coordinator independent acceptance"
+    "Coordinator result of actual managed-valid oldSID revoke/rebind/refresh negatives",
+    "Signed unchanged provider JWT expiration03:30:55UTC actual HTTP proof pending; retained encrypted fixture only",
+    "Integrate final02 main cloud adapter and full domain authority snapshots; native8 checks currently personal sync with authorityPending true",
+    "Domain04 private Realtime reconnect and full two-account gameplay integration remains its owner",
+    "Coordinator independent actual privacy SQL readback result",
+    "Old full cloud account/data migration EXTERNAL: original server export/SSH unavailable; preparation tool does not count as migration",
+    "One final account-targeted regression and actual dual Electron recheck when domain integration changes justify it"
   ]
 }
