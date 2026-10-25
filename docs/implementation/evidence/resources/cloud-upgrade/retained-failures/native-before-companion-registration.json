@@ -1,0 +1,45 @@
+{
+  "at": "2026-10-25T04:16:18.898Z",
+  "runtimeSourceCommit": "d1386775b1c60353d6b44d20e81ff1b5f3827596",
+  "dataSource": {
+    "mode": "live",
+    "simulated": false,
+    "topology": "Two independent production Electron processes and userData roots on one physical machine",
+    "physicalDevices": 1
+  },
+  "views": [],
+  "errors": [],
+  "passed": false,
+  "buildProvenance": {
+    "schemaVersion": 2,
+    "builtAt": "2026-10-25T04:06:54.284Z",
+    "sourceCommit": "e275ae65c9b798aeb9c54e1e529c567e3df7446b",
+    "sourceTree": "a8a48c5a47f113232bfe8256fc91f54f15c8d2de",
+    "sourceDirtyFiles": [],
+    "codeFingerprint": "2b6f977dd7564af2fd10ae6ec73a43b3118d98c049bbe01b7f94a730b94ea2f2",
+    "canonicalSourceFingerprint": "1e86579ce073af83940b860c8ecb160abc715c599d4a13be43767bab48028d2c",
+    "canonicalPolicy": "Repository-relative paths; CRLF normalized to LF for source text only. Packaged/compiled bytes remain exact.",
+    "compiledFingerprint": "0711e1fae36cdd4f7b43f43678eb8f3197928308cf19ca6b846204f206357a04",
+    "codeFiles": 288,
+    "compiledFiles": 84,
+    "toolchain": {
+      "node": "24.21.0",
+      "electron": "44.9.3",
+      "sqlite": "13.0.3",
+      "vite": "7.3.7",
+      "typescript": "5.9.3",
+      "platform": "win32",
+      "arch": "x64"
+    },
+    "entrypoints": {
+      "main": "main/index.cjs",
+      "app": "ui/index.html",
+      "desktop": "ui/desktop.html",
+      "preload": "preload/index.cjs"
+    }
+  },
+  "failure": {
+    "code": "ERR_ASSERTION",
+    "message": "accounts:cloudPreview: BACKUP_MODULE_UNSUPPORTED"
+  }
+}

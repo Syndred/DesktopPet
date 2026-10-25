@@ -1,0 +1,107 @@
+
+> lingjing-desktop@0.1.8 build:pc
+> electron-vite build && node scripts/desktop/runtime-closure.mjs && node scripts/desktop/write-build-manifest.mjs
+
+vite v7.3.7 building ssr environment for production...
+transforming...
+✓ 1 modules transformed.
+rendering chunks...
+apps/pc-app/dist/main/index.cjs  14.10 kB
+✓ built in 83ms
+vite v7.3.7 building ssr environment for production...
+transforming...
+✓ 1 modules transformed.
+rendering chunks...
+apps/pc-app/dist/preload/index.cjs  0.90 kB
+✓ built in 9ms
+vite v7.3.7 building client environment for production...
+transforming...
+✓ 3971 modules transformed.
+rendering chunks...
+../dist/ui/index.html                                     0.85 kB
+../dist/ui/desktop.html                                   1.29 kB
+../dist/ui/feature-routes.json                            2.42 kB
+../dist/ui/.vite/manifest.json                           19.09 kB
+../dist/ui/assets/brand-mark-DlZ0bfA1.png               405.14 kB
+../dist/ui/assets/maplibre-gl-worker-BJZj9QkU.js        516.74 kB
+../dist/ui/assets/garden-food-atlas-v1-DiKuftwr.png   1,849.15 kB
+../dist/ui/assets/desktop-artwork-Dni2yrGU.png        1,933.08 kB
+../dist/ui/assets/account-artwork-xSsPx11U.png        1,952.41 kB
+../dist/ui/assets/companionship-room-v1-DVsfRJRu.png  2,079.94 kB
+../dist/ui/assets/wild-lake-v1-k7Ftd-7_.png           2,777.40 kB
+../dist/ui/assets/night-courtyard-v1-DYpzU6pT.png     2,809.62 kB
+../dist/ui/assets/garden-terrace-v1-DxO0gG7c.png      3,300.69 kB
+../dist/ui/assets/index-C_jvkNM0.css                      0.54 kB
+../dist/ui/assets/DesktopCompanion-DciaR5bo.css           1.41 kB
+../dist/ui/assets/BattleScreen-ClnWaRe3.css              12.81 kB
+../dist/ui/assets/ResourcePortrait-BtVfzUjW.css          13.67 kB
+../dist/ui/assets/index-uBmXH2NG.css                     17.66 kB
+../dist/ui/assets/index-DksK50OY.css                     19.40 kB
+../dist/ui/assets/index-zIwrJ-_H.css                     21.20 kB
+../dist/ui/assets/index-Dy3yurGZ.css                     30.61 kB
+../dist/ui/assets/BattleMoves-BVISVj5e.css               30.87 kB
+../dist/ui/assets/index-CRpDRVxm.css                     33.32 kB
+../dist/ui/assets/desktop-CzIoRXpL.css                   55.03 kB
+../dist/ui/assets/app-fDHBKO2_.css                       64.19 kB
+../dist/ui/assets/NearbyMap--S9olhOP.css                 71.51 kB
+../dist/ui/assets/index-CZB9Gpnt.js                       0.14 kB
+../dist/ui/assets/chevron-left-CKQ4kr6U.js                0.17 kB
+../dist/ui/assets/webworkerAll-DTu3OtSB.js                0.19 kB
+../dist/ui/assets/plus-IZEFYs6U.js                        0.19 kB
+../dist/ui/assets/cloud-Bd_tVMVq.js                       0.20 kB
+../dist/ui/assets/arrow-right-BUSpYPP4.js                 0.20 kB
+../dist/ui/assets/arrow-down-BAvkLQYU.js                  0.20 kB
+../dist/ui/assets/clock-3-2f7nrMCT.js                     0.20 kB
+../dist/ui/assets/search-CAfA6u8V.js                      0.20 kB
+../dist/ui/assets/play-xVpXyh9P.js                        0.23 kB
+../dist/ui/assets/info-BfIbHRXm.js                        0.24 kB
+../dist/ui/assets/pause-DVTim6_Y.js                       0.25 kB
+../dist/ui/assets/cloud-check-BXpIzebn.js                 0.25 kB
+../dist/ui/assets/flag-BDf3CsGx.js                        0.28 kB
+../dist/ui/assets/heart-BarczO9q.js                       0.29 kB
+../dist/ui/assets/map-pin-52IdKeUa.js                     0.29 kB
+../dist/ui/assets/monitor-BZXfi9MT.js                     0.29 kB
+../dist/ui/assets/pencil-C97DlLVC.js                      0.31 kB
+../dist/ui/assets/browserAll-BJeBzKWp.js                  0.31 kB
+../dist/ui/assets/bell-BPOMYUOy.js                        0.33 kB
+../dist/ui/assets/face-slightly-smiling-BTrbMDUV.js       0.33 kB
+../dist/ui/assets/refresh-cw-0Jux4V6K.js                  0.36 kB
+../dist/ui/assets/desktop-yym5Ia5_.js                     0.39 kB
+../dist/ui/assets/hard-drive-QlZEuoPc.js                  0.42 kB
+../dist/ui/assets/save-BUxmNR-0.js                        0.55 kB
+../dist/ui/assets/dialog-DYEmeFZW.js                      0.75 kB
+../dist/ui/assets/mountain-Cn371NBk.js                    1.03 kB
+../dist/ui/assets/CompanionPortrait-D51Wd-Zy.js           3.16 kB
+../dist/ui/assets/DesktopCompanion-6KQoc2x-.js            5.04 kB
+../dist/ui/assets/switch-BUbUrTGo.js                      5.05 kB
+../dist/ui/assets/checkbox-Zc-E6ELO.js                    5.11 kB
+../dist/ui/assets/popover-C3yfhxT4.js                     5.80 kB
+../dist/ui/assets/dialog-Cf5tDY0b.js                      7.58 kB
+../dist/ui/assets/tabs-CpcV7aM4.js                        9.13 kB
+../dist/ui/assets/ResourcePortrait-D7R5J3Y1.js            9.23 kB
+../dist/ui/assets/BattleMoves-DJLkZ8IU.js                10.08 kB
+../dist/ui/assets/init-CigAU1T6.js                       10.10 kB
+../dist/ui/assets/slider-CUtRaIiv.js                     11.58 kB
+../dist/ui/assets/scroll-area-BbfG_TFX.js                14.33 kB
+../dist/ui/assets/index-B3MPYunP.js                      17.40 kB
+../dist/ui/assets/index-FDJx9kgO.js                      17.77 kB
+../dist/ui/assets/index-C46qcPqn.js                      20.23 kB
+../dist/ui/assets/BattleScreen-iLrgwjXX.js               20.93 kB
+../dist/ui/assets/index-lKQ2lW4K.js                      27.17 kB
+../dist/ui/assets/index-B9szCstu.js                      28.54 kB
+../dist/ui/assets/index-CRnsCTt7.js                      33.17 kB
+../dist/ui/assets/select-4PmlQZ5o.js                     46.77 kB
+../dist/ui/assets/app-DaA6qFsw.js                        69.13 kB
+../dist/ui/assets/ParticleBuffer-nTZ-MFRd.js            125.92 kB
+../dist/ui/assets/index-tL3cIdZv.js                     400.01 kB
+../dist/ui/assets/motion-BlyJPngK.js                    407.85 kB
+../dist/ui/assets/index-BKovLdae.js                     777.67 kB
+../dist/ui/assets/NearbyMap-BesERJCp.js               1,078.45 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 8.64s
+Runtime closure: 106 files, 181 edges, 4 JS/MJS dependencies
+Build provenance: facaf9b87756 · bfbd59c240f2
