@@ -1,0 +1,512 @@
+{
+  "at": "2026-10-25T03:49:35.527Z",
+  "executable": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\artifacts\\pc-cloud-upgrade\\Lingjing-0.1.8-portable-x64.exe",
+  "executableSha256": "d5f06ea30ac6bd2b69441152eaffb4971e4001a2ecf1b367e081ab0336506827",
+  "expectedSource": "7d5ef74cf55b4257e0072c2c1a4e81663db84ea6",
+  "ordinaryConfig": {
+    "scope": "Ordinary actual portable SFX launch with a fresh local profile, no QA marker and no cloud configuration environment variables. Configuration availability, not a live-cloud transaction.",
+    "profile": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\artifacts\\foundation\\cloud-engineering\\portable\\run-1792900159028\\ordinary-config\\fresh-profile",
+    "pid": 32716,
+    "actualCloudConfig": {
+      "projectRef": "jbvrdmrkwpznbrvteive",
+      "url": "https://jbvrdmrkwpznbrvteive.supabase.co",
+      "sha256": "c1625c63f1d959f92b3392b47f2fb492452803eedf1c0d1ebc68a1168ab64eda",
+      "resourceDirectory": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\3LAbxBfMfpICNBIMeACK9o5weBj\\resources"
+    },
+    "publicCloud": {
+      "projectRef": "jbvrdmrkwpznbrvteive",
+      "url": "https://jbvrdmrkwpznbrvteive.supabase.co",
+      "sha256": "c1625c63f1d959f92b3392b47f2fb492452803eedf1c0d1ebc68a1168ab64eda",
+      "resourcePath": "lingjing-cloud-public.json"
+    },
+    "electron": "44.9.3",
+    "defaultProvider": "runtime",
+    "passed": true,
+    "completedAt": "2026-10-25T03:49:35.475Z"
+  },
+  "scenario": {
+    "schemaVersion": 1,
+    "application": "lingjing",
+    "scenario": "unified-battle",
+    "runId": "d24a5113-05d6-42fb-b744-5a3e0a49df6a",
+    "isolated": true,
+    "profilePath": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\artifacts\\qa\\unified-battle\\qa-1792900175515-d24a5113",
+    "createdAt": "2026-10-25T03:49:35.516Z",
+    "env": {
+      "LINGJING_QA_SCENARIO": "unified-battle",
+      "PET_USER_DATA_DIR": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\artifacts\\qa\\unified-battle\\qa-1792900175515-d24a5113"
+    }
+  },
+  "launcherPid": 15752,
+  "scope": "Actual portable SFX and extracted ASAR, fresh explicit isolated QA profile. Native/renderer smoke, not live Supabase or second physical device evidence.",
+  "checks": [
+    {
+      "id": "actual-sfx-asar-source-and-secure-preload",
+      "electron": "44.9.3",
+      "build": {
+        "schemaVersion": 2,
+        "builtAt": "2026-10-25T03:44:31.400Z",
+        "sourceCommit": "7d5ef74cf55b4257e0072c2c1a4e81663db84ea6",
+        "sourceTree": "594f3f3486d6d0d295d8aeddd4da849f488519e0",
+        "sourceDirtyFiles": [],
+        "codeFingerprint": "f17b9dfb9dcfa721e0b54f57b54fd6becd46249678b5253f99a44352ee73fff3",
+        "canonicalSourceFingerprint": "a6c36494496f2e7d96a191fc47a96bd139bc8195d9485250e2e49a65eb06708f",
+        "canonicalPolicy": "Repository-relative paths; CRLF normalized to LF for source text only. Packaged/compiled bytes remain exact.",
+        "compiledFingerprint": "cb4644b54f85f1b59e55ee546cd779cfb6a55c4ed676690308317efb1815451f",
+        "codeFiles": 286,
+        "compiledFiles": 87,
+        "toolchain": {
+          "node": "24.21.0",
+          "electron": "44.9.3",
+          "sqlite": "13.0.3",
+          "vite": "7.3.7",
+          "typescript": "5.9.3",
+          "platform": "win32",
+          "arch": "x64"
+        },
+        "entrypoints": {
+          "main": "main/index.cjs",
+          "app": "ui/index.html",
+          "desktop": "ui/desktop.html",
+          "preload": "preload/index.cjs"
+        },
+        "publicCloud": {
+          "projectRef": "jbvrdmrkwpznbrvteive",
+          "url": "https://jbvrdmrkwpznbrvteive.supabase.co",
+          "sha256": "c1625c63f1d959f92b3392b47f2fb492452803eedf1c0d1ebc68a1168ab64eda",
+          "resourcePath": "lingjing-cloud-public.json"
+        },
+        "packageName": "lingjing-desktop",
+        "runtimeClosure": {
+          "manifest": "runtime-closure.json",
+          "files": 96,
+          "edges": 156,
+          "sha256": "27bc448cb9fbd386dd7394b4e5c3c3f60c6e1a24ccf6c21c6ca7f3e69e7e4ea5"
+        }
+      }
+    },
+    {
+      "id": "packaged-native-fullscreen-monitor-ready",
+      "running": true,
+      "ready": true,
+      "observations": [
+        {
+          "at": 1792900186300,
+          "running": true,
+          "ready": false
+        },
+        {
+          "at": 1792900186515,
+          "running": true,
+          "ready": false
+        },
+        {
+          "at": 1792900186720,
+          "running": true,
+          "ready": false
+        },
+        {
+          "at": 1792900186922,
+          "running": true,
+          "ready": false
+        },
+        {
+          "at": 1792900187128,
+          "running": true,
+          "ready": false
+        },
+        {
+          "at": 1792900187333,
+          "running": true,
+          "ready": false
+        },
+        {
+          "at": 1792900187536,
+          "running": true,
+          "ready": true
+        }
+      ]
+    },
+    {
+      "id": "eight-characters-five-elements",
+      "resources": [
+        {
+          "id": "builtin:lingjing-yuwan-v2",
+          "element": "water",
+          "availability": "ready"
+        },
+        {
+          "id": "builtin:lingjing-xiaolan-v1",
+          "element": "water",
+          "availability": "ready"
+        },
+        {
+          "id": "builtin:lingjing-fantuan-v1",
+          "element": "water",
+          "availability": "ready"
+        },
+        {
+          "id": "builtin:lingjing-shiba-v2",
+          "element": "fire",
+          "availability": "ready"
+        },
+        {
+          "id": "builtin:lingjing-hatcat-v1",
+          "element": "metal",
+          "availability": "ready"
+        },
+        {
+          "id": "builtin:lingjing-xiaohu-v1",
+          "element": "water",
+          "availability": "ready"
+        },
+        {
+          "id": "builtin:lingjing-qingya-v1",
+          "element": "wood",
+          "availability": "ready"
+        },
+        {
+          "id": "builtin:lingjing-yantuan-v1",
+          "element": "earth",
+          "availability": "ready"
+        }
+      ]
+    },
+    {
+      "id": "packaged-wood-walk",
+      "petId": "pet-cc6ac3c1-4070-405d-91d4-4310dd8c7e97",
+      "identity": {
+        "id": "builtin:lingjing-qingya-v1",
+        "clip": "walk",
+        "texture": "lingjing-resource://asset/builtin%3Alingjing-qingya-v1/sprites.png:1cd0626ea29767476b371519ec4dc00fc43c528bfcd92627166275b937db2060"
+      },
+      "frames": [
+        {
+          "at": 3272.7000000029802,
+          "frame": "0",
+          "texture": "5",
+          "region": "696,65,183,258"
+        },
+        {
+          "at": 3396.300000011921,
+          "frame": "0",
+          "texture": "5",
+          "region": "696,65,183,258"
+        },
+        {
+          "at": 3518.9000000059605,
+          "frame": "1",
+          "texture": "6",
+          "region": "992,64,198,260"
+        },
+        {
+          "at": 3639.9000000059605,
+          "frame": "0",
+          "texture": "5",
+          "region": "696,65,183,258"
+        },
+        {
+          "at": 3761.2000000029802,
+          "frame": "0",
+          "texture": "5",
+          "region": "696,65,183,258"
+        },
+        {
+          "at": 3882.4000000059605,
+          "frame": "1",
+          "texture": "6",
+          "region": "992,64,198,260"
+        },
+        {
+          "at": 4003.6000000089407,
+          "frame": "0",
+          "texture": "5",
+          "region": "696,65,183,258"
+        }
+      ]
+    },
+    {
+      "id": "packaged-earth-walk",
+      "petId": "pet-8ab9757e-0deb-4f9f-ad50-52ee3aceb4ab",
+      "identity": {
+        "id": "builtin:lingjing-yantuan-v1",
+        "clip": "walk",
+        "texture": "lingjing-resource://asset/builtin%3Alingjing-yantuan-v1/sprites.png:09b4b0bd591c07daea0a588386f39cfbe19226fd0d39664bdb8342fc4912fa09"
+      },
+      "frames": [
+        {
+          "at": 4892,
+          "frame": "0",
+          "texture": "42",
+          "region": "655,47,279,249"
+        },
+        {
+          "at": 5013.800000011921,
+          "frame": "0",
+          "texture": "42",
+          "region": "655,47,279,249"
+        },
+        {
+          "at": 5136.9000000059605,
+          "frame": "1",
+          "texture": "43",
+          "region": "962,47,264,248"
+        },
+        {
+          "at": 5258.300000011921,
+          "frame": "0",
+          "texture": "42",
+          "region": "655,47,279,249"
+        },
+        {
+          "at": 5379.4000000059605,
+          "frame": "0",
+          "texture": "42",
+          "region": "655,47,279,249"
+        },
+        {
+          "at": 5500.70000000298,
+          "frame": "1",
+          "texture": "43",
+          "region": "962,47,264,248"
+        },
+        {
+          "at": 5622.5,
+          "frame": "0",
+          "texture": "42",
+          "region": "655,47,279,249"
+        }
+      ]
+    },
+    {
+      "id": "packaged-shared-training-round",
+      "sessionId": "battle-d3fe501e-8cdb-4931-8e0e-5d4a63518fd9",
+      "round": 1,
+      "player": "pet-cc6ac3c1-4070-405d-91d4-4310dd8c7e97",
+      "hp": {
+        "player": 120,
+        "enemy": 120
+      }
+    }
+  ],
+  "errors": [],
+  "info": {
+    "version": "0.1.8",
+    "platform": "win32",
+    "build": {
+      "schemaVersion": 2,
+      "builtAt": "2026-10-25T03:44:31.400Z",
+      "sourceCommit": "7d5ef74cf55b4257e0072c2c1a4e81663db84ea6",
+      "sourceTree": "594f3f3486d6d0d295d8aeddd4da849f488519e0",
+      "sourceDirtyFiles": [],
+      "codeFingerprint": "f17b9dfb9dcfa721e0b54f57b54fd6becd46249678b5253f99a44352ee73fff3",
+      "canonicalSourceFingerprint": "a6c36494496f2e7d96a191fc47a96bd139bc8195d9485250e2e49a65eb06708f",
+      "canonicalPolicy": "Repository-relative paths; CRLF normalized to LF for source text only. Packaged/compiled bytes remain exact.",
+      "compiledFingerprint": "cb4644b54f85f1b59e55ee546cd779cfb6a55c4ed676690308317efb1815451f",
+      "codeFiles": 286,
+      "compiledFiles": 87,
+      "toolchain": {
+        "node": "24.21.0",
+        "electron": "44.9.3",
+        "sqlite": "13.0.3",
+        "vite": "7.3.7",
+        "typescript": "5.9.3",
+        "platform": "win32",
+        "arch": "x64"
+      },
+      "entrypoints": {
+        "main": "main/index.cjs",
+        "app": "ui/index.html",
+        "desktop": "ui/desktop.html",
+        "preload": "preload/index.cjs"
+      },
+      "publicCloud": {
+        "projectRef": "jbvrdmrkwpznbrvteive",
+        "url": "https://jbvrdmrkwpznbrvteive.supabase.co",
+        "sha256": "c1625c63f1d959f92b3392b47f2fb492452803eedf1c0d1ebc68a1168ab64eda",
+        "resourcePath": "lingjing-cloud-public.json"
+      },
+      "packageName": "lingjing-desktop",
+      "runtimeClosure": {
+        "manifest": "runtime-closure.json",
+        "files": 96,
+        "edges": 156,
+        "sha256": "27bc448cb9fbd386dd7394b4e5c3c3f60c6e1a24ccf6c21c6ca7f3e69e7e4ea5"
+      }
+    },
+    "runtime": {
+      "electron": "44.9.3",
+      "node": "24.22.0",
+      "modules": "149",
+      "napi": "10",
+      "arch": "x64",
+      "tray": {
+        "active": true,
+        "bounds": {
+          "x": 1775,
+          "y": 1150,
+          "width": 33,
+          "height": 49
+        }
+      }
+    },
+    "features": [
+      {
+        "id": "accounts",
+        "commands": [
+          "session",
+          "login",
+          "register",
+          "logout",
+          "profileSave",
+          "passwordChange",
+          "settingsGet",
+          "settingsDefaults",
+          "settingsSave",
+          "backupList",
+          "backupExport",
+          "backupPreview",
+          "backupRestore",
+          "syncStatus",
+          "syncNow",
+          "syncRetry",
+          "cloudPreview",
+          "testNotification",
+          "pointer"
+        ]
+      },
+      {
+        "id": "resources",
+        "commands": [
+          "list",
+          "history",
+          "cloudStatus",
+          "cloudSync",
+          "cloudPull",
+          "resolve",
+          "save",
+          "import"
+        ]
+      },
+      {
+        "id": "companions",
+        "commands": [
+          "list",
+          "get",
+          "combatProfile",
+          "desktopInput",
+          "adopt",
+          "rename",
+          "desktop",
+          "select",
+          "interact",
+          "perform",
+          "appearance"
+        ]
+      },
+      {
+        "id": "battle",
+        "commands": [
+          "overview",
+          "rules",
+          "context",
+          "settleContext",
+          "selectPet",
+          "startTraining",
+          "snapshot",
+          "act",
+          "retryAction",
+          "search",
+          "invitations",
+          "invite",
+          "respondInvite",
+          "cancelInvite",
+          "createRoom",
+          "joinRoom",
+          "sync",
+          "leave",
+          "listReports",
+          "getReport",
+          "retrySettlement",
+          "qaPreset"
+        ]
+      },
+      {
+        "id": "garden",
+        "commands": [
+          "plant",
+          "harvest",
+          "craft",
+          "feed",
+          "garrison",
+          "snapshot",
+          "territoryLocate",
+          "territoryChallenge",
+          "territorySettle"
+        ]
+      },
+      {
+        "id": "discovery",
+        "commands": [
+          "snapshot",
+          "setExploring",
+          "locate",
+          "watch",
+          "stopWatch",
+          "setDemo",
+          "setProvider",
+          "tile",
+          "qaTarget",
+          "begin",
+          "act",
+          "cancel",
+          "confirm",
+          "pokedex",
+          "memories"
+        ]
+      },
+      {
+        "id": "conversations",
+        "commands": [
+          "snapshot",
+          "select",
+          "history",
+          "profile.save",
+          "connection.save",
+          "connection.test",
+          "connection.cancel",
+          "memory.save",
+          "memory.delete",
+          "send",
+          "retry",
+          "cancel",
+          "history.clear",
+          "legacy.preview",
+          "legacy.import"
+        ]
+      }
+    ],
+    "user": {
+      "id": "qa:d24a5113-05d6-42fb-b744-5a3e0a49df6a:local-ff9b2f72-3155-4a79-9cd8-7ed1d4d33026",
+      "subjectId": "qa:d24a5113-05d6-42fb-b744-5a3e0a49df6a:local-ff9b2f72-3155-4a79-9cd8-7ed1d4d33026",
+      "ownerAccountId": "qa:d24a5113-05d6-42fb-b744-5a3e0a49df6a:local-ff9b2f72-3155-4a79-9cd8-7ed1d4d33026",
+      "provider": "local",
+      "account": "qa_exe_1792900186166",
+      "username": "EXE工程验收",
+      "revision": 0,
+      "createdAt": "2026-10-25T03:49:46.173Z",
+      "updatedAt": "2026-10-25T03:49:46.173Z",
+      "dataMode": "simulated"
+    },
+    "scenario": {
+      "id": "unified-battle",
+      "runId": "d24a5113-05d6-42fb-b744-5a3e0a49df6a",
+      "provenance": "simulated",
+      "isolated": true
+    }
+  },
+  "loadedUrl": "file:///C:/Users/ADMINI~1/AppData/Local/Temp/3LAbxBfMfpICNBIMeACK9o5weBj/resources/app.asar/apps/pc-app/dist/ui/index.html#/companions",
+  "passed": true,
+  "completedAt": "2026-10-25T03:49:53.830Z",
+  "ownedProcessTreeStopped": true
+}

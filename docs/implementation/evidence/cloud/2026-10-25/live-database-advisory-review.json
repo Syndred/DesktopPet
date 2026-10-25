@@ -1,0 +1,174 @@
+{
+  "at": "2026-10-25T04:10:43.387Z",
+  "projectRef": "jbvrdmrkwpznbrvteive",
+  "before": {
+    "at": "2026-10-25T04:08:58.198Z",
+    "security": [
+      {
+        "name": "rls_enabled_no_policy",
+        "level": "INFO",
+        "count": 42
+      },
+      {
+        "name": "auth_leaked_password_protection",
+        "level": "WARN",
+        "count": 1
+      }
+    ],
+    "performance": [
+      {
+        "name": "unindexed_foreign_keys",
+        "level": "INFO",
+        "count": 17
+      },
+      {
+        "name": "auth_rls_initplan",
+        "level": "WARN",
+        "count": 2
+      },
+      {
+        "name": "no_primary_key",
+        "level": "INFO",
+        "count": 1
+      },
+      {
+        "name": "unused_index",
+        "level": "INFO",
+        "count": 24
+      }
+    ]
+  },
+  "liveForeignKeyIndexes": {
+    "found": 13,
+    "invalid": 0,
+    "expected": 13,
+    "afterUnindexedForeignKeys": [
+      {
+        "name": "post",
+        "type": "table",
+        "schema": "comparisontext_archive_20261025",
+        "fkey_name": "post_user_id_user_id_fk",
+        "fkey_columns": [
+          2
+        ]
+      },
+      {
+        "name": "role_permission",
+        "type": "table",
+        "schema": "comparisontext_archive_20261025",
+        "fkey_name": "role_permission_permission_id_permission_id_fk",
+        "fkey_columns": [
+          3
+        ]
+      },
+      {
+        "name": "taxonomy",
+        "type": "table",
+        "schema": "comparisontext_archive_20261025",
+        "fkey_name": "taxonomy_user_id_user_id_fk",
+        "fkey_columns": [
+          2
+        ]
+      },
+      {
+        "name": "user_role",
+        "type": "table",
+        "schema": "comparisontext_archive_20261025",
+        "fkey_name": "user_role_role_id_role_id_fk",
+        "fkey_columns": [
+          3
+        ]
+      }
+    ],
+    "source": "infra/supabase/migrations/20261025040919_lingjing_live_foreign_key_indexes.sql"
+  },
+  "remainingAssessments": [
+    {
+      "name": "rls_enabled_no_policy",
+      "assessment": "Deliberate deny-by-default private archive/worker state. No public policy added to silence informational notices."
+    },
+    {
+      "name": "auth_rls_initplan",
+      "assessment": "Actual authenticated-role EXPLAIN shows all three resource policy values are InitPlans; existing SELECT wrappers retained.",
+      "actualPlan": [
+        {
+          "QUERY PLAN": [
+            {
+              "Plan": {
+                "Node Type": "Bitmap Heap Scan",
+                "Parallel Aware": false,
+                "Async Capable": false,
+                "Relation Name": "lingjing_resource_packages",
+                "Alias": "lingjing_resource_packages",
+                "Startup Cost": 1.58,
+                "Total Cost": 3.73,
+                "Plan Rows": 1,
+                "Plan Width": 48,
+                "Recheck Cond": "(auth_user_id = (InitPlan 1).col1)",
+                "Filter": "(((InitPlan 3).col1 IS DISTINCT FROM 'true'::text) AND (owner_account_id = (InitPlan 2).col1))",
+                "Plans": [
+                  {
+                    "Node Type": "Result",
+                    "Parent Relationship": "InitPlan",
+                    "Subplan Name": "InitPlan 1",
+                    "Parallel Aware": false,
+                    "Async Capable": false,
+                    "Startup Cost": 0,
+                    "Total Cost": 0.03,
+                    "Plan Rows": 1,
+                    "Plan Width": 16
+                  },
+                  {
+                    "Node Type": "Result",
+                    "Parent Relationship": "InitPlan",
+                    "Subplan Name": "InitPlan 2",
+                    "Parallel Aware": false,
+                    "Async Capable": false,
+                    "Startup Cost": 0,
+                    "Total Cost": 0.26,
+                    "Plan Rows": 1,
+                    "Plan Width": 32
+                  },
+                  {
+                    "Node Type": "Result",
+                    "Parent Relationship": "InitPlan",
+                    "Subplan Name": "InitPlan 3",
+                    "Parallel Aware": false,
+                    "Async Capable": false,
+                    "Startup Cost": 0,
+                    "Total Cost": 0.03,
+                    "Plan Rows": 1,
+                    "Plan Width": 32
+                  },
+                  {
+                    "Node Type": "Bitmap Index Scan",
+                    "Parent Relationship": "Outer",
+                    "Parallel Aware": false,
+                    "Async Capable": false,
+                    "Index Name": "lingjing_resource_packages_owner_time",
+                    "Startup Cost": 0,
+                    "Total Cost": 1.26,
+                    "Plan Rows": 2,
+                    "Plan Width": 0,
+                    "Index Cond": "(auth_user_id = (InitPlan 1).col1)"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "auth_leaked_password_protection",
+      "assessment": "Official Supabase documentation requires Pro or above. Existing Free plan unchanged; warning remains disclosed, not silently marked fixed.",
+      "source": "https://supabase.com/docs/guides/auth/password-security"
+    },
+    {
+      "name": "unused_index",
+      "assessment": "Newly deployed/low traffic indexes and untouched archived indexes. No drop based solely on zero counters."
+    }
+  ],
+  "archiveChanged": false,
+  "scope": "Live index/schema advisor verification; no load-test or zero-warning claim."
+}

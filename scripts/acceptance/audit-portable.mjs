@@ -23,7 +23,9 @@ try {
   const manifest = JSON.parse(extract('apps/pc-app/dist/build-manifest.json').toString('utf8'));
   proof.build = manifest;
   assert.deepEqual(manifest.sourceDirtyFiles, [], 'Final package must originate from a committed clean build');
-  execFileSync('git', ['diff', '--quiet', manifest.sourceCommit, '--', 'apps/pc-app/runtime', 'apps/pc-app/ui/src', 'packages/shared-types', 'package.json', 'package-lock.json', 'electron.vite.config.ts', 'scripts/desktop', 'scripts/release', 'config']);
+  // Non-shipped integration notes can be updated while a frozen candidate compresses.
+  // Every actually shipped runtime/build file is still compared byte-for-byte below.
+  execFileSync('git', ['diff', '--quiet', manifest.sourceCommit, '--', 'apps/pc-app/runtime', 'apps/pc-app/ui/src', 'packages/shared-types', 'package.json', 'package-lock.json', 'electron.vite.config.ts', 'scripts/desktop', 'scripts/release', 'config', ':(glob,exclude)apps/pc-app/runtime/**/*.md']);
   const closureBytes = extract('apps/pc-app/dist/runtime-closure.json'), closure = JSON.parse(closureBytes);
   assert.equal(hash(closureBytes), manifest.runtimeClosure.sha256); assert.equal(closure.files.length, manifest.runtimeClosure.files);
   for (const file of closure.files) { assert.ok(entries.includes(file.path), `Required runtime dependency missing: ${file.path}`); assert.equal(hash(extract(file.path)), file.sha256, `Runtime closure hash mismatch: ${file.path}`); }

@@ -16,7 +16,7 @@ export function companionDocument(envelope,owner) {
 export async function prepareBattleSettlement({envelope,owner,session,actions=[]}) {
   const sessionId=session.mode==='friend'?session.room.id:session.id,now=Date.parse(session.endedAt),actionId=`battle:${sessionId}:${owner}`;
   const growth=await awardBattleResult({envelope,ownerAccountId:owner,petId:session.player.petId,sessionId,won:session.winner==='player',mode:session.mode,actionId,now});
-  const receiptId=sessionId,input={actionId:`${actionId}:seeds`,source:'battle',receiptId};
+  const receiptId=sessionId,input={actionId:`battle-seeds:${session.mode}:${sessionId}`,source:'battle',receiptId};
   const seedHash=await digest({source:'battle',receipt:receiptId}),cropIds=Object.keys(catalog.CROPS);
   const verified={ownerAccountId:owner,id:receiptId,source:'battle',cropId:cropIds[parseInt(seedHash.slice(0,8),16)%cropIds.length]};
   const source=structuredClone(growth.envelope);source.data.modules.garden??=emptyGarden(owner);

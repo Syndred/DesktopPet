@@ -61,5 +61,5 @@ export async function verifyPackage(client:SupabaseClient,row:Record<string,unkn
     if(descriptor.format==='lingjing.character'){if(descriptor.version!==1||descriptor.kind!=='spritesheet'||descriptor.image!==document.entryAsset)invalid();}
     else if(!object(descriptor.meta)||!object(descriptor.frames)||descriptor.meta.image!==document.entryAsset)invalid();
   }
-  return {resourceId:row.resource_id,manifestSha256:row.manifest_sha256};
+  return {resourceId:row.resource_id,manifestSha256:row.manifest_sha256,document};
 }
