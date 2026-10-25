@@ -180,7 +180,7 @@
     "Main-coordinator final business freeze/integration, one full combined regression and final portable package",
     "Coordinator-owned retirement of old SQL/function entry points after 04/08 acceptance and MCP version alignment"
   ],
-  "updatedAt": "2026-10-25T03:55:24.704Z",
+  "updatedAt": "2026-10-25T04:05:14.112Z",
   "approvedIntegrations": {
     "accounts": "45b857d",
     "resources": "4e8fdf8",
@@ -198,7 +198,11 @@
     "individuallyInventoriedFilesRemoved": 68,
     "oldBundled3DAssetsRemoved": true,
     "originalAttributionPreserved": "docs/implementation/legacy-model-attribution.json",
-    "qualityGates": "One maintained CI workflow with current domain native and actual GUI/EXE gates; retired in-memory/static prototype counts."
+    "qualityGates": "One maintained CI workflow with current domain native and actual GUI/EXE gates; retired in-memory/static prototype counts.",
+    "retiredHistoricalPortableVerifiers": [
+      "scripts/acceptance/portable-independent.mjs",
+      "scripts/acceptance/portable-launch.mjs"
+    ]
   },
   "packageCandidate": {
     "version": "engineering-rc-09af97f",
@@ -242,5 +246,23 @@
       "releaseDirectory": "releases/engineering-rc-7d5ef74"
     }
   ],
-  "cleanupCloudMatrix": "docs/implementation/cleanup/cloud-retirement-consumers.json"
+  "cleanupCloudMatrix": "docs/implementation/cleanup/cloud-retirement-consumers.json",
+  "integrationChecks": [
+    {
+      "id": "tray-cloud-recall-contract",
+      "status": "review-on-final-business-freeze",
+      "observedMainSource": "fd932fd3eb8e77733e284bb91ddc926930b600ac",
+      "caller": "apps/pc-app/runtime/main/index.ts:196",
+      "provider": "apps/pc-app/runtime/features/companions/index.cjs:86",
+      "finding": "Current main cloud recallAll returns a Promise/durable intent; the tray callback invokes it without awaiting and closes windows immediately. Verify intended queued recall feedback and owner/session-change behavior with final 02 contract; do not infer a synchronous cloud confirmation.",
+      "ownership": "Public host review only; no domain WIP changed"
+    }
+  ],
+  "lastCoordinatorObservation": {
+    "threadId": "01a1704b-e200-7090-9d17-958218c80f42",
+    "turnId": "01a170c3-9680-71c0-9241-ea88e32e7587",
+    "status": "inProgress",
+    "revision": 17,
+    "scope": "Authoritative live wait_threads snapshot; final business freeze has not been issued."
+  }
 }
