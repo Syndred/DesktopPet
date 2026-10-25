@@ -1,0 +1,36 @@
+{
+  "at": "2026-10-25T04:34:13.643Z",
+  "sourceBeforeRetirement": "39fb4608554918cc087acedb17a1294eeaa071ca",
+  "recovery": {
+    "path": "C:/Users/Administrator/.codex/backups/DesktopPet/2026-10-25/cloud-upgrade-pre-retirement.bundle",
+    "bytes": 334590231,
+    "sha256": "a1295b814f6ccb2d3d53607235ddb11a61725d61c6fef538452f7ae9904c5e8c",
+    "gitBundleVerify": "passed; complete history",
+    "trackedOnly": true,
+    "untrackedDesignsUntouched": true
+  },
+  "retired": [
+    {
+      "file": "apps/pc-app/runtime/features/accounts/remote.cjs",
+      "bytes": 5202,
+      "sha256": "fbd8efc100259c42a00f440c18a3cc81c6fb9917dc549abe485fac05b2fc6308",
+      "replacement": "features/accounts/supabase-remote.cjs",
+      "consumersUpdated": [
+        "features/accounts/index.cjs default Auth",
+        "features/companions/tests/accounts-boundary.test.cjs disabled modern SDK"
+      ],
+      "reason": "Old runtime sessionToken network adapter and explicit legacy-auth escape hatch have no remaining product caller after actual new Auth/native acceptance",
+      "preserved": [
+        "original local account password verification",
+        "read-only original JSON import",
+        "owner aliases, pet IDs and all original data"
+      ]
+    }
+  ],
+  "checks": {
+    "localOriginalAccountsBoundary": "passed actual SQLite/original JSON preservation with modern disabled network wrapper"
+  },
+  "remaining": [
+    "04 old duel transport consumers and obsolete SQL/Edge deployment drafts; retire after the new native flow is accepted"
+  ]
+}

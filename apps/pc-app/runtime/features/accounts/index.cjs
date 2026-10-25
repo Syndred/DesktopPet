@@ -1,6 +1,5 @@
 const { migrations } = require("./schema.cjs");
 const { AccountsService } = require("./service.cjs");
-const { createRemoteAdapter } = require("./remote.cjs");
 const { SupabaseRemote } = require('./supabase-remote.cjs');
 const { createDesktopHost } = require("./desktop-host.cjs");
 const { defaultSettings } = require("./settings.cjs");
@@ -16,8 +15,7 @@ module.exports = {
       productionDirectories: ["Lingjing", "qingpet-desktop-runtime", "qingpet-lord-3d"].map(name => join(electron.app.getPath("appData"), name)) });
     const host = createDesktopHost(services, electron);
     const accounts = new AccountsService({ services, host, qaScenario,
-      remote: qaScenario ? qaRemoteBoundary() : process.env.LINGJING_LEGACY_AUTH==='1'
-        ?createRemoteAdapter(services.legacy?.onlineDuelService):new SupabaseRemote({userData:services.paths.userData}) });
+      remote: qaScenario ? qaRemoteBoundary() : new SupabaseRemote({userData:services.paths.userData}) });
     const activeHost = accounts.host;
     services.session.setAdapter(accounts);
     services.provide("accounts", accounts);

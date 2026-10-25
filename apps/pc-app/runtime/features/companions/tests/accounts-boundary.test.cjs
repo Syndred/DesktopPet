@@ -7,7 +7,7 @@ const { join, resolve, dirname, basename } = require('node:path');
 const { RuntimeDataStore } = require('../../../services/runtime-data-store.cjs');
 const { createServices } = require('../../../core/services.cjs');
 const { AccountsService } = require('../../accounts/service.cjs');
-const { createRemoteAdapter } = require('../../accounts/remote.cjs');
+const { SupabaseRemote } = require('../../accounts/supabase-remote.cjs');
 const { migrations: accountMigrations } = require('../../accounts/schema.cjs');
 const { migrateCompanions } = require('../migrations.cjs');
 const feature = require('../index.cjs');
@@ -26,7 +26,7 @@ test('real accounts aliases and verified local login isolate 2D instances while 
   for (const migration of conversations.migrations) db.exec(migration.sql);
   migrateCompanions(db);
   const services = createServices({ db, legacy: { runtimeDataStore: legacy }, paths: { userData: folder, legacyDataFile: file }, windows: {}, safeStorage: undefined });
-  const accounts = new AccountsService({ services, remote: createRemoteAdapter({ enabled: false }) });
+  const accounts = new AccountsService({ services, remote: new SupabaseRemote({userData:folder,config:null}) });
   services.session.setAdapter(accounts); services.provide('accounts', accounts);
   const registration = feature.register(services);
   for (const [command, handler] of Object.entries(registration.commands)) services.ipc.handle(`companions:${command}`, handler);

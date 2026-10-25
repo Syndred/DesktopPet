@@ -38,7 +38,7 @@ close-to-tray、窗口数量、置顶、穿透、安静时段和定位权限接�
 
 ## 旧入口退役
 
-当前分支仍有 LINGJING_LEGACY_AUTH 的显式旧适配分支和对局 QA/历史消费者；它们不是新协议示例。待主协调完成新 04/08 验收后统一退役旧函数/SQL及其测试。精确消费者与端口替换见 docs/implementation/cleanup/cloud-retirement-consumers.json。不得通过旧 SQL 的 db push/reset、repair 历史或删除原档来完成退役。
+旧账号 sessionToken 网络适配和显式旧登录开关已退役。普通云账号统一使用 SupabaseRemote，本机旧账号继续在本机验证原密码和导入原档。对局旧云端消费者与旧函数/SQL由主协调统一核对退役，精确清单见 docs/implementation/cleanup/cloud-retirement-consumers.json。不得通过旧 SQL 的 db push/reset、repair 历史或删除原档来完成退役。
 
 ## 已完成验证
 

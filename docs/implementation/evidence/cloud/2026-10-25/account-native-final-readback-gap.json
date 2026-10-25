@@ -1,0 +1,14 @@
+{
+  "at": "2026-10-25T04:31:07Z",
+  "scope": "Coordinator independent query_only SQLite and real Supabase readback after the author two-Electron run; profiles unchanged",
+  "owner": "account:bb3a94fa-1490-47d8-bb2b-4476eee6c766",
+  "authorEvidence": "docs/implementation/evidence/accounts/cloud-2026-10-25/dual-electron-full.json",
+  "retainedAuthorChecks": 9,
+  "cloud": { "revision": 5, "checksum": "491f0674f642ebb1744d0c5c9fd6a8d6321cde94c17164c87ecabd86622fb77b" },
+  "deviceA": { "revision": 5, "volume": 54, "syncEnabled": true, "quickCheck": "ok" },
+  "deviceB": { "revision": 4, "volume": 43, "syncEnabled": true, "quickCheck": "ok" },
+  "petAndInventoryEqual": true,
+  "remaining": "Final peer local application/equality is not proved. Current periodic account task flushes retries but does not pull newer clean-peer state. Add safe clean-peer readback without replacing dirty/conflicted data, then actual final A/B SQLite plus cloud revision must match.",
+  "acceptedAsFinalPeerEquality": false,
+  "originalProfilesModifiedByCoordinator": false
+}
