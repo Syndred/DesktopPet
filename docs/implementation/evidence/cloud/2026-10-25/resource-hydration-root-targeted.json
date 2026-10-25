@@ -1,0 +1,18 @@
+{
+  "at": "2026-10-25T05:52:20.889Z",
+  "sourceCommit": "35ee1fe94f61bb7f33da44cdcf41d270764643f5",
+  "implementationCommit": "f36d344971423286c8040eb1f341ed692ec7cad8",
+  "scope": "Independent coordinator targeted resource guard/automatic sync/shared checkpoints: actual SQLite and production adapters with simulated provider; not actual HTTPS or native GUI evidence",
+  "tests": 48,
+  "passed": 48,
+  "failed": 0,
+  "tap": {
+    "path": "artifacts/cloud-upgrade/2026-10-25/resource-hydration-root-targeted.tap",
+    "bytes": 4675,
+    "sha256": "a11e47b886337c08b7333c66b727d020f6f3c7ebeda5165d52e08141898915f8"
+  },
+  "runtime": {
+    "node": "24.21.0",
+    "sqlite": "3.53.4"
+  }
+}
