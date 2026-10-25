@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-25T11:03:18.558Z",
+  "updatedAt": "2026-10-25T12:32:38.884Z",
   "status": "in-progress",
   "qaThreadId": "01a172b4-d7f0-7213-9a40-092418ee776b",
   "soleNativeInputOwner": "01a172b4-d7f0-7213-9a40-092418ee776b",
@@ -111,6 +111,24 @@
       "relatedFixCommit": "a4ae503b3520ec8742dceb4ba4189be0addde35e",
       "actualUiRetestPassed": false,
       "activeResponsibleThreadId": "01a172b4-16fa-7461-b53c-317ccbd8e3eb"
+    },
+    {
+      "issueId": "QA-010",
+      "owner": "05",
+      "activeResponsibleThreadId": "01a172b5-695c-7712-9047-53a020eae0c0",
+      "fixCommit": "98e6c32f9d62359da0d498d46aba812d25f971f1",
+      "mergeCommit": "066f61df2d9b6ef8977756c8b0700c1ba5b01681",
+      "status": "source-fixed; final candidate native retest pending",
+      "actualUiRetestPassed": false,
+      "severity": "P2"
+    },
+    {
+      "issueId": "QA-011",
+      "owner": "06",
+      "activeResponsibleThreadId": "01a172b4-c29e-7201-80c9-4102317bcacf",
+      "status": "actual old312 native failure; targeted source fix in progress",
+      "actualUiRetestPassed": false,
+      "severity": "P2"
     }
   ],
   "integrationOwner": "01",
@@ -177,14 +195,20 @@
       "wildEncounter": "03",
       "independentAcceptance": "09"
     },
-    "status": "implementation-in-progress; not accepted in candidate 312e5fe"
+    "status": "source-integrated-and-real-cloud-deployed; final portable UI acceptance pending",
+    "uiUx": {
+      "instruction": "Validate each button and complete real-user flows; correct unreasonable UI/UX and retest in the same final portable",
+      "requiresActualEvidence": true,
+      "source": "Direct human steering in active coordinator chat on 2026-10-25"
+    }
   },
   "nextCandidate": {
-    "status": "source-integration-in-progress",
+    "status": "independent-packaging-environment-repair; QA011 targeted source fix in progress",
     "requiredContract": "docs/implementation/companions-global-serial-contract.json",
     "sourceFixes": {
       "QA008": "02ea2dac317b3aaaee12cf9517b456450391cf9c",
-      "perLaunchPortableExtraction": "a4ae503b3520ec8742dceb4ba4189be0addde35e"
+      "perLaunchPortableExtraction": "a4ae503b3520ec8742dceb4ba4189be0addde35e",
+      "QA010": "066f61df2d9b6ef8977756c8b0700c1ba5b01681"
     },
     "rootTargetedVerification": {
       "QA008": {
@@ -205,6 +229,18 @@
       "description": "Controlled same-profile hot duplicate wrapper exited9 without another main process and did not restore the original minimized window; original payload/ASAR remained intact",
       "evidence": "docs/implementation/qa/2026-10-25-user-acceptance/rounds/candidate-312e5fe-524fd56d/evidence/qa006-hot-captured-01/summary.json",
       "status": "awaiting actual next portable retest; packaging fix source integrated; cause not asserted from static evidence alone"
+    },
+    "previousSourceFreeze": "066f61df2d9b6ef8977756c8b0700c1ba5b01681",
+    "sourceGateEvidence": "docs/implementation/qa/2026-10-25-user-acceptance/integration-gates-066f61d.json",
+    "cloudDeployment": "docs/implementation/evidence/cloud/2026-10-25/global-serial-deployment.json",
+    "liveConcurrency": "docs/implementation/evidence/cloud/2026-10-25/global-serial-live-concurrency.json",
+    "packaging": {
+      "firstAttempt": "rejected",
+      "source": "066f61df2d9b6ef8977756c8b0700c1ba5b01681",
+      "reason": "5 of 7 runtime external imports required missing transitive packages and attempted development node_modules fallback",
+      "evidence": "C:/Users/Administrator/Desktop/project/DesktopPet-fresh-worktrees/01/artifacts/foundation/user-acceptance/user-acceptance-066f61d/dependency-gap-summary.json",
+      "remediation": "01 authorized to create independent detached worktree with physical lock-bound npm ci dependencies; root and existing junctions preserved",
+      "finalCandidateDelivered": false
     }
   },
   "activeTeam": {

@@ -1,0 +1,128 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "066f61df2d9b6ef8977756c8b0700c1ba5b01681",
+  "verify": {
+    "exitCode": 0,
+    "passedTests": 46,
+    "testFiles": 10,
+    "lint": true,
+    "types": true,
+    "log": "artifacts/qa/user-acceptance/global-serial/integration-066f61d/verify.log"
+  },
+  "native": {
+    "exitCode": 0,
+    "passedTests": 373,
+    "failedTests": 0,
+    "skippedTests": 0,
+    "log": "artifacts/qa/user-acceptance/global-serial/integration-066f61d/native.log"
+  },
+  "cloud": {
+    "exitCode": 0,
+    "passedNodeTests": 86,
+    "nodeTestFiles": 24,
+    "passedDenoValidators": 5,
+    "migrations": 23,
+    "strictMigrationGate": true,
+    "sourceComparison": true,
+    "log": "artifacts/qa/user-acceptance/global-serial/integration-066f61d/cloud.log",
+    "sourceReport": "artifacts/foundation/cloud-engineering/cloud-source-check.json",
+    "sourceCheckStartedAt": "2026-10-25T12:12:50.545Z"
+  },
+  "actualPortableUserAcceptance": false,
+  "initialPackageRejected": true,
+  "packagingBlocker": "Shared junction caused npm dependency collection to omit runtime transitive packages; isolated extraction denied outside-app fallback. Independent physical build environment required.",
+  "realCloudEvidence": [
+    "docs/implementation/evidence/cloud/2026-10-25/global-serial-deployment.json",
+    "docs/implementation/evidence/cloud/2026-10-25/global-serial-live-concurrency.json"
+  ],
+  "preservation": {
+    "stage": "After B/C real HTTP concurrency and PG rollback proof, before the final candidate UI run",
+    "originalRows": 636,
+    "missingRows": 0,
+    "changedRows": 0,
+    "tables": [
+      {
+        "table": "public.lingjing_accounts",
+        "before": 55,
+        "after": 57,
+        "missing": 0,
+        "changed": 0,
+        "added": 2
+      },
+      {
+        "table": "public.lingjing_saves",
+        "before": 40,
+        "after": 42,
+        "missing": 0,
+        "changed": 0,
+        "added": 2
+      },
+      {
+        "table": "public.lingjing_save_actions",
+        "before": 322,
+        "after": 326,
+        "missing": 0,
+        "changed": 0,
+        "added": 4
+      },
+      {
+        "table": "public.lingjing_save_archives",
+        "before": 24,
+        "after": 24,
+        "missing": 0,
+        "changed": 0,
+        "added": 0
+      },
+      {
+        "table": "lingjing_private.owned_pet_ids",
+        "before": 62,
+        "after": 66,
+        "missing": 0,
+        "changed": 0,
+        "added": 4
+      },
+      {
+        "table": "lingjing_private.authority_fragments",
+        "before": 67,
+        "after": 69,
+        "missing": 0,
+        "changed": 0,
+        "added": 2
+      },
+      {
+        "table": "lingjing_discovery.permits",
+        "before": 2,
+        "after": 2,
+        "missing": 0,
+        "changed": 0,
+        "added": 0
+      },
+      {
+        "table": "lingjing_discovery.captures",
+        "before": 1,
+        "after": 1,
+        "missing": 0,
+        "changed": 0,
+        "added": 0
+      },
+      {
+        "table": "lingjing_discovery.location_proofs",
+        "before": 56,
+        "after": 56,
+        "missing": 0,
+        "changed": 0,
+        "added": 0
+      },
+      {
+        "table": "lingjing_discovery.location_test_grants",
+        "before": 7,
+        "after": 9,
+        "missing": 0,
+        "changed": 0,
+        "added": 2
+      }
+    ],
+    "privateProof": "artifacts/qa/user-acceptance/global-serial/post-concurrency-preservation.json"
+  },
+  "recordedAt": "2026-10-25T12:34:09.370Z"
+}
