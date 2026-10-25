@@ -1,0 +1,109 @@
+{
+  "at": "2026-10-25T02:48:53.501Z",
+  "runtimeSourceCommit": "8b610bf75d7b7f73f15a440b24174aec54d2cb74",
+  "projectRef": "jbvrdmrkwpznbrvteive",
+  "dataSource": {
+    "authority": "live",
+    "simulated": false,
+    "transport": "actual Supabase HTTPS with official SDK",
+    "topology": "Two isolated SQLite client roots in one validator process; not dual Electron or two physical devices"
+  },
+  "clients": [
+    {
+      "label": "A",
+      "ownerAccountId": "account:2851a984-dacc-4548-865e-1810bc3ab384",
+      "authUserId": "ecf7ccab-f4b2-4cb5-b0ab-a4613fe28886",
+      "deviceId": "0875b3b5-ba44-4f77-a6bb-c42df672e801",
+      "sessionId": "50280ab0-8271-4a3f-8789-5dd8f4e95533"
+    },
+    {
+      "label": "B",
+      "ownerAccountId": "account:2851a984-dacc-4548-865e-1810bc3ab384",
+      "authUserId": "ecf7ccab-f4b2-4cb5-b0ab-a4613fe28886",
+      "deviceId": "1f941766-a026-463e-a64e-a8d585db1d00",
+      "sessionId": "1aed22ea-b907-4cf6-911f-1d8b9b071b61"
+    },
+    {
+      "label": "OTHER",
+      "ownerAccountId": "account:36de5656-7f93-4def-9a5e-68cc4b43e27f",
+      "authUserId": "401cdef0-f4e1-470a-bc89-789f92dd242f",
+      "deviceId": "a6d691c5-0511-4687-90f8-83f4a2ef2b8e",
+      "sessionId": "09ee0c50-3129-4bd0-868d-30de6e9ce138"
+    }
+  ],
+  "passed": true,
+  "resourceId": "ea939131-eb50-4cde-adcc-c51241100c34",
+  "contentHash": "94e0af4b98334788f9f2357fde6c84c70cc051684760d05c9ca4eebf97a3977a",
+  "manifestSha256": "227446e353d0eefbd752ce7feafaa2e185f83ef8c2e2e7546fdfa7b70d13ea01",
+  "files": [
+    {
+      "key": "character.json",
+      "bytes": 8897,
+      "sha256A": "ac176d23703fd8d9de97a23574966b44728657ceb7c32bb3fcea80469cfa9954",
+      "sha256B": "ac176d23703fd8d9de97a23574966b44728657ceb7c32bb3fcea80469cfa9954"
+    },
+    {
+      "key": "sprites.png",
+      "bytes": 1802491,
+      "sha256A": "aa59df3af26d4f7faf9272193b7d1d35ed6d2f22ebb6b294a5a2853f0539f693",
+      "sha256B": "aa59df3af26d4f7faf9272193b7d1d35ed6d2f22ebb6b294a5a2853f0539f693"
+    }
+  ],
+  "upload": [
+    {
+      "resourceId": "ea939131-eb50-4cde-adcc-c51241100c34",
+      "manifestSha256": "227446e353d0eefbd752ce7feafaa2e185f83ef8c2e2e7546fdfa7b70d13ea01",
+      "verified": true,
+      "archiveOnly": false
+    }
+  ],
+  "download": [
+    {
+      "resourceId": "ea939131-eb50-4cde-adcc-c51241100c34",
+      "archiveOnly": false,
+      "restored": true,
+      "repaired": false,
+      "manifestSha256": "227446e353d0eefbd752ce7feafaa2e185f83ef8c2e2e7546fdfa7b70d13ea01",
+      "verified": true
+    }
+  ],
+  "otherAccount": {
+    "storageDenied": true,
+    "status": "404",
+    "indexRows": 0
+  },
+  "faultRecovery": {
+    "injection": "One SDK fetch deliberately unavailable, then actual provider HTTPS; no simulated server",
+    "verifiedDuringFault": false,
+    "sqliteActuallyClosedAndReopened": true,
+    "manifestStableAcrossRetry": true,
+    "failedAttempts": 1
+  },
+  "sqlite": {
+    "a": 1,
+    "b": 1
+  },
+  "coordinatorReadback": {
+    "at": "2026-10-25T02:52:41.017Z",
+    "kind": "Independent Supabase SQL index and storage.objects readback",
+    "index": [
+      {
+        "resource_id": "ea939131-eb50-4cde-adcc-c51241100c34",
+        "owner_account_id": "account:2851a984-dacc-4548-865e-1810bc3ab384",
+        "auth_user_id": "ecf7ccab-f4b2-4cb5-b0ab-a4613fe28886",
+        "content_hash": "94e0af4b98334788f9f2357fde6c84c70cc051684760d05c9ca4eebf97a3977a",
+        "manifest_sha256": "227446e353d0eefbd752ce7feafaa2e185f83ef8c2e2e7546fdfa7b70d13ea01",
+        "manifest_bytes": 7237,
+        "total_bytes": 1811388,
+        "resource_kind": "spritesheet"
+      }
+    ],
+    "objects": [
+      {
+        "objects": 3,
+        "total_object_bytes": "1818625",
+        "correct_auth_uid": true
+      }
+    ]
+  }
+}

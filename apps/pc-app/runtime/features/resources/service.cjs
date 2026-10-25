@@ -45,6 +45,8 @@ class ResourcesService {
     return Promise.all(resources.map(resource => this.withAvailability(owner, resource)));
   }
   async get(owner, id) { this.owner(owner); return this.withAvailability(owner, this.repository.get(owner, this.canonicalId(id))); }
+  /** Historical metadata stays readable, but never enters the active renderer/import parser. */
+  listArchived(owner) { return require('./history.cjs').listHistoricalResources(this, owner); }
   /** Synchronous adapters for callers already inside the shared SQLite transaction. */
   getRecord(owner, id) { this.owner(owner); return withRosterElement(normalize2DResource(this.repository.get(owner, this.canonicalId(id)))); }
   importFile(owner, filePath, metadata = {}) {

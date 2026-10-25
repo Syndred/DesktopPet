@@ -7,11 +7,7 @@
   },
   "files": [
     "apps/pc-app/dist/**/*",
-    "apps/pc-app/runtime/core/**/*.cjs",
-    "apps/pc-app/runtime/features/**/*.cjs",
-    "apps/pc-app/runtime/features/**/*.json",
     "apps/pc-app/runtime/features/*/assets/**/*",
-    "apps/pc-app/runtime/services/**/*.cjs",
     "apps/pc-app/runtime/assets/brand/**/*",
     "apps/pc-app/runtime/assets/illustrations/**/*",
     "!**/*.test.cjs",
@@ -25,6 +21,10 @@
     "!**/write-evidence.mjs",
     "!**/prepare-*-fixture.mjs",
     "!**/assets/models/**/*",
+    "!node_modules/@qingpet/game-engine/**/*",
+    "!node_modules/@qingpet/supabase-edge/**/*",
+    "!node_modules/@qingpet/observability/**/*",
+    "!node_modules/@qingpet/pc-app/**/*",
     "!apps/pc-app/runtime/features/resources/legacy/**/*",
     "!node_modules/better-sqlite3/prebuilds/linux*.node",
     "!node_modules/better-sqlite3/prebuilds/darwin*.node",
@@ -91,5 +91,11 @@
   "npmRebuild": false,
   "asarUnpack": [
     "node_modules/better-sqlite3/prebuilds/win32-x64.node"
+  ],
+  "extraResources": [
+    {
+      "from": "config/lingjing-cloud-public.json",
+      "to": "lingjing-cloud-public.json"
+    }
   ]
 }

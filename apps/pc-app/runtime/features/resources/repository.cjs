@@ -21,6 +21,7 @@ const migrations = [{
     PRIMARY KEY(resource_id, owner_account_id)
   );`,
 }];
+migrations.push(...require('./cloud-schema.cjs').migrations);
 /** The caller owns the connection and migration executor. No second application database. */
 class ResourcesRepository {
   constructor(db) { this.db = db; }

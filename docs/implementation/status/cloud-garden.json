@@ -1,0 +1,81 @@
+{
+  "module": "garden",
+  "branch": "codex/lingjing-garden",
+  "commit": "see git log for this file",
+  "goalStatus": "active",
+  "scope": "Cloud territorial authority, canonical garden economy and atomic per-pet inventory integration",
+  "baseline": "46abf416e0500b53ef32fc29b441d923ef5a6a80",
+  "contracts": [
+    "docs/implementation/cloud-upgrade-2026-10-25.md",
+    "docs/implementation/cloud-garden-contract.md",
+    "docs/implementation/cloud-identity-contract-2026-10-25.md"
+  ],
+  "migrations": [
+    {
+      "path": "infra/supabase/migrations/20261025024617_lingjing_territory_authority.sql",
+      "generatedBy": "Supabase CLI 2.122.0 migration new",
+      "status": "ready-for-coordinator-review-and-apply",
+      "deployed": false,
+      "replacesUndeployedDraft": "20261025020010"
+    }
+  ],
+  "checks": [
+    "origin fetched; origin/main4786f97 is included",
+    "10 local domain and real08 identity/CAS non-spatial PostgreSQL checks passed; no PostGIS substitute used",
+    "400 ordered element/action-pair parity cases and canonical04 source SHA verified",
+    "Deno2.9.6 check --no-config passed for both complete Edge entrypoints",
+    "Actual02 awardBattleResult and applyGrowthEffect consumed; long160-character owner supported",
+    "03 take_location consumed inside owner-first world SQL transaction, per-purpose proof, isolated QA world namespace",
+    "Unified lingjing_saves/commit_authority consumed in the same transaction; no05 new-pet registration",
+    "native dependency checkpoint retained; no shared node_modules rebuild"
+  ],
+  "realCloudEvidence": {
+    "projectRef": "jbvrdmrkwpznbrvteive",
+    "readOnlyMetadata": true,
+    "deployedByThisModule": false,
+    "territoryAcceptance": false
+  },
+  "preservation": {
+    "legacyOwnerTextIds": true,
+    "secondInventoryStore": false,
+    "privateGardenUnaffectedByWorldOwnership": true,
+    "productionDataModified": false,
+    "battleUiTouched": false
+  },
+  "cleanupCandidates": [
+    {
+      "path": "Old garden-sync body session_token authentication",
+      "replacement": "08 withActor and narrow server-only authority RPC",
+      "status": "replaced-in-new-entrypoint"
+    },
+    {
+      "path": "Initial generated battle-core.mjs copy",
+      "replacement": "04 shared battle-core.js direct import; desktop generatedCJS",
+      "status": "removed"
+    }
+  ],
+  "remaining": [
+    "Coordinator review/apply PostGIS migration and deploy both Edge functions",
+    "Wire desktop cloudActor transport, exact request journal and remote battle resume/context/act/settle without04UI change",
+    "Adapt live HTTPS verifier to fresh03 signed per-purpose proofs and legal02 adopt API; run real independent-client/concurrency/failure/retry/restart evidence",
+    "Unified Electron build and independent coordinator acceptance"
+  ],
+  "phase": "server-checkpoint-ready-for-coordinator-review;desktop-and-live-acceptance-active",
+  "dependencyCheckpoint": "b40af0efcf6062ddc2e8c360523c996fc91ebc0a",
+  "identityCheckpoint": "ee36030ad37614ac321b94ae4ee4169d705f1165",
+  "code": {
+    "territoryDomain": "infra/supabase/functions/territory-sync/domain.mjs",
+    "territoryHandler": "infra/supabase/functions/territory-sync/handler.mjs",
+    "canonicalEngine": "infra/supabase/functions/_shared/battle-core.js",
+    "engineDeploymentAdapter": "scripts/battle/build-core.mjs",
+    "edgeDistribution": "scripts/acceptance/cloud-territory/build-edge.mjs",
+    "newKernelWritten": false,
+    "battleUiTouched": false
+  },
+  "integrationRequests": {
+    "accounts08": "Consumed deployed protected CAS3474905; lock_save_owner -> domain rows -> commit_authority. No runtime_account_saves or body session_token in new entrypoints.",
+    "companions02": "Consumed9497e8d pure adapter and canonical growth. Use deployed67546f5/d7b4b07 companions-sync for normal live adoption;05 never registers pets.",
+    "discovery03": "Consumed live03 take_location schema+guard; purpose read/challenge/settle and reference bound in same transaction. Main locationProofs.prove supplies opaque proofs.03 capture should call4-argument capture_context inside its own commit."
+  },
+  "serverDeployable": true
+}

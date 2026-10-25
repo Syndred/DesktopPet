@@ -1,4 +1,5 @@
-import type { BattleParticipant, BattleRound, BattleStatus } from '../../../../../../packages/shared-types/src/features/battle';
+import type { BattleParticipant, BattleRound, BattleRulesProfile, BattleStatus } from '../../../../../../packages/shared-types/src/features/battle';
+import type { ElementType } from '../../../../../../packages/shared-types/src/battle';
 
 export const elements = {
   metal: { label: '金', symbol: '✦', color: '#a28a3e', hint: '易伤：受到的伤害每层 ×1.5' },
@@ -10,6 +11,15 @@ export const elements = {
 export const actionLabels = { normal_attack: '普通攻击', element_attack: '属性攻击', dodge: '闪避', ultimate: '大招', stunned: '无法行动' };
 export const statusLabels: Record<string, string> = { burn: '燃烧', freeze: '冻结', parasite: '寄生', vulnerability: '易伤', petrify: '迟钝' };
 export const modeLabels: Record<string, string> = { training: '训练', friend: '好友对战', wild: '野外挑战', territory: '领地挑战', duel: '旧版对战', capture: '旧版捕捉' };
+/** Icons retain player/enemy order; only the authoritative counter direction changes. */
+export function battleAffinity(player: ElementType, enemy: ElementType, rules: BattleRulesProfile) {
+  const direction = player !== enemy && rules.advantage?.[player] === enemy ? 'right'
+    : player !== enemy && rules.advantage?.[enemy] === player ? 'left' : 'neutral';
+  return { direction, symbol: direction === 'right' ? '→' : direction === 'left' ? '←' : '—',
+    label: direction === 'right' ? `${elements[player].label}克制${elements[enemy].label}，从左向右，克制 ×1.2`
+      : direction === 'left' ? `${elements[enemy].label}克制${elements[player].label}，从右向左，受制 ×0.8`
+        : `${elements[player].label}与${elements[enemy].label}无克制，伤害 ×1` };
+}
 export const statusLabel = (status: BattleStatus) => `${statusLabels[status.type] || status.type}${(status.stacks || 1) > 1 ? ` ×${status.stacks}` : ''} · ${status.duration} 回合`;
 export function petName(pet: BattleParticipant | undefined) {
   if (pet?.petId === 'waiting-peer') return '对手未加入';

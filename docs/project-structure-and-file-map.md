@@ -1,98 +1,29 @@
-﻿# 灵境项目目录与文件用途
+# 灵境项目目录与文件用途
 
-更新时间：2026-03-08
+更新于 2026-10-25。正式架构与运行命令见 [README](../README.md)、[运行配置](runtime-config.md) 和 [发布说明](release-runbook.md)。
 
-## 1. 根目录
+| 路径 | 用途 |
+| --- | --- |
+| apps/pc-app/runtime/main/index.ts | Electron 正式窗口、托盘、受信 IPC 与退出生命周期 |
+| apps/pc-app/runtime/preload/index.ts | sandbox/contextIsolation 的类型化桥接 |
+| apps/pc-app/runtime/core | 服务注册、SQLite、资源备份、只读历史兼容与档案发现 |
+| apps/pc-app/runtime/features | accounts/resources/companions/battle/garden/discovery/conversations 七个模块 |
+| apps/pc-app/ui/src | React 主界面、路由模块和共享 ResourceStage |
+| apps/pc-app/ui/desktop.html | 独立透明桌宠入口 |
+| build/feature-routes.ts | 编译时提取路由元数据，运行时按需导入 |
+| packages/shared-types/src/ipc.ts | 公共 IPC 命令及类型契约 |
+| apps/pc-app/runtime/assets/brand | 正式品牌、窗口和托盘图标 |
+| apps/pc-app/runtime/features/resources/assets/roster-v2 | 八角色、五元素的二维动画资源及来源记录 |
+| config/lingjing-cloud-public.json | 可公开的 Supabase 配置 |
+| infra/supabase | 由协调统一审批的迁移与函数；旧入口退役清单见 cleanup inventory |
+| scripts/desktop | 正式启动、原生加载、依赖闭包及来源清单 |
+| scripts/release/electron-builder.pc.cjs | 复核依赖闭包后加载 JSON 打包配置 |
+| scripts/release | 真实签名检查、不可变 EXE 归档、校验、选版与启动 |
+| scripts/acceptance | 真实 Electron、便携 EXE、包来源与隔离验收 |
+| artifacts/pc-cloud-upgrade | 当前 Windows x64 便携 EXE 与解包结果（忽略，不提交） |
+| docs/implementation/status | 各模块的提交、证据、数据保护和剩余事项 |
+| docs/implementation/cleanup | 旧文件、替代入口、消费者与恢复决定 |
 
-1. `package.json`：工作区脚本入口、版本号、打包/测试命令。
-2. `package-lock.json`：依赖锁定。
-3. `README.md`：项目总览。
-4. `scripts/`：启动、构建、发布、运维脚本。
-5. `apps/`：应用端代码（PC 运行时、Supabase Edge）。
-6. `infra/`：数据库迁移、RLS、Supabase 相关基础设施。
-7. `tests/`：任务化测试与回归测试。
-8. `docs/`：配置说明、验收说明、发布说明等文档。
+旧 HTML renderer/auth/main/preload、移动端发布占位以及哈希伪签名脚本已退役。仍有消费者的旧数据读取、地图或联机能力保留至正式替代验收完成，再按清单清理；不能直接删除它们破坏历史恢复或业务行为。
 
-## 2. PC 运行时核心目录（重点）
-
-1. `apps/pc-app/runtime/main.cjs`
-   - Electron 主进程。
-   - 负责窗口、托盘、IPC、联机服务接线。
-2. `apps/pc-app/runtime/preload.cjs`
-   - 渲染层与主进程的安全桥接 API。
-3. `apps/pc-app/runtime/renderer/index.html`
-   - 桌宠与面板结构。
-4. `apps/pc-app/runtime/renderer/styles.css`
-   - 桌宠与面板样式。
-5. `apps/pc-app/runtime/renderer/renderer.mjs`
-   - 前端交互主逻辑：战斗、联机、仓库、日志、国际化。
-6. `apps/pc-app/runtime/auth/index.html`
-   - 登录注册窗口结构。
-7. `apps/pc-app/runtime/auth/styles.css`
-   - 登录注册窗口样式。
-8. `apps/pc-app/runtime/auth/renderer.mjs`
-   - 登录注册窗口逻辑。
-9. `apps/pc-app/runtime/services/battle-runtime.cjs`
-   - 回合战斗规则与结算。
-10. `apps/pc-app/runtime/services/runtime-data-store.cjs`
-   - 本地数据持久化（账号会话、仓库、战报等）。
-11. `apps/pc-app/runtime/services/online-duel-service.cjs`
-   - 联机对战服务封装（房间、回合、同步、诊断日志）。
-12. `apps/pc-app/runtime/services/map-runtime.cjs`
-   - 地图能力抽象（定位、权限、追踪、距离）。
-13. `apps/pc-app/runtime/services/wild-pet-runtime.cjs`
-   - 附近灵宠生成、收留流程、冷却逻辑。
-14. `apps/pc-app/runtime/assets/models/`
-   - 运行时 GLB 模型资源。
-15. `apps/pc-app/runtime/assets/models/catalog.json`
-   - 模型来源、许可、作者与文件映射清单。
-16. `apps/pc-app/runtime/assets/icons/`
-   - 托盘/窗口图标资源。
-
-## 3. 联机与数据库
-
-1. `infra/supabase/migrations/`
-   - 数据库结构与策略迁移。
-2. `infra/supabase/functions/duel-online/index.ts`
-   - 联机回合结算 Edge Function。
-3. `infra/supabase/README.md`
-   - Supabase 部署与接线说明。
-4. `infra/supabase/rls-matrix.md`
-   - RLS 权限矩阵说明。
-
-## 4. 发布与打包
-
-1. `scripts/release/electron-builder.pc.json`
-   - PC 端打包配置（产物格式、图标、输出目录）。
-2. `scripts/release/build-pc.mjs`
-   - PC 构建流程脚本。
-3. `artifacts/pc-beta/`
-   - 打包产物输出目录。
-4. `build/icon.png`
-   - Windows 打包图标源文件（由 electron-builder 转换为 ico）。
-
-## 5. 联机双开调试脚本
-
-1. `scripts/desktop/start-online-dual.cmd`
-   - 一键双开 A/B 客户端。
-2. `scripts/desktop/start-online-a.cmd`
-3. `scripts/desktop/start-online-b.cmd`
-4. `scripts/desktop/local-online-env.cmd`
-   - 本地联机环境变量（Supabase URL/ANON KEY）。
-
-## 6. 当前瘦身策略（本次执行）
-
-1. 已删除确认无引用的临时文件：`.tmp-electron-check.cjs`。
-2. 保留所有与后续路线直接相关模块：
-   - 联机服务
-   - 仓库与战报
-   - 地图/收留
-   - 鉴权与单端会话
-3. 未做激进删除，避免误伤回归测试路径。
-
-## 7. 后续可继续瘦身的范围（建议分批）
-
-1. 清理历史实验脚本（先确认无 CI/文档引用）。
-2. 将 `renderer.mjs` 按功能拆分模块（duel/inventory/map/auth/ui）。
-3. 建立模型目录清单与自动校验，减少硬编码映射。
-4. 对 `docs/` 做版本归档，保留最新+关键里程碑文档。
+清理前完整 Git bundle 保存在 artifacts/recovery/cloud-foundation-2026-10-25。恢复到新目录，不覆盖当前检出；用户档案、设计源文件以及 comparisontext 加密恢复备份不属于源码清理。

@@ -5,7 +5,7 @@ import { useAppMotion } from '../../components/motion';
 
 export type BattlePhase = 'rest' | 'windup' | 'release' | 'impact' | 'effects';
 export const battleTimeline = { windup: 0, release: 280, impact: 620, effects: 940, rest: 1520 } as const;
-interface Timeline { key: string; phase: BattlePhase; before: BattleSnapshot; round: BattleRound | null }
+interface Timeline { key: string; phase: BattlePhase; before: BattleSnapshot; round: BattleRound | null; endsAt?: number }
 export function useBattleAnimation(session: BattleSession) {
   const allowed = useAppMotion();
   const seen = useRef({ id: session.id, round: session.snapshot.round, snapshot: session.snapshot });
@@ -20,7 +20,7 @@ export function useBattleAnimation(session: BattleSession) {
       setTimeline(value => value.key === key && allowed ? value : { key, phase: 'rest', before: session.snapshot, round: null });
       return;
     }
-    setTimeline({ key, phase: 'windup', before: previous.snapshot, round: latest });
+    setTimeline({ key, phase: 'windup', before: previous.snapshot, round: latest, endsAt: Date.now() + battleTimeline.rest });
     const timers = (['release', 'impact', 'effects', 'rest'] as const).map(phase => window.setTimeout(() => {
       setTimeline(value => value.key === key ? { ...value, phase } : value);
     }, battleTimeline[phase]));
@@ -41,5 +41,5 @@ export function useBattleAnimation(session: BattleSession) {
   };
   const events = round?.visualEvents?.filter(event => event.phase === phase && event.kind !== 'action') || [];
   const snapshot = phase === 'windup' || phase === 'release' ? timeline.before : session.snapshot;
-  return { phase, key: timeline.key, busy: phase !== 'rest', snapshot, events, action, interrupted, round, allowed };
+  return { phase, key: timeline.key, busy: phase !== 'rest', endsAt: phase !== 'rest' ? timeline.endsAt : undefined, snapshot, events, action, interrupted, round, allowed };
 }
