@@ -29,7 +29,9 @@ grant select,insert,update,delete on storage.objects to authenticated;
 alter table storage.objects enable row level security;
 create table public.legacy_fixture(id text primary key,data jsonb);insert into public.legacy_fixture values('untouched','{"history":true}');`);
 await db.exec(identitySql);
+await db.exec(readFileSync('infra/supabase/migrations/20261025021759_lingjing_protected_save_cas.sql','utf8'));
 await db.exec(readFileSync('infra/supabase/migrations/20261025020942_lingjing_private_resource_storage.sql','utf8'));
+await db.exec(readFileSync('infra/supabase/migrations/20261025024855_lingjing_verified_resource_authority.sql','utf8'));
 await db.query('insert into auth.users(id) values($1),($2)',[uidA,uidB]);
 await db.query('insert into auth.sessions(id,user_id) values($1,$2),($3,$2),($4,$5)',[sessionA,uidA,sessionA2,sessionB,uidB]);
 async function as(uid,session,device,sql,args=[],role='authenticated'){
@@ -69,6 +71,35 @@ test('LOCAL SQL: immutable objects/index cannot be replaced or deleted through c
   assert.equal((await as(uidA,sessionA,deviceA,'delete from storage.objects returning *')).length,0);
   await assert.rejects(as(uidA,sessionA,deviceA,'update public.lingjing_resource_packages set manifest_bytes=20'),/permission denied/);
   await assert.rejects(as(uidA,sessionA,deviceA,'delete from public.lingjing_resource_packages'),/permission denied/);
+});
+test('LOCAL SQL: only service-verified receipts can register protected resource references atomically',async()=>{
+  await assert.rejects(as(uidA,sessionA,deviceA,'select public.lingjing_register_resource_receipt($1,$2,$3,$4)',[ownerA,uidA,resourceId,sha]),/permission denied/);
+  const receipt=(await as(null,null,null,'select public.lingjing_register_resource_receipt($1,$2,$3,$4) receipt',[ownerA,uidA,resourceId,sha],'service_role'))[0].receipt;
+  assert.equal(receipt.revision,1);assert.equal(receipt.duplicate,false);
+  const replay=(await as(null,null,null,'select public.lingjing_register_resource_receipt($1,$2,$3,$4) receipt',[ownerA,uidA,resourceId,sha],'service_role'))[0].receipt;
+  assert.equal(replay.revision,1);assert.equal(replay.duplicate,true);
+  const head=(await db.query('select revision,envelope from public.lingjing_saves where owner_id=$1',[ownerA])).rows[0];
+  assert.equal(head.revision,1);assert.equal(head.envelope.data.modules['character-resources'].version,2);assert.equal(head.envelope.data.modules['character-resources'].data.references[0].resourceId,resourceId);
+  assert.equal((await as(uidA,sessionA2,deviceA2,'select * from public.lingjing_resource_references')).length,1);
+  assert.equal((await as(uidB,sessionB,deviceB,'select * from public.lingjing_resource_references')).length,0);
+  await assert.rejects(as(uidA,sessionA,deviceA,'delete from public.lingjing_resource_references'),/permission denied/);
+});
+test('LOCAL SQL: personal CAS cannot invent a private resource reference; a failed ledger write rolls back the save too',async()=>{
+  const head=(await db.query('select envelope from public.lingjing_saves where owner_id=$1',[ownerA])).rows[0].envelope;
+  const forged=structuredClone(head);delete forged.checksum;forged.data.modules['character-resources'].data.references[0].resourceId='40000000-0000-4000-8000-000000000099';
+  const sealed=(await db.query('select lingjing_private.seal_save($1::jsonb) envelope',[JSON.stringify(forged)])).rows[0].envelope;
+  await assert.rejects(as(uidA,sessionA,deviceA,'select public.lingjing_push_save($1,1,$2::jsonb)',['forged-resource-action',JSON.stringify(sealed)]),/LJ_PROTECTED_STATE_REQUIRES_AUTHORITY/);
+  const id='40000000-0000-4000-8000-000000000002',digest='b'.repeat(64),target=`${uidA}/${id}/${digest}/manifest.json`;
+  await as(uidA,sessionA,deviceA,"insert into public.lingjing_resource_packages(auth_user_id,resource_id,owner_account_id,manifest_sha256,content_hash,manifest_path,manifest_bytes,total_bytes,resource_kind) values($1,$2,$3,$4,$4,$5,100,1000,'spritesheet')",[uidA,id,ownerA,digest,target]);
+  await db.exec("create function public.fixture_ref_failure() returns trigger language plpgsql as $$begin raise exception 'fixture ledger failure';end$$; create trigger fixture_ref_failure before insert on public.lingjing_resource_references for each row execute function public.fixture_ref_failure();");
+  await assert.rejects(as(null,null,null,'select public.lingjing_register_resource_receipt($1,$2,$3,$4)',[ownerA,uidA,id,digest],'service_role'),/fixture ledger failure/);
+  assert.equal((await db.query('select revision from public.lingjing_saves where owner_id=$1',[ownerA])).rows[0].revision,1);
+  assert.equal((await db.query('select * from public.lingjing_resource_references where resource_id=$1',[id])).rows.length,0);
+  await db.exec('drop trigger fixture_ref_failure on public.lingjing_resource_references;drop function public.fixture_ref_failure();');
+  const committed=(await as(null,null,null,'select public.lingjing_register_resource_receipt($1,$2,$3,$4) receipt',[ownerA,uidA,id,digest],'service_role'))[0].receipt;
+  assert.equal(committed.revision,2);
+  const all=(await db.query('select envelope from public.lingjing_saves where owner_id=$1',[ownerA])).rows[0].envelope.data.modules['character-resources'].data.references;assert.equal(all.length,2);
+  const replay=(await as(null,null,null,'select public.lingjing_register_resource_receipt($1,$2,$3,$4) receipt',[ownerA,uidA,resourceId,sha],'service_role'))[0].receipt;assert.equal(replay.revision,1);assert.equal((await db.query('select revision from public.lingjing_saves where owner_id=$1',[ownerA])).rows[0].revision,2);
 });
 test('LOCAL SQL: single-device revocation blocks both Storage/index while other same-account device survives',async()=>{
   await as(uidA,sessionA,deviceA,'select public.lingjing_revoke_device($1)',[deviceA]);

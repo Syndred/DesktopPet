@@ -10,7 +10,7 @@ const root=process.cwd(),require=createRequire(import.meta.url);
 const {createClient}=require('@supabase/supabase-js'),Database=require('better-sqlite3');
 const {ResourcesService}=require('../service.cjs'),{migrations}=require('../repository.cjs');
 const {ResourceCloudSync}=require('../cloud-sync.cjs'),{hash,identity,BUCKET,TABLE}=require('../cloud-contract.cjs');
-const {migrate}=require('../../../core/database.cjs');
+const {openDatabase,migrate}=require('../../../core/database.cjs');
 if(!process.argv.includes('--live'))throw Error('Explicit --live and coordinator-provided authenticated sessions are required');
 const configFile=process.env.LJ_STORAGE_PUBLIC_CONFIG;
 if(!configFile)throw Error('LJ_STORAGE_PUBLIC_CONFIG is required; do not put keys in command-line arguments');
@@ -32,7 +32,7 @@ async function actorFor(label){
 }
 async function local(label,actor){
   const profile=path.join(directory,label);await fs.mkdir(profile,{recursive:true});
-  const db=new Database(path.join(profile,'lingjing.sqlite'));opened.push(db);migrate(db,'resources',migrations);
+  const db=openDatabase(path.join(profile,'lingjing.sqlite'));opened.push(db);migrate(db,'resources',migrations);
   const service=new ResourcesService({db,storageRoot:path.join(profile,'managed'),seedBuiltin:false});await service.seed();
   return {db,service,cloud:new ResourceCloudSync({service,getActor:()=>actorFor(label)})};
 }

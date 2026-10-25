@@ -55,6 +55,15 @@ test('production adapter rejects a simulated actor/HTTP client before any transf
   const production=new ResourceCloudSync({service:a.service,getActor:async()=>a.actor});production.enqueue(OWNER,randomUUID(),[imported.resource.id]);
   const result=await production.flush(OWNER);assert.equal(result.verified.length,0);assert.equal(result.errors[0].code,'RESOURCE_CLOUD_AUTH_REQUIRED');assert.equal(f.http.state.requests.length,0);assert.equal(a.cloud.status(OWNER).dataMode,'simulated');
 });
+test('verified old owner aliases keep their original owner text in the immutable package without rewriting local history',async t=>{
+  const f=await fixture(t),a=await f.local('a'),imported=await a.service.importFile(OWNER,path.join(f.source,'character.json'));
+  a.db.exec('create table account_aliases(provider text,subject_id text,owner_account_id text)');a.db.prepare('insert into account_aliases values(?,?,?)').run('runtime','legacy-original-subject',OWNER);
+  a.db.prepare('update lingjing_resources set owner_account_id=? where resource_id=?').run('legacy-original-subject',imported.resource.id);
+  a.db.prepare('update lingjing_resource_imports set owner_account_id=? where resource_id=?').run('legacy-original-subject',imported.resource.id);
+  const packet=await buildPackage(a.service,OWNER,UID,imported.resource.id);
+  assert.equal(packet.manifest.sourceOwnerAccountId,'legacy-original-subject');assert.equal(packet.manifest.imports[0].source_owner_account_id,'legacy-original-subject');assert.equal(packet.manifest.ownerAccountId,OWNER);
+  assert.equal(a.db.prepare('select owner_account_id from lingjing_resources where resource_id=?').get(imported.resource.id).owner_account_id,'legacy-original-subject');
+});
 test('lost upload receipt survives reopen and resumes immutable chunks with independent readback',async t=>{
   const f=await fixture(t),a=await f.local('a'),imported=await a.service.importFile(OWNER,path.join(f.source,'character.json'));
   a.cloud.enqueue(OWNER,randomUUID(),[imported.resource.id]);f.http.state.failAfterWrite=true;

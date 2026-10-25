@@ -8,10 +8,10 @@ function registerResourceCloud(services, service) {
   const cloud = new ResourceCloudSync({service,isEnabled:enabled,
     async getActor(owner) {
       if(services.session.getOwnerAccountId()!==owner)throw new ResourceError('SESSION_CHANGED','账号已切换');
-      const auth=services.get('cloudAuth');
+      const auth=services.get('cloudActor');
       if(typeof auth?.requireActor!=='function')throw new ResourceError('RESOURCE_CLOUD_AUTH_REQUIRED','云端身份服务尚未就绪');
-      const actor=await auth.requireActor(owner);
-      if(services.session.getOwnerAccountId()!==owner)throw new ResourceError('SESSION_CHANGED','账号已切换');
+      const actor=await auth.requireActor();
+      if(services.session.getOwnerAccountId()!==owner||actor.ownerAccountId!==owner)throw new ResourceError('SESSION_CHANGED','账号已切换');
       return actor;
     },
     onChanged(owner,resourceId){services.events.emit('resources:changed',{ownerAccountId:owner,resourceId});}
