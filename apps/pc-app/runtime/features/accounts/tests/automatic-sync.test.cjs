@@ -119,3 +119,21 @@ test('real SQLite / simulated provider: exact already-applied domain readback ad
  const result=await f.accounts.runAutomaticSync();assert.equal(result.readbackOnly,true);assert.equal(state(f).cloud_revision,2);assert.equal(f.db.prepare('SELECT count(*) n FROM account_backup_receipts').get().n,0);
  await f.edit(21);await f.accounts.runAutomaticSync();assert.equal(f.pushes.length,1);assert.equal(f.pushes[0].baseRevision,2);assert.equal(state(f).cloud_revision,3);assert.equal(volume(f),21);
 });
+
+test('real SQLite / simulated provider: production conversation adapter automatically queues messages, memory and persona while retaining local credentials',async()=>{
+ const f=await fixture(),conversation=require('../../conversations/schema.cjs'),{ConversationStore}=require('../../conversations/store.cjs');
+ conversation.migrations.forEach(m=>f.db.exec(m.sql));
+ f.accounts.backups.register(require('../../conversations/backup.cjs').createConversationBackupAdapter({db:f.db}));
+ f.head(10,2);f.accounts.sync.acceptAuthoritativeReadback(f.owner,{envelope:f.cloud.envelope,cloudRevision:2});
+ const store=new ConversationStore(f.db),pet='original-owned-pet',action=randomUUID(),config={provider:'openai_compatible',baseUrl:'https://model.example.invalid/v1',model:'configured-model',contextChars:24000,maxOutputTokens:512};
+ const content='{"password":"EXAMPLE_PLACEHOLDER","enabled":true}';
+ store.saveConnection(f.owner,null,{...config,encryptedKey:'DEVICE-ONLY-CREDENTIAL-CIPHERTEXT'},0);
+ store.createTurn(f.owner,pet,action,content,config);store.updateReply(f.owner,pet,action,'明确模拟的既有完整回复','complete');
+ store.saveMemory(f.owner,pet,{content});store.saveProfile(f.owner,pet,{persona:content,replyStyle:'natural',memoryEnabled:true,pauseWhileChatting:true,useOverride:false},0);
+ await f.accounts.runAutomaticSync();assert.equal(f.pushes.length,1);assert.match(f.pushes[0].actionId,/^auto:/);
+ const data=f.cloud.envelope.data.modules.conversations.data;
+ assert.equal(data.tables.conversation_messages.find(row=>row.role==='user').content,content);
+ assert.equal(data.tables.conversation_memories[0].content,content);assert.equal(data.tables.conversation_profiles[0].persona,content);
+ assert.equal(JSON.stringify(f.cloud.envelope).includes('DEVICE-ONLY-CREDENTIAL-CIPHERTEXT'),false);
+ assert.equal(store.getConnection(f.owner,null,true).encryptedKey,'DEVICE-ONLY-CREDENTIAL-CIPHERTEXT');assert.equal(f.accounts.sync.status(f.owner).localChanged,false);
+});
