@@ -1,0 +1,91 @@
+{
+  "module": "coordinator",
+  "status": "active-cloud-upgrade",
+  "clientDate": "2026-10-25",
+  "branch": "codex/lingjing-implementation-base",
+  "goalMode": true,
+  "contract": "docs/implementation/cloud-upgrade-2026-10-25.md",
+  "target": {
+    "projectRef": "jbvrdmrkwpznbrvteive",
+    "url": "https://jbvrdmrkwpznbrvteive.supabase.co",
+    "plan": "free",
+    "reused": "Text Comparision",
+    "otherProjectsUntouched": true
+  },
+  "assigned": [
+    {
+      "module": "灵境 08｜账号同步与桌面设置",
+      "threadId": "01a16dc5-cc18-7da0-9c80-2b3ede0154ec",
+      "hostId": "local"
+    },
+    {
+      "module": "灵境 05｜领地菜园背包与喂养",
+      "threadId": "01a16dc5-c0f2-7ea2-b491-d5d4b65e55e3",
+      "hostId": "local"
+    },
+    {
+      "module": "灵境 01｜基础架构与 UI 总集成",
+      "threadId": "01a16dc5-7796-7a43-a251-17ddd68b2a49",
+      "hostId": "local"
+    },
+    {
+      "module": "灵境 03｜地图定位与捕捉",
+      "threadId": "01a16dc5-b9cb-7421-884a-911c0d267322",
+      "hostId": "local"
+    },
+    {
+      "module": "灵境 02｜多宠物桌面与养成",
+      "threadId": "01a16dc5-b72d-78d0-9bd8-50bfe70cec63",
+      "hostId": "local"
+    },
+    {
+      "module": "灵境 07｜2D 角色资源与动画导入",
+      "threadId": "01a16dc5-c785-7e61-86ea-6d27260788f3",
+      "hostId": "local"
+    },
+    {
+      "module": "灵境 06｜AI 聊天人设与记忆",
+      "threadId": "01a16dc5-c418-7372-ac4b-1d9abb116865",
+      "hostId": "local"
+    },
+    {
+      "module": "灵境 04｜对战联机与战报",
+      "threadId": "01a16dc5-bc81-78c1-81f1-c7385f644a2c",
+      "hostId": "local"
+    }
+  ],
+  "battleProtection": {
+    "styleDeliveryNaturallyCompleted": "0ddda2a",
+    "styleGoalCompletedBeforeCloudDispatch": true,
+    "worktreeNotOverwritten": true
+  },
+  "deployment": {
+    "projectPreservation": "passed",
+    "preservationEvidence": "docs/implementation/evidence/cloud/2026-10-25/project-preservation.json",
+    "auth": "awaiting-accounts-shared-contract",
+    "territory": "in-progress-garden",
+    "discovery": "in-progress-discovery",
+    "duel": "in-progress-battle",
+    "storage": "in-progress-resources",
+    "fullAcceptance": "pending"
+  },
+  "externalConditions": [
+    {
+      "id": "old-self-hosted-source-unavailable",
+      "endpoint": "http://47.112.208.97:8000",
+      "observed": "UND_ERR_SOCKET on real health fetch",
+      "userResponse": "暂无可用SSH或数据库备份",
+      "policy": "Preserve existing readable data and secure migration interfaces; no full old-cloud-account migration claimed"
+    },
+    {
+      "id": "physical-second-device",
+      "policy": "Record isolated same-host device profiles and actual second physical machine separately"
+    }
+  ],
+  "remaining": [
+    "Review and deploy staged Auth/RLS and domain migrations/functions",
+    "Real cloud authority and isolated Electron sync/multiplayer acceptance",
+    "Integrate modules and Electron/Windows CI/runtime cleanup",
+    "Final data preservation, source/package residue and release audit"
+  ]
+}

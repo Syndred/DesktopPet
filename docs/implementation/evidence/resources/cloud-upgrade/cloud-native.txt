@@ -1,0 +1,142 @@
+TAP version 13
+# Subtest: actual official SDK protocol: A upload, distinct-client B hydrate preserves IDs/history and independent same-content imports
+ok 1 - actual official SDK protocol: A upload, distinct-client B hydrate preserves IDs/history and independent same-content imports
+  ---
+  duration_ms: 633.531
+  type: 'test'
+  ...
+# Subtest: lost upload receipt survives reopen and resumes immutable chunks with independent readback
+ok 2 - lost upload receipt survives reopen and resumes immutable chunks with independent readback
+  ---
+  duration_ms: 167.6322
+  type: 'test'
+  ...
+# Subtest: offline intent is durable before Auth and session switch never applies a downloaded package
+ok 3 - offline intent is durable before Auth and session switch never applies a downloaded package
+  ---
+  duration_ms: 220.7168
+  type: 'test'
+  ...
+# Subtest: tampered manifest/size/path and credential-bearing descriptors fail before publication
+ok 4 - tampered manifest/size/path and credential-bearing descriptors fail before publication
+  ---
+  duration_ms: 122.509
+  type: 'test'
+  ...
+# Subtest: historical GLB archive is readable/restorable but never appears in 2D list or import
+ok 5 - historical GLB archive is readable/restorable but never appears in 2D list or import
+  ---
+  duration_ms: 409.7609
+  type: 'test'
+  ...
+# Subtest: interrupted new-client download resumes verified disk chunks after reopening SQLite
+ok 6 - interrupted new-client download resumes verified disk chunks after reopening SQLite
+  ---
+  duration_ms: 332.0033
+  type: 'test'
+  ...
+# Subtest: corrupt downloaded bytes are never registered and preserve an existing missing local reference
+ok 7 - corrupt downloaded bytes are never registered and preserve an existing missing local reference
+  ---
+  duration_ms: 279.7615
+  type: 'test'
+  ...
+# Subtest: approved anime package becomes a standard Pixi spritesheet with authored actions
+ok 8 - approved anime package becomes a standard Pixi spritesheet with authored actions
+  ---
+  duration_ms: 172.4345
+  type: 'test'
+  ...
+# Subtest: imports standard Pixi/TexturePacker atlases including trim and rotation metadata
+ok 9 - imports standard Pixi/TexturePacker atlases including trim and rotation metadata
+  ---
+  duration_ms: 11.3683
+  type: 'test'
+  ...
+# Subtest: copies actual 2D assets, keeps receipts and source intact, isolates owners, repairs missing copies
+ok 10 - copies actual 2D assets, keeps receipts and source intact, isolates owners, repairs missing copies
+  ---
+  duration_ms: 86.2735
+  type: 'test'
+  ...
+# Subtest: anchor, frame rate, rotation and scale save per scene and per owner; instances remain independent
+ok 11 - anchor, frame rate, rotation and scale save per scene and per owner; instances remain independent
+  ---
+  duration_ms: 48.6712
+  type: 'test'
+  ...
+# Subtest: rejects broken JSON, missing images, unsafe paths, frame overflow and invalid calibration without changing the library
+ok 12 - rejects broken JSON, missing images, unsafe paths, frame overflow and invalid calibration without changing the library
+  ---
+  duration_ms: 34.0442
+  type: 'test'
+  ...
+# Subtest: 2D-only boundary rejects other formats while historical records and files remain unchanged
+ok 13 - 2D-only boundary rejects other formats while historical records and files remain unchanged
+  ---
+  duration_ms: 28.6584
+  type: 'test'
+  ...
+# Subtest: concurrent imports share an appearance and keep every successful receipt
+ok 14 - concurrent imports share an appearance and keep every successful receipt
+  ---
+  duration_ms: 64.6752
+  type: 'test'
+  ...
+# Subtest: verified account aliases restore legacy 2D imports and preferences without rewriting ownership
+ok 15 - verified account aliases restore legacy 2D imports and preferences without rewriting ownership
+  ---
+  duration_ms: 50.737
+  type: 'test'
+  ...
+# Subtest: eight distinct generated PNGs cover all elements with 16 bounded Pixi frames and dedicated poses
+ok 16 - eight distinct generated PNGs cover all elements with 16 bounded Pixi frames and dedicated poses
+  ---
+  duration_ms: 233.8608
+  type: 'test'
+  ...
+# Subtest: registration adds canonical resources without deleting old bytes, preferences or import receipts
+ok 17 - registration adds canonical resources without deleting old bytes, preferences or import receipts
+  ---
+  duration_ms: 215.5779
+  type: 'test'
+  ...
+# Subtest: templates, legacy aliases, desktop and battle all resolve the same canonical appearance
+ok 18 - templates, legacy aliases, desktop and battle all resolve the same canonical appearance
+  ---
+  duration_ms: 235.6929
+  type: 'test'
+  ...
+# Subtest: Git LF/CRLF changes relocate registered packs without replacing canonical rows or preferences
+ok 19 - Git LF/CRLF changes relocate registered packs without replacing canonical rows or preferences
+  ---
+  duration_ms: 149.3919
+  type: 'test'
+  ...
+# Subtest: standard atlas per-clip FPS and loop metadata rejects invalid values before import
+ok 20 - standard atlas per-clip FPS and loop metadata rejects invalid values before import
+  ---
+  duration_ms: 14.7276
+  type: 'test'
+  ...
+# Subtest: resource backup restores actual 2D pack bytes to new managed paths and rejects a different owner
+ok 21 - resource backup restores actual 2D pack bytes to new managed paths and rejects a different owner
+  ---
+  duration_ms: 179.3156
+  type: 'test'
+  ...
+# Subtest: standard Pixi atlas survives backup restore and complete user-data relocation
+ok 22 - standard Pixi atlas survives backup restore and complete user-data relocation
+  ---
+  duration_ms: 175.2747
+  type: 'test'
+  ...
+1..22
+# tests 22
+# suites 0
+# pass 22
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2466.7483
