@@ -32,11 +32,23 @@ try{
     let resource,cloudStatus;
     for(let attempt=0;attempt<100;attempt++){
       resource=(await invoke('resources','list')).find(row=>row.id===login.resourceId);cloudStatus=await invoke('resources','cloudStatus');
-      if(resource?.availability==='ready'&&cloudStatus.lastVerifiedAt)break;
+      if(resource?.availability==='ready'&&cloudStatus.lastVerifiedAt&&!cloudStatus.running)break;
       if(!cloudStatus.running)await invoke('resources','cloudPull',{resourceIds:[login.resourceId]});
       await page.waitForTimeout(250);
     }
     assert(resource?.availability==='ready','The real resource never became available');assert(cloudStatus.lastVerifiedAt);assert.equal(cloudStatus.dataMode,'live');assert.equal(resource.contentHash,login.contentHash);
+    if(label==='A'){
+      const calibration=structuredClone(resource.calibration),actions=structuredClone(resource.actions);calibration.desktop.scale=1.45;calibration.desktop.rotationDeg=7;calibration.desktop.verticalOffset=0.12;calibration.desktop.mirrorX=true;calibration.battle.scale=1.2;actions.wave=actions.idle;
+      await invoke('resources','save',{resourceId:resource.id,expectedRevision:resource.revision,calibration,actions});
+      for(let attempt=0;attempt<80;attempt++){
+        cloudStatus=await invoke('resources','cloudStatus');const pending=cloudStatus.preferenceUploads?.some(row=>['pending','retry','conflict'].includes(row.status));
+        if(cloudStatus.lastPreferenceVerifiedAt&&!pending)break;
+        if(!cloudStatus.running)await invoke('resources','cloudSync',{actionId:randomUUID(),resourceIds:[]});
+        await page.waitForTimeout(250);
+      }
+    }
+    resource=(await invoke('resources','list')).find(row=>row.id===login.resourceId);
+    assert.equal(resource.calibration.desktop.scale,1.45);assert.equal(resource.calibration.desktop.rotationDeg,7);assert.equal(resource.calibration.desktop.mirrorX,true);assert.equal(resource.actions.wave,resource.actions.idle);
     const cloudPreview=await invoke('accounts','cloudPreview');
     const cloudRestore=await invoke('accounts','backupRestore',{previewId:cloudPreview.previewId,actionId:randomUUID(),mode:'merge'});
     assert.equal(cloudRestore.restored,true);
@@ -44,6 +56,7 @@ try{
     assert.equal(preserved.data.modules['character-resources'].version,1);
     assert(preserved.data.modules['character-resources'].data.resources.some(row=>row.row.resource_id===resource.id));
     assert.equal((await invoke('resources','list')).find(row=>row.id===resource.id)?.contentHash,login.contentHash);
+    const customPet=login.petId?await invoke('companions','get',{petId:login.petId}):null;if(customPet){assert.equal(customPet.resource.resourceId,resource.id);assert.equal(customPet.petId,login.petId);}
     await app.evaluate(({BrowserWindow},label)=>{const window=BrowserWindow.getAllWindows()[0];window.setTitle('灵境 · 真实云端资源恢复 '+label);window.setContentSize(1280,844);},label);
     await page.getByRole('button',{name:'角色资源',exact:true}).click();await page.locator(`.resource-card[data-resource-id="${resource.id}"]`).click();
     await page.waitForFunction(id=>document.querySelector(`.resource-stage[data-resource-id="${id}"]`)?.dataset.status==='ready',resource.id);await page.waitForTimeout(200);
@@ -53,7 +66,7 @@ try{
     const actor=await page.evaluate(()=>window.lingjing.invoke('accounts','session'));assert(actor.ok);
     const device=JSON.parse(await fs.readFile(path.join(profile,'accounts/device.json'),'utf8'));
     const versions=await app.evaluate(()=>({...process.versions}));
-    report.views.push({label,pid:app.process().pid,profile:path.relative(root,profile),owner:session.currentUser.id,authUserId:session.currentUser.authUserId,device,resourceId:resource.id,contentHash:resource.contentHash,host,cloudStatus,versions,cloudRestore:{restored:true,cloudRevision:cloudPreview.cloudRevision,modules:cloudPreview.modules,preservedLocalResourceBackupVersion:1},startupBefore,startupAfter,screenshot});
+    report.views.push({label,pid:app.process().pid,profile:path.relative(root,profile),owner:session.currentUser.id,authUserId:session.currentUser.authUserId,device,resourceId:resource.id,contentHash:resource.contentHash,host,cloudStatus,preferences:{calibration:resource.calibration,actions:resource.actions},customPet:customPet?{petId:customPet.petId,resource:customPet.resource,growth:customPet.growth}:null,versions,cloudRestore:{restored:true,cloudRevision:cloudPreview.cloudRevision,modules:cloudPreview.modules,preservedLocalResourceBackupVersion:1},startupBefore,startupAfter,screenshot});
   }
   assert.notEqual(report.views[0].pid,report.views[1].pid);assert.notEqual(report.views[0].device.deviceId,report.views[1].device.deviceId);assert.deepEqual(report.errors,[]);report.passed=true;
 }catch(error){report.failure={code:error.code||'LIVE_ELECTRON_FAILED',message:String(error.message).replaceAll(login.password,'[redacted]')};throw error;}

@@ -75,7 +75,7 @@ function register(services) {
     try { await ready; return await handler(payload, context); }
     catch (error) { const result = toResult(error); return { ok: false, code: result.error.code, message: result.error.message, ...(result.error.revision !== undefined ? { revision: result.error.revision } : {}) }; }
   };
-  const changed = (owner, resource) => { services.events.emit('resources:changed', { ownerAccountId: owner, resourceId: resource.id, revision: resource.revision }); cloudHost.changed(owner,resource); };
+  const changed = (owner, resource,preferenceChange=false) => { services.events.emit('resources:changed', { ownerAccountId: owner, resourceId: resource.id, revision: resource.revision }); cloudHost.changed(owner,resource,preferenceChange); };
   installResourceProtocol({ protocol, service, getOwnerAccountId: () => services.session.getOwnerAccountId(), isTrustedAssetRequest(request) {
     const origin = request.headers.get('origin');
     const renderer = process.env.ELECTRON_RENDERER_URL;
@@ -90,7 +90,7 @@ function register(services) {
       cloudSync: run(async (payload, context) => { cloudHost.cloud.enqueue(context.ownerAccountId,payload.actionId,payload.resourceIds); return cloudHost.cloud.flush(context.ownerAccountId,{force:true}); }),
       cloudPull: run((payload, context) => cloudHost.cloud.pull(context.ownerAccountId,payload)),
       resolve: run((payload, context) => service.resolve(context.ownerAccountId, payload)),
-      save: run(async (payload, context) => { const resource = await service.save(context.ownerAccountId, payload); changed(context.ownerAccountId, resource); return resource; }),
+      save: run(async (payload, context) => { const resource = await service.save(context.ownerAccountId, payload); changed(context.ownerAccountId, resource,true); return resource; }),
       import: run(async (payload, context) => {
         const options = { title: '导入 2D 角色资源', properties: ['openFile'], filters: [{ name: '2D 角色包 / PixiJS 图集', extensions: ['json'] }] };
         const window = BrowserWindow.getFocusedWindow();

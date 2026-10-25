@@ -5,7 +5,7 @@ const {cloudProjection}=require('./cloud-projection.cjs');
 const personalModules=new Set(['settings','conversations']);
 function meaningfulData(data){
   const modules={...data.modules};if(modules.legacy?.data===null)delete modules.legacy;
-  if(modules['character-resources']?.version===2&&modules['character-resources'].data.references?.length===0)delete modules['character-resources'];
+  if(modules['character-resources']?.version===2&&modules['character-resources'].data.references?.length===0&&!(modules['character-resources'].data.preferences||[]).length)delete modules['character-resources'];
   return {...data,modules,tables:Object.fromEntries(Object.entries(data.tables).filter(([,table])=>table.rows?.length))};
 }
 function protectedData(data){const copy=meaningfulData(data);return {...copy,modules:Object.fromEntries(Object.entries(copy.modules).filter(([key])=>!personalModules.has(key)))};}
