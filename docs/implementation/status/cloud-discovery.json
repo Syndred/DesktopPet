@@ -2,11 +2,11 @@
   "module": "discovery",
   "scope": "Real HTTPS cloud discovery/admission/wild rounds/capture receipts, unified Auth and preserved legacy owner, original BattleScreen/rules and Windows location gates, canonical save/instance/reward recovery across devices",
   "branch": "codex/lingjing-discovery",
-  "commit": "ca981f5ed8e62d5dabc3e090310a2ba40889ab31",
+  "commit": "df6e0895960cdd53053421568ba869bd2ceba48a",
   "goalStatus": "active",
-  "status": "location_component_ready_for_central_deployment_capture_sql_in_progress",
+  "status": "cloud_game_server_checkpoint_ready_for_review_runtime_spi_in_progress",
   "deployReady": false,
-  "sharedBaseline": "46abf416e0500b53ef32fc29b441d923ef5a6a80",
+  "sharedBaseline": "d7b4b07",
   "approvedIdentityCheckpoint": "f81008c",
   "contracts": [
     "docs/implementation/cloud-upgrade-2026-10-25.md",
@@ -23,7 +23,10 @@
     "Optional coordinator-only scenario grants preserve simulated provenance; clients cannot self-enable through metadata or a body flag",
     "Generated geo/catalog/presenter is a thin adapter importing approved04 shared battle-core.js4969eac, no second bundled desktop rules engine",
     "Main-process transport consumes shared cloudActor.requireActor().invoke; no second JWT/refresher or legacy token path",
-    "Every location RPC rechecks canonical08 active account and bound device/session/revoked state under FOR SHARE"
+    "Every location RPC rechecks canonical08 active account and bound device/session/revoked state under FOR SHARE",
+    "Server-owned wildSQL read/write store, protected owner lock/CAS and immutable receipts are implemented",
+    "Capture consumes current proof and validates locked05 region context while canonically registering pet-permitUUID and one companion/capture/memory receipt",
+    "Full local state-machine/kernel→02growth/05inventory→SQL sharedsave→capture→SQLite projection path passes injected-failure rollback checks"
   ],
   "migrations": [
     {
@@ -42,14 +45,37 @@
       ],
       "status": "Local PGlite revocation/permissions check passed; ready for central deployment",
       "remoteAppliedByThisChat": false
+    },
+    {
+      "path": "infra/supabase/migrations/20261025030459_lingjing_discovery_wild_transactions.sql",
+      "createdBy": "Supabase CLI2.122.0 migration new lingjing_discovery_wild_transactions --workdir infra",
+      "requires": [
+        "08 identity/Auth/protected CAS already deployed",
+        "03 location/live_actor migrations already deployed",
+        "02 trusted companions module from companions-sync67546f5+d7b4b07 already deployed",
+        "05 garden module initialized via legitimate API",
+        "05 public.runtime_territory_capture_context(text,double precision,double precision), same transaction FOR SHARE"
+      ],
+      "status": "Local shared-domain/SQL complete path passed; ready for central review/deployment after05 prerequisites",
+      "remoteAppliedByThisChat": false
+    },
+    {
+      "path": "infra/supabase/migrations/20261025033352_lingjing_discovery_capture_scenarios.sql",
+      "createdBy": "Supabase CLI2.122.0 migration new lingjing_discovery_capture_scenarios --workdir infra",
+      "requires": [
+        "20261025030459_lingjing_discovery_wild_transactions.sql",
+        "05 context four-argument40941f2 interface"
+      ],
+      "status": "Append-only; base published game migration unchanged. Local same-world guard and full atomic path passed",
+      "remoteAppliedByThisChat": false
     }
   ],
   "checks": [
     {
-      "command": "Targeted cloud protocol/handler/location SQL/runtime/authority/transport/actor-guard tests",
+      "command": "node --test eight targeted discovery cloud test files;12 cases",
       "passed": true,
-      "cases": 11,
-      "scope": "Local only; actual ECDSA, encrypted test vault, shared core and PGlite checks; no deployed cloud success claimed"
+      "cases": 12,
+      "scope": "Local only. Includes actual PGlite authority/store,02 constructor/growth,05seed reducer, save/proof/instance rollback on injected failure, realSQLite schema/import and preserved old encounter history"
     },
     {
       "command": "npx --yes deno@2.9.6 check --config infra/supabase/functions/discovery/deno.json infra/supabase/functions/discovery/index.ts",
@@ -65,6 +91,17 @@
       "check": "Generated bundle equals existing kernel across25 ordered elements and4 player actions versus normal, plus three geographic spawn grids",
       "passed": true,
       "scope": "100 deterministic distribution parity cases; no game formula changes or natural/real-cloud gameplay claim"
+    },
+    {
+      "command": "npm ci --no-audit --no-fund followed by npm run native:check",
+      "passed": true,
+      "scope": "This worktree own non-junction node_modules; actual Electron44.9.3 + SQLite13.0.3 and sameDB Node/Electron readback; shared Junction not rebuilt"
+    },
+    {
+      "command": "node apps/pc-app/runtime/features/discovery/verification/cloud-location-live.mjs",
+      "passed": true,
+      "cases": 13,
+      "scope": "Real HTTPS Auth and production Electron44.9.3 with an observer-only registry bootstrap;13 component checks; imprecise physical samples124m; no cloud precision proof or full capture success"
     }
   ],
   "realCloudEvidence": {
@@ -86,15 +123,28 @@
       "lingjing-auth ACTIVEv2 verify_jwtfalse",
       "lingjing-save ACTIVEv1 verify_jwtfalse"
     ],
-    "discoveryHttpsVerified": false,
-    "realAuthPositiveFlowVerifiedByThisChat": false,
-    "productionWritesByThisChat": 0,
+    "discoveryHttpsVerified": true,
+    "realAuthPositiveFlowVerifiedByThisChat": true,
     "advisorsBaseline": {
       "infoFindings": 19,
       "kind": "rls_enabled_no_policy in the18 isolated comparisontext archive tables and08 private legacy_account_claims; intentional deny-by-default, not newly deployed discovery tables",
       "remediationReference": "https://supabase.com/docs/guides/database/database-linter?lint=0008_rls_enabled_no_policy"
     },
-    "observedAt": "2026-10-25T03:01:55.675Z"
+    "observedAt": "2026-10-25T03:01:55.675Z",
+    "locationComponentEvidence": "docs/implementation/evidence/discovery/2026-10-25-cloud-location-live/evidence.json",
+    "locationComponentChecks": 13,
+    "preciseLocationProofVerified": false,
+    "fullCaptureVerified": false,
+    "sameMachineTwoElectron": {
+      "verified": true,
+      "electron": "44.9.3",
+      "sqlite": "13.0.3",
+      "separateDeviceAndSession": true,
+      "physicalSecondDevice": false
+    },
+    "authorizedProductValidationWrites": "Dedicated Auth test accounts, device keys/nonces and self-device revoke via deployed product APIs; no SQL migration, deployment or production data edits",
+    "schemaMigrationsOrDeploymentsByThisChat": 0,
+    "adminProductionWritesByThisChat": 0
   },
   "preservation": {
     "legacyOwnersAreText": true,
@@ -102,7 +152,7 @@
     "sharedSourceCheckoutModified": false,
     "battleUiModified": false,
     "battle04WorktreeAccessed": false,
-    "remoteDatabaseOrFunctionsChanged": false,
+    "remoteDatabaseOrFunctionsChanged": "Only coordinator migrated/deployed. This chat performed authorized dedicated test-account/product location/device validation calls; no user data, schema or deployment edits.",
     "privateKeysOrTokensCommitted": false,
     "capturePetIdsAndRewards": "Must be returned by the canonical08/02 transaction, never generated independently on each client; still in implementation"
   },
@@ -113,14 +163,12 @@
     }
   ],
   "remaining": [
-    "Implement transactional PostgreSQL game store for the already implemented server-owned state machine",
-    "Bind merged08 lock_save_owner/domain rows/commit_authority transaction and02 per-instance legal registration",
-    "Complete02 per-instance import/reconcile and05 server territory capture context consumption",
-    "Integrate the external wild authority into existing battle backend/BattleScreen without touching04 UI",
-    "Central deploy can start with the independent signed-location component above; submit remaining full capture component separately",
-    "Run authenticated real HTTPS negative/positive/ownership/replay tests and two isolated client/local SQLite/new-device recovery checks after coordinator deployment",
-    "Keep physical Windows precision failures explicit and preserve the original80m gate; hardware/location attestation is not claimed by a device signature",
-    "Run deployed advisor diff and final preservation/readback against the same approved source/run identity"
+    "Central review/deploy gameSQL and discovery update after05 prerequisites; no admin remote mutation performed here",
+    "Implement private external wild backend SPI through the one existing BattleScreen; no battle UI/style edits",
+    "Apply canonical cloud capture/fullsave to local SQLite and recover samepetId/reward on fresh device through08/02 verified restore",
+    "Run realHTTPS reserve/round/capture/race/replay/owner-negative checks and actual separate Electron processes on44.9.3/13.0.3",
+    "Native sourceos precise cloudproof/nearby positive remains unverified: latest Electron44 runtime samples124m, original80m gate retained; earlier78m local-os physical capture remains separately accepted",
+    "Retire own legacy server authority only after its fixtures and production consumers are replaced; finish advisor/readback preservation check"
   ],
   "approvedSaveCheckpoint": "3474905",
   "independentComponents": {
@@ -152,6 +200,44 @@
         "mainProcess": "services.get('locationProofs').prove(purpose,reference)",
         "transaction": "consume in the same05 SQL transaction; stable consumer; lock canonical owner first when also committing save"
       }
+    },
+    "cloudGame": {
+      "readyForCentralReview": true,
+      "implementationCommit": "df6e0895960cdd53053421568ba869bd2ceba48a",
+      "migration": "infra/supabase/migrations/20261025030459_lingjing_discovery_wild_transactions.sql",
+      "function": "discovery",
+      "verifyJwt": false,
+      "selfContainedSource": "infra/supabase/functions/discovery with shared lingjing-auth.ts/battle-core.js",
+      "requires": [
+        "08 identity/Auth/protected CAS already deployed",
+        "03 location/live_actor migrations already deployed",
+        "02 trusted companions module from companions-sync67546f5+d7b4b07 already deployed",
+        "05 garden module initialized via legitimate API",
+        "05 runtime_territory_capture_context(owner,lat,lng,scenarioId|null)40941f2 is now deployed; same-transaction FOR SHARE"
+      ],
+      "operations": [
+        "reserve",
+        "permits",
+        "session",
+        "act",
+        "cancel",
+        "confirm",
+        "captures",
+        "action"
+      ],
+      "ownership": "lock_save_owner then canonical actor/domain rows then commit_authority in sameSQL transaction",
+      "canonicalAdapters": [
+        "02 createCompanionInstance/companionUnit/awardBattleResult (no constructor/growth duplicate)",
+        "05 applyCloudCommand/catalog (no seed quantity/inventory duplicate)"
+      ],
+      "checks": "12 targeted local tests including shared core, actual PGlite state machine/store/authority transaction, injected common-save failure rollback and realSQLite import; not cloud capture evidence",
+      "remoteAppliedByThisChat": false,
+      "readyForCentralDeployment": true,
+      "migrations": [
+        "infra/supabase/migrations/20261025030459_lingjing_discovery_wild_transactions.sql",
+        "infra/supabase/migrations/20261025033352_lingjing_discovery_capture_scenarios.sql"
+      ],
+      "scenarioRule": "Normal proof sourceos passes null; simulated proof must retain the original granted permit scenario, source/scenario switches reject before consuming or reading world context"
     }
   },
   "nativePositionEvidence": {
@@ -166,5 +252,32 @@
     "rawCoordinatesCommitted": false,
     "fullCloudCaptureAcceptance": false
   },
-  "updatedAt": "2026-10-25T03:01:55.676Z"
+  "updatedAt": "2026-10-25T03:38:03.573Z",
+  "approvedCompanionCheckpoint": "67546f5+d7b4b07",
+  "latestRemoteCodeCheck": {
+    "fetchedAt": "2026-10-25T03:32:03.679Z",
+    "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086",
+    "alreadyIncluded": true
+  },
+  "approvedGardenCheckpoint": "40941f2",
+  "integrationRequests": {
+    "coordinatorLimitedLocationGrant": {
+      "reason": "Native44 sourceos remains124m, so precise cloud proof is unavailable. A dedicated explicitly simulated grant would enable realHTTPS game validation with unchanged80m gate and isolated world namespace.",
+      "target": {
+        "authUserId": "83270acc-8ac0-439d-889d-d12d61d648df",
+        "ownerAccountId": "account:ea9e6ecd-e251-41ad-9b50-dcad2d96f7b7",
+        "deviceId": "71fd3ebe-06f4-4e76-8183-732e1db58094",
+        "scenarioId": "cloud-discovery-03"
+      },
+      "table": "lingjing_discovery.location_test_grants",
+      "ttl": "Coordinator-issued short expiry, at most2hours",
+      "grantIssuedByThisChat": false,
+      "testProfile": "artifacts/cloud-discovery/live-location-1792897943463/device-b",
+      "visibility": "Simulated source/provider/scenario retained; no physical-location or second-physical-device claim"
+    },
+    "sharedLocalRestore": {
+      "owners": "08/02",
+      "need": "Approved private canonical companion/readback apply bridge and registered backup legacy conversion; do not use per-client createCapturedInstance/random petId for cloud receipts"
+    }
+  }
 }

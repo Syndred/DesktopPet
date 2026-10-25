@@ -60,10 +60,13 @@ export function useConversations(client: ConversationClient = desktopConversatio
     // Clear the previous instance immediately, including its memories and persona.
     setLoading(true); update(null); setError('');
     try {
-      const value = await request('select', { petId }, previous);
+      const value = await request('select', { petId, actionId: crypto.randomUUID() }, previous);
       if (mounted.current && identity === epoch.current && sequence === loadSequence.current) update(value);
     } catch (cause) {
-      if (mounted.current && identity === epoch.current && sequence === loadSequence.current) setError(cause instanceof Error ? cause.message : '切换伙伴失败。');
+      if (mounted.current && identity === epoch.current && sequence === loadSequence.current) {
+        update(previous);
+        setError(cause instanceof Error ? cause.message : '切换伙伴失败。');
+      }
     } finally { if (mounted.current && sequence === loadSequence.current) setLoading(false); }
   }, [request, update]);
   const send = useCallback(async (text: string, retryActionId?: string) => {

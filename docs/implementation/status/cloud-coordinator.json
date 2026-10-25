@@ -64,14 +64,17 @@
     "preservationEvidence": "docs/implementation/evidence/cloud/2026-10-25/project-preservation.json",
     "auth": "deployed-v2-actual-https-8-of-8-passed",
     "authEvidence": "docs/implementation/evidence/cloud/2026-10-25/auth-bridge-http.json",
-    "save": "deployed-v1-protected-CAS-actual-client-acceptance-pending",
-    "territory": "in-progress-garden",
-    "discovery": "in-progress-discovery",
-    "duel": "in-progress-battle",
+    "save": "deployed-v1; real CAS/privacy/concurrency/main and partial two-Electron acceptance passed",
+    "territory": "garden-sync-v1/territory-sync-v1/PostGIS3.3.7 deployed; actual garden A/B and spatial/privilege checks passed; full world signed-location loop pending",
+    "discovery": "signed location v1 deployed; full wild transactions integration awaiting final checkpoint",
+    "duel": "server checkpoint reviewed; transaction-level actor refresh and verified custom-resource support requested before deploy",
     "storage": "actual-HTTPS-upload-restore-hashes-other-account-denial-and-retry-passed; protected-reference-integration-pending",
     "fullAcceptance": "pending",
     "manifest": "docs/implementation/evidence/cloud/2026-10-25/deployment-manifest.json",
-    "storageEvidence": "docs/implementation/evidence/cloud/2026-10-25/storage-http-independent.json"
+    "storageEvidence": "docs/implementation/evidence/cloud/2026-10-25/storage-http-independent.json",
+    "companions": "companions-sync-v1 deployed; real legal adoption, replay/CAS/owner boundaries passed; main/native routing pending",
+    "resources": "c02b20c main/Edge verifier merged; new service-actor guard required before deployment; original private Storage live proof passed",
+    "sessions": "immutable revocation ledger deployed; original managed-valid revoked SID/replacement/B and original provider signed expired JWT denied in actual HTTPS"
   },
   "externalConditions": [
     {
@@ -87,11 +90,12 @@
     }
   ],
   "remaining": [
-    "Complete authoritative pet initialization and integrate territory/discovery/battle/resource transactions into common save revision",
-    "Review and deploy remaining domain functions/migrations; verify actual RLS/Realtime/transactions",
-    "Run real isolated Electron cloud sync/multiplayer acceptance and account/data preservation",
-    "Integrate foundation cleanup and final Windows EXE/source/package/readback acceptance",
-    "Align MCP-observed migration versions with CLI source migration bookkeeping"
+    "Deploy common transaction-level live Auth/session/device guard and domain dependents; do not weaken RLS or broaden auth table grants",
+    "Complete02/05/03/04 main process authority routing and07 protected references/version2 asset hydration; preserve raw originals",
+    "Independently verify real signed-location territory/capture, private Realtime, authoritative shared rewards and exact retry/restart receipts",
+    "Full-domain same-host two-Electron acceptance with ordinary isolated profiles; record physical-device scope separately",
+    "Retire audited unused old cloud functions/SQL, align actual remote migration versions and perform one final regression/package acceptance",
+    "Original old cloud export/SSH unavailable per user response; preserve all readable local data and import tools without claiming migrated all old cloud accounts"
   ],
   "engineering": {
     "electron": "44.9.3",
@@ -110,9 +114,17 @@
       "scope": "route loading, subscription cleanup, clocks, stable IDs, modal/session lifecycle and accessibility",
       "targetedEslint": "passed",
       "blockingFindings": 0
+    },
+    "profileDiscovery": "Canonical SQLite takes precedence over old JSON; explicit override and binary rollback retain the selected profile",
+    "packageMonitor": {
+      "rejectedOriginal": "running:true ready:false could not pass",
+      "correctedEvidence": "docs/implementation/evidence/foundation/cloud-engineering/packaged-fullscreen-monitor-verified.json",
+      "actualAwaitedObservations": 10,
+      "stableReadySamples": 3,
+      "finalPortablePackagePending": true
     }
   },
-  "updatedAt": "2026-10-25T03:01:37.071Z",
+  "updatedAt": "2026-10-25T03:36:36.061Z",
   "approvedCheckpoints": [
     {
       "module": "accounts",
@@ -138,6 +150,21 @@
       "module": "conversations",
       "commit": "543b71f",
       "review": "26 coordinator SQLite/archive/HTTP-protocol checks passed; real cloud pet chat sync pending"
+    },
+    {
+      "module": "foundation",
+      "commit": "b0e69bd",
+      "review": "Recoverable prototype/3D cleanup and package/release/profile discovery integrated. Incorrect monitor verdict rejected and original preserved; actual strict repeated ready protocol rerun passed. Final business portable still pending."
+    },
+    {
+      "module": "resources",
+      "commit": "c02b20c",
+      "review": "Source/byte verification and main cloudActor reviewed; root7 SQL +9 protocol checks passed. Fresh actor guard deployment and actual protected-ref/native test pending."
+    },
+    {
+      "module": "accounts",
+      "commit": "3e91bfd",
+      "review": "Legacy normalization is internal view only; original envelope/checksum/files retained. Root8 targeted native restore/provider cases and original signed expired HTTPS denial passed."
     }
   ],
   "locationProgress": {

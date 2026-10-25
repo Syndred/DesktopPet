@@ -1,0 +1,40 @@
+{
+  "at": "2026-10-25T03:32:53.459Z",
+  "sourceCommit": "00afefd9483fb930f699bdf62203766282656f6a",
+  "kind": "Actual HTTPS two independent main-process SupabaseRemote instances on one Windows host; not Electron or physical-second-device evidence",
+  "ownerAccountId": "account:470a41d4-3cf7-4a7d-8b1e-32e276d2a719",
+  "devices": [
+    "da637f8b-e800-4d06-8448-f5a1b46ae310",
+    "cf697ba3-6ddb-41cc-a1e9-c131f74a675e"
+  ],
+  "checks": [
+    {
+      "name": "canonical cloud garden initialized without changing owned pet IDs",
+      "revision": 11,
+      "petIds": [
+        "pet-2b88f57b-5199-4d42-bebb-3836f5b69ec5",
+        "pet-9fa48de9-6ad9-4a15-a4da-4277b39a642c",
+        "pet-ccec2bdd-b680-4e97-9a68-dcfbeef1986d"
+      ]
+    },
+    {
+      "name": "actual A plant commits once; exact replay and B head match",
+      "actionId": "coord-garden-df4a2010-a727-41f8-92d1-cd5c719f6746",
+      "revision": 12,
+      "checksum": "d992d4af0c4644f8eb7b610d42e1686ab4e04dd651130858c8478a2895c3e3c5"
+    },
+    {
+      "name": "stale revision denied",
+      "code": "REVISION_CONFLICT"
+    },
+    {
+      "name": "client reward injection denied",
+      "code": "INVALID_GARDEN_COMMAND"
+    },
+    {
+      "name": "world command without signed location denied",
+      "code": "LOCATION_PERMIT_REQUIRED"
+    }
+  ],
+  "passed": true
+}

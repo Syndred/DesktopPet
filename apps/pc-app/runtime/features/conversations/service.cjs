@@ -14,9 +14,10 @@ function revision(value) { if (!Number.isSafeInteger(value) || value < 0) fail("
 function scopeKey(owner, petId, kind = "chat") { return JSON.stringify([owner, kind, petId]); }
 
 class ConversationService {
-  constructor({ store, secrets, getSession, listPets, onSessionChanged, publish = () => {}, setChatActivity = () => {}, transport = requestCompletion }) {
+  constructor({ store, secrets, getSession, listPets, getChatSelection, selectChatPet, onSessionChanged, publish = () => {}, setChatActivity = () => {}, transport = requestCompletion }) {
     this.store = store; this.secrets = secrets; this.getSession = getSession; this.listPets = listPets;
     this.publish = publish; this.setChatActivity = setChatActivity; this.transport = transport; this.active = new Map(); this.epoch = 0; this.disposed = false;
+    this.getChatSelection = getChatSelection; this.selectChatPet = selectChatPet;
     this.store.recoverInterrupted();
     this.unsubscribe = onSessionChanged?.(() => { this.epoch++; this.abortAll("SESSION_CHANGED"); });
   }
@@ -72,7 +73,9 @@ class ConversationService {
       templateId: pet.templateId ?? null, avatarUrl: pet.avatarUrl ?? pet.resource?.thumbnailUrl ?? null, level: pet.level ?? pet.growth?.level ?? 1,
       element: ["metal", "wood", "earth", "water", "fire"].includes(pet.element) ? pet.element : null,
       ...(pet.resource ? { resource: { resourceId: pet.resource.resourceId, kind: pet.resource.kind } } : {}) }));
-    const selected = payload.petId ?? this.store.getSelectedPet(session.owner);
+    // The shared companion chat slot is authoritative when integrated. A local
+    // preference from an older client is only a compatibility hint.
+    const selected = payload.petId ?? (this.getChatSelection ? this.getChatSelection(session.owner) : this.store.getSelectedPet(session.owner));
     const petId = pets.some((pet) => pet.petId === selected) ? selected : pets[0]?.petId ?? null;
     return { accountId: session.owner, sessionRevision: session.epoch, pets, petId, summaries: this.store.summaries(session.owner, pets.map((p) => p.petId)),
       globalConnection: this.store.getConnection(session.owner), secureStorageAvailable: this.secrets.available(),
@@ -205,6 +208,12 @@ class ConversationService {
         case "snapshot": data = this.snapshot(session, payload); break;
         case "select": {
           const petId = string(payload.petId, 160); this.pet(session, petId);
+          if (this.selectChatPet) {
+            try { await this.selectChatPet(session.owner, petId, payload.actionId == null ? randomUUID() : string(payload.actionId, 160)); }
+            catch (error) { if (!this.current(session)) fail('SESSION_CHANGED'); if (error instanceof ConversationError) throw error; fail('SELECTION_FAILED'); }
+            if (!this.current(session)) fail('SESSION_CHANGED');
+            if (this.getChatSelection && this.getChatSelection(session.owner) !== petId) fail('REVISION_CONFLICT');
+          }
           this.store.selectPet(session.owner, petId); data = this.snapshot(session, { petId }); break;
         }
         case "history": {

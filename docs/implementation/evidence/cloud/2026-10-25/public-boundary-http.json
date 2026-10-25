@@ -1,8 +1,8 @@
 {
-  "at": "2026-10-25T02:49:31.836Z",
+  "at": "2026-10-25T03:47:59.447Z",
   "projectRef": "jbvrdmrkwpznbrvteive",
   "kind": "read-only actual HTTPS public boundary on deployed Supabase; no simulation",
-  "sourceCommit": "84f41d07ee86530b60944e4425e2488835999c05",
+  "sourceCommit": "dec7bea828d18bfc87941ff1aaebeff87e4e9601",
   "publicConfigSha256": "625ca2a50fb7b3ae479208d65bf31dc877ce5b22d516fe559c8ecde976a7b481",
   "credentialsIncluded": false,
   "checks": [
@@ -19,6 +19,42 @@
     },
     {
       "name": "anonymous save refused",
+      "status": 401,
+      "code": "AUTH_REQUIRED",
+      "passed": true
+    },
+    {
+      "name": "anonymous companions-sync refused",
+      "status": 401,
+      "code": "AUTH_REQUIRED",
+      "passed": true
+    },
+    {
+      "name": "anonymous garden-sync refused",
+      "status": 401,
+      "code": "AUTH_REQUIRED",
+      "passed": true
+    },
+    {
+      "name": "anonymous territory-sync refused",
+      "status": 401,
+      "code": "AUTH_REQUIRED",
+      "passed": true
+    },
+    {
+      "name": "anonymous discovery refused",
+      "status": 401,
+      "code": "AUTH_REQUIRED",
+      "passed": true
+    },
+    {
+      "name": "anonymous lingjing-resources refused",
+      "status": 401,
+      "code": "AUTH_REQUIRED",
+      "passed": true
+    },
+    {
+      "name": "anonymous lingjing-battle refused",
       "status": 401,
       "code": "AUTH_REQUIRED",
       "passed": true
