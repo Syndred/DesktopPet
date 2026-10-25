@@ -15,17 +15,19 @@ export function useCompanions() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
   const [busy, setBusy] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
   const requestGeneration = useRef(0);
   const mutationLock = useRef(false);
   const mounted = useRef(true);
   const reload = useCallback(async () => {
     const generation = ++requestGeneration.current;
+    setRefreshing(true);
     try {
       const data = await companionsRequest<CompanionsSnapshot>('list');
       if (mounted.current && generation === requestGeneration.current) { setSnapshot(data); setError(''); }
     } catch (failure) {
       if (mounted.current && generation === requestGeneration.current) { setError(failure instanceof Error ? failure.message : String(failure)); setSnapshot(null); }
-    } finally { if (mounted.current && generation === requestGeneration.current) setLoading(false); }
+    } finally { if (mounted.current && generation === requestGeneration.current) { setLoading(false); setRefreshing(false); } }
   }, []);
   useEffect(() => {
     mounted.current = true; void reload();
@@ -56,5 +58,5 @@ export function useCompanions() {
     } finally { mutationLock.current = false; if (mounted.current) setBusy(false); }
   }, [reload]);
   const petAction = (command: string, pet: CompanionPet, payload: Record<string, unknown> = {}) => mutate(command, { petId: pet.petId, expectedRevision: pet.revision, ...payload });
-  return { snapshot, error, loading, busy, reload, mutate, petAction };
+  return { snapshot, error, loading, busy, refreshing, reload, mutate, petAction };
 }
