@@ -10,9 +10,10 @@ const messages={INVALID_CREDENTIALS:'账号或密码不正确。',INVALID_OLD_PA
   AUTH_RATE_LIMITED:'尝试过于频繁，请稍后重试。',SESSION_INVALIDATED:'此设备登录已失效，请重新登录。'};
 function failure(code,message){return new AccountError(code,messages[code]||message||'云端请求未完成，原数据已保留。');}
 
-function publicConfig({env=process.env,resourcesPath=process.resourcesPath}={}){
+function publicConfig({env=process.env,resourcesPath=process.resourcesPath,sourcePath=join(__dirname,'../../../../../config/lingjing-cloud-public.json')}={}){
   let value={};
-  const file=env.LINGJING_PUBLIC_CONFIG||(resourcesPath&&join(resourcesPath,'lingjing-cloud-public.json'));
+  const file=env.LINGJING_PUBLIC_CONFIG||[resourcesPath&&join(resourcesPath,'lingjing-cloud-public.json'),sourcePath].find(candidate=>candidate&&existsSync(candidate));
+  if(env.LINGJING_PUBLIC_CONFIG&&!existsSync(file))throw failure('CLOUD_CONFIG_INVALID');
   if(file&&existsSync(file)){
     try{value=JSON.parse(readFileSync(file,'utf8'));}catch{throw failure('CLOUD_CONFIG_INVALID');}
   }

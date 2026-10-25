@@ -23,7 +23,8 @@ const response=data=>({ok:true,status:200,async json(){return{ok:true,data};}});
 afterEach(()=>{for(const x of services.splice(0)){x.accounts.dispose();x.db.close();}for(const p of directories.splice(0))rmSync(p,{recursive:true,force:true});});
 
 test('PROTOCOL UNIT simulated: modern HTTPS config and stable distinct per-profile device IDs',()=>{
- assert.equal(publicConfig({env:{},resourcesPath:null}),null);
+ assert.equal(publicConfig({env:{},resourcesPath:null,sourcePath:null}),null);
+ assert.equal(new URL(publicConfig({env:{},resourcesPath:null}).url).hostname,'jbvrdmrkwpznbrvteive.supabase.co');
  assert.throws(()=>publicConfig({env:{SUPABASE_URL:'http://example.com',SUPABASE_PUBLISHABLE_KEY:'sb_publishable_x'},resourcesPath:null}),{code:'CLOUD_CONFIG_INVALID'});
  assert.throws(()=>publicConfig({env:{SUPABASE_URL:config.url,SUPABASE_PUBLISHABLE_KEY:'sb_secret_x'},resourcesPath:null}),{code:'CLOUD_CONFIG_INVALID'});
  const one=dir(),two=dir();assert.equal(stableDevice(one),stableDevice(one));assert.notEqual(stableDevice(one),stableDevice(two));
