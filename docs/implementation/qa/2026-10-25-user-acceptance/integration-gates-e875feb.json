@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "format": "lingjing.qa.frozen-candidate-readiness",
+  "recordedAt": "2026-10-25T12:46:56.526Z",
+  "sourceCommit": "e875febf3430be341191a639668d43e7f09826dc",
+  "previousFullGateSource": "066f61df2d9b6ef8977756c8b0700c1ba5b01681",
+  "inheritedFullGates": "docs/implementation/qa/2026-10-25-user-acceptance/integration-gates-066f61d.json",
+  "productChanges": [
+    {
+      "file": "apps/pc-app/ui/src/features/accounts/settings-page.tsx",
+      "blob": "dcbf301ec20cd17992f47411f9d7e9314532937a"
+    },
+    {
+      "file": "apps/pc-app/ui/src/features/battle/index.tsx",
+      "blob": "40b9094acd4b7df224cd450c30251e2c0db0ac3c"
+    },
+    {
+      "file": "apps/pc-app/ui/src/features/conversations/styles.css",
+      "blob": "479e38c11f29038390b16913f9d7479bf72999ec"
+    }
+  ],
+  "runtimeCloudSqlAssetsOrLockChanged": false,
+  "checks": {
+    "rootUiTypecheckExitCode": 0,
+    "rootTargetedLintExitCode": 0,
+    "qa011CanonicalHeadlessCases": 24,
+    "qa012DirectedRouteCases": 8,
+    "reactReview": {
+      "hooks": "No conditional/new hooks; automatic navigation effect removed in favour of explicit continue action",
+      "requests": "No new fetch or mutation path; original commands and session IDs retained",
+      "accessibility": "Clear continue/view action, retained accessible status output; notification reasons localized",
+      "performance": "No new runtime dependency; static notification text map hoisted; portrait CSS scoped to chat"
+    }
+  },
+  "upstream": {
+    "head": "4786f97680679c2db0aa307fa5f67ec247f93086",
+    "pullOutcome": "Already up to date",
+    "readinessRecordedAt": "2026-10-25T12:46:56.526Z"
+  },
+  "cloudDeployment": "docs/implementation/evidence/cloud/2026-10-25/global-serial-deployment.json",
+  "liveBoundary": "docs/implementation/evidence/cloud/2026-10-25/global-serial-live-scope-boundary.json",
+  "candidateBinaryDelivered": false,
+  "actualUserAcceptancePassed": false
+}

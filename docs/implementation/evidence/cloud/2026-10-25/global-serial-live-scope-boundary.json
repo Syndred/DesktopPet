@@ -1,0 +1,147 @@
+{
+  "schemaVersion": 1,
+  "format": "lingjing.global-serial.live-scope-boundary",
+  "recordedAt": "2026-10-25T12:42:51.563Z",
+  "projectRef": "jbvrdmrkwpznbrvteive",
+  "sourceCommit": "087ea3992028ac14cb5e9e31fdc8ded548bec274",
+  "runId": "c-scope-6e1253a0-9474-4db4-b2db-c7e706a23b24",
+  "kind": "real HTTPS snapshot boundary; root alone controls C grant",
+  "scenarioId": "user-acceptance-790f5b6d-a900-4c6f-bb3f-e32237136ed1",
+  "requests": [
+    {
+      "label": "baseline",
+      "startedAt": "2026-10-25T12:40:29.771Z",
+      "status": 200,
+      "responseCode": null,
+      "scope": "qa:user-acceptance-790f5b6d-a900-4c6f-bb3f-e32237136ed1",
+      "responseOk": true,
+      "endedAt": "2026-10-25T12:40:34.918Z",
+      "code": null,
+      "ok": true
+    },
+    {
+      "label": "forged-request-fields",
+      "startedAt": "2026-10-25T12:40:34.931Z",
+      "status": 400,
+      "responseCode": "INVALID_REQUEST",
+      "scope": null,
+      "responseOk": false,
+      "endedAt": "2026-10-25T12:40:36.562Z",
+      "code": "INVALID_REQUEST",
+      "ok": false
+    },
+    {
+      "label": "ignored-nonauthoritative-input",
+      "startedAt": "2026-10-25T12:40:36.563Z",
+      "status": 200,
+      "responseCode": null,
+      "scope": "qa:user-acceptance-790f5b6d-a900-4c6f-bb3f-e32237136ed1",
+      "responseOk": true,
+      "endedAt": "2026-10-25T12:40:39.341Z",
+      "code": null,
+      "ok": true
+    },
+    {
+      "label": "forged-unsigned-user-metadata",
+      "startedAt": "2026-10-25T12:40:39.342Z",
+      "status": 401,
+      "responseCode": "AUTH_INVALID",
+      "scope": null,
+      "responseOk": false,
+      "endedAt": "2026-10-25T12:40:40.387Z",
+      "code": "AUTH_INVALID",
+      "ok": false
+    },
+    {
+      "label": "after-untrusted-inputs",
+      "startedAt": "2026-10-25T12:40:40.387Z",
+      "status": 200,
+      "responseCode": null,
+      "scope": "qa:user-acceptance-790f5b6d-a900-4c6f-bb3f-e32237136ed1",
+      "responseOk": true,
+      "endedAt": "2026-10-25T12:40:42.829Z",
+      "code": null,
+      "ok": true
+    },
+    {
+      "label": "expired-grant",
+      "startedAt": "2026-10-25T12:41:11.333Z",
+      "status": 503,
+      "responseCode": "GLOBAL_SERIAL_SCOPE_REVOKED",
+      "scope": null,
+      "responseOk": false,
+      "endedAt": "2026-10-25T12:41:14.260Z",
+      "code": "GLOBAL_SERIAL_SCOPE_REVOKED",
+      "ok": false
+    },
+    {
+      "label": "restored-grant",
+      "startedAt": "2026-10-25T12:41:26.670Z",
+      "status": 200,
+      "responseCode": null,
+      "scope": "qa:user-acceptance-790f5b6d-a900-4c6f-bb3f-e32237136ed1",
+      "responseOk": true,
+      "endedAt": "2026-10-25T12:41:30.131Z",
+      "code": null,
+      "ok": true
+    }
+  ],
+  "baseline": {
+    "scope": "qa:user-acceptance-790f5b6d-a900-4c6f-bb3f-e32237136ed1",
+    "revision": 2,
+    "envelopeChecksum": "ec3b6774663fedf8437ac897d16463052e344b2930c34dcc7e5d3eb00a745307",
+    "pets": [
+      {
+        "petId": "pet-04115591-0aad-4c39-9da4-8a7410a2feee",
+        "templateId": "animal-wood-deer",
+        "globalSerial": "1"
+      },
+      {
+        "petId": "pet-83debfa4-25be-425e-b8c7-bc0405ee7e9f",
+        "templateId": "animal-earth-pangolin",
+        "globalSerial": "1"
+      }
+    ]
+  },
+  "expired": {
+    "status": 503,
+    "code": "GLOBAL_SERIAL_SCOPE_REVOKED",
+    "scope": null,
+    "explicitRefusal": true,
+    "liveFallback": false
+  },
+  "restored": {
+    "scope": "qa:user-acceptance-790f5b6d-a900-4c6f-bb3f-e32237136ed1",
+    "revision": 2,
+    "envelopeChecksum": "ec3b6774663fedf8437ac897d16463052e344b2930c34dcc7e5d3eb00a745307",
+    "pets": [
+      {
+        "petId": "pet-04115591-0aad-4c39-9da4-8a7410a2feee",
+        "templateId": "animal-wood-deer",
+        "globalSerial": "1"
+      },
+      {
+        "petId": "pet-83debfa4-25be-425e-b8c7-bc0405ee7e9f",
+        "templateId": "animal-earth-pangolin",
+        "globalSerial": "1"
+      }
+    ]
+  },
+  "untrustedInputChecks": {
+    "requestFieldsRejected": true,
+    "acceptedNonAuthoritativeInputIgnored": true,
+    "invalidJwtRejected": true,
+    "originalScopeAndSaveUnchanged": true,
+    "persistentAuthMetadataModified": false,
+    "signedEditableMetadataMutationTested": false
+  },
+  "originalGrantExpiryRestored": "2026-10-25T13:37:34.896538Z",
+  "noLoginOrRefresh": true,
+  "noAuthMetadataMutation": true,
+  "noPetCommands": true,
+  "nativeUiVerified": false,
+  "fullAcceptancePassed": false,
+  "passed": true,
+  "privateProof": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/qa/user-acceptance/790f5b6d-a900-4c6f-bb3f-e32237136ed1/api-c-scope-6e1253a0-9474-4db4-b2db-c7e706a23b24/result-redacted.json",
+  "scopeLimit": "C backend-only synthetic identity; server-owned QA grant was temporarily expired by exact CAS and then restored. No A/B identity or ordinary user profile was touched."
+}
