@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "at": "2026-10-25T03:16:54.248Z",
+  "at": "2026-10-25T04:00:00.054Z",
   "source": "0b80bd09f9da29048d77c216bebab41ed48f7e9d",
   "snapshot": "artifacts/recovery/cloud-foundation-2026-10-25/pre-cleanup.bundle",
   "policy": "Only listed code/build/test consumers are candidates. User profiles, history, design sources and recovery backups are excluded. Runtime source removal follows service extraction; business-owner replacements wait for coordinator approval.",
@@ -1973,6 +1973,32 @@
         "test:unit obsolete SQL source-string assertions only"
       ],
       "decision": "Retire obsolete migration text tests; old SQL itself retained for coordinator-owned history alignment"
+    },
+    {
+      "oldFile": "scripts/acceptance/portable-independent.mjs",
+      "bytes": 8210,
+      "sha256": "086cf133e3c588e9dcb77495d6942b9def425758942941150d653eb0d8f0db9b",
+      "replacement": "scripts/acceptance/portable-smoke.mjs + portable-config-smoke.mjs; current-source bound QA with strict readiness, atlas frames and actual SFX config",
+      "consumers": [],
+      "historicalReferences": [
+        "cleanup inventory only; old acceptance receipts remain in committed evidence"
+      ],
+      "decision": "Delete unused historical executable verification entry; frozen source and old QA data are not modified",
+      "recoveryCopy": "artifacts/recovery/cloud-foundation-2026-10-25/retired-portable-verifiers/portable-independent.mjs",
+      "sourceBeforeRemoval": "2566e397220b545d35cb30f31241f225734f7b81"
+    },
+    {
+      "oldFile": "scripts/acceptance/portable-launch.mjs",
+      "bytes": 6462,
+      "sha256": "ccaacf58a0b501409380e20494d20bfbc006981d58447baf72931d7f72b81870",
+      "replacement": "scripts/acceptance/portable-smoke.mjs + portable-config-smoke.mjs; current-source bound QA with strict readiness, atlas frames and actual SFX config",
+      "consumers": [],
+      "historicalReferences": [
+        "cleanup inventory only; old acceptance receipts remain in committed evidence"
+      ],
+      "decision": "Delete unused historical executable verification entry; frozen source and old QA data are not modified",
+      "recoveryCopy": "artifacts/recovery/cloud-foundation-2026-10-25/retired-portable-verifiers/portable-launch.mjs",
+      "sourceBeforeRemoval": "2566e397220b545d35cb30f31241f225734f7b81"
     }
   ],
   "supplementAt": "2026-10-25T02:50:26.978Z",
