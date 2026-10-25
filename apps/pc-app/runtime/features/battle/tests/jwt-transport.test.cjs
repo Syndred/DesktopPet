@@ -31,3 +31,27 @@ test('SCRIPTED SDK lifecycle: callback auth is retained and a coded shared-invok
   f.transport.invoke=async()=>{throw Object.assign(new Error('revoked'),{code:'SESSION_REVOKED'});};
   await assert.rejects(f.online.invoke('get_room',{roomId:f.room.id}),error=>error.code==='SESSION_REVOKED');assert.equal(f.online.channel,null);assert.equal(f.online.getStatus().actor,null);assert.ok(f.state.disconnects>0);
 });
+test('SCRIPTED SDK lifecycle: a real-sync path replaces a closed private channel after socket reconnect without changing the room or pending action',async()=>{
+  const f=fixture();await f.online.createRoom({actionId:'reconnect-original-room',petId:'pet'});const old=f.online.channel;old.state='closed';
+  const value=await f.online.syncRoom({roomId:f.room.id});assert.equal(old.removed,true);assert.notEqual(f.online.channel,old);assert.equal(f.online.channel.state,'joined');assert.equal(f.online.channel.name,`lingjing:battle:${f.room.id}`);assert.equal(value.pendingAction.actionId,'original-action');assert.deepEqual(f.online.channel.config,{config:{private:true}});
+});
+
+test('SCRIPTED SDK lifecycle: overlapping readbacks replace a disconnected subscription once and never remove its replacement',async()=>{
+  const f=fixture();await f.online.createRoom({actionId:'concurrent-reconnect',petId:'pet'});const old=f.online.channel;old.state='leaving';
+  let release,removes=0;f.client.removeChannel=channel=>{removes++;assert.equal(channel,old);return new Promise(resolve=>{release=()=>{channel.removed=true;resolve();};});};
+  const first=f.online.syncRoom({roomId:f.room.id}),second=f.online.syncRoom({roomId:f.room.id});
+  for(let n=0;n<20&&!release;n++)await new Promise(resolve=>setImmediate(resolve));assert.ok(release);release();
+  const results=await Promise.all([first,second]);assert.equal(removes,1);assert.equal(f.channels.length,2);assert.equal(f.online.channel,f.channels[1]);assert.equal(f.online.channel.removed,undefined);assert.equal(f.online.channel.state,'joined');assert.ok(results.every(value=>value.pendingAction.actionId==='original-action'));
+});
+
+test('actual installed SDK lifecycle: disconnect teardown cannot retain the old room topic; unrelated subscriptions survive (no network/Auth)',async()=>{
+  const {createClient}=require('@supabase/supabase-js');
+  const client=createClient('https://offline-sdk-test.supabase.co','sb_publishable_offline_lifecycle_only',{accessToken:async()=>null});
+  try {
+    const topic='lingjing:battle:40000000-0000-4000-8000-000000000001',old=client.channel(topic,{config:{private:true}}),other=client.channel('lingjing:unrelated-feature',{config:{private:true}});
+    // Execute the actual SDK teardown used by disconnect, without opening a socket.
+    old.teardown();assert.equal(old.state,'closed');assert.deepEqual(old.bindings,{});
+    await new OnlineDuelService().removeRoomChannel(client,old);
+    assert.equal(client.getChannels().includes(old),false);assert.equal(client.getChannels().includes(other),true);assert.notEqual(client.channel(topic,{config:{private:true}}),old);
+  } finally {await client.removeAllChannels();}
+});
