@@ -1,0 +1,128 @@
+DC7 T04/T05/T06 本机模拟供应商包与 09 原生操作计划
+
+准备状态
+本包尚未启动。PID、port、实际 binding 均未分配，不包含运行通过回执。
+sourceCommit = dc7aee379d0fb241e5c4bd4bf43101fa1a85a678。
+Root 后续 e1c73bc70deffdc88cb88ef56d1e3e118ef39b33 仅文档；Main/preload/UI 差异为空。
+复用 conversations/transport.cjs 和 runtime.test.cjs 的 OpenAI-compatible SSE/JSON 协议。
+没有新依赖；仅使用 Node 标准库。没有产品代码、profile、SQLite 或 vault 访问。
+
+冻结与两阶段授权
+1. Root 核准唯一 DC7 EXE/ASAR 来源及完整原生矩阵；只有 09 可启动该产品和操作 UI。
+2. 09 正常 UI/AppInfo 与只读 SQLite 确认 ownerAccountId、petId、当前连接范围、空凭据
+   和历史保全条件，填 expectedBinding 模板。Root 审核填写后的 binding 与本包冻结 SHA，
+   给出 approval-ref，之后 09 才可 start helper。模板默认 false/占位值会拒绝启动。
+   Root 核准具体 binding 的 SHA 后不得再改 ID/范围/档案哈希；start 会同时校验包与 binding。
+3. freeze.json 记录文件和 DC7 协议源码 SHA256。文本统一 LF 后计算，兼容 Windows CRLF。
+   CLI 每次校验包内容；start 必须传 Root 核准的 freeze SHA，未核准时仅可 verify。
+   verify 不建立 socket，打印 prepared_not_started、pid:null、port:null。
+
+建议范围和保全
+- T04/T05 优先现有受保护普通本地 QA owner 下，通过正常领养 UI 新建测试 pet。
+  新 pet 独立 override 必须没有旧凭据；不因为新建 owner 阻塞流式/取消验证。
+- 记录明确 ownerAccountId + petId，不从 global active pet、昵称或编号反推归属。
+  helper 的 model tag 只是绑定标签：wire 不含 owner/petId，不能证明实际宠物归属。
+  09 须用 UI 当前伙伴及只读 SQL 的 owner/petId/actionId 验证每次动作。
+- 已有历史先留存只读 checkpoint/备份；推荐新测试 pet 的空历史作为基线。
+  checkpoint 只提交计数、ID、必要摘要及密钥存在状态，不输出原配置/凭据或聊天原文。
+  helper 不读取该 checkpoint、产品配置、数据库或密钥，它只记录操作人给的引用。
+- 不打开/复制/解密原 key，不覆盖真实 provider/global/vault。已有 owner 的真实全局配置
+  保留；T04/T05 只动新 pet 独立槽。发现目标槽有原配置/凭据，停止对该槽写入。
+- T06 global 只在全新 QA owner，或 Root 认可的只读无旧 key 且无真实 provider 的空槽测试。
+  binding.connectionScope=account 或 pet-and-account 时，还需 freshQaOwner 或
+  globalSlotReadOnlyConfirmedEmpty。pet-and-account 允许同一已核准 run 内测试安全的两种槽。
+  若先只核准 pet，则先完成 T04/T05；后续 global 资格到齐再核准新 binding/run，不能热改归属。
+  不满足就待 A05 后或单列该子项；不能为通过矩阵清除/替换原全局密钥。
+
+准备命令（现在只允许这两项；均不监听）
+  node tools/qa/dc7-chat-provider/cli.cjs verify
+  node --test tools/qa/dc7-chat-provider/provider.test.cjs
+后者仅用内存 HTTP/SSE 对象，不调用 listen、fetch、产品或任何 profile。
+
+Root 核准后，09 唯一启动
+在 09 的仓库工作目录创建 artifacts/conversations/dc7-simulated-provider/。
+把 binding.example.json 复制为该目录的 binding.json，填 Root 冻结 EXE/ASAR SHA、
+实际 QA owner/petId、目标槽与保全证据；不得填原 key 或原 provider 配置。
+先用下列不监听命令给 Root 审核具体归属及 binding SHA：
+  node tools/qa/dc7-chat-provider/cli.cjs verify --binding <该绝对binding路径>
+Root 明确核准该 binding 后，09 才执行：
+  node tools/qa/dc7-chat-provider/cli.cjs start --binding <该绝对binding路径> --approval-ref <Root回执ID> --approved-freeze-sha256 <Root核准包SHA> --approved-binding-sha256 <Root核准bindingSHA>
+该命令应由 09 在自己的 helper exec session 运行，不接管产品进程或已有终端。
+若另用 Start-Process，必须 -WindowStyle Hidden；保持控制台输出在 ignored helper 证据目录。
+只有 start 校验通过后才绑定 127.0.0.1:0，OS 选择唯一随机端口，不抢已有端口。
+此时 stdout 才给实际 PID/port/baseUrl/model/dummyKey/runDirectory；此前不得填写这些值。
+dummyKey 每 run 独立且只为本包生成，明显以 qa-only-simulated- 开头；不是外部凭据。
+只接受该 run 的确切 dummy bearer 和 model。其它 key 一律 401，不回显、不记录 header 值。
+不把 UI 中的任何原 key 粘贴到 helper 或日志。不要打印原配置/凭据。
+
+09 正常 UI 配置（不得用脚本/IPC直接改连接、profile或历史）
+1. 在明确的新测试 pet 上进入 AI 对话的「独立连接」，选择「OpenAI 兼容」。
+2. API Key 填本 run dummyKey；接口地址填实际 baseUrl；模型填实际 model。
+   model 以「模拟验收-DC7」开头，所有模拟回复也有「模拟验收 / DC7」前缀。
+3. 正常保存连接，再在该 pet 人设区启用/保存「独立连接」。核对目标 petId 没变。
+   测试连接应在独立槽进行，不能误点有真实配置的全局连接测试。
+4. 模式先 stream，正常点「测试」并保存 UI 成功和 helper request 元数据；模拟测试通过
+   不能记作真实外部模型成功。connection.test 默认 30 秒，正常聊天默认 90 秒。
+
+显式控制（均仅本地 owned 文件，无新增控制 HTTP 端点）
+  node tools/qa/dc7-chat-provider/cli.cjs set-mode --run <实际runDirectory> --mode <模式>
+  node tools/qa/dc7-chat-provider/cli.cjs status --run <实际runDirectory>
+模式只影响后续请求，不会切换正在进行的流。status 是最后一次文件状态，不探测端口。
+stream      约每140ms一个 Unicode 字，显式模拟文本，最后 finish_reason=stop 和 [DONE]。
+hold        先逐字发14字（约2秒）后等待，留足正常 UI 取消窗口；最多等待100秒。
+truncate    发14字后正常结束 HTTP，但省略 finish/[DONE]，检验不完整 SSE。
+disconnect  发14字后断开本次真实 loopback socket，检验部分回复的断流错误。
+http401     使用正确 dummy 也故意回401，DC7 应映射 PROVIDER_AUTH。
+http429     故意回429，DC7 应映射 RATE_LIMITED；不会伪造真实供应商配额。
+http503     故意回503，DC7 应映射 PROVIDER_UNAVAILABLE。
+empty       正常结束但无文本，应出现 EMPTY_RESPONSE。
+json        回模拟 JSON completion，检验 SDK 兼容路径，不新增第二次网络调用。
+
+T04：发送、逐字流、取消与连接测试取消
+1. stream：输入全新合成消息「【模拟验收DC7/<run短号>/T04-1】本机流式测试」。
+   看首字到末字逐步出现、成功结束和 busy 解除，记录截图/时间/当前 owner+petId。
+2. hold：输入另一条新合成消息，看到首段后点「停止回复」。
+   看 UI busy 解除；helper response_closed/client_closed 只记请求号、模式、字数等元信息。
+   SQL 应为该 owner+petId 的 cancelled/CANCELLED；不是只凭按钮文字判通过。
+3. 在独立连接的「测试」操作中用 hold，再正常取消测试；确认没有新增聊天消息。
+
+T05：原 action 重试、历史持久化与隔离
+1. 先将模式改 stream，对 T04 已取消轮次点原「重试」，不能手动另发同样正文代替重试。
+   SQL 应保留原 actionId/assistantId，attempt 增加，同 action 用户一条、助手一条。
+2. 新建几轮合成成功消息；正常离开/返回、切另一 pet 再切回，确认历史不串。
+3. 由 09 正常退出并重启同一冻结候选/同一隔离档案；helper 可保持运行。
+   看消息、状态、选择、人设/记忆仍属于同一明确 owner+petId。
+4. 若产品只支持失败/取消的「重试」，按实际功能记录，不编造成功轮次的「再生成」按钮。
+
+T06：错误、断流、无凭据回退和脱敏
+1. http401/http429：用新合成消息或原失败轮次重试，确认固定公开错误、无原始 key/header。
+2. truncate/disconnect：看到首段后错误，不能算成功；再 stream 点原重试，核对没有重复用户。
+3. 在该新 pet 独立槽填另一个明确错误的合成 dummy，provider 必须401；绝不能使用真实 key。
+   清除这份新测试 key 时只清该 pet 独立槽；再开启 override 不得暗中回落原 global key。
+4. global/独立保存取消与切换只有在上述安全 global 条件成立并获 Root 核准后执行。
+   若已有真实 global，保留它且单列 global 子项，不能在当前 owner 上试探其真实供应商。
+5. 从实际正常备份/Root批准的同步审计核对密钥不入备份/云载荷；只记录匹配次数、字段存在
+   与必要摘要，不打印真实配置/密文/正文。local helper 不产生也不证明任何云同步结果；
+   尚未实际观察的 cloud 子项保留待验，不用本机成功推定。
+6. 要测试断线，可停止本 helper 后对本机地址请求，预期 NETWORK_ERROR；不改系统网络/代理。
+
+记录分类与可见证据
+准备检查 = 无 socket 的内存校验；不是实际 HTTP、不是 native 通过。
+simulated upstream = 返回内容/错误由本机脚本控制，不是外部模型。
+real loopback HTTP = Root批准启动后真实127.0.0.1请求/SSE/socket关闭元数据。
+actual native flow = 09 在唯一冻结 DC7 EXE 上正常 UI 操作、截图和只读 SQLite 读回。
+只有对应证据均到齐才更新 T04/T05/T06；externalModelSuccess 永远 false。
+helper sim-N 是 helper 请求号，不是产品 actionId，也不能证明 owner/petId。
+audit.jsonl 默认只含时间、请求序号、模式、状态、长度/数量、结束/关闭原因。
+不写 header 值、请求/回复正文、人设、记忆或原配置；body最多256KiB，只在内存检查后丢弃。
+来源/EXE/ASAR、owner+petId、UI事件、mode切换、产品actionId与helper请求顺序由09一起绑定。
+
+安全清理与保留
+  node tools/qa/dc7-chat-provider/cli.cjs stop --run <实际runDirectory>
+stop 仅写该 owned run 的停止文件；稍后 status 必须显示 stopped 才有停止回执。
+若 helper 已失效，status 不证明仍活着；不能按进程名/path批量kill或删除 profile。
+helper 只关闭自己 server/socket/timer；一小时自动停止。正常 Ctrl+C 也只结束本 helper。
+保留 state/audit/原native失败、成功截图和SQLite证据，不自动删除任何文件或产品历史。
+仅可在正常 UI 清理本次新 pet/新 QA owner 的 dummy key；原 global/provider/vault 完全保留。
+默认保留合成消息；如确需「清空历史」，须先保存该新测试 pet 证据，确认整个 owner+petId
+范围只有本次合成数据且基线为空，再由09正常UI执行。混有原历史时禁止清空。

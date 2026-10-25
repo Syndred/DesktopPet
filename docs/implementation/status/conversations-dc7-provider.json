@@ -1,0 +1,45 @@
+{
+  "module": "conversations",
+  "task": "DC7 T04/T05/T06 simulated-provider preparation",
+  "preparedOn": "2026-10-26",
+  "timezone": "Asia/Shanghai",
+  "status": "prepared_awaiting_root_and_explicit_binding_approval",
+  "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+  "referenceDocHead": "e1c73bc70deffdc88cb88ef56d1e3e118ef39b33",
+  "package": "tools/qa/dc7-chat-provider",
+  "plan": "tools/qa/dc7-chat-provider/PLAN.txt",
+  "freezeSha256NormalizedLf": "2db88b9e3efb7bb2fd239f01749c5c9c29fe31ae6ab8bd4316bbc03392357590",
+  "bundle": "artifacts/conversations/dc7-prepared-package/dc7-simulated-provider-prepared.zip",
+  "bundleSha256": "e78d4282827e934a95c2888bd5c7bb6baf310dc85755c72810285b9d664e7fc7",
+  "bundleBytes": 18736,
+  "preparedWorktree": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet-fresh-worktrees\\06",
+  "checks": {
+    "pureInMemoryPassed": 8,
+    "pureInMemoryFailed": 0,
+    "syntax": "passed",
+    "targetedLint": "passed",
+    "protocolGitBlobHashesMatched": 9,
+    "mainPreloadUiDiffAtReferenceDocHead": "empty",
+    "packageVerify": "prepared_not_started"
+  },
+  "runtime": {
+    "listenerStarted": false,
+    "pid": null,
+    "port": null,
+    "expectedOwnerAccountId": null,
+    "expectedPetId": null,
+    "actualNativeFlowExecuted": false,
+    "externalModelSuccess": false,
+    "productOrProfileOpened": false,
+    "externalHttpRequestsByPreparation": 0
+  },
+  "requiredApproval": "Root approval binds frozen package SHA and the actual owner/pet/artifact binding SHA after 09 normal UI/AppInfo and readonly SQLite confirmation.",
+  "preservation": "No product/profile/global/vault mutation or credential reads; only standalone helper and plan files. Original history remains; use a new test pet or explicit checkpoint.",
+  "ownershipLimit": "OpenAI-compatible wire omits owner/petId. Helper metadata/model label do not prove actual pet; 09 UI+SQLite readback is required.",
+  "scopeOrder": "Existing protected local QA owner/new pet independent override may run T04/T05 first. Global T06 requires Root-approved fresh owner or readonly empty-key safe slot; otherwise separate pending subcase.",
+  "pending": [
+    "Root review package and fill/approve concrete expectedBinding after 09 readback",
+    "09 alone starts helper and DC7 native product/UI after appropriate Root approval",
+    "T04/T05/T06 actual loopback HTTP, native flows and backup/cloud boundary evidence remain unexecuted"
+  ]
+}

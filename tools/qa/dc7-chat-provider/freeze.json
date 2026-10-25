@@ -1,0 +1,84 @@
+{
+  "format": "lingjing.dc7.simulated-provider.freeze",
+  "version": 1,
+  "preparedOn": "2026-10-26",
+  "timezone": "Asia/Shanghai",
+  "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+  "referenceDocHead": "e1c73bc70deffdc88cb88ef56d1e3e118ef39b33",
+  "hashScheme": "SHA256 of UTF-8 files after CRLF-to-LF normalization; sourceHashes are exact Git blob SHA256",
+  "files": {
+    "provider.cjs": "68e3b7d750e0f6cb9cd41389f5fe36c6654a3d05678942724a721fe01e188af2",
+    "cli.cjs": "c8461668708facc9c28b1a8a079ba50dbd0146fb733e6d473ccca27931fc2d11",
+    "provider.test.cjs": "8d029d2d40e30e982c8ec10a3d0459f15b60559100e4afa1be742cdfe4e8fd06",
+    "binding.example.json": "78a614ae81d62d5229cb109843042029285b7f5c3fa03fb5577a35a055945981",
+    "PLAN.txt": "93a0e0e5e538fca285f84f175a926acd2571cc9d5a1a0062b0dff378bb73533f"
+  },
+  "sourceHashes": {
+    "apps/pc-app/runtime/features/conversations/transport.cjs": "c57284cf951a2197e87a1db69ce8a1fd5cceb976991609db419f4b677014f463",
+    "apps/pc-app/runtime/features/conversations/errors.cjs": "7e1a6a189d8ceef0f980020aab1e3c8eb29320cc2d15c7d37e3205dc8e2f04b2",
+    "apps/pc-app/runtime/features/conversations/service.cjs": "933c97eeb6b49cc3e6be721f75e17d1b66ac77b8ed0b6d69248d149e32c870ef",
+    "apps/pc-app/runtime/features/conversations/store.cjs": "fbe5df43dc2500c7c379b80c9b92af4785dd3a6a1e9d0064f75395cad7e981e4",
+    "apps/pc-app/runtime/features/conversations/context.cjs": "13117ac6edab5afb02781e77f4a5969149fffc014b4e1bd22c6362e539933020",
+    "apps/pc-app/runtime/features/conversations/tests/runtime.test.cjs": "961706d8597a71bfc704c6d6d72ba1f3f0cca4b7b6c8a09dadf354c554c2d0c4",
+    "apps/pc-app/ui/src/features/conversations/settings-page.tsx": "63a9120b4fc0b32b2adb551d4e406920ab387c4d826bbf39818bf9c4918b3f76",
+    "packages/shared-types/src/features/conversations/index.ts": "127173ed108796e12f7ee4e75b743410543a9012ebeacf8e81c058c54e18aa40",
+    "package.json": "db1b8c108a0f6c6381fe5a885da0f8eb8abd6457e0d0dc83a9930b903f5d1355"
+  },
+  "mainPreloadUiUnchangedAtReferenceDocHead": true,
+  "protocol": {
+    "endpoint": "POST /v1/chat/completions",
+    "bind": "127.0.0.1:0 exclusive; runtime OS-selected port only",
+    "authentication": "exact fresh run dummy bearer only; no original keys or header values logged",
+    "model": "exact run-scoped visible 模拟验收-DC7 label",
+    "requestBodyBytes": 262144,
+    "sse": "one Unicode code point per delta, 140ms gap, finish_reason stop and DONE",
+    "modes": [
+      "stream",
+      "hold",
+      "truncate",
+      "disconnect",
+      "http401",
+      "http429",
+      "http503",
+      "empty",
+      "json"
+    ],
+    "holdSecondsAfterPrefix": 100,
+    "connectionTestTimeoutSeconds": 30,
+    "chatTimeoutSeconds": 90,
+    "helperLifetimeSeconds": 3600,
+    "ownership": "expected ownerAccountId+petId only; wire omits both, actual binding requires 09 UI+SQLite readback",
+    "privacy": "metadata only; no input/header/persona/memory/output content in audit",
+    "approval": "Root receipt plus approved package SHA and approved explicit binding SHA are required before the only start/listen entry point",
+    "connectionScopes": [
+      "pet",
+      "account",
+      "pet-and-account"
+    ]
+  },
+  "expectedBinding": {
+    "status": "Root_and_09_must_fill_after_real_UI_and_readonly_SQLite",
+    "template": "binding.example.json",
+    "ownerAccountId": null,
+    "petId": null,
+    "exeSha256": null,
+    "asarSha256": null,
+    "existingQaOwnerNewPetPermittedForPetOnly": true,
+    "globalRequiresFreshOwnerOrReadOnlyNoKeyEvidence": true,
+    "rootApprovedBindingSha256": null
+  },
+  "preparation": {
+    "pureInMemoryChecksPassed": 8,
+    "pureInMemoryChecksFailed": 0,
+    "syntaxCheck": "passed",
+    "targetedLint": "passed",
+    "node": "v24.21.0",
+    "listenerStarted": false,
+    "pid": null,
+    "port": null,
+    "externalHttpRequestsByPreparation": 0,
+    "productOrProfileOpened": false,
+    "actualNativeFlowExecuted": false,
+    "externalModelSuccess": false
+  }
+}
