@@ -1,0 +1,59 @@
+# 灵境共享云身份与存档权限契约
+
+状态：第一阶段身份接口已实现，待主协调部署；账号登录桥、完整存档 CAS 和真实 HTTP/Electron 双客户端验收继续实施。PGlite 仅是本地 SQL 检查，不能算真实 Supabase 通过。
+
+目标项目 `jbvrdmrkwpznbrvteive`。不读取或迁入 comparisontext 的用户记录；不修改它的私有归档。旧 DesktopPet 实例 `http://47.112.208.97:8000` 无凭据健康检查超时/UND_ERR_SOCKET，且暂无 SSH 或源备份。旧全量云账号迁移单列外部未完成项；不能把空 Auth 库当迁移成功，也不接受客户端自报旧 owner。新账号和云权限实施不依赖旧实例可达。
+
+## 公共身份
+
+`infra/supabase/functions/_shared/lingjing-auth.ts` 提供 `requireActor(request)`、`withActor(handler)`、`readJson`、`jsonResponse`、`assertActorOwner`、`assertDifferentPlayers`。返回：
+
+```ts
+type LingjingActor = {
+  schemaVersion: 1; authority: 'live'; authKind: 'supabase';
+  authUserId: string; ownerAccountId: string; deviceId: string; sessionId: string;
+  account: string; username: string;
+};
+// ActorContext.client 是携带当前用户 JWT 的 Supabase SDK，仅服务端使用，
+// 不可枚举，不会随 JSON 序列化。普通领域操作不要使用 admin client。
+```
+
+客户端请求必须带 `Authorization: Bearer <Supabase user JWT>`、`apikey: <modern publishable key>`、`X-Lingjing-Device-Id: <UUID>`。设备 ID 稳定保存在各独立用户目录，不作为不同玩家身份。helper 先实际调用 `auth.getUser(jwt)`，然后 RPC 验证 auth.sessions 活跃性、非匿名用户、UID→文本 owner 映射和该 device/session 绑定。不信任 user_metadata、renderer owner 或旧 session_token。
+
+现代 Edge 环境使用 JSON 字典 `SUPABASE_PUBLISHABLE_KEYS['default']` / `SUPABASE_SECRET_KEYS['default']`；helper 集中读取，兼容单数和旧变量仅作 fallback。此项目旧 anon key 已被主协调实测为无效，因此部署需确认现代字典存在。`supabasePublicConfig()` / `createAdminClient()` 分别供用户验证与账号桥调用。secret 不进入 renderer、提交、日志或证据。
+
+部署 `verify_jwt=false`，所有受保护的业务函数必须使用 `withActor` / `requireActor` 完成实际认证。这与允许匿名访问是不同配置。账号密码入口本身可以无 JWT；后续 actor/device/业务操作必须验证用户 JWT。新 username 账号通过受控 Auth 管理 API 创建 named user 并确认内部登录标识，不依赖目标项目默认邮件自动确认开关。该桥及节流/渐进迁移在后续提交交付。
+
+## SQL / RLS
+
+规范迁移由 CLI 2.122.0 `migration new` 生成：`20261025020314_lingjing_identity_actor_contract.sql`。新增 `public.lingjing_accounts` / `public.lingjing_devices` 及不可直接读写的 `lingjing_private.legacy_account_claims`。不覆盖既有表。UID 与 owner 分列；新 owner 为独立 `account:<uuid>`，已验证旧记录保留原文本 owner。
+
+对外 RPC：
+
+- `lingjing_register_device(p_device_id, p_label)`：在经验证 Auth 登录后建立当前 device/session 绑定；不会替换同账号其他 device。
+- `lingjing_actor_context(p_device_id)`：返回上述公共 actor。
+- `lingjing_current_owner()`：领域 RLS 的统一文本 owner。
+- `lingjing_revoke_device(p_device_id)`：仅当前 owner 的设备；常规退出只撤销当前 device，并使用 Supabase `signOut({scope:'local'})`，不全局互踢。
+- `lingjing_link_auth_user(...)`：仅 `service_role` 可执行。新账号由服务端 Auth API创建，旧 owner 只能来自受控源清单。函数通过 FK 检查 Auth UID存在，不要求 service_role 读取 auth.users。匿名排除和 session 活跃性在私有权限查验函数中独立执行。
+
+领域表使用 `owner_account_id text`，不把它改为 Auth UUID。SELECT/UPDATE/DELETE 用 `owner_account_id = (select public.lingjing_current_owner())`；UPDATE 同时有 USING / WITH CHECK。需要事务写入的权威表不直接开放客户端写权限；用领域受控 RPC，固定空 search_path 并显式撤销 PUBLIC/anon EXECUTE。私有 Auth 查验函数仅访问必要 auth.sessions/users 字段，未扩大 service_role 的 auth.users SELECT 权限。
+
+## 各域接入
+
+- 04 联机：actor 的 owner 是玩家身份；同 owner 两个 device 不能充当两名对战玩家，调用 `assertDifferentPlayers`。真实 JWT 不传入旧 HTTP/单 session_token 传输。新增云联机后端消费同一 actor，当前 UI 所有权不变。
+- 05 领地/菜园：相同 actor.client 与 owner；地理/库存/结算函数在事务内验证参与者、胜负、actionId/revision，并更新受保护存档状态。
+- 03 探索/捕捉：owner/petId 归属用同一映射，位置、捕捉和奖励凭证由该域权威验证；模拟明确区分，不能写成 live 定位成功。
+- 07 资源 Storage：私有 bucket，路径第一段为稳定 owner；Storage policy 通过 `lingjing_current_owner()` 验证，并传同样设备头。manifest/hash/owner 共同校验，不上传密钥。
+- 02 伙伴 / 06 聊天：保留原 petId、消息/成长实例关联。客户端只提交个人允许同步的部分；领域权威状态不得被整包覆盖。
+
+## 完整存档的权限边界（后续 CAS 实现必须满足）
+
+结构正确、owner 正确和 checksum 正确不构成改写玩法状态的权限。`garden / discovery / battle / companions / resources / legacy` 模块及其 SQL 表默认受保护；个人设置/聊天等白名单部分可走用户 CAS。已成为云端权威的库存、奖励、捕捉、领地、成长和战报，只能由对应受控事务从真实数据生成 authority fragment。完整存档 push 必须与该受保护片段一致；首次迁移没有可信源时保存原档为未授权迁移档案，不能凭本地 JSON 自动生成云端经济/胜利。其他域必须在同一事务提交权威片段和统一存档 revision，避免先发奖再补存档的分叉。
+
+CAS / 幂等 / 断网恢复的具体 RPC 和客户端接口将在后续提交固定，现阶段不能部署旧 `accounts-sync` 的 runtime session_token 实现作为新权限模型。
+
+## 当前验证和来源
+
+本地 `cloud-identity-sql.test.mjs` 已验证：旧文本 owner保留、客户端不能绑定/读取旧凭据、两个 device/session 同时有效、跨 owner/假设备/失效 session 拒绝、撤销单设备不踢另一设备。Deno 2.9.6 类型检查通过；SDK 2.98.0 固定并保留 lock。已合入 Electron44.9.3 / SQLite13.0.3 公共检查点并通过 native:check，未 rebuild 共用 node_modules。真实云端迁移/HTTP结果仍待集中部署，不以这些本地检查代替。
+
+官方资料（2026-10-25 已核对）：[Auth sessions](https://supabase.com/docs/guides/auth/sessions)、[Sign out scopes](https://supabase.com/docs/guides/auth/signout)、[Edge secrets](https://supabase.com/docs/guides/functions/secrets)、[新 API keys](https://supabase.com/docs/guides/getting-started/migrating-to-new-api-keys)、[RLS](https://supabase.com/docs/guides/database/postgres/row-level-security)。已检查最新 changelog，Node/Electron 使用现代 TLS；未引入自造 JWT 或第二套认证密码系统。
