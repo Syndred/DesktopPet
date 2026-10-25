@@ -17,6 +17,12 @@
       "status": "applied-by-coordinator;PostGIS3.3.7",
       "deployed": true,
       "replacesUndeployedDraft": "20261025020010"
+    },
+    {
+      "path": "infra/supabase/migrations/20261025034225_lingjing_territory_receipt_operator.sql",
+      "generatedBy": "Supabase CLI2.122.0 migration new",
+      "status": "ready-for-coordinator-apply;fix-json-operator-precedence",
+      "deployed": false
     }
   ],
   "checks": [
@@ -40,7 +46,18 @@
       "garden": "ACTIVE v1",
       "territory": "ACTIVE v1"
     },
-    "spatialBoundaryAndRlsCheckedByCoordinator": true
+    "spatialBoundaryAndRlsCheckedByCoordinator": true,
+    "liveSameAccountGardenCas": true,
+    "liveServerBattles": 2,
+    "realDefeatsPendingConfirmation": true,
+    "transactionRollbackVerified": {
+      "sqlState": "42725",
+      "where": "runtime_territory_write IF settlement identity comparison",
+      "noSeedOrGrowthApplied": true,
+      "challengeState": "finished",
+      "fix": "((p_payload->'settledBattle')-'reward')",
+      "readOnlyRemoteInspection": true
+    }
   },
   "preservation": {
     "legacyOwnerTextIds": true,
@@ -67,7 +84,7 @@
     "Run real cloud crop maturity -> harvest -> craft -> feed, preserving original periods",
     "Unified dual-profile Electron flow and independent coordinator acceptance"
   ],
-  "phase": "deployed-by-coordinator;desktop-bridge-wired;live-HTTPS-fixture-prepared",
+  "phase": "real-HTTPS-receipt-operator-fix-ready-for-coordinator;desktop-stable",
   "dependencyCheckpoint": "b40af0efcf6062ddc2e8c360523c996fc91ebc0a",
   "identityCheckpoint": "ee36030ad37614ac321b94ae4ee4169d705f1165",
   "code": {
@@ -109,5 +126,12 @@
       }
     ],
     "requestedDurationMinutes": 90
+  },
+  "liveVerifier": {
+    "privateConfig": "artifacts/garden/cloud/private-clients.json",
+    "output": "artifacts/garden/cloud/live-4b474857-e93b-4354-a119-a21157984812",
+    "realClockRiceMaturesAt": "2026-10-25T04:01:09.873Z",
+    "physicalLocationProof": false,
+    "locationSource": "coordinator-granted simulated"
   }
 }
