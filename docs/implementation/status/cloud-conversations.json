@@ -2,9 +2,9 @@
   "module": "conversations",
   "scope": "cloud-upgrade-2026-10-25",
   "branch": "codex/lingjing-conversations",
-  "commit": "6e81e2ed08684380da541a613b96b12542e3d312",
+  "commit": "543b71fe6868",
   "goalStatus": "active",
-  "status": "checkpoint_ready_for_01_integration",
+  "status": "checkpoint_ready_awaiting_cloud_projection_and_legal_pet",
   "contracts": {
     "identity": "08 accounts: verified owner mapping, complete-save CAS and account save-restored events",
     "backup": "conversations version 1 adapter; stable IDs and array order, no sequence or encrypted_key",
@@ -17,8 +17,9 @@
     ],
     "conversationConsumer": "docs/implementation/cloud-conversations-contract.txt",
     "approvedIdentityCheckpoint": "f81008c",
-    "pendingFullSaveCheckpoint": "45b857d",
-    "backupEntry": "services.get(conversations).createBackupAdapter(); compatibility core forwarder retained"
+    "backupEntry": "services.get(conversations).createBackupAdapter(); compatibility core forwarder retained",
+    "approvedFullSaveCheckpoint": "45b857d",
+    "approvedShellCheckpoint": "ced8e5e"
   },
   "migrations": {
     "remote": [],
@@ -76,7 +77,7 @@
     }
   ],
   "realCloudEvidence": {
-    "status": "awaiting_approved_full_save_and_legal_cloud_pet_registration",
+    "status": "approved_auth_cas_and_typed_shell_merged_waiting08_projection02_pet",
     "projectRef": "jbvrdmrkwpznbrvteive",
     "ownPrivilegedWrites": 0,
     "ownCloudSyncAcceptance": false,
@@ -86,8 +87,8 @@
       "evidence": "docs/implementation/evidence/conversations/cloud-2026-10-25/model-preflight.json"
     },
     "legacyPrivacyGate": {
-      "status": "verify08 cloud projection before push",
-      "detail": "Current local full backup preserves opaque legacy fixture key/token fields. Conversation module itself and device credential table are excluded. New45b857d cloud serialization must be verified separately."
+      "status": "confirmed_not_filtered_in45b857d_client",
+      "detail": "AccountSync.enqueue uses backups.snapshot(owner), and legacy adapter returns raw account_legacy_data.document unchanged. SQL rejects secret keys after transmission; it is not a client privacy filter. Do not upload a legacy archive containing opaque apiKey/sessionToken. Await08 cloud projection, retain original local raw archive."
     }
   },
   "preservation": [
@@ -97,22 +98,22 @@
   "cleanupCandidates": [
     {
       "path": "apps/pc-app/runtime/main.cjs obsolete AI code",
-      "decision": "removed16 declarations/IPC",
+      "decision": "old whole shell deleted by approved01 ced8e5e; removal retained in merge543b71f",
       "replacement": "features/conversations/service.cjs + AI SDK transport.cjs"
     },
     {
       "path": "apps/pc-app/runtime/preload.cjs aiChat",
-      "decision": "removed",
+      "decision": "old whole shell deleted by approved01 ced8e5e; removal retained in merge543b71f",
       "replacement": "preload/index.ts typed IPC"
     },
     {
       "path": "apps/pc-app/runtime/renderer/renderer.mjs AI storage/scheduler/fake replies",
-      "decision": "removed125 owned declarations/calls/translations",
+      "decision": "old whole shell deleted by approved01 ced8e5e; removal retained in merge543b71f",
       "replacement": "React conversations + verified archive importer"
     },
     {
       "path": "apps/pc-app/runtime/renderer/index.html AI panel",
-      "decision": "removed",
+      "decision": "old whole shell deleted by approved01 ced8e5e; removal retained in merge543b71f",
       "replacement": "settings/ai"
     },
     {
@@ -122,11 +123,12 @@
     }
   ],
   "remaining": [
-    "Merge approved45b857d and validate actual cloud projection privacy.",
-    "Consume02 approved legal pet registration, then real A/B chat/persona/memory sync, conflicts/offline/restart tests.",
-    "Main coordinator deployment/integration and final independent acceptance; original legacy server migration remains08 condition."
+    "Consume08 approved client cloud projection (raw legacy upload currently unsafe).",
+    "Consume02 approved legal cloud pet adoption/registration; do not seed SQL pets.",
+    "Real two Electron A/B chat/persona/memory CAS, conflicts/offline/restart checks.",
+    "Coordinator deployment/integration and independent acceptance; original legacy server migration remains08 condition."
   ],
-  "updatedAt": "2026-10-25T02:49:37.502Z",
+  "updatedAt": "2026-10-25T02:54:16.928Z",
   "cleanupManifest": "docs/implementation/evidence/conversations/cloud-2026-10-25/cleanup-manifest.json",
   "installation": {
     "workspaceNodeModulesIndependent": true,
@@ -137,5 +139,10 @@
       "npm run native:check"
     ],
     "initialDefaultCi": "node-gyp fallback required unavailable Visual Studio; bundled N-API install and native check succeeded"
+  },
+  "cloudLatest": {
+    "fetchedAt": "2026-10-25T02:54:16.927Z",
+    "originMain": "4786f97",
+    "included": true
   }
 }
