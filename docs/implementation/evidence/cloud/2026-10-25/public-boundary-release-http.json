@@ -1,0 +1,94 @@
+{
+  "at": "2026-10-25T05:58:32.507Z",
+  "projectRef": "jbvrdmrkwpznbrvteive",
+  "kind": "read-only actual HTTPS public boundary on deployed Supabase; no simulation",
+  "sourceCommit": "1c8cc0b43d4b00be7e6e58b9f26ce03f18a1feab",
+  "publicConfigSha256": "625ca2a50fb7b3ae479208d65bf31dc877ce5b22d516fe559c8ecde976a7b481",
+  "credentialsIncluded": false,
+  "checks": [
+    {
+      "name": "managed Auth health",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "name": "anonymous actor refused with well-formed unregistered device",
+      "status": 401,
+      "code": "AUTH_REQUIRED",
+      "passed": true
+    },
+    {
+      "name": "anonymous save refused",
+      "status": 401,
+      "code": "AUTH_REQUIRED",
+      "passed": true
+    },
+    {
+      "name": "anonymous companions-sync refused",
+      "status": 401,
+      "code": "AUTH_REQUIRED",
+      "passed": true
+    },
+    {
+      "name": "anonymous garden-sync refused",
+      "status": 401,
+      "code": "AUTH_REQUIRED",
+      "passed": true
+    },
+    {
+      "name": "anonymous territory-sync refused",
+      "status": 401,
+      "code": "AUTH_REQUIRED",
+      "passed": true
+    },
+    {
+      "name": "anonymous discovery refused",
+      "status": 401,
+      "code": "AUTH_REQUIRED",
+      "passed": true
+    },
+    {
+      "name": "anonymous lingjing-resources refused",
+      "status": 401,
+      "code": "AUTH_REQUIRED",
+      "passed": true
+    },
+    {
+      "name": "anonymous lingjing-battle refused",
+      "status": 401,
+      "code": "AUTH_REQUIRED",
+      "passed": true
+    },
+    {
+      "name": "anonymous accounts hidden",
+      "status": 401,
+      "code": "42501",
+      "passed": true
+    },
+    {
+      "name": "anonymous saves hidden",
+      "status": 401,
+      "code": "42501",
+      "passed": true
+    },
+    {
+      "name": "authority RPC is server-only",
+      "status": 401,
+      "code": "42501",
+      "passed": true
+    },
+    {
+      "name": "old public application table unavailable",
+      "status": 404,
+      "code": "PGRST205",
+      "passed": true
+    },
+    {
+      "name": "private archive not an exposed schema",
+      "status": 406,
+      "code": "PGRST106",
+      "passed": true
+    }
+  ],
+  "passed": true
+}

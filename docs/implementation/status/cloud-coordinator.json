@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-25T05:54:42.949Z",
-  "phase": "final-source-freeze-and-unified-verification",
+  "updatedAt": "2026-10-25T05:58:55.928Z",
+  "phase": "correcting-final-native-fixtures-before-portable-freeze",
   "goalStatus": "active",
   "deployed": {
     "projectRef": "jbvrdmrkwpznbrvteive",
@@ -125,8 +125,8 @@
     }
   },
   "fixedRemainingWork": [
-    "Freeze common source after the fix; run one final integrated verify, native and strict cloud source regression",
-    "Build the actual final portable SFX at that freeze; independently run complete normal IPC/React/HTTPS/SQLite/native business acceptance"
+    "Merge garden/conversation fixture contract corrections, retain original failures, rerun affected native verification",
+    "Freeze corrected common source and build final actual portable; root verifies the complete business path"
   ],
   "cleanup": {
     "completedCodeRetirement": true,
@@ -258,10 +258,10 @@
       "review": "Legacy normalization is internal view only; original envelope/checksum/files retained. Root8 targeted native restore/provider cases and original signed expired HTTPS denial passed."
     }
   ],
-  "status": "final-source-freeze-and-unified-verification",
+  "status": "correcting-final-native-fixtures-before-portable-freeze",
   "remaining": [
-    "Freeze common source after the fix; run one final integrated verify, native and strict cloud source regression",
-    "Build the actual final portable SFX at that freeze; independently run complete normal IPC/React/HTTPS/SQLite/native business acceptance"
+    "Merge garden/conversation fixture contract corrections, retain original failures, rerun affected native verification",
+    "Freeze corrected common source and build final actual portable; root verifies the complete business path"
   ],
   "engineering": {
     "historicalEngineeringCheckpoints": {
@@ -293,5 +293,25 @@
     },
     "finalBusinessPortablePending": true
   },
-  "freezePolicy": "No further product edits without a concrete verification failure; one common verify/native/strict-cloud regression and actual final portable business acceptance. Later evidence-only commits do not replace the exact packaged source identity."
+  "freezePolicy": "No further product edits without a concrete verification failure; one common verify/native/strict-cloud regression and actual final portable business acceptance. Later evidence-only commits do not replace the exact packaged source identity.",
+  "finalRegression": {
+    "firstSource": "30f3cd29c3682bf8674caf1610a89e8060ebdeca",
+    "strictCloud": {
+      "passed": true,
+      "nodeTestFiles": 22,
+      "denoCases": 5,
+      "generatedHashAndMtimeUnchanged": true
+    },
+    "verify": {
+      "passed": true,
+      "unitTests": 46,
+      "lint": "Scoped typed-JSON boundaries/private UID omission/control-path checks; immutable Auth username binding corrected"
+    },
+    "native": {
+      "firstRunTests": 260,
+      "passed": 254,
+      "failed": 6,
+      "fixtureCorrectionsPending": true
+    }
+  }
 }

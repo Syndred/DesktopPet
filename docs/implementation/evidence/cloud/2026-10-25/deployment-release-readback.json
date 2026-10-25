@@ -1,5 +1,5 @@
 {
-  "at": "2026-10-25 05:49:28 UTC",
+  "at": "2026-10-25 05:58:31 UTC",
   "projectRef": "jbvrdmrkwpznbrvteive",
   "migrations": [
     {
@@ -97,13 +97,13 @@
       "slug": "lingjing-auth",
       "name": "lingjing-auth",
       "status": "ACTIVE",
-      "version": 2,
+      "version": 3,
       "created_at": 1792895361305,
-      "updated_at": 1792895861420,
+      "updated_at": 1792907904251,
       "verify_jwt": false,
       "import_map": false,
-      "entrypoint_path": "file:///tmp/user_fn_jbvrdmrkwpznbrvteive_69ecdbd1-ee0f-45e8-9cc7-d69fb224d1c3_2/source/infra/supabase/functions/lingjing-auth/index.ts",
-      "ezbr_sha256": "80434bb2511e8403255afad38eb189bae3efdfc1d4b172fc2ecdba0b489f8fe1"
+      "entrypoint_path": "file:///tmp/user_fn_jbvrdmrkwpznbrvteive_69ecdbd1-ee0f-45e8-9cc7-d69fb224d1c3_3/source/infra/supabase/functions/lingjing-auth/index.ts",
+      "ezbr_sha256": "fdfed66567b2b8bd1876856a9fd68b8f94282256a562495ec49e1bee9887b3ec"
     },
     {
       "id": "1c6202a1-213d-4531-bf2a-1e853de7c000",
@@ -197,5 +197,6 @@
       "ezbr_sha256": "1bb7c77c2844ef33606527d2286b5e53e69a7b39dd6a53d410ff845458c60385"
     }
   ],
-  "passed": true
+  "passed": true,
+  "authStaticCorrection": "docs/implementation/evidence/cloud/2026-10-25/auth-static-correction-deployment.json"
 }

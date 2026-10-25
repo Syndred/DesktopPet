@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "at": "2026-10-25T04:25:02.239Z",
+  "at": "2026-10-25 05:58:31 UTC",
   "projectRef": "jbvrdmrkwpznbrvteive",
   "url": "https://jbvrdmrkwpznbrvteive.supabase.co",
   "plan": "free",
@@ -192,18 +192,18 @@
       "slug": "lingjing-auth",
       "name": "lingjing-auth",
       "status": "ACTIVE",
-      "version": 2,
+      "version": 3,
       "created_at": 1792895361305,
-      "updated_at": 1792895861420,
+      "updated_at": 1792907904251,
       "verify_jwt": false,
       "import_map": false,
-      "entrypoint_path": "file:///tmp/user_fn_jbvrdmrkwpznbrvteive_69ecdbd1-ee0f-45e8-9cc7-d69fb224d1c3_2/source/infra/supabase/functions/lingjing-auth/index.ts",
-      "ezbr_sha256": "80434bb2511e8403255afad38eb189bae3efdfc1d4b172fc2ecdba0b489f8fe1",
+      "entrypoint_path": "file:///tmp/user_fn_jbvrdmrkwpznbrvteive_69ecdbd1-ee0f-45e8-9cc7-d69fb224d1c3_3/source/infra/supabase/functions/lingjing-auth/index.ts",
+      "ezbr_sha256": "fdfed66567b2b8bd1876856a9fd68b8f94282256a562495ec49e1bee9887b3ec",
       "source": {
         "function": "lingjing-auth",
         "entrypoint": "infra/supabase/functions/lingjing-auth/index.ts",
-        "sourceCommit": "df9f00a847adecfd3fb6e591a7a951a362b7e83e",
-        "sourceSha256": "4610880718ca892affd4ab1b86fb3c0bebe91fc1b4ed553bc863b72191ae4fd9",
+        "sourceCommit": "1c8cc0b43d4b00be7e6e58b9f26ce03f18a1feab",
+        "sourceSha256": "cf4a4117b1180f78b4c88eff17f34de4bf26f62cdfdfd7a82bf6b22f656b3c98",
         "files": [
           {
             "name": "infra/supabase/functions/_shared/lingjing-auth.ts",
@@ -215,7 +215,7 @@
           },
           {
             "name": "infra/supabase/functions/lingjing-auth/index.ts",
-            "bytes": 8119
+            "bytes": 8121
           }
         ],
         "external": [
@@ -652,5 +652,6 @@
     "remoteHistoryMutated": false,
     "legacyDraftRetirementPending": false,
     "legacyDraftRetirementEvidence": "docs/implementation/cleanup/cloud-coordinator-retirement.json"
-  }
+  },
+  "authStaticCorrection": "docs/implementation/evidence/cloud/2026-10-25/auth-static-correction-deployment.json"
 }
