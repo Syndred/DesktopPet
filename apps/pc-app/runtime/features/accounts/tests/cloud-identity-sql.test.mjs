@@ -14,6 +14,7 @@ await db.exec(`create role anon; create role authenticated; create role service_
   create function auth.uid() returns uuid language sql stable as $$select (auth.jwt()->>'sub')::uuid$$;
 `);
 await db.exec(readFileSync("infra/supabase/migrations/20261025020314_lingjing_identity_actor_contract.sql", "utf8"));
+await db.exec(readFileSync("infra/supabase/migrations/20261025021755_lingjing_auth_bridge.sql", "utf8"));
 await db.query("insert into auth.users(id) values($1),($2)", [a,b]);
 await db.query("insert into auth.sessions(id,user_id) values($1,$2),($3,$2),($4,$5)", [sa,a,sa2,sb,b]);
 await db.query("insert into lingjing_private.legacy_account_claims(source_instance,legacy_subject,owner_id,account_key,account,username,password_hash,source_record_checksum,source_manifest_checksum,created_at) values('old-runtime','legacy-a','user-original-text','alice','alice','Alice',repeat('a',64),repeat('b',64),repeat('c',64),now())");
@@ -55,4 +56,21 @@ test("LOCAL PGlite only: revoking device A leaves same-account device B active",
   await as(a,sa,da,"select public.lingjing_revoke_device($1)",[da]);
   await assert.rejects(as(a,sa,da,"select public.lingjing_actor_context($1)",[da]),/LJ_DEVICE_SESSION_REQUIRED/);
   assert.equal((await as(a,sa2,da2,"select public.lingjing_actor_context($1) actor",[da2]))[0].actor.ownerAccountId,linkedA.owner_id);
+});
+test("LOCAL PGlite only: revoked refresh cannot re-register, fresh Auth session can rebind one device", async () => {
+  await assert.rejects(as(a,sa,da,"select public.lingjing_register_device($1,'refresh')",[da]),/LJ_DEVICE_SESSION_REQUIRED/);
+  const sa3="20000000-0000-4000-8000-000000000004";
+  await db.query("insert into auth.sessions(id,user_id) values($1,$2)",[sa3,a]);
+  assert.equal((await as(a,sa3,da,"select public.lingjing_register_device($1,'new login') actor",[da]))[0].actor.sessionId,sa3);
+  await assert.rejects(as(a,sa3,"30000000-0000-4000-8000-000000000099","select public.lingjing_register_device($1,'copy')",["30000000-0000-4000-8000-000000000099"]),/LJ_DEVICE_SESSION_BOUND/);
+  assert.equal((await as(a,sa2,da2,"select public.lingjing_current_owner() owner"))[0].owner,linkedA.owner_id);
+});
+test("LOCAL PGlite only: auth directory, staged reservation and rate limits are service-only", async () => {
+  const record=(await as(null,null,null,"select public.lingjing_auth_reserve('charlie','Charlie') item",[],"service_role"))[0].item;
+  assert.match(record.email,/^lj-[0-9a-f-]+@login\.lingjing\.invalid$/); assert.equal(record.authUserId,null);
+  await assert.rejects(as(a,sa2,da2,"select public.lingjing_auth_record('charlie')"),/permission denied/);
+  const row=(await as(null,null,null,"select public.lingjing_auth_record('alice') item",[],"service_role"))[0].item;
+  assert.equal(row.legacy,null); // Already linked: the old hash can never be a login fallback.
+  for(let i=0;i<2;i++)await as(null,null,null,"select public.lingjing_auth_rate_limit(repeat('d',64),2)",[],"service_role");
+  await assert.rejects(as(null,null,null,"select public.lingjing_auth_rate_limit(repeat('d',64),2)",[],"service_role"),/LJ_AUTH_RATE_LIMITED/);
 });
