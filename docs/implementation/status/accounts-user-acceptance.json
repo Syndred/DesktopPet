@@ -1,0 +1,102 @@
+{
+  "module": "accounts",
+  "updatedAt": "2026-10-25T09:27:01.667Z",
+  "integrationBase": "6d4df8fdbf102e185cfc9c022bcdddf4601aac82",
+  "sourceCommit": "c83d3b5746d692707aec51fdac3dbb24fae2bff8",
+  "overallStatus": "fixed-awaiting-independent-qa",
+  "completeUserAcceptancePassed": false,
+  "independentQa": {
+    "threadId": "01a1725c-d59c-7620-9bb6-1c0d4e0fb3a3",
+    "title": "灵境 09｜完整用户功能验收与缺陷闭环",
+    "role": "Sole actual mouse/keyboard verifier; coordinator merges/repackages before retest."
+  },
+  "issues": [
+    {
+      "id": "QA-001",
+      "severity": "release-blocking",
+      "status": "fixed-awaiting-independent-qa",
+      "reportedPackage": {
+        "source": "a9acd7f",
+        "sha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289"
+      },
+      "problem": "登录页保持登录复选框、文本和锁图标垂直不对齐。",
+      "rootCause": "ac-check 继承 margin-top:12px，而 ac-login-preference 只清除了 margin-bottom；flex 按包含顶部外边距的标签盒居中，使标签内容与旁侧锁图标错位。iconOnly 状态徽标此前没有固定方形尺寸。",
+      "files": [
+        "apps/pc-app/ui/src/features/accounts/auth.tsx",
+        "apps/pc-app/ui/src/features/accounts/status.tsx",
+        "apps/pc-app/ui/src/features/accounts/styles.css"
+      ],
+      "commit": "c83d3b5746d692707aec51fdac3dbb24fae2bff8",
+      "changes": [
+        "两项偏好共用行容器间距，标签 margin:0、min-height:24px、line-height:20px。",
+        "复选框保持16px；iconOnly 图标盒固定24px，SVG 不收缩，统一文字/控件/图标垂直中心。",
+        "账号类型标题保留同一行高度，切换本机图标不推移后续输入框。",
+        "账号布局使用可收缩网格；800px 以下单列表单，隐藏装饰插画，避免挤压输入与错误提示。"
+      ],
+      "verified": {
+        "sourceOnlyAuthLogicPreserved": true,
+        "authPrefixSha256": "1c670453966d4d050f872397d4ce4439feab41c571f22b05353693c3f5ed33d3",
+        "uiTypecheck": {
+          "command": "npm run typecheck:ui",
+          "exitCode": 0
+        },
+        "targetedLint": {
+          "command": "node node_modules/eslint/bin/eslint.js apps/pc-app/ui/src/features/accounts/auth.tsx apps/pc-app/ui/src/features/accounts/status.tsx",
+          "exitCode": 0
+        },
+        "diffCheck": {
+          "exitCode": 0
+        },
+        "headlessLayout": {
+          "passed": true,
+          "measurementCases": 24,
+          "totalCases": 30,
+          "maxCenterSpreadCssPx": 0,
+          "cssViewportWidths": [
+            1280,
+            1024,
+            800,
+            640,
+            360
+          ],
+          "emulatedDeviceScaleFactors": [
+            1,
+            1.25,
+            1.5,
+            2
+          ],
+          "modes": [
+            "登录",
+            "注册"
+          ],
+          "providers": [
+            "云端账号",
+            "本机账号"
+          ],
+          "otherChecks": [
+            "记住账号勾选",
+            "密码显隐",
+            "超长模拟错误换行",
+            "安全存储不可用时保持登录禁用"
+          ],
+          "actualDesktopUsed": false,
+          "actualAccountOrVaultUsed": false,
+          "osDpiChanged": false,
+          "ipc": "Explicitly simulated error; no authentication was performed."
+        }
+      },
+      "pendingQa": [
+        "总协调合并后在同一最终 SFX 包由09真实鼠标键盘复验 QA-001。",
+        "09复核实际窄窗及 Windows 常见 DPI 下登录/注册、账号类型、记住账号、保持登录、密码显隐和错误提示。",
+        "真实登录、DPAPI 与会话保持仍由09验收；本次仅确认其源码逻辑未改，不宣称行为验收通过。"
+      ],
+      "evidence": "docs/implementation/evidence/accounts/user-acceptance/2026-10-25/qa-001/layout.json"
+    }
+  ],
+  "outOfScope": [
+    "No companion/battle styles changed.",
+    "No TypeScript migration or auth/DPAPI/session refactor.",
+    "No user app was closed, no visible desktop browser or Electron app was driven."
+  ],
+  "evidenceDirectory": "docs/implementation/evidence/accounts/user-acceptance/2026-10-25/qa-001"
+}

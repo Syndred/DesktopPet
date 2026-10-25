@@ -70,8 +70,10 @@ export function AuthPage({ session, onSignedIn }: { session: AccountsSession; on
           <label>账号<Input value={account} onChange={e => setAccount(e.target.value)} autoComplete="username" minLength={3} maxLength={32} required spellCheck={false} /></label>
           <label>密码<div className="ac-password"><Input aria-label="密码" type={visible ? "text" : "password"} value={password} onChange={e => setPassword(e.target.value)} autoComplete={register ? "new-password" : "current-password"} minLength={6} maxLength={64} required /><Button type="button" onClick={() => setVisible(!visible)} aria-label={visible ? "隐藏密码" : "显示密码"}>{visible ? <EyeOff size={18} /> : <Eye size={18} />}</Button></div></label>
           {register && <label>确认密码<Input type="password" value={confirm} onChange={e => setConfirm(e.target.value)} autoComplete="new-password" minLength={6} maxLength={64} required /></label>}
-          <label className="ac-check"><AccountCheckbox label="记住账号" checked={remember} onChange={setRemember} disabled={pending} />记住账号</label>
-          <div className="ac-login-preference"><label className="ac-check"><AccountCheckbox label="保持登录" checked={rememberSession} disabled={!session.secureStorageAvailable || pending} onChange={setRememberSession} />保持登录</label><AccountStatus icon={LockKeyhole} label="登录保护" detail={session.scenario ? "测试场景仅在本次运行中登录。" : session.secureStorageAvailable ? "在这台电脑上保持登录，密码不会保存在页面中。" : "此设备暂不支持保持登录。"} iconOnly /></div>
+          <div className="ac-auth-preferences">
+            <label className="ac-check"><AccountCheckbox label="记住账号" checked={remember} onChange={setRemember} disabled={pending} /><span>记住账号</span></label>
+            <div className="ac-login-preference"><label className="ac-check"><AccountCheckbox label="保持登录" checked={rememberSession} disabled={!session.secureStorageAvailable || pending} onChange={setRememberSession} /><span>保持登录</span></label><AccountStatus icon={LockKeyhole} label="登录保护" detail={session.scenario ? "测试场景仅在本次运行中登录。" : session.secureStorageAvailable ? "在这台电脑上保持登录，密码不会保存在页面中。" : "此设备暂不支持保持登录。"} iconOnly /></div>
+          </div>
           <div className="ac-notice ac-error" role="alert">{error}</div>
           <Button className="ac-primary ac-submit" type="submit">{pending ? "正在验证…" : register ? "创建账号 →" : "登录进入 →"}</Button>
         </fieldset>

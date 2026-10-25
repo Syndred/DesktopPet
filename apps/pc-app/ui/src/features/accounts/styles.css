@@ -71,12 +71,12 @@
 .ac-time-range>span{color:var(--ac-muted);font-size:12px}
 .ac-settings-footer{display:flex;justify-content:space-between;align-items:center;padding:4px 0 10px}
 .ac-settings-footer>.ac-primary{min-width:150px}
-.ac-auth{display:grid;grid-template-columns:1.1fr 1fr;max-width:1020px;min-height:660px;margin:14px auto;border:1px solid var(--ac-line);background:#fff;border-radius:15px;overflow:hidden}
+.ac-auth{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);max-width:1020px;min-height:660px;margin:14px auto;border:1px solid var(--ac-line);background:#fff;border-radius:15px;overflow:hidden}
 .ac-auth-scene{position:relative;overflow:hidden;padding:55px 40px;background:radial-gradient(ellipse at 20% 10%,#fffbe7 0,transparent 45%),radial-gradient(ellipse at 100% 95%,#d1e9ff,transparent 55%),linear-gradient(145deg,#e1efff,#f5f9ff 50%,#dbe7fa)}
 .accounts .ac-auth-scene h1{font-size:40px;margin:18px 0 12px}
 .ac-auth-scene>p:not(.ac-eyebrow){font-size:15px;color:#5e719d}
 .accounts .ac-scene-footer{position:absolute;bottom:32px;left:40px;font-size:12px;letter-spacing:.12em}
-.ac-auth-card{padding:32px 38px}
+.ac-auth-card{min-width:0;padding:32px 38px}
 .ac-segment{display:flex;border-radius:8px;overflow:hidden;background:#edf4ff}
 .accounts .ac-segment button{flex:1;border-radius:8px;background:transparent;color:#58729e}
 .accounts .ac-segment button[aria-pressed=true]{color:#fff;background:var(--ac-blue)}
@@ -176,7 +176,7 @@
    checked travel is track width minus thumb size and the two equal insets. */
 .accounts .ac-radix-switch [data-slot=switch-thumb] { position:absolute; left:var(--ac-switch-inset); top:var(--ac-switch-inset); width:var(--ac-switch-thumb); height:var(--ac-switch-thumb); background:var(--primary-foreground,#fff); border-radius:50%; transform:none!important; translate:0 0!important; transition:translate .16s; }
 .accounts .ac-radix-switch[data-state=checked] [data-slot=switch-thumb] { translate:calc(var(--ac-switch-width) - var(--ac-switch-thumb) - 2 * var(--ac-switch-inset)) 0!important; }
-.accounts .ac-radix-checkbox { width:16px; height:16px; min-width:16px; min-height:16px; padding:0!important; border:1px solid #c8d5e9!important; border-radius:3px; background:white; }
+.accounts .ac-radix-checkbox { width:16px; height:16px; min-width:16px; min-height:16px; flex-shrink:0; padding:0!important; border:1px solid #c8d5e9!important; border-radius:3px; background:white; }
 .accounts .ac-radix-checkbox[data-state=checked] { background:var(--ac-blue); color:white; }
 .accounts .ac-select-trigger { display:flex; width:100%; justify-content:space-between; min-height:38px; padding:8px 12px; margin-top:6px; border:1px solid #d8e2f3; border-radius:6px; background:#fcfdff; color:var(--ac-ink); font-size:13px; font-weight:400; }
 .accounts .ac-select-trigger.ac-limit-select { width:65px; min-width:65px; margin:0; }
@@ -199,10 +199,18 @@
 .ac-title-row { display:flex; align-items:center; gap:10px; }
 .ac-status-badge { display:inline-flex; align-items:center; gap:5px; width:fit-content; padding:4px 7px; border-radius:6px; font-size:11px; line-height:16px; color:var(--ac-muted); background:var(--secondary,#edf2ff); cursor:help; }
 .ac-status-badge:focus-visible { outline:3px solid var(--ring,#9db5ff); outline-offset:3px; }
+.ac-status-badge>svg { display:block; flex-shrink:0; }
+.accounts .ac-status-icon-only { width:24px; height:24px; min-width:24px; min-height:24px; flex:0 0 24px; justify-content:center; padding:0; gap:0; vertical-align:middle; }
 .ac-status-success { color:#397964; background:#eaf6ef; }
 .ac-status-warning { color:#956022; background:#fff3e2; }
 .ac-save-status { display:flex; align-items:center; flex-wrap:wrap; gap:6px; }
 .ac-tooltip { font-size:12px; line-height:1.5; }
+.ac-auth-preferences { display:grid; gap:8px; margin-top:12px; }
+.accounts .ac-auth-preferences .ac-check { min-height:24px; margin:0; line-height:20px; }
 .ac-login-preference { display:flex; align-items:center; gap:6px; }
-.accounts .ac-login-preference .ac-check { margin-bottom:0; }
-.ac-field-caption { display:flex; align-items:center; gap:6px; }
+.ac-field-caption { display:flex; align-items:center; gap:6px; min-height:24px; }
+@media(max-width:800px){
+  .ac-auth { grid-template-columns:minmax(0,1fr); max-width:520px; min-height:0; }
+  .ac-auth-scene { display:none; }
+  .ac-auth-card { padding:clamp(20px,4vw,26px); }
+}
