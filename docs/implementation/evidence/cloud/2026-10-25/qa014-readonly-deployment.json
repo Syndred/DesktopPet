@@ -1,0 +1,249 @@
+{
+  "schemaVersion": 1,
+  "format": "lingjing.qa014.actual-readonly-deployment",
+  "recordedAt": "2026-10-25T15:21:05.095Z",
+  "projectRef": "jbvrdmrkwpznbrvteive",
+  "deployedFromCommit": "1bf17ef1be03373b849bbcb992ef199bb3eba792",
+  "purpose": "Trusted display-only global serial views for canonical battle participants and historical territory defenders",
+  "migrations": [
+    {
+      "version": "20261025151136",
+      "name": "lingjing_battle_serial_views",
+      "sqlSha256": "99ab99a5f55397f5325e90d19e376a8aa9fdd2f33e59ebd4d347521cce5c86ec"
+    },
+    {
+      "version": "20261025151139",
+      "name": "lingjing_territory_serial_views",
+      "sqlSha256": "357a4032a00ea5a3fd517618081f78422f568e7aa5e84946ed91523743ce72a0"
+    }
+  ],
+  "ledger": "docs/implementation/evidence/cloud/2026-10-25/migration-ledger-serial-views.json",
+  "previous23LedgerPreserved": true,
+  "previous22LedgerPreserved": true,
+  "functions": [
+    {
+      "name": "lingjing-battle",
+      "version": 3,
+      "bundleSha256": "471a3e43947c47d1b98300cab450bfa9935758ac7db7aa61cfa914d66a15eb96",
+      "verifyJwtGatewayUnchanged": false,
+      "ownFreshJwtActorValidationRetained": true,
+      "exactSourceReadback": true,
+      "files": [
+        {
+          "name": "functions/lingjing-battle/index.ts",
+          "sha256": "e61eaba891c1e49760407a04fd601eb6cf94735218f94249f5fad24fef0f6e41"
+        },
+        {
+          "name": "functions/lingjing-battle/runtime.generated.mjs",
+          "sha256": "487012fbf985eb5491039f02cf88da3530def4b6069ac7b581c44296df4f45b5"
+        },
+        {
+          "name": "functions/_shared/lingjing-auth.ts",
+          "sha256": "7178c839542293a568d43ffe23c7d5af6c0a9f71254f342e864f65fe5e839b9e"
+        }
+      ]
+    },
+    {
+      "name": "territory-sync",
+      "version": 3,
+      "bundleSha256": "fae620e73d1009aad3b9b799afa473769a4833c9582e026269784a6ab3e07e68",
+      "verifyJwtGatewayUnchanged": false,
+      "ownFreshJwtActorValidationRetained": true,
+      "exactSourceReadback": true,
+      "files": [
+        {
+          "name": "functions/territory-sync/index.ts",
+          "sha256": "a2b648ad256db3f5e273ef644a9432a1c3dbbfa2ff82578470c735c15e8600a7"
+        },
+        {
+          "name": "functions/_shared/lingjing-auth.ts",
+          "sha256": "7178c839542293a568d43ffe23c7d5af6c0a9f71254f342e864f65fe5e839b9e"
+        },
+        {
+          "name": "functions/_shared/garden-runtime.bundle.mjs",
+          "sha256": "809cfbc8ef4332e342962b019a60aed39a65337a348ae3ce72a47ca6c90d3970"
+        },
+        {
+          "name": "functions/_shared/battle-core.js",
+          "sha256": "67225069e3542668b6c7316e4f35a545cb3892754ca1fb3af8efd3c2bef3e885"
+        }
+      ]
+    },
+    {
+      "name": "garden-sync",
+      "version": 3,
+      "bundleSha256": "1c947b745a0b4ab439bf7de22134c46e66efcf82b62a964f71a1ee0a37250201",
+      "verifyJwtGatewayUnchanged": false,
+      "ownFreshJwtActorValidationRetained": true,
+      "exactSourceReadback": true,
+      "files": [
+        {
+          "name": "functions/garden-sync/index.ts",
+          "sha256": "ce88887ca7559e59ddf9fccd99324bfaac5d8a790024c94682dc74efda49a706"
+        },
+        {
+          "name": "functions/_shared/lingjing-auth.ts",
+          "sha256": "7178c839542293a568d43ffe23c7d5af6c0a9f71254f342e864f65fe5e839b9e"
+        },
+        {
+          "name": "functions/_shared/garden-runtime.bundle.mjs",
+          "sha256": "809cfbc8ef4332e342962b019a60aed39a65337a348ae3ce72a47ca6c90d3970"
+        },
+        {
+          "name": "functions/_shared/battle-core.js",
+          "sha256": "67225069e3542668b6c7316e4f35a545cb3892754ca1fb3af8efd3c2bef3e885"
+        }
+      ]
+    }
+  ],
+  "untouchedFunctions": [
+    {
+      "name": "lingjing-auth",
+      "version": 3,
+      "bundleSha256": "fdfed66567b2b8bd1876856a9fd68b8f94282256a562495ec49e1bee9887b3ec"
+    },
+    {
+      "name": "lingjing-save",
+      "version": 1,
+      "bundleSha256": "308252c2e54b2ccd6a88b39d552ab5ce1a995686cd2ac3277a8ee7557efca95a"
+    },
+    {
+      "name": "discovery",
+      "version": 6,
+      "bundleSha256": "3008e9093b28f522faa0588a61b6cc8e5681649de9f80ae37ca46b1c3be0a27a"
+    },
+    {
+      "name": "companions-sync",
+      "version": 2,
+      "bundleSha256": "4cd7fd44a332f855041b02fee4c3313e0e041305f7953df8005dedc39d729b42"
+    },
+    {
+      "name": "lingjing-resources",
+      "version": 2,
+      "bundleSha256": "9566fadfa78048de3ba8e9287a4a6f481c19041feac2f55037ddfdfbbcb30c20"
+    }
+  ],
+  "sqlFunctions": [
+    {
+      "schema": "lingjing_private",
+      "name": "global_serial_read_actor_namespace",
+      "stable": true,
+      "securityDefiner": true,
+      "emptySearchPath": true,
+      "anonExecute": false,
+      "authenticatedExecute": false,
+      "serviceExecute": true,
+      "bodySha256": "5783a4b7ade903b5b24fbfd4c92280b4d5518830025ecead517893e43f8277ac",
+      "actualCanonicalCNamespace": "qa:user-acceptance-790f5b6d-a900-4c6f-bb3f-e32237136ed1"
+    },
+    {
+      "schema": "public",
+      "name": "lingjing_battle_serial_views",
+      "stable": true,
+      "securityDefiner": false,
+      "emptySearchPath": true,
+      "anonExecute": false,
+      "authenticatedExecute": false,
+      "serviceExecute": true,
+      "bodySha256": "1320e8fba7e76d4e36a7457b91566a81610ff7dd01e25fcccb0efa75fd93fcb1",
+      "actualCanonicalCNamespace": "qa:user-acceptance-790f5b6d-a900-4c6f-bb3f-e32237136ed1"
+    },
+    {
+      "schema": "public",
+      "name": "lingjing_territory_serial_views",
+      "stable": true,
+      "securityDefiner": false,
+      "emptySearchPath": true,
+      "anonExecute": false,
+      "authenticatedExecute": false,
+      "serviceExecute": true,
+      "bodySha256": "83d7a1dbba88afe90751f1a5317e4e691a26562607f049cfc246c43858a44715",
+      "actualCanonicalCNamespace": "qa:user-acceptance-790f5b6d-a900-4c6f-bb3f-e32237136ed1"
+    }
+  ],
+  "rowPreservation": {
+    "before": "2026-10-25T15:09:58.082Z",
+    "after": "2026-10-25T15:16:23.406Z",
+    "tables": 43,
+    "originalRows": 2030,
+    "missingOriginalRows": 0,
+    "changedOriginalRows": 0,
+    "addedRows": 0,
+    "scope": "All 43 application tables captured before DDL/deployment and after actual HTTPS checks. Supabase migration/deployment metadata is separate. Authorized QA-grant fixture changes occurred before this baseline.",
+    "privateBefore": "artifacts/qa/user-acceptance/global-serial/qa014-before-row-fingerprints-private.json",
+    "privateAfter": "artifacts/qa/user-acceptance/global-serial/qa014-after-row-fingerprints-private.json"
+  },
+  "actualHttp": {
+    "recordedAt": "2026-10-25T15:15:38.476Z",
+    "passed": true,
+    "realProviderHttps": true,
+    "scriptedResponses": false,
+    "nativeUi": false,
+    "readOnlyOperations": true,
+    "originalCActorAndSessionUnchanged": true,
+    "checks": [
+      {
+        "function": "lingjing-battle",
+        "op": "get_display_metadata",
+        "code": "ROOM_FORBIDDEN",
+        "passed": true
+      },
+      {
+        "function": "territory-sync",
+        "op": "serial-views",
+        "code": "NOT_PARTICIPANT",
+        "passed": true
+      },
+      {
+        "function": "garden-sync",
+        "op": "snapshot",
+        "passed": true,
+        "originalCanonicalOwnerPresent": true
+      }
+    ],
+    "trace": [
+      {
+        "path": "/functions/v1/lingjing-battle",
+        "status": 403
+      },
+      {
+        "path": "/functions/v1/territory-sync",
+        "status": 403
+      },
+      {
+        "path": "/functions/v1/garden-sync",
+        "status": 200
+      }
+    ]
+  },
+  "securityAdvisors": {
+    "newFindings": 0,
+    "existingUnchanged": [
+      {
+        "name": "rls_enabled_no_policy",
+        "level": "INFO",
+        "count": 46,
+        "remediation": "https://supabase.com/docs/guides/database/database-linter?lint=0008_rls_enabled_no_policy"
+      },
+      {
+        "name": "auth_leaked_password_protection",
+        "level": "WARN",
+        "count": 1,
+        "remediation": "https://supabase.com/docs/guides/auth/password-security#password-strength-and-leaked-password-protection"
+      }
+    ]
+  },
+  "preservationContract": {
+    "noAllocation": true,
+    "noBackfill": true,
+    "noOriginalPetOrRoomOrReportOrReceiptRewrites": true,
+    "clientCommandsAndHashesUnchanged": true,
+    "displayMetadataIsSeparateReadView": true,
+    "missingOrUnconfirmed": "待同步"
+  },
+  "limitations": {
+    "nativeUiVerified": false,
+    "authorizedFriendAndTerritoryPositiveUiPendingFinalCandidate": true,
+    "full98CaseAcceptance": false
+  }
+}

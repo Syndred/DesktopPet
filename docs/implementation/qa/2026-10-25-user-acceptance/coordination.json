@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-25T14:50:38.1869046Z",
+  "updatedAt": "2026-10-25T15:21:05.4758826Z",
   "status": "in-progress",
   "qaThreadId": "01a172b4-d7f0-7213-9a40-092418ee776b",
   "soleNativeInputOwner": "01a172b4-d7f0-7213-9a40-092418ee776b",
@@ -156,7 +156,7 @@
       "issueId": "QA-014",
       "owner": "04+05+08",
       "severity": "P2",
-      "status": "Main view/friend RPC integrated; territory read-only source under independent scope review; same-final-candidate native retest pending",
+      "status": "Source integrated and exact cloud deployment verified; same-final-candidate native retest pending",
       "activeResponsibleThreadIds": [
         "01a172b4-bb6d-7061-882f-48af515b9bdc",
         "01a172b5-695c-7712-9047-53a020eae0c0",
@@ -274,7 +274,7 @@
     }
   },
   "nextCandidate": {
-    "status": "QA013 integrated; QA014 main/friend source integrated, awaiting territory scope-review closure and unified final checks before unique build",
+    "status": "All source gates passed; QA014 readonly SQL/Edge deployed and exact-read-back; ready for unique final packaging and 09 final98 native acceptance",
     "requiredContract": "docs/implementation/companions-global-serial-contract.json",
     "sourceFixes": {
       "QA008": "02ea2dac317b3aaaee12cf9517b456450391cf9c",
@@ -288,7 +288,7 @@
       "QA014": {
         "main": "c21eb0c23e8e9fb6148ddf98344921dfeb3f611c",
         "friendRpc": "e73e733ead340f4bdd37b9bb65b30cef7435d349",
-        "territoryRpc": "pending final review"
+        "territoryRpc": "d24533784d6cda4e84e2104f10a259a8ab623ba3"
       }
     },
     "rootTargetedVerification": {
@@ -312,7 +312,7 @@
       "status": "awaiting actual next portable retest; packaging fix source integrated; cause not asserted from static evidence alone"
     },
     "previousSourceFreeze": "066f61df2d9b6ef8977756c8b0700c1ba5b01681",
-    "sourceGateEvidence": "docs/implementation/qa/2026-10-25-user-acceptance/integration-gates-e875feb.json",
+    "sourceGateEvidence": "docs/implementation/qa/2026-10-25-user-acceptance/integration-gates-1bf17ef.json",
     "cloudDeployment": "docs/implementation/evidence/cloud/2026-10-25/global-serial-deployment.json",
     "liveConcurrency": "docs/implementation/evidence/cloud/2026-10-25/global-serial-live-concurrency.json",
     "packaging": {
@@ -354,6 +354,15 @@
       "restoreManifest": "artifacts/qa/user-acceptance/global-serial/grants-renewal-active.json",
       "restoreAfterAcceptance": true,
       "currentRestoreScript": "artifacts/qa/user-acceptance/global-serial/restore-original-qa-grant-expiries-from-1700.sql"
+    },
+    "testedCodeSource": "1bf17ef1be03373b849bbcb992ef199bb3eba792",
+    "qa014Deployment": "docs/implementation/evidence/cloud/2026-10-25/qa014-readonly-deployment.json",
+    "bSecondDeviceFixture": {
+      "profile": "artifacts/qa/user-acceptance/790f5b6d-a900-4c6f-bb3f-e32237136ed1/cloud-b-second-device-native",
+      "deviceId": "351797b0-cad7-4b8f-9f93-8d0e806c49c3",
+      "sameOwner": "B",
+      "normalUiLoginPending": true,
+      "temporaryGrantCleanup": "artifacts/qa/user-acceptance/global-serial/remove-added-b2-qa-grant-after-acceptance.sql"
     }
   },
   "activeTeam": {

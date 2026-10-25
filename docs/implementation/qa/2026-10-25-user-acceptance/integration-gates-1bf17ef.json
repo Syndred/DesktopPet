@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "format": "lingjing.integrated-source-gates",
+  "recordedAt": "2026-10-25T15:21:05.097Z",
+  "codeSourceCommit": "1bf17ef1be03373b849bbcb992ef199bb3eba792",
+  "passed": true,
+  "verification": {
+    "lint": true,
+    "nodeAndDesktopTypes": true,
+    "uiTypes": true,
+    "unit": {
+      "passed": 49,
+      "files": 11,
+      "failed": 0,
+      "log": "artifacts/qa/user-acceptance/global-serial/integration-1bf17ef/verify.log",
+      "expectedNegativeChildAssertionOutput": true,
+      "overallExitCode": 0
+    }
+  },
+  "nativeRuntime": {
+    "passed": 384,
+    "failed": 0,
+    "skipped": 0,
+    "sourceCommit": "d24533784d6cda4e84e2104f10a259a8ab623ba3",
+    "log": "artifacts/qa/user-acceptance/global-serial/integration-d245337/native.log",
+    "subsequentChangesOnlyThreeTestFiles": true,
+    "productionRuntimeUnchanged": true
+  },
+  "cloudSource": {
+    "nodePassed": 120,
+    "nodeFailed": 0,
+    "nodeFiles": 27,
+    "denoPassed": 13,
+    "denoFailed": 0,
+    "strictMigrationsBeforeDeployment": "23 deployed plus 2 reviewed pending",
+    "log": "artifacts/qa/user-acceptance/global-serial/integration-1bf17ef/cloud.log",
+    "engineeringReport": "artifacts/foundation/cloud-engineering/cloud-source-check.json",
+    "provenance": "Local source/PostgreSQL-WASM/SQLite/scripted Deno; not real-cloud or native UI acceptance"
+  },
+  "actualDeployment": "docs/implementation/evidence/cloud/2026-10-25/qa014-readonly-deployment.json",
+  "migrationPromotion": {
+    "deployedCount": 25,
+    "pendingCount": 0,
+    "sqlBytesUnchanged": true,
+    "strictFilenameCheckPassed": true,
+    "ledgerTestsPassed": 4,
+    "previousLedgersPreserved": true
+  },
+  "originalFailuresPreserved": {
+    "invalidNpmCmdNeverStartedTests": "artifacts/qa/user-acceptance/global-serial/integration-d245337/invalid-npm-cmd-launch.json",
+    "lintAndMissingSpeciesFixtureFailures": "artifacts/qa/user-acceptance/global-serial/integration-d245337",
+    "testOnlyFixes": [
+      "f46156ae",
+      "1bf17ef1"
+    ],
+    "productWorldOrRulesRelaxed": false
+  },
+  "nativeProductAcceptance": {
+    "intermediateE875CriticalGates": true,
+    "finalCandidate98": false,
+    "qa013AndQa014FinalNativeRetestPending": true
+  },
+  "remoteMainAtLastPull": "4786f97680679c2db0aa307fa5f67ec247f93086"
+}
