@@ -58,7 +58,13 @@ class DiscoveryService {
     const owner=this.getOwner(),encounters=owner ? this.repo.list(owner) : [];
     if(this.authority&&this.cloudRuntime&&location.mode!=='demo'){
       const remote=this.cloudRuntime.nearbyState;
-      return{spawns:(remote?.spawns||[]).map(spawn=>({...spawn,demo:false,inRange:location.status==='ready'&&remote.timestampMs===fix.timestampMs&&spawn.inRange,captureState:encounters.find(e=>e.spawn.id===spawn.id&&!['lost','cancelled'].includes(e.status))?.status||'available'})),territories:[],captureRadiusMeters:100};
+      // Watch samples advance while HTTPS discovery is in flight. A new sample
+      // must not disable a still-nearby server-generated point solely because
+      // its timestamp differs. This is only a preview: reserve/capture require
+      // a fresh signed proof and the server checks the original 100m geofence.
+      const eligible=location.status==='ready'&&this.location.policyAllowed()&&remote?.source===fix.source&&(remote.scenarioId||null)===(fix.scenarioId||null);
+      const metric=this.location.metricFix(fix);
+      return{spawns:(remote?.spawns||[]).map(spawn=>({...spawn,demo:false,distanceMeters:Math.round(distanceMeters(metric,spawn.position)),inRange:Boolean(eligible&&spawn.expiresAt>this.now()&&geofence(metric,spawn.position,100,this.now()).ok),captureState:encounters.find(e=>e.spawn.id===spawn.id&&!['lost','cancelled'].includes(e.status))?.status||'available'})),territories:[],captureRadiusMeters:100};
     }
     const spawns=nearbySpawns(fix,this.now(),450,this.getCompanions?.()?.listTemplates?.()).map(spawn=>{
       const existing=encounters.find(e=>e.spawn.id===spawn.id && !['lost','cancelled'].includes(e.status));

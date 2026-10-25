@@ -48,24 +48,6 @@ global.__cloudGameProbe=async({op,...args})=>{
   }
   return{...await global.__cloudGameProbe({op:'inspectSqlite'}),restore:{restored:restored.data.restored,mode:restored.data.mode,preservedBeforeRestore:Boolean(restored.data.preservedBackup)},localRestoreScope:'Actual accounts cloudPreview/backupRestore IPC and registered adapters/resource hydration; before-restore archive preserved'};
  }
- if(op==='readbackToFreshSqlite'){
-  const c=await s.get('cloudActor').requireActor(),head=await c.invoke('lingjing-save',{op:'read'}),owner=c.ownerAccountId,unit=head.envelope.data.modules.companions;
-  const api=s.get('companions').backupAdapter;api.validate(unit.data,owner);
-  const before=api.export(owner),pristine=before.identityImports.length===0&&Object.entries(before.tables).every(([name,rows])=>name==='companion_accounts'||rows.length===0)&&before.tables.companion_accounts.every(row=>Object.values(JSON.parse(row.selections_json)).every(id=>id===null));
-  if(pristine)requireProbe('node:fs').writeFileSync(requireProbe('node:path').join(s.paths.userData,'before-cloud-readback-'+Date.now()+'.json'),JSON.stringify(before,null,2),{flag:'wx'});
-  const tables=head.envelope.data.tables,db=s.db;
-  db.transaction(()=>{api.restore(owner,unit.data,pristine?'replace':'merge');for(const name of ['discovery_encounters','discovery_actions','discovery_captures','discovery_memory_tags']){
-   const record=tables[name];if(!record)throw Error('Missing discovery projection');
-   const columns=db.prepare('PRAGMA table_info('+name+')').all().map(({name,type,notnull,pk,dflt_value})=>({name,type,notnull,pk,dflt_value}));
-   if(JSON.stringify(columns)!==JSON.stringify(record.schema))throw Error('Projection schema mismatch');
-   const names=columns.map(c=>c.name),insert=db.prepare('INSERT OR IGNORE INTO '+name+'('+names.join(',')+') VALUES('+names.map(()=>'?').join(',')+')');
-   for(const row of record.rows){if(row.owner_account_id!==owner)throw Error('Foreign projection');insert.run(...names.map(k=>row[k]));}
-  }})();
-  return{owner,revision:head.revision,pets:db.prepare('select pet_id,template_id,revision,data_json from companion_pets where owner_account_id=? order by pet_id').all(owner).map(r=>{const p=JSON.parse(r.data_json);return{petId:r.pet_id,resourceId:p.resource.resourceId,experience:p.growth.experience,originBattleId:p.origin.battleId};}),
-    captures:db.prepare('select pet_id,data_json from discovery_captures where owner_account_id=?').all(owner).map(r=>({petId:r.pet_id,battleId:JSON.parse(r.data_json).battleId,validation:JSON.parse(r.data_json).validation})),
-    memories:db.prepare('select pet_id,count(*) count from discovery_memory_tags where owner_account_id=? group by pet_id').all(owner),
-    localRestoreScope:'Dedicated empty-profile test harness calls actual02 backup adapter and imports actual03 generic projection. Production automatic restore/UI integration is separate.'};
- }
  throw Error('Unknown probe operation');
 };
 requireProbe(${JSON.stringify(join(root,'apps/pc-app/dist/main/index.cjs'))});\n`);

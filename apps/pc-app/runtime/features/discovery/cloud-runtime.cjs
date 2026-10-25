@@ -88,13 +88,18 @@ class CloudDiscoveryRuntime {
   async read(owner,id){const session=await this.authority().sessionFor(this.permitId(id));this.assertOwner(owner);return this.remember(owner,session);}
   async begin(input){
     const owner=this.owner();return this.serial(owner,async()=>{
-      this.discovery.requireFix();
-      await this.services.get('companions').refreshCloud(owner);
-      this.services.get('companions').getPet(owner,input.petId);
-      if(this.services.get('companions').getSelections(owner).battlePetId!==input.petId){const selected=await this.services.invoke('companions','select',{actionId:'wild-selection:'+checksum({actionId:input.actionId}),petId:input.petId,slot:'battlePetId'});if(!selected.ok)fail(selected.code,selected.message);}
-      const garden=await this.services.invoke('garden','snapshot');if(!garden.ok)fail(garden.code,garden.message);
-      this.discovery.requireFix();const original=this.intent(owner,input.actionId);
+      const original=this.intent(owner,input.actionId);
       if(original&&(original.request.op!=='reserve'||original.request.spawnId!==input.spawnId||original.request.petId!==input.petId))fail('ACTION_ID_CONFLICT','操作编号已用于其他请求');
+      // A prior operation is read back before mutable position/selection checks.
+      // It cannot create a different encounter or change its owned participant.
+      if(!original){
+        this.discovery.requireFix();
+        await this.services.get('companions').refreshCloud(owner);
+        this.services.get('companions').getPet(owner,input.petId);
+        if(this.services.get('companions').getSelections(owner).battlePetId!==input.petId){const selected=await this.services.invoke('companions','select',{actionId:'wild-selection:'+checksum({actionId:input.actionId}),petId:input.petId,slot:'battlePetId'});if(!selected.ok)fail(selected.code,selected.message);}
+        const garden=await this.services.invoke('garden','snapshot');if(!garden.ok)fail(garden.code,garden.message);
+        this.discovery.requireFix();
+      }
       const body=original?.request||{op:'reserve',spawnId:input.spawnId,petId:input.petId,proofId:(await this.proofs.prove('begin',input.spawnId)).id,actionId:input.actionId};
       const permit=await this.request(owner,body);
       await this.refresh(true);const encounter=this.discovery.repo.get(owner,'encounter-'+permit.id);if(!encounter)fail('CLOUD_APPLY_PENDING','云端相遇已保存，本机读回待确认');return{ok:true,data:require('./service.cjs').publicEncounter(encounter)};
