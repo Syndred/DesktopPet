@@ -1,0 +1,119 @@
+{
+  "format": "lingjing.conversations.qa011.native-follow-up",
+  "updatedAt": "2026-10-25T21:54:39.2484957+08:00",
+  "issue": "QA-011",
+  "status": "verified_on_e875_for_tested_fox",
+  "sourceFixCommit": "46e647367960f5f31f58855ed00d2bdadc689b30",
+  "nativeVerifierThread": "01a172b4-d7f0-7213-9a40-092418ee776b",
+  "reviewerThread": "01a172b4-c29e-7201-80c9-4102317bcacf",
+  "candidate": {
+    "round": "candidate-e875feb-50e52249",
+    "runId": "e71b9c11-e62a-46a6-aa4d-decdd34c4200",
+    "sourceCommit": "e875febf3430be341191a639668d43e7f09826dc",
+    "sourceTree": "2d8977dc36e95ede498d3e3f14a26f1f9b392a16",
+    "exeSha256": "3e1bac39b805486aca8e9118444c352c8eab8777fb24409b2ed60108810ed3f9",
+    "asarSha256": "993a2b91463223fd0c12e4c596459a6bde46d250baff9a2267c8fc2a66c8871d",
+    "metadataSource": "docs/implementation/qa/2026-10-25-user-acceptance/rounds/candidate-e875feb-50e52249/round.json"
+  },
+  "nativeScope": {
+    "templateId": "animal-white-fox",
+    "resourceId": "builtin:lingjing-xiaohu-v1",
+    "routes": [
+      "#/chat",
+      "#/settings/ai"
+    ],
+    "viewports": [
+      "2048x1151",
+      "1340x920"
+    ],
+    "dpr": 1.25,
+    "nativeCases": 4,
+    "minimumVisibleContentRatio": 0.9999442978869677,
+    "visualReview": "06 viewed all four 09 native captures; ear tips, face and chin remain visible.",
+    "allEightCharactersNativelyVerified": false,
+    "completeApplicationAcceptance": false
+  },
+  "cases": [
+    {
+      "case": "chat-wide",
+      "route": "#/chat",
+      "viewport": {
+        "width": 2048,
+        "height": 1151,
+        "dpr": 1.25
+      },
+      "svgSize": {
+        "width": 212.46250915527344,
+        "height": 225
+      },
+      "viewBox": "58.24 0 163.51999999999998 173.16",
+      "preserveAspectRatio": "xMidYMid slice",
+      "visibleContentRatio": 0.9999458551352586,
+      "geometryEvidence": "docs/implementation/qa/2026-10-25-user-acceptance/rounds/candidate-e875feb-50e52249/evidence/qa011-chat-wide-geometry.json",
+      "geometrySha256": "710ef9890a910617a9c78cded177972a9486af691ab6c0605c8a6723fef3638c",
+      "nativeScreenshot": "docs/implementation/qa/2026-10-25-user-acceptance/rounds/candidate-e875feb-50e52249/evidence/qa011-chat-wide-native.jpg",
+      "nativeScreenshotSha256": "622d71bf6773bd150d87953d521422f26880a433620fbf332cd3295814179af2"
+    },
+    {
+      "case": "chat-normal",
+      "route": "#/chat",
+      "viewport": {
+        "width": 1340,
+        "height": 920,
+        "dpr": 1.25
+      },
+      "svgSize": {
+        "width": 212.46250915527344,
+        "height": 225
+      },
+      "viewBox": "58.24 0 163.51999999999998 173.16",
+      "preserveAspectRatio": "xMidYMid slice",
+      "visibleContentRatio": 0.9999458551352586,
+      "geometryEvidence": "docs/implementation/qa/2026-10-25-user-acceptance/rounds/candidate-e875feb-50e52249/evidence/qa011-chat-normal-geometry.json",
+      "geometrySha256": "21c54a0383abb502fbaea289bf40137afafc210d4fdfa8bb459452fbf6138aca",
+      "nativeScreenshot": "docs/implementation/qa/2026-10-25-user-acceptance/rounds/candidate-e875feb-50e52249/evidence/qa011-chat-normal-native.jpg",
+      "nativeScreenshotSha256": "db4b5d1ed606296916723f8fb443f9c08aaf6b5c0e78e35a6360991cb5c589d2"
+    },
+    {
+      "case": "ai-wide",
+      "route": "#/settings/ai",
+      "viewport": {
+        "width": 2048,
+        "height": 1151,
+        "dpr": 1.25
+      },
+      "svgSize": {
+        "width": 179.41250610351562,
+        "height": 190
+      },
+      "viewBox": "58.24 0 163.51999999999998 173.16",
+      "preserveAspectRatio": "xMidYMid slice",
+      "visibleContentRatio": 0.9999442978869677,
+      "geometryEvidence": "docs/implementation/qa/2026-10-25-user-acceptance/rounds/candidate-e875feb-50e52249/evidence/qa011-ai-wide-geometry.json",
+      "geometrySha256": "7489add1fbb42775efd581d938ca367bc21c7788ba7dc0a471b1cf177610858f",
+      "nativeScreenshot": "docs/implementation/qa/2026-10-25-user-acceptance/rounds/candidate-e875feb-50e52249/evidence/qa011-ai-wide-native.jpg",
+      "nativeScreenshotSha256": "13d7ec609f96674140bd1be1732e4ad197b8e865a36fcf66e26d3af6d49a1e8d"
+    },
+    {
+      "case": "ai-normal",
+      "route": "#/settings/ai",
+      "viewport": {
+        "width": 1340,
+        "height": 920,
+        "dpr": 1.25
+      },
+      "svgSize": {
+        "width": 179.41250610351562,
+        "height": 190
+      },
+      "viewBox": "58.24 0 163.51999999999998 173.16",
+      "preserveAspectRatio": "xMidYMid slice",
+      "visibleContentRatio": 0.9999442978869677,
+      "geometryEvidence": "docs/implementation/qa/2026-10-25-user-acceptance/rounds/candidate-e875feb-50e52249/evidence/qa011-ai-normal-geometry.json",
+      "geometrySha256": "2c32b6736f812a29972bb64b554063c98836ee4b720167be50cf62a8971fc33a",
+      "nativeScreenshot": "docs/implementation/qa/2026-10-25-user-acceptance/rounds/candidate-e875feb-50e52249/evidence/qa011-ai-normal-native.jpg",
+      "nativeScreenshotSha256": "c2bc4789a973ee7e5ce08e2859b4d7fdb712923b1e008495ed7d2795e5e22bd5"
+    }
+  ],
+  "preservation": "Original 312 failure and 24-case component evidence remain unchanged; no product source, user database, API key, persona, memory or native input changed by this follow-up."
+}

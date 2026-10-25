@@ -4,12 +4,14 @@
   "severity": "P2",
   "sourceFixCommit": "46e647367960f5f31f58855ed00d2bdadc689b30",
   "baselineSource": "066f61df2d9b6ef8977756c8b0700c1ba5b01681",
-  "sourceStatus": "fixed_and_component_verified",
-  "nativeUserAcceptance": "pending_09_final_package",
+  "sourceStatus": "fixed_component_verified_and_fox_native_verified_on_e875",
+  "nativeUserAcceptance": "verified_e875_fox_scope_only",
   "completeUserAcceptancePassed": false,
   "cause": "The chat scene forced a portrait SVG to fill both dimensions of a wide 407.4x225 slot. Its existing xMidYMid slice policy enlarged the authored viewBox to roughly 407.4x431.4 and clipped almost half its height.",
   "fix": "Center the chat scene content and preserve the SVG intrinsic aspect ratio with automatic width/height plus maximum bounds on both dimensions.",
-  "changedProductFiles": ["apps/pc-app/ui/src/features/conversations/styles.css"],
+  "changedProductFiles": [
+    "apps/pc-app/ui/src/features/conversations/styles.css"
+  ],
   "preserved": [
     "Shared .cp-portrait and other modules",
     "ResourcePortrait default slice policy, authored close-up viewBox, frame and asset bytes",
@@ -31,9 +33,16 @@
     "modelOrCloudRequests": 0,
     "evidence": "docs/implementation/evidence/conversations/qa011-2026-10-25/index.json"
   },
-  "pendingQa": [
-    "09 checks the single final integrated executable at wide and narrow windows with the current selected pet",
-    "Confirm complete readable face, unchanged role/resource identity, working selector and unchanged reaction node",
-    "Keep the original 312 failure evidence; close QA011 only after native final-package confirmation"
-  ]
+  "pendingQa": [],
+  "updatedAt": "2026-10-25T21:54:39.2484957+08:00",
+  "nativeVerification": {
+    "candidateSource": "e875febf3430be341191a639668d43e7f09826dc",
+    "exeSha256": "3e1bac39b805486aca8e9118444c352c8eab8777fb24409b2ed60108810ed3f9",
+    "asarSha256": "993a2b91463223fd0c12e4c596459a6bde46d250baff9a2267c8fc2a66c8871d",
+    "cases": 4,
+    "scope": "Existing fox on chat and AI settings at 2048x1151 and 1340x920, DPR1.25",
+    "minimumVisibleContentRatio": 0.9999442978869677,
+    "allEightCharactersNativelyVerified": false,
+    "evidence": "docs/implementation/evidence/conversations/qa011-2026-10-25/native-e875.json"
+  }
 }

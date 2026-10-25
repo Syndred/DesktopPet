@@ -18,4 +18,10 @@ Screenshots show actual decoded canonical pixels; they are component evidence.
 Rounded corner styling is retained; alpha coverage uses rectangular viewports.
 
 The earlier 312 native screenshot and geometry stay in 09's original round.
-Final integrated executable/native acceptance remains pending with 09.
+Native acceptance was pending at this source delivery; see the follow-up below.
+
+Follow-up: native-e875.json records 09's four actual e875 fox captures and
+geometry at chat/AI settings, 2048x1151 and 1340x920, DPR1.25. QA-011 is verified
+for that tested scope, with at least 99.9944% visible content. The 8-character
+gallery remains component evidence; this does not claim eight native passes or
+complete application acceptance. Original failure/source-run evidence is kept.
