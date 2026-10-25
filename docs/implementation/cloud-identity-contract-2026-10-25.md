@@ -102,8 +102,20 @@ JSON SHA256 和现有备份保持兼容，SQL 处理 UTF-16 键排序及 ECMAScr
 
 后续已验证且提交到 `docs/implementation/evidence/accounts/cloud-2026-10-25/`：实际并发CAS两种竞争均正确；主协调managed-valid旧SID重绑/refresh拒绝且独立设备继续有效；嵌套/serialized假凭据5种拒绝且安全投影独立DB读回无假标记；原签发JWT自然过期被Auth403 bad_jwt(expired)及save401拒绝；生产聊天adapter生成的消息/记忆/人设JSON示例经过合法云领养、CAS及独立Data API读回逐字一致且整包checksum不变。
 
-在合入主协调831e483及会话预览修复7a6b04a后，最新 `dual-electron-full.json` 的9项真实双Electron44.9.3检查全部通过，`fullSaveVerified:true` / `authorityPending:false` / `unverifiedLocal:0`。通过正式IPC领养的非空伙伴和标准菜园库存先从真实云权威恢复到两端，再完整CAS同步；冲突保留原本机备份。断网任务 `087172dc-e60f-45aa-bb0d-19e98456dedd` 保留base4，真实进程重启后原任务提交到revision5，并由另一进程独立读取相同action/checksum/volume54。退出A后重启未登录，B保持可用。两端截图、只读SQLite计数和源码/构建摘要同目录保存；B另起真实进程恢复其加密会话并重读渲染状态。该证据限同机双进程，未验证两台实体设备及私有Realtime频道重连，也不代表旧服务器全部数据已迁移。
+历史 `dual-electron-full.json` 的9项检查各自成立，`fullSaveVerified:true`只说明该次完整保存已核验。独立复查发现：A最终revision5/volume54，B仅远程读回相同回执，本机仍revision4/volume43；当时30秒任务只flush，没有自动拉取，也没有为个人改动自动建队。它不能证明最终双端一致。原证据和原SQLite继续保留，差异见 `automatic-gap-retrospective.json`，不能覆盖历史文件来消除这个缺口。
 
 所有已生成的本地/云端恢复预览在adopt/logout/当前owner会话失效时清空，只清内存预览，不删原备份或缓存。同SID自动令牌刷新仍允许恢复。真实SQLite搭配明确模拟Auth的回归确认：同owner新SID即使本机指纹不变，旧previewId也不能写入恢复；原备份字节不变。最终账号范围54项、UI类型检查和生产构建通过，build-manifest记录源码7a6b04a及干净工作区。完成前已再次执行 `git pull --no-rebase --no-edit origin main`，结果为已是最新，origin/main为4786f97680679c2db0aa307fa5f67ec247f93086。
+
+## 安全自动同步与最新双端收敛验收
+
+280328d复用正式30秒任务、SDK、持久outbox及备份恢复。accounts-007只新增本机 `account_sync_baselines`，保存已确认版本/envelope校验和及个人/受保护内容指纹，不存登录令牌，不改云端协议/RLS。自动上传必须已有匹配的已确认基线、受保护指纹未变且没有待处理冲突或未核验/隐私裁剪原档；只为个人改动生成一次持久auto action，然后执行原CAS/readback。断网、响应丢失和重启继续使用原action/base，不静默重定版本。
+
+自动读回只允许替换相对检查点完全干净的本机。云端读取和prepareCloud前后核对owner/device/SID/epoch、本机完整指纹、检查点、同步开关及待处理/未核验状态；异步期间新增改动、退出或同owner新SID均拒绝应用，同SID自动刷新允许继续。同步恢复事务先保留before-restore文件；恢复后的完整规范数据必须与读回一致才提交checkpoint。已由其他领域合法应用且完整视图与云端完全相同的情况，只确认严格读回，不覆盖本机；不因单一领域更新直接宣称其他个人内容已同步。
+
+主进程sync/settings/save-restored事件让实际账号页刷新状态；未检查、正在同步、待处理、部分内容和云端较新均不宣称完整“已同步”。dirty/离线/冲突保留本机与原任务，仍提供显式预览及保档恢复。
+
+最新真实证据为 `docs/implementation/evidence/accounts/cloud-2026-10-25/automatic-sync/evidence.json`，源码280328d、8项通过。首次建立基线以后没有调用立即同步、重试或runAutomaticSync，只等待正式定时器：正常设置修改自动上传并实际落地B；B的本机volume42面对较新云端时保留原action并显示冲突；显式恢复保留42原档；A断网任务 `auto:72f3e76a-4cd5-4d96-b374-6aabc95f8b36` 以原base5跨真实Electron进程重启后自动提交revision6，B持续运行自动恢复54。两端UI订阅实际显示已同步，两份query_only SQLite、完整规范数据指纹及独立Supabase MCP SELECT均一致：revision6、volume54、checksum `d2cfa0ddb6eb76fd7e18d61c3c62e6d194372aee22bd52d122ef1bf8b8f6ff89`。快照、冲突截图、构建来源、独立SQL回读及摘要manifest均在同目录。没有复制凭据文件/JWT/密码。
+
+最新账号回归73项、领域/checkpoint集成9项、UI类型检查和生产构建通过。生产conversation adapter的消息/记忆/人设自动排队另有明确模拟provider的真实SQLite用例，未宣称真实LLM生成。本机双进程未冒称两台实体设备或私有Realtime频道重连；旧服务器全量迁移与最终EXE联合发布仍由主协调处理。完成前04:56:56 UTC再次pull origin/main，仍为已是最新；无自行部署、云端SQL写入或恢复旧网络入口。
 
 官方资料（2026-10-25 已核对）：[Auth sessions](https://supabase.com/docs/guides/auth/sessions)、[Sign out scopes](https://supabase.com/docs/guides/auth/signout)、[Edge secrets](https://supabase.com/docs/guides/functions/secrets)、[新 API keys](https://supabase.com/docs/guides/getting-started/migrating-to-new-api-keys)、[RLS](https://supabase.com/docs/guides/database/postgres/row-level-security)。已检查最新 changelog，Node/Electron 使用现代 TLS；未引入自造 JWT 或第二套认证密码系统。

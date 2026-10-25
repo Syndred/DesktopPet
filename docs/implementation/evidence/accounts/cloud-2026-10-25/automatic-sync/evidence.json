@@ -1,0 +1,331 @@
+{
+  "at": "2026-10-25T04:47:18.506Z",
+  "sourceSha": "280328d8d31803410dc239e6804999bc6e5f41c7",
+  "kind": "Actual production Electron main/preload/React UI, two separate Windows processes and isolated profiles, real Supabase HTTPS; same host, not two physical machines",
+  "automaticTask": "Unmodified production30-second interval; verifier never calls runAutomaticSync, syncRetry or syncNow after initial baseline setup",
+  "checks": [
+    {
+      "name": "real two-process same-account sessions and Windows encrypted vaults",
+      "data": {
+        "owner": "account:6cfcec97-b88e-44de-883e-649355a365a7",
+        "pidA": 21124,
+        "pidB": 25568,
+        "a": {
+          "available": true,
+          "deviceId": "468effdc-2180-47cf-a991-f3b97d8a5d41",
+          "sessionId": "2f7fbcc1-2c89-407b-b249-e301154b021c",
+          "owner": "account:6cfcec97-b88e-44de-883e-649355a365a7",
+          "matchesCurrent": true,
+          "encrypted": true
+        },
+        "b": {
+          "available": true,
+          "deviceId": "c3aef25d-8a77-424d-8ddb-de8c651537b3",
+          "sessionId": "4d6b146b-63f4-4124-bb5a-9f770087e55d",
+          "owner": "account:6cfcec97-b88e-44de-883e-649355a365a7",
+          "matchesCurrent": true,
+          "encrypted": true
+        }
+      }
+    },
+    {
+      "name": "real legal cloud pet and garden plus explicit initial full confirmed baseline",
+      "data": {
+        "petId": "pet-a548e041-ab66-4251-9249-a7dc1035fbbe",
+        "revision": 3
+      }
+    },
+    {
+      "name": "normal personal settings edit auto-enqueues/uploads and B actually applies without any sync click",
+      "data": {
+        "action": {
+          "action_id": "auto:e0bdd7f4-e74e-4564-9387-4bec77093f71",
+          "base_revision": 3,
+          "status": "verified",
+          "last_error": null
+        },
+        "cloud": {
+          "revision": 4,
+          "checksum": "33d5b212bc89b545649d27b9a558f58493f5ee543c5a826af3be4a5b8c3a867a",
+          "actionId": "auto:e0bdd7f4-e74e-4564-9387-4bec77093f71",
+          "volume": 31,
+          "dataChecksum": "3bbea3649568013b8ab4fc3c29545dc8733ceba9ad58a0d19f489a1eafde2fbf"
+        },
+        "a": {
+          "status": {
+            "configured": true,
+            "cloudRevision": 4,
+            "lastVerifiedAt": "2026-10-25T04:48:50.955Z",
+            "lastError": null,
+            "pending": 0,
+            "conflicts": 0,
+            "localChanged": false,
+            "unverifiedLocal": 0,
+            "privacyRedactions": 0,
+            "running": false,
+            "observedCloudRevision": 4,
+            "lastCloudCheckedAt": "2026-10-25T04:48:50.947Z",
+            "remoteChanged": false
+          },
+          "disk": {
+            "revision": 4,
+            "checksum": "33d5b212bc89b545649d27b9a558f58493f5ee543c5a826af3be4a5b8c3a867a",
+            "volume": 31,
+            "syncEnabled": true,
+            "quickCheck": "ok",
+            "outbox": [
+              {
+                "action_id": "224b60a8-20c8-4347-8f93-172814b64e1c",
+                "base_revision": 2,
+                "status": "verified",
+                "last_error": null
+              },
+              {
+                "action_id": "auto:e0bdd7f4-e74e-4564-9387-4bec77093f71",
+                "base_revision": 3,
+                "status": "verified",
+                "last_error": null
+              }
+            ],
+            "pets": [
+              "pet-a548e041-ab66-4251-9249-a7dc1035fbbe"
+            ]
+          }
+        },
+        "b": {
+          "status": {
+            "configured": true,
+            "cloudRevision": 4,
+            "lastVerifiedAt": "2026-10-25T04:48:51.583Z",
+            "lastError": null,
+            "pending": 0,
+            "conflicts": 0,
+            "localChanged": false,
+            "unverifiedLocal": 0,
+            "privacyRedactions": 0,
+            "running": false,
+            "observedCloudRevision": 4,
+            "lastCloudCheckedAt": "2026-10-25T04:48:51.541Z",
+            "remoteChanged": false
+          },
+          "disk": {
+            "revision": 4,
+            "checksum": "33d5b212bc89b545649d27b9a558f58493f5ee543c5a826af3be4a5b8c3a867a",
+            "volume": 31,
+            "syncEnabled": true,
+            "quickCheck": "ok",
+            "outbox": [],
+            "pets": [
+              "pet-a548e041-ab66-4251-9249-a7dc1035fbbe"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "dirty B is never silently overwritten; its exact original automatic action stays conflicted",
+      "data": {
+        "original": {
+          "action_id": "auto:481c511d-a9a9-4e3b-ac32-bab2fc3c1162",
+          "base_revision": 4,
+          "status": "retry",
+          "last_error": "CLOUD_UNAVAILABLE"
+        },
+        "status": {
+          "configured": true,
+          "cloudRevision": 4,
+          "lastVerifiedAt": "2026-10-25T04:48:51.583Z",
+          "lastError": "SYNC_CONFLICT",
+          "pending": 1,
+          "conflicts": 1,
+          "localChanged": true,
+          "unverifiedLocal": 0,
+          "privacyRedactions": 0,
+          "running": false,
+          "observedCloudRevision": 4,
+          "lastCloudCheckedAt": "2026-10-25T04:48:51.541Z",
+          "remoteChanged": false
+        },
+        "disk": {
+          "revision": 4,
+          "checksum": "33d5b212bc89b545649d27b9a558f58493f5ee543c5a826af3be4a5b8c3a867a",
+          "volume": 42,
+          "syncEnabled": true,
+          "quickCheck": "ok",
+          "outbox": [
+            {
+              "action_id": "auto:481c511d-a9a9-4e3b-ac32-bab2fc3c1162",
+              "base_revision": 4,
+              "status": "conflict",
+              "last_error": "SYNC_CONFLICT"
+            }
+          ],
+          "pets": [
+            "pet-a548e041-ab66-4251-9249-a7dc1035fbbe"
+          ]
+        }
+      }
+    },
+    {
+      "name": "explicit conflict recovery retains dirty42 backup and restores the chosen cloud version",
+      "data": {
+        "backup": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-accounts\\DesktopPet\\artifacts\\accounts\\cloud-auto-electron-1792903638505\\device-b\\accounts\\backups\\before-restore-1792903824314-b3171ffb-940e-410b-b08d-cf3dfc2a3996.lingjing.json",
+        "revision": 5
+      }
+    },
+    {
+      "name": "A original automatic offline action and encrypted session survive actual process restart",
+      "data": {
+        "original": {
+          "action_id": "auto:72f3e76a-4cd5-4d96-b374-6aabc95f8b36",
+          "base_revision": 5,
+          "status": "retry",
+          "last_error": "CLOUD_UNAVAILABLE"
+        },
+        "source": {
+          "checksum": "f92a483fbe8457f78b2c901856e94a3b2754209a6693eff7874bec18ba9365a4",
+          "volume": 54
+        },
+        "oldPid": 21124,
+        "newPid": 28276,
+        "beforeRestart": {
+          "available": true,
+          "deviceId": "468effdc-2180-47cf-a991-f3b97d8a5d41",
+          "sessionId": "2f7fbcc1-2c89-407b-b249-e301154b021c",
+          "owner": "account:6cfcec97-b88e-44de-883e-649355a365a7",
+          "matchesCurrent": true,
+          "encrypted": true
+        },
+        "afterRestart": {
+          "available": true,
+          "deviceId": "468effdc-2180-47cf-a991-f3b97d8a5d41",
+          "sessionId": "2f7fbcc1-2c89-407b-b249-e301154b021c",
+          "owner": "account:6cfcec97-b88e-44de-883e-649355a365a7",
+          "matchesCurrent": true,
+          "encrypted": true
+        },
+        "scope": "controlled per-request closed TLS socket; host network not disabled"
+      }
+    },
+    {
+      "name": "production timer retries the same A action then B automatically converges in actual UI, SQLite and full cloud checksum",
+      "data": {
+        "originalAction": {
+          "action_id": "auto:72f3e76a-4cd5-4d96-b374-6aabc95f8b36",
+          "base_revision": 5,
+          "status": "verified",
+          "last_error": null
+        },
+        "cloud": {
+          "revision": 6,
+          "checksum": "d2cfa0ddb6eb76fd7e18d61c3c62e6d194372aee22bd52d122ef1bf8b8f6ff89",
+          "actionId": "auto:72f3e76a-4cd5-4d96-b374-6aabc95f8b36",
+          "volume": 54,
+          "dataChecksum": "75342ab7eda1218a8acbd041e6c3b114f027e6625be9a0003c0c51e491f2bb99"
+        },
+        "a": {
+          "status": {
+            "configured": true,
+            "cloudRevision": 6,
+            "lastVerifiedAt": "2026-10-25T04:51:51.592Z",
+            "lastError": null,
+            "pending": 0,
+            "conflicts": 0,
+            "localChanged": false,
+            "unverifiedLocal": 0,
+            "privacyRedactions": 0,
+            "running": false,
+            "observedCloudRevision": 6,
+            "lastCloudCheckedAt": "2026-10-25T04:51:51.583Z",
+            "remoteChanged": false
+          },
+          "disk": {
+            "revision": 6,
+            "checksum": "d2cfa0ddb6eb76fd7e18d61c3c62e6d194372aee22bd52d122ef1bf8b8f6ff89",
+            "volume": 54,
+            "syncEnabled": true,
+            "quickCheck": "ok",
+            "outbox": [
+              {
+                "action_id": "224b60a8-20c8-4347-8f93-172814b64e1c",
+                "base_revision": 2,
+                "status": "verified",
+                "last_error": null
+              },
+              {
+                "action_id": "auto:e0bdd7f4-e74e-4564-9387-4bec77093f71",
+                "base_revision": 3,
+                "status": "verified",
+                "last_error": null
+              },
+              {
+                "action_id": "auto:9beec848-4c74-411d-a15d-41aeb016c3e5",
+                "base_revision": 4,
+                "status": "verified",
+                "last_error": null
+              },
+              {
+                "action_id": "auto:72f3e76a-4cd5-4d96-b374-6aabc95f8b36",
+                "base_revision": 5,
+                "status": "verified",
+                "last_error": null
+              }
+            ],
+            "pets": [
+              "pet-a548e041-ab66-4251-9249-a7dc1035fbbe"
+            ]
+          }
+        },
+        "b": {
+          "status": {
+            "configured": true,
+            "cloudRevision": 6,
+            "lastVerifiedAt": "2026-10-25T04:51:51.200Z",
+            "lastError": null,
+            "pending": 0,
+            "conflicts": 0,
+            "localChanged": false,
+            "unverifiedLocal": 0,
+            "privacyRedactions": 0,
+            "running": false,
+            "observedCloudRevision": 6,
+            "lastCloudCheckedAt": "2026-10-25T04:51:51.158Z",
+            "remoteChanged": false
+          },
+          "disk": {
+            "revision": 6,
+            "checksum": "d2cfa0ddb6eb76fd7e18d61c3c62e6d194372aee22bd52d122ef1bf8b8f6ff89",
+            "volume": 54,
+            "syncEnabled": true,
+            "quickCheck": "ok",
+            "outbox": [
+              {
+                "action_id": "auto:481c511d-a9a9-4e3b-ac32-bab2fc3c1162",
+                "base_revision": 4,
+                "status": "superseded",
+                "last_error": "CLOUD_RESTORE_SUPERSEDED"
+              }
+            ],
+            "pets": [
+              "pet-a548e041-ab66-4251-9249-a7dc1035fbbe"
+            ]
+          }
+        },
+        "originalSourcePreserved": true,
+        "uiReloadedByVerifier": false
+      }
+    },
+    {
+      "name": "actual A logout/restart remains signed out while converged B remains active",
+      "data": {
+        "revision": 6
+      }
+    }
+  ],
+  "errors": [],
+  "passed": true,
+  "finalBothLocalConverged": true,
+  "finalRevision": 6,
+  "finalChecksum": "d2cfa0ddb6eb76fd7e18d61c3c62e6d194372aee22bd52d122ef1bf8b8f6ff89",
+  "manualSyncCommandsAfterSetup": 0
+}

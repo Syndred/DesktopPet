@@ -2,10 +2,10 @@
   "module": "accounts",
   "scope": "2026-10-25 Supabase Auth/JWT, stable legacy owner mapping, per-device sessions, full-save CAS/idempotency/conflict/offline recovery",
   "branch": "codex/lingjing-accounts",
-  "commit": "7a6b04a0cc83f84143c42af71d4947ce9f7ce4cb",
+  "commit": "280328d8d31803410dc239e6804999bc6e5f41c7",
   "worktree": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-accounts\\DesktopPet",
-  "goalStatus": "active",
-  "phase": "Reopened: original9 native assertions remain valid individually but did not prove final B-local convergence. Safe automatic personal enqueue/push and clean-only full pull implemented;18 realSQLite/simulated-provider safety checks passed; new actual dual-Electron automatic convergence verifier next. Frozen cloud protocol untouched.",
+  "goalStatus": "complete",
+  "phase": "Automatic convergence gap closed on280328d: normal personal edit auto-queues/uploads; clean B atomically pulls full save; dirty B retains original action/conflict; A offline original action survives restart and automatically retries. Both actual UIs and query-only SQLite agree with independent cloud SQL at revision6. Original9-case run retained as historical bounded evidence.",
   "baseline": "46abf416e0500b53ef32fc29b441d923ef5a6a80",
   "dependencyCheckpoint": "b40af0efcf6062ddc2e8c360523c996fc91ebc0a",
   "contracts": {
@@ -289,6 +289,18 @@
       "command": "node --test cloud-identity-sql cloud-save-sql cloud-service-actor-sql cloud-session-upgrade-sql migration-preservation-replay",
       "result": "23 passed,0 failed,0 skipped after4830619 migration path alignment",
       "kind": "Local PGlite actual SQL, not a new cloud deployment"
+    },
+    {
+      "command": "node --test <all nine accounts test files>",
+      "kind": "Local real SQLite/PGlite/DPAPI and explicitly simulated protocol cases; no live LLM calls",
+      "result": "73 passed,0 failed,0 skipped",
+      "testCommit": "4f60a30336eb423057b758a6b17e6ba6c4c8bdfe"
+    },
+    {
+      "command": "node --test foundation/cloud-checkpoint, companions/cloud-authority, companions/backup-integration",
+      "kind": "Local SQLite and explicit domain protocol fixtures",
+      "result": "9 passed after aligning pre-existing fixture with approved domain readback semantics; strict full-checkpoint rejections remain asserted directly",
+      "testCommit": "4f60a30336eb423057b758a6b17e6ba6c4c8bdfe"
     }
   ],
   "realCloudEvidence": {
@@ -329,24 +341,24 @@
       "passed": true
     },
     "dualElectron": {
-      "evidence": "docs/implementation/evidence/accounts/cloud-2026-10-25/dual-electron-full.json",
-      "source": "7a6b04a0cc83f84143c42af71d4947ce9f7ce4cb",
+      "evidence": "docs/implementation/evidence/accounts/cloud-2026-10-25/automatic-sync/evidence.json",
+      "source": "280328d8d31803410dc239e6804999bc6e5f41c7",
       "passed": true,
-      "passedChecks": 9,
+      "passedChecks": 8,
       "fullSaveVerified": true,
       "authorityPending": false,
-      "scope": "Two actual Electron44 processes on one Windows host, isolated profiles, production TypeScript main/preload and React renderer, actual Supabase HTTPS. Not two physical machines.",
-      "petId": "pet-bc320c7d-8a0a-49e9-aa5d-c974f12276a1",
-      "owner": "account:bb3a94fa-1490-47d8-bb2b-4476eee6c766",
-      "originalRetryActionId": "087172dc-e60f-45aa-bb0d-19e98456dedd",
-      "retryRevision": 5,
+      "finalBothLocalConverged": true,
+      "finalRevision": 6,
+      "finalChecksum": "d2cfa0ddb6eb76fd7e18d61c3c62e6d194372aee22bd52d122ef1bf8b8f6ff89",
+      "manualSyncCommandsAfterSetup": 0,
       "privateRealtimeReconnectVerified": false,
       "physicalTwoMachinesVerified": false,
+      "independentSqlReadback": "docs/implementation/evidence/accounts/cloud-2026-10-25/automatic-sync/independent-cloud-readback.json",
       "screenshots": [
-        "docs/implementation/evidence/accounts/cloud-2026-10-25/dual-electron-full-a.png",
-        "docs/implementation/evidence/accounts/cloud-2026-10-25/dual-electron-full-b.png"
-      ],
-      "visualInspection": "A shows actual completed synchronization; additional real B process resumed its encrypted session and rerendered actual enabled-sync setting before B screenshot. Initial B image reflected stale in-memory UI after acceptance-driver direct IPC and is not the canonical B image."
+        "docs/implementation/evidence/accounts/cloud-2026-10-25/automatic-sync/device-a-converged.png",
+        "docs/implementation/evidence/accounts/cloud-2026-10-25/automatic-sync/device-b-converged.png",
+        "docs/implementation/evidence/accounts/cloud-2026-10-25/automatic-sync/device-b-dirty-conflict.png"
+      ]
     },
     "casConcurrency": {
       "passed": true,
@@ -356,7 +368,7 @@
       "checks": 2
     },
     "remoteLatest": {
-      "at": "2026-10-25T04:26:12.0329645Z",
+      "at": "2026-10-25T04:56:56.4739693Z",
       "command": "git pull --no-rebase --no-edit origin main",
       "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086",
       "result": "Already up to date"
@@ -396,6 +408,26 @@
       "fullSaveVerified": false,
       "passedChecks": 8,
       "privateRealtimeReconnectVerified": false
+    },
+    "dualElectronBeforeAutomaticPull": {
+      "evidence": "docs/implementation/evidence/accounts/cloud-2026-10-25/dual-electron-full.json",
+      "source": "7a6b04a0cc83f84143c42af71d4947ce9f7ce4cb",
+      "passed": true,
+      "passedChecks": 9,
+      "fullSaveVerified": true,
+      "authorityPending": false,
+      "scope": "Two actual Electron44 processes on one Windows host, isolated profiles, production TypeScript main/preload and React renderer, actual Supabase HTTPS. Not two physical machines.",
+      "petId": "pet-bc320c7d-8a0a-49e9-aa5d-c974f12276a1",
+      "owner": "account:bb3a94fa-1490-47d8-bb2b-4476eee6c766",
+      "originalRetryActionId": "087172dc-e60f-45aa-bb0d-19e98456dedd",
+      "retryRevision": 5,
+      "privateRealtimeReconnectVerified": false,
+      "physicalTwoMachinesVerified": false,
+      "screenshots": [
+        "docs/implementation/evidence/accounts/cloud-2026-10-25/dual-electron-full-a.png",
+        "docs/implementation/evidence/accounts/cloud-2026-10-25/dual-electron-full-b.png"
+      ],
+      "visualInspection": "A shows actual completed synchronization; additional real B process resumed its encrypted session and rerendered actual enabled-sync setting before B screenshot. Initial B image reflected stale in-memory UI after acceptance-driver direct IPC and is not the canonical B image."
     }
   },
   "preservation": {
@@ -409,7 +441,6 @@
     "Old runtime single session_token cloud adapter only after new Auth path and all domain consumers are migrated; preserve source-import reader and user files"
   ],
   "remaining": [
-    "Complete real automatic dualElectron: no manual sync after setup, offline original-action restart, B dirty refusal, both local SQLite/UI/hash finally match cloud",
     "Actual complete old-server migration remains external: no independently verified old export/SSH. Staged DPAPI preparation is not completed cloud migration.",
     "Final mainline integration, release build and retired legacy fallback/function/SQL consumer removal remain coordinator-owned; no production SQL deployment was performed from this worktree.",
     "Private Realtime gameplay/reconnect acceptance belongs04/coordinator; own native evidence proves SDK token rotation only and explicitly uses two processes on one host."
@@ -444,10 +475,27 @@
     "cloudDeploymentsByThisWorktree": 0
   },
   "automaticSyncGap": {
-    "open": true,
+    "open": false,
     "originalRun": "artifacts/accounts/cloud-electron-1792902024228",
     "originalFinalConvergenceVerified": false,
-    "rootEvidence": "docs/implementation/evidence/cloud/2026-10-25/account-native-final-readback-gap.json",
-    "retained": "Original evidence, B rev4/volume43 profile and failed-run profiles preserved; new isolated live profiles will be used"
+    "retrospective": "docs/implementation/evidence/accounts/cloud-2026-10-25/automatic-gap-retrospective.json",
+    "resolution": "docs/implementation/evidence/accounts/cloud-2026-10-25/automatic-sync/evidence.json",
+    "finalBothLocalConverged": true,
+    "finalRevision": 6,
+    "finalChecksum": "d2cfa0ddb6eb76fd7e18d61c3c62e6d194372aee22bd52d122ef1bf8b8f6ff89",
+    "originalArtifactsRetained": true,
+    "verifiedScope": "Unmodified actual30-second production timer; same host/two Electron processes; no sync commands after setup; actual settings changes and full pet/garden state. Production conversation adapter automatic message/memory/persona behavior additionally covered by explicitly simulated-provider realSQLite test, not claimed as live LLM generation."
+  },
+  "testCommit": "4f60a30336eb423057b758a6b17e6ba6c4c8bdfe",
+  "automaticSyncImplementation": {
+    "intervalMs": 30000,
+    "entrypoint": "AccountsService.runAutomaticSync -> AccountSync.reconcile",
+    "localMigration": "accounts-007-automatic-sync-baselines: additive owner/revision/checksum and separate personal/protected fingerprints, no credentials",
+    "upload": "Only personal edits against a matching confirmed protected fingerprint and no pending/conflict/unverified/redacted source create one durable auto action before I/O. The original base/action survives offline and response-loss; never silently rebased.",
+    "pull": "Only clean confirmed local state may atomically replace with a newer verified cloud envelope. Owner/device/SID/epoch, unchanged raw data fingerprint, checkpoint, pending and unsafe-source checks bracket read/hydration and transaction; before-restore backup retained.",
+    "domainReadback": "Exact complete local/cloud equality can acknowledge an already-applied verified domain snapshot without restoring or bypassing the strict checkpoint guard.",
+    "ui": "Main sync/settings/restore events refresh the actual account view; running/unconfirmed/remote-new/partial/conflict states cannot claim complete synchronization.",
+    "productionCloudProtocolChanges": false,
+    "legacyNetworkRestored": false
   }
 }

@@ -1,0 +1,53 @@
+{
+  "queryOnly": true,
+  "revision": 6,
+  "checksum": "d2cfa0ddb6eb76fd7e18d61c3c62e6d194372aee22bd52d122ef1bf8b8f6ff89",
+  "volume": 54,
+  "syncEnabled": true,
+  "quickCheck": "ok",
+  "outbox": [
+    {
+      "action_id": "224b60a8-20c8-4347-8f93-172814b64e1c",
+      "base_revision": 2,
+      "status": "verified",
+      "last_error": null
+    },
+    {
+      "action_id": "auto:e0bdd7f4-e74e-4564-9387-4bec77093f71",
+      "base_revision": 3,
+      "status": "verified",
+      "last_error": null
+    },
+    {
+      "action_id": "auto:9beec848-4c74-411d-a15d-41aeb016c3e5",
+      "base_revision": 4,
+      "status": "verified",
+      "last_error": null
+    },
+    {
+      "action_id": "auto:72f3e76a-4cd5-4d96-b374-6aabc95f8b36",
+      "base_revision": 5,
+      "status": "verified",
+      "last_error": null
+    }
+  ],
+  "pets": [
+    "pet-a548e041-ab66-4251-9249-a7dc1035fbbe"
+  ],
+  "status": {
+    "configured": true,
+    "cloudRevision": 6,
+    "lastVerifiedAt": "2026-10-25T04:51:51.592Z",
+    "lastError": null,
+    "pending": 0,
+    "conflicts": 0,
+    "localChanged": false,
+    "unverifiedLocal": 0,
+    "privacyRedactions": 0,
+    "running": false,
+    "observedCloudRevision": 6,
+    "lastCloudCheckedAt": "2026-10-25T04:51:51.583Z",
+    "remoteChanged": false
+  },
+  "localDataChecksum": "75342ab7eda1218a8acbd041e6c3b114f027e6625be9a0003c0c51e491f2bb99"
+}

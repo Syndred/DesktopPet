@@ -1,0 +1,41 @@
+{
+  "recordedAt": "2026-10-25T04:57:39.997Z",
+  "nativeSource": "280328d8d31803410dc239e6804999bc6e5f41c7",
+  "testCommit": "4f60a30336eb423057b758a6b17e6ba6c4c8bdfe",
+  "scope": "Sanitized real native evidence plus independent SELECT-only hosted readback; no vault ciphertext/JWT/password included",
+  "digestPolicy": "PNG exact bytes; JSON UTF-8 with CRLF normalized to LF",
+  "files": [
+    {
+      "file": "evidence.json",
+      "sha256": "b8af563253d42df6ed198a28e107fd8a941a98302006f405579d4a702dc5cba6"
+    },
+    {
+      "file": "device-a-sqlite-final.json",
+      "sha256": "67ddb8e626d8eed98899a31f8850e752fafb3a0032d4937cf99bdb781cdb5967"
+    },
+    {
+      "file": "device-b-sqlite-final.json",
+      "sha256": "db74495c7eb6ec691e7dc331def35945bd68575824cb1f72490b6e04aa72d1c3"
+    },
+    {
+      "file": "device-a-converged.png",
+      "sha256": "98c6430d4755248be39a261b2f8f07b739b0cb56aea25d0251e8b9cd9e01c616"
+    },
+    {
+      "file": "device-b-converged.png",
+      "sha256": "7d3256bc7d367c69e52d577ea4ca904a8913a9fa534dd6f05863c82c3f6a115a"
+    },
+    {
+      "file": "device-b-dirty-conflict.png",
+      "sha256": "61604c316462efb7be1a5940bf56c146e6bfc9939a0996cc69008793b7f89b93"
+    },
+    {
+      "file": "build-manifest.json",
+      "sha256": "ebea1edbcea08eb2761a3b997d5d3f40f9cac86c494e43a20ab18d4ecc94fc5a"
+    },
+    {
+      "file": "independent-cloud-readback.json",
+      "sha256": "4402055ac6373b78bceff2d70b93812dc9ee2648fc82939d06710098e0e58520"
+    }
+  ]
+}
