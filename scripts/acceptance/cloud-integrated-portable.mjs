@@ -141,5 +141,16 @@ try{
   proof.final={owner,petId,resourceId,revision:cloud.revision,checksum:cloud.checksum,originalActionId:actionId,receiptRevision:receipt.revision,receiptChecksum:receipt.checksum,domainChecksum:checksum(domainA),peerEquality:true,cloudSqlUnits:cloudUnits,encryptedSessionResumed:true,resourceBytesAndHistoryPreserved:true,resourceCloudVersion:2,resourceLocalBackupVersion:1,preferenceCloudRevision:cloudPreference.revision,readerDevice:decodeProof(user.proof).actor.deviceId};pass('Independent HTTPS receipt plus query-only SQLite prove final domain, actual resource bytes/history and exact preference equality; original v1 local export excludes credentials',{...proof.final});
   for(const model of[a,b]){await model.page.evaluate(()=>{location.hash='#/account';});const statusView=model.page.getByLabel('存档状态',{exact:true});await pollState(async()=>await statusView.getAttribute('data-cloud-revision')===String(cloud.revision)&&await statusView.getByLabel('已同步',{exact:true}).isVisible(),Boolean,{timeoutMs:30000,label:'Final actual account UI does not show the verified current version'});await model.page.screenshot({path:join(output,`portable-final-${model.label}.png`),fullPage:true});}
   assert.deepEqual(proof.errors,[]);proof.passed=true;
-}catch(error){proof.failure={name:error.name,message:safe(error.message),stack:safe(error.stack)};process.exitCode=1;}
+}catch(error){
+  proof.failure={name:error.name,message:safe(error.message),stack:safe(error.stack)};process.exitCode=1;
+  // Capture the exact live failure state before finally hides this run's pet or
+  // closes the owned processes. These read-only counters contain no credentials.
+  proof.failureStatus=await Promise.all([a,b].filter(Boolean).map(async model=>{
+    let timer;try{
+      const data=await Promise.race([status(model),new Promise((_,reject)=>{timer=setTimeout(()=>reject(new Error('Owned status observation timed out')),3000);})]);
+      return{device:model.label,data};
+    }catch(observation){return{device:model.label,error:safe(observation.message)};}
+    finally{clearTimeout(timer);}
+  }));
+}
 finally{online=true;if(!proof.passed&&petId&&a)try{await a.call('companions','desktop',{actionId:randomUUID(),petId,visible:false});}catch{}if(reader)await reader.remote.signOut(reader.session).catch(()=>{});for(const model of models)await model.stop().catch(()=>{});for(const socket of sockets)socket.destroy();await new Promise(done=>proxy.close(done));proof.completedAt=new Date().toISOString();save();console.log(JSON.stringify({output,passed:proof.passed,checks:proof.checks.length,failure:proof.failure?.message}));}
