@@ -24,11 +24,13 @@ getLegacyInventory(ownerAccountId) 提供经过归属映射的原始库存/历�
 
 完整存档通过各模块 backup adapter 注册到同一 BackupManager。跨端写入使用 expected revision + actionId + 校验和，冲突先保留当前本机档案和待同步记录。资源、聊天、宠物和成长分别保留其归属和完整性，不建立第二套库存或奖励入口。
 
-资源引用 v2 与受验证偏好先异步下载、检查实际私有文件和权威回执，再进入同步 SQLite 恢复事务。预览保留原始 envelope/checksum，内部规范视图只用于比较；异步等待后必须仍是原 owner/device/SID，同 SID 的令牌刷新可以继续，退出后同账号重新登录须重新预览。只有完整本机视图与独立云端读回相同，才推进公共同步基线。
+资源引用 v2 与受验证偏好先异步下载、检查实际私有文件和权威回执，再进入同步 SQLite 恢复事务。预览保留原始 envelope/checksum，内部规范视图只用于比较；异步等待后必须仍是原 owner/device/SID，同 SID 的令牌刷新可以继续，退出后同账号重新登录须重新预览。各域的 acceptAuthoritativeReadback 仍要求完整本机视图与独立云端读回相同；后台 reconcile 对单边个人编辑的窄处理见下文。
 
 已生成的本地/云端预览也只在当前登录会话内有效：adopt、logout 和当前 owner 会话失效时清空内存预览；同 SID 自动刷新不清空。原备份、下载缓存、待重试任务不随预览清理删除。
 
 开启同步后，正式30秒任务调用 runAutomaticSync/reconcile。已确认基线另外保存个人/受保护内容的指纹；只有受保护内容仍匹配、且没有待处理冲突或未核验原档时，个人设置/聊天改动才自动生成持久任务并上传。断网先保留原action/base，不读取新版头后重新定基；旧检查点缺少分类指纹时，先核对其原版本和校验和再补齐基线。
+
+权威域已应用新云端内容，但其完整读回恰遇 sync.running 时，个人编辑可能先于完整基线确认。reconcile 仅在本机受保护视图严格等于新版云档、服务器个人内容仍等于已确认原版本、且没有待确认 outbox/未核验原档/隐私投影时，核验原版本完整 envelope 后推进基线；不恢复或改写任何本机行。该状态仍保留 localChanged，下一次正常自动任务才把本机个人编辑按新基线生成原始持久 action。已存在或已发送的 outbox 不重设 actionId/base/document，真正双端个人冲突仍拒绝。核验期间 owner/device/SID/epoch、同步开关或本机内容变化均中止；资源守卫与受保护指纹未放宽。
 
 只有相对已确认检查点完全干净、没有pending/conflict/unverified/privacy-redacted原档的客户端，才自动采纳较新云版本。读回、prepareCloud前后以及同步事务内重查owner/device/SID/epoch、本机完整指纹及原检查点；期间有改动就保留并提示。恢复复用正式BackupManager原子事务，先留before-restore文件，恢复后的完整规范视图必须与云端相同才确认新版本。已经由领域应用、且完整视图与真实读回完全一致的状态，可以只确认检查点，不重写任何本机内容。
 

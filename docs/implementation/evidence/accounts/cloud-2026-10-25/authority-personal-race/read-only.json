@@ -1,0 +1,276 @@
+{
+  "at": "2026-10-25T07:37:18.193Z",
+  "sourceCommit": "d376b76a01dd8e450d28bab4479bbe2581ae39c4",
+  "executableSha256": "6e9cdb2aac621b490b09f530870ab7569858e66a4cb7b352bae81aa997fccaf2",
+  "originalRun": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\cloud-upgrade\\2026-10-25\\final-portable-uTajxg",
+  "queryOnly": true,
+  "noRemoteWrites": true,
+  "selectionActionId": "b42886ee-f9af-465c-b062-d97582f45859",
+  "clients": {
+    "A": {
+      "status": {
+        "configured": true,
+        "cloudRevision": 73,
+        "lastVerifiedAt": "2026-10-25T07:25:47.818Z",
+        "lastError": null,
+        "pending": 0,
+        "conflicts": 0,
+        "localChanged": true,
+        "unverifiedLocal": 0,
+        "privacyRedactions": 0,
+        "running": false,
+        "observedCloudRevision": null,
+        "lastCloudCheckedAt": null,
+        "remoteChanged": false
+      },
+      "state": {
+        "owner_account_id": "account:470a41d4-3cf7-4a7d-8b1e-32e276d2a719",
+        "cloud_revision": 73,
+        "last_checksum": "01caf8f39e791277896cb2c2b29f9649d203ad461a12e6943360f87d1ae5affb",
+        "last_verified_at": "2026-10-25T07:25:47.818Z",
+        "last_error": null
+      },
+      "baseline": {
+        "revision": 73,
+        "checksum": "01caf8f39e791277896cb2c2b29f9649d203ad461a12e6943360f87d1ae5affb",
+        "data": "ae79e26d5ffd5c5ea7b34d343afa8338f175d9d5c1fecf3cacc7091fce936412",
+        "personal": "a6c16d57388cb94704b2f549ded1e9b17b2875ac60c914f614c8da8b018eebea",
+        "protected": "2abf94376dc246766fb4a0b9f5fa7322e25d11008dc11974c64e3715dbbaf778",
+        "envelopeValid": true,
+        "derived": {
+          "data": "ae79e26d5ffd5c5ea7b34d343afa8338f175d9d5c1fecf3cacc7091fce936412",
+          "personal": "a6c16d57388cb94704b2f549ded1e9b17b2875ac60c914f614c8da8b018eebea",
+          "protected": "2abf94376dc246766fb4a0b9f5fa7322e25d11008dc11974c64e3715dbbaf778"
+        }
+      },
+      "current": {
+        "data": "06f1568011f5a0705cc4c60446f0cd1e292cdf3cab58403ea0470617fa36d879",
+        "personal": "a60035b79d9b2b20d15edb9d05b0649ee5b5e9d039cb6e334951ba5e114f9d02",
+        "protected": "827e814baeb75521921680d5928acd6999fae7ce5292c684ba44d445d79bae70"
+      },
+      "outbox": [
+        {
+          "action_id": "bc3df04a-515c-4af4-993e-771d234f42f5",
+          "base_revision": 71,
+          "checksum": "9705a7a9701126d66fb8536c718ab8006aa23d0c04630c1b3b9b40b5cbf0de92",
+          "status": "verified",
+          "attempts": 0,
+          "last_error": null,
+          "created_at": "2026-10-25T07:24:38.646Z",
+          "verified_at": "2026-10-25T07:24:45.349Z"
+        }
+      ],
+      "sources": [
+        {
+          "action_id": "bc3df04a-515c-4af4-993e-771d234f42f5",
+          "authority_pending": 0,
+          "cloud_excluded": "[]",
+          "archive_reason": null,
+          "prepared_at": "2026-10-25T07:24:40.939Z"
+        }
+      ],
+      "companionReadback": {
+        "action_id": "companions:verified-head",
+        "kind": "companions-cloud-readback",
+        "input_hash": "c7ed5cab0d378e3d81f9266b59c2570ea04dbc4665d65b6be4aeda4cc3ce4984",
+        "result": "{\"cloudRevision\":75,\"checksum\":\"3ff2385a0db062b6292ac97ff02fbf6900871e24af4958cfb475f84d6c64977c\",\"verifiedAt\":\"2026-10-25T07:28:10.104Z\",\"sharedSavePending\":true}",
+        "created_at": "2026-10-25T07:28:10.104Z"
+      },
+      "selectionIntent": {
+        "action_id": "companions:b42886ee-f9af-465c-b062-d97582f45859",
+        "kind": "companions-cloud-command",
+        "input_hash": "dd16381f89d60c634e4fa1a7c60e50a795011e2b18daa450b37c39415e4f1937",
+        "status": "verified",
+        "base_revision": 73,
+        "sent_at": "2026-10-25T07:25:47.828Z",
+        "verified_at": "2026-10-25T07:25:56.035Z",
+        "cloud": "{\"authority\":\"live\",\"actionId\":\"companions:b42886ee-f9af-465c-b062-d97582f45859\",\"revision\":74,\"checksum\":\"3da3182c1bd1dd7400a1b0928e8b57ea2e1c19d5ec228151b74b3ec5adce35b5\",\"sharedSavePending\":true}"
+      },
+      "quickCheck": "ok",
+      "originalDatabaseSha256Before": "c3fa5c4ae221b86898527e5836adfea3340b14257b44fec72e6965c0f1c44880",
+      "originalDatabaseSha256After": "c3fa5c4ae221b86898527e5836adfea3340b14257b44fec72e6965c0f1c44880",
+      "originalDatabaseHashUnchanged": true
+    },
+    "B": {
+      "status": {
+        "configured": true,
+        "cloudRevision": 74,
+        "lastVerifiedAt": "2026-10-25T07:27:53.334Z",
+        "lastError": null,
+        "pending": 0,
+        "conflicts": 0,
+        "localChanged": false,
+        "unverifiedLocal": 0,
+        "privacyRedactions": 0,
+        "running": false,
+        "observedCloudRevision": null,
+        "lastCloudCheckedAt": null,
+        "remoteChanged": false
+      },
+      "state": {
+        "owner_account_id": "account:470a41d4-3cf7-4a7d-8b1e-32e276d2a719",
+        "cloud_revision": 74,
+        "last_checksum": "3da3182c1bd1dd7400a1b0928e8b57ea2e1c19d5ec228151b74b3ec5adce35b5",
+        "last_verified_at": "2026-10-25T07:27:53.334Z",
+        "last_error": null
+      },
+      "baseline": {
+        "revision": 74,
+        "checksum": "3da3182c1bd1dd7400a1b0928e8b57ea2e1c19d5ec228151b74b3ec5adce35b5",
+        "data": "cfac178c32cc2a289661e0fd87569c2cea6bdd06d361068a07077c601180812d",
+        "personal": "a6c16d57388cb94704b2f549ded1e9b17b2875ac60c914f614c8da8b018eebea",
+        "protected": "95653ae8f1ca43b5cd5981afa0ee2260d988c99f462a91e5b516276068c6a624",
+        "envelopeValid": true,
+        "derived": {
+          "data": "cfac178c32cc2a289661e0fd87569c2cea6bdd06d361068a07077c601180812d",
+          "personal": "a6c16d57388cb94704b2f549ded1e9b17b2875ac60c914f614c8da8b018eebea",
+          "protected": "95653ae8f1ca43b5cd5981afa0ee2260d988c99f462a91e5b516276068c6a624"
+        }
+      },
+      "current": {
+        "data": "cfac178c32cc2a289661e0fd87569c2cea6bdd06d361068a07077c601180812d",
+        "personal": "a6c16d57388cb94704b2f549ded1e9b17b2875ac60c914f614c8da8b018eebea",
+        "protected": "95653ae8f1ca43b5cd5981afa0ee2260d988c99f462a91e5b516276068c6a624"
+      },
+      "outbox": [],
+      "sources": [],
+      "companionReadback": {
+        "action_id": "companions:verified-head",
+        "kind": "companions-cloud-readback",
+        "input_hash": "1a4de28800be5e598895b71c68fa965a76bb90ee6a3a6ea065f2a345a44aadbe",
+        "result": "{\"cloudRevision\":74,\"checksum\":\"3da3182c1bd1dd7400a1b0928e8b57ea2e1c19d5ec228151b74b3ec5adce35b5\",\"verifiedAt\":\"2026-10-25T07:26:14.284Z\",\"sharedSavePending\":false}",
+        "created_at": "2026-10-25T07:26:14.284Z"
+      },
+      "quickCheck": "ok",
+      "originalDatabaseSha256Before": "327462c2fdef47bc23d27c71240fd86ab59201d9d906f3f26fc8a46ba5b200fe",
+      "originalDatabaseSha256After": "327462c2fdef47bc23d27c71240fd86ab59201d9d906f3f26fc8a46ba5b200fe",
+      "originalDatabaseHashUnchanged": true
+    }
+  },
+  "comparison": {
+    "baseline73To74": {
+      "battle": {
+        "left": "63f0868429dad562c3c9ac086d655ad82367344f8283ead46bc91397a5300719",
+        "right": "63f0868429dad562c3c9ac086d655ad82367344f8283ead46bc91397a5300719",
+        "equal": true
+      },
+      "garden": {
+        "left": "5932e0cfeb7939f9f2fbe45f578bdcc34a6157179b8d06dd5880b780bc421927",
+        "right": "5932e0cfeb7939f9f2fbe45f578bdcc34a6157179b8d06dd5880b780bc421927",
+        "equal": true
+      },
+      "settings": {
+        "left": "1bdcf45e223bf0cec41abfc68f197a9de1ba2d849d8785f3e2e4238d3f7042c5",
+        "right": "1bdcf45e223bf0cec41abfc68f197a9de1ba2d849d8785f3e2e4238d3f7042c5",
+        "equal": true
+      },
+      "companions": {
+        "left": "5ad68bd63d0c7d60d193fbeadd1cbd83990ecce4af612d91ca17d93a5cb27b2d",
+        "right": "b2090ca46065c30352e733c357a6ee59605085e079d7e8d7efbc21751b42ea33",
+        "equal": false
+      },
+      "conversations": {
+        "left": "9b0a83bf225e4852f1c16f96bda134f1b19f2cbb49ddd6c416e5c2af9c077862",
+        "right": "9b0a83bf225e4852f1c16f96bda134f1b19f2cbb49ddd6c416e5c2af9c077862",
+        "equal": true
+      },
+      "character-resources": {
+        "left": "47e0c7bf1511436ca5761bfdda88f11517087c8d8c4ac11f502fec4926a06095",
+        "right": "47e0c7bf1511436ca5761bfdda88f11517087c8d8c4ac11f502fec4926a06095",
+        "equal": true
+      }
+    },
+    "currentAAfterCleanupToConfirmed74": {
+      "legacy": {
+        "left": "b4172e233a964b9f9648be49eb1dfd9a0ad06c4ec3025ab9161753ecfabd070a",
+        "equal": false
+      },
+      "settings": {
+        "left": "1bdcf45e223bf0cec41abfc68f197a9de1ba2d849d8785f3e2e4238d3f7042c5",
+        "right": "1bdcf45e223bf0cec41abfc68f197a9de1ba2d849d8785f3e2e4238d3f7042c5",
+        "equal": true
+      },
+      "character-resources": {
+        "left": "47e0c7bf1511436ca5761bfdda88f11517087c8d8c4ac11f502fec4926a06095",
+        "right": "47e0c7bf1511436ca5761bfdda88f11517087c8d8c4ac11f502fec4926a06095",
+        "equal": true
+      },
+      "companions": {
+        "left": "1b3e2538b598344ced94985c8a39850522ba988ef577953aa3db3944c021cb5c",
+        "right": "b2090ca46065c30352e733c357a6ee59605085e079d7e8d7efbc21751b42ea33",
+        "equal": false
+      },
+      "battle": {
+        "left": "63f0868429dad562c3c9ac086d655ad82367344f8283ead46bc91397a5300719",
+        "right": "63f0868429dad562c3c9ac086d655ad82367344f8283ead46bc91397a5300719",
+        "equal": true
+      },
+      "garden": {
+        "left": "5932e0cfeb7939f9f2fbe45f578bdcc34a6157179b8d06dd5880b780bc421927",
+        "right": "5932e0cfeb7939f9f2fbe45f578bdcc34a6157179b8d06dd5880b780bc421927",
+        "equal": true
+      },
+      "conversations": {
+        "left": "66b3ded1e86f32f6ebb4ac78a82527bbb72c0efd9f2f36fa0a7e0bb82b9acc11",
+        "right": "9b0a83bf225e4852f1c16f96bda134f1b19f2cbb49ddd6c416e5c2af9c077862",
+        "equal": false
+      }
+    },
+    "companionCleanupDiff": {
+      "companion_accounts": {
+        "leftCount": 1,
+        "rightCount": 1,
+        "equal": false,
+        "changedKeys": [
+          {
+            "id": "account:470a41d4-3cf7-4a7d-8b1e-32e276d2a719"
+          }
+        ]
+      },
+      "companion_pets": {
+        "leftCount": 14,
+        "rightCount": 14,
+        "equal": false,
+        "changedKeys": [
+          {
+            "id": "pet-448332c4-b8c4-4807-a90c-f627635f783e",
+            "createdAt": "2026-10-25T07:25:37.461Z"
+          }
+        ]
+      },
+      "companion_actions": {
+        "leftCount": 64,
+        "rightCount": 63,
+        "equal": false,
+        "changedKeys": [
+          {
+            "id": "b95c0755-003d-450e-9967-bf44a44be733",
+            "operation": "desktop",
+            "createdAt": "2026-10-25T07:28:05.026Z"
+          }
+        ]
+      },
+      "companion_legacy_archive": {
+        "leftCount": 0,
+        "rightCount": 0,
+        "equal": true,
+        "changedKeys": []
+      },
+      "companion_interactions": {
+        "leftCount": 3,
+        "rightCount": 3,
+        "equal": true,
+        "changedKeys": []
+      },
+      "companion_capture_receipts": {
+        "leftCount": 0,
+        "rightCount": 0,
+        "equal": true,
+        "changedKeys": []
+      }
+    },
+    "remotePersonalUnchanged": true,
+    "currentPersonalEdited": true,
+    "note": "Original failure was at head74. Current A includes the later finally hide action/head75; that protected cleanup difference is not attributed to the failure."
+  }
+}
