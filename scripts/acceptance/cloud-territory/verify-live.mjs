@@ -142,6 +142,22 @@ async function economy(){
   const repeat=await call(2,'garden',{op:'command',command:'feed',input:feed});assert.equal(repeat.replayed,true);assert.equal((await state(0)).envelope.checksum,fed.readback.envelope.checksum);await independentReceipt(2,fed.authorityReceiptId);
   proof.economy={...proof.economy,passed:true,finishedAt:new Date().toISOString(),actualElapsedMs:current.serverTime-proof.economy.startedAt,harvested:2,crafted:1,fedTo:target.petId,repeatAcrossDevice:true};proof.after=await Promise.all([0,1].map(async i=>summary(await state(i))));save();record('actual original25-minute maturity, harvest2, craft1 and feed same pet once, independently read by same-account other device');
 }
+async function admission(){
+  const index=0,before=await state(index),region=before.territories.find(t=>t.id===proof.territory.id);
+  assert.equal(before.snapshot.remainingInvasions,0,'Use the existing account with two original legal attempts; never reset its allowance');
+  proof.admission||={inputs:[],checks:[],passed:false};
+  for(const [label,petId,expected] of [['foreign-pet',proof.contestPets[1],'PET_NOT_OWNED'],['daily-quota',proof.contestPets[0],'DAILY_INVASIONS_USED']]){
+    if(proof.admission.checks.some(c=>c.name===label&&c.passed))continue;
+    const input={actionId:`admission-${label}:${proof.runId}:${Date.now()}`,sessionOwnerAccountId:config.actors[index].ownerAccountId,territoryId:region.id,expectedTerritoryRevision:region.revision,petId,locationReceiptId:await location(index,'territory:challenge',region.id)};
+    proof.admission.inputs.push(input);save();
+    const denied=await clients[index]('territory',{op:'challenge',input});assert.equal(denied.body.ok,false);assert.equal(denied.body.code,expected);
+    proof.admission.checks.push({name:label,code:denied.body.code,httpStatus:denied.httpStatus,passed:true});save();
+  }
+  const after=await state(index);assert.equal(after.envelope.checksum,before.envelope.checksum);assert.equal(after.snapshot.remainingInvasions,0);
+  assert.deepEqual(after.territories,before.territories);assert.deepEqual(after.snapshot.pets,before.snapshot.pets);assert.deepEqual(after.snapshot.items,before.snapshot.items);
+  Object.assign(proof.admission,{passed:true,at:new Date().toISOString(),beforeChecksum:before.envelope.checksum,afterChecksum:after.envelope.checksum,remainingInvasions:0,worldAndEconomyUnchanged:true,source:'actual HTTPS with fresh signed coordinator-granted simulated location permits'});save();
+  record('foreign pet and third daily challenge rejected by real authority with no world, pet or inventory changes',proof.admission.checks);
+}
 async function negatives(){
   assert.equal(proof.passed,true);const index=proof.loser,other=1-index,before=await state(index),region=before.territories.find(t=>t.id===proof.territory.id);
   const request=await action('expiredProofChallenge',async()=>({actionId:`expired-proof:${proof.runId}`,sessionOwnerAccountId:config.actors[index].ownerAccountId,territoryId:region.id,expectedTerritoryRevision:region.revision,petId:proof.contestPets[index],locationReceiptId:await location(index,'territory:challenge',region.id)}));
@@ -168,7 +184,8 @@ async function restart(){
 }
 try{
   for(let index=0;index<3;index++)clients[index]=await connect(index);assert.equal(new Set(active.map(c=>c.pid)).size,3);proof.clients=proof.clients||active;proof.lastClients=active;save();
-  if(process.argv.includes('--readback'))await restart();
+  if(process.argv.includes('--admission'))await admission();
+  else if(process.argv.includes('--readback'))await restart();
   else if(process.argv.includes('--negative'))await negatives();
   else if(process.argv.includes('--economy'))await economy();
   else{await initialize();if(!process.argv.includes('--prepare-only'))await contest();}

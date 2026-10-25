@@ -4,6 +4,8 @@ import {randomUUID,randomBytes,createHash} from 'node:crypto';
 import {readFileSync,writeFileSync,mkdirSync,existsSync,copyFileSync} from 'node:fs';
 import {resolve,join} from 'node:path';
 import {execFileSync} from 'node:child_process';
+import {inspectOfflineRecovery} from './native-offline.mjs';
+import {inspectBasemap} from './native-map.mjs';
 const root=resolve('.'),configFile=resolve(process.argv[2]||'artifacts/garden/cloud/private-clients.json'),config=JSON.parse(readFileSync(configFile,'utf8'));
 assert.equal(config.testOnly,true);assert.equal(config.projectUrl,'https://jbvrdmrkwpznbrvteive.supabase.co');
 config.native||={account:`gardennative_${config.runId.slice(0,8)}`,password:`Garden-${randomBytes(20).toString('base64url')}`,username:'园地桌面验收',scenarioId:`native-${config.runId.slice(0,8)}`,profiles:[resolve(config.output,'electron-a'),resolve(config.output,'electron-b')]};
@@ -13,7 +15,7 @@ const evidence=existsSync(evidenceFile)?JSON.parse(readFileSync(evidenceFile,'ut
 const models=[],save=()=>writeFileSync(evidenceFile,JSON.stringify(evidence,null,2)+'\n');
 evidence.backendPassed||=evidence.passed===true;
 if(evidence.lostResponse&&!evidence.lostResponse.originalPid)evidence.lostResponse.originalPid=evidence.actors[0]?.pid;
-evidence.runs||=[];evidence.runs.push({at:new Date().toISOString(),sourceSha:execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8',windowsHide:true}).trim(),runtimeFiles:Object.fromEntries(['garden/cloud-authority.cjs','garden/index.cjs','garden/migrations.cjs','battle/index.cjs'].map(path=>[path,createHash('sha256').update(readFileSync(resolve('apps/pc-app/runtime/features',path))).digest('hex')])),buildManifest:JSON.parse(readFileSync('apps/pc-app/dist/build-manifest.json','utf8'))});save();
+evidence.runs||=[];evidence.runs.push({at:new Date().toISOString(),phase:process.argv.slice(3).filter(arg=>arg.startsWith('--')),sourceSha:execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8',windowsHide:true}).trim(),runtimeFiles:Object.fromEntries(['garden/cloud-authority.cjs','garden/index.cjs','garden/migrations.cjs','battle/index.cjs'].map(path=>[path,createHash('sha256').update(readFileSync(resolve('apps/pc-app/runtime/features',path))).digest('hex')])),sourceHashPolicy:'Additional UI and acceptance source hashes normalize CRLF to LF',sourceFiles:Object.fromEntries(['apps/pc-app/ui/src/features/discovery/NearbyMap.tsx','apps/pc-app/ui/src/features/garden/index.tsx','scripts/acceptance/cloud-territory/electron-live.mjs','scripts/acceptance/cloud-territory/native-map.mjs','scripts/acceptance/cloud-territory/native-offline.mjs'].map(path=>[path,createHash('sha256').update(readFileSync(resolve(path),'utf8').replaceAll('\r\n','\n')).digest('hex')])),buildManifest:JSON.parse(readFileSync('apps/pc-app/dist/build-manifest.json','utf8'))});save();
 function pass(name,data={}){evidence.checks.push({name,...data});save();console.log(JSON.stringify({passed:name,...data}));}
 async function invoke(model,feature,command,payload={},expect=true){const result=await model.page.evaluate(({feature,command,payload})=>window.lingjing.invoke(feature,command,payload),{feature,command,payload});if(expect)assert.equal(result.ok,true,`${result.code}: ${result.message}`);return expect?result.data:result;}
 async function launch(index){
@@ -147,7 +149,9 @@ try{
     evidence.petIds||=[];evidence.petIds[pet]=receipt.result.data.pet.petId;save();
   }
   await snapshot(a);await snapshot(b);
-  if(process.argv.includes('--inspect')){await inspectHydratedUi(a,b);}
+  if(process.argv.includes('--map')){await inspectBasemap({models:[a,b],evidence,save,pass,invoke,snapshot,capture});}
+  else if(process.argv.includes('--offline')){await inspectOfflineRecovery({a,b,evidence,save,pass,invoke,snapshot,launch,login,capture});}
+  else if(process.argv.includes('--inspect')){await inspectHydratedUi(a,b);}
   else if(process.argv.includes('--prepare')){
     const request={purpose:'coordinator-only discovery location_test_grants',scenarioId:settings.scenarioId,projectRef:'jbvrdmrkwpznbrvteive',source:'simulated',worldNamespace:`qa:${settings.scenarioId}:territory:`,actors:[actorA,actorB].map(({authUserId,ownerAccountId,deviceId,sessionId})=>({authUserId,ownerAccountId,deviceId,sessionId})),requestedDurationMinutes:90};
     writeFileSync(join(output,'location-grant-request.json'),JSON.stringify(request,null,2)+'\n');pass('two normal product-Auth Electron profiles and legal adopted pets prepared',{grantRequest:join(output,'location-grant-request.json'),actors:request.actors});
