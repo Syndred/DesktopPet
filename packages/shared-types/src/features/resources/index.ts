@@ -98,6 +98,8 @@ export interface ResourceCloudStatus {
   enabled:boolean; uploads:{status:string;count:number}[]; downloads:{status:string;count:number}[];
   lastVerifiedAt:string|null;running:boolean;dataMode:'live'|'simulated';bucket:string;
   lastStorageVerifiedAt?:string|null;
+  preferenceUploads?:{status:string;count:number}[];
+  lastPreferenceVerifiedAt?:string|null;
 }
 export interface ResourceArchiveSummary {
   id:string;name:string;kind:'model3d';archiveOnly:true;origin:CharacterResource['origin'];

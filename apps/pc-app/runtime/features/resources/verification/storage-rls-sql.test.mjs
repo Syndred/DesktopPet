@@ -36,6 +36,7 @@ const guardFile=process.env.LINGJING_ACTOR_GUARD_SQL||'infra/supabase/migrations
 await db.exec(readFileSync(guardFile,'utf8'));
 await db.exec(readFileSync('infra/supabase/migrations/20261025020942_lingjing_private_resource_storage.sql','utf8'));
 await db.exec(readFileSync('infra/supabase/migrations/20261025024855_lingjing_verified_resource_authority.sql','utf8'));
+await db.exec(readFileSync('infra/supabase/migrations/20261025035333_lingjing_verified_resource_preferences.sql','utf8'));
 await db.query('insert into auth.users(id) values($1),($2)',[uidA,uidB]);
 await db.query('insert into auth.sessions(id,user_id) values($1,$2),($3,$2),($4,$5)',[sessionA,uidA,sessionA2,sessionB,uidB]);
 async function as(uid,session,device,sql,args=[],role='authenticated'){
@@ -104,6 +105,37 @@ test('LOCAL SQL: personal CAS cannot invent a private resource reference; a fail
   assert.equal(committed.revision,2);
   const all=(await db.query('select envelope from public.lingjing_saves where owner_id=$1',[ownerA])).rows[0].envelope.data.modules['character-resources'].data.references;assert.equal(all.length,2);
   const replay=(await as(null,null,null,'select public.lingjing_register_resource_receipt($1,$2,$3,$4,$5,$6) receipt',[ownerA,uidA,resourceId,sha,deviceA,sessionA],'service_role'))[0].receipt;assert.equal(replay.revision,1);assert.equal((await db.query('select revision from public.lingjing_saves where owner_id=$1',[ownerA])).rows[0].revision,2);
+});
+test('LOCAL SQL: validated resource preferences commit once with shared protected save, reject direct writes, invalid refs and stale edits',async()=>{
+  const calibration={scale:1.35,rotationDeg:5,verticalOffset:0.1,mirrorX:true,anchorX:0.5,anchorY:0.85,fps:12};
+  const document={calibration:{desktop:calibration,battle:{...calibration,scale:1.1}},actions:Object.fromEntries(['idle','blink','walk','wave','eat','attack_windup','attack_release','attack','hit','skill','victory','sleep'].map(key=>[key,'idle']))};
+  const id='50000000-0000-4000-8000-000000000001';
+  const call=(action=id,base=0,doc=document,resource=resourceId,role='service_role')=>as(null,null,null,'select public.lingjing_set_resource_preferences($1,$2,$3,$4,$5,$6,$7,$8::jsonb) receipt',[ownerA,uidA,deviceA,sessionA,resource,action,base,JSON.stringify(doc)],role);
+  await assert.rejects(call(id,0,document,resourceId,'authenticated'),/permission denied/);
+  const first=(await call())[0].receipt;assert.equal(first.preferenceRevision,1);assert.equal(first.revision,3);
+  const duplicate=(await call())[0].receipt;assert.equal(duplicate.duplicate,true);assert.equal(duplicate.checksum,first.checksum);
+  assert.equal((await as(uidA,sessionA2,deviceA2,'select * from public.lingjing_resource_preferences')).length,1);
+  assert.equal((await as(uidB,sessionB,deviceB,'select * from public.lingjing_resource_preferences')).length,0);
+  const head=(await db.query('select envelope from public.lingjing_saves where owner_id=$1',[ownerA])).rows[0].envelope;
+  assert.deepEqual(head.data.modules['character-resources'].data.preferences[0],{resourceId,revision:1,...document});
+  const invalid=structuredClone(document);invalid.calibration.desktop.scale=4;
+  await assert.rejects(call('50000000-0000-4000-8000-000000000002',1,invalid),/LJ_RESOURCE_PREFERENCE_INVALID/);
+  await assert.rejects(call('50000000-0000-4000-8000-000000000002'),/LJ_RESOURCE_PREFERENCE_CONFLICT/);
+  await assert.rejects(call('50000000-0000-4000-8000-000000000002',0,document,'40000000-0000-4000-8000-000000000099'),/LJ_RESOURCE_REFERENCE_REQUIRED/);
+  const changed=structuredClone(document);changed.calibration.desktop.scale=1.5;
+  await assert.rejects(call(id,0,changed),/LJ_ACTION_ID_REUSED/);
+  assert.equal((await db.query('select revision from public.lingjing_saves where owner_id=$1',[ownerA])).rows[0].revision,3);
+});
+test('LOCAL SQL: late preference receipt failure rolls back both preference and common save; new packages preserve committed preferences',async()=>{
+  const pref=(await db.query('select document from public.lingjing_resource_preferences where owner_account_id=$1',[ownerA])).rows[0].document;
+  const changed=structuredClone(pref);changed.calibration.desktop.scale=1.6;
+  await db.exec("create function public.fixture_preference_failure() returns trigger language plpgsql as $$begin raise exception 'fixture preference ledger failure';end$$; create trigger fixture_preference_failure before insert on public.lingjing_resource_preference_actions for each row execute function public.fixture_preference_failure();");
+  await assert.rejects(as(null,null,null,'select public.lingjing_set_resource_preferences($1,$2,$3,$4,$5,$6,1,$7::jsonb)',[ownerA,uidA,deviceA,sessionA,resourceId,'50000000-0000-4000-8000-000000000003',JSON.stringify(changed)],'service_role'),/fixture preference ledger failure/);
+  assert.equal((await db.query('select revision from public.lingjing_saves where owner_id=$1',[ownerA])).rows[0].revision,3);
+  assert.deepEqual((await db.query('select document from public.lingjing_resource_preferences where owner_account_id=$1',[ownerA])).rows[0].document,pref);
+  await db.exec('drop trigger fixture_preference_failure on public.lingjing_resource_preference_actions;drop function public.fixture_preference_failure();');
+  const refs=(await db.query('select lingjing_private.resource_module($1) module',[ownerA])).rows[0].module;
+  assert.equal(refs.data.references.length,2);assert.equal(refs.data.preferences[0].calibration.desktop.scale,1.35);
 });
 test('LOCAL SQL: privileged registration rechecks real session, expiry, anonymous status and exact device before replay',async()=>{
   const before=(await db.query('select revision,envelope from public.lingjing_saves where owner_id=$1',[ownerA])).rows[0];
