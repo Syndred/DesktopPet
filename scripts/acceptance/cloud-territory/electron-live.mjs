@@ -111,7 +111,7 @@ try{
     const untouched=before.pets.find(p=>p.petId===evidence.petIds[1]);assert.deepEqual(finalA.pets.find(p=>p.petId===untouched.petId),untouched);
     const after=JSON.stringify(finalA.items),petState=JSON.stringify(finalA.pets);await invoke(b,'battle','settleContext',{sessionId,actionId:`native-confirm:${config.runId}`});const repeated=await snapshot(b);assert.equal(JSON.stringify(repeated.items),after);assert.equal(JSON.stringify(repeated.pets),petState);
     for(const model of [liveA,b]){await model.page.evaluate(()=>{location.hash='#/garden';});await model.page.getByRole('heading',{name:'给伙伴，留一片小天地。',exact:true}).waitFor();await capture(model,`cloud-garden-${model.index?'b':'a'}`);}
-    evidence.final={sessionId,rounds:battle.snapshot.round,ownerAccountId:actorA.ownerAccountId,items:finalA.items,pets:finalA.pets,territories:finalA.territories};assert.deepEqual(evidence.rendererErrors||[],[]);evidence.passed=true;save();console.log(JSON.stringify({passed:true,evidence:evidenceFile}));
+    evidence.final={sessionId,rounds:battle.snapshot.round,ownerAccountId:actorA.ownerAccountId,items:finalA.items,pets:finalA.pets,territories:finalA.territories};assert.deepEqual(evidence.rendererErrors||[],[]);if(evidence.failure){evidence.resolvedIncidents||=[];evidence.resolvedIncidents.push(evidence.failure);delete evidence.failure;}evidence.passed=true;save();console.log(JSON.stringify({passed:true,evidence:evidenceFile}));
   }
 }catch(error){evidence.failure={at:new Date().toISOString(),message:error.message};evidence.passed=false;save();console.error(JSON.stringify({evidence:evidenceFile,failure:evidence.failure}));process.exitCode=1;}
 finally{for(const model of models)if(!model.closed)await model.app.close().catch(()=>{});}

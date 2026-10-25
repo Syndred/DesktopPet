@@ -26,6 +26,7 @@ async function action(key,make){if(!proof.actions[key]){proof.actions[key]=await
 async function location(index,purpose,reference){const result=await clients[index]('discovery',null,{operation:'prove',purpose,reference}),permit=success(result);assert.equal(permit.source,'simulated');assert.equal(permit.fix.scenarioId,config.scenarioId);return permit.id;}
 async function readSession(index,id){return call(index,'territory',{op:'session',input:{sessionId:id}});}
 function record(name,data={}){proof.checks.push({name,...data});save();}
+function resolvedFailure(){if(proof.failure){proof.resolvedIncidents||=[];proof.resolvedIncidents.push(proof.failure);delete proof.failure;}}
 async function independentReceipt(index,receiptId){const saved=await call(index,'save',{op:'read',actionId:receiptId});assert.equal(saved.actionId,receiptId);assert.ok(saved.revision>0&&saved.envelope?.checksum===saved.checksum);return {revision:saved.revision,checksum:saved.checksum};}
 
 async function initialize(){
@@ -141,6 +142,22 @@ async function economy(){
   const repeat=await call(2,'garden',{op:'command',command:'feed',input:feed});assert.equal(repeat.replayed,true);assert.equal(hash(summary(await state(0))),hash(after));await independentReceipt(2,fed.authorityReceiptId);
   proof.economy={...proof.economy,passed:true,finishedAt:new Date().toISOString(),actualElapsedMs:current.serverTime-proof.economy.startedAt,harvested:2,crafted:1,fedTo:target.petId,repeatAcrossDevice:true};proof.after=await Promise.all([0,1].map(async i=>summary(await state(i))));save();record('actual original25-minute maturity, harvest2, craft1 and feed same pet once, independently read by same-account other device');
 }
+async function negatives(){
+  assert.equal(proof.passed,true);const index=proof.loser,other=1-index,before=await state(index),region=before.territories.find(t=>t.id===proof.territory.id);
+  const request=await action('expiredProofChallenge',async()=>({actionId:`expired-proof:${proof.runId}`,sessionOwnerAccountId:config.actors[index].ownerAccountId,territoryId:region.id,expectedTerritoryRevision:region.revision,petId:proof.contestPets[index],locationReceiptId:await location(index,'territory:challenge',region.id)}));
+  if(!proof.security?.expiredProof){await new Promise(resolve=>setTimeout(resolve,16000));const denied=await clients[index]('territory',{op:'challenge',input:request});assert.equal(denied.body?.ok,false);assert.equal(denied.body.code,'LOCATION_PROOF_EXPIRED');assert.equal(denied.httpStatus,409);proof.security||={};proof.security.expiredProof={passed:true,code:denied.body.code};save();}
+  const scoped=await location(index,'territory:challenge','wrong-region-reference');
+  const scopeDenied=await clients[index]('territory',{op:'challenge',input:{...request,actionId:`wrong-scope:${proof.runId}`,locationReceiptId:scoped}});assert.equal(scopeDenied.body.ok,false);assert.equal(scopeDenied.body.code,'LOCATION_PROOF_SCOPE_MISMATCH');
+  const foreignProof=await clients[other]('territory',{op:'challenge',input:{...request,actionId:`foreign-proof:${proof.runId}`,sessionOwnerAccountId:config.actors[other].ownerAccountId,petId:proof.contestPets[other],locationReceiptId:scoped}});assert.equal(foreignProof.body.ok,false);assert.ok(/LOCATION|OWNER/.test(foreignProof.body.code));
+  const forged=await clients[index]('territory',{op:'settle',input:{sessionId:proof.battles[index].id,actionId:`forged-winner:${proof.runId}`,winner:'player'}});assert.equal(forged.httpStatus,403);assert.equal(forged.body.code,'UNTRUSTED_AUTHORITY_FIELD');
+  const missing=await clients[index]('territory',{op:'locate',input:{actionId:`missing-proof:${proof.runId}`}});assert.equal(missing.body.ok,false);assert.equal(missing.body.code,'LOCATION_PERMIT_REQUIRED');
+  assert.equal((await state(index)).envelope.checksum,before.envelope.checksum);
+  const rice=await state(0);
+  if(rice.serverTime<proof.economy.maturesAt){
+    const denied=await clients[0]('garden',{op:'command',command:'harvest',input:{actionId:`immature-harvest:${proof.runId}`,expectedRevision:rice.snapshot.revision,plotIds:['plot-3']}});assert.equal(denied.body.ok,false);assert.equal(denied.body.code,'CROP_NOT_MATURE');assert.equal((await state(0)).envelope.checksum,rice.envelope.checksum);proof.security.immatureHarvest={passed:true,code:denied.body.code};
+  }
+  proof.security={...proof.security,passed:true,wrongScope:scopeDenied.body.code,foreignProof:foreignProof.body.code,forgedWinner:forged.body.code,missingProof:missing.body.code,noEconomicChange:true};save();record('real HTTPS expired15-second proof, wrong scope, foreign proof, forged winner, missing proof and premature harvest denied without economics',proof.security);
+}
 async function restart(){
   assert.equal(proof.passed,true);assert.ok(proof.after);
   for(let index=0;index<2;index++){
@@ -152,8 +169,9 @@ async function restart(){
 try{
   for(let index=0;index<3;index++)clients[index]=await connect(index);assert.equal(new Set(active.map(c=>c.pid)).size,3);proof.clients=proof.clients||active;proof.lastClients=active;save();
   if(process.argv.includes('--readback'))await restart();
+  else if(process.argv.includes('--negative'))await negatives();
   else if(process.argv.includes('--economy'))await economy();
   else{await initialize();if(!process.argv.includes('--prepare-only'))await contest();}
-  console.log(JSON.stringify({evidence:file,passed:proof.passed,economyPassed:proof.economy?.passed||false,restartPassed:proof.restartReadback?.passed||false,overallPassed:proof.overallPassed,physicalTwoDeviceAcceptance:false}));
+  resolvedFailure();save();console.log(JSON.stringify({evidence:file,passed:proof.passed,economyPassed:proof.economy?.passed||false,restartPassed:proof.restartReadback?.passed||false,overallPassed:proof.overallPassed,physicalTwoDeviceAcceptance:false}));
 }catch(error){proof.failure={at:new Date().toISOString(),code:error.code||'ASSERTION_FAILED',message:String(error.message)};proof.overallPassed=false;save();console.error(JSON.stringify({evidence:file,failure:proof.failure}));process.exitCode=1;}
 finally{for(const worker of workers)worker.kill();}

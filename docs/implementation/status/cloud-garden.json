@@ -35,7 +35,8 @@
     "Unified lingjing_saves/commit_authority consumed in the same transaction; no05 new-pet registration",
     "native dependency checkpoint retained; no shared node_modules rebuild",
     "Two isolated normal product-Auth accounts and third independent same-account device prepared without remote SQL writes",
-    "2 runtime-fixture checks passed: SQLite reopen exact original request, whole companion unit/chat preservation, shared battle wrapper with no local reward before confirmation"
+    "2 runtime-fixture checks passed: SQLite reopen exact original request, whole companion unit/chat preservation, shared battle wrapper with no local reward before confirmation",
+    "Final own-module regression34/34 passed; current production TypeScript/desktop typecheck passed"
   ],
   "realCloudEvidence": {
     "projectRef": "jbvrdmrkwpznbrvteive",
@@ -131,7 +132,7 @@
     "discovery03": "Consumed live03 take_location schema+guard; purpose read/challenge/settle and reference bound in same transaction. Main locationProofs.prove supplies opaque proofs.03 capture should call4-argument capture_context inside its own commit."
   },
   "serverDeployable": true,
-  "desktopCheckpoint": "latest garden commit containing this status; b5b1eaf +7873839 and monotonic cache fix",
+  "desktopCheckpoint": "ebcedea (includes b5b1eaf,7873839, monotonic server revision cache, complete-unit restore and exact request recovery)",
   "coordinatorDeploymentCheckpoint": "40941f2",
   "locationTestGrantRequest": {
     "file": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-garden\\DesktopPet\\artifacts\\garden\\cloud\\live-4b474857-e93b-4354-a119-a21157984812/location-grant-request.json",
@@ -185,5 +186,12 @@
       }
     ],
     "requestedDurationMinutes": 90
+  },
+  "ownModuleRegression": {
+    "passed": 34,
+    "failed": 0,
+    "typecheck": true,
+    "native": "Electron44.9.3 N-API10 / better-sqlite3 13.0.3",
+    "uiModifiedByGarden": false
   }
 }
