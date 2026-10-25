@@ -1,5 +1,6 @@
 const { createHash } = require('node:crypto');
 const { canonical, saveDataChecksum } = require('../accounts/util.cjs');
+const {legacyFinishedProjection}=require('./canonical-projection.cjs');
 const hash = value => createHash('sha256').update(canonical(value)).digest('hex');
 const fail = (code,message) => { throw Object.assign(new Error(message),{code}); };
 
@@ -31,7 +32,19 @@ class BattleCloudAuthority {
     if(projectionOnly){
       const reward=b.rewards.find(row=>row.action_id===proof.action_id&&row.pet_id===proof.pet_id);
       const current=[this.db.prepare('SELECT id,room_id,status,data_json,revision,updated_at FROM battle_sessions WHERE owner_account_id=? AND id=?').get(owner,session.id),this.db.prepare('SELECT id,session_id,data_json,ended_at FROM battle_reports_v2 WHERE owner_account_id=? AND id=?').get(owner,report.id),this.db.prepare('SELECT session_id,action_id,pet_id,data_json FROM battle_reward_receipts WHERE owner_account_id=? AND session_id=?').get(owner,session.id)];
-      if(current.some(row=>!row)||hash(current)!==hash([session,report,reward]))fail('CLOUD_LOCAL_CONFLICT','旧完成档与权威终局不同，原始记录已保留');
+      if(current.some(row=>!row)||hash(current)!==hash([session,report,reward])){
+        if(!legacyFinishedProjection(current,[session,report,reward]))fail('CLOUD_LOCAL_CONFLICT','旧完成档与权威终局不同，原始记录已保留');
+        // Preserve the original full save before repairing this byte-identical
+        // reward's narrowly recognized pre-fix presentation projection.
+        backups.save(owner,null,'before-cloud-battle-projection-repair');
+        this.db.exec('SAVEPOINT battle_legacy_projection');
+        try{
+          this.owner(owner);
+          this.db.prepare('UPDATE battle_sessions SET room_id=?,status=?,data_json=?,revision=?,updated_at=? WHERE owner_account_id=? AND id=?').run(session.room_id,session.status,session.data_json,session.revision,session.updated_at,owner,session.id);
+          this.db.prepare('UPDATE battle_reports_v2 SET data_json=?,ended_at=? WHERE owner_account_id=? AND id=?').run(report.data_json,report.ended_at,owner,report.id);
+          this.db.exec('RELEASE SAVEPOINT battle_legacy_projection');
+        }catch(error){this.db.exec('ROLLBACK TO SAVEPOINT battle_legacy_projection');this.db.exec('RELEASE SAVEPOINT battle_legacy_projection');throw error;}
+      }
       this.owner(owner);battle.acceptAuthorityProjection(owner,b,{sessionId:session.id,actionId:receiptKey,revision:remote.revision,checksum:remote.checksum});
       this.confirm(owner,envelope,remote.revision,true);return proof;
     }
