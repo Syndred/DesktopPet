@@ -1,11 +1,16 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { BattleActionType } from '../../../../../../packages/shared-types/src/battle';
 import type { BattleContext, BattleParticipant, BattleReport, BattleRulesProfile, BattleSession } from '../../../../../../packages/shared-types/src/features/battle';
+import type { CompanionDisplayIdentity } from '../../../../../../packages/shared-types/src/features/companions';
 import { request } from '../../app/bridge';
 import { reserveBattleAction, resolvedBattleAction, type BattleActionAttempt } from './action-intent';
 
+/** Lobby display only; battle participants in saved sessions/reports keep their original shape. */
+export interface BattleOwnedPet extends BattleParticipant {
+  readonly displayIdentity: CompanionDisplayIdentity;
+}
 export interface BattleOverview {
-  rules: BattleRulesProfile; pets: BattleParticipant[]; selectedPetId?: string; session: BattleSession | null;
+  rules: BattleRulesProfile; pets: BattleOwnedPet[]; selectedPetId?: string; session: BattleSession | null;
   reports: BattleReport[]; opponents: BattleParticipant[]; online: { enabled: boolean };
 }
 /** One owner-scoped controller for every entry, including ambiguous network actions. */
