@@ -3,8 +3,8 @@
   "scope": "cloud-upgrade-2026-10-25",
   "branch": "codex/lingjing-conversations",
   "commit": "79801a2",
-  "goalStatus": "blocked",
-  "status": "blocked_external_approved_cloud_dependencies",
+  "goalStatus": "active",
+  "status": "resumed_real_services_running_two_electron_acceptance",
   "contracts": {
     "identity": "08 accounts: verified owner mapping, complete-save CAS and account save-restored events",
     "backup": "conversations version 1 adapter; stable IDs and array order, no sequence or encrypted_key",
@@ -19,7 +19,9 @@
     "approvedIdentityCheckpoint": "f81008c",
     "backupEntry": "services.get(conversations).createBackupAdapter(); compatibility core forwarder retained",
     "approvedFullSaveCheckpoint": "45b857d",
-    "approvedShellCheckpoint": "ced8e5e"
+    "approvedShellCheckpoint": "ced8e5e",
+    "approvedIntegrationCheckpoint": "9366dcd plus root07 e193f6f via313686a",
+    "sharedChatSelection": "getSelections(owner).chatPetId is authority; await companions.select(chatPetId) before compatibility preference mutation; reject/late session does not update selection"
   },
   "migrations": {
     "remote": [],
@@ -92,6 +94,16 @@
       "status": "passed",
       "reportedBy": "main coordinator user delegation",
       "source": "543b71f"
+    },
+    {
+      "command": "node --test conversations/tests/selection.test.cjs conversations/tests/runtime.test.cjs",
+      "checks": 16,
+      "status": "passed",
+      "scope": "4 actual SQLite/asynchronous simulated acknowledgements +12 actual local HTTP fixture; no live cloud claim"
+    },
+    {
+      "command": "feature ESLint with explicit cjs/mjs/ts/tsx extensions and typecheck:ui",
+      "status": "passed"
     }
   ],
   "realCloudEvidence": {
@@ -143,12 +155,11 @@
     }
   ],
   "remaining": [
-    "Consume08 approved client cloud projection (raw legacy upload currently unsafe).",
-    "Consume02 approved legal cloud pet adoption/registration; do not seed SQL pets.",
-    "Real two Electron A/B chat/persona/memory CAS, conflicts/offline/restart checks.",
-    "Coordinator deployment/integration and independent acceptance; original legacy server migration remains08 condition."
+    "Run full two Electron/real HTTPS CAS with two legally adopted same-template pets, exact JSON text, scope-specific device credentials, conflicts and restart SQLite readback.",
+    "Consume02 approved main routing and validate normal public chat selection including rejection/offline; server-path adoption scope remains explicit.",
+    "Independent coordinator final review."
   ],
-  "updatedAt": "2026-10-25T03:13:09.672Z",
+  "updatedAt": "2026-10-25T03:56:52.853Z",
   "cleanupManifest": "docs/implementation/evidence/conversations/cloud-2026-10-25/cleanup-manifest.json",
   "installation": {
     "workspaceNodeModulesIndependent": true,
@@ -167,7 +178,7 @@
   },
   "preparedAcceptance": {
     "script": "apps/pc-app/runtime/features/conversations/tests/cloud-sync.acceptance.mjs",
-    "status": "prepared_not_run",
+    "status": "ready_to_run_against_deployed_services",
     "prerequisites": [
       "approved08 client personal cloud projection",
       "approved02 public legal cloud adoption deployed"
@@ -197,7 +208,8 @@
         "detail": "Same reproduction now preserves exact JSON text in message.content, profile.persona and memory.content. This proves local filter behavior only; real server/body and two-Electron chat CAS still pending."
       }
     },
-    "harnessCommit": "79801a2"
+    "harnessCommit": "79801a2",
+    "adoptionScope": "main-only cloudActor controlled adopt/select then Accounts public cloudPreview/backupRestore; final companion UI route separate"
   },
   "checkpoint": "d54c8a8",
   "goalAudit": {
@@ -217,26 +229,7 @@
     "acceptanceScript": "apps/pc-app/runtime/features/conversations/tests/cloud-sync.acceptance.mjs",
     "completionClaimed": false
   },
-  "blockedAudit": {
-    "consecutiveGoalTurns": 3,
-    "condition": "Approved/deployed cloud pet adoption/main-process bridge and field-aware08 privacy checkpoint unavailable to this owner; successful per-pet A/B CAS cannot be run against the approved baseline.",
-    "currentEvidence": {
-      "approvedLocalHead": "d54c8a8",
-      "accountsReadOnlyRef": "6876b36",
-      "accountsTextFixLocal": "8e5c735 passed same reproduction",
-      "companionsPublishedRef": "d1653d3",
-      "companionsRuntime": "02 latest live turn reports server tests passed, deployment checkpoint preparation and main-process integration still pending",
-      "coordinatorApprovedSource": [
-        "45b857d",
-        "ced8e5e"
-      ],
-      "remoteMain": "4786f97680679c2db0aa307fa5f67ec247f93086 already included"
-    },
-    "resumeNeeds": [
-      "Coordinator-approved08 projection/server-guard checkpoint deployed",
-      "Coordinator-approved02 legal cloud adoption/main-process bridge deployed"
-    ],
-    "goalScopeUnchanged": true,
-    "fullChatSyncClaimed": false
-  }
+  "resumedAt": "2026-10-25T03:56:52.853Z",
+  "resumedBy": "Main coordinator: all8 live; approved latest root merged; legal main cloudActor adoption allowed before02 UI routing",
+  "blockResolved": true
 }

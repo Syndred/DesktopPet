@@ -29,7 +29,7 @@ const checks = [], errors = [], clients = [], observedPushes = [];
 const evidence = { at: new Date().toISOString(), runId, taskId: '01a16dc5-c418-7372-ac4b-1d9abb116865', sourceCommit: execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(),
   build: JSON.parse(readFileSync('apps/pc-app/dist/build-manifest.json', 'utf8')), realCloud: true, realElectron: true, sameHost: true,
   projectRef: 'jbvrdmrkwpznbrvteive', privilegedWrites: 0, syntheticModelResponses: false, checks, rendererErrors: errors,
-  adoptionPath: 'actual main-only accounts.requireCloudActor().invoke(companions-sync), then public Accounts cloudPreview/backupRestore; final companion UI adoption is not claimed',
+  adoptionPath: 'actual main-only cloudActor companions-sync adoption and initial chat slot, then public Accounts cloudPreview/backupRestore; final companion UI adoption/selection is not claimed',
   modelTransport: 'actual loopback connection refusal and stalled socket cancellation; no external provider/model success claimed',
   offlineTransport: 'explicit test injection causes actual loopback connection refusal for one cloud push; restart uses real HTTPS service' };
 const record = (name, data) => { checks.push({ name, data }); console.log('PASS', name); };
@@ -107,7 +107,7 @@ async function sendFailed(c, petId, text) {
   const actionId = randomUUID(), result = await invoke(c, 'conversations', 'send', { petId, text, actionId });
   assert.equal(result.code, 'NETWORK_ERROR'); return actionId;
 }
-async function snapshot(c, petId) { return call(c, 'conversations', 'snapshot', { petId }); }
+async function snapshot(c, petId) { return call(c, 'conversations', 'snapshot', petId ? { petId } : {}); }
 const comparableMessages = rows => rows.map(row => Object.fromEntries(Object.entries(row).filter(([key]) => key !== 'sequence')));
 async function assertStoredKey(c, owner) {
   const db = new DatabaseSync(join(c.profile, 'lingjing.sqlite'), { readOnly: true }); db.exec('PRAGMA query_only=ON');
@@ -129,14 +129,20 @@ try {
   const adopted = await adopt(a, b, owner, '跨端原伙伴'), adoptedSecond = await adopt(a, b, owner, '同模板第二只');
   const petId = adopted.receipt.pet.petId, secondPetId = adoptedSecond.receipt.pet.petId; assert.notEqual(petId, secondPetId);
   assert.equal(adopted.receipt.pet.templateId, adoptedSecond.receipt.pet.templateId);
+  const selected = await a.app.evaluate(async (_electron, { petId, expectedRevision, actionId }) => {
+    const ctx = await globalThis.__conversationCloudAccounts.requireCloudActor();
+    const r = await ctx.invoke('companions-sync', { op: 'command', command: 'select', input: { petId, expectedRevision, actionId, slot: 'chatPetId' } });
+    return { actionId: r.actionId, revision: r.revision, checksum: r.checksum, selections: r.result.data.selections };
+  }, { petId, expectedRevision: adopted.receipt.pet.revision, actionId: randomUUID() });
+  assert.deepEqual(selected.selections, { chatPetId: petId, battlePetId: null, guardPetId: null });
   await restore(a);
   await restore(b); const cloudPets = await call(b, 'companions', 'list');
   assert.ok([petId, secondPetId].every(id => cloudPets.pets.some(item => item.petId === id)));
-  record('Main cloudActor legally adopts two same-template pets; B independently reads both exact action receipts and IDs', { owner, adopted, adoptedSecond });
+  assert.equal((await snapshot(a)).petId, petId); assert.equal((await snapshot(b)).petId, petId);
+  record('Main cloudActor legally adopts two same-template pets; B reads both exact action receipts, original IDs and the independent chat slot', { owner, adopted, adoptedSecond, selected });
   await configure(a, closedBase); await configure(b, closedBase);
   await configure(a, closedBase, secondPetId); await configure(b, closedBase, secondPetId);
   await enableSync(a); await enableSync(b); await observePushPrivacy(a); await observePushPrivacy(b);
-  await call(a, 'conversations', 'select', { petId });
   const firstAction = await sendFailed(a, petId, authored.message);
   await configure(a, stallBase);
   const cancelledAction = randomUUID(), pending = invoke(a, 'conversations', 'send', { petId, text: 'A 的取消消息', actionId: cancelledAction });
