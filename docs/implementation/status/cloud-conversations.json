@@ -148,7 +148,7 @@
     "Real two Electron A/B chat/persona/memory CAS, conflicts/offline/restart checks.",
     "Coordinator deployment/integration and independent acceptance; original legacy server migration remains08 condition."
   ],
-  "updatedAt": "2026-10-25T03:06:22.412Z",
+  "updatedAt": "2026-10-25T03:08:06.908Z",
   "cleanupManifest": "docs/implementation/evidence/conversations/cloud-2026-10-25/cleanup-manifest.json",
   "installation": {
     "workspaceNodeModulesIndependent": true,
@@ -180,7 +180,8 @@
       "concurrent CAS conflict and atomic merge conflict",
       "explicit restore and safety backup",
       "process restart and exact-action outbox retry",
-      "all observed push bodies exclude local keys/ciphers/Auth proof"
+      "all observed push bodies exclude local keys/ciphers/Auth proof",
+      "exact ordinary JSON content with credential-like field names remains unchanged in message/persona/memory"
     ],
     "injectedStep": "Only one offline cloud push uses explicit actual loopback-refusal fault injection; subsequent retry/readback uses real HTTPS.",
     "receiptSemantics": "New08 distinguishes personalVerified from full-save verified/requiresAuthority/privacyRedactions. Harness requires actual personalVerified and records the full receipt without promoting historic gameplay.",
@@ -188,7 +189,13 @@
     "interfaceReview": {
       "commit": "ce0affb",
       "mode": "read-only committed code; not merged or deployed by06",
-      "pendingApproval": true
-    }
+      "pendingApproval": true,
+      "textFidelityGate": {
+        "status": "failed_in_pending08_ce0affb",
+        "evidence": "docs/implementation/evidence/conversations/cloud-2026-10-25/pending-projection-text-failure.json",
+        "detail": "Read-only actual cloudProjection code rewrites ordinary JSON text in message.content, profile.persona, memory.content. Await approved field-aware filter; no cloud/pet/DB write in this reproduction."
+      }
+    },
+    "harnessCommit": "79801a2"
   }
 }
