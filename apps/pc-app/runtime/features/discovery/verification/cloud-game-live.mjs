@@ -8,13 +8,16 @@ import {randomUUID,createHash} from 'node:crypto';
 import {execFileSync} from 'node:child_process';
 import assert from 'node:assert/strict';
 const root=resolve('.'),output=resolve(`artifacts/cloud-discovery/live-game-${Date.now()}`),scenarioId='cloud-discovery-03';
+const resume=process.env.LINGJING_CLOUD_GAME_RESUME?resolve(process.env.LINGJING_CLOUD_GAME_RESUME):null,profileBase=resume||output;
+const previous=resume?JSON.parse(readFileSync(join(resume,'evidence.json'),'utf8')):null;
 mkdirSync(output,{recursive:true});
 const publicConfig=resolve(process.env.LINGJING_PUBLIC_CONFIG||'config/lingjing-cloud-public.json');
 const proof={at:new Date().toISOString(),sourceCommit:execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8',windowsHide:true}).trim(),
   build:JSON.parse(readFileSync('apps/pc-app/dist/build-manifest.json','utf8')),projectRef:'jbvrdmrkwpznbrvteive',scenarioId,
   productionMain:true,registryObserver:true,syntheticPosition:true,physicalPositionAcceptance:false,physicalSecondDevice:false,
   realAuth:true,realHttps:true,rawCoordinatesSaved:false,tokensOrPasswordsSaved:false,actors:[],checks:[],attempts:[],errors:[]};
-const apps=[],bootstrap=join(output,'production-observer.cjs'),account=`cg03_${Date.now()}`,password=`CloudGame-${randomUUID()}!`;
+if(resume)proof.resumeFrom=resume;
+const apps=[],bootstrap=join(output,'production-observer.cjs');let account=`cg03_${Date.now()}`,password=`CloudGame-${randomUUID()}!`;
 const save=()=>writeFileSync(join(output,'evidence.json'),JSON.stringify(proof,null,2)+'\n');
 const phase=(name,details={})=>{writeFileSync(join(output,'progress.json'),JSON.stringify({phase:name,at:new Date().toISOString(),...details},null,2)+'\n');console.log(JSON.stringify({phase:name,...details}));};
 writeFileSync(bootstrap,`const requireProbe=require,core=require(${JSON.stringify(join(root,'apps/pc-app/runtime/core/services.cjs'))}),create=core.createServices;
@@ -31,6 +34,7 @@ global.__cloudGameProbe=async({op,...args})=>{
   return signer.prove(args.purpose,args.reference||'');
  }
  if(op==='keepCredentials')return s.safeStorage.encryptString(JSON.stringify(args.credentials)).toString('base64');
+ if(op==='openCredentials')return JSON.parse(s.safeStorage.decryptString(requireProbe('node:fs').readFileSync(args.path)));
  if(op==='readbackToFreshSqlite'){
   const c=await s.get('cloudActor').requireActor(),head=await c.invoke('lingjing-save',{op:'read'}),owner=c.ownerAccountId,unit=head.envelope.data.modules.companions;
   const api=s.get('companions').backupAdapter;api.validate(unit.data,owner);api.restore(owner,unit.data,'merge');
@@ -53,11 +57,16 @@ requireProbe(${JSON.stringify(join(root,'apps/pc-app/dist/main/index.cjs'))});\n
 async function main(client,op,args={}){const reply=await client.app.evaluate(async(_electron,input)=>{try{return{ok:true,data:await global.__cloudGameProbe(input)};}catch(e){return{ok:false,code:e.code||'PROBE_FAILED',message:e.message};}},{op,...args});if(!reply.ok)throw Object.assign(new Error(reply.code+': '+reply.message),{code:reply.code});return reply.data;}
 const invoke=(client,name,body)=>main(client,'invoke',{name,body});
 async function launch(label,register=false){
- const env={...process.env,PET_USER_DATA_DIR:join(output,label),LINGJING_PUBLIC_CONFIG:publicConfig};
+ const env={...process.env,PET_USER_DATA_DIR:join(profileBase,label),LINGJING_PUBLIC_CONFIG:publicConfig};
  for(const key of['ELECTRON_RUN_AS_NODE','PET_RUNTIME_DATA_FILE','LINGJING_QA_SCENARIO','LINGJING_CONTROLLED_LOCATION','LINGJING_BATTLE_QA','LINGJING_LEGACY_AUTH'])delete env[key];
  const app=await electron.launch({args:[bootstrap],cwd:root,env});apps.push(app);const page=await app.firstWindow();page.on('pageerror',e=>proof.errors.push(e.message));await page.waitForFunction(()=>Boolean(window.lingjing));
- const result=await page.evaluate(input=>window.lingjing.invoke('accounts',input.register?'register':'login',{provider:'runtime',account:input.account,password:input.password,confirmPassword:input.password,username:'探索云端验收',rememberSession:true}),{register,account,password});
- assert.equal(result.ok,true,JSON.stringify(result));const client={app,page,label},identity=await main(client,'actor');assert.equal(identity.electron,'44.9.3');assert.equal(identity.qaProfile,false);client.actor=identity.actor;proof.actors.push({label,...identity});return client;
+ const client={app,page,label};
+ if(resume){const saved=await main(client,'openCredentials',{path:join(resume,'credentials.secure')});account=saved.account;password=saved.password;}
+ const existing=await page.evaluate(()=>window.lingjing.invoke('accounts','session'));
+ if(!existing.data?.currentUser){
+  const result=await page.evaluate(input=>window.lingjing.invoke('accounts',input.register?'register':'login',{provider:'runtime',account:input.account,password:input.password,confirmPassword:input.password,username:'探索云端验收',rememberSession:true}),{register:register&&!resume,account,password});assert.equal(result.ok,true,JSON.stringify(result));
+ }
+ const identity=await main(client,'actor');assert.equal(identity.actor.account,account);assert.equal(identity.electron,'44.9.3');assert.equal(identity.qaProfile,false);client.actor=identity.actor;proof.actors.push({label,...identity});return client;
 }
 const fixAt=position=>({...position,accuracyMeters:5,coordinateSystem:'wgs84',source:'simulated',provider:'qa-discovery',scenarioId});
 async function prove(client,purpose,reference,position){return main(client,'prove',{purpose,reference,fix:fixAt(position)});}
@@ -66,18 +75,24 @@ async function rejected(client,body,codes,label){try{await invoke(client,'discov
 try{
  const a=await launch('device-a',true),b=await launch('device-b');assert.equal(a.actor.ownerAccountId,b.actor.ownerAccountId);assert.notEqual(a.actor.deviceId,b.actor.deviceId);assert.notEqual(a.actor.sessionId,b.actor.sessionId);
  writeFileSync(join(output,'credentials.secure'),Buffer.from(await main(a,'keepCredentials',{credentials:{account,password}}),'base64'));proof.tokensOrPasswordsSaved='Only Windows safeStorage encrypted test credentials in ignored artifacts; no plaintext or tokens in evidence';
- const adopted=await invoke(a,'companions-sync',{op:'command',command:'adopt',input:{actionId:'cloud-game-adopt-'+randomUUID(),templateId:'big-fish-gentle',name:'规范云端出战伙伴',showOnDesktop:false}});const pet=adopted.result.data.pet;
+ let pet;
+ if(previous?.originalPetId){const restored=await invoke(a,'companions-sync',{op:'snapshot'});pet=JSON.parse(restored.module.data.tables.companion_pets.find(row=>row.pet_id===previous.originalPetId).data_json);}
+ else{const adopted=await invoke(a,'companions-sync',{op:'command',command:'adopt',input:{actionId:'cloud-game-adopt-'+randomUUID(),templateId:'big-fish-gentle',name:'规范云端出战伙伴',showOnDesktop:false}});pet=adopted.result.data.pet;}
  const garden=await invoke(a,'garden-sync',{op:'snapshot'});assert.ok(garden.envelope.data.modules.garden);proof.originalPetId=pet.petId;
  const targets=proof.actors.map(({label,actor})=>({label,authUserId:actor.authUserId,ownerAccountId:actor.ownerAccountId,deviceId:actor.deviceId,scenarioId}));
  writeFileSync(join(output,'grant-request.json'),JSON.stringify({testOnly:true,scenarioId,ttl:'up to2hours',targets},null,2)+'\n');save();phase('awaiting-coordinator-qa-grants',{output,targets});
  await waitForGrant(a);await waitForGrant(b);phase('grants-verified');
- const discovery=await prove(a,'discover','',{lat:31.2,lng:121.4}),nearby=await invoke(a,'discovery',{op:'nearby',proofId:discovery.id});const spawn=nearby.spawns.find(p=>p.element==='fire');assert.ok(spawn);proof.fixtureCoordinateHash=createHash('sha256').update(spawn.position.lat+','+spawn.position.lng).digest('hex');
+ const deploymentDeadline=Date.now()+5*60*1000;while(!(await invoke(a,'discovery',{op:'protocol'})).receiptRecovery){if(Date.now()>=deploymentDeadline)throw Error('Receipt recovery checkpoint not deployed');phase('awaiting-receipt-recovery-deployment');await new Promise(done=>setTimeout(done,10000));}
+ const existingPermits=resume?await invoke(a,'discovery',{op:'permits'}):[],pending=existingPermits.find(p=>p.petId===pet.petId&&['active','won'].includes(p.status));
+ const discovery=await prove(a,'discover','',{lat:31.2,lng:121.4}),nearby=await invoke(a,'discovery',{op:'nearby',proofId:discovery.id});const spawn=pending?.spawn||nearby.spawns.find(p=>p.element==='fire');assert.ok(spawn);proof.fixtureCoordinateHash=createHash('sha256').update(spawn.position.lat+','+spawn.position.lng).digest('hex');
  let won,permit;
  for(let attempt=0;attempt<3;attempt++){
-  const beginProof=await prove(a,'begin',spawn.id,spawn.position),input={op:'reserve',spawnId:spawn.id,petId:pet.petId,proofId:beginProof.id,actionId:'cloud-reserve-'+randomUUID()};permit=await invoke(a,'discovery',input);assert.deepEqual(await invoke(b,'discovery',input),permit);
-  await rejected(b,{op:'confirm',permitId:permit.id,proofId:randomUUID(),name:'还不能收服',actionId:'early-'+randomUUID()},['VICTORY_REQUIRED'],'early capture refused');
+  if(attempt===0&&pending)permit={id:pending.id,sessionId:pending.sessionId,expiresAt:pending.expiresAt};
+  else{const beginProof=await prove(a,'begin',spawn.id,spawn.position),input={op:'reserve',spawnId:spawn.id,petId:pet.petId,proofId:beginProof.id,actionId:'cloud-reserve-'+randomUUID()};permit=await invoke(a,'discovery',input);assert.deepEqual(await invoke(b,'discovery',input),permit);}
   let session=await invoke(b,'discovery',{op:'session',permitId:permit.id});
-  const first={op:'act',permitId:permit.id,action:'normal_attack',expectedRound:1,actionId:'cloud-same-action-'+randomUUID()};
+  if(session.status==='finished'){won=session;proof.attempts.push({permitId:permit.id,battleId:session.id,winner:session.winner,rounds:session.snapshot.round,reward:session.reward});break;}
+  await rejected(b,{op:'confirm',permitId:permit.id,proofId:randomUUID(),name:'还不能收服',actionId:'early-'+randomUUID()},['VICTORY_REQUIRED'],'early capture refused');
+  const first={op:'act',permitId:permit.id,action:'normal_attack',expectedRound:session.snapshot.round+1,actionId:'cloud-same-action-'+randomUUID()};
   const replay=await Promise.all([invoke(a,'discovery',first),invoke(b,'discovery',first)]);assert.deepEqual(replay[0],replay[1]);session=replay[0];proof.checks.push({label:'same-owner concurrent same action returns one identical committed round',passed:true});
   if(session.status==='active'){
    const round=session.snapshot.round+1,collision=await Promise.allSettled([invoke(a,'discovery',{op:'act',permitId:permit.id,action:'normal_attack',expectedRound:round,actionId:'cloud-race-a-'+randomUUID()}),invoke(b,'discovery',{op:'act',permitId:permit.id,action:'dodge',expectedRound:round,actionId:'cloud-race-b-'+randomUUID()})]);
