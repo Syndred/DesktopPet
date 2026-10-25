@@ -1,6 +1,6 @@
 # 云端对战接口与阶段检查点
 
-负责人 04；保留已经验收的 V3 全部界面。分支 `codex/lingjing-battle-v3`，V3 冻结交付 `0ddda2a`，完整后端检查点 `5ebb63b`；已消费08稳定SID SDK `2f850a3`、02共享成长 `9497e8d`，并合入已批准的新桌面入口及伙伴后端 `d7b4b07`。
+负责人04；保留已验收V3全部界面。分支 `codex/lingjing-battle-v3`，V3冻结 `0ddda2a`，完整后端初版 `5ebb63b`，部署阻断补丁 `69a23b4`。已消费08稳定SID SDK及事务guard `08088e7/de11173`、02共享成长/伙伴后端、05 `40941f2` 的完整菜园领域模块。
 
 ## 权限与事务
 
@@ -14,6 +14,10 @@
 
 公开权威写RPC都是 `SECURITY INVOKER`、空search_path，撤销PUBLIC/anon/authenticated EXECUTE，只授予service_role。受控Edge用08 actor确定Auth UID/owner，普通读取使用actor.client；出战伙伴来自受保护head，资源/五行/等级/成长不接收客户端自报。
 
+所有写RPC传入08验证过的deviceId/sessionId，并在业务锁前调用统一私有 `lingjing_private.assert_service_actor(owner,uid,device,sid)`。它先锁owner，再锁定并重查真实Auth用户/session/not_after、不可变撤销账本与非撤销设备绑定；04不复制另一套认证，也不扩大service_role对Auth表的权限。命令缓存和已保存结算的HTTP重放同样进入guarded RPC，不能绕开。SQL验证保留Auth session的情况下撤销原设备，旧SID全部拒绝且不落账；同owner另一SID仍可读写。
+
+资源校验复用02模板五行；合法跨五行内置换装也不改变模板元素。自定义2D外观只查询同owner/Auth的 `lingjing_resource_references` 已验证spritesheet引用，绝不以客户端可写 `resource_packages` 作为授权。
+
 - `lingjing_battle_command(actor,owner,op,actionId,input)`：同 actor/actionId 的完整命令回执；邀请/接受/入房/锁定行动/离开在数据库事务中校验权限。接受邀请与房间/预约对象绑定同事务；命令重放不能换目标、动作或伙伴。
 - `lingjing_battle_commit_round(room,round,revision,rawHost,rawGuest,result)`：锁房间，核对版本、双方已锁定动作与 revision；回合插入和状态推进同事务。失败回滚，重复提交返回同一权威回合。
 - `lingjing_battle_training_command`：云账号训练使用同一内核的实际AI行动，保存服务端会话、不可变行动回执和revision；客户端只提交动作。相同actionId重放不会重新抽取AI动作或推进另一回合。
@@ -21,7 +25,7 @@
 
 第二个CLI迁移 `20261025024552_lingjing_battle_authority_save.sql` 依赖08 protected CAS及第一份battle迁移。只新增训练会话/命令/结算表和同事务RPC，不改旧历史。好友和训练活动成员互斥，遵守统一账号行优先的锁顺序。两份battle迁移均未由04写入生产。
 
-正式函数名 `lingjing-battle`，入口 `infra/supabase/functions/lingjing-battle/index.ts`。由08 withActor校验真实JWT/活跃Auth session/owner/device。部署verify_jwt=false只关闭旧网关JWT校验，不关闭函数内认证。打包需保留仓库相对路径，包含共享Auth/JSON/core与02/05纯领域模块，见status的deploymentGraph；不要部署旧duel-online入口。
+正式函数名 `lingjing-battle`。运行时只需 `lingjing-battle/index.ts`、`lingjing-battle/runtime.generated.mjs`、`_shared/lingjing-auth.ts` 三份文件。`scripts/battle/build-cloud.mjs`机械打包同一核心/02成长与模板/05菜园及JSON，`--check`按仓库相对路径与CRLF规范化SHA校验，不手改生成物。完整TS源码仍保留审查。08 withActor校验真实JWT/活跃Auth session/owner/device；verify_jwt=false只关闭旧网关校验，不关闭函数认证。不要部署旧duel-online入口。
 
 ## 同一规则核心
 
@@ -40,7 +44,7 @@ PGlite 实际执行 08 身份 SQL 和新增对战 SQL，完成真实数据库事
 ## 后续必须完成
 
 1. 主协调部署两份migration和完整lingjing-battle函数；04不自行部署或管理式种数据。
-2. 消费02主进程云领养/选择/读回、05新云账号菜园初始化。02后端adopt已上线，原有本机选择不能冒充已验证云操作；新界面保持原样。
+2. 消费02主进程云领养/选择/读回。05 emptyGarden及其权威初始化已接入原子奖励，第一次未打开菜园也能合法初始化并领种子；不做管理式种数据。02后端adopt已上线，原有本机选择不能冒充已验证云操作。
 3. 部署后执行真实账号邀请、多回合、JWT刷新重连、断网/重启、双方战报、训练及第二客户端存档读回。当前authority-save六项是实际本地Postgres/SQLite验证，不是HTTPS证明。
 4. 真实验收使用两个独立 deviceId、fresh 用户目录、两个 Electron 进程，明确是同机双客户端。不会启用会强制 simulated 身份的 unified-battle QA transport，也不冒称两台实体设备。
 5. 旧 `duel-online/index.ts` 中密码/单token和重复规则，在账号桥迁出并确认消费者为零后替换/删除；不因清理旧代码丢失历史读取或账号迁移能力。

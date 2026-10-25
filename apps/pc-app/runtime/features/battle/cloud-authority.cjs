@@ -10,10 +10,11 @@ class BattleCloudAuthority {
   owner(owner) { if(this.services.get('accounts')?.getOwnerAccountId()!==owner)fail('AUTH_CHANGED','账号已切换，请重新打开对战'); }
   async apply(owner,proof) {
     this.owner(owner);
-    if(proof?.owner_account_id!==owner||proof.reward?.actionId!==proof.action_id||proof.reward?.petId!==proof.pet_id||proof.authority?.actionId!==proof.action_id||!Number.isSafeInteger(proof.authority?.revision))fail('INVALID_SETTLEMENT_PROOF','云端结算归属不一致');
+    const receiptKey=proof?.authority?.actionId,scopedKey=`battle-authority:${proof?.reward?.mode}:${proof?.room_id}`;
+    if(proof?.owner_account_id!==owner||proof.reward?.actionId!==proof.action_id||proof.reward?.petId!==proof.pet_id||![proof.action_id,scopedKey].includes(receiptKey)||!Number.isSafeInteger(proof.authority?.revision))fail('INVALID_SETTLEMENT_PROOF','云端结算归属不一致');
     const actor=await this.services.get('cloudActor').requireActor();this.owner(owner);
-    const remote=await actor.invoke('lingjing-save',{op:'read',actionId:proof.action_id});this.owner(owner);
-    if(remote?.actionId!==proof.action_id||remote.revision!==proof.authority.revision||remote.checksum!==proof.authority.checksum||remote.envelope?.checksum!==remote.checksum)fail('CLOUD_READBACK_MISMATCH','尚未读回本次结算的匹配存档，请重试原结算');
+    const remote=await actor.invoke('lingjing-save',{op:'read',actionId:receiptKey});this.owner(owner);
+    if(remote?.actionId!==receiptKey||remote.revision!==proof.authority.revision||remote.checksum!==proof.authority.checksum||remote.envelope?.checksum!==remote.checksum)fail('CLOUD_READBACK_MISMATCH','尚未读回本次结算的匹配存档，请重试原结算');
     const backups=this.services.get('backups'),envelope=remote.envelope;backups.validate(envelope,owner);
     if(envelope.provenance?.mode!=='live')fail('INVALID_SETTLEMENT_PROOF','云端结算来源无效');
     const modules=envelope.data.modules,companions=backups.adapters.get('companions'),garden=backups.adapters.get('garden'),battle=backups.adapters.get('battle');

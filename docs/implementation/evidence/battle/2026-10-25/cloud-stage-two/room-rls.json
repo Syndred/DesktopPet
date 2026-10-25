@@ -1,11 +1,12 @@
 {
-  "at": "2026-10-25T03:13:59.419Z",
+  "at": "2026-10-25T03:42:58.463Z",
   "provenance": "local-embedded-PostgreSQL-only",
   "realCloudVerified": false,
   "checks": [
     "actual PostgreSQL invitation, acceptance, reserved membership, same-owner refusal and stable command receipt",
     "RLS denies anonymous/nonparticipants, pending choices, direct client mutations, spoofed RPC actors and private-topic outsiders",
     "shared versioned core resolves 8 immutable rounds, atomic rollback, duplicate commits and two pet-bound receipts",
+    "shared08 transaction guard denies revoked original SID for commands/rounds/receipt replay without mutations; same-owner second device can write",
     "actual revoke_device RPC blocks direct room/round/Realtime SELECT while original Auth session still exists; same-owner second device stays authorized",
     "direct room/round REST-equivalent RLS and Realtime SELECT reject still-unexpired JWT claims after session revocation or account lock",
     "all authority RPCs use fixed empty search_path, security invoker and service-only execution"
@@ -35,25 +36,25 @@
     {
       "won": true,
       "pet_id": "original-pet-a",
-      "room_id": "efb1dcf4-a540-4f45-a2aa-4e912b395e18",
-      "action_id": "battle:efb1dcf4-a540-4f45-a2aa-4e912b395e18:legacy-text-a",
-      "created_at": "2026-10-25T11:13:59.393+08:00",
+      "room_id": "1eddd201-4e3f-47ec-8f61-edbf9ae434b4",
+      "action_id": "battle:1eddd201-4e3f-47ec-8f61-edbf9ae434b4:legacy-text-a",
+      "created_at": "2026-10-25T11:42:58.423+08:00",
       "experience": 20,
       "core_version": "five-elements-standard-v1/2026-10-25",
       "rules_version": "five-elements-standard-v1",
-      "actor_auth_uid": "4f394295-dccd-477f-8250-5f85430c7aa9",
+      "actor_auth_uid": "463085a4-73b7-4665-92f7-da57daece586",
       "owner_account_id": "legacy-text-a"
     },
     {
       "won": false,
       "pet_id": "original-pet-b",
-      "room_id": "efb1dcf4-a540-4f45-a2aa-4e912b395e18",
-      "action_id": "battle:efb1dcf4-a540-4f45-a2aa-4e912b395e18:legacy-text-b",
-      "created_at": "2026-10-25T11:13:59.395+08:00",
+      "room_id": "1eddd201-4e3f-47ec-8f61-edbf9ae434b4",
+      "action_id": "battle:1eddd201-4e3f-47ec-8f61-edbf9ae434b4:legacy-text-b",
+      "created_at": "2026-10-25T11:42:58.426+08:00",
       "experience": 5,
       "core_version": "five-elements-standard-v1/2026-10-25",
       "rules_version": "five-elements-standard-v1",
-      "actor_auth_uid": "73fe3ed0-5de2-4556-b968-01ce7221f0c6",
+      "actor_auth_uid": "a77a70b1-97c3-40af-9720-e4652139ae76",
       "owner_account_id": "legacy-text-b"
     }
   ],
