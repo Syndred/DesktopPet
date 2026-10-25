@@ -115,3 +115,16 @@ test('LOCAL PGlite only: authored JSON examples and public capture proof remain 
  assert.equal(canonical(cloudProjection(withProof).envelope.data.modules.discovery.data.proof),canonical(withProof.data.modules.discovery.data.proof));
  const archived=(await as(uidA,sidA,deviceA,"select public.lingjing_archive_save('public-capture-proof','unverified-local',$1) item",[withProof]))[0].item;assert.equal(archived.promoted,false);
 });
+test('LOCAL PGlite only: a failed authoritative snapshot rolls domain mutation and common revision back together',async()=>{
+ await db.exec(`create table public.local_test_domain_balance(owner_id text primary key,coins integer not null);
+  grant all on public.local_test_domain_balance to service_role;
+  create function public.local_test_atomic_reward(p_owner text) returns void language plpgsql as $$ begin
+   perform lingjing_private.lock_save_owner(p_owner);
+   update public.local_test_domain_balance set coins=coins+100 where owner_id=p_owner;
+   perform lingjing_private.commit_authority(p_owner,'invalid-atomic-reward',jsonb_build_object('garden',jsonb_build_object('tables',jsonb_build_object('test_balances',
+    jsonb_build_object('schema','[]'::jsonb,'rows',jsonb_build_array(jsonb_build_object('owner_account_id','other-owner','coins',100)))))));
+  end $$;grant execute on function public.local_test_atomic_reward(text) to service_role;`);
+ await db.query('insert into public.local_test_domain_balance values($1,7)',[ownerA]);const prior=(await head()).revision;
+ await assert.rejects(service('select public.local_test_atomic_reward($1)',[ownerA]),/LJ_SAVE_OWNER_MISMATCH/);
+ assert.equal((await db.query('select coins from public.local_test_domain_balance where owner_id=$1',[ownerA])).rows[0].coins,7);assert.equal((await head()).revision,prior);
+});
