@@ -13,6 +13,15 @@ assert.equal(audit.passed, true, 'A successful package audit is required'); asse
 const executable = resolve(audit.executable), digest = await sha256(executable);
 assert.equal(digest, audit.sha256); assert.equal(digest, smoke.executableSha256, 'Smoke must exercise these exact executable bytes');
 assert.equal(smoke.expectedSource, audit.build.sourceCommit); assert.deepEqual(audit.build.sourceDirtyFiles, []);
+assert.equal(smoke.info?.build?.canonicalSourceFingerprint, audit.build.canonicalSourceFingerprint, 'The launched EXE must contain the audited source');
+assert.equal(smoke.info?.build?.compiledFingerprint, audit.build.compiledFingerprint, 'The launched EXE must contain the audited compiled bytes');
+assert.equal(smoke.info?.build?.runtimeClosure?.sha256, audit.build.runtimeClosure?.sha256);
+assert.equal(smoke.ordinaryConfig?.passed, true, 'Ordinary no-environment cloud configuration smoke required');
+assert.equal(smoke.ordinaryConfig.actualCloudConfig?.sha256, audit.publicCloud?.sha256, 'Actual SFX public configuration must match the audited resource');
+const monitor = smoke.checks.find(check => check.id === 'packaged-native-fullscreen-monitor-ready');
+assert.equal(monitor?.running, true, 'Running packaged native monitor required'); assert.equal(monitor?.ready, true, 'A running process alone is not a ready native monitor');
+for (const element of ['wood','earth']) { const walk = smoke.checks.find(check => check.id === `packaged-${element}-walk`); assert.ok(walk?.frames?.length > 1 && new Set(walk.frames.map(frame => frame.region)).size > 1, 'Actual packaged atlas progression evidence required'); }
+assert.equal(smoke.checks.find(check => check.id === 'packaged-shared-training-round')?.round, 1, 'Actual packaged training round required');
 assert.ok(audit.publicCloud?.sha256 && audit.runtimeClosure?.files, 'Current cloud configuration and runtime dependency closure audit required');
 const signature = authenticode(executable);
 assert.ok(['Valid','NotSigned'].includes(signature.status), `Invalid or unavailable Authenticode result: ${signature.status}`);

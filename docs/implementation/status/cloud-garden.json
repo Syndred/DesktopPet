@@ -14,9 +14,15 @@
     {
       "path": "infra/supabase/migrations/20261025024617_lingjing_territory_authority.sql",
       "generatedBy": "Supabase CLI 2.122.0 migration new",
-      "status": "ready-for-coordinator-review-and-apply",
-      "deployed": false,
+      "status": "applied-by-coordinator;PostGIS3.3.7",
+      "deployed": true,
       "replacesUndeployedDraft": "20261025020010"
+    },
+    {
+      "path": "infra/supabase/migrations/20261025034225_lingjing_territory_receipt_operator.sql",
+      "generatedBy": "Supabase CLI2.122.0 migration new",
+      "status": "applied-by-coordinator;12701d4",
+      "deployed": true
     }
   ],
   "checks": [
@@ -27,13 +33,61 @@
     "Actual02 awardBattleResult and applyGrowthEffect consumed; long160-character owner supported",
     "03 take_location consumed inside owner-first world SQL transaction, per-purpose proof, isolated QA world namespace",
     "Unified lingjing_saves/commit_authority consumed in the same transaction; no05 new-pet registration",
-    "native dependency checkpoint retained; no shared node_modules rebuild"
+    "native dependency checkpoint retained; no shared node_modules rebuild",
+    "Two isolated normal product-Auth accounts and third independent same-account device prepared without remote SQL writes",
+    "2 runtime-fixture checks passed: SQLite reopen exact original request, whole companion unit/chat preservation, shared battle wrapper with no local reward before confirmation",
+    "Final own-module regression34/34 passed; current production TypeScript/desktop typecheck passed"
   ],
   "realCloudEvidence": {
     "projectRef": "jbvrdmrkwpznbrvteive",
     "readOnlyMetadata": true,
     "deployedByThisModule": false,
-    "territoryAcceptance": false
+    "territoryAcceptance": true,
+    "functions": {
+      "garden": "ACTIVE v1",
+      "territory": "ACTIVE v1"
+    },
+    "spatialBoundaryAndRlsCheckedByCoordinator": true,
+    "liveSameAccountGardenCas": true,
+    "liveServerBattles": 2,
+    "realDefeatsPendingConfirmation": true,
+    "transactionRollbackVerified": {
+      "sqlState": "42725",
+      "where": "runtime_territory_write IF settlement identity comparison",
+      "noSeedOrGrowthApplied": true,
+      "challengeState": "finished",
+      "fix": "((p_payload->'settledBattle')-'reward')",
+      "readOnlyRemoteInspection": true
+    },
+    "live": {
+      "contest": {
+        "passed": true,
+        "exactlyOneOccupation": true,
+        "loserCode": "TERRITORY_CONFLICT",
+        "recovery": "original actionId/hash/proof replay after real response-stream loss"
+      },
+      "defeat": {
+        "passed": true,
+        "sessions": [
+          "btl-nkgUd5R3SrSC6-OhzL_PZw",
+          "btl-KDeeidcWQ5K1sRRVR3CaYg"
+        ],
+        "worldRevisionUnchanged": true,
+        "onlyLegalParticipationReward": true
+      },
+      "garrison": {
+        "passed": true,
+        "foreignDenied": "TERRITORY_NOT_OWNED"
+      },
+      "pids": [
+        28436,
+        22020,
+        24652
+      ],
+      "physicalTwoDeviceAcceptance": false,
+      "locationSource": "simulated/coordinator-granted",
+      "riceMaturesAt": "2026-10-25T04:01:09.873Z"
+    }
   },
   "preservation": {
     "legacyOwnerTextIds": true,
@@ -55,12 +109,12 @@
     }
   ],
   "remaining": [
-    "Coordinator review/apply PostGIS migration and deploy both Edge functions",
-    "Wire desktop cloudActor transport, exact request journal and remote battle resume/context/act/settle without04UI change",
-    "Adapt live HTTPS verifier to fresh03 signed per-purpose proofs and legal02 adopt API; run real independent-client/concurrency/failure/retry/restart evidence",
-    "Unified Electron build and independent coordinator acceptance"
+    "Coordinator native-location grants for two real secure Electron profiles (new public actor/device identifiers attached)",
+    "Run native shared-BattleScreen cloud round/restart/confirmation and same-account cloud readback",
+    "Original rice25min matures at04:01:09.873UTC; then real HTTPS harvest/craft/feed and new-process exact readback",
+    "Final focused regression and independent coordinator acceptance"
   ],
-  "phase": "server-checkpoint-ready-for-coordinator-review;desktop-and-live-acceptance-active",
+  "phase": "real-HTTPS-territory-contest-passed;dual-Electron-prepared;rice-natural-clock-running",
   "dependencyCheckpoint": "b40af0efcf6062ddc2e8c360523c996fc91ebc0a",
   "identityCheckpoint": "ee36030ad37614ac321b94ae4ee4169d705f1165",
   "code": {
@@ -73,9 +127,71 @@
     "battleUiTouched": false
   },
   "integrationRequests": {
-    "accounts08": "Consumed deployed protected CAS3474905; lock_save_owner -> domain rows -> commit_authority. No runtime_account_saves or body session_token in new entrypoints.",
+    "accounts08": "Consumed deployed protected CAS3474905; lock_save_owner -> domain rows -> commit_authority. No runtime_account_saves or body session_token in new entrypoints. Optional full-save checkpoint stays unchanged when Accounts has not registered the published02 companion backup adapter;05 restores only its verified domain units and retains unrelated local data.",
     "companions02": "Consumed9497e8d pure adapter and canonical growth. Use deployed67546f5/d7b4b07 companions-sync for normal live adoption;05 never registers pets.",
     "discovery03": "Consumed live03 take_location schema+guard; purpose read/challenge/settle and reference bound in same transaction. Main locationProofs.prove supplies opaque proofs.03 capture should call4-argument capture_context inside its own commit."
   },
-  "serverDeployable": true
+  "serverDeployable": true,
+  "desktopCheckpoint": "ebcedea (includes b5b1eaf,7873839, monotonic server revision cache, complete-unit restore and exact request recovery)",
+  "coordinatorDeploymentCheckpoint": "40941f2",
+  "locationTestGrantRequest": {
+    "file": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-garden\\DesktopPet\\artifacts\\garden\\cloud\\live-4b474857-e93b-4354-a119-a21157984812/location-grant-request.json",
+    "purpose": "coordinator-only discovery location_test_grants",
+    "scenarioId": "garden-4b474857",
+    "projectRef": "jbvrdmrkwpznbrvteive",
+    "source": "simulated",
+    "worldNamespace": "qa:garden-4b474857:territory:",
+    "actors": [
+      {
+        "authUserId": "ea7bddfc-7769-4935-8234-181a07f92383",
+        "ownerAccountId": "account:9f591ede-bc87-4aa3-af70-084189dfae9e",
+        "deviceId": "c99f5ada-1db8-4462-8fd0-5e58e9b5562b",
+        "sessionId": "c30976aa-bd3c-4265-b410-66e16a431e6a"
+      },
+      {
+        "authUserId": "052aa033-e5fb-4b55-8445-792233733417",
+        "ownerAccountId": "account:5c7620b5-0802-4667-94b9-6284bd459841",
+        "deviceId": "3a1cc414-8fa3-40d5-9ad3-165fa93d6a9c",
+        "sessionId": "e1829aed-df50-4616-9ee0-b3b5ab68be62"
+      }
+    ],
+    "requestedDurationMinutes": 90
+  },
+  "liveVerifier": {
+    "privateConfig": "artifacts/garden/cloud/private-clients.json",
+    "output": "artifacts/garden/cloud/live-4b474857-e93b-4354-a119-a21157984812",
+    "realClockRiceMaturesAt": "2026-10-25T04:01:09.873Z",
+    "physicalLocationProof": false,
+    "locationSource": "coordinator-granted simulated"
+  },
+  "nativeLocationTestGrantRequest": {
+    "file": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-garden\\DesktopPet\\artifacts\\garden\\cloud\\live-4b474857-e93b-4354-a119-a21157984812/electron/location-grant-request.json",
+    "purpose": "coordinator-only discovery location_test_grants",
+    "scenarioId": "native-4b474857",
+    "projectRef": "jbvrdmrkwpznbrvteive",
+    "source": "simulated",
+    "worldNamespace": "qa:native-4b474857:territory:",
+    "actors": [
+      {
+        "authUserId": "c2f1198b-f1b4-4212-8488-7f86e683f4a0",
+        "ownerAccountId": "account:9695104c-0fe6-41c5-829f-0442c502c641",
+        "deviceId": "c07c9d75-e896-4b07-b436-a3a960c235e6",
+        "sessionId": "ad2c8091-e50a-44c3-8ff0-4f9407c453ef"
+      },
+      {
+        "authUserId": "c2f1198b-f1b4-4212-8488-7f86e683f4a0",
+        "ownerAccountId": "account:9695104c-0fe6-41c5-829f-0442c502c641",
+        "deviceId": "e768a904-9103-4369-b707-124c2b11b12e",
+        "sessionId": "acd5402a-4229-4fc3-b3ac-579edf38d044"
+      }
+    ],
+    "requestedDurationMinutes": 90
+  },
+  "ownModuleRegression": {
+    "passed": 34,
+    "failed": 0,
+    "typecheck": true,
+    "native": "Electron44.9.3 N-API10 / better-sqlite3 13.0.3",
+    "uiModifiedByGarden": false
+  }
 }

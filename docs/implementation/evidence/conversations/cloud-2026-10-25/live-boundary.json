@@ -1,0 +1,124 @@
+{
+  "at": "2026-10-25T02:55:48.185Z",
+  "sourceCommit": "a2c794bdf18479be668f7beb757017edcd3347d6",
+  "build": {
+    "schemaVersion": 2,
+    "builtAt": "2026-10-25T02:53:25.037Z",
+    "sourceCommit": "543b71fe6868a70178d7929f151fc69ea90f779e",
+    "sourceTree": "6ec417ec04d22dd014eeee8e45dd2228c1f46158",
+    "sourceDirtyFiles": [],
+    "codeFingerprint": "cac1dc5501cd679e0682b7c885772df568357b818643eacd2b1bc9fb8cfbea08",
+    "canonicalSourceFingerprint": "aa75b6afe1533872c8f3f1927b7c38f2de4ce10cbeb2d900c01c324f9ab33166",
+    "canonicalPolicy": "Repository-relative paths; CRLF normalized to LF for source text only. Packaged/compiled bytes remain exact.",
+    "compiledFingerprint": "946552a53909840837c6602121c9e2d8eb04626a24cb2801a5bb5d40f5e704c0",
+    "codeFiles": 276,
+    "compiledFiles": 84,
+    "toolchain": {
+      "node": "24.21.0",
+      "electron": "44.9.3",
+      "sqlite": "13.0.3",
+      "vite": "7.3.7",
+      "typescript": "5.9.3",
+      "platform": "win32",
+      "arch": "x64"
+    },
+    "entrypoints": {
+      "main": "main/index.cjs",
+      "app": "ui/index.html",
+      "desktop": "ui/desktop.html",
+      "preload": "preload/index.cjs"
+    }
+  },
+  "projectRef": "jbvrdmrkwpznbrvteive",
+  "realCloud": true,
+  "realElectron": true,
+  "sameHost": true,
+  "checks": [
+    {
+      "name": "Two real Electron processes log into one real Supabase owner; public IPC contains no Auth proof",
+      "data": {
+        "owner": "account:2d27d754-c39e-471e-8728-d7c369bec7cd",
+        "persistence": [
+          "secure",
+          "secure"
+        ]
+      }
+    },
+    {
+      "name": "Fresh main-only cloudActor validates two device/session bindings and hides SDK/token properties",
+      "data": {
+        "a": {
+          "account": "convqa_mvn8jv15",
+          "authKind": "supabase",
+          "deviceId": "545c929f-e668-4b4d-8098-a98ca14618e1",
+          "username": "聊天云端边界验收",
+          "authority": "live",
+          "sessionId": "35fbe275-770b-4d46-8894-9c60b39bb4e3",
+          "authUserId": "18951869-b4ed-49e1-a42f-376297ffa0ca",
+          "schemaVersion": 1,
+          "ownerAccountId": "account:2d27d754-c39e-471e-8728-d7c369bec7cd"
+        },
+        "b": {
+          "account": "convqa_mvn8jv15",
+          "authKind": "supabase",
+          "deviceId": "55d5de09-9f72-418f-a5ea-d1e8d31d0736",
+          "username": "聊天云端边界验收",
+          "authority": "live",
+          "sessionId": "4a8685e2-c5c2-4e78-9ebe-35fe3a9c9033",
+          "authUserId": "18951869-b4ed-49e1-a42f-376297ffa0ca",
+          "schemaVersion": 1,
+          "ownerAccountId": "account:2d27d754-c39e-471e-8728-d7c369bec7cd"
+        }
+      }
+    },
+    {
+      "name": "Actual DPAPI key stays on A; conversation archive carries metadata without key or encrypted blob",
+      "data": {
+        "encryptedKeyBytes": 97,
+        "bHasConnection": false
+      }
+    },
+    {
+      "name": "Public conversation IPC rejects an unowned pet before any memory write",
+      "data": {
+        "code": "PET_NOT_FOUND"
+      }
+    },
+    {
+      "name": "Real HTTPS personal-save SQL rejects an unregistered owner/pet reference",
+      "data": {
+        "accepted": false,
+        "code": "PET_OWNER_MISMATCH",
+        "httpStatus": 403
+      }
+    },
+    {
+      "name": "A signs out while B retains its real live device session",
+      "data": {
+        "bSessionId": "4a8685e2-c5c2-4e78-9ebe-35fe3a9c9033"
+      }
+    }
+  ],
+  "rendererErrors": [],
+  "scope": "Auth/main-only actor, pet rejection and local credential privacy; successful pet chat CAS is a separate acceptance",
+  "privilegedWrites": 0,
+  "petIdsCreated": 0,
+  "modelResponsesSimulated": false,
+  "runtime": {
+    "electron": "44.9.3",
+    "node": "24.22.0",
+    "modules": "149",
+    "napi": "10",
+    "arch": "x64",
+    "tray": {
+      "active": true,
+      "bounds": {
+        "x": 1775,
+        "y": 1150,
+        "width": 33,
+        "height": 49
+      }
+    }
+  },
+  "status": "passed"
+}

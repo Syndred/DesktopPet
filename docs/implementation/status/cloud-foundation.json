@@ -4,7 +4,7 @@
   "branch": "codex/lingjing-foundation",
   "commit": "73639b6da9a71e3068d1de35dc363d170a3a516b",
   "goalStatus": "active",
-  "stage": "engineering-checkpoint-accepted-pending-final-business-freeze",
+  "stage": "strict-real-portable-candidate-archived-rollback-rehearsal-in-progress",
   "contracts": [
     "docs/implementation/cloud-upgrade-2026-10-25.md",
     "https://www.electronjs.org/docs/latest/tutorial/electron-timelines",
@@ -97,10 +97,36 @@
     },
     {
       "name": "Actual packaged Windows EXE runs ASAR-contained native fullscreen script",
-      "passed": true,
+      "passed": false,
       "evidence": "docs/implementation/evidence/foundation/cloud-engineering/packaged-fullscreen-monitor.json",
       "source": "73639b6da9a71e3068d1de35dc363d170a3a516b",
-      "scope": "Actual unpacked EXE, embedded ASAR, explicit fresh QA profile; final portable test also requires this ready signal."
+      "scope": "Actual unpacked EXE, embedded ASAR, explicit fresh QA profile; final portable test also requires this ready signal.",
+      "status": "rejected-original-verdict",
+      "correction": "Actual ready:false retained. Replacement requires explicit awaited main-process snapshots and strict true assertions."
+    },
+    {
+      "name": "Corrected actual packaged Windows EXE fullscreen readiness and stability",
+      "passed": true,
+      "evidence": "docs/implementation/evidence/foundation/cloud-engineering/packaged-fullscreen-monitor-verified.json",
+      "source": "09af97f0a92677f417b3e33aa352d7ad018eb08e",
+      "strictAssertions": true,
+      "observations": 10,
+      "stableSamples": 3,
+      "replacesRejectedEvidence": "docs/implementation/evidence/foundation/cloud-engineering/packaged-fullscreen-monitor.json"
+    },
+    {
+      "name": "Real portable SFX: ordinary config + strict native monitor + roster + actual atlas frames + training",
+      "passed": true,
+      "cases": 6,
+      "evidence": "docs/implementation/evidence/foundation/cloud-engineering/candidate-09af97f/portable-smoke.json",
+      "source": "09af97f0a92677f417b3e33aa352d7ad018eb08e"
+    },
+    {
+      "name": "Windows Get-AuthenticodeSignature on actual portable EXE",
+      "passed": true,
+      "status": "NotSigned",
+      "signed": false,
+      "scope": "Unsigned candidate explicitly recorded. No certificate purchase or publication."
     }
   ],
   "realCloudEvidence": {
@@ -144,12 +170,10 @@
     "cleanInstallFixCommit": "e294f2235297c406429c05cd6847daa74ed6dd79"
   },
   "remaining": [
-    "Approved growth, garden and cloud battle/discovery final checkpoints",
-    "Fresh isolated install after workspace/lock cleanup; final all-domain regression once integration is frozen",
-    "Final actual EXE audit/ordinary config/fullscreen monitor/native training smoke and verified binary rollback rehearsal",
-    "Coordinator-approved old cloud SQL/function retirement; no remote migration history changes by foundation"
+    "Actual binary rollback selection/launch/readback rehearsal",
+    "Main coordinator owns remaining business freeze, full integrated regression, final package and old cloud SQL/function retirement"
   ],
-  "updatedAt": "2026-10-25T03:22:27.830Z",
+  "updatedAt": "2026-10-25T03:44:18.708Z",
   "approvedIntegrations": {
     "accounts": "45b857d",
     "resources": "4e8fdf8",
@@ -170,11 +194,17 @@
     "qualityGates": "One maintained CI workflow with current domain native and actual GUI/EXE gates; retired in-memory/static prototype counts."
   },
   "packageCandidate": {
-    "source": "6e6dbe64aeb1d547ea9411319a9b5e0369a7becd",
-    "sha256": "948e7e6abd85a7c01cbdd2b4e4c05803292ec32fe66abeac00c0f0d0ff67dbb0",
-    "auditPassed": true,
+    "version": "engineering-rc-09af97f",
+    "source": "09af97f0a92677f417b3e33aa352d7ad018eb08e",
+    "sha256": "2f6eb365d9ee18d09da3a6d9723ff7103754c6f0b1d8ce8def1005ce12570f7f",
+    "bytes": 169148687,
+    "authenticode": "NotSigned",
     "final": false,
-    "smoke": "Early CDP attachment race found and fixed in verifier; first verification interrupted. Ordinary startup subsequently reached matching source and runtime account provider. Final rebuilt monitor-ready smoke remains required.",
-    "authenticode": "No certificate configured; unsigned. Final status will use Get-AuthenticodeSignature."
+    "auditPassed": true,
+    "smokePassed": true,
+    "monitorReady": true,
+    "ordinaryCloudConfigSha": "c1625c63f1d959f92b3392b47f2fb492452803eedf1c0d1ebc68a1168ab64eda",
+    "evidence": "docs/implementation/evidence/foundation/cloud-engineering/candidate-09af97f/manifest.json",
+    "scope": "Public engineering candidate; final business freeze/package is owned by main coordinator."
   }
 }

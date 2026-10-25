@@ -1,0 +1,118 @@
+{
+  "at": "2026-10-25T03:52:55.355Z",
+  "projectRef": "jbvrdmrkwpznbrvteive",
+  "scope": "Actual independent SQL count/content hash comparison to pre-replacement encrypted export; no raw data or credentials emitted",
+  "tables": [
+    {
+      "table": "account",
+      "actualRows": 4,
+      "hashMatches": true,
+      "expectedRows": 4
+    },
+    {
+      "table": "ai_task",
+      "actualRows": 0,
+      "hashMatches": true,
+      "expectedRows": 0
+    },
+    {
+      "table": "apikey",
+      "actualRows": 0,
+      "hashMatches": true,
+      "expectedRows": 0
+    },
+    {
+      "table": "chat",
+      "actualRows": 0,
+      "hashMatches": true,
+      "expectedRows": 0
+    },
+    {
+      "table": "chat_message",
+      "actualRows": 0,
+      "hashMatches": true,
+      "expectedRows": 0
+    },
+    {
+      "table": "config",
+      "actualRows": 12,
+      "hashMatches": true,
+      "expectedRows": 12
+    },
+    {
+      "table": "credit",
+      "actualRows": 3,
+      "hashMatches": true,
+      "expectedRows": 3
+    },
+    {
+      "table": "order",
+      "actualRows": 0,
+      "hashMatches": true,
+      "expectedRows": 0
+    },
+    {
+      "table": "permission",
+      "actualRows": 29,
+      "hashMatches": true,
+      "expectedRows": 29
+    },
+    {
+      "table": "post",
+      "actualRows": 0,
+      "hashMatches": true,
+      "expectedRows": 0
+    },
+    {
+      "table": "role",
+      "actualRows": 4,
+      "hashMatches": true,
+      "expectedRows": 4
+    },
+    {
+      "table": "role_permission",
+      "actualRows": 34,
+      "hashMatches": true,
+      "expectedRows": 34
+    },
+    {
+      "table": "session",
+      "actualRows": 9,
+      "hashMatches": true,
+      "expectedRows": 9
+    },
+    {
+      "table": "subscription",
+      "actualRows": 0,
+      "hashMatches": true,
+      "expectedRows": 0
+    },
+    {
+      "table": "taxonomy",
+      "actualRows": 0,
+      "hashMatches": true,
+      "expectedRows": 0
+    },
+    {
+      "table": "user",
+      "actualRows": 4,
+      "hashMatches": true,
+      "expectedRows": 4
+    },
+    {
+      "table": "user_role",
+      "actualRows": 1,
+      "hashMatches": true,
+      "expectedRows": 1
+    },
+    {
+      "table": "verification",
+      "actualRows": 0,
+      "hashMatches": true,
+      "expectedRows": 0
+    }
+  ],
+  "tableCount": 18,
+  "rowCount": 100,
+  "passed": true
+}

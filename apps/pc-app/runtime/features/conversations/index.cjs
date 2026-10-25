@@ -49,6 +49,14 @@ function register(services) {
     // be lost between timer ticks. lastLoginAt also detects a fresh legacy login.
     getSession: () => ({ ownerAccountId: observe().owner, revision: generation }),
     onSessionChanged: (listener) => { listeners.add(listener); return () => listeners.delete(listener); },
+    getChatSelection: owner => services.get('companions')?.getSelections(owner)?.chatPetId ?? null,
+    selectChatPet: async (owner, petId, actionId) => {
+      const companions = services.get('companions');
+      if (!companions?.select || !companions?.getPet) throw new Error('Companion selection is unavailable');
+      const pet = companions.getPet(owner, petId);
+      const result = await companions.select(owner, { petId, slot: 'chatPetId', expectedRevision: pet.revision, actionId });
+      if (result?.ok === false) throw new Error('Companion selection was rejected');
+    },
     listPets: (ownerAccountId) => {
       const companions = services.get("companions");
       if (companions?.listPets) return companions.listPets(ownerAccountId);

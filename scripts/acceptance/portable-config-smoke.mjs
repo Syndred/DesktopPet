@@ -1,8 +1,10 @@
 import { chromium } from 'playwright';
 import { spawn, execFileSync } from 'node:child_process';
 import { createServer } from 'node:net';
-import { join } from 'node:path';
-import { mkdirSync, writeFileSync } from 'node:fs';
+import { join, sep } from 'node:path';
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+import { createHash } from 'node:crypto';
 import assert from 'node:assert/strict';
 
 export async function verifyPortableDefaultConfig({ executable, expectedSource, output }) {
@@ -30,6 +32,12 @@ export async function verifyPortableDefaultConfig({ executable, expectedSource, 
     assert.equal(session.ok, true); assert.equal(session.data.dataMode, 'live'); assert.equal(session.data.scenario, null); assert.equal(session.data.currentUser, null); assert.equal(session.data.defaultProvider, 'runtime', 'Cloud account must be configured without shell environment');
     const info = await page.evaluate(() => window.lingjing.invoke('app', 'info', {})); assert.equal(info.ok, true); assert.equal(info.data.build.sourceCommit, expectedSource);
     assert.equal(info.data.build.publicCloud.projectRef, 'jbvrdmrkwpznbrvteive');
+    const loadedFile = fileURLToPath(page.url().split('#')[0]), boundary = loadedFile.indexOf(`${sep}app.asar${sep}`);
+    assert.ok(boundary > 0 && !loadedFile.includes('win-unpacked'), 'Configuration smoke must use the extracted actual portable SFX');
+    const resourceDirectory = loadedFile.slice(0, boundary), bytes = readFileSync(join(resourceDirectory, 'lingjing-cloud-public.json')), actualCloud = JSON.parse(bytes);
+    const actualSha = createHash('sha256').update(bytes).digest('hex');
+    assert.equal(actualSha, info.data.build.publicCloud.sha256); assert.equal(actualCloud.projectRef, info.data.build.publicCloud.projectRef); assert.equal(actualCloud.url, info.data.build.publicCloud.url);
+    proof.actualCloudConfig = { projectRef: actualCloud.projectRef, url: actualCloud.url, sha256: actualSha, resourceDirectory };
     proof.publicCloud = info.data.build.publicCloud; proof.electron = info.data.runtime.electron; proof.defaultProvider = session.data.defaultProvider; proof.passed = true;
     return proof;
   } catch (error) { proof.failure = String(error); throw error; }

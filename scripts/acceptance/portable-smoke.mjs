@@ -7,6 +7,7 @@ import { randomUUID } from 'node:crypto';
 import assert from 'node:assert/strict';
 import { sha256 } from '../release/release-store.mjs';
 import { verifyPortableDefaultConfig } from './portable-config-smoke.mjs';
+import { pollState } from './poll-state.mjs';
 
 const option = name => process.argv.find(value => value.startsWith(`--${name}=`))?.slice(name.length + 3);
 const root = resolve('.'), config = JSON.parse(readFileSync('scripts/release/electron-builder.pc.json')), version = JSON.parse(readFileSync('package.json')).version;
@@ -23,7 +24,7 @@ let launchError, logs = ''; child.on('error', error => { launchError = error; })
 for (const stream of [child.stdout, child.stderr]) stream?.on('data', value => { logs = (logs + value.toString()).slice(-12000); });
 const proof = { at: new Date().toISOString(), executable, executableSha256: await sha256(executable), expectedSource, ordinaryConfig, scenario, launcherPid: child.pid,
   scope: 'Actual portable SFX and extracted ASAR, fresh explicit isolated QA profile. Native/renderer smoke, not live Supabase or second physical device evidence.', checks: [], errors: [] };
-let browser;
+let browser, mainPage;
 try {
   let ready = false;
   for (let n = 0; n < 240; n++) {
@@ -35,6 +36,7 @@ try {
   let page;
   for (let n = 0; n < 100; n++) { page = browser.contexts().flatMap(context => context.pages()).find(value => value.url().includes('/app.asar/') && value.url().includes('/ui/index.html')); if (page) break; await new Promise(done => setTimeout(done, 100)); }
   assert.ok(page); page.setDefaultTimeout(20000); page.on('pageerror', error => proof.errors.push(error.message));
+  mainPage = page;
   await page.waitForFunction(() => Boolean(window.lingjing));
   const invoke = async (feature, command, payload = {}) => { const result = await page.evaluate(input => window.lingjing.invoke(input.feature, input.command, input.payload), { feature, command, payload }); assert.equal(result.ok, true, JSON.stringify(result)); return result.data; };
   const password = `Portable-${randomUUID()}!`;
@@ -45,9 +47,10 @@ try {
   assert.equal(proof.info.build.sourceCommit, expectedSource); assert.deepEqual(proof.info.build.sourceDirtyFiles, []); assert.equal(proof.info.features.length, 7);
   assert.equal(await page.evaluate(() => typeof window.require), 'undefined'); assert.equal(await page.evaluate(() => typeof window.lingjing.send), 'undefined');
   proof.checks.push({ id: 'actual-sfx-asar-source-and-secure-preload', electron: actualElectron, build: proof.info.build });
-  await page.waitForFunction(async () => { const result = await window.lingjing.invoke('accounts', 'settingsGet', {}); return result.ok && result.data.host?.fullscreenMonitor && result.data.host?.fullscreenMonitorReady; }, undefined, { timeout: 20000 });
-  const settings = await invoke('accounts', 'settingsGet');
-  proof.checks.push({ id: 'packaged-native-fullscreen-monitor-ready', running: settings.host.fullscreenMonitor, ready: settings.host.fullscreenMonitorReady });
+  const monitorObservations = [];
+  const settings = await pollState(async () => { const value = await invoke('accounts', 'settingsGet'); monitorObservations.push({ at: Date.now(), running: value.host.fullscreenMonitor, ready: value.host.fullscreenMonitorReady }); return value; }, value => value.host.fullscreenMonitor === true && value.host.fullscreenMonitorReady === true, { label: 'Packaged fullscreen monitor did not emit its protocol ready line' });
+  assert.equal(settings.host.fullscreenMonitor, true); assert.equal(settings.host.fullscreenMonitorReady, true);
+  proof.checks.push({ id: 'packaged-native-fullscreen-monitor-ready', running: settings.host.fullscreenMonitor, ready: settings.host.fullscreenMonitorReady, observations: monitorObservations });
   const resources = await invoke('resources', 'list'); assert.ok(['metal', 'wood', 'earth', 'water', 'fire'].every(element => resources.some(resource => resource.element === element && resource.availability === 'ready')));
   assert.ok(resources.filter(resource => resource.availability === 'ready').length >= 8);
   proof.checks.push({ id: 'eight-characters-five-elements', resources: resources.map(resource => ({ id: resource.id, element: resource.element, availability: resource.availability })) });
@@ -55,23 +58,42 @@ try {
   for (const [templateId, name] of [['animal-wood-deer', '包内青芽'], ['animal-earth-pangolin', '包内岩团']]) {
     const { pet } = await invoke('companions', 'adopt', { actionId: randomUUID(), templateId, name, showOnDesktop: false }); selected ||= pet;
     await page.locator('.sidebar').getByRole('button', { name: '角色资源', exact: true }).click();
-    await page.locator(`.resource-card[data-resource-id="${pet.resource.resourceId}"]`).click();
+    await page.locator('.resources-page').waitFor();
+    const resource = resources.find(value => value.id === pet.resource.resourceId); assert.ok(resource);
+    await page.locator('.resources-library').getByRole('button').filter({ hasText: resource.name }).click();
     await page.getByRole('combobox', { name: '预览动作', exact: true }).click(); await page.getByRole('option', { name: '行走', exact: true }).click();
     const stage = page.locator('.resources-preview .resource-stage[data-status="ready"][data-action="walk"][data-fallback="false"]'); await stage.waitFor();
     assert.equal(await stage.locator('canvas').count(), 1); await page.waitForTimeout(300);
     const identity = await stage.evaluate(element => ({ id: element.getAttribute('data-resource-id'), clip: element.getAttribute('data-clip'), texture: element.querySelector('.resource-sprite-host')?.getAttribute('data-texture-key') }));
-    assert.equal(identity.id, pet.resource.resourceId); assert.ok(identity.texture); proof.checks.push({ id: `packaged-${pet.element}-walk`, petId: pet.petId, identity });
+    assert.equal(identity.id, pet.resource.resourceId); assert.ok(identity.texture);
+    const frames = await stage.locator('.resource-sprite-host').evaluate(async element => {
+      const samples = [];
+      for (let count = 0; count < 7; count++) {
+        samples.push({ at: performance.now(), frame: element.dataset.frame, texture: element.dataset.frameTexture, region: element.dataset.textureFrame });
+        await new Promise(done => setTimeout(done, 120));
+      }
+      return samples;
+    });
+    assert.ok(new Set(frames.map(frame => frame.texture)).size > 1 && new Set(frames.map(frame => frame.region)).size > 1, 'Walking must advance actual atlas texture regions');
+    await stage.locator('canvas').screenshot({ path: join(output, `${pet.element}-walk-canvas.png`) });
+    proof.checks.push({ id: `packaged-${pet.element}-walk`, petId: pet.petId, identity, frames });
     await page.screenshot({ path: join(output, `${pet.element}-walk.png`) });
   }
   await invoke('battle', 'selectPet', { actionId: randomUUID(), petId: selected.petId });
   await page.evaluate(() => { location.hash = '#/battle'; }); await page.getByRole('button', { name: '开始', exact: true }).click();
   const screen = page.locator('[data-battle-screen="shared-v1"]'); await screen.waitFor(); const sessionId = await screen.getAttribute('data-session-id');
   await page.getByRole('button', { name: '普通攻击', exact: true }).click();
-  await page.waitForFunction(async id => { const result = await window.lingjing.invoke('battle', 'snapshot', { sessionId: id }); return result.ok && result.data.snapshot.round === 1; }, sessionId);
-  const battle = await invoke('battle', 'snapshot', { sessionId }); assert.equal(battle.rounds.length, 1); assert.equal(battle.rounds[0].actions.player, 'normal_attack');
+  const battle = await pollState(() => invoke('battle', 'snapshot', { sessionId }), value => value.snapshot.round === 1, { label: 'Actual packaged battle round was not committed' }); assert.equal(battle.rounds.length, 1); assert.equal(battle.rounds[0].actions.player, 'normal_attack');
   proof.checks.push({ id: 'packaged-shared-training-round', sessionId, round: battle.snapshot.round, player: battle.player.petId, hp: battle.rounds[0].hpAfter });
   assert.deepEqual(proof.errors, []); proof.passed = true; console.log(JSON.stringify({ passed: true, output, executableSha256: proof.executableSha256, checks: proof.checks.length }));
-} catch (error) { proof.failure = String(error); throw error; }
+} catch (error) {
+  proof.passed = false; proof.failure = String(error);
+  if (mainPage && !mainPage.isClosed()) {
+    await mainPage.screenshot({ path: join(output, 'failure.png') }).catch(() => {});
+    proof.failureState = await mainPage.evaluate(() => ({ url: location.href, headings: [...document.querySelectorAll('h1,h2')].map(element => element.textContent), resourceCards: [...document.querySelectorAll('.resource-card')].map(element => ({ id: element.getAttribute('data-resource-id'), text: element.textContent })), status: [...document.querySelectorAll('[role="status"]')].map(element => element.textContent) })).catch(() => null);
+  }
+  throw error;
+}
 finally {
   proof.completedAt = new Date().toISOString(); writeFileSync(join(output, 'evidence.json'), JSON.stringify(proof, null, 2));
   if (browser) { const close = (async () => { try { const session = await browser.newBrowserCDPSession(); await session.send('Browser.close'); } catch { /* Process may close before reply. */ } await browser.close().catch(() => {}); })(); await Promise.race([close, new Promise(done => setTimeout(done, 3000))]); }

@@ -29,11 +29,12 @@ class AccountSync {
     this.getSession = getSession; this.getSettings = getSettings; this.running = new Set();
     this.onInvalidSession = onInvalidSession;
   }
-  cloudView(data,owner){
-    const view=owner&&this.backups.normalizeData?this.backups.normalizeData(data,owner):data;
+  normalizeData(data,owner=this.getSession()?.ownerAccountId){return this.backups.normalizeData&&typeof owner==='string'?this.backups.normalizeData(data,owner):data;}
+  cloudView(data,owner=this.getSession()?.ownerAccountId){
+    const view=this.normalizeData(data,owner);
     return owner&&this.remote.authKind==='supabase'&&this.backups.cloudData?this.backups.cloudData(view,owner):view;
   }
-  dataChecksum(data,owner){
+  dataChecksum(data,owner=this.getSession()?.ownerAccountId){
     const view=this.cloudView(data,owner);return saveDataChecksum(this.remote.authKind==='supabase'?meaningfulData(view):view);
   }
   status(owner) {

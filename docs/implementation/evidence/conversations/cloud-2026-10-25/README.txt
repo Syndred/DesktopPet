@@ -8,3 +8,5 @@ The old baseline46abf41 is the recoverable code snapshot; cleanup-manifest.json 
 01 should switch main/index.ts and foundation backup test to the feature-owned archive entry, then may delete the compatibility forwarder. Generic old renderer cleanup remains01.
 The full-save/actor checkpoint45b857d is next; legal cloud pet registration must use02 instead of arbitrary SQL.
 Actual HTTPS A/B is still required. Goal remains active.
+
+Actual HTTPS boundary acceptance (2026-10-25): live-boundary.json, 6 checks passed, two real Electron44 processes on one host; real Auth/actor and server PET_OWNER_MISMATCH403. No fake pet was inserted, no privileged SQL was used, no model request was made. Runtime a2c794b (approved shell543b71f), harness44e63cc. This is NOT successful full chat/persona/memory synchronization; approved08 personal projection and02 legal cloud pet creation remain prerequisites.

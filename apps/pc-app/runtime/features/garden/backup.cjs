@@ -42,6 +42,8 @@ function createGardenBackupAdapter(db) {
       if(!exists)db.prepare('INSERT INTO garden_territory_logs(territory_id,owner_account_id,action,old_owner_id,new_owner_id,battle_id,created_at) VALUES (?,?,?,?,?,?,?)').run(row.territory_id,owner,row.action,row.old_owner_id,row.new_owner_id,row.battle_id,row.created_at);
     }
   }
-  return { id: 'garden', version: 1, tables: [...PERSONAL, 'garden_ledger', 'garden_cloud_state', 'garden_territory_records', 'garden_territory_logs'], export: exportData, validate, restore };
+  // Device delivery journal stays in this SQLite profile and is never exported
+  // as account economics or merged into another device's queue.
+  return { id: 'garden', version: 1, tables: [...PERSONAL, 'garden_ledger', 'garden_cloud_state', 'garden_territory_records', 'garden_territory_logs','garden_cloud_requests'], export: exportData, validate, restore };
 }
 module.exports = { createGardenBackupAdapter, PERSONAL };

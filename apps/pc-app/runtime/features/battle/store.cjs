@@ -30,6 +30,12 @@ class BattleStore {
   reserve(owner, actionId, sessionId, command) {
     this.db.prepare("INSERT INTO battle_action_receipts(owner_account_id,action_id,session_id,command_json) VALUES(?,?,?,?)").run(owner, actionId, sessionId, JSON.stringify(command));
   }
+  pendingCommand(owner, type, input) {
+    const rows=this.db.prepare("SELECT action_id,command_json FROM battle_action_receipts WHERE owner_account_id=? AND result_json IS NULL").all(owner);
+    for(const row of rows){const command=JSON.parse(row.command_json);if(command.type===`cloud:${type}`&&JSON.stringify(command.input)===JSON.stringify(input))return row.action_id;}
+    const actionId=`cloud:${type}:${require('node:crypto').randomUUID()}`;
+    this.reserve(owner,actionId,actionId,{type:`cloud:${type}`,input});return actionId;
+  }
   resolve(owner, actionId, result) {
     const receipt = result?.snapshot ? { sessionId: result.id, revision: result.revision, resolvedRound: result.snapshot.round } : result;
     this.db.prepare("UPDATE battle_action_receipts SET result_json=? WHERE owner_account_id=? AND action_id=?").run(JSON.stringify(receipt), owner, actionId);

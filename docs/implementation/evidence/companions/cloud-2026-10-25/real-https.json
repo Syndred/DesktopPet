@@ -1,0 +1,191 @@
+{
+  "at": "2026-10-25T03:23:44.290Z",
+  "runId": "40bf5871-eddf-4605-96d2-59a7a3451acb",
+  "output": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-companions\\DesktopPet\\artifacts\\companions\\real-cloud-F7ingw",
+  "sourceCommit": "13cb925a0bde3b50b39de1f120d4f2842069aa8f",
+  "kind": "real-HTTPS-with-Accounts-SupabaseRemote",
+  "project": "jbvrdmrkwpznbrvteive",
+  "physicalSecondDevice": false,
+  "electronAcceptance": false,
+  "checks": [
+    {
+      "name": "Two authenticated device IDs share stable owner, independent same-template pets and one adoption receipt",
+      "petIds": [
+        "pet-2b88f57b-5199-4d42-bebb-3836f5b69ec5",
+        "pet-9fa48de9-6ad9-4a15-a4da-4277b39a642c"
+      ],
+      "firstAction": "companions:companion-verify-0930a740-a28b-4d92-9ac1-9062f64d69a9"
+    },
+    {
+      "name": "Real HTTPS concurrent stale revision permits one rename and preserves the winning state",
+      "denied": "REVISION_CONFLICT"
+    },
+    {
+      "name": "Independent selections, original desktop coordinates, builtin2D appearance and server-clock interaction replay read back on both devices"
+    },
+    {
+      "name": "Client growth injection and foreign pet/owner are denied; custom appearance stays unavailable until server reference exists",
+      "growthDenied": {
+        "code": "INVALID_INPUT",
+        "status": 400
+      },
+      "foreign": {
+        "code": "PET_NOT_FOUND",
+        "status": 404
+      },
+      "ownerSpoof": {
+        "code": "OWNER_MISMATCH",
+        "status": 403
+      },
+      "customAppearance": {
+        "code": "COMPANION_CLOUD_UNAVAILABLE",
+        "status": 503
+      },
+      "customReferenceConfigured": false
+    },
+    {
+      "name": "Valid-checksum full-save growth forgery is denied by08 protected CAS",
+      "code": "PROTECTED_STATE_REQUIRES_AUTHORITY",
+      "status": 403
+    },
+    {
+      "name": "Separate restarted Node process retains device identity and reads the same original pet IDs/history; other device remains usable"
+    },
+    {
+      "name": "Deployed companion route denies anonymous and forged JWT requests"
+    }
+  ],
+  "actors": [
+    {
+      "account": "coordpet_mvn9fqgp",
+      "authKind": "supabase",
+      "deviceId": "c30505b5-6690-4129-a0ac-78a81397e25b",
+      "username": "云端验收",
+      "authority": "live",
+      "sessionId": "7a186a73-a155-40fb-b855-bacf9f994906",
+      "authUserId": "7642015c-da48-453a-8334-924065b0f1c3",
+      "schemaVersion": 1,
+      "ownerAccountId": "account:470a41d4-3cf7-4a7d-8b1e-32e276d2a719"
+    },
+    {
+      "account": "coordpet_mvn9fqgp",
+      "authKind": "supabase",
+      "deviceId": "c5726737-390e-4a53-a23d-ab714e3f3719",
+      "username": "云端验收",
+      "authority": "live",
+      "sessionId": "22095e09-a597-46c7-a2a8-296e16ed906f",
+      "authUserId": "7642015c-da48-453a-8334-924065b0f1c3",
+      "schemaVersion": 1,
+      "ownerAccountId": "account:470a41d4-3cf7-4a7d-8b1e-32e276d2a719"
+    },
+    {
+      "account": "coordpet_b_mvn9fqgp",
+      "authKind": "supabase",
+      "deviceId": "3423bf71-1ba5-450c-8886-d24df551d6a1",
+      "username": "云端验收",
+      "authority": "live",
+      "sessionId": "53e233d0-8366-43c3-a2ee-0f71720c30ce",
+      "authUserId": "ef131e02-d492-441a-aeae-753d34d2b4f0",
+      "schemaVersion": 1,
+      "ownerAccountId": "account:87092945-7726-4ec6-a790-8d3b4f25254c"
+    }
+  ],
+  "processes": [
+    5416,
+    19740
+  ],
+  "final": {
+    "ownerAccountId": "account:470a41d4-3cf7-4a7d-8b1e-32e276d2a719",
+    "revision": 10,
+    "pets": [
+      {
+        "ownerAccountId": "account:470a41d4-3cf7-4a7d-8b1e-32e276d2a719",
+        "petId": "pet-2b88f57b-5199-4d42-bebb-3836f5b69ec5",
+        "templateId": "big-fish-gentle",
+        "name": "并发甲40bf5871",
+        "serial": "2B88F57B",
+        "element": "water",
+        "resource": {
+          "resourceId": "builtin:lingjing-xiaolan-v1",
+          "kind": "2d"
+        },
+        "source": "adoption",
+        "origin": {},
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 62,
+          "satiety": 60,
+          "affinity": 1,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        },
+        "desktop": {
+          "visible": false,
+          "behavior": "quiet",
+          "scale": 1.25,
+          "position": {
+            "x": -1270,
+            "y": 260,
+            "displayId": "original-cloud-monitor"
+          }
+        },
+        "revision": 5,
+        "createdAt": "2026-10-25T03:23:56.228Z",
+        "updatedAt": "2026-10-25T03:24:26.109Z"
+      },
+      {
+        "ownerAccountId": "account:470a41d4-3cf7-4a7d-8b1e-32e276d2a719",
+        "petId": "pet-9fa48de9-6ad9-4a15-a4da-4277b39a642c",
+        "templateId": "big-fish-gentle",
+        "name": "云鱼乙40bf5871",
+        "serial": "9FA48DE9",
+        "element": "water",
+        "resource": {
+          "resourceId": "builtin:lingjing-yuwan-v2",
+          "kind": "2d"
+        },
+        "source": "adoption",
+        "origin": {},
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        },
+        "desktop": {
+          "visible": false,
+          "behavior": "quiet",
+          "scale": 1,
+          "position": {
+            "x": 560,
+            "y": 520,
+            "displayId": null
+          }
+        },
+        "revision": 1,
+        "createdAt": "2026-10-25T03:24:02.097Z",
+        "updatedAt": "2026-10-25T03:24:02.097Z"
+      }
+    ],
+    "selections": {
+      "chatPetId": "pet-2b88f57b-5199-4d42-bebb-3836f5b69ec5",
+      "battlePetId": "pet-9fa48de9-6ad9-4a15-a4da-4277b39a642c",
+      "guardPetId": "pet-2b88f57b-5199-4d42-bebb-3836f5b69ec5"
+    }
+  },
+  "passed": true
+}

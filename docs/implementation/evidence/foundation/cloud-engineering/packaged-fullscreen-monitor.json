@@ -223,5 +223,13 @@
       "isolated": true
     }
   },
-  "passed": true
+  "passed": false,
+  "correction": {
+    "at": "2026-10-25T03:34:56.932Z",
+    "originalVerdict": true,
+    "originalCommit": "d5f9590",
+    "originalFileSha256": "07b0f8c7d0ad448f7c63a23e0e10da4b91c1d2981b1a6e1e6a8dcfd67ddec5d9",
+    "reason": "Rejected: running:true ready:false was incorrectly called passed. Async browser predicate was not a sufficient wait; the original observed false signal is retained.",
+    "replacement": "packaged-fullscreen-monitor-verified.json after actual new run only"
+  }
 }
