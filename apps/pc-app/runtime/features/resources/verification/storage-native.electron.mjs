@@ -5,11 +5,11 @@ import path from 'node:path';
 import {randomUUID} from 'node:crypto';
 import {createRequire} from 'node:module';
 import {execFileSync,spawn} from 'node:child_process';
-const root=process.cwd(),require=createRequire(path.join(root,'package.json')),{_electron}=require('playwright');
+const root=process.cwd(),require=createRequire(import.meta.url),{_electron}=require('playwright');
 const {provisionQaProfile}=require('../../accounts/qa-scenario.cjs'),{storageFixture}=require('./storage-http-fixture.cjs');
 const directory=path.join(root,'artifacts/resources/cloud-native-'+Date.now());await fs.mkdir(directory);
 const profileA=path.join(directory,'A'),profileB=path.join(directory,'B'),marker=provisionQaProfile(profileA);
-const http=await storageFixture(),opened=[];
+const http=await storageFixture(),opened=[],stopped=new WeakSet();
 const report={at:new Date().toISOString(),runtimeSourceCommit:execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim(),dataSource:{mode:'simulated',cloudVerified:false,transfer:'official SDK over explicit localhost fixture',ui:'production Electron and actual Pixi; two separate processes and profile roots',physicalDevices:1},owner:null,views:[],errors:[],passed:false};
 const account='storageqa_'+randomUUID().slice(0,8),password='Fixture_'+randomUUID();
 async function launch(profile){
@@ -20,6 +20,7 @@ async function launch(profile){
   return {app,page,invoke};
 }
 async function stop(application){
+  if(stopped.has(application))return;stopped.add(application);
   const child=application.process(),exited=child.exitCode!==null?Promise.resolve():new Promise(resolve=>child.once('exit',resolve));
   await application.evaluate(({app})=>app.exit(0)).catch(()=>{});await exited;
 }
@@ -52,4 +53,4 @@ try{
   }
   assert.deepEqual(report.errors,[]);report.passed=true;
 }catch(error){report.failure=error.stack;throw error;}
-finally{for(const app of opened)if(app.process().exitCode===null)await stop(app);await http.close();await fs.writeFile(path.join(directory,'evidence.json'),JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify({passed:report.passed,evidence:path.relative(root,path.join(directory,'evidence.json'))}));}
+finally{for(const app of opened)try{await stop(app);}catch{}await http.close();await fs.writeFile(path.join(directory,'evidence.json'),JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify({passed:report.passed,evidence:path.relative(root,path.join(directory,'evidence.json'))}));}
