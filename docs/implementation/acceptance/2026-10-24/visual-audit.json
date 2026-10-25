@@ -40,62 +40,62 @@
   "findings": [
     {
       "id": "A01",
-      "status": "open",
+      "status": "verified-after-first-recheck",
       "foundationStatus": "fixed-and-rechecked-pending-independent-visual-approval"
     },
     {
       "id": "A02",
-      "status": "open",
+      "status": "verified-after-first-recheck",
       "foundationStatus": "fixed-and-rechecked-pending-independent-visual-approval"
     },
     {
       "id": "A03",
-      "status": "open",
+      "status": "verified-after-first-recheck",
       "foundationStatus": "fixed-and-rechecked-pending-independent-visual-approval"
     },
     {
       "id": "A04",
-      "status": "open",
+      "status": "verified-after-first-recheck",
       "foundationStatus": "fixed-and-rechecked-pending-independent-visual-approval"
     },
     {
       "id": "A05",
-      "status": "open",
+      "status": "verified-after-first-recheck",
       "foundationStatus": "fixed-and-rechecked-pending-independent-visual-approval"
     },
     {
       "id": "A06",
-      "status": "open",
+      "status": "verified-after-first-recheck",
       "foundationStatus": "fixed-and-rechecked-pending-independent-visual-approval"
     },
     {
       "id": "A07",
-      "status": "open",
+      "status": "final-focused-recheck-pending",
       "foundationStatus": "fixed-and-rechecked-pending-independent-visual-approval"
     },
     {
       "id": "A08",
-      "status": "open",
+      "status": "final-focused-recheck-pending",
       "foundationStatus": "fixed-and-rechecked-pending-independent-visual-approval"
     },
     {
       "id": "A09",
-      "status": "open",
+      "status": "final-focused-recheck-pending",
       "foundationStatus": "fixed-and-rechecked-pending-independent-visual-approval"
     },
     {
       "id": "A10",
-      "status": "open",
+      "status": "final-focused-recheck-pending",
       "foundationStatus": "fixed-and-rechecked-pending-independent-visual-approval"
     },
     {
       "id": "A11",
-      "status": "open",
+      "status": "verified-after-first-recheck",
       "foundationStatus": "fixed-and-rechecked-pending-independent-visual-approval"
     },
     {
       "id": "A12",
-      "status": "open",
+      "status": "final-focused-recheck-pending",
       "foundationStatus": "fixed-and-rechecked-pending-independent-visual-approval"
     }
   ],
@@ -104,6 +104,67 @@
     "Do not infer full 19-page or external-service acceptance from this capture set.",
     "Source worktree had ongoing uncommitted edits; screenshots and computed styles are authoritative baseline evidence."
   ],
+  "firstRecheck": {
+    "sourceCommit": "3aef2bfa7b94db3af371ca8e70bb0bbcd5cf5982",
+    "evidence": "artifacts/ui-acceptance/2026-10-24/recheck-1/evidence.json",
+    "views": 15,
+    "allAutomatedChecksPassed": true,
+    "checks": [
+      {
+        "id": "A07-six-distinct-template-resources",
+        "passed": true
+      },
+      {
+        "id": "A04-no-inventory-overlap",
+        "passed": true
+      },
+      {
+        "id": "A04-pet-choice-height",
+        "passed": true
+      },
+      {
+        "id": "A05-switch-thumb-contained",
+        "passed": true
+      },
+      {
+        "id": "A02-discovery-page-insets",
+        "passed": true
+      },
+      {
+        "id": "A03-battle-card-gap",
+        "passed": true
+      },
+      {
+        "id": "A09-core-skills-visible",
+        "passed": true
+      },
+      {
+        "id": "A11-combat-hp-derivation",
+        "passed": true
+      },
+      {
+        "id": "A01-consistent-page-titles",
+        "passed": true
+      },
+      {
+        "id": "A08-required-actions-present",
+        "passed": true
+      },
+      {
+        "id": "A08-alternate-pet-battle-identity",
+        "passed": true
+      },
+      {
+        "id": "runtime-no-page-errors",
+        "passed": true
+      }
+    ],
+    "manualRemaining": [
+      "A09: HUD decorative diagonal leaves enemy name on dark scene",
+      "A07/A12: portrait framing should show face/upper body instead of a tiny whole body",
+      "A10: final native four-control interaction after HUD/portrait merge"
+    ]
+  },
   "foundationRecheck": {
     "at": "2026-10-24T13:46:32.612Z",
     "status": "targeted-runtime-checks-passed-pending-independent-visual-approval",
@@ -115,5 +176,6 @@
     ],
     "originalBaselinePreserved": true,
     "scope": "20 actual captures plus targeted geometry, 72 authored action resolutions, 24 Pixi previews, real skill/ultimate/reward flow; external gates unchanged"
-  }
+  },
+  "supersededBy": "unified-battle-goal.txt and unified-audit.json preserve the current eight-character/four-entry gate"
 }
