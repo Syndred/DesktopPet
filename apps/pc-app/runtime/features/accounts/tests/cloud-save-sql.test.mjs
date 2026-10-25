@@ -101,3 +101,17 @@ test('LOCAL PGlite only: normalized secret keys and nested serialized JSON canno
  const saved=(await as(uidA,sidA,deviceA,"select public.lingjing_archive_save('safe-projection-probe','unverified-local',$1) item",[projection.envelope]))[0].item;assert.equal(saved.promoted,false);
  const rows=await as(uidA,sidA,deviceA,"select envelope from public.lingjing_save_archives where action_id='safe-projection-probe'");assert.ok(!JSON.stringify(rows).includes(marker));
 });
+test('LOCAL PGlite only: authored JSON examples and public capture proof remain byte-for-byte unchanged',async()=>{
+ const text='{"password":"EXAMPLE_PLACEHOLDER","enabled":true}',current=(await head()).envelope,doc=structuredClone(current);
+ doc.data.modules.conversations={version:1,data:{ownerAccountId:ownerA,tables:{
+  conversation_messages:[{owner_account_id:ownerA,pet_id:'original-pet-1',id:'json-example',content:text}],
+  conversation_memories:[{owner_account_id:ownerA,pet_id:'original-pet-1',id:'json-memory',content:text}],
+  conversation_profiles:[{owner_account_id:ownerA,pet_id:'original-pet-1',persona:text,reply_style:text}]
+ }}};
+ const source=seal(Object.fromEntries(Object.entries(doc).filter(([key])=>key!=='checksum'))),{cloudProjection}=createRequire(import.meta.url)('../cloud-projection.cjs');
+ const projection=cloudProjection(source);assert.equal(projection.projectedChecksum,source.checksum);assert.equal(projection.envelope.data.modules.conversations.data.tables.conversation_messages[0].content,text);
+ const saved=await push('authored-json-must-survive',4,projection.envelope);assert.equal(saved.envelope.data.modules.conversations.data.tables.conversation_memories[0].content,text);
+ const withProof=envelope(ownerA,{discovery:{version:1,data:{proof:{captureId:'public-business-proof',signature:'receipt-signature'}}}});
+ assert.equal(canonical(cloudProjection(withProof).envelope.data.modules.discovery.data.proof),canonical(withProof.data.modules.discovery.data.proof));
+ const archived=(await as(uidA,sidA,deviceA,"select public.lingjing_archive_save('public-capture-proof','unverified-local',$1) item",[withProof]))[0].item;assert.equal(archived.promoted,false);
+});
