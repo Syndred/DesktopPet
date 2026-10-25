@@ -158,6 +158,7 @@ app.whenReady().then(async () => {
   }
   features = discoverFeatures(join(runtime, 'features'), services);
   await require(join(runtime, 'core/builtin-art.cjs')).registerBuiltinArt(services);
+  if (services.get('backups') && services.get('companions')?.backupAdapter && !services.get('backups').adapters.has('companions')) services.get('backups').register(services.get('companions').backupAdapter);
   if (services.get('backups') && services.get('resources')) services.get('backups').register(require(join(runtime, 'core/resource-backup.cjs')).createResourceBackupAdapter(services));
   if (services.get('backups') && services.get('conversations')) services.get('backups').register(require(join(runtime, 'core/conversation-backup.cjs')).createConversationBackupAdapter(services));
   services.ipc.handle('app:info', () => ({ version: app.getVersion(), platform: process.platform, build,
