@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-25T09:44:24.123Z",
+  "updatedAt": "2026-10-25T09:46:57.141Z",
   "owner": "01 foundation/integration",
   "phase": "reopened-complete-user-acceptance",
   "status": "source-fix-ready-awaiting-09-and-coordinator-candidate",
@@ -165,7 +165,7 @@
       "issueId": "QA-004",
       "owner": "02; independent input/retest09",
       "severity": "P1",
-      "status": "actual-existing-state-observed-root-cause-open",
+      "status": "observed-here-and-original-drag-reproduced-by09-awaiting-fix-retest",
       "summary": "原进程10392的透明、不激活、TopMost窗口物理2145×2230，DPI120；本会话没有拖动或操作该窗口。",
       "observed": {
         "pid": 10392,
@@ -218,14 +218,22 @@
           "excerpt": "if (input.scale !== undefined) { if (!Number.isFinite(input.scale) || input.scale < 0.5 || input.scale > 2) invalid('外观大小需为 50%–200%'); pet.desktop.scale = input.scale; }"
         }
       ],
-      "next": "09 records the actual drag/DIP/client-size/scale sequence and02 fixes the owned manager. No pet factory or domain file was changed here."
+      "next": "09 records the actual drag/DIP/client-size/scale sequence and02 fixes the owned manager. No pet factory or domain file was changed here.",
+      "corroborationReportedByCoordinator": {
+        "threadId": "01a1704b-e200-7090-9d17-958218c80f42",
+        "operator": "09",
+        "dragCount": 10,
+        "sizeIncreasePerDragDip": 2,
+        "persistedScale": 1,
+        "measuredByThisChat": false
+      }
     },
     {
       "key": "main-window-workarea-minimum-conflict",
-      "issueId": null,
-      "registration": "requested-from09-do-not-allocate-duplicate-id",
+      "issueId": "QA-005",
+      "registration": "registered-by09",
       "owner": "01 source fix;09 hardware verification",
-      "severity": "P2",
+      "severity": "P2-source-risk",
       "status": "source-fixed-simulated-geometry-passed-hardware-pending",
       "summary": "原逻辑把初始height夹至workArea，却仍强制minHeight700；例如1280×680 DIP工作区产生height680/minHeight700冲突。宽度低于960时同样冲突。",
       "fix": {
@@ -254,7 +262,9 @@
           "line": 27,
           "excerpt": "const minWidth = Math.min(MIN_WIDTH, areaWidth), minHeight = Math.min(MIN_HEIGHT, areaHeight);"
         }
-      ]
+      ],
+      "reproduced": false,
+      "hardwareConstraint": "09确认当前125%大屏不具备小工作区原生复现条件；模拟geometry不计为真实用户通过。"
     },
     {
       "key": "drag-coordinate-and-window-size-contract",
@@ -285,10 +295,10 @@
     {
       "key": "desktop-tool-button-selector-contract",
       "issueId": null,
-      "registration": "09 registration requested; owner02",
+      "registration": "09 deferred issue creation until actual final-candidate hitbox/size evidence",
       "owner": "02",
-      "severity": "P2",
-      "status": "source-selector-mismatch-routed-no-cross-domain-edit",
+      "severity": "unrated-source-observation",
+      "status": "source-observation-only-not-a-user-blocker-claim",
       "summary": "desktop.css用.cp-desktop-tools .button设28×27，但公共Button生成group/button并提供data-slot=button，不带旧.button类；该域规则不能命中该组件。",
       "sourceEvidence": [
         {
@@ -307,7 +317,7 @@
           "excerpt": "data-slot=\"button\""
         }
       ],
-      "next": "02使用稳定的data-slot/显式域类处理，勿通过给全局Button追加旧.button类激活全局旧min-height规则。"
+      "next": "02可参考旧选择器观察，09结合最终包真实按钮命中/尺寸后决定是否立项；本会话不派发新的UI缺陷。"
     },
     {
       "key": "common-icon-box-policy",
@@ -400,6 +410,15 @@
       "owner": "02",
       "status": "pending-owner-and09",
       "additionalNativeObservationProvided": true
+    },
+    "QA-005": {
+      "owner": "01",
+      "severity": "P2-source-risk",
+      "sourceFixCommit": "da330a3214ffff83be749f20a75d4c06fa7976cf",
+      "simulatedChecksPassed": 8,
+      "reproduced": false,
+      "hardware": "09 current125% large display cannot reproduce small-workarea case",
+      "independent09Retest": "pending integrated candidate; minimize/maximize/restore on available hardware"
     }
   },
   "publicChangeCoordination": {
@@ -476,5 +495,14 @@
       "url": "https://raw.githubusercontent.com/NousResearch/hermes-agent/main/apps/desktop/electron/hud-ipc.ts",
       "use": "External primary implementation documents a similar setPosition growth workaround; investigation lead only, not proof for this product/Electron44."
     }
-  ]
+  ],
+  "coordinatorIntegrationNotification": {
+    "sourceCommit": "9e57de1d210376ce679168eb1acbff8e37cff1cd",
+    "reportedIntegrated": [
+      "08 login alignment",
+      "02 element classification and stable identity and desktop-size fix"
+    ],
+    "checkedOutHere": false,
+    "newCandidateAuthorized": false
+  }
 }
