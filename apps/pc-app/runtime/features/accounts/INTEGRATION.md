@@ -28,6 +28,12 @@ getLegacyInventory(ownerAccountId) 提供经过归属映射的原始库存/历�
 
 已生成的本地/云端预览也只在当前登录会话内有效：adopt、logout 和当前 owner 会话失效时清空内存预览；同 SID 自动刷新不清空。原备份、下载缓存、待重试任务不随预览清理删除。
 
+开启同步后，正式30秒任务调用 runAutomaticSync/reconcile。已确认基线另外保存个人/受保护内容的指纹；只有受保护内容仍匹配、且没有待处理冲突或未核验原档时，个人设置/聊天改动才自动生成持久任务并上传。断网先保留原action/base，不读取新版头后重新定基；旧检查点缺少分类指纹时，先核对其原版本和校验和再补齐基线。
+
+只有相对已确认检查点完全干净、没有pending/conflict/unverified/privacy-redacted原档的客户端，才自动采纳较新云版本。读回、prepareCloud前后以及同步事务内重查owner/device/SID/epoch、本机完整指纹及原检查点；期间有改动就保留并提示。恢复复用正式BackupManager原子事务，先留before-restore文件，恢复后的完整规范视图必须与云端相同才确认新版本。已经由领域应用、且完整视图与真实读回完全一致的状态，可以只确认检查点，不重写任何本机内容。
+
+主进程发出sync/settings/save-restored事件，账号页订阅后重读实际状态。未检查、正在同步、云端较新、部分内容或待处理记录不会显示完整“已同步”；保留冲突预览与显式恢复路径。accounts-007只新增本机指纹表，未修改冻结的云协议、迁移或RLS。
+
 Windows safeStorage 保管登录凭据与个人 BYOK；密钥不进入 renderer、普通 SQLite 明文、云存档、导出或日志。云投影按已知 schema 去除配置凭据，同时保留用户创作的 JSON/消息内容，不能简单按字段名删掉正常对话。服务端继续检查完整 actor、受保护状态及拒绝不合法投影。
 
 ## 桌面宿主与验证
@@ -38,8 +44,10 @@ close-to-tray、窗口数量、置顶、穿透、安静时段和定位权限接�
 
 ## 旧入口退役
 
-当前分支仍有 LINGJING_LEGACY_AUTH 的显式旧适配分支和对局 QA/历史消费者；它们不是新协议示例。待主协调完成新 04/08 验收后统一退役旧函数/SQL及其测试。精确消费者与端口替换见 docs/implementation/cleanup/cloud-retirement-consumers.json。不得通过旧 SQL 的 db push/reset、repair 历史或删除原档来完成退役。
+旧网络入口、旧函数/SQL及历史消费者由主协调统一退役，不能恢复旧remote/LEGACY_AUTH网络分支。本机旧密码验证、归属映射和原档读取继续保留。精确消费者与端口替换见 docs/implementation/cleanup/cloud-retirement-consumers.json。不得通过旧SQL的db push/reset、repair历史或删除原档来完成退役。
 
 ## 已完成验证
 
-7a6b04a 在真实 Supabase HTTPS 和两个独立 Electron44.9.3 进程完成 9 项检查：正式领养与标准菜园初始化、同 petId 双端恢复、完整存档校验、CAS 冲突保档、SDK 令牌轮转、加密重启、原任务断网重试到版本5、令牌边界和单设备退出。证据为 docs/implementation/evidence/accounts/cloud-2026-10-25/dual-electron-full.json，明确 fullSaveVerified=true、authorityPending=false。本机双进程未声明两台实体设备或私有 Realtime 频道重连；旧服务器数据仍缺可信来源。最终账号回归54项、UI类型检查和生产构建通过。
+7a6b04a的9项历史检查各自成立，但最终B只远程读取了A的回执，仍留在本机版本4，不能作为最终双端一致证明。原run、截图和只读差异记录全部保留。
+
+280328d的自动双Electron验收8项通过，证据在 docs/implementation/evidence/accounts/cloud-2026-10-25/automatic-sync/。初次建立检查点后没有调用立即同步、重试或后台任务入口，只等待真实30秒定时器。正常个人设置变更自动上传并落到B；B有本机脏数据时保留原action并显示冲突；显式恢复保留原档；A断网原action跨真实进程重启自动提交，B持续运行自动落地。最终两端实际UI、query_only SQLite与独立Supabase SQL均为revision6、volume54、相同checksum，完整规范数据指纹也相同。账号73项回归、跨模块9项、类型检查和生产构建通过；其中聊天adapter自动排队是明确模拟provider的真实SQLite检查，未声明真实LLM调用。本次仍限同机双进程，未声明两台实体设备或私有Realtime重连，旧云数据仍缺可信来源。

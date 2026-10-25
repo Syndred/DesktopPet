@@ -1,0 +1,35 @@
+{
+  "queryOnly": true,
+  "revision": 6,
+  "checksum": "d2cfa0ddb6eb76fd7e18d61c3c62e6d194372aee22bd52d122ef1bf8b8f6ff89",
+  "volume": 54,
+  "syncEnabled": true,
+  "quickCheck": "ok",
+  "outbox": [
+    {
+      "action_id": "auto:481c511d-a9a9-4e3b-ac32-bab2fc3c1162",
+      "base_revision": 4,
+      "status": "superseded",
+      "last_error": "CLOUD_RESTORE_SUPERSEDED"
+    }
+  ],
+  "pets": [
+    "pet-a548e041-ab66-4251-9249-a7dc1035fbbe"
+  ],
+  "status": {
+    "configured": true,
+    "cloudRevision": 6,
+    "lastVerifiedAt": "2026-10-25T04:51:51.200Z",
+    "lastError": null,
+    "pending": 0,
+    "conflicts": 0,
+    "localChanged": false,
+    "unverifiedLocal": 0,
+    "privacyRedactions": 0,
+    "running": false,
+    "observedCloudRevision": 6,
+    "lastCloudCheckedAt": "2026-10-25T04:51:51.158Z",
+    "remoteChanged": false
+  },
+  "localDataChecksum": "75342ab7eda1218a8acbd041e6c3b114f027e6625be9a0003c0c51e491f2bb99"
+}

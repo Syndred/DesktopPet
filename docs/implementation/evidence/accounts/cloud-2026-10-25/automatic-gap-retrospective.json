@@ -1,0 +1,23 @@
+{
+  "at": "2026-10-25T04:49:00.638Z",
+  "originalRun": "artifacts/accounts/cloud-electron-1792902024228",
+  "queryOnly": true,
+  "originalFilesModified": false,
+  "scopeCorrection": "Original9 individual assertions remain valid; final B-local convergence was not tested and was false. Retained original evidence is historical, not final automatic-sync acceptance.",
+  "results": {
+    "device-a": {
+      "cloud_revision": 5,
+      "last_checksum": "491f0674f642ebb1744d0c5c9fd6a8d6321cde94c17164c87ecabd86622fb77b",
+      "volume": 54,
+      "syncEnabled": true,
+      "quickCheck": "ok"
+    },
+    "device-b": {
+      "cloud_revision": 4,
+      "last_checksum": "37e0760dc8f55cb92775633a2217ff310147e70c70b1b7780e9772422688d68c",
+      "volume": 43,
+      "syncEnabled": true,
+      "quickCheck": "ok"
+    }
+  }
+}
