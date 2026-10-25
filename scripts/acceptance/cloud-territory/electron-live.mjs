@@ -87,6 +87,7 @@ async function capture(model,name,replace=false){
 }
 async function inspectHydratedUi(a,b){
   assert.ok(evidence.backendPassed&&evidence.sessionId,'Complete the original live backend/restart flow first');
+  evidence.visualPassed=false;evidence.passed=false;save();
   const battle=await invoke(a,'battle','snapshot',{sessionId:evidence.sessionId});assert.equal(battle.status,'finished');assert.equal(battle.winner,'player');
   // Retain early captures as diagnostic history, then replace them only after
   // React has actually loaded the authoritative completed session/garden.
@@ -108,13 +109,33 @@ async function inspectHydratedUi(a,b){
     evidence.uiPlant={passed:true,through:'actual rendered plot/seed/播种 controls -> IPC -> shared actor -> cloud CAS',plotId:'plot-6',gardenRevision:after.revision,peerReadback:true};evidence.final={...evidence.final,items:after.items,pets:after.pets,plots:after.plots};save();
   }
   for(const model of [a,b]){
+    await model.page.bringToFront();
     await model.page.evaluate(()=>{location.hash='#/garden';});await model.page.locator('.garden-layout').waitFor();await model.page.locator('.garden-territory-panel .garden-pill').filter({hasText:'我的领地'}).waitFor();
     await model.page.locator('[aria-label="云端已确认"]').waitFor();assert.equal(await model.page.locator('.garden-notice-error').count(),0);
     await model.page.waitForFunction(()=>{const map=document.querySelector('.garden-shared-map .discovery-map');return map?.getAttribute('data-map-ready')==='true'&&Number(map.getAttribute('data-map-loaded-tiles'))>0&&document.querySelector('.discovery-map-canvas')?.getBoundingClientRect().height>300;});
     await model.page.waitForFunction(()=>document.querySelectorAll('.garden-pet-portrait .resource-stage[data-status="ready"]').length>=2);
-    const pixels=await model.page.evaluate(async()=>{
-      const canvases=[...document.querySelectorAll('.garden-pet-portrait canvas')];let pixels=[];for(let n=0;n<30;n++){await new Promise(resolve=>requestAnimationFrame(resolve));pixels=canvases.map(canvas=>{const c=document.createElement('canvas');c.width=canvas.width;c.height=canvas.height;const x=c.getContext('2d');x.drawImage(canvas,0,0);const d=x.getImageData(0,0,c.width,c.height).data;let total=0;for(let i=3;i<d.length;i+=4)if(d[i]>20)total++;return total;});if(pixels.every(p=>p>1000))break;}return pixels;
-    });assert.equal(pixels.length,2);assert.ok(pixels.every(p=>p>1000));pass(`cloud-garden-${model.index?'b':'a'}:loaded-map-and-portraits`,{portraitVisiblePixels:pixels,loadedMapTiles:Number(await model.page.locator('.garden-shared-map .discovery-map').getAttribute('data-map-loaded-tiles'))});
+    const regions=await model.page.evaluate(()=>({innerWidth,portraits:[...document.querySelectorAll('.garden-pet-portrait')].map(el=>{const r=el.getBoundingClientRect();return{x:r.x,y:r.y,width:r.width,height:r.height};})}));
+    // Non-playing WebGL stages can clear their drawing buffer after composition.
+    // Inspect the actual native window pixels, excluding the pale background and
+    // the top-right selection badge, instead of treating that buffer as blank UI.
+    const pixels=await model.app.evaluate(async({BrowserWindow},regions)=>{
+      const image=await BrowserWindow.getAllWindows()[0].capturePage(),size=image.getSize(),bytes=image.toBitmap(),scale=size.width/regions.innerWidth;
+      return regions.portraits.map(r=>{
+        let ink=0;
+        for(let y=Math.ceil((r.y+2)*scale);y<Math.min(size.height,(r.y+r.height-2)*scale);y++)for(let x=Math.ceil((r.x+2)*scale);x<Math.min(size.width,(r.x+r.width-2)*scale);x++){
+          if(y<(r.y+24)*scale&&x>(r.x+r.width-27)*scale)continue;
+          const offset=(y*size.width+x)*4;
+          if(bytes[offset+3]>20&&Math.min(bytes[offset],bytes[offset+1],bytes[offset+2])<170)ink++;
+        }
+        return ink;
+      });
+    },regions);
+    if(pixels.length!==2||!pixels.every(p=>p>1000)){
+      const diagnostics=await model.page.evaluate(()=>[...document.querySelectorAll('.garden-pet-portrait')].map(parent=>({html:parent.innerHTML.slice(0,1400),layout:[parent,...parent.querySelectorAll('.cp-portrait,.resource-stage,.resource-stage-transform,.resource-sprite-host,canvas')].map(el=>({className:el.className,rect:{x:el.getBoundingClientRect().x,y:el.getBoundingClientRect().y,width:el.getBoundingClientRect().width,height:el.getBoundingClientRect().height},height:getComputedStyle(el).height,display:getComputedStyle(el).display,visibility:getComputedStyle(el).visibility,...el.dataset}))})));
+      await model.page.screenshot({path:join(output,`cloud-garden-${model.index?'b':'a'}.inspect-failed-${Date.now()}.png`)});
+      console.log(JSON.stringify({gardenPortraitFailure:{index:model.index,pixels,diagnostics}}));
+    }
+    assert.equal(pixels.length,2);assert.ok(pixels.every(p=>p>1000));pass(`cloud-garden-${model.index?'b':'a'}:loaded-map-and-portraits`,{portraitVisiblePixels:pixels,pixelMethod:'native composited bitmap, character ink only; pale background and selection badge excluded',loadedMapTiles:Number(await model.page.locator('.garden-shared-map .discovery-map').getAttribute('data-map-loaded-tiles'))});
     await capture(model,`cloud-garden-${model.index?'b':'a'}`,true);
   }
   evidence.visualPassed=true;evidence.passed=true;if(evidence.failure){evidence.resolvedIncidents.push(evidence.failure);delete evidence.failure;}save();console.log(JSON.stringify({passed:true,hydratedVisuals:true,evidence:evidenceFile}));
