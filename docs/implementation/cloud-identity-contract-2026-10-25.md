@@ -72,11 +72,15 @@ JSON SHA256 和现有备份保持兼容，SQL 处理 UTF-16 键排序及 ECMAScr
 
 ## Electron 主进程消费接口
 
-默认账号入口改用 `SupabaseRemote`，通过 `LINGJING_PUBLIC_CONFIG` 指向公开 JSON，或 `LINGJING_SUPABASE_URL` / `LINGJING_SUPABASE_PUBLISHABLE_KEY` 环境变量；发布包可提供 `resources/lingjing-cloud-public.json`。配置只允许 HTTPS + 现代 publishable key，secret 永不接入桌面。设备 UUID 位于当前 userData 的 `accounts/device.json`，每个独立用户目录独立保存。旧单 token HTTP 适配仅显式 `LINGJING_LEGACY_AUTH=1` 可启用，不用于新账号路径。
+默认账号入口改用 `SupabaseRemote`，开发源码默认读取仓库 `config/lingjing-cloud-public.json`，发布包读取 `resources/lingjing-cloud-public.json`。`LINGJING_PUBLIC_CONFIG` 指向的公开 JSON、`LINGJING_SUPABASE_URL` / `LINGJING_SUPABASE_PUBLISHABLE_KEY` 环境变量可显式覆盖。配置只允许 HTTPS + 现代 publishable key，secret 永不接入桌面。设备 UUID 位于当前 userData 的 `accounts/device.json`，每个独立用户目录独立保存。旧单 token HTTP 适配仅显式 `LINGJING_LEGACY_AUTH=1` 可启用，不用于新账号路径。
 
 领域从 `services.get('cloudActor')` 取得主进程能力：`await requireActor()` 或 `await invoke('lingjing-领域函数', body)`。也可调用 `accounts.requireCloudActor()` / `accounts.cloudInvoke(name,body)`。前者返回公开 actor 字段以及非枚举的 `.client`（官方 Supabase SDK，含用户 JWT/设备头）、`.invoke(name,body)`（会刷新令牌）、`.accessToken`、`.url` 和 `.publishableKey`。资源模块每次 Storage 操作重新取得 context；不要长期缓存 SDK 对象或转发到 renderer。`JSON.stringify(context)` 不含这些字段。领域还应在异步结果应用本地前核对 owner/会话，统一 invoke 已阻止退出/切号后的旧结果生效。
 
 旧 `requireRuntimeUser()` 对新 Auth 返回 `CLOUD_PROTOCOL_UPGRADE_REQUIRED`，`privateSession().sessionToken` 为null，JWT不会误发到原HTTP。新 Auth证明仅在主进程的 `cloudProof`，包含Auth SDK签发的access/refresh；既有 `SessionVault` 用Windows safeStorage加密保存证明。SQLite仅追加 `account_cloud_links` 记录稳定 owner 与Auth UID，不保存令牌。刷新合并并发请求，成功后同步更新加密凭据；退出/切号epoch与旧proof检查阻止迟到刷新恢复登录。
+
+同一个 owner/device/Auth session 取得的 `.client` 是同一个官方 SDK 实例。SDK 使用 `accessToken` 异步 callback，由账号模块在每次 Data API/Storage 请求及 Realtime callback/heartbeat/reconnect 时取得仍有效的 access JWT；没有固定 Authorization header。刷新后账号模块调用 `client.realtime.setAuth()` 更新现有频道，并保持callback模式。消费者不得手动 `setAuth(token)` 固定令牌；SDK的 `.auth` 不对领域开放，密码/刷新由账号模块独占。退出、失效、切账号或Auth session更换时取消频道并断开连接，旧SDK回调不再提供该账号JWT。`.accessToken` 是兼容的瞬时值，长期任务必须使用SDK callback或 `.invoke()`，不可缓存该字符串。
+
+主进程受保护同步先完整保存 `account_sync_sources.original_document`，再按已确认的 cloudRevision 拼合个人设置/聊天与当前服务端权威片段。缺少可信来源的本机玩法差异上传为 `promoted:false` 原档，不会覆盖云库存。同步结果 `requiresAuthority:true` 时只声明个人内容成功，UI明确显示历史进度待核验；所有本机数据仍可导出。冲突不会重定基准版本；显式云恢复前生成原档备份。已经准备的CAS输入在网络/响应丢失后原样重试，不能重新读取新版头覆盖原action内容。
 
 本地 `cloud-identity-sql.test.mjs` 已验证：旧文本 owner保留、客户端不能绑定/读取旧凭据、两个 device/session 同时有效、跨 owner/假设备/失效 session 拒绝、撤销单设备不踢另一设备。Deno 2.9.6 类型检查通过；SDK 2.98.0 固定并保留 lock。已合入 Electron44.9.3 / SQLite13.0.3 公共检查点并通过 native:check，未 rebuild 共用 node_modules。真实云端迁移/HTTP结果仍待集中部署，不以这些本地检查代替。
 
