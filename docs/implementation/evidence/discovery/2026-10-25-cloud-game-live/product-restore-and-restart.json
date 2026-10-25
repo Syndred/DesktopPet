@@ -1,0 +1,245 @@
+{
+  "at": "2026-10-25T04:09:29.813Z",
+  "sourceCommit": "e47587c3d5a21a8e6e7676781ad683ec52f22faa",
+  "build": {
+    "schemaVersion": 2,
+    "builtAt": "2026-10-25T04:07:09.362Z",
+    "sourceCommit": "e47587c3d5a21a8e6e7676781ad683ec52f22faa",
+    "sourceTree": "0793c29013310113c8a23ac0fb84790f98141842",
+    "sourceDirtyFiles": [],
+    "codeFingerprint": "4ffe5e9e10739cfa41500c7bcacc2210bbe7723e86f6631ba5ffb284d9441fc5",
+    "canonicalSourceFingerprint": "c191c08355d016b56ff54e70c10c5d69ccb17206b00fad1abdf52042bca0d987",
+    "canonicalPolicy": "Repository-relative paths; CRLF normalized to LF for source text only. Packaged/compiled bytes remain exact.",
+    "compiledFingerprint": "eaa734c24b1a8a7d066ca865b453efababc4ed83bdb7a376af61896642e60dc1",
+    "codeFiles": 296,
+    "compiledFiles": 87,
+    "toolchain": {
+      "node": "24.21.0",
+      "electron": "44.9.3",
+      "sqlite": "13.0.3",
+      "vite": "7.3.7",
+      "typescript": "5.9.3",
+      "platform": "win32",
+      "arch": "x64"
+    },
+    "entrypoints": {
+      "main": "main/index.cjs",
+      "app": "ui/index.html",
+      "desktop": "ui/desktop.html",
+      "preload": "preload/index.cjs"
+    },
+    "publicCloud": {
+      "projectRef": "jbvrdmrkwpznbrvteive",
+      "url": "https://jbvrdmrkwpznbrvteive.supabase.co",
+      "sha256": "c1625c63f1d959f92b3392b47f2fb492452803eedf1c0d1ebc68a1168ab64eda",
+      "resourcePath": "lingjing-cloud-public.json"
+    },
+    "packageName": "lingjing-desktop",
+    "runtimeClosure": {
+      "manifest": "runtime-closure.json",
+      "files": 104,
+      "edges": 175,
+      "sha256": "11f880552f2b0f3341e1a133851c93535e520e56cb83d4c98a984e8631e9d183"
+    }
+  },
+  "projectRef": "jbvrdmrkwpznbrvteive",
+  "scenarioId": "cloud-discovery-03",
+  "productionMain": true,
+  "registryObserver": true,
+  "syntheticPosition": true,
+  "physicalPositionAcceptance": false,
+  "physicalSecondDevice": false,
+  "realAuth": true,
+  "realHttps": true,
+  "rawCoordinatesSaved": false,
+  "tokensOrPasswordsSaved": "Only Windows safeStorage encrypted test credentials in ignored artifacts; no plaintext or tokens in evidence",
+  "actors": [
+    {
+      "label": "device-a",
+      "actor": {
+        "account": "cg03_1792899947200",
+        "authKind": "supabase",
+        "deviceId": "b9300119-4e88-41d5-b182-051c3f943e87",
+        "username": "探索云端验收",
+        "authority": "live",
+        "sessionId": "eb6b0776-5dc3-42f8-bf27-350eb42d5fef",
+        "authUserId": "319083e4-2592-4369-84b4-0f05f6c2ea3a",
+        "schemaVersion": 1,
+        "ownerAccountId": "account:31fa2df1-6847-4466-84ca-ed92bc4ee78f"
+      },
+      "electron": "44.9.3",
+      "qaProfile": false
+    },
+    {
+      "label": "device-b",
+      "actor": {
+        "account": "cg03_1792899947200",
+        "authKind": "supabase",
+        "deviceId": "8c61169a-8bc4-4250-b87f-f216e13954ef",
+        "username": "探索云端验收",
+        "authority": "live",
+        "sessionId": "25e5a1ec-bb89-495b-a13b-636401b3f75d",
+        "authUserId": "319083e4-2592-4369-84b4-0f05f6c2ea3a",
+        "schemaVersion": 1,
+        "ownerAccountId": "account:31fa2df1-6847-4466-84ca-ed92bc4ee78f"
+      },
+      "electron": "44.9.3",
+      "qaProfile": false
+    },
+    {
+      "label": "fresh-device-c",
+      "actor": {
+        "account": "cg03_1792899947200",
+        "authKind": "supabase",
+        "deviceId": "2ba68123-761e-4289-ac9b-a1ab7414f478",
+        "username": "探索云端验收",
+        "authority": "live",
+        "sessionId": "fc9bccfd-45ad-4bb7-bedd-769318a8125a",
+        "authUserId": "319083e4-2592-4369-84b4-0f05f6c2ea3a",
+        "schemaVersion": 1,
+        "ownerAccountId": "account:31fa2df1-6847-4466-84ca-ed92bc4ee78f"
+      },
+      "electron": "44.9.3",
+      "qaProfile": false
+    },
+    {
+      "label": "fresh-device-c",
+      "actor": {
+        "account": "cg03_1792899947200",
+        "authKind": "supabase",
+        "deviceId": "2ba68123-761e-4289-ac9b-a1ab7414f478",
+        "username": "探索云端验收",
+        "authority": "live",
+        "sessionId": "fc9bccfd-45ad-4bb7-bedd-769318a8125a",
+        "authUserId": "319083e4-2592-4369-84b4-0f05f6c2ea3a",
+        "schemaVersion": 1,
+        "ownerAccountId": "account:31fa2df1-6847-4466-84ca-ed92bc4ee78f"
+      },
+      "electron": "44.9.3",
+      "qaProfile": false
+    }
+  ],
+  "checks": [
+    {
+      "label": "capture/companion/memory/reward uniqueness, new device and restart retain server petId",
+      "passed": true
+    }
+  ],
+  "attempts": [
+    {
+      "permitId": "a3efdc72-2007-4e4f-823e-297d52c9bc22",
+      "battleId": "battle-cloud-a3efdc72-2007-4e4f-823e-297d52c9bc22",
+      "winner": "player",
+      "rounds": 28,
+      "reward": {
+        "won": true,
+        "mode": "wild",
+        "petId": "pet-161ff8e2-efdf-40f0-b27a-431554562325",
+        "seeds": {
+          "itemId": "seed:berry",
+          "source": "battle",
+          "quantity": 2,
+          "receiptId": "battle-cloud-a3efdc72-2007-4e4f-823e-297d52c9bc22"
+        },
+        "applied": true,
+        "actionId": "battle:battle-cloud-a3efdc72-2007-4e4f-823e-297d52c9bc22:account:31fa2df1-6847-4466-84ca-ed92bc4ee78f",
+        "duplicate": false,
+        "sessionId": "battle-cloud-a3efdc72-2007-4e4f-823e-297d52c9bc22",
+        "experience": 20,
+        "currentLevel": 1,
+        "previousLevel": 1,
+        "currentExperience": 20,
+        "previousExperience": 0
+      }
+    }
+  ],
+  "errors": [],
+  "resumeFrom": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-discovery\\DesktopPet\\artifacts\\cloud-discovery\\live-game-1792899947119",
+  "previousAcceptance": {
+    "sourceCommit": "2f8736636e44d409a531d76efb37d74a89c72295",
+    "checks": [],
+    "capture": {
+      "petId": "pet-a3efdc72-2007-4e4f-823e-297d52c9bc22",
+      "battleId": "battle-cloud-a3efdc72-2007-4e4f-823e-297d52c9bc22",
+      "permitId": "a3efdc72-2007-4e4f-823e-297d52c9bc22",
+      "validation": "simulated",
+      "scenarioId": "cloud-discovery-03",
+      "resourceId": "builtin:lingjing-shiba-v2",
+      "templateId": "animal-shiba"
+    },
+    "error": "PROBE_FAILED: Projection schema mismatch"
+  },
+  "originalPetId": "pet-161ff8e2-efdf-40f0-b27a-431554562325",
+  "fixtureCoordinateHash": "86ea830266f3ee47512b155f0f78d8bf2b3c649bf23d43314109a89aacd61ddb",
+  "capture": {
+    "petId": "pet-a3efdc72-2007-4e4f-823e-297d52c9bc22",
+    "battleId": "battle-cloud-a3efdc72-2007-4e4f-823e-297d52c9bc22",
+    "permitId": "a3efdc72-2007-4e4f-823e-297d52c9bc22",
+    "validation": "simulated",
+    "scenarioId": "cloud-discovery-03",
+    "resourceId": "builtin:lingjing-shiba-v2",
+    "templateId": "animal-shiba"
+  },
+  "newDeviceSqlite": {
+    "owner": "account:31fa2df1-6847-4466-84ca-ed92bc4ee78f",
+    "pets": [
+      {
+        "pet_id": "pet-161ff8e2-efdf-40f0-b27a-431554562325"
+      },
+      {
+        "pet_id": "pet-a3efdc72-2007-4e4f-823e-297d52c9bc22"
+      }
+    ],
+    "captures": [
+      {
+        "petId": "pet-a3efdc72-2007-4e4f-823e-297d52c9bc22",
+        "battleId": "battle-cloud-a3efdc72-2007-4e4f-823e-297d52c9bc22"
+      }
+    ],
+    "memories": [
+      {
+        "pet_id": "pet-a3efdc72-2007-4e4f-823e-297d52c9bc22",
+        "count": 1
+      }
+    ],
+    "restore": {
+      "restored": true,
+      "mode": "replace",
+      "preservedBeforeRestore": true
+    },
+    "localRestoreScope": "Actual accounts cloudPreview/backupRestore IPC and registered adapters/resource hydration; before-restore archive preserved"
+  },
+  "restartCloudReadback": true,
+  "restartSqlite": {
+    "owner": "account:31fa2df1-6847-4466-84ca-ed92bc4ee78f",
+    "pets": [
+      {
+        "pet_id": "pet-161ff8e2-efdf-40f0-b27a-431554562325"
+      },
+      {
+        "pet_id": "pet-a3efdc72-2007-4e4f-823e-297d52c9bc22"
+      }
+    ],
+    "captures": [
+      {
+        "petId": "pet-a3efdc72-2007-4e4f-823e-297d52c9bc22",
+        "battleId": "battle-cloud-a3efdc72-2007-4e4f-823e-297d52c9bc22"
+      }
+    ],
+    "memories": [
+      {
+        "pet_id": "pet-a3efdc72-2007-4e4f-823e-297d52c9bc22",
+        "count": 1
+      }
+    ]
+  },
+  "passed": true,
+  "productAutomaticRestoreOrBattleScreenVerified": false,
+  "productManualCloudRestoreVerified": true,
+  "sharedBattleScreenVerified": false,
+  "serverVersionsDuringAcceptance": [
+    3,
+    4
+  ],
+  "runtimeSourceNotes": "Compiled main/UI build e47587c recorded in build manifest. Garden main-only applyCloudReadback hook and an unimported discovery cloud-runtime source were added at04:10:44UTC during the final restart; neither hook/module was called by this restore verifier. Final shared-BattleScreen/runtime acceptance remains pending."
+}
