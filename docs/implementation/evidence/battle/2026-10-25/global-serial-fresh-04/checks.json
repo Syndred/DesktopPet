@@ -1,0 +1,161 @@
+{
+  "format": "lingjing.battle.global-serial.directed-review",
+  "version": 1,
+  "runId": "f4a7e4df-ea5a-4ae4-84e2-116b7d43618f",
+  "checkedAt": "2026-10-25T11:32:20.251Z",
+  "approvedBase": "85321dc2b2837e261d159ef136bcf52d855d6207",
+  "headWhenRun": "85321dc2b2837e261d159ef136bcf52d855d6207",
+  "verification": "actual domain/services and SQLite with explicitly scripted number readbacks and invitation transport",
+  "realCloudVerified": false,
+  "sqlOrEdgeDeployed": false,
+  "realGlobalNumberAllocation": false,
+  "nativeUiExercised": false,
+  "productFilesChanged": false,
+  "pending": [
+    "09 native lobby/selection/invitation verification on the frozen candidate",
+    "independent live cloud number readback after coordinator SQL/Edge deployment"
+  ],
+  "checkedCount": 9,
+  "passed": true,
+  "checks": [
+    {
+      "id": "untrusted-import-is-pending",
+      "passed": true,
+      "forgedRawNumber": "123456",
+      "lobbyNumbers": [
+        "待同步",
+        "待同步"
+      ]
+    },
+    {
+      "id": "overview-uses-trusted-read-only-identity",
+      "passed": true,
+      "readback": "scripted fixture through actual applyCloudReadback/cache/getPet/getDisplayIdentity/overview",
+      "identities": [
+        {
+          "petId": "pet-eef67b90-0be6-4130-be5b-a9e3bf90d06e",
+          "roleName": "小狐",
+          "instanceNumber": "0007",
+          "historicalNickname": "历史名字1"
+        },
+        {
+          "petId": "pet-7bb0ae03-8d29-4dea-83cd-e3a3a40a409f",
+          "roleName": "小狐",
+          "instanceNumber": "9007199254740993",
+          "historicalNickname": "历史名字2"
+        }
+      ],
+      "rawPetBytesUnchanged": true,
+      "backupBytesUnchanged": true
+    },
+    {
+      "id": "foreign-or-renumbered-metadata-rejected",
+      "passed": true,
+      "confirmedNumbersUnchanged": true,
+      "wrongContextRejected": true,
+      "foreignPetRejected": true
+    },
+    {
+      "id": "owner-isolation-and-legacy-adapter-fallback",
+      "passed": true,
+      "ownerBNumber": "0008",
+      "ownerBWasPendingBeforeOwnReadback": true,
+      "absentIdentityAdapter": "待同步"
+    },
+    {
+      "id": "selection-keeps-original-owner-and-petId",
+      "passed": true,
+      "owner": "scripted_serial_battle_a",
+      "petId": "pet-7bb0ae03-8d29-4dea-83cd-e3a3a40a409f",
+      "selectionSlot": "battlePetId",
+      "visibleNumberIsNotAnIdentifier": true,
+      "combatDtoHasNoIdentityProjection": true
+    },
+    {
+      "id": "invitation-journal-keeps-original-owner-and-petId",
+      "passed": true,
+      "transport": "scripted sendDuelRequest; no network",
+      "sends": [
+        {
+          "owner": "scripted_serial_battle_a",
+          "input": {
+            "targetAccount": "scripted_serial_battle_b",
+            "allowResend": false
+          }
+        }
+      ],
+      "owner": "scripted_serial_battle_a",
+      "journal": {
+        "petId": "pet-7bb0ae03-8d29-4dea-83cd-e3a3a40a409f",
+        "type": "invite"
+      },
+      "foreignPetSent": false
+    },
+    {
+      "id": "late-account-switch-and-history-preservation",
+      "passed": true,
+      "lateReplyRejected": "AUTH_CHANGED",
+      "noLateInviteJournal": true,
+      "originalPetRowsSha256": "7b0e5310bac4e84f2068cc4dae9f7ca6c39ab7faec302b2ed40aa19a0d2a31d0",
+      "originalReportSha256": "6b081f35482ff99a88dcdcfdfadd57fba2cb0007ca2910ce57f6f40ececcdde2",
+      "originalActionRowsUnchanged": 3
+    },
+    {
+      "id": "approved-source-and-battle-scope-unchanged",
+      "passed": true,
+      "originalBattle": "8cff955f52b908163a70aa5f4b8e3ca68ffb1536",
+      "approvedBase": "85321dc2b2837e261d159ef136bcf52d855d6207",
+      "unchangedPaths": [
+        "apps/pc-app/runtime/features/battle",
+        "apps/pc-app/runtime/services/battle-runtime.cjs",
+        "apps/pc-app/ui/src/features/battle",
+        "packages/shared-types/src/features/battle"
+      ],
+      "sourceFiles": [
+        {
+          "path": "apps/pc-app/runtime/features/battle/service.cjs",
+          "gitBlob": "d923da36a90573a19a7eb81e948a083c85eb8d0d",
+          "sha256": "80d78ad59843f354f8a638f24c71a977fda099f2db50812cad605b55da107058"
+        },
+        {
+          "path": "apps/pc-app/ui/src/features/battle/index.tsx",
+          "gitBlob": "d8032d3f77c8bc356559c43796e5a96452d6dc71",
+          "sha256": "b7c9823fc2084754a58e7a7daee37bf19a25f91cccfccc260c6f457415273b7b"
+        },
+        {
+          "path": "apps/pc-app/ui/src/features/battle/FriendsPanel.tsx",
+          "gitBlob": "cbfbe3b10c57c7d9f272b06a5c36f6d8374f73a7",
+          "sha256": "0e1e9d695fc91da6b1ad9a5d38081b0d6e562a47f06e8c15ce588bb3fb4b90ed"
+        },
+        {
+          "path": "apps/pc-app/ui/src/features/battle/useBattleSession.ts",
+          "gitBlob": "68cdaddcb212b81a85faa25ce89a8a98b7f874db",
+          "sha256": "7d4964ff5c747a4c6286a1eae6e228c371b7848a11895194868eb37a7459041a"
+        },
+        {
+          "path": "apps/pc-app/runtime/features/companions/index.cjs",
+          "gitBlob": "c3222f27e547390ed91beed67ad23e698fa94937",
+          "sha256": "f43d83190ca342cd378cde58f29376b34f24467ca5eab5535bcbc0c5edc80274"
+        },
+        {
+          "path": "apps/pc-app/runtime/features/companions/global-serial-cache.cjs",
+          "gitBlob": "a37f6ec2bcf73690f05ec5585663fa7855e006db",
+          "sha256": "2458fc010d9db74d2e944ad4339fafe7939ed64516e7c74f670faf9a53f4112c"
+        },
+        {
+          "path": "apps/pc-app/runtime/features/companions/display-identity.mjs",
+          "gitBlob": "2eea42574959727859725ceb388d17f45f18098d",
+          "sha256": "fdeb282ec4d0efbde116563824585a1b52174d7767a511a5ea4ce77d6e2578e5"
+        }
+      ]
+    },
+    {
+      "id": "independent-read-only-SQLite-reopen",
+      "passed": true,
+      "database": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet-fresh-worktrees\\04\\artifacts\\qa\\battle-global-serial\\f4a7e4df-ea5a-4ae4-84e2-116b7d43618f\\directed.sqlite",
+      "queryOnly": true,
+      "originalPetRowsUnchanged": true,
+      "originalReportBytesUnchanged": true
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "format": "lingjing.battle.global-serial.source-review",
+  "version": 1,
+  "role": "04",
+  "approvedBase": "85321dc2b2837e261d159ef136bcf52d855d6207",
+  "originalBattleSource": "8cff955f52b908163a70aa5f4b8e3ca68ffb1536",
+  "worktree": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet-fresh-worktrees\\04",
+  "branch": "codex/lingjing-04-fresh-20261025",
+  "upstream": {
+    "fetchCommand": "git fetch origin main",
+    "pullCommand": "git pull --ff-only origin main",
+    "result": "Already up to date.",
+    "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086",
+    "integration": "git merge --ff-only 85321dc2b2837e261d159ef136bcf52d855d6207",
+    "integrationResult": "Fast-forward from 8cff955 to 85321dc"
+  },
+  "result": "directed-source-and-scripted-readback-checks-passed",
+  "newDefectsInRequestedScope": [],
+  "productPatchRequired": false,
+  "sourceReview": {
+    "overviewPath": "battle.overview -> overviewData(owner) -> companions.getDisplayIdentity(owner, petId) -> api.getPet(owner, petId) -> service.readPet -> private serialCache.project -> companionIdentity",
+    "trustBoundary": "CloudCompanionAuthority.apply validates the separate serialRegistry against owner, template, original pet rows and revision before the private cache accepts it; raw/imported pet metadata is stripped from read DTOs.",
+    "display": "Only canonical decimal strings become display numbers; minimum four digits, no Number conversion, UUID or legacy serial fallback; absent metadata or identity adapter displays 待同步.",
+    "selector": "Select value, SelectItem key/value, battle.selectPet and startTraining keep the original petId. Display roleName/instanceNumber are text only.",
+    "invitation": "FriendsPanel passes the original pet.petId; BattleFeatureService validates that pet under the current owner and stores it in the owner-scoped invite journal. Existing wire input remains targetAccount/allowResend/actionId; display numbers do not enter the protocol.",
+    "persistence": "Identity projection is confined to the lobby DTO; ownedPet combat DTO, original companion JSON/actions/archive, battle reports, core and protocol remain unchanged.",
+    "unchangedScope": [
+      "apps/pc-app/runtime/features/battle",
+      "apps/pc-app/runtime/services/battle-runtime.cjs",
+      "apps/pc-app/ui/src/features/battle",
+      "packages/shared-types/src/features/battle"
+    ]
+  },
+  "verification": {
+    "directedReview": {
+      "command": "node docs/implementation/evidence/battle/2026-10-25/global-serial-fresh-04/verify.cjs",
+      "passed": 9,
+      "failed": 0,
+      "evidence": "checks.json",
+      "runtime": "Node v24.21.0; actual production services and real SQLite; scripted number metadata and invitation transport"
+    },
+    "existingTargetedTests": {
+      "command": "node --test --test-reporter=spec --test-name-pattern='display identity|display numbers|unconfirmed legacy|unverified imported|real SQLite' apps/pc-app/runtime/features/companions/tests/display-identity.test.cjs apps/pc-app/runtime/features/companions/tests/global-serial-cache.test.cjs",
+      "passed": 5,
+      "failed": 0,
+      "evidence": "targeted-domain-tests.txt"
+    },
+    "realCloudVerified": false,
+    "realNumberAllocationVerified": false,
+    "sqlOrEdgeDeploymentPerformed": false,
+    "nativeUiExercised": false,
+    "nativeDpapiExercised": false,
+    "fullSuiteRepeated": false
+  },
+  "pendingIndependentAcceptance": [
+    "09 verifies the training/friends lobby number text and narrow-window wrapping on the frozen candidate.",
+    "09 verifies that selecting or inviting a same-template instance acts on the selected original petId in the real application.",
+    "After coordinator SQL/Edge deployment, independently read back real cloud numbering and verify the corresponding owner/pet identity."
+  ]
+}

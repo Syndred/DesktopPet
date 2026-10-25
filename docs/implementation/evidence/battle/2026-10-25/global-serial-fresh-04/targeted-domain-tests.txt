@@ -1,0 +1,14 @@
+COMPANION_IDENTITY_DB {"kind":"unconfirmed-legacy-real-SQLite-readback","realGlobalAllocation":false,"owner":"existing-identity-owner","numbers":["待同步","待同步"],"internalPetIds":["pet-11111111-0000-4000-8000-000000000001","pet-11111111-0000-4000-8000-000000000002"],"confirmedFieldAbsent":true,"roleNames":["礼帽喵","礼帽喵"],"legacySerials":["11111111","11111111"],"historicalNicknames":["旧昵称一","旧昵称二"],"selections":{"chatPetId":"pet-11111111-0000-4000-8000-000000000001","battlePetId":"pet-11111111-0000-4000-8000-000000000002","guardPetId":"pet-11111111-0000-4000-8000-000000000002"},"savedScale":1.35,"savedPosition":{"x":137,"y":293,"displayId":"old-monitor"},"backupChecksumBefore":"a27f4629ebd061633912e5f2f927ac27cc7971c9cbfc88e9428d5e315a79d729","backupChecksumAfterReopen":"a27f4629ebd061633912e5f2f927ac27cc7971c9cbfc88e9428d5e315a79d729","exactExportUnchanged":true,"reopenedQueryOnly":true,"originalReceiptCount":7}
+✔ display identity formats supplied authoritative decimal metadata while preserving the original role, petId, nickname and legacy serial (1.5754ms)
+✔ display numbers never use UUID/legacy serial or JS Number conversion and remain pending without canonical confirmed metadata (0.282ms)
+✔ unconfirmed legacy identity stays pending and preserves original SQLite bytes, checksum, receipts, owner, growth, resource and selections across reopen (364.2122ms)
+✔ unverified imported metadata, foreign identity and noncanonical numbers cannot assert authority (3.3492ms)
+✔ real SQLite, backup restore and actual API/IPC outlets use independent readback and retain original bytes (422.9212ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 513.1005
