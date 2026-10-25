@@ -19,9 +19,9 @@
     "saveIntegration": "Server-only character-resources v2 refs via common commit_authority; hydrateReferences before applying dependent cloud fragments; local backup v1 retained"
   },
   "migrations": [
-    "infra/supabase/migrations/20261025020942_lingjing_private_resource_storage.sql",
-    "infra/supabase/migrations/20261025024855_lingjing_verified_resource_authority.sql",
-    "infra/supabase/migrations/20261025035333_lingjing_verified_resource_preferences.sql"
+    "infra/supabase/migrations/20261025023614_lingjing_private_resource_storage.sql",
+    "infra/supabase/migrations/20261025034122_lingjing_verified_resource_authority.sql",
+    "infra/supabase/migrations/20261025041216_lingjing_verified_resource_preferences.sql"
   ],
   "checks": [
     {
@@ -97,7 +97,7 @@
     "sharedEngineeringFollowup": "01 may remove obsolete release exclusion; root config/dependencies untouched by resource changes"
   },
   "remaining": [
-    "Coordinator applies 20261025035333_lingjing_verified_resource_preferences.sql and deploys latest lingjing-resources graph",
+    "Coordinator applies 20261025041216_lingjing_verified_resource_preferences.sql and deploys latest lingjing-resources graph",
     "Real HTTPS preference command/readback plus two-Electron full-save/custom-pet/file/Pixi restoration",
     "Verify normal modified preference can normalize to protected v2 rather than remaining authorityPending",
     "Old-source migration and two physical devices remain separate coordinator acceptance conditions"
@@ -123,7 +123,7 @@
     }
   ],
   "serverDependencies": [
-    "infra/supabase/migrations/20261025031842_lingjing_session_revocation_ledger.sql",
-    "infra/supabase/migrations/20261025033602_lingjing_transaction_actor_guard.sql"
+    "infra/supabase/migrations/20261025032327_lingjing_session_revocation_ledger.sql",
+    "infra/supabase/migrations/20261025034106_lingjing_transaction_actor_guard.sql"
   ]
 }

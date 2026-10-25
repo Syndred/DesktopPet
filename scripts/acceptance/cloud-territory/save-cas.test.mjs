@@ -21,9 +21,9 @@ async function setup(){
     create function auth.jwt() returns jsonb language sql as $$select coalesce(nullif(current_setting('request.jwt.claims',true),'')::jsonb,'{}'::jsonb)$$;
     create function auth.uid() returns uuid language sql as $$select (auth.jwt()->>'sub')::uuid$$;
     grant usage on schema auth to authenticated,service_role;grant execute on all functions in schema auth to authenticated,service_role;`);
-  await db.exec(await readFile('infra/supabase/migrations/20261025020314_lingjing_identity_actor_contract.sql','utf8'));
-  await db.exec(await readFile('infra/supabase/migrations/20261025021759_lingjing_protected_save_cas.sql','utf8'));
-  const sql=await readFile('infra/supabase/migrations/20261025024617_lingjing_territory_authority.sql','utf8');
+  await db.exec(await readFile('infra/supabase/migrations/20261025021620_lingjing_identity_actor_contract.sql','utf8'));
+  await db.exec(await readFile('infra/supabase/migrations/20261025024615_lingjing_protected_save_cas.sql','utf8'));
+  const sql=await readFile('infra/supabase/migrations/20261025033032_lingjing_territory_authority.sql','utf8');
   assert.ok(!/entry level|runtime_account_saves|runtime_accounts/.test(sql));
   await db.exec(sql.slice(sql.indexOf('create or replace function public.runtime_territory_check_actor'),sql.indexOf('create or replace function public.runtime_territory_read')));
   const actor={schemaVersion:1,authority:'live',authKind:'supabase',ownerAccountId:'legacy:cas-check',authUserId:randomUUID(),deviceId:randomUUID(),sessionId:randomUUID()};

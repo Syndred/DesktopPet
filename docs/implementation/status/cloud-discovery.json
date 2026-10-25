@@ -30,24 +30,24 @@
   ],
   "migrations": [
     {
-      "path": "infra/supabase/migrations/20261025020719_lingjing_discovery_cloud_authority.sql",
+      "path": "infra/supabase/migrations/20261025030635_lingjing_discovery_cloud_authority.sql",
       "createdBy": "Supabase CLI2.122.0 migration new lingjing_discovery_cloud_authority --workdir infra",
       "status": "Independently deployable signed location prerequisite; whole capture remains in progress",
       "requires": "08 canonical identity and Auth bridge; follow with live_actor_guard migration",
       "remoteAppliedByThisChat": false
     },
     {
-      "path": "infra/supabase/migrations/20261025025641_lingjing_discovery_live_actor_guard.sql",
+      "path": "infra/supabase/migrations/20261025030639_lingjing_discovery_live_actor_guard.sql",
       "createdBy": "Supabase CLI2.122.0 migration new lingjing_discovery_live_actor_guard --workdir infra",
       "requires": [
         "08 canonical identity/device tables",
-        "20261025020719_lingjing_discovery_cloud_authority.sql"
+        "20261025030635_lingjing_discovery_cloud_authority.sql"
       ],
       "status": "Local PGlite revocation/permissions check passed; ready for central deployment",
       "remoteAppliedByThisChat": false
     },
     {
-      "path": "infra/supabase/migrations/20261025030459_lingjing_discovery_wild_transactions.sql",
+      "path": "infra/supabase/migrations/20261025034132_lingjing_discovery_wild_transactions.sql",
       "createdBy": "Supabase CLI2.122.0 migration new lingjing_discovery_wild_transactions --workdir infra",
       "requires": [
         "08 identity/Auth/protected CAS already deployed",
@@ -60,10 +60,10 @@
       "remoteAppliedByThisChat": false
     },
     {
-      "path": "infra/supabase/migrations/20261025033352_lingjing_discovery_capture_scenarios.sql",
+      "path": "infra/supabase/migrations/20261025034136_lingjing_discovery_capture_scenarios.sql",
       "createdBy": "Supabase CLI2.122.0 migration new lingjing_discovery_capture_scenarios --workdir infra",
       "requires": [
-        "20261025030459_lingjing_discovery_wild_transactions.sql",
+        "20261025034132_lingjing_discovery_wild_transactions.sql",
         "05 context four-argument40941f2 interface"
       ],
       "status": "Append-only; base published game migration unchanged. Local same-world guard and full atomic path passed",
@@ -199,8 +199,8 @@
       "implementationCommit": "ca981f5ed8e62d5dabc3e090310a2ba40889ab31",
       "requires": [
         "08 canonical identity + Auth bridge (already observed deployed)",
-        "20261025020719_lingjing_discovery_cloud_authority.sql",
-        "20261025025641_lingjing_discovery_live_actor_guard.sql"
+        "20261025030635_lingjing_discovery_cloud_authority.sql",
+        "20261025030639_lingjing_discovery_live_actor_guard.sql"
       ],
       "edgeFunction": "discovery",
       "verifyJwt": false,
@@ -226,7 +226,7 @@
     "cloudGame": {
       "readyForCentralReview": true,
       "implementationCommit": "df6e0895960cdd53053421568ba869bd2ceba48a",
-      "migration": "infra/supabase/migrations/20261025030459_lingjing_discovery_wild_transactions.sql",
+      "migration": "infra/supabase/migrations/20261025034132_lingjing_discovery_wild_transactions.sql",
       "function": "discovery",
       "verifyJwt": false,
       "selfContainedSource": "infra/supabase/functions/discovery with shared lingjing-auth.ts/battle-core.js",
@@ -256,8 +256,8 @@
       "remoteAppliedByThisChat": false,
       "readyForCentralDeployment": true,
       "migrations": [
-        "infra/supabase/migrations/20261025030459_lingjing_discovery_wild_transactions.sql",
-        "infra/supabase/migrations/20261025033352_lingjing_discovery_capture_scenarios.sql"
+        "infra/supabase/migrations/20261025034132_lingjing_discovery_wild_transactions.sql",
+        "infra/supabase/migrations/20261025034136_lingjing_discovery_capture_scenarios.sql"
       ],
       "scenarioRule": "Normal proof sourceos passes null; simulated proof must retain the original granted permit scenario, source/scenario switches reject before consuming or reading world context"
     }

@@ -13,9 +13,9 @@ await db.exec(`create role anon; create role authenticated; create role service_
   create function auth.jwt() returns jsonb language sql stable as $$select coalesce(nullif(current_setting('request.jwt.claims',true),''),'{}')::jsonb$$;
   create function auth.uid() returns uuid language sql stable as $$select (auth.jwt()->>'sub')::uuid$$;
 `);
-await db.exec(readFileSync("infra/supabase/migrations/20261025020314_lingjing_identity_actor_contract.sql", "utf8"));
-await db.exec(readFileSync("infra/supabase/migrations/20261025021755_lingjing_auth_bridge.sql", "utf8"));
-await db.exec(readFileSync('infra/supabase/migrations/20261025031842_lingjing_session_revocation_ledger.sql','utf8'));
+await db.exec(readFileSync("infra/supabase/migrations/20261025021620_lingjing_identity_actor_contract.sql", "utf8"));
+await db.exec(readFileSync("infra/supabase/migrations/20261025022918_lingjing_auth_bridge.sql", "utf8"));
+await db.exec(readFileSync('infra/supabase/migrations/20261025032327_lingjing_session_revocation_ledger.sql','utf8'));
 await db.query("insert into auth.users(id) values($1),($2)", [a,b]);
 await db.query("insert into auth.sessions(id,user_id) values($1,$2),($3,$2),($4,$5)", [sa,a,sa2,sb,b]);
 await db.query("insert into lingjing_private.legacy_account_claims(source_instance,legacy_subject,owner_id,account_key,account,username,password_hash,source_record_checksum,source_manifest_checksum,created_at) values('old-runtime','legacy-a','user-original-text','alice','alice','Alice',repeat('a',64),repeat('b',64),repeat('c',64),now())");
