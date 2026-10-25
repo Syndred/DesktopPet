@@ -1,0 +1,209 @@
+{
+  "at": "2026-10-25T10:17:50.279Z",
+  "sourceCommit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+  "status": "candidate-awaiting-09",
+  "method": "Extract NSIS and its 7z application payload as data, then audit the actual SFX app.asar. No application execution.",
+  "commands": [
+    {
+      "phase": "extract-nsis",
+      "command": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\node_modules\\electron-winstaller\\vendor\\7z-x64.exe",
+      "args": [
+        "x",
+        "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\artifacts\\pc-user-acceptance-312e5fe\\Lingjing-0.1.8-portable-x64.exe",
+        "-oC:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\artifacts\\foundation\\user-acceptance\\user-acceptance-312e5fe\\sfx-outer",
+        "-y",
+        "-bd"
+      ],
+      "startedAt": "2026-10-25T10:17:50.581Z",
+      "exitCode": 0,
+      "completedAt": "2026-10-25T10:17:50.698Z"
+    },
+    {
+      "phase": "extract-app-payload",
+      "command": "C:\\Users\\Administrator\\AppData\\Local\\electron-builder\\Cache\\7zip@1.0.0\\7zip-win-x64-a34pt\\bin\\7za.exe",
+      "args": [
+        "x",
+        "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\artifacts\\foundation\\user-acceptance\\user-acceptance-312e5fe\\sfx-outer\\$PLUGINSDIR\\app-64.7z",
+        "-oC:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\artifacts\\foundation\\user-acceptance\\user-acceptance-312e5fe\\sfx-audit\\win-unpacked",
+        "-y",
+        "-bd"
+      ],
+      "startedAt": "2026-10-25T10:17:50.698Z",
+      "exitCode": 0,
+      "completedAt": "2026-10-25T10:17:59.047Z"
+    },
+    {
+      "phase": "audit-actual-sfx",
+      "command": "C:\\Users\\Administrator\\AppData\\Local\\Author Software\\nvm\\installs\\v24.21.0\\node.exe",
+      "args": [
+        "scripts/acceptance/audit-portable.mjs",
+        "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\artifacts\\foundation\\user-acceptance\\user-acceptance-312e5fe\\sfx-audit",
+        "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\artifacts\\foundation\\user-acceptance\\user-acceptance-312e5fe\\package-audit.json"
+      ],
+      "startedAt": "2026-10-25T10:17:59.048Z",
+      "exitCode": 0,
+      "completedAt": "2026-10-25T10:17:59.664Z"
+    },
+    {
+      "phase": "verify-signature",
+      "command": "C:\\Users\\Administrator\\AppData\\Local\\Author Software\\nvm\\installs\\v24.21.0\\node.exe",
+      "args": [
+        "scripts/release/verify-signature.mjs",
+        "--executable=C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\artifacts\\pc-user-acceptance-312e5fe\\Lingjing-0.1.8-portable-x64.exe"
+      ],
+      "startedAt": "2026-10-25T10:18:00.171Z",
+      "exitCode": 0,
+      "completedAt": "2026-10-25T10:18:02.845Z"
+    }
+  ],
+  "passed": true,
+  "fullFunctionalAcceptancePassed": false,
+  "applicationLaunches": 0,
+  "executable": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\artifacts\\pc-user-acceptance-312e5fe\\Lingjing-0.1.8-portable-x64.exe",
+  "sha256": "01b8993f4464a8d2a19ceb906d0b1875b702e17777fbb7aec88738a6a63307da",
+  "bytes": 169197132,
+  "payload": {
+    "path": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\artifacts\\foundation\\user-acceptance\\user-acceptance-312e5fe\\sfx-outer\\$PLUGINSDIR\\app-64.7z",
+    "sha256": "5a404572650150b21b0cd814b02e0ddffde1a0f82e9d3e050075b6b0600ce769",
+    "bytes": 168796182
+  },
+  "appAsar": {
+    "path": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\artifacts\\foundation\\user-acceptance\\user-acceptance-312e5fe\\sfx-audit\\win-unpacked\\resources\\app.asar",
+    "sha256": "de3e646fddfbc0a202e41f00dbcc26a3896d939d91a78b8228a2af3839a5cf0d",
+    "bytes": 267467690,
+    "identicalToBuilderOutput": true
+  },
+  "build": {
+    "schemaVersion": 2,
+    "builtAt": "2026-10-25T10:13:32.215Z",
+    "sourceCommit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+    "sourceTree": "9e1768b2d76f72c8758435f2d975026d3cde7e3b",
+    "sourceDirtyFiles": [],
+    "codeFingerprint": "c78e26491fdb411e3bf98b813c3d032c6b699f3413076f6dadf51c167a46baad",
+    "canonicalSourceFingerprint": "19a2cdb76618616b9b08bddd971ed6a5616f72bc90dee55abd539fd988f47334",
+    "canonicalPolicy": "Repository-relative paths; CRLF normalized to LF for source text only. Packaged/compiled bytes remain exact.",
+    "compiledFingerprint": "72d74cb4b8b6b095563ccda6936f7f2f1320d0cb0d52babd5e9d363f0bd5dfff",
+    "codeFiles": 310,
+    "compiledFiles": 89,
+    "toolchain": {
+      "node": "24.21.0",
+      "electron": "44.9.3",
+      "sqlite": "13.0.3",
+      "vite": "7.3.7",
+      "typescript": "5.9.3",
+      "platform": "win32",
+      "arch": "x64"
+    },
+    "entrypoints": {
+      "main": "main/index.cjs",
+      "app": "ui/index.html",
+      "desktop": "ui/desktop.html",
+      "preload": "preload/index.cjs"
+    },
+    "publicCloud": {
+      "projectRef": "jbvrdmrkwpznbrvteive",
+      "url": "https://jbvrdmrkwpznbrvteive.supabase.co",
+      "sha256": "c1625c63f1d959f92b3392b47f2fb492452803eedf1c0d1ebc68a1168ab64eda",
+      "resourcePath": "lingjing-cloud-public.json"
+    },
+    "packageName": "lingjing-desktop",
+    "runtimeClosure": {
+      "manifest": "runtime-closure.json",
+      "files": 114,
+      "edges": 196,
+      "sha256": "6d64dbe605f706e4404c56ca608b8febcbc8e229603f31528e287208fa8eabcf"
+    }
+  },
+  "publicCloud": {
+    "projectRef": "jbvrdmrkwpznbrvteive",
+    "sha256": "c1625c63f1d959f92b3392b47f2fb492452803eedf1c0d1ebc68a1168ab64eda",
+    "path": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\artifacts\\foundation\\user-acceptance\\user-acceptance-312e5fe\\sfx-audit\\win-unpacked\\resources\\lingjing-cloud-public.json"
+  },
+  "runtimeClosure": {
+    "files": 114,
+    "edges": 196,
+    "sha256": "6d64dbe605f706e4404c56ca608b8febcbc8e229603f31528e287208fa8eabcf",
+    "jsAndMjs": [
+      "apps/pc-app/runtime/features/companions/cloud-domain.mjs",
+      "apps/pc-app/runtime/features/companions/display-identity.mjs",
+      "apps/pc-app/runtime/features/companions/growth.mjs",
+      "apps/pc-app/runtime/features/companions/instance.mjs",
+      "apps/pc-app/runtime/features/resources/preferences.mjs"
+    ]
+  },
+  "native": {
+    "packageVersion": "13.0.3",
+    "sha256": "e21e5efd71fba66578e95b62554d9028064a80dafd7221bf8a8ef155de8d240a"
+  },
+  "assets": [
+    {
+      "id": "builtin:lingjing-yuwan-v2",
+      "element": "water",
+      "bytes": 2106218,
+      "sha256": "1ce64faec5553a9beca9780c06f1f3b701698a63c91a51a9b71ccd3e59aaa1c1"
+    },
+    {
+      "id": "builtin:lingjing-xiaolan-v1",
+      "element": "water",
+      "bytes": 2354539,
+      "sha256": "ed3296108d762293a235010e7c6222ad69960d65bb035e309e251909df09a5fb"
+    },
+    {
+      "id": "builtin:lingjing-fantuan-v1",
+      "element": "water",
+      "bytes": 2119970,
+      "sha256": "4b1eb6d06ba4c737a3cd2a10f567a2ff2af80bfec3be260e7df304af4bdb80f8"
+    },
+    {
+      "id": "builtin:lingjing-shiba-v2",
+      "element": "fire",
+      "bytes": 1623971,
+      "sha256": "d5d561c04f06018d185b2dc3807658f274420e033f0a28621bfdda70abae5fb5"
+    },
+    {
+      "id": "builtin:lingjing-hatcat-v1",
+      "element": "metal",
+      "bytes": 1738346,
+      "sha256": "c4490613eab58617c5b63293f637d8af3061dee101da12588f82bbff06045777"
+    },
+    {
+      "id": "builtin:lingjing-xiaohu-v1",
+      "element": "water",
+      "bytes": 1604286,
+      "sha256": "df4ba559d509f72e48fd2beeea287668058de94f1853c70e26f5e0b298e277ae"
+    },
+    {
+      "id": "builtin:lingjing-qingya-v1",
+      "element": "wood",
+      "bytes": 1802491,
+      "sha256": "aa59df3af26d4f7faf9272193b7d1d35ed6d2f22ebb6b294a5a2853f0539f693"
+    },
+    {
+      "id": "builtin:lingjing-yantuan-v1",
+      "element": "earth",
+      "bytes": 2441235,
+      "sha256": "f03bc1b8cd1c20c5ef6d466d20db9fb7f9584b7739f21414d22fc2c91c01d886"
+    }
+  ],
+  "licenses": [
+    "licenses/shadcn-ui.txt",
+    "licenses/dependencies.json",
+    "licenses/generated-illustrations.json",
+    "licenses/generated-garden.json",
+    "licenses/generated-roster.json",
+    "licenses/roster-generation-prompts.json",
+    "licenses/roster-refinement-prompts.json",
+    "licenses/roster-element-extension-prompts.json",
+    "licenses/roster-element-extension-refinement.json"
+  ],
+  "signature": {
+    "thumbprint": null,
+    "subject": null,
+    "validUntil": null,
+    "signed": false,
+    "kind": "Authenticode",
+    "status": "NotSigned"
+  },
+  "auditFile": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\artifacts\\foundation\\user-acceptance\\user-acceptance-312e5fe\\package-audit.json",
+  "completedAt": "2026-10-25T10:18:03.375Z"
+}

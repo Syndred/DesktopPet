@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-25T10:15:02.280Z",
+  "updatedAt": "2026-10-25T10:25:38.901Z",
   "status": "in-progress",
   "qaThreadId": "01a1725c-d59c-7620-9bb6-1c0d4e0fb3a3",
   "soleNativeInputOwner": "01a1725c-d59c-7620-9bb6-1c0d4e0fb3a3",
@@ -93,11 +93,17 @@
   "releaseGate": "All release blockers fixed and independently retested; full scenario matrix reports actual pass/fail/blocked per same final portable; no mock-only full acceptance claims",
   "productionFreeze": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
   "candidate": {
-    "status": "building",
+    "status": "candidate-delivered-awaiting-actual-retest",
     "sourceCommit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
-    "buildOwner": "01",
+    "path": "releases/user-acceptance-312e5fe/Lingjing-0.1.8-portable-x64.exe",
+    "bytes": 169197132,
+    "sha256": "01b8993f4464a8d2a19ceb906d0b1875b702e17777fbb7aec88738a6a63307da",
+    "appAsarSha256": "de3e646fddfbc0a202e41f00dbcc26a3896d939d91a78b8228a2af3839a5cf0d",
+    "signature": "NotSigned",
+    "runtimeClosureFiles": 114,
     "actualUserAcceptancePassed": false,
-    "technicalGates": "docs/implementation/qa/2026-10-25-user-acceptance/integration-gates-312e5fe.json"
+    "engineeringEvidence": "docs/implementation/evidence/foundation/user-acceptance-312e5fe/handoff.json",
+    "rootCopyReadback": "docs/implementation/evidence/foundation/user-acceptance-312e5fe/root-copy-readback.json"
   },
   "identityConsumerCommits": {
     "companions": "ad20468b38c89a79090de435a2cfcf8d2e928ec7",
@@ -106,5 +112,11 @@
     "conversations": "4adcf1d66fee6b74f73d2d69359c09eaeeedea21",
     "discovery": "e74a9aa",
     "resources": "e6dd93c"
+  },
+  "baselineArchive": {
+    "round": "rounds/baseline-a9acd7f-790f5b6d/round.json",
+    "rootVerifiedFiles": 100,
+    "indexSha256": "29c3ad3bf10fbbad9cb72ab5b290076c969a2ce4b42a9a3b9d021e971bcb42fe",
+    "textCredentialFlags": 0
   }
 }

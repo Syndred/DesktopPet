@@ -1,0 +1,626 @@
+{
+  "ok": true,
+  "data": {
+    "scenario": "qa",
+    "location": {
+      "mode": "real",
+      "status": "ready",
+      "permission": "unknown",
+      "fix": {
+        "lat": 31.229699999999998,
+        "lng": 121.47389999999999,
+        "accuracyMeters": 5,
+        "timestampMs": 1792921670307,
+        "coordinateSystem": "wgs84",
+        "source": "simulated",
+        "scenarioId": "54f0fb7d-bc8a-45cd-8896-754333d59d31",
+        "provider": "qa-discovery",
+        "positionSource": "Scenario"
+      },
+      "lastError": null,
+      "watching": false
+    },
+    "map": {
+      "id": "osm",
+      "name": "OpenStreetMap",
+      "coordinateSystem": "wgs84",
+      "attribution": "© OpenStreetMap contributors",
+      "attributionUrl": "https://www.openstreetmap.org/copyright",
+      "tileUrl": "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+      "maxZoom": 19,
+      "available": true,
+      "providers": [
+        {
+          "id": "osm",
+          "name": "OpenStreetMap",
+          "available": true
+        },
+        {
+          "id": "tencent",
+          "name": "腾讯地图",
+          "available": false
+        },
+        {
+          "id": "google",
+          "name": "Google Maps",
+          "available": false
+        }
+      ]
+    },
+    "spawns": [
+      {
+        "templateId": "animal-wood-deer",
+        "name": "青芽",
+        "element": "wood",
+        "description": "戴着枝叶小角的林间幼鹿，喜欢收集新芽。",
+        "resourceId": "builtin:lingjing-qingya-v1",
+        "stats": {
+          "hp": 130,
+          "atk": 26,
+          "def": 26,
+          "spd": 18
+        },
+        "id": "wild-2d-v2-f3621dbe19-498033-52049-202456",
+        "wildSerial": "D5364DD852639CAE9",
+        "position": {
+          "lat": 31.229699999999998,
+          "lng": 121.47389999999999
+        },
+        "coordinateSystem": "wgs84",
+        "rarity": "common",
+        "placeLabel": "附近探索点",
+        "placeLabelSource": "game",
+        "expiresAt": 1792922400000,
+        "distanceMeters": 0,
+        "source": "game-spawn",
+        "demo": false,
+        "inRange": true,
+        "captureState": "available",
+        "mapPosition": {
+          "lat": 31.229699999999998,
+          "lng": 121.47389999999999
+        }
+      },
+      {
+        "templateId": "animal-earth-pangolin",
+        "name": "岩团",
+        "element": "earth",
+        "description": "披着暖褐鳞甲的小穿山甲，稳稳守住每一步。",
+        "resourceId": "builtin:lingjing-yantuan-v1",
+        "stats": {
+          "hp": 142,
+          "atk": 24,
+          "def": 34,
+          "spd": 11
+        },
+        "id": "wild-2d-v2-f3621dbe19-498033-52049-202455",
+        "wildSerial": "D1A6035D2BD0EF6A2",
+        "position": {
+          "lat": 31.229699999999998,
+          "lng": 121.4733
+        },
+        "coordinateSystem": "wgs84",
+        "rarity": "rare",
+        "placeLabel": "附近探索点",
+        "placeLabelSource": "game",
+        "expiresAt": 1792922400000,
+        "distanceMeters": 57,
+        "source": "game-spawn",
+        "demo": false,
+        "inRange": true,
+        "captureState": "available",
+        "mapPosition": {
+          "lat": 31.229699999999998,
+          "lng": 121.4733
+        }
+      },
+      {
+        "templateId": "big-fish-cheerful",
+        "name": "小蓝",
+        "element": "water",
+        "description": "活泼的侧马尾伙伴，穿着宽松鲸鱼斗篷。",
+        "resourceId": "builtin:lingjing-xiaolan-v1",
+        "stats": {
+          "hp": 124,
+          "atk": 28,
+          "def": 24,
+          "spd": 20
+        },
+        "id": "wild-2d-v2-f3621dbe19-498033-52048-202457",
+        "wildSerial": "D3B15B7E18BA51332",
+        "position": {
+          "lat": 31.2291,
+          "lng": 121.47449999999999
+        },
+        "coordinateSystem": "wgs84",
+        "rarity": "common",
+        "placeLabel": "附近探索点",
+        "placeLabelSource": "game",
+        "expiresAt": 1792922400000,
+        "distanceMeters": 88,
+        "source": "game-spawn",
+        "demo": false,
+        "inRange": true,
+        "captureState": "available",
+        "mapPosition": {
+          "lat": 31.2291,
+          "lng": 121.47449999999999
+        }
+      },
+      {
+        "templateId": "animal-shiba",
+        "name": "焰柴",
+        "element": "fire",
+        "description": "热情勇敢的柴犬，星星项圈总是闪闪发亮。",
+        "resourceId": "builtin:lingjing-shiba-v2",
+        "stats": {
+          "hp": 118,
+          "atk": 33,
+          "def": 20,
+          "spd": 22
+        },
+        "id": "wild-2d-v2-f3621dbe19-498033-52049-202454",
+        "wildSerial": "D4312CD0DEE2CEA3E",
+        "position": {
+          "lat": 31.229699999999998,
+          "lng": 121.47269999999999
+        },
+        "coordinateSystem": "wgs84",
+        "rarity": "common",
+        "placeLabel": "附近探索点",
+        "placeLabelSource": "game",
+        "expiresAt": 1792922400000,
+        "distanceMeters": 114,
+        "source": "game-spawn",
+        "demo": false,
+        "inRange": false,
+        "captureState": "available",
+        "mapPosition": {
+          "lat": 31.229699999999998,
+          "lng": 121.47269999999999
+        }
+      },
+      {
+        "templateId": "animal-shiba",
+        "name": "焰柴",
+        "element": "fire",
+        "description": "热情勇敢的柴犬，星星项圈总是闪闪发亮。",
+        "resourceId": "builtin:lingjing-shiba-v2",
+        "stats": {
+          "hp": 118,
+          "atk": 33,
+          "def": 20,
+          "spd": 22
+        },
+        "id": "wild-2d-v2-f3621dbe19-498033-52049-202453",
+        "wildSerial": "D528294AD52907D9F",
+        "position": {
+          "lat": 31.229699999999998,
+          "lng": 121.47209999999998
+        },
+        "coordinateSystem": "wgs84",
+        "rarity": "common",
+        "placeLabel": "附近探索点",
+        "placeLabelSource": "game",
+        "expiresAt": 1792922400000,
+        "distanceMeters": 171,
+        "source": "game-spawn",
+        "demo": false,
+        "inRange": false,
+        "captureState": "available",
+        "mapPosition": {
+          "lat": 31.229699999999998,
+          "lng": 121.47209999999998
+        }
+      },
+      {
+        "templateId": "animal-hat-cat",
+        "name": "礼帽喵",
+        "element": "metal",
+        "description": "戴着礼帽的燕尾猫，擅长温柔的小魔术。",
+        "resourceId": "builtin:lingjing-hatcat-v1",
+        "stats": {
+          "hp": 136,
+          "atk": 30,
+          "def": 30,
+          "spd": 13
+        },
+        "id": "wild-2d-v2-f3621dbe19-498033-52049-202459",
+        "wildSerial": "D34596DA1E89F8936",
+        "position": {
+          "lat": 31.229699999999998,
+          "lng": 121.47569999999999
+        },
+        "coordinateSystem": "wgs84",
+        "rarity": "common",
+        "placeLabel": "附近探索点",
+        "placeLabelSource": "game",
+        "expiresAt": 1792922400000,
+        "distanceMeters": 171,
+        "source": "game-spawn",
+        "demo": false,
+        "inRange": false,
+        "captureState": "available",
+        "mapPosition": {
+          "lat": 31.229699999999998,
+          "lng": 121.47569999999999
+        }
+      },
+      {
+        "templateId": "animal-earth-pangolin",
+        "name": "岩团",
+        "element": "earth",
+        "description": "披着暖褐鳞甲的小穿山甲，稳稳守住每一步。",
+        "resourceId": "builtin:lingjing-yantuan-v1",
+        "stats": {
+          "hp": 142,
+          "atk": 24,
+          "def": 34,
+          "spd": 11
+        },
+        "id": "wild-2d-v2-f3621dbe19-498033-52047-202454",
+        "wildSerial": "D11C05C2976866399",
+        "position": {
+          "lat": 31.228499999999997,
+          "lng": 121.47269999999999
+        },
+        "coordinateSystem": "wgs84",
+        "rarity": "common",
+        "placeLabel": "附近探索点",
+        "placeLabelSource": "game",
+        "expiresAt": 1792922400000,
+        "distanceMeters": 176,
+        "source": "game-spawn",
+        "demo": false,
+        "inRange": false,
+        "captureState": "available",
+        "mapPosition": {
+          "lat": 31.228499999999997,
+          "lng": 121.47269999999999
+        }
+      },
+      {
+        "templateId": "big-fish-foodie",
+        "name": "饭团",
+        "element": "water",
+        "description": "盘着双丸子头的美食家，认真珍惜每一顿饭。",
+        "resourceId": "builtin:lingjing-fantuan-v1",
+        "stats": {
+          "hp": 124,
+          "atk": 28,
+          "def": 24,
+          "spd": 20
+        },
+        "id": "wild-2d-v2-f3621dbe19-498033-52051-202458",
+        "wildSerial": "D0EB620B6945A3541",
+        "position": {
+          "lat": 31.2309,
+          "lng": 121.47509999999998
+        },
+        "coordinateSystem": "wgs84",
+        "rarity": "rare",
+        "placeLabel": "附近探索点",
+        "placeLabelSource": "game",
+        "expiresAt": 1792922400000,
+        "distanceMeters": 176,
+        "source": "game-spawn",
+        "demo": false,
+        "inRange": false,
+        "captureState": "available",
+        "mapPosition": {
+          "lat": 31.2309,
+          "lng": 121.47509999999998
+        }
+      },
+      {
+        "templateId": "big-fish-gentle",
+        "name": "鱼丸",
+        "element": "water",
+        "description": "安静温柔的鲸尾少女，喜欢陪你度过日常。",
+        "resourceId": "builtin:lingjing-yuwan-v2",
+        "stats": {
+          "hp": 124,
+          "atk": 28,
+          "def": 24,
+          "spd": 20
+        },
+        "id": "wild-2d-v2-f3621dbe19-498033-52050-202453",
+        "wildSerial": "D64174151E8926A7D",
+        "position": {
+          "lat": 31.230299999999996,
+          "lng": 121.47209999999998
+        },
+        "coordinateSystem": "wgs84",
+        "rarity": "common",
+        "placeLabel": "附近探索点",
+        "placeLabelSource": "game",
+        "expiresAt": 1792922400000,
+        "distanceMeters": 184,
+        "source": "game-spawn",
+        "demo": false,
+        "inRange": false,
+        "captureState": "available",
+        "mapPosition": {
+          "lat": 31.230299999999996,
+          "lng": 121.47209999999998
+        }
+      },
+      {
+        "templateId": "animal-wood-deer",
+        "name": "青芽",
+        "element": "wood",
+        "description": "戴着枝叶小角的林间幼鹿，喜欢收集新芽。",
+        "resourceId": "builtin:lingjing-qingya-v1",
+        "stats": {
+          "hp": 130,
+          "atk": 26,
+          "def": 26,
+          "spd": 18
+        },
+        "id": "wild-2d-v2-f3621dbe19-498033-52050-202459",
+        "wildSerial": "D5B9C0DEDBB1AE953",
+        "position": {
+          "lat": 31.230299999999996,
+          "lng": 121.47569999999999
+        },
+        "coordinateSystem": "wgs84",
+        "rarity": "rare",
+        "placeLabel": "附近探索点",
+        "placeLabelSource": "game",
+        "expiresAt": 1792922400000,
+        "distanceMeters": 184,
+        "source": "game-spawn",
+        "demo": false,
+        "inRange": false,
+        "captureState": "available",
+        "mapPosition": {
+          "lat": 31.230299999999996,
+          "lng": 121.47569999999999
+        }
+      },
+      {
+        "templateId": "animal-wood-deer",
+        "name": "青芽",
+        "element": "wood",
+        "description": "戴着枝叶小角的林间幼鹿，喜欢收集新芽。",
+        "resourceId": "builtin:lingjing-qingya-v1",
+        "stats": {
+          "hp": 130,
+          "atk": 26,
+          "def": 26,
+          "spd": 18
+        },
+        "id": "wild-2d-v2-f3621dbe19-498033-52052-202456",
+        "wildSerial": "D4F94FFD9164F2272",
+        "position": {
+          "lat": 31.231499999999997,
+          "lng": 121.47389999999999
+        },
+        "coordinateSystem": "wgs84",
+        "rarity": "common",
+        "placeLabel": "附近探索点",
+        "placeLabelSource": "game",
+        "expiresAt": 1792922400000,
+        "distanceMeters": 200,
+        "source": "game-spawn",
+        "demo": false,
+        "inRange": false,
+        "captureState": "available",
+        "mapPosition": {
+          "lat": 31.231499999999997,
+          "lng": 121.47389999999999
+        }
+      },
+      {
+        "templateId": "big-fish-gentle",
+        "name": "鱼丸",
+        "element": "water",
+        "description": "安静温柔的鲸尾少女，喜欢陪你度过日常。",
+        "resourceId": "builtin:lingjing-yuwan-v2",
+        "stats": {
+          "hp": 124,
+          "atk": 28,
+          "def": 24,
+          "spd": 20
+        },
+        "id": "wild-2d-v2-f3621dbe19-498033-52046-202457",
+        "wildSerial": "D32D7A407D6D2AE00",
+        "position": {
+          "lat": 31.227899999999998,
+          "lng": 121.47449999999999
+        },
+        "coordinateSystem": "wgs84",
+        "rarity": "common",
+        "placeLabel": "附近探索点",
+        "placeLabelSource": "game",
+        "expiresAt": 1792922400000,
+        "distanceMeters": 208,
+        "source": "game-spawn",
+        "demo": false,
+        "inRange": false,
+        "captureState": "available",
+        "mapPosition": {
+          "lat": 31.227899999999998,
+          "lng": 121.47449999999999
+        }
+      },
+      {
+        "templateId": "animal-white-fox",
+        "name": "小狐",
+        "element": "water",
+        "description": "安静机灵的雪白小狐，像雪花一样轻盈。",
+        "resourceId": "builtin:lingjing-xiaohu-v1",
+        "stats": {
+          "hp": 124,
+          "atk": 28,
+          "def": 24,
+          "spd": 20
+        },
+        "id": "wild-2d-v2-f3621dbe19-498033-52052-202457",
+        "wildSerial": "D24736D81D2F615BF",
+        "position": {
+          "lat": 31.231499999999997,
+          "lng": 121.47449999999999
+        },
+        "coordinateSystem": "wgs84",
+        "rarity": "common",
+        "placeLabel": "附近探索点",
+        "placeLabelSource": "game",
+        "expiresAt": 1792922400000,
+        "distanceMeters": 208,
+        "source": "game-spawn",
+        "demo": false,
+        "inRange": false,
+        "captureState": "available",
+        "mapPosition": {
+          "lat": 31.231499999999997,
+          "lng": 121.47449999999999
+        }
+      },
+      {
+        "templateId": "big-fish-foodie",
+        "name": "饭团",
+        "element": "water",
+        "description": "盘着双丸子头的美食家，认真珍惜每一顿饭。",
+        "resourceId": "builtin:lingjing-fantuan-v1",
+        "stats": {
+          "hp": 124,
+          "atk": 28,
+          "def": 24,
+          "spd": 20
+        },
+        "id": "wild-2d-v2-f3621dbe19-498033-52047-202459",
+        "wildSerial": "D630E7B1B4A389087",
+        "position": {
+          "lat": 31.228499999999997,
+          "lng": 121.47569999999999
+        },
+        "coordinateSystem": "wgs84",
+        "rarity": "common",
+        "placeLabel": "附近探索点",
+        "placeLabelSource": "game",
+        "expiresAt": 1792922400000,
+        "distanceMeters": 217,
+        "source": "game-spawn",
+        "demo": false,
+        "inRange": false,
+        "captureState": "available",
+        "mapPosition": {
+          "lat": 31.228499999999997,
+          "lng": 121.47569999999999
+        }
+      },
+      {
+        "templateId": "animal-hat-cat",
+        "name": "礼帽喵",
+        "element": "metal",
+        "description": "戴着礼帽的燕尾猫，擅长温柔的小魔术。",
+        "resourceId": "builtin:lingjing-hatcat-v1",
+        "stats": {
+          "hp": 136,
+          "atk": 30,
+          "def": 30,
+          "spd": 13
+        },
+        "id": "wild-2d-v2-f3621dbe19-498033-52051-202453",
+        "wildSerial": "D56F1B4DF93211EA2",
+        "position": {
+          "lat": 31.2309,
+          "lng": 121.47209999999998
+        },
+        "coordinateSystem": "wgs84",
+        "rarity": "common",
+        "placeLabel": "附近探索点",
+        "placeLabelSource": "game",
+        "expiresAt": 1792922400000,
+        "distanceMeters": 217,
+        "source": "game-spawn",
+        "demo": false,
+        "inRange": false,
+        "captureState": "available",
+        "mapPosition": {
+          "lat": 31.2309,
+          "lng": 121.47209999999998
+        }
+      },
+      {
+        "templateId": "big-fish-cheerful",
+        "name": "小蓝",
+        "element": "water",
+        "description": "活泼的侧马尾伙伴，穿着宽松鲸鱼斗篷。",
+        "resourceId": "builtin:lingjing-xiaolan-v1",
+        "stats": {
+          "hp": 124,
+          "atk": 28,
+          "def": 24,
+          "spd": 20
+        },
+        "id": "wild-2d-v2-f3621dbe19-498033-52049-202452",
+        "wildSerial": "D633D6C0B168516E8",
+        "position": {
+          "lat": 31.229699999999998,
+          "lng": 121.47149999999999
+        },
+        "coordinateSystem": "wgs84",
+        "rarity": "common",
+        "placeLabel": "附近探索点",
+        "placeLabelSource": "game",
+        "expiresAt": 1792922400000,
+        "distanceMeters": 228,
+        "source": "game-spawn",
+        "demo": false,
+        "inRange": false,
+        "captureState": "available",
+        "mapPosition": {
+          "lat": 31.229699999999998,
+          "lng": 121.47149999999999
+        }
+      }
+    ],
+    "territories": [],
+    "captureRadiusMeters": 100,
+    "mapLocation": {
+      "lat": 31.229699999999998,
+      "lng": 121.47389999999999
+    },
+    "territoriesAvailable": false,
+    "pets": [
+      {
+        "petId": "pet-3b40de99-bcb5-465a-bba4-c91465063ff1",
+        "name": "小狐",
+        "element": "water",
+        "resource": {
+          "resourceId": "builtin:lingjing-xiaohu-v1",
+          "kind": "2d"
+        },
+        "level": 1
+      },
+      {
+        "petId": "pet-30793a4f-85e5-41dc-999e-3f24a8095969",
+        "name": "小狐",
+        "element": "water",
+        "resource": {
+          "resourceId": "builtin:lingjing-xiaohu-v1",
+          "kind": "2d"
+        },
+        "level": 1
+      },
+      {
+        "petId": "pet-1da5a63f-c32a-4d74-a88b-8878e09732ee",
+        "name": "验收昵称",
+        "element": "water",
+        "resource": {
+          "resourceId": "builtin:lingjing-xiaohu-v1",
+          "kind": "2d"
+        },
+        "level": 1
+      }
+    ],
+    "encounters": [],
+    "captures": [],
+    "signedIn": true,
+    "storage": "local",
+    "cloudConfigured": false,
+    "cloudStatus": "disabled"
+  }
+}

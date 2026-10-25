@@ -1,0 +1,207 @@
+{
+  "schemaVersion": 1,
+  "roundId": "baseline-a9acd7f-790f5b6d",
+  "frozenAt": "2026-10-25T10:19:27.628Z",
+  "immutable": true,
+  "runId": "790f5b6d-a900-4c6f-bb3f-e32237136ed1",
+  "scenarioRunId": "54f0fb7d-bc8a-45cd-8896-754333d59d31",
+  "sourceCommit": "a9acd7f6f1920c541d429fa26d1f054b1427cd95",
+  "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+  "executable": "C:/Users/Administrator/Desktop/project/DesktopPet/releases/final-a9acd7f/Lingjing-0.1.8-portable-x64.exe",
+  "cases": 94,
+  "executedCases": [
+    {
+      "id": "A01",
+      "status": "passed",
+      "actual": "原SFX启动到登录，实际manifest a9acd7f；档案与namespaced模拟场景绑定",
+      "evidence": [
+        "evidence/baseline-login.png",
+        "run-manifest.json"
+      ]
+    },
+    {
+      "id": "A02",
+      "status": "failed",
+      "actual": "保持登录锁图标上偏，复现QA-001",
+      "evidence": [
+        "evidence/baseline-login.png",
+        "evidence/QA-001-login-geometry.json"
+      ]
+    },
+    {
+      "id": "A05",
+      "status": "passed",
+      "actual": "正常UI填四字段、Enter注册成功；独立QA owner，模拟标识明确",
+      "evidence": [
+        "evidence/baseline-registration-filled.png",
+        "evidence/baseline-registration-submit.png",
+        "evidence/local-registration-session.json"
+      ]
+    },
+    {
+      "id": "A06",
+      "status": "running",
+      "actual": "原EXE正常UI新云端档案注册成功，live/Auth user与独立Supabase lingjing_accounts行匹配；保持登录secure；新候选另行实测",
+      "evidence": [
+        "evidence/cloud-runtime-identity.json",
+        "evidence/baseline-cloud-registered-native.jpg"
+      ]
+    },
+    {
+      "id": "C01",
+      "status": "failed",
+      "actual": "原包领养分类为大肥鱼/动物伙伴；属性被放到下拉菜单，复现QA-002",
+      "evidence": [
+        "evidence/baseline-adoption.png"
+      ]
+    },
+    {
+      "id": "C02",
+      "status": "passed",
+      "actual": "通过真实键盘两次正常领养同模板小狐；实例petId和serial不同，待固定名/编号需求修复复验",
+      "evidence": [
+        "evidence/two-foxes-readback.json"
+      ]
+    },
+    {
+      "id": "C03",
+      "status": "failed",
+      "actual": "同模板列表两只仅同名、无编号；可把第三只标准小狐改为验收昵称。后端UUID/短serial存在，需固定标准名和完整编号投影各域，QA-003复现",
+      "evidence": [
+        "evidence/QA-003-three-instances.json",
+        "evidence/QA-003-three-instances-renderer.png"
+      ]
+    },
+    {
+      "id": "D02",
+      "status": "failed",
+      "actual": "125% DPI真实10次拖动：窗口232×280→252×300 DIP；stage214×222.9→234×242.9，保存scale全程1；每次输入均isTrusted，复现QA-004",
+      "evidence": [
+        "evidence/QA-004-drag-series.json",
+        "evidence/QA-004-drag-events.json",
+        "evidence/QA-004-drag-00.png",
+        "evidence/QA-004-drag-10.png"
+      ]
+    },
+    {
+      "id": "T02",
+      "status": "running",
+      "actual": "正常UI选第二只并保存独立人设，snapshot对应第二只petId revision1；记忆/切回/重启待最终包",
+      "evidence": [
+        "evidence/chat-persona-second-after.json"
+      ]
+    },
+    {
+      "id": "M01",
+      "status": "running",
+      "actual": "实际打开未定位空态，经明确QA位置入口加载OSM/MapLibre底图和真实角色标记；模拟定位来源已保存，平移缩放待最终包",
+      "evidence": [
+        "evidence/discovery-explicit-qa-map.json",
+        "evidence/discovery-explicit-qa-map-renderer.png"
+      ]
+    },
+    {
+      "id": "M04",
+      "status": "running",
+      "actual": "正常QA位置刷新得到15个相遇，位置过期会禁用挑战；刷新后恢复。真实定位与空结果/冷却后续验证",
+      "evidence": [
+        "evidence/discovery-explicit-qa-map.json",
+        "evidence/discovery-encounter-before-battle.json"
+      ]
+    },
+    {
+      "id": "M06",
+      "status": "running",
+      "actual": "真实UI相遇→共用战斗页；离开确认可取消并恢复，再确认离开显示已离开/回合0。权威为明确QA模拟；失败和过期其他分支待最终包",
+      "evidence": [
+        "evidence/wild-abandoned-readback.json",
+        "evidence/wild-abandoned-renderer.png"
+      ]
+    },
+    {
+      "id": "G05",
+      "status": "running",
+      "actual": "正常UI地块1确认播种胡萝卜，种子2→1；界面进入原有10分钟生长且收获禁用。等待自然成熟，重复点击/其他种植待最终包",
+      "evidence": [
+        "evidence/garden-first-plant.json",
+        "evidence/garden-first-plant-renderer.png"
+      ]
+    },
+    {
+      "id": "A13",
+      "status": "running",
+      "actual": "全新云端零宠物时提示伙伴已保存/其他待核对；正常核对进入账号页，同步初始关闭，启用后预览/立即同步返回云端无存档；随后正常领养鱼丸成功，独立云端存档revision1。是否可正常完成首次核对留到候选继续，不预判为缺陷。",
+      "evidence": [
+        "evidence/baseline-cloud-registered-native.jpg",
+        "evidence/baseline-cloud-review-entry-native.jpg",
+        "evidence/cloud-before-first-review.json",
+        "evidence/baseline-cloud-preview-request-native.jpg",
+        "evidence/baseline-cloud-first-adoption-completed-native.jpg",
+        "evidence/baseline-live-cloud-independent.json"
+      ]
+    },
+    {
+      "id": "N05",
+      "status": "failed",
+      "actual": "同profile原SFX重复启动产生第二主进程和登录窗口，原窗口仍在；复现QA-006",
+      "evidence": [
+        "evidence/QA-006-duplicate-profile.json",
+        "evidence/QA-006-duplicate-login-native.png"
+      ]
+    }
+  ],
+  "counts": {
+    "passed": 3,
+    "failed": 5,
+    "pending": 79,
+    "running": 7
+  },
+  "issues": [
+    {
+      "id": "QA-001",
+      "severity": "P1-release-blocker",
+      "reproduced": true,
+      "status": "fixed_awaiting_retest"
+    },
+    {
+      "id": "QA-002",
+      "severity": "P1-release-blocker",
+      "reproduced": true,
+      "status": "fixed_awaiting_retest"
+    },
+    {
+      "id": "QA-003",
+      "severity": "P1-release-blocker",
+      "reproduced": true,
+      "status": "fixed_awaiting_retest"
+    },
+    {
+      "id": "QA-004",
+      "severity": "P1-release-blocker",
+      "reproduced": true,
+      "status": "fixed_awaiting_retest"
+    },
+    {
+      "id": "QA-005",
+      "severity": "P2-source-risk",
+      "reproduced": false,
+      "status": "fixed_awaiting_retest"
+    },
+    {
+      "id": "QA-006",
+      "severity": "P1-release-blocker",
+      "reproduced": true,
+      "status": "fixed_awaiting_retest"
+    },
+    {
+      "id": "QA-007",
+      "severity": "P2-source-risk",
+      "reproduced": false,
+      "status": "fixed_awaiting_retest"
+    }
+  ],
+  "evidenceFiles": 100,
+  "next": "New candidate gets new round/runId and reset final pass status; no old pass transfers",
+  "fixtures": "Private ignored local-a/cloud-a profiles stay in place; no passwords/tokens/vault/DB copied into public checkpoint",
+  "processCleanup": "Owned duplicate main18500 has no pages/windows after Browser.close target closure and debugger detach; full process exit not confirmed. User10392 untouched."
+}

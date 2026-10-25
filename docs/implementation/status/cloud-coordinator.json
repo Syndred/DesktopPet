@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-25T10:15:02.280Z",
-  "phase": "full-user-acceptance-new-candidate-building",
+  "updatedAt": "2026-10-25T10:25:38.901Z",
+  "phase": "full-user-acceptance-candidate-delivered",
   "deployed": {
     "projectRef": "jbvrdmrkwpznbrvteive",
     "migrations": 22,
@@ -151,7 +151,7 @@
     "fullLocalSupabasePostgisReset": false,
     "dockerOrPodmanAvailable": false
   },
-  "releaseStatus": "Frozen corrected source passed local technical gates; candidate building; full user acceptance pending",
+  "releaseStatus": "Corrected unsigned candidate delivered to independent actual-user QA; no full-user pass claimed",
   "priorFailedEvidenceRetained": true,
   "module": "coordinator",
   "clientDate": "2026-10-25",
@@ -254,7 +254,7 @@
       "review": "Legacy normalization is internal view only; original envelope/checksum/files retained. Root8 targeted native restore/provider cases and original signed expired HTTPS denial passed."
     }
   ],
-  "status": "full-user-acceptance-new-candidate-building",
+  "status": "full-user-acceptance-candidate-delivered",
   "remaining": [
     "QA-001 登录页保持登录复选框文字与锁图标未对齐; source fixed, actual corrected-portable retest pending",
     "QA-002 领养分类仍为大肥鱼/动物伙伴，需改为属性图标; source fixed, actual corrected-portable retest pending",
@@ -512,7 +512,7 @@
     "page": "Cloud account login"
   },
   "userAcceptance": {
-    "status": "candidate-building",
+    "status": "actual-candidate-retest-pending",
     "startedAt": "2026-10-25T09:23:06.780Z",
     "threadId": "01a1725c-d59c-7620-9bb6-1c0d4e0fb3a3",
     "threadTitle": "灵境 09｜完整用户功能验收与缺陷闭环",
@@ -526,11 +526,17 @@
     "fullUserAcceptancePassed": false,
     "matrixCases": 94,
     "candidate": {
-      "status": "building",
+      "status": "candidate-delivered-awaiting-actual-retest",
       "sourceCommit": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
-      "buildOwner": "01",
+      "path": "releases/user-acceptance-312e5fe/Lingjing-0.1.8-portable-x64.exe",
+      "bytes": 169197132,
+      "sha256": "01b8993f4464a8d2a19ceb906d0b1875b702e17777fbb7aec88738a6a63307da",
+      "appAsarSha256": "de3e646fddfbc0a202e41f00dbcc26a3896d939d91a78b8228a2af3839a5cf0d",
+      "signature": "NotSigned",
+      "runtimeClosureFiles": 114,
       "actualUserAcceptancePassed": false,
-      "technicalGates": "docs/implementation/qa/2026-10-25-user-acceptance/integration-gates-312e5fe.json"
+      "engineeringEvidence": "docs/implementation/evidence/foundation/user-acceptance-312e5fe/handoff.json",
+      "rootCopyReadback": "docs/implementation/evidence/foundation/user-acceptance-312e5fe/root-copy-readback.json"
     },
     "knownIssues": [
       "QA-001",

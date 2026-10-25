@@ -1,0 +1,235 @@
+{
+  "ok": true,
+  "data": {
+    "ownerAccountId": "qa:54f0fb7d-bc8a-45cd-8896-754333d59d31:local-ee934188-5eea-4044-b90a-7f0fbf4a6147",
+    "pets": [
+      {
+        "ownerAccountId": "qa:54f0fb7d-bc8a-45cd-8896-754333d59d31:local-ee934188-5eea-4044-b90a-7f0fbf4a6147",
+        "petId": "pet-3b40de99-bcb5-465a-bba4-c91465063ff1",
+        "templateId": "animal-white-fox",
+        "name": "小狐",
+        "serial": "3B40DE99",
+        "element": "water",
+        "resource": {
+          "resourceId": "builtin:lingjing-xiaohu-v1",
+          "kind": "2d"
+        },
+        "source": "adoption",
+        "origin": {},
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        },
+        "desktop": {
+          "visible": true,
+          "behavior": "quiet",
+          "scale": 1,
+          "position": {
+            "x": 80,
+            "y": 520,
+            "displayId": null
+          }
+        },
+        "revision": 1,
+        "createdAt": "2026-10-25T09:34:00.008Z",
+        "updatedAt": "2026-10-25T09:34:00.008Z"
+      },
+      {
+        "ownerAccountId": "qa:54f0fb7d-bc8a-45cd-8896-754333d59d31:local-ee934188-5eea-4044-b90a-7f0fbf4a6147",
+        "petId": "pet-30793a4f-85e5-41dc-999e-3f24a8095969",
+        "templateId": "animal-white-fox",
+        "name": "小狐",
+        "serial": "30793A4F",
+        "element": "water",
+        "resource": {
+          "resourceId": "builtin:lingjing-xiaohu-v1",
+          "kind": "2d"
+        },
+        "source": "adoption",
+        "origin": {},
+        "growth": {
+          "level": 1,
+          "experience": 0,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        },
+        "desktop": {
+          "visible": true,
+          "behavior": "quiet",
+          "scale": 1,
+          "position": {
+            "x": 320,
+            "y": 520,
+            "displayId": null
+          }
+        },
+        "revision": 1,
+        "createdAt": "2026-10-25T09:34:35.594Z",
+        "updatedAt": "2026-10-25T09:34:35.594Z"
+      }
+    ],
+    "selections": {
+      "chatPetId": null,
+      "battlePetId": null,
+      "guardPetId": null
+    },
+    "templates": [
+      {
+        "templateId": "big-fish-gentle",
+        "name": "鱼丸",
+        "category": "big-fish",
+        "element": "water",
+        "description": "安静温柔的鲸尾少女，喜欢陪你度过日常。",
+        "resource": {
+          "resourceId": "builtin:lingjing-yuwan-v2",
+          "kind": "2d"
+        },
+        "baseStats": {
+          "hp": 124,
+          "atk": 28,
+          "def": 24,
+          "spd": 20
+        }
+      },
+      {
+        "templateId": "big-fish-cheerful",
+        "name": "小蓝",
+        "category": "big-fish",
+        "element": "water",
+        "description": "活泼的侧马尾伙伴，穿着宽松鲸鱼斗篷。",
+        "resource": {
+          "resourceId": "builtin:lingjing-xiaolan-v1",
+          "kind": "2d"
+        },
+        "baseStats": {
+          "hp": 124,
+          "atk": 28,
+          "def": 24,
+          "spd": 20
+        }
+      },
+      {
+        "templateId": "big-fish-foodie",
+        "name": "饭团",
+        "category": "big-fish",
+        "element": "water",
+        "description": "盘着双丸子头的美食家，认真珍惜每一顿饭。",
+        "resource": {
+          "resourceId": "builtin:lingjing-fantuan-v1",
+          "kind": "2d"
+        },
+        "baseStats": {
+          "hp": 124,
+          "atk": 28,
+          "def": 24,
+          "spd": 20
+        }
+      },
+      {
+        "templateId": "animal-shiba",
+        "name": "焰柴",
+        "category": "animal",
+        "element": "fire",
+        "description": "热情勇敢的柴犬，星星项圈总是闪闪发亮。",
+        "resource": {
+          "resourceId": "builtin:lingjing-shiba-v2",
+          "kind": "2d"
+        },
+        "baseStats": {
+          "hp": 118,
+          "atk": 33,
+          "def": 20,
+          "spd": 22
+        }
+      },
+      {
+        "templateId": "animal-hat-cat",
+        "name": "礼帽喵",
+        "category": "animal",
+        "element": "metal",
+        "description": "戴着礼帽的燕尾猫，擅长温柔的小魔术。",
+        "resource": {
+          "resourceId": "builtin:lingjing-hatcat-v1",
+          "kind": "2d"
+        },
+        "baseStats": {
+          "hp": 136,
+          "atk": 30,
+          "def": 30,
+          "spd": 13
+        }
+      },
+      {
+        "templateId": "animal-white-fox",
+        "name": "小狐",
+        "category": "animal",
+        "element": "water",
+        "description": "安静机灵的雪白小狐，像雪花一样轻盈。",
+        "resource": {
+          "resourceId": "builtin:lingjing-xiaohu-v1",
+          "kind": "2d"
+        },
+        "baseStats": {
+          "hp": 124,
+          "atk": 28,
+          "def": 24,
+          "spd": 20
+        }
+      },
+      {
+        "templateId": "animal-wood-deer",
+        "name": "青芽",
+        "category": "animal",
+        "element": "wood",
+        "description": "戴着枝叶小角的林间幼鹿，喜欢收集新芽。",
+        "resource": {
+          "resourceId": "builtin:lingjing-qingya-v1",
+          "kind": "2d"
+        },
+        "baseStats": {
+          "hp": 130,
+          "atk": 26,
+          "def": 26,
+          "spd": 18
+        }
+      },
+      {
+        "templateId": "animal-earth-pangolin",
+        "name": "岩团",
+        "category": "animal",
+        "element": "earth",
+        "description": "披着暖褐鳞甲的小穿山甲，稳稳守住每一步。",
+        "resource": {
+          "resourceId": "builtin:lingjing-yantuan-v1",
+          "kind": "2d"
+        },
+        "baseStats": {
+          "hp": 142,
+          "atk": 24,
+          "def": 34,
+          "spd": 11
+        }
+      }
+    ],
+    "revision": 3
+  },
+  "revision": 3
+}

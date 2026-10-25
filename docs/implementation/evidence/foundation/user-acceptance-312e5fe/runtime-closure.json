@@ -1,0 +1,1606 @@
+{
+  "schemaVersion": 1,
+  "policy": "Formal core and registered feature roots; static relative require/import closure plus explicit native support files. No extension-only packaging assumptions.",
+  "roots": [
+    "apps/pc-app/runtime/core/builtin-art.cjs",
+    "apps/pc-app/runtime/core/database.cjs",
+    "apps/pc-app/runtime/core/ipc-guard.cjs",
+    "apps/pc-app/runtime/core/main-window-geometry.cjs",
+    "apps/pc-app/runtime/core/profile-instance.cjs",
+    "apps/pc-app/runtime/core/profile-path.cjs",
+    "apps/pc-app/runtime/core/qa-scenario.cjs",
+    "apps/pc-app/runtime/core/resource-backup.cjs",
+    "apps/pc-app/runtime/core/runtime-compat.cjs",
+    "apps/pc-app/runtime/core/services.cjs",
+    "apps/pc-app/runtime/core/tray-recall.cjs",
+    "apps/pc-app/runtime/features/accounts/index.cjs",
+    "apps/pc-app/runtime/features/battle/index.cjs",
+    "apps/pc-app/runtime/features/companions/index.cjs",
+    "apps/pc-app/runtime/features/conversations/index.cjs",
+    "apps/pc-app/runtime/features/discovery/index.cjs",
+    "apps/pc-app/runtime/features/garden/index.cjs",
+    "apps/pc-app/runtime/features/resources/index.cjs"
+  ],
+  "supportFiles": [
+    "apps/pc-app/runtime/features/accounts/foreground-fullscreen.ps1",
+    "apps/pc-app/runtime/features/discovery/windows-location.ps1"
+  ],
+  "files": [
+    {
+      "path": "apps/pc-app/runtime/core/builtin-art.cjs",
+      "sha256": "71b92acf699c5165b748ec3c2a9b7b9148889ab8a33ba3a716e155f500b07e42",
+      "bytes": 1438
+    },
+    {
+      "path": "apps/pc-app/runtime/core/database.cjs",
+      "sha256": "2aca289c50a337b43f7aba748f4bd69088c3d2d019ace402d99c27d26675c705",
+      "bytes": 1311
+    },
+    {
+      "path": "apps/pc-app/runtime/core/ipc-guard.cjs",
+      "sha256": "d0544394201165b359d71b804225cdcb9c7f66ce3404bc4db0dadf090d95fa06",
+      "bytes": 2085
+    },
+    {
+      "path": "apps/pc-app/runtime/core/main-window-geometry.cjs",
+      "sha256": "768c04b62b80778d24ec1b6e4537f4bf29ea480cff80abd3fe5a6d62595e0b9c",
+      "bytes": 2280
+    },
+    {
+      "path": "apps/pc-app/runtime/core/profile-instance.cjs",
+      "sha256": "ab449020d186f13e8cd152b23b504e10fe5396593abbcebbdfa6682aa7087c06",
+      "bytes": 1452
+    },
+    {
+      "path": "apps/pc-app/runtime/core/profile-path.cjs",
+      "sha256": "804a49b87cf57c93f4a088ad63807950c267ae9f7151699ad63658adc4441e73",
+      "bytes": 739
+    },
+    {
+      "path": "apps/pc-app/runtime/core/qa-scenario.cjs",
+      "sha256": "ea50bb156038be32fdc6014c35c02c05107b19a18e33eb823526c06d8438287d",
+      "bytes": 2714
+    },
+    {
+      "path": "apps/pc-app/runtime/core/resource-backup.cjs",
+      "sha256": "8fb33fa614b2a339906da136c162f8794b810515c0a94636cc480419992d795c",
+      "bytes": 8666
+    },
+    {
+      "path": "apps/pc-app/runtime/core/runtime-compat.cjs",
+      "sha256": "820fbf7ea3cb52dfe8fc631a96e983b5654dfcaf853ad781832df946000ca980",
+      "bytes": 1048
+    },
+    {
+      "path": "apps/pc-app/runtime/core/services.cjs",
+      "sha256": "584035523ff13f296b6e1f09f5623af237e62326a749fa090e6fe85c37b27422",
+      "bytes": 4336
+    },
+    {
+      "path": "apps/pc-app/runtime/core/tray-recall.cjs",
+      "sha256": "ca0aab78ca8767b5c3b539f956515d50419d581067227d3fc9de907357c04eb9",
+      "bytes": 1593
+    },
+    {
+      "path": "apps/pc-app/runtime/features/accounts/backups.cjs",
+      "sha256": "9f85fdb987484b7bd904bfb59e28f07c09f17bb3f13b0dcc4793f3d62e666488",
+      "bytes": 17949
+    },
+    {
+      "path": "apps/pc-app/runtime/features/accounts/cloud-projection.cjs",
+      "sha256": "dae4250f9a140dd8ba2829a472abe7b9ca0a1c8c1b0e6780711a9f8d72401ce1",
+      "bytes": 3667
+    },
+    {
+      "path": "apps/pc-app/runtime/features/accounts/desktop-host.cjs",
+      "sha256": "a727b1926891b6994ad8fdcef4d7e318552b7eb2700a9124faf4149914c95c77",
+      "bytes": 11628
+    },
+    {
+      "path": "apps/pc-app/runtime/features/accounts/errors.cjs",
+      "sha256": "b6a4841a8d5ae7aab90bec85eb14931f4d826c6becf40395e51f490413211a44",
+      "bytes": 657
+    },
+    {
+      "path": "apps/pc-app/runtime/features/accounts/foreground-fullscreen.ps1",
+      "sha256": "c2f16680c385c3bb1b7b34fcd28284dd62d3e0db321e9afd732da8d9a2e9657f",
+      "bytes": 2752
+    },
+    {
+      "path": "apps/pc-app/runtime/features/accounts/index.cjs",
+      "sha256": "edaff4b9de23d68cb0216df02424d11d962a5e0dd899406c7484660c4011e9df",
+      "bytes": 4852
+    },
+    {
+      "path": "apps/pc-app/runtime/features/accounts/legacy.cjs",
+      "sha256": "4994a515805e3e93b29aba0d088f5bd0d0e29c68d2a441475c1a7c20c2acaa54",
+      "bytes": 6254
+    },
+    {
+      "path": "apps/pc-app/runtime/features/accounts/qa-scenario.cjs",
+      "sha256": "b2dad1219793dc5e08808a841701406b35a7cd20dbcf7fb52274ab0fec905b1c",
+      "bytes": 5300
+    },
+    {
+      "path": "apps/pc-app/runtime/features/accounts/schema.cjs",
+      "sha256": "c15be259010a67fda5619f48c6c1ddaa04dd1614cabc94a5e67c785bdf658f46",
+      "bytes": 5593
+    },
+    {
+      "path": "apps/pc-app/runtime/features/accounts/service.cjs",
+      "sha256": "53f209596e80315687d85e72c519fefd93f4c3a71a92e5468875f0a5a400bada",
+      "bytes": 25102
+    },
+    {
+      "path": "apps/pc-app/runtime/features/accounts/settings.cjs",
+      "sha256": "005792b599389a79ae16e564fabfae46b57116c983954a5204419f232146c83e",
+      "bytes": 3526
+    },
+    {
+      "path": "apps/pc-app/runtime/features/accounts/startup.cjs",
+      "sha256": "ac28b6e3a5a28866f844e0bf8de75c75c66df487f09abfba12e0156a6cc40892",
+      "bytes": 2911
+    },
+    {
+      "path": "apps/pc-app/runtime/features/accounts/supabase-remote.cjs",
+      "sha256": "b63d1d5ae7d94c4abf26a50999198282374e9763c0870926b734916a2210994d",
+      "bytes": 14405
+    },
+    {
+      "path": "apps/pc-app/runtime/features/accounts/sync.cjs",
+      "sha256": "0de9565284dde238e8415d7881c1ebaa075f886869ac8c5de94798ab90ed1fbd",
+      "bytes": 31641
+    },
+    {
+      "path": "apps/pc-app/runtime/features/accounts/util.cjs",
+      "sha256": "11ec3c905a9fe940e8e9e7512cd063edc490bd90feeaa9b311e74fba88431d75",
+      "bytes": 6079
+    },
+    {
+      "path": "apps/pc-app/runtime/features/accounts/vault.cjs",
+      "sha256": "2ebbcaa2f9ed179f2d931f4367a99e393132bb00a0e6407c9dcdb14c60f45ae1",
+      "bytes": 1303
+    },
+    {
+      "path": "apps/pc-app/runtime/features/battle/assets.cjs",
+      "sha256": "f31bb93da02c10cbccb32cc59726fef719aab2a58b721fe8054eed32ab963859",
+      "bytes": 2574
+    },
+    {
+      "path": "apps/pc-app/runtime/features/battle/backup.cjs",
+      "sha256": "9331f854c4b3fcbd2cda5b34ca6e2369191bddf914fec83fab5f56f66c08b8de",
+      "bytes": 11976
+    },
+    {
+      "path": "apps/pc-app/runtime/features/battle/canonical-projection.cjs",
+      "sha256": "d38a8ba1d5e320a29fd822d725612463741c10a7eff71cdc340cfa5465e46bf0",
+      "bytes": 1524
+    },
+    {
+      "path": "apps/pc-app/runtime/features/battle/cloud-authority.cjs",
+      "sha256": "6ba5aaf668e7681d602db086f24c676ecea8e88dedca140855fdaed01925137c",
+      "bytes": 8985
+    },
+    {
+      "path": "apps/pc-app/runtime/features/battle/core.generated.cjs",
+      "sha256": "7e8af43248f4105ceea103518d59f907c4657ffae91add203763b0a884049528",
+      "bytes": 20257
+    },
+    {
+      "path": "apps/pc-app/runtime/features/battle/index.cjs",
+      "sha256": "d0d186ad868a6592e63154c29e16dfefefccd67a34ab97307db65027cc3fb6d0",
+      "bytes": 4402
+    },
+    {
+      "path": "apps/pc-app/runtime/features/battle/migrations.cjs",
+      "sha256": "f39833e10f3d2451abebedc76026dd33818dd965de8f71669b0f79243abcbffc",
+      "bytes": 2272
+    },
+    {
+      "path": "apps/pc-app/runtime/features/battle/presentation.cjs",
+      "sha256": "5a022497bc5d292b2833553f8db63543bc5f2a8074650ad828092bc9504f2305",
+      "bytes": 3016
+    },
+    {
+      "path": "apps/pc-app/runtime/features/battle/qa-adapter.cjs",
+      "sha256": "67dab784d48872b9cb80d5e94897c310413924f8a05c5fdfbad210b74adfe194",
+      "bytes": 2612
+    },
+    {
+      "path": "apps/pc-app/runtime/features/battle/service.cjs",
+      "sha256": "3947bd43678d5909deaca5cc7a1753197684f805ec20704429442a2fd37b073b",
+      "bytes": 49836
+    },
+    {
+      "path": "apps/pc-app/runtime/features/battle/store.cjs",
+      "sha256": "88b5377a29dc5490dd9e6eff3c315f6f47c0bb0d0b0144271f6c6194af7124fe",
+      "bytes": 8927
+    },
+    {
+      "path": "apps/pc-app/runtime/features/battle/transport-journal.cjs",
+      "sha256": "a9d6b4b1e9ad5f67afa8de4d5ac42e8b63678114e147e724f541dd825a4b0097",
+      "bytes": 14441
+    },
+    {
+      "path": "apps/pc-app/runtime/features/companions/backup.cjs",
+      "sha256": "b893c65a55328fb4cb788fb40c747c84b8ac8b0790d65895e3ee600e2fe8c81b",
+      "bytes": 11050
+    },
+    {
+      "path": "apps/pc-app/runtime/features/companions/cloud-authority.cjs",
+      "sha256": "4e51f6656123bc89b81355069b745c07d7f8f0ddad46133ab8dd95539a06bfbd",
+      "bytes": 15181
+    },
+    {
+      "path": "apps/pc-app/runtime/features/companions/cloud-domain.mjs",
+      "sha256": "3f676b52c480992e3da1a1b0ab6a30cbae24493eec17f51e2936ad33efd40595",
+      "bytes": 11394
+    },
+    {
+      "path": "apps/pc-app/runtime/features/companions/combat-profile.cjs",
+      "sha256": "0e561b32105647fda021a97f85f20db69742fce458b64ff08852163b538293bd",
+      "bytes": 698
+    },
+    {
+      "path": "apps/pc-app/runtime/features/companions/display-identity.mjs",
+      "sha256": "3effef269a5fcc37bb3515e89e3d5dd4819ed910878fd6b9cb34ef3ef5185da3",
+      "bytes": 708
+    },
+    {
+      "path": "apps/pc-app/runtime/features/companions/growth.mjs",
+      "sha256": "6846f43372f0d4523ab8fb32135fdbcf58da6c5c070caea14e9f0b51448aefd7",
+      "bytes": 1947
+    },
+    {
+      "path": "apps/pc-app/runtime/features/companions/identity.cjs",
+      "sha256": "955f0b3da4da8b7ff0dc4317829f94092fcfc0ee5557b881d40ffd3e18b5189f",
+      "bytes": 4938
+    },
+    {
+      "path": "apps/pc-app/runtime/features/companions/index.cjs",
+      "sha256": "b76e06c7cd5ff154cd8986c122f69fcdc1a2e5f096177eff2186110637beb4b5",
+      "bytes": 11223
+    },
+    {
+      "path": "apps/pc-app/runtime/features/companions/instance.mjs",
+      "sha256": "e057fb2696b477a2a2883d2932b7059455ae0d640c944e02721e622a3cd0b73f",
+      "bytes": 1868
+    },
+    {
+      "path": "apps/pc-app/runtime/features/companions/migrations.cjs",
+      "sha256": "8f624fc1a41f8b784996ecb78c08f9be45732a5a99bd1864e61aa047cd1f729a",
+      "bytes": 2611
+    },
+    {
+      "path": "apps/pc-app/runtime/features/companions/playback.cjs",
+      "sha256": "678a4ad428fd5c7b3762a5ef6dbb630a48fb53896aef222242c05bda7091baf3",
+      "bytes": 4196
+    },
+    {
+      "path": "apps/pc-app/runtime/features/companions/service.cjs",
+      "sha256": "1748df3dba28f16f754e080304643377e35bfddd7fcb43eccf5a2aa4e7efc7e3",
+      "bytes": 18940
+    },
+    {
+      "path": "apps/pc-app/runtime/features/companions/templates.cjs",
+      "sha256": "30413d86990b9da4c33be49e21905e03b7520766710a4a33f09a859fc4fb50e3",
+      "bytes": 520
+    },
+    {
+      "path": "apps/pc-app/runtime/features/companions/windows.cjs",
+      "sha256": "4339a5df628369accd1761a2e3302e332d362cd3dbf91036b3d6b0edae41868b",
+      "bytes": 12683
+    },
+    {
+      "path": "apps/pc-app/runtime/features/conversations/backup.cjs",
+      "sha256": "073c36d82a15c0665048471e75139ab2c977b371763f7ab1a756902fb6b6ff52",
+      "bytes": 13829
+    },
+    {
+      "path": "apps/pc-app/runtime/features/conversations/context.cjs",
+      "sha256": "7e3bbe2855b9c4fab454f8307fdbe46909545b864c5e87d93a879b296ae7f767",
+      "bytes": 2155
+    },
+    {
+      "path": "apps/pc-app/runtime/features/conversations/errors.cjs",
+      "sha256": "8ceed55cc99564b7a63b70a155d4bba301e986517afe07fe2f63cd0f4f00c98c",
+      "bytes": 2670
+    },
+    {
+      "path": "apps/pc-app/runtime/features/conversations/index.cjs",
+      "sha256": "5d303370dc2b45a3ac43c9c327c7d7ea364264d4ab8921b02b65b711cee949f6",
+      "bytes": 5421
+    },
+    {
+      "path": "apps/pc-app/runtime/features/conversations/legacy-import.cjs",
+      "sha256": "fe55e1c0a8405b246a3abfd7897f4615fa8fb07b82fa3b9782c06913b88820ba",
+      "bytes": 10272
+    },
+    {
+      "path": "apps/pc-app/runtime/features/conversations/schema.cjs",
+      "sha256": "e6331607c86f999d8d1c65dce0517790b7d2f5cd942a383268c6f45942722f9c",
+      "bytes": 3444
+    },
+    {
+      "path": "apps/pc-app/runtime/features/conversations/secrets.cjs",
+      "sha256": "b11607bb4e235f4b7a7fdaaa12529f6e8e1ac41e42144b8b1ef813141cc26723",
+      "bytes": 960
+    },
+    {
+      "path": "apps/pc-app/runtime/features/conversations/service.cjs",
+      "sha256": "a878eb47d31a6f81a897b0abae75d2e77ff3dd3b771d5567e49c77f4ea2ab762",
+      "bytes": 18206
+    },
+    {
+      "path": "apps/pc-app/runtime/features/conversations/store.cjs",
+      "sha256": "d71d12ff1e7071a5f8fd04887bdd29dfeb69107082424485830ec37dff8c5341",
+      "bytes": 10850
+    },
+    {
+      "path": "apps/pc-app/runtime/features/conversations/transport.cjs",
+      "sha256": "1a98e64109f2d6cea9fa65a083f841797473289fff48f8ac896981527612805a",
+      "bytes": 5951
+    },
+    {
+      "path": "apps/pc-app/runtime/features/discovery/battle-adapter.cjs",
+      "sha256": "ddda9be1120f8178b103a8399baaa17f82f33af96b612d390410e5360c58a76e",
+      "bytes": 1690
+    },
+    {
+      "path": "apps/pc-app/runtime/features/discovery/cloud-adapter.cjs",
+      "sha256": "0dd4ae14b93381855f14bc1e05a40122c283baf8ae1f6f9cff488baf4126e2aa",
+      "bytes": 3657
+    },
+    {
+      "path": "apps/pc-app/runtime/features/discovery/cloud-location.cjs",
+      "sha256": "b8e32cb9abddd85f15d6e62d029ca9ec9e7a3e2631dcbf4a7b3a0c07214dc163",
+      "bytes": 4465
+    },
+    {
+      "path": "apps/pc-app/runtime/features/discovery/cloud-runtime.cjs",
+      "sha256": "3aaa1105be62007130728010e74c4d2332c5201a781391f8cabd487e31335c64",
+      "bytes": 17200
+    },
+    {
+      "path": "apps/pc-app/runtime/features/discovery/coordinates.cjs",
+      "sha256": "8173415933b84130520ba84393cdde60da546985c6c6eb98d9cfb9cdf30858e8",
+      "bytes": 4352
+    },
+    {
+      "path": "apps/pc-app/runtime/features/discovery/index.cjs",
+      "sha256": "f4a2c7d32f0e455064e3826bcb1b02402e3a33e8d02ae83f8d4c07ff26958a4b",
+      "bytes": 5519
+    },
+    {
+      "path": "apps/pc-app/runtime/features/discovery/location-adapter.cjs",
+      "sha256": "8ed514913787a3df8364ee628eb16803adfd9cd1c19681eae2ca118a2b67e3b7",
+      "bytes": 8453
+    },
+    {
+      "path": "apps/pc-app/runtime/features/discovery/map-adapter.cjs",
+      "sha256": "bb59fcb0a4d86b17ccca3660b5e441d2c20f216bf294d54a382935f23770a279",
+      "bytes": 1510
+    },
+    {
+      "path": "apps/pc-app/runtime/features/discovery/migrations.cjs",
+      "sha256": "16dea625f179ad119e2e5a16aba07f31eac95a2a00c0e2824fa917695d5383ee",
+      "bytes": 1366
+    },
+    {
+      "path": "apps/pc-app/runtime/features/discovery/qa-location.cjs",
+      "sha256": "00e9a3c4d9f2d044ef6aba5c26a64aa1e65bbc14d3dd57318e3b57e4d8604797",
+      "bytes": 2699
+    },
+    {
+      "path": "apps/pc-app/runtime/features/discovery/repository.cjs",
+      "sha256": "6a62597213366072d787a826b96d46ecd0dce12a3045272a9fedf51f5bd708e4",
+      "bytes": 4266
+    },
+    {
+      "path": "apps/pc-app/runtime/features/discovery/service.cjs",
+      "sha256": "bda6e6f5cb0d9cddfc2f832db81f809faeb2102086274184326340e907edf537",
+      "bytes": 20537
+    },
+    {
+      "path": "apps/pc-app/runtime/features/discovery/spawns.cjs",
+      "sha256": "2950569d290a471904d602e2aa363d0186ad6d56281f271cff820d47c54c70aa",
+      "bytes": 2827
+    },
+    {
+      "path": "apps/pc-app/runtime/features/discovery/territory-adapter.cjs",
+      "sha256": "8b6fca47988bd8cc1cac02b40ffc571d89080fa5ae0dbe7f14f23952fd64477d",
+      "bytes": 2675
+    },
+    {
+      "path": "apps/pc-app/runtime/features/discovery/tile-cache.cjs",
+      "sha256": "2b47e5083386f420c472aa5df29f8a4510f08624f1b7e80284bbf32faf9ca562",
+      "bytes": 2435
+    },
+    {
+      "path": "apps/pc-app/runtime/features/discovery/window-visibility.cjs",
+      "sha256": "0b7b2d6590bc843c43d594d9b8a2a65194abab16305e1995af7c3f75e1328c8d",
+      "bytes": 2108
+    },
+    {
+      "path": "apps/pc-app/runtime/features/discovery/windows-location.ps1",
+      "sha256": "58010e969e9d156f22dc0da9f17ae451fc252a84384c35ca1de6e7fc25929a5b",
+      "bytes": 2510
+    },
+    {
+      "path": "apps/pc-app/runtime/features/garden/backup.cjs",
+      "sha256": "5f643c81747dcf07f345800c070239c77dedcc3281e88b566bafaa59dcbf2169",
+      "bytes": 4784
+    },
+    {
+      "path": "apps/pc-app/runtime/features/garden/catalog.cjs",
+      "sha256": "01b36c5e4e5d3e785492328cc2644869b30dd99fc88d0905542b667b5615f131",
+      "bytes": 251
+    },
+    {
+      "path": "apps/pc-app/runtime/features/garden/catalog.json",
+      "sha256": "0559996d3f825fb0d62dbe7672b7179f4d6aff622ba801aaea12a5eaf61ea47b",
+      "bytes": 3325
+    },
+    {
+      "path": "apps/pc-app/runtime/features/garden/cloud-authority.cjs",
+      "sha256": "9408f5197a107dbcdb5a74866b5b80c76df1cdfb0542d3b82331974035a8c0d4",
+      "bytes": 20110
+    },
+    {
+      "path": "apps/pc-app/runtime/features/garden/identity.cjs",
+      "sha256": "c7800c38ceba5050f9abe2ef67c0cc90df62b154dd72530e60cda9b6ef469044",
+      "bytes": 3681
+    },
+    {
+      "path": "apps/pc-app/runtime/features/garden/index.cjs",
+      "sha256": "453a81ade1e1a042fddeab4296b41a3b99d507567d2f944a1a8b4b1f9d793cfa",
+      "bytes": 9803
+    },
+    {
+      "path": "apps/pc-app/runtime/features/garden/migrations.cjs",
+      "sha256": "adaa6826f2f0d02409afcf7f062eb513815c41144465bd3234fe4f7b443ec78c",
+      "bytes": 6229
+    },
+    {
+      "path": "apps/pc-app/runtime/features/garden/qa-location.cjs",
+      "sha256": "0a4be95e869b7548b152a04573ff3591931dacd663eac106202c16888d3e0da4",
+      "bytes": 1585
+    },
+    {
+      "path": "apps/pc-app/runtime/features/garden/service.cjs",
+      "sha256": "e2924819dc0403566abc942161dacd35589b7b31cbbf402d1eea31fbf56c8748",
+      "bytes": 17385
+    },
+    {
+      "path": "apps/pc-app/runtime/features/garden/settlements.cjs",
+      "sha256": "11ed42753b32654713dc1c9c2990dbc6aba12492de545a891c8525df179a2375",
+      "bytes": 2524
+    },
+    {
+      "path": "apps/pc-app/runtime/features/garden/territories.cjs",
+      "sha256": "cbe45a2dac9b3238417e864c5f694fe72769f1da9b0896fe09970ceb609d8bc7",
+      "bytes": 11601
+    },
+    {
+      "path": "apps/pc-app/runtime/features/resources/assets/roster-v2/catalog.json",
+      "sha256": "8d40e857fbad95130051085b0dcff64feb099d0375260a0ab6259ea217d2da08",
+      "bytes": 4333
+    },
+    {
+      "path": "apps/pc-app/runtime/features/resources/assets/roster-v2/source-record.json",
+      "sha256": "b9776f950aebb4bd121f3106f6fa072e18ca42ca8e1aa97f9e971896ce64cc7a",
+      "bytes": 38772
+    },
+    {
+      "path": "apps/pc-app/runtime/features/resources/cloud-backup.cjs",
+      "sha256": "0caeecc51eb859ea1e1ff80817dc79fd17afab88ebc1f09bfd2faef0c5147fbc",
+      "bytes": 7048
+    },
+    {
+      "path": "apps/pc-app/runtime/features/resources/cloud-contract.cjs",
+      "sha256": "c915000addd469bae09f67099965d1102a274f33fc7739b15187911b6b76fd8e",
+      "bytes": 7256
+    },
+    {
+      "path": "apps/pc-app/runtime/features/resources/cloud-host.cjs",
+      "sha256": "f56b1107042b32b52563eb7b4457c4a8039f5eb306018226e72899bf5e858844",
+      "bytes": 2801
+    },
+    {
+      "path": "apps/pc-app/runtime/features/resources/cloud-packages.cjs",
+      "sha256": "e5089d47d7e379f4d48990d1322b3b96be8cda6370cdc9af3f75120d1e0c6d3b",
+      "bytes": 9605
+    },
+    {
+      "path": "apps/pc-app/runtime/features/resources/cloud-preferences.cjs",
+      "sha256": "59f006e6d206c29b3b3264f2a3ad246c714196e323540be19db131184523ad0e",
+      "bytes": 13240
+    },
+    {
+      "path": "apps/pc-app/runtime/features/resources/cloud-schema.cjs",
+      "sha256": "0b2f99a083511ecb958c50f49037fae449f6a52f1e75c3554bb0bd423410f2dd",
+      "bytes": 4365
+    },
+    {
+      "path": "apps/pc-app/runtime/features/resources/cloud-sync.cjs",
+      "sha256": "085b05b1deba76926b5cdf14f32dc30d15d61eebbab33bcf3f154f002364564c",
+      "bytes": 27519
+    },
+    {
+      "path": "apps/pc-app/runtime/features/resources/history.cjs",
+      "sha256": "1d40247c752944a1ce0be2526f414b5aa8ff3126e431947bc6c7cd5e90a147b0",
+      "bytes": 3103
+    },
+    {
+      "path": "apps/pc-app/runtime/features/resources/index.cjs",
+      "sha256": "4df912db10eaf7e1dc70a7cae829f10786119aad95f304b58a95528527013a5f",
+      "bytes": 8081
+    },
+    {
+      "path": "apps/pc-app/runtime/features/resources/package-2d.cjs",
+      "sha256": "30605cc092f70af40e657898db89c897ae481899fa016f935c68405da7a329e8",
+      "bytes": 9040
+    },
+    {
+      "path": "apps/pc-app/runtime/features/resources/parser.cjs",
+      "sha256": "1cf7e365201578b69a1fb749e3e5296a4d012717ab66978852c9530e90797392",
+      "bytes": 137
+    },
+    {
+      "path": "apps/pc-app/runtime/features/resources/preferences.mjs",
+      "sha256": "8ca3b1df39d0a2db4856c33850e44c68bde47dd69573fe2cafac3695512ca9d4",
+      "bytes": 3415
+    },
+    {
+      "path": "apps/pc-app/runtime/features/resources/preparation-guard.cjs",
+      "sha256": "54bd2ade56aa683b66ef8cb809d6ead8d2fd1566d5b97f240bcc2bb277b3924b",
+      "bytes": 9418
+    },
+    {
+      "path": "apps/pc-app/runtime/features/resources/repository.cjs",
+      "sha256": "21e4c261f3d0c1465ef2c6e8c6c629b048ca4a738151517473ba67bb5e64fb82",
+      "bytes": 7464
+    },
+    {
+      "path": "apps/pc-app/runtime/features/resources/roster.cjs",
+      "sha256": "93fd2e24e6db59e865c9dc77b88369c5cd13f6273a2742915ed83a01f67f81e0",
+      "bytes": 3524
+    },
+    {
+      "path": "apps/pc-app/runtime/features/resources/service.cjs",
+      "sha256": "73a2c2a2aaf3253929225ac19d3b7b96a1a47d934c3faeab2cd6562a67611b73",
+      "bytes": 12420
+    },
+    {
+      "path": "apps/pc-app/runtime/features/resources/validation.cjs",
+      "sha256": "3ab93f39d2fbd52550d03bf8898400529a802d2ae4d0003b09fab01116a889b0",
+      "bytes": 4504
+    },
+    {
+      "path": "apps/pc-app/runtime/services/battle-runtime.cjs",
+      "sha256": "1cfdc674de9302ad44bd6485492af854ab6748d30d78e9074fbc329da5b7da5a",
+      "bytes": 145
+    },
+    {
+      "path": "apps/pc-app/runtime/services/map-runtime.cjs",
+      "sha256": "e03be31b2f5cc8adda1e8e0b64017b727c75b3473dffed259f54646690b16509",
+      "bytes": 7165
+    },
+    {
+      "path": "apps/pc-app/runtime/services/online-duel-service.cjs",
+      "sha256": "c683d2e0813d5e3ad471851508d66b88346928b32d9591ab517b5940eb0dc02e",
+      "bytes": 38859
+    },
+    {
+      "path": "apps/pc-app/runtime/services/runtime-data-store.cjs",
+      "sha256": "65931c491c9be74c423c39a8211bf41acbcc3337eff06a18abb46ec7570412b3",
+      "bytes": 59823
+    }
+  ],
+  "edges": [
+    {
+      "from": "apps/pc-app/runtime/core/builtin-art.cjs",
+      "specifier": "../features/resources/parser.cjs",
+      "to": "apps/pc-app/runtime/features/resources/parser.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/core/builtin-art.cjs",
+      "specifier": "../features/resources/repository.cjs",
+      "to": "apps/pc-app/runtime/features/resources/repository.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/core/resource-backup.cjs",
+      "specifier": "../features/resources/cloud-backup.cjs",
+      "to": "apps/pc-app/runtime/features/resources/cloud-backup.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/core/resource-backup.cjs",
+      "specifier": "../features/resources/parser.cjs",
+      "to": "apps/pc-app/runtime/features/resources/parser.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/core/runtime-compat.cjs",
+      "specifier": "../services/map-runtime.cjs",
+      "to": "apps/pc-app/runtime/services/map-runtime.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/core/runtime-compat.cjs",
+      "specifier": "../services/online-duel-service.cjs",
+      "to": "apps/pc-app/runtime/services/online-duel-service.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/core/runtime-compat.cjs",
+      "specifier": "../services/runtime-data-store.cjs",
+      "to": "apps/pc-app/runtime/services/runtime-data-store.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/core/services.cjs",
+      "specifier": "./database.cjs",
+      "to": "apps/pc-app/runtime/core/database.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/accounts/backups.cjs",
+      "specifier": "./errors.cjs",
+      "to": "apps/pc-app/runtime/features/accounts/errors.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/accounts/backups.cjs",
+      "specifier": "./legacy.cjs",
+      "to": "apps/pc-app/runtime/features/accounts/legacy.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/accounts/backups.cjs",
+      "specifier": "./settings.cjs",
+      "to": "apps/pc-app/runtime/features/accounts/settings.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/accounts/backups.cjs",
+      "specifier": "./util.cjs",
+      "to": "apps/pc-app/runtime/features/accounts/util.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/accounts/cloud-projection.cjs",
+      "specifier": "./util.cjs",
+      "to": "apps/pc-app/runtime/features/accounts/util.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/accounts/desktop-host.cjs",
+      "specifier": "./settings.cjs",
+      "to": "apps/pc-app/runtime/features/accounts/settings.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/accounts/desktop-host.cjs",
+      "specifier": "./startup.cjs",
+      "to": "apps/pc-app/runtime/features/accounts/startup.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/accounts/index.cjs",
+      "specifier": "./desktop-host.cjs",
+      "to": "apps/pc-app/runtime/features/accounts/desktop-host.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/accounts/index.cjs",
+      "specifier": "./qa-scenario.cjs",
+      "to": "apps/pc-app/runtime/features/accounts/qa-scenario.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/accounts/index.cjs",
+      "specifier": "./schema.cjs",
+      "to": "apps/pc-app/runtime/features/accounts/schema.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/accounts/index.cjs",
+      "specifier": "./service.cjs",
+      "to": "apps/pc-app/runtime/features/accounts/service.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/accounts/index.cjs",
+      "specifier": "./settings.cjs",
+      "to": "apps/pc-app/runtime/features/accounts/settings.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/accounts/index.cjs",
+      "specifier": "./supabase-remote.cjs",
+      "to": "apps/pc-app/runtime/features/accounts/supabase-remote.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/accounts/legacy.cjs",
+      "specifier": "./errors.cjs",
+      "to": "apps/pc-app/runtime/features/accounts/errors.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/accounts/legacy.cjs",
+      "specifier": "./util.cjs",
+      "to": "apps/pc-app/runtime/features/accounts/util.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/accounts/qa-scenario.cjs",
+      "specifier": "../../core/qa-scenario.cjs",
+      "to": "apps/pc-app/runtime/core/qa-scenario.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/accounts/qa-scenario.cjs",
+      "specifier": "./errors.cjs",
+      "to": "apps/pc-app/runtime/features/accounts/errors.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/accounts/service.cjs",
+      "specifier": "./backups.cjs",
+      "to": "apps/pc-app/runtime/features/accounts/backups.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/accounts/service.cjs",
+      "specifier": "./errors.cjs",
+      "to": "apps/pc-app/runtime/features/accounts/errors.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/accounts/service.cjs",
+      "specifier": "./legacy.cjs",
+      "to": "apps/pc-app/runtime/features/accounts/legacy.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/accounts/service.cjs",
+      "specifier": "./qa-scenario.cjs",
+      "to": "apps/pc-app/runtime/features/accounts/qa-scenario.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/accounts/service.cjs",
+      "specifier": "./settings.cjs",
+      "to": "apps/pc-app/runtime/features/accounts/settings.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/accounts/service.cjs",
+      "specifier": "./supabase-remote.cjs",
+      "to": "apps/pc-app/runtime/features/accounts/supabase-remote.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/accounts/service.cjs",
+      "specifier": "./sync.cjs",
+      "to": "apps/pc-app/runtime/features/accounts/sync.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/accounts/service.cjs",
+      "specifier": "./util.cjs",
+      "to": "apps/pc-app/runtime/features/accounts/util.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/accounts/service.cjs",
+      "specifier": "./vault.cjs",
+      "to": "apps/pc-app/runtime/features/accounts/vault.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/accounts/settings.cjs",
+      "specifier": "./errors.cjs",
+      "to": "apps/pc-app/runtime/features/accounts/errors.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/accounts/supabase-remote.cjs",
+      "specifier": "./errors.cjs",
+      "to": "apps/pc-app/runtime/features/accounts/errors.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/accounts/supabase-remote.cjs",
+      "specifier": "./util.cjs",
+      "to": "apps/pc-app/runtime/features/accounts/util.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/accounts/sync.cjs",
+      "specifier": "./cloud-projection.cjs",
+      "to": "apps/pc-app/runtime/features/accounts/cloud-projection.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/accounts/sync.cjs",
+      "specifier": "./errors.cjs",
+      "to": "apps/pc-app/runtime/features/accounts/errors.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/accounts/sync.cjs",
+      "specifier": "./util.cjs",
+      "to": "apps/pc-app/runtime/features/accounts/util.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/accounts/util.cjs",
+      "specifier": "./errors.cjs",
+      "to": "apps/pc-app/runtime/features/accounts/errors.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/accounts/vault.cjs",
+      "specifier": "./errors.cjs",
+      "to": "apps/pc-app/runtime/features/accounts/errors.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/accounts/vault.cjs",
+      "specifier": "./util.cjs",
+      "to": "apps/pc-app/runtime/features/accounts/util.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/battle/assets.cjs",
+      "specifier": "../resources/assets/roster-v2/catalog.json",
+      "to": "apps/pc-app/runtime/features/resources/assets/roster-v2/catalog.json"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/battle/assets.cjs",
+      "specifier": "../resources/parser.cjs",
+      "to": "apps/pc-app/runtime/features/resources/parser.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/battle/backup.cjs",
+      "specifier": "./transport-journal.cjs",
+      "to": "apps/pc-app/runtime/features/battle/transport-journal.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/battle/canonical-projection.cjs",
+      "specifier": "../accounts/util.cjs",
+      "to": "apps/pc-app/runtime/features/accounts/util.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/battle/cloud-authority.cjs",
+      "specifier": "../accounts/util.cjs",
+      "to": "apps/pc-app/runtime/features/accounts/util.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/battle/cloud-authority.cjs",
+      "specifier": "./canonical-projection.cjs",
+      "to": "apps/pc-app/runtime/features/battle/canonical-projection.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/battle/index.cjs",
+      "specifier": "./assets.cjs",
+      "to": "apps/pc-app/runtime/features/battle/assets.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/battle/index.cjs",
+      "specifier": "./backup.cjs",
+      "to": "apps/pc-app/runtime/features/battle/backup.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/battle/index.cjs",
+      "specifier": "./migrations.cjs",
+      "to": "apps/pc-app/runtime/features/battle/migrations.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/battle/index.cjs",
+      "specifier": "./presentation.cjs",
+      "to": "apps/pc-app/runtime/features/battle/presentation.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/battle/index.cjs",
+      "specifier": "./service.cjs",
+      "to": "apps/pc-app/runtime/features/battle/service.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/battle/index.cjs",
+      "specifier": "../../services/battle-runtime.cjs",
+      "to": "apps/pc-app/runtime/services/battle-runtime.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/battle/migrations.cjs",
+      "specifier": "./transport-journal.cjs",
+      "to": "apps/pc-app/runtime/features/battle/transport-journal.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/battle/presentation.cjs",
+      "specifier": "../../services/battle-runtime.cjs",
+      "to": "apps/pc-app/runtime/services/battle-runtime.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/battle/qa-adapter.cjs",
+      "specifier": "../../services/online-duel-service.cjs",
+      "to": "apps/pc-app/runtime/services/online-duel-service.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/battle/service.cjs",
+      "specifier": "./assets.cjs",
+      "to": "apps/pc-app/runtime/features/battle/assets.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/battle/service.cjs",
+      "specifier": "./cloud-authority.cjs",
+      "to": "apps/pc-app/runtime/features/battle/cloud-authority.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/battle/service.cjs",
+      "specifier": "./presentation.cjs",
+      "to": "apps/pc-app/runtime/features/battle/presentation.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/battle/service.cjs",
+      "specifier": "./qa-adapter.cjs",
+      "to": "apps/pc-app/runtime/features/battle/qa-adapter.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/battle/service.cjs",
+      "specifier": "./store.cjs",
+      "to": "apps/pc-app/runtime/features/battle/store.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/battle/service.cjs",
+      "specifier": "./transport-journal.cjs",
+      "to": "apps/pc-app/runtime/features/battle/transport-journal.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/battle/service.cjs",
+      "specifier": "../resources/assets/roster-v2/catalog.json",
+      "to": "apps/pc-app/runtime/features/resources/assets/roster-v2/catalog.json"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/battle/service.cjs",
+      "specifier": "../../services/battle-runtime.cjs",
+      "to": "apps/pc-app/runtime/services/battle-runtime.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/battle/service.cjs",
+      "specifier": "../../services/online-duel-service.cjs",
+      "to": "apps/pc-app/runtime/services/online-duel-service.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/battle/store.cjs",
+      "specifier": "./transport-journal.cjs",
+      "to": "apps/pc-app/runtime/features/battle/transport-journal.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/companions/backup.cjs",
+      "specifier": "./service.cjs",
+      "to": "apps/pc-app/runtime/features/companions/service.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/companions/cloud-authority.cjs",
+      "specifier": "../accounts/util.cjs",
+      "to": "apps/pc-app/runtime/features/accounts/util.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/companions/cloud-authority.cjs",
+      "specifier": "./backup.cjs",
+      "to": "apps/pc-app/runtime/features/companions/backup.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/companions/cloud-authority.cjs",
+      "specifier": "./cloud-domain.mjs",
+      "to": "apps/pc-app/runtime/features/companions/cloud-domain.mjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/companions/cloud-domain.mjs",
+      "specifier": "./growth.mjs",
+      "to": "apps/pc-app/runtime/features/companions/growth.mjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/companions/cloud-domain.mjs",
+      "specifier": "./instance.mjs",
+      "to": "apps/pc-app/runtime/features/companions/instance.mjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/companions/combat-profile.cjs",
+      "specifier": "../../services/battle-runtime.cjs",
+      "to": "apps/pc-app/runtime/services/battle-runtime.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/companions/display-identity.mjs",
+      "specifier": "../resources/assets/roster-v2/catalog.json",
+      "to": "apps/pc-app/runtime/features/resources/assets/roster-v2/catalog.json"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/companions/identity.cjs",
+      "specifier": "./service.cjs",
+      "to": "apps/pc-app/runtime/features/companions/service.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/companions/index.cjs",
+      "specifier": "./backup.cjs",
+      "to": "apps/pc-app/runtime/features/companions/backup.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/companions/index.cjs",
+      "specifier": "./cloud-authority.cjs",
+      "to": "apps/pc-app/runtime/features/companions/cloud-authority.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/companions/index.cjs",
+      "specifier": "./combat-profile.cjs",
+      "to": "apps/pc-app/runtime/features/companions/combat-profile.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/companions/index.cjs",
+      "specifier": "./display-identity.mjs",
+      "to": "apps/pc-app/runtime/features/companions/display-identity.mjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/companions/index.cjs",
+      "specifier": "./identity.cjs",
+      "to": "apps/pc-app/runtime/features/companions/identity.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/companions/index.cjs",
+      "specifier": "./migrations.cjs",
+      "to": "apps/pc-app/runtime/features/companions/migrations.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/companions/index.cjs",
+      "specifier": "./playback.cjs",
+      "to": "apps/pc-app/runtime/features/companions/playback.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/companions/index.cjs",
+      "specifier": "./service.cjs",
+      "to": "apps/pc-app/runtime/features/companions/service.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/companions/index.cjs",
+      "specifier": "./windows.cjs",
+      "to": "apps/pc-app/runtime/features/companions/windows.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/companions/instance.mjs",
+      "specifier": "../resources/assets/roster-v2/catalog.json",
+      "to": "apps/pc-app/runtime/features/resources/assets/roster-v2/catalog.json"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/companions/service.cjs",
+      "specifier": "./growth.mjs",
+      "to": "apps/pc-app/runtime/features/companions/growth.mjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/companions/service.cjs",
+      "specifier": "./instance.mjs",
+      "to": "apps/pc-app/runtime/features/companions/instance.mjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/companions/service.cjs",
+      "specifier": "./templates.cjs",
+      "to": "apps/pc-app/runtime/features/companions/templates.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/companions/templates.cjs",
+      "specifier": "./instance.mjs",
+      "to": "apps/pc-app/runtime/features/companions/instance.mjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/companions/windows.cjs",
+      "specifier": "./service.cjs",
+      "to": "apps/pc-app/runtime/features/companions/service.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/conversations/backup.cjs",
+      "specifier": "./transport.cjs",
+      "to": "apps/pc-app/runtime/features/conversations/transport.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/conversations/index.cjs",
+      "specifier": "./backup.cjs",
+      "to": "apps/pc-app/runtime/features/conversations/backup.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/conversations/index.cjs",
+      "specifier": "./schema.cjs",
+      "to": "apps/pc-app/runtime/features/conversations/schema.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/conversations/index.cjs",
+      "specifier": "./secrets.cjs",
+      "to": "apps/pc-app/runtime/features/conversations/secrets.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/conversations/index.cjs",
+      "specifier": "./service.cjs",
+      "to": "apps/pc-app/runtime/features/conversations/service.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/conversations/index.cjs",
+      "specifier": "./store.cjs",
+      "to": "apps/pc-app/runtime/features/conversations/store.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/conversations/legacy-import.cjs",
+      "specifier": "./backup.cjs",
+      "to": "apps/pc-app/runtime/features/conversations/backup.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/conversations/legacy-import.cjs",
+      "specifier": "./errors.cjs",
+      "to": "apps/pc-app/runtime/features/conversations/errors.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/conversations/secrets.cjs",
+      "specifier": "./errors.cjs",
+      "to": "apps/pc-app/runtime/features/conversations/errors.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/conversations/service.cjs",
+      "specifier": "./context.cjs",
+      "to": "apps/pc-app/runtime/features/conversations/context.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/conversations/service.cjs",
+      "specifier": "./errors.cjs",
+      "to": "apps/pc-app/runtime/features/conversations/errors.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/conversations/service.cjs",
+      "specifier": "./legacy-import.cjs",
+      "to": "apps/pc-app/runtime/features/conversations/legacy-import.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/conversations/service.cjs",
+      "specifier": "./transport.cjs",
+      "to": "apps/pc-app/runtime/features/conversations/transport.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/conversations/store.cjs",
+      "specifier": "./errors.cjs",
+      "to": "apps/pc-app/runtime/features/conversations/errors.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/conversations/transport.cjs",
+      "specifier": "./errors.cjs",
+      "to": "apps/pc-app/runtime/features/conversations/errors.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/discovery/battle-adapter.cjs",
+      "specifier": "../../services/battle-runtime.cjs",
+      "to": "apps/pc-app/runtime/services/battle-runtime.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/discovery/cloud-runtime.cjs",
+      "specifier": "../accounts/util.cjs",
+      "to": "apps/pc-app/runtime/features/accounts/util.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/discovery/cloud-runtime.cjs",
+      "specifier": "./cloud-adapter.cjs",
+      "to": "apps/pc-app/runtime/features/discovery/cloud-adapter.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/discovery/cloud-runtime.cjs",
+      "specifier": "./service.cjs",
+      "to": "apps/pc-app/runtime/features/discovery/service.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/discovery/cloud-runtime.cjs",
+      "specifier": "./service.cjs",
+      "to": "apps/pc-app/runtime/features/discovery/service.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/discovery/index.cjs",
+      "specifier": "./cloud-adapter.cjs",
+      "to": "apps/pc-app/runtime/features/discovery/cloud-adapter.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/discovery/index.cjs",
+      "specifier": "./cloud-location.cjs",
+      "to": "apps/pc-app/runtime/features/discovery/cloud-location.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/discovery/index.cjs",
+      "specifier": "./cloud-runtime.cjs",
+      "to": "apps/pc-app/runtime/features/discovery/cloud-runtime.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/discovery/index.cjs",
+      "specifier": "./location-adapter.cjs",
+      "to": "apps/pc-app/runtime/features/discovery/location-adapter.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/discovery/index.cjs",
+      "specifier": "./migrations.cjs",
+      "to": "apps/pc-app/runtime/features/discovery/migrations.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/discovery/index.cjs",
+      "specifier": "./qa-location.cjs",
+      "to": "apps/pc-app/runtime/features/discovery/qa-location.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/discovery/index.cjs",
+      "specifier": "./service.cjs",
+      "to": "apps/pc-app/runtime/features/discovery/service.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/discovery/index.cjs",
+      "specifier": "./territory-adapter.cjs",
+      "to": "apps/pc-app/runtime/features/discovery/territory-adapter.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/discovery/index.cjs",
+      "specifier": "./tile-cache.cjs",
+      "to": "apps/pc-app/runtime/features/discovery/tile-cache.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/discovery/index.cjs",
+      "specifier": "./window-visibility.cjs",
+      "to": "apps/pc-app/runtime/features/discovery/window-visibility.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/discovery/location-adapter.cjs",
+      "specifier": "./coordinates.cjs",
+      "to": "apps/pc-app/runtime/features/discovery/coordinates.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/discovery/map-adapter.cjs",
+      "specifier": "./coordinates.cjs",
+      "to": "apps/pc-app/runtime/features/discovery/coordinates.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/discovery/qa-location.cjs",
+      "specifier": "./spawns.cjs",
+      "to": "apps/pc-app/runtime/features/discovery/spawns.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/discovery/service.cjs",
+      "specifier": "./battle-adapter.cjs",
+      "to": "apps/pc-app/runtime/features/discovery/battle-adapter.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/discovery/service.cjs",
+      "specifier": "./coordinates.cjs",
+      "to": "apps/pc-app/runtime/features/discovery/coordinates.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/discovery/service.cjs",
+      "specifier": "./location-adapter.cjs",
+      "to": "apps/pc-app/runtime/features/discovery/location-adapter.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/discovery/service.cjs",
+      "specifier": "./map-adapter.cjs",
+      "to": "apps/pc-app/runtime/features/discovery/map-adapter.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/discovery/service.cjs",
+      "specifier": "./repository.cjs",
+      "to": "apps/pc-app/runtime/features/discovery/repository.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/discovery/service.cjs",
+      "specifier": "./spawns.cjs",
+      "to": "apps/pc-app/runtime/features/discovery/spawns.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/discovery/service.cjs",
+      "specifier": "../../services/battle-runtime.cjs",
+      "to": "apps/pc-app/runtime/services/battle-runtime.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/discovery/spawns.cjs",
+      "specifier": "../companions/templates.cjs",
+      "to": "apps/pc-app/runtime/features/companions/templates.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/discovery/spawns.cjs",
+      "specifier": "./coordinates.cjs",
+      "to": "apps/pc-app/runtime/features/discovery/coordinates.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/discovery/territory-adapter.cjs",
+      "specifier": "./coordinates.cjs",
+      "to": "apps/pc-app/runtime/features/discovery/coordinates.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/garden/backup.cjs",
+      "specifier": "./service.cjs",
+      "to": "apps/pc-app/runtime/features/garden/service.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/garden/catalog.cjs",
+      "specifier": "./catalog.json",
+      "to": "apps/pc-app/runtime/features/garden/catalog.json"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/garden/cloud-authority.cjs",
+      "specifier": "../battle/store.cjs",
+      "to": "apps/pc-app/runtime/features/battle/store.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/garden/cloud-authority.cjs",
+      "specifier": "../companions/backup.cjs",
+      "to": "apps/pc-app/runtime/features/companions/backup.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/garden/cloud-authority.cjs",
+      "specifier": "./backup.cjs",
+      "to": "apps/pc-app/runtime/features/garden/backup.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/garden/cloud-authority.cjs",
+      "specifier": "./service.cjs",
+      "to": "apps/pc-app/runtime/features/garden/service.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/garden/identity.cjs",
+      "specifier": "./backup.cjs",
+      "to": "apps/pc-app/runtime/features/garden/backup.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/garden/identity.cjs",
+      "specifier": "./service.cjs",
+      "to": "apps/pc-app/runtime/features/garden/service.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/garden/index.cjs",
+      "specifier": "./backup.cjs",
+      "to": "apps/pc-app/runtime/features/garden/backup.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/garden/index.cjs",
+      "specifier": "./cloud-authority.cjs",
+      "to": "apps/pc-app/runtime/features/garden/cloud-authority.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/garden/index.cjs",
+      "specifier": "./identity.cjs",
+      "to": "apps/pc-app/runtime/features/garden/identity.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/garden/index.cjs",
+      "specifier": "./migrations.cjs",
+      "to": "apps/pc-app/runtime/features/garden/migrations.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/garden/index.cjs",
+      "specifier": "./service.cjs",
+      "to": "apps/pc-app/runtime/features/garden/service.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/garden/index.cjs",
+      "specifier": "./settlements.cjs",
+      "to": "apps/pc-app/runtime/features/garden/settlements.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/garden/index.cjs",
+      "specifier": "./territories.cjs",
+      "to": "apps/pc-app/runtime/features/garden/territories.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/garden/service.cjs",
+      "specifier": "./catalog.cjs",
+      "to": "apps/pc-app/runtime/features/garden/catalog.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/garden/service.cjs",
+      "specifier": "./migrations.cjs",
+      "to": "apps/pc-app/runtime/features/garden/migrations.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/garden/territories.cjs",
+      "specifier": "../discovery/coordinates.cjs",
+      "to": "apps/pc-app/runtime/features/discovery/coordinates.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/garden/territories.cjs",
+      "specifier": "../discovery/territory-adapter.cjs",
+      "to": "apps/pc-app/runtime/features/discovery/territory-adapter.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/garden/territories.cjs",
+      "specifier": "./qa-location.cjs",
+      "to": "apps/pc-app/runtime/features/garden/qa-location.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/garden/territories.cjs",
+      "specifier": "./service.cjs",
+      "to": "apps/pc-app/runtime/features/garden/service.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/resources/cloud-backup.cjs",
+      "specifier": "./assets/roster-v2/catalog.json",
+      "to": "apps/pc-app/runtime/features/resources/assets/roster-v2/catalog.json"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/resources/cloud-backup.cjs",
+      "specifier": "./cloud-contract.cjs",
+      "to": "apps/pc-app/runtime/features/resources/cloud-contract.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/resources/cloud-backup.cjs",
+      "specifier": "./cloud-packages.cjs",
+      "to": "apps/pc-app/runtime/features/resources/cloud-packages.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/resources/cloud-backup.cjs",
+      "specifier": "./cloud-preferences.cjs",
+      "to": "apps/pc-app/runtime/features/resources/cloud-preferences.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/resources/cloud-backup.cjs",
+      "specifier": "./preparation-guard.cjs",
+      "to": "apps/pc-app/runtime/features/resources/preparation-guard.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/resources/cloud-contract.cjs",
+      "specifier": "./parser.cjs",
+      "to": "apps/pc-app/runtime/features/resources/parser.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/resources/cloud-host.cjs",
+      "specifier": "./cloud-sync.cjs",
+      "to": "apps/pc-app/runtime/features/resources/cloud-sync.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/resources/cloud-host.cjs",
+      "specifier": "./parser.cjs",
+      "to": "apps/pc-app/runtime/features/resources/parser.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/resources/cloud-packages.cjs",
+      "specifier": "./cloud-contract.cjs",
+      "to": "apps/pc-app/runtime/features/resources/cloud-contract.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/resources/cloud-packages.cjs",
+      "specifier": "./history.cjs",
+      "to": "apps/pc-app/runtime/features/resources/history.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/resources/cloud-packages.cjs",
+      "specifier": "./parser.cjs",
+      "to": "apps/pc-app/runtime/features/resources/parser.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/resources/cloud-preferences.cjs",
+      "specifier": "./cloud-contract.cjs",
+      "to": "apps/pc-app/runtime/features/resources/cloud-contract.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/resources/cloud-preferences.cjs",
+      "specifier": "./parser.cjs",
+      "to": "apps/pc-app/runtime/features/resources/parser.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/resources/cloud-sync.cjs",
+      "specifier": "./cloud-contract.cjs",
+      "to": "apps/pc-app/runtime/features/resources/cloud-contract.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/resources/cloud-sync.cjs",
+      "specifier": "./cloud-packages.cjs",
+      "to": "apps/pc-app/runtime/features/resources/cloud-packages.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/resources/cloud-sync.cjs",
+      "specifier": "./cloud-preferences.cjs",
+      "to": "apps/pc-app/runtime/features/resources/cloud-preferences.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/resources/cloud-sync.cjs",
+      "specifier": "./parser.cjs",
+      "to": "apps/pc-app/runtime/features/resources/parser.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/resources/history.cjs",
+      "specifier": "./cloud-contract.cjs",
+      "to": "apps/pc-app/runtime/features/resources/cloud-contract.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/resources/history.cjs",
+      "specifier": "./parser.cjs",
+      "to": "apps/pc-app/runtime/features/resources/parser.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/resources/index.cjs",
+      "specifier": "./cloud-host.cjs",
+      "to": "apps/pc-app/runtime/features/resources/cloud-host.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/resources/index.cjs",
+      "specifier": "./parser.cjs",
+      "to": "apps/pc-app/runtime/features/resources/parser.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/resources/index.cjs",
+      "specifier": "./repository.cjs",
+      "to": "apps/pc-app/runtime/features/resources/repository.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/resources/index.cjs",
+      "specifier": "./roster.cjs",
+      "to": "apps/pc-app/runtime/features/resources/roster.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/resources/index.cjs",
+      "specifier": "./service.cjs",
+      "to": "apps/pc-app/runtime/features/resources/service.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/resources/package-2d.cjs",
+      "specifier": "./validation.cjs",
+      "to": "apps/pc-app/runtime/features/resources/validation.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/resources/parser.cjs",
+      "specifier": "./package-2d.cjs",
+      "to": "apps/pc-app/runtime/features/resources/package-2d.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/resources/preparation-guard.cjs",
+      "specifier": "./cloud-contract.cjs",
+      "to": "apps/pc-app/runtime/features/resources/cloud-contract.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/resources/preparation-guard.cjs",
+      "specifier": "./parser.cjs",
+      "to": "apps/pc-app/runtime/features/resources/parser.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/resources/repository.cjs",
+      "specifier": "./cloud-schema.cjs",
+      "to": "apps/pc-app/runtime/features/resources/cloud-schema.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/resources/repository.cjs",
+      "specifier": "./parser.cjs",
+      "to": "apps/pc-app/runtime/features/resources/parser.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/resources/roster.cjs",
+      "specifier": "./assets/roster-v2/catalog.json",
+      "to": "apps/pc-app/runtime/features/resources/assets/roster-v2/catalog.json"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/resources/roster.cjs",
+      "specifier": "./assets/roster-v2/source-record.json",
+      "to": "apps/pc-app/runtime/features/resources/assets/roster-v2/source-record.json"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/resources/roster.cjs",
+      "specifier": "./parser.cjs",
+      "to": "apps/pc-app/runtime/features/resources/parser.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/resources/service.cjs",
+      "specifier": "./history.cjs",
+      "to": "apps/pc-app/runtime/features/resources/history.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/resources/service.cjs",
+      "specifier": "./parser.cjs",
+      "to": "apps/pc-app/runtime/features/resources/parser.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/resources/service.cjs",
+      "specifier": "./repository.cjs",
+      "to": "apps/pc-app/runtime/features/resources/repository.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/resources/service.cjs",
+      "specifier": "./roster.cjs",
+      "to": "apps/pc-app/runtime/features/resources/roster.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/resources/validation.cjs",
+      "specifier": "./preferences.mjs",
+      "to": "apps/pc-app/runtime/features/resources/preferences.mjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/services/battle-runtime.cjs",
+      "specifier": "../features/battle/core.generated.cjs",
+      "to": "apps/pc-app/runtime/features/battle/core.generated.cjs"
+    },
+    {
+      "from": "apps/pc-app/runtime/services/online-duel-service.cjs",
+      "specifier": "./battle-runtime.cjs",
+      "to": "apps/pc-app/runtime/services/battle-runtime.cjs"
+    }
+  ],
+  "external": [
+    "@ai-sdk/openai-compatible",
+    "@supabase/supabase-js",
+    "@turf/boolean-point-in-polygon",
+    "@turf/distance",
+    "@turf/helpers",
+    "ai",
+    "better-sqlite3",
+    "electron",
+    "node:child_process",
+    "node:crypto",
+    "node:events",
+    "node:fs",
+    "node:fs/promises",
+    "node:os",
+    "node:path",
+    "node:timers/promises"
+  ],
+  "computed": [
+    {
+      "from": "apps/pc-app/runtime/core/services.cjs",
+      "expression": "require(path)"
+    }
+  ]
+}

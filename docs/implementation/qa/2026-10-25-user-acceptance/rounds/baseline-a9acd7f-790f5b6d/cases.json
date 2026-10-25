@@ -1,0 +1,1710 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-10-25T09:24:08.155Z",
+  "baseline": {
+    "executable": "C:/Users/Administrator/Desktop/project/DesktopPet/releases/final-a9acd7f/Lingjing-0.1.8-portable-x64.exe",
+    "sourceCommit": "a9acd7f",
+    "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289"
+  },
+  "cases": [
+    {
+      "id": "A01",
+      "domain": "启动登录",
+      "title": "首次冷启动",
+      "owner": "01",
+      "reproducibleSteps": [
+        "新档案运行原便携EXE",
+        "等待登录界面与插画"
+      ],
+      "expected": "不读取普通档案；无白屏；显示版本与可用登录入口",
+      "actual": "原SFX启动到登录，实际manifest a9acd7f；档案与namespaced模拟场景绑定",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [
+        "evidence/baseline-login.png",
+        "run-manifest.json"
+      ],
+      "status": "passed",
+      "updatedAt": "2026-10-25T09:26:00.944Z"
+    },
+    {
+      "id": "A02",
+      "domain": "启动登录",
+      "title": "登录保持行对齐 QA-001",
+      "owner": "08",
+      "reproducibleSteps": [
+        "观察默认登录表单",
+        "逐一聚焦记住账号、保持登录与锁图标"
+      ],
+      "expected": "文字、复选框、锁图标垂直居中；焦点和提示清晰",
+      "actual": "保持登录锁图标上偏，复现QA-001",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [
+        "evidence/baseline-login.png",
+        "evidence/QA-001-login-geometry.json"
+      ],
+      "status": "failed",
+      "updatedAt": "2026-10-25T09:26:00.945Z"
+    },
+    {
+      "id": "A03",
+      "domain": "启动登录",
+      "title": "空值与错误登录",
+      "owner": "08",
+      "reproducibleSteps": [
+        "空表单提交",
+        "无效账号或错误密码提交"
+      ],
+      "expected": "保留输入；明确错误；不创建会话",
+      "actual": "尚未在本轮实际操作",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [],
+      "status": "pending"
+    },
+    {
+      "id": "A04",
+      "domain": "启动登录",
+      "title": "注册校验",
+      "owner": "08",
+      "reproducibleSteps": [
+        "切注册",
+        "输入短账号、密码不一致、重复账号并提交"
+      ],
+      "expected": "对应校验明确；失败不创建重复身份",
+      "actual": "尚未在本轮实际操作",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [],
+      "status": "pending"
+    },
+    {
+      "id": "A05",
+      "domain": "启动登录",
+      "title": "合成QA本地注册",
+      "owner": "08",
+      "reproducibleSteps": [
+        "填写独立QA身份",
+        "正常提交注册"
+      ],
+      "expected": "进入主界面；独立owner/device与模拟提示准确",
+      "actual": "正常UI填四字段、Enter注册成功；独立QA owner，模拟标识明确",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [
+        "evidence/baseline-registration-filled.png",
+        "evidence/baseline-registration-submit.png",
+        "evidence/local-registration-session.json"
+      ],
+      "status": "passed",
+      "updatedAt": "2026-10-25T09:28:19.250Z"
+    },
+    {
+      "id": "A06",
+      "domain": "启动登录",
+      "title": "云端合成账号注册登录",
+      "owner": "08",
+      "reproducibleSteps": [
+        "全新普通隔离档案注册独立QA账号",
+        "正常登录"
+      ],
+      "expected": "实际Auth成功；云端独立回读匹配；不触及真人凭据",
+      "actual": "原EXE正常UI新云端档案注册成功，live/Auth user与独立Supabase lingjing_accounts行匹配；保持登录secure；新候选另行实测",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [
+        "evidence/cloud-runtime-identity.json",
+        "evidence/baseline-cloud-registered-native.jpg"
+      ],
+      "status": "running",
+      "updatedAt": "2026-10-25T10:10:20.933Z"
+    },
+    {
+      "id": "A07",
+      "domain": "启动登录",
+      "title": "显隐密码与键盘顺序",
+      "owner": "08",
+      "reproducibleSteps": [
+        "切换密码眼睛",
+        "Tab/Shift+Tab走完整表单",
+        "Enter提交"
+      ],
+      "expected": "密码值一致；焦点顺序自然；按钮有名称",
+      "actual": "尚未在本轮实际操作",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [],
+      "status": "pending"
+    },
+    {
+      "id": "A08",
+      "domain": "启动登录",
+      "title": "记住账号",
+      "owner": "08",
+      "reproducibleSteps": [
+        "勾记住账号登录",
+        "退出并重启"
+      ],
+      "expected": "仅恢复账号提示；密码不明文保存",
+      "actual": "尚未在本轮实际操作",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [],
+      "status": "pending"
+    },
+    {
+      "id": "A09",
+      "domain": "启动登录",
+      "title": "保持登录重启",
+      "owner": "08",
+      "reproducibleSteps": [
+        "云账号勾保持登录",
+        "退出应用并重启同档案"
+      ],
+      "expected": "安全会话恢复且账号归属正确",
+      "actual": "尚未在本轮实际操作",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [],
+      "status": "pending"
+    },
+    {
+      "id": "A10",
+      "domain": "启动登录",
+      "title": "未保持登录重启",
+      "owner": "08",
+      "reproducibleSteps": [
+        "不勾保持登录正常登录",
+        "关闭重开"
+      ],
+      "expected": "要求登录；持久业务数据保留",
+      "actual": "尚未在本轮实际操作",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [],
+      "status": "pending"
+    },
+    {
+      "id": "A11",
+      "domain": "启动登录",
+      "title": "账号切换隔离",
+      "owner": "08",
+      "reproducibleSteps": [
+        "甲领养写状态并退出",
+        "乙登录",
+        "甲再登录"
+      ],
+      "expected": "宠物/聊天/战报/设置/桌面不串归属",
+      "actual": "尚未在本轮实际操作",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [],
+      "status": "pending"
+    },
+    {
+      "id": "A12",
+      "domain": "启动登录",
+      "title": "退出与失效会话",
+      "owner": "08",
+      "reproducibleSteps": [
+        "退出登录",
+        "重复访问业务页",
+        "云端撤销专用QA会话后继续操作"
+      ],
+      "expected": "立即清理私有可见数据并要求重新认证",
+      "actual": "尚未在本轮实际操作",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [],
+      "status": "pending"
+    },
+    {
+      "id": "N01",
+      "domain": "导航窗口",
+      "title": "所有主导航入口",
+      "owner": "01",
+      "reproducibleSteps": [
+        "依次点击全部主导航",
+        "前进后退并返回"
+      ],
+      "expected": "目标页正确；激活状态和标题一致；无空白",
+      "actual": "尚未在本轮实际操作",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [],
+      "status": "pending"
+    },
+    {
+      "id": "N02",
+      "domain": "导航窗口",
+      "title": "最小尺寸与最大化",
+      "owner": "01",
+      "reproducibleSteps": [
+        "鼠标缩到支持最小尺寸",
+        "最大化",
+        "恢复"
+      ],
+      "expected": "主要表单/弹窗/滚动均可达；无错位遮挡",
+      "actual": "尚未在本轮实际操作",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [],
+      "status": "pending"
+    },
+    {
+      "id": "N03",
+      "domain": "导航窗口",
+      "title": "窗口连续缩放与滚动",
+      "owner": "01",
+      "reproducibleSteps": [
+        "多页反复缩放",
+        "滚动长列表和弹窗"
+      ],
+      "expected": "布局稳定；不丢选中实体或未提交内容",
+      "actual": "尚未在本轮实际操作",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [],
+      "status": "pending"
+    },
+    {
+      "id": "N04",
+      "domain": "导航窗口",
+      "title": "关闭到托盘与恢复",
+      "owner": "08",
+      "reproducibleSteps": [
+        "点击关闭",
+        "托盘打开",
+        "退出自身进程"
+      ],
+      "expected": "行为符合设置；可恢复；不关闭其他进程",
+      "actual": "尚未在本轮实际操作",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [],
+      "status": "pending"
+    },
+    {
+      "id": "C01",
+      "domain": "灵宠",
+      "title": "属性图标分类 QA-002",
+      "owner": "02",
+      "reproducibleSteps": [
+        "进入领养页",
+        "切全部与金木水火土"
+      ],
+      "expected": "以属性图标分类；去掉大肥鱼/动物伙伴类型标签",
+      "actual": "原包领养分类为大肥鱼/动物伙伴；属性被放到下拉菜单，复现QA-002",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [
+        "evidence/baseline-adoption.png"
+      ],
+      "status": "failed",
+      "updatedAt": "2026-10-25T09:28:56.105Z"
+    },
+    {
+      "id": "C02",
+      "domain": "灵宠",
+      "title": "同模板连续领养",
+      "owner": "02",
+      "reproducibleSteps": [
+        "同模板正常领养两次",
+        "查看拥有列表"
+      ],
+      "expected": "两独立实例；固定标准名与唯一稳定编号",
+      "actual": "通过真实键盘两次正常领养同模板小狐；实例petId和serial不同，待固定名/编号需求修复复验",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [
+        "evidence/two-foxes-readback.json"
+      ],
+      "status": "passed",
+      "updatedAt": "2026-10-25T09:34:50.035Z"
+    },
+    {
+      "id": "C03",
+      "domain": "灵宠",
+      "title": "固定角色名和唯一编号 QA-003",
+      "owner": "02",
+      "reproducibleSteps": [
+        "领养",
+        "查看列表/详情/桌面/聊天/对战",
+        "重启与同步回读"
+      ],
+      "expected": "角色固定名一致；编号可辨识且稳定；同模板不同编号",
+      "actual": "同模板列表两只仅同名、无编号；可把第三只标准小狐改为验收昵称。后端UUID/短serial存在，需固定标准名和完整编号投影各域，QA-003复现",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [
+        "evidence/QA-003-three-instances.json",
+        "evidence/QA-003-three-instances-renderer.png"
+      ],
+      "status": "failed",
+      "updatedAt": "2026-10-25T09:41:41.506Z"
+    },
+    {
+      "id": "C04",
+      "domain": "灵宠",
+      "title": "五行筛选与拥有筛选",
+      "owner": "02",
+      "reproducibleSteps": [
+        "逐个五行筛选",
+        "切只看已拥有",
+        "空结果与恢复"
+      ],
+      "expected": "结果准确；已选预览与筛选一致；可清空筛选",
+      "actual": "尚未在本轮实际操作",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [],
+      "status": "pending"
+    },
+    {
+      "id": "C05",
+      "domain": "灵宠",
+      "title": "八角色详情与动画",
+      "owner": "02",
+      "reproducibleSteps": [
+        "逐个打开八角色预览/详情"
+      ],
+      "expected": "实际角色资源可见；属性/固定名正确；无占位替代",
+      "actual": "尚未在本轮实际操作",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [],
+      "status": "pending"
+    },
+    {
+      "id": "C06",
+      "domain": "灵宠",
+      "title": "详情页全部页签",
+      "owner": "02",
+      "reproducibleSteps": [
+        "打开灵宠详情",
+        "依次成长/技能/记忆/外观等页签"
+      ],
+      "expected": "内容与petId一致；导航返回保留上下文",
+      "actual": "尚未在本轮实际操作",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [],
+      "status": "pending"
+    },
+    {
+      "id": "C07",
+      "domain": "灵宠",
+      "title": "养成互动与冷却",
+      "owner": "02",
+      "reproducibleSteps": [
+        "指定甲互动",
+        "立即重复",
+        "查看乙"
+      ],
+      "expected": "仅甲变化；冷却反馈清楚；不重复扣奖",
+      "actual": "尚未在本轮实际操作",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [],
+      "status": "pending"
+    },
+    {
+      "id": "C08",
+      "domain": "灵宠",
+      "title": "每宠独立选择",
+      "owner": "02",
+      "reproducibleSteps": [
+        "甲放桌面",
+        "乙聊天",
+        "丙训练",
+        "丁驻守"
+      ],
+      "expected": "不同功能各自选宠；不随全局选中交叉更换",
+      "actual": "尚未在本轮实际操作",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [],
+      "status": "pending"
+    },
+    {
+      "id": "C09",
+      "domain": "灵宠",
+      "title": "无宠物空状态",
+      "owner": "02",
+      "reproducibleSteps": [
+        "新账号访问详情/桌面/聊天/训练"
+      ],
+      "expected": "引导领养；无伪造实体或崩溃",
+      "actual": "尚未在本轮实际操作",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [],
+      "status": "pending"
+    },
+    {
+      "id": "C10",
+      "domain": "灵宠",
+      "title": "领养快速连点与返回",
+      "owner": "02",
+      "reproducibleSteps": [
+        "快速重复点击领养",
+        "返回列表再进入"
+      ],
+      "expected": "明确成功数；幂等或用户意图数量正确；无幽灵实例",
+      "actual": "尚未在本轮实际操作",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [],
+      "status": "pending"
+    },
+    {
+      "id": "D01",
+      "domain": "桌面",
+      "title": "显示隐藏与上限",
+      "owner": "02",
+      "reproducibleSteps": [
+        "显示1至4只",
+        "尝试超限",
+        "隐藏后再显示"
+      ],
+      "expected": "遵守1–4上限；设置更低时遵守设置；实例不串",
+      "actual": "尚未在本轮实际操作",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [],
+      "status": "pending"
+    },
+    {
+      "id": "D02",
+      "domain": "桌面",
+      "title": "重复拖动变大 QA-004",
+      "owner": "02",
+      "reproducibleSteps": [
+        "正常拖动同一灵宠至少10次",
+        "每次读取DIP/DPI和实际精灵尺寸"
+      ],
+      "expected": "只改变位置；窗口、stage、scale不累乘",
+      "actual": "125% DPI真实10次拖动：窗口232×280→252×300 DIP；stage214×222.9→234×242.9，保存scale全程1；每次输入均isTrusted，复现QA-004",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [
+        "evidence/QA-004-drag-series.json",
+        "evidence/QA-004-drag-events.json",
+        "evidence/QA-004-drag-00.png",
+        "evidence/QA-004-drag-10.png"
+      ],
+      "status": "failed",
+      "updatedAt": "2026-10-25T09:39:55.118Z"
+    },
+    {
+      "id": "D03",
+      "domain": "桌面",
+      "title": "边缘与越界恢复",
+      "owner": "02",
+      "reproducibleSteps": [
+        "拖向四边",
+        "关闭重启"
+      ],
+      "expected": "可找回；持久位置被安全限制于有效屏幕",
+      "actual": "尚未在本轮实际操作",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [],
+      "status": "pending"
+    },
+    {
+      "id": "D04",
+      "domain": "桌面",
+      "title": "单宠大小偏好",
+      "owner": "02",
+      "reproducibleSteps": [
+        "详情调甲大小",
+        "观察乙",
+        "保存重开"
+      ],
+      "expected": "仅甲变化；范围有效；重启后尺寸稳定",
+      "actual": "尚未在本轮实际操作",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [],
+      "status": "pending"
+    },
+    {
+      "id": "D05",
+      "domain": "桌面",
+      "title": "DPI与多显示器",
+      "owner": "02",
+      "reproducibleSteps": [
+        "当前DPI真实拖动",
+        "有硬件时跨DPI屏拖动"
+      ],
+      "expected": "DIP/像素转换正确；缺少硬件的组合明确受阻",
+      "actual": "尚未在本轮实际操作",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [],
+      "status": "pending"
+    },
+    {
+      "id": "D06",
+      "domain": "桌面",
+      "title": "拖动持久化与重启",
+      "owner": "02",
+      "reproducibleSteps": [
+        "拖到新位置",
+        "退出自身应用",
+        "重开登录"
+      ],
+      "expected": "恢复同一编号/位置/尺寸；不额外生成实例",
+      "actual": "尚未在本轮实际操作",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [],
+      "status": "pending"
+    },
+    {
+      "id": "D07",
+      "domain": "桌面",
+      "title": "行为与鼠标交互",
+      "owner": "02",
+      "reproducibleSteps": [
+        "切站立/行走/跟随等真实可用模式",
+        "单击/右键观察"
+      ],
+      "expected": "行为匹配；拖动不误触；右键入口可用",
+      "actual": "尚未在本轮实际操作",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [],
+      "status": "pending"
+    },
+    {
+      "id": "D08",
+      "domain": "桌面",
+      "title": "穿透与全屏隐藏",
+      "owner": "02",
+      "reproducibleSteps": [
+        "使用正常UI切换穿透",
+        "观察全屏隐藏策略"
+      ],
+      "expected": "有可恢复控制；不永久失去交互；各宠独立",
+      "actual": "尚未在本轮实际操作",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [],
+      "status": "pending"
+    },
+    {
+      "id": "D09",
+      "domain": "桌面",
+      "title": "托盘全部显示隐藏",
+      "owner": "08",
+      "reproducibleSteps": [
+        "正常托盘显示/隐藏全部",
+        "回到主窗口"
+      ],
+      "expected": "正确作用于本档案桌面实例；保持选择归属",
+      "actual": "尚未在本轮实际操作",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [],
+      "status": "pending"
+    },
+    {
+      "id": "T01",
+      "domain": "聊天",
+      "title": "空状态和切宠",
+      "owner": "06",
+      "reproducibleSteps": [
+        "无宠访问聊天",
+        "有宠选甲后选乙"
+      ],
+      "expected": "空状态明确；头像/名字/会话归属一致",
+      "actual": "尚未在本轮实际操作",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [],
+      "status": "pending"
+    },
+    {
+      "id": "T02",
+      "domain": "聊天",
+      "title": "人设与记忆独立",
+      "owner": "06",
+      "reproducibleSteps": [
+        "分别编辑甲乙人设/记忆",
+        "切换并重开"
+      ],
+      "expected": "各petId独立持久化；不串实例",
+      "actual": "正常UI选第二只并保存独立人设，snapshot对应第二只petId revision1；记忆/切回/重启待最终包",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [
+        "evidence/chat-persona-second-after.json"
+      ],
+      "status": "running",
+      "updatedAt": "2026-10-25T09:51:56.236Z"
+    },
+    {
+      "id": "T03",
+      "domain": "聊天",
+      "title": "无供应商配置错误",
+      "owner": "06",
+      "reproducibleSteps": [
+        "未配有效LLM发送合成消息"
+      ],
+      "expected": "清晰可恢复错误；不显示伪造模型回复",
+      "actual": "尚未在本轮实际操作",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [],
+      "status": "pending"
+    },
+    {
+      "id": "T04",
+      "domain": "聊天",
+      "title": "发送流式与取消",
+      "owner": "06",
+      "reproducibleSteps": [
+        "配置专用测试供应商或标明模拟",
+        "发送",
+        "生成中取消"
+      ],
+      "expected": "用户消息一次；正确流式或错误；取消不残留busy",
+      "actual": "尚未在本轮实际操作",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [],
+      "status": "pending"
+    },
+    {
+      "id": "T05",
+      "domain": "聊天",
+      "title": "历史与再生成",
+      "owner": "06",
+      "reproducibleSteps": [
+        "正常发送多轮",
+        "离开返回",
+        "重启",
+        "重试或再生成"
+      ],
+      "expected": "历史按petId一致；状态和分支明确",
+      "actual": "尚未在本轮实际操作",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [],
+      "status": "pending"
+    },
+    {
+      "id": "T06",
+      "domain": "聊天",
+      "title": "凭据边界与失联",
+      "owner": "06",
+      "reproducibleSteps": [
+        "专用无效key配置",
+        "请求失败/断网",
+        "查看同步载荷"
+      ],
+      "expected": "密钥不入云/备份；错误可重试；不泄露凭据",
+      "actual": "尚未在本轮实际操作",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [],
+      "status": "pending"
+    },
+    {
+      "id": "M01",
+      "domain": "探索地图",
+      "title": "地图初始与图层",
+      "owner": "03",
+      "reproducibleSteps": [
+        "打开附近",
+        "等待地图",
+        "缩放/平移"
+      ],
+      "expected": "实际地图加载；可区分未定位、加载、失败",
+      "actual": "实际打开未定位空态，经明确QA位置入口加载OSM/MapLibre底图和真实角色标记；模拟定位来源已保存，平移缩放待最终包",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [
+        "evidence/discovery-explicit-qa-map.json",
+        "evidence/discovery-explicit-qa-map-renderer.png"
+      ],
+      "status": "running",
+      "updatedAt": "2026-10-25T09:51:56.230Z"
+    },
+    {
+      "id": "M02",
+      "domain": "探索地图",
+      "title": "定位未授权与重试",
+      "owner": "03",
+      "reproducibleSteps": [
+        "未授权定位状态查看",
+        "重试定位"
+      ],
+      "expected": "不假定位；状态解释清晰；不自动改OS隐私设置",
+      "actual": "尚未在本轮实际操作",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [],
+      "status": "pending"
+    },
+    {
+      "id": "M03",
+      "domain": "探索地图",
+      "title": "真实定位精度准入",
+      "owner": "03",
+      "reproducibleSteps": [
+        "正常定位",
+        "查看精度",
+        "尝试准入"
+      ],
+      "expected": "沿用80米门槛；硬件不合格受阻而非绕过",
+      "actual": "尚未在本轮实际操作",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [],
+      "status": "pending"
+    },
+    {
+      "id": "M04",
+      "domain": "探索地图",
+      "title": "探索扫描与无结果",
+      "owner": "03",
+      "reproducibleSteps": [
+        "合格定位或明确模拟场景扫描",
+        "切范围与重试"
+      ],
+      "expected": "正确空态/结果/冷却；不重复发奖",
+      "actual": "正常QA位置刷新得到15个相遇，位置过期会禁用挑战；刷新后恢复。真实定位与空结果/冷却后续验证",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [
+        "evidence/discovery-explicit-qa-map.json",
+        "evidence/discovery-encounter-before-battle.json"
+      ],
+      "status": "running",
+      "updatedAt": "2026-10-25T09:51:56.232Z"
+    },
+    {
+      "id": "M05",
+      "domain": "探索地图",
+      "title": "野外相遇到捕捉",
+      "owner": "03",
+      "reproducibleSteps": [
+        "打开相遇",
+        "正常战斗胜利",
+        "尝试捕捉"
+      ],
+      "expected": "胜利才可捕捉；生成指定资源新petId与receipt",
+      "actual": "尚未在本轮实际操作",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [],
+      "status": "pending"
+    },
+    {
+      "id": "M06",
+      "domain": "探索地图",
+      "title": "失败逃跑与过期",
+      "owner": "03",
+      "reproducibleSteps": [
+        "相遇逃跑/失败",
+        "过期后重试",
+        "离页返回"
+      ],
+      "expected": "不能错误捕捉；状态可恢复；不重复结算",
+      "actual": "真实UI相遇→共用战斗页；离开确认可取消并恢复，再确认离开显示已离开/回合0。权威为明确QA模拟；失败和过期其他分支待最终包",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [
+        "evidence/wild-abandoned-readback.json",
+        "evidence/wild-abandoned-renderer.png"
+      ],
+      "status": "running",
+      "updatedAt": "2026-10-25T09:51:56.234Z"
+    },
+    {
+      "id": "M07",
+      "domain": "探索地图",
+      "title": "网络异常与重新定位",
+      "owner": "03",
+      "reproducibleSteps": [
+        "专用进程断网",
+        "地图/相遇请求",
+        "恢复网络"
+      ],
+      "expected": "错误明确；旧结果不冒充新位置；可恢复",
+      "actual": "尚未在本轮实际操作",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [],
+      "status": "pending"
+    },
+    {
+      "id": "B01",
+      "domain": "对战",
+      "title": "训练选择与开始",
+      "owner": "04",
+      "reproducibleSteps": [
+        "选指定宠物",
+        "选择训练配置",
+        "点击开始"
+      ],
+      "expected": "双方真实资源；属性与实例正确；进入共用战斗页",
+      "actual": "尚未在本轮实际操作",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [],
+      "status": "pending"
+    },
+    {
+      "id": "B02",
+      "domain": "对战",
+      "title": "全部招式与回合反馈",
+      "owner": "04",
+      "reproducibleSteps": [
+        "普通/技能/防御/治疗逐项操作"
+      ],
+      "expected": "按钮可用性与消耗正确；每操作一回合；动画对应",
+      "actual": "尚未在本轮实际操作",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [],
+      "status": "pending"
+    },
+    {
+      "id": "B03",
+      "domain": "对战",
+      "title": "自然胜负与奖励",
+      "owner": "04",
+      "reproducibleSteps": [
+        "持续正常操作到自然终局",
+        "确认",
+        "重开战报"
+      ],
+      "expected": "奖励只发一次；HP/XP/种子与持久receipt一致",
+      "actual": "尚未在本轮实际操作",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [],
+      "status": "pending"
+    },
+    {
+      "id": "B04",
+      "domain": "对战",
+      "title": "进行中返回恢复",
+      "owner": "04",
+      "reproducibleSteps": [
+        "训练数回合",
+        "离开返回",
+        "重开应用"
+      ],
+      "expected": "可恢复或明确放弃；不重复开始/结算",
+      "actual": "尚未在本轮实际操作",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [],
+      "status": "pending"
+    },
+    {
+      "id": "B05",
+      "domain": "对战",
+      "title": "历史和回放",
+      "owner": "04",
+      "reproducibleSteps": [
+        "打开本轮真实战报",
+        "逐回合回顾"
+      ],
+      "expected": "双方/招式/HP/属性/终局与原记录一致",
+      "actual": "尚未在本轮实际操作",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [],
+      "status": "pending"
+    },
+    {
+      "id": "B06",
+      "domain": "对战",
+      "title": "好友邀请和接受",
+      "owner": "04",
+      "reproducibleSteps": [
+        "双独立合成账号建立联系",
+        "甲邀请乙",
+        "乙接受"
+      ],
+      "expected": "双方一致session；自然真实Reatime推进",
+      "actual": "尚未在本轮实际操作",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [],
+      "status": "pending"
+    },
+    {
+      "id": "B07",
+      "domain": "对战",
+      "title": "好友拒绝",
+      "owner": "04",
+      "reproducibleSteps": [
+        "甲邀请乙",
+        "乙拒绝"
+      ],
+      "expected": "双方终止；不发战斗奖；可再次邀请",
+      "actual": "尚未在本轮实际操作",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [],
+      "status": "pending"
+    },
+    {
+      "id": "B08",
+      "domain": "对战",
+      "title": "好友取消",
+      "owner": "04",
+      "reproducibleSteps": [
+        "甲发邀请",
+        "甲取消",
+        "乙尝试接受"
+      ],
+      "expected": "取消可见；不能接受已取消邀请",
+      "actual": "尚未在本轮实际操作",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [],
+      "status": "pending"
+    },
+    {
+      "id": "B09",
+      "domain": "对战",
+      "title": "邀请过期",
+      "owner": "04",
+      "reproducibleSteps": [
+        "发真实或明确模拟过期邀请",
+        "等待产品过期",
+        "接受"
+      ],
+      "expected": "双方状态一致；过期不能启动",
+      "actual": "尚未在本轮实际操作",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [],
+      "status": "pending"
+    },
+    {
+      "id": "B10",
+      "domain": "对战",
+      "title": "断网重连与重复操作",
+      "owner": "04",
+      "reproducibleSteps": [
+        "双端对战",
+        "仅QA进程网络中断",
+        "恢复并继续"
+      ],
+      "expected": "权威回合一致；补回原回合；不双发奖励",
+      "actual": "尚未在本轮实际操作",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [],
+      "status": "pending"
+    },
+    {
+      "id": "B11",
+      "domain": "对战",
+      "title": "好友自然终局和重启",
+      "owner": "04",
+      "reproducibleSteps": [
+        "真实双方自然打至终局",
+        "两端重开",
+        "独立云回读"
+      ],
+      "expected": "双方战报与结算相同；原session与奖励唯一",
+      "actual": "尚未在本轮实际操作",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [],
+      "status": "pending"
+    },
+    {
+      "id": "B12",
+      "domain": "对战",
+      "title": "未知对手与空态",
+      "owner": "04",
+      "reproducibleSteps": [
+        "无好友/离线对手/信息未到时打开邀请"
+      ],
+      "expected": "不伪造头像/属性/HP；显示等待或明确错误",
+      "actual": "尚未在本轮实际操作",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [],
+      "status": "pending"
+    },
+    {
+      "id": "G01",
+      "domain": "领地菜园",
+      "title": "领地初始地图与列表",
+      "owner": "05",
+      "reproducibleSteps": [
+        "打开领地/菜园",
+        "缩放与选领地"
+      ],
+      "expected": "地图/边界/状态真实；定位限制说明正确",
+      "actual": "尚未在本轮实际操作",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [],
+      "status": "pending"
+    },
+    {
+      "id": "G02",
+      "domain": "领地菜园",
+      "title": "驻守选宠与更换",
+      "owner": "05",
+      "reproducibleSteps": [
+        "选择甲驻守",
+        "查看乙",
+        "更换为丙"
+      ],
+      "expected": "归属独立；只有选中领地/宠物改变",
+      "actual": "尚未在本轮实际操作",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [],
+      "status": "pending"
+    },
+    {
+      "id": "G03",
+      "domain": "领地菜园",
+      "title": "竞争胜利占领",
+      "owner": "05",
+      "reproducibleSteps": [
+        "合格定位或明确模拟领地竞争",
+        "自然胜利",
+        "确认占领"
+      ],
+      "expected": "仅胜利占领；服务端/本机receipt一致",
+      "actual": "尚未在本轮实际操作",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [],
+      "status": "pending"
+    },
+    {
+      "id": "G04",
+      "domain": "领地菜园",
+      "title": "竞争失败取消和占用",
+      "owner": "05",
+      "reproducibleSteps": [
+        "竞争失败/取消",
+        "重复占领",
+        "他人已占领场景"
+      ],
+      "expected": "失败确认无占领；冲突清楚；不重复扣奖",
+      "actual": "尚未在本轮实际操作",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [],
+      "status": "pending"
+    },
+    {
+      "id": "G05",
+      "domain": "领地菜园",
+      "title": "种植与库存扣减",
+      "owner": "05",
+      "reproducibleSteps": [
+        "指定地块种可用种子",
+        "重复点击",
+        "查看背包"
+      ],
+      "expected": "仅成功种植一次扣种；地块与库存一致",
+      "actual": "正常UI地块1确认播种胡萝卜，种子2→1；界面进入原有10分钟生长且收获禁用。等待自然成熟，重复点击/其他种植待最终包",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [
+        "evidence/garden-first-plant.json",
+        "evidence/garden-first-plant-renderer.png"
+      ],
+      "status": "running",
+      "updatedAt": "2026-10-25T09:58:56.596Z"
+    },
+    {
+      "id": "G06",
+      "domain": "领地菜园",
+      "title": "成熟等待与收获",
+      "owner": "05",
+      "reproducibleSteps": [
+        "查看未成熟",
+        "到实际/明确模拟成熟点",
+        "收获和重试"
+      ],
+      "expected": "未成熟不可收；成熟奖励一次且receipt一致",
+      "actual": "尚未在本轮实际操作",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [],
+      "status": "pending"
+    },
+    {
+      "id": "G07",
+      "domain": "领地菜园",
+      "title": "离线与云端冲突",
+      "owner": "05",
+      "reproducibleSteps": [
+        "双QA端修改同领地或断网写入",
+        "恢复"
+      ],
+      "expected": "按权威决策；冲突不丢失或重复经济动作",
+      "actual": "尚未在本轮实际操作",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [],
+      "status": "pending"
+    },
+    {
+      "id": "I01",
+      "domain": "背包喂养",
+      "title": "分类与空背包",
+      "owner": "05",
+      "reproducibleSteps": [
+        "逐分类查看",
+        "选择物品",
+        "无库存状态"
+      ],
+      "expected": "数量/说明/用途准确；空态明确",
+      "actual": "尚未在本轮实际操作",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [],
+      "status": "pending"
+    },
+    {
+      "id": "I02",
+      "domain": "背包喂养",
+      "title": "合成成功与不足",
+      "owner": "05",
+      "reproducibleSteps": [
+        "选择配方",
+        "足量合成",
+        "不足时重试"
+      ],
+      "expected": "材料与产物原子变化；不足不扣减",
+      "actual": "尚未在本轮实际操作",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [],
+      "status": "pending"
+    },
+    {
+      "id": "I03",
+      "domain": "背包喂养",
+      "title": "指定实例喂养",
+      "owner": "05",
+      "reproducibleSteps": [
+        "选甲喂一个物品",
+        "查乙",
+        "重复点击"
+      ],
+      "expected": "只甲成长与饱食变化；库存扣一次",
+      "actual": "尚未在本轮实际操作",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [],
+      "status": "pending"
+    },
+    {
+      "id": "I04",
+      "domain": "背包喂养",
+      "title": "库存重启同步",
+      "owner": "05",
+      "reproducibleSteps": [
+        "本轮真实经济操作后重启/同步",
+        "独立读receipt"
+      ],
+      "expected": "数量/归属保持；不再结算",
+      "actual": "尚未在本轮实际操作",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [],
+      "status": "pending"
+    },
+    {
+      "id": "R01",
+      "domain": "角色资源",
+      "title": "库筛选预览与偏好",
+      "owner": "07",
+      "reproducibleSteps": [
+        "打开资源库",
+        "分类筛选",
+        "选角色和动作"
+      ],
+      "expected": "全部资源可渲染；偏好不改变错误petId",
+      "actual": "尚未在本轮实际操作",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [],
+      "status": "pending"
+    },
+    {
+      "id": "R02",
+      "domain": "角色资源",
+      "title": "真实动作全套与重复播放",
+      "owner": "07",
+      "reproducibleSteps": [
+        "各角色播放idle/walk/attack/hit等可用动作",
+        "连续相同招式"
+      ],
+      "expected": "实际canvas/纹理帧推进；同动作可重播",
+      "actual": "尚未在本轮实际操作",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [],
+      "status": "pending"
+    },
+    {
+      "id": "R03",
+      "domain": "角色资源",
+      "title": "本地资源导入",
+      "owner": "07",
+      "reproducibleSteps": [
+        "用新QA样本从正常文件选择导入"
+      ],
+      "expected": "资源可见可渲染；manifest/字节/历史正确",
+      "actual": "尚未在本轮实际操作",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [],
+      "status": "pending"
+    },
+    {
+      "id": "R04",
+      "domain": "角色资源",
+      "title": "无效导入与路径边界",
+      "owner": "07",
+      "reproducibleSteps": [
+        "导入无效包/缺文件/路径穿越样本"
+      ],
+      "expected": "拒绝且明确原因；已有资源和文件不破坏",
+      "actual": "尚未在本轮实际操作",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [],
+      "status": "pending"
+    },
+    {
+      "id": "R05",
+      "domain": "角色资源",
+      "title": "导出和重导入",
+      "owner": "07",
+      "reproducibleSteps": [
+        "正常导出QA资源",
+        "全新档案重新导入"
+      ],
+      "expected": "字节/动作映射一致；路径可选",
+      "actual": "尚未在本轮实际操作",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [],
+      "status": "pending"
+    },
+    {
+      "id": "R06",
+      "domain": "角色资源",
+      "title": "偏好与资源云端恢复",
+      "owner": "07",
+      "reproducibleSteps": [
+        "云QA端导入与改偏好",
+        "第二新档案同步"
+      ],
+      "expected": "实际字节校验和一致；私有owner正确",
+      "actual": "尚未在本轮实际操作",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [],
+      "status": "pending"
+    },
+    {
+      "id": "S01",
+      "domain": "账号同步",
+      "title": "账户页资料与状态",
+      "owner": "08",
+      "reproducibleSteps": [
+        "查看用户/设备/同步状态",
+        "修改合成用户名"
+      ],
+      "expected": "身份明确；revision正确；不错误展示成功",
+      "actual": "尚未在本轮实际操作",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [],
+      "status": "pending"
+    },
+    {
+      "id": "S02",
+      "domain": "账号同步",
+      "title": "自动同步完整域",
+      "owner": "08",
+      "reproducibleSteps": [
+        "云QA端写宠物/聊天/战报/领地/背包/偏好",
+        "第二端正常登录"
+      ],
+      "expected": "完整域自动出现；独立云原文匹配",
+      "actual": "尚未在本轮实际操作",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [],
+      "status": "pending"
+    },
+    {
+      "id": "S03",
+      "domain": "账号同步",
+      "title": "离线写入恢复",
+      "owner": "08",
+      "reproducibleSteps": [
+        "只中断QA进程业务网络",
+        "修改",
+        "重开后联网"
+      ],
+      "expected": "outbox原请求保留；恢复后仅提交一次",
+      "actual": "尚未在本轮实际操作",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [],
+      "status": "pending"
+    },
+    {
+      "id": "S04",
+      "domain": "账号同步",
+      "title": "双端并发冲突",
+      "owner": "08",
+      "reproducibleSteps": [
+        "甲乙基于同版本更改",
+        "先后同步",
+        "解决冲突"
+      ],
+      "expected": "显式冲突或正确CAS；不静默覆盖",
+      "actual": "尚未在本轮实际操作",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [],
+      "status": "pending"
+    },
+    {
+      "id": "S05",
+      "domain": "账号同步",
+      "title": "权限与跨账号隔离",
+      "owner": "08",
+      "reproducibleSteps": [
+        "甲写私有数据",
+        "乙访问甲已知ID与频道"
+      ],
+      "expected": "服务端拒绝；本地缓存不串；无泄露",
+      "actual": "尚未在本轮实际操作",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [],
+      "status": "pending"
+    },
+    {
+      "id": "S06",
+      "domain": "账号同步",
+      "title": "同步错误与手动重试",
+      "owner": "08",
+      "reproducibleSteps": [
+        "模拟/真实专用网络错",
+        "点重试",
+        "恢复"
+      ],
+      "expected": "状态准确；busy结束；无重试风暴或双发",
+      "actual": "尚未在本轮实际操作",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [],
+      "status": "pending"
+    },
+    {
+      "id": "P01",
+      "domain": "设置备份",
+      "title": "所有设置分组可达",
+      "owner": "08",
+      "reproducibleSteps": [
+        "逐设置页签",
+        "键盘与滚动"
+      ],
+      "expected": "分组/标签/控件状态清楚；无布局遮挡",
+      "actual": "尚未在本轮实际操作",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [],
+      "status": "pending"
+    },
+    {
+      "id": "P02",
+      "domain": "设置备份",
+      "title": "保存取消与重启",
+      "owner": "08",
+      "reproducibleSteps": [
+        "改非安全偏好",
+        "不保存离开",
+        "再保存并重开"
+      ],
+      "expected": "取消不持久化；保存值正确恢复",
+      "actual": "尚未在本轮实际操作",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [],
+      "status": "pending"
+    },
+    {
+      "id": "P03",
+      "domain": "设置备份",
+      "title": "桌面上限音量尺寸",
+      "owner": "08",
+      "reproducibleSteps": [
+        "1–4上限与音量正常修改",
+        "保存",
+        "核对桌面"
+      ],
+      "expected": "合法范围；实际生效；每宠状态归属正确",
+      "actual": "尚未在本轮实际操作",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [],
+      "status": "pending"
+    },
+    {
+      "id": "P04",
+      "domain": "设置备份",
+      "title": "导出本地备份",
+      "owner": "08",
+      "reproducibleSteps": [
+        "正常UI导出QA备份",
+        "读取文件"
+      ],
+      "expected": "模块完整；无密码/API密钥；provenance明确",
+      "actual": "尚未在本轮实际操作",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [],
+      "status": "pending"
+    },
+    {
+      "id": "P05",
+      "domain": "设置备份",
+      "title": "恢复备份与回滚",
+      "owner": "08",
+      "reproducibleSteps": [
+        "导出后改变QA状态",
+        "正常UI恢复",
+        "读取原件保护备份"
+      ],
+      "expected": "恢复正确；恢复前档案保留；不污染普通账号",
+      "actual": "尚未在本轮实际操作",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [],
+      "status": "pending"
+    },
+    {
+      "id": "P06",
+      "domain": "设置备份",
+      "title": "无效跨身份备份",
+      "owner": "08",
+      "reproducibleSteps": [
+        "选择损坏或其他身份/模拟来源备份"
+      ],
+      "expected": "产品边界拒绝或警告明确；原数据保留",
+      "actual": "尚未在本轮实际操作",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [],
+      "status": "pending"
+    },
+    {
+      "id": "P07",
+      "domain": "设置备份",
+      "title": "通知开机和隐私边界",
+      "owner": "08",
+      "reproducibleSteps": [
+        "查看开机/位置/统计等设置和说明"
+      ],
+      "expected": "界面准确；需OS/隐私实改者记录边界，不代用户修改",
+      "actual": "尚未在本轮实际操作",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [],
+      "status": "pending"
+    },
+    {
+      "id": "P08",
+      "domain": "设置备份",
+      "title": "版本日志和更新入口",
+      "owner": "01",
+      "reproducibleSteps": [
+        "打开关于/版本/日志/更新等实际入口"
+      ],
+      "expected": "版本与运行manifest一致；入口真实；不打开敏感日志外传",
+      "actual": "尚未在本轮实际操作",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [],
+      "status": "pending"
+    },
+    {
+      "id": "A13",
+      "domain": "启动登录",
+      "title": "存档待核对提示与正常确认",
+      "owner": "08",
+      "reproducibleSteps": [
+        "正常新QA账号领养",
+        "观察伙伴已保存/其他存档待核对提示",
+        "正常界面核对与返回"
+      ],
+      "expected": "首次确认合理且能完成；不丢宠物/历史/资源/固定名或编号；普通新档案不无故卡住",
+      "actual": "全新云端零宠物时提示伙伴已保存/其他待核对；正常核对进入账号页，同步初始关闭，启用后预览/立即同步返回云端无存档；随后正常领养鱼丸成功，独立云端存档revision1。是否可正常完成首次核对留到候选继续，不预判为缺陷。",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [
+        "evidence/baseline-cloud-registered-native.jpg",
+        "evidence/baseline-cloud-review-entry-native.jpg",
+        "evidence/cloud-before-first-review.json",
+        "evidence/baseline-cloud-preview-request-native.jpg",
+        "evidence/baseline-cloud-first-adoption-completed-native.jpg",
+        "evidence/baseline-live-cloud-independent.json"
+      ],
+      "status": "running",
+      "updatedAt": "2026-10-25T10:19:27.547Z"
+    },
+    {
+      "id": "N05",
+      "domain": "导航窗口",
+      "title": "同一档案重复启动",
+      "owner": "01",
+      "reproducibleSteps": [
+        "同一独立profile再次启动同一EXE",
+        "比较进程/窗口/同宠窗口与SQLite占用"
+      ],
+      "expected": "第二次只聚焦既有主窗口；不同profile允许独立设备测试",
+      "actual": "同profile原SFX重复启动产生第二主进程和登录窗口，原窗口仍在；复现QA-006",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [
+        "evidence/QA-006-duplicate-profile.json",
+        "evidence/QA-006-duplicate-login-native.png"
+      ],
+      "status": "failed",
+      "updatedAt": "2026-10-25T09:53:50.176Z"
+    },
+    {
+      "id": "P09",
+      "domain": "设置备份",
+      "title": "便携版开机启动路径稳定",
+      "owner": "08",
+      "reproducibleSteps": [
+        "核对正常开机启动配置所用可执行路径",
+        "确认不是会清理的SFX临时解压Lingjing.exe",
+        "不用注销或重启系统"
+      ],
+      "expected": "注册持久且存在的便携SFX路径，带正确profile语义；不破坏用户原启动项",
+      "actual": "尚未实测",
+      "severity": "TBD",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [],
+      "status": "pending"
+    }
+  ]
+}

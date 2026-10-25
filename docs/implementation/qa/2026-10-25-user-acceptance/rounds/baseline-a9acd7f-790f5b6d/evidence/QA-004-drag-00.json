@@ -1,0 +1,101 @@
+{
+  "at": "2026-10-25T09:35:20.212Z",
+  "url": "file:///C:/Users/ADMINI~1/AppData/Local/Temp/3LBAQALUKgWr1yvvvscHsCaqSpQ/resources/app.asar/apps/pc-app/dist/ui/desktop.html#/desktop/pet-3b40de99-bcb5-465a-bba4-c91465063ff1",
+  "title": "灵境 · 小狐",
+  "dpr": 1.25,
+  "window": {
+    "screenX": 80,
+    "screenY": 520,
+    "innerWidth": 232,
+    "innerHeight": 280,
+    "outerWidth": 232,
+    "outerHeight": 280
+  },
+  "surface": {
+    "x": 0,
+    "y": 0,
+    "width": 232,
+    "height": 280
+  },
+  "visual": {
+    "x": 9,
+    "y": 25,
+    "width": 214,
+    "height": 222.90000915527344
+  },
+  "stage": {
+    "x": 9,
+    "y": 25,
+    "width": 214,
+    "height": 222.90000915527344
+  },
+  "resourceStatus": {
+    "resourceId": "builtin:lingjing-xiaohu-v1",
+    "petId": "pet-3b40de99-bcb5-465a-bba4-c91465063ff1",
+    "action": "idle",
+    "clip": "idle",
+    "fallback": "false",
+    "status": "ready"
+  },
+  "canvas": {
+    "rect": {
+      "x": 9,
+      "y": 25,
+      "width": 214.40000915527344,
+      "height": 223.1999969482422
+    },
+    "width": 268,
+    "height": 279
+  },
+  "persisted": {
+    "ownerAccountId": "qa:54f0fb7d-bc8a-45cd-8896-754333d59d31:local-ee934188-5eea-4044-b90a-7f0fbf4a6147",
+    "petId": "pet-3b40de99-bcb5-465a-bba4-c91465063ff1",
+    "templateId": "animal-white-fox",
+    "name": "小狐",
+    "serial": "3B40DE99",
+    "element": "water",
+    "resource": {
+      "resourceId": "builtin:lingjing-xiaohu-v1",
+      "kind": "2d"
+    },
+    "source": "adoption",
+    "origin": {},
+    "growth": {
+      "level": 1,
+      "experience": 0,
+      "mood": 60,
+      "satiety": 60,
+      "affinity": 0,
+      "winsTotal": 0,
+      "stats": {
+        "hp": 124,
+        "atk": 28,
+        "def": 24,
+        "spd": 20
+      }
+    },
+    "desktop": {
+      "visible": true,
+      "behavior": "quiet",
+      "scale": 1,
+      "position": {
+        "x": 80,
+        "y": 520,
+        "displayId": null
+      }
+    },
+    "revision": 1,
+    "createdAt": "2026-10-25T09:34:00.008Z",
+    "updatedAt": "2026-10-25T09:34:00.008Z"
+  },
+  "nativeScreenshot": [
+    {
+      "height": 280,
+      "id": "screenshot-0",
+      "originX": 100,
+      "originY": 650,
+      "width": 232,
+      "zIndex": 0
+    }
+  ]
+}

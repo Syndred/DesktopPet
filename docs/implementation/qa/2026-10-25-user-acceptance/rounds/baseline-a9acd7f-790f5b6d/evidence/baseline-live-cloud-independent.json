@@ -1,0 +1,110 @@
+{
+  "at": "2026-10-25T10:18:15.529Z",
+  "source": "independent Supabase MCP execute_sql",
+  "projectId": "jbvrdmrkwpznbrvteive",
+  "query": "select jsonb_build_object('account',to_jsonb(a),'devices',(select coalesce(jsonb_agg(to_jsonb(d)),'[]'::jsonb) from public.lingjing_devices d where d.owner_id=a.owner_id),'save',(select to_jsonb(s) from public.lingjing_saves s where s.owner_id=a.owner_id),'saveActions',(select coalesce(jsonb_agg(jsonb_build_object('actionId',x.action_id,'kind',x.kind,'baseRevision',x.base_revision,'revision',x.revision,'checksum',x.checksum) order by x.created_at),'[]'::jsonb) from public.lingjing_save_actions x where x.owner_id=a.owner_id)) as proof from public.lingjing_accounts a where a.account='uat_1025_a_9e486a';",
+  "rows": [
+    {
+      "proof": {
+        "save": {
+          "checksum": "c6f2062b77181a79c63ca550153de182c7fe8945fc5ce9735580938727c461cf",
+          "envelope": {
+            "data": {
+              "tables": {},
+              "modules": {
+                "companions": {
+                  "data": {
+                    "tables": {
+                      "companion_pets": [
+                        {
+                          "pet_id": "pet-40899e45-d323-49c8-9136-743f14be6ce3",
+                          "revision": 1,
+                          "data_json": "{\"ownerAccountId\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\",\"petId\":\"pet-40899e45-d323-49c8-9136-743f14be6ce3\",\"templateId\":\"big-fish-gentle\",\"name\":\"鱼丸\",\"serial\":\"40899E45\",\"element\":\"water\",\"resource\":{\"resourceId\":\"builtin:lingjing-yuwan-v2\",\"kind\":\"2d\"},\"source\":\"adoption\",\"origin\":{},\"growth\":{\"level\":1,\"experience\":0,\"mood\":60,\"satiety\":60,\"affinity\":0,\"winsTotal\":0,\"stats\":{\"hp\":124,\"atk\":28,\"def\":24,\"spd\":20}},\"desktop\":{\"visible\":false,\"behavior\":\"quiet\",\"scale\":1,\"position\":{\"x\":80,\"y\":520,\"displayId\":null}},\"revision\":1,\"createdAt\":\"2026-10-25T10:15:21.267Z\",\"updatedAt\":\"2026-10-25T10:15:21.267Z\"}",
+                          "created_at": "2026-10-25T10:15:21.267Z",
+                          "updated_at": "2026-10-25T10:15:21.267Z",
+                          "template_id": "big-fish-gentle",
+                          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630"
+                        }
+                      ],
+                      "companion_actions": [
+                        {
+                          "action_id": "a39bdbba-ce65-4bb4-b51f-6da97f713ab7",
+                          "operation": "adopt",
+                          "created_at": "2026-10-25T10:15:21.267Z",
+                          "result_json": "{\"ok\":true,\"data\":{\"pet\":{\"ownerAccountId\":\"account:99efc8c1-c420-47f3-9a5c-91aa302d5630\",\"petId\":\"pet-40899e45-d323-49c8-9136-743f14be6ce3\",\"templateId\":\"big-fish-gentle\",\"name\":\"鱼丸\",\"serial\":\"40899E45\",\"element\":\"water\",\"resource\":{\"resourceId\":\"builtin:lingjing-yuwan-v2\",\"kind\":\"2d\"},\"source\":\"adoption\",\"origin\":{},\"growth\":{\"level\":1,\"experience\":0,\"mood\":60,\"satiety\":60,\"affinity\":0,\"winsTotal\":0,\"stats\":{\"hp\":124,\"atk\":28,\"def\":24,\"spd\":20}},\"desktop\":{\"visible\":false,\"behavior\":\"quiet\",\"scale\":1,\"position\":{\"x\":80,\"y\":520,\"displayId\":null}},\"revision\":1,\"createdAt\":\"2026-10-25T10:15:21.267Z\",\"updatedAt\":\"2026-10-25T10:15:21.267Z\"},\"selections\":{\"chatPetId\":null,\"battlePetId\":null,\"guardPetId\":null}},\"revision\":1,\"duplicate\":false}",
+                          "request_hash": "25ee675a06591494a20b28c0ecc7020b8c98fa75ee9ac5c3fa957b50447c0de0",
+                          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630"
+                        }
+                      ],
+                      "companion_accounts": [
+                        {
+                          "revision": 1,
+                          "selections_json": "{\"chatPetId\":null,\"battlePetId\":null,\"guardPetId\":null}",
+                          "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+                          "legacy_imported_at": "2026-10-25T10:15:21.267Z"
+                        }
+                      ],
+                      "companion_interactions": [],
+                      "companion_legacy_archive": [],
+                      "companion_capture_receipts": []
+                    },
+                    "ownerAccountId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+                    "identityImports": []
+                  },
+                  "version": 1
+                }
+              }
+            },
+            "format": "lingjing-account-save",
+            "version": 1,
+            "checksum": "c6f2062b77181a79c63ca550153de182c7fe8945fc5ce9735580938727c461cf",
+            "identity": {
+              "provider": "runtime",
+              "subjectId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630"
+            },
+            "createdAt": "2026-10-25T10:15:21.380Z",
+            "provenance": {
+              "mode": "live"
+            },
+            "ownerAccountId": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630"
+          },
+          "owner_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "revision": 1,
+          "action_id": "companions:a39bdbba-ce65-4bb4-b51f-6da97f713ab7",
+          "updated_at": "2026-10-25T10:15:21.380758+00:00"
+        },
+        "account": {
+          "status": "active",
+          "account": "uat_1025_a_9e486a",
+          "owner_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+          "username": "云端验收甲",
+          "created_at": "2026-10-25T10:05:01.804833+00:00",
+          "updated_at": "2026-10-25T10:05:01.804833+00:00",
+          "account_key": "uat_1025_a_9e486a",
+          "auth_user_id": "524c5302-19a2-43ec-aa72-b8894bd48efe",
+          "legacy_source": null
+        },
+        "devices": [
+          {
+            "label": "Windows 灵境",
+            "owner_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630",
+            "device_id": "41de040e-a134-487f-b1d3-76b5254a8f97",
+            "created_at": "2026-10-25T10:05:02.238001+00:00",
+            "revoked_at": null,
+            "last_seen_at": "2026-10-25T10:05:02.238001+00:00",
+            "auth_session_id": "7deaf22a-df64-461a-92fc-9fe1b0e8b0dd"
+          }
+        ],
+        "saveActions": [
+          {
+            "kind": "authority",
+            "actionId": "companions:a39bdbba-ce65-4bb4-b51f-6da97f713ab7",
+            "checksum": "c6f2062b77181a79c63ca550153de182c7fe8945fc5ce9735580938727c461cf",
+            "revision": 1,
+            "baseRevision": 0
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,216 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-10-25T09:24:08.156Z",
+  "authorization": {
+    "threadId": "01a1704b-e200-7090-9d17-958218c80f42",
+    "userMessageId": "01a1725b-4da0-7b13-86ec-0d4935596ccb",
+    "verified": true
+  },
+  "issues": [
+    {
+      "id": "QA-001",
+      "title": "登录页保持登录复选框文字与锁图标未对齐",
+      "reproducibleSteps": [
+        "运行原成品",
+        "观察保持登录行"
+      ],
+      "expected": "复选框文字锁图标垂直居中，焦点提示可用",
+      "actual": "125% DPI原EXE截图和DOM独立复现：label中心Y 572.194、checkbox 572.188、锁badge与SVG 566.188，锁图标上偏6 DIP",
+      "owner": "08",
+      "severity": "P1-release-blocker",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [
+        "evidence/baseline-login.png",
+        "evidence/QA-001-login-geometry.json"
+      ],
+      "status": "fixed_awaiting_retest",
+      "assignment": "总协调已发08；本验收不重复派发",
+      "reproduced": true,
+      "updatedAt": "2026-10-25T10:19:27.549Z",
+      "fixCommits": [
+        "c83d3b5746d692707aec51fdac3dbb24fae2bff8"
+      ],
+      "fixIntegratedSource": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+      "verification": "Source integrated by coordinator; no candidate native verification yet. Baseline actual failures remain."
+    },
+    {
+      "id": "QA-002",
+      "title": "领养分类仍为大肥鱼/动物伙伴，需改为属性图标",
+      "reproducibleSteps": [
+        "注册或登录",
+        "打开领养页",
+        "观察分类"
+      ],
+      "expected": "全部与金木水火土属性图标分类，不使用角色物种分类",
+      "actual": "原EXE正常注册后通过领养按钮进入；仍显示全部/大肥鱼/动物伙伴，另有全部五行下拉，用户要求未实现",
+      "owner": "02",
+      "severity": "P1-release-blocker",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [
+        "evidence/baseline-adoption.png"
+      ],
+      "status": "fixed_awaiting_retest",
+      "assignment": "总协调已发02",
+      "reproduced": true,
+      "updatedAt": "2026-10-25T10:19:27.551Z",
+      "fixCommits": [
+        "ad20468"
+      ],
+      "fixIntegratedSource": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+      "verification": "Source integrated by coordinator; no candidate native verification yet. Baseline actual failures remain."
+    },
+    {
+      "id": "QA-003",
+      "title": "角色必须固定标准名与每实例唯一稳定编号",
+      "reproducibleSteps": [
+        "同模板领养两只",
+        "查看列表/详情/桌面/聊天/对战",
+        "重启/同步"
+      ],
+      "expected": "标准名不改写且编号唯一可辨、稳定、各域petId不串",
+      "actual": "三次真实UI同模板领养：前两只小狐在列表与桌面仅显示同名，无可见稳定编号；第三次在领养表单输入验收昵称后实例和列表显示该昵称替代标准名。后端已有petId与8位serial且三者不同，并非后端完全无编号。全局完整唯一编号、固定标准名和跨域可辨识仍需修复。",
+      "owner": "02",
+      "severity": "P1-release-blocker",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [
+        "evidence/QA-003-three-instances.json",
+        "evidence/QA-003-three-instances-renderer.png",
+        "evidence/QA-004-drag-00.png"
+      ],
+      "status": "fixed_awaiting_retest",
+      "assignment": "总协调已发02",
+      "reproduced": true,
+      "updatedAt": "2026-10-25T10:19:27.552Z",
+      "crossDomainInitialObservation": "聊天列表三只同模板仍只显示name；无可见编号。其aria-label有petId末8位，界面视觉仍不能区分。evidence/chat-unconfigured-renderer.png",
+      "fixCommits": [
+        "ad20468",
+        "4adcf1d",
+        "2c6f5b3",
+        "619e64d"
+      ],
+      "fixIntegratedSource": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+      "verification": "Source integrated by coordinator; no candidate native verification yet. Baseline actual failures remain."
+    },
+    {
+      "id": "QA-004",
+      "title": "桌面宠物连续拖动逐渐变大",
+      "reproducibleSteps": [
+        "领养后放桌面",
+        "重复拖动至少10次",
+        "记录每次窗口DIP/DPI/stage/精灵尺寸",
+        "重启回读"
+      ],
+      "expected": "拖动仅改坐标；尺寸和scale不累乘，重启稳定",
+      "actual": "125% DPI实际10次原生拖动：232×280→252×300 DIP，stage214×222.9→234×242.9，保存scale始终1；20个受信pointerdown/up。静止quiet模式排除自动行为。用户原超大透明桌宠另有01只读窗口元数据2145×2230物理像素，不能当作本次实拖数据。",
+      "owner": "02",
+      "severity": "P1-release-blocker",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [
+        "evidence/QA-004-drag-series.json",
+        "evidence/QA-004-drag-events.json",
+        "evidence/QA-004-drag-00.png",
+        "evidence/QA-004-drag-10.png"
+      ],
+      "status": "fixed_awaiting_retest",
+      "assignment": "总协调已发02",
+      "reproduced": true,
+      "updatedAt": "2026-10-25T10:19:27.553Z",
+      "fixCommits": [
+        "ad20468"
+      ],
+      "fixIntegratedSource": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+      "verification": "Source integrated by coordinator; no candidate native verification yet. Baseline actual failures remain."
+    },
+    {
+      "id": "QA-005",
+      "title": "主窗口最小尺寸固定960×700可能超过高缩放小屏工作区",
+      "reproducibleSteps": [
+        "使用工作区DIP小于960×700的显示环境",
+        "正常启动、恢复与缩放主窗口"
+      ],
+      "expected": "最小尺寸和初始/恢复尺寸均不超过当前可用工作区，核心操作可滚动到达",
+      "actual": "01发现源码先clamp到workArea、随后BrowserWindow固定minWidth=960/minHeight=700；当前本机125%大屏尚未实际复现小工作区超界。标记源码风险，不能当作真实窗口失败或已通过。",
+      "owner": "01",
+      "severity": "P2-source-risk",
+      "sourceCommit": "a9acd7f",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [
+        "apps/pc-app/runtime/main/index.ts:createWindow",
+        "C:/Users/Administrator/.codex/worktrees/lingjing-foundation/DesktopPet/artifacts/foundation/user-acceptance/window-metadata.json"
+      ],
+      "status": "fixed_awaiting_retest",
+      "reproduced": false,
+      "assignment": "总协调已授权01仅修公共主窗口DIP边界；实际最终包待验收",
+      "fixCommits": [
+        "da330a3214ffff83be749f20a75d4c06fa7976cf"
+      ],
+      "fixIntegratedSource": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+      "verification": "Source integrated by coordinator; no candidate native verification yet. Baseline actual failures remain.",
+      "updatedAt": "2026-10-25T10:19:27.554Z"
+    },
+    {
+      "id": "QA-006",
+      "title": "同一档案重复启动会生成第二主进程与登录窗口",
+      "reproducibleSteps": [
+        "原EXE以独立local-a档案启动、注册并保留运行",
+        "确认两QA桌宠quiet静止",
+        "同一EXE再次传入完全相同PET_USER_DATA_DIR与QA标记启动",
+        "比较窗口与进程"
+      ],
+      "expected": "同档案只聚焦已有主窗口；不同档案可分别运行",
+      "actual": "实际出现launcher16196→main18500与第二窗口13832364登录页；原launcher17140→main23668/窗口787934仍运行；第二运行manifest同a9acd7f、QA runId和绝对profile完全相同。未继续同库双登录写入，不声称已损坏数据。",
+      "owner": "01",
+      "severity": "P1-release-blocker",
+      "sourceCommit": "a9acd7f6f1920c541d429fa26d1f054b1427cd95",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [
+        "evidence/QA-006-duplicate-profile.json",
+        "evidence/QA-006-duplicate-login-renderer.png",
+        "evidence/QA-006-duplicate-login-native.png",
+        "duplicate-launch.json"
+      ],
+      "status": "fixed_awaiting_retest",
+      "reproduced": true,
+      "fixCommits": [
+        "8e5e2a61c23e6ecbcdbf115d76e414e0f7de63d1"
+      ],
+      "fixIntegratedSource": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+      "verification": "Source integrated by coordinator; no candidate native verification yet. Baseline actual failures remain.",
+      "updatedAt": "2026-10-25T10:19:27.555Z"
+    },
+    {
+      "id": "QA-007",
+      "title": "便携版开机启动默认路径指向SFX临时解压exe",
+      "reproducibleSteps": [
+        "只读核对原EXE实际main进程路径",
+        "核对desktop-host.cjs setLoginItemSettings参数",
+        "对照Electron官方path缺省process.execPath行为"
+      ],
+      "expected": "开机启动显式使用持久便携入口及正确参数；保留已有启动项；QA不修改全局启动配置",
+      "actual": "原包运行main位于Temp/3LBAQALUKgWr1yvvvscHsCaqSpQ/Lingjing.exe；desktop-host只传openAtLogin/enabled，无path。Electron官方文档确认默认process.execPath。已确认源码风险，未实际写OS注册表/注销/重启，不能声称已做重启后的用户实测。",
+      "owner": "08",
+      "severity": "P2-source-risk",
+      "sourceCommit": "a9acd7f6f1920c541d429fa26d1f054b1427cd95",
+      "exeSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+      "evidence": [
+        "evidence/QA-006-duplicate-profile.json",
+        "apps/pc-app/runtime/features/accounts/desktop-host.cjs:123",
+        "https://www.electronjs.org/docs/latest/api/app/#appsetloginitemsettingssettings-macos-windows"
+      ],
+      "status": "fixed_awaiting_retest",
+      "reproduced": false,
+      "verificationLevel": "actual process-path + source + official API contract; OS startup write intentionally untested",
+      "fixCommits": [
+        "f0da7e1",
+        "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17"
+      ],
+      "fixIntegratedSource": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+      "verification": "Source integrated by coordinator; no candidate native verification yet. Baseline actual failures remain.",
+      "updatedAt": "2026-10-25T10:19:27.557Z"
+    }
+  ]
+}
