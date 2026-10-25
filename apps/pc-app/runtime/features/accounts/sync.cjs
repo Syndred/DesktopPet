@@ -1,5 +1,12 @@
 const { invariant } = require("./errors.cjs");
-const { actionId, saveDataChecksum, transaction } = require("./util.cjs");
+const { actionId, saveDataChecksum, checksum, transaction } = require("./util.cjs");
+const { randomUUID }=require('node:crypto');
+const personalModules=new Set(['settings','conversations']);
+function meaningfulData(data){
+  const modules={...data.modules};if(modules.legacy?.data===null)delete modules.legacy;
+  return {...data,modules,tables:Object.fromEntries(Object.entries(data.tables).filter(([,table])=>table.rows?.length))};
+}
+function protectedData(data){const copy=meaningfulData(data);return {...copy,modules:Object.fromEntries(Object.entries(copy.modules).filter(([key])=>!personalModules.has(key)))};}
 
 class AccountSync {
   constructor({ db, backups, remote, getSession, getSettings, onInvalidSession }) {
@@ -7,6 +14,7 @@ class AccountSync {
     this.getSession = getSession; this.getSettings = getSettings; this.running = new Set();
     this.onInvalidSession = onInvalidSession;
   }
+  dataChecksum(data){return saveDataChecksum(this.remote.authKind==='supabase'?meaningfulData(data):data);}
   status(owner) {
     const state = this.db.prepare("SELECT * FROM account_sync_state WHERE owner_account_id=?").get(owner);
     const counts = this.db.prepare(`SELECT status,COUNT(*) AS count FROM account_sync_outbox
@@ -15,11 +23,13 @@ class AccountSync {
       AND status='verified' ORDER BY verified_at DESC LIMIT 1`).get(owner);
     const checkpoint = this.db.prepare('SELECT * FROM account_sync_checkpoints WHERE owner_account_id=?').get(owner);
     const savedChecksum = checkpoint && state && checkpoint.cloud_revision === state.cloud_revision && checkpoint.envelope_checksum === state.last_checksum
-      ? checkpoint.data_checksum : receipt ? saveDataChecksum(JSON.parse(receipt.document).data) : null;
+      ? checkpoint.data_checksum : receipt ? this.dataChecksum(JSON.parse(receipt.document).data) : null;
+    const unresolved=this.db.prepare('SELECT count(*) count FROM account_sync_sources WHERE owner_account_id=? AND authority_pending=1').get(owner).count;
     return { configured: Boolean(this.remote.enabled), cloudRevision: state?.cloud_revision || 0,
       lastVerifiedAt: state?.last_verified_at || null, lastError: state?.last_error || null,
       pending: counts.reduce((n, c) => n + c.count, 0), conflicts: counts.find(c => c.status === "conflict")?.count || 0,
-      localChanged: savedChecksum !== this.backups.dataChecksum(owner), running: this.running.has(owner) };
+      localChanged:savedChecksum!==this.dataChecksum(this.backups.snapshot(owner).data),unverifiedLocal:unresolved,
+      running: this.running.has(owner) };
   }
   enqueue(owner, inputId) {
     const id = actionId(inputId);
@@ -34,9 +44,51 @@ class AccountSync {
       pending ? { actionId: pending.action_id } : undefined);
     const snapshot = this.backups.snapshot(owner);
     const base = this.db.prepare("SELECT cloud_revision FROM account_sync_state WHERE owner_account_id=?").get(owner)?.cloud_revision || 0;
-    this.db.prepare("INSERT INTO account_sync_outbox(owner_account_id,action_id,base_revision,checksum,document,status,created_at) VALUES(?,?,?,?,?,'pending',?)")
-      .run(owner, id, base, snapshot.checksum, JSON.stringify(snapshot), new Date().toISOString());
+    transaction(this.db,()=>{
+      const at=new Date().toISOString();
+      this.db.prepare("INSERT INTO account_sync_outbox(owner_account_id,action_id,base_revision,checksum,document,status,created_at) VALUES(?,?,?,?,?,'pending',?)")
+        .run(owner,id,base,snapshot.checksum,JSON.stringify(snapshot),at);
+      if(this.remote.authKind==='supabase')this.db.prepare('INSERT INTO account_sync_sources(owner_account_id,action_id,original_document,original_checksum,archive_action_id,created_at) VALUES(?,?,?,?,?,?)')
+        .run(owner,id,JSON.stringify(snapshot),snapshot.checksum,`archive:${randomUUID()}`,at);
+    });
     return { queued: true, actionId: id, status: "pending" };
+  }
+  async prepareProtected(owner,row,session){
+    if(this.remote.authKind!=='supabase')return row;
+    let source=this.db.prepare('SELECT * FROM account_sync_sources WHERE owner_account_id=? AND action_id=?').get(owner,row.action_id);
+    if(!source){
+      this.db.prepare('INSERT INTO account_sync_sources(owner_account_id,action_id,original_document,original_checksum,archive_action_id,created_at) VALUES(?,?,?,?,?,?)')
+        .run(owner,row.action_id,row.document,row.checksum,`archive:${randomUUID()}`,new Date().toISOString());
+      source=this.db.prepare('SELECT * FROM account_sync_sources WHERE owner_account_id=? AND action_id=?').get(owner,row.action_id);
+    }
+    if(source.prepared_at)return row; // Retry exactly the same CAS input after an uncertain response.
+    const local=JSON.parse(source.original_document);this.backups.validate(local,owner);
+    const cloud=await this.remote.cloudSave('read',session);
+    if(cloud?.envelope)this.backups.validate(cloud.envelope,owner);
+    const protectedCloud=cloud?.envelope?.data||{modules:{},tables:{}};
+    const different=saveDataChecksum(protectedData(local.data))!==saveDataChecksum(protectedData(protectedCloud));
+    const conflict=(cloud?.revision||0)!==row.base_revision;
+    if(different||conflict){
+      const reason=source.archive_reason||(conflict?'pre-conflict':'unverified-local');
+      this.db.prepare('UPDATE account_sync_sources SET archive_reason=?,authority_pending=? WHERE owner_account_id=? AND action_id=?')
+        .run(reason,different?1:0,owner,row.action_id);
+      if(!source.cloud_archive_id){
+        const receipt=await this.remote.cloudSave('archive',session,{actionId:source.archive_action_id,reason,envelope:local});
+        invariant(receipt?.promoted===false&&receipt.checksum===source.original_checksum&&typeof receipt.id==='string','SYNC_RECEIPT_MISMATCH','原始存档归档回执不一致。');
+        this.db.prepare('UPDATE account_sync_sources SET cloud_archive_id=? WHERE owner_account_id=? AND action_id=?').run(receipt.id,owner,row.action_id);
+      }
+    }
+    invariant(!conflict,'SYNC_CONFLICT','云端已有较新版本，本机原档已保留，请先预览云端存档。');
+    const modules={...(cloud?.envelope?.data.modules||{})};
+    for(const [name,value]of Object.entries(local.data.modules))if(personalModules.has(name))modules[name]=value;
+    const {checksum:oldDigest,...body}=local;
+    const nextBody={...body,data:{modules,tables:cloud?.envelope?.data.tables||{}}};
+    const envelope={...nextBody,checksum:checksum(nextBody)};
+    transaction(this.db,()=>{
+      this.db.prepare('UPDATE account_sync_outbox SET checksum=?,document=? WHERE owner_account_id=? AND action_id=?').run(envelope.checksum,JSON.stringify(envelope),owner,row.action_id);
+      this.db.prepare('UPDATE account_sync_sources SET prepared_at=? WHERE owner_account_id=? AND action_id=?').run(new Date().toISOString(),owner,row.action_id);
+    });
+    return {...row,checksum:envelope.checksum,document:JSON.stringify(envelope)};
   }
   async flush(owner, force = false) {
     if (this.running.has(owner)) return { busy: true };
@@ -47,8 +99,9 @@ class AccountSync {
       AND status IN ('pending','retry') AND (next_attempt_at<=? OR ?=1) ORDER BY created_at LIMIT 1`).all(owner, Date.now(), force ? 1 : 0);
     if (!rows.length) return { verified: false, idle: true };
     this.running.add(owner);
-    const row = rows[0];
+    let row = rows[0];
     try {
+      row=await this.prepareProtected(owner,row,session);
       const receipt = await this.remote.cloudSave("push", session, { actionId: row.action_id, baseRevision: row.base_revision,
         envelope: JSON.parse(row.document) });
       invariant(receipt?.actionId === row.action_id && receipt.checksum === row.checksum && Number.isInteger(receipt.revision)
@@ -66,9 +119,10 @@ class AccountSync {
           DO UPDATE SET cloud_revision=excluded.cloud_revision,last_checksum=excluded.last_checksum,last_verified_at=excluded.last_verified_at,last_error=NULL`)
           .run(owner, receipt.revision, row.checksum, at);
       });
-      return { verified: true, actionId: row.action_id, revision: receipt.revision, checksum: row.checksum };
+      const unresolved=this.db.prepare('SELECT authority_pending FROM account_sync_sources WHERE owner_account_id=? AND action_id=?').get(owner,row.action_id)?.authority_pending===1;
+      return {verified:!unresolved,personalVerified:true,requiresAuthority:unresolved,actionId:row.action_id,revision:receipt.revision,checksum:row.checksum};
     } catch (error) {
-      const conflict = error.code === "SYNC_CONFLICT";
+      const conflict = ['SYNC_CONFLICT','PROTECTED_STATE_MISMATCH','PROTECTED_STATE_REQUIRES_AUTHORITY','PET_OWNER_MISMATCH'].includes(error.code);
       const attempts = row.attempts + 1;
       const delay = Math.min(30 * 60 * 1000, 2000 * 2 ** Math.min(attempts, 10));
       transaction(this.db, () => {
@@ -102,6 +156,8 @@ class AccountSync {
       this.db.prepare(`INSERT INTO account_sync_state(owner_account_id,cloud_revision,last_checksum) VALUES(?,?,?)
         ON CONFLICT(owner_account_id) DO UPDATE SET cloud_revision=excluded.cloud_revision,last_checksum=excluded.last_checksum,last_error=NULL`)
         .run(owner, preview.cloudRevision, preview.envelope.checksum);
+      if(this.dataChecksum(this.backups.snapshot(owner).data)===this.dataChecksum(preview.envelope.data))
+        this.db.prepare('UPDATE account_sync_sources SET authority_pending=0 WHERE owner_account_id=?').run(owner);
     });
   }
   /** Main-only bridge for another authoritative module. Advance the shared CAS
@@ -119,8 +175,8 @@ class AccountSync {
     invariant(!current || cloudRevision >= current.cloud_revision, 'SYNC_STALE_READBACK', '云端存档读回版本较旧。');
     invariant(!current || cloudRevision !== current.cloud_revision || !current.last_checksum || current.last_checksum === envelope.checksum,
       'SYNC_RECEIPT_MISMATCH', '同一云端版本返回了不同的存档。');
-    const digest = saveDataChecksum(envelope.data);
-    invariant(this.backups.dataChecksum(owner) === digest, 'CLOUD_LOCAL_CONFLICT', '其他本机进度尚未与完整云端存档一致，已保留原数据。');
+    const digest = this.dataChecksum(envelope.data);
+    invariant(this.dataChecksum(this.backups.snapshot(owner).data) === digest, 'CLOUD_LOCAL_CONFLICT', '其他本机进度尚未与完整云端存档一致，已保留原数据。');
     transaction(this.db, () => {
       const at = new Date().toISOString();
       this.db.prepare(`INSERT INTO account_sync_state VALUES(?,?,?,?,NULL) ON CONFLICT(owner_account_id)
@@ -129,6 +185,7 @@ class AccountSync {
       this.db.prepare(`INSERT INTO account_sync_checkpoints VALUES(?,?,?,?,?) ON CONFLICT(owner_account_id)
         DO UPDATE SET cloud_revision=excluded.cloud_revision,envelope_checksum=excluded.envelope_checksum,data_checksum=excluded.data_checksum,verified_at=excluded.verified_at`)
         .run(owner, cloudRevision, envelope.checksum, digest, at);
+      this.db.prepare('UPDATE account_sync_sources SET authority_pending=0 WHERE owner_account_id=?').run(owner);
     });
     return { verified: true, revision: cloudRevision };
   }

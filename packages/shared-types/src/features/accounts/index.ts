@@ -4,6 +4,8 @@ export interface AccountUser {
   ownerAccountId: string;
   provider: "local" | "runtime";
   dataMode?: "live" | "simulated";
+  authKind?: 'supabase';
+  authUserId?: string;
   account: string;
   username: string;
   revision: number;
@@ -46,6 +48,7 @@ export interface SettingsSnapshot {
 export interface SyncStatus {
   configured: boolean; cloudRevision: number; lastVerifiedAt: string | null;
   lastError: string | null; pending: number; conflicts: number; localChanged: boolean; running: boolean;
+  unverifiedLocal?: number;
 }
 export interface BackupPreview {
   previewId: string; checksum: string; currentChecksum?: string; cloudRevision?: number;

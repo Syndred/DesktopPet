@@ -23,7 +23,8 @@ const response=data=>({ok:true,status:200,async json(){return{ok:true,data};}});
 afterEach(()=>{for(const x of services.splice(0)){x.accounts.dispose();x.db.close();}for(const p of directories.splice(0))rmSync(p,{recursive:true,force:true});});
 
 test('PROTOCOL UNIT simulated: modern HTTPS config and stable distinct per-profile device IDs',()=>{
- assert.equal(publicConfig({env:{},resourcesPath:null}),null);
+ assert.equal(publicConfig({env:{},resourcesPath:null,sourcePath:null}),null);
+ assert.equal(new URL(publicConfig({env:{},resourcesPath:null}).url).hostname,'jbvrdmrkwpznbrvteive.supabase.co');
  assert.throws(()=>publicConfig({env:{SUPABASE_URL:'http://example.com',SUPABASE_PUBLISHABLE_KEY:'sb_publishable_x'},resourcesPath:null}),{code:'CLOUD_CONFIG_INVALID'});
  assert.throws(()=>publicConfig({env:{SUPABASE_URL:config.url,SUPABASE_PUBLISHABLE_KEY:'sb_secret_x'},resourcesPath:null}),{code:'CLOUD_CONFIG_INVALID'});
  const one=dir(),two=dir();assert.equal(stableDevice(one),stableDevice(one));assert.notEqual(stableDevice(one),stableDevice(two));
@@ -56,4 +57,39 @@ test('PROTOCOL UNIT simulated: a refresh finishing after logout cannot restore m
  const pending=f.accounts.cloudInvoke('lingjing-save',{op:'read'});await started;await f.accounts.logout();release();
  await assert.rejects(pending,{code:'SESSION_CHANGED'});assert.equal(f.accounts.getCurrentUser(),null);assert.equal(f.remote.active,null);
  assert.equal(f.db.prepare('select blocked from account_session_control').get().blocked,1);
+});
+test('PROTOCOL UNIT simulated: protected sync archives the original and reports partial synchronization honestly',async()=>{
+ let current,cloud,received,archive;
+ const f=fixture(async(url,options)=>{const body=JSON.parse(options.body);
+  if(url.endsWith('lingjing-auth')){if(body.op==='login'){current=bundle(options.headers['X-Lingjing-Device-Id']);return response(current);}return response({actor:current.actor});}
+  if(body.op==='archive'){archive=body.envelope;return response({id:randomUUID(),checksum:archive.checksum,promoted:false});}
+  if(body.op==='push'){received=body.envelope;cloud={actionId:body.actionId,revision:2,checksum:received.checksum,envelope:received};return response(cloud);}return response(cloud);
+ });
+ await f.accounts.authenticate({provider:'runtime',account:'alice',password:'secret123'});
+ f.accounts.backups.register({id:'garden',version:1,export:()=>({coins:999}),validate(){},restore(){}});
+ const owner=f.accounts.requireOwner(),settings=f.accounts.settings();settings.document.sync.enabled=true;await f.accounts.saveSettings({...settings,actionId:randomUUID()});
+ const original=f.accounts.backups.snapshot(owner),{checksum:discarded,...body}=original;body.data.modules.garden.data.coins=7;
+ cloud={revision:1,envelope:{...body,checksum:require('../util.cjs').checksum(body)}};
+ f.db.prepare('insert into account_sync_state(owner_account_id,cloud_revision) values(?,1)').run(owner);
+ const action=randomUUID();f.accounts.sync.enqueue(owner,action);const result=await f.accounts.sync.flush(owner,true);
+ assert.equal(archive.data.modules.garden.data.coins,999);assert.equal(received.data.modules.garden.data.coins,7);
+ assert.equal(f.accounts.backups.snapshot(owner).data.modules.garden.data.coins,999);
+ assert.equal(result.personalVerified,true);assert.equal(result.verified,false);assert.equal(result.requiresAuthority,true);
+ assert.equal(f.accounts.sync.status(owner).unverifiedLocal,1);
+ const source=f.db.prepare('select * from account_sync_sources').get();assert.equal(JSON.parse(source.original_document).data.modules.garden.data.coins,999);assert.ok(source.cloud_archive_id);
+});
+test('PROTOCOL UNIT simulated: one session SDK reads current token after refresh and removes channels on logout',async()=>{
+ const device=randomUUID(),start=Date.now();let clock=start,current=bundle(device,'original-text-owner',randomUUID(),start/1000+90),lastAuthorization;
+ const remote=new SupabaseRemote({deviceId:device,config,now:()=>clock,fetcher:async(url,options)=>{
+  if(String(url).includes('/rest/v1/')){lastAuthorization=new Headers(options.headers).get('authorization');return new Response('[]',{status:200,headers:{'content-type':'application/json'}});}
+  const body=JSON.parse(options.body);if(body.op==='refresh'){current={...current,tokens:{...current.tokens,accessToken:'updated.protocol.jwt',expiresAt:clock/1000+3600}};return response(current);}return response({actor:current.actor});
+ }});
+ const proof=require('../supabase-remote.cjs').normalized(current).proof,session={id:current.currentUser.id,cloudProof:proof};remote.setCurrentUser(session);
+ const first=await remote.cloudContext(session),second=await remote.cloudContext(session);assert.equal(first.client,second.client);
+ await first.client.from('lingjing_accounts').select('owner_id');assert.equal(lastAuthorization,`Bearer ${current.tokens.accessToken}`);
+ clock+=60_000;await first.client.from('lingjing_accounts').select('owner_id');assert.equal(lastAuthorization,'Bearer updated.protocol.jwt');
+ await first.client.realtime.setAuth();assert.equal(first.client.realtime.accessTokenValue,'updated.protocol.jwt');
+ first.client.channel('unjoined-owner-channel');assert.equal(first.client.getChannels().length,1);remote.setCurrentUser(null);
+ await new Promise(r=>setImmediate(r));assert.equal(first.client.getChannels().length,0);
+ await first.client.from('lingjing_accounts').select('owner_id');assert.notEqual(lastAuthorization,'Bearer updated.protocol.jwt');remote.dispose();
 });

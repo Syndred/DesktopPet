@@ -89,6 +89,15 @@ const migrations = [{
     auth_user_id TEXT NOT NULL UNIQUE, project_url TEXT NOT NULL,
     created_at TEXT NOT NULL, updated_at TEXT NOT NULL
   );`
+}, {
+  id:'accounts-005-protected-sync-source-preservation',
+  sql:`CREATE TABLE IF NOT EXISTS account_sync_sources (
+    owner_account_id TEXT NOT NULL,action_id TEXT NOT NULL,
+    original_document TEXT NOT NULL,original_checksum TEXT NOT NULL,
+    archive_action_id TEXT NOT NULL,archive_reason TEXT,cloud_archive_id TEXT,
+    authority_pending INTEGER NOT NULL DEFAULT 0,prepared_at TEXT,created_at TEXT NOT NULL,
+    PRIMARY KEY(owner_account_id,action_id)
+  );`
 }];
 
 module.exports = { migrations };
