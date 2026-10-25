@@ -1,6 +1,7 @@
 const {migrations}=require('./migrations.cjs');
 const {DiscoveryService}=require('./service.cjs');
 const {CloudDiscoveryAuthority}=require('./cloud-adapter.cjs');
+const {CloudLocationProofs}=require('./cloud-location.cjs');
 const {TileCache}=require('./tile-cache.cjs');
 const {join}=require('node:path');
 const {TerritoryMapAdapter}=require('./territory-adapter.cjs');
@@ -11,13 +12,16 @@ module.exports={
   id:'discovery',migrations,
   publicCommands:['snapshot','locate','watch','stopWatch','setDemo','setProvider','tile','setExploring'],
   register(services) {
-    const cloud=new CloudDiscoveryAuthority({getUser:()=>services.get('accounts')?.privateSession?.() || services.session.getCurrentUser()});
+    const cloud=new CloudDiscoveryAuthority({requireActor:()=>services.get('cloudActor')?.requireActor()});
     let exploring=false;
     const qaLocation=createQaLocationAdapter(services);
     const location=new LocationService({...(qaLocation?{adapter:qaLocation}:{}),mayUseLocation:()=>{if(qaLocation)return exploring&&qaLocation.allowed();const privacy=services.get('privacy');return privacy ? privacy.mayUseLocation() : true;}});
     const discovery=new DiscoveryService({db:services.db,getOwner:()=>services.session.getOwnerAccountId(),getCompanions:()=>services.get('companions'),getBattle:()=>services.get('battle'),invokeBattle:(command,payload)=>services.invoke('battle',command,payload),events:services.events,location,
-      getAuthority:()=>services.get('qaScenario')?null:(process.env.LINGJING_DISCOVERY_CLOUD==='1' || services.get('accounts')?.privateSession?.()?.provider==='runtime' ? cloud : null)});
+      getAuthority:()=>services.get('qaScenario')?null:(process.env.LINGJING_DISCOVERY_CLOUD==='1' || services.get('accounts')?.privateSession?.()?.authKind==='supabase' ? cloud : null)});
     services.provide('discovery',discovery);
+    const proofs=new CloudLocationProofs({authority:cloud,getFix:()=>discovery.requireFix(),safeStorage:services.safeStorage,userData:services.paths.userData});
+    // Main-process capability only. No coordinate, key or signing IPC exposed.
+    services.provide('locationProofs',Object.freeze({prove:(purpose,reference)=>proofs.prove(purpose,reference)}));
     discovery.territories=new TerritoryMapAdapter(()=>services.get('territories'),discovery.map);
     discovery.stopLocationWatch=()=>discovery.location.suspend();
     // Chromium follows the desktop's existing system/session proxy settings.
@@ -28,7 +32,7 @@ module.exports={
     let windowVisibility;
     const setExploring=requested=>{const active=Boolean(requested)&&(!windowVisibility||windowVisibility.isVisible());exploring=active;services.get('privacy')?.setExploring(active);services.events.emit('discovery:exploring',{active});if(!active)discovery.location.suspend();};
     windowVisibility=observeExplorationWindows(electron,setExploring);
-    const offSession=services.events.on('accounts:session-changed',()=>{setExploring(false);discovery.location.reset();});
+    const offSession=services.events.on('accounts:session-changed',()=>{setExploring(false);discovery.location.reset();proofs.clear();cloud.clear();});
     const offPrivacy=services.events.on('accounts:location-revoked',()=>discovery.location.blockByPolicy());
     return {commands:{
       snapshot:()=>discovery.snapshot(),
@@ -42,6 +46,6 @@ module.exports={
       ...(qaLocation?{qaTarget:async payload=>{qaLocation.selectTemplate(payload.templateId);location.reset();const result=await location.locate();return result.ok?discovery.snapshot():{ok:false,code:result.error.code,message:result.error.message};}}:{}),
       begin:payload=>discovery.begin(payload),act:payload=>discovery.act(payload),cancel:payload=>discovery.cancel(payload),confirm:payload=>discovery.confirm(payload),
       pokedex:()=>({ok:true,data:discovery.captureViews(discovery.owner())}),memories:payload=>discovery.memories(payload)
-    },dispose(){windowVisibility.dispose();offSession();offPrivacy();unsubscribe();setExploring(false);discovery.dispose();}};
+    },dispose(){windowVisibility.dispose();offSession();offPrivacy();unsubscribe();proofs.clear();cloud.clear();setExploring(false);discovery.dispose();}};
   }
 };

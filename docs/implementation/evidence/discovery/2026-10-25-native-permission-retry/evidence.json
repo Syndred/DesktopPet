@@ -1,0 +1,106 @@
+{
+  "at": "2026-10-25T02:54:51.301Z",
+  "sourceCommit": "05ffa620769108c8ecf607c97065c94d0a2b336d",
+  "build": {
+    "schemaVersion": 1,
+    "builtAt": "2026-10-25T02:54:36.051Z",
+    "sourceCommit": "05ffa620769108c8ecf607c97065c94d0a2b336d",
+    "sourceDirtyFiles": [],
+    "codeFingerprint": "203d099faeef1a1a21daaab0d7310d4ea914e0e2377ed6bba6374b031b4dc122",
+    "compiledFingerprint": "239da04ef14c4577f8b55a7d2687261cc24acc3a4c4ef26f959208f2cc49ce69",
+    "codeFiles": 224,
+    "compiledFiles": 24
+  },
+  "productionMain": true,
+  "controlledPosition": false,
+  "rawCoordinatesCommitted": false,
+  "preflightOnly": false,
+  "physicalLocationAcceptance": true,
+  "systemSamples": [
+    {
+      "phase": "before challenge",
+      "at": "2026-10-25T02:54:55.500Z",
+      "status": "ready",
+      "permission": "granted",
+      "provider": "windows-geolocator",
+      "source": "os",
+      "positionSource": "WiFi",
+      "accuracyMeters": 78,
+      "timestampMs": 1792896895026,
+      "coordinateHash": "98fd60ccd0cef621383c63385012d87cadfa1de65be85638730d7b20058d78da",
+      "error": null
+    },
+    {
+      "phase": "before confirmation",
+      "at": "2026-10-25T02:55:29.980Z",
+      "status": "ready",
+      "permission": "granted",
+      "provider": "windows-geolocator",
+      "source": "os",
+      "positionSource": "WiFi",
+      "accuracyMeters": 78,
+      "timestampMs": 1792896925083,
+      "coordinateHash": "98fd60ccd0cef621383c63385012d87cadfa1de65be85638730d7b20058d78da",
+      "error": null
+    }
+  ],
+  "attempts": [
+    {
+      "attempt": 1,
+      "encounterId": "encounter-43ac8a51-f6fc-4c63-8478-0ab39ab90c96",
+      "battleId": "battle-f98465bc-395f-411b-85ef-956e75e1a534",
+      "templateId": "animal-shiba",
+      "resourceId": "builtin:lingjing-shiba-v2",
+      "rounds": 20,
+      "status": "finished",
+      "winner": "player"
+    }
+  ],
+  "rendererErrors": [],
+  "entry": {
+    "appPath": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-discovery\\DesktopPet",
+    "electron": "36.9.5",
+    "verificationHostPresent": false
+  },
+  "capture": {
+    "petId": "pet-58ce62cd-611b-4d8d-929b-d0eea9212064",
+    "encounterId": "encounter-43ac8a51-f6fc-4c63-8478-0ab39ab90c96",
+    "ownerAccountId": "local-24ab6867-09d1-4320-9196-fa635a04cc96",
+    "battleId": "battle-f98465bc-395f-411b-85ef-956e75e1a534",
+    "resourceId": "builtin:lingjing-shiba-v2",
+    "templateId": "animal-shiba",
+    "element": "fire",
+    "validation": "local-os",
+    "scenario": "live",
+    "distanceMeters": 46,
+    "duplicateReturnsSamePetId": true,
+    "backpackMatches": true,
+    "pokedexMatches": true,
+    "memoryCount": 1
+  },
+  "sqlite": {
+    "ownerAccountId": "local-24ab6867-09d1-4320-9196-fa635a04cc96",
+    "captures": 1,
+    "ownedInstances": 1,
+    "memories": 1,
+    "reports": 1,
+    "matchingBattleReports": 1,
+    "matchingCompanionReceipts": 1,
+    "encounterId": "encounter-43ac8a51-f6fc-4c63-8478-0ab39ab90c96",
+    "battleId": "battle-f98465bc-395f-411b-85ef-956e75e1a534",
+    "encounterStatus": "captured",
+    "capturePetId": "pet-58ce62cd-611b-4d8d-929b-d0eea9212064",
+    "companionOriginBattleId": "battle-f98465bc-395f-411b-85ef-956e75e1a534",
+    "petId": "pet-58ce62cd-611b-4d8d-929b-d0eea9212064",
+    "resourceId": "builtin:lingjing-shiba-v2",
+    "validation": "local-os",
+    "scenario": "live"
+  },
+  "restart": {
+    "explicitLogin": true,
+    "samePetId": true,
+    "currentLocationNotPersisted": true,
+    "watchNotRestored": true
+  },
+  "passed": true
+}
