@@ -3,8 +3,8 @@
   "scope": "cloud-upgrade-2026-10-25",
   "branch": "codex/lingjing-conversations",
   "commit": "79801a2",
-  "goalStatus": "active",
-  "status": "waiting_for_coordinator_approved_projection_and_legal_pet_bridge",
+  "goalStatus": "blocked",
+  "status": "blocked_external_approved_cloud_dependencies",
   "contracts": {
     "identity": "08 accounts: verified owner mapping, complete-save CAS and account save-restored events",
     "backup": "conversations version 1 adapter; stable IDs and array order, no sequence or encrypted_key",
@@ -148,7 +148,7 @@
     "Real two Electron A/B chat/persona/memory CAS, conflicts/offline/restart checks.",
     "Coordinator deployment/integration and independent acceptance; original legacy server migration remains08 condition."
   ],
-  "updatedAt": "2026-10-25T03:12:30.628Z",
+  "updatedAt": "2026-10-25T03:13:09.672Z",
   "cleanupManifest": "docs/implementation/evidence/conversations/cloud-2026-10-25/cleanup-manifest.json",
   "installation": {
     "workspaceNodeModulesIndependent": true,
@@ -199,7 +199,7 @@
     },
     "harnessCommit": "79801a2"
   },
-  "checkpoint": "a2664ad",
+  "checkpoint": "d54c8a8",
   "goalAudit": {
     "completed": [
       "approved common baseline and45b857d identity/CAS consumer",
@@ -216,5 +216,27 @@
     ],
     "acceptanceScript": "apps/pc-app/runtime/features/conversations/tests/cloud-sync.acceptance.mjs",
     "completionClaimed": false
+  },
+  "blockedAudit": {
+    "consecutiveGoalTurns": 3,
+    "condition": "Approved/deployed cloud pet adoption/main-process bridge and field-aware08 privacy checkpoint unavailable to this owner; successful per-pet A/B CAS cannot be run against the approved baseline.",
+    "currentEvidence": {
+      "approvedLocalHead": "d54c8a8",
+      "accountsReadOnlyRef": "6876b36",
+      "accountsTextFixLocal": "8e5c735 passed same reproduction",
+      "companionsPublishedRef": "d1653d3",
+      "companionsRuntime": "02 latest live turn reports server tests passed, deployment checkpoint preparation and main-process integration still pending",
+      "coordinatorApprovedSource": [
+        "45b857d",
+        "ced8e5e"
+      ],
+      "remoteMain": "4786f97680679c2db0aa307fa5f67ec247f93086 already included"
+    },
+    "resumeNeeds": [
+      "Coordinator-approved08 projection/server-guard checkpoint deployed",
+      "Coordinator-approved02 legal cloud adoption/main-process bridge deployed"
+    ],
+    "goalScopeUnchanged": true,
+    "fullChatSyncClaimed": false
   }
 }
