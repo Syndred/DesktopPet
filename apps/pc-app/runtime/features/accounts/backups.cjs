@@ -93,6 +93,24 @@ class BackupManager {
     });
   }
   dataChecksum(owner) { return saveDataChecksum(this.snapshot(owner).data); }
+  captureCloudPreparation(owner){
+    const before=this.snapshot(owner).data;
+    const guards=[...this.adapters].filter(([,adapter])=>adapter.captureCloudPreparation).map(([id,adapter])=>[id,adapter.captureCloudPreparation(owner,before.modules[id])]);
+    return{data:before,assert:envelope=>{
+      const current=this.snapshot(owner).data,modules={...current.modules};
+      for(const[id,guard]of guards){invariant(guard(envelope.data.modules[id],current.modules[id]),'SAVE_CHANGED','资源准备期间存档已变化。');modules[id]=before.modules[id];}
+      invariant(saveDataChecksum({...current,modules})===saveDataChecksum(before),'SAVE_CHANGED','核对期间本机存档已变化，原数据已保留。');
+      return saveDataChecksum(current);
+    }};
+  }
+  cloudBaselineView(owner,baseline,expected,current){
+    const modules={...current.modules};
+    for(const[id,adapter]of this.adapters)if(adapter.matchesCloudBaseline){
+      invariant(adapter.matchesCloudBaseline(owner,baseline.modules[id],expected.modules[id],current.modules[id]),'SAVE_CHANGED','资源增量尚未核验。');
+      if(Object.hasOwn(baseline.modules,id))modules[id]=baseline.modules[id];else delete modules[id];
+    }
+    return{...current,modules};
+  }
   /** Internal restore/fingerprint view. Call validate first for external input;
    * the original envelope/checksum/file is never rewritten by normalization. */
   normalizeData(data, owner) {

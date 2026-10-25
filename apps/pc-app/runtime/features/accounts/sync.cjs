@@ -43,10 +43,10 @@ class AccountSync {
   }
   recordBaseline(owner,envelope,revision){
     const digest=this.fingerprints(envelope.data,owner);
-    this.db.prepare(`INSERT INTO account_sync_baselines VALUES(?,?,?,?,?,?) ON CONFLICT(owner_account_id)
+    this.db.prepare(`INSERT INTO account_sync_baselines(owner_account_id,cloud_revision,envelope_checksum,data_checksum,personal_checksum,protected_checksum,cloud_document) VALUES(?,?,?,?,?,?,?) ON CONFLICT(owner_account_id)
       DO UPDATE SET cloud_revision=excluded.cloud_revision,envelope_checksum=excluded.envelope_checksum,
-      data_checksum=excluded.data_checksum,personal_checksum=excluded.personal_checksum,protected_checksum=excluded.protected_checksum`)
-      .run(owner,revision,envelope.checksum,digest.data,digest.personal,digest.protected);
+      data_checksum=excluded.data_checksum,personal_checksum=excluded.personal_checksum,protected_checksum=excluded.protected_checksum,cloud_document=excluded.cloud_document`)
+      .run(owner,revision,envelope.checksum,digest.data,digest.personal,digest.protected,JSON.stringify(envelope));
   }
   confirmed(owner,state=this.db.prepare('SELECT * FROM account_sync_state WHERE owner_account_id=?').get(owner)){
     if(!state?.last_checksum||!state.last_verified_at)return null;
@@ -61,6 +61,27 @@ class AccountSync {
     if(!receipt)return null;
     const digest=this.fingerprints(JSON.parse(receipt.document).data,owner);
     return{cloud_revision:state.cloud_revision,envelope_checksum:state.last_checksum,data_checksum:digest.data,personal_checksum:digest.personal,protected_checksum:digest.protected};
+  }
+  async confirmedDocument(owner,baseline,session,unchanged){
+    let envelope=baseline.cloud_document?JSON.parse(baseline.cloud_document):null;
+    if(!envelope){
+      const row=this.db.prepare("SELECT document FROM account_sync_outbox WHERE owner_account_id=? AND status='verified' AND base_revision+1=? AND checksum=? LIMIT 1")
+        .get(owner,baseline.cloud_revision,baseline.envelope_checksum);
+      if(row)envelope=JSON.parse(row.document);
+      else{
+        invariant(this.remote.cloudContext,'SYNC_BASELINE_REQUIRED','已确认的原版本尚未读回，请先预览云端存档。');
+        const context=await this.remote.cloudContext(session);unchanged();
+        const reply=await context.client.from('lingjing_save_actions').select('revision,checksum,envelope').eq('owner_id',owner)
+          .eq('revision',baseline.cloud_revision).eq('checksum',baseline.envelope_checksum).maybeSingle();unchanged();
+        invariant(!reply.error&&reply.data?.revision===baseline.cloud_revision&&reply.data.checksum===baseline.envelope_checksum,
+          'SYNC_BASELINE_REQUIRED','已确认的原版本尚未核验，原存档已保留。');envelope=reply.data.envelope;
+      }
+    }
+    this.backups.validate(envelope,owner);
+    invariant(envelope.checksum===baseline.envelope_checksum&&this.dataChecksum(envelope.data,owner)===baseline.data_checksum,
+      'SYNC_READBACK_MISMATCH','原版本的完整校验不一致，原存档已保留。');
+    if(!baseline.cloud_document){unchanged();this.recordBaseline(owner,envelope,baseline.cloud_revision);}
+    return envelope;
   }
   status(owner) {
     const state = this.db.prepare("SELECT * FROM account_sync_state WHERE owner_account_id=?").get(owner);
@@ -229,23 +250,29 @@ class AccountSync {
     invariant(active(),'SESSION_CHANGED','登录状态已变化。');
     status=this.status(owner);baseline=this.confirmed(owner);
     if(status.pending||status.unverifiedLocal||status.privacyRedactions)return{blocked:true,reason:'UNVERIFIED_LOCAL'};
-    const originalFingerprint=this.backups.dataChecksum(owner),originalRevision=status.cloudRevision;
+    const preparation=this.backups.captureCloudPreparation?.(owner);
+    const originalData=preparation?.data||this.backups.snapshot(owner).data;
+    const originalFingerprint=saveDataChecksum(originalData),originalRevision=status.cloudRevision;
     const originalEnvelope=baseline?.envelope_checksum;
-    const unchanged=()=>{
+    let permittedEnvelope;
+    const unchanged=(checkData=true)=>{
       invariant(active(),'SESSION_CHANGED','登录状态已变化。');
       const now=this.status(owner),confirmed=this.confirmed(owner);
-      invariant(this.getSettings(owner).document.sync.enabled&&this.backups.dataChecksum(owner)===originalFingerprint
+      const fingerprint=checkData?(permittedEnvelope&&preparation?preparation.assert(permittedEnvelope):this.backups.dataChecksum(owner)):null;
+      invariant(this.getSettings(owner).document.sync.enabled&&(!checkData||permittedEnvelope&&preparation||fingerprint===originalFingerprint)
         &&now.cloudRevision===originalRevision&&confirmed?.envelope_checksum===originalEnvelope&&!now.pending&&!now.unverifiedLocal&&!now.privacyRedactions,
         'SAVE_CHANGED','核对期间本机存档已变化，原数据已保留，请重新同步。');
+      return fingerprint;
     };
     this.running.add(owner);onProgress();let previewId;
     try{
-      const cloud=await this.remote.cloudSave('read',session);unchanged();
-      if(!cloud?.envelope)return{idle:true};
+      const cloud=await this.remote.cloudSave('read',session);unchanged(false);
+      if(!cloud?.envelope){unchanged();return{idle:true};}
       this.backups.validate(cloud.envelope,owner);
       invariant(Number.isSafeInteger(cloud.revision)&&cloud.revision>=originalRevision&&cloud.checksum===cloud.envelope.checksum,
         'SYNC_RECEIPT_MISMATCH','云端存档版本或校验不一致。');
       if(cloud.revision===originalRevision&&originalEnvelope)invariant(cloud.checksum===originalEnvelope,'SYNC_RECEIPT_MISMATCH','同一云端版本返回了不同的存档。');
+      permittedEnvelope=cloud.envelope;unchanged();
       this.observations.set(owner,{revision:cloud.revision,checkedAt:new Date().toISOString(),error:null});
       const local=this.fingerprints(this.backups.snapshot(owner).data,owner),remote=this.fingerprints(cloud.envelope.data,owner);
       if(local.data===remote.data){
@@ -264,10 +291,16 @@ class AccountSync {
         }
         this.observations.get(owner).error='PROTECTED_LOCAL_CHANGED';return{blocked:true,reason:'PROTECTED_LOCAL_CHANGED'};
       }
-      invariant(!status.localChanged,'SYNC_REMOTE_CONFLICT','云端和本机都有更新，原存档已保留，请先预览云端版本。');
-      unchanged();await this.backups.prepareCloud?.(cloud.envelope,owner);unchanged();
+      let clean=!status.localChanged;
+      if(!clean&&this.backups.cloudBaselineView){
+        const original=await this.confirmedDocument(owner,baseline,session,unchanged);unchanged();
+        const view=this.backups.cloudBaselineView(owner,original.data,cloud.envelope.data,originalData);
+        clean=this.dataChecksum(view,owner)===baseline.data_checksum;
+      }
+      invariant(clean,'SYNC_REMOTE_CONFLICT','云端和本机都有更新，原存档已保留，请先预览云端版本。');
+      unchanged();await this.backups.prepareCloud?.(cloud.envelope,owner);const preparedFingerprint=unchanged();
       previewId=randomUUID();
-      const preview={owner,envelope:cloud.envelope,currentChecksum:originalFingerprint,cloudRevision:cloud.revision,expiresAt:Date.now()+60_000};
+      const preview={owner,envelope:cloud.envelope,currentChecksum:preparedFingerprint,cloudRevision:cloud.revision,expiresAt:Date.now()+60_000};
       this.backups.previews.set(previewId,preview);
       const restored=transaction(this.db,()=>{
         unchanged();const result=this.backups.restore(owner,{previewId,actionId:`auto-restore:${randomUUID()}`,mode:'replace'});

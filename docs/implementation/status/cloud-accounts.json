@@ -4,8 +4,8 @@
   "branch": "codex/lingjing-accounts",
   "commit": "280328d8d31803410dc239e6804999bc6e5f41c7",
   "worktree": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-accounts\\DesktopPet",
-  "goalStatus": "complete",
-  "phase": "Automatic convergence gap closed on280328d: normal personal edit auto-queues/uploads; clean B atomically pulls full save; dirty B retains original action/conflict; A offline original action survives restart and automatically retries. Both actual UIs and query-only SQLite agree with independent cloud SQL at revision6. Original9-case run retained as historical bounded evidence.",
+  "goalStatus": "active",
+  "phase": "Focused resource hydration integration fix: production07 realSQLite reproduction confirmed SAVE_CHANGED and pre-pump permanent dirty. Strict planned resource deltas, semantic native JSON matching, standalone008 immutable baseline doc and exact old-revision recovery implemented.26 resource cases and22 focused existing cases passed; real HTTPS dual-resource acceptance next. No73-case rerun or cloud protocol/deployment changes.",
   "baseline": "46abf416e0500b53ef32fc29b441d923ef5a6a80",
   "dependencyCheckpoint": "b40af0efcf6062ddc2e8c360523c996fc91ebc0a",
   "contracts": {
@@ -497,5 +497,20 @@
     "ui": "Main sync/settings/restore events refresh the actual account view; running/unconfirmed/remote-new/partial/conflict states cannot claim complete synchronization.",
     "productionCloudProtocolChanges": false,
     "legacyNetworkRestored": false
+  },
+  "resourceHydrationGap": {
+    "open": true,
+    "localMigration": "accounts-008-confirmed-cloud-document",
+    "accounts007Unchanged": true,
+    "targetedResourceCases": 26,
+    "focusedExistingCases": 22,
+    "providerScope": "Production07 ResourceCloudSync/officialSDK/realSQLite/files with explicitly simulated HTTPS transport. Live resource proof pending.",
+    "boundaries": [
+      "Existing row/document/prefs and other modules remain strict",
+      "New resources/files/imports need exact incoming verified plan",
+      "Pre-pump verified resources/preferences projected against original confirmed document",
+      "007 missing document recovered only from exact owner/revision/checksum immutable action",
+      "Pending/logout/newSID never waived"
+    ]
   }
 }
