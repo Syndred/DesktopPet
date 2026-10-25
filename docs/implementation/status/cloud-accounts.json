@@ -2,10 +2,10 @@
   "module": "accounts",
   "scope": "2026-10-25 Supabase Auth/JWT, stable legacy owner mapping, per-device sessions, full-save CAS/idempotency/conflict/offline recovery",
   "branch": "codex/lingjing-accounts",
-  "commit": "72986c1",
+  "commit": "08088e7e3208cc414aa7a0dbdc2009d5ecd57097",
   "worktree": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-accounts\\DesktopPet",
   "goalStatus": "active",
-  "phase": "Immutable revocation ledger deployed by coordinator, real negative verifier running there; normalized legacy hook6435a13 merged72986c1 with safe CAS preserved;25 focused tests passed.",
+  "phase": "Urgent service actor guard and03/05/02 adoption READY;3 actual local SQL checks passed. Immediate independent deployment checkpoint, no GUI dependency.",
   "baseline": "46abf416e0500b53ef32fc29b441d923ef5a6a80",
   "dependencyCheckpoint": "b40af0efcf6062ddc2e8c360523c996fc91ebc0a",
   "contracts": {
@@ -138,6 +138,25 @@
       "merge": "72986c1",
       "safeCas": "Use normalized view only for fingerprints/protected-state equality; never rewrite original envelope/checksum or upload client-normalized authority",
       "api": "backups.normalizeData(data,owner), adapter legacyTables/fromLegacyTables"
+    },
+    "transactionActorGuard": {
+      "test": "node --test apps/pc-app/runtime/features/accounts/tests/cloud-service-actor-sql.test.mjs 3 passed (actual PGlite SQL, not real cloud)",
+      "helper": "lingjing_private.assert_service_actor(p_owner text,p_uid uuid,p_device uuid,p_sid uuid) returns void",
+      "scope": "owner FOR UPDATE first, real Auth user and session FOR SHARE, nonanonymous/not_after by clock_timestamp, immutable ledger, active device/SID; holds locks to transaction end",
+      "consumersPending": [
+        "04/07 pass verified owner/UID/device/SID to helper in same business transaction"
+      ],
+      "readyForCoordinatorDeployment": true,
+      "migrations": [
+        "20261025033602_lingjing_transaction_actor_guard.sql",
+        "20261025033734_lingjing_domain_actor_guard_adoption.sql"
+      ],
+      "permissions": "Private SECURITY DEFINER search_path empty, onlyservice_role execute; no new Auth-table SELECT grants",
+      "adopted": [
+        "03 lingjing_discovery.live_actor(jsonb) same signature/invoker/grants",
+        "05 public.runtime_territory_check_actor(text,uuid,text,uuid) same signature/invoker/grants",
+        "02 private commit_companion_command same signature/definer/grants/business body, old guard only replaced"
+      ]
     }
   },
   "migrations": [
@@ -182,6 +201,18 @@
       "generatedBy": "Supabase CLI2.122.0 migration new lingjing_session_revocation_ledger",
       "remoteAppliedByThisChat": false,
       "file": "infra/supabase/migrations/20261025031842_lingjing_session_revocation_ledger.sql"
+    },
+    {
+      "readyForCoordinatorReview": true,
+      "file": "infra/supabase/migrations/20261025033602_lingjing_transaction_actor_guard.sql",
+      "generatedBy": "Supabase CLI2.122.0 migration new lingjing_transaction_actor_guard",
+      "remoteAppliedByThisChat": false
+    },
+    {
+      "readyForCoordinatorReview": true,
+      "file": "infra/supabase/migrations/20261025033734_lingjing_domain_actor_guard_adoption.sql",
+      "generatedBy": "Supabase CLI2.122.0 migration new lingjing_domain_actor_guard_adoption",
+      "remoteAppliedByThisChat": false
     }
   ],
   "checks": [
