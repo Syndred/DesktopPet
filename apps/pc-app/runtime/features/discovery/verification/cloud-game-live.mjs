@@ -82,7 +82,7 @@ try{
  const targets=proof.actors.map(({label,actor})=>({label,authUserId:actor.authUserId,ownerAccountId:actor.ownerAccountId,deviceId:actor.deviceId,scenarioId}));
  writeFileSync(join(output,'grant-request.json'),JSON.stringify({testOnly:true,scenarioId,ttl:'up to2hours',targets},null,2)+'\n');save();phase('awaiting-coordinator-qa-grants',{output,targets});
  await waitForGrant(a);await waitForGrant(b);phase('grants-verified');
- const deploymentDeadline=Date.now()+5*60*1000;while(!(await invoke(a,'discovery',{op:'protocol'})).receiptRecovery){if(Date.now()>=deploymentDeadline)throw Error('Receipt recovery checkpoint not deployed');phase('awaiting-receipt-recovery-deployment');await new Promise(done=>setTimeout(done,10000));}
+ const deploymentDeadline=Date.now()+5*60*1000;while(!(await invoke(a,'discovery',{op:'protocol'})).wildAuthority){if(Date.now()>=deploymentDeadline)throw Error('Wild authority checkpoint not deployed');phase('awaiting-wild-authority-deployment');await new Promise(done=>setTimeout(done,10000));}
  const existingPermits=resume?await invoke(a,'discovery',{op:'permits'}):[],pending=existingPermits.find(p=>p.petId===pet.petId&&['active','won'].includes(p.status));
  const discovery=await prove(a,'discover','',{lat:31.2,lng:121.4}),nearby=await invoke(a,'discovery',{op:'nearby',proofId:discovery.id});const spawn=pending?.spawn||nearby.spawns.find(p=>p.element==='fire');assert.ok(spawn);proof.fixtureCoordinateHash=createHash('sha256').update(spawn.position.lat+','+spawn.position.lng).digest('hex');
  let won,permit;
