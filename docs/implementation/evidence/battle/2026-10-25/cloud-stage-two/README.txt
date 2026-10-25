@@ -1,4 +1,5 @@
-Source implementation: 5ebb63b, branch codex/lingjing-battle-v3.
+Source implementation: 5ebb63b; deployment guard/custom resource/bundle patch
+69a23b4, branch codex/lingjing-battle-v3.
 This is a reviewable deployment checkpoint, not a claim of real cloud acceptance.
 
 authority-save.json: actual local PGlite migrations/transactions and canonical
@@ -7,7 +8,10 @@ scripted actor invoker backed by the real local save table, not HTTPS/Auth.
 Checks include all-or-nothing rollback after protected save mutation, two owners,
 one XP award/two seeds/complete mirrored reports, duplicate settlement,
 late local-adapter rollback, independent local progress conflict, service-only
-execution, obsolete receipt-only path refusal and server training replay.
+execution, obsolete receipt-only path refusal, server training replay, and
+revoked original device/SID denial with another same-owner device preserved.
+The actual08 assert_service_actor migration is loaded; no test auth stub.
+First-garden initialization uses the actual05 emptyGarden + reward reducer.
 
 room-rls.json: actual local Postgres invitation/action/round/RLS checks, including
 device-only revoke while auth.sessions remains and another device stays valid.
@@ -20,3 +24,9 @@ Additional checks: Deno2.9.6 full entrypoint, frozen1200 cases/7162 rounds,
 5 scripted SDK boundary/lifecycle checks, original16 battle/legacy-rules native
 cases, build:pc with approved new main/preload and lazy UI.
 V3 UI and its original screenshot evidence remain unchanged.
+
+2 pure trusted-pet cases verify same-owner custom2D reference authorization and
+template elements. 2 Deno SCRIPTED cached-handler cases verify RPC-bound device/
+SID on replay. These are not real Auth/network proof.
+Generated cloud ESM check uses repository-relative canonical source digests;
+deployment needs index.ts, runtime.generated.mjs and08 _shared/lingjing-auth.ts.
