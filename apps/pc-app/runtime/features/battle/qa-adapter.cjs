@@ -12,9 +12,10 @@ function readQaProfile(services) {
   return { ...config, ...scenario };
 }
 function createQaOnline(config) {
-  const online = new OnlineDuelService({ supabaseUrl: config.endpoint, supabaseAnonKey: 'isolated-qa-only' });
+  const online = new OnlineDuelService({ isolatedQa: true });
+  online.supabaseUrl = config.endpoint;
   online.invoke = async (op, payload = {}) => {
-    const response = await fetch(config.endpoint, { method: 'POST', signal: AbortSignal.timeout(5000), headers: { 'content-type': 'application/json', 'x-qa-run': config.runId, 'x-qa-token': config.token }, body: JSON.stringify({ userAccount: online.currentUser?.account, username: online.currentUser?.username, op, ...payload }) });
+    const response = await fetch(config.endpoint, { method: 'POST', signal: AbortSignal.timeout(5000), headers: { 'content-type': 'application/json', 'x-qa-run': config.runId, 'x-qa-token': config.token }, body: JSON.stringify({ ...payload, op, userId: online.currentUser?.id, sessionToken: `qa:${config.runId}:${online.currentUser?.id}`, userAccount: online.currentUser?.account, username: online.currentUser?.username }) });
     const value = await response.json();
     if (!response.ok || value.ok === false) throw Object.assign(new Error(value.message || 'QA transport rejected request'), { code: value.code || 'QA_TRANSPORT_ERROR' });
     return value;

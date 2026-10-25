@@ -3,7 +3,6 @@ const assert = require("node:assert/strict");
 const { mkdtempSync, readFileSync, existsSync } = require("node:fs");
 const { tmpdir } = require("node:os");
 const { join, resolve } = require("node:path");
-const vm = require("node:vm");
 const { openDatabase, migrate } = require("../../core/database.cjs");
 const { createServices } = require("../../core/services.cjs");
 const { RuntimeDataStore } = require("../../services/runtime-data-store.cjs");
@@ -64,10 +63,8 @@ test('SCRIPTED cloud selection: delayed rejection leaves no cloud start request 
   } finally{f.close();}
 });
 
-test("desktop and edge formulas agree for all 400 five-element/action pairs and stacked effects", () => {
-  const source = readFileSync(resolve(__dirname, "../../../../../infra/supabase/functions/duel-online/index.ts"), "utf8").trimStart().replace(/^import[^\n]+\n/, "");
-  const scope = { Deno: { serve() {} }, console, crypto: globalThis.crypto };
-  vm.runInNewContext(`${source}\nglobalThis.resolveForTest=resolveRound;`, scope);
+test("modern versioned room DTO preserves the shared desktop core for all 400 five-element/action pairs and stacked effects", async () => {
+  const {resolveRoomRound,RULES_VERSION,BATTLE_CORE_VERSION}=await import('../../../../../infra/supabase/functions/lingjing-battle/room-core.js');
   const elements = ["metal", "wood", "earth", "water", "fire"];
   const actions = ["normal_attack", "element_attack", "dodge", "ultimate"];
   for (const left of elements) for (const right of elements) for (const a of actions) for (const b of actions) {
@@ -76,20 +73,20 @@ test("desktop and edge formulas agree for all 400 five-element/action pairs and 
     session.player.anger = 70; session.enemy.anger = 80;
     session.player.statuses = [{ type: "burn", duration: 3, stacks: 2, sourceId: "enemy" }, { type: "petrify", duration: 3, stacks: 2, sourceId: "enemy" }];
     session.enemy.statuses = [{ type: "parasite", duration: 3, stacks: 2, potency: 2, sourceId: "player" }, { type: "vulnerability", duration: 3, stacks: 2, sourceId: "player" }];
-    const room = { current_round: 1 };
+    const room = { current_round: 1, last_resolved_round: 0, rules_version: RULES_VERSION, core_version: BATTLE_CORE_VERSION };
     for (const [role, side] of [["player", "host"], ["enemy", "guest"]]) {
       for (const key of ["element", "hp", "anger"]) room[`${side}_${key}`] = session[role][key];
       room[`${side}_free_dodge_used`] = false;
       room[`${side}_statuses`] = session[role].statuses.map(status => ({ ...status, sourceId: status.sourceId === "player" ? "host" : "guest" }));
     }
     const local = executeRound(session, a, b);
-    const cloud = clone(scope.resolveForTest(room, a, b));
+    const cloud = clone(resolveRoomRound(room, a, b));
     assert.deepEqual(local.hpAfter, { player: cloud.hp_after.host, enemy: cloud.hp_after.guest }, `${left}/${right} ${a}/${b} hp`);
     assert.deepEqual(local.angerAfter, { player: cloud.anger_after.host, enemy: cloud.anger_after.guest });
     assert.deepEqual(local.actions, { player: cloud.actions.host, enemy: cloud.actions.guest });
     assert.equal(local.winner, cloud.winner_side === "host" ? "player" : cloud.winner_side === "guest" ? "enemy" : null);
     for (const [role, side] of [["player", "host"], ["enemy", "guest"]]) {
-      const statuses = cloud.statuses_after[side].map(status => ({ ...status, sourceId: status.sourceId === "host" ? "player" : "enemy" }));
+      const statuses = cloud.statuses_after[side].map(status => ({ ...status, sourceId: status.sourceId === "host" ? "player" : "enemy", stackable: Boolean(status.stackable) }));
       assert.deepEqual(local.statusesAfter[role].map(status => ({ ...status, stackable: Boolean(status.stackable) })), statuses);
       assert.deepEqual(local.dotDamageEvents[role], cloud.dot_damage_events[side]);
       assert.deepEqual(local.healEvents[role], cloud.heal_events[side]);
@@ -159,6 +156,7 @@ function protocolFixture(f, remote = {}) {
       updated_at: `2026-10-24T00:00:${String(count).padStart(2, '0')}Z` });
   };
   const online = f.service.online;
+  online.isolatedQa = true; online.configured = true; online.enabled = true;
   online.invoke = async (op, payload) => {
     remote.calls.push({ op, payload: clone(payload) });
     if (op === 'create_room') return { room: clone(remote.room) };
@@ -228,7 +226,7 @@ test('scripted transport: a room advancing during history pagination cannot leav
 });
 
 test('scripted realtime: callbacks from a removed room cannot replace the current room or restore cleared state', async () => {
-  const online = new OnlineDuelService();
+  const online = new OnlineDuelService({ isolatedQa: true });
   const channels = [];
   online.client = {
     channel() {
@@ -241,8 +239,8 @@ test('scripted realtime: callbacks from a removed room cannot replace the curren
   const room = id => ({ id, host_user_id: 'unit-user', guest_user_id: 'unit-peer', current_round: 1, last_resolved_round: 0 });
   online.applyRoom(room('first')); await online.subscribeRoom();
   online.applyRoom(room('second')); await online.subscribeRoom();
-  const notifyRoom = (channel, value) => channel.handlers.find(entry => entry.table === 'duel_rooms').handler({ new: value });
-  const notifyRound = (channel, roomId, number) => channel.handlers.find(entry => entry.table === 'duel_rounds').handler({ new: { room_id: roomId, round_no: number } });
+  const notifyRoom = (channel, value) => channel.handlers.find(entry => entry.table === 'lingjing_battle_rooms').handler({ new: value });
+  const notifyRound = (channel, roomId, number) => channel.handlers.find(entry => entry.table === 'lingjing_battle_rounds').handler({ new: { room_id: roomId, round_no: number } });
   notifyRoom(channels[0], { ...room('first'), current_round: 9, last_resolved_round: 8 });
   notifyRound(channels[0], 'first', 8);
   assert.equal(online.room.id, 'second'); assert.equal(online.roundCache.has(8), false);

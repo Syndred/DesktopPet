@@ -2,6 +2,11 @@ const {test}=require('node:test');
 const assert=require('node:assert/strict');
 const {OnlineDuelService}=require('../../../services/online-duel-service.cjs');
 const actor={schemaVersion:1,authority:'live',authKind:'supabase',authUserId:'10000000-0000-4000-8000-000000000001',ownerAccountId:'old-owner-text',deviceId:'20000000-0000-4000-8000-000000000001',sessionId:'30000000-0000-4000-8000-000000000001',account:'unit-user',username:'单元检查'};
+test('retired transport: old constructor URL/key/function options cannot create a client or activate password identity',async()=>{
+  const online=new OnlineDuelService({supabaseUrl:'http://retired.invalid:8000',supabaseAnonKey:'retired-key',functionName:'duel-online'});online.setCurrentUser({id:'archive-owner',sessionToken:'archive-only'});
+  assert.equal(online.client,null);assert.equal(online.getStatus().enabled,false);assert.equal(online.getStatus().authKind,'unavailable');assert.equal(online.supabaseUrl,null);assert.equal(online.functionName,'lingjing-battle');assert.equal(Object.hasOwn(online,'supabaseAnonKey'),false);assert.equal(Object.hasOwn(online.currentUser,'sessionToken'),false);
+  for(const method of ['registerAccount','loginAccount','updateAccount'])assert.equal(online[method],undefined);await assert.rejects(online.invoke('get_room',{roomId:'old-room'}),{code:'CLOUD_AUTH_UNAVAILABLE'});
+});
 function fixture() {
   const calls=[],channels=[],state={authCalls:0,disconnects:0};
   const room={id:'40000000-0000-4000-8000-000000000001',host_user_id:actor.ownerAccountId,guest_user_id:'other-owner',room_code:'ABCDEFGHIJ',status:'active',current_round:1,last_resolved_round:0,host_element:'water',guest_element:'fire',host_hp:120,guest_hp:120,host_anger:0,guest_anger:0};
@@ -54,4 +59,11 @@ test('actual installed SDK lifecycle: disconnect teardown cannot retain the old 
     await new OnlineDuelService().removeRoomChannel(client,old);
     assert.equal(client.getChannels().includes(old),false);assert.equal(client.getChannels().includes(other),true);assert.notEqual(client.channel(topic,{config:{private:true}}),old);
   } finally {await client.removeAllChannels();}
+});
+
+test('SIMULATED loopback only: explicit QA adapter owns scenario identity and pet facts without a Supabase fallback client',async()=>{
+  const {mkdtempSync}=require('node:fs'),{join}=require('node:path'),{tmpdir}=require('node:os'),{randomUUID}=require('node:crypto');
+  const {startQaDuelServer}=require('./qa-duel-server.cjs'),{createQaOnline}=require('../qa-adapter.cjs');
+  const runId=randomUUID(),token=randomUUID(),server=await startQaDuelServer({runId,token,directory:mkdtempSync(join(tmpdir(),'battle-qa-retirement-'))});
+  try{const online=createQaOnline({runId,token,endpoint:server.endpoint});online.setCurrentUser({id:'qa-fixture-owner',account:'qa-fixture'});await online.createRoom({actionId:randomUUID(),petId:'qa-pet',petElement:'water',petName:'隔离水伴'});assert.equal(online.client,null);assert.equal(online.getStatus().authKind,'isolated-qa');assert.equal(online.room.host_element,'water');assert.equal(online.room.host_user_id,'qa-fixture-owner');assert.equal(server.state.provenance,'simulated');assert.equal(server.state.operations[0].userId,'qa-fixture-owner');}finally{await server.close();}
 });

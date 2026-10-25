@@ -609,9 +609,9 @@ class BattleFeatureService {
     session.winner = room.winner_side === session.side ? "player" : room.winner_side ? "enemy" : null;
     let proof = null;
     if (room.status === "finished" && session.winner && !this.store.reward(owner, session.id)) {
-      const user = this.user(owner);
+      this.user(owner);
       try {
-        proof = await this.online.invoke("claim_battle_settlement", { userId: user.id, sessionToken: user.sessionToken, roomId: room.id, petId: session.player.petId });
+        proof = await this.online.invoke("claim_battle_settlement", { roomId: room.id, petId: session.player.petId });
         this.assertOwner(owner);
         if(this.isCloud(owner)) {await this.cloud.apply(owner,proof);this.assertOwner(owner);const saved=this.store.session(owner,session.id);if(pending&&rounds.has(pending.roundNo))this.store.resolve(owner,pending.actionId,saved);return saved;}
       } catch (error) {
@@ -636,9 +636,9 @@ class BattleFeatureService {
       if (["finished", "abandoned"].includes(session.status)) return session;
       if(session.mode==='training'&&session.context?.authority==='supabase') {this.user(owner);const response=await this.cloudCommand(owner,'training-leave',{sessionId:session.id},actionId=>this.online.invoke('leave_training',{sessionId:session.id,actionId}));return this.saveCloudTraining(owner,response);}
       if (session.mode === "friend") {
-        const user = this.user(owner);
+        this.user(owner);
         // Unlike the compatibility service's best-effort leave, require server acknowledgment.
-        const result = await this.cloudCommand(owner,'leave',{roomId:session.room.id},actionId=>this.online.invoke("leave_room", { actionId,userId: user.id, sessionToken: user.sessionToken, roomId: session.room.id, reason: "user_leave" }));
+        const result = await this.cloudCommand(owner,'leave',{roomId:session.room.id},actionId=>this.online.invoke("leave_room", { actionId, roomId: session.room.id, reason: "user_leave" }));
         this.assertOwner(owner);
         if (result.room?.status === "finished") return this.syncInternal(owner, session);
         session.room = result.room || session.room;
