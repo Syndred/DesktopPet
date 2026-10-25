@@ -28,9 +28,9 @@ function installResourceProtocol({ protocol, service, getOwnerAccountId, isTrust
   });
 }
 /** Adapter with explicit injected capabilities; foundation owns IPC/preload/session wiring. */
-async function registerResources({ db, storageRoot, ipcMain, dialog, protocol, getOwnerAccountId, isTrustedSender, getWindow, legacyModelsDir, starterManifest }) {
+async function registerResources({ db, storageRoot, ipcMain, dialog, protocol, getOwnerAccountId, isTrustedSender, getWindow, starterManifest }) {
   if (typeof getOwnerAccountId !== 'function' || typeof isTrustedSender !== 'function') throw new Error('Resources needs a verified owner resolver and trusted sender guard');
-  const service = new ResourcesService({ db, storageRoot, legacyModelsDir, starterManifest });
+  const service = new ResourcesService({ db, storageRoot, starterManifest });
   await service.seed();
   async function dispatch(event, command, payload) {
     try {
@@ -70,11 +70,12 @@ function register(services) {
   // Commands surface seed errors; keep a failed seed from becoming an unhandled rejection.
   void ready.catch(() => {});
   services.provide('resources', service);
+  const cloudHost = require('./cloud-host.cjs').registerResourceCloud(services,service);
   const run = handler => async (payload, context) => {
     try { await ready; return await handler(payload, context); }
     catch (error) { const result = toResult(error); return { ok: false, code: result.error.code, message: result.error.message, ...(result.error.revision !== undefined ? { revision: result.error.revision } : {}) }; }
   };
-  const changed = (owner, resource) => services.events.emit('resources:changed', { ownerAccountId: owner, resourceId: resource.id, revision: resource.revision });
+  const changed = (owner, resource) => { services.events.emit('resources:changed', { ownerAccountId: owner, resourceId: resource.id, revision: resource.revision }); cloudHost.changed(owner,resource); };
   installResourceProtocol({ protocol, service, getOwnerAccountId: () => services.session.getOwnerAccountId(), isTrustedAssetRequest(request) {
     const origin = request.headers.get('origin');
     const renderer = process.env.ELECTRON_RENDERER_URL;
@@ -84,6 +85,10 @@ function register(services) {
   return {
     commands: {
       list: run((_payload, context) => service.list(context.ownerAccountId)),
+      history: run((_payload, context) => service.listArchived(context.ownerAccountId)),
+      cloudStatus: run((_payload, context) => cloudHost.cloud.status(context.ownerAccountId)),
+      cloudSync: run(async (payload, context) => { cloudHost.cloud.enqueue(context.ownerAccountId,payload.actionId,payload.resourceIds); return cloudHost.cloud.flush(context.ownerAccountId,{force:true}); }),
+      cloudPull: run((payload, context) => cloudHost.cloud.pull(context.ownerAccountId,payload)),
       resolve: run((payload, context) => service.resolve(context.ownerAccountId, payload)),
       save: run(async (payload, context) => { const resource = await service.save(context.ownerAccountId, payload); changed(context.ownerAccountId, resource); return resource; }),
       import: run(async (payload, context) => {
@@ -95,7 +100,7 @@ function register(services) {
         const result = await service.importFile(context.ownerAccountId, selected.filePaths[0], payload); changed(context.ownerAccountId, result.resource); return result;
       }),
     },
-    dispose() { protocol.unhandle(SCHEME); },
+    dispose() { cloudHost.dispose(); protocol.unhandle(SCHEME); },
   };
 }
 module.exports = { id: 'resources', CHANNEL, SCHEME, migrations, register, registerResources, registerResourceScheme, installResourceProtocol, ResourcesService };

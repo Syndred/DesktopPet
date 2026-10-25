@@ -82,6 +82,13 @@ const migrations = [{
     singleton INTEGER PRIMARY KEY CHECK(singleton=1),
     profile_id TEXT NOT NULL, scenario_id TEXT NOT NULL
   );`
+}, {
+  id: 'accounts-004-supabase-identity-link',
+  sql: `CREATE TABLE IF NOT EXISTS account_cloud_links (
+    owner_account_id TEXT PRIMARY KEY REFERENCES account_identities(owner_account_id),
+    auth_user_id TEXT NOT NULL UNIQUE, project_url TEXT NOT NULL,
+    created_at TEXT NOT NULL, updated_at TEXT NOT NULL
+  );`
 }];
 
 module.exports = { migrations };

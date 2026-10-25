@@ -1,0 +1,81 @@
+{
+  "module": "resources",
+  "scope": "Private Supabase Storage packages, owner/Auth UID boundary, durable resume, new-client preservation and legacy archive cleanup",
+  "branch": "codex/lingjing-resources",
+  "commit": "bae0ea2f17978ff68bc42aabaa7ad8d9c1a2cbca",
+  "baselineCommit": "46abf416e0500b53ef32fc29b441d923ef5a6a80",
+  "goalStatus": "active",
+  "contracts": {
+    "document": "docs/implementation/cloud-resource-contract.md",
+    "actor": "08 ActorContext schemaVersion1/authority live/authKind supabase; main-only authenticated client",
+    "requiredMainCapability": "services.provide(cloudAuth,{requireActor(owner)})",
+    "providedMainCapability": "resourceCloud.enqueue/flush/pull/status/synchronize",
+    "ipc": [
+      "resources:cloudStatus",
+      "resources:cloudSync",
+      "resources:cloudPull",
+      "resources:history"
+    ],
+    "saveIntegration": "08 flush Storage references before save publication; hydrate resource references before accepting cloud restore; no parallel pet/growth/inventory/preference CAS"
+  },
+  "migrations": [
+    "infra/supabase/migrations/20261025020942_lingjing_private_resource_storage.sql"
+  ],
+  "checks": [
+    {
+      "command": "native resource/storage/roster/backup combined",
+      "result": "22/22 passed before latest explicit production fixture gate; latest Storage subset 8/8 passed",
+      "kind": "Actual Electron ABI SQLite + actual official SDK over explicit localhost fixture; not real cloud"
+    },
+    {
+      "command": "node --test apps/pc-app/runtime/features/resources/verification/storage-rls-sql.test.mjs",
+      "result": "5/5 passed",
+      "kind": "LOCAL PGlite 0.5.11 using approved 08 identity migration; not real cloud"
+    },
+    {
+      "command": "npm run typecheck:ui",
+      "result": "passed after public types"
+    },
+    {
+      "command": "resource UI/shared type eslint",
+      "result": "passed"
+    },
+    {
+      "command": "npm run build:pc",
+      "result": "passed; new source-bound post-commit build for native acceptance follows"
+    }
+  ],
+  "realCloudEvidence": {
+    "projectRef": "jbvrdmrkwpznbrvteive",
+    "readOnlyBucketInventory": "2026-10-25: empty",
+    "deployed": false,
+    "aUploadBReadback": false,
+    "crossAccountDenied": false,
+    "identityMigrationDeployedByCoordinator": true,
+    "resourcesMigrationApplied": false,
+    "legitimateSessionsAvailable": false,
+    "tokenOrSecretInSourceOrEvidence": false
+  },
+  "preservation": {
+    "originalOwnerAndResourceIds": true,
+    "builtinsRemainOffline": true,
+    "remoteChangesByCoordinatorOnly": true
+  },
+  "cleanupCandidates": {
+    "removed": 5,
+    "manifest": "docs/implementation/evidence/resources/cloud-upgrade/cleanup-sources.json",
+    "recoverableSourceCommit": "46abf416e0500b53ef32fc29b441d923ef5a6a80",
+    "localSourceArchive": "artifacts/resources/legacy-resource-source-46abf41.zip",
+    "archiveSha256": "60825b7b6443a32c98fd3e941674eaabef4928cedbf4d6cc12d0e42856d1d675",
+    "sharedEngineeringFollowup": "01 may remove obsolete release exclusion; root config/dependencies untouched by resource changes"
+  },
+  "remaining": [
+    "Native production Electron resource recovery selfcheck bound to source SHA",
+    "08 main-process cloudAuth.requireActor and protected-save integration hooks",
+    "Coordinator applies reviewed Storage migration after identity migration",
+    "Legitimate real HTTPS A/B upload/readback and other-account rejection",
+    "Final main-session integrated dual-Electron and physical-device acceptance kept separate"
+  ],
+  "identityCheckpoint": "f81008ce1f88c2b6c11d0bb05122d5afb5891039",
+  "phase": "core-ready-for-coordinator-storage-migration-review; native and live validation continuing"
+}
