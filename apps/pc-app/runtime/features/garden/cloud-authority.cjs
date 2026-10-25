@@ -140,7 +140,12 @@ class CloudGardenAuthority{
     if(kind==='feed'&&newlyApplied)try{await this.services.get('companions')?.playAction?.(context.ownerAccountId,{petId:input.petId,action:'eat',actionId:`garden:${input.actionId}`});}catch{}
     return op?{ok:true,data:reply.data,replayed:reply.replayed}: {...reply.result,replayed:reply.replayed||reply.result.replayed};
   });}
-  ownsBattle(payload,context){if(!payload?.sessionId||!this.isCloud(context))return false;return payload.sessionId.startsWith('btl-')||this.battles.session(context.ownerAccountId,payload.sessionId)?.context?.authority==='cloud';}
+  ownsBattle(payload,context){
+    if(!payload?.sessionId||!this.isCloud(context))return false;
+    const cached=this.battles.session(context.ownerAccountId,payload.sessionId);
+    if(cached)return cached.mode==='territory'&&cached.context?.authority==='cloud';
+    return /^btl-[A-Za-z0-9_-]{22}$/.test(payload.sessionId);
+  }
   async remoteBattle(payload,context){
     const pending=this.db.prepare("SELECT input_json FROM garden_cloud_requests WHERE owner_account_id=? AND op='act' AND status='pending' ORDER BY created_at").all(context.ownerAccountId).map(row=>JSON.parse(row.input_json)).find(input=>input.sessionId===payload.sessionId);
     if(pending)try{await this.send(context,'territory-sync','act','territoryAct',pending);}catch(error){
