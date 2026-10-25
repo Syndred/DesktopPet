@@ -98,7 +98,7 @@ JSON SHA256 和现有备份保持兼容，SQL 处理 UTF-16 键排序及 ECMAScr
 
 输出仅 `claims.dpapi`（Windows当前用户加密，entropy为公开字符串 `LINGJING_LEGACY_CLAIMS_V1`）与不含用户名/密码摘要的audit.json；不覆盖原导出或旧输出。每条claim保持原TEXT owner、用户名、原SHA256密码语义及创建时间，关联源record/manifest摘要。主协调后续在安全内存中解密、复核来源后才能阶段性写私有claims表；登录端验证原密码后才创建并绑定Auth身份。该工具的3个合成用例不代表已经拿到旧服务器数据。宠物/成长/库存/消息/资源的旧源导入仍需各域核对，audit明确 `cloudMigrationCompleted:false`。
 
-真实Auth由主协调部署并HTTPS8/8验收；CAS部署后的本会话主进程HTTPS11/11证据为 `artifacts/accounts/cloud-main-http-1792896651252/evidence.json`。实际双Electron44.9.3、Windows safeStorage、同账号双会话、跨进程个人存档读回/冲突/加密重启与持久队列、SDK实际令牌轮转8项通过：`artifacts/accounts/cloud-electron-1792897321861/evidence.json`。后一证据明确 `fullSaveVerified:false` / `authorityPending:true`：当前完整域初始化/权威片段仍由02/03/04/05/07整合，不能冒称全域存档已完成；同机双进程也不能冒称两台实体设备。secret guard修订待集中部署和真实隐私HTTPS读回，不以本地8个SQL/6个协议测试代替。
+真实Auth由主协调部署并HTTPS8/8验收；CAS部署后的本会话主进程HTTPS11/11证据为 `artifacts/accounts/cloud-main-http-1792896651252/evidence.json`。实际双Electron44.9.3、Windows safeStorage、同账号双会话、跨进程个人存档读回/冲突/加密重启与持久队列、SDK实际令牌轮转8项通过：`artifacts/accounts/cloud-electron-1792897321861/evidence.json`。后一证据明确 `fullSaveVerified:false` / `authorityPending:true`：当前完整域初始化/权威片段仍由02/03/04/05/07整合，不能冒称全域存档已完成；同机双进程也不能冒称两台实体设备。secret guard及事务内actor guard均已由主协调集中部署，真实隐私/原文/失效会话证据见下。
 
 后续已验证且提交到 `docs/implementation/evidence/accounts/cloud-2026-10-25/`：实际并发CAS两种竞争均正确；主协调managed-valid旧SID重绑/refresh拒绝且独立设备继续有效；嵌套/serialized假凭据5种拒绝且安全投影独立DB读回无假标记；原签发JWT自然过期被Auth403 bad_jwt(expired)及save401拒绝；生产聊天adapter生成的消息/记忆/人设JSON示例经过合法云领养、CAS及独立Data API读回逐字一致且整包checksum不变。完整云端存档与最新全域双Electron仍待各域主进程入口/权威初始化齐备。
 

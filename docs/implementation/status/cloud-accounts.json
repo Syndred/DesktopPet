@@ -378,5 +378,13 @@
     "04 private realtime full two-account gameplay integration belongs04/coordinator; stable SDK/Auth refresh is ready",
     "Old complete cloud account/data migration EXTERNAL: no verified old export/SSH; DPAPI preparation is not actual migration",
     "One final account-targeted regression and final origin/main pull confirmation"
-  ]
+  ],
+  "resourceHydrationReadOnlyReview": {
+    "accepted": "Validate external original checksum/owner/schema before hydration and validate again after; additive download cache before synchronous atomic restore; normalized/cloud refs fingerprint only; no rewrite original envelope",
+    "otherWorktreeEdited": false,
+    "api": "07 WIP backups.prepareCloud(envelope,owner), adapter.prepareCloud(owner,module), backups.cloudData +adapter.cloudModule; sync.previewCloud awaits hydrate outside SQLite restore",
+    "sharedFilesNotEdited": "accounts/backups.cjs andsync.cjs left to07 WIP until its checkpoint",
+    "finding": "Observed previewCloud only rechecks owner after prepareCloud await. Capture and recheck original SID or Accounts epoch as well, so same-owner logout/relogin/password newSID cannot return a stale preview. Keep additive cache, but reject stale preview token asSESSION_CHANGED.",
+    "readOnly": true
+  }
 }
