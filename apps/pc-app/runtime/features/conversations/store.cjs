@@ -53,8 +53,11 @@ class ConversationStore {
     });
   }
   getConnection(owner, petId = null, includeSecret = false) {
-    return connection(this.db.prepare(`SELECT * FROM conversation_connections
-      WHERE owner_account_id=? AND scope=? AND scope_id=?`).get(owner, petId === null ? "account" : "pet", petId ?? ""), includeSecret);
+    return connection(this.db.prepare(`SELECT c.*,COALESCE(k.encrypted_key,c.encrypted_key) AS encrypted_key
+      FROM conversation_connections c LEFT JOIN conversation_credentials k
+      ON k.owner_account_id=c.owner_account_id AND k.scope=c.scope AND k.scope_id=c.scope_id
+      AND k.provider=c.provider AND k.base_url=c.base_url
+      WHERE c.owner_account_id=? AND c.scope=? AND c.scope_id=?`).get(owner, petId === null ? "account" : "pet", petId ?? ""), includeSecret);
   }
   saveConnection(owner, petId, value, revision) {
     return this.transaction(() => {
@@ -67,6 +70,12 @@ class ConversationStore {
         revision=excluded.revision,updated_at=excluded.updated_at`).run(owner, petId === null ? "account" : "pet", petId ?? "",
         value.provider, value.baseUrl, value.model, value.encryptedKey, value.contextChars,
         value.maxOutputTokens, revision + 1, Date.now());
+      // User edits explicitly replace/clear this device's key. Cloud restoration
+      // uses the archive adapter and never deletes this local-only credential vault.
+      const scope = petId === null ? "account" : "pet", scopeId = petId ?? "";
+      this.db.prepare("DELETE FROM conversation_credentials WHERE owner_account_id=? AND scope=? AND scope_id=?").run(owner, scope, scopeId);
+      if (value.encryptedKey) this.db.prepare("INSERT INTO conversation_credentials VALUES(?,?,?,?,?,?,?)")
+        .run(owner, scope, scopeId, value.provider, value.baseUrl, value.encryptedKey, Date.now());
       return this.getConnection(owner, petId);
     });
   }

@@ -1,0 +1,36 @@
+聊天跨端存档消费者契约（2026-10-25）
+
+当前实现
+features/conversations/backup.cjs 提供 createConversationBackupAdapter(services)。
+services.get('conversations').createBackupAdapter() 是01推荐正式注册入口。
+core/conversation-backup.cjs 已移除重复领域实现，仅保留兼容转发器，现有 main/index.ts 和 foundation 测试继续可运行。
+
+08完整存档消费
+继续使用完整存档 modules.conversations，version=1；五张原表字段契约不变。
+消息 id、pet_id、action_id、role、created_at 保持；仅本机 sequence 不上传，接收端重新分配。
+merge 使用两个既有顺序的稳定ID锚点合并，旧前缀不会追加到新尾部；顺序矛盾或不同完整文本拒绝，不静默覆盖。
+人设/记忆/连接不同的同编号记录要求选择恢复版本；replace 在08预览/校验/存前备份的事务内完成。
+生成中拒绝恢复；先停止实际生成再恢复。导出正在生成的回复为 cancelled/INTERRUPTED 投影，保留已接收部分，不修改发送端实时生成。
+账号完整存档CAS、出站队列、重试、冲突预览、HTTPS和Auth UID→旧owner映射只消费08接口，不另建聊天云表/云认证/同步协议。
+恢复成功后08继续发 accounts:save-restored {ownerAccountId}。本模块已订阅并提升会话世代，清空旧编辑器/游标并拒绝旧请求。
+
+设备密钥
+conversation_credentials 是仅本机表：新SQLite迁移从原 conversation_connections 加密字段复制，原行和历史数据保留。
+snapshot明确定义的字段不含 sequence、encrypted_key、API key或token；credential表由统一备份敏感列过滤排除。
+远端删除/替换连接配置不会删除本机凭据；只在 owner/scope/scope_id/provider/base_url 全部精确匹配时复用本机密钥。
+用户主动编辑/清空连接仍替换或清除当前设备该scope的凭据，避免把旧key转发到新端点。
+
+共享隐私待08审核
+现有 accounts/legacy.cjs 的 legacy adapter 原样导出 account_legacy_data JSON；该结构可能包含旧设置、token或加密blob。
+完整云存档必须在08统一边界递归检查/过滤敏感结构（保留本机原档）。聊天模块不会接管账号身份或修改该适配器。
+
+01消费者与替代入口
+apps/pc-app/runtime/main/index.ts:151 -> 改用 services.get('conversations').createBackupAdapter()；注册仍由公共启动器统一执行一次。
+tests/foundation/conversation-backup.test.cjs -> 改为导入 features/conversations/backup.cjs。
+完成以上两处替换后可删除 core/conversation-backup.cjs 兼容转发器。该转发器当前只有require转发，没有旧领域实现。
+旧 main.cjs / preload.cjs / renderer/renderer.mjs / renderer/index.html 的AI路径正在逐项清理，待交付最终消费者清单。
+本模块不修改battle UI，不改变04工作树；真实Supabase写入/部署由主协调统一执行。
+
+首轮定向验证
+archive.test.cjs 8项通过；原 runtime.test.cjs 12项通过。均为本机SQLite/协议验收，不算真实云端成功。
+真实HTTPS A/B与现有安全BYOK凭据验证将在08公共契约及主协调部署后执行，结果单独记录。

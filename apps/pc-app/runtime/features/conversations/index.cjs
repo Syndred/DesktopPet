@@ -3,6 +3,7 @@ const { ConversationStore } = require("./store.cjs");
 const { ConversationService } = require("./service.cjs");
 const { migrations } = require("./schema.cjs");
 const { createElectronSecretCodec } = require("./secrets.cjs");
+const { createConversationBackupAdapter } = require("./backup.cjs");
 
 const commands = ["snapshot", "select", "history", "profile.save", "connection.save", "connection.test", "connection.cancel",
   "memory.save", "memory.delete", "send", "retry", "cancel", "history.clear"];
@@ -34,6 +35,11 @@ function register(services) {
   };
   const unsubscribers = ["accounts:changed", "accounts:session-changed", "accounts:session", "auth:changed", "session:changed"]
     .map((name) => services.events.on(name, () => changed()));
+  // A full-save replacement changes the meaning of revisions/cursors even when
+  // the verified owner is unchanged. Invalidate old editors and pending reads.
+  unsubscribers.push(services.events.on("accounts:save-restored", value => {
+    if (value?.ownerAccountId === services.session.getOwnerAccountId()) changed();
+  }));
   // The v1 foundation session contract has no mandatory session event. This also
   // catches changes made through the retained legacy login window.
   const sessionWatch = setInterval(observe, 500);
@@ -53,6 +59,7 @@ function register(services) {
     publish: (value) => services.events.emit("conversations:changed", value),
     setChatActivity: (value) => services.events.emit("conversations:activity", value) });
   services.provide("conversations", {
+    createBackupAdapter: () => createConversationBackupAdapter(services),
     hasActive: owner => [...feature.service.active.values()].some(active => active.session.owner === owner),
     getProfile: (ownerAccountId, petId) => feature.service.store.getProfile(ownerAccountId, petId),
     isChatting: (ownerAccountId, petId) => feature.service.active.has(JSON.stringify([ownerAccountId, "chat", petId])),
