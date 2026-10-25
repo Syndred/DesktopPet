@@ -27,12 +27,20 @@ test('a missing, renamed or unexpected migration cannot silently replace the dep
 });
 
 test('reviewed promotion accepts 22 deployed plus 1 pending and 23 deployed without rewriting old ledger evidence',()=>{
-  const old=checkMigrationNames(expectedFiles);
+  // Build both states from the immutable historical ledger, independently of
+  // whether the current checked-in manifest has already been promoted.
+  const historicalEvidence='docs/implementation/evidence/cloud/2026-10-25/migration-ledger-alignment.json';
+  const historicalLedger=JSON.parse(readFileSync(new URL(`../../${historicalEvidence}`,import.meta.url),'utf8'));
+  const historicalFiles=historicalLedger.entries.map(entry=>entry.target.split('/').at(-1)).sort();
+  const candidate='20261025105253_lingjing_global_pet_serials.sql';
+  const reviewFiles=[...historicalFiles,candidate];
+  const beforePromotion={schemaVersion:1,expectedDeployedCount:22,files:historicalFiles,pendingReviewFiles:[candidate],ledgerEvidence:historicalEvidence};
+  const old=checkMigrationNames(reviewFiles,{approvedManifest:beforePromotion});
   assert.equal(old.deployedMigrationCount,22);assert.equal(old.pendingReviewFiles.length,1);
   // Local review fixture only. The actual promotion must use a new ledger
   // evidence file; the historical 22-entry artifact is never rewritten.
-  const promoted={...manifest,expectedDeployedCount:23,files:expectedFiles,pendingReviewFiles:[],ledgerEvidence:'local-promotion-fixture'};
-  const next=checkMigrationNames(expectedFiles,{approvedManifest:promoted});
+  const promoted={schemaVersion:1,expectedDeployedCount:23,files:reviewFiles,pendingReviewFiles:[],ledgerEvidence:'local-promotion-fixture'};
+  const next=checkMigrationNames(reviewFiles,{approvedManifest:promoted});
   assert.equal(next.deployedMigrationCount,23);assert.deepEqual(next.pendingReviewFiles,[]);
-  assert.throws(()=>checkMigrationNames(expectedFiles,{approvedManifest:{...promoted,expectedDeployedCount:22}}),/Invalid approved/);
+  assert.throws(()=>checkMigrationNames(reviewFiles,{approvedManifest:{...promoted,expectedDeployedCount:22}}),/Invalid approved/);
 });
