@@ -126,6 +126,7 @@
 .cp-instance-identity { display: grid; gap: 3px; min-width: 0; margin: 7px 0; color: #6f85a9; text-align: left; }
 .cp-instance-identity code { font-family: Consolas, monospace; font-size: 10px; line-height: 1.5; overflow-wrap: anywhere; white-space: normal; }
 .cp-instance-identity small { font-size: 11px; line-height: 1.5; overflow-wrap: anywhere; }
+.cp-desktop-state-note { margin: 0; font-size: var(--text-caption, 11px); line-height: 1.6; }
 .cp-status-heading > div:last-child { min-width: 0; }
 .cp-pet-card .cp-instance-identity { margin: 7px 0; }
 .cp-hero-copy .cp-instance-identity { max-width: 250px; }

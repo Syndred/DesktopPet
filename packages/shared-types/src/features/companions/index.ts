@@ -83,6 +83,13 @@ export interface CompanionsSnapshot {
   selections: CompanionSelections;
   templates: CompanionTemplate[];
   revision: number;
+  /** Main-process runtime projection, never part of raw pets, receipts or backups. */
+  desktopDisplay?: {
+    ownerAccountId: string;
+    available: boolean;
+    limit: number | null;
+    pets: Array<{ petId: PetId; state: 'off' | 'visible' | 'waiting' | 'hidden' | 'unknown'; reason: 'limit' | 'fullscreen' | null }>;
+  };
   sync?: {
     mode: 'cloud';
     status: 'cached' | 'ready' | 'pending' | 'offline' | 'conflict';

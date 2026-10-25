@@ -1,5 +1,6 @@
 import { Button, Card } from "../../components/ui";
-import { useEffect, useState, type ReactNode, type FormEvent } from "react";
+import { useEffect, useRef, useState, type ReactNode, type FormEvent } from "react";
+import { desktopPolicyFingerprint } from "../../app/desktop-policy";
 import { Monitor, Pointer, RefreshCw, FlaskConical } from "lucide-react";
 import { Input } from "../../components/ui/input";
 import { AccountSelect, AccountSwitch, AccountSlider } from "./controls";
@@ -29,11 +30,36 @@ function SettingsForm({ privacy = false, session }: { privacy?: boolean; session
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
   const [pointerPreview, setPointerPreview] = useState(false);
+  const hostGeneration = useRef(0);
+  const owner = session.currentUser?.ownerAccountId || session.currentUser?.id;
+  const hostCurrent = snapshot?.host?.ownerAccountId === owner;
+  const visibleCount = hostCurrent && Array.isArray(snapshot?.host?.windows) ? snapshot.host.windows.filter(value => value.visible).length : null;
+  const appliedLimit = hostCurrent ? snapshot?.host?.companionLimit : null;
   useEffect(() => {
-    let active = true;
-    void request<SettingsSnapshot>("settingsGet").then(value => { if (active) { setSnapshot(value); setDocument(value.document); } }).catch(e => { if (active) setError(errorText(e)); });
-    return () => { active = false; };
-  }, []);
+    let active = true, policyKey: string | null = null;
+    const refreshHost = async () => {
+      const generation = ++hostGeneration.current;
+      try {
+        const value = await request<SettingsSnapshot>("settingsGet");
+        if (!active || generation !== hostGeneration.current) return;
+        if (value.host?.ownerAccountId && value.host.ownerAccountId !== owner) return;
+        setSnapshot(previous => previous ? { ...previous, host: value.host } : value);
+        setDocument(previous => previous || value.document);
+      } catch (e) { if (active && generation === hostGeneration.current) setError(errorText(e)); }
+    };
+    void refreshHost();
+    const stopWindows = window.lingjing?.subscribe('companions:windows-changed', value => {
+      const who = (value as { ownerAccountId?: string } | null)?.ownerAccountId;
+      if (!who || who === owner) void refreshHost();
+    });
+    const stopPolicy = window.lingjing?.subscribe('accounts:behavior', value => {
+      const who = (value as { ownerAccountId?: string } | null)?.ownerAccountId;
+      if (who && who !== owner) return;
+      const key = desktopPolicyFingerprint(value);
+      if (key !== null && key !== policyKey) { policyKey = key; void refreshHost(); }
+    });
+    return () => { active = false; hostGeneration.current += 1; stopWindows?.(); stopPolicy?.(); };
+  }, [owner]);
   const edit = <K extends keyof SettingsDocument, P extends keyof SettingsDocument[K]>(section: K, key: P, value: SettingsDocument[K][P]) => {
     setDocument(previous => previous ? { ...previous, [section]: { ...previous[section], [key]: value } } : previous);
     setNotice("");
@@ -41,9 +67,10 @@ function SettingsForm({ privacy = false, session }: { privacy?: boolean; session
   async function save(event: FormEvent) {
     event.preventDefault(); if (pending || !snapshot || !document) return;
     setPending(true); setError(""); setNotice("");
+    hostGeneration.current += 1;
     try {
       const saved = await request<SettingsSnapshot>("settingsSave", { document, revision: snapshot.revision, actionId: newActionId() });
-      setSnapshot(saved); setDocument(saved.document); setNotice("设置已保存。");
+      hostGeneration.current += 1; setSnapshot(saved); setDocument(saved.document); setNotice("设置已保存。");
     } catch (e) { setError(errorText(e)); }
     finally { setPending(false); }
   }
@@ -61,7 +88,7 @@ function SettingsForm({ privacy = false, session }: { privacy?: boolean; session
           </ToggleRow>
           <ToggleRow title="全屏应用时暂时隐藏" checked={document.desktop.hideInFullscreen} onChange={v => edit("desktop", "hideInFullscreen", v)} />
           <ToggleRow title="启用安静时段" checked={document.notifications.quietEnabled} onChange={v => edit("notifications", "quietEnabled", v)}><div className="ac-time-range ac-inline-time"><label>开始时间<Input type="time" value={document.notifications.quietStart} onChange={e => edit("notifications", "quietStart", e.target.value)} required /></label><span>至</span><label>结束时间<Input type="time" value={document.notifications.quietEnd} onChange={e => edit("notifications", "quietEnd", e.target.value)} required /></label></div></ToggleRow>
-        </Card><aside className="ac-card ac-desktop-preview"><div className="ac-preview-heading"><h2><Monitor size={18} />桌面预览</h2><Button type="button" className="ac-secondary" aria-pressed={pointerPreview} onClick={() => setPointerPreview(!pointerPreview)}><Pointer size={13} />穿透预览</Button></div><div className={`ac-desktop-scene ${pointerPreview ? "ac-preview-pointer" : ""}`} aria-label="批准的灵境 2D 桌面场景">{pointerPreview && <span className="ac-pointer-hint">{document.desktop.clickThrough ? "透明区域可穿透" : "透明区域接收鼠标"}</span>}</div><div className="ac-preview-caption"><p>已出场 {snapshot?.host?.companionWindows ?? 0} / {document.desktop.companionLimit}</p></div></aside></div>}
+        </Card><aside className="ac-card ac-desktop-preview"><div className="ac-preview-heading"><h2><Monitor size={18} />桌面预览</h2><Button type="button" className="ac-secondary" aria-pressed={pointerPreview} onClick={() => setPointerPreview(!pointerPreview)}><Pointer size={13} />穿透预览</Button></div><div className={`ac-desktop-scene ${pointerPreview ? "ac-preview-pointer" : ""}`} aria-label="批准的灵境 2D 桌面场景">{pointerPreview && <span className="ac-pointer-hint">{document.desktop.clickThrough ? "透明区域可穿透" : "透明区域接收鼠标"}</span>}</div><div className="ac-preview-caption"><p role="status">当前显示 {visibleCount === null ? '待确认' : `${visibleCount} / ${appliedLimit ?? '待确认'}`}</p><small>统计当前实际显示；等待空位或临时隐藏不会关闭陪伴偏好。{appliedLimit !== null && appliedLimit !== undefined && document.desktop.companionLimit !== appliedLimit ? '新的上限将在保存后生效。' : ''}</small></div></aside></div>}
         {privacy && <Card className="ac-card"><h2>通知与安静时段</h2>
           {privacy && <><ToggleRow title="桌面通知" checked={document.notifications.enabled} onChange={v => edit("notifications", "enabled", v)} />
             <ToggleRow title="伙伴互动提醒" checked={document.notifications.companions} onChange={v => edit("notifications", "companions", v)} />
@@ -87,5 +114,5 @@ export function SettingsPage({ privacy = false }: { privacy?: boolean }) {
   if (error) return <div className="accounts ac-card" role="alert">{error}</div>;
   if (!session) return <div className="accounts ac-loading" role="status">正在核对账号…</div>;
   if (!session.currentUser) return <AuthPage session={session} onSignedIn={refresh} />;
-  return <SettingsForm key={session.currentUser.id} privacy={privacy} session={session} />;
+  return <SettingsForm key={session.currentUser.ownerAccountId || session.currentUser.id} privacy={privacy} session={session} />;
 }

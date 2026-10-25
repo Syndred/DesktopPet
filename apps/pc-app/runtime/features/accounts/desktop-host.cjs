@@ -12,6 +12,7 @@ function createDesktopHost(services, electron) {
   const ignored = new Set(), hiddenByFullscreen = new Set(), hiddenByLimit = new Set();
   const cleanups = [];
   const bindings = new Map();
+  const overCompanionLimit = index => Boolean(settings && index >= settings.desktop.companionLimit);
   const getPetWindows = () => {
     const custom = services.windows?.getPetWindows?.() || services.windows?.listCompanionWindows?.()
       || services.windows?.all?.()?.map(entry => Array.isArray(entry) ? entry[1] : entry) || [];
@@ -21,9 +22,14 @@ function createDesktopHost(services, electron) {
     // This is deliberately NOT BrowserWindow.getAllWindows(): settings/auth must stay clickable.
     return [];
   };
+  const windowDisplayView = () => getPetWindows().map((w, index) => ({ id: w.id, alwaysOnTop: w.isAlwaysOnTop(), visible: w.isVisible(),
+    slotAllocated: settings ? !overCompanionLimit(index) : null,
+    hiddenReason: overCompanionLimit(index) ? "limit" : hiddenByFullscreen.has(w.id) ? "fullscreen" : null }));
   const publish = () => {
     if (!settings) return;
     services.events?.emit("accounts:behavior", {
+      ownerAccountId: services.session?.getOwnerAccountId?.() ?? null,
+      desktopDisplayFingerprint: JSON.stringify(windowDisplayView().map(w => [w.id, w.visible, w.slotAllocated, w.hiddenReason])),
       settings, quiet: isQuiet(settings), fullscreen: foregroundFullscreen,
       soundsAllowed: settings.desktop.interactionSounds && !isQuiet(settings), volume: settings.desktop.volume,
       companionLimit: settings.desktop.companionLimit
@@ -50,7 +56,7 @@ function createDesktopHost(services, electron) {
       const ignoredNow = settings.desktop.clickThrough && binding.requested;
       binding.original(ignoredNow, { forward: true });
       if (ignoredNow) ignored.add(win.id); else ignored.delete(win.id);
-      const overLimit = index >= settings.desktop.companionLimit;
+      const overLimit = overCompanionLimit(index);
       if (overLimit && win.isVisible()) { win.hide(); hiddenByLimit.add(win.id); }
       if (!overLimit && hiddenByLimit.has(win.id) && !foregroundFullscreen) { win.showInactive(); hiddenByLimit.delete(win.id); }
       const hide = settings.desktop.hideInFullscreen && foregroundFullscreen;
@@ -165,12 +171,13 @@ function createDesktopHost(services, electron) {
       return result.canceled ? null : result.filePaths[0];
     },
     status() {
-      const windows = getPetWindows();
+      const windows = windowDisplayView();
       return { startup: startup.status(),
+        ownerAccountId: services.session?.getOwnerAccountId?.() ?? null,
         fullscreenMonitor: Boolean(monitor && !monitor.killed), fullscreenMonitorReady: monitorReady, foregroundFullscreen,
         fullscreenSource: foregroundFullscreen ? nativeFullscreen ? "win32" : "electron" : null,
-        companionWindows: windows.length, clickThroughWindows: [...ignored],
-        windows: windows.map(w => ({ id: w.id, alwaysOnTop: w.isAlwaysOnTop(), visible: w.isVisible() })),
+        companionWindows: windows.length, companionLimit: settings?.desktop.companionLimit ?? null, clickThroughWindows: [...ignored],
+        windows,
         locationAllowed: this.mayUseLocation(), emotionStatistics: this.mayCollectEmotion(),
         closeToTrayConnected: true, companionLimitConnected: true };
     },

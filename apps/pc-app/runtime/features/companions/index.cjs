@@ -7,6 +7,7 @@ const { createCompanionBackupAdapter } = require('./backup.cjs');
 const { CloudCompanionAuthority } = require('./cloud-authority.cjs');
 const { companionIdentity } = require('./display-identity.mjs');
 const { createGlobalSerialCache } = require('./global-serial-cache.cjs');
+const { projectDesktopDisplay } = require('./desktop-display.cjs');
 const { join } = require('node:path');
 
 module.exports = {
@@ -130,7 +131,22 @@ module.exports = {
     };
     return {
       commands: {
-        async list(_payload, context) { await services.get('resources')?.ready; ensureImported(context.ownerAccountId);if(cloud.enabled(context.ownerAccountId)&&!cloud.busy(context.ownerAccountId))await cloud.refresh(context.ownerAccountId).catch(()=>{});desktop?.sync();const result=service.readSnapshot(context.ownerAccountId);if(cloud.enabled(context.ownerAccountId))result.data.sync=cloud.state(context.ownerAccountId);return result; },
+        async list(_payload, context) {
+          await services.get('resources')?.ready;
+          const current = () => services.session.getOwnerAccountId() === context.ownerAccountId;
+          const switched = () => ({ ok: false, code: 'SESSION_CHANGED', message: '账号已切换，请重新打开此页面。' });
+          if (!current()) return switched();
+          ensureImported(context.ownerAccountId);
+          if (cloud.enabled(context.ownerAccountId) && !cloud.busy(context.ownerAccountId)) await cloud.refresh(context.ownerAccountId).catch(() => {});
+          if (!current()) return switched();
+          desktop?.sync();
+          const result = service.readSnapshot(context.ownerAccountId);
+          result.data.desktopDisplay = projectDesktopDisplay({ ownerAccountId: context.ownerAccountId,
+            currentOwnerAccountId: services.session.getOwnerAccountId(), pets: result.data.pets,
+            windows: desktop?.inspect(), host: services.get('accounts')?.host?.status?.() });
+          if (cloud.enabled(context.ownerAccountId)) result.data.sync = cloud.state(context.ownerAccountId);
+          return result;
+        },
         async get(payload, context) { await services.get('resources')?.ready;if(cloud.enabled(context.ownerAccountId)&&!cloud.busy(context.ownerAccountId))await cloud.refresh(context.ownerAccountId).catch(()=>{});const pet = api.getPet(context.ownerAccountId, payload.petId); return { ok: true, data: pet, revision: pet.revision }; },
         combatProfile(payload, context) { const data = api.getCombatProfile(context.ownerAccountId, payload.petId); return { ok: true, data, revision: service.requirePet(context.ownerAccountId, payload.petId).revision }; },
         identity(payload, context) { const data = api.getDisplayIdentity(context.ownerAccountId, payload.petId); return { ok: true, data, revision: service.requirePet(context.ownerAccountId, payload.petId).revision }; },

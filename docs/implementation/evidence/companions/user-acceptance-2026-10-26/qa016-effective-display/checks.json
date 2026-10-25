@@ -1,0 +1,286 @@
+{
+  "format": "lingjing.companions.qa016.effective-desktop-display.v1",
+  "at": "2026-10-25T18:26:55.4394705Z",
+  "role": "02",
+  "status": "independent source candidate; root integration and new native acceptance pending",
+  "baseCommit": "b808a1406d2ed194377ee2861dfe0b28dcf1e997",
+  "frozenCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+  "scope": {
+    "commands": "Only existing companions.list, settingsGet/settingsSave and existing subscriptions; no new command, event or timer",
+    "dto": "Transient owner-bound desktopDisplay sibling; raw CompanionPet, receipts, backup payloads and stored settings unchanged",
+    "identity": "Verified owner plus petId/windowId; existing host Map order supplies allocation; actual visibility wins including zero",
+    "ui": "Shared roster/detail presentation; settings counts host.windows[].visible and uses applied companionLimit, not the draft",
+    "refresh": "Existing windows-changed/accounts:behavior, actual-fact fingerprint deduplication, generation and owner guards, teardown",
+    "preserved": "Created-window diagnostic count, allocation/promotion, window geometry, chat pause semantics, all original per-pet state"
+  },
+  "checks": {
+    "main": {
+      "exitCode": 0,
+      "passed": 5,
+      "failed": 0,
+      "command": "node --test apps/pc-app/runtime/features/companions/tests/desktop-display.test.cjs",
+      "actual": "CompanionsService, core IPC invoke/list handler, accounts desktop host allocation, SQLite, read-only/query-only second connection",
+      "controlled": "Native BrowserWindow/process APIs and companion window manager are explicit doubles; no Electron starts",
+      "cases": [
+        "✔ actual Main allocation order binds per-pet state and never stores the runtime sibling (329.2202ms)",
+        "✔ limit changes and simulated native fullscreen report actual zero without closing preferences or inventing chat reasons (305.4568ms)",
+        "✔ closing a preceding handle promotes the actual waiting window using the existing host event and order (285.6054ms)",
+        "✔ foreign window/host metadata and absent runtime state cannot supply a requested or guessed count (372.9409ms)",
+        "✔ actual IPC list refuses a stale owner after the existing asynchronous resource boundary (274.2019ms)"
+      ],
+      "sqliteReadbacks": [
+        {
+          "owners": 2,
+          "before": [
+            "f7a7b0fc7216c96b27e743c1742b24f78b4d341b4dd3407adbf0443230dc50d0",
+            "7697672f71cbe4386833b82216f875e1df073dcdd4c458fdd6d1ce82456dfc09"
+          ],
+          "after": [
+            "f7a7b0fc7216c96b27e743c1742b24f78b4d341b4dd3407adbf0443230dc50d0",
+            "7697672f71cbe4386833b82216f875e1df073dcdd4c458fdd6d1ce82456dfc09"
+          ],
+          "settingsBytesUnchanged": true,
+          "queryOnlyReadback": true,
+          "nativeWindowStarted": false,
+          "processStarted": false
+        },
+        {
+          "owners": 2,
+          "before": [
+            "7868ed7b7d997b5539839786b4e84dc96466bbed4c3b74f4ef256f3c44e0685d",
+            "9afbe0abe3c6cd0b6dec61d2ecc72d3df4d0705791f0ab030b78a16297cdfbe2"
+          ],
+          "after": [
+            "7868ed7b7d997b5539839786b4e84dc96466bbed4c3b74f4ef256f3c44e0685d",
+            "9afbe0abe3c6cd0b6dec61d2ecc72d3df4d0705791f0ab030b78a16297cdfbe2"
+          ],
+          "settingsBytesUnchanged": true,
+          "queryOnlyReadback": true,
+          "nativeWindowStarted": false,
+          "processStarted": false
+        },
+        {
+          "owners": 2,
+          "before": [
+            "3ea511004ab38504ab4f12c570430a6c263e7902c497c62d31444a09fbf5eb4b",
+            "1ca6e936ba6485cb0c4b008985cfe3e3a78bca7ca354d9e93e61c8ad288133f0"
+          ],
+          "after": [
+            "3ea511004ab38504ab4f12c570430a6c263e7902c497c62d31444a09fbf5eb4b",
+            "1ca6e936ba6485cb0c4b008985cfe3e3a78bca7ca354d9e93e61c8ad288133f0"
+          ],
+          "settingsBytesUnchanged": true,
+          "queryOnlyReadback": true,
+          "nativeWindowStarted": false,
+          "processStarted": false
+        },
+        {
+          "owners": 2,
+          "before": [
+            "4550e9b8a3e8887bd02e619ecbf13adf817013a0dba14e197e2d70f5647b97c5",
+            "a51170e12646940cf1a41452a94554c24dcd78af0d00d8cd0f49958ce9dfe6e9"
+          ],
+          "after": [
+            "4550e9b8a3e8887bd02e619ecbf13adf817013a0dba14e197e2d70f5647b97c5",
+            "a51170e12646940cf1a41452a94554c24dcd78af0d00d8cd0f49958ce9dfe6e9"
+          ],
+          "settingsBytesUnchanged": true,
+          "queryOnlyReadback": true,
+          "nativeWindowStarted": false,
+          "processStarted": false
+        },
+        {
+          "owners": 2,
+          "before": [
+            "2de378031d761a3953ee888a7fe579f9fc8740fd9fd4928807439042033e13e0",
+            "9e1d65704dda03ec6a1e5ba1ad1873f744bdba670a18dfc3aaeea0a7bb5749d3"
+          ],
+          "after": [
+            "2de378031d761a3953ee888a7fe579f9fc8740fd9fd4928807439042033e13e0",
+            "9e1d65704dda03ec6a1e5ba1ad1873f744bdba670a18dfc3aaeea0a7bb5749d3"
+          ],
+          "settingsBytesUnchanged": true,
+          "queryOnlyReadback": true,
+          "nativeWindowStarted": false,
+          "processStarted": false
+        }
+      ]
+    },
+    "reactDom": {
+      "exitCode": 0,
+      "passed": 9,
+      "failed": 0,
+      "command": "node apps/pc-app/runtime/features/companions/tests/desktop-display-ui.acceptance.mjs",
+      "actual": "CompanionsPage, PetDetailPage, SettingsPage, client hooks, accessible Radix controls and React DOM in isolated headless system Chrome",
+      "controlled": "IPC/controller responses, portrait, navigation, motion and battle ports; no native product UI",
+      "details": "component-checks.json",
+      "subscriptionsRemovedAfterEveryCase": true
+    },
+    "types": [
+      {
+        "command": "npm run typecheck",
+        "exitCode": 0,
+        "log": "typecheck-project.log"
+      },
+      {
+        "command": "npm run typecheck:ui",
+        "exitCode": 0,
+        "log": "typecheck-ui.log"
+      }
+    ],
+    "lint": {
+      "command": "npx eslint apps/pc-app/ui/src/app/desktop-policy.ts apps/pc-app/ui/src/features/companions/desktop-display.ts apps/pc-app/ui/src/features/companions/CompanionsPage.tsx apps/pc-app/ui/src/features/companions/components.tsx apps/pc-app/ui/src/features/companions/PetDetailPage.tsx apps/pc-app/ui/src/features/companions/client.ts apps/pc-app/ui/src/features/accounts/settings-page.tsx packages/shared-types/src/features/accounts/index.ts packages/shared-types/src/features/companions/index.ts apps/pc-app/runtime/features/companions/tests/desktop-display-ui.acceptance.mjs",
+      "exitCode": 0,
+      "log": "No lint diagnostics"
+    },
+    "syntax": {
+      "command": "node --check on accounts/desktop-host.cjs, companions/index.cjs, desktop-display.cjs and both new test entry points",
+      "exitCode": 0
+    },
+    "whitespace": {
+      "command": "git diff --cached --check",
+      "exitCode": 0
+    },
+    "reactReview": {
+      "instruction": "vercel/react-best-practices",
+      "result": "Reviewed hook ordering/dependencies, owner-key remount and stale-generation rejection, subscription cleanup, immutable host-only refresh preserving drafts, explicit zero, stable pet keys and accessible switch status",
+      "nativeVisualAcceptance": false
+    }
+  },
+  "frozenCompatibility": {
+    "detail": "dc7-patch-compatibility.json",
+    "checkExit": 0,
+    "applyExit": 0,
+    "sourcePatchSha256": "82a277d285bf357b958c0ad59efca694b7d05103983204f27ae47e1912aacd29",
+    "preservesReadIdentityPet": true,
+    "preservesNotificationReasonText": true,
+    "virtualTree": "4194590f31d26d5931b67a8b52135a6c495e60d0",
+    "method": "Separate GIT_INDEX_FILE; no checkout, root worktree or root index writes",
+    "qa015CommitRequired": false
+  },
+  "cloud": {
+    "command": "git pull --ff-only origin main",
+    "exitCode": 0,
+    "output": "Already up to date.",
+    "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086",
+    "updatedAt": "2026-10-25T18:26:55.5131859Z"
+  },
+  "reportedDefectEvidence": [
+    {
+      "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\implementation\\qa\\2026-10-25-user-acceptance\\rounds\\candidate-dc7aee3-1b1afdd1\\evidence\\d01-fifth-adopted-display-still-four.json",
+      "present": true,
+      "sha256": "0d045958bd12af131d89a1a3da006c9d47eb123604bbae1bd9c6f671df18af31",
+      "use": "Read-only defect evidence from 09; not fixed-candidate verification"
+    },
+    {
+      "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\implementation\\qa\\2026-10-25-user-acceptance\\rounds\\candidate-dc7aee3-1b1afdd1\\evidence\\d01-five-preferences-four-effective-native.jpg",
+      "present": true,
+      "sha256": "f116402680f173de4aece22b4738470e73afa86de127c8503136365a04f3394a",
+      "use": "Read-only defect evidence from 09; not fixed-candidate verification"
+    },
+    {
+      "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\implementation\\qa\\2026-10-25-user-acceptance\\rounds\\candidate-dc7aee3-1b1afdd1\\evidence\\d01-limit1-policy-vs-ui-count.json",
+      "present": true,
+      "sha256": "6e53294aeb73d20e0bc8d4841745661c70ed2c6860079f6ad0d6ed2881f3cea4",
+      "use": "Read-only defect evidence from 09; not fixed-candidate verification"
+    },
+    {
+      "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\docs\\implementation\\qa\\2026-10-25-user-acceptance\\rounds\\candidate-dc7aee3-1b1afdd1\\evidence\\d01-limit1-saved-effective-count-native.jpg",
+      "present": true,
+      "sha256": "b0a8d32926b2a536c896fbcb1f873cff7c28e8efdc353ad60a383d78d675a4a4",
+      "use": "Read-only defect evidence from 09; not fixed-candidate verification"
+    }
+  ],
+  "sourceFiles": [
+    {
+      "path": "apps/pc-app/runtime/features/accounts/desktop-host.cjs",
+      "sha256": "c097c2ca40e50b08e2ba439aa7835beabdf0d416c0c015070ebf5cb2f9f0940d",
+      "stagedGitBlob": "3ebacf675e0c21c81d7bfae85257c2e6b6193eb5"
+    },
+    {
+      "path": "apps/pc-app/runtime/features/companions/INTEGRATION.md",
+      "sha256": "c24018b86e4dad4272701bb8b9535b07935bac8b6285a163dbbff8e3ba156372",
+      "stagedGitBlob": "e7730893e6b5b937adee2ef375ee629caa4f074b"
+    },
+    {
+      "path": "apps/pc-app/runtime/features/companions/desktop-display.cjs",
+      "sha256": "b634e89ab6e296132f2d9c1ae04a04a580cd3276564a9a774fdcf226a449cdce",
+      "stagedGitBlob": "566f43592d01e9eb07c305e32bb2df15bbf115ca"
+    },
+    {
+      "path": "apps/pc-app/runtime/features/companions/index.cjs",
+      "sha256": "313b382761686869f256ecbf530bbd1d20b78753516b373065e40ca32d7f7d79",
+      "stagedGitBlob": "f2df8ae1cea77a271efea99a9937ff5487849082"
+    },
+    {
+      "path": "apps/pc-app/runtime/features/companions/tests/desktop-display-ui.acceptance.mjs",
+      "sha256": "f7d85551c903e752a0ea970e48772dd4cec3268ca827aaecbb1944956cff1947",
+      "stagedGitBlob": "7d61a6da8f4001725c2cacd1c9bcb08409baf4f1"
+    },
+    {
+      "path": "apps/pc-app/runtime/features/companions/tests/desktop-display.test.cjs",
+      "sha256": "fe03a18adfe0231638709a7fea9c441d761680584d8df166226cee0d066b467d",
+      "stagedGitBlob": "c806c1da10a9e096e087ba02a3443056fb0e76c8"
+    },
+    {
+      "path": "apps/pc-app/ui/src/app/desktop-policy.ts",
+      "sha256": "14516c34d32aa8870aa29544c27deff3d13635366fdebc95b845aa21fa64366f",
+      "stagedGitBlob": "1d33507f58ff4bcc0b979783b2e0c453efc82b2b"
+    },
+    {
+      "path": "apps/pc-app/ui/src/features/accounts/settings-page.tsx",
+      "sha256": "800cd1cc8799809d532b3c5ba0d9ac6503230aa80e3d87c5024f1ff7e37b8f03",
+      "stagedGitBlob": "27760ba00ad234ea83503c34ea4f7ee57d2f3f61"
+    },
+    {
+      "path": "apps/pc-app/ui/src/features/companions/CompanionsPage.tsx",
+      "sha256": "1709237b20011c52313f810117c870fe0f5767692d3056f19c8fe778f7969a6d",
+      "stagedGitBlob": "776c83e2ec4d927f543d04b47d4fe8d312072299"
+    },
+    {
+      "path": "apps/pc-app/ui/src/features/companions/PetDetailPage.tsx",
+      "sha256": "f4369f2acf6aa16c74230ccd839d173851b049ef6b68d458be29468ea48a3b42",
+      "stagedGitBlob": "50181e4bf9a76fe788285788fbfa6b3a5f348a6c"
+    },
+    {
+      "path": "apps/pc-app/ui/src/features/companions/client.ts",
+      "sha256": "65e384599abe90e4dbff0209fa2a13bc5c6856fd74dea9d6f112efe7911fc560",
+      "stagedGitBlob": "5dfee7b3e691443efd31f6fc4200d5fba71078e2"
+    },
+    {
+      "path": "apps/pc-app/ui/src/features/companions/components.tsx",
+      "sha256": "100d699aae3d4931b36467f607756b65b715b4f5610cd19e438975f15664469c",
+      "stagedGitBlob": "db8511527cdef6f3d3971094eece7970e0175ad8"
+    },
+    {
+      "path": "apps/pc-app/ui/src/features/companions/desktop-display.ts",
+      "sha256": "d753ede0ec80d06d648bd020208468c758304fc3851fbe03d938a262422f86d6",
+      "stagedGitBlob": "59d8631e0949e29cfe5c83eaa96c3d0ff57bead7"
+    },
+    {
+      "path": "apps/pc-app/ui/src/features/companions/styles.css",
+      "sha256": "a1358f68e4504a622a0f43a7008b2e0c0b799372323f7d5c9f190b36a72de13d",
+      "stagedGitBlob": "ad9a495ef005c034177b1d2b7a8f30086b849983"
+    },
+    {
+      "path": "packages/shared-types/src/features/accounts/index.ts",
+      "sha256": "6debc87da4c556189e6cee233c41f1a4ed386cdfec573f2b49f037d731f5451f",
+      "stagedGitBlob": "e9dd824cf957c6a0fdbf431a30c8616d62bfa83f"
+    },
+    {
+      "path": "packages/shared-types/src/features/companions/index.ts",
+      "sha256": "dc911bb7af69db0059f8b5eb44a5a1c7dbe837015b69cb52ff4548f56de3cec4",
+      "stagedGitBlob": "7f9f480720fc5135c2800192e067233fe6c6e322"
+    }
+  ],
+  "limitations": [
+    "No new EXE/ASAR, no push/merge/release, no native product window starts or desktop input",
+    "The frozen DC7 product and central QA matrix were not changed",
+    "After root grouped integration, 09 must verify actual 5-enabled/4-visible and limit1/visible1, capacity promotion, fullscreen actual0 with preferences preserved, owner switches and live refresh",
+    "QA015 first-ready/first-drag geometry is a separate commit and acceptance item"
+  ],
+  "harnessHistory": [
+    "First component harness build lacked the PNG loader; fixed in the harness before execution; no product behavior failure. Both subsequent component runs passed 9/9.",
+    "A typecheck terminal session was no longer available after compaction, so project and UI typechecks were rerun once to capture explicit exit code 0. No broad regression rerun."
+  ]
+}

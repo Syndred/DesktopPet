@@ -1,0 +1,27 @@
+{
+  "frozenCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+  "method": "Separate GIT_INDEX_FILE; no checkout, root worktree or root index writes",
+  "stagedPaths": [
+    "apps/pc-app/runtime/features/accounts/desktop-host.cjs",
+    "apps/pc-app/runtime/features/companions/index.cjs",
+    "apps/pc-app/runtime/features/companions/desktop-display.cjs",
+    "apps/pc-app/runtime/features/companions/tests/desktop-display.test.cjs",
+    "apps/pc-app/runtime/features/companions/tests/desktop-display-ui.acceptance.mjs",
+    "apps/pc-app/runtime/features/companions/INTEGRATION.md",
+    "apps/pc-app/ui/src/app/desktop-policy.ts",
+    "apps/pc-app/ui/src/features/accounts/settings-page.tsx",
+    "apps/pc-app/ui/src/features/companions/desktop-display.ts",
+    "apps/pc-app/ui/src/features/companions/CompanionsPage.tsx",
+    "apps/pc-app/ui/src/features/companions/PetDetailPage.tsx",
+    "apps/pc-app/ui/src/features/companions/client.ts",
+    "apps/pc-app/ui/src/features/companions/components.tsx",
+    "apps/pc-app/ui/src/features/companions/styles.css",
+    "packages/shared-types/src/features/accounts/index.ts",
+    "packages/shared-types/src/features/companions/index.ts"
+  ],
+  "checkExit": 0,
+  "applyExit": 0,
+  "preservesReadIdentityPet": true,
+  "preservesNotificationReasonText": true,
+  "virtualTree": "4194590f31d26d5931b67a8b52135a6c495e60d0"
+}

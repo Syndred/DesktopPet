@@ -1,4 +1,4 @@
-import { useEffect, useState, type ReactNode } from 'react';
+import { useEffect, useId, useState, type ReactNode } from 'react';
 import { Footprints, Heart, Info, Maximize2, MessageCircle, Monitor, Plus, Smile, Soup, Swords } from 'lucide-react';
 import type { ElementType } from '../../../../../../packages/shared-types/src/battle';
 import type { CompanionPet, CompanionsSnapshot } from '../../../../../../packages/shared-types/src/features/companions';
@@ -12,6 +12,7 @@ import { ElementMark } from '../battle/BattleMoves';
 import { elements as battleElements } from '../battle/presentation';
 import type { useCompanions } from './client';
 import { companionIdentity } from './identity';
+import { desktopPresentation } from './desktop-display';
 
 export type Controller = ReturnType<typeof useCompanions>;
 export function CompanionCloudNotice({ controller }: { controller: Controller }) {
@@ -56,12 +57,14 @@ export function PetActions({ pet, controller }: { pet: CompanionPet; controller:
 
 export function DesktopControls({ pet, controller }: { pet: CompanionPet; controller: Controller }) {
   const roleName = companionIdentity(pet).roleName;
+  const display = desktopPresentation(controller.snapshot, pet), statusId = useId();
   const [scale, setScale] = useState(pet.desktop.scale);
   useEffect(() => setScale(pet.desktop.scale), [pet.petId, pet.desktop.scale]);
   return <div className="cp-desktop-controls">
     <div className="cp-control-row"><span><Footprints size={16}/>行为模式</span><Select value={pet.desktop.behavior} disabled={controller.busy} onValueChange={behavior => { void controller.petAction('desktop', pet, { behavior }); }}><SelectTrigger aria-label={`${roleName}的行为模式`} className="cp-behavior-select"><SelectValue/></SelectTrigger><SelectContent>{behaviors.map(item => <SelectItem key={item.value} value={item.value}>{item.label}</SelectItem>)}</SelectContent></Select></div>
     <div className="cp-control-row"><span><Maximize2 size={16}/>外观大小</span><Slider className="cp-scale-slider" aria-label={`${roleName}的外观大小`} value={[scale]} min={.5} max={2} step={.05} disabled={controller.busy} onValueChange={values => setScale(values[0])} onValueCommit={values => { if (values[0] !== pet.desktop.scale) void controller.petAction('desktop', pet, { scale: values[0] }); }}/><small>{Math.round(scale * 100)}%</small></div>
-    <div className="cp-control-row"><span><Monitor size={17}/>在桌面显示</span><Switch aria-label={`${roleName}在桌面显示`} checked={pet.desktop.visible} disabled={controller.busy} onCheckedChange={visible => { void controller.petAction('desktop', pet, { visible }); }}/></div>
+    <div className="cp-control-row"><span><Monitor size={17}/>开启桌面陪伴</span><Switch aria-label={`${roleName}开启桌面陪伴`} aria-describedby={statusId} checked={pet.desktop.visible} disabled={controller.busy} onCheckedChange={visible => { void controller.petAction('desktop', pet, { visible }); }}/></div>
+    <p id={statusId} className="muted cp-desktop-state-note" role="status">{display.note}</p>
     <Button variant="secondary" disabled={controller.busy || controller.snapshot?.selections.battlePetId === pet.petId} onClick={() => controller.petAction('select', pet, { slot: 'battlePetId' })}><Swords size={17}/>{controller.snapshot?.selections.battlePetId === pet.petId ? '当前出战伙伴' : '设为出战伙伴'}</Button>
   </div>;
 }

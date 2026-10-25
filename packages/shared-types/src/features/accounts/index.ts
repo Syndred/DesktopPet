@@ -35,10 +35,13 @@ export interface AccountsSession {
   migration: { status: string; imported: number; unresolved: Array<{ legacyId?: string; reason: string }> };
 }
 export interface DesktopHostStatus {
+  ownerAccountId?: string | null;
   startup: boolean; fullscreenMonitor: boolean; foregroundFullscreen: boolean;
   fullscreenMonitorReady: boolean; fullscreenSource: "win32" | "electron" | null;
   companionWindows: number; clickThroughWindows: number[];
-  windows: Array<{ id: number; alwaysOnTop: boolean; visible: boolean }>;
+  /** Runtime policy only; companionWindows remains the diagnostic created-window count. */
+  companionLimit?: number | null;
+  windows: Array<{ id: number; alwaysOnTop: boolean; visible: boolean; slotAllocated?: boolean | null; hiddenReason?: 'limit' | 'fullscreen' | null }>;
   locationAllowed: boolean; emotionStatistics: boolean;
   closeToTrayConnected: boolean; companionLimitConnected: boolean;
 }

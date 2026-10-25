@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { CompanionMutation, CompanionPet, CompanionResult, CompanionsSnapshot } from '../../../../../../packages/shared-types/src/features/companions/index';
 import '../../app/types';
+import { desktopPolicyFingerprint } from '../../app/desktop-policy';
 
 export const actionId = () => crypto.randomUUID();
 export async function companionsRequest<T>(command: string, payload?: unknown): Promise<T> {
@@ -19,23 +20,35 @@ export function useCompanions() {
   const requestGeneration = useRef(0);
   const mutationLock = useRef(false);
   const mounted = useRef(true);
+  const policyFingerprint = useRef<string | null>(null);
+  const acceptedOwner = useRef<string | null>(null);
   const reload = useCallback(async () => {
     const generation = ++requestGeneration.current;
     setRefreshing(true);
     try {
       const data = await companionsRequest<CompanionsSnapshot>('list');
-      if (mounted.current && generation === requestGeneration.current) { setSnapshot(data); setError(''); }
+      if (mounted.current && generation === requestGeneration.current) { acceptedOwner.current = data.ownerAccountId; setSnapshot(data); setError(''); }
     } catch (failure) {
-      if (mounted.current && generation === requestGeneration.current) { setError(failure instanceof Error ? failure.message : String(failure)); setSnapshot(null); }
+      if (mounted.current && generation === requestGeneration.current) { acceptedOwner.current = null; setError(failure instanceof Error ? failure.message : String(failure)); setSnapshot(null); }
     } finally { if (mounted.current && generation === requestGeneration.current) { setLoading(false); setRefreshing(false); } }
   }, []);
   useEffect(() => {
     mounted.current = true; void reload();
     const unsubscribe = window.lingjing?.subscribe('companions:changed', () => { void reload(); });
-    const sessionUnsubscribe = window.lingjing?.subscribe('app:session', () => {
-      requestGeneration.current += 1; setSnapshot(null); setLoading(true); void reload();
+    const windowsUnsubscribe = window.lingjing?.subscribe('companions:windows-changed', value => {
+      const who = (value as { ownerAccountId?: string } | null)?.ownerAccountId;
+      if (!who || !acceptedOwner.current || who === acceptedOwner.current) void reload();
     });
-    return () => { mounted.current = false; requestGeneration.current += 1; unsubscribe?.(); sessionUnsubscribe?.(); };
+    const policyUnsubscribe = window.lingjing?.subscribe('accounts:behavior', value => {
+      const who = (value as { ownerAccountId?: string } | null)?.ownerAccountId;
+      if (who && acceptedOwner.current && who !== acceptedOwner.current) return;
+      const fingerprint = desktopPolicyFingerprint(value);
+      if (fingerprint !== null && fingerprint !== policyFingerprint.current) { policyFingerprint.current = fingerprint; void reload(); }
+    });
+    const sessionUnsubscribe = window.lingjing?.subscribe('app:session', () => {
+      requestGeneration.current += 1; policyFingerprint.current = null; acceptedOwner.current = null; setSnapshot(null); setLoading(true); void reload();
+    });
+    return () => { mounted.current = false; requestGeneration.current += 1; unsubscribe?.(); windowsUnsubscribe?.(); policyUnsubscribe?.(); sessionUnsubscribe?.(); };
   }, [reload]);
   const mutate = useCallback(async (command: string, payload: Record<string, unknown>) => {
     if (mutationLock.current) return null;
