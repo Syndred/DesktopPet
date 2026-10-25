@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "at": "2026-10-25T02:47:39.057Z",
+  "at": "2026-10-25T03:11:50.331Z",
   "projectRef": "jbvrdmrkwpznbrvteive",
   "url": "https://jbvrdmrkwpznbrvteive.supabase.co",
   "plan": "free",
@@ -33,6 +33,24 @@
       "version": "20261025024615",
       "name": "lingjing_protected_save_cas",
       "source": "infra/supabase/migrations/20261025021759_lingjing_protected_save_cas.sql",
+      "bookkeepingAligned": false
+    },
+    {
+      "version": "20261025030635",
+      "name": "lingjing_discovery_cloud_authority",
+      "source": "infra/supabase/migrations/20261025020719_lingjing_discovery_cloud_authority.sql",
+      "bookkeepingAligned": false
+    },
+    {
+      "version": "20261025030639",
+      "name": "lingjing_discovery_live_actor_guard",
+      "source": "infra/supabase/migrations/20261025025641_lingjing_discovery_live_actor_guard.sql",
+      "bookkeepingAligned": false
+    },
+    {
+      "version": "20261025030859",
+      "name": "lingjing_cloud_secret_guard",
+      "source": "infra/supabase/migrations/20261025025906_lingjing_cloud_secret_guard.sql",
       "bookkeepingAligned": false
     }
   ],
@@ -110,6 +128,76 @@
         ],
         "warnings": []
       }
+    },
+    {
+      "id": "c233809a-4db5-4a8a-a515-ff17934dfcd0",
+      "slug": "discovery",
+      "name": "discovery",
+      "status": "ACTIVE",
+      "version": 1,
+      "created_at": 1792897606497,
+      "updated_at": 1792897606497,
+      "verify_jwt": false,
+      "import_map": false,
+      "entrypoint_path": "file:///tmp/user_fn_jbvrdmrkwpznbrvteive_c233809a-4db5-4a8a-a515-ff17934dfcd0_1/source/infra/supabase/functions/discovery/index.ts",
+      "ezbr_sha256": "d42352b64e3ad75f722a4aaf190d3877c5caf228cf8f5de46a73794f1a123629",
+      "source": {
+        "function": "discovery",
+        "entrypoint": "infra/supabase/functions/discovery/index.ts",
+        "sourceCommit": "267306c5d311f2b342a89dcb1f44630fe0f07884",
+        "sourceSha256": "2b816d7178da57a7cb4c5b7d4de553f5b081bf2b690173f6bea1991019a72f6b",
+        "files": [
+          {
+            "name": "infra/supabase/functions/_shared/battle-core.js",
+            "bytes": 18099
+          },
+          {
+            "name": "infra/supabase/functions/_shared/lingjing-auth.ts",
+            "bytes": 7618
+          },
+          {
+            "name": "infra/supabase/functions/discovery/_generated/runtime.mjs",
+            "bytes": 35437
+          },
+          {
+            "name": "infra/supabase/functions/discovery/deno.json",
+            "bytes": 113
+          },
+          {
+            "name": "infra/supabase/functions/discovery/deno.lock",
+            "bytes": 3993
+          },
+          {
+            "name": "infra/supabase/functions/discovery/handler.mjs",
+            "bytes": 5115
+          },
+          {
+            "name": "infra/supabase/functions/discovery/index.ts",
+            "bytes": 973
+          },
+          {
+            "name": "infra/supabase/functions/discovery/protocol.mjs",
+            "bytes": 7141
+          },
+          {
+            "name": "infra/supabase/functions/discovery/store.mjs",
+            "bytes": 2017
+          }
+        ],
+        "external": [
+          "node:module",
+          "npm:@supabase/supabase-js@2.98.0"
+        ],
+        "warnings": []
+      },
+      "capabilities": [
+        "protocol",
+        "device.register",
+        "location.challenge",
+        "location.prove",
+        "nearby"
+      ],
+      "fullCaptureReady": false
     }
   ],
   "storage": {
@@ -117,22 +205,22 @@
     "private": true,
     "maxObjectBytes": 4194304,
     "ownerPolicy": "Fresh Auth session, active device and AuthUID-bound path",
-    "actualLiveAcceptance": "pending"
+    "actualLiveAcceptance": "Passed actual HTTPS same-owner A/B upload, private-byte restore, cross-account denial, injected connection failure and SQLite reopen; protected refs integration pending"
   },
   "securityAdvisors": [
     {
       "name": "rls_enabled_no_policy",
       "level": "INFO",
-      "count": 23,
+      "count": 27,
       "remediation": "https://supabase.com/docs/guides/database/database-linter?lint=0008_rls_enabled_no_policy",
-      "disposition": "Intentional deny-all on private archive/server-only tables"
+      "disposition": "Intentional deny-all private tables"
     },
     {
       "name": "auth_leaked_password_protection",
       "level": "WARN",
       "count": 1,
       "remediation": "https://supabase.com/docs/guides/auth/password-security#password-strength-and-leaked-password-protection",
-      "disposition": "Free plan lacks this Pro-only feature; no paid upgrade authorized"
+      "disposition": "Pro-only feature; Free plan retained with no paid upgrade"
     }
   ],
   "limitations": {
@@ -140,5 +228,6 @@
     "topology": "Actual HTTPS clients on one Windows host; full dual-Electron and physical-second-device results separate."
   },
   "credentialsIncluded": false,
-  "fullAcceptancePassed": false
+  "fullAcceptancePassed": false,
+  "privacyEvidence": "docs/implementation/evidence/cloud/2026-10-25/privacy-http-independent.json"
 }
