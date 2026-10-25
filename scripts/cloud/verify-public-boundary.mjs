@@ -14,7 +14,7 @@ assert.match(config.publishableKey, /^sb_publishable_/);
 assert.equal(new URL(config.url).protocol, 'https:');
 const checks = [
   { name: 'managed Auth health', path: '/auth/v1/health', statuses: [200] },
-  { name: 'anonymous actor refused', path: '/functions/v1/lingjing-auth', body: { op: 'actor' }, statuses: [401], code: 'AUTH_REQUIRED' },
+  { name: 'anonymous actor refused with well-formed unregistered device', path: '/functions/v1/lingjing-auth', body: { op: 'actor' }, headers: { 'X-Lingjing-Device-Id': '00000000-0000-4000-8000-000000000001' }, statuses: [401], code: 'AUTH_REQUIRED' },
   { name: 'anonymous save refused', path: '/functions/v1/lingjing-save', body: { op: 'read' }, statuses: [401], code: 'AUTH_REQUIRED' },
   { name: 'anonymous accounts hidden', path: '/rest/v1/lingjing_accounts?select=owner_id', statuses: [401, 403], code: '42501' },
   { name: 'anonymous saves hidden', path: '/rest/v1/lingjing_saves?select=owner_id', statuses: [401, 403], code: '42501' },
