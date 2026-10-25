@@ -60,6 +60,18 @@ async function installSigner(model){
 async function snapshot(model){return invoke(model,'garden','snapshot');}
 async function command(model,kind,input){const current=await snapshot(model);return invoke(model,'garden',kind,{...input,actionId:input.actionId||randomUUID(),sessionOwnerAccountId:current.ownerAccountId,expectedRevision:input.expectedRevision??current.revision});}
 async function capture(model,name){
+  await model.page.bringToFront();
+  if(await model.page.locator('.battle-stage').count()){
+    await model.page.waitForFunction(()=>document.querySelectorAll('.battle-stage .resource-stage[data-status="ready"]').length===2);
+    const rendered=await model.page.evaluate(async()=>{
+      const stages=[...document.querySelectorAll('.battle-stage .resource-stage')],canvases=stages.map(s=>s.querySelector('canvas'));let pixels=[];
+      for(let attempt=0;attempt<30;attempt++){
+        await new Promise(resolve=>requestAnimationFrame(resolve));pixels=canvases.map(canvas=>{const copy=document.createElement('canvas');copy.width=canvas.width;copy.height=canvas.height;const ctx=copy.getContext('2d');ctx.drawImage(canvas,0,0);const data=ctx.getImageData(0,0,copy.width,copy.height).data;let count=0;for(let i=3;i<data.length;i+=4)if(data[i]>20)count++;return count;});if(pixels.every(n=>n>2500))break;
+      }
+      return stages.map((s,i)=>({resourceId:s.getAttribute('data-resource-id'),petId:s.getAttribute('data-pet-id'),status:s.getAttribute('data-status'),action:s.getAttribute('data-action'),textureFrame:s.querySelector('.resource-sprite-host')?.getAttribute('data-texture-frame'),visiblePixels:pixels[i]}));
+    });
+    assert.equal(rendered.length,2);assert.ok(rendered.every(actor=>actor.visiblePixels>2500&&actor.textureFrame));pass(`${name}:actual-rendered-actors`,{actors:rendered});
+  }
   await model.page.screenshot({path:join(output,`${name}.png`)});
   const visible=await model.page.evaluate(()=>({text:document.body.innerText.slice(0,500),canvas:[...document.querySelectorAll('canvas')].map(c=>({width:c.width,height:c.height})),images:[...document.images].map(img=>({ready:img.complete&&img.naturalWidth>0,src:img.src.slice(0,100)}))}));
   pass(name,{renderer:visible});
