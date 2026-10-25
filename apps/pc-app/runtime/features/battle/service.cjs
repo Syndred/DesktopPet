@@ -139,8 +139,16 @@ class BattleFeatureService {
   overviewData(owner) {
     const current = this.store.latest(owner);
     const status = this.online.getStatus();
+    const companions = this.services.get("companions");
+    // Lobby-only read projection; ownedPet stays unchanged for sessions and receipts.
+    const pets = this.pets(owner).map(pet => ({
+      ...pet,
+      displayIdentity: companions?.getDisplayIdentity?.(owner, pet.petId) || {
+        roleName: '历史伙伴', instanceNumber: pet.petId, historicalNickname: pet.petName || null
+      }
+    }));
     return {
-      pets: this.pets(owner), session: current, rules: getBattleRules(), selectedPetId: this.services.get("companions")?.getSelections?.(owner)?.battlePetId || null,
+      pets, session: current, rules: getBattleRules(), selectedPetId: companions?.getSelections?.(owner)?.battlePetId || null,
       online: { enabled: status.enabled, configured: status.configured, available: status.available },
       reports: this.localReports(owner,{}), opponents: this.opponents()
     };
