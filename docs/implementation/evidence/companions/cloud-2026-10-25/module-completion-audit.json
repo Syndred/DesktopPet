@@ -1,0 +1,153 @@
+{
+  "module": "companions",
+  "objective": "完成本轮 companions 云端身份与存档升级：接08统一身份/同步与05库存原子事务，完整保留旧账号映射、原petId/同模板多实例/名字成长历史、桌面位置和独立选择；验证双客户端、别名迁移、重复操作、并发冲突、重启和旧档恢复，提交 cloud-companions 状态与可复现证据，并明确真实服务与本地验证来源。保持2D和1–4约束，不修改04战场，不自行改远端库或覆盖函数。",
+  "moduleScopeComplete": true,
+  "moduleRuntimeCheckpoint": "ff62979ad86f518238e0280ec4ab8a856de27da6",
+  "projectReleaseCompleteClaim": false,
+  "requirements": [
+    {
+      "requirement": "Consume08 unified identity and shared save/transport",
+      "result": "proved",
+      "implementation": "companions/index.cjs and cloud-authority.cjs use08 cloudActor, stable text owner, the registered shared backup unit and existing account_actions. No separate cloud account, pet, inventory or save store.",
+      "evidence": [
+        "real-https.json",
+        "native-https.json",
+        "final-guard-native.json",
+        "worker-acl.json"
+      ],
+      "scope": "Actual Supabase Auth/HTTPS and default production Electron on one physical Windows host. Unrelated pending save data cannot be silently rebased; strict Accounts whole-save comparison remains authoritative."
+    },
+    {
+      "requirement": "Preserve original owner mappings, petId, same-template instances, names and growth/history",
+      "result": "proved",
+      "evidence": [
+        "apps/pc-app/runtime/features/companions/tests/backup.test.cjs",
+        "apps/pc-app/runtime/features/companions/tests/accounts-boundary.test.cjs",
+        "native-https.json",
+        "real-https.json",
+        "history-retention-guard.txt"
+      ],
+      "scope": "Actual local Accounts/SQLite alias and old-file preservation fixtures plus real HTTPS/native same-owner original-ID restoration. Two old owners may retain the same original petId without cross-account merge. Original external old-cloud account import is separately owned by root/08 and is not claimed without its source."
+    },
+    {
+      "requirement": "Preserve capture receipts, original owner archives and interaction history during automatic companion readback",
+      "result": "proved",
+      "implementation": "ff62979 compares immutable capture rows by battle_id/wild_pet_id and original identity-import rows by source owner; interaction timestamps cannot disappear or regress before automatic SQLite replacement.",
+      "evidence": [
+        "apps/pc-app/runtime/features/companions/tests/cloud-authority.test.cjs",
+        "history-retention-guard.txt"
+      ],
+      "scope": "Explicit protocol simulation with real SQLite, actual backup/checkpoint code and canonical forward reducer. Six structurally valid regressive snapshots leave the unit and both checkpoints unchanged. A canonical forward interaction succeeds. No new cloud protocol, remote mutation or native business rerun."
+    },
+    {
+      "requirement": "Independent desktop placement and chat/battle/guard choices",
+      "result": "proved",
+      "evidence": [
+        "native-https.json",
+        "native-restore.json",
+        "final-guard-native.json",
+        "apps/pc-app/runtime/features/companions/tests/backup.test.cjs"
+      ],
+      "scope": "Real HTTPS three-slot selection and native drag/restart recovery. Earlier explicitly local Electron backup restoration retains disconnected-monitor coordinates without persisting the local clamp."
+    },
+    {
+      "requirement": "Compose companion growth with05 inventory in one transaction",
+      "result": "proved",
+      "implementation": "Shared pure growth/award adapter; existing SQLite savepoints and complete-save units. Cloud sessions reject direct local growth/capture grants and require verified domain readback.",
+      "evidence": [
+        "apps/pc-app/runtime/features/companions/tests/backup-integration.test.cjs",
+        "apps/pc-app/runtime/features/companions/tests/cloud-growth.test.mjs",
+        "apps/pc-app/runtime/features/companions/tests/garden-cloud-contract.acceptance.mjs",
+        "shared-checkpoint-fixture-regression.txt"
+      ],
+      "scope": "Actual local SQLite/Garden/BackupManager tests prove one food debit and one targeted pet change, replay and outer rollback. Exact committed05 canonical-domain conformance is labelled local. Final combined game/economy SFX acceptance is root/01/05's integration responsibility, not substituted with these local tests."
+    },
+    {
+      "requirement": "Dual clients, duplicate operations, concurrent conflicts, offline intents and restart",
+      "result": "proved",
+      "evidence": [
+        "native-https.json",
+        "final-guard-native.json",
+        "main-recall-https.json",
+        "owner-queue-regression.txt"
+      ],
+      "scope": "Two independent real production Electron processes/device/userData roots; original adoption replay, stale rename conflict and A-only end-to-end TLS interruption. Original position action remains immutable across restart and has an independent HTTPS receipt. RecallAll uses an actual registered main capability/SQLite in a clearly labelled Node host. Cached replay across owner switch is rejected."
+    },
+    {
+      "requirement": "Old-save restore and complete original-file preservation",
+      "result": "proved",
+      "evidence": [
+        "apps/pc-app/runtime/features/companions/tests/backup.test.cjs",
+        "apps/pc-app/runtime/features/companions/tests/backup-integration.test.cjs",
+        "native-restore.json"
+      ],
+      "scope": "Local complete old six-table conversion, pre-module archives, verified aliases and raw archived3D history; original checksum/file bytes are preserved before internal normalization. Actual local Electron backup preview/restore/restart is labelled local. No assertion that an unavailable external old-cloud source was migrated."
+    },
+    {
+      "requirement": "Active2D and1-4 visible-companion contract",
+      "result": "proved",
+      "evidence": [
+        "apps/pc-app/runtime/features/companions/tests/service.test.cjs",
+        "apps/pc-app/runtime/features/companions/tests/cloud-domain.test.mjs",
+        "final-guard-native.json",
+        "native-final-guard-A.png",
+        "native-final-guard-B.png"
+      ],
+      "scope": "Local/cloud canonical reducers retain the1-4 range. Archived3D data remains preserved and inactive. Both actual final-source custom2D frames are visible, have8727 colored pixels, and their copied PNG SHA256 matches the recorded frame."
+    },
+    {
+      "requirement": "Status, reproducible evidence and cleanup/compatibility handoff",
+      "result": "proved",
+      "evidence": [
+        "docs/implementation/status/cloud-companions.json",
+        "docs/implementation/cloud-companions-contract.md",
+        "docs/implementation/cloud-companions-cleanup.md",
+        "README.md",
+        "retained-native-failures.json",
+        "portable-script-review-933c8a0.json"
+      ],
+      "scope": "Real HTTPS/native, local real-SQLite/PGlite and simulated protocol sources are distinguished. Failed verifier runs are retained; DPAPI files, passwords, tokens and raw user databases are not published."
+    },
+    {
+      "requirement": "No04 battlefield changes or unilateral remote schema/function mutation",
+      "result": "proved",
+      "scope": "Own patches remain in companion/shared contract/testing/documentation scope. Approved coordinator merges are distinguished from authored changes.02 authored deployable sources and performed explicitly authorized test-account application API writes; deployment and remote schema changes remained coordinator-owned."
+    }
+  ],
+  "coordinatorAcceptance": {
+    "acceptedDelivery": "acbc6d3",
+    "basis": "Coordinator explicitly independently accepted actual companion native frames and the original position action revision50/checksum, and instructed that final SFX and unavailable old-cloud migration are root-owned handoffs.",
+    "additionalRequiredModulePatch": "ff62979: include the focused automatic history-retention guard before final packaging;7 local protocol/SQLite cases pass. Prior native/HTTPS evidence stays bound to its original sources."
+  },
+  "handoff": {
+    "finalSfxAndCombinedAcceptance": {
+      "owner": "root +01 + dependent domains",
+      "state": "coordinator-owned",
+      "moduleCheckpointToInclude": "ff62979"
+    },
+    "originalExternalCloudMigration": {
+      "owner": "root +08",
+      "state": "User confirmed SSH/source backup unavailable; root records the project boundary",
+      "moduleBehavior": "Preserve unverified old data for review; do not grant protected progress from client JSON or fabricate old-source migration"
+    },
+    "physicalMachineScope": {
+      "verifiedPhysicalMachines": 1,
+      "verifiedIndependentElectronClients": 2,
+      "twoPhysicalMachinesClaim": false
+    },
+    "portableReview": {
+      "reviewedCommit": "933c8a0",
+      "artifact": "portable-script-review-933c8a0.json",
+      "finalScriptFixesAndRun": "root-owned; no extra business rerun by02"
+    }
+  },
+  "remainingModuleRequirements": [],
+  "auditedAt": "2026-10-25T05:21:16Z",
+  "sourceFetch": {
+    "command": "git pull --ff-only origin main",
+    "at": "2026-10-25T05:21:16Z",
+    "result": "Already up to date",
+    "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086",
+    "behind": 0
+  }
+}

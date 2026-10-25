@@ -120,7 +120,15 @@
 .cp-adoption-layout { display: grid; grid-template-columns: minmax(360px, 1.5fr) minmax(260px, 1fr); gap: 25px; align-items: start; }
 .cp-adoption-filter { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 17px; }
 .cp-adoption-filter-tools { display: flex; gap: 12px; align-items: center; }
-.cp-element-filter { min-width: 104px; width: 104px; height: 32px; font-size: var(--text-label); }
+.cp-element-categories { height: auto; flex-wrap: wrap; }
+.cp-element-categories .cp-element { gap: 4px; }
+.cp-adoption-identity-note { color: var(--muted); font-size: var(--text-label); line-height: 1.7; margin: 0; }
+.cp-instance-identity { display: grid; gap: 3px; min-width: 0; margin: 7px 0; color: #6f85a9; text-align: left; }
+.cp-instance-identity code { font-family: Consolas, monospace; font-size: 10px; line-height: 1.5; overflow-wrap: anywhere; white-space: normal; }
+.cp-instance-identity small { font-size: 11px; line-height: 1.5; overflow-wrap: anywhere; }
+.cp-status-heading > div:last-child { min-width: 0; }
+.cp-pet-card .cp-instance-identity { margin: 7px 0; }
+.cp-hero-copy .cp-instance-identity { max-width: 250px; }
 .cp-checkbox { display: flex !important; align-items: center; gap: 7px; font-size: 12px; color: #6a7d9f; white-space: nowrap; }
 .cp-checkbox input { accent-color: #587dff; width: 16px; height: 16px; }
 .cp-template-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }

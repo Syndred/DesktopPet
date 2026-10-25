@@ -5,6 +5,7 @@ import { usePath } from '../../app/navigation';
 import { Button } from '../../components/ui';
 import { CompanionPortrait } from './CompanionPortrait';
 import { actionId, companionsRequest } from './client';
+import { companionIdentity } from './identity';
 import './desktop.css';
 
 /** Production desktop route: shared React components + resources' Pixi Assets/AnimatedSprite renderer. */
@@ -20,7 +21,7 @@ export function DesktopCompanion() {
   }, []);
   useEffect(() => {
     let active = true;
-    const load = async () => { try { const data = await companionsRequest<CompanionPet>('get', { petId }); if (active) { setPet(data); document.title = `灵境 · ${data.name}`; } } catch (error) { if (active) setMessage(error instanceof Error ? error.message : '伙伴正在返回灵境'); } };
+    const load = async () => { try { const data = await companionsRequest<CompanionPet>('get', { petId }); if (active) { setPet(data); document.title = `灵境 · ${companionIdentity(data).roleName} · ${data.petId}`; } } catch (error) { if (active) setMessage(error instanceof Error ? error.message : '伙伴正在返回灵境'); } };
     void load(); const unsubscribe = window.lingjing.subscribe('companions:changed', () => { void load(); });
     return () => { active = false; unsubscribe(); };
   }, [petId]);
@@ -46,10 +47,11 @@ export function DesktopCompanion() {
     try { await input('drag-move', point); await input('drag-end'); } catch (error) { setMessage(error instanceof Error ? error.message : '位置仍待确认，请回到灵境重新连接'); }
   };
   if (!pet) return null;
-  return <main className={`cp-desktop-surface ${pet.desktop.behavior === 'sleep' ? 'is-sleeping' : ''}`} data-pet-id={petId} data-resource-id={pet.resource.resourceId} data-element={pet.element} aria-label={`${pet.name}的桌面伙伴`}>
-    <div className="cp-desktop-tools"><Button variant="secondary" aria-label={`摸摸${pet.name}`} onClick={async () => { try { await companionsRequest('interact', { actionId: actionId(), petId }); setMessage('感受到你的陪伴啦'); } catch (error) { setMessage(error instanceof Error ? error.message : '稍后再试'); } }}><Heart size={15}/></Button><Button variant="secondary" aria-label={`收回${pet.name}`} onClick={async () => { try { await companionsRequest('desktop', { actionId: actionId(), petId, visible: false }); } catch (error) { setMessage(error instanceof Error ? error.message : '收回操作仍待确认'); } }}><House size={15}/></Button></div>
-    <div className="cp-desktop-visual" ref={visual} onPointerDown={start} onPointerUp={end} onPointerCancel={end}><CompanionPortrait ownerAccountId={pet.ownerAccountId} petId={petId} resource={pet.resource} name={pet.name} animate action={pet.desktop.behavior === 'sleep' ? 'sleep' : ['wander', 'follow'].includes(pet.desktop.behavior) ? 'walk' : 'idle'}/></div>
-    <span className="cp-desktop-name">{pet.name}{pet.desktop.behavior === 'sleep' ? ' · 休息中' : ''}</span>
+  const identity = companionIdentity(pet);
+  return <main className={`cp-desktop-surface ${pet.desktop.behavior === 'sleep' ? 'is-sleeping' : ''}`} data-pet-id={petId} data-resource-id={pet.resource.resourceId} data-element={pet.element} aria-label={`${identity.roleName}的桌面伙伴`}>
+    <div className="cp-desktop-tools"><Button variant="secondary" aria-label={`摸摸${identity.roleName}`} onClick={async () => { try { await companionsRequest('interact', { actionId: actionId(), petId }); setMessage('感受到你的陪伴啦'); } catch (error) { setMessage(error instanceof Error ? error.message : '稍后再试'); } }}><Heart size={15}/></Button><Button variant="secondary" aria-label={`收回${identity.roleName}`} onClick={async () => { try { await companionsRequest('desktop', { actionId: actionId(), petId, visible: false }); } catch (error) { setMessage(error instanceof Error ? error.message : '收回操作仍待确认'); } }}><House size={15}/></Button></div>
+    <div className="cp-desktop-visual" ref={visual} onPointerDown={start} onPointerUp={end} onPointerCancel={end}><CompanionPortrait ownerAccountId={pet.ownerAccountId} petId={petId} resource={pet.resource} name={identity.roleName} animate action={pet.desktop.behavior === 'sleep' ? 'sleep' : ['wander', 'follow'].includes(pet.desktop.behavior) ? 'walk' : 'idle'}/></div>
+    <span className="cp-desktop-name" title={identity.historicalNickname ? `历史昵称：${identity.historicalNickname}` : undefined}><strong>{identity.roleName}{pet.desktop.behavior === 'sleep' ? ' · 休息中' : ''}</strong><code data-instance-number={identity.instanceNumber}>编号 {identity.instanceNumber}</code></span>
     {message && <div className="cp-desktop-message" role="status">{message}</div>}
   </main>;
 }

@@ -124,3 +124,38 @@ test('PROTOCOL SIMULATION: a cached original-action replay queued behind a netwo
     assert.deepEqual(f.backup.export(owner),before);assert.equal(remote.calls.length,1);
   }finally{f.close();cleanup(path);}
 });
+
+test('PROTOCOL SIMULATION: automatic readback preserves capture bindings, original owner archives and monotonic interaction history',async()=>{
+  const path=folder(),remote=server(),f=client(path,remote);
+  try{
+    const captured=f.service.createCapturedInstance(owner,{actionId:'history-original-capture',templateId:'animal-shiba',name:'原捕捉伙伴',showOnDesktop:false,origin:{wildPetId:'history-original-wild',wildSerial:'original-serial',battleId:'history-original-battle'}}).data.pet;
+    const other=f.service.adopt(owner,adopt('history-second-pet')).data.pet;
+    f.service.interact(owner,{actionId:'history-original-interact',petId:captured.petId});
+    f.db.prepare('INSERT INTO companion_identity_imports VALUES(?,?,?,?)').run('original-legacy-owner',owner,JSON.stringify({originalOwner:'original-legacy-owner',rawHistory:'原始归属档案'}),'2026-10-24T00:00:00.000Z');
+    const original=f.sync.backups.snapshot(owner),unit=original.data.modules.companions.data;
+    const seal=value=>{const{checksum:prior,...body}=value;void prior;return{...body,checksum:checksum(body)};};
+    const packet=(envelope,revision)=>({authority:'live',ownerAccountId:owner,revision,envelope,module:envelope.data.modules.companions});
+    f.authority.apply(owner,packet(original,1));const before=f.backup.export(owner),ack={...f.authority.row(owner,'companions:verified-head')};
+    const mutations=[
+      next=>{next.tables.companion_capture_receipts=[];},
+      next=>{next.tables.companion_capture_receipts[0].pet_id=other.petId;},
+      next=>{next.identityImports=[];},
+      next=>{next.identityImports[0].archive_json=JSON.stringify({changed:'different original history'});},
+      next=>{next.tables.companion_interactions=[];},
+      next=>{next.tables.companion_interactions[0].last_interacted_at--;}
+    ];
+    for(const mutate of mutations){
+      const incoming=structuredClone(original);mutate(incoming.data.modules.companions.data);const sealed=seal(incoming);
+      f.backup.validate(sealed.data.modules.companions.data,owner);
+      assert.throws(()=>f.authority.apply(owner,packet(sealed,2)),error=>error.code==='CLOUD_HISTORY_CONFLICT');
+      assert.deepEqual(f.backup.export(owner),before);assert.deepEqual({...f.authority.row(owner,'companions:verified-head')},ack);assert.equal(f.sync.status(owner).cloudRevision,1);
+    }
+    const now=unit.tables.companion_interactions[0].last_interacted_at+10001;
+    const forward=await applyCompanionCommand(original,owner,'interact',{actionId:'history-forward-interact',petId:captured.petId},now);
+    const advanced=structuredClone(original);advanced.data.modules.companions=forward.module;
+    f.authority.apply(owner,packet(seal(advanced),2));
+    assert.deepEqual(f.backup.export(owner).tables.companion_capture_receipts,before.tables.companion_capture_receipts);
+    assert.deepEqual(f.backup.export(owner).identityImports,before.identityImports);
+    assert.equal(f.backup.export(owner).tables.companion_interactions[0].last_interacted_at,now);
+  }finally{f.close();cleanup(path);}
+});

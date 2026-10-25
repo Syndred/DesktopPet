@@ -1,19 +1,17 @@
 import { useEffect, useState, type ReactNode } from 'react';
-import { Footprints, Heart, Info, Maximize2, MessageCircle, Monitor, Pencil, Plus, Smile, Soup, Swords, X } from 'lucide-react';
+import { Footprints, Heart, Info, Maximize2, MessageCircle, Monitor, Plus, Smile, Soup, Swords } from 'lucide-react';
 import type { ElementType } from '../../../../../../packages/shared-types/src/battle';
 import type { CompanionPet, CompanionsSnapshot } from '../../../../../../packages/shared-types/src/features/companions';
 import { navigate } from '../../app/navigation';
-import { Button, EmptyState, ErrorNotice } from '../../components/ui';
-import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '../../components/ui/dialog';
-import { Input } from '../../components/ui/input';
+import { Button, EmptyState } from '../../components/ui';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../../components/ui/select';
 import { Slider } from '../../components/ui/slider';
 import { Switch } from '../../components/ui/switch';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../../components/ui/tooltip';
-import { PageTransition } from '../../components/motion';
 import { ElementMark } from '../battle/BattleMoves';
 import { elements as battleElements } from '../battle/presentation';
 import type { useCompanions } from './client';
+import { companionIdentity } from './identity';
 
 export type Controller = ReturnType<typeof useCompanions>;
 export function CompanionCloudNotice({ controller }: { controller: Controller }) {
@@ -30,6 +28,10 @@ export function CompanionCloudNotice({ controller }: { controller: Controller })
 export function CompanionElement({ element }: { element: ElementType }) {
   return <span className="cp-element" data-element={element}><ElementMark element={element}/>{battleElements[element].label}</span>;
 }
+export function CompanionInstanceNumber({ pet, showNickname = false }: { pet: CompanionPet; showNickname?: boolean }) {
+  const identity = companionIdentity(pet);
+  return <span className="cp-instance-identity" data-instance-number={identity.instanceNumber}><code>编号 {identity.instanceNumber}</code>{showNickname && identity.historicalNickname && <small>历史昵称：{identity.historicalNickname}</small>}</span>;
+}
 export function InfoHint({ label, children, content }: { label: string; children?: ReactNode; content: ReactNode }) {
   return <TooltipProvider delayDuration={250}><Tooltip><TooltipTrigger asChild><Button type="button" variant="ghost" className="cp-hint" aria-label={label}>{children || <Info size={14}/>}</Button></TooltipTrigger><TooltipContent>{content}</TooltipContent></Tooltip></TooltipProvider>;
 }
@@ -40,27 +42,12 @@ export function activeSnapshot(snapshot: CompanionsSnapshot): CompanionsSnapshot
 export function usePageScroll() { useEffect(() => { document.querySelector('.main-content')?.scrollTo({ top: 0 }); }, []); }
 
 export function StateMeters({ pet, showMax = false }: { pet: CompanionPet; showMax?: boolean }) {
+  const roleName = companionIdentity(pet).roleName;
   return <div className="cp-meters">{[
     { name: '心情', value: pet.growth.mood, className: 'mood', Icon: Smile },
     { name: '饱食', value: pet.growth.satiety, className: 'satiety', Icon: Soup },
     { name: '亲密度', value: pet.growth.affinity, className: 'affinity', Icon: Heart }
-  ].map(item => <div className={`cp-meter ${item.className}`} key={item.name}><InfoHint label={`${item.name} ${item.value}`} content={`${item.name} ${item.value} / 100`}><item.Icon className="cp-meter-icon" size={20} aria-hidden="true"/></InfoHint><meter min={0} max={100} value={item.value} aria-label={`${pet.name}的${item.name}`}/><strong>{item.value}{showMax && <small> / 100</small>}</strong></div>)}</div>;
-}
-
-/** Public shadcn/Radix primitives own modal focus, Tab containment, Escape and focus return. */
-export function RenameControl({ pet, controller }: { pet: CompanionPet; controller: Controller }) {
-  const [open, setOpen] = useState(false); const [name, setName] = useState(pet.name);
-  return <Dialog open={open} onOpenChange={next => { if (!controller.busy) { if (next) setName(pet.name); setOpen(next); } }}>
-    <TooltipProvider delayDuration={350}><Tooltip><TooltipTrigger asChild><DialogTrigger asChild><Button variant="ghost" className="cp-icon-button" aria-label={`修改${pet.name}的名字`}><Pencil size={16}/></Button></DialogTrigger></TooltipTrigger><TooltipContent>给它起个独有的名字</TooltipContent></Tooltip></TooltipProvider>
-    <DialogContent className="cp-modal shadow-none" showCloseButton={false} onEscapeKeyDown={event => { if (controller.busy) event.preventDefault(); }} onPointerDownOutside={event => { if (controller.busy) event.preventDefault(); }}>
-      <PageTransition routeKey={`rename:${pet.petId}`}><div className="cp-dialog-heading"><DialogHeader><DialogTitle>给伙伴起个名字</DialogTitle><DialogDescription className="sr-only">修改{pet.name}的名字，1–24 个字符。</DialogDescription></DialogHeader><DialogClose asChild><Button variant="ghost" className="cp-icon-button" aria-label="关闭改名" disabled={controller.busy}><X size={18}/></Button></DialogClose></div>
-        <form onSubmit={async event => { event.preventDefault(); if (await controller.petAction('rename', pet, { name })) setOpen(false); }} className="cp-rename-form">
-          <label htmlFor="cp-new-name">伙伴名字</label><Input id="cp-new-name" autoFocus value={name} onChange={event => setName(event.target.value)} maxLength={48} required/>
-          <small>1–24 个字符</small><ErrorNotice message={controller.error}/><DialogFooter className="cp-dialog-actions"><DialogClose asChild><Button type="button" variant="secondary" disabled={controller.busy}>取消</Button></DialogClose><Button disabled={controller.busy || !name.trim() || [...name.trim()].length > 24} type="submit">{controller.busy ? '正在保存…' : '保存名字'}</Button></DialogFooter>
-        </form>
-      </PageTransition>
-    </DialogContent>
-  </Dialog>;
+  ].map(item => <div className={`cp-meter ${item.className}`} key={item.name}><InfoHint label={`${item.name} ${item.value}`} content={`${item.name} ${item.value} / 100`}><item.Icon className="cp-meter-icon" size={20} aria-hidden="true"/></InfoHint><meter min={0} max={100} value={item.value} aria-label={`${roleName}的${item.name}`}/><strong>{item.value}{showMax && <small> / 100</small>}</strong></div>)}</div>;
 }
 
 export function PetActions({ pet, controller }: { pet: CompanionPet; controller: Controller }) {
@@ -68,12 +55,13 @@ export function PetActions({ pet, controller }: { pet: CompanionPet; controller:
 }
 
 export function DesktopControls({ pet, controller }: { pet: CompanionPet; controller: Controller }) {
+  const roleName = companionIdentity(pet).roleName;
   const [scale, setScale] = useState(pet.desktop.scale);
   useEffect(() => setScale(pet.desktop.scale), [pet.petId, pet.desktop.scale]);
   return <div className="cp-desktop-controls">
-    <div className="cp-control-row"><span><Footprints size={16}/>行为模式</span><Select value={pet.desktop.behavior} disabled={controller.busy} onValueChange={behavior => { void controller.petAction('desktop', pet, { behavior }); }}><SelectTrigger aria-label={`${pet.name}的行为模式`} className="cp-behavior-select"><SelectValue/></SelectTrigger><SelectContent>{behaviors.map(item => <SelectItem key={item.value} value={item.value}>{item.label}</SelectItem>)}</SelectContent></Select></div>
-    <div className="cp-control-row"><span><Maximize2 size={16}/>外观大小</span><Slider className="cp-scale-slider" aria-label={`${pet.name}的外观大小`} value={[scale]} min={.5} max={2} step={.05} disabled={controller.busy} onValueChange={values => setScale(values[0])} onValueCommit={values => { if (values[0] !== pet.desktop.scale) void controller.petAction('desktop', pet, { scale: values[0] }); }}/><small>{Math.round(scale * 100)}%</small></div>
-    <div className="cp-control-row"><span><Monitor size={17}/>在桌面显示</span><Switch aria-label={`${pet.name}在桌面显示`} checked={pet.desktop.visible} disabled={controller.busy} onCheckedChange={visible => { void controller.petAction('desktop', pet, { visible }); }}/></div>
+    <div className="cp-control-row"><span><Footprints size={16}/>行为模式</span><Select value={pet.desktop.behavior} disabled={controller.busy} onValueChange={behavior => { void controller.petAction('desktop', pet, { behavior }); }}><SelectTrigger aria-label={`${roleName}的行为模式`} className="cp-behavior-select"><SelectValue/></SelectTrigger><SelectContent>{behaviors.map(item => <SelectItem key={item.value} value={item.value}>{item.label}</SelectItem>)}</SelectContent></Select></div>
+    <div className="cp-control-row"><span><Maximize2 size={16}/>外观大小</span><Slider className="cp-scale-slider" aria-label={`${roleName}的外观大小`} value={[scale]} min={.5} max={2} step={.05} disabled={controller.busy} onValueChange={values => setScale(values[0])} onValueCommit={values => { if (values[0] !== pet.desktop.scale) void controller.petAction('desktop', pet, { scale: values[0] }); }}/><small>{Math.round(scale * 100)}%</small></div>
+    <div className="cp-control-row"><span><Monitor size={17}/>在桌面显示</span><Switch aria-label={`${roleName}在桌面显示`} checked={pet.desktop.visible} disabled={controller.busy} onCheckedChange={visible => { void controller.petAction('desktop', pet, { visible }); }}/></div>
     <Button variant="secondary" disabled={controller.busy || controller.snapshot?.selections.battlePetId === pet.petId} onClick={() => controller.petAction('select', pet, { slot: 'battlePetId' })}><Swords size={17}/>{controller.snapshot?.selections.battlePetId === pet.petId ? '当前出战伙伴' : '设为出战伙伴'}</Button>
   </div>;
 }

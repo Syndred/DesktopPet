@@ -28,10 +28,14 @@ class CloudCompanionAuthority {
   assertNoHistoryLoss(current,incoming){
     const ids=new Set(incoming.tables.companion_pets.map(row=>row.pet_id));
     if(current.tables.companion_pets.some(row=>!ids.has(row.pet_id)))fail('CLOUD_HISTORY_CONFLICT','云端版本缺少本机已有伙伴，原档已保留，请先预览核对。');
-    for(const[name,key]of[['companion_actions','action_id'],['companion_legacy_archive','legacy_pet_id']]){
-      const records=new Map(incoming.tables[name].map(row=>[row[key],row]));
-      if(current.tables[name].some(row=>!records.has(row[key])||checksum(row)!==checksum(records.get(row[key]))))fail('CLOUD_HISTORY_CONFLICT','云端版本与本机原始回执或历史不同，已保留，请先预览核对。');
+    for(const[name,columns]of[['companion_actions',['action_id']],['companion_legacy_archive',['legacy_pet_id']],['companion_capture_receipts',['battle_id','wild_pet_id']]]){
+      const key=row=>JSON.stringify(columns.map(column=>row[column])),records=new Map(incoming.tables[name].map(row=>[key(row),row]));
+      if(current.tables[name].some(row=>!records.has(key(row))||checksum(row)!==checksum(records.get(key(row)))))fail('CLOUD_HISTORY_CONFLICT','云端版本与本机原始回执或历史不同，已保留，请先预览核对。');
     }
+    const imports=new Map(incoming.identityImports.map(row=>[row.source_owner_account_id,row]));
+    if(current.identityImports.some(row=>!imports.has(row.source_owner_account_id)||checksum(row)!==checksum(imports.get(row.source_owner_account_id))))fail('CLOUD_HISTORY_CONFLICT','云端版本与本机原始归属档案不同，已保留，请先预览核对。');
+    const interactions=new Map(incoming.tables.companion_interactions.map(row=>[row.pet_id,row]));
+    if(current.tables.companion_interactions.some(row=>!interactions.has(row.pet_id)||interactions.get(row.pet_id).last_interacted_at<row.last_interacted_at))fail('CLOUD_HISTORY_CONFLICT','云端版本缺少本机互动进度，已保留，请先预览核对。');
   }
   apply(owner,remote){
     this.current(owner);

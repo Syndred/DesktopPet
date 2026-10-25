@@ -1,6 +1,8 @@
 # 伙伴云接入验收
 
-正式运行代码检查点为9a18511，包含协调冻结基线4830619及bc10bb5队列归属守卫。后续交付仅增加验收脚本、共享测试夹具和证据文档。
+已完成原生运行的代码检查点为9a18511，包含协调冻结基线4830619及bc10bb5队列归属守卫。各轮验证保留对应源码来源，验收脚本、共享夹具和后续守卫增量分别说明。
+
+模块完成审计又补齐ff62979历史保留守卫：自动读回不得删改原捕捉凭据、归属迁移档案，或回退互动时间。7项定向协议/真实SQLite检查通过；该增量单独标注为本地检查，先前HTTPS/原生证据的源码版本保持原样。最终打包请包含ff62979。
 
 | 证据 | 来源与范围 |
 |---|---|
@@ -11,6 +13,8 @@
 | owner-queue-regression.txt | 8项通过；6个明确标注协议模拟的真实SQLite用例，加账号边界和实际资源动作隔离；包含切换账号时排队缓存重放的先失败后修复用例 |
 | shared-checkpoint-fixture-regression.txt | 3项通过；当前完整单元注册和会话夹具；严格冲突/忙碌/待确认守卫、原请求不变、离线记忆保留 |
 | ledger-path-regression.txt | 3项本地PGlite检查通过；迁移路径已对齐实际ledger名称；不是远程SQL执行证据 |
+| history-retention-guard.txt | ff62979的7项本地协议/SQLite检查；6种合法结构的历史回退被拒绝，原单元和检查点保持不变，正常后续互动可推进 |
+| module-completion-audit.json | 原模块目标逐项证据与完成审计；本模块工作已完成，最终SFX和外部旧云迁移交给root及对应模块 |
 | retained-native-failures.json | 失败的验收脚本与协议版本不匹配记录保留，不替代成功报告 |
 
 本机只有一台实体Windows设备。双Electron进程、独立deviceId和隔离资料目录已有证据；两台实体设备验收、最终EXE及跨模块最终结算由协调方统一验收。旧外部云源未经核验时不声称完成迁移。原始SQLite、DPAPI密文和私有资源包留在被忽略的artifacts中，没有进入该公开证据目录。
@@ -26,3 +30,5 @@ node apps/pc-app/runtime/features/companions/tests/cloud-recall.acceptance.mjs <
 ```
 
 `native-cloud-offline-pending.png`显示待确认的原请求；`native-cloud-custom-B.png`和`native-final-guard-A.png`显示与具体petId/resourceId绑定的实际2D窗口。成功运行已收起本次创建的可见测试伙伴，所有宠物、成长、回执、资源和历史保留。
+
+`native-final-guard-B.png`一并保存最终定向运行的B端窗口，A/B文件SHA256均与final-guard-native.json中的原始帧记录核对一致。协调方已独立接受acbc6d3伙伴领域证据并复核原position action rev50/hash；本模块不以尚未完成的全项目SFX或暂无SSH/备份的外部旧云源作为自身完成门槛，也不声称那些项目已通过。最终便携包、08自动双向同步的联合运行及旧云源边界由根会话接手。

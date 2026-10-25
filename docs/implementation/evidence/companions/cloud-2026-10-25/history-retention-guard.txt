@@ -1,0 +1,15 @@
+✔ PROTOCOL SIMULATION: offline-before-send intent is durable and restart sends its original request exactly once (122.2484ms)
+✔ PROTOCOL SIMULATION: an uncertain committed adoption reads its immutable receipt after restart without creating another same-template pet (97.2915ms)
+✔ PROTOCOL SIMULATION: consecutive offline positions retain immutable unknown requests and coalesce only drafts that were never sent (135.9767ms)
+✔ PROTOCOL SIMULATION: unknown local progress and account switches preserve both owner namespaces instead of overwriting cached pets (80.2025ms)
+✔ PROTOCOL SIMULATION: verified companion readback preserves unrelated offline data and the original common-save request without advancing its base (113.948ms)
+✔ PROTOCOL SIMULATION: a cached original-action replay queued behind a network read cannot return an old-owner pet after account switch (91.5371ms)
+✔ PROTOCOL SIMULATION: automatic readback preserves capture bindings, original owner archives and monotonic interaction history (109.9756ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 826.3744

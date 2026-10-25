@@ -5,6 +5,7 @@ const { createCompanionPlayback } = require('./playback.cjs');
 const { companionCombatProfile } = require('./combat-profile.cjs');
 const { createCompanionBackupAdapter } = require('./backup.cjs');
 const { CloudCompanionAuthority } = require('./cloud-authority.cjs');
+const { companionIdentity } = require('./display-identity.mjs');
 
 module.exports = {
   id: 'companions', migrations,
@@ -65,6 +66,7 @@ module.exports = {
         return pet;
       },
       getSelections(ownerAccountId) { return service.selections(ownerAccountId); },
+      getDisplayIdentity(ownerAccountId, petId) { return companionIdentity(api.getPet(ownerAccountId, petId)); },
       getCombatProfile(ownerAccountId, petId) { return companionCombatProfile(api.getPet(ownerAccountId, petId), services.get('battle')?.getRules()); },
       listTemplates() { return service.templates(); },
       playAction(ownerAccountId, input) { return playback.play(ownerAccountId, api.getPet(ownerAccountId, input.petId), input.action, input.actionId); },
@@ -126,6 +128,7 @@ module.exports = {
         async list(_payload, context) { await services.get('resources')?.ready; ensureImported(context.ownerAccountId);if(cloud.enabled(context.ownerAccountId)&&!cloud.busy(context.ownerAccountId))await cloud.refresh(context.ownerAccountId).catch(()=>{});desktop?.sync();const result=service.snapshot(context.ownerAccountId);if(cloud.enabled(context.ownerAccountId))result.data.sync=cloud.state(context.ownerAccountId);return result; },
         async get(payload, context) { await services.get('resources')?.ready;if(cloud.enabled(context.ownerAccountId)&&!cloud.busy(context.ownerAccountId))await cloud.refresh(context.ownerAccountId).catch(()=>{});const pet = api.getPet(context.ownerAccountId, payload.petId); return { ok: true, data: pet, revision: pet.revision }; },
         combatProfile(payload, context) { const data = api.getCombatProfile(context.ownerAccountId, payload.petId); return { ok: true, data, revision: service.requirePet(context.ownerAccountId, payload.petId).revision }; },
+        identity(payload, context) { const data = api.getDisplayIdentity(context.ownerAccountId, payload.petId); return { ok: true, data, revision: service.requirePet(context.ownerAccountId, payload.petId).revision }; },
         desktopInput(payload, context) {
           if (!desktop) return { ok: false, code: 'DESKTOP_UNAVAILABLE', message: '请在灵境桌面应用中操作伙伴' };
           return desktop.handleInput(context.ownerAccountId, payload);

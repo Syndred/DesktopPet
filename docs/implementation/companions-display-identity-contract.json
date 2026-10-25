@@ -1,0 +1,67 @@
+{
+  "format": "lingjing.companions.display-identity",
+  "version": 1,
+  "purpose": "QA-003: fixed catalog role name plus complete original petId; presentation only",
+  "implementation": {
+    "pureRuntime": "apps/pc-app/runtime/features/companions/display-identity.mjs",
+    "uiExport": "apps/pc-app/ui/src/features/companions/identity.ts",
+    "types": "packages/shared-types/src/features/companions/index.ts#CompanionDisplayIdentity",
+    "mainApi": "services.get(\"companions\").getDisplayIdentity(ownerAccountId, petId)",
+    "ipc": {
+      "feature": "companions",
+      "command": "identity",
+      "input": {
+        "petId": "original petId"
+      },
+      "output": "CompanionResult<CompanionDisplayIdentity>"
+    }
+  },
+  "fields": {
+    "roleName": "Catalog character.name looked up by immutable original templateId, independent of mutable appearance/resourceId and stored name.",
+    "instanceNumber": "Complete original petId, case-sensitive and untruncated. Never regenerate, hash, slice, replace or persist it as another identifier.",
+    "historicalNickname": "Original stored pet.name when different from roleName; otherwise null. Unknown historical templates use roleName=历史伙伴 and retain their original name here."
+  },
+  "example": {
+    "input": {
+      "ownerAccountId": "existing-owner",
+      "templateId": "animal-hat-cat",
+      "petId": "pet-11111111-0000-4000-8000-000000000001",
+      "name": "原昵称",
+      "serial": "11111111"
+    },
+    "output": {
+      "roleName": "礼帽喵",
+      "instanceNumber": "pet-11111111-0000-4000-8000-000000000001",
+      "historicalNickname": "原昵称"
+    }
+  },
+  "invariants": [
+    "Ownership and every command/selection remain keyed by (ownerAccountId, petId). Display text never selects an instance.",
+    "Do not mutate canonical pet.name, pet.serial, templateId, resource, owner, petId, growth, origin, revisions, history or receipts to add this view.",
+    "Do not put the projection into SQLite data_json, immutable action results, backup units or cloud envelopes. Their original byte content and checksums remain compatible.",
+    "Render roleName and full instanceNumber together; wrap the full number, with no ellipsis or short-prefix substitution.",
+    "The same-template twins may share historical serials, names or resources, but their full petIds remain distinct. Equal historical petIds in different owners retain separate namespaces."
+  ],
+  "adoption": {
+    "newUi": "Submit the selected current template.name; no arbitrary role-name input or rename control.",
+    "legacyCompatibility": "Existing stored names and old rename/adoption APIs remain compatible historical data. No cloud migration or server redeployment is required."
+  },
+  "companionsCoverage": [
+    "/companions overview/status/roster",
+    "/companions/:petId detail and historical nickname",
+    "/companions/adopt confirmation",
+    "/desktop/:petId role name plus full number"
+  ],
+  "coordinatorRouting": {
+    "status": "ready-for-consumer-integration",
+    "owners": [
+      "conversations/chat",
+      "battle display only",
+      "garden owned pet selectors",
+      "discovery owned pet results"
+    ],
+    "request": "Use the shared projection for labels and full number while retaining each domain's existing explicit petId and independent selection. This branch intentionally does not edit their UIs or battle core."
+  },
+  "uiExample": "import { companionIdentity } from \"../companions/identity\"; const { roleName, instanceNumber, historicalNickname } = companionIdentity(pet);",
+  "sharedLayerChangesRequired": false
+}
