@@ -31,6 +31,10 @@ function transportRow(row,sessions,owner){
  * Only recognized cloud transport records gain a byte-bound local journal map.
  * Unknown/offline/business records remain in the protected snapshot. */
 function upgradeTransportJournal(db,owner){
+  // Garden may hold a lazy BattleStore without installing the battle module.
+  // Inspect schema metadata only until both old tables and migration002 exist.
+  const schema=db.prepare("SELECT count(*) AS count FROM sqlite_master WHERE type='table' AND name IN ('battle_action_receipts','battle_sessions','battle_transport_journal')").get();
+  if(schema.count!==3)return;
   const owners=owner?[owner]:db.prepare('SELECT DISTINCT owner_account_id FROM battle_action_receipts').all().map(row=>row.owner_account_id);
   const insert=db.prepare(`INSERT OR IGNORE INTO battle_transport_journal(owner_account_id,${JOURNAL_COLUMNS.join(',')},projection_origin) VALUES(${Array(2+JOURNAL_COLUMNS.length).fill('?').join(',')})`);
   for(const currentOwner of owners){
