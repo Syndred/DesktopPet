@@ -74,7 +74,7 @@ class CloudGardenAuthority{
       return remote.snapshot;
     });
   }
-  project(snapshot){const map=this.services.get('discovery')?.map;return {...snapshot,territories:(snapshot.territories||[]).map(record=>({...record,...(map?.project?{mapBoundary:record.boundary.map(point=>map.project(point))}:{})}))};}
+  project(snapshot){const map=this.services.get('discovery')?.map,scenario=(snapshot.territories||[]).find(record=>record.worldMode==='simulated');return {...snapshot,...(scenario?{scenario:{mode:'simulated',id:scenario.scenarioId,label:'云端定位演练'}}:{}),territories:(snapshot.territories||[]).map(record=>({...record,...(map?.project?{mapBoundary:record.boundary.map(point=>map.project(point))}:{})}))};}
   async snapshot(context){
     await this.request('garden-sync',{op:'snapshot'},context);
     const remote=await this.request('territory-sync',{op:'snapshot'},context);this.applyReadback(context,remote);
@@ -139,7 +139,14 @@ class CloudGardenAuthority{
     return op?{ok:true,data:reply.data,replayed:reply.replayed}: {...reply.result,replayed:reply.replayed||reply.result.replayed};
   });}
   ownsBattle(payload,context){if(!payload?.sessionId||!this.isCloud(context))return false;return payload.sessionId.startsWith('btl-')||this.battles.session(context.ownerAccountId,payload.sessionId)?.context?.authority==='cloud';}
-  async remoteBattle(payload,context){const remote=await this.request('territory-sync',{op:'session',input:{sessionId:payload.sessionId}},context);this.applyReadback(context,remote);return {remote,session:this.cache(context,remote.session,remote.challenge?.status)};}
+  async remoteBattle(payload,context){
+    const pending=this.db.prepare("SELECT input_json FROM garden_cloud_requests WHERE owner_account_id=? AND op='act' AND status='pending' ORDER BY created_at").all(context.ownerAccountId).map(row=>JSON.parse(row.input_json)).find(input=>input.sessionId===payload.sessionId);
+    if(pending)try{await this.send(context,'territory-sync','act','territoryAct',pending);}catch(error){
+      const row=this.db.prepare('SELECT status FROM garden_cloud_requests WHERE owner_account_id=? AND action_id=?').get(context.ownerAccountId,pending.actionId);
+      if(row?.status!=='conflict')throw error;
+    }
+    const remote=await this.request('territory-sync',{op:'session',input:{sessionId:payload.sessionId}},context);this.applyReadback(context,remote);return {remote,session:this.cache(context,remote.session,remote.challenge?.status)};
+  }
   async battleCommand(name,payload,context){
     if(name==='context')return (await this.remoteBattle(payload,context)).remote.context;
     if(['snapshot','sync','leave'].includes(name))return (await this.remoteBattle(payload,context)).session;
