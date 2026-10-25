@@ -6,6 +6,14 @@ const personalModules=new Set(['settings','conversations']);
 function meaningfulData(data){
   const modules={...data.modules};if(modules.legacy?.data===null)delete modules.legacy;
   if(modules['character-resources']?.version===2&&modules['character-resources'].data.references?.length===0)delete modules['character-resources'];
+  const battle=modules.battle;
+  if(battle?.version===1&&battle.data&&Object.keys(battle.data).sort().join('|')==='actions|reports|rewards|sessions'
+    &&Object.values(battle.data).every(rows=>Array.isArray(rows)&&rows.length===0))delete modules.battle;
+  const garden=modules.garden,data=garden?.data;
+  if(garden?.version===1&&data&&Object.keys(data).every(key=>['ownerAccountId','tables','territoryArchive'].includes(key))
+    &&data.tables&&Object.values(data.tables).every(rows=>Array.isArray(rows)&&rows.length===0)
+    &&(!data.territoryArchive||Object.keys(data.territoryArchive).sort().join('|')==='logs|territories'
+      &&data.territoryArchive.logs?.length===0&&data.territoryArchive.territories?.length===0))delete modules.garden;
   return {...data,modules,tables:Object.fromEntries(Object.entries(data.tables).filter(([,table])=>table.rows?.length))};
 }
 function protectedData(data){const copy=meaningfulData(data);return {...copy,modules:Object.fromEntries(Object.entries(copy.modules).filter(([key])=>!personalModules.has(key)))};}

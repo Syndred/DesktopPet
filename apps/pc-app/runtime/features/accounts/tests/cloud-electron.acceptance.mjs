@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';import {randomUUID,randomBytes} from 'no
 import {mkdirSync,readFileSync,writeFileSync} from 'node:fs';import {join,resolve} from 'node:path';import {execFileSync} from 'node:child_process';
 import {DatabaseSync} from 'node:sqlite';
 const root=resolve('.'),output=resolve(`artifacts/accounts/cloud-electron-${Date.now()}`);mkdirSync(output,{recursive:true});
+const requireFull=process.env.ACCOUNTS_REQUIRE_FULL_SYNC==='1';
 const account=`nativeqa_${Date.now().toString(36)}`,password=`Aa9!${randomBytes(18).toString('base64url')}`;
 const evidence={at:new Date().toISOString(),sourceSha:execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8',windowsHide:true}).trim(),
  kind:'Two actual Electron44 processes on one Windows host, isolated profiles, production TypeScript main/preload and React renderer, actual Supabase HTTPS. Not two physical machines.',
@@ -53,11 +54,26 @@ try{
  pass('actual separate Electron processes log in to same HTTPS account without kicking each other',{pidA:activeA.pid,pidB:activeB.pid,owner:a.currentUser.id,native});
  const va=await vaultProof(activeA),vb=await vaultProof(activeB);assert.notEqual(va.deviceId,vb.deviceId);assert.notEqual(va.sessionId,vb.sessionId);
  assert.ok(va.encryptedNotPlaintext&&vb.encryptedNotPlaintext&&va.matchesCurrentSession&&vb.matchesCurrentSession);pass('two Windows safeStorage vaults keep device-specific sessions encrypted',{a:va,b:vb});
+ if(requireFull){
+  const adopted=await activeA.page.evaluate(async input=>{const r=await window.lingjing.invoke('companions','adopt',input);if(!r.ok)throw new Error(`${r.code}: ${r.message}`);return r.data;},
+    {actionId:randomUUID(),templateId:'big-fish-gentle',name:'完整云存档伙伴',showOnDesktop:false});
+  const pet=adopted.pet;assert.ok(pet?.petId);
+  const initial=await activeB.app.evaluate(async petId=>{
+    const a=globalThis.__accountsCloudAcceptanceServices.get('accounts'),s=await a.cloudInvoke('companions-sync',{op:'snapshot'});
+    if(!s.module.data.tables.companion_pets.some(row=>row.pet_id===petId))throw new Error('Product adoption was not independently present in real cloud');
+    const garden=await a.cloudInvoke('garden-sync',{op:'snapshot'});return{petId,owner:s.ownerAccountId,revision:garden.accountRevision||garden.revision};
+  },pet.petId);
+  await restore(activeA);await restore(activeB);
+  const restoredPet=await activeB.page.evaluate(async petId=>{const r=await window.lingjing.invoke('companions','get',{petId});if(!r.ok)throw new Error(r.code);return r.data;},pet.petId);
+  assert.equal(restoredPet.petId,pet.petId);assert.equal(restoredPet.ownerAccountId,a.currentUser.id);
+  pass('product IPC cloud adoption plus standard server garden bootstrap restores the same real pet on both clients',{...initial,petId:pet.petId,scope:'builtin 2D resource; no SQL-seeded pet/inventory and no synthetic gameplay reward'});
+ }
  await settings(activeA,31);await settings(activeB,42);
  const first=await invoke(activeA,'syncNow',{actionId:randomUUID()});assert.equal(first.personalVerified,true);
  const cloudB=await activeB.app.evaluate(async()=>{const a=globalThis.__accountsCloudAcceptanceServices.get('accounts');const row=await a.remote.cloudSave('read',a.privateSession());return{revision:row.revision,checksum:row.checksum,volume:row.envelope.data.modules.settings.data.desktop.volume,modules:Object.keys(row.envelope.data.modules)};});
  assert.equal(cloudB.volume,31);assert.equal(cloudB.revision,first.revision);pass('rendered application A saves, application B independently reads matching actual cloud receipt',{first,cloudB});
  evidence.fullSaveVerified=first.verified===true;evidence.authorityPending=first.requiresAuthority===true;
+ if(requireFull)assert.equal(evidence.fullSaveVerified,true,'All-domain save still contains unverified local authority; personal-only success cannot pass this run');
  const conflict=await invoke(activeB,'syncNow',{actionId:randomUUID()},false);assert.equal(conflict.code,'SYNC_CONFLICT');assert.equal((await invoke(activeB,'settingsGet')).document.desktop.volume,42);
  const restored=await restore(activeB);assert.equal((await invoke(activeB,'settingsGet')).document.desktop.volume,31);assert.ok(restored.preservedBackup.filePath);
  assert.equal(JSON.parse(readFileSync(restored.preservedBackup.filePath,'utf8')).data.modules.settings.data.desktop.volume,42);

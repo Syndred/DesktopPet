@@ -103,3 +103,10 @@ test('PROTOCOL UNIT simulated: async asset hydration rejects same-owner re-login
  f.accounts.current.proof=original;f.accounts.backups.prepareCloud=async()=>{const next=decodeProof(f.accounts.current.proof);next.accessToken='refreshed.protocol.jwt';f.accounts.current.proof=JSON.stringify(next);};
  const preview=await f.accounts.sync.previewCloud(owner);assert.ok(preview.previewId);assert.equal(decodeProof(f.accounts.current.proof).actor.sessionId,oldSid);
 });
+test('PROTOCOL UNIT simulated: untouched empty battle/garden modules are absent-state equivalents, real history remains significant',()=>{
+ const f=fixture(async()=>response({})),base={modules:{},tables:{}};
+ const data={modules:{battle:{version:1,data:{sessions:[],actions:[],reports:[],rewards:[]}},garden:{version:1,data:{ownerAccountId:'original-text-owner',tables:{garden_accounts:[],garden_items:[]},territoryArchive:{territories:[],logs:[]}}}},tables:{}};
+ assert.equal(f.accounts.sync.dataChecksum(data),f.accounts.sync.dataChecksum(base));
+ const nonempty=structuredClone(data);nonempty.modules.battle.data.reports.push({id:'retained-report'});assert.notEqual(f.accounts.sync.dataChecksum(nonempty),f.accounts.sync.dataChecksum(base));
+ const history=structuredClone(data);history.modules.garden.data.territoryArchive.logs.push({id:'retained-history'});assert.notEqual(f.accounts.sync.dataChecksum(history),f.accounts.sync.dataChecksum(base));
+});
