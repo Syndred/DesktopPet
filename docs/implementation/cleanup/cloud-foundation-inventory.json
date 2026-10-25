@@ -1943,6 +1943,36 @@
         "scripts/desktop/start-online-dual.cmd"
       ],
       "decision": "Replace stale old-token/shared-JSON/session-deletion launcher; preserve every existing local-online-env.cmd and profile untouched"
+    },
+    {
+      "oldFile": "tests/task-t003-supabase-migration.test.ts",
+      "bytes": 2345,
+      "sha256": "80f7613467af25cac80d947f02f5768c44f9765d832f0bbd92c7d74c540b5c45",
+      "replacement": "Actual modern SQL execution/RLS/actor denial acceptance owned by main and domains",
+      "consumers": [
+        "test:unit obsolete SQL source-string assertions only"
+      ],
+      "decision": "Retire obsolete migration text tests; old SQL itself retained for coordinator-owned history alignment"
+    },
+    {
+      "oldFile": "tests/task-t205-persistence-schema.test.ts",
+      "bytes": 1361,
+      "sha256": "13f5429058ab2a331478f3fb09d11bc79a07e6751fb6a0c9115feeb4bfc24de8",
+      "replacement": "Actual modern SQL execution/RLS/actor denial acceptance owned by main and domains",
+      "consumers": [
+        "test:unit obsolete SQL source-string assertions only"
+      ],
+      "decision": "Retire obsolete migration text tests; old SQL itself retained for coordinator-owned history alignment"
+    },
+    {
+      "oldFile": "tests/task-t206-online-duel-schema.test.ts",
+      "bytes": 1822,
+      "sha256": "11c12c52e8aa949011cdfbb8caf84d2faa466d49839a7ce3909edd072ab7a359",
+      "replacement": "Actual modern SQL execution/RLS/actor denial acceptance owned by main and domains",
+      "consumers": [
+        "test:unit obsolete SQL source-string assertions only"
+      ],
+      "decision": "Retire obsolete migration text tests; old SQL itself retained for coordinator-owned history alignment"
     }
   ],
   "supplementAt": "2026-10-25T02:50:26.978Z",
@@ -1964,7 +1994,8 @@
       "infra/supabase/functions/duel-online"
     ],
     "migrationHistoryOwner": "01a1704b-e200-7090-9d17-958218c80f42",
-    "snapshot": "artifacts/recovery/cloud-foundation-2026-10-25/pre-cleanup.bundle"
+    "snapshot": "artifacts/recovery/cloud-foundation-2026-10-25/pre-cleanup.bundle",
+    "consumerMatrix": "docs/implementation/cleanup/cloud-retirement-consumers.json"
   },
   "testingPolicy": "Retire test-only in-memory prototypes and static assertions for removed HTML. Linux verifies current TS/unit; Windows runs all domain CJS/native + actual GUI/EXE. Do not present old prototype test counts as current product acceptance."
 }

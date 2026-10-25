@@ -11,8 +11,9 @@ const profile = process.env.PET_USER_DATA_DIR ? resolve(process.env.PET_USER_DAT
   ? resolveProfilePath({ current: join(process.env.APPDATA, packageName), appData: process.env.APPDATA }) : undefined;
 if (process.argv.includes('--verify-only')) console.log(JSON.stringify({ passed: true, version: release.version, executable: release.executable, sha256: release.manifest.executable.sha256, profile }));
 else {
+  const delimiter = process.argv.indexOf('--'), args = delimiter >= 0 ? process.argv.slice(delimiter + 1) : [];
   // Explicitly preserve discovery when selecting older binaries that only look for legacy JSON.
-  const child = spawn(release.executable, [], { detached: true, stdio: 'ignore', windowsHide: true, env: { ...process.env, ...(profile ? { PET_USER_DATA_DIR: profile } : {}) } });
+  const child = spawn(release.executable, args, { detached: true, stdio: 'ignore', windowsHide: true, env: { ...process.env, ...(profile ? { PET_USER_DATA_DIR: profile } : {}) } });
   await new Promise((resolve, reject) => { child.once('spawn', resolve); child.once('error', reject); }); child.unref();
   console.log(JSON.stringify({ version: release.version, executable: release.executable, pid: child.pid, profile }));
 }
