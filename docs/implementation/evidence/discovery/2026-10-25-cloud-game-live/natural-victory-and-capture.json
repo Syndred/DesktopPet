@@ -1,0 +1,148 @@
+{
+  "at": "2026-10-25T03:52:09.689Z",
+  "sourceCommit": "57b944a504901c0a7a026a64fd243d17acdd68df",
+  "build": {
+    "schemaVersion": 2,
+    "builtAt": "2026-10-25T03:44:42.383Z",
+    "sourceCommit": "65bfcca52db86d609cb9c3f2d084a925a9f4e5eb",
+    "sourceTree": "2e5f5dc8491de768a05d78fd49221fbbff50d436",
+    "sourceDirtyFiles": [],
+    "codeFingerprint": "27b43756d0c260bad9c2e1aac106eeef6b8ba4aced6800044daf98e960c1c107",
+    "canonicalSourceFingerprint": "0cb9832901db383220377b736d82e38756e1ace2a28ec6f19c8030e81544cee9",
+    "canonicalPolicy": "Repository-relative paths; CRLF normalized to LF for source text only. Packaged/compiled bytes remain exact.",
+    "compiledFingerprint": "b1de8903db83cd4806847d3f53e8ea4b6d01262f0af64037e455b643b0c56190",
+    "codeFiles": 292,
+    "compiledFiles": 86,
+    "toolchain": {
+      "node": "24.21.0",
+      "electron": "44.9.3",
+      "sqlite": "13.0.3",
+      "vite": "7.3.7",
+      "typescript": "5.9.3",
+      "platform": "win32",
+      "arch": "x64"
+    },
+    "entrypoints": {
+      "main": "main/index.cjs",
+      "app": "ui/index.html",
+      "desktop": "ui/desktop.html",
+      "preload": "preload/index.cjs"
+    }
+  },
+  "projectRef": "jbvrdmrkwpznbrvteive",
+  "scenarioId": "cloud-discovery-03",
+  "productionMain": true,
+  "registryObserver": true,
+  "syntheticPosition": true,
+  "physicalPositionAcceptance": false,
+  "physicalSecondDevice": false,
+  "realAuth": true,
+  "realHttps": true,
+  "rawCoordinatesSaved": false,
+  "tokensOrPasswordsSaved": "Only Windows safeStorage encrypted test credentials in ignored artifacts; no plaintext or tokens in evidence",
+  "actors": [
+    {
+      "label": "device-a",
+      "actor": {
+        "account": "cg03_1792899947200",
+        "authKind": "supabase",
+        "deviceId": "b9300119-4e88-41d5-b182-051c3f943e87",
+        "username": "探索云端验收",
+        "authority": "live",
+        "sessionId": "eb6b0776-5dc3-42f8-bf27-350eb42d5fef",
+        "authUserId": "319083e4-2592-4369-84b4-0f05f6c2ea3a",
+        "schemaVersion": 1,
+        "ownerAccountId": "account:31fa2df1-6847-4466-84ca-ed92bc4ee78f"
+      },
+      "electron": "44.9.3",
+      "qaProfile": false
+    },
+    {
+      "label": "device-b",
+      "actor": {
+        "account": "cg03_1792899947200",
+        "authKind": "supabase",
+        "deviceId": "8c61169a-8bc4-4250-b87f-f216e13954ef",
+        "username": "探索云端验收",
+        "authority": "live",
+        "sessionId": "25e5a1ec-bb89-495b-a13b-636401b3f75d",
+        "authUserId": "319083e4-2592-4369-84b4-0f05f6c2ea3a",
+        "schemaVersion": 1,
+        "ownerAccountId": "account:31fa2df1-6847-4466-84ca-ed92bc4ee78f"
+      },
+      "electron": "44.9.3",
+      "qaProfile": false
+    },
+    {
+      "label": "fresh-device-c",
+      "actor": {
+        "account": "cg03_1792899947200",
+        "authKind": "supabase",
+        "deviceId": "2ba68123-761e-4289-ac9b-a1ab7414f478",
+        "username": "探索云端验收",
+        "authority": "live",
+        "sessionId": "fc9bccfd-45ad-4bb7-bedd-769318a8125a",
+        "authUserId": "319083e4-2592-4369-84b4-0f05f6c2ea3a",
+        "schemaVersion": 1,
+        "ownerAccountId": "account:31fa2df1-6847-4466-84ca-ed92bc4ee78f"
+      },
+      "electron": "44.9.3",
+      "qaProfile": false
+    }
+  ],
+  "checks": [
+    {
+      "label": "early capture refused",
+      "rejected": true
+    },
+    {
+      "label": "same-owner concurrent same action returns one identical committed round",
+      "passed": true
+    },
+    {
+      "label": "different same-round actions commit only one transition",
+      "passed": true
+    }
+  ],
+  "attempts": [
+    {
+      "permitId": "a3efdc72-2007-4e4f-823e-297d52c9bc22",
+      "battleId": "battle-cloud-a3efdc72-2007-4e4f-823e-297d52c9bc22",
+      "winner": "player",
+      "rounds": 28,
+      "reward": {
+        "won": true,
+        "mode": "wild",
+        "petId": "pet-161ff8e2-efdf-40f0-b27a-431554562325",
+        "seeds": {
+          "itemId": "seed:berry",
+          "source": "battle",
+          "quantity": 2,
+          "receiptId": "battle-cloud-a3efdc72-2007-4e4f-823e-297d52c9bc22"
+        },
+        "applied": true,
+        "actionId": "battle:battle-cloud-a3efdc72-2007-4e4f-823e-297d52c9bc22:account:31fa2df1-6847-4466-84ca-ed92bc4ee78f",
+        "duplicate": false,
+        "sessionId": "battle-cloud-a3efdc72-2007-4e4f-823e-297d52c9bc22",
+        "experience": 20,
+        "currentLevel": 1,
+        "previousLevel": 1,
+        "currentExperience": 20,
+        "previousExperience": 0
+      }
+    }
+  ],
+  "errors": [],
+  "resumeFrom": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-discovery\\DesktopPet\\artifacts\\cloud-discovery\\live-game-1792899947119",
+  "originalPetId": "pet-161ff8e2-efdf-40f0-b27a-431554562325",
+  "fixtureCoordinateHash": "86ea830266f3ee47512b155f0f78d8bf2b3c649bf23d43314109a89aacd61ddb",
+  "capture": {
+    "petId": "pet-a3efdc72-2007-4e4f-823e-297d52c9bc22",
+    "battleId": "battle-cloud-a3efdc72-2007-4e4f-823e-297d52c9bc22",
+    "permitId": "a3efdc72-2007-4e4f-823e-297d52c9bc22",
+    "validation": "simulated",
+    "scenarioId": "cloud-discovery-03"
+  },
+  "passed": false,
+  "error": "COMPANION_BACKUP_CONFLICT: 两份伙伴存档存在不同进度，已保留；请预览完整恢复，不能逐行拼接"
+}

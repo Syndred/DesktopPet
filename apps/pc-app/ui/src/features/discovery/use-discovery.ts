@@ -41,8 +41,11 @@ export function useDiscovery() {
     alive.current = true;
     const release = claimExploration();
     void refresh();
-    const subscriptions = ['discovery:changed', 'discovery:location', 'app:session', 'companions:changed', 'garden:changed'].map(event => window.lingjing?.subscribe(event, () => void refresh()));
-    subscriptions.push(window.lingjing?.subscribe('accounts:session-changed', () => { setExploring(inExploration() && document.visibilityState === 'visible'); void refresh(); }));
+    const subscriptions = ['discovery:changed', 'discovery:location', 'companions:changed', 'garden:changed'].map(event => window.lingjing?.subscribe(event, () => void refresh()));
+    for (const event of ['app:session','accounts:session-changed']) subscriptions.push(window.lingjing?.subscribe(event, () => {
+      ++generation.current; setData(null); setError('');
+      setExploring(inExploration() && document.visibilityState === 'visible'); void refresh();
+    }));
     const timer = setInterval(() => { if(document.visibilityState === 'visible') void refresh(); }, 15000);
     return () => { alive.current = false;clearInterval(timer);release(); for (const off of subscriptions) off?.(); };
   }, [refresh]);

@@ -4,7 +4,7 @@
   "branch": "codex/lingjing-discovery",
   "commit": "feb44e9e10b63fc96776ffb4107f0cb9e2a53126",
   "goalStatus": "active",
-  "status": "cloud_game_server_checkpoint_ready_for_review_runtime_spi_in_progress",
+  "status": "real-HTTPS-game-and-new-device-restore-passed_runtime-BattleScreen-in-progress",
   "deployReady": false,
   "sharedBaseline": "d7b4b07",
   "approvedIdentityCheckpoint": "f81008c",
@@ -139,7 +139,7 @@
     "locationComponentEvidence": "docs/implementation/evidence/discovery/2026-10-25-cloud-location-live/evidence.json",
     "locationComponentChecks": 13,
     "preciseLocationProofVerified": false,
-    "fullCaptureVerified": false,
+    "fullCaptureVerified": true,
     "sameMachineTwoElectron": {
       "verified": true,
       "electron": "44.9.3",
@@ -150,8 +150,24 @@
     "authorizedProductValidationWrites": "Dedicated Auth test accounts, device keys/nonces and self-device revoke via deployed product APIs; no SQL migration, deployment or production data edits",
     "schemaMigrationsOrDeploymentsByThisChat": 0,
     "adminProductionWritesByThisChat": 0,
-    "discoveryFunctionVersion": 3,
-    "serverGamePositiveFlow": "in progress, not yet accepted"
+    "discoveryFunctionVersion": 4,
+    "serverGamePositiveFlow": "PASS natural28round victory, one server-generated petId/capture/memory/growth/seed receipt; source simulated QA; explicit product cloud preview/restore and coldSQLite readback",
+    "fullProductUiVerified": false,
+    "productCloudRestoreAndColdSqliteVerified": true,
+    "gameEvidence": "docs/implementation/evidence/discovery/2026-10-25-cloud-game-live",
+    "independentReadback": {
+      "queriedAt": "2026-10-25T04:15:36.281Z",
+      "scope": "Independent read-only Supabase SQL against the same dedicated owner, after real HTTPS and normal product restore",
+      "ownerId": "account:31fa2df1-6847-4466-84ca-ed92bc4ee78f",
+      "revision": 37,
+      "petCount": 2,
+      "companionCaptureReceipts": 1,
+      "captureCount": 1,
+      "memoryCount": 1,
+      "battleSeedReceipts": 1,
+      "originalPetExperience": 20,
+      "capturedPetId": "pet-a3efdc72-2007-4e4f-823e-297d52c9bc22"
+    }
   },
   "preservation": {
     "legacyOwnersAreText": true,
@@ -170,10 +186,9 @@
     }
   ],
   "remaining": [
-    "Central review/deploy gameSQL and discovery update after05 prerequisites; no admin remote mutation performed here",
+    "Complete and actually verify private external wild adapter through the existing sharedBattleScreen and normal discovery main commands; no local re-resolution or duplicated rewards",
     "Implement private external wild backend SPI through the one existing BattleScreen; no battle UI/style edits",
     "Apply canonical cloud capture/fullsave to local SQLite and recover samepetId/reward on fresh device through08/02 verified restore",
-    "Run realHTTPS reserve/round/capture/race/replay/owner-negative checks and actual separate Electron processes on44.9.3/13.0.3",
     "Native sourceos precise cloudproof/nearby positive remains unverified: latest Electron44 runtime samples124m, original80m gate retained; earlier78m local-os physical capture remains separately accepted",
     "Retire own legacy server authority only after its fixtures and production consumers are replaced; finish advisor/readback preservation check"
   ],
@@ -259,7 +274,7 @@
     "rawCoordinatesCommitted": false,
     "fullCloudCaptureAcceptance": false
   },
-  "updatedAt": "2026-10-25T03:54:45.697Z",
+  "updatedAt": "2026-10-25T04:15:36.283Z",
   "approvedCompanionCheckpoint": "67546f5+d7b4b07",
   "latestRemoteCodeCheck": {
     "fetchedAt": "2026-10-25T03:32:03.679Z",
@@ -298,11 +313,10 @@
   },
   "currentLiveRun": {
     "initial": "artifacts/cloud-discovery/live-game-1792899947119",
-    "status": "Original first concurrent same-action round exposed optimistic read race; checkpoint feb44e9 fixed and independently deployed by coordinator as discoveryv3; preserve account/permit and resume",
-    "resumeLog": "artifacts/cloud-discovery/live-game-resume.log",
-    "serverCheckpoint": "feb44e9",
-    "serverVersion": 3,
-    "source": "simulated",
+    "naturalVictory": "artifacts/cloud-discovery/live-game-1792900329688",
+    "productRestore": "artifacts/cloud-discovery/live-game-1792901369813",
+    "status": "server-game-and-product-cloud-restore-passed_runtime-BattleScreen-in-progress",
+    "serverVersion": 4,
     "scenarioId": "cloud-discovery-03"
   }
 }

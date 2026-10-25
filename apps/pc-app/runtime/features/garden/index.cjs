@@ -55,6 +55,7 @@ module.exports = {
     services.provide("garden", {
       service,
       snapshot: context => service.snapshot(context),
+      applyCloudReadback:(owner,remote)=>cloud.applyReadback({ownerAccountId:owner},remote),
       territories,
       cloudBattles:{owns:(payload,context)=>cloud.ownsBattle(payload,context),invoke:(name,payload,context)=>cloud.battleCommand(name,payload,context)},
       migrateOwnerAlias:context=>identity.migrate(context),
