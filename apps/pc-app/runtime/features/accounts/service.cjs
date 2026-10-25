@@ -117,6 +117,7 @@ class AccountsService {
   }
   async adopt(row, proof, rememberSession) {
     this.epoch++;
+    this.backups.previews.clear();
     const epoch = this.epoch;
     this.current = { ownerAccountId: row.owner_account_id, provider: row.provider, proof, persistence: "memory", rememberSession,
       authKind:row.provider==='runtime'&&this.remote.authKind==='supabase'?'supabase':row.provider };
@@ -215,7 +216,7 @@ class AccountsService {
   async logout() {
     const prior = this.current;
     const previousCloudSession = this.privateSession();
-    this.epoch++; this.current = null;
+    this.epoch++; this.current = null; this.backups.previews.clear();
     this.db.prepare("INSERT INTO account_session_control VALUES(1,1) ON CONFLICT(singleton) DO UPDATE SET blocked=1").run();
     try { this.vault.clear(); } catch { this.startupIssue = "SECURE_SESSION_CLEAR_FAILED"; }
     this.host?.clear?.();
@@ -227,7 +228,7 @@ class AccountsService {
   }
   invalidateSession(owner) {
     if (this.current?.provider !== "runtime" || this.current.ownerAccountId !== owner) return;
-    this.epoch++; this.current = null; this.startupIssue = "SESSION_INVALIDATED";
+    this.epoch++; this.current = null; this.startupIssue = "SESSION_INVALIDATED"; this.backups.previews.clear();
     this.db.prepare("INSERT INTO account_session_control VALUES(1,1) ON CONFLICT(singleton) DO UPDATE SET blocked=1").run();
     try { this.vault.clear(); } catch { /* SQLite revocation still prevents this proof from resuming. */ }
     this.host?.clear?.(); this.remote.setCurrentUser(null); this.emitSession();

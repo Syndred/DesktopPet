@@ -103,8 +103,13 @@ try{
  },offlineActionId);assert.equal(retained.status,'retry');assert.equal(retained.base_revision,second.revision);
  await activeA.app.evaluate(({BrowserWindow})=>{const win=BrowserWindow.getAllWindows()[0];win.show();win.focus();});
  await activeA.page.getByRole('button',{name:'重试同步',exact:true}).click();
- await activeA.page.waitForFunction(async revision=>{const r=await window.lingjing.invoke('accounts','syncStatus');return r.ok&&r.data.pending===0&&!r.data.running&&r.data.cloudRevision===revision;},second.revision+1,{timeout:45_000});
- const retryStatus=await invoke(activeA,'syncStatus');const retried={revision:retryStatus.cloudRevision};assert.equal(retried.revision,second.revision+1);assert.equal((await invoke(activeA,'settingsGet')).document.desktop.volume,54);
+ let retryStatus;const retryDeadline=Date.now()+45_000;
+ do{retryStatus=await invoke(activeA,'syncStatus');
+  if(retryStatus.pending===0&&!retryStatus.running&&retryStatus.cloudRevision===second.revision+1)break;
+  await new Promise(resolve=>setTimeout(resolve,500));
+ }while(Date.now()<retryDeadline);
+ assert.equal(retryStatus.pending,0,'Original retry action did not finish');assert.equal(retryStatus.running,false);
+ const retried={revision:retryStatus.cloudRevision};assert.equal(retried.revision,second.revision+1);assert.equal((await invoke(activeA,'settingsGet')).document.desktop.volume,54);
  const retryReadback=await activeB.app.evaluate(async(_electron,id)=>{
   const a=globalThis.__accountsCloudAcceptanceServices.get('accounts'),row=await a.remote.cloudSave('read',a.privateSession(),{actionId:id});
   return{actionId:row.actionId,revision:row.revision,checksum:row.checksum,volume:row.envelope.data.modules.settings.data.desktop.volume};

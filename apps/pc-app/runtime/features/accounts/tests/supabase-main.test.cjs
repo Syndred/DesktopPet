@@ -1,6 +1,6 @@
 const {test,afterEach}=require('node:test');
 const assert=require('node:assert/strict');
-const {mkdtempSync,rmSync}=require('node:fs');
+const {mkdtempSync,rmSync,readFileSync}=require('node:fs');
 const {tmpdir}=require('node:os');const {join}=require('node:path');const {randomUUID}=require('node:crypto');
 const {DatabaseSync}=require('node:sqlite');
 const {SupabaseRemote,publicConfig,stableDevice,decodeProof}=require('../supabase-remote.cjs');
@@ -109,4 +109,36 @@ test('PROTOCOL UNIT simulated: untouched empty battle/garden modules are absent-
  assert.equal(f.accounts.sync.dataChecksum(data),f.accounts.sync.dataChecksum(base));
  const nonempty=structuredClone(data);nonempty.modules.battle.data.reports.push({id:'retained-report'});assert.notEqual(f.accounts.sync.dataChecksum(nonempty),f.accounts.sync.dataChecksum(base));
  const history=structuredClone(data);history.modules.garden.data.territoryArchive.logs.push({id:'retained-history'});assert.notEqual(f.accounts.sync.dataChecksum(history),f.accounts.sync.dataChecksum(base));
+});
+
+test('real SQLite with simulated Auth: issued restore previews expire across session transitions, same-SID refresh remains usable',async()=>{
+ let current,cloud;
+ const f=fixture(async(url,options)=>{const body=JSON.parse(options.body);
+  if(url.endsWith('lingjing-auth')){
+   if(body.op==='login'){current=bundle(options.headers['X-Lingjing-Device-Id']);return response(current);}
+   if(body.op==='refresh'){current={...current,tokens:{...current.tokens,accessToken:`refreshed.${randomUUID()}`}};return response(current);}
+   return response({actor:current.actor});
+  }return response(cloud);
+ });
+ const login=()=>f.accounts.authenticate({provider:'runtime',account:'alice',password:'secret123'});
+ await login();const owner=f.accounts.requireOwner(),file=join(f.directory,'retained-original.lingjing.json');
+ f.accounts.backups.save(owner,file);const original=readFileSync(file);cloud={revision:1,envelope:f.accounts.backups.snapshot(owner)};
+ const refreshPreview=await f.accounts.sync.previewCloud(owner),refreshSid=f.accounts.privateSession().sessionId;
+ await f.remote.refresh(f.remote.active);assert.equal(f.accounts.privateSession().sessionId,refreshSid);
+ assert.equal((await f.accounts.restoreBackup({previewId:refreshPreview.previewId,actionId:randomUUID(),mode:'replace'})).restored,true);
+ for(const transition of ['logout','invalidation','new-adopt']){
+  const local=f.accounts.backups.preview(owner,file),remote=await f.accounts.sync.previewCloud(owner);
+  const sid=f.accounts.privateSession().sessionId,fingerprint=f.accounts.backups.dataChecksum(owner);
+  const actions=f.db.prepare('SELECT count(*) n FROM account_actions').get().n;
+  const receipts=f.db.prepare('SELECT count(*) n FROM account_backup_receipts').get().n;
+  if(transition==='logout'){await f.accounts.logout();await f.accounts.signOutPending;}
+  if(transition==='invalidation')f.accounts.invalidateSession(owner);
+  await login();assert.equal(f.accounts.requireOwner(),owner);assert.notEqual(f.accounts.privateSession().sessionId,sid);
+  assert.equal(f.accounts.backups.dataChecksum(owner),fingerprint);assert.equal(f.accounts.backups.previews.size,0);
+  for(const preview of [local,remote])await assert.rejects(f.accounts.restoreBackup({previewId:preview.previewId,actionId:randomUUID(),mode:'replace'}),{code:'BACKUP_PREVIEW_EXPIRED'});
+  assert.equal(f.accounts.backups.dataChecksum(owner),fingerprint);
+  assert.equal(f.db.prepare('SELECT count(*) n FROM account_actions').get().n,actions);
+  assert.equal(f.db.prepare('SELECT count(*) n FROM account_backup_receipts').get().n,receipts);
+  assert.deepEqual(readFileSync(file),original);
+ }
 });
