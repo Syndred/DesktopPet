@@ -1,0 +1,104 @@
+{
+  "at": "2026-10-25T02:44:37.309Z",
+  "runtimeSourceCommit": "8b610bf75d7b7f73f15a440b24174aec54d2cb74",
+  "dataSource": {
+    "mode": "simulated",
+    "cloudVerified": false,
+    "transfer": "official SDK over explicit localhost fixture",
+    "ui": "production Electron and actual Pixi; two separate processes and profile roots",
+    "physicalDevices": 1
+  },
+  "owner": "qa:f8492fe7-b580-4df2-b5e3-d2d0dfa19e5b:local-3dbce0c7-5aa6-40d1-bd29-0d5f7400ce0f",
+  "views": [
+    {
+      "label": "A",
+      "pid": 11496,
+      "profile": "artifacts\\resources\\cloud-native-1792896277301\\A",
+      "owner": "qa:f8492fe7-b580-4df2-b5e3-d2d0dfa19e5b:local-3dbce0c7-5aa6-40d1-bd29-0d5f7400ce0f",
+      "resourceId": "a283857a-7f4a-4717-8c1e-121c5f49a3cb",
+      "contentHash": "94e0af4b98334788f9f2357fde6c84c70cc051684760d05c9ca4eebf97a3977a",
+      "host": {
+        "renderer": "pixi-spritesheet",
+        "frame": "1",
+        "frameTexture": "21",
+        "textureFrame": "76,63,184,261",
+        "contentBounds": "{\"x\":235.89257142857142,\"y\":21.409142857142825,\"width\":106.61485714285716,\"height\":151.23085714285716,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+        "textureKey": "lingjing-resource://asset/a283857a-7f4a-4717-8c1e-121c5f49a3cb/sprites.png:94e0af4b98334788f9f2357fde6c84c70cc051684760d05c9ca4eebf97a3977a",
+        "textureSource": "4"
+      },
+      "cloudStatus": {
+        "enabled": false,
+        "uploads": [],
+        "downloads": [],
+        "lastVerifiedAt": null,
+        "running": false,
+        "dataMode": "live",
+        "bucket": "lingjing-resources-v1"
+      },
+      "screenshot": "client-A.png"
+    },
+    {
+      "label": "B",
+      "pid": 26716,
+      "profile": "artifacts\\resources\\cloud-native-1792896277301\\B",
+      "owner": "qa:f8492fe7-b580-4df2-b5e3-d2d0dfa19e5b:local-3dbce0c7-5aa6-40d1-bd29-0d5f7400ce0f",
+      "resourceId": "a283857a-7f4a-4717-8c1e-121c5f49a3cb",
+      "contentHash": "94e0af4b98334788f9f2357fde6c84c70cc051684760d05c9ca4eebf97a3977a",
+      "host": {
+        "renderer": "pixi-spritesheet",
+        "frame": "1",
+        "frameTexture": "20",
+        "textureFrame": "76,63,184,261",
+        "contentBounds": "{\"x\":235.89257142857142,\"y\":21.409142857142825,\"width\":106.61485714285716,\"height\":151.23085714285716,\"canvasWidth\":578.4,\"canvasHeight\":208}",
+        "textureKey": "lingjing-resource://asset/a283857a-7f4a-4717-8c1e-121c5f49a3cb/sprites.png:94e0af4b98334788f9f2357fde6c84c70cc051684760d05c9ca4eebf97a3977a",
+        "textureSource": "3"
+      },
+      "cloudStatus": {
+        "enabled": false,
+        "uploads": [],
+        "downloads": [],
+        "lastVerifiedAt": null,
+        "running": false,
+        "dataMode": "live",
+        "bucket": "lingjing-resources-v1"
+      },
+      "screenshot": "client-B.png"
+    }
+  ],
+  "errors": [],
+  "passed": true,
+  "transfer": {
+    "simulated": true,
+    "cloudVerified": false,
+    "resourceId": "a283857a-7f4a-4717-8c1e-121c5f49a3cb",
+    "contentHash": "94e0af4b98334788f9f2357fde6c84c70cc051684760d05c9ca4eebf97a3977a",
+    "files": [
+      {
+        "key": "character.json",
+        "sha256A": "ac176d23703fd8d9de97a23574966b44728657ceb7c32bb3fcea80469cfa9954",
+        "sha256B": "ac176d23703fd8d9de97a23574966b44728657ceb7c32bb3fcea80469cfa9954"
+      },
+      {
+        "key": "sprites.png",
+        "sha256A": "aa59df3af26d4f7faf9272193b7d1d35ed6d2f22ebb6b294a5a2853f0539f693",
+        "sha256B": "aa59df3af26d4f7faf9272193b7d1d35ed6d2f22ebb6b294a5a2853f0539f693"
+      }
+    ],
+    "receipts": [
+      [
+        {
+          "direction": "upload",
+          "data_mode": "simulated",
+          "n": 1
+        }
+      ],
+      [
+        {
+          "direction": "download",
+          "data_mode": "simulated",
+          "n": 1
+        }
+      ]
+    ]
+  }
+}

@@ -48,8 +48,8 @@ async function buildPackage(service, owner, uid, resourceId) {
     files.push({key,size:bytes.length,sha256:hash(bytes),chunks});
   }
   const keys=service.repository.ownerKeys(owner), placeholders=keys.map(()=>'?').join(',');
-  const imports=service.repository.db.prepare(`SELECT * FROM lingjing_resource_imports WHERE resource_id=? AND owner_account_id IN (${placeholders}) ORDER BY import_id`).all(resourceId,...keys).map(receipt=>({...receipt,owner_account_id:owner}));
-  const manifest={format:'lingjing.resource-package',version:1,ownerAccountId:owner,authUserId:uid,resourceId,contentHash:row.content_hash,document,archiveOnly:document.kind==='model3d',
+  const imports=service.repository.db.prepare(`SELECT * FROM lingjing_resource_imports WHERE resource_id=? AND owner_account_id IN (${placeholders}) ORDER BY import_id`).all(resourceId,...keys).map(receipt=>({...receipt,source_owner_account_id:receipt.owner_account_id,owner_account_id:owner}));
+  const manifest={format:'lingjing.resource-package',version:1,ownerAccountId:owner,sourceOwnerAccountId:row.owner_account_id,authUserId:uid,resourceId,contentHash:row.content_hash,document,archiveOnly:document.kind==='model3d',
     descriptorKey:document.kind==='spritesheet'?files.find(file=>/\.json$/i.test(file.key))?.key:null,files,totalBytes,imports};
   const bytes=validateManifest(manifest,{owner,uid});
   await validatePayload(manifest,locations);
