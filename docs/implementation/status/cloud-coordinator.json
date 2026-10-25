@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "updatedAt": "2026-10-25T06:57:13.986Z",
-  "phase": "final-journal-fix-accepted-rebuilding-actual-portable",
+  "phase": "final-portable-row-order-fix-validation",
   "goalStatus": "active",
   "deployed": {
     "projectRef": "jbvrdmrkwpznbrvteive",
@@ -352,5 +352,12 @@
     "unknownBusinessStillProtected": true,
     "evidence": "docs/implementation/evidence/battle/2026-10-25/portable-journal-gap/evidence.json"
   },
-  "finalRegressionAfterJournal": "docs/implementation/evidence/cloud/2026-10-25/final-journal-regression.json"
+  "finalRegressionAfterJournal": "docs/implementation/evidence/cloud/2026-10-25/final-journal-regression.json",
+  "finalRowOrderFix": {
+    "at": "2026-10-25T07:15:03.152Z",
+    "scope": "Derived battle SQL set fingerprints only; original checksum and all rows unchanged",
+    "evidence": "docs/implementation/evidence/cloud/2026-10-25/battle-row-order-baseline-compatibility.json",
+    "previousActualSfxFailure": "docs/implementation/evidence/cloud/2026-10-25/final-portable-7051ce3-first/evidence.json",
+    "oldBaselineCompatible": true
+  }
 }

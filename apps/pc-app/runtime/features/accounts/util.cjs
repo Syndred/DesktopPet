@@ -23,6 +23,22 @@ function saveDataChecksum(data) {
     if (module?.data?.tables) modules[id] = { ...module, data: { ...module.data,
       tables: Object.fromEntries(Object.entries(module.data.tables).map(([name,rows]) => [name, sortRows(rows)])) } };
   }
+  const battle = modules.battle;
+  if ([1,2].includes(battle?.version) && battle.data) {
+    const rows = { ...battle.data };
+    for (const [name,key] of Object.entries({sessions:'id',actions:'action_id',reports:'id',rewards:'session_id'})) {
+      if (!Array.isArray(rows[name])) continue;
+      // Match the authority's primary-key order without rewriting stored JSON,
+      // envelope checksums, round order or the separate local transport journal.
+      rows[name] = [...rows[name]].sort((a,b) => {
+        const left=String(a[key]),right=String(b[key]);
+        if (left!==right) return left < right ? -1 : 1;
+        const first=canonical(a),second=canonical(b);
+        return first < second ? -1 : first > second ? 1 : 0;
+      });
+    }
+    modules.battle = { ...battle, data: rows };
+  }
   const tables = Object.fromEntries(Object.entries(data.tables).map(([name,table]) => [name, { ...table, rows: sortRows(table.rows) }]));
   return checksum({ ...data, modules, tables });
 }

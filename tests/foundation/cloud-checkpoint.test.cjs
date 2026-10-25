@@ -85,3 +85,29 @@ test('SQL row ordering does not change a save fingerprint while message order re
   const reordered=structuredClone(data);reordered.tables.pets.rows.reverse();assert.equal(saveDataChecksum(data),saveDataChecksum(reordered));
   reordered.modules.conversations.data.messages.reverse();assert.notEqual(saveDataChecksum(data),saveDataChecksum(reordered));
 });
+
+test('battle SQL sets match existing authority baselines without changing envelopes or ordered content',()=>{
+  const rounds=[{round:1,text:'first'},{round:2,text:'second'}];
+  const data={tables:{},modules:{battle:{version:1,data:{
+    sessions:[{id:'battle-training',data_json:JSON.stringify({rounds})},{id:'online-friend',data_json:'{}'}],
+    actions:[{action_id:'action-a',command_json:'{"type":"attack"}'},{action_id:'action-b',command_json:'{}'}],
+    reports:[{id:'battle-training',data_json:JSON.stringify({rounds})},{id:'online-friend',data_json:'{}'}],
+    rewards:[{session_id:'battle-training',action_id:'battle:battle-training',data_json:'{"experience":5}'},{session_id:'online-friend',action_id:'battle:friend',data_json:'{"experience":20}'}]
+  }}}};
+  const original=structuredClone(data),oldBaseline=checksum(data),reordered=structuredClone(data);
+  for(const rows of Object.values(reordered.modules.battle.data))rows.reverse();
+  assert.equal(saveDataChecksum(data),oldBaseline,'existing authority primary-key order keeps its fingerprint');
+  assert.equal(saveDataChecksum(reordered),oldBaseline,'SQLite query-plan order does not mark protected data dirty');
+  assert.notEqual(checksum(reordered),oldBaseline,'raw envelope hashing stays order-sensitive');
+  assert.deepEqual(data,original,'fingerprinting never mutates the original document');
+  reordered.modules.battle.data.sessions[1].data_json=JSON.stringify({rounds:[...rounds].reverse()});
+  assert.notEqual(saveDataChecksum(reordered),oldBaseline,'the actual round order remains protected');
+  const extra=structuredClone(data);extra.modules.battle.data.unrecognizedHistory=['first','second'];
+  const reversedExtra=structuredClone(extra);reversedExtra.modules.battle.data.unrecognizedHistory.reverse();
+  assert.notEqual(saveDataChecksum(extra),saveDataChecksum(reversedExtra),'unknown ordered fields remain significant');
+  const local=structuredClone(data);local.modules.battle.version=2;local.modules.battle.data.transportJournal=[{action_id:'z'},{action_id:'a'}];
+  const localReversed=structuredClone(local);localReversed.modules.battle.data.rewards.reverse();
+  assert.equal(saveDataChecksum(local),saveDataChecksum(localReversed));
+  localReversed.modules.battle.data.transportJournal.reverse();
+  assert.notEqual(saveDataChecksum(local),saveDataChecksum(localReversed),'transport provenance is not silently normalized');
+});

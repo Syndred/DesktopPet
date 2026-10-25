@@ -37,6 +37,22 @@ function query(model,sql,args=[]){const db=new Database(join(model.profile,'ling
 const status=model=>model.call('accounts','syncStatus');
 async function restore(model){const preview=await model.call('accounts','cloudPreview');return model.call('accounts','backupRestore',{previewId:preview.previewId,mode:'replace',actionId:randomUUID()});}
 async function waitClean(model,label){return pollState(()=>status(model),s=>!s.pending&&!s.conflicts&&!s.localChanged&&!s.unverifiedLocal&&!s.running,{timeoutMs:120000,intervalMs:700,label});}
+async function selectAfterSync(model,id){
+  const actionId=randomUUID();proof.selectionAttempts=[];
+  for(let attempt=1;attempt<=3;attempt++){
+    await waitClean(model,'Selection must wait for the prior complete-save check');
+    const before=await status(model),selection=query(model,'select selections_json from companion_accounts where owner_account_id=?',[owner])[0].selections_json;
+    const result=await model.page.evaluate(payload=>window.lingjing.invoke('conversations','select',payload),{petId:id,actionId});
+    const after=await status(model),intent=query(model,"select result from account_actions where owner_account_id=? and action_id=? and kind='companions-cloud-command'",[owner,'companions:'+actionId])[0];
+    proof.selectionAttempts.push({attempt,actionId,ok:result.ok,code:result.code,before,after,intentStatus:intent?JSON.parse(intent.result).status:null});save();
+    assert.equal((await model.call('accounts','session')).currentUser.id,owner);
+    if(result.ok){assert.equal(JSON.parse(intent.result).status,'verified');assert.equal(JSON.parse(query(model,'select selections_json from companion_accounts where owner_account_id=?',[owner])[0].selections_json).chatPetId,id);return result.data;}
+    assert.equal(result.code,'SELECTION_FAILED',result.message);
+    assert.ok(!intent&&(before.running||after.running),'A selection retry needs proof of the pre-intent sync-busy guard');
+    assert.equal(query(model,'select selections_json from companion_accounts where owner_account_id=?',[owner])[0].selections_json,selection,'Refused selection must preserve every original slot');
+  }
+  assert.fail('The same selection action was refused three times');
+}
 async function frame(model,id,name,resourceId){const page=await pollState(async()=>model.pages().find(page=>page.url().includes(`#/desktop/${id}`)),Boolean,{timeoutMs:30000});await page.locator(`.resource-stage[data-status="ready"][data-resource-id="${resourceId}"] canvas`).waitFor();await delay(500);const capture=await model.main(async({BrowserWindow},id)=>{const window=BrowserWindow.getAllWindows().find(window=>window.webContents.getURL().includes(`#/desktop/${id}`));const image=await window.capturePage(),bitmap=image.toBitmap();let visiblePixels=0,coloredPixels=0;for(let i=0;i<bitmap.length;i+=4){if(bitmap[i+3]>10)visiblePixels++;if(bitmap[i+3]>10&&Math.max(bitmap[i],bitmap[i+1],bitmap[i+2])-Math.min(bitmap[i],bitmap[i+1],bitmap[i+2])>20)coloredPixels++;}return {windowId:window.id,visible:window.isVisible(),size:image.getSize(),visiblePixels,coloredPixels,png:image.toPNG().toString('base64')};},id);assert.ok(capture.visible&&capture.visiblePixels>1000&&capture.coloredPixels>500);const bytes=Buffer.from(capture.png,'base64');delete capture.png;writeFileSync(join(output,name),bytes);return {...capture,file:name,sha256:createHash('sha256').update(bytes).digest('hex')};}
 function readResource(model,id){
   const row=query(model,'select resource_id,content_hash,document_json from lingjing_resources where owner_account_id=? and resource_id=?',[owner,id])[0];assert.ok(row);
@@ -78,7 +94,8 @@ try{
   pass('Actual portable A/B use packaged cloud configuration, independent encrypted sessions and a verified complete starting save',{owner,pids:[a.runtime.pid,b.runtime.pid],runtime:[a.runtime,b.runtime],source:expectedSource,tunnels,baselinePetIds:originals});
   const nickname='联合验收'+short;await a.page.evaluate(()=>{location.hash='#/companions/adopt';});await a.page.getByLabel('给它起个昵称').fill(nickname);const visible=a.page.getByRole('checkbox',{name:'领养后放到桌面'});if(await visible.isChecked())await visible.uncheck();await a.page.getByRole('button',{name:'领养这位伙伴',exact:true}).click();await a.page.locator('.cp-success').filter({hasText:nickname}).waitFor();
   const pets=(await a.call('companions','list')).pets,pet=pets.find(pet=>pet.name===nickname);assert.ok(pet);petId=pet.petId;assert.equal(pets.length,originals.length+1);assert.ok(originals.every(id=>pets.some(pet=>pet.petId===id)));
-  await a.call('conversations','select',{petId,actionId:randomUUID()});const chat=await a.call('conversations','snapshot',{petId}),persona='{"password":"EXAMPLE_PLACEHOLDER","kind":"authored persona '+short+'"}',memory='原账号联合验收记忆 '+short;
+  await waitClean(a,'Adoption complete-save checkpoint did not settle');await waitClean(b,'Adoption did not automatically reach the clean peer');
+  await selectAfterSync(a,petId);const chat=await a.call('conversations','snapshot',{petId}),persona='{"password":"EXAMPLE_PLACEHOLDER","kind":"authored persona '+short+'"}',memory='原账号联合验收记忆 '+short;
   await a.call('conversations','profile.save',{petId,revision:chat.profile.revision,profile:{...chat.profile,persona,useOverride:true}});await a.call('conversations','memory.save',{petId,memory:{content:memory}});
   const closed=netServer();await new Promise(done=>closed.listen(0,'127.0.0.1',done));const modelPort=closed.address().port;await new Promise(done=>closed.close(done));
   const overrideChat=await a.call('conversations','snapshot',{petId});assert.equal(overrideChat.profile.useOverride,true);
