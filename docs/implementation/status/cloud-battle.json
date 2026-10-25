@@ -2,7 +2,7 @@
   "module": "battle",
   "scope": "2026-10-25 real Supabase JWT-bound friend duels, shared versioned rules, participant Realtime/RLS, restart recovery and idempotent settlement; preserve approved V3",
   "branch": "codex/lingjing-battle-v3",
-  "commit": "69a23b4 (guard/custom pet/bundled source); initial authority5ebb63b; approved08guard de11173/08088e7 and05 40941f2 merged",
+  "commit": "b413835: installed SDK stale-topic eviction; 15e21c7 serialized channel replacement; b178db8 original action IDs scoped to round; approved unified baseline4830619 included",
   "goalStatus": "in_progress_under_existing_unfinished_goal",
   "goalLifecycle": "get_goal returned the older blocked full battle/online objective, which still includes the not-yet-verified real-cloud loop. It cannot truthfully be marked complete merely to create a replacement. Continue authorized work; no token budget or model changes.",
   "contracts": {
@@ -14,8 +14,7 @@
     "authority": "Service-only invoker RPCs with fixed empty search_path; renderer cannot write rooms, actions, results or reward values",
     "core": "infra/supabase/functions/_shared/battle-core.js, version five-elements-standard-v1/2026-10-25; generated desktop CJS checked by source SHA256",
     "pending": [
-      "02 main-process cloud companion command/readback adapter (server commands are deployed)",
-      "coordinator deployment and real cloud/native acceptance"
+      "complete real cloud/native multi-round, restart, training recovery and device-revoke acceptance"
     ],
     "mainTransport": {
       "entry": "OnlineDuelService.useCloudTransport(provider)",
@@ -32,7 +31,7 @@
       "localPostgresExecuted": true,
       "productionAppliedByThisChat": false,
       "readyForReview": true,
-      "remoteStateVerified": "Read-only list_migrations 2026-10-25: battle migration was not applied, so staged level/lock additions do not rewrite an applied migration"
+      "remoteStateVerified": "Read-only list_migrations 2026-10-25 confirms this migration and authority_save/scoped_authority_receipt applied by the coordinator;22 migrations total"
     },
     {
       "path": "infra/supabase/migrations/20261025034748_lingjing_battle_authority_save.sql",
@@ -77,19 +76,19 @@
     {
       "command": "node --test apps/pc-app/runtime/features/battle/tests/jwt-transport.test.cjs",
       "passed": true,
-      "cases": 5,
-      "scope": "explicitly SCRIPTED SDK boundary tests, not live cloud"
+      "cases": 8,
+      "scope": "7 explicitly SCRIPTED SDK boundaries plus actual installed realtime-js teardown/topic cache regression without network; not live cloud"
     }
   ],
   "realCloudEvidence": {
     "project": "jbvrdmrkwpznbrvteive",
     "projectName": "Text Comparision",
     "projectStatus": "ACTIVE_HEALTHY",
-    "inspection": "Read-only public schema currently contains 08 lingjing_accounts/lingjing_devices with RLS; security advisor baseline includes intentionally isolated archive/no-policy INFO findings",
-    "mutationsByThisChat": false,
-    "httpsBattleVerified": false,
-    "realtimeVerified": false,
-    "twoElectronProcessesVerified": false,
+    "inspection": "Independent read-only Edge/migration inventory confirms8 ACTIVE functions, lingjing-battle version2,22 applied migrations. Actual acceptance creates designated accounts/adopts owned pets and uses normal application commands; no admin seeding or deployment by this chat.",
+    "mutationsByThisChat": "normal designated QA account gameplay only; no DDL/deploy",
+    "httpsBattleVerified": "partial: actual invite/accept/join and first resolved round; complete run pending",
+    "realtimeVerified": "initial private channels joined; reconnect defect fixed locally and rerun pending",
+    "twoElectronProcessesVerified": true,
     "twoPhysicalDevicesVerified": false
   },
   "preservation": [
@@ -105,23 +104,23 @@
       "path": "infra/supabase/functions/duel-online/index.ts",
       "replacement": "JWT handler plus shared battle-core and 08 account bridge",
       "consumers": "legacy account/password protocol and duplicate host/guest formulas; migrate account consumers first",
-      "decision": "retain until the account bridge and new backend are integrated, then replace after consumer audit"
+      "decision": "old function/migration deletion is coordinator-owned; local tests will migrate away from loading it after the real acceptance"
     },
     {
       "path": "apps/pc-app/runtime/services/online-duel-service.cjs legacy HTTP fallback and single-token bodies",
       "replacement": "08 Auth/JWT HTTPS SDK provider, current channel and recovery logic",
       "consumers": "old account adapter and current battle service",
-      "decision": "do not send new JWT credentials to legacy HTTP; migrate active consumers before deletion"
+      "decision": "coordinator requested retirement after real acceptance: remove default HTTP/key/password paths; retain08 callback SDK, private rooms and explicit isolated QA transport"
     }
   ],
   "remaining": [
-    "coordinator deployment",
     "real HTTPS/Realtime multi-round and restart acceptance",
     "true cloud training and second-client canonical growth/inventory/report readback",
-    "consume02 main-process cloud selection/adoption adapter so legitimate selections never become an unverified local-only branch",
+    "device-only revoke with old still-valid JWT REST/private-channel refusal and other same-owner device success",
+    "retire old transport defaults and legacy SQL/VM test consumers after acceptance",
     "final upstream fetch/pull and cleanup audit"
   ],
-  "stage": "complete_server_bundle_ready_for_coordinator_deployment; native_and_live_cloud_acceptance_pending",
+  "stage": "coordinator_deployed_v2; actual_native_acceptance_running_after_client_reconnect_fix",
   "productionReady": false,
   "readyForCoordinatorDeployment": true,
   "serverBundle": {
@@ -138,7 +137,7 @@
   "authorityCheckpoint": {
     "test": "node apps/pc-app/runtime/features/battle/tests/authority-save.test.mjs",
     "passed": true,
-    "checks": 7,
+    "checks": 8,
     "scope": "Actual local PGlite SQL + canonical SQLite adapters. Atomic rollback after protected write, two owners/reports, duplicate growth/seeds refusal, late local adapter rollback, offline-branch preservation, service-only and old receipt-only denial, server training state machine. Scripted readback boundary is not real HTTPS proof",
     "evidence": "docs/implementation/evidence/battle/2026-10-25/cloud-stage-two/authority-save.json",
     "native": "ordinary npm ci in own non-junction node_modules, then native:check: actual Electron44.9.3/Node24.21.0 + better-sqlite3 13.0.3 opened the same DB; original16 battle/legacy-rules cases passed",
@@ -150,8 +149,10 @@
   },
   "liveVerifier": {
     "path": "apps/pc-app/runtime/features/battle/verify-live-cloud.mjs",
-    "configured": false,
-    "executed": false,
+    "configured": true,
+    "executed": true,
+    "complete": false,
+    "latestAttemptSource": "b413835; earlier failed actual runs retained under ignored artifacts/battle/live-* with their own source commits and original evidence",
     "description": "Two opponent profiles plus a fresh same-owner recovery profile on one host. Real HTTPS tracing, original-action response interruption, actual Auth refresh/callback-mode WSS reconnect, native restart with persisted Auth, mirrored reports, cloud training + same-owner canonical growth/inventory readback, actual device-only revoke then still-valid JWT REST/private-channel refusal while another device stays authorized. Input requires testOnly=true and two designated accounts/server-owned pets; no fake QA actors.",
     "physicalDeviceClaim": "One Windows host, two independent Electron processes. Two physical devices unverified."
   }
