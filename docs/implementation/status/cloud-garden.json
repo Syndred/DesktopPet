@@ -1,0 +1,15 @@
+{
+  "module":"garden",
+  "branch":"codex/lingjing-garden",
+  "commit":"see git log for this file",
+  "goalStatus":"active",
+  "scope":"Cloud territorial authority, canonical garden economy and atomic per-pet inventory integration",
+  "baseline":"46abf416e0500b53ef32fc29b441d923ef5a6a80",
+  "contracts":["docs/implementation/cloud-upgrade-2026-10-25.md","docs/implementation/cloud-garden-contract.md"],
+  "migrations":[{"path":"infra/supabase/migrations/20261025020010_lingjing_territory_authority.sql","generatedBy":"Supabase CLI 2.122.0 migration new","status":"implementation-in-progress","deployed":false}],
+  "checks":["Old local goal was completed and independently accepted; new unbudgeted goal created","Public cloud-upgrade baseline merged in original managed worktree","Supabase skill, Postgres/RLS guidance, changelog and PostGIS docs consulted","Target project metadata read-only: public schema currently reports no visible tables, PostGIS available but not installed; no mutation performed"],
+  "realCloudEvidence":{"projectRef":"jbvrdmrkwpznbrvteive","readOnlyMetadata":true,"deployedByThisModule":false,"territoryAcceptance":false},
+  "preservation":{"legacyOwnerTextIds":true,"secondInventoryStore":false,"privateGardenUnaffectedByWorldOwnership":true,"productionDataModified":false,"battleUiTouched":false},
+  "cleanupCandidates":[{"path":"Old runtime session_token authentication in garden-sync","replacement":"08 unified actor context; retain old account data and migrate through shared adapter","status":"pending-integration"}],
+  "remaining":["Implement PostGIS/transaction RPC and server-authoritative challenge lifecycle","Consume published08 actor and03 location contracts","Wire existing shared battle session/context without UI changes","Run focused local tests and provide real HTTPS independent-client verifier","Main-coordinated deployment and independent cloud acceptance"]
+}
