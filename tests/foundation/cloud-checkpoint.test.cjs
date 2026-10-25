@@ -10,6 +10,7 @@ const { AccountSync } = require('../../apps/pc-app/runtime/features/accounts/syn
 const { checksum } = require('../../apps/pc-app/runtime/features/accounts/util.cjs');
 const { saveDataChecksum } = require('../../apps/pc-app/runtime/features/accounts/util.cjs');
 const { CompanionsService } = require('../../apps/pc-app/runtime/features/companions/service.cjs');
+const { createCompanionBackupAdapter } = require('../../apps/pc-app/runtime/features/companions/backup.cjs');
 const { GardenService } = require('../../apps/pc-app/runtime/features/garden/service.cjs');
 const { createGardenBackupAdapter } = require('../../apps/pc-app/runtime/features/garden/backup.cjs');
 const { CloudGardenAuthority } = require('../../apps/pc-app/runtime/features/garden/cloud-authority.cjs');
@@ -25,8 +26,9 @@ function fixture() {
   const garden = new GardenService({ db }); garden.snapshot({ ownerAccountId: owner });
   const backups = new BackupManager({ db,directory,getIdentity:who=>db.prepare('SELECT * FROM account_identities WHERE owner_account_id=?').get(who) });
   backups.register(createGardenBackupAdapter(db));
+  backups.register(createCompanionBackupAdapter(db));
   const sync = new AccountSync({ db,backups,remote:{enabled:true},getSession:()=>({ownerAccountId:owner,provider:'runtime'}),getSettings:()=>({document:{sync:{enabled:true}}}) });
-  const authority = new CloudGardenAuthority({db,get:name=>name==='accounts'?{sync}:null},garden);
+  const authority = new CloudGardenAuthority({db,session:{getOwnerAccountId:()=>owner},get:name=>name==='accounts'?{sync}:null},garden);
   const initial = backups.snapshot(owner);
   db.prepare('INSERT INTO account_sync_state VALUES(?,?,?,?,NULL)').run(owner,1,initial.checksum,new Date().toISOString());
   return {db,owner,garden,backups,sync,authority,initial};
@@ -46,22 +48,30 @@ test('real shared SQLite garden readback advances the account CAS base without r
     assert.equal(f.sync.status(f.owner).cloudRevision,2);assert.equal(f.sync.status(f.owner).localChanged,false);
     f.sync.enqueue(f.owner,'next-full-save');
     assert.equal(f.db.prepare('SELECT base_revision FROM account_sync_outbox WHERE owner_account_id=?').get(f.owner).base_revision,2);
-    assert.throws(()=>f.authority.applyReadback({ownerAccountId:f.owner},remote),{code:'SYNC_PENDING'});
+    const pending={...f.db.prepare('SELECT * FROM account_sync_outbox WHERE owner_account_id=?').get(f.owner)};
+    f.authority.applyReadback({ownerAccountId:f.owner},remote);
+    assert.throws(()=>f.sync.acceptAuthoritativeReadback(f.owner,{envelope:remote.envelope,cloudRevision:remote.accountRevision}),{code:'SYNC_PENDING'});
+    assert.deepEqual({...f.db.prepare('SELECT * FROM account_sync_outbox WHERE owner_account_id=?').get(f.owner)},pending);
     assert.equal(f.db.prepare('SELECT status FROM account_sync_outbox WHERE owner_account_id=?').get(f.owner).status,'pending');
   } finally {f.db.close();}
 });
-test('other unsynced feature data and in-flight saves stop checkpoint adoption and roll back garden changes', async () => {
+test('local SQLite fixture: verified domain readback preserves unrelated offline data while strict account checkpoint rejects conflict or in-flight saves', async () => {
   const f=fixture();try {
-    const remote=await remotePlant(f), backup=createGardenBackupAdapter(f.db), before=backup.export(f.owner);
+    const remote=await remotePlant(f), backup=createGardenBackupAdapter(f.db);
     f.db.prepare('UPDATE test_notes SET note=? WHERE owner_account_id=?').run('离线新回忆',f.owner);
-    assert.throws(()=>f.authority.applyReadback({ownerAccountId:f.owner},remote),{code:'CLOUD_LOCAL_CONFLICT'});
-    assert.deepEqual(backup.export(f.owner),before);
+    f.authority.applyReadback({ownerAccountId:f.owner},remote);
+    assert.equal(f.garden.snapshot({ownerAccountId:f.owner}).data.plots[0].cropType,'rice');
+    const applied=backup.export(f.owner);
+    assert.throws(()=>f.sync.acceptAuthoritativeReadback(f.owner,{envelope:remote.envelope,cloudRevision:remote.accountRevision}),{code:'CLOUD_LOCAL_CONFLICT'});
+    assert.deepEqual(backup.export(f.owner),applied);
     assert.equal(f.db.prepare('SELECT note FROM test_notes WHERE owner_account_id=?').get(f.owner).note,'离线新回忆');
     assert.equal(f.sync.status(f.owner).cloudRevision,1);
     f.db.prepare('UPDATE test_notes SET note=? WHERE owner_account_id=?').run('已有回忆',f.owner);
     f.sync.running.add(f.owner);
-    assert.throws(()=>f.authority.applyReadback({ownerAccountId:f.owner},remote),{code:'SYNC_BUSY'});
-    assert.deepEqual(backup.export(f.owner),before);
+    f.authority.applyReadback({ownerAccountId:f.owner},remote);
+    assert.throws(()=>f.sync.acceptAuthoritativeReadback(f.owner,{envelope:remote.envelope,cloudRevision:remote.accountRevision}),{code:'SYNC_BUSY'});
+    assert.deepEqual(backup.export(f.owner),applied);
+    assert.equal(f.sync.status(f.owner).cloudRevision,1);
     f.sync.running.delete(f.owner);
     f.authority.applyReadback({ownerAccountId:f.owner},remote);
     assert.throws(()=>f.sync.acceptAuthoritativeReadback(f.owner,{envelope:f.initial,cloudRevision:1}),{code:'SYNC_STALE_READBACK'});
