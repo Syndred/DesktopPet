@@ -62,7 +62,8 @@ function register(services) {
       if (companions?.listPets) return companions.listPets(ownerAccountId);
       // Legacy inventory is already scoped by the verified RuntimeDataStore session.
       if (services.session.getOwnerAccountId() !== ownerAccountId) return [];
-      return services.legacy.runtimeDataStore.getInventorySnapshot().pets;
+      // Imported/local JSON is not an authoritative global-number source.
+      return services.legacy.runtimeDataStore.getInventorySnapshot().pets.map(pet => ({ ...pet, globalSerial: undefined }));
     },
     publish: (value) => services.events.emit("conversations:changed", value),
     setChatActivity: (value) => services.events.emit("conversations:activity", value) });

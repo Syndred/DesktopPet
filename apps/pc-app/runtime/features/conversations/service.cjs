@@ -71,6 +71,9 @@ class ConversationService {
     const pets = this.pets(session).map((pet) => ({ petId: pet.petId ?? pet.id,
       name: typeof pet.name === "string" ? pet.name : pet.name?.zh || "灵宠",
       templateId: pet.templateId ?? null, avatarUrl: pet.avatarUrl ?? pet.resource?.thumbnailUrl ?? null, level: pet.level ?? pet.growth?.level ?? 1,
+      // Only carry canonical metadata from the main-process inventory adapter;
+      // the renderer cannot assign it and legacy serial/UUID are never substitutes.
+      ...(typeof pet.globalSerial === "string" && /^[1-9][0-9]*$/u.test(pet.globalSerial) ? { globalSerial: pet.globalSerial } : {}),
       element: ["metal", "wood", "earth", "water", "fire"].includes(pet.element) ? pet.element : null,
       ...(pet.resource ? { resource: { resourceId: pet.resource.resourceId, kind: pet.resource.kind } } : {}) }));
     // The shared companion chat slot is authoritative when integrated. A local
