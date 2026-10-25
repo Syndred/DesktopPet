@@ -20,7 +20,7 @@ const evidence={at:new Date().toISOString(),kind:'Actual provider-issued signed 
  const auth=await fetch(`${config.url}/auth/v1/user`,{headers,signal:AbortSignal.timeout(30_000)}),authData=await auth.json();
  const expirationConfirmed=/expir/i.test([authData.msg,authData.message,authData.error_description,authData.error_code,authData.code].filter(Boolean).join(' '));
  evidence.provider={status:auth.status,code:authData.error_code||authData.code,serverDate:auth.headers.get('date'),expirationConfirmed};
- if(auth.status!==401||!expirationConfirmed)throw Object.assign(new Error(),{code:'PROVIDER_DID_NOT_CONFIRM_EXPIRATION'});
+ if(![401,403].includes(auth.status)||!expirationConfirmed||!['bad_jwt','invalid_jwt'].includes(authData.error_code||authData.code))throw Object.assign(new Error(),{code:'PROVIDER_DID_NOT_CONFIRM_EXPIRATION'});
  const save=await fetch(`${config.url}/functions/v1/lingjing-save`,{method:'POST',headers:{...headers,'content-type':'application/json'},body:JSON.stringify({op:'read'}),signal:AbortSignal.timeout(30_000)}),saveData=await save.json();
  if(save.status!==401)throw Object.assign(new Error(),{code:'EXPIRED_SAVE_ACCESS_WAS_NOT_REJECTED'});
  evidence.save={status:save.status,code:saveData.code};evidence.passed=true;
