@@ -58,7 +58,7 @@ try{
   const adopted=await activeA.page.evaluate(async input=>{const r=await window.lingjing.invoke('companions','adopt',input);if(!r.ok)throw new Error(`${r.code}: ${r.message}`);return r.data;},
     {actionId:randomUUID(),templateId:'big-fish-gentle',name:'完整云存档伙伴',showOnDesktop:false});
   const pet=adopted.pet;assert.ok(pet?.petId);
-  const initial=await activeB.app.evaluate(async petId=>{
+  const initial=await activeB.app.evaluate(async(_electron,petId)=>{
     const a=globalThis.__accountsCloudAcceptanceServices.get('accounts'),s=await a.cloudInvoke('companions-sync',{op:'snapshot'});
     if(!s.module.data.tables.companion_pets.some(row=>row.pet_id===petId))throw new Error('Product adoption was not independently present in real cloud');
     const garden=await a.cloudInvoke('garden-sync',{op:'snapshot'});return{petId,owner:s.ownerAccountId,revision:garden.accountRevision||garden.revision};
@@ -111,7 +111,7 @@ try{
  await close(activeA);activeA=await launch('device-a');await activeA.page.getByRole('heading',{name:'欢迎回来',exact:true}).waitFor();assert.equal((await invoke(activeA,'session')).currentUser,null);
  pass('logout A revokes its real session, restart stays signed out, B remains active',bAlive);
  assert.deepEqual(evidence.errors,[]);evidence.passed=true;writeFileSync(join(output,'evidence.json'),JSON.stringify(evidence,null,2));console.log('CLOUD_ELECTRON_PASSED',output);
-}catch(error){evidence.error={message:error.message};writeFileSync(join(output,'failure.json'),JSON.stringify(evidence,null,2));console.error(error.message);process.exitCode=1;}
+}catch(error){const message=String(error.message).replaceAll(password,'<redacted-qa-password>');evidence.error={message};writeFileSync(join(output,'failure.json'),JSON.stringify(evidence,null,2));console.error(message);process.exitCode=1;}
 finally{for(const model of models)await close(model);for(const name of ['device-a','device-b']){
  const dbFile=join(output,name,'lingjing.sqlite');try{const db=new DatabaseSync(dbFile,{readOnly:true});const counts=db.prepare('select status,count(*) count from account_sync_outbox group by status').all();writeFileSync(join(output,`${name}-sqlite-readback.json`),JSON.stringify({counts},null,2));db.close();}catch{} }
 }
