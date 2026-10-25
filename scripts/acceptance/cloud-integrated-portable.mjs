@@ -91,6 +91,9 @@ try{
   owner=(await a.call('accounts','session')).currentUser.id;assert.equal((await b.call('accounts','session')).currentUser.id,owner);assert.ok(tunnels>0);
   await restore(a);let settings=await a.call('accounts','settingsGet');settings.document.sync.enabled=true;await a.call('accounts','settingsSave',{actionId:randomUUID(),revision:settings.revision,document:settings.document});const initial=await a.call('accounts','syncNow',{actionId:randomUUID()});assert.equal(initial.verified,true);await restore(b);await waitClean(b,'Initial complete B restore did not settle');
   const originals=(await a.call('companions','list')).pets.map(pet=>pet.petId),originalResources=readDomain(a).resources;
+  // Exercise the real overview/report consumer before expensive business steps,
+  // including compatibility between cloud v1 and local journal-backed v2.
+  for(const model of[a,b])await model.call('battle','overview');
   pass('Actual portable A/B use packaged cloud configuration, independent encrypted sessions and a verified complete starting save',{owner,pids:[a.runtime.pid,b.runtime.pid],runtime:[a.runtime,b.runtime],source:expectedSource,tunnels,baselinePetIds:originals});
   const nickname='联合验收'+short;await a.page.evaluate(()=>{location.hash='#/companions/adopt';});await a.page.getByLabel('给它起个昵称').fill(nickname);const visible=a.page.getByRole('checkbox',{name:'领养后放到桌面'});if(await visible.isChecked())await visible.uncheck();await a.page.getByRole('button',{name:'领养这位伙伴',exact:true}).click();await a.page.locator('.cp-success').filter({hasText:nickname}).waitFor();
   const pets=(await a.call('companions','list')).pets,pet=pets.find(pet=>pet.name===nickname);assert.ok(pet);petId=pet.petId;assert.equal(pets.length,originals.length+1);assert.ok(originals.every(id=>pets.some(pet=>pet.petId===id)));
