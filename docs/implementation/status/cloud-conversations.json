@@ -148,7 +148,7 @@
     "Real two Electron A/B chat/persona/memory CAS, conflicts/offline/restart checks.",
     "Coordinator deployment/integration and independent acceptance; original legacy server migration remains08 condition."
   ],
-  "updatedAt": "2026-10-25T03:00:01.038Z",
+  "updatedAt": "2026-10-25T03:06:22.412Z",
   "cleanupManifest": "docs/implementation/evidence/conversations/cloud-2026-10-25/cleanup-manifest.json",
   "installation": {
     "workspaceNodeModulesIndependent": true,
@@ -182,6 +182,13 @@
       "process restart and exact-action outbox retry",
       "all observed push bodies exclude local keys/ciphers/Auth proof"
     ],
-    "injectedStep": "Only one offline cloud push uses explicit actual loopback-refusal fault injection; subsequent retry/readback uses real HTTPS."
+    "injectedStep": "Only one offline cloud push uses explicit actual loopback-refusal fault injection; subsequent retry/readback uses real HTTPS.",
+    "receiptSemantics": "New08 distinguishes personalVerified from full-save verified/requiresAuthority/privacyRedactions. Harness requires actual personalVerified and records the full receipt without promoting historic gameplay.",
+    "privacyScope": "Inspect actual archive and push envelope bodies, not only the conversation adapter export.",
+    "interfaceReview": {
+      "commit": "ce0affb",
+      "mode": "read-only committed code; not merged or deployed by06",
+      "pendingApproval": true
+    }
   }
 }

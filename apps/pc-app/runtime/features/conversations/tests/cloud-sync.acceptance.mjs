@@ -65,11 +65,11 @@ async function observePushPrivacy(c) {
     remote.fetcher = async (url, init) => {
       if (String(url).endsWith('/functions/v1/lingjing-save')) {
         const request = JSON.parse(init.body);
-        if (request.op === 'push') {
+        if (request.op === 'push' || request.op === 'archive') {
           const json = JSON.stringify(request.envelope), proof = remote.active;
           const db = globalThis.__conversationCloudAccounts.db;
           const ciphers = db.prepare('SELECT encrypted_key FROM conversation_credentials WHERE encrypted_key IS NOT NULL').all().map(row => row.encrypted_key);
-          globalThis.__conversationCloudPushes.push({ actionId: request.actionId, checksum: request.envelope.checksum,
+          globalThis.__conversationCloudPushes.push({ op: request.op, actionId: request.actionId, checksum: request.envelope.checksum,
             safe: ![...localKeys, ...ciphers, proof?.accessToken, proof?.refreshToken].filter(Boolean).some(value => json.includes(value)) && !/"(?:apiKey|api_key|encrypted_key|accessToken|refreshToken|sessionToken)"\s*:/.test(json) });
         }
       }
@@ -117,7 +117,7 @@ try {
   state = await snapshot(a, petId); const originalIds = state.messages.map(row => row.id);
   assert.equal(state.messages[1].status, 'failed'); assert.equal(state.messages[3].status, 'cancelled');
   assert.ok(state.messages.filter(row => row.role === 'assistant').every(row => row.content === ''));
-  const sentA = await call(a, 'accounts', 'syncNow', { actionId: randomUUID() }); assert.equal(sentA.verified, true);
+  const sentA = await call(a, 'accounts', 'syncNow', { actionId: randomUUID() }); assert.equal(sentA.personalVerified, true);
   await restore(b); let stateB = await snapshot(b, petId);
   assert.deepEqual(stateB.messages.map(row => row.id), originalIds); assert.equal(stateB.profile.persona, state.profile.persona);
   assert.deepEqual(stateB.memories, state.memories); assert.equal(stateB.globalConnection.hasKey, true);
@@ -129,7 +129,7 @@ try {
   await call(a, 'conversations', 'profile.save', { petId, revision: state.profile.revision, profile: { ...state.profile, persona: 'A 未同步的人设冲突' } });
   await call(b, 'conversations', 'profile.save', { petId, revision: stateB.profile.revision, profile: { ...stateB.profile, persona: 'B 的较新人设' } });
   await call(b, 'conversations', 'memory.delete', { petId, id: stateB.memories[0].id, revision: stateB.memories[0].revision });
-  const sentB = await call(b, 'accounts', 'syncNow', { actionId: randomUUID() }); assert.equal(sentB.verified, true);
+  const sentB = await call(b, 'accounts', 'syncNow', { actionId: randomUUID() }); assert.equal(sentB.personalVerified, true);
   const conflicted = await invoke(a, 'accounts', 'syncNow', { actionId: randomUUID() }); assert.equal(conflicted.code, 'SYNC_CONFLICT');
   assert.equal((await call(a, 'accounts', 'syncStatus')).conflicts, 1);
   const preview = await call(a, 'accounts', 'cloudPreview');
@@ -152,13 +152,25 @@ try {
   observedPushes.push(...await a.app.evaluate(() => globalThis.__conversationCloudPushes));
   const profileA = a.profile; await close(a); a = await launch('a', profileA);
   assert.equal((await call(a, 'accounts', 'session')).currentUser.id, owner); await observePushPrivacy(a);
-  const retried = await call(a, 'accounts', 'syncRetry'); assert.equal(retried.verified, true); assert.equal(retried.actionId, offlineAction);
+  let retried = await call(a, 'accounts', 'syncRetry');
+  if (retried.idle) {
+    // Startup may have already flushed the durable row before the explicit
+    // retry command. Independently read this exact action from the real service.
+    const receipt = await a.app.evaluate(async (_electron, actionId) => {
+      const ctx = await globalThis.__conversationCloudAccounts.requireCloudActor();
+      const r = await ctx.invoke('lingjing-save', { op: 'read', actionId });
+      return { actionId: r.actionId, revision: r.revision, checksum: r.envelope?.checksum };
+    }, offlineAction);
+    assert.equal(receipt.actionId, offlineAction); assert.ok(receipt.checksum);
+    retried = { ...retried, ...receipt, completedDuringStartup: true };
+  } else assert.equal(retried.personalVerified, true);
+  assert.equal(retried.actionId, offlineAction);
   await restore(b); stateB = await snapshot(b, petId);
   assert.deepEqual(stateB.messages.map(row => row.id), beforeRestart.messages.map(row => row.id)); assert.deepEqual(stateB.memories, beforeRestart.memories);
   assert.equal((await assertStoredKey(a, owner)).cipherHash, keyA.cipherHash); assert.equal((await assertStoredKey(b, owner)).cipherHash, keyB.cipherHash);
   record('A persists the failed cloud outbox and local key across process restart; exact action retries through real HTTPS and B independently reads it back', { injectedFailure: offline.code, retry: retried, finalIds: stateB.messages.map(row => row.id) });
   for (const c of [a, b]) { observedPushes.push(...await c.app.evaluate(() => globalThis.__conversationCloudPushes)); assert.equal(await c.page.evaluate(() => localStorage.length), 0); }
-  assert.ok(observedPushes.length >= 4 && observedPushes.every(row => row.safe)); assert.deepEqual(errors, []);
+  assert.ok(observedPushes.filter(row => row.op === 'push').length >= 4 && observedPushes.every(row => row.safe)); assert.deepEqual(errors, []);
   evidence.privacyChecks = observedPushes; evidence.owner = owner; evidence.petId = petId; evidence.fullChatSync = true; evidence.status = 'passed';
   await b.page.evaluate(() => { location.hash = '#/chat'; });
   await b.page.getByRole('log', { name: '聊天记录' }).waitFor(); await b.page.screenshot({ path: join(output, 'cloud-restored-chat.png'), fullPage: true });
