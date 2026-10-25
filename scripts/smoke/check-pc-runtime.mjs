@@ -1,38 +1,9 @@
-import { existsSync, readFileSync } from "node:fs";
-import { join, resolve } from "node:path";
-
-const root = resolve(process.cwd());
-
-const requiredFiles = [
-  "scripts/desktop/run-electron.cjs",
-  "apps/pc-app/runtime/main.cjs",
-  "apps/pc-app/runtime/preload.cjs",
-  "apps/pc-app/runtime/services/battle-runtime.cjs",
-  "apps/pc-app/runtime/services/map-runtime.cjs",
-  "apps/pc-app/runtime/services/runtime-data-store.cjs",
-  "apps/pc-app/runtime/services/wild-pet-runtime.cjs",
-  "apps/pc-app/runtime/assets/models/Fox.glb",
-  "apps/pc-app/runtime/assets/models/CesiumMan.glb",
-  "apps/pc-app/runtime/package.json",
-  "apps/pc-app/runtime/renderer/index.html",
-  "apps/pc-app/runtime/renderer/renderer.mjs",
-  "apps/pc-app/runtime/renderer/styles.css"
-];
-
-for (const file of requiredFiles) {
-  const fullPath = join(root, file);
-  if (!existsSync(fullPath)) {
-    throw new Error(`missing runtime file: ${file}`);
-  }
-}
-
-const packageJson = JSON.parse(readFileSync(join(root, "package.json"), "utf8"));
-if (!packageJson.scripts["dev:pc"]) {
-  throw new Error("missing script: dev:pc");
-}
-
-if (!packageJson.scripts["start:pc"]) {
-  throw new Error("missing script: start:pc");
-}
-
-console.log("PC runtime smoke passed.");
+import { existsSync, readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
+import assert from 'node:assert/strict';
+const pkg = JSON.parse(readFileSync('package.json', 'utf8'));
+assert.equal(pkg.main, 'apps/pc-app/dist/main/index.cjs');
+assert.equal(pkg.scripts['dev:pc:legacy'], undefined);
+for (const file of ['apps/pc-app/runtime/main/index.ts', 'apps/pc-app/runtime/preload/index.ts', 'apps/pc-app/runtime/core/runtime-compat.cjs', 'apps/pc-app/ui/index.html', 'apps/pc-app/ui/src/main.tsx']) assert.ok(existsSync(resolve(file)), file);
+for (const file of ['apps/pc-app/runtime/main.cjs', 'apps/pc-app/runtime/main.mjs', 'apps/pc-app/runtime/preload.cjs', 'apps/pc-app/runtime/preload.mjs', 'apps/pc-app/runtime/renderer/index.html', 'apps/pc-app/runtime/auth/index.html']) assert.equal(existsSync(resolve(file)), false, 'Obsolete entry remains: ' + file);
+console.log('Formal Electron/React entry and obsolete-source removal checks passed.');

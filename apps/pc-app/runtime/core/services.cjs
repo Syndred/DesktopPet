@@ -48,7 +48,9 @@ function createServices({ db, legacy, paths, windows, safeStorage }) {
         }
         return { ok: true, data: value };
       } catch (error) {
-        console.error(`[${feature}:${command}]`, error);
+        // Domain/provider exceptions can carry request headers or BYOK details.
+        // Keep logs useful without serializing the exception or renderer payload.
+        console.error(`[${feature}:${command}]`, { requestId, code: error.code || 'INTERNAL_ERROR', name: error.name || 'Error' });
         return { ok: false, code: error.code || 'INTERNAL_ERROR', message: error.message || '操作未完成。' };
       }
     }

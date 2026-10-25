@@ -1,5 +1,5 @@
 {
-  "name": "qingpet-lord-3d",
+  "name": "lingjing-desktop",
   "version": "0.1.8",
   "private": true,
   "description": "灵境 · 多宠物桌面伙伴",
@@ -36,7 +36,6 @@
     "test:watch": "vitest",
     "verify": "npm run lint && npm run typecheck && npm run test:layers",
     "build:pc": "electron-vite build && node scripts/desktop/write-build-manifest.mjs",
-    "dev:pc:legacy": "node scripts/desktop/run-electron.cjs apps/pc-app/runtime",
     "typecheck:ui": "tsc --noEmit -p apps/pc-app/ui/tsconfig.json",
     "native:electron": "node scripts/desktop/verify-native.cjs",
     "package:pc:dir": "npm run build:pc && electron-builder --config scripts/release/electron-builder.pc.json --win --dir --x64",

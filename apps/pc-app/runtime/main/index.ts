@@ -8,7 +8,6 @@ import { app, BrowserWindow, ipcMain, Menu, nativeImage, protocol, safeStorage, 
 const require = createRequire(import.meta.url);
 const runtime = resolve(dirname(fileURLToPath(import.meta.url)), '../../runtime');
 if (process.platform === 'win32') app.setAppUserModelId('com.lingjing.desktop');
-process.env.LINGJING_FOUNDATION = '1';
 // Retain the original app identity/path so existing accounts and history are found.
 if (process.env.PET_USER_DATA_DIR) app.setPath('userData', resolve(process.env.PET_USER_DATA_DIR));
 else {
@@ -18,18 +17,23 @@ else {
 const { openDatabase, backupLegacy } = require(join(runtime, 'core/database.cjs'));
 const { createServices, discoverFeatures } = require(join(runtime, 'core/services.cjs'));
 const { readQaScenario } = require(join(runtime, 'core/qa-scenario.cjs'));
-const { initializeLegacy } = require(join(runtime, 'main.cjs'));
+const { createRuntimeCompatibility } = require(join(runtime, 'core/runtime-compat.cjs'));
+const { validateIpcRequest, desktopEventAllowed } = require(join(runtime, 'core/ipc-guard.cjs'));
 const resourceEntry = join(runtime, 'features/resources/index.cjs');
 if (existsSync(resourceEntry)) require(resourceEntry).registerResourceScheme(protocol);
 
 let window: BrowserWindow | null = null;
 let tray: Tray | null = null;
 let quitting = false;
+let shuttingDown = false;
+let shutdownComplete = false;
 let services: any;
 let features: any[] = [];
 let closeToTray = true;
+let compatibility: { dispose(): void } | undefined;
 const companionWindows = new Map<string, BrowserWindow>();
 const rendererFile = resolve(runtime, '../dist/ui/index.html');
+const desktopRendererFile = resolve(runtime, '../dist/ui/desktop.html');
 const preload = resolve(runtime, '../dist/preload/index.cjs');
 const manifestFile = resolve(runtime, '../dist/build-manifest.json');
 let build: Record<string, unknown> | undefined;
@@ -39,8 +43,11 @@ function trusted(event: Electron.IpcMainEvent | Electron.IpcMainInvokeEvent) {
   try {
   const frame = event.senderFrame;
   if (!frame || frame !== event.sender.mainFrame) return false;
+  const host = BrowserWindow.fromWebContents(event.sender);
+  const desktop = [...companionWindows.values()].some(value => value === host);
+  if (host !== window && !desktop) return false;
   if (process.env.ELECTRON_RENDERER_URL) return new URL(frame.url).origin === new URL(process.env.ELECTRON_RENDERER_URL).origin;
-  return frame.url.startsWith('file:') && fileURLToPath(frame.url.split('#')[0]) === rendererFile;
+  return frame.url.startsWith('file:') && fileURLToPath(frame.url.split('#')[0]) === (desktop ? desktopRendererFile : rendererFile);
   } catch { return false; }
 }
 
@@ -53,8 +60,9 @@ function protect(win: BrowserWindow) {
 
 function load(win: BrowserWindow, route = '/companions') {
   const url = process.env.ELECTRON_RENDERER_URL;
-  if (url) void win.loadURL(`${url}#${route}`);
-  else void win.loadFile(rendererFile, { hash: route });
+  const desktop = route.startsWith('/desktop/');
+  if (url) void win.loadURL(`${desktop ? new URL('desktop.html', url.endsWith('/') ? url : `${url}/`).href : url}#${route}`);
+  else void win.loadFile(desktop ? desktopRendererFile : rendererFile, { hash: route });
 }
 
 function createWindow() {
@@ -88,7 +96,8 @@ function createWindow() {
 }
 
 function emit(name: string, payload: unknown) {
-  for (const win of BrowserWindow.getAllWindows()) win.webContents.send('lingjing:event', { name, payload });
+  if (window && !window.isDestroyed()) window.webContents.send('lingjing:event', { name, payload });
+  for (const [petId, win] of companionWindows) if (!win.isDestroyed() && desktopEventAllowed(name, payload, petId)) win.webContents.send('lingjing:event', { name, payload });
 }
 
 const windows = {
@@ -97,6 +106,7 @@ const windows = {
     const win = new BrowserWindow({ width: options.width || 240, height: options.height || 280,
       ...(Number.isFinite(options.x) && Number.isFinite(options.y) ? { x: options.x, y: options.y } : {}),
       transparent: true, frame: false, resizable: false, hasShadow: false, skipTaskbar: true,
+      backgroundColor: '#00000000',
       alwaysOnTop: true, show: false, focusable: false,
       webPreferences: { preload, contextIsolation: true, nodeIntegration: false, sandbox: true } });
     companionWindows.set(petId, win);
@@ -135,7 +145,8 @@ app.whenReady().then(async () => {
   const legacyDataExisted = sourceMarker ? sourceMarker.value === 'existing' : existsSync(legacyDataFile);
   if (!sourceMarker) db.prepare('INSERT INTO lingjing_meta(key,value) VALUES(?,?)').run(sourceKey, legacyDataExisted ? 'existing' : 'new');
   backupLegacy(legacyDataFile);
-  const legacy = initializeLegacy();
+  const legacy = createRuntimeCompatibility({ userData, legacyDataFile });
+  compatibility = legacy;
   services = createServices({ db, legacy, paths: { userData, assets: join(runtime, 'assets'), legacyDataFile, legacyDataExisted }, windows, safeStorage });
   if (qaScenario) {
     services.provide('qaProfile', Object.freeze({ ...qaScenario, accountContext }));
@@ -149,12 +160,16 @@ app.whenReady().then(async () => {
   await require(join(runtime, 'core/builtin-art.cjs')).registerBuiltinArt(services);
   if (services.get('backups') && services.get('resources')) services.get('backups').register(require(join(runtime, 'core/resource-backup.cjs')).createResourceBackupAdapter(services));
   if (services.get('backups') && services.get('conversations')) services.get('backups').register(require(join(runtime, 'core/conversation-backup.cjs')).createConversationBackupAdapter(services));
-  services.ipc.handle('app:info', () => ({ version: app.getVersion(), platform: process.platform, build, features: features.map(x => ({ id: x.id, commands: x.commands })), user: services.session.getCurrentUser(), ...(qaScenario ? { scenario: qaScenario.descriptor } : {}) }), { public: true });
+  services.ipc.handle('app:info', () => ({ version: app.getVersion(), platform: process.platform, build,
+    runtime: { electron: process.versions.electron, node: process.versions.node, modules: process.versions.modules, napi: process.versions.napi, arch: process.arch,
+      tray: { active: Boolean(tray && !tray.isDestroyed()), ...(tray && !tray.isDestroyed() && process.platform === 'win32' ? { bounds: tray.getBounds() } : {}) } },
+    features: features.map(x => ({ id: x.id, commands: x.commands })), user: services.session.getCurrentUser(), ...(qaScenario ? { scenario: qaScenario.descriptor } : {}) }), { public: true });
   ipcMain.handle('lingjing:invoke', async (event, request) => {
+    if (quitting) return { ok: false, code: 'APP_CLOSING', message: '应用正在关闭。' };
     if (!trusted(event)) return { ok: false, code: 'UNTRUSTED_SENDER', message: '请求来源无效。' };
-    try {
-      if (!request || typeof request.feature !== 'string' || typeof request.command !== 'string' || JSON.stringify(request).length > 2_000_000) return { ok: false, code: 'INVALID_REQUEST', message: '请求格式无效。' };
-    } catch { return { ok: false, code: 'INVALID_REQUEST', message: '请求格式无效。' }; }
+    const desktopPetId = [...companionWindows].find(([, host]) => host.webContents === event.sender)?.[0];
+    const invalid = validateIpcRequest(request, desktopPetId);
+    if (invalid) return { ok: false, code: invalid, message: invalid === 'WINDOW_SCOPE_VIOLATION' ? '此窗口不能操作该功能或伙伴。' : '请求格式无效。' };
     const owner = services.session.getOwnerAccountId();
     const result = await services.invoke(request.feature, request.command, request.payload);
     if (owner !== services.session.getOwnerAccountId()) {
@@ -189,5 +204,21 @@ app.whenReady().then(async () => {
   app.on('activate', windows.showMain);
 }).catch(error => { console.error(error); app.exit(1); });
 
-app.on('before-quit', () => { quitting = true; for (const f of features) f.dispose?.(); services?.db?.close(); tray?.destroy(); });
+app.on('before-quit', event => {
+  if (shutdownComplete) return;
+  event.preventDefault();
+  if (shuttingDown) return;
+  shuttingDown = true;
+  quitting = true;
+  const dispose = async () => {
+    for (const feature of [...features].reverse()) {
+      try { await feature.dispose?.(); } catch { console.error('[shutdown]', { feature: feature.id, code: 'DISPOSE_FAILED' }); }
+    }
+    compatibility?.dispose();
+  };
+  void Promise.race([dispose(), new Promise<void>(done => setTimeout(done, 4000))]).finally(() => {
+    if (services?.db?.open) services.db.close();
+    tray?.destroy(); shutdownComplete = true; app.quit();
+  });
+});
 app.on('window-all-closed', () => { /* Tray and independent companion windows remain alive. */ });
