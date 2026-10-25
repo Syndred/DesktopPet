@@ -64,19 +64,23 @@
     "preservationEvidence": "docs/implementation/evidence/cloud/2026-10-25/project-preservation.json",
     "auth": "deployed-v2-actual-https-8-of-8-passed",
     "authEvidence": "docs/implementation/evidence/cloud/2026-10-25/auth-bridge-http.json",
-    "save": "deployed-v1-protected-CAS-actual-client-acceptance-pending",
-    "territory": "in-progress-garden",
-    "discovery": "in-progress-discovery",
-    "duel": "in-progress-battle",
-    "storage": "private-bucket-and-RLS-deployed-actual-A-B-test-in-progress",
+    "save": "deployed-v1; real CAS/privacy/concurrency/main and partial two-Electron acceptance passed",
+    "territory": "garden-sync-v2/territory-sync-v2/PostGIS3.3.7 deployed; real-clock harvest/craft/feed and world HTTP loop passed; full native signed-location loop pending",
+    "discovery": "full wild transactions deployed v4; actual 28-round natural victory and unique capture passed using explicit synthetic QA location; native new-device restore pending",
+    "duel": "lingjing-battle-v2 and scoped CAS receipt migration deployed; original long-owner domain receipts retained; real dual-Electron/Realtime acceptance in progress",
+    "storage": "actual private HTTPS bytes/ref publication/custom companion appearance passed; v2 hydration integrated; validated preferences command in progress",
     "fullAcceptance": "pending",
-    "manifest": "docs/implementation/evidence/cloud/2026-10-25/deployment-manifest.json"
+    "manifest": "docs/implementation/evidence/cloud/2026-10-25/deployment-manifest.json",
+    "storageEvidence": "docs/implementation/evidence/cloud/2026-10-25/storage-http-independent.json",
+    "companions": "companions-sync-v1 deployed; seven real HTTPS cases passed; production main commands/durable intents/native position routing integrated; dual-Electron in progress",
+    "resources": "lingjing-resources-v1 deployed with shared live actor guard, owner verified refs and full-save v2 hydration; private bytes/custom appearance passed; preference commands and full native restoration pending",
+    "sessions": "immutable revocation ledger deployed; original managed-valid revoked SID/replacement/B and original provider signed expired JWT denied in actual HTTPS"
   },
   "externalConditions": [
     {
       "id": "old-self-hosted-source-unavailable",
       "endpoint": "http://47.112.208.97:8000",
-      "observed": "UND_ERR_SOCKET on real health fetch",
+      "observed": "Latest direct TCP 8000 connects, but unauthenticated Auth health HTTP still times out. Source database remains unreadable; no credentials sent.",
       "userResponse": "暂无可用SSH或数据库备份",
       "policy": "Preserve existing readable data and secure migration interfaces; no full old-cloud-account migration claimed"
     },
@@ -86,18 +90,87 @@
     }
   ],
   "remaining": [
-    "Complete authoritative pet initialization and integrate territory/discovery/battle/resource transactions into common save revision",
-    "Review and deploy remaining domain functions/migrations; verify actual RLS/Realtime/transactions",
-    "Run real isolated Electron cloud sync/multiplayer acceptance and account/data preservation",
-    "Integrate foundation cleanup and final Windows EXE/source/package/readback acceptance",
-    "Align MCP-observed migration versions with CLI source migration bookkeeping"
+    "Finish07 validated resource-preference commands and08 asynchronous preview session-generation guard; preserve raw originals",
+    "Independently verify real signed-location territory/capture, private Realtime, authoritative shared rewards and exact retry/restart receipts",
+    "Full-domain same-host two-Electron acceptance with ordinary isolated profiles; record physical-device scope separately",
+    "Retire audited unused old cloud functions/SQL, align actual remote migration versions and perform one final regression/package acceptance",
+    "Original old cloud export/SSH unavailable per user response; preserve all readable local data and import tools without claiming migrated all old cloud accounts"
   ],
   "engineering": {
     "electron": "44.9.3",
     "betterSqlite3": "13.0.3",
     "cleanNpmCi": "passed on coordinator checkout",
     "nativeSharedDb": "passed",
-    "evidence": "docs/implementation/evidence/cloud/2026-10-25/native-compatibility.json"
+    "evidence": "docs/implementation/evidence/cloud/2026-10-25/native-compatibility.json",
+    "integratedBuild": {
+      "sourceCommit": "bd18cfcd7aa7",
+      "codeFingerprint": "b3aea8f2264b",
+      "passed": true,
+      "kind": "production electron-vite build after approved foundation, V3 and conversations integration"
+    },
+    "reactReview": {
+      "skill": "vercel:react-best-practices",
+      "scope": "route loading, subscription cleanup, clocks, stable IDs, modal/session lifecycle and accessibility",
+      "targetedEslint": "passed",
+      "blockingFindings": 0
+    },
+    "profileDiscovery": "Canonical SQLite takes precedence over old JSON; explicit override and binary rollback retain the selected profile",
+    "packageMonitor": {
+      "rejectedOriginal": "running:true ready:false could not pass",
+      "correctedEvidence": "docs/implementation/evidence/foundation/cloud-engineering/packaged-fullscreen-monitor-verified.json",
+      "actualAwaitedObservations": 10,
+      "stableReadySamples": 3,
+      "finalPortablePackagePending": true
+    }
   },
-  "updatedAt": "2026-10-25T02:47:39.050Z"
+  "updatedAt": "2026-10-25T04:10:00.000Z",
+  "approvedCheckpoints": [
+    {
+      "module": "accounts",
+      "commit": "45b857d",
+      "review": "Auth v2 8 real HTTPS checks; protected CAS with owner+pet compound ownership; main privacy/realtime followup in progress"
+    },
+    {
+      "module": "foundation",
+      "commit": "ced8e5e",
+      "review": "New main/preload, typed IPC, lazy routing and separate desktop; coordinator typecheck and 5 actual data/window boundary cases passed"
+    },
+    {
+      "module": "battle-style",
+      "commit": "0ddda2a",
+      "review": "V3 completed naturally before cloud dispatch; native manifest/1024 screenshot independently inspected, no style edits"
+    },
+    {
+      "module": "resources",
+      "commit": "4e8fdf8",
+      "review": "Private Storage deployed; actual HTTPS A/B bytes and server index independently read; reference verifier pending"
+    },
+    {
+      "module": "conversations",
+      "commit": "543b71f",
+      "review": "26 coordinator SQLite/archive/HTTP-protocol checks passed; real cloud pet chat sync pending"
+    },
+    {
+      "module": "foundation",
+      "commit": "b0e69bd",
+      "review": "Recoverable prototype/3D cleanup and package/release/profile discovery integrated. Incorrect monitor verdict rejected and original preserved; actual strict repeated ready protocol rerun passed. Final business portable still pending."
+    },
+    {
+      "module": "resources",
+      "commit": "c02b20c",
+      "review": "Source/byte verification and main cloudActor reviewed; root7 SQL +9 protocol checks passed. Fresh actor guard deployment and actual protected-ref/native test pending."
+    },
+    {
+      "module": "accounts",
+      "commit": "3e91bfd",
+      "review": "Legacy normalization is internal view only; original envelope/checksum/files retained. Root8 targeted native restore/provider cases and original signed expired HTTPS denial passed."
+    }
+  ],
+  "locationProgress": {
+    "sourceCommit": "e3533ce",
+    "actualNative": "Windows WiFi 78m under original 80m/100m gates; 20-round local win/capture/restart; coordinate hashes only",
+    "runtime": "Electron36.9.5 explicitly recorded",
+    "cloudAcceptance": false,
+    "supportedRuntimeRecheck": "pending under final Electron44 cloud integration"
+  }
 }

@@ -15,7 +15,7 @@ await db.exec(`create role anon;create role authenticated;create role service_ro
  create table auth.sessions(id uuid primary key,user_id uuid not null references auth.users(id),not_after timestamptz);
  create function auth.jwt() returns jsonb language sql stable as $$select coalesce(nullif(current_setting('request.jwt.claims',true),''),'{}')::jsonb$$;
  create function auth.uid() returns uuid language sql stable as $$select (auth.jwt()->>'sub')::uuid$$;`);
-for(const file of ['20261025020314_lingjing_identity_actor_contract.sql','20261025021755_lingjing_auth_bridge.sql','20261025021759_lingjing_protected_save_cas.sql','20261025025906_lingjing_cloud_secret_guard.sql'])await db.exec(readFileSync(`infra/supabase/migrations/${file}`,'utf8'));
+for(const file of ['20261025021620_lingjing_identity_actor_contract.sql','20261025022918_lingjing_auth_bridge.sql','20261025024615_lingjing_protected_save_cas.sql','20261025030859_lingjing_cloud_secret_guard.sql'])await db.exec(readFileSync(`infra/supabase/migrations/${file}`,'utf8'));
 await db.query('insert into auth.users(id) values($1),($2)',[uidA,uidB]);
 await db.query('insert into auth.sessions(id,user_id) values($1,$2),($3,$2),($4,$5)',[sidA,uidA,sidA2,sidB,uidB]);
 async function as(uid,sid,device,sql,params=[],role='authenticated'){
@@ -114,4 +114,17 @@ test('LOCAL PGlite only: authored JSON examples and public capture proof remain 
  const withProof=envelope(ownerA,{discovery:{version:1,data:{proof:{captureId:'public-business-proof',signature:'receipt-signature'}}}});
  assert.equal(canonical(cloudProjection(withProof).envelope.data.modules.discovery.data.proof),canonical(withProof.data.modules.discovery.data.proof));
  const archived=(await as(uidA,sidA,deviceA,"select public.lingjing_archive_save('public-capture-proof','unverified-local',$1) item",[withProof]))[0].item;assert.equal(archived.promoted,false);
+});
+test('LOCAL PGlite only: a failed authoritative snapshot rolls domain mutation and common revision back together',async()=>{
+ await db.exec(`create table public.local_test_domain_balance(owner_id text primary key,coins integer not null);
+  grant all on public.local_test_domain_balance to service_role;
+  create function public.local_test_atomic_reward(p_owner text) returns void language plpgsql as $$ begin
+   perform lingjing_private.lock_save_owner(p_owner);
+   update public.local_test_domain_balance set coins=coins+100 where owner_id=p_owner;
+   perform lingjing_private.commit_authority(p_owner,'invalid-atomic-reward',jsonb_build_object('garden',jsonb_build_object('tables',jsonb_build_object('test_balances',
+    jsonb_build_object('schema','[]'::jsonb,'rows',jsonb_build_array(jsonb_build_object('owner_account_id','other-owner','coins',100)))))));
+  end $$;grant execute on function public.local_test_atomic_reward(text) to service_role;`);
+ await db.query('insert into public.local_test_domain_balance values($1,7)',[ownerA]);const prior=(await head()).revision;
+ await assert.rejects(service('select public.local_test_atomic_reward($1)',[ownerA]),/LJ_SAVE_OWNER_MISMATCH/);
+ assert.equal((await db.query('select coins from public.local_test_domain_balance where owner_id=$1',[ownerA])).rows[0].coins,7);assert.equal((await head()).revision,prior);
 });

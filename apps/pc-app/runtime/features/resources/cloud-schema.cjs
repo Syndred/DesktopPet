@@ -22,4 +22,37 @@ const migrations = [{ id: 'resources-002-cloud-packages', sql: `
     status TEXT NOT NULL DEFAULT 'pending', last_error TEXT, verified_at TEXT,
     PRIMARY KEY(owner_account_id,resource_id,auth_user_id,manifest_sha256)
   );` }];
+migrations.push({id:'resources-003-cloud-proof-source',sql:`
+  ALTER TABLE lingjing_resource_cloud_outbox ADD COLUMN data_mode TEXT NOT NULL DEFAULT 'unverified';
+  ALTER TABLE lingjing_resource_cloud_downloads ADD COLUMN data_mode TEXT NOT NULL DEFAULT 'unverified';
+  ALTER TABLE lingjing_resource_cloud_receipts ADD COLUMN data_mode TEXT NOT NULL DEFAULT 'unverified';
+`});
+migrations.push({id:'resources-004-authority-stage',sql:`
+  ALTER TABLE lingjing_resource_cloud_outbox ADD COLUMN storage_verified INTEGER NOT NULL DEFAULT 0;
+  ALTER TABLE lingjing_resource_cloud_outbox ADD COLUMN storage_verified_at TEXT;
+  ALTER TABLE lingjing_resource_cloud_outbox ADD COLUMN authority_registered INTEGER NOT NULL DEFAULT 0;
+  ALTER TABLE lingjing_resource_cloud_downloads ADD COLUMN authority_registered INTEGER NOT NULL DEFAULT 0;
+  ALTER TABLE lingjing_resource_cloud_receipts ADD COLUMN authority_action_id TEXT;
+  ALTER TABLE lingjing_resource_cloud_receipts ADD COLUMN authority_revision INTEGER;
+  ALTER TABLE lingjing_resource_cloud_receipts ADD COLUMN authority_checksum TEXT;
+  UPDATE lingjing_resource_cloud_outbox SET storage_verified=1,storage_verified_at=verified_at WHERE status='verified';
+`});
+migrations.push({id:'resources-005-cloud-preferences',sql:`
+ CREATE TABLE lingjing_resource_preference_outbox (
+  owner_account_id TEXT NOT NULL,resource_id TEXT NOT NULL,local_revision INTEGER NOT NULL,action_id TEXT NOT NULL,
+  auth_user_id TEXT,base_revision INTEGER,document_json TEXT NOT NULL,status TEXT NOT NULL DEFAULT 'pending',
+  attempts INTEGER NOT NULL DEFAULT 0,next_attempt_at INTEGER NOT NULL DEFAULT 0,last_error TEXT,created_at TEXT NOT NULL,verified_at TEXT,
+  PRIMARY KEY(owner_account_id,resource_id,local_revision),UNIQUE(owner_account_id,action_id)
+ );
+ CREATE TABLE lingjing_resource_preference_state (
+  owner_account_id TEXT NOT NULL,resource_id TEXT NOT NULL,cloud_revision INTEGER NOT NULL,local_revision INTEGER NOT NULL,
+  document_json TEXT NOT NULL,authority_action_id TEXT NOT NULL,authority_revision INTEGER NOT NULL,authority_checksum TEXT NOT NULL,verified_at TEXT NOT NULL,
+  PRIMARY KEY(owner_account_id,resource_id)
+ );
+ CREATE TABLE lingjing_resource_preference_cache (
+  owner_account_id TEXT NOT NULL,resource_id TEXT NOT NULL,cloud_revision INTEGER NOT NULL,document_json TEXT NOT NULL,
+  authority_action_id TEXT NOT NULL,authority_revision INTEGER NOT NULL,authority_checksum TEXT NOT NULL,
+  PRIMARY KEY(owner_account_id,resource_id,cloud_revision)
+ );
+`});
 module.exports = { migrations };

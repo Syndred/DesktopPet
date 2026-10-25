@@ -3,10 +3,11 @@ import assert from 'node:assert/strict';import {randomUUID,randomBytes} from 'no
 import {mkdirSync,readFileSync,writeFileSync} from 'node:fs';import {join,resolve} from 'node:path';import {execFileSync} from 'node:child_process';
 import {DatabaseSync} from 'node:sqlite';
 const root=resolve('.'),output=resolve(`artifacts/accounts/cloud-electron-${Date.now()}`);mkdirSync(output,{recursive:true});
+const requireFull=process.env.ACCOUNTS_REQUIRE_FULL_SYNC==='1';
 const account=`nativeqa_${Date.now().toString(36)}`,password=`Aa9!${randomBytes(18).toString('base64url')}`;
 const evidence={at:new Date().toISOString(),sourceSha:execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8',windowsHide:true}).trim(),
  kind:'Two actual Electron44 processes on one Windows host, isolated profiles, production TypeScript main/preload and React renderer, actual Supabase HTTPS. Not two physical machines.',
- credentialsPersisted:'Windows safeStorage ciphertext only; no password or token in evidence',checks:[],errors:[]};
+ requireCompleteDomainSave:requireFull,credentialsPersisted:'Windows safeStorage ciphertext only; no password or token in evidence',checks:[],errors:[]};
 const models=[];let activeA,activeB;
 function pass(name,data){evidence.checks.push({name,data});console.log('PASS',name);writeFileSync(join(output,'progress.json'),JSON.stringify(evidence,null,2));}
 const invoke=async(model,command,payload={},expectOk=true)=>{
@@ -53,15 +54,31 @@ try{
  pass('actual separate Electron processes log in to same HTTPS account without kicking each other',{pidA:activeA.pid,pidB:activeB.pid,owner:a.currentUser.id,native});
  const va=await vaultProof(activeA),vb=await vaultProof(activeB);assert.notEqual(va.deviceId,vb.deviceId);assert.notEqual(va.sessionId,vb.sessionId);
  assert.ok(va.encryptedNotPlaintext&&vb.encryptedNotPlaintext&&va.matchesCurrentSession&&vb.matchesCurrentSession);pass('two Windows safeStorage vaults keep device-specific sessions encrypted',{a:va,b:vb});
+ if(requireFull){
+  const adopted=await activeA.page.evaluate(async input=>{const r=await window.lingjing.invoke('companions','adopt',input);if(!r.ok)throw new Error(`${r.code}: ${r.message}`);return r.data;},
+    {actionId:randomUUID(),templateId:'big-fish-gentle',name:'完整云存档伙伴',showOnDesktop:false});
+  const pet=adopted.pet;assert.ok(pet?.petId);
+  const initial=await activeB.app.evaluate(async(_electron,petId)=>{
+    const a=globalThis.__accountsCloudAcceptanceServices.get('accounts'),s=await a.cloudInvoke('companions-sync',{op:'snapshot'});
+    if(!s.module.data.tables.companion_pets.some(row=>row.pet_id===petId))throw new Error('Product adoption was not independently present in real cloud');
+    const garden=await a.cloudInvoke('garden-sync',{op:'snapshot'});return{petId,owner:s.ownerAccountId,revision:garden.accountRevision||garden.revision};
+  },pet.petId);
+  await restore(activeA);await restore(activeB);
+  const restoredPet=await activeB.page.evaluate(async petId=>{const r=await window.lingjing.invoke('companions','get',{petId});if(!r.ok)throw new Error(r.code);return r.data;},pet.petId);
+  assert.equal(restoredPet.petId,pet.petId);assert.equal(restoredPet.ownerAccountId,a.currentUser.id);
+  pass('product IPC cloud adoption plus standard server garden bootstrap restores the same real pet on both clients',{...initial,petId:pet.petId,scope:'builtin 2D resource; no SQL-seeded pet/inventory and no synthetic gameplay reward'});
+ }
  await settings(activeA,31);await settings(activeB,42);
  const first=await invoke(activeA,'syncNow',{actionId:randomUUID()});assert.equal(first.personalVerified,true);
  const cloudB=await activeB.app.evaluate(async()=>{const a=globalThis.__accountsCloudAcceptanceServices.get('accounts');const row=await a.remote.cloudSave('read',a.privateSession());return{revision:row.revision,checksum:row.checksum,volume:row.envelope.data.modules.settings.data.desktop.volume,modules:Object.keys(row.envelope.data.modules)};});
  assert.equal(cloudB.volume,31);assert.equal(cloudB.revision,first.revision);pass('rendered application A saves, application B independently reads matching actual cloud receipt',{first,cloudB});
  evidence.fullSaveVerified=first.verified===true;evidence.authorityPending=first.requiresAuthority===true;
+ if(requireFull)assert.equal(evidence.fullSaveVerified,true,'All-domain save still contains unverified local authority; personal-only success cannot pass this run');
  const conflict=await invoke(activeB,'syncNow',{actionId:randomUUID()},false);assert.equal(conflict.code,'SYNC_CONFLICT');assert.equal((await invoke(activeB,'settingsGet')).document.desktop.volume,42);
  const restored=await restore(activeB);assert.equal((await invoke(activeB,'settingsGet')).document.desktop.volume,31);assert.ok(restored.preservedBackup.filePath);
  assert.equal(JSON.parse(readFileSync(restored.preservedBackup.filePath,'utf8')).data.modules.settings.data.desktop.volume,42);
  await settings(activeB,43);const second=await invoke(activeB,'syncNow',{actionId:randomUUID()});assert.equal(second.revision,first.revision+1);
+ if(requireFull)assert.equal(second.verified,true,'Second-client full save remained partial');
  pass('real IPC conflict preserves B state; explicit cloud restore keeps original backup before next CAS',{conflict:conflict.code,backup:restored.preservedBackup.filePath,revision:second.revision});
  const sdk=await activeB.app.evaluate(async()=>{
   const accounts=globalThis.__accountsCloudAcceptanceServices.get('accounts'),first=await accounts.requireCloudActor(),client=first.client,prior=accounts.remote.active.accessToken;
@@ -79,11 +96,14 @@ try{
  await activeA.page.getByRole('heading',{name:'把每一段陪伴，好好保存。',exact:true}).waitFor();
  const resumed=await invoke(activeA,'session');assert.equal(resumed.currentUser.id,a.currentUser.id);assert.equal(resumed.persistence,'secure');
  const afterRestart=await vaultProof(activeA);assert.equal(afterRestart.deviceId,beforeRestart.deviceId);assert.equal(afterRestart.sessionId,beforeRestart.sessionId);assert.notEqual(activeA.pid,oldPid);
- const retried=await invoke(activeA,'syncRetry');assert.equal(retried.personalVerified,true);assert.equal(retried.revision,second.revision+1);assert.equal((await invoke(activeA,'settingsGet')).document.desktop.volume,54);
+ await activeA.page.getByRole('button',{name:'重试同步',exact:true}).click();
+ await activeA.page.waitForFunction(async()=>{const r=await window.lingjing.invoke('accounts','syncStatus');return r.ok&&r.data.pending===0;});
+ const retryStatus=await invoke(activeA,'syncStatus');const retried={revision:retryStatus.cloudRevision};assert.equal(retried.revision,second.revision+1);assert.equal((await invoke(activeA,'settingsGet')).document.desktop.volume,54);
+ if(requireFull){assert.equal(retryStatus.localChanged,false);assert.equal(retryStatus.unverifiedLocal,0);}
  pass('real Electron restart resumes encrypted session and durable queue after controlled connection refusal',{oldPid,newPid:activeA.pid,deviceId:afterRestart.deviceId,sessionId:afterRestart.sessionId,revision:retried.revision,scope:'per-request closed TLS socket; host network was not disabled'});
  for(const model of [activeA,activeB]){await model.page.evaluate(()=>{location.hash='#/account';});await model.page.getByRole('heading',{name:'把每一段陪伴，好好保存。',exact:true}).waitFor();await model.page.screenshot({path:join(output,`${model.name}.png`)});}
  const secretBoundary=await activeA.app.evaluate(()=>{const a=globalThis.__accountsCloudAcceptanceServices.get('accounts'),text=JSON.stringify(a.session()),fs=globalThis.__accountsCloudAcceptanceRequire('node:fs');
-  const matches=[a.remote.active.accessToken,a.remote.active.refreshToken];const bytes=fs.readFileSync(a.services.db.name);
+  const matches=[a.remote.active.accessToken,a.remote.active.refreshToken];const bytes=Buffer.concat([a.services.db.name,`${a.services.db.name}-wal`].filter(file=>fs.existsSync(file)).map(file=>fs.readFileSync(file)));
   return{sessionExcludesTokens:matches.every(t=>!text.includes(t)),sqliteExcludesTokens:matches.every(t=>!bytes.includes(Buffer.from(t)))};});
  assert.ok(secretBoundary.sessionExcludesTokens&&secretBoundary.sqliteExcludesTokens);pass('actual public session and SQLite omit access/refresh tokens',secretBoundary);
  await invoke(activeA,'logout');const signedOut=await activeA.app.evaluate(async()=>await globalThis.__accountsCloudAcceptanceServices.get('accounts').signOutPending);assert.equal(signedOut.confirmed,true);
@@ -91,7 +111,7 @@ try{
  await close(activeA);activeA=await launch('device-a');await activeA.page.getByRole('heading',{name:'欢迎回来',exact:true}).waitFor();assert.equal((await invoke(activeA,'session')).currentUser,null);
  pass('logout A revokes its real session, restart stays signed out, B remains active',bAlive);
  assert.deepEqual(evidence.errors,[]);evidence.passed=true;writeFileSync(join(output,'evidence.json'),JSON.stringify(evidence,null,2));console.log('CLOUD_ELECTRON_PASSED',output);
-}catch(error){evidence.error={message:error.message};writeFileSync(join(output,'failure.json'),JSON.stringify(evidence,null,2));console.error(error.message);process.exitCode=1;}
+}catch(error){const message=String(error.message).replaceAll(password,'<redacted-qa-password>');evidence.error={message};writeFileSync(join(output,'failure.json'),JSON.stringify(evidence,null,2));console.error(message);process.exitCode=1;}
 finally{for(const model of models)await close(model);for(const name of ['device-a','device-b']){
  const dbFile=join(output,name,'lingjing.sqlite');try{const db=new DatabaseSync(dbFile,{readOnly:true});const counts=db.prepare('select status,count(*) count from account_sync_outbox group by status').all();writeFileSync(join(output,`${name}-sqlite-readback.json`),JSON.stringify({counts},null,2));db.close();}catch{} }
 }

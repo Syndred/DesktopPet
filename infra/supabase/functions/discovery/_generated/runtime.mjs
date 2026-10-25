@@ -765,18 +765,808 @@ var import_presentation = __toESM(require_presentation(), 1);
 var import_coordinates = __toESM(require_coordinates(), 1);
 var import_spawns = __toESM(require_spawns(), 1);
 import { BattleRuntimeService, getBattleRules as getBattleRules2, executeRound } from "../../_shared/battle-core.js";
+
+// apps/pc-app/runtime/features/resources/assets/roster-v2/catalog.json
+var catalog_default = {
+  format: "lingjing.roster",
+  version: 2,
+  createdAt: "2026-10-24T13:22:52.669Z",
+  designReference: "docs/design/2026-10-24/full-ui/03-pet-detail-and-adoption.png",
+  actionConvention: [
+    "idle",
+    "blink",
+    "walk",
+    "wave",
+    "eat",
+    "attack_windup",
+    "attack_release",
+    "attack",
+    "hit",
+    "skill",
+    "victory",
+    "sleep"
+  ],
+  legacyAliases: {
+    "builtin:lingjing-yuwan-v1": "builtin:lingjing-yuwan-v2",
+    "builtin:lingjing-battle-yuwan-v1": "builtin:lingjing-yuwan-v2",
+    "builtin:lingjing-battle-shiba-v1": "builtin:lingjing-shiba-v2"
+  },
+  characters: [
+    {
+      id: "yuwan",
+      name: "\u9C7C\u4E38",
+      templateId: "big-fish-gentle",
+      category: "big-fish",
+      element: "water",
+      resourceId: "builtin:lingjing-yuwan-v2",
+      description: "\u5B89\u9759\u6E29\u67D4\u7684\u9CB8\u5C3E\u5C11\u5973\uFF0C\u559C\u6B22\u966A\u4F60\u5EA6\u8FC7\u65E5\u5E38\u3002",
+      identityFeatures: [
+        "\u767D\u8272\u6C34\u624B\u5E3D",
+        "\u9CB8\u5C3E",
+        "\u6D77\u519B\u84DD\u8936\u88D9"
+      ],
+      manifest: "yuwan/character.json"
+    },
+    {
+      id: "xiaolan",
+      name: "\u5C0F\u84DD",
+      templateId: "big-fish-cheerful",
+      category: "big-fish",
+      element: "water",
+      resourceId: "builtin:lingjing-xiaolan-v1",
+      description: "\u6D3B\u6CFC\u7684\u4FA7\u9A6C\u5C3E\u4F19\u4F34\uFF0C\u7A7F\u7740\u5BBD\u677E\u9CB8\u9C7C\u6597\u7BF7\u3002",
+      identityFeatures: [
+        "\u9AD8\u4FA7\u9A6C\u5C3E\u4E0E\u5927\u8774\u8776\u7ED3",
+        "\u9CB8\u9C7C\u8FDE\u5E3D\u6597\u7BF7",
+        "\u5C0F\u9774\u5B50"
+      ],
+      manifest: "xiaolan/character.json"
+    },
+    {
+      id: "fantuan",
+      name: "\u996D\u56E2",
+      templateId: "big-fish-foodie",
+      category: "big-fish",
+      element: "water",
+      resourceId: "builtin:lingjing-fantuan-v1",
+      description: "\u76D8\u7740\u53CC\u4E38\u5B50\u5934\u7684\u7F8E\u98DF\u5BB6\uFF0C\u8BA4\u771F\u73CD\u60DC\u6BCF\u4E00\u987F\u996D\u3002",
+      identityFeatures: [
+        "\u53CC\u4E38\u5B50\u53D1\u9AFB",
+        "\u7C73\u767D\u56F4\u88D9",
+        "\u996D\u56E2\u53D1\u5939"
+      ],
+      manifest: "fantuan/character.json"
+    },
+    {
+      id: "shiba",
+      name: "\u7130\u67F4",
+      templateId: "animal-shiba",
+      category: "animal",
+      element: "fire",
+      resourceId: "builtin:lingjing-shiba-v2",
+      description: "\u70ED\u60C5\u52C7\u6562\u7684\u67F4\u72AC\uFF0C\u661F\u661F\u9879\u5708\u603B\u662F\u95EA\u95EA\u53D1\u4EAE\u3002",
+      identityFeatures: [
+        "\u6A59\u767D\u6BDB\u67F4\u72AC",
+        "\u5377\u5C3E",
+        "\u661F\u661F\u9879\u5708"
+      ],
+      manifest: "shiba/character.json"
+    },
+    {
+      id: "hatcat",
+      name: "\u793C\u5E3D\u55B5",
+      templateId: "animal-hat-cat",
+      category: "animal",
+      element: "metal",
+      resourceId: "builtin:lingjing-hatcat-v1",
+      description: "\u6234\u7740\u793C\u5E3D\u7684\u71D5\u5C3E\u732B\uFF0C\u64C5\u957F\u6E29\u67D4\u7684\u5C0F\u9B54\u672F\u3002",
+      identityFeatures: [
+        "\u9ED1\u767D\u71D5\u5C3E\u732B",
+        "\u9ED1\u8272\u9AD8\u793C\u5E3D",
+        "\u6D77\u519B\u84DD\u9B54\u672F\u62AB\u80A9"
+      ],
+      manifest: "hatcat/character.json"
+    },
+    {
+      id: "xiaohu",
+      name: "\u5C0F\u72D0",
+      templateId: "animal-white-fox",
+      category: "animal",
+      element: "water",
+      resourceId: "builtin:lingjing-xiaohu-v1",
+      description: "\u5B89\u9759\u673A\u7075\u7684\u96EA\u767D\u5C0F\u72D0\uFF0C\u50CF\u96EA\u82B1\u4E00\u6837\u8F7B\u76C8\u3002",
+      identityFeatures: [
+        "\u96EA\u767D\u72D0\u6BDB\u4E0E\u5927\u8033\u6735",
+        "\u84EC\u677E\u957F\u5C3E",
+        "\u84DD\u91D1\u5B9D\u77F3\u9886\u7ED3"
+      ],
+      manifest: "xiaohu/character.json"
+    },
+    {
+      id: "qingya",
+      name: "\u9752\u82BD",
+      templateId: "animal-wood-deer",
+      category: "animal",
+      element: "wood",
+      resourceId: "builtin:lingjing-qingya-v1",
+      description: "\u6234\u7740\u679D\u53F6\u5C0F\u89D2\u7684\u6797\u95F4\u5E7C\u9E7F\uFF0C\u559C\u6B22\u6536\u96C6\u65B0\u82BD\u3002",
+      identityFeatures: [
+        "\u679D\u89D2\u4E0E\u5AE9\u82BD",
+        "\u6591\u70B9\u5E7C\u9E7F",
+        "\u53F6\u62AB\u80A9\u4E0E\u6A61\u679C\u540A\u5760"
+      ],
+      manifest: "qingya/character.json"
+    },
+    {
+      id: "yantuan",
+      name: "\u5CA9\u56E2",
+      templateId: "animal-earth-pangolin",
+      category: "animal",
+      element: "earth",
+      resourceId: "builtin:lingjing-yantuan-v1",
+      description: "\u62AB\u7740\u6696\u8910\u9CDE\u7532\u7684\u5C0F\u7A7F\u5C71\u7532\uFF0C\u7A33\u7A33\u5B88\u4F4F\u6BCF\u4E00\u6B65\u3002",
+      identityFeatures: [
+        "\u6696\u8910\u9CDE\u7532",
+        "\u5377\u66F2\u9CDE\u5C3E",
+        "\u7425\u73C0\u77FF\u77F3\u4E0E\u6398\u571F\u722A"
+      ],
+      manifest: "yantuan/character.json"
+    }
+  ]
+};
+
+// apps/pc-app/runtime/features/companions/instance.mjs
+var BASE_STATS = Object.freeze({ fire: { hp: 118, atk: 33, def: 20, spd: 22 }, water: { hp: 124, atk: 28, def: 24, spd: 20 }, wood: { hp: 130, atk: 26, def: 26, spd: 18 }, metal: { hp: 136, atk: 30, def: 30, spd: 13 }, earth: { hp: 142, atk: 24, def: 34, spd: 11 } });
+var copy = (value) => JSON.parse(JSON.stringify(value));
+function listBuiltinTemplates() {
+  return catalog_default.characters.map(({ templateId, name, category, element, description, resourceId }) => ({ templateId, name, category, element, description, resource: { resourceId, kind: "2d" }, baseStats: { ...BASE_STATS[element] } }));
+}
+var fail = (message) => {
+  throw Object.assign(new Error(message), { code: "INVALID_INPUT" });
+};
+function companionName(value, reject = fail) {
+  if (typeof value !== "string" || !value.trim() || [...value.trim()].length > 24 || /[\u0000-\u001f\u007f]/u.test(value)) reject("\u540D\u5B57\u9700\u4E3A 1\u201324 \u4E2A\u5B57\u7B26");
+  return value.trim();
+}
+function createCompanionInstance({ ownerAccountId, template, input, source, petId, createdAt, count }, reject = fail) {
+  return { ownerAccountId, petId, templateId: template.templateId, name: companionName(input.name || template.name, reject), serial: source === "capture" && input.origin?.wildSerial ? String(input.origin.wildSerial) : petId.slice(4, 12).toUpperCase(), element: template.element, resource: copy(template.resource), source, origin: copy(input.origin || {}), growth: { level: 1, experience: 0, mood: 60, satiety: 60, affinity: 0, winsTotal: 0, stats: copy(template.baseStats) }, desktop: { visible: Boolean(input.showOnDesktop), behavior: "quiet", scale: 1, position: { x: 80 + count % 5 * 240, y: 520 - Math.floor(count / 5) * 50, displayId: null } }, revision: 1, createdAt, updatedAt: createdAt };
+}
+
+// apps/pc-app/runtime/features/companions/growth.mjs
+var defaultReject = (message) => {
+  throw Object.assign(new Error(message), { code: "INVALID_INPUT" });
+};
+var clamp = (value, low, high) => Math.min(high, Math.max(low, value));
+function applyGrowthEffect(growth, effect, reject = defaultReject) {
+  if (!effect || typeof effect !== "object" || Array.isArray(effect)) reject("\u517B\u6210\u6548\u679C\u65E0\u6548");
+  const fields = ["mood", "satiety", "affinity", "experience", "wins"];
+  for (const key of Object.keys(effect)) if (!fields.includes(key)) reject("\u4E0D\u652F\u6301\u7684\u517B\u6210\u6548\u679C");
+  for (const key of fields) if (effect[key] !== void 0 && (!Number.isSafeInteger(effect[key]) || Math.abs(effect[key]) > 1e4)) reject("\u517B\u6210\u6548\u679C\u65E0\u6548");
+  if ((effect.experience || 0) < 0 || (effect.wins || 0) < 0) reject("\u7ECF\u9A8C\u4E0E\u80DC\u573A\u4E0D\u80FD\u51CF\u5C11");
+  const next = { ...growth, stats: { ...growth.stats } };
+  for (const key of ["mood", "satiety", "affinity"]) next[key] = clamp(next[key] + (effect[key] || 0), 0, 100);
+  let experience = next.experience + (effect.experience || 0);
+  while (experience >= 100) {
+    experience -= 100;
+    next.level++;
+    for (const key of ["hp", "atk", "def", "spd"]) {
+      const value = next.stats[key];
+      next.stats[key] = value <= 0 ? 0 : Math.max(value + 1, Math.round(value * 1.1));
+    }
+  }
+  next.experience = experience;
+  next.winsTotal += effect.wins || 0;
+  return next;
+}
+function battleGrowthEffect(won) {
+  if (typeof won !== "boolean") defaultReject("\u6218\u6597\u7ED3\u679C\u65E0\u6548");
+  return { experience: won ? 20 : 5, wins: won ? 1 : 0 };
+}
+
+// apps/pc-app/runtime/features/companions/cloud-domain.mjs
+var fail2 = (code, message) => {
+  throw Object.assign(new Error(message), { code });
+};
+var object = (value) => value !== null && typeof value === "object" && !Array.isArray(value);
+var keys = { companion_accounts: ["owner_account_id"], companion_pets: ["owner_account_id", "pet_id"], companion_actions: ["owner_account_id", "action_id"], companion_legacy_archive: ["owner_account_id", "legacy_pet_id"], companion_interactions: ["owner_account_id", "pet_id"], companion_capture_receipts: ["owner_account_id", "battle_id", "wild_pet_id"] };
+var COMPANION_TABLES = Object.keys(keys);
+var parse = (value) => {
+  try {
+    return JSON.parse(value);
+  } catch {
+    fail2("INVALID_CLOUD_SAVE", "\u4F19\u4F34\u5B58\u6863\u635F\u574F");
+  }
+};
+function normalizeCompanionRows(data) {
+  for (const [name, fields] of Object.entries(keys)) data.tables[name].sort((a, b) => {
+    const left = JSON.stringify(fields.map((key) => a[key])), right = JSON.stringify(fields.map((key) => b[key]));
+    return left < right ? -1 : left > right ? 1 : 0;
+  });
+  return data;
+}
+function companionUnit(envelope, owner, now) {
+  if (envelope && envelope.ownerAccountId !== owner) fail2("OWNER_MISMATCH", "\u5B58\u6863\u5C5E\u4E8E\u5176\u4ED6\u8D26\u53F7");
+  const existing = envelope?.data?.modules?.companions;
+  let data;
+  if (existing !== void 0) {
+    if (existing?.version !== 1 || existing.data?.ownerAccountId !== owner || !object(existing.data.tables) || !Array.isArray(existing.data.identityImports)) fail2("INVALID_CLOUD_SAVE", "\u4F19\u4F34\u6A21\u5757\u7248\u672C\u6216\u5F52\u5C5E\u4E0D\u5339\u914D");
+    if (COMPANION_TABLES.some((name) => Object.hasOwn(envelope.data.tables || {}, name))) fail2("INVALID_CLOUD_SAVE", "\u4F19\u4F34\u5B58\u6863\u5305\u542B\u4E24\u4EFD\u72B6\u6001");
+    data = structuredClone(existing.data);
+  } else {
+    const found = COMPANION_TABLES.filter((name) => Object.hasOwn(envelope?.data?.tables || {}, name));
+    if (found.length && found.length !== COMPANION_TABLES.length) fail2("INVALID_CLOUD_SAVE", "\u65E7\u4F19\u4F34\u5B58\u6863\u4E0D\u5B8C\u6574");
+    data = { ownerAccountId: owner, tables: Object.fromEntries(COMPANION_TABLES.map((name) => [name, found.length ? structuredClone(envelope.data.tables[name].rows) : []])), identityImports: [] };
+    if (!found.length) data.tables.companion_accounts.push({ owner_account_id: owner, revision: 0, selections_json: JSON.stringify({ chatPetId: null, battlePetId: null, guardPetId: null }), legacy_imported_at: new Date(now).toISOString() });
+  }
+  if (Object.keys(data.tables).sort().join() !== [...COMPANION_TABLES].sort().join()) fail2("INVALID_CLOUD_SAVE", "\u4F19\u4F34\u5B58\u6863\u4E0D\u5B8C\u6574");
+  for (const name of COMPANION_TABLES) {
+    const seen = /* @__PURE__ */ new Set();
+    if (!Array.isArray(data.tables[name]) || data.tables[name].some((row) => !object(row) || row.owner_account_id !== owner)) fail2("OWNER_MISMATCH", "\u4F19\u4F34\u8BB0\u5F55\u5F52\u5C5E\u4E0D\u5339\u914D");
+    for (const row of data.tables[name]) {
+      const id = JSON.stringify(keys[name].map((key) => row[key]));
+      if (seen.has(id)) fail2("INVALID_CLOUD_SAVE", "\u4F19\u4F34\u8BB0\u5F55\u91CD\u590D");
+      seen.add(id);
+    }
+  }
+  if (data.tables.companion_accounts.length !== 1 || !Number.isSafeInteger(data.tables.companion_accounts[0].revision) || data.tables.companion_accounts[0].revision < 0) fail2("INVALID_CLOUD_SAVE", "\u4F19\u4F34\u8D26\u53F7\u7248\u672C\u65E0\u6548");
+  for (const row of data.tables.companion_pets) {
+    const pet = parse(row.data_json);
+    if (pet.ownerAccountId !== owner || pet.petId !== row.pet_id || pet.templateId !== row.template_id || pet.revision !== row.revision || pet.createdAt !== row.created_at || pet.updatedAt !== row.updated_at) fail2("INVALID_CLOUD_SAVE", "\u4F19\u4F34\u5B9E\u4F8B\u5F52\u5C5E\u6216\u4FEE\u8BA2\u4E0D\u4E00\u81F4");
+  }
+  return normalizeCompanionRows(data);
+}
+
+// apps/pc-app/runtime/features/companions/cloud-growth.mjs
+var TABLES = ["companion_accounts", "companion_pets", "companion_actions", "companion_legacy_archive", "companion_interactions", "companion_capture_receipts"];
+var fail3 = (code, message) => {
+  throw Object.assign(new Error(message), { code });
+};
+var object2 = (value) => value !== null && typeof value === "object" && !Array.isArray(value);
+var identifier = (value) => typeof value === "string" && value.trim() === value && value.length > 0 && value.length <= 200 && !/[\u0000-\u001f\u007f]/u.test(value);
+var receiptIdentifier = (value) => typeof value === "string" && value.trim() === value && value.length > 0 && value.length <= 512 && !/[\u0000-\u001f\u007f]/u.test(value);
+function canonical(value) {
+  if (value === null || ["boolean", "string"].includes(typeof value) || typeof value === "number" && Number.isFinite(value)) return JSON.stringify(value);
+  if (Array.isArray(value)) return "[" + value.map(canonical).join(",") + "]";
+  if (!object2(value) || ![Object.prototype, null].includes(Object.getPrototypeOf(value))) fail3("INVALID_CLOUD_SAVE", "\u5B58\u6863\u5305\u542B\u975E JSON \u6570\u636E");
+  return "{" + Object.keys(value).sort().map((key) => JSON.stringify(key) + ":" + canonical(value[key])).join(",") + "}";
+}
+async function checksum(value) {
+  return [...new Uint8Array(await crypto.subtle.digest("SHA-256", new TextEncoder().encode(canonical(value))))].map((byte) => byte.toString(16).padStart(2, "0")).join("");
+}
+function parse2(value) {
+  try {
+    return JSON.parse(value);
+  } catch {
+    fail3("INVALID_CLOUD_SAVE", "\u4F19\u4F34\u5B58\u6863\u8BB0\u5F55\u635F\u574F");
+  }
+}
+function readTables(envelope, owner) {
+  const module = envelope.data?.modules?.companions;
+  let tables;
+  if (module !== void 0) {
+    if (module?.version !== 1 || module.data?.ownerAccountId !== owner || !object2(module.data.tables) || !Array.isArray(module.data.identityImports)) fail3("INVALID_CLOUD_SAVE", "\u4F19\u4F34\u6A21\u5757\u5F52\u5C5E\u6216\u7248\u672C\u4E0D\u5339\u914D");
+    if (TABLES.some((name) => Object.hasOwn(envelope.data.tables || {}, name))) fail3("INVALID_CLOUD_SAVE", "\u4F19\u4F34\u5B58\u6863\u5305\u542B\u4E24\u4EFD\u72B6\u6001");
+    tables = module.data.tables;
+    if (Object.keys(tables).sort().join() !== [...TABLES].sort().join()) fail3("INVALID_CLOUD_SAVE", "\u4F19\u4F34\u5B58\u6863\u4E0D\u5B8C\u6574");
+  } else tables = Object.fromEntries(TABLES.map((name) => [name, envelope.data?.tables?.[name]?.rows]));
+  for (const name of TABLES) if (!Array.isArray(tables[name]) || tables[name].some((row) => !object2(row) || row.owner_account_id !== owner)) fail3("INVALID_CLOUD_SAVE", "\u4F19\u4F34\u5B58\u6863\u4E0D\u5B8C\u6574\u6216\u5F52\u5C5E\u4E0D\u5339\u914D");
+  if (tables.companion_accounts.length !== 1 || !Number.isSafeInteger(tables.companion_accounts[0].revision)) fail3("INVALID_CLOUD_SAVE", "\u4F19\u4F34\u8D26\u53F7\u7248\u672C\u65E0\u6548");
+  return tables;
+}
+function validatePet(row, owner, petId) {
+  const pet = parse2(row.data_json);
+  if (!object2(pet) || pet.ownerAccountId !== owner || pet.petId !== petId || pet.templateId !== row.template_id || pet.revision !== row.revision || !Number.isSafeInteger(pet.revision) || pet.revision < 1 || pet.createdAt !== row.created_at || pet.updatedAt !== row.updated_at) fail3("INVALID_CLOUD_SAVE", "\u4F19\u4F34\u7F16\u53F7\u6216\u4FEE\u8BA2\u4E0D\u4E00\u81F4");
+  if (pet.resource?.kind !== "2d") fail3("RESOURCE_UNAVAILABLE", "\u5386\u53F2\u4F19\u4F34\u8BB0\u5F55\u5DF2\u4FDD\u7559\uFF0C\u5F53\u524D\u6218\u6597\u4F7F\u7528 2D \u4F19\u4F34");
+  const growth = pet.growth;
+  if (!object2(growth) || !Number.isSafeInteger(growth.level) || growth.level < 1 || !["experience", "mood", "satiety", "affinity", "winsTotal"].every((key) => Number.isSafeInteger(growth[key]) && growth[key] >= 0) || !object2(growth.stats) || !["hp", "atk", "def", "spd"].every((key) => Number.isSafeInteger(growth.stats[key]) && growth.stats[key] >= 0)) fail3("INVALID_CLOUD_SAVE", "\u4F19\u4F34\u6210\u957F\u8BB0\u5F55\u65E0\u6548");
+  return pet;
+}
+async function awardBattleResult(input) {
+  const { envelope: source, ownerAccountId: owner, petId, sessionId, won, mode, actionId, now } = input || {};
+  if (!object2(input) || Object.keys(input).some((key) => !["envelope", "ownerAccountId", "petId", "sessionId", "won", "mode", "actionId", "now"].includes(key)) || ![owner, petId, sessionId].every(identifier) || !receiptIdentifier(actionId) || typeof won !== "boolean" || !["training", "friend", "wild", "territory"].includes(mode) || !Number.isSafeInteger(now) || now < 0 || !Number.isFinite(new Date(now).getTime())) fail3("INVALID_INPUT", "\u6218\u6597\u6210\u957F\u8BF7\u6C42\u65E0\u6548");
+  if (actionId !== `battle:${sessionId}:${owner}`) fail3("INVALID_BATTLE_ACTION", "\u6218\u6597\u5956\u52B1\u5FC5\u987B\u4F7F\u7528\u56FA\u5B9A\u7ED3\u7B97\u6807\u8BC6");
+  if (source?.format !== "lingjing-account-save" || source.version !== 1 || source.ownerAccountId !== owner || source.provenance?.mode !== "live") fail3("BACKUP_OWNER_MISMATCH", "\u6218\u6597\u5B58\u6863\u5F52\u5C5E\u6216\u73AF\u5883\u4E0D\u5339\u914D");
+  const envelope = structuredClone(source);
+  const { checksum: digest, ...body } = envelope;
+  if (typeof digest !== "string" || digest !== await checksum(body)) fail3("BACKUP_CHECKSUM_MISMATCH", "\u6218\u6597\u5B58\u6863\u5B8C\u6574\u6027\u6821\u9A8C\u5931\u8D25");
+  const tables = readTables(envelope, owner), rows = tables.companion_pets.filter((row) => row.pet_id === petId);
+  if (rows.length !== 1) fail3("PET_NOT_FOUND", "\u627E\u4E0D\u5230\u5F53\u524D\u8D26\u53F7\u7684\u6218\u6597\u4F19\u4F34");
+  const pet = validatePet(rows[0], owner, petId), effect = battleGrowthEffect(won);
+  const actionInput = { actionId, petId, effect }, requestHash = await checksum(actionInput);
+  const prior = tables.companion_actions.filter((row) => row.action_id === actionId);
+  if (prior.length > 1) fail3("INVALID_CLOUD_SAVE", "\u6218\u6597\u6210\u957F\u56DE\u6267\u91CD\u590D");
+  if (prior.length) {
+    const record = prior[0], result2 = parse2(record.result_json), saved = result2.data?.battleReward;
+    if (record.operation !== "growth" || record.request_hash !== requestHash || result2.ok !== true || result2.data?.pet?.ownerAccountId !== owner || result2.data?.pet?.petId !== petId || saved && (saved.sessionId !== sessionId || saved.mode !== mode || saved.won !== won)) fail3("ACTION_ID_CONFLICT", "\u6B64\u7ED3\u7B97\u6807\u8BC6\u5DF2\u7528\u4E8E\u5176\u4ED6\u6218\u6597\u6216\u4F19\u4F34");
+    const growth = result2.data.pet.growth;
+    return { envelope, reward: { ...saved || { actionId, petId, sessionId, mode, won, experience: effect.experience, applied: true, currentExperience: growth.experience, currentLevel: growth.level }, duplicate: true } };
+  }
+  const previous = { ...pet.growth }, account = tables.companion_accounts[0], timestamp = new Date(now).toISOString();
+  const selections = parse2(account.selections_json);
+  if (!object2(selections) || Object.keys(selections).sort().join() !== ["battlePetId", "chatPetId", "guardPetId"].sort().join() || Object.values(selections).some((id) => id !== null && !tables.companion_pets.some((row) => row.pet_id === id))) fail3("INVALID_CLOUD_SAVE", "\u4F19\u4F34\u72EC\u7ACB\u9009\u62E9\u65E0\u6548");
+  pet.growth = applyGrowthEffect(pet.growth, effect);
+  pet.revision++;
+  pet.updatedAt = timestamp;
+  if (!Number.isSafeInteger(pet.revision) || !Number.isSafeInteger(account.revision + 1)) fail3("INVALID_CLOUD_SAVE", "\u4F19\u4F34\u4FEE\u8BA2\u8D85\u51FA\u8303\u56F4");
+  Object.assign(rows[0], { revision: pet.revision, data_json: JSON.stringify(pet), updated_at: timestamp });
+  account.revision++;
+  const reward = { actionId, petId, sessionId, mode, won, experience: effect.experience, applied: true, duplicate: false, previousExperience: previous.experience, previousLevel: previous.level, currentExperience: pet.growth.experience, currentLevel: pet.growth.level };
+  const result = { ok: true, data: { pet, selections, battleReward: reward }, revision: account.revision, duplicate: false };
+  tables.companion_actions.push({ owner_account_id: owner, action_id: actionId, operation: "growth", request_hash: requestHash, result_json: JSON.stringify(result), created_at: timestamp });
+  tables.companion_actions.sort((a, b) => {
+    const left = JSON.stringify([a.owner_account_id, a.action_id]), right = JSON.stringify([b.owner_account_id, b.action_id]);
+    return left < right ? -1 : left > right ? 1 : 0;
+  });
+  envelope.createdAt = timestamp;
+  const { checksum: oldChecksum, ...nextBody } = envelope;
+  void oldChecksum;
+  envelope.checksum = await checksum(nextBody);
+  return { envelope, reward };
+}
+
+// apps/pc-app/runtime/features/garden/catalog.json with { type: 'json' }
+var catalog_default2 = {
+  CROPS: {
+    carrot: {
+      id: "carrot",
+      name: "\u80E1\u841D\u535C",
+      icon: "\u{1F955}",
+      seedItemId: "seed:carrot",
+      harvestItemId: "carrot",
+      growMs: 6e5,
+      yield: 3,
+      color: "#ed9448"
+    },
+    tomato: {
+      id: "tomato",
+      name: "\u756A\u8304",
+      icon: "\u{1F345}",
+      seedItemId: "seed:tomato",
+      harvestItemId: "tomato",
+      growMs: 9e5,
+      yield: 3,
+      color: "#ef7875"
+    },
+    berry: {
+      id: "berry",
+      name: "\u8393\u679C",
+      icon: "\u{1FAD0}",
+      seedItemId: "seed:berry",
+      harvestItemId: "berry",
+      growMs: 12e5,
+      yield: 4,
+      color: "#9e8fd4"
+    },
+    rice: {
+      id: "rice",
+      name: "\u7A3B\u7C73",
+      icon: "\u{1F33E}",
+      seedItemId: "seed:rice",
+      harvestItemId: "rice",
+      growMs: 15e5,
+      yield: 2,
+      color: "#d2ad54"
+    }
+  },
+  ITEMS: {
+    "seed:carrot": {
+      id: "seed:carrot",
+      name: "\u80E1\u841D\u535C\u79CD\u5B50",
+      icon: "\u{1F955}",
+      category: "seed",
+      source: "\u63A2\u7D22\u4E0E\u5BF9\u6218",
+      effects: null
+    },
+    "seed:tomato": {
+      id: "seed:tomato",
+      name: "\u756A\u8304\u79CD\u5B50",
+      icon: "\u{1F345}",
+      category: "seed",
+      source: "\u63A2\u7D22\u4E0E\u5BF9\u6218",
+      effects: null
+    },
+    "seed:berry": {
+      id: "seed:berry",
+      name: "\u8393\u679C\u79CD\u5B50",
+      icon: "\u{1FAD0}",
+      category: "seed",
+      source: "\u63A2\u7D22\u4E0E\u5BF9\u6218",
+      effects: null
+    },
+    "seed:rice": {
+      id: "seed:rice",
+      name: "\u7A3B\u7C73\u79CD\u5B50",
+      icon: "\u{1F33E}",
+      category: "seed",
+      source: "\u63A2\u7D22\u4E0E\u5BF9\u6218",
+      effects: null
+    },
+    carrot: {
+      id: "carrot",
+      name: "\u80E1\u841D\u535C",
+      icon: "\u{1F955}",
+      category: "food",
+      source: "\u83DC\u56ED\u6536\u83B7",
+      effects: {
+        satiety: 12,
+        mood: 2,
+        intimacy: 2
+      }
+    },
+    tomato: {
+      id: "tomato",
+      name: "\u756A\u8304",
+      icon: "\u{1F345}",
+      category: "food",
+      source: "\u83DC\u56ED\u6536\u83B7",
+      effects: {
+        satiety: 10,
+        mood: 3,
+        intimacy: 2
+      }
+    },
+    berry: {
+      id: "berry",
+      name: "\u8393\u679C",
+      icon: "\u{1FAD0}",
+      category: "food",
+      source: "\u83DC\u56ED\u6536\u83B7",
+      effects: {
+        satiety: 8,
+        mood: 4,
+        intimacy: 3
+      }
+    },
+    rice: {
+      id: "rice",
+      name: "\u7A3B\u7C73",
+      icon: "\u{1F33E}",
+      category: "ingredient",
+      source: "\u83DC\u56ED\u6536\u83B7",
+      effects: null
+    },
+    cooked_rice: {
+      id: "cooked_rice",
+      name: "\u70ED\u4E4E\u4E4E\u7684\u7C73\u996D",
+      icon: "\u{1F35A}",
+      category: "food",
+      source: "\u7A3B\u7C73\u5236\u4F5C",
+      effects: {
+        satiety: 20,
+        mood: 3,
+        intimacy: 4
+      }
+    }
+  },
+  RECIPES: {
+    cooked_rice: {
+      id: "cooked_rice",
+      name: "\u70ED\u4E4E\u4E4E\u7684\u7C73\u996D",
+      input: {
+        itemId: "rice",
+        quantity: 1
+      },
+      output: {
+        itemId: "cooked_rice",
+        quantity: 1
+      }
+    }
+  },
+  BASE_PLOTS: 6,
+  STARTER_SEEDS: 2,
+  MAX_QUANTITY: 99
+};
+
+// apps/pc-app/runtime/features/garden/cloud-domain.mjs
+var { CROPS, ITEMS, RECIPES, BASE_PLOTS, STARTER_SEEDS, MAX_QUANTITY } = catalog_default2;
+var problem = (code, message) => {
+  throw Object.assign(new Error(message), { code });
+};
+var copy2 = (value) => structuredClone(value);
+var GARDEN_TABLES = ["garden_accounts", "garden_plots", "garden_items", "garden_actions", "garden_events", "garden_reward_receipts", "garden_garrisons", "garden_outbox", "garden_territory_attempts", "garden_territory_challenges"];
+var COMPANION_TABLES2 = ["companion_accounts", "companion_pets", "companion_actions", "companion_legacy_archive", "companion_interactions", "companion_capture_receipts"];
+function emptyGarden(owner) {
+  return { version: 1, data: { ownerAccountId: owner, tables: Object.fromEntries(GARDEN_TABLES.map((name) => [name, []])), territoryArchive: { territories: [], logs: [] } } };
+}
+function validQuantity(value) {
+  if (!Number.isSafeInteger(value) || value < 1 || value > MAX_QUANTITY) problem("INVALID_QUANTITY", "\u6570\u91CF\u65E0\u6548");
+  return value;
+}
+function gardenDocument(envelope, owner) {
+  const module = envelope?.data?.modules?.garden;
+  if (envelope?.ownerAccountId !== owner || module?.version !== 1 || module.data?.ownerAccountId !== owner || !module.data.tables) problem("CLOUD_GARDEN_NOT_INITIALIZED", "\u8BF7\u5148\u5728\u8D26\u53F7\u9875\u9762\u540C\u6B65\u5305\u542B\u83DC\u56ED\u7684\u5B8C\u6574\u5B58\u6863");
+  const tables = module.data.tables;
+  if (Object.keys(tables).sort().join() !== [...GARDEN_TABLES].sort().join()) problem("INVALID_CLOUD_SAVE", "\u4E91\u7AEF\u83DC\u56ED\u5B58\u6863\u4E0D\u5B8C\u6574");
+  for (const name of GARDEN_TABLES) if (!Array.isArray(tables[name]) || tables[name].some((row) => !row || row.owner_account_id !== owner)) problem("INVALID_CLOUD_SAVE", "\u4E91\u7AEF\u83DC\u56ED\u5F52\u5C5E\u6821\u9A8C\u5931\u8D25");
+  return tables;
+}
+function cloudCompanions(envelope, owner) {
+  const unit = envelope?.data?.modules?.companions;
+  let tables;
+  if (unit !== void 0) {
+    if (unit?.version !== 1 || unit.data?.ownerAccountId !== owner || !unit.data.tables || !Array.isArray(unit.data.identityImports) || COMPANION_TABLES2.some((name) => Object.hasOwn(envelope.data.tables || {}, name))) problem("INVALID_CLOUD_SAVE", "\u4F19\u4F34\u6A21\u5757\u5F52\u5C5E\u6216\u7248\u672C\u65E0\u6548\uFF0C\u6216\u5305\u542B\u4E24\u4EFD\u72B6\u6001");
+    tables = unit.data.tables;
+    if (Object.keys(tables).sort().join() !== [...COMPANION_TABLES2].sort().join()) problem("INVALID_CLOUD_SAVE", "\u4F19\u4F34\u5B58\u6863\u4E0D\u5B8C\u6574");
+  } else tables = Object.fromEntries(COMPANION_TABLES2.map((name) => [name, envelope?.data?.tables?.[name]?.rows]));
+  for (const name of COMPANION_TABLES2) if (!Array.isArray(tables[name]) || tables[name].some((row) => !row || row.owner_account_id !== owner)) problem("COMPANIONS_UNAVAILABLE", "\u4F19\u4F34\u5B58\u6863\u4E0D\u5B8C\u6574\u6216\u5F52\u5C5E\u4E0D\u4E00\u81F4");
+  if (tables.companion_accounts.length !== 1 || !Number.isSafeInteger(tables.companion_accounts[0].revision)) problem("INVALID_CLOUD_SAVE", "\u4F19\u4F34\u8D26\u53F7\u7248\u672C\u65E0\u6548");
+  return { pets: tables.companion_pets, accounts: tables.companion_accounts, actions: tables.companion_actions };
+}
+function applyCloudCommand(source, owner, kind, input, now, requestHash, uuid = () => crypto.randomUUID(), verifiedReward) {
+  if (!input || typeof input.actionId !== "string" || !/^[a-zA-Z0-9:_-]{1,160}$/.test(input.actionId)) problem("INVALID_ACTION", "\u64CD\u4F5C\u7F16\u53F7\u65E0\u6548");
+  if (input.sessionOwnerAccountId !== void 0 && input.sessionOwnerAccountId !== owner) problem("SESSION_CHANGED", "\u8D26\u53F7\u5DF2\u5207\u6362\uFF0C\u8BF7\u5237\u65B0");
+  const envelope = copy2(source), tables = gardenDocument(envelope, owner);
+  const previous = tables.garden_actions.find((row) => row.action_id === input.actionId);
+  if (previous) {
+    if (previous.request_hash !== requestHash || previous.kind !== kind) problem("ACTION_ID_REUSED", "\u6B64\u64CD\u4F5C\u7F16\u53F7\u5DF2\u7528\u4E8E\u53E6\u4E00\u9879\u64CD\u4F5C");
+    return { envelope, result: { ...JSON.parse(previous.result_json), replayed: true }, changed: false };
+  }
+  const actionId = input.actionId;
+  function change(itemId, delta, petId = null, eventKind = kind) {
+    let item = tables.garden_items.find((row) => row.item_id === itemId);
+    const balance = (item?.quantity || 0) + delta;
+    if (!Number.isSafeInteger(balance) || balance < 0) problem("INSUFFICIENT_ITEMS", `${ITEMS[itemId]?.name || itemId}\u4E0D\u8DB3`);
+    if (balance > 1e9) problem("INVENTORY_LIMIT", "\u5E93\u5B58\u5DF2\u8FBE\u4E0A\u9650");
+    if (item) item.quantity = balance;
+    else {
+      item = { owner_account_id: owner, item_id: itemId, quantity: balance };
+      tables.garden_items.push(item);
+    }
+    tables.garden_events.push({ owner_account_id: owner, event_id: uuid(), action_id: actionId, kind: eventKind, item_id: itemId, delta, balance, pet_id: petId, created_at: now });
+  }
+  const initializing = !tables.garden_accounts.length;
+  if (initializing) {
+    tables.garden_accounts.push({ owner_account_id: owner, revision: 0, initialized_at: now });
+    for (let i = 1; i <= BASE_PLOTS; i++) tables.garden_plots.push({ owner_account_id: owner, plot_id: `plot-${i}`, crop_type: null, planted_at: null, matures_at: null, yield_quantity: 0, revision: 0 });
+    for (const crop of Object.values(CROPS)) change(crop.seedItemId, STARTER_SEEDS, null, "starter");
+  }
+  const account = tables.garden_accounts[0];
+  if (kind === "initialize" && !initializing) return { envelope, result: { ok: true, data: { initialized: true }, revision: account.revision, replayed: true }, changed: false };
+  if (kind !== "reward" && (!Number.isSafeInteger(input.expectedRevision) || input.expectedRevision !== account.revision)) problem("REVISION_CONFLICT", "\u53E6\u4E00\u53F0\u8BBE\u5907\u5DF2\u66F4\u65B0\u83DC\u56ED\uFF0C\u8BF7\u5237\u65B0");
+  let receipt;
+  if (kind === "initialize") {
+    receipt = { initialized: true, plots: BASE_PLOTS };
+  } else if (kind === "plant") {
+    const crop = CROPS[input.cropType];
+    if (!crop) problem("INVALID_CROP", "\u79CD\u5B50\u65E0\u6548");
+    const plot = tables.garden_plots.find((row) => row.plot_id === input.plotId);
+    if (!plot) problem("PLOT_NOT_FOUND", "\u627E\u4E0D\u5230\u8FD9\u5757\u83DC\u5730");
+    if (plot.crop_type) problem("PLOT_OCCUPIED", "\u8BF7\u5148\u6536\u83B7");
+    change(crop.seedItemId, -1);
+    Object.assign(plot, { crop_type: crop.id, planted_at: now, matures_at: now + crop.growMs, yield_quantity: crop.yield, revision: plot.revision + 1 });
+    receipt = { plotId: plot.plot_id, cropType: crop.id, plantedAt: now, maturesAt: plot.matures_at, yieldQuantity: plot.yield_quantity };
+  } else if (kind === "harvest") {
+    if (!Array.isArray(input.plotIds) || input.plotIds.length < 1 || input.plotIds.length > BASE_PLOTS || new Set(input.plotIds).size !== input.plotIds.length) problem("INVALID_PLOTS", "\u8BF7\u9009\u62E9\u6709\u6548\u5730\u5757");
+    const harvested = [];
+    for (const id of input.plotIds) {
+      const plot = tables.garden_plots.find((row) => row.plot_id === id);
+      if (!plot) problem("PLOT_NOT_FOUND", "\u627E\u4E0D\u5230\u83DC\u5730");
+      if (!plot.crop_type) problem("ALREADY_HARVESTED", "\u8FD9\u5757\u83DC\u5730\u5DF2\u6536\u83B7");
+      if (now < plot.matures_at) problem("CROP_NOT_MATURE", "\u4F5C\u7269\u5C1A\u672A\u6210\u719F");
+      const crop = CROPS[plot.crop_type];
+      change(crop.harvestItemId, plot.yield_quantity);
+      harvested.push({ plotId: id, itemId: crop.harvestItemId, quantity: plot.yield_quantity });
+      Object.assign(plot, { crop_type: null, planted_at: null, matures_at: null, yield_quantity: 0, revision: plot.revision + 1 });
+    }
+    receipt = { harvested };
+  } else if (kind === "craft") {
+    const recipe = RECIPES[input.recipeId];
+    if (!recipe) problem("INVALID_RECIPE", "\u98DF\u8C31\u65E0\u6548");
+    const count = validQuantity(input.quantity);
+    change(recipe.input.itemId, -recipe.input.quantity * count);
+    change(recipe.output.itemId, recipe.output.quantity * count);
+    receipt = { recipeId: recipe.id, itemId: recipe.output.itemId, quantity: recipe.output.quantity * count };
+  } else if (kind === "feed") {
+    const item = ITEMS[input.itemId];
+    if (!item?.effects) problem("NOT_EDIBLE", "\u7A3B\u7C73\u9700\u8981\u5148\u5236\u4F5C\uFF0C\u79CD\u5B50\u4E0D\u80FD\u5582\u98DF");
+    const count = validQuantity(input.quantity);
+    const pets = cloudCompanions(envelope, owner).pets;
+    const petRow = pets?.find((row) => row.owner_account_id === owner && row.pet_id === input.petId);
+    if (!petRow) problem("PET_NOT_FOUND", "\u5F53\u524D\u8D26\u53F7\u6CA1\u6709\u8FD9\u53EA\u4F19\u4F34");
+    if (!Number.isSafeInteger(input.expectedPetRevision) || petRow.revision !== input.expectedPetRevision) problem("REVISION_CONFLICT", "\u4F19\u4F34\u72B6\u6001\u5DF2\u66F4\u65B0\uFF0C\u8BF7\u5237\u65B0");
+    const pet = JSON.parse(petRow.data_json);
+    if (pet.ownerAccountId !== owner || pet.petId !== input.petId) problem("PET_NOT_FOUND", "\u4F19\u4F34\u5F52\u5C5E\u4E0D\u4E00\u81F4");
+    change(item.id, -count, pet.petId);
+    pet.growth = applyGrowthEffect(pet.growth, { satiety: item.effects.satiety * count, mood: item.effects.mood * count, affinity: item.effects.intimacy * count });
+    pet.revision++;
+    pet.updatedAt = new Date(now).toISOString();
+    petRow.revision = pet.revision;
+    petRow.updated_at = pet.updatedAt;
+    petRow.data_json = JSON.stringify(pet);
+    const companionAccount = cloudCompanions(envelope, owner).accounts.find((row) => row.owner_account_id === owner);
+    if (companionAccount) companionAccount.revision++;
+    receipt = { petId: pet.petId, itemId: item.id, quantity: count, effects: Object.fromEntries(Object.entries(item.effects).map(([key, value]) => [key, value * count])), pet };
+  } else if (kind === "reward") {
+    if (!verifiedReward || verifiedReward.ownerAccountId !== owner || verifiedReward.id !== input.receiptId || verifiedReward.source !== input.source || !CROPS[verifiedReward.cropId]) problem("UNVERIFIED_REWARD", "\u9700\u8981\u5DF2\u7ED3\u7B97\u7684\u670D\u52A1\u7AEF\u51ED\u636E");
+    if (tables.garden_reward_receipts.some((row) => row.source === input.source && row.receipt_id === input.receiptId)) problem("REWARD_ALREADY_CLAIMED", "\u672C\u6B21\u79CD\u5B50\u5DF2\u5165\u5E93");
+    const crop = CROPS[verifiedReward.cropId], count = input.source === "battle" ? 2 : 1;
+    change(crop.seedItemId, count);
+    receipt = { source: input.source, receiptId: input.receiptId, itemId: crop.seedItemId, quantity: count };
+    tables.garden_reward_receipts.push({ owner_account_id: owner, source: input.source, receipt_id: input.receiptId, action_id: actionId, result_json: JSON.stringify(receipt) });
+  } else problem("CLOUD_COMMAND_UNAVAILABLE", "\u8BE5\u64CD\u4F5C\u5C1A\u672A\u63A5\u5165\u4E91\u7AEF\u6743\u5A01\u7ED3\u7B97");
+  account.revision++;
+  const result = { ok: true, data: receipt, revision: account.revision, replayed: false };
+  tables.garden_actions.push({ owner_account_id: owner, action_id: actionId, kind, request_hash: requestHash, result_json: JSON.stringify(result), created_at: now });
+  tables.garden_outbox.push({ owner_account_id: owner, action_id: actionId, payload_json: JSON.stringify({ kind, input, result }), status: "synced", attempts: 0, last_error: null, created_at: now });
+  envelope.createdAt = new Date(now).toISOString();
+  return { envelope, result, changed: true };
+}
+
+// apps/pc-app/runtime/features/garden/catalog.json
+var catalog_default3 = {
+  CROPS: {
+    carrot: {
+      id: "carrot",
+      name: "\u80E1\u841D\u535C",
+      icon: "\u{1F955}",
+      seedItemId: "seed:carrot",
+      harvestItemId: "carrot",
+      growMs: 6e5,
+      yield: 3,
+      color: "#ed9448"
+    },
+    tomato: {
+      id: "tomato",
+      name: "\u756A\u8304",
+      icon: "\u{1F345}",
+      seedItemId: "seed:tomato",
+      harvestItemId: "tomato",
+      growMs: 9e5,
+      yield: 3,
+      color: "#ef7875"
+    },
+    berry: {
+      id: "berry",
+      name: "\u8393\u679C",
+      icon: "\u{1FAD0}",
+      seedItemId: "seed:berry",
+      harvestItemId: "berry",
+      growMs: 12e5,
+      yield: 4,
+      color: "#9e8fd4"
+    },
+    rice: {
+      id: "rice",
+      name: "\u7A3B\u7C73",
+      icon: "\u{1F33E}",
+      seedItemId: "seed:rice",
+      harvestItemId: "rice",
+      growMs: 15e5,
+      yield: 2,
+      color: "#d2ad54"
+    }
+  },
+  ITEMS: {
+    "seed:carrot": {
+      id: "seed:carrot",
+      name: "\u80E1\u841D\u535C\u79CD\u5B50",
+      icon: "\u{1F955}",
+      category: "seed",
+      source: "\u63A2\u7D22\u4E0E\u5BF9\u6218",
+      effects: null
+    },
+    "seed:tomato": {
+      id: "seed:tomato",
+      name: "\u756A\u8304\u79CD\u5B50",
+      icon: "\u{1F345}",
+      category: "seed",
+      source: "\u63A2\u7D22\u4E0E\u5BF9\u6218",
+      effects: null
+    },
+    "seed:berry": {
+      id: "seed:berry",
+      name: "\u8393\u679C\u79CD\u5B50",
+      icon: "\u{1FAD0}",
+      category: "seed",
+      source: "\u63A2\u7D22\u4E0E\u5BF9\u6218",
+      effects: null
+    },
+    "seed:rice": {
+      id: "seed:rice",
+      name: "\u7A3B\u7C73\u79CD\u5B50",
+      icon: "\u{1F33E}",
+      category: "seed",
+      source: "\u63A2\u7D22\u4E0E\u5BF9\u6218",
+      effects: null
+    },
+    carrot: {
+      id: "carrot",
+      name: "\u80E1\u841D\u535C",
+      icon: "\u{1F955}",
+      category: "food",
+      source: "\u83DC\u56ED\u6536\u83B7",
+      effects: {
+        satiety: 12,
+        mood: 2,
+        intimacy: 2
+      }
+    },
+    tomato: {
+      id: "tomato",
+      name: "\u756A\u8304",
+      icon: "\u{1F345}",
+      category: "food",
+      source: "\u83DC\u56ED\u6536\u83B7",
+      effects: {
+        satiety: 10,
+        mood: 3,
+        intimacy: 2
+      }
+    },
+    berry: {
+      id: "berry",
+      name: "\u8393\u679C",
+      icon: "\u{1FAD0}",
+      category: "food",
+      source: "\u83DC\u56ED\u6536\u83B7",
+      effects: {
+        satiety: 8,
+        mood: 4,
+        intimacy: 3
+      }
+    },
+    rice: {
+      id: "rice",
+      name: "\u7A3B\u7C73",
+      icon: "\u{1F33E}",
+      category: "ingredient",
+      source: "\u83DC\u56ED\u6536\u83B7",
+      effects: null
+    },
+    cooked_rice: {
+      id: "cooked_rice",
+      name: "\u70ED\u4E4E\u4E4E\u7684\u7C73\u996D",
+      icon: "\u{1F35A}",
+      category: "food",
+      source: "\u7A3B\u7C73\u5236\u4F5C",
+      effects: {
+        satiety: 20,
+        mood: 3,
+        intimacy: 4
+      }
+    }
+  },
+  RECIPES: {
+    cooked_rice: {
+      id: "cooked_rice",
+      name: "\u70ED\u4E4E\u4E4E\u7684\u7C73\u996D",
+      input: {
+        itemId: "rice",
+        quantity: 1
+      },
+      output: {
+        itemId: "cooked_rice",
+        quantity: 1
+      }
+    }
+  },
+  BASE_PLOTS: 6,
+  STARTER_SEEDS: 2,
+  MAX_QUANTITY: 99
+};
+
+// discovery-cloud-entry.mjs
 var { presentSession, visualEvents } = import_presentation.default;
 var { geofence, checkFix, distanceMeters } = import_coordinates.default;
 var { nearbySpawns, canonicalCatalog } = import_spawns.default;
 export {
   BattleRuntimeService,
+  applyCloudCommand,
+  awardBattleResult,
   canonicalCatalog,
   checkFix,
+  companionUnit,
+  createCompanionInstance,
   distanceMeters,
+  emptyGarden,
   executeRound,
+  catalog_default3 as gardenCatalog,
+  gardenDocument,
   geofence,
   getBattleRules2 as getBattleRules,
+  listBuiltinTemplates,
   nearbySpawns,
+  normalizeCompanionRows,
   presentSession,
   visualEvents
 };

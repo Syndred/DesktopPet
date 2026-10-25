@@ -8,10 +8,10 @@ function registerResourceCloud(services, service) {
   const cloud = new ResourceCloudSync({service,isEnabled:enabled,
     async getActor(owner) {
       if(services.session.getOwnerAccountId()!==owner)throw new ResourceError('SESSION_CHANGED','账号已切换');
-      const auth=services.get('cloudAuth');
+      const auth=services.get('cloudActor');
       if(typeof auth?.requireActor!=='function')throw new ResourceError('RESOURCE_CLOUD_AUTH_REQUIRED','云端身份服务尚未就绪');
-      const actor=await auth.requireActor(owner);
-      if(services.session.getOwnerAccountId()!==owner)throw new ResourceError('SESSION_CHANGED','账号已切换');
+      const actor=await auth.requireActor();
+      if(services.session.getOwnerAccountId()!==owner||actor.ownerAccountId!==owner)throw new ResourceError('SESSION_CHANGED','账号已切换');
       return actor;
     },
     onChanged(owner,resourceId){services.events.emit('resources:changed',{ownerAccountId:owner,resourceId});}
@@ -24,7 +24,7 @@ function registerResourceCloud(services, service) {
     running.add(owner);
     try {
       await service.ready;
-      if(seed)cloud.enqueue(owner,randomUUID());
+      if(seed){cloud.enqueue(owner,randomUUID());cloud.preferences.enqueue(owner);}
       await cloud.flush(owner);
       let offset=0;
       do{const batch=await cloud.pull(owner,{offset});if(batch.busy)break;offset=batch.nextOffset;}while(offset!==null&&!disposed&&services.session.getOwnerAccountId()===owner);
@@ -35,7 +35,7 @@ function registerResourceCloud(services, service) {
   const listeners=['accounts:session-changed','accounts:settings-changed','accounts:save-restored'].map(event=>services.events.on(event,()=>{void pump(true);}));
   const timer=setInterval(()=>{void pump();},30000);timer.unref?.();
   void service.ready.then(()=>pump(true)).catch(()=>{});
-  return {cloud,changed(owner,resource){if(resource.origin==='import'&&enabled(owner)){cloud.enqueue(owner,randomUUID(),[resource.id]);void pump();}},
+  return {cloud,changed(owner,resource,preferenceChange=false){if(enabled(owner)){if(preferenceChange)cloud.preferences.enqueue(owner,[resource.id]);else if(resource.origin==='import')cloud.enqueue(owner,randomUUID(),[resource.id]);void pump();}},
     dispose(){disposed=true;clearInterval(timer);for(const off of listeners)off();}};
 }
 module.exports={registerResourceCloud};

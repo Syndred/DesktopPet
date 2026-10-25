@@ -10,7 +10,7 @@ import { CompanionPortrait } from './CompanionPortrait';
 import { ActionPreview } from './ActionPreview';
 import { BattleSkillSummary } from '../battle/BattleMoves';
 import { hasYuwanRoomArtwork } from './artwork';
-import { CompanionElement, DesktopControls, InfoHint, LoadingOrEmpty, PetActions, RenameControl, StateMeters, usePageScroll, type Controller } from './components';
+import { CompanionCloudNotice, CompanionElement, DesktopControls, InfoHint, LoadingOrEmpty, PetActions, RenameControl, StateMeters, usePageScroll, type Controller } from './components';
 
 const hasRoomArtwork = (pet: CompanionPet) => hasYuwanRoomArtwork(pet.resource.resourceId);
 
@@ -70,5 +70,5 @@ function PetDetailContent({ pet, snapshot, controller }: { pet: CompanionPet; sn
 export function PetDetailPage() {
   usePageScroll(); const controller = useCompanions(); const path = usePath(); const petId = path.slice('/companions/'.length);
   const stored = controller.snapshot?.pets.find(candidate => candidate.petId === petId); const pet = stored?.resource.kind === '2d' ? stored : null;
-  return <div className="cp-page cp-detail-page"><ErrorNotice message={controller.error}/>{!controller.snapshot ? <LoadingOrEmpty controller={controller}/> : !pet ? <EmptyState title={stored ? '这份旧伙伴记录已保留' : '这只伙伴不在当前账号的灵境里'} action={<Button onClick={() => navigate('/companions')}>回到我的灵宠</Button>}/> : <PetDetailContent key={`${controller.snapshot.ownerAccountId}:${pet.petId}`} pet={pet} snapshot={controller.snapshot} controller={controller}/>}</div>;
+  return <div className="cp-page cp-detail-page"><CompanionCloudNotice controller={controller}/><ErrorNotice message={controller.error}/>{!controller.snapshot ? <LoadingOrEmpty controller={controller}/> : !pet ? <EmptyState title={stored ? '这份旧伙伴记录已保留' : '这只伙伴不在当前账号的灵境里'} action={<Button onClick={() => navigate('/companions')}>回到我的灵宠</Button>}/> : <PetDetailContent key={`${controller.snapshot.ownerAccountId}:${pet.petId}`} pet={pet} snapshot={controller.snapshot} controller={controller}/>}</div>;
 }

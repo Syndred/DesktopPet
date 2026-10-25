@@ -19,7 +19,9 @@ function cloudProjection(envelope){
   if(Array.isArray(value))return value.map((item,index)=>scrub(item,[...path,String(index)],depth+1));
   if(value&&typeof value==='object'){
    const clean=Object.create(null);for(const [key,item]of Object.entries(value)){
-    if(secretKey(key)||opaqueKeys.has(normalize(key))||/(sourcejson|rawjson|rawdocument|legacyarchive)$/.test(normalize(key))){excluded.push([...path,key].join('.'));continue;}
+    const opaque=opaqueKeys.has(normalize(key))||/(sourcejson|rawjson|rawdocument|legacyarchive)$/.test(normalize(key));
+    const empty=item===null||item===''||Array.isArray(item)&&item.length===0;
+    if(secretKey(key)||opaque&&!empty){excluded.push([...path,key].join('.'));continue;}
     clean[key]=scrub(item,[...path,key],depth+1);
    }return clean;
   }
@@ -31,7 +33,9 @@ function cloudProjection(envelope){
  const {checksum:sourceChecksum,...body}=envelope;
  const data={modules:{},tables:{}};
  for(const [name,record]of Object.entries(body.data.modules)){
-  if(name==='legacy'){if(record.data!==null)excluded.push('data.modules.legacy');continue;}
+  if(name==='legacy'){
+   if(record.data!==null)excluded.push('data.modules.legacy');else data.modules[name]={version:record.version,data:null};continue;
+  }
   data.modules[name]=scrub(record,['data','modules',name]);
  }
  for(const [name,record]of Object.entries(body.data.tables)){
@@ -42,6 +46,6 @@ function cloudProjection(envelope){
  }
  const projected={...body,data,excluded:[...new Set([...(body.excluded||[]),...excluded])]};
  const projectedEnvelope={...projected,checksum:checksum(projected)};
- return{envelope:projectedEnvelope,sourceChecksum,projectedChecksum:projectedEnvelope.checksum,excluded,originalCloudComplete:excluded.length===0};
+ return{envelope:projectedEnvelope,sourceChecksum,projectedChecksum:projectedEnvelope.checksum,excluded,originalCloudComplete:projectedEnvelope.checksum===sourceChecksum};
 }
 module.exports={cloudProjection};

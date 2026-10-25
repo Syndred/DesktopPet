@@ -81,7 +81,7 @@ class SupabaseRemote {
     if(!session){this.active=null;this.closeSdkSessions();return;}
     const proof=decodeProof(session.cloudProof||session.proof);
     invariant(proof.actor.deviceId===this.deviceId&&proof.actor.ownerAccountId===(session.ownerAccountId||session.id),'INVALID_CLOUD_IDENTITY','凭据与当前设备或账号不匹配。');
-    this.closeSdkSessions(proof.actor.sessionId);this.active=proof;
+    this.active=proof;this.closeSdkSessions(proof.actor.sessionId);
   }
   closeSdkSessions(keepSessionId){
     for(const [sid,record]of this.sdkSessions)if(sid!==keepSessionId){

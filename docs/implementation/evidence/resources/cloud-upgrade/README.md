@@ -10,7 +10,9 @@
 - 内置八角色继续离线，私有上传只取已登记资源文件，不导出应用配置/账号或 BYOK vault；凭据字段描述会在任何网络请求前拒绝。
 - 正式 history.cjs 保留已有模型档案的只读查询、包内引用校验及跨客户端档案恢复，活动导入/预览继续仅 2D。
 
-主进程需由 08 提供 `cloudAuth.requireActor(owner)` 的已认证 ActorContext。生产适配器拒绝 simulated actor 和 HTTP client；只有显式 protocolFixture 测试构造器允许 127.0.0.1，且状态标为 simulated。没有因网络失败而切换 mock。
+主进程消费 08 `cloudActor.requireActor()`，在异步前后检查 owner。生产适配器拒绝 simulated actor 和 HTTP client；只有显式 protocolFixture 测试构造器允许 127.0.0.1，状态及持久化回执均标为 simulated。没有因网络失败而切换 mock。
+
+[真实服务层证据](live-service/evidence.json) 已证明实际 Supabase A→B 哈希与原 resourceId 一致、OTHER Storage404/index0、一次明确网络故障后关闭重开 SQLite 续传。这个结果属于存储层；受保护 refs 注册和真实双 Electron 单独验收。[早期 SQLITE_ERROR](retained-failures/initial-sqlite-ledger.json) 保留，修正为使用正式 openDatabase 初始化迁移台账后重新运行，没有把失败改成成功。[旧模拟双 Electron](native-simulated/evidence.json) 仍标 simulated/cloudVerified=false，实际使用 Electron36.9.5/SQLite12.11.1，不改写成升级后的44版本。
 
 ## 本机验证与真实云端边界
 

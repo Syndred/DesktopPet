@@ -1,0 +1,129 @@
+{
+  "at": "2026-10-25T03:02:01.862Z",
+  "sourceSha": "7784f8a3cfefb84a3ab6285d121166caeea9a03a",
+  "kind": "Two actual Electron44 processes on one Windows host, isolated profiles, production TypeScript main/preload and React renderer, actual Supabase HTTPS. Not two physical machines.",
+  "credentialsPersisted": "Windows safeStorage ciphertext only; no password or token in evidence",
+  "checks": [
+    {
+      "name": "actual separate Electron processes log in to same HTTPS account without kicking each other",
+      "data": {
+        "pidA": 3892,
+        "pidB": 21812,
+        "owner": "account:0b11ad7e-ca87-47ed-bcf8-5cdb7d6d4edc",
+        "native": {
+          "electron": "44.9.3",
+          "node": "24.22.0",
+          "userData": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-accounts\\DesktopPet\\artifacts\\accounts\\cloud-electron-1792897321861\\device-a"
+        }
+      }
+    },
+    {
+      "name": "two Windows safeStorage vaults keep device-specific sessions encrypted",
+      "data": {
+        "a": {
+          "available": true,
+          "file": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-accounts\\DesktopPet\\artifacts\\accounts\\cloud-electron-1792897321861\\device-a\\accounts\\verified-session.bin",
+          "sha256": "aede81eff178754da4b04a9bf760d2de0402e1e8779108aee40fc36d24da7069",
+          "encryptedNotPlaintext": true,
+          "matchesCurrentSession": true,
+          "deviceId": "f26c4bdf-cf04-4792-957c-722f3df6d47b",
+          "sessionId": "f73bfbe0-ee13-4407-8132-4789d0d34413",
+          "owner": "account:0b11ad7e-ca87-47ed-bcf8-5cdb7d6d4edc"
+        },
+        "b": {
+          "available": true,
+          "file": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-accounts\\DesktopPet\\artifacts\\accounts\\cloud-electron-1792897321861\\device-b\\accounts\\verified-session.bin",
+          "sha256": "2ccf46231f4b2041f5fcfa16e29ab49d396c3a4bc62576d9f6ddcf00fcc2e2b8",
+          "encryptedNotPlaintext": true,
+          "matchesCurrentSession": true,
+          "deviceId": "bb0ccba6-7ce3-4a7b-96fa-054b2825d329",
+          "sessionId": "3686eb0a-c0fc-41c1-9b97-aabb0f4a0032",
+          "owner": "account:0b11ad7e-ca87-47ed-bcf8-5cdb7d6d4edc"
+        }
+      }
+    },
+    {
+      "name": "rendered application A saves, application B independently reads matching actual cloud receipt",
+      "data": {
+        "first": {
+          "verified": false,
+          "personalVerified": true,
+          "requiresAuthority": true,
+          "privacyRedactions": false,
+          "actionId": "9e075ae9-22cd-426f-ab60-0b17b2b4ba05",
+          "revision": 1,
+          "checksum": "f03ff714e6a1a07e322c8e5a5d73f0070080fe36b5496e9803d5b2ecd51f8313",
+          "status": {
+            "configured": true,
+            "cloudRevision": 1,
+            "lastVerifiedAt": "2026-10-25T03:02:19.221Z",
+            "lastError": null,
+            "pending": 0,
+            "conflicts": 0,
+            "localChanged": true,
+            "unverifiedLocal": 1,
+            "privacyRedactions": 0,
+            "running": false
+          }
+        },
+        "cloudB": {
+          "revision": 1,
+          "checksum": "f03ff714e6a1a07e322c8e5a5d73f0070080fe36b5496e9803d5b2ecd51f8313",
+          "volume": 31,
+          "modules": [
+            "settings",
+            "conversations"
+          ]
+        }
+      }
+    },
+    {
+      "name": "real IPC conflict preserves B state; explicit cloud restore keeps original backup before next CAS",
+      "data": {
+        "conflict": "SYNC_CONFLICT",
+        "backup": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-accounts\\DesktopPet\\artifacts\\accounts\\cloud-electron-1792897321861\\device-b\\accounts\\backups\\before-restore-1792897344527-8e737310-dc0e-47a5-9d39-d59c765941fd.lingjing.json",
+        "revision": 2
+      }
+    },
+    {
+      "name": "real Auth rotation updates same SDK Data API and Realtime token plus encrypted vault",
+      "data": {
+        "sameClient": true,
+        "rotated": true,
+        "realtimeTokenMatches": true,
+        "owner": "account:0b11ad7e-ca87-47ed-bcf8-5cdb7d6d4edc",
+        "channelCount": 0,
+        "privateChannelReconnectVerified": false
+      }
+    },
+    {
+      "name": "real Electron restart resumes encrypted session and durable queue after controlled connection refusal",
+      "data": {
+        "oldPid": 3892,
+        "newPid": 27596,
+        "deviceId": "f26c4bdf-cf04-4792-957c-722f3df6d47b",
+        "sessionId": "f73bfbe0-ee13-4407-8132-4789d0d34413",
+        "revision": 3,
+        "scope": "per-request closed TLS socket; host network was not disabled"
+      }
+    },
+    {
+      "name": "actual public session and SQLite omit access/refresh tokens",
+      "data": {
+        "sessionExcludesTokens": true,
+        "sqliteExcludesTokens": true
+      }
+    },
+    {
+      "name": "logout A revokes its real session, restart stays signed out, B remains active",
+      "data": {
+        "owner": "account:0b11ad7e-ca87-47ed-bcf8-5cdb7d6d4edc",
+        "revision": 3
+      }
+    }
+  ],
+  "errors": [],
+  "fullSaveVerified": false,
+  "authorityPending": true,
+  "passed": true
+}

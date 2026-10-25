@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "sources": {
+    "apps/pc-app/runtime/features/companions/cloud-growth.mjs": "e8b5c929a842d7786c4ae2b7fb608836252d4722f63ed0f600245a37005d5807",
+    "apps/pc-app/runtime/features/companions/growth.mjs": "e2239549f38a5df3b8911406c69d3a3c4c0ac655061cb219966716fb85c28255",
+    "apps/pc-app/runtime/features/garden/catalog.json": "4f87be75b43692f0271e3c472e2558fa9ab0f60f41c5f37fa419aad542cd59fa",
+    "apps/pc-app/runtime/features/garden/cloud-domain.mjs": "c0c7c7e15b71f91ccd24c7eaffb09c4137f148166f5b38014aa2d3fcfd19cf41",
+    "apps/pc-app/runtime/features/resources/assets/roster-v2/catalog.json": "7910fbc82b93957047a1767ae1f09f6431877f5a9ac4df59f30c1b48049b3ef8",
+    "infra/supabase/functions/garden-sync/handler.mjs": "686e7265435cce075d350a4886865108cf7f608ffb26628dae7ec35fab6cc741",
+    "infra/supabase/functions/territory-sync/domain.mjs": "6db77b62cd43f8c892cfd506f53f36e46cfb1d4e8d685a7de1655be3d9526fb6",
+    "infra/supabase/functions/territory-sync/handler.mjs": "4155bf0fd1eeb9a1117fa7a36d7ff1f90a9d7b5d316697520a05ea15a5d77168",
+    "scripts/acceptance/cloud-territory/edge-runtime.mjs": "d47546c1383332206b344429d9989e1d997b048da9d80ed179f65d6768938e46",
+    "infra/supabase/functions/_shared/battle-core.js": "67225069e3542668b6c7316e4f35a545cb3892754ca1fb3af8efd3c2bef3e885"
+  },
+  "bundleSha256": "d755f6f3787b382c37f298f2ea0c39444aa854ec42eebb920a799ee43a83f302",
+  "battleCore": "./battle-core.js",
+  "containsBattleFormula": false
+}
