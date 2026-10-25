@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-25T06:01:47.899Z",
-  "phase": "final-portable-build-and-independent-business-acceptance",
+  "updatedAt": "2026-10-25T06:18:05.634Z",
+  "phase": "actual-final-exe-revealed-battle-journal-convergence-gap",
   "goalStatus": "active",
   "deployed": {
     "projectRef": "jbvrdmrkwpznbrvteive",
@@ -125,8 +125,9 @@
     }
   },
   "fixedRemainingWork": [
-    "Build and audit actual final portable SFX from exact freeze",
-    "Coordinator independently accepts the actual EXE business flow through normal React/IPC/HTTPS/query-only SQLite/native rendered pixels"
+    "Correct battle transport journal/canonical full-save boundary while preserving original local receipts and pending retry IDs",
+    "Rebuild only if product source changes and rerun actual final portable business acceptance",
+    "Finish original report replay, offline original-action restart and final independent full-save equality checks"
   ],
   "cleanup": {
     "completedCodeRetirement": true,
@@ -258,10 +259,11 @@
       "review": "Legacy normalization is internal view only; original envelope/checksum/files retained. Root8 targeted native restore/provider cases and original signed expired HTTPS denial passed."
     }
   ],
-  "status": "final-portable-build-and-independent-business-acceptance",
+  "status": "actual-final-exe-revealed-battle-journal-convergence-gap",
   "remaining": [
-    "Build and audit actual final portable SFX from exact freeze",
-    "Coordinator independently accepts the actual EXE business flow through normal React/IPC/HTTPS/query-only SQLite/native rendered pixels"
+    "Correct battle transport journal/canonical full-save boundary while preserving original local receipts and pending retry IDs",
+    "Rebuild only if product source changes and rerun actual final portable business acceptance",
+    "Finish original report replay, offline original-action restart and final independent full-save equality checks"
   ],
   "engineering": {
     "historicalEngineeringCheckpoints": {
@@ -291,7 +293,16 @@
         "finalPortablePackagePending": true
       }
     },
-    "finalBusinessPortablePending": true
+    "finalBusinessPortablePending": true,
+    "deliveredCandidate": {
+      "sourceCommit": "2e13487f73396ebad981ff703b4377f403e214e0",
+      "executable": "releases/final-2e13487/Lingjing-0.1.8-portable-x64.exe",
+      "sha256": "90dc58a18487825ec86b943a11c1deeb927cd97ff4a75e280b673487dc583070",
+      "bytes": 169183111,
+      "signature": "NotSigned",
+      "engineeringPassed": true,
+      "businessPassed": false
+    }
   },
   "freezePolicy": "No further product edits without a concrete verification failure; one common verify/native/strict-cloud regression and actual final portable business acceptance. Later evidence-only commits do not replace the exact packaged source identity.",
   "finalRegression": {
@@ -320,5 +331,17 @@
     },
     "evidence": "docs/implementation/evidence/cloud/2026-10-25/final-regression.json"
   },
-  "productFreeze": "2e13487f73396ebad981ff703b4377f403e214e0"
+  "productFreeze": "2e13487f73396ebad981ff703b4377f403e214e0",
+  "finalPortableFirstAttempt": {
+    "passed": false,
+    "completedBusinessChecks": 3,
+    "actualAuthAndOriginal11PetIds": true,
+    "actualAutomaticPersonalSync": true,
+    "actualPrivateBytesAndPreferencesAndNativePixels": true,
+    "actualTrainingRounds": 20,
+    "failure": "A settlement did not settle",
+    "causeUnderReview": "Locally durable live transport intents share protected battle actions; A has 21 local action receipts while canonical B/cloud have zero",
+    "originalFailureEvidence": "docs/implementation/evidence/cloud/2026-10-25/final-portable-2e13487-first/evidence.json",
+    "originalProfileDirectory": "artifacts/cloud-upgrade/2026-10-25/final-portable-Fbu6gW"
+  }
 }
