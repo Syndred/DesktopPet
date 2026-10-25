@@ -90,3 +90,23 @@ test('PROTOCOL SIMULATION: unknown local progress and account switches preserve 
     f.switchOwner('other-owner');await assert.rejects(()=>f.authority.refresh(owner),error=>error.code==='SESSION_CHANGED');assert.deepEqual(f.service.requirePet(owner,existing.petId),existing);
   }finally{f.close();cleanup(path);}
 });
+
+test('PROTOCOL SIMULATION: verified companion readback preserves unrelated offline data and the original common-save request without advancing its base',async()=>{
+  const path=folder(),remote=server(),f=client(path,remote);
+  try{
+    const first=await f.authority.execute(owner,'adopt',adopt('shared-pending-adopt')),petId=first.data.pet.petId;
+    const revision=f.sync.status(owner).cloudRevision;
+    f.db.exec('CREATE TABLE offline_notes(owner_account_id TEXT PRIMARY KEY,note TEXT NOT NULL)');
+    f.db.prepare('INSERT INTO offline_notes VALUES(?,?)').run(owner,'原始回忆');
+    f.sync.enqueue(owner,'original-common-save-action');
+    const original=f.db.prepare('SELECT * FROM account_sync_outbox WHERE owner_account_id=?').get(owner);
+    f.db.prepare('UPDATE offline_notes SET note=? WHERE owner_account_id=?').run('离线新回忆',owner);
+    await f.authority.execute(owner,'rename',{actionId:'shared-pending-rename',petId,name:'云端已确认的名字'});
+    assert.equal(f.service.requirePet(owner,petId).name,'云端已确认的名字');
+    assert.equal(f.db.prepare('SELECT note FROM offline_notes WHERE owner_account_id=?').get(owner).note,'离线新回忆');
+    assert.deepEqual(f.db.prepare('SELECT * FROM account_sync_outbox WHERE owner_account_id=?').get(owner),original);
+    assert.equal(f.sync.status(owner).cloudRevision,revision);
+    assert.equal(f.authority.state(owner).sharedSavePending,true);
+    assert.equal(f.authority.pending(owner).length,0);
+  }finally{f.close();cleanup(path);}
+});
