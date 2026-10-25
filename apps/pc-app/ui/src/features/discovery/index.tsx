@@ -13,6 +13,7 @@ import { CaptureResultView } from './CaptureResultView';
 import { PokedexView } from './PokedexView';
 import { twoDimensional } from './presentation';
 import './styles.css';
+import './identity.css';
 
 function DiscoveryPage() {
   const { data: state, pending, error, run, refresh } = useDiscovery();

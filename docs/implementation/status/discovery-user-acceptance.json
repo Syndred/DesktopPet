@@ -1,0 +1,84 @@
+{
+  "module": "discovery",
+  "issue": "QA-003",
+  "updatedAt": "2026-10-25T09:50:45.430Z",
+  "status": "source-ready_waiting-09-real-user-acceptance",
+  "branch": "codex/lingjing-discovery",
+  "coordinatorBaseline": "9e57de1d210376ce679168eb1acbff8e37cff1cd",
+  "baselineIntegration": "Clean fast-forward; no local source changes existed before integration. Ignored profiles, existing data and design files preserved.",
+  "remoteCode": {
+    "command": "git fetch origin main",
+    "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086",
+    "latestIncluded": true
+  },
+  "identityContract": "docs/implementation/companions-display-identity-contract.json",
+  "scope": [
+    "PetPicker selected value, dropdown options and quick cards: canonical roleName and complete original petId, wrapping without ellipsis",
+    "Capture result: canonical current role and complete petId; original capture name/serial explicitly historical; nickname editing removed from this current-identity view",
+    "Pokedex: current instance identity and complete petId alongside original encounter history, with existing petId/capture/encounter links retained",
+    "Read-only DiscoveryPet DTO gains immutable original templateId; appearance/resource is never used to guess identity",
+    "captureViews preserves stored name/serial instead of overwriting them from current pets, and joins current appearance/desktop state by owner plus petId"
+  ],
+  "preservation": {
+    "savedCaptureNamesSerialsMemoryUnchanged": true,
+    "petIdsAndCommandKeysUnchanged": true,
+    "companionDataAndRevisionsNotWritten": true,
+    "newIdentityNotPersisted": true,
+    "cloudOrSqliteMigration": false,
+    "position80mOrGameplayProtocolChanged": false,
+    "oldServerUsed": false,
+    "tsMigrationPerformed": false,
+    "userWindowsOperatedOrClosed": false,
+    "packagedOrLaunchedApps": false
+  },
+  "verification": [
+    {
+      "name": "npm run typecheck:ui",
+      "passed": true
+    },
+    {
+      "name": "ESLint targeted4UI TSX + shared discovery types + new projection test",
+      "passed": true,
+      "errors": 0
+    },
+    {
+      "name": "node --check discovery/service.cjs",
+      "passed": true
+    },
+    {
+      "name": "node --test discovery/tests/display-identity.test.mjs",
+      "passed": true,
+      "cases": 2,
+      "scope": "Ephemeral in-memory SQLite fixtures only. Same-template/same-prefix twins, mutable resource mismatch, unknown template, foreign owner same petId, original companion and capture bytes unchanged."
+    },
+    {
+      "name": "Direct CJS ESLint",
+      "passed": false,
+      "existingBaselineErrors": 10,
+      "introducedErrors": 0,
+      "baselineVerified": "git show 9e57de1:apps/pc-app/runtime/features/discovery/service.cjs | eslint --stdin; same10 errors at unchanged lines1-8/203",
+      "rules": [
+        "@typescript-eslint/no-require-imports",
+        "@typescript-eslint/no-unused-vars (pre-existing checkFix)",
+        "no-control-regex"
+      ],
+      "note": "No rule suppression or unrelated TS migration performed."
+    }
+  ],
+  "reactReview": {
+    "keysAndSelections": "Original petId; no name-based lookup",
+    "hooks": "No added fetch/effect or conditional hook",
+    "accessibility": "Distinct full-id card labels; original select label preserved; full-id text not truncated",
+    "performance": "Shared pure catalog projection, no identity IPC per render"
+  },
+  "handoff": {
+    "realInputOwner": "09 / 01a1725c-d59c-7620-9bb6-1c0d4e0fb3a3",
+    "nativeAcceptanceCompletedHere": false,
+    "requestedChecks": [
+      "Same-role twins show two complete distinct ids in picker and select the exact petId",
+      "Result and pokedex show fixed role + full id even after mutable appearance/history nickname differ",
+      "Historical nickname/serial and memory text remain original; details/capture links stay on the same instance",
+      "Narrow viewport wraps full ids rather than clipping or ellipsis"
+    ]
+  }
+}

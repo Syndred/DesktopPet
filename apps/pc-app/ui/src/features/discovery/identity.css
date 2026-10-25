@@ -1,0 +1,38 @@
+.discovery-instance-number {
+  display: block;
+  min-width: 0;
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  font-size: 11px;
+  line-height: 1.5;
+  color: #7087af;
+}
+.discovery-picker-heading { flex-wrap: wrap; align-items: flex-start; }
+.discovery-picker-heading [data-slot=select-trigger] {
+  width: min(100%, 320px);
+  max-width: 100%;
+  height: auto;
+  min-height: 44px;
+  white-space: normal;
+}
+.discovery-picker-heading [data-slot=select-value] {
+  display: block;
+  flex: 1;
+  min-width: 0;
+  white-space: normal;
+  overflow: visible;
+  -webkit-line-clamp: unset;
+}
+.discovery-picker-identity { display: block; min-width: 0; max-width: 100%; text-align: left; }
+.discovery-picker-options { width: min(360px, calc(100vw - 32px)); max-width: calc(100vw - 32px); }
+.discovery-picker-options [data-slot=select-item] { white-space: normal; }
+.discovery-picker-options [data-slot=select-item] > span:last-child { display: block; min-width: 0; max-width: 100%; }
+.discovery-pet-card strong { white-space: normal; overflow: visible; text-overflow: clip; }
+.discovery-pet-card .discovery-instance-number { font-size: 10px; }
+.discovery-result-details, .discovery-result-profile, .discovery-pokedex-card { min-width: 0; }
+.discovery-result-profile .discovery-profile-top > div { min-width: 0; }
+.discovery-result-profile dt { flex-shrink: 0; }
+.discovery-result-profile dd { min-width: 0; text-align: right; overflow-wrap: anywhere; }
+.discovery-postcard > .discovery-instance-number { padding: 4px; }
