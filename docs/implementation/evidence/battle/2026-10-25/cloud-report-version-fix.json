@@ -1,0 +1,111 @@
+{
+  "at": "2026-10-25T07:29:58.637Z",
+  "scope": "Battle-only cloud report reader compatibility after local journal-v2 upgrade",
+  "sourceParent": "d376b76a01dd8e450d28bab4479bbe2581ae39c4",
+  "originalPortable": {
+    "acceptancePassed": false,
+    "runId": "b52c8a26-1903-4b05-9ce2-aa2d5b668580",
+    "sourceCommit": "d376b76a01dd8e450d28bab4479bbe2581ae39c4",
+    "executable": {
+      "path": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\artifacts\\pc-cloud-upgrade-final-d376b76\\Lingjing-0.1.8-portable-x64.exe",
+      "size": 169185444,
+      "sha256": "6e9cdb2aac621b490b09f530870ab7569858e66a4cb7b352bae81aa997fccaf2"
+    },
+    "asarSha256": "67a9d85e81ab287ecb19abfa2c0d0d1785e12ccfc902d00b67fd7ae1347681d2",
+    "cloudRevision": 7,
+    "localChanged": false,
+    "actualPublicIpcFailure": {
+      "ok": false,
+      "code": "INVALID_BATTLE_BACKUP",
+      "message": "云端战报版本不兼容"
+    },
+    "diagnosticsPath": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\final-portable-friend-d376b76-1792912907417\\report-version-diagnostics.json"
+  },
+  "change": {
+    "productionFile": "apps/pc-app/runtime/features/battle/service.cjs",
+    "productionSha256": "8730014e48a5d35bdb9b7cb50e08b6542ec58f3e0b9e628062d3663a8a3e5502",
+    "acceptedCloudVersion": 1,
+    "localBackupVersion": 2,
+    "localSupportedVersions": [
+      1
+    ],
+    "validation": "Registered adapter versions plus validateModule; only report cache writes",
+    "unchanged": [
+      "Cloud wire format",
+      "Original envelope checksum and JSON bytes",
+      "XP and seed ledgers",
+      "CSS and TSX",
+      "Cloud deployment"
+    ]
+  },
+  "validation": {
+    "authority": "Real shared SQLite, real BackupManager/AccountSync/BattleFeatureService and actual settlement preparation with explicitly scripted cloud reads; not live Auth/HTTPS acceptance",
+    "native": {
+      "passed": 39,
+      "total": 39,
+      "exitCode": 0,
+      "files": [
+        "apps/pc-app/runtime/features/battle/tests/cloud-report-version.test.cjs",
+        "apps/pc-app/runtime/features/battle/battle.test.cjs",
+        "apps/pc-app/runtime/features/battle/tests/transport-journal.test.cjs",
+        "tests/foundation/cloud-checkpoint.test.cjs",
+        "tests/foundation/cloud-restore-provenance.test.cjs"
+      ],
+      "logPath": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\report-version-fix-1792913355804\\final-targeted-native.log"
+    },
+    "negativeControl": {
+      "originalService": "d376b76",
+      "expectedFailures": 2,
+      "observedFailures": 2,
+      "logPath": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\report-version-fix-1792913355804\\negative-original-service.log"
+    },
+    "cases": [
+      "Mixed completed training and friend reports through public overview/listReports/getReport",
+      "Cold report cache restored to exact cloud JSON",
+      "Existing companion XP, seed inventory, receipts, battle sessions/actions/journal and AccountSync checkpoint unchanged",
+      "Unknown version 99 rejected",
+      "A structurally valid local v2 cannot be read as a cloud report module",
+      "Forged v2 without journal and forged v1 with journal rejected before cache writes"
+    ],
+    "cjsLint": {
+      "passed": true,
+      "command": "node node_modules/eslint/bin/eslint.js apps/pc-app/runtime/features/battle/service.cjs apps/pc-app/runtime/features/battle/tests/cloud-report-version.test.cjs --rule '@typescript-eslint/no-require-imports: off'",
+      "note": "Electron CommonJS require imports are retained; default direct CJS lint rejects those existing imports."
+    }
+  },
+  "scan": {
+    "extensions": "cjs,mjs,js,ts,tsx,mts,cts,jsx",
+    "directories": [
+      "apps",
+      "packages",
+      "scripts",
+      "tests",
+      "infra"
+    ],
+    "artifactPath": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\report-version-fix-1792913355804\\version-consumers-scan.json",
+    "artifactSha256": "b9637358fe771887bebfda1bd8eb476d94138636f54b61ac56ea92bf9f9615f2",
+    "findings": [
+      {
+        "path": "apps/pc-app/runtime/features/battle/service.cjs",
+        "result": "The incompatible direct cloud-module/local-adapter equality was corrected."
+      },
+      {
+        "path": "apps/pc-app/runtime/features/accounts/backups.cjs",
+        "result": "Already accepts registered version or versions and invokes validateModule."
+      },
+      {
+        "path": "apps/pc-app/runtime/features/battle/cloud-authority.cjs",
+        "result": "Intentionally requires formal cloud v1 and validates its complete settlement modules."
+      },
+      {
+        "path": "apps/pc-app/runtime/features/resources/cloud-backup.cjs",
+        "result": "Separate local-v1/cloud-v2 adapter already checks its matching shape through validateModule."
+      },
+      {
+        "path": "apps/pc-app/runtime/features/accounts/sync.cjs and util.cjs",
+        "result": "Cloud normalization and battle SQL-set fingerprints already honor the projected format."
+      }
+    ]
+  },
+  "remaining": "Rebuild and rerun actual portable friend acceptance on the newly frozen source. Existing d376 failure remains a failure."
+}
