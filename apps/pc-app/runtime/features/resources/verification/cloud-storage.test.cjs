@@ -45,6 +45,7 @@ test('actual official SDK protocol: A upload, distinct-client B hydrate preserve
   assert.equal(b.db.prepare('select count(*) n from lingjing_resource_imports where resource_id=?').get(id).n,1);
   await b.cloud.pull(OWNER);assert.equal(b.db.prepare('select count(*) n from lingjing_resource_imports').get().n,2);
   const originalPng=await fs.readFile(path.join(f.source,'sprites.png')),receivedPng=await fs.readFile(await b.service.assetFile(OWNER,id,'sprites.png'));assert.equal(hash(originalPng),hash(receivedPng));
+  assert.equal(new ResourceCloudSync({service:a.service,getActor:()=>a.actor}).status(OWNER).lastVerifiedAt,null,'A fixture verification must never become a production cloud receipt');
   // Explicit local HTTP fixture denial, not a claim that deployed Supabase RLS was tested.
   const c=await f.local('other',OTHER,'runtime:other');assert.equal((await c.cloud.pull('runtime:other')).restored.length,0);
   const denied=await c.actor.client.storage.from(BUCKET).download(f.http.state.rows[0].manifest_path);assert(denied.error);

@@ -29,15 +29,15 @@ async function immutablePut(client,key,bytes,type) {
 class ResourceCloudSync {
   constructor({service,getActor,isEnabled=()=>true,onChanged=()=>{},now=()=>Date.now(),protocolFixture=false}) {
     this.service=service;this.db=service.repository.db;this.getActor=getActor;this.isEnabled=isEnabled;this.onChanged=onChanged;this.now=now;
-    this.uploading=new Set();this.downloading=new Set();this.protocolFixture=protocolFixture;
+    this.uploading=new Set();this.downloading=new Set();this.protocolFixture=protocolFixture;this.mode=protocolFixture?'simulated':'live';
   }
   owner(owner){this.service.owner(owner);return this.service.repository.ownerKeys(owner)[0];}
   async actor(owner,uid){const value=identity(await this.getActor(owner),owner,{allowProtocolFixture:this.protocolFixture});if(uid&&value.authUserId!==uid)reject('RESOURCE_CLOUD_IDENTITY_CHANGED','云端账号映射已变化，原重试记录已保留');return value;}
   status(inputOwner) {
-    const owner=this.owner(inputOwner),uploads=this.db.prepare("SELECT status,count(*) AS count FROM lingjing_resource_cloud_outbox WHERE owner_account_id=? GROUP BY status").all(owner);
-    const downloads=this.db.prepare("SELECT status,count(*) AS count FROM lingjing_resource_cloud_downloads WHERE owner_account_id=? GROUP BY status").all(owner);
-    const last=this.db.prepare('SELECT max(verified_at) AS at FROM lingjing_resource_cloud_receipts WHERE owner_account_id=?').get(owner);
-    return {enabled:Boolean(this.isEnabled(owner)),uploads,downloads,lastVerifiedAt:last.at||null,running:this.uploading.has(owner)||this.downloading.has(owner),dataMode:this.protocolFixture?'simulated':'live',bucket:BUCKET};
+    const owner=this.owner(inputOwner),uploads=this.db.prepare("SELECT status,count(*) AS count FROM lingjing_resource_cloud_outbox WHERE owner_account_id=? AND data_mode=? GROUP BY status").all(owner,this.mode);
+    const downloads=this.db.prepare("SELECT status,count(*) AS count FROM lingjing_resource_cloud_downloads WHERE owner_account_id=? AND data_mode=? GROUP BY status").all(owner,this.mode);
+    const last=this.db.prepare('SELECT max(verified_at) AS at FROM lingjing_resource_cloud_receipts WHERE owner_account_id=? AND data_mode=?').get(owner,this.mode);
+    return {enabled:Boolean(this.isEnabled(owner)),uploads,downloads,lastVerifiedAt:last.at||null,running:this.uploading.has(owner)||this.downloading.has(owner),dataMode:this.mode,bucket:BUCKET};
   }
   enqueue(inputOwner,actionId=randomUUID(),resourceIds) {
     const owner=this.owner(inputOwner);
@@ -45,12 +45,12 @@ class ResourceCloudSync {
     const keys=this.service.repository.ownerKeys(owner),marks=keys.map(()=>'?').join(',');
     const ids=resourceIds??this.db.prepare(`SELECT resource_id FROM lingjing_resources WHERE owner_account_id IN (${marks}) ORDER BY resource_id`).all(...keys).map(row=>row.resource_id);
     if(!Array.isArray(ids)||ids.length>1000||ids.some(id=>!UUID.test(id)))reject('INVALID_REQUEST','同步资源列表无效');
-    const add=this.db.prepare("INSERT INTO lingjing_resource_cloud_outbox(owner_account_id,action_id,resource_id,created_at) VALUES(?,?,?,?) ON CONFLICT DO NOTHING");
-    this.service.repository.transaction(()=>{for(const id of ids){ownedRow(this.service,owner,id);add.run(owner,actionId,id,new Date(this.now()).toISOString());}});
+    const add=this.db.prepare("INSERT INTO lingjing_resource_cloud_outbox(owner_account_id,action_id,resource_id,created_at,data_mode) VALUES(?,?,?,?,?) ON CONFLICT DO NOTHING");
+    this.service.repository.transaction(()=>{for(const id of ids){ownedRow(this.service,owner,id);add.run(owner,actionId,id,new Date(this.now()).toISOString(),this.mode);}});
     return {queued:ids.length,actionId};
   }
   receipt(owner,manifest,digest,direction) {
-    this.db.prepare('INSERT INTO lingjing_resource_cloud_receipts VALUES(?,?,?,?,?,?,?) ON CONFLICT DO UPDATE SET verified_at=excluded.verified_at').run(owner,manifest.resourceId,manifest.authUserId,digest,manifest.contentHash,direction,new Date(this.now()).toISOString());
+    this.db.prepare('INSERT INTO lingjing_resource_cloud_receipts(owner_account_id,resource_id,auth_user_id,manifest_sha256,content_hash,direction,verified_at,data_mode) VALUES(?,?,?,?,?,?,?,?) ON CONFLICT DO UPDATE SET verified_at=excluded.verified_at,data_mode=excluded.data_mode').run(owner,manifest.resourceId,manifest.authUserId,digest,manifest.contentHash,direction,new Date(this.now()).toISOString(),this.mode);
   }
   async uploadJob(owner,job) {
     let actor=await this.actor(owner,job.auth_user_id),manifest,digest,bytes,locations;
@@ -84,7 +84,7 @@ class ResourceCloudSync {
     if(Object.keys(entry).some(key=>entry[key]!==found[key]))reject('RESOURCE_CLOUD_HASH_MISMATCH','云端资源回执与本次包不一致');
     await this.actor(owner,actor.authUserId);
     this.receipt(owner,manifest,digest,'upload');
-    this.db.prepare("UPDATE lingjing_resource_cloud_outbox SET status='verified',verified_at=?,last_error=NULL WHERE owner_account_id=? AND action_id=? AND resource_id=?").run(new Date(this.now()).toISOString(),owner,job.action_id,job.resource_id);
+    this.db.prepare("UPDATE lingjing_resource_cloud_outbox SET status='verified',verified_at=?,last_error=NULL,data_mode=? WHERE owner_account_id=? AND action_id=? AND resource_id=?").run(new Date(this.now()).toISOString(),this.mode,owner,job.action_id,job.resource_id);
     return {resourceId:manifest.resourceId,manifestSha256:digest,verified:true,archiveOnly:manifest.archiveOnly};
   }
   async flush(inputOwner,{force=false}={}) {
@@ -92,7 +92,7 @@ class ResourceCloudSync {
     if(this.uploading.has(owner))return {busy:true};this.uploading.add(owner);
     const verified=[],errors=[];
     try {
-      const jobs=this.db.prepare("SELECT * FROM lingjing_resource_cloud_outbox WHERE owner_account_id=? AND (status IN ('pending','retry') OR (?=1 AND status='blocked')) AND (next_attempt_at<=? OR ?=1) ORDER BY created_at,resource_id LIMIT 1000").all(owner,force?1:0,this.now(),force?1:0);
+      const jobs=this.db.prepare("SELECT * FROM lingjing_resource_cloud_outbox WHERE owner_account_id=? AND (data_mode=? OR (?=1 AND data_mode='unverified')) AND (status IN ('pending','retry') OR (?=1 AND status='blocked')) AND (next_attempt_at<=? OR ?=1) ORDER BY created_at,resource_id LIMIT 1000").all(owner,this.mode,force?1:0,force?1:0,this.now(),force?1:0);
       for(const job of jobs)try{verified.push(await this.uploadJob(owner,job));}catch(error){
         const safe=cloudError(error),retry=['RESOURCE_CLOUD_UNAVAILABLE','RESOURCE_CLOUD_AUTH_REQUIRED','RESOURCE_CLOUD_IDENTITY_CHANGED','RESOURCE_CLOUD_FORBIDDEN','SESSION_CHANGED'].includes(safe.code);
         this.db.prepare('UPDATE lingjing_resource_cloud_outbox SET status=?,attempts=attempts+1,next_attempt_at=?,last_error=? WHERE owner_account_id=? AND action_id=? AND resource_id=?').run(retry?'retry':'blocked',this.now()+Math.min(1800000,2000*2**Math.min(job.attempts+1,10)),safe.code,owner,job.action_id,job.resource_id);
@@ -119,8 +119,9 @@ class ResourceCloudSync {
   async downloadEntry(owner,actor,row) {
     validateIndex(row,owner,actor.authUserId);
     const identityArgs=[owner,row.resource_id,actor.authUserId,row.manifest_sha256];
-    this.db.prepare('INSERT INTO lingjing_resource_cloud_downloads(owner_account_id,resource_id,auth_user_id,manifest_sha256,directory) VALUES(?,?,?,?,?) ON CONFLICT DO NOTHING').run(...identityArgs,'restore-'+randomUUID());
+    this.db.prepare('INSERT INTO lingjing_resource_cloud_downloads(owner_account_id,resource_id,auth_user_id,manifest_sha256,directory,data_mode) VALUES(?,?,?,?,?,?) ON CONFLICT DO NOTHING').run(...identityArgs,'restore-'+randomUUID(),this.mode);
     const job=this.db.prepare('SELECT * FROM lingjing_resource_cloud_downloads WHERE owner_account_id=? AND resource_id=? AND auth_user_id=? AND manifest_sha256=?').get(...identityArgs);
+    if(![this.mode,'unverified'].includes(job.data_mode))reject('RESOURCE_CLOUD_MODE_MISMATCH','模拟与真实资源传输记录不可混用');
     try {
       let manifest;
       if(job.manifest_json)manifest=JSON.parse(job.manifest_json);
@@ -142,7 +143,7 @@ class ResourceCloudSync {
       } else restored=await hydratePackage(this.service,owner,manifest,{directory:job.directory,readChunk:(file,index,chunk)=>this.cachedChunk(owner,actor.authUserId,manifest,row.manifest_sha256,file,index,chunk),beforeApply:()=>this.actor(owner,actor.authUserId)});
       await this.actor(owner,actor.authUserId);
       this.receipt(owner,manifest,row.manifest_sha256,'download');
-      this.db.prepare("UPDATE lingjing_resource_cloud_downloads SET status='verified',last_error=NULL,verified_at=? WHERE owner_account_id=? AND resource_id=? AND auth_user_id=? AND manifest_sha256=?").run(new Date(this.now()).toISOString(),...identityArgs);
+      this.db.prepare("UPDATE lingjing_resource_cloud_downloads SET status='verified',last_error=NULL,verified_at=?,data_mode=? WHERE owner_account_id=? AND resource_id=? AND auth_user_id=? AND manifest_sha256=?").run(new Date(this.now()).toISOString(),this.mode,...identityArgs);
       this.onChanged(owner,manifest.resourceId);return {...restored,manifestSha256:row.manifest_sha256,verified:true};
     }catch(error){const safe=cloudError(error);this.db.prepare("UPDATE lingjing_resource_cloud_downloads SET status='retry',last_error=? WHERE owner_account_id=? AND resource_id=? AND auth_user_id=? AND manifest_sha256=?").run(safe.code,...identityArgs);throw safe;}
   }

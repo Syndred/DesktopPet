@@ -22,4 +22,9 @@ const migrations = [{ id: 'resources-002-cloud-packages', sql: `
     status TEXT NOT NULL DEFAULT 'pending', last_error TEXT, verified_at TEXT,
     PRIMARY KEY(owner_account_id,resource_id,auth_user_id,manifest_sha256)
   );` }];
+migrations.push({id:'resources-003-cloud-proof-source',sql:`
+  ALTER TABLE lingjing_resource_cloud_outbox ADD COLUMN data_mode TEXT NOT NULL DEFAULT 'unverified';
+  ALTER TABLE lingjing_resource_cloud_downloads ADD COLUMN data_mode TEXT NOT NULL DEFAULT 'unverified';
+  ALTER TABLE lingjing_resource_cloud_receipts ADD COLUMN data_mode TEXT NOT NULL DEFAULT 'unverified';
+`});
 module.exports = { migrations };
