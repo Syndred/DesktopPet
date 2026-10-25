@@ -7,6 +7,7 @@ const { join, resolve, dirname, basename } = require('node:path');
 const { migrateCompanions } = require('../migrations.cjs');
 const { CompanionsService, atomic } = require('../service.cjs');
 const { createCompanionBackupAdapter, TABLES } = require('../backup.cjs');
+const { createCompanionOwnerMigration } = require('../identity.cjs');
 
 const owner = 'legacy-runtime-text-owner';
 function cleanup(folder) { assert.equal(dirname(resolve(folder)),resolve(tmpdir())); assert.ok(basename(folder).startsWith('companion-cloud-')); rmSync(folder,{recursive:true,force:true}); }
@@ -74,5 +75,30 @@ test('archived 3D animals and original raw history survive a new-client restore 
     a.service.importLegacyInventory(owner,legacy);const original=a.adapter.export(owner);a.adapter.validate(original,owner);b.adapter.restore(owner,JSON.parse(JSON.stringify(original)),'merge');
     assert.deepEqual(b.adapter.export(owner),original);assert.equal(JSON.parse(original.tables.companion_legacy_archive[0].source_json).chats[0].id,'old-message');
     assert.equal(b.service.requirePet(owner,'old-animal-id').resource.kind,'3d');
+  }finally{a.db.close();b.db.close();cleanup(folder);}
+});
+
+test('verified alias migration retains source and target-before history, stable IDs and replay receipts through another client',()=>{
+  const folder=mkdtempSync(join(tmpdir(),'companion-cloud-alias-')),a=client(folder,'a'),b=client(folder,'b');
+  try{
+    a.db.exec('CREATE TABLE account_identities(owner_account_id TEXT,provider TEXT,subject_id TEXT);CREATE TABLE account_aliases(provider TEXT,subject_id TEXT,owner_account_id TEXT,evidence TEXT)');
+    const source=owner,target='local:'+source;seed(a);const original=a.adapter.export(source);
+    a.service.importLegacyInventory(target,{pets:[{id:'pristine-target-original',name:{zh:'初始旧记录'},model:'old.glb',chats:[{id:'target-history',text:'迁移前历史也保留'}]}]});
+    const targetBefore=a.adapter.export(target);
+    a.db.prepare('INSERT INTO account_identities VALUES(?,?,?)').run(target,'local',source);
+    a.db.prepare('INSERT INTO account_aliases VALUES(?,?,?,?)').run('local',source,target,'legacy-id');
+    const migration=createCompanionOwnerMigration({db:a.db,session:{getOwnerAccountId:()=>target},get:()=>({identity:who=>a.db.prepare('SELECT * FROM account_identities WHERE owner_account_id=?').get(who)})},()=>{});
+    migration.ensure(target);migration.ensure(target);
+    const migrated=a.adapter.export(target);assert.equal(migrated.identityImports.length,1);
+    assert.deepEqual(a.adapter.export(source),original);
+    assert.deepEqual(JSON.parse(migrated.identityImports[0].archive_json).targetBefore,targetBefore.tables);
+    assert.deepEqual(migrated.tables.companion_pets.map(row=>row.pet_id),original.tables.companion_pets.map(row=>row.pet_id));
+    assert.equal(b.adapter.restore(target,migrated,'merge').restored,true);assert.deepEqual(b.adapter.export(target),migrated);
+    const first=original.tables.companion_pets.map(row=>JSON.parse(row.data_json)).find(pet=>pet.source==='adoption');
+    const restored=b.service.requirePet(target,first.petId);assert.deepEqual(restored.growth,first.growth);assert.deepEqual(restored.desktop,first.desktop);
+    assert.equal(b.service.adopt(target,{actionId:'adopt-0',templateId:'big-fish-gentle',name:'旧鱼一号',showOnDesktop:true}).duplicate,true);
+    const foreign=structuredClone(migrated);foreign.identityImports[0].target_owner_account_id='other-owner';
+    assert.throws(()=>b.adapter.restore(target,foreign,'replace'),error=>error.code==='COMPANION_BACKUP_INVALID');
+    assert.deepEqual(b.adapter.export(target),migrated);
   }finally{a.db.close();b.db.close();cleanup(folder);}
 });

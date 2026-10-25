@@ -76,12 +76,16 @@ function createDesktopWindowManager({ services, service, ensureImported, changed
       for (const pet of pets) {
         const entry = entries.get(pet.petId);
         if (!entry) { create(pet); continue; }
-        if (entry.pet.revision !== pet.revision) {
+        // A verified full-save replacement can restore a different device's
+        // state with the same per-pet revision. Reconcile the saved content too.
+        if (JSON.stringify(entry.pet) !== JSON.stringify(pet)) {
           const previous = entry.pet; entry.pet = pet;
           if (!entry.drag && (previous.desktop.scale !== pet.desktop.scale || JSON.stringify(previous.desktop.position) !== JSON.stringify(pet.desktop.position))) {
             const bounds = boundsFor(pet, screen);
             entry.window.setBounds({ x: bounds.x, y: bounds.y, width: bounds.width, height: bounds.height }, false);
-            entry.positionDirty = bounds.x !== pet.desktop.position.x || bounds.y !== pet.desktop.position.y || bounds.displayId !== pet.desktop.position.displayId;
+            // Applying a saved/cloud position only derives local window bounds.
+            // Its monitor clamp must not become another device's saved position.
+            entry.positionDirty = false;
           }
         }
       }
