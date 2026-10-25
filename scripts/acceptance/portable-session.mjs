@@ -42,6 +42,10 @@ export async function launchPortableSession({executable,profile,expectedSource,l
   try{
     const targets=await pollState(async()=>{if(failure)throw failure;try{const response=await fetch(`http://127.0.0.1:${nodePort}/json/list`,{signal:AbortSignal.timeout(400)});return response.ok?await response.json():[];}catch{return[];}},rows=>rows.some(row=>row.webSocketDebuggerUrl),{timeoutMs:60000,label:'Real portable did not expose its owned main inspector'});
     connection=await inspector(targets.find(row=>row.webSocketDebuggerUrl).webSocketDebuggerUrl);
+    const processReply=await connection.send('Runtime.evaluate',{expression:'({pid:process.pid,electron:process.versions.electron,node:process.versions.node,profileOverride:process.env.PET_USER_DATA_DIR,resourcesPath:process.resourcesPath})',returnByValue:true});
+    if(processReply.exceptionDetails)throw new Error('Owned portable process metadata unavailable');
+    runtime=processReply.result?.value;
+    assert.ok(runtime?.electron);assert.equal(resolve(runtime.profileOverride||''),profile,'Refuse a portable process without the exact isolated profile override');
     // The Node inspector can listen before Electron registers its built-in
     // module aliases. A real renderer exists only after that initialization.
     await pollState(async()=>{try{const response=await fetch(`http://127.0.0.1:${browserPort}/json/list`,{signal:AbortSignal.timeout(400)});return response.ok?await response.json():[];}catch{return[];}},rows=>rows.some(row=>row.type==='page'),{timeoutMs:60000,label:'Real portable did not open its renderer'});
