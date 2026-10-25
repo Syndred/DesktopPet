@@ -1,0 +1,141 @@
+{
+  "module": "conversations",
+  "scope": "cloud-upgrade-2026-10-25",
+  "branch": "codex/lingjing-conversations",
+  "commit": "6e81e2ed08684380da541a613b96b12542e3d312",
+  "goalStatus": "active",
+  "status": "checkpoint_ready_for_01_integration",
+  "contracts": {
+    "identity": "08 accounts: verified owner mapping, complete-save CAS and account save-restored events",
+    "backup": "conversations version 1 adapter; stable IDs and array order, no sequence or encrypted_key",
+    "entry": "core/conversation-backup.cjs -> feature-owned adapter compatibility entry planned",
+    "sharedBaseline": "46abf416e0500b53ef32fc29b441d923ef5a6a80",
+    "coordinationNeeds": [
+      "08保持统一完整存档CAS与并发冲突，无需新建聊天云表。",
+      "完整存档legacy模块须审核递归敏感字段；account_legacy_data原始归档不能将BYOK/apiKey/token随云存档导出。",
+      "云恢复后继续发accounts:save-restored(ownerAccountId)，用于刷新聊天状态与拒绝恢复前旧界面写入。"
+    ],
+    "conversationConsumer": "docs/implementation/cloud-conversations-contract.txt",
+    "approvedIdentityCheckpoint": "f81008c",
+    "pendingFullSaveCheckpoint": "45b857d",
+    "backupEntry": "services.get(conversations).createBackupAdapter(); compatibility core forwarder retained"
+  },
+  "migrations": {
+    "remote": [],
+    "local": "conversations-002-local-credentials-and-imports (additive SQLite; no remote schema change)"
+  },
+  "checks": [
+    {
+      "command": "node --test apps/pc-app/runtime/features/conversations/tests/archive.test.cjs",
+      "status": "passed",
+      "checks": 9,
+      "scope": "actual local SQLite; no cloud claim"
+    },
+    {
+      "command": "node --test apps/pc-app/runtime/features/conversations/tests/legacy-import.test.cjs",
+      "status": "passed",
+      "checks": 5
+    },
+    {
+      "command": "node --test apps/pc-app/runtime/features/conversations/tests/runtime.test.cjs",
+      "status": "passed",
+      "checks": 12
+    },
+    {
+      "command": "node scripts/desktop/run-native-tests.cjs tests/foundation/conversation-backup.test.cjs",
+      "status": "passed",
+      "checks": 1
+    },
+    {
+      "command": "npm run native:check",
+      "status": "passed",
+      "evidence": "docs/implementation/evidence/conversations/cloud-2026-10-25/native.json",
+      "versions": "Electron44.9.3 / SQLite13.0.3 / Node24 same database"
+    },
+    {
+      "command": "node apps/pc-app/runtime/features/conversations/tests/recovery-acceptance.mjs",
+      "status": "passed",
+      "checks": 4,
+      "realCloud": false,
+      "evidence": "docs/implementation/evidence/conversations/cloud-2026-10-25/recovery.json"
+    },
+    {
+      "command": "node apps/pc-app/runtime/features/conversations/tests/dialog-acceptance.mjs",
+      "status": "passed",
+      "checks": 2,
+      "realCloud": false,
+      "evidence": "docs/implementation/evidence/conversations/cloud-2026-10-25/dialogs.json"
+    },
+    {
+      "command": "npm run typecheck:ui",
+      "status": "passed"
+    },
+    {
+      "command": "feature scoped ESLint / production build",
+      "status": "passed"
+    }
+  ],
+  "realCloudEvidence": {
+    "status": "awaiting_approved_full_save_and_legal_cloud_pet_registration",
+    "projectRef": "jbvrdmrkwpznbrvteive",
+    "ownPrivilegedWrites": 0,
+    "ownCloudSyncAcceptance": false,
+    "coordinatorReported": "Auth/actor deployed; new45b857d Auth8/8 and protectedCAS live; own HTTPS A/B still to run.",
+    "externalModel": {
+      "status": "no_secure_model_profile_in_checked_standard_appdata_locations",
+      "evidence": "docs/implementation/evidence/conversations/cloud-2026-10-25/model-preflight.json"
+    },
+    "legacyPrivacyGate": {
+      "status": "verify08 cloud projection before push",
+      "detail": "Current local full backup preserves opaque legacy fixture key/token fields. Conversation module itself and device credential table are excluded. New45b857d cloud serialization must be verified separately."
+    }
+  },
+  "preservation": [
+    "Existing owner/petId/message IDs, history, profiles and memories retained.",
+    "API keys remain main-process safeStorage; no key, encrypted blob or token in conversation snapshots."
+  ],
+  "cleanupCandidates": [
+    {
+      "path": "apps/pc-app/runtime/main.cjs obsolete AI code",
+      "decision": "removed16 declarations/IPC",
+      "replacement": "features/conversations/service.cjs + AI SDK transport.cjs"
+    },
+    {
+      "path": "apps/pc-app/runtime/preload.cjs aiChat",
+      "decision": "removed",
+      "replacement": "preload/index.ts typed IPC"
+    },
+    {
+      "path": "apps/pc-app/runtime/renderer/renderer.mjs AI storage/scheduler/fake replies",
+      "decision": "removed125 owned declarations/calls/translations",
+      "replacement": "React conversations + verified archive importer"
+    },
+    {
+      "path": "apps/pc-app/runtime/renderer/index.html AI panel",
+      "decision": "removed",
+      "replacement": "settings/ai"
+    },
+    {
+      "path": "apps/pc-app/runtime/core/conversation-backup.cjs",
+      "decision": "domain implementation moved; retain compatibility forwarder until01 swaps two consumers",
+      "replacement": "services.get(conversations).createBackupAdapter()"
+    }
+  ],
+  "remaining": [
+    "Merge approved45b857d and validate actual cloud projection privacy.",
+    "Consume02 approved legal pet registration, then real A/B chat/persona/memory sync, conflicts/offline/restart tests.",
+    "Main coordinator deployment/integration and final independent acceptance; original legacy server migration remains08 condition."
+  ],
+  "updatedAt": "2026-10-25T02:49:37.502Z",
+  "cleanupManifest": "docs/implementation/evidence/conversations/cloud-2026-10-25/cleanup-manifest.json",
+  "installation": {
+    "workspaceNodeModulesIndependent": true,
+    "sharedNodeModulesChanged": false,
+    "recipe": [
+      "npm ci --ignore-scripts --no-audit --no-fund",
+      "node node_modules/electron/install.js",
+      "npm run native:check"
+    ],
+    "initialDefaultCi": "node-gyp fallback required unavailable Visual Studio; bundled N-API install and native check succeeded"
+  }
+}

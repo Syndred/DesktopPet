@@ -1,15 +1,15 @@
 {
   "module": "battle",
-  "branch": "codex/lingjing-battle",
-  "commit": "5ca0bc3a87cebfa8b8ce14a73929388d8a02613d",
-  "status": "unified_battle_ready_for_main_review",
+  "branch": "codex/lingjing-battle-v3",
+  "commit": "2871bb874ce61fa0195f01907a5d6bb037ac77a9",
+  "status": "battle_v3_ready_for_main_review",
   "implementationReady": true,
   "goalComplete": false,
   "productionDeployed": false,
   "scope": "docs/implementation/acceptance/2026-10-24/unified-battle-goal.txt",
   "upstream": {
     "fetched": true,
-    "fetchCheckedAt": "2026-10-24T15:54:27.294Z",
+    "fetchCheckedAt": "2026-10-25T00:15:17.1302350Z",
     "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086",
     "originMainIsAncestor": true,
     "mergeOriginMainResult": "Already up to date"
@@ -46,7 +46,8 @@
     "使用 foundation 路径绑定 QA profile、命名空间账号和领域模拟定位；双端模拟邀请/房间/重启恢复/奖励使用实际内核，所有证据标 simulated。",
     "领地胜负均完成来源确认；野外胜利收服、重复确认/领奖的真实 SQLite 回执只读核对通过。",
     "精简战斗与好友大厅重复文案，保留真实错误、身份、房间码、键盘、禁用原因与实际操作。",
-    "同版本旧 rules 的缺失展示元数据在共享会话/战报读路径补齐；保留旧数值与历史，单项恢复检查通过，未重跑25 UI。"
+    "同版本旧 rules 的缺失展示元数据在共享会话/战报读路径补齐；保留旧数值与历史，单项恢复检查通过，未重跑25 UI。",
+    "V3：主区域全景、镜像 HUD/条形、等级属性位置、居中四圆招式、50 怒气归一环、精确悬停提示、实际阶段时钟、小型滚动日志和规则驱动左右克制箭头。"
   ],
   "tests": [
     {
@@ -156,6 +157,19 @@
       "validationScope": "legacy_read_projection_followup",
       "result": "1 passed, 0 failed; preserved saved numbers, rounds, HP, anger, reward; unknown version unchanged; no engine/store writes",
       "evidence": "docs/implementation/evidence/battle/2026-10-24/unified/legacy-rules-readback.json"
+    },
+    {
+      "check": "V3 focused compiled Electron acceptance",
+      "command": "node apps/pc-app/runtime/features/battle/verify-v3.mjs",
+      "result": "32 recorded checks passed, 0 errors",
+      "evidence": "docs/implementation/evidence/battle/2026-10-25/v3/native.json",
+      "validationScope": "V3 native, simulated QA authority; not live cloud"
+    },
+    {
+      "check": "V3 readable hover and focus capture",
+      "command": "node apps/pc-app/runtime/features/battle/verify-v3.mjs --tips-only",
+      "result": "7 checks passed, identical product source hashes/fingerprint",
+      "evidence": "docs/implementation/evidence/battle/2026-10-25/v3/tooltip-capture.json"
     }
   ],
   "openSource": [
@@ -430,5 +444,29 @@
     "需要当前 companions/resources/accounts/garden 同库适配和公共 useAppMotion（含 7f0e896 实时系统设置修复）",
     "审核后先部署 infra/supabase/migrations/20261024_lingjing_battle_atomic_rounds.sql，再发布更新的 duel-online",
     "服务恢复并具备两个隔离的真实云端账号后，完成好友双端联机与跨设备结算验收"
-  ]
+  ],
+  "previousAccepted": {
+    "branch": "codex/lingjing-battle",
+    "commit": "5ca0bc3a87cebfa8b8ce14a73929388d8a02613d",
+    "status": "unified_battle_ready_for_main_review"
+  },
+  "v3": {
+    "base": "f1dbc30312b6041f32ee815b67faeeb20a7a24df",
+    "productCommit": "8bcde0dcf1c11db69795490618ef6401d9819786",
+    "fullNativeRun": "2148cedfc4a197e9974baa6826492155f88d0f9d",
+    "tooltipCaptureRun": "2871bb874ce61fa0195f01907a5d6bb037ac77a9",
+    "evidence": "docs/implementation/evidence/battle/2026-10-25/v3/manifest.json",
+    "nativeResult": "32 recorded checks passed, 0 page errors; 25 ordered counter relations, 4 entry modes, 3 native sizes, 5 unique SQLite rewards",
+    "tooltipResult": "7 focused capture/layout checks passed, 0 errors; six hover/focus states checked after the Radix fade completes",
+    "countdown": "Existing gameplay has no selection/peer deadline. Those phases show unlimited/waiting; only the existing 1520 ms action animation has an absolute presentation deadline. No auto-submit or new timeout rule. Reopening restores authoritative state without replay.",
+    "limits": [
+      "Friend authority/location/QA identities are simulated; no live-cloud success claim",
+      "Main integration/packaging review pending; no push or deployment"
+    ],
+    "preserved": [
+      "battle-runtime.cjs and damage/anger/reward formulas",
+      "Existing sessions, reports, histories and owner/pet boundaries",
+      "Wild capture and territory win/loss source confirmation"
+    ]
+  }
 }

@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-25T02:10:12.091Z",
+  "sourceCommit": "4bc27807ae93301e01d4795d6ccbfd2ad3b7e804",
+  "projectRef": "jbvrdmrkwpznbrvteive",
+  "transport": "real HTTPS fetch using active publishable key, no mock",
+  "scope": "Comparisontext archive public API isolation only; gameplay/auth acceptance remains pending",
+  "checks": [
+    {
+      "id": "old-public-users-not-exposed",
+      "status": 404,
+      "expected": 404,
+      "code": "PGRST205",
+      "passed": true
+    },
+    {
+      "id": "private-archive-schema-not-exposed",
+      "status": 406,
+      "expected": 406,
+      "code": "PGRST106",
+      "passed": true
+    }
+  ],
+  "passed": true
+}

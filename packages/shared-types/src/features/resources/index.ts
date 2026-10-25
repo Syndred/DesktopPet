@@ -88,4 +88,17 @@ export interface ResourcesClient {
   save(request: ResourceSaveRequest): Promise<ResourceResult<CharacterResource>>;
   resolve(request: ResourceDisplayRequest): Promise<ResourceResult<ResourceDisplay>>;
   assetUrl(resourceId: string, assetKey: string): string;
+  cloudStatus?(): Promise<ResourceResult<ResourceCloudStatus>>;
+  cloudSync?(input: {actionId:string;resourceIds?:string[]}): Promise<ResourceResult<{busy:true}|{verified:ResourceCloudReceipt[];errors:{resourceId:string;code:string}[];pending:number}>>;
+  cloudPull?(input?: {offset?:number;limit?:number;resourceIds?:string[]}): Promise<ResourceResult<{busy:true}|{restored:ResourceCloudReceipt[];nextOffset:number|null}>>;
+  history?(): Promise<ResourceResult<ResourceArchiveSummary[]>>;
+}
+export interface ResourceCloudReceipt {resourceId:string;manifestSha256:string;verified:boolean;archiveOnly?:boolean}
+export interface ResourceCloudStatus {
+  enabled:boolean; uploads:{status:string;count:number}[]; downloads:{status:string;count:number}[];
+  lastVerifiedAt:string|null;running:boolean;dataMode:'live'|'simulated';bucket:string;
+}
+export interface ResourceArchiveSummary {
+  id:string;name:string;kind:'model3d';archiveOnly:true;origin:CharacterResource['origin'];
+  importedAt:string;contentHash:string;provenance:ResourceProvenance;entryAsset:string;registeredFiles:string[];
 }

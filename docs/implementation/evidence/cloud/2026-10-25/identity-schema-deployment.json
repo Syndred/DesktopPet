@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "clientDate": "2026-10-25",
+  "projectRef": "jbvrdmrkwpznbrvteive",
+  "reviewedImplementation": "ee36030ad37614ac321b94ae4ee4169d705f1165",
+  "sourceIntegration": "fb83211ec4ca2aa975f3749bd293121eaae53dae",
+  "sourceMigration": "infra/supabase/migrations/20261025020314_lingjing_identity_actor_contract.sql",
+  "remoteMigrationVersion": "20261025021620",
+  "transport": "Supabase MCP apply_migration; only outer BEGIN/COMMIT removed because MCP owns transaction",
+  "privileges": {
+    "devicesRls": true,
+    "accountsRls": true,
+    "mappedAccounts": 0,
+    "serviceRoleLinkRpc": true,
+    "authenticatedLinkRpc": false,
+    "anonymousDeviceSelect": false,
+    "anonymousAccountSelect": false,
+    "anonymousPrivilegedRpc": 0,
+    "serviceRoleAuthUsersSelect": false,
+    "authenticatedLegacyClaimSelect": false
+  },
+  "httpEvidence": "docs/implementation/evidence/cloud/2026-10-25/identity-schema-http.json",
+  "advisors": [
+    {
+      "name": "rls_enabled_no_policy",
+      "level": "INFO",
+      "count": 19,
+      "remediation": "https://supabase.com/docs/guides/database/database-linter?lint=0008_rls_enabled_no_policy"
+    }
+  ],
+  "passed": true,
+  "validUserAndDualDeviceVerified": false,
+  "scope": "Schema and anonymous/forged-token gate only; full account and sync acceptance still required"
+}

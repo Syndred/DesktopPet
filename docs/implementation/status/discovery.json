@@ -379,6 +379,11 @@
       "command": "node apps/pc-app/runtime/features/discovery/verification/physical-flow.mjs --preflight",
       "sourceCommit": "6bdd16726c16ff58f566bc464339c984deace6dd",
       "result": "Actual production Electron native-provider preflight verified: Windows WiFi fix114m, source os, permission granted, imprecise correctly retained, opt-in watch explicitly stopped, renderer errors[]. No full challenge/capture attempted."
+    },
+    {
+      "command": "node apps/pc-app/runtime/features/discovery/verification/physical-flow.mjs",
+      "sourceCommit": "05ffa620769108c8ecf607c97065c94d0a2b336d",
+      "result": "PASS actual Windows78m,20-round natural victory, local-os capture, one pet/capture/memory/report/receipt, duplicate same petId, backpack/pokedex, read-only SQLite and restart. Actual Electron36.9.5; no claim about future packaged44.9.3 runtime."
     }
   ],
   "runtimeEvidence": {
@@ -426,23 +431,20 @@
     },
     "privateSystemMapScreenshotNotCommitted": "artifacts/discovery/2d-windows-1792847349359/real-system-location-private.png",
     "latestNativeDiagnostic": {
-      "at": "2026-10-24T15:28:28.474Z",
-      "adapter": "production Electron WindowsLocationAdapter; actual ordinary account, privacy setting and foreground watch",
-      "sourceCommit": "6bdd16726c16ff58f566bc464339c984deace6dd",
+      "at": "2026-10-25T02:55:29.980Z",
+      "adapter": "Production Electron WindowsLocationAdapter; ordinary isolated local account, opt-in foreground location",
+      "sourceCommit": "05ffa620769108c8ecf607c97065c94d0a2b336d",
       "ok": true,
       "source": "os",
       "permission": "granted",
       "provider": "windows-geolocator",
       "positionSource": "WiFi",
-      "accuracyMeters": 114,
-      "timestampMs": 1792855707831,
-      "coordinateHash": "03aab80cb8860712f78cd8536d4d35c1882993918e4a0cbb5e2b592be293ed51",
+      "accuracyMeters": 78,
       "rawCoordinatesSaved": false,
       "systemPermissionDenialResolved": true,
-      "physicalLocationAcceptance": false,
+      "physicalLocationAcceptance": true,
       "quality": {
-        "ok": false,
-        "code": "LOCATION_IMPRECISE",
+        "ok": true,
         "thresholdMeters": 80
       }
     },
@@ -1007,6 +1009,94 @@
       "comparedFiles": 35,
       "differences": [],
       "evidence": "docs/implementation/evidence/discovery/2026-10-24-main-review/current-project-source.json"
+    },
+    "nativePhysicalCapture": {
+      "command": "node apps/pc-app/runtime/features/discovery/verification/physical-flow.mjs",
+      "sourceCommit": "05ffa620769108c8ecf607c97065c94d0a2b336d",
+      "build": {
+        "schemaVersion": 1,
+        "builtAt": "2026-10-25T02:54:36.051Z",
+        "sourceCommit": "05ffa620769108c8ecf607c97065c94d0a2b336d",
+        "sourceDirtyFiles": [],
+        "codeFingerprint": "203d099faeef1a1a21daaab0d7310d4ea914e0e2377ed6bba6374b031b4dc122",
+        "compiledFingerprint": "239da04ef14c4577f8b55a7d2687261cc24acc3a4c4ef26f959208f2cc49ce69",
+        "codeFiles": 224,
+        "compiledFiles": 24
+      },
+      "productionMain": true,
+      "controlledPosition": false,
+      "physicalLocationAcceptance": true,
+      "systemSamples": [
+        {
+          "phase": "before challenge",
+          "at": "2026-10-25T02:54:55.500Z",
+          "status": "ready",
+          "permission": "granted",
+          "provider": "windows-geolocator",
+          "source": "os",
+          "positionSource": "WiFi",
+          "accuracyMeters": 78,
+          "timestampMs": 1792896895026,
+          "coordinateHash": "98fd60ccd0cef621383c63385012d87cadfa1de65be85638730d7b20058d78da",
+          "error": null
+        },
+        {
+          "phase": "before confirmation",
+          "at": "2026-10-25T02:55:29.980Z",
+          "status": "ready",
+          "permission": "granted",
+          "provider": "windows-geolocator",
+          "source": "os",
+          "positionSource": "WiFi",
+          "accuracyMeters": 78,
+          "timestampMs": 1792896925083,
+          "coordinateHash": "98fd60ccd0cef621383c63385012d87cadfa1de65be85638730d7b20058d78da",
+          "error": null
+        }
+      ],
+      "capture": {
+        "petId": "pet-58ce62cd-611b-4d8d-929b-d0eea9212064",
+        "encounterId": "encounter-43ac8a51-f6fc-4c63-8478-0ab39ab90c96",
+        "ownerAccountId": "local-24ab6867-09d1-4320-9196-fa635a04cc96",
+        "battleId": "battle-f98465bc-395f-411b-85ef-956e75e1a534",
+        "resourceId": "builtin:lingjing-shiba-v2",
+        "templateId": "animal-shiba",
+        "element": "fire",
+        "validation": "local-os",
+        "scenario": "live",
+        "distanceMeters": 46,
+        "duplicateReturnsSamePetId": true,
+        "backpackMatches": true,
+        "pokedexMatches": true,
+        "memoryCount": 1
+      },
+      "sqlite": {
+        "ownerAccountId": "local-24ab6867-09d1-4320-9196-fa635a04cc96",
+        "captures": 1,
+        "ownedInstances": 1,
+        "memories": 1,
+        "reports": 1,
+        "matchingBattleReports": 1,
+        "matchingCompanionReceipts": 1,
+        "encounterId": "encounter-43ac8a51-f6fc-4c63-8478-0ab39ab90c96",
+        "battleId": "battle-f98465bc-395f-411b-85ef-956e75e1a534",
+        "encounterStatus": "captured",
+        "capturePetId": "pet-58ce62cd-611b-4d8d-929b-d0eea9212064",
+        "companionOriginBattleId": "battle-f98465bc-395f-411b-85ef-956e75e1a534",
+        "petId": "pet-58ce62cd-611b-4d8d-929b-d0eea9212064",
+        "resourceId": "builtin:lingjing-shiba-v2",
+        "validation": "local-os",
+        "scenario": "live"
+      },
+      "restart": {
+        "explicitLogin": true,
+        "samePetId": true,
+        "currentLocationNotPersisted": true,
+        "watchNotRestored": true
+      },
+      "actualElectron": "36.9.5",
+      "rendererErrors": [],
+      "committedEvidence": "docs/implementation/evidence/discovery/2026-10-25-native-permission-retry/evidence.json"
     }
   },
   "dependencyManifest": "apps/pc-app/runtime/features/discovery/dependencies.json",
@@ -1016,7 +1106,6 @@
     "Product-wide final integration is owned by the main chat; discovery module acceptance is complete."
   ],
   "realIncomplete": [
-    "Precise physical-position capture remains unaccepted and deferred under U06; latest actual production Electron native read returned114m with permission granted. The80m threshold is unchanged.",
     "Cloud deployment/live Supabase receipt remains deferred under U06; QA never claims cloud success.",
     "Tencent/Google provider credentials are not configured; coordinate adapter boundaries are retained.",
     "Product-wide final integration remains with the main chat. It is not claimed complete by this module and does not hold this accepted module goal open."
@@ -1026,7 +1115,7 @@
     "artifacts/discovery/windows/evidence.json (pre-2D scope; not current visual acceptance)"
   ],
   "dataPolicy": "Only discovery-owned source/docs were edited directly. Other features and foundation scripts arrived through committed foundation merges. QA uses newly created verified directories and namespaced local accounts; ordinary user saves, original profiles and historical evidence are preserved. No real coordinate, credential, production migration/deployment or external message was committed/sent. Live cloud and precise native capture are explicitly deferred, not inferred from simulated receipts.",
-  "updatedAt": "2026-10-24T15:40:44.285Z",
+  "updatedAt": "2026-10-25T02:56:17.333Z",
   "visualAudit": {
     "source": {
       "branch": "codex/lingjing-implementation-base",
@@ -1233,7 +1322,7 @@
     }
   },
   "deferredVerification": [
-    "Genuine precise OS-position capture and deployed live cloud/readback are retained as unverified history; latest user U06 allows isolated simulation and deferral for this round"
+    "Historical U06 deferral remains recorded; physical capture is now verified by the2026-10-25 user-authorized retry. Real HTTPS capture remains a separate active upgrade task."
   ],
   "overallFinalIntegration": {
     "owner": "main chat",

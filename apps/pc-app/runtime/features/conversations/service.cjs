@@ -3,6 +3,7 @@ const { randomUUID } = require("node:crypto");
 const { fail, publicError, ConversationError } = require("./errors.cjs");
 const { normalizeConnection, requestCompletion } = require("./transport.cjs");
 const { buildContext, styles } = require("./context.cjs");
+const { buildLegacyConversationImport, importLegacyConversations } = require("./legacy-import.cjs");
 
 function string(value, max, optional = false) {
   if (optional && value === "") return "";
@@ -249,6 +250,23 @@ class ConversationService {
           const petId = string(payload.petId, 160); this.pet(session, petId);
           this.abort(session.owner, petId); this.store.clearHistory(session.owner, petId);
           data = { cleared: true }; this.emit(session, { type: "changed", petId }); break;
+        }
+        case "legacy.preview": case "legacy.import": {
+          if (payload.includeSettings != null && typeof payload.includeSettings !== "boolean") fail("INVALID_INPUT");
+          const options = { db:this.store.db, owner:session.owner, pets:this.pets(session).map(pet=>({...pet,petId:pet.petId ?? pet.id,name:typeof pet.name === "string" ? pet.name : pet.name?.zh || "伙伴"})),store:this.store,
+            unassignedPetId:payload.unassignedPetId == null ? null : string(payload.unassignedPetId,160) };
+          try {
+            if (command === "legacy.preview") data = buildLegacyConversationImport(options).preview;
+            else {
+              data = importLegacyConversations({...options,sourceHash:string(payload.sourceHash,160),includeSettings:payload.includeSettings !== false,
+                hasActive:[...this.active.values()].some(active=>active.session.owner === session.owner)});
+              this.emit(session,{type:"changed",petId:null});
+            }
+          } catch (error) {
+            if (error instanceof ConversationError) throw error;
+            fail(error.code === "CONVERSATION_BUSY" ? "BUSY" : error.code === "CONVERSATION_MERGE_CONFLICT" || error.code === "CONVERSATION_ORDER_CONFLICT" ? "LEGACY_CONFLICT" : "LEGACY_INVALID");
+          }
+          break;
         }
         default: fail("INVALID_INPUT");
       }

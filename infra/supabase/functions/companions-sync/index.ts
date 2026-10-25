@@ -22,7 +22,9 @@ Deno.serve(withActor(async(request,actor)=>{
     const id=(body.input as Record<string,unknown>).resourceId;
     if(typeof id!=='string')return fail('INVALID_INPUT');
     if(uuid(id)){
-      const {data:resource,error:resourceError}=await actor.client.from('lingjing_resource_packages').select('resource_id,owner_account_id,resource_kind').eq('auth_user_id',actor.authUserId).eq('owner_account_id',actor.ownerAccountId).eq('resource_id',id).order('created_at',{ascending:false}).limit(1).maybeSingle();
+      // Only a service-verified package registered in the protected save can
+      // authorize appearance. The client-writable upload index is insufficient.
+      const {data:resource,error:resourceError}=await actor.client.from('lingjing_resource_references').select('resource_id,owner_account_id,resource_kind').eq('auth_user_id',actor.authUserId).eq('owner_account_id',actor.ownerAccountId).eq('resource_id',id).order('created_at',{ascending:false}).limit(1).maybeSingle();
       if(resourceError)problem(resourceError);
       if(resource?.resource_kind==='spritesheet')authorizedResource={resourceId:id,ownerAccountId:actor.ownerAccountId,kind:'2d'};
     }

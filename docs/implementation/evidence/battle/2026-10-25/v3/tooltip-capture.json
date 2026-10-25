@@ -1,0 +1,579 @@
+{
+  "at": "2026-10-25T00:13:21.250Z",
+  "provenance": "simulated",
+  "runId": "53e5420f-6a13-464f-b460-df314c65cb01",
+  "sourceCommit": "2871bb874ce61fa0195f01907a5d6bb037ac77a9",
+  "sourceDirty": "",
+  "buildManifest": {
+    "schemaVersion": 1,
+    "builtAt": "2026-10-25T00:13:09.180Z",
+    "sourceCommit": "2871bb874ce61fa0195f01907a5d6bb037ac77a9",
+    "sourceDirtyFiles": [],
+    "codeFingerprint": "4fefa3c077c281149a57e31b3a47d63aba3d3bab27ccef823d9fbda8f9333563",
+    "compiledFingerprint": "d4c44b4542aaca48e5d011d3ee26663eab16d65368efcdcdfd1be6838e5051f9",
+    "codeFiles": 218,
+    "compiledFiles": 24
+  },
+  "sourceHashes": [
+    {
+      "file": "apps/pc-app/ui/src/features/battle/BattleArena.tsx",
+      "sha256": "89be64355e6277f8ba0cf166f714e98d838ea1aec485b3051aa7958cc564dd64"
+    },
+    {
+      "file": "apps/pc-app/ui/src/features/battle/BattleScreen.tsx",
+      "sha256": "1055de52413183897edb7a5b49d8d5d50c92c55f287f5cd31877658fc44833c8"
+    },
+    {
+      "file": "apps/pc-app/ui/src/features/battle/BattleMoves.tsx",
+      "sha256": "c192879b1494d4c01ada8e90fcb07ac2c45ad991d5ee4672423951080756e1c7"
+    },
+    {
+      "file": "apps/pc-app/ui/src/features/battle/BattlePhaseClock.tsx",
+      "sha256": "12db5d5b1de5fbe580ae37a5b52953b4a1aa1566518ba2b78a3a8052bac20f44"
+    },
+    {
+      "file": "apps/pc-app/ui/src/features/battle/useBattleAnimation.ts",
+      "sha256": "fa4d78003a19799d324e840190735be547f370310bd3da0a4e9c2db385d2650b"
+    },
+    {
+      "file": "apps/pc-app/ui/src/features/battle/presentation.ts",
+      "sha256": "38c88c99602033df55ab7b001bd7c9e7ead43f60707d1628fb123e22ae672f4e"
+    },
+    {
+      "file": "apps/pc-app/ui/src/features/battle/battle-v3.css",
+      "sha256": "ce7321530372a9005fcb02989475181da69b1c1b0c0ad3b76446b2db5982accb"
+    }
+  ],
+  "scope": "Real compiled Electron rendering, native windows, IPC, path-bound namespaced SQLite accounts, canonical Pixi resources. Loopback friend authority and domain-owned location fixtures are simulated, not live cloud.",
+  "steps": [
+    {
+      "at": "2026-10-25T00:13:23.452Z",
+      "name": "native layout training-1280",
+      "viewport": {
+        "width": 1280,
+        "height": 846,
+        "dpr": 1.25
+      },
+      "mode": "training",
+      "main": {
+        "x": 192,
+        "y": 54,
+        "width": 1088,
+        "height": 791.6000366210938,
+        "right": 1280,
+        "bottom": 845.6000366210938
+      },
+      "arena": {
+        "x": 192,
+        "y": 54,
+        "width": 1088,
+        "height": 791.6000366210938,
+        "right": 1280,
+        "bottom": 845.6000366210938
+      },
+      "hud": [
+        {
+          "x": 243.1999969482422,
+          "y": 122,
+          "width": 409.8000183105469,
+          "height": 146,
+          "right": 653.0000152587891,
+          "bottom": 268
+        },
+        {
+          "x": 819,
+          "y": 122,
+          "width": 409.8000183105469,
+          "height": 146,
+          "right": 1228.8000183105469,
+          "bottom": 268
+        }
+      ],
+      "identity": [
+        {
+          "x": 256,
+          "y": 139.5,
+          "width": 88,
+          "height": 111,
+          "right": 344,
+          "bottom": 250.5
+        },
+        {
+          "x": 1128,
+          "y": 139.5,
+          "width": 88,
+          "height": 111,
+          "right": 1216,
+          "bottom": 250.5
+        }
+      ],
+      "level": [
+        {
+          "x": 273.5500183105469,
+          "y": 231.5,
+          "width": 52.88750076293945,
+          "height": 19,
+          "right": 326.4375190734863,
+          "bottom": 250.5
+        },
+        {
+          "x": 1145.550048828125,
+          "y": 231.5,
+          "width": 52.88750076293945,
+          "height": 19,
+          "right": 1198.4375495910645,
+          "bottom": 250.5
+        }
+      ],
+      "actors": [
+        {
+          "x": 289.9125061035156,
+          "y": 299.38751220703125,
+          "width": 392.5625,
+          "height": 316.6499938964844,
+          "right": 682.4750061035156,
+          "bottom": 616.0375061035156
+        },
+        {
+          "x": 789.5250244140625,
+          "y": 299.38751220703125,
+          "width": 392.5625,
+          "height": 316.6499938964844,
+          "right": 1182.0875244140625,
+          "bottom": 616.0375061035156
+        }
+      ],
+      "group": {
+        "x": 564,
+        "y": 652.5250244140625,
+        "width": 344,
+        "height": 106,
+        "right": 908,
+        "bottom": 758.5250244140625
+      },
+      "orbs": [
+        {
+          "x": 566,
+          "y": 648.5250244140625,
+          "width": 82,
+          "height": 82,
+          "right": 648,
+          "bottom": 730.5250244140625
+        },
+        {
+          "x": 673,
+          "y": 668.5250244140625,
+          "width": 62,
+          "height": 62,
+          "right": 735,
+          "bottom": 730.5250244140625
+        },
+        {
+          "x": 759,
+          "y": 668.5250244140625,
+          "width": 62,
+          "height": 62,
+          "right": 821,
+          "bottom": 730.5250244140625
+        },
+        {
+          "x": 845,
+          "y": 668.5250244140625,
+          "width": 62,
+          "height": 62,
+          "right": 907,
+          "bottom": 730.5250244140625
+        }
+      ],
+      "log": {
+        "x": 1020.6500244140625,
+        "y": 633.625,
+        "width": 239.35000610351562,
+        "height": 189.97500610351562,
+        "right": 1260.0000305175781,
+        "bottom": 823.6000061035156
+      },
+      "enemyFill": [
+        "rtl",
+        "rtl"
+      ],
+      "enemyPortrait": "matrix(-1, 0, 0, 1, 0, 0)",
+      "enemyText": "none",
+      "canvases": 2,
+      "sidebars": 0,
+      "visiblePixels": [
+        43797,
+        55482
+      ]
+    },
+    {
+      "at": "2026-10-25T00:13:24.000Z",
+      "name": "native layout training-1440",
+      "viewport": {
+        "width": 1440,
+        "height": 900,
+        "dpr": 1.25
+      },
+      "mode": "training",
+      "main": {
+        "x": 192,
+        "y": 54,
+        "width": 1248,
+        "height": 846,
+        "right": 1440,
+        "bottom": 900
+      },
+      "arena": {
+        "x": 192,
+        "y": 54,
+        "width": 1248,
+        "height": 846,
+        "right": 1440,
+        "bottom": 900
+      },
+      "hud": [
+        {
+          "x": 249.60000610351562,
+          "y": 122,
+          "width": 483.3999938964844,
+          "height": 146,
+          "right": 733,
+          "bottom": 268
+        },
+        {
+          "x": 899,
+          "y": 122,
+          "width": 483.3999938964844,
+          "height": 146,
+          "right": 1382.3999938964844,
+          "bottom": 268
+        }
+      ],
+      "identity": [
+        {
+          "x": 262.3999938964844,
+          "y": 139.5,
+          "width": 88,
+          "height": 111,
+          "right": 350.3999938964844,
+          "bottom": 250.5
+        },
+        {
+          "x": 1281.5999755859375,
+          "y": 139.5,
+          "width": 88,
+          "height": 111,
+          "right": 1369.5999755859375,
+          "bottom": 250.5
+        }
+      ],
+      "level": [
+        {
+          "x": 279.95001220703125,
+          "y": 231.5,
+          "width": 52.88750076293945,
+          "height": 19,
+          "right": 332.8375129699707,
+          "bottom": 250.5
+        },
+        {
+          "x": 1299.1500244140625,
+          "y": 231.5,
+          "width": 52.88750076293945,
+          "height": 19,
+          "right": 1352.037525177002,
+          "bottom": 250.5
+        }
+      ],
+      "actors": [
+        {
+          "x": 304.3125,
+          "y": 316.25,
+          "width": 450.2875061035156,
+          "height": 338.4125061035156,
+          "right": 754.6000061035156,
+          "bottom": 654.6625061035156
+        },
+        {
+          "x": 877.4000244140625,
+          "y": 316.25,
+          "width": 450.2875061035156,
+          "height": 338.4125061035156,
+          "right": 1327.6875305175781,
+          "bottom": 654.6625061035156
+        }
+      ],
+      "group": {
+        "x": 644,
+        "y": 700.9500122070312,
+        "width": 344,
+        "height": 106,
+        "right": 988,
+        "bottom": 806.9500122070312
+      },
+      "orbs": [
+        {
+          "x": 646,
+          "y": 696.9500122070312,
+          "width": 82,
+          "height": 82,
+          "right": 728,
+          "bottom": 778.9500122070312
+        },
+        {
+          "x": 753,
+          "y": 716.9500122070312,
+          "width": 62,
+          "height": 62,
+          "right": 815,
+          "bottom": 778.9500122070312
+        },
+        {
+          "x": 839,
+          "y": 716.9500122070312,
+          "width": 62,
+          "height": 62,
+          "right": 901,
+          "bottom": 778.9500122070312
+        },
+        {
+          "x": 925,
+          "y": 716.9500122070312,
+          "width": 62,
+          "height": 62,
+          "right": 987,
+          "bottom": 778.9500122070312
+        }
+      ],
+      "log": {
+        "x": 1150,
+        "y": 678,
+        "width": 270,
+        "height": 200,
+        "right": 1420,
+        "bottom": 878
+      },
+      "enemyFill": [
+        "rtl",
+        "rtl"
+      ],
+      "enemyPortrait": "matrix(-1, 0, 0, 1, 0, 0)",
+      "enemyText": "none",
+      "canvases": 2,
+      "sidebars": 0,
+      "visiblePixels": [
+        49992,
+        63300
+      ]
+    },
+    {
+      "at": "2026-10-25T00:13:24.348Z",
+      "name": "native layout training-1024",
+      "viewport": {
+        "width": 1024,
+        "height": 720,
+        "dpr": 1.25
+      },
+      "mode": "training",
+      "main": {
+        "x": 166,
+        "y": 54,
+        "width": 858,
+        "height": 666,
+        "right": 1024,
+        "bottom": 720
+      },
+      "arena": {
+        "x": 166,
+        "y": 54,
+        "width": 858,
+        "height": 666,
+        "right": 1024,
+        "bottom": 720
+      },
+      "hud": [
+        {
+          "x": 186,
+          "y": 107,
+          "width": 345,
+          "height": 128,
+          "right": 531,
+          "bottom": 235
+        },
+        {
+          "x": 659,
+          "y": 107,
+          "width": 345,
+          "height": 128,
+          "right": 1004,
+          "bottom": 235
+        }
+      ],
+      "identity": [
+        {
+          "x": 196.8000030517578,
+          "y": 127.5,
+          "width": 64,
+          "height": 87,
+          "right": 260.8000030517578,
+          "bottom": 214.5
+        },
+        {
+          "x": 929.2000122070312,
+          "y": 127.5,
+          "width": 64,
+          "height": 87,
+          "right": 993.2000122070312,
+          "bottom": 214.5
+        }
+      ],
+      "level": [
+        {
+          "x": 204.875,
+          "y": 195.5,
+          "width": 47.837501525878906,
+          "height": 19,
+          "right": 252.7125015258789,
+          "bottom": 214.5
+        },
+        {
+          "x": 937.2750244140625,
+          "y": 195.5,
+          "width": 47.837501525878906,
+          "height": 19,
+          "right": 985.1125259399414,
+          "bottom": 214.5
+        }
+      ],
+      "actors": [
+        {
+          "x": 226.0500030517578,
+          "y": 273.7749938964844,
+          "width": 335.75,
+          "height": 253.08750915527344,
+          "right": 561.8000030517578,
+          "bottom": 526.8625030517578
+        },
+        {
+          "x": 628.2000122070312,
+          "y": 273.7749938964844,
+          "width": 335.75,
+          "height": 253.08750915527344,
+          "right": 963.9500122070312,
+          "bottom": 526.8625030517578
+        }
+      ],
+      "group": {
+        "x": 447.5,
+        "y": 559.4000244140625,
+        "width": 295,
+        "height": 94,
+        "right": 742.5,
+        "bottom": 653.4000244140625
+      },
+      "orbs": [
+        {
+          "x": 449.5,
+          "y": 556.4000244140625,
+          "width": 72,
+          "height": 72,
+          "right": 521.5,
+          "bottom": 628.4000244140625
+        },
+        {
+          "x": 539.5,
+          "y": 572.4000244140625,
+          "width": 56,
+          "height": 56,
+          "right": 595.5,
+          "bottom": 628.4000244140625
+        },
+        {
+          "x": 612.5,
+          "y": 572.4000244140625,
+          "width": 56,
+          "height": 56,
+          "right": 668.5,
+          "bottom": 628.4000244140625
+        },
+        {
+          "x": 685.5,
+          "y": 572.4000244140625,
+          "width": 56,
+          "height": 56,
+          "right": 741.5,
+          "bottom": 628.4000244140625
+        }
+      ],
+      "log": {
+        "x": 809,
+        "y": 562,
+        "width": 200,
+        "height": 140,
+        "right": 1009,
+        "bottom": 702
+      },
+      "enemyFill": [
+        "rtl",
+        "rtl"
+      ],
+      "enemyPortrait": "matrix(-1, 0, 0, 1, 0, 0)",
+      "enemyText": "none",
+      "canvases": 2,
+      "sidebars": 0,
+      "visiblePixels": [
+        27891,
+        35325
+      ]
+    },
+    {
+      "at": "2026-10-25T00:13:25.317Z",
+      "name": "hover and keyboard focus normal_attack",
+      "text": "打断属性"
+    },
+    {
+      "at": "2026-10-25T00:13:26.263Z",
+      "name": "hover and keyboard focus element_attack",
+      "text": "无法闪避"
+    },
+    {
+      "at": "2026-10-25T00:13:27.184Z",
+      "name": "hover and keyboard focus dodge",
+      "text": "闪避攻击"
+    },
+    {
+      "at": "2026-10-25T00:13:27.185Z",
+      "name": "V3 native verification passed"
+    }
+  ],
+  "errors": [],
+  "passed": true,
+  "profiles": {
+    "host": {
+      "directory": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\v3-1792887201133\\host",
+      "owner": "qa:53e5420f-6a13-464f-b460-df314c65cb01:local-92fe6a6e-e969-4512-a48a-52dff9b1f897",
+      "account": "qa_host_87201301"
+    }
+  },
+  "sqlite": [
+    {
+      "name": "host",
+      "tables": [
+        "battle_sessions",
+        "battle_action_receipts",
+        "battle_reports_v2",
+        "battle_reward_receipts"
+      ],
+      "sessions": [
+        {
+          "id": "battle-dff63110-fdfa-4f47-8d9d-ad67f69246eb",
+          "status": "active",
+          "mode": "training",
+          "rounds": 0,
+          "anger": 0
+        }
+      ],
+      "rewards": []
+    }
+  ]
+}

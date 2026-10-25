@@ -1,0 +1,58 @@
+TAP version 13
+# Subtest: actual official SDK protocol: A upload, distinct-client B hydrate preserves IDs/history and independent same-content imports
+ok 1 - actual official SDK protocol: A upload, distinct-client B hydrate preserves IDs/history and independent same-content imports
+  ---
+  duration_ms: 608.1058
+  type: 'test'
+  ...
+# Subtest: production adapter rejects a simulated actor/HTTP client before any transfer
+ok 2 - production adapter rejects a simulated actor/HTTP client before any transfer
+  ---
+  duration_ms: 162.9537
+  type: 'test'
+  ...
+# Subtest: lost upload receipt survives reopen and resumes immutable chunks with independent readback
+ok 3 - lost upload receipt survives reopen and resumes immutable chunks with independent readback
+  ---
+  duration_ms: 169.9479
+  type: 'test'
+  ...
+# Subtest: offline intent is durable before Auth and session switch never applies a downloaded package
+ok 4 - offline intent is durable before Auth and session switch never applies a downloaded package
+  ---
+  duration_ms: 248.075
+  type: 'test'
+  ...
+# Subtest: tampered manifest/size/path and credential-bearing descriptors fail before publication
+ok 5 - tampered manifest/size/path and credential-bearing descriptors fail before publication
+  ---
+  duration_ms: 127.7426
+  type: 'test'
+  ...
+# Subtest: historical GLB archive is readable/restorable but never appears in 2D list or import
+ok 6 - historical GLB archive is readable/restorable but never appears in 2D list or import
+  ---
+  duration_ms: 369.7342
+  type: 'test'
+  ...
+# Subtest: interrupted new-client download resumes verified disk chunks after reopening SQLite
+ok 7 - interrupted new-client download resumes verified disk chunks after reopening SQLite
+  ---
+  duration_ms: 307.7208
+  type: 'test'
+  ...
+# Subtest: corrupt downloaded bytes are never registered and preserve an existing missing local reference
+ok 8 - corrupt downloaded bytes are never registered and preserve an existing missing local reference
+  ---
+  duration_ms: 305.9399
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2500.129
