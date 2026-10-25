@@ -7,7 +7,7 @@ import type { DiscoveryPet, DiscoverySnapshot, WildSpawn } from '../../../../../
 import { NearbyMap } from './NearbyMap';
 import { PetPicker } from './PetPicker';
 import { ResourcePortrait } from './ResourcePortrait';
-import { elements } from './presentation';
+import { elements, encounterAvailability, locationBlockingReason } from './presentation';
 import { companionIdentity } from '../companions/identity';
 import lake from './assets/wild-lake-v1.png';
 
@@ -21,9 +21,9 @@ export function WildPreviewView({ state, spawn, pet, selectPet, pending, observe
     attempted.current = true; void observe();
   }, [cloud, pending, state.signedIn, spawn.demo, spawn.inRange, observe]);
   const active = state.encounters.some(encounter => ['challenging', 'won'].includes(encounter.status));
-  const unavailable = pending ? '正在处理' : !state.signedIn ? '先登录' : !pet ? '选择出战伙伴' : spawn.demo ? '演示仅供浏览' : !spawn.inRange ? '进入互动范围后挑战' : active ? '先继续已有挑战' : state.cloudStatus !== 'disabled' && state.cloudStatus !== 'ready' ? '当前账号暂不可挑战' : cloud && identity.instanceNumber === '待同步' ? '等待相遇编号同步' : '';
+  const unavailable = pending ? '正在处理' : !state.signedIn ? '先登录' : !pet ? '选择出战伙伴' : spawn.demo ? '演示仅供浏览' : locationBlockingReason(state) || (!spawn.inRange ? '进入互动范围后挑战' : active ? '先继续已有挑战' : state.cloudStatus !== 'disabled' && state.cloudStatus !== 'ready' ? '当前账号暂不可挑战' : cloud && identity.instanceNumber === '待同步' ? '等待相遇编号同步' : '');
   return <div className="discovery-wild-view">
-    <div className="discovery-wild-heading"><div><Button variant="ghost" className="discovery-back" onClick={() => navigate('/discovery')}><ArrowLeft size={15}/>附近探索 / 野外遭遇</Button><h1>在附近，遇见了{identity.roleName}。</h1><p>{spawn.distanceMeters} m · {spawn.demo ? '演示' : spawn.inRange ? '可挑战' : '前往附近'}</p></div><div className="discovery-mini-map"><NearbyMap state={state} mini/></div></div>
+    <div className="discovery-wild-heading"><div><Button variant="ghost" className="discovery-back" onClick={() => navigate('/discovery')}><ArrowLeft size={15}/>附近探索 / 野外遭遇</Button><h1>在附近，遇见了{identity.roleName}。</h1><p>{spawn.distanceMeters} m · {encounterAvailability(state, spawn)}</p></div><div className="discovery-mini-map"><NearbyMap state={state} mini/></div></div>
     <div className="discovery-wild-grid"><section className="discovery-wild-scene" style={{ backgroundImage: `url("${lake}")` }} aria-label="湖畔相遇插画">
       {pet ? <div className="discovery-scene-player"><ResourcePortrait resourceId={pet.resource.resourceId} instanceId={pet.petId}/></div> : null}
       <div className="discovery-scene-wild"><ResourcePortrait resourceId={spawn.resourceId} instanceId={spawn.id} facing="left"/></div>

@@ -1,0 +1,43 @@
+{
+  "format": "lingjing.discovery.ui-defect-checks",
+  "version": 1,
+  "issue": "QA013",
+  "status": "source-fixed_pending-next-candidate-native-retest",
+  "scope": "UI availability wording only",
+  "reportedCandidate": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+  "integratedSourceChecked": "e875febf3430be341191a639668d43e7f09826dc",
+  "equivalentFixAlreadyPresent": false,
+  "sourceParent": "24ca5d10f821b5a25f3db46f8d9da6488be24660",
+  "nativeEvidence": {
+    "owner": "fresh09",
+    "snapshot": "docs/implementation/qa/2026-10-25-user-acceptance/rounds/candidate-312e5fe-524fd56d/evidence/fresh09-discovery-disabled-freshness-readback.json",
+    "screenshot": "docs/implementation/qa/2026-10-25-user-acceptance/rounds/candidate-312e5fe-524fd56d/evidence/fresh09-discovery-stale-wrong-disable-reason.jpg",
+    "snapshotSha256": "f88617c481143275b287f581d7ef8a9f577ac7c5c720300801a90da5329573cb",
+    "screenshotSha256": "1348da2cf2317c47b689cde463eaa4d99d70a96d4fd431633f5dfb818d359dae",
+    "facts": "Same57m distance/5m accuracy/100m radius. Stale LOCATION_STALE disables challenge but old UI calls it distance. Normal refresh alone changes ready/inRange/enabled."
+  },
+  "changes": [
+    "Read the authoritative location status before interpreting spawn.inRange as a distance failure.",
+    "Stale QA tooltip/subtitle directs the user to the actual right-hand 更新场景位置 control; native profile wording says重新定位.",
+    "Explore selected subtitle shares that reason, and its existing preview link says查看相遇 while position is blocked.",
+    "Ready in-range remains可挑战; ready out-of-range retains前往附近/进入互动范围后挑战."
+  ],
+  "checks": [
+    { "command": "node node_modules/vitest/vitest.mjs run tests/discovery-presentation.test.ts", "passed": true, "tests": 3, "failed": 0 },
+    { "command": "npm run typecheck:ui", "passed": true },
+    { "command": "ESLint tests/discovery-presentation.test.ts + discovery presentation.ts/WildPreviewView.tsx/ExploreView.tsx", "passed": true },
+    { "command": "git diff --check", "passed": true },
+    { "command": "git fetch origin main; git pull --ff-only origin main", "passed": true, "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086", "result": "Already up to date" }
+  ],
+  "preservation": {
+    "locationAdapterChanged": false,
+    "serverOrProtocolChanged": false,
+    "time30sPrecision80mRange100mChanged": false,
+    "qaProvenanceChanged": false,
+    "clockOrPositionChanged": false,
+    "nativeInputPerformedHere": false,
+    "packagedOrPublished": false,
+    "backendProbeExecutedHere": false
+  },
+  "handoff": "Root integrates this narrow commit into the next final source;09 repeats the real stale-tooltip and normal-refresh sequence. Old312/e875 package is not relabeled as fixed."
+}
