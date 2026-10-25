@@ -1,0 +1,24 @@
+✔ LOCAL cloud-v2 adapter rejects wrong owner, arbitrary schema/path, repeated refs and version/content mismatch (45.8338ms)
+✔ LOCAL v2 validation confers no authority: restore refuses a client-only reference without a live server receipt (57.1224ms)
+✔ LOCAL backup manager dispatches cloud v2 hydration before a retained preview while preserving the original v1 file (45.5945ms)
+✔ LOCAL preference outbox persists exact intent before Auth and retries the same action after actual SQLite reopen (75.5645ms)
+✔ LOCAL preference hydration preserves a dirty local edit and refuses to call it verified (43.8017ms)
+✔ actual official SDK protocol: A upload, distinct-client B hydrate preserves IDs/history and independent same-content imports (765.8109ms)
+✔ production adapter rejects a simulated actor/HTTP client before any transfer (189.3918ms)
+✔ verified old owner aliases keep their original owner text in the immutable package without rewriting local history (201.8473ms)
+✔ lost upload receipt survives reopen and resumes immutable chunks with independent readback (253.4415ms)
+✔ offline intent is durable before Auth and session switch never applies a downloaded package (402.4047ms)
+✔ tampered manifest/size/path and credential-bearing descriptors fail before publication (214.1345ms)
+✔ historical GLB archive is readable/restorable but never appears in 2D list or import (533.3996ms)
+✔ interrupted new-client download resumes verified disk chunks after reopening SQLite (457.4494ms)
+✔ corrupt downloaded bytes are never registered and preserve an existing missing local reference (454.2408ms)
+✔ resource backup restores actual 2D pack bytes to new managed paths and rejects a different owner (106.2091ms)
+✔ standard Pixi atlas survives backup restore and complete user-data relocation (142.6195ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3597.9384

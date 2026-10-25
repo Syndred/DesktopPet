@@ -2,6 +2,8 @@
 
 当前代码与状态指针见 [cloud-resources.json](../../../status/cloud-resources.json)，完整边界见 [cloud-resource-contract.md](../../../cloud-resource-contract.md)。统一源基线 46abf41；已合入主协调批准的身份检查点 f81008c。真实部署由主协调完成，资源会话没有直接变更数据库、部署函数或修改 comparisontext 原表。
 
+最终总集成运行源为 facaf9b（已合4830619），[最终双 Electron](live-integrated-dual/evidence.json) 与[独立 Root8 读回](live-integrated-dual/independent-root-readback.json) 已通过。A/B 是两个实际 Electron44 进程、独立 profile/device UUID；偏好本机 revision2/1 均等价于同一云 revision5，完整 v2 恢复保留原 v1 文件、两文件 SHA256、原导入流水与同一私有外观伙伴。两个最终截图都已检查主体完整可见；sourceDirtyFiles为空，闭包构建106文件/181依赖边/4个JS-MJS依赖通过。资源域交付完成；实体双设备与全产品冻结由主协调处理。下文旧证据继续保留其原运行版本和成功/失败状态。
+
 ## 已完成的域实现
 
 - 私有 `lingjing-resources-v1` bucket，Auth UID 前缀、08 `lingjing_current_owner()` 与设备/会话撤销校验；immutable 索引及 INSERT/SELECT 策略，无 UPDATE/DELETE/upsert/public URL。

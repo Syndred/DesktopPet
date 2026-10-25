@@ -28,8 +28,10 @@
 
 云端 `lingjing_resource_preferences` 和 immutable preference action 行仅允许客户端 RLS 读取。每个资源使用独立偏好 revision 检查并发，成功在同一个公共 save revision 提交 `character-resources.version2.data.preferences:[{resourceId,revision,calibration,actions}]`；包登记会同时保留已经提交的偏好。原 action 重试返回原回执，错误 SID、未验证索引、非法校准、过期版本和后续回执失败均不改变公共存档。
 
-本机 resources-005 保留偏好 outbox、状态与已核验缓存。先排队再取得 Auth，首次请求冻结 base revision，重开 SQLite 后复用 action/输入；后续本机编辑按顺序保留。自动读取不覆盖脏的本机偏好。明确云端预览先核验缓存，通用恢复事务再应用；冲突保留原档，replace 也保留已 superseded 的队列历史。云指纹使用已核验的偏好语义，允许不同客户端本机 revision 不同，同时保留 v1 备份原 revision。当前本机检查通过，真实新客户端偏好与双 Electron 验收随后补证。
+本机 resources-005 保留偏好 outbox、状态与已核验缓存。先排队再取得 Auth，首次请求冻结 base revision，重开 SQLite 后复用 action/输入；后续本机编辑按顺序保留。自动读取不覆盖脏的本机偏好。明确云端预览先核验缓存，通用恢复事务再应用；冲突保留原档，replace 也保留已 superseded 的队列历史。云指纹使用已核验的偏好语义，允许不同客户端本机 revision 不同，同时保留 v1 备份原 revision。最终集成源 facaf9b 已通过真实双 Electron：偏好云 revision5、本机 A revision2/B revision1，两个非空偏好指纹都为 v2，并与独立读取的受保护资源模块完全一致。
 
 真实目标验证已完成：[受保护引用与拒绝证据](evidence/resources/cloud-upgrade/live-authority/evidence.json)、[02 自定义外观联验](evidence/resources/cloud-upgrade/live-authority/companion-joint.json)。原包未重复上传；B 独立读回统一存档 v2，OTHER404、伪造 index422、撤销设备401，失败均未提升 revision/checksum。伙伴换装只认可 verified references，保持同 petId/成长。
 
-两次迁移均由 Supabase CLI 2.122.0 的 migration new 生成；资源会话不直接改变远端 schema/函数。主协调已部署 private Storage，第二次 authority 迁移与函数待统一部署。目标项目初始只读检查没有 Storage bucket，原 comparisontext 的 18 张业务表保留。本机协议验证和真实 HTTPS A/B/跨账号证据分别记录，不能互相代替。
+三次迁移均由 Supabase CLI 2.122.0 的 migration new 生成，主协调再按实际 MCP ledger 对齐版本名，原执行与重命名审计由总集成保留。当前实际文件为23614 private Storage、34122 verified authority、41216 verified preferences；资源会话没有直接改变远端 schema/函数。主协调已部署三个迁移及 lingjing-resources v2；原 comparisontext 的 18 张业务表受保护保留。本机协议验证和真实 HTTPS A/B/跨账号证据分别记录，不能互相代替。
+
+最终证据为 [总集成双 Electron](evidence/resources/cloud-upgrade/live-integrated-dual/evidence.json) 与 [独立根存档读回](evidence/resources/cloud-upgrade/live-integrated-dual/independent-root-readback.json)：已消费4830619，总构建源 facaf9b，两个实际 PID/设备 UUID，原两文件 SHA256、resourceId/import_id、同一自定义 petId 与成长、修改后校准/动作映射、原 v1 备份及实际可见 Pixi 图像均一致。它是同机两个独立进程；两台实体设备、原外部来源迁移、全产品打包和旧基础设施退役仍由主协调分别验收，不纳入此资源域完成声明。
