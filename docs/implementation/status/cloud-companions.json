@@ -2,14 +2,14 @@
   "module": "companions",
   "scope": "Cloud-upgrade 2026-10-25: preserve companion consistency units through Accounts identity/save sync and Garden transactions",
   "branch": "codex/lingjing-companions",
-  "commit": "8f4273108b4723d43f9ee7537ffd22197a9609a6",
+  "commit": "230e9b6",
   "goalStatus": "active",
   "phase": "controlled cloud command server ready for coordinator review/deployment; main IPC/native/cloud readback integration continuing",
   "contracts": {
     "baseline": "docs/implementation/cloud-upgrade-2026-10-25.md",
     "sharedSave": "Consume services.get('backups') and Accounts sync; no second account, inventory, reward or transport",
     "companionUnit": "docs/implementation/cloud-companions-contract.md",
-    "accountsIntegrationNeed": "Current BackupManager rejects old generic tables when a new adapter claims them. Need a verified-envelope legacy-table conversion hook before claiming companion tables, so existing version-1 archives remain restorable. Companion adapter will provide fromLegacyTables(tables,owner) for the complete existing table set.",
+    "accountsIntegrationNeed": "Legacy hook implemented separately in6435a13, aligned with approved08 8e5c735 in230e9b6: validate original checksum/provenance/identity/schema first, normalize internal restore/fingerprint view, preserve original file/cloud checksum; meaningfulData/prepareProtected/cloudProjection/authority_pending preserved.",
     "gardenIntegrationNeed": "Current garden/cloud-domain.mjs reads envelope.data.tables.companion_pets/accounts; new companion module data.tables must be supported in the same save/locked inventory transaction, preserving old generic format reads.",
     "gardenGrowthAdapter": "companions/cloud-growth.mjs exports pure async awardBattleResult({envelope,ownerAccountId,petId,sessionId,won,mode,actionId,now}) -> {envelope,reward}; shared growth.mjs is used by both local SQLite service and cloud.05 must verify server battle then commit same companion/inventory/world fragments once. No DB write/transport inside adapter.",
     "requiredCloudCommands": "Coordinator requires02 legitimate cloud adoption/rename/selections/desktop/authorized appearance commands through08 cloudActor and protected commit_authority, with owned pet registration and no client-provided growth/inventory. Implementation now continuing.",
@@ -18,7 +18,9 @@
     "criticalOwnerPetPair": "RESOLVED by08 d57d383 and approved45b857d merged here: registry is (owner_id,pet_id); two-owner SQLite and local SQL command checks cover identical original IDs without rewriting them.",
     "serverCommandDeployment": "docs/implementation/cloud-companions-deployment.md; companions-sync self-authenticating Edge + service-only commit worker, seven controlled commands including interact; deployment remains coordinator-only",
     "protectedPersonalFieldsNeed": "Accounts shared CAS must permit validated names/desktop settings/independent selections while retaining authoritative pet identity/growth/capture/adoption receipts; checksum alone is not gameplay permission.",
-    "mainOnlyAdapter": "services.get('companions').backupAdapter; registration pending Accounts verified legacy-envelope normalization"
+    "mainOnlyAdapter": "services.get('companions').backupAdapter now production-registers when shared normalizeData capability exists",
+    "serverCheckpoint": "67546f5 includes cloud-domain/instance factory, companions-sync Edge, CLI migration and local/HTTP verifiers; coordinator reviews/deploys",
+    "sharedAccountsCheckpoint": "6435a13 shared backups/sync/util normalization + regression;230e9b6 merges8e5c735 retaining safety projection and privacy state"
   },
   "migrations": [{"file":"infra/supabase/migrations/20261025025515_lingjing_companion_commands.sql","generatedBy":"Supabase CLI2.122.0 migration new lingjing_companion_commands --workdir infra","remoteAppliedByThisChat":false}],
   "checks": {
@@ -78,11 +80,19 @@
       "decision": "retain actual legacy import and verified alias migration; switch generic backups only after08/05 integration"
     }
   ],
+  "actionGaps": [
+    {"action":"adopt","server":"implemented/tested;67546f5","runtime":"cloudActor IPC routing continuing"},
+    {"action":"rename/select/appearance/recall-all","server":"implemented/tested;67546f5","runtime":"cloudActor IPC routing continuing"},
+    {"action":"desktop management settings","server":"implemented/tested;67546f5","runtime":"cloudActor IPC routing continuing"},
+    {"action":"native drag/wander persistence","server":"same controlled desktop command","runtime":"must replace direct local protected writes for Supabase sessions; continuing"},
+    {"action":"interact","server":"fixed original mood2/affinity1, per-pet10s server cooldown and one receipt implemented/tested","runtime":"cloudActor IPC routing continuing"},
+    {"action":"canonical builtin migration","server":"same trusted roster IDs","runtime":"disable local protected rewrites for Supabase sessions; preserve original historical IDs"},
+    {"action":"food/XP/seeds","server":"05 transaction +02 shared growth; local contract integration passed","runtime":"05/04 authority paths pending integration; no client chosen rewards"}
+  ],
   "remaining": [
-    "Implement and publish controlled cloud companion command entry and main IPC adapter using approved08 cloudActor",
-    "production adapter registration after08 verified old-envelope normalization",
-    "Accounts protected personal-field and verified alias integration",
-    "08 cloud owned-pet ownership must use owner+petId; global legacy petId uniqueness is incompatible",
+    "Coordinator deploys reviewed67546f5 companion SQL/Edge and runs designated-account HTTPS verifier",
+    "Main cloudActor IPC routing, native position write routing, durable common action intents and safe same-unit readback",
+    "Latest Accounts safety projection + companion registration final targeted verification",
     "Garden same-save inventory integration",
     "new Accounts real-HTTPS two-client conflict/offline/restart tests",
     "real HTTPS old-save restoration and independent client readback after coordinated deployment",
