@@ -1,4 +1,5 @@
 const {test}=require('node:test');const assert=require('node:assert/strict');const {createHash}=require('node:crypto');
+const {spawnSync}=require('node:child_process');
 const {prepareClaims,protectClaims}=require('../../../../../../scripts/migration/prepare-lingjing-legacy-claims.cjs');
 const hash=bytes=>createHash('sha256').update(bytes).digest('hex');
 const row={id:'original-old-owner',account:'alice',account_key:'alice',username:'原昵称',password_hash:hash('SYNTHETIC_NOT_REAL_PASSWORD'),created_at:'2020-01-02T03:04:05Z'};
@@ -15,4 +16,6 @@ test('LOCAL synthetic preparation only: reject damaged, QA, empty, comparison-pr
 });
 test('LOCAL synthetic preparation only: Windows DPAPI encrypted result does not contain fixture hash or owner plaintext',{skip:process.platform!=='win32'},()=>{
  const s=source(),bundle=prepareClaims(s.bytes,s.manifest),encrypted=protectClaims(bundle);assert.ok(encrypted.length>0);assert.equal(encrypted.includes(Buffer.from(row.password_hash)),false);assert.equal(encrypted.includes(Buffer.from(row.id)),false);
+ const script="Add-Type -AssemblyName System.Security; [Console]::OutputEncoding=[Text.Encoding]::UTF8; $b=[Convert]::FromBase64String([Console]::In.ReadToEnd()); $e=[Text.Encoding]::UTF8.GetBytes('LINGJING_LEGACY_CLAIMS_V1'); [Console]::Out.Write([Text.Encoding]::UTF8.GetString([Security.Cryptography.ProtectedData]::Unprotect($b,$e,[Security.Cryptography.DataProtectionScope]::CurrentUser)));";
+ const restored=spawnSync('powershell.exe',['-NoProfile','-NonInteractive','-Command',script],{input:encrypted.toString('base64'),encoding:'utf8',windowsHide:true});assert.equal(restored.status,0);assert.equal(JSON.parse(restored.stdout.replace(/^\uFEFF/,'')).claims[0].username,row.username);
 });

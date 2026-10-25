@@ -84,6 +84,12 @@ JSON SHA256 和现有备份保持兼容，SQL 处理 UTF-16 键排序及 ECMAScr
 
 ## 当前验证和来源
 
+## 旧源恢复后的准备工具
+
+`node scripts/migration/prepare-lingjing-legacy-claims.cjs <runtime_accounts.json> <manifest.json> <新的输出目录>` 仅本机准备，不执行网络写入、创建Auth用户或重置密码。manifest 必须是 `format:lingjing-server-export,version:1,environment:production`，`source:{origin:http://47.112.208.97:8000,collection:public.runtime_accounts,instanceId:真实实例标识}`，`provenance:{kind:operator-server-export,mode:live}`，`file:{sha256,byteLength,rowCount}`。原导出需来自运营方实际恢复的服务器/备份，文件manifest本身不能证明来源；主协调仍必须独立验证取证链。空表、QA/模拟来源、comparison项目、重复owner/账号及损坏校验拒绝。
+
+输出仅 `claims.dpapi`（Windows当前用户加密，entropy为公开字符串 `LINGJING_LEGACY_CLAIMS_V1`）与不含用户名/密码摘要的audit.json；不覆盖原导出或旧输出。每条claim保持原TEXT owner、用户名、原SHA256密码语义及创建时间，关联源record/manifest摘要。主协调后续在安全内存中解密、复核来源后才能阶段性写私有claims表；登录端验证原密码后才创建并绑定Auth身份。该工具的3个合成用例不代表已经拿到旧服务器数据。宠物/成长/库存/消息/资源的旧源导入仍需各域核对，audit明确 `cloudMigrationCompleted:false`。
+
 真实Auth由主协调部署并HTTPS8/8验收；CAS部署后的本会话主进程HTTPS11/11证据为 `artifacts/accounts/cloud-main-http-1792896651252/evidence.json`。实际双Electron44.9.3、Windows safeStorage、同账号双会话、跨进程个人存档读回/冲突/加密重启与持久队列、SDK实际令牌轮转8项通过：`artifacts/accounts/cloud-electron-1792897321861/evidence.json`。后一证据明确 `fullSaveVerified:false` / `authorityPending:true`：当前完整域初始化/权威片段仍由02/03/04/05/07整合，不能冒称全域存档已完成；同机双进程也不能冒称两台实体设备。secret guard修订待集中部署和真实隐私HTTPS读回，不以本地8个SQL/6个协议测试代替。
 
 官方资料（2026-10-25 已核对）：[Auth sessions](https://supabase.com/docs/guides/auth/sessions)、[Sign out scopes](https://supabase.com/docs/guides/auth/signout)、[Edge secrets](https://supabase.com/docs/guides/functions/secrets)、[新 API keys](https://supabase.com/docs/guides/getting-started/migrating-to-new-api-keys)、[RLS](https://supabase.com/docs/guides/database/postgres/row-level-security)。已检查最新 changelog，Node/Electron 使用现代 TLS；未引入自造 JWT 或第二套认证密码系统。
