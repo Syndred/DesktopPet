@@ -1,0 +1,320 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-25T20:02:51.244Z",
+  "sourceCommit": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+  "exeSha256": "90e52d4947d506303bd5741d9e901f1e92b3fa2c948847966c956088724f855d",
+  "actualAsarSha256": "d1d2e2e9ce5f50e3eaa54dc857012ff5704411effb50dfc44e50a1cf30ee8fba",
+  "roundId": "candidate-dc7aee3-1b1afdd1",
+  "runId": "1b1afdd1-3d03-4ac6-a193-892533d3c587",
+  "evidenceKind": "real-native-ui-live-cloud-authority-with-independent-read-only-receipt-and-SQLite-comparison",
+  "cases": [
+    "G06",
+    "I02",
+    "I03",
+    "I04"
+  ],
+  "maturity": {
+    "simulatedClock": false,
+    "actualServerTime": true,
+    "fourCrops": "carrot, tomato, berry and rice naturally matured; no database or clock overrides"
+  },
+  "harvest": {
+    "actionId": "d55e282b-93d0-49c5-874a-0fbabeb379d8",
+    "requestHash": "6424b2cd74a6641d1056132df3951a7c2d136e08a9810aa717f4b00935da1aea",
+    "operationRows": 1,
+    "gardenRevision": {
+      "before": 7,
+      "after": 8
+    },
+    "saveRevision": 17,
+    "harvestEvents": 4,
+    "inventory": {
+      "carrot": [
+        3,
+        6
+      ],
+      "tomato": [
+        0,
+        3
+      ],
+      "berry": [
+        0,
+        4
+      ],
+      "rice": [
+        0,
+        2
+      ]
+    },
+    "allSeedRowsPreserved": true,
+    "twoCompanionRowsPreserved": true,
+    "disabledSecondClickDidNotCreateAction": true,
+    "canonicalResponseExact": true,
+    "canonicalResponseSha256": "277a29ab052698d98c9a318d025f4dece30a559afa58a14445b2a292758ff7a0"
+  },
+  "craftAndFeed": {
+    "qualification": "Cloud head was observed after feed. Craft intermediate atomic inventory is evidenced by its immutable operation, two craft events, matching native post-craft state, and the subsequent exact one-food feed delta; this is not a claim of a pre-feed cloud head snapshot.",
+    "receipts": [
+      {
+        "kind": "craft",
+        "actionId": "09188c2d-a7da-4185-a828-a1b7c9c0a5cb",
+        "requestHash": "73f707eb52d3ad999b79472a79db649e89e432b63e01d607477509af071a3dae",
+        "operationRows": 1,
+        "accountRevision": 18,
+        "gardenRevision": 9,
+        "serverCanonicalResponseSha256": "66debd5aca380fd390daf0b3af50eb5a14543a9a32e72c117656632d0a5177b9",
+        "localCanonicalResponseSha256": "66debd5aca380fd390daf0b3af50eb5a14543a9a32e72c117656632d0a5177b9",
+        "events": [
+          {
+            "kind": "craft",
+            "delta": 2,
+            "pet_id": null,
+            "balance": 2,
+            "item_id": "cooked_rice",
+            "event_id": "319f293a-09e6-4416-914e-a8861561ec85",
+            "action_id": "09188c2d-a7da-4185-a828-a1b7c9c0a5cb",
+            "created_at": 1792957782543,
+            "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630"
+          },
+          {
+            "kind": "craft",
+            "delta": -2,
+            "pet_id": null,
+            "balance": 0,
+            "item_id": "rice",
+            "event_id": "ef2ca6b5-40e9-40e4-8f72-3980b654f8b2",
+            "action_id": "09188c2d-a7da-4185-a828-a1b7c9c0a5cb",
+            "created_at": 1792957782543,
+            "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630"
+          }
+        ]
+      },
+      {
+        "kind": "feed",
+        "actionId": "4b0d62dc-bbdd-4c39-b42c-6ba1f259807f",
+        "requestHash": "2db6db06c2d6cdd848006e57da0d0e403b89183c8ed0d57119cab7cdc7972dc2",
+        "operationRows": 1,
+        "accountRevision": 19,
+        "gardenRevision": 10,
+        "serverCanonicalResponseSha256": "2d4c632bb0032306b4aa429a539e6e6ad77f233fdd52a0b011e09e63c9fbd9b8",
+        "localCanonicalResponseSha256": "2d4c632bb0032306b4aa429a539e6e6ad77f233fdd52a0b011e09e63c9fbd9b8",
+        "events": [
+          {
+            "kind": "feed",
+            "delta": -1,
+            "pet_id": "pet-3b746d1a-d968-42e1-9c13-73fd35a45273",
+            "balance": 1,
+            "item_id": "cooked_rice",
+            "event_id": "2efc8efe-c250-46d4-8c35-698365edeffd",
+            "action_id": "4b0d62dc-bbdd-4c39-b42c-6ba1f259807f",
+            "created_at": 1792957877768,
+            "owner_account_id": "account:99efc8c1-c420-47f3-9a5c-91aa302d5630"
+          }
+        ]
+      }
+    ],
+    "craftInventory": {
+      "rice": [
+        2,
+        0
+      ],
+      "cooked_rice": [
+        0,
+        2
+      ]
+    },
+    "depletedCraftDisabledAndNoExtraAction": true,
+    "feed": {
+      "targetPetId": "pet-3b746d1a-d968-42e1-9c13-73fd35a45273",
+      "ordinaryNativeGesture": "double-click quantity-one feed",
+      "operationRows": 1,
+      "feedEvents": 1,
+      "cookedRice": [
+        2,
+        1
+      ],
+      "targetRevision": [
+        1,
+        2
+      ],
+      "satiety": [
+        60,
+        80
+      ],
+      "mood": [
+        60,
+        63
+      ],
+      "affinity": [
+        0,
+        4
+      ],
+      "otherPetFullRowExact": true,
+      "chatBattleGuardSelectionsUnchanged": true
+    },
+    "allIndependentChecks": {
+      "craft_receipt_exact": true,
+      "craft_original_hash": true,
+      "craft_committed": true,
+      "craft_events_exact": true,
+      "craft_native_checks": true,
+      "feed_receipt_exact": true,
+      "feed_original_hash": true,
+      "feed_committed": true,
+      "feed_events_exact": true,
+      "feed_native_checks": true,
+      "craft_before_items_matches_live_harvest": true,
+      "craft_pets_unchanged": true,
+      "craft_to_feed_items_exact": true,
+      "feed_after_garden_accounts_cloud_exact": true,
+      "feed_after_garden_items_cloud_exact": true,
+      "feed_after_garden_plots_cloud_exact": true,
+      "feed_after_companion_pets_cloud_exact": true,
+      "only_target_pet_changed": true,
+      "specific_target_receipt": true,
+      "one_food_deduction": true,
+      "two_craft_events": true,
+      "stable_fish_preview_number_0001": true
+    }
+  },
+  "normalRestart": {
+    "cloudCheckedAt": "2026-10-25 19:58:59.783946+00",
+    "sharedSaveRevision": 21,
+    "gardenRevision": 10,
+    "threeEconomicOperationsStillExactlyOneEach": true,
+    "matchingEconomicEventsStillSeven": true,
+    "allIndependentCloudChecks": {
+      "gardenSame": true,
+      "itemsSame": true,
+      "plotsSame": true,
+      "petsSame": true,
+      "threeSameOperations": true,
+      "sevenSameEvents": true
+    },
+    "allNineEconomicAndCompanionTablesExact": true,
+    "rawRowCounts": {
+      "garden_accounts": 1,
+      "garden_items": 9,
+      "garden_plots": 6,
+      "garden_actions": 10,
+      "garden_events": 17,
+      "garden_cloud_requests": 9,
+      "garden_reward_receipts": 0,
+      "companion_accounts": 1,
+      "companion_pets": 2
+    },
+    "localStorageSentinelExact": true,
+    "indexedDbSentinelExact": true,
+    "storageOriginExact": true,
+    "pendingNull": true,
+    "hrefQualification": "Page location changes during normal navigation and SFX extraction. It is not persisted LocalStorage/IndexedDB state; origin and actual recorded LS/IDB values were compared separately.",
+    "nativeFinalChecks": {
+      "normalUiExitConfirmed": true,
+      "newSfxRoot": true,
+      "allPayloadFilesExact": true,
+      "actualProfileFromChild": true,
+      "sameOwner": true,
+      "sameAuthUid": true,
+      "ordinaryLiveNoScenario": true,
+      "allEconomicRowsExact": true,
+      "petsExact": true,
+      "sameLS": true,
+      "sameIDB": true,
+      "sameOrigin": true,
+      "noRealPending": true,
+      "originalSettingsExact": true,
+      "trustedFishNumberStable": true
+    },
+    "actualMainPid": 12112,
+    "actualWrapperPid": 15848,
+    "actualChildProfileMatched": true,
+    "originalSettingsRestored": true,
+    "settledFishCardAndPreviewBoth": "0001",
+    "numberLoadingQualification": "The initial pending label resolved through the normal read-only identity lookup. It is not a persistent mismatch and no legacy serial/UUID display fallback was used."
+  },
+  "finalInventory": [
+    {
+      "itemId": "seed:carrot",
+      "quantity": 0
+    },
+    {
+      "itemId": "seed:tomato",
+      "quantity": 1
+    },
+    {
+      "itemId": "seed:berry",
+      "quantity": 1
+    },
+    {
+      "itemId": "seed:rice",
+      "quantity": 1
+    },
+    {
+      "itemId": "carrot",
+      "quantity": 6
+    },
+    {
+      "itemId": "tomato",
+      "quantity": 3
+    },
+    {
+      "itemId": "berry",
+      "quantity": 4
+    },
+    {
+      "itemId": "rice",
+      "quantity": 0
+    },
+    {
+      "itemId": "cooked_rice",
+      "quantity": 1
+    }
+  ],
+  "scopeLimit": "UI/UX QA015-018 fixes are prepared separately and are not in this tested DC7 binary. This proof does not replace remaining cases or new-candidate targeted native rechecks.",
+  "evidence": [
+    {
+      "path": "artifacts/qa/user-acceptance/global-serial/root-dc7-four-crop-harvest-live-20261026.json",
+      "sha256": "d49365b08454b918cf6a4b437b183dfd7de5013961fa88e1b05ed1c07ab8240a"
+    },
+    {
+      "path": "artifacts/qa/user-acceptance/global-serial/root-dc7-four-crop-harvest-canonical-20261026.json",
+      "sha256": "b0a166b4a1fc926556cc79c9426547377b6774f2767396c2bb93472fc1678591"
+    },
+    {
+      "path": "artifacts/qa/user-acceptance/global-serial/root-dc7-craft-and-feed-live-20261026.json",
+      "sha256": "9bd6e9d44c9c1525d04c1f8c4c43da2530e0dc6ee7feafb84560ad0f4e493c28"
+    },
+    {
+      "path": "artifacts/qa/user-acceptance/global-serial/root-dc7-craft-and-feed-canonical-20261026.json",
+      "sha256": "2e91be3bfeb02d603cd6a051ad24d21e137bb3be0a3a281e76b2b4fc2b8746bb"
+    },
+    {
+      "path": "artifacts/qa/user-acceptance/global-serial/root-i04-live-economy-after-restart-20261026.json",
+      "sha256": "bb607f354e0e5e7f6f02d3723e1f1af1eb63b514fa1eeb0c32e2b0e5f63b1308"
+    },
+    {
+      "path": "artifacts/qa/user-acceptance/global-serial/root-i04-core-table-preservation-20261026.json",
+      "sha256": "d7a511e65f8e76cc2ebf10bf507a39177e8ecf692b801fdd6c15ba14561d3318"
+    },
+    {
+      "path": "artifacts/qa/user-acceptance/global-serial/root-i04-native-main-readback-20261026.json",
+      "sha256": "e1bd4c6ee34dfb2a7b6562ca39fc602f9c69093430886e6da024a922fafc634d"
+    },
+    {
+      "path": "docs/implementation/qa/2026-10-25-user-acceptance/rounds/candidate-dc7aee3-1b1afdd1/evidence/i04-before-normal-restart.json",
+      "sha256": "55badbb59481173532f271294256bba0a97510c76bc470dba0eb8dfbe1cc0b78"
+    },
+    {
+      "path": "docs/implementation/qa/2026-10-25-user-acceptance/rounds/candidate-dc7aee3-1b1afdd1/evidence/i04-after-normal-restart-initial.json",
+      "sha256": "6d74c9bdefdb43d9de329e4ed0c4f0b3b6e6d7092bfd3a5589b3f7e5a26d703c"
+    },
+    {
+      "path": "docs/implementation/qa/2026-10-25-user-acceptance/rounds/candidate-dc7aee3-1b1afdd1/evidence/g06-four-crops-harvested-once-native.jpg",
+      "sha256": "9a74556f05bdba38c4a626771770b651e17d5094086b6eee72439c4ce88cd481"
+    },
+    {
+      "path": "docs/implementation/qa/2026-10-25-user-acceptance/rounds/candidate-dc7aee3-1b1afdd1/evidence/i03-a1-fox-fed-once-native.jpg",
+      "sha256": "800f7d5de1ebf48d7568b3e123686b83a2962319845c6aee93c0a0577ebecfed"
+    }
+  ]
+}
