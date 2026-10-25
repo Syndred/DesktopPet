@@ -76,7 +76,7 @@ export function FriendsPanel({ pet, busy, onSession, run }: { pet?: BattleOwnedP
       <p className="muted">新邀请 5 分钟有效，以服务器判定为准。</p>
       {onlineError && <div className="battle-online-error" role="status"><p>{onlineError}</p>{/账号|登录/.test(onlineError) ? <Button variant="secondary" onClick={() => navigate('/account')}>前往账号设置</Button> : null}</div>}
       {unconfirmed.length ? <div><h3 className="battle-own-title">发送结果待确认</h3>{unconfirmed.map(attempt => <div key={attempt.actionId} className="battle-invitation grid min-w-0 gap-2">
-        <strong className="[overflow-wrap:anywhere]">{attempt.targetAccount}</strong><small>原请求已保留；重试会使用原操作编号。</small>
+        <strong className="[overflow-wrap:anywhere]">{attempt.targetAccount}</strong><small>原请求已保留，可重试确认发送结果。</small>
         <div className="battle-two-buttons"><Button disabled={busy || !pet} onClick={() => void send(attempt.targetAccount, attempt)}>重试原请求</Button><Button disabled={busy || !pet} variant="secondary" onClick={() => void send(attempt.targetAccount)}>重新发送</Button></div>
         <small>重新发送会保留原请求；仍有效的邀请不会延长有效期。</small>
       </div>)}</div> : null}
