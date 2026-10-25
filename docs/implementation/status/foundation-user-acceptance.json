@@ -1,0 +1,508 @@
+{
+  "schemaVersion": 1,
+  "updatedAt": "2026-10-25T09:46:57.141Z",
+  "owner": "01 foundation/integration",
+  "phase": "reopened-complete-user-acceptance",
+  "status": "source-fix-ready-awaiting-09-and-coordinator-candidate",
+  "reviewSourceCommit": "6d4df8fdbf102e185cfc9c022bcdddf4601aac82",
+  "sourceFixCommit": "da330a3214ffff83be749f20a75d4c06fa7976cf",
+  "fullFunctionalAcceptancePassed": false,
+  "newCandidateBuilt": false,
+  "authorization": {
+    "humanThread": "01a1704b-e200-7090-9d17-958218c80f42",
+    "humanMessage": "01a1725b-4da0-7b13-86ec-0d4935596ccb",
+    "scope": "User requested complete real-user acceptance and direct routing of defects to the responsible chats. Coordinator separately authorized only the public main-window work-area fix.",
+    "soleMouseKeyboardOperator": {
+      "threadId": "01a1725c-d59c-7620-9bb6-1c0d4e0fb3a3",
+      "title": "灵境 09｜完整用户功能验收与缺陷闭环"
+    },
+    "issueRegistryOwner": "09",
+    "newIssueIdsAssignedHere": []
+  },
+  "baseline": {
+    "path": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\releases\\final-a9acd7f\\Lingjing-0.1.8-portable-x64.exe",
+    "sha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+    "bytes": 169196329,
+    "classification": "user-defect-reproduction-baseline",
+    "globalFunctionalAccepted": false,
+    "sourceCommit": "a9acd7f6f1920c541d429fa26d1f054b1427cd95",
+    "shaVerified": true,
+    "historicalEvidenceScope": "Previously recorded engineering/native/selected cloud paths only; not complete user acceptance."
+  },
+  "observation": {
+    "method": "Read-only User32/DWM metadata; no UI input or application state calls",
+    "observedAtUtc": "2026-10-25T09:31:00.1757152+00:00",
+    "windowMetrics": [
+      {
+        "Hwnd": 9703220,
+        "Pid": 10392,
+        "Visible": true,
+        "Minimized": false,
+        "Dpi": 120,
+        "DpiAwareness": 2,
+        "PerMonitorV2": false,
+        "ExStyle": "0x8280028",
+        "Layered": true,
+        "NoActivate": true,
+        "RoleHint": "transparent-companion-candidate",
+        "FrameResult": 0,
+        "FramePhysical": {
+          "x": 966,
+          "y": 526,
+          "width": 2145,
+          "height": 2230
+        },
+        "ApproximateFrameDip": {
+          "width": 1716,
+          "height": 1784
+        }
+      },
+      {
+        "Hwnd": 787934,
+        "Pid": 23668,
+        "Visible": true,
+        "Minimized": false,
+        "Dpi": 120,
+        "DpiAwareness": 2,
+        "PerMonitorV2": false,
+        "ExStyle": "0x200100",
+        "Layered": false,
+        "NoActivate": false,
+        "RoleHint": "main-or-other-product-window",
+        "FrameResult": 0,
+        "FramePhysical": {
+          "x": 453,
+          "y": 156,
+          "width": 1653,
+          "height": 1128
+        },
+        "ApproximateFrameDip": {
+          "width": 1322.4,
+          "height": 902.4
+        }
+      },
+      {
+        "Hwnd": 3475554,
+        "Pid": 10392,
+        "Visible": true,
+        "Minimized": false,
+        "Dpi": 120,
+        "DpiAwareness": 2,
+        "PerMonitorV2": false,
+        "ExStyle": "0x200100",
+        "Layered": false,
+        "NoActivate": false,
+        "RoleHint": "main-or-other-product-window",
+        "FrameResult": 0,
+        "FramePhysical": {
+          "x": 572,
+          "y": 103,
+          "width": 1653,
+          "height": 1157
+        },
+        "ApproximateFrameDip": {
+          "width": 1322.4,
+          "height": 925.6
+        }
+      }
+    ],
+    "roleHintsAreHeuristic": true,
+    "physicalBoundsAreNotElectronGetBounds": true,
+    "approximateDipIsDerivedNotMeasuredElectronBounds": true,
+    "currentPetScaleNotRead": true,
+    "dragPerformedByThisChat": false,
+    "processAndBinaryObservations": [
+      {
+        "executable": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\3LBAQALUKgWr1yvvvscHsCaqSpQ\\Lingjing.exe",
+        "archive": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\3LBAQALUKgWr1yvvvscHsCaqSpQ\\resources\\app.asar",
+        "pids": [
+          10392,
+          23668
+        ],
+        "sourceCommit": "a9acd7f6f1920c541d429fa26d1f054b1427cd95",
+        "canonicalSourceFingerprint": "b395e8c50da3b0530a5b934880f4fd127d53bfb0b8328666d15cbf5da7db2806",
+        "compiledFingerprint": "df4008fed8aae88a6f58f6bc016bf56b1b3451bc727a8fccf4a9457af4cebfdc",
+        "asarSha256": "c5d76b7b4966f241a7de8657c88ec2e309d41ff8fd62a6ed44d6c3ebc3c48f7e",
+        "asarBytes": 267439913,
+        "inspectedReadOnly": true
+      }
+    ],
+    "portableInputs": [
+      {
+        "path": "C:\\Users\\Administrator\\Desktop\\project\\desktoppet\\releases\\final-a9acd7f\\lingjing-0.1.8-portable-x64.exe",
+        "sha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+        "bytes": 169196329,
+        "matchesReportedBaseline": true
+      },
+      {
+        "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\releases\\final-a9acd7f\\Lingjing-0.1.8-portable-x64.exe",
+        "sha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+        "bytes": 169196329,
+        "matchesReportedBaseline": true
+      }
+    ],
+    "reviewVsBaselineProductionDifferences": [],
+    "evidence": [
+      {
+        "path": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\artifacts\\foundation\\user-acceptance\\window-metadata.json",
+        "sha256": "c6db04018761813d00995b1ccfd6b235dd7162f2212bbba6d461599af9424330"
+      },
+      {
+        "path": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\artifacts\\foundation\\user-acceptance\\binary-paths.json",
+        "sha256": "fcc73e1b7d3a47cee2755496e916c2de2cfc52b2a4d271d30c723ea77eb86ade"
+      }
+    ],
+    "notificationTo09": {
+      "sent": true,
+      "hwndDecimal": 9703220,
+      "hwndHex": "0x940F34",
+      "note": "Decimal handle is authoritative; an earlier hex typo was immediately corrected. Instance/profile ownership must be confirmed by09 before any product exit."
+    }
+  },
+  "findings": [
+    {
+      "key": "oversized-existing-transparent-window",
+      "issueId": "QA-004",
+      "owner": "02; independent input/retest09",
+      "severity": "P1",
+      "status": "observed-here-and-original-drag-reproduced-by09-awaiting-fix-retest",
+      "summary": "原进程10392的透明、不激活、TopMost窗口物理2145×2230，DPI120；本会话没有拖动或操作该窗口。",
+      "observed": {
+        "pid": 10392,
+        "hwnd": 9703220,
+        "boundsPhysical": {
+          "x": 966,
+          "y": 526,
+          "width": 2145,
+          "height": 2230
+        },
+        "dpi": 120,
+        "approximateFrameDip": {
+          "width": 1716,
+          "height": 1784
+        }
+      },
+      "normalContract": {
+        "baseDip": {
+          "width": 230,
+          "height": 280
+        },
+        "allowedScale": [
+          0.5,
+          2
+        ],
+        "maximumDip": {
+          "width": 460,
+          "height": 560
+        },
+        "maximumPhysicalAtObservedDpi": {
+          "width": 575,
+          "height": 700
+        }
+      },
+      "limits": "Window role is inferred from native styles. User pet.scale was not read. This is not a controlled drag reproduction or proof of a specific Electron defect. Dynamic click-through state was not inspected.",
+      "sourceEvidence": [
+        {
+          "path": "apps/pc-app/runtime/features/companions/windows.cjs",
+          "line": 5,
+          "excerpt": "const width = Math.round(230 * pet.desktop.scale);"
+        },
+        {
+          "path": "apps/pc-app/runtime/features/companions/windows.cjs",
+          "line": 134,
+          "excerpt": "entry.window.setPosition(bounds.x, bounds.y, false); entry.positionDirty = true;"
+        },
+        {
+          "path": "apps/pc-app/runtime/features/companions/service.cjs",
+          "line": 196,
+          "excerpt": "if (input.scale !== undefined) { if (!Number.isFinite(input.scale) || input.scale < 0.5 || input.scale > 2) invalid('外观大小需为 50%–200%'); pet.desktop.scale = input.scale; }"
+        }
+      ],
+      "next": "09 records the actual drag/DIP/client-size/scale sequence and02 fixes the owned manager. No pet factory or domain file was changed here.",
+      "corroborationReportedByCoordinator": {
+        "threadId": "01a1704b-e200-7090-9d17-958218c80f42",
+        "operator": "09",
+        "dragCount": 10,
+        "sizeIncreasePerDragDip": 2,
+        "persistedScale": 1,
+        "measuredByThisChat": false
+      }
+    },
+    {
+      "key": "main-window-workarea-minimum-conflict",
+      "issueId": "QA-005",
+      "registration": "registered-by09",
+      "owner": "01 source fix;09 hardware verification",
+      "severity": "P2-source-risk",
+      "status": "source-fixed-simulated-geometry-passed-hardware-pending",
+      "summary": "原逻辑把初始height夹至workArea，却仍强制minHeight700；例如1280×680 DIP工作区产生height680/minHeight700冲突。宽度低于960时同样冲突。",
+      "fix": {
+        "commit": "da330a3214ffff83be749f20a75d4c06fa7976cf",
+        "files": [
+          "apps/pc-app/runtime/main/index.ts",
+          "apps/pc-app/runtime/core/main-window-geometry.cjs",
+          "tests/foundation/main-window-geometry.test.cjs"
+        ],
+        "contract": [
+          "仅主窗口初始化和恢复；输入输出统一为Electron DIP。",
+          "有效保存位置/尺寸不变；越界位置/尺寸与native minimum一并夹入实际display.workArea。",
+          "缺失/非法坐标采用主显示器与居中默认值；不会向display选择API传Infinity。",
+          "不重写保存对象或工作区对象，不增加IPC，不改透明伙伴factory。"
+        ],
+        "scopeLimit": "Startup/restore geometry only. This is not proof of responsive layout or dynamic mixed-monitor behavior."
+      },
+      "sourceEvidence": [
+        {
+          "path": "apps/pc-app/runtime/main/index.ts",
+          "line": 70,
+          "excerpt": "const probe = mainWindowDisplayProbe(restored);"
+        },
+        {
+          "path": "apps/pc-app/runtime/core/main-window-geometry.cjs",
+          "line": 27,
+          "excerpt": "const minWidth = Math.min(MIN_WIDTH, areaWidth), minHeight = Math.min(MIN_HEIGHT, areaHeight);"
+        }
+      ],
+      "reproduced": false,
+      "hardwareConstraint": "09确认当前125%大屏不具备小工作区原生复现条件；模拟geometry不计为真实用户通过。"
+    },
+    {
+      "key": "drag-coordinate-and-window-size-contract",
+      "issueId": "QA-004",
+      "owner": "02; public adapter only if coordinator requests",
+      "severity": "P2",
+      "status": "contract-risk-not-independently-reproduced",
+      "summary": "renderer传PointerEvent.screenX/Y，manager混合原window.getBounds和screen工作区；follow另取Electron的DIP光标坐标。没有显式坐标单位字段或拖动尺寸恒定断言。",
+      "sourceEvidence": [
+        {
+          "path": "apps/pc-app/ui/src/features/companions/DesktopCompanion.tsx",
+          "line": 32,
+          "excerpt": "if (drag.current && performance.now() - lastMove.current > 20) { lastMove.current = performance.now(); void input('drag-move', { screenX: event.screenX, screenY: event.screenY }).catch(() => {}); }"
+        },
+        {
+          "path": "apps/pc-app/runtime/features/companions/windows.cjs",
+          "line": 130,
+          "excerpt": "else if (input.action === 'drag-start') entry.drag = { cursor: point(), bounds: entry.window.getBounds() };"
+        },
+        {
+          "path": "apps/pc-app/runtime/features/companions/windows.cjs",
+          "line": 152,
+          "excerpt": "const cursor = screen.getCursorScreenPoint(); const dx = cursor.x - (x + bounds.width / 2); const dy = cursor.y - (y + bounds.height / 2);"
+        }
+      ],
+      "next": "09独占真实拖动，记录DPI/zoom/devicePixelRatio/窗口DIP/物理尺寸/持久化scale；坐标差异目前仅为风险，不宣称已证实。"
+    },
+    {
+      "key": "desktop-tool-button-selector-contract",
+      "issueId": null,
+      "registration": "09 deferred issue creation until actual final-candidate hitbox/size evidence",
+      "owner": "02",
+      "severity": "unrated-source-observation",
+      "status": "source-observation-only-not-a-user-blocker-claim",
+      "summary": "desktop.css用.cp-desktop-tools .button设28×27，但公共Button生成group/button并提供data-slot=button，不带旧.button类；该域规则不能命中该组件。",
+      "sourceEvidence": [
+        {
+          "path": "apps/pc-app/ui/src/features/companions/desktop.css",
+          "line": 11,
+          "excerpt": ".cp-desktop-tools .button { width: 28px; height: 27px; min-height: 0; padding: 5px; border-radius: 8px; background: var(--cream, #fbfcff); box-shadow: none; }"
+        },
+        {
+          "path": "apps/pc-app/ui/src/components/ui/button.tsx",
+          "line": 7,
+          "excerpt": "\"group/button inline-flex shrink-0 items-center justify-center rounded-lg border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50  disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4\","
+        },
+        {
+          "path": "apps/pc-app/ui/src/components/ui/button.tsx",
+          "line": 57,
+          "excerpt": "data-slot=\"button\""
+        }
+      ],
+      "next": "02可参考旧选择器观察，09结合最终包真实按钮命中/尺寸后决定是否立项；本会话不派发新的UI缺陷。"
+    },
+    {
+      "key": "common-icon-box-policy",
+      "issueId": null,
+      "owner": "01 contract review; domain layouts remain08/02",
+      "severity": "P3",
+      "status": "documented-contract-no-public-style-change",
+      "summary": "Button默认CSS给无size-*类的svg强制size-4；Lucide size={15}的宽高属性不应被视为最终CSS尺寸。Checkbox自身固定size-4/indicator size-3.5，Input不提供前缀图标盒。",
+      "sourceEvidence": [
+        {
+          "path": "apps/pc-app/ui/src/components/ui/button.tsx",
+          "line": 7,
+          "excerpt": "\"group/button inline-flex shrink-0 items-center justify-center rounded-lg border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50  disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4\","
+        },
+        {
+          "path": "apps/pc-app/ui/src/components/ui/checkbox.tsx",
+          "line": 23,
+          "excerpt": "className=\"grid place-content-center text-current transition-none [&>svg]:size-3.5\""
+        },
+        {
+          "path": "apps/pc-app/ui/src/components/ui/input.tsx",
+          "line": 8,
+          "excerpt": "data-slot=\"input\""
+        }
+      ],
+      "next": "继续使用data-slot与明确CSS尺寸契约。账号QA-001由08处理，当前没有公共组件修改必要性的实测证明。"
+    },
+    {
+      "key": "display-metrics-change-coverage",
+      "issueId": null,
+      "owner": "09 first;01/02 only after coordination",
+      "severity": "P2",
+      "status": "source-risk-hardware-coverage-pending",
+      "summary": "当前没有display-metrics-changed监听；主窗口只启动时夹取，quiet桌宠在显示器/缩放变化后可能缺少重新夹取。不要把该潜在路径与已观察巨大窗口直接等同。",
+      "next": "09补充跨屏/显示器断开/同一会话DPI变化可测部分；本次窄修不增加动态重排或回写云端位置。"
+    },
+    {
+      "key": "explicit-binary-and-asar-source-binding",
+      "issueId": null,
+      "owner": "01/09",
+      "severity": "P2",
+      "status": "running-a9-source-confirmed-path-selection-contract-recorded",
+      "summary": "当前两主进程10392/23668的实际ASAR只读核实均为a9acd7f；两次启动SFX输入SHA均匹配5fb591f…，没有发现本次用户用错版本的证据。多个版本和默认输出路径并存，后续验收必须钉住明确EXE/完整SHA/ASAR来源。",
+      "next": "不得因review HEAD为6d4就宣称现运行a9已变成新包；等root给唯一已集成来源后再制作新候选，不覆盖旧包。"
+    }
+  ],
+  "simulatedVerification": {
+    "label": "SIMULATED geometry only; not user/hardware acceptance",
+    "tests": 8,
+    "passed": 8,
+    "failed": 0,
+    "matrixCombinations": 72,
+    "command": "node --test --test-reporter=tap tests/foundation/main-window-geometry.test.cjs",
+    "evidence": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\artifacts\\foundation\\user-acceptance\\main-window-geometry-simulated.tap",
+    "typescriptDesktop": {
+      "command": "tsc --noEmit -p apps/pc-app/tsconfig.desktop.json",
+      "exitCode": 0
+    },
+    "mainEslint": {
+      "command": "eslint apps/pc-app/runtime/main/index.ts",
+      "exitCode": 0
+    },
+    "hardwareVerified": false,
+    "mouseKeyboardVerified": false,
+    "readOnlyRuntimeClosure": {
+      "passed": true,
+      "files": 111,
+      "edges": 193,
+      "mainGeometryHelperIncluded": true,
+      "buildRun": false
+    }
+  },
+  "ownerStatus": {
+    "QA-001": {
+      "owner": "08",
+      "reportedIntegratedByCoordinator": true,
+      "fixCommit": "c83d3b5746d692707aec51fdac3dbb24fae2bff8",
+      "deliveryCommit": "5ba10dbcf092b422d05d247bc73533110e041eeb",
+      "independent09Retest": "pending"
+    },
+    "QA-002": {
+      "owner": "02",
+      "status": "pending-owner-and09"
+    },
+    "QA-003": {
+      "owner": "02",
+      "status": "pending-owner-and09"
+    },
+    "QA-004": {
+      "owner": "02",
+      "status": "pending-owner-and09",
+      "additionalNativeObservationProvided": true
+    },
+    "QA-005": {
+      "owner": "01",
+      "severity": "P2-source-risk",
+      "sourceFixCommit": "da330a3214ffff83be749f20a75d4c06fa7976cf",
+      "simulatedChecksPassed": 8,
+      "reproduced": false,
+      "hardware": "09 current125% large display cannot reproduce small-workarea case",
+      "independent09Retest": "pending integrated candidate; minimize/maximize/restore on available hardware"
+    }
+  },
+  "publicChangeCoordination": {
+    "approvedOnly": "Initial/restored main window bounds and minimum sizing; implemented in commit above.",
+    "notChanged": [
+      "transparent companion create adapter",
+      "accounts domain",
+      "companions domain",
+      "battle styles",
+      "shared Button/Checkbox/Input styles",
+      "cloud schema or Edge",
+      "old user archives"
+    ],
+    "conditionalRequests": [
+      {
+        "files": [
+          "apps/pc-app/runtime/main/index.ts",
+          "packages/shared-types/src/ipc.ts"
+        ],
+        "contract": "Only if02 needs public cooperation: agree DIP position units and stable pet-window size, preserve transparency/focus/click-through/owner boundaries; no new renderer authority.",
+        "status": "not-implemented-await-coordinator"
+      },
+      {
+        "files": [
+          "apps/pc-app/ui/src/components/ui/button.tsx",
+          "apps/pc-app/ui/src/components/ui/checkbox.tsx"
+        ],
+        "contract": "Stable data-slot selectors and CSS icon sizes; domain alignment fixes stay with08/02.",
+        "status": "no-public-style-change-authorized"
+      }
+    ]
+  },
+  "proposed09Checks": [
+    "在集成候选上复验可用工作区较小时窗口初始bounds/minimum不会互相冲突。",
+    "验证已有有效主窗口位置/尺寸重启保持，断开旧屏时只夹取不合格值。",
+    "真实长距离/反复拖动与quiet/wander/follow分别检查尺寸和scale不累计。",
+    "记录DWM物理矩形、Electron getBounds/getContentBounds、renderer zoom/DPR，不能混当同一种坐标。",
+    "先确认原用户实例归属，按root允许的产品正常退出处理遮挡；不杀进程、不改原档。",
+    "桌面工具按钮命中区域、账号锁图标、属性分类、固定角色名和稳定编号均以同一新候选实测。"
+  ],
+  "safety": {
+    "inputActions": 0,
+    "focusActions": 0,
+    "windowsClosed": 0,
+    "processesKilled": 0,
+    "applicationsLaunched": 0,
+    "ordinaryUserDatabasesOpened": 0,
+    "buildsOrPackagesRun": 0,
+    "fullRegressionRuns": 0,
+    "productDomainsOrStylesModified": false,
+    "baselineExecutablePreserved": true,
+    "newCandidateRequiresExplicitCoordinatorSource": true,
+    "typescriptMigration": "paused",
+    "legacyServer": "excluded-by-user"
+  },
+  "references": [
+    {
+      "url": "https://www.electronjs.org/docs/latest/api/screen",
+      "use": "Electron screen coordinate/DIP conversion and display metrics contract."
+    },
+    {
+      "url": "https://www.electronjs.org/docs/latest/api/base-window",
+      "use": "Window bounds/content bounds and native minimum sizing contract."
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getdpiforwindow",
+      "use": "Target window DPI awareness interpretation."
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getwindowrect",
+      "use": "GetWindowRect DPI virtualization and DWM visible-frame distinction."
+    },
+    {
+      "url": "https://raw.githubusercontent.com/NousResearch/hermes-agent/main/apps/desktop/electron/hud-ipc.ts",
+      "use": "External primary implementation documents a similar setPosition growth workaround; investigation lead only, not proof for this product/Electron44."
+    }
+  ],
+  "coordinatorIntegrationNotification": {
+    "sourceCommit": "9e57de1d210376ce679168eb1acbff8e37cff1cd",
+    "reportedIntegrated": [
+      "08 login alignment",
+      "02 element classification and stable identity and desktop-size fix"
+    ],
+    "checkedOutHere": false,
+    "newCandidateAuthorized": false
+  }
+}
