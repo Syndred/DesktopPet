@@ -18,14 +18,14 @@
   ],
   "migrations": [
     {
-      "path": "infra/supabase/migrations/20261025024617_lingjing_territory_authority.sql",
+      "path": "infra/supabase/migrations/20261025033032_lingjing_territory_authority.sql",
       "generatedBy": "Supabase CLI 2.122.0 migration new",
       "status": "applied-by-coordinator;PostGIS3.3.7",
       "deployed": true,
       "replacesUndeployedDraft": "20261025020010"
     },
     {
-      "path": "infra/supabase/migrations/20261025034225_lingjing_territory_receipt_operator.sql",
+      "path": "infra/supabase/migrations/20261025034313_lingjing_territory_receipt_operator.sql",
       "generatedBy": "Supabase CLI2.122.0 migration new",
       "status": "applied-by-coordinator;12701d4",
       "deployed": true
