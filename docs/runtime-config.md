@@ -36,4 +36,6 @@ PET_USER_DATA_DIR 的显式绝对目录优先。未设置时，先寻找当前�
 
 `npm run typecheck`、`npm run typecheck:ui` 检查类型；`npm run test:native` 在实际 Electron 执行所有 CJS/SQLite 测试。`npm run pc:smoke:profile` 使用新建隔离目录验证只有 SQLite 的旧档发现；`npm run pc:smoke:engineering` 验证原生窗口、托盘、请求图与 IPC。
 
-QA 必须通过 create-scenario-profile.mjs 新建路径绑定的隔离目录，同时设置 PET_USER_DATA_DIR 与 LINGJING_QA_SCENARIO。不得给普通用户目录补 QA 标记。QA 明确显示模拟身份；真实 Supabase、同机双进程和两台实体设备证据分别记录。
+模拟业务 QA 通过 create-scenario-profile.mjs 新建路径绑定的隔离目录，同时设置 PET_USER_DATA_DIR 与 LINGJING_QA_SCENARIO，并明确显示模拟身份。真实云端验收则使用独立 PET_USER_DATA_DIR 和指定测试账号，从正常 Supabase Auth 登录，不注入模拟账号或场景身份。不得给普通用户目录补 QA 标记。真实 Supabase、合成测试定位、同机双进程和两台实体设备证据分别记录。
+
+npm run verify:cloud 不继承云端凭据，严格检查22份已部署迁移名、生成源码不变性、领域SQL与Deno验证器。完整本地 Supabase/PostGIS reset 需要 Docker/Podman，目前环境未提供，不能由这些本地用例推断为通过。
