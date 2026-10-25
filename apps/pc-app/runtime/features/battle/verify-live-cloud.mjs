@@ -15,6 +15,9 @@ if(reopenIndex>=0){assert.ok(reopenPath);assert.equal(reopenProof?.passed,true);
 const resumeIndex=process.argv.indexOf('--resume-duel-proof'),resumePath=resumeIndex>=0?process.argv[resumeIndex+1]:null;
 const resumeProof=resumePath?JSON.parse(readFileSync(resolve(resumePath),'utf8')):null;
 if(resumeIndex>=0){assert.ok(resumePath);assert.ok(!reopenProof);assert.equal(resumeProof?.projectRef,'jbvrdmrkwpznbrvteive');assert.equal(resumeProof.provenance,'real-HTTPS-and-Realtime-acceptance');const pushes=resumeProof.steps.find(step=>step.name==='both actual private channels delivered server round/room pushes');assert.equal(pushes?.pushes?.length,2);assert.ok(pushes.pushes.every(value=>value.events.some(event=>event.type==='round-updated')));const terminal=resumeProof.steps.findLast(step=>/^real HTTPS round \d+ matches on both clients$/.test(step.name));assert.ok(terminal&&(terminal.playerHp===0||terminal.enemyHp===0));}
+const revokeIndex=process.argv.indexOf('--resume-device-proof'),revokePath=revokeIndex>=0?process.argv[revokeIndex+1]:null;
+const revokeProof=revokePath?JSON.parse(readFileSync(resolve(revokePath),'utf8')):null;
+if(revokeIndex>=0){assert.ok(revokePath);assert.ok(!reopenProof&&!resumeProof);assert.equal(revokeProof?.projectRef,'jbvrdmrkwpznbrvteive');assert.equal(revokeProof.provenance,'real-HTTPS-and-Realtime-acceptance');assert.ok(revokeProof.steps.some(step=>step.name==='second same-owner native client naturally resumed cloud training through actual UI moves; both share canonical growth/inventory/report'&&step.reward.applied));}
 assert.ok(input,'Set LINGJING_CLOUD_BATTLE_INPUT to the private acceptance input file');
 const inputBytes=readFileSync(resolve(input),'utf8');
 const decoded=input.endsWith('.dpapi')?execFileSync('powershell.exe',['-NoProfile','-NonInteractive','-Command',"[Console]::InputEncoding=[Text.Encoding]::UTF8;[Console]::OutputEncoding=[Text.UTF8Encoding]::new($false);Add-Type -AssemblyName System.Security;[Text.Encoding]::UTF8.GetString([Security.Cryptography.ProtectedData]::Unprotect([Convert]::FromBase64String([Console]::In.ReadToEnd()),$null,[Security.Cryptography.DataProtectionScope]::CurrentUser))"],{input:inputBytes,encoding:'utf8',windowsHide:true}):inputBytes;
@@ -59,6 +62,7 @@ const apps=new Map(),profiles={},errors=[],steps=[];
 const proof={runId,at:new Date().toISOString(),provenance:'real-HTTPS-and-Realtime-acceptance',scope:friendsOnly?'friend-duel-only; training/device-revoke remain pending':'friend-duel, training, recovery and device-revoke',projectRef:config.projectRef,origin:config.url,machineCount:1,physicalDevices:1,concurrentDuelPlayers:2,independentProfiles:friendsOnly?2:3,statement:'Two isolated duel clients plus an optional fresh same-account recovery client on the same Windows host; not two physical devices. Test faults cancel a real response read and close the real SDK socket; no mock authority or simulated location is used.',sourceCommit:execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim(),sourceDirty:execFileSync('git',['status','--short'],{encoding:'utf8'}).trim(),build:JSON.parse(readFileSync('apps/pc-app/dist/build-manifest.json','utf8')),steps,errors};
 if(reopenProof)Object.assign(proof,{scope:'after-retirement: real Auth/HTTPS/private-channel and persisted completed report reopen only',priorFullAcceptance:resolve(reopenPath),concurrentDuelPlayers:0,independentProfiles:1,statement:'One fresh isolated native profile reopens the prior fully accepted cloud battle using the final retired transport, then restarts with persisted Auth. This scoped check does not claim another complete duel/training/revocation run.'});
 if(resumeProof)Object.assign(proof,{scope:'resume immutable completed cloud duel: report/reward restart, natural training takeover and device-only revoke',priorDuelProof:{path:resolve(resumePath),sha256:createHash('sha256').update(readFileSync(resolve(resumePath))).digest('hex'),runId:resumeProof.runId,sourceCommit:resumeProof.sourceCommit,fullRunPassed:resumeProof.passed,priorFailure:resumeProof.failure?.message,completedScope:'actual invite/join, response loss, refresh/reconnect, pending-action native restart, ten natural immutable rounds and actual private-channel pushes'},statement:'Continue the same designated owners and completed cloud room through fresh isolated native profiles. Earlier duel phases retain their original failed-run proof and source commit; this run independently rereads the actual terminal room/rewards, then checks the remaining report/training/revocation flow. One Windows host, not two physical devices.'});
+if(revokeProof)Object.assign(proof,{scope:'remaining device-only revoke stage on actual completed duel/training owners',priorTrainingProof:{path:resolve(revokePath),sha256:createHash('sha256').update(readFileSync(resolve(revokePath))).digest('hex'),runId:revokeProof.runId,sourceCommit:revokeProof.sourceCommit,fullRunPassed:revokeProof.passed,priorFailure:revokeProof.failure?.message,priorDuelProof:revokeProof.priorDuelProof},independentProfiles:2,concurrentDuelPlayers:0,statement:'Two fresh native profiles of the same designated owner reread its completed training/report. One revokes the other actual device, then the captured still-valid JWT must fail REST/private Realtime while the remaining device succeeds. Earlier duel/training phases keep their original proofs and commits. One Windows host.'});
 const save=()=>writeFileSync(join(output,'evidence.json'),JSON.stringify(proof,null,2));
 const record=(name,details={})=>{steps.push({at:new Date().toISOString(),name,...details});save();console.log(name);};
 const api=async(page,feature,command,payload={})=>{const result=await page.evaluate(({feature,command,payload})=>window.lingjing.invoke(feature,command,payload),{feature,command,payload});assert.equal(result.ok,true,`${feature}.${command}: ${result.code} ${result.message}`);return result.data;};
@@ -118,9 +122,9 @@ async function revokeAndVerify(revoked,other,roomId) {
     globalThis.__revokedBattleRead={token:accounts.remote.active.accessToken,url:actor.url,key:actor.publishableKey,deviceId:actor.deviceId};
     return {deviceId:actor.deviceId,sessionId:actor.sessionId,ownerAccountId:actor.ownerAccountId};
   });
-  await other.app.evaluate(async({deviceId})=>{const actor=await globalThis.__liveBattleServices.get('cloudActor').requireActor();const value=await actor.client.rpc('lingjing_revoke_device',{p_device_id:deviceId});if(value.error)throw new Error(value.error.message);},descriptor);
-  const denied=await revoked.app.evaluate(async({roomId})=>{
-    const state=globalThis.__revokedBattleRead,headers={apikey:state.key,Authorization:'Bearer '+state.token};
+  await other.app.evaluate(async(_electron,{deviceId})=>{const actor=await globalThis.__liveBattleServices.get('cloudActor').requireActor();const value=await actor.client.rpc('lingjing_revoke_device',{p_device_id:deviceId});if(value.error)throw new Error(value.error.message);},descriptor);
+  const denied=await revoked.app.evaluate(async(_electron,{roomId})=>{
+    const state=globalThis.__revokedBattleRead,headers={apikey:state.key,Authorization:'Bearer '+state.token,'X-Lingjing-Device-Id':state.deviceId};
     const paths=[`/rest/v1/lingjing_battle_rooms?id=eq.${roomId}&select=id`,`/rest/v1/lingjing_battle_rounds?room_id=eq.${roomId}&select=round_no`];
     const rest=[];for(const path of paths){const response=await fetch(state.url+path,{headers});const body=await response.json();rest.push({status:response.status,code:body.code,message:body.message});}
     const authResponse=await fetch(state.url+'/auth/v1/user',{headers}),auth=await authResponse.json();
@@ -137,7 +141,7 @@ async function revokeAndVerify(revoked,other,roomId) {
   assert.equal(denied.authJwtStillValid,true,'Test device-only revocation while the original JWT is still valid');
   assert.ok(denied.rest.every(row=>[401,403].includes(row.status)&&/LJ_(DEVICE_SESSION_REQUIRED|SESSION_REVOKED)/.test(String(row.message))));
   assert.equal(denied.realtime,'CHANNEL_ERROR','Require an actual server channel denial');
-  const allowed=await other.app.evaluate(async({roomId})=>{
+  const allowed=await other.app.evaluate(async(_electron,{roomId})=>{
     const actor=await globalThis.__liveBattleServices.get('cloudActor').requireActor(),result=await actor.client.from('lingjing_battle_rooms').select('id').eq('id',roomId);
     if(result.error)throw new Error(result.error.message);
     const channel=actor.client.channel('lingjing:battle:'+roomId,{config:{private:true}});
@@ -145,11 +149,17 @@ async function revokeAndVerify(revoked,other,roomId) {
     return {roomCount:result.data.length,realtime,deviceId:actor.deviceId};
   },{roomId});
   assert.equal(allowed.roomCount,1);assert.equal(allowed.realtime,'SUBSCRIBED');assert.notEqual(allowed.deviceId,descriptor.deviceId);
-  record('actual device-only revoke denies old JWT REST/private Realtime while another same-owner device stays authorized',{revoked:descriptor,denied,allowed});
+  record('actual device-only revoke denies old JWT REST/private Realtime while another same-owner device stays authorized',{roomId,revoked:descriptor,denied,allowed});
 }
 let failure;
 try {
-  if(reopenProof){
+  if(revokeProof){
+    const revoked=await launch(0),other=await launch(1,0),prior=revokeProof.steps.find(step=>step.roomId),training=revokeProof.steps.find(step=>step.sessionId&&step.reward?.applied);assert.equal(revoked.profile.owner,other.profile.owner);assert.equal(revoked.profile.owner,revokeProof.profiles[0].owner);
+    const trainingReport=await api(revoked.page,'battle','getReport',{reportId:training.sessionId});assert.deepEqual(await api(other.page,'battle','getReport',{reportId:training.sessionId}),trainingReport);assert.equal(trainingReport.reward.applied,true);
+    await route(revoked.page,`/battle/session/online-${prior.roomId}`);await screen(revoked.page);await api(revoked.page,'battle','sync',{sessionId:`online-${prior.roomId}`});const authorized=await joined(revoked);profiles[0].deviceId=authorized.actor.deviceId;
+    const otherDevice=await other.app.evaluate(async()=>{const actor=await globalThis.__liveBattleServices.get('cloudActor').requireActor();return {ownerAccountId:actor.ownerAccountId,deviceId:actor.deviceId};});assert.notEqual(otherDevice.deviceId,profiles[0].deviceId);profiles[1].deviceId=otherDevice.deviceId;record('same-owner native devices reread the prior accepted cloud training/report before device-only revoke',{roomId:prior.roomId,trainingSessionId:training.sessionId,authorized,otherDevice});
+    await revokeAndVerify(revoked,other,prior.roomId);
+  } else if(reopenProof){
     const client=await launch(0),roomId=reopenProof.steps.find(step=>step.roomId)?.roomId;
     assert.ok(roomId);const prior=reopenProof.sqlite.find(value=>value.owner===client.profile.owner),saved=prior?.reports.find(value=>value.session_id===`online-${roomId}`);assert.ok(saved,'The designated account must own the prior accepted report');
     const report=await api(client.page,'battle','getReport',{reportId:saved.id});await route(client.page,`/battle/session/${saved.session_id}`);await screen(client.page);const session=await api(client.page,'battle','sync',{sessionId:saved.session_id});assert.equal(session.status,'finished');assert.equal(session.reward.applied,true);assert.equal(session.pendingAction,null);
