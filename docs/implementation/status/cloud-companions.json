@@ -2,9 +2,9 @@
   "module": "companions",
   "scope": "Cloud-upgrade 2026-10-25: preserve companion consistency units through Accounts identity/save sync and Garden transactions",
   "branch": "codex/lingjing-companions",
-  "commit": "9a18511e79c46e06619383e82b2dc24e32dabbcb",
-  "goalStatus": "active",
-  "phase": "02 production cloud command/native checkpoint delivered against frozen4830619; final coordinator integration and verified external legacy source remain explicit",
+  "commit": "ff62979ad86f518238e0280ec4ab8a856de27da6",
+  "goalStatus": "complete",
+  "phase": "02 module complete and handed off; parent accepted native/HTTPS evidence; final SFX and unavailable original external-cloud migration remain root-owned",
   "contracts": {
     "baseline": "docs/implementation/cloud-upgrade-2026-10-25.md",
     "sharedSave": "Consume services.get('backups') and Accounts sync; no second account, inventory, reward or transport",
@@ -21,7 +21,7 @@
     "mainOnlyAdapter": "Production main adapter routes all seven commands and native positions through08 cloudActor; durable intents/verified-head metadata use existing account_actions; only exact verified companion-unit readback restores; common base stays strict",
     "serverCheckpoint": "67546f5 includes cloud-domain/instance factory, companions-sync Edge, CLI migration and local/HTTP verifiers; coordinator reviews/deploys",
     "sharedAccountsCheckpoint": "6435a13 shared backups/sync/util normalization + regression;230e9b6 merges8e5c735 retaining safety projection and privacy state",
-    "mainCheckpoint": "662c649 initial main;bc10bb5 queued cached-replay owner guard;9a18511 frozen integration runtime",
+    "mainCheckpoint": "662c649 main routing;bc10bb5 cached replay owner guard;9a18511 native frozen integration;ff62979 automatic capture/owner-archive/interaction retention guard",
     "coordinatorBaseline": "4830619 merged in9a18511; resource preferences protocol and actual ledger migration paths retained; no deployment or remote SQL mutation by02"
   },
   "migrations": [
@@ -34,8 +34,8 @@
   ],
   "checks": {
     "sourceFetched": true,
-    "sourceFetchedAt": "2026-10-25T04:35:22Z",
-    "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086; git pull --ff-only origin main reported Already up to date;0 behind",
+    "sourceFetchedAt": "2026-10-25T05:21:16Z",
+    "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086; final git pull --ff-only origin main:Already up to date;0 behind",
     "publicBaselineMerged": true,
     "companionUnit": "7 local real-SQLite cases: two client files/reopen, original IDs and receipts, merge conflict/rollback, full old-table conversion, pre-module raw archives, raw archived animal history, verified alias source/target-before preservation, two owners retaining identical original pet IDs",
     "completeSaveInventory": "1 local actual BackupManager/Garden integration case passed: two client files, one food debit/one grown pet, replay and late-adapter failure rollback; explicit test registration only",
@@ -60,7 +60,9 @@
     "finalGuardNative": "5 groups actual production Electron44 at9a18511 with matching build/source; actual process.pid, loaded guard function hashes with2 owner checks, encrypted device resume, cached adoption, one fixed interact reward and both specified custom2D window pixels; final-guard-native.json",
     "recallMainHttps": "Actual registered main recallAll capability+real SQLite in lightweight Node host;08 HTTPS and independent device exact receipt; repeat grants no duplicate state, original pet/growth retained; not tray-click or full-save advancement evidence",
     "currentLedgerSql": "3/3 local PGlite cases passed after4830619 ledger path rename; ordinary-role/foreign/revoked denial and atomic rollback retained; no remote SQL writes",
-    "latestUi": "npm run typecheck:ui passed after frozen4830619 integration; Chinese pending/cache/shared-save notice and native error handling built successfully"
+    "latestUi": "npm run typecheck:ui passed after frozen4830619 integration; Chinese pending/cache/shared-save notice and native error handling built successfully",
+    "historyRetentionGuard": "ff62979: first reproduced an accepted missing capture receipt;7 targeted protocol/actual-SQLite tests now pass, including6 structurally valid regressive histories rejected before unit/checkpoint mutation and canonical forward interaction accepted. No extra cloud/native business run.",
+    "coordinatorAcceptance": "Root explicitly independently accepted acbc6d3 domain HTTPS/native/restart evidence, visible frames and original position action rev50/checksum; finalSFX/old-cloud source boundary delegated to root. New focused retention patch ff62979 is included in handoff."
   },
   "realCloudEvidence": {
     "project": "jbvrdmrkwpznbrvteive",
@@ -150,11 +152,7 @@
       "runtime": "Approved05/04 server authority integrated in4830619;02 shared growth and actual complete-save SQLite interop pass. Coordinator owns combined final native settlement acceptance."
     }
   ],
-  "remaining": [
-    "Coordinator combined frozen-source/EXE acceptance and final legacy compatibility cleanup; no02 deployment requested",
-    "Verified original external old-cloud source/identity proof required before claiming that source migrated; local old archives and aliases remain preserved and tested",
-    "Native tray click and two physical machines are outside supplied same-host two-Electron evidence; main recall capability itself has real HTTPS proof"
-  ],
+  "remaining": [],
   "portableReview": {
     "commit": "933c8a0",
     "mode": "read-only",
@@ -164,6 +162,13 @@
     "portableBusinessRun": false,
     "fullSuiteRun": false,
     "sourceChanged": false,
-    "awaiting": "Coordinator script fixes and08 actual bidirectional auto-sync before final portable acceptance"
+    "awaiting": "Handed to root; coordinator confirms7adc5e3 script corrections, with final execution and verification root-owned"
+  },
+  "completionAudit": "docs/implementation/evidence/companions/cloud-2026-10-25/module-completion-audit.json",
+  "handoff": {
+    "finalSfxAndCombinedAcceptance": "root +01; include ff62979; outside completed02 module delivery",
+    "originalExternalCloudMigration": "root +08; user confirmed no SSH/source backup; no mass migration claim",
+    "physicalDevices": "Evidence proves2 independent Electron clients on1 physical Windows host",
+    "portableReview": "933c8a0 read-only findings delivered in4c31ef5; root owns script fixes and final run"
   }
 }
