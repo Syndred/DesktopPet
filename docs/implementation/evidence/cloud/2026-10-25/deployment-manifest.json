@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "at": "2026-10-25T03:11:50.331Z",
+  "at": "2026-10-25T03:33:38.786Z",
   "projectRef": "jbvrdmrkwpznbrvteive",
   "url": "https://jbvrdmrkwpznbrvteive.supabase.co",
   "plan": "free",
@@ -51,6 +51,24 @@
       "version": "20261025030859",
       "name": "lingjing_cloud_secret_guard",
       "source": "infra/supabase/migrations/20261025025906_lingjing_cloud_secret_guard.sql",
+      "bookkeepingAligned": false
+    },
+    {
+      "version": "20261025031842",
+      "name": "lingjing_companion_commands",
+      "source": "infra/supabase/migrations/20261025025515_lingjing_companion_commands.sql",
+      "bookkeepingAligned": false
+    },
+    {
+      "version": "20261025032327",
+      "name": "lingjing_session_revocation_ledger",
+      "source": "infra/supabase/migrations/20261025031842_lingjing_session_revocation_ledger.sql",
+      "bookkeepingAligned": false
+    },
+    {
+      "version": "20261025033032",
+      "name": "lingjing_territory_authority",
+      "source": "infra/supabase/migrations/20261025024617_lingjing_territory_authority.sql",
       "bookkeepingAligned": false
     }
   ],
@@ -198,6 +216,137 @@
         "nearby"
       ],
       "fullCaptureReady": false
+    },
+    {
+      "id": "0b1554b0-54bf-46c8-8849-0c90b2166adb",
+      "slug": "companions-sync",
+      "name": "companions-sync",
+      "status": "ACTIVE",
+      "version": 1,
+      "created_at": 1792898325173,
+      "updated_at": 1792898325173,
+      "verify_jwt": false,
+      "import_map": false,
+      "entrypoint_path": "file:///tmp/user_fn_jbvrdmrkwpznbrvteive_0b1554b0-54bf-46c8-8849-0c90b2166adb_1/source/infra/supabase/functions/companions-sync/index.ts",
+      "ezbr_sha256": "ed7bb3e618548d3bf8ab75583154fa871cbcf42d07e6d48f1f2218f23e3bd6d1",
+      "source": {
+        "function": "companions-sync",
+        "entrypoint": "infra/supabase/functions/companions-sync/index.ts",
+        "sourceCommit": "d7b4b07a26fd1850f2747c22c1a6b1700423f621",
+        "sourceSha256": "b2317ec5103e291f4b4e6d266a67093cc0b94e66107fe4dbba77b8f0fdf43a70",
+        "files": [
+          {
+            "name": "apps/pc-app/runtime/features/companions/cloud-domain.mjs",
+            "bytes": 11269
+          },
+          {
+            "name": "apps/pc-app/runtime/features/companions/growth.mjs",
+            "bytes": 1947
+          },
+          {
+            "name": "apps/pc-app/runtime/features/companions/instance.mjs",
+            "bytes": 1868
+          },
+          {
+            "name": "apps/pc-app/runtime/features/resources/assets/roster-v2/catalog.json",
+            "bytes": 4333
+          },
+          {
+            "name": "infra/supabase/functions/_shared/lingjing-auth.ts",
+            "bytes": 7618
+          },
+          {
+            "name": "infra/supabase/functions/companions-sync/index.ts",
+            "bytes": 3721
+          }
+        ],
+        "external": [
+          "npm:@supabase/supabase-js@2.98.0"
+        ],
+        "warnings": []
+      }
+    },
+    {
+      "id": "f99744d5-6104-48a0-8034-7a5f65288af8",
+      "slug": "garden-sync",
+      "name": "garden-sync",
+      "status": "ACTIVE",
+      "version": 1,
+      "created_at": 1792899045335,
+      "updated_at": 1792899045335,
+      "verify_jwt": false,
+      "import_map": false,
+      "entrypoint_path": "file:///tmp/user_fn_jbvrdmrkwpznbrvteive_f99744d5-6104-48a0-8034-7a5f65288af8_1/source/infra/supabase/functions/garden-sync/index.ts",
+      "ezbr_sha256": "194be36ab26058f979258735537c42cd3e1886c706625655c57cb5be6b9e694d",
+      "source": {
+        "function": "garden-sync",
+        "entrypoint": "infra/supabase/functions/garden-sync/index.ts",
+        "sourceCommit": "40941f242bcf398b78177fe1f8d09b26b5c1a7fa",
+        "sourceSha256": "bd04861d46ed1cb2c8e56c65c6cb3f95c3fd2bfee549e215562b6a9b55469e1c",
+        "files": [
+          {
+            "name": "infra/supabase/functions/_shared/battle-core.js",
+            "bytes": 18099
+          },
+          {
+            "name": "infra/supabase/functions/_shared/garden-runtime.bundle.mjs",
+            "bytes": 52937
+          },
+          {
+            "name": "infra/supabase/functions/_shared/lingjing-auth.ts",
+            "bytes": 7618
+          },
+          {
+            "name": "infra/supabase/functions/garden-sync/index.ts",
+            "bytes": 500
+          }
+        ],
+        "external": [
+          "npm:@supabase/supabase-js@2.98.0"
+        ],
+        "warnings": []
+      }
+    },
+    {
+      "id": "66a0c082-da96-4ed8-acb7-dd7f92b9907b",
+      "slug": "territory-sync",
+      "name": "territory-sync",
+      "status": "ACTIVE",
+      "version": 1,
+      "created_at": 1792899052591,
+      "updated_at": 1792899052591,
+      "verify_jwt": false,
+      "import_map": false,
+      "entrypoint_path": "file:///tmp/user_fn_jbvrdmrkwpznbrvteive_66a0c082-da96-4ed8-acb7-dd7f92b9907b_1/source/infra/supabase/functions/territory-sync/index.ts",
+      "ezbr_sha256": "cf0241a8adfa89809e1ef8182455a6434103b2fc3403c23e5d18b3917080c406",
+      "source": {
+        "function": "territory-sync",
+        "entrypoint": "infra/supabase/functions/territory-sync/index.ts",
+        "sourceCommit": "40941f242bcf398b78177fe1f8d09b26b5c1a7fa",
+        "sourceSha256": "18e638caa827843add17b4ae8c6a0bac6d7519fdbef139fee29069a7f540298f",
+        "files": [
+          {
+            "name": "infra/supabase/functions/_shared/battle-core.js",
+            "bytes": 18099
+          },
+          {
+            "name": "infra/supabase/functions/_shared/garden-runtime.bundle.mjs",
+            "bytes": 52937
+          },
+          {
+            "name": "infra/supabase/functions/_shared/lingjing-auth.ts",
+            "bytes": 7618
+          },
+          {
+            "name": "infra/supabase/functions/territory-sync/index.ts",
+            "bytes": 542
+          }
+        ],
+        "external": [
+          "npm:@supabase/supabase-js@2.98.0"
+        ],
+        "warnings": []
+      }
     }
   ],
   "storage": {
@@ -229,5 +378,16 @@
   },
   "credentialsIncluded": false,
   "fullAcceptancePassed": false,
-  "privacyEvidence": "docs/implementation/evidence/cloud/2026-10-25/privacy-http-independent.json"
+  "privacyEvidence": "docs/implementation/evidence/cloud/2026-10-25/privacy-http-independent.json",
+  "postgis": {
+    "version": "3.3.7",
+    "spatialBoundaryPassed": true,
+    "permissionEvidence": "docs/implementation/evidence/cloud/2026-10-25/world-spatial-permissions.json"
+  },
+  "authority": {
+    "companions": "Legal adoption and exact B readback passed; complete main/native flow pending",
+    "garden": "Actual HTTPS planting/replay/stale-revision/reward-denial and B readback passed",
+    "territory": "Deployed; full signed-location/concurrency/native acceptance pending",
+    "immutableSessionRevocation": "Actual managed-valid old SID remains denied after replacement; B remains live"
+  }
 }
