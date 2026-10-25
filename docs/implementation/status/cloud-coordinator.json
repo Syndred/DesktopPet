@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-25T06:57:13.986Z",
-  "phase": "final-portable-row-order-fix-validation",
+  "updatedAt": "2026-10-25T07:16:26.728Z",
+  "phase": "final-row-order-fix-accepted-rebuilding-actual-portable",
   "goalStatus": "active",
   "deployed": {
     "projectRef": "jbvrdmrkwpznbrvteive",
@@ -329,7 +329,11 @@
     },
     "evidence": "docs/implementation/evidence/cloud/2026-10-25/final-regression.json"
   },
-  "productFreeze": "7051ce308a55f1a8b426f0290eb79162ce94a634",
+  "productFreeze": {
+    "commit": "d376b76a01dd8e450d28bab4479bbe2581ae39c4",
+    "sourceHeld": true,
+    "actualPortableBusinessAccepted": false
+  },
   "finalPortableFirstAttempt": {
     "passed": false,
     "completedBusinessChecks": 3,
@@ -358,6 +362,25 @@
     "scope": "Derived battle SQL set fingerprints only; original checksum and all rows unchanged",
     "evidence": "docs/implementation/evidence/cloud/2026-10-25/battle-row-order-baseline-compatibility.json",
     "previousActualSfxFailure": "docs/implementation/evidence/cloud/2026-10-25/final-portable-7051ce3-first/evidence.json",
-    "oldBaselineCompatible": true
+    "oldBaselineCompatible": true,
+    "nativeRegression": {
+      "tests": 279,
+      "passed": 279,
+      "failed": 0,
+      "evidence": "docs/implementation/evidence/cloud/2026-10-25/final-row-order-regression.json"
+    },
+    "selectionDiagnosis": {
+      "evidence": "docs/implementation/evidence/cloud/2026-10-25/final-portable-7051ce3-first/selection-read-only-diagnosis.json",
+      "sha256": "4c3187d1f952478248d7a8d3257214a95f7923191b6f601b33864511043d5d4a",
+      "originalFailedRunRetained": true,
+      "oldUuidNotRecorded": true,
+      "newRunUsesOneRecordedStableUuid": true
+    }
+  },
+  "remoteRefresh": {
+    "at": "2026-10-25T07:16:26.728Z",
+    "command": "git fetch origin; git pull --ff-only origin main",
+    "result": "Already up to date",
+    "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086"
   }
 }
