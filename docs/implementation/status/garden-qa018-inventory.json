@@ -1,0 +1,40 @@
+{
+  "module": "garden",
+  "issue": "QA-018",
+  "case": "I01",
+  "date": "2026-10-26",
+  "baseCheckpoint": "f27dee15f714bfe8b483b245a890d98b774e3cd1",
+  "phase": "implemented-targeted-checks-passed-awaiting-batch-integration-and-09-recheck",
+  "sourceEvidence": "docs/implementation/qa/2026-10-25-user-acceptance/rounds/candidate-dc7aee3-1b1afdd1/evidence",
+  "observed": [
+    "i01-seed-category-native.jpg shows the empty decoration category without a query, but search-specific empty copy and hidden rice feeding detail remain",
+    "i01-tool-empty-category-native.jpg shows nonempty tools/seeds with the same hidden rice detail"
+  ],
+  "files": [
+    "apps/pc-app/ui/src/features/garden/index.tsx",
+    "docs/implementation/status/garden-qa018-inventory.json"
+  ],
+  "changes": [
+    "Resolve selected detail exclusively from the currently visible filtered items",
+    "Distinguish category/all-inventory emptiness from a nonempty search with no match; whitespace counts as no query",
+    "Render a clear selection/empty prompt when no visible selected item exists; do not mount default feeding as a hidden-food fallback",
+    "Explain the existing zero-stock feeding disabled state with inventory-shortage visible and accessible labels"
+  ],
+  "zeroStockEvidence": "The original max < effectiveCount disabled condition blocks feeding at quantity 0 even after a pet is chosen, while the original no-pet label suggested choosing a pet would resolve the problem. Only labels changed; quantity, disabled and feed payload expressions are preserved.",
+  "validation": {
+    "uiTypecheck": "passed",
+    "targetedEslint": "passed",
+    "diffCheck": "passed",
+    "renderStateChecks": 8,
+    "renderScope": "Actual InventoryPage React DOM with a real isolated in-memory GardenService snapshot and controlled read adapter; not native product/cloud acceptance",
+    "mutationCallsDuringFilterSearchAndDisabledFeed": 0,
+    "snapshotUnchanged": true,
+    "mutationCommandAndPayloadAstPairsUnchanged": 9,
+    "browserErrors": 0,
+    "evidenceDirectory": "artifacts/qa/garden-qa018/",
+    "evidenceFiles": ["render-state.mjs", "render-state.json", "decoration-empty.png", "tools-unselected.png"]
+  },
+  "preservation": "No runtime/domain/schema/economy/inventory/petId/actionId/resource changes; no new timer, product fixture data or permanent test suite",
+  "delivery": "Independent commit for Root's existing QA015-017 gap batch; do not integrate or package separately now",
+  "nativeRecheck": "Pending 09 I01 in the next unified candidate; central cases/issues are not modified by 05"
+}
