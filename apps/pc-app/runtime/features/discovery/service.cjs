@@ -76,7 +76,7 @@ class DiscoveryService {
   captureViews(owner,owned) {
     if(!owner)return [];
     const pets=owned || this.getCompanions?.()?.listPets?.(owner) || [];
-    return this.repo.captures(owner).map(capture=>{const pet=pets.find(value=>value.petId===capture.petId);return {...capture,...(pet?{name:pet.name,serial:pet.serial,resourceId:pet.resource.resourceId,showOnDesktop:Boolean(pet.desktop?.visible)}:{})};});
+    return this.repo.captures(owner).map(capture=>{const pet=pets.find(value=>value.ownerAccountId===owner&&value.petId===capture.petId);return {...capture,...(pet?{resourceId:pet.resource.resourceId,showOnDesktop:Boolean(pet.desktop?.visible)}:{})};});
   }
   snapshot() {
     if(this.getOwner()&&this.authority&&this.cloudRuntime)return this.cloudRuntime.refresh().then(()=>this.snapshotLocal());
@@ -85,7 +85,7 @@ class DiscoveryService {
   snapshotLocal() {
     const owner=this.getOwner(),companion=this.getCompanions?.();
     const owned=owner ? (companion?.listPets?.(owner) || companion?.snapshot?.(owner)?.data?.pets || []) : [];
-    const pets=owned.map(p=>({petId:p.petId,name:p.name,element:p.element,resource:p.resource,level:p.growth?.level || 1}));
+    const pets=owned.map(p=>({petId:p.petId,templateId:p.templateId,name:p.name,element:p.element,resource:p.resource,level:p.growth?.level || 1}));
     if(owner) for(const encounter of this.repo.list(owner)) this.syncExternal(encounter);
     const nearby=this.nearby(),fix=this.location.snapshot().fix;
     const territories=this.territories?.nearby(owner,fix) || {available:false,items:[]};
