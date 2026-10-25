@@ -8,10 +8,10 @@ const {randomUUID}=require('node:crypto');
 const {BackupManager}=require('../../apps/pc-app/runtime/features/accounts/backups.cjs');
 const {checksum}=require('../../apps/pc-app/runtime/features/accounts/util.cjs');
 
-function fixture(t){
+function fixture(t,provider='local'){
   const directory=mkdtempSync(join(tmpdir(),'lingjing-restore-provenance-')),db=new DatabaseSync(':memory:'),owner='provenance-owner',calls=[];
   for(const migration of require('../../apps/pc-app/runtime/features/accounts/schema.cjs').migrations)db.exec(migration.sql);
-  db.prepare('INSERT INTO account_identities(owner_account_id,provider,subject_id,account,account_key,username,created_at,updated_at) VALUES(?,?,?,?,?,?,?,?)').run(owner,'local',owner,'owner','owner','原账号','2026-10-25','2026-10-25');
+  db.prepare('INSERT INTO account_identities(owner_account_id,provider,subject_id,account,account_key,username,created_at,updated_at) VALUES(?,?,?,?,?,?,?,?)').run(owner,provider,owner,'owner','owner','原账号','2026-10-25','2026-10-25');
   db.exec('CREATE TABLE restore_proof(owner_account_id TEXT PRIMARY KEY,value TEXT NOT NULL)');db.prepare('INSERT INTO restore_proof VALUES(?,?)').run(owner,'original');
   const backups=new BackupManager({db,directory,getIdentity:id=>db.prepare('SELECT * FROM account_identities WHERE owner_account_id=?').get(id)});
   const adapter={id:'provenance-test',version:1,tables:['restore_proof'],
@@ -25,7 +25,7 @@ function fixture(t){
   // Neither field becomes the main process's verified preview metadata.
   body.cloudRevision=123;body.provenance={mode:'live'};const envelope={...body,checksum:checksum(body)},file=join(directory,'source.json');writeFileSync(file,JSON.stringify(envelope));
   t.after(()=>{db.close();const target=resolve(directory);assert.equal(dirname(target),resolve(tmpdir()));assert.ok(basename(target).startsWith('lingjing-restore-provenance-'));rmSync(target,{recursive:true,force:true});});
-  return{db,owner,backups,calls,envelope,preview:()=>backups.preview(owner,file),restore(preview,extra={}){return backups.restore(owner,{previewId:preview.previewId,actionId:randomUUID(),mode:'replace',...extra});}};
+  return{db,owner,backups,calls,envelope,file,preview:()=>backups.preview(owner,file),restore(preview,extra={}){return backups.restore(owner,{previewId:preview.previewId,actionId:randomUUID(),mode:'replace',...extra});}};
 }
 
 test('file provenance and renderer-supplied revision cannot select a cloud restore adapter',t=>{
@@ -54,4 +54,25 @@ test('changed data and invalid private cloud metadata fail before any restore ad
   assert.throws(()=>f.restore(preview),{code:'SYNC_RECEIPT_MISMATCH'});retained.cloudRevision=7;
   f.db.prepare('UPDATE restore_proof SET value=?').run('unconfirmed local edit');assert.throws(()=>f.restore(preview),{code:'SAVE_CHANGED'});
   assert.deepEqual(f.calls,[]);assert.equal(f.db.prepare('SELECT value FROM restore_proof').get().value,'unconfirmed local edit');
+});
+
+test('actual SQLite and production adapters: an old finished v1 file reaches a clean AccountSync checkpoint only through the private cloud-preview route',t=>{
+  const f=fixture(t,'runtime'),{createBattleBackupAdapter}=require('../../apps/pc-app/runtime/features/battle/backup.cjs'),{AccountSync}=require('../../apps/pc-app/runtime/features/accounts/sync.cjs');
+  for(const migration of require('../../apps/pc-app/runtime/features/battle/migrations.cjs'))f.db.exec(migration.sql);
+  const adapter=createBattleBackupAdapter(f.db);f.backups.register(adapter);
+  const seal=battle=>{const {checksum:discard,...body}=f.backups.snapshot(f.owner);void discard;body.data.modules.battle={version:1,data:battle};return{...body,checksum:checksum(body)};};
+  const empty={sessions:[],actions:[],reports:[],rewards:[]},initial=seal(empty);
+  const sync=new AccountSync({db:f.db,backups:f.backups,remote:{enabled:true,authKind:'supabase'},getSession:()=>({provider:'runtime',ownerAccountId:f.owner,authKind:'supabase',sessionId:'scripted-session',deviceId:'scripted-device'}),getSettings:()=>({document:{sync:{enabled:true}}})});
+  sync.acceptAuthoritativeReadback(f.owner,{envelope:initial,cloudRevision:67});
+  const id='battle-provenance',reward={actionId:'battle-provenance-reward',petId:'owned-pet',experience:5,applied:true},session={id,mode:'training',status:'finished',context:{authority:'supabase',cloudUserId:f.owner},snapshot:{round:1},rounds:[{round:1}],player:{petId:reward.petId},reward,reportId:id};
+  const canonical={sessions:[{id,room_id:null,status:'finished',data_json:JSON.stringify(session),revision:1,updated_at:'2026-10-25'}],actions:[],reports:[{id,session_id:id,data_json:JSON.stringify({...session,sessionId:id}),ended_at:'2026-10-25'}],rewards:[{session_id:id,action_id:reward.actionId,pet_id:reward.petId,data_json:JSON.stringify(reward)}]};
+  const cloud=seal(canonical),original={action_id:'old-local-intent',session_id:id,command_json:'{ "action": "normal_attack", "roundNo": 1 }',result_json:'{ "sessionId": "battle-provenance", "revision": 99, "resolvedRound": 1 }'},old=seal({...canonical,actions:[original]});
+  writeFileSync(f.file,JSON.stringify(old));f.restore(f.preview());assert.equal(sync.status(f.owner).localChanged,true);
+  // The identical canonical payload in a local file still cannot acquire a seal.
+  writeFileSync(f.file,JSON.stringify(cloud));f.restore(f.preview(),{cloudRevision:68});assert.equal(sync.status(f.owner).localChanged,true);
+  const preview=f.preview(),retained=f.backups.previews.get(preview.previewId);retained.cloudRevision=68;
+  require('../../apps/pc-app/runtime/features/accounts/util.cjs').transaction(f.db,()=>{f.restore(preview);sync.acceptCloudRestore(f.owner,retained);});
+  assert.equal(sync.status(f.owner).cloudRevision,68);assert.equal(sync.status(f.owner).localChanged,false);
+  assert.deepEqual({...f.db.prepare('SELECT action_id,session_id,command_json,result_json FROM battle_action_receipts WHERE owner_account_id=?').get(f.owner)},original);
+  assert.equal(adapter.cloudModule(f.owner,{version:2,data:adapter.export(f.owner)}).data.actions.length,0);
 });
