@@ -120,6 +120,9 @@ test('LOCAL SQL: validated resource preferences commit once with shared protecte
   assert.deepEqual(head.data.modules['character-resources'].data.preferences[0],{resourceId,revision:1,...document});
   const invalid=structuredClone(document);invalid.calibration.desktop.scale=4;
   await assert.rejects(call('50000000-0000-4000-8000-000000000002',1,invalid),/LJ_RESOURCE_PREFERENCE_INVALID/);
+  for(const malformed of [{calibration:{},actions:{}},{...document,calibration:{}},{...document,actions:{}},{...document,calibration:{desktop:{},battle:calibration}}]){
+    await assert.rejects(call('50000000-0000-4000-8000-000000000002',1,malformed),/LJ_RESOURCE_PREFERENCE_INVALID/);
+  }
   await assert.rejects(call('50000000-0000-4000-8000-000000000002'),/LJ_RESOURCE_PREFERENCE_CONFLICT/);
   await assert.rejects(call('50000000-0000-4000-8000-000000000002',0,document,'40000000-0000-4000-8000-000000000099'),/LJ_RESOURCE_REFERENCE_REQUIRED/);
   const changed=structuredClone(document);changed.calibration.desktop.scale=1.5;

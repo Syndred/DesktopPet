@@ -11,7 +11,7 @@ create table public.lingjing_resource_preference_actions (
  request_hash text not null,preference_revision bigint not null,authority_action_id text not null,
  primary key(owner_account_id,action_id),foreign key(owner_account_id,authority_action_id) references public.lingjing_save_actions(owner_id,action_id)
 );
-create index lingjing_resource_preferences_authority_fk on public.lingjing_resource_preferences(owner_account_id,authority_action_id);
+create index lingjing_resource_preferences_action_fk on public.lingjing_resource_preferences(owner_account_id,authority_action_id);
 create index lingjing_resource_preference_actions_authority_fk on public.lingjing_resource_preference_actions(owner_account_id,authority_action_id);
 alter table public.lingjing_resource_preferences enable row level security;
 alter table public.lingjing_resource_preference_actions enable row level security;
@@ -29,10 +29,10 @@ create function lingjing_private.validate_resource_preferences(p_doc jsonb) retu
 declare v_context jsonb;v_value jsonb;v_key text;v_number numeric;
 begin
  if jsonb_typeof(p_doc) is distinct from 'object' or jsonb_typeof(p_doc->'calibration') is distinct from 'object' or jsonb_typeof(p_doc->'actions') is distinct from 'object'
-  or (select array_agg(key order by key) from jsonb_object_keys(p_doc) key)<>array['actions','calibration']::text[]
-  or (select array_agg(key order by key) from jsonb_object_keys(p_doc->'calibration') key)<>array['battle','desktop']::text[] then raise exception 'LJ_RESOURCE_PREFERENCE_INVALID';end if;
+  or (select array_agg(key order by key) from jsonb_object_keys(p_doc) key) is distinct from array['actions','calibration']::text[]
+  or (select array_agg(key order by key) from jsonb_object_keys(p_doc->'calibration') key) is distinct from array['battle','desktop']::text[] then raise exception 'LJ_RESOURCE_PREFERENCE_INVALID';end if;
  for v_context in select value from jsonb_each(p_doc->'calibration') loop
-  if jsonb_typeof(v_context)<>'object' or (select array_agg(key order by key) from jsonb_object_keys(v_context) key)<>array['anchorX','anchorY','fps','mirrorX','rotationDeg','scale','verticalOffset']::text[]
+  if jsonb_typeof(v_context)<>'object' or (select array_agg(key order by key) from jsonb_object_keys(v_context) key) is distinct from array['anchorX','anchorY','fps','mirrorX','rotationDeg','scale','verticalOffset']::text[]
    or jsonb_typeof(v_context->'mirrorX')<>'boolean' then raise exception 'LJ_RESOURCE_PREFERENCE_INVALID';end if;
   for v_key,v_value in select * from jsonb_each(v_context-'mirrorX') loop
    if jsonb_typeof(v_value)<>'number' then raise exception 'LJ_RESOURCE_PREFERENCE_INVALID';end if;
@@ -42,7 +42,7 @@ begin
     or(v_key='fps' and(v_number<0 or v_number>60 or(v_number>0 and v_number<1))) then raise exception 'LJ_RESOURCE_PREFERENCE_INVALID';end if;
   end loop;
  end loop;
- if (select array_agg(key order by key) from jsonb_object_keys(p_doc->'actions') key)<>array['attack','attack_release','attack_windup','blink','eat','hit','idle','skill','sleep','victory','walk','wave']::text[] then raise exception 'LJ_RESOURCE_PREFERENCE_INVALID';end if;
+ if (select array_agg(key order by key) from jsonb_object_keys(p_doc->'actions') key) is distinct from array['attack','attack_release','attack_windup','blink','eat','hit','idle','skill','sleep','victory','walk','wave']::text[] then raise exception 'LJ_RESOURCE_PREFERENCE_INVALID';end if;
  for v_value in select value from jsonb_each(p_doc->'actions') loop
   if jsonb_typeof(v_value) not in('string','null') or(jsonb_typeof(v_value)='string' and length(v_value#>>'{}') not between 1 and 200) then raise exception 'LJ_RESOURCE_PREFERENCE_INVALID';end if;
  end loop;
@@ -63,7 +63,7 @@ returns jsonb language plpgsql security invoker set search_path='' as $$
 declare v_prior public.lingjing_resource_preference_actions;v_hash text;v_current bigint;v_receipt jsonb;v_authority text;
 begin
  perform lingjing_private.assert_service_actor(p_owner,p_uid,p_device,p_sid);
- if p_action_id is null or p_base_revision is null or p_base_revision<0 then raise exception 'LJ_INVALID_REQUEST';end if;
+ if p_action_id is null or p_resource_id is null or length(p_resource_id) not between 1 and 200 or p_base_revision is null or p_base_revision<0 then raise exception 'LJ_INVALID_REQUEST';end if;
  perform lingjing_private.validate_resource_preferences(p_document);
  if p_resource_id not in('builtin:lingjing-yuwan-v2','builtin:lingjing-xiaolan-v1','builtin:lingjing-fantuan-v1','builtin:lingjing-shiba-v2','builtin:lingjing-hatcat-v1','builtin:lingjing-xiaohu-v1','builtin:lingjing-qingya-v1','builtin:lingjing-yantuan-v1')
   and not exists(select 1 from public.lingjing_resource_references where owner_account_id=p_owner and auth_user_id=p_uid and resource_id::text=p_resource_id and resource_kind='spritesheet') then raise exception 'LJ_RESOURCE_REFERENCE_REQUIRED';end if;
