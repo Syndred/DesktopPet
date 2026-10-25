@@ -30,6 +30,7 @@ export function companionUnit(envelope,owner,now){
 const fields={adopt:['actionId','templateId','name','showOnDesktop'],rename:['actionId','petId','expectedRevision','name'],desktop:['actionId','petId','expectedRevision','visible','behavior','scale','position'],select:['actionId','petId','expectedRevision','slot'],appearance:['actionId','petId','expectedRevision','resourceId'],interact:['actionId','petId','expectedRevision'],'recall-all':['actionId']};
 export function validateCommand(command,input){
   if(!Object.hasOwn(fields,command)||!object(input)||Object.keys(input).some(key=>!fields[command].includes(key))||typeof input.actionId!=='string'||!/^[a-zA-Z0-9][a-zA-Z0-9:_-]{7,95}$/.test(input.actionId))fail('INVALID_INPUT','伙伴操作或操作编号无效');
+  if(new TextEncoder().encode(JSON.stringify(input)).length>60*1024)fail('INVALID_INPUT','伙伴操作内容超出限制');
 }
 /** Only specific personal/adoption commands; no caller-supplied growth, rewards,
  * petId for adoption, raw unit, owner, schema, or inventory can be submitted.
