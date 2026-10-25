@@ -2,7 +2,7 @@
   "module": "discovery",
   "scope": "Real HTTPS cloud discovery/admission/wild rounds/capture receipts, unified Auth and preserved legacy owner, original BattleScreen/rules and Windows location gates, canonical save/instance/reward recovery across devices",
   "branch": "codex/lingjing-discovery",
-  "commit": "6ef8039be02db23e5117fe1c581c2df325df8367",
+  "commit": "df6e0895960cdd53053421568ba869bd2ceba48a",
   "goalStatus": "active",
   "status": "cloud_game_server_checkpoint_ready_for_review_runtime_spi_in_progress",
   "deployReady": false,
@@ -57,6 +57,16 @@
         "05 public.runtime_territory_capture_context(text,double precision,double precision), same transaction FOR SHARE"
       ],
       "status": "Local shared-domain/SQL complete path passed; ready for central review/deployment after05 prerequisites",
+      "remoteAppliedByThisChat": false
+    },
+    {
+      "path": "infra/supabase/migrations/20261025033352_lingjing_discovery_capture_scenarios.sql",
+      "createdBy": "Supabase CLI2.122.0 migration new lingjing_discovery_capture_scenarios --workdir infra",
+      "requires": [
+        "20261025030459_lingjing_discovery_wild_transactions.sql",
+        "05 context four-argument40941f2 interface"
+      ],
+      "status": "Append-only; base published game migration unchanged. Local same-world guard and full atomic path passed",
       "remoteAppliedByThisChat": false
     }
   ],
@@ -193,7 +203,7 @@
     },
     "cloudGame": {
       "readyForCentralReview": true,
-      "implementationCommit": "6ef8039be02db23e5117fe1c581c2df325df8367",
+      "implementationCommit": "df6e0895960cdd53053421568ba869bd2ceba48a",
       "migration": "infra/supabase/migrations/20261025030459_lingjing_discovery_wild_transactions.sql",
       "function": "discovery",
       "verifyJwt": false,
@@ -203,7 +213,7 @@
         "03 location/live_actor migrations already deployed",
         "02 trusted companions module from companions-sync67546f5+d7b4b07 already deployed",
         "05 garden module initialized via legitimate API",
-        "05 public.runtime_territory_capture_context(text,double precision,double precision), same transaction FOR SHARE"
+        "05 runtime_territory_capture_context(owner,lat,lng,scenarioId|null)40941f2 is now deployed; same-transaction FOR SHARE"
       ],
       "operations": [
         "reserve",
@@ -221,7 +231,13 @@
         "05 applyCloudCommand/catalog (no seed quantity/inventory duplicate)"
       ],
       "checks": "12 targeted local tests including shared core, actual PGlite state machine/store/authority transaction, injected common-save failure rollback and realSQLite import; not cloud capture evidence",
-      "remoteAppliedByThisChat": false
+      "remoteAppliedByThisChat": false,
+      "readyForCentralDeployment": true,
+      "migrations": [
+        "infra/supabase/migrations/20261025030459_lingjing_discovery_wild_transactions.sql",
+        "infra/supabase/migrations/20261025033352_lingjing_discovery_capture_scenarios.sql"
+      ],
+      "scenarioRule": "Normal proof sourceos passes null; simulated proof must retain the original granted permit scenario, source/scenario switches reject before consuming or reading world context"
     }
   },
   "nativePositionEvidence": {
@@ -236,11 +252,32 @@
     "rawCoordinatesCommitted": false,
     "fullCloudCaptureAcceptance": false
   },
-  "updatedAt": "2026-10-25T03:28:51.882Z",
+  "updatedAt": "2026-10-25T03:38:03.573Z",
   "approvedCompanionCheckpoint": "67546f5+d7b4b07",
   "latestRemoteCodeCheck": {
     "fetchedAt": "2026-10-25T03:32:03.679Z",
     "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086",
     "alreadyIncluded": true
+  },
+  "approvedGardenCheckpoint": "40941f2",
+  "integrationRequests": {
+    "coordinatorLimitedLocationGrant": {
+      "reason": "Native44 sourceos remains124m, so precise cloud proof is unavailable. A dedicated explicitly simulated grant would enable realHTTPS game validation with unchanged80m gate and isolated world namespace.",
+      "target": {
+        "authUserId": "83270acc-8ac0-439d-889d-d12d61d648df",
+        "ownerAccountId": "account:ea9e6ecd-e251-41ad-9b50-dcad2d96f7b7",
+        "deviceId": "71fd3ebe-06f4-4e76-8183-732e1db58094",
+        "scenarioId": "cloud-discovery-03"
+      },
+      "table": "lingjing_discovery.location_test_grants",
+      "ttl": "Coordinator-issued short expiry, at most2hours",
+      "grantIssuedByThisChat": false,
+      "testProfile": "artifacts/cloud-discovery/live-location-1792897943463/device-b",
+      "visibility": "Simulated source/provider/scenario retained; no physical-location or second-physical-device claim"
+    },
+    "sharedLocalRestore": {
+      "owners": "08/02",
+      "need": "Approved private canonical companion/readback apply bridge and registered backup legacy conversion; do not use per-client createCapturedInstance/random petId for cloud receipts"
+    }
   }
 }
