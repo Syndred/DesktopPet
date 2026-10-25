@@ -36,6 +36,8 @@ jobs:
         run: node --input-type=module -e "import {releaseVersion} from './scripts/release/release-store.mjs'; releaseVersion(process.env.RELEASE_VERSION)"
       - run: npm ci
       - run: npm run verify
+      - name: Strict cloud source, modern SQL and pinned Deno validators
+        run: npm run verify:cloud
       - run: npm run test:native
       - run: npm run release:prepare
       - uses: actions/upload-artifact@v7.0.2

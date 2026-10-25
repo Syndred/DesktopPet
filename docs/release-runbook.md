@@ -8,6 +8,8 @@
 
 在干净、已提交的检出中执行 `npm run release:prepare`。该命令依次构建实际 EXE、审计 ASAR、启动实际便携程序，再生成不可覆盖的版本目录。可先设置 `RELEASE_VERSION`，或单独使用 `npm run release:manifest -- --version=<version>` 归档已经通过审计和烟雾检查的同一 EXE。
 
+发布前先执行 `npm run verify:cloud`：严格核对与实际账本对齐的 22 个迁移文件名，比较 battle/garden/discovery 的生成分发，并运行现代本地 SQL/authority 与 Deno 2.9.6 共享验证器。入口不需要云凭据或 Docker，不代表完整 PostGIS reset。旧草稿退役后的 CI 和发布流程不接受 `--allow-legacy-drafts` 过渡参数，旧文件重新混入 migrations 会失败。
+
 产物位于 `artifacts/pc-cloud-upgrade/`。版本归档在 `releases/<version>/`，包括真实 EXE、独立 SHA256 文件、manifest.json、包审计及便携程序验收记录。版本目录存在时拒绝覆盖；生成清单默认不切换正在使用的版本。
 
 ## 来源和依赖闭包
@@ -26,7 +28,9 @@ SHA256 仅用于完整性校验。真实签名由 electron-builder 使用 `CSC_L
 
 ## CI 和发布
 
-CI 包含 Linux 类型与单元检查，以及 Windows 普通 npm ci、Node/Electron 共用 SQLite、全部 CJS/native 测试、实际 EXE 构建、旧 SQLite 档案发现、原生窗口/托盘/IPC/延迟加载、包审计及便携 EXE smoke。只上传 EXE 与选定 JSON/PNG 证据，不上传用户档案、加密凭据或 artifacts 全目录。
+CI 包含 Linux 类型与单元检查、独立的严格云端源码/现代 SQL/Deno 检查，以及 Windows 普通 npm ci、Node/Electron 共用 SQLite、全部 CJS/native 测试、实际 EXE 构建、旧 SQLite 档案发现、原生窗口/托盘/IPC/延迟加载、包审计及便携 EXE smoke。只上传 EXE 与选定验证日志、JSON/PNG 证据，不上传用户档案、加密凭据或 artifacts 全目录。
+
+原生工程验收要求检出、构建清单和应用实际报告的提交相同，并核对编译及依赖闭包指纹。旧构建在创建 QA 档案和启动窗口之前被拒绝。伙伴首页检查其余五个业务页面未加载，独立桌宠检查全部七个业务页面未加载；账号页因启动登录已被访问，属于伙伴首页的已加载前置页面。
 
 Release Pipeline 默认 dry_run。正式发布要求已有审核过的 Git tag、真实证书、实际 EXE smoke 与匹配哈希；随后创建 GitHub Release，上传同一不可变二进制和清单。未运行 GitHub 托管 workflow 时，不能把本地等价检查写成托管 CI 成功。
 
