@@ -1,0 +1,30 @@
+{
+  "passed": true,
+  "at": "2026-10-24T14:57:12.261Z",
+  "sourceSha": "b08adcc89e4482bd6cbb1c7a1efc923a599a42fe",
+  "electron": "36.9.5",
+  "sharedDescriptorUnchanged": true,
+  "scenario": {
+    "id": "unified-battle",
+    "runId": "2ccd6836-a0dd-426c-b8ef-3cf47383df6d",
+    "provenance": "simulated",
+    "isolated": true
+  },
+  "identity": {
+    "authority": "simulated",
+    "scenarioId": "unified-battle",
+    "runId": "2ccd6836-a0dd-426c-b8ef-3cf47383df6d",
+    "id": "qa:2ccd6836-a0dd-426c-b8ef-3cf47383df6d:local-935ebe04-b155-4599-9ce8-c94b7992dd7e",
+    "ownerAccountId": "qa:2ccd6836-a0dd-426c-b8ef-3cf47383df6d:local-935ebe04-b155-4599-9ce8-c94b7992dd7e",
+    "provider": "qa",
+    "account": "qa_actor",
+    "username": "测试伙伴"
+  },
+  "checks": [
+    "existing foundation qaScenario is retained without duplicate registration",
+    "qaIdentity resolves verified current owner only",
+    "no cloud token is synthesized",
+    "live-cloud guard rejects QA",
+    "identity capability rejects access after logout"
+  ]
+}

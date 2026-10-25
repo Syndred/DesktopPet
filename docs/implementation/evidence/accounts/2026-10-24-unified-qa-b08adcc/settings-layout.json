@@ -1,0 +1,2244 @@
+{
+  "at": "2026-10-24T14:55:57.321Z",
+  "captureBefore": false,
+  "isolatedProfile": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-accounts\\DesktopPet\\artifacts\\accounts\\settings-layout-1792853757081\\profile",
+  "checks": [
+    {
+      "name": "1280×844: all tracks contain complete circular thumbs, privacy and save are visible without scrolling",
+      "data": {
+        "viewport": {
+          "width": 1280,
+          "height": 844,
+          "scale": 1.25
+        },
+        "main": {
+          "left": 192,
+          "top": 54,
+          "right": 1280,
+          "bottom": 844,
+          "width": 1088,
+          "height": 790,
+          "scrollTop": 0,
+          "scrollHeight": 790,
+          "clientHeight": 790,
+          "scrollWidth": 1088,
+          "clientWidth": 1088
+        },
+        "save": {
+          "left": 1106,
+          "top": 687.9750366210938,
+          "right": 1256,
+          "bottom": 723.9750366210938,
+          "width": 150,
+          "height": 36
+        },
+        "privacy": {
+          "left": 402,
+          "top": 521.5750122070312,
+          "right": 1256,
+          "bottom": 675.9750213623047,
+          "width": 854,
+          "height": 154.40000915527344
+        },
+        "page": {
+          "left": 192,
+          "top": 54,
+          "right": 1280,
+          "bottom": 743.9750366210938,
+          "width": 1088,
+          "height": 689.9750366210938
+        },
+        "preview": {
+          "left": 919.5375366210938,
+          "top": 175.9499969482422,
+          "right": 1211.5375366210938,
+          "bottom": 470.77500915527344,
+          "width": 292,
+          "height": 294.82501220703125
+        },
+        "typography": {
+          "body": {
+            "fontFamily": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+            "fontSize": "14px",
+            "lineHeight": "21px"
+          },
+          ".accounts": {
+            "fontFamily": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+            "fontSize": "14px",
+            "lineHeight": "21px"
+          },
+          ".ac-page-heading h1": {
+            "fontFamily": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+            "fontSize": "29px",
+            "lineHeight": "39.15px"
+          },
+          ".ac-setting-row strong": {
+            "fontFamily": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+            "fontSize": "13px",
+            "lineHeight": "18px"
+          },
+          ".ac-setting-row small": {
+            "fontFamily": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+            "fontSize": "11px",
+            "lineHeight": "14px"
+          }
+        },
+        "switches": [
+          {
+            "label": "始终置顶",
+            "checked": "false",
+            "track": {
+              "left": 810.2875366210938,
+              "top": 177.15000915527344,
+              "right": 848.2875366210938,
+              "bottom": 199.15000915527344,
+              "width": 38,
+              "height": 22
+            },
+            "thumb": {
+              "left": 813.2875366210938,
+              "top": 180.15000915527344,
+              "right": 829.2875366210938,
+              "bottom": 196.15000915527344,
+              "width": 16,
+              "height": 16
+            },
+            "translate": "0px",
+            "transform": "none"
+          },
+          {
+            "label": "透明区域鼠标穿透",
+            "checked": "false",
+            "track": {
+              "left": 810.2875366210938,
+              "top": 212.9499969482422,
+              "right": 848.2875366210938,
+              "bottom": 234.9499969482422,
+              "width": 38,
+              "height": 22
+            },
+            "thumb": {
+              "left": 813.2875366210938,
+              "top": 215.9499969482422,
+              "right": 829.2875366210938,
+              "bottom": 231.9499969482422,
+              "width": 16,
+              "height": 16
+            },
+            "translate": "0px",
+            "transform": "none"
+          },
+          {
+            "label": "开机启动",
+            "checked": "false",
+            "track": {
+              "left": 810.2875366210938,
+              "top": 248.75,
+              "right": 848.2875366210938,
+              "bottom": 270.75,
+              "width": 38,
+              "height": 22
+            },
+            "thumb": {
+              "left": 813.2875366210938,
+              "top": 251.75,
+              "right": 829.2875366210938,
+              "bottom": 267.75,
+              "width": 16,
+              "height": 16
+            },
+            "translate": "0px",
+            "transform": "none"
+          },
+          {
+            "label": "关闭窗口后留在托盘",
+            "checked": "true",
+            "track": {
+              "left": 810.2875366210938,
+              "top": 284.5500183105469,
+              "right": 848.2875366210938,
+              "bottom": 306.5500183105469,
+              "width": 38,
+              "height": 22
+            },
+            "thumb": {
+              "left": 829.2875366210938,
+              "top": 287.5500183105469,
+              "right": 845.2875366210938,
+              "bottom": 303.5500183105469,
+              "width": 16,
+              "height": 16
+            },
+            "translate": "16px",
+            "transform": "none"
+          },
+          {
+            "label": "互动音效",
+            "checked": "true",
+            "track": {
+              "left": 810.2875366210938,
+              "top": 361.1499938964844,
+              "right": 848.2875366210938,
+              "bottom": 383.1499938964844,
+              "width": 38,
+              "height": 22
+            },
+            "thumb": {
+              "left": 829.2875366210938,
+              "top": 364.1499938964844,
+              "right": 845.2875366210938,
+              "bottom": 380.1499938964844,
+              "width": 16,
+              "height": 16
+            },
+            "translate": "16px",
+            "transform": "none"
+          },
+          {
+            "label": "全屏应用时暂时隐藏",
+            "checked": "true",
+            "track": {
+              "left": 810.2875366210938,
+              "top": 415.95001220703125,
+              "right": 848.2875366210938,
+              "bottom": 437.95001220703125,
+              "width": 38,
+              "height": 22
+            },
+            "thumb": {
+              "left": 829.2875366210938,
+              "top": 418.95001220703125,
+              "right": 845.2875366210938,
+              "bottom": 434.95001220703125,
+              "width": 16,
+              "height": 16
+            },
+            "translate": "16px",
+            "transform": "none"
+          },
+          {
+            "label": "启用安静时段",
+            "checked": "true",
+            "track": {
+              "left": 810.2875366210938,
+              "top": 446.75,
+              "right": 848.2875366210938,
+              "bottom": 468.75,
+              "width": 38,
+              "height": 22
+            },
+            "thumb": {
+              "left": 829.2875366210938,
+              "top": 449.75,
+              "right": 845.2875366210938,
+              "bottom": 465.75,
+              "width": 16,
+              "height": 16
+            },
+            "translate": "16px",
+            "transform": "none"
+          },
+          {
+            "label": "允许附近探索使用位置",
+            "checked": "false",
+            "track": {
+              "left": 1203.2000732421875,
+              "top": 573.5750122070312,
+              "right": 1241.2000732421875,
+              "bottom": 595.5750122070312,
+              "width": 38,
+              "height": 22
+            },
+            "thumb": {
+              "left": 1206.2000732421875,
+              "top": 576.5750122070312,
+              "right": 1222.2000732421875,
+              "bottom": 592.5750122070312,
+              "width": 16,
+              "height": 16
+            },
+            "translate": "0px",
+            "transform": "none"
+          },
+          {
+            "label": "位置仅在探索时更新",
+            "checked": "true",
+            "track": {
+              "left": 1203.2000732421875,
+              "top": 604.375,
+              "right": 1241.2000732421875,
+              "bottom": 626.375,
+              "width": 38,
+              "height": 22
+            },
+            "thumb": {
+              "left": 1222.2000732421875,
+              "top": 607.375,
+              "right": 1238.2000732421875,
+              "bottom": 623.375,
+              "width": 16,
+              "height": 16
+            },
+            "translate": "16px",
+            "transform": "none"
+          },
+          {
+            "label": "情绪统计",
+            "checked": "false",
+            "track": {
+              "left": 1203.2000732421875,
+              "top": 635.1749877929688,
+              "right": 1241.2000732421875,
+              "bottom": 657.1749877929688,
+              "width": 38,
+              "height": 22
+            },
+            "thumb": {
+              "left": 1206.2000732421875,
+              "top": 638.1749877929688,
+              "right": 1222.2000732421875,
+              "bottom": 654.1749877929688,
+              "width": 16,
+              "height": 16
+            },
+            "translate": "0px",
+            "transform": "none"
+          },
+          {
+            "label": "界面动效",
+            "checked": "true",
+            "track": {
+              "left": 771.2999877929688,
+              "top": 694.9750366210938,
+              "right": 809.2999877929688,
+              "bottom": 716.9750366210938,
+              "width": 38,
+              "height": 22
+            },
+            "thumb": {
+              "left": 790.2999877929688,
+              "top": 697.9750366210938,
+              "right": 806.2999877929688,
+              "bottom": 713.9750366210938,
+              "width": 16,
+              "height": 16
+            },
+            "translate": "16px",
+            "transform": "none"
+          }
+        ]
+      }
+    },
+    {
+      "name": "both states of every switch keep the full thumb inside its actual track"
+    },
+    {
+      "name": "1440×900: settings, privacy and save remain fully visible at normal scale"
+    },
+    {
+      "name": "1024×700: natural vertical scrolling exposes save with no horizontal overflow"
+    },
+    {
+      "name": "notification and privacy page consumes the same centered Radix switch styling"
+    },
+    {
+      "name": "render-only verification leaves stored settings and privacy preferences unchanged"
+    }
+  ],
+  "views": [
+    {
+      "name": "desktop-1280x844",
+      "viewport": {
+        "width": 1280,
+        "height": 844,
+        "scale": 1.25
+      },
+      "main": {
+        "left": 192,
+        "top": 54,
+        "right": 1280,
+        "bottom": 844,
+        "width": 1088,
+        "height": 790,
+        "scrollTop": 0,
+        "scrollHeight": 790,
+        "clientHeight": 790,
+        "scrollWidth": 1088,
+        "clientWidth": 1088
+      },
+      "save": {
+        "left": 1106,
+        "top": 687.9750366210938,
+        "right": 1256,
+        "bottom": 723.9750366210938,
+        "width": 150,
+        "height": 36
+      },
+      "privacy": {
+        "left": 402,
+        "top": 521.5750122070312,
+        "right": 1256,
+        "bottom": 675.9750213623047,
+        "width": 854,
+        "height": 154.40000915527344
+      },
+      "page": {
+        "left": 192,
+        "top": 54,
+        "right": 1280,
+        "bottom": 743.9750366210938,
+        "width": 1088,
+        "height": 689.9750366210938
+      },
+      "preview": {
+        "left": 919.5375366210938,
+        "top": 175.9499969482422,
+        "right": 1211.5375366210938,
+        "bottom": 470.77500915527344,
+        "width": 292,
+        "height": 294.82501220703125
+      },
+      "typography": {
+        "body": {
+          "fontFamily": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+          "fontSize": "14px",
+          "lineHeight": "21px"
+        },
+        ".accounts": {
+          "fontFamily": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+          "fontSize": "14px",
+          "lineHeight": "21px"
+        },
+        ".ac-page-heading h1": {
+          "fontFamily": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+          "fontSize": "29px",
+          "lineHeight": "39.15px"
+        },
+        ".ac-setting-row strong": {
+          "fontFamily": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+          "fontSize": "13px",
+          "lineHeight": "18px"
+        },
+        ".ac-setting-row small": {
+          "fontFamily": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+          "fontSize": "11px",
+          "lineHeight": "14px"
+        }
+      },
+      "switches": [
+        {
+          "label": "始终置顶",
+          "checked": "false",
+          "track": {
+            "left": 810.2875366210938,
+            "top": 177.15000915527344,
+            "right": 848.2875366210938,
+            "bottom": 199.15000915527344,
+            "width": 38,
+            "height": 22
+          },
+          "thumb": {
+            "left": 813.2875366210938,
+            "top": 180.15000915527344,
+            "right": 829.2875366210938,
+            "bottom": 196.15000915527344,
+            "width": 16,
+            "height": 16
+          },
+          "translate": "0px",
+          "transform": "none"
+        },
+        {
+          "label": "透明区域鼠标穿透",
+          "checked": "false",
+          "track": {
+            "left": 810.2875366210938,
+            "top": 212.9499969482422,
+            "right": 848.2875366210938,
+            "bottom": 234.9499969482422,
+            "width": 38,
+            "height": 22
+          },
+          "thumb": {
+            "left": 813.2875366210938,
+            "top": 215.9499969482422,
+            "right": 829.2875366210938,
+            "bottom": 231.9499969482422,
+            "width": 16,
+            "height": 16
+          },
+          "translate": "0px",
+          "transform": "none"
+        },
+        {
+          "label": "开机启动",
+          "checked": "false",
+          "track": {
+            "left": 810.2875366210938,
+            "top": 248.75,
+            "right": 848.2875366210938,
+            "bottom": 270.75,
+            "width": 38,
+            "height": 22
+          },
+          "thumb": {
+            "left": 813.2875366210938,
+            "top": 251.75,
+            "right": 829.2875366210938,
+            "bottom": 267.75,
+            "width": 16,
+            "height": 16
+          },
+          "translate": "0px",
+          "transform": "none"
+        },
+        {
+          "label": "关闭窗口后留在托盘",
+          "checked": "true",
+          "track": {
+            "left": 810.2875366210938,
+            "top": 284.5500183105469,
+            "right": 848.2875366210938,
+            "bottom": 306.5500183105469,
+            "width": 38,
+            "height": 22
+          },
+          "thumb": {
+            "left": 829.2875366210938,
+            "top": 287.5500183105469,
+            "right": 845.2875366210938,
+            "bottom": 303.5500183105469,
+            "width": 16,
+            "height": 16
+          },
+          "translate": "16px",
+          "transform": "none"
+        },
+        {
+          "label": "互动音效",
+          "checked": "true",
+          "track": {
+            "left": 810.2875366210938,
+            "top": 361.1499938964844,
+            "right": 848.2875366210938,
+            "bottom": 383.1499938964844,
+            "width": 38,
+            "height": 22
+          },
+          "thumb": {
+            "left": 829.2875366210938,
+            "top": 364.1499938964844,
+            "right": 845.2875366210938,
+            "bottom": 380.1499938964844,
+            "width": 16,
+            "height": 16
+          },
+          "translate": "16px",
+          "transform": "none"
+        },
+        {
+          "label": "全屏应用时暂时隐藏",
+          "checked": "true",
+          "track": {
+            "left": 810.2875366210938,
+            "top": 415.95001220703125,
+            "right": 848.2875366210938,
+            "bottom": 437.95001220703125,
+            "width": 38,
+            "height": 22
+          },
+          "thumb": {
+            "left": 829.2875366210938,
+            "top": 418.95001220703125,
+            "right": 845.2875366210938,
+            "bottom": 434.95001220703125,
+            "width": 16,
+            "height": 16
+          },
+          "translate": "16px",
+          "transform": "none"
+        },
+        {
+          "label": "启用安静时段",
+          "checked": "true",
+          "track": {
+            "left": 810.2875366210938,
+            "top": 446.75,
+            "right": 848.2875366210938,
+            "bottom": 468.75,
+            "width": 38,
+            "height": 22
+          },
+          "thumb": {
+            "left": 829.2875366210938,
+            "top": 449.75,
+            "right": 845.2875366210938,
+            "bottom": 465.75,
+            "width": 16,
+            "height": 16
+          },
+          "translate": "16px",
+          "transform": "none"
+        },
+        {
+          "label": "允许附近探索使用位置",
+          "checked": "false",
+          "track": {
+            "left": 1203.2000732421875,
+            "top": 573.5750122070312,
+            "right": 1241.2000732421875,
+            "bottom": 595.5750122070312,
+            "width": 38,
+            "height": 22
+          },
+          "thumb": {
+            "left": 1206.2000732421875,
+            "top": 576.5750122070312,
+            "right": 1222.2000732421875,
+            "bottom": 592.5750122070312,
+            "width": 16,
+            "height": 16
+          },
+          "translate": "0px",
+          "transform": "none"
+        },
+        {
+          "label": "位置仅在探索时更新",
+          "checked": "true",
+          "track": {
+            "left": 1203.2000732421875,
+            "top": 604.375,
+            "right": 1241.2000732421875,
+            "bottom": 626.375,
+            "width": 38,
+            "height": 22
+          },
+          "thumb": {
+            "left": 1222.2000732421875,
+            "top": 607.375,
+            "right": 1238.2000732421875,
+            "bottom": 623.375,
+            "width": 16,
+            "height": 16
+          },
+          "translate": "16px",
+          "transform": "none"
+        },
+        {
+          "label": "情绪统计",
+          "checked": "false",
+          "track": {
+            "left": 1203.2000732421875,
+            "top": 635.1749877929688,
+            "right": 1241.2000732421875,
+            "bottom": 657.1749877929688,
+            "width": 38,
+            "height": 22
+          },
+          "thumb": {
+            "left": 1206.2000732421875,
+            "top": 638.1749877929688,
+            "right": 1222.2000732421875,
+            "bottom": 654.1749877929688,
+            "width": 16,
+            "height": 16
+          },
+          "translate": "0px",
+          "transform": "none"
+        },
+        {
+          "label": "界面动效",
+          "checked": "true",
+          "track": {
+            "left": 771.2999877929688,
+            "top": 694.9750366210938,
+            "right": 809.2999877929688,
+            "bottom": 716.9750366210938,
+            "width": 38,
+            "height": 22
+          },
+          "thumb": {
+            "left": 790.2999877929688,
+            "top": 697.9750366210938,
+            "right": 806.2999877929688,
+            "bottom": 713.9750366210938,
+            "width": 16,
+            "height": 16
+          },
+          "translate": "16px",
+          "transform": "none"
+        }
+      ]
+    },
+    {
+      "name": "opposite-switch-states",
+      "viewport": {
+        "width": 1280,
+        "height": 844,
+        "scale": 1.25
+      },
+      "main": {
+        "left": 192,
+        "top": 54,
+        "right": 1280,
+        "bottom": 844,
+        "width": 1088,
+        "height": 790,
+        "scrollTop": 0,
+        "scrollHeight": 790,
+        "clientHeight": 790,
+        "scrollWidth": 1088,
+        "clientWidth": 1088
+      },
+      "save": {
+        "left": 1106,
+        "top": 687.9750366210938,
+        "right": 1256,
+        "bottom": 723.9750366210938,
+        "width": 150,
+        "height": 36
+      },
+      "privacy": {
+        "left": 402,
+        "top": 521.5750122070312,
+        "right": 1256,
+        "bottom": 675.9750213623047,
+        "width": 854,
+        "height": 154.40000915527344
+      },
+      "page": {
+        "left": 192,
+        "top": 54,
+        "right": 1280,
+        "bottom": 743.9750366210938,
+        "width": 1088,
+        "height": 689.9750366210938
+      },
+      "preview": {
+        "left": 919.5375366210938,
+        "top": 175.9499969482422,
+        "right": 1211.5375366210938,
+        "bottom": 470.77500915527344,
+        "width": 292,
+        "height": 294.82501220703125
+      },
+      "typography": {
+        "body": {
+          "fontFamily": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+          "fontSize": "14px",
+          "lineHeight": "21px"
+        },
+        ".accounts": {
+          "fontFamily": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+          "fontSize": "14px",
+          "lineHeight": "21px"
+        },
+        ".ac-page-heading h1": {
+          "fontFamily": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+          "fontSize": "29px",
+          "lineHeight": "39.15px"
+        },
+        ".ac-setting-row strong": {
+          "fontFamily": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+          "fontSize": "13px",
+          "lineHeight": "18px"
+        },
+        ".ac-setting-row small": {
+          "fontFamily": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+          "fontSize": "11px",
+          "lineHeight": "14px"
+        }
+      },
+      "switches": [
+        {
+          "label": "始终置顶",
+          "checked": "true",
+          "track": {
+            "left": 810.2875366210938,
+            "top": 177.15000915527344,
+            "right": 848.2875366210938,
+            "bottom": 199.15000915527344,
+            "width": 38,
+            "height": 22
+          },
+          "thumb": {
+            "left": 829.2875366210938,
+            "top": 180.15000915527344,
+            "right": 845.2875366210938,
+            "bottom": 196.15000915527344,
+            "width": 16,
+            "height": 16
+          },
+          "translate": "16px",
+          "transform": "none"
+        },
+        {
+          "label": "透明区域鼠标穿透",
+          "checked": "true",
+          "track": {
+            "left": 810.2875366210938,
+            "top": 212.9499969482422,
+            "right": 848.2875366210938,
+            "bottom": 234.9499969482422,
+            "width": 38,
+            "height": 22
+          },
+          "thumb": {
+            "left": 829.2875366210938,
+            "top": 215.9499969482422,
+            "right": 845.2875366210938,
+            "bottom": 231.9499969482422,
+            "width": 16,
+            "height": 16
+          },
+          "translate": "16px",
+          "transform": "none"
+        },
+        {
+          "label": "开机启动",
+          "checked": "true",
+          "track": {
+            "left": 810.2875366210938,
+            "top": 248.75,
+            "right": 848.2875366210938,
+            "bottom": 270.75,
+            "width": 38,
+            "height": 22
+          },
+          "thumb": {
+            "left": 829.2875366210938,
+            "top": 251.75,
+            "right": 845.2875366210938,
+            "bottom": 267.75,
+            "width": 16,
+            "height": 16
+          },
+          "translate": "16px",
+          "transform": "none"
+        },
+        {
+          "label": "关闭窗口后留在托盘",
+          "checked": "false",
+          "track": {
+            "left": 810.2875366210938,
+            "top": 284.5500183105469,
+            "right": 848.2875366210938,
+            "bottom": 306.5500183105469,
+            "width": 38,
+            "height": 22
+          },
+          "thumb": {
+            "left": 813.2875366210938,
+            "top": 287.5500183105469,
+            "right": 829.2875366210938,
+            "bottom": 303.5500183105469,
+            "width": 16,
+            "height": 16
+          },
+          "translate": "0px",
+          "transform": "none"
+        },
+        {
+          "label": "互动音效",
+          "checked": "false",
+          "track": {
+            "left": 810.2875366210938,
+            "top": 361.1499938964844,
+            "right": 848.2875366210938,
+            "bottom": 383.1499938964844,
+            "width": 38,
+            "height": 22
+          },
+          "thumb": {
+            "left": 813.2875366210938,
+            "top": 364.1499938964844,
+            "right": 829.2875366210938,
+            "bottom": 380.1499938964844,
+            "width": 16,
+            "height": 16
+          },
+          "translate": "0px",
+          "transform": "none"
+        },
+        {
+          "label": "全屏应用时暂时隐藏",
+          "checked": "false",
+          "track": {
+            "left": 810.2875366210938,
+            "top": 415.95001220703125,
+            "right": 848.2875366210938,
+            "bottom": 437.95001220703125,
+            "width": 38,
+            "height": 22
+          },
+          "thumb": {
+            "left": 813.2875366210938,
+            "top": 418.95001220703125,
+            "right": 829.2875366210938,
+            "bottom": 434.95001220703125,
+            "width": 16,
+            "height": 16
+          },
+          "translate": "0px",
+          "transform": "none"
+        },
+        {
+          "label": "启用安静时段",
+          "checked": "false",
+          "track": {
+            "left": 810.2875366210938,
+            "top": 446.75,
+            "right": 848.2875366210938,
+            "bottom": 468.75,
+            "width": 38,
+            "height": 22
+          },
+          "thumb": {
+            "left": 813.2875366210938,
+            "top": 449.75,
+            "right": 829.2875366210938,
+            "bottom": 465.75,
+            "width": 16,
+            "height": 16
+          },
+          "translate": "0px",
+          "transform": "none"
+        },
+        {
+          "label": "允许附近探索使用位置",
+          "checked": "true",
+          "track": {
+            "left": 1203.2000732421875,
+            "top": 573.5750122070312,
+            "right": 1241.2000732421875,
+            "bottom": 595.5750122070312,
+            "width": 38,
+            "height": 22
+          },
+          "thumb": {
+            "left": 1222.2000732421875,
+            "top": 576.5750122070312,
+            "right": 1238.2000732421875,
+            "bottom": 592.5750122070312,
+            "width": 16,
+            "height": 16
+          },
+          "translate": "16px",
+          "transform": "none"
+        },
+        {
+          "label": "位置仅在探索时更新",
+          "checked": "false",
+          "track": {
+            "left": 1203.2000732421875,
+            "top": 604.375,
+            "right": 1241.2000732421875,
+            "bottom": 626.375,
+            "width": 38,
+            "height": 22
+          },
+          "thumb": {
+            "left": 1206.2000732421875,
+            "top": 607.375,
+            "right": 1222.2000732421875,
+            "bottom": 623.375,
+            "width": 16,
+            "height": 16
+          },
+          "translate": "0px",
+          "transform": "none"
+        },
+        {
+          "label": "情绪统计",
+          "checked": "true",
+          "track": {
+            "left": 1203.2000732421875,
+            "top": 635.1749877929688,
+            "right": 1241.2000732421875,
+            "bottom": 657.1749877929688,
+            "width": 38,
+            "height": 22
+          },
+          "thumb": {
+            "left": 1222.2000732421875,
+            "top": 638.1749877929688,
+            "right": 1238.2000732421875,
+            "bottom": 654.1749877929688,
+            "width": 16,
+            "height": 16
+          },
+          "translate": "16px",
+          "transform": "none"
+        },
+        {
+          "label": "界面动效",
+          "checked": "false",
+          "track": {
+            "left": 771.2999877929688,
+            "top": 694.9750366210938,
+            "right": 809.2999877929688,
+            "bottom": 716.9750366210938,
+            "width": 38,
+            "height": 22
+          },
+          "thumb": {
+            "left": 774.2999877929688,
+            "top": 697.9750366210938,
+            "right": 790.2999877929688,
+            "bottom": 713.9750366210938,
+            "width": 16,
+            "height": 16
+          },
+          "translate": "0px",
+          "transform": "none"
+        }
+      ]
+    },
+    {
+      "name": "wide-1440x900",
+      "viewport": {
+        "width": 1440,
+        "height": 900,
+        "scale": 1.25
+      },
+      "main": {
+        "left": 192,
+        "top": 54,
+        "right": 1440,
+        "bottom": 900,
+        "width": 1248,
+        "height": 846,
+        "scrollTop": 0,
+        "scrollHeight": 846,
+        "clientHeight": 846,
+        "scrollWidth": 1248,
+        "clientWidth": 1248
+      },
+      "save": {
+        "left": 1266,
+        "top": 687.9750366210938,
+        "right": 1416,
+        "bottom": 723.9750366210938,
+        "width": 150,
+        "height": 36
+      },
+      "privacy": {
+        "left": 402,
+        "top": 521.5750122070312,
+        "right": 1416,
+        "bottom": 675.9750213623047,
+        "width": 1014,
+        "height": 154.40000915527344
+      },
+      "page": {
+        "left": 192,
+        "top": 54,
+        "right": 1440,
+        "bottom": 743.9750366210938,
+        "width": 1248,
+        "height": 689.9750366210938
+      },
+      "preview": {
+        "left": 1043.3499755859375,
+        "top": 175.9499969482422,
+        "right": 1335.3499755859375,
+        "bottom": 470.77500915527344,
+        "width": 292,
+        "height": 294.82501220703125
+      },
+      "typography": {
+        "body": {
+          "fontFamily": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+          "fontSize": "14px",
+          "lineHeight": "21px"
+        },
+        ".accounts": {
+          "fontFamily": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+          "fontSize": "14px",
+          "lineHeight": "21px"
+        },
+        ".ac-page-heading h1": {
+          "fontFamily": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+          "fontSize": "29px",
+          "lineHeight": "39.15px"
+        },
+        ".ac-setting-row strong": {
+          "fontFamily": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+          "fontSize": "13px",
+          "lineHeight": "18px"
+        },
+        ".ac-setting-row small": {
+          "fontFamily": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+          "fontSize": "11px",
+          "lineHeight": "14px"
+        }
+      },
+      "switches": [
+        {
+          "label": "始终置顶",
+          "checked": "false",
+          "track": {
+            "left": 897.9125366210938,
+            "top": 177.15000915527344,
+            "right": 935.9125366210938,
+            "bottom": 199.15000915527344,
+            "width": 38,
+            "height": 22
+          },
+          "thumb": {
+            "left": 900.9125366210938,
+            "top": 180.15000915527344,
+            "right": 916.9125366210938,
+            "bottom": 196.15000915527344,
+            "width": 16,
+            "height": 16
+          },
+          "translate": "0px",
+          "transform": "none"
+        },
+        {
+          "label": "透明区域鼠标穿透",
+          "checked": "false",
+          "track": {
+            "left": 897.9125366210938,
+            "top": 212.9499969482422,
+            "right": 935.9125366210938,
+            "bottom": 234.9499969482422,
+            "width": 38,
+            "height": 22
+          },
+          "thumb": {
+            "left": 900.9125366210938,
+            "top": 215.9499969482422,
+            "right": 916.9125366210938,
+            "bottom": 231.9499969482422,
+            "width": 16,
+            "height": 16
+          },
+          "translate": "0px",
+          "transform": "none"
+        },
+        {
+          "label": "开机启动",
+          "checked": "false",
+          "track": {
+            "left": 897.9125366210938,
+            "top": 248.75,
+            "right": 935.9125366210938,
+            "bottom": 270.75,
+            "width": 38,
+            "height": 22
+          },
+          "thumb": {
+            "left": 900.9125366210938,
+            "top": 251.75,
+            "right": 916.9125366210938,
+            "bottom": 267.75,
+            "width": 16,
+            "height": 16
+          },
+          "translate": "0px",
+          "transform": "none"
+        },
+        {
+          "label": "关闭窗口后留在托盘",
+          "checked": "true",
+          "track": {
+            "left": 897.9125366210938,
+            "top": 284.5500183105469,
+            "right": 935.9125366210938,
+            "bottom": 306.5500183105469,
+            "width": 38,
+            "height": 22
+          },
+          "thumb": {
+            "left": 916.9125366210938,
+            "top": 287.5500183105469,
+            "right": 932.9125366210938,
+            "bottom": 303.5500183105469,
+            "width": 16,
+            "height": 16
+          },
+          "translate": "16px",
+          "transform": "none"
+        },
+        {
+          "label": "互动音效",
+          "checked": "true",
+          "track": {
+            "left": 897.9125366210938,
+            "top": 361.1499938964844,
+            "right": 935.9125366210938,
+            "bottom": 383.1499938964844,
+            "width": 38,
+            "height": 22
+          },
+          "thumb": {
+            "left": 916.9125366210938,
+            "top": 364.1499938964844,
+            "right": 932.9125366210938,
+            "bottom": 380.1499938964844,
+            "width": 16,
+            "height": 16
+          },
+          "translate": "16px",
+          "transform": "none"
+        },
+        {
+          "label": "全屏应用时暂时隐藏",
+          "checked": "true",
+          "track": {
+            "left": 897.9125366210938,
+            "top": 415.95001220703125,
+            "right": 935.9125366210938,
+            "bottom": 437.95001220703125,
+            "width": 38,
+            "height": 22
+          },
+          "thumb": {
+            "left": 916.9125366210938,
+            "top": 418.95001220703125,
+            "right": 932.9125366210938,
+            "bottom": 434.95001220703125,
+            "width": 16,
+            "height": 16
+          },
+          "translate": "16px",
+          "transform": "none"
+        },
+        {
+          "label": "启用安静时段",
+          "checked": "true",
+          "track": {
+            "left": 897.9125366210938,
+            "top": 446.75,
+            "right": 935.9125366210938,
+            "bottom": 468.75,
+            "width": 38,
+            "height": 22
+          },
+          "thumb": {
+            "left": 916.9125366210938,
+            "top": 449.75,
+            "right": 932.9125366210938,
+            "bottom": 465.75,
+            "width": 16,
+            "height": 16
+          },
+          "translate": "16px",
+          "transform": "none"
+        },
+        {
+          "label": "允许附近探索使用位置",
+          "checked": "false",
+          "track": {
+            "left": 1363.2000732421875,
+            "top": 573.5750122070312,
+            "right": 1401.2000732421875,
+            "bottom": 595.5750122070312,
+            "width": 38,
+            "height": 22
+          },
+          "thumb": {
+            "left": 1366.2000732421875,
+            "top": 576.5750122070312,
+            "right": 1382.2000732421875,
+            "bottom": 592.5750122070312,
+            "width": 16,
+            "height": 16
+          },
+          "translate": "0px",
+          "transform": "none"
+        },
+        {
+          "label": "位置仅在探索时更新",
+          "checked": "true",
+          "track": {
+            "left": 1363.2000732421875,
+            "top": 604.375,
+            "right": 1401.2000732421875,
+            "bottom": 626.375,
+            "width": 38,
+            "height": 22
+          },
+          "thumb": {
+            "left": 1382.2000732421875,
+            "top": 607.375,
+            "right": 1398.2000732421875,
+            "bottom": 623.375,
+            "width": 16,
+            "height": 16
+          },
+          "translate": "16px",
+          "transform": "none"
+        },
+        {
+          "label": "情绪统计",
+          "checked": "false",
+          "track": {
+            "left": 1363.2000732421875,
+            "top": 635.1749877929688,
+            "right": 1401.2000732421875,
+            "bottom": 657.1749877929688,
+            "width": 38,
+            "height": 22
+          },
+          "thumb": {
+            "left": 1366.2000732421875,
+            "top": 638.1749877929688,
+            "right": 1382.2000732421875,
+            "bottom": 654.1749877929688,
+            "width": 16,
+            "height": 16
+          },
+          "translate": "0px",
+          "transform": "none"
+        },
+        {
+          "label": "界面动效",
+          "checked": "true",
+          "track": {
+            "left": 851.2999877929688,
+            "top": 694.9750366210938,
+            "right": 889.2999877929688,
+            "bottom": 716.9750366210938,
+            "width": 38,
+            "height": 22
+          },
+          "thumb": {
+            "left": 870.2999877929688,
+            "top": 697.9750366210938,
+            "right": 886.2999877929688,
+            "bottom": 713.9750366210938,
+            "width": 16,
+            "height": 16
+          },
+          "translate": "16px",
+          "transform": "none"
+        }
+      ]
+    },
+    {
+      "name": "compact-1024x700",
+      "viewport": {
+        "width": 1024,
+        "height": 700,
+        "scale": 1.25
+      },
+      "main": {
+        "left": 166,
+        "top": 54,
+        "right": 1008.7999877929688,
+        "bottom": 700,
+        "width": 842.7999877929688,
+        "height": 646,
+        "scrollTop": 0,
+        "scrollHeight": 827,
+        "clientHeight": 646,
+        "scrollWidth": 828,
+        "clientWidth": 828
+      },
+      "save": {
+        "left": 819.6000366210938,
+        "top": 777.9500122070312,
+        "right": 969.6000366210938,
+        "bottom": 813.9500122070312,
+        "width": 150,
+        "height": 36
+      },
+      "privacy": {
+        "left": 351,
+        "top": 563.5499877929688,
+        "right": 969.6000366210938,
+        "bottom": 765.9499969482422,
+        "width": 618.6000366210938,
+        "height": 202.40000915527344
+      },
+      "page": {
+        "left": 166,
+        "top": 54,
+        "right": 993.6000366210938,
+        "bottom": 833.9500122070312,
+        "width": 827.6000366210938,
+        "height": 779.9500122070312
+      },
+      "preview": {
+        "left": 0,
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "width": 0,
+        "height": 0
+      },
+      "typography": {
+        "body": {
+          "fontFamily": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+          "fontSize": "14px",
+          "lineHeight": "21px"
+        },
+        ".accounts": {
+          "fontFamily": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+          "fontSize": "14px",
+          "lineHeight": "21px"
+        },
+        ".ac-page-heading h1": {
+          "fontFamily": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+          "fontSize": "29px",
+          "lineHeight": "39.15px"
+        },
+        ".ac-setting-row strong": {
+          "fontFamily": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+          "fontSize": "13px",
+          "lineHeight": "18px"
+        },
+        ".ac-setting-row small": {
+          "fontFamily": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+          "fontSize": "11px",
+          "lineHeight": "14px"
+        }
+      },
+      "switches": [
+        {
+          "label": "始终置顶",
+          "checked": "false",
+          "track": {
+            "left": 916.7999877929688,
+            "top": 181.15000915527344,
+            "right": 954.7999877929688,
+            "bottom": 203.15000915527344,
+            "width": 38,
+            "height": 22
+          },
+          "thumb": {
+            "left": 919.7999877929688,
+            "top": 184.15000915527344,
+            "right": 935.7999877929688,
+            "bottom": 200.15000915527344,
+            "width": 16,
+            "height": 16
+          },
+          "translate": "0px",
+          "transform": "none"
+        },
+        {
+          "label": "透明区域鼠标穿透",
+          "checked": "false",
+          "track": {
+            "left": 916.7999877929688,
+            "top": 224.9499969482422,
+            "right": 954.7999877929688,
+            "bottom": 246.9499969482422,
+            "width": 38,
+            "height": 22
+          },
+          "thumb": {
+            "left": 919.7999877929688,
+            "top": 227.9499969482422,
+            "right": 935.7999877929688,
+            "bottom": 243.9499969482422,
+            "width": 16,
+            "height": 16
+          },
+          "translate": "0px",
+          "transform": "none"
+        },
+        {
+          "label": "开机启动",
+          "checked": "false",
+          "track": {
+            "left": 916.7999877929688,
+            "top": 268.75,
+            "right": 954.7999877929688,
+            "bottom": 290.75,
+            "width": 38,
+            "height": 22
+          },
+          "thumb": {
+            "left": 919.7999877929688,
+            "top": 271.75,
+            "right": 935.7999877929688,
+            "bottom": 287.75,
+            "width": 16,
+            "height": 16
+          },
+          "translate": "0px",
+          "transform": "none"
+        },
+        {
+          "label": "关闭窗口后留在托盘",
+          "checked": "true",
+          "track": {
+            "left": 916.7999877929688,
+            "top": 312.5500183105469,
+            "right": 954.7999877929688,
+            "bottom": 334.5500183105469,
+            "width": 38,
+            "height": 22
+          },
+          "thumb": {
+            "left": 935.7999877929688,
+            "top": 315.5500183105469,
+            "right": 951.7999877929688,
+            "bottom": 331.5500183105469,
+            "width": 16,
+            "height": 16
+          },
+          "translate": "16px",
+          "transform": "none"
+        },
+        {
+          "label": "互动音效",
+          "checked": "true",
+          "track": {
+            "left": 916.7999877929688,
+            "top": 405.1499938964844,
+            "right": 954.7999877929688,
+            "bottom": 427.1499938964844,
+            "width": 38,
+            "height": 22
+          },
+          "thumb": {
+            "left": 935.7999877929688,
+            "top": 408.1499938964844,
+            "right": 951.7999877929688,
+            "bottom": 424.1499938964844,
+            "width": 16,
+            "height": 16
+          },
+          "translate": "16px",
+          "transform": "none"
+        },
+        {
+          "label": "全屏应用时暂时隐藏",
+          "checked": "true",
+          "track": {
+            "left": 916.7999877929688,
+            "top": 467.95001220703125,
+            "right": 954.7999877929688,
+            "bottom": 489.95001220703125,
+            "width": 38,
+            "height": 22
+          },
+          "thumb": {
+            "left": 935.7999877929688,
+            "top": 470.95001220703125,
+            "right": 951.7999877929688,
+            "bottom": 486.95001220703125,
+            "width": 16,
+            "height": 16
+          },
+          "translate": "16px",
+          "transform": "none"
+        },
+        {
+          "label": "启用安静时段",
+          "checked": "true",
+          "track": {
+            "left": 916.7999877929688,
+            "top": 506.75,
+            "right": 954.7999877929688,
+            "bottom": 528.75,
+            "width": 38,
+            "height": 22
+          },
+          "thumb": {
+            "left": 935.7999877929688,
+            "top": 509.75,
+            "right": 951.7999877929688,
+            "bottom": 525.75,
+            "width": 16,
+            "height": 16
+          },
+          "translate": "16px",
+          "transform": "none"
+        },
+        {
+          "label": "允许附近探索使用位置",
+          "checked": "false",
+          "track": {
+            "left": 916.7999877929688,
+            "top": 625.5499877929688,
+            "right": 954.7999877929688,
+            "bottom": 647.5499877929688,
+            "width": 38,
+            "height": 22
+          },
+          "thumb": {
+            "left": 919.7999877929688,
+            "top": 628.5499877929688,
+            "right": 935.7999877929688,
+            "bottom": 644.5499877929688,
+            "width": 16,
+            "height": 16
+          },
+          "translate": "0px",
+          "transform": "none"
+        },
+        {
+          "label": "位置仅在探索时更新",
+          "checked": "true",
+          "track": {
+            "left": 916.7999877929688,
+            "top": 670.3500366210938,
+            "right": 954.7999877929688,
+            "bottom": 692.3500366210938,
+            "width": 38,
+            "height": 22
+          },
+          "thumb": {
+            "left": 935.7999877929688,
+            "top": 673.3500366210938,
+            "right": 951.7999877929688,
+            "bottom": 689.3500366210938,
+            "width": 16,
+            "height": 16
+          },
+          "translate": "16px",
+          "transform": "none"
+        },
+        {
+          "label": "情绪统计",
+          "checked": "false",
+          "track": {
+            "left": 916.7999877929688,
+            "top": 715.1500244140625,
+            "right": 954.7999877929688,
+            "bottom": 737.1500244140625,
+            "width": 38,
+            "height": 22
+          },
+          "thumb": {
+            "left": 919.7999877929688,
+            "top": 718.1500244140625,
+            "right": 935.7999877929688,
+            "bottom": 734.1500244140625,
+            "width": 16,
+            "height": 16
+          },
+          "translate": "0px",
+          "transform": "none"
+        },
+        {
+          "label": "界面动效",
+          "checked": "true",
+          "track": {
+            "left": 602.6000366210938,
+            "top": 784.9500122070312,
+            "right": 640.6000366210938,
+            "bottom": 806.9500122070312,
+            "width": 38,
+            "height": 22
+          },
+          "thumb": {
+            "left": 621.6000366210938,
+            "top": 787.9500122070312,
+            "right": 637.6000366210938,
+            "bottom": 803.9500122070312,
+            "width": 16,
+            "height": 16
+          },
+          "translate": "16px",
+          "transform": "none"
+        }
+      ]
+    },
+    {
+      "name": "compact-save-scrolled-into-view",
+      "viewport": {
+        "width": 1024,
+        "height": 700,
+        "scale": 1.25
+      },
+      "main": {
+        "left": 166,
+        "top": 54,
+        "right": 1008.7999877929688,
+        "bottom": 700,
+        "width": 842.7999877929688,
+        "height": 646,
+        "scrollTop": 180.8000030517578,
+        "scrollHeight": 827,
+        "clientHeight": 646,
+        "scrollWidth": 828,
+        "clientWidth": 828
+      },
+      "save": {
+        "left": 819.6000366210938,
+        "top": 597.1500244140625,
+        "right": 969.6000366210938,
+        "bottom": 633.1500244140625,
+        "width": 150,
+        "height": 36
+      },
+      "privacy": {
+        "left": 351,
+        "top": 382.75,
+        "right": 969.6000366210938,
+        "bottom": 585.1500091552734,
+        "width": 618.6000366210938,
+        "height": 202.40000915527344
+      },
+      "page": {
+        "left": 166,
+        "top": -126.80000305175781,
+        "right": 993.6000366210938,
+        "bottom": 653.1500091552734,
+        "width": 827.6000366210938,
+        "height": 779.9500122070312
+      },
+      "preview": {
+        "left": 0,
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "width": 0,
+        "height": 0
+      },
+      "typography": {
+        "body": {
+          "fontFamily": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+          "fontSize": "14px",
+          "lineHeight": "21px"
+        },
+        ".accounts": {
+          "fontFamily": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+          "fontSize": "14px",
+          "lineHeight": "21px"
+        },
+        ".ac-page-heading h1": {
+          "fontFamily": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+          "fontSize": "29px",
+          "lineHeight": "39.15px"
+        },
+        ".ac-setting-row strong": {
+          "fontFamily": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+          "fontSize": "13px",
+          "lineHeight": "18px"
+        },
+        ".ac-setting-row small": {
+          "fontFamily": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+          "fontSize": "11px",
+          "lineHeight": "14px"
+        }
+      },
+      "switches": [
+        {
+          "label": "始终置顶",
+          "checked": "false",
+          "track": {
+            "left": 916.7999877929688,
+            "top": 0.3499999940395355,
+            "right": 954.7999877929688,
+            "bottom": 22.349999994039536,
+            "width": 38,
+            "height": 22
+          },
+          "thumb": {
+            "left": 919.7999877929688,
+            "top": 3.3500001430511475,
+            "right": 935.7999877929688,
+            "bottom": 19.350000143051147,
+            "width": 16,
+            "height": 16
+          },
+          "translate": "0px",
+          "transform": "none"
+        },
+        {
+          "label": "透明区域鼠标穿透",
+          "checked": "false",
+          "track": {
+            "left": 916.7999877929688,
+            "top": 44.150001525878906,
+            "right": 954.7999877929688,
+            "bottom": 66.1500015258789,
+            "width": 38,
+            "height": 22
+          },
+          "thumb": {
+            "left": 919.7999877929688,
+            "top": 47.150001525878906,
+            "right": 935.7999877929688,
+            "bottom": 63.150001525878906,
+            "width": 16,
+            "height": 16
+          },
+          "translate": "0px",
+          "transform": "none"
+        },
+        {
+          "label": "开机启动",
+          "checked": "false",
+          "track": {
+            "left": 916.7999877929688,
+            "top": 87.95000457763672,
+            "right": 954.7999877929688,
+            "bottom": 109.95000457763672,
+            "width": 38,
+            "height": 22
+          },
+          "thumb": {
+            "left": 919.7999877929688,
+            "top": 90.95000457763672,
+            "right": 935.7999877929688,
+            "bottom": 106.95000457763672,
+            "width": 16,
+            "height": 16
+          },
+          "translate": "0px",
+          "transform": "none"
+        },
+        {
+          "label": "关闭窗口后留在托盘",
+          "checked": "true",
+          "track": {
+            "left": 916.7999877929688,
+            "top": 131.75,
+            "right": 954.7999877929688,
+            "bottom": 153.75,
+            "width": 38,
+            "height": 22
+          },
+          "thumb": {
+            "left": 935.7999877929688,
+            "top": 134.75,
+            "right": 951.7999877929688,
+            "bottom": 150.75,
+            "width": 16,
+            "height": 16
+          },
+          "translate": "16px",
+          "transform": "none"
+        },
+        {
+          "label": "互动音效",
+          "checked": "true",
+          "track": {
+            "left": 916.7999877929688,
+            "top": 224.35000610351562,
+            "right": 954.7999877929688,
+            "bottom": 246.35000610351562,
+            "width": 38,
+            "height": 22
+          },
+          "thumb": {
+            "left": 935.7999877929688,
+            "top": 227.35000610351562,
+            "right": 951.7999877929688,
+            "bottom": 243.35000610351562,
+            "width": 16,
+            "height": 16
+          },
+          "translate": "16px",
+          "transform": "none"
+        },
+        {
+          "label": "全屏应用时暂时隐藏",
+          "checked": "true",
+          "track": {
+            "left": 916.7999877929688,
+            "top": 287.1499938964844,
+            "right": 954.7999877929688,
+            "bottom": 309.1499938964844,
+            "width": 38,
+            "height": 22
+          },
+          "thumb": {
+            "left": 935.7999877929688,
+            "top": 290.1499938964844,
+            "right": 951.7999877929688,
+            "bottom": 306.1499938964844,
+            "width": 16,
+            "height": 16
+          },
+          "translate": "16px",
+          "transform": "none"
+        },
+        {
+          "label": "启用安静时段",
+          "checked": "true",
+          "track": {
+            "left": 916.7999877929688,
+            "top": 325.95001220703125,
+            "right": 954.7999877929688,
+            "bottom": 347.95001220703125,
+            "width": 38,
+            "height": 22
+          },
+          "thumb": {
+            "left": 935.7999877929688,
+            "top": 328.95001220703125,
+            "right": 951.7999877929688,
+            "bottom": 344.95001220703125,
+            "width": 16,
+            "height": 16
+          },
+          "translate": "16px",
+          "transform": "none"
+        },
+        {
+          "label": "允许附近探索使用位置",
+          "checked": "false",
+          "track": {
+            "left": 916.7999877929688,
+            "top": 444.75,
+            "right": 954.7999877929688,
+            "bottom": 466.75,
+            "width": 38,
+            "height": 22
+          },
+          "thumb": {
+            "left": 919.7999877929688,
+            "top": 447.75,
+            "right": 935.7999877929688,
+            "bottom": 463.75,
+            "width": 16,
+            "height": 16
+          },
+          "translate": "0px",
+          "transform": "none"
+        },
+        {
+          "label": "位置仅在探索时更新",
+          "checked": "true",
+          "track": {
+            "left": 916.7999877929688,
+            "top": 489.5500183105469,
+            "right": 954.7999877929688,
+            "bottom": 511.5500183105469,
+            "width": 38,
+            "height": 22
+          },
+          "thumb": {
+            "left": 935.7999877929688,
+            "top": 492.5500183105469,
+            "right": 951.7999877929688,
+            "bottom": 508.5500183105469,
+            "width": 16,
+            "height": 16
+          },
+          "translate": "16px",
+          "transform": "none"
+        },
+        {
+          "label": "情绪统计",
+          "checked": "false",
+          "track": {
+            "left": 916.7999877929688,
+            "top": 534.3500366210938,
+            "right": 954.7999877929688,
+            "bottom": 556.3500366210938,
+            "width": 38,
+            "height": 22
+          },
+          "thumb": {
+            "left": 919.7999877929688,
+            "top": 537.3500366210938,
+            "right": 935.7999877929688,
+            "bottom": 553.3500366210938,
+            "width": 16,
+            "height": 16
+          },
+          "translate": "0px",
+          "transform": "none"
+        },
+        {
+          "label": "界面动效",
+          "checked": "true",
+          "track": {
+            "left": 602.6000366210938,
+            "top": 604.1500244140625,
+            "right": 640.6000366210938,
+            "bottom": 626.1500244140625,
+            "width": 38,
+            "height": 22
+          },
+          "thumb": {
+            "left": 621.6000366210938,
+            "top": 607.1500244140625,
+            "right": 637.6000366210938,
+            "bottom": 623.1500244140625,
+            "width": 16,
+            "height": 16
+          },
+          "translate": "16px",
+          "transform": "none"
+        }
+      ]
+    },
+    {
+      "name": "notification-and-privacy-1280x844",
+      "viewport": {
+        "width": 1280,
+        "height": 844,
+        "scale": 1.25
+      },
+      "main": {
+        "left": 192,
+        "top": 54,
+        "right": 1280,
+        "bottom": 844,
+        "width": 1088,
+        "height": 790,
+        "scrollTop": 0,
+        "scrollHeight": 790,
+        "clientHeight": 790,
+        "scrollWidth": 1088,
+        "clientWidth": 1088
+      },
+      "save": {
+        "left": 1106,
+        "top": 606.9125366210938,
+        "right": 1256,
+        "bottom": 642.9125366210938,
+        "width": 150,
+        "height": 36
+      },
+      "privacy": {
+        "left": 402,
+        "top": 440.51251220703125,
+        "right": 1256,
+        "bottom": 594.9125213623047,
+        "width": 854,
+        "height": 154.40000915527344
+      },
+      "page": {
+        "left": 192,
+        "top": 54,
+        "right": 1280,
+        "bottom": 713.9125366210938,
+        "width": 1088,
+        "height": 659.9125366210938
+      },
+      "preview": null,
+      "typography": {
+        "body": {
+          "fontFamily": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+          "fontSize": "14px",
+          "lineHeight": "21px"
+        },
+        ".accounts": {
+          "fontFamily": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+          "fontSize": "14px",
+          "lineHeight": "21px"
+        },
+        ".ac-page-heading h1": {
+          "fontFamily": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+          "fontSize": "29px",
+          "lineHeight": "39.15px"
+        },
+        ".ac-setting-row strong": {
+          "fontFamily": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+          "fontSize": "13px",
+          "lineHeight": "18px"
+        },
+        ".ac-setting-row small": {
+          "fontFamily": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+          "fontSize": "11px",
+          "lineHeight": "14px"
+        }
+      },
+      "switches": [
+        {
+          "label": "桌面通知",
+          "checked": "true",
+          "track": {
+            "left": 1203.2000732421875,
+            "top": 177.15000915527344,
+            "right": 1241.2000732421875,
+            "bottom": 199.15000915527344,
+            "width": 38,
+            "height": 22
+          },
+          "thumb": {
+            "left": 1222.2000732421875,
+            "top": 180.15000915527344,
+            "right": 1238.2000732421875,
+            "bottom": 196.15000915527344,
+            "width": 16,
+            "height": 16
+          },
+          "translate": "16px",
+          "transform": "none"
+        },
+        {
+          "label": "伙伴互动提醒",
+          "checked": "true",
+          "track": {
+            "left": 1203.2000732421875,
+            "top": 207.9499969482422,
+            "right": 1241.2000732421875,
+            "bottom": 229.9499969482422,
+            "width": 38,
+            "height": 22
+          },
+          "thumb": {
+            "left": 1222.2000732421875,
+            "top": 210.9499969482422,
+            "right": 1238.2000732421875,
+            "bottom": 226.9499969482422,
+            "width": 16,
+            "height": 16
+          },
+          "translate": "16px",
+          "transform": "none"
+        },
+        {
+          "label": "对战邀请提醒",
+          "checked": "true",
+          "track": {
+            "left": 1203.2000732421875,
+            "top": 238.75,
+            "right": 1241.2000732421875,
+            "bottom": 260.75,
+            "width": 38,
+            "height": 22
+          },
+          "thumb": {
+            "left": 1222.2000732421875,
+            "top": 241.75,
+            "right": 1238.2000732421875,
+            "bottom": 257.75,
+            "width": 16,
+            "height": 16
+          },
+          "translate": "16px",
+          "transform": "none"
+        },
+        {
+          "label": "菜园成熟提醒",
+          "checked": "true",
+          "track": {
+            "left": 1203.2000732421875,
+            "top": 269.5500183105469,
+            "right": 1241.2000732421875,
+            "bottom": 291.5500183105469,
+            "width": 38,
+            "height": 22
+          },
+          "thumb": {
+            "left": 1222.2000732421875,
+            "top": 272.5500183105469,
+            "right": 1238.2000732421875,
+            "bottom": 288.5500183105469,
+            "width": 16,
+            "height": 16
+          },
+          "translate": "16px",
+          "transform": "none"
+        },
+        {
+          "label": "启用安静时段",
+          "checked": "true",
+          "track": {
+            "left": 1203.2000732421875,
+            "top": 305.3500061035156,
+            "right": 1241.2000732421875,
+            "bottom": 327.3500061035156,
+            "width": 38,
+            "height": 22
+          },
+          "thumb": {
+            "left": 1222.2000732421875,
+            "top": 308.3500061035156,
+            "right": 1238.2000732421875,
+            "bottom": 324.3500061035156,
+            "width": 16,
+            "height": 16
+          },
+          "translate": "16px",
+          "transform": "none"
+        },
+        {
+          "label": "允许附近探索使用位置",
+          "checked": "false",
+          "track": {
+            "left": 1203.2000732421875,
+            "top": 492.51251220703125,
+            "right": 1241.2000732421875,
+            "bottom": 514.5125122070312,
+            "width": 38,
+            "height": 22
+          },
+          "thumb": {
+            "left": 1206.2000732421875,
+            "top": 495.51251220703125,
+            "right": 1222.2000732421875,
+            "bottom": 511.51251220703125,
+            "width": 16,
+            "height": 16
+          },
+          "translate": "0px",
+          "transform": "none"
+        },
+        {
+          "label": "位置仅在探索时更新",
+          "checked": "true",
+          "track": {
+            "left": 1203.2000732421875,
+            "top": 523.3125,
+            "right": 1241.2000732421875,
+            "bottom": 545.3125,
+            "width": 38,
+            "height": 22
+          },
+          "thumb": {
+            "left": 1222.2000732421875,
+            "top": 526.3125,
+            "right": 1238.2000732421875,
+            "bottom": 542.3125,
+            "width": 16,
+            "height": 16
+          },
+          "translate": "16px",
+          "transform": "none"
+        },
+        {
+          "label": "情绪统计",
+          "checked": "false",
+          "track": {
+            "left": 1203.2000732421875,
+            "top": 554.1124877929688,
+            "right": 1241.2000732421875,
+            "bottom": 576.1124877929688,
+            "width": 38,
+            "height": 22
+          },
+          "thumb": {
+            "left": 1206.2000732421875,
+            "top": 557.1124877929688,
+            "right": 1222.2000732421875,
+            "bottom": 573.1124877929688,
+            "width": 16,
+            "height": 16
+          },
+          "translate": "0px",
+          "transform": "none"
+        },
+        {
+          "label": "界面动效",
+          "checked": "true",
+          "track": {
+            "left": 771.2999877929688,
+            "top": 613.9125366210938,
+            "right": 809.2999877929688,
+            "bottom": 635.9125366210938,
+            "width": 38,
+            "height": 22
+          },
+          "thumb": {
+            "left": 790.2999877929688,
+            "top": 616.9125366210938,
+            "right": 806.2999877929688,
+            "bottom": 632.9125366210938,
+            "width": 16,
+            "height": 16
+          },
+          "translate": "16px",
+          "transform": "none"
+        }
+      ]
+    }
+  ],
+  "passed": true
+}
