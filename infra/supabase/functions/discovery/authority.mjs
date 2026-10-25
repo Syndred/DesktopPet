@@ -48,6 +48,7 @@ export function createWildAuthority({ store, now = Date.now, uuid = () => crypto
     if (input.op === 'session') return presentSession((await permit(actor, input.permitId)).session);
     if (input.op === 'action') { const value = await store.action(actor, identifier(input.actionId, 'actionId')); requireValue(value, 'ACTION_NOT_FOUND', '找不到操作回执', 404); return value; }
     if (input.op === 'captures') return store.captures(actor);
+    if (input.op === 'permits') return store.permits(actor);
     if (input.op === 'act') {
       requireValue(ACTIONS.has(input.action) && Number.isSafeInteger(input.expectedRound) && input.expectedRound >= 1, 'INVALID_BATTLE_ACTION', '行动或回合无效');
       const request = { op: 'act', permitId: identifier(input.permitId, 'permitId'), action: input.action, expectedRound: input.expectedRound };

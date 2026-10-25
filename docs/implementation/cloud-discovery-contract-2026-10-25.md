@@ -55,6 +55,18 @@ select public.lingjing_discovery_take_location(
 
 08的authority fragment/全存档revision已合入；后续游戏事务按 `lock_save_owner → 领域行 → commit_authority` 同一SQL提交。02登记合法宠物、05统一经济和规范成长，本域不会另建库存/成长通道。跨端恢复必须采用服务端同一个petId与奖励凭据；真实链路未验收前不置完成。
 
+## 游戏 SQL 与函数下一检查点
+
+`20261025030459_lingjing_discovery_wild_transactions.sql` 已通过实际PGlite/共享规则/规范02实例与成长/05库存 reducer 的贯通检查。它新增私有permits、game_actions和captures，普通客户端无表或RPC权限；同一owner锁序串行化回合、准入和收服。`game_write` 在同一事务消费位置、核对实例原revision、写服务端会话/不可变回执，并提交统一08 authority fragment。公开 HTTP 只接收动作/回合/permitId/actionId，特权payload完全由验证后的Edge生成。
+
+依赖：已部署08身份/受保护CAS、上述03位置迁移、已批准02 `67546f5+d7b4b07` 的可信 companions module，以及05部署 `public.runtime_territory_capture_context(text,double precision,double precision)` 并通过合法菜园入口初始化 garden module。SQL可创建而05函数尚未部署，但此时不得宣称完整收服可用；胜负奖励也明确要求规范garden模块。捕捉事务内重算05上下文并以FOR SHARE保持区域，预览若变化则整体冲突重试，不发放旧HTTP倍率。
+
+游戏入口在本检查点接入 `authority.mjs/store.mjs/domain.mjs`。`domain.mjs`只拼装共享规范函数：02的 `createCompanionInstance/companionUnit/awardBattleResult`、05的 `applyCloudCommand`；不复制构造器、成长公式或奖励数量。捕捉petId固定为 `pet-<server permit UUID>`，新实例及 `(owner,petId)` 注册、位置消费、discovery回执和统一存档revision同一SQL提交。新旧伙伴/独立选择/历史行保留；当前服务器discovery片段使用原SQLite通用表schema，12项专项检查包含真实SQLite导入和旧历史保留。
+
+HTTP操作：`reserve {spawnId,petId,proofId,actionId}` → `{id,sessionId,expiresAt}`；`session {permitId}`、`act {permitId,action,expectedRound,actionId}`、`cancel {permitId,actionId}`、`confirm {permitId,proofId,name,actionId}`、`captures`、`permits`、`action {actionId}`。actor或对战对象/胜负/经验/倍率不由客户端提交。操作冲突或网络不确定时读原action或会话；普通写入不能覆盖受保护片段。
+
+尚待完成：主协调审查/部署新游戏迁移及函数、05前置、真实HTTPS捕捉/竞争回执、新版Electron共享BattleScreen后端SPI与SQLite/新设备恢复。完整目标仍active，当前位置组件真实HTTPS13项检查与物理78米local-os收服不能替代这些未验收项。
+
 ## 验证状态
 
 当前11个本地专项检查通过：真实ECDSA篡改/重放、加密测试vault与handler/SQL贯通、嵌入PostgreSQL权限/nonce/消费和统一设备撤销、共享核心100次分发一致性、源哈希/8角色目录、状态机回执与共享Auth主进程能力消费。嵌入PostgreSQL/测试vault/注入actor仅是本地检查，不是Supabase Auth或云端部署证据。

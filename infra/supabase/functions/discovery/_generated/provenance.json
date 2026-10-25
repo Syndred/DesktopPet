@@ -6,7 +6,14 @@
     "infra/supabase/functions/_shared/battle-core.js": "67225069e3542668b6c7316e4f35a545cb3892754ca1fb3af8efd3c2bef3e885",
     "apps/pc-app/runtime/features/battle/presentation.cjs": "24b6ba3d7c5c4ab1e0b93c4e0358696bc2d7bbf08ecc1b44652b3fb5e431865f",
     "apps/pc-app/runtime/features/discovery/coordinates.cjs": "0cf629d1c1c35a848ae03f5633492dbf94d4478687c839da0677ce3f18843077",
-    "apps/pc-app/runtime/features/discovery/spawns.cjs": "756da390303cb42d09a7de9498da14a6a56a4788faa9e59bc15ad56407e6a291"
+    "apps/pc-app/runtime/features/discovery/spawns.cjs": "756da390303cb42d09a7de9498da14a6a56a4788faa9e59bc15ad56407e6a291",
+    "apps/pc-app/runtime/features/companions/cloud-domain.mjs": "756a49dfa483edc208bbdcaf6b0d336034e949c3081fa7ac519b87a225301fa3",
+    "apps/pc-app/runtime/features/companions/instance.mjs": "814049b4e678cf52ce9aa63e695fdc89293dd6da9bd0bee72deb86986f10bf45",
+    "apps/pc-app/runtime/features/companions/cloud-growth.mjs": "0b78e2628646a6016e6eccbaad3ef2dec10bcc53189acd3a064a2d3275f5c085",
+    "apps/pc-app/runtime/features/companions/growth.mjs": "e2239549f38a5df3b8911406c69d3a3c4c0ac655061cb219966716fb85c28255",
+    "apps/pc-app/runtime/features/resources/assets/roster-v2/catalog.json": "7910fbc82b93957047a1767ae1f09f6431877f5a9ac4df59f30c1b48049b3ef8",
+    "apps/pc-app/runtime/features/garden/cloud-domain.mjs": "261866c5c0182abc67eb07c745aac96db40bbe760eba4dff72cd8d40191e1676",
+    "apps/pc-app/runtime/features/garden/catalog.json": "4f87be75b43692f0271e3c472e2558fa9ab0f60f41c5f37fa419aad542cd59fa"
   },
   "catalog": [
     {
@@ -50,5 +57,5 @@
       "element": "water"
     }
   ],
-  "runtimeSha256": "f50f1543959f0859f304abc3d55c190b4fdb7e33cfe95d2adfe560f6440f6fef"
+  "runtimeSha256": "521f652228ec45f798e2b85e765474a92b120ce2c88de16f11fbcbed4ca59fc2"
 }
