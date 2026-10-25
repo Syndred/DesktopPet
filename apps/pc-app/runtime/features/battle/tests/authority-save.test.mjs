@@ -15,7 +15,7 @@ const {createCompanionBackupAdapter}=require('../../companions/backup.cjs'),{cre
 const {GardenService}=require('../../garden/service.cjs'),{BackupManager}=require('../../accounts/backups.cjs');
 const {BattleCloudAuthority}=require('../cloud-authority.cjs');
 const {saveDataChecksum}=require('../../accounts/util.cjs');
-const users=['host','guest'].map(name=>({uid:randomUUID(),owner:randomUUID(),account:name,device:randomUUID(),sid:randomUUID()}));
+const users=['host','guest'].map((name,index)=>({uid:randomUUID(),owner:index===1?'o'.repeat(160):randomUUID(),account:name,device:randomUUID(),sid:randomUUID()}));
 const record=name=>{checks.push(name);console.log(name);};
 await db.exec(`CREATE ROLE anon;CREATE ROLE authenticated;CREATE ROLE service_role BYPASSRLS;
 CREATE SCHEMA auth;GRANT USAGE ON SCHEMA auth TO authenticated,service_role;
@@ -41,7 +41,7 @@ function fixture(user,templateId) {
   const other=companions.adopt(user.owner,{actionId:'canonical-other-adoption',templateId,name:'另一只伙伴',showOnDesktop:false}).data.pet;
   const garden=new GardenService({db:sqlite});garden.snapshot({ownerAccountId:user.owner});
   const companion=createCompanionBackupAdapter(sqlite),gardenBackup=createGardenBackupAdapter(sqlite),battle=require('../backup.cjs').createBattleBackupAdapter(sqlite);
-  const backups=new BackupManager({db:sqlite,directory:`artifacts/battle/cloud/readback-${user.owner}`,getIdentity:owner=>sqlite.prepare('SELECT * FROM account_identities WHERE owner_account_id=?').get(owner)});backups.register(companion);backups.register(gardenBackup);backups.register(battle);
+  const backups=new BackupManager({db:sqlite,directory:`artifacts/battle/cloud/readback-${user.uid}`,getIdentity:owner=>sqlite.prepare('SELECT * FROM account_identities WHERE owner_account_id=?').get(owner)});backups.register(companion);backups.register(gardenBackup);backups.register(battle);
   const envelope=backups.snapshot(user.owner);return {sqlite,pet,other,envelope,companion,gardenBackup,battle,backups,companions};
 }
 const binding=user=>[user.uid,user.owner,user.device,user.sid];
@@ -76,6 +76,7 @@ try {
     const previous=await head(user),session=friendSession(room,rounds,user.owner,{}),p=await prepareBattleSettlement({envelope:previous.envelope,owner:user.owner,session});
     const proof=await settle(user,'friend',room.id,user.pet.petId,previous.revision,p),again=await settle(user,'friend',room.id,user.pet.petId,0,p),current=await head(user);
     assert.equal(proof.authority.actionId,index===0?proof.action_id:`battle-authority:friend:${room.id}`);
+    if(index===1){assert.ok(proof.action_id.length>200);assert.ok(proof.authority.actionId.length<=128);assert.equal(proof.reward.actionId,`battle:${room.id}:${user.owner}`);}
     assert.equal(again.duplicate,true);assert.deepEqual({...again,duplicate:false},proof);assert.equal(current.revision,previous.revision+1);
     const modules=current.envelope.data.modules,originalPets=previous.envelope.data.modules.companions.data.tables.companion_pets;
     const pets=modules.companions.data.tables.companion_pets,pet=JSON.parse(pets.find(row=>row.pet_id===user.pet.petId).data_json),old=JSON.parse(originalPets.find(row=>row.pet_id===user.pet.petId).data_json);
@@ -101,7 +102,7 @@ try {
   }
   assert.equal(reports[0].endedAt,reports[1].endedAt);assert.equal(reports[0].rounds.length,reports[1].rounds.length);
   const oldHead=await head(host),oldAgain=await settle(host,'friend',room.id,host.pet.petId,0,prepared);assert.equal(oldAgain.authority.actionId,host.proof.action_id);assert.deepEqual(oldAgain.authority,host.proof.authority);assert.deepEqual(await head(host),oldHead);
-  record('additive CAS-key migration uses a short owner-scoped key for new receipts and replays an existing original domain-key receipt unchanged');
+  record('160-character original owner completes Postgres settlement and SQLite replay using a short CAS key while retaining its original long domain receipt; an existing legacy receipt replays unchanged');
   for(let i=0;i<reports[0].rounds.length;i++){assert.equal(reports[0].rounds[i].hpAfter.player,reports[1].rounds[i].hpAfter.enemy);assert.equal(reports[0].rounds[i].actions.player,reports[1].rounds[i].actions.enemy);}
   record('both owners receive exactly one canonical growth + two seeds + mirrored complete report, with original other-pet state preserved');
   record('actual SQLite readback completes a finished-but-pending report idempotently; late adapter failure rolls back companion/garden restore together');
