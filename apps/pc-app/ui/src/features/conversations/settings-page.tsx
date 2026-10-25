@@ -101,7 +101,7 @@ function PersonaForm({ pet, profile, request, refresh }: { pet: ConversationPet;
 }
 
 function SettingsNavigation() {
-  const links = [{ href: '/settings', title: '桌面与行为', icon: Monitor }, { href: '/settings', title: '通知与隐私', icon: Bell },
+  const links = [{ href: '/settings', title: '桌面与行为', icon: Monitor }, { href: '/settings/privacy', title: '通知与隐私', icon: Bell },
     { href: '/settings/ai', title: 'AI 对话', icon: MessageCircle }, { href: '/resources', title: '角色资源', icon: Box }, { href: '/account', title: '账号与同步', icon: UserRound }];
   return <nav className="cv-settings-nav" aria-label="设置分类">{links.map(link => <a key={link.title} href={`#${link.href}`} className={link.href === '/settings/ai' ? 'selected' : ''}
     aria-current={link.href === '/settings/ai' ? 'page' : undefined}><link.icon size={18}/><span>{link.title}</span></a>)}</nav>;
