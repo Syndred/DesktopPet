@@ -1,0 +1,107 @@
+{
+  "module": "discovery",
+  "scope": "Real HTTPS cloud discovery/admission/wild rounds/capture receipts, unified Auth and preserved legacy owner, original BattleScreen/rules and Windows location gates, canonical save/instance/reward recovery across devices",
+  "branch": "codex/lingjing-discovery",
+  "commit": "e3d8ec31cbb1da31492dce58d82856a4360f2bc5",
+  "goalStatus": "active",
+  "status": "signed_location_layer_implemented_authoritative_capture_in_progress",
+  "deployReady": false,
+  "sharedBaseline": "46abf416e0500b53ef32fc29b441d923ef5a6a80",
+  "approvedIdentityCheckpoint": "f81008c",
+  "contracts": [
+    "docs/implementation/cloud-upgrade-2026-10-25.md",
+    "docs/implementation/cloud-identity-contract-2026-10-25.md",
+    "docs/implementation/cloud-discovery-contract-2026-10-25.md",
+    "infra/supabase/functions/_shared/lingjing-auth.ts"
+  ],
+  "implemented": [
+    "The function consumes shared withActor and modern key helpers; removes the former body session_token/runtime_accounts authentication path",
+    "Canonical Auth UUID and preserved text owner remain separate, with verified device/session binding",
+    "Encrypted main-process P-256 signing key, fixed canonical payload, server nonce and purpose/reference binding, no coordinate-signing IPC",
+    "Freshness30s, precision80m, default-position rejection, proof TTL15s and replay/key-rotation/consumer checks;100m geofence rules unchanged",
+    "Service-only additive location schema/RPC, RLS, explicit EXECUTE revocation, row locks, idempotent proof acceptance and shared in-transaction take_location API for05",
+    "Optional coordinator-only scenario grants preserve simulated provenance; clients cannot self-enable through metadata or a body flag",
+    "Self-contained generated function bundle directly contains the current battle kernel, read presenter, coordinates and eight-role world catalog with source hashes"
+  ],
+  "migrations": [
+    {
+      "path": "infra/supabase/migrations/20261025020719_lingjing_discovery_cloud_authority.sql",
+      "createdBy": "Supabase CLI2.122.0 migration new lingjing_discovery_cloud_authority --workdir infra",
+      "status": "location layer locally checked; session/capture/save integration still being added; not ready for production deployment",
+      "requires": "Approved08 identity mapping/device contract; full save authority transaction contract before capture can be deployed",
+      "remoteAppliedByThisChat": false
+    }
+  ],
+  "checks": [
+    {
+      "command": "node --test apps/pc-app/runtime/features/discovery/tests/cloud-handler.test.mjs apps/pc-app/runtime/features/discovery/tests/cloud-protocol.test.mjs apps/pc-app/runtime/features/discovery/tests/cloud-location-sql.test.mjs apps/pc-app/runtime/features/discovery/tests/cloud-runtime.test.mjs",
+      "passed": true,
+      "cases": 7,
+      "scope": "Local actual ECDSA/AES test vault, Request/Response, PGlite SQL and kernel distribution parity; not real Auth, HTTPS, Windows safeStorage or physical positioning"
+    },
+    {
+      "command": "npx --yes deno@2.9.6 check --config infra/supabase/functions/discovery/deno.json infra/supabase/functions/discovery/index.ts",
+      "passed": true,
+      "scope": "Function-owned config isolates application tsconfig and avoids modifying shared node_modules"
+    },
+    {
+      "command": "Deno2.9.6 eval imports generated runtime and executes rules/nearbySpawns",
+      "passed": true,
+      "scope": "Actual Deno execution: five-elements-standard-v1,16 generated nearby points"
+    },
+    {
+      "check": "Generated bundle equals existing kernel across25 ordered elements and4 player actions versus normal, plus three geographic spawn grids",
+      "passed": true,
+      "scope": "100 deterministic distribution parity cases; no game formula changes or natural/real-cloud gameplay claim"
+    }
+  ],
+  "realCloudEvidence": {
+    "targetProject": "jbvrdmrkwpznbrvteive",
+    "name": "Text Comparision",
+    "statusReadOnlyVerified": "ACTIVE_HEALTHY",
+    "region": "ap-southeast-1",
+    "database": "PostgreSQL17.6.1.104",
+    "observedMigrations": ["preserve_comparisontext_before_lingjing", "lingjing_identity_actor_contract"],
+    "legacyArchiveSchemaObserved": "comparisontext_archive_20261025",
+    "legacyBusinessTablesObserved": 18,
+    "edgeFunctionsObserved": 0,
+    "discoveryHttpsVerified": false,
+    "realAuthPositiveFlowVerifiedByThisChat": false,
+    "productionWritesByThisChat": 0,
+    "advisorsBaseline": {
+      "infoFindings": 19,
+      "kind": "rls_enabled_no_policy in the18 isolated comparisontext archive tables and08 private legacy_account_claims; intentional deny-by-default, not newly deployed discovery tables",
+      "remediationReference": "https://supabase.com/docs/guides/database/database-linter?lint=0008_rls_enabled_no_policy"
+    }
+  },
+  "preservation": {
+    "legacyOwnersAreText": true,
+    "oldDataAndHistoryDeleted": false,
+    "sharedSourceCheckoutModified": false,
+    "battleUiModified": false,
+    "battle04WorktreeAccessed": false,
+    "remoteDatabaseOrFunctionsChanged": false,
+    "privateKeysOrTokensCommitted": false,
+    "capturePetIdsAndRewards": "Must be returned by the canonical08/02 transaction, never generated independently on each client; still in implementation"
+  },
+  "cleanupCandidates": [
+    {
+      "path": "apps/pc-app/runtime/features/discovery/server-authority.cjs",
+      "reason": "Former legacy runtime session/standalone authority; retire after the new self-contained authoritative server and corresponding tests replace its remaining fixture consumers"
+    },
+    {
+      "path": "apps/pc-app/runtime/features/discovery/cloud-adapter.cjs",
+      "reason": "Replace legacy sessionToken body/anon bearer with approved08 JWT/device main-process transport; no insecure fallback will remain"
+    }
+  ],
+  "remaining": [
+    "Implement server-owned reserve/session/act/cancel/capture with immutable action and battle receipts",
+    "Bind canonical full-save authority fragment/revision transaction once08 publishes it; retain same petId and one reward receipt across devices",
+    "Complete02 per-instance import/reconcile and05 server territory capture context consumption",
+    "Integrate the external wild authority into existing battle backend/BattleScreen without touching04 UI",
+    "Submit complete self-contained function and migration for central deployment; do not deploy the current location-only checkpoint as complete capture",
+    "Run authenticated real HTTPS negative/positive/ownership/replay tests and two isolated client/local SQLite/new-device recovery checks after coordinator deployment",
+    "Keep physical Windows precision failures explicit and preserve the original80m gate; hardware/location attestation is not claimed by a device signature",
+    "Run deployed advisor diff and final preservation/readback against the same approved source/run identity"
+  ]
+}
