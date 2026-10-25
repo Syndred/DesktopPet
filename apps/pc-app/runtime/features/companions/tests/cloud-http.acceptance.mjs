@@ -10,9 +10,14 @@ const require=createRequire(import.meta.url),{SupabaseRemote,publicConfig,decode
 // Coordinator-run REAL HTTPS verifier. Requires two explicitly designated test
 // accounts in an ignored credentials file; never writes tokens/passwords/logins
 // to evidence. Node processes are not Electron or two physical machines.
-const credentialsFile=process.env.LINGJING_COMPANION_VERIFY_CREDENTIALS;
+const credentialsFile=process.env.LINGJING_COMPANION_VERIFY_CREDENTIALS_DPAPI||process.env.LINGJING_COMPANION_VERIFY_CREDENTIALS;
 assert.ok(credentialsFile,'Set LINGJING_COMPANION_VERIFY_CREDENTIALS to coordinator-owned ignored JSON');
-const credentials=JSON.parse(readFileSync(credentialsFile,'utf8'));assert.equal(credentials.testOnly,true);
+let credentialBytes=readFileSync(credentialsFile);
+if(process.env.LINGJING_COMPANION_VERIFY_CREDENTIALS_DPAPI){
+  const decrypt=`Add-Type -AssemblyName System.Security; $bytes=[Convert]::FromBase64String([Console]::In.ReadToEnd()); $clear=[Security.Cryptography.ProtectedData]::Unprotect($bytes,$null,[Security.Cryptography.DataProtectionScope]::CurrentUser); [Console]::Out.Write([Convert]::ToBase64String($clear))`;
+  credentialBytes=Buffer.from(execFileSync('powershell.exe',['-NoProfile','-NonInteractive','-Command',decrypt],{input:credentialBytes.toString('base64'),encoding:'utf8',windowsHide:true}).trim(),'base64');
+}
+const credentials=JSON.parse(credentialBytes.toString('utf8'));credentialBytes.fill(0);assert.equal(credentials.testOnly,true);
 assert.ok(credentials.a?.account&&credentials.a?.password&&credentials.b?.account&&credentials.b?.password);
 const config=publicConfig();assert.ok(config);assert.equal(new URL(config.url).hostname,'jbvrdmrkwpznbrvteive.supabase.co');
 async function login(profile,credential){mkdirSync(profile,{recursive:true});const remote=new SupabaseRemote({userData:profile,config}),user=await remote.login(credential.account,credential.password),session={...user,ownerAccountId:user.id,cloudProof:user.proof};remote.setCurrentUser(session);return{remote,session,actor:decodeProof(user.proof).actor};}
