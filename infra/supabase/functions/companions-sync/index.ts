@@ -12,7 +12,13 @@ Deno.serve(withActor(async(request,actor)=>{
   const {data:head,error}=await actor.client.from('lingjing_saves').select('action_id,revision,checksum,envelope').eq('owner_id',actor.ownerAccountId).maybeSingle();
   if(error)problem(error);
   if(body.op==='snapshot'){
-    try{return jsonResponse({ok:true,data:{ownerAccountId:actor.ownerAccountId,revision:head?.revision||0,envelope:head?.envelope||null,module:{version:1,data:companionUnit(head?.envelope,actor.ownerAccountId,Date.now())},authority:'live'}});}catch(error){problem(error as {code?:string;message?:string});}
+    try{
+      const worker=createAdminClient();
+      const {data:serialRegistry,error:serialError}=await worker.rpc('lingjing_global_serial_owned',{p_actor:actor,p_expected_revision:head?.revision||0});
+      if(serialError)problem(serialError);
+      return jsonResponse({ok:true,data:{ownerAccountId:actor.ownerAccountId,revision:head?.revision||0,envelope:head?.envelope||null,
+        module:{version:1,data:companionUnit(head?.envelope,actor.ownerAccountId,Date.now())},serialRegistry,authority:'live'}});
+    }catch(error){problem(error as {code?:string;message?:string});}
   }
   if(body.op!=='command'||typeof body.command!=='string')fail('INVALID_REQUEST');
   try{validateCommand(body.command,body.input);}catch(error){problem(error as {code?:string;message?:string});}

@@ -6,11 +6,14 @@ const { companionCombatProfile } = require('./combat-profile.cjs');
 const { createCompanionBackupAdapter } = require('./backup.cjs');
 const { CloudCompanionAuthority } = require('./cloud-authority.cjs');
 const { companionIdentity } = require('./display-identity.mjs');
+const { createGlobalSerialCache } = require('./global-serial-cache.cjs');
+const { join } = require('node:path');
 
 module.exports = {
   id: 'companions', migrations,
   register(services) {
-    const service = new CompanionsService({ db: services.db });
+    const serialCache=createGlobalSerialCache({directory:services.paths?.userData?join(services.paths.userData,'accounts'):null,safeStorage:services.safeStorage});
+    const service = new CompanionsService({ db: services.db,projectIdentity:serialCache.project });
     const backupAdapter=createCompanionBackupAdapter(services.db);
     const playback = createCompanionPlayback({ services, service });
     const disposers = [];
@@ -25,7 +28,7 @@ module.exports = {
         desktop?.sync();
       });
     }
-    const cloud=new CloudCompanionAuthority(services,service,backupAdapter,changed);
+    const cloud=new CloudCompanionAuthority(services,service,backupAdapter,changed,serialCache);
     const ownerMigration = createCompanionOwnerMigration(services, changed);
     function upgradeBuiltins(ownerAccountId) {
       if(cloud.enabled(ownerAccountId))return;
@@ -59,9 +62,9 @@ module.exports = {
       persistDesktopPosition(owner,input){return cloud.execute(owner,'desktop',{actionId:input.actionId,petId:input.petId,position:input.position},{nativePosition:true});},
       hasPendingRecallAll(owner){return cloud.enabled(owner)&&cloud.pending(owner).some(row=>row.command==='recall-all');},
       migrateOwnerAlias: ownerMigration.migrate,
-      listPets(ownerAccountId) { ensureImported(ownerAccountId); return service.snapshot(ownerAccountId).data.pets.filter(pet => pet.resource.kind === '2d'); },
+      listPets(ownerAccountId) { ensureImported(ownerAccountId); return service.readSnapshot(ownerAccountId).data.pets.filter(pet => pet.resource.kind === '2d'); },
       getPet(ownerAccountId, petId) {
-        ensureImported(ownerAccountId); const pet = service.requirePet(ownerAccountId, petId);
+        ensureImported(ownerAccountId); const pet = service.readPet(ownerAccountId, petId);
         if (pet.resource.kind !== '2d') throw Object.assign(new Error('旧伙伴原始记录已保留，本版使用 2D 伙伴'), { code: 'RESOURCE_UNAVAILABLE' });
         return pet;
       },
@@ -125,7 +128,7 @@ module.exports = {
     };
     return {
       commands: {
-        async list(_payload, context) { await services.get('resources')?.ready; ensureImported(context.ownerAccountId);if(cloud.enabled(context.ownerAccountId)&&!cloud.busy(context.ownerAccountId))await cloud.refresh(context.ownerAccountId).catch(()=>{});desktop?.sync();const result=service.snapshot(context.ownerAccountId);if(cloud.enabled(context.ownerAccountId))result.data.sync=cloud.state(context.ownerAccountId);return result; },
+        async list(_payload, context) { await services.get('resources')?.ready; ensureImported(context.ownerAccountId);if(cloud.enabled(context.ownerAccountId)&&!cloud.busy(context.ownerAccountId))await cloud.refresh(context.ownerAccountId).catch(()=>{});desktop?.sync();const result=service.readSnapshot(context.ownerAccountId);if(cloud.enabled(context.ownerAccountId))result.data.sync=cloud.state(context.ownerAccountId);return result; },
         async get(payload, context) { await services.get('resources')?.ready;if(cloud.enabled(context.ownerAccountId)&&!cloud.busy(context.ownerAccountId))await cloud.refresh(context.ownerAccountId).catch(()=>{});const pet = api.getPet(context.ownerAccountId, payload.petId); return { ok: true, data: pet, revision: pet.revision }; },
         combatProfile(payload, context) { const data = api.getCombatProfile(context.ownerAccountId, payload.petId); return { ok: true, data, revision: service.requirePet(context.ownerAccountId, payload.petId).revision }; },
         identity(payload, context) { const data = api.getDisplayIdentity(context.ownerAccountId, payload.petId); return { ok: true, data, revision: service.requirePet(context.ownerAccountId, payload.petId).revision }; },

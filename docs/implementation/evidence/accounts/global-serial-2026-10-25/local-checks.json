@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-25T11:21:14.8733694Z",
+  "sourceBase": "312e5fef320dfd7bb0a1a6eb88d0ce798d09ac17",
+  "publicDisplayDependency": "a528ebcf90e33491364a606747727f7f28f46457",
+  "sqlCommits": [
+    "e97d01ecb395ce12ad4b1a93fb105b84f9dd33a7",
+    "3dd85d6"
+  ],
+  "kind": "LOCAL PostgreSQL-WASM plus real Node SQLite and protocol fixtures",
+  "testCount": 17,
+  "passed": 17,
+  "failed": 0,
+  "cloudDeployed": false,
+  "realCloudConcurrencyVerified": false,
+  "nativeWindowsUiVerified": false,
+  "nativeSafeStorageVerified": false,
+  "cachePersistence": "AES-GCM safeStorage fixture; production requires Electron OS safeStorage",
+  "oldRows": "10-table full-row hashes unchanged by migration; companion export/action/archive bytes unchanged by read projection",
+  "separateRegressionTestsPassed": 18,
+  "denoCompanionsSnapshotCheck": "passed cached Deno 2.9.6 check using committed lockfile",
+  "lint": "targeted MJS; CJS with existing CommonJS and control-regex compatibility rules",
+  "log": "local-final.tap",
+  "logSha256": "04496a03f5ebaca3dca121e7472285b32bd1e1362d892401c5955c5a38dafaad"
+}

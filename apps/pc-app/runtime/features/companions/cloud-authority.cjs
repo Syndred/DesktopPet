@@ -8,7 +8,7 @@ const HEAD='companions:verified-head',INTENT='companions-cloud-command';
  * account_actions holds local command intents and verified receipt metadata.
  * No second remote account, pet, inventory, reward or save store is introduced. */
 class CloudCompanionAuthority {
-  constructor(services,service,backup,changed){this.services=services;this.service=service;this.backup=backup;this.changed=changed;this.db=services.db;this.queues=new Map();this.states=new Map();}
+  constructor(services,service,backup,changed,serialCache=null){this.services=services;this.service=service;this.backup=backup;this.changed=changed;this.serialCache=serialCache;this.db=services.db;this.queues=new Map();this.states=new Map();}
   accounts(){return this.services.get('accounts');}
   enabled(owner){const session=this.accounts()?.privateSession?.();return session?.authKind==='supabase'&&session.ownerAccountId===owner;}
   current(owner){if(this.services.session.getOwnerAccountId()!==owner||!this.enabled(owner))fail('SESSION_CHANGED','账号已切换，请重新操作。');}
@@ -52,6 +52,7 @@ class CloudCompanionAuthority {
     }
     const incoming=remote.module.data;this.backup.validate(incoming,owner);
     if(companionDataChecksum(companionUnit(envelope,owner,Date.now()))!==companionDataChecksum(incoming))fail('CLOUD_RECEIPT_MISMATCH','伙伴内容与完整存档不一致。');
+    if(remote.serialRegistry!==undefined)this.serialCache?.validate(owner,remote.serialRegistry,incoming.tables.companion_pets,remote.revision);
     const current=this.backup.export(owner),localDigest=companionDataChecksum(current),incomingDigest=companionDataChecksum(incoming),ack=this.row(owner,HEAD),prior=ack?JSON.parse(ack.result):null;
     if(prior&&remote.revision<prior.cloudRevision)fail('SYNC_STALE_READBACK','云端读回版本较旧，本机数据已保留。');
     if(localDigest!==incomingDigest&&!this.pristine(current)){
@@ -67,7 +68,8 @@ class CloudCompanionAuthority {
       this.db.prepare('INSERT INTO account_actions(owner_account_id,action_id,kind,input_hash,result,created_at) VALUES(?,?,?,?,?,?) ON CONFLICT(owner_account_id,action_id) DO UPDATE SET input_hash=excluded.input_hash,result=excluded.result,created_at=excluded.created_at').run(owner,HEAD,'companions-cloud-readback',incomingDigest,JSON.stringify(info),info.verifiedAt);
     });
     this.states.set(owner,{mode:'cloud',status:'ready',pending:this.pending(owner).length,cloudRevision:remote.revision,sharedSavePending});
-    if(localDigest!==incomingDigest)this.changed(owner);
+    const serialChanged=remote.serialRegistry===undefined?false:this.serialCache?.accept(owner,remote.serialRegistry,incoming.tables.companion_pets,remote.revision);
+    if(localDigest!==incomingDigest||serialChanged)this.changed(owner);
   }
   async refreshInside(owner,{resume=true}={}){
     this.current(owner);

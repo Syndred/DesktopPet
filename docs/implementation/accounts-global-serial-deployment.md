@@ -84,3 +84,24 @@ commit;
 拒绝生产号、claim 中途故障回滚、旧 reserve 兼容和超出2^53号码。
 WASM 会串行排队事务；其并发发起检查仅证明该执行器无碰撞，不能证明真实云多连接锁竞争、
 Auth、PostGIS 或原生UI通过。真实云并发和09验收仍待总协调部署后完成。
+
+## Main 可信缓存与只读出口
+
+`companions-sync snapshot.serialRegistry` 是单独的服务端 DTO，不进入 envelope/module。
+`CloudCompanionAuthority.apply` 先验证原 envelope checksum、companions module、owner/revision，
+再把 registry 每项与 canonical petId/templateId 配对；允许同owner历史条目保留各自namespace。
+缺少该独立字段时兼容旧Edge；绝不从 pet.data_json/globalSerial、备份、昵称或资源推断号码。
+
+main 将已验证条目存入 `userData/accounts/global-pet-serials.cache`，由 Electron safeStorage
+密封，通过临时文件原子替换。该文件不在共享SQLite，不会被账号/伙伴备份导出或恢复。
+加密不可用时仅保存内存，重启后待服务端读回；损坏/明文缓存也只会待同步。
+缓存按 owner+petId+原templateId 投影，已有权威号不可被不同读回更换或转移。
+
+`CompanionsService.readPet/readSnapshot` 与内部 raw `requirePet/snapshot` 分开。
+index API getPet/listPets/getDisplayIdentity 和 IPC get/list/identity 均消费只读投影；
+内部 mutation、原回执与 backup adapter 继续读取原JSON。纯补号也发
+`companions:changed {ownerAccountId}`，05可按当前owner订阅刷新。
+
+`global-serial-cache.test.cjs` 用真实Node SQLite、实际backup restore及实际services.invoke
+覆盖上述API/IPC、伪造导入、离线、混合namespace、超2^53号、原导出/档案字节保留和缓存重启。
+持久化测试使用AES-GCM safeStorage替身，不能冒充Windows DPAPI或Electron原生通过。

@@ -2,6 +2,7 @@ const { createHash, randomUUID } = require('node:crypto');
 const { listTemplates, findTemplate, BASE_STATS } = require('./templates.cjs');
 const { applyGrowthEffect } = require('./growth.mjs');
 const { createCompanionInstance } = require('./instance.mjs');
+const { withoutUntrustedGlobalSerial } = require('./global-serial-cache.cjs');
 
 class CompanionError extends Error {
   constructor(code, message, revision) { super(message); this.code = code; this.revision = revision; }
@@ -48,9 +49,10 @@ function atomic(db, fn) {
 }
 
 class CompanionsService {
-  constructor({ db, now = () => new Date(), uuid = randomUUID, templates = listTemplates, resolveTemplate = findTemplate }) {
+  constructor({ db, now = () => new Date(), uuid = randomUUID, templates = listTemplates, resolveTemplate = findTemplate, projectIdentity = withoutUntrustedGlobalSerial }) {
     if (!db?.prepare || !db?.exec) throw new Error('Companions require the host SQLite connection');
     this.db = db; this.now = now; this.uuid = uuid; this.templates = templates; this.resolveTemplate = resolveTemplate;
+    this.projectIdentity = projectIdentity;
   }
 
   account(ownerAccountId) {
@@ -69,6 +71,11 @@ class CompanionsService {
   }
 
   selections(ownerAccountId) { return JSON.parse(this.account(ownerAccountId).selections_json); }
+
+  // Separate read-only DTOs from raw domain state. Mutations/receipts/backups
+  // keep the original JSON and cannot accidentally persist a projected number.
+  readPet(ownerAccountId, petId) { return this.projectIdentity(this.requirePet(ownerAccountId, petId)); }
+  readSnapshot(ownerAccountId) { const view=this.snapshot(ownerAccountId);view.data.pets=view.data.pets.map(pet=>this.projectIdentity(pet));return view; }
 
   snapshot(ownerAccountId) {
     const account = this.account(ownerAccountId);
