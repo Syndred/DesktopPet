@@ -157,7 +157,7 @@ class BattleFeatureService {
   async saveCloudTraining(owner,response) {
     this.assertOwner(owner);const session=response.session;
     if(!session||session.mode!=='training'||session.context?.cloudUserId!==owner||session.context?.authority!=='supabase')throw fail('INVALID_CLOUD_SESSION','云端训练归属不一致');
-    if(response.proof){if(!this.store.reward(owner,session.id))await this.cloud.apply(owner,response.proof);this.assertOwner(owner);return this.store.session(owner,session.id);}
+    if(response.proof){const applied=Boolean(this.store.reward(owner,session.id)),needs=this.services.get('backups')?.adapters.get('battle')?.needsAuthorityProjection?.(owner,session.id);if(!applied||needs)await this.cloud.apply(owner,response.proof,{projectionOnly:applied});this.assertOwner(owner);return this.store.session(owner,session.id);}
     if(session.status==='abandoned')return this.services.db.transaction(()=>this.finish(owner,session,'abandoned'))();
     return this.store.save(owner,session);
   }
@@ -608,14 +608,16 @@ class BattleFeatureService {
     }
     session.winner = room.winner_side === session.side ? "player" : room.winner_side ? "enemy" : null;
     let proof = null;
-    if (room.status === "finished" && session.winner && !this.store.reward(owner, session.id)) {
+    const applied=Boolean(this.store.reward(owner,session.id)),projectionOnly=applied&&this.services.get('backups')?.adapters.get('battle')?.needsAuthorityProjection?.(owner,session.id);
+    if (room.status === "finished" && session.winner && (!applied||projectionOnly)) {
       this.user(owner);
       try {
         proof = await this.online.invoke("claim_battle_settlement", { roomId: room.id, petId: session.player.petId });
         this.assertOwner(owner);
-        if(this.isCloud(owner)) {await this.cloud.apply(owner,proof);this.assertOwner(owner);const saved=this.store.session(owner,session.id);if(pending&&rounds.has(pending.roundNo))this.store.resolve(owner,pending.actionId,saved);return saved;}
+        if(this.isCloud(owner)) {await this.cloud.apply(owner,proof,{projectionOnly:Boolean(projectionOnly)});this.assertOwner(owner);const saved=this.store.session(owner,session.id);if(pending&&rounds.has(pending.roundNo))this.store.resolve(owner,pending.actionId,saved);return saved;}
       } catch (error) {
         this.assertOwner(owner);
+        if(projectionOnly)throw error;
         session.settlementError = friendlyError(error);
       }
     }

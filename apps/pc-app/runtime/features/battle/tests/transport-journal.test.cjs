@@ -99,3 +99,17 @@ test('server-locked-original supersession accepts only its explicit shape/reason
     const foreign=plain(f.adapter.export(owner)),session=JSON.parse(foreign.sessions[0].data_json);session.context.cloudUserId='other-owner';foreign.sessions[0].data_json=JSON.stringify(session);assert.throws(()=>f.adapter.validateModule({version:2,data:foreign},owner),{code:'INVALID_BATTLE_BACKUP'});
   }finally{f.close();}
 });
+
+test('finished v1 import becomes clean only through the main-only verified cloud-preview restore; file/context claims cannot seal it',()=>{
+  const f=fixture();try{const old=structuredClone(f.data);old.actions=[{action_id:'finished-import',session_id:id,command_json:JSON.stringify({action:'element_attack',roundNo:1}),result_json:JSON.stringify({sessionId:id,revision:99,resolvedRound:1})}];f.adapter.restore(owner,old,'replace');assert.equal(f.adapter.cloudModule(owner,{version:2,data:f.adapter.export(owner)}).data.actions.length,1);
+    for(const context of [{kind:'file',ownerAccountId:owner,revision:68,checksum:f.cloud.checksum},{kind:'verified-cloud-preview',ownerAccountId:'foreign',revision:68,checksum:f.cloud.checksum},{kind:'verified-cloud-preview',ownerAccountId:owner,revision:0,checksum:f.cloud.checksum}])assert.throws(()=>f.adapter.restoreCloud(owner,f.data,'replace',f.db,context),{code:'INVALID_BATTLE_BACKUP'});
+    assert.equal(f.adapter.cloudModule(owner,{version:2,data:f.adapter.export(owner)}).data.actions.length,1);
+    f.adapter.restoreCloud(owner,f.data,'replace',f.db,{kind:'verified-cloud-preview',ownerAccountId:owner,revision:68,checksum:f.cloud.checksum});f.sync.acceptCloudRestore(owner,{envelope:f.cloud.envelope,cloudRevision:68});assert.equal(f.sync.status(owner).localChanged,false);assert.equal(f.sync.status(owner).cloudRevision,68);assert.deepEqual(plain(f.adapter.export(owner).actions),old.actions);
+  }finally{f.close();}
+});
+
+test('an already rewarded training does not skip a needed fresh projection-only authority readback',async()=>{
+  const f=fixture();try{const old=structuredClone(f.data);old.actions=[{action_id:'already-finished',session_id:id,command_json:JSON.stringify({action:'element_attack',roundNo:1}),result_json:null}];f.adapter.restore(owner,old,'replace');const calls=[],service=Object.assign(Object.create(BattleFeatureService.prototype),{store:f.store,verifiedOwner:()=>owner,services:{get:name=>name==='backups'?f.backups:undefined},cloud:{apply:async(value,proof,options)=>{calls.push({value,proof,options});f.adapter.acceptAuthorityProjection(owner,f.data,{sessionId:id,actionId:'scripted-main-only-readback',revision:68,checksum:f.cloud.checksum});}}});
+    const proof={scripted:true};await service.saveCloudTraining(owner,{session:f.session,proof});assert.deepEqual(calls,[{value:owner,proof,options:{projectionOnly:true}}]);assert.equal(f.adapter.needsAuthorityProjection(owner,id),false);assert.deepEqual(plain(f.adapter.export(owner).actions),old.actions);
+  }finally{f.close();}
+});

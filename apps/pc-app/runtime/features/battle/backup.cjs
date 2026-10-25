@@ -55,12 +55,24 @@ function createBattleBackupAdapter(db) {
       const {transportJournal,...data}=module.data;void transportJournal;
       return {version:1,data:{...data,actions:cloudActions(module.data,owner,db)}};
     },
+    needsAuthorityProjection(owner,sessionId){
+      return db.prepare('SELECT session_id,result_json FROM battle_transport_journal WHERE owner_account_id=? AND legacy_row_json IS NOT NULL AND authority_json IS NULL').all(owner)
+        .some(row=>row.session_id===sessionId||(row.result_json&&JSON.parse(row.result_json).session?.id===sessionId));
+    },
+    restoreCloud(owner,data,mode,connection,context){
+      if(connection!==db||context?.kind!=='verified-cloud-preview'||context.ownerAccountId!==owner||!Number.isSafeInteger(context.revision)||context.revision<1||!/^[0-9a-f]{64}$/.test(context.checksum))invalid('云端预览来源尚未核验');
+      this.restore(owner,data,mode);
+      for(const session of data.sessions){const body=JSON.parse(session.data_json);if(session.status==='finished'&&body.context?.authority==='supabase'&&body.context.cloudUserId===owner&&['training','friend'].includes(body.mode))this.acceptAuthorityProjection(owner,data,{sessionId:session.id,actionId:`cloud-preview:${context.revision}`,revision:context.revision,checksum:context.checksum});}
+    },
     /** Main-only: called inside BattleCloudAuthority's verified readback savepoint.
      * A user v1/v2 file cannot supply the nonserialized origin/seal columns. */
     acceptAuthorityProjection(owner,data,receipt){
       this.validate(data,owner);
       const session=data.sessions.find(row=>row.id===receipt.sessionId),body=session&&JSON.parse(session.data_json);
       if(!session||session.status!=='finished'||body.context?.authority!=='supabase'||body.context.cloudUserId!==owner||!Number.isSafeInteger(receipt.revision)||receipt.revision<1||!/^[0-9a-f]{64}$/.test(receipt.checksum)||typeof receipt.actionId!=='string')invalid('云端动作投影核验来源无效');
+      const report=data.reports.find(row=>row.session_id===session.id),reward=data.rewards.find(row=>row.session_id===session.id);
+      const exact=(table,columns,key,id,expected)=>{const current=db.prepare(`SELECT ${columns.join(',')} FROM ${table} WHERE owner_account_id=? AND ${key}=?`).get(owner,id);return current&&expected&&columns.every(column=>current[column]===expected[column]);};
+      if(!exact(TABLES.sessions.table,TABLES.sessions.columns,'id',session.id,session)||!exact(TABLES.reports.table,TABLES.reports.columns,'id',report?.id,report)||!exact(TABLES.rewards.table,TABLES.rewards.columns,'session_id',session.id,reward))invalid('本机终局、战报或奖励与核验原文不同，原记录已保留');
       const sessions=new Map([[session.id,body]]),canonicalIds=new Set(data.actions.map(row=>row.action_id));
       for(const row of db.prepare(`SELECT ${COLUMNS.join(',')} FROM battle_action_receipts WHERE owner_account_id=?`).all(owner)){
         const journal=db.prepare('SELECT legacy_row_json,session_id,command_json FROM battle_transport_journal WHERE owner_account_id=? AND action_id=?').get(owner,row.action_id);
