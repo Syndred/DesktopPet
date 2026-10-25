@@ -6,7 +6,7 @@
 
 前置：08 身份 / Auth bridge / protected save CAS 已部署；03 `20261025020719` 定位 schema 和 `20261025025641` live actor guard 已部署；02 `9497e8d` 纯成长函数已合入。02 合法领养入口现已由主协调上线，真实验收应通过 `companions-sync` 领养，不能 SQL 造宠物。
 
-主协调审查并应用 `infra/supabase/migrations/20261025024617_lingjing_territory_authority.sql`，随后部署 `garden-sync/index.ts` 和 `territory-sync/index.ts`，均 `verify_jwt=false`。统一 `withActor/getUser/设备会话` 严格验证仍在入口执行。随函数携带 `_shared/lingjing-auth.ts`、`_shared/garden-runtime.bundle.mjs`、`_shared/battle-core.js`。bundle 没有仓库外相对导入；按 `node scripts/acceptance/cloud-territory/build-edge.mjs --check` 核对来源。迁移是 CLI 2.122.0 `migration new` 生成的新追加文件；旧 `20261025020010` 草案从未部署，已在本地以新规范文件替换，历史仍在 Git。
+主协调审查并应用 `infra/supabase/migrations/20261025033032_lingjing_territory_authority.sql`，随后部署 `garden-sync/index.ts` 和 `territory-sync/index.ts`，均 `verify_jwt=false`。统一 `withActor/getUser/设备会话` 严格验证仍在入口执行。随函数携带 `_shared/lingjing-auth.ts`、`_shared/garden-runtime.bundle.mjs`、`_shared/battle-core.js`。bundle 没有仓库外相对导入；按 `node scripts/acceptance/cloud-territory/build-edge.mjs --check` 核对来源。迁移是 CLI 2.122.0 `migration new` 生成的新追加文件；旧 `20261025020010` 草案从未部署，已在本地以新规范文件替换，历史仍在 Git。
 
 `garden-sync` 接受 `snapshot` 和 `command:{plant,harvest,craft,feed}`。首次 snapshot 只创建标准六块地和每种两颗种子，不创建宠物，不导入本地库存。奖励只能随可信战斗/捕捉领域提交，不再开放 renderer claimReward。
 
@@ -34,7 +34,7 @@ PostGIS Polygon/Point + GiST负责当前位置及区域围栏。两个当前 rev
 
 最终园地专项回归34/34、生产 TypeScript/desktop typecheck 和 Electron44.9.3 / better-sqlite3 13.0.3 原生检查通过。覆盖400种共享核心有序元素/动作对、真实 SQLite 实例身份、完整伙伴格式、02规范成长、160字符 owner、幂等/版本拒绝、真实08 identity/CAS +05非空间提交、角色拒绝、撤销回滚、库存与同一伙伴原子变化和其他受保护模块保全。两个完整 Edge 入口通过 Deno2.9.6 `check --no-config`。
 
-上述 PGlite/运行夹具是本地检查，未替换或模拟 PostGIS。另已由主协调实际应用 PostGIS3.3.7 和两个入口；03:40真实结算发现 JSON 减键优先级错误，回滚验证库存/成长未写入。新增 CLI 迁移 `20261025034225_lingjing_territory_receipt_operator.sql` 后，由主协调应用并使用原请求重试成功。已应用历史未重写。
+上述 PGlite/运行夹具是本地检查，未替换或模拟 PostGIS。另已由主协调实际应用 PostGIS3.3.7 和两个入口；03:40真实结算发现 JSON 减键优先级错误，回滚验证库存/成长未写入。新增 CLI 迁移 `20261025034313_lingjing_territory_receipt_operator.sql` 后，由主协调应用并使用原请求重试成功。已应用历史未重写。
 
 真实 HTTPS 已通过：三独立进程/不同设备，同账号并发一次提交/跨设备同回执；两个正常 Auth 账号通过 companions-sync 合法领养；首轮两场自然败局保留并各结算一次5XP/两颗种子；第二次合法挑战两场自然胜利并发争夺，只一方占领、另一方 superseded 无成长/种子；实际响应头后断开正文读取，再按同一 actionId/hash/proof 恢复；驻守不改成长/库存且跨账号拒绝；15秒许可实际到期、错误用途/目标、跨账号许可、伪造胜者、缺许可和提前收获均拒绝且经济未变化。原水稻25分钟时钟继续运行，未缩时或改客户端时间。
 

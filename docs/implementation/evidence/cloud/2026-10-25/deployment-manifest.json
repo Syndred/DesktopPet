@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "at": "2026-10-25T04:08:23.230Z",
+  "at": "2026-10-25T04:25:02.239Z",
   "projectRef": "jbvrdmrkwpznbrvteive",
   "url": "https://jbvrdmrkwpznbrvteive.supabase.co",
   "plan": "free",
@@ -8,122 +8,182 @@
     {
       "version": "20261025015911",
       "name": "preserve_comparisontext_before_lingjing",
-      "source": "infra/supabase/migrations/20261025015844_preserve_comparisontext_before_lingjing.sql",
-      "bookkeepingAligned": false
+      "source": "infra/supabase/migrations/20261025015911_preserve_comparisontext_before_lingjing.sql",
+      "originalSource": "infra/supabase/migrations/20261025015844_preserve_comparisontext_before_lingjing.sql",
+      "bookkeepingAligned": true,
+      "appliedStatementSha256": "6fe30249af23dc330f8aa6820496d28e8e8c02a917e016af694ceac8f59dbf39",
+      "replayAdaptation": {
+        "operation": "infra/supabase/operations/20261025015911-preserve-comparisontext.executed.sql",
+        "reason": "Fresh database has no unrelated original source; strict source/archive protection retained; original remote history never modified."
+      }
     },
     {
       "version": "20261025021620",
       "name": "lingjing_identity_actor_contract",
-      "source": "infra/supabase/migrations/20261025020314_lingjing_identity_actor_contract.sql",
-      "bookkeepingAligned": false
+      "source": "infra/supabase/migrations/20261025021620_lingjing_identity_actor_contract.sql",
+      "originalSource": "infra/supabase/migrations/20261025020314_lingjing_identity_actor_contract.sql",
+      "bookkeepingAligned": true,
+      "appliedStatementSha256": "1568d934738a63514d236c1b7e7394307157141bcca4f640aff5f931791f212b"
     },
     {
       "version": "20261025022918",
       "name": "lingjing_auth_bridge",
-      "source": "infra/supabase/migrations/20261025021755_lingjing_auth_bridge.sql",
-      "bookkeepingAligned": false
+      "source": "infra/supabase/migrations/20261025022918_lingjing_auth_bridge.sql",
+      "originalSource": "infra/supabase/migrations/20261025021755_lingjing_auth_bridge.sql",
+      "bookkeepingAligned": true,
+      "appliedStatementSha256": "e47a69114072d59454902f828132d18a35e618f97b6e9c9e00a04d234df5d5af"
     },
     {
       "version": "20261025023614",
       "name": "lingjing_private_resource_storage",
-      "source": "infra/supabase/migrations/20261025020942_lingjing_private_resource_storage.sql",
-      "bookkeepingAligned": false
+      "source": "infra/supabase/migrations/20261025023614_lingjing_private_resource_storage.sql",
+      "originalSource": "infra/supabase/migrations/20261025020942_lingjing_private_resource_storage.sql",
+      "bookkeepingAligned": true,
+      "appliedStatementSha256": "688b2f3e262da89fe67e51bda2bd7aee98b038ffa327f9d352e749e78e58722f"
     },
     {
       "version": "20261025024615",
       "name": "lingjing_protected_save_cas",
-      "source": "infra/supabase/migrations/20261025021759_lingjing_protected_save_cas.sql",
-      "bookkeepingAligned": false
+      "source": "infra/supabase/migrations/20261025024615_lingjing_protected_save_cas.sql",
+      "originalSource": "infra/supabase/migrations/20261025021759_lingjing_protected_save_cas.sql",
+      "bookkeepingAligned": true,
+      "appliedStatementSha256": "7f0b7ca4e3e370463e1de326483dfda5c7580807dffee21296bd2e2d3dea430c"
     },
     {
       "version": "20261025030635",
       "name": "lingjing_discovery_cloud_authority",
-      "source": "infra/supabase/migrations/20261025020719_lingjing_discovery_cloud_authority.sql",
-      "bookkeepingAligned": false
+      "source": "infra/supabase/migrations/20261025030635_lingjing_discovery_cloud_authority.sql",
+      "originalSource": "infra/supabase/migrations/20261025020719_lingjing_discovery_cloud_authority.sql",
+      "bookkeepingAligned": true,
+      "appliedStatementSha256": "93f951f18c002f657d072d56ef8da8784eb91e04d23b1720269ff6b04fe87be6"
     },
     {
       "version": "20261025030639",
       "name": "lingjing_discovery_live_actor_guard",
-      "source": "infra/supabase/migrations/20261025025641_lingjing_discovery_live_actor_guard.sql",
-      "bookkeepingAligned": false
+      "source": "infra/supabase/migrations/20261025030639_lingjing_discovery_live_actor_guard.sql",
+      "originalSource": "infra/supabase/migrations/20261025025641_lingjing_discovery_live_actor_guard.sql",
+      "bookkeepingAligned": true,
+      "appliedStatementSha256": "be94676c9fe881ef506e4633e52720ecf3f47471556489d02b9403a391b66760"
     },
     {
       "version": "20261025030859",
       "name": "lingjing_cloud_secret_guard",
-      "source": "infra/supabase/migrations/20261025025906_lingjing_cloud_secret_guard.sql",
-      "bookkeepingAligned": false
+      "source": "infra/supabase/migrations/20261025030859_lingjing_cloud_secret_guard.sql",
+      "originalSource": "infra/supabase/migrations/20261025025906_lingjing_cloud_secret_guard.sql",
+      "bookkeepingAligned": true,
+      "appliedStatementSha256": "e3a1ad30c523f211f47dcb24c2a77191aef93b9b0be5a17d333209fc1e9fda8b"
     },
     {
       "version": "20261025031842",
       "name": "lingjing_companion_commands",
-      "source": "infra/supabase/migrations/20261025025515_lingjing_companion_commands.sql",
-      "bookkeepingAligned": false
+      "source": "infra/supabase/migrations/20261025031842_lingjing_companion_commands.sql",
+      "originalSource": "infra/supabase/migrations/20261025025515_lingjing_companion_commands.sql",
+      "bookkeepingAligned": true,
+      "appliedStatementSha256": "86ce8ead55d50ab312a24d98c9f242825a8564249931e04793e6c9a65ee45506"
     },
     {
       "version": "20261025032327",
       "name": "lingjing_session_revocation_ledger",
-      "source": "infra/supabase/migrations/20261025031842_lingjing_session_revocation_ledger.sql",
-      "bookkeepingAligned": false
+      "source": "infra/supabase/migrations/20261025032327_lingjing_session_revocation_ledger.sql",
+      "originalSource": "infra/supabase/migrations/20261025031842_lingjing_session_revocation_ledger.sql",
+      "bookkeepingAligned": true,
+      "appliedStatementSha256": "1fb53921be97b9fc82587da058296ebf6999cc9b002202e99d29960714c6362c"
     },
     {
       "version": "20261025033032",
       "name": "lingjing_territory_authority",
-      "source": "infra/supabase/migrations/20261025024617_lingjing_territory_authority.sql",
-      "bookkeepingAligned": false
+      "source": "infra/supabase/migrations/20261025033032_lingjing_territory_authority.sql",
+      "originalSource": "infra/supabase/migrations/20261025024617_lingjing_territory_authority.sql",
+      "bookkeepingAligned": true,
+      "appliedStatementSha256": "55cf6be2bb5d081129db801433a9f59beaee43c124fdd285514b71956a14e278"
     },
     {
       "version": "20261025034106",
       "name": "lingjing_transaction_actor_guard",
-      "source": "infra/supabase/migrations/20261025033602_lingjing_transaction_actor_guard.sql",
-      "bookkeepingAligned": false
+      "source": "infra/supabase/migrations/20261025034106_lingjing_transaction_actor_guard.sql",
+      "originalSource": "infra/supabase/migrations/20261025033602_lingjing_transaction_actor_guard.sql",
+      "bookkeepingAligned": true,
+      "appliedStatementSha256": "e8e153ad0178cdec4205804edf79ca191aa0df252c97177b7ad3de6a2e9eaf2e"
     },
     {
       "version": "20261025034110",
       "name": "lingjing_domain_actor_guard_adoption",
-      "source": "infra/supabase/migrations/20261025033734_lingjing_domain_actor_guard_adoption.sql",
-      "bookkeepingAligned": false
+      "source": "infra/supabase/migrations/20261025034110_lingjing_domain_actor_guard_adoption.sql",
+      "originalSource": "infra/supabase/migrations/20261025033734_lingjing_domain_actor_guard_adoption.sql",
+      "bookkeepingAligned": true,
+      "appliedStatementSha256": "c2f32c44a5c663ca82bc2533c9914d47475baa6a93b835390f95a445f3a2a810"
     },
     {
       "version": "20261025034122",
       "name": "lingjing_verified_resource_authority",
-      "source": "infra/supabase/migrations/20261025024855_lingjing_verified_resource_authority.sql",
-      "bookkeepingAligned": false
+      "source": "infra/supabase/migrations/20261025034122_lingjing_verified_resource_authority.sql",
+      "originalSource": "infra/supabase/migrations/20261025024855_lingjing_verified_resource_authority.sql",
+      "bookkeepingAligned": true,
+      "appliedStatementSha256": "58fe505ec0a54c3a63d11842b865ec4aabcf7e0eccb61d49a3659b489cd7552b"
     },
     {
       "version": "20261025034132",
       "name": "lingjing_discovery_wild_transactions",
-      "source": "infra/supabase/migrations/20261025030459_lingjing_discovery_wild_transactions.sql",
-      "bookkeepingAligned": false
+      "source": "infra/supabase/migrations/20261025034132_lingjing_discovery_wild_transactions.sql",
+      "originalSource": "infra/supabase/migrations/20261025030459_lingjing_discovery_wild_transactions.sql",
+      "bookkeepingAligned": true,
+      "appliedStatementSha256": "ecb8aae31b48f857d6507ef2922a49f42b96934b6e33cca4415497bec24cb807"
     },
     {
       "version": "20261025034136",
       "name": "lingjing_discovery_capture_scenarios",
-      "source": "infra/supabase/migrations/20261025033352_lingjing_discovery_capture_scenarios.sql",
-      "bookkeepingAligned": false
+      "source": "infra/supabase/migrations/20261025034136_lingjing_discovery_capture_scenarios.sql",
+      "originalSource": "infra/supabase/migrations/20261025033352_lingjing_discovery_capture_scenarios.sql",
+      "bookkeepingAligned": true,
+      "appliedStatementSha256": "649586c2309b1eb00c23f658fb8d00c59ca82732ce8e703dd771d41cd1055515"
     },
     {
       "version": "20261025034313",
       "name": "lingjing_territory_receipt_operator",
-      "source": "infra/supabase/migrations/20261025034225_lingjing_territory_receipt_operator.sql",
-      "bookkeepingAligned": false
+      "source": "infra/supabase/migrations/20261025034313_lingjing_territory_receipt_operator.sql",
+      "originalSource": "infra/supabase/migrations/20261025034225_lingjing_territory_receipt_operator.sql",
+      "bookkeepingAligned": true,
+      "appliedStatementSha256": "43571f9abcd1d950be2cb20354cf00ac55a8695948d8694bd080e686afb66f25"
     },
     {
       "version": "20261025034744",
       "name": "lingjing_battle_jwt_rooms",
-      "source": "infra/supabase/migrations/20261025020540_lingjing_battle_jwt_rooms.sql",
-      "bookkeepingAligned": false
+      "source": "infra/supabase/migrations/20261025034744_lingjing_battle_jwt_rooms.sql",
+      "originalSource": "infra/supabase/migrations/20261025020540_lingjing_battle_jwt_rooms.sql",
+      "bookkeepingAligned": true,
+      "appliedStatementSha256": "d67c29851984e97232e083e7196b3d0b0210a5826f60e69c1957cd23d8463b2f"
     },
     {
       "version": "20261025034748",
       "name": "lingjing_battle_authority_save",
-      "source": "infra/supabase/migrations/20261025024552_lingjing_battle_authority_save.sql",
-      "bookkeepingAligned": false
+      "source": "infra/supabase/migrations/20261025034748_lingjing_battle_authority_save.sql",
+      "originalSource": "infra/supabase/migrations/20261025024552_lingjing_battle_authority_save.sql",
+      "bookkeepingAligned": true,
+      "appliedStatementSha256": "2ce125f22c9a52e37f2dd9a67c8bb29e72fc117417a35e9702908f2402e5c852"
     },
     {
       "version": "20261025040739",
       "name": "lingjing_battle_scoped_authority_receipt",
-      "source": "infra/supabase/migrations/20261025035820_lingjing_battle_scoped_authority_receipt.sql",
-      "bookkeepingAligned": false
+      "source": "infra/supabase/migrations/20261025040739_lingjing_battle_scoped_authority_receipt.sql",
+      "originalSource": "infra/supabase/migrations/20261025035820_lingjing_battle_scoped_authority_receipt.sql",
+      "bookkeepingAligned": true,
+      "appliedStatementSha256": "a775aefb620feb6b3c8fe574e0137f4fb0509d64b041613a2dcd1a82a16367de"
+    },
+    {
+      "version": "20261025040946",
+      "name": "lingjing_live_foreign_key_indexes",
+      "source": "infra/supabase/migrations/20261025040946_lingjing_live_foreign_key_indexes.sql",
+      "originalSource": "infra/supabase/migrations/20261025040919_lingjing_live_foreign_key_indexes.sql",
+      "bookkeepingAligned": true,
+      "appliedStatementSha256": "5b5d3653a8c2496959de19895a8a14f93beaa285eadc987a8288e68e32c897b5"
+    },
+    {
+      "version": "20261025041216",
+      "name": "lingjing_verified_resource_preferences",
+      "source": "infra/supabase/migrations/20261025041216_lingjing_verified_resource_preferences.sql",
+      "originalSource": "infra/supabase/migrations/20261025035333_lingjing_verified_resource_preferences.sql",
+      "bookkeepingAligned": true,
+      "appliedStatementSha256": "e14634a2a2963c9723151bca422acf135e187fe35cbd5385b66be45cbc2615e6"
     }
   ],
   "functions": [
@@ -206,18 +266,18 @@
       "slug": "discovery",
       "name": "discovery",
       "status": "ACTIVE",
-      "version": 4,
+      "version": 5,
       "created_at": 1792897606497,
-      "updated_at": 1792901273949,
+      "updated_at": 1792901727015,
       "verify_jwt": false,
       "import_map": false,
-      "entrypoint_path": "file:///tmp/user_fn_jbvrdmrkwpznbrvteive_c233809a-4db5-4a8a-a515-ff17934dfcd0_4/source/infra/supabase/functions/discovery/index.ts",
-      "ezbr_sha256": "52e80f7f079aeaa76e9a96a099bccc1d3df92b7b10597cb75221564506ce07fa",
+      "entrypoint_path": "file:///tmp/user_fn_jbvrdmrkwpznbrvteive_c233809a-4db5-4a8a-a515-ff17934dfcd0_5/source/infra/supabase/functions/discovery/index.ts",
+      "ezbr_sha256": "4d1242990da2a4ee0835be15c43972a41951dd282774b5c17ae7342edc3ddf08",
       "source": {
         "function": "discovery",
         "entrypoint": "infra/supabase/functions/discovery/index.ts",
-        "sourceCommit": "e20b3a258bd735e1a12d98b35e20ee8d507f0dee",
-        "sourceSha256": "781f12b1b57f433e767cf47372f5189d0704b602e4c614f3453af3b416724ccc",
+        "sourceCommit": "0abf8ee7be1549ae6c028e09aa10f8a73880018f",
+        "sourceSha256": "e3237b78f346ead0b40229b6debe62f90762cdad6afd5533a1668ec352afc611",
         "files": [
           {
             "name": "infra/supabase/functions/_shared/battle-core.js",
@@ -249,7 +309,7 @@
           },
           {
             "name": "infra/supabase/functions/discovery/handler.mjs",
-            "bytes": 5455
+            "bytes": 5492
           },
           {
             "name": "infra/supabase/functions/discovery/index.ts",
@@ -407,19 +467,59 @@
       "slug": "lingjing-resources",
       "name": "lingjing-resources",
       "status": "ACTIVE",
-      "version": 1,
+      "version": 2,
       "created_at": 1792899684823,
-      "updated_at": 1792899684823,
+      "updated_at": 1792901538972,
       "verify_jwt": false,
       "import_map": false,
-      "entrypoint_path": "file:///tmp/user_fn_jbvrdmrkwpznbrvteive_b811e1eb-1a35-4f1f-b092-c501738a8612_1/source/infra/supabase/functions/lingjing-resources/index.ts",
-      "ezbr_sha256": "6f676f1927f7b8fa9f6c47d820370853dcdce327f707a3047621d7ac1d448ad3",
+      "entrypoint_path": "file:///tmp/user_fn_jbvrdmrkwpznbrvteive_b811e1eb-1a35-4f1f-b092-c501738a8612_2/source/infra/supabase/functions/lingjing-resources/index.ts",
+      "ezbr_sha256": "9566fadfa78048de3ba8e9287a4a6f481c19041feac2f55037ddfdfbbcb30c20",
       "source": {
         "function": "lingjing-resources",
         "entrypoint": "infra/supabase/functions/lingjing-resources/index.ts",
-        "sourceCommit": "088dbbe17b6251c33816b41f808f8f4d46dd147c",
-        "sourceSha256": "909842543abc21152086788e3381121829a7262a5a7a68db49afc907f8df2b97",
+        "sourceCommit": "2725fb339aff809ae08924d64f3bf9392458d4ac",
+        "sourceSha256": "133c8122b3d8922b2c8e281930b8660f0e43b91ff3f223ed3a1f681183e73a03",
         "files": [
+          {
+            "name": "apps/pc-app/runtime/features/resources/assets/roster-v2/catalog.json",
+            "bytes": 4333
+          },
+          {
+            "name": "apps/pc-app/runtime/features/resources/assets/roster-v2/fantuan/character.json",
+            "bytes": 9453
+          },
+          {
+            "name": "apps/pc-app/runtime/features/resources/assets/roster-v2/hatcat/character.json",
+            "bytes": 9458
+          },
+          {
+            "name": "apps/pc-app/runtime/features/resources/assets/roster-v2/qingya/character.json",
+            "bytes": 9406
+          },
+          {
+            "name": "apps/pc-app/runtime/features/resources/assets/roster-v2/shiba/character.json",
+            "bytes": 9455
+          },
+          {
+            "name": "apps/pc-app/runtime/features/resources/assets/roster-v2/xiaohu/character.json",
+            "bytes": 9453
+          },
+          {
+            "name": "apps/pc-app/runtime/features/resources/assets/roster-v2/xiaolan/character.json",
+            "bytes": 9453
+          },
+          {
+            "name": "apps/pc-app/runtime/features/resources/assets/roster-v2/yantuan/character.json",
+            "bytes": 9402
+          },
+          {
+            "name": "apps/pc-app/runtime/features/resources/assets/roster-v2/yuwan/character.json",
+            "bytes": 9454
+          },
+          {
+            "name": "apps/pc-app/runtime/features/resources/preferences.mjs",
+            "bytes": 3415
+          },
           {
             "name": "infra/supabase/functions/_shared/lingjing-auth.ts",
             "bytes": 7618
@@ -434,11 +534,15 @@
           },
           {
             "name": "infra/supabase/functions/lingjing-resources/index.ts",
-            "bytes": 2791
+            "bytes": 2920
           },
           {
             "name": "infra/supabase/functions/lingjing-resources/package.ts",
-            "bytes": 6892
+            "bytes": 6901
+          },
+          {
+            "name": "infra/supabase/functions/lingjing-resources/preferences.ts",
+            "bytes": 4531
           }
         ],
         "external": [
@@ -497,7 +601,7 @@
     {
       "name": "rls_enabled_no_policy",
       "level": "INFO",
-      "count": 27,
+      "count": 42,
       "remediation": "https://supabase.com/docs/guides/database/database-linter?lint=0008_rls_enabled_no_policy",
       "disposition": "Intentional deny-all private tables"
     },
@@ -526,20 +630,26 @@
     "garden": "Actual HTTPS planting/replay/stale-revision/reward-denial and B readback passed",
     "territory": "Deployed; full signed-location/concurrency/native acceptance pending",
     "immutableSessionRevocation": "Actual managed-valid old SID remains denied after replacement; B remains live",
-    "verifiedResources": "Actual server publish/replay/other-account404/fake-index422/revoked401 passed; v2 adapter compatible and root11 native checks passed; preferences/native full sync in progress",
+    "verifiedResources": "Deployed v2 validated calibration/action preferences and complete v2 hydration. Root5 actual HTTPS preference/CAS/RLS cases passed; full native in progress",
     "freshActor": "Canonical owner lock, managed Auth/user/session rows, immutable revoked SID and exact device binding rechecked in domain transaction; no extra Auth-table grants",
-    "battle": "Deployed-v1: guarded friend rooms, server training and common-save settlement; unresolved choices private; actual Realtime/native acceptance in progress"
+    "battle": "Deployed v2 with short owner-scoped CAS keys; original domain/legacy receipts retained; actual Realtime/native acceptance in progress"
   },
   "acceptanceEvidence": {
     "serviceGuard": "docs/implementation/evidence/cloud/2026-10-25/service-actor-deployment.json",
     "companionCommands": "docs/implementation/evidence/cloud/2026-10-25/companion-full-http-independent.json",
     "expiredSignedJwt": "docs/implementation/evidence/cloud/2026-10-25/expired-signed-jwt-http.json",
     "resources": "docs/implementation/evidence/resources/cloud-upgrade/live-authority/evidence.json",
-    "customAppearance": "docs/implementation/evidence/resources/cloud-upgrade/live-authority/companion-joint.json"
+    "customAppearance": "docs/implementation/evidence/resources/cloud-upgrade/live-authority/companion-joint.json",
+    "resourcePreferences": "docs/implementation/evidence/cloud/2026-10-25/resource-preferences-http-independent.json"
   },
   "publicBoundary": {
     "passed": 14,
     "total": 14,
     "evidence": "docs/implementation/evidence/cloud/2026-10-25/public-boundary-http.json"
+  },
+  "migrationAlignment": {
+    "evidence": "docs/implementation/evidence/cloud/2026-10-25/migration-ledger-alignment.json",
+    "remoteHistoryMutated": false,
+    "legacyDraftRetirementPending": true
   }
 }

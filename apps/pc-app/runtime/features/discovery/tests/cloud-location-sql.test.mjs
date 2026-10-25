@@ -4,7 +4,7 @@ import assert from 'node:assert/strict';
 import { PGlite } from '@electric-sql/pglite';
 import { readFileSync } from 'node:fs';
 import { generateKeyPairSync, createHash } from 'node:crypto';
-const migration = 'infra/supabase/migrations/20261025020719_lingjing_discovery_cloud_authority.sql';
+const migration = 'infra/supabase/migrations/20261025030635_lingjing_discovery_cloud_authority.sql';
 const actor = { authUserId: 'dfb705bf-90f6-45ca-83f6-a4c3fc3cb46e', ownerAccountId: 'runtime:original-non-uuid-owner', deviceId: 'device-a', sessionId: 'session-a' };
 test('embedded PostgreSQL validates additive location permissions, nonce replay, device binding and service-only RPC', async () => {
   const db = new PGlite();
