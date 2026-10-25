@@ -1,6 +1,7 @@
 const { createHash, randomUUID } = require('node:crypto');
 const { listTemplates, findTemplate, BASE_STATS } = require('./templates.cjs');
 const { applyGrowthEffect } = require('./growth.mjs');
+const { createCompanionInstance } = require('./instance.mjs');
 
 class CompanionError extends Error {
   constructor(code, message, revision) { super(message); this.code = code; this.revision = revision; }
@@ -140,14 +141,7 @@ class CompanionsService {
     const createdAt = this.now().toISOString();
     const petId = `pet-${this.uuid()}`;
     const count = Number(this.db.prepare('SELECT COUNT(*) AS count FROM companion_pets WHERE owner_account_id = ?').get(ownerAccountId).count);
-    return {
-      ownerAccountId, petId, templateId: template.templateId, name: petName(input.name || template.name),
-      serial: source === 'capture' && input.origin?.wildSerial ? String(input.origin.wildSerial) : petId.slice(4, 12).toUpperCase(),
-      element: template.element, resource: clone(template.resource), source, origin: clone(input.origin || {}),
-      growth: { level: 1, experience: 0, mood: 60, satiety: 60, affinity: 0, winsTotal: 0, stats: clone(template.baseStats) },
-      desktop: { visible: Boolean(input.showOnDesktop), behavior: 'quiet', scale: 1, position: { x: 80 + (count % 5) * 240, y: 520 - Math.floor(count / 5) * 50, displayId: null } },
-      revision: 1, createdAt, updatedAt: createdAt
-    };
+    return createCompanionInstance({ownerAccountId,template,input,source,petId,createdAt,count},invalid);
   }
 
   adopt(ownerAccountId, input) {

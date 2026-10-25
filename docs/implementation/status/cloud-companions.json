@@ -4,7 +4,7 @@
   "branch": "codex/lingjing-companions",
   "commit": "8f4273108b4723d43f9ee7537ffd22197a9609a6",
   "goalStatus": "active",
-  "phase": "companion-unit/native-preservation-ready; Accounts complete-save and Garden cloud integration pending",
+  "phase": "controlled cloud command server ready for coordinator review/deployment; main IPC/native/cloud readback integration continuing",
   "contracts": {
     "baseline": "docs/implementation/cloud-upgrade-2026-10-25.md",
     "sharedSave": "Consume services.get('backups') and Accounts sync; no second account, inventory, reward or transport",
@@ -15,11 +15,12 @@
     "requiredCloudCommands": "Coordinator requires02 legitimate cloud adoption/rename/selections/desktop/authorized appearance commands through08 cloudActor and protected commit_authority, with owned pet registration and no client-provided growth/inventory. Implementation now continuing.",
     "identityCheckpoint": "Approved f81008c / implementation ee36030 merged. Stable text actor.ownerAccountId, authUserId and deviceId remain separate; no UUID/petId rewrite.",
     "identityIntegrationNeed": "Existing verified pre-Accounts aliases remain supported. Await explicit Accounts authorization hook if a linked legacy alias differs from the new Auth identity subject; no username or renderer owner matching.",
-    "criticalOwnerPetPair": "Old ownerA and ownerB can both own original pet-001. Draft08 20261025021759_lingjing_protected_save_cas.sql owned_pet_ids currently has global pet_id PK and commit_authority rejects same ID under another owner. Must use (owner_id,pet_id) composite ownership and owner-specific lookups before deployment; never rename legacy IDs. Two-owner actual SQLite backup regression added.",
+    "criticalOwnerPetPair": "RESOLVED by08 d57d383 and approved45b857d merged here: registry is (owner_id,pet_id); two-owner SQLite and local SQL command checks cover identical original IDs without rewriting them.",
+    "serverCommandDeployment": "docs/implementation/cloud-companions-deployment.md; companions-sync self-authenticating Edge + service-only commit worker, seven controlled commands including interact; deployment remains coordinator-only",
     "protectedPersonalFieldsNeed": "Accounts shared CAS must permit validated names/desktop settings/independent selections while retaining authoritative pet identity/growth/capture/adoption receipts; checksum alone is not gameplay permission.",
     "mainOnlyAdapter": "services.get('companions').backupAdapter; registration pending Accounts verified legacy-envelope normalization"
   },
-  "migrations": [],
+  "migrations": [{"file":"infra/supabase/migrations/20261025025515_lingjing_companion_commands.sql","generatedBy":"Supabase CLI2.122.0 migration new lingjing_companion_commands --workdir infra","remoteAppliedByThisChat":false}],
   "checks": {
     "sourceFetched": true,
     "sourceFetchedAt": "2026-10-25T02:27:35Z",
@@ -33,7 +34,12 @@
     "latestBackupChecks": "7/7 targeted backup + actual complete-save/Garden integration checks passed after pre-module archive and locale-independent ordering support",
     "ownerPairRegression": "7/7 backup.test.cjs passed after adding two original owners with pet-001 and separate growth/names/action receipts; foreign-owner restore rejected without changes",
     "nativeEvidence": "docs/implementation/evidence/companions/cloud-2026-10-25/native-restore.json (clean source ca0c733; run 3VhIVU)",
-    "build": "npm run build:pc passed"
+    "build": "npm run build:pc passed before current server changes",
+    "cloudCommandDomain": "4 local canonical command tests passed: shared SQLite factory parity, per-pet server-clock interact/replay, forbidden growth/owner/custom3D injection, display1-4 range",
+    "cloudCommandSql": "3 LOCAL PGlite tests passed: original generated pet replay/CAS and compound ownership, ordinary-role/foreign/revoked denial with no Auth grant expansion, whole transaction rollback",
+    "cloudCommandTypes": "Deno2.9.6 check --no-config --lock=infra/supabase/functions/_shared/deno.lock infra/supabase/functions/companions-sync/index.ts passed",
+    "cloudGrowthAndGarden": "shared growth local parity16/16; exact committed05 53732f4 engine/domain +02 canonical award adapter + actual BackupManager two SQLite clients passed; local only, no HTTPS claim",
+    "httpVerifier": "cloud-http.acceptance.mjs syntax checked; requires coordinator-approved deployment and designated credentials before execution"
   },
   "realCloudEvidence": {
     "project": "jbvrdmrkwpznbrvteive",
