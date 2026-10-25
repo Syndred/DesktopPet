@@ -57,16 +57,16 @@ test('runtime fixture: persisted original request survives SQLite reopen after l
 });
 
 test('runtime fixture: existing battle command wrapper routes cloud sessions remotely and only confirmation applies canonical rewards',async()=>{
-  let f,envelope,revision=1,battle,challengeStatus='active';const receipts=new Map(),proofs=[];
+  let f,envelope,revision=1,battle,challengeStatus='active',settlementResult;const receipts=new Map(),proofs=[];
   const region={id:'qa:bridge:territory:1:2',name:'测试庭院',worldMode:'simulated',scenarioId:'bridge',revision:1,ownerAccountId:null,captureMultiplier:2,boundary:[{lat:1,lng:2},{lat:1.006,lng:2},{lat:1.006,lng:2.006},{lat:1,lng:2.006}]};
-  const current=()=>readback(envelope,revision,{session:battle,territory:region,challenge:battle?{battle_json:battle,status:challengeStatus}:null,context:{action:'territory',settled:challengeStatus==='settled',returnTo:'/garden',resultPath:'/garden'}});
+  const current=()=>readback(envelope,revision,{session:battle,territory:region,challenge:battle?{battle_json:battle,status:challengeStatus}:null,context:{action:'territory',settled:challengeStatus==='settled',result:settlementResult||null,returnTo:'/garden',resultPath:'/garden'}});
   const invoke=async(name,body)=>{
     if(['session','snapshot'].includes(body.op))return current();const {input}=body,kind={challenge:'territoryChallenge',act:'territoryAct',settle:'territorySettle'}[body.op],hash=await digest({kind,input});
     if(receipts.has(input.actionId))return {...receipts.get(input.actionId),replayed:true,readback:current()};
     let response;
     if(body.op==='challenge'){battle=beginTerritoryBattle(owner,envelope,region,input,Date.now());response={ok:true,data:{sessionId:battle.id,territoryId:region.id},battle};}
     if(body.op==='act'){battle=advanceTerritoryBattle(battle,input,Date.now());challengeStatus=battle.status;response={ok:true,data:battle};}
-    if(body.op==='settle'){const applied=await applyTerritoryCommand(envelope,owner,kind,input,Date.now(),hash,{battle,region},{awardBattleResult});envelope=applied.envelope;battle=applied.settledBattle;revision++;challengeStatus='settled';response={ok:true,data:applied.result.data,battle};}
+    if(body.op==='settle'){const applied=await applyTerritoryCommand(envelope,owner,kind,input,Date.now(),hash,{battle,region},{awardBattleResult});envelope=applied.envelope;battle=applied.settledBattle;revision++;challengeStatus='settled';response={ok:true,data:applied.result.data,battle};settlementResult=response;}
     response={...response,actionId:input.actionId,requestHash:hash,readback:current()};receipts.set(input.actionId,response);return response;
   };
   f=open(':memory:',invoke);const data=await baseline(f);envelope=data.envelope;
@@ -89,5 +89,6 @@ test('runtime fixture: existing battle command wrapper routes cloud sessions rem
     assert.equal(f.db.prepare('select count(*) count from garden_reward_receipts').get().count,1);assert.equal(f.db.prepare('select count(*) count from battle_reward_receipts').get().count,0);
     const updated=JSON.stringify(createCompanionBackupAdapter(f.db).export(owner));await feature.commands.settleContext({sessionId:battle.id,actionId:'runtime:confirm'},context);assert.equal(JSON.stringify(createCompanionBackupAdapter(f.db).export(owner)),updated);
     const view=await feature.commands.context({sessionId:battle.id},context);assert.equal(view.data.settled,true);
+    const peer=open(':memory:',invoke);try{const count=receipts.size;const reused=await peer.cloud.settleContext(context,{sessionId:battle.id,actionId:'runtime:confirm'});assert.equal(reused.replayed,true);assert.equal(receipts.size,count);assert.deepEqual(createCompanionBackupAdapter(peer.db).export(owner),envelope.data.modules.companions.data);}finally{peer.db.close();}
   }finally{feature.dispose();f.db.close();}
 });
