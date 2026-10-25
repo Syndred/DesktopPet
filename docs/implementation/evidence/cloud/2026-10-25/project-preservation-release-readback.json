@@ -1,0 +1,118 @@
+{
+  "at": "2026-10-25 05:49:28 UTC",
+  "projectRef": "jbvrdmrkwpznbrvteive",
+  "scope": "Actual independent read-only SQL, compare all original archived rows to verified pre-replacement encrypted export; no raw records or credentials emitted",
+  "tableCount": 18,
+  "rowCount": 100,
+  "tables": [
+    {
+      "table_name": "chat",
+      "actual_rows": 0,
+      "hash_matches": true,
+      "expected_rows": 0
+    },
+    {
+      "table_name": "post",
+      "actual_rows": 0,
+      "hash_matches": true,
+      "expected_rows": 0
+    },
+    {
+      "table_name": "role",
+      "actual_rows": 4,
+      "hash_matches": true,
+      "expected_rows": 4
+    },
+    {
+      "table_name": "user",
+      "actual_rows": 4,
+      "hash_matches": true,
+      "expected_rows": 4
+    },
+    {
+      "table_name": "order",
+      "actual_rows": 0,
+      "hash_matches": true,
+      "expected_rows": 0
+    },
+    {
+      "table_name": "apikey",
+      "actual_rows": 0,
+      "hash_matches": true,
+      "expected_rows": 0
+    },
+    {
+      "table_name": "config",
+      "actual_rows": 12,
+      "hash_matches": true,
+      "expected_rows": 12
+    },
+    {
+      "table_name": "credit",
+      "actual_rows": 3,
+      "hash_matches": true,
+      "expected_rows": 3
+    },
+    {
+      "table_name": "account",
+      "actual_rows": 4,
+      "hash_matches": true,
+      "expected_rows": 4
+    },
+    {
+      "table_name": "ai_task",
+      "actual_rows": 0,
+      "hash_matches": true,
+      "expected_rows": 0
+    },
+    {
+      "table_name": "session",
+      "actual_rows": 9,
+      "hash_matches": true,
+      "expected_rows": 9
+    },
+    {
+      "table_name": "taxonomy",
+      "actual_rows": 0,
+      "hash_matches": true,
+      "expected_rows": 0
+    },
+    {
+      "table_name": "user_role",
+      "actual_rows": 1,
+      "hash_matches": true,
+      "expected_rows": 1
+    },
+    {
+      "table_name": "permission",
+      "actual_rows": 29,
+      "hash_matches": true,
+      "expected_rows": 29
+    },
+    {
+      "table_name": "chat_message",
+      "actual_rows": 0,
+      "hash_matches": true,
+      "expected_rows": 0
+    },
+    {
+      "table_name": "subscription",
+      "actual_rows": 0,
+      "hash_matches": true,
+      "expected_rows": 0
+    },
+    {
+      "table_name": "verification",
+      "actual_rows": 0,
+      "hash_matches": true,
+      "expected_rows": 0
+    },
+    {
+      "table_name": "role_permission",
+      "actual_rows": 34,
+      "hash_matches": true,
+      "expected_rows": 34
+    }
+  ],
+  "passed": true
+}
