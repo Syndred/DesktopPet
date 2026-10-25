@@ -1,0 +1,15 @@
+✔ LOCAL cloud-v2 adapter rejects wrong owner, arbitrary schema/path, repeated refs and version/content mismatch (37.2498ms)
+✔ LOCAL v2 validation confers no authority: restore refuses a client-only reference without a live server receipt (45.7065ms)
+✔ LOCAL backup manager dispatches cloud v2 hydration before a retained preview while preserving the original v1 file (29.5061ms)
+✔ LOCAL preference outbox persists exact intent before Auth and retries the same action after actual SQLite reopen (67.2856ms)
+✔ LOCAL preference hydration preserves a dirty local edit and refuses to call it verified (35.4694ms)
+✔ resource backup restores actual 2D pack bytes to new managed paths and rejects a different owner (114.9805ms)
+✔ standard Pixi atlas survives backup restore and complete user-data relocation (129.5211ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 332.9676

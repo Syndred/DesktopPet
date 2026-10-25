@@ -71,6 +71,15 @@ export interface CompanionsSnapshot {
   selections: CompanionSelections;
   templates: CompanionTemplate[];
   revision: number;
+  sync?: {
+    mode: 'cloud';
+    status: 'cached' | 'ready' | 'pending' | 'offline' | 'conflict';
+    pending: number;
+    sharedSavePending: boolean;
+    cloudRevision?: number;
+    error?: string;
+    message?: string;
+  };
 }
 
 export interface CompanionAction {

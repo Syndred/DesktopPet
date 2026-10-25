@@ -1,0 +1,64 @@
+{
+  "at": "2026-10-25T04:13:15.491Z",
+  "sourceCommit": "8d03e7f4ef3f3972969244a632d06ddad04ef0b8",
+  "scope": "Real HTTPS/Auth/owner-bound SDK and independent common-save readback. Node profiles only.",
+  "electronAcceptance": false,
+  "physicalSecondDevice": false,
+  "checks": [
+    {
+      "name": "A writes valid builtin calibration/actions; independent authenticated B reads identical preference and immutable common receipt without changing other domain data",
+      "actionId": "resource-pref:b8d488a2-db8e-4fc1-89a5-f35064db09ec",
+      "revision": 40,
+      "checksum": "a80e4fb43957ec9928e35c3e64d35565da692ec15d481517eb69d181deb68a76",
+      "preferenceRevision": 1
+    },
+    {
+      "name": "Same original request replays without a second preference/save revision"
+    },
+    {
+      "name": "Stale preference CAS and changed reuse of an existing action are denied",
+      "stale": {
+        "code": "RESOURCE_PREFERENCE_CONFLICT",
+        "status": 409
+      },
+      "reused": {
+        "code": "ACTION_ID_REUSED",
+        "status": 409
+      }
+    },
+    {
+      "name": "Missing fields, unknown clip and extra gameplay authority fields are refused by deployed shared validator"
+    },
+    {
+      "name": "Other owner cannot read preferences and authenticated clients cannot execute service authority RPC",
+      "directRpcSqlState": "42501"
+    }
+  ],
+  "actors": [
+    {
+      "ownerAccountId": "account:470a41d4-3cf7-4a7d-8b1e-32e276d2a719",
+      "authUserId": "7642015c-da48-453a-8334-924065b0f1c3",
+      "deviceId": "176d163f-f821-4eaa-ae2a-bcd0dec03737",
+      "sessionId": "e502781c-c3f0-4aef-821a-257f0fd3e3a7"
+    },
+    {
+      "ownerAccountId": "account:470a41d4-3cf7-4a7d-8b1e-32e276d2a719",
+      "authUserId": "7642015c-da48-453a-8334-924065b0f1c3",
+      "deviceId": "fdb2f9fc-3c34-42b7-b2d1-0834d3722f44",
+      "sessionId": "539feacc-7095-4c5a-89a2-1084311bf65c"
+    },
+    {
+      "ownerAccountId": "account:87092945-7726-4ec6-a790-8d3b4f25254c",
+      "authUserId": "ef131e02-d492-441a-aeae-753d34d2b4f0",
+      "deviceId": "025ed3ec-d2c8-4720-a951-1bf4079b5a18",
+      "sessionId": "2284439d-2f3f-4e39-b372-ff99611e42b5"
+    }
+  ],
+  "final": {
+    "ownerAccountId": "account:470a41d4-3cf7-4a7d-8b1e-32e276d2a719",
+    "resourceId": "builtin:lingjing-qingya-v1",
+    "revision": 40,
+    "checksum": "a80e4fb43957ec9928e35c3e64d35565da692ec15d481517eb69d181deb68a76"
+  },
+  "passed": true
+}

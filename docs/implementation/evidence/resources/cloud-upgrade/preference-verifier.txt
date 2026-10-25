@@ -1,0 +1,10 @@
+Check infra/supabase/functions/lingjing-resources/package.test.ts
+running 5 tests from ./infra/supabase/functions/lingjing-resources/package.test.ts
+LOCAL verifier: actual existing 2D parser package hashes all source bytes before registration ... ok (40ms)
+LOCAL verifier: changed image chunk is refused before a server receipt can be produced ... ok (9ms)
+LOCAL verifier: UID/owner and wrong manifest hash are refused ... ok (6ms)
+LOCAL verifier: credential-bearing original descriptor is refused even with matching hashes ... ok (8ms)
+LOCAL preference verifier: shared desktop rules accept real clips and reject bounds, unknown clips and extra authority fields ... ok (8ms)
+
+ok | 5 passed | 0 failed (80ms)
+

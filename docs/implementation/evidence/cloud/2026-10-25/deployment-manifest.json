@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "at": "2026-10-25T03:52:55.355Z",
+  "at": "2026-10-25T04:08:23.230Z",
   "projectRef": "jbvrdmrkwpznbrvteive",
   "url": "https://jbvrdmrkwpznbrvteive.supabase.co",
   "plan": "free",
@@ -118,6 +118,12 @@
       "name": "lingjing_battle_authority_save",
       "source": "infra/supabase/migrations/20261025024552_lingjing_battle_authority_save.sql",
       "bookkeepingAligned": false
+    },
+    {
+      "version": "20261025040739",
+      "name": "lingjing_battle_scoped_authority_receipt",
+      "source": "infra/supabase/migrations/20261025035820_lingjing_battle_scoped_authority_receipt.sql",
+      "bookkeepingAligned": false
     }
   ],
   "functions": [
@@ -200,18 +206,18 @@
       "slug": "discovery",
       "name": "discovery",
       "status": "ACTIVE",
-      "version": 3,
+      "version": 4,
       "created_at": 1792897606497,
-      "updated_at": 1792900256491,
+      "updated_at": 1792901273949,
       "verify_jwt": false,
       "import_map": false,
-      "entrypoint_path": "file:///tmp/user_fn_jbvrdmrkwpznbrvteive_c233809a-4db5-4a8a-a515-ff17934dfcd0_3/source/infra/supabase/functions/discovery/index.ts",
-      "ezbr_sha256": "8aff9535f9931e3606f846d1c8ffb3ffb85703e12304b3a97c89a23d17df715c",
+      "entrypoint_path": "file:///tmp/user_fn_jbvrdmrkwpznbrvteive_c233809a-4db5-4a8a-a515-ff17934dfcd0_4/source/infra/supabase/functions/discovery/index.ts",
+      "ezbr_sha256": "52e80f7f079aeaa76e9a96a099bccc1d3df92b7b10597cb75221564506ce07fa",
       "source": {
         "function": "discovery",
         "entrypoint": "infra/supabase/functions/discovery/index.ts",
-        "sourceCommit": "b1d6b8c2111328a37377d0ff493575ade3b8097c",
-        "sourceSha256": "e78ac6da349b4c0c4ed3519b5ac5dc03b1af8ff44fab5b07a32b9015aa43f78e",
+        "sourceCommit": "e20b3a258bd735e1a12d98b35e20ee8d507f0dee",
+        "sourceSha256": "781f12b1b57f433e767cf47372f5189d0704b602e4c614f3453af3b416724ccc",
         "files": [
           {
             "name": "infra/supabase/functions/_shared/battle-core.js",
@@ -223,7 +229,7 @@
           },
           {
             "name": "infra/supabase/functions/discovery/_generated/runtime.mjs",
-            "bytes": 75775
+            "bytes": 74398
           },
           {
             "name": "infra/supabase/functions/discovery/authority.mjs",
@@ -263,24 +269,7 @@
           "npm:@supabase/supabase-js@2.98.0"
         ],
         "warnings": []
-      },
-      "capabilities": [
-        "protocol",
-        "device.register",
-        "location.challenge",
-        "location.prove",
-        "nearby",
-        "reserve",
-        "permits",
-        "session",
-        "act",
-        "cancel",
-        "confirm",
-        "captures",
-        "action"
-      ],
-      "fullCaptureReady": true,
-      "fullCaptureVerified": false
+      }
     },
     {
       "id": "0b1554b0-54bf-46c8-8849-0c90b2166adb",
@@ -336,18 +325,18 @@
       "slug": "garden-sync",
       "name": "garden-sync",
       "status": "ACTIVE",
-      "version": 1,
+      "version": 2,
       "created_at": 1792899045335,
-      "updated_at": 1792899045335,
+      "updated_at": 1792901269826,
       "verify_jwt": false,
       "import_map": false,
-      "entrypoint_path": "file:///tmp/user_fn_jbvrdmrkwpznbrvteive_f99744d5-6104-48a0-8034-7a5f65288af8_1/source/infra/supabase/functions/garden-sync/index.ts",
-      "ezbr_sha256": "194be36ab26058f979258735537c42cd3e1886c706625655c57cb5be6b9e694d",
+      "entrypoint_path": "file:///tmp/user_fn_jbvrdmrkwpznbrvteive_f99744d5-6104-48a0-8034-7a5f65288af8_2/source/infra/supabase/functions/garden-sync/index.ts",
+      "ezbr_sha256": "e3e2cd877a721629686a9fc33cb00f8bd63fe337e803283d7b799975db06b546",
       "source": {
         "function": "garden-sync",
         "entrypoint": "infra/supabase/functions/garden-sync/index.ts",
-        "sourceCommit": "40941f242bcf398b78177fe1f8d09b26b5c1a7fa",
-        "sourceSha256": "bd04861d46ed1cb2c8e56c65c6cb3f95c3fd2bfee549e215562b6a9b55469e1c",
+        "sourceCommit": "e20b3a258bd735e1a12d98b35e20ee8d507f0dee",
+        "sourceSha256": "15be51d37c545ea86dfb1afd74fff1829200cd74757bc0ca57220219179d82c5",
         "files": [
           {
             "name": "infra/supabase/functions/_shared/battle-core.js",
@@ -355,7 +344,7 @@
           },
           {
             "name": "infra/supabase/functions/_shared/garden-runtime.bundle.mjs",
-            "bytes": 52937
+            "bytes": 53131
           },
           {
             "name": "infra/supabase/functions/_shared/lingjing-auth.ts",
@@ -377,18 +366,18 @@
       "slug": "territory-sync",
       "name": "territory-sync",
       "status": "ACTIVE",
-      "version": 1,
+      "version": 2,
       "created_at": 1792899052591,
-      "updated_at": 1792899052591,
+      "updated_at": 1792901271966,
       "verify_jwt": false,
       "import_map": false,
-      "entrypoint_path": "file:///tmp/user_fn_jbvrdmrkwpznbrvteive_66a0c082-da96-4ed8-acb7-dd7f92b9907b_1/source/infra/supabase/functions/territory-sync/index.ts",
-      "ezbr_sha256": "cf0241a8adfa89809e1ef8182455a6434103b2fc3403c23e5d18b3917080c406",
+      "entrypoint_path": "file:///tmp/user_fn_jbvrdmrkwpznbrvteive_66a0c082-da96-4ed8-acb7-dd7f92b9907b_2/source/infra/supabase/functions/territory-sync/index.ts",
+      "ezbr_sha256": "8d427a84ae9512eaac59ce1ff758ea7e6709b84f162f307eb9d3d725357a99d6",
       "source": {
         "function": "territory-sync",
         "entrypoint": "infra/supabase/functions/territory-sync/index.ts",
-        "sourceCommit": "40941f242bcf398b78177fe1f8d09b26b5c1a7fa",
-        "sourceSha256": "18e638caa827843add17b4ae8c6a0bac6d7519fdbef139fee29069a7f540298f",
+        "sourceCommit": "e20b3a258bd735e1a12d98b35e20ee8d507f0dee",
+        "sourceSha256": "f6ce57424eef4302b4cdcf092866a1a2d99407da601f66582b485716e16819f4",
         "files": [
           {
             "name": "infra/supabase/functions/_shared/battle-core.js",
@@ -396,7 +385,7 @@
           },
           {
             "name": "infra/supabase/functions/_shared/garden-runtime.bundle.mjs",
-            "bytes": 52937
+            "bytes": 53131
           },
           {
             "name": "infra/supabase/functions/_shared/lingjing-auth.ts",
@@ -464,18 +453,18 @@
       "slug": "lingjing-battle",
       "name": "lingjing-battle",
       "status": "ACTIVE",
-      "version": 1,
+      "version": 2,
       "created_at": 1792900070663,
-      "updated_at": 1792900070663,
+      "updated_at": 1792901262074,
       "verify_jwt": false,
       "import_map": false,
-      "entrypoint_path": "file:///tmp/user_fn_jbvrdmrkwpznbrvteive_e86dccfa-a9a9-4a27-b914-33472c1331d1_1/source/infra/supabase/functions/lingjing-battle/index.ts",
-      "ezbr_sha256": "288ca3d32680ad98bae3e437c7926e825d679efc725c068001f6cc7adc6c2f56",
+      "entrypoint_path": "file:///tmp/user_fn_jbvrdmrkwpznbrvteive_e86dccfa-a9a9-4a27-b914-33472c1331d1_2/source/infra/supabase/functions/lingjing-battle/index.ts",
+      "ezbr_sha256": "1bb7c77c2844ef33606527d2286b5e53e69a7b39dd6a53d410ff845458c60385",
       "source": {
         "function": "lingjing-battle",
         "entrypoint": "infra/supabase/functions/lingjing-battle/index.ts",
-        "sourceCommit": "dec7bea828d18bfc87941ff1aaebeff87e4e9601",
-        "sourceSha256": "c055bddff1900d17ec320395c9fe3934c993faa01f5d9c15dc2ad344e9a1d25d",
+        "sourceCommit": "e20b3a258bd735e1a12d98b35e20ee8d507f0dee",
+        "sourceSha256": "12c049ad6eba494a89148b3cef6ee609c48776e0cae28a0f524821e2432716e9",
         "files": [
           {
             "name": "infra/supabase/functions/_shared/lingjing-auth.ts",
@@ -487,7 +476,7 @@
           },
           {
             "name": "infra/supabase/functions/lingjing-battle/runtime.generated.mjs",
-            "bytes": 84602
+            "bytes": 83319
           }
         ],
         "external": [

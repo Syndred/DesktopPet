@@ -1,0 +1,18 @@
+✔ LOCAL SQL: private bucket and immutable index permit same-account separate sessions only (21.4939ms)
+✔ LOCAL SQL: spoofed owner/UID/path and oversized index are rejected (16.7159ms)
+✔ LOCAL SQL: anonymous, missing/revoked sessions and wrong device are denied (8.0819ms)
+✔ LOCAL SQL: immutable objects/index cannot be replaced or deleted through client permissions (5.7026ms)
+✔ LOCAL SQL: only service-verified receipts can register protected resource references atomically (33.6744ms)
+✔ LOCAL SQL: personal CAS cannot invent a private resource reference; a failed ledger write rolls back the save too (44.8945ms)
+✔ LOCAL SQL: validated resource preferences commit once with shared protected save, reject direct writes, invalid refs and stale edits (42.1736ms)
+✔ LOCAL SQL: late preference receipt failure rolls back both preference and common save; new packages preserve committed preferences (20.8288ms)
+✔ LOCAL SQL: privileged registration rechecks real session, expiry, anonymous status and exact device before replay (13.9677ms)
+✔ LOCAL SQL: single-device revocation blocks both Storage/index while other same-account device survives (25.3518ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1836.8688

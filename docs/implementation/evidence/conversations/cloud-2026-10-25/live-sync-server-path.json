@@ -1,0 +1,588 @@
+{
+  "at": "2026-10-25T04:01:48.661Z",
+  "runId": "c55be683-abaa-47f3-b662-2c8bb7b3c0f3",
+  "taskId": "01a16dc5-c418-7372-ac4b-1d9abb116865",
+  "sourceCommit": "9c2bd75cf7a38fbe21e2aad12c3e96d97cbbe9c4",
+  "build": {
+    "schemaVersion": 2,
+    "builtAt": "2026-10-25T03:59:11.657Z",
+    "sourceCommit": "bc444d9c374651e3a846650e747244621ad3377e",
+    "sourceTree": "06fd2b5ac03ea5cf569b73be56ed11485dd7e9ea",
+    "sourceDirtyFiles": [],
+    "codeFingerprint": "633b0a704a2cd10df2be9e0e35f552a1b81a2322f13be6892eee27de181890c6",
+    "canonicalSourceFingerprint": "5983e6b6d3526fcbe82a6e87be737a6c626311c06094a9ae9018428d5d965961",
+    "canonicalPolicy": "Repository-relative paths; CRLF normalized to LF for source text only. Packaged/compiled bytes remain exact.",
+    "compiledFingerprint": "375b16a69bc56d9080a1fdcd94df4387a799e76d2366fbc503cccca3a25cf863",
+    "codeFiles": 294,
+    "compiledFiles": 87,
+    "toolchain": {
+      "node": "24.21.0",
+      "electron": "44.9.3",
+      "sqlite": "13.0.3",
+      "vite": "7.3.7",
+      "typescript": "5.9.3",
+      "platform": "win32",
+      "arch": "x64"
+    },
+    "entrypoints": {
+      "main": "main/index.cjs",
+      "app": "ui/index.html",
+      "desktop": "ui/desktop.html",
+      "preload": "preload/index.cjs"
+    },
+    "publicCloud": {
+      "projectRef": "jbvrdmrkwpznbrvteive",
+      "url": "https://jbvrdmrkwpznbrvteive.supabase.co",
+      "sha256": "c1625c63f1d959f92b3392b47f2fb492452803eedf1c0d1ebc68a1168ab64eda",
+      "resourcePath": "lingjing-cloud-public.json"
+    },
+    "packageName": "lingjing-desktop",
+    "runtimeClosure": {
+      "manifest": "runtime-closure.json",
+      "files": 102,
+      "edges": 169,
+      "sha256": "ee8b6e5e8fd4c32374c4cd23fe5188f0b4969e38e5d0719da6fa78b618e4f214"
+    }
+  },
+  "realCloud": true,
+  "realElectron": true,
+  "sameHost": true,
+  "projectRef": "jbvrdmrkwpznbrvteive",
+  "privilegedWrites": 0,
+  "syntheticModelResponses": false,
+  "checks": [
+    {
+      "name": "Main cloudActor legally adopts two same-template pets and selects only chatPetId; B reads both exact action receipts",
+      "data": {
+        "owner": "account:7f33e37f-a15e-4169-861b-213b44c04a72",
+        "adopted": {
+          "receipt": {
+            "pet": {
+              "name": "跨端原伙伴",
+              "petId": "pet-638e41e7-53b6-463b-a3bf-9662ed37e76c",
+              "growth": {
+                "mood": 60,
+                "level": 1,
+                "stats": {
+                  "hp": 124,
+                  "atk": 28,
+                  "def": 24,
+                  "spd": 20
+                },
+                "satiety": 60,
+                "affinity": 0,
+                "winsTotal": 0,
+                "experience": 0
+              },
+              "origin": {},
+              "serial": "638E41E7",
+              "source": "adoption",
+              "desktop": {
+                "scale": 1,
+                "visible": false,
+                "behavior": "quiet",
+                "position": {
+                  "x": 80,
+                  "y": 520,
+                  "displayId": null
+                }
+              },
+              "element": "water",
+              "resource": {
+                "kind": "2d",
+                "resourceId": "builtin:lingjing-yuwan-v2"
+              },
+              "revision": 1,
+              "createdAt": "2026-10-25T04:02:02.140Z",
+              "updatedAt": "2026-10-25T04:02:02.140Z",
+              "templateId": "big-fish-gentle",
+              "ownerAccountId": "account:7f33e37f-a15e-4169-861b-213b44c04a72"
+            },
+            "actionId": "companions:9310a3ac-c7aa-43f7-b6f4-0c6370eef5dc",
+            "revision": 1,
+            "checksum": "a469d08114e81ba3f5fb85bbae5d9637a47fb2ae5aaa18fb4b2a9a3017d18cc5",
+            "ownerAccountId": "account:7f33e37f-a15e-4169-861b-213b44c04a72",
+            "authority": "live"
+          },
+          "readback": {
+            "actionId": "companions:9310a3ac-c7aa-43f7-b6f4-0c6370eef5dc",
+            "revision": 1,
+            "checksum": "a469d08114e81ba3f5fb85bbae5d9637a47fb2ae5aaa18fb4b2a9a3017d18cc5",
+            "petIds": [
+              "pet-638e41e7-53b6-463b-a3bf-9662ed37e76c"
+            ]
+          }
+        },
+        "adoptedSecond": {
+          "receipt": {
+            "pet": {
+              "name": "同模板第二只",
+              "petId": "pet-a86cbfa0-78c0-46d8-8bac-c540dee26924",
+              "growth": {
+                "mood": 60,
+                "level": 1,
+                "stats": {
+                  "hp": 124,
+                  "atk": 28,
+                  "def": 24,
+                  "spd": 20
+                },
+                "satiety": 60,
+                "affinity": 0,
+                "winsTotal": 0,
+                "experience": 0
+              },
+              "origin": {},
+              "serial": "A86CBFA0",
+              "source": "adoption",
+              "desktop": {
+                "scale": 1,
+                "visible": false,
+                "behavior": "quiet",
+                "position": {
+                  "x": 320,
+                  "y": 520,
+                  "displayId": null
+                }
+              },
+              "element": "water",
+              "resource": {
+                "kind": "2d",
+                "resourceId": "builtin:lingjing-yuwan-v2"
+              },
+              "revision": 1,
+              "createdAt": "2026-10-25T04:02:06.342Z",
+              "updatedAt": "2026-10-25T04:02:06.342Z",
+              "templateId": "big-fish-gentle",
+              "ownerAccountId": "account:7f33e37f-a15e-4169-861b-213b44c04a72"
+            },
+            "actionId": "companions:2b2b249d-9b77-4667-bdf1-af1674eff97e",
+            "revision": 2,
+            "checksum": "b0b510f9f09a4dd2bdbf10c3aa80cca5081b5da50a8726f859716f2c8feaaa95",
+            "ownerAccountId": "account:7f33e37f-a15e-4169-861b-213b44c04a72",
+            "authority": "live"
+          },
+          "readback": {
+            "actionId": "companions:2b2b249d-9b77-4667-bdf1-af1674eff97e",
+            "revision": 2,
+            "checksum": "b0b510f9f09a4dd2bdbf10c3aa80cca5081b5da50a8726f859716f2c8feaaa95",
+            "petIds": [
+              "pet-638e41e7-53b6-463b-a3bf-9662ed37e76c",
+              "pet-a86cbfa0-78c0-46d8-8bac-c540dee26924"
+            ]
+          }
+        },
+        "selected": {
+          "actionId": "companions:9f449fc0-cfa0-4fad-a68e-bb9763dc6e89",
+          "revision": 3,
+          "checksum": "f36a90f26841260165175001c572d93b42446e9b85de89e2d59667449fd56a62",
+          "selections": {
+            "chatPetId": "pet-638e41e7-53b6-463b-a3bf-9662ed37e76c",
+            "guardPetId": null,
+            "battlePetId": null
+          }
+        }
+      }
+    },
+    {
+      "name": "Public Accounts preview and full restore hydrate both real pet instances and the authoritative chat slot on A and B",
+      "data": {
+        "petIds": [
+          "pet-638e41e7-53b6-463b-a3bf-9662ed37e76c",
+          "pet-a86cbfa0-78c0-46d8-8bac-c540dee26924"
+        ],
+        "chatPetId": "pet-638e41e7-53b6-463b-a3bf-9662ed37e76c"
+      }
+    },
+    {
+      "name": "Actual HTTPS CAS preserves message IDs/order, cancelled/failed states and exact user-authored JSON in message/persona/memory; each device retains its own key",
+      "data": {
+        "receipt": {
+          "verified": false,
+          "personalVerified": true,
+          "requiresAuthority": true,
+          "privacyRedactions": false,
+          "actionId": "098fa788-855a-4dfa-a1b9-038f0ae8e78e",
+          "revision": 4,
+          "checksum": "88b8c1ae79dd2a144a8cb46a9ddab058d71c49ff3622bae7957325f59f2d9d49",
+          "status": {
+            "configured": true,
+            "cloudRevision": 4,
+            "lastVerifiedAt": "2026-10-25T04:02:17.801Z",
+            "lastError": null,
+            "pending": 0,
+            "conflicts": 0,
+            "localChanged": true,
+            "unverifiedLocal": 1,
+            "privacyRedactions": 0,
+            "running": false
+          }
+        },
+        "originalIds": [
+          "5ee3b716-884b-4dcd-aa32-efa54cf0b41a",
+          "374df9a8-6ece-4663-8405-bad7fb252243",
+          "d821c0b7-92e1-4c4b-8850-adf228b051be",
+          "4bc0aecc-d2e5-46ab-b008-774ee9989af5"
+        ],
+        "firstAction": "6db4a8a3-809a-496a-a7cd-f7b6e7b50a79",
+        "cancelledAction": "c0e26e5c-8636-402e-b1dc-41d66ad7e795",
+        "authoredTextUnchanged": true
+      }
+    },
+    {
+      "name": "Client preflight preserves conflict outbox and real SQL CAS returns409; conflicting merge rolls back, explicit replace restores B and memory deletion with a local safety backup",
+      "data": {
+        "bReceipt": {
+          "verified": false,
+          "personalVerified": true,
+          "requiresAuthority": true,
+          "privacyRedactions": false,
+          "actionId": "6c24e252-4723-43ef-8f03-671692c82d27",
+          "revision": 5,
+          "checksum": "af46c21ec9752f275d52c239a70aa08e29e1abaaee015a5a63e04c680ac09c1e",
+          "status": {
+            "configured": true,
+            "cloudRevision": 5,
+            "lastVerifiedAt": "2026-10-25T04:02:24.746Z",
+            "lastError": null,
+            "pending": 0,
+            "conflicts": 0,
+            "localChanged": true,
+            "unverifiedLocal": 1,
+            "privacyRedactions": 0,
+            "running": false
+          }
+        },
+        "preflightCode": "SYNC_CONFLICT",
+        "directSqlCas": {
+          "accepted": false,
+          "actionId": "631da93f-3af9-4baa-8a13-26b3c3eb5c66",
+          "code": "SYNC_CONFLICT",
+          "httpStatus": 409
+        },
+        "mergeCode": "CONVERSATION_MERGE_CONFLICT"
+      }
+    },
+    {
+      "name": "A persists the failed cloud outbox and local key across process restart; exact action retries through real HTTPS and B independently reads it back",
+      "data": {
+        "injectedFailure": "CLOUD_UNAVAILABLE",
+        "retry": {
+          "verified": false,
+          "personalVerified": true,
+          "requiresAuthority": true,
+          "privacyRedactions": false,
+          "actionId": "3b33fb02-3664-43d1-a3ae-ff4ba10e3751",
+          "revision": 6,
+          "checksum": "4da9e150b9e7447ec9d3e55bbd21fba11e8e716a0e981122ff99ea5fde9ad7b1",
+          "status": {
+            "configured": true,
+            "cloudRevision": 6,
+            "lastVerifiedAt": "2026-10-25T04:02:41.641Z",
+            "lastError": null,
+            "pending": 0,
+            "conflicts": 0,
+            "localChanged": true,
+            "unverifiedLocal": 3,
+            "privacyRedactions": 0,
+            "running": false
+          }
+        },
+        "finalIds": [
+          "5ee3b716-884b-4dcd-aa32-efa54cf0b41a",
+          "374df9a8-6ece-4663-8405-bad7fb252243",
+          "d821c0b7-92e1-4c4b-8850-adf228b051be",
+          "4bc0aecc-d2e5-46ab-b008-774ee9989af5",
+          "afd87514-85c5-497d-894c-eb769eea84fe",
+          "77d84ad0-3260-4da5-af58-a4ae1f8c3e26"
+        ]
+      }
+    }
+  ],
+  "rendererErrors": [],
+  "adoptionPath": "actual main-only cloudActor companions-sync adoption and initial chat slot, then public Accounts cloudPreview/backupRestore; final companion UI adoption/selection is not claimed",
+  "modelTransport": "actual loopback connection refusal and stalled socket cancellation; no external provider/model success claimed",
+  "offlineTransport": "explicit test injection causes actual loopback connection refusal for one cloud push; restart uses real HTTPS service",
+  "owner": "account:7f33e37f-a15e-4169-861b-213b44c04a72",
+  "petIds": [
+    "pet-638e41e7-53b6-463b-a3bf-9662ed37e76c",
+    "pet-a86cbfa0-78c0-46d8-8bac-c540dee26924"
+  ],
+  "sqliteReadback": {
+    "a": {
+      "owner": "account:7f33e37f-a15e-4169-861b-213b44c04a72",
+      "profile": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-conversations\\DesktopPet\\artifacts\\conversations\\cloud-sync\\run-1792900908653\\profile-a",
+      "pid": 12440,
+      "cipherHashes": [
+        {
+          "scope": "account",
+          "scopeId": "",
+          "hash": "121b709f7abbcef5ba5b73e920d3bb3820b1a9228597f799c48286a7540d7cc2"
+        },
+        {
+          "scope": "pet",
+          "scopeId": "pet-a86cbfa0-78c0-46d8-8bac-c540dee26924",
+          "hash": "aa1d35daaa346c6f5dded24cbdf7edd05e0e3b232b3841032b8fb14b4d796618"
+        }
+      ],
+      "rows": [
+        {
+          "sequence": 7,
+          "id": "5ee3b716-884b-4dcd-aa32-efa54cf0b41a",
+          "pet_id": "pet-638e41e7-53b6-463b-a3bf-9662ed37e76c",
+          "action_id": "6db4a8a3-809a-496a-a7cd-f7b6e7b50a79",
+          "role": "user",
+          "status": "complete",
+          "contentHash": "1f26998fdfd1a9b621ab80e4e3ae9e5b7569fab2717a024e52a696a4c2f0b892"
+        },
+        {
+          "sequence": 8,
+          "id": "374df9a8-6ece-4663-8405-bad7fb252243",
+          "pet_id": "pet-638e41e7-53b6-463b-a3bf-9662ed37e76c",
+          "action_id": "6db4a8a3-809a-496a-a7cd-f7b6e7b50a79",
+          "role": "assistant",
+          "status": "failed",
+          "contentHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "sequence": 9,
+          "id": "d821c0b7-92e1-4c4b-8850-adf228b051be",
+          "pet_id": "pet-638e41e7-53b6-463b-a3bf-9662ed37e76c",
+          "action_id": "c0e26e5c-8636-402e-b1dc-41d66ad7e795",
+          "role": "user",
+          "status": "complete",
+          "contentHash": "c105e8a13722b5eeec7f57bb5ee3865fc54b8c3c9073f7232581ca643f6f0225"
+        },
+        {
+          "sequence": 10,
+          "id": "4bc0aecc-d2e5-46ab-b008-774ee9989af5",
+          "pet_id": "pet-638e41e7-53b6-463b-a3bf-9662ed37e76c",
+          "action_id": "c0e26e5c-8636-402e-b1dc-41d66ad7e795",
+          "role": "assistant",
+          "status": "cancelled",
+          "contentHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "sequence": 11,
+          "id": "3fb23e8a-11b8-4a7a-b615-0204cecf631d",
+          "pet_id": "pet-a86cbfa0-78c0-46d8-8bac-c540dee26924",
+          "action_id": "a221b055-4920-446f-a0c5-52c390f8d4d7",
+          "role": "user",
+          "status": "complete",
+          "contentHash": "b9ddc3140198ed9c9ea206912e98e215fd75462b2107e5da3cac01d13da7ed53"
+        },
+        {
+          "sequence": 12,
+          "id": "07bddef2-a656-40ac-943a-3bfeb0084118",
+          "pet_id": "pet-a86cbfa0-78c0-46d8-8bac-c540dee26924",
+          "action_id": "a221b055-4920-446f-a0c5-52c390f8d4d7",
+          "role": "assistant",
+          "status": "failed",
+          "contentHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "sequence": 13,
+          "id": "afd87514-85c5-497d-894c-eb769eea84fe",
+          "pet_id": "pet-638e41e7-53b6-463b-a3bf-9662ed37e76c",
+          "action_id": "b8edfbe5-a5bc-45e1-9646-d0e2035b7d99",
+          "role": "user",
+          "status": "complete",
+          "contentHash": "2e5298753bb320d22e95ba383529de8963feee128d34cca31669a0dd1b96b681"
+        },
+        {
+          "sequence": 14,
+          "id": "77d84ad0-3260-4da5-af58-a4ae1f8c3e26",
+          "pet_id": "pet-638e41e7-53b6-463b-a3bf-9662ed37e76c",
+          "action_id": "b8edfbe5-a5bc-45e1-9646-d0e2035b7d99",
+          "role": "assistant",
+          "status": "failed",
+          "contentHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ],
+      "memories": [
+        {
+          "id": "0af08a72-c12e-48c9-ad5d-a73d1014291e",
+          "pet_id": "pet-638e41e7-53b6-463b-a3bf-9662ed37e76c",
+          "contentHash": "e3e156920a1d7b360841af81a0f3440898b8ee6f537895c045d9924ace500e7f"
+        },
+        {
+          "id": "f894fbdd-5127-4d51-97ab-87fa5f1d3de8",
+          "pet_id": "pet-a86cbfa0-78c0-46d8-8bac-c540dee26924",
+          "contentHash": "d83bd63a5a23083e93ec20b3bbb55a06d8e0527119721a46cb7905f4599fac8c"
+        }
+      ]
+    },
+    "b": {
+      "owner": "account:7f33e37f-a15e-4169-861b-213b44c04a72",
+      "profile": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-conversations\\DesktopPet\\artifacts\\conversations\\cloud-sync\\run-1792900908653\\profile-b",
+      "pid": 25380,
+      "cipherHashes": [
+        {
+          "scope": "account",
+          "scopeId": "",
+          "hash": "0e2ef9c258768e8a9a95ed97a94ce160a36b942311bbecb936628e4213096c31"
+        },
+        {
+          "scope": "pet",
+          "scopeId": "pet-a86cbfa0-78c0-46d8-8bac-c540dee26924",
+          "hash": "6621fa9d615aa4a3938cfa675b399f76bc6e0e2983ae22b8664f4ad5ba28e34f"
+        }
+      ],
+      "rows": [
+        {
+          "sequence": 7,
+          "id": "5ee3b716-884b-4dcd-aa32-efa54cf0b41a",
+          "pet_id": "pet-638e41e7-53b6-463b-a3bf-9662ed37e76c",
+          "action_id": "6db4a8a3-809a-496a-a7cd-f7b6e7b50a79",
+          "role": "user",
+          "status": "complete",
+          "contentHash": "1f26998fdfd1a9b621ab80e4e3ae9e5b7569fab2717a024e52a696a4c2f0b892"
+        },
+        {
+          "sequence": 8,
+          "id": "374df9a8-6ece-4663-8405-bad7fb252243",
+          "pet_id": "pet-638e41e7-53b6-463b-a3bf-9662ed37e76c",
+          "action_id": "6db4a8a3-809a-496a-a7cd-f7b6e7b50a79",
+          "role": "assistant",
+          "status": "failed",
+          "contentHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "sequence": 9,
+          "id": "d821c0b7-92e1-4c4b-8850-adf228b051be",
+          "pet_id": "pet-638e41e7-53b6-463b-a3bf-9662ed37e76c",
+          "action_id": "c0e26e5c-8636-402e-b1dc-41d66ad7e795",
+          "role": "user",
+          "status": "complete",
+          "contentHash": "c105e8a13722b5eeec7f57bb5ee3865fc54b8c3c9073f7232581ca643f6f0225"
+        },
+        {
+          "sequence": 10,
+          "id": "4bc0aecc-d2e5-46ab-b008-774ee9989af5",
+          "pet_id": "pet-638e41e7-53b6-463b-a3bf-9662ed37e76c",
+          "action_id": "c0e26e5c-8636-402e-b1dc-41d66ad7e795",
+          "role": "assistant",
+          "status": "cancelled",
+          "contentHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "sequence": 11,
+          "id": "3fb23e8a-11b8-4a7a-b615-0204cecf631d",
+          "pet_id": "pet-a86cbfa0-78c0-46d8-8bac-c540dee26924",
+          "action_id": "a221b055-4920-446f-a0c5-52c390f8d4d7",
+          "role": "user",
+          "status": "complete",
+          "contentHash": "b9ddc3140198ed9c9ea206912e98e215fd75462b2107e5da3cac01d13da7ed53"
+        },
+        {
+          "sequence": 12,
+          "id": "07bddef2-a656-40ac-943a-3bfeb0084118",
+          "pet_id": "pet-a86cbfa0-78c0-46d8-8bac-c540dee26924",
+          "action_id": "a221b055-4920-446f-a0c5-52c390f8d4d7",
+          "role": "assistant",
+          "status": "failed",
+          "contentHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "sequence": 13,
+          "id": "afd87514-85c5-497d-894c-eb769eea84fe",
+          "pet_id": "pet-638e41e7-53b6-463b-a3bf-9662ed37e76c",
+          "action_id": "b8edfbe5-a5bc-45e1-9646-d0e2035b7d99",
+          "role": "user",
+          "status": "complete",
+          "contentHash": "2e5298753bb320d22e95ba383529de8963feee128d34cca31669a0dd1b96b681"
+        },
+        {
+          "sequence": 14,
+          "id": "77d84ad0-3260-4da5-af58-a4ae1f8c3e26",
+          "pet_id": "pet-638e41e7-53b6-463b-a3bf-9662ed37e76c",
+          "action_id": "b8edfbe5-a5bc-45e1-9646-d0e2035b7d99",
+          "role": "assistant",
+          "status": "failed",
+          "contentHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ],
+      "memories": [
+        {
+          "id": "0af08a72-c12e-48c9-ad5d-a73d1014291e",
+          "pet_id": "pet-638e41e7-53b6-463b-a3bf-9662ed37e76c",
+          "contentHash": "e3e156920a1d7b360841af81a0f3440898b8ee6f537895c045d9924ace500e7f"
+        },
+        {
+          "id": "f894fbdd-5127-4d51-97ab-87fa5f1d3de8",
+          "pet_id": "pet-a86cbfa0-78c0-46d8-8bac-c540dee26924",
+          "contentHash": "d83bd63a5a23083e93ec20b3bbb55a06d8e0527119721a46cb7905f4599fac8c"
+        }
+      ]
+    },
+    "previousPidA": 23744
+  },
+  "privacyChecks": [
+    {
+      "op": "archive",
+      "actionId": "archive:7c3bdfe3-1e5a-4cc2-bb70-26aa38f5f63e",
+      "checksum": "a4f1d829aa16786ab6ccb6e160238b8af351d1a7821d230cc97dad059b23395a",
+      "safe": true
+    },
+    {
+      "op": "push",
+      "actionId": "098fa788-855a-4dfa-a1b9-038f0ae8e78e",
+      "checksum": "88b8c1ae79dd2a144a8cb46a9ddab058d71c49ff3622bae7957325f59f2d9d49",
+      "safe": true
+    },
+    {
+      "op": "archive",
+      "actionId": "archive:3acefe9a-754e-497f-98f6-61d82633cf05",
+      "checksum": "c4d741c5c40d9222662e08667f38b57b373e68d3d326da6a974ae401b8e62809",
+      "safe": true
+    },
+    {
+      "op": "push",
+      "actionId": "631da93f-3af9-4baa-8a13-26b3c3eb5c66",
+      "checksum": "88b8c1ae79dd2a144a8cb46a9ddab058d71c49ff3622bae7957325f59f2d9d49",
+      "safe": true
+    },
+    {
+      "op": "archive",
+      "actionId": "archive:f0712d50-60a0-4bb0-a59c-bedb98bc7c05",
+      "checksum": "f71ab13b62cab0ec64d8ecdbb3236929e2d94ba7f9feddea6d9bfd0e31a4cb1a",
+      "safe": true
+    },
+    {
+      "op": "push",
+      "actionId": "3b33fb02-3664-43d1-a3ae-ff4ba10e3751",
+      "checksum": "4da9e150b9e7447ec9d3e55bbd21fba11e8e716a0e981122ff99ea5fde9ad7b1",
+      "safe": true
+    },
+    {
+      "op": "archive",
+      "actionId": "archive:d6c1d402-78c6-4267-9d44-761202304184",
+      "checksum": "89498a5b7055f3e33c37af9598a7d2bd3c7c5776fc047d2cbf23593ca7ab93bf",
+      "safe": true
+    },
+    {
+      "op": "push",
+      "actionId": "6c24e252-4723-43ef-8f03-671692c82d27",
+      "checksum": "af46c21ec9752f275d52c239a70aa08e29e1abaaee015a5a63e04c680ac09c1e",
+      "safe": true
+    }
+  ],
+  "fullChatSync": true,
+  "status": "passed",
+  "runtime": {
+    "electron": "44.9.3",
+    "node": "24.22.0",
+    "modules": "149",
+    "napi": "10",
+    "arch": "x64",
+    "tray": {
+      "active": true,
+      "bounds": {
+        "x": 1775,
+        "y": 1150,
+        "width": 33,
+        "height": 49
+      }
+    }
+  }
+}

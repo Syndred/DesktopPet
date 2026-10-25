@@ -2,7 +2,7 @@
   "module": "resources",
   "scope": "Private Supabase Storage packages, owner/Auth UID boundary, durable resume, new-client preservation and legacy archive cleanup",
   "branch": "codex/lingjing-resources",
-  "commit": "126d717ae435adcb63e029aa7c6732306958835d",
+  "commit": "e193f6fec62fbcd94c4c56df532c82402bd5f0c5",
   "baselineCommit": "46abf416e0500b53ef32fc29b441d923ef5a6a80",
   "goalStatus": "active",
   "contracts": {
@@ -20,7 +20,8 @@
   },
   "migrations": [
     "infra/supabase/migrations/20261025020942_lingjing_private_resource_storage.sql",
-    "infra/supabase/migrations/20261025024855_lingjing_verified_resource_authority.sql"
+    "infra/supabase/migrations/20261025024855_lingjing_verified_resource_authority.sql",
+    "infra/supabase/migrations/20261025035333_lingjing_verified_resource_preferences.sql"
   ],
   "checks": [
     {
@@ -96,12 +97,13 @@
     "sharedEngineeringFollowup": "01 may remove obsolete release exclusion; root config/dependencies untouched by resource changes"
   },
   "remaining": [
-    "Synchronize validated resource calibration/action preferences and clear authorityPending for normal changed preferences",
-    "Real HTTPS two-Electron v2 full-save restore before dependent custom companion appearance, source-bound screenshots",
+    "Coordinator applies 20261025035333_lingjing_verified_resource_preferences.sql and deploys latest lingjing-resources graph",
+    "Real HTTPS preference command/readback plus two-Electron full-save/custom-pet/file/Pixi restoration",
+    "Verify normal modified preference can normalize to protected v2 rather than remaining authorityPending",
     "Old-source migration and two physical devices remain separate coordinator acceptance conditions"
   ],
   "identityCheckpoint": "f81008ce1f88c2b6c11d0bb05122d5afb5891039",
-  "phase": "live protected references and companion appearance joint acceptance passed; v1/v2 cloud backup hydration ready; preference sync and real dual Electron continue",
+  "phase": "preference authority command, durable queue, v2 hydration/fingerprint implemented; 10 SQL +5 Edge +7 focused native checks passed; coordinator deployment and real dual Electron pending",
   "functions": [
     {
       "name": "lingjing-resources",
@@ -111,9 +113,13 @@
         "../_shared/lingjing-auth.ts",
         "../_shared/lingjing-json.ts",
         "./package.ts",
-        "./deno.lock"
+        "./deno.lock",
+        "./preferences.ts",
+        "../../../../apps/pc-app/runtime/features/resources/preferences.mjs",
+        "../../../../apps/pc-app/runtime/features/resources/assets/roster-v2/catalog.json",
+        "8 canonical roster-v2/*/character.json metadata imports; no PNGs"
       ],
-      "deployment": "coordinator deployed ACTIVE v1, source088dbbe, graph90984254"
+      "deployment": "ACTIVE v1 accepted; preference command source and migration ready for coordinator increment"
     }
   ],
   "serverDependencies": [

@@ -1,9 +1,11 @@
 import { withActor, requireActor, readJson, jsonResponse, LingjingAuthError, createAdminClient, uuid } from '../_shared/lingjing-auth.ts';
 import { verifyPackage,indexFields,indexTable,referenceTable } from './package.ts';
+import {preferenceCommand} from './preferences.ts';
 const receiptFields='resource_id,manifest_sha256,authority_action_id,authority_revision,authority_checksum';
 const summary=(row:Record<string,unknown>)=>({resourceId:row.resource_id,manifestSha256:row.manifest_sha256,authorityActionId:row.authority_action_id,revision:row.authority_revision,checksum:row.authority_checksum,duplicate:true});
 Deno.serve(withActor(async(request,actor)=>{
   const body=await readJson(request,4096);
+  if(body.op==='preferences')return preferenceCommand(request,actor,body);
   if(!['publish','read'].includes(String(body.op))||!uuid(body.resourceId)||typeof body.manifestSha256!=='string'||!/^[0-9a-f]{64}$/.test(body.manifestSha256))throw new LingjingAuthError('INVALID_REQUEST',400);
   const prior=await actor.client.from(referenceTable).select(receiptFields).eq('owner_account_id',actor.ownerAccountId).eq('auth_user_id',actor.authUserId).eq('resource_id',body.resourceId).eq('manifest_sha256',body.manifestSha256).maybeSingle();
   if(prior.error)throw new LingjingAuthError('RESOURCE_REFERENCES_UNAVAILABLE',503);
