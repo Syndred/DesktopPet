@@ -4,7 +4,7 @@
   "branch": "codex/lingjing-conversations",
   "commit": "79801a2",
   "goalStatus": "active",
-  "status": "awaiting08_authored_text_preservation_fix_and02_legal_pet",
+  "status": "waiting_for_coordinator_approved_projection_and_legal_pet_bridge",
   "contracts": {
     "identity": "08 accounts: verified owner mapping, complete-save CAS and account save-restored events",
     "backup": "conversations version 1 adapter; stable IDs and array order, no sequence or encrypted_key",
@@ -148,7 +148,7 @@
     "Real two Electron A/B chat/persona/memory CAS, conflicts/offline/restart checks.",
     "Coordinator deployment/integration and independent acceptance; original legacy server migration remains08 condition."
   ],
-  "updatedAt": "2026-10-25T03:09:25.881Z",
+  "updatedAt": "2026-10-25T03:12:30.628Z",
   "cleanupManifest": "docs/implementation/evidence/conversations/cloud-2026-10-25/cleanup-manifest.json",
   "installation": {
     "workspaceNodeModulesIndependent": true,
@@ -187,16 +187,34 @@
     "receiptSemantics": "New08 distinguishes personalVerified from full-save verified/requiresAuthority/privacyRedactions. Harness requires actual personalVerified and records the full receipt without promoting historic gameplay.",
     "privacyScope": "Inspect actual archive and push envelope bodies, not only the conversation adapter export.",
     "interfaceReview": {
-      "commit": "ce0affb",
-      "mode": "read-only committed code; not merged or deployed by06",
+      "commit": "6876b36",
+      "mode": "read-only committed08 review; not merged or deployed by06",
       "pendingApproval": true,
       "textFidelityGate": {
-        "status": "failed_in_pending08_ce0affb",
-        "evidence": "docs/implementation/evidence/conversations/cloud-2026-10-25/pending-projection-text-failure.json",
-        "detail": "Read-only actual cloudProjection code rewrites ordinary JSON text in message.content, profile.persona, memory.content. Await approved field-aware filter; no cloud/pet/DB write in this reproduction."
+        "status": "passed_local_fixed8e5c735_not_real_cloud",
+        "evidence": "docs/implementation/evidence/conversations/cloud-2026-10-25/pending-projection-text-fix-review.json",
+        "previousFailure": "docs/implementation/evidence/conversations/cloud-2026-10-25/pending-projection-text-failure.json",
+        "detail": "Same reproduction now preserves exact JSON text in message.content, profile.persona and memory.content. This proves local filter behavior only; real server/body and two-Electron chat CAS still pending."
       }
     },
     "harnessCommit": "79801a2"
   },
-  "checkpoint": "a2664ad"
+  "checkpoint": "a2664ad",
+  "goalAudit": {
+    "completed": [
+      "approved common baseline and45b857d identity/CAS consumer",
+      "approvedced8e5e shell merged with obsolete AI shell deleted",
+      "per-owner/pet stable archive and explicit conflict behavior checked with actual SQLite",
+      "actual Electron44 recovery, DPAPI and public actor/pet-boundary evidence",
+      "legacy archive import and recoverable cleanup manifest",
+      "cloud-conversations status and consumer inventory"
+    ],
+    "missing": [
+      "approved/deployed08 field-aware cloud projection + server guard consumption",
+      "approved/deployed02 legal cloud pet adoption main-process bridge",
+      "successful real Supabase A/B per-pet chat/persona/memory CAS, conflict, deletion and restart readback"
+    ],
+    "acceptanceScript": "apps/pc-app/runtime/features/conversations/tests/cloud-sync.acceptance.mjs",
+    "completionClaimed": false
+  }
 }
