@@ -56,6 +56,10 @@ class DiscoveryService {
     const location=this.location.snapshot(),fix=location.fix;
     if(!fix) return {spawns:[],territories:[],captureRadiusMeters:100};
     const owner=this.getOwner(),encounters=owner ? this.repo.list(owner) : [];
+    if(this.authority&&this.cloudRuntime&&location.mode!=='demo'){
+      const remote=this.cloudRuntime.nearbyState;
+      return{spawns:(remote?.spawns||[]).map(spawn=>({...spawn,demo:false,inRange:location.status==='ready'&&remote.timestampMs===fix.timestampMs&&spawn.inRange,captureState:encounters.find(e=>e.spawn.id===spawn.id&&!['lost','cancelled'].includes(e.status))?.status||'available'})),territories:[],captureRadiusMeters:100};
+    }
     const spawns=nearbySpawns(fix,this.now(),450,this.getCompanions?.()?.listTemplates?.()).map(spawn=>{
       const existing=encounters.find(e=>e.spawn.id===spawn.id && !['lost','cancelled'].includes(e.status));
       const range=fix.source!=='demo'&&this.location.quality(fix).ok ? geofence(this.location.metricFix(fix),spawn.position,100,this.now()) : {ok:false};
@@ -69,6 +73,10 @@ class DiscoveryService {
     return this.repo.captures(owner).map(capture=>{const pet=pets.find(value=>value.petId===capture.petId);return {...capture,...(pet?{name:pet.name,resourceId:pet.resource.resourceId,showOnDesktop:Boolean(pet.desktop?.visible)}:{})};});
   }
   snapshot() {
+    if(this.getOwner()&&this.authority&&this.cloudRuntime)return this.cloudRuntime.refresh().then(()=>this.snapshotLocal());
+    return this.snapshotLocal();
+  }
+  snapshotLocal() {
     const owner=this.getOwner(),companion=this.getCompanions?.();
     const owned=owner ? (companion?.listPets?.(owner) || companion?.snapshot?.(owner)?.data?.pets || []) : [];
     const pets=owned.map(p=>({petId:p.petId,name:p.name,element:p.element,resource:p.resource,level:p.growth?.level || 1}));
@@ -78,10 +86,11 @@ class DiscoveryService {
     return ok({scenario:this.scenario(),location:this.location.snapshot(),map:this.map.snapshot(),...nearby,
       mapLocation:fix ? this.map.project(fix) : null,spawns:nearby.spawns.map(s=>({...s,mapPosition:this.map.project(s.position)})),territories:territories.items,territoriesAvailable:territories.available,pets,
       encounters:owner ? this.repo.list(owner).map(publicEncounter) : [],captures:this.captureViews(owner,owned),
-      signedIn:Boolean(owner),storage:'local',cloudConfigured:Boolean(this.authority),
+      signedIn:Boolean(owner),storage:this.authority?'cloud':'local',cloudConfigured:Boolean(this.authority),
       cloudStatus:!this.authority ? 'disabled' : !this.getBattle?.()?.supportsCloudWild ? 'battle_adapter_missing' : 'ready'});
   }
   async begin(input) {
+    if(this.authority&&this.cloudRuntime)return this.cloudRuntime.begin(input);
     const owner=this.owner(),request={op:'begin',spawnId:input.spawnId,petId:input.petId};
     const replay=this.repo.replay(owner,input.actionId,request); if(replay) return replay;
     if(this.authority && !this.getBattle?.()?.supportsCloudWild) problem('CLOUD_BATTLE_INTEGRATION_REQUIRED','云端野外对战适配尚未连接，可先使用本机探索模式');
@@ -114,6 +123,7 @@ class DiscoveryService {
     return new RegisteredWildBattleAdapter(battle,this.invokeBattle);
   }
   syncExternal(encounter) {
+    if(encounter.cloudPermit?.id)return encounter;
     if(encounter.battle?.adapter!=='battle-feature' || !['challenging','won'].includes(encounter.status)) return encounter;
     const adapter=this.battleAdapter(); if(!adapter.read) return encounter;
     const battle=adapter.read(encounter.ownerAccountId,encounter.battle.battleId);
@@ -127,6 +137,12 @@ class DiscoveryService {
   act(input) {return this.serial(this.owner(),()=>this.performAct(input));}
   async performAct(input) {
     const owner=this.owner();
+    const cloudEncounter=this.repo.get(owner,input.encounterId);
+    if(cloudEncounter?.cloudPermit?.id&&this.cloudRuntime){
+      const pending=this.cloudRuntime.intent(owner,input.actionId),expectedRound=pending?.request?.expectedRound||cloudEncounter.battle.view.round+1;
+      await this.cloudRuntime.command('act',{sessionId:cloudEncounter.battle.battleId,action:input.action,actionId:input.actionId,expectedRound},{ownerAccountId:owner});
+      return ok(publicEncounter(this.repo.get(owner,input.encounterId)));
+    }
     const replay=this.repo.replay(owner,input.actionId,{op:'act',encounterId:input.encounterId,action:input.action,expectedRevision:input.expectedRevision});if(replay) return replay;
     let encounter=this.currentEncounter(owner,input.encounterId);
     this.checkRevision(encounter,input.expectedRevision);
@@ -152,6 +168,8 @@ class DiscoveryService {
     });
   }
   async cancel(input) {
+    const cloudEncounter=this.repo.get(this.owner(),input.encounterId);
+    if(cloudEncounter?.cloudPermit?.id&&this.cloudRuntime)return this.cloudRuntime.cancel(input);
     const owner=this.owner();
     const replay=this.repo.replay(owner,input.actionId,{op:'cancel',encounterId:input.encounterId});if(replay) return replay;
     const existing=this.currentEncounter(owner,input.encounterId);
@@ -167,6 +185,8 @@ class DiscoveryService {
     });
   }
   async confirm(input) {
+    const cloudEncounter=this.repo.get(this.owner(),input.encounterId);
+    if(cloudEncounter?.cloudPermit?.id&&this.cloudRuntime)return this.cloudRuntime.confirm(input);
     const owner=this.owner(),encounter=this.syncExternal(this.currentEncounter(owner,input.encounterId));
     const name=typeof input.name==='string' ? input.name.trim() : encounter.spawn.name;
     const replay=this.repo.replay(owner,input.actionId,{op:'confirm',encounterId:input.encounterId,name,showOnDesktop:Boolean(input.showOnDesktop)});if(replay) return replay;

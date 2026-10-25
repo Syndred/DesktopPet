@@ -45,6 +45,11 @@ module.exports = {
           // finish/applyReward. Other modes retain their existing adapters.
           const territory=services.get('garden')?.cloudBattles;
           let data = external ? await external.command(name,payload,context) : territory?.owns(payload,context) ? await territory.invoke(name,payload,context) : await service[name](payload, context);
+          if(name==='listReports'||name==='overview'){
+            const additional=[];for(const api of contextAuthorities.values())if(api.listReports)additional.push(...await api.listReports(context.ownerAccountId));
+            const existing=name==='listReports'?data:data.reports||[],merged=[...new Map([...existing,...additional].map(report=>[report.id,report])).values()].sort((a,b)=>String(b.endedAt||'').localeCompare(String(a.endedAt||''))).slice(0,Math.max(1,Math.min(200,Number(payload.limit)||60)));
+            data=name==='listReports'?merged:{...data,reports:merged};
+          }
           if (data?.snapshot) data = presentSession(data);
           else if (data?.session) data = { ...data, session: presentSession(data.session) };
           return { ok: true, data };
