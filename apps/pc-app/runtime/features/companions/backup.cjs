@@ -8,13 +8,14 @@ const conflict = message => { throw new CompanionError('COMPANION_BACKUP_CONFLIC
 const object = value => value && typeof value === 'object' && !Array.isArray(value);
 const id = value => typeof value === 'string' && value.trim() === value && value.length > 0 && value.length <= 200 && !/[\u0000-\u001f\u007f]/u.test(value);
 const integer = value => Number.isSafeInteger(value) && value >= 0;
+const compare = (left, right) => left < right ? -1 : left > right ? 1 : 0;
 function parse(value, label) { try { return JSON.parse(value); } catch { fail(`${label}已损坏，原存档已保留`); } }
 function canonical(value) {
   if (Array.isArray(value)) return value.map(canonical);
   return object(value) ? Object.fromEntries(Object.keys(value).sort().map(key => [key, canonical(value[key])])) : value;
 }
 function digest(data) {
-  const sorted = { ...data, tables: Object.fromEntries(Object.entries(data.tables).map(([name, rows]) => [name, [...rows].sort((a,b) => JSON.stringify(canonical(a)).localeCompare(JSON.stringify(canonical(b))))])), identityImports: [...data.identityImports].sort((a,b) => a.source_owner_account_id.localeCompare(b.source_owner_account_id)) };
+  const sorted = { ...data, tables: Object.fromEntries(Object.entries(data.tables).map(([name, rows]) => [name, [...rows].sort((a,b) => compare(JSON.stringify(canonical(a)), JSON.stringify(canonical(b))))])), identityImports: [...data.identityImports].sort((a,b) => compare(a.source_owner_account_id,b.source_owner_account_id)) };
   return createHash('sha256').update(JSON.stringify(canonical(sorted))).digest('hex');
 }
 
@@ -23,7 +24,7 @@ function createCompanionBackupAdapter(db) {
   const columns = name => db.prepare(`PRAGMA table_info(${name})`).all().map(column => column.name);
   const primary = name => db.prepare(`PRAGMA table_info(${name})`).all().filter(column => column.pk).sort((a,b) => a.pk-b.pk).map(column => column.name);
   const plainRows = rows => rows.map(row => ({ ...row }));
-  const ordered = (name, rows) => { const keys = primary(name); return plainRows(rows).sort((a,b) => JSON.stringify(keys.map(key => a[key])).localeCompare(JSON.stringify(keys.map(key => b[key])))); };
+  const ordered = (name, rows) => { const keys = primary(name); return plainRows(rows).sort((a,b) => compare(JSON.stringify(keys.map(key => a[key])),JSON.stringify(keys.map(key => b[key])))); };
   function exportData(owner) {
     return { ownerAccountId: owner, tables: Object.fromEntries(TABLES.map(name => [name, ordered(name, db.prepare(`SELECT * FROM ${name} WHERE owner_account_id=?`).all(owner))])), identityImports: ordered(IDENTITY_TABLE, db.prepare(`SELECT * FROM ${IDENTITY_TABLE} WHERE target_owner_account_id=?`).all(owner)) };
   }
@@ -77,8 +78,12 @@ function createCompanionBackupAdapter(db) {
     return data;
   }
   function fromLegacyTables(tables, owner) {
+    if (!object(tables)) fail('旧伙伴存档格式无效');
     const found = TABLES.filter(name => Object.hasOwn(tables, name));
-    if (!found.length) return null;
+    // Archives predating this feature only have Accounts' raw legacy module.
+    // An explicit replace clears stale imported markers so its verified raw
+    // inventory can be imported again; merge still rejects nonempty progress.
+    if (!found.length) return validate({ownerAccountId:owner,tables:Object.fromEntries(TABLES.map(name=>[name,[]])),identityImports:[]},owner);
     if (found.length !== TABLES.length || found.some(name => !object(tables[name]) || !Array.isArray(tables[name].rows))) fail('旧伙伴存档表不完整，不能局部拼接恢复');
     const data = { ownerAccountId: owner, tables: Object.fromEntries(TABLES.map(name => [name, ordered(name, tables[name].rows)])), identityImports: [] };
     validate(data, owner); return data;

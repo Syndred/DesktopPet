@@ -78,6 +78,20 @@ test('archived 3D animals and original raw history survive a new-client restore 
   }finally{a.db.close();b.db.close();cleanup(folder);}
 });
 
+test('archives from before companion tables clear only on explicit replace and can re-import their original raw pet IDs',()=>{
+  const folder=mkdtempSync(join(tmpdir(),'companion-cloud-pre-feature-')),a=client(folder,'a');
+  try{
+    seed(a);const kept=a.adapter.export(owner),empty=a.adapter.fromLegacyTables({},owner);
+    assert.throws(()=>a.adapter.restore(owner,empty,'merge'),error=>error.code==='COMPANION_BACKUP_CONFLICT');assert.deepEqual(a.adapter.export(owner),kept);
+    a.adapter.restore(owner,empty,'replace');
+    assert.equal(a.adapter.export(owner).tables.companion_accounts.length,0);
+    a.service.importLegacyInventory(owner,{pets:[{id:'original-pre-module-id',name:{zh:'更早的原宠物'},model:'old-model.glb',level:7,exp:23,chats:[{id:'original-pre-module-chat'}]}]});
+    assert.equal(a.service.requirePet(owner,'original-pre-module-id').name,'更早的原宠物');
+    assert.equal(a.service.requirePet(owner,'original-pre-module-id').growth.level,7);
+    assert.equal(JSON.parse(a.adapter.export(owner).tables.companion_legacy_archive[0].source_json).chats[0].id,'original-pre-module-chat');
+  }finally{a.db.close();cleanup(folder);}
+});
+
 test('verified alias migration retains source and target-before history, stable IDs and replay receipts through another client',()=>{
   const folder=mkdtempSync(join(tmpdir(),'companion-cloud-alias-')),a=client(folder,'a'),b=client(folder,'b');
   try{
