@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "ledgerEvidence": "docs/implementation/evidence/cloud/2026-10-25/migration-ledger-alignment.json",
+  "scope": "Approved migration filenames aligned to the actual ledger; not a live schema or full PostGIS reset assertion.",
+  "files": [
+    "20261025015911_preserve_comparisontext_before_lingjing.sql",
+    "20261025021620_lingjing_identity_actor_contract.sql",
+    "20261025022918_lingjing_auth_bridge.sql",
+    "20261025023614_lingjing_private_resource_storage.sql",
+    "20261025024615_lingjing_protected_save_cas.sql",
+    "20261025030635_lingjing_discovery_cloud_authority.sql",
+    "20261025030639_lingjing_discovery_live_actor_guard.sql",
+    "20261025030859_lingjing_cloud_secret_guard.sql",
+    "20261025031842_lingjing_companion_commands.sql",
+    "20261025032327_lingjing_session_revocation_ledger.sql",
+    "20261025033032_lingjing_territory_authority.sql",
+    "20261025034106_lingjing_transaction_actor_guard.sql",
+    "20261025034110_lingjing_domain_actor_guard_adoption.sql",
+    "20261025034122_lingjing_verified_resource_authority.sql",
+    "20261025034132_lingjing_discovery_wild_transactions.sql",
+    "20261025034136_lingjing_discovery_capture_scenarios.sql",
+    "20261025034313_lingjing_territory_receipt_operator.sql",
+    "20261025034744_lingjing_battle_jwt_rooms.sql",
+    "20261025034748_lingjing_battle_authority_save.sql",
+    "20261025040739_lingjing_battle_scoped_authority_receipt.sql",
+    "20261025040946_lingjing_live_foreign_key_indexes.sql",
+    "20261025041216_lingjing_verified_resource_preferences.sql"
+  ]
+}
