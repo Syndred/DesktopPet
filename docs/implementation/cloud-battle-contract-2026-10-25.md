@@ -25,7 +25,7 @@
 
 第二个CLI迁移 `20261025034748_lingjing_battle_authority_save.sql` 依赖08 protected CAS及第一份battle迁移。只新增训练会话/命令/结算表和同事务RPC，不改旧历史。好友和训练活动成员互斥，遵守统一账号行优先的锁顺序。第三份 `20261025040739_lingjing_battle_scoped_authority_receipt.sql` 将08 CAS动作键改为短的 `battle-authority:<mode>:<UUID>`，原领域奖励actionId和旧回执不变；160字符原owner的SQL到SQLite重放已通过。三份均已由主协调部署，04未部署或改远端历史。
 
-正式函数名 `lingjing-battle`。运行时只需 `lingjing-battle/index.ts`、`lingjing-battle/runtime.generated.mjs`、`_shared/lingjing-auth.ts` 三份文件。`scripts/battle/build-cloud.mjs`机械打包同一核心/02成长与模板/05菜园及JSON，`--check`按仓库相对路径与CRLF规范化SHA校验，不手改生成物。完整TS源码仍保留审查。08 withActor校验真实JWT/活跃Auth session/owner/device；verify_jwt=false只关闭旧网关校验，不关闭函数认证。不要部署旧duel-online入口。
+正式函数名 `lingjing-battle`，部署文件闭包由 `node scripts/cloud/read-edge-bundle.cjs lingjing-battle --json` 收集和校验，不手选入口与依赖。`scripts/battle/build-cloud.mjs`机械打包同一核心/02成长与模板/05菜园及JSON，`--check`按仓库相对路径与CRLF规范化SHA校验，不手改生成物。完整TS源码仍保留审查。08 withActor校验真实JWT/活跃Auth session/owner/device；verify_jwt=false只关闭旧网关校验，不关闭函数认证。旧duel-online入口已退役。
 
 ## 同一规则核心
 
@@ -55,7 +55,7 @@ PGlite 实际执行 08 身份 SQL 和新增对战 SQL，完成真实数据库事
 
 完整证据与8个隔离目录readOnly/query_only核对见 [cloud-native-v2/README.md](evidence/battle/2026-10-25/cloud-native-v2/README.md)。证据按原始运行及文件SHA相连：前两轮在后续界面／脚本阶段失败，保持其原始false状态，再定向补验剩余范围；不宣称一次不中断全程通过，也不宣称两台实体设备。
 
-04源码／证据已可合入。主协调仍负责08资源水合／raw指纹守卫整合、最终冻结和成品验收，以及旧Edge／SQL文件最终删除与部署；04不执行远端部署或删除远端历史。
+04源码／证据已合入，主协调已独立核对真实房间、双账号云端奖励和8份原生SQLite档。旧Edge／SQL已按恢复审计删除，远端迁移历史未修改。主协调继续负责08资源水合／raw指纹守卫整合、最终冻结和成品验收；04不执行远端部署或删除远端历史。
 
 ## 官方依据
 
