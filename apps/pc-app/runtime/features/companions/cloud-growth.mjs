@@ -4,6 +4,7 @@ const TABLES = ['companion_accounts','companion_pets','companion_actions','compa
 const fail = (code, message) => { throw Object.assign(new Error(message), { code }); };
 const object = value => value !== null && typeof value === 'object' && !Array.isArray(value);
 const identifier = value => typeof value === 'string' && value.trim() === value && value.length > 0 && value.length <= 200 && !/[\u0000-\u001f\u007f]/u.test(value);
+const receiptIdentifier = value => typeof value === 'string' && value.trim() === value && value.length > 0 && value.length <= 512 && !/[\u0000-\u001f\u007f]/u.test(value);
 function canonical(value) {
   if (value === null || ['boolean','string'].includes(typeof value) || typeof value === 'number' && Number.isFinite(value)) return JSON.stringify(value);
   if (Array.isArray(value)) return '[' + value.map(canonical).join(',') + ']';
@@ -43,7 +44,7 @@ function validatePet(row, owner, petId) {
  * transaction. This function performs no network, database write or commit. */
 export async function awardBattleResult(input) {
   const {envelope:source,ownerAccountId:owner,petId,sessionId,won,mode,actionId,now}=input||{};
-  if (!object(input)||Object.keys(input).some(key=>!['envelope','ownerAccountId','petId','sessionId','won','mode','actionId','now'].includes(key))||![owner,petId,sessionId,actionId].every(identifier)||typeof won!=='boolean'||!['training','friend','wild','territory'].includes(mode)||!Number.isSafeInteger(now)||now<0||!Number.isFinite(new Date(now).getTime())) fail('INVALID_INPUT','战斗成长请求无效');
+  if (!object(input)||Object.keys(input).some(key=>!['envelope','ownerAccountId','petId','sessionId','won','mode','actionId','now'].includes(key))||![owner,petId,sessionId].every(identifier)||!receiptIdentifier(actionId)||typeof won!=='boolean'||!['training','friend','wild','territory'].includes(mode)||!Number.isSafeInteger(now)||now<0||!Number.isFinite(new Date(now).getTime())) fail('INVALID_INPUT','战斗成长请求无效');
   if (actionId!==`battle:${sessionId}:${owner}`) fail('INVALID_BATTLE_ACTION','战斗奖励必须使用固定结算标识');
   if (source?.format!=='lingjing-account-save'||source.version!==1||source.ownerAccountId!==owner||source.provenance?.mode!=='live') fail('BACKUP_OWNER_MISMATCH','战斗存档归属或环境不匹配');
   const envelope=structuredClone(source);
