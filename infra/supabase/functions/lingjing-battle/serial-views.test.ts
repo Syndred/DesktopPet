@@ -28,6 +28,7 @@ Deno.test('SCRIPTED display batch uses only the current verified actor and one r
  const response=await handler(request({op:'get_display_metadata',roomIds:[roomId.toUpperCase()]}),context);
  assert.equal(response.status,200);assert.deepEqual(await response.json(),{ok:true,data:metadata});
  const {account:_account,username:_username,...actor}=caller;
+ void _account;void _username;
  assert.deepEqual(calls,[{name:'lingjing_battle_serial_views',input:{p_actor:actor,p_room_ids:[roomId]}}]);
  assert.ok(!JSON.stringify(calls).includes('client'));
 });

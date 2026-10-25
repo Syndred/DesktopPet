@@ -107,7 +107,18 @@ test('LOCAL globalSerial migration, private registry, authority hooks and proof 
    assert.deepEqual(await f.hashes(),hashes);assert.deepEqual(await counters(),state);
    await f.db.exec('drop trigger serial_fixture_failure on lingjing_private.global_pet_serials;drop function public.serial_fixture_failure()');
   });
-  const spawn=nearbySpawns({lat:31.2,lng:121.4},Date.now()).find(s=>s.templateId==='animal-shiba');assert.ok(spawn);
+  // A point's nearest 16 hourly spawns need not contain every species. Search a
+  // bounded adjacent grid using the real generator, then prove that spawn's
+  // unchanged position; never fabricate a species, ID or out-of-time sample.
+  const spawnTime=Date.now(),offsets=[0,-0.0024,0.0024,-0.0048,0.0048];let spawn;
+  for(const lat of offsets){
+   for(const lng of offsets){
+    spawn=nearbySpawns({lat:31.2+lat,lng:121.4+lng},spawnTime).find(s=>s.templateId==='animal-shiba');
+    if(spawn)break;
+   }
+   if(spawn)break;
+  }
+  assert.ok(spawn,'Expected a real animal-shiba in the bounded fixture world sample');
   let observed;
   await t.test('nearby lookup allocates nothing; observe is owner-scoped, idempotent and range checked',async()=>{
    const state=await counters();assert.deepEqual(await lookup(a,[spawn]),[]);assert.deepEqual(await counters(),state);
