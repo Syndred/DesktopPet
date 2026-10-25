@@ -1,0 +1,124 @@
+{
+  "acceptancePassed": false,
+  "source": "2cafccd6871403f69ae8a5bb17dbd658b5a48272",
+  "executable": {
+    "path": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\artifacts\\pc-cloud-upgrade-final-2cafccd\\Lingjing-0.1.8-portable-x64.exe",
+    "size": 169188376,
+    "sha256": "af75c5a8ace15a4a924e71a24fd258df80a459648a1c1ab8d795b1da6e43837e"
+  },
+  "runId": "73f3f050-e818-4a42-8519-4dabdd4b8a15",
+  "roomId": "556a9aee-40a0-4609-8fa1-c07926fe67cc",
+  "sessionId": "online-556a9aee-40a0-4609-8fa1-c07926fe67cc",
+  "invitationId": "513c8ce0-c71b-438a-aaa9-a2b6631d7ef6",
+  "rounds": 10,
+  "naturalResult": {
+    "aHp": 40,
+    "bHp": 0
+  },
+  "failure": "terminal A did not become automatically clean",
+  "repeatSettlementAttempted": false,
+  "profiles": [
+    {
+      "label": "A",
+      "owner": "account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+      "profile": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\final-portable-friend-2cafccd-1792914266808\\profile-A",
+      "pid": 26484,
+      "deviceId": "7411882c-c1b5-49ed-98d8-fb6da4e74900",
+      "source": "2cafccd6871403f69ae8a5bb17dbd658b5a48272",
+      "asarSha256": "1aefc491055159bb806d72466587b7920340412e71bd3d2b6bb76c3defd4a8d5"
+    },
+    {
+      "label": "B",
+      "owner": "account:9e230794-470b-45be-9a18-a2564c88ba35",
+      "profile": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\final-portable-friend-2cafccd-1792914266808\\profile-B",
+      "pid": 13712,
+      "deviceId": "aba8efef-f8ba-481d-8e45-0b55fedd5215",
+      "source": "2cafccd6871403f69ae8a5bb17dbd658b5a48272",
+      "asarSha256": "1aefc491055159bb806d72466587b7920340412e71bd3d2b6bb76c3defd4a8d5"
+    }
+  ],
+  "owners": [
+    {
+      "label": "A",
+      "owner": "account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+      "cloudRevision": 8,
+      "localCheckpoint": 7,
+      "authorityReceipt": "battle-authority:friend:556a9aee-40a0-4609-8fa1-c07926fe67cc",
+      "xp": 20,
+      "seedItem": "seed:berry",
+      "seedQuantity": 2,
+      "rewardRows": 1,
+      "seedRows": 1,
+      "companionsAndGardenExact": true,
+      "battleMismatches": [
+        {
+          "unit": "sessions",
+          "extraIds": [],
+          "changedIds": [
+            "online-556a9aee-40a0-4609-8fa1-c07926fe67cc"
+          ]
+        },
+        {
+          "unit": "actions",
+          "extraIds": [
+            "invite:513c8ce0-c71b-438a-aaa9-a2b6631d7ef6"
+          ],
+          "changedIds": []
+        },
+        {
+          "unit": "reports",
+          "extraIds": [],
+          "changedIds": [
+            "online-556a9aee-40a0-4609-8fa1-c07926fe67cc"
+          ]
+        }
+      ]
+    },
+    {
+      "label": "B",
+      "owner": "account:9e230794-470b-45be-9a18-a2564c88ba35",
+      "cloudRevision": 6,
+      "localCheckpoint": 5,
+      "authorityReceipt": "battle-authority:friend:556a9aee-40a0-4609-8fa1-c07926fe67cc",
+      "xp": 5,
+      "seedItem": "seed:berry",
+      "seedQuantity": 2,
+      "rewardRows": 1,
+      "seedRows": 1,
+      "companionsAndGardenExact": true,
+      "battleMismatches": [
+        {
+          "unit": "sessions",
+          "extraIds": [],
+          "changedIds": [
+            "online-556a9aee-40a0-4609-8fa1-c07926fe67cc"
+          ]
+        },
+        {
+          "unit": "actions",
+          "extraIds": [
+            "accept:513c8ce0-c71b-438a-aaa9-a2b6631d7ef6"
+          ],
+          "changedIds": []
+        },
+        {
+          "unit": "reports",
+          "extraIds": [],
+          "changedIds": [
+            "online-556a9aee-40a0-4609-8fa1-c07926fe67cc"
+          ]
+        }
+      ]
+    }
+  ],
+  "evidence": {
+    "run": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\final-portable-friend-2cafccd-1792914266808\\evidence.json",
+    "independentHttpsSqlite": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\final-portable-friend-2cafccd-1792914266808\\terminal-independent-audit.json",
+    "originalActionIds": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\final-portable-friend-2cafccd-1792914266808\\terminal-read-only-first.json",
+    "nativeJoinedA": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\final-portable-friend-2cafccd-1792914266808\\joined-A.png",
+    "nativeJoinedB": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\final-portable-friend-2cafccd-1792914266808\\joined-B.png",
+    "renderedFinalA": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\final-portable-friend-2cafccd-1792914266808\\failure-A.png",
+    "renderedFinalB": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\final-portable-friend-2cafccd-1792914266808\\failure-B.png"
+  },
+  "statement": "The two scoped actual native processes have exited. The completed cloud room, all original operation IDs and original failed local SQLite profiles remain intact. No test gates or production source were changed."
+}

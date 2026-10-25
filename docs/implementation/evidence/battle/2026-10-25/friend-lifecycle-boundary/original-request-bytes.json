@@ -1,0 +1,20 @@
+[
+  {
+    "owner_account_id": "account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+    "action_id": "invite:513c8ce0-c71b-438a-aaa9-a2b6631d7ef6",
+    "session_id": "invite:513c8ce0-c71b-438a-aaa9-a2b6631d7ef6",
+    "command_json": "{\"petId\":\"pet-2d660416-db18-44a1-8392-74f235484151\",\"type\":\"invite\"}",
+    "result_json": null,
+    "commandSha256": "b4d55435211af9af098831415561d7d9303644bfc119ce7c58e3f4e4b19b84b6",
+    "resultSha256": null
+  },
+  {
+    "owner_account_id": "account:9e230794-470b-45be-9a18-a2564c88ba35",
+    "action_id": "accept:513c8ce0-c71b-438a-aaa9-a2b6631d7ef6",
+    "session_id": "accept:513c8ce0-c71b-438a-aaa9-a2b6631d7ef6",
+    "command_json": "{\"petId\":\"pet-7374c520-8730-45ca-a419-227e60a2fa81\",\"type\":\"accept\"}",
+    "result_json": "{\"room\":{\"id\":\"556a9aee-40a0-4609-8fa1-c07926fe67cc\",\"room_code\":\"EAD48AB294\",\"status\":\"waiting\",\"host_user_id\":\"account:9e230794-470b-45be-9a18-a2564c88ba35\",\"host_account\":\"battleqa_mvncxw0v_b\",\"guest_user_id\":null,\"guest_account\":null,\"host_pet_id\":\"pet-7374c520-8730-45ca-a419-227e60a2fa81\",\"guest_pet_id\":null,\"host_pet_level\":1,\"guest_pet_level\":null,\"host_resource_id\":\"builtin:lingjing-shiba-v2\",\"guest_resource_id\":null,\"invitation_id\":\"513c8ce0-c71b-438a-aaa9-a2b6631d7ef6\",\"invited_user_id\":\"account:3423cecd-2b9e-4987-bd84-c616eee15d10\",\"host_pet_name\":\"联机火伴\",\"guest_pet_name\":null,\"host_element\":\"fire\",\"guest_element\":null,\"current_round\":1,\"last_resolved_round\":0,\"host_hp\":120,\"guest_hp\":120,\"host_anger\":0,\"guest_anger\":0,\"host_free_dodge_used\":false,\"guest_free_dodge_used\":false,\"host_statuses\":[],\"guest_statuses\":[],\"winner_side\":null,\"created_at\":\"2026-10-25T07:47:09.590036+00:00\",\"updated_at\":\"2026-10-25T07:47:09.590036+00:00\"}}",
+    "commandSha256": "559f9c1e95f713c94785f3eed08020e412660a7254a1a132b8e0db000dfbceb4",
+    "resultSha256": "c5d85ffe8960fca5bbc9d0d446c05966ece0c5219e21bd00abd5ada0030046e0"
+  }
+]

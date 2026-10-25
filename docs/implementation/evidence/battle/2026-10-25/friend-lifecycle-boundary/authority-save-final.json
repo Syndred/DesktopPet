@@ -1,0 +1,19 @@
+{
+  "at": "2026-10-25T08:23:47.500Z",
+  "provenance": "local-actual-PGlite-and-canonical-SQLite-fixtures",
+  "realCloudVerified": false,
+  "checks": [
+    "actual Postgres rollback after protected commit: missing report leaves growth, inventory, head revision and receipt unchanged",
+    "160-character original owner completes Postgres settlement and SQLite replay using a short CAS key while retaining its original long domain receipt; an existing legacy receipt replays unchanged",
+    "both owners receive exactly one canonical growth + two seeds + mirrored complete report, with original other-pet state preserved",
+    "actual SQLite readback completes a finished-but-pending report idempotently; late adapter failure rolls back companion/garden restore together",
+    "formal Supabase AccountSync/BackupManager: pre-battle baseline, durable start/round journal, actual SQL authority readback and final resolve advance the baseline and remain clean",
+    "an independent unverified local operation is preserved and reported as a conflict, never silently replaced",
+    "authenticated settlement forgery and obsolete receipt-only service path are denied",
+    "server training state machine uses the same core and atomically awards canonical growth/inventory/report with immutable per-round replay",
+    "shared08 guard rechecks stale original device/SID before training/settlement replay, rolls back without mutation, and permits another same-owner device"
+  ],
+  "friendRounds": 18,
+  "trainingRounds": 16,
+  "passed": true
+}

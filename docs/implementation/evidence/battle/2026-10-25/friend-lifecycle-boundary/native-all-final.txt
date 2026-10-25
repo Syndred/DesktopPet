@@ -1,0 +1,404 @@
+✔ raw legacy migration preserves bytes, isolates explicit inventories and is idempotent (506.4259ms)
+✔ ambiguous global history is archived instead of cloned into every missing inventory (303.8225ms)
+✔ legacy missing credentials cannot log in with the old default password (311.9845ms)
+✔ remote placeholder hashes without tokens are never accepted as local credentials (311.9548ms)
+✔ corrupt legacy content stays archived without blocking the recoverable account UI (409.1249ms)
+✔ logout revokes persisted session resumption even when encrypted file removal fails (430.0862ms)
+✔ local login upgrades legacy SHA256, and nickname/password changes are atomic and readable (828.0232ms)
+✔ settings are owner-scoped, revision-aware and actionId-idempotent across account switches (477.7363ms)
+✔ cloud and local users with the same account name keep distinct stable owners (463.8533ms)
+✔ a late cloud login cannot resurrect a logged-out session (297.9192ms)
+✔ quiet hours cross midnight and gate notification sound without reading input (0.4346ms)
+✔ real SQLite backup/replace preserves original data, rejects tampering and other accounts, survives reopening (681.4059ms)
+✔ restoring a failed feature adapter rolls back all rows and leaves before-restore backup (427.5044ms)
+✔ backup previews become stale when domain data changes, before writing any restore (424.4389ms)
+✔ offline sync queues remain owner-scoped and retryable after a real network refusal (438.2831ms)
+✔ sync requires an exact receipt AND independent readback before being marked verified (protocol unit) (350.0847ms)
+✔ cloud session invalidation clears only that verified session and retains its outbox (313.8301ms)
+✔ shared SQLite / simulated wire: an actual companion selection overlapping automatic read preserves subsequent persona, memory and failed-message edits (531.1681ms)
+▶ shared SQLite / simulated wire: unknown protected edits and genuine two-device personal edits remain conflicts
+  ✔ unknown-protected (361.1772ms)
+  ✔ remote-personal (370.8502ms)
+✔ shared SQLite / simulated wire: unknown protected edits and genuine two-device personal edits remain conflicts (732.7021ms)
+✔ shared SQLite / simulated wire: an uncertain sent outbox retries its original action/base/document and is never rebased onto a later authority (364.9141ms)
+▶ shared SQLite / simulated wire: exact old-envelope proof is required, and same-SID token refresh remains allowed
+  ✔ exact-ledger (379.2261ms)
+  ✔ missing-ledger (375.7054ms)
+  ✔ forged-personal-fingerprint (366.8837ms)
+  ✔ same-SID-refresh (350.603ms)
+✔ shared SQLite / simulated wire: exact old-envelope proof is required, and same-SID token refresh remains allowed (1473.4005ms)
+▶ shared SQLite / simulated wire: owner, SID, epoch, sync setting and concurrent local changes invalidate adoption while exact baseline proof is in flight
+  ✔ owner (312.8522ms)
+  ✔ logout (358.8208ms)
+  ✔ same-owner-new-SID (349.1202ms)
+  ✔ epoch (352.0718ms)
+  ✔ disabled (359.9525ms)
+  ✔ personal-edit (339.4058ms)
+  ✔ protected-edit (343.727ms)
+✔ shared SQLite / simulated wire: owner, SID, epoch, sync setting and concurrent local changes invalidate adoption while exact baseline proof is in flight (2416.85ms)
+✔ real SQLite / simulated provider: clean automatic pull atomically applies full state and preserves original backup (412.2416ms)
+✔ real SQLite / simulated provider: offline personal edits enqueue one original action before I/O and retry its original base (527.0512ms)
+✔ real SQLite / simulated provider: newer cloud plus dirty personal state retains original queue as conflict (485.9828ms)
+✔ real SQLite / simulated provider: unknown protected changes are never auto-uploaded or overwritten (422.9512ms)
+✔ real SQLite / simulated provider: local edits while cloud read is pending abort automatic adoption (424.7238ms)
+▶ real SQLite / simulated provider: changes during hydration preserve cache and reject local edits, logout or same-owner new SID
+  ✔ local-edit (424.8731ms)
+  ✔ logout (397.8699ms)
+  ✔ same-owner-new-SID (357.0971ms)
+✔ real SQLite / simulated provider: changes during hydration preserve cache and reject local edits, logout or same-owner new SID (1180.5348ms)
+✔ real SQLite / simulated provider: same-SID token refresh during hydration still permits safe atomic pull (422.5043ms)
+▶ real SQLite / simulated provider: unverified original, missing baseline, disabled sync and existing conflicts block automatic overwrite
+  ✔ unverified (426.7984ms)
+  ✔ redacted (426.173ms)
+  ✔ unknown-baseline (395.3488ms)
+  ✔ disabled (388.5601ms)
+  ✔ conflict (390.1403ms)
+✔ real SQLite / simulated provider: unverified original, missing baseline, disabled sync and existing conflicts block automatic overwrite (2027.6376ms)
+✔ real SQLite / simulated provider: failed restore rolls back all domains and checkpoint while retaining original backup file (405.0058ms)
+✔ real SQLite / simulated provider: exact already-applied domain readback advances baseline without overwriting and allows later personal upload (475.1708ms)
+✔ real SQLite / simulated provider: production conversation adapter automatically queues messages, memory and persona while retaining local credentials (534.4299ms)
+✔ LOCAL synthetic preparation only: original owner/hash/date preserved and never marked actual migration (1.4864ms)
+✔ LOCAL synthetic preparation only: reject damaged, QA, empty, comparison-project and ambiguous sources (0.963ms)
+✔ LOCAL synthetic preparation only: Windows DPAPI encrypted result does not contain fixture hash or owner plaintext (3418.2739ms)
+✔ QA requires explicit flag, fresh marker and matching directory/scenario; normal profiles never fall back (650.7239ms)
+✔ QA refuses existing accounts/raw history and cannot reopen its database as a normal profile (894.0327ms)
+✔ verified QA identities are namespaced, memory-only, owner-scoped and rejected by live cloud paths (541.2133ms)
+✔ QA backups retain provenance, restore with preservation, and reject every normal/other-scenario envelope (948.228ms)
+✔ QA host never enables system startup, location, emotion collection or native notifications (404.7301ms)
+✔ production07 + BackupManager with real SQLite / simulated HTTPS provider: new private resource hydration must allow atomic full-save adoption (4064.0047ms)
+✔ production07 + real SQLite: verified resource/pref pump before reconcile may precede the companion appearance update (4796.0143ms)
+✔ production07 may append only the new exact manifest import to an existing native import without rewriting its original JSON (2749.2604ms)
+✔ production07 safe file repair may rebind an existing registry only to its verified restore plan while preserving original bytes (2553.6215ms)
+✔ real SQLite upgrade: accounts008 preserves existing007 rows and recovers the exact old immutable cloud document (4613.0737ms)
+▶ production07 preparation never admits user edits, extra imports/files, unverified proof or any pending action
+  ✔ existing-resource (1790.8683ms)
+  ✔ preference (1738.0059ms)
+  ✔ existing-import (1827.7673ms)
+  ✔ extra-import (1797.5926ms)
+  ✔ extra-file (1819.5785ms)
+  ✔ file-bytes (1756.698ms)
+  ✔ file-registry (1802.6762ms)
+  ✔ missing-proof (1771.0817ms)
+  ✔ personal (1735.4862ms)
+  ✔ companion (1773.7451ms)
+  ✔ account-pending (1827.1937ms)
+  ✔ preference-pending (1768.1205ms)
+✔ production07 preparation never admits user edits, extra imports/files, unverified proof or any pending action (21410.5017ms)
+▶ resource pump admission still rejects pre-existing user preferences, unknown private imports and unrelated companion edits
+  ✔ preference (2309.2692ms)
+  ✔ unknown-import (3289.9346ms)
+  ✔ companion (2272.5768ms)
+✔ resource pump admission still rejects pre-existing user preferences, unknown private imports and unrelated companion edits (7872.3514ms)
+▶ real production hydration rejects logout and same-owner new SID during actual SDK chunk reads
+  ✔ logout (1558.8162ms)
+  ✔ new-SID (1565.644ms)
+✔ real production hydration rejects logout and same-owner new SID during actual SDK chunk reads (3124.8746ms)
+✔ 007 upgrade never guesses or accepts a damaged immutable baseline after independent resource pump (2584.3671ms)
+✔ PROTOCOL UNIT simulated: modern HTTPS config and stable distinct per-profile device IDs (19.6179ms)
+✔ PROTOCOL UNIT simulated: Auth UID links additively to old text owner without tokens in SQLite/public session (380.7991ms)
+✔ PROTOCOL UNIT simulated: concurrent refresh is single-flight and adopts a 12-character opaque token (21.9979ms)
+✔ PROTOCOL UNIT simulated: a refresh finishing after logout cannot restore main-process login (325.7047ms)
+✔ PROTOCOL UNIT simulated: protected sync archives the original and reports partial synchronization honestly (438.4709ms)
+✔ PROTOCOL UNIT simulated: one session SDK reads current token after refresh and removes channels on logout (7.2783ms)
+✔ PROTOCOL UNIT simulated: async asset hydration rejects same-owner re-login but accepts same-SID refresh (346.6652ms)
+✔ PROTOCOL UNIT simulated: untouched empty battle/garden modules are absent-state equivalents, real history remains significant (273.7309ms)
+✔ real SQLite with simulated Auth: issued restore previews expire across session transitions, same-SID refresh remains usable (458.6995ms)
+✔ SCRIPTED cloud selection: training waits for delayed canonical selection before any start request or battle write (89.4511ms)
+(node:28444) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/Administrator/.codex/worktrees/lingjing-battle/DesktopPet/infra/supabase/functions/lingjing-battle/room-core.js is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\Administrator\.codex\worktrees\lingjing-battle\DesktopPet\package.json.
+(Use `electron --trace-warnings ...` to show where the warning was created)
+✔ SCRIPTED cloud selection: delayed rejection leaves no cloud start request or battle/action receipt (48.1738ms)
+✔ modern versioned room DTO preserves the shared desktop core for all 400 five-element/action pairs and stacked effects (26.5646ms)
+✔ restore preserves free dodge, anger, stacks and terminal state without resetting a fight (1.1119ms)
+✔ online round review uses that round's HP, anger, statuses and free dodge, not latest room state (0.7264ms)
+✔ realtime does not regress a newer room or keep another room's cached rounds (0.3056ms)
+✔ scripted transport: uncertain original action survives SQLite restart and never spills into the next round (123.03ms)
+✔ scripted transport: history sync fills a missing middle page rather than only fetching before the oldest round (81.733ms)
+✔ scripted transport: a room advancing during history pagination cannot leave a stale snapshot marked complete (72.106ms)
+✔ scripted realtime: callbacks from a removed room cannot replace the current room or restore cleared state (0.7512ms)
+✔ real SQLite and companions: full training awards only the selected instance once, and preserves legacy data (121.0989ms)
+✔ real disk restart restores a fight and stale simultaneous commands cannot play a second round (111.7291ms)
+✔ failed seed adapter rolls back the final round, experience, report and reward receipt together (76.2747ms)
+✔ wild/territory adapters keep trusted challenge provenance and isolate owner access (94.0748ms)
+✔ real accounts local-ID mapping preserves legacy archives, isolates 2D ownership and revokes battle access on logout (145.7058ms)
+✔ real garden adapter consumes the battle outcome and never repeats territory ownership or seed settlement (168.2574ms)
+✔ battle backup keeps newer final state and cannot roll a reward ledger backward (121.7428ms)
+(node:13564) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/Administrator/.codex/worktrees/lingjing-battle/DesktopPet/infra/supabase/functions/lingjing-battle/settlement.js is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\Administrator\.codex\worktrees\lingjing-battle\DesktopPet\package.json.
+(Use `electron --trace-warnings ...` to show where the warning was created)
+✔ real shared SQLite / scripted cloud: local battle v2 reads mixed training/friend cloud v1 through public overview and reports without changing XP, seeds or authority checkpoint (144.3081ms)
+[battle:overview] {
+  requestId: 'f579972d-1bfc-4077-932f-521f9a3f2b7e',
+  code: 'BACKUP_MODULE_UNSUPPORTED',
+  name: 'AccountError'
+}
+[battle:overview] {
+  requestId: '2e8823e2-12ae-42aa-ae10-8b94cba6dab6',
+  code: 'INVALID_BATTLE_BACKUP',
+  name: 'Error'
+}
+[battle:overview] {
+  requestId: 'fbccd4e6-8c01-4882-b055-de1910a6f498',
+  code: 'INVALID_BATTLE_BACKUP',
+  name: 'Error'
+}
+[battle:overview] {
+  requestId: '1b089c2d-6800-4405-9112-33e210043b86',
+  code: 'INVALID_BATTLE_BACKUP',
+  name: 'Error'
+}
+✔ real shared SQLite / scripted cloud: unknown versions, local-v2 envelopes and v1 journal forgeries fail before changing report cache or economy (120.2663ms)
+(node:18308) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/Administrator/.codex/worktrees/lingjing-battle/DesktopPet/infra/supabase/functions/lingjing-battle/room-core.js is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\Administrator\.codex\worktrees\lingjing-battle\DesktopPet\package.json.
+(Use `electron --trace-warnings ...` to show where the warning was created)
+✔ real shared SQLite / typed scripted wire: actual Online and Battle lifecycle invite/accept/join/natural terminal/readback/repeat remains canonical and clean for both owners (532.7314ms)
+✔ real disk restart / typed scripted wire: original invite and accept IDs, selected pet and response-loss recovery survive without second rooms (149.3009ms)
+✔ real shared SQLite / typed scripted wire: reject, cancel, expiration and waiting-room leave keep protocol history without cloud business edits (142.8118ms)
+✔ generic v1/v2 missing maps never acquire native seals after a real BattleStore/BackupAdapter reconstruction; original bytes and file checksums remain intact (111.3627ms)
+✔ native legacy invite/accept maps preserve old rows byte for byte; unknown business/result edits remain protected and dirty (170.251ms)
+✔ old-shape pending cloud invite reuses its original UUID and false wire body after disk restart; explicit resend true remains distinct (151.3025ms)
+✔ native old waiting row retains raw bytes while leave/expiry cache becomes terminal across restart and permits the next room (175.9776ms)
+✔ generic v2 empty-cache import retains the original session as protected through reconstruction instead of acquiring an upgrade seal (117.0846ms)
+✔ fresh exact authority receipt repairs only the known legacy finish metadata projection, archives raw bytes once, and rejects a real HP edit (275.1838ms)
+✔ real Online / disk restart: join and unresolved round retry retain original wire IDs and pet mapping; active leave remains protocol-only (167.9069ms)
+✔ a cloud-looking prefix or forged journal source cannot hide unknown business input/result edits (125.8105ms)
+✔ typed scripted lost settlement response: disk restart retries the same room authority receipt once without a second XP or seed award (299.7404ms)
+✔ retired transport: old constructor URL/key/function options cannot create a client or activate password identity (1.5064ms)
+✔ SCRIPTED SDK boundary only: cloud operations omit legacy identity and untrusted pet facts, keep original actionId and private authorized topic (1.9284ms)
+✔ SCRIPTED SDK boundary only: auth owner changes during refresh cannot invoke the old client (0.208ms)
+✔ SCRIPTED SDK boundary only: HTTP credentials and legacy password ops are refused before network calls (0.1902ms)
+✔ SCRIPTED SDK boundary only: revoked JWT response and logout disconnect/remove channels without exposing tokens (7.0633ms)
+✔ SCRIPTED SDK lifecycle: callback auth is retained and a coded shared-invoker revocation closes the channel (0.6434ms)
+✔ SCRIPTED SDK lifecycle: a real-sync path replaces a closed private channel after socket reconnect without changing the room or pending action (0.6222ms)
+✔ SCRIPTED SDK lifecycle: overlapping readbacks replace a disconnected subscription once and never remove its replacement (5.141ms)
+✔ actual installed SDK lifecycle: disconnect teardown cannot retain the old room topic; unrelated subscriptions survive (no network/Auth) (60.6826ms)
+✔ SIMULATED loopback only: explicit QA adapter owns scenario identity and pet facts without a Supabase fallback client (53.1726ms)
+✔ same-version legacy session and report gain missing display metadata without changing stored gameplay (7.9321ms)
+✔ optional BattleStore inspects metadata only for every absent/partial schema and never creates or queries battle tables (3.6803ms)
+✔ later normal battle registration runs migration002 and preserves/migrates the original durable request (2.0487ms)
+✔ real SQLite / scripted provider: strict account checkpoint remains clean after post-authority journal resolution; original action bytes survive (29.4451ms)
+✔ legacy v1 restore retains raw rows and retries the original pending ID; imported records stay protected without authority proof (8.7956ms)
+✔ local v2 backup round trip keeps durable start/round requests and immutable origin bytes; new transport is absent from strict four-array cloud projection (10.6621ms)
+✔ forged local-v2 markers cannot hide unknown/offline/foreign-owner business rows or altered original requests (6.2165ms)
+✔ generic v1 restore never overwrites an existing raw business/action slot or treats a file as verified authority (4.9155ms)
+✔ a recognized-looking but rewritten v2 marker cannot hide a changed row without the byte-matching main-only seal (5.6971ms)
+✔ modified protected action/session/report/reward rows remain dirty and cannot be auto-overwritten or omitted (80.1388ms)
+✔ server-locked-original supersession accepts only its explicit shape/reason, distinct original/replacement IDs and same-owner session (4.9454ms)
+✔ finished v1 import becomes clean only through the main-only verified cloud-preview restore; file/context claims cannot seal it (8.1148ms)
+✔ an already rewarded training does not skip a needed fresh projection-only authority readback (4.7261ms)
+[companions:rename] {
+  requestId: 'd240db09-6b6b-46f9-aaa2-eed013a2dd12',
+  code: 'PET_NOT_FOUND',
+  name: 'Error'
+}
+[companions:list] {
+  requestId: '8ffbfaca-6e5f-4b1e-b888-8a3696a5e514',
+  code: 'AUTH_REQUIRED',
+  name: 'Error'
+}
+✔ real accounts aliases and verified local login isolate 2D instances while preserving unsupported historical animals (1159.8547ms)
+✔ Accounts full-save restore transfers Garden food and exactly one grown companion together; retries and a later adapter failure cannot split them (1635.3987ms)
+✔ registered Accounts hook validates and restores original generic archives as one companion unit without rewriting the file or cloud receipt (1369.5861ms)
+✔ two independent SQLite clients preserve exact instances, growth, positions, selections and retry receipts across restore/restart (188.0093ms)
+✔ divergent client progress cannot merge receipts or union pets, and outer rollback includes the whole companion unit (183.4266ms)
+✔ old generic-table archives convert without changing any saved row; partial, foreign, misbound or duplicate records are rejected (101.9736ms)
+✔ archived 3D animals and original raw history survive a new-client restore without becoming active 3D resources (154.0979ms)
+✔ archives from before companion tables clear only on explicit replace and can re-import their original raw pet IDs (123.703ms)
+✔ verified alias migration retains source and target-before history, stable IDs and replay receipts through another client (207.6824ms)
+✔ two old accounts can restore the same original pet ID without renaming, collision or cross-account receipts (168.2602ms)
+✔ PROTOCOL SIMULATION: offline-before-send intent is durable and restart sends its original request exactly once (212.8868ms)
+✔ PROTOCOL SIMULATION: an uncertain committed adoption reads its immutable receipt after restart without creating another same-template pet (220.5992ms)
+✔ PROTOCOL SIMULATION: consecutive offline positions retain immutable unknown requests and coalesce only drafts that were never sent (273.6502ms)
+✔ PROTOCOL SIMULATION: unknown local progress and account switches preserve both owner namespaces instead of overwriting cached pets (165.6215ms)
+✔ PROTOCOL SIMULATION: verified companion readback preserves unrelated offline data and the original common-save request without advancing its base (238.949ms)
+✔ PROTOCOL SIMULATION: a cached original-action replay queued behind a network read cannot return an old-owner pet after account switch (169.0199ms)
+✔ actual resource clips dispatch to one owner/pet only; replay and an in-flight account change cannot play twice or cross owners (702.7924ms)
+✔ the complete five-element roster survives adoption, selection and reopen without replacing instance identity (137.2383ms)
+✔ three identical templates retain independent names, growth, desktop modes and positions after reopening SQLite (113.1757ms)
+✔ garden inventory debit and one pet growth update commit or roll back together (90.6112ms)
+✔ action IDs bind the operation and full payload, including target pet; retry after restart is idempotent (70.5388ms)
+✔ main-derived account ownership isolates reads, edits, selections, actions and identical legacy IDs (95.214ms)
+✔ legacy migration preserves raw records, original JSON/history, IDs, stats and does not overwrite later progress (79.3829ms)
+✔ migration failure rolls back all pets and can be retried after source repair (60.6266ms)
+✔ desktop, chat, battle and guard choices are independent and never inferred from a template (74.2111ms)
+✔ second SQLite connection rejects a stale revision without losing a newer name (55.7561ms)
+✔ trusted capture creation is idempotent; distinct captures of one template remain distinct (74.2492ms)
+✔ canonical builtin upgrade preserves each instance and custom bindings without converting archived 3D records (107.3313ms)
+✔ growth retains current 100 XP / 10 percent rule and validates numerical effects (79.7558ms)
+✔ touch cooldown belongs to each pet and persists; invalid positions and names do not write (90.6029ms)
+✔ complete-save adapter preserves owners, pet/message IDs and local credentials across devices (12.2995ms)
+✔ running replies export as interrupted projections without changing the sender or receiver checksum (3.2857ms)
+✔ an older client key edit or clear is not resurrected by the local vault during cloud restore (3.5472ms)
+✔ old history prefixes merge before existing tails while stable IDs and pagination survive sequence collisions (5.798ms)
+✔ ambiguous message edits and contradictory order reject atomically instead of silently overwriting (5.4012ms)
+✔ restore refuses active generations; cancel/retry progress merges without duplicating user messages (3.9882ms)
+✔ memory/profile fork rejects atomically; replace applies explicit deletion while keeping the vault (3.0857ms)
+✔ credentials, duplicate IDs and cross-pet message rebinding are rejected before mutation (1.4264ms)
+✔ same-owner full-save restoration invalidates stale chat editors and cursors (6.2397ms)
+✔ legacy preview/import reads only verified owner archives, preserves originals and original message IDs (11.6222ms)
+✔ unassigned role-known records require an explicit owned pet mapping (3.7836ms)
+✔ stale archive hashes, corrupt data and active generation reject without partial import (3.9523ms)
+✔ conflicting current persona remains intact; history-only import is an explicit recovery path (4.5176ms)
+✔ empty and unsupported old records remain archived instead of inventing a sender or pet (1.385ms)
+✔ snapshot projects only verified inventory elements and never guesses from names or payload (133.5677ms)
+✔ account + pet instance isolates personas, notes, selections and durable history (569.4259ms)
+✔ saved connection is encrypted, redacted, scoped and actually tested over HTTP (303.3584ms)
+✔ connection tests can be cancelled separately without creating history (166.4199ms)
+✔ cancellation aborts the real stream; retry keeps one user turn; action IDs deduplicate (260.8963ms)
+✔ account switching aborts pending replies and never emits old-account data into the new session (200.0315ms)
+✔ memory edits use revisions; deletion aborts old context and disappears from later prompts after restart (282.8133ms)
+✔ startup recovers interrupted turns, bounded context preserves recent complete pairs, history pages remain scoped (1038.1366ms)
+✔ provider failures remain retryable; raw error bodies never leak; incomplete streams do not count as success (331.3023ms)
+✔ clear history preserves notes/persona and never clears the same template in another instance (239.64ms)
+✔ stale renderer actions cannot write to a new account or a new login of the same account (122.4951ms)
+✔ synchronous shutdown records cancellation before the shared database closes (165.3435ms)
+✔ PROTOCOL UNIT: pending companion ack does not publish or persist a new chat choice (4.4342ms)
+✔ PROTOCOL UNIT: rejection preserves the authoritative choice and local preference (1.7476ms)
+✔ PROTOCOL UNIT: a delayed old-owner confirmation cannot write either owner preference (2.3287ms)
+✔ main integration routes only chatPetId and ignores a stale local selection hint (3.4023ms)
+✔ discovery consumes the shared main-process capability and negotiates its protocol (2.5534ms)
+✔ legacy tokens, service keys, HTTP, other projects, mismatched protocols and changed owners fail closed (0.6092ms)
+[discovery:confirm] {
+  requestId: 'bee9194b-1c18-41ec-ab18-b0ae88fbc0b0',
+  code: 'VICTORY_REQUIRED',
+  name: 'Error'
+}
+[discovery:confirm] {
+  requestId: '458c5570-a6c8-4801-9d1b-8153b13243bf',
+  code: 'SQLITE_CONSTRAINT_TRIGGER',
+  name: 'SqliteError'
+}
+[discovery:begin] {
+  requestId: 'dc994b6f-904c-4032-a0a7-4f5b53bf916a',
+  code: 'ACTION_ID_CONFLICT',
+  name: 'Error'
+}
+[discovery:confirm] {
+  requestId: '890f63fd-7dd9-4448-8c69-d7533e541739',
+  code: 'VICTORY_REQUIRED',
+  name: 'Error'
+}
+[discovery:begin] {
+  requestId: 'be642d6f-d056-4a2e-b157-6d11628578ff',
+  code: 'REAL_LOCATION_REQUIRED',
+  name: 'Error'
+}
+[discovery:cancel] {
+  requestId: '4349b68c-9215-43a2-9d43-6d7d6d38ab7b',
+  code: 'ENCOUNTER_NOT_FOUND',
+  name: 'Error'
+}
+✔ coordinate conversion round-trips in China and preserves overseas positions (3.2398ms)
+✔ geofence rejects demo, stale, default OS positions, coarse accuracy and out-of-range (0.3809ms)
+✔ real adapter errors clear old coordinates; demo never masquerades as permission granted (0.8162ms)
+✔ cancelling an in-flight location request discards the late result (0.2732ms)
+✔ leaving demo clears its sample before a native request and never treats the city change as drift (0.2019ms)
+✔ application privacy blocks native calls and discards a late fix after revocation (0.3261ms)
+✔ map provider changes only projection, never system coordinates (0.2203ms)
+✔ generated encounters remain anchored while the user moves (4.1036ms)
+✔ encounters follow canonical 2D template resources and use a new generation after rebinding (4.3369ms)
+✔ old encounter readback exposes authoritative rules without rewriting history or leaking engine state (0.4343ms)
+✔ actual shared SQLite + companions + battle: map to victory, confirmation, pokedex, memory, idempotency and restart (198.306ms)
+✔ shared battle commands finish the linked wild session and confirmation reads that authority (112.3905ms)
+✔ capture rolls back companion, pokedex and memory together when SQLite rejects the tag (134.0558ms)
+✔ ownership, action conflicts, cancellation, precise-location and demo boundaries use real services (75.8ms)
+✔ real territory battle ownership feeds the discovery map and capture provenance without changing combat stats (182.1758ms)
+✔ QA adapter requires the verified isolated scenario and matching current identity (4.9672ms)
+✔ simulated fixes keep their source and cannot pass the native geofence without the explicit QA adapter (6.3754ms)
+✔ an ordinary location service never promotes a simulated adapter result to OS permission (0.1963ms)
+✔ six personal plots, starter grants once, strict account isolation (171.1271ms)
+✔ offline growth survives actual database close/reopen, harvest issues once (186.4582ms)
+✔ recipe consumes rice and food debits one, changes only the selected real companion (182.1155ms)
+✔ failed companion update rolls back inventory, ledger, revision and action (167.8727ms)
+✔ invalid quantities, stale revisions and raw rice cannot consume inventory (172.2006ms)
+✔ batch harvest is all-or-nothing (169.8634ms)
+✔ seed rewards require trusted receipts, dedupe the settlement and compose with rollback (161.8009ms)
+✔ two database connections cannot duplicate a mature plot or overspend (172.064ms)
+✔ territory changes keep personal garden, crops and harvested items (169.9504ms)
+✔ verified alias without companion migration preserves old garden and refuses a second starter grant (9.289ms)
+✔ published companion owner adapter and garden migrate the real old graph once together (11.4147ms)
+✔ once real companion rows match the alias, garden rekeys once and archives its exact old graph (6.7889ms)
+✔ two progressed owner graphs cannot be merged by an alias (6.7153ms)
+✔ a progressed target garden rolls back the shared companion migration in the same transaction (5.8633ms)
+✔ a real battle receipt repairs seed settlement exactly once on garden open (254.0977ms)
+✔ territory challenge uses the real battle outcome and retains a personal crop (261.1224ms)
+✔ territory refuses the OS default location and shares discovery boundary rules (182.1023ms)
+✔ account backup cannot merge a harvest action with an older planted plot (193.7837ms)
+✔ public battle-context settlement keeps its original receipt after another inventory transaction (250.069ms)
+✔ ordinary services never gain a simulated territory location (1.2694ms)
+✔ verified independent QA marker reuses discovery location and its identity and quality checks (7.424ms)
+✔ LOCAL cloud-v2 adapter rejects wrong owner, arbitrary schema/path, repeated refs and version/content mismatch (53.7714ms)
+✔ LOCAL v2 validation confers no authority: restore refuses a client-only reference without a live server receipt (63.0951ms)
+✔ LOCAL backup manager dispatches cloud v2 hydration before a retained preview while preserving the original v1 file (51.8806ms)
+✔ LOCAL preference outbox persists exact intent before Auth and retries the same action after actual SQLite reopen (87.2618ms)
+✔ LOCAL preference hydration preserves a dirty local edit and refuses to call it verified (53.1576ms)
+✔ actual official SDK protocol: A upload, distinct-client B hydrate preserves IDs/history and independent same-content imports (1417.6991ms)
+✔ production adapter rejects a simulated actor/HTTP client before any transfer (367.6334ms)
+✔ verified old owner aliases keep their original owner text in the immutable package without rewriting local history (395.2935ms)
+✔ lost upload receipt survives reopen and resumes immutable chunks with independent readback (423.7012ms)
+✔ offline intent is durable before Auth and session switch never applies a downloaded package (678.1457ms)
+✔ tampered manifest/size/path and credential-bearing descriptors fail before publication (283.3689ms)
+✔ historical GLB archive is readable/restorable but never appears in 2D list or import (522.9062ms)
+✔ interrupted new-client download resumes verified disk chunks after reopening SQLite (480.5251ms)
+✔ corrupt downloaded bytes are never registered and preserve an existing missing local reference (459.8691ms)
+✔ approved anime package becomes a standard Pixi spritesheet with authored actions (398.9399ms)
+✔ imports standard Pixi/TexturePacker atlases including trim and rotation metadata (11.8532ms)
+✔ copies actual 2D assets, keeps receipts and source intact, isolates owners, repairs missing copies (79.9547ms)
+✔ anchor, frame rate, rotation and scale save per scene and per owner; instances remain independent (54.9887ms)
+✔ rejects broken JSON, missing images, unsafe paths, frame overflow and invalid calibration without changing the library (20.6087ms)
+✔ 2D-only boundary rejects other formats while historical records and files remain unchanged (41.2449ms)
+✔ concurrent imports share an appearance and keep every successful receipt (66.241ms)
+✔ verified account aliases restore legacy 2D imports and preferences without rewriting ownership (77.1044ms)
+✔ eight distinct generated PNGs cover all elements with 16 bounded Pixi frames and dedicated poses (408.7245ms)
+✔ registration adds canonical resources without deleting old bytes, preferences or import receipts (171.8849ms)
+✔ templates, legacy aliases, desktop and battle all resolve the same canonical appearance (115.1493ms)
+✔ Git LF/CRLF changes relocate registered packs without replacing canonical rows or preferences (129.3061ms)
+✔ standard atlas per-clip FPS and loop metadata rejects invalid values before import (13.3435ms)
+✔ real shared SQLite garden readback advances the account CAS base without reporting a local edit (79.9428ms)
+✔ local SQLite fixture: verified domain readbacks retain unrelated local work while blocked complete-save checkpoints stay unchanged (91.2984ms)
+✔ SQL row ordering does not change a save fingerprint while message order remains significant (0.5823ms)
+✔ battle SQL sets match existing authority baselines without changing envelopes or ordered content (0.7403ms)
+✔ file provenance and renderer-supplied revision cannot select a cloud restore adapter (22.4932ms)
+✔ only verified main preview metadata selects the cloud adapter with the original checksum and owner (9.1236ms)
+✔ a different owner or expired preview cannot call the trusted adapter (4.3095ms)
+✔ an uncommitted revision-zero preview retains ordinary restore semantics without authority promotion (13.9366ms)
+✔ changed data and invalid private cloud metadata fail before any restore adapter runs (5.2962ms)
+✔ actual SQLite and production adapters: an old finished v1 file reaches a clean AccountSync checkpoint only through the private cloud-preview route (40.1345ms)
+✔ chat backup restores stable messages across sequence collisions and never exports a credential (93.1199ms)
+✔ IPC accepts data only and bounds encoded bytes, depth, feature and prototypes (2.979ms)
+✔ desktop windows can operate only their bound pet and the small required capability set (0.2152ms)
+✔ desktop event stream excludes chat and other pet actions (0.1608ms)
+✔ verified alias retains independent pet IDs, growth, receipts and original archive without granting another provider (50.7684ms)
+✔ registered garden and companions migrate the same verified old save without a second starter or changed pet (83.2862ms)
+✔ profile discovery gives explicit override, then current SQLite, then old SQLite, then JSON precedence (1.3293ms)
+✔ ordinary startup has no simulation; an existing QA profile requires its explicit flag (2.1117ms)
+✔ scenario refuses an ordinary profile, unknown mode, or marker copied from another directory (5.4301ms)
+✔ scenario cannot point the legacy store outside its independent profile (4.1341ms)
+✔ verified QA profile can reopen with the same provenance and cannot mutate the descriptor (6.2292ms)
+✔ resource backup restores actual 2D pack bytes to new managed paths and rejects a different owner (135.6263ms)
+✔ standard Pixi atlas survives backup restore and complete user-data relocation (148.4268ms)
+✔ desktop closure follows required MJS/JS/JSON and refuses test-only dependencies (213.0312ms)
+✔ extracted compatibility reads existing accounts, pets and history without rewriting the archive or exposing legacy windows/IPC (9.2177ms)
+✔ read-only legacy load never creates a missing archive or replaces malformed original bytes (1.4497ms)
+[companions:list] {
+  requestId: '6b0095dc-4b0b-47c8-ad07-e6ba52f9a62e',
+  code: 'AUTH_REQUIRED',
+  name: 'Error'
+}
+✔ migration failure rolls back all writes and retry applies exactly once (39.825ms)
+✔ main process session owns commands even if renderer sends a forged owner (2.586ms)
+✔ tray waits for the command and closes only the original owner windows after acknowledgement (1.1123ms)
+✔ rejected or unsuccessful commands keep windows and emit only a safe warning (0.3535ms)
+✔ an account switch or replacement window while awaiting cannot close a new session window (0.2635ms)
+✔ synchronous local commands still work and a failed warning listener cannot reject the handler (0.1642ms)
+ℹ tests 311
+ℹ suites 0
+ℹ pass 311
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 53997.2391
