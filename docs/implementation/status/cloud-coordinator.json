@@ -68,15 +68,16 @@
     "territory": "in-progress-garden",
     "discovery": "in-progress-discovery",
     "duel": "in-progress-battle",
-    "storage": "private-bucket-and-RLS-deployed-actual-A-B-test-in-progress",
+    "storage": "actual-HTTPS-upload-restore-hashes-other-account-denial-and-retry-passed; protected-reference-integration-pending",
     "fullAcceptance": "pending",
-    "manifest": "docs/implementation/evidence/cloud/2026-10-25/deployment-manifest.json"
+    "manifest": "docs/implementation/evidence/cloud/2026-10-25/deployment-manifest.json",
+    "storageEvidence": "docs/implementation/evidence/cloud/2026-10-25/storage-http-independent.json"
   },
   "externalConditions": [
     {
       "id": "old-self-hosted-source-unavailable",
       "endpoint": "http://47.112.208.97:8000",
-      "observed": "UND_ERR_SOCKET on real health fetch",
+      "observed": "Latest direct TCP 8000 connects, but unauthenticated Auth health HTTP still times out. Source database remains unreadable; no credentials sent.",
       "userResponse": "暂无可用SSH或数据库备份",
       "policy": "Preserve existing readable data and secure migration interfaces; no full old-cloud-account migration claimed"
     },
@@ -97,7 +98,53 @@
     "betterSqlite3": "13.0.3",
     "cleanNpmCi": "passed on coordinator checkout",
     "nativeSharedDb": "passed",
-    "evidence": "docs/implementation/evidence/cloud/2026-10-25/native-compatibility.json"
+    "evidence": "docs/implementation/evidence/cloud/2026-10-25/native-compatibility.json",
+    "integratedBuild": {
+      "sourceCommit": "bd18cfcd7aa7",
+      "codeFingerprint": "b3aea8f2264b",
+      "passed": true,
+      "kind": "production electron-vite build after approved foundation, V3 and conversations integration"
+    },
+    "reactReview": {
+      "skill": "vercel:react-best-practices",
+      "scope": "route loading, subscription cleanup, clocks, stable IDs, modal/session lifecycle and accessibility",
+      "targetedEslint": "passed",
+      "blockingFindings": 0
+    }
   },
-  "updatedAt": "2026-10-25T02:47:39.050Z"
+  "updatedAt": "2026-10-25T03:01:37.071Z",
+  "approvedCheckpoints": [
+    {
+      "module": "accounts",
+      "commit": "45b857d",
+      "review": "Auth v2 8 real HTTPS checks; protected CAS with owner+pet compound ownership; main privacy/realtime followup in progress"
+    },
+    {
+      "module": "foundation",
+      "commit": "ced8e5e",
+      "review": "New main/preload, typed IPC, lazy routing and separate desktop; coordinator typecheck and 5 actual data/window boundary cases passed"
+    },
+    {
+      "module": "battle-style",
+      "commit": "0ddda2a",
+      "review": "V3 completed naturally before cloud dispatch; native manifest/1024 screenshot independently inspected, no style edits"
+    },
+    {
+      "module": "resources",
+      "commit": "4e8fdf8",
+      "review": "Private Storage deployed; actual HTTPS A/B bytes and server index independently read; reference verifier pending"
+    },
+    {
+      "module": "conversations",
+      "commit": "543b71f",
+      "review": "26 coordinator SQLite/archive/HTTP-protocol checks passed; real cloud pet chat sync pending"
+    }
+  ],
+  "locationProgress": {
+    "sourceCommit": "e3533ce",
+    "actualNative": "Windows WiFi 78m under original 80m/100m gates; 20-round local win/capture/restart; coordinate hashes only",
+    "runtime": "Electron36.9.5 explicitly recorded",
+    "cloudAcceptance": false,
+    "supportedRuntimeRecheck": "pending under final Electron44 cloud integration"
+  }
 }
