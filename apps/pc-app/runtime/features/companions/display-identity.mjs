@@ -6,10 +6,12 @@ const roleNames = new Map(catalog.characters.map(character => [character.templat
 export function companionIdentity(pet) {
   // Appearance can change independently; the original template defines the role.
   const roleName = roleNames.get(pet.templateId) || '历史伙伴';
+  const serial = pet.globalSerial;
   return {
     roleName,
-    // Full original identifier: no random replacement, hash, prefix or truncation.
-    instanceNumber: pet.petId,
+    // Consume confirmed metadata only. No UUID/legacy-serial fallback or local
+    // allocation; keeping text also preserves integers above JS Number precision.
+    instanceNumber: typeof serial === 'string' && /^[1-9][0-9]*$/u.test(serial) ? serial.padStart(4, '0') : '待同步',
     historicalNickname: pet.name !== roleName ? pet.name : null
   };
 }

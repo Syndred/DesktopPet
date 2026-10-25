@@ -1,0 +1,123 @@
+{
+  "format": "lingjing.companions.global-serial.source-checks",
+  "version": 1,
+  "decisionId": "globalSerial-20261025-v1",
+  "status": "source-checked-ready-for-consumer-integration",
+  "createdAt": "2026-10-25T11:07:28.9432891Z",
+  "worktree": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet-fresh-worktrees\\02",
+  "branch": "codex/lingjing-02-fresh-20261025",
+  "sourceBaseCommit": "02ea2dac317b3aaaee12cf9517b456450391cf9c",
+  "recoveredFromSnapshot": "b9a97aa63de16c7bc81b36b1f933ea271db06e3c",
+  "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086",
+  "originMainMissingCommits": 0,
+  "scope": "Public DTO/helper and companion UI only. No authority service, registry, cache or cloud deployment changes.",
+  "checks": {
+    "targetedTests": {
+      "passed": 28,
+      "failed": 0,
+      "files": [
+        "display-identity.test.cjs",
+        "service.test.cjs",
+        "backup.test.cjs",
+        "desktop-position.test.cjs"
+      ],
+      "runner": "Electron as Node with ELECTRON_RUN_AS_NODE=1 and windowsHide; no native UI input"
+    },
+    "typecheckUi": "passed",
+    "typecheckProjectAndDesktop": "passed",
+    "targetedLint": {
+      "status": "passed",
+      "files": 7,
+      "commonJsTest": "Passed node --check and the 28-test runner. Initial broad ESLint attempt included this CJS test and hit the TypeScript-only no-require-imports rule; the repository lint script excludes .cjs. Original attempt is preserved in lint.log."
+    },
+    "reactReview": "Hook ordering and cleanup preserved; hidden desktop labels removed; image and interaction controls retained with accessible metadata."
+  },
+  "numericFixtures": {
+    "kind": "Controlled supplied metadata only, not real server allocation",
+    "canonical": [
+      "1",
+      "9999",
+      "10000",
+      "9007199254740993"
+    ],
+    "missingAndInvalid": "待同步",
+    "legacyIdFallback": "none",
+    "numberConversion": false
+  },
+  "sqlite": {
+    "kind": "Isolated real SQLite readback; reopened connection query_only",
+    "realGlobalAllocation": false,
+    "oldDataAndReceiptsUnchanged": true,
+    "backupChecksumBefore": "7277ecaff089a99b5ce9df417ae777e16fb90679e5bbf750c0e47d99da4b525f",
+    "backupChecksumAfter": "7277ecaff089a99b5ce9df417ae777e16fb90679e5bbf750c0e47d99da4b525f",
+    "originalReceiptCount": 7,
+    "unconfirmedNumber": "待同步"
+  },
+  "desktop": {
+    "noVisibleNameOrNumber": "Source reviewed; real rendered application check belongs to 09",
+    "geometry": "Simulated monitor fixtures only",
+    "nativeUiOperated": false
+  },
+  "pending": [
+    "08 verified get/list/snapshot/identity sidecar projection and independent authoritative readback",
+    "03 observe allocation and capture binding to the same globalSerial",
+    "09 independent real application acceptance against a frozen new candidate"
+  ],
+  "fullAcceptancePassed": false,
+  "sourceFiles": [
+    {
+      "path": "apps/pc-app/runtime/features/companions/display-identity.mjs",
+      "gitBlob": "2eea42574959727859725ceb388d17f45f18098d"
+    },
+    {
+      "path": "apps/pc-app/runtime/features/companions/display-identity.d.mts",
+      "gitBlob": "1cc176b2c9221d8418e42c2d5c6714c93998e9d2"
+    },
+    {
+      "path": "apps/pc-app/runtime/features/companions/tests/display-identity.test.cjs",
+      "gitBlob": "e5a8f65a09b573a698708e0d9275d8720b7bb80d"
+    },
+    {
+      "path": "apps/pc-app/ui/src/features/companions/AdoptionPage.tsx",
+      "gitBlob": "6c731510cd6f6c63931ec9c6bb409b13469c1b3f"
+    },
+    {
+      "path": "apps/pc-app/ui/src/features/companions/CompanionsPage.tsx",
+      "gitBlob": "6ec3a75441dedf91e5d55d77c4cd7272482cf50f"
+    },
+    {
+      "path": "apps/pc-app/ui/src/features/companions/DesktopCompanion.tsx",
+      "gitBlob": "1f344c5ab4476044a9989ed9d1f5ad2bc0430822"
+    },
+    {
+      "path": "apps/pc-app/ui/src/features/companions/desktop.css",
+      "gitBlob": "27351bf7b2dd1fea300a0c9f3066828b7f847a0e"
+    },
+    {
+      "path": "packages/shared-types/src/features/companions/index.ts",
+      "gitBlob": "2c32c8f555be150a90aaf578b9b5d5134a5a4d11"
+    },
+    {
+      "path": "packages/shared-types/src/features/discovery/index.ts",
+      "gitBlob": "05f4969725ed5ddeb3168b57fc1a14c9cf3f7634"
+    }
+  ],
+  "logs": [
+    {
+      "path": "artifacts/companions/user-qa/global-serial/fresh-02-20261025/targeted-tests.log",
+      "sha256": "18aac3c8937e968d6d26b5f254d35fce3a3a190ec63cf3fb79f73af5dea992af"
+    },
+    {
+      "path": "artifacts/companions/user-qa/global-serial/fresh-02-20261025/typecheck-ui.log",
+      "sha256": "fe461f1dccc328285132a3ca0d1d09e7278c8413c08c9292d228b3dd04f39dc7"
+    },
+    {
+      "path": "artifacts/companions/user-qa/global-serial/fresh-02-20261025/typecheck.log",
+      "sha256": "14fb90e8348ca480c1cb61192806cbf0a4ae43c7142c6aa2b749cd5680cb5f38"
+    },
+    {
+      "path": "artifacts/companions/user-qa/global-serial/fresh-02-20261025/lint-supported-files.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}

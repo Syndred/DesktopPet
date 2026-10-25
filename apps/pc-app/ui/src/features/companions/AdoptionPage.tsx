@@ -26,9 +26,10 @@ export function AdoptionPage() {
   for (const pet of snapshot.pets) counts.set(pet.templateId, (counts.get(pet.templateId) || 0) + 1);
   const templates = snapshot.templates.filter(template => (elementFilter === 'all' || template.element === elementFilter) && (!ownedOnly || counts.has(template.templateId)));
   const selected = templates.find(template => template.templateId === selectedId) || templates[0];
+  const welcomed = adopted?.ownerAccountId === snapshot.ownerAccountId ? snapshot.pets.find(pet => pet.petId === adopted.petId) || adopted : null;
 
   return <div className="cp-page cp-adoption-page"><CompanionCloudNotice controller={controller}/><ErrorNotice message={controller.error}/>
-    {adopted && <div className="cp-success" role="status"><Check size={18}/><span>{companionIdentity(adopted).roleName} 已加入你的灵境。<CompanionInstanceNumber pet={adopted}/></span><Button variant="ghost" onClick={() => navigate(`/companions/${encodeURIComponent(adopted.petId)}`)}>去看它<ArrowRight size={16}/></Button></div>}
+    {welcomed && <div className="cp-success" role="status"><Check size={18}/><span>{companionIdentity(welcomed).roleName} 已加入你的灵境。<CompanionInstanceNumber pet={welcomed}/></span><Button variant="ghost" onClick={() => navigate(`/companions/${encodeURIComponent(welcomed.petId)}`)}>去看它<ArrowRight size={16}/></Button></div>}
     <div className="cp-adoption-layout"><section className="cp-adoption-main"><PageHeader back={{ label: '我的灵宠', onClick: () => navigate('/companions') }} eyebrow="领养伙伴" title="再认识一位新朋友。" description="不同的性格，一样的温柔。找到让你心动的伙伴吧。"/>
       <Tabs value={elementFilter} onValueChange={value => { setElementFilter(value); setAdopted(null); }}>
         <div className="cp-adoption-filter"><TabsList className="cp-segmented cp-element-categories" aria-label="按五行分类"><TabsTrigger value="all">全部</TabsTrigger>{elementCategories.map(element => <TabsTrigger key={element} value={element}><CompanionElement element={element}/></TabsTrigger>)}</TabsList><label className="cp-checkbox"><Checkbox checked={ownedOnly} onCheckedChange={value => { setOwnedOnly(value === true); setAdopted(null); }} aria-label="只看已拥有"/>已拥有</label></div>
