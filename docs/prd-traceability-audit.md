@@ -10,7 +10,7 @@
 | 探索、定位、权威对局和捕捉 | [探索状态](implementation/status/cloud-discovery.json) |
 | 训练、好友联机、私有频道和战报 | [对战状态](implementation/status/cloud-battle.json) |
 | PostGIS领地、菜园、库存与指定宠物喂养 | [领地状态](implementation/status/cloud-garden.json) |
-| 人设、记忆、消息顺序与本机模型凭据 | [对话状态](implementation/status/conversations.json) |
+| 人设、记忆、消息顺序与本机模型凭据 | [对话状态](implementation/status/cloud-conversations.json) |
 | 私有资源、导入字节/流水、显示偏好 | [资源状态](implementation/status/cloud-resources.json) |
 | 云端部署与原项目保全 | [部署清单](implementation/evidence/cloud/2026-10-25/deployment-manifest.json)、[保全复核](implementation/evidence/cloud/2026-10-25/project-preservation-final-readback.json) |
 | 已替代代码与内容清理 | [协调方恢复与退役审计](implementation/cleanup/cloud-coordinator-retirement.json) |
