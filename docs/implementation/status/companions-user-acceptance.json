@@ -1,0 +1,182 @@
+{
+  "module": "companions",
+  "branch": "codex/lingjing-companions",
+  "updatedAt": "2026-10-25T09:43:56.364Z",
+  "status": "implementation-ready-awaiting-coordinator-integration-and-09-retest",
+  "implementationCommit": "ad20468b38c89a79090de435a2cfcf8d2e928ec7",
+  "userAcceptancePassed": false,
+  "baseline": {
+    "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086",
+    "pullResult": "Already up to date after git fetch origin and git pull --ff-only origin main, repeated after implementation commit.",
+    "behindOriginMain": 0,
+    "coordinatorIntegrated": "6d4df8fdbf102e185cfc9c022bcdddf4601aac82",
+    "mergeCommit": "f6b0e15baaa94244c713466effb5db7fb4c86cb5"
+  },
+  "scope": {
+    "owner": "companions runtime/UI/styles plus companions-owned shared types and integration contract",
+    "commonMainOrResourceEdits": false,
+    "battleCoreOr04StylesEdited": false,
+    "tsMigrationPaused": true,
+    "fullProductPackageBuilds": 0,
+    "published": false,
+    "ordinaryUserAccountOrPetsOperated": false
+  },
+  "defects": {
+    "QA-002": {
+      "status": "implemented-awaiting-09-rendered-UI-acceptance",
+      "rootCause": "Adoption used legacy big-fish/animal category tabs with a second element dropdown.",
+      "change": "One 全部/金/木/水/火/土 icon tab bar reuses CompanionElement; owned filtering and selected preview share the visible set, and empty results have no adoption form.",
+      "preservation": "All eight catalog characters and resources, including the three original fish roles, remain intact."
+    },
+    "QA-003": {
+      "status": "companions-implemented-cross-domain-integration-and-09-retest-pending",
+      "rootCause": "UI treated mutable stored pet.name as the role name and either hid instance identity or displayed the historical shortened serial.",
+      "change": "Read-only companionIdentity returns catalog roleName, complete original petId as instanceNumber, and differing stored name as historicalNickname. Full IDs wrap visibly in overview, roster, detail, adoption success and desktop. Adoption submits template.name and has no arbitrary-name input; role rename controls are removed.",
+      "compatibility": "No petId, owner, name, serial, history, action receipt, growth, selection, resource or cloud envelope is rewritten. Existing rename APIs remain backward compatible as stored historical name data.",
+      "contract": "docs/implementation/companions-display-identity-contract.json",
+      "dtoPolicy": "Consumers without templateId must add a read-only templateId/identity DTO field or use authenticated identity IPC/main API. Never infer identity from resourceId; retain historical messages and authoritative battle reports verbatim."
+    },
+    "QA-004": {
+      "status": "root-cause-reproduced-native-geometry-fixed-awaiting-09-real-drag-retest",
+      "rootCause": "Electron setPosition takes the current native GetSize() into the next SetBounds. Fractional-DPI enclosing-rectangle rounding feeds back into every move.",
+      "change": "placeDesktopWindow always passes x/y/width/height in DIP derived from the saved scale. Drag, wander, follow, cloud pending-position reapply, conflict recovery and scale/position sync all use the same helper.",
+      "preserved": "PointerEvent screenX/Y captured with each event, grab-offset semantics, pointer capture, release sequence and existing local/cloud persistence protocol are retained. No cursor-at-IPC-time replacement, scale reset or new size clamp is used.",
+      "observed": {
+        "electron": "44.9.3",
+        "displayScaleFactor": 1.25,
+        "movesPerCase": 240,
+        "savedScales": [
+          0.75,
+          1,
+          1.35
+        ],
+        "legacyAtScale1": {
+          "initial": [
+            232,
+            280
+          ],
+          "final": [
+            471,
+            445
+          ]
+        },
+        "fixedAtScale1": {
+          "requested": [
+            230,
+            280
+          ],
+          "final": [
+            231,
+            281
+          ]
+        },
+        "samePositionStable": true,
+        "maximumNativeRoundingDip": 2
+      },
+      "nativeEvidence": "docs/implementation/evidence/companions/user-acceptance-2026-10-25/native-geometry-summary.json",
+      "realOriginalPackageBaseline": "docs/implementation/evidence/companions/user-acceptance-2026-10-25/09-original-package-baseline-reference.json"
+    }
+  },
+  "validation": {
+    "targetedDomainRegression": {
+      "exitCode": 0,
+      "passed": 32,
+      "failed": 0,
+      "evidence": "docs/implementation/evidence/companions/user-acceptance-2026-10-25/targeted-domain-tests.txt",
+      "coverage": [
+        "independent same-template pets",
+        "original SQLite rows and legacy archives",
+        "save/restore and account namespace isolation",
+        "cloud receipt/history preservation",
+        "display identity projection and geometry policy"
+      ],
+      "limitation": "Seven cloud-authority cases are explicitly protocol simulations with real SQLite, not HTTPS/cloud acceptance."
+    },
+    "focusedIdentityDB": {
+      "exitCode": 0,
+      "passed": 3,
+      "failed": 0,
+      "evidence": "docs/implementation/evidence/companions/user-acceptance-2026-10-25/identity-db-readback.json",
+      "log": "docs/implementation/evidence/companions/user-acceptance-2026-10-25/identity-db-tests.txt",
+      "checksumBefore": "f585b080e6cf6ff1966f4a103cb8b7cbe8b14fc36e3a96b8cc6fd8ffd71af640",
+      "checksumAfterReopen": "f585b080e6cf6ff1966f4a103cb8b7cbe8b14fc36e3a96b8cc6fd8ffd71af640",
+      "queryOnlyReadback": true,
+      "unchangedOriginalReceiptCount": 7
+    },
+    "nativeGeometry": {
+      "exitCode": 0,
+      "evidence": "docs/implementation/evidence/companions/user-acceptance-2026-10-25/native-geometry-summary.json",
+      "rawSamples": {
+        "gzip": "docs\\implementation\\evidence\\companions\\user-acceptance-2026-10-25\\native-geometry-samples.json.gz",
+        "sha256": "bc5329cf1ab312d671b221b2ca54575983851536279831ec337f08d474f3b695",
+        "uncompressedSha256": "d206e056b50d6edfbdcc1cb363f3bebf4e325540a06add27c80fe5cb49b05738",
+        "sampleCount": 1440,
+        "localOriginal": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-companions\\DesktopPet\\artifacts\\companions\\user-qa\\native-geometry-final.json"
+      },
+      "rawSources": {
+        "gzip": "docs\\implementation\\evidence\\companions\\user-acceptance-2026-10-25\\native-source-snapshot.json.gz",
+        "sha256": "98c643be178e75789d56dacf517681b42c144fb136749ad5ade65ce1653bb4bd"
+      },
+      "sourceMatchesAfterLineEndingNormalization": true,
+      "realNativeWindows": true,
+      "realMouseDrag": false,
+      "physicalCrossScreen": false,
+      "renderedSpriteAcceptance": false
+    },
+    "uiTypecheck": {
+      "command": "npm run typecheck:ui",
+      "exitCode": 0,
+      "evidence": "docs/implementation/evidence/companions/user-acceptance-2026-10-25/typecheck-ui.txt"
+    },
+    "projectTypecheck": {
+      "command": "npm run typecheck",
+      "exitCode": 0,
+      "evidence": "docs/implementation/evidence/companions/user-acceptance-2026-10-25/typecheck.txt"
+    },
+    "targetedESLint": {
+      "exitCode": 0,
+      "files": [
+        "ActionPreview.tsx",
+        "AdoptionPage.tsx",
+        "CompanionsPage.tsx",
+        "DesktopCompanion.tsx",
+        "PetDetailPage.tsx",
+        "components.tsx",
+        "identity.ts",
+        "packages/shared-types/src/features/companions/index.ts"
+      ]
+    },
+    "focusedBrowserBundleAndRuntimeClosure": {
+      "exitCode": 0,
+      "evidence": "docs/implementation/evidence/companions/user-acceptance-2026-10-25/bundle-closure.json",
+      "productPackageBuilt": false,
+      "note": "Four companion entry modules compile; display-identity.mjs and roster JSON are included by formal runtime closure. Standard shared renderer chunk-size warning only."
+    },
+    "reactReview": "Stable component/hook ownership; explicit owner and petId preserved; derived role/filter state; no per-frame React state or new inline component definitions."
+  },
+  "handoff": {
+    "coordinator": "01a1704b-e200-7090-9d17-958218c80f42",
+    "realInputOperator": "09",
+    "realInputThread": "01a1725c-d59c-7620-9bb6-1c0d4e0fb3a3",
+    "readyToIntegrate": true,
+    "crossDomainConsumers": [
+      "conversations chat/persona",
+      "battle live owned-pet picker and labels only",
+      "garden selector/feeding",
+      "discovery PetPicker/CaptureResult",
+      "resources ApplyToCompanion"
+    ],
+    "consumption": {
+      "ui": "Import companionIdentity from companions/identity and render roleName + full instanceNumber; show historicalNickname as historical data when needed.",
+      "main": "services.get(\"companions\").getDisplayIdentity(ownerAccountId,petId)",
+      "ipc": "window.lingjing.invoke(\"companions\",\"identity\",{petId})"
+    },
+    "retest09": [
+      "QA-002: all five icon categories plus All; owned and empty states; selected preview agrees with the filtered grid; all eight roles/resources remain reachable.",
+      "QA-003: adopt the same role twice through UI with fixed role name and no name input. Full distinct petIds remain visible and consistent in roster/detail/desktop and routed cross-domain views; original custom names remain historical nicknames.",
+      "QA-004: actual trusted native mouse drags, including fast release, for repeated cycles in quiet mode. Capture window/content bounds, saved scale, display DPI, zoom and actual canonical sprite frames before/after; logical requested size and saved scale must not accumulate.",
+      "QA-004: wander/follow over time use the same invariant. Restart and, where hardware permits, cross physical mixed-DPI monitors while preserving scale/position. The available hidden-window proof has one physical125% display and does not claim cross-screen or real drag acceptance."
+    ],
+    "finalAcceptance": "Only coordinator/09 can close the user QA after the integrated candidate is built and exercised. Hidden geometry and protocol tests do not substitute for that acceptance."
+  }
+}

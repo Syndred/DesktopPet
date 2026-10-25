@@ -1,0 +1,40 @@
+✔ Accounts full-save restore transfers Garden food and exactly one grown companion together; retries and a later adapter failure cannot split them (1444.9713ms)
+✔ registered Accounts hook validates and restores original generic archives as one companion unit without rewriting the file or cloud receipt (700.8687ms)
+✔ two independent SQLite clients preserve exact instances, growth, positions, selections and retry receipts across restore/restart (175.4361ms)
+✔ divergent client progress cannot merge receipts or union pets, and outer rollback includes the whole companion unit (181.0629ms)
+✔ old generic-table archives convert without changing any saved row; partial, foreign, misbound or duplicate records are rejected (101.771ms)
+✔ archived 3D animals and original raw history survive a new-client restore without becoming active 3D resources (143.9084ms)
+✔ archives from before companion tables clear only on explicit replace and can re-import their original raw pet IDs (105.9811ms)
+✔ verified alias migration retains source and target-before history, stable IDs and replay receipts through another client (192.0382ms)
+✔ two old accounts can restore the same original pet ID without renaming, collision or cross-account receipts (159.7165ms)
+✔ PROTOCOL SIMULATION: offline-before-send intent is durable and restart sends its original request exactly once (222.52ms)
+✔ PROTOCOL SIMULATION: an uncertain committed adoption reads its immutable receipt after restart without creating another same-template pet (195.65ms)
+✔ PROTOCOL SIMULATION: consecutive offline positions retain immutable unknown requests and coalesce only drafts that were never sent (264.4307ms)
+✔ PROTOCOL SIMULATION: unknown local progress and account switches preserve both owner namespaces instead of overwriting cached pets (169.5958ms)
+✔ PROTOCOL SIMULATION: verified companion readback preserves unrelated offline data and the original common-save request without advancing its base (211.9265ms)
+✔ PROTOCOL SIMULATION: a cached original-action replay queued behind a network read cannot return an old-owner pet after account switch (149.7176ms)
+✔ PROTOCOL SIMULATION: automatic readback preserves capture bindings, original owner archives and monotonic interaction history (146.117ms)
+✔ display identity uses the original template and the full case-sensitive petId, even with colliding old serials or changed appearances (1.0979ms)
+✔ identity API and repeated presentation reads preserve original SQLite bytes, cloud backup checksum, receipts, owner, growth, resource and independent selections across reopen (414.2976ms)
+✔ geometry policy uses saved logical scale across mixed-DPI and negative-origin display fixtures without reading a native size back (1.4802ms)
+✔ the complete five-element roster survives adoption, selection and reopen without replacing instance identity (128.7747ms)
+✔ three identical templates retain independent names, growth, desktop modes and positions after reopening SQLite (100.3146ms)
+✔ garden inventory debit and one pet growth update commit or roll back together (96.0338ms)
+✔ action IDs bind the operation and full payload, including target pet; retry after restart is idempotent (76.6262ms)
+✔ main-derived account ownership isolates reads, edits, selections, actions and identical legacy IDs (94.0283ms)
+✔ legacy migration preserves raw records, original JSON/history, IDs, stats and does not overwrite later progress (78.1035ms)
+✔ migration failure rolls back all pets and can be retried after source repair (79.7659ms)
+✔ desktop, chat, battle and guard choices are independent and never inferred from a template (103.2111ms)
+✔ second SQLite connection rejects a stale revision without losing a newer name (72.9212ms)
+✔ trusted capture creation is idempotent; distinct captures of one template remain distinct (85.7179ms)
+✔ canonical builtin upgrade preserves each instance and custom bindings without converting archived 3D records (112.1936ms)
+✔ growth retains current 100 XP / 10 percent rule and validates numerical effects (61.3988ms)
+✔ touch cooldown belongs to each pet and persists; invalid positions and names do not write (79.9643ms)
+ℹ tests 32
+ℹ suites 0
+ℹ pass 32
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2250.6816

@@ -1,0 +1,281 @@
+{
+  "kind": "isolated-native-window-geometry",
+  "realMouseDrag": false,
+  "implementationCommit": "ad20468b38c89a79090de435a2cfcf8d2e928ec7",
+  "measuredSource": {
+    "commit": "f6b0e15baaa94244c713466effb5db7fb4c86cb5",
+    "dirty": "M apps/pc-app/runtime/features/companions/INTEGRATION.md\n M apps/pc-app/runtime/features/companions/index.cjs\n M apps/pc-app/runtime/features/companions/windows.cjs\n M apps/pc-app/ui/src/features/companions/ActionPreview.tsx\n M apps/pc-app/ui/src/features/companions/AdoptionPage.tsx\n M apps/pc-app/ui/src/features/companions/CompanionsPage.tsx\n M apps/pc-app/ui/src/features/companions/DesktopCompanion.tsx\n M apps/pc-app/ui/src/features/companions/PetDetailPage.tsx\n M apps/pc-app/ui/src/features/companions/components.tsx\n M apps/pc-app/ui/src/features/companions/desktop.css\n M apps/pc-app/ui/src/features/companions/styles.css\n M packages/shared-types/src/features/companions/index.ts\n?? apps/pc-app/runtime/features/companions/display-identity.d.mts\n?? apps/pc-app/runtime/features/companions/display-identity.mjs\n?? apps/pc-app/runtime/features/companions/tests/desktop-geometry.acceptance.cjs\n?? apps/pc-app/runtime/features/companions/tests/display-identity.test.cjs\n?? apps/pc-app/ui/src/features/companions/identity.ts",
+    "windowsSha256": "4339a5df628369accd1761a2e3302e332d362cd3dbf91036b3d6b0edae41868b",
+    "harnessSha256": "8e9b2de3f616a5dac2340aebab4cc86d01cbc4099d775237b33ca7fc7e753cbb"
+  },
+  "sourceBytesMatchImplementation": false,
+  "committedRuntimeBlobSha256": "d439062c064b49227009155e3a4adf93f294993a5d3db516c19efe0223eb9571",
+  "startedAt": "2026-10-25T09:38:04.769Z",
+  "completedAt": "2026-10-25T09:38:27.827Z",
+  "electron": "44.9.3",
+  "displays": [
+    {
+      "id": 2568730015,
+      "scaleFactor": 1.25,
+      "workArea": {
+        "x": 0,
+        "y": 0,
+        "width": 2048,
+        "height": 1152
+      }
+    }
+  ],
+  "rawSamples": {
+    "gzip": "docs\\implementation\\evidence\\companions\\user-acceptance-2026-10-25\\native-geometry-samples.json.gz",
+    "sha256": "bc5329cf1ab312d671b221b2ca54575983851536279831ec337f08d474f3b695",
+    "uncompressedSha256": "d206e056b50d6edfbdcc1cb363f3bebf4e325540a06add27c80fe5cb49b05738",
+    "sampleCount": 1440,
+    "localOriginal": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-companions\\DesktopPet\\artifacts\\companions\\user-qa\\native-geometry-final.json"
+  },
+  "method": "Actual hidden native BrowserWindows with production window options. Legacy setPosition compared with the production placeDesktopWindow helper, 240 native moves for each of three saved-scale preferences. No product account or product desktop window was loaded; no mouse/keyboard or IPC drag was simulated.",
+  "limitation": "Native enclosing DIP rectangles vary by pixel phase at fractional DPI. Repeated identical positions must have identical measured sizes. This machine has one 125%-DPI display; physical mixed-DPI crossing, rendered sprite scale and actual user drag remain 09 acceptance.",
+  "fixedSizeStable": true,
+  "legacyGrowthReproduced": true,
+  "measurements": [
+    {
+      "displayId": 2568730015,
+      "displayScaleFactor": 1.25,
+      "savedScale": 0.75,
+      "method": "setPosition",
+      "canonical": {
+        "width": 173,
+        "height": 210
+      },
+      "initial": {
+        "x": 60,
+        "y": 60,
+        "width": 176,
+        "height": 212
+      },
+      "final": {
+        "x": 99,
+        "y": 61,
+        "width": 415,
+        "height": 377
+      },
+      "viewport": {
+        "width": 415,
+        "height": 376,
+        "dpr": 1.25
+      },
+      "savedScaleAfter": 0.75,
+      "samePositionStable": false,
+      "maxRoundingDip": 242,
+      "widthRange": [
+        176,
+        415
+      ],
+      "heightRange": [
+        212,
+        377
+      ]
+    },
+    {
+      "displayId": 2568730015,
+      "displayScaleFactor": 1.25,
+      "savedScale": 0.75,
+      "method": "placeDesktopWindow",
+      "canonical": {
+        "width": 173,
+        "height": 210
+      },
+      "initial": {
+        "x": 60,
+        "y": 60,
+        "width": 176,
+        "height": 212
+      },
+      "final": {
+        "x": 99,
+        "y": 61,
+        "width": 174,
+        "height": 212
+      },
+      "viewport": {
+        "width": 174,
+        "height": 211,
+        "dpr": 1.25
+      },
+      "savedScaleAfter": 0.75,
+      "samePositionStable": true,
+      "maxRoundingDip": 2,
+      "widthRange": [
+        174,
+        175
+      ],
+      "heightRange": [
+        211,
+        212
+      ]
+    },
+    {
+      "displayId": 2568730015,
+      "displayScaleFactor": 1.25,
+      "savedScale": 1,
+      "method": "setPosition",
+      "canonical": {
+        "width": 230,
+        "height": 280
+      },
+      "initial": {
+        "x": 60,
+        "y": 60,
+        "width": 232,
+        "height": 280
+      },
+      "final": {
+        "x": 99,
+        "y": 61,
+        "width": 471,
+        "height": 445
+      },
+      "viewport": {
+        "width": 411,
+        "height": 392,
+        "dpr": 1.25
+      },
+      "savedScaleAfter": 1,
+      "samePositionStable": false,
+      "maxRoundingDip": 241,
+      "widthRange": [
+        232,
+        471
+      ],
+      "heightRange": [
+        280,
+        445
+      ]
+    },
+    {
+      "displayId": 2568730015,
+      "displayScaleFactor": 1.25,
+      "savedScale": 1,
+      "method": "placeDesktopWindow",
+      "canonical": {
+        "width": 230,
+        "height": 280
+      },
+      "initial": {
+        "x": 60,
+        "y": 60,
+        "width": 232,
+        "height": 280
+      },
+      "final": {
+        "x": 99,
+        "y": 61,
+        "width": 231,
+        "height": 281
+      },
+      "viewport": {
+        "width": 231,
+        "height": 280,
+        "dpr": 1.25
+      },
+      "savedScaleAfter": 1,
+      "samePositionStable": true,
+      "maxRoundingDip": 2,
+      "widthRange": [
+        231,
+        232
+      ],
+      "heightRange": [
+        280,
+        281
+      ]
+    },
+    {
+      "displayId": 2568730015,
+      "displayScaleFactor": 1.25,
+      "savedScale": 1.35,
+      "method": "setPosition",
+      "canonical": {
+        "width": 311,
+        "height": 378
+      },
+      "initial": {
+        "x": 60,
+        "y": 60,
+        "width": 312,
+        "height": 380
+      },
+      "final": {
+        "x": 99,
+        "y": 61,
+        "width": 551,
+        "height": 545
+      },
+      "viewport": {
+        "width": 503,
+        "height": 492,
+        "dpr": 1.25
+      },
+      "savedScaleAfter": 1.35,
+      "samePositionStable": false,
+      "maxRoundingDip": 240,
+      "widthRange": [
+        312,
+        551
+      ],
+      "heightRange": [
+        380,
+        545
+      ]
+    },
+    {
+      "displayId": 2568730015,
+      "displayScaleFactor": 1.25,
+      "savedScale": 1.35,
+      "method": "placeDesktopWindow",
+      "canonical": {
+        "width": 311,
+        "height": 378
+      },
+      "initial": {
+        "x": 60,
+        "y": 60,
+        "width": 312,
+        "height": 380
+      },
+      "final": {
+        "x": 99,
+        "y": 61,
+        "width": 312,
+        "height": 380
+      },
+      "viewport": {
+        "width": 312,
+        "height": 379,
+        "dpr": 1.25
+      },
+      "savedScaleAfter": 1.35,
+      "samePositionStable": true,
+      "maxRoundingDip": 2,
+      "widthRange": [
+        312,
+        312
+      ],
+      "heightRange": [
+        379,
+        380
+      ]
+    }
+  ],
+  "rootCause": {
+    "explanation": "Electron setPosition constructs the next bounds from position plus GetSize(); native fractional-DPI rounding feeds back into the next move. Explicit width/height from saved scale break that feedback.",
+    "primarySource": "https://github.com/electron/electron/blob/main/shell/browser/native_window.cc",
+    "DIPReference": "https://www.electronjs.org/docs/latest/api/screen"
+  },
+  "sourceMatchesAfterLineEndingNormalization": true,
+  "sourceWorkingTreeMatchesMeasured": true,
+  "sourceNormalization": "Measured Windows working-tree sources retain CRLF; Git blobs normalize text to LF. Both runtime and harness match the implementation commit exactly after line-ending normalization. Original measured source bytes are retained in the gzip source snapshot.",
+  "rawSources": {
+    "gzip": "docs\\implementation\\evidence\\companions\\user-acceptance-2026-10-25\\native-source-snapshot.json.gz",
+    "sha256": "98c643be178e75789d56dacf517681b42c144fb136749ad5ade65ce1653bb4bd"
+  }
+}
