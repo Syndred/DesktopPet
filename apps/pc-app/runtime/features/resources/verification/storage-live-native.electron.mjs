@@ -13,6 +13,7 @@ if(!login.account||!login.password||!login.resourceId||!process.env.LINGJING_PUB
 const directory=path.join(root,'artifacts/resources/cloud-real-electron-'+Date.now());await fs.mkdir(directory);
 const report={at:new Date().toISOString(),runtimeSourceCommit:execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim(),dataSource:{mode:'live',simulated:false,topology:'Two independent production Electron processes and userData roots on one physical machine',physicalDevices:1},views:[],errors:[],passed:false};
 report.buildProvenance=JSON.parse(await fs.readFile(path.join(root,'apps/pc-app/dist/build-manifest.json'),'utf8'));
+report.verificationSourceCommit=report.runtimeSourceCommit;report.runtimeSourceCommit=report.buildProvenance.sourceCommit;
 const open=[],stopped=new WeakSet();
 let expectedPreferences;
 async function stop(app){if(stopped.has(app))return;stopped.add(app);const cp=app.process(),exit=cp.exitCode===null?new Promise(resolve=>cp.once('exit',resolve)):Promise.resolve();await app.evaluate(({app})=>app.exit(0)).catch(()=>{});await exit;}
@@ -52,7 +53,7 @@ try{
     resource=(await invoke('resources','list')).find(row=>row.id===login.resourceId);
     assert.deepEqual({calibration:resource.calibration,actions:resource.actions},expectedPreferences);
     const cloudPreview=await invoke('accounts','cloudPreview');
-    const cloudRestore=await invoke('accounts','backupRestore',{previewId:cloudPreview.previewId,actionId:randomUUID(),mode:'merge'});
+    const cloudRestore=await invoke('accounts','backupRestore',{previewId:cloudPreview.previewId,actionId:randomUUID(),mode:'replace'});
     assert.equal(cloudRestore.restored,true);
     const preserved=JSON.parse(await fs.readFile(cloudRestore.preservedBackup.filePath,'utf8'));
     assert.equal(preserved.data.modules['character-resources'].version,1);
