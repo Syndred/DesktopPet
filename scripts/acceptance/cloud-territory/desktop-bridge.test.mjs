@@ -76,6 +76,8 @@ test('runtime fixture: existing battle command wrapper routes cloud sessions rem
     const input={actionId:'runtime:challenge',sessionOwnerAccountId:owner,petId:data.pets[0].petId,territoryId:region.id,expectedTerritoryRevision:1,expectedRevision:0};
     const start=await f.cloud.command(context,'territoryChallenge',input);assert.equal(start.ok,true);assert.equal(proofs[0].purpose,'territory:challenge');assert.equal(proofs[0].reference,region.id);
     const originalSession=structuredClone(battle);
+    f.cloud.battles.save(owner,{...originalSession,id:'wild-other-domain',mode:'wild',context:{authority:'cloud',origin:'discovery'}});
+    assert.equal(f.cloud.ownsBattle({sessionId:'wild-other-domain'},context),false,'the territory bridge must not intercept discovery or other cloud battle domains');
     await f.cloud.command(context,'territoryChallenge',input);assert.equal(proofs.length,1);
     const originalGrowth=JSON.stringify(data.pets.map(p=>p.growth));
     for(let i=0;i<150&&battle.status==='active';i++){

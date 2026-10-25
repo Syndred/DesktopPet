@@ -5,6 +5,7 @@ import { createRequire } from 'node:module';
 import type { SupabaseClient } from 'npm:@supabase/supabase-js@2.98.0';
 import { canonical } from '../_shared/lingjing-json.ts';
 import { verifyPackage } from './package.ts';
+import {validatePreferenceDocument} from './preferences.ts';
 const require=createRequire(import.meta.url);
 const {parseCharacterFile}=require('../../../../apps/pc-app/runtime/features/resources/parser.cjs');
 const owner='account:local-verifier',uid='10000000-0000-4000-8000-000000000001';
@@ -36,4 +37,12 @@ Deno.test('LOCAL verifier: UID/owner and wrong manifest hash are refused',async(
 });
 Deno.test('LOCAL verifier: credential-bearing original descriptor is refused even with matching hashes',async()=>{
   const p=await packet(true);await denied(()=>verifyPackage(p.client,p.row,owner,uid));
+});
+Deno.test('LOCAL preference verifier: shared desktop rules accept real clips and reject bounds, unknown clips and extra authority fields',async()=>{
+  const p=await packet(),resource=p.manifest.document;
+  const document=structuredClone({calibration:resource.calibration,actions:resource.actions});document.calibration.desktop.scale=1.35;
+  validatePreferenceDocument(document,resource.clips);
+  const invalid=structuredClone(document);invalid.calibration.desktop.scale=4;await denied(()=>Promise.resolve(validatePreferenceDocument(invalid,resource.clips)));
+  const clip=structuredClone(document);clip.actions.idle='not-a-real-clip';await denied(()=>Promise.resolve(validatePreferenceDocument(clip,resource.clips)));
+  await denied(()=>Promise.resolve(validatePreferenceDocument({...document,growth:{experience:999}},resource.clips)));
 });

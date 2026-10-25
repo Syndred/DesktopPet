@@ -15,7 +15,7 @@ const {createCompanionBackupAdapter}=require('../../companions/backup.cjs'),{cre
 const {GardenService}=require('../../garden/service.cjs'),{BackupManager}=require('../../accounts/backups.cjs');
 const {BattleCloudAuthority}=require('../cloud-authority.cjs');
 const {saveDataChecksum}=require('../../accounts/util.cjs');
-const users=['host','guest'].map(name=>({uid:randomUUID(),owner:randomUUID(),account:name,device:randomUUID(),sid:randomUUID()}));
+const users=['host','guest'].map((name,index)=>({uid:randomUUID(),owner:index===1?'o'.repeat(160):randomUUID(),account:name,device:randomUUID(),sid:randomUUID()}));
 const record=name=>{checks.push(name);console.log(name);};
 await db.exec(`CREATE ROLE anon;CREATE ROLE authenticated;CREATE ROLE service_role BYPASSRLS;
 CREATE SCHEMA auth;GRANT USAGE ON SCHEMA auth TO authenticated,service_role;
@@ -26,7 +26,7 @@ CREATE FUNCTION auth.uid() RETURNS uuid LANGUAGE sql STABLE AS $$SELECT (auth.jw
 CREATE SCHEMA realtime;CREATE TABLE realtime.messages(topic text,extension text);ALTER TABLE realtime.messages ENABLE ROW LEVEL SECURITY;
 CREATE FUNCTION realtime.topic() RETURNS text LANGUAGE sql STABLE AS $$SELECT current_setting('request.topic',true)$$;`);
 await loadSharedActorGuard(db);
-for(const name of ['20261025020540_lingjing_battle_jwt_rooms','20261025024552_lingjing_battle_authority_save'])await db.exec(readFileSync(`infra/supabase/migrations/${name}.sql`,'utf8'));
+for(const name of ['20261025034744_lingjing_battle_jwt_rooms','20261025034748_lingjing_battle_authority_save'])await db.exec(readFileSync(`infra/supabase/migrations/${name}.sql`,'utf8'));
 async function rpc(name,args,role='service_role') {
   await db.exec(`BEGIN;SET LOCAL ROLE ${role}`);
   try {const result=await db.query(`SELECT public.${name}(${args.map((_,i)=>`$${i+1}`).join(',')}) value`,args);await db.exec('COMMIT');return result.rows[0].value;}
@@ -41,7 +41,7 @@ function fixture(user,templateId) {
   const other=companions.adopt(user.owner,{actionId:'canonical-other-adoption',templateId,name:'另一只伙伴',showOnDesktop:false}).data.pet;
   const garden=new GardenService({db:sqlite});garden.snapshot({ownerAccountId:user.owner});
   const companion=createCompanionBackupAdapter(sqlite),gardenBackup=createGardenBackupAdapter(sqlite),battle=require('../backup.cjs').createBattleBackupAdapter(sqlite);
-  const backups=new BackupManager({db:sqlite,directory:`artifacts/battle/cloud/readback-${user.owner}`,getIdentity:owner=>sqlite.prepare('SELECT * FROM account_identities WHERE owner_account_id=?').get(owner)});backups.register(companion);backups.register(gardenBackup);backups.register(battle);
+  const backups=new BackupManager({db:sqlite,directory:`artifacts/battle/cloud/readback-${user.uid}`,getIdentity:owner=>sqlite.prepare('SELECT * FROM account_identities WHERE owner_account_id=?').get(owner)});backups.register(companion);backups.register(gardenBackup);backups.register(battle);
   const envelope=backups.snapshot(user.owner);return {sqlite,pet,other,envelope,companion,gardenBackup,battle,backups,companions};
 }
 const binding=user=>[user.uid,user.owner,user.device,user.sid];
@@ -71,9 +71,12 @@ try {
   record('actual Postgres rollback after protected commit: missing report leaves growth, inventory, head revision and receipt unchanged');
   await assert.rejects(settle(host,'friend',room.id,host.pet.petId,0,prepared),/LJ_SYNC_CONFLICT/);assert.deepEqual(await head(host),before);
   const reports=[];
-  for(const user of users) {
+  for(const [index,user] of users.entries()) {
+    if(index===1)await db.exec(readFileSync('infra/supabase/migrations/20261025040739_lingjing_battle_scoped_authority_receipt.sql','utf8'));
     const previous=await head(user),session=friendSession(room,rounds,user.owner,{}),p=await prepareBattleSettlement({envelope:previous.envelope,owner:user.owner,session});
     const proof=await settle(user,'friend',room.id,user.pet.petId,previous.revision,p),again=await settle(user,'friend',room.id,user.pet.petId,0,p),current=await head(user);
+    assert.equal(proof.authority.actionId,index===0?proof.action_id:`battle-authority:friend:${room.id}`);
+    if(index===1){assert.ok(proof.action_id.length>200);assert.ok(proof.authority.actionId.length<=128);assert.equal(proof.reward.actionId,`battle:${room.id}:${user.owner}`);}
     assert.equal(again.duplicate,true);assert.deepEqual({...again,duplicate:false},proof);assert.equal(current.revision,previous.revision+1);
     const modules=current.envelope.data.modules,originalPets=previous.envelope.data.modules.companions.data.tables.companion_pets;
     const pets=modules.companions.data.tables.companion_pets,pet=JSON.parse(pets.find(row=>row.pet_id===user.pet.petId).data_json),old=JSON.parse(originalPets.find(row=>row.pet_id===user.pet.petId).data_json);
@@ -84,7 +87,7 @@ try {
     assert.equal(proof.authority.checksum,current.envelope.checksum);assert.deepEqual(proof.report,JSON.parse(modules.battle.data.reports[0].data_json));reports.push(proof.report);
     // Scripted transport to the actual action-specific Postgres save. This tests
     // the real SQLite adapter path, and is explicitly not HTTPS/Auth evidence.
-    const readback=async()=>({actionId:proof.action_id,revision:current.revision,checksum:current.checksum,envelope:current.envelope});
+    const readback=async()=>({actionId:proof.authority.actionId,revision:current.revision,checksum:current.checksum,envelope:current.envelope});
     const services={db:user.local.sqlite,get:name=>name==='backups'?user.local.backups:name==='accounts'?{getOwnerAccountId:()=>user.owner}:name==='cloudActor'?{requireActor:async()=>({invoke:readback})}:undefined};
     const store=new (require('../store.cjs').BattleStore)(user.local.sqlite),pendingSession={...session,reward:{...proof.reward,applied:false,pendingReason:'intentional lost readback'},reportId:session.id};
     store.save(user.owner,pendingSession);store.saveReport(user.owner,{...proof.report,reward:pendingSession.reward});
@@ -98,6 +101,8 @@ try {
     user.authority=authority;user.proof=proof;
   }
   assert.equal(reports[0].endedAt,reports[1].endedAt);assert.equal(reports[0].rounds.length,reports[1].rounds.length);
+  const oldHead=await head(host),oldAgain=await settle(host,'friend',room.id,host.pet.petId,0,prepared);assert.equal(oldAgain.authority.actionId,host.proof.action_id);assert.deepEqual(oldAgain.authority,host.proof.authority);assert.deepEqual(await head(host),oldHead);
+  record('160-character original owner completes Postgres settlement and SQLite replay using a short CAS key while retaining its original long domain receipt; an existing legacy receipt replays unchanged');
   for(let i=0;i<reports[0].rounds.length;i++){assert.equal(reports[0].rounds[i].hpAfter.player,reports[1].rounds[i].hpAfter.enemy);assert.equal(reports[0].rounds[i].actions.player,reports[1].rounds[i].actions.enemy);}
   record('both owners receive exactly one canonical growth + two seeds + mirrored complete report, with original other-pet state preserved');
   record('actual SQLite readback completes a finished-but-pending report idempotently; late adapter failure rolls back companion/garden restore together');

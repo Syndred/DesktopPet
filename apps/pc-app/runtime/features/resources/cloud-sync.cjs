@@ -31,6 +31,7 @@ class ResourceCloudSync {
   constructor({service,getActor,isEnabled=()=>true,onChanged=()=>{},now=()=>Date.now(),protocolFixture=false}) {
     this.service=service;this.db=service.repository.db;this.getActor=getActor;this.isEnabled=isEnabled;this.onChanged=onChanged;this.now=now;
     this.uploading=new Set();this.downloading=new Set();this.protocolFixture=protocolFixture;this.mode=protocolFixture?'simulated':'live';
+    this.preferences=new (require('./cloud-preferences.cjs').ResourceCloudPreferences)(this);
   }
   owner(owner){this.service.owner(owner);return this.service.repository.ownerKeys(owner)[0];}
   async actor(owner,uid){const value=identity(await this.getActor(owner),owner,{allowProtocolFixture:this.protocolFixture});if(uid&&value.authUserId!==uid)reject('RESOURCE_CLOUD_IDENTITY_CHANGED','云端账号映射已变化，原重试记录已保留');return value;}
@@ -40,7 +41,8 @@ class ResourceCloudSync {
     const downloads=this.db.prepare(`SELECT ${stage} status,count(*) AS count FROM lingjing_resource_cloud_downloads WHERE owner_account_id=? AND data_mode=? GROUP BY 1`).all(owner,this.mode);
     const last=this.db.prepare("SELECT max(verified_at) AS at FROM lingjing_resource_cloud_receipts WHERE owner_account_id=? AND data_mode=? AND (authority_action_id IS NOT NULL OR data_mode='simulated')").get(owner,this.mode);
     const storage=this.db.prepare('SELECT max(at) AS at FROM (SELECT verified_at at FROM lingjing_resource_cloud_receipts WHERE owner_account_id=? AND data_mode=? UNION ALL SELECT storage_verified_at at FROM lingjing_resource_cloud_outbox WHERE owner_account_id=? AND data_mode=?)').get(owner,this.mode,owner,this.mode);
-    return {enabled:Boolean(this.isEnabled(owner)),uploads,downloads,lastVerifiedAt:last.at||null,lastStorageVerifiedAt:storage.at||null,running:this.uploading.has(owner)||this.downloading.has(owner),dataMode:this.mode,bucket:BUCKET};
+    const preferenceAt=this.db.prepare('SELECT max(verified_at) at FROM lingjing_resource_preference_state WHERE owner_account_id=?').get(owner).at;
+    return {enabled:Boolean(this.isEnabled(owner)),uploads,downloads,lastVerifiedAt:last.at||null,lastStorageVerifiedAt:storage.at||null,preferenceUploads:this.preferences.status(owner),lastPreferenceVerifiedAt:preferenceAt||null,running:this.uploading.has(owner)||this.downloading.has(owner),dataMode:this.mode,bucket:BUCKET};
   }
   enqueue(inputOwner,actionId=randomUUID(),resourceIds) {
     const owner=this.owner(inputOwner);
@@ -49,8 +51,17 @@ class ResourceCloudSync {
     const ids=resourceIds??this.db.prepare(`SELECT resource_id FROM lingjing_resources WHERE owner_account_id IN (${marks}) ORDER BY resource_id`).all(...keys).map(row=>row.resource_id);
     if(!Array.isArray(ids)||ids.length>1000||ids.some(id=>!UUID.test(id)))reject('INVALID_REQUEST','同步资源列表无效');
     const add=this.db.prepare("INSERT INTO lingjing_resource_cloud_outbox(owner_account_id,action_id,resource_id,created_at,data_mode) VALUES(?,?,?,?,?) ON CONFLICT DO NOTHING");
-    this.service.repository.transaction(()=>{for(const id of ids){ownedRow(this.service,owner,id);add.run(owner,actionId,id,new Date(this.now()).toISOString(),this.mode);}});
-    return {queued:ids.length,actionId};
+    let queued=0;
+    this.service.repository.transaction(()=>{for(const id of ids){
+      const row=ownedRow(this.service,owner,id);
+      if(!this.protocolFixture){
+        const proofs=this.db.prepare("SELECT resource_id,auth_user_id,manifest_sha256 FROM lingjing_resource_cloud_receipts WHERE owner_account_id=? AND resource_id=? AND content_hash=? AND data_mode='live' AND authority_action_id IS NOT NULL").all(owner,id,row.content_hash);
+        const imports=this.db.prepare(`SELECT import_id FROM lingjing_resource_imports WHERE resource_id=? AND owner_account_id IN (${marks})`).all(id,...keys);
+        if(proofs.some(proof=>{try{const manifest=this.referenceManifestLocal(owner,{resourceId:id,authUserId:proof.auth_user_id,manifestSha256:proof.manifest_sha256});return canonical(manifest.document)===canonical(JSON.parse(row.document_json))&&imports.every(item=>manifest.imports.some(original=>original.import_id===item.import_id));}catch{return false;}}))continue;
+      }
+      queued+=add.run(owner,actionId,id,new Date(this.now()).toISOString(),this.mode).changes;
+    }});
+    return {queued,actionId};
   }
   receipt(owner,manifest,digest,direction,authority) {
     this.db.prepare('INSERT INTO lingjing_resource_cloud_receipts(owner_account_id,resource_id,auth_user_id,manifest_sha256,content_hash,direction,verified_at,data_mode,authority_action_id,authority_revision,authority_checksum) VALUES(?,?,?,?,?,?,?,?,?,?,?) ON CONFLICT DO UPDATE SET verified_at=excluded.verified_at,data_mode=excluded.data_mode,authority_action_id=excluded.authority_action_id,authority_revision=excluded.authority_revision,authority_checksum=excluded.authority_checksum').run(owner,manifest.resourceId,manifest.authUserId,digest,manifest.contentHash,direction,new Date(this.now()).toISOString(),this.mode,authority?.actionId??null,authority?.revision??null,authority?.checksum??null);
@@ -129,7 +140,8 @@ class ResourceCloudSync {
         this.db.prepare('UPDATE lingjing_resource_cloud_outbox SET status=?,attempts=attempts+1,next_attempt_at=?,last_error=? WHERE owner_account_id=? AND action_id=? AND resource_id=?').run(retry?'retry':'blocked',this.now()+Math.min(1800000,2000*2**Math.min(job.attempts+1,10)),safe.code,owner,job.action_id,job.resource_id);
         errors.push({resourceId:job.resource_id,code:safe.code});if(retry)break;
       }
-      return {verified,errors,pending:this.status(owner).uploads.filter(row=>['pending','retry','blocked','awaiting-authority'].includes(row.status)).reduce((n,row)=>n+row.count,0)};
+      const preferences=await this.preferences.flush(owner,{force});
+      return {verified,errors,preferences,pending:preferences.pending+this.status(owner).uploads.filter(row=>['pending','retry','blocked','awaiting-authority'].includes(row.status)).reduce((n,row)=>n+row.count,0)};
     } finally {this.uploading.delete(owner);}
   }
   async cachedChunk(owner,uid,manifest,digest,file,index,chunk) {
@@ -190,6 +202,7 @@ class ResourceCloudSync {
       const rows=result(await query);if(!Array.isArray(rows)||rows.length>limit)reject('RESOURCE_CLOUD_INVALID','云端资源列表格式无效');
       const restored=[];
       for(const row of rows){await this.actor(owner,actor.authUserId);restored.push(await this.downloadEntry(owner,actor,row));}
+      await this.preferences.pull(owner);
       return {restored,nextOffset:rows.length===limit?offset+limit:null};
     } finally {this.downloading.delete(owner);}
   }
@@ -198,12 +211,13 @@ class ResourceCloudSync {
     do{const batch=await this.pull(owner,{offset});if(batch.busy)return {upload,busy:true};restored.push(...batch.restored);offset=batch.nextOffset;}while(offset!==null);
     return {upload,restored};
   }
-  async referenceSnapshot(inputOwner) {
+  async referenceSnapshot(inputOwner,{includePreferences=true}={}) {
     const owner=this.owner(inputOwner),actor=await this.actor(owner);if(this.protocolFixture)reject('RESOURCE_AUTHORITY_REQUIRED','模拟场景没有真实权威资源引用');
     const rows=result(await actor.client.from(REFERENCES).select(REFERENCE_FIELDS).eq('auth_user_id',actor.authUserId).eq('owner_account_id',owner).order('resource_id').order('manifest_sha256').limit(10000));
     if(!Array.isArray(rows)||rows.length===10000)reject('RESOURCE_CLOUD_INVALID','资源引用数量超过一次恢复范围');
     for(const row of rows){validateIndex(row,owner,actor.authUserId);await this.verifyAuthority(owner,actor,row);}
-    return {version:2,data:{format:'lingjing-resource-references',ownerAccountId:owner,references:rows.map(row=>({authUserId:row.auth_user_id,resourceId:row.resource_id,manifestSha256:row.manifest_sha256,contentHash:row.content_hash,manifestPath:row.manifest_path,manifestBytes:row.manifest_bytes,totalBytes:row.total_bytes,kind:row.resource_kind}))}};
+    const preferences=includePreferences?await this.preferences.remoteSnapshot(owner):[];
+    return {version:2,data:{format:'lingjing-resource-references',ownerAccountId:owner,references:rows.map(row=>({authUserId:row.auth_user_id,resourceId:row.resource_id,manifestSha256:row.manifest_sha256,contentHash:row.content_hash,manifestPath:row.manifest_path,manifestBytes:row.manifest_bytes,totalBytes:row.total_bytes,kind:row.resource_kind})),preferences}};
   }
   referenceManifestLocal(inputOwner,reference) {
     const owner=this.owner(inputOwner),args=[owner,reference.resourceId,reference.authUserId,reference.manifestSha256];
@@ -220,15 +234,16 @@ class ResourceCloudSync {
       if(manifest.contentHash!==row.content_hash)reject('RESOURCE_AUTHORITY_REQUIRED','资源回执与本机 manifest 不一致');
       return {...reference,manifestPath:manifestPath(row.auth_user_id,row.resource_id,row.manifest_sha256),manifestBytes:bytes.length,totalBytes:manifest.totalBytes,kind:manifest.archiveOnly?'model3d-archive':'spritesheet'};
     });
-    return {version:2,data:{format:'lingjing-resource-references',ownerAccountId:owner,references}};
+    return {version:2,data:{format:'lingjing-resource-references',ownerAccountId:owner,references,preferences:this.preferences.snapshot(owner)}};
   }
   async hydrateReferences(inputOwner,snapshot) {
     const owner=this.owner(inputOwner);
     if(snapshot?.version!==2||snapshot.data?.format!=='lingjing-resource-references'||snapshot.data.ownerAccountId!==owner||!Array.isArray(snapshot.data.references)||snapshot.data.references.length>10000)reject('RESOURCE_AUTHORITY_REQUIRED','资源引用存档格式或归属无效');
-    const expected=await this.referenceSnapshot(owner),trusted=new Map(expected.data.references.map(row=>[row.resourceId+':'+row.manifestSha256,row]));
+    const expected=await this.referenceSnapshot(owner,{includePreferences:false}),trusted=new Map(expected.data.references.map(row=>[row.resourceId+':'+row.manifestSha256,row]));
     for(const row of snapshot.data.references)if(canonical(trusted.get(row.resourceId+':'+row.manifestSha256))!==canonical(row))reject('RESOURCE_AUTHORITY_REQUIRED','客户端不能声明未核验的资源引用');
     const actor=await this.actor(owner),restored=[];
     for(const reference of snapshot.data.references){const row=validateIndex(result(await actor.client.from(REFERENCES).select(REFERENCE_FIELDS).eq('auth_user_id',actor.authUserId).eq('resource_id',reference.resourceId).eq('manifest_sha256',reference.manifestSha256).maybeSingle()),owner,actor.authUserId);restored.push(await this.downloadEntry(owner,actor,row));}
+    await this.preferences.prepare(owner,snapshot.data.preferences||[]);
     return {restored};
   }
 }

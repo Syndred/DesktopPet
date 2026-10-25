@@ -1023,6 +1023,7 @@ var fail3 = (code, message) => {
 };
 var object2 = (value) => value !== null && typeof value === "object" && !Array.isArray(value);
 var identifier = (value) => typeof value === "string" && value.trim() === value && value.length > 0 && value.length <= 200 && !/[\u0000-\u001f\u007f]/u.test(value);
+var receiptIdentifier = (value) => typeof value === "string" && value.trim() === value && value.length > 0 && value.length <= 512 && !/[\u0000-\u001f\u007f]/u.test(value);
 function canonical(value) {
   if (value === null || ["boolean", "string"].includes(typeof value) || typeof value === "number" && Number.isFinite(value)) return JSON.stringify(value);
   if (Array.isArray(value)) return "[" + value.map(canonical).join(",") + "]";
@@ -1062,7 +1063,7 @@ function validatePet(row, owner, petId) {
 }
 async function awardBattleResult(input) {
   const { envelope: source, ownerAccountId: owner, petId, sessionId, won, mode, actionId, now } = input || {};
-  if (!object2(input) || Object.keys(input).some((key) => !["envelope", "ownerAccountId", "petId", "sessionId", "won", "mode", "actionId", "now"].includes(key)) || ![owner, petId, sessionId, actionId].every(identifier) || typeof won !== "boolean" || !["training", "friend", "wild", "territory"].includes(mode) || !Number.isSafeInteger(now) || now < 0 || !Number.isFinite(new Date(now).getTime())) fail3("INVALID_INPUT", "\u6218\u6597\u6210\u957F\u8BF7\u6C42\u65E0\u6548");
+  if (!object2(input) || Object.keys(input).some((key) => !["envelope", "ownerAccountId", "petId", "sessionId", "won", "mode", "actionId", "now"].includes(key)) || ![owner, petId, sessionId].every(identifier) || !receiptIdentifier(actionId) || typeof won !== "boolean" || !["training", "friend", "wild", "territory"].includes(mode) || !Number.isSafeInteger(now) || now < 0 || !Number.isFinite(new Date(now).getTime())) fail3("INVALID_INPUT", "\u6218\u6597\u6210\u957F\u8BF7\u6C42\u65E0\u6548");
   if (actionId !== `battle:${sessionId}:${owner}`) fail3("INVALID_BATTLE_ACTION", "\u6218\u6597\u5956\u52B1\u5FC5\u987B\u4F7F\u7528\u56FA\u5B9A\u7ED3\u7B97\u6807\u8BC6");
   if (source?.format !== "lingjing-account-save" || source.version !== 1 || source.ownerAccountId !== owner || source.provenance?.mode !== "live") fail3("BACKUP_OWNER_MISMATCH", "\u6218\u6597\u5B58\u6863\u5F52\u5C5E\u6216\u73AF\u5883\u4E0D\u5339\u914D");
   const envelope = structuredClone(source);

@@ -43,11 +43,11 @@ export function DesktopCompanion() {
     if (!drag.current) return; drag.current = false;
     const point = { screenX: event.screenX, screenY: event.screenY }; const target = event.currentTarget;
     if (target.hasPointerCapture(event.pointerId)) target.releasePointerCapture(event.pointerId);
-    try { await input('drag-move', point); await input('drag-end'); } catch { setMessage('位置未能保存，请重试'); }
+    try { await input('drag-move', point); await input('drag-end'); } catch (error) { setMessage(error instanceof Error ? error.message : '位置仍待确认，请回到灵境重新连接'); }
   };
   if (!pet) return null;
   return <main className={`cp-desktop-surface ${pet.desktop.behavior === 'sleep' ? 'is-sleeping' : ''}`} data-pet-id={petId} data-resource-id={pet.resource.resourceId} data-element={pet.element} aria-label={`${pet.name}的桌面伙伴`}>
-    <div className="cp-desktop-tools"><Button variant="secondary" aria-label={`摸摸${pet.name}`} onClick={async () => { try { await companionsRequest('interact', { actionId: actionId(), petId }); setMessage('感受到你的陪伴啦'); } catch (error) { setMessage(error instanceof Error ? error.message : '稍后再试'); } }}><Heart size={15}/></Button><Button variant="secondary" aria-label={`收回${pet.name}`} onClick={() => companionsRequest('desktop', { actionId: actionId(), petId, visible: false })}><House size={15}/></Button></div>
+    <div className="cp-desktop-tools"><Button variant="secondary" aria-label={`摸摸${pet.name}`} onClick={async () => { try { await companionsRequest('interact', { actionId: actionId(), petId }); setMessage('感受到你的陪伴啦'); } catch (error) { setMessage(error instanceof Error ? error.message : '稍后再试'); } }}><Heart size={15}/></Button><Button variant="secondary" aria-label={`收回${pet.name}`} onClick={async () => { try { await companionsRequest('desktop', { actionId: actionId(), petId, visible: false }); } catch (error) { setMessage(error instanceof Error ? error.message : '收回操作仍待确认'); } }}><House size={15}/></Button></div>
     <div className="cp-desktop-visual" ref={visual} onPointerDown={start} onPointerUp={end} onPointerCancel={end}><CompanionPortrait ownerAccountId={pet.ownerAccountId} petId={petId} resource={pet.resource} name={pet.name} animate action={pet.desktop.behavior === 'sleep' ? 'sleep' : ['wander', 'follow'].includes(pet.desktop.behavior) ? 'walk' : 'idle'}/></div>
     <span className="cp-desktop-name">{pet.name}{pet.desktop.behavior === 'sleep' ? ' · 休息中' : ''}</span>
     {message && <div className="cp-desktop-message" role="status">{message}</div>}

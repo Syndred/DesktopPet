@@ -20,11 +20,12 @@
     "protectedPersonalFieldsNeed": "Accounts shared CAS must permit validated names/desktop settings/independent selections while retaining authoritative pet identity/growth/capture/adoption receipts; checksum alone is not gameplay permission.",
     "mainOnlyAdapter": "Production main adapter routes all seven commands and native positions through08 cloudActor; durable intents/verified-head metadata use existing account_actions; only exact verified companion-unit readback restores; common base stays strict",
     "serverCheckpoint": "67546f5 includes cloud-domain/instance factory, companions-sync Edge, CLI migration and local/HTTP verifiers; coordinator reviews/deploys",
-    "sharedAccountsCheckpoint": "6435a13 shared backups/sync/util normalization + regression;230e9b6 merges8e5c735 retaining safety projection and privacy state"
+    "sharedAccountsCheckpoint": "6435a13 shared backups/sync/util normalization + regression;230e9b6 merges8e5c735 retaining safety projection and privacy state",
+    "mainCheckpoint": "662c649: focused-tested main cloud IPC/native intent adapter; select/recallAll are async for Supabase consumers"
   },
   "migrations": [
     {
-      "file": "infra/supabase/migrations/20261025025515_lingjing_companion_commands.sql",
+      "file": "infra/supabase/migrations/20261025031842_lingjing_companion_commands.sql",
       "generatedBy": "Supabase CLI2.122.0 migration new lingjing_companion_commands --workdir infra",
       "remoteAppliedByThisChat": false
     }
@@ -51,7 +52,8 @@
     "liveWorkerPermissions": "Independent read-only real SQL: anon/authenticated cannot execute worker; service_role can; service_role still cannot SELECT auth.users; worker-acl.json",
     "sharedHookAlignment": "After merging8e5c735 and preserving safety projection/authority_pending,11 focused shared/Accounts/legacy normalization checks passed",
     "latestGardenContract": "Current13cb925 runtime code with exact05 53732f4 passed canonical-engine settlement, complete-save clientB restore and stale-preview conflict; artifacts/companions/garden-contract-VkP9ws (local only)",
-    "mainAuthorityFocused": "6/6 passed:4 explicitly labelled real-SQLite protocol simulations plus Accounts-boundary and playback isolation; node syntax checks passed; not real HTTPS/Electron proof"
+    "mainAuthorityFocused": "6/6 passed:4 explicitly labelled real-SQLite protocol simulations plus Accounts-boundary and playback isolation; node syntax checks passed; not real HTTPS/Electron proof",
+    "longLegacyReceipt": "11/11 growth+backup checks passed;160-character original owner and51-character session retain original long receipt through shared growth/validation/actual second SQLite restore in module and legacy formats; only receipt ID bound widened to512"
   },
   "realCloudEvidence": {
     "project": "jbvrdmrkwpznbrvteive",

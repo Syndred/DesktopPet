@@ -1,0 +1,59 @@
+{
+  "queriedAt": "2026-10-25 04:07:26 UTC",
+  "kind": "read-only Supabase SQL after actual product HTTP operations; no direct SQL test writes",
+  "region": {
+    "id": "qa:garden-4b474857:territory:7582:11683",
+    "revision": 3,
+    "worldMode": "simulated",
+    "scenarioId": "garden-4b474857",
+    "boundaryValid": true,
+    "garrisonPetId": "pet-453144ca-f618-4cb6-94fd-44c962c1ce71",
+    "ownerAccountId": "account:5c7620b5-0802-4667-94b9-6284bd459841"
+  },
+  "accounts": [
+    {
+      "checksum": "1199c95e4b35fc0531fd841dc003dcc0bc5459476cfe015e6957f642665b20ce",
+      "challenges": [
+        {
+          "status": "settled",
+          "winner": "player",
+          "sessionId": "btl-L0Ff15kYS_C84MZqikJWHA"
+        },
+        {
+          "status": "settled",
+          "winner": "enemy",
+          "sessionId": "btl-KDeeidcWQ5K1sRRVR3CaYg"
+        }
+      ],
+      "seedReceipts": 2,
+      "gardenRevision": "6",
+      "ownerAccountId": "account:5c7620b5-0802-4667-94b9-6284bd459841",
+      "accountRevision": 7
+    },
+    {
+      "checksum": "20280cb95ac405a3b5154f2d8d0166bd266047e9cf07564421260eb16f84d053",
+      "challenges": [
+        {
+          "status": "superseded",
+          "winner": "player",
+          "sessionId": "btl-eYwOa2XeRYKfN-IiB_1zGw"
+        },
+        {
+          "status": "settled",
+          "winner": "enemy",
+          "sessionId": "btl-nkgUd5R3SrSC6-OhzL_PZw"
+        }
+      ],
+      "seedReceipts": 1,
+      "gardenRevision": "8",
+      "ownerAccountId": "account:9f591ede-bc87-4aa3-af70-084189dfae9e",
+      "accountRevision": 10
+    }
+  ],
+  "longAction": {
+    "accountRevision": 10,
+    "authorityReceiptId": "garden:f83ec70c4feb9cdf59286db5dcea3adced8a4b0b90ea7830aa5cee396f23fbbd",
+    "domainActionLength": 160,
+    "authorityActionLength": 71
+  }
+}
