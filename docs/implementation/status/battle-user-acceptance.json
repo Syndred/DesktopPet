@@ -1,12 +1,12 @@
 {
   "module": "battle",
-  "updatedAt": "2026-10-25T09:54:59.7012800Z",
+  "updatedAt": "2026-10-25T10:49:22.6713786Z",
   "integrationBase": "9e57de1d210376ce679168eb1acbff8e37cff1cd",
   "overallStatus": "fixed-awaiting-independent-qa",
   "completeUserAcceptancePassed": false,
   "upstream": {
     "fetched": true,
-    "fetchCheckedAt": "2026-10-25T09:54:59.7012800Z",
+    "fetchCheckedAt": "2026-10-25T10:49:22.6713786Z",
     "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086",
     "pullCommand": "git pull --ff-only origin main",
     "pullResult": "Already up to date"
@@ -23,7 +23,7 @@
       "status": "fixed-awaiting-independent-qa",
       "scope": "训练和好友大厅的己方选宠列表、当前己方伙伴显示。",
       "problem": "旧选宠文字使用可变历史昵称，同角色实例缺少完整编号，无法稳定区分。",
-      "identityContract": "docs/implementation/companions-display-identity-contract.json",
+      "identityContract": "docs/implementation/companions-global-serial-contract.json",
       "files": [
         "apps/pc-app/runtime/features/battle/service.cjs",
         "apps/pc-app/ui/src/features/battle/useBattleSession.ts",
@@ -31,9 +31,9 @@
         "apps/pc-app/ui/src/features/battle/FriendsPanel.tsx"
       ],
       "changes": [
-        "仅 overviewData().pets 的临时返回对象增加 displayIdentity，调用 companions.getDisplayIdentity(owner, petId) 读取固定角色名和完整原 petId。",
-        "缺少身份能力的旧适配器仅显示历史伙伴与完整原 petId，不从可变外观或 resourceId 推断角色。",
-        "选宠项、选中值和好友大厅当前己方摘要显示固定角色名与完整编号；局部文本允许换行，不使用省略号或短编号。",
+        "仅 overviewData().pets 的临时返回对象增加 displayIdentity，调用 companions.getDisplayIdentity(owner, petId) 读取固定角色名和公共 helper 格式化的已确认 globalSerial。",
+        "缺少身份能力的旧适配器仅显示历史伙伴与待同步，不公开内部 petId，不从可变外观或 resourceId 推断角色或编号。",
+        "选宠项、选中值和好友大厅当前己方摘要消费公共 instanceNumber：数字号至少四位，未确认时待同步；局部文本允许换行。",
         "只读 BattleOwnedPet 扩展只用于大厅概览；选择、训练、邀请、房间命令仍传原 petId。"
       ],
       "sourceReview": {
@@ -85,9 +85,31 @@
         },
         "pendingIndependentQa": "09 在最小窗口实际选中长编号，确认两行及更多行撑高、完整可见，且不挤出选择控件。"
       },
+      "globalSerialFollowUp": {
+        "baseCommit": "e651bca0c36b6fccc894f6cde7b325720a3e5651",
+        "decisionId": "globalSerial-20261025-v1",
+        "scope": "仅将 battle overview 缺少身份能力时的 instanceNumber 回退从内部 petId 改为待同步。",
+        "displayPath": "overviewData -> companions.getDisplayIdentity(owner, petId) -> companionIdentity(api.getPet(owner, petId)); battle 的 ownedPet 战斗 DTO 不参与身份号投影。",
+        "integrationDependencies": [
+          "02 公共 helper/DTO：已确认 globalSerial 字串补至至少四位；缺值待同步。当前 battle 基线尚未包含该公共变更。",
+          "08 权威登记与可信读回：只由已确认云端元数据提供 globalSerial。"
+        ],
+        "numberAllocationAdded": false,
+        "petIdOrPersistenceChanged": false,
+        "stylesChanged": false,
+        "verified": {
+          "targetedLint": {
+            "command": "node node_modules/eslint/bin/eslint.js apps/pc-app/runtime/features/battle/service.cjs --rule '@typescript-eslint/no-require-imports: off'",
+            "exitCode": 0
+          },
+          "syntaxCheck": { "command": "node --check apps/pc-app/runtime/features/battle/service.cjs", "exitCode": 0 },
+          "diffCheck": { "command": "git diff --check", "exitCode": 0 }
+        },
+        "actualInputAcceptancePerformed": false
+      },
       "pendingIndependentQa": [
-        "训练和好友大厅中，同角色多实例的选宠项和选中值均完整显示不同原 petId。",
-        "好友大厅我方出战伙伴摘要显示固定角色名及完整编号，窄窗口中可换行。",
+        "合入 02/08 后，训练和好友大厅同角色实例显示云端确认的数字号，至少四位；缺值只显示待同步，不公开 UUID。",
+        "好友大厅我方出战伙伴摘要显示固定角色名及数字号，窄窗口中可换行。",
         "选择不同实例后，实际训练或好友流程仍归属所选原 petId；历史战报保持原文字。"
       ]
     }
