@@ -1,0 +1,47 @@
+[
+  {
+    "file": "apps/pc-app/runtime/features/resources/legacy/parser-3d.cjs",
+    "sha256": "748d0e76a15133588ec00f9efa8b44d1470fc6132f987c6bd9582dcdc1f0cf48",
+    "bytes": 16134,
+    "previousCommit": "46abf416e0500b53ef32fc29b441d923ef5a6a80",
+    "replacement": "apps/pc-app/runtime/features/resources/history.cjs (read-only existing archive) / package-2d.cjs / ResourceStage.tsx (active 2D)",
+    "activeConsumers": 0,
+    "decision": "Delete inactive renderer/importer/test copies; preserve user models and database history"
+  },
+  {
+    "file": "apps/pc-app/runtime/features/resources/legacy/README.txt",
+    "sha256": "65aa027311f6f91c6aca62300960ad63c7a8c74751edfa51e1446844389d5ee9",
+    "bytes": 385,
+    "previousCommit": "46abf416e0500b53ef32fc29b441d923ef5a6a80",
+    "replacement": "apps/pc-app/runtime/features/resources/history.cjs (read-only existing archive) / package-2d.cjs / ResourceStage.tsx (active 2D)",
+    "activeConsumers": 0,
+    "decision": "Delete inactive renderer/importer/test copies; preserve user models and database history"
+  },
+  {
+    "file": "apps/pc-app/runtime/features/resources/legacy/resources-3d.test.cjs.txt",
+    "sha256": "cae751adcd3cb2bdf10bb4437d3326eff2e5a8706cb143c8af7ec64b8c658031",
+    "bytes": 14488,
+    "previousCommit": "46abf416e0500b53ef32fc29b441d923ef5a6a80",
+    "replacement": "apps/pc-app/runtime/features/resources/history.cjs (read-only existing archive) / package-2d.cjs / ResourceStage.tsx (active 2D)",
+    "activeConsumers": 0,
+    "decision": "Delete inactive renderer/importer/test copies; preserve user models and database history"
+  },
+  {
+    "file": "apps/pc-app/runtime/features/resources/legacy/ResourceStage-3d.tsx.txt",
+    "sha256": "1129981a5e9796736b8ea3386b2bd22d03c28908478a1222b8233889ec37f506",
+    "bytes": 10745,
+    "previousCommit": "46abf416e0500b53ef32fc29b441d923ef5a6a80",
+    "replacement": "apps/pc-app/runtime/features/resources/history.cjs (read-only existing archive) / package-2d.cjs / ResourceStage.tsx (active 2D)",
+    "activeConsumers": 0,
+    "decision": "Delete inactive renderer/importer/test copies; preserve user models and database history"
+  },
+  {
+    "file": "apps/pc-app/runtime/features/resources/legacy/smoke-3d.mjs.txt",
+    "sha256": "205ffd84cded4d52856c9273c1d1752440640012a389d009d610b8c1dcee18fd",
+    "bytes": 6582,
+    "previousCommit": "46abf416e0500b53ef32fc29b441d923ef5a6a80",
+    "replacement": "apps/pc-app/runtime/features/resources/history.cjs (read-only existing archive) / package-2d.cjs / ResourceStage.tsx (active 2D)",
+    "activeConsumers": 0,
+    "decision": "Delete inactive renderer/importer/test copies; preserve user models and database history"
+  }
+]
