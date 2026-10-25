@@ -131,7 +131,7 @@ async function contest(){
 }
 async function economy(){
   assert.ok(proof.economy);if(proof.economy.passed)return;
-  let current=await state(0),before=summary(current);if(current.serverTime<proof.economy.maturesAt){console.log(JSON.stringify({phase:'economy',pending:true,maturesAt:new Date(proof.economy.maturesAt).toISOString(),remainingMs:proof.economy.maturesAt-current.serverTime,evidence:file}));return;}
+  let current=await state(0),before=proof.economy.before||proof.after?.[0]||summary(current);if(current.serverTime<proof.economy.maturesAt){console.log(JSON.stringify({phase:'economy',pending:true,maturesAt:new Date(proof.economy.maturesAt).toISOString(),remainingMs:proof.economy.maturesAt-current.serverTime,evidence:file}));return;}proof.economy.before=before;save();
   const harvest=await action('riceHarvest',async()=>({actionId:`rice-harvest:${proof.runId}`,sessionOwnerAccountId:config.actors[0].ownerAccountId,expectedRevision:current.snapshot.revision,plotIds:['plot-3']}));
   const harvested=await call(0,'garden',{op:'command',command:'harvest',input:harvest});assert.equal(harvested.result.data.harvested[0].quantity,2);current=await state(0);
   const craft=await action('riceCraft',async()=>({actionId:`rice-craft:${proof.runId}`,sessionOwnerAccountId:config.actors[0].ownerAccountId,expectedRevision:current.snapshot.revision,recipeId:'cooked_rice',quantity:1}));
@@ -139,7 +139,7 @@ async function economy(){
   const target=current.snapshot.pets.find(p=>p.petId===proof.pets[0][0]),feed=await action('riceFeed',async()=>({actionId:(`rice-feed:${proof.runId}:`).padEnd(160,'x'),sessionOwnerAccountId:config.actors[0].ownerAccountId,expectedRevision:current.snapshot.revision,petId:target.petId,expectedPetRevision:target.revision,itemId:'cooked_rice',quantity:1}));
   const fed=await call(0,'garden',{op:'command',command:'feed',input:feed});assert.equal(fed.result.data.petId,target.petId);assert.equal(feed.actionId.length,160);assert.equal(fed.authorityReceiptId.length,71);const after=summary(fed.readback);
   assert.deepEqual(after.pets.filter(p=>p.petId!==target.petId),before.pets.filter(p=>p.petId!==target.petId));
-  const repeat=await call(2,'garden',{op:'command',command:'feed',input:feed});assert.equal(repeat.replayed,true);assert.equal(hash(summary(await state(0))),hash(after));await independentReceipt(2,fed.authorityReceiptId);
+  const repeat=await call(2,'garden',{op:'command',command:'feed',input:feed});assert.equal(repeat.replayed,true);assert.equal((await state(0)).envelope.checksum,fed.readback.envelope.checksum);await independentReceipt(2,fed.authorityReceiptId);
   proof.economy={...proof.economy,passed:true,finishedAt:new Date().toISOString(),actualElapsedMs:current.serverTime-proof.economy.startedAt,harvested:2,crafted:1,fedTo:target.petId,repeatAcrossDevice:true};proof.after=await Promise.all([0,1].map(async i=>summary(await state(i))));save();record('actual original25-minute maturity, harvest2, craft1 and feed same pet once, independently read by same-account other device');
 }
 async function negatives(){
