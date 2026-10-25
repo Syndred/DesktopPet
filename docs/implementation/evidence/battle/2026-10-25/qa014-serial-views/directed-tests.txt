@@ -1,0 +1,19 @@
+✔ trusted friend sides use owner+petId, preserve long text and ignore stored number fields; all result shapes are cloned (4.9838ms)
+✔ malformed viewer/room/side/template/decimal metadata never asserts peer authority (2.4919ms)
+✔ unregistered/failed peer metadata remains pending and is retried; raw metadata is not a transport source (0.9952ms)
+✔ reports batch at twenty, cap concurrency at two and never request an arbitrary peer actor (5.7083ms)
+✔ late lookup cannot return the old owner; account change clears room identity cache (1.7825ms)
+QA014_SQLITE {"queryOnly":true,"originalTablesSha256":"e7b2a71340117a12b85398be6400a01ab0942cc82178fa3fc5e5d8caec417b74","rawSessionSha256":"4a529f9356bdff906b1f6b08f42d8e98b1ecb0f0e48ee916eab1ec0fdea5ca33","rawReportSha256":"0ea20b5981757b31dabd99d38b4cc61d4b72e3f5014445e21e2aee3e870ad577","originalCommandSha256":"f5746bf31c5b4abb97d8ebd9520e795cc59421620ed4d34bc5bd05deb1b227c3","realCloud":false}
+✔ slow optional metadata does not hold a successful read and emits a later owner-bound refresh (12.6049ms)
+✔ training NPC is a practice role without an issued number; wild only consumes the trusted current-owner encounter cache (0.5955ms)
+✔ territory identities bind original session and both requested pets; null enemy never implies guardian (1.4412ms)
+✔ transport strips sibling metadata before core receipts; optional listener failure preserves the exact original response and request (0.9473ms)
+✔ actual Main IPC and pure companion read work under query_only and retain original SQLite session/report/receipt/archive bytes (41.2895ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 151.1816

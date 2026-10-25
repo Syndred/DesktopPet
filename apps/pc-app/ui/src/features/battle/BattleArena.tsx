@@ -13,6 +13,7 @@ import { battleAffinity, elements, petName, roundLines, statusLabel } from './pr
 import { BattleMoves, ElementMark } from './BattleMoves';
 import { BattlePhaseClock } from './BattlePhaseClock';
 import { useBattleAnimation } from './useBattleAnimation';
+import { ParticipantIdentity } from './identity';
 
 export function BattlePortrait({ pet, facing = 'right', small = false, action = 'idle', playing = true, playbackKey }: {
   pet: BattleParticipant; facing?: 'left' | 'right'; small?: boolean; action?: ResourceAction; playing?: boolean; playbackKey?: string;
@@ -42,7 +43,7 @@ export function CombatantStatus({ pet, actor, rules, enemy = false, waiting = fa
   if (pet.petId === 'waiting-peer') return <div className="combatant-status enemy battle-waiting-peer" aria-label={waiting ? '等待好友加入' : '对手未加入'}><UserRound size={34}/>{waiting ? <Clock3 size={17}/> : null}</div>;
   return <div className={`combatant-status ${enemy ? 'enemy' : ''}`} data-element={actor.element}>
     <div className="combatant-identity"><BattlePortrait pet={pet} small facing={enemy ? 'left' : 'right'}/><Tooltip><TooltipTrigger asChild><span className="combatant-level" tabIndex={0} aria-label={`Lv.${pet.level || 1} · ${elements[actor.element].label}系`}>Lv.{String(pet.level || 1).padStart(2, '0')}<ElementMark element={actor.element} size={15}/></span></TooltipTrigger><TooltipContent>{elements[actor.element].label} · {rules.elementEffects?.[actor.element]?.description || elements[actor.element].hint}</TooltipContent></Tooltip></div>
-    <div className="combatant-bars"><div className="combatant-title"><strong>{petName(pet)}</strong></div>
+    <div className="combatant-bars"><div className="combatant-title"><ParticipantIdentity pet={pet}/></div>
       <div className="battle-meter-row"><Heart size={11}/><progress aria-label={`${petName(pet)}生命`} max={actor.maxHp} value={actor.hp}/><b>{actor.hp}/{actor.maxHp}</b></div>
       <div className="battle-meter-row anger"><Zap size={11}/><progress aria-label={`${petName(pet)}怒气`} max={rules.maxAnger} value={actor.anger}/><b>{actor.anger}/{rules.maxAnger}</b></div>
       <div className="battle-statuses">{actor.statuses.map(status => <Tooltip key={status.type}><TooltipTrigger asChild><span className="battle-status-chip" tabIndex={0} aria-label={statusLabel(status)}><StatusIcon type={status.type}/>{(status.stacks || 1) > 1 ? <b>{status.stacks}</b> : null}<small>{status.duration}</small></span></TooltipTrigger><TooltipContent>{statusLabel(status)}</TooltipContent></Tooltip>)}</div>

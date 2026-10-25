@@ -1,0 +1,84 @@
+{
+  "format": "lingjing.battle.qa014.component-review",
+  "version": 1,
+  "checkedAt": "2026-10-25T14:40:52.289Z",
+  "runId": "c6565212-47bb-44bf-b843-eaac455b6158",
+  "passed": true,
+  "checkedCount": 6,
+  "sourceHead": "1346f07ac907a0a249d28e760077a98ab49da0c8",
+  "rawSessionSha256": "e6af47b7494dde8a41690e352011f65509b38b378ba471805e6db41542717321",
+  "nativeProductLaunched": false,
+  "nativeInputPerformed": false,
+  "realCloudVerified": false,
+  "fixtureBoundaries": [
+    "IPC transport",
+    "private metadata provider inputs",
+    "ResourceStage/ResourcePortrait pixels",
+    "application theme and layout shell not mounted",
+    "about:blank action UUID availability shim"
+  ],
+  "actualCss": [
+    "battle.css",
+    "battle-v3.css",
+    "identity.css"
+  ],
+  "checks": [
+    {
+      "id": "actual-both-HUD-identities",
+      "passed": true
+    },
+    {
+      "id": "unconfirmed-legacy-template-preserves-readable-historical-name",
+      "passed": true
+    },
+    {
+      "id": "long-decimal-wrap-and-unissued-practice-guardian",
+      "passed": true,
+      "widths": [
+        {
+          "text": "编号 900719925474099312345678901234567890123456789012345678901234567890",
+          "width": 180,
+          "scrollWidth": 180,
+          "whiteSpace": "normal"
+        },
+        {
+          "text": "陪练",
+          "width": 180,
+          "scrollWidth": 180,
+          "whiteSpace": "normal"
+        },
+        {
+          "text": "守卫",
+          "width": 180,
+          "scrollWidth": 180,
+          "whiteSpace": "normal"
+        },
+        {
+          "text": "编号 待同步",
+          "width": 180,
+          "scrollWidth": 180,
+          "whiteSpace": "normal"
+        }
+      ]
+    },
+    {
+      "id": "actual-report-list-detail-replay-identities",
+      "passed": true
+    },
+    {
+      "id": "report-view-does-not-enter-original-selection-command",
+      "passed": true,
+      "selectionPayload": {
+        "petId": "original-own-pet",
+        "actionId": "b4843413-dd5f-4ff2-8a23-29b8ae1816fa"
+      }
+    },
+    {
+      "id": "QA012-retains-current-session-after-serial-view-report",
+      "passed": true,
+      "sessionId": "online-d2511455-11dc-42ae-bde5-8aacdf8a13d3"
+    }
+  ],
+  "fullStageVisualAcceptance": false,
+  "verificationScope": "component DOM, identity label wrapping and actual report/navigation callbacks; not complete product appearance"
+}

@@ -1,0 +1,15 @@
+.battle-participant-identity { min-width: 0; max-width: 100%; }
+.battle-participant-identity > strong { display: block; overflow-wrap: anywhere; }
+.battle-identity-number,
+.battle-result-portraits .battle-identity-number {
+  display: block;
+  min-width: 0;
+  max-width: 100%;
+  color: var(--muted-foreground, #8191a8);
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 1.4;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+.battle-report-identities { min-width: 0; max-width: 100%; }

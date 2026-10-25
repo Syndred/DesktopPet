@@ -1,0 +1,249 @@
+{
+  "format": "lingjing.battle.qa012.directed-routing",
+  "checkedAt": "2026-10-25T14:41:03.892Z",
+  "runId": "85920166-32c3-4d8c-9c86-37f3fa45bd22",
+  "baseline": "51ec072294f819eea397ad3063fb59cd854a39b5",
+  "passed": true,
+  "checkedCount": 8,
+  "source": "apps/pc-app/ui/src/features/battle/index.tsx",
+  "sourceBlob": "40b9094acd4b7df224cd450c30251e2c0db0ac3c",
+  "sourceSha256": "90cfc37b73351c31176d13443b373433dc2fb9d0310d09a0cf060ac88b35f72c",
+  "fixtureBoundaries": [
+    "scripted IPC and in-memory session",
+    "arena/portrait rendering",
+    "friends panel content",
+    "reports panel content",
+    "CSS not rendered"
+  ],
+  "actualModules": [
+    "BattlePage/BattleLobby",
+    "BattleScreen toolbar",
+    "useBattleSession",
+    "request bridge",
+    "hash navigation",
+    "kit buttons and tabs"
+  ],
+  "nativeProductLaunched": false,
+  "nativeInputPerformed": false,
+  "originalQaProcessesTouched": false,
+  "realCloudVerified": false,
+  "pending": "09 native repeat on the next frozen candidate",
+  "checks": [
+    {
+      "id": "before-fix-reproduces-return-loop",
+      "passed": true,
+      "trace": [
+        "#/battle/session/battle-qa012-original-session",
+        "#/battle",
+        "#/battle/session/battle-qa012-original-session"
+      ],
+      "baseline": "51ec072294f819eea397ad3063fb59cd854a39b5"
+    },
+    {
+      "id": "training-return-stays-in-actionable-lobby",
+      "passed": true,
+      "path": "/battle",
+      "noParallelStartEntry": true
+    },
+    {
+      "id": "training-restores-same-session-and-reports-remain-accessible",
+      "passed": true,
+      "originalSession": "battle-qa012-original-session",
+      "snapshotSha256": "53a1c5a53e810939f18c81af37061f34c1d2e6226dd4cb6b4ec1891894abfafb",
+      "trace": [
+        "#/battle/session/battle-qa012-original-session",
+        "#/battle",
+        "#/battle/session/battle-qa012-original-session",
+        "#/battle",
+        "#/battle/reports",
+        "#/battle"
+      ],
+      "commands": [
+        {
+          "feature": "battle",
+          "command": "overview"
+        },
+        {
+          "feature": "battle",
+          "command": "snapshot",
+          "payload": {
+            "sessionId": "battle-qa012-original-session"
+          }
+        },
+        {
+          "feature": "battle",
+          "command": "context",
+          "payload": {
+            "sessionId": "battle-qa012-original-session"
+          }
+        },
+        {
+          "feature": "battle",
+          "command": "overview"
+        },
+        {
+          "feature": "battle",
+          "command": "context",
+          "payload": {
+            "sessionId": "battle-qa012-original-session"
+          }
+        },
+        {
+          "feature": "battle",
+          "command": "overview"
+        },
+        {
+          "feature": "battle",
+          "command": "snapshot",
+          "payload": {
+            "sessionId": "battle-qa012-original-session"
+          }
+        },
+        {
+          "feature": "battle",
+          "command": "context",
+          "payload": {
+            "sessionId": "battle-qa012-original-session"
+          }
+        },
+        {
+          "feature": "battle",
+          "command": "overview"
+        },
+        {
+          "feature": "battle",
+          "command": "context",
+          "payload": {
+            "sessionId": "battle-qa012-original-session"
+          }
+        }
+      ],
+      "noBattleWrites": true
+    },
+    {
+      "id": "friend-return-stays-in-actionable-lobby",
+      "passed": true,
+      "path": "/battle/friends",
+      "noParallelStartEntry": true
+    },
+    {
+      "id": "friend-restores-same-session-and-reports-remain-accessible",
+      "passed": true,
+      "originalSession": "battle-qa012-original-session",
+      "snapshotSha256": "0fdfc320fcb850794b69ca6485da1ec103b68e24afaf0d0c8cee3d7af595b1c9",
+      "trace": [
+        "#/battle/session/battle-qa012-original-session",
+        "#/battle/friends",
+        "#/battle/session/battle-qa012-original-session",
+        "#/battle/friends",
+        "#/battle/reports",
+        "#/battle"
+      ],
+      "commands": [
+        {
+          "feature": "battle",
+          "command": "overview"
+        },
+        {
+          "feature": "battle",
+          "command": "snapshot",
+          "payload": {
+            "sessionId": "battle-qa012-original-session"
+          }
+        },
+        {
+          "feature": "battle",
+          "command": "sync",
+          "payload": {
+            "sessionId": "battle-qa012-original-session"
+          }
+        },
+        {
+          "feature": "battle",
+          "command": "context",
+          "payload": {
+            "sessionId": "battle-qa012-original-session"
+          }
+        },
+        {
+          "feature": "battle",
+          "command": "overview"
+        },
+        {
+          "feature": "battle",
+          "command": "sync",
+          "payload": {
+            "sessionId": "battle-qa012-original-session"
+          }
+        },
+        {
+          "feature": "battle",
+          "command": "context",
+          "payload": {
+            "sessionId": "battle-qa012-original-session"
+          }
+        },
+        {
+          "feature": "battle",
+          "command": "overview"
+        },
+        {
+          "feature": "battle",
+          "command": "snapshot",
+          "payload": {
+            "sessionId": "battle-qa012-original-session"
+          }
+        },
+        {
+          "feature": "battle",
+          "command": "sync",
+          "payload": {
+            "sessionId": "battle-qa012-original-session"
+          }
+        },
+        {
+          "feature": "battle",
+          "command": "context",
+          "payload": {
+            "sessionId": "battle-qa012-original-session"
+          }
+        },
+        {
+          "feature": "battle",
+          "command": "overview"
+        },
+        {
+          "feature": "battle",
+          "command": "sync",
+          "payload": {
+            "sessionId": "battle-qa012-original-session"
+          }
+        },
+        {
+          "feature": "battle",
+          "command": "context",
+          "payload": {
+            "sessionId": "battle-qa012-original-session"
+          }
+        }
+      ],
+      "noBattleWrites": true
+    },
+    {
+      "id": "wild-context-return-preserved",
+      "passed": true,
+      "path": "/discovery",
+      "sessionUnchanged": true
+    },
+    {
+      "id": "territory-context-return-preserved",
+      "passed": true,
+      "path": "/garden",
+      "sessionUnchanged": true
+    },
+    {
+      "id": "no-active-session-keeps-normal-training-entry",
+      "passed": true
+    }
+  ]
+}

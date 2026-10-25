@@ -1,5 +1,6 @@
 import type { BattleParticipant, BattleRound, BattleRulesProfile, BattleStatus } from '../../../../../../packages/shared-types/src/features/battle';
 import type { ElementType } from '../../../../../../packages/shared-types/src/battle';
+import type { BattleParticipantView } from '../../../../../../packages/shared-types/src/features/battle/views';
 
 export const elements = {
   metal: { label: '金', symbol: '✦', color: '#a28a3e', hint: '易伤：受到的伤害每层 ×1.5' },
@@ -23,6 +24,8 @@ export function battleAffinity(player: ElementType, enemy: ElementType, rules: B
 export const statusLabel = (status: BattleStatus) => `${statusLabels[status.type] || status.type}${(status.stacks || 1) > 1 ? ` ×${status.stacks}` : ''} · ${status.duration} 回合`;
 export function petName(pet: BattleParticipant | undefined) {
   if (pet?.petId === 'waiting-peer') return '对手未加入';
+  const view = pet as Partial<BattleParticipantView> | undefined;
+  if (view?.displayIdentity?.roleName && view.displayIdentity.roleName !== '历史伙伴' && view.displayKind !== 'guardian') return view.displayIdentity.roleName;
   const name = pet?.petName as string | { zh: string } | undefined;
   return typeof name === 'object' ? name.zh : name || '伙伴';
 }

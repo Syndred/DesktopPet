@@ -1,12 +1,12 @@
 {
   "module": "battle",
-  "updatedAt": "2026-10-25T12:38:46.000Z",
-  "integrationBase": "51ec072294f819eea397ad3063fb59cd854a39b5",
+  "updatedAt": "2026-10-25T14:44:12.000Z",
+  "integrationBase": "1346f07ac907a0a249d28e760077a98ab49da0c8",
   "overallStatus": "fixed-awaiting-independent-qa",
   "completeUserAcceptancePassed": false,
   "upstream": {
     "fetched": true,
-    "fetchCheckedAt": "2026-10-25T12:34:45.000Z",
+    "fetchCheckedAt": "2026-10-25T14:44:12.000Z",
     "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086",
     "pullCommand": "git pull --ff-only origin main",
     "pullResult": "Already up to date"
@@ -163,6 +163,42 @@
         "09 在下一冻结候选完成训练一回合后点返回，确认停留对战中心且继续本场可操作。",
         "继续本场恢复相同 sessionId、回合、HP、怒气及原行动记录，不创建新对局或重复奖励。",
         "好友等待/进行中返回后可恢复同一房间，战报标签正常，野外与领地返回各自原页面。"
+      ]
+    },
+    {
+      "id": "QA-014",
+      "status": "fixed-awaiting-independent-qa",
+      "problem": "可信编号此前仅到己方大厅，双方HUD、好友对手与战报未展示编号。",
+      "branch": "codex/lingjing-battle-serial-views-20261025",
+      "viewBoundary": "Final Main IPC clones only; independent BattleParticipantView/SessionView/ReportView, no core BattleParticipant expansion.",
+      "changes": [
+        "己方身份由无导入/升级副作用的readIdentityPet读取08可信cache投影，公共helper格式化固定角色名和至少四位数字号。",
+        "好友对手由已鉴权房间serial-views sidecar绑定owner/room/side/pet；20房间分批、最大2并发、owner+room缓存，缺号/失败可重试。",
+        "房间与结算响应displayMetadata在传输层隔离，原成功响应及原命令参数不携带展示元数据。",
+        "野外只消费discovery主进程已验证读回；领地接入garden.getBattleSerialViews，namespace:null只允许全空身份及已验证NPC分类。",
+        "HUD、战报列表/详情/回放显示编号，长数字换行；未知模板保留原可读名字并待同步，陪练/系统守卫不领号。"
+      ],
+      "evidence": "docs/implementation/evidence/battle/2026-10-25/qa014-serial-views/review.json",
+      "verified": {
+        "directedBoundaryTests": { "passed": 10, "failed": 0, "realSQLiteQueryOnly": true },
+        "componentDomAndCssChecks": { "passed": 6, "failed": 0, "fullStageVisualAcceptance": false },
+        "qa012NavigationRegression": { "passed": 8, "failed": 0 },
+        "uiTypecheck": { "command": "npm run typecheck:ui", "exitCode": 0 },
+        "targetedLint": { "exitCode": 0 },
+        "rawCoreCommandAndPersistenceChanged": false,
+        "realCloudVerified": false,
+        "actualInputAcceptancePerformed": false,
+        "packageBuilt": false,
+        "fullSuiteRun": false
+      },
+      "integrationDependencies": [
+        "08 friend纯读RPC/Edge提交729929d86cbef2e5f4f95c53af09a6f1b66b82eb，由Root审核整合与部署。",
+        "05领地getBattleSerialViews provider及独立纯读RPC，由Root审核整合与部署。"
+      ],
+      "pendingIndependentQa": [
+        "Root完成08/05依赖整合及部署后，09以两个真实账号核对好友双方HUD及战报号码与各自可信编号一致。",
+        "09验证野外已observe号码、捕获后同号、领地历史守卫owner绑定，以及缺号待同步和陪练/守卫无实体号。",
+        "同一最终候选复验QA012返回/继续本场、原session及回执/奖励不变。"
       ]
     }
   ]

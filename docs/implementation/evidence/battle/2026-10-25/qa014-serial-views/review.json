@@ -1,0 +1,43 @@
+{
+  "format": "lingjing.battle.qa014.source-review",
+  "version": 1,
+  "base": "1346f07ac907a0a249d28e760077a98ab49da0c8",
+  "previousBranchHeadPreserved": "d3a5f2f48433e326a6d3e6cc50acba7e94bd21ee",
+  "branch": "codex/lingjing-battle-serial-views-20261025",
+  "upstream": { "command": "git fetch origin main; git pull --ff-only origin main", "result": "Already up to date.", "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086" },
+  "behavior": "Final Main IPC clones expose displayIdentity/displayKind; original battle core objects and all domain commands remain unchanged. Both HUDs and report list/detail/replay consume the view. Unknown role templates keep historical readable names and pending numbers.",
+  "trustedSources": {
+    "own": "companions.readIdentityPet -> service.readPet -> existing private global-serial cache project -> shared companionIdentity; no ensureImported/upgradeBuiltins side effects",
+    "friend": "08 get_display_metadata {roomIds}, maximum20 unique per batch, canonical actor/room/side/owner/pet binding, no peer actor impersonation",
+    "wild": "discovery CloudDiscoveryRuntime current-owner verified session cache; matching original session/player/spawn/template",
+    "territory": "05 garden.getBattleSerialViews with original challenge owner/pet binding; namespace:null only when every identity is null, optional proven guardian classification",
+    "practice": "existing immutable training opponent catalog and original training-element key; no issued instance number"
+  },
+  "safety": {
+    "sidecarCannotEnterOriginalReceipt": "OnlineDuelService.invokeCloud strips displayMetadata before returning the original core response and notifies only the separate Main view receiver.",
+    "failure": "Missing/invalid/offline metadata stays pending, no negative cache; optional lookup has a750ms response budget, bounded2 concurrent requests, later owner-bound UI refresh. Completed command success is retained; owner changes still reject stale results.",
+    "cache": "owner+room or owner+territory-session; cleared on account/session changes; old room revisions cannot erase newer confirmed identities",
+    "noInventedNumbers": "No UUID/legacy serial/raw stored globalSerial fallback; decimal strings are never converted to Number; unjoined peer and unissued practice/guardian are distinguished.",
+    "protectedSourceHashes": "scope.json"
+  },
+  "verification": [
+    { "command": "node --test --test-reporter=spec apps/pc-app/runtime/features/battle/tests/display-views.test.cjs", "passed": 10, "failed": 0, "evidence": "directed-tests.txt", "covers": "owner/pet collisions, malformed sidecars, missing metadata retry,20-room batching/two concurrency, account-switch rejection, delayed optional read, practice/wild/territory trust, response/request byte preservation, actual IPC and realSQLite query_only" },
+    { "command": "node docs/implementation/evidence/battle/2026-10-25/qa014-serial-views/verify-ui.cjs", "passed": 6, "failed": 0, "evidence": "ui-checks.json", "covers": "actual React HUD/report DOM, long-label CSS wrapping, unconfirmed old-name fallback, no issued practice/guardian number, report select payload, QA012 recovery" },
+    { "command": "node docs/implementation/evidence/battle/2026-10-25/qa012-return-lobby/verify-navigation.cjs", "passed": 8, "failed": 0, "evidence": "qa012-navigation-checks.json", "note": "The original historical QA012 evidence file was preserved; this run is recorded only in QA014 evidence." },
+    { "command": "npm run typecheck:ui", "exitCode": 0 },
+    { "command": "targeted ESLint on changed TS/TSX/CJS; existing CJS require rule exception only", "exitCode": 0 }
+  ],
+  "verificationLimits": {
+    "wireAndMetadataInputs": "scripted fixtures, not live cloud",
+    "resourcePixels": "explicit resource-render fixtures",
+    "fullStageVisualAcceptance": false,
+    "applicationThemeAndShellMounted": false,
+    "nativeProductLaunched": false,
+    "nativeInputPerformed": false,
+    "httpNumberAllocationPerformed": false,
+    "sqlOrEdgeDeploymentPerformed": false,
+    "fullSuiteRepeated": false
+  },
+  "requiredIntegration": ["08 friend service-only lookup/Edge sibling commit729929d86cbef2e5f4f95c53af09a6f1b66b82eb", "05 territory Main provider/read-only lookup"],
+  "pending": "Root integrates/deploys dependencies and freezes one candidate;09 independently verifies both real accounts, wild/territory numbers and final-package QA012. This source review does not mark native acceptance passed."
+}

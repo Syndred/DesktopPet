@@ -4,11 +4,13 @@ const { createBattleBackupAdapter } = require("./backup.cjs");
 const { registerBattleArt } = require("./assets.cjs");
 const { getBattleRules } = require('../../services/battle-runtime.cjs');
 const { presentSession } = require('./presentation.cjs');
+const { createBattleDisplayViews } = require('./display-views.cjs');
 
 module.exports = {
   id: "battle", migrations,
   register(services) {
     const service = new BattleFeatureService(services);
+    const displayViews = createBattleDisplayViews({ services, online: service.online, prepareOnline: owner => service.user(owner) });
     // Trusted domain authorities supply already committed sessions. The shared
     // commands/renderer/presenter remain unchanged; no local reward resolver is
     // called for an externally owned session.
@@ -52,11 +54,11 @@ module.exports = {
           }
           if (data?.snapshot) data = presentSession(data);
           else if (data?.session) data = { ...data, session: presentSession(data.session) };
-          return { ok: true, data };
+          return { ok: true, data: await displayViews.project(data, context.ownerAccountId) };
         }
         catch (error) { return { ok: false, code: error.code || "BATTLE_SERVICE_UNAVAILABLE", message: friendlyError(error) }; }
       };
     }
-    return { commands, dispose: () => { contextAuthorities.clear(); removeBackup?.(); service.dispose(); } };
+    return { commands, dispose: () => { displayViews.dispose(); contextAuthorities.clear(); removeBackup?.(); service.dispose(); } };
   }
 };

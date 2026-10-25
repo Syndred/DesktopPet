@@ -1,5 +1,5 @@
 const BATTLE_RULES = require('./battle-runtime.cjs').getBattleRules();
-﻿const { setTimeout: sleep } = require("node:timers/promises");
+const { setTimeout: sleep } = require("node:timers/promises");
 
 const { randomUUID } = require('node:crypto');
 
@@ -23,6 +23,7 @@ class OnlineDuelService {
     this.channelRoomId = null;
     this.subscriptionTask = null;
     this.listeners = new Set();
+    this.displayMetadataListeners = new Set();
     this.currentUser = null;
     this.room = null;
     this.side = null;
@@ -83,6 +84,11 @@ class OnlineDuelService {
     return () => {
       this.listeners.delete(listener);
     };
+  }
+
+  onDisplayMetadata(listener) {
+    this.displayMetadataListeners.add(listener);
+    return () => this.displayMetadataListeners.delete(listener);
   }
 
   emit(event, payload = {}) {
@@ -493,6 +499,15 @@ class OnlineDuelService {
     }
     const value = data?.ok === true ? data.data : data;
     if (!value || typeof value !== 'object') throw new Error('云端对战响应无效');
+    // Sidecar identity is main-process view data, never part of an original
+    // command result/receipt, room, session or saved envelope.
+    if (Object.hasOwn(value, 'displayMetadata')) {
+      const { displayMetadata, ...original } = value;
+      for (const listener of this.displayMetadataListeners) {
+        try { listener(displayMetadata, this.cloudActor.ownerAccountId); } catch { /* Optional view data cannot fail a committed command. */ }
+      }
+      return original;
+    }
     return value;
   }
 

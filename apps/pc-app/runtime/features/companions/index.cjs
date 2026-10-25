@@ -69,6 +69,8 @@ module.exports = {
         return pet;
       },
       getSelections(ownerAccountId) { return service.selections(ownerAccountId); },
+      // Main-only identity reads must not trigger legacy import/resource upgrades.
+      readIdentityPet(ownerAccountId, petId) { return service.readPet(ownerAccountId, petId); },
       getDisplayIdentity(ownerAccountId, petId) { return companionIdentity(api.getPet(ownerAccountId, petId)); },
       getCombatProfile(ownerAccountId, petId) { return companionCombatProfile(api.getPet(ownerAccountId, petId), services.get('battle')?.getRules()); },
       listTemplates() { return service.templates(); },

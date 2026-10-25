@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { BattleActionType } from '../../../../../../packages/shared-types/src/battle';
-import type { BattleContext, BattleParticipant, BattleReport, BattleRulesProfile, BattleSession } from '../../../../../../packages/shared-types/src/features/battle';
+import type { BattleContext, BattleParticipant, BattleRulesProfile } from '../../../../../../packages/shared-types/src/features/battle';
+import type { BattleReportView as BattleReport, BattleSessionView as BattleSession } from '../../../../../../packages/shared-types/src/features/battle/views';
 import type { CompanionDisplayIdentity } from '../../../../../../packages/shared-types/src/features/companions';
 import { request } from '../../app/bridge';
 import { reserveBattleAction, resolvedBattleAction, type BattleActionAttempt } from './action-intent';
@@ -36,6 +37,19 @@ export function useBattleSession(sessionId?: string) {
     const reset = () => { const next = ++generation.current; retry.current = null; setData(null); setSession(null); setContext(null); setBusy(false); void reload().catch(failure => { if (generation.current === next) setError(failure.message); }); };
     const stop = window.lingjing?.subscribe('app:session', reset);
     return () => { generation.current++; stop?.(); };
+  }, [reload]);
+  useEffect(() => {
+    let alive = true, timer: number | undefined;
+    const refreshIdentity = () => {
+      if (!alive) return;
+      if (processing.current || syncing.current) { timer = window.setTimeout(refreshIdentity, 100); return; }
+      void reload().catch(() => { /* Optional identity refresh keeps the current battle usable. */ });
+    };
+    const stop = window.lingjing?.subscribe('battle:online', value => {
+      if ((value as { type?: string }).type !== 'display-identities') return;
+      window.clearTimeout(timer); timer = window.setTimeout(refreshIdentity, 100);
+    });
+    return () => { alive = false; window.clearTimeout(timer); stop?.(); };
   }, [reload]);
   const run = useCallback(async <T,>(task: () => Promise<T>): Promise<T | undefined> => {
     if (processing.current) return;
