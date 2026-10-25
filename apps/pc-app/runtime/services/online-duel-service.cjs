@@ -56,6 +56,8 @@ class OnlineDuelService {
 
     this.client = null;
     this.channel = null;
+    this.channelRoomId = null;
+    this.subscriptionTask = null;
     this.listeners = new Set();
     this.currentUser = null;
     this.room = null;
@@ -274,7 +276,7 @@ class OnlineDuelService {
       ...(options.beforeRound ? { beforeRound: options.beforeRound } : {})
     });
 
-    const needsSubscription = !this.channel || this.room?.id !== response.room?.id || ['closed','errored'].includes(this.channel.state);
+    const needsSubscription = !this.channel || this.channelRoomId !== response.room?.id || !['joined', 'joining'].includes(this.channel.state);
     this.applyRoom(response.room);
     this.cacheRounds(response.rounds);
     if (needsSubscription && this.side) await this.subscribeRoom();
@@ -676,17 +678,39 @@ class OnlineDuelService {
   }
 
   async subscribeRoom() {
+    // UI sync and round readback can overlap after a socket reconnect. Serialize
+    // channel replacement, then recheck state so one subscriber cannot remove
+    // another subscriber's newly joined channel.
+    const generation = this.authGeneration, roomId = this.requireRoom().id;
+    const previous = this.subscriptionTask || Promise.resolve();
+    const task = previous.catch(() => {}).then(() => this.ensureRoomSubscription(roomId, generation));
+    this.subscriptionTask = task;
+    try { await task; }
+    finally { if (this.subscriptionTask === task) this.subscriptionTask = null; }
+  }
+
+  async ensureRoomSubscription(roomId, generation) {
     this.ensureEnabled();
     if (this.cloudProvider) await this.refreshCloudTransport();
     const room = this.requireRoom();
+    const assertCurrent = () => {
+      if (generation !== this.authGeneration) throw Object.assign(new Error('账号已切换'), { code: 'AUTH_CHANGED' });
+      if (this.room?.id !== roomId) throw Object.assign(new Error('对战房间已变化'), { code: 'ROOM_CHANGED' });
+    };
+    assertCurrent();
+    if (this.channelRoomId === roomId && ['joined', 'joining'].includes(this.channel?.state)) return;
+    const client = this.client;
 
     if (this.channel) {
+      const old = this.channel;
+      this.channel = null;
+      this.channelRoomId = null;
       try {
-        await this.client.removeChannel(this.channel);
+        await client.removeChannel(old);
       } catch {
         // ignore
       }
-      this.channel = null;
+      assertCurrent();
     }
 
     const channelName = this.cloudProvider ? `lingjing:battle:${room.id}` : `duel-room-${room.id}`;
@@ -734,9 +758,10 @@ class OnlineDuelService {
     );
 
     this.channel = channel;
-    channel.subscribe((status) => {
+    this.channelRoomId = roomId;
+    channel.subscribe((status, error) => {
       if (!isCurrent()) return;
-      this.emit("realtime-status", { status, roomId: room.id });
+      this.emit("realtime-status", { status, roomId: room.id, reason: typeof error?.message === 'string' ? error.message.replace(/eyJ[A-Za-z0-9_.-]+/g, '[redacted]').slice(0, 200) : null });
     });
   }
 

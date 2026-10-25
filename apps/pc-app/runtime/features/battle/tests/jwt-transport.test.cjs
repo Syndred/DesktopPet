@@ -35,3 +35,11 @@ test('SCRIPTED SDK lifecycle: a real-sync path replaces a closed private channel
   const f=fixture();await f.online.createRoom({actionId:'reconnect-original-room',petId:'pet'});const old=f.online.channel;old.state='closed';
   const value=await f.online.syncRoom({roomId:f.room.id});assert.equal(old.removed,true);assert.notEqual(f.online.channel,old);assert.equal(f.online.channel.state,'joined');assert.equal(f.online.channel.name,`lingjing:battle:${f.room.id}`);assert.equal(value.pendingAction.actionId,'original-action');assert.deepEqual(f.online.channel.config,{config:{private:true}});
 });
+
+test('SCRIPTED SDK lifecycle: overlapping readbacks replace a disconnected subscription once and never remove its replacement',async()=>{
+  const f=fixture();await f.online.createRoom({actionId:'concurrent-reconnect',petId:'pet'});const old=f.online.channel;old.state='leaving';
+  let release,removes=0;f.client.removeChannel=channel=>{removes++;assert.equal(channel,old);return new Promise(resolve=>{release=()=>{channel.removed=true;resolve();};});};
+  const first=f.online.syncRoom({roomId:f.room.id}),second=f.online.syncRoom({roomId:f.room.id});
+  for(let n=0;n<20&&!release;n++)await new Promise(resolve=>setImmediate(resolve));assert.ok(release);release();
+  const results=await Promise.all([first,second]);assert.equal(removes,1);assert.equal(f.channels.length,2);assert.equal(f.online.channel,f.channels[1]);assert.equal(f.online.channel.removed,undefined);assert.equal(f.online.channel.state,'joined');assert.ok(results.every(value=>value.pendingAction.actionId==='original-action'));
+});

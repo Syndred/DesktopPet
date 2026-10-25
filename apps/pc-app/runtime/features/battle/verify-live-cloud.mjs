@@ -46,7 +46,7 @@ const {OnlineDuelService}=require('./apps/pc-app/runtime/services/online-duel-se
 const servicesModule=require('./apps/pc-app/runtime/core/services.cjs'),createServices=servicesModule.createServices;
 servicesModule.createServices=options=>{const services=createServices(options);globalThis.__liveBattleServices=services;return services;};
 const subscribe=OnlineDuelService.prototype.subscribeRoom;
-OnlineDuelService.prototype.subscribeRoom=async function(...args){globalThis.__liveBattle=this;return subscribe.apply(this,args);};
+OnlineDuelService.prototype.subscribeRoom=async function(...args){globalThis.__liveBattle=this;if(!this.__acceptanceObserved){this.__acceptanceObserved=true;this.onEvent(event=>{if(event.type==='realtime-status'){globalThis.__liveBattleStatuses??=[];globalThis.__liveBattleStatuses.push(event);}});}return subscribe.apply(this,args);};
 require('./apps/pc-app/dist/main/index.cjs');
 `);
 const apps=new Map(),profiles={},errors=[],steps=[];
@@ -81,7 +81,8 @@ async function connection(client) {
 }
 async function joined(client) {
   let state;for(let attempt=0;attempt<60;attempt++){state=await connection(client);if(state.socket==='open'&&state.channel==='joined')return state;await new Promise(resolve=>setTimeout(resolve,250));}
-  assert.fail(`Real private Realtime channel did not join: ${JSON.stringify(state)}`);
+  const events=await client.app.evaluate(()=>globalThis.__liveBattleStatuses?.slice(-10)||[]);
+  assert.fail(`Real private Realtime channel did not join: ${JSON.stringify({state,events})}`);
 }
 async function pendingAction(client,sessionId,roundNo) {
   for(let attempt=0;attempt<150;attempt++){const value=await api(client.page,'battle','snapshot',{sessionId});if(value.pendingAction?.roundNo===roundNo)return value;await client.page.waitForTimeout(200);}
