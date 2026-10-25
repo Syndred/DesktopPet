@@ -145,7 +145,7 @@
     }
   ],
   "remaining": [],
-  "stage": "portable_journal_gap_fixed_locally; source_checkpoint_ready_for_coordinator_integration",
+  "stage": "journal_correction_integrated_by_coordinator; final_affected_regression_and_rebuilt_SFX_pending",
   "productionReady": false,
   "readyForCoordinatorDeployment": false,
   "serverBundle": {
@@ -188,11 +188,11 @@
   },
   "sourceCheckpoint": "c82380fc9f9535bfe9fa37f87dbf08c6e24d2eca",
   "coordinatorRemaining": [
-    "integrate private cloud-preview restore provenance hook",
-    "targeted native regression and actual SFX revalidation"
+    "final affected native regressions",
+    "01 rebuilt actual SFX verification"
   ],
   "moduleAcceptanceComplete": false,
-  "productionReadinessReason": "A later actual integrated SFX exposed a journal/protected-snapshot contract gap. Local correction and directed upgrade tests passed; coordinator must repackage and revalidate the actual SFX.",
+  "productionReadinessReason": "Coordinator reports source and private-preview-hook integration plus16 passing targeted checks; actual rebuilt SFX remains pending.",
   "readyForCoordinatorMerge": true,
   "readyForCoordinatorAcceptance": true,
   "upstream": {
@@ -219,8 +219,8 @@
     "localAtomicAuthorityChecks": 9,
     "rootPrivatePreviewHook": "695007e4c7bf583673f63b5d39e4172a28b2d692",
     "coordinatorNext": [
-      "integrate private cloud-preview restore provenance hook",
-      "targeted native regression and actual SFX revalidation"
+      "final affected native regressions",
+      "01 rebuilt actual SFX verification"
     ],
     "files": {
       "upgrade-copies.json": "b4667bfac7ca87ad374d6fa3b4d58ba6080cdfc72fbc2df16d14d36ecdf004bf",
@@ -232,6 +232,28 @@
     "evidence": "docs/implementation/evidence/battle/2026-10-25/portable-journal-gap/README.md",
     "rootCause": "Local durable start/round intents were serialized as protected battle.actions; post-readback resolve used local cache revisions.",
     "boundary": "local v2 complete history+journal; strict cloud v1 four-array snapshot; byte-bound main-only origin/readback seals; v1/v2 file input is never authority",
-    "originalPortableFailure": "A settlement did not settle"
-  }
+    "originalPortableFailure": "A settlement did not settle",
+    "coordinatorIntegration": {
+      "recordedAt": "2026-10-25T06:49:44.635Z",
+      "source": "coordinator delegation from01a1704b-e200-7090-9d17-958218c80f42",
+      "independentlyRerunByThisChat": false,
+      "mergedSource": [
+        "8c3fb94",
+        "c82380f"
+      ],
+      "privatePreviewHook": "695007e4c7bf583673f63b5d39e4172a28b2d692",
+      "targetedCasesPassed": 16,
+      "verifiedRoute": "BackupManager private preview map -> battle.restoreCloud -> AccountSync.acceptCloudRestore",
+      "fileAndInputClaimsStayDirty": true,
+      "verifiedMainMetadataCanClean": true,
+      "originalRawBytesPreserved": true,
+      "newActualSfxPassed": false,
+      "pending": [
+        "final affected native regressions",
+        "01 rebuilt actual SFX verification"
+      ]
+    },
+    "upgradedCopiesManifest": "docs/implementation/evidence/battle/2026-10-25/portable-journal-gap/upgrade-copy-locations.json"
+  },
+  "sourceMergeComplete": true
 }
