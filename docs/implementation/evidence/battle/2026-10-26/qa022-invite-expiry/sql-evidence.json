@@ -1,0 +1,50 @@
+{
+  "at": "2026-10-25T21:30:40.619Z",
+  "provenance": "isolated-embedded-PostgreSQL-with-test-only-clock",
+  "liveCloudVerified": false,
+  "nativeFiveMinuteAcceptance": false,
+  "multiConnectionLockRaceVerified": false,
+  "migration": "20261025211937_lingjing_battle_invite_expiry.sql",
+  "checks": [
+    "migration preserves every original legacy field, status, timestamp, room, membership and command/receipt value; expiry is null",
+    "server-time polling and resend do not impose a deadline on legacy pending invitations; ordinary legacy acceptance still works",
+    "new invitations use exactly server creation plus five minutes; valid resend, retry and reverse send cannot renew or duplicate the pending invite",
+    "at exact deadline server list shows expired, acceptance is rejected atomically, polling is read-only, and original action returns its unchanged result",
+    "only a new business action creates a fresh invitation; before-deadline acceptance stays accepted and reuses its room after the deadline",
+    "time crossing during membership insertion rolls back room/member/command; room-code join cannot bypass an expired pending invitation",
+    "new read RPC and receipt replay retain service-only invoker/fresh-actor checks; foreign history, terminal legacy rows and reward/round tables stay intact"
+  ],
+  "functions": [
+    {
+      "nspname": "public",
+      "proname": "lingjing_battle_command",
+      "prosecdef": false,
+      "proconfig": [
+        "search_path=\"\""
+      ],
+      "authenticated": false,
+      "anon": false
+    },
+    {
+      "nspname": "lingjing_private",
+      "proname": "battle_invite_now",
+      "prosecdef": false,
+      "proconfig": [
+        "search_path=\"\""
+      ],
+      "authenticated": false,
+      "anon": false
+    },
+    {
+      "nspname": "public",
+      "proname": "lingjing_battle_list_invites",
+      "prosecdef": false,
+      "proconfig": [
+        "search_path=\"\""
+      ],
+      "authenticated": false,
+      "anon": false
+    }
+  ],
+  "passed": true
+}

@@ -7,7 +7,8 @@ const uuid=value=>typeof value==='string'&&/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}
 const messages={INVALID_CREDENTIALS:'账号或密码不正确。',INVALID_OLD_PASSWORD:'当前密码不正确。',ACCOUNT_EXISTS:'账号已存在。',
   SYNC_CONFLICT:'云端已有较新存档，原存档和待同步记录已保留，请先预览。',ACTION_ID_REUSED:'操作标识已经用于不同的内容。',
   PROTECTED_STATE_REQUIRES_AUTHORITY:'原始本地进度需要可信来源核验，已保留原档。',PROTECTED_STATE_MISMATCH:'云端玩法数据已更新，请先读回。',
-  AUTH_RATE_LIMITED:'尝试过于频繁，请稍后重试。',SESSION_INVALIDATED:'此设备登录已失效，请重新登录。'};
+  AUTH_RATE_LIMITED:'尝试过于频繁，请稍后重试。',SESSION_INVALIDATED:'此设备登录已失效，请重新登录。',
+  INVITE_EXPIRED:'邀请已过期，请重新发起对战。'};
 function failure(code,message){return new AccountError(code,messages[code]||message||'云端请求未完成，原数据已保留。');}
 
 function publicConfig({env=process.env,resourcesPath=process.resourcesPath,sourcePath=join(__dirname,'../../../../../config/lingjing-cloud-public.json')}={}){

@@ -35,7 +35,7 @@ module.exports = {
       settleTerritoryChallenge: input => service.settleTerritoryChallenge(input)
     });
     const commands = {};
-    const names = ["overview", "rules", "context", "settleContext", "selectPet", "startTraining", "snapshot", "act", "retryAction", "search", "invitations", "invite", "respondInvite", "cancelInvite", "createRoom", "joinRoom", "sync", "leave", "listReports", "getReport", "retrySettlement"];
+    const names = ["overview", "rules", "context", "settleContext", "selectPet", "startTraining", "snapshot", "act", "retryAction", "search", "invitations", "pendingInvitations", "invite", "respondInvite", "cancelInvite", "createRoom", "joinRoom", "sync", "leave", "listReports", "getReport", "retrySettlement"];
     if (service.qa) names.push('qaPreset');
     for (const name of names) {
       commands[name] = async (payload = {}, context) => {

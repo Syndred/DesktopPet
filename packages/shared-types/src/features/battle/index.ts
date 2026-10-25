@@ -71,11 +71,15 @@ export interface BattleReport {
   rules?: BattleRulesProfile;
 }
 export interface DuelUser { id: string; account: string; username: string }
+/** Main-process read view of unresolved local invite transport; never auto-replayed. */
+export interface DuelInvitationAttempt { actionId: string; targetAccount: string; allowResend: boolean }
 export interface DuelInvitation {
   id: string; fromUserId: string; fromAccount: string; toUserId: string; toAccount: string;
-  status: "pending" | "accepted" | "rejected" | "cancelled";
+  status: "pending" | "accepted" | "rejected" | "cancelled" | "expired";
   roomId?: string | null; roomCode?: string | null; roomStatus?: string | null;
   createdAt: string; updatedAt: string;
+  /** Server-owned deadline. Missing/null is a legacy invitation with no expiry. */
+  expiresAt?: string | null;
 }
 export interface BattleFeatureAdapter {
   getRules(): BattleRulesProfile;

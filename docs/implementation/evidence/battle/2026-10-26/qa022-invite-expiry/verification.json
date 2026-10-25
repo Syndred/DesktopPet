@@ -1,0 +1,161 @@
+{
+  "at": "2026-10-25T21:40:50.566Z",
+  "scope": "QA022 preparation only; collected from completed targeted runs",
+  "base": "32b62eb560e886f3131666afe908c37c64b5a587",
+  "branch": "codex/lingjing-battle-invite-expiry-qa022-20261026",
+  "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086",
+  "cloudMainPulled": "Already up to date",
+  "checks": [
+    {
+      "command": "node --test apps/pc-app/runtime/features/battle/tests/invite-expiry-sql.test.mjs",
+      "passed": 1,
+      "scope": "isolated PostgreSQL actual migrations; test-only private clock",
+      "businessGroups": 7
+    },
+    {
+      "command": "node --test apps/pc-app/runtime/features/battle/tests/cloud-battle-sql.test.mjs",
+      "passed": 1,
+      "scope": "actual PostgreSQL with QA022 migration; eight rounds and two settlement receipts"
+    },
+    {
+      "command": "node --test apps/pc-app/runtime/features/battle/tests/transport-journal.test.cjs",
+      "passed": 11,
+      "scope": "real SQLite; scripted wire; original/new action and backup preservation"
+    },
+    {
+      "command": "node scripts/desktop/run-native-tests.cjs apps/pc-app/runtime/features/battle/tests/friend-lifecycle.test.cjs",
+      "passed": 12,
+      "scope": "Electron RUN_AS_NODE only; real SQLite/disk; scripted wire"
+    },
+    {
+      "command": "Deno 2.9.6 test --no-config --node-modules-dir=none --lock=infra/supabase/functions/_shared/deno.lock --frozen --no-prompt infra/supabase/functions/lingjing-battle/handler.test.ts",
+      "passed": 4,
+      "scope": "scripted Edge boundary"
+    },
+    {
+      "command": "node artifacts/qa/qa022-invite-expiry/verify-ui.mjs",
+      "groups": 4,
+      "scope": "isolated-real-React-component-with-scripted-IPC-and-portrait-boundary"
+    },
+    {
+      "command": "npm run typecheck:ui",
+      "passed": true
+    },
+    {
+      "command": "eslint FriendsPanel.tsx packages/shared-types/src/features/battle/index.ts",
+      "passed": true
+    },
+    {
+      "command": "node scripts/cloud/check-migrations.mjs",
+      "passed": true,
+      "deployed": 25,
+      "pendingReview": 1
+    },
+    {
+      "command": "node scripts/battle/build-cloud.mjs --check",
+      "passed": true
+    },
+    {
+      "command": "node --check (modified runtime CJS files)",
+      "passed": true
+    },
+    {
+      "command": "git diff --check",
+      "passed": true
+    }
+  ],
+  "unchanged": [
+    {
+      "path": "apps/pc-app/runtime/services/battle-runtime.cjs",
+      "normalizedSha256": "add99b96ef7531150ad440707c4a0c251d69f2c1dd5b6b4b3aa4929f77daa38e",
+      "sameAsBase": true
+    },
+    {
+      "path": "apps/pc-app/runtime/features/battle/core.generated.cjs",
+      "normalizedSha256": "65d80a286f749bbbf06a763a66992ded08927696dfd43baca5b39025e3021edb",
+      "sameAsBase": true
+    },
+    {
+      "path": "apps/pc-app/runtime/features/battle/backup.cjs",
+      "normalizedSha256": "945fe6a775077b5c94d9339a41f132ae83af595a48e6996de1a48a25cc964095",
+      "sameAsBase": true
+    },
+    {
+      "path": "apps/pc-app/ui/src/features/battle/BattleScreen.tsx",
+      "normalizedSha256": "eaef32cef25829e13bd4b2bf73bc9ac2c8c726226c2a5dc978eca7d6c3b9b40f",
+      "sameAsBase": true
+    },
+    {
+      "path": "apps/pc-app/ui/src/features/battle/battle.css",
+      "normalizedSha256": "88e15a6b16512125519703e6a5e133c4325ed9ea50b529e772e576c4bd050834",
+      "sameAsBase": true
+    },
+    {
+      "path": "apps/pc-app/ui/src/features/battle/battle-v3.css",
+      "normalizedSha256": "ce7321530372a9005fcb02989475181da69b1c1b0c0ad3b76446b2db5982accb",
+      "sameAsBase": true
+    },
+    {
+      "path": "packages/shared-types/src/battle.ts",
+      "normalizedSha256": "71b08832725ca48ae7106951c3237131302448be3e5e2b2c049178da04aa7376",
+      "sameAsBase": true
+    },
+    {
+      "path": "infra/supabase/functions/_shared/battle-core.js",
+      "normalizedSha256": "67225069e3542668b6c7316e4f35a545cb3892754ca1fb3af8efd3c2bef3e885",
+      "sameAsBase": true
+    },
+    {
+      "path": "infra/supabase/functions/lingjing-battle/room-core.js",
+      "normalizedSha256": "ff11c8793f10363b10b1e701770f35c0f1caea9d8da4d913baed651ec72f679e",
+      "sameAsBase": true
+    },
+    {
+      "path": "infra/supabase/functions/lingjing-battle/settlement.js",
+      "normalizedSha256": "1df31d1d372b0611281f35e7d691af58000e3ee9100f226d3a3f5b69cfc2fbe2",
+      "sameAsBase": true
+    },
+    {
+      "path": "infra/supabase/functions/lingjing-battle/authority.ts",
+      "normalizedSha256": "c8a1f70d1142513093f6d7288cf5e95ecad3c5f2e5ba4d246057733b13b2c78d",
+      "sameAsBase": true
+    },
+    {
+      "path": "infra/supabase/migrations/20261025034744_lingjing_battle_jwt_rooms.sql",
+      "normalizedSha256": "93f1908ac7f8878a0cc8beced8fb0dc4d05a3c835db90dac2bff59ba97e7a216",
+      "sameAsBase": true
+    },
+    {
+      "path": "infra/supabase/migrations/20261025115122_lingjing_global_pet_serials.sql",
+      "normalizedSha256": "a908e5479b0b47f071f49559da2d4c71adb62a05ca6c96349f79f72741b68356",
+      "sameAsBase": true
+    },
+    {
+      "path": "package.json",
+      "normalizedSha256": "db1b8c108a0f6c6381fe5a885da0f8eb8abd6457e0d0dc83a9930b903f5d1355",
+      "sameAsBase": true
+    },
+    {
+      "path": "package-lock.json",
+      "normalizedSha256": "e195cb9811a73f4044b7b3ff1cc4202ae3f1adff5d761c79c1a2e50f8a0d206b",
+      "sameAsBase": true
+    }
+  ],
+  "sqlActionAndLeaveTailUnchanged": true,
+  "ownedPetMethodUnchanged": true,
+  "constraints": {
+    "cloudApplied": false,
+    "edgeDeployed": false,
+    "productStarted": false,
+    "qaInputDriven": false,
+    "realDataOrClockChanged": false,
+    "sharedDependenciesInstalledOrRebuilt": false,
+    "packaged": false,
+    "pushed": false
+  },
+  "remaining": [
+    "live deployed HTTPS and multi-connection contention",
+    "native new-candidate invitation with natural five-minute wait"
+  ],
+  "passed": true
+}

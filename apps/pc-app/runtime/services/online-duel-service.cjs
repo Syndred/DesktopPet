@@ -951,7 +951,8 @@ function normalizeRuntimeDuelRequest(input) {
     roomCode: normalizeRoomCode(input.roomCode),
     roomStatus: normalizeRuntimeRoomStatus(input.roomStatus),
     createdAt: normalizeString(input.createdAt) || null,
-    updatedAt: normalizeString(input.updatedAt) || null
+    updatedAt: normalizeString(input.updatedAt) || null,
+    ...(Object.hasOwn(input,'expiresAt')?{expiresAt:normalizeString(input.expiresAt)||null}:{})
   };
 }
 

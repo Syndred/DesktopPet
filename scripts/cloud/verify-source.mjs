@@ -92,6 +92,7 @@ const tests = [
   'apps/pc-app/runtime/features/discovery/tests/cloud-runtime.test.mjs',
   'apps/pc-app/runtime/features/discovery/tests/global-serial.test.mjs',
   'apps/pc-app/runtime/features/battle/tests/cloud-battle-sql.test.mjs',
+  'apps/pc-app/runtime/features/battle/tests/invite-expiry-sql.test.mjs',
   'apps/pc-app/runtime/features/battle/tests/serial-views-sql.test.mjs',
   'apps/pc-app/runtime/features/battle/tests/authority-save.test.mjs',
   'apps/pc-app/runtime/features/battle/tests/trusted-pet.test.mjs',

@@ -18,7 +18,16 @@ function ownedRoom(room,owner,petId){
   return Boolean(side&&(!petId||room[`${side}_pet_id`]===petId));
 }
 function ownedSession(session,owner){return subset(session,SESSION_KEYS)&&session.context?.authority==='supabase'&&session.context.cloudUserId===owner&&['training','friend'].includes(session.mode)&&string(session.id)&&Number.isSafeInteger(session.snapshot?.round);}
-function requestResult(result,owner){return result===null||subset(result,['ok','resent','retryAfterSeconds','error','request'])&&typeof result.ok==='boolean'&&(!result.request||keys(result.request,['id','fromUserId','fromAccount','toUserId','toAccount','status','roomId','roomCode','roomStatus','createdAt','updatedAt'])&&['id','fromUserId','fromAccount','toUserId','toAccount'].every(key=>string(result.request[key]))&&[result.request.fromUserId,result.request.toUserId].includes(owner));}
+function requestResult(result,owner){
+  if(result===null)return true;
+  if(!subset(result,['ok','resent','retryAfterSeconds','error','request'])||typeof result.ok!=='boolean')return false;
+  const invitation=result.request;if(!invitation)return true;
+  const fields=['id','fromUserId','fromAccount','toUserId','toAccount','status','roomId','roomCode','roomStatus','createdAt','updatedAt'];
+  // Accept both the exact old shape and the optional nullable deadline. Unknown
+  // metadata and foreign-owner rows remain protected by the original boundary.
+  return (keys(invitation,fields)||keys(invitation,[...fields,'expiresAt'])&&(invitation.expiresAt===null||string(invitation.expiresAt)))
+    &&['id','fromUserId','fromAccount','toUserId','toAccount'].every(key=>string(invitation[key]))&&[invitation.fromUserId,invitation.toUserId].includes(owner);
+}
 function commandInput(type,input){
   const shapes={'training-start':['petId','enemyElement'],'training-leave':['sessionId'],invite:['targetAccount'],create:['petId'],join:['roomCode','petId'],leave:['roomId'],reject:['requestId'],cancel:['requestId'],'accept-confirm':['requestId','roomId','roomCode','roomStatus']};
   const modernInvite=type==='invite'&&keys(input,['targetAccount','allowResend'])&&string(input.targetAccount)&&typeof input.allowResend==='boolean';

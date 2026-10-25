@@ -7,7 +7,7 @@ const {DatabaseSync}=require('node:sqlite');
 const {createBattleBackupAdapter}=require('../backup.cjs');
 const {BattleStore}=require('../store.cjs');
 const {BattleFeatureService}=require('../service.cjs');
-const {upgradeTransportJournal,rowBytes}=require('../transport-journal.cjs');
+const {upgradeTransportJournal,rowBytes,transportRow}=require('../transport-journal.cjs');
 const {BackupManager}=require('../../accounts/backups.cjs');
 const {AccountSync}=require('../../accounts/sync.cjs');
 const {checksum}=require('../../accounts/util.cjs');
@@ -33,6 +33,42 @@ function legacy(f){
   for(let n=1;n<=2;n++){f.store.reserve(owner,'round-'+n,id,{action:'element_attack',roundNo:n});f.store.resolve(owner,'round-'+n,{id,revision:n*2+1,snapshot:{round:n}});}
   const original=f.db.prepare('SELECT action_id,session_id,command_json,result_json FROM battle_action_receipts').all();upgradeTransportJournal(f.db,owner);return original;
 }
+
+test('real SQLite / scripted wire: a new invitation click preserves the unresolved original action and nullable-deadline transport through backup restore',async()=>{
+  const f=fixture(),restored=fixture();try{
+    const calls=[],oldId='invite-uncertain-original',newId='invite-new-business-click';
+    const request={id:'50000000-0000-4000-8000-000000000022',fromUserId:owner,fromAccount:'journal',toUserId:'other-owner',toAccount:'other',status:'pending',roomId:null,roomCode:null,roomStatus:null,createdAt:'2031-01-02T03:04:05Z',updatedAt:'2031-01-02T03:04:05Z',expiresAt:'2031-01-02T03:09:05Z'};
+    const service=Object.assign(Object.create(BattleFeatureService.prototype),{store:f.store,locks:new Map(),owner:()=>owner,verifiedOwner:()=>owner,user:()=>({id:owner}),ownedPet:()=>({petId}),isCloud:()=>true,online:{sendDuelRequest:async input=>{calls.push(input);if(input.actionId===oldId)throw new Error('SCRIPTED_RESPONSE_LOST');return{ok:true,request};}}});
+    await assert.rejects(service.invite({targetAccount:'other',petId,actionId:oldId},{}),/SCRIPTED_RESPONSE_LOST/);
+    const original=plain(f.db.prepare('SELECT * FROM battle_transport_journal WHERE action_id=?').get(oldId));
+    assert.equal(original.result_json,null);
+    assert.deepEqual(service.pendingInvitations({},{}),[{actionId:oldId,targetAccount:'other',allowResend:false}]);
+    assert.deepEqual(f.store.unconfirmedInvites('foreign-owner'),[]);assert.equal(calls.length,1,'Reading pending requests never sends them');
+    await assert.rejects(service.invite({targetAccount:'other',petId,actionId:oldId},{}),/SCRIPTED_RESPONSE_LOST/);
+    await assert.rejects(service.invite({targetAccount:'other',petId},{}),/SCRIPTED_RESPONSE_LOST/);
+    assert.deepEqual(await service.invite({targetAccount:'other',petId,actionId:newId},{}),request);
+    assert.deepEqual(calls.map(input=>input.actionId),[oldId,oldId,oldId,newId]);
+    assert.deepEqual(await service.invite({targetAccount:'other',petId,actionId:newId},{}),request);
+    assert.equal(calls.length,4,'Replaying a committed original id returns its result without creating another action');
+    assert.deepEqual(plain(f.db.prepare('SELECT * FROM battle_transport_journal WHERE action_id=?').get(oldId)),original);
+    const row=f.db.prepare('SELECT * FROM battle_transport_journal WHERE action_id=?').get(newId);
+    assert.equal(JSON.parse(row.result_json).request.expiresAt,request.expiresAt);
+    assert.equal(transportRow(row,new Map(),owner),true);
+    for(const variant of ['legacy','null','invalid','unknown','foreign']){
+      const result=JSON.parse(row.result_json);
+      if(variant==='legacy')delete result.request.expiresAt;
+      if(variant==='null')result.request.expiresAt=null;
+      if(variant==='invalid')result.request.expiresAt=123;
+      if(variant==='unknown')result.request.experience=999;
+      if(variant==='foreign')result.request.fromUserId='foreign-owner';
+      assert.equal(transportRow({...row,result_json:JSON.stringify(result)},new Map(),owner),['legacy','null'].includes(variant),variant);
+    }
+    const local={version:2,data:f.adapter.export(owner)};restored.adapter.validateModule(local,owner);restored.adapter.restore(owner,local.data,'replace');
+    assert.deepEqual(restored.adapter.export(owner),local.data);
+    assert.equal(restored.adapter.cloudModule(owner,local).data.actions.length,0);
+    assert.equal(restored.store.action(owner,oldId).result,null);
+  }finally{f.close();restored.close();}
+});
 
 test('real SQLite / scripted provider: strict account checkpoint remains clean after post-authority journal resolution; original action bytes survive',async()=>{
   const f=fixture();try{const original=legacy(f);assert.equal(f.adapter.export(owner).transportJournal.length,3);assert.deepEqual(plain(f.adapter.cloudModule(owner,{version:2,data:f.adapter.export(owner)})),f.cloud.envelope.data.modules.battle);

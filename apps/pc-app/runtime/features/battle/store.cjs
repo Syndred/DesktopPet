@@ -54,6 +54,13 @@ class BattleStore {
     const actionId=`cloud:${type}:${require('node:crypto').randomUUID()}`;
     this.reserveTransport(owner,actionId,actionId,{type:`cloud:${type}`,input});return actionId;
   }
+  unconfirmedInvites(owner) {
+    return this.db.prepare('SELECT action_id,command_json FROM battle_transport_journal WHERE owner_account_id=? AND result_json IS NULL').all(owner).flatMap(row=>{
+      const command=parse(row.command_json);
+      return command?.type==='cloud:invite'&&sameCommandInput('invite',command.input,command.input)
+        ?[{actionId:row.action_id,targetAccount:command.input.targetAccount,allowResend:command.input.allowResend===true}]:[];
+    });
+  }
   resolve(owner, actionId, result) {
     const receipt = result?.snapshot ? { sessionId: result.id, revision: result.revision, resolvedRound: result.snapshot.round } : result;
     const journal=this.db.prepare('SELECT 1 FROM battle_transport_journal WHERE owner_account_id=? AND action_id=?').get(owner,actionId);

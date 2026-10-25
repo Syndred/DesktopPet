@@ -17,6 +17,7 @@ CREATE TABLE realtime.messages(topic text,extension text); ALTER TABLE realtime.
 CREATE FUNCTION realtime.topic() RETURNS text LANGUAGE sql STABLE AS $$SELECT current_setting('request.topic',true)$$;`);
 await loadSharedActorGuard(db);
 await db.exec(readFileSync('infra/supabase/migrations/20261025034744_lingjing_battle_jwt_rooms.sql','utf8'));
+await db.exec(readFileSync('infra/supabase/migrations/20261025211937_lingjing_battle_invite_expiry.sql','utf8'));
 for(const u of Object.values(users)){
   await db.query('INSERT INTO auth.users(id) VALUES($1)',[u.uid]);await db.query('INSERT INTO auth.sessions(id,user_id) VALUES($1,$2)',[u.sid,u.uid]);
   await db.query('INSERT INTO public.lingjing_accounts(owner_id,auth_user_id,account_key,account,username) VALUES($1,$2,$3,$3,$4)',[u.owner,u.uid,u.account,u.pet.name]);

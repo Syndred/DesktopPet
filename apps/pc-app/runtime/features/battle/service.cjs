@@ -443,6 +443,11 @@ class BattleFeatureService {
     return { inbound: result.inbound, outbound: result.outbound };
   }
 
+  pendingInvitations(_payload, context) {
+    const owner=this.owner(context);this.user(owner);
+    return this.store.unconfirmedInvites(owner);
+  }
+
   async invite(payload, context) {
     const owner = this.owner(context);
     return this.serial(owner, async () => {
@@ -450,7 +455,10 @@ class BattleFeatureService {
       this.ownedPet(owner, payload.petId);
       const targetAccount=text(payload.targetAccount,'对方账号');
       const allowResend=Boolean(payload.allowResend);
-      const result = await this.cloudCommand(owner,'invite',{targetAccount,allowResend},actionId=>this.online.sendDuelRequest({ actionId, targetAccount, allowResend }));
+      // A user click can explicitly start a new business action after expiry.
+      // Older callers without an id retain uncertain-response retry semantics.
+      const inputActionId=payload.actionId?text(payload.actionId,'操作编号'):undefined;
+      const result = await this.cloudCommand(owner,'invite',{targetAccount,allowResend},actionId=>this.online.sendDuelRequest({ actionId, targetAccount, allowResend }),inputActionId);
       this.assertOwner(owner);
       if (result.ok === false) throw fail("INVITE_COOLDOWN", result.retryAfterSeconds ? `请在 ${result.retryAfterSeconds} 秒后重发` : "邀请发送失败");
       // Persist chosen combatant separately from desktop/chat selection.
@@ -482,6 +490,7 @@ class BattleFeatureService {
       this.assertOwner(owner);
       const request = requests.inbound.find(item => item.id === requestId);
       if (!request) throw fail("INVITE_NOT_FOUND", "未找到发给当前账号的邀请");
+      if (request.status === "expired") throw fail("INVITE_EXPIRED", "邀请已过期，请重新发起对战。");
       if (payload.decision === "reject") {
         const rejected = await this.cloudCommand(owner,'reject',{requestId},actionId=>this.online.respondDuelRequest({actionId,requestId,decision:'reject'}),`reject:${requestId}`);
         this.assertOwner(owner);

@@ -16,7 +16,7 @@ const table={rooms:'lingjing_battle_rooms',invites:'lingjing_battle_invites',act
 const moves=new Set(['normal_attack','element_attack','dodge','ultimate']);
 const elements=new Set(['metal','wood','earth','water','fire']);
 const denied=new Set(['ROOM_FORBIDDEN','INVITE_FORBIDDEN','SELF_DUEL_FORBIDDEN','PET_OWNER_MISMATCH','PET_ROOM_MISMATCH','ACTOR_OWNER_MISMATCH','TARGET_OWNER_MISMATCH','OWNER_MISMATCH','GLOBAL_SERIAL_SCOPE_REVOKED','GLOBAL_SERIAL_SCOPE_CONFLICT']);
-const conflicts=new Set(['ACTION_ID_REUSED','ACTION_LOCKED','INVITE_CONFLICT','INVITE_ALREADY_RECEIVED','ROOM_FULL','ROOM_NOT_WAITING','ROUND_CONFLICT','BATTLE_IN_PROGRESS','BATTLE_UNFINISHED','BATTLE_RULES_UNSUPPORTED']);
+const conflicts=new Set(['ACTION_ID_REUSED','ACTION_LOCKED','INVITE_CONFLICT','INVITE_EXPIRED','INVITE_ALREADY_RECEIVED','ROOM_FULL','ROOM_NOT_WAITING','ROUND_CONFLICT','BATTLE_IN_PROGRESS','BATTLE_UNFINISHED','BATTLE_RULES_UNSUPPORTED']);
 const authCodes=new Set(['AUTH_REQUIRED','AUTH_INVALID','SESSION_REVOKED','DEVICE_SESSION_REQUIRED','DEVICE_REQUIRED','IDENTITY_REQUIRED']);
 const codeOf=(error:unknown)=>{
   const message=String((error as {message?:string})?.message||'');
@@ -30,7 +30,7 @@ const text=(value:unknown,max=160)=>{if(typeof value!=='string'||!value.trim()||
 const identifier=(value:unknown)=>{if(!uuid(value))fail('INVALID_COMMAND');return value;};
 const integer=(value:unknown,min=1,max=1000000)=>{if(!Number.isSafeInteger(value)||Number(value)<min||Number(value)>max)fail('INVALID_COMMAND');return Number(value);};
 const canonical=(value:unknown):string=>Array.isArray(value)?`[${value.map(canonical).join(',')}]`:value&&typeof value==='object'?`{${Object.entries(value).sort(([a],[b])=>a.localeCompare(b)).map(([key,item])=>`${JSON.stringify(key)}:${canonical(item)}`).join(',')}}`:JSON.stringify(value);
-const inviteDto=(row:Row,room?:Row)=>({id:row.id,fromUserId:row.from_user_id,toUserId:row.to_user_id,fromAccount:row.from_account,toAccount:row.to_account,status:row.status,roomId:row.room_id,roomCode:room?.room_code||null,roomStatus:room?.status||null,createdAt:row.created_at,updatedAt:row.updated_at});
+const inviteDto=(row:Row,room?:Row)=>({id:row.id,fromUserId:row.from_user_id,toUserId:row.to_user_id,fromAccount:row.from_account,toAccount:row.to_account,status:row.status,roomId:row.room_id,roomCode:room?.room_code||null,roomStatus:room?.status||null,createdAt:row.created_at,updatedAt:row.updated_at,expiresAt:row.expires_at??null});
 function roomDto(row:Row):Row {
   const {host_auth_uid:_host,guest_auth_uid:_guest,invited_auth_uid:_invited,...safe}=row;
   return {...safe,authority:'live',protocolVersion:2};
@@ -101,7 +101,10 @@ export function createBattleHandler(deps:BattleDependencies) {
     return {room:roomDto(room),rounds:rounds.sort((a,b)=>a.round_no-b.round_no),pendingAction:pending?{actionId:pending.action_id,action:pending.action_type,roundNo:pending.round_no,uncertain:false}:null,displayMetadata:await optionalDisplayMetadata(actor,room.id)};
   }
   async function invitations(actor:ActorContext) {
-    const rows=await must(actor.client.from(table.invites).select('*').order('created_at',{ascending:false}).limit(100)) as Row[];
+    // Expiry is a server-time read projection. Polling must not renew deadlines,
+    // rewrite legacy rows or reinterpret a committed command's original result.
+    const listed=await rpc('lingjing_battle_list_invites',{p_actor:actor.authUserId,p_owner:actor.ownerAccountId,p_device:actor.deviceId,p_session:actor.sessionId});
+    const rows=listed.invitations as Row[];
     const ids=rows.map(row=>row.room_id).filter(Boolean);
     // A reserved invitee cannot read a room before joining. Only return code/status for
     // that accepted invitation, without exposing the other player's actor statistics.

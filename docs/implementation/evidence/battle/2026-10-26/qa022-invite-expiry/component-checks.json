@@ -1,0 +1,111 @@
+{
+  "at": "2026-10-25T21:35:51.297Z",
+  "provenance": "isolated-real-React-component-with-scripted-IPC-and-portrait-boundary",
+  "nativeProductStarted": false,
+  "liveCloudVerified": false,
+  "nativeFiveMinuteAcceptance": false,
+  "checks": [
+    "mount and explicit refresh are read-only; legacy no-expiry and new server deadline labels are both present",
+    "explicit retry sends the original action ID, logical resend flag and selected pet; unresolved fixture remains intact",
+    "only explicit resend and expired-invite reissue clicks generate distinct new IDs; the unresolved original is retained",
+    "offline cloud refresh keeps local unresolved requests visible and performs no replay; rendered controls have no horizontal overflow"
+  ],
+  "sourceHashes": {
+    "apps/pc-app/ui/src/features/battle/FriendsPanel.tsx": "1bbd70d9deae43fb498321a659e260cbc55f861904a6a021aff5b298478e8a76",
+    "apps/pc-app/runtime/features/battle/service.cjs": "d96794d6f34355459e4163e5c686c3e3a77e00a5c30c60cd9e04d576dc74575a",
+    "apps/pc-app/runtime/features/battle/store.cjs": "9e8b9b24a360ed03aa142ef86789a25e30fefc3e276bc72a2d489b31a662ba7e"
+  },
+  "trace": [
+    {
+      "feature": "battle",
+      "command": "pendingInvitations"
+    },
+    {
+      "feature": "battle",
+      "command": "invitations"
+    },
+    {
+      "feature": "battle",
+      "command": "pendingInvitations"
+    },
+    {
+      "feature": "battle",
+      "command": "invitations"
+    },
+    {
+      "feature": "battle",
+      "command": "invite",
+      "payload": {
+        "actionId": "original-uncertain-qa022",
+        "targetAccount": "peer_unknown",
+        "allowResend": true,
+        "petId": "fixture-selected-pet"
+      }
+    },
+    {
+      "feature": "battle",
+      "command": "pendingInvitations"
+    },
+    {
+      "feature": "battle",
+      "command": "invitations"
+    },
+    {
+      "feature": "battle",
+      "command": "invite",
+      "payload": {
+        "actionId": "35d7f01b-94e5-40c2-8100-b614b54b5518",
+        "targetAccount": "peer_unknown",
+        "allowResend": false,
+        "petId": "fixture-selected-pet"
+      }
+    },
+    {
+      "feature": "battle",
+      "command": "pendingInvitations"
+    },
+    {
+      "feature": "battle",
+      "command": "invitations"
+    },
+    {
+      "feature": "battle",
+      "command": "invite",
+      "payload": {
+        "actionId": "cb47821c-13ec-4e61-85ee-f6e9fd019cd0",
+        "targetAccount": "peer_expired_out",
+        "allowResend": false,
+        "petId": "fixture-selected-pet"
+      }
+    },
+    {
+      "feature": "battle",
+      "command": "pendingInvitations"
+    },
+    {
+      "feature": "battle",
+      "command": "invitations"
+    },
+    {
+      "feature": "battle",
+      "command": "pendingInvitations"
+    },
+    {
+      "feature": "battle",
+      "command": "invitations"
+    }
+  ],
+  "overflow": {
+    "document": false,
+    "buttons": [],
+    "invitationDisplays": [
+      "grid",
+      "grid",
+      "grid",
+      "grid",
+      "grid"
+    ]
+  },
+  "pageErrors": [],
+  "passed": true
+}
