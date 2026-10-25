@@ -91,16 +91,31 @@ try{
  pass('real Auth rotation updates same SDK Data API and Realtime token plus encrypted vault',{...sdk,privateChannelReconnectVerified:false});
  await restore(activeA);await settings(activeA,54);
  await activeA.app.evaluate(()=>{const remote=globalThis.__accountsCloudAcceptanceServices.get('accounts').remote;remote.__acceptanceFetch=remote.fetcher;remote.fetcher=()=>fetch('https://127.0.0.1:1',{signal:AbortSignal.timeout(2000)});});
- const refused=await invoke(activeA,'syncNow',{actionId:randomUUID()},false);assert.equal(refused.code,'CLOUD_UNAVAILABLE');assert.ok((await invoke(activeA,'syncStatus')).pending>0);
+ const offlineActionId=randomUUID();
+ const refused=await invoke(activeA,'syncNow',{actionId:offlineActionId},false);assert.equal(refused.code,'CLOUD_UNAVAILABLE');assert.ok((await invoke(activeA,'syncStatus')).pending>0);
  const beforeRestart=await vaultProof(activeA),oldPid=activeA.pid;await close(activeA);activeA=await launch('device-a');
  await activeA.page.getByRole('heading',{name:'把每一段陪伴，好好保存。',exact:true}).waitFor();
  const resumed=await invoke(activeA,'session');assert.equal(resumed.currentUser.id,a.currentUser.id);assert.equal(resumed.persistence,'secure');
  const afterRestart=await vaultProof(activeA);assert.equal(afterRestart.deviceId,beforeRestart.deviceId);assert.equal(afterRestart.sessionId,beforeRestart.sessionId);assert.notEqual(activeA.pid,oldPid);
+ const retained=await activeA.app.evaluate((_electron,id)=>{
+  const a=globalThis.__accountsCloudAcceptanceServices.get('accounts');
+  return a.db.prepare('SELECT action_id,base_revision,status FROM account_sync_outbox WHERE owner_account_id=? AND action_id=?').get(a.requireOwner(),id);
+ },offlineActionId);assert.equal(retained.status,'retry');assert.equal(retained.base_revision,second.revision);
+ await activeA.app.evaluate(({BrowserWindow})=>{const win=BrowserWindow.getAllWindows()[0];win.show();win.focus();});
  await activeA.page.getByRole('button',{name:'重试同步',exact:true}).click();
- await activeA.page.waitForFunction(async()=>{const r=await window.lingjing.invoke('accounts','syncStatus');return r.ok&&r.data.pending===0;});
- const retryStatus=await invoke(activeA,'syncStatus');const retried={revision:retryStatus.cloudRevision};assert.equal(retried.revision,second.revision+1);assert.equal((await invoke(activeA,'settingsGet')).document.desktop.volume,54);
+ let retryStatus;const retryDeadline=Date.now()+45_000;
+ do{retryStatus=await invoke(activeA,'syncStatus');
+  if(retryStatus.pending===0&&!retryStatus.running&&retryStatus.cloudRevision===second.revision+1)break;
+  await new Promise(resolve=>setTimeout(resolve,500));
+ }while(Date.now()<retryDeadline);
+ assert.equal(retryStatus.pending,0,'Original retry action did not finish');assert.equal(retryStatus.running,false);
+ const retried={revision:retryStatus.cloudRevision};assert.equal(retried.revision,second.revision+1);assert.equal((await invoke(activeA,'settingsGet')).document.desktop.volume,54);
+ const retryReadback=await activeB.app.evaluate(async(_electron,id)=>{
+  const a=globalThis.__accountsCloudAcceptanceServices.get('accounts'),row=await a.remote.cloudSave('read',a.privateSession(),{actionId:id});
+  return{actionId:row.actionId,revision:row.revision,checksum:row.checksum,volume:row.envelope.data.modules.settings.data.desktop.volume};
+ },offlineActionId);assert.equal(retryReadback.actionId,offlineActionId);assert.equal(retryReadback.revision,retried.revision);assert.equal(retryReadback.volume,54);
  if(requireFull){assert.equal(retryStatus.localChanged,false);assert.equal(retryStatus.unverifiedLocal,0);}
- pass('real Electron restart resumes encrypted session and durable queue after controlled connection refusal',{oldPid,newPid:activeA.pid,deviceId:afterRestart.deviceId,sessionId:afterRestart.sessionId,revision:retried.revision,scope:'per-request closed TLS socket; host network was not disabled'});
+ pass('real Electron restart resumes encrypted session and durable queue after controlled connection refusal',{oldPid,newPid:activeA.pid,deviceId:afterRestart.deviceId,sessionId:afterRestart.sessionId,retained,retryReadback,scope:'per-request closed TLS socket; host network was not disabled'});
  for(const model of [activeA,activeB]){await model.page.evaluate(()=>{location.hash='#/account';});await model.page.getByRole('heading',{name:'把每一段陪伴，好好保存。',exact:true}).waitFor();await model.page.screenshot({path:join(output,`${model.name}.png`)});}
  const secretBoundary=await activeA.app.evaluate(()=>{const a=globalThis.__accountsCloudAcceptanceServices.get('accounts'),text=JSON.stringify(a.session()),fs=globalThis.__accountsCloudAcceptanceRequire('node:fs');
   const matches=[a.remote.active.accessToken,a.remote.active.refreshToken];const bytes=Buffer.concat([a.services.db.name,`${a.services.db.name}-wal`].filter(file=>fs.existsSync(file)).map(file=>fs.readFileSync(file)));
