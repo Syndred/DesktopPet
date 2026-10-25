@@ -53,6 +53,8 @@ class ConversationStore {
     });
   }
   getConnection(owner, petId = null, includeSecret = false) {
+    // The live row remains authoritative for older clients that can edit/clear
+    // keys. The vault is consulted only by an explicit archive restoration.
     return connection(this.db.prepare(`SELECT * FROM conversation_connections
       WHERE owner_account_id=? AND scope=? AND scope_id=?`).get(owner, petId === null ? "account" : "pet", petId ?? ""), includeSecret);
   }
@@ -67,6 +69,12 @@ class ConversationStore {
         revision=excluded.revision,updated_at=excluded.updated_at`).run(owner, petId === null ? "account" : "pet", petId ?? "",
         value.provider, value.baseUrl, value.model, value.encryptedKey, value.contextChars,
         value.maxOutputTokens, revision + 1, Date.now());
+      // User edits explicitly replace/clear this device's key. Cloud restoration
+      // uses the archive adapter and never deletes this local-only credential vault.
+      const scope = petId === null ? "account" : "pet", scopeId = petId ?? "";
+      this.db.prepare("DELETE FROM conversation_credentials WHERE owner_account_id=? AND scope=? AND scope_id=?").run(owner, scope, scopeId);
+      if (value.encryptedKey) this.db.prepare("INSERT INTO conversation_credentials VALUES(?,?,?,?,?,?,?)")
+        .run(owner, scope, scopeId, value.provider, value.baseUrl, value.encryptedKey, Date.now());
       return this.getConnection(owner, petId);
     });
   }
