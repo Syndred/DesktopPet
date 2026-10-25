@@ -658,6 +658,12 @@ function createTerritoryService({ actor, worker, awardBattleResult: awardBattleR
     if (!input || typeof input !== "object" || Array.isArray(input)) fail2("INVALID_REQUEST");
     for (const key of ["winner", "battle", "reward", "envelope", "actor", "source", "territoryBoundary", "maxHp", "anger"]) if (Object.hasOwn(input, key)) fail2("UNTRUSTED_AUTHORITY_FIELD");
     if (input.sessionOwnerAccountId !== void 0 && input.sessionOwnerAccountId !== owner) fail2("SESSION_CHANGED");
+    if (op === "serial-views") {
+      if (Object.keys(body).some((key) => !["op", "input"].includes(key)) || Object.keys(input).some((key) => key !== "sessionIds")) fail2("UNTRUSTED_AUTHORITY_FIELD");
+      const ids = input.sessionIds;
+      if (!Array.isArray(ids) || ids.length < 1 || ids.length > 20 || new Set(ids).size !== ids.length || ids.some((id) => typeof id !== "string" || !/^[A-Za-z0-9][A-Za-z0-9:_-]{0,159}$/.test(id))) fail2("INVALID_REQUEST");
+      return rpc("lingjing_territory_serial_views", { p_actor: actor, p_session_ids: ids });
+    }
     if (op === "snapshot") return snapshot(await read());
     if (op === "session") {
       if (typeof input.sessionId !== "string" || !input.sessionId) fail2("INVALID_SESSION");
@@ -706,7 +712,7 @@ function createTerritoryService({ actor, worker, awardBattleResult: awardBattleR
 }
 function territoryError(error) {
   const code = error?.code || "TERRITORY_CLOUD_UNAVAILABLE";
-  return { status: /ACTOR|PARTICIPANT|OWNER|AUTH|UNTRUSTED|NOT_OWNED|SCENARIO/.test(code) ? 403 : /CONFLICT|REUSED|EXPIRED|STALE/.test(code) ? 409 : /UNAVAILABLE/.test(code) ? 503 : 400, body: { ok: false, code, message: error?.code ? error.message : "\u4E91\u7AEF\u9886\u5730\u8BF7\u6C42\u672A\u5B8C\u6210" } };
+  return { status: /ACTOR|PARTICIPANT|OWNER|AUTH|UNTRUSTED|NOT_OWNED|SCENARIO|SESSION_REVOKED|DEVICE_SESSION_REQUIRED|GLOBAL_SERIAL_SCOPE_/.test(code) ? 403 : /CONFLICT|REUSED|EXPIRED|STALE/.test(code) ? 409 : /UNAVAILABLE/.test(code) ? 503 : 400, body: { ok: false, code, message: error?.code ? error.message : "\u4E91\u7AEF\u9886\u5730\u8BF7\u6C42\u672A\u5B8C\u6210" } };
 }
 
 // infra/supabase/functions/garden-sync/handler.mjs

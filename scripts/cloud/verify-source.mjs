@@ -98,6 +98,8 @@ const tests = [
   'apps/pc-app/runtime/features/resources/verification/storage-rls-sql.test.mjs',
   'scripts/acceptance/cloud-territory/save-cas.test.mjs',
   'scripts/acceptance/cloud-territory/receipt-expression.test.mjs',
+  'scripts/acceptance/cloud-territory/serial-views-sql.test.mjs',
+  'scripts/acceptance/cloud-territory/serial-views.test.mjs',
 ];
 
 try {

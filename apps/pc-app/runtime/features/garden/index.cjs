@@ -6,6 +6,7 @@ const { TerritoryService } = require("./territories.cjs");
 const { createGardenBackupAdapter } = require('./backup.cjs');
 const { CloudGardenAuthority } = require('./cloud-authority.cjs');
 const { createOwnerMigration } = require('./identity.cjs');
+const { createTerritorySerialViews } = require('./battle-serial-views.cjs');
 
 function companionAdapter(services) {
   const get = () => {
@@ -51,12 +52,14 @@ module.exports = {
     if (!services.get('territories')) services.provide('territories', territories);
     const removeBackupAdapter = services.get('backups')?.register(createGardenBackupAdapter(services.db));
     const cloud = new CloudGardenAuthority(services, service);
+    const serialViews = createTerritorySerialViews(services, cloud);
     const identity = createOwnerMigration(services,service);
     services.provide("garden", {
       service,
       snapshot: context => service.snapshot(context),
       applyCloudReadback:(owner,remote)=>cloud.applyReadback({ownerAccountId:owner},remote),
       territories,
+      getBattleSerialViews:input=>serialViews.read(input),
       cloudBattles:{owns:(payload,context)=>cloud.ownsBattle(payload,context),invoke:(name,payload,context)=>cloud.battleCommand(name,payload,context)},
       migrateOwnerAlias:context=>identity.migrate(context),
       getBattleContext:input=>{

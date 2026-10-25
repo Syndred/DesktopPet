@@ -23,6 +23,13 @@ export function createTerritoryService({actor,worker,awardBattleResult,now=Date.
     if(!input||typeof input!=='object'||Array.isArray(input))fail('INVALID_REQUEST');
     for(const key of ['winner','battle','reward','envelope','actor','source','territoryBoundary','maxHp','anger'])if(Object.hasOwn(input,key))fail('UNTRUSTED_AUTHORITY_FIELD');
     if(input.sessionOwnerAccountId!==undefined&&input.sessionOwnerAccountId!==owner)fail('SESSION_CHANGED');
+    if(op==='serial-views'){
+      if(Object.keys(body).some(key=>!['op','input'].includes(key))||Object.keys(input).some(key=>key!=='sessionIds'))fail('UNTRUSTED_AUTHORITY_FIELD');
+      const ids=input.sessionIds;
+      if(!Array.isArray(ids)||ids.length<1||ids.length>20||new Set(ids).size!==ids.length
+        ||ids.some(id=>typeof id!=='string'||!/^[A-Za-z0-9][A-Za-z0-9:_-]{0,159}$/.test(id)))fail('INVALID_REQUEST');
+      return rpc('lingjing_territory_serial_views',{p_actor:actor,p_session_ids:ids});
+    }
     if(op==='snapshot')return snapshot(await read());
     if(op==='session'){if(typeof input.sessionId!=='string'||!input.sessionId)fail('INVALID_SESSION');const value=await read(input);return {session:value.challenge?.battle_json,context:{action:'territory',returnTo:'/garden',resultPath:'/garden',sessionId:input.sessionId,territoryId:value.territory?.id,settled:['settled','superseded'].includes(value.challenge?.status),result:value.challenge?.result_json},...snapshot(value)};}
     const kind=kinds[op];if(!kind)fail('INVALID_TERRITORY_COMMAND');
@@ -58,4 +65,4 @@ export function createTerritoryService({actor,worker,awardBattleResult,now=Date.
   }};
 }
 
-export function territoryError(error){const code=error?.code||'TERRITORY_CLOUD_UNAVAILABLE';return {status:/ACTOR|PARTICIPANT|OWNER|AUTH|UNTRUSTED|NOT_OWNED|SCENARIO/.test(code)?403:/CONFLICT|REUSED|EXPIRED|STALE/.test(code)?409:/UNAVAILABLE/.test(code)?503:400,body:{ok:false,code,message:error?.code?error.message:'云端领地请求未完成'}};}
+export function territoryError(error){const code=error?.code||'TERRITORY_CLOUD_UNAVAILABLE';return {status:/ACTOR|PARTICIPANT|OWNER|AUTH|UNTRUSTED|NOT_OWNED|SCENARIO|SESSION_REVOKED|DEVICE_SESSION_REQUIRED|GLOBAL_SERIAL_SCOPE_/.test(code)?403:/CONFLICT|REUSED|EXPIRED|STALE/.test(code)?409:/UNAVAILABLE/.test(code)?503:400,body:{ok:false,code,message:error?.code?error.message:'云端领地请求未完成'}};}
