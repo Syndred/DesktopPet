@@ -112,7 +112,7 @@ class OnlineDuelService {
     const identity = [endpoint.origin, owner, actor.deviceId, actor.sessionId].join('|');
     if (!this.client || this.cloudIdentity !== identity) {
       const previous = this.client, channel = this.channel; this.channel = null;
-      if (previous && channel) await previous.removeChannel(channel).catch(() => {});
+      if (previous && channel) await this.removeRoomChannel(previous, channel).catch(() => {});
       if (generation !== this.authGeneration) throw Object.assign(new Error('账号已切换'), { code: 'AUTH_CHANGED' });
       this.client = transport.client;
       this.cloudIdentity = identity;
@@ -556,7 +556,7 @@ class OnlineDuelService {
       const current = this.channel;
       this.channel = null;
       try {
-        await this.client.removeChannel(current);
+        await this.removeRoomChannel(this.client, current);
       } catch {
         // Ignore remove failures.
       }
@@ -566,6 +566,19 @@ class OnlineDuelService {
       this.emit("room-cleared", {
         reason: normalizeString(options.reason) || "unknown"
       });
+    }
+  }
+
+  async removeRoomChannel(client, channel) {
+    await client.removeChannel(channel);
+    // realtime-js2.98 disconnect().teardown() clears the channel's close
+    // binding. removeChannel then leaves that closed object in its topic cache,
+    // and channel(topic) returns the unusable object. Evict only that stale
+    // registration, after the normal unsubscribe and before creating its replacement.
+    // Never clear the shared SDK's other feature subscriptions.
+    const registered = client.getChannels?.();
+    if (registered?.includes(channel) && registered.every(value => value === channel || value.topic !== channel.topic)) {
+      client.realtime?._remove?.(channel);
     }
   }
 
@@ -706,7 +719,7 @@ class OnlineDuelService {
       this.channel = null;
       this.channelRoomId = null;
       try {
-        await client.removeChannel(old);
+        await this.removeRoomChannel(client, old);
       } catch {
         // ignore
       }
