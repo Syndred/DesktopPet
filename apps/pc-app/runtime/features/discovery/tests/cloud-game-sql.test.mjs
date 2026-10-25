@@ -13,8 +13,32 @@ import {createWildAuthority} from '../../../../../../infra/supabase/functions/di
 import {createDiscoveryHandler} from '../../../../../../infra/supabase/functions/discovery/handler.mjs';
 import {awardBattle,createCapture} from '../../../../../../infra/supabase/functions/discovery/domain.mjs';
 const require=createRequire(import.meta.url),{checksum}=require('../../accounts/util.cjs');
+const fixtureTime=1792940240820,fixturePosition={lat:31.2,lng:121.4};
+function fireSpawn(now){
+  // A region's nearest16 may contain no fire template in this hourly world.
+  // Move only the fixture search point; retain the generated ID and geometry.
+  const offsets=[0,.0024,-.0024,.0048,-.0048];
+  for(const lat of offsets)for(const lng of offsets){
+    const spawn=nearbySpawns({lat:fixturePosition.lat+lat,lng:fixturePosition.lng+lng},now).find(value=>value.element==='fire');
+    if(spawn)return spawn;
+  }
+  assert.fail('No generated fire spawn in the bounded local fixture search');
+}
+test('fire fixture finds a real candidate when the initial region has none, across hourly worlds',()=>{
+  assert.equal(nearbySpawns(fixturePosition,fixtureTime).some(value=>value.element==='fire'),false);
+  for(let hour=0;hour<24;hour++){
+    const now=fixtureTime+hour*3600000,spawn=fireSpawn(now);
+    const rebuilt=nearbySpawns(spawn.position,now).find(value=>value.id===spawn.id);
+    assert.equal(spawn.element,'fire');assert.ok(spawn.expiresAt>now);assert.ok(rebuilt);
+    assert.equal(rebuilt.templateId,spawn.templateId);assert.deepEqual(rebuilt.position,spawn.position);
+    assert.notEqual(spawn.id,fireSpawn(now+3600000).id);
+  }
+});
 test('wild writes atomically consume proof and commit protected save, preserving history and replay across devices',async t=>{
   t.mock.method(Math,'random',()=>.5); // Unit-only deterministic NPC, never a product request.
+  // PGlite and Edge share this local clock, including the original failing hour;
+  // selection, location age and proof expiry cannot race an hourly rollover.
+  t.mock.timers.enable({apis:['Date'],now:fixtureTime});
   const db=new PGlite();
   const uid='a0000000-0000-4000-8000-000000000001',sid='b0000000-0000-4000-8000-000000000001',device='c0000000-0000-4000-8000-000000000001';
   try{
@@ -39,7 +63,8 @@ test('wild writes atomically consume proof and commit protected save, preserving
     await db.query("select public.lingjing_commit_authority($1,'unit-trusted-source-001',$2)",[owner,{companions:{module:{version:1,data:companion},petIds:[pet.petId]},garden:{module:initialized.envelope.data.modules.garden},discovery:{tables:discoveryTables}}]);
     const location=async(op,input,who=actor)=>(await db.query('select public.lingjing_discovery_location($1::jsonb,$2,$3::jsonb) v',[JSON.stringify(who),op,JSON.stringify(input)])).rows[0].v;
     const key=generateKeyPairSync('ec',{namedCurve:'prime256v1'}).publicKey.export({format:'jwk'});await location('register_device',{publicJwk:key,keyFingerprint:'a'.repeat(64)});
-    const unitSpawn=nearbySpawns({lat:31.2,lng:121.4},Date.now()).find(value=>value.element==='fire');
+    assert.equal((await db.query('select floor(extract(epoch from clock_timestamp())*1000)::double precision now')).rows[0].now,Date.now());
+    const unitSpawn=fireSpawn(Date.now());
     const nonce=await location('issue_nonce',{purpose:'begin',reference:unitSpawn.id});
     const proof=await location('accept_nonce',{challengeId:nonce.id,signatureHash:'a'.repeat(64),fix:{...unitSpawn.position,accuracyMeters:5,timestampMs:Date.now(),source:'os',provider:'windows-geolocator',positionSource:'WiFi',coordinateSystem:'wgs84'}});
     const engine=new BattleRuntimeService(),session={id:'battle-cloud-'+id,mode:'wild',status:'active',player:pet,enemy:{petId:unitSpawn.id,templateId:unitSpawn.templateId,element:'fire'},snapshot:engine.reset({playerElement:'water',enemyElement:'fire'}),rules:getBattleRules(),rounds:[],winner:null,revision:1,context:{origin:'discovery',cloudAuthority:'discovery',permitId:id}};
@@ -80,7 +105,7 @@ test('wild writes atomically consume proof and commit protected save, preserving
     const authority=createWildAuthority({store,uuid:()=>id2,projectRef:'explicit-local-unit'}),call=input=>authority({actor:verified,input});
     const handler=createDiscoveryHandler({requireActor:async()=>verified,store,authority});
     const http=async input=>{const response=await handler(new Request('https://explicit-local.invalid',{method:'POST',body:JSON.stringify(input)}));const body=await response.json();assert.equal(body.ok,true,JSON.stringify(body));return body.data;};
-    const spawn=nearbySpawns({lat:31.2,lng:121.4},Date.now()).find(p=>p.element==='fire');assert.ok(spawn);
+    const spawn=fireSpawn(Date.now());assert.ok(spawn);
     const issue=async(purpose,reference)=>{const n=await location('issue_nonce',{purpose,reference});return location('accept_nonce',{challengeId:n.id,signatureHash:'d'.repeat(64),fix:{...spawn.position,accuracyMeters:5,timestampMs:Date.now(),source:'os',provider:'windows-geolocator',coordinateSystem:'wgs84',positionSource:'WiFi'}});};
     const discoverProof=await issue('discover',''),countRows=async()=>(await db.query('select count(*)::int n from lingjing_private.global_pet_serials')).rows[0].n;
     const beforeNearby=await countRows();await http({op:'nearby',proofId:discoverProof.id});assert.equal(await countRows(),beforeNearby,'nearby never allocates candidate numbers');
