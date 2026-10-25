@@ -27,6 +27,32 @@ jobs:
       - name: Verify workspace
         run: npm run verify
 
+  cloud-source:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      ELECTRON_SKIP_BINARY_DOWNLOAD: '1'
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-node@v7.1.0
+        with:
+          node-version: 24
+          cache: npm
+      - name: Install workspace dependencies without cloud credentials or Docker
+        run: npm ci
+      - name: Strict migration names, read-only distributions, modern SQL and Deno validators
+        run: npm run verify:cloud
+      - name: Keep local source-check evidence
+        if: always()
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: cloud-source-${{ github.sha }}
+          if-no-files-found: warn
+          retention-days: 14
+          path: |
+            artifacts/foundation/cloud-engineering/cloud-source-check.json
+            artifacts/foundation/cloud-engineering/cloud-source-check/run-*/*.log
+
   windows-desktop:
     runs-on: windows-latest
     timeout-minutes: 25

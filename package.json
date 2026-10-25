@@ -29,6 +29,7 @@
     "perf:report": "node scripts/perf/generate-weekly-report.mjs",
     "test:watch": "vitest",
     "verify": "npm run lint && npm run typecheck && npm run typecheck:ui && npm run test:unit",
+    "verify:cloud": "node scripts/cloud/verify-source.mjs",
     "build:pc": "electron-vite build && node scripts/desktop/runtime-closure.mjs && node scripts/desktop/write-build-manifest.mjs",
     "typecheck:ui": "tsc --noEmit -p apps/pc-app/ui/tsconfig.json",
     "native:electron": "node scripts/desktop/verify-native.cjs",
