@@ -144,7 +144,7 @@ class BattleFeatureService {
     const pets = this.pets(owner).map(pet => ({
       ...pet,
       displayIdentity: companions?.getDisplayIdentity?.(owner, pet.petId) || {
-        roleName: '历史伙伴', instanceNumber: pet.petId, historicalNickname: pet.petName || null
+        roleName: '历史伙伴', instanceNumber: '待同步', historicalNickname: pet.petName || null
       }
     }));
     return {
