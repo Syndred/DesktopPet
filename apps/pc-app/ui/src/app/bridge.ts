@@ -1,5 +1,12 @@
 import { useCallback, useEffect, useState } from 'react';
 import type { AppResult, FeatureId } from '../../../../../packages/shared-types/src/app';
+import type { IpcFeature, IpcCommand, IpcArguments, IpcOutput } from '../../../../../packages/shared-types/src/ipc';
+export function command<Feature extends IpcFeature, Command extends IpcCommand<Feature>>(feature: Feature, method: Command, ...args: IpcArguments<Feature, Command>): Promise<AppResult<IpcOutput<Feature, Command>>> {
+  return window.lingjing.call(feature, method, ...args);
+}
+export function useCommand<Feature extends IpcFeature, Command extends IpcCommand<Feature>>(feature: Feature, method: Command, ...args: IpcArguments<Feature, Command>) {
+  return useFeatureRequest<IpcOutput<Feature, Command>>(feature, method, args[0]);
+}
 export async function request<T = any>(feature: FeatureId | 'app', command: string, payload?: unknown): Promise<T> {
   if (!window.lingjing) throw new Error('请在灵境桌面应用中打开此页面。');
   const result: AppResult<any> = await window.lingjing.invoke(feature, command, payload);

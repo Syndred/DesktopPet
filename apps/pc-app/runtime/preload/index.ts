@@ -2,6 +2,7 @@ import { contextBridge, ipcRenderer } from 'electron';
 import type { AppBridge } from '../../../../packages/shared-types/src/app';
 
 const bridge: AppBridge = {
+  call: (feature, command, ...[payload]) => ipcRenderer.invoke('lingjing:invoke', { feature, command, payload: payload ?? {} }),
   invoke: (feature, command, payload = {}) => ipcRenderer.invoke('lingjing:invoke', { feature, command, payload }),
   subscribe(name, listener) {
     const wrapped = (_event: unknown, event: { name: string; payload: unknown }) => { if (event?.name === name) listener(event.payload); };
