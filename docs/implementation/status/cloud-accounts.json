@@ -96,7 +96,7 @@
         "push",
         "archive"
       ],
-      "migration": "20261025021759_lingjing_protected_save_cas.sql",
+      "migration": "20261025024615_lingjing_protected_save_cas.sql",
       "domainSql": "lingjing_private.lock_save_owner(owner) FIRST; commit_authority(owner,actionId,fragments,expectedRevision|null) in SAME domain transaction",
       "petRegistration": "d57d383 compound(owner_id,pet_id); same historical ID under two owners retained and tested; 02 must register via controlled initialization/adoption/verified migration"
     },
@@ -116,11 +116,11 @@
       "cloudArchive": "safe projection only, legacy module and raw archive/credential schema excluded, normalized sensitive keys and nested/serialized JSON stripped",
       "server": "8e5c735 path-aware guard preserves authored message/memory/persona JSON string byte-for-byte, checks nested/serialized config credentials. Public business proof retained; cloudProof/sessionProof/authProof private. SQL8 cases +protocol6 passed.",
       "localOriginal": "account_sync_sources.original_document/original_checksum retains local snapshot; existing raw sources/backup files never deleted",
-      "migration": "20261025025906_lingjing_cloud_secret_guard.sql",
+      "migration": "20261025030859_lingjing_cloud_secret_guard.sql",
       "implementation": "apps/pc-app/runtime/features/accounts/cloud-projection.cjs"
     },
     "sessionRevocation": {
-      "migration": "20261025031842_lingjing_session_revocation_ledger.sql",
+      "migration": "20261025032327_lingjing_session_revocation_ledger.sql",
       "deployedByThisChat": false,
       "guard": "live_session_id shared by direct RPC/actor/session/RLS",
       "authTableGrantsExpanded": false,
@@ -148,8 +148,8 @@
       ],
       "readyForCoordinatorDeployment": false,
       "migrations": [
-        "20261025033602_lingjing_transaction_actor_guard.sql",
-        "20261025033734_lingjing_domain_actor_guard_adoption.sql"
+        "20261025034106_lingjing_transaction_actor_guard.sql",
+        "20261025034110_lingjing_domain_actor_guard_adoption.sql"
       ],
       "permissions": "Private SECURITY DEFINER search_path empty, onlyservice_role execute; no new Auth-table SELECT grants",
       "adopted": [
@@ -162,7 +162,7 @@
   },
   "migrations": [
     {
-      "file": "infra/supabase/migrations/20261025020314_lingjing_identity_actor_contract.sql",
+      "file": "infra/supabase/migrations/20261025021620_lingjing_identity_actor_contract.sql",
       "generatedBy": "Supabase CLI 2.122.0 migration new lingjing_identity_actor_contract",
       "touches": [
         "public.lingjing_accounts",
@@ -174,7 +174,7 @@
       "coordinatorAppliedVersion": "20261025021620"
     },
     {
-      "file": "infra/supabase/migrations/20261025021755_lingjing_auth_bridge.sql",
+      "file": "infra/supabase/migrations/20261025022918_lingjing_auth_bridge.sql",
       "generatedBy": "Supabase CLI 2.122.0 migration new lingjing_auth_bridge",
       "touches": [
         "private auth directory/reservations/rate buckets",
@@ -188,11 +188,11 @@
     {
       "remoteAppliedByThisChat": false,
       "generatedBy": "Supabase CLI2.122.0 migration new lingjing_protected_save_cas",
-      "file": "infra/supabase/migrations/20261025021759_lingjing_protected_save_cas.sql",
+      "file": "infra/supabase/migrations/20261025024615_lingjing_protected_save_cas.sql",
       "readyForCoordinatorReview": true
     },
     {
-      "file": "infra/supabase/migrations/20261025025906_lingjing_cloud_secret_guard.sql",
+      "file": "infra/supabase/migrations/20261025030859_lingjing_cloud_secret_guard.sql",
       "remoteAppliedByThisChat": false,
       "readyForCoordinatorReview": true,
       "generatedBy": "Supabase CLI2.122.0 migration new lingjing_cloud_secret_guard"
@@ -201,17 +201,17 @@
       "readyForCoordinatorReview": true,
       "generatedBy": "Supabase CLI2.122.0 migration new lingjing_session_revocation_ledger",
       "remoteAppliedByThisChat": false,
-      "file": "infra/supabase/migrations/20261025031842_lingjing_session_revocation_ledger.sql"
+      "file": "infra/supabase/migrations/20261025032327_lingjing_session_revocation_ledger.sql"
     },
     {
       "readyForCoordinatorReview": true,
-      "file": "infra/supabase/migrations/20261025033602_lingjing_transaction_actor_guard.sql",
+      "file": "infra/supabase/migrations/20261025034106_lingjing_transaction_actor_guard.sql",
       "generatedBy": "Supabase CLI2.122.0 migration new lingjing_transaction_actor_guard",
       "remoteAppliedByThisChat": false
     },
     {
       "readyForCoordinatorReview": true,
-      "file": "infra/supabase/migrations/20261025033734_lingjing_domain_actor_guard_adoption.sql",
+      "file": "infra/supabase/migrations/20261025034110_lingjing_domain_actor_guard_adoption.sql",
       "generatedBy": "Supabase CLI2.122.0 migration new lingjing_domain_actor_guard_adoption",
       "remoteAppliedByThisChat": false
     }

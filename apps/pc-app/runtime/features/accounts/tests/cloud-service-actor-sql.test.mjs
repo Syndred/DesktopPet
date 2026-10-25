@@ -9,9 +9,9 @@ await db.exec(`create role anon;create role authenticated;create role service_ro
  create schema lingjing_discovery;grant usage on schema lingjing_discovery to service_role;
  create function lingjing_discovery.live_actor(p_actor jsonb) returns void language plpgsql as $$begin null;end$$;
  create function public.runtime_territory_check_actor(p_owner text,p_uid uuid,p_device text,p_session uuid) returns void language plpgsql as $$begin null;end$$;`);
-for(const name of ['20261025020314_lingjing_identity_actor_contract.sql','20261025021755_lingjing_auth_bridge.sql','20261025021759_lingjing_protected_save_cas.sql',
- '20261025025515_lingjing_companion_commands.sql','20261025025906_lingjing_cloud_secret_guard.sql','20261025031842_lingjing_session_revocation_ledger.sql',
- '20261025033602_lingjing_transaction_actor_guard.sql','20261025033734_lingjing_domain_actor_guard_adoption.sql'])await db.exec(readFileSync(`infra/supabase/migrations/${name}`,'utf8'));
+for(const name of ['20261025021620_lingjing_identity_actor_contract.sql','20261025022918_lingjing_auth_bridge.sql','20261025024615_lingjing_protected_save_cas.sql',
+ '20261025031842_lingjing_companion_commands.sql','20261025030859_lingjing_cloud_secret_guard.sql','20261025032327_lingjing_session_revocation_ledger.sql',
+ '20261025034106_lingjing_transaction_actor_guard.sql','20261025034110_lingjing_domain_actor_guard_adoption.sql'])await db.exec(readFileSync(`infra/supabase/migrations/${name}`,'utf8'));
 await db.query('insert into auth.users(id) values($1)',[uid]);await db.query('insert into auth.sessions values($1,$2,null)',[sid,uid]);
 async function as(role,sql,params=[]){await db.exec(`begin;set local role ${role}`);try{
  await db.query("select set_config('request.jwt.claims',$1,true),set_config('request.headers',$2,true)",[JSON.stringify({sub:uid,session_id:sid,role}),JSON.stringify({'x-lingjing-device-id':device})]);

@@ -13,7 +13,7 @@ test('location policy and consumption recheck canonical owner/device/session rev
       grant select,update on public.lingjing_accounts,public.lingjing_devices to service_role;
       insert into auth.users values('${actor.authUserId}');insert into public.lingjing_accounts values('${actor.ownerAccountId}','${actor.authUserId}','active');
       insert into public.lingjing_devices values('${actor.ownerAccountId}','${actor.deviceId}','${actor.sessionId}',null);`);
-    for(const file of ['20261025020719_lingjing_discovery_cloud_authority.sql','20261025025641_lingjing_discovery_live_actor_guard.sql'])await db.exec(readFileSync('infra/supabase/migrations/'+file,'utf8'));
+    for(const file of ['20261025030635_lingjing_discovery_cloud_authority.sql','20261025030639_lingjing_discovery_live_actor_guard.sql'])await db.exec(readFileSync('infra/supabase/migrations/'+file,'utf8'));
     await db.exec('set role service_role');assert.deepEqual(await call(),{allowSimulatedLocation:false});
     for(const override of [{ownerAccountId:'foreign'},{deviceId:'not-a-uuid'},{sessionId:'d37552dd-bbdd-4877-8d2c-89f5e77c47e8'}])await assert.rejects(call({...actor,...override}),/AUTH_REQUIRED/);
     await db.exec("reset role;update public.lingjing_devices set revoked_at=now();set role service_role");await assert.rejects(call(),/AUTH_REQUIRED/);

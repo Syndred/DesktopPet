@@ -1,0 +1,63 @@
+# Supabase CLI 2.122 local/deployment configuration. No service credentials.
+# Remote history/source versions are recorded in deployment-manifest.json.
+project_id = "lingjing-desktop"
+
+[api]
+enabled = true
+port = 54321
+schemas = ["public", "graphql_public"]
+extra_search_path = ["public", "extensions"]
+max_rows = 1000
+
+[db]
+port = 54322
+shadow_port = 54320
+major_version = 17
+
+[db.migrations]
+enabled = true
+schema_paths = []
+
+[db.seed]
+enabled = false
+
+[realtime]
+enabled = true
+
+[storage]
+enabled = true
+file_size_limit = "4MiB"
+
+# Each protected function validates fresh Auth/user/session/device in its body.
+
+[functions.lingjing-auth]
+verify_jwt = false
+entrypoint = "./functions/lingjing-auth/index.ts"
+
+[functions.lingjing-save]
+verify_jwt = false
+entrypoint = "./functions/lingjing-save/index.ts"
+
+[functions.companions-sync]
+verify_jwt = false
+entrypoint = "./functions/companions-sync/index.ts"
+
+[functions.discovery]
+verify_jwt = false
+entrypoint = "./functions/discovery/index.ts"
+
+[functions.garden-sync]
+verify_jwt = false
+entrypoint = "./functions/garden-sync/index.ts"
+
+[functions.territory-sync]
+verify_jwt = false
+entrypoint = "./functions/territory-sync/index.ts"
+
+[functions.lingjing-battle]
+verify_jwt = false
+entrypoint = "./functions/lingjing-battle/index.ts"
+
+[functions.lingjing-resources]
+verify_jwt = false
+entrypoint = "./functions/lingjing-resources/index.ts"

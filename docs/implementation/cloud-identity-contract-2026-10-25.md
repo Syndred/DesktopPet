@@ -26,7 +26,7 @@ type LingjingActor = {
 
 ## SQL / RLS
 
-规范迁移由 CLI 2.122.0 `migration new` 生成：`20261025020314_lingjing_identity_actor_contract.sql`。新增 `public.lingjing_accounts` / `public.lingjing_devices` 及不可直接读写的 `lingjing_private.legacy_account_claims`。不覆盖既有表。UID 与 owner 分列；新 owner 为独立 `account:<uuid>`，已验证旧记录保留原文本 owner。
+规范迁移由 CLI 2.122.0 `migration new` 生成：`20261025021620_lingjing_identity_actor_contract.sql`。新增 `public.lingjing_accounts` / `public.lingjing_devices` 及不可直接读写的 `lingjing_private.legacy_account_claims`。不覆盖既有表。UID 与 owner 分列；新 owner 为独立 `account:<uuid>`，已验证旧记录保留原文本 owner。
 
 对外 RPC：
 
@@ -52,7 +52,7 @@ type LingjingActor = {
 
 ## 完整存档与领域事务接口
 
-`20261025021759_lingjing_protected_save_cas.sql` 提供 `lingjing-save` 自验证 Edge 入口（`verify_jwt=false`）。`POST {op:'push',actionId,baseRevision,envelope}` 使用用户 JWT 和设备头，只能修改 `settings` / `conversations`；所有受保护模块及通用表必须与服务器片段完全一致。`read` 无 actionId 读当前完整头，带 actionId 独立读回不可变操作回执；`archive` 保存原始本地档案并返回 `promoted:false`，不生成库存或奖励。所有公开表仅允许本人 SELECT，写入必须经过受限 RPC。冲突 `SYNC_CONFLICT` / 标识复用 `ACTION_ID_REUSED` 为409，不能自动强推。
+`20261025024615_lingjing_protected_save_cas.sql` 提供 `lingjing-save` 自验证 Edge 入口（`verify_jwt=false`）。`POST {op:'push',actionId,baseRevision,envelope}` 使用用户 JWT 和设备头，只能修改 `settings` / `conversations`；所有受保护模块及通用表必须与服务器片段完全一致。`read` 无 actionId 读当前完整头，带 actionId 独立读回不可变操作回执；`archive` 保存原始本地档案并返回 `promoted:false`，不生成库存或奖励。所有公开表仅允许本人 SELECT，写入必须经过受限 RPC。冲突 `SYNC_CONFLICT` / 标识复用 `ACTION_ID_REUSED` 为409，不能自动强推。
 
 领域 SQL 受控函数在同一事务中按以下顺序执行：
 
@@ -80,13 +80,13 @@ JSON SHA256 和现有备份保持兼容，SQL 处理 UTF-16 键排序及 ECMAScr
 
 同一个 owner/device/Auth session 取得的 `.client` 是同一个官方 SDK 实例。SDK 使用 `accessToken` 异步 callback，由账号模块在每次 Data API/Storage 请求及 Realtime callback/heartbeat/reconnect 时取得仍有效的 access JWT；没有固定 Authorization header。刷新后账号模块调用 `client.realtime.setAuth()` 更新现有频道，并保持callback模式。消费者不得手动 `setAuth(token)` 固定令牌；SDK的 `.auth` 不对领域开放，密码/刷新由账号模块独占。退出、失效、切账号或Auth session更换时取消频道并断开连接，旧SDK回调不再提供该账号JWT。`.accessToken` 是兼容的瞬时值，长期任务必须使用SDK callback或 `.invoke()`，不可缓存该字符串。
 
-`20261025031842_lingjing_session_revocation_ledger.sql` 追加私有、禁止UPDATE/DELETE的 `revoked_auth_sessions`，永久记录显式撤销和被新登录替换的SID。register/revoke按owner行锁序列化，等锁后再查SID。`live_session_id()` 共用检查使直接authenticated RPC、actor、session和RLS均拒绝旧SID，不能只依赖当前device行或Edge。升级时保留全部当前有效设备绑定，只补记已撤销行及已关联灵境账号当前未绑定的旧Auth sessions，以关闭旧实现已丢失的替换历史；不改Auth表数据，不扩大service_role对auth表读取权限。迁移瞬间尚未完成设备绑定的登录可能需要重新登录一次，原密码和存档不变。
+`20261025032327_lingjing_session_revocation_ledger.sql` 追加私有、禁止UPDATE/DELETE的 `revoked_auth_sessions`，永久记录显式撤销和被新登录替换的SID。register/revoke按owner行锁序列化，等锁后再查SID。`live_session_id()` 共用检查使直接authenticated RPC、actor、session和RLS均拒绝旧SID，不能只依赖当前device行或Edge。升级时保留全部当前有效设备绑定，只补记已撤销行及已关联灵境账号当前未绑定的旧Auth sessions，以关闭旧实现已丢失的替换历史；不改Auth表数据，不扩大service_role对auth表读取权限。迁移瞬间尚未完成设备绑定的登录可能需要重新登录一次，原密码和存档不变。
 
 所有service-role业务提交在同一事务先调用 `lingjing_private.assert_service_actor(owner,authUid,deviceUuid,sessionUuid)`：取得owner `FOR UPDATE`规范锁后，锁住真实Auth用户/session `FOR SHARE`，复核activeowner、nonanonymous、实际not_after/clock_timestamp、immutable撤销账本和当前device/SID。锁保留到业务提交结束，把退出/撤销与提交线性化；没有新Auth表读取授权。helper私有definer、空search_path、仅service_role可EXEC。`20261025033602` 提供helper，`20261025033734` 保持03 discovery live_actor、05 territory_check_actor和02 companion command签名/授权及业务内容，替换其重复身份检查；04/07新RPC应直接调用同一helper并传四个已验证身份字段。
 
 主进程受保护同步先完整保存 `account_sync_sources.original_document`，再按已确认的 cloudRevision 拼合个人设置/聊天与当前服务端权威片段。缺少可信来源的本机玩法差异只上传 `promoted:false` 安全投影，不会覆盖云库存。`cloud-projection.cjs` 排除旧legacy原文、raw/source_json、凭据字段及配置JSON内嵌的凭据，单列 `original_checksum` 与 `cloud_projection_checksum` 和排除项；不能把安全投影称为完整原档云备份。本机旧源原件、原始快照和备份保留。同步结果 `requiresAuthority:true` / `privacyRedactions:true` 时只声明可同步内容成功，UI显示核验/私密字段留在本机。冲突不会重定基准版本；显式云恢复前生成原档备份。已经准备的CAS输入在网络/响应丢失后原样重试，不能重新读取新版头覆盖原action内容。
 
-`20261025025906_lingjing_cloud_secret_guard.sql` 与客户端使用一致的schema边界：`conversations.data.tables.conversation_messages.content`、`conversation_memories.content`、`conversation_profiles.persona/reply_style` 的字符串是用户正文，逐字保留，即使正文是 `{"password":"EXAMPLE_PLACEHOLDER","enabled":true}`。只有这些明确字段免于字符串JSON配置解析；其他位置的nested/serialized credential继续拒绝。通用表的对应正文叶子也使用完整路径判断，不能通过带点的伪造key名绕过。公开业务 `proof`（例如捕捉回执）不视为登录密钥，`cloudProof/sessionProof/authProof` 才是账号私密字段。
+`20261025030859_lingjing_cloud_secret_guard.sql` 与客户端使用一致的schema边界：`conversations.data.tables.conversation_messages.content`、`conversation_memories.content`、`conversation_profiles.persona/reply_style` 的字符串是用户正文，逐字保留，即使正文是 `{"password":"EXAMPLE_PLACEHOLDER","enabled":true}`。只有这些明确字段免于字符串JSON配置解析；其他位置的nested/serialized credential继续拒绝。通用表的对应正文叶子也使用完整路径判断，不能通过带点的伪造key名绕过。公开业务 `proof`（例如捕捉回执）不视为登录密钥，`cloudProof/sessionProof/authProof` 才是账号私密字段。
 
 02 的 `6435a13` 已合入并解决sync冲突。`BackupManager.normalizeData(data,owner)` 可通过已注册adapter的 `legacyTables/fromLegacyTables` 在验证后生成通用表→正式模块的恢复/指纹视图，原envelope和checksum不改。受保护同步仅用该视图比较归属及差异，上传CAS仍原样携带服务器权威片段，不能用转换生成自报玩法状态。显式云恢复新增对应checksum/revision checkpoint，避免恢复成功后因旧回执被误报为待同步。
 

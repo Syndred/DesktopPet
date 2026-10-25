@@ -12,9 +12,9 @@
 
 ## 服务端受保护引用
 
-第二迁移 `20261025024855_lingjing_verified_resource_authority.sql` 和函数 `lingjing-resources` 在 identity / protected-save CAS / private Storage 之后由主协调部署。函数使用统一 withActor；publish 只接收 resourceId、manifestSha256，从当前用户的真实私有对象读取 manifest 和所有分块，校验路径、大小、分块/全文件/整包哈希和密钥字段，再重新核对会话。用户客户端从不使用 service secret。
+第二迁移 `20261025034122_lingjing_verified_resource_authority.sql` 和函数 `lingjing-resources` 在 identity / protected-save CAS / private Storage 之后由主协调部署。函数使用统一 withActor；publish 只接收 resourceId、manifestSha256，从当前用户的真实私有对象读取 manifest 和所有分块，校验路径、大小、分块/全文件/整包哈希和密钥字段，再重新核对会话。用户客户端从不使用 service secret。
 
-核验后服务端调用仅 service_role 可执行的 `lingjing_register_resource_receipt`。设备 UUID 与 session UUID 只从 withActor 的已验证 actor 传入，客户端 body 不可覆盖。SQL 先调用 08 `lingjing_private.assert_service_actor(owner,uid,device,sid)`，取得统一 owner 锁后检查真实 Auth session、not_after、非匿名、不可变撤销台账与设备绑定，再从实际 index 行生成 refs，调用 private commit_authority，并写 `lingjing_resource_references`，同事务提交；失败同时回滚，重复同一包也须先通过事务 guard。普通 authenticated 只能读本人 references，不能注册、修改或删除；个人 CAS 不能自报资源权限。部署顺序还要求 08 的 `20261025031842_lingjing_session_revocation_ledger.sql` 和 `20261025033602_lingjing_transaction_actor_guard.sql` 先于资源注册函数；不新增 auth.* 表权限。
+核验后服务端调用仅 service_role 可执行的 `lingjing_register_resource_receipt`。设备 UUID 与 session UUID 只从 withActor 的已验证 actor 传入，客户端 body 不可覆盖。SQL 先调用 08 `lingjing_private.assert_service_actor(owner,uid,device,sid)`，取得统一 owner 锁后检查真实 Auth session、not_after、非匿名、不可变撤销台账与设备绑定，再从实际 index 行生成 refs，调用 private commit_authority，并写 `lingjing_resource_references`，同事务提交；失败同时回滚，重复同一包也须先通过事务 guard。普通 authenticated 只能读本人 references，不能注册、修改或删除；个人 CAS 不能自报资源权限。部署顺序还要求 08 的 `20261025032327_lingjing_session_revocation_ledger.sql` 和 `20261025034106_lingjing_transaction_actor_guard.sql` 先于资源注册函数；不新增 auth.* 表权限。
 
 客户端在独立请求中读回 references 与 lingjing_save_actions，核对同 actionId/revision/checksum 后才将 live 任务记为完整 verified。仅上传成功但未注册的旧任务显示 awaiting-authority，保留 lastStorageVerifiedAt；lastVerifiedAt 只表示完成受保护注册。此前模拟/未验证回执持续隔离，不能提升为 live 成功。旧存储阶段已通过的包可直接复用发布，不重复上传全部字节。
 
@@ -24,7 +24,7 @@
 
 ## 校准和动作偏好
 
-增量迁移 `20261025035333_lingjing_verified_resource_preferences.sql` 与 Edge `op:preferences` 使用同一 owner 事务 guard 和 protected-save commit。请求仅有 `{op,resourceId,actionId:UUID,baseRevision,document:{calibration,actions}}`；不接受成长、库存、任意 schema 或文本 owner。`preferences.mjs` 抽取原桌面验证器的原算法供桌面与 Edge 共用。私有资源必须已有 verified reference，Edge 重新读取真实包验证实际 clip；内置八角色只使用已提交的图集 JSON 动作元数据，继续离线，不上传内置图像。数据库另外限制全部字段、数值范围和类型。
+增量迁移 `20261025041216_lingjing_verified_resource_preferences.sql` 与 Edge `op:preferences` 使用同一 owner 事务 guard 和 protected-save commit。请求仅有 `{op,resourceId,actionId:UUID,baseRevision,document:{calibration,actions}}`；不接受成长、库存、任意 schema 或文本 owner。`preferences.mjs` 抽取原桌面验证器的原算法供桌面与 Edge 共用。私有资源必须已有 verified reference，Edge 重新读取真实包验证实际 clip；内置八角色只使用已提交的图集 JSON 动作元数据，继续离线，不上传内置图像。数据库另外限制全部字段、数值范围和类型。
 
 云端 `lingjing_resource_preferences` 和 immutable preference action 行仅允许客户端 RLS 读取。每个资源使用独立偏好 revision 检查并发，成功在同一个公共 save revision 提交 `character-resources.version2.data.preferences:[{resourceId,revision,calibration,actions}]`；包登记会同时保留已经提交的偏好。原 action 重试返回原回执，错误 SID、未验证索引、非法校准、过期版本和后续回执失败均不改变公共存档。
 

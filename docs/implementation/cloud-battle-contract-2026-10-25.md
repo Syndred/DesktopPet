@@ -4,7 +4,7 @@
 
 ## 权限与事务
 
-目标 `jbvrdmrkwpznbrvteive`，全部远端迁移和部署由主协调执行。规范 SQL 由 CLI 2.122.0 `migration new` 生成：`20261025020540_lingjing_battle_jwt_rooms.sql`，依赖先部署 08 身份迁移。
+目标 `jbvrdmrkwpznbrvteive`，全部远端迁移和部署由主协调执行。规范 SQL 由 CLI 2.122.0 `migration new` 生成：`20261025034744_lingjing_battle_jwt_rooms.sql`，依赖先部署 08 身份迁移。
 
 新增七张 `lingjing_battle_*` 表：邀请、房间、成员、未解析行动、已解析回合、命令回执、奖励凭据。历史旧表不删除或改写。Auth UUID 和旧文本 owner 分列；同一 Auth 用户或同一 owner 最多一个活动房间，同账号不同设备不能互相对战。
 
@@ -23,7 +23,7 @@
 - `lingjing_battle_training_command`：云账号训练使用同一内核的实际AI行动，保存服务端会话、不可变行动回执和revision；客户端只提交动作。相同actionId重放不会重新抽取AI动作或推进另一回合。
 - `lingjing_battle_settle_authority`：好友/训练共用一次结算事务。先lock_save_owner，再锁领域行，核验原出战pet和胜负；02 awardBattleResult、05 applyCloudCommand准备伙伴/菜园，04投影完整战报，最后在同一SQL事务调用08 commit_authority并插入结算回执。失败全部回滚；旧receipt-only claim函数已撤销service_role EXECUTE。稳定奖励actionId为好友 `battle:<room UUID>:<owner>`、训练 `battle:battle-<training UUID>:<owner>`；种子source=battle、receiptId分别为room UUID或训练sessionId，复用05确定性种子选择及2粒数量。
 
-第二个CLI迁移 `20261025024552_lingjing_battle_authority_save.sql` 依赖08 protected CAS及第一份battle迁移。只新增训练会话/命令/结算表和同事务RPC，不改旧历史。好友和训练活动成员互斥，遵守统一账号行优先的锁顺序。两份battle迁移均未由04写入生产。
+第二个CLI迁移 `20261025034748_lingjing_battle_authority_save.sql` 依赖08 protected CAS及第一份battle迁移。只新增训练会话/命令/结算表和同事务RPC，不改旧历史。好友和训练活动成员互斥，遵守统一账号行优先的锁顺序。两份battle迁移均未由04写入生产。
 
 正式函数名 `lingjing-battle`。运行时只需 `lingjing-battle/index.ts`、`lingjing-battle/runtime.generated.mjs`、`_shared/lingjing-auth.ts` 三份文件。`scripts/battle/build-cloud.mjs`机械打包同一核心/02成长与模板/05菜园及JSON，`--check`按仓库相对路径与CRLF规范化SHA校验，不手改生成物。完整TS源码仍保留审查。08 withActor校验真实JWT/活跃Auth session/owner/device；verify_jwt=false只关闭旧网关校验，不关闭函数认证。不要部署旧duel-online入口。
 
