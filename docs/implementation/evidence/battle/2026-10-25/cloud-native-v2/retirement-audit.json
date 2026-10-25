@@ -1,0 +1,49 @@
+{
+  "at": "2026-10-25T05:27:20.626Z",
+  "runtimeSource": "65e42105687ef38bdc97450f006d0415aec9a6ac",
+  "retired": [
+    "hardcoded47 HTTP URL and anon key",
+    "SUPABASE_URL/SUPABASE_ANON_KEY/launcher fallback in OnlineDuelService",
+    "registerAccount/loginAccount/updateAccount legacy password protocol",
+    "legacy request-body identity in production room/directory methods",
+    "old public duel_* room channels",
+    "VM execution of old duel-online source",
+    "old account/duel schema SQL verification"
+  ],
+  "retained": [
+    "08 verified HTTPS Auth SDK and accessToken callback",
+    "private lingjing:battle room and round consumers",
+    "new JWT-authorized search_accounts operation name",
+    "archive/history read compatibility",
+    "explicit foundation-gated loopback QA adapter"
+  ],
+  "remainingOldReferences": [
+    {
+      "path": "runtime/features/battle/tests/jwt-transport.test.cjs",
+      "reason": "Negative constructor/HTTP/password tests only; asserts no activation or network request"
+    },
+    {
+      "path": "runtime/features/battle/verify-live-cloud.mjs",
+      "reason": "Introspection asserts old password methods and key field do not exist"
+    },
+    {
+      "path": "runtime/features/accounts/supabase-remote.cjs",
+      "reason": "Explicit rejection of obsolete Edge function names; owned by08"
+    },
+    {
+      "path": "runtime/features/battle/qa-adapter.cjs and tests/qa-duel-server.cjs",
+      "reason": "Clearly simulated loopback scenario identity only"
+    }
+  ],
+  "coordinatorOwnedLegacyFiles": [
+    "infra/supabase/functions/duel-online/index.ts",
+    "infra/supabase/migrations/0003_duel_realtime_schema.sql",
+    "infra/supabase/migrations/0004_runtime_cloud_auth_duel_requests.sql",
+    "infra/supabase/migrations/0005_runtime_single_login_session.sql",
+    "infra/supabase/migrations/20261024_lingjing_battle_atomic_rounds.sql"
+  ],
+  "cssChanged": false,
+  "formulasChanged": false,
+  "remoteDeployedByThisChat": false,
+  "normalRuntimeLegacyConsumers": 0
+}

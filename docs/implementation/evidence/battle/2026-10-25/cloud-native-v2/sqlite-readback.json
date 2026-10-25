@@ -1,0 +1,1443 @@
+{
+  "at": "2026-10-25T05:25:23.814Z",
+  "provenance": "actual-marked-native-QA-SQLite-read-only",
+  "assertions": "exact owned pet, original action IDs, one XP/seed/report receipt per actual finished battle; inventory equals starter stock plus unique rewards; 10 friend and20 training rounds persisted",
+  "readbacks": [
+    {
+      "phase": "duel-phase",
+      "profile": "0",
+      "owner": "account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+      "pet": {
+        "petId": "pet-2d660416-db18-44a1-8392-74f235484151",
+        "element": "water",
+        "growth": {
+          "level": 1,
+          "experience": 20,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 1,
+          "stats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        }
+      },
+      "rewards": [
+        {
+          "owner_account_id": "account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+          "session_id": "online-355f4104-85cf-4ca4-8e27-321f0638e376",
+          "pet_id": "pet-2d660416-db18-44a1-8392-74f235484151",
+          "action_id": "battle:355f4104-85cf-4ca4-8e27-321f0638e376:account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+          "reward": {
+            "actionId": "battle:355f4104-85cf-4ca4-8e27-321f0638e376:account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+            "petId": "pet-2d660416-db18-44a1-8392-74f235484151",
+            "sessionId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+            "mode": "friend",
+            "won": true,
+            "experience": 20,
+            "applied": true,
+            "duplicate": false,
+            "previousExperience": 0,
+            "previousLevel": 1,
+            "currentExperience": 20,
+            "currentLevel": 1,
+            "seeds": {
+              "source": "battle",
+              "receiptId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+              "itemId": "seed:tomato",
+              "quantity": 2
+            }
+          }
+        }
+      ],
+      "growth": [
+        {
+          "actionId": "battle:355f4104-85cf-4ca4-8e27-321f0638e376:account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+          "reward": {
+            "actionId": "battle:355f4104-85cf-4ca4-8e27-321f0638e376:account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+            "petId": "pet-2d660416-db18-44a1-8392-74f235484151",
+            "sessionId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+            "mode": "friend",
+            "won": true,
+            "experience": 20,
+            "applied": true,
+            "duplicate": false,
+            "previousExperience": 0,
+            "previousLevel": 1,
+            "currentExperience": 20,
+            "currentLevel": 1
+          }
+        }
+      ],
+      "reports": [
+        {
+          "id": "online-355f4104-85cf-4ca4-8e27-321f0638e376",
+          "sessionId": "online-355f4104-85cf-4ca4-8e27-321f0638e376",
+          "rounds": 10,
+          "reward": {
+            "actionId": "battle:355f4104-85cf-4ca4-8e27-321f0638e376:account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+            "petId": "pet-2d660416-db18-44a1-8392-74f235484151",
+            "sessionId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+            "mode": "friend",
+            "won": true,
+            "experience": 20,
+            "applied": true,
+            "duplicate": false,
+            "previousExperience": 0,
+            "previousLevel": 1,
+            "currentExperience": 20,
+            "currentLevel": 1,
+            "seeds": {
+              "source": "battle",
+              "receiptId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+              "itemId": "seed:tomato",
+              "quantity": 2
+            }
+          }
+        }
+      ],
+      "seeds": [
+        {
+          "source": "battle",
+          "receipt_id": "355f4104-85cf-4ca4-8e27-321f0638e376",
+          "action_id": "battle-seeds:friend:355f4104-85cf-4ca4-8e27-321f0638e376",
+          "result": {
+            "source": "battle",
+            "receiptId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+            "itemId": "seed:tomato",
+            "quantity": 2
+          }
+        }
+      ],
+      "items": [
+        {
+          "item_id": "seed:berry",
+          "quantity": 2
+        },
+        {
+          "item_id": "seed:carrot",
+          "quantity": 2
+        },
+        {
+          "item_id": "seed:rice",
+          "quantity": 2
+        },
+        {
+          "item_id": "seed:tomato",
+          "quantity": 4
+        }
+      ],
+      "queryOnly": true,
+      "markerRunId": "4d2d7db8-596d-4397-844b-243e8600f14e"
+    },
+    {
+      "phase": "duel-phase",
+      "profile": "1",
+      "owner": "account:9e230794-470b-45be-9a18-a2564c88ba35",
+      "pet": {
+        "petId": "pet-7374c520-8730-45ca-a419-227e60a2fa81",
+        "element": "fire",
+        "growth": {
+          "level": 1,
+          "experience": 5,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 118,
+            "atk": 33,
+            "def": 20,
+            "spd": 22
+          }
+        }
+      },
+      "rewards": [
+        {
+          "owner_account_id": "account:9e230794-470b-45be-9a18-a2564c88ba35",
+          "session_id": "online-355f4104-85cf-4ca4-8e27-321f0638e376",
+          "pet_id": "pet-7374c520-8730-45ca-a419-227e60a2fa81",
+          "action_id": "battle:355f4104-85cf-4ca4-8e27-321f0638e376:account:9e230794-470b-45be-9a18-a2564c88ba35",
+          "reward": {
+            "actionId": "battle:355f4104-85cf-4ca4-8e27-321f0638e376:account:9e230794-470b-45be-9a18-a2564c88ba35",
+            "petId": "pet-7374c520-8730-45ca-a419-227e60a2fa81",
+            "sessionId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+            "mode": "friend",
+            "won": false,
+            "experience": 5,
+            "applied": true,
+            "duplicate": false,
+            "previousExperience": 0,
+            "previousLevel": 1,
+            "currentExperience": 5,
+            "currentLevel": 1,
+            "seeds": {
+              "source": "battle",
+              "receiptId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+              "itemId": "seed:tomato",
+              "quantity": 2
+            }
+          }
+        }
+      ],
+      "growth": [
+        {
+          "actionId": "battle:355f4104-85cf-4ca4-8e27-321f0638e376:account:9e230794-470b-45be-9a18-a2564c88ba35",
+          "reward": {
+            "actionId": "battle:355f4104-85cf-4ca4-8e27-321f0638e376:account:9e230794-470b-45be-9a18-a2564c88ba35",
+            "petId": "pet-7374c520-8730-45ca-a419-227e60a2fa81",
+            "sessionId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+            "mode": "friend",
+            "won": false,
+            "experience": 5,
+            "applied": true,
+            "duplicate": false,
+            "previousExperience": 0,
+            "previousLevel": 1,
+            "currentExperience": 5,
+            "currentLevel": 1
+          }
+        }
+      ],
+      "reports": [
+        {
+          "id": "online-355f4104-85cf-4ca4-8e27-321f0638e376",
+          "sessionId": "online-355f4104-85cf-4ca4-8e27-321f0638e376",
+          "rounds": 10,
+          "reward": {
+            "actionId": "battle:355f4104-85cf-4ca4-8e27-321f0638e376:account:9e230794-470b-45be-9a18-a2564c88ba35",
+            "petId": "pet-7374c520-8730-45ca-a419-227e60a2fa81",
+            "sessionId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+            "mode": "friend",
+            "won": false,
+            "experience": 5,
+            "applied": true,
+            "duplicate": false,
+            "previousExperience": 0,
+            "previousLevel": 1,
+            "currentExperience": 5,
+            "currentLevel": 1,
+            "seeds": {
+              "source": "battle",
+              "receiptId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+              "itemId": "seed:tomato",
+              "quantity": 2
+            }
+          }
+        }
+      ],
+      "seeds": [
+        {
+          "source": "battle",
+          "receipt_id": "355f4104-85cf-4ca4-8e27-321f0638e376",
+          "action_id": "battle-seeds:friend:355f4104-85cf-4ca4-8e27-321f0638e376",
+          "result": {
+            "source": "battle",
+            "receiptId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+            "itemId": "seed:tomato",
+            "quantity": 2
+          }
+        }
+      ],
+      "items": [
+        {
+          "item_id": "seed:berry",
+          "quantity": 2
+        },
+        {
+          "item_id": "seed:carrot",
+          "quantity": 2
+        },
+        {
+          "item_id": "seed:rice",
+          "quantity": 2
+        },
+        {
+          "item_id": "seed:tomato",
+          "quantity": 4
+        }
+      ],
+      "queryOnly": true,
+      "markerRunId": "4d2d7db8-596d-4397-844b-243e8600f14e"
+    },
+    {
+      "phase": "report-training-phase",
+      "profile": "0",
+      "owner": "account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+      "pet": {
+        "petId": "pet-2d660416-db18-44a1-8392-74f235484151",
+        "element": "water",
+        "growth": {
+          "level": 1,
+          "experience": 25,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 1,
+          "stats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        }
+      },
+      "rewards": [
+        {
+          "owner_account_id": "account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+          "session_id": "battle-8a87db17-8b9f-40c2-b198-b85780b86e4b",
+          "pet_id": "pet-2d660416-db18-44a1-8392-74f235484151",
+          "action_id": "battle:battle-8a87db17-8b9f-40c2-b198-b85780b86e4b:account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+          "reward": {
+            "actionId": "battle:battle-8a87db17-8b9f-40c2-b198-b85780b86e4b:account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+            "petId": "pet-2d660416-db18-44a1-8392-74f235484151",
+            "sessionId": "battle-8a87db17-8b9f-40c2-b198-b85780b86e4b",
+            "mode": "training",
+            "won": false,
+            "experience": 5,
+            "applied": true,
+            "duplicate": false,
+            "previousExperience": 20,
+            "previousLevel": 1,
+            "currentExperience": 25,
+            "currentLevel": 1,
+            "seeds": {
+              "source": "battle",
+              "receiptId": "battle-8a87db17-8b9f-40c2-b198-b85780b86e4b",
+              "itemId": "seed:carrot",
+              "quantity": 2
+            }
+          }
+        },
+        {
+          "owner_account_id": "account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+          "session_id": "online-355f4104-85cf-4ca4-8e27-321f0638e376",
+          "pet_id": "pet-2d660416-db18-44a1-8392-74f235484151",
+          "action_id": "battle:355f4104-85cf-4ca4-8e27-321f0638e376:account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+          "reward": {
+            "actionId": "battle:355f4104-85cf-4ca4-8e27-321f0638e376:account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+            "petId": "pet-2d660416-db18-44a1-8392-74f235484151",
+            "sessionId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+            "mode": "friend",
+            "won": true,
+            "experience": 20,
+            "applied": true,
+            "duplicate": false,
+            "previousExperience": 0,
+            "previousLevel": 1,
+            "currentExperience": 20,
+            "currentLevel": 1,
+            "seeds": {
+              "source": "battle",
+              "receiptId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+              "itemId": "seed:tomato",
+              "quantity": 2
+            }
+          }
+        }
+      ],
+      "growth": [
+        {
+          "actionId": "battle:355f4104-85cf-4ca4-8e27-321f0638e376:account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+          "reward": {
+            "actionId": "battle:355f4104-85cf-4ca4-8e27-321f0638e376:account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+            "petId": "pet-2d660416-db18-44a1-8392-74f235484151",
+            "sessionId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+            "mode": "friend",
+            "won": true,
+            "experience": 20,
+            "applied": true,
+            "duplicate": false,
+            "previousExperience": 0,
+            "previousLevel": 1,
+            "currentExperience": 20,
+            "currentLevel": 1
+          }
+        },
+        {
+          "actionId": "battle:battle-8a87db17-8b9f-40c2-b198-b85780b86e4b:account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+          "reward": {
+            "actionId": "battle:battle-8a87db17-8b9f-40c2-b198-b85780b86e4b:account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+            "petId": "pet-2d660416-db18-44a1-8392-74f235484151",
+            "sessionId": "battle-8a87db17-8b9f-40c2-b198-b85780b86e4b",
+            "mode": "training",
+            "won": false,
+            "experience": 5,
+            "applied": true,
+            "duplicate": false,
+            "previousExperience": 20,
+            "previousLevel": 1,
+            "currentExperience": 25,
+            "currentLevel": 1
+          }
+        }
+      ],
+      "reports": [
+        {
+          "id": "battle-8a87db17-8b9f-40c2-b198-b85780b86e4b",
+          "sessionId": "battle-8a87db17-8b9f-40c2-b198-b85780b86e4b",
+          "rounds": 20,
+          "reward": {
+            "actionId": "battle:battle-8a87db17-8b9f-40c2-b198-b85780b86e4b:account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+            "petId": "pet-2d660416-db18-44a1-8392-74f235484151",
+            "sessionId": "battle-8a87db17-8b9f-40c2-b198-b85780b86e4b",
+            "mode": "training",
+            "won": false,
+            "experience": 5,
+            "applied": true,
+            "duplicate": false,
+            "previousExperience": 20,
+            "previousLevel": 1,
+            "currentExperience": 25,
+            "currentLevel": 1,
+            "seeds": {
+              "source": "battle",
+              "receiptId": "battle-8a87db17-8b9f-40c2-b198-b85780b86e4b",
+              "itemId": "seed:carrot",
+              "quantity": 2
+            }
+          }
+        },
+        {
+          "id": "online-355f4104-85cf-4ca4-8e27-321f0638e376",
+          "sessionId": "online-355f4104-85cf-4ca4-8e27-321f0638e376",
+          "rounds": 10,
+          "reward": {
+            "actionId": "battle:355f4104-85cf-4ca4-8e27-321f0638e376:account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+            "petId": "pet-2d660416-db18-44a1-8392-74f235484151",
+            "sessionId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+            "mode": "friend",
+            "won": true,
+            "experience": 20,
+            "applied": true,
+            "duplicate": false,
+            "previousExperience": 0,
+            "previousLevel": 1,
+            "currentExperience": 20,
+            "currentLevel": 1,
+            "seeds": {
+              "source": "battle",
+              "receiptId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+              "itemId": "seed:tomato",
+              "quantity": 2
+            }
+          }
+        }
+      ],
+      "seeds": [
+        {
+          "source": "battle",
+          "receipt_id": "355f4104-85cf-4ca4-8e27-321f0638e376",
+          "action_id": "battle-seeds:friend:355f4104-85cf-4ca4-8e27-321f0638e376",
+          "result": {
+            "source": "battle",
+            "receiptId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+            "itemId": "seed:tomato",
+            "quantity": 2
+          }
+        },
+        {
+          "source": "battle",
+          "receipt_id": "battle-8a87db17-8b9f-40c2-b198-b85780b86e4b",
+          "action_id": "battle-seeds:training:battle-8a87db17-8b9f-40c2-b198-b85780b86e4b",
+          "result": {
+            "source": "battle",
+            "receiptId": "battle-8a87db17-8b9f-40c2-b198-b85780b86e4b",
+            "itemId": "seed:carrot",
+            "quantity": 2
+          }
+        }
+      ],
+      "items": [
+        {
+          "item_id": "seed:berry",
+          "quantity": 2
+        },
+        {
+          "item_id": "seed:carrot",
+          "quantity": 4
+        },
+        {
+          "item_id": "seed:rice",
+          "quantity": 2
+        },
+        {
+          "item_id": "seed:tomato",
+          "quantity": 4
+        }
+      ],
+      "queryOnly": true,
+      "markerRunId": "33218d1e-488f-486c-ad56-502cb458a9b0"
+    },
+    {
+      "phase": "report-training-phase",
+      "profile": "1",
+      "owner": "account:9e230794-470b-45be-9a18-a2564c88ba35",
+      "pet": {
+        "petId": "pet-7374c520-8730-45ca-a419-227e60a2fa81",
+        "element": "fire",
+        "growth": {
+          "level": 1,
+          "experience": 5,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 0,
+          "stats": {
+            "hp": 118,
+            "atk": 33,
+            "def": 20,
+            "spd": 22
+          }
+        }
+      },
+      "rewards": [
+        {
+          "owner_account_id": "account:9e230794-470b-45be-9a18-a2564c88ba35",
+          "session_id": "online-355f4104-85cf-4ca4-8e27-321f0638e376",
+          "pet_id": "pet-7374c520-8730-45ca-a419-227e60a2fa81",
+          "action_id": "battle:355f4104-85cf-4ca4-8e27-321f0638e376:account:9e230794-470b-45be-9a18-a2564c88ba35",
+          "reward": {
+            "actionId": "battle:355f4104-85cf-4ca4-8e27-321f0638e376:account:9e230794-470b-45be-9a18-a2564c88ba35",
+            "petId": "pet-7374c520-8730-45ca-a419-227e60a2fa81",
+            "sessionId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+            "mode": "friend",
+            "won": false,
+            "experience": 5,
+            "applied": true,
+            "duplicate": false,
+            "previousExperience": 0,
+            "previousLevel": 1,
+            "currentExperience": 5,
+            "currentLevel": 1,
+            "seeds": {
+              "source": "battle",
+              "receiptId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+              "itemId": "seed:tomato",
+              "quantity": 2
+            }
+          }
+        }
+      ],
+      "growth": [
+        {
+          "actionId": "battle:355f4104-85cf-4ca4-8e27-321f0638e376:account:9e230794-470b-45be-9a18-a2564c88ba35",
+          "reward": {
+            "actionId": "battle:355f4104-85cf-4ca4-8e27-321f0638e376:account:9e230794-470b-45be-9a18-a2564c88ba35",
+            "petId": "pet-7374c520-8730-45ca-a419-227e60a2fa81",
+            "sessionId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+            "mode": "friend",
+            "won": false,
+            "experience": 5,
+            "applied": true,
+            "duplicate": false,
+            "previousExperience": 0,
+            "previousLevel": 1,
+            "currentExperience": 5,
+            "currentLevel": 1
+          }
+        }
+      ],
+      "reports": [
+        {
+          "id": "online-355f4104-85cf-4ca4-8e27-321f0638e376",
+          "sessionId": "online-355f4104-85cf-4ca4-8e27-321f0638e376",
+          "rounds": 10,
+          "reward": {
+            "actionId": "battle:355f4104-85cf-4ca4-8e27-321f0638e376:account:9e230794-470b-45be-9a18-a2564c88ba35",
+            "petId": "pet-7374c520-8730-45ca-a419-227e60a2fa81",
+            "sessionId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+            "mode": "friend",
+            "won": false,
+            "experience": 5,
+            "applied": true,
+            "duplicate": false,
+            "previousExperience": 0,
+            "previousLevel": 1,
+            "currentExperience": 5,
+            "currentLevel": 1,
+            "seeds": {
+              "source": "battle",
+              "receiptId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+              "itemId": "seed:tomato",
+              "quantity": 2
+            }
+          }
+        }
+      ],
+      "seeds": [
+        {
+          "source": "battle",
+          "receipt_id": "355f4104-85cf-4ca4-8e27-321f0638e376",
+          "action_id": "battle-seeds:friend:355f4104-85cf-4ca4-8e27-321f0638e376",
+          "result": {
+            "source": "battle",
+            "receiptId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+            "itemId": "seed:tomato",
+            "quantity": 2
+          }
+        }
+      ],
+      "items": [
+        {
+          "item_id": "seed:berry",
+          "quantity": 2
+        },
+        {
+          "item_id": "seed:carrot",
+          "quantity": 2
+        },
+        {
+          "item_id": "seed:rice",
+          "quantity": 2
+        },
+        {
+          "item_id": "seed:tomato",
+          "quantity": 4
+        }
+      ],
+      "queryOnly": true,
+      "markerRunId": "33218d1e-488f-486c-ad56-502cb458a9b0"
+    },
+    {
+      "phase": "report-training-phase",
+      "profile": "2",
+      "owner": "account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+      "pet": {
+        "petId": "pet-2d660416-db18-44a1-8392-74f235484151",
+        "element": "water",
+        "growth": {
+          "level": 1,
+          "experience": 25,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 1,
+          "stats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        }
+      },
+      "rewards": [
+        {
+          "owner_account_id": "account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+          "session_id": "battle-8a87db17-8b9f-40c2-b198-b85780b86e4b",
+          "pet_id": "pet-2d660416-db18-44a1-8392-74f235484151",
+          "action_id": "battle:battle-8a87db17-8b9f-40c2-b198-b85780b86e4b:account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+          "reward": {
+            "actionId": "battle:battle-8a87db17-8b9f-40c2-b198-b85780b86e4b:account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+            "petId": "pet-2d660416-db18-44a1-8392-74f235484151",
+            "sessionId": "battle-8a87db17-8b9f-40c2-b198-b85780b86e4b",
+            "mode": "training",
+            "won": false,
+            "experience": 5,
+            "applied": true,
+            "duplicate": false,
+            "previousExperience": 20,
+            "previousLevel": 1,
+            "currentExperience": 25,
+            "currentLevel": 1,
+            "seeds": {
+              "source": "battle",
+              "receiptId": "battle-8a87db17-8b9f-40c2-b198-b85780b86e4b",
+              "itemId": "seed:carrot",
+              "quantity": 2
+            }
+          }
+        },
+        {
+          "owner_account_id": "account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+          "session_id": "online-355f4104-85cf-4ca4-8e27-321f0638e376",
+          "pet_id": "pet-2d660416-db18-44a1-8392-74f235484151",
+          "action_id": "battle:355f4104-85cf-4ca4-8e27-321f0638e376:account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+          "reward": {
+            "actionId": "battle:355f4104-85cf-4ca4-8e27-321f0638e376:account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+            "petId": "pet-2d660416-db18-44a1-8392-74f235484151",
+            "sessionId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+            "mode": "friend",
+            "won": true,
+            "experience": 20,
+            "applied": true,
+            "duplicate": false,
+            "previousExperience": 0,
+            "previousLevel": 1,
+            "currentExperience": 20,
+            "currentLevel": 1,
+            "seeds": {
+              "source": "battle",
+              "receiptId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+              "itemId": "seed:tomato",
+              "quantity": 2
+            }
+          }
+        }
+      ],
+      "growth": [
+        {
+          "actionId": "battle:355f4104-85cf-4ca4-8e27-321f0638e376:account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+          "reward": {
+            "actionId": "battle:355f4104-85cf-4ca4-8e27-321f0638e376:account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+            "petId": "pet-2d660416-db18-44a1-8392-74f235484151",
+            "sessionId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+            "mode": "friend",
+            "won": true,
+            "experience": 20,
+            "applied": true,
+            "duplicate": false,
+            "previousExperience": 0,
+            "previousLevel": 1,
+            "currentExperience": 20,
+            "currentLevel": 1
+          }
+        },
+        {
+          "actionId": "battle:battle-8a87db17-8b9f-40c2-b198-b85780b86e4b:account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+          "reward": {
+            "actionId": "battle:battle-8a87db17-8b9f-40c2-b198-b85780b86e4b:account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+            "petId": "pet-2d660416-db18-44a1-8392-74f235484151",
+            "sessionId": "battle-8a87db17-8b9f-40c2-b198-b85780b86e4b",
+            "mode": "training",
+            "won": false,
+            "experience": 5,
+            "applied": true,
+            "duplicate": false,
+            "previousExperience": 20,
+            "previousLevel": 1,
+            "currentExperience": 25,
+            "currentLevel": 1
+          }
+        }
+      ],
+      "reports": [
+        {
+          "id": "battle-8a87db17-8b9f-40c2-b198-b85780b86e4b",
+          "sessionId": "battle-8a87db17-8b9f-40c2-b198-b85780b86e4b",
+          "rounds": 20,
+          "reward": {
+            "actionId": "battle:battle-8a87db17-8b9f-40c2-b198-b85780b86e4b:account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+            "petId": "pet-2d660416-db18-44a1-8392-74f235484151",
+            "sessionId": "battle-8a87db17-8b9f-40c2-b198-b85780b86e4b",
+            "mode": "training",
+            "won": false,
+            "experience": 5,
+            "applied": true,
+            "duplicate": false,
+            "previousExperience": 20,
+            "previousLevel": 1,
+            "currentExperience": 25,
+            "currentLevel": 1,
+            "seeds": {
+              "source": "battle",
+              "receiptId": "battle-8a87db17-8b9f-40c2-b198-b85780b86e4b",
+              "itemId": "seed:carrot",
+              "quantity": 2
+            }
+          }
+        },
+        {
+          "id": "online-355f4104-85cf-4ca4-8e27-321f0638e376",
+          "sessionId": "online-355f4104-85cf-4ca4-8e27-321f0638e376",
+          "rounds": 10,
+          "reward": {
+            "actionId": "battle:355f4104-85cf-4ca4-8e27-321f0638e376:account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+            "petId": "pet-2d660416-db18-44a1-8392-74f235484151",
+            "sessionId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+            "mode": "friend",
+            "won": true,
+            "experience": 20,
+            "applied": true,
+            "duplicate": false,
+            "previousExperience": 0,
+            "previousLevel": 1,
+            "currentExperience": 20,
+            "currentLevel": 1,
+            "seeds": {
+              "source": "battle",
+              "receiptId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+              "itemId": "seed:tomato",
+              "quantity": 2
+            }
+          }
+        }
+      ],
+      "seeds": [
+        {
+          "source": "battle",
+          "receipt_id": "355f4104-85cf-4ca4-8e27-321f0638e376",
+          "action_id": "battle-seeds:friend:355f4104-85cf-4ca4-8e27-321f0638e376",
+          "result": {
+            "source": "battle",
+            "receiptId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+            "itemId": "seed:tomato",
+            "quantity": 2
+          }
+        },
+        {
+          "source": "battle",
+          "receipt_id": "battle-8a87db17-8b9f-40c2-b198-b85780b86e4b",
+          "action_id": "battle-seeds:training:battle-8a87db17-8b9f-40c2-b198-b85780b86e4b",
+          "result": {
+            "source": "battle",
+            "receiptId": "battle-8a87db17-8b9f-40c2-b198-b85780b86e4b",
+            "itemId": "seed:carrot",
+            "quantity": 2
+          }
+        }
+      ],
+      "items": [
+        {
+          "item_id": "seed:berry",
+          "quantity": 2
+        },
+        {
+          "item_id": "seed:carrot",
+          "quantity": 4
+        },
+        {
+          "item_id": "seed:rice",
+          "quantity": 2
+        },
+        {
+          "item_id": "seed:tomato",
+          "quantity": 4
+        }
+      ],
+      "queryOnly": true,
+      "markerRunId": "33218d1e-488f-486c-ad56-502cb458a9b0"
+    },
+    {
+      "phase": "device-revoke",
+      "profile": "0",
+      "owner": "account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+      "pet": {
+        "petId": "pet-2d660416-db18-44a1-8392-74f235484151",
+        "element": "water",
+        "growth": {
+          "level": 1,
+          "experience": 25,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 1,
+          "stats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        }
+      },
+      "rewards": [
+        {
+          "owner_account_id": "account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+          "session_id": "battle-8a87db17-8b9f-40c2-b198-b85780b86e4b",
+          "pet_id": "pet-2d660416-db18-44a1-8392-74f235484151",
+          "action_id": "battle:battle-8a87db17-8b9f-40c2-b198-b85780b86e4b:account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+          "reward": {
+            "actionId": "battle:battle-8a87db17-8b9f-40c2-b198-b85780b86e4b:account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+            "petId": "pet-2d660416-db18-44a1-8392-74f235484151",
+            "sessionId": "battle-8a87db17-8b9f-40c2-b198-b85780b86e4b",
+            "mode": "training",
+            "won": false,
+            "experience": 5,
+            "applied": true,
+            "duplicate": false,
+            "previousExperience": 20,
+            "previousLevel": 1,
+            "currentExperience": 25,
+            "currentLevel": 1,
+            "seeds": {
+              "source": "battle",
+              "receiptId": "battle-8a87db17-8b9f-40c2-b198-b85780b86e4b",
+              "itemId": "seed:carrot",
+              "quantity": 2
+            }
+          }
+        },
+        {
+          "owner_account_id": "account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+          "session_id": "online-355f4104-85cf-4ca4-8e27-321f0638e376",
+          "pet_id": "pet-2d660416-db18-44a1-8392-74f235484151",
+          "action_id": "battle:355f4104-85cf-4ca4-8e27-321f0638e376:account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+          "reward": {
+            "actionId": "battle:355f4104-85cf-4ca4-8e27-321f0638e376:account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+            "petId": "pet-2d660416-db18-44a1-8392-74f235484151",
+            "sessionId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+            "mode": "friend",
+            "won": true,
+            "experience": 20,
+            "applied": true,
+            "duplicate": false,
+            "previousExperience": 0,
+            "previousLevel": 1,
+            "currentExperience": 20,
+            "currentLevel": 1,
+            "seeds": {
+              "source": "battle",
+              "receiptId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+              "itemId": "seed:tomato",
+              "quantity": 2
+            }
+          }
+        }
+      ],
+      "growth": [
+        {
+          "actionId": "battle:355f4104-85cf-4ca4-8e27-321f0638e376:account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+          "reward": {
+            "actionId": "battle:355f4104-85cf-4ca4-8e27-321f0638e376:account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+            "petId": "pet-2d660416-db18-44a1-8392-74f235484151",
+            "sessionId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+            "mode": "friend",
+            "won": true,
+            "experience": 20,
+            "applied": true,
+            "duplicate": false,
+            "previousExperience": 0,
+            "previousLevel": 1,
+            "currentExperience": 20,
+            "currentLevel": 1
+          }
+        },
+        {
+          "actionId": "battle:battle-8a87db17-8b9f-40c2-b198-b85780b86e4b:account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+          "reward": {
+            "actionId": "battle:battle-8a87db17-8b9f-40c2-b198-b85780b86e4b:account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+            "petId": "pet-2d660416-db18-44a1-8392-74f235484151",
+            "sessionId": "battle-8a87db17-8b9f-40c2-b198-b85780b86e4b",
+            "mode": "training",
+            "won": false,
+            "experience": 5,
+            "applied": true,
+            "duplicate": false,
+            "previousExperience": 20,
+            "previousLevel": 1,
+            "currentExperience": 25,
+            "currentLevel": 1
+          }
+        }
+      ],
+      "reports": [
+        {
+          "id": "battle-8a87db17-8b9f-40c2-b198-b85780b86e4b",
+          "sessionId": "battle-8a87db17-8b9f-40c2-b198-b85780b86e4b",
+          "rounds": 20,
+          "reward": {
+            "actionId": "battle:battle-8a87db17-8b9f-40c2-b198-b85780b86e4b:account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+            "petId": "pet-2d660416-db18-44a1-8392-74f235484151",
+            "sessionId": "battle-8a87db17-8b9f-40c2-b198-b85780b86e4b",
+            "mode": "training",
+            "won": false,
+            "experience": 5,
+            "applied": true,
+            "duplicate": false,
+            "previousExperience": 20,
+            "previousLevel": 1,
+            "currentExperience": 25,
+            "currentLevel": 1,
+            "seeds": {
+              "source": "battle",
+              "receiptId": "battle-8a87db17-8b9f-40c2-b198-b85780b86e4b",
+              "itemId": "seed:carrot",
+              "quantity": 2
+            }
+          }
+        },
+        {
+          "id": "online-355f4104-85cf-4ca4-8e27-321f0638e376",
+          "sessionId": "online-355f4104-85cf-4ca4-8e27-321f0638e376",
+          "rounds": 10,
+          "reward": {
+            "actionId": "battle:355f4104-85cf-4ca4-8e27-321f0638e376:account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+            "petId": "pet-2d660416-db18-44a1-8392-74f235484151",
+            "sessionId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+            "mode": "friend",
+            "won": true,
+            "experience": 20,
+            "applied": true,
+            "duplicate": false,
+            "previousExperience": 0,
+            "previousLevel": 1,
+            "currentExperience": 20,
+            "currentLevel": 1,
+            "seeds": {
+              "source": "battle",
+              "receiptId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+              "itemId": "seed:tomato",
+              "quantity": 2
+            }
+          }
+        }
+      ],
+      "seeds": [
+        {
+          "source": "battle",
+          "receipt_id": "355f4104-85cf-4ca4-8e27-321f0638e376",
+          "action_id": "battle-seeds:friend:355f4104-85cf-4ca4-8e27-321f0638e376",
+          "result": {
+            "source": "battle",
+            "receiptId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+            "itemId": "seed:tomato",
+            "quantity": 2
+          }
+        },
+        {
+          "source": "battle",
+          "receipt_id": "battle-8a87db17-8b9f-40c2-b198-b85780b86e4b",
+          "action_id": "battle-seeds:training:battle-8a87db17-8b9f-40c2-b198-b85780b86e4b",
+          "result": {
+            "source": "battle",
+            "receiptId": "battle-8a87db17-8b9f-40c2-b198-b85780b86e4b",
+            "itemId": "seed:carrot",
+            "quantity": 2
+          }
+        }
+      ],
+      "items": [
+        {
+          "item_id": "seed:berry",
+          "quantity": 2
+        },
+        {
+          "item_id": "seed:carrot",
+          "quantity": 4
+        },
+        {
+          "item_id": "seed:rice",
+          "quantity": 2
+        },
+        {
+          "item_id": "seed:tomato",
+          "quantity": 4
+        }
+      ],
+      "queryOnly": true,
+      "markerRunId": "04be08e6-b950-4476-b965-bb630ff2a7e1"
+    },
+    {
+      "phase": "device-revoke",
+      "profile": "1",
+      "owner": "account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+      "pet": {
+        "petId": "pet-2d660416-db18-44a1-8392-74f235484151",
+        "element": "water",
+        "growth": {
+          "level": 1,
+          "experience": 25,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 1,
+          "stats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        }
+      },
+      "rewards": [
+        {
+          "owner_account_id": "account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+          "session_id": "battle-8a87db17-8b9f-40c2-b198-b85780b86e4b",
+          "pet_id": "pet-2d660416-db18-44a1-8392-74f235484151",
+          "action_id": "battle:battle-8a87db17-8b9f-40c2-b198-b85780b86e4b:account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+          "reward": {
+            "actionId": "battle:battle-8a87db17-8b9f-40c2-b198-b85780b86e4b:account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+            "petId": "pet-2d660416-db18-44a1-8392-74f235484151",
+            "sessionId": "battle-8a87db17-8b9f-40c2-b198-b85780b86e4b",
+            "mode": "training",
+            "won": false,
+            "experience": 5,
+            "applied": true,
+            "duplicate": false,
+            "previousExperience": 20,
+            "previousLevel": 1,
+            "currentExperience": 25,
+            "currentLevel": 1,
+            "seeds": {
+              "source": "battle",
+              "receiptId": "battle-8a87db17-8b9f-40c2-b198-b85780b86e4b",
+              "itemId": "seed:carrot",
+              "quantity": 2
+            }
+          }
+        },
+        {
+          "owner_account_id": "account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+          "session_id": "online-355f4104-85cf-4ca4-8e27-321f0638e376",
+          "pet_id": "pet-2d660416-db18-44a1-8392-74f235484151",
+          "action_id": "battle:355f4104-85cf-4ca4-8e27-321f0638e376:account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+          "reward": {
+            "actionId": "battle:355f4104-85cf-4ca4-8e27-321f0638e376:account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+            "petId": "pet-2d660416-db18-44a1-8392-74f235484151",
+            "sessionId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+            "mode": "friend",
+            "won": true,
+            "experience": 20,
+            "applied": true,
+            "duplicate": false,
+            "previousExperience": 0,
+            "previousLevel": 1,
+            "currentExperience": 20,
+            "currentLevel": 1,
+            "seeds": {
+              "source": "battle",
+              "receiptId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+              "itemId": "seed:tomato",
+              "quantity": 2
+            }
+          }
+        }
+      ],
+      "growth": [
+        {
+          "actionId": "battle:355f4104-85cf-4ca4-8e27-321f0638e376:account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+          "reward": {
+            "actionId": "battle:355f4104-85cf-4ca4-8e27-321f0638e376:account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+            "petId": "pet-2d660416-db18-44a1-8392-74f235484151",
+            "sessionId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+            "mode": "friend",
+            "won": true,
+            "experience": 20,
+            "applied": true,
+            "duplicate": false,
+            "previousExperience": 0,
+            "previousLevel": 1,
+            "currentExperience": 20,
+            "currentLevel": 1
+          }
+        },
+        {
+          "actionId": "battle:battle-8a87db17-8b9f-40c2-b198-b85780b86e4b:account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+          "reward": {
+            "actionId": "battle:battle-8a87db17-8b9f-40c2-b198-b85780b86e4b:account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+            "petId": "pet-2d660416-db18-44a1-8392-74f235484151",
+            "sessionId": "battle-8a87db17-8b9f-40c2-b198-b85780b86e4b",
+            "mode": "training",
+            "won": false,
+            "experience": 5,
+            "applied": true,
+            "duplicate": false,
+            "previousExperience": 20,
+            "previousLevel": 1,
+            "currentExperience": 25,
+            "currentLevel": 1
+          }
+        }
+      ],
+      "reports": [
+        {
+          "id": "battle-8a87db17-8b9f-40c2-b198-b85780b86e4b",
+          "sessionId": "battle-8a87db17-8b9f-40c2-b198-b85780b86e4b",
+          "rounds": 20,
+          "reward": {
+            "actionId": "battle:battle-8a87db17-8b9f-40c2-b198-b85780b86e4b:account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+            "petId": "pet-2d660416-db18-44a1-8392-74f235484151",
+            "sessionId": "battle-8a87db17-8b9f-40c2-b198-b85780b86e4b",
+            "mode": "training",
+            "won": false,
+            "experience": 5,
+            "applied": true,
+            "duplicate": false,
+            "previousExperience": 20,
+            "previousLevel": 1,
+            "currentExperience": 25,
+            "currentLevel": 1,
+            "seeds": {
+              "source": "battle",
+              "receiptId": "battle-8a87db17-8b9f-40c2-b198-b85780b86e4b",
+              "itemId": "seed:carrot",
+              "quantity": 2
+            }
+          }
+        },
+        {
+          "id": "online-355f4104-85cf-4ca4-8e27-321f0638e376",
+          "sessionId": "online-355f4104-85cf-4ca4-8e27-321f0638e376",
+          "rounds": 10,
+          "reward": {
+            "actionId": "battle:355f4104-85cf-4ca4-8e27-321f0638e376:account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+            "petId": "pet-2d660416-db18-44a1-8392-74f235484151",
+            "sessionId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+            "mode": "friend",
+            "won": true,
+            "experience": 20,
+            "applied": true,
+            "duplicate": false,
+            "previousExperience": 0,
+            "previousLevel": 1,
+            "currentExperience": 20,
+            "currentLevel": 1,
+            "seeds": {
+              "source": "battle",
+              "receiptId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+              "itemId": "seed:tomato",
+              "quantity": 2
+            }
+          }
+        }
+      ],
+      "seeds": [
+        {
+          "source": "battle",
+          "receipt_id": "355f4104-85cf-4ca4-8e27-321f0638e376",
+          "action_id": "battle-seeds:friend:355f4104-85cf-4ca4-8e27-321f0638e376",
+          "result": {
+            "source": "battle",
+            "receiptId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+            "itemId": "seed:tomato",
+            "quantity": 2
+          }
+        },
+        {
+          "source": "battle",
+          "receipt_id": "battle-8a87db17-8b9f-40c2-b198-b85780b86e4b",
+          "action_id": "battle-seeds:training:battle-8a87db17-8b9f-40c2-b198-b85780b86e4b",
+          "result": {
+            "source": "battle",
+            "receiptId": "battle-8a87db17-8b9f-40c2-b198-b85780b86e4b",
+            "itemId": "seed:carrot",
+            "quantity": 2
+          }
+        }
+      ],
+      "items": [
+        {
+          "item_id": "seed:berry",
+          "quantity": 2
+        },
+        {
+          "item_id": "seed:carrot",
+          "quantity": 4
+        },
+        {
+          "item_id": "seed:rice",
+          "quantity": 2
+        },
+        {
+          "item_id": "seed:tomato",
+          "quantity": 4
+        }
+      ],
+      "queryOnly": true,
+      "markerRunId": "04be08e6-b950-4476-b965-bb630ff2a7e1"
+    },
+    {
+      "phase": "after-retirement",
+      "profile": "0",
+      "owner": "account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+      "pet": {
+        "petId": "pet-2d660416-db18-44a1-8392-74f235484151",
+        "element": "water",
+        "growth": {
+          "level": 1,
+          "experience": 25,
+          "mood": 60,
+          "satiety": 60,
+          "affinity": 0,
+          "winsTotal": 1,
+          "stats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        }
+      },
+      "rewards": [
+        {
+          "owner_account_id": "account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+          "session_id": "battle-8a87db17-8b9f-40c2-b198-b85780b86e4b",
+          "pet_id": "pet-2d660416-db18-44a1-8392-74f235484151",
+          "action_id": "battle:battle-8a87db17-8b9f-40c2-b198-b85780b86e4b:account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+          "reward": {
+            "actionId": "battle:battle-8a87db17-8b9f-40c2-b198-b85780b86e4b:account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+            "petId": "pet-2d660416-db18-44a1-8392-74f235484151",
+            "sessionId": "battle-8a87db17-8b9f-40c2-b198-b85780b86e4b",
+            "mode": "training",
+            "won": false,
+            "experience": 5,
+            "applied": true,
+            "duplicate": false,
+            "previousExperience": 20,
+            "previousLevel": 1,
+            "currentExperience": 25,
+            "currentLevel": 1,
+            "seeds": {
+              "source": "battle",
+              "receiptId": "battle-8a87db17-8b9f-40c2-b198-b85780b86e4b",
+              "itemId": "seed:carrot",
+              "quantity": 2
+            }
+          }
+        },
+        {
+          "owner_account_id": "account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+          "session_id": "online-355f4104-85cf-4ca4-8e27-321f0638e376",
+          "pet_id": "pet-2d660416-db18-44a1-8392-74f235484151",
+          "action_id": "battle:355f4104-85cf-4ca4-8e27-321f0638e376:account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+          "reward": {
+            "actionId": "battle:355f4104-85cf-4ca4-8e27-321f0638e376:account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+            "petId": "pet-2d660416-db18-44a1-8392-74f235484151",
+            "sessionId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+            "mode": "friend",
+            "won": true,
+            "experience": 20,
+            "applied": true,
+            "duplicate": false,
+            "previousExperience": 0,
+            "previousLevel": 1,
+            "currentExperience": 20,
+            "currentLevel": 1,
+            "seeds": {
+              "source": "battle",
+              "receiptId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+              "itemId": "seed:tomato",
+              "quantity": 2
+            }
+          }
+        }
+      ],
+      "growth": [
+        {
+          "actionId": "battle:355f4104-85cf-4ca4-8e27-321f0638e376:account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+          "reward": {
+            "actionId": "battle:355f4104-85cf-4ca4-8e27-321f0638e376:account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+            "petId": "pet-2d660416-db18-44a1-8392-74f235484151",
+            "sessionId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+            "mode": "friend",
+            "won": true,
+            "experience": 20,
+            "applied": true,
+            "duplicate": false,
+            "previousExperience": 0,
+            "previousLevel": 1,
+            "currentExperience": 20,
+            "currentLevel": 1
+          }
+        },
+        {
+          "actionId": "battle:battle-8a87db17-8b9f-40c2-b198-b85780b86e4b:account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+          "reward": {
+            "actionId": "battle:battle-8a87db17-8b9f-40c2-b198-b85780b86e4b:account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+            "petId": "pet-2d660416-db18-44a1-8392-74f235484151",
+            "sessionId": "battle-8a87db17-8b9f-40c2-b198-b85780b86e4b",
+            "mode": "training",
+            "won": false,
+            "experience": 5,
+            "applied": true,
+            "duplicate": false,
+            "previousExperience": 20,
+            "previousLevel": 1,
+            "currentExperience": 25,
+            "currentLevel": 1
+          }
+        }
+      ],
+      "reports": [
+        {
+          "id": "battle-8a87db17-8b9f-40c2-b198-b85780b86e4b",
+          "sessionId": "battle-8a87db17-8b9f-40c2-b198-b85780b86e4b",
+          "rounds": 20,
+          "reward": {
+            "actionId": "battle:battle-8a87db17-8b9f-40c2-b198-b85780b86e4b:account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+            "petId": "pet-2d660416-db18-44a1-8392-74f235484151",
+            "sessionId": "battle-8a87db17-8b9f-40c2-b198-b85780b86e4b",
+            "mode": "training",
+            "won": false,
+            "experience": 5,
+            "applied": true,
+            "duplicate": false,
+            "previousExperience": 20,
+            "previousLevel": 1,
+            "currentExperience": 25,
+            "currentLevel": 1,
+            "seeds": {
+              "source": "battle",
+              "receiptId": "battle-8a87db17-8b9f-40c2-b198-b85780b86e4b",
+              "itemId": "seed:carrot",
+              "quantity": 2
+            }
+          }
+        },
+        {
+          "id": "online-355f4104-85cf-4ca4-8e27-321f0638e376",
+          "sessionId": "online-355f4104-85cf-4ca4-8e27-321f0638e376",
+          "rounds": 10,
+          "reward": {
+            "actionId": "battle:355f4104-85cf-4ca4-8e27-321f0638e376:account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+            "petId": "pet-2d660416-db18-44a1-8392-74f235484151",
+            "sessionId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+            "mode": "friend",
+            "won": true,
+            "experience": 20,
+            "applied": true,
+            "duplicate": false,
+            "previousExperience": 0,
+            "previousLevel": 1,
+            "currentExperience": 20,
+            "currentLevel": 1,
+            "seeds": {
+              "source": "battle",
+              "receiptId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+              "itemId": "seed:tomato",
+              "quantity": 2
+            }
+          }
+        }
+      ],
+      "seeds": [
+        {
+          "source": "battle",
+          "receipt_id": "355f4104-85cf-4ca4-8e27-321f0638e376",
+          "action_id": "battle-seeds:friend:355f4104-85cf-4ca4-8e27-321f0638e376",
+          "result": {
+            "source": "battle",
+            "receiptId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+            "itemId": "seed:tomato",
+            "quantity": 2
+          }
+        },
+        {
+          "source": "battle",
+          "receipt_id": "battle-8a87db17-8b9f-40c2-b198-b85780b86e4b",
+          "action_id": "battle-seeds:training:battle-8a87db17-8b9f-40c2-b198-b85780b86e4b",
+          "result": {
+            "source": "battle",
+            "receiptId": "battle-8a87db17-8b9f-40c2-b198-b85780b86e4b",
+            "itemId": "seed:carrot",
+            "quantity": 2
+          }
+        }
+      ],
+      "items": [
+        {
+          "item_id": "seed:berry",
+          "quantity": 2
+        },
+        {
+          "item_id": "seed:carrot",
+          "quantity": 4
+        },
+        {
+          "item_id": "seed:rice",
+          "quantity": 2
+        },
+        {
+          "item_id": "seed:tomato",
+          "quantity": 4
+        }
+      ],
+      "queryOnly": true,
+      "markerRunId": "236155d6-d3f0-427f-a9a2-478c2497b9d8"
+    }
+  ],
+  "passed": true
+}

@@ -1,0 +1,30 @@
+✔ SCRIPTED cloud selection: training waits for delayed canonical selection before any start request or battle write (64.8283ms)
+(node:2744) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/Administrator/.codex/worktrees/lingjing-battle/DesktopPet/infra/supabase/functions/lingjing-battle/room-core.js is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\Administrator\.codex\worktrees\lingjing-battle\DesktopPet\package.json.
+(Use `electron --trace-warnings ...` to show where the warning was created)
+✔ SCRIPTED cloud selection: delayed rejection leaves no cloud start request or battle/action receipt (33.4439ms)
+✔ modern versioned room DTO preserves the shared desktop core for all 400 five-element/action pairs and stacked effects (16.5268ms)
+✔ restore preserves free dodge, anger, stacks and terminal state without resetting a fight (0.4515ms)
+✔ online round review uses that round's HP, anger, statuses and free dodge, not latest room state (0.4922ms)
+✔ realtime does not regress a newer room or keep another room's cached rounds (0.2097ms)
+✔ scripted transport: uncertain original action survives SQLite restart and never spills into the next round (68.5397ms)
+✔ scripted transport: history sync fills a missing middle page rather than only fetching before the oldest round (39.3416ms)
+✔ scripted transport: a room advancing during history pagination cannot leave a stale snapshot marked complete (42.4706ms)
+✔ scripted realtime: callbacks from a removed room cannot replace the current room or restore cleared state (0.93ms)
+✔ real SQLite and companions: full training awards only the selected instance once, and preserves legacy data (125.0067ms)
+✔ real disk restart restores a fight and stale simultaneous commands cannot play a second round (98.7738ms)
+✔ failed seed adapter rolls back the final round, experience, report and reward receipt together (58.7008ms)
+✔ wild/territory adapters keep trusted challenge provenance and isolate owner access (54.0493ms)
+✔ real accounts local-ID mapping preserves legacy archives, isolates 2D ownership and revokes battle access on logout (125.9315ms)
+✔ real garden adapter consumes the battle outcome and never repeats territory ownership or seed settlement (132.1873ms)
+✔ battle backup keeps newer final state and cannot roll a reward ledger backward (73.7591ms)
+✔ same-version legacy session and report gain missing display metadata without changing stored gameplay (1.639ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 18
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1017.9854
