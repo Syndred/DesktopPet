@@ -671,7 +671,12 @@ class BattleFeatureService {
     if(!remote?.envelope)return;
     const backups=this.services.get('backups');backups.validate(remote.envelope,owner);
     const module=remote.envelope.data.modules.battle;if(!module)return;
-    const adapter=backups.adapters.get('battle');if(module.version!==adapter?.version)throw fail('INVALID_BATTLE_BACKUP','云端战报版本不兼容');adapter.validate(module.data,owner);
+    const adapter=backups.adapters.get('battle');
+    // The cloud keeps its four-array v1 format; local v2 additionally owns a
+    // transport journal. A supported local backup is not a cloud report source.
+    if(module.version!==1||!adapter||!(module.version===adapter.version||adapter.versions?.includes(module.version)))throw fail('INVALID_BATTLE_BACKUP','云端战报版本不兼容');
+    if(adapter.validateModule)adapter.validateModule(module,owner);
+    else adapter.validate(module.data,owner);
     // Read-only cloud projections populate only the report cache. They cannot
     // award XP/seeds or overwrite an independent local companion/inventory unit.
     this.services.db.transaction(()=>{for(const row of module.data.reports)this.store.saveReport(owner,JSON.parse(row.data_json));})();
