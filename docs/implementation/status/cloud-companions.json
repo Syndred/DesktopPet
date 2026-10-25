@@ -2,7 +2,7 @@
   "module": "companions",
   "scope": "Cloud-upgrade 2026-10-25: preserve companion consistency units through Accounts identity/save sync and Garden transactions",
   "branch": "codex/lingjing-companions",
-  "commit": "ca0c733",
+  "commit": "8f4273108b4723d43f9ee7537ffd22197a9609a6",
   "goalStatus": "active",
   "phase": "companion-unit/native-preservation-ready; Accounts complete-save and Garden cloud integration pending",
   "contracts": {
@@ -19,12 +19,14 @@
   "migrations": [],
   "checks": {
     "sourceFetched": true,
+    "sourceFetchedAt": "2026-10-25T02:27:35Z",
+    "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086; fully included; 0 commits behind after git fetch origin",
     "publicBaselineMerged": true,
     "companionUnit": "6 local real-SQLite cases passed: two client files/reopen, original IDs and receipts, merge conflict/rollback, full old-table conversion, pre-module raw archives, raw archived animal history, verified alias source/target-before preservation",
     "completeSaveInventory": "1 local actual BackupManager/Garden integration case passed: two client files, one food debit/one grown pet, replay and late-adapter failure rollback; explicit test registration only",
     "nativeCompatibility": "native:check passed Electron44.9.3/Node24 + better-sqlite3 13.0.3 N-API on same shared database; no shared node_modules rebuild",
     "nativeRestore": "Actual Electron44/production IPC restores same-revision off-screen coordinates, retains them across save timer/restart, and persists intentional drag; local marked QA, not HTTPS cloud",
-    "focusedRegression": "23/23 passed: node --test apps/pc-app/runtime/features/companions/tests/*.test.cjs tests/foundation/owner-alias.test.cjs",
+    "focusedRegression": "23/23 passed on ca0c733: node --test apps/pc-app/runtime/features/companions/tests/*.test.cjs tests/foundation/owner-alias.test.cjs; later backup changes have their own targeted 7/7 checks",
     "latestBackupChecks": "7/7 targeted backup + actual complete-save/Garden integration checks passed after pre-module archive and locale-independent ordering support",
     "nativeEvidence": "docs/implementation/evidence/companions/cloud-2026-10-25/native-restore.json (clean source ca0c733; run 3VhIVU)",
     "build": "npm run build:pc passed"
