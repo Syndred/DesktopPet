@@ -2,10 +2,10 @@
   "module": "accounts",
   "scope": "2026-10-25 Supabase Auth/JWT, stable legacy owner mapping, per-device sessions, full-save CAS/idempotency/conflict/offline recovery",
   "branch": "codex/lingjing-accounts",
-  "commit": "f36d344971423286c8040eb1f341ed692ec7cad8",
+  "commit": "8838f679458c265b1945334f75c45a7065118954",
   "worktree": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-accounts\\DesktopPet",
   "goalStatus": "complete",
-  "phase": "Resource source f36d344 stable and independently accepted by coordinator. Actual HTTPS/private-resource two-Electron run passed;26 resource and22 adjacent directed checks passed. Coordinator froze30f3cd29 for final SFX; this handoff changes evidence/status only. No subsequent product source changes, no73-case rerun, no dependency on final package or unavailable old source.",
+  "phase": "Authority/personal automatic-sync race fixed on coordinator source d376b76. Read-only original SFX proof retained;69 targeted Electron/SQLite checks and repository lint pass. No original profile changes, real cloud writes, battle/UI changes or new SFX pass claimed.",
   "baseline": "46abf416e0500b53ef32fc29b441d923ef5a6a80",
   "dependencyCheckpoint": "b40af0efcf6062ddc2e8c360523c996fc91ebc0a",
   "contracts": {
@@ -563,5 +563,13 @@
     "independentResourceAcceptance": "Coordinator independently checked hosted revision/checksum, both original SQLite profiles, file SHA/import IDs and unchanged native JSON",
     "subsequentProductChanges": false,
     "evidenceOnlyHandoff": true
+  },
+  "authorityPersonalRace": {
+    "sourceCommit": "8838f679458c265b1945334f75c45a7065118954",
+    "integrationBase": "d376b76a01dd8e450d28bab4479bbe2581ae39c4",
+    "evidence": "docs/implementation/evidence/accounts/cloud-2026-10-25/authority-personal-race/evidence.json",
+    "originalSfxFailurePreserved": true,
+    "codeAndDirectedChecksComplete": true,
+    "coordinatorSfxRevalidation": "pending"
   }
 }

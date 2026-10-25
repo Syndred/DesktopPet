@@ -1,0 +1,85 @@
+✔ shared SQLite / simulated wire: an actual companion selection overlapping automatic read preserves subsequent persona, memory and failed-message edits (452.2885ms)
+▶ shared SQLite / simulated wire: unknown protected edits and genuine two-device personal edits remain conflicts
+  ✔ unknown-protected (275.1911ms)
+  ✔ remote-personal (342.5988ms)
+✔ shared SQLite / simulated wire: unknown protected edits and genuine two-device personal edits remain conflicts (618.4031ms)
+✔ shared SQLite / simulated wire: an uncertain sent outbox retries its original action/base/document and is never rebased onto a later authority (308.5617ms)
+▶ shared SQLite / simulated wire: exact old-envelope proof is required, and same-SID token refresh remains allowed
+  ✔ exact-ledger (299.3742ms)
+  ✔ missing-ledger (273.6672ms)
+  ✔ forged-personal-fingerprint (262.0528ms)
+  ✔ same-SID-refresh (287.8549ms)
+✔ shared SQLite / simulated wire: exact old-envelope proof is required, and same-SID token refresh remains allowed (1123.7466ms)
+▶ shared SQLite / simulated wire: owner, SID, epoch, sync setting and concurrent local changes invalidate adoption while exact baseline proof is in flight
+  ✔ owner (269.5926ms)
+  ✔ logout (259.8771ms)
+  ✔ same-owner-new-SID (269.8264ms)
+  ✔ epoch (275.6739ms)
+  ✔ disabled (300.4439ms)
+  ✔ personal-edit (305.4599ms)
+  ✔ protected-edit (312.1009ms)
+✔ shared SQLite / simulated wire: owner, SID, epoch, sync setting and concurrent local changes invalidate adoption while exact baseline proof is in flight (1993.8638ms)
+✔ real SQLite / simulated provider: clean automatic pull atomically applies full state and preserves original backup (344.0568ms)
+✔ real SQLite / simulated provider: offline personal edits enqueue one original action before I/O and retry its original base (411.8586ms)
+✔ real SQLite / simulated provider: newer cloud plus dirty personal state retains original queue as conflict (417.6907ms)
+✔ real SQLite / simulated provider: unknown protected changes are never auto-uploaded or overwritten (284.6782ms)
+✔ real SQLite / simulated provider: local edits while cloud read is pending abort automatic adoption (277.7921ms)
+▶ real SQLite / simulated provider: changes during hydration preserve cache and reject local edits, logout or same-owner new SID
+  ✔ local-edit (291.9203ms)
+  ✔ logout (296.9152ms)
+  ✔ same-owner-new-SID (277.4546ms)
+✔ real SQLite / simulated provider: changes during hydration preserve cache and reject local edits, logout or same-owner new SID (866.915ms)
+✔ real SQLite / simulated provider: same-SID token refresh during hydration still permits safe atomic pull (291.6348ms)
+▶ real SQLite / simulated provider: unverified original, missing baseline, disabled sync and existing conflicts block automatic overwrite
+  ✔ unverified (300.9957ms)
+  ✔ redacted (298.0951ms)
+  ✔ unknown-baseline (306.4093ms)
+  ✔ disabled (310.1712ms)
+  ✔ conflict (366.3858ms)
+✔ real SQLite / simulated provider: unverified original, missing baseline, disabled sync and existing conflicts block automatic overwrite (1582.7157ms)
+✔ real SQLite / simulated provider: failed restore rolls back all domains and checkpoint while retaining original backup file (325.0743ms)
+✔ real SQLite / simulated provider: exact already-applied domain readback advances baseline without overwriting and allows later personal upload (310.8175ms)
+✔ real SQLite / simulated provider: production conversation adapter automatically queues messages, memory and persona while retaining local credentials (361.2045ms)
+✔ production07 + BackupManager with real SQLite / simulated HTTPS provider: new private resource hydration must allow atomic full-save adoption (3508.9022ms)
+✔ production07 + real SQLite: verified resource/pref pump before reconcile may precede the companion appearance update (4479.2115ms)
+✔ production07 may append only the new exact manifest import to an existing native import without rewriting its original JSON (2756.6759ms)
+✔ production07 safe file repair may rebind an existing registry only to its verified restore plan while preserving original bytes (2603.5258ms)
+✔ real SQLite upgrade: accounts008 preserves existing007 rows and recovers the exact old immutable cloud document (4644.5009ms)
+▶ production07 preparation never admits user edits, extra imports/files, unverified proof or any pending action
+  ✔ existing-resource (1592.3404ms)
+  ✔ preference (1819.1497ms)
+  ✔ existing-import (1601.0586ms)
+  ✔ extra-import (1748.2538ms)
+  ✔ extra-file (1816.6402ms)
+  ✔ file-bytes (1779.0957ms)
+  ✔ file-registry (1859.5678ms)
+  ✔ missing-proof (1798.0305ms)
+  ✔ personal (1844.1632ms)
+  ✔ companion (1830.659ms)
+  ✔ account-pending (1831.8888ms)
+  ✔ preference-pending (1756.0818ms)
+✔ production07 preparation never admits user edits, extra imports/files, unverified proof or any pending action (21278.3524ms)
+▶ resource pump admission still rejects pre-existing user preferences, unknown private imports and unrelated companion edits
+  ✔ preference (2220.1021ms)
+  ✔ unknown-import (3340.7669ms)
+  ✔ companion (2399.2903ms)
+✔ resource pump admission still rejects pre-existing user preferences, unknown private imports and unrelated companion edits (7960.6026ms)
+▶ real production hydration rejects logout and same-owner new SID during actual SDK chunk reads
+  ✔ logout (1550.6076ms)
+  ✔ new-SID (1603.9969ms)
+✔ real production hydration rejects logout and same-owner new SID during actual SDK chunk reads (3154.9829ms)
+✔ 007 upgrade never guesses or accepts a damaged immutable baseline after independent resource pump (2531.5142ms)
+✔ PROTOCOL SIMULATION: offline-before-send intent is durable and restart sends its original request exactly once (205.0199ms)
+✔ PROTOCOL SIMULATION: an uncertain committed adoption reads its immutable receipt after restart without creating another same-template pet (140.0889ms)
+✔ PROTOCOL SIMULATION: consecutive offline positions retain immutable unknown requests and coalesce only drafts that were never sent (208.6033ms)
+✔ PROTOCOL SIMULATION: unknown local progress and account switches preserve both owner namespaces instead of overwriting cached pets (126.1795ms)
+✔ PROTOCOL SIMULATION: verified companion readback preserves unrelated offline data and the original common-save request without advancing its base (208.1637ms)
+✔ PROTOCOL SIMULATION: a cached original-action replay queued behind a network read cannot return an old-owner pet after account switch (151.319ms)
+ℹ tests 69
+ℹ suites 0
+ℹ pass 69
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 53070.2176

@@ -1,0 +1,103 @@
+{
+  "at": "2026-10-25T07:38:00.709Z",
+  "sourceCommit": "8838f679458c265b1945334f75c45a7065118954",
+  "integrationBase": "d376b76a01dd8e450d28bab4479bbe2581ae39c4",
+  "scope": "08-only AccountSync reconciliation. Production shared SQLite, AccountsService, CloudCompanionAuthority, actor transport, adapters and reducers; explicitly simulated remote wire. No actual cloud writes or new SFX acceptance.",
+  "originalFailure": {
+    "run": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\cloud-upgrade\\2026-10-25\\final-portable-uTajxg",
+    "sourceCommit": "d376b76a01dd8e450d28bab4479bbe2581ae39c4",
+    "executableSha256": "6e9cdb2aac621b490b09f530870ab7569858e66a4cb7b352bae81aa997fccaf2",
+    "selectionActionId": "b42886ee-f9af-465c-b062-d97582f45859",
+    "baselineA": 73,
+    "confirmedB": 74,
+    "selectionIntentStatus": "verified",
+    "selectionReceiptRevision": 74,
+    "serverPersonalUnchanged": true,
+    "originalDatabasesUnchanged": true,
+    "cleanup": "Finally hid only the new pet; A current protected data/companion ack is head75, and is not treated as the pre-cleanup head74 state."
+  },
+  "liveReadOnlyCloudMetadata": {
+    "method": "Supabase MCP owner-scoped SELECT, no mutations",
+    "owner": "account:470a41d4-3cf7-4a7d-8b1e-32e276d2a719",
+    "ledger": [
+      {
+        "revision": 73,
+        "actionId": "companions:6b84acfe-553f-4d7d-9955-12704da53c0c",
+        "checksum": "01caf8f39e791277896cb2c2b29f9649d203ad461a12e6943360f87d1ae5affb"
+      },
+      {
+        "revision": 74,
+        "actionId": "companions:b42886ee-f9af-465c-b062-d97582f45859",
+        "checksum": "3da3182c1bd1dd7400a1b0928e8b57ea2e1c19d5ec228151b74b3ec5adce35b5"
+      },
+      {
+        "revision": 75,
+        "actionId": "companions:b95c0755-003d-450e-9967-bf44a44be733",
+        "checksum": "3ff2385a0db062b6292ac97ff02fbf6900871e24af4958cfb475f84d6c64977c"
+      }
+    ],
+    "headRevisionAtRead": 75
+  },
+  "change": {
+    "file": "apps/pc-app/runtime/features/accounts/sync.cjs",
+    "newerHeadOnly": true,
+    "protectedMustExactlyMatchRemote": true,
+    "remotePersonalMustMatchValidatedOriginalEnvelope": true,
+    "requiresNoPendingOutboxOrUnverifiedSource": true,
+    "localRowsRewritten": false,
+    "existingOutboxRebased": false,
+    "resourceGuardChanged": false,
+    "actorOrFingerprintRelaxed": false,
+    "personalUpload": "The next ordinary automatic cycle queues one original durable action at the newly verified base."
+  },
+  "checks": {
+    "native": {
+      "passed": 69,
+      "failed": 0,
+      "runtime": {
+        "electron": "44.9.3",
+        "node": "24.22.0"
+      },
+      "command": "node scripts/desktop/run-native-tests.cjs apps/pc-app/runtime/features/accounts/tests/authority-personal-race.test.cjs apps/pc-app/runtime/features/accounts/tests/automatic-sync.test.cjs apps/pc-app/runtime/features/accounts/tests/resource-hydration-sync.test.cjs apps/pc-app/runtime/features/companions/tests/cloud-authority.test.cjs"
+    },
+    "newDirectedCases": 18,
+    "repositoryLint": {
+      "command": "npm run lint",
+      "exitCode": 0
+    },
+    "cjsSyntaxChecks": {
+      "exitCode": 0
+    },
+    "diffCheck": {
+      "exitCode": 0
+    },
+    "newRuntimeSfxPassed": false
+  },
+  "coveredBoundaries": [
+    "actual persisted selection starts before auto-read lock, authority readback meets sync.running, later persona/memory/failed user-message are kept",
+    "subsequent automatic action uploads all personal data without another selection or manual retry",
+    "unknown protected changes and true two-device personal divergence remain conflicts",
+    "uncertain sent outbox retries identical action/base/checksum/document, without rebase",
+    "exact original ledger read is scoped by owner/revision/checksum; missing or forged proof is rejected",
+    "owner, logout, same-owner new SID, epoch, disabled sync, personal edit and protected edit during proof abort adoption",
+    "same-SID token refresh remains valid",
+    "read-only second SQLite connection confirms durable final baseline"
+  ],
+  "files": {
+    "read-only.json": {
+      "sha256": "d94948a35bb6f8aae7e539c342acf3840dd44d5c78dd4c2c5d7e5fa47902ccae"
+    },
+    "targeted-tests.txt": {
+      "sha256": "510cd8054a60d613dfbbee0a48c83fa6b9b88e23d32aa015172d5239d40e4717"
+    },
+    "native-targeted-tests.txt": {
+      "sha256": "a0edc8f46b7067f51ea483f72a5980d4598b7daf78967db1f5b0fb593e172c3a"
+    },
+    "repository-lint.txt": {
+      "sha256": "5358517e73c49b455fa2ddbf3f4ac6dd7a4bae424530a2d258b9fc99102881df"
+    },
+    "inspect-original-read-only.cjs": {
+      "sha256": "201c481be4883f51490100f46c1f5561ec9e819f914cead180d088c61eda1a00"
+    }
+  }
+}
