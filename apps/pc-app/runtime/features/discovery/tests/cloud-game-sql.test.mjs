@@ -7,7 +7,7 @@ import {readFileSync} from 'node:fs';
 import {generateKeyPairSync} from 'node:crypto';
 import {createRequire} from 'node:module';
 import {BattleRuntimeService,getBattleRules} from '../../../../../../infra/supabase/functions/_shared/battle-core.js';
-import {companionUnit,createCompanionInstance,listBuiltinTemplates,nearbySpawns,applyCloudCommand} from '../../../../../../infra/supabase/functions/discovery/_generated/runtime.mjs';
+import {companionUnit,createCompanionInstance,listBuiltinTemplates,nearbySpawns,applyCloudCommand,emptyGarden} from '../../../../../../infra/supabase/functions/discovery/_generated/runtime.mjs';
 import {createDiscoveryStore} from '../../../../../../infra/supabase/functions/discovery/store.mjs';
 import {createWildAuthority} from '../../../../../../infra/supabase/functions/discovery/authority.mjs';
 import {awardBattle,createCapture} from '../../../../../../infra/supabase/functions/discovery/domain.mjs';
@@ -21,7 +21,7 @@ test('wild writes atomically consume proof and commit protected save, preserving
       create table auth.users(id uuid primary key,is_anonymous boolean not null default false);create table auth.sessions(id uuid primary key,user_id uuid,not_after timestamptz);
       create function auth.jwt() returns jsonb language sql stable as $$select coalesce(nullif(current_setting('request.jwt.claims',true),''),'{}')::jsonb$$;
       create function auth.uid() returns uuid language sql stable as $$select (auth.jwt()->>'sub')::uuid$$;`);
-    for(const name of ['20261025020314_lingjing_identity_actor_contract.sql','20261025021755_lingjing_auth_bridge.sql','20261025021759_lingjing_protected_save_cas.sql','20261025020719_lingjing_discovery_cloud_authority.sql','20261025025641_lingjing_discovery_live_actor_guard.sql','20261025030459_lingjing_discovery_wild_transactions.sql'])await db.exec(readFileSync('infra/supabase/migrations/'+name,'utf8'));
+    for(const name of ['20261025020314_lingjing_identity_actor_contract.sql','20261025021755_lingjing_auth_bridge.sql','20261025021759_lingjing_protected_save_cas.sql','20261025020719_lingjing_discovery_cloud_authority.sql','20261025025641_lingjing_discovery_live_actor_guard.sql','20261025030459_lingjing_discovery_wild_transactions.sql','20261025033352_lingjing_discovery_capture_scenarios.sql'])await db.exec(readFileSync('infra/supabase/migrations/'+name,'utf8'));
     await db.query('insert into auth.users(id) values($1)',[uid]);await db.query('insert into auth.sessions(id,user_id) values($1,$2)',[sid,uid]);
     const owner=(await db.query("select public.lingjing_link_auth_user($1,'localgame','Local Game') v",[uid])).rows[0].v.owner_id;
     await db.query("select set_config('request.jwt.claims',$1,false),set_config('request.headers',$2,false)",[JSON.stringify({sub:uid,session_id:sid,role:'authenticated'}),JSON.stringify({'x-lingjing-device-id':device})]);
@@ -30,13 +30,13 @@ test('wild writes atomically consume proof and commit protected save, preserving
     const companion=companionUnit(null,owner,Date.now());
     const pet=createCompanionInstance({ownerAccountId:owner,petId:'pet-original-001',template:listBuiltinTemplates().find(p=>p.element==='water'),input:{name:'原伙伴'},source:'adoption',createdAt:new Date().toISOString(),count:0});pet.revision=7;
     companion.tables.companion_pets.push({owner_account_id:owner,pet_id:pet.petId,template_id:pet.templateId,revision:7,data_json:JSON.stringify(pet),created_at:pet.createdAt,updated_at:pet.updatedAt});companion.tables.companion_accounts[0].revision=1;
-    const garden={version:1,data:{ownerAccountId:owner,tables:Object.fromEntries(['garden_accounts','garden_plots','garden_items','garden_actions','garden_events','garden_reward_receipts','garden_outbox'].map(name=>[name,[]]))}};
+    const garden=emptyGarden(owner);
     const initialized=applyCloudCommand({ownerAccountId:owner,data:{modules:{garden},tables:{}}},owner,'initialize',{actionId:'unit-garden-init',expectedRevision:0},Date.now(),'d'.repeat(64));
     const schemas=JSON.parse(readFileSync('infra/supabase/functions/discovery/_generated/sqlite-schemas.json','utf8'));
     const discoveryTables=Object.fromEntries(Object.entries(schemas).map(([name,schema])=>[name,{schema,rows:[]} ]));
     const historical={owner_account_id:owner,encounter_id:'encounter-historical-preserved',status:'lost',revision:8,data_json:JSON.stringify({legacy:true,petId:pet.petId}),updated_at:1};discoveryTables.discovery_encounters.rows.push(historical);
     await db.query("select public.lingjing_commit_authority($1,'unit-trusted-source-001',$2)",[owner,{companions:{module:{version:1,data:companion},petIds:[pet.petId]},garden:{module:initialized.envelope.data.modules.garden},discovery:{tables:discoveryTables}}]);
-    const location=async(op,input)=>(await db.query('select public.lingjing_discovery_location($1::jsonb,$2,$3::jsonb) v',[JSON.stringify(actor),op,JSON.stringify(input)])).rows[0].v;
+    const location=async(op,input,who=actor)=>(await db.query('select public.lingjing_discovery_location($1::jsonb,$2,$3::jsonb) v',[JSON.stringify(who),op,JSON.stringify(input)])).rows[0].v;
     const key=generateKeyPairSync('ec',{namedCurve:'prime256v1'}).publicKey.export({format:'jwk'});await location('register_device',{publicJwk:key,keyFingerprint:'a'.repeat(64)});
     const nonce=await location('issue_nonce',{purpose:'begin',reference:'unit-spawn'});
     const proof=await location('accept_nonce',{challengeId:nonce.id,signatureHash:'a'.repeat(64),fix:{lat:31.2,lng:121.4,accuracyMeters:5,timestampMs:Date.now(),source:'os',provider:'windows-geolocator',positionSource:'WiFi',coordinateSystem:'wgs84'}});
@@ -67,10 +67,10 @@ test('wild writes atomically consume proof and commit protected save, preserving
     // The actual server state machine, real02 constructor/growth and05 reducer
     // now exercise the complete SQL store. Only the world boundary is a local
     // stand-in: this test does not claim deployed PostGIS/region ownership.
-    await db.exec(`reset role;create function public.runtime_territory_capture_context(text,double precision,double precision) returns jsonb language sql as $$select '{"territoryId":null,"captureMultiplier":1}'::jsonb$$;
-      revoke all on function public.runtime_territory_capture_context(text,double precision,double precision) from public,anon,authenticated;
-      grant execute on function public.runtime_territory_capture_context(text,double precision,double precision) to service_role;set role service_role;`);
-    const rpcNames={lingjing_discovery_location:['p_actor','p_op','p_input'],lingjing_discovery_game_read:['p_actor','p_op','p_key'],lingjing_discovery_game_write:['p_actor','p_op','p_operation','p_expected_save_revision','p_fragments'],runtime_territory_capture_context:['p_owner','p_lat','p_lng']};
+    await db.exec(`reset role;create function public.runtime_territory_capture_context(text,double precision,double precision,text default null) returns jsonb language sql as $$select '{"territoryId":null,"captureMultiplier":1}'::jsonb$$;
+      revoke all on function public.runtime_territory_capture_context(text,double precision,double precision,text) from public,anon,authenticated;
+      grant execute on function public.runtime_territory_capture_context(text,double precision,double precision,text) to service_role;set role service_role;`);
+    const rpcNames={lingjing_discovery_location:['p_actor','p_op','p_input'],lingjing_discovery_game_read:['p_actor','p_op','p_key'],lingjing_discovery_game_write:['p_actor','p_op','p_operation','p_expected_save_revision','p_fragments'],runtime_territory_capture_context:['p_owner','p_lat','p_lng','p_scenario_id']};
     const admin={async rpc(name,args){try{const fields=rpcNames[name];assert.ok(fields);const values=fields.map(key=>typeof args[key]==='object'?JSON.stringify(args[key]):args[key]);const result=await db.query('select public.'+name+'('+fields.map((_,i)=>'$'+(i+1)).join(',')+') v',values);return{data:result.rows[0].v,error:null};}catch(e){return{data:null,error:{message:e.message}};}}};
     const userClient={from(name){assert.equal(name,'lingjing_saves');return{select(){return this;},eq(field,value){assert.equal(field,'owner_id');assert.equal(value,owner);return this;},async maybeSingle(){return{data:await head(),error:null};}};}};
     const verified={...actor,schemaVersion:1,authority:'live',authKind:'supabase',client:userClient};
@@ -83,6 +83,14 @@ test('wild writes atomically consume proof and commit protected save, preserving
     for(let n=0;n<80&&current.status==='active';n++)current=await call({op:'act',permitId:id2,actionId:'full-turn-'+n,expectedRound:current.snapshot.round+1,action:current.snapshot.player.anger>=current.rules.ultimateAnger?'ultimate':'normal_attack'});
     assert.equal(current.status,'finished');assert.equal(current.winner,'player');assert.equal(current.reward.applied,true);assert.equal(current.reward.experience,20);
     const wonHead=await head(),beforeCapture=wonHead.revision,captureProof=await issue('capture',id2);
+    await db.exec('reset role');
+    await db.query("insert into lingjing_discovery.location_test_grants(auth_uid,device_id,scenario_id,expires_at) values($1,$2,'explicit-unit-qa',clock_timestamp()+interval '2 minutes')",[uid,device]);
+    await db.exec('set role service_role');
+    const qaActor={...actor,allowSimulatedLocation:true,scenarioId:'explicit-unit-qa'};
+    const qaNonce=await location('issue_nonce',{purpose:'capture',reference:id2},qaActor);
+    const qaProof=await location('accept_nonce',{challengeId:qaNonce.id,signatureHash:'e'.repeat(64),fix:{...spawn.position,accuracyMeters:5,timestampMs:Date.now(),source:'simulated',provider:'qa-discovery',coordinateSystem:'wgs84',scenarioId:'explicit-unit-qa'}},qaActor);
+    await assert.rejects(authority({actor:{...verified,allowSimulatedLocation:true,scenarioId:'explicit-unit-qa'},input:{op:'confirm',permitId:id2,proofId:qaProof.id,name:'不能跨世界收服',actionId:'cross-scenario-capture'}}),{code:'LOCATION_SCENARIO_MISMATCH'});
+    assert.equal((await location('read_proof',{proofId:qaProof.id})).consumedAt,null);
     const confirmation={op:'confirm',permitId:id2,proofId:captureProof.id,name:'云端规范新伙伴',actionId:'full-game-capture'};
     // Failure after domain rows but before save revision must roll back proof,
     // canonical instance/registry, capture receipt and the action receipt.

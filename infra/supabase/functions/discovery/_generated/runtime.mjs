@@ -1262,6 +1262,11 @@ var problem = (code, message) => {
   throw Object.assign(new Error(message), { code });
 };
 var copy2 = (value) => structuredClone(value);
+var GARDEN_TABLES = ["garden_accounts", "garden_plots", "garden_items", "garden_actions", "garden_events", "garden_reward_receipts", "garden_garrisons", "garden_outbox", "garden_territory_attempts", "garden_territory_challenges"];
+var COMPANION_TABLES2 = ["companion_accounts", "companion_pets", "companion_actions", "companion_legacy_archive", "companion_interactions", "companion_capture_receipts"];
+function emptyGarden(owner) {
+  return { version: 1, data: { ownerAccountId: owner, tables: Object.fromEntries(GARDEN_TABLES.map((name) => [name, []])), territoryArchive: { territories: [], logs: [] } } };
+}
 function validQuantity(value) {
   if (!Number.isSafeInteger(value) || value < 1 || value > MAX_QUANTITY) problem("INVALID_QUANTITY", "\u6570\u91CF\u65E0\u6548");
   return value;
@@ -1270,8 +1275,21 @@ function gardenDocument(envelope, owner) {
   const module = envelope?.data?.modules?.garden;
   if (envelope?.ownerAccountId !== owner || module?.version !== 1 || module.data?.ownerAccountId !== owner || !module.data.tables) problem("CLOUD_GARDEN_NOT_INITIALIZED", "\u8BF7\u5148\u5728\u8D26\u53F7\u9875\u9762\u540C\u6B65\u5305\u542B\u83DC\u56ED\u7684\u5B8C\u6574\u5B58\u6863");
   const tables = module.data.tables;
-  for (const name of ["garden_accounts", "garden_plots", "garden_items", "garden_actions", "garden_events", "garden_reward_receipts", "garden_outbox"]) if (!Array.isArray(tables[name]) || tables[name].some((row) => row.owner_account_id !== owner)) problem("INVALID_CLOUD_SAVE", "\u4E91\u7AEF\u83DC\u56ED\u5F52\u5C5E\u6821\u9A8C\u5931\u8D25");
+  if (Object.keys(tables).sort().join() !== [...GARDEN_TABLES].sort().join()) problem("INVALID_CLOUD_SAVE", "\u4E91\u7AEF\u83DC\u56ED\u5B58\u6863\u4E0D\u5B8C\u6574");
+  for (const name of GARDEN_TABLES) if (!Array.isArray(tables[name]) || tables[name].some((row) => !row || row.owner_account_id !== owner)) problem("INVALID_CLOUD_SAVE", "\u4E91\u7AEF\u83DC\u56ED\u5F52\u5C5E\u6821\u9A8C\u5931\u8D25");
   return tables;
+}
+function cloudCompanions(envelope, owner) {
+  const unit = envelope?.data?.modules?.companions;
+  let tables;
+  if (unit !== void 0) {
+    if (unit?.version !== 1 || unit.data?.ownerAccountId !== owner || !unit.data.tables || !Array.isArray(unit.data.identityImports) || COMPANION_TABLES2.some((name) => Object.hasOwn(envelope.data.tables || {}, name))) problem("INVALID_CLOUD_SAVE", "\u4F19\u4F34\u6A21\u5757\u5F52\u5C5E\u6216\u7248\u672C\u65E0\u6548\uFF0C\u6216\u5305\u542B\u4E24\u4EFD\u72B6\u6001");
+    tables = unit.data.tables;
+    if (Object.keys(tables).sort().join() !== [...COMPANION_TABLES2].sort().join()) problem("INVALID_CLOUD_SAVE", "\u4F19\u4F34\u5B58\u6863\u4E0D\u5B8C\u6574");
+  } else tables = Object.fromEntries(COMPANION_TABLES2.map((name) => [name, envelope?.data?.tables?.[name]?.rows]));
+  for (const name of COMPANION_TABLES2) if (!Array.isArray(tables[name]) || tables[name].some((row) => !row || row.owner_account_id !== owner)) problem("COMPANIONS_UNAVAILABLE", "\u4F19\u4F34\u5B58\u6863\u4E0D\u5B8C\u6574\u6216\u5F52\u5C5E\u4E0D\u4E00\u81F4");
+  if (tables.companion_accounts.length !== 1 || !Number.isSafeInteger(tables.companion_accounts[0].revision)) problem("INVALID_CLOUD_SAVE", "\u4F19\u4F34\u8D26\u53F7\u7248\u672C\u65E0\u6548");
+  return { pets: tables.companion_pets, accounts: tables.companion_accounts, actions: tables.companion_actions };
 }
 function applyCloudCommand(source, owner, kind, input, now, requestHash, uuid = () => crypto.randomUUID(), verifiedReward) {
   if (!input || typeof input.actionId !== "string" || !/^[a-zA-Z0-9:_-]{1,160}$/.test(input.actionId)) problem("INVALID_ACTION", "\u64CD\u4F5C\u7F16\u53F7\u65E0\u6548");
@@ -1341,20 +1359,20 @@ function applyCloudCommand(source, owner, kind, input, now, requestHash, uuid = 
     const item = ITEMS[input.itemId];
     if (!item?.effects) problem("NOT_EDIBLE", "\u7A3B\u7C73\u9700\u8981\u5148\u5236\u4F5C\uFF0C\u79CD\u5B50\u4E0D\u80FD\u5582\u98DF");
     const count = validQuantity(input.quantity);
-    const pets = envelope.data.tables?.companion_pets?.rows;
+    const pets = cloudCompanions(envelope, owner).pets;
     const petRow = pets?.find((row) => row.owner_account_id === owner && row.pet_id === input.petId);
     if (!petRow) problem("PET_NOT_FOUND", "\u5F53\u524D\u8D26\u53F7\u6CA1\u6709\u8FD9\u53EA\u4F19\u4F34");
     if (!Number.isSafeInteger(input.expectedPetRevision) || petRow.revision !== input.expectedPetRevision) problem("REVISION_CONFLICT", "\u4F19\u4F34\u72B6\u6001\u5DF2\u66F4\u65B0\uFF0C\u8BF7\u5237\u65B0");
     const pet = JSON.parse(petRow.data_json);
     if (pet.ownerAccountId !== owner || pet.petId !== input.petId) problem("PET_NOT_FOUND", "\u4F19\u4F34\u5F52\u5C5E\u4E0D\u4E00\u81F4");
     change(item.id, -count, pet.petId);
-    for (const [effect, target] of [["satiety", "satiety"], ["mood", "mood"], ["intimacy", "affinity"]]) pet.growth[target] = Math.min(100, Math.max(0, pet.growth[target] + item.effects[effect] * count));
+    pet.growth = applyGrowthEffect(pet.growth, { satiety: item.effects.satiety * count, mood: item.effects.mood * count, affinity: item.effects.intimacy * count });
     pet.revision++;
     pet.updatedAt = new Date(now).toISOString();
     petRow.revision = pet.revision;
     petRow.updated_at = pet.updatedAt;
     petRow.data_json = JSON.stringify(pet);
-    const companionAccount = envelope.data.tables?.companion_accounts?.rows?.find((row) => row.owner_account_id === owner);
+    const companionAccount = cloudCompanions(envelope, owner).accounts.find((row) => row.owner_account_id === owner);
     if (companionAccount) companionAccount.revision++;
     receipt = { petId: pet.petId, itemId: item.id, quantity: count, effects: Object.fromEntries(Object.entries(item.effects).map(([key, value]) => [key, value * count])), pet };
   } else if (kind === "reward") {
@@ -1539,6 +1557,7 @@ export {
   companionUnit,
   createCompanionInstance,
   distanceMeters,
+  emptyGarden,
   executeRound,
   catalog_default3 as gardenCatalog,
   gardenDocument,

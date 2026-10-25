@@ -5,7 +5,7 @@ const exposed = new Set(['AUTH_REQUIRED','DEVICE_KEY_INVALID','DEVICE_KEY_REQUIR
   'INVALID_COORDINATES','LOCATION_STALE','LOCATION_IMPRECISE','REAL_LOCATION_REQUIRED','INVALID_CONSUMER','UNSUPPORTED_OP',
   'ACTION_ID_CONFLICT','INVALID_ACTION','PERMIT_NOT_FOUND','ROUND_CONFLICT','REVISION_CONFLICT','SYNC_CONFLICT','BATTLE_FINISHED',
   'ENCOUNTER_PENDING','ENCOUNTER_EXPIRED','SPAWN_ALREADY_CAPTURED','CLOUD_PET_NOT_SYNCED','VICTORY_REQUIRED','CAPTURE_ALREADY_CONFIRMED',
-  'COMPANIONS_AUTHORITY_REQUIRED','CLOUD_REWARD_ADAPTER_REQUIRED','TERRITORY_CONFLICT','DISCOVERY_SCHEMA_CONFLICT','INVALID_CAPTURE_RECEIPT']);
+  'COMPANIONS_AUTHORITY_REQUIRED','CLOUD_REWARD_ADAPTER_REQUIRED','TERRITORY_CONFLICT','DISCOVERY_SCHEMA_CONFLICT','INVALID_CAPTURE_RECEIPT','LOCATION_SCENARIO_MISMATCH']);
 export function actorDto(actor) {
   return { authUserId: actor.authUserId, ownerAccountId: actor.ownerAccountId, deviceId: actor.deviceId, sessionId: actor.sessionId,
     ...(actor.allowSimulatedLocation === true ? { allowSimulatedLocation: true, scenarioId: actor.scenarioId } : {}) };
@@ -78,7 +78,7 @@ export function createDiscoveryStore(admin, { awardBattle, createCapture, now = 
       requireValue(typeof createCapture === 'function', 'COMPANIONS_AUTHORITY_REQUIRED', '规范伙伴捕捉构造器尚未部署', 503);
       const current = await head(actor);
       const proof = await rpc('lingjing_discovery_location', { p_actor: actorDto(actor), p_op: 'read_proof', p_input: { proofId: operation.locationProofId } });
-      const context = await rpc('runtime_territory_capture_context', { p_owner: actor.ownerAccountId, p_lat: proof.fix.lat, p_lng: proof.fix.lng });
+      const context = await rpc('runtime_territory_capture_context', { p_owner: actor.ownerAccountId, p_lat: proof.fix.lat, p_lng: proof.fix.lng, p_scenario_id: proof.source === 'simulated' ? proof.fix.scenarioId : null });
       // This preview is recomputed/compared and locked by05 inside game_write.
       // A region change aborts the whole capture; no stale HTTP multiplier grant.
       const capture = { ...operation.capture, ...context }, instance = { ...operation.instance, origin: { ...operation.instance.origin, ...context } };
