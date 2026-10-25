@@ -98,6 +98,10 @@ const migrations = [{
     authority_pending INTEGER NOT NULL DEFAULT 0,prepared_at TEXT,created_at TEXT NOT NULL,
     PRIMARY KEY(owner_account_id,action_id)
   );`
+}, {
+  id:'accounts-006-cloud-projection-audit',
+  sql:`ALTER TABLE account_sync_sources ADD COLUMN cloud_projection_checksum TEXT;
+    ALTER TABLE account_sync_sources ADD COLUMN cloud_excluded TEXT NOT NULL DEFAULT '[]';`
 }];
 
 module.exports = { migrations };

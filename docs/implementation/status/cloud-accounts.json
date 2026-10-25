@@ -2,10 +2,10 @@
   "module": "accounts",
   "scope": "2026-10-25 Supabase Auth/JWT, stable legacy owner mapping, per-device sessions, full-save CAS/idempotency/conflict/offline recovery",
   "branch": "codex/lingjing-accounts",
-  "commit": "2f850a3",
+  "commit": "fe56957",
   "worktree": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-accounts\\DesktopPet",
   "goalStatus": "active",
-  "phase": "Auth+CAS actual HTTPS main service11/11 passed; dynamic stable SDK callback2f850a3 ready; approved foundationced8e5e merged for true dual Electron",
+  "phase": "Privacy hotfixfe56957 ready for immediate centralized SQL migration; real dual Electron in progress, first attempt Auth passed but fixture require scope fixed",
   "baseline": "46abf416e0500b53ef32fc29b441d923ef5a6a80",
   "dependencyCheckpoint": "b40af0efcf6062ddc2e8c360523c996fc91ebc0a",
   "contracts": {
@@ -110,6 +110,14 @@
       "entry": "apps/pc-app/runtime/features/accounts/supabase-remote.cjs",
       "oldHttp": "default disabled; explicit LINGJING_LEGACY_AUTH=1 only; new privateSession.sessionToken=null and requireRuntimeUser blocked",
       "sdkLifecycle": "2f850a3 stable per Auth session SDK, accessToken callback (no fixed Authorization); callback mode reset after SDK initial seed; refresh calls realtime.setAuth() without token; logout/switch/invalid/dispose disconnects channels; clients must not manually setAuth(token)"
+    },
+    "cloudPrivacy": {
+      "proof": "sourceChecksum and cloud projectionChecksum distinct; excluded paths recorded without values; never claim full original uploaded",
+      "cloudArchive": "safe projection only, legacy module and raw archive/credential schema excluded, normalized sensitive keys and nested/serialized JSON stripped",
+      "server": "has_secret normalizes case/separators and recursively inspects JSON strings, including encryptedSecret/openai_api_key; no existing migration edited",
+      "localOriginal": "account_sync_sources.original_document/original_checksum retains local snapshot; existing raw sources/backup files never deleted",
+      "migration": "20261025025906_lingjing_cloud_secret_guard.sql",
+      "implementation": "apps/pc-app/runtime/features/accounts/cloud-projection.cjs"
     }
   },
   "migrations": [
@@ -142,6 +150,12 @@
       "generatedBy": "Supabase CLI2.122.0 migration new lingjing_protected_save_cas",
       "file": "infra/supabase/migrations/20261025021759_lingjing_protected_save_cas.sql",
       "readyForCoordinatorReview": true
+    },
+    {
+      "file": "infra/supabase/migrations/20261025025906_lingjing_cloud_secret_guard.sql",
+      "remoteAppliedByThisChat": false,
+      "readyForCoordinatorReview": true,
+      "generatedBy": "Supabase CLI2.122.0 migration new lingjing_cloud_secret_guard"
     }
   ],
   "checks": [
@@ -186,6 +200,11 @@
       "command": "node --test supabase-main.test.cjs",
       "kind": "simulated protocol, official SDK real object",
       "result": "6 protocol unit cases passed including stable SDK dynamic token and channel cleanup"
+    },
+    {
+      "kind": "local PGlite/protocol only; real privacy HTTP verifier next",
+      "result": "13 passed including fake nested and serialized BYOK guard/safe projection and dynamic SDK lifecycle",
+      "command": "node --test cloud-save-sql.test.mjs supabase-main.test.cjs"
     }
   ],
   "realCloudEvidence": {

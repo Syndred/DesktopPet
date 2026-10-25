@@ -1,0 +1,100 @@
+{
+  "at": "2026-10-25T02:35:15.643Z",
+  "sourceCommit": "7416031fa5e3ee39932c5bf39cedd36a5cb93930",
+  "build": {
+    "schemaVersion": 1,
+    "builtAt": "2026-10-25T02:34:15.282Z",
+    "sourceCommit": "7416031fa5e3ee39932c5bf39cedd36a5cb93930",
+    "sourceDirtyFiles": [],
+    "codeFingerprint": "6f4abc0e734504d97833fbcbd27b928919e86e47630ef8fea5efb56b6f522394",
+    "compiledFingerprint": "d26b736fbce92876bd9608f7afaae8d6ed19be84729b54060304fd4adbd3538e",
+    "codeFiles": 219,
+    "compiledFiles": 24
+  },
+  "status": "passed",
+  "realElectron": true,
+  "realCloud": false,
+  "versions": {
+    "electron": "44.9.3",
+    "node": "24.22.0",
+    "chrome": "152.0.7977.167"
+  },
+  "provenance": {
+    "qaIdentity": "simulated namespaced profile",
+    "syntheticLegacyFixture": true,
+    "modelResponsesSimulated": false,
+    "modelTransport": "two actual loopback connection refusals",
+    "nativeFilePicker": "test-only file path adapter; OS dialog not claimed"
+  },
+  "marker": {
+    "schemaVersion": 1,
+    "application": "lingjing",
+    "scenario": "unified-battle",
+    "runId": "7655936e-f8ee-4747-93ff-7d2333604b0a",
+    "isolated": true,
+    "profilePath": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-conversations\\DesktopPet\\artifacts\\conversations\\cloud-recovery\\run-1792895710184\\qa-profile",
+    "createdAt": "2026-10-25T02:35:10.185Z"
+  },
+  "checks": [
+    "Actual AI-settings preview/import prepends original stable IDs before existing history, retains persona/memory, and leaves the same-template second pet untouched.",
+    "Unified account backup consumes the feature archive; conversation wire data excludes keys/blobs/tokens and device-local credential/import tables.",
+    "Actual account preview/replace restoration emits a new session epoch, resets same-revision persona/key drafts, restores IDs/order and rejects an old editor write.",
+    "Actual process restart and read-only SQLite confirm stable IDs/order, original archive bytes, preserved local encrypted key, and empty renderer key storage."
+  ],
+  "networkAttempts": 2,
+  "owner": "qa:7655936e-f8ee-4747-93ff-7d2333604b0a:local-6e89b441-cc3d-44a3-b2d0-bdf90a76a590",
+  "petIds": [
+    "pet-9c0189f6-1ed3-40ca-84c4-4a9d4a3b0f21",
+    "pet-7296ca9f-db47-4474-b82f-1d4789f93eca"
+  ],
+  "expectedIds": [
+    "original-old-user-1",
+    "original-old-user-2",
+    "bdb5dd05-0579-46e3-894f-e07c9f747118",
+    "fb0e029c-56c4-4a79-babb-e23cc47308eb"
+  ],
+  "sqliteRows": [
+    {
+      "id": "original-old-user-1",
+      "pet_id": "pet-9c0189f6-1ed3-40ca-84c4-4a9d4a3b0f21",
+      "role": "user",
+      "status": "complete",
+      "error_code": null,
+      "attempt": 1
+    },
+    {
+      "id": "original-old-user-2",
+      "pet_id": "pet-9c0189f6-1ed3-40ca-84c4-4a9d4a3b0f21",
+      "role": "user",
+      "status": "complete",
+      "error_code": null,
+      "attempt": 1
+    },
+    {
+      "id": "bdb5dd05-0579-46e3-894f-e07c9f747118",
+      "pet_id": "pet-9c0189f6-1ed3-40ca-84c4-4a9d4a3b0f21",
+      "role": "user",
+      "status": "complete",
+      "error_code": null,
+      "attempt": 1
+    },
+    {
+      "id": "fb0e029c-56c4-4a79-babb-e23cc47308eb",
+      "pet_id": "pet-9c0189f6-1ed3-40ca-84c4-4a9d4a3b0f21",
+      "role": "assistant",
+      "status": "failed",
+      "error_code": "NETWORK_ERROR",
+      "attempt": 2
+    }
+  ],
+  "archiveHash": "1d26a36a7bfa86eb8ba38e19e6d58ea008fa8e9626e89bd19d66d6f6345cfb6e",
+  "originalArchivePreserved": true,
+  "encryptedKeyBytes": 48,
+  "rendererErrors": [],
+  "rendererKeyStorage": 0,
+  "wholeSaveLegacyPrivacyPending": true,
+  "externalConditions": [
+    "08 live login/full-save CAS and central deployment are required for real HTTPS A/B tests.",
+    "Whole-save legacy module retains opaque secret fixture fields; 08 must filter cloud serialization before any real cloud push."
+  ]
+}

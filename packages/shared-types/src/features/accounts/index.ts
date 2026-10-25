@@ -49,6 +49,7 @@ export interface SyncStatus {
   configured: boolean; cloudRevision: number; lastVerifiedAt: string | null;
   lastError: string | null; pending: number; conflicts: number; localChanged: boolean; running: boolean;
   unverifiedLocal?: number;
+  privacyRedactions?: number;
 }
 export interface BackupPreview {
   previewId: string; checksum: string; currentChecksum?: string; cloudRevision?: number;

@@ -1,0 +1,120 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-25T03:11:50.332Z",
+  "projectRef": "jbvrdmrkwpznbrvteive",
+  "source": {
+    "function": "discovery",
+    "entrypoint": "infra/supabase/functions/discovery/index.ts",
+    "sourceCommit": "267306c5d311f2b342a89dcb1f44630fe0f07884",
+    "sourceSha256": "2b816d7178da57a7cb4c5b7d4de553f5b081bf2b690173f6bea1991019a72f6b",
+    "files": [
+      {
+        "name": "infra/supabase/functions/_shared/battle-core.js",
+        "bytes": 18099
+      },
+      {
+        "name": "infra/supabase/functions/_shared/lingjing-auth.ts",
+        "bytes": 7618
+      },
+      {
+        "name": "infra/supabase/functions/discovery/_generated/runtime.mjs",
+        "bytes": 35437
+      },
+      {
+        "name": "infra/supabase/functions/discovery/deno.json",
+        "bytes": 113
+      },
+      {
+        "name": "infra/supabase/functions/discovery/deno.lock",
+        "bytes": 3993
+      },
+      {
+        "name": "infra/supabase/functions/discovery/handler.mjs",
+        "bytes": 5115
+      },
+      {
+        "name": "infra/supabase/functions/discovery/index.ts",
+        "bytes": 973
+      },
+      {
+        "name": "infra/supabase/functions/discovery/protocol.mjs",
+        "bytes": 7141
+      },
+      {
+        "name": "infra/supabase/functions/discovery/store.mjs",
+        "bytes": 2017
+      }
+    ],
+    "external": [
+      "node:module",
+      "npm:@supabase/supabase-js@2.98.0"
+    ],
+    "warnings": []
+  },
+  "deployedFunction": {
+    "id": "c233809a-4db5-4a8a-a515-ff17934dfcd0",
+    "slug": "discovery",
+    "name": "discovery",
+    "status": "ACTIVE",
+    "version": 1,
+    "created_at": 1792897606497,
+    "updated_at": 1792897606497,
+    "verify_jwt": false,
+    "import_map": false,
+    "entrypoint_path": "file:///tmp/user_fn_jbvrdmrkwpznbrvteive_c233809a-4db5-4a8a-a515-ff17934dfcd0_1/source/infra/supabase/functions/discovery/index.ts",
+    "ezbr_sha256": "d42352b64e3ad75f722a4aaf190d3877c5caf228cf8f5de46a73794f1a123629"
+  },
+  "migrations": [
+    {
+      "version": "20261025030635",
+      "name": "lingjing_discovery_cloud_authority",
+      "source": "infra/supabase/migrations/20261025020719_lingjing_discovery_cloud_authority.sql",
+      "bookkeepingAligned": false
+    },
+    {
+      "version": "20261025030639",
+      "name": "lingjing_discovery_live_actor_guard",
+      "source": "infra/supabase/migrations/20261025025641_lingjing_discovery_live_actor_guard.sql",
+      "bookkeepingAligned": false
+    }
+  ],
+  "privileges": {
+    "tables": [
+      {
+        "rls": true,
+        "name": "location_test_grants",
+        "anon_select": false,
+        "authenticated_select": false
+      },
+      {
+        "rls": true,
+        "name": "devices",
+        "anon_select": false,
+        "authenticated_select": false
+      },
+      {
+        "rls": true,
+        "name": "location_nonces",
+        "anon_select": false,
+        "authenticated_select": false
+      },
+      {
+        "rls": true,
+        "name": "location_proofs",
+        "anon_select": false,
+        "authenticated_select": false
+      }
+    ],
+    "service_rpc": true,
+    "anonymous_rpc": false,
+    "authenticated_rpc": false,
+    "client_schema_usage": false
+  },
+  "anonymousHttp": {
+    "status": 401,
+    "code": "AUTH_REQUIRED"
+  },
+  "positiveLiveLocation": "pending module03",
+  "fullCaptureReady": false,
+  "scope": "Deployed signed-location component only; not a full cloud capture acceptance"
+}

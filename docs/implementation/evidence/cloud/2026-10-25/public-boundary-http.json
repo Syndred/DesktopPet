@@ -1,0 +1,58 @@
+{
+  "at": "2026-10-25T02:49:31.836Z",
+  "projectRef": "jbvrdmrkwpznbrvteive",
+  "kind": "read-only actual HTTPS public boundary on deployed Supabase; no simulation",
+  "sourceCommit": "84f41d07ee86530b60944e4425e2488835999c05",
+  "publicConfigSha256": "625ca2a50fb7b3ae479208d65bf31dc877ce5b22d516fe559c8ecde976a7b481",
+  "credentialsIncluded": false,
+  "checks": [
+    {
+      "name": "managed Auth health",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "name": "anonymous actor refused with well-formed unregistered device",
+      "status": 401,
+      "code": "AUTH_REQUIRED",
+      "passed": true
+    },
+    {
+      "name": "anonymous save refused",
+      "status": 401,
+      "code": "AUTH_REQUIRED",
+      "passed": true
+    },
+    {
+      "name": "anonymous accounts hidden",
+      "status": 401,
+      "code": "42501",
+      "passed": true
+    },
+    {
+      "name": "anonymous saves hidden",
+      "status": 401,
+      "code": "42501",
+      "passed": true
+    },
+    {
+      "name": "authority RPC is server-only",
+      "status": 401,
+      "code": "42501",
+      "passed": true
+    },
+    {
+      "name": "old public application table unavailable",
+      "status": 404,
+      "code": "PGRST205",
+      "passed": true
+    },
+    {
+      "name": "private archive not an exposed schema",
+      "status": 406,
+      "code": "PGRST106",
+      "passed": true
+    }
+  ],
+  "passed": true
+}

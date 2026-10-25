@@ -41,5 +41,23 @@ const migrations = [{
       owner_account_id TEXT PRIMARY KEY, selected_pet_id TEXT NOT NULL
     );
   `
+}, {
+  id: "conversations-002-local-credentials-and-imports",
+  sql: `
+    CREATE TABLE IF NOT EXISTS conversation_credentials (
+      owner_account_id TEXT NOT NULL, scope TEXT NOT NULL CHECK(scope IN ('account','pet')),
+      scope_id TEXT NOT NULL, provider TEXT NOT NULL, base_url TEXT NOT NULL,
+      encrypted_key TEXT NOT NULL, updated_at INTEGER NOT NULL,
+      PRIMARY KEY(owner_account_id,scope,scope_id,provider,base_url)
+    );
+    INSERT OR IGNORE INTO conversation_credentials
+      SELECT owner_account_id,scope,scope_id,provider,base_url,encrypted_key,updated_at
+      FROM conversation_connections WHERE encrypted_key IS NOT NULL;
+    CREATE TABLE IF NOT EXISTS conversation_legacy_imports (
+      owner_account_id TEXT NOT NULL, source_hash TEXT NOT NULL,
+      result TEXT NOT NULL, imported_at INTEGER NOT NULL,
+      PRIMARY KEY(owner_account_id,source_hash)
+    );
+  `
 }];
 module.exports = { migrations };

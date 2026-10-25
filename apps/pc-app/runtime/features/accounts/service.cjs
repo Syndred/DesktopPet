@@ -220,7 +220,7 @@ class AccountsService {
     try { this.vault.clear(); } catch { this.startupIssue = "SECURE_SESSION_CLEAR_FAILED"; }
     this.host?.clear?.();
     if (prior?.provider === "local") this.db.prepare("DELETE FROM account_login_sessions WHERE proof_hash=?").run(checksum(prior.proof));
-    if (this.remote.signOut) void this.remote.signOut(previousCloudSession).catch(() => {});
+    if (this.remote.signOut) this.signOutPending=this.remote.signOut(previousCloudSession).then(()=>({confirmed:true}),()=>({confirmed:false}));
     else this.remote.setCurrentUser(null);
     this.emitSession({ notifyApp: false });
     return { currentUser: null };
