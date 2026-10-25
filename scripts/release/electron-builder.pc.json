@@ -89,6 +89,9 @@
     "artifactName": "Lingjing-${version}-portable-${arch}.${ext}"
   },
   "npmRebuild": false,
+  "portable": {
+    "unpackDirName": true
+  },
   "asarUnpack": [
     "node_modules/better-sqlite3/prebuilds/win32-x64.node"
   ],
