@@ -64,7 +64,7 @@ async function raw(body,device,token){const response=await fetch(`${config.url}/
  a.remote.fetcher=async()=>fetch('https://127.0.0.1:1',{signal:AbortSignal.timeout(3000)}); // Actual refused socket; no JWT is sent to the probe.
  await assert.rejects(a.accounts.sync.flush(owner,true),{code:'CLOUD_UNAVAILABLE'});const retry=a.db.prepare('select * from account_sync_outbox where action_id=?').get(offlineId);assert.equal(retry.status,'retry');
  a.remote.fetcher=realFetch;const recovered=await a.accounts.sync.flush(owner,true);assert.equal(recovered.revision,4);pass('controlled real connection refusal retains SQLite queue and reconnect readback',{actionId:offlineId,statusDuringFailure:retry.status,revision:4,scope:'per-request closed localhost TLS socket; host network was not disabled'});
- const previousProof=a.remote.active;await a.accounts.logout();await new Promise(r=>setTimeout(r,1200));
+ const previousProof=a.remote.active;await a.accounts.logout();assert.equal((await a.accounts.signOutPending).confirmed,true);
  const revoked=await raw({op:'read'},a.remote.deviceId,previousProof.accessToken);assert.equal(revoked.status,401);
  const still=await b.accounts.requireCloudActor();assert.equal(still.ownerAccountId,owner);assert.equal((await b.remote.cloudSave('read',b.accounts.privateSession())).revision,4);pass('main logout revokes A while same-account B retains actual cloud access',{a:revoked.status,b:'live'});
  for(const m of models){const dbBytes=readFileSync(join(m.directory,'state.sqlite'));for(const token of [previousProof.accessToken,previousProof.refreshToken])assert.equal(dbBytes.includes(Buffer.from(token)),false);}
