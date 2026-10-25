@@ -1,12 +1,12 @@
 {
   "module": "battle",
-  "updatedAt": "2026-10-25T09:49:22.7432672Z",
+  "updatedAt": "2026-10-25T09:54:59.7012800Z",
   "integrationBase": "9e57de1d210376ce679168eb1acbff8e37cff1cd",
   "overallStatus": "fixed-awaiting-independent-qa",
   "completeUserAcceptancePassed": false,
   "upstream": {
     "fetched": true,
-    "fetchCheckedAt": "2026-10-25T09:49:22.7432672Z",
+    "fetchCheckedAt": "2026-10-25T09:54:59.7012800Z",
     "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086",
     "pullCommand": "git pull --ff-only origin main",
     "pullResult": "Already up to date"
@@ -64,6 +64,26 @@
         "newDuelRun": false,
         "packageBuilt": false,
         "actualInputAcceptancePerformed": false
+      },
+      "layoutFollowUp": {
+        "baseCommit": "4d97becf949d4c77d91f3c33fed41440ee4904c0",
+        "reason": "完整编号换行时，SelectTrigger 的默认 data-[size=default]:h-8 存在固定高度隐患。",
+        "files": ["apps/pc-app/ui/src/features/battle/index.tsx"],
+        "changes": [
+          "仅选宠 SelectTrigger 增加 data-[size=default]:h-auto 和 min-h-8，与默认高度使用相同条件，允许内容撑高。",
+          "增加 flex-1 和 min-w-0!；重要声明仅覆盖该控件现有的 230px 最小宽度，使选中编号可随剩余宽度换行。",
+          "battle.css、公共 SelectTrigger 和对局样式保持原样。"
+        ],
+        "verified": {
+          "uiTypecheck": { "command": "npm run typecheck:ui", "exitCode": 0 },
+          "targetedLint": {
+            "command": "node node_modules/eslint/bin/eslint.js apps/pc-app/ui/src/features/battle/index.tsx",
+            "exitCode": 0
+          },
+          "diffCheck": { "command": "git diff --check", "exitCode": 0 },
+          "actualInputAcceptancePerformed": false
+        },
+        "pendingIndependentQa": "09 在最小窗口实际选中长编号，确认两行及更多行撑高、完整可见，且不挤出选择控件。"
       },
       "pendingIndependentQa": [
         "训练和好友大厅中，同角色多实例的选宠项和选中值均完整显示不同原 petId。",
