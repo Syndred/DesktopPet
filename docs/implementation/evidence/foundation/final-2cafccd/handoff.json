@@ -1,0 +1,46 @@
+{
+  "at": "2026-10-25T07:45:31.084Z",
+  "status": "engineering-archive-ready-business-joint-pending",
+  "sourceCommit": "2cafccd6871403f69ae8a5bb17dbd658b5a48272",
+  "executable": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\releases\\final-2cafccd\\Lingjing-0.1.8-portable-x64.exe",
+  "inputExercisedByRoot": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\artifacts\\pc-cloud-upgrade-final-2cafccd\\Lingjing-0.1.8-portable-x64.exe",
+  "sha256": "af75c5a8ace15a4a924e71a24fd258df80a459648a1c1ab8d795b1da6e43837e",
+  "bytes": 169188376,
+  "authenticode": {
+    "thumbprint": null,
+    "subject": null,
+    "validUntil": null,
+    "signed": false,
+    "kind": "Authenticode",
+    "status": "NotSigned"
+  },
+  "manifest": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\releases\\final-2cafccd\\manifest.json",
+  "packageAudit": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\artifacts\\foundation\\cloud-engineering\\final-2cafccd\\package-audit.json",
+  "engineeringEvidence": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\artifacts\\foundation\\cloud-engineering\\final-2cafccd\\engineering-evidence.json",
+  "profileEvidence": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\artifacts\\foundation\\cloud-engineering\\final-2cafccd\\profile-evidence.json",
+  "portableEvidence": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\artifacts\\foundation\\cloud-engineering\\final-2cafccd\\portable-evidence.json",
+  "preservedCandidates": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\artifacts\\foundation\\cloud-engineering\\final-2cafccd\\preserved-candidates.json",
+  "canonicalSourceFingerprint": "5e4469dfec52d78f8926dcd47681e07b36434cb77188c3a52beba8cd8f698a6f",
+  "compiledFingerprint": "8bdf477a5cbe7b0ebf25b103d6736e67fbfa6886cc81e6c1f84b8648a8c583a2",
+  "runtimeClosure": {
+    "files": 109,
+    "edges": 190,
+    "sha256": "72aad987d0f45f0548509ea3272b65e08c5253199dd132946dcae732caa2fe74",
+    "jsAndMjs": [
+      "apps/pc-app/runtime/features/companions/cloud-domain.mjs",
+      "apps/pc-app/runtime/features/companions/growth.mjs",
+      "apps/pc-app/runtime/features/companions/instance.mjs",
+      "apps/pc-app/runtime/features/resources/preferences.mjs"
+    ]
+  },
+  "checks": {
+    "engineering": 5,
+    "oldSqliteProfile": 2,
+    "actualPortable": 6
+  },
+  "copiedInputShaUnchanged": true,
+  "publicReleasePublished": false,
+  "tagCreated": false,
+  "localSmokeScope": "Actual engineering/source/config/isolated QA checks; full real-cloud joint business acceptance is independently owned by root and is not asserted here.",
+  "passed": true
+}
