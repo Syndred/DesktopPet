@@ -39,7 +39,7 @@ async function settings(model,volume){const old=await invoke(model,'settingsGet'
  return invoke(model,'settingsSave',{document:old.document,revision:old.revision,actionId:randomUUID()});}
 async function restore(model){const preview=await invoke(model,'cloudPreview');return invoke(model,'backupRestore',{previewId:preview.previewId,mode:'replace',actionId:randomUUID()});}
 async function vaultProof(model){return model.app.evaluate(({safeStorage})=>{
- const services=globalThis.__accountsCloudAcceptanceServices,accounts=services.get('accounts'),fs=require('node:fs'),crypto=require('node:crypto');
+ const services=globalThis.__accountsCloudAcceptanceServices,accounts=services.get('accounts'),fs=globalThis.__accountsCloudAcceptanceRequire('node:fs'),crypto=globalThis.__accountsCloudAcceptanceRequire('node:crypto');
  const bytes=fs.readFileSync(accounts.vault.file),saved=accounts.vault.load(),proof=JSON.parse(saved.proof),active=accounts.remote.active;
  return{available:safeStorage.isEncryptionAvailable(),file:accounts.vault.file,sha256:crypto.createHash('sha256').update(bytes).digest('hex'),
   encryptedNotPlaintext:!bytes.includes(Buffer.from(active.accessToken))&&!bytes.includes(Buffer.from(active.refreshToken)),
@@ -82,7 +82,7 @@ try{
  const retried=await invoke(activeA,'syncRetry');assert.equal(retried.personalVerified,true);assert.equal(retried.revision,second.revision+1);assert.equal((await invoke(activeA,'settingsGet')).document.desktop.volume,54);
  pass('real Electron restart resumes encrypted session and durable queue after controlled connection refusal',{oldPid,newPid:activeA.pid,deviceId:afterRestart.deviceId,sessionId:afterRestart.sessionId,revision:retried.revision,scope:'per-request closed TLS socket; host network was not disabled'});
  for(const model of [activeA,activeB]){await model.page.evaluate(()=>{location.hash='#/account';});await model.page.getByRole('heading',{name:'把每一段陪伴，好好保存。',exact:true}).waitFor();await model.page.screenshot({path:join(output,`${model.name}.png`)});}
- const secretBoundary=await activeA.app.evaluate(()=>{const a=globalThis.__accountsCloudAcceptanceServices.get('accounts'),text=JSON.stringify(a.session()),fs=require('node:fs');
+ const secretBoundary=await activeA.app.evaluate(()=>{const a=globalThis.__accountsCloudAcceptanceServices.get('accounts'),text=JSON.stringify(a.session()),fs=globalThis.__accountsCloudAcceptanceRequire('node:fs');
   const matches=[a.remote.active.accessToken,a.remote.active.refreshToken];const bytes=fs.readFileSync(a.services.db.name);
   return{sessionExcludesTokens:matches.every(t=>!text.includes(t)),sqliteExcludesTokens:matches.every(t=>!bytes.includes(Buffer.from(t)))};});
  assert.ok(secretBoundary.sessionExcludesTokens&&secretBoundary.sqliteExcludesTokens);pass('actual public session and SQLite omit access/refresh tokens',secretBoundary);

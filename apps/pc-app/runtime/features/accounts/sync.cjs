@@ -1,6 +1,7 @@
 const { invariant } = require("./errors.cjs");
 const { actionId, saveDataChecksum, checksum, transaction } = require("./util.cjs");
 const { randomUUID }=require('node:crypto');
+const {cloudProjection}=require('./cloud-projection.cjs');
 const personalModules=new Set(['settings','conversations']);
 function meaningfulData(data){
   const modules={...data.modules};if(modules.legacy?.data===null)delete modules.legacy;
@@ -25,10 +26,12 @@ class AccountSync {
     const savedChecksum = checkpoint && state && checkpoint.cloud_revision === state.cloud_revision && checkpoint.envelope_checksum === state.last_checksum
       ? checkpoint.data_checksum : receipt ? this.dataChecksum(JSON.parse(receipt.document).data) : null;
     const unresolved=this.db.prepare('SELECT count(*) count FROM account_sync_sources WHERE owner_account_id=? AND authority_pending=1').get(owner).count;
+    const projections=this.db.prepare("SELECT cloud_excluded FROM account_sync_sources WHERE owner_account_id=? AND cloud_excluded<>'[]'").all(owner);
     return { configured: Boolean(this.remote.enabled), cloudRevision: state?.cloud_revision || 0,
       lastVerifiedAt: state?.last_verified_at || null, lastError: state?.last_error || null,
       pending: counts.reduce((n, c) => n + c.count, 0), conflicts: counts.find(c => c.status === "conflict")?.count || 0,
       localChanged:savedChecksum!==this.dataChecksum(this.backups.snapshot(owner).data),unverifiedLocal:unresolved,
+      privacyRedactions:projections.length,
       running: this.running.has(owner) };
   }
   enqueue(owner, inputId) {
@@ -63,24 +66,27 @@ class AccountSync {
     }
     if(source.prepared_at)return row; // Retry exactly the same CAS input after an uncertain response.
     const local=JSON.parse(source.original_document);this.backups.validate(local,owner);
+    const projection=cloudProjection(local);
+    this.db.prepare('UPDATE account_sync_sources SET cloud_projection_checksum=?,cloud_excluded=? WHERE owner_account_id=? AND action_id=?')
+      .run(projection.projectedChecksum,JSON.stringify(projection.excluded),owner,row.action_id);
     const cloud=await this.remote.cloudSave('read',session);
     if(cloud?.envelope)this.backups.validate(cloud.envelope,owner);
     const protectedCloud=cloud?.envelope?.data||{modules:{},tables:{}};
     const different=saveDataChecksum(protectedData(local.data))!==saveDataChecksum(protectedData(protectedCloud));
     const conflict=(cloud?.revision||0)!==row.base_revision;
-    if(different||conflict){
+    if(different||conflict||!projection.originalCloudComplete){
       const reason=source.archive_reason||(conflict?'pre-conflict':'unverified-local');
       this.db.prepare('UPDATE account_sync_sources SET archive_reason=?,authority_pending=? WHERE owner_account_id=? AND action_id=?')
         .run(reason,different?1:0,owner,row.action_id);
       if(!source.cloud_archive_id){
-        const receipt=await this.remote.cloudSave('archive',session,{actionId:source.archive_action_id,reason,envelope:local});
-        invariant(receipt?.promoted===false&&receipt.checksum===source.original_checksum&&typeof receipt.id==='string','SYNC_RECEIPT_MISMATCH','原始存档归档回执不一致。');
+        const receipt=await this.remote.cloudSave('archive',session,{actionId:source.archive_action_id,reason,envelope:projection.envelope});
+        invariant(receipt?.promoted===false&&receipt.checksum===projection.projectedChecksum&&typeof receipt.id==='string','SYNC_RECEIPT_MISMATCH','安全存档投影的归档回执不一致。');
         this.db.prepare('UPDATE account_sync_sources SET cloud_archive_id=? WHERE owner_account_id=? AND action_id=?').run(receipt.id,owner,row.action_id);
       }
     }
     invariant(!conflict,'SYNC_CONFLICT','云端已有较新版本，本机原档已保留，请先预览云端存档。');
     const modules={...(cloud?.envelope?.data.modules||{})};
-    for(const [name,value]of Object.entries(local.data.modules))if(personalModules.has(name))modules[name]=value;
+    for(const [name,value]of Object.entries(projection.envelope.data.modules))if(personalModules.has(name))modules[name]=value;
     const {checksum:oldDigest,...body}=local;
     const nextBody={...body,data:{modules,tables:cloud?.envelope?.data.tables||{}}};
     const envelope={...nextBody,checksum:checksum(nextBody)};
@@ -120,7 +126,9 @@ class AccountSync {
           .run(owner, receipt.revision, row.checksum, at);
       });
       const unresolved=this.db.prepare('SELECT authority_pending FROM account_sync_sources WHERE owner_account_id=? AND action_id=?').get(owner,row.action_id)?.authority_pending===1;
-      return {verified:!unresolved,personalVerified:true,requiresAuthority:unresolved,actionId:row.action_id,revision:receipt.revision,checksum:row.checksum};
+      const redacted=this.db.prepare('SELECT cloud_excluded FROM account_sync_sources WHERE owner_account_id=? AND action_id=?').get(owner,row.action_id)?.cloud_excluded;
+      const privacyRedactions=Boolean(redacted&&redacted!=='[]');
+      return {verified:!unresolved&&!privacyRedactions,personalVerified:true,requiresAuthority:unresolved,privacyRedactions,actionId:row.action_id,revision:receipt.revision,checksum:row.checksum};
     } catch (error) {
       const conflict = ['SYNC_CONFLICT','PROTECTED_STATE_MISMATCH','PROTECTED_STATE_REQUIRES_AUTHORITY','PET_OWNER_MISMATCH'].includes(error.code);
       const attempts = row.attempts + 1;
