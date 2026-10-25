@@ -1,0 +1,240 @@
+{
+  "schemaVersion": 1,
+  "status": "candidate-awaiting-root-copy-and09",
+  "createdAt": "2026-10-25T12:54:33.92Z",
+  "kind": "windows-portable-user-acceptance-candidate",
+  "archiveLabel": "user-acceptance-e875feb",
+  "productVersion": "0.1.8",
+  "sourceCommit": "e875febf3430be341191a639668d43e7f09826dc",
+  "executable": {
+    "file": "Lingjing-0.1.8-portable-x64.exe",
+    "bytes": 169213223,
+    "sha256": "3e1bac39b805486aca8e9118444c352c8eab8777fb24409b2ed60108810ed3f9"
+  },
+  "authenticode": {
+    "thumbprint": null,
+    "subject": null,
+    "validUntil": null,
+    "signed": false,
+    "kind": "Authenticode",
+    "status": "NotSigned"
+  },
+  "source": {
+    "schemaVersion": 2,
+    "builtAt": "2026-10-25T12:48:36.49Z",
+    "sourceCommit": "e875febf3430be341191a639668d43e7f09826dc",
+    "sourceTree": "2d8977dc36e95ede498d3e3f14a26f1f9b392a16",
+    "sourceDirtyFiles": [],
+    "codeFingerprint": "a3122d871bbc372c8ffc9a84e15b5b9565b5daace1a6cff29eb0bfadeedb2fbf",
+    "canonicalSourceFingerprint": "4b0266609b34857edf22a87530c32f1ab0d8ea7d87aed631f8bc73efc5fb1f50",
+    "canonicalPolicy": "Repository-relative paths; CRLF normalized to LF for source text only. Packaged/compiled bytes remain exact.",
+    "compiledFingerprint": "c7ed77da99cfc2c803640a25ddc5dff61cb837aa79d2e83729b976b1a4351bd2",
+    "codeFiles": 312,
+    "compiledFiles": 89,
+    "toolchain": {
+      "node": "24.21.0",
+      "electron": "44.9.3",
+      "sqlite": "13.0.3",
+      "vite": "7.3.7",
+      "typescript": "5.9.3",
+      "platform": "win32",
+      "arch": "x64"
+    },
+    "entrypoints": {
+      "main": "main/index.cjs",
+      "app": "ui/index.html",
+      "desktop": "ui/desktop.html",
+      "preload": "preload/index.cjs"
+    },
+    "publicCloud": {
+      "projectRef": "jbvrdmrkwpznbrvteive",
+      "url": "https://jbvrdmrkwpznbrvteive.supabase.co",
+      "sha256": "c1625c63f1d959f92b3392b47f2fb492452803eedf1c0d1ebc68a1168ab64eda",
+      "resourcePath": "lingjing-cloud-public.json"
+    },
+    "packageName": "lingjing-desktop",
+    "runtimeClosure": {
+      "manifest": "runtime-closure.json",
+      "files": 116,
+      "edges": 199,
+      "sha256": "1df30187a94a9ff92ea18e2c1376031491730f7ebe56c434b8dc1fdd5a7b0be9"
+    }
+  },
+  "appAsar": {
+    "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet-build-066f61d\\artifacts\\foundation\\user-acceptance\\user-acceptance-e875feb\\sfx-audit\\win-unpacked\\resources\\app.asar",
+    "sha256": "993a2b91463223fd0c12e4c596459a6bde46d250baff9a2267c8fc2a66c8871d",
+    "bytes": 267484870,
+    "identicalToBuilderOutput": true
+  },
+  "publicCloud": {
+    "projectRef": "jbvrdmrkwpznbrvteive",
+    "sha256": "c1625c63f1d959f92b3392b47f2fb492452803eedf1c0d1ebc68a1168ab64eda",
+    "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet-build-066f61d\\artifacts\\foundation\\user-acceptance\\user-acceptance-e875feb\\sfx-audit\\win-unpacked\\resources\\lingjing-cloud-public.json"
+  },
+  "runtimeClosure": {
+    "files": 116,
+    "edges": 199,
+    "sha256": "1df30187a94a9ff92ea18e2c1376031491730f7ebe56c434b8dc1fdd5a7b0be9",
+    "jsAndMjs": [
+      "apps/pc-app/runtime/features/companions/cloud-domain.mjs",
+      "apps/pc-app/runtime/features/companions/display-identity.mjs",
+      "apps/pc-app/runtime/features/companions/growth.mjs",
+      "apps/pc-app/runtime/features/companions/instance.mjs",
+      "apps/pc-app/runtime/features/resources/preferences.mjs"
+    ]
+  },
+  "resources": {
+    "characterAtlases": 8,
+    "assets": [
+      {
+        "id": "builtin:lingjing-yuwan-v2",
+        "element": "water",
+        "bytes": 2106218,
+        "sha256": "1ce64faec5553a9beca9780c06f1f3b701698a63c91a51a9b71ccd3e59aaa1c1"
+      },
+      {
+        "id": "builtin:lingjing-xiaolan-v1",
+        "element": "water",
+        "bytes": 2354539,
+        "sha256": "ed3296108d762293a235010e7c6222ad69960d65bb035e309e251909df09a5fb"
+      },
+      {
+        "id": "builtin:lingjing-fantuan-v1",
+        "element": "water",
+        "bytes": 2119970,
+        "sha256": "4b1eb6d06ba4c737a3cd2a10f567a2ff2af80bfec3be260e7df304af4bdb80f8"
+      },
+      {
+        "id": "builtin:lingjing-shiba-v2",
+        "element": "fire",
+        "bytes": 1623971,
+        "sha256": "d5d561c04f06018d185b2dc3807658f274420e033f0a28621bfdda70abae5fb5"
+      },
+      {
+        "id": "builtin:lingjing-hatcat-v1",
+        "element": "metal",
+        "bytes": 1738346,
+        "sha256": "c4490613eab58617c5b63293f637d8af3061dee101da12588f82bbff06045777"
+      },
+      {
+        "id": "builtin:lingjing-xiaohu-v1",
+        "element": "water",
+        "bytes": 1604286,
+        "sha256": "df4ba559d509f72e48fd2beeea287668058de94f1853c70e26f5e0b298e277ae"
+      },
+      {
+        "id": "builtin:lingjing-qingya-v1",
+        "element": "wood",
+        "bytes": 1802491,
+        "sha256": "aa59df3af26d4f7faf9272193b7d1d35ed6d2f22ebb6b294a5a2853f0539f693"
+      },
+      {
+        "id": "builtin:lingjing-yantuan-v1",
+        "element": "earth",
+        "bytes": 2441235,
+        "sha256": "f03bc1b8cd1c20c5ef6d466d20db9fb7f9584b7739f21414d22fc2c91c01d886"
+      }
+    ],
+    "licenses": [
+      "licenses/shadcn-ui.txt",
+      "licenses/dependencies.json",
+      "licenses/generated-illustrations.json",
+      "licenses/generated-garden.json",
+      "licenses/generated-roster.json",
+      "licenses/roster-generation-prompts.json",
+      "licenses/roster-refinement-prompts.json",
+      "licenses/roster-element-extension-prompts.json",
+      "licenses/roster-element-extension-refinement.json"
+    ]
+  },
+  "dependencyImportProbe": {
+    "passed": true,
+    "ancestorFallbackRejected": true,
+    "imports": [
+      {
+        "name": "@ai-sdk/openai-compatible",
+        "version": "3.0.77",
+        "resolved": "node_modules/@ai-sdk/openai-compatible/dist/index.js",
+        "exportCount": 6
+      },
+      {
+        "name": "@supabase/supabase-js",
+        "version": "2.98.0",
+        "resolved": "node_modules/@supabase/supabase-js/dist/index.cjs",
+        "exportCount": 49
+      },
+      {
+        "name": "@turf/boolean-point-in-polygon",
+        "version": "7.4.0",
+        "resolved": "node_modules/@turf/boolean-point-in-polygon/dist/cjs/index.cjs",
+        "exportCount": 4
+      },
+      {
+        "name": "@turf/distance",
+        "version": "7.4.0",
+        "resolved": "node_modules/@turf/distance/dist/cjs/index.cjs",
+        "exportCount": 4
+      },
+      {
+        "name": "@turf/helpers",
+        "version": "7.4.0",
+        "resolved": "node_modules/@turf/helpers/dist/cjs/index.cjs",
+        "exportCount": 34
+      },
+      {
+        "name": "ai",
+        "version": "7.0.152",
+        "resolved": "node_modules/ai/dist/index.js",
+        "exportCount": 179
+      },
+      {
+        "name": "better-sqlite3",
+        "version": "13.0.3",
+        "resolved": "node_modules/better-sqlite3/lib/index.js",
+        "exportCount": 3
+      }
+    ],
+    "packagedNativeInMemory": {
+      "sqlite": "3.53.4",
+      "quickCheck": "ok",
+      "profileFilesOpened": false
+    }
+  },
+  "portableExtraction": {
+    "patchCommit": "a4ae503b3520ec8742dceb4ba4189be0addde35e",
+    "configSha256": "ed0cfa5a226029642bfc48b5bd66a50e52937c3980e518a09cb476a5e99cdb8d",
+    "cjsSha256": "503e3fdf4c5df4e8ec24f143c8ccd2c20225d0c3d5dcde26c863f78660b9bf0f",
+    "configUnchangedSincePatch": true,
+    "portableUnpackDirName": true,
+    "builderVersion": "26.18.0",
+    "generatorSha256": "f91b31d96cae53852f263ed89d2bc406ae2be7ff40ce3539b46e1cafe34a41b9",
+    "templateSha256": "80fa75cf8cb68f4999eb92afc9f37f8e5b605cb1c3a077821bbc350a9b907a48",
+    "installedGeneratorBranch": "UNPACK_DIR_NAME is set only for string or falsy unpackDirName; true leaves it undefined.",
+    "templateDefault": "PLUGINSDIR/app",
+    "priorActualInertCompilerEvidence": "docs/implementation/evidence/foundation/portable-per-launch/inert-nsis-compile.json",
+    "actualProductPerLaunchAndPersistenceVerified": false,
+    "requiredOwner": "09"
+  },
+  "engineeringAuditPassed": true,
+  "fullFunctionalAcceptancePassed": false,
+  "productLaunchesBy01": 0,
+  "publicReleasePublished": false,
+  "tagCreated": false,
+  "pushed": false,
+  "pending09Gates": [
+    "Cold/hot duplicate launch and original-window activation",
+    "Distinct isolated profiles in parallel and first complete payload",
+    "Same absolute profile across distinct actual payload roots: localStorage and IndexedDB sentinels",
+    "Original real garden pending owner/actionId/command/payload and Node request/outbox persistence; same actionId UI retry and independent receipt readback"
+  ],
+  "knownOutstandingIssues": [
+    {
+      "id": "QA013",
+      "status": "known-not-in-this-frozen-source",
+      "description": "Expired location disables challenge but UI incorrectly tells user to move closer; follow-up UI reason fix pending.",
+      "severity": "P2",
+      "owner": "03"
+    }
+  ],
+  "acceptanceScope": "Key startup/persistence and existing-fix candidate; not full functional acceptance."
+}

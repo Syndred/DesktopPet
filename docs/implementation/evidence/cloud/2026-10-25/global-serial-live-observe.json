@@ -1,0 +1,305 @@
+{
+  "schemaVersion": 1,
+  "format": "lingjing.global-serial.live-wild-observe",
+  "recordedAt": "2026-10-25T12:53:11.264Z",
+  "projectRef": "jbvrdmrkwpznbrvteive",
+  "runId": "c03-shiba-20261025-790f5b6d-v1",
+  "scenarioId": "user-acceptance-790f5b6d-a900-4c6f-bb3f-e32237136ed1",
+  "createdAt": "2026-10-25T12:49:20.692Z",
+  "completedAt": "2026-10-25T12:49:53.553Z",
+  "realHttps": true,
+  "syntheticPosition": true,
+  "physicalGps": false,
+  "nativeUi": false,
+  "observed": {
+    "ownerAccountId": "account:0521a3e5-adf4-4b0b-9c0b-0923a7b63fe9",
+    "namespace": "qa:user-acceptance-790f5b6d-a900-4c6f-bb3f-e32237136ed1",
+    "spawnId": "wild-2d-v2-f3621dbe19-498036-52001-202331",
+    "templateId": "animal-shiba",
+    "globalSerial": "1",
+    "source": "simulated",
+    "scenarioId": "user-acceptance-790f5b6d-a900-4c6f-bb3f-e32237136ed1"
+  },
+  "reentry": {
+    "ownerAccountId": "account:0521a3e5-adf4-4b0b-9c0b-0923a7b63fe9",
+    "namespace": "qa:user-acceptance-790f5b6d-a900-4c6f-bb3f-e32237136ed1",
+    "spawnId": "wild-2d-v2-f3621dbe19-498036-52001-202331",
+    "templateId": "animal-shiba",
+    "globalSerial": "1",
+    "source": "simulated",
+    "scenarioId": "user-acceptance-790f5b6d-a900-4c6f-bb3f-e32237136ed1"
+  },
+  "nearbyReadback": {
+    "id": "wild-2d-v2-f3621dbe19-498036-52001-202331",
+    "templateId": "animal-shiba",
+    "globalSerial": "1"
+  },
+  "independentSqlReadback": {
+    "petId": null,
+    "spawnId": "wild-2d-v2-f3621dbe19-498036-52001-202331",
+    "createdAt": "2026-10-25T12:49:46.089355+00:00",
+    "namespace": "qa:user-acceptance-790f5b6d-a900-4c6f-bb3f-e32237136ed1",
+    "templateId": "animal-shiba",
+    "globalSerial": "1",
+    "ownerAccountId": "account:0521a3e5-adf4-4b0b-9c0b-0923a7b63fe9"
+  },
+  "http": [
+    {
+      "step": "auth",
+      "url": "https://jbvrdmrkwpznbrvteive.supabase.co/functions/v1/lingjing-auth",
+      "requestBodySha256": "176f204e40d5dd6ac209a36711abdddde77d7d0a9b9ca6a7de47774935088fa9",
+      "sentAt": "2026-10-25T12:49:20.756Z",
+      "httpStatus": 200,
+      "respondedAt": "2026-10-25T12:49:23.479Z",
+      "serverDate": "Sun, 25 Oct 2026 12:49:23 GMT",
+      "requestId": "01a1731b-c3d2-7dbf-baf8-b0e0bdf5e631"
+    },
+    {
+      "step": "protocol",
+      "url": "https://jbvrdmrkwpznbrvteive.supabase.co/functions/v1/discovery",
+      "requestBodySha256": "913a75776395371422d2c4e4b715166060771298519fb3f350069c14d319c8f3",
+      "sentAt": "2026-10-25T12:49:23.483Z",
+      "httpStatus": 200,
+      "respondedAt": "2026-10-25T12:49:26.413Z",
+      "serverDate": "Sun, 25 Oct 2026 12:49:26 GMT",
+      "requestId": "01a1731b-cb8c-73f4-b63b-1d57a2460dfb"
+    },
+    {
+      "step": "discover:protocol",
+      "url": "https://jbvrdmrkwpznbrvteive.supabase.co/functions/v1/discovery",
+      "requestBodySha256": "913a75776395371422d2c4e4b715166060771298519fb3f350069c14d319c8f3",
+      "sentAt": "2026-10-25T12:49:26.423Z",
+      "httpStatus": 200,
+      "respondedAt": "2026-10-25T12:49:27.540Z",
+      "serverDate": "Sun, 25 Oct 2026 12:49:27 GMT",
+      "requestId": "01a1731b-d707-7850-84d9-6a8e2d6ecaee"
+    },
+    {
+      "step": "discover:device.register",
+      "url": "https://jbvrdmrkwpznbrvteive.supabase.co/functions/v1/discovery",
+      "requestBodySha256": "eed7e94c484fa9f124b757fd1df16432ca3549ffc62924dbe2afe99a48ddcf14",
+      "sentAt": "2026-10-25T12:49:27.542Z",
+      "httpStatus": 200,
+      "respondedAt": "2026-10-25T12:49:30.069Z",
+      "serverDate": "Sun, 25 Oct 2026 12:49:30 GMT",
+      "requestId": "01a1731b-db65-7e4b-9d56-3abfda173b9a"
+    },
+    {
+      "step": "discover:location.challenge",
+      "url": "https://jbvrdmrkwpznbrvteive.supabase.co/functions/v1/discovery",
+      "requestBodySha256": "59f5bead34ed2d8e92b4979928e3e1b5d67eae204c38594cd8ba4c38cd690257",
+      "sentAt": "2026-10-25T12:49:30.070Z",
+      "httpStatus": 200,
+      "respondedAt": "2026-10-25T12:49:31.772Z",
+      "serverDate": "Sun, 25 Oct 2026 12:49:31 GMT",
+      "requestId": "01a1731b-e548-7428-824d-2e21c18efa7d"
+    },
+    {
+      "step": "discover:location.prove",
+      "url": "https://jbvrdmrkwpznbrvteive.supabase.co/functions/v1/discovery",
+      "requestBodySha256": "d088e919d29424cc2cd949e2f4fb4e46e74d01df3a630280f7f76bd058c59b50",
+      "sentAt": "2026-10-25T12:49:31.779Z",
+      "httpStatus": 200,
+      "respondedAt": "2026-10-25T12:49:35.168Z",
+      "serverDate": "Sun, 25 Oct 2026 12:49:35 GMT",
+      "requestId": "01a1731b-ebf5-7d48-b219-21baf406768a"
+    },
+    {
+      "step": "discover-nearby:nearby",
+      "url": "https://jbvrdmrkwpznbrvteive.supabase.co/functions/v1/discovery",
+      "requestBodySha256": "6936c2bdc1d691d02fe21f6854b7e5a1064a398a18b033ba83b4be78a5e748a9",
+      "sentAt": "2026-10-25T12:49:35.170Z",
+      "httpStatus": 200,
+      "respondedAt": "2026-10-25T12:49:38.227Z",
+      "serverDate": "Sun, 25 Oct 2026 12:49:38 GMT",
+      "requestId": "01a1731b-f931-7aee-8551-96af73640145"
+    },
+    {
+      "step": "observe:location.challenge",
+      "url": "https://jbvrdmrkwpznbrvteive.supabase.co/functions/v1/discovery",
+      "requestBodySha256": "59f5bead34ed2d8e92b4979928e3e1b5d67eae204c38594cd8ba4c38cd690257",
+      "sentAt": "2026-10-25T12:49:38.230Z",
+      "httpStatus": 200,
+      "respondedAt": "2026-10-25T12:49:40.986Z",
+      "serverDate": "Sun, 25 Oct 2026 12:49:40 GMT",
+      "requestId": "01a1731c-0529-7b4a-ab98-61e5a4fd20dc"
+    },
+    {
+      "step": "observe:location.prove",
+      "url": "https://jbvrdmrkwpznbrvteive.supabase.co/functions/v1/discovery",
+      "requestBodySha256": "3510c0484e30afc58c7e4eb595a489c50958a8322f9c275f07589f48a49cd81a",
+      "sentAt": "2026-10-25T12:49:40.989Z",
+      "httpStatus": 200,
+      "respondedAt": "2026-10-25T12:49:43.839Z",
+      "serverDate": "Sun, 25 Oct 2026 12:49:43 GMT",
+      "requestId": "01a1731c-0fec-7c52-93fd-5477b583beed"
+    },
+    {
+      "step": "observe-first:observe",
+      "url": "https://jbvrdmrkwpznbrvteive.supabase.co/functions/v1/discovery",
+      "requestBodySha256": "371b1f513c5d7856c7ce1a76a884fbb1261bffae26df2e39a3f3577319305251",
+      "sentAt": "2026-10-25T12:49:43.841Z",
+      "httpStatus": 200,
+      "respondedAt": "2026-10-25T12:49:46.102Z",
+      "serverDate": "Sun, 25 Oct 2026 12:49:46 GMT",
+      "requestId": "01a1731c-1b10-7579-a6ae-dcf5828b250b"
+    },
+    {
+      "step": "reenter:location.challenge",
+      "url": "https://jbvrdmrkwpznbrvteive.supabase.co/functions/v1/discovery",
+      "requestBodySha256": "59f5bead34ed2d8e92b4979928e3e1b5d67eae204c38594cd8ba4c38cd690257",
+      "sentAt": "2026-10-25T12:49:46.104Z",
+      "httpStatus": 200,
+      "respondedAt": "2026-10-25T12:49:47.810Z",
+      "serverDate": "Sun, 25 Oct 2026 12:49:47 GMT",
+      "requestId": "01a1731c-23e8-791f-b141-57cb12252ed8"
+    },
+    {
+      "step": "reenter:location.prove",
+      "url": "https://jbvrdmrkwpznbrvteive.supabase.co/functions/v1/discovery",
+      "requestBodySha256": "f74a167f39e32c0a28493325c324044f6087e73a744a61c15a208ff92f04e4b0",
+      "sentAt": "2026-10-25T12:49:47.820Z",
+      "httpStatus": 200,
+      "respondedAt": "2026-10-25T12:49:49.898Z",
+      "serverDate": "Sun, 25 Oct 2026 12:49:50 GMT",
+      "requestId": "01a1731c-2a9d-7f85-a7c5-50c89eb55948"
+    },
+    {
+      "step": "observe-reentry:observe",
+      "url": "https://jbvrdmrkwpznbrvteive.supabase.co/functions/v1/discovery",
+      "requestBodySha256": "70a0417f4a8df36755c8b51bf519496b84a2cc4d34e495e959ea4fb6ec3c77e6",
+      "sentAt": "2026-10-25T12:49:49.900Z",
+      "httpStatus": 200,
+      "respondedAt": "2026-10-25T12:49:51.398Z",
+      "serverDate": "Sun, 25 Oct 2026 12:49:51 GMT",
+      "requestId": "01a1731c-32bc-70f4-8993-d33621c39697"
+    },
+    {
+      "step": "reentry-nearby:nearby",
+      "url": "https://jbvrdmrkwpznbrvteive.supabase.co/functions/v1/discovery",
+      "requestBodySha256": "eb0fc5e9c54881f19f5fba13f1b83199eebcce646e436c469f49667ccc1b2374",
+      "sentAt": "2026-10-25T12:49:51.401Z",
+      "httpStatus": 200,
+      "respondedAt": "2026-10-25T12:49:53.551Z",
+      "serverDate": "Sun, 25 Oct 2026 12:49:53 GMT",
+      "requestId": "01a1731c-3897-71fc-a6b8-30c9311aa4b5"
+    }
+  ],
+  "steps": {
+    "auth": {
+      "id": "c03-shiba-20261025-790f5b6d-v1:auth",
+      "inputSha256": "176f204e40d5dd6ac209a36711abdddde77d7d0a9b9ca6a7de47774935088fa9",
+      "status": "verified",
+      "at": "2026-10-25T12:49:20.754Z",
+      "finishedAt": "2026-10-25T12:49:23.482Z"
+    },
+    "protocol": {
+      "id": "c03-shiba-20261025-790f5b6d-v1:protocol",
+      "inputSha256": "913a75776395371422d2c4e4b715166060771298519fb3f350069c14d319c8f3",
+      "status": "verified",
+      "at": "2026-10-25T12:49:23.482Z",
+      "finishedAt": "2026-10-25T12:49:26.414Z"
+    },
+    "discover:protocol": {
+      "id": "c03-shiba-20261025-790f5b6d-v1:discover:protocol",
+      "inputSha256": "913a75776395371422d2c4e4b715166060771298519fb3f350069c14d319c8f3",
+      "status": "verified",
+      "at": "2026-10-25T12:49:26.423Z",
+      "finishedAt": "2026-10-25T12:49:27.541Z"
+    },
+    "discover:device.register": {
+      "id": "c03-shiba-20261025-790f5b6d-v1:discover:device.register",
+      "inputSha256": "eed7e94c484fa9f124b757fd1df16432ca3549ffc62924dbe2afe99a48ddcf14",
+      "status": "verified",
+      "at": "2026-10-25T12:49:27.541Z",
+      "finishedAt": "2026-10-25T12:49:30.069Z"
+    },
+    "discover:location.challenge": {
+      "id": "c03-shiba-20261025-790f5b6d-v1:discover:location.challenge",
+      "inputSha256": "59f5bead34ed2d8e92b4979928e3e1b5d67eae204c38594cd8ba4c38cd690257",
+      "status": "verified",
+      "at": "2026-10-25T12:49:30.070Z",
+      "finishedAt": "2026-10-25T12:49:31.773Z"
+    },
+    "discover:location.prove": {
+      "id": "c03-shiba-20261025-790f5b6d-v1:discover:location.prove",
+      "inputSha256": "d088e919d29424cc2cd949e2f4fb4e46e74d01df3a630280f7f76bd058c59b50",
+      "status": "verified",
+      "at": "2026-10-25T12:49:31.778Z",
+      "finishedAt": "2026-10-25T12:49:35.169Z"
+    },
+    "discover-nearby:nearby": {
+      "id": "c03-shiba-20261025-790f5b6d-v1:discover-nearby:nearby",
+      "inputSha256": "6936c2bdc1d691d02fe21f6854b7e5a1064a398a18b033ba83b4be78a5e748a9",
+      "status": "verified",
+      "at": "2026-10-25T12:49:35.170Z",
+      "finishedAt": "2026-10-25T12:49:38.228Z"
+    },
+    "observe:location.challenge": {
+      "id": "c03-shiba-20261025-790f5b6d-v1:observe:location.challenge",
+      "inputSha256": "59f5bead34ed2d8e92b4979928e3e1b5d67eae204c38594cd8ba4c38cd690257",
+      "status": "verified",
+      "at": "2026-10-25T12:49:38.228Z",
+      "finishedAt": "2026-10-25T12:49:40.987Z"
+    },
+    "observe:location.prove": {
+      "id": "c03-shiba-20261025-790f5b6d-v1:observe:location.prove",
+      "inputSha256": "3510c0484e30afc58c7e4eb595a489c50958a8322f9c275f07589f48a49cd81a",
+      "status": "verified",
+      "at": "2026-10-25T12:49:40.988Z",
+      "finishedAt": "2026-10-25T12:49:43.840Z"
+    },
+    "observe-first:observe": {
+      "id": "c03-shiba-20261025-790f5b6d-v1:observe-first:observe",
+      "inputSha256": "371b1f513c5d7856c7ce1a76a884fbb1261bffae26df2e39a3f3577319305251",
+      "status": "verified",
+      "at": "2026-10-25T12:49:43.840Z",
+      "finishedAt": "2026-10-25T12:49:46.102Z"
+    },
+    "reenter:location.challenge": {
+      "id": "c03-shiba-20261025-790f5b6d-v1:reenter:location.challenge",
+      "inputSha256": "59f5bead34ed2d8e92b4979928e3e1b5d67eae204c38594cd8ba4c38cd690257",
+      "status": "verified",
+      "at": "2026-10-25T12:49:46.104Z",
+      "finishedAt": "2026-10-25T12:49:47.810Z"
+    },
+    "reenter:location.prove": {
+      "id": "c03-shiba-20261025-790f5b6d-v1:reenter:location.prove",
+      "inputSha256": "f74a167f39e32c0a28493325c324044f6087e73a744a61c15a208ff92f04e4b0",
+      "status": "verified",
+      "at": "2026-10-25T12:49:47.819Z",
+      "finishedAt": "2026-10-25T12:49:49.899Z"
+    },
+    "observe-reentry:observe": {
+      "id": "c03-shiba-20261025-790f5b6d-v1:observe-reentry:observe",
+      "inputSha256": "70a0417f4a8df36755c8b51bf519496b84a2cc4d34e495e959ea4fb6ec3c77e6",
+      "status": "verified",
+      "at": "2026-10-25T12:49:49.900Z",
+      "finishedAt": "2026-10-25T12:49:51.399Z"
+    },
+    "reentry-nearby:nearby": {
+      "id": "c03-shiba-20261025-790f5b6d-v1:reentry-nearby:nearby",
+      "inputSha256": "eb0fc5e9c54881f19f5fba13f1b83199eebcce646e436c469f49667ccc1b2374",
+      "status": "verified",
+      "at": "2026-10-25T12:49:51.400Z",
+      "finishedAt": "2026-10-25T12:49:53.552Z"
+    }
+  },
+  "qaFoxCounterUnconsumed": true,
+  "passed": true,
+  "captureVerified": false,
+  "fullAcceptancePassed": false,
+  "qualification": "Backend-only actual main SDK + HTTPS + server grant + P-256 signature; explicit synthetic position, no native UI/GPS, no battle/capture/adoption, no fox allocation.",
+  "privateProof": "C:/Users/Administrator/Desktop/project/DesktopPet-fresh-worktrees/03/artifacts/discovery/c-cloud-qa-prepared-20261025/observe-state.json",
+  "privateProofSha256": "0a55a0e43bc8f5666cb0d7e6046980f7308cf1b2c887d2368c1a30b562f8f597",
+  "sourceFiles": {
+    "apps/pc-app/runtime/features/accounts/supabase-remote.cjs": "b63d1d5ae7d94c4abf26a50999198282374e9763c0870926b734916a2210994d",
+    "apps/pc-app/runtime/features/discovery/cloud-adapter.cjs": "be8bce573ab2df1f2d7d7e84a63eb63a1d2a8073ac4b90eac8f5cee7def59c3d",
+    "apps/pc-app/runtime/features/discovery/cloud-location.cjs": "b8e32cb9abddd85f15d6e62d029ca9ec9e7a3e2631dcbf4a7b3a0c07214dc163",
+    "infra/supabase/functions/discovery/protocol.mjs": "48ed9843c554217a859013cfd35d6bc0f216ebe9774b9eb8194e337eddba246c",
+    "infra/supabase/functions/discovery/handler.mjs": "5b3d2fbb23ada125614cc4399c89982850166b2e88fce5bdbca7a265662e4731",
+    "infra/supabase/functions/discovery/authority.mjs": "643ca0be5f5b02318b7cf86bc9d547cdaa72baa9f2786947ffc2b13e62ac2709",
+    "infra/supabase/functions/discovery/store.mjs": "2fb25572810fafdd974e11fb6b79cd647be2c126d5c478f7b133046c525d232e",
+    "infra/supabase/migrations/20261025115122_lingjing_global_pet_serials.sql": "49bf4db3bf6d4b9b3bec3de80b2c145d7c6abe8068fa98b1e06e2ef97be32350"
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "at": "2026-10-25T12:54:34.059Z",
+  "status": "candidate-awaiting-root-copy-and09",
+  "sourceCommit": "e875febf3430be341191a639668d43e7f09826dc",
+  "sourceTree": "2d8977dc36e95ede498d3e3f14a26f1f9b392a16",
+  "sourceDirtyFiles": [],
+  "executable": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet-build-066f61d\\releases\\user-acceptance-e875feb\\Lingjing-0.1.8-portable-x64.exe",
+  "bytes": 169213223,
+  "sha256": "3e1bac39b805486aca8e9118444c352c8eab8777fb24409b2ed60108810ed3f9",
+  "authenticode": {
+    "thumbprint": null,
+    "subject": null,
+    "validUntil": null,
+    "signed": false,
+    "kind": "Authenticode",
+    "status": "NotSigned"
+  },
+  "candidateManifest": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet-build-066f61d\\releases\\user-acceptance-e875feb\\candidate-manifest.json",
+  "candidateManifestSha256": "5c5831a02b87c8ec5439ba06b2f6d2db5734c6af6239e5fdef46e4113ee898de",
+  "packageAudit": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet-build-066f61d\\releases\\user-acceptance-e875feb\\package-audit.json",
+  "offlineSfxAudit": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet-build-066f61d\\releases\\user-acceptance-e875feb\\offline-extraction.json",
+  "appAsar": {
+    "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet-build-066f61d\\artifacts\\foundation\\user-acceptance\\user-acceptance-e875feb\\sfx-audit\\win-unpacked\\resources\\app.asar",
+    "sha256": "993a2b91463223fd0c12e4c596459a6bde46d250baff9a2267c8fc2a66c8871d",
+    "bytes": 267484870,
+    "identicalToBuilderOutput": true
+  },
+  "runtimeClosure": {
+    "files": 116,
+    "edges": 199,
+    "sha256": "1df30187a94a9ff92ea18e2c1376031491730f7ebe56c434b8dc1fdd5a7b0be9",
+    "jsAndMjs": [
+      "apps/pc-app/runtime/features/companions/cloud-domain.mjs",
+      "apps/pc-app/runtime/features/companions/display-identity.mjs",
+      "apps/pc-app/runtime/features/companions/growth.mjs",
+      "apps/pc-app/runtime/features/companions/instance.mjs",
+      "apps/pc-app/runtime/features/resources/preferences.mjs"
+    ]
+  },
+  "packagedDependencies": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet-build-066f61d\\releases\\user-acceptance-e875feb\\packaged-dependencies.json",
+  "perLaunchPackaging": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet-build-066f61d\\releases\\user-acceptance-e875feb\\per-launch-packaging.json",
+  "characterAtlases": 8,
+  "archivedCopyHashMatchesInput": true,
+  "buildExitCode": 0,
+  "offlineAuditExitCode": 0,
+  "fullFunctionalAcceptancePassed": false,
+  "visibleProductLaunches": 0,
+  "publicReleasePublished": false,
+  "tagCreated": false,
+  "pushed": false,
+  "knownOutstandingIssues": [
+    {
+      "id": "QA013",
+      "status": "known-not-in-this-frozen-source",
+      "description": "Expired location disables challenge but UI incorrectly tells user to move closer; follow-up UI reason fix pending.",
+      "severity": "P2",
+      "owner": "03"
+    }
+  ],
+  "acceptanceScope": "QA009 and prior-fix candidate; QA013 outstanding; no full-pass claim.",
+  "latestOriginMainReconfirmed": "4786f97680679c2db0aa307fa5f67ec247f93086"
+}

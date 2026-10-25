@@ -1,0 +1,61 @@
+{
+  "at": "2026-10-25T12:52:29.845Z",
+  "snapshot": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet-build-066f61d\\artifacts\\foundation\\user-acceptance\\user-acceptance-e875feb\\asar-extracted-for-node-probe",
+  "node": "24.21.0",
+  "imports": [
+    {
+      "name": "@ai-sdk/openai-compatible",
+      "version": "3.0.77",
+      "resolved": "node_modules/@ai-sdk/openai-compatible/dist/index.js",
+      "exportCount": 6
+    },
+    {
+      "name": "@supabase/supabase-js",
+      "version": "2.98.0",
+      "resolved": "node_modules/@supabase/supabase-js/dist/index.cjs",
+      "exportCount": 49
+    },
+    {
+      "name": "@turf/boolean-point-in-polygon",
+      "version": "7.4.0",
+      "resolved": "node_modules/@turf/boolean-point-in-polygon/dist/cjs/index.cjs",
+      "exportCount": 4
+    },
+    {
+      "name": "@turf/distance",
+      "version": "7.4.0",
+      "resolved": "node_modules/@turf/distance/dist/cjs/index.cjs",
+      "exportCount": 4
+    },
+    {
+      "name": "@turf/helpers",
+      "version": "7.4.0",
+      "resolved": "node_modules/@turf/helpers/dist/cjs/index.cjs",
+      "exportCount": 34
+    },
+    {
+      "name": "ai",
+      "version": "7.0.152",
+      "resolved": "node_modules/ai/dist/index.js",
+      "exportCount": 179
+    },
+    {
+      "name": "better-sqlite3",
+      "version": "13.0.3",
+      "resolved": "node_modules/better-sqlite3/lib/index.js",
+      "exportCount": 3
+    }
+  ],
+  "errors": [],
+  "productLaunched": false,
+  "profileOpened": false,
+  "networkRequests": false,
+  "cjsAndEsmAncestorFallbackRejected": true,
+  "packagedNativeInMemory": {
+    "sqlite": "3.53.4",
+    "quickCheck": "ok",
+    "profileFilesOpened": false
+  },
+  "moduleCacheOutsideSnapshot": [],
+  "passed": true
+}

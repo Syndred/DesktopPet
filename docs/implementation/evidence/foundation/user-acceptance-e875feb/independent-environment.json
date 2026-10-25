@@ -1,0 +1,88 @@
+{
+  "initialSourceCommit": "066f61df2d9b6ef8977756c8b0700c1ba5b01681",
+  "npmCi": {
+    "completedAt": "2026-10-25T12:32:20.3325558Z",
+    "node": "C:\\Users\\Administrator\\AppData\\Local\\Author Software\\nvm\\.nodejs\\node.exe",
+    "root": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet-build-066f61d",
+    "sharedDependenciesModified": false,
+    "sourceHead": "066f61df2d9b6ef8977756c8b0700c1ba5b01681",
+    "productLaunched": false,
+    "command": "npm ci --no-audit --no-fund --foreground-scripts",
+    "npm": "C:\\Users\\Administrator\\AppData\\Local\\Author Software\\nvm\\.nodejs\\npm.exe",
+    "exitCode": 0,
+    "startedAt": "2026-10-25T12:32:06.1385438Z"
+  },
+  "sourceBeforeSha256": "f12067614585622ce0dbd16bd276b3d9a8ee3884a658d6f5e49d26b3573895f0",
+  "packageJsonSha256": "8a303204c6a14e311cd9fac6bb26bcc34c2d16411b9c0b03e322e41bdceae63d",
+  "runtimeInstallImportPreflight": {
+    "count": 7,
+    "ancestorFallbackRejected": true,
+    "passed": true,
+    "boundary": "Independent installed dependencies only. Actual SFX import proof recorded separately."
+  },
+  "installedVersions": {
+    "electron": "44.9.3",
+    "electron-builder": "26.18.0",
+    "better-sqlite3": "13.0.3",
+    "typescript": "5.9.3",
+    "@ai-sdk/openai-compatible": "3.0.77",
+    "@supabase/supabase-js": "2.98.0",
+    "ai": "7.0.152"
+  },
+  "sourceAfterSha256": "5da032fe54f40dada3a5b22ebc4d186ad90b5b6ecfacb27d51fb9c52d89f43e7",
+  "finalSourceCommit": "e875febf3430be341191a639668d43e7f09826dc",
+  "sharedDependenciesModified": false,
+  "at": "2026-10-25T12:48:23.1770109Z",
+  "packageLockSha256": "2f44da2c2e3195642c4c3556848e5c89b690d020b415f5bc86eaf2b7c4d2777c",
+  "trackedFilesComparedBeforeAfterCi": 1967,
+  "nodeModules": {
+    "path": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet-build-066f61d\\node_modules",
+    "realPath": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet-build-066f61d\\node_modules",
+    "isSymbolicLink": false
+  },
+  "byteDifferencesAfterCi": [],
+  "productLaunched": false,
+  "buildWorktree": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet-build-066f61d",
+  "independentResolutions": [
+    {
+      "name": "app-builder-lib",
+      "resolved": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet-build-066f61d\\node_modules\\app-builder-lib\\out\\index.js"
+    },
+    {
+      "name": "electron",
+      "resolved": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet-build-066f61d\\node_modules\\electron\\index.js"
+    },
+    {
+      "name": "better-sqlite3",
+      "resolved": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet-build-066f61d\\node_modules\\better-sqlite3\\lib\\index.js"
+    },
+    {
+      "name": "@ai-sdk/openai-compatible",
+      "resolved": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet-build-066f61d\\node_modules\\@ai-sdk\\openai-compatible\\dist\\index.js"
+    },
+    {
+      "name": "@ai-sdk/provider",
+      "resolved": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet-build-066f61d\\node_modules\\@ai-sdk\\provider\\dist\\index.js"
+    },
+    {
+      "name": "@supabase/supabase-js",
+      "resolved": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet-build-066f61d\\node_modules\\@supabase\\supabase-js\\dist\\index.cjs"
+    },
+    {
+      "name": "@supabase/functions-js",
+      "resolved": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet-build-066f61d\\node_modules\\@supabase\\functions-js\\dist\\main\\index.js"
+    },
+    {
+      "name": "@turf/distance",
+      "resolved": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet-build-066f61d\\node_modules\\@turf\\distance\\dist\\cjs\\index.cjs"
+    },
+    {
+      "name": "@turf/invariant",
+      "resolved": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet-build-066f61d\\node_modules\\@turf\\invariant\\dist\\cjs\\index.cjs"
+    },
+    {
+      "name": "ai",
+      "resolved": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet-build-066f61d\\node_modules\\ai\\dist\\index.js"
+    }
+  ]
+}

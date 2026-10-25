@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "a594f09c0b3000fa0d14a6e851601c9a6f21aba8",
+  "recordedAt": "2026-10-25T13:07:40.980Z",
+  "sourceChangesSinceE875": {
+    "product": [
+      "apps/pc-app/ui/src/features/discovery/ExploreView.tsx",
+      "apps/pc-app/ui/src/features/discovery/WildPreviewView.tsx",
+      "apps/pc-app/ui/src/features/discovery/presentation.ts"
+    ],
+    "unitGate": [
+      "tests/discovery-presentation.test.ts",
+      "vitest.unit.config.ts"
+    ],
+    "runtimeCloudSqlAssetsOrLockChanged": false
+  },
+  "verify": {
+    "lint": true,
+    "nodeAndDesktopTypes": true,
+    "uiTypes": true,
+    "passedTests": 49,
+    "testFiles": 11,
+    "exitCode": 0
+  },
+  "integrationRepair": {
+    "observedFailure": "NodeNext typecheck reached the UI helper through the newly registered unit regression; original extensionless type-only directory import failed TS2834",
+    "fix": "Explicit discovery/index.js type-only import, with no tsconfig weakening or runtime change",
+    "postFixVerifyExitCode": 0
+  },
+  "inheritedNative": {
+    "source": "066f61df2d9b6ef8977756c8b0700c1ba5b01681",
+    "passedTests": 373,
+    "runtimeUnchanged": true
+  },
+  "inheritedCloud": {
+    "source": "066f61df2d9b6ef8977756c8b0700c1ba5b01681",
+    "passedNodeTests": 86,
+    "passedDenoValidators": 5,
+    "cloudSourceUnchanged": true
+  },
+  "nativeAcceptancePassed": false,
+  "candidateBinaryBuilt": false,
+  "existingEngineeringCandidate": "e875febf3430be341191a639668d43e7f09826dc",
+  "waitingFor": "09 critical startup/persistence result on e875 before the next complete candidate build"
+}

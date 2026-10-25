@@ -1,0 +1,149 @@
+{
+  "schemaVersion": 1,
+  "format": "lingjing.global-serial.live-wild-capture",
+  "recordedAt": "2026-10-25T13:06:51.350Z",
+  "projectRef": "jbvrdmrkwpznbrvteive",
+  "runId": "c03-shiba-20261025-790f5b6d-v1:capture-v1",
+  "scenarioId": "user-acceptance-790f5b6d-a900-4c6f-bb3f-e32237136ed1",
+  "realHttps": true,
+  "syntheticPosition": true,
+  "physicalGps": false,
+  "nativeUi": false,
+  "battle": {
+    "id": "battle-cloud-dd351cb3-465a-45ef-ae2b-f673b7f7da95",
+    "status": "finished",
+    "winner": "player",
+    "rounds": 30
+  },
+  "observed": {
+    "ownerAccountId": "account:0521a3e5-adf4-4b0b-9c0b-0923a7b63fe9",
+    "namespace": "qa:user-acceptance-790f5b6d-a900-4c6f-bb3f-e32237136ed1",
+    "spawnId": "wild-2d-v2-f3621dbe19-498036-52001-202331",
+    "templateId": "animal-shiba",
+    "globalSerial": "1",
+    "source": "simulated",
+    "scenarioId": "user-acceptance-790f5b6d-a900-4c6f-bb3f-e32237136ed1"
+  },
+  "capture": {
+    "id": "capture-dd351cb3-465a-45ef-ae2b-f673b7f7da95",
+    "name": "焰柴",
+    "cloud": {
+      "transport": "https",
+      "projectRef": "jbvrdmrkwpznbrvteive",
+      "authoritative": true
+    },
+    "petId": "pet-dd351cb3-465a-45ef-ae2b-f673b7f7da95",
+    "element": "fire",
+    "actionId": "discovery:encounter-dd351cb3-465a-45ef-ae2b-f673b7f7da95",
+    "battleId": "battle-cloud-dd351cb3-465a-45ef-ae2b-f673b7f7da95",
+    "permitId": "dd351cb3-465a-45ef-ae2b-f673b7f7da95",
+    "scenario": "qa",
+    "memoryTags": [
+      {
+        "id": "encounter-dd351cb3-465a-45ef-ae2b-f673b7f7da95:first-meeting",
+        "kind": "first_meeting",
+        "text": "在附近探索点相遇，赢得挑战后成为了伙伴。",
+        "title": "我们的第一次见面",
+        "createdAt": "2026-10-25T12:57:35.728Z",
+        "placeLabel": "附近探索点"
+      }
+    ],
+    "placeLabel": "附近探索点",
+    "resourceId": "builtin:lingjing-shiba-v2",
+    "scenarioId": "user-acceptance-790f5b6d-a900-4c6f-bb3f-e32237136ed1",
+    "templateId": "animal-shiba",
+    "validation": "simulated",
+    "encounterId": "encounter-dd351cb3-465a-45ef-ae2b-f673b7f7da95",
+    "territoryId": null,
+    "capturedAtMs": 1792933055728,
+    "showOnDesktop": false,
+    "distanceMeters": 0,
+    "ownerAccountId": "account:0521a3e5-adf4-4b0b-9c0b-0923a7b63fe9",
+    "captureMultiplier": 1,
+    "globalSerial": "1"
+  },
+  "independentRegistry": {
+    "petId": "pet-dd351cb3-465a-45ef-ae2b-f673b7f7da95",
+    "spawnId": "wild-2d-v2-f3621dbe19-498036-52001-202331",
+    "createdAt": "2026-10-25T12:49:46.089355+00:00",
+    "namespace": "qa:user-acceptance-790f5b6d-a900-4c6f-bb3f-e32237136ed1",
+    "templateId": "animal-shiba",
+    "globalSerial": "1",
+    "ownerAccountId": "account:0521a3e5-adf4-4b0b-9c0b-0923a7b63fe9"
+  },
+  "rawOwned": {
+    "petId": "pet-dd351cb3-465a-45ef-ae2b-f673b7f7da95",
+    "templateId": "animal-shiba",
+    "originReceiptId": "capture-dd351cb3-465a-45ef-ae2b-f673b7f7da95",
+    "rawPetHasGlobalSerial": false
+  },
+  "rawCapture": {
+    "petId": "pet-dd351cb3-465a-45ef-ae2b-f673b7f7da95",
+    "source": "simulated",
+    "permitId": "dd351cb3-465a-45ef-ae2b-f673b7f7da95",
+    "scenarioId": "user-acceptance-790f5b6d-a900-4c6f-bb3f-e32237136ed1",
+    "permitStatus": "captured",
+    "ownerAccountId": "account:0521a3e5-adf4-4b0b-9c0b-0923a7b63fe9",
+    "receiptHasGlobalSerial": false
+  },
+  "httpSummary": {
+    "requests": 52,
+    "allStatus200": true,
+    "firstSentAt": "2026-10-25T12:54:52.979Z",
+    "lastSentAt": "2026-10-25T12:57:43.447Z"
+  },
+  "knownSuccessfulReplays": {
+    "reserveSamePermit": true,
+    "firstRoundSameSnapshot": true
+  },
+  "originalCaptureActionReadback": {
+    "requestHash": "a82bf22a2b171e8cdcb106938377c537dac6b91ba90e3e2b0e745a7c0b21e965",
+    "petId": "pet-dd351cb3-465a-45ef-ae2b-f673b7f7da95",
+    "globalSerial": "1"
+  },
+  "qaCounters": [
+    {
+      "lastSerial": "2",
+      "templateId": "animal-earth-pangolin"
+    },
+    {
+      "lastSerial": "0",
+      "templateId": "animal-hat-cat"
+    },
+    {
+      "lastSerial": "1",
+      "templateId": "animal-shiba"
+    },
+    {
+      "lastSerial": "0",
+      "templateId": "animal-white-fox"
+    },
+    {
+      "lastSerial": "2",
+      "templateId": "animal-wood-deer"
+    },
+    {
+      "lastSerial": "0",
+      "templateId": "big-fish-cheerful"
+    },
+    {
+      "lastSerial": "0",
+      "templateId": "big-fish-foodie"
+    },
+    {
+      "lastSerial": "2",
+      "templateId": "big-fish-gentle"
+    }
+  ],
+  "originalDataPreservation": {
+    "rows": 636,
+    "missing": 0,
+    "changed": 0,
+    "privateProof": "artifacts/qa/user-acceptance/global-serial/post-capture-independent-sql.json"
+  },
+  "passed": true,
+  "fullAcceptancePassed": false,
+  "privateProof": "C:/Users/Administrator/Desktop/project/DesktopPet-fresh-worktrees/03/artifacts/discovery/c-cloud-qa-prepared-20261025/capture-state.json",
+  "privateProofSha256": "2d841d0afe3bfc7416f9098112ad03a6df14ff8597e5e75979e73792a4602cca",
+  "qualification": "Actual main SDK, safeStorage signing key, server-owned QA grant, real public HTTPS and server battle/receipts; all location inputs explicitly simulated. No native UI or physical GPS acceptance."
+}
