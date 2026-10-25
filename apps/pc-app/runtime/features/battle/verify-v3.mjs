@@ -113,8 +113,9 @@ async function ring(page,session,name) {
 async function tooltips(page) {
   for(const [action,expected] of [['normal_attack','打断属性'],['element_attack','无法闪避'],['dodge','闪避攻击']]) {
     const button=page.locator(`.battle-command[data-action="${action}"]`);
-    await button.hover();await page.locator('.battle-command-hint').waitFor();assert.equal((await page.locator('.battle-command-hint').innerText()).trim(),expected);await capture(page,`hover-${action}`);
-    await page.mouse.move(250,300);await page.keyboard.press('Escape');await button.focus();await page.locator('.battle-command-hint').waitFor();assert.equal((await page.locator('.battle-command-hint').innerText()).trim(),expected);await capture(page,`focus-${action}`);await page.keyboard.press('Escape');
+    const ready=()=>page.waitForFunction(()=>{const node=document.querySelector('.battle-command-hint');return node&&Number(getComputedStyle(node).opacity)>.99;});
+    await page.evaluate(()=>document.activeElement?.blur());await button.hover();await ready();assert.equal((await page.locator('.battle-command-hint').innerText()).trim(),expected);await capture(page,`hover-${action}`);
+    await page.mouse.move(250,300);await page.keyboard.press('Escape');await button.focus();await ready();assert.equal((await page.locator('.battle-command-hint').innerText()).trim(),expected);await capture(page,`focus-${action}`);await page.keyboard.press('Escape');
     record(`hover and keyboard focus ${action}`,{text:expected});
   }
 }
@@ -166,7 +167,8 @@ try {
   let host=await launch('host');let session=await start(host.page,host.pets.find(pet=>pet.element==='water'),'fire');
   await geometry(host.page,'training-1280');
   const win=await host.app.browserWindow(host.page);await win.evaluate(win=>win.setContentSize(1440,900,false));await geometry(host.page,'training-1440');await win.evaluate(win=>win.setContentSize(1024,720,false));await geometry(host.page,'training-1024');await win.evaluate(win=>win.setContentSize(1280,844,false));
-  if(!process.argv.includes('--layout-only')) {
+  if(process.argv.includes('--tips-only'))await tooltips(host.page);
+  else if(!process.argv.includes('--layout-only')) {
     await ring(host.page,session,'charge-empty');await tooltips(host.page);session=await act(host.page,session,'normal_attack','partial-charge');assert.ok(session.snapshot.player.anger>0&&session.snapshot.player.anger<session.rules.ultimateAnger);await ring(host.page,session,'charge-partial');
     for(let i=0;i<3;i++)session=await act(host.page,session,'normal_attack',`log-${i}`);
     const scroll=host.page.locator('.battle-live-log-scroll [data-slot="scroll-area-viewport"]');const size=await scroll.evaluate(node=>({height:node.clientHeight,content:node.scrollHeight}));assert.ok(size.content>size.height);await scroll.hover();await host.page.mouse.wheel(0,400);await host.page.waitForFunction(()=>document.querySelector('.battle-live-log-scroll [data-slot="scroll-area-viewport"]').scrollTop>0);await capture(host.page,'log-scrolled');record('real round log scrolls inside bounded card',size);
