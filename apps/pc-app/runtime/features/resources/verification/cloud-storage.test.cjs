@@ -15,6 +15,7 @@ const OWNER='runtime:preserved-old-subject';
 const UID='11111111-1111-4111-8111-111111111111';
 const OTHER='22222222-2222-4222-8222-222222222222';
 async function fixture(t){
+  await fs.mkdir(path.join(ROOT,'artifacts/resources'),{recursive:true});
   const directory=await fs.mkdtemp(path.join(ROOT,'artifacts/resources/cloud-'));
   const http=await storageFixture(),clients=[];
   t.after(async()=>{for(const c of clients)if(c.db.open)c.db.close();await http.close();});
