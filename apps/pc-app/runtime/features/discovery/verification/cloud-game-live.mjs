@@ -61,7 +61,7 @@ async function launch(label,register=false){
  for(const key of['ELECTRON_RUN_AS_NODE','PET_RUNTIME_DATA_FILE','LINGJING_QA_SCENARIO','LINGJING_CONTROLLED_LOCATION','LINGJING_BATTLE_QA','LINGJING_LEGACY_AUTH'])delete env[key];
  const app=await electron.launch({args:[bootstrap],cwd:root,env});apps.push(app);const page=await app.firstWindow();page.on('pageerror',e=>proof.errors.push(e.message));await page.waitForFunction(()=>Boolean(window.lingjing));
  const client={app,page,label};
- if(resume){const saved=await main(client,'openCredentials',{path:join(resume,'credentials.secure')});account=saved.account;password=saved.password;}
+ if(resume&&label==='device-a'){const saved=await main(client,'openCredentials',{path:join(resume,'credentials.secure')});account=saved.account;password=saved.password;}
  const existing=await page.evaluate(()=>window.lingjing.invoke('accounts','session'));
  if(!existing.data?.currentUser){
   const result=await page.evaluate(input=>window.lingjing.invoke('accounts',input.register?'register':'login',{provider:'runtime',account:input.account,password:input.password,confirmPassword:input.password,username:'探索云端验收',rememberSession:true}),{register:register&&!resume,account,password});assert.equal(result.ok,true,JSON.stringify(result));
