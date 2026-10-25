@@ -16,10 +16,11 @@ export const legacyDrafts = [
 ];
 
 export function checkMigrationNames(files, { allowLegacyDrafts = false } = {}) {
-  const expected = manifest.files;
-  if (manifest.schemaVersion !== 1 || expected.length !== 22 || new Set(expected).size !== 22 ||
+  const deployed = manifest.files, pendingReview = manifest.pendingReviewFiles || [];
+  const expected = [...deployed, ...pendingReview];
+  if (manifest.schemaVersion !== 1 || deployed.length !== 22 || new Set(expected).size !== expected.length ||
     expected.some(name => !/^\d{14}_[a-z0-9_]+\.sql$/.test(name)) ||
-    new Set(expected.map(name => name.slice(0, 14))).size !== 22 ||
+    new Set(expected.map(name => name.slice(0, 14))).size !== expected.length ||
     expected.join('\n') !== [...expected].sort().join('\n')) throw new Error('Invalid approved migration manifest');
   const missing = expected.filter(name => !files.includes(name));
   const legacy = files.filter(name => legacyDrafts.includes(name)).sort();
@@ -27,7 +28,8 @@ export function checkMigrationNames(files, { allowLegacyDrafts = false } = {}) {
   if (missing.length || unexpected.length) {
     throw new Error(`Migration filename gate failed: ${JSON.stringify({ missing, unexpected, legacyDrafts: legacy })}`);
   }
-  return { passed: true, strict: !allowLegacyDrafts, migrationCount: expected.length, legacyDrafts: legacy, files: expected };
+  return { passed: true, strict: !allowLegacyDrafts, migrationCount: expected.length, deployedMigrationCount: deployed.length,
+    pendingReviewFiles: pendingReview, legacyDrafts: legacy, files: expected };
 }
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
