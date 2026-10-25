@@ -9,14 +9,14 @@ import {execFileSync} from 'node:child_process';
 import assert from 'node:assert/strict';
 const root=resolve('.'),output=resolve(`artifacts/cloud-discovery/live-game-${Date.now()}`),scenarioId='cloud-discovery-03';
 const resume=process.env.LINGJING_CLOUD_GAME_RESUME?resolve(process.env.LINGJING_CLOUD_GAME_RESUME):null,profileBase=resume||output;
-const previous=resume?JSON.parse(readFileSync(join(resume,'evidence.json'),'utf8')):null;
+const previous=resume?JSON.parse(readFileSync(process.env.LINGJING_CLOUD_GAME_CHECKPOINT||join(resume,'evidence.json'),'utf8')):null;
 mkdirSync(output,{recursive:true});
 const publicConfig=resolve(process.env.LINGJING_PUBLIC_CONFIG||'config/lingjing-cloud-public.json');
 const proof={at:new Date().toISOString(),sourceCommit:execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8',windowsHide:true}).trim(),
   build:JSON.parse(readFileSync('apps/pc-app/dist/build-manifest.json','utf8')),projectRef:'jbvrdmrkwpznbrvteive',scenarioId,
   productionMain:true,registryObserver:true,syntheticPosition:true,physicalPositionAcceptance:false,physicalSecondDevice:false,
   realAuth:true,realHttps:true,rawCoordinatesSaved:false,tokensOrPasswordsSaved:false,actors:[],checks:[],attempts:[],errors:[]};
-if(resume)proof.resumeFrom=resume;
+if(resume){proof.resumeFrom=resume;proof.previousAcceptance=previous?.capture?{sourceCommit:previous.sourceCommit,checks:previous.checks,capture:previous.capture,error:previous.error}:null;}
 const apps=[],bootstrap=join(output,'production-observer.cjs');let account=`cg03_${Date.now()}`,password=`CloudGame-${randomUUID()}!`;
 const save=()=>writeFileSync(join(output,'evidence.json'),JSON.stringify(proof,null,2)+'\n');
 const phase=(name,details={})=>{writeFileSync(join(output,'progress.json'),JSON.stringify({phase:name,at:new Date().toISOString(),...details},null,2)+'\n');console.log(JSON.stringify({phase:name,...details}));};
@@ -35,11 +35,17 @@ global.__cloudGameProbe=async({op,...args})=>{
  }
  if(op==='keepCredentials')return s.safeStorage.encryptString(JSON.stringify(args.credentials)).toString('base64');
  if(op==='openCredentials')return JSON.parse(s.safeStorage.decryptString(requireProbe('node:fs').readFileSync(args.path)));
+ if(op==='inspectSqlite'){
+  const c=await s.get('cloudActor').requireActor(),owner=c.ownerAccountId;
+  return{owner,pets:s.db.prepare('select pet_id from companion_pets where owner_account_id=? order by pet_id').all(owner),captures:s.db.prepare('select pet_id,data_json from discovery_captures where owner_account_id=?').all(owner).map(row=>({petId:row.pet_id,battleId:JSON.parse(row.data_json).battleId})),memories:s.db.prepare('select pet_id,count(*) count from discovery_memory_tags where owner_account_id=? group by pet_id').all(owner)};
+ }
  if(op==='readbackToFreshSqlite'){
   const c=await s.get('cloudActor').requireActor(),head=await c.invoke('lingjing-save',{op:'read'}),owner=c.ownerAccountId,unit=head.envelope.data.modules.companions;
-  const api=s.get('companions').backupAdapter;api.validate(unit.data,owner);api.restore(owner,unit.data,'merge');
+  const api=s.get('companions').backupAdapter;api.validate(unit.data,owner);
+  const before=api.export(owner),pristine=before.identityImports.length===0&&Object.entries(before.tables).every(([name,rows])=>name==='companion_accounts'||rows.length===0)&&before.tables.companion_accounts.every(row=>Object.values(JSON.parse(row.selections_json)).every(id=>id===null));
+  if(pristine)requireProbe('node:fs').writeFileSync(requireProbe('node:path').join(s.paths.userData,'before-cloud-readback-'+Date.now()+'.json'),JSON.stringify(before,null,2),{flag:'wx'});
   const tables=head.envelope.data.tables,db=s.db;
-  db.transaction(()=>{for(const name of ['discovery_encounters','discovery_actions','discovery_captures','discovery_memory_tags']){
+  db.transaction(()=>{api.restore(owner,unit.data,pristine?'replace':'merge');for(const name of ['discovery_encounters','discovery_actions','discovery_captures','discovery_memory_tags']){
    const record=tables[name];if(!record)throw Error('Missing discovery projection');
    const columns=db.prepare('PRAGMA table_info('+name+')').all().map(({name,type,notnull,pk,dflt_value})=>({name,type,notnull,pk,dflt_value}));
    if(JSON.stringify(columns)!==JSON.stringify(record.schema))throw Error('Projection schema mismatch');
@@ -83,7 +89,7 @@ try{
  writeFileSync(join(output,'grant-request.json'),JSON.stringify({testOnly:true,scenarioId,ttl:'up to2hours',targets},null,2)+'\n');save();phase('awaiting-coordinator-qa-grants',{output,targets});
  await waitForGrant(a);await waitForGrant(b);phase('grants-verified');
  const deploymentDeadline=Date.now()+5*60*1000;while(!(await invoke(a,'discovery',{op:'protocol'})).wildAuthority){if(Date.now()>=deploymentDeadline)throw Error('Wild authority checkpoint not deployed');phase('awaiting-wild-authority-deployment');await new Promise(done=>setTimeout(done,10000));}
- const existingPermits=resume?await invoke(a,'discovery',{op:'permits'}):[],pending=existingPermits.find(p=>p.petId===pet.petId&&['active','won'].includes(p.status));
+ const existingPermits=resume?await invoke(a,'discovery',{op:'permits'}):[],pending=existingPermits.find(p=>p.id===previous?.capture?.permitId)||existingPermits.find(p=>p.petId===pet.petId&&['active','won'].includes(p.status));
  const discovery=await prove(a,'discover','',{lat:31.2,lng:121.4}),nearby=await invoke(a,'discovery',{op:'nearby',proofId:discovery.id});const spawn=pending?.spawn||nearby.spawns.find(p=>p.element==='fire');assert.ok(spawn);proof.fixtureCoordinateHash=createHash('sha256').update(spawn.position.lat+','+spawn.position.lng).digest('hex');
  let won,permit;
  for(let attempt=0;attempt<3;attempt++){
@@ -109,10 +115,10 @@ try{
  const captureProof=await prove(b,'capture',permit.id,spawn.position),confirmation={op:'confirm',permitId:permit.id,proofId:captureProof.id,name:'跨端同一新伙伴',actionId:'cloud-capture-'+randomUUID()};
  const confirmed=await Promise.all([invoke(b,'discovery',confirmation),invoke(b,'discovery',confirmation)]);assert.equal(confirmed[0].petId,confirmed[1].petId);const capture=confirmed[0];assert.equal(capture.petId,'pet-'+permit.id);assert.equal(capture.validation,'simulated');assert.equal(capture.scenarioId,scenarioId);
  const duplicate=await invoke(a,'discovery',{...confirmation,name:'重复确认不能改名',proofId:randomUUID(),actionId:'cloud-duplicate-'+randomUUID()});assert.equal(duplicate.petId,capture.petId);assert.equal(duplicate.name,capture.name);
- const readB=await invoke(b,'discovery',{op:'captures'});assert.equal(readB.filter(p=>p.permitId===permit.id).length,1);proof.capture={petId:capture.petId,battleId:capture.battleId,permitId:permit.id,validation:capture.validation,scenarioId:capture.scenarioId};
+ const readB=await invoke(b,'discovery',{op:'captures'});assert.equal(readB.filter(p=>p.permitId===permit.id).length,1);proof.capture={petId:capture.petId,battleId:capture.battleId,permitId:permit.id,validation:capture.validation,scenarioId:capture.scenarioId,resourceId:capture.resourceId,templateId:capture.templateId};
  const deviceC=await launch('fresh-device-c');assert.equal(deviceC.actor.ownerAccountId,a.actor.ownerAccountId);assert.notEqual(deviceC.actor.deviceId,a.actor.deviceId);const cRead=await invoke(deviceC,'discovery',{op:'captures'});assert.equal(cRead.find(p=>p.permitId===permit.id).petId,capture.petId);
  const local=await main(deviceC,'readbackToFreshSqlite');assert.equal(local.captures.find(p=>p.petId===capture.petId).battleId,won.id);assert.equal(local.memories.find(p=>p.pet_id===capture.petId).count,1);assert.equal(local.pets.find(p=>p.petId===capture.petId).originBattleId,won.id);proof.newDeviceSqlite=local;
- await deviceC.app.close();const reopened=await launch('fresh-device-c');const reopenedCloud=await invoke(reopened,'discovery',{op:'captures'});assert.equal(reopenedCloud.find(p=>p.permitId===permit.id).petId,capture.petId);proof.restartCloudReadback=true;
+ await deviceC.app.close();const reopened=await launch('fresh-device-c');const reopenedCloud=await invoke(reopened,'discovery',{op:'captures'});assert.equal(reopenedCloud.find(p=>p.permitId===permit.id).petId,capture.petId);proof.restartCloudReadback=true;proof.restartSqlite=await main(reopened,'inspectSqlite');assert.equal(proof.restartSqlite.captures.length,1);assert.equal(proof.restartSqlite.captures[0].petId,capture.petId);assert.equal(proof.restartSqlite.memories.find(p=>p.pet_id===capture.petId).count,1);
  const head=await invoke(b,'lingjing-save',{op:'read'}),tables=head.envelope.data.modules.companions.data.tables,stored=JSON.parse(tables.companion_pets.find(p=>p.pet_id===pet.petId).data_json);assert.equal(stored.growth.experience,proof.attempts.reduce((n,p)=>n+p.reward.experience,0));
  assert.equal(tables.companion_pets.length,2);assert.equal(tables.companion_capture_receipts.length,1);assert.equal(head.envelope.data.modules.garden.data.tables.garden_reward_receipts.filter(p=>p.source==='battle').length,proof.attempts.length);
  proof.checks.push({label:'capture/companion/memory/reward uniqueness, new device and restart retain server petId',passed:true});assert.deepEqual(proof.errors,[]);proof.passed=true;proof.productAutomaticRestoreOrBattleScreenVerified=false;phase('passed',{capture:proof.capture,output});
