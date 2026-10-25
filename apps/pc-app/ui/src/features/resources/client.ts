@@ -16,4 +16,6 @@ async function invoke<T>(command: string, payload?: unknown): Promise<ResourceRe
 export const resourcesClient: ResourcesClient = {
   list: () => invoke('list'), importResource: metadata => invoke('import', metadata), save: payload => invoke('save', payload),
   resolve: payload => invoke('resolve', payload), assetUrl: resourceAssetUrl,
+  cloudStatus: () => invoke('cloudStatus'), cloudSync: payload => invoke('cloudSync',payload),
+  cloudPull: payload => invoke('cloudPull',payload), history: () => invoke('history'),
 };
