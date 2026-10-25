@@ -6,7 +6,7 @@
   "goalStatus": "active",
   "status": "location_component_ready_for_central_deployment_capture_sql_in_progress",
   "deployReady": false,
-  "sharedBaseline": "46abf416e0500b53ef32fc29b441d923ef5a6a80",
+  "sharedBaseline": "d7b4b07",
   "approvedIdentityCheckpoint": "f81008c",
   "contracts": [
     "docs/implementation/cloud-upgrade-2026-10-25.md",
@@ -65,6 +65,17 @@
       "check": "Generated bundle equals existing kernel across25 ordered elements and4 player actions versus normal, plus three geographic spawn grids",
       "passed": true,
       "scope": "100 deterministic distribution parity cases; no game formula changes or natural/real-cloud gameplay claim"
+    },
+    {
+      "command": "npm ci --no-audit --no-fund followed by npm run native:check",
+      "passed": true,
+      "scope": "This worktree own non-junction node_modules; actual Electron44.9.3 + SQLite13.0.3 and sameDB Node/Electron readback; shared Junction not rebuilt"
+    },
+    {
+      "command": "node apps/pc-app/runtime/features/discovery/verification/cloud-location-live.mjs",
+      "passed": true,
+      "cases": 13,
+      "scope": "Real HTTPS Auth and production Electron44.9.3 with an observer-only registry bootstrap;13 component checks; imprecise physical samples124m; no cloud precision proof or full capture success"
     }
   ],
   "realCloudEvidence": {
@@ -86,15 +97,27 @@
       "lingjing-auth ACTIVEv2 verify_jwtfalse",
       "lingjing-save ACTIVEv1 verify_jwtfalse"
     ],
-    "discoveryHttpsVerified": false,
-    "realAuthPositiveFlowVerifiedByThisChat": false,
+    "discoveryHttpsVerified": true,
+    "realAuthPositiveFlowVerifiedByThisChat": true,
     "productionWritesByThisChat": 0,
     "advisorsBaseline": {
       "infoFindings": 19,
       "kind": "rls_enabled_no_policy in the18 isolated comparisontext archive tables and08 private legacy_account_claims; intentional deny-by-default, not newly deployed discovery tables",
       "remediationReference": "https://supabase.com/docs/guides/database/database-linter?lint=0008_rls_enabled_no_policy"
     },
-    "observedAt": "2026-10-25T03:01:55.675Z"
+    "observedAt": "2026-10-25T03:01:55.675Z",
+    "locationComponentEvidence": "docs/implementation/evidence/discovery/2026-10-25-cloud-location-live/evidence.json",
+    "locationComponentChecks": 13,
+    "preciseLocationProofVerified": false,
+    "fullCaptureVerified": false,
+    "sameMachineTwoElectron": {
+      "verified": true,
+      "electron": "44.9.3",
+      "sqlite": "13.0.3",
+      "separateDeviceAndSession": true,
+      "physicalSecondDevice": false
+    },
+    "authorizedProductValidationWrites": "Dedicated Auth test accounts, device keys/nonces and self-device revoke via deployed product APIs; no SQL migration, deployment or production data edits"
   },
   "preservation": {
     "legacyOwnersAreText": true,
@@ -166,5 +189,6 @@
     "rawCoordinatesCommitted": false,
     "fullCloudCaptureAcceptance": false
   },
-  "updatedAt": "2026-10-25T03:01:55.676Z"
+  "updatedAt": "2026-10-25T03:20:51.505Z",
+  "approvedCompanionCheckpoint": "67546f5+d7b4b07"
 }
