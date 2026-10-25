@@ -10,7 +10,9 @@ const runtime = resolve(dirname(fileURLToPath(import.meta.url)), '../../runtime'
 if (process.platform === 'win32') app.setAppUserModelId('com.lingjing.desktop');
 // Prefer canonical SQLite before legacy JSON; preserve each archive in place.
 const { resolveProfilePath } = require(join(runtime, 'core/profile-path.cjs'));
-app.setPath('userData', resolveProfilePath({ current: app.getPath('userData'), appData: app.getPath('appData'), override: process.env.PET_USER_DATA_DIR }));
+const { claimProfileInstance } = require(join(runtime, 'core/profile-instance.cjs'));
+const profileInstance = claimProfileInstance({ app, profilePath: resolveProfilePath({ current: app.getPath('userData'), appData: app.getPath('appData'), override: process.env.PET_USER_DATA_DIR }) });
+if (!profileInstance.primary) app.exit(0);
 const { openDatabase, backupLegacy } = require(join(runtime, 'core/database.cjs'));
 const { createServices, discoverFeatures } = require(join(runtime, 'core/services.cjs'));
 const { readQaScenario } = require(join(runtime, 'core/qa-scenario.cjs'));
@@ -124,11 +126,16 @@ const windows = {
       if (typeof settings.clickThrough === 'boolean') win.setIgnoreMouseEvents(settings.clickThrough, { forward: true });
     }
   },
-  showMain() { if (!window) createWindow(); window?.show(); window?.focus(); },
+  showMain() {
+    if (quitting || !services) return;
+    if (!window || window.isDestroyed()) createWindow();
+    if (window?.isMinimized()) window.restore();
+    window?.show(); window?.focus();
+  },
   emit
 };
 
-app.whenReady().then(async () => {
+if (profileInstance.primary) app.whenReady().then(async () => {
   Menu.setApplicationMenu(null);
   session.defaultSession.setPermissionRequestHandler((_contents, _permission, callback) => callback(false));
   const userData = app.getPath('userData');
@@ -199,10 +206,13 @@ app.whenReady().then(async () => {
   ]));
   tray.on('double-click', windows.showMain);
   app.on('activate', windows.showMain);
+  // An earlier second-instance event must not create a window before services.
+  profileInstance.ready(windows.showMain);
 }).catch(error => { console.error(error); app.exit(1); });
 
 app.on('before-quit', event => {
   if (shutdownComplete) return;
+  profileInstance.dispose();
   event.preventDefault();
   if (shuttingDown) return;
   shuttingDown = true;
