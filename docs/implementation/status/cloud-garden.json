@@ -1,15 +1,15 @@
 {
   "module": "garden",
-  "phase": "module-acceptance-passed-awaiting-independent-coordinator-review",
+  "phase": "complete-source-merged-and-independently-accepted-by-coordinator",
   "coordinatorNextAction": {
-    "kind": "Review final source, SQL readback, HTTP and native evidence, then integrate and release",
-    "baseline": "4830619",
-    "evidence": "docs/implementation/evidence/garden/cloud-2026-10-25/evidence.json",
-    "remoteMutationAuthority": "coordinator only"
+    "kind": "Integrate final documentation/evidence-only handoff checkpoint; root/01 continue full application packaging",
+    "sourceAlreadyMerged": "d715e2d",
+    "evidence": "docs\\implementation\\evidence\\garden\\cloud-2026-10-25\\evidence.json",
+    "audit": "docs\\implementation\\evidence\\garden\\cloud-2026-10-25\\completion-audit.json"
   },
   "branch": "codex/lingjing-garden",
   "commit": "see git log for this file",
-  "goalStatus": "active",
+  "goalStatus": "complete",
   "scope": "Cloud territorial authority, canonical garden economy and atomic per-pet inventory integration",
   "baseline": "46abf416e0500b53ef32fc29b441d923ef5a6a80",
   "contracts": [
@@ -45,7 +45,10 @@
     "2 runtime-fixture checks passed: SQLite reopen exact original request, whole companion unit/chat preservation, shared battle wrapper with no local reward before confirmation",
     "Final own-module regression34/34 passed; current production TypeScript/desktop typecheck passed",
     "Final production main/desktop TypeScript and UI typecheck passed after direct-entry stylesheet imports",
-    "Actual native composited-window avatar ink2819/2434 each client; loaded tiles and confirmed13-round winner rendered"
+    "Actual native composited-window avatar ink2819/2434 each client; loaded tiles and confirmed13-round winner rendered",
+    "Supplemental real TCP ECONNRESET before HTTPS, persisted actual UI action, process restart and retry button commit once; current cloud stays unchanged while offline",
+    "Fresh signed-permit challenge admission rejects foreign pet403 and daily limit400 with unchanged checksum/world",
+    "Native OSM idle/all tiles and source-raster/native pixel correspondence passed on both clients; original single-color tile preserved; no new C location proof"
   ],
   "realCloudEvidence": {
     "projectRef": "jbvrdmrkwpznbrvteive",
@@ -447,7 +450,437 @@
       "samePhysicalHost": true,
       "locationSource": "coordinator-granted simulated; no physical GPS claim",
       "transportFault": "HTTPS response body cancelled after headers; physical host network unchanged",
-      "rendererErrors": []
+      "rendererErrors": [],
+      "offline": {
+        "phase": "passed",
+        "passed": true,
+        "plotId": "plot-5",
+        "cropType": "tomato",
+        "ownerAccountId": "account:9695104c-0fe6-41c5-829f-0442c502c641",
+        "originalPid": 3012,
+        "transportFault": {
+          "connections": 2,
+          "errors": [
+            {
+              "name": "TypeError",
+              "causeCode": "ECONNRESET",
+              "causeName": "Error"
+            },
+            {
+              "name": "TypeError",
+              "causeCode": "ECONNRESET",
+              "causeName": "Error"
+            }
+          ],
+          "method": "real loopback TCP CONNECT proxy destroys sockets; per-process undici dispatcher",
+          "scope": "one isolated Electron process; no host network setting changed"
+        },
+        "input": {
+          "plotId": "plot-5",
+          "cropType": "tomato",
+          "sessionOwnerAccountId": "account:9695104c-0fe6-41c5-829f-0442c502c641",
+          "actionId": "72d580aa-09a1-4cf4-8ba9-1fc1faaaa878",
+          "expectedRevision": 4
+        },
+        "journal": {
+          "action_id": "72d580aa-09a1-4cf4-8ba9-1fc1faaaa878",
+          "wire_input_json": "{\"plotId\":\"plot-5\",\"cropType\":\"tomato\",\"sessionOwnerAccountId\":\"account:9695104c-0fe6-41c5-829f-0442c502c641\",\"actionId\":\"72d580aa-09a1-4cf4-8ba9-1fc1faaaa878\",\"expectedRevision\":4}",
+          "request_hash": "0bbbbbcf145bf60ec1599c8987d5b7d502de5fbc7c022d8b9484d804100ab650",
+          "status": "pending"
+        },
+        "peerUnchangedWhileOffline": true,
+        "restartedPid": 29024,
+        "uiRetryClicked": true,
+        "completedAt": "2026-10-25T05:00:07.248Z",
+        "exactWireAndHashAfterRestart": true,
+        "originalRetryButtonConfirmed": true,
+        "finalJournalStatus": "committed",
+        "peerReadback": true,
+        "noDuplicateDebit": true,
+        "petsUnchanged": true,
+        "localStoragePendingCleared": true,
+        "revisionBefore": 4,
+        "revisionAfter": 5
+      },
+      "map": {
+        "passed": true,
+        "clients": [
+          {
+            "index": 0,
+            "initial": {
+              "view": {
+                "innerWidth": 1280,
+                "rect": {
+                  "x": 224.8000030517578,
+                  "y": 270.8999938964844,
+                  "width": 646.2250366210938,
+                  "height": 388.3999938964844
+                },
+                "background": "rgb(234, 242, 245)",
+                "zoom": 16.8,
+                "lat": 45.5124,
+                "lng": 70.1184,
+                "idle": "true",
+                "tilesComplete": "true",
+                "loadedTiles": 12
+              },
+              "sourceTile": {
+                "file": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-garden\\DesktopPet\\artifacts\\garden\\cloud\\live-4b474857-e93b-4354-a119-a21157984812\\electron-a\\cache\\discovery\\tiles\\osm\\18\\182130\\93769.png",
+                "url": "https://tile.openstreetmap.org/18/182130/93769.png",
+                "sha256": "4430a7456799d903fa8e423754748cc9bbdf776d5fed1e61dff7960f4b8868d1",
+                "bytes": 103,
+                "size": {
+                  "width": 256,
+                  "height": 256
+                },
+                "opaqueColors": 1,
+                "dominantColors": [
+                  [
+                    "242,239,233",
+                    65536
+                  ]
+                ]
+              },
+              "nativePixels": {
+                "samples": 32491,
+                "sourceMatchedPixels": 0,
+                "nonBackgroundPixels": 32491,
+                "nonDominantPixels": 0,
+                "uniqueColors": 1,
+                "dominantColors": [
+                  [
+                    "218,223,237",
+                    32491
+                  ]
+                ]
+              }
+            },
+            "wide": {
+              "view": {
+                "innerWidth": 1280,
+                "rect": {
+                  "x": 224.8000030517578,
+                  "y": 270.8999938964844,
+                  "width": 646.2250366210938,
+                  "height": 388.3999938964844
+                },
+                "background": "rgb(234, 242, 245)",
+                "zoom": 11,
+                "lat": 45.51240000000169,
+                "lng": 70.11839999999557,
+                "idle": "true",
+                "tilesComplete": "true",
+                "loadedTiles": 95
+              },
+              "sourceTile": {
+                "file": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-garden\\DesktopPet\\artifacts\\garden\\cloud\\live-4b474857-e93b-4354-a119-a21157984812\\electron-a\\cache\\discovery\\tiles\\osm\\12\\2845\\1465.png",
+                "url": "https://tile.openstreetmap.org/12/2845/1465.png",
+                "sha256": "1ecdc1332a5aad74cec110f9b0b6f52cb2ca59e5409b93cea3404eeccd1a32c0",
+                "bytes": 714,
+                "size": {
+                  "width": 256,
+                  "height": 256
+                },
+                "opaqueColors": 13,
+                "dominantColors": [
+                  [
+                    "242,239,233",
+                    65316
+                  ],
+                  [
+                    "199,198,197",
+                    45
+                  ],
+                  [
+                    "204,203,202",
+                    29
+                  ],
+                  [
+                    "227,225,222",
+                    27
+                  ],
+                  [
+                    "200,200,199",
+                    26
+                  ]
+                ]
+              },
+              "nativePixels": {
+                "samples": 32491,
+                "sourceMatchedPixels": 32450,
+                "nonBackgroundPixels": 32491,
+                "nonDominantPixels": 240,
+                "uniqueColors": 71,
+                "dominantColors": [
+                  [
+                    "240,239,236",
+                    32251
+                  ],
+                  [
+                    "237,236,233",
+                    32
+                  ],
+                  [
+                    "229,229,227",
+                    17
+                  ],
+                  [
+                    "239,238,235",
+                    13
+                  ],
+                  [
+                    "238,237,234",
+                    11
+                  ]
+                ]
+              }
+            },
+            "cause": "original high-zoom OSM tile itself is a single land color at this synthetic rural coordinate; owned-region fill tints it blue",
+            "locationState": {
+              "mode": "real",
+              "status": "idle",
+              "permission": "unknown",
+              "fix": null,
+              "lastError": null,
+              "watching": false
+            },
+            "locationUnchanged": true,
+            "worldAndEconomyUnchanged": true
+          },
+          {
+            "index": 1,
+            "initial": {
+              "view": {
+                "innerWidth": 1280,
+                "rect": {
+                  "x": 224.8000030517578,
+                  "y": 270.8999938964844,
+                  "width": 646.2250366210938,
+                  "height": 388.3999938964844
+                },
+                "background": "rgb(234, 242, 245)",
+                "zoom": 16.8,
+                "lat": 45.5124,
+                "lng": 70.1184,
+                "idle": "true",
+                "tilesComplete": "true",
+                "loadedTiles": 12
+              },
+              "sourceTile": {
+                "file": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-garden\\DesktopPet\\artifacts\\garden\\cloud\\live-4b474857-e93b-4354-a119-a21157984812\\electron-b\\cache\\discovery\\tiles\\osm\\18\\182130\\93769.png",
+                "url": "https://tile.openstreetmap.org/18/182130/93769.png",
+                "sha256": "4430a7456799d903fa8e423754748cc9bbdf776d5fed1e61dff7960f4b8868d1",
+                "bytes": 103,
+                "size": {
+                  "width": 256,
+                  "height": 256
+                },
+                "opaqueColors": 1,
+                "dominantColors": [
+                  [
+                    "242,239,233",
+                    65536
+                  ]
+                ]
+              },
+              "nativePixels": {
+                "samples": 32491,
+                "sourceMatchedPixels": 0,
+                "nonBackgroundPixels": 32491,
+                "nonDominantPixels": 14632,
+                "uniqueColors": 2,
+                "dominantColors": [
+                  [
+                    "218,223,237",
+                    17859
+                  ],
+                  [
+                    "212,226,245",
+                    14632
+                  ]
+                ]
+              }
+            },
+            "wide": {
+              "view": {
+                "innerWidth": 1280,
+                "rect": {
+                  "x": 224.8000030517578,
+                  "y": 270.8999938964844,
+                  "width": 646.2250366210938,
+                  "height": 388.3999938964844
+                },
+                "background": "rgb(234, 242, 245)",
+                "zoom": 11,
+                "lat": 45.51240000000169,
+                "lng": 70.11839999999557,
+                "idle": "true",
+                "tilesComplete": "true",
+                "loadedTiles": 95
+              },
+              "sourceTile": {
+                "file": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-garden\\DesktopPet\\artifacts\\garden\\cloud\\live-4b474857-e93b-4354-a119-a21157984812\\electron-b\\cache\\discovery\\tiles\\osm\\12\\2845\\1465.png",
+                "url": "https://tile.openstreetmap.org/12/2845/1465.png",
+                "sha256": "1ecdc1332a5aad74cec110f9b0b6f52cb2ca59e5409b93cea3404eeccd1a32c0",
+                "bytes": 714,
+                "size": {
+                  "width": 256,
+                  "height": 256
+                },
+                "opaqueColors": 13,
+                "dominantColors": [
+                  [
+                    "242,239,233",
+                    65316
+                  ],
+                  [
+                    "199,198,197",
+                    45
+                  ],
+                  [
+                    "204,203,202",
+                    29
+                  ],
+                  [
+                    "227,225,222",
+                    27
+                  ],
+                  [
+                    "200,200,199",
+                    26
+                  ]
+                ]
+              },
+              "nativePixels": {
+                "samples": 32491,
+                "sourceMatchedPixels": 32450,
+                "nonBackgroundPixels": 32491,
+                "nonDominantPixels": 240,
+                "uniqueColors": 71,
+                "dominantColors": [
+                  [
+                    "240,239,236",
+                    32251
+                  ],
+                  [
+                    "237,236,233",
+                    32
+                  ],
+                  [
+                    "229,229,227",
+                    17
+                  ],
+                  [
+                    "239,238,235",
+                    13
+                  ],
+                  [
+                    "238,237,234",
+                    11
+                  ]
+                ]
+              }
+            },
+            "cause": "original high-zoom OSM tile itself is a single land color at this synthetic rural coordinate; owned-region fill tints it blue",
+            "locationState": {
+              "mode": "real",
+              "status": "idle",
+              "permission": "unknown",
+              "fix": null,
+              "lastError": null,
+              "watching": false
+            },
+            "locationUnchanged": true,
+            "worldAndEconomyUnchanged": true
+          }
+        ],
+        "scope": "native composited pixels after MapLibre idle/all tiles; normal viewport zoom controls; no location or world mutation",
+        "completedAt": "2026-10-25T05:23:05.962Z"
+      },
+      "cleanBuild": {
+        "schemaVersion": 2,
+        "builtAt": "2026-10-25T05:21:50.098Z",
+        "sourceCommit": "d715e2dc7c8e1e9d9a1d745439d48ec7168c304d",
+        "sourceTree": "6740a3667a0e000167188523f8837982a6197588",
+        "sourceDirtyFiles": [],
+        "codeFingerprint": "50f674f7559d1b71cfc595fc20264605c4bd8db4a5ad1f8450cd2ad305853b18",
+        "canonicalSourceFingerprint": "6a87052d1ed7409c82ac5b4992d8557025816f1577c6dc6c5b15cf157cdc7df4",
+        "canonicalPolicy": "Repository-relative paths; CRLF normalized to LF for source text only. Packaged/compiled bytes remain exact.",
+        "compiledFingerprint": "54decd1237c94b877bd3afbd1ab9558fd333150d901271d9564b22dc473b1768",
+        "codeFiles": 298,
+        "compiledFiles": 86,
+        "toolchain": {
+          "node": "24.21.0",
+          "electron": "44.9.3",
+          "sqlite": "13.0.3",
+          "vite": "7.3.7",
+          "typescript": "5.9.3",
+          "platform": "win32",
+          "arch": "x64"
+        },
+        "entrypoints": {
+          "main": "main/index.cjs",
+          "app": "ui/index.html",
+          "desktop": "ui/desktop.html",
+          "preload": "preload/index.cjs"
+        },
+        "publicCloud": {
+          "projectRef": "jbvrdmrkwpznbrvteive",
+          "url": "https://jbvrdmrkwpznbrvteive.supabase.co",
+          "sha256": "c1625c63f1d959f92b3392b47f2fb492452803eedf1c0d1ebc68a1168ab64eda",
+          "resourcePath": "lingjing-cloud-public.json"
+        },
+        "packageName": "lingjing-desktop",
+        "runtimeClosure": {
+          "manifest": "runtime-closure.json",
+          "files": 106,
+          "edges": 181,
+          "sha256": "311d15e546c3a51d7f72748f791794ff47972f12e8a2b0fadd2eec29e149d2d7"
+        }
+      },
+      "incrementalSqlReadback": "docs\\implementation\\evidence\\garden\\cloud-2026-10-25\\native-incremental-sql-readback.json",
+      "permissionReadback": "docs\\implementation\\evidence\\garden\\cloud-2026-10-25\\permissions-final-readback.json"
+    },
+    "liveAdmission": {
+      "inputs": [
+        {
+          "actionId": "admission-foreign-pet:4b474857-e93b-4354-a119-a21157984812:1792904452471",
+          "sessionOwnerAccountId": "account:9f591ede-bc87-4aa3-af70-084189dfae9e",
+          "territoryId": "qa:garden-4b474857:territory:7582:11683",
+          "expectedTerritoryRevision": 3,
+          "petId": "pet-d4dd1eb0-a2c0-4f1d-a3a8-c73121cd32cd",
+          "locationReceiptId": "b9e1e675-9d4c-441b-a916-4c611209890f"
+        },
+        {
+          "actionId": "admission-daily-quota:4b474857-e93b-4354-a119-a21157984812:1792904459343",
+          "sessionOwnerAccountId": "account:9f591ede-bc87-4aa3-af70-084189dfae9e",
+          "territoryId": "qa:garden-4b474857:territory:7582:11683",
+          "expectedTerritoryRevision": 3,
+          "petId": "pet-8ff77358-cc5d-4dbd-9c3d-5c6f15aa4c1c",
+          "locationReceiptId": "6d894ef6-e531-4798-8127-e63c909c779b"
+        }
+      ],
+      "checks": [
+        {
+          "name": "foreign-pet",
+          "code": "PET_NOT_OWNED",
+          "httpStatus": 403,
+          "passed": true
+        },
+        {
+          "name": "daily-quota",
+          "code": "DAILY_INVASIONS_USED",
+          "httpStatus": 400,
+          "passed": true
+        }
+      ],
+      "passed": true,
+      "at": "2026-10-25T05:01:05.229Z",
+      "beforeChecksum": "20280cb95ac405a3b5154f2d8d0166bd266047e9cf07564421260eb16f84d053",
+      "afterChecksum": "20280cb95ac405a3b5154f2d8d0166bd266047e9cf07564421260eb16f84d053",
+      "remainingInvasions": 0,
+      "worldAndEconomyUnchanged": true,
+      "source": "actual HTTPS with fresh signed coordinator-granted simulated location permits"
     }
   },
   "preservation": {
@@ -471,9 +904,7 @@
       "status": "removed"
     }
   ],
-  "remaining": [
-    "Independent coordinator final review and unified release"
-  ],
+  "remaining": [],
   "dependencyCheckpoint": "b40af0efcf6062ddc2e8c360523c996fc91ebc0a",
   "identityCheckpoint": "ee36030ad37614ac321b94ae4ee4169d705f1165",
   "code": {
@@ -491,7 +922,7 @@
     "discovery03": "Consumed live03 take_location schema+guard; purpose read/challenge/settle and reference bound in same transaction. Main locationProofs.prove supplies opaque proofs.03 capture should call4-argument capture_context inside its own commit."
   },
   "serverDeployable": true,
-  "desktopCheckpoint": "7cbd06a (cloud snapshot revision and direct garden entry styles), approved4830619 integrated",
+  "desktopCheckpoint": "d715e2dc7c8e1e9d9a1d745439d48ec7168c304d",
   "coordinatorDeploymentCheckpoint": "4830619",
   "locationTestGrantRequest": {
     "file": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-garden\\DesktopPet\\artifacts\\garden\\cloud\\live-4b474857-e93b-4354-a119-a21157984812/electron/location-grant-request.json",
@@ -554,14 +985,16 @@
     "typecheck": true,
     "native": "Electron44.9.3 N-API10 / better-sqlite3 13.0.3",
     "uiModifiedByGarden": [
-      "apps/pc-app/ui/src/features/garden/index.tsx (shared CSS dependencies only)"
+      "apps/pc-app/ui/src/features/garden/index.tsx (shared CSS imports)",
+      "apps/pc-app/ui/src/features/discovery/NearbyMap.tsx (approved observation data attributes only)"
     ],
     "currentCloudAggregate": {
       "passed": 13,
       "failed": 0
     },
     "uiTypecheck": true,
-    "battleUiTouched": false
+    "battleUiTouched": false,
+    "reactReview": "Hooks cleanup, stable primitive dependencies, functional state equality guard, no style/policy changes; no04 UI edits"
   },
   "completedLocationTestGrants": {
     "file": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-garden\\DesktopPet\\artifacts\\garden\\cloud\\live-4b474857-e93b-4354-a119-a21157984812/location-grant-request.json",
@@ -587,5 +1020,17 @@
     "requestedDurationMinutes": 90
   },
   "moduleWorkComplete": true,
-  "independentCoordinatorAcceptance": "pending"
+  "independentCoordinatorAcceptance": "accepted-source-and-final-raw-increments;sanitized-docs-publication-complete",
+  "coordinatorReview": {
+    "sourceThreadId": "01a1704b-e200-7090-9d17-958218c80f42",
+    "source": "Coordinator delegation received in this chat; root main Git ancestry verified independently below",
+    "reviewedSourceCheckpoint": "d715e2d",
+    "conclusions": [
+      "Source reviewed and merged by coordinator: NearbyMap observation attributes only, no camera/location behavior change",
+      "Coordinator independently read raw Electron evidence and verified actual OSM/native pixel match with idle/tilesComplete",
+      "Coordinator independently verified offline original action survives restart and commits once"
+    ],
+    "remainingCondition": "Publish the sanitized map/offline aggregate, updated A/B screenshots and status into docs, then hand off and finish the module",
+    "conditionSatisfied": "Published passed aggregate includes native.map and native.offline, eight hashed screenshots and explicit retained old-map evidence failure records; all are committed in the handoff checkpoint."
+  }
 }

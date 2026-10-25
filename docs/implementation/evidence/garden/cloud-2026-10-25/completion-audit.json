@@ -1,0 +1,145 @@
+{
+  "at": "2026-10-25T05:29:25.152Z",
+  "sourceCommit": "d715e2dc7c8e1e9d9a1d745439d48ec7168c304d",
+  "fullGoalComplete": true,
+  "scope": "All original module goal requirements proven; coordinator has accepted source and independently verified the final increments. Full application packaging belongs to the coordinator/01.",
+  "requirements": [
+    {
+      "id": "identity",
+      "requirement": "Unified Supabase Auth to retained TEXT owner and managed actor context",
+      "status": "proven",
+      "evidence": [
+        "native-incremental-sql-readback.json ownerIdType=text",
+        "evidence.json native.actors: same real owner/Auth UID, independent device/SID, safeStorage",
+        "infra/supabase/functions/_shared/lingjing-auth.ts",
+        "cloud.test.mjs real identity/CAS and long legacy-owner cases"
+      ]
+    },
+    {
+      "id": "postgis-and-admission",
+      "requirement": "PostGIS spatial queries, trusted location, challenge eligibility and daily quota",
+      "status": "proven",
+      "evidence": [
+        "docs/implementation/evidence/cloud/2026-10-25/world-spatial-permissions.json",
+        "native-incremental-sql-readback.json nativeWorld.coversCenter/coversOutside",
+        "evidence.json http.security and http.admission: expired/scope/foreign proof, foreign pet, third daily attempt denied"
+      ]
+    },
+    {
+      "id": "authoritative-battle",
+      "requirement": "Only the canonical server battle core advances sessions and validates receipts",
+      "status": "proven",
+      "evidence": [
+        "evidence.json http.battles, forged-winner rejection and native.final.rounds=13",
+        "scripts/acceptance/cloud-territory/check-runtime.mjs canonical04 SHA",
+        "cloud.test.mjs 400 ordered element/action combinations and deployed receipt expression"
+      ]
+    },
+    {
+      "id": "ownership-and-garrison",
+      "requirement": "Concurrent ownership changes and authorized same-pet garrison",
+      "status": "proven",
+      "evidence": [
+        "evidence.json http.contest: exactly one occupation, superseded winner has no growth/seeds",
+        "evidence.json http.defeat: natural defeat settles once without world revision",
+        "evidence.json http.garrison: foreign owner denied and growth/inventory unchanged"
+      ]
+    },
+    {
+      "id": "atomic-economy",
+      "requirement": "One canonical inventory and companion store, atomic reward/food growth with replay safety",
+      "status": "proven",
+      "evidence": [
+        "evidence.json http.sameAccountRace, http.economy: actual25-minute rice, harvest2/craft1/feed one original pet, actionId160",
+        "sql-readback.json original71-character CAS receipt",
+        "native-incremental-sql-readback.json offlineOriginalReceipt unique operation",
+        "cloud.test.mjs real non-spatial SQL actor rejection rollback and other-module preservation"
+      ]
+    },
+    {
+      "id": "preservation",
+      "requirement": "Retain old owner/pet IDs, original growth, inventory, chat and history",
+      "status": "proven-for-retention",
+      "evidence": [
+        "cloud.test.mjs whole legacy six-table and canonical companion units, unrelated pet/chat preservation",
+        "runtime_garden_commit_authoritative identity/unrelated-save equality guards and unchanged petId set",
+        "docs/implementation/evidence/cloud/2026-10-25/project-preservation-final-readback.json: all original project tables retain row counts/content hashes"
+      ],
+      "limit": "This verifies retention and the supported legacy TEXT/data format; it does not claim every unavailable historical cloud account was imported."
+    },
+    {
+      "id": "territory-availability",
+      "requirement": "Close CLOUD_TERRITORY_UNAVAILABLE through the integrated product path",
+      "status": "proven",
+      "evidence": [
+        "evidence.json native real BattleScreen and garden IPC through live territory-sync",
+        "apps/pc-app/runtime/features/garden/index.cjs and cloud-authority.cjs contain the live adapter; retired unavailable placeholder absent"
+      ]
+    },
+    {
+      "id": "migrations-and-edge",
+      "requirement": "CLI-created additive migrations and independent deployed garden/territory Edge entries",
+      "status": "proven",
+      "evidence": [
+        "deployment-readback.json: actual22-version ledger and garden-sync/territory-sync ACTIVE v2",
+        "20261025033032_lingjing_territory_authority.sql",
+        "20261025034313_lingjing_territory_receipt_operator.sql",
+        "Deno entrypoint and source bundle/core checks recorded in cloud-garden.json"
+      ],
+      "deploymentAuthority": "coordinator only; this module made no remote schema/grant/deployment writes"
+    },
+    {
+      "id": "dual-client-transport-recovery",
+      "requirement": "Actual HTTPS dual-client concurrency, failures, original retries and offline/restart scripts",
+      "status": "proven",
+      "evidence": [
+        "evidence.json http response-stream loss after headers with exact receipt replay",
+        "evidence.json native.lostResponse original battle action and actual process restart",
+        "evidence.json native.offline real ECONNRESET before HTTPS, peer cloud unchanged, persisted UI pending, restart and original retry button, debit once"
+      ],
+      "scope": "Same Windows host, separate real processes/profiles; controlled per-process network route failure, not a physical host-wide outage; coordinator-granted simulated location."
+    },
+    {
+      "id": "rendered-map-and-ui",
+      "requirement": "Native visible characters, confirmed battle, actual UI planting and real basemap raster pixels",
+      "status": "proven",
+      "evidence": [
+        "evidence.json native.uiPlant, native.visualPassed, native.map",
+        "cloud-garden-map-initial-a.png and cloud-garden-map-initial-b.png preserve the original uniform source-tile condition",
+        "cloud-garden-a.png and cloud-garden-b.png show actual OSM roads after normal zoom11; source13 colors/native71 colors/240 texture pixels each"
+      ],
+      "invariants": "Only viewport zoom changes. Location, signed permits, territory, pets, plots and stock preserved; NearbyMap adds observation attributes only;04 UI unchanged."
+    },
+    {
+      "id": "independent-coordinator-acceptance",
+      "requirement": "Coordinator performs deployment and independent acceptance",
+      "status": "proven",
+      "proven": [
+        "Coordinator deployed the additive migrations and both v2 functions",
+        "docs/implementation/evidence/cloud/2026-10-25/world-spatial-permissions.json and garden-http-independent.json are independent coordinator checks",
+        "Coordinator confirmed merge of78fcd7a, verified13-round natural-win screenshot and requested the now-completed basemap increment"
+      ],
+      "coordinator": {
+        "sourceThreadId": "01a1704b-e200-7090-9d17-958218c80f42",
+        "source": "Coordinator delegation received in this chat; root main Git ancestry verified independently below",
+        "reviewedSourceCheckpoint": "d715e2d",
+        "conclusions": [
+          "Source reviewed and merged by coordinator: NearbyMap observation attributes only, no camera/location behavior change",
+          "Coordinator independently read raw Electron evidence and verified actual OSM/native pixel match with idle/tilesComplete",
+          "Coordinator independently verified offline original action survives restart and commits once"
+        ],
+        "remainingCondition": "Publish the sanitized map/offline aggregate, updated A/B screenshots and status into docs, then hand off and finish the module",
+        "conditionSatisfied": "Published passed aggregate includes native.map and native.offline, eight hashed screenshots and explicit retained old-map evidence failure records; all are committed in the handoff checkpoint."
+      }
+    }
+  ],
+  "tests": {
+    "cloudAggregate": "13/13 after7cbd06a",
+    "gardenRegression": "34/34 before final shared stylesheet imports; retained results, no whole economy rerun",
+    "uiTypecheck": "passed after NearbyMap observation attributes",
+    "productionBuild": "passed from clean d715e2d; canonicalSourceFingerprint=6a87052d1ed7409c82ac5b4992d8557025816f1577c6dc6c5b15cf157cdc7df4"
+  },
+  "artifactHashesVerified": 8,
+  "currentPermissionReadback": "permissions-final-readback.json",
+  "retainedMapEvidenceFailure": "retained-failures/pre-map-review/failure.json"
+}

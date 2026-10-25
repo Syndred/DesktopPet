@@ -1,6 +1,6 @@
 {
-  "at": "2026-10-25T04:50:05.224Z",
-  "sourceSha": "ecaf3d8c6d0e4b20923861c9541fd855ca174cb5",
+  "at": "2026-10-25T05:25:49.353Z",
+  "sourceSha": "d715e2dc7c8e1e9d9a1d745439d48ec7168c304d",
   "phase": "module-acceptance-passed-awaiting-independent-coordinator-review",
   "projectRef": "jbvrdmrkwpznbrvteive",
   "deploymentBy": "coordinator",
@@ -58,7 +58,7 @@
     ],
     "lastClients": [
       {
-        "pid": 23456,
+        "pid": 11904,
         "actor": {
           "account": "gardenqa_4b474857_0",
           "authKind": "supabase",
@@ -72,7 +72,7 @@
         }
       },
       {
-        "pid": 4048,
+        "pid": 17260,
         "actor": {
           "account": "gardenqa_4b474857_1",
           "authKind": "supabase",
@@ -86,7 +86,7 @@
         }
       },
       {
-        "pid": 24608,
+        "pid": 21812,
         "actor": {
           "account": "gardenqa_4b474857_0",
           "authKind": "supabase",
@@ -215,6 +215,47 @@
       "forgedWinner": "UNTRUSTED_AUTHORITY_FIELD",
       "missingProof": "LOCATION_PERMIT_REQUIRED",
       "noEconomicChange": true
+    },
+    "admission": {
+      "inputs": [
+        {
+          "actionId": "admission-foreign-pet:4b474857-e93b-4354-a119-a21157984812:1792904452471",
+          "sessionOwnerAccountId": "account:9f591ede-bc87-4aa3-af70-084189dfae9e",
+          "territoryId": "qa:garden-4b474857:territory:7582:11683",
+          "expectedTerritoryRevision": 3,
+          "petId": "pet-d4dd1eb0-a2c0-4f1d-a3a8-c73121cd32cd",
+          "locationReceiptId": "b9e1e675-9d4c-441b-a916-4c611209890f"
+        },
+        {
+          "actionId": "admission-daily-quota:4b474857-e93b-4354-a119-a21157984812:1792904459343",
+          "sessionOwnerAccountId": "account:9f591ede-bc87-4aa3-af70-084189dfae9e",
+          "territoryId": "qa:garden-4b474857:territory:7582:11683",
+          "expectedTerritoryRevision": 3,
+          "petId": "pet-8ff77358-cc5d-4dbd-9c3d-5c6f15aa4c1c",
+          "locationReceiptId": "6d894ef6-e531-4798-8127-e63c909c779b"
+        }
+      ],
+      "checks": [
+        {
+          "name": "foreign-pet",
+          "code": "PET_NOT_OWNED",
+          "httpStatus": 403,
+          "passed": true
+        },
+        {
+          "name": "daily-quota",
+          "code": "DAILY_INVASIONS_USED",
+          "httpStatus": 400,
+          "passed": true
+        }
+      ],
+      "passed": true,
+      "at": "2026-10-25T05:01:05.229Z",
+      "beforeChecksum": "20280cb95ac405a3b5154f2d8d0166bd266047e9cf07564421260eb16f84d053",
+      "afterChecksum": "20280cb95ac405a3b5154f2d8d0166bd266047e9cf07564421260eb16f84d053",
+      "remainingInvasions": 0,
+      "worldAndEconomyUnchanged": true,
+      "source": "actual HTTPS with fresh signed coordinator-granted simulated location permits"
     },
     "transportFault": {
       "kind": "actual HTTPS response stream destroyed after server headers before body",
@@ -1102,6 +1143,21 @@
       },
       {
         "name": "actual original25-minute maturity, harvest2, craft1 and feed same pet once, independently read by same-account other device"
+      },
+      {
+        "0": {
+          "name": "foreign-pet",
+          "code": "PET_NOT_OWNED",
+          "httpStatus": 403,
+          "passed": true
+        },
+        "1": {
+          "name": "daily-quota",
+          "code": "DAILY_INVASIONS_USED",
+          "httpStatus": 400,
+          "passed": true
+        },
+        "name": "foreign pet and third daily challenge rejected by real authority with no world, pet or inventory changes"
       }
     ],
     "selectedOriginalInputs": {
@@ -1197,6 +1253,352 @@
       "gardenRevision": 4,
       "peerReadback": true
     },
+    "offline": {
+      "phase": "passed",
+      "passed": true,
+      "plotId": "plot-5",
+      "cropType": "tomato",
+      "ownerAccountId": "account:9695104c-0fe6-41c5-829f-0442c502c641",
+      "originalPid": 3012,
+      "transportFault": {
+        "connections": 2,
+        "errors": [
+          {
+            "name": "TypeError",
+            "causeCode": "ECONNRESET",
+            "causeName": "Error"
+          },
+          {
+            "name": "TypeError",
+            "causeCode": "ECONNRESET",
+            "causeName": "Error"
+          }
+        ],
+        "method": "real loopback TCP CONNECT proxy destroys sockets; per-process undici dispatcher",
+        "scope": "one isolated Electron process; no host network setting changed"
+      },
+      "input": {
+        "plotId": "plot-5",
+        "cropType": "tomato",
+        "sessionOwnerAccountId": "account:9695104c-0fe6-41c5-829f-0442c502c641",
+        "actionId": "72d580aa-09a1-4cf4-8ba9-1fc1faaaa878",
+        "expectedRevision": 4
+      },
+      "journal": {
+        "action_id": "72d580aa-09a1-4cf4-8ba9-1fc1faaaa878",
+        "wire_input_json": "{\"plotId\":\"plot-5\",\"cropType\":\"tomato\",\"sessionOwnerAccountId\":\"account:9695104c-0fe6-41c5-829f-0442c502c641\",\"actionId\":\"72d580aa-09a1-4cf4-8ba9-1fc1faaaa878\",\"expectedRevision\":4}",
+        "request_hash": "0bbbbbcf145bf60ec1599c8987d5b7d502de5fbc7c022d8b9484d804100ab650",
+        "status": "pending"
+      },
+      "peerUnchangedWhileOffline": true,
+      "restartedPid": 29024,
+      "uiRetryClicked": true,
+      "completedAt": "2026-10-25T05:00:07.248Z",
+      "exactWireAndHashAfterRestart": true,
+      "originalRetryButtonConfirmed": true,
+      "finalJournalStatus": "committed",
+      "peerReadback": true,
+      "noDuplicateDebit": true,
+      "petsUnchanged": true,
+      "localStoragePendingCleared": true,
+      "revisionBefore": 4,
+      "revisionAfter": 5
+    },
+    "map": {
+      "passed": true,
+      "clients": [
+        {
+          "index": 0,
+          "initial": {
+            "view": {
+              "innerWidth": 1280,
+              "rect": {
+                "x": 224.8000030517578,
+                "y": 270.8999938964844,
+                "width": 646.2250366210938,
+                "height": 388.3999938964844
+              },
+              "background": "rgb(234, 242, 245)",
+              "zoom": 16.8,
+              "lat": 45.5124,
+              "lng": 70.1184,
+              "idle": "true",
+              "tilesComplete": "true",
+              "loadedTiles": 12
+            },
+            "sourceTile": {
+              "file": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-garden\\DesktopPet\\artifacts\\garden\\cloud\\live-4b474857-e93b-4354-a119-a21157984812\\electron-a\\cache\\discovery\\tiles\\osm\\18\\182130\\93769.png",
+              "url": "https://tile.openstreetmap.org/18/182130/93769.png",
+              "sha256": "4430a7456799d903fa8e423754748cc9bbdf776d5fed1e61dff7960f4b8868d1",
+              "bytes": 103,
+              "size": {
+                "width": 256,
+                "height": 256
+              },
+              "opaqueColors": 1,
+              "dominantColors": [
+                [
+                  "242,239,233",
+                  65536
+                ]
+              ]
+            },
+            "nativePixels": {
+              "samples": 32491,
+              "sourceMatchedPixels": 0,
+              "nonBackgroundPixels": 32491,
+              "nonDominantPixels": 0,
+              "uniqueColors": 1,
+              "dominantColors": [
+                [
+                  "218,223,237",
+                  32491
+                ]
+              ]
+            }
+          },
+          "wide": {
+            "view": {
+              "innerWidth": 1280,
+              "rect": {
+                "x": 224.8000030517578,
+                "y": 270.8999938964844,
+                "width": 646.2250366210938,
+                "height": 388.3999938964844
+              },
+              "background": "rgb(234, 242, 245)",
+              "zoom": 11,
+              "lat": 45.51240000000169,
+              "lng": 70.11839999999557,
+              "idle": "true",
+              "tilesComplete": "true",
+              "loadedTiles": 95
+            },
+            "sourceTile": {
+              "file": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-garden\\DesktopPet\\artifacts\\garden\\cloud\\live-4b474857-e93b-4354-a119-a21157984812\\electron-a\\cache\\discovery\\tiles\\osm\\12\\2845\\1465.png",
+              "url": "https://tile.openstreetmap.org/12/2845/1465.png",
+              "sha256": "1ecdc1332a5aad74cec110f9b0b6f52cb2ca59e5409b93cea3404eeccd1a32c0",
+              "bytes": 714,
+              "size": {
+                "width": 256,
+                "height": 256
+              },
+              "opaqueColors": 13,
+              "dominantColors": [
+                [
+                  "242,239,233",
+                  65316
+                ],
+                [
+                  "199,198,197",
+                  45
+                ],
+                [
+                  "204,203,202",
+                  29
+                ],
+                [
+                  "227,225,222",
+                  27
+                ],
+                [
+                  "200,200,199",
+                  26
+                ]
+              ]
+            },
+            "nativePixels": {
+              "samples": 32491,
+              "sourceMatchedPixels": 32450,
+              "nonBackgroundPixels": 32491,
+              "nonDominantPixels": 240,
+              "uniqueColors": 71,
+              "dominantColors": [
+                [
+                  "240,239,236",
+                  32251
+                ],
+                [
+                  "237,236,233",
+                  32
+                ],
+                [
+                  "229,229,227",
+                  17
+                ],
+                [
+                  "239,238,235",
+                  13
+                ],
+                [
+                  "238,237,234",
+                  11
+                ]
+              ]
+            }
+          },
+          "cause": "original high-zoom OSM tile itself is a single land color at this synthetic rural coordinate; owned-region fill tints it blue",
+          "locationState": {
+            "mode": "real",
+            "status": "idle",
+            "permission": "unknown",
+            "fix": null,
+            "lastError": null,
+            "watching": false
+          },
+          "locationUnchanged": true,
+          "worldAndEconomyUnchanged": true
+        },
+        {
+          "index": 1,
+          "initial": {
+            "view": {
+              "innerWidth": 1280,
+              "rect": {
+                "x": 224.8000030517578,
+                "y": 270.8999938964844,
+                "width": 646.2250366210938,
+                "height": 388.3999938964844
+              },
+              "background": "rgb(234, 242, 245)",
+              "zoom": 16.8,
+              "lat": 45.5124,
+              "lng": 70.1184,
+              "idle": "true",
+              "tilesComplete": "true",
+              "loadedTiles": 12
+            },
+            "sourceTile": {
+              "file": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-garden\\DesktopPet\\artifacts\\garden\\cloud\\live-4b474857-e93b-4354-a119-a21157984812\\electron-b\\cache\\discovery\\tiles\\osm\\18\\182130\\93769.png",
+              "url": "https://tile.openstreetmap.org/18/182130/93769.png",
+              "sha256": "4430a7456799d903fa8e423754748cc9bbdf776d5fed1e61dff7960f4b8868d1",
+              "bytes": 103,
+              "size": {
+                "width": 256,
+                "height": 256
+              },
+              "opaqueColors": 1,
+              "dominantColors": [
+                [
+                  "242,239,233",
+                  65536
+                ]
+              ]
+            },
+            "nativePixels": {
+              "samples": 32491,
+              "sourceMatchedPixels": 0,
+              "nonBackgroundPixels": 32491,
+              "nonDominantPixels": 14632,
+              "uniqueColors": 2,
+              "dominantColors": [
+                [
+                  "218,223,237",
+                  17859
+                ],
+                [
+                  "212,226,245",
+                  14632
+                ]
+              ]
+            }
+          },
+          "wide": {
+            "view": {
+              "innerWidth": 1280,
+              "rect": {
+                "x": 224.8000030517578,
+                "y": 270.8999938964844,
+                "width": 646.2250366210938,
+                "height": 388.3999938964844
+              },
+              "background": "rgb(234, 242, 245)",
+              "zoom": 11,
+              "lat": 45.51240000000169,
+              "lng": 70.11839999999557,
+              "idle": "true",
+              "tilesComplete": "true",
+              "loadedTiles": 95
+            },
+            "sourceTile": {
+              "file": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-garden\\DesktopPet\\artifacts\\garden\\cloud\\live-4b474857-e93b-4354-a119-a21157984812\\electron-b\\cache\\discovery\\tiles\\osm\\12\\2845\\1465.png",
+              "url": "https://tile.openstreetmap.org/12/2845/1465.png",
+              "sha256": "1ecdc1332a5aad74cec110f9b0b6f52cb2ca59e5409b93cea3404eeccd1a32c0",
+              "bytes": 714,
+              "size": {
+                "width": 256,
+                "height": 256
+              },
+              "opaqueColors": 13,
+              "dominantColors": [
+                [
+                  "242,239,233",
+                  65316
+                ],
+                [
+                  "199,198,197",
+                  45
+                ],
+                [
+                  "204,203,202",
+                  29
+                ],
+                [
+                  "227,225,222",
+                  27
+                ],
+                [
+                  "200,200,199",
+                  26
+                ]
+              ]
+            },
+            "nativePixels": {
+              "samples": 32491,
+              "sourceMatchedPixels": 32450,
+              "nonBackgroundPixels": 32491,
+              "nonDominantPixels": 240,
+              "uniqueColors": 71,
+              "dominantColors": [
+                [
+                  "240,239,236",
+                  32251
+                ],
+                [
+                  "237,236,233",
+                  32
+                ],
+                [
+                  "229,229,227",
+                  17
+                ],
+                [
+                  "239,238,235",
+                  13
+                ],
+                [
+                  "238,237,234",
+                  11
+                ]
+              ]
+            }
+          },
+          "cause": "original high-zoom OSM tile itself is a single land color at this synthetic rural coordinate; owned-region fill tints it blue",
+          "locationState": {
+            "mode": "real",
+            "status": "idle",
+            "permission": "unknown",
+            "fix": null,
+            "lastError": null,
+            "watching": false
+          },
+          "locationUnchanged": true,
+          "worldAndEconomyUnchanged": true
+        }
+      ],
+      "scope": "native composited pixels after MapLibre idle/all tiles; normal viewport zoom controls; no location or world mutation",
+      "completedAt": "2026-10-25T05:23:05.962Z"
+    },
     "actors": [
       {
         "actor": {
@@ -1214,7 +1616,7 @@
         "userData": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-garden\\DesktopPet\\artifacts\\garden\\cloud\\live-4b474857-e93b-4354-a119-a21157984812\\electron-a",
         "encrypted": true,
         "qaScenarioPresent": false,
-        "pid": 26736
+        "pid": 29448
       },
       {
         "actor": {
@@ -1232,7 +1634,7 @@
         "userData": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-garden\\DesktopPet\\artifacts\\garden\\cloud\\live-4b474857-e93b-4354-a119-a21157984812\\electron-b",
         "encrypted": true,
         "qaScenarioPresent": false,
-        "pid": 14660
+        "pid": 32616
       }
     ],
     "checks": [
@@ -1412,6 +1814,439 @@
         "name": "cloud-garden-b",
         "renderer": {
           "text": "灵境\n我的灵宠\n附近探索\n对战中心\n领地\n背包\n聊天\n角色资源\n设置\n园地桌面验收\n\n领地 / 和伙伴的小天地\n\n给伙伴，留一片小天地。\n\n在真实的风景里，和伙伴一起创造属于你们的角落。\n\n今日可入侵 1 次\n领地总览\n我的菜园\n制作食物\n背包与喂养\n© OpenStreetMap contributors\n可相遇伙伴\n领地\n查看演练领地\n附近的庭院\n我的领地\n区域捕捉收益 × 2\n我的菜园\n1 块作物成熟了\n去菜园 收获 →\n我的领地\n附近的庭院\n\n附近领地\n\n区域捕捉收益\n✧ × 2\n驻守伙伴\n桌面出战喵\nLv.01\n桌面原伙伴\nLv.01\n确认驻守\n结束驻守\n占领记录 ⌄",
+          "canvas": [
+            {
+              "width": 808,
+              "height": 485
+            },
+            {
+              "width": 166,
+              "height": 166
+            },
+            {
+              "width": 166,
+              "height": 166
+            }
+          ],
+          "images": [
+            {
+              "ready": true,
+              "src": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-garden/DesktopPet/apps/pc-app/dist/ui/brand"
+            }
+          ]
+        }
+      },
+      {
+        "name": "cloud-garden-offline-pending",
+        "renderer": {
+          "text": "灵境\n我的灵宠\n附近探索\n对战中心\n领地\n背包\n聊天\n角色资源\n设置\n园地桌面验收\n\n领地 / 和伙伴的小天地\n\n把小日子，种成好收成。\n\n在这里，和伙伴一起，把平凡的日子种出温柔的惊喜。\n\n收获成熟作物 · 1\n领地总览\n我的菜园\n制作食物\n背包与喂养\n云端回复尚未确认，可安全重试原操作\n刷新\n等待确认\n重试\n账号基础菜园\n慢慢长大，好好收获\n地块 1\n播种\n地块 2\n播种\n地块 3\n播种\n地块 4\n播种\n地块 5\n播种\n胡萝卜\n可收获\n六块小天地，每一份收成都属于你。\n作物的成长过程\n播种\n埋下种子，期待发芽\n生长\n离线时也在慢慢长大\n成熟\n成熟后会一直等你\n收获入库\n直接喂食，或做一碗米饭\n\n正在照料\n\n地块 5 · 等你播种\n\n选一包种子，在这里种下新的期待。\n\n生长时间 / 成熟收成\n15 分钟 · 3 份起\n播种\n选择种子 拥有数量\n胡萝卜\n种子 × 1\n番茄\n种子 × 2\n莓果\n种子 × 4\n稻米\n种子 × 2\n从探索和对战中获得种子 ↗",
+          "canvas": [
+            {
+              "width": 808,
+              "height": 605
+            },
+            {
+              "width": 243,
+              "height": 243
+            }
+          ],
+          "images": [
+            {
+              "ready": true,
+              "src": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-garden/DesktopPet/apps/pc-app/dist/ui/brand"
+            }
+          ]
+        }
+      },
+      {
+        "name": "cloud-garden-offline-recovered",
+        "renderer": {
+          "text": "灵境\n我的灵宠\n附近探索\n对战中心\n领地\n背包\n聊天\n角色资源\n设置\n园地桌面验收\n\n领地 / 和伙伴的小天地\n\n把小日子，种成好收成。\n\n在这里，和伙伴一起，把平凡的日子种出温柔的惊喜。\n\n收获成熟作物 · 1\n领地总览\n我的菜园\n制作食物\n背包与喂养\n✓ 原操作已确认保存。\n账号基础菜园\n慢慢长大，好好收获\n地块 1\n播种\n地块 2\n播种\n地块 3\n播种\n地块 4\n播种\n番茄\n14:32\n胡萝卜\n可收获\n六块小天地，每一份收成都属于你。\n作物的成长过程\n播种\n埋下种子，期待发芽\n生长\n离线时也在慢慢长大\n成熟\n成熟后会一直等你\n收获入库\n直接喂食，或做一碗米饭\n\n正在照料\n\n地块 1 · 等你播种\n\n选一包种子，在这里种下新的期待。\n\n生长时间 / 成熟收成\n10 分钟 · 3 份起\n播种\n选择种子 拥有数量\n胡萝卜\n种子 × 1\n番茄\n种子 × 1\n莓果\n种子 × 4\n稻米\n种子 × 2\n从探索和对战中获得种子 ↗",
+          "canvas": [
+            {
+              "width": 808,
+              "height": 605
+            },
+            {
+              "width": 243,
+              "height": 243
+            }
+          ],
+          "images": [
+            {
+              "ready": true,
+              "src": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-garden/DesktopPet/apps/pc-app/dist/ui/brand"
+            }
+          ]
+        }
+      },
+      {
+        "name": "actual per-process TCP connection failure, persisted UI operation, real restart and original retry commit once",
+        "originalPid": 3012,
+        "restartedPid": 29024,
+        "actionId": "72d580aa-09a1-4cf4-8ba9-1fc1faaaa878",
+        "connections": 2,
+        "transportErrors": [
+          {
+            "name": "TypeError",
+            "causeCode": "ECONNRESET",
+            "causeName": "Error"
+          },
+          {
+            "name": "TypeError",
+            "causeCode": "ECONNRESET",
+            "causeName": "Error"
+          }
+        ],
+        "revisionBefore": 4,
+        "revisionAfter": 5
+      },
+      {
+        "name": "cloud-garden-map-initial-a",
+        "renderer": {
+          "text": "灵境\n我的灵宠\n附近探索\n对战中心\n领地\n背包\n聊天\n角色资源\n设置\n园地桌面验收\n\n领地 / 和伙伴的小天地\n\n给伙伴，留一片小天地。\n\n在真实的风景里，和伙伴一起创造属于你们的角落。\n\n今日可入侵 1 次\n领地总览\n我的菜园\n制作食物\n背包与喂养\n© OpenStreetMap contributors\n可相遇伙伴\n领地\n查看演练领地\n附近的庭院\n我的领地\n区域捕捉收益 × 2\n我的菜园\n1 块作物成熟了\n去菜园 收获 →\n我的领地\n附近的庭院\n\n附近领地\n\n区域捕捉收益\n✧ × 2\n驻守伙伴\n桌面出战喵\nLv.01\n桌面原伙伴\nLv.01\n确认驻守\n结束驻守\n占领记录 ⌄",
+          "canvas": [
+            {
+              "width": 808,
+              "height": 485
+            },
+            {
+              "width": 166,
+              "height": 166
+            },
+            {
+              "width": 166,
+              "height": 166
+            }
+          ],
+          "images": [
+            {
+              "ready": true,
+              "src": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-garden/DesktopPet/apps/pc-app/dist/ui/brand"
+            }
+          ]
+        }
+      },
+      {
+        "name": "cloud-garden-a:actual-basemap-painted",
+        "zoom": 11,
+        "sourceTileColors": 13,
+        "nativeSourceMatchedPixels": 32450,
+        "samples": 32491,
+        "originalSourceTileColors": 1
+      },
+      {
+        "name": "cloud-garden-a",
+        "renderer": {
+          "text": "灵境\n我的灵宠\n附近探索\n对战中心\n领地\n背包\n聊天\n角色资源\n设置\n园地桌面验收\n\n领地 / 和伙伴的小天地\n\n给伙伴，留一片小天地。\n\n在真实的风景里，和伙伴一起创造属于你们的角落。\n\n今日可入侵 1 次\n领地总览\n我的菜园\n制作食物\n背包与喂养\n© OpenStreetMap contributors\n可相遇伙伴\n领地\n查看演练领地\n附近的庭院\n我的领地\n区域捕捉收益 × 2\n我的菜园\n1 块作物成熟了\n去菜园 收获 →\n我的领地\n附近的庭院\n\n附近领地\n\n区域捕捉收益\n✧ × 2\n驻守伙伴\n桌面出战喵\nLv.01\n桌面原伙伴\nLv.01\n确认驻守\n结束驻守\n占领记录 ⌄",
+          "canvas": [
+            {
+              "width": 808,
+              "height": 485
+            },
+            {
+              "width": 166,
+              "height": 166
+            },
+            {
+              "width": 166,
+              "height": 166
+            }
+          ],
+          "images": [
+            {
+              "ready": true,
+              "src": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-garden/DesktopPet/apps/pc-app/dist/ui/brand"
+            }
+          ]
+        }
+      },
+      {
+        "name": "cloud-garden-map-initial-b",
+        "renderer": {
+          "text": "灵境\n我的灵宠\n附近探索\n对战中心\n领地\n背包\n聊天\n角色资源\n设置\n园地桌面验收\n\n领地 / 和伙伴的小天地\n\n给伙伴，留一片小天地。\n\n在真实的风景里，和伙伴一起创造属于你们的角落。\n\n今日可入侵 1 次\n领地总览\n我的菜园\n制作食物\n背包与喂养\n© OpenStreetMap contributors\n可相遇伙伴\n领地\n查看演练领地\n附近的庭院\n我的领地\n区域捕捉收益 × 2\n我的菜园\n1 块作物成熟了\n去菜园 收获 →\n我的领地\n附近的庭院\n\n附近领地\n\n区域捕捉收益\n✧ × 2\n驻守伙伴\n桌面出战喵\nLv.01\n桌面原伙伴\nLv.01\n确认驻守\n结束驻守\n占领记录 ⌄",
+          "canvas": [
+            {
+              "width": 808,
+              "height": 485
+            },
+            {
+              "width": 166,
+              "height": 166
+            },
+            {
+              "width": 166,
+              "height": 166
+            }
+          ],
+          "images": [
+            {
+              "ready": true,
+              "src": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-garden/DesktopPet/apps/pc-app/dist/ui/brand"
+            }
+          ]
+        }
+      },
+      {
+        "name": "cloud-garden-b:actual-basemap-painted",
+        "zoom": 11,
+        "sourceTileColors": 13,
+        "nativeSourceMatchedPixels": 32450,
+        "samples": 32491,
+        "originalSourceTileColors": 1
+      },
+      {
+        "name": "cloud-garden-b",
+        "renderer": {
+          "text": "灵境\n我的灵宠\n附近探索\n对战中心\n领地\n背包\n聊天\n角色资源\n设置\n园地桌面验收\n\n领地 / 和伙伴的小天地\n\n给伙伴，留一片小天地。\n\n在真实的风景里，和伙伴一起创造属于你们的角落。\n\n今日可入侵 1 次\n领地总览\n我的菜园\n制作食物\n背包与喂养\n© OpenStreetMap contributors\n可相遇伙伴\n领地\n查看演练领地\n附近的庭院\n我的领地\n区域捕捉收益 × 2\n我的菜园\n1 块作物成熟了\n去菜园 收获 →\n我的领地\n附近的庭院\n\n附近领地\n\n区域捕捉收益\n✧ × 2\n驻守伙伴\n桌面出战喵\nLv.01\n桌面原伙伴\nLv.01\n确认驻守\n结束驻守\n占领记录 ⌄",
+          "canvas": [
+            {
+              "width": 808,
+              "height": 485
+            },
+            {
+              "width": 166,
+              "height": 166
+            },
+            {
+              "width": 166,
+              "height": 166
+            }
+          ],
+          "images": [
+            {
+              "ready": true,
+              "src": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-garden/DesktopPet/apps/pc-app/dist/ui/brand"
+            }
+          ]
+        }
+      },
+      {
+        "name": "cloud-garden-map-initial-a",
+        "renderer": {
+          "text": "灵境\n我的灵宠\n附近探索\n对战中心\n领地\n背包\n聊天\n角色资源\n设置\n园地桌面验收\n\n领地 / 和伙伴的小天地\n\n给伙伴，留一片小天地。\n\n在真实的风景里，和伙伴一起创造属于你们的角落。\n\n今日可入侵 1 次\n领地总览\n我的菜园\n制作食物\n背包与喂养\n© OpenStreetMap contributors\n可相遇伙伴\n领地\n查看演练领地\n附近的庭院\n我的领地\n区域捕捉收益 × 2\n我的菜园\n2 块作物成熟了\n去菜园 收获 →\n我的领地\n附近的庭院\n\n附近领地\n\n区域捕捉收益\n✧ × 2\n驻守伙伴\n桌面出战喵\nLv.01\n桌面原伙伴\nLv.01\n确认驻守\n结束驻守\n占领记录 ⌄",
+          "canvas": [
+            {
+              "width": 808,
+              "height": 485
+            },
+            {
+              "width": 166,
+              "height": 166
+            },
+            {
+              "width": 166,
+              "height": 166
+            }
+          ],
+          "images": [
+            {
+              "ready": true,
+              "src": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-garden/DesktopPet/apps/pc-app/dist/ui/brand"
+            }
+          ]
+        }
+      },
+      {
+        "name": "cloud-garden-a:actual-basemap-painted",
+        "zoom": 11,
+        "sourceTileColors": 13,
+        "nativeColors": 71,
+        "nativeTexturePixels": 240,
+        "nativeSourceMatchedPixels": 32450,
+        "samples": 32491,
+        "originalSourceTileColors": 1
+      },
+      {
+        "name": "cloud-garden-a",
+        "renderer": {
+          "text": "灵境\n我的灵宠\n附近探索\n对战中心\n领地\n背包\n聊天\n角色资源\n设置\n园地桌面验收\n\n领地 / 和伙伴的小天地\n\n给伙伴，留一片小天地。\n\n在真实的风景里，和伙伴一起创造属于你们的角落。\n\n今日可入侵 1 次\n领地总览\n我的菜园\n制作食物\n背包与喂养\n© OpenStreetMap contributors\n可相遇伙伴\n领地\n查看演练领地\n附近的庭院\n我的领地\n区域捕捉收益 × 2\n我的菜园\n2 块作物成熟了\n去菜园 收获 →\n我的领地\n附近的庭院\n\n附近领地\n\n区域捕捉收益\n✧ × 2\n驻守伙伴\n桌面出战喵\nLv.01\n桌面原伙伴\nLv.01\n确认驻守\n结束驻守\n占领记录 ⌄",
+          "canvas": [
+            {
+              "width": 808,
+              "height": 485
+            },
+            {
+              "width": 166,
+              "height": 166
+            },
+            {
+              "width": 166,
+              "height": 166
+            }
+          ],
+          "images": [
+            {
+              "ready": true,
+              "src": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-garden/DesktopPet/apps/pc-app/dist/ui/brand"
+            }
+          ]
+        }
+      },
+      {
+        "name": "cloud-garden-map-initial-b",
+        "renderer": {
+          "text": "灵境\n我的灵宠\n附近探索\n对战中心\n领地\n背包\n聊天\n角色资源\n设置\n园地桌面验收\n\n领地 / 和伙伴的小天地\n\n给伙伴，留一片小天地。\n\n在真实的风景里，和伙伴一起创造属于你们的角落。\n\n今日可入侵 1 次\n领地总览\n我的菜园\n制作食物\n背包与喂养\n© OpenStreetMap contributors\n可相遇伙伴\n领地\n查看演练领地\n附近的庭院\n我的领地\n区域捕捉收益 × 2\n我的菜园\n2 块作物成熟了\n去菜园 收获 →\n我的领地\n附近的庭院\n\n附近领地\n\n区域捕捉收益\n✧ × 2\n驻守伙伴\n桌面出战喵\nLv.01\n桌面原伙伴\nLv.01\n确认驻守\n结束驻守\n占领记录 ⌄",
+          "canvas": [
+            {
+              "width": 808,
+              "height": 485
+            },
+            {
+              "width": 166,
+              "height": 166
+            },
+            {
+              "width": 166,
+              "height": 166
+            }
+          ],
+          "images": [
+            {
+              "ready": true,
+              "src": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-garden/DesktopPet/apps/pc-app/dist/ui/brand"
+            }
+          ]
+        }
+      },
+      {
+        "name": "cloud-garden-b:actual-basemap-painted",
+        "zoom": 11,
+        "sourceTileColors": 13,
+        "nativeColors": 71,
+        "nativeTexturePixels": 240,
+        "nativeSourceMatchedPixels": 32450,
+        "samples": 32491,
+        "originalSourceTileColors": 1
+      },
+      {
+        "name": "cloud-garden-b",
+        "renderer": {
+          "text": "灵境\n我的灵宠\n附近探索\n对战中心\n领地\n背包\n聊天\n角色资源\n设置\n园地桌面验收\n\n领地 / 和伙伴的小天地\n\n给伙伴，留一片小天地。\n\n在真实的风景里，和伙伴一起创造属于你们的角落。\n\n今日可入侵 1 次\n领地总览\n我的菜园\n制作食物\n背包与喂养\n© OpenStreetMap contributors\n可相遇伙伴\n领地\n查看演练领地\n附近的庭院\n我的领地\n区域捕捉收益 × 2\n我的菜园\n2 块作物成熟了\n去菜园 收获 →\n我的领地\n附近的庭院\n\n附近领地\n\n区域捕捉收益\n✧ × 2\n驻守伙伴\n桌面出战喵\nLv.01\n桌面原伙伴\nLv.01\n确认驻守\n结束驻守\n占领记录 ⌄",
+          "canvas": [
+            {
+              "width": 808,
+              "height": 485
+            },
+            {
+              "width": 166,
+              "height": 166
+            },
+            {
+              "width": 166,
+              "height": 166
+            }
+          ],
+          "images": [
+            {
+              "ready": true,
+              "src": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-garden/DesktopPet/apps/pc-app/dist/ui/brand"
+            }
+          ]
+        }
+      },
+      {
+        "name": "cloud-garden-map-initial-a",
+        "renderer": {
+          "text": "灵境\n我的灵宠\n附近探索\n对战中心\n领地\n背包\n聊天\n角色资源\n设置\n园地桌面验收\n\n领地 / 和伙伴的小天地\n\n给伙伴，留一片小天地。\n\n在真实的风景里，和伙伴一起创造属于你们的角落。\n\n今日可入侵 1 次\n领地总览\n我的菜园\n制作食物\n背包与喂养\n© OpenStreetMap contributors\n可相遇伙伴\n领地\n查看演练领地\n附近的庭院\n我的领地\n区域捕捉收益 × 2\n我的菜园\n2 块作物成熟了\n去菜园 收获 →\n我的领地\n附近的庭院\n\n附近领地\n\n区域捕捉收益\n✧ × 2\n驻守伙伴\n桌面出战喵\nLv.01\n桌面原伙伴\nLv.01\n确认驻守\n结束驻守\n占领记录 ⌄",
+          "canvas": [
+            {
+              "width": 808,
+              "height": 485
+            },
+            {
+              "width": 166,
+              "height": 166
+            },
+            {
+              "width": 166,
+              "height": 166
+            }
+          ],
+          "images": [
+            {
+              "ready": true,
+              "src": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-garden/DesktopPet/apps/pc-app/dist/ui/brand"
+            }
+          ]
+        }
+      },
+      {
+        "name": "cloud-garden-a:actual-basemap-painted",
+        "zoom": 11,
+        "sourceTileColors": 13,
+        "nativeColors": 71,
+        "nativeTexturePixels": 240,
+        "nativeSourceMatchedPixels": 32450,
+        "samples": 32491,
+        "originalSourceTileColors": 1
+      },
+      {
+        "name": "cloud-garden-a",
+        "renderer": {
+          "text": "灵境\n我的灵宠\n附近探索\n对战中心\n领地\n背包\n聊天\n角色资源\n设置\n园地桌面验收\n\n领地 / 和伙伴的小天地\n\n给伙伴，留一片小天地。\n\n在真实的风景里，和伙伴一起创造属于你们的角落。\n\n今日可入侵 1 次\n领地总览\n我的菜园\n制作食物\n背包与喂养\n© OpenStreetMap contributors\n可相遇伙伴\n领地\n查看演练领地\n附近的庭院\n我的领地\n区域捕捉收益 × 2\n我的菜园\n2 块作物成熟了\n去菜园 收获 →\n我的领地\n附近的庭院\n\n附近领地\n\n区域捕捉收益\n✧ × 2\n驻守伙伴\n桌面出战喵\nLv.01\n桌面原伙伴\nLv.01\n确认驻守\n结束驻守\n占领记录 ⌄",
+          "canvas": [
+            {
+              "width": 808,
+              "height": 485
+            },
+            {
+              "width": 166,
+              "height": 166
+            },
+            {
+              "width": 166,
+              "height": 166
+            }
+          ],
+          "images": [
+            {
+              "ready": true,
+              "src": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-garden/DesktopPet/apps/pc-app/dist/ui/brand"
+            }
+          ]
+        }
+      },
+      {
+        "name": "cloud-garden-map-initial-b",
+        "renderer": {
+          "text": "灵境\n我的灵宠\n附近探索\n对战中心\n领地\n背包\n聊天\n角色资源\n设置\n园地桌面验收\n\n领地 / 和伙伴的小天地\n\n给伙伴，留一片小天地。\n\n在真实的风景里，和伙伴一起创造属于你们的角落。\n\n今日可入侵 1 次\n领地总览\n我的菜园\n制作食物\n背包与喂养\n© OpenStreetMap contributors\n可相遇伙伴\n领地\n查看演练领地\n附近的庭院\n我的领地\n区域捕捉收益 × 2\n我的菜园\n2 块作物成熟了\n去菜园 收获 →\n我的领地\n附近的庭院\n\n附近领地\n\n区域捕捉收益\n✧ × 2\n驻守伙伴\n桌面出战喵\nLv.01\n桌面原伙伴\nLv.01\n确认驻守\n结束驻守\n占领记录 ⌄",
+          "canvas": [
+            {
+              "width": 808,
+              "height": 485
+            },
+            {
+              "width": 166,
+              "height": 166
+            },
+            {
+              "width": 166,
+              "height": 166
+            }
+          ],
+          "images": [
+            {
+              "ready": true,
+              "src": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-garden/DesktopPet/apps/pc-app/dist/ui/brand"
+            }
+          ]
+        }
+      },
+      {
+        "name": "cloud-garden-b:actual-basemap-painted",
+        "zoom": 11,
+        "sourceTileColors": 13,
+        "nativeColors": 71,
+        "nativeTexturePixels": 240,
+        "nativeSourceMatchedPixels": 32450,
+        "samples": 32491,
+        "originalSourceTileColors": 1
+      },
+      {
+        "name": "cloud-garden-b",
+        "renderer": {
+          "text": "灵境\n我的灵宠\n附近探索\n对战中心\n领地\n背包\n聊天\n角色资源\n设置\n园地桌面验收\n\n领地 / 和伙伴的小天地\n\n给伙伴，留一片小天地。\n\n在真实的风景里，和伙伴一起创造属于你们的角落。\n\n今日可入侵 1 次\n领地总览\n我的菜园\n制作食物\n背包与喂养\n© OpenStreetMap contributors\n可相遇伙伴\n领地\n查看演练领地\n附近的庭院\n我的领地\n区域捕捉收益 × 2\n我的菜园\n2 块作物成熟了\n去菜园 收获 →\n我的领地\n附近的庭院\n\n附近领地\n\n区域捕捉收益\n✧ × 2\n驻守伙伴\n桌面出战喵\nLv.01\n桌面原伙伴\nLv.01\n确认驻守\n结束驻守\n占领记录 ⌄",
           "canvas": [
             {
               "width": 808,
@@ -1903,6 +2738,237 @@
             "sha256": "311d15e546c3a51d7f72748f791794ff47972f12e8a2b0fadd2eec29e149d2d7"
           }
         }
+      },
+      {
+        "at": "2026-10-25T04:58:44.883Z",
+        "sourceSha": "78fcd7aaa75e1c1e1d82e66441916e75638b03ff",
+        "runtimeFiles": {
+          "garden/cloud-authority.cjs": "a06e7d0cde7c868519d7c69399376cce0f10a20eca4ebf043523ade9c1f72634",
+          "garden/index.cjs": "c8ad7144f618eb945459733c0f09020a5abf9c32d4f609067ee68cc242db3f75",
+          "garden/migrations.cjs": "1cd3db8448c6a1c545dc1b2c477044daf1191f1c7e145ca8c8abedd1d1d0abcd",
+          "battle/index.cjs": "da1f7cf233f80c93f2cf6256fbfd1d9bc166ed8eb1b7d8ebc591c47026ccbf1c"
+        },
+        "buildManifest": {
+          "schemaVersion": 2,
+          "builtAt": "2026-10-25T04:36:36.226Z",
+          "sourceCommit": "7cbd06a222fd5c91cf27e004aa6d1acf6ad8662c",
+          "sourceTree": "cbd01e6691be86f0c2084e06a81f65a24c79890c",
+          "sourceDirtyFiles": [],
+          "codeFingerprint": "a79d1a961fa8688c73ecf50bcec118382174299dcf33c6f35730250e9f713267",
+          "canonicalSourceFingerprint": "bba779caacf6a141da7d04f5a5d8618391dfe5167fd9f8cea199d7d45d3505c1",
+          "canonicalPolicy": "Repository-relative paths; CRLF normalized to LF for source text only. Packaged/compiled bytes remain exact.",
+          "compiledFingerprint": "2f2675d7fae3ae84845506c0858566d24af71a4fa1ad1bb49c665f205bf73dd6",
+          "codeFiles": 298,
+          "compiledFiles": 86,
+          "toolchain": {
+            "node": "24.21.0",
+            "electron": "44.9.3",
+            "sqlite": "13.0.3",
+            "vite": "7.3.7",
+            "typescript": "5.9.3",
+            "platform": "win32",
+            "arch": "x64"
+          },
+          "entrypoints": {
+            "main": "main/index.cjs",
+            "app": "ui/index.html",
+            "desktop": "ui/desktop.html",
+            "preload": "preload/index.cjs"
+          },
+          "publicCloud": {
+            "projectRef": "jbvrdmrkwpznbrvteive",
+            "url": "https://jbvrdmrkwpznbrvteive.supabase.co",
+            "sha256": "c1625c63f1d959f92b3392b47f2fb492452803eedf1c0d1ebc68a1168ab64eda",
+            "resourcePath": "lingjing-cloud-public.json"
+          },
+          "packageName": "lingjing-desktop",
+          "runtimeClosure": {
+            "manifest": "runtime-closure.json",
+            "files": 106,
+            "edges": 181,
+            "sha256": "311d15e546c3a51d7f72748f791794ff47972f12e8a2b0fadd2eec29e149d2d7"
+          }
+        }
+      },
+      {
+        "at": "2026-10-25T05:12:06.362Z",
+        "sourceSha": "78fcd7aaa75e1c1e1d82e66441916e75638b03ff",
+        "runtimeFiles": {
+          "garden/cloud-authority.cjs": "a06e7d0cde7c868519d7c69399376cce0f10a20eca4ebf043523ade9c1f72634",
+          "garden/index.cjs": "c8ad7144f618eb945459733c0f09020a5abf9c32d4f609067ee68cc242db3f75",
+          "garden/migrations.cjs": "1cd3db8448c6a1c545dc1b2c477044daf1191f1c7e145ca8c8abedd1d1d0abcd",
+          "battle/index.cjs": "da1f7cf233f80c93f2cf6256fbfd1d9bc166ed8eb1b7d8ebc591c47026ccbf1c"
+        },
+        "buildManifest": {
+          "schemaVersion": 2,
+          "builtAt": "2026-10-25T05:12:05.779Z",
+          "sourceCommit": "78fcd7aaa75e1c1e1d82e66441916e75638b03ff",
+          "sourceTree": "e6bcd8240fd31bf09c438199f1f3eba009b7b98f",
+          "sourceDirtyFiles": [
+            "M apps/pc-app/ui/src/features/discovery/NearbyMap.tsx",
+            " M docs/implementation/cloud-garden-contract.md",
+            " M scripts/acceptance/cloud-territory/electron-live.mjs",
+            " M scripts/acceptance/cloud-territory/publish-evidence.mjs",
+            " M scripts/acceptance/cloud-territory/verify-live.mjs",
+            "?? scripts/acceptance/cloud-territory/native-map.mjs",
+            "?? scripts/acceptance/cloud-territory/native-offline.mjs"
+          ],
+          "codeFingerprint": "50f674f7559d1b71cfc595fc20264605c4bd8db4a5ad1f8450cd2ad305853b18",
+          "canonicalSourceFingerprint": "6a87052d1ed7409c82ac5b4992d8557025816f1577c6dc6c5b15cf157cdc7df4",
+          "canonicalPolicy": "Repository-relative paths; CRLF normalized to LF for source text only. Packaged/compiled bytes remain exact.",
+          "compiledFingerprint": "54decd1237c94b877bd3afbd1ab9558fd333150d901271d9564b22dc473b1768",
+          "codeFiles": 298,
+          "compiledFiles": 86,
+          "toolchain": {
+            "node": "24.21.0",
+            "electron": "44.9.3",
+            "sqlite": "13.0.3",
+            "vite": "7.3.7",
+            "typescript": "5.9.3",
+            "platform": "win32",
+            "arch": "x64"
+          },
+          "entrypoints": {
+            "main": "main/index.cjs",
+            "app": "ui/index.html",
+            "desktop": "ui/desktop.html",
+            "preload": "preload/index.cjs"
+          },
+          "publicCloud": {
+            "projectRef": "jbvrdmrkwpznbrvteive",
+            "url": "https://jbvrdmrkwpznbrvteive.supabase.co",
+            "sha256": "c1625c63f1d959f92b3392b47f2fb492452803eedf1c0d1ebc68a1168ab64eda",
+            "resourcePath": "lingjing-cloud-public.json"
+          },
+          "packageName": "lingjing-desktop",
+          "runtimeClosure": {
+            "manifest": "runtime-closure.json",
+            "files": 106,
+            "edges": 181,
+            "sha256": "311d15e546c3a51d7f72748f791794ff47972f12e8a2b0fadd2eec29e149d2d7"
+          }
+        }
+      },
+      {
+        "at": "2026-10-25T05:15:44.237Z",
+        "sourceSha": "78fcd7aaa75e1c1e1d82e66441916e75638b03ff",
+        "runtimeFiles": {
+          "garden/cloud-authority.cjs": "a06e7d0cde7c868519d7c69399376cce0f10a20eca4ebf043523ade9c1f72634",
+          "garden/index.cjs": "c8ad7144f618eb945459733c0f09020a5abf9c32d4f609067ee68cc242db3f75",
+          "garden/migrations.cjs": "1cd3db8448c6a1c545dc1b2c477044daf1191f1c7e145ca8c8abedd1d1d0abcd",
+          "battle/index.cjs": "da1f7cf233f80c93f2cf6256fbfd1d9bc166ed8eb1b7d8ebc591c47026ccbf1c"
+        },
+        "buildManifest": {
+          "schemaVersion": 2,
+          "builtAt": "2026-10-25T05:12:05.779Z",
+          "sourceCommit": "78fcd7aaa75e1c1e1d82e66441916e75638b03ff",
+          "sourceTree": "e6bcd8240fd31bf09c438199f1f3eba009b7b98f",
+          "sourceDirtyFiles": [
+            "M apps/pc-app/ui/src/features/discovery/NearbyMap.tsx",
+            " M docs/implementation/cloud-garden-contract.md",
+            " M scripts/acceptance/cloud-territory/electron-live.mjs",
+            " M scripts/acceptance/cloud-territory/publish-evidence.mjs",
+            " M scripts/acceptance/cloud-territory/verify-live.mjs",
+            "?? scripts/acceptance/cloud-territory/native-map.mjs",
+            "?? scripts/acceptance/cloud-territory/native-offline.mjs"
+          ],
+          "codeFingerprint": "50f674f7559d1b71cfc595fc20264605c4bd8db4a5ad1f8450cd2ad305853b18",
+          "canonicalSourceFingerprint": "6a87052d1ed7409c82ac5b4992d8557025816f1577c6dc6c5b15cf157cdc7df4",
+          "canonicalPolicy": "Repository-relative paths; CRLF normalized to LF for source text only. Packaged/compiled bytes remain exact.",
+          "compiledFingerprint": "54decd1237c94b877bd3afbd1ab9558fd333150d901271d9564b22dc473b1768",
+          "codeFiles": 298,
+          "compiledFiles": 86,
+          "toolchain": {
+            "node": "24.21.0",
+            "electron": "44.9.3",
+            "sqlite": "13.0.3",
+            "vite": "7.3.7",
+            "typescript": "5.9.3",
+            "platform": "win32",
+            "arch": "x64"
+          },
+          "entrypoints": {
+            "main": "main/index.cjs",
+            "app": "ui/index.html",
+            "desktop": "ui/desktop.html",
+            "preload": "preload/index.cjs"
+          },
+          "publicCloud": {
+            "projectRef": "jbvrdmrkwpznbrvteive",
+            "url": "https://jbvrdmrkwpznbrvteive.supabase.co",
+            "sha256": "c1625c63f1d959f92b3392b47f2fb492452803eedf1c0d1ebc68a1168ab64eda",
+            "resourcePath": "lingjing-cloud-public.json"
+          },
+          "packageName": "lingjing-desktop",
+          "runtimeClosure": {
+            "manifest": "runtime-closure.json",
+            "files": 106,
+            "edges": 181,
+            "sha256": "311d15e546c3a51d7f72748f791794ff47972f12e8a2b0fadd2eec29e149d2d7"
+          }
+        }
+      },
+      {
+        "at": "2026-10-25T05:21:50.614Z",
+        "phase": [
+          "--map"
+        ],
+        "sourceSha": "d715e2dc7c8e1e9d9a1d745439d48ec7168c304d",
+        "runtimeFiles": {
+          "garden/cloud-authority.cjs": "a06e7d0cde7c868519d7c69399376cce0f10a20eca4ebf043523ade9c1f72634",
+          "garden/index.cjs": "c8ad7144f618eb945459733c0f09020a5abf9c32d4f609067ee68cc242db3f75",
+          "garden/migrations.cjs": "1cd3db8448c6a1c545dc1b2c477044daf1191f1c7e145ca8c8abedd1d1d0abcd",
+          "battle/index.cjs": "da1f7cf233f80c93f2cf6256fbfd1d9bc166ed8eb1b7d8ebc591c47026ccbf1c"
+        },
+        "sourceHashPolicy": "Additional UI and acceptance source hashes normalize CRLF to LF",
+        "sourceFiles": {
+          "apps/pc-app/ui/src/features/discovery/NearbyMap.tsx": "1ba55262ea52b13c36e86bd0c288d56a8eeb3a00cdce6f64fbb060555502a36a",
+          "apps/pc-app/ui/src/features/garden/index.tsx": "ef44d3e27024dc4eedebd1501659edd8978f36d0d815effce979022a4d3c6ae0",
+          "scripts/acceptance/cloud-territory/electron-live.mjs": "6d74042f45586bb35e081b09591343ad7217185ab0adf6034969f3e7be541595",
+          "scripts/acceptance/cloud-territory/native-map.mjs": "0df33e26f2051e1c17c9bc47bef2d489ebb15a8531d49b37f5bcf09f18ed0f96",
+          "scripts/acceptance/cloud-territory/native-offline.mjs": "9fe42fb0dba38bd4142075ff469cc2e9316959ddeb5ed0d8435f5ba69bb96261"
+        },
+        "buildManifest": {
+          "schemaVersion": 2,
+          "builtAt": "2026-10-25T05:21:50.098Z",
+          "sourceCommit": "d715e2dc7c8e1e9d9a1d745439d48ec7168c304d",
+          "sourceTree": "6740a3667a0e000167188523f8837982a6197588",
+          "sourceDirtyFiles": [],
+          "codeFingerprint": "50f674f7559d1b71cfc595fc20264605c4bd8db4a5ad1f8450cd2ad305853b18",
+          "canonicalSourceFingerprint": "6a87052d1ed7409c82ac5b4992d8557025816f1577c6dc6c5b15cf157cdc7df4",
+          "canonicalPolicy": "Repository-relative paths; CRLF normalized to LF for source text only. Packaged/compiled bytes remain exact.",
+          "compiledFingerprint": "54decd1237c94b877bd3afbd1ab9558fd333150d901271d9564b22dc473b1768",
+          "codeFiles": 298,
+          "compiledFiles": 86,
+          "toolchain": {
+            "node": "24.21.0",
+            "electron": "44.9.3",
+            "sqlite": "13.0.3",
+            "vite": "7.3.7",
+            "typescript": "5.9.3",
+            "platform": "win32",
+            "arch": "x64"
+          },
+          "entrypoints": {
+            "main": "main/index.cjs",
+            "app": "ui/index.html",
+            "desktop": "ui/desktop.html",
+            "preload": "preload/index.cjs"
+          },
+          "publicCloud": {
+            "projectRef": "jbvrdmrkwpznbrvteive",
+            "url": "https://jbvrdmrkwpznbrvteive.supabase.co",
+            "sha256": "c1625c63f1d959f92b3392b47f2fb492452803eedf1c0d1ebc68a1168ab64eda",
+            "resourcePath": "lingjing-cloud-public.json"
+          },
+          "packageName": "lingjing-desktop",
+          "runtimeClosure": {
+            "manifest": "runtime-closure.json",
+            "files": 106,
+            "edges": 181,
+            "sha256": "311d15e546c3a51d7f72748f791794ff47972f12e8a2b0fadd2eec29e149d2d7"
+          }
+        }
       }
     ],
     "lostResponse": {
@@ -1943,7 +3009,7 @@
           "category": "seed",
           "source": "探索与对战",
           "effects": null,
-          "quantity": 2
+          "quantity": 1
         },
         {
           "id": "seed:berry",
@@ -2221,12 +3287,12 @@
         },
         {
           "plotId": "plot-5",
-          "cropType": null,
-          "plantedAt": null,
-          "maturesAt": null,
-          "yieldQuantity": 0,
-          "revision": 0,
-          "stage": "empty"
+          "cropType": "tomato",
+          "plantedAt": 1792904378934,
+          "maturesAt": 1792905278934,
+          "yieldQuantity": 3,
+          "revision": 1,
+          "stage": "growing"
         },
         {
           "plotId": "plot-6",
@@ -2235,7 +3301,7 @@
           "maturesAt": 1792903316911,
           "yieldQuantity": 3,
           "revision": 1,
-          "stage": "growing"
+          "stage": "mature"
         }
       ]
     },
@@ -2543,11 +3609,27 @@
     },
     {
       "file": "cloud-garden-a.png",
-      "sha256": "7f063c6d2a3fcbd484f93c0b9d75f79581970ee38e332d3ea7b738bb4c62e17c"
+      "sha256": "fc6be013c486caf9ba188c33f3623638baeefc35dc0d1eb36b4d78f4a978728c"
     },
     {
       "file": "cloud-garden-b.png",
-      "sha256": "34cf5c9ed7ce86b257f6eb6049b36933f2162f5da3c6c2def2557564a7a95af2"
+      "sha256": "fc6be013c486caf9ba188c33f3623638baeefc35dc0d1eb36b4d78f4a978728c"
+    },
+    {
+      "file": "cloud-garden-offline-pending.png",
+      "sha256": "c58ab5843c48866d4273bd81ce14d7778a41c2c79c506bfc2812e19b79960374"
+    },
+    {
+      "file": "cloud-garden-offline-recovered.png",
+      "sha256": "cbe5eaea27d21b6a5692fc02835584da60fd57e7a77da7e7e0d9abad1ecc2509"
+    },
+    {
+      "file": "cloud-garden-map-initial-a.png",
+      "sha256": "1e00d8690b8c9d44fe7e510137b9c860ab0386cf3d32faabb098e3914795f12e"
+    },
+    {
+      "file": "cloud-garden-map-initial-b.png",
+      "sha256": "3d47d52f3cffd18f4b07facd283a2ac4c7155f1c6e9b0246a8fddb70d4f5d8a0"
     }
   ],
   "passed": true

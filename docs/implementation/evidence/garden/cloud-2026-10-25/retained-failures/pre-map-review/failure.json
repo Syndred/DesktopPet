@@ -1,0 +1,21 @@
+{
+  "sourceCommit": "78fcd7aaa75e1c1e1d82e66441916e75638b03ff",
+  "status": "superseded-map-evidence-failure",
+  "reason": "The original acceptance checked loaded-tile counts but did not prove actual raster paint. Retained early acceptance images are insufficient map evidence.",
+  "diagnosis": "The original high-zoom OSM tile at the synthetic rural QA coordinate is one opaque land color under the owned-region fill; this does not establish a renderer/network defect.",
+  "resolution": "Normal viewport zoom11, MapLibre idle/areTilesLoaded and native source-raster/texture pixels now verified; system fix, QA permits, business location and world untouched.",
+  "replacement": [
+    "cloud-garden-a.png",
+    "cloud-garden-b.png"
+  ],
+  "artifacts": [
+    {
+      "file": "retained-failures/pre-map-review/cloud-garden-a.png",
+      "sha256": "7f063c6d2a3fcbd484f93c0b9d75f79581970ee38e332d3ea7b738bb4c62e17c"
+    },
+    {
+      "file": "retained-failures/pre-map-review/cloud-garden-b.png",
+      "sha256": "34cf5c9ed7ce86b257f6eb6049b36933f2162f5da3c6c2def2557564a7a95af2"
+    }
+  ]
+}
