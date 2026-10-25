@@ -18,7 +18,8 @@ const { BackupManager }=require('../../accounts/backups.cjs');
 const { checksum }=require('../../accounts/util.cjs');
 const owner='original-owner-with-cloud-save',now=1792896000000;
 const seal=envelope=>{const{checksum:old,...body}=envelope;void old;return{...body,checksum:checksum(body)};};
-function fixture(moduleFormat=true){
+function fixture(moduleFormat=true,ownerAccountId=owner){
+  const owner=ownerAccountId;
   const folder=mkdtempSync(join(tmpdir(),'companion-cloud-growth-')),db=new DatabaseSync(join(folder,'save.sqlite'));
   db.exec('PRAGMA foreign_keys=ON');migrations.forEach(m=>db.exec(m.sql));migrateCompanions(db);
   db.prepare('INSERT INTO account_identities(owner_account_id,provider,subject_id,account,account_key,username,created_at,updated_at) VALUES(?,?,?,?,?,?,?,?)').run(owner,'runtime',owner,'original','original','原账号','2026-10-24','2026-10-24');
@@ -34,6 +35,31 @@ function fixture(moduleFormat=true){
 }
 const input=(envelope,petId,sessionId='verified-server-battle',won=true)=>({envelope,ownerAccountId:owner,petId,sessionId,won,mode:'territory',actionId:`battle:${sessionId}:${owner}`,now});
 const unit=(f,envelope)=>envelope.data.modules.companions?.data||f.adapter.fromLegacyTables(envelope.data.tables,owner);
+
+test('160-character original owner retains its long battle receipt through shared growth and actual SQLite backup restore',async()=>{
+  const longOwner='o'.repeat(160),sessionId='s'.repeat(51),actionId=`battle:${sessionId}:${longOwner}`;
+  assert.ok(actionId.length>200);
+  for(const moduleFormat of[true,false]){
+    const f=fixture(moduleFormat,longOwner),target=fixture(true,longOwner);
+    try{
+      const original=f.backups.snapshot(longOwner),petId=f.pets[0].petId;
+      const request={...input(original,petId,sessionId),ownerAccountId:longOwner,actionId};
+      const awarded=await awardBattleResult(request),data=awarded.envelope.data.modules.companions?.data||f.adapter.fromLegacyTables(awarded.envelope.data.tables,longOwner);
+      f.adapter.validate(data,longOwner);target.adapter.restore(longOwner,data,'replace');
+      assert.deepEqual(target.adapter.export(longOwner),data);
+      const receipt=target.db.prepare('SELECT action_id FROM companion_actions WHERE owner_account_id=? AND action_id=?').get(longOwner,actionId);
+      assert.equal(receipt.action_id,actionId);assert.equal(target.service.requirePet(longOwner,petId).ownerAccountId,longOwner);
+      assert.equal(target.service.requirePet(longOwner,petId).growth.level,2);
+      assert.equal((await awardBattleResult({...request,envelope:awarded.envelope})).reward.duplicate,true);
+      for(const invalid of['x'.repeat(513),'invalid\u0000receipt']){
+        await assert.rejects(()=>awardBattleResult({...request,actionId:invalid}),error=>error.code==='INVALID_INPUT');
+        const corrupt=structuredClone(data);corrupt.tables.companion_actions[0].action_id=invalid;
+        assert.throws(()=>target.adapter.validate(corrupt,longOwner),error=>error.code==='COMPANION_BACKUP_INVALID');
+      }
+      await assert.rejects(()=>awardBattleResult({...request,ownerAccountId:'o'.repeat(201)}),error=>error.code==='INVALID_INPUT');
+    }finally{f.close();target.close();}
+  }
+});
 
 test('cloud award uses the same SQLite growth rule, levels exactly one instance and preserves raw history, positions and independent selections',async()=>{
   const f=fixture();try{
