@@ -1,0 +1,16 @@
+{
+  "scope": "Synthetic local integration fixture only; not native or cloud position evidence",
+  "beforeFixFailureReproduced": true,
+  "productionTerritoryCodeChanged": false,
+  "ownedTerritory": "territory:5205:20245",
+  "hourlyComparison": [
+    {"at": "2026-10-25T04:59:00Z", "waterSpawnDistanceMeters": 59, "helperMovedFixture": false, "insideOwnedRegion": true},
+    {"at": "2026-10-25T05:10:00Z", "waterSpawnDistanceMeters": 109, "helperMovedFixture": true, "insideOwnedRegion": false}
+  ],
+  "cause": "Generic start helper falls back to a water spawn and moves its fixture to that point. The new hourly point was just outside the already-owned cell. Null territory attribution was correct production behavior.",
+  "fixCommit": "95e8155",
+  "fix": "Territory-specific test selects an actual generated water spawn inside its authoritative polygon; helper uses that exact preferred spawn. Existing captureMultiplier2, territoryId and canonical124HP assertions remain.",
+  "additionalAssertions": ["The actual fixture fix is inside the owned polygon before capture", "The existing authoritative captureContext resolves that same territory", "An outside position still resolves null territory"],
+  "checks": {"targetedTerritory": "1/1 pass", "nativeDiscoverySuite": "15/15 pass"},
+  "fullRegressionRepeatedByThisChat": false
+}

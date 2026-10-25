@@ -65,7 +65,7 @@ select public.lingjing_discovery_take_location(
 
 HTTP操作：`reserve {spawnId,petId,proofId,actionId}` → `{id,sessionId,expiresAt}`；`session {permitId}`、`act {permitId,action,expectedRound,actionId}`、`cancel {permitId,actionId}`、`confirm {permitId,proofId,name,actionId}`、`captures`、`permits`、`action {actionId}`。actor或对战对象/胜负/经验/倍率不由客户端提交。操作冲突或网络不确定时读原action或会话；普通写入不能覆盖受保护片段。
 
-主协调已部署迁移及 discovery v5。真实 HTTPS 已完成 28 回合自然胜利、同操作并发读回、异操作同回合竞争、唯一捕捉，以及正常产品云存档预览/恢复与第三个隔离客户端冷启动。主进程共享 BattleScreen 的实际界面验收仍在进行，不能用组件验收替代。
+主协调已部署迁移及 discovery v5。真实 HTTPS 已完成 28 回合自然胜利、同操作并发读回、异操作同回合竞争、唯一捕捉，以及正常产品云存档预览/恢复与第三个隔离客户端冷启动。生产主进程共享 BattleScreen 已完成实际两回合出招、同 owner 跨客户端读回、离开、原胜利/28回合战报载入、捕捉结果和冷启动验收。原会话重放没有新增战斗、经验、伙伴或种子奖励。
 
 ## 生产主进程和共享战场
 
@@ -82,6 +82,12 @@ HTTP操作：`reserve {spawnId,petId,proofId,actionId}` → `{id,sessionId,expir
 当前13个本地云端专项检查通过：真实ECDSA篡改/重放、加密测试vault与handler/SQL贯通、嵌入PostgreSQL权限/nonce/消费和统一设备撤销、共享核心100次分发一致性、源哈希/8角色目录、状态机并发回执与共享Auth主进程能力消费。清理后本机探索15项与共享战斗17项通过，主进程和UI类型检查通过。嵌入PostgreSQL/测试vault/注入actor仅是本地检查，不是Supabase Auth或云端部署证据。
 
 真实云端游戏与产品新设备恢复证据见 `evidence/discovery/2026-10-25-cloud-game-live/`，使用由主协调限时授权的 `cloud-discovery-03` 模拟位置。真实 Auth、HTTPS、随机对战和事务未替换；位置模拟与同机独立设备/会话均明确标注，不能称为实地云端收服或两台实体设备验收。
+
+生产主进程证据见 `evidence/discovery/2026-10-25-cloud-main-live/`。首次战报截在转场中的误判已明确撤回并保留原记录；严格载入暴露的 TooltipProvider 问题由04修复，批准检查点746ca666合入后实际战报页及角色画面通过。最新独立云端读回为 revision44、2伙伴、唯一收服/记忆/种子回执、原伙伴20经验和新伙伴0经验。先前15项领地回归在整点后暴露的受控坐标越界，已仅修正测试选点并保留/加强原地域断言，未改变生产规则或历史。
+
+最终 Electron44 实地重试权限已 granted，但最后精度212米，仍被80米门槛拒绝；没有宣称真实精确位置的云端正向通过，也不再重复扩展定位验收。主会话负责最终公共冻结与一次严格全回归，本域不另跑全量。
+
+最终只读权限检查确认7张 discovery 私表均启用 RLS，anon/authenticated 无 SELECT，4个公共 RPC 仅 service_role 可执行，18张旧业务归档表保留。平台安全建议中的42项无策略提示对应归档/服务端专用表的默认拒绝；共享 Auth 另有一项“泄漏密码保护未启用”提示，参见[官方说明](https://supabase.com/docs/guides/auth/password-security#password-strength-and-leaked-password-protection)。此项由主协调/账号域评估，本域未改变平台管理设置。
 
 2026-10-25用户开启Windows位置权限后另行通过真实实地验收：生产Electron36.9.5、普通隔离账户、Windows WiFi78米、20回合自然胜利、local-os收服、唯一petId/回执/SQLite及重启恢复。证据见 `evidence/discovery/2026-10-25-native-permission-retry/evidence.json`。这份旧实际运行版本证据保留原标注；最终云端Electron将按批准依赖切换44.9.3/13.0.3后复验。只提交坐标hash，不提交真实坐标。
 

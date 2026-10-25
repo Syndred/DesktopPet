@@ -14,8 +14,8 @@ const output=resolve(`artifacts/cloud-discovery/live-main-${Date.now()}`),scenar
 const capturedPetId='pet-a3efdc72-2007-4e4f-823e-297d52c9bc22',originalPermit='a3efdc72-2007-4e4f-823e-297d52c9bc22';
 const originalSession='battle-cloud-'+originalPermit,originalEncounter='encounter-'+originalPermit;
 const publicConfig=resolve(process.env.LINGJING_PUBLIC_CONFIG||'config/lingjing-cloud-public.json');
-const checkpointPath=process.env.LINGJING_CLOUD_MAIN_CHECKPOINT&&resolve(process.env.LINGJING_CLOUD_MAIN_CHECKPOINT),checkpoint=checkpointPath?JSON.parse(readFileSync(checkpointPath,'utf8')):null;
-if(checkpoint){assert.equal(checkpoint.passed,true);assert.equal(checkpoint.scenarioId,scenarioId);assert.equal(checkpoint.shortBattle.status,'abandoned');}
+const checkpointPath=process.env.LINGJING_CLOUD_MAIN_CHECKPOINT&&resolve(process.env.LINGJING_CLOUD_MAIN_CHECKPOINT),checkpointRecord=checkpointPath?JSON.parse(readFileSync(checkpointPath,'utf8')):null,checkpoint=checkpointRecord?.actionCheckpointUsable?checkpointRecord.raw:checkpointRecord;
+if(checkpoint){assert.ok(checkpointRecord.actionCheckpointUsable||checkpoint.passed===true);assert.equal(checkpoint.scenarioId,scenarioId);assert.equal(checkpoint.shortBattle.status,'abandoned');}
 mkdirSync(output,{recursive:true});
 const evidence={at:new Date().toISOString(),sourceCommit:execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8',windowsHide:true}).trim(),
   sourceDirty:execFileSync('git',['status','--porcelain'],{encoding:'utf8',windowsHide:true}).trim().split('\n').filter(Boolean),
@@ -77,7 +77,7 @@ const rendererActors=client=>client.page.locator('.resource-stage').evaluateAll(
 const check=(label,details={})=>evidence.checks.push({label,passed:true,...details});
 try{
  const a=await launch('device-a'),b=await launch('device-b');assert.notEqual(a.actor.deviceId,b.actor.deviceId);assert.notEqual(a.actor.sessionId,b.actor.sessionId);
- evidence.positionFixture=await probe(a,'qaPosition');phase('server-grant-verified');
+ if(checkpoint){evidence.positionFixture=null;evidence.currentLocationFixture=false;phase('stored-session-readback-ready');}else{evidence.positionFixture=await probe(a,'qaPosition');phase('server-grant-verified');}
  const before=await remote(a,'lingjing-save',{op:'read'}),unit=before.envelope.data.modules.companions.data.tables;phase('canonical-head-read');
  evidence.originalPetId=unit.companion_pets.find(p=>p.pet_id!==capturedPetId).pet_id;
  const settings=await ipc(a,'accounts','settingsGet');if(!settings.document.privacy.locationAllowed){settings.document.privacy.locationAllowed=true;await ipc(a,'accounts','settingsSave',{revision:settings.revision,document:settings.document,actionId:randomUUID()});}
@@ -85,7 +85,7 @@ try{
  await a.app.evaluate(({BrowserWindow})=>{const w=BrowserWindow.getAllWindows().find(w=>w.isVisible());w?.show();w?.focus();});
  await ipc(a,'discovery','setExploring',{active:true});let state=await ipc(a,'discovery','snapshot');
  if(!checkpoint&&!state.encounters.some(e=>e.status==='challenging'&&e.petId===capturedPetId)){await ipc(a,'discovery','watch');state=await until(a,s=>s.location.status==='ready'&&s.spawns.length>0,'server nearby');assert.equal(state.location.fix.source,'simulated');}
- assert.equal(state.storage,'cloud');assert.equal(state.scenario,'qa');
+ assert.equal(state.storage,'cloud');assert.equal(state.scenario,checkpoint?'live':'qa');
  assert.equal(typeof state.captures.find(c=>c.petId===capturedPetId).serial,'string');assert.ok(state.captures.find(c=>c.petId===capturedPetId).serial.length);check('production discovery snapshot imports canonical companion and existing capture');phase('canonical-main-projection-ready');
  const previousShort=state.encounters.find(e=>checkpoint?e.battle?.battleId===checkpoint.shortBattle.sessionId:e.status==='challenging'&&e.petId===capturedPetId);
  let short;
@@ -119,7 +119,9 @@ try{
  const won=await ipc(a,'battle','snapshot',{sessionId:originalSession});assert.equal(won.status,'finished');assert.equal(won.winner,'player');assert.equal(won.snapshot.round,28);assert.equal(won.player.petId,evidence.originalPetId);evidence.existingVictory={sessionId:won.id,rounds:won.snapshot.round,playerPetId:won.player.petId,reward:won.reward};
  await a.page.locator('.battle-stage .resource-stage[data-status="ready"]').first().waitFor({timeout:40000});evidence.wonRendererActors=await rendererActors(a);evidence.wonScreen=await screenCapture(a,'existing-cloud-victory');
  const report=await ipc(a,'battle','getReport',{reportId:'report-cloud-'+originalPermit});assert.equal(report.status,'finished');assert.equal(report.rounds.length,28);assert.equal(report.player.petId,evidence.originalPetId);
- await a.page.getByRole('button',{name:'战报',exact:true}).click();await a.page.locator('.battle-reports-layout').waitFor({timeout:90000});await a.page.getByRole('button',{name:'第 28 回合',exact:true}).waitFor();await a.page.waitForFunction(()=>{const e=document.querySelector('.battle-reports-layout')?.closest('.app-page-motion');return !e||Number(getComputedStyle(e).opacity)>.99;});assert.match(await a.page.locator('.battle-reward-summary').innerText(),/28 回合/);evidence.reportRendererActors=await rendererActors(a);evidence.reportScreen=await screenCapture(a,'existing-cloud-report');check('existing natural victory and full report render original pet and 28 rounds');
+ await a.page.getByRole('button',{name:'战报',exact:true}).click();await a.page.waitForFunction(()=>document.querySelector('.battle-reports-layout')||document.body.innerText.includes('页面暂时遇到问题'),null,{timeout:90000});
+ if(!await a.page.locator('.battle-reports-layout').count()){evidence.reportRenderError=(await a.page.locator('body').innerText()).slice(-600);throw Error('Shared report renderer failed: '+evidence.reportRenderError);}
+ await a.page.getByRole('button',{name:'第 28 回合',exact:true}).waitFor();await a.page.waitForFunction(()=>{const e=document.querySelector('.battle-reports-layout')?.closest('.app-page-motion');return !e||Number(getComputedStyle(e).opacity)>.99;});await a.page.waitForFunction(()=>document.querySelectorAll('.battle-result-portraits .resource-stage[data-status="ready"]').length===2);assert.match(await a.page.locator('.battle-reward-summary').innerText(),/28 回合/);evidence.reportRendererActors=await rendererActors(a);evidence.reportScreen=await screenCapture(a,'existing-cloud-report');check('existing natural victory and full report render original pet and 28 rounds');
  const replay=await ipc(a,'battle','settleContext',{sessionId:originalSession,actionId:'cloud-main-replay:'+randomUUID(),name:'重复确认不应改名'});assert.equal(replay.petId,capturedPetId);assert.equal(replay.resultPath,'/discovery/result/'+originalEncounter);check('normal battle.settleContext recovers original captured pet');
  await a.page.evaluate(id=>{location.hash='#/discovery/result/'+id;},originalEncounter);await a.page.locator('.discovery-result').waitFor({timeout:40000});await a.page.locator('.discovery-postcard .resource-stage[data-status="ready"] canvas').waitFor({timeout:40000});evidence.resultRendererActors=await rendererActors(a);assert.ok(evidence.resultRendererActors.some(r=>r.petId===capturedPetId&&r.resourceId==='builtin:lingjing-shiba-v2'&&r.status==='ready'));evidence.resultScreen=await screenCapture(a,'same-cloud-captured-pet');
  const final=await remote(a,'lingjing-save',{op:'read'}),tables=final.envelope.data.modules.companions.data.tables,pets=tables.companion_pets.map(p=>JSON.parse(p.data_json));

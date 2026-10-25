@@ -1,0 +1,83 @@
+{
+  "at": "2026-10-25T05:04:19.877Z",
+  "projectRef": "jbvrdmrkwpznbrvteive",
+  "readOnly": true,
+  "remoteSchemaOrAdminChangesByThisChat": 0,
+  "functions": [
+    {
+      "name": "lingjing-auth",
+      "version": 2,
+      "status": "ACTIVE",
+      "verify_jwt": false
+    },
+    {
+      "name": "lingjing-save",
+      "version": 1,
+      "status": "ACTIVE",
+      "verify_jwt": false
+    },
+    {
+      "name": "discovery",
+      "version": 5,
+      "status": "ACTIVE",
+      "verify_jwt": false
+    },
+    {
+      "name": "companions-sync",
+      "version": 1,
+      "status": "ACTIVE",
+      "verify_jwt": false
+    },
+    {
+      "name": "garden-sync",
+      "version": 2,
+      "status": "ACTIVE",
+      "verify_jwt": false
+    },
+    {
+      "name": "territory-sync",
+      "version": 2,
+      "status": "ACTIVE",
+      "verify_jwt": false
+    },
+    {
+      "name": "lingjing-resources",
+      "version": 2,
+      "status": "ACTIVE",
+      "verify_jwt": false
+    },
+    {
+      "name": "lingjing-battle",
+      "version": 2,
+      "status": "ACTIVE",
+      "verify_jwt": false
+    }
+  ],
+  "advisories": [
+    {
+      "name": "rls_enabled_no_policy",
+      "level": "INFO",
+      "count": 42,
+      "remediation": "https://supabase.com/docs/guides/database/database-linter?lint=0008_rls_enabled_no_policy",
+      "schemas": {
+        "comparisontext_archive_20261025": 18,
+        "lingjing_discovery": 7,
+        "lingjing_private": 6,
+        "public": 11
+      }
+    },
+    {
+      "name": "auth_leaked_password_protection",
+      "level": "WARN",
+      "count": 1,
+      "remediation": "https://supabase.com/docs/guides/auth/password-security#password-strength-and-leaked-password-protection",
+      "schemas": {
+        "Auth": 1
+      }
+    }
+  ],
+  "interpretation": {
+    "rls": "Deny by default on archived/private/server-only tables, including7 discovery tables with revoked client grants. No policy was added to expose them.",
+    "authWarning": "Existing common Supabase Auth leaked-password protection is disabled. Central account/platform owner owns any settings decision;03 changed no admin settings."
+  }
+}

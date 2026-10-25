@@ -1,0 +1,136 @@
+{
+  "at": "2026-10-25T05:01:13.100Z",
+  "sourceCommit": "ee6681a0bea8b60f6a746ddccedf1e76ec7c8b5e",
+  "build": {
+    "schemaVersion": 2,
+    "builtAt": "2026-10-25T04:41:04.026Z",
+    "sourceCommit": "2ed7946f2f742374dfc263692b0076917013e449",
+    "sourceTree": "49637bae0becf5f259e052ecb6a15ad7bae808d7",
+    "sourceDirtyFiles": [],
+    "codeFingerprint": "7cb840119a049ee3859e43518a9eac45fc933a090d582ecc98b43b512cb82f60",
+    "canonicalSourceFingerprint": "46ca4188df4fc86eb4882e6ecb5b46d5ce64e150cb96712a0109a3d7208836a3",
+    "canonicalPolicy": "Repository-relative paths; CRLF normalized to LF for source text only. Packaged/compiled bytes remain exact.",
+    "compiledFingerprint": "a737593a50aff2e238e8f29edbde44a09b08b6189b8443f2983bed4ba30d05ed",
+    "codeFiles": 299,
+    "compiledFiles": 87,
+    "toolchain": {
+      "node": "24.21.0",
+      "electron": "44.9.3",
+      "sqlite": "13.0.3",
+      "vite": "7.3.7",
+      "typescript": "5.9.3",
+      "platform": "win32",
+      "arch": "x64"
+    },
+    "entrypoints": {
+      "main": "main/index.cjs",
+      "app": "ui/index.html",
+      "desktop": "ui/desktop.html",
+      "preload": "preload/index.cjs"
+    },
+    "publicCloud": {
+      "projectRef": "jbvrdmrkwpznbrvteive",
+      "url": "https://jbvrdmrkwpznbrvteive.supabase.co",
+      "sha256": "c1625c63f1d959f92b3392b47f2fb492452803eedf1c0d1ebc68a1168ab64eda",
+      "resourcePath": "lingjing-cloud-public.json"
+    },
+    "packageName": "lingjing-desktop",
+    "runtimeClosure": {
+      "manifest": "runtime-closure.json",
+      "files": 107,
+      "edges": 186,
+      "sha256": "30296b5fa74058573f6d7a3022d2738e11ed3035de1a2d2efa17c7877e139a65"
+    }
+  },
+  "productionMain": true,
+  "registryObserverOnly": true,
+  "rawCoordinatesSaved": false,
+  "simulatedPosition": false,
+  "accuracyGateMeters": 80,
+  "samples": [
+    {
+      "status": "locating",
+      "permission": "unknown",
+      "watching": true,
+      "coordinateHash": null,
+      "error": null
+    },
+    {
+      "status": "imprecise",
+      "permission": "granted",
+      "watching": true,
+      "source": "os",
+      "provider": "windows-geolocator",
+      "accuracyMeters": 2000,
+      "timestampMs": 1792904491404,
+      "coordinateHash": "2affccca384f2ccd236d1aa9cf32cbfc7e0b7282787a9b41a9e8cd62f9244e15",
+      "error": {
+        "code": "LOCATION_IMPRECISE",
+        "message": "定位精度不足，请移动到信号较好的地方（需要 ≤ 80 米）"
+      }
+    },
+    {
+      "status": "locating",
+      "permission": "granted",
+      "watching": true,
+      "source": "os",
+      "provider": "windows-geolocator",
+      "accuracyMeters": 2000,
+      "timestampMs": 1792904491404,
+      "coordinateHash": "2affccca384f2ccd236d1aa9cf32cbfc7e0b7282787a9b41a9e8cd62f9244e15",
+      "error": null
+    },
+    {
+      "status": "imprecise",
+      "permission": "granted",
+      "watching": true,
+      "coordinateHash": null,
+      "error": {
+        "code": "LOCATION_DRIFT",
+        "message": "位置跳变过大，请重新定位"
+      }
+    },
+    {
+      "status": "locating",
+      "permission": "granted",
+      "watching": true,
+      "coordinateHash": null,
+      "error": null
+    },
+    {
+      "status": "imprecise",
+      "permission": "granted",
+      "watching": true,
+      "source": "os",
+      "provider": "windows-geolocator",
+      "accuracyMeters": 212,
+      "timestampMs": 1792904517547,
+      "coordinateHash": "5974a698ab125c15f84d9ffce116a405efea0111385059b0761010db021fd19a",
+      "error": {
+        "code": "LOCATION_IMPRECISE",
+        "message": "定位精度不足，请移动到信号较好的地方（需要 ≤ 80 米）"
+      }
+    }
+  ],
+  "errors": [],
+  "cloudProofVerified": false,
+  "identity": {
+    "actor": {
+      "account": "cg03_1792899947200",
+      "authKind": "supabase",
+      "deviceId": "2ba68123-761e-4289-ac9b-a1ab7414f478",
+      "username": "探索云端验收",
+      "authority": "live",
+      "sessionId": "fc9bccfd-45ad-4bb7-bedd-769318a8125a",
+      "authUserId": "319083e4-2592-4369-84b4-0f05f6c2ea3a",
+      "schemaVersion": 1,
+      "ownerAccountId": "account:31fa2df1-6847-4466-84ca-ed92bc4ee78f"
+    },
+    "electron": "44.9.3",
+    "qaProfile": false,
+    "simulatedLocationAllowed": false
+  },
+  "watchStopped": true,
+  "nativeProviderVerified": true,
+  "outcome": "system-permission-granted-precision-still-insufficient"
+}
