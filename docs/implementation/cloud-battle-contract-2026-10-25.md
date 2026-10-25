@@ -1,6 +1,6 @@
 # 云端对战接口与阶段检查点
 
-负责人 04；保留已经验收的 V3 全部界面。当前分支 `codex/lingjing-battle-v3`，V3 冻结交付 `0ddda2a`，本轮统一范围已合入，身份契约消费 08 的 `ee36030`。
+负责人 04；保留已经验收的 V3 全部界面。分支 `codex/lingjing-battle-v3`，V3 冻结交付 `0ddda2a`，完整后端检查点 `5ebb63b`；已消费08稳定SID SDK `2f850a3`、02共享成长 `9497e8d`，并合入已批准的新桌面入口及伙伴后端 `d7b4b07`。
 
 ## 权限与事务
 
@@ -8,21 +8,28 @@
 
 新增七张 `lingjing_battle_*` 表：邀请、房间、成员、未解析行动、已解析回合、命令回执、奖励凭据。历史旧表不删除或改写。Auth UUID 和旧文本 owner 分列；同一 Auth 用户或同一 owner 最多一个活动房间，同账号不同设备不能互相对战。
 
-房间/回合/邀请/奖励 SELECT 同时检查参与者 Auth UID 与 08 `lingjing_private.session_owner()`，后者每次查询校验真实 session/account 状态；不允许只匹配 UID 而让尚未过期的已登出 JWT 继续直读 Data API。Realtime 不支持自定义 WebSocket headers，因此不能在频道 RLS 中误用依赖 X-Lingjing-Device-Id 的 HTTP helper。HTTP Edge 必须通过 08 `requireActor` 校验设备/session；Realtime 用其 header-free session guard，退出/失效时客户端移除频道，刷新 JWT 后重新授权。
+房间/回合/邀请/奖励 SELECT 同时检查参与者 Auth UID 与私有 `battle_viewer_owner()`：消费08 header-free `session_owner/live_session_id`，并核查同一owner/session存在未撤销设备。这个空search_path的私有definer只用于绕开devices自身HTTP-header RLS递归，不给service_role读取auth.users的额外权限。真实revoke_device只更新revoked_at、不删除Auth session的场景也必须立即拒绝直读；同owner另一未撤销设备继续可读。Realtime不支持自定义WebSocket headers，不能误用HTTP设备头helper。
 
 私有频道 `lingjing:battle:<room UUID>` 的 SELECT 仅参与者能通过；不开放客户端 Broadcast INSERT。Postgres Changes 仅发布房间、回合、邀请，逐行 RLS 继续执行。未解析行动无客户端 SELECT 权限，也不进入 publication，不能提前看到对手选择。
 
-三个权威 RPC 都是 `SECURITY INVOKER`、空 search_path，撤销 PUBLIC/anon/authenticated EXECUTE，只授予 service_role。受控 Edge 用 08 actor 确定 actor UUID/owner，普通读取使用 actor.client；服务端权限只用于不可由客户端伪造的事务写入/目录解析，密钥不会交给桌面或 renderer。
+公开权威写RPC都是 `SECURITY INVOKER`、空search_path，撤销PUBLIC/anon/authenticated EXECUTE，只授予service_role。受控Edge用08 actor确定Auth UID/owner，普通读取使用actor.client；出战伙伴来自受保护head，资源/五行/等级/成长不接收客户端自报。
 
 - `lingjing_battle_command(actor,owner,op,actionId,input)`：同 actor/actionId 的完整命令回执；邀请/接受/入房/锁定行动/离开在数据库事务中校验权限。接受邀请与房间/预约对象绑定同事务；命令重放不能换目标、动作或伙伴。
 - `lingjing_battle_commit_round(room,round,revision,rawHost,rawGuest,result)`：锁房间，核对版本、双方已锁定动作与 revision；回合插入和状态推进同事务。失败回滚，重复提交返回同一权威回合。
-- `lingjing_battle_claim_settlement(actor,owner,room,pet)`：仅已结束参与者与原出战 pet；一次性稳定 `battle:<room>:<owner>` 回执，胜20经验、负5。这里只生成权威奖励凭据，不另建云库存/成长通道。需接 08/领域统一 authority fragment，在同一事务更新受保护存档和 revision，不能把客户端整包当发奖凭证。
+- `lingjing_battle_training_command`：云账号训练使用同一内核的实际AI行动，保存服务端会话、不可变行动回执和revision；客户端只提交动作。相同actionId重放不会重新抽取AI动作或推进另一回合。
+- `lingjing_battle_settle_authority`：好友/训练共用一次结算事务。先lock_save_owner，再锁领域行，核验原出战pet和胜负；02 awardBattleResult、05 applyCloudCommand准备伙伴/菜园，04投影完整战报，最后在同一SQL事务调用08 commit_authority并插入结算回执。失败全部回滚；旧receipt-only claim函数已撤销service_role EXECUTE。稳定奖励actionId为好友 `battle:<room UUID>:<owner>`、训练 `battle:battle-<training UUID>:<owner>`；种子source=battle、receiptId分别为room UUID或训练sessionId，复用05确定性种子选择及2粒数量。
+
+第二个CLI迁移 `20261025024552_lingjing_battle_authority_save.sql` 依赖08 protected CAS及第一份battle迁移。只新增训练会话/命令/结算表和同事务RPC，不改旧历史。好友和训练活动成员互斥，遵守统一账号行优先的锁顺序。两份battle迁移均未由04写入生产。
+
+正式函数名 `lingjing-battle`，入口 `infra/supabase/functions/lingjing-battle/index.ts`。由08 withActor校验真实JWT/活跃Auth session/owner/device。部署verify_jwt=false只关闭旧网关JWT校验，不关闭函数内认证。打包需保留仓库相对路径，包含共享Auth/JSON/core与02/05纯领域模块，见status的deploymentGraph；不要部署旧duel-online入口。
 
 ## 同一规则核心
 
 `infra/supabase/functions/_shared/battle-core.js` 是原桌面算法的单一源码；`scripts/battle/build-core.mjs` 机械生成桌面 CJS，`--check` 校验源码 SHA256，禁止手工改生成物。原 `services/battle-runtime.cjs` 只保留导出兼容入口。规则 ID `five-elements-standard-v1` 不变，核心版本 `five-elements-standard-v1/2026-10-25` 明确写进每场房间/回合。
 
-`duel-online/room-core.js` 只转换 host/guest DTO，调用同一内核；不重复伤害、怒气、异常状态或胜负公式。未知版本拒绝按新公式解析，历史记录不重算。选招依然不限时，不引入自动动作或判负。
+`lingjing-battle/room-core.js`只转换host/guest DTO，调用同一内核；不重复伤害、怒气、异常状态或胜负公式。未知版本拒绝解析，历史记录不重算。训练也使用该内核原AI。选招依然不限时，不引入自动动作或判负。
+
+主进程消费08 cloudActor.requireActor()的稳定SID SDK及fresh invoke。Realtime仅调用无参setAuth()，保留SDK accessToken callback，不把显式旧JWT钉在manual模式。退出/切账号拆频道。create/join/invite/训练start先持久化原请求编号，恢复服务端原行动；网络失败不改成下一回合的新命令。云端结算后必须另发HTTPS读取原actionId对应的完整存档，核对revision/checksum/owner/report，再在同一SQLite事务恢复02/05/04一致性单元；不再本机追加XP或种子。有独立本机操作时保留并报冲突。
 
 ## 已完成的本地验证
 
@@ -32,9 +39,9 @@ PGlite 实际执行 08 身份 SQL 和新增对战 SQL，完成真实数据库事
 
 ## 后续必须完成
 
-1. 固定 08 主进程 Auth 客户端/refresh/device API，接现有 OnlineDuelService，不另建多人框架；新链路不发送旧 userId/sessionToken 作为授权。
-2. 固定受保护账号存档/伙伴查询及 reward authority fragment 事务接口，出战 pet 必须来自服务端已验证归属；不信任 renderer 资源/五行/成长或未授权旧本地 JSON。
-3. 自包含 JWT Edge handler、真实 HTTPS/Realtime 客户端和两进程验证器；由主协调部署后进行真实账号、邀请、多回合、断网/重启、双方战报及服务端读回。
+1. 主协调部署两份migration和完整lingjing-battle函数；04不自行部署或管理式种数据。
+2. 消费02主进程云领养/选择/读回、05新云账号菜园初始化。02后端adopt已上线，原有本机选择不能冒充已验证云操作；新界面保持原样。
+3. 部署后执行真实账号邀请、多回合、JWT刷新重连、断网/重启、双方战报、训练及第二客户端存档读回。当前authority-save六项是实际本地Postgres/SQLite验证，不是HTTPS证明。
 4. 真实验收使用两个独立 deviceId、fresh 用户目录、两个 Electron 进程，明确是同机双客户端。不会启用会强制 simulated 身份的 unified-battle QA transport，也不冒称两台实体设备。
 5. 旧 `duel-online/index.ts` 中密码/单token和重复规则，在账号桥迁出并确认消费者为零后替换/删除；不因清理旧代码丢失历史读取或账号迁移能力。
 

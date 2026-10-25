@@ -1,0 +1,16 @@
+{
+  "at": "2026-10-25T03:15:04.719Z",
+  "provenance": "local-actual-PGlite-and-canonical-SQLite-fixtures",
+  "realCloudVerified": false,
+  "checks": [
+    "actual Postgres rollback after protected commit: missing report leaves growth, inventory, head revision and receipt unchanged",
+    "both owners receive exactly one canonical growth + two seeds + mirrored complete report, with original other-pet state preserved",
+    "actual SQLite canonical readback is idempotent; a late report-adapter failure rolls back companion and garden restore together",
+    "an independent unverified local operation is preserved and reported as a conflict, never silently replaced",
+    "authenticated settlement forgery and obsolete receipt-only service path are denied",
+    "server training state machine uses the same core and atomically awards canonical growth/inventory/report with immutable per-round replay"
+  ],
+  "friendRounds": 18,
+  "trainingRounds": 16,
+  "passed": true
+}

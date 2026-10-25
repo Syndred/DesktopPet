@@ -2,26 +2,26 @@
   "module": "battle",
   "scope": "2026-10-25 real Supabase JWT-bound friend duels, shared versioned rules, participant Realtime/RLS, restart recovery and idempotent settlement; preserve approved V3",
   "branch": "codex/lingjing-battle-v3",
-  "commit": "4969eac",
+  "commit": "5ebb63b (source); shared approved checkpoints through 2b126b4 merge d7b4b07",
   "goalStatus": "in_progress_under_existing_unfinished_goal",
   "goalLifecycle": "get_goal returned the older blocked full battle/online objective, which still includes the not-yet-verified real-cloud loop. It cannot truthfully be marked complete merely to create a replacement. Continue authorized work; no token budget or model changes.",
   "contracts": {
     "scope": "docs/implementation/cloud-upgrade-2026-10-25.md",
     "battle": "docs/implementation/cloud-battle-contract-2026-10-25.md",
-    "identityCommit": "4ef97fd (identity ee36030, Auth bridge5607dfa/refresh320cafd, protected save4ef97fd)",
+    "identityCommit": "2f850a3/f2c6651 stable SID-bound callback SDK; protected CAS4ef97fd and owner+pet pair fix; companion backend67546f5/d7b4b07",
     "identity": "infra/supabase/functions/_shared/lingjing-auth.ts: requireActor, ActorContext.client, stable ownerAccountId/authUserId/deviceId/sessionId; 08 owns mapping and auth helper",
     "rls": "Participant Auth UID + private battle_viewer_owner(): consumes08 fresh session_owner/live_session_id and reads only same owner/session non-revoked device binding without header-RLS recursion. No service_role auth.users grant.",
     "authority": "Service-only invoker RPCs with fixed empty search_path; renderer cannot write rooms, actions, results or reward values",
     "core": "infra/supabase/functions/_shared/battle-core.js, version five-elements-standard-v1/2026-10-25; generated desktop CJS checked by source SHA256",
     "pending": [
-      "08 main-process SDK adapter connects the transport seam",
-      "02 canonical cloud growth reducer",
-      "same-transaction battle/companions authority fragments via08 commit_authority"
+      "02 main-process cloud companion command/readback adapter (server commands are deployed)",
+      "05 canonical garden initialization for a new cloud account (settlement consumes existing shared module)",
+      "coordinator deployment and real cloud/native acceptance"
     ],
     "mainTransport": {
       "entry": "OnlineDuelService.useCloudTransport(provider)",
       "providerResult": "{url:httpsProjectOrigin, client:stable main-process Supabase SDK with account-owned accessToken refresh/device header, actor:08 public ActorContext sans client}",
-      "integration": "08 can configure the existing legacy.onlineDuelService before battle registration; setCurrentUser uses stable text owner, no sessionToken needed on this transport",
+      "integration": "BattleFeatureService consumes services.get('cloudActor').requireActor(); stable SID SDK + fresh context.invoke; realtime.setAuth() without arguments preserves08 callback mode, no fixed JWT is pinned",
       "tokenBoundary": "No access/refresh/service keys in getStatus; actor is safe metadata only. JWT route strips body owner/sessionToken and untrusted pet facts. Credentials never travel to legacy HTTP."
     }
   },
@@ -32,7 +32,17 @@
       "dependsOn": "20261025020314_lingjing_identity_actor_contract.sql",
       "localPostgresExecuted": true,
       "productionAppliedByThisChat": false,
-      "readyForReview": true
+      "readyForReview": true,
+      "remoteStateVerified": "Read-only list_migrations 2026-10-25: battle migration was not applied, so staged level/lock additions do not rewrite an applied migration"
+    },
+    {
+      "path": "infra/supabase/migrations/20261025024552_lingjing_battle_authority_save.sql",
+      "createdWith": "Supabase CLI2.122.0 migration new lingjing_battle_authority_save --workdir infra",
+      "dependsOn": "08 protected_save_cas and 04 battle_jwt_rooms",
+      "localPostgresExecuted": true,
+      "productionAppliedByThisChat": false,
+      "readyForReview": true,
+      "contract": "service-only friend/training settle RPC locks save owner before domain row, commits02 growth +05 garden +04 complete report via commit_authority in the same transaction, then immutable receipt; old receipt-only RPC EXECUTE revoked"
     }
   ],
   "checks": [
@@ -61,14 +71,14 @@
       "scope": "existing runtime/real SQLite regression; explicitly scripted network cases are not live-cloud proof"
     },
     {
-      "command": "Deno2.9.6 check infra/supabase/functions/duel-online/handler.ts",
+      "command": "Deno2.9.6 check infra/supabase/functions/lingjing-battle/index.ts",
       "passed": true,
-      "scope": "prepared JWT handler; final authority resolver/entrypoint pending"
+      "scope": "complete JWT entrypoint, protected pet resolver, shared growth/inventory settlement and server training"
     },
     {
       "command": "node --test apps/pc-app/runtime/features/battle/tests/jwt-transport.test.cjs",
       "passed": true,
-      "cases": 4,
+      "cases": 5,
       "scope": "explicitly SCRIPTED SDK boundary tests, not live cloud"
     }
   ],
@@ -106,15 +116,36 @@
     }
   ],
   "remaining": [
-    "JWT Edge handler and runtime adapter",
-    "shared protected pet/reward authority transaction",
     "coordinator deployment",
     "real HTTPS/Realtime multi-round and restart acceptance",
-    "cross-device report and settlement readback",
+    "true cloud training and second-client canonical growth/inventory/report readback",
+    "consume02 main-process cloud selection/adoption adapter so legitimate selections never become an unverified local-only branch",
+    "consume05 legitimate cloud garden initialization; no admin seeding by04",
     "final upstream fetch/pull and cleanup audit"
   ],
-  "stage": "jwt_handler_transport_and_device_rls_checkpoint",
+  "stage": "complete_server_bundle_ready_for_coordinator_deployment; native_and_live_cloud_acceptance_pending",
   "productionReady": false,
+  "readyForCoordinatorDeployment": true,
+  "serverBundle": {
+    "name": "lingjing-battle",
+    "entrypoint": "infra/supabase/functions/lingjing-battle/index.ts",
+    "verifyJwt": false,
+    "authorization": "08 withActor does fresh Auth.getUser + owner/device/live Auth-session checks on every operation. false disables only the gateway's legacy JWT-key verification; it does not expose anonymous authority",
+    "deploymentGraph": "Preserve repository-relative import paths: lingjing-battle/*.ts/js, _shared/{lingjing-auth,lingjing-json,battle-core}, apps/pc-app/runtime/features/companions/{cloud-growth,growth}.mjs, garden/{cloud-domain.mjs,catalog.json}, resources/assets/roster-v2/catalog.json",
+    "operations": "friend search/invite/accept/join/immutable actions/get active/leave/settle; start_training/training_action/get_training/get_active_training/leave_training",
+    "sharedAuthority": "02 awardBattleResult +05 applyCloudCommand +08 private commit_authority; canonical battle backup includes complete mirrored rounds and server endedAt",
+    "pendingRecovery": "native command receipt before create/join/invite/training request, fixed per-round actionId, server own pending-action recovery, active room/training recovery on another client, owner/logout channel teardown"
+  },
+  "authorityCheckpoint": {
+    "test": "node apps/pc-app/runtime/features/battle/tests/authority-save.test.mjs",
+    "passed": true,
+    "checks": 6,
+    "scope": "Actual local PGlite SQL + canonical SQLite adapters. Atomic rollback after protected write, two owners/reports, duplicate growth/seeds refusal, late local adapter rollback, offline-branch preservation, service-only and old receipt-only denial, server training state machine. Scripted readback boundary is not real HTTPS proof",
+    "evidence": "docs/implementation/evidence/battle/2026-10-25/cloud-stage-two/authority-save.json",
+    "native": "ordinary npm ci in own non-junction node_modules, then native:check: actual Electron44.9.3/Node24.21.0 + better-sqlite3 13.0.3 opened the same DB; original16 battle/legacy-rules cases passed",
+    "build": "npm run build:pc passed with new TypeScript main/preload, independent desktop entry and approved lazy UI; no old shell restored",
+    "timestamp": "2026-10-25T03:20:48Z"
+  },
   "liveVerifier": {
     "path": "apps/pc-app/runtime/features/battle/verify-live-cloud.mjs",
     "configured": false,
