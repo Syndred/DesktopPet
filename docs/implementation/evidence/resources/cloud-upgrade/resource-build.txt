@@ -1,0 +1,44 @@
+
+> qingpet-lord-3d@0.1.8 build:pc
+> electron-vite build && node scripts/desktop/write-build-manifest.mjs
+
+vite v7.3.7 building ssr environment for production...
+transforming...
+✓ 1 modules transformed.
+rendering chunks...
+apps/pc-app/dist/main/index.cjs  12.32 kB
+✓ built in 177ms
+vite v7.3.7 building ssr environment for production...
+transforming...
+✓ 1 modules transformed.
+rendering chunks...
+apps/pc-app/dist/preload/index.cjs  0.77 kB
+✓ built in 12ms
+vite v7.3.7 building client environment for production...
+transforming...
+✓ 3962 modules transformed.
+rendering chunks...
+../dist/ui/index.html                                     0.78 kB
+../dist/ui/assets/brand-mark-DlZ0bfA1.png               405.14 kB
+../dist/ui/assets/maplibre-gl-worker-BJZj9QkU.js        516.74 kB
+../dist/ui/assets/garden-food-atlas-v1-DiKuftwr.png   1,849.15 kB
+../dist/ui/assets/desktop-artwork-Dni2yrGU.png        1,933.08 kB
+../dist/ui/assets/account-artwork-xSsPx11U.png        1,952.41 kB
+../dist/ui/assets/companionship-room-v1-DVsfRJRu.png  2,079.94 kB
+../dist/ui/assets/wild-lake-v1-k7Ftd-7_.png           2,777.40 kB
+../dist/ui/assets/night-courtyard-v1-DYpzU6pT.png     2,809.62 kB
+../dist/ui/assets/garden-terrace-v1-DxO0gG7c.png      3,300.69 kB
+../dist/ui/assets/index-CrRtvS6L.css                    303.58 kB
+../dist/ui/assets/webworkerAll-DmFRMvwL.js                0.18 kB
+../dist/ui/assets/browserAll-DxbDE4dI.js                  0.31 kB
+../dist/ui/assets/init-D-I4Z59z.js                       10.09 kB
+../dist/ui/assets/ParticleBuffer-QZmwZUdy.js            125.92 kB
+../dist/ui/assets/index-VBDbkJ3n.js                     777.69 kB
+../dist/ui/assets/index-CgE3Rt1s.js                   2,245.13 kB
+✓ built in 9.47s
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+Build provenance: f81008ce1f88 · c01cf0ded014
