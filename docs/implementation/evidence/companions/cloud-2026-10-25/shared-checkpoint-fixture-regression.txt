@@ -1,0 +1,11 @@
+✔ real shared SQLite garden readback advances the account CAS base without reporting a local edit (60.5482ms)
+✔ local SQLite fixture: verified domain readback preserves unrelated offline data while strict account checkpoint rejects conflict or in-flight saves (55.6712ms)
+✔ SQL row ordering does not change a save fingerprint while message order remains significant (0.4181ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 192.7768

@@ -1,0 +1,102 @@
+{
+  "at": "2026-10-25T04:27:35.262Z",
+  "sourceCommit": "9a18511e79c46e06619383e82b2dc24e32dabbcb",
+  "buildSource": "9a18511e79c46e06619383e82b2dc24e32dabbcb",
+  "buildFingerprint": "12e86af5155129c1b9d6310c6b5b73d04f0f336eeeb3b592a010f6ca42f55fd3",
+  "fullRun": {
+    "runId": "9d8fe784-40da-456d-b8eb-cebc165f726e",
+    "sourceCommit": "55d6b240f6bb4e4aa608218bab8b40a110345d6e"
+  },
+  "mode": "live",
+  "physicalDevices": 1,
+  "scope": "Targeted final-source production restart, encrypted session resume, actual main cached replay/interact, specified custom resource native pixels; full offline seven groups are separate earlier-source evidence",
+  "checks": [
+    {
+      "name": "Final-source production process resumes encrypted original device and replays cached adoption",
+      "label": "A",
+      "pid": 11836,
+      "electron": "44.9.3",
+      "queueOwnerChecks": 2,
+      "serialSha256": "803660f1c43f2e473f2ca04da1e856a3c4014ab305c4ab9a28c615688aaa630f",
+      "deviceId": "5d27637f-f187-4f42-a0b8-9e2ab1964fd9"
+    },
+    {
+      "name": "Final-source production process resumes encrypted original device and replays cached adoption",
+      "label": "B",
+      "pid": 32336,
+      "electron": "44.9.3",
+      "queueOwnerChecks": 2,
+      "serialSha256": "803660f1c43f2e473f2ca04da1e856a3c4014ab305c4ab9a28c615688aaa630f",
+      "deviceId": "c368e074-7821-4ac0-b57e-3ba4657d95f8"
+    },
+    {
+      "name": "Actual production interact and same-action replay award fixed mood/affinity only once across clients",
+      "actionId": "7a99bd82-ff2b-4d6e-9fa4-4d5b73c820ba",
+      "petId": "pet-3eea8bca-f04f-4f64-9a04-603f36596890",
+      "before": {
+        "level": 1,
+        "experience": 0,
+        "mood": 60,
+        "satiety": 60,
+        "affinity": 0,
+        "winsTotal": 0,
+        "stats": {
+          "hp": 124,
+          "atk": 28,
+          "def": 24,
+          "spd": 20
+        }
+      },
+      "after": {
+        "level": 1,
+        "experience": 0,
+        "mood": 62,
+        "satiety": 60,
+        "affinity": 1,
+        "winsTotal": 0,
+        "stats": {
+          "hp": 124,
+          "atk": 28,
+          "def": 24,
+          "spd": 20
+        }
+      }
+    },
+    {
+      "name": "Final-source actual native specified custom2D frame",
+      "label": "A",
+      "resourceId": "74f5d8ff-ffa6-4f40-8e41-39f80b33acf3",
+      "petId": "pet-3eea8bca-f04f-4f64-9a04-603f36596890",
+      "pid": 11836,
+      "windowId": 2,
+      "visible": true,
+      "coloredPixels": 8727,
+      "bounds": {
+        "x": 260,
+        "y": 230,
+        "width": 230,
+        "height": 280
+      },
+      "sha256": "359aa51b9d1300705e3dd1561b23670d4b7d3ef0830f89c9d2e59068d516381e"
+    },
+    {
+      "name": "Final-source actual native specified custom2D frame",
+      "label": "B",
+      "resourceId": "74f5d8ff-ffa6-4f40-8e41-39f80b33acf3",
+      "petId": "pet-3eea8bca-f04f-4f64-9a04-603f36596890",
+      "pid": 32336,
+      "windowId": 4,
+      "visible": true,
+      "coloredPixels": 8727,
+      "bounds": {
+        "x": 260,
+        "y": 230,
+        "width": 230,
+        "height": 280
+      },
+      "sha256": "359aa51b9d1300705e3dd1561b23670d4b7d3ef0830f89c9d2e59068d516381e"
+    }
+  ],
+  "errors": [],
+  "passed": true
+}
