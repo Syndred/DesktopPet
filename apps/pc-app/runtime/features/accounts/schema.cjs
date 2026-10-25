@@ -109,6 +109,9 @@ const migrations = [{
     cloud_revision INTEGER NOT NULL, envelope_checksum TEXT NOT NULL,
     data_checksum TEXT NOT NULL, personal_checksum TEXT NOT NULL, protected_checksum TEXT NOT NULL
   );`
+}, {
+  id:'accounts-008-confirmed-cloud-document',
+  sql:'ALTER TABLE account_sync_baselines ADD COLUMN cloud_document TEXT;'
 }];
 
 module.exports = { migrations };

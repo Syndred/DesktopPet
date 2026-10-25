@@ -30,7 +30,10 @@ function attachCloudBackup(adapter,services){
   const service=services.get('resources'),db=services.db;
   const cloud=()=>services.get('resourceCloud')||service.cloud;
   const isCloud=data=>data?.format==='lingjing-resource-references';
+  const preparation=require('./preparation-guard.cjs').resourcePreparationGuard({service,db,cloud,validateReferences});
   return {...adapter,versions:[1,2],tables:[...adapter.tables,...CLOUD_TABLES],
+    captureCloudPreparation:(owner,before)=>preparation.capture(owner,before),
+    matchesCloudBaseline:(owner,baseline,expected,current)=>preparation.baseline(owner,baseline,expected,current),
     validate(data,owner){if(isCloud(data))validateReferences(data,owner);else adapter.validate(data,owner);},
     validateModule(module,owner){
       if((module.version===2)!==isCloud(module.data))reject('RESOURCE_AUTHORITY_REQUIRED','资源备份模块版本与内容不一致');
