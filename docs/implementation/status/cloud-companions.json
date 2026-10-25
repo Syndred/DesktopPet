@@ -4,7 +4,7 @@
   "branch": "codex/lingjing-companions",
   "commit": "13cb925a0bde3b50b39de1f120d4f2842069aa8f",
   "goalStatus": "active",
-  "phase": "coordinator-deployed commands passed real HTTPS two-deviceId/independent-process checks; main IPC/native/cloud readback integration continuing",
+  "phase": "Main cloudActor IPC and native durable position routing checkpoint; focused protocol checks passed, real Electron acceptance continuing",
   "contracts": {
     "baseline": "docs/implementation/cloud-upgrade-2026-10-25.md",
     "sharedSave": "Consume services.get('backups') and Accounts sync; no second account, inventory, reward or transport",
@@ -18,11 +18,17 @@
     "criticalOwnerPetPair": "RESOLVED by08 d57d383 and approved45b857d merged here: registry is (owner_id,pet_id); two-owner SQLite and local SQL command checks cover identical original IDs without rewriting them.",
     "serverCommandDeployment": "docs/implementation/cloud-companions-deployment.md; companions-sync self-authenticating Edge + service-only commit worker, seven controlled commands including interact; deployment remains coordinator-only",
     "protectedPersonalFieldsNeed": "Accounts shared CAS must permit validated names/desktop settings/independent selections while retaining authoritative pet identity/growth/capture/adoption receipts; checksum alone is not gameplay permission.",
-    "mainOnlyAdapter": "services.get('companions').backupAdapter now production-registers when shared normalizeData capability exists",
+    "mainOnlyAdapter": "Production main adapter routes all seven commands and native positions through08 cloudActor; durable intents/verified-head metadata use existing account_actions; only exact verified companion-unit readback restores; common base stays strict",
     "serverCheckpoint": "67546f5 includes cloud-domain/instance factory, companions-sync Edge, CLI migration and local/HTTP verifiers; coordinator reviews/deploys",
     "sharedAccountsCheckpoint": "6435a13 shared backups/sync/util normalization + regression;230e9b6 merges8e5c735 retaining safety projection and privacy state"
   },
-  "migrations": [{"file":"infra/supabase/migrations/20261025025515_lingjing_companion_commands.sql","generatedBy":"Supabase CLI2.122.0 migration new lingjing_companion_commands --workdir infra","remoteAppliedByThisChat":false}],
+  "migrations": [
+    {
+      "file": "infra/supabase/migrations/20261025025515_lingjing_companion_commands.sql",
+      "generatedBy": "Supabase CLI2.122.0 migration new lingjing_companion_commands --workdir infra",
+      "remoteAppliedByThisChat": false
+    }
+  ],
   "checks": {
     "sourceFetched": true,
     "sourceFetchedAt": "2026-10-25T03:27:54Z",
@@ -44,7 +50,8 @@
     "httpVerifier": "REAL HTTPS7 checks passed using coordinator-created DPAPI test accounts; independent deviceIds + a restarted Node process, not Electron or physical second machine; evidence/companions/cloud-2026-10-25/real-https.json",
     "liveWorkerPermissions": "Independent read-only real SQL: anon/authenticated cannot execute worker; service_role can; service_role still cannot SELECT auth.users; worker-acl.json",
     "sharedHookAlignment": "After merging8e5c735 and preserving safety projection/authority_pending,11 focused shared/Accounts/legacy normalization checks passed",
-    "latestGardenContract": "Current13cb925 runtime code with exact05 53732f4 passed canonical-engine settlement, complete-save clientB restore and stale-preview conflict; artifacts/companions/garden-contract-VkP9ws (local only)"
+    "latestGardenContract": "Current13cb925 runtime code with exact05 53732f4 passed canonical-engine settlement, complete-save clientB restore and stale-preview conflict; artifacts/companions/garden-contract-VkP9ws (local only)",
+    "mainAuthorityFocused": "6/6 passed:4 explicitly labelled real-SQLite protocol simulations plus Accounts-boundary and playback isolation; node syntax checks passed; not real HTTPS/Electron proof"
   },
   "realCloudEvidence": {
     "project": "jbvrdmrkwpznbrvteive",
@@ -93,21 +100,48 @@
     }
   ],
   "actionGaps": [
-    {"action":"adopt","server":"implemented/tested;67546f5","runtime":"cloudActor IPC routing continuing"},
-    {"action":"rename/select/appearance/recall-all","server":"implemented/tested;67546f5","runtime":"cloudActor IPC routing continuing"},
-    {"action":"desktop management settings","server":"implemented/tested;67546f5","runtime":"cloudActor IPC routing continuing"},
-    {"action":"native drag/wander persistence","server":"same controlled desktop command","runtime":"must replace direct local protected writes for Supabase sessions; continuing"},
-    {"action":"interact","server":"fixed original mood2/affinity1, per-pet10s server cooldown and one receipt implemented/tested","runtime":"cloudActor IPC routing continuing"},
-    {"action":"canonical builtin migration","server":"same trusted roster IDs","runtime":"disable local protected rewrites for Supabase sessions; preserve original historical IDs"},
-    {"action":"food/XP/seeds","server":"05 transaction +02 shared growth; local contract integration passed","runtime":"05/04 authority paths pending integration; no client chosen rewards"}
+    {
+      "action": "adopt",
+      "server": "implemented/tested;67546f5",
+      "runtime": "Production main cloudActor routing implemented; focused checks passed; real Electron acceptance continuing"
+    },
+    {
+      "action": "rename/select/appearance/recall-all",
+      "server": "implemented/tested;67546f5",
+      "runtime": "Production main cloudActor routing implemented; focused checks passed; real Electron acceptance continuing"
+    },
+    {
+      "action": "desktop management settings",
+      "server": "implemented/tested;67546f5",
+      "runtime": "Production main cloudActor routing implemented; focused checks passed; real Electron acceptance continuing"
+    },
+    {
+      "action": "native drag/wander persistence",
+      "server": "same controlled desktop command",
+      "runtime": "Production main cloudActor routing implemented; focused checks passed; real Electron acceptance continuing"
+    },
+    {
+      "action": "interact",
+      "server": "fixed original mood2/affinity1, per-pet10s server cooldown and one receipt implemented/tested",
+      "runtime": "Production main cloudActor routing implemented; focused checks passed; real Electron acceptance continuing"
+    },
+    {
+      "action": "canonical builtin migration",
+      "server": "same trusted roster IDs",
+      "runtime": "Supabase sessions skip local protected builtin rewrites; original historical IDs preserved"
+    },
+    {
+      "action": "food/XP/seeds",
+      "server": "05 transaction +02 shared growth; local contract integration passed",
+      "runtime": "05/04 authority paths pending integration; no client chosen rewards"
+    }
   ],
   "remaining": [
-    "Main cloudActor IPC routing, native position write routing, durable common action intents and safe same-unit readback",
-    "Latest Accounts safety projection + companion registration final targeted verification",
-    "Garden same-save inventory integration",
-    "new Accounts real-HTTPS two-client conflict/offline/restart tests",
-    "real HTTPS old-save restoration and independent client readback after coordinated deployment",
-    "07 protected reference positive custom2D appearance and new-client resource availability after coordinated deployment",
-    "final source fetch and coordinator integration acceptance"
+    "Real default Electron dual-client/offline/restart acceptance for the main cloud command adapter",
+    "Async select consumers in06/04 must await cloud confirmation; coordinator coordinating",
+    "Positive07 protected custom2D appearance and resource hydration",
+    "05 same-save growth/inventory and03 capture authoritative readback integration",
+    "Verified old cloud source restoration; local legacy archives remain preserved",
+    "Final source fetch and coordinator integration acceptance"
   ]
 }
