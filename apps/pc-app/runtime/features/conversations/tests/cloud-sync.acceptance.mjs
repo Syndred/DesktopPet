@@ -32,7 +32,7 @@ const evidence = { at: new Date().toISOString(), runId, taskId: '01a16dc5-c418-7
   adoptionPath: 'actual main-only cloudActor companions-sync adoption and initial chat slot, then public Accounts cloudPreview/backupRestore; final companion UI adoption/selection is not claimed',
   modelTransport: 'actual loopback connection refusal and stalled socket cancellation; no external provider/model success claimed',
   offlineTransport: 'explicit test injection causes actual loopback connection refusal for one cloud push; restart uses real HTTPS service' };
-const record = (name, data) => { checks.push({ name, data }); console.log('PASS', name); };
+const record = (name, data) => { checks.push({ name, data }); writeFileSync(join(output, 'checkpoint.json'), JSON.stringify({ ...evidence, status: 'running' }, null, 2)); console.log('PASS', name); };
 const invoke = (c, feature, command, payload = {}) => c.page.evaluate(({ feature, command, payload }) => window.lingjing.invoke(feature, command, payload), { feature, command, payload });
 async function call(c, feature, command, payload) { const r = await invoke(c, feature, command, payload); assert.equal(r.ok, true, `${feature}.${command}: ${r.code} ${r.message}`); return r.data; }
 async function until(predicate, name) { const end = Date.now() + 15000; while (!await predicate()) { assert.ok(Date.now() < end, `Timed out: ${name}`); await new Promise(done => setTimeout(done, 60)); } }
@@ -126,6 +126,7 @@ try {
   const b = await launch('b'); await call(b, 'accounts', 'login', { provider: 'runtime', account, password, rememberSession: true });
   const owner = (await call(a, 'accounts', 'session')).currentUser.id;
   assert.equal((await call(b, 'accounts', 'session')).currentUser.id, owner);
+  evidence.owner = owner;
   const adopted = await adopt(a, b, owner, '跨端原伙伴'), adoptedSecond = await adopt(a, b, owner, '同模板第二只');
   const petId = adopted.receipt.pet.petId, secondPetId = adoptedSecond.receipt.pet.petId; assert.notEqual(petId, secondPetId);
   assert.equal(adopted.receipt.pet.templateId, adoptedSecond.receipt.pet.templateId);
@@ -135,11 +136,13 @@ try {
     return { actionId: r.actionId, revision: r.revision, checksum: r.checksum, selections: r.result.data.selections };
   }, { petId, expectedRevision: adopted.receipt.pet.revision, actionId: randomUUID() });
   assert.deepEqual(selected.selections, { chatPetId: petId, battlePetId: null, guardPetId: null });
+  evidence.petIds = [petId, secondPetId];
+  record('Main cloudActor legally adopts two same-template pets and selects only chatPetId; B reads both exact action receipts', { owner, adopted, adoptedSecond, selected });
   await restore(a);
   await restore(b); const cloudPets = await call(b, 'companions', 'list');
   assert.ok([petId, secondPetId].every(id => cloudPets.pets.some(item => item.petId === id)));
   assert.equal((await snapshot(a)).petId, petId); assert.equal((await snapshot(b)).petId, petId);
-  record('Main cloudActor legally adopts two same-template pets; B reads both exact action receipts, original IDs and the independent chat slot', { owner, adopted, adoptedSecond, selected });
+  record('Public Accounts preview and full restore hydrate both real pet instances and the authoritative chat slot on A and B', { petIds: [petId, secondPetId], chatPetId: petId });
   await configure(a, closedBase); await configure(b, closedBase);
   await configure(a, closedBase, secondPetId); await configure(b, closedBase, secondPetId);
   await enableSync(a); await enableSync(b); await observePushPrivacy(a); await observePushPrivacy(b);

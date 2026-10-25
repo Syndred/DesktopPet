@@ -159,7 +159,7 @@
     "Consume02 approved main routing and validate normal public chat selection including rejection/offline; server-path adoption scope remains explicit.",
     "Independent coordinator final review."
   ],
-  "updatedAt": "2026-10-25T03:56:52.853Z",
+  "updatedAt": "2026-10-25T03:59:01.561Z",
   "cleanupManifest": "docs/implementation/evidence/conversations/cloud-2026-10-25/cleanup-manifest.json",
   "installation": {
     "workspaceNodeModulesIndependent": true,
@@ -231,5 +231,12 @@
   },
   "resumedAt": "2026-10-25T03:56:52.853Z",
   "resumedBy": "Main coordinator: all8 live; approved latest root merged; legal main cloudActor adoption allowed before02 UI routing",
-  "blockResolved": true
+  "blockResolved": true,
+  "integrationFinding": {
+    "code": "BACKUP_MODULE_UNSUPPORTED",
+    "module": "companions",
+    "cause": "Typed production startup registered resource/conversation adapters but not the existing approved companions.backupAdapter. Real legal cloud adoption succeeded; Accounts preview then rejected missing module.",
+    "fix": "runtime/main/index.ts registers the existing companion unit once, guarded against future02 self-registration. No new renderer IPC or pet fixture.",
+    "failedRun": "artifacts/conversations/cloud-sync/run-1792900630774/failure.json"
+  }
 }
