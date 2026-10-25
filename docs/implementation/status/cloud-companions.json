@@ -11,6 +11,8 @@
     "companionUnit": "docs/implementation/cloud-companions-contract.md",
     "accountsIntegrationNeed": "Current BackupManager rejects old generic tables when a new adapter claims them. Need a verified-envelope legacy-table conversion hook before claiming companion tables, so existing version-1 archives remain restorable. Companion adapter will provide fromLegacyTables(tables,owner) for the complete existing table set.",
     "gardenIntegrationNeed": "Current garden/cloud-domain.mjs reads envelope.data.tables.companion_pets/accounts; new companion module data.tables must be supported in the same save/locked inventory transaction, preserving old generic format reads.",
+    "gardenGrowthAdapter": "companions/cloud-growth.mjs exports pure async awardBattleResult({envelope,ownerAccountId,petId,sessionId,won,mode,actionId,now}) -> {envelope,reward}; shared growth.mjs is used by both local SQLite service and cloud.05 must verify server battle then commit same companion/inventory/world fragments once. No DB write/transport inside adapter.",
+    "requiredCloudCommands": "Coordinator requires02 legitimate cloud adoption/rename/selections/desktop/authorized appearance commands through08 cloudActor and protected commit_authority, with owned pet registration and no client-provided growth/inventory. Implementation now continuing.",
     "identityCheckpoint": "Approved f81008c / implementation ee36030 merged. Stable text actor.ownerAccountId, authUserId and deviceId remain separate; no UUID/petId rewrite.",
     "identityIntegrationNeed": "Existing verified pre-Accounts aliases remain supported. Await explicit Accounts authorization hook if a linked legacy alias differs from the new Auth identity subject; no username or renderer owner matching.",
     "criticalOwnerPetPair": "Old ownerA and ownerB can both own original pet-001. Draft08 20261025021759_lingjing_protected_save_cas.sql owned_pet_ids currently has global pet_id PK and commit_authority rejects same ID under another owner. Must use (owner_id,pet_id) composite ownership and owner-specific lookups before deployment; never rename legacy IDs. Two-owner actual SQLite backup regression added.",
@@ -71,6 +73,7 @@
     }
   ],
   "remaining": [
+    "Implement and publish controlled cloud companion command entry and main IPC adapter using approved08 cloudActor",
     "production adapter registration after08 verified old-envelope normalization",
     "Accounts protected personal-field and verified alias integration",
     "08 cloud owned-pet ownership must use owner+petId; global legacy petId uniqueness is incompatible",
