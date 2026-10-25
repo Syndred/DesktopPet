@@ -42,13 +42,15 @@ export async function launchPortableSession({executable,profile,expectedSource,l
   try{
     const targets=await pollState(async()=>{if(failure)throw failure;try{const response=await fetch(`http://127.0.0.1:${nodePort}/json/list`,{signal:AbortSignal.timeout(400)});return response.ok?await response.json():[];}catch{return[];}},rows=>rows.some(row=>row.webSocketDebuggerUrl),{timeoutMs:60000,label:'Real portable did not expose its owned main inspector'});
     connection=await inspector(targets.find(row=>row.webSocketDebuggerUrl).webSocketDebuggerUrl);
+    // The Node inspector can listen before Electron registers its built-in
+    // module aliases. A real renderer exists only after that initialization.
+    await pollState(async()=>{try{const response=await fetch(`http://127.0.0.1:${browserPort}/json/list`,{signal:AbortSignal.timeout(400)});return response.ok?await response.json():[];}catch{return[];}},rows=>rows.some(row=>row.type==='page'),{timeoutMs:60000,label:'Real portable did not open its renderer'});
     runtime=await main(({app})=>({pid:process.pid,electron:process.versions.electron,node:process.versions.node,profileOverride:process.env.PET_USER_DATA_DIR,userData:app.getPath('userData'),resourcesPath:process.resourcesPath}));
     assert.ok(runtime.electron);assert.equal(resolve(runtime.profileOverride||''),profile,'Refuse a portable process without the exact isolated profile override');
     // Inspector starts before the application module applies its profile path.
     // Wait for that actual startup contract before observing/instrumenting main.
     await pollState(()=>main(({app})=>({ready:app.isReady(),profile:app.getPath('userData')})),value=>value.ready&&resolve(value.profile)===profile,{timeoutMs:30000,label:'Portable startup did not apply its exact isolated profile'});
     runtime.userData=profile;assert.ok(runtime.resourcesPath.includes('resources'));
-    await pollState(async()=>{try{const response=await fetch(`http://127.0.0.1:${browserPort}/json/list`,{signal:AbortSignal.timeout(400)});return response.ok?await response.json():[];}catch{return[];}},rows=>rows.some(row=>row.type==='page'),{timeoutMs:60000,label:'Real portable did not open its renderer'});
     browser=await chromium.connectOverCDP(`http://127.0.0.1:${browserPort}`);
     const page=await pollState(async()=>browser.contexts().flatMap(context=>context.pages()).find(page=>page.url().includes('/app.asar/')&&page.url().includes('/ui/index.html')),Boolean);
     await page.waitForFunction(()=>Boolean(window.lingjing));page.setDefaultTimeout(25000);
