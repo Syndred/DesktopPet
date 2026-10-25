@@ -2,65 +2,22 @@ const fs = require('node:fs/promises');
 const path = require('node:path');
 const { createHash } = require('node:crypto');
 
-const ACTIONS = Object.freeze(['idle', 'blink', 'walk', 'wave', 'eat', 'attack_windup', 'attack_release', 'attack', 'hit', 'skill', 'victory', 'sleep']);
+const { ACTIONS, DEFAULT_CALIBRATION, createPreferenceValidators } = require('./preferences.mjs');
 const LIMITS = Object.freeze({ file: 128 * 1024 * 1024, total: 256 * 1024 * 1024, json: 4 * 1024 * 1024, files: 128, pixels: 4096 * 4096 });
-const DEFAULT_CALIBRATION = Object.freeze({ scale: 1, rotationDeg: 0, verticalOffset: 0, mirrorX: false, anchorX: 0.5, anchorY: 0.85, fps: 0 });
+
 class ResourceError extends Error {
   constructor(code, message, details = {}) { super(message); this.name = 'ResourceError'; this.code = code; this.details = details; }
 }
 function fail(code, message) { throw new ResourceError(code, message); }
 function plain(value) { return value && typeof value === 'object' && !Array.isArray(value); }
 function text(value, max = 500) { return typeof value === 'string' ? value.trim().slice(0, max) : ''; }
-function numeric(value, fallback, min, max, field) {
-  if (value === undefined) return fallback;
-  if (typeof value !== 'number' || !Number.isFinite(value) || value < min || value > max) fail('INVALID_CALIBRATION', `${field} 超出允许范围`);
-  return value;
-}
-function calibration(value = {}) {
-  if (!plain(value)) fail('INVALID_CALIBRATION', '校准参数格式错误');
-  if (value.mirrorX !== undefined && typeof value.mirrorX !== 'boolean') fail('INVALID_CALIBRATION', '翻转参数格式错误');
-  if (typeof value.fps === 'number' && value.fps > 0 && value.fps < 1) fail('INVALID_CALIBRATION', '自定义帧率应为 1 到 60，或使用动作原始帧率');
-  return {
-    scale: numeric(value.scale, 1, 0.25, 3, '大小'),
-    rotationDeg: numeric(value.rotationDeg ?? value.yawDeg, 0, -180, 180, '旋转'),
-    verticalOffset: numeric(value.verticalOffset, 0, -0.5, 0.5, '垂直位置'),
-    mirrorX: value.mirrorX ?? false,
-    anchorX: numeric(value.anchorX, 0.5, 0, 1, '横向锚点'),
-    anchorY: numeric(value.anchorY, 0.85, 0, 1, '纵向锚点'),
-    fps: numeric(value.fps, 0, 0, 60, '播放帧率'),
-  };
-}
-function calibrations(value = {}) {
-  if (!plain(value)) fail('INVALID_CALIBRATION', '校准参数格式错误');
-  return { desktop: calibration(value.desktop), battle: calibration(value.battle) };
-}
+const { calibration, calibrations, actionMap } = createPreferenceValidators(fail);
 function provenance(value = {}, trustedStatus = 'unverified') {
   return {
     author: text(value.author, 120) || '未提供作者', source: text(value.source, 1000) || '本地导入',
     license: text(value.license, 240) || '授权未确认', licenseUrl: text(value.licenseUrl, 1000),
     attribution: text(value.attribution, 2000), status: trustedStatus,
   };
-}
-function actionMap(value, clips, strict = false) {
-  if (value !== undefined && !plain(value)) fail('INVALID_ACTION_MAP', '动作映射格式错误');
-  const names = new Set(clips.map(clip => clip.name));
-  const patterns = {
-    idle: /idle|stand|静|待机/i, blink: /blink|眨眼/i, walk: /walk|run|move|走|跑/i, wave: /wave|greet|招手/i, eat: /eat|feed|chew|进食|吃/i,
-    attack_windup: /attack[_ -]?(?:windup|start)|攻击起手|蓄势/i, attack_release: /attack[_ -]?(?:release|strike)|攻击释放/i, attack: /attack|bite|punch|攻击/i,
-    hit: /hit|hurt|damage|受击/i, skill: /skill|cast|spell|技能/i, victory: /victory|win|dance|胜利/i, sleep: /sleep|rest|睡/i,
-  };
-  return Object.fromEntries(ACTIONS.map(action => {
-    if (value && Object.hasOwn(value, action)) {
-      const clip = value[action];
-      if (clip !== null && (typeof clip !== 'string' || !names.has(clip))) {
-        if (strict) fail('UNKNOWN_CLIP', `${action} 映射的动画不存在`);
-        return [action, null];
-      }
-      return [action, clip];
-    }
-    const preferredIdle = action === 'idle' ? clips.find(clip => /(^|[|:_])idle(?:norm)?$/i.test(clip.name)) : null;
-    return [action, clips.find(clip => clip.name === action)?.name ?? preferredIdle?.name ?? clips.find(clip => patterns[action].test(clip.name))?.name ?? (action === 'idle' ? clips[0]?.name ?? null : null)];
-  }));
 }
 function safeRelative(value) {
   if (typeof value !== 'string' || value.length > 500 || !value || /[\\\x00-\x1f:%?#]/.test(value)) fail('UNSAFE_PATH', '资源路径必须是包内相对路径');

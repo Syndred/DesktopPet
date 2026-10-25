@@ -1,0 +1,91 @@
+{
+  "at": "2026-10-25T03:52:37.150Z",
+  "scope": "Actual distinct portable EXE selection and launcher, same fresh path-bound QA SQLite profile across versions. Binary/source selection, persisted owner/pet/growth and tamper refusal; no cloud-schema rollback or two-physical-device claim.",
+  "scenario": {
+    "schemaVersion": 1,
+    "application": "lingjing",
+    "scenario": "unified-battle",
+    "runId": "7ddc2ddd-396a-4015-adfa-046acb37d50f",
+    "isolated": true,
+    "profilePath": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\artifacts\\qa\\unified-battle\\qa-1792900357141-7ddc2ddd",
+    "createdAt": "2026-10-25T03:52:37.142Z",
+    "env": {
+      "LINGJING_QA_SCENARIO": "unified-battle",
+      "PET_USER_DATA_DIR": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\artifacts\\qa\\unified-battle\\qa-1792900357141-7ddc2ddd"
+    }
+  },
+  "stateDirectory": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\artifacts\\foundation\\cloud-engineering\\rollback\\run-1792900357101\\selection",
+  "checks": [
+    {
+      "id": "candidate-selected-and-real-launcher-created-owned-data",
+      "version": "engineering-rc-7d5ef74",
+      "source": "7d5ef74cf55b4257e0072c2c1a4e81663db84ea6",
+      "sha256": "d5f06ea30ac6bd2b69441152eaffb4971e4001a2ecf1b367e081ab0336506827",
+      "pid": 20892,
+      "owner": "qa:7ddc2ddd-396a-4015-adfa-046acb37d50f:local-cf723ea9-aff9-47c5-8697-0a75e2a4eca8",
+      "petId": "pet-3a7f6fc8-1759-4672-908b-f1f57119419a",
+      "loadedUrl": "file:///C:/Users/ADMINI~1/AppData/Local/Temp/3LAbxBfMfpICNBIMeACK9o5weBj/resources/app.asar/apps/pc-app/dist/ui/index.html#/companions",
+      "profile": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\artifacts\\qa\\unified-battle\\qa-1792900357141-7ddc2ddd"
+    },
+    {
+      "id": "previous-selected-and-real-launcher-restored-same-owned-data",
+      "version": "engineering-rc-09af97f",
+      "source": "09af97f0a92677f417b3e33aa352d7ad018eb08e",
+      "sha256": "2f6eb365d9ee18d09da3a6d9723ff7103754c6f0b1d8ce8def1005ce12570f7f",
+      "pid": 23300,
+      "owner": "qa:7ddc2ddd-396a-4015-adfa-046acb37d50f:local-cf723ea9-aff9-47c5-8697-0a75e2a4eca8",
+      "petId": "pet-3a7f6fc8-1759-4672-908b-f1f57119419a",
+      "loadedUrl": "file:///C:/Users/ADMINI~1/AppData/Local/Temp/3LAaIPcx8E2UClfQxAPe67ebDoD/resources/app.asar/apps/pc-app/dist/ui/index.html#/companions",
+      "profile": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\artifacts\\qa\\unified-battle\\qa-1792900357141-7ddc2ddd"
+    },
+    {
+      "id": "same-sqlite-domain-rows-and-integrity-after-binary-rollback",
+      "owner": "qa:7ddc2ddd-396a-4015-adfa-046acb37d50f:local-cf723ea9-aff9-47c5-8697-0a75e2a4eca8",
+      "petId": "pet-3a7f6fc8-1759-4672-908b-f1f57119419a",
+      "before": {
+        "identity": {
+          "owner_account_id": "qa:7ddc2ddd-396a-4015-adfa-046acb37d50f:local-cf723ea9-aff9-47c5-8697-0a75e2a4eca8",
+          "account": "qa_rollback_1792900357449",
+          "username": "回滚原档验证"
+        },
+        "pet": {
+          "owner_account_id": "qa:7ddc2ddd-396a-4015-adfa-046acb37d50f:local-cf723ea9-aff9-47c5-8697-0a75e2a4eca8",
+          "pet_id": "pet-3a7f6fc8-1759-4672-908b-f1f57119419a",
+          "data_json": "{\"ownerAccountId\":\"qa:7ddc2ddd-396a-4015-adfa-046acb37d50f:local-cf723ea9-aff9-47c5-8697-0a75e2a4eca8\",\"petId\":\"pet-3a7f6fc8-1759-4672-908b-f1f57119419a\",\"templateId\":\"animal-wood-deer\",\"name\":\"回滚保留的青芽\",\"serial\":\"3A7F6FC8\",\"element\":\"wood\",\"resource\":{\"resourceId\":\"builtin:lingjing-qingya-v1\",\"kind\":\"2d\"},\"source\":\"adoption\",\"origin\":{},\"growth\":{\"level\":1,\"experience\":0,\"mood\":60,\"satiety\":60,\"affinity\":0,\"winsTotal\":0,\"stats\":{\"hp\":130,\"atk\":26,\"def\":26,\"spd\":18}},\"desktop\":{\"visible\":false,\"behavior\":\"quiet\",\"scale\":1,\"position\":{\"x\":80,\"y\":520,\"displayId\":null}},\"revision\":1,\"createdAt\":\"2026-10-25T03:52:48.441Z\",\"updatedAt\":\"2026-10-25T03:52:48.441Z\"}"
+        },
+        "legacyJsonExists": false
+      },
+      "after": {
+        "identity": {
+          "owner_account_id": "qa:7ddc2ddd-396a-4015-adfa-046acb37d50f:local-cf723ea9-aff9-47c5-8697-0a75e2a4eca8",
+          "account": "qa_rollback_1792900357449",
+          "username": "回滚原档验证"
+        },
+        "pet": {
+          "owner_account_id": "qa:7ddc2ddd-396a-4015-adfa-046acb37d50f:local-cf723ea9-aff9-47c5-8697-0a75e2a4eca8",
+          "pet_id": "pet-3a7f6fc8-1759-4672-908b-f1f57119419a",
+          "data_json": "{\"ownerAccountId\":\"qa:7ddc2ddd-396a-4015-adfa-046acb37d50f:local-cf723ea9-aff9-47c5-8697-0a75e2a4eca8\",\"petId\":\"pet-3a7f6fc8-1759-4672-908b-f1f57119419a\",\"templateId\":\"animal-wood-deer\",\"name\":\"回滚保留的青芽\",\"serial\":\"3A7F6FC8\",\"element\":\"wood\",\"resource\":{\"resourceId\":\"builtin:lingjing-qingya-v1\",\"kind\":\"2d\"},\"source\":\"adoption\",\"origin\":{},\"growth\":{\"level\":1,\"experience\":0,\"mood\":60,\"satiety\":60,\"affinity\":0,\"winsTotal\":0,\"stats\":{\"hp\":130,\"atk\":26,\"def\":26,\"spd\":18}},\"desktop\":{\"visible\":false,\"behavior\":\"quiet\",\"scale\":1,\"position\":{\"x\":80,\"y\":520,\"displayId\":null}},\"revision\":1,\"createdAt\":\"2026-10-25T03:52:48.441Z\",\"updatedAt\":\"2026-10-25T03:52:48.441Z\"}"
+        },
+        "legacyJsonExists": false
+      }
+    },
+    {
+      "id": "tampered-real-exe-refused-before-pointer-change"
+    }
+  ],
+  "artifacts": [
+    {
+      "version": "engineering-rc-09af97f",
+      "source": "09af97f0a92677f417b3e33aa352d7ad018eb08e",
+      "sha256": "2f6eb365d9ee18d09da3a6d9723ff7103754c6f0b1d8ce8def1005ce12570f7f"
+    },
+    {
+      "version": "engineering-rc-7d5ef74",
+      "source": "7d5ef74cf55b4257e0072c2c1a4e81663db84ea6",
+      "sha256": "d5f06ea30ac6bd2b69441152eaffb4971e4001a2ecf1b367e081ab0336506827"
+    }
+  ],
+  "sameRuntimeSourceFingerprint": true,
+  "passed": true,
+  "completedAt": "2026-10-25T03:53:08.778Z"
+}

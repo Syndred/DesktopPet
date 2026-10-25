@@ -26,16 +26,16 @@
   },
   "migrations": [
     {
-      "path": "infra/supabase/migrations/20261025020540_lingjing_battle_jwt_rooms.sql",
+      "path": "infra/supabase/migrations/20261025034744_lingjing_battle_jwt_rooms.sql",
       "createdWith": "Supabase CLI 2.122.0 migration new lingjing_battle_jwt_rooms --workdir infra",
-      "dependsOn": "08 identity, protected CAS, immutable session revocation ledger and 20261025033602_lingjing_transaction_actor_guard.sql",
+      "dependsOn": "08 identity, protected CAS, immutable session revocation ledger and 20261025034106_lingjing_transaction_actor_guard.sql",
       "localPostgresExecuted": true,
       "productionAppliedByThisChat": false,
       "readyForReview": true,
       "remoteStateVerified": "Read-only list_migrations 2026-10-25: battle migration was not applied, so staged level/lock additions do not rewrite an applied migration"
     },
     {
-      "path": "infra/supabase/migrations/20261025024552_lingjing_battle_authority_save.sql",
+      "path": "infra/supabase/migrations/20261025034748_lingjing_battle_authority_save.sql",
       "createdWith": "Supabase CLI2.122.0 migration new lingjing_battle_authority_save --workdir infra",
       "dependsOn": "08 protected_save_cas + assert_service_actor and 04 battle_jwt_rooms",
       "localPostgresExecuted": true,

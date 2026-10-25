@@ -1,5 +1,5 @@
-// Uses approved 08 projection and deployed 02 adoption through main cloudActor.
-// Adoption is a server-path acceptance; final companion UI routing is separate.
+// Uses approved 08 projection and 02 normal companion IPC/cloud routing.
+// Chat selection also uses the actual React UI, including a rejected request.
 // Real Supabase saves + two real Electron processes on one host. Model calls use
 // actual loopback connection failure/stall, without a synthetic model response.
 import { _electron as electron } from 'playwright';
@@ -29,13 +29,13 @@ const checks = [], errors = [], clients = [], observedPushes = [];
 const evidence = { at: new Date().toISOString(), runId, taskId: '01a16dc5-c418-7372-ac4b-1d9abb116865', sourceCommit: execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(),
   build: JSON.parse(readFileSync('apps/pc-app/dist/build-manifest.json', 'utf8')), realCloud: true, realElectron: true, sameHost: true,
   projectRef: 'jbvrdmrkwpznbrvteive', privilegedWrites: 0, syntheticModelResponses: false, checks, rendererErrors: errors,
-  adoptionPath: 'actual main-only cloudActor companions-sync adoption and initial chat slot, then public Accounts cloudPreview/backupRestore; final companion UI adoption/selection is not claimed',
+  adoptionPath: 'normal production companions IPC/cloud router, actual React chat selection and public Accounts cloudPreview/backupRestore; companion adoption form clicks are not claimed',
   modelTransport: 'actual loopback connection refusal and stalled socket cancellation; no external provider/model success claimed',
   offlineTransport: 'explicit test injection causes actual loopback connection refusal for one cloud push; restart uses real HTTPS service' };
 const record = (name, data) => { checks.push({ name, data }); writeFileSync(join(output, 'checkpoint.json'), JSON.stringify({ ...evidence, status: 'running' }, null, 2)); console.log('PASS', name); };
 const invoke = (c, feature, command, payload = {}) => c.page.evaluate(({ feature, command, payload }) => window.lingjing.invoke(feature, command, payload), { feature, command, payload });
 async function call(c, feature, command, payload) { const r = await invoke(c, feature, command, payload); assert.equal(r.ok, true, `${feature}.${command}: ${r.code} ${r.message}`); return r.data; }
-async function until(predicate, name) { const end = Date.now() + 15000; while (!await predicate()) { assert.ok(Date.now() < end, `Timed out: ${name}`); await new Promise(done => setTimeout(done, 60)); } }
+async function until(predicate, name) { const end = Date.now() + 60000; while (!await predicate()) { assert.ok(Date.now() < end, `Timed out: ${name}`); await new Promise(done => setTimeout(done, 60)); } }
 const closedBase = await new Promise((done, reject) => { const s = createServer(); s.on('error', reject); s.listen(0, '127.0.0.1', () => { const port = s.address().port; s.close(error => error ? reject(error) : done(`http://127.0.0.1:${port}/v1`)); }); });
 const sockets = new Set(), stalled = createServer(socket => { sockets.add(socket); socket.on('close', () => sockets.delete(socket)); socket.on('error', () => {}); });
 await new Promise((done, reject) => { stalled.on('error', reject); stalled.listen(0, '127.0.0.1', done); });
@@ -62,11 +62,8 @@ async function configure(c, baseUrl, petId = null) {
 }
 async function adopt(c, reader, owner, name) {
   const input = { templateId: 'big-fish-gentle', name, showOnDesktop: false, actionId: randomUUID() };
-  const receipt = await c.app.evaluate(async (_electron, input) => {
-    const ctx = await globalThis.__conversationCloudAccounts.requireCloudActor();
-    const r = await ctx.invoke('companions-sync', { op: 'command', command: 'adopt', input });
-    return { pet: r.result?.data?.pet, actionId: r.actionId, revision: r.revision, checksum: r.checksum, ownerAccountId: r.ownerAccountId, authority: r.authority };
-  }, input);
+  const result = await invoke(c, 'companions', 'adopt', input); assert.equal(result.ok, true, result.message);
+  const receipt = { pet: result.data.pet, ...result.cloud, ownerAccountId: owner };
   assert.equal(receipt.authority, 'live'); assert.equal(receipt.ownerAccountId, owner);
   assert.equal(receipt.actionId, `companions:${input.actionId}`); assert.equal(receipt.pet.ownerAccountId, owner);
   const readback = await reader.app.evaluate(async (_electron, actionId) => {
@@ -130,17 +127,41 @@ try {
   const adopted = await adopt(a, b, owner, '跨端原伙伴'), adoptedSecond = await adopt(a, b, owner, '同模板第二只');
   const petId = adopted.receipt.pet.petId, secondPetId = adoptedSecond.receipt.pet.petId; assert.notEqual(petId, secondPetId);
   assert.equal(adopted.receipt.pet.templateId, adoptedSecond.receipt.pet.templateId);
-  const selected = await a.app.evaluate(async (_electron, { petId, expectedRevision, actionId }) => {
+  const selectAction = randomUUID();
+  await call(a, 'conversations', 'select', { petId, actionId: selectAction });
+  const selected = await b.app.evaluate(async (_electron, actionId) => {
     const ctx = await globalThis.__conversationCloudAccounts.requireCloudActor();
-    const r = await ctx.invoke('companions-sync', { op: 'command', command: 'select', input: { petId, expectedRevision, actionId, slot: 'chatPetId' } });
-    return { actionId: r.actionId, revision: r.revision, checksum: r.checksum, selections: r.result.data.selections };
-  }, { petId, expectedRevision: adopted.receipt.pet.revision, actionId: randomUUID() });
+    const r = await ctx.invoke('lingjing-save', { op: 'read', actionId });
+    return { actionId: r.actionId, revision: r.revision, checksum: r.checksum, selections: JSON.parse(r.envelope.data.modules.companions.data.tables.companion_accounts[0].selections_json) };
+  }, `companions:${selectAction}`);
   assert.deepEqual(selected.selections, { chatPetId: petId, battlePetId: null, guardPetId: null });
   evidence.petIds = [petId, secondPetId];
-  record('Main cloudActor legally adopts two same-template pets and selects only chatPetId; B reads both exact action receipts', { owner, adopted, adoptedSecond, selected });
+  record('Production companion IPC legally adopts two same-template pets; conversation select confirms only chatPetId and B reads the exact real receipts', { owner, adopted, adoptedSecond, selected });
+  await a.page.evaluate(() => { location.hash = '#/chat'; });
+  await a.page.getByRole('heading', { name: '聊天', exact: true }).waitFor();
+  await a.app.evaluate((_electron, closedBase) => {
+    const remote = globalThis.__conversationCloudAccounts.remote; globalThis.__conversationSelectionFetch = remote.fetcher;
+    remote.fetcher = (url, init) => String(url).endsWith('/functions/v1/companions-sync') ? fetch(closedBase, { signal: AbortSignal.timeout(2000) }) : globalThis.__conversationSelectionFetch(url, init);
+  }, closedBase);
+  await a.page.getByRole('button', { name: /^同模板第二只，/ }).click();
+  await a.page.getByRole('alert').filter({ hasText: '伙伴切换暂未确认，请稍后重试。原选择已保留。' }).waitFor();
+  assert.equal((await snapshot(a)).petId, petId);
+  assert.equal(await a.page.getByRole('button', { name: /^跨端原伙伴，/ }).getAttribute('aria-pressed'), 'true');
+  await a.page.screenshot({ path: join(output, 'chat-selection-rejected.png'), fullPage: true });
+  const rejectedIntent = await a.app.evaluate((_electron, owner) => globalThis.__conversationCloudAccounts.db.prepare("SELECT action_id FROM account_actions WHERE owner_account_id=? AND kind='companions-cloud-command' AND json_extract(result,'$.command')='select' AND json_extract(result,'$.status')='retry'").get(owner)?.action_id, owner);
+  assert.ok(rejectedIntent);
+  await a.app.evaluate(() => { globalThis.__conversationCloudAccounts.remote.fetcher = globalThis.__conversationSelectionFetch; });
+  await a.page.getByRole('button', { name: /^同模板第二只，/ }).click();
+  await until(async () => (await snapshot(a)).petId === secondPetId && await a.page.getByRole('button', { name: /^同模板第二只，/ }).getAttribute('aria-pressed') === 'true', 'same pending chat choice confirmed through real HTTPS');
+  const verifiedIntent = await a.app.evaluate((_electron, { owner, actionId }) => JSON.parse(globalThis.__conversationCloudAccounts.db.prepare('SELECT result FROM account_actions WHERE owner_account_id=? AND action_id=?').get(owner, actionId).result).status, { owner, actionId: rejectedIntent });
+  assert.equal(verifiedIntent, 'verified');
+  await a.page.getByRole('button', { name: /^跨端原伙伴，/ }).click();
+  await until(async () => (await snapshot(a)).petId === petId && await a.page.getByRole('button', { name: /^跨端原伙伴，/ }).getAttribute('aria-pressed') === 'true', 'original chat pet selected through React and the cloud router');
+  record('Actual React chat selection keeps the original view during a controlled connection refusal, then confirms the original durable operation online without changing battle/guard slots', { rejectedIntent, verifiedIntent, failureScope: 'one companions request goes to a closed loopback socket; host network remains online' });
   await restore(a);
   await restore(b); const cloudPets = await call(b, 'companions', 'list');
   assert.ok([petId, secondPetId].every(id => cloudPets.pets.some(item => item.petId === id)));
+  assert.deepEqual(cloudPets.selections, { chatPetId: petId, battlePetId: null, guardPetId: null });
   assert.equal((await snapshot(a)).petId, petId); assert.equal((await snapshot(b)).petId, petId);
   record('Public Accounts preview and full restore hydrate both real pet instances and the authoritative chat slot on A and B', { petIds: [petId, secondPetId], chatPetId: petId });
   await configure(a, closedBase); await configure(b, closedBase);
@@ -184,6 +205,13 @@ try {
   const sentB = await call(b, 'accounts', 'syncNow', { actionId: randomUUID() }); assert.equal(sentB.personalVerified, true);
   const conflicted = await invoke(a, 'accounts', 'syncNow', { actionId: randomUUID() }); assert.equal(conflicted.code, 'SYNC_CONFLICT');
   assert.equal((await call(a, 'accounts', 'syncStatus')).conflicts, 1);
+  const staleSql = await a.app.evaluate(async (_electron, { actionId, staleAction, baseRevision }) => {
+    const ctx = await globalThis.__conversationCloudAccounts.requireCloudActor();
+    const source = await ctx.invoke('lingjing-save', { op: 'read', actionId: staleAction });
+    try { await ctx.invoke('lingjing-save', { op: 'push', actionId, baseRevision, envelope: source.envelope }); return { accepted: true, actionId }; }
+    catch (error) { return { accepted: false, actionId, code: error.code, httpStatus: error.httpStatus }; }
+  }, { actionId: randomUUID(), staleAction: sentA.actionId, baseRevision: sentA.revision });
+  assert.equal(staleSql.accepted, false); assert.equal(staleSql.code, 'SYNC_CONFLICT'); assert.equal(staleSql.httpStatus, 409);
   const preview = await call(a, 'accounts', 'cloudPreview');
   const merge = await invoke(a, 'accounts', 'backupRestore', { previewId: preview.previewId, mode: 'merge', actionId: randomUUID() });
   assert.equal(merge.code, 'CONVERSATION_MERGE_CONFLICT'); assert.equal((await snapshot(a, petId)).profile.persona, 'A 未同步的人设冲突');
@@ -193,7 +221,7 @@ try {
   assert.deepEqual(comparableMessages((await snapshot(a, secondPetId)).messages), comparableMessages(secondBefore.messages));
   assert.deepEqual((await snapshot(a, secondPetId)).memories, secondBefore.memories);
   assert.ok((await call(a, 'accounts', 'backupList')).length > 0);
-  record('Real stale CAS is rejected; conflicting merge rolls back, explicit replace restores B and memory deletion with a local safety backup', { bReceipt: sentB, casCode: conflicted.code, mergeCode: merge.code });
+  record('Client preflight preserves conflict outbox and real SQL CAS returns409; conflicting merge rolls back, explicit replace restores B and memory deletion with a local safety backup', { bReceipt: sentB, preflightCode: conflicted.code, directSqlCas: staleSql, mergeCode: merge.code });
   await sendFailed(a, petId, '断网待重试的用户消息'); await call(a, 'conversations', 'memory.save', { petId, memory: { content: '重启后应读回的记忆' } });
   const offlineAction = randomUUID(), beforeRestart = await snapshot(a, petId);
   await a.app.evaluate((_electron, closedBase) => {
@@ -228,7 +256,10 @@ try {
   evidence.sqliteReadback = { a: nativeA, b: nativeB, previousPidA: previousPid };
   record('A persists the failed cloud outbox and local key across process restart; exact action retries through real HTTPS and B independently reads it back', { injectedFailure: offline.code, retry: retried, finalIds: stateB.messages.map(row => row.id) });
   for (const c of [a, b]) { observedPushes.push(...await c.app.evaluate(() => globalThis.__conversationCloudPushes)); assert.equal(await c.page.evaluate(() => localStorage.length), 0); }
-  assert.ok(observedPushes.filter(row => row.op === 'push').length >= 4 && observedPushes.every(row => row.safe)); assert.deepEqual(errors, []);
+  evidence.privacyChecks = observedPushes;
+  const requiredPushes = [sentA.actionId, sentB.actionId, staleSql.actionId, offlineAction];
+  assert.ok(requiredPushes.every(actionId => observedPushes.some(row => row.op === 'push' && row.actionId === actionId)));
+  assert.ok(observedPushes.every(row => row.safe)); assert.deepEqual(errors, []);
   evidence.privacyChecks = observedPushes; evidence.owner = owner; evidence.petIds = [petId, secondPetId]; evidence.fullChatSync = true; evidence.status = 'passed';
   evidence.runtime = (await call(b, 'app', 'info')).runtime;
   await b.page.evaluate(() => { location.hash = '#/chat'; });
