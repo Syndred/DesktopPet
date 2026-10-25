@@ -1,0 +1,274 @@
+{
+  "at": "2026-10-25T04:30:01.598Z",
+  "status": "passed",
+  "taskId": "01a16dc5-c418-7372-ac4b-1d9abb116865",
+  "runId": "286aea84-cbe7-4f77-9d14-9cc6fd249476",
+  "sourceCommit": "de1a2d36915af3f61465ef0d724e923574b8ffd9",
+  "method": "Post-exit DatabaseSync readOnly with query_only; current DB/auth-link/device files compared to the matching live run, not an independent reviewer",
+  "owner": "account:fced51d4-f4bb-48ef-9073-eea9d93cf3b3",
+  "petIds": [
+    "pet-801cfd4c-29a3-4b0e-98fd-3d11d104cc5a",
+    "pet-9d792824-56eb-4ccd-9418-c260d60c497a"
+  ],
+  "checks": [
+    "same real Auth UID and owner, distinct stable devices",
+    "same per-pet message IDs/order/content and terminal states",
+    "same persona/memory and deletion outcome",
+    "same local per-scope ciphertexts across restart; different devices retain different ciphertexts",
+    "only chatPetId selected; battle/guard remain null"
+  ],
+  "audited": {
+    "a": {
+      "identity": {
+        "owner_account_id": "account:fced51d4-f4bb-48ef-9073-eea9d93cf3b3",
+        "auth_user_id": "daaad53a-0bc2-4550-8f9e-6ba47cc256d3"
+      },
+      "deviceId": "08fdb088-f2d3-4bd8-99d8-506982d012cf",
+      "profile": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-conversations\\DesktopPet\\artifacts\\conversations\\cloud-sync\\run-1792902441808\\profile-a",
+      "pid": 23740,
+      "selections": {
+        "chatPetId": "pet-801cfd4c-29a3-4b0e-98fd-3d11d104cc5a",
+        "battlePetId": null,
+        "guardPetId": null
+      },
+      "rows": [
+        {
+          "sequence": 7,
+          "id": "f0e465c4-e6e5-4b52-91b0-9e402f42e003",
+          "pet_id": "pet-801cfd4c-29a3-4b0e-98fd-3d11d104cc5a",
+          "action_id": "25ae7c92-efa7-4816-8350-c6cd1de9945a",
+          "role": "user",
+          "status": "complete",
+          "contentHash": "1f26998fdfd1a9b621ab80e4e3ae9e5b7569fab2717a024e52a696a4c2f0b892"
+        },
+        {
+          "sequence": 8,
+          "id": "200726c4-7faf-49df-93ed-bd4187d9d245",
+          "pet_id": "pet-801cfd4c-29a3-4b0e-98fd-3d11d104cc5a",
+          "action_id": "25ae7c92-efa7-4816-8350-c6cd1de9945a",
+          "role": "assistant",
+          "status": "failed",
+          "contentHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "sequence": 9,
+          "id": "1b8c5cf8-5ac5-43dd-9a30-d1b45157d101",
+          "pet_id": "pet-801cfd4c-29a3-4b0e-98fd-3d11d104cc5a",
+          "action_id": "f941a8be-c707-486b-ae9d-86aa8b75ae4a",
+          "role": "user",
+          "status": "complete",
+          "contentHash": "c105e8a13722b5eeec7f57bb5ee3865fc54b8c3c9073f7232581ca643f6f0225"
+        },
+        {
+          "sequence": 10,
+          "id": "860559ca-01b2-4914-9aee-824996a9a233",
+          "pet_id": "pet-801cfd4c-29a3-4b0e-98fd-3d11d104cc5a",
+          "action_id": "f941a8be-c707-486b-ae9d-86aa8b75ae4a",
+          "role": "assistant",
+          "status": "cancelled",
+          "contentHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "sequence": 11,
+          "id": "36f5ba6c-a2d9-427b-9fa9-4a8ad05721ca",
+          "pet_id": "pet-9d792824-56eb-4ccd-9418-c260d60c497a",
+          "action_id": "ce79b171-13a4-483c-bc04-af2ab8d3fdef",
+          "role": "user",
+          "status": "complete",
+          "contentHash": "b9ddc3140198ed9c9ea206912e98e215fd75462b2107e5da3cac01d13da7ed53"
+        },
+        {
+          "sequence": 12,
+          "id": "f2a1268f-7575-4761-b580-95c2ab8395df",
+          "pet_id": "pet-9d792824-56eb-4ccd-9418-c260d60c497a",
+          "action_id": "ce79b171-13a4-483c-bc04-af2ab8d3fdef",
+          "role": "assistant",
+          "status": "failed",
+          "contentHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "sequence": 13,
+          "id": "6d6306a6-bd8f-41c0-8985-476af8bc69ac",
+          "pet_id": "pet-801cfd4c-29a3-4b0e-98fd-3d11d104cc5a",
+          "action_id": "fede3c6b-bf80-46a4-834d-fe4e373ed958",
+          "role": "user",
+          "status": "complete",
+          "contentHash": "2e5298753bb320d22e95ba383529de8963feee128d34cca31669a0dd1b96b681"
+        },
+        {
+          "sequence": 14,
+          "id": "a085e523-2ee4-417b-aff9-94a196e73c17",
+          "pet_id": "pet-801cfd4c-29a3-4b0e-98fd-3d11d104cc5a",
+          "action_id": "fede3c6b-bf80-46a4-834d-fe4e373ed958",
+          "role": "assistant",
+          "status": "failed",
+          "contentHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ],
+      "memories": [
+        {
+          "id": "80f0ad10-982c-4243-9aac-b5bce2f6995e",
+          "pet_id": "pet-9d792824-56eb-4ccd-9418-c260d60c497a",
+          "contentHash": "d83bd63a5a23083e93ec20b3bbb55a06d8e0527119721a46cb7905f4599fac8c"
+        },
+        {
+          "id": "887b87e7-48de-41f4-bc58-368b97526d65",
+          "pet_id": "pet-801cfd4c-29a3-4b0e-98fd-3d11d104cc5a",
+          "contentHash": "e3e156920a1d7b360841af81a0f3440898b8ee6f537895c045d9924ace500e7f"
+        }
+      ],
+      "profiles": [
+        {
+          "pet_id": "pet-801cfd4c-29a3-4b0e-98fd-3d11d104cc5a",
+          "revision": 2,
+          "use_override": 0,
+          "personaHash": "a1d4c631722bdf66bcddfdef19f6178ed682c99c2845a3a7495b8c88600db696"
+        },
+        {
+          "pet_id": "pet-9d792824-56eb-4ccd-9418-c260d60c497a",
+          "revision": 1,
+          "use_override": 1,
+          "personaHash": "1d2c08fc5b1d2443ea5beb615f5c4d5363ed6b8f5007d6c1231fe7485cbd0863"
+        }
+      ],
+      "cipherHashes": [
+        {
+          "scope": "account",
+          "scopeId": "",
+          "hash": "dbd934c50b42a89a7983e0d182ddb4b542e4768fb28453b29bc11420f5dd87cc"
+        },
+        {
+          "scope": "pet",
+          "scopeId": "pet-9d792824-56eb-4ccd-9418-c260d60c497a",
+          "hash": "888ed81e498b348f78090226f34600d69e7b228d589247b7b96c796d3cfefd0d"
+        }
+      ]
+    },
+    "b": {
+      "identity": {
+        "owner_account_id": "account:fced51d4-f4bb-48ef-9073-eea9d93cf3b3",
+        "auth_user_id": "daaad53a-0bc2-4550-8f9e-6ba47cc256d3"
+      },
+      "deviceId": "70ecba21-5963-4a0d-862e-0adfe6f85aee",
+      "profile": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-conversations\\DesktopPet\\artifacts\\conversations\\cloud-sync\\run-1792902441808\\profile-b",
+      "pid": 18592,
+      "selections": {
+        "chatPetId": "pet-801cfd4c-29a3-4b0e-98fd-3d11d104cc5a",
+        "battlePetId": null,
+        "guardPetId": null
+      },
+      "rows": [
+        {
+          "sequence": 7,
+          "id": "f0e465c4-e6e5-4b52-91b0-9e402f42e003",
+          "pet_id": "pet-801cfd4c-29a3-4b0e-98fd-3d11d104cc5a",
+          "action_id": "25ae7c92-efa7-4816-8350-c6cd1de9945a",
+          "role": "user",
+          "status": "complete",
+          "contentHash": "1f26998fdfd1a9b621ab80e4e3ae9e5b7569fab2717a024e52a696a4c2f0b892"
+        },
+        {
+          "sequence": 8,
+          "id": "200726c4-7faf-49df-93ed-bd4187d9d245",
+          "pet_id": "pet-801cfd4c-29a3-4b0e-98fd-3d11d104cc5a",
+          "action_id": "25ae7c92-efa7-4816-8350-c6cd1de9945a",
+          "role": "assistant",
+          "status": "failed",
+          "contentHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "sequence": 9,
+          "id": "1b8c5cf8-5ac5-43dd-9a30-d1b45157d101",
+          "pet_id": "pet-801cfd4c-29a3-4b0e-98fd-3d11d104cc5a",
+          "action_id": "f941a8be-c707-486b-ae9d-86aa8b75ae4a",
+          "role": "user",
+          "status": "complete",
+          "contentHash": "c105e8a13722b5eeec7f57bb5ee3865fc54b8c3c9073f7232581ca643f6f0225"
+        },
+        {
+          "sequence": 10,
+          "id": "860559ca-01b2-4914-9aee-824996a9a233",
+          "pet_id": "pet-801cfd4c-29a3-4b0e-98fd-3d11d104cc5a",
+          "action_id": "f941a8be-c707-486b-ae9d-86aa8b75ae4a",
+          "role": "assistant",
+          "status": "cancelled",
+          "contentHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "sequence": 11,
+          "id": "36f5ba6c-a2d9-427b-9fa9-4a8ad05721ca",
+          "pet_id": "pet-9d792824-56eb-4ccd-9418-c260d60c497a",
+          "action_id": "ce79b171-13a4-483c-bc04-af2ab8d3fdef",
+          "role": "user",
+          "status": "complete",
+          "contentHash": "b9ddc3140198ed9c9ea206912e98e215fd75462b2107e5da3cac01d13da7ed53"
+        },
+        {
+          "sequence": 12,
+          "id": "f2a1268f-7575-4761-b580-95c2ab8395df",
+          "pet_id": "pet-9d792824-56eb-4ccd-9418-c260d60c497a",
+          "action_id": "ce79b171-13a4-483c-bc04-af2ab8d3fdef",
+          "role": "assistant",
+          "status": "failed",
+          "contentHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "sequence": 13,
+          "id": "6d6306a6-bd8f-41c0-8985-476af8bc69ac",
+          "pet_id": "pet-801cfd4c-29a3-4b0e-98fd-3d11d104cc5a",
+          "action_id": "fede3c6b-bf80-46a4-834d-fe4e373ed958",
+          "role": "user",
+          "status": "complete",
+          "contentHash": "2e5298753bb320d22e95ba383529de8963feee128d34cca31669a0dd1b96b681"
+        },
+        {
+          "sequence": 14,
+          "id": "a085e523-2ee4-417b-aff9-94a196e73c17",
+          "pet_id": "pet-801cfd4c-29a3-4b0e-98fd-3d11d104cc5a",
+          "action_id": "fede3c6b-bf80-46a4-834d-fe4e373ed958",
+          "role": "assistant",
+          "status": "failed",
+          "contentHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ],
+      "memories": [
+        {
+          "id": "80f0ad10-982c-4243-9aac-b5bce2f6995e",
+          "pet_id": "pet-9d792824-56eb-4ccd-9418-c260d60c497a",
+          "contentHash": "d83bd63a5a23083e93ec20b3bbb55a06d8e0527119721a46cb7905f4599fac8c"
+        },
+        {
+          "id": "887b87e7-48de-41f4-bc58-368b97526d65",
+          "pet_id": "pet-801cfd4c-29a3-4b0e-98fd-3d11d104cc5a",
+          "contentHash": "e3e156920a1d7b360841af81a0f3440898b8ee6f537895c045d9924ace500e7f"
+        }
+      ],
+      "profiles": [
+        {
+          "pet_id": "pet-801cfd4c-29a3-4b0e-98fd-3d11d104cc5a",
+          "revision": 2,
+          "use_override": 0,
+          "personaHash": "a1d4c631722bdf66bcddfdef19f6178ed682c99c2845a3a7495b8c88600db696"
+        },
+        {
+          "pet_id": "pet-9d792824-56eb-4ccd-9418-c260d60c497a",
+          "revision": 1,
+          "use_override": 1,
+          "personaHash": "1d2c08fc5b1d2443ea5beb615f5c4d5363ed6b8f5007d6c1231fe7485cbd0863"
+        }
+      ],
+      "cipherHashes": [
+        {
+          "scope": "account",
+          "scopeId": "",
+          "hash": "fccc0e04e8cdc42b6f81cc302ecc4c9e89ae14ddb4cb8dec5b60b51cea4df628"
+        },
+        {
+          "scope": "pet",
+          "scopeId": "pet-9d792824-56eb-4ccd-9418-c260d60c497a",
+          "hash": "12749ab3fdf7a8f5871882092845cf4d6c6096fa33232cb5fe13dc2263b61f8c"
+        }
+      ]
+    }
+  }
+}

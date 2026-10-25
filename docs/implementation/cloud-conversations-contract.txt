@@ -36,3 +36,5 @@ recovery/dialog/native材料保留原运行来源；旧历史QA身份/归档是�
 复现：设置LINGJING_PUBLIC_CONFIG为目标公开JSON，先npm run build:pc，再node apps/pc-app/runtime/features/conversations/tests/cloud-sync.acceptance.mjs。
 退出后读回：node apps/pc-app/runtime/features/conversations/tests/cloud-sqlite-readback.mjs 打印的运行目录/evidence.json。数据库、凭据及原始备份留在ignored artifacts，不提交。
 本模块无Supabase迁移或部署；由主协调集中部署。全项目EXE/其他领域的最终验收由主协调和01负责。
+
+4830619整合复核：同一正式链路在源码de1a2d36915af3f61465ef0d724e923574b8ffd9再次通过实际HTTPS双Electron6组和退出后SQLite5组；同SID刷新/重登区分及空模块校验和两项协议单元检查通过。证据见cloud-2026-10-25/baseline4830619/。仅消费主协调迁移重命名，不恢复旧文件名，不改冻结协议，不自行部署。
