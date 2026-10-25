@@ -93,3 +93,13 @@ test('PROTOCOL UNIT simulated: one session SDK reads current token after refresh
  await new Promise(r=>setImmediate(r));assert.equal(first.client.getChannels().length,0);
  await first.client.from('lingjing_accounts').select('owner_id');assert.notEqual(lastAuthorization,'Bearer updated.protocol.jwt');remote.dispose();
 });
+test('PROTOCOL UNIT simulated: async asset hydration rejects same-owner re-login but accepts same-SID refresh',async()=>{
+ let current,cloud;const f=fixture(async(url,options)=>{const body=JSON.parse(options.body);
+  if(body.op==='login'){current=bundle(options.headers['X-Lingjing-Device-Id']);return response(current);}return response(cloud||{actor:current.actor});});
+ await f.accounts.authenticate({provider:'runtime',account:'alice',password:'secret123'});const owner=f.accounts.requireOwner();cloud={revision:1,envelope:f.accounts.backups.snapshot(owner)};
+ const original=f.accounts.current.proof,oldSid=decodeProof(original).actor.sessionId;
+ f.accounts.backups.prepareCloud=async()=>{const next=decodeProof(f.accounts.current.proof);next.actor.sessionId=randomUUID();f.accounts.current.proof=JSON.stringify(next);};
+ await assert.rejects(f.accounts.sync.previewCloud(owner),{code:'SESSION_CHANGED'});assert.equal(f.accounts.backups.previews.size,0);
+ f.accounts.current.proof=original;f.accounts.backups.prepareCloud=async()=>{const next=decodeProof(f.accounts.current.proof);next.accessToken='refreshed.protocol.jwt';f.accounts.current.proof=JSON.stringify(next);};
+ const preview=await f.accounts.sync.previewCloud(owner);assert.ok(preview.previewId);assert.equal(decodeProof(f.accounts.current.proof).actor.sessionId,oldSid);
+});

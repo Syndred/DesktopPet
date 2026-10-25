@@ -9,6 +9,11 @@ function meaningfulData(data){
   return {...data,modules,tables:Object.fromEntries(Object.entries(data.tables).filter(([,table])=>table.rows?.length))};
 }
 function protectedData(data){const copy=meaningfulData(data);return {...copy,modules:Object.fromEntries(Object.entries(copy.modules).filter(([key])=>!personalModules.has(key)))};}
+function sameSession(current,expected){
+  if(!current||current.ownerAccountId!==expected.ownerAccountId||current.provider!==expected.provider)return false;
+  if(expected.authKind==='supabase')return current.authKind==='supabase'&&typeof expected.sessionId==='string'&&current.sessionId===expected.sessionId;
+  return current.sessionToken===expected.sessionToken;
+}
 
 class AccountSync {
   constructor({ db, backups, remote, getSession, getSettings, onInvalidSession }) {
@@ -158,7 +163,7 @@ class AccountSync {
     invariant(remote?.envelope, "CLOUD_SAVE_NOT_FOUND", "云端还没有此账号的存档。");
     this.backups.validate(remote.envelope, owner);
     await this.backups.prepareCloud?.(remote.envelope,owner);
-    invariant(this.getSession()?.ownerAccountId===owner,"SESSION_CHANGED","账号已切换，请重新预览云端存档。");
+    invariant(sameSession(this.getSession(),session),"SESSION_CHANGED","登录状态已变化，请重新预览云端存档。");
     const id = require("node:crypto").randomUUID();
     this.backups.previews.set(id, { owner, envelope: remote.envelope, currentChecksum: this.backups.dataChecksum(owner),
       expiresAt: Date.now() + 10 * 60 * 1000, cloudRevision: remote.revision });
