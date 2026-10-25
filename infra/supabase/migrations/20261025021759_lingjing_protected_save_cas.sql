@@ -24,8 +24,8 @@ create table lingjing_private.authority_fragments (
   updated_at timestamptz not null default now(),primary key(owner_id,module_id)
 );
 create table lingjing_private.owned_pet_ids (
-  pet_id text primary key, owner_id text not null references public.lingjing_accounts(owner_id),
-  created_at timestamptz not null default now()
+  pet_id text not null, owner_id text not null references public.lingjing_accounts(owner_id),
+  created_at timestamptz not null default now(),primary key(owner_id,pet_id)
 );
 create index lingjing_owned_pets_owner_idx on lingjing_private.owned_pet_ids(owner_id);
 alter table public.lingjing_saves enable row level security;
@@ -229,8 +229,7 @@ begin
       if v_fragment.key<>'companions' or jsonb_typeof(v_fragment.value->'petIds')<>'array' then raise exception 'LJ_AUTHORITY_FRAGMENT_INVALID';end if;
       for v_pet in select * from jsonb_array_elements(v_fragment.value->'petIds') loop
         if jsonb_typeof(v_pet)<>'string' or length(v_pet#>>'{}') not between 1 and 160 then raise exception 'LJ_PET_OWNER_MISMATCH';end if;
-        if exists(select 1 from lingjing_private.owned_pet_ids where pet_id=(v_pet#>>'{}') and owner_id<>p_owner_id) then raise exception 'LJ_PET_OWNER_MISMATCH';end if;
-        insert into lingjing_private.owned_pet_ids(pet_id,owner_id) values(v_pet#>>'{}',p_owner_id) on conflict(pet_id) do nothing;
+        insert into lingjing_private.owned_pet_ids(pet_id,owner_id) values(v_pet#>>'{}',p_owner_id) on conflict(owner_id,pet_id) do nothing;
       end loop;
     end if;
     insert into lingjing_private.authority_fragments(owner_id,module_id,module_state,table_states)

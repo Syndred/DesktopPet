@@ -64,15 +64,20 @@ test('LOCAL PGlite only: atomic server fragments share one revision without allo
  const good=structuredClone(r.envelope);good.data.modules.settings.data.desktop.size=2;const next=seal(Object.fromEntries(Object.entries(good).filter(([k])=>k!=='checksum')));assert.equal((await push('personal-after-server',2,next)).revision,3);
  const bad=structuredClone(next);bad.data.modules.garden.data.coins=888;await assert.rejects(push('override-server-state',3,seal(Object.fromEntries(Object.entries(bad).filter(([k])=>k!=='checksum')))),/LJ_PROTECTED_STATE_REQUIRES_AUTHORITY/);
  const drop=structuredClone(next);delete drop.data.modules.companions;await assert.rejects(push('drop-server-fragment',3,seal(Object.fromEntries(Object.entries(drop).filter(([k])=>k!=='checksum')))),/LJ_PROTECTED_STATE_MISMATCH/);
- await assert.rejects(service("select public.lingjing_commit_authority($1,'steal-pet-authority',$2)",[ownerB,{companions:{module:{version:1,data:{}},petIds:['original-pet-1']}}]),/LJ_PET_OWNER_MISMATCH/);
+ const legacyB=(await service("select public.lingjing_commit_authority($1,'original-owner-b-pet',$2) item",[ownerB,{companions:{module:{version:1,data:{pets:[{id:'original-pet-1',name:'B original'}]}},petIds:['original-pet-1','exclusive-owner-b-pet']}}]))[0].item;
+ assert.equal(legacyB.envelope.data.modules.companions.data.pets[0].id,'original-pet-1');
+ assert.equal((await head()).envelope.data.modules.companions.data.pets[0].id,'original-pet-1');
+ const registrations=(await db.query("select owner_id,pet_id from lingjing_private.owned_pet_ids where pet_id='original-pet-1'")).rows;assert.equal(registrations.length,2);
 });
 test('LOCAL PGlite only: personal pet references, direct writes and cross-account reads are denied',async()=>{
  const current=(await head()).envelope;
- for(const pet of ['original-pet-1','cross-owner-pet']){
+ for(const pet of ['original-pet-1','exclusive-owner-b-pet']){
   const copy=structuredClone(current);copy.data.modules.conversations={version:1,data:{ownerAccountId:ownerA,tables:{conversation_messages:[{owner_account_id:ownerA,pet_id:pet,id:'message1'}]}}};const doc=seal(Object.fromEntries(Object.entries(copy).filter(([k])=>k!=='checksum')));
   if(pet==='original-pet-1')assert.equal((await push('owned-chat-pet-action',3,doc)).revision,4);else await assert.rejects(push('foreign-chat-pet-action',4,doc),/LJ_PET_OWNER_MISMATCH/);
  }
  assert.equal((await as(uidB,sidB,deviceB,'select * from public.lingjing_saves where owner_id=$1',[ownerA])).length,0);
+ const ownB=(await as(uidB,sidB,deviceB,'select * from public.lingjing_saves'))[0];assert.equal(ownB.envelope.data.modules.companions.data.pets[0].name,'B original');
+ await assert.rejects(as(uidA,sidA,deviceA,'select * from lingjing_private.owned_pet_ids'),/permission denied/);
  await assert.rejects(as(uidA,sidA,deviceA,'delete from public.lingjing_saves'),/permission denied/);
  await assert.rejects(as(null,null,null,'select * from public.lingjing_saves',[],'anon'),/permission denied/);
 });

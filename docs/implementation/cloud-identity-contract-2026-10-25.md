@@ -60,7 +60,9 @@ type LingjingActor = {
 2. 执行领域变更，使用 actionId 幂等回执。只有成功的变化能够进入下一步。
 3. 从已验证的服务端行生成完整领域片段，调用 `lingjing_private.commit_authority(owner, 'garden:<actionId>', fragments, expectedRevision或null)`。必须在同一个数据库事务中；不得在已发奖后另发第二个 SDK 请求补存档。发生异常整个事务回滚。
 
-`fragments` 示例：`{"garden":{"module":{"version":1,"data":领域备份适配器原格式},"tables":{}},"companions":{"module":{"version":1,"data":伙伴备份原格式},"petIds":["保持原始petId"]}}`。module 和 tables 可省略其中一项，省略的领域 module 表示该域只维护表片段。tables 的每个值必须是正式 SQLite 备份的 `{schema:[...],rows:[...]}`，每一行 `owner_account_id` 必须是目标 owner。应由领域部署代码固定结构生成，不接收客户端自报 schema、余额、经验或胜负。petIds 仅 companions 的可信事务可登记，不能抢占其他 owner 的 petId；不因退役删除历史聊天的归属记录。
+`fragments` 示例：`{"garden":{"module":{"version":1,"data":领域备份适配器原格式},"tables":{}},"companions":{"module":{"version":1,"data":伙伴备份原格式},"petIds":["保持原始petId"]}}`。module 和 tables 可省略其中一项，省略的领域 module 表示该域只维护表片段。tables 的每个值必须是正式 SQLite 备份的 `{schema:[...],rows:[...]}`，每一行 `owner_account_id` 必须是目标 owner。应由领域部署代码固定结构生成，不接收客户端自报 schema、余额、经验或胜负。petIds 仅 companions 的可信事务可登记，主键为 `(owner_id,pet_id)`，不假设历史 petId 跨账号唯一；所有验证同时匹配 owner，不因退役删除历史聊天的归属记录。
+
+02 的正常云端入口必须提供受控初始化/领养、选择、改名及位置更新，并为当前 owner 登记宠物。新账号可以按服务端已定义规则领取初始伙伴；已有档案仅经可信旧源或合法领域凭据保留原 ID/成长/库存。不能因为没有登记而让新账号一直无法聊天、探索和对局，也不能把整包客户端进度当作初始化奖励。相同旧 petId 可以分别属于两个 owner，实际请求不得混用这两个复合身份。
 
 可用受保护模块名：`garden`、`discovery`、`battle`、`companions`、`resources`、`character-resources`、`legacy`。不同领域不得同时声明同一张表。该函数重建所有领域的受保护层并保留个人设置/聊天，统一版本只增一次；重复相同 actionId 返回原回执。`public.lingjing_commit_authority` 仅 service_role 可用，供经服务端验证的 Storage/可信旧源收据导入；它不对普通客户端开放。领域数据库事务直接调用 private helper，无需服务密钥。
 
