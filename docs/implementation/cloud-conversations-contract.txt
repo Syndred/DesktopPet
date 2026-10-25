@@ -46,3 +46,9 @@ AI设置的“导入旧记录”图标 -> legacy.preview / legacy.import，来�
 无法确认发送者、伙伴或格式的记录不猜测，保留原档并显示未决数；无时间记录显示“旧记录”。
 未归属但发送者明确的记录，必须由用户明确勾选归到当前已拥有伙伴；个人BYOK旧键及token字段不进入导入结果。
 完整保存仍复用08 CAS；本模块没有Supabase迁移或领域函数，也不自行部署。
+
+2026-10-25 选宠异步合同：
+生产 snapshot 默认读取 companions.getSelections(owner).chatPetId；旧 conversation_preferences 只作兼容缓存。
+select 等待 companions.select(owner,{petId,slot:chatPetId,expectedRevision,actionId}) 确认后再写缓存；拒绝、断网、迟到会话或不同的最新选择不提前写入。
+聊天UI失败时恢复当前会话原视图，battlePetId/guardPetId不参与聊天选择。
+01最新入口已直接调用 feature.createBackupAdapter，core兼容转发器已被公共整合检查点删除。
