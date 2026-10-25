@@ -17,6 +17,11 @@ assert.equal(smoke.info?.build?.canonicalSourceFingerprint, audit.build.canonica
 assert.equal(smoke.info?.build?.compiledFingerprint, audit.build.compiledFingerprint, 'The launched EXE must contain the audited compiled bytes');
 assert.equal(smoke.info?.build?.runtimeClosure?.sha256, audit.build.runtimeClosure?.sha256);
 assert.equal(smoke.ordinaryConfig?.passed, true, 'Ordinary no-environment cloud configuration smoke required');
+assert.equal(smoke.ordinaryConfig.actualCloudConfig?.sha256, audit.publicCloud?.sha256, 'Actual SFX public configuration must match the audited resource');
+const monitor = smoke.checks.find(check => check.id === 'packaged-native-fullscreen-monitor-ready');
+assert.equal(monitor?.running, true, 'Running packaged native monitor required'); assert.equal(monitor?.ready, true, 'A running process alone is not a ready native monitor');
+for (const element of ['wood','earth']) { const walk = smoke.checks.find(check => check.id === `packaged-${element}-walk`); assert.ok(walk?.frames?.length > 1 && new Set(walk.frames.map(frame => frame.region)).size > 1, 'Actual packaged atlas progression evidence required'); }
+assert.equal(smoke.checks.find(check => check.id === 'packaged-shared-training-round')?.round, 1, 'Actual packaged training round required');
 assert.ok(audit.publicCloud?.sha256 && audit.runtimeClosure?.files, 'Current cloud configuration and runtime dependency closure audit required');
 const signature = authenticode(executable);
 assert.ok(['Valid','NotSigned'].includes(signature.status), `Invalid or unavailable Authenticode result: ${signature.status}`);
