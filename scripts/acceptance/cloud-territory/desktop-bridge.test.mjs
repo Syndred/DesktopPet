@@ -75,12 +75,14 @@ test('runtime fixture: existing battle command wrapper routes cloud sessions rem
   try{
     const input={actionId:'runtime:challenge',sessionOwnerAccountId:owner,petId:data.pets[0].petId,territoryId:region.id,expectedTerritoryRevision:1,expectedRevision:0};
     const start=await f.cloud.command(context,'territoryChallenge',input);assert.equal(start.ok,true);assert.equal(proofs[0].purpose,'territory:challenge');assert.equal(proofs[0].reference,region.id);
+    const originalSession=structuredClone(battle);
     await f.cloud.command(context,'territoryChallenge',input);assert.equal(proofs.length,1);
     const originalGrowth=JSON.stringify(data.pets.map(p=>p.growth));
     for(let i=0;i<150&&battle.status==='active';i++){
       const response=await feature.commands.act({sessionId:battle.id,actionId:`runtime:act:${i}`,expectedRound:battle.snapshot.round+1,action:battle.snapshot.player.anger>=50?'ultimate':'normal_attack'},context);assert.equal(response.ok,true);assert.equal(response.data.context.authority,'cloud');
     }
     assert.equal(battle.status,'finished');assert.equal(f.db.prepare('select count(*) count from battle_reward_receipts').get().count,0);assert.equal(JSON.stringify(f.companions.snapshot(owner).data.pets.map(p=>p.growth)),originalGrowth);
+    assert.equal(f.cloud.cache(context,originalSession,'active').snapshot.round,battle.snapshot.round,'an earlier concurrent read cannot roll back committed server rounds');
     const final=await feature.commands.settleContext({sessionId:battle.id,actionId:'runtime:confirm'},context);assert.equal(final.ok,true);assert.equal(final.data.resultPath,'/garden');assert.equal(proofs.length,battle.winner==='player'?2:1);
     assert.equal(f.db.prepare('select count(*) count from garden_reward_receipts').get().count,1);assert.equal(f.db.prepare('select count(*) count from battle_reward_receipts').get().count,0);
     const updated=JSON.stringify(createCompanionBackupAdapter(f.db).export(owner));await feature.commands.settleContext({sessionId:battle.id,actionId:'runtime:confirm'},context);assert.equal(JSON.stringify(createCompanionBackupAdapter(f.db).export(owner)),updated);
