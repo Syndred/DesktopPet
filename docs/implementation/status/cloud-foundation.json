@@ -4,7 +4,7 @@
   "branch": "codex/lingjing-foundation",
   "commit": "73639b6da9a71e3068d1de35dc363d170a3a516b",
   "goalStatus": "active",
-  "stage": "engineering-checkpoint-accepted-pending-final-business-freeze",
+  "stage": "strict-packaged-monitor-rerun-passed-candidate-in-progress",
   "contracts": [
     "docs/implementation/cloud-upgrade-2026-10-25.md",
     "https://www.electronjs.org/docs/latest/tutorial/electron-timelines",
@@ -97,10 +97,22 @@
     },
     {
       "name": "Actual packaged Windows EXE runs ASAR-contained native fullscreen script",
-      "passed": true,
+      "passed": false,
       "evidence": "docs/implementation/evidence/foundation/cloud-engineering/packaged-fullscreen-monitor.json",
       "source": "73639b6da9a71e3068d1de35dc363d170a3a516b",
-      "scope": "Actual unpacked EXE, embedded ASAR, explicit fresh QA profile; final portable test also requires this ready signal."
+      "scope": "Actual unpacked EXE, embedded ASAR, explicit fresh QA profile; final portable test also requires this ready signal.",
+      "status": "rejected-original-verdict",
+      "correction": "Actual ready:false retained. Replacement requires explicit awaited main-process snapshots and strict true assertions."
+    },
+    {
+      "name": "Corrected actual packaged Windows EXE fullscreen readiness and stability",
+      "passed": true,
+      "evidence": "docs/implementation/evidence/foundation/cloud-engineering/packaged-fullscreen-monitor-verified.json",
+      "source": "09af97f0a92677f417b3e33aa352d7ad018eb08e",
+      "strictAssertions": true,
+      "observations": 10,
+      "stableSamples": 3,
+      "replacesRejectedEvidence": "docs/implementation/evidence/foundation/cloud-engineering/packaged-fullscreen-monitor.json"
     }
   ],
   "realCloudEvidence": {
@@ -149,7 +161,7 @@
     "Final actual EXE audit/ordinary config/fullscreen monitor/native training smoke and verified binary rollback rehearsal",
     "Coordinator-approved old cloud SQL/function retirement; no remote migration history changes by foundation"
   ],
-  "updatedAt": "2026-10-25T03:22:27.830Z",
+  "updatedAt": "2026-10-25T03:35:50.210Z",
   "approvedIntegrations": {
     "accounts": "45b857d",
     "resources": "4e8fdf8",

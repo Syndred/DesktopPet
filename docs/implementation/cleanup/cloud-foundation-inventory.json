@@ -1895,6 +1895,54 @@
         "Historical model attribution and fat-fish license"
       ],
       "decision": "Move attribution metadata to documentation; preserve original content without bundled 3D files"
+    },
+    {
+      "oldFile": "scripts/desktop/start-online-instance.cmd",
+      "bytes": 2188,
+      "sha256": "af51d0366a23845fa893a816afab6f4fe7661c35405c0f34ce548f82f9e9d30f",
+      "replacement": "Explicit new cloud-client A/B launcher + public config + isolated new profile paths",
+      "consumers": [
+        "scripts/desktop/start-online-a.cmd",
+        "scripts/desktop/start-online-b.cmd",
+        "scripts/desktop/start-online-dual.cmd"
+      ],
+      "decision": "Replace stale old-token/shared-JSON/session-deletion launcher; preserve every existing local-online-env.cmd and profile untouched"
+    },
+    {
+      "oldFile": "scripts/desktop/local-online-env.example.cmd",
+      "bytes": 277,
+      "sha256": "85867a22d167ca94d968ce682a0119b091df7afe0a39b7d19dc4ffd4fbbeb37e",
+      "replacement": "Explicit new cloud-client A/B launcher + public config + isolated new profile paths",
+      "consumers": [
+        "scripts/desktop/start-online-a.cmd",
+        "scripts/desktop/start-online-b.cmd",
+        "scripts/desktop/start-online-dual.cmd"
+      ],
+      "decision": "Replace stale old-token/shared-JSON/session-deletion launcher; preserve every existing local-online-env.cmd and profile untouched"
+    },
+    {
+      "oldFile": "docs/lingjing-pc-config-usage.md",
+      "bytes": 4826,
+      "sha256": "32e308e45a80352ff88e579aeaa3991e2a8ddd66a4ab71f23bc5e7721b77756e",
+      "replacement": "Explicit new cloud-client A/B launcher + public config + isolated new profile paths",
+      "consumers": [
+        "scripts/desktop/start-online-a.cmd",
+        "scripts/desktop/start-online-b.cmd",
+        "scripts/desktop/start-online-dual.cmd"
+      ],
+      "decision": "Replace stale old-token/shared-JSON/session-deletion launcher; preserve every existing local-online-env.cmd and profile untouched"
+    },
+    {
+      "oldFile": ".env.example",
+      "bytes": 324,
+      "sha256": "ffa4e90a1c8a60b99b12a36a48843a2f5cf0af1636be585f1a76100b450a3688",
+      "replacement": "Explicit new cloud-client A/B launcher + public config + isolated new profile paths",
+      "consumers": [
+        "scripts/desktop/start-online-a.cmd",
+        "scripts/desktop/start-online-b.cmd",
+        "scripts/desktop/start-online-dual.cmd"
+      ],
+      "decision": "Replace stale old-token/shared-JSON/session-deletion launcher; preserve every existing local-online-env.cmd and profile untouched"
     }
   ],
   "supplementAt": "2026-10-25T02:50:26.978Z",
