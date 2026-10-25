@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-25T13:06:51.350Z",
+  "updatedAt": "2026-10-25T14:20:56.3544663Z",
   "status": "in-progress",
   "qaThreadId": "01a172b4-d7f0-7213-9a40-092418ee776b",
   "soleNativeInputOwner": "01a172b4-d7f0-7213-9a40-092418ee776b",
@@ -151,6 +151,19 @@
       "fixCommit": "4405a2e",
       "actualUiRetestPassed": false,
       "sourceProof": "docs/implementation/evidence/discovery/qa013-stale-location/checks.json"
+    },
+    {
+      "issueId": "QA-014",
+      "owner": "04+08",
+      "severity": "P2",
+      "status": "confirmed display gap; trusted read-only battle serial metadata and IPC view implementation in progress",
+      "activeResponsibleThreadIds": [
+        "01a172b4-bb6d-7061-882f-48af515b9bdc",
+        "01a172b4-d081-7f53-bbda-0987e5a4c7ac"
+      ],
+      "sourceBaseline": "1346f07ac907a0a249d28e760077a98ab49da0c8",
+      "actualUiRetestPassed": false,
+      "scope": "Battle HUD, friend room and historical reports; preserve stored sessions/reports/receipts and command bytes"
     }
   ],
   "integrationOwner": "01",
@@ -158,7 +171,7 @@
   "releaseGate": "All release blockers fixed and independently retested; full scenario matrix reports actual pass/fail/blocked per same final portable; no mock-only full acceptance claims",
   "productionFreeze": "e875febf3430be341191a639668d43e7f09826dc",
   "candidate": {
-    "status": "critical-startup and existing-fix native acceptance; QA013 absent from this binary",
+    "status": "cold/hot, two profiles, cold-pair and renderer storage passed; cloud garden transport-outage recovery pending",
     "sourceCommit": "e875febf3430be341191a639668d43e7f09826dc",
     "path": "releases/user-acceptance-e875feb/Lingjing-0.1.8-portable-x64.exe",
     "bytes": 169213223,
@@ -170,8 +183,39 @@
     "engineeringEvidence": "docs/implementation/evidence/foundation/user-acceptance-e875feb/candidate-manifest.json",
     "rootCopyReadback": "docs/implementation/evidence/foundation/user-acceptance-e875feb/root-copy-readback.json",
     "knownUnfixed": [
-      "QA013"
-    ]
+      "QA013",
+      "QA014"
+    ],
+    "criticalNativeResults": {
+      "coldSingle": true,
+      "hotSameProfile": true,
+      "mainPid": 26956,
+      "wrapperPid": 26024,
+      "originalWindowRestored": true,
+      "secondProfile": true,
+      "coldPair": true,
+      "crossRootPersistence": false,
+      "rendererStorageAcrossRoots": true,
+      "gardenOutboxAcrossRoots": false,
+      "lastObservedLocalMainPid": 12988
+    },
+    "startupDiagnostic": {
+      "firstAttempt": "rounds/candidate-e875feb-50e52249/evidence/cold-single-1/summary.json",
+      "wrapperPid": 3512,
+      "observedChildPid": 19940,
+      "exitCode": 9,
+      "productSourceChanged": false,
+      "original67TablesUnchanged": true,
+      "diagnostic": "PowerShell 7.6.5 on .NET10 SetEnvironmentVariable(name,$null) leaves an existing empty environment key. Bare Electron with empty ELECTRON_RUN_AS_NODE executes Node and rejects remote-debugging-port with9; absent key uses Electron44.9.3 and accepts the flag.",
+      "privateNonProductProof": "artifacts/qa/user-acceptance/global-serial/qa009-empty-environment-diagnostic.json",
+      "nativeCauseConfirmed": true,
+      "helperVersion": 2,
+      "helperSha256": "e1aed2926c6ec3049476acccc2da3147f461b578ae6d94f6274d2feb3e704bc4",
+      "controlledSameBinarySuccess": "rounds/candidate-e875feb-50e52249/evidence/cold-single-2-env-v2/summary.json",
+      "helperFixOwner": "01",
+      "soleNextProductLaunchOwner": "09",
+      "retestRequiresFreshEvidenceDirectory": true
+    }
   },
   "identityConsumerCommits": {
     "companions": "ad20468b38c89a79090de435a2cfcf8d2e928ec7",
@@ -228,7 +272,7 @@
     }
   },
   "nextCandidate": {
-    "status": "QA013 source integrated and verify49 passed; waiting e875 critical startup result before final build",
+    "status": "Build held pending actual cloud garden outage recovery and QA014 trusted battle serial views; QA013 source verified",
     "requiredContract": "docs/implementation/companions-global-serial-contract.json",
     "sourceFixes": {
       "QA008": "02ea2dac317b3aaaee12cf9517b456450391cf9c",
@@ -296,7 +340,13 @@
       "cloud86Plus5InheritedNoCloudChanges": true
     },
     "liveObserve": "docs/implementation/evidence/cloud/2026-10-25/global-serial-live-observe.json",
-    "liveCapture": "docs/implementation/evidence/cloud/2026-10-25/global-serial-live-capture.json"
+    "liveCapture": "docs/implementation/evidence/cloud/2026-10-25/global-serial-live-capture.json",
+    "temporaryQaGrantRenewal": {
+      "namespaceUnchanged": true,
+      "expiresAt": "2026-10-25T15:00:00Z",
+      "restoreManifest": "artifacts/qa/user-acceptance/global-serial/grants-renewal-active.json",
+      "restoreAfterAcceptance": true
+    }
   },
   "activeTeam": {
     "registry": "docs/implementation/handoffs/2026-10-25-fresh-sessions/registry.json",
@@ -323,5 +373,11 @@
       "engineeringEvidence": "docs/implementation/evidence/foundation/user-acceptance-312e5fe/handoff.json",
       "rootCopyReadback": "docs/implementation/evidence/foundation/user-acceptance-312e5fe/root-copy-readback.json"
     }
-  ]
+  ],
+  "remoteRefresh": {
+    "checkedAt": "2026-10-25T14:20:56.3587879Z",
+    "command": "git fetch origin main; git pull --ff-only origin main",
+    "result": "Already up to date",
+    "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086"
+  }
 }
