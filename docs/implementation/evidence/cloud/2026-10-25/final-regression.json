@@ -1,0 +1,66 @@
+{
+  "at": "2026-10-25T06:01:47.899Z",
+  "packagedSource": "2e13487f73396ebad981ff703b4377f403e214e0",
+  "scope": "Actual local coordinator verification. First failures retained; only failed native suite rerun after narrow test-fixture corrections. No hosted GitHub CI or complete local Supabase/PostGIS reset claimed.",
+  "verify": {
+    "exitCode": 0,
+    "lint": true,
+    "types": true,
+    "uiTypes": true,
+    "unitTests": 46,
+    "firstLintErrors": 14,
+    "correction": "Scoped dynamic PostgREST JSON rows, intentional Auth UID omission/control-path regex/helper; immutable Auth binding fixed and actually redeployed v3"
+  },
+  "native": {
+    "exitCode": 0,
+    "tests": 260,
+    "passed": 260,
+    "failed": 0,
+    "firstRun": {
+      "tests": 260,
+      "passed": 254,
+      "failed": 6
+    },
+    "corrections": [
+      "production event bus/local fixture identity",
+      "authoritative companion selections and stronger restore epoch/history assertions"
+    ],
+    "productionBehaviorChanged": false
+  },
+  "cloud": {
+    "exitCode": 0,
+    "migrations": 22,
+    "nodeTestFiles": 22,
+    "denoVerifierCases": 5,
+    "denoVersion": "2.9.6",
+    "fourGeneratedDistributionsHashAndMtimeUnchanged": true
+  },
+  "files": [
+    {
+      "path": "artifacts/cloud-upgrade/2026-10-25/final-verify-30f3cd2.log",
+      "bytes": 2278,
+      "sha256": "947585e8478df091c2c4c3124242636eba0b6f4935684db9c218a8d7397a1c65"
+    },
+    {
+      "path": "artifacts/cloud-upgrade/2026-10-25/final-verify-corrected.log",
+      "bytes": 4626,
+      "sha256": "3be6981c30c683b225574690b1619e7149e98af671a76d8e2a786673196354fc"
+    },
+    {
+      "path": "artifacts/cloud-upgrade/2026-10-25/final-native-30f3cd2.log",
+      "bytes": 35920,
+      "sha256": "61f617d0fbb90e67100c07c474e3d36f8c11db373acf746d3c43971af60b2972"
+    },
+    {
+      "path": "artifacts/cloud-upgrade/2026-10-25/final-native-2e13487.log",
+      "bytes": 30208,
+      "sha256": "c61350c99ace030a3426dda01909194aceb4ff6b39e6bc4792b430d5fee05aad"
+    },
+    {
+      "path": "artifacts/cloud-upgrade/2026-10-25/final-cloud-30f3cd2.log",
+      "bytes": 28109,
+      "sha256": "71ecd8bcb059ec28cb3271f5d8a9a437ad4111dce065d40a393dfa3765524924"
+    }
+  ],
+  "passed": true
+}

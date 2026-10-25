@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-25T06:00:07.077Z",
-  "phase": "final-corrected-source-frozen-portable-and-native-verification",
+  "updatedAt": "2026-10-25T06:01:47.899Z",
+  "phase": "final-portable-build-and-independent-business-acceptance",
   "goalStatus": "active",
   "deployed": {
     "projectRef": "jbvrdmrkwpznbrvteive",
@@ -125,8 +125,8 @@
     }
   },
   "fixedRemainingWork": [
-    "Finish native regression at corrected freeze, retain original failures",
-    "Build final actual portable at exact freeze; coordinator independently verifies the complete business path"
+    "Build and audit actual final portable SFX from exact freeze",
+    "Coordinator independently accepts the actual EXE business flow through normal React/IPC/HTTPS/query-only SQLite/native rendered pixels"
   ],
   "cleanup": {
     "completedCodeRetirement": true,
@@ -258,10 +258,10 @@
       "review": "Legacy normalization is internal view only; original envelope/checksum/files retained. Root8 targeted native restore/provider cases and original signed expired HTTPS denial passed."
     }
   ],
-  "status": "final-corrected-source-frozen-portable-and-native-verification",
+  "status": "final-portable-build-and-independent-business-acceptance",
   "remaining": [
-    "Finish native regression at corrected freeze, retain original failures",
-    "Build final actual portable at exact freeze; coordinator independently verifies the complete business path"
+    "Build and audit actual final portable SFX from exact freeze",
+    "Coordinator independently accepts the actual EXE business flow through normal React/IPC/HTTPS/query-only SQLite/native rendered pixels"
   ],
   "engineering": {
     "historicalEngineeringCheckpoints": {
@@ -309,14 +309,16 @@
     },
     "native": {
       "firstRunTests": 260,
-      "passed": 254,
-      "failed": 6,
+      "passed": 260,
+      "failed": 0,
       "fixtureCorrectionsPending": false,
       "fixtureCorrections": [
         "1c1eee7e937a9706af4dc20dd1e34bf8062a0c6f",
         "2f3cbcef66c26a5d1484185c9fd81273aa8600b5"
       ],
-      "rerunPending": true
-    }
-  }
+      "rerunPending": false
+    },
+    "evidence": "docs/implementation/evidence/cloud/2026-10-25/final-regression.json"
+  },
+  "productFreeze": "2e13487f73396ebad981ff703b4377f403e214e0"
 }
