@@ -28,10 +28,10 @@ try {
   let ready = false;
   for (let n = 0; n < 240; n++) {
     if (launchError) throw launchError;
-    try { const result = await fetch(`http://127.0.0.1:${port}/json/version`, { signal: AbortSignal.timeout(300) }); if (result.ok) { ready = true; break; } } catch { /* Wait for SFX extraction. */ }
+    try { const result = await fetch(`http://127.0.0.1:${port}/json/list`, { signal: AbortSignal.timeout(300) }); if (result.ok && (await result.json()).some(target => target.type === 'page')) { ready = true; break; } } catch { /* Wait for SFX extraction and renderer creation. */ }
     await new Promise(done => setTimeout(done, 250));
   }
-  assert.ok(ready, 'Portable SFX did not start its embedded Electron'); browser = await chromium.connectOverCDP(`http://127.0.0.1:${port}`);
+  assert.ok(ready, 'Portable SFX did not start its embedded Electron business window'); browser = await chromium.connectOverCDP(`http://127.0.0.1:${port}`, { timeout: 15000 });
   let page;
   for (let n = 0; n < 100; n++) { page = browser.contexts().flatMap(context => context.pages()).find(value => value.url().includes('/app.asar/') && value.url().includes('/ui/index.html')); if (page) break; await new Promise(done => setTimeout(done, 100)); }
   assert.ok(page); page.setDefaultTimeout(20000); page.on('pageerror', error => proof.errors.push(error.message));
@@ -45,6 +45,9 @@ try {
   assert.equal(proof.info.build.sourceCommit, expectedSource); assert.deepEqual(proof.info.build.sourceDirtyFiles, []); assert.equal(proof.info.features.length, 7);
   assert.equal(await page.evaluate(() => typeof window.require), 'undefined'); assert.equal(await page.evaluate(() => typeof window.lingjing.send), 'undefined');
   proof.checks.push({ id: 'actual-sfx-asar-source-and-secure-preload', electron: actualElectron, build: proof.info.build });
+  await page.waitForFunction(async () => { const result = await window.lingjing.invoke('accounts', 'settingsGet', {}); return result.ok && result.data.host?.fullscreenMonitor && result.data.host?.fullscreenMonitorReady; }, undefined, { timeout: 20000 });
+  const settings = await invoke('accounts', 'settingsGet');
+  proof.checks.push({ id: 'packaged-native-fullscreen-monitor-ready', running: settings.host.fullscreenMonitor, ready: settings.host.fullscreenMonitorReady });
   const resources = await invoke('resources', 'list'); assert.ok(['metal', 'wood', 'earth', 'water', 'fire'].every(element => resources.some(resource => resource.element === element && resource.availability === 'ready')));
   assert.ok(resources.filter(resource => resource.availability === 'ready').length >= 8);
   proof.checks.push({ id: 'eight-characters-five-elements', resources: resources.map(resource => ({ id: resource.id, element: resource.element, availability: resource.availability })) });

@@ -30,6 +30,8 @@ CI 包含 Linux 类型/分层回归，以及 Windows 普通 npm ci、Node/Electr
 
 Release Pipeline 默认 dry_run。正式发布要求已有审核过的 Git tag、真实证书、实际 EXE smoke 与匹配哈希；随后创建 GitHub Release，上传同一不可变二进制和清单。未运行 GitHub 托管 workflow 时，不能把本地等价检查写成托管 CI 成功。
 
+触发正式发布前，先把 release_version 对应 tag 推送到 origin，并使它指向本次 workflow 的 GITHUB_SHA。发布步骤会读取远端 tag、解引用 annotated tag 到 commit，强制核对 tag commit == manifest.source.sourceCommit == GITHUB_SHA；同名 tag 指向其他提交会被拒绝，不会由 --target 自动纠正。
+
 工作流使用已核对的官方版本：[checkout v7.0.1](https://github.com/actions/checkout/releases/tag/v7.0.1)、[setup-node v7.1.0](https://github.com/actions/setup-node/releases/tag/v7.1.0)、[upload-artifact v7.0.2](https://github.com/actions/upload-artifact/releases/tag/v7.0.2)、[download-artifact v8.0.2](https://github.com/actions/download-artifact/releases/tag/v8.0.2)。
 
 ## 真实二进制回滚
