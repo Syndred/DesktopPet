@@ -1,5 +1,7 @@
 # 菜园界面与集成验收记录
 
+2026-10-25 最新状态：桌面领地/菜园完整目标与主会话最终集成验收均已完成，见[完成审计](evidence/garden/goal-completion-audit.md)。以下保留原阶段的实测和条件记录；其中集中视觉/打包等待已由最终交付关闭，实时云与双设备按用户范围暂缓。
+
 工作分支：`codex/lingjing-garden`。已合入 foundation `99c1b9e`，包含公共账号 checkpoint、六个正式形象、旧引用升级、playAction 与共享近景构图接口，以及已验收的归属迁移和公共排版 token；在独立托管工作树验证。共享源检出保持原状。远端 `origin/main` 已重新 fetch，当前为 `4786f97680679c2db0aa307fa5f67ec247f93086`。
 
 对照原图：`docs/design/2026-10-24/full-ui/05-territory-garden-and-inventory.png` 与 `10-garden-harvest-and-feeding.png`。截图来自实际 Electron 窗口，界面通过正式 IPC 操作同一个 SQLite 连接，未使用静态网页替代产品。
