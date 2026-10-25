@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-25T05:31:06.727Z",
+  "updatedAt": "2026-10-25T05:36:13.091Z",
   "phase": "awaiting-automatic-resource-integration-fix-and-final-source-freeze",
   "goalStatus": "active",
   "deployed": {
@@ -65,7 +65,8 @@
       "uniqueNativeSeedReceipts": 1,
       "normalUiPlantAndOriginalOfflineRetry": true,
       "nativeOsMapRasterPaintReviewed": true,
-      "publishedIncrementalEvidencePending": true
+      "publishedIncrementalEvidencePending": false,
+      "incrementalEvidence": "docs/implementation/evidence/garden/cloud-2026-10-25/completion-audit.json"
     },
     "conversations": {
       "evidence": "docs/implementation/evidence/conversations/cloud-2026-10-25/baseline4830619/live-sync.json",
@@ -74,9 +75,20 @@
       "externalLlmSuccessClaimed": false
     },
     "battle": {
-      "actualDuelTrainingReconnectAndDeviceRevokeReported": true,
-      "postRetirementNativeReadbackReported": true,
-      "finalPublishedEvidenceReviewPending": true
+      "accepted": true,
+      "actualDuelTrainingReconnectAndDeviceRevoke": true,
+      "singleUninterruptedRunPassed": false,
+      "rawFailedRunsPreserved": true,
+      "postRetirementNativeReadback": true,
+      "finalPublishedEvidenceReviewPending": false,
+      "evidence": "docs/implementation/evidence/battle/2026-10-25/cloud-native-v2/evidence.json",
+      "independentEvidence": [
+        "docs/implementation/evidence/cloud/2026-10-25/battle-native-independent-cloud.json",
+        "docs/implementation/evidence/cloud/2026-10-25/battle-native-independent-sqlite.json"
+      ],
+      "friendRounds": 10,
+      "trainingRounds": 20,
+      "independentMarkedSqliteProfiles": 8
     },
     "currentSourceTargetedRegression": {
       "passed": 42,
@@ -92,7 +104,6 @@
   },
   "fixedRemainingWork": [
     "08 strictly reconcile verified resource hydration, including a prior07 pump, without overwriting personal/protected user changes; exercise upgrade from existing local baselines",
-    "Review and merge final sanitized battle and garden incremental native evidence",
     "Freeze common source after the fix; run one final integrated verify, native and strict cloud source regression",
     "Build the actual final portable SFX at that freeze; independently run complete normal IPC/React/HTTPS/SQLite/native business acceptance"
   ],
@@ -229,7 +240,6 @@
   "status": "awaiting-automatic-resource-integration-fix-and-final-source-freeze",
   "remaining": [
     "08 strictly reconcile verified resource hydration, including a prior07 pump, without overwriting personal/protected user changes; exercise upgrade from existing local baselines",
-    "Review and merge final sanitized battle and garden incremental native evidence",
     "Freeze common source after the fix; run one final integrated verify, native and strict cloud source regression",
     "Build the actual final portable SFX at that freeze; independently run complete normal IPC/React/HTTPS/SQLite/native business acceptance"
   ],

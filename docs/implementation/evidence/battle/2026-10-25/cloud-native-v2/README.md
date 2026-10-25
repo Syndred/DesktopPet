@@ -36,4 +36,4 @@
 
 生产 OnlineDuelService 已删除旧 HTTP／anon key 默认值、launcher 环境回退、注册／登录／改密协议和旧表频道；正常身份只来自08稳定 SDK。好友检索沿用正式新函数的 `search_accounts` 操作名，身份由 JWT 决定，正文不再附旧 userId/sessionToken。旧身份模拟仅在明确的隔离 QA adapter 内构造。
 
-`verify-postgres.mjs` 已转向当前数据库检查；400 组 room DTO 对照改为直接调用现代共享内核，不再执行旧 Edge 源码。旧 Edge／SQL 文件最终删除和08水合指纹整合仍由主协调负责。04 没有改 CSS 或战斗公式。
+400 组 room DTO 对照直接调用现代共享内核，不再执行旧 Edge 源码。协调主线已删除旧 verify-postgres 入口及旧 Edge／SQL，当前数据库回归统一由 npm run verify:cloud 执行，恢复审计见 docs/implementation/cleanup/cloud-coordinator-retirement.json。08水合指纹整合和最终成品验收仍由主协调负责。04 没有改 CSS 或战斗公式。

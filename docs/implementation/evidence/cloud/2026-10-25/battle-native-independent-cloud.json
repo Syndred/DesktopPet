@@ -1,0 +1,34 @@
+{
+  "writtenAt": "2026-10-25T05:35:34.085Z",
+  "projectRef": "jbvrdmrkwpznbrvteive",
+  "queryOnly": true,
+  "method": "Coordinator independent exact QA room/owner Supabase SELECT; no provider write",
+  "room": {
+    "id": "355f4104-85cf-4ca4-8e27-321f0638e376",
+    "status": "finished",
+    "host_user_id": "account:9e230794-470b-45be-9a18-a2564c88ba35",
+    "guest_user_id": "account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+    "last_resolved_round": 10,
+    "winner_side": "guest",
+    "persisted_rounds": 10
+  },
+  "heads": [
+    {
+      "owner_id": "account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+      "revision": 6,
+      "checksum": "ae6d43f27a66758c1d7b799865a36973371455a8d96bc007455df9dbff09893b",
+      "experience": 25,
+      "xp_receipts": 2,
+      "seed_receipts": 2
+    },
+    {
+      "owner_id": "account:9e230794-470b-45be-9a18-a2564c88ba35",
+      "revision": 4,
+      "checksum": "fa5979ef76231e4dad1a75c18bb30d6d7e9eec0469369b390b49fd019ca1c128",
+      "experience": 5,
+      "xp_receipts": 1,
+      "seed_receipts": 1
+    }
+  ],
+  "passed": true
+}

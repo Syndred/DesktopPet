@@ -1,0 +1,59 @@
+{
+  "at": "2026-10-25T05:33:07.460Z",
+  "projectRef": "jbvrdmrkwpznbrvteive",
+  "queryOnly": true,
+  "method": "Coordinator Supabase SELECT of exact own discovery/native-garden QA owner protected-save fragments; no provider write",
+  "simulatedLocation": true,
+  "physicalMachines": 1,
+  "rows": [
+    {
+      "owner_id": "account:31fa2df1-6847-4466-84ca-ed92bc4ee78f",
+      "revision": 44,
+      "checksum": "b3b9aa82fb07ca1649bcab4ea80981076e12891765ed520b14c5530fec6b1e0b",
+      "pets": 2,
+      "discovery_captures": 1,
+      "seed_receipts": 1,
+      "receipt_rows": [
+        {
+          "source": "battle",
+          "action_id": "wild-seeds:battle-cloud-a3efdc72-2007-4e4f-823e-297d52c9bc22",
+          "receipt_id": "battle-cloud-a3efdc72-2007-4e4f-823e-297d52c9bc22",
+          "result_json": "{\"source\":\"battle\",\"receiptId\":\"battle-cloud-a3efdc72-2007-4e4f-823e-297d52c9bc22\",\"itemId\":\"seed:berry\",\"quantity\":2}",
+          "owner_account_id": "account:31fa2df1-6847-4466-84ca-ed92bc4ee78f"
+        }
+      ],
+      "garden_account": [
+        {
+          "revision": 2,
+          "initialized_at": 1792899964797,
+          "owner_account_id": "account:31fa2df1-6847-4466-84ca-ed92bc4ee78f"
+        }
+      ]
+    },
+    {
+      "owner_id": "account:9695104c-0fe6-41c5-829f-0442c502c641",
+      "revision": 6,
+      "checksum": "17ba5aa2fbedd5376417c3bf0e9fdf64476516ebfeda9729b4c1932210f85052",
+      "pets": 2,
+      "discovery_captures": 0,
+      "seed_receipts": 1,
+      "receipt_rows": [
+        {
+          "source": "battle",
+          "action_id": "territory-seeds:btl-2DAeKwYZRNq1kg7FIBQIzA",
+          "receipt_id": "btl-2DAeKwYZRNq1kg7FIBQIzA",
+          "result_json": "{\"source\":\"battle\",\"receiptId\":\"btl-2DAeKwYZRNq1kg7FIBQIzA\",\"itemId\":\"seed:berry\",\"quantity\":2}",
+          "owner_account_id": "account:9695104c-0fe6-41c5-829f-0442c502c641"
+        }
+      ],
+      "garden_account": [
+        {
+          "revision": 5,
+          "initialized_at": 1792900205623,
+          "owner_account_id": "account:9695104c-0fe6-41c5-829f-0442c502c641"
+        }
+      ]
+    }
+  ],
+  "passed": true
+}

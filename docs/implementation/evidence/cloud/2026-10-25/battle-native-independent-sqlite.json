@@ -1,0 +1,155 @@
+{
+  "at": "2026-10-25T05:35:34.426Z",
+  "scope": "Coordinator independently reopens eight original marked live QA profiles; snapshots differ legitimately by phase; final A25/B5 match independent current cloud, one reward per completed session",
+  "passed": true,
+  "profiles": [
+    {
+      "phase": "duel-phase",
+      "profile": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\live-1792904347214-4d2d7db8\\device-1",
+      "owner": "account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+      "queryOnly": true,
+      "petId": "pet-2d660416-db18-44a1-8392-74f235484151",
+      "experience": 20,
+      "xpReceipts": 1,
+      "seedReceipts": 1,
+      "reports": [
+        {
+          "session": "online-355f4104-85cf-4ca4-8e27-321f0638e376",
+          "rounds": 10
+        }
+      ]
+    },
+    {
+      "phase": "duel-phase",
+      "profile": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\live-1792904347214-4d2d7db8\\device-2",
+      "owner": "account:9e230794-470b-45be-9a18-a2564c88ba35",
+      "queryOnly": true,
+      "petId": "pet-7374c520-8730-45ca-a419-227e60a2fa81",
+      "experience": 5,
+      "xpReceipts": 1,
+      "seedReceipts": 1,
+      "reports": [
+        {
+          "session": "online-355f4104-85cf-4ca4-8e27-321f0638e376",
+          "rounds": 10
+        }
+      ]
+    },
+    {
+      "phase": "report-training-phase",
+      "profile": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\live-1792904902772-33218d1e\\device-1",
+      "owner": "account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+      "queryOnly": true,
+      "petId": "pet-2d660416-db18-44a1-8392-74f235484151",
+      "experience": 25,
+      "xpReceipts": 2,
+      "seedReceipts": 2,
+      "reports": [
+        {
+          "session": "battle-8a87db17-8b9f-40c2-b198-b85780b86e4b",
+          "rounds": 20
+        },
+        {
+          "session": "online-355f4104-85cf-4ca4-8e27-321f0638e376",
+          "rounds": 10
+        }
+      ]
+    },
+    {
+      "phase": "report-training-phase",
+      "profile": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\live-1792904902772-33218d1e\\device-2",
+      "owner": "account:9e230794-470b-45be-9a18-a2564c88ba35",
+      "queryOnly": true,
+      "petId": "pet-7374c520-8730-45ca-a419-227e60a2fa81",
+      "experience": 5,
+      "xpReceipts": 1,
+      "seedReceipts": 1,
+      "reports": [
+        {
+          "session": "online-355f4104-85cf-4ca4-8e27-321f0638e376",
+          "rounds": 10
+        }
+      ]
+    },
+    {
+      "phase": "report-training-phase",
+      "profile": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\live-1792904902772-33218d1e\\device-3",
+      "owner": "account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+      "queryOnly": true,
+      "petId": "pet-2d660416-db18-44a1-8392-74f235484151",
+      "experience": 25,
+      "xpReceipts": 2,
+      "seedReceipts": 2,
+      "reports": [
+        {
+          "session": "battle-8a87db17-8b9f-40c2-b198-b85780b86e4b",
+          "rounds": 20
+        },
+        {
+          "session": "online-355f4104-85cf-4ca4-8e27-321f0638e376",
+          "rounds": 10
+        }
+      ]
+    },
+    {
+      "phase": "device-revoke",
+      "profile": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\live-1792905246701-04be08e6\\device-1",
+      "owner": "account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+      "queryOnly": true,
+      "petId": "pet-2d660416-db18-44a1-8392-74f235484151",
+      "experience": 25,
+      "xpReceipts": 2,
+      "seedReceipts": 2,
+      "reports": [
+        {
+          "session": "battle-8a87db17-8b9f-40c2-b198-b85780b86e4b",
+          "rounds": 20
+        },
+        {
+          "session": "online-355f4104-85cf-4ca4-8e27-321f0638e376",
+          "rounds": 10
+        }
+      ]
+    },
+    {
+      "phase": "device-revoke",
+      "profile": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\live-1792905246701-04be08e6\\device-2",
+      "owner": "account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+      "queryOnly": true,
+      "petId": "pet-2d660416-db18-44a1-8392-74f235484151",
+      "experience": 25,
+      "xpReceipts": 2,
+      "seedReceipts": 2,
+      "reports": [
+        {
+          "session": "battle-8a87db17-8b9f-40c2-b198-b85780b86e4b",
+          "rounds": 20
+        },
+        {
+          "session": "online-355f4104-85cf-4ca4-8e27-321f0638e376",
+          "rounds": 10
+        }
+      ]
+    },
+    {
+      "phase": "after-retirement",
+      "profile": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\live-1792905608011-236155d6\\device-1",
+      "owner": "account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+      "queryOnly": true,
+      "petId": "pet-2d660416-db18-44a1-8392-74f235484151",
+      "experience": 25,
+      "xpReceipts": 2,
+      "seedReceipts": 2,
+      "reports": [
+        {
+          "session": "battle-8a87db17-8b9f-40c2-b198-b85780b86e4b",
+          "rounds": 20
+        },
+        {
+          "session": "online-355f4104-85cf-4ca4-8e27-321f0638e376",
+          "rounds": 10
+        }
+      ]
+    }
+  ]
+}
