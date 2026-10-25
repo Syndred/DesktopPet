@@ -179,6 +179,16 @@
       "originalContentInVerifiedBundle": true,
       "contentReplacement": true,
       "dataDeleted": false
+    },
+    {
+      "file": "apps/pc-app/runtime/features/discovery/server-authority.cjs",
+      "bytes": 4162,
+      "sha256": "25ab6f46dcd58814474695960e3ecab22c21c78cc545676fa7cdb3106bfb98fb",
+      "replacement": "features/discovery/cloud-runtime.cjs plus deployed discovery v5 and registered shared BattleScreen",
+      "reason": "Retire separate legacy server authority and its standalone engine consumer after actual cloud game/product restore and shared runtime proof",
+      "originalBytesMatchedVerifiedBundleBeforeMerge": true,
+      "retirementCommit": "ee6681a0bea8b60f6a746ddccedf1e76ec7c8b5e",
+      "dataDeleted": false
     }
   ],
   "checks": {
@@ -188,8 +198,7 @@
     "recoveryContent": "git diff --exit-code 39fb4608554918cc087acedb17a1294eeaa071ca HEAD -- all 13 retired paths passed before removal"
   },
   "remaining": [
-    "04 old duel transport and duel-online VM consumer; retire after current real native acceptance",
-    "03 obsolete standalone server authority consumers; retain required location/map and original data readers"
+    "04 old duel transport and duel-online VM consumer; retire after current real native acceptance"
   ],
-  "updatedAt": "2026-10-25T05:04:23.953Z"
+  "updatedAt": "2026-10-25T05:08:58.460Z"
 }
