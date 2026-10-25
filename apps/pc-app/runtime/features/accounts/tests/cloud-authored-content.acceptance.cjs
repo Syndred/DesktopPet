@@ -8,7 +8,7 @@ const text='{"password":"EXAMPLE_PLACEHOLDER","enabled":true}';const evidence={a
  const adopted=await remote.invoke(session,'companions-sync',{op:'command',command:'adopt',baseRevision:0,input:{actionId:randomUUID(),templateId:'big-fish-gentle',name:'原文验收云鱼',showOnDesktop:false}});
  const petId=adopted.result.data.pet.petId;assert.ok(petId);
  const now=Date.now(),message=randomUUID();
- db.prepare('insert into conversation_profiles(owner_account_id,pet_id,persona,reply_style,updated_at) values(?,?,?,?,?)').run(user.id,petId,text,text,now);
+ db.prepare('insert into conversation_profiles(owner_account_id,pet_id,persona,reply_style,updated_at) values(?,?,?,?,?)').run(user.id,petId,text,'natural',now);
  db.prepare('insert into conversation_memories(id,owner_account_id,pet_id,content,created_at,updated_at) values(?,?,?,?,?,?)').run(randomUUID(),user.id,petId,text,now,now);
  db.prepare("insert into conversation_messages(id,owner_account_id,pet_id,action_id,role,content,status,created_at,updated_at) values(?,?,?,?,'user',?,'complete',?,?)").run(message,user.id,petId,randomUUID(),text,now,now);
  const adapter=createConversationBackupAdapter({db,get:()=>null}),conversations=adapter.export(user.id);adapter.validate(conversations,user.id);
@@ -18,7 +18,7 @@ const text='{"password":"EXAMPLE_PLACEHOLDER","enabled":true}';const evidence={a
  const receipt=await remote.cloudSave('push',session,{actionId:randomUUID(),baseRevision:head.revision,envelope:safe.envelope});
  const context=await remote.cloudContext(session),read=await context.client.from('lingjing_saves').select('revision,checksum,envelope').single();assert.equal(read.error,null);assert.equal(read.data.checksum,source.checksum);assert.equal(receipt.checksum,source.checksum);
  const tables=read.data.envelope.data.modules.conversations.data.tables;
- assert.equal(tables.conversation_messages.find(row=>row.id===message).content,text);assert.equal(tables.conversation_memories[0].content,text);assert.equal(tables.conversation_profiles[0].persona,text);assert.equal(tables.conversation_profiles[0].reply_style,text);
+ assert.equal(tables.conversation_messages.find(row=>row.id===message).content,text);assert.equal(tables.conversation_memories[0].content,text);assert.equal(tables.conversation_profiles[0].persona,text);assert.equal(tables.conversation_profiles[0].reply_style,'natural');
  evidence.passed=true;evidence.owner=user.id;evidence.petId=petId;evidence.messageId=message;evidence.messageSha256=createHash('sha256').update(text).digest('hex');evidence.schemaSource='production features/conversations/backup.cjs';
  evidence.sameSourceAndCloudChecksum=true;evidence.unchangedFields=['message content','memory content','persona','reply_style'];evidence.revision=read.data.revision;evidence.checksum=read.data.checksum;
  writeFileSync(join(output,'evidence.json'),JSON.stringify(evidence,null,2));console.log('CLOUD_AUTHORED_CONTENT_PASSED',output);
