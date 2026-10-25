@@ -30,5 +30,14 @@ const proof = { schemaVersion: 1, at: new Date().toISOString(), source: execFile
   snapshot: 'artifacts/recovery/cloud-foundation-2026-10-25/pre-cleanup.bundle',
   policy: 'Only listed code/build/test consumers are candidates. User profiles, history, design sources and recovery backups are excluded. Runtime source removal follows service extraction; business-owner replacements wait for coordinator approval.',
   protected: ['docs/design/', 'artifacts/cloud-upgrade/2026-10-25/comparisontext-backup', 'C:/Users/Administrator/.codex/backups/DesktopPet/2026-10-25/comparisontext', 'User AppData and all save/profile/history/resource paths'], entries };
-const output = resolve('docs/implementation/cleanup/cloud-foundation-inventory.json'); mkdirSync(dirname(output), { recursive: true }); writeFileSync(output, JSON.stringify(proof, null, 2) + '\n');
-console.log(JSON.stringify({ output, entries: entries.length, decisions: Object.fromEntries([...new Set(entries.map(x => x.decision))].map(decision => [decision, entries.filter(x => x.decision === decision).length])) }));
+const output = resolve('docs/implementation/cleanup/cloud-foundation-inventory.json');
+const previous = existsSync(output) ? JSON.parse(readFileSync(output, 'utf8')) : {};
+const retained = new Map((previous.entries || []).map(entry => [entry.oldFile, entry]));
+for (const entry of entries) {
+  const original = retained.get(entry.oldFile);
+  retained.set(entry.oldFile, original ? { ...original, latestConsumerAudit: { at: proof.at, consumers: entry.consumers } } : entry);
+}
+// Preserve pre-deletion hashes, manual approval decisions and completed records.
+const merged = { ...previous, ...proof, entries: [...retained.values()] };
+mkdirSync(dirname(output), { recursive: true }); writeFileSync(output, JSON.stringify(merged, null, 2) + '\n');
+console.log(JSON.stringify({ output, entries: merged.entries.length, decisions: Object.fromEntries([...new Set(merged.entries.map(x => x.decision))].map(decision => [decision, merged.entries.filter(x => x.decision === decision).length])) }));

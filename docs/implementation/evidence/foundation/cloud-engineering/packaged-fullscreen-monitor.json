@@ -1,0 +1,227 @@
+{
+  "at": "2026-10-25T03:21:40.755Z",
+  "scope": "Actual unpacked Windows EXE with ASAR-contained fullscreen helper and fresh explicit QA profile. Not portable SFX or cloud/device acceptance.",
+  "checks": [
+    {
+      "id": "actual-asar-powershell-monitor-ready",
+      "running": true,
+      "ready": false
+    }
+  ],
+  "url": "file:///C:/Users/Administrator/.codex/worktrees/lingjing-foundation/DesktopPet/artifacts/pc-cloud-upgrade/win-unpacked/resources/app.asar/apps/pc-app/dist/ui/index.html#/companions",
+  "info": {
+    "version": "0.1.8",
+    "platform": "win32",
+    "build": {
+      "schemaVersion": 2,
+      "builtAt": "2026-10-25T03:20:27.594Z",
+      "sourceCommit": "73639b6da9a71e3068d1de35dc363d170a3a516b",
+      "sourceTree": "edd89c229b50becc4cbde3f0ee8ad742d19f6f7d",
+      "sourceDirtyFiles": [],
+      "codeFingerprint": "6bd9b949b7858449b441ca77cc4d70fd726f6e97f9fc44a7a49331ade2ab8f67",
+      "canonicalSourceFingerprint": "2088e542242a3fe43ceeb3285c22c5128989d28bb37dd4dfbb350194c309f0f4",
+      "canonicalPolicy": "Repository-relative paths; CRLF normalized to LF for source text only. Packaged/compiled bytes remain exact.",
+      "compiledFingerprint": "cb4644b54f85f1b59e55ee546cd779cfb6a55c4ed676690308317efb1815451f",
+      "codeFiles": 286,
+      "compiledFiles": 87,
+      "toolchain": {
+        "node": "24.21.0",
+        "electron": "44.9.3",
+        "sqlite": "13.0.3",
+        "vite": "7.3.7",
+        "typescript": "5.9.3",
+        "platform": "win32",
+        "arch": "x64"
+      },
+      "entrypoints": {
+        "main": "main/index.cjs",
+        "app": "ui/index.html",
+        "desktop": "ui/desktop.html",
+        "preload": "preload/index.cjs"
+      },
+      "publicCloud": {
+        "projectRef": "jbvrdmrkwpznbrvteive",
+        "url": "https://jbvrdmrkwpznbrvteive.supabase.co",
+        "sha256": "c1625c63f1d959f92b3392b47f2fb492452803eedf1c0d1ebc68a1168ab64eda",
+        "resourcePath": "lingjing-cloud-public.json"
+      },
+      "runtimeClosure": {
+        "manifest": "runtime-closure.json",
+        "files": 96,
+        "edges": 156,
+        "sha256": "27bc448cb9fbd386dd7394b4e5c3c3f60c6e1a24ccf6c21c6ca7f3e69e7e4ea5"
+      }
+    },
+    "runtime": {
+      "electron": "44.9.3",
+      "node": "24.22.0",
+      "modules": "149",
+      "napi": "10",
+      "arch": "x64",
+      "tray": {
+        "active": true,
+        "bounds": {
+          "x": 1775,
+          "y": 1150,
+          "width": 33,
+          "height": 49
+        }
+      }
+    },
+    "features": [
+      {
+        "id": "accounts",
+        "commands": [
+          "session",
+          "login",
+          "register",
+          "logout",
+          "profileSave",
+          "passwordChange",
+          "settingsGet",
+          "settingsDefaults",
+          "settingsSave",
+          "backupList",
+          "backupExport",
+          "backupPreview",
+          "backupRestore",
+          "syncStatus",
+          "syncNow",
+          "syncRetry",
+          "cloudPreview",
+          "testNotification",
+          "pointer"
+        ]
+      },
+      {
+        "id": "resources",
+        "commands": [
+          "list",
+          "history",
+          "cloudStatus",
+          "cloudSync",
+          "cloudPull",
+          "resolve",
+          "save",
+          "import"
+        ]
+      },
+      {
+        "id": "companions",
+        "commands": [
+          "list",
+          "get",
+          "combatProfile",
+          "desktopInput",
+          "adopt",
+          "rename",
+          "desktop",
+          "select",
+          "interact",
+          "perform",
+          "appearance"
+        ]
+      },
+      {
+        "id": "battle",
+        "commands": [
+          "overview",
+          "rules",
+          "context",
+          "settleContext",
+          "selectPet",
+          "startTraining",
+          "snapshot",
+          "act",
+          "retryAction",
+          "search",
+          "invitations",
+          "invite",
+          "respondInvite",
+          "cancelInvite",
+          "createRoom",
+          "joinRoom",
+          "sync",
+          "leave",
+          "listReports",
+          "getReport",
+          "retrySettlement",
+          "qaPreset"
+        ]
+      },
+      {
+        "id": "garden",
+        "commands": [
+          "plant",
+          "harvest",
+          "craft",
+          "feed",
+          "garrison",
+          "snapshot",
+          "territoryLocate",
+          "territoryChallenge",
+          "territorySettle"
+        ]
+      },
+      {
+        "id": "discovery",
+        "commands": [
+          "snapshot",
+          "setExploring",
+          "locate",
+          "watch",
+          "stopWatch",
+          "setDemo",
+          "setProvider",
+          "tile",
+          "qaTarget",
+          "begin",
+          "act",
+          "cancel",
+          "confirm",
+          "pokedex",
+          "memories"
+        ]
+      },
+      {
+        "id": "conversations",
+        "commands": [
+          "snapshot",
+          "select",
+          "history",
+          "profile.save",
+          "connection.save",
+          "connection.test",
+          "connection.cancel",
+          "memory.save",
+          "memory.delete",
+          "send",
+          "retry",
+          "cancel",
+          "history.clear",
+          "legacy.preview",
+          "legacy.import"
+        ]
+      }
+    ],
+    "user": {
+      "id": "qa:05782335-4c23-4a91-811c-977aeefe5836:local-9e28cd5c-b896-43c0-97cd-209ac9682d24",
+      "subjectId": "qa:05782335-4c23-4a91-811c-977aeefe5836:local-9e28cd5c-b896-43c0-97cd-209ac9682d24",
+      "ownerAccountId": "qa:05782335-4c23-4a91-811c-977aeefe5836:local-9e28cd5c-b896-43c0-97cd-209ac9682d24",
+      "provider": "local",
+      "account": "qa_monitor_1792898501348",
+      "username": "包内全屏检测",
+      "revision": 0,
+      "createdAt": "2026-10-25T03:21:41.351Z",
+      "updatedAt": "2026-10-25T03:21:41.351Z",
+      "dataMode": "simulated"
+    },
+    "scenario": {
+      "id": "unified-battle",
+      "runId": "05782335-4c23-4a91-811c-977aeefe5836",
+      "provenance": "simulated",
+      "isolated": true
+    }
+  },
+  "passed": true
+}
