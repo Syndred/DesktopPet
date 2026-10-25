@@ -140,6 +140,24 @@
       "cases": 3,
       "evidence": "docs/implementation/evidence/foundation/cloud-engineering/release-source-gate.json",
       "scope": "Three actual local Git repository tests, isolated local bare origin. No GitHub publish/deploy or hosted CI claim."
+    },
+    {
+      "name": "Async native tray recall control, ownership and failure containment",
+      "passed": true,
+      "groups": 4,
+      "evidence": "docs/implementation/evidence/foundation/cloud-engineering/tray-recall-control.json",
+      "scope": "Async service/control fixtures run on the actual Electron Node test runner. No live cloud/native-menu/portable acceptance claim; final integrated native flow waits for approved business freeze."
+    },
+    {
+      "name": "Actual Electron BrowserWindow/MenuItem tray recall ownership control",
+      "passed": true,
+      "cases": 4,
+      "evidence": "docs/implementation/evidence/foundation/cloud-engineering/tray-recall-native.json",
+      "scope": "Actual Electron BrowserWindow/MenuItem control with explicitly simulated deferred companion responses/session identities. No real cloud, production-menu or final portable claim.",
+      "runtime": {
+        "electron": "44.9.3",
+        "node": "24.22.0"
+      }
     }
   ],
   "realCloudEvidence": {
@@ -187,7 +205,7 @@
     "Main-coordinator final business freeze/integration, one full combined regression and final portable package",
     "Coordinator-owned retirement of old SQL/function entry points after 04/08 acceptance and MCP version alignment"
   ],
-  "updatedAt": "2026-10-25T04:08:52.430Z",
+  "updatedAt": "2026-10-25T04:24:12.807Z",
   "approvedIntegrations": {
     "accounts": "45b857d",
     "resources": "4e8fdf8",
@@ -257,12 +275,15 @@
   "integrationChecks": [
     {
       "id": "tray-cloud-recall-contract",
-      "status": "review-on-final-business-freeze",
+      "status": "unit-and-native-window-controls-passed-final-product-cloud-menu-flow-pending",
       "observedMainSource": "fd932fd3eb8e77733e284bb91ddc926930b600ac",
       "caller": "apps/pc-app/runtime/main/index.ts:196",
       "provider": "apps/pc-app/runtime/features/companions/index.cjs:86",
       "finding": "Current main cloud recallAll returns a Promise/durable intent; the tray callback invokes it without awaiting and closes windows immediately. Verify intended queued recall feedback and owner/session-change behavior with final 02 contract; do not infer a synchronous cloud confirmation.",
-      "ownership": "Public host review only; no domain WIP changed"
+      "ownership": "Public host review only; no domain WIP changed",
+      "change": "Await original domain recallAll; require ok:true; recheck owner after await and per close; close only captured owner/petId/windowId matches; fixed accounts:host-warning code on failure. No intent/progress writes.",
+      "evidence": "docs/implementation/evidence/foundation/cloud-engineering/tray-recall-control.json",
+      "nativeControlEvidence": "docs/implementation/evidence/foundation/cloud-engineering/tray-recall-native.json"
     }
   ],
   "lastCoordinatorObservation": {

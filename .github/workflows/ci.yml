@@ -42,6 +42,8 @@ jobs:
         run: npm run native:check
       - name: All CJS and SQLite domain checks on actual Electron
         run: npm run test:native
+      - name: Native tray window ownership with explicit deferred service fixtures
+        run: node scripts/acceptance/tray-recall-native.mjs
       - name: Build the actual Windows portable executable
         run: npm run package:pc:win
       - name: SQLite-only old profile survives ordinary startup and restart
