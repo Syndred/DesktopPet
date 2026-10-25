@@ -1,0 +1,32 @@
+{
+  "queriedAt": "2026-10-25T05:15:58.032896+00:00",
+  "kind": "read-only connected Supabase query after native per-process transport failure/restart and basemap audit; no direct SQL test writes",
+  "projectRef": "jbvrdmrkwpznbrvteive",
+  "ownerIdType": "text",
+  "nativeLocationProofsAfterMapAuditStart": 0,
+  "lastNativeLocationProofAt": "2026-10-25T04:24:32.739383+00:00",
+  "nativeWorld": {
+    "id": "qa:native-4b474857:territory:7585:11686",
+    "owner": "account:9695104c-0fe6-41c5-829f-0442c502c641",
+    "revision": 2,
+    "coversCenter": true,
+    "coversOutside": false
+  },
+  "offlineOriginalReceipt": {
+    "actionId": "72d580aa-09a1-4cf4-8ba9-1fc1faaaa878",
+    "replayed": "false",
+    "requestHash": "0bbbbbcf145bf60ec1599c8987d5b7d502de5fbc7c022d8b9484d804100ab650",
+    "accountRevision": 6,
+    "authorityReceiptId": "garden:0bbbbbcf145bf60ec1599c8987d5b7d502de5fbc7c022d8b9484d804100ab650"
+  },
+  "nativePlot": {
+    "plot_id": "plot-5",
+    "revision": 1,
+    "crop_type": "tomato",
+    "matures_at": 1792905278934,
+    "planted_at": 1792904378934,
+    "yield_quantity": 3,
+    "owner_account_id": "account:9695104c-0fe6-41c5-829f-0442c502c641"
+  },
+  "nativeOperationCount": 1
+}

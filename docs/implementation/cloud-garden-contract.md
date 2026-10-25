@@ -38,13 +38,17 @@ PostGIS Polygon/Point + GiST负责当前位置及区域围栏。两个当前 rev
 
 真实 HTTPS 已通过：三独立进程/不同设备身份，同账号并发一次提交/跨客户端同回执；两个正常 Auth 账号通过 companions-sync 合法领养；首轮两场自然败局保留并各结算一次5XP/两颗种子；第二次合法挑战两场自然胜利并发争夺，只一方占领、另一方 superseded 无成长/种子；实际响应头后断开正文读取，再按同一 actionId/hash/proof 恢复；驻守不改成长/库存且跨账号拒绝；15秒许可实际到期、错误用途/目标、跨账号许可、伪造胜者、缺许可和提前收获均拒绝且经济未变化。原水稻完整等待服务端25分钟成熟后，收获2、制作1份米饭并喂给同一原伙伴，其他伙伴保持原样。160字符原 actionId 对应71字符公共CAS回执，另一客户端重放不再次扣库存或增长。新的独立进程读回完整存档 checksum 和原结算回执一致。
 
-桌面只改主进程服务适配。`cloudActor.requireActor().invoke` 负责身份/刷新；新的设备请求 journal 保留精确 wire input/定位许可/hash，不导出为第二份库存。既有 battle command wrapper 把云领地 session 分发到服务端，禁止本地 finish/applyReward；恢复 snapshot 自动确认同一原行动，缓存以服务器 revision 抵挡过时并发读回。整个伙伴六表和 identityImports 作为一致性单位恢复；存在本机未同步操作时保留原档。其他本机模块尚未匹配时不推进08完整存档 CAS 基线，领域读回不擦除聊天/设置。
+桌面主进程通过 `cloudActor.requireActor().invoke` 负责身份/刷新；新的设备请求 journal 保留精确 wire input/定位许可/hash，不导出为第二份库存。既有 battle command wrapper 把云领地 session 分发到服务端，禁止本地 finish/applyReward；恢复 snapshot 自动确认同一原行动，缓存以服务器 revision 抵挡过时并发读回。整个伙伴六表和 identityImports 作为一致性单位恢复；存在本机未同步操作时保留原档。其他本机模块尚未匹配时不推进08完整存档 CAS 基线，领域读回不擦除聊天/设置。
 
 两个实际 Electron44 隔离配置已通过正常界面登录、safeStorage加密、合法领养及云战场验收。实际取消首行动的HTTPS正文后退出进程；重启只推进原来的一个回合，原 wire/hash 从 SQLite pending 转为 committed。两端交替操作同一对局，自然胜利13回合，确认一次并跨端重放，库存与伙伴一致，非目标伙伴未变。实际“播种”按钮完成一次云端CAS，另一进程读回同一地块/种子变化。
 
+补充的 `--offline` 验收将一端真实 Node fetch 的进程 dispatcher 指向只销毁 TCP 连接的回环 CONNECT 代理，不返回任何 HTTP/API 数据，观测到两次 `ECONNRESET`。正常界面的播种失败后保留 localStorage 原操作和 SQLite pending；另一端仍在线，确认云端种子、伙伴和地块均未变。退出该进程并重新启动后，实际“重试”按钮提交同一 wire/hash，版本仅4→5、番茄种子仅2→1，跨端再次重放不扣第二颗种子，伙伴完全不变，待确认记录清除。该证据是单进程网络路径故障，未修改整机网络。`--admission` 另以两个原合法挑战已用完的账号和新签名许可验证：外来 petId 返回 `PET_NOT_OWNED`，第三次挑战返回 `DAILY_INVASIONS_USED`，存档 checksum、每日余额及世界状态不变。
+
 真实窗口复核还修复了菜园 snapshot 顶层 revision 缺失，以及首次直接进入园地时共享地图/伙伴样式未加载。最终截图等待服务端胜局、“已确认”、实际地图瓦片和可见角色内容；静止WebGL缓冲合成后可能清空，头像改用原生窗口合成位图检查，排除浅色背景和角标后各有2819/2434个角色像素。34项园地回归完成后，最终云端专项13/13、主进程/桌面/界面类型检查及共享核心/bundle来源检查再通过。
 
-以上进程均在同一台Windows机器，定位来自主协调授权的独立模拟场景；不构成两个实体设备或物理GPS证据，响应正文丢失也不等同整机网络断开。`garden-sync v2` 和 `territory-sync v2` 已只读核对为 ACTIVE。状态及真实证据见 `status/cloud-garden.json` 与 `evidence/garden/cloud-2026-10-25/evidence.json`；完整忽略目录保留原 action、失败记录、替换前截图和回执。剩余工作是主协调独立验收及统一发布。
+主协调复核原地图截图后，新增 `--map` 增量验收：NearbyMap 仅增加 idle、areTilesLoaded 和视口的观测 data 属性，不改变地图样式、地理/云协议、定位或业务边界。原16.8级视口的真实OSM中心瓦片只有一种不透明陆地颜色 `(242,239,233)`，领地填色叠加后原生画布为 `(218,223,237)`，单色不属于已渲染地物证据。通过正常“缩小”按钮将纯展示相机缩到现有最小11级后，道路线条出现；两端分别等待 idle/全部瓦片完成，源中心瓦片13种颜色，原生采样71种颜色、240个纹理像素，32450/32491个采样匹配源瓦片。相机中心与系统定位状态保持原样，领地、伙伴、地块、库存前后严格相等；SQL另确认地图验收期间该账号没有新定位许可，最后一张仍在04:24签发。原单色与新纹理截图均保留。没有重建领地或重跑原经济成熟。
+
+以上进程均在同一台Windows机器，定位来自主协调授权的独立模拟场景；不构成两个实体设备或物理GPS证据，响应正文丢失和单进程路由故障也不等同整机网络断开。`garden-sync v2` 和 `territory-sync v2` 已只读核对为 ACTIVE。状态及真实证据见 `status/cloud-garden.json` 与 `evidence/garden/cloud-2026-10-25/evidence.json`；完整忽略目录保留原 action、失败记录、替换前截图和回执。剩余工作是主协调对最后增量独立验收和合入；全应用统一打包由主协调另行推进。
 
 复现命令（私有配置仅保存在 artifacts，包含专用测试账号和 proof，不进入源码/证据）：
 
@@ -53,6 +57,7 @@ node scripts/acceptance/cloud-territory/prepare-live.mjs artifacts/garden/cloud/
 # 主协调根据 location-grant-request.json 授权专用 actor/device/scenario 后
 node scripts/acceptance/cloud-territory/verify-live.mjs artifacts/garden/cloud/private-clients.json
 node scripts/acceptance/cloud-territory/verify-live.mjs artifacts/garden/cloud/private-clients.json --negative
+node scripts/acceptance/cloud-territory/verify-live.mjs artifacts/garden/cloud/private-clients.json --admission
 # 等原25分钟服务端成熟时间，不缩时
 node scripts/acceptance/cloud-territory/verify-live.mjs artifacts/garden/cloud/private-clients.json --economy
 node scripts/acceptance/cloud-territory/verify-live.mjs artifacts/garden/cloud/private-clients.json --readback
@@ -60,6 +65,8 @@ node scripts/acceptance/cloud-territory/electron-live.mjs artifacts/garden/cloud
 # 主协调另授两个实际 Electron actor/device 的模拟定位许可后
 node scripts/acceptance/cloud-territory/electron-live.mjs artifacts/garden/cloud/private-clients.json
 node scripts/acceptance/cloud-territory/electron-live.mjs artifacts/garden/cloud/private-clients.json --inspect
+node scripts/acceptance/cloud-territory/electron-live.mjs artifacts/garden/cloud/private-clients.json --offline
+node scripts/acceptance/cloud-territory/electron-live.mjs artifacts/garden/cloud/private-clients.json --map
 node scripts/acceptance/cloud-territory/publish-evidence.mjs artifacts/garden/cloud/private-clients.json
 ```
 
