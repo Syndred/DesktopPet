@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-25T10:25:38.901Z",
+  "updatedAt": "2026-10-25T10:42:36.812Z",
   "status": "in-progress",
   "qaThreadId": "01a1725c-d59c-7620-9bb6-1c0d4e0fb3a3",
   "soleNativeInputOwner": "01a1725c-d59c-7620-9bb6-1c0d4e0fb3a3",
@@ -118,5 +118,40 @@
     "rootVerifiedFiles": 100,
     "indexSha256": "29c3ad3bf10fbbad9cb72ab5b290076c969a2ce4b42a9a3b9d021e971bcb42fe",
     "textCredentialFlags": 0
+  },
+  "latestUserRequirements": {
+    "source": "Direct user instruction on 2026-10-25; supersedes previous GUID-as-display-number interpretation",
+    "original": "编号用阿拉伯数字，每一种宠物类型从0001开始，比如小狐，用户第一只0001，野外遇到另一只0002，别人领取的0003，以此类推；桌面显示不需要名字和编号",
+    "numbering": {
+      "scope": "global per immutable original templateId across users",
+      "first": "0001",
+      "minimumDigits": 4,
+      "example": [
+        "小狐 / 用户甲首只 / 0001",
+        "小狐 / 野外另一实体 / 0002",
+        "小狐 / 用户乙领养 / 0003"
+      ],
+      "wildIdentity": "Number assigned to authoritative encountered entity and retained after capture",
+      "internalIdentity": "Preserve original ownerAccountId and petId; public number is additive metadata",
+      "implementationGuards": [
+        "Server atomic allocation and idempotence",
+        "Independent counters per type",
+        "Never recycle or renumber existing allocated numbers",
+        "No local fabricated global numbers",
+        "Keep original accounts, raw histories, aliases and receipts"
+      ]
+    },
+    "desktop": {
+      "showName": false,
+      "showNumber": false,
+      "keepPetInteractions": true
+    },
+    "owners": {
+      "companions": "02",
+      "registryAndCloud": "08",
+      "wildEncounter": "03",
+      "independentAcceptance": "09"
+    },
+    "status": "implementation-in-progress; not accepted in candidate 312e5fe"
   }
 }
