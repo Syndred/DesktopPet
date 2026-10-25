@@ -5,6 +5,7 @@ const { BattleStore, copy } = require("./store.cjs");
 const { appearance2d } = require("./assets.cjs");
 const { readQaProfile, createQaOnline, qaUser } = require('./qa-adapter.cjs');
 const { presentSession, presentReport } = require('./presentation.cjs');
+const { BattleCloudAuthority } = require('./cloud-authority.cjs');
 
 const ACTIONS = new Set(["normal_attack", "element_attack", "dodge", "ultimate"]);
 const ELEMENTS = new Set(["metal", "wood", "earth", "water", "fire"]);
@@ -21,7 +22,13 @@ class BattleFeatureService {
     this.store = new BattleStore(services.db);
     this.qa = readQaProfile(services);
     this.online = this.qa?.endpoint ? createQaOnline(this.qa) : services.legacy?.onlineDuelService || new OnlineDuelService();
+    const cloudActor = services.get('cloudActor');
+    if (!this.qa && cloudActor?.requireActor) this.online.useCloudTransport(async () => {
+      const context = await cloudActor.requireActor();
+      return { url: context.url, actor: context, client: context.client, invoke: context.invoke };
+    });
     this.locks = new Map();
+    this.cloud = new BattleCloudAuthority(services);
     this.unsubscribe = this.online.onEvent(event => {
       // Network notifications trigger a verified sync; their payload is never a settlement.
       services.events?.emit("battle:online", {
@@ -29,6 +36,10 @@ class BattleFeatureService {
         roomId: event.payload?.roomId || event.payload?.room?.id || null,
         status: event.payload?.status || null
       });
+    });
+    this.stopSession = services.events?.on('accounts:session-changed', value => {
+      const user = value?.currentUser;
+      if (!user || (this.online.currentUser && this.online.currentUser.id !== (user.ownerAccountId || user.id))) this.online.setCurrentUser(null);
     });
   }
 
@@ -42,8 +53,8 @@ class BattleFeatureService {
 
   user(owner) {
     const accounts = this.services.get("accounts");
-    const user = this.qa ? qaUser(this.services, owner, this.qa) : accounts?.requireRuntimeUser ? accounts.requireRuntimeUser() : this.services.session.getCurrentUser();
-    if (!user || (user.ownerAccountId || user.id) !== owner || !user.sessionToken) throw fail("ONLINE_LOGIN_REQUIRED", "请登录云端账号后使用好友对战");
+    const user = this.qa ? qaUser(this.services, owner, this.qa) : this.online.cloudProvider ? accounts?.privateSession?.() : accounts?.requireRuntimeUser ? accounts.requireRuntimeUser() : this.services.session.getCurrentUser();
+    if (!user || (user.ownerAccountId || user.id) !== owner || (this.online.cloudProvider ? user.authKind !== 'supabase' : !user.sessionToken)) throw fail("ONLINE_LOGIN_REQUIRED", "请登录云端账号后使用好友对战");
     this.online.setCurrentUser(user);
     return user;
   }
@@ -115,13 +126,40 @@ class BattleFeatureService {
 
   overview(_payload, context) {
     const owner = this.owner(context);
+    if(this.isCloud(owner)&&!this.store.latest(owner))return this.serial(owner,async()=>{
+      this.user(owner);const response=await this.online.invoke('get_active_room',{});this.assertOwner(owner);
+      if(response.room){await this.online.syncRoom({roomId:response.room.id,roundsLimit:50});this.assertOwner(owner);const side=response.room.host_user_id===owner?'host':'guest';await this.syncInternal(owner,this.bindRoom(owner,response.room,response.room[`${side}_pet_id`]));}
+      else {const training=await this.online.invoke('get_active_training',{});this.assertOwner(owner);if(training.session)await this.saveCloudTraining(owner,training);}
+      await this.refreshCloudReports(owner);return this.overviewData(owner);
+    });
+    return this.overviewData(owner);
+  }
+
+  overviewData(owner) {
     const current = this.store.latest(owner);
     const status = this.online.getStatus();
     return {
       pets: this.pets(owner), session: current, rules: getBattleRules(), selectedPetId: this.services.get("companions")?.getSelections?.(owner)?.battlePetId || null,
       online: { enabled: status.enabled, configured: status.configured, available: status.available },
-      reports: this.listReports({}, { ownerAccountId: owner }), opponents: this.opponents()
+      reports: this.localReports(owner,{}), opponents: this.opponents()
     };
+  }
+
+  isCloud(owner) {return !this.qa&&Boolean(this.online.cloudProvider)&&this.services.get('accounts')?.privateSession?.()?.authKind==='supabase'&&this.verifiedOwner()===owner;}
+
+  async cloudCommand(owner,type,input,invoke,inputActionId) {
+    if(!this.isCloud(owner))return invoke(undefined);
+    const actionId=inputActionId||this.store.pendingCommand(owner,type,input),prior=this.store.action(owner,actionId);
+    if(inputActionId){if(prior&&(prior.command.type!==`cloud:${type}`||JSON.stringify(prior.command.input)!==JSON.stringify(input)))throw fail('ACTION_CONFLICT','操作编号与原请求不一致');if(prior?.result)return prior.result;if(!prior)this.store.reserve(owner,actionId,actionId,{type:`cloud:${type}`,input});}
+    const result=await invoke(actionId);this.assertOwner(owner);this.store.resolve(owner,actionId,result);return result;
+  }
+
+  async saveCloudTraining(owner,response) {
+    this.assertOwner(owner);const session=response.session;
+    if(!session||session.mode!=='training'||session.context?.cloudUserId!==owner||session.context?.authority!=='supabase')throw fail('INVALID_CLOUD_SESSION','云端训练归属不一致');
+    if(response.proof){if(!this.store.reward(owner,session.id))await this.cloud.apply(owner,response.proof);this.assertOwner(owner);return this.store.session(owner,session.id);}
+    if(session.status==='abandoned')return this.services.db.transaction(()=>this.finish(owner,session,'abandoned'))();
+    return this.store.save(owner,session);
   }
 
   rules(_payload, context) { this.owner(context); return getBattleRules(); }
@@ -176,6 +214,11 @@ class BattleFeatureService {
     if (!ELEMENTS.has(payload.enemyElement)) throw fail("INVALID_ELEMENT", "请选择训练对手的五行");
     const opponent = this.opponents().find(pet => pet.element === payload.enemyElement);
     if (!opponent) throw fail('ELEMENT_ROSTER_MISSING', `${ELEMENT_NAMES[payload.enemyElement]}系伙伴尚未就绪`);
+    if(this.isCloud(owner))return this.serial(owner,async()=>{
+      this.user(owner);this.ownedPet(owner,payload.petId);
+      const response=await this.cloudCommand(owner,'training-start',{petId:payload.petId,enemyElement:payload.enemyElement},actionId=>this.online.invoke('start_training',{actionId,petId:payload.petId,enemyElement:payload.enemyElement}),payload.actionId);
+      const current=await this.online.invoke('get_training',{sessionId:response.session.id});return this.saveCloudTraining(owner,current);
+    });
     return this.serial(owner, () => this.startLocal(owner, payload, "training", {
       id: `training:${payload.enemyElement}`,
       opponent
@@ -231,6 +274,7 @@ class BattleFeatureService {
     const companions = this.services.get("companions");
     if (companions?.select) {
       const result = companions.select(owner, { actionId: text(payload.actionId, "操作编号"), petId: pet.petId, slot: "battlePetId" });
+      if(result?.then)return result.then(value=>{if(value?.ok===false)throw fail(value.code,value.message);return pet;});
       if (result?.ok === false) throw fail(result.code, result.message);
     }
     return pet;
@@ -313,6 +357,13 @@ class BattleFeatureService {
       if (session.status !== "active") throw fail("BATTLE_NOT_ACTIVE", "当前对战不能提交行动");
       if (payload.expectedRound != null && payload.expectedRound !== session.snapshot.round + 1 && !receipt) throw fail("ROUND_CONFLICT", "回合已更新，请先同步");
       if (session.pendingAction && session.pendingAction.actionId !== actionId) throw fail("ACTION_PENDING", "本回合行动已锁定，请等待对手或重新同步");
+      if(session.mode==='training'&&session.context?.authority==='supabase') {
+        this.user(owner);const roundNo=receipt?.command.roundNo||session.snapshot.round+1;
+        if(!receipt)this.store.reserve(owner,actionId,session.id,{action:payload.action,roundNo});
+        session.pendingAction={actionId,action:payload.action,roundNo,uncertain:true};this.store.save(owner,session);
+        try {const response=await this.online.invoke('training_action',{sessionId:session.id,actionId,action:payload.action,roundNo});const saved=await this.saveCloudTraining(owner,response);this.store.resolve(owner,actionId,saved);return saved;}
+        catch(error){this.assertOwner(owner);throw fail('ONLINE_ACTION_UNCERTAIN',`训练结果待云端确认，请同步原回合。${friendlyError(error)}`);}
+      }
       if (session.mode === "friend") return this.actOnline(owner, session, { ...payload, actionId }, receipt);
       return this.services.db.transaction(() => {
         if (!receipt) this.store.reserve(owner, actionId, session.id, { action: payload.action, roundNo: session.snapshot.round + 1 });
@@ -339,7 +390,7 @@ class BattleFeatureService {
     session.pendingAction = { actionId: payload.actionId, action: payload.action, roundNo, uncertain: true };
     this.store.save(owner, session);
     try {
-      await this.online.submitAction({ action: payload.action, roundNo, waitForResolution: false });
+      await this.online.submitAction({ actionId: payload.actionId, action: payload.action, roundNo, waitForResolution: false });
       this.assertOwner(owner);
       session = this.requireSession(owner, session.id);
       if (session.pendingAction) session.pendingAction.uncertain = false;
@@ -356,11 +407,14 @@ class BattleFeatureService {
     const owner = this.owner(context);
     return this.serial(owner, async () => {
       let session = this.requireSession(owner, payload.sessionId);
-      if (!session.pendingAction || session.mode !== "friend") throw fail("NO_PENDING_ACTION", "当前没有待确认的原行动");
+      if (!session.pendingAction || session.mode !== "friend"&&session.context?.authority!=='supabase') throw fail("NO_PENDING_ACTION", "当前没有待确认的原行动");
       // Sync first: a resolved last round must never become a command for the next round.
       session = await this.syncInternal(owner, session);
       if (!session.pendingAction) return session;
       const pending = session.pendingAction;
+      if(session.mode==='training') {
+        this.user(owner);const response=await this.online.invoke('training_action',{sessionId:session.id,actionId:pending.actionId,action:pending.action,roundNo:pending.roundNo});const saved=await this.saveCloudTraining(owner,response);this.store.resolve(owner,pending.actionId,saved);return saved;
+      }
       return this.actOnline(owner, session, pending, this.store.action(owner, pending.actionId));
     });
   }
@@ -384,7 +438,8 @@ class BattleFeatureService {
     return this.serial(owner, async () => {
       this.user(owner);
       this.ownedPet(owner, payload.petId);
-      const result = await this.online.sendDuelRequest({ targetAccount: text(payload.targetAccount, "对方账号"), allowResend: Boolean(payload.allowResend) });
+      const targetAccount=text(payload.targetAccount,'对方账号');
+      const result = await this.cloudCommand(owner,'invite',{targetAccount},actionId=>this.online.sendDuelRequest({ actionId, targetAccount, allowResend: Boolean(payload.allowResend) }));
       this.assertOwner(owner);
       if (result.ok === false) throw fail("INVITE_COOLDOWN", result.retryAfterSeconds ? `请在 ${result.retryAfterSeconds} 秒后重发` : "邀请发送失败");
       // Persist chosen combatant separately from desktop/chat selection.
@@ -430,13 +485,13 @@ class BattleFeatureService {
       const key = `accept:${requestId}`;
       let pending = this.store.action(owner, key)?.result;
       if (!pending) {
-        const created = await this.online.createRoom({ petId: pet.petId, requestId, petResourceId: pet.appearance2d, petName: pet.petName, petElement: pet.element });
+        const created = await this.online.createRoom({ actionId:key, petId: pet.petId, requestId, petResourceId: pet.appearance2d, petName: pet.petName, petElement: pet.element });
         this.assertOwner(owner);
         pending = { room: created.room };
         if (!this.store.action(owner, key)) this.store.reserve(owner, key, key, { petId: payload.petId, type: "accept" });
         this.store.resolve(owner, key, pending);
       }
-      const accepted = await this.online.respondDuelRequest({ requestId, decision: "accept", roomId: pending.room.id, roomCode: pending.room.room_code, roomStatus: pending.room.status });
+      const accepted = await this.online.respondDuelRequest({ actionId:`accept-confirm:${requestId}`,requestId, decision: "accept", roomId: pending.room.id, roomCode: pending.room.room_code, roomStatus: pending.room.status });
       this.assertOwner(owner);
       const synced = await this.online.syncRoom({ roomId: pending.room.id, roundsLimit: 50 });
       this.assertOwner(owner);
@@ -457,7 +512,7 @@ class BattleFeatureService {
     const session = {
       id: `online-${room.id}`, mode: "friend", status: room.status === "waiting" ? "waiting" : "active",
       startedAt: room.created_at || new Date().toISOString(), player,
-      enemy: { petId: room[`${peer}_pet_id`] || room[`${peer}_user_id`] || "waiting-peer", petName: room[`${peer}_pet_name`] || "等待好友", element: room[`${peer}_element`] || "wood", appearance2d: room[`${peer}_resource_id`] || appearance2d({ element: room[`${peer}_element`] }) },
+      enemy: { petId: room[`${peer}_pet_id`] || room[`${peer}_user_id`] || "waiting-peer", petName: room[`${peer}_pet_name`] || "等待好友", element: room[`${peer}_element`] || "wood", level:room[`${peer}_pet_level`]||1, appearance2d: room[`${peer}_resource_id`] || appearance2d({ element: room[`${peer}_element`] }) },
       snapshot: this.online.toBattleState(), room: copy(room), side,
       rounds: [], winner: null, pendingAction: null, historyComplete: true, rules: getBattleRules(),
       context: { authority: this.qa ? 'simulated' : 'supabase', cloudUserId: user.id, ...(this.qa ? { scenarioId: this.qa.runId } : {}) }
@@ -471,7 +526,7 @@ class BattleFeatureService {
       this.user(owner);
       if (this.store.latest(owner)) throw fail("BATTLE_IN_PROGRESS", "已有待完成的对战，请先恢复或离开");
       const pet = this.ownedPet(owner, payload.petId);
-      const created = await this.online.createRoom({ petId: pet.petId, petResourceId: pet.appearance2d, petName: pet.petName, petElement: pet.element });
+      const created = await this.cloudCommand(owner,'create',{petId:pet.petId},actionId=>this.online.createRoom({ actionId,petId: pet.petId, petResourceId: pet.appearance2d, petName: pet.petName, petElement: pet.element }));
       this.assertOwner(owner);
       return this.bindRoom(owner, created.room, pet.petId);
     });
@@ -489,7 +544,7 @@ class BattleFeatureService {
     if (active && active.room?.room_code !== roomCode) throw fail("BATTLE_IN_PROGRESS", "请先完成或离开当前对战");
     const petId = payload.requestId ? this.store.action(owner, `invite:${payload.requestId}`)?.command.petId || payload.petId : payload.petId;
     const pet = this.ownedPet(owner, petId);
-    const joined = await this.online.joinRoom({ roomCode, petId: pet.petId, petResourceId: pet.appearance2d, petName: pet.petName, petElement: pet.element });
+    const joined = await this.cloudCommand(owner,'join',{roomCode,petId:pet.petId},actionId=>this.online.joinRoom({ actionId,roomCode, petId: pet.petId, petResourceId: pet.appearance2d, petName: pet.petName, petElement: pet.element }));
     this.assertOwner(owner);
     return this.syncInternal(owner, this.bindRoom(owner, joined.room, pet.petId));
   }
@@ -500,6 +555,11 @@ class BattleFeatureService {
   }
 
   async syncInternal(owner, session) {
+    if(session.mode==='training'&&session.context?.authority==='supabase') {
+      this.user(owner);const response=await this.online.invoke('get_training',{sessionId:session.id});this.assertOwner(owner);
+      const pending=session.pendingAction;if(pending&&response.session?.snapshot.round<pending.roundNo)response.session.pendingAction=pending;
+      const saved=await this.saveCloudTraining(owner,response);if(pending&&saved.snapshot.round>=pending.roundNo)this.store.resolve(owner,pending.actionId,saved);return saved;
+    }
     if (session.mode !== "friend") return session;
     this.user(owner);
     const response = await this.online.syncRoom({ roomId: session.room.id, roundsLimit: 50 });
@@ -532,10 +592,16 @@ class BattleFeatureService {
     session.room = copy(room);
     session.snapshot = this.online.toBattleState();
     const peer = session.side === "host" ? "guest" : "host";
-    session.enemy = { ...session.enemy, petId: room[`${peer}_pet_id`] || room[`${peer}_user_id`] || "waiting-peer", petName: room[`${peer}_pet_name`] || "等待好友", element: room[`${peer}_element`] || "wood", appearance2d: room[`${peer}_resource_id`] || appearance2d({ element: room[`${peer}_element`] }) };
+    session.enemy = { ...session.enemy, petId: room[`${peer}_pet_id`] || room[`${peer}_user_id`] || "waiting-peer", petName: room[`${peer}_pet_name`] || "等待好友", element: room[`${peer}_element`] || "wood", level:room[`${peer}_pet_level`]||1, appearance2d: room[`${peer}_resource_id`] || appearance2d({ element: room[`${peer}_element`] }) };
     session.rounds = [...rounds.values()].sort((a, b) => a.round - b.round);
     session.historyComplete = session.rounds.length === Number(room.last_resolved_round || 0) && session.rounds.every((round, index) => round.round === index + 1);
     const pending = session.pendingAction;
+    if(response.pendingAction) {
+      const own=response.pendingAction;
+      if(pending&&pending.roundNo===own.roundNo&&(pending.actionId!==own.actionId||pending.action!==own.action))this.store.resolve(owner,pending.actionId,{sessionId:session.id,supersededBy:own.actionId,reason:'server-locked-original'});
+      session.pendingAction={...own,uncertain:false};
+      if(!this.store.action(owner,own.actionId))this.store.reserve(owner,own.actionId,session.id,{action:own.action,roundNo:own.roundNo});
+    }
     if (pending && rounds.has(pending.roundNo)) {
       session.pendingAction = null;
     }
@@ -546,12 +612,14 @@ class BattleFeatureService {
       try {
         proof = await this.online.invoke("claim_battle_settlement", { userId: user.id, sessionToken: user.sessionToken, roomId: room.id, petId: session.player.petId });
         this.assertOwner(owner);
+        if(this.isCloud(owner)) {await this.cloud.apply(owner,proof);this.assertOwner(owner);const saved=this.store.session(owner,session.id);if(pending&&rounds.has(pending.roundNo))this.store.resolve(owner,pending.actionId,saved);return saved;}
       } catch (error) {
         this.assertOwner(owner);
         session.settlementError = friendlyError(error);
       }
     }
     return this.services.db.transaction(() => {
+      if(this.isCloud(owner)&&room.status==='finished'&&!this.store.reward(owner,session.id)){session.endedAt=room.updated_at;session.reward={actionId:`battle:${room.id}:${owner}`,petId:session.player.petId,experience:session.winner==='player'?20:5,applied:false,pendingReason:session.settlementError||'等待云端结算读回'};session.status='finished';session.reportId=session.id;this.store.saveReport(owner,{id:session.id,sessionId:session.id,mode:session.mode,status:session.status,winner:session.winner,player:session.player,enemy:session.enemy,startedAt:session.startedAt,endedAt:session.endedAt,rounds:session.rounds,reward:session.reward,historyComplete:session.historyComplete,context:session.context,rules:session.rules});return this.store.save(owner,session);}
       if (room.status === "finished") session = this.finish(owner, session, "finished", proof);
       else if (room.status === "abandoned") session = this.finish(owner, session, "abandoned");
       else { session.status = room.status === "waiting" ? "waiting" : "active"; session = this.store.save(owner, session); }
@@ -565,10 +633,11 @@ class BattleFeatureService {
     return this.serial(owner, async () => {
       let session = this.requireSession(owner, payload.sessionId);
       if (["finished", "abandoned"].includes(session.status)) return session;
+      if(session.mode==='training'&&session.context?.authority==='supabase') {this.user(owner);const response=await this.cloudCommand(owner,'training-leave',{sessionId:session.id},actionId=>this.online.invoke('leave_training',{sessionId:session.id,actionId}));return this.saveCloudTraining(owner,response);}
       if (session.mode === "friend") {
         const user = this.user(owner);
         // Unlike the compatibility service's best-effort leave, require server acknowledgment.
-        const result = await this.online.invoke("leave_room", { userId: user.id, sessionToken: user.sessionToken, roomId: session.room.id, reason: "user_leave" });
+        const result = await this.cloudCommand(owner,'leave',{roomId:session.room.id},actionId=>this.online.invoke("leave_room", { actionId,userId: user.id, sessionToken: user.sessionToken, roomId: session.room.id, reason: "user_leave" }));
         this.assertOwner(owner);
         if (result.room?.status === "finished") return this.syncInternal(owner, session);
         session.room = result.room || session.room;
@@ -590,6 +659,22 @@ class BattleFeatureService {
 
   listReports(payload, context) {
     const owner = this.owner(context);
+    if(this.isCloud(owner))return this.refreshCloudReports(owner).then(()=>this.localReports(owner,payload));
+    return this.localReports(owner,payload);
+  }
+
+  async refreshCloudReports(owner) {
+    const actor=await this.services.get('cloudActor').requireActor(),remote=await actor.invoke('lingjing-save',{op:'read'});this.assertOwner(owner);
+    if(!remote?.envelope)return;
+    const backups=this.services.get('backups');backups.validate(remote.envelope,owner);
+    const module=remote.envelope.data.modules.battle;if(!module)return;
+    const adapter=backups.adapters.get('battle');if(module.version!==adapter?.version)throw fail('INVALID_BATTLE_BACKUP','云端战报版本不兼容');adapter.validate(module.data,owner);
+    // Read-only cloud projections populate only the report cache. They cannot
+    // award XP/seeds or overwrite an independent local companion/inventory unit.
+    this.services.db.transaction(()=>{for(const row of module.data.reports)this.store.saveReport(owner,JSON.parse(row.data_json));})();
+  }
+
+  localReports(owner,payload) {
     const reports = this.store.reports(owner, payload.limit);
     const legacy = this.ownedLegacy(owner)?.battleReports || [];
     const known = new Set(reports.map(report => report.sessionId));
@@ -604,7 +689,8 @@ class BattleFeatureService {
 
   getReport(payload, context) {
     const owner = this.owner(context);
-    const report = this.store.report(owner, text(payload.reportId, "战报编号")) || this.listReports({ limit: 200 }, context).find(item => item.id === payload.reportId);
+    const report = this.store.report(owner, text(payload.reportId, "战报编号")) || this.localReports(owner,{limit:200}).find(item=>item.id===payload.reportId);
+    if(!report&&this.isCloud(owner))return this.refreshCloudReports(owner).then(()=>{const saved=this.store.report(owner,payload.reportId);if(!saved)throw fail('REPORT_NOT_FOUND','未找到当前账号的战报');return presentReport(saved);});
     if (!report) throw fail("REPORT_NOT_FOUND", "未找到当前账号的战报");
     return presentReport(report);
   }
@@ -650,7 +736,7 @@ class BattleFeatureService {
     } };
   }
 
-  dispose() { this.unsubscribe?.(); }
+  dispose() { this.unsubscribe?.(); this.stopSession?.(); }
 }
 
 function friendlyError(error) {
