@@ -1,0 +1,20 @@
+{
+  "implementationCommit": "e074faee62c34b0faa2a0e152feaed72e1662891",
+  "date": "2026-10-24",
+  "scope": "Companions A01/A02/A03/A06/A07/A08/A11 and A07/A12 portrait consumer follow-up",
+  "checks": [
+    "14 actual SQLite/account/resource checks passed",
+    "Production build, TypeScript, feature ESLint and diff whitespace checks passed",
+    "Six real UI adoptions; 24 wave/eat/attack/hit plays with actual changing Pixi frames; same pet/resource in detail/desktop/chat/actual training",
+    "Restart preserved names/growth/visibility/canonical resourceId; original legacy file bytes unchanged",
+    "1280x844 and 1440x900 CSS px captures loaded and visually inspected",
+    "Six adoption portrait viewports use canonical idle frames; status/roster/detail thumbnails use shared helper; native and large preview remain full body"
+  ],
+  "actionEvidence": "pre-portrait/roster-actions.json",
+  "portraitEvidence": "portrait/evidence.json",
+  "portraitSource": "resources ResourcePortrait / resolveResourcePortrait, commit 1dac04e",
+  "fullBodyProof": "portrait/desktop-full-body.png",
+  "sourceArtwork": "apps/pc-app/runtime/features/resources/assets/roster-v2/source-record.json",
+  "originalReference": "docs/design/2026-10-24/full-ui/03-pet-detail-and-adoption.png",
+  "independentVisualApproval": "Main conversation owns final integrated visual review; no claim of all-19-page approval here"
+}

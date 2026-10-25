@@ -3,21 +3,68 @@
   "productName": "Lingjing",
   "icon": "build/icon.png",
   "directories": {
-    "output": "artifacts/pc-beta"
+    "output": "artifacts/pc-beta-unified"
   },
   "files": [
     "apps/pc-app/dist/**/*",
     "apps/pc-app/runtime/**/*",
     "!**/*.test.cjs",
+    "!**/*.test.mjs",
+    "!**/tests/**/*",
     "!**/verification/**/*",
+    "!**/*.electron.mjs",
+    "!**/verify-electron.mjs",
     "!**/testing-adapter.cjs",
     "!**/generate-fish.cjs",
     "!**/assets/models/**/*",
+    "!apps/pc-app/dist/ui/models/**/*",
+    "!apps/pc-app/runtime/features/resources/legacy/**/*",
     "!apps/pc-app/runtime/renderer/**/*",
     "!apps/pc-app/runtime/auth/**/*",
-    "package.json"
+    "package.json",
+    "!**/verify-*.mjs",
+    "!**/write-evidence.mjs",
+    "!**/prepare-*-fixture.mjs"
   ],
   "asar": true,
+  "extraFiles": [
+    {
+      "from": "apps/pc-app/ui/src/components/ui/LICENSE.shadcn",
+      "to": "licenses/shadcn-ui.txt"
+    },
+    {
+      "from": "docs/implementation/foundation-dependencies.json",
+      "to": "licenses/dependencies.json"
+    },
+    {
+      "from": "docs/implementation/illustration-assets.json",
+      "to": "licenses/generated-illustrations.json"
+    },
+    {
+      "from": "docs/implementation/garden-assets.json",
+      "to": "licenses/generated-garden.json"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/resources/assets/roster-v2/source-record.json",
+      "to": "licenses/generated-roster.json"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/resources/assets/roster-v2/generation-prompts.json",
+      "to": "licenses/roster-generation-prompts.json"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/resources/assets/roster-v2/layout-refinement-prompts.json",
+      "to": "licenses/roster-refinement-prompts.json"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/resources/assets/roster-v2/element-extension-prompts.json",
+      "to": "licenses/roster-element-extension-prompts.json"
+    },
+    {
+      "from": "apps/pc-app/runtime/features/resources/assets/roster-v2/element-extension-refinement.json",
+      "to": "licenses/roster-element-extension-refinement.json"
+    }
+  ],
   "extraMetadata": {
     "main": "apps/pc-app/dist/main/index.cjs"
   },

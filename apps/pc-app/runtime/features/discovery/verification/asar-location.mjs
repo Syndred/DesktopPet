@@ -1,0 +1,36 @@
+// A narrow packaged-module check; does not build, publish or validate a release.
+import { createRequire } from 'node:module';
+import { cpSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { resolve, join, dirname } from 'node:path';
+import { spawnSync } from 'node:child_process';
+import assert from 'node:assert/strict';
+const require = createRequire(import.meta.url), asar = require('@electron/asar');
+const metadata = JSON.parse(readFileSync(resolve(dirname(require.resolve('@electron/asar')), '../package.json'), 'utf8'));
+const output = resolve(`artifacts/discovery/asar-location-${Date.now()}`), source = join(output, 'source'), profile = join(output, 'profile'), archive = join(output, 'location.asar');
+mkdirSync(source, { recursive: true }); mkdirSync(profile, { recursive: true });
+for (const name of ['location-adapter.cjs', 'coordinates.cjs', 'windows-location.ps1']) cpSync(resolve('apps/pc-app/runtime/features/discovery', name), join(source, name));
+await asar.createPackage(source, archive);
+assert.equal(existsSync(`${archive}.unpacked`), false);
+const bootstrap = join(output, 'main.cjs');
+writeFileSync(bootstrap, `const {app}=require('electron'),{execFile}=require('node:child_process'),{createHash}=require('node:crypto');
+app.setPath('userData',${JSON.stringify(profile)});
+app.whenReady().then(async()=>{
+  const {WindowsLocationAdapter}=require(${JSON.stringify(join(archive, 'location-adapter.cjs'))});
+  const {checkFix}=require(${JSON.stringify(join(archive, 'coordinates.cjs'))});
+  let encoded=false;
+  const adapter=new WindowsLocationAdapter({execute:(file,args,options,callback)=>{encoded=args.includes('-EncodedCommand')&&!args.includes('-File');return execFile(file,args,options,callback);}});
+  const fix=await adapter.getPosition();
+  console.log(JSON.stringify({at:new Date().toISOString(),ok:fix.ok,source:fix.source,provider:fix.provider,positionSource:fix.positionSource,accuracyMeters:fix.accuracyMeters,timestampMs:fix.timestampMs,quality:fix.ok?checkFix(fix):{ok:false,code:fix.code,hresult:fix.hresult},encodedCommand:encoded,coordinateHash:fix.ok?createHash('sha256').update(fix.lat+','+fix.lng).digest('hex'):null,rawCoordinatesSaved:false}));
+  app.quit();
+}).catch(error=>{console.log(JSON.stringify({passed:false,error:error.message}));app.exit(1);});
+`);
+const env = { ...process.env }; delete env.ELECTRON_RUN_AS_NODE;
+const result = spawnSync(require('electron'), [bootstrap], { env, windowsHide: true, encoding: 'utf8', timeout: 30000 });
+assert.equal(result.status, 0, result.error?.message || result.stderr || result.stdout);
+const evidence = JSON.parse(result.stdout.trim());
+assert.equal(evidence.ok, true, JSON.stringify(evidence));
+assert.equal(evidence.encodedCommand, true); assert.equal(evidence.provider, 'windows-geolocator'); assert.equal(evidence.source, 'os');
+Object.assign(evidence, { passed: true, loadedFromAsar: true, unpackedScript: false, asarVersion: metadata.version, physicalLocationAcceptance: false, validationScope: 'Actual Electron module loaded from ASAR; full installer validation belongs to foundation', output });
+writeFileSync(join(output, 'evidence.json'), JSON.stringify(evidence, null, 2));
+writeFileSync(resolve('artifacts/discovery/latest-asar-location-evidence.json'), JSON.stringify(evidence, null, 2));
+console.log(JSON.stringify(evidence, null, 2));

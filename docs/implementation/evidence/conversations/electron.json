@@ -1,0 +1,58 @@
+{
+  "at": "2026-10-24T12:58:06.921Z",
+  "status": "passed",
+  "cloudModelTest": "not-run-no-authorized-model-config",
+  "transport": "AI SDK 7 + local HTTP protocol fixture; not a cloud model",
+  "electron": "36.9.5",
+  "checks": [
+    "production window: sandbox + contextIsolation + real Electron safeStorage",
+    "shared Radix Tabs, Select and Switch respond to arrow keys, End, Enter and Space",
+    "settings buttons -> IPC -> DPAPI encrypted SQLite connection; HTTP connection test returned text",
+    "shared Dialog traps focus, Escape closes and returns focus; Popover inserts emoji into assistant-ui composer",
+    "real compose + send + streamed rendering + user-added memory in outbound context",
+    "two publicly adopted pets share one 2D template but keep independent persona, memory and history",
+    "stop button aborts real HTTP stream; retry reuses one user message",
+    "actual Electron process restart restores both histories, selection, persona, notes and decryptable credential",
+    "real IPC note deletion updates UI and removes note from the next model context",
+    "retained local main session switch clears mounted UI, aborts pending response, and restores original owner on return",
+    "chat drafts, settings dialogs and unsaved keys never reappear in another account or login",
+    "app animation-off switches the actual character to a still frame; live OS reduced motion freezes advancing Pixi frames; no 3D element or model asset request"
+  ],
+  "requestCount": 8,
+  "abortedStreams": 2,
+  "reused": {
+    "assistantUi": "0.15.31",
+    "aiSdk": "7.0.152",
+    "openaiCompatible": "3.0.77",
+    "radix": "1.8.1",
+    "motion": "14.6.0",
+    "pixi": "8.22.0"
+  },
+  "twoDOnly": {
+    "modelViewerElements": 0,
+    "modelViewerRegistered": false,
+    "modelAssetRequests": 0,
+    "actualPixiCanvas": true
+  },
+  "sqliteFile": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-conversations\\DesktopPet\\artifacts\\conversations\\electron\\run-1792846674986\\profile\\lingjing.sqlite",
+  "window": {
+    "sandbox": true,
+    "contextIsolation": true,
+    "safeStorage": true
+  },
+  "noRendererKeyStorage": true,
+  "errors": [],
+  "sourceRun": "run-1792846674986",
+  "foundationCommit": "d0488f081c5ab643d7913cf0f2a66c5d55a79d05",
+  "dialogFocusCycles": 3,
+  "sourceSha256": {
+    "apps/pc-app/runtime/features/conversations/transport.cjs": "c57284cf951a2197e87a1db69ce8a1fd5cceb976991609db419f4b677014f463",
+    "apps/pc-app/runtime/features/conversations/tests/electron-flow.mjs": "f80b1a9109676a9bd0ca7181c551043e78616b3a047160e5fb1f6c19d338b0b9",
+    "apps/pc-app/ui/src/features/conversations/assistant-thread.tsx": "74f2eef0a2f976e751147b51f0c01c4d5863f27614827b6f24a9cdc0d91b2938",
+    "apps/pc-app/ui/src/features/conversations/chat-page.tsx": "b328972c5035f28bb3a5c21d6676ec8959594cdf04e86a5d1851cda203b4525f",
+    "apps/pc-app/ui/src/features/conversations/components.tsx": "1d6845e43fe9deba0652e44971dece3b5698dd1c763229c8ecb5637b7405c050",
+    "apps/pc-app/ui/src/features/conversations/settings-page.tsx": "743b49070c8d6fd0ba05c6c86c87aa1c00b302cc272b622a6759eb2f80a1fed8",
+    "apps/pc-app/ui/src/features/conversations/styles.css": "cc39924c073fff557631c4a7151aa1a27a8cc3d70b5f16b548dbdef8644b445c"
+  },
+  "implementationCommit": "c08e6851fe611c0a5cce7765f16acb9a810c8df8"
+}

@@ -1,3 +1,4 @@
+const BATTLE_RULES = require('./battle-runtime.cjs').getBattleRules();
 ﻿const { setTimeout: sleep } = require("node:timers/promises");
 
 const { existsSync, readFileSync } = require("node:fs");
@@ -148,6 +149,9 @@ class OnlineDuelService {
       userId: user.id,
       sessionToken: user.sessionToken,
       userAccount: user.account,
+      petId: normalizeString(payload.petId),
+      requestId: normalizeString(payload.requestId),
+      petResourceId: normalizeString(payload.petResourceId),
       petElement: normalizeElement(payload.petElement) || "metal",
       petName: normalizePetName(payload.petName)
     });
@@ -179,7 +183,9 @@ class OnlineDuelService {
       userId: user.id,
       sessionToken: user.sessionToken,
       userAccount: user.account,
+      petId: normalizeString(payload.petId),
       petElement: normalizeElement(payload.petElement) || "metal",
+      petResourceId: normalizeString(payload.petResourceId),
       petName: normalizePetName(payload.petName)
     });
 
@@ -211,11 +217,14 @@ class OnlineDuelService {
       sessionToken: user.sessionToken,
       roomId,
       roomCode,
-      roundsLimit: clampRoundsLimit(options.roundsLimit)
+      roundsLimit: clampRoundsLimit(options.roundsLimit),
+      ...(options.beforeRound ? { beforeRound: options.beforeRound } : {})
     });
 
+    const needsSubscription = !this.channel || this.room?.id !== response.room?.id;
     this.applyRoom(response.room);
     this.cacheRounds(response.rounds);
+    if (needsSubscription && this.side) await this.subscribeRoom();
     this.emit("room-synced", {
       room: this.room,
       side: this.side
@@ -250,7 +259,8 @@ class OnlineDuelService {
       throw new Error("invalid action");
     }
 
-    const roundNo = Number(room.current_round);
+    // An ambiguous network response must retry the original round, never the next one.
+    const roundNo = Number(input.roundNo || room.current_round);
     const response = await this.invoke("submit_action", {
       roomId: room.id,
       userId: user.id,
@@ -264,6 +274,9 @@ class OnlineDuelService {
     }
 
     let resolvedRound = response.round ? normalizeRound(response.round) : null;
+    if (!resolvedRound && input.waitForResolution === false) {
+      return { pending: true, accepted: true, roundNo, state: this.toBattleState() };
+    }
     if (!resolvedRound) {
       resolvedRound = await this.waitForResolvedRound(roundNo);
     }
@@ -532,7 +545,8 @@ class OnlineDuelService {
     };
 
     const { data, error } = await this.client.functions.invoke(this.functionName, {
-      body: requestBody
+      body: requestBody,
+      timeout: 12000
     });
 
     if (error) {
@@ -587,6 +601,7 @@ class OnlineDuelService {
 
     const channelName = `duel-room-${room.id}`;
     const channel = this.client.channel(channelName);
+    const isCurrent = () => this.channel === channel && this.room?.id === room.id;
 
     channel.on(
       "postgres_changes",
@@ -597,7 +612,7 @@ class OnlineDuelService {
         filter: `id=eq.${room.id}`
       },
       (payload) => {
-        if (!payload?.new) return;
+        if (!payload?.new || !isCurrent() || payload.new.id !== room.id) return;
         this.applyRoom(payload.new);
         this.emit("room-updated", {
           room: this.room,
@@ -617,7 +632,7 @@ class OnlineDuelService {
       },
       (payload) => {
         const normalized = normalizeRound(payload?.new);
-        if (!normalized) return;
+        if (!normalized || !isCurrent() || normalized.room_id !== room.id) return;
         this.roundCache.set(normalized.round_no, normalized);
         this.emit("round-updated", {
           round: normalized,
@@ -628,11 +643,11 @@ class OnlineDuelService {
       }
     );
 
+    this.channel = channel;
     channel.subscribe((status) => {
+      if (!isCurrent()) return;
       this.emit("realtime-status", { status, roomId: room.id });
     });
-
-    this.channel = channel;
   }
 
   async waitForResolvedRound(roundNo, options = {}) {
@@ -669,6 +684,12 @@ class OnlineDuelService {
 
   applyRoom(roomInput) {
     const normalized = normalizeRoom(roomInput);
+    if (normalized && this.room?.id === normalized.id) {
+      if (normalized.last_resolved_round < this.room.last_resolved_round) return;
+      if (normalized.updated_at && this.room.updated_at && normalized.updated_at < this.room.updated_at) return;
+    } else {
+      this.roundCache.clear();
+    }
     this.room = normalized;
     this.side = normalized && this.currentUser ? resolveUserSide(normalized, this.currentUser.id) : null;
   }
@@ -684,17 +705,19 @@ class OnlineDuelService {
       player: {
         id: "player",
         element: normalizeElement(room[`${playerPrefix}_element`]) || "metal",
-        hp: clampInt(room[`${playerPrefix}_hp`], 0, 120, 120),
-        maxHp: 120,
-        anger: clampInt(room[`${playerPrefix}_anger`], 0, 100, 0),
+        hp: clampInt(room[`${playerPrefix}_hp`], 0, BATTLE_RULES.maxHp, BATTLE_RULES.maxHp),
+        maxHp: BATTLE_RULES.maxHp,
+        anger: clampInt(room[`${playerPrefix}_anger`], 0, BATTLE_RULES.maxAnger, 0),
+        freeDodgeUsed: Boolean(room[`${playerPrefix}_free_dodge_used`]),
         statuses: normalizeStatusList(room[`${playerPrefix}_statuses`])
       },
       enemy: {
         id: "enemy",
         element: normalizeElement(room[`${enemyPrefix}_element`]) || "wood",
-        hp: clampInt(room[`${enemyPrefix}_hp`], 0, 120, 120),
-        maxHp: 120,
-        anger: clampInt(room[`${enemyPrefix}_anger`], 0, 100, 0),
+        hp: clampInt(room[`${enemyPrefix}_hp`], 0, BATTLE_RULES.maxHp, BATTLE_RULES.maxHp),
+        maxHp: BATTLE_RULES.maxHp,
+        anger: clampInt(room[`${enemyPrefix}_anger`], 0, BATTLE_RULES.maxAnger, 0),
+        freeDodgeUsed: Boolean(room[`${enemyPrefix}_free_dodge_used`]),
         statuses: normalizeStatusList(room[`${enemyPrefix}_statuses`])
       }
     };
@@ -717,6 +740,19 @@ class OnlineDuelService {
 
     const playerAction = normalizedRound[`${playerSide}_action`] || "normal_attack";
     const enemyAction = normalizedRound[`${enemySide}_action`] || "normal_attack";
+
+    const mapStatuses = (statuses) => normalizeStatusList(statuses).map((status) => ({
+      ...status,
+      ...(status.sourceId ? { sourceId: status.sourceId === playerSide ? "player" : "enemy" } : {})
+    }));
+    const state = this.toBattleState();
+    state.round = normalizedRound.round_no;
+    for (const [role, prefix] of [["player", playerSide], ["enemy", enemySide]]) {
+      state[role].hp = result.hp_after[prefix];
+      state[role].anger = result.anger_after[prefix];
+      state[role].statuses = mapStatuses(result.statuses_after[prefix]);
+      state[role].freeDodgeUsed = Boolean(result.free_dodge_used[prefix]);
+    }
 
     return {
       playerAction,
@@ -743,6 +779,9 @@ class OnlineDuelService {
           player: normalizeRoundEvents(result.heal_events?.[playerSide]),
           enemy: normalizeRoundEvents(result.heal_events?.[enemySide])
         },
+        hpAfter: { player: state.player.hp, enemy: state.enemy.hp },
+        angerAfter: { player: state.player.anger, enemy: state.enemy.anger },
+        statusesAfter: { player: state.player.statuses, enemy: state.enemy.statuses },
         winner:
           normalizeWinnerSide(result.winner_side) === playerSide
             ? "player"
@@ -751,7 +790,7 @@ class OnlineDuelService {
               : null,
         notes: Array.isArray(result.notes) ? result.notes : []
       },
-      state: this.toBattleState()
+      state
     };
   }
 }
@@ -829,16 +868,22 @@ function normalizeRoom(input) {
     host_account: normalizeString(input.host_account) || "",
     guest_user_id: normalizeString(input.guest_user_id) || null,
     guest_account: normalizeString(input.guest_account) || null,
+    host_pet_id: normalizeString(input.host_pet_id) || null,
+    guest_pet_id: normalizeString(input.guest_pet_id) || null,
+    host_resource_id: normalizeString(input.host_resource_id) || null,
+    guest_resource_id: normalizeString(input.guest_resource_id) || null,
+    invitation_id: normalizeString(input.invitation_id) || null,
+    invited_user_id: normalizeString(input.invited_user_id) || null,
     host_pet_name: normalizePetName(input.host_pet_name),
     guest_pet_name: normalizeString(input.guest_pet_name) || null,
     host_element: normalizeElement(input.host_element) || "metal",
     guest_element: normalizeElement(input.guest_element) || null,
     current_round: toPositiveInt(input.current_round, 1),
     last_resolved_round: Math.max(0, toPositiveInt(input.last_resolved_round, 0)),
-    host_hp: clampInt(input.host_hp, 0, 120, 120),
-    guest_hp: clampInt(input.guest_hp, 0, 120, 120),
-    host_anger: clampInt(input.host_anger, 0, 100, 0),
-    guest_anger: clampInt(input.guest_anger, 0, 100, 0),
+    host_hp: clampInt(input.host_hp, 0, BATTLE_RULES.maxHp, BATTLE_RULES.maxHp),
+    guest_hp: clampInt(input.guest_hp, 0, BATTLE_RULES.maxHp, BATTLE_RULES.maxHp),
+    host_anger: clampInt(input.host_anger, 0, BATTLE_RULES.maxAnger, 0),
+    guest_anger: clampInt(input.guest_anger, 0, BATTLE_RULES.maxAnger, 0),
     host_free_dodge_used: Boolean(input.host_free_dodge_used),
     guest_free_dodge_used: Boolean(input.guest_free_dodge_used),
     host_statuses: normalizeStatusList(input.host_statuses),
@@ -860,6 +905,18 @@ function normalizeRound(input) {
     guest_action: normalizeAction(input.guest_action) || "normal_attack",
     winner_side: normalizeWinnerSide(input.winner_side),
     round_result: {
+      hp_after: {
+        host: clampInt(result.hp_after?.host, 0, BATTLE_RULES.maxHp, BATTLE_RULES.maxHp),
+        guest: clampInt(result.hp_after?.guest, 0, BATTLE_RULES.maxHp, BATTLE_RULES.maxHp)
+      },
+      anger_after: {
+        host: clampInt(result.anger_after?.host, 0, BATTLE_RULES.maxAnger, 0),
+        guest: clampInt(result.anger_after?.guest, 0, BATTLE_RULES.maxAnger, 0)
+      },
+      free_dodge_used: {
+        host: Boolean(result.free_dodge_used?.host),
+        guest: Boolean(result.free_dodge_used?.guest)
+      },
       winner_side: normalizeWinnerSide(result.winner_side),
       damage_taken: {
         host: clampInt(result.damage_taken?.host, 0, 9999, 0),

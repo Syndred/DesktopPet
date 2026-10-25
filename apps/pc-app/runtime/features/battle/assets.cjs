@@ -1,0 +1,37 @@
+const { join } = require("node:path");
+const SHIBA_RESOURCE = "builtin:lingjing-battle-shiba-v1";
+const YUWAN_RESOURCE = "builtin:lingjing-battle-yuwan-v1";
+const CANONICAL_YUWAN_RESOURCE = "builtin:lingjing-yuwan-v2";
+const CANONICAL_SHIBA_RESOURCE = "builtin:lingjing-shiba-v2";
+function appearance2d(pet = {}) {
+  if (pet.resource?.kind === "2d" && pet.resource.resourceId) return pet.resource.resourceId;
+  if (pet.appearance2d) return pet.appearance2d;
+  if (pet.resourceRef) return pet.resourceRef;
+  return require('../resources/assets/roster-v2/catalog.json').characters.find(character => character.element === pet.element)?.resourceId;
+}
+async function registerBattleArt(services) {
+  const resources = services.get("resources");
+  if (!resources?.repository || !resources.addBuiltinAssetRoot) return false;
+  await resources.ready;
+  const repository = resources.repository;
+  if (repository.hasGlobal(CANONICAL_YUWAN_RESOURCE) && repository.hasGlobal(CANONICAL_SHIBA_RESOURCE)) return true;
+  // Reuse the existing resource parser/repository and Pixi stage; no battle-specific animation engine.
+  const { parseCharacterFile } = require("../resources/parser.cjs");
+  for (const [id, folder] of [[SHIBA_RESOURCE, "shiba-v1"], [YUWAN_RESOURCE, "yuwan-v1"]]) {
+    const referenced = services.db.prepare("SELECT 1 FROM battle_sessions WHERE instr(data_json, ?) > 0 UNION ALL SELECT 1 FROM battle_reports_v2 WHERE instr(data_json, ?) > 0 LIMIT 1").get(id, id);
+    if (!referenced && !(id === SHIBA_RESOURCE && !repository.hasGlobal(CANONICAL_SHIBA_RESOURCE))) continue;
+    const root = join(__dirname, "assets", folder);
+    resources.addBuiltinAssetRoot(root);
+    if (repository.hasGlobal(id)) {
+      const update = services.db.prepare("UPDATE lingjing_resource_files SET file_path=? WHERE resource_id=? AND asset_key=?");
+      for (const row of repository.files("builtin", id)) update.run(join(root, row.asset_key), id, row.asset_key);
+      continue;
+    }
+    const parsed = await parseCharacterFile(join(root, "character.json"));
+    const resource = { ...parsed.resource, id, origin: "builtin", revision: 0,
+      importedAt: "2026-10-24T00:00:00.000Z", provenance: { ...parsed.resource.provenance, status: "project-original" } };
+    repository.transaction(() => repository.insert(null, resource, [...parsed.files.keys()].map(key => [key, join(root, key)])));
+  }
+  return true;
+}
+module.exports = { registerBattleArt, appearance2d, SHIBA_RESOURCE, YUWAN_RESOURCE, CANONICAL_YUWAN_RESOURCE, CANONICAL_SHIBA_RESOURCE };

@@ -1,0 +1,27 @@
+{
+  "sourceCommit": "cd19fa1b145c20d0180fbc79eda2a62146b2207a",
+  "scope": "Visual review of actual production Electron screenshots in the verified isolated QA profile; discovery self-check only",
+  "reviewedPreviews": [
+    "preview-big-fish-gentle.png",
+    "preview-big-fish-cheerful.png",
+    "preview-big-fish-foodie.png",
+    "preview-animal-shiba.png",
+    "preview-animal-hat-cat.png",
+    "preview-animal-white-fox.png",
+    "preview-animal-wood-deer.png",
+    "preview-animal-earth-pangolin.png"
+  ],
+  "reviewedNewSharedBattles": ["wild-wood-1280.png", "wild-earth-1280.png"],
+  "findings": [
+    "All eight distinct canonical characters visibly render in the actual encounter scene; no placeholder or missing character is used",
+    "Heads, feet, deer antlers and pangolin tail stay inside the large scene; the six original identities are retained",
+    "Canonical portrait, displayed element and large actor agree for each encounter",
+    "Wood and earth use the same shared BattleScreen HUD, four move cards, action controller and background as the existing wild battle",
+    "Wild and training HUD/move geometry is compared at both CSS viewport sizes in evidence.json",
+    "Capture result and restarted result use the saved independent shiba resource and compact QA provenance indicator"
+  ],
+  "simulatedPosition": true,
+  "liveCloudVerified": false,
+  "physicalCaptureVerified": false,
+  "independentMainReview": "pending"
+}

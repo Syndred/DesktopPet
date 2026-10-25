@@ -1,0 +1,20 @@
+{
+  "format": "lingjing.character", "version": 1,
+  "name": "鱼丸 · 并肩的水之回响", "kind": "spritesheet", "image": "yuwan-battle-sprites-v1.png",
+  "sheet": { "width": 313.5, "height": 313.5, "columns": 4, "rows": 4 },
+  "clips": {
+    "idle": { "frames": [0,1,2,3], "fps": 4, "loop": true },
+    "attack": { "frames": [4,5,6,7], "fps": 7, "loop": false },
+    "hit": { "frames": [8,9,10,11], "fps": 7, "loop": false },
+    "skill": { "frames": [12,13,14,15], "fps": 7, "loop": false },
+    "walk": { "frames": [8,10,11], "fps": 5, "loop": true },
+    "victory": { "frames": [3,15], "fps": 3, "loop": false },
+    "sleep": { "frames": [1], "fps": 1, "loop": true }
+  },
+  "actions": { "idle":"idle", "walk":"walk", "attack":"attack", "hit":"hit", "skill":"skill", "victory":"victory", "sleep":"sleep" },
+  "calibration": {
+    "desktop": { "scale":1, "yawDeg":0, "pitchDeg":0, "verticalOffset":0, "mirrorX":false },
+    "battle": { "scale":1.05, "yawDeg":0, "pitchDeg":0, "verticalOffset":0.04, "mirrorX":false }
+  },
+  "provenance": { "author":"灵境项目", "source":"Built-in image_gen, 2026-10-24; expanded from the project's approved yuwan-sprites-v1.png", "license":"Project-original generated asset; in-project use", "attribution":"鱼丸战斗动作图集 · 灵境项目" }
+}

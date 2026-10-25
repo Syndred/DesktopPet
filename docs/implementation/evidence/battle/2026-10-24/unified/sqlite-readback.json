@@ -1,0 +1,2618 @@
+{
+  "at": "2026-10-24T15:40:21.425Z",
+  "provenance": "simulated",
+  "reader": "Node SQLite readOnly + query_only; no feature adapter or renderer response used for this readback",
+  "profiles": [
+    {
+      "path": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\unified-1792855630674\\host",
+      "scenario": {
+        "id": "unified-battle",
+        "runId": "cd1df60a-e0b5-4d4d-9395-50f24a33a393",
+        "provenance": "simulated",
+        "isolated": true
+      },
+      "owners": [
+        "qa:cd1df60a-e0b5-4d4d-9395-50f24a33a393:local-b0194dae-8a6b-4cb2-9935-bded1c8ee91f"
+      ],
+      "sessions": [
+        {
+          "owner": "qa:cd1df60a-e0b5-4d4d-9395-50f24a33a393:local-b0194dae-8a6b-4cb2-9935-bded1c8ee91f",
+          "id": "battle-a0cf24de-fc6c-4881-bb31-8235eeb8bfb9",
+          "mode": "wild",
+          "status": "finished",
+          "winner": "player",
+          "rounds": 1,
+          "snapshot": {
+            "round": 1,
+            "player": {
+              "id": "player",
+              "element": "water",
+              "hp": 120,
+              "maxHp": 120,
+              "anger": 0,
+              "freeDodgeUsed": false,
+              "statuses": []
+            },
+            "enemy": {
+              "id": "enemy",
+              "element": "water",
+              "hp": 0,
+              "maxHp": 120,
+              "anger": 0,
+              "freeDodgeUsed": true,
+              "statuses": []
+            }
+          },
+          "player": {
+            "petId": "pet-f11a607d-3358-41b8-9be1-91bf5a8594bc",
+            "petName": "鱼丸",
+            "element": "water",
+            "level": 1,
+            "resourceRef": "builtin:lingjing-yuwan-v2",
+            "resource": {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "kind": "2d"
+            },
+            "appearance2d": "builtin:lingjing-yuwan-v2"
+          },
+          "enemy": {
+            "petId": "wild-2d-v2-f3621dbe19-498015-52050-202456",
+            "petName": "饭团",
+            "element": "water",
+            "resourceRef": "builtin:lingjing-fantuan-v1",
+            "appearance2d": "builtin:lingjing-fantuan-v1"
+          },
+          "context": {
+            "id": "wild-2d-v2-f3621dbe19-498015-52050-202456",
+            "spawnId": "wild-2d-v2-f3621dbe19-498015-52050-202456",
+            "expiresAt": 1792857600000,
+            "origin": "discovery",
+            "encounterId": "encounter-6456add1-d79c-46a3-9648-f44e81e739e6",
+            "scenario": "qa",
+            "returnPath": "/discovery/encounter/encounter-6456add1-d79c-46a3-9648-f44e81e739e6",
+            "authority": "simulated",
+            "scenarioId": "cd1df60a-e0b5-4d4d-9395-50f24a33a393",
+            "qaPreset": "finisher",
+            "qaEnemyAction": "dodge"
+          },
+          "reward": {
+            "actionId": "battle:battle-a0cf24de-fc6c-4881-bb31-8235eeb8bfb9:qa:cd1df60a-e0b5-4d4d-9395-50f24a33a393:local-b0194dae-8a6b-4cb2-9935-bded1c8ee91f",
+            "petId": "pet-f11a607d-3358-41b8-9be1-91bf5a8594bc",
+            "experience": 20,
+            "applied": true,
+            "previousExperience": 0,
+            "previousLevel": 1,
+            "currentExperience": 20,
+            "currentLevel": 1,
+            "seeds": {
+              "source": "battle",
+              "receiptId": "battle-a0cf24de-fc6c-4881-bb31-8235eeb8bfb9",
+              "itemId": "seed:carrot",
+              "quantity": 2
+            }
+          }
+        },
+        {
+          "owner": "qa:cd1df60a-e0b5-4d4d-9395-50f24a33a393:local-b0194dae-8a6b-4cb2-9935-bded1c8ee91f",
+          "id": "battle-4a47206b-5123-4bb8-aa52-bf42d94015ec",
+          "mode": "territory",
+          "status": "finished",
+          "winner": "player",
+          "rounds": 1,
+          "snapshot": {
+            "round": 1,
+            "player": {
+              "id": "player",
+              "element": "water",
+              "hp": 120,
+              "maxHp": 120,
+              "anger": 0,
+              "freeDodgeUsed": false,
+              "statuses": []
+            },
+            "enemy": {
+              "id": "enemy",
+              "element": "wood",
+              "hp": 0,
+              "maxHp": 120,
+              "anger": 0,
+              "freeDodgeUsed": true,
+              "statuses": []
+            }
+          },
+          "player": {
+            "petId": "pet-f11a607d-3358-41b8-9be1-91bf5a8594bc",
+            "petName": "鱼丸",
+            "element": "water",
+            "level": 1,
+            "resourceRef": "builtin:lingjing-yuwan-v2",
+            "resource": {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "kind": "2d"
+            },
+            "appearance2d": "builtin:lingjing-yuwan-v2"
+          },
+          "enemy": {
+            "petId": "guardian:qa:cd1df60a-e0b5-4d4d-9395-50f24a33a393:territory:5205:20245",
+            "petName": "青芽",
+            "element": "wood",
+            "level": 1,
+            "resource": {
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "kind": "2d"
+            },
+            "appearance2d": "builtin:lingjing-qingya-v1"
+          },
+          "context": {
+            "id": "qa:cd1df60a-e0b5-4d4d-9395-50f24a33a393:territory:5205:20245:1",
+            "territoryId": "qa:cd1df60a-e0b5-4d4d-9395-50f24a33a393:territory:5205:20245",
+            "territoryRevision": 1,
+            "authority": "simulated",
+            "scenarioId": "cd1df60a-e0b5-4d4d-9395-50f24a33a393",
+            "qaPreset": "finisher",
+            "qaEnemyAction": "dodge"
+          },
+          "reward": {
+            "actionId": "battle:battle-4a47206b-5123-4bb8-aa52-bf42d94015ec:qa:cd1df60a-e0b5-4d4d-9395-50f24a33a393:local-b0194dae-8a6b-4cb2-9935-bded1c8ee91f",
+            "petId": "pet-f11a607d-3358-41b8-9be1-91bf5a8594bc",
+            "experience": 20,
+            "applied": true,
+            "previousExperience": 20,
+            "previousLevel": 1,
+            "currentExperience": 40,
+            "currentLevel": 1,
+            "seeds": {
+              "source": "battle",
+              "receiptId": "battle-4a47206b-5123-4bb8-aa52-bf42d94015ec",
+              "itemId": "seed:rice",
+              "quantity": 2
+            }
+          }
+        }
+      ],
+      "rewards": [
+        {
+          "owner_account_id": "qa:cd1df60a-e0b5-4d4d-9395-50f24a33a393:local-b0194dae-8a6b-4cb2-9935-bded1c8ee91f",
+          "session_id": "battle-a0cf24de-fc6c-4881-bb31-8235eeb8bfb9",
+          "action_id": "battle:battle-a0cf24de-fc6c-4881-bb31-8235eeb8bfb9:qa:cd1df60a-e0b5-4d4d-9395-50f24a33a393:local-b0194dae-8a6b-4cb2-9935-bded1c8ee91f",
+          "data": {
+            "actionId": "battle:battle-a0cf24de-fc6c-4881-bb31-8235eeb8bfb9:qa:cd1df60a-e0b5-4d4d-9395-50f24a33a393:local-b0194dae-8a6b-4cb2-9935-bded1c8ee91f",
+            "petId": "pet-f11a607d-3358-41b8-9be1-91bf5a8594bc",
+            "experience": 20,
+            "applied": true,
+            "previousExperience": 0,
+            "previousLevel": 1,
+            "currentExperience": 20,
+            "currentLevel": 1,
+            "seeds": {
+              "source": "battle",
+              "receiptId": "battle-a0cf24de-fc6c-4881-bb31-8235eeb8bfb9",
+              "itemId": "seed:carrot",
+              "quantity": 2
+            }
+          }
+        },
+        {
+          "owner_account_id": "qa:cd1df60a-e0b5-4d4d-9395-50f24a33a393:local-b0194dae-8a6b-4cb2-9935-bded1c8ee91f",
+          "session_id": "battle-4a47206b-5123-4bb8-aa52-bf42d94015ec",
+          "action_id": "battle:battle-4a47206b-5123-4bb8-aa52-bf42d94015ec:qa:cd1df60a-e0b5-4d4d-9395-50f24a33a393:local-b0194dae-8a6b-4cb2-9935-bded1c8ee91f",
+          "data": {
+            "actionId": "battle:battle-4a47206b-5123-4bb8-aa52-bf42d94015ec:qa:cd1df60a-e0b5-4d4d-9395-50f24a33a393:local-b0194dae-8a6b-4cb2-9935-bded1c8ee91f",
+            "petId": "pet-f11a607d-3358-41b8-9be1-91bf5a8594bc",
+            "experience": 20,
+            "applied": true,
+            "previousExperience": 20,
+            "previousLevel": 1,
+            "currentExperience": 40,
+            "currentLevel": 1,
+            "seeds": {
+              "source": "battle",
+              "receiptId": "battle-4a47206b-5123-4bb8-aa52-bf42d94015ec",
+              "itemId": "seed:rice",
+              "quantity": 2
+            }
+          }
+        }
+      ],
+      "challenges": [
+        {
+          "owner_account_id": "qa:cd1df60a-e0b5-4d4d-9395-50f24a33a393:local-b0194dae-8a6b-4cb2-9935-bded1c8ee91f",
+          "battle_id": "battle-4a47206b-5123-4bb8-aa52-bf42d94015ec",
+          "territory_id": "qa:cd1df60a-e0b5-4d4d-9395-50f24a33a393:territory:5205:20245",
+          "settled": 1,
+          "result": {
+            "territoryId": "qa:cd1df60a-e0b5-4d4d-9395-50f24a33a393:territory:5205:20245",
+            "won": true,
+            "ownerAccountId": "qa:cd1df60a-e0b5-4d4d-9395-50f24a33a393:local-b0194dae-8a6b-4cb2-9935-bded1c8ee91f",
+            "territoryRevision": 2,
+            "captureMultiplier": 2
+          }
+        }
+      ],
+      "captures": [
+        {
+          "ownerAccountId": "qa:cd1df60a-e0b5-4d4d-9395-50f24a33a393:local-b0194dae-8a6b-4cb2-9935-bded1c8ee91f",
+          "encounterId": "encounter-6456add1-d79c-46a3-9648-f44e81e739e6",
+          "scenario": "qa",
+          "scenarioId": "cd1df60a-e0b5-4d4d-9395-50f24a33a393",
+          "petId": "pet-786b758d-db9f-4810-beae-a477fc62b963",
+          "actionId": "discovery:encounter-6456add1-d79c-46a3-9648-f44e81e739e6",
+          "name": "隔离收服伙伴",
+          "templateId": "big-fish-foodie",
+          "resourceId": "builtin:lingjing-fantuan-v1",
+          "element": "water",
+          "serial": "D55E6014C5F730266",
+          "territoryId": null,
+          "captureMultiplier": 1,
+          "capturedAtMs": 1792855636757,
+          "placeLabel": "附近探索点",
+          "memoryTags": [
+            {
+              "id": "encounter-6456add1-d79c-46a3-9648-f44e81e739e6:first-meeting",
+              "kind": "first_meeting",
+              "title": "我们的第一次见面",
+              "text": "在附近探索点相遇，赢得挑战后成为了伙伴。",
+              "placeLabel": "附近探索点",
+              "createdAt": "2026-10-24T15:27:16.757Z"
+            }
+          ],
+          "showOnDesktop": false,
+          "validation": "simulated",
+          "distanceMeters": 0
+        }
+      ],
+      "seeds": [
+        {
+          "owner_account_id": "qa:cd1df60a-e0b5-4d4d-9395-50f24a33a393:local-b0194dae-8a6b-4cb2-9935-bded1c8ee91f",
+          "source": "battle",
+          "receipt_id": "battle-a0cf24de-fc6c-4881-bb31-8235eeb8bfb9",
+          "action_id": "battle:battle-a0cf24de-fc6c-4881-bb31-8235eeb8bfb9:qa:cd1df60a-e0b5-4d4d-9395-50f24a33a393:local-b0194dae-8a6b-4cb2-9935-bded1c8ee91f:seeds",
+          "result_json": "{\"source\":\"battle\",\"receiptId\":\"battle-a0cf24de-fc6c-4881-bb31-8235eeb8bfb9\",\"itemId\":\"seed:carrot\",\"quantity\":2}"
+        },
+        {
+          "owner_account_id": "qa:cd1df60a-e0b5-4d4d-9395-50f24a33a393:local-b0194dae-8a6b-4cb2-9935-bded1c8ee91f",
+          "source": "battle",
+          "receipt_id": "battle-4a47206b-5123-4bb8-aa52-bf42d94015ec",
+          "action_id": "battle:battle-4a47206b-5123-4bb8-aa52-bf42d94015ec:qa:cd1df60a-e0b5-4d4d-9395-50f24a33a393:local-b0194dae-8a6b-4cb2-9935-bded1c8ee91f:seeds",
+          "result_json": "{\"source\":\"battle\",\"receiptId\":\"battle-4a47206b-5123-4bb8-aa52-bf42d94015ec\",\"itemId\":\"seed:rice\",\"quantity\":2}"
+        }
+      ],
+      "territoryLogs": [
+        {
+          "territory_id": "qa:cd1df60a-e0b5-4d4d-9395-50f24a33a393:territory:5205:20245",
+          "action": "invade",
+          "old_owner_id": null,
+          "new_owner_id": null,
+          "battle_id": "battle-4a47206b-5123-4bb8-aa52-bf42d94015ec"
+        },
+        {
+          "territory_id": "qa:cd1df60a-e0b5-4d4d-9395-50f24a33a393:territory:5205:20245",
+          "action": "occupy",
+          "old_owner_id": null,
+          "new_owner_id": "qa:cd1df60a-e0b5-4d4d-9395-50f24a33a393:local-b0194dae-8a6b-4cb2-9935-bded1c8ee91f",
+          "battle_id": "battle-4a47206b-5123-4bb8-aa52-bf42d94015ec"
+        }
+      ],
+      "reportCount": 2
+    },
+    {
+      "path": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\unified-1792855630674\\territory-loss",
+      "scenario": {
+        "id": "unified-battle",
+        "runId": "cd1df60a-e0b5-4d4d-9395-50f24a33a393",
+        "provenance": "simulated",
+        "isolated": true
+      },
+      "owners": [
+        "qa:cd1df60a-e0b5-4d4d-9395-50f24a33a393:local-e626e7da-2c1c-4848-9f2a-fd1fd3c98bb1"
+      ],
+      "sessions": [
+        {
+          "owner": "qa:cd1df60a-e0b5-4d4d-9395-50f24a33a393:local-e626e7da-2c1c-4848-9f2a-fd1fd3c98bb1",
+          "id": "battle-7c804ab8-77bf-45cc-82e9-678865023345",
+          "mode": "territory",
+          "status": "finished",
+          "winner": "enemy",
+          "rounds": 1,
+          "snapshot": {
+            "round": 1,
+            "player": {
+              "id": "player",
+              "element": "water",
+              "hp": 0,
+              "maxHp": 120,
+              "anger": 10,
+              "freeDodgeUsed": false,
+              "statuses": [
+                {
+                  "type": "parasite",
+                  "duration": 2,
+                  "potency": 2,
+                  "stacks": 1,
+                  "stackable": true,
+                  "sourceId": "enemy"
+                }
+              ]
+            },
+            "enemy": {
+              "id": "enemy",
+              "element": "wood",
+              "hp": 120,
+              "maxHp": 120,
+              "anger": 5,
+              "freeDodgeUsed": false,
+              "statuses": []
+            }
+          },
+          "player": {
+            "petId": "pet-e25bfe63-8280-47a3-bc3e-9631eb75f803",
+            "petName": "鱼丸",
+            "element": "water",
+            "level": 1,
+            "resourceRef": "builtin:lingjing-yuwan-v2",
+            "resource": {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "kind": "2d"
+            },
+            "appearance2d": "builtin:lingjing-yuwan-v2"
+          },
+          "enemy": {
+            "petId": "guardian:qa:cd1df60a-e0b5-4d4d-9395-50f24a33a393:territory:5205:20245",
+            "petName": "青芽",
+            "element": "wood",
+            "level": 1,
+            "resource": {
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "kind": "2d"
+            },
+            "appearance2d": "builtin:lingjing-qingya-v1"
+          },
+          "context": {
+            "id": "qa:cd1df60a-e0b5-4d4d-9395-50f24a33a393:territory:5205:20245:1",
+            "territoryId": "qa:cd1df60a-e0b5-4d4d-9395-50f24a33a393:territory:5205:20245",
+            "territoryRevision": 1,
+            "authority": "simulated",
+            "scenarioId": "cd1df60a-e0b5-4d4d-9395-50f24a33a393",
+            "qaPreset": "defending",
+            "qaEnemyAction": "ultimate"
+          },
+          "reward": {
+            "actionId": "battle:battle-7c804ab8-77bf-45cc-82e9-678865023345:qa:cd1df60a-e0b5-4d4d-9395-50f24a33a393:local-e626e7da-2c1c-4848-9f2a-fd1fd3c98bb1",
+            "petId": "pet-e25bfe63-8280-47a3-bc3e-9631eb75f803",
+            "experience": 5,
+            "applied": true,
+            "previousExperience": 0,
+            "previousLevel": 1,
+            "currentExperience": 5,
+            "currentLevel": 1,
+            "seeds": {
+              "source": "battle",
+              "receiptId": "battle-7c804ab8-77bf-45cc-82e9-678865023345",
+              "itemId": "seed:berry",
+              "quantity": 2
+            }
+          }
+        }
+      ],
+      "rewards": [
+        {
+          "owner_account_id": "qa:cd1df60a-e0b5-4d4d-9395-50f24a33a393:local-e626e7da-2c1c-4848-9f2a-fd1fd3c98bb1",
+          "session_id": "battle-7c804ab8-77bf-45cc-82e9-678865023345",
+          "action_id": "battle:battle-7c804ab8-77bf-45cc-82e9-678865023345:qa:cd1df60a-e0b5-4d4d-9395-50f24a33a393:local-e626e7da-2c1c-4848-9f2a-fd1fd3c98bb1",
+          "data": {
+            "actionId": "battle:battle-7c804ab8-77bf-45cc-82e9-678865023345:qa:cd1df60a-e0b5-4d4d-9395-50f24a33a393:local-e626e7da-2c1c-4848-9f2a-fd1fd3c98bb1",
+            "petId": "pet-e25bfe63-8280-47a3-bc3e-9631eb75f803",
+            "experience": 5,
+            "applied": true,
+            "previousExperience": 0,
+            "previousLevel": 1,
+            "currentExperience": 5,
+            "currentLevel": 1,
+            "seeds": {
+              "source": "battle",
+              "receiptId": "battle-7c804ab8-77bf-45cc-82e9-678865023345",
+              "itemId": "seed:berry",
+              "quantity": 2
+            }
+          }
+        }
+      ],
+      "challenges": [
+        {
+          "owner_account_id": "qa:cd1df60a-e0b5-4d4d-9395-50f24a33a393:local-e626e7da-2c1c-4848-9f2a-fd1fd3c98bb1",
+          "battle_id": "battle-7c804ab8-77bf-45cc-82e9-678865023345",
+          "territory_id": "qa:cd1df60a-e0b5-4d4d-9395-50f24a33a393:territory:5205:20245",
+          "settled": 1,
+          "result": {
+            "territoryId": "qa:cd1df60a-e0b5-4d4d-9395-50f24a33a393:territory:5205:20245",
+            "won": false,
+            "ownerAccountId": null,
+            "territoryRevision": 2,
+            "captureMultiplier": 1
+          }
+        }
+      ],
+      "captures": [],
+      "seeds": [
+        {
+          "owner_account_id": "qa:cd1df60a-e0b5-4d4d-9395-50f24a33a393:local-e626e7da-2c1c-4848-9f2a-fd1fd3c98bb1",
+          "source": "battle",
+          "receipt_id": "battle-7c804ab8-77bf-45cc-82e9-678865023345",
+          "action_id": "battle:battle-7c804ab8-77bf-45cc-82e9-678865023345:qa:cd1df60a-e0b5-4d4d-9395-50f24a33a393:local-e626e7da-2c1c-4848-9f2a-fd1fd3c98bb1:seeds",
+          "result_json": "{\"source\":\"battle\",\"receiptId\":\"battle-7c804ab8-77bf-45cc-82e9-678865023345\",\"itemId\":\"seed:berry\",\"quantity\":2}"
+        }
+      ],
+      "territoryLogs": [
+        {
+          "territory_id": "qa:cd1df60a-e0b5-4d4d-9395-50f24a33a393:territory:5205:20245",
+          "action": "invade",
+          "old_owner_id": null,
+          "new_owner_id": null,
+          "battle_id": "battle-7c804ab8-77bf-45cc-82e9-678865023345"
+        },
+        {
+          "territory_id": "qa:cd1df60a-e0b5-4d4d-9395-50f24a33a393:territory:5205:20245",
+          "action": "defend",
+          "old_owner_id": null,
+          "new_owner_id": null,
+          "battle_id": "battle-7c804ab8-77bf-45cc-82e9-678865023345"
+        }
+      ],
+      "reportCount": 1
+    },
+    {
+      "path": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\unified-1792855814504\\host",
+      "scenario": {
+        "id": "unified-battle",
+        "runId": "16c98b83-b949-4adc-846c-6994d6031e1e",
+        "provenance": "simulated",
+        "isolated": true
+      },
+      "owners": [
+        "qa:16c98b83-b949-4adc-846c-6994d6031e1e:local-5179cab7-7e23-479d-9fb1-1fffe03429ac"
+      ],
+      "sessions": [
+        {
+          "owner": "qa:16c98b83-b949-4adc-846c-6994d6031e1e:local-5179cab7-7e23-479d-9fb1-1fffe03429ac",
+          "id": "battle-d4a05d15-92a0-4056-aa16-f6013deb9b1a",
+          "mode": "training",
+          "status": "abandoned",
+          "winner": null,
+          "rounds": 1,
+          "snapshot": {
+            "round": 1,
+            "player": {
+              "id": "player",
+              "element": "metal",
+              "hp": 85,
+              "maxHp": 120,
+              "anger": 50,
+              "freeDodgeUsed": false,
+              "statuses": []
+            },
+            "enemy": {
+              "id": "enemy",
+              "element": "metal",
+              "hp": 88,
+              "maxHp": 120,
+              "anger": 16,
+              "freeDodgeUsed": true,
+              "statuses": [
+                {
+                  "type": "vulnerability",
+                  "duration": 2,
+                  "stacks": 1,
+                  "stackable": true,
+                  "sourceId": "player"
+                }
+              ]
+            }
+          },
+          "player": {
+            "petId": "pet-debaef6f-bb98-4ab1-9145-18fec867e99a",
+            "petName": "礼帽喵",
+            "element": "metal",
+            "level": 1,
+            "resourceRef": "builtin:lingjing-hatcat-v1",
+            "resource": {
+              "resourceId": "builtin:lingjing-hatcat-v1",
+              "kind": "2d"
+            },
+            "appearance2d": "builtin:lingjing-hatcat-v1"
+          },
+          "enemy": {
+            "petId": "training-metal",
+            "petName": "礼帽喵",
+            "element": "metal",
+            "level": 1,
+            "resourceRef": "builtin:lingjing-hatcat-v1",
+            "appearance2d": "builtin:lingjing-hatcat-v1",
+            "resource": {
+              "resourceId": "builtin:lingjing-hatcat-v1",
+              "kind": "2d"
+            }
+          },
+          "context": {
+            "id": "training:metal",
+            "authority": "simulated",
+            "scenarioId": "16c98b83-b949-4adc-846c-6994d6031e1e",
+            "qaPreset": "charged",
+            "qaEnemyAction": "dodge"
+          }
+        },
+        {
+          "owner": "qa:16c98b83-b949-4adc-846c-6994d6031e1e:local-5179cab7-7e23-479d-9fb1-1fffe03429ac",
+          "id": "battle-c690f243-e633-4e0c-a8d9-fdf1586b7bba",
+          "mode": "training",
+          "status": "abandoned",
+          "winner": null,
+          "rounds": 1,
+          "snapshot": {
+            "round": 1,
+            "player": {
+              "id": "player",
+              "element": "metal",
+              "hp": 85,
+              "maxHp": 120,
+              "anger": 70,
+              "freeDodgeUsed": false,
+              "statuses": []
+            },
+            "enemy": {
+              "id": "enemy",
+              "element": "wood",
+              "hp": 86,
+              "maxHp": 120,
+              "anger": 17,
+              "freeDodgeUsed": true,
+              "statuses": [
+                {
+                  "type": "vulnerability",
+                  "duration": 2,
+                  "stacks": 1,
+                  "stackable": true,
+                  "sourceId": "player"
+                }
+              ]
+            }
+          },
+          "player": {
+            "petId": "pet-debaef6f-bb98-4ab1-9145-18fec867e99a",
+            "petName": "礼帽喵",
+            "element": "metal",
+            "level": 1,
+            "resourceRef": "builtin:lingjing-hatcat-v1",
+            "resource": {
+              "resourceId": "builtin:lingjing-hatcat-v1",
+              "kind": "2d"
+            },
+            "appearance2d": "builtin:lingjing-hatcat-v1"
+          },
+          "enemy": {
+            "petId": "training-wood",
+            "petName": "青芽",
+            "element": "wood",
+            "level": 1,
+            "resourceRef": "builtin:lingjing-qingya-v1",
+            "appearance2d": "builtin:lingjing-qingya-v1",
+            "resource": {
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "kind": "2d"
+            }
+          },
+          "context": {
+            "id": "training:wood",
+            "authority": "simulated",
+            "scenarioId": "16c98b83-b949-4adc-846c-6994d6031e1e",
+            "qaPreset": "charged",
+            "qaEnemyAction": "dodge"
+          }
+        },
+        {
+          "owner": "qa:16c98b83-b949-4adc-846c-6994d6031e1e:local-5179cab7-7e23-479d-9fb1-1fffe03429ac",
+          "id": "battle-1fc05b23-c928-4f34-ad07-17f0e510d7f6",
+          "mode": "training",
+          "status": "abandoned",
+          "winner": null,
+          "rounds": 1,
+          "snapshot": {
+            "round": 1,
+            "player": {
+              "id": "player",
+              "element": "metal",
+              "hp": 85,
+              "maxHp": 120,
+              "anger": 50,
+              "freeDodgeUsed": false,
+              "statuses": []
+            },
+            "enemy": {
+              "id": "enemy",
+              "element": "earth",
+              "hp": 88,
+              "maxHp": 120,
+              "anger": 16,
+              "freeDodgeUsed": true,
+              "statuses": [
+                {
+                  "type": "vulnerability",
+                  "duration": 2,
+                  "stacks": 1,
+                  "stackable": true,
+                  "sourceId": "player"
+                }
+              ]
+            }
+          },
+          "player": {
+            "petId": "pet-debaef6f-bb98-4ab1-9145-18fec867e99a",
+            "petName": "礼帽喵",
+            "element": "metal",
+            "level": 1,
+            "resourceRef": "builtin:lingjing-hatcat-v1",
+            "resource": {
+              "resourceId": "builtin:lingjing-hatcat-v1",
+              "kind": "2d"
+            },
+            "appearance2d": "builtin:lingjing-hatcat-v1"
+          },
+          "enemy": {
+            "petId": "training-earth",
+            "petName": "岩团",
+            "element": "earth",
+            "level": 1,
+            "resourceRef": "builtin:lingjing-yantuan-v1",
+            "appearance2d": "builtin:lingjing-yantuan-v1",
+            "resource": {
+              "resourceId": "builtin:lingjing-yantuan-v1",
+              "kind": "2d"
+            }
+          },
+          "context": {
+            "id": "training:earth",
+            "authority": "simulated",
+            "scenarioId": "16c98b83-b949-4adc-846c-6994d6031e1e",
+            "qaPreset": "charged",
+            "qaEnemyAction": "dodge"
+          }
+        },
+        {
+          "owner": "qa:16c98b83-b949-4adc-846c-6994d6031e1e:local-5179cab7-7e23-479d-9fb1-1fffe03429ac",
+          "id": "battle-7b215e33-817b-41fb-8264-149c1c658739",
+          "mode": "training",
+          "status": "abandoned",
+          "winner": null,
+          "rounds": 1,
+          "snapshot": {
+            "round": 1,
+            "player": {
+              "id": "player",
+              "element": "metal",
+              "hp": 85,
+              "maxHp": 120,
+              "anger": 50,
+              "freeDodgeUsed": false,
+              "statuses": []
+            },
+            "enemy": {
+              "id": "enemy",
+              "element": "water",
+              "hp": 88,
+              "maxHp": 120,
+              "anger": 16,
+              "freeDodgeUsed": true,
+              "statuses": [
+                {
+                  "type": "vulnerability",
+                  "duration": 2,
+                  "stacks": 1,
+                  "stackable": true,
+                  "sourceId": "player"
+                }
+              ]
+            }
+          },
+          "player": {
+            "petId": "pet-debaef6f-bb98-4ab1-9145-18fec867e99a",
+            "petName": "礼帽喵",
+            "element": "metal",
+            "level": 1,
+            "resourceRef": "builtin:lingjing-hatcat-v1",
+            "resource": {
+              "resourceId": "builtin:lingjing-hatcat-v1",
+              "kind": "2d"
+            },
+            "appearance2d": "builtin:lingjing-hatcat-v1"
+          },
+          "enemy": {
+            "petId": "training-water",
+            "petName": "鱼丸",
+            "element": "water",
+            "level": 1,
+            "resourceRef": "builtin:lingjing-yuwan-v2",
+            "appearance2d": "builtin:lingjing-yuwan-v2",
+            "resource": {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "kind": "2d"
+            }
+          },
+          "context": {
+            "id": "training:water",
+            "authority": "simulated",
+            "scenarioId": "16c98b83-b949-4adc-846c-6994d6031e1e",
+            "qaPreset": "charged",
+            "qaEnemyAction": "dodge"
+          }
+        },
+        {
+          "owner": "qa:16c98b83-b949-4adc-846c-6994d6031e1e:local-5179cab7-7e23-479d-9fb1-1fffe03429ac",
+          "id": "battle-54d390f7-7809-4936-8f6d-1e5da8c56f16",
+          "mode": "training",
+          "status": "abandoned",
+          "winner": null,
+          "rounds": 1,
+          "snapshot": {
+            "round": 1,
+            "player": {
+              "id": "player",
+              "element": "metal",
+              "hp": 85,
+              "maxHp": 120,
+              "anger": 50,
+              "freeDodgeUsed": false,
+              "statuses": []
+            },
+            "enemy": {
+              "id": "enemy",
+              "element": "fire",
+              "hp": 90,
+              "maxHp": 120,
+              "anger": 15,
+              "freeDodgeUsed": true,
+              "statuses": [
+                {
+                  "type": "vulnerability",
+                  "duration": 2,
+                  "stacks": 1,
+                  "stackable": true,
+                  "sourceId": "player"
+                }
+              ]
+            }
+          },
+          "player": {
+            "petId": "pet-debaef6f-bb98-4ab1-9145-18fec867e99a",
+            "petName": "礼帽喵",
+            "element": "metal",
+            "level": 1,
+            "resourceRef": "builtin:lingjing-hatcat-v1",
+            "resource": {
+              "resourceId": "builtin:lingjing-hatcat-v1",
+              "kind": "2d"
+            },
+            "appearance2d": "builtin:lingjing-hatcat-v1"
+          },
+          "enemy": {
+            "petId": "training-fire",
+            "petName": "焰柴",
+            "element": "fire",
+            "level": 1,
+            "resourceRef": "builtin:lingjing-shiba-v2",
+            "appearance2d": "builtin:lingjing-shiba-v2",
+            "resource": {
+              "resourceId": "builtin:lingjing-shiba-v2",
+              "kind": "2d"
+            }
+          },
+          "context": {
+            "id": "training:fire",
+            "authority": "simulated",
+            "scenarioId": "16c98b83-b949-4adc-846c-6994d6031e1e",
+            "qaPreset": "charged",
+            "qaEnemyAction": "dodge"
+          }
+        },
+        {
+          "owner": "qa:16c98b83-b949-4adc-846c-6994d6031e1e:local-5179cab7-7e23-479d-9fb1-1fffe03429ac",
+          "id": "battle-b3556424-7d90-4c28-b426-67086ada048a",
+          "mode": "training",
+          "status": "abandoned",
+          "winner": null,
+          "rounds": 1,
+          "snapshot": {
+            "round": 1,
+            "player": {
+              "id": "player",
+              "element": "wood",
+              "hp": 87,
+              "maxHp": 120,
+              "anger": 50,
+              "freeDodgeUsed": false,
+              "statuses": []
+            },
+            "enemy": {
+              "id": "enemy",
+              "element": "metal",
+              "hp": 88,
+              "maxHp": 120,
+              "anger": 15,
+              "freeDodgeUsed": true,
+              "statuses": [
+                {
+                  "type": "parasite",
+                  "duration": 2,
+                  "potency": 2,
+                  "stacks": 1,
+                  "stackable": true,
+                  "sourceId": "player"
+                }
+              ]
+            }
+          },
+          "player": {
+            "petId": "pet-c4f12223-d103-483d-8cc3-31ad1f8b74cc",
+            "petName": "青芽",
+            "element": "wood",
+            "level": 1,
+            "resourceRef": "builtin:lingjing-qingya-v1",
+            "resource": {
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "kind": "2d"
+            },
+            "appearance2d": "builtin:lingjing-qingya-v1"
+          },
+          "enemy": {
+            "petId": "training-metal",
+            "petName": "礼帽喵",
+            "element": "metal",
+            "level": 1,
+            "resourceRef": "builtin:lingjing-hatcat-v1",
+            "appearance2d": "builtin:lingjing-hatcat-v1",
+            "resource": {
+              "resourceId": "builtin:lingjing-hatcat-v1",
+              "kind": "2d"
+            }
+          },
+          "context": {
+            "id": "training:metal",
+            "authority": "simulated",
+            "scenarioId": "16c98b83-b949-4adc-846c-6994d6031e1e",
+            "qaPreset": "charged",
+            "qaEnemyAction": "dodge"
+          }
+        },
+        {
+          "owner": "qa:16c98b83-b949-4adc-846c-6994d6031e1e:local-5179cab7-7e23-479d-9fb1-1fffe03429ac",
+          "id": "battle-2ffcdd3f-f8ef-42ea-98a9-36f6649ea28a",
+          "mode": "training",
+          "status": "abandoned",
+          "winner": null,
+          "rounds": 1,
+          "snapshot": {
+            "round": 1,
+            "player": {
+              "id": "player",
+              "element": "wood",
+              "hp": 87,
+              "maxHp": 120,
+              "anger": 50,
+              "freeDodgeUsed": false,
+              "statuses": []
+            },
+            "enemy": {
+              "id": "enemy",
+              "element": "wood",
+              "hp": 86,
+              "maxHp": 120,
+              "anger": 16,
+              "freeDodgeUsed": true,
+              "statuses": [
+                {
+                  "type": "parasite",
+                  "duration": 2,
+                  "potency": 2,
+                  "stacks": 1,
+                  "stackable": true,
+                  "sourceId": "player"
+                }
+              ]
+            }
+          },
+          "player": {
+            "petId": "pet-c4f12223-d103-483d-8cc3-31ad1f8b74cc",
+            "petName": "青芽",
+            "element": "wood",
+            "level": 1,
+            "resourceRef": "builtin:lingjing-qingya-v1",
+            "resource": {
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "kind": "2d"
+            },
+            "appearance2d": "builtin:lingjing-qingya-v1"
+          },
+          "enemy": {
+            "petId": "training-wood",
+            "petName": "青芽",
+            "element": "wood",
+            "level": 1,
+            "resourceRef": "builtin:lingjing-qingya-v1",
+            "appearance2d": "builtin:lingjing-qingya-v1",
+            "resource": {
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "kind": "2d"
+            }
+          },
+          "context": {
+            "id": "training:wood",
+            "authority": "simulated",
+            "scenarioId": "16c98b83-b949-4adc-846c-6994d6031e1e",
+            "qaPreset": "charged",
+            "qaEnemyAction": "dodge"
+          }
+        },
+        {
+          "owner": "qa:16c98b83-b949-4adc-846c-6994d6031e1e:local-5179cab7-7e23-479d-9fb1-1fffe03429ac",
+          "id": "battle-633822b5-a740-4a17-84de-f22797993bd1",
+          "mode": "training",
+          "status": "abandoned",
+          "winner": null,
+          "rounds": 1,
+          "snapshot": {
+            "round": 1,
+            "player": {
+              "id": "player",
+              "element": "wood",
+              "hp": 87,
+              "maxHp": 120,
+              "anger": 70,
+              "freeDodgeUsed": false,
+              "statuses": []
+            },
+            "enemy": {
+              "id": "enemy",
+              "element": "earth",
+              "hp": 84,
+              "maxHp": 120,
+              "anger": 17,
+              "freeDodgeUsed": true,
+              "statuses": [
+                {
+                  "type": "parasite",
+                  "duration": 2,
+                  "potency": 2,
+                  "stacks": 1,
+                  "stackable": true,
+                  "sourceId": "player"
+                }
+              ]
+            }
+          },
+          "player": {
+            "petId": "pet-c4f12223-d103-483d-8cc3-31ad1f8b74cc",
+            "petName": "青芽",
+            "element": "wood",
+            "level": 1,
+            "resourceRef": "builtin:lingjing-qingya-v1",
+            "resource": {
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "kind": "2d"
+            },
+            "appearance2d": "builtin:lingjing-qingya-v1"
+          },
+          "enemy": {
+            "petId": "training-earth",
+            "petName": "岩团",
+            "element": "earth",
+            "level": 1,
+            "resourceRef": "builtin:lingjing-yantuan-v1",
+            "appearance2d": "builtin:lingjing-yantuan-v1",
+            "resource": {
+              "resourceId": "builtin:lingjing-yantuan-v1",
+              "kind": "2d"
+            }
+          },
+          "context": {
+            "id": "training:earth",
+            "authority": "simulated",
+            "scenarioId": "16c98b83-b949-4adc-846c-6994d6031e1e",
+            "qaPreset": "charged",
+            "qaEnemyAction": "dodge"
+          }
+        },
+        {
+          "owner": "qa:16c98b83-b949-4adc-846c-6994d6031e1e:local-5179cab7-7e23-479d-9fb1-1fffe03429ac",
+          "id": "battle-6bc81add-71c3-41ee-86cc-baeb563ced22",
+          "mode": "training",
+          "status": "abandoned",
+          "winner": null,
+          "rounds": 1,
+          "snapshot": {
+            "round": 1,
+            "player": {
+              "id": "player",
+              "element": "wood",
+              "hp": 87,
+              "maxHp": 120,
+              "anger": 50,
+              "freeDodgeUsed": false,
+              "statuses": []
+            },
+            "enemy": {
+              "id": "enemy",
+              "element": "water",
+              "hp": 86,
+              "maxHp": 120,
+              "anger": 16,
+              "freeDodgeUsed": true,
+              "statuses": [
+                {
+                  "type": "parasite",
+                  "duration": 2,
+                  "potency": 2,
+                  "stacks": 1,
+                  "stackable": true,
+                  "sourceId": "player"
+                }
+              ]
+            }
+          },
+          "player": {
+            "petId": "pet-c4f12223-d103-483d-8cc3-31ad1f8b74cc",
+            "petName": "青芽",
+            "element": "wood",
+            "level": 1,
+            "resourceRef": "builtin:lingjing-qingya-v1",
+            "resource": {
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "kind": "2d"
+            },
+            "appearance2d": "builtin:lingjing-qingya-v1"
+          },
+          "enemy": {
+            "petId": "training-water",
+            "petName": "鱼丸",
+            "element": "water",
+            "level": 1,
+            "resourceRef": "builtin:lingjing-yuwan-v2",
+            "appearance2d": "builtin:lingjing-yuwan-v2",
+            "resource": {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "kind": "2d"
+            }
+          },
+          "context": {
+            "id": "training:water",
+            "authority": "simulated",
+            "scenarioId": "16c98b83-b949-4adc-846c-6994d6031e1e",
+            "qaPreset": "charged",
+            "qaEnemyAction": "dodge"
+          }
+        },
+        {
+          "owner": "qa:16c98b83-b949-4adc-846c-6994d6031e1e:local-5179cab7-7e23-479d-9fb1-1fffe03429ac",
+          "id": "battle-7b106700-6d1c-45fc-81e3-01bdb9855901",
+          "mode": "training",
+          "status": "abandoned",
+          "winner": null,
+          "rounds": 1,
+          "snapshot": {
+            "round": 1,
+            "player": {
+              "id": "player",
+              "element": "wood",
+              "hp": 87,
+              "maxHp": 120,
+              "anger": 50,
+              "freeDodgeUsed": false,
+              "statuses": []
+            },
+            "enemy": {
+              "id": "enemy",
+              "element": "fire",
+              "hp": 86,
+              "maxHp": 120,
+              "anger": 16,
+              "freeDodgeUsed": true,
+              "statuses": [
+                {
+                  "type": "parasite",
+                  "duration": 2,
+                  "potency": 2,
+                  "stacks": 1,
+                  "stackable": true,
+                  "sourceId": "player"
+                }
+              ]
+            }
+          },
+          "player": {
+            "petId": "pet-c4f12223-d103-483d-8cc3-31ad1f8b74cc",
+            "petName": "青芽",
+            "element": "wood",
+            "level": 1,
+            "resourceRef": "builtin:lingjing-qingya-v1",
+            "resource": {
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "kind": "2d"
+            },
+            "appearance2d": "builtin:lingjing-qingya-v1"
+          },
+          "enemy": {
+            "petId": "training-fire",
+            "petName": "焰柴",
+            "element": "fire",
+            "level": 1,
+            "resourceRef": "builtin:lingjing-shiba-v2",
+            "appearance2d": "builtin:lingjing-shiba-v2",
+            "resource": {
+              "resourceId": "builtin:lingjing-shiba-v2",
+              "kind": "2d"
+            }
+          },
+          "context": {
+            "id": "training:fire",
+            "authority": "simulated",
+            "scenarioId": "16c98b83-b949-4adc-846c-6994d6031e1e",
+            "qaPreset": "charged",
+            "qaEnemyAction": "dodge"
+          }
+        },
+        {
+          "owner": "qa:16c98b83-b949-4adc-846c-6994d6031e1e:local-5179cab7-7e23-479d-9fb1-1fffe03429ac",
+          "id": "battle-c1ab67ac-2467-453c-9f3a-b77d07f7d55d",
+          "mode": "training",
+          "status": "abandoned",
+          "winner": null,
+          "rounds": 1,
+          "snapshot": {
+            "round": 1,
+            "player": {
+              "id": "player",
+              "element": "earth",
+              "hp": 85,
+              "maxHp": 120,
+              "anger": 50,
+              "freeDodgeUsed": false,
+              "statuses": []
+            },
+            "enemy": {
+              "id": "enemy",
+              "element": "metal",
+              "hp": 88,
+              "maxHp": 120,
+              "anger": 16,
+              "freeDodgeUsed": true,
+              "statuses": [
+                {
+                  "type": "petrify",
+                  "duration": 2,
+                  "stacks": 1,
+                  "stackable": true,
+                  "sourceId": "player"
+                }
+              ]
+            }
+          },
+          "player": {
+            "petId": "pet-00146434-6b75-45f9-ac97-5e6985dbdfb5",
+            "petName": "岩团",
+            "element": "earth",
+            "level": 1,
+            "resourceRef": "builtin:lingjing-yantuan-v1",
+            "resource": {
+              "resourceId": "builtin:lingjing-yantuan-v1",
+              "kind": "2d"
+            },
+            "appearance2d": "builtin:lingjing-yantuan-v1"
+          },
+          "enemy": {
+            "petId": "training-metal",
+            "petName": "礼帽喵",
+            "element": "metal",
+            "level": 1,
+            "resourceRef": "builtin:lingjing-hatcat-v1",
+            "appearance2d": "builtin:lingjing-hatcat-v1",
+            "resource": {
+              "resourceId": "builtin:lingjing-hatcat-v1",
+              "kind": "2d"
+            }
+          },
+          "context": {
+            "id": "training:metal",
+            "authority": "simulated",
+            "scenarioId": "16c98b83-b949-4adc-846c-6994d6031e1e",
+            "qaPreset": "charged",
+            "qaEnemyAction": "dodge"
+          }
+        },
+        {
+          "owner": "qa:16c98b83-b949-4adc-846c-6994d6031e1e:local-5179cab7-7e23-479d-9fb1-1fffe03429ac",
+          "id": "battle-4211123f-2299-461b-a7af-d69595c7e881",
+          "mode": "training",
+          "status": "abandoned",
+          "winner": null,
+          "rounds": 1,
+          "snapshot": {
+            "round": 1,
+            "player": {
+              "id": "player",
+              "element": "earth",
+              "hp": 85,
+              "maxHp": 120,
+              "anger": 50,
+              "freeDodgeUsed": false,
+              "statuses": []
+            },
+            "enemy": {
+              "id": "enemy",
+              "element": "wood",
+              "hp": 90,
+              "maxHp": 120,
+              "anger": 15,
+              "freeDodgeUsed": true,
+              "statuses": [
+                {
+                  "type": "petrify",
+                  "duration": 2,
+                  "stacks": 1,
+                  "stackable": true,
+                  "sourceId": "player"
+                }
+              ]
+            }
+          },
+          "player": {
+            "petId": "pet-00146434-6b75-45f9-ac97-5e6985dbdfb5",
+            "petName": "岩团",
+            "element": "earth",
+            "level": 1,
+            "resourceRef": "builtin:lingjing-yantuan-v1",
+            "resource": {
+              "resourceId": "builtin:lingjing-yantuan-v1",
+              "kind": "2d"
+            },
+            "appearance2d": "builtin:lingjing-yantuan-v1"
+          },
+          "enemy": {
+            "petId": "training-wood",
+            "petName": "青芽",
+            "element": "wood",
+            "level": 1,
+            "resourceRef": "builtin:lingjing-qingya-v1",
+            "appearance2d": "builtin:lingjing-qingya-v1",
+            "resource": {
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "kind": "2d"
+            }
+          },
+          "context": {
+            "id": "training:wood",
+            "authority": "simulated",
+            "scenarioId": "16c98b83-b949-4adc-846c-6994d6031e1e",
+            "qaPreset": "charged",
+            "qaEnemyAction": "dodge"
+          }
+        },
+        {
+          "owner": "qa:16c98b83-b949-4adc-846c-6994d6031e1e:local-5179cab7-7e23-479d-9fb1-1fffe03429ac",
+          "id": "battle-2024f30d-73d4-4481-a8cf-0d0053e3eb73",
+          "mode": "training",
+          "status": "abandoned",
+          "winner": null,
+          "rounds": 1,
+          "snapshot": {
+            "round": 1,
+            "player": {
+              "id": "player",
+              "element": "earth",
+              "hp": 85,
+              "maxHp": 120,
+              "anger": 50,
+              "freeDodgeUsed": false,
+              "statuses": []
+            },
+            "enemy": {
+              "id": "enemy",
+              "element": "earth",
+              "hp": 88,
+              "maxHp": 120,
+              "anger": 16,
+              "freeDodgeUsed": true,
+              "statuses": [
+                {
+                  "type": "petrify",
+                  "duration": 2,
+                  "stacks": 1,
+                  "stackable": true,
+                  "sourceId": "player"
+                }
+              ]
+            }
+          },
+          "player": {
+            "petId": "pet-00146434-6b75-45f9-ac97-5e6985dbdfb5",
+            "petName": "岩团",
+            "element": "earth",
+            "level": 1,
+            "resourceRef": "builtin:lingjing-yantuan-v1",
+            "resource": {
+              "resourceId": "builtin:lingjing-yantuan-v1",
+              "kind": "2d"
+            },
+            "appearance2d": "builtin:lingjing-yantuan-v1"
+          },
+          "enemy": {
+            "petId": "training-earth",
+            "petName": "岩团",
+            "element": "earth",
+            "level": 1,
+            "resourceRef": "builtin:lingjing-yantuan-v1",
+            "appearance2d": "builtin:lingjing-yantuan-v1",
+            "resource": {
+              "resourceId": "builtin:lingjing-yantuan-v1",
+              "kind": "2d"
+            }
+          },
+          "context": {
+            "id": "training:earth",
+            "authority": "simulated",
+            "scenarioId": "16c98b83-b949-4adc-846c-6994d6031e1e",
+            "qaPreset": "charged",
+            "qaEnemyAction": "dodge"
+          }
+        },
+        {
+          "owner": "qa:16c98b83-b949-4adc-846c-6994d6031e1e:local-5179cab7-7e23-479d-9fb1-1fffe03429ac",
+          "id": "battle-dba2a531-b0c2-44ae-b469-b79d1b96f2b7",
+          "mode": "training",
+          "status": "abandoned",
+          "winner": null,
+          "rounds": 1,
+          "snapshot": {
+            "round": 1,
+            "player": {
+              "id": "player",
+              "element": "earth",
+              "hp": 85,
+              "maxHp": 120,
+              "anger": 70,
+              "freeDodgeUsed": false,
+              "statuses": []
+            },
+            "enemy": {
+              "id": "enemy",
+              "element": "water",
+              "hp": 86,
+              "maxHp": 120,
+              "anger": 17,
+              "freeDodgeUsed": true,
+              "statuses": [
+                {
+                  "type": "petrify",
+                  "duration": 2,
+                  "stacks": 1,
+                  "stackable": true,
+                  "sourceId": "player"
+                }
+              ]
+            }
+          },
+          "player": {
+            "petId": "pet-00146434-6b75-45f9-ac97-5e6985dbdfb5",
+            "petName": "岩团",
+            "element": "earth",
+            "level": 1,
+            "resourceRef": "builtin:lingjing-yantuan-v1",
+            "resource": {
+              "resourceId": "builtin:lingjing-yantuan-v1",
+              "kind": "2d"
+            },
+            "appearance2d": "builtin:lingjing-yantuan-v1"
+          },
+          "enemy": {
+            "petId": "training-water",
+            "petName": "鱼丸",
+            "element": "water",
+            "level": 1,
+            "resourceRef": "builtin:lingjing-yuwan-v2",
+            "appearance2d": "builtin:lingjing-yuwan-v2",
+            "resource": {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "kind": "2d"
+            }
+          },
+          "context": {
+            "id": "training:water",
+            "authority": "simulated",
+            "scenarioId": "16c98b83-b949-4adc-846c-6994d6031e1e",
+            "qaPreset": "charged",
+            "qaEnemyAction": "dodge"
+          }
+        },
+        {
+          "owner": "qa:16c98b83-b949-4adc-846c-6994d6031e1e:local-5179cab7-7e23-479d-9fb1-1fffe03429ac",
+          "id": "battle-b4f7d8f8-9f31-4de2-90c0-b79dcbc82754",
+          "mode": "training",
+          "status": "abandoned",
+          "winner": null,
+          "rounds": 1,
+          "snapshot": {
+            "round": 1,
+            "player": {
+              "id": "player",
+              "element": "earth",
+              "hp": 85,
+              "maxHp": 120,
+              "anger": 50,
+              "freeDodgeUsed": false,
+              "statuses": []
+            },
+            "enemy": {
+              "id": "enemy",
+              "element": "fire",
+              "hp": 88,
+              "maxHp": 120,
+              "anger": 16,
+              "freeDodgeUsed": true,
+              "statuses": [
+                {
+                  "type": "petrify",
+                  "duration": 2,
+                  "stacks": 1,
+                  "stackable": true,
+                  "sourceId": "player"
+                }
+              ]
+            }
+          },
+          "player": {
+            "petId": "pet-00146434-6b75-45f9-ac97-5e6985dbdfb5",
+            "petName": "岩团",
+            "element": "earth",
+            "level": 1,
+            "resourceRef": "builtin:lingjing-yantuan-v1",
+            "resource": {
+              "resourceId": "builtin:lingjing-yantuan-v1",
+              "kind": "2d"
+            },
+            "appearance2d": "builtin:lingjing-yantuan-v1"
+          },
+          "enemy": {
+            "petId": "training-fire",
+            "petName": "焰柴",
+            "element": "fire",
+            "level": 1,
+            "resourceRef": "builtin:lingjing-shiba-v2",
+            "appearance2d": "builtin:lingjing-shiba-v2",
+            "resource": {
+              "resourceId": "builtin:lingjing-shiba-v2",
+              "kind": "2d"
+            }
+          },
+          "context": {
+            "id": "training:fire",
+            "authority": "simulated",
+            "scenarioId": "16c98b83-b949-4adc-846c-6994d6031e1e",
+            "qaPreset": "charged",
+            "qaEnemyAction": "dodge"
+          }
+        },
+        {
+          "owner": "qa:16c98b83-b949-4adc-846c-6994d6031e1e:local-5179cab7-7e23-479d-9fb1-1fffe03429ac",
+          "id": "battle-c2f1f1ad-8ddb-4e18-930d-39b24de543df",
+          "mode": "training",
+          "status": "abandoned",
+          "winner": null,
+          "rounds": 1,
+          "snapshot": {
+            "round": 1,
+            "player": {
+              "id": "player",
+              "element": "water",
+              "hp": 85,
+              "maxHp": 120,
+              "anger": 50,
+              "freeDodgeUsed": false,
+              "statuses": []
+            },
+            "enemy": {
+              "id": "enemy",
+              "element": "metal",
+              "hp": 88,
+              "maxHp": 120,
+              "anger": 5,
+              "freeDodgeUsed": true,
+              "statuses": []
+            }
+          },
+          "player": {
+            "petId": "pet-848f3a75-6e65-4f03-ba77-e8666da758c3",
+            "petName": "小狐",
+            "element": "water",
+            "level": 1,
+            "resourceRef": "builtin:lingjing-xiaohu-v1",
+            "resource": {
+              "resourceId": "builtin:lingjing-xiaohu-v1",
+              "kind": "2d"
+            },
+            "appearance2d": "builtin:lingjing-xiaohu-v1"
+          },
+          "enemy": {
+            "petId": "training-metal",
+            "petName": "礼帽喵",
+            "element": "metal",
+            "level": 1,
+            "resourceRef": "builtin:lingjing-hatcat-v1",
+            "appearance2d": "builtin:lingjing-hatcat-v1",
+            "resource": {
+              "resourceId": "builtin:lingjing-hatcat-v1",
+              "kind": "2d"
+            }
+          },
+          "context": {
+            "id": "training:metal",
+            "authority": "simulated",
+            "scenarioId": "16c98b83-b949-4adc-846c-6994d6031e1e",
+            "qaPreset": "charged",
+            "qaEnemyAction": "dodge"
+          }
+        },
+        {
+          "owner": "qa:16c98b83-b949-4adc-846c-6994d6031e1e:local-5179cab7-7e23-479d-9fb1-1fffe03429ac",
+          "id": "battle-da3fd59c-2424-459c-a0d3-4c59447ed0ef",
+          "mode": "training",
+          "status": "abandoned",
+          "winner": null,
+          "rounds": 1,
+          "snapshot": {
+            "round": 1,
+            "player": {
+              "id": "player",
+              "element": "water",
+              "hp": 85,
+              "maxHp": 120,
+              "anger": 50,
+              "freeDodgeUsed": false,
+              "statuses": []
+            },
+            "enemy": {
+              "id": "enemy",
+              "element": "wood",
+              "hp": 88,
+              "maxHp": 120,
+              "anger": 5,
+              "freeDodgeUsed": true,
+              "statuses": []
+            }
+          },
+          "player": {
+            "petId": "pet-848f3a75-6e65-4f03-ba77-e8666da758c3",
+            "petName": "小狐",
+            "element": "water",
+            "level": 1,
+            "resourceRef": "builtin:lingjing-xiaohu-v1",
+            "resource": {
+              "resourceId": "builtin:lingjing-xiaohu-v1",
+              "kind": "2d"
+            },
+            "appearance2d": "builtin:lingjing-xiaohu-v1"
+          },
+          "enemy": {
+            "petId": "training-wood",
+            "petName": "青芽",
+            "element": "wood",
+            "level": 1,
+            "resourceRef": "builtin:lingjing-qingya-v1",
+            "appearance2d": "builtin:lingjing-qingya-v1",
+            "resource": {
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "kind": "2d"
+            }
+          },
+          "context": {
+            "id": "training:wood",
+            "authority": "simulated",
+            "scenarioId": "16c98b83-b949-4adc-846c-6994d6031e1e",
+            "qaPreset": "charged",
+            "qaEnemyAction": "dodge"
+          }
+        },
+        {
+          "owner": "qa:16c98b83-b949-4adc-846c-6994d6031e1e:local-5179cab7-7e23-479d-9fb1-1fffe03429ac",
+          "id": "battle-e22de93b-0b8a-44f4-b5c4-25347fdee1b6",
+          "mode": "training",
+          "status": "abandoned",
+          "winner": null,
+          "rounds": 1,
+          "snapshot": {
+            "round": 1,
+            "player": {
+              "id": "player",
+              "element": "water",
+              "hp": 85,
+              "maxHp": 120,
+              "anger": 50,
+              "freeDodgeUsed": false,
+              "statuses": []
+            },
+            "enemy": {
+              "id": "enemy",
+              "element": "earth",
+              "hp": 90,
+              "maxHp": 120,
+              "anger": 5,
+              "freeDodgeUsed": true,
+              "statuses": []
+            }
+          },
+          "player": {
+            "petId": "pet-848f3a75-6e65-4f03-ba77-e8666da758c3",
+            "petName": "小狐",
+            "element": "water",
+            "level": 1,
+            "resourceRef": "builtin:lingjing-xiaohu-v1",
+            "resource": {
+              "resourceId": "builtin:lingjing-xiaohu-v1",
+              "kind": "2d"
+            },
+            "appearance2d": "builtin:lingjing-xiaohu-v1"
+          },
+          "enemy": {
+            "petId": "training-earth",
+            "petName": "岩团",
+            "element": "earth",
+            "level": 1,
+            "resourceRef": "builtin:lingjing-yantuan-v1",
+            "appearance2d": "builtin:lingjing-yantuan-v1",
+            "resource": {
+              "resourceId": "builtin:lingjing-yantuan-v1",
+              "kind": "2d"
+            }
+          },
+          "context": {
+            "id": "training:earth",
+            "authority": "simulated",
+            "scenarioId": "16c98b83-b949-4adc-846c-6994d6031e1e",
+            "qaPreset": "charged",
+            "qaEnemyAction": "dodge"
+          }
+        },
+        {
+          "owner": "qa:16c98b83-b949-4adc-846c-6994d6031e1e:local-5179cab7-7e23-479d-9fb1-1fffe03429ac",
+          "id": "battle-78cc4c27-d7ec-48b8-b045-1a334e2a73f9",
+          "mode": "training",
+          "status": "abandoned",
+          "winner": null,
+          "rounds": 1,
+          "snapshot": {
+            "round": 1,
+            "player": {
+              "id": "player",
+              "element": "water",
+              "hp": 85,
+              "maxHp": 120,
+              "anger": 50,
+              "freeDodgeUsed": false,
+              "statuses": []
+            },
+            "enemy": {
+              "id": "enemy",
+              "element": "water",
+              "hp": 88,
+              "maxHp": 120,
+              "anger": 5,
+              "freeDodgeUsed": true,
+              "statuses": []
+            }
+          },
+          "player": {
+            "petId": "pet-848f3a75-6e65-4f03-ba77-e8666da758c3",
+            "petName": "小狐",
+            "element": "water",
+            "level": 1,
+            "resourceRef": "builtin:lingjing-xiaohu-v1",
+            "resource": {
+              "resourceId": "builtin:lingjing-xiaohu-v1",
+              "kind": "2d"
+            },
+            "appearance2d": "builtin:lingjing-xiaohu-v1"
+          },
+          "enemy": {
+            "petId": "training-water",
+            "petName": "鱼丸",
+            "element": "water",
+            "level": 1,
+            "resourceRef": "builtin:lingjing-yuwan-v2",
+            "appearance2d": "builtin:lingjing-yuwan-v2",
+            "resource": {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "kind": "2d"
+            }
+          },
+          "context": {
+            "id": "training:water",
+            "authority": "simulated",
+            "scenarioId": "16c98b83-b949-4adc-846c-6994d6031e1e",
+            "qaPreset": "charged",
+            "qaEnemyAction": "dodge"
+          }
+        },
+        {
+          "owner": "qa:16c98b83-b949-4adc-846c-6994d6031e1e:local-5179cab7-7e23-479d-9fb1-1fffe03429ac",
+          "id": "battle-1d86a036-d6ca-40b8-ad68-cfadd2a19d63",
+          "mode": "training",
+          "status": "abandoned",
+          "winner": null,
+          "rounds": 1,
+          "snapshot": {
+            "round": 1,
+            "player": {
+              "id": "player",
+              "element": "water",
+              "hp": 85,
+              "maxHp": 120,
+              "anger": 70,
+              "freeDodgeUsed": false,
+              "statuses": []
+            },
+            "enemy": {
+              "id": "enemy",
+              "element": "fire",
+              "hp": 86,
+              "maxHp": 120,
+              "anger": 5,
+              "freeDodgeUsed": true,
+              "statuses": []
+            }
+          },
+          "player": {
+            "petId": "pet-848f3a75-6e65-4f03-ba77-e8666da758c3",
+            "petName": "小狐",
+            "element": "water",
+            "level": 1,
+            "resourceRef": "builtin:lingjing-xiaohu-v1",
+            "resource": {
+              "resourceId": "builtin:lingjing-xiaohu-v1",
+              "kind": "2d"
+            },
+            "appearance2d": "builtin:lingjing-xiaohu-v1"
+          },
+          "enemy": {
+            "petId": "training-fire",
+            "petName": "焰柴",
+            "element": "fire",
+            "level": 1,
+            "resourceRef": "builtin:lingjing-shiba-v2",
+            "appearance2d": "builtin:lingjing-shiba-v2",
+            "resource": {
+              "resourceId": "builtin:lingjing-shiba-v2",
+              "kind": "2d"
+            }
+          },
+          "context": {
+            "id": "training:fire",
+            "authority": "simulated",
+            "scenarioId": "16c98b83-b949-4adc-846c-6994d6031e1e",
+            "qaPreset": "charged",
+            "qaEnemyAction": "dodge"
+          }
+        },
+        {
+          "owner": "qa:16c98b83-b949-4adc-846c-6994d6031e1e:local-5179cab7-7e23-479d-9fb1-1fffe03429ac",
+          "id": "battle-34e83d9c-6300-4f3e-8a56-db7517151272",
+          "mode": "training",
+          "status": "abandoned",
+          "winner": null,
+          "rounds": 1,
+          "snapshot": {
+            "round": 1,
+            "player": {
+              "id": "player",
+              "element": "fire",
+              "hp": 85,
+              "maxHp": 120,
+              "anger": 70,
+              "freeDodgeUsed": false,
+              "statuses": []
+            },
+            "enemy": {
+              "id": "enemy",
+              "element": "metal",
+              "hp": 79,
+              "maxHp": 120,
+              "anger": 17,
+              "freeDodgeUsed": true,
+              "statuses": [
+                {
+                  "type": "burn",
+                  "duration": 2,
+                  "stacks": 1,
+                  "stackable": true,
+                  "sourceId": "player"
+                }
+              ]
+            }
+          },
+          "player": {
+            "petId": "pet-3222fc20-b5b0-442b-8f63-93370c89e6c1",
+            "petName": "焰柴",
+            "element": "fire",
+            "level": 1,
+            "resourceRef": "builtin:lingjing-shiba-v2",
+            "resource": {
+              "resourceId": "builtin:lingjing-shiba-v2",
+              "kind": "2d"
+            },
+            "appearance2d": "builtin:lingjing-shiba-v2"
+          },
+          "enemy": {
+            "petId": "training-metal",
+            "petName": "礼帽喵",
+            "element": "metal",
+            "level": 1,
+            "resourceRef": "builtin:lingjing-hatcat-v1",
+            "appearance2d": "builtin:lingjing-hatcat-v1",
+            "resource": {
+              "resourceId": "builtin:lingjing-hatcat-v1",
+              "kind": "2d"
+            }
+          },
+          "context": {
+            "id": "training:metal",
+            "authority": "simulated",
+            "scenarioId": "16c98b83-b949-4adc-846c-6994d6031e1e",
+            "qaPreset": "charged",
+            "qaEnemyAction": "dodge"
+          }
+        },
+        {
+          "owner": "qa:16c98b83-b949-4adc-846c-6994d6031e1e:local-5179cab7-7e23-479d-9fb1-1fffe03429ac",
+          "id": "battle-74df0ccb-c7c3-483f-bf09-83e032c85aa3",
+          "mode": "training",
+          "status": "abandoned",
+          "winner": null,
+          "rounds": 1,
+          "snapshot": {
+            "round": 1,
+            "player": {
+              "id": "player",
+              "element": "fire",
+              "hp": 85,
+              "maxHp": 120,
+              "anger": 50,
+              "freeDodgeUsed": false,
+              "statuses": []
+            },
+            "enemy": {
+              "id": "enemy",
+              "element": "wood",
+              "hp": 81,
+              "maxHp": 120,
+              "anger": 16,
+              "freeDodgeUsed": true,
+              "statuses": [
+                {
+                  "type": "burn",
+                  "duration": 2,
+                  "stacks": 1,
+                  "stackable": true,
+                  "sourceId": "player"
+                }
+              ]
+            }
+          },
+          "player": {
+            "petId": "pet-3222fc20-b5b0-442b-8f63-93370c89e6c1",
+            "petName": "焰柴",
+            "element": "fire",
+            "level": 1,
+            "resourceRef": "builtin:lingjing-shiba-v2",
+            "resource": {
+              "resourceId": "builtin:lingjing-shiba-v2",
+              "kind": "2d"
+            },
+            "appearance2d": "builtin:lingjing-shiba-v2"
+          },
+          "enemy": {
+            "petId": "training-wood",
+            "petName": "青芽",
+            "element": "wood",
+            "level": 1,
+            "resourceRef": "builtin:lingjing-qingya-v1",
+            "appearance2d": "builtin:lingjing-qingya-v1",
+            "resource": {
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "kind": "2d"
+            }
+          },
+          "context": {
+            "id": "training:wood",
+            "authority": "simulated",
+            "scenarioId": "16c98b83-b949-4adc-846c-6994d6031e1e",
+            "qaPreset": "charged",
+            "qaEnemyAction": "dodge"
+          }
+        },
+        {
+          "owner": "qa:16c98b83-b949-4adc-846c-6994d6031e1e:local-5179cab7-7e23-479d-9fb1-1fffe03429ac",
+          "id": "battle-908b74dd-5b7a-42a0-a6de-ddf2ca5eec8f",
+          "mode": "training",
+          "status": "abandoned",
+          "winner": null,
+          "rounds": 1,
+          "snapshot": {
+            "round": 1,
+            "player": {
+              "id": "player",
+              "element": "fire",
+              "hp": 85,
+              "maxHp": 120,
+              "anger": 50,
+              "freeDodgeUsed": false,
+              "statuses": []
+            },
+            "enemy": {
+              "id": "enemy",
+              "element": "earth",
+              "hp": 81,
+              "maxHp": 120,
+              "anger": 16,
+              "freeDodgeUsed": true,
+              "statuses": [
+                {
+                  "type": "burn",
+                  "duration": 2,
+                  "stacks": 1,
+                  "stackable": true,
+                  "sourceId": "player"
+                }
+              ]
+            }
+          },
+          "player": {
+            "petId": "pet-3222fc20-b5b0-442b-8f63-93370c89e6c1",
+            "petName": "焰柴",
+            "element": "fire",
+            "level": 1,
+            "resourceRef": "builtin:lingjing-shiba-v2",
+            "resource": {
+              "resourceId": "builtin:lingjing-shiba-v2",
+              "kind": "2d"
+            },
+            "appearance2d": "builtin:lingjing-shiba-v2"
+          },
+          "enemy": {
+            "petId": "training-earth",
+            "petName": "岩团",
+            "element": "earth",
+            "level": 1,
+            "resourceRef": "builtin:lingjing-yantuan-v1",
+            "appearance2d": "builtin:lingjing-yantuan-v1",
+            "resource": {
+              "resourceId": "builtin:lingjing-yantuan-v1",
+              "kind": "2d"
+            }
+          },
+          "context": {
+            "id": "training:earth",
+            "authority": "simulated",
+            "scenarioId": "16c98b83-b949-4adc-846c-6994d6031e1e",
+            "qaPreset": "charged",
+            "qaEnemyAction": "dodge"
+          }
+        },
+        {
+          "owner": "qa:16c98b83-b949-4adc-846c-6994d6031e1e:local-5179cab7-7e23-479d-9fb1-1fffe03429ac",
+          "id": "battle-4de5450a-0c3e-41d0-b9f3-6ea61fcb2a85",
+          "mode": "training",
+          "status": "abandoned",
+          "winner": null,
+          "rounds": 1,
+          "snapshot": {
+            "round": 1,
+            "player": {
+              "id": "player",
+              "element": "fire",
+              "hp": 85,
+              "maxHp": 120,
+              "anger": 50,
+              "freeDodgeUsed": false,
+              "statuses": []
+            },
+            "enemy": {
+              "id": "enemy",
+              "element": "water",
+              "hp": 83,
+              "maxHp": 120,
+              "anger": 15,
+              "freeDodgeUsed": true,
+              "statuses": [
+                {
+                  "type": "burn",
+                  "duration": 2,
+                  "stacks": 1,
+                  "stackable": true,
+                  "sourceId": "player"
+                }
+              ]
+            }
+          },
+          "player": {
+            "petId": "pet-3222fc20-b5b0-442b-8f63-93370c89e6c1",
+            "petName": "焰柴",
+            "element": "fire",
+            "level": 1,
+            "resourceRef": "builtin:lingjing-shiba-v2",
+            "resource": {
+              "resourceId": "builtin:lingjing-shiba-v2",
+              "kind": "2d"
+            },
+            "appearance2d": "builtin:lingjing-shiba-v2"
+          },
+          "enemy": {
+            "petId": "training-water",
+            "petName": "鱼丸",
+            "element": "water",
+            "level": 1,
+            "resourceRef": "builtin:lingjing-yuwan-v2",
+            "appearance2d": "builtin:lingjing-yuwan-v2",
+            "resource": {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "kind": "2d"
+            }
+          },
+          "context": {
+            "id": "training:water",
+            "authority": "simulated",
+            "scenarioId": "16c98b83-b949-4adc-846c-6994d6031e1e",
+            "qaPreset": "charged",
+            "qaEnemyAction": "dodge"
+          }
+        },
+        {
+          "owner": "qa:16c98b83-b949-4adc-846c-6994d6031e1e:local-5179cab7-7e23-479d-9fb1-1fffe03429ac",
+          "id": "battle-47fe38ca-6a53-45db-ba61-d671a9486a67",
+          "mode": "training",
+          "status": "abandoned",
+          "winner": null,
+          "rounds": 1,
+          "snapshot": {
+            "round": 1,
+            "player": {
+              "id": "player",
+              "element": "fire",
+              "hp": 85,
+              "maxHp": 120,
+              "anger": 50,
+              "freeDodgeUsed": false,
+              "statuses": []
+            },
+            "enemy": {
+              "id": "enemy",
+              "element": "fire",
+              "hp": 81,
+              "maxHp": 120,
+              "anger": 16,
+              "freeDodgeUsed": true,
+              "statuses": [
+                {
+                  "type": "burn",
+                  "duration": 2,
+                  "stacks": 1,
+                  "stackable": true,
+                  "sourceId": "player"
+                }
+              ]
+            }
+          },
+          "player": {
+            "petId": "pet-3222fc20-b5b0-442b-8f63-93370c89e6c1",
+            "petName": "焰柴",
+            "element": "fire",
+            "level": 1,
+            "resourceRef": "builtin:lingjing-shiba-v2",
+            "resource": {
+              "resourceId": "builtin:lingjing-shiba-v2",
+              "kind": "2d"
+            },
+            "appearance2d": "builtin:lingjing-shiba-v2"
+          },
+          "enemy": {
+            "petId": "training-fire",
+            "petName": "焰柴",
+            "element": "fire",
+            "level": 1,
+            "resourceRef": "builtin:lingjing-shiba-v2",
+            "appearance2d": "builtin:lingjing-shiba-v2",
+            "resource": {
+              "resourceId": "builtin:lingjing-shiba-v2",
+              "kind": "2d"
+            }
+          },
+          "context": {
+            "id": "training:fire",
+            "authority": "simulated",
+            "scenarioId": "16c98b83-b949-4adc-846c-6994d6031e1e",
+            "qaPreset": "charged",
+            "qaEnemyAction": "dodge"
+          }
+        }
+      ],
+      "rewards": [],
+      "challenges": [],
+      "captures": [],
+      "seeds": [],
+      "territoryLogs": [],
+      "reportCount": 25
+    },
+    {
+      "path": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\unified-1792856133774\\host",
+      "scenario": {
+        "id": "unified-battle",
+        "runId": "a6a628a9-74ac-4b35-841e-48c6d222cd3c",
+        "provenance": "simulated",
+        "isolated": true
+      },
+      "owners": [
+        "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-ec28cad1-0c22-4c75-af83-dbc47c4b607d"
+      ],
+      "sessions": [
+        {
+          "owner": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-ec28cad1-0c22-4c75-af83-dbc47c4b607d",
+          "id": "battle-a1f839b1-d515-448a-8eb2-286dd9eed198",
+          "mode": "training",
+          "status": "abandoned",
+          "winner": null,
+          "rounds": 0,
+          "snapshot": {
+            "round": 0,
+            "player": {
+              "id": "player",
+              "element": "water",
+              "hp": 120,
+              "maxHp": 120,
+              "anger": 0,
+              "freeDodgeUsed": false,
+              "statuses": []
+            },
+            "enemy": {
+              "id": "enemy",
+              "element": "wood",
+              "hp": 120,
+              "maxHp": 120,
+              "anger": 0,
+              "freeDodgeUsed": false,
+              "statuses": []
+            }
+          },
+          "player": {
+            "petId": "pet-26998bae-6688-438a-b51f-c0e0bc441c07",
+            "petName": "鱼丸",
+            "element": "water",
+            "level": 1,
+            "resourceRef": "builtin:lingjing-yuwan-v2",
+            "resource": {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "kind": "2d"
+            },
+            "appearance2d": "builtin:lingjing-yuwan-v2"
+          },
+          "enemy": {
+            "petId": "training-wood",
+            "petName": "青芽",
+            "element": "wood",
+            "level": 1,
+            "resourceRef": "builtin:lingjing-qingya-v1",
+            "appearance2d": "builtin:lingjing-qingya-v1",
+            "resource": {
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "kind": "2d"
+            }
+          },
+          "context": {
+            "id": "training:wood",
+            "authority": "simulated",
+            "scenarioId": "a6a628a9-74ac-4b35-841e-48c6d222cd3c"
+          }
+        },
+        {
+          "owner": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-ec28cad1-0c22-4c75-af83-dbc47c4b607d",
+          "id": "battle-c5ecbe80-f6d9-4c42-8825-fb378b716366",
+          "mode": "training",
+          "status": "abandoned",
+          "winner": null,
+          "rounds": 3,
+          "snapshot": {
+            "round": 3,
+            "player": {
+              "id": "player",
+              "element": "wood",
+              "hp": 95,
+              "maxHp": 120,
+              "anger": 50,
+              "freeDodgeUsed": false,
+              "statuses": []
+            },
+            "enemy": {
+              "id": "enemy",
+              "element": "water",
+              "hp": 66,
+              "maxHp": 120,
+              "anger": 30,
+              "freeDodgeUsed": true,
+              "statuses": [
+                {
+                  "type": "parasite",
+                  "duration": 3,
+                  "potency": 2,
+                  "stacks": 2,
+                  "stackable": true,
+                  "sourceId": "player"
+                }
+              ]
+            }
+          },
+          "player": {
+            "petId": "pet-03117d25-f49d-4e35-8199-07a1a4dd40cf",
+            "petName": "青芽",
+            "element": "wood",
+            "level": 1,
+            "resourceRef": "builtin:lingjing-qingya-v1",
+            "resource": {
+              "resourceId": "builtin:lingjing-qingya-v1",
+              "kind": "2d"
+            },
+            "appearance2d": "builtin:lingjing-qingya-v1"
+          },
+          "enemy": {
+            "petId": "training-water",
+            "petName": "鱼丸",
+            "element": "water",
+            "level": 1,
+            "resourceRef": "builtin:lingjing-yuwan-v2",
+            "appearance2d": "builtin:lingjing-yuwan-v2",
+            "resource": {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "kind": "2d"
+            }
+          },
+          "context": {
+            "id": "training:water",
+            "authority": "simulated",
+            "scenarioId": "a6a628a9-74ac-4b35-841e-48c6d222cd3c",
+            "qaPreset": "charged",
+            "qaEnemyAction": "dodge"
+          }
+        },
+        {
+          "owner": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-ec28cad1-0c22-4c75-af83-dbc47c4b607d",
+          "id": "online-130b09ea-4ceb-445b-aa75-a1c22e53d74d",
+          "mode": "friend",
+          "status": "abandoned",
+          "winner": null,
+          "rounds": 1,
+          "snapshot": {
+            "round": 1,
+            "player": {
+              "id": "player",
+              "element": "water",
+              "hp": 85,
+              "maxHp": 120,
+              "anger": 50,
+              "freeDodgeUsed": false,
+              "statuses": []
+            },
+            "enemy": {
+              "id": "enemy",
+              "element": "metal",
+              "hp": 90,
+              "maxHp": 120,
+              "anger": 35,
+              "freeDodgeUsed": false,
+              "statuses": []
+            }
+          },
+          "player": {
+            "petId": "pet-26998bae-6688-438a-b51f-c0e0bc441c07",
+            "petName": "鱼丸",
+            "element": "water",
+            "level": 1,
+            "resourceRef": "builtin:lingjing-yuwan-v2",
+            "resource": {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "kind": "2d"
+            },
+            "appearance2d": "builtin:lingjing-yuwan-v2"
+          },
+          "enemy": {
+            "petId": "pet-3b3c437d-ce1f-4cfe-ae67-3fc88534660c",
+            "petName": "礼帽喵",
+            "element": "metal",
+            "appearance2d": "builtin:lingjing-hatcat-v1"
+          },
+          "context": {
+            "authority": "simulated",
+            "cloudUserId": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-ec28cad1-0c22-4c75-af83-dbc47c4b607d",
+            "scenarioId": "a6a628a9-74ac-4b35-841e-48c6d222cd3c",
+            "qaPreset": "charged"
+          }
+        },
+        {
+          "owner": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-ec28cad1-0c22-4c75-af83-dbc47c4b607d",
+          "id": "online-0c98a40c-58c3-4d8b-8ab3-6df0bd0a019b",
+          "mode": "friend",
+          "status": "finished",
+          "winner": "player",
+          "rounds": 1,
+          "snapshot": {
+            "round": 1,
+            "player": {
+              "id": "player",
+              "element": "water",
+              "hp": 120,
+              "maxHp": 120,
+              "anger": 0,
+              "freeDodgeUsed": false,
+              "statuses": []
+            },
+            "enemy": {
+              "id": "enemy",
+              "element": "metal",
+              "hp": 0,
+              "maxHp": 120,
+              "anger": 0,
+              "freeDodgeUsed": true,
+              "statuses": []
+            }
+          },
+          "player": {
+            "petId": "pet-26998bae-6688-438a-b51f-c0e0bc441c07",
+            "petName": "鱼丸",
+            "element": "water",
+            "level": 1,
+            "resourceRef": "builtin:lingjing-yuwan-v2",
+            "resource": {
+              "resourceId": "builtin:lingjing-yuwan-v2",
+              "kind": "2d"
+            },
+            "appearance2d": "builtin:lingjing-yuwan-v2"
+          },
+          "enemy": {
+            "petId": "pet-3b3c437d-ce1f-4cfe-ae67-3fc88534660c",
+            "petName": "礼帽喵",
+            "element": "metal",
+            "appearance2d": "builtin:lingjing-hatcat-v1"
+          },
+          "context": {
+            "authority": "simulated",
+            "cloudUserId": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-ec28cad1-0c22-4c75-af83-dbc47c4b607d",
+            "scenarioId": "a6a628a9-74ac-4b35-841e-48c6d222cd3c",
+            "qaPreset": "finisher"
+          },
+          "reward": {
+            "actionId": "battle:0c98a40c-58c3-4d8b-8ab3-6df0bd0a019b:qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-ec28cad1-0c22-4c75-af83-dbc47c4b607d",
+            "petId": "pet-26998bae-6688-438a-b51f-c0e0bc441c07",
+            "experience": 20,
+            "applied": true,
+            "previousExperience": 0,
+            "previousLevel": 1,
+            "currentExperience": 20,
+            "currentLevel": 1,
+            "seeds": {
+              "source": "battle",
+              "receiptId": "online-0c98a40c-58c3-4d8b-8ab3-6df0bd0a019b",
+              "itemId": "seed:rice",
+              "quantity": 2
+            }
+          }
+        }
+      ],
+      "rewards": [
+        {
+          "owner_account_id": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-ec28cad1-0c22-4c75-af83-dbc47c4b607d",
+          "session_id": "online-0c98a40c-58c3-4d8b-8ab3-6df0bd0a019b",
+          "action_id": "battle:0c98a40c-58c3-4d8b-8ab3-6df0bd0a019b:qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-ec28cad1-0c22-4c75-af83-dbc47c4b607d",
+          "data": {
+            "actionId": "battle:0c98a40c-58c3-4d8b-8ab3-6df0bd0a019b:qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-ec28cad1-0c22-4c75-af83-dbc47c4b607d",
+            "petId": "pet-26998bae-6688-438a-b51f-c0e0bc441c07",
+            "experience": 20,
+            "applied": true,
+            "previousExperience": 0,
+            "previousLevel": 1,
+            "currentExperience": 20,
+            "currentLevel": 1,
+            "seeds": {
+              "source": "battle",
+              "receiptId": "online-0c98a40c-58c3-4d8b-8ab3-6df0bd0a019b",
+              "itemId": "seed:rice",
+              "quantity": 2
+            }
+          }
+        }
+      ],
+      "challenges": [],
+      "captures": [],
+      "seeds": [
+        {
+          "owner_account_id": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-ec28cad1-0c22-4c75-af83-dbc47c4b607d",
+          "source": "battle",
+          "receipt_id": "online-0c98a40c-58c3-4d8b-8ab3-6df0bd0a019b",
+          "action_id": "battle:0c98a40c-58c3-4d8b-8ab3-6df0bd0a019b:qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-ec28cad1-0c22-4c75-af83-dbc47c4b607d:seeds",
+          "result_json": "{\"source\":\"battle\",\"receiptId\":\"online-0c98a40c-58c3-4d8b-8ab3-6df0bd0a019b\",\"itemId\":\"seed:rice\",\"quantity\":2}"
+        }
+      ],
+      "territoryLogs": [],
+      "reportCount": 4
+    },
+    {
+      "path": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\unified-1792856133774\\guest",
+      "scenario": {
+        "id": "unified-battle",
+        "runId": "a6a628a9-74ac-4b35-841e-48c6d222cd3c",
+        "provenance": "simulated",
+        "isolated": true
+      },
+      "owners": [
+        "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-0f34a853-d4c6-47f9-a994-b0dfb21a35bc"
+      ],
+      "sessions": [
+        {
+          "owner": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-0f34a853-d4c6-47f9-a994-b0dfb21a35bc",
+          "id": "online-130b09ea-4ceb-445b-aa75-a1c22e53d74d",
+          "mode": "friend",
+          "status": "abandoned",
+          "winner": null,
+          "rounds": 1,
+          "snapshot": {
+            "round": 1,
+            "player": {
+              "id": "player",
+              "element": "metal",
+              "hp": 90,
+              "maxHp": 120,
+              "anger": 35,
+              "freeDodgeUsed": false,
+              "statuses": []
+            },
+            "enemy": {
+              "id": "enemy",
+              "element": "water",
+              "hp": 85,
+              "maxHp": 120,
+              "anger": 50,
+              "freeDodgeUsed": false,
+              "statuses": []
+            }
+          },
+          "player": {
+            "petId": "pet-3b3c437d-ce1f-4cfe-ae67-3fc88534660c",
+            "petName": "礼帽喵",
+            "element": "metal",
+            "level": 1,
+            "resourceRef": "builtin:lingjing-hatcat-v1",
+            "resource": {
+              "resourceId": "builtin:lingjing-hatcat-v1",
+              "kind": "2d"
+            },
+            "appearance2d": "builtin:lingjing-hatcat-v1"
+          },
+          "enemy": {
+            "petId": "pet-26998bae-6688-438a-b51f-c0e0bc441c07",
+            "petName": "鱼丸",
+            "element": "water",
+            "appearance2d": "builtin:lingjing-yuwan-v2"
+          },
+          "context": {
+            "authority": "simulated",
+            "cloudUserId": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-0f34a853-d4c6-47f9-a994-b0dfb21a35bc",
+            "scenarioId": "a6a628a9-74ac-4b35-841e-48c6d222cd3c"
+          }
+        },
+        {
+          "owner": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-0f34a853-d4c6-47f9-a994-b0dfb21a35bc",
+          "id": "online-0c98a40c-58c3-4d8b-8ab3-6df0bd0a019b",
+          "mode": "friend",
+          "status": "finished",
+          "winner": "enemy",
+          "rounds": 1,
+          "snapshot": {
+            "round": 1,
+            "player": {
+              "id": "player",
+              "element": "metal",
+              "hp": 0,
+              "maxHp": 120,
+              "anger": 0,
+              "freeDodgeUsed": true,
+              "statuses": []
+            },
+            "enemy": {
+              "id": "enemy",
+              "element": "water",
+              "hp": 120,
+              "maxHp": 120,
+              "anger": 0,
+              "freeDodgeUsed": false,
+              "statuses": []
+            }
+          },
+          "player": {
+            "petId": "pet-3b3c437d-ce1f-4cfe-ae67-3fc88534660c",
+            "petName": "礼帽喵",
+            "element": "metal",
+            "level": 1,
+            "resourceRef": "builtin:lingjing-hatcat-v1",
+            "resource": {
+              "resourceId": "builtin:lingjing-hatcat-v1",
+              "kind": "2d"
+            },
+            "appearance2d": "builtin:lingjing-hatcat-v1"
+          },
+          "enemy": {
+            "petId": "pet-26998bae-6688-438a-b51f-c0e0bc441c07",
+            "petName": "鱼丸",
+            "element": "water",
+            "appearance2d": "builtin:lingjing-yuwan-v2"
+          },
+          "context": {
+            "authority": "simulated",
+            "cloudUserId": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-0f34a853-d4c6-47f9-a994-b0dfb21a35bc",
+            "scenarioId": "a6a628a9-74ac-4b35-841e-48c6d222cd3c"
+          },
+          "reward": {
+            "actionId": "battle:0c98a40c-58c3-4d8b-8ab3-6df0bd0a019b:qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-0f34a853-d4c6-47f9-a994-b0dfb21a35bc",
+            "petId": "pet-3b3c437d-ce1f-4cfe-ae67-3fc88534660c",
+            "experience": 5,
+            "applied": true,
+            "previousExperience": 0,
+            "previousLevel": 1,
+            "currentExperience": 5,
+            "currentLevel": 1,
+            "seeds": {
+              "source": "battle",
+              "receiptId": "online-0c98a40c-58c3-4d8b-8ab3-6df0bd0a019b",
+              "itemId": "seed:rice",
+              "quantity": 2
+            }
+          }
+        }
+      ],
+      "rewards": [
+        {
+          "owner_account_id": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-0f34a853-d4c6-47f9-a994-b0dfb21a35bc",
+          "session_id": "online-0c98a40c-58c3-4d8b-8ab3-6df0bd0a019b",
+          "action_id": "battle:0c98a40c-58c3-4d8b-8ab3-6df0bd0a019b:qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-0f34a853-d4c6-47f9-a994-b0dfb21a35bc",
+          "data": {
+            "actionId": "battle:0c98a40c-58c3-4d8b-8ab3-6df0bd0a019b:qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-0f34a853-d4c6-47f9-a994-b0dfb21a35bc",
+            "petId": "pet-3b3c437d-ce1f-4cfe-ae67-3fc88534660c",
+            "experience": 5,
+            "applied": true,
+            "previousExperience": 0,
+            "previousLevel": 1,
+            "currentExperience": 5,
+            "currentLevel": 1,
+            "seeds": {
+              "source": "battle",
+              "receiptId": "online-0c98a40c-58c3-4d8b-8ab3-6df0bd0a019b",
+              "itemId": "seed:rice",
+              "quantity": 2
+            }
+          }
+        }
+      ],
+      "challenges": [],
+      "captures": [],
+      "seeds": [
+        {
+          "owner_account_id": "qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-0f34a853-d4c6-47f9-a994-b0dfb21a35bc",
+          "source": "battle",
+          "receipt_id": "online-0c98a40c-58c3-4d8b-8ab3-6df0bd0a019b",
+          "action_id": "battle:0c98a40c-58c3-4d8b-8ab3-6df0bd0a019b:qa:a6a628a9-74ac-4b35-841e-48c6d222cd3c:local-0f34a853-d4c6-47f9-a994-b0dfb21a35bc:seeds",
+          "result_json": "{\"source\":\"battle\",\"receiptId\":\"online-0c98a40c-58c3-4d8b-8ab3-6df0bd0a019b\",\"itemId\":\"seed:rice\",\"quantity\":2}"
+        }
+      ],
+      "territoryLogs": [],
+      "reportCount": 2
+    }
+  ]
+}

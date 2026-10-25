@@ -15,7 +15,10 @@ function within(root, file) {
 
 /** Explicit main-process configuration only. A renderer request cannot enable QA. */
 function readQaScenario({ env = process.env, userData }) {
-  if (!env.LINGJING_QA_SCENARIO) return null;
+  if (!env.LINGJING_QA_SCENARIO) {
+    if ([MARKER, 'lingjing-qa-profile.json'].some(name => existsSync(join(userData, name)))) throw Object.assign(new Error('请使用对应验收场景打开此目录。'), { code: 'QA_SCENARIO_REQUIRED' });
+    return null;
+  }
   if (env.LINGJING_QA_SCENARIO !== SCENARIO) reject('未知的验收场景。');
   if (!env.PET_USER_DATA_DIR || !isAbsolute(env.PET_USER_DATA_DIR)) reject('验收场景需要独立资料目录。');
   const profile = realpathSync(userData);

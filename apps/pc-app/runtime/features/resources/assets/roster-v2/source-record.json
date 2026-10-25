@@ -1,0 +1,1432 @@
+{
+  "at": "2026-10-24T13:34:47.859Z",
+  "designReference": "docs/design/2026-10-24/full-ui/03-pet-detail-and-adoption.png",
+  "tool": "built-in image_gen.imagegen",
+  "license": "项目生成素材",
+  "imageEditing": "All raster generation and padding revisions used the built-in image tool. Python only inspected alpha and exported rectangles; Node copied PNG bytes without modification. Pixi standard trim metadata provides the common logical frame and baseline.",
+  "characters": [
+    {
+      "id": "yuwan",
+      "name": "鱼丸",
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "templateId": "big-fish-gentle",
+      "file": "yuwan/sprites.png",
+      "sha256": "1ce64faec5553a9beca9780c06f1f3b701698a63c91a51a9b71ccd3e59aaa1c1",
+      "generatedSource": "C:\\Users\\Administrator\\.codex\\generated_images\\01a16dc5-c785-7e61-86ea-6d27260788f3\\exec-b2f32772-e97d-4d3a-bb9e-8bc62e4b7fa9.png",
+      "tool": "built-in image_gen.imagegen",
+      "transparent_background": true,
+      "actualImageSize": [
+        1254,
+        1254
+      ],
+      "logicalFrameSize": [
+        512,
+        512
+      ],
+      "baseline": 435,
+      "anchor": [
+        0.5,
+        0.849609375
+      ],
+      "bitmapBytesUnchanged": true,
+      "frames": 16,
+      "clips": {
+        "idle": {
+          "frames": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0
+          ],
+          "fps": 8,
+          "loop": true
+        },
+        "blink": {
+          "frames": [
+            1,
+            0
+          ],
+          "fps": 8,
+          "loop": false
+        },
+        "walk": {
+          "frames": [
+            2,
+            3
+          ],
+          "fps": 6,
+          "loop": true
+        },
+        "wave": {
+          "frames": [
+            4,
+            5,
+            4,
+            0
+          ],
+          "fps": 5,
+          "loop": false
+        },
+        "eat": {
+          "frames": [
+            6,
+            7,
+            6,
+            7,
+            0
+          ],
+          "fps": 5,
+          "loop": false
+        },
+        "attack_windup": {
+          "frames": [
+            8
+          ],
+          "fps": 8,
+          "loop": false
+        },
+        "attack_release": {
+          "frames": [
+            9
+          ],
+          "fps": 8,
+          "loop": false
+        },
+        "attack": {
+          "frames": [
+            8,
+            9,
+            9,
+            0
+          ],
+          "fps": 8,
+          "loop": false
+        },
+        "hit": {
+          "frames": [
+            10,
+            10,
+            0
+          ],
+          "fps": 8,
+          "loop": false
+        },
+        "skill": {
+          "frames": [
+            11,
+            11,
+            12,
+            12,
+            0
+          ],
+          "fps": 8,
+          "loop": false
+        },
+        "victory": {
+          "frames": [
+            13,
+            13,
+            0
+          ],
+          "fps": 3,
+          "loop": false
+        },
+        "sleep": {
+          "frames": [
+            15
+          ],
+          "fps": 1,
+          "loop": true
+        },
+        "sleep_seated": {
+          "frames": [
+            14
+          ],
+          "fps": 1,
+          "loop": true
+        }
+      },
+      "seamThreshold": 128,
+      "allHighAlphaSeamsClear": true,
+      "uniqueFramePixelHashes": [
+        "4430bf18ac55ffc06ec56faff0ba62e0fb4fd7b19bfeaf96dd3f5c8e9fdd57ed",
+        "542d3ace98aad05100473b43be380e1c9861dc10a3194a342627345508d67a10",
+        "ce9f9c09a4e1695cc099ff1ca7f550f21990765c00ad1ea9e387d815617a9113",
+        "38338147883a8e2bf84936a126c23ead8dbba7cdbe9b22f80536ee23325d03df",
+        "86bb5012c791b42cf9b7ba5b2bee88248388439039bb94ca126bfb1c4bc4e696",
+        "013f2bce18c697f644ab57c79036b82a1e75e4769fe256f298317dfe11b25174",
+        "b4cb992171e3fde949a4cc933bbe9f4bd85aaad0a0a1cd278532d8b21f40196d",
+        "df5a926fe9899bb51ce96f49bf66112d2c803c68cf32d5bfc9d0b1350b896aef",
+        "f419934601858efa24dcce39581b1784e5576823decf885c483a9f4dba3cdc53",
+        "ad44d385e6e6389b0aaa57614843bd8e45a8b4016d50f8148dad87622c1a0c61",
+        "ff4707495c6f79a6605a3c5f430c0f425de02469b5a4b8c70b2695de0b08200b",
+        "5ee449dc9b99439befaf329b13c8a0a0071246fca81ade9fb3870f01550cc57e",
+        "faeacebb422f9674be7b17e51b8ef797b11aa05f926ada3649b6513126ad0547",
+        "288d9fff13662ba2001ed0a07621626a960cc7a23df54521986a17815fd92618",
+        "094613d0e64b211833fea86fa30ce13625fc16e2599b162a925c784448ad6139",
+        "cce07a70195642dac66e4f2aa4fa0975e19a1b44512b8a07044c031fd066ff02"
+      ],
+      "poseReview": "Viewed all 16 generated poses; distinct idle/blink, stride pair, greeting pair, eating pair, attack windup/release, recoiling hit, skill charge/release, victory, and two sleeping postures. Attack/hit/skill do not alias greeting or rest."
+    },
+    {
+      "id": "xiaolan",
+      "name": "小蓝",
+      "resourceId": "builtin:lingjing-xiaolan-v1",
+      "templateId": "big-fish-cheerful",
+      "file": "xiaolan/sprites.png",
+      "sha256": "ed3296108d762293a235010e7c6222ad69960d65bb035e309e251909df09a5fb",
+      "generatedSource": "C:\\Users\\Administrator\\.codex\\generated_images\\01a16dc5-c785-7e61-86ea-6d27260788f3\\exec-21470029-61f4-4c75-a444-a0c445b8917f.png",
+      "tool": "built-in image_gen.imagegen",
+      "transparent_background": true,
+      "actualImageSize": [
+        1254,
+        1254
+      ],
+      "logicalFrameSize": [
+        512,
+        512
+      ],
+      "baseline": 435,
+      "anchor": [
+        0.5,
+        0.849609375
+      ],
+      "bitmapBytesUnchanged": true,
+      "frames": 16,
+      "clips": {
+        "idle": {
+          "frames": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0
+          ],
+          "fps": 8,
+          "loop": true
+        },
+        "blink": {
+          "frames": [
+            1,
+            0
+          ],
+          "fps": 8,
+          "loop": false
+        },
+        "walk": {
+          "frames": [
+            2,
+            3
+          ],
+          "fps": 6,
+          "loop": true
+        },
+        "wave": {
+          "frames": [
+            4,
+            5,
+            4,
+            0
+          ],
+          "fps": 5,
+          "loop": false
+        },
+        "eat": {
+          "frames": [
+            6,
+            7,
+            6,
+            7,
+            0
+          ],
+          "fps": 5,
+          "loop": false
+        },
+        "attack_windup": {
+          "frames": [
+            8
+          ],
+          "fps": 8,
+          "loop": false
+        },
+        "attack_release": {
+          "frames": [
+            9
+          ],
+          "fps": 8,
+          "loop": false
+        },
+        "attack": {
+          "frames": [
+            8,
+            9,
+            9,
+            0
+          ],
+          "fps": 8,
+          "loop": false
+        },
+        "hit": {
+          "frames": [
+            10,
+            10,
+            0
+          ],
+          "fps": 8,
+          "loop": false
+        },
+        "skill": {
+          "frames": [
+            11,
+            11,
+            12,
+            12,
+            0
+          ],
+          "fps": 8,
+          "loop": false
+        },
+        "victory": {
+          "frames": [
+            13,
+            13,
+            0
+          ],
+          "fps": 3,
+          "loop": false
+        },
+        "sleep": {
+          "frames": [
+            15
+          ],
+          "fps": 1,
+          "loop": true
+        },
+        "sleep_seated": {
+          "frames": [
+            14
+          ],
+          "fps": 1,
+          "loop": true
+        }
+      },
+      "seamThreshold": 128,
+      "allHighAlphaSeamsClear": true,
+      "uniqueFramePixelHashes": [
+        "0b7a66923556d855ea6525e285a9d3df93dc069239997ec2edaee3048b159b46",
+        "7b686bed1fcc91ab62b5dcda8ae77c35b5e56b9b751d63762cf432fd4eeacfbc",
+        "2c2ea8d305a0343234ce9d84b561aca0badead6a8dda53b767855ed9a21790a3",
+        "44b556b20b22840fff31783eca24378aa2ed2da82547766d6479afbb7f9c9c88",
+        "84dc91feb2a5aeffec9f6d13f93837f0da7fed206d94a10efc02bc801360e8a6",
+        "8d38b81da6cb4655b6706d04342887f7de1fc6c650248dfce96c511ce13ef708",
+        "9471ea3b08667ee458efbaaf7014341f1ebefef4dd851e0347c57263a7ece3f3",
+        "f889e545c50289fec048c5dec774fd3803bd2e62cb25fdeea46a1473a16fea77",
+        "4b23c27b02cc510b5a125a6d99705f84a16876a8225046c5ebbca99a0b908c51",
+        "ef663e7be49be86c8572733f847644bdf29256c910632475501904ed83eecfe4",
+        "40b15ce9d08ad9144781b8db1af2de7d17a252e8678c39876e4580fe458b8c62",
+        "0de5ede71a33f0635d2553e4880a6ac2143557e03b0fa7ad50d1980a62645bcc",
+        "223371f042c86cda569c3d293393d1f50841ee9ab7aba57d3b02d01d2616952c",
+        "457f4342da2f6114dd960311647f73c5242cb3710ff9e9037e0783fdf1f1d8ba",
+        "83bc39223ab578809f592a57c04bb92d67b7b33a088929358b580dbd5ec19402",
+        "fedf05592b977af8d25483af5e1fb5be2bf49a7e9b10bfc8a9b0dfa9b2330f53"
+      ],
+      "poseReview": "Viewed all 16 generated poses; distinct idle/blink, stride pair, greeting pair, eating pair, attack windup/release, recoiling hit, skill charge/release, victory, and two sleeping postures. Attack/hit/skill do not alias greeting or rest."
+    },
+    {
+      "id": "fantuan",
+      "name": "饭团",
+      "resourceId": "builtin:lingjing-fantuan-v1",
+      "templateId": "big-fish-foodie",
+      "file": "fantuan/sprites.png",
+      "sha256": "4b1eb6d06ba4c737a3cd2a10f567a2ff2af80bfec3be260e7df304af4bdb80f8",
+      "generatedSource": "C:\\Users\\Administrator\\.codex\\generated_images\\01a16dc5-c785-7e61-86ea-6d27260788f3\\exec-4923749e-4d45-4562-8648-0df766dbbcf1.png",
+      "tool": "built-in image_gen.imagegen",
+      "transparent_background": true,
+      "actualImageSize": [
+        1254,
+        1254
+      ],
+      "logicalFrameSize": [
+        512,
+        512
+      ],
+      "baseline": 435,
+      "anchor": [
+        0.5,
+        0.849609375
+      ],
+      "bitmapBytesUnchanged": true,
+      "frames": 16,
+      "clips": {
+        "idle": {
+          "frames": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0
+          ],
+          "fps": 8,
+          "loop": true
+        },
+        "blink": {
+          "frames": [
+            1,
+            0
+          ],
+          "fps": 8,
+          "loop": false
+        },
+        "walk": {
+          "frames": [
+            2,
+            3
+          ],
+          "fps": 6,
+          "loop": true
+        },
+        "wave": {
+          "frames": [
+            4,
+            5,
+            4,
+            0
+          ],
+          "fps": 5,
+          "loop": false
+        },
+        "eat": {
+          "frames": [
+            6,
+            7,
+            6,
+            7,
+            0
+          ],
+          "fps": 5,
+          "loop": false
+        },
+        "attack_windup": {
+          "frames": [
+            8
+          ],
+          "fps": 8,
+          "loop": false
+        },
+        "attack_release": {
+          "frames": [
+            9
+          ],
+          "fps": 8,
+          "loop": false
+        },
+        "attack": {
+          "frames": [
+            8,
+            9,
+            9,
+            0
+          ],
+          "fps": 8,
+          "loop": false
+        },
+        "hit": {
+          "frames": [
+            10,
+            10,
+            0
+          ],
+          "fps": 8,
+          "loop": false
+        },
+        "skill": {
+          "frames": [
+            11,
+            11,
+            12,
+            12,
+            0
+          ],
+          "fps": 8,
+          "loop": false
+        },
+        "victory": {
+          "frames": [
+            13,
+            13,
+            0
+          ],
+          "fps": 3,
+          "loop": false
+        },
+        "sleep": {
+          "frames": [
+            15
+          ],
+          "fps": 1,
+          "loop": true
+        },
+        "sleep_seated": {
+          "frames": [
+            14
+          ],
+          "fps": 1,
+          "loop": true
+        }
+      },
+      "seamThreshold": 128,
+      "allHighAlphaSeamsClear": true,
+      "uniqueFramePixelHashes": [
+        "04e991c0759651090aee59b93b8dc4d183295dcadaa96859076e6a4cdf7b2e5b",
+        "44637658a73a527d094e636328998036b2e962299a95d8b534e8fc368628a97d",
+        "47585b90d62b687e9b107c39b79e84a4e505ad236272d5b9ffccb5261a960193",
+        "426adcfbc22ac336ca103179ba48de5528167c32cc4f83bb82d73b8da2fcde79",
+        "6454ce3cd03e8fbc7d043df3580ea193e9459ab735f3a68ac69245ca88665149",
+        "4c3a3a30dcb994a2325ac7b99efba5a3b88e9b29197800640f355b48c026b476",
+        "9b0bf6d551ce5ce15520b14ee836f97328f726d8daec7f3ffb6793829021612d",
+        "8f5a7799864fd6435246f5e634a9cb946eb95f63fa08a8a55e0e528a4bbc7fea",
+        "4eb5180d67b2801f5f8e6286ab8df6bd7678c4b5fb0b50844fd03d9db44c471b",
+        "764e5522e4be98e1fcd845b56ae7bb557791688e15b1391aad36db2c5113995e",
+        "e87120bf44219fb9c5326c6c6fa431c17e9e181a7632f1aa19d2c2a5f998ad0d",
+        "15c33937c4431216d274d7dbb5eabf9d7b4919a93fff0a3e03524799af8ff9c1",
+        "62e3f634bdc542561a3fdba9d5427e2f75d3972d88f2213a997b40ed8c6a075b",
+        "3297be336a8b7d944dabc8d65dec4c4cb58a4ea3bfbd007d6dc8aada02832a5a",
+        "77da6741a61b3c5745fd1b95601a2eff8c7b42761a3ddb41228ceb9118b70627",
+        "6e1d5dc3df7fe2c1be8ea340d6b6f460e0ba08b34865fd9cbfcb79b61ad0547b"
+      ],
+      "poseReview": "Viewed all 16 generated poses; distinct idle/blink, stride pair, greeting pair, eating pair, attack windup/release, recoiling hit, skill charge/release, victory, and two sleeping postures. Attack/hit/skill do not alias greeting or rest."
+    },
+    {
+      "id": "shiba",
+      "name": "焰柴",
+      "resourceId": "builtin:lingjing-shiba-v2",
+      "templateId": "animal-shiba",
+      "file": "shiba/sprites.png",
+      "sha256": "d5d561c04f06018d185b2dc3807658f274420e033f0a28621bfdda70abae5fb5",
+      "generatedSource": "C:\\Users\\Administrator\\.codex\\generated_images\\01a16dc5-c785-7e61-86ea-6d27260788f3\\exec-153f4164-34d1-4a92-9128-8229491933ca.png",
+      "tool": "built-in image_gen.imagegen",
+      "transparent_background": true,
+      "actualImageSize": [
+        1254,
+        1254
+      ],
+      "logicalFrameSize": [
+        512,
+        512
+      ],
+      "baseline": 435,
+      "anchor": [
+        0.5,
+        0.849609375
+      ],
+      "bitmapBytesUnchanged": true,
+      "frames": 16,
+      "clips": {
+        "idle": {
+          "frames": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0
+          ],
+          "fps": 8,
+          "loop": true
+        },
+        "blink": {
+          "frames": [
+            1,
+            0
+          ],
+          "fps": 8,
+          "loop": false
+        },
+        "walk": {
+          "frames": [
+            2,
+            3
+          ],
+          "fps": 6,
+          "loop": true
+        },
+        "wave": {
+          "frames": [
+            4,
+            5,
+            4,
+            0
+          ],
+          "fps": 5,
+          "loop": false
+        },
+        "eat": {
+          "frames": [
+            6,
+            7,
+            6,
+            7,
+            0
+          ],
+          "fps": 5,
+          "loop": false
+        },
+        "attack_windup": {
+          "frames": [
+            8
+          ],
+          "fps": 8,
+          "loop": false
+        },
+        "attack_release": {
+          "frames": [
+            9
+          ],
+          "fps": 8,
+          "loop": false
+        },
+        "attack": {
+          "frames": [
+            8,
+            9,
+            9,
+            0
+          ],
+          "fps": 8,
+          "loop": false
+        },
+        "hit": {
+          "frames": [
+            10,
+            10,
+            0
+          ],
+          "fps": 8,
+          "loop": false
+        },
+        "skill": {
+          "frames": [
+            11,
+            11,
+            12,
+            12,
+            0
+          ],
+          "fps": 8,
+          "loop": false
+        },
+        "victory": {
+          "frames": [
+            13,
+            13,
+            0
+          ],
+          "fps": 3,
+          "loop": false
+        },
+        "sleep": {
+          "frames": [
+            15
+          ],
+          "fps": 1,
+          "loop": true
+        },
+        "sleep_seated": {
+          "frames": [
+            14
+          ],
+          "fps": 1,
+          "loop": true
+        }
+      },
+      "seamThreshold": 128,
+      "allHighAlphaSeamsClear": true,
+      "uniqueFramePixelHashes": [
+        "aedc6cec203618e352d7112d22d04ef0e47b358349694fbe0290b20c881c89c7",
+        "9ecc42c1ad37e631536aadae780da67ddc5fab0b6e961e212c80c4aa949aa15a",
+        "656a029f16e05554924a8b5020e2f2a08412df3150f4140b8bff9aaccb013953",
+        "30e33b0a5bfe5a83e41e8f3095c15918406088748cfb84c7c3b55b18d8d179e6",
+        "2cba38bf3bbd9f7a50af9da1d3727a72ec6f984586f2d5fd1ac297241fe60103",
+        "e4df7467017ee1ff39b96ddf1efef73138ecb0ab829b9218c266c945fded1cab",
+        "197f266fd125b6b921b8d5253d9e996a9bffebeb366bccdf6f620430e7e1e0bd",
+        "e621f1eb0042797bec3a6cc12b7ff05a0193a958ff16221de14b6e1469aa398e",
+        "da8bf3761055f3cc9631ef9c2e175a0b1dfebdac012ba5e63c1e93f5215ec626",
+        "7aa77a92638e878ac0a96ae76009dc1879dd37d675496e36ac4515b4e8ff6c97",
+        "8495a087736143c31a64733c883e9b51c235641683d3e46b9b46865254bf7b1b",
+        "1e9f6220d37c1a8f4a4e5be34d874af46dcf54d93a9b921b1d360cc780479853",
+        "34ecc51f943ba71fd7cde7fdbf579c45667fbbf5b63602d81609e2056f00d7c0",
+        "cb66f8e79e4be252862c1224bfb3f06e51f64944e9028f09aa2658d6834eb6a0",
+        "e941f084ca80825cc8685e89388fac904e3615c55d4389d3b9abe6ace419e83f",
+        "e2b989e944aef70501bbcd0d83e50cc22d553a7016c168d9a1ebb9eb21135803"
+      ],
+      "poseReview": "Viewed all 16 generated poses; distinct idle/blink, stride pair, greeting pair, eating pair, attack windup/release, recoiling hit, skill charge/release, victory, and two sleeping postures. Attack/hit/skill do not alias greeting or rest."
+    },
+    {
+      "id": "hatcat",
+      "name": "礼帽喵",
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "templateId": "animal-hat-cat",
+      "file": "hatcat/sprites.png",
+      "sha256": "c4490613eab58617c5b63293f637d8af3061dee101da12588f82bbff06045777",
+      "generatedSource": "C:\\Users\\Administrator\\.codex\\generated_images\\01a16dc5-c785-7e61-86ea-6d27260788f3\\exec-f8ec444d-1211-4a8d-bcd3-320500aaea63.png",
+      "tool": "built-in image_gen.imagegen",
+      "transparent_background": true,
+      "actualImageSize": [
+        1254,
+        1254
+      ],
+      "logicalFrameSize": [
+        512,
+        512
+      ],
+      "baseline": 435,
+      "anchor": [
+        0.5,
+        0.849609375
+      ],
+      "bitmapBytesUnchanged": true,
+      "frames": 16,
+      "clips": {
+        "idle": {
+          "frames": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0
+          ],
+          "fps": 8,
+          "loop": true
+        },
+        "blink": {
+          "frames": [
+            1,
+            0
+          ],
+          "fps": 8,
+          "loop": false
+        },
+        "walk": {
+          "frames": [
+            2,
+            3
+          ],
+          "fps": 6,
+          "loop": true
+        },
+        "wave": {
+          "frames": [
+            4,
+            5,
+            4,
+            0
+          ],
+          "fps": 5,
+          "loop": false
+        },
+        "eat": {
+          "frames": [
+            6,
+            7,
+            6,
+            7,
+            0
+          ],
+          "fps": 5,
+          "loop": false
+        },
+        "attack_windup": {
+          "frames": [
+            8
+          ],
+          "fps": 8,
+          "loop": false
+        },
+        "attack_release": {
+          "frames": [
+            9
+          ],
+          "fps": 8,
+          "loop": false
+        },
+        "attack": {
+          "frames": [
+            8,
+            9,
+            9,
+            0
+          ],
+          "fps": 8,
+          "loop": false
+        },
+        "hit": {
+          "frames": [
+            10,
+            10,
+            0
+          ],
+          "fps": 8,
+          "loop": false
+        },
+        "skill": {
+          "frames": [
+            11,
+            11,
+            12,
+            12,
+            0
+          ],
+          "fps": 8,
+          "loop": false
+        },
+        "victory": {
+          "frames": [
+            13,
+            13,
+            0
+          ],
+          "fps": 3,
+          "loop": false
+        },
+        "sleep": {
+          "frames": [
+            15
+          ],
+          "fps": 1,
+          "loop": true
+        },
+        "sleep_seated": {
+          "frames": [
+            14
+          ],
+          "fps": 1,
+          "loop": true
+        }
+      },
+      "seamThreshold": 128,
+      "allHighAlphaSeamsClear": true,
+      "uniqueFramePixelHashes": [
+        "82a4330a98ccdb4ac3b2de2c94c6c9ed043658c198a7a29d4079276469acf8d5",
+        "e8c67bb69d370f3b51484e22b273ee20727415c0fb4017961390240df172d07f",
+        "eee4f831eb135c51bb7c9f8639f47bb83d925583560719314ebd35524cf0aa22",
+        "3cbbc2dd7953bde825dde1588bae365270b9d35d38abeb43b6eb7e99f194924d",
+        "9f32df4cdde8a36295b06b026244ca6d17d06719eb939e3a9e52cd66c9dce989",
+        "e9833e50c56879820b83d22cf46aa8e074cbf2ae63b4b9e21f6dda3c660c940c",
+        "8eab2c2b830fc2848cac733d847b5249f9bd44f3fb2945cfce9ffc55a11b562a",
+        "ba3fe23f8d1c5ac3dbc400f7a24b4c5ec82dc64e9036960c8145386fec8c42c7",
+        "51031262c17cabfaf6e7c19410493f4fd2ca1b32598338898c601c26fd8ec46e",
+        "a959b6b5b9be0cabb7b8dd57ff7dc31a91d25eb773cbaa620bd4a00a3aa4f753",
+        "fe9e4f775c92c03dd68fa7906d9368bbbae7329c18eb121db30db5397969413e",
+        "89ee30669361260e9526e141f337d835ba9bea45ea4e421cbf7d72d32d43938b",
+        "77eeab287e060e9c494297567229d1e082611eda2a656b03c7836a0176110ea0",
+        "dbd2d4df0b9dbbd0d18273ead78a5f09728378684d9014f5ddba228b009a1b8b",
+        "a7912b579058002ca8b7c168db83532b235afd163fca8558d580f856a4846e10",
+        "39bf62bdbc2c29b5ba8f54546abe46f05bfe07fb789e97a610b26df3251f6d5c"
+      ],
+      "poseReview": "Viewed all 16 generated poses; distinct idle/blink, stride pair, greeting pair, eating pair, attack windup/release, recoiling hit, skill charge/release, victory, and two sleeping postures. Attack/hit/skill do not alias greeting or rest."
+    },
+    {
+      "id": "xiaohu",
+      "name": "小狐",
+      "resourceId": "builtin:lingjing-xiaohu-v1",
+      "templateId": "animal-white-fox",
+      "file": "xiaohu/sprites.png",
+      "sha256": "df4ba559d509f72e48fd2beeea287668058de94f1853c70e26f5e0b298e277ae",
+      "generatedSource": "C:\\Users\\Administrator\\.codex\\generated_images\\01a16dc5-c785-7e61-86ea-6d27260788f3\\exec-9dd68af7-7e7a-494f-92fd-cf5390c71ba1.png",
+      "tool": "built-in image_gen.imagegen",
+      "transparent_background": true,
+      "actualImageSize": [
+        1254,
+        1254
+      ],
+      "logicalFrameSize": [
+        512,
+        512
+      ],
+      "baseline": 435,
+      "anchor": [
+        0.5,
+        0.849609375
+      ],
+      "bitmapBytesUnchanged": true,
+      "frames": 16,
+      "clips": {
+        "idle": {
+          "frames": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0
+          ],
+          "fps": 8,
+          "loop": true
+        },
+        "blink": {
+          "frames": [
+            1,
+            0
+          ],
+          "fps": 8,
+          "loop": false
+        },
+        "walk": {
+          "frames": [
+            2,
+            3
+          ],
+          "fps": 6,
+          "loop": true
+        },
+        "wave": {
+          "frames": [
+            4,
+            5,
+            4,
+            0
+          ],
+          "fps": 5,
+          "loop": false
+        },
+        "eat": {
+          "frames": [
+            6,
+            7,
+            6,
+            7,
+            0
+          ],
+          "fps": 5,
+          "loop": false
+        },
+        "attack_windup": {
+          "frames": [
+            8
+          ],
+          "fps": 8,
+          "loop": false
+        },
+        "attack_release": {
+          "frames": [
+            9
+          ],
+          "fps": 8,
+          "loop": false
+        },
+        "attack": {
+          "frames": [
+            8,
+            9,
+            9,
+            0
+          ],
+          "fps": 8,
+          "loop": false
+        },
+        "hit": {
+          "frames": [
+            10,
+            10,
+            0
+          ],
+          "fps": 8,
+          "loop": false
+        },
+        "skill": {
+          "frames": [
+            11,
+            11,
+            12,
+            12,
+            0
+          ],
+          "fps": 8,
+          "loop": false
+        },
+        "victory": {
+          "frames": [
+            13,
+            13,
+            0
+          ],
+          "fps": 3,
+          "loop": false
+        },
+        "sleep": {
+          "frames": [
+            15
+          ],
+          "fps": 1,
+          "loop": true
+        },
+        "sleep_seated": {
+          "frames": [
+            14
+          ],
+          "fps": 1,
+          "loop": true
+        }
+      },
+      "seamThreshold": 128,
+      "allHighAlphaSeamsClear": true,
+      "uniqueFramePixelHashes": [
+        "29c2eaf3564c0fb664fbbd09a9b329a03ba88c9185c66accbaa87807c780f8d5",
+        "c96fe624a956e55b0aca851eca320cbcb4894a62607e222ce7d37975a89460d3",
+        "5a4ddecfcaa5f4443251fb554c4f9b0597f79ee58cb057eedf24439c1299c9ed",
+        "aeccb1c2791520e2e386efd0d955baf175a5fc3dbf2668f2c837a2b332b3d630",
+        "493e30b1155e64a6e3d535b18a9d4631562ead15db49bf6df284ec6902222f2f",
+        "ae2d6d414d86948300e222ea2a390a32bd946440f6294009a3ed920eabab154c",
+        "44c258969772d6abf04f87618cbf4c664bcd5452f9ad15aaae6be4e9a3b481dc",
+        "a375f666c36b668709482f8df4ce80ecbd807dac50f53aad1671ceff75d3d22b",
+        "c052d07269ef54c1b2a01a79dfa72c246b1ea4f16f8cd2cc80897ce5cc67ae24",
+        "d6df4e9e0bf3381389ad1602dbf811c029106176af17452e62bb8ac9b7f82112",
+        "b170b4bc57d6edfa1957e42728d0d2f8dfb8dcaee70bcdc6f1f08cee28f4c50a",
+        "8bd7c7f2f7eecaa08a8ae467ada9ba6f4266a05ccd92dea28d1af7f55b3b9396",
+        "c88f4d9c6938b27b95c8bc4bb14ecde5d5ede68f0e84119816c4712acbdbc9e4",
+        "8f80cb2b573fb81ea9a1e3c810c14e496b7cd921cedb5da7b90b384c9fd91d39",
+        "e0a50839c28ba28aaa9d0ca9564882d43af30dd587af7f6e70aa95a8dfdb1430",
+        "76ac54c2347635accb37d4eebd3c3467ddbec0c8af6f2f81730e4b10ebd3dced"
+      ],
+      "poseReview": "Viewed all 16 generated poses; distinct idle/blink, stride pair, greeting pair, eating pair, attack windup/release, recoiling hit, skill charge/release, victory, and two sleeping postures. Attack/hit/skill do not alias greeting or rest."
+    },
+    {
+      "id": "qingya",
+      "name": "青芽",
+      "resourceId": "builtin:lingjing-qingya-v1",
+      "templateId": "animal-wood-deer",
+      "file": "qingya/sprites.png",
+      "sha256": "aa59df3af26d4f7faf9272193b7d1d35ed6d2f22ebb6b294a5a2853f0539f693",
+      "generatedSource": "C:\\Users\\Administrator\\.codex\\generated_images\\01a16dc5-c785-7e61-86ea-6d27260788f3\\exec-86757204-66b7-4034-99f9-d8c944b6a4b9.png",
+      "element": "wood",
+      "promptFile": "element-extension-prompts.json",
+      "tool": "built-in image_gen.imagegen",
+      "transparent_background": true,
+      "actualImageSize": [
+        1254,
+        1254
+      ],
+      "logicalFrameSize": [
+        512,
+        512
+      ],
+      "baseline": 435,
+      "anchor": [
+        0.5,
+        0.849609375
+      ],
+      "bitmapBytesUnchanged": true,
+      "frames": 16,
+      "clips": {
+        "idle": {
+          "frames": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0
+          ],
+          "fps": 8,
+          "loop": true
+        },
+        "blink": {
+          "frames": [
+            1,
+            0
+          ],
+          "fps": 8,
+          "loop": false
+        },
+        "walk": {
+          "frames": [
+            2,
+            3
+          ],
+          "fps": 6,
+          "loop": true
+        },
+        "wave": {
+          "frames": [
+            4,
+            5,
+            4,
+            0
+          ],
+          "fps": 5,
+          "loop": false
+        },
+        "eat": {
+          "frames": [
+            6,
+            7,
+            6,
+            7,
+            0
+          ],
+          "fps": 5,
+          "loop": false
+        },
+        "attack_windup": {
+          "frames": [
+            8
+          ],
+          "fps": 8,
+          "loop": false
+        },
+        "attack_release": {
+          "frames": [
+            9
+          ],
+          "fps": 8,
+          "loop": false
+        },
+        "attack": {
+          "frames": [
+            8,
+            9,
+            9,
+            0
+          ],
+          "fps": 8,
+          "loop": false
+        },
+        "hit": {
+          "frames": [
+            10,
+            10,
+            0
+          ],
+          "fps": 8,
+          "loop": false
+        },
+        "skill": {
+          "frames": [
+            11,
+            11,
+            12,
+            12,
+            0
+          ],
+          "fps": 8,
+          "loop": false
+        },
+        "victory": {
+          "frames": [
+            13,
+            13,
+            0
+          ],
+          "fps": 3,
+          "loop": false
+        },
+        "sleep": {
+          "frames": [
+            15
+          ],
+          "fps": 1,
+          "loop": true
+        },
+        "sleep_seated": {
+          "frames": [
+            14
+          ],
+          "fps": 1,
+          "loop": true
+        }
+      },
+      "seamThreshold": 128,
+      "allHighAlphaSeamsClear": true,
+      "uniqueFramePixelHashes": [
+        "2e99ccd288a70f28cd85a31520b63d302b4005e85326824e1175531de8b38697",
+        "547bf330afacbebe40b4cc6bd7dc573cdb52741c9b37e4452a134d6dae8e33f3",
+        "ddb4a031b6122d7f106b5eb09b1c5a8a4d9af067b43dc05a977636ad3a0be855",
+        "cdde8d20a96c1e5b56ce1da68faaede6829cc86693a5430e1ac7a5b2fac9d2dc",
+        "67f0178679b70de8e02821f40f87bc2be5f0e2e5ece161acb782a311f6e4fec3",
+        "d4f9f4fc4f8933c54188c744e9e9d8cc3238c6d18a2d52a5846f350c93aeb779",
+        "b4aca09b4fe7cace1da8ef2d56b7deab3a71d4e23835557855357a19a4a2f689",
+        "4fa9ed33224e2b86ace9e0c1ad711136d85e53fd8e452f2d086573c3241d0b0b",
+        "6284280527eb2de3f2f64e75877a4942f47fb201a34bc7e921c0ce9afb06e6fe",
+        "fe039ec0d3fb58aba298ac0274caa282c8935bc6700c32c5d8a24dcb0bcac5b0",
+        "3bf9bfe71f8cd882324eac11cb3f4c2f89f7a98c2c7af21684e427003df3e5e0",
+        "0edffdb7745a19e2b3b39679a478b8858981274957578790c462055278a6f789",
+        "75c5c4e9f956c5fec774870826e7b3fcf8476768c46ecdd6933c3c51b1830e39",
+        "6ace4c97043cb30904868ea8e8f49f1a322ede691a3d7f792b6dc8760bc5fa9e",
+        "0cad9e5a95a632199bbadd28a03b8bb609f8390136085e9369bc849b07f6483d",
+        "88c592d8e2eeb89d0609699b886a821316a627700a7da329442856d3f2884872"
+      ],
+      "poseReview": "Viewed all 16 generated poses; distinct idle/blink, stride pair, greeting pair, eating pair, attack windup/release, recoiling hit, skill charge/release, victory, and two sleeping postures. Attack/hit/skill do not alias greeting or rest.",
+      "refinementPromptFile": "element-extension-refinement.json"
+    },
+    {
+      "id": "yantuan",
+      "name": "岩团",
+      "resourceId": "builtin:lingjing-yantuan-v1",
+      "templateId": "animal-earth-pangolin",
+      "file": "yantuan/sprites.png",
+      "sha256": "f03bc1b8cd1c20c5ef6d466d20db9fb7f9584b7739f21414d22fc2c91c01d886",
+      "generatedSource": "C:\\Users\\Administrator\\.codex\\generated_images\\01a16dc5-c785-7e61-86ea-6d27260788f3\\exec-9878e66b-3469-4928-a6de-70b702edb7d1.png",
+      "element": "earth",
+      "promptFile": "element-extension-prompts.json",
+      "tool": "built-in image_gen.imagegen",
+      "transparent_background": true,
+      "actualImageSize": [
+        1254,
+        1254
+      ],
+      "logicalFrameSize": [
+        512,
+        512
+      ],
+      "baseline": 435,
+      "anchor": [
+        0.5,
+        0.849609375
+      ],
+      "bitmapBytesUnchanged": true,
+      "frames": 16,
+      "clips": {
+        "idle": {
+          "frames": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0
+          ],
+          "fps": 8,
+          "loop": true
+        },
+        "blink": {
+          "frames": [
+            1,
+            0
+          ],
+          "fps": 8,
+          "loop": false
+        },
+        "walk": {
+          "frames": [
+            2,
+            3
+          ],
+          "fps": 6,
+          "loop": true
+        },
+        "wave": {
+          "frames": [
+            4,
+            5,
+            4,
+            0
+          ],
+          "fps": 5,
+          "loop": false
+        },
+        "eat": {
+          "frames": [
+            6,
+            7,
+            6,
+            7,
+            0
+          ],
+          "fps": 5,
+          "loop": false
+        },
+        "attack_windup": {
+          "frames": [
+            8
+          ],
+          "fps": 8,
+          "loop": false
+        },
+        "attack_release": {
+          "frames": [
+            9
+          ],
+          "fps": 8,
+          "loop": false
+        },
+        "attack": {
+          "frames": [
+            8,
+            9,
+            9,
+            0
+          ],
+          "fps": 8,
+          "loop": false
+        },
+        "hit": {
+          "frames": [
+            10,
+            10,
+            0
+          ],
+          "fps": 8,
+          "loop": false
+        },
+        "skill": {
+          "frames": [
+            11,
+            11,
+            12,
+            12,
+            0
+          ],
+          "fps": 8,
+          "loop": false
+        },
+        "victory": {
+          "frames": [
+            13,
+            13,
+            0
+          ],
+          "fps": 3,
+          "loop": false
+        },
+        "sleep": {
+          "frames": [
+            15
+          ],
+          "fps": 1,
+          "loop": true
+        },
+        "sleep_seated": {
+          "frames": [
+            14
+          ],
+          "fps": 1,
+          "loop": true
+        }
+      },
+      "seamThreshold": 128,
+      "allHighAlphaSeamsClear": true,
+      "uniqueFramePixelHashes": [
+        "2d5e35f1f62e3be3ed6772fdacdb2c135770013b02cc15003cc221cbf482eb73",
+        "56e50c2b484ada5756a2e5ebf3d916c52810e26c738302f4532bdc3047d1af00",
+        "52aecbbd48c4b3573b482b0c0cc05e6da1a3a7a3b40183f7c19bbbc3498c9469",
+        "9e64fcc6006600ff0beeb77305a67379fbdc038f28dc3b33478808f3b669225b",
+        "8a0eb98e174c468c3ae99fc738f803e950296d8d8ce05e401cb6c9f304159940",
+        "02e79a8dcedb87132a26675a0e986e534eb859d97f85cab94277cee810c3f51a",
+        "7c90cd7e0d5827272fcbd283ac0ffbe8720bcfd1d2c44ba6ae236ed38fdd53ed",
+        "470a43a91795332956bbb05997be902f06e3dc044a310db77234725b1b0b3b24",
+        "e71b688554471461e1172372f295e2dce609c14d263dc8f85a5007e362ca5de0",
+        "92dd07b46f799ac5cc675a894de47f6c364c7716e370e1074cf60e8db0fa1c94",
+        "cdb9c27014e90fc7fb076def224cd7a64d88f72ee142d666fa1445260db74b51",
+        "da115a948567b173e0225bddcb190d7374cceeee33bbb4fbaaf46389801cf518",
+        "bd87d14d68a16d8f42ced0ebf1d31efec795b3856f133f2665c9e85544e3fb87",
+        "fc12fe89e489b2ba99f54afc7f8801b9ef48fd75986e35f0a74463754cfd2865",
+        "6c5a18468e54163a1ef75df56f1b7d86a04b89eb0b96103d451c79f6e13d33d4",
+        "95ef5d5c1213dd96f9729ecee316cd342856cbf34bbc7faa339a8774d65fbe2b"
+      ],
+      "poseReview": "Viewed all 16 generated poses; distinct idle/blink, stride pair, greeting pair, eating pair, attack windup/release, recoiling hit, skill charge/release, victory, and two sleeping postures. Attack/hit/skill do not alias greeting or rest."
+    }
+  ],
+  "extensions": [
+    {
+      "at": "2026-10-24T14:56:16.536Z",
+      "characters": [
+        "qingya",
+        "yantuan"
+      ],
+      "promptFile": "element-extension-prompts.json"
+    }
+  ]
+}

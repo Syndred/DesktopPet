@@ -1,19 +1,253 @@
 {
   "module": "foundation",
   "branch": "codex/lingjing-foundation",
-  "commit": "see git log for this file; initial shell follows contract 613e87a",
-  "status": "integrating",
-  "upstream": { "fetched": true, "originMain": "4786f97", "baseline": "6c8ce65", "originMainIsAncestor": true },
+  "commit": "c4ac69369d01786549dc55ac0bc76c98c930445d",
+  "status": "completed-unified-four-entry-integration",
+  "upstream": {
+    "fetched": true,
+    "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086",
+    "baseline": "6c8ce65",
+    "originMainIsAncestor": true
+  },
   "contract": "docs/implementation/foundation-contract.md",
   "tests": [
-    { "command": "npm run build:pc", "result": "passed" },
-    { "command": "npm run typecheck", "result": "passed" },
-    { "command": "npm run lint", "result": "passed" },
-    { "command": "npm run test:foundation", "result": "2 passed; actual Electron SQLite connection, rollback and owner verification" },
-    { "command": "npm run pc:smoke:shell", "result": "passed; actual Windows Electron 36.9.5, navigation, isolated sandbox bridge, visible native window" }
+    {
+      "command": "npm run test:foundation",
+      "result": "10 passed on actual Electron SQLite"
+    },
+    {
+      "command": "accounts/tests/accounts.test.cjs",
+      "result": "17 cases passed; one corrected guard case rechecked separately"
+    },
+    {
+      "command": "garden/cloud.test.mjs",
+      "result": "8 passed local HTTP + PostgreSQL WASM; not deployed service"
+    },
+    {
+      "command": "lingjing-pages.mjs",
+      "result": "Actual local training loss, 13 rounds, pet A +5 XP only, 2 seeds once; report/chat routing passed"
+    },
+    {
+      "command": "shared typography check",
+      "result": "30 actual native route/size cases passed; this is only A01-A03 verification"
+    },
+    {
+      "command": "qa-scenario.test.cjs",
+      "result": "4 passed; explicit opt-in, ordinary-profile rejection, cross-profile/legacy-store isolation, restart descriptor"
+    },
+    {
+      "command": "qa-profile-isolation.mjs",
+      "result": "Actual production Electron: ordinary startup has no QA flag; explicit QA tooltip; IPC cannot enable QA; account restores in same independent profile"
+    },
+    {
+      "command": "garden/cloud.test.mjs after final incoming module merge",
+      "result": "11 passed on local HTTP + PostgreSQL WASM; not a live deployed service"
+    },
+    {
+      "command": "foundation + accounts QA boundary tests",
+      "result": "9 passed after unified preflight/identity integration"
+    },
+    {
+      "command": "shared-battle-feedback.mjs",
+      "result": "4 targeted feedback cases / 5 actual UI actions passed; 1280x844 and 1440x900 skill card geometry passed"
+    },
+    {
+      "command": "final-candidate targeted metadata/backup, waiting-room UI and actual portable launch",
+      "result": "2 native cases and 3 actual waiting/leave/report cases passed; final SFX preserves all 6 old instances and exact growth, loads all 8 resources and a real Pixi walk canvas."
+    }
   ],
-  "evidence": ["artifacts/foundation/shell/evidence.json", "artifacts/foundation/shell/shell.png"],
-  "integrationDependencies": ["companions", "discovery", "battle", "garden", "conversations", "resources", "accounts"],
-  "remaining": ["Merge seven feature deliveries and complete service adapters", "Verify 19 pages and all gameplay in actual Electron", "Verify account isolation, import, restart recovery and online service", "Run final complete regression once", "Create and launch Windows package"],
-  "dataPolicy": "Original JSON/history retained with one-time backup before opening; one SQLite connection and transactional migration ledger; no destructive production migration or production release"
+  "evidence": [
+    "artifacts/foundation/pages/evidence.json",
+    "artifacts/foundation/resource-art/evidence.json",
+    "artifacts/foundation/shared-rhythm/evidence.json",
+    "docs/implementation/evidence/garden/verification.json",
+    "docs/implementation/acceptance/2026-10-24/visual-audit.txt",
+    "docs/implementation/evidence/foundation/final-unified/delivery.json"
+  ],
+  "integrationDependencies": [
+    "companions",
+    "discovery",
+    "battle",
+    "garden",
+    "conversations",
+    "resources",
+    "accounts"
+  ],
+  "remaining": [],
+  "dataPolicy": "Original JSON/history retained with one-time backup before opening; one SQLite connection and transactional migration ledger; no destructive production migration or production release",
+  "updatedAt": "2026-10-24T16:12:11.014Z",
+  "integratedModules": [
+    "accounts",
+    "resources",
+    "companions",
+    "battle",
+    "garden",
+    "discovery",
+    "conversations"
+  ],
+  "publicUi": {
+    "fixCommit": "50f6cad",
+    "audit": [
+      "A01",
+      "A02",
+      "A03"
+    ],
+    "tokens": "apps/pc-app/ui/src/styles/tokens.css",
+    "layout": "apps/pc-app/ui/src/styles/layout.css",
+    "h1": "28px / 700 / 1.4",
+    "pagePadding": "24px block / 32px inline; responsive spacing tokens",
+    "cardMargins": 0,
+    "targetedResult": "1280 and 1440, 15 routes each; actual computed styles passed",
+    "fullVisualAcceptance": "Main independent 15 views at two widths and 12 layout gates passed; H1 28px/card 16px; final candidate has no global slogan or app footer."
+  },
+  "integrationClosure": {
+    "route": "92c6f0e route-scoped location snapshots; actual report/chat exit cleanup verified",
+    "ownerAlias": "registered garden and companions migrate verified raw-ID save together; same petId, exact growth/crop timestamps, original archive, no second starter",
+    "cloudCheckpoint": "b3c15a5 authoritative full-save readback updates account CAS only after complete local domain equality; pending/in-flight/stale/conflicting states retained",
+    "conversationBackup": "stable IDs and message order across SQLite sequence collisions; encrypted credentials excluded",
+    "resourceBackup": "grid + Pixi atlas bytes restored and relocated; original files retained"
+  },
+  "visualAcceptance": "All seven modules independently reviewed by main; shared four-entry flow, five elements/eight characters, layout and legacy sample accepted.",
+  "goalComplete": true,
+  "previousIntegratedSource": "e068d372c111c2eb3a3d55fd130dffef14657c53",
+  "scopeUpdate": {
+    "at": "2026-10-24T14:38:43.574Z",
+    "contract": "docs/implementation/unified-battle-integration.md",
+    "fourEntries": [
+      "training",
+      "friend",
+      "wild",
+      "territory"
+    ],
+    "singleSharedBattleRequired": true,
+    "elementCoverage": [
+      "metal",
+      "wood",
+      "water",
+      "fire",
+      "earth"
+    ],
+    "matrixPairs": 25,
+    "liveCloudDeferred": true,
+    "simulationRequiresIsolatedProfile": true,
+    "sharedBattleContract": "docs/implementation/unified-battle-contract.txt",
+    "acceptance": "docs/implementation/acceptance/2026-10-24/unified-battle-goal.txt"
+  },
+  "previousPortable": {
+    "status": "historical-stage-only-superseded-by-unified-battle-scope",
+    "builtAtSource": "d8e922ecaf99b2e9654299a68af98e292769fdb1",
+    "path": "artifacts/pc-beta/Lingjing-0.1.8-portable-x64.exe",
+    "sha256": "8062ac079407dd7ddde0a6a9453d4020b0d9a1edba99072bebb5474bd76a640b",
+    "sfxLaunch": "artifacts/foundation/portable/evidence.json",
+    "asarAudit": "artifacts/foundation/packaged-audit/evidence.json",
+    "passed": true
+  },
+  "deferredExternal": [
+    "Live cloud friend/sync/territory service and real two-device readback",
+    "Precise physical location and live AI provider credentials"
+  ],
+  "qaIsolation": {
+    "source": "4702b06",
+    "descriptor": {
+      "id": "unified-battle",
+      "provenance": "simulated",
+      "isolated": true
+    },
+    "normalStartupUnaffected": true,
+    "realElectronRestartPassed": true,
+    "evidence": "docs/implementation/evidence/foundation/qa-isolation/integrated-evidence.json",
+    "adapterFlows": "Actual production-main training, friend loopback, wild and territory context flows passed in explicit isolated QA profiles; normal SFX launch has no QA descriptor.",
+    "identityBoundary": "One shared marker/preflight; same run ID in account SQLite namespace; memory-only login; real cloud/OS startup/location/backup boundaries retained",
+    "restartPolicy": "Explicit QA login required; restores the same QA owner and provenance"
+  },
+  "sharedBattleFeedback": {
+    "source": "a2c4535",
+    "passed": true,
+    "scope": "Actual production Electron; explicit QA legal charged prestate and controlled opponent. Four actions; water repeated twice; same engine snapshots and rendered windup/release/impact/effects/rest. Not natural-game or live cloud evidence.",
+    "cases": [
+      "water immediate anger, no freeze status",
+      "normal interrupts element, no dodge feedback or skill release",
+      "actual dodge versus normal",
+      "ultimate hits dodge, spends 50 anger and heals 20"
+    ],
+    "evidence": "docs/implementation/evidence/foundation/shared-battle-feedback/evidence.json",
+    "allFourModesAccepted": true,
+    "status": "accepted-shared-four-entry-flow-and-focused-animation",
+    "followUp": {
+      "issue": "At impact the interrupted actor had data-action=hit but the actual texture had already reached the idle tail of the release-stage clip.",
+      "owner": "battle/resources playbackKey and phase timing",
+      "required": "Focused interrupted-hit recheck against actual Pixi texture frame; no repeat of accepted water/dodge UI or full matrix",
+      "passed": true,
+      "source": "f80026b",
+      "evidence": "docs/implementation/evidence/foundation/hit-frame-recheck/evidence.json"
+    }
+  },
+  "finalChecks": "docs/implementation/evidence/foundation/unified-checks.json",
+  "finalPackage": {
+    "path": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\artifacts\\pc-beta-unified\\Lingjing-0.1.8-portable-x64.exe",
+    "sha256": "605c5ee6f943b1be235bb5a839b11572dd4e227c3cc25adbcf320cbee6b000b9",
+    "bytes": 146009889,
+    "passed": true,
+    "files": 161,
+    "characters": 8,
+    "licenses": 9,
+    "sourceCommit": "c4ac69369d01786549dc55ac0bc76c98c930445d",
+    "codeFingerprint": "0e78fde20d39557ef89bff8914470d6e8c08166b8b340b63b430e85aa936a380",
+    "compiledFingerprint": "2d1b1bdfa86cf6defd54bf676a44ed1473fc2b0f86c199dbd8abd4ee4412d791",
+    "audit": "docs/implementation/evidence/foundation/final-unified/package-audit.json",
+    "sfxLaunch": "docs/implementation/evidence/foundation/final-unified/portable/evidence.json"
+  },
+  "mainIndependent": [
+    {
+      "name": "final-rules-v3",
+      "source": "1b1b699c68ccef46e349384fbba280f484002b37",
+      "passed": true,
+      "matrix": 25,
+      "matrixDamageCases": 75,
+      "properties": 9,
+      "evidence": "docs/implementation/evidence/foundation/final-unified/main-independent/final-rules-v3.json",
+      "sha256": "f7cabd0b71c064bb79caab82fb32e1206f77a311d977dc7be897c326995b5921"
+    },
+    {
+      "name": "final-battle-v3",
+      "source": "7cdcfdc9d022bb646c20bb2e96f90f03b6f5a3a1",
+      "passed": true,
+      "checks": 65,
+      "evidence": "docs/implementation/evidence/foundation/final-unified/main-independent/final-battle-v3.json",
+      "sha256": "ce34cdfec8076fb51014147449423568b12e290d28c46b513c277486c9bfeff9"
+    },
+    {
+      "name": "final-friend-v3",
+      "source": "7cdcfdc9d022bb646c20bb2e96f90f03b6f5a3a1",
+      "passed": true,
+      "checks": 20,
+      "evidence": "docs/implementation/evidence/foundation/final-unified/main-independent/final-friend-v3.json",
+      "sha256": "f63f967214926decb073ff227ec05059082da12808beb4fa7ad18fa1831856c1"
+    },
+    {
+      "name": "final-context-v3",
+      "source": "07db4d9c6d8ebbcfa081ff2f5e62a15dd065145a",
+      "passed": true,
+      "checks": 11,
+      "evidence": "docs/implementation/evidence/foundation/final-unified/main-independent/final-context-v3.json",
+      "sha256": "b24c96eb3556fef7c1ea9c1c7923c6ee26b5f87bda1d13647fa97e85f2f086a9"
+    },
+    {
+      "name": "final-rhythm-v3",
+      "source": "07db4d9c6d8ebbcfa081ff2f5e62a15dd065145a",
+      "passed": true,
+      "checks": 12,
+      "evidence": "docs/implementation/evidence/foundation/final-unified/main-independent/final-rhythm-v3.json",
+      "sha256": "a9cebfaab4ca3b7cdfb6a301acf01fec12df62baf767fa4d97770732e4b5991a"
+    },
+    {
+      "name": "final-legacy-rules-v3",
+      "source": "774afd71ec778d90b7d7d8e6a07873e38320819f",
+      "passed": true,
+      "checks": 6,
+      "evidence": "docs/implementation/evidence/foundation/final-unified/main-independent/final-legacy-rules-v3.json",
+      "sha256": "21df10034dac3cb12bfaf76c91b5f1a1c33060832a1bc6ac57901f9122193712"
+    }
+  ],
+  "releaseScope": "Current agreed desktop unified-battle scope complete. Deferred live external services remain explicitly listed; simulated flows are not live-provider receipts."
 }

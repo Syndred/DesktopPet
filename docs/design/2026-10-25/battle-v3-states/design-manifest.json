@@ -1,0 +1,101 @@
+{
+  "title": "灵境 1v1 对战 V3 · 场景内悬浮控件",
+  "date": "2026-10-25",
+  "generator": "Built-in imagegen",
+  "scope": "视觉设计预览；未修改应用代码。画面数值、倒计时和蓄力值为示意。",
+  "requirements": [
+    "属性图标紧跟等级，整组位于头像下方且留在卡片内。",
+    "双方状态卡保持镜像、数值内嵌，右侧头像朝左且条形反向填充；上方卡片留出更宽间距。",
+    "背景扩展至导航右侧的整片区域，移除独占右侧栏及底部云雾隔断。",
+    "大招、攻击、属性、闪避四个按钮作为一个整体居中，全部缩小；三个基础圆圈等大，大招稍大。",
+    "四个按钮直接叠加在背景地面上，半透明且没有独立底部面板。",
+    "大招始终显示，充能用围绕大招的环形进度表达；移除原有横向进度条。",
+    "蓄满后金色圆环完整点亮，星芒增强，按钮位置与尺寸不变。",
+    "回合记录为右下角半透明小卡片，滚动条表明可滚动。",
+    "悬停说明：攻击=打断属性，属性=无法闪避，闪避=闪避攻击。"
+  ],
+  "states": [
+    {
+      "id": "charging",
+      "name": "环形蓄力中",
+      "file": "01-ring-charging.png",
+      "source": "C:\\Users\\Administrator\\.codex\\generated_images\\01a16d86-7650-7871-8e27-5b65477a126e\\exec-82dc5293-a7f6-420e-becf-b386b3bf3c28.png",
+      "charge": 36,
+      "tooltip": null,
+      "prompts": [
+        {
+          "key": "base-prompt",
+          "text": "Use case: ui-mockup.\nCreate a NEW, refined high-fidelity full desktop UI screenshot for 灵境, using the provided previous design ONLY as style/character reference. Rebuild the battle layout to be more immersive and spacious. Preserve the Chinese ivory/ice-blue left app navigation and four-point star logo, woodland deer 青芽 on the LEFT facing RIGHT, orange Shiba 焰柴 on the RIGHT facing LEFT, and beautiful blue night lantern courtyard. Same polished cute 2D anime art, crisp Chinese typography. One-versus-one only.\n\nSTATE: DEFAULT / PARTLY CHARGED, no hover. Full screenshot, 1536x1024 proportions.\n\nMAJOR COMPOSITION CHANGES:\n- The courtyard background now fills ALL space to the RIGHT of the navigation sidebar, edge-to-edge from top to bottom and all the way to the RIGHT window edge. Widen the playable arena substantially.\n- DELETE the full-height white right action-log sidebar. DELETE ALL white bottom toolbar panels, cloud/fog banks, white gradients, mist dividers and white control backgrounds. The detailed courtyard floor remains clearly visible to the very bottom, BEHIND every skill button.\n- Right action log becomes a SMALL floating translucent glass card in the BOTTOM-RIGHT, about280px wide by220px high. Title \"回合记录\", 3 compact readable action rows and a clearly visible thin vertical SCROLLBAR. Blue-black glass at30–40% opacity, white/soft-blue text; the scene remains visible through it. Keep it separate from the controls and clear of both pet faces. No tall blank space, no party/roster panel. A tiny unobtrusive \"离开\" control may sit at the top-right.\n- Four compact skill buttons float DIRECTLY ON THE SCENERY near bottom center. Center the ENTIRE FOUR-BUTTON GROUP within the expanded arena (the area right of navigation), not the whole app window. Keep comfortable bottom padding. No panel behind them.\n\nTOP HUD:\nTwo exactly equal sized mirrored white-glass status cards, generously inset from the top and outer edges and much farther apart around a clear center countdown. At reference scale roughly left card x310..680 and right card x1110..1480, around arena center x895; cards y90..255. The center round pill and countdown align to the exact arena center. The round pill reads only \"回合 2\"; countdown \"15s\".\nEntire card structures are MIRRORED: left portrait on LEFT outside-end, right portrait on RIGHT outside-end; names and bars toward center; left bar fills LEFT-to-RIGHT, right bar fills RIGHT-to-LEFT, with right bars' empty portion visibly at LEFT. Hearts/energy symbols at outer ends; all values centered INSIDE thick HP and energy bars. Match card height, width, avatar diameter, bar dimensions and padding.\nEach portrait is INSIDE the card. Directly BELOW each portrait, still INSIDE the card, one compact line reads \"Lv.01\" IMMEDIATELY FOLLOWED by the element icon: leaf for deer, flame for dog. Both icons must be AFTER THE LEVEL, not after names. NAME ROWS contain ONLY \"青芽\" and \"焰柴\", NO element icons near names. Keep every word and digit unmirrored.\nPlayer HP96/120, energy36/100; enemy HP82/120, energy56/100. All bar numbers INSIDE. Right circular Shiba portrait looks LEFT. Levels+element icons have sufficient padding below and never protrude beyond card.\n\nCOMPACT FOUR-CIRCLE CONTROLS:\nOrder LEFT to RIGHT: 大招 / 攻击 / 属性 / 闪避.\nMake ALL buttons substantially SMALLER than input, about45% smaller in diameter: the three basic circles about80px each; ultimate about100–104px, only modestly larger. All button centers share one horizontal baseline. Equally spaced, entire group centered across the expanded battle arena.\nThree basic circles are IDENTICAL diameter, rim, translucency and icon style. Pale-blue glass fill only10–15% opaque, fine blue-white outline, crisp simple icons sword / leaf / dodge motion. Short Chinese labels below: \"攻击\", \"属性\", \"闪避\". The courtyard stones are visibly continuous THROUGH the button interiors, with no opaque white fills.\nThe LEFT ultimate circle is ALWAYS VISIBLE, even not fully charged. Muted antique-gold four-point star icon and subtle gold glass circle, label \"大招\" below. It appears dormant at36% charge, not brilliantly lit.\nCRITICAL: ONE RING-SHAPED CHARGE METER ENCIRCLES THE ULTIMATE BUTTON. Thin full circular dark translucent track, bright gold outer progress ARC showing36% completion clockwise starting at12 o'clock. Small \"36%\" inside the lower part of this ultimate circle, unobtrusive but readable. This RING is the ONLY ultimate charge indicator. REMOVE the previous long horizontal charge bar COMPLETELY. No horizontal charge bar anywhere. No charge bar under the three basic circles.\nKeep all four circles visible in default state; no grey missing placeholder or hidden ultimate. No tooltip/cursor in this default state. Do not put permanent descriptions beside skills.\n\nLeave generous view of the courtyard and the two pets. Overlay UI should be smaller and quieter, log only at bottom-right, buttons transparent over scenery, no clouds/white divider. No extra characters, no device frame, no perspective, no collage, no annotations or watermark."
+        },
+        {
+          "key": "layout-fix-prompt",
+          "text": "Use case: ui-mockup. Refine ONLY layout alignment and button size in this exact 灵境 1v1 design. Keep all artwork, background, sidebar, card designs, text, stats, circular charge36%, level-followed-by-element icons, translucent bottom-right scrollable log, and absence of clouds unchanged.\n\nThe battle arena now spans x=220..1536; its exact horizontal CENTER is x=878. The current controls and countdown are still left of that center. CORRECT THIS VISIBLY:\n1. SHRINK the ENTIRE four-circle skill group to about74% of its current size (diameters, rings and icon sizes). Target three basic circles80px diameter and ultimate about110px. The buttons must look compact, MUCH SMALLER than the current image. Keep their glass transparent with courtyard stones visible through them.\n2. Then move the entire four-button group approximately120px RIGHT to be centered on x=878, NOT centered in the old narrower battlefield. All four circle centers align on y=880. The full four-button group should occupy approximately x=658..1098, with no overlap into the right log. Left-to-right order remains 大招 / 攻击 / 属性 / 闪避. Equally spaced with breathing room, small labels below. Ultimate remains visible with36% outer charge ring; NO horizontal charge bar. There should be noticeably MORE visible courtyard floor around the now smaller centered controls.\n3. Re-center the whole top HUD on the SAME arena center x=878 and spread the two cards farther apart: shift left card about15px LEFT; shift right card about110px RIGHT; shift center round/timer group about50px RIGHT. Target left card x=320..710 and right card x=1046..1436, both exactly390px wide. Keep their y position near90..255, equal height, mirrored contents and right-to-left enemy bars. Round pill and timer centered at x=878 in the wider gap. This uses the extra arena width and leaves generous margins from outer edges.\n4. Keep the small bottom-right log exactly where it is, transparent and visibly scrollable, NOT a full-height sidebar. Preserve the two pets and entire full-bleed courtyard, no fog/white gradient at bottom.\n\nNever restore a white bottom toolbar, cloud divider, long charge bar or party list. The key visible corrections are a substantially SMALLER four-circle group shifted RIGHT to the arena center, and top HUD cards farther apart symmetrically around the SAME center. Do not move navigation, character artwork or background. No tooltip or cursor. Full screen, same dimensions, no annotations."
+        },
+        {
+          "key": "center-fix-prompt",
+          "text": "Use case: ui-mockup. Make exactly ONE alignment correction to this screenshot. Everything else MUST stay unchanged.\n\nThe bottom action row has FOUR circles: 大招, 攻击, 属性, 闪避. The current mistake is that the THREE basic circles alone are centered, leaving the golden ultimate hanging too far left. The user explicitly wants ALL FOUR BUTTONS TOGETHER CENTERED. COUNT THE ULTIMATE AS PART OF THE GROUP.\n\nMove ALL FOUR circles, their icons, their labels and the ultimate36% progress ring TOGETHER approximately85px to the RIGHT, with NO resizing and NO spacing changes. Keep the entire four-circle silhouette within the arena and to the left of the floating log. The full group's left and right bounds must balance around the center of the expanded arena. The centerline of the arena should pass BETWEEN the ATTACK circle and the ATTRIBUTE circle, rather than through the ATTRIBUTE circle. The entire four-button row should be centered under the top countdown and between the two pets. This visible RIGHTWARD translation of the whole four-button group is the ONLY requested edit.\n\nDo NOT move only the ultimate, do NOT re-center only the three blue circles. Move all four as one object. Keep all small diameters identical to this input. Keep the ultimate visible and36% ring partial. Preserve the top HUD, compact round2 and15s timer, Lv.01 followed by element icons beneath portraits, mirrored enemy fill directions, translucent scrollable log at bottom-right, full continuous courtyard without clouds, side navigation and pets exactly as-is. No new text or tooltip. Full screenshot, same resolution and aspect ratio."
+        }
+      ]
+    },
+    {
+      "id": "attack",
+      "name": "悬停攻击",
+      "file": "02-hover-attack.png",
+      "source": "C:\\Users\\Administrator\\.codex\\generated_images\\01a16d86-7650-7871-8e27-5b65477a126e\\exec-74cf236b-b09e-409d-a4d6-5fc207ab7abe.png",
+      "charge": 36,
+      "tooltip": "打断属性",
+      "prompts": [
+        {
+          "key": "attack-prompt",
+          "text": "Use case: ui-mockup. Edit the provided FINAL v3 immersive battle screenshot, preserving its ENTIRE layout exactly except the interaction state specified. Keep the full-bleed night courtyard right of navigation, no fog or white bottom toolbar, equal mirrored top HUD with \"Lv.01 [element]\" INSIDE beneath portraits and names WITHOUT icons, reversed enemy bar fill direction, \"回合 2\",15s timer, deer versus Shiba, and small translucent scrollable log at bottom-right. Keep ALL FOUR COMPACT BUTTONS in exactly the same positions, sizes, shared horizontal alignment and transparency: 大招 / 攻击 / 属性 / 闪避. Always retain the ultimate, its PARTIAL36% circular charge ring and36% number. Keep stones visible through all button interiors. No horizontal charge bar, no roster, no full-height right sidebar, no new panels. Only the specified circle is hovered; all other circles remain neutral. No circle moves, scales or lifts on hover. Full app, same resolution and aspect, no crop, no annotations or watermark.\nSTATE: HOVER ATTACK. Highlight ONLY the sword circle labelled \"攻击\" with a brighter thin blue rim. Place a compact dark translucent navy tooltip directly ABOVE that attack circle, tiny downward tail pointing to the sword, white Chinese text EXACTLY \"打断属性\". Four Chinese characters, one line, crisp14–16px type. Add a small white mouse pointer near the bottom-right inside the attack circle. The gold ultimate at its left stays visible with36% outer ring, unhovered; attribute and dodge remain neutral. Keep tooltip small and away from pet faces. Change nothing else."
+        },
+        {
+          "key": "attack-fix-prompt",
+          "text": "Precise UI image correction: keep the entire supplied screenshot unchanged, especially the attack hover tooltip \"打断属性\", four compact glass circles, ultimate36% circular ring, full background and floating log.\nFix ONLY the two element symbols beside avatar levels. After the LEFT \"Lv.01\", replace the erroneous Chinese character with a small GREEN LEAF PICTOGRAM (a tiny leaf shape with a vein, no text). After the RIGHT \"Lv.01\", replace the red Chinese character 火 with a small ORANGE FLAME PICTOGRAM (a flame silhouette, no text). These are vector-like ICONS, NOT Chinese characters, NOT any writing. They sit immediately to the RIGHT of each level, underneath each portrait and inside its card. Everything else remains exactly as input. No other edits, no new text, no layout change, full screen."
+        }
+      ]
+    },
+    {
+      "id": "element",
+      "name": "悬停属性",
+      "file": "03-hover-element.png",
+      "source": "C:\\Users\\Administrator\\.codex\\generated_images\\01a16d86-7650-7871-8e27-5b65477a126e\\exec-84c3344f-bb31-4bbe-93e9-cba5f7b318fc.png",
+      "charge": 36,
+      "tooltip": "无法闪避",
+      "prompts": [
+        {
+          "key": "element-prompt",
+          "text": "Precise UI state edit. Input is the FINAL approved-layout reference. Edit ONLY the small lower skill-controls region, below y=730. All artwork, text, icons and layout ABOVE y=730 must remain visually identical, including the leaf/flame pictograms beside levels. Do not repaint any top HUD or change level symbols into text. Keep the bottom-right translucent scrollable log unchanged.\n\nHOVER ATTRIBUTE state: of the FOUR compact circles in order 大招 / 攻击 / 属性 / 闪避, hover ONLY the third circle, the LEAF icon labelled 属性. Add a brighter thin blue ring to this circle, without moving, lifting, resizing or filling it opaquely. Directly above it, add a small dark translucent navy speech tooltip, white Chinese text exactly \"无法闪避\", tiny downward triangle pointing toward the leaf circle. One short line. Small white mouse pointer near that circle's lower-right interior.\nKeep the other three circles neutral. The ultimate remains ALWAYS visible on the left with36% partial outer circular progress arc and36% number. Preserve the centered four-button group, all positions, small diameters, glass transparency and unobstructed courtyard floor. No clouds, no bottom toolbar, no horizontal progress bar, no extra labels or panels. Full screenshot, same1536x1024 proportions, no crop."
+        }
+      ]
+    },
+    {
+      "id": "dodge",
+      "name": "悬停闪避",
+      "file": "04-hover-dodge.png",
+      "source": "C:\\Users\\Administrator\\.codex\\generated_images\\01a16d86-7650-7871-8e27-5b65477a126e\\exec-7630a6fb-14f5-4b98-ac3f-446660d0b4e4.png",
+      "charge": 36,
+      "tooltip": "闪避攻击",
+      "prompts": [
+        {
+          "key": "dodge-prompt",
+          "text": "Precise UI state edit of the supplied final immersive battle screenshot. Edit ONLY the small lower skill-controls area below y=730. Everything above that line, including the leaf and flame pictogram icons AFTER levels, stays visually identical. Bottom-right translucent scrollable log stays unchanged.\n\nHOVER DODGE: in the four-button row 大招 / 攻击 / 属性 / 闪避, highlight ONLY the RIGHTMOST dodge/running circle labelled 闪避. A brighter thin blue rim, same size and same position, no lifting or resizing. Directly above this circle show a compact dark translucent navy tooltip with white Chinese text EXACTLY \"闪避攻击\", four characters in one line, and tiny downward-pointing tail. Small white cursor near lower-right interior of the dodge circle.\nAll other circles neutral, including ALWAYS VISIBLE gold ultimate on the left with36% partial outer circular charge arc and36% text. Keep ALL FOUR buttons compact and centered as one group, with transparent interiors revealing the courtyard floor. No opaque bottom panels, fog/clouds, horizontal charge bar, roster, new labels or extra objects. Same complete screenshot and aspect ratio, no crop, no watermark."
+        }
+      ]
+    },
+    {
+      "id": "ultimate",
+      "name": "大招蓄满",
+      "file": "05-ring-ultimate-ready.png",
+      "source": "C:\\Users\\Administrator\\.codex\\generated_images\\01a16d86-7650-7871-8e27-5b65477a126e\\exec-512f9477-8395-4bfe-ab83-259a85a30900.png",
+      "charge": 100,
+      "tooltip": null,
+      "prompts": [
+        {
+          "key": "ultimate-prompt",
+          "text": "Precise UI state edit of the provided final immersive battle design: show ULTIMATE FULLY CHARGED while preserving the ENTIRE screenshot layout and all existing artwork.\n\nChange ONLY:\n1. The outer circular charge ring AROUND the leftmost ultimate button: complete the partial36% arc into a FULL100% luminous gold circle, and replace its small36% number with \"100%\". Keep the ring and button the SAME SIZE and in the SAME POSITION. Brighten the four-point star at the center to warm white-gold and add only a few tiny tasteful golden star specks around the ring. This is a clearly ready-to-release ultimate, compact, not a big explosion. Keep label \"大招\" below.\n2. In the top LEFT player's energy bar only, change36/100 to100/100 and fully fill the existing blue bar. Keep HP96/120 and all enemy stats unchanged.\n\nKeep the four SMALL controls centered as ONE group in order 大招 / 攻击 / 属性 / 闪避, same positions, diameters, spacing and translucent interiors revealing the floor. No tooltip, cursor, extra explanatory labels, new panels or horizontal charge bar. Three basic circles stay neutral and unchanged. Keep the full courtyard visible to bottom and right edge, NO white/cloud divider. Keep the little translucent scrollable log floating at bottom-right. Preserve ALL top HUD details and pictogram icons: GREEN LEAF PICTOGRAM immediately AFTER the level under the LEFT portrait and ORANGE FLAME PICTOGRAM immediately AFTER the level under the RIGHT portrait. Do not replace those pictograms with Chinese characters or move them beside names. Mirrored card structure and right-to-left enemy bar fills remain identical. Compact round2 and15s timer unchanged. Same full screenshot dimensions and aspect, no crop or watermark."
+        }
+      ]
+    }
+  ]
+}

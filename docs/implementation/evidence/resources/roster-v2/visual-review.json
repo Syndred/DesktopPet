@@ -1,0 +1,354 @@
+{
+  "at": "2026-10-24T14:20:12.536Z",
+  "verifiedCodeCommit": "939c254",
+  "method": "Viewed all six 16-frame contact sheets assembled only from native-scale production ResourceStage screenshots; checked individual attack-release screenshot and six actual portrait SVG screenshots.",
+  "rejects": "Earlier Electron zoom 1.5 element clips had wrong coordinates and are excluded; final captures use native zoom 1 with physical-size assertions.",
+  "bitmapPolicy": "Generated PNG bytes remain unchanged; no threshold masking; exact frame rectangles and Pixi trim metadata provide separation.",
+  "sceneBounds": {
+    "capturedFrames": 96,
+    "allInsideStage": true,
+    "minimumTopPadding": 10.399999999999977,
+    "maximumBottom": 172.64
+  },
+  "characters": [
+    {
+      "id": "yuwan",
+      "name": "鱼丸",
+      "frames": 16,
+      "actualTextureSources": [
+        "2"
+      ],
+      "actualFrameTextureCount": 16,
+      "review": "Full characters, hats/ears/tails and spell effects visible; no neighbouring character fragments observed in the final Pixi captures."
+    },
+    {
+      "id": "xiaolan",
+      "name": "小蓝",
+      "frames": 16,
+      "actualTextureSources": [
+        "6"
+      ],
+      "actualFrameTextureCount": 16,
+      "review": "Full characters, hats/ears/tails and spell effects visible; no neighbouring character fragments observed in the final Pixi captures."
+    },
+    {
+      "id": "fantuan",
+      "name": "饭团",
+      "frames": 16,
+      "actualTextureSources": [
+        "10"
+      ],
+      "actualFrameTextureCount": 16,
+      "review": "Full characters, hats/ears/tails and spell effects visible; no neighbouring character fragments observed in the final Pixi captures."
+    },
+    {
+      "id": "shiba",
+      "name": "焰柴",
+      "frames": 16,
+      "actualTextureSources": [
+        "14"
+      ],
+      "actualFrameTextureCount": 16,
+      "review": "Full characters, hats/ears/tails and spell effects visible; no neighbouring character fragments observed in the final Pixi captures."
+    },
+    {
+      "id": "hatcat",
+      "name": "礼帽喵",
+      "frames": 16,
+      "actualTextureSources": [
+        "18"
+      ],
+      "actualFrameTextureCount": 16,
+      "review": "Full characters, hats/ears/tails and spell effects visible; no neighbouring character fragments observed in the final Pixi captures."
+    },
+    {
+      "id": "xiaohu",
+      "name": "小狐",
+      "frames": 16,
+      "actualTextureSources": [
+        "22"
+      ],
+      "actualFrameTextureCount": 16,
+      "review": "Full characters, hats/ears/tails and spell effects visible; no neighbouring character fragments observed in the final Pixi captures."
+    }
+  ],
+  "portraits": {
+    "count": 6,
+    "review": "Same canonical idle bitmap, with visibly larger head/upper-body composition; stage retains full-body composition."
+  },
+  "instances": {
+    "samples": [
+      [
+        {
+          "resourceId": "builtin:lingjing-yuwan-v2",
+          "petId": "resource-preview-a",
+          "frame": "7",
+          "frameTexture": "3",
+          "textureSource": "2"
+        },
+        {
+          "resourceId": "builtin:lingjing-yuwan-v2",
+          "petId": "resource-preview-b",
+          "frame": "0",
+          "frameTexture": "5",
+          "textureSource": "2"
+        }
+      ],
+      [
+        {
+          "resourceId": "builtin:lingjing-yuwan-v2",
+          "petId": "resource-preview-a",
+          "frame": "7",
+          "frameTexture": "3",
+          "textureSource": "2"
+        },
+        {
+          "resourceId": "builtin:lingjing-yuwan-v2",
+          "petId": "resource-preview-b",
+          "frame": "1",
+          "frameTexture": "6",
+          "textureSource": "2"
+        }
+      ],
+      [
+        {
+          "resourceId": "builtin:lingjing-yuwan-v2",
+          "petId": "resource-preview-a",
+          "frame": "7",
+          "frameTexture": "3",
+          "textureSource": "2"
+        },
+        {
+          "resourceId": "builtin:lingjing-yuwan-v2",
+          "petId": "resource-preview-b",
+          "frame": "0",
+          "frameTexture": "5",
+          "textureSource": "2"
+        }
+      ],
+      [
+        {
+          "resourceId": "builtin:lingjing-yuwan-v2",
+          "petId": "resource-preview-a",
+          "frame": "7",
+          "frameTexture": "3",
+          "textureSource": "2"
+        },
+        {
+          "resourceId": "builtin:lingjing-yuwan-v2",
+          "petId": "resource-preview-b",
+          "frame": "1",
+          "frameTexture": "6",
+          "textureSource": "2"
+        }
+      ],
+      [
+        {
+          "resourceId": "builtin:lingjing-yuwan-v2",
+          "petId": "resource-preview-a",
+          "frame": "7",
+          "frameTexture": "3",
+          "textureSource": "2"
+        },
+        {
+          "resourceId": "builtin:lingjing-yuwan-v2",
+          "petId": "resource-preview-b",
+          "frame": "0",
+          "frameTexture": "5",
+          "textureSource": "2"
+        }
+      ],
+      [
+        {
+          "resourceId": "builtin:lingjing-yuwan-v2",
+          "petId": "resource-preview-a",
+          "frame": "7",
+          "frameTexture": "3",
+          "textureSource": "2"
+        },
+        {
+          "resourceId": "builtin:lingjing-yuwan-v2",
+          "petId": "resource-preview-b",
+          "frame": "1",
+          "frameTexture": "6",
+          "textureSource": "2"
+        }
+      ],
+      [
+        {
+          "resourceId": "builtin:lingjing-yuwan-v2",
+          "petId": "resource-preview-a",
+          "frame": "7",
+          "frameTexture": "3",
+          "textureSource": "2"
+        },
+        {
+          "resourceId": "builtin:lingjing-yuwan-v2",
+          "petId": "resource-preview-b",
+          "frame": "1",
+          "frameTexture": "6",
+          "textureSource": "2"
+        }
+      ]
+    ],
+    "leftFrames": [
+      "3"
+    ],
+    "rightFrames": [
+      "5",
+      "6"
+    ],
+    "sameTextureSource": true,
+    "differentPetIds": true
+  },
+  "ordinaryAttackReplay": {
+    "rectangles": [
+      "41,654,264,243",
+      "41,654,264,243",
+      "41,654,264,243",
+      "356,642,280,257",
+      "356,642,280,257",
+      "356,642,280,257",
+      "356,642,280,257",
+      "356,642,280,257",
+      "59,61,221,251",
+      "59,61,221,251",
+      "59,61,221,251",
+      "59,61,221,251",
+      "59,61,221,251"
+    ],
+    "uniqueRectangles": [
+      "41,654,264,243",
+      "356,642,280,257",
+      "59,61,221,251"
+    ]
+  },
+  "fileHashes": {
+    "evidence.json": "66138d7e6417f9b33f8f7c39e61a059ab7d0f0263e6e99efa667b3c59a80c126",
+    "portrait-and-playback.json": "ee8f4298658b9af0629d4a655f0fe894c0aabc2efc1d8c359d8d27ba51a70487",
+    "sqlite-readback.json": "7db9e93abbe38ef1186228bf26c2f13e857abfe7828e8fd0c7142cc68ac75ebc",
+    "yuwan-independent-instances.png": "55850369fcbde76297cad9e5cbf719f43420faffab8fd36b054632f6c03f1e8e",
+    "yuwan-frame-00.png": "1a19491b09a71955bc697868a48cf986380aab53f7ad0bc0e9b64a9c6a25521c",
+    "yuwan-frame-01.png": "7f00edd93535197db92de4cb9caff5e7d8820ea170f656db938a313356ee51c1",
+    "yuwan-frame-02.png": "f353fd3f8b1bfbaa88eea8396fb232099679355916d2f863f51a182920c53f3b",
+    "yuwan-frame-03.png": "fdb7dde4b781dab8c57677a0d019b1c45a7a17fa7c01e8b6df094ac8f5c841fd",
+    "yuwan-frame-04.png": "f7f63b53a312fc9b6799cede27db81350911ec0faa8dbf4ba99fef1a59e8d08e",
+    "yuwan-frame-05.png": "64fb4d9923cad2a41c9f96dbcaddfdbda774e9e94e156af7983ca4514d5df49d",
+    "yuwan-frame-06.png": "be595800b604f0f97af4a151ff53c7c3a4d3c00f993008da92acb5d07fc9e079",
+    "yuwan-frame-07.png": "40fbd5ba4a5e9275ff42d0a3562674110c19a7664ce3aa5079fa613377d5178f",
+    "yuwan-frame-08.png": "3639e8d943652144a77d051e89dd758f18707524dd842165591396a5ae9eca59",
+    "yuwan-frame-09.png": "5fa111ca302adc710cabec700555e43d48e963b2e69fd596cad7c837610f4430",
+    "yuwan-frame-10.png": "1fb3a6369ca5bc9bcef95e858cf371c8260b779fa6631cc0529ee2bd9d59894a",
+    "yuwan-frame-11.png": "0252fbb5ff61fe12d3e07e01c9939fcfe5a69af4fe3382dd372766e5f863dc20",
+    "yuwan-frame-12.png": "0271f1f2ff8895f15acfd9db74a7725164a42589fe8ac52b451d0534e665f5fc",
+    "yuwan-frame-13.png": "ca7e0aea32284cf6080388a64c827bf722b659c0e4e59efe0329fccdcd109fe5",
+    "yuwan-frame-14.png": "d5faea57c31a2c66d82f68571fe69a12a944a4a2618e8f2fe13ce7b3cbc6ed1d",
+    "yuwan-frame-15.png": "3806df9a40fdf0d9796362b8349c780ab02fb1f6c0e100bd21a58fb2b28639b4",
+    "yuwan-frames.html": "ee0c7bb27972ff6db344033de3762abe37b55a76b7d9b04a540888cdc1eaed02",
+    "yuwan-frames.png": "d44bf67019dc188b563edc26572afa4b6362892834baedd7aef75bd9747df1b3",
+    "yuwan-page-1280.png": "76ce51cd962b35cdc309908296776f4bbdc5bf5fe3786a1266641cac408dfea1",
+    "yuwan-portrait.png": "86aa9c3c80cebbcc81f01d139ffd9734eac75bb15fb631411057937f44486f64",
+    "xiaolan-frame-00.png": "9daff4b1d4a6c1d0472fa24ada0c90c4c65b0abe9b3e179f74ee357d4033df23",
+    "xiaolan-frame-01.png": "82d7d8e153e9b670d3ef1fa58113d7fe4acec65a6b0b8745cab7e921d9acb136",
+    "xiaolan-frame-02.png": "1b4f9e73e70ca7dde8b2428799ab0470c5b9637731b9c0747c5731258cd26047",
+    "xiaolan-frame-03.png": "d3864ee2b36e3b0e8e04b3386f13242dcb23d38a2630b3571471f2fcc16d1b5f",
+    "xiaolan-frame-04.png": "fa776a6fa3c45c4ec55fbc979fc94703487fddfab965abc605a1230c4d5db777",
+    "xiaolan-frame-05.png": "64575d6702d4a0c27a48ae19f3056a9a49b19c971a899cdd7984d86b63bdb400",
+    "xiaolan-frame-06.png": "67f18618f02994fcc482f36aa28e33ece0007ec7a82d992cdc22110aac622f99",
+    "xiaolan-frame-07.png": "2cbcdee3c0315ad6634cfd9a3ae8f053189e53d6891b23e2a95e20e2a1a6c372",
+    "xiaolan-frame-08.png": "2a1a8fa63064e76d702d6bb74dfb886759cc3369d5da2ec3a2c16a605a73ac8d",
+    "xiaolan-frame-09.png": "624169edecc272639c55dcd3331c8b423923b7a068b7c7ea7d83f9e1c2526d5d",
+    "xiaolan-frame-10.png": "7ccbd20b163c5ad1d14d08654de403f77e5e614793aac04245d45a900380a9a0",
+    "xiaolan-frame-11.png": "ad0406384bde7e0be03867026624f014717724a57c80ff890c17bc672b2bbe83",
+    "xiaolan-frame-12.png": "ea69068e5c14e5eb1b685c4efcc5e1a2ba6a9939176349bcd03298496fe35cca",
+    "xiaolan-frame-13.png": "bc9ad7980b1fa43f5be622361d87be64972ed8c8d6df026f97501ed4a165c5a9",
+    "xiaolan-frame-14.png": "80f1e2c623e1d2499d0ab45ff3cd6947af8d75766043bd753e33a29f6c982e9f",
+    "xiaolan-frame-15.png": "4c5d61bcf57a2dbd7d864afcd4ee7caf741be028ba8b09e4eef799e40cb39b51",
+    "xiaolan-frames.html": "947466423c3c8fb061035b64b70f55341c45cfc1d350645726a12aa9cf39ba20",
+    "xiaolan-frames.png": "35fea0e61a0e83afa5828b33c78bee6d562da497f45a83e40cc4fde19a42c7e9",
+    "xiaolan-page-1280.png": "fb01a35ddc50f7ba8bfe627c64d10cdf5d517aa24d555823afafd959835c0b4f",
+    "xiaolan-portrait.png": "a1edcf3e16bc3436d589acb76be51a3b97353e763956798ddc9ff7d6adf0046e",
+    "fantuan-frame-00.png": "4d4dce7b552aaad5edbad6a210fb4fba749cb4cb8c7ddda54ba7b454b541d5e0",
+    "fantuan-frame-01.png": "0b545129e5f694bf5204a5e0890a4842c126a532fd244e68c1139ac9f886ec5a",
+    "fantuan-frame-02.png": "905fa2e9f1c54eac61f7669f9670b2bb13e6146c0664aeebb63a4fabf521a6b8",
+    "fantuan-frame-03.png": "4a013489e0ef51ada69d67365dee5be5a6a91dcffab61a279408c5ac08df81c0",
+    "fantuan-frame-04.png": "93a9bb21bfd2c7113c41160720acd86c7d77805d31cfe4cb0111c8c2e7d19442",
+    "fantuan-frame-05.png": "50bcffaaa4edcd115bf75b8111fe4c15601a0ad265f4d7125b4179b3f900fdbe",
+    "fantuan-frame-06.png": "5920fc8ab84b83c2ae3e07d139d86a6c7be4b38bb9503920271894aeb3644e8d",
+    "fantuan-frame-07.png": "682c1c8df502f66806f08841e20561890459da759f6d1f3e2336a9f53ef36ab0",
+    "fantuan-frame-08.png": "263df80d22049794d47e97c6498be87ce80b8852b2e451e66c494a06f48f9c95",
+    "fantuan-frame-09.png": "6c88e7e41234e1fab870c8a766f9113ab8e42a1578ca73aeff2b49f476c5fb24",
+    "fantuan-frame-10.png": "b89f41f7dedc6d865adfe81a1e096b5df45332dc5adb4ec8b2d34c93a07f347d",
+    "fantuan-frame-11.png": "90fc4434fc710507801f5e63d327bf606811db6e2f51a9147d72eb6d832bbe6f",
+    "fantuan-frame-12.png": "0eca353b003fe230706c50312298cca7eb2ef49d47aa488594e3df8d2fd6dd97",
+    "fantuan-frame-13.png": "1bd51887f936a31eb7216e895047444b85c47b597e0ed897a48688190f34d6c3",
+    "fantuan-frame-14.png": "2d8e8101864eea2bd7c558db47d53961e6dbc7797fd6d27a990e95c44812de1e",
+    "fantuan-frame-15.png": "25e769ddabea1bf89993b360372b6e7faa910b0968385df736f52712251b1d40",
+    "fantuan-frames.html": "1d01073d1360bd7eca16b927800db7007f26bf406c08dc55ebf1e3fa96bf0357",
+    "fantuan-frames.png": "dde0b4df683b5eb4a4dc17e987f9d3ab1b463f3355e3b20018510a5df0d9db7d",
+    "fantuan-page-1280.png": "c85eee6a307458e9daa1362f0eb2a9161d260c0d60afb907e8aac026277b8a4b",
+    "fantuan-portrait.png": "a605de3d7aa70f86b4c730aa759d0c1cd92bddaf7282e925240449d7bbee70c6",
+    "shiba-frame-00.png": "4bf44b03d3cb3819ac42b5dd50c643507d6917310c588e733ec22ae4ac419c36",
+    "shiba-frame-01.png": "34408aa86f6c11e06b129834e006f91f41fa650fea034e6eec5ed5c7403be73e",
+    "shiba-frame-02.png": "1c7df2cb9572073ba6dee74f5a15bc26aaa8e9b5366d8da7341175b52eba50d4",
+    "shiba-frame-03.png": "939777486788c1975e638680705a985d9278e3a87c1c08fcb97b9064a8e54f54",
+    "shiba-frame-04.png": "365194fc477d07abdf9f17fd23f516186d95183ce26df98751fa7c5db32f437c",
+    "shiba-frame-05.png": "f661e5cba12ac152ef64176565c254a7a536f6ced822253a97b632f82533c167",
+    "shiba-frame-06.png": "81702359d6be1488cc6e5737f45d9d26c3e17be76cfb3b065a5524c8d9b1a9c5",
+    "shiba-frame-07.png": "d6ac86a06b65f073f4ad53d5e6e33237e729bef7a1e9550df8f6146e98cba9b5",
+    "shiba-frame-08.png": "89485167eb382bc2717d9cc173535eb8f8a74a19fe9012fe0a39afddbe59234a",
+    "shiba-frame-09.png": "5a9425ca41b5dd4efd0454aa76ff51a313b799ec759797bd4fc4fdf90eb75abb",
+    "shiba-frame-10.png": "b774d8bcd106c9f1d70e390f09ea05fafc127c5304c28623b945dc52e5204b0f",
+    "shiba-frame-11.png": "22997f26737f716d99fa574e6820233f7b62a7b31d2993659e8d58ea4201d3f7",
+    "shiba-frame-12.png": "abb4b2931b912406f48ea97b6dc64e7f0ecf7639cd76ffd789245b658f4b7867",
+    "shiba-frame-13.png": "7c2bb70846db1891afd86ff589f994b1eafb99d2399e84a858f80daa93a518cc",
+    "shiba-frame-14.png": "36068a197a9d402ee284546e94daca4b370239e56ae3d097cf8e562ffe2ba858",
+    "shiba-frame-15.png": "d642ed8a61ca6a33fb29ca1291209afef992c790b4b887e76a64735daf15553f",
+    "shiba-frames.html": "78f9851244cabaeec816c01519439a7f278207530d4da2e9002e0fd5ce5c9d1d",
+    "shiba-frames.png": "e0f4f7c621d6962f1586f3588c61507a08f99b5c1888818e2abe9037e67e748b",
+    "shiba-page-1280.png": "bf5108f97f06192e834bafc52c0346cfbefb1033bc71e73367ea6d2544d346da",
+    "shiba-portrait.png": "95378cb9ac6aede640c4b71e902e5b7cfd56ddc3a94378fe83c0a72c1ce62b31",
+    "hatcat-frame-00.png": "683c7f5aea5acc67bfab82a0351ca8297515ab4f6023864fe2b292213c25b002",
+    "hatcat-frame-01.png": "cfde7b86768cccff1585b042469aa3f9e65c58848d96ec0ecdc25f9b3e585b3c",
+    "hatcat-frame-02.png": "b17bd343ed0b967c5aad2764ff3d5c9518a40c160d8acfd1dd37298edb78a569",
+    "hatcat-frame-03.png": "572956eb9d5c047b8f756352eeb681944562b2dd3d360ae0fa2a24d88787303f",
+    "hatcat-frame-04.png": "ac77a8e321b74c18bd3e8a2896b3a145822b2e7a492d57e46a7c7c9565e3e1bf",
+    "hatcat-frame-05.png": "506cec01d714847b09f18567d77ee79c8b94cc2d047a2ef9c394d0ff76e64657",
+    "hatcat-frame-06.png": "4eb7e07047d89529e8b40f9d35d6f4afa3fda57b4ca11f9dfc5c911bb06c9872",
+    "hatcat-frame-07.png": "53c0dad62df4514fdda5d16798876580d72cec9833b3ff064fad2e02e68b98af",
+    "hatcat-frame-08.png": "d9bad14170e9a44b2562aa3516815da9e751621be65316b3dadfd3c18c7855e0",
+    "hatcat-frame-09.png": "d5d09ad2e5934081dfef5190afd1a3e8ded2f0b102b2cf202d03064122af9efa",
+    "hatcat-frame-10.png": "c5a938c9f46c5585a017f98bc4af1e7924b99bd8cae6bc9455abed52051f166e",
+    "hatcat-frame-11.png": "79aad795742a406eaaf8e9765698a359f1b8e7b5d3a8644b340f98ab98d99bd8",
+    "hatcat-frame-12.png": "1f1b9134a8e42bee5d80d035e12414a97f17b8a34df7465bf66342d5433be05b",
+    "hatcat-frame-13.png": "88a4b40f0d59ae9ac4d53b495a394ce4399bd145dec8a88f107ed174b153a970",
+    "hatcat-frame-14.png": "e81eed36b07274a2e7a84e44da3dc52096b43ece35c707188648cc723e6a7ebc",
+    "hatcat-frame-15.png": "57cfa751d8417c320ee2d77d99ba76149fcab9b16daf2abf4a8e68faab7b85a1",
+    "hatcat-frames.html": "f4ef4c77c456abe106257b952889d496a003f60161eee82a09ddd38c669a9e38",
+    "hatcat-frames.png": "1d45260af1b6e95121f79acc90e66df6db9c4a1a5bfd3979e41c87ca14a5fc0a",
+    "hatcat-page-1280.png": "60b93de2728ec6b08fe5c5e7ee27691a238b7aa4a0351acaed22e3a983f57b9f",
+    "hatcat-portrait.png": "4d328f43f16f30d0406275279f0e72b514eb376f6df07eb7f2ae4d95196d6c45",
+    "xiaohu-frame-00.png": "133219f704b43fe3084f80dbd68fbe6b45f22cab8a3206dd72318800295dd177",
+    "xiaohu-frame-01.png": "000e08b5de87e9342e8c4df109d7d7b9f23b3d7edf2052961ea83e49f46f14d7",
+    "xiaohu-frame-02.png": "da2b26ff4b5e83a1f67573c33cabff85cb25f2211763abab1ffae579223bbede",
+    "xiaohu-frame-03.png": "e5986949fcce6111f1f54cde37fc8342d6324b4d05f5f90ee1964862de5d209a",
+    "xiaohu-frame-04.png": "8ab95a3fa5c619e91c60653aab2421ddd455d4a039375783d3ef0904b6aaec55",
+    "xiaohu-frame-05.png": "349b091b5d6474c9bcd198d8d50de774b3ae72a8a4e20239355dff20185e1ad3",
+    "xiaohu-frame-06.png": "d4d3431dc8dd308641e029796345779f53862ec6a4cfc541a808b42a2ab24491",
+    "xiaohu-frame-07.png": "6dab2445a3fae196847bb0d31f120a25d69d268415d83474f85eaa512604055c",
+    "xiaohu-frame-08.png": "25b973b3236ee997197a0c3e003c11080c063681f9a14aacf252608b389a3e10",
+    "xiaohu-frame-09.png": "5009188c89d3bc71e6adc09006fcb3c43b4e258add0c29b40fd15eeaa65ec03c",
+    "xiaohu-frame-10.png": "a6ba09ea2378ed6ee81d3fda869b302bfc282c7fa3ed1c1386431fbd216c8415",
+    "xiaohu-frame-11.png": "278c85564e53b85bf99adf72f5109d1359f4a19e4444f93659923b66bf049a2c",
+    "xiaohu-frame-12.png": "79f4a1c5e4a785efdc9c72f64275ea455dafe7da390497b7b6608a758dffb6db",
+    "xiaohu-frame-13.png": "236c1a4fb497354460bdcf20ce8ce82c424ccb8524201c344c4098343c017ec0",
+    "xiaohu-frame-14.png": "7dca418dde32b8d96624bb1bdc31248e3c0fa99d26a0fbddd0a163b256950da8",
+    "xiaohu-frame-15.png": "cf6348aaa6a1ffdf47f3ebbde207983e7b44ce24416c697b18ab2df71edd34a8",
+    "xiaohu-frames.html": "37df8d46130cef2250796f3d86d2fe2bc591767dce5142402ee41dc090a48151",
+    "xiaohu-frames.png": "39aebee592a3a6ec022e507e6cc72b5e1425c8eeab53f058094005925d5d38ac",
+    "xiaohu-page-1280.png": "1efa0067e21759ba78081ef017ed05f9e724643bce821b981542c122f80a4f68",
+    "xiaohu-portrait.png": "9d11b6612cae4aa219e752155d313bc9eec99ac68763c72b667b0bdeefd2bef8",
+    "resource-layout-1280.png": "dfad27c6560dceb65f09b26852cf82ce4bf096de1dcbe34fe3c8bc79acfbfd84",
+    "resource-layout-1440.png": "d0d52e11684dbf5c1ce6320f2bd42aff74f869ad11b77d2e4eaed11d0eb22bb8"
+  }
+}

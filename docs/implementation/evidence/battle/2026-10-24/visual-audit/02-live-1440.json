@@ -1,0 +1,845 @@
+{
+  "viewport": {
+    "width": 1440,
+    "height": 900,
+    "dpr": 1.25
+  },
+  "title": {
+    "rect": {
+      "x": 224,
+      "y": 78,
+      "width": 257.0500183105469,
+      "height": 39.20000076293945,
+      "top": 78,
+      "right": 481.0500183105469,
+      "bottom": 117.20000076293945,
+      "left": 224
+    },
+    "font": {
+      "family": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+      "size": "28px",
+      "weight": "700"
+    },
+    "marginBottom": "8px"
+  },
+  "tabs": {
+    "rect": {
+      "x": 224,
+      "y": 173,
+      "width": 296,
+      "height": 36,
+      "top": 173,
+      "right": 520,
+      "bottom": 209,
+      "left": 224
+    },
+    "font": {
+      "family": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+      "size": "14px",
+      "weight": "400"
+    },
+    "marginBottom": "10px"
+  },
+  "arena": {
+    "rect": {
+      "x": 224,
+      "y": 219,
+      "width": 837.2250366210938,
+      "height": 583.4125366210938,
+      "top": 219,
+      "right": 1061.2250366210938,
+      "bottom": 802.4125366210938,
+      "left": 224
+    },
+    "font": {
+      "family": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+      "size": "14px",
+      "weight": "400"
+    },
+    "marginBottom": "0px"
+  },
+  "sidebar": {
+    "rect": {
+      "x": 1077.2249755859375,
+      "y": 219,
+      "width": 315.57501220703125,
+      "height": 583.4125366210938,
+      "top": 219,
+      "right": 1392.7999877929688,
+      "bottom": 802.4125366210938,
+      "left": 1077.2249755859375
+    },
+    "font": {
+      "family": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+      "size": "14px",
+      "weight": "400"
+    },
+    "marginBottom": "0px"
+  },
+  "hud": [
+    {
+      "enemy": false,
+      "rect": {
+        "x": 234.8000030517578,
+        "y": 231.8000030517578,
+        "width": 369.8125,
+        "height": 97.01250457763672,
+        "top": 231.8000030517578,
+        "right": 604.6125030517578,
+        "bottom": 328.81250762939453,
+        "left": 234.8000030517578
+      },
+      "font": {
+        "family": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+        "size": "14px",
+        "weight": "400"
+      },
+      "marginBottom": "0px",
+      "clip": "polygon(0px 0px, calc(100% - 8px) 0px, 100% 100%, 0px 100%)",
+      "content": [
+        {
+          "rect": {
+            "x": 299.8000183105469,
+            "y": 239.8000030517578,
+            "width": 24,
+            "height": 17.137500762939453,
+            "top": 239.8000030517578,
+            "right": 323.8000183105469,
+            "bottom": 256.93750381469727,
+            "left": 299.8000183105469
+          },
+          "font": {
+            "family": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+            "size": "12px",
+            "weight": "900"
+          },
+          "marginBottom": "0px"
+        },
+        {
+          "rect": {
+            "x": 536.9249877929688,
+            "y": 241.22500610351562,
+            "width": 53.6875,
+            "height": 14.27500057220459,
+            "top": 241.22500610351562,
+            "right": 590.6124877929688,
+            "bottom": 255.50000667572021,
+            "left": 536.9249877929688
+          },
+          "font": {
+            "family": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+            "size": "10px",
+            "weight": "500"
+          },
+          "marginBottom": "0px"
+        },
+        {
+          "rect": {
+            "x": 299.8000183105469,
+            "y": 266.7875061035156,
+            "width": 240.8125,
+            "height": 6,
+            "top": 266.7875061035156,
+            "right": 540.6125183105469,
+            "bottom": 272.7875061035156,
+            "left": 299.8000183105469
+          },
+          "font": {
+            "family": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+            "size": "10px",
+            "weight": "400"
+          },
+          "marginBottom": "0px"
+        },
+        {
+          "rect": {
+            "x": 545.6124877929688,
+            "y": 261.9375,
+            "width": 45,
+            "height": 15.71250057220459,
+            "top": 261.9375,
+            "right": 590.6124877929688,
+            "bottom": 277.6500005722046,
+            "left": 545.6124877929688
+          },
+          "font": {
+            "family": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+            "size": "11px",
+            "weight": "500"
+          },
+          "marginBottom": "0px"
+        },
+        {
+          "rect": {
+            "x": 299.8000183105469,
+            "y": 287.5,
+            "width": 240.8125,
+            "height": 6,
+            "top": 287.5,
+            "right": 540.6125183105469,
+            "bottom": 293.5,
+            "left": 299.8000183105469
+          },
+          "font": {
+            "family": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+            "size": "10px",
+            "weight": "400"
+          },
+          "marginBottom": "0px"
+        },
+        {
+          "rect": {
+            "x": 545.6124877929688,
+            "y": 282.6499938964844,
+            "width": 45,
+            "height": 15.71250057220459,
+            "top": 282.6499938964844,
+            "right": 590.6124877929688,
+            "bottom": 298.36249446868896,
+            "left": 545.6124877929688
+          },
+          "font": {
+            "family": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+            "size": "11px",
+            "weight": "500"
+          },
+          "marginBottom": "0px"
+        }
+      ]
+    },
+    {
+      "enemy": true,
+      "rect": {
+        "x": 680.6124877929688,
+        "y": 231.8000030517578,
+        "width": 369.8125,
+        "height": 73.5625,
+        "top": 231.8000030517578,
+        "right": 1050.4249877929688,
+        "bottom": 305.3625030517578,
+        "left": 680.6124877929688
+      },
+      "font": {
+        "family": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+        "size": "14px",
+        "weight": "400"
+      },
+      "marginBottom": "0px",
+      "clip": "polygon(8px 0px, 100% 0px, 100% 100%, 0px 100%)",
+      "content": [
+        {
+          "rect": {
+            "x": 694.6124877929688,
+            "y": 239.8000030517578,
+            "width": 24,
+            "height": 17.137500762939453,
+            "top": 239.8000030517578,
+            "right": 718.6124877929688,
+            "bottom": 256.93750381469727,
+            "left": 694.6124877929688
+          },
+          "font": {
+            "family": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+            "size": "12px",
+            "weight": "900"
+          },
+          "marginBottom": "0px"
+        },
+        {
+          "rect": {
+            "x": 931.7374877929688,
+            "y": 241.22500610351562,
+            "width": 53.6875,
+            "height": 14.27500057220459,
+            "top": 241.22500610351562,
+            "right": 985.4249877929688,
+            "bottom": 255.50000667572021,
+            "left": 931.7374877929688
+          },
+          "font": {
+            "family": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+            "size": "10px",
+            "weight": "500"
+          },
+          "marginBottom": "0px"
+        },
+        {
+          "rect": {
+            "x": 694.6124877929688,
+            "y": 266.7875061035156,
+            "width": 240.8125,
+            "height": 6,
+            "top": 266.7875061035156,
+            "right": 935.4249877929688,
+            "bottom": 272.7875061035156,
+            "left": 694.6124877929688
+          },
+          "font": {
+            "family": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+            "size": "10px",
+            "weight": "400"
+          },
+          "marginBottom": "0px"
+        },
+        {
+          "rect": {
+            "x": 940.4249877929688,
+            "y": 261.9375,
+            "width": 45,
+            "height": 15.71250057220459,
+            "top": 261.9375,
+            "right": 985.4249877929688,
+            "bottom": 277.6500005722046,
+            "left": 940.4249877929688
+          },
+          "font": {
+            "family": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+            "size": "11px",
+            "weight": "500"
+          },
+          "marginBottom": "0px"
+        },
+        {
+          "rect": {
+            "x": 694.6124877929688,
+            "y": 287.5,
+            "width": 240.8125,
+            "height": 6,
+            "top": 287.5,
+            "right": 935.4249877929688,
+            "bottom": 293.5,
+            "left": 694.6124877929688
+          },
+          "font": {
+            "family": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+            "size": "10px",
+            "weight": "400"
+          },
+          "marginBottom": "0px"
+        },
+        {
+          "rect": {
+            "x": 940.4249877929688,
+            "y": 282.6499938964844,
+            "width": 45,
+            "height": 15.71250057220459,
+            "top": 282.6499938964844,
+            "right": 985.4249877929688,
+            "bottom": 298.36249446868896,
+            "left": 940.4249877929688
+          },
+          "font": {
+            "family": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+            "size": "11px",
+            "weight": "500"
+          },
+          "marginBottom": "0px"
+        }
+      ]
+    }
+  ],
+  "portraits": [
+    {
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "framing": "portrait",
+      "viewBox": "37.57 0 176.8 165.66"
+    },
+    {
+      "resourceId": "builtin:lingjing-shiba-v2",
+      "framing": "portrait",
+      "viewBox": "60.480000000000004 0 161.28 167.17"
+    },
+    {
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "framing": "portrait",
+      "viewBox": "37.57 0 176.8 165.66"
+    },
+    {
+      "resourceId": "builtin:lingjing-xiaolan-v1",
+      "framing": "portrait",
+      "viewBox": "23.900000000000002 0 200.76 179.84"
+    },
+    {
+      "resourceId": "builtin:lingjing-fantuan-v1",
+      "framing": "portrait",
+      "viewBox": "11.05 0 198.9 166.4"
+    },
+    {
+      "resourceId": "builtin:lingjing-shiba-v2",
+      "framing": "portrait",
+      "viewBox": "60.480000000000004 0 161.28 167.17"
+    }
+  ],
+  "cards": [
+    {
+      "action": "group/button inline-flex shrink-0 items-center justify-center rounded-lg border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50 h-8 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2 button button-ghost shadow-none battle-move normal_attack element-water",
+      "selected": "false",
+      "rect": {
+        "x": 232.8000030517578,
+        "y": 680.6124877929688,
+        "width": 198.90000915527344,
+        "height": 112,
+        "top": 680.6124877929688,
+        "right": 431.70001220703125,
+        "bottom": 792.6124877929688,
+        "left": 232.8000030517578
+      },
+      "font": {
+        "family": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+        "size": "14px",
+        "weight": "500"
+      },
+      "marginBottom": "0px",
+      "art": {
+        "rect": {
+          "x": 240.60000610351562,
+          "y": 695.6124877929688,
+          "width": 56,
+          "height": 56,
+          "top": 695.6124877929688,
+          "right": 296.6000061035156,
+          "bottom": 751.6124877929688,
+          "left": 240.60000610351562
+        },
+        "font": {
+          "family": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+          "size": "14px",
+          "weight": "500"
+        },
+        "marginBottom": "0px"
+      },
+      "copy": {
+        "rect": {
+          "x": 302.6000061035156,
+          "y": 701.6124877929688,
+          "width": 121.30000305175781,
+          "height": 44,
+          "top": 701.6124877929688,
+          "right": 423.90000915527344,
+          "bottom": 745.6124877929688,
+          "left": 302.6000061035156
+        },
+        "font": {
+          "family": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+          "size": "14px",
+          "weight": "500"
+        },
+        "marginBottom": "0px"
+      },
+      "title": {
+        "rect": {
+          "x": 302.6000061035156,
+          "y": 701.6124877929688,
+          "width": 64,
+          "height": 22,
+          "top": 701.6124877929688,
+          "right": 366.6000061035156,
+          "bottom": 723.6124877929688,
+          "left": 302.6000061035156
+        },
+        "font": {
+          "family": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+          "size": "16px",
+          "weight": "700"
+        },
+        "marginBottom": "0px"
+      },
+      "description": {
+        "rect": {
+          "x": 302.6000061035156,
+          "y": 728.6124877929688,
+          "width": 66,
+          "height": 17,
+          "top": 728.6124877929688,
+          "right": 368.6000061035156,
+          "bottom": 745.6124877929688,
+          "left": 302.6000061035156
+        },
+        "font": {
+          "family": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+          "size": "11px",
+          "weight": "400"
+        },
+        "marginBottom": "0px"
+      },
+      "status": {
+        "rect": {
+          "x": 240.60000610351562,
+          "y": 762.8125,
+          "width": 183.3000030517578,
+          "height": 22,
+          "top": 762.8125,
+          "right": 423.90000915527344,
+          "bottom": 784.8125,
+          "left": 240.60000610351562
+        },
+        "font": {
+          "family": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+          "size": "11px",
+          "weight": "500"
+        },
+        "marginBottom": "0px"
+      }
+    },
+    {
+      "action": "group/button inline-flex shrink-0 items-center justify-center rounded-lg border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50 h-8 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2 button button-ghost shadow-none battle-move element_attack element-water",
+      "selected": "true",
+      "rect": {
+        "x": 439.70001220703125,
+        "y": 680.6124877929688,
+        "width": 198.91250610351562,
+        "height": 112,
+        "top": 680.6124877929688,
+        "right": 638.6125183105469,
+        "bottom": 792.6124877929688,
+        "left": 439.70001220703125
+      },
+      "font": {
+        "family": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+        "size": "14px",
+        "weight": "500"
+      },
+      "marginBottom": "0px",
+      "art": {
+        "rect": {
+          "x": 447.3000183105469,
+          "y": 695.6124877929688,
+          "width": 56,
+          "height": 56,
+          "top": 695.6124877929688,
+          "right": 503.3000183105469,
+          "bottom": 751.6124877929688,
+          "left": 447.3000183105469
+        },
+        "font": {
+          "family": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+          "size": "14px",
+          "weight": "500"
+        },
+        "marginBottom": "0px"
+      },
+      "copy": {
+        "rect": {
+          "x": 509.3000183105469,
+          "y": 701.6124877929688,
+          "width": 121.7125015258789,
+          "height": 44,
+          "top": 701.6124877929688,
+          "right": 631.0125198364258,
+          "bottom": 745.6124877929688,
+          "left": 509.3000183105469
+        },
+        "font": {
+          "family": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+          "size": "14px",
+          "weight": "500"
+        },
+        "marginBottom": "0px"
+      },
+      "title": {
+        "rect": {
+          "x": 509.3000183105469,
+          "y": 701.6124877929688,
+          "width": 64,
+          "height": 22,
+          "top": 701.6124877929688,
+          "right": 573.3000183105469,
+          "bottom": 723.6124877929688,
+          "left": 509.3000183105469
+        },
+        "font": {
+          "family": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+          "size": "16px",
+          "weight": "700"
+        },
+        "marginBottom": "0px"
+      },
+      "description": {
+        "rect": {
+          "x": 509.3000183105469,
+          "y": 728.6124877929688,
+          "width": 66,
+          "height": 17,
+          "top": 728.6124877929688,
+          "right": 575.3000183105469,
+          "bottom": 745.6124877929688,
+          "left": 509.3000183105469
+        },
+        "font": {
+          "family": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+          "size": "11px",
+          "weight": "400"
+        },
+        "marginBottom": "0px"
+      },
+      "status": {
+        "rect": {
+          "x": 447.3000183105469,
+          "y": 763.0125122070312,
+          "width": 183.71250915527344,
+          "height": 22,
+          "top": 763.0125122070312,
+          "right": 631.0125274658203,
+          "bottom": 785.0125122070312,
+          "left": 447.3000183105469
+        },
+        "font": {
+          "family": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+          "size": "11px",
+          "weight": "500"
+        },
+        "marginBottom": "0px"
+      }
+    },
+    {
+      "action": "group/button inline-flex shrink-0 items-center justify-center rounded-lg border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50 h-8 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2 button button-ghost shadow-none battle-move dodge element-water",
+      "selected": "false",
+      "rect": {
+        "x": 646.6124877929688,
+        "y": 680.6124877929688,
+        "width": 198.90000915527344,
+        "height": 112,
+        "top": 680.6124877929688,
+        "right": 845.5124969482422,
+        "bottom": 792.6124877929688,
+        "left": 646.6124877929688
+      },
+      "font": {
+        "family": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+        "size": "14px",
+        "weight": "500"
+      },
+      "marginBottom": "0px",
+      "art": {
+        "rect": {
+          "x": 654.4125366210938,
+          "y": 695.6124877929688,
+          "width": 56,
+          "height": 56,
+          "top": 695.6124877929688,
+          "right": 710.4125366210938,
+          "bottom": 751.6124877929688,
+          "left": 654.4125366210938
+        },
+        "font": {
+          "family": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+          "size": "14px",
+          "weight": "500"
+        },
+        "marginBottom": "0px"
+      },
+      "copy": {
+        "rect": {
+          "x": 716.4125366210938,
+          "y": 701.6124877929688,
+          "width": 121.30000305175781,
+          "height": 44,
+          "top": 701.6124877929688,
+          "right": 837.7125396728516,
+          "bottom": 745.6124877929688,
+          "left": 716.4125366210938
+        },
+        "font": {
+          "family": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+          "size": "14px",
+          "weight": "500"
+        },
+        "marginBottom": "0px"
+      },
+      "title": {
+        "rect": {
+          "x": 716.4125366210938,
+          "y": 701.6124877929688,
+          "width": 32,
+          "height": 22,
+          "top": 701.6124877929688,
+          "right": 748.4125366210938,
+          "bottom": 723.6124877929688,
+          "left": 716.4125366210938
+        },
+        "font": {
+          "family": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+          "size": "16px",
+          "weight": "700"
+        },
+        "marginBottom": "0px"
+      },
+      "description": {
+        "rect": {
+          "x": 716.4125366210938,
+          "y": 728.6124877929688,
+          "width": 66,
+          "height": 17,
+          "top": 728.6124877929688,
+          "right": 782.4125366210938,
+          "bottom": 745.6124877929688,
+          "left": 716.4125366210938
+        },
+        "font": {
+          "family": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+          "size": "11px",
+          "weight": "400"
+        },
+        "marginBottom": "0px"
+      },
+      "status": {
+        "rect": {
+          "x": 654.4125366210938,
+          "y": 762.8125,
+          "width": 183.3000030517578,
+          "height": 22,
+          "top": 762.8125,
+          "right": 837.7125396728516,
+          "bottom": 784.8125,
+          "left": 654.4125366210938
+        },
+        "font": {
+          "family": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+          "size": "11px",
+          "weight": "500"
+        },
+        "marginBottom": "0px"
+      }
+    },
+    {
+      "action": "group/button inline-flex shrink-0 items-center justify-center rounded-lg border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50 h-8 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2 button button-ghost shadow-none battle-move ultimate element-water",
+      "selected": "false",
+      "rect": {
+        "x": 853.5125122070312,
+        "y": 680.6124877929688,
+        "width": 198.91250610351562,
+        "height": 112,
+        "top": 680.6124877929688,
+        "right": 1052.4250183105469,
+        "bottom": 792.6124877929688,
+        "left": 853.5125122070312
+      },
+      "font": {
+        "family": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+        "size": "14px",
+        "weight": "500"
+      },
+      "marginBottom": "0px",
+      "art": {
+        "rect": {
+          "x": 861.3125,
+          "y": 695.6124877929688,
+          "width": 56,
+          "height": 56,
+          "top": 695.6124877929688,
+          "right": 917.3125,
+          "bottom": 751.6124877929688,
+          "left": 861.3125
+        },
+        "font": {
+          "family": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+          "size": "14px",
+          "weight": "500"
+        },
+        "marginBottom": "0px"
+      },
+      "copy": {
+        "rect": {
+          "x": 923.3125,
+          "y": 701.6124877929688,
+          "width": 121.3125,
+          "height": 44,
+          "top": 701.6124877929688,
+          "right": 1044.625,
+          "bottom": 745.6124877929688,
+          "left": 923.3125
+        },
+        "font": {
+          "family": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+          "size": "14px",
+          "weight": "500"
+        },
+        "marginBottom": "0px"
+      },
+      "title": {
+        "rect": {
+          "x": 923.3125,
+          "y": 701.6124877929688,
+          "width": 32,
+          "height": 22,
+          "top": 701.6124877929688,
+          "right": 955.3125,
+          "bottom": 723.6124877929688,
+          "left": 923.3125
+        },
+        "font": {
+          "family": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+          "size": "16px",
+          "weight": "700"
+        },
+        "marginBottom": "0px"
+      },
+      "description": {
+        "rect": {
+          "x": 923.3125,
+          "y": 728.6124877929688,
+          "width": 75.1624984741211,
+          "height": 17,
+          "top": 728.6124877929688,
+          "right": 998.4749984741211,
+          "bottom": 745.6124877929688,
+          "left": 923.3125
+        },
+        "font": {
+          "family": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+          "size": "11px",
+          "weight": "400"
+        },
+        "marginBottom": "0px"
+      },
+      "status": {
+        "rect": {
+          "x": 861.3125,
+          "y": 762.8125,
+          "width": 183.3125,
+          "height": 22,
+          "top": 762.8125,
+          "right": 1044.625,
+          "bottom": 784.8125,
+          "left": 861.3125
+        },
+        "font": {
+          "family": "\"Microsoft YaHei UI\", \"Microsoft YaHei\", system-ui, sans-serif",
+          "size": "11px",
+          "weight": "500"
+        },
+        "marginBottom": "0px"
+      }
+    }
+  ],
+  "party": [
+    {
+      "name": "鱼丸Lv.01",
+      "petId": "pet-576ce662-7d77-44dc-a8ea-1112eb9ad98b"
+    },
+    {
+      "name": "小蓝Lv.01",
+      "petId": "pet-2bff6d05-c49d-4462-aedb-f4054b8b29ac"
+    },
+    {
+      "name": "饭团Lv.01",
+      "petId": "pet-9bac08f0-152d-43d8-96b9-4a3f20dc334d"
+    },
+    {
+      "name": "焰柴Lv.01",
+      "petId": "pet-57743b65-85c8-4721-896e-97a66878fff4"
+    }
+  ],
+  "resources": [
+    {
+      "petId": "pet-576ce662-7d77-44dc-a8ea-1112eb9ad98b",
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "action": "idle"
+    },
+    {
+      "petId": "training-fire",
+      "resourceId": "builtin:lingjing-shiba-v2",
+      "action": "idle"
+    }
+  ]
+}

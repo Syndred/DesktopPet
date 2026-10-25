@@ -1,0 +1,577 @@
+{
+  "at": "2026-10-24T14:03:25.597Z",
+  "controlledPosition": true,
+  "physicalLocationAcceptance": false,
+  "previews": [
+    {
+      "spawnId": "wild-2d-v2-e196afe1f4-498014-52052-202457",
+      "templateId": "big-fish-gentle",
+      "name": "鱼丸",
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "pixiReady": true,
+      "realAtlasThumbnail": true
+    },
+    {
+      "spawnId": "wild-2d-v2-e196afe1f4-498014-52050-202457",
+      "templateId": "big-fish-cheerful",
+      "name": "小蓝",
+      "resourceId": "builtin:lingjing-xiaolan-v1",
+      "pixiReady": true,
+      "realAtlasThumbnail": true
+    },
+    {
+      "spawnId": "wild-2d-v2-e196afe1f4-498014-52051-202456",
+      "templateId": "big-fish-foodie",
+      "name": "饭团",
+      "resourceId": "builtin:lingjing-fantuan-v1",
+      "pixiReady": true,
+      "realAtlasThumbnail": true
+    },
+    {
+      "spawnId": "wild-2d-v2-e196afe1f4-498014-52051-202454",
+      "templateId": "animal-shiba",
+      "name": "焰柴",
+      "resourceId": "builtin:lingjing-shiba-v2",
+      "pixiReady": true,
+      "realAtlasThumbnail": true
+    },
+    {
+      "spawnId": "wild-2d-v2-e196afe1f4-498014-52050-202454",
+      "templateId": "animal-white-fox",
+      "name": "小狐",
+      "resourceId": "builtin:lingjing-xiaohu-v1",
+      "pixiReady": true,
+      "realAtlasThumbnail": true
+    },
+    {
+      "spawnId": "wild-2d-v2-e196afe1f4-498014-52050-202456",
+      "templateId": "animal-hat-cat",
+      "name": "礼帽喵",
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "pixiReady": true,
+      "realAtlasThumbnail": true
+    }
+  ],
+  "animationSamples": [
+    {
+      "action": "element_attack",
+      "round": 1,
+      "sha256": "329367c9c2eba0dcc6554f9bc8ce3e1808c69bfba0c7998f423b7f74ef822af2"
+    },
+    {
+      "action": "normal_attack",
+      "round": 2,
+      "sha256": "84325d3d2c3d70aa8a25082e4f928a0ed31ba4e57ea9093404f548e0e6d07e61"
+    },
+    {
+      "action": "ultimate",
+      "round": 26,
+      "sha256": "d4c8d43e56ac537f14b7d2e278d7ac096e642de883b7a16758d6b8c19cd355a3"
+    }
+  ],
+  "rendererErrors": [],
+  "viewport": {
+    "nativeAfterResize": {
+      "width": 1280,
+      "height": 844
+    },
+    "cssViewportOverride": null,
+    "verification": {
+      "width": 1280,
+      "height": 844
+    }
+  },
+  "hitScreenshot": true,
+  "poses": [
+    {
+      "petId": "pet-9cc9a1c1-6369-42de-8f49-9915a986b4ee",
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "action": "idle",
+      "clip": "idle",
+      "fallback": "false",
+      "frame": "0"
+    },
+    {
+      "petId": "wild-2d-v2-e196afe1f4-498014-52050-202456",
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "action": "idle",
+      "clip": "idle",
+      "fallback": "false",
+      "frame": "0"
+    },
+    {
+      "petId": "pet-9cc9a1c1-6369-42de-8f49-9915a986b4ee",
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "action": "idle",
+      "clip": "idle",
+      "fallback": "false",
+      "frame": "1"
+    },
+    {
+      "petId": "wild-2d-v2-e196afe1f4-498014-52050-202456",
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "action": "idle",
+      "clip": "idle",
+      "fallback": "false",
+      "frame": "1"
+    },
+    {
+      "petId": "pet-9cc9a1c1-6369-42de-8f49-9915a986b4ee",
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "action": "skill",
+      "clip": "skill",
+      "fallback": "false",
+      "frame": "1"
+    },
+    {
+      "petId": "wild-2d-v2-e196afe1f4-498014-52050-202456",
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "action": "walk",
+      "clip": "walk",
+      "fallback": "false",
+      "frame": "1"
+    },
+    {
+      "petId": "pet-9cc9a1c1-6369-42de-8f49-9915a986b4ee",
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "action": "skill",
+      "clip": "skill",
+      "fallback": "false",
+      "frame": "0"
+    },
+    {
+      "petId": "wild-2d-v2-e196afe1f4-498014-52050-202456",
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "action": "walk",
+      "clip": "walk",
+      "fallback": "false",
+      "frame": "0"
+    },
+    {
+      "petId": "pet-9cc9a1c1-6369-42de-8f49-9915a986b4ee",
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "action": "skill",
+      "clip": "skill",
+      "fallback": "false",
+      "frame": "2"
+    },
+    {
+      "petId": "pet-9cc9a1c1-6369-42de-8f49-9915a986b4ee",
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "action": "skill",
+      "clip": "skill",
+      "fallback": "false",
+      "frame": "3"
+    },
+    {
+      "petId": "pet-9cc9a1c1-6369-42de-8f49-9915a986b4ee",
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "action": "skill",
+      "clip": "skill",
+      "fallback": "false",
+      "frame": "4"
+    },
+    {
+      "petId": "pet-9cc9a1c1-6369-42de-8f49-9915a986b4ee",
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "action": "idle",
+      "clip": "idle",
+      "fallback": "false",
+      "frame": "4"
+    },
+    {
+      "petId": "wild-2d-v2-e196afe1f4-498014-52050-202456",
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "action": "hit",
+      "clip": "hit",
+      "fallback": "false",
+      "frame": "1"
+    },
+    {
+      "petId": "wild-2d-v2-e196afe1f4-498014-52050-202456",
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "action": "hit",
+      "clip": "hit",
+      "fallback": "false",
+      "frame": "0"
+    },
+    {
+      "petId": "pet-9cc9a1c1-6369-42de-8f49-9915a986b4ee",
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "action": "idle",
+      "clip": "idle",
+      "fallback": "false",
+      "frame": "2"
+    },
+    {
+      "petId": "wild-2d-v2-e196afe1f4-498014-52050-202456",
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "action": "hit",
+      "clip": "hit",
+      "fallback": "false",
+      "frame": "2"
+    },
+    {
+      "petId": "pet-9cc9a1c1-6369-42de-8f49-9915a986b4ee",
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "action": "idle",
+      "clip": "idle",
+      "fallback": "false",
+      "frame": "3"
+    },
+    {
+      "petId": "wild-2d-v2-e196afe1f4-498014-52050-202456",
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "action": "idle",
+      "clip": "idle",
+      "fallback": "false",
+      "frame": "2"
+    },
+    {
+      "petId": "pet-9cc9a1c1-6369-42de-8f49-9915a986b4ee",
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "action": "idle",
+      "clip": "idle",
+      "fallback": "false",
+      "frame": "5"
+    },
+    {
+      "petId": "pet-9cc9a1c1-6369-42de-8f49-9915a986b4ee",
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "action": "idle",
+      "clip": "idle",
+      "fallback": "false",
+      "frame": "6"
+    },
+    {
+      "petId": "pet-9cc9a1c1-6369-42de-8f49-9915a986b4ee",
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "action": "idle",
+      "clip": "idle",
+      "fallback": "false",
+      "frame": "7"
+    },
+    {
+      "petId": "wild-2d-v2-e196afe1f4-498014-52050-202456",
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "action": "idle",
+      "clip": "idle",
+      "fallback": "false",
+      "frame": "3"
+    },
+    {
+      "petId": "pet-9cc9a1c1-6369-42de-8f49-9915a986b4ee",
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "action": "idle",
+      "clip": "idle",
+      "fallback": "false",
+      "frame": "8"
+    },
+    {
+      "petId": "wild-2d-v2-e196afe1f4-498014-52050-202456",
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "action": "idle",
+      "clip": "idle",
+      "fallback": "false",
+      "frame": "4"
+    },
+    {
+      "petId": "pet-9cc9a1c1-6369-42de-8f49-9915a986b4ee",
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "action": "idle",
+      "clip": "idle",
+      "fallback": "false",
+      "frame": "9"
+    },
+    {
+      "petId": "wild-2d-v2-e196afe1f4-498014-52050-202456",
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "action": "idle",
+      "clip": "idle",
+      "fallback": "false",
+      "frame": "5"
+    },
+    {
+      "petId": "pet-9cc9a1c1-6369-42de-8f49-9915a986b4ee",
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "action": "idle",
+      "clip": "idle",
+      "fallback": "false",
+      "frame": "10"
+    },
+    {
+      "petId": "wild-2d-v2-e196afe1f4-498014-52050-202456",
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "action": "idle",
+      "clip": "idle",
+      "fallback": "false",
+      "frame": "6"
+    },
+    {
+      "petId": "pet-9cc9a1c1-6369-42de-8f49-9915a986b4ee",
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "action": "attack",
+      "clip": "attack",
+      "fallback": "false",
+      "frame": "10"
+    },
+    {
+      "petId": "wild-2d-v2-e196afe1f4-498014-52050-202456",
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "action": "skill",
+      "clip": "skill",
+      "fallback": "false",
+      "frame": "6"
+    },
+    {
+      "petId": "pet-9cc9a1c1-6369-42de-8f49-9915a986b4ee",
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "action": "attack",
+      "clip": "attack",
+      "fallback": "false",
+      "frame": "0"
+    },
+    {
+      "petId": "wild-2d-v2-e196afe1f4-498014-52050-202456",
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "action": "skill",
+      "clip": "skill",
+      "fallback": "false",
+      "frame": "0"
+    },
+    {
+      "petId": "pet-9cc9a1c1-6369-42de-8f49-9915a986b4ee",
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "action": "attack",
+      "clip": "attack",
+      "fallback": "false",
+      "frame": "1"
+    },
+    {
+      "petId": "wild-2d-v2-e196afe1f4-498014-52050-202456",
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "action": "skill",
+      "clip": "skill",
+      "fallback": "false",
+      "frame": "1"
+    },
+    {
+      "petId": "pet-9cc9a1c1-6369-42de-8f49-9915a986b4ee",
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "action": "attack",
+      "clip": "attack",
+      "fallback": "false",
+      "frame": "2"
+    },
+    {
+      "petId": "wild-2d-v2-e196afe1f4-498014-52050-202456",
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "action": "skill",
+      "clip": "skill",
+      "fallback": "false",
+      "frame": "2"
+    },
+    {
+      "petId": "pet-9cc9a1c1-6369-42de-8f49-9915a986b4ee",
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "action": "attack",
+      "clip": "attack",
+      "fallback": "false",
+      "frame": "3"
+    },
+    {
+      "petId": "wild-2d-v2-e196afe1f4-498014-52050-202456",
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "action": "skill",
+      "clip": "skill",
+      "fallback": "false",
+      "frame": "3"
+    },
+    {
+      "petId": "wild-2d-v2-e196afe1f4-498014-52050-202456",
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "action": "skill",
+      "clip": "skill",
+      "fallback": "false",
+      "frame": "4"
+    },
+    {
+      "petId": "wild-2d-v2-e196afe1f4-498014-52050-202456",
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "action": "hit",
+      "clip": "hit",
+      "fallback": "false",
+      "frame": "4"
+    },
+    {
+      "petId": "pet-9cc9a1c1-6369-42de-8f49-9915a986b4ee",
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "action": "attack",
+      "clip": "attack",
+      "fallback": "false",
+      "frame": "7"
+    },
+    {
+      "petId": "wild-2d-v2-e196afe1f4-498014-52050-202456",
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "action": "walk",
+      "clip": "walk",
+      "fallback": "false",
+      "frame": "3"
+    },
+    {
+      "petId": "pet-9cc9a1c1-6369-42de-8f49-9915a986b4ee",
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "action": "attack",
+      "clip": "attack",
+      "fallback": "false",
+      "frame": "6"
+    },
+    {
+      "petId": "wild-2d-v2-e196afe1f4-498014-52050-202456",
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "action": "attack",
+      "clip": "attack",
+      "fallback": "false",
+      "frame": "6"
+    },
+    {
+      "petId": "wild-2d-v2-e196afe1f4-498014-52050-202456",
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "action": "attack",
+      "clip": "attack",
+      "fallback": "false",
+      "frame": "0"
+    },
+    {
+      "petId": "wild-2d-v2-e196afe1f4-498014-52050-202456",
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "action": "attack",
+      "clip": "attack",
+      "fallback": "false",
+      "frame": "1"
+    },
+    {
+      "petId": "wild-2d-v2-e196afe1f4-498014-52050-202456",
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "action": "attack",
+      "clip": "attack",
+      "fallback": "false",
+      "frame": "2"
+    },
+    {
+      "petId": "wild-2d-v2-e196afe1f4-498014-52050-202456",
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "action": "attack",
+      "clip": "attack",
+      "fallback": "false",
+      "frame": "3"
+    },
+    {
+      "petId": "pet-9cc9a1c1-6369-42de-8f49-9915a986b4ee",
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "action": "hit",
+      "clip": "hit",
+      "fallback": "false",
+      "frame": "3"
+    },
+    {
+      "petId": "wild-2d-v2-e196afe1f4-498014-52050-202456",
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "action": "hit",
+      "clip": "hit",
+      "fallback": "false",
+      "frame": "3"
+    },
+    {
+      "petId": "pet-9cc9a1c1-6369-42de-8f49-9915a986b4ee",
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "action": "hit",
+      "clip": "hit",
+      "fallback": "false",
+      "frame": "0"
+    },
+    {
+      "petId": "pet-9cc9a1c1-6369-42de-8f49-9915a986b4ee",
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "action": "hit",
+      "clip": "hit",
+      "fallback": "false",
+      "frame": "1"
+    },
+    {
+      "petId": "pet-9cc9a1c1-6369-42de-8f49-9915a986b4ee",
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "action": "hit",
+      "clip": "hit",
+      "fallback": "false",
+      "frame": "2"
+    },
+    {
+      "petId": "wild-2d-v2-e196afe1f4-498014-52050-202456",
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "action": "walk",
+      "clip": "walk",
+      "fallback": "false",
+      "frame": "2"
+    },
+    {
+      "petId": "wild-2d-v2-e196afe1f4-498014-52050-202456",
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "action": "walk",
+      "clip": "walk",
+      "fallback": "false",
+      "frame": "6"
+    },
+    {
+      "petId": "pet-9cc9a1c1-6369-42de-8f49-9915a986b4ee",
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "action": "hit",
+      "clip": "hit",
+      "fallback": "false",
+      "frame": "4"
+    },
+    {
+      "petId": "pet-9cc9a1c1-6369-42de-8f49-9915a986b4ee",
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "action": "victory",
+      "clip": "victory",
+      "fallback": "false",
+      "frame": "2"
+    },
+    {
+      "petId": "pet-9cc9a1c1-6369-42de-8f49-9915a986b4ee",
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "action": "victory",
+      "clip": "victory",
+      "fallback": "false",
+      "frame": "0"
+    },
+    {
+      "petId": "pet-9cc9a1c1-6369-42de-8f49-9915a986b4ee",
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "action": "victory",
+      "clip": "victory",
+      "fallback": "false",
+      "frame": "1"
+    }
+  ],
+  "capture": {
+    "petId": "pet-81360b28-beec-4655-885e-019843fe6904",
+    "templateId": "animal-hat-cat",
+    "resourceId": "builtin:lingjing-hatcat-v1",
+    "element": "metal",
+    "duplicateReturnsSamePet": true,
+    "backpackMatches": true,
+    "memoryCount": 1,
+    "pokedexMatches": true,
+    "randomAttempts": 1
+  },
+  "restart": {
+    "samePetId": true,
+    "canonicalResourceRetained": true,
+    "currentLocationNotPersisted": true
+  },
+  "passed": true,
+  "output": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-discovery\\DesktopPet\\artifacts\\discovery\\roster-actions-1792850605419"
+}

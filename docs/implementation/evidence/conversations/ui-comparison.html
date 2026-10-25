@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>灵境 · 聊天与 AI 设置 · 图稿对照证据</title>
+<style>
+:root{font-family:"Microsoft YaHei",sans-serif;color:#1d3159;background:#f5f8ff}body{max-width:1440px;margin:30px auto;padding:0 24px 50px}h1{font-size:27px}h2{font-size:21px;margin-top:34px}p,li{line-height:1.9;font-size:14px}a{color:#4966ed}.pair{display:grid;grid-template-columns:1fr 1fr;gap:20px}figure{margin:0;background:white;border:1px solid #dce5f6;border-radius:12px;overflow:hidden}figcaption{padding:14px;font-size:14px;font-weight:600}.image{display:block;height:480px;overflow:hidden;background:#eef4ff}.image img{display:block;width:100%;height:100%;object-fit:contain}.image.design img{object-fit:cover}.image.chat-board img{object-position:center top}.image.settings-board img{object-position:center bottom}small{font-size:12px;color:#7083a5}.note{padding:15px 20px;border:1px solid #dce5f6;border-radius:12px;background:white}table{border-collapse:collapse;width:100%;font-size:13px}td,th{padding:12px;text-align:left;border:1px solid #dce5f6;background:white;line-height:1.8}@media(max-width:950px){.pair{grid-template-columns:1fr}.image{height:auto;aspect-ratio:1.45}}
+</style>
+<h1>聊天与 AI 设置：批准图稿 / 真实 Electron</h1>
+<p class="note">本页保留上一轮协议与功能验收截图。固定清单 A01 / A03 / A12 的最新字体、间距及角色身份截图请查看 <a href="audit-2026-10-24/index.html">2026-10-24 定向整改对照</a>。</p>
+<p>2026-10-24 · 仅作验收图册。右图是正式生产构建的 Electron 截图，原始文件未修改。使用隔离本地账号和公开领养接口创建三只同模板 2D 伙伴。模型端点是明确标识的本机协议 fixture，未验证云端模型。</p>
+<div class="note"><a href="electron.json">12 项真实 Electron 验收记录</a> · <a href="../../status/conversations.json">完整状态与开源许可</a><br><small>图稿左列仅在本页以 CSS 展示相关半页；点击可打开完整原图。截图包含 Windows 显示缩放，不能把不同画布的像素差视为布局评分。</small></div>
+<h2>06 上半：独立聊天与记忆</h2>
+<div class="pair">
+<figure><figcaption>批准图稿 · 06 上半</figcaption><a class="image design chat-board" href="../../../design/2026-10-24/full-ui/06-chat-and-friend-duels.png"><img src="../../../design/2026-10-24/full-ui/06-chat-and-friend-duels.png" alt="批准的聊天图稿"></a></figure>
+<figure><figcaption>正式 Electron · /chat</figcaption><a class="image" href="chat.png"><img src="chat.png" alt="真实 Electron 聊天与记忆页面"></a></figure>
+</div>
+<p>对应结构：雾蓝公共导航与四芒星、左侧实例列表、中间消息与输入、右侧动漫形象 / 人设 / 独立记忆 / 暂停散步。正式聊天使用 assistant-ui；回复后的小角色使用共享 Pixi 图集，编辑与删除真实落盘。</p>
+<h2>08 下半：AI 对话设置</h2>
+<div class="pair">
+<figure><figcaption>批准图稿 · 08 下半</figcaption><a class="image design settings-board" href="../../../design/2026-10-24/full-ui/08-desktop-and-ai-settings.png"><img src="../../../design/2026-10-24/full-ui/08-desktop-and-ai-settings.png" alt="批准的 AI 设置图稿"></a></figure>
+<figure><figcaption>正式 Electron · /settings/ai</figcaption><a class="image" href="ai-settings.png"><img src="ai-settings.png" alt="真实 Electron 全局连接与逐伙伴人设页面"></a></figure>
+</div>
+<p>对应结构：设置分类导航、标题层级、全局 / 伙伴 Tabs、左连接表单与伙伴选择、右角色插图与性格风格。Select、Tabs、Switch、Popover 和 Dialog 实际采用共享 shadcn / Radix。密钥只显示已保存状态，测试成功来自该次 HTTP 返回文本。</p>
+<h2>差异与边界</h2>
+<table><thead><tr><th>项目</th><th>当前实现及原因</th></tr></thead><tbody>
+<tr><td>角色插画</td><td>复用 foundation 按批准角色制作的原创房间插画和八姿态图集；角色身份及色彩一致，具体姿势、面部与裁切不与概念图逐像素相同。未搬用候选项目的受限角色素材。</td></tr>
+<tr><td>消息、等级与时间</td><td>截图保留本机验收文字、真实实例 ID 与实际等级，不填入概念图的示例聊天或 Lv.08。三个同模板形象各有自己的 petId。</td></tr>
+<tr><td>安全和真实状态</td><td>新增密钥保留 / 清除、独立连接和回复预算；不回显已保存 Key。成功状态须收到实际文本，不展示预设云端成功。</td></tr>
+<tr><td>记忆与附加输入</td><td>记忆明确由用户保存，提供添加 / 编辑 / 删除；未实现自动提取、图片附件或语音，因此没有对应假按钮。表情 Popover 可实际插入输入框。</td></tr>
+<tr><td>窗口适配</td><td>窗口尺寸和显示缩放不同于概念画布，AI 设置较长区域可纵向滚动；980×750 检查无横向溢出。按钮平面化，系统与应用动画关闭均已验收。</td></tr>
+</tbody></table>
+<p><a href="restored.png">查看实际进程重启、账号切换后的聊天恢复截图</a>。本图册用于检查真实应用，不承载产品逻辑。</p>
+</html>

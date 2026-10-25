@@ -1,0 +1,140 @@
+灵境 conversations 模块集成说明（2026-10-24，2D / UI 图优先修订）
+
+入口与依赖
+runtime/features/conversations/index.cjs 遵守 foundation-contract.md v1，导出 register/migrations。
+ui/src/features/conversations/index.tsx 注册 /chat 与 /settings/ai。公共壳自动发现。
+已合入 foundation d0488f0（本分支合并提交 b92366d），包含真实账号、2D 伙伴和共享组件。
+根 package/lock 由 foundation 维护；本模块的 dependencies.json 是需求及许可清单。
+根清单已统一加入 ai 7.0.152、@ai-sdk/openai-compatible 3.0.77、@assistant-ui/react 0.15.31。
+没有增加另一个 UI 基础库、角色动画引擎、模型网关或模型账号系统。
+
+正式页面与开源复用
+assistant-thread.tsx 实际使用 assistant-ui 的 useExternalStoreRuntime、AssistantRuntimeProvider、
+ThreadPrimitive、MessagePrimitive、ComposerPrimitive；输入、IME、发送、停止、消息和滚动由它处理。
+外部 store 接已有 SQLite/IPC 领域服务，不使用第三方浏览器存储或客户端模型 SDK。
+transport.cjs 实际使用 AI SDK streamText/generateText 与 openai-compatible chatModel；
+SSE、JSON 和 provider 序列化由库处理。本模块不再维护手写 SSE parser。
+公用 shadcn/Radix：Button、Input、Textarea、Checkbox、Switch、Tabs、Select、Tooltip、Popover、Dialog。
+Motion 使用 components/motion 的 AnimatedList 与公共 PageTransition/MotionPanel；
+2D 动作调用 companions/CompanionPortrait -> resources/ResourceStage -> PixiJS。
+没有本功能专属的精灵播放器；受控弹窗用共享 DialogContent.onCloseAutoFocus 归还焦点，Radix 处理焦点限制。
+共享主题变量来自公共样式，模块 CSS 负责 06 三列聊天及 08 AI 设置布局。
+批准图、真实 Electron 截图、差异与许可清单见 docs/implementation/status/conversations.json
+和 docs/implementation/evidence/conversations/ui-comparison.html。
+
+身份与持久化
+所有命令使用主进程的已验证账号与实际 petId。ownerId/ownerAccountId 载荷不能选择账号。
+expectedAccountId / expectedSessionRevision 只用于拒绝旧界面操作，不能授权账号。
+优先 companions.listPets(ownerAccountId)，兼容已有经验证 RuntimeDataStore 的实例库存。
+profiles/messages/memories/connections 均以账号与实例限定；全局连接另有 account 范围。
+聊天选择保存在 conversation_preferences，独立于出战、驻守与桌面出场选择。
+仅使用 foundation 的单 SQLite 连接和迁移执行器，不打开第二个业务数据库。
+退出同步标记中断回复；异常退出的 pending/streaming 在下次注册时恢复为 cancelled。
+回滚代码时保留所有 conversation_* 表与 lingjing_migrations 记录，不删除用户文件或旧数据。
+
+命令（成功 {ok:true,data}，失败 {ok:false,code,message}）
+snapshot / select / history / profile.save
+connection.save / connection.test / connection.cancel
+memory.save / memory.delete / send / retry / cancel / history.clear
+类型见 packages/shared-types/src/features/conversations/index.ts。
+send/retry 流完成后返回，期间事件更新；并发 IPC cancel 中止实际网络请求。
+actionId 去重防止重复记录和请求；retry 只允许最后一次失败/取消回复，保留一条用户消息。
+profile、memory、connection 编辑使用 revision，拒绝旧版本。
+
+安全模型调用
+DeepSeek / OpenAI / OpenAI 兼容 Chat Completions 请求全部留在主进程。
+模型 ID 由用户填写；SDK 自动重试关闭，遥测及 prompt/output 记录明确关闭。
+支持 SSE、JSON 兼容回复、AbortController、超时、显式重试及 4 个并发请求上限。
+忽略 stream:true 而返回 JSON 的接口复用原响应通过 SDK 解析，不再发第二次网络请求。
+HTTP 仅允许 localhost / 127.0.0.1 / [::1]；其他接口必须 HTTPS。
+禁止 URL 凭据、query、fragment 与重定向；接收网络体硬限 2 MiB，文本硬限 32000 字符。
+API Key 经 Electron safeStorage / Windows DPAPI 加密存 SQLite，读取只返回 hasKey。
+SDK/provider 原始异常可能含 prompt/key，只转换为固定公开错误码，不返回 renderer 或写日志。
+系统安全存储不可用时拒绝保存。更换接口/提供商必须重新填 key，不向新接口转发旧 key。
+逐宠物覆盖连接使用自己的 key，不隐式复用全局 key。备份/云同步必须排除 encrypted_key。
+
+上下文与记忆
+历史分页 50 条，上下文最多最近 24 个完整对话轮次。
+字符预算 12000..48000；记忆最多 6000 字符/24 条；每条 1000 字符，每实例最多 100 条。
+人设最多 2000 字符，用户输入最多 8000 字符，回复 token 上限 64..4096。
+字符预算不冒充精确 token 计量。记忆由用户明确添加、编辑、删除，没有自动长期记忆抽取。
+修改记忆、人设或连接中止使用旧上下文的回复；删除记忆影响后续请求，不删除历史原文。
+清空历史不删除单独保存的记忆与人设。
+
+跨模块接点与 2D 范围
+conversations:changed：当前会话的 reply/changed，含 accountId、petId、actionId。
+conversations:session：清空旧界面并读取当前账号；包含旧登录观察兜底。
+conversations:activity：{ownerAccountId,petId,active,pauseWhileChatting}。
+getProfile(owner,petId) / isChatting(owner,petId) 由 companions/windows.cjs 消费，暂停当前实例散步。
+静态头像和侧图均通过当前 petId/resourceId 解析共享 ResourcePortrait 近景；回复完成动作复用 CompanionPortrait / Pixi。
+旧形象记录保留，无法用本版资源显示时使用共享资源提示，不尝试载入旧模型。
+本模块不导入 model-viewer、Three、GLB/GLTF/VRM；不新增 3D 支持或 3D 测试链路。
+按钮平面化，公共 Motion 和 Pixi 都遵守系统 reduced motion 与应用动画开关。
+语音 capabilities=false；本次没有假语音按钮或额外 Python/Vue/语音栈。
+
+验收与仍需外部处理的项
+12 项真实文件 SQLite + 本机 HTTP 运行时测试通过（含实际库存元素投影校验）。
+12 项正式 Electron / React / preload / IPC / DPAPI / SQLite 验收通过，实际重启进程和账号切换。
+包括共享组件键盘/焦点、表情输入、逐宠物隔离、记忆删除、取消重试、动画开关与 2D Pixi canvas。
+没有运行真实云模型：本会话未收到授权模型配置；本机协议 fixture 不算云端模型成功。
+foundation 负责最终全模块 Windows 回归与根依赖聚合。此前探索模块类型/依赖问题已由
+foundation 修复并合入；本分支最终 typecheck:ui、typecheck 与 build:pc 均通过。
+旧兼容 renderer 的明文 AI 设置仍留在历史文件；新 React 路径不使用它。
+其安全导入需明确账号映射，不扫描、复制或擅自归属用户旧 key。
+账号备份/同步若纳入聊天领域记录，必须保留 owner 归属并排除设备密钥密文。
+
+定向复现
+node --test apps/pc-app/runtime/features/conversations/tests/runtime.test.cjs
+npx eslint apps/pc-app/runtime/features/conversations apps/pc-app/ui/src/features/conversations packages/shared-types/src/features/conversations --ext .cjs,.mjs,.ts,.tsx
+npm run typecheck:ui
+npm run typecheck
+npm run build:pc
+node apps/pc-app/runtime/features/conversations/tests/electron-flow.mjs
+Electron 测试只写 artifacts/conversations 下的隔离账号、角色和加密数据库，保留原用户数据。
+
+固定视觉清单 A01 / A03 / A07 聊天接点 / A12（2026-10-24 后续修正）
+已采用 foundation 50f6cad 的公共 tokens.css/layout.css，不在业务层另建字体体系。
+聊天与 AI 设置：主标题 text-title=28px/weight-title=700，卡片标题 text-card=16px，
+正文 text-body=14px，标签 text-label=12px，辅助 text-caption=11px；移除业务标题 vw clamp。
+卡片 margin=0，父布局 space-4=16px；页面内距随公共 page-pad-*，卡片内距16px。
+所有头像通过当前 pet.resource 调用共享资源显示组件，不再用固定鱼丸图作为默认头像。
+头像与侧图统一读取当前资源的正式近景裁切，缺资源显示提示。
+监听 companions:changed，使当前页面内的形象绑定替换实时刷新，保留 petId、历史与模型连接。
+伙伴选择采用三列自适应宽度，副标签在卡片内正常换行；不向截图添加聊天记录。
+4 项定向真实 Electron 检查通过，覆盖1280×844、1440×900和980×900计算样式、两种真实资源、
+切换/原地替换后的身份一致；本轮模型请求为0。原生文件选择器由测试适配器指定项目包，
+资源解析、复制、归属检查与公开IPC绑定均为产品实现，不把文件选择器本身算作原生操作验收。
+证据：docs/implementation/evidence/conversations/audit-2026-10-24/index.html 与 evidence.json。
+六个正式形象和完整动作由 resources/companions 统一交付；全部模块合并后的集中视觉回验仍由主会话负责。
+
+A07 / A12 portrait 构图收口（同日后续）
+主会话 recheck-1 已验证六个正式形象及跨页身份；本轮只修聊天圆头像和伙伴缩略图的构图。
+静态头像通过正式 resources.resolve 读取当前资源，使用 resources/ResourcePortrait framing=portrait，
+由共享 resolveResourcePortrait（1dac04e）按真实首个待机帧主体区域确定近景 viewBox。
+本模块不计算自己的裁切参数，并移除旧 scale(1.8)；资源变更时重新读取，不另生成头像文件。
+聊天列表、线程头部、空状态和 AI 设置伙伴选择统一走 PetAvatar；本轮 PetScene 也复用近景，CompanionReaction 保持完整动作。
+定向脚本：node apps/pc-app/runtime/features/conversations/tests/portrait-acceptance.mjs。
+4项检查通过：六个 canonical 图集来源、实际近景 viewBox、无额外 CSS 缩放及礼帽喵身份/空历史；模型请求为0。
+证据见 docs/implementation/evidence/conversations/portrait-2026-10-24/。本轮没有重复全量回归。
+
+U02 / U05 / U07 聊天与 AI 设置收口
+前台移除口号、重复实例标签和整段说明，使用公共 Tooltip 与 Lucide 图标。
+记忆归属、密钥保留、更换接口后重填、上下文预算、暂停散步等说明按需显示；
+危险操作后果、缺少连接、失败状态仍可理解。禁用操作的提示包装可由键盘聚焦。
+ConversationPet.element 仅来自已验证库存的五行枚举；不推测角色元素。
+自验入口 compact-acceptance.mjs 要求正式角色覆盖全部五行，逐个核对 petId/resourceId/element。
+仅在 artifacts/conversations/compact 的隔离 QA profile 操作，不加载正常用户存档。
+本轮不注入模型回复；真实本机不可用地址用于验证发送、重试、错误以及记忆开关，
+SQLite 只读核对失败轮次、清空后的历史/记忆/人设和加密密钥，不回传密文。
+云模型允许暂缓；主会话对最终集成版本的独立验收仍待完成。
+
+本轮正式自验交付
+源码 d9e1b71119e3141f9f82164db26586d371835e19，foundation 67d0d4df781d3eae7dd2a546b5d981107c45f737，含五行资源 f4c210d / 58c3a9d。
+正式 Electron 五组操作全部通过，八形象与五行近景身份一致；renderer errors=0。
+两次真实本机连接失败，助手回复为空；重试不重复用户消息；清空历史后保留记忆和人设。
+DPAPI 加密密钥、记忆关闭及历史清空通过 SQLite 只读核对。
+证据与10张截图：docs/implementation/evidence/conversations/unified-2026-10-24/index.html / evidence.json。
+状态 accepted_by_main_review；主会话已接受代码 d9e1b71 / 交付 deda2f2。云模型按本轮范围暂缓，U08 全产品验收由主会话完成。
+
+主会话复验已接受，依据与接受项见 docs/implementation/evidence/conversations/unified-2026-10-24/parent-review.json。
+本组不重复自验；最终集成若回传本模块具体问题，再定向修正和复验。

@@ -1,0 +1,343 @@
+{
+  "module": "companions",
+  "branch": "codex/lingjing-companions",
+  "implementationCommit": "deeebe0ba5af7823c68393533adfe7e4f7317a15",
+  "status": "accepted-by-main-awaiting-final-integration",
+  "unifiedBattleScope": {
+    "required": [
+      "U02 complete five-element roster and stable instance identity",
+      "U03 consume battle public action/element presentation",
+      "U05 concise labels and keyboard-accessible Radix hints",
+      "U07 real Electron self-acceptance with source SHA"
+    ],
+    "pending": [
+      "Final integrated acceptance continues in the main chat"
+    ],
+    "publicPresentationContract": {
+      "file": "ui/src/features/battle/BattleMoves.tsx",
+      "exports": [
+        "ElementMark",
+        "BattleMoves",
+        "getBattleMovePresentation",
+        "BattleSkillSummary"
+      ],
+      "change": "Narrow shared-presentation extraction in this branch: live BattleMoves and read-only detail both consume the existing same-source move definitions, icons and authority-derived rule hints. No battle engine, command availability, damage formula or additional BattleMoves mount was added.",
+      "consumerReady": true
+    },
+    "previousAcceptance": "The six-character portrait audit below is preserved historical evidence, not completion of the expanded goal.",
+    "selfVerified": true,
+    "nativeVisualProof": "docs/implementation/evidence/companions/unified-2026-10-24/native/evidence.json",
+    "ruleScope": "Companions consumes the actual rules and compares five UI element hints; battle/main own the complete 25-matchup numeric and four-mode acceptance."
+  },
+  "updatedAt": "2026-10-24T15:49:03.414Z",
+  "upstream": {
+    "fetchedAgainBeforeDelivery": true,
+    "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086",
+    "baseline": "6c8ce65",
+    "originMainIsAncestor": true,
+    "remoteCommitsMissingAtFinalFetch": 0,
+    "finalFetchUtc": "2026-10-24T15:47:21.402Z"
+  },
+  "foundationContractIntegrated": "67d0d4df781d3eae7dd2a546b5d981107c45f737",
+  "contract": "apps/pc-app/runtime/features/companions/INTEGRATION.md",
+  "verification": "docs/implementation/evidence/companions/unified-2026-10-24/verification.json",
+  "routes": [
+    "/companions",
+    "/companions/adopt",
+    "/companions/:petId",
+    "/desktop/:petId"
+  ],
+  "delivered": [
+    "Repeated adoption of one template creates independent petId/serial/name/growth/desktop state/provenance",
+    "Three simultaneous transparent native windows use foundation windows/preload plus the common React/Pixi desktop route",
+    "Per-pet rename/touch/behavior/scale/visibility/drag and restart persistence",
+    "Independent chat/battle/guard choices; chat entries synchronize the real conversation selection and owner",
+    "Transactional garden growth adapter, trusted idempotent capture receipts and preserved current progression rules",
+    "Verified account isolation and additive raw legacy archive with original JSON/animals/history retained",
+    "Approved 01/03 layouts with Chinese flat UI, public shadcn Radix controls, shared Motion and actual Pixi rendering",
+    "Eight canonical adoptions and actual five-element identity across detail/native/chat/training/garrison, with five SQLite garrison receipts",
+    "Read-only battle skill summary and live command bar share one presenter, original icons and actual rule hints",
+    "Detail battle entry selects its exact pet first; companion action IDs drive same-clip restart without remounting Pixi",
+    "Compact Radix hints and numeric bars; final native captures obey the original 1-4 account display contract and restore the isolated QA state"
+  ],
+  "actualOpenSourceUse": [
+    {
+      "project": "React",
+      "version": "19.3.1",
+      "license": "MIT",
+      "where": "ui/src/features/companions: all four pages and native desktop route"
+    },
+    {
+      "project": "Electron",
+      "version": "36.9.5",
+      "license": "MIT",
+      "where": "runtime/features/companions/windows.cjs consumes foundation sandboxed transparent windows"
+    },
+    {
+      "project": "electron-vite",
+      "version": "4.0.1",
+      "license": "MIT",
+      "where": "foundation production build used in real runtime acceptance"
+    },
+    {
+      "project": "shadcn/ui Radix Nova",
+      "version": "official registry source snapshot 2026-10-24",
+      "license": "MIT",
+      "where": "components.tsx/AdoptionPage.tsx/PetDetailPage.tsx use shared actual Dialog/Tabs/Select/Slider/Switch/Checkbox/Input/Tooltip/Button/Card/Badge",
+      "provenance": "docs/implementation/shadcn-source-record.json and ui/src/components/ui/LICENSE.shadcn"
+    },
+    {
+      "project": "radix-ui",
+      "version": "1.8.1",
+      "license": "MIT",
+      "where": "Real focus trap/roving tabs/keyboard/Escape/focus restoration and controlled value behavior through public shadcn components"
+    },
+    {
+      "project": "Tailwind CSS",
+      "version": "4.3.3",
+      "license": "MIT",
+      "where": "Shared Radix component variants, theme tokens and flat styles; feature CSS supplies approved composed page layouts"
+    },
+    {
+      "project": "Motion for React",
+      "version": "14.6.0",
+      "license": "MIT",
+      "where": "Public route/modal/list wrappers and live useAppMotion policy; controlled actions only select Pixi clips"
+    },
+    {
+      "project": "PixiJS",
+      "version": "8.22.0",
+      "license": "MIT",
+      "where": "Shared ResourceStage for full-body desktop, action previews and large preview; public ResourcePortrait for same-atlas idle close-ups, no separate animation engine"
+    },
+    {
+      "project": "Lucide React",
+      "version": "1.61.0",
+      "license": "ISC",
+      "where": "Status/action/behavior/detail/native-window controls throughout companions feature"
+    },
+    {
+      "project": "better-sqlite3",
+      "version": "12.11.1",
+      "license": "MIT",
+      "where": "Foundation single SQLite connection consumed by additive migrations, CAS, idempotency and composable growth/capture transactions; Node domain checks use the actual node:sqlite alternative"
+    }
+  ],
+  "necessaryCustomLogic": [
+    "Owner plus petId domain identity, migration/archive, revision checks, durable action and encounter receipts",
+    "Composable synchronous garden growth transaction and current 100 XP/10 percent progression",
+    "Native per-instance hit regions, desktop walking and durable position handling; character frames are still rendered by shared Pixi",
+    "Approved hero/detail/adoption composition and static atlas thumbnails; no replacement UI primitive or animation engine",
+    "Accessible name is supplied to shared Slider Thumb; Radix owns all interaction"
+  ],
+  "artwork": {
+    "resourceId": "Six canonical resources from resources/roster.cjs",
+    "provenance": "apps/pc-app/runtime/features/resources/assets/roster-v2/source-record.json",
+    "source": "Approved character board adapted into project-generated illustration and transparent sprite atlas",
+    "catalog": "Fish, Blue, Riceball, Shiba, Hat Cat, White Fox; distinct actual 2D atlases and 12 action mappings per character",
+    "characters": [
+      {
+        "name": "鱼丸",
+        "templateId": "big-fish-gentle",
+        "resourceId": "builtin:lingjing-yuwan-v2"
+      },
+      {
+        "name": "小蓝",
+        "templateId": "big-fish-cheerful",
+        "resourceId": "builtin:lingjing-xiaolan-v1"
+      },
+      {
+        "name": "饭团",
+        "templateId": "big-fish-foodie",
+        "resourceId": "builtin:lingjing-fantuan-v1"
+      },
+      {
+        "name": "焰柴",
+        "templateId": "animal-shiba",
+        "resourceId": "builtin:lingjing-shiba-v2"
+      },
+      {
+        "name": "礼帽喵",
+        "templateId": "animal-hat-cat",
+        "resourceId": "builtin:lingjing-hatcat-v1"
+      },
+      {
+        "name": "小狐",
+        "templateId": "animal-white-fox",
+        "resourceId": "builtin:lingjing-xiaohu-v1"
+      }
+    ]
+  },
+  "uiComparisons": [
+    {
+      "actual": "docs/implementation/evidence/companions/audit-2026-10-24/portrait/1280-overview.png",
+      "reference": "docs/design/2026-10-24/full-ui/01-companions-and-desktop.png",
+      "verified": "Shared title tokens, room hero, independent six-character close-up roster and true per-pet controls"
+    },
+    {
+      "actual": "docs/implementation/evidence/companions/audit-2026-10-24/portrait/1280-detail.png",
+      "reference": "docs/design/2026-10-24/full-ui/03-pet-detail-and-adoption.png",
+      "verified": "Parallel header/Tabs, actual scene overlays, growth/standard-rule meaning, close-up skill portraits and illustrated memory"
+    },
+    {
+      "actual": "docs/implementation/evidence/companions/audit-2026-10-24/portrait/1280-adoption.png",
+      "reference": "docs/design/2026-10-24/full-ui/03-pet-detail-and-adoption.png",
+      "verified": "Six portrait template cards; true shared canonical resource, full-body large preview and real adoption form"
+    }
+  ],
+  "checks": {
+    "sqliteAndAccountBoundary": "15 passed, 0 failed; eight canonical resources, all five elements, original archive/account isolation, independent instances, transaction/receipt and action ownership coverage",
+    "typescript": "passed",
+    "featureEslint": "passed",
+    "productionBuild": "passed; existing bundle-size/shared ResourceStage chunk warnings",
+    "diffCheck": "passed",
+    "realElectronLifecycle": "artifacts/companions/electron-4yE4tp/evidence.json: passed",
+    "realNativeDrag": "artifacts/companions/electron-4yE4tp/native-drag.json: fish 8,8 to 85,62; other two saved positions unchanged",
+    "realRadixKeyboardPersistence": "artifacts/companions/electron-4yE4tp/radix-ui.json: Switch Space and Slider arrows persist; final UI pass also verifies named Thumb",
+    "final2dUiAndChat": "Eight actual UI adoptions / five instance identities through detail, native, chat, detail-to-battle entry, training and actual garrison / 25 Pixi clips / two same-action restarts / same-account restart: passed",
+    "correctedStaticCaptures": "docs/implementation/evidence/companions/unified-2026-10-24/verification.json: 1280x844 and 1440x900 CSS px, loaded assets, shared four-skill summary, compact hints and full eight-card roster with lower-scroll evidence",
+    "portraitConsumer": "capture-UCPqyb: six adoption portraits at both sizes, same canonical idle frames, large preview and native full body preserved; images decoded and inspected",
+    "nativeSpritePixels": "docs/implementation/evidence/companions/unified-2026-10-24/native/evidence.json: actual visible canonical canvases, 12671 wood and 12788 earth nontransparent pixels, PNGs inspected; original limit 3 and all preferences/visibility restored",
+    "sharedBattlePresenter": "Live command bar and read-only companion details use getBattleMovePresentation + SkillContent; source guard confirms exactly one BattleMoves mount",
+    "sourceArchitecture": "12 passed; source guards only, not final four-mode runtime acceptance",
+    "mainIndependentReview": "accepted by main after independent visual and evidence readback"
+  },
+  "only2d": {
+    "activeTemplatesAndConsumerList": "2D spritesheets only",
+    "desktopAndPreviews": "Actual resources Pixi ResourceStage, no companion HTML/preload/canvas engine",
+    "liveCheck": "No model-viewer or GLB/GLTF/VRM import label in companions adoption",
+    "history": "Old appearance metadata and original files remain archived; no old 3D rendering acceptance required"
+  },
+  "integrationNotes": [
+    "Consume services.get('companions') synchronously on the foundation shared connection; never debit food again merely because a growth receipt is duplicate",
+    "Capture accepts optional authoritative element independently of 2D appearance; listTemplates exposes the current supported IDs",
+    "Foundation already supplies shared windows and tray-wide persisted recallAll",
+    "No root package/lock edits or unrelated feature-branch merges were made by this feature",
+    "Public battle/BattleMoves.tsx contains a narrow same-source read-only presenter bridge; latest foundation dodge-cost/locking behavior is retained. No battle-runtime formula was changed.",
+    "Desktop display range remains the Accounts 1-4 contract. Five-element identity verification does not require five simultaneous visible windows."
+  ],
+  "knownLimits": [
+    "Central main conversation owns final integrated visual approval and other modules follow-up",
+    "Local acceptance does not assert online AI, cloud synchronization or production deployment success"
+  ],
+  "remaining": [
+    "Final integrated acceptance continues in the main chat"
+  ],
+  "dataPolicy": "Only additive owner-scoped tables/raw archive; original JSON/animals/history/design files preserved; no production migration/deployment",
+  "uiRefinement": {
+    "scope": "Follow-up: approved 03 layout/font/card spacing, at least six distinct shared resource shapes, real wave/eat/hit actions, same resourceId in battle",
+    "foundationIntegrated": "bbb4395",
+    "normalizedLayoutEvidence": "docs\\implementation\\evidence\\companions\\audit-2026-10-24\\pre-portrait\\capture-metadata.json",
+    "normalizedViewport": "1280x844 and 1440x900 CSS px, actual DPR1 normalization recorded",
+    "implemented": [
+      "Title and room scene in left column; right Tabs start at page top and span its width",
+      "Real illustrated memory with actual source/date",
+      "Adoption preview aligns at page top",
+      "Aspect-preserving static atlas thumbnails; standard non-grid atlas uses shared Pixi",
+      "Per-owner/pet transient action playback, preview and feeding-commit routing in progress"
+    ],
+    "pendingResourceContract": [],
+    "finalEvidencePending": false,
+    "audit": "9915684: docs/implementation/acceptance/2026-10-24/visual-audit.txt",
+    "auditItems": [
+      "A01",
+      "A02",
+      "A03",
+      "A06",
+      "A07",
+      "A08",
+      "A11"
+    ],
+    "visualPass": false,
+    "interimEvidence": "docs/implementation/evidence/companions/refinement-v1/evidence.json: geometry and one existing clip route passed; not final six-character visual acceptance",
+    "combatAuthority": "Public battle.getRules / battle-runtime.getBattleRules; six actual training sessions match maxHP and canonical resourceId, growth values are labelled separately",
+    "pendingAuditItems": [
+      "Central independent integrated approval; this branch consumer implementation and targeted checks are complete"
+    ],
+    "directionChecks": [
+      "13 actual SQLite/account/resource checks passed",
+      "TypeScript and feature ESLint passed",
+      "1280x844 real production Electron: scene/footer no vertical overflow; title/tabs alignment and Card margins passed",
+      "Real native per-pet clip frames advanced 0/1/2 and returned to idle",
+      "Actual training same pet/resource reads max HP120; persisted growth HP124 retained"
+    ],
+    "sixCharacterEvidence": "docs\\implementation\\evidence\\companions\\audit-2026-10-24\\pre-portrait\\roster-actions.json",
+    "canonicalMigration": "Only explicit registry aliases upgrade; default templates map to their own canonical resource, manual bindings and all instance data/history remain independent",
+    "portraitCompleted": {
+      "evidence": "docs/implementation/evidence/companions/audit-2026-10-24/portrait/evidence.json",
+      "fullBodyUnchanged": true,
+      "independentApprovalOwnedByMain": true,
+      "locations": [
+        "Adoption cards",
+        "Owned roster",
+        "Status avatar",
+        "Detail skill thumbnails"
+      ],
+      "sharedDependency": "1dac04e",
+      "code": "e074fae"
+    },
+    "completedAuditItems": [
+      "A01 shared font/page tokens, H1 28px/700",
+      "A02 compact left breadcrumb/header; full-width right Tabs at top",
+      "A03 zero Card margin and public layout rhythm",
+      "A06 actual scene, overlay information, real memory illustration and data",
+      "A07 six distinct canonical resources with close-up portraits",
+      "A08 actual owner/pet/resource-scoped actions; food playback only after commit",
+      "A11 public battle.getRules display and actual training equality",
+      "A07/A12 follow-up public ResourcePortrait consumer with full-body stages retained"
+    ]
+  },
+  "previousVerification": "docs/implementation/evidence/companions/audit-2026-10-24/verification.json",
+  "functionalChangeCommit": "12fabe21fe9fc45ce9119560d6d01e3e60cd042e",
+  "verifiedRuntimeCommit": "4770aa1fd2abcca98a1986ccd0a7b38f7826049c",
+  "currentValidation": {
+    "domainTests": 15,
+    "typecheck": "passed",
+    "targetedEslint": "passed",
+    "productionBuild": "passed",
+    "uiAdoptions": 8,
+    "elements": [
+      "metal",
+      "wood",
+      "water",
+      "fire",
+      "earth"
+    ],
+    "actualClipPlays": 25,
+    "sameActionReplays": 2,
+    "newCharacterTrainingTimelines": 2,
+    "garrisonCommandsAndDatabaseReceipts": 5,
+    "detailToBattleEntryUsesExactPet": 5,
+    "viewports": [
+      {
+        "width": 1280,
+        "height": 844,
+        "dpr": 1
+      },
+      {
+        "width": 1440,
+        "height": 900,
+        "dpr": 1
+      }
+    ],
+    "restart": {
+      "petCount": 8,
+      "selections": {
+        "chatPetId": "pet-cffdaa10-9939-4e80-a135-ff802cf932f6",
+        "battlePetId": "pet-cffdaa10-9939-4e80-a135-ff802cf932f6",
+        "guardPetId": null
+      },
+      "reauthenticatedSameQaAccount": true,
+      "sessionPersistence": "memory-only-by-QA-policy"
+    },
+    "architecture": "12 source guards passed; this is not four-mode runtime final acceptance"
+  },
+  "mainIndependentReview": {
+    "status": "accepted",
+    "receivedAt": "2026-10-24T15:49:03.414Z",
+    "sourceThreadId": "01a16d86-7650-7871-8e27-5b65477a126e",
+    "runtimeSourceSha": "4770aa1fd2abcca98a1986ccd0a7b38f7826049c",
+    "acceptedCodeHead": "deeebe0ba5af7823c68393533adfe7e4f7317a15",
+    "evidence": "Main independently viewed both real native sprite images, wood detail, earth skills, verification and SQLite readback; accepted canonical identity, pixels, original limit 3, restored settings/state, eight adoptions, five-element paths, 25 actions, replay and restart. No full rerun requested."
+  }
+}

@@ -70,6 +70,13 @@ const migrations = [{
     blocked INTEGER NOT NULL CHECK(blocked IN (0,1))
   );`
 }, {
+  id: "accounts-003-authoritative-checkpoints",
+  sql: `CREATE TABLE IF NOT EXISTS account_sync_checkpoints (
+    owner_account_id TEXT PRIMARY KEY REFERENCES account_identities(owner_account_id),
+    cloud_revision INTEGER NOT NULL, envelope_checksum TEXT NOT NULL,
+    data_checksum TEXT NOT NULL, verified_at TEXT NOT NULL
+  );`
+}, {
   id: "accounts-003-isolated-qa-profile",
   sql: `CREATE TABLE IF NOT EXISTS account_qa_profile (
     singleton INTEGER PRIMARY KEY CHECK(singleton=1),

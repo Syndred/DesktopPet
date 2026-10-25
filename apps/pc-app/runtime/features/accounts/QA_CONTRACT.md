@@ -1,5 +1,7 @@
 # Isolated QA identity contract
 
+Foundation's main entry now calls both the low-level profile validator and this account resolver before opening stores. It passes the verified private context through `qaProfile`; Accounts reuses it for SQLite validation and publishes `qaIdentity`. The single common `qaScenario` delegates its `requireIdentity()` to `qaIdentity`. Core never imports Accounts, avoiding a circular validator dependency. Unified runs use one `.lingjing-qa-profile.json` and the `unified-battle` flag.
+
 For the unified battle goal (2026-10-24). Accounts consumes foundation's public scenario guard from commit 4c05172; it adds no battle engine or simulated cloud sync.
 
 ## One shared scenario

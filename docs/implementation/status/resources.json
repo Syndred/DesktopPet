@@ -1,0 +1,303 @@
+{
+  "module": "resources",
+  "branch": "codex/lingjing-resources",
+  "state": "ready_for_foundation_acceptance",
+  "goal": "unified-battle-goal.txt / U02, U04 public API, U05 resources UI, U07 author self-acceptance",
+  "verifiedCodeCommit": "f4c210deaa826d3c2ab8d68cb5dadb18538ca864",
+  "sourceSync": {
+    "remote": "origin/main",
+    "revision": "4786f97680679c2db0aa307fa5f67ec247f93086",
+    "fetchedThisTurn": true,
+    "ancestorOfHead": true,
+    "verifiedAt": "2026-10-24T15:12:20.727Z"
+  },
+  "characters": [
+    {
+      "name": "鱼丸",
+      "templateId": "big-fish-gentle",
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "element": "water",
+      "manifest": "apps/pc-app/runtime/features/resources/assets/roster-v2/yuwan/character.json",
+      "distinctPoseFrames": 16,
+      "canonicalActions": 12,
+      "availableClips": 13
+    },
+    {
+      "name": "小蓝",
+      "templateId": "big-fish-cheerful",
+      "resourceId": "builtin:lingjing-xiaolan-v1",
+      "element": "water",
+      "manifest": "apps/pc-app/runtime/features/resources/assets/roster-v2/xiaolan/character.json",
+      "distinctPoseFrames": 16,
+      "canonicalActions": 12,
+      "availableClips": 13
+    },
+    {
+      "name": "饭团",
+      "templateId": "big-fish-foodie",
+      "resourceId": "builtin:lingjing-fantuan-v1",
+      "element": "water",
+      "manifest": "apps/pc-app/runtime/features/resources/assets/roster-v2/fantuan/character.json",
+      "distinctPoseFrames": 16,
+      "canonicalActions": 12,
+      "availableClips": 13
+    },
+    {
+      "name": "焰柴",
+      "templateId": "animal-shiba",
+      "resourceId": "builtin:lingjing-shiba-v2",
+      "element": "fire",
+      "manifest": "apps/pc-app/runtime/features/resources/assets/roster-v2/shiba/character.json",
+      "distinctPoseFrames": 16,
+      "canonicalActions": 12,
+      "availableClips": 13
+    },
+    {
+      "name": "礼帽喵",
+      "templateId": "animal-hat-cat",
+      "resourceId": "builtin:lingjing-hatcat-v1",
+      "element": "metal",
+      "manifest": "apps/pc-app/runtime/features/resources/assets/roster-v2/hatcat/character.json",
+      "distinctPoseFrames": 16,
+      "canonicalActions": 12,
+      "availableClips": 13
+    },
+    {
+      "name": "小狐",
+      "templateId": "animal-white-fox",
+      "resourceId": "builtin:lingjing-xiaohu-v1",
+      "element": "water",
+      "manifest": "apps/pc-app/runtime/features/resources/assets/roster-v2/xiaohu/character.json",
+      "distinctPoseFrames": 16,
+      "canonicalActions": 12,
+      "availableClips": 13
+    },
+    {
+      "name": "青芽",
+      "templateId": "animal-wood-deer",
+      "resourceId": "builtin:lingjing-qingya-v1",
+      "element": "wood",
+      "manifest": "apps/pc-app/runtime/features/resources/assets/roster-v2/qingya/character.json",
+      "distinctPoseFrames": 16,
+      "canonicalActions": 12,
+      "availableClips": 13
+    },
+    {
+      "name": "岩团",
+      "templateId": "animal-earth-pangolin",
+      "resourceId": "builtin:lingjing-yantuan-v1",
+      "element": "earth",
+      "manifest": "apps/pc-app/runtime/features/resources/assets/roster-v2/yantuan/character.json",
+      "distinctPoseFrames": 16,
+      "canonicalActions": 12,
+      "availableClips": 13
+    }
+  ],
+  "elementCoverage": {
+    "metal": 1,
+    "wood": 1,
+    "water": 4,
+    "fire": 1,
+    "earth": 1
+  },
+  "canonicalAliases": {
+    "builtin:lingjing-yuwan-v1": "builtin:lingjing-yuwan-v2",
+    "builtin:lingjing-battle-yuwan-v1": "builtin:lingjing-yuwan-v2",
+    "builtin:lingjing-battle-shiba-v1": "builtin:lingjing-shiba-v2"
+  },
+  "assetSource": "apps/pc-app/runtime/features/resources/assets/roster-v2/source-record.json",
+  "prompts": [
+    "apps/pc-app/runtime/features/resources/assets/roster-v2/generation-prompts.json",
+    "apps/pc-app/runtime/features/resources/assets/roster-v2/layout-refinement-prompts.json",
+    "apps/pc-app/runtime/features/resources/assets/roster-v2/element-extension-prompts.json",
+    "apps/pc-app/runtime/features/resources/assets/roster-v2/element-extension-refinement.json"
+  ],
+  "runtimeAcceptance": {
+    "passed": true,
+    "scope": "Only two new characters captured this round; original six accepted evidence retained separately",
+    "dataSource": {
+      "mode": "local-qa",
+      "simulated": false,
+      "cloud": "not used",
+      "profile": "artifacts/resources/2d-profile"
+    },
+    "realPixiFrames": 32,
+    "canonicalActionsPerCharacter": 12,
+    "independentRealFrameTexturesPerCharacter": 16,
+    "portraits": 2,
+    "sceneBounds": {
+      "capturedFrames": 32,
+      "allInsideStage": true,
+      "minimumTopPadding": 10.399999999999949,
+      "maximumBottom": 172.64
+    },
+    "sameActionReplays": {
+      "passed": true,
+      "events": 8,
+      "actions": [
+        "attack",
+        "hit"
+      ],
+      "actualTextureRectangleAndFrameUidChanged": true,
+      "canvasAndSharedTextureSourcePreserved": true,
+      "evidence": "replay/evidence.json"
+    },
+    "templateEndpointCoverage": {
+      "metal": 1,
+      "wood": 1,
+      "water": 4,
+      "fire": 1,
+      "earth": 1
+    },
+    "adoptionAndBattleSelection": {
+      "passed": true,
+      "method": "Formal preload IPC receipts and list/SQLite readback; no played battle claim",
+      "originalSelectionRestored": true,
+      "evidence": "docs/implementation/evidence/resources/five-elements/adoption-selection-readback.json"
+    },
+    "sqliteCounts": {
+      "allResourceRows": 12,
+      "globalRows": 10
+    },
+    "retainedHistoricalBuiltins": [
+      {
+        "resource_id": "builtin:lingjing-yuwan-v1"
+      },
+      {
+        "resource_id": "builtin:lingjing-battle-shiba-v1"
+      }
+    ],
+    "retainedImportReceipts": 2,
+    "pageErrors": [],
+    "consoleErrors": [],
+    "evidence": "docs/implementation/evidence/resources/five-elements/evidence.json",
+    "visualReview": "docs/implementation/evidence/resources/five-elements/visual-review.json",
+    "source": "docs/implementation/evidence/resources/five-elements/source.json"
+  },
+  "portraitContract": {
+    "component": "ResourcePortrait",
+    "helper": "resolveResourcePortrait",
+    "publicEntry": "apps/pc-app/ui/src/features/resources/index.tsx",
+    "documentation": "docs/implementation/roster-contract.md",
+    "source": "Same canonical idle texture; centralized head/upper-body viewport; no new raster image or global stage enlargement",
+    "resourcesConsumer": "wired"
+  },
+  "playbackContract": {
+    "prop": "ResourceStage.playbackKey?: string | number",
+    "consumer": "Use a new real event ID per side/phase, including repeated hit at impact. Do not generate random render keys or replay restored history.",
+    "documentation": "docs/implementation/five-element-resources-contract.md",
+    "testedActualFrameRectsAndTextureUids": true
+  },
+  "tests": [
+    {
+      "command": "node scripts/desktop/run-native-tests.cjs apps/pc-app/runtime/features/resources/verification/roster.test.cjs",
+      "result": "5/5 passed; eight canonical identities/elements and old alias/row/preferences preservation"
+    },
+    {
+      "command": "npm run typecheck:ui",
+      "result": "passed"
+    },
+    {
+      "command": "npx eslint apps/pc-app/ui/src/features/resources --ext .ts,.tsx",
+      "result": "passed"
+    },
+    {
+      "command": "npm run build:pc",
+      "result": "passed; existing Vite large-chunk warning"
+    },
+    {
+      "command": "node apps/pc-app/runtime/features/resources/verification/roster-preview.electron.mjs --only=qingya,yantuan --out=artifacts/resources/five-elements/preview",
+      "result": "passed; 32 actual frames, 24 action mappings, two portraits, no renderer/console errors"
+    },
+    {
+      "command": "node apps/pc-app/runtime/features/resources/verification/roster-replay.electron.mjs",
+      "result": "passed; eight same-action replays of attack/hit, actual texture frame and UID changes, same canvas and TextureSource"
+    }
+  ],
+  "preservation": {
+    "originalSixFiles": 12,
+    "originalSixByteHashesUnchanged": true,
+    "originalModelDirectoryUnchanged": true,
+    "codexConfigUnchanged": true,
+    "oldAliasesRowsPreferencesReceiptsPreserved": true,
+    "evidence": "docs/implementation/evidence/resources/five-elements/original-six-preserved.json"
+  },
+  "previousSixCharacterAcceptance": {
+    "sourceCommit": "4afd06127884b08c083654a213e4cdbd12508e73",
+    "verifiedCodeCommit": "939c254",
+    "runtimeAcceptance": {
+      "passed": true,
+      "realPixiFrames": 96,
+      "canonicalActionsPerCharacter": 12,
+      "independentRealFrameTexturesPerCharacter": 16,
+      "sceneBounds": {
+        "capturedFrames": 96,
+        "allInsideStage": true,
+        "minimumTopPadding": 10.399999999999977,
+        "maximumBottom": 172.64
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "portraits": 6,
+      "independentInstances": {
+        "sameTextureSource": true,
+        "differentPetIds": true,
+        "leftPausedTextureCount": 1,
+        "rightPlayingTextureCount": 2
+      },
+      "attackReplay": [
+        "41,654,264,243",
+        "356,642,280,257",
+        "59,61,221,251"
+      ],
+      "sqliteCounts": {
+        "allResourceRows": 10,
+        "globalRows": 8
+      },
+      "retainedHistoricalBuiltins": [
+        {
+          "resource_id": "builtin:lingjing-yuwan-v1"
+        },
+        {
+          "resource_id": "builtin:lingjing-battle-shiba-v1"
+        }
+      ],
+      "retainedImportReceipts": 2,
+      "canonicalPreferenceRows": 0,
+      "evidence": "docs/implementation/evidence/resources/roster-v2/evidence.json",
+      "visualReview": "docs/implementation/evidence/resources/roster-v2/visual-review.json"
+    },
+    "tests": [
+      {
+        "command": "node scripts/desktop/run-native-tests.cjs apps/pc-app/runtime/features/resources/verification/resources.test.cjs apps/pc-app/runtime/features/resources/verification/roster.test.cjs tests/foundation/resource-backup.test.cjs",
+        "result": "14/14 passed before adding the LF/CRLF case"
+      },
+      {
+        "command": "node scripts/desktop/run-native-tests.cjs apps/pc-app/runtime/features/resources/verification/roster.test.cjs",
+        "result": "latest roster suite 5/5 passed, including Git LF/CRLF relocation without replacing rows/preferences"
+      },
+      {
+        "command": "npm run typecheck:ui",
+        "result": "passed"
+      },
+      {
+        "command": "npx eslint apps/pc-app/ui/src/features/resources packages/shared-types/src/features/resources",
+        "result": "passed"
+      },
+      {
+        "command": "npm run build:pc",
+        "result": "passed; existing Vite large-chunk warning remains"
+      },
+      {
+        "command": "node apps/pc-app/runtime/features/resources/verification/roster-preview.electron.mjs",
+        "result": "passed: 6 characters, 96 actual frames, 12 actions each, all drawn rectangles inside stage, 0 renderer/console errors"
+      }
+    ]
+  },
+  "integrationDependencies": [
+    "battle consumes ResourceStage.playbackKey for each real new phase/event, particularly same hit during impact; restore logic must not replay history",
+    "foundation/main independently accepts the two new characters inside the shared BattleScreen/Arena and verifies all four modes plus 25 ordered elemental matchups using current rules",
+    "cloud may be deferred or isolated simulated adapter under the main goal; no cloud result claimed by resource QA"
+  ],
+  "remaining": []
+}

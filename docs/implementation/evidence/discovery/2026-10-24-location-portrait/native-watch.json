@@ -1,0 +1,96 @@
+{
+  "at": "2026-10-24T14:18:03.522Z",
+  "productionMain": true,
+  "controlledPosition": false,
+  "rawCoordinatesCommitted": false,
+  "systemSamples": [
+    {
+      "phase": "before challenge",
+      "at": "2026-10-24T14:18:10.364Z",
+      "status": "imprecise",
+      "permission": "granted",
+      "provider": "windows-geolocator",
+      "source": "os",
+      "positionSource": "WiFi",
+      "accuracyMeters": 313,
+      "timestampMs": 1792851490015,
+      "coordinateHash": "dce02adaabb3e55436c8a17f30acf0fdc9fbeb2e19f1d97a33b099bf000f1429",
+      "error": {
+        "code": "LOCATION_IMPRECISE",
+        "message": "定位精度不足，请移动到信号较好的地方（需要 ≤ 80 米）"
+      }
+    },
+    {
+      "phase": "before challenge",
+      "at": "2026-10-24T14:18:22.091Z",
+      "status": "imprecise",
+      "permission": "granted",
+      "provider": "windows-geolocator",
+      "source": "os",
+      "positionSource": "WiFi",
+      "accuracyMeters": 313,
+      "timestampMs": 1792851501828,
+      "coordinateHash": "dce02adaabb3e55436c8a17f30acf0fdc9fbeb2e19f1d97a33b099bf000f1429",
+      "error": {
+        "code": "LOCATION_IMPRECISE",
+        "message": "定位精度不足，请移动到信号较好的地方（需要 ≤ 80 米）"
+      }
+    },
+    {
+      "phase": "before challenge",
+      "at": "2026-10-24T14:18:37.175Z",
+      "status": "imprecise",
+      "permission": "granted",
+      "provider": "windows-geolocator",
+      "source": "os",
+      "positionSource": "WiFi",
+      "accuracyMeters": 313,
+      "timestampMs": 1792851516806,
+      "coordinateHash": "dce02adaabb3e55436c8a17f30acf0fdc9fbeb2e19f1d97a33b099bf000f1429",
+      "error": {
+        "code": "LOCATION_IMPRECISE",
+        "message": "定位精度不足，请移动到信号较好的地方（需要 ≤ 80 米）"
+      }
+    },
+    {
+      "phase": "before challenge",
+      "at": "2026-10-24T14:18:52.000Z",
+      "status": "imprecise",
+      "permission": "granted",
+      "provider": "windows-geolocator",
+      "source": "os",
+      "positionSource": "WiFi",
+      "accuracyMeters": 313,
+      "timestampMs": 1792851531846,
+      "coordinateHash": "dce02adaabb3e55436c8a17f30acf0fdc9fbeb2e19f1d97a33b099bf000f1429",
+      "error": {
+        "code": "LOCATION_IMPRECISE",
+        "message": "定位精度不足，请移动到信号较好的地方（需要 ≤ 80 米）"
+      }
+    },
+    {
+      "phase": "before challenge",
+      "at": "2026-10-24T14:19:07.316Z",
+      "status": "imprecise",
+      "permission": "granted",
+      "provider": "windows-geolocator",
+      "source": "os",
+      "positionSource": "WiFi",
+      "accuracyMeters": 313,
+      "timestampMs": 1792851546901,
+      "coordinateHash": "dce02adaabb3e55436c8a17f30acf0fdc9fbeb2e19f1d97a33b099bf000f1429",
+      "error": {
+        "code": "LOCATION_IMPRECISE",
+        "message": "定位精度不足，请移动到信号较好的地方（需要 ≤ 80 米）"
+      }
+    }
+  ],
+  "rendererErrors": [],
+  "entry": {
+    "appPath": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-discovery\\DesktopPet",
+    "electron": "36.9.5",
+    "verificationHostPresent": false
+  },
+  "physicalLocationAcceptance": false,
+  "error": "No precise OS fix within the bounded60s native watch: before challenge"
+}

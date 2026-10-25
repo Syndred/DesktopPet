@@ -10,7 +10,8 @@ module.exports = {
   id: "accounts", migrations, publicCommands: ["session", "login", "register", "logout"],
   register(services) {
     const electron = require("electron");
-    const qaScenario = resolveQaScenario({ userData: services.paths.userData, legacyDataFile: services.paths.legacyDataFile, foundationScenario: services.get?.("qaScenario"),
+    const preflight = services.get('qaProfile');
+    const qaScenario = preflight?.accountContext || resolveQaScenario({ userData: services.paths.userData, legacyDataFile: services.paths.legacyDataFile, foundationScenario: services.get?.("qaScenario"),
       productionDirectories: ["Lingjing", "qingpet-desktop-runtime", "qingpet-lord-3d"].map(name => join(electron.app.getPath("appData"), name)) });
     const host = createDesktopHost(services, electron);
     const accounts = new AccountsService({ services, host, qaScenario,

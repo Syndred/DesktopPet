@@ -19,7 +19,7 @@ export function createAccountsHandler(createClient) {
       // Check a bounded stream as well as Content-Length; chunked bodies cannot bypass this limit.
       const chunks = [], reader = request.body?.getReader(); let length = 0;
       if (reader) {
-        while (true) {
+        for (;;) {
           const part = await reader.read(); if (part.done) break;
           length += part.value.byteLength; assert(length <= 26 * 1024 * 1024, "SAVE_TOO_LARGE"); chunks.push(part.value);
         }

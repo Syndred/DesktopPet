@@ -1,0 +1,68 @@
+/* Shared page rhythm. Module layouts consume these tokens at normal size. */
+
+body { font-family: var(--font-ui); font-size: var(--text-body); font-weight: var(--weight-body); }
+.app-shell .resources-page { font-family: inherit; }
+.app-shell:not(.is-auth) .main-content h1 {
+  font-family: var(--font-ui);
+  font-size: var(--text-title);
+  font-weight: var(--weight-title);
+  line-height: 1.4;
+  letter-spacing: .02em;
+  margin: 0 0 var(--space-2);
+}
+.app-shell .main-content :is(.cp-page,.battle-page,.discovery-page,.garden-feature,.resources-page,.ac-page,.cv-root) {
+  padding: var(--page-pad-block) var(--page-pad-inline) var(--space-4);
+  width: 100%;
+  max-width: 1440px;
+  min-width: 0;
+  margin-inline: auto;
+}
+.app-shell .main-content :is(.page-header,.garden-heading,.resources-heading,.ac-page-heading,.cv-page-header,.discovery-main-heading) {
+  margin: 0 0 var(--space-6);
+  gap: var(--space-6);
+}
+.app-shell .main-content :is(.eyebrow,.garden-eyebrow,.resources-breadcrumb,.ac-eyebrow,.cv-page-header>p) {
+  font-size: var(--text-label);
+  font-weight: var(--weight-body);
+  line-height: 20px;
+  margin: 0 0 var(--space-2);
+}
+.app-shell .main-content :is(.page-header .muted,.garden-subtitle,.resources-heading p:last-child,.ac-page-heading>p:last-child,.cv-page-header>div>div>p,.discovery-main-heading>div>p) {
+  font-size: var(--text-body);
+  font-weight: var(--weight-body);
+  line-height: 1.7;
+  margin: 0;
+}
+.app-shell .main-content .card { margin-bottom: 0; }
+.app-shell .main-content :is(.card,.garden-card,.resources-panel) > :is(h2,h3),
+.app-shell .main-content [data-slot="card-title"] {
+  font-size: var(--text-card);
+  font-weight: var(--weight-section);
+  line-height: 1.5;
+}
+.app-shell .main-content .page-header .page-breadcrumb { display: flex; align-items: center; gap: var(--space-2); }
+.app-shell .main-content .page-breadcrumb .page-back {
+  height: auto;
+  min-height: 20px;
+  border: 0;
+  border-radius: 4px;
+  padding: 0;
+  background: transparent;
+  color: inherit;
+  font-size: inherit;
+  font-weight: var(--weight-label);
+}
+.cp-detail-body { display: grid; gap: var(--space-4); }
+.cp-detail-content { display: grid; gap: var(--space-4); }
+.cp-adoption-layout,.cp-detail-layout { column-gap: var(--space-6); }
+.battle-live-sidebar { gap: var(--space-4); }
+.battle-training-layout { gap: var(--space-5); }
+.battle-live-layout { gap: var(--space-4); }
+
+@media (max-width: 1100px) {
+  :root { --page-pad-inline: var(--space-6); }
+}
+@media (max-width: 760px) {
+  :root { --text-title: 24px; --page-pad-inline: var(--space-4); --page-pad-block: var(--space-5); }
+}
+.scenario-indicator{display:inline-grid;place-items:center;width:28px;height:28px;margin-left:4px;padding:0;border:1px solid var(--line);border-radius:8px;color:var(--primary);background:#fff;-webkit-app-region:no-drag}

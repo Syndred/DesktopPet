@@ -1,0 +1,234 @@
+{
+  "scope": "U01-U08; final user goal supersedes the earlier six-character visual recheck",
+  "status": "accepted",
+  "rulesEvidence": "artifacts/ui-acceptance/2026-10-24/rules-v3/evidence.json",
+  "independentChecks": {
+    "orderedElementPairs": 25,
+    "actionCases": 75,
+    "elementProperties": 9,
+    "failures": 0
+  },
+  "moduleReviews": [
+    {
+      "module": "accounts",
+      "code": "b08adcc",
+      "selfEvidenceCommit": "830b658",
+      "status": "accepted in final integrated review",
+      "review": "Reviewed actual Electron screenshots, isolated identity and backup/restart readback. Independently launched the delivered app and used CSS.getPlatformFontsForNode to confirm actual Microsoft YaHei UI glyphs in titles, setting labels and cards.",
+      "independentEvidence": "artifacts/ui-acceptance/2026-10-24/account-platform-fonts/evidence.json",
+      "integrationNote": "The account-only branch retains historical H1 29px and card heading 18px. Final foundation build must apply the shared 28px/700 title and card tokens."
+    },
+    {
+      "module": "resources",
+      "code": "f4c210d",
+      "selfEvidenceCommit": "58c3a9d",
+      "status": "accepted in final integrated review",
+      "review": "Viewed original artwork, actual Pixi 32-frame gallery and resource page. Reviewed two portraits, adoption/selection SQLite readback and eight repeated-action traces. Independently confirmed the original six PNGs/manifests have no Git diff.",
+      "coverage": {
+        "characters": 8,
+        "elements": 5,
+        "newActualFrames": 32,
+        "newCanonicalActionMappings": 24
+      },
+      "integrationNote": "Battle/companions must pass actual event playback keys to the common renderer and retain canonical resource/element identity."
+    },
+    {
+      "module": "conversations",
+      "code": "d9e1b71",
+      "selfEvidenceCommit": "deda2f2",
+      "status": "accepted in final integrated review",
+      "review": "Reviewed actual 1440 chat and 1280 AI-settings windows plus persisted results: eight canonical portraits, all five instance elements, saved persona/memory, real send/retry failures without fabricated assistant output, clear-history preserving memory/persona, no renderer key storage. Header control center differs by about 4px; no horizontal overflow.",
+      "evidence": "docs/implementation/evidence/conversations/unified-2026-10-24/",
+      "integrationNote": "Final shared typography and current-build route checks remain part of final integrated acceptance."
+    },
+    {
+      "module": "garden",
+      "code": "e90dcb9",
+      "selfEvidenceCommit": "ef01d4d",
+      "status": "accepted in final integrated review",
+      "review": "Reviewed actual shared-screen win/loss pictures and SQLite/restart evidence. Victory occupies; defeat confirms without occupying. Both keep exact session identity, one seed receipt, preserved personal crops, and idempotent re-confirmation. The defender uses canonical wood Qingya. Garrison does not alter independent pet selection or combat growth.",
+      "evidence": "docs/implementation/evidence/garden/unified-battle/verification.json",
+      "provenance": "Simulated shared location and declared legal QA prestate/opponent action; actual original engine, UI and local transactions. No live GPS or cloud acceptance."
+    },
+    {
+      "module": "discovery",
+      "code": "cd19fa1",
+      "selfEvidenceCommit": "79c7534",
+      "status": "accepted in final integrated review",
+      "review": "Viewed earth wild battle and capture result, reviewed exact session resume, canonical wood/earth actions, duplicate capture, restarted capture/memory and linked SQLite reports/receipts. Training and wild use equal HUD/move geometry at both sizes; no separate arena remains.",
+      "evidence": "docs/implementation/evidence/discovery/2026-10-24-unified/evidence.json",
+      "provenance": "Wild gameplay uses explicit simulated location. Real Windows provider separately returned granted WiFi position at 114m accuracy and stopped watching; this exceeds the existing 80m requirement and does not establish physical-location capture success."
+    },
+    {
+      "module": "companions",
+      "code": "4770aa1",
+      "selfEvidenceCommit": "deeebe0",
+      "status": "accepted in final integrated review",
+      "review": "Reviewed wood detail, earth shared skill cards, real transparent native wood/earth windows, five garrison receipts and restart database readback. Eight adoptions, five elements and 25 actual clip plays are covered. Corrected native frames have 12671 and 12788 visible pixels; the original loading-star frame is explicitly excluded.",
+      "evidence": "docs/implementation/evidence/companions/unified-2026-10-24/verification.json",
+      "nativePolicy": "The legal product range remains 1-4. QA kept the original limit 3 and temporarily recalled three instances for capture, restoring all settings and meaningful pet state."
+    },
+    {
+      "module": "battle",
+      "code": "5ca0bc3",
+      "selfEvidenceCommit": "07bd49a",
+      "status": "accepted in final integrated review",
+      "review": "Reviewed 25 actual UI element pairs and focused animation/peer/motion self-evidence. Main independently verified all four entries, four actions and textures, two-process outcomes, contextual receipts and old-save read projection."
+    },
+    {
+      "module": "foundation",
+      "code": "c4ac693",
+      "selfEvidenceCommit": "731cf25",
+      "status": "accepted in final integrated and portable review",
+      "review": "Reviewed final layered/native/local PostgreSQL results, ASAR file/asset/license audit, original six-instance growth retention, and independently launched the copied portable EXE with real two-character Pixi and one training round."
+    }
+  ],
+  "openFindings": [],
+  "deliveryGate": "Each module self-verifies real Electron, main chat independently reviews, concrete failures return to the owning chat. Final integrated acceptance and current-workspace delivery follow only after all required work passes.",
+  "provenance": "Controlled engine fixtures and isolated simulated transport/location are not live cloud or real GPS evidence.",
+  "reviewedAt": "2026-10-24T16:15:21.579Z",
+  "findings": [
+    {
+      "id": "U01-screen-reuse",
+      "owner": "battle/discovery/garden/foundation",
+      "finding": "Exploration previously owned a second arena/HUD/timer. Sharing BattleMoves alone does not satisfy reuse.",
+      "requiredEvidence": "All four actual entry paths render the same BattleScreen, controller, HUD, log and animation; contextual settlement keeps the originating session ID.",
+      "status": "verified",
+      "resolution": "Closed by module self-verification plus independent actual Electron and public-rule evidence listed in finalIndependentAcceptance."
+    },
+    {
+      "id": "U02-roster",
+      "owner": "resources/companions",
+      "finding": "The six-character roster has water, fire and metal only.",
+      "requiredEvidence": "Distinct wood and earth artwork and usable instances, with consistent resource/element identity in adoption, detail, desktop, chat, battle and territory.",
+      "status": "verified",
+      "resolution": "Closed by module self-verification plus independent actual Electron and public-rule evidence listed in finalIndependentAcceptance."
+    },
+    {
+      "id": "U03-water-presentation",
+      "owner": "battle",
+      "finding": "presentation.cjs infers freeze from a successful water action although the engine applies immediate rage reduction without freeze.",
+      "requiredEvidence": "Actual water result shows rage reduction, no invented freeze/stun, no disabled turn.",
+      "status": "verified",
+      "resolution": "Closed by module self-verification plus independent actual Electron and public-rule evidence listed in finalIndependentAcceptance."
+    },
+    {
+      "id": "U04-interrupt-presentation",
+      "owner": "battle",
+      "finding": "The engine's action-missed note also covers normal interrupting element. The view currently renders every miss as successful dodge.",
+      "requiredEvidence": "Normal-vs-element interruption and dodge-vs-normal avoidance have distinct truthful animation and events.",
+      "status": "verified",
+      "resolution": "Closed by module self-verification plus independent actual Electron and public-rule evidence listed in finalIndependentAcceptance."
+    },
+    {
+      "id": "U04-animation-and-controls",
+      "owner": "battle/foundation",
+      "finding": "Natural-gameplay attempts cannot provide deterministic ultimate coverage; earlier failed harness evidence is retained.",
+      "requiredEvidence": "A verified isolated QA profile supplies a legal charged state; all four controls, repeated actions, elemental effects, ultimate cost/heal/hit, restart and reduced motion are independently observed.",
+      "status": "verified",
+      "resolution": "Closed by module self-verification plus independent actual Electron and public-rule evidence listed in finalIndependentAcceptance."
+    },
+    {
+      "id": "U03-legacy-rule-metadata",
+      "status": "verified",
+      "resolution": "5ca0bc3 additive same-version read projection; six actual old-profile assertions pass, including exact original session/report JSON preservation."
+    }
+  ],
+  "finalIndependentAcceptance": {
+    "productIntegrator": "c4ac693",
+    "rootBuild": {
+      "schemaVersion": 1,
+      "builtAt": "2026-10-24T16:07:08.349Z",
+      "sourceCommit": "774afd71ec778d90b7d7d8e6a07873e38320819f",
+      "sourceDirtyFiles": [
+        "?? docs/design/2026-10-24/01-companions-and-desktop.png",
+        "?? docs/design/2026-10-24/02-exploration-and-battle.png",
+        "?? docs/design/2026-10-24/full-ui/05-territory-and-inventory.png",
+        "?? docs/design/2026-10-24/imagegen-prompts.txt",
+        "?? docs/design/2026-10-24/lingjing-designs-v2.zip",
+        "?? docs/design/2026-10-24/lingjing-designs-v3-garden.zip",
+        "?? docs/design/2026-10-24/stack-research.txt"
+      ],
+      "codeFingerprint": "7f40fe16a67c8555d0dbbc931623fad67544b8041d7cc444328a896fd9ddcd97",
+      "compiledFingerprint": "3fade55c68d0891b0005c6c12d8d298e840c35872ab63eeeb6d0c051f95ae91a",
+      "codeFiles": 216,
+      "compiledFiles": 24
+    },
+    "reviewHead": "f43d9659fd400492e762d641e3176784767ccc8c",
+    "native": [
+      {
+        "scope": "battle",
+        "file": "artifacts/ui-acceptance/2026-10-24/final-build-v3/battle/evidence.json",
+        "sourceCommit": "f43d9659fd400492e762d641e3176784767ccc8c",
+        "checks": 65,
+        "passed": true
+      },
+      {
+        "scope": "friend",
+        "file": "artifacts/ui-acceptance/2026-10-24/final-build-v3/friend/evidence.json",
+        "sourceCommit": "f43d9659fd400492e762d641e3176784767ccc8c",
+        "checks": 20,
+        "rounds": 11,
+        "passed": true
+      },
+      {
+        "scope": "contexts",
+        "file": "artifacts/ui-acceptance/2026-10-24/final-build-v3/contexts/evidence.json",
+        "sourceCommit": "f43d9659fd400492e762d641e3176784767ccc8c",
+        "checks": 11,
+        "passed": true
+      },
+      {
+        "scope": "rhythm",
+        "file": "artifacts/ui-acceptance/2026-10-24/final-rhythm-v3/evidence.json",
+        "sourceCommit": "07db4d9c6d8ebbcfa081ff2f5e62a15dd065145a",
+        "checks": 12,
+        "views": 15,
+        "passed": true
+      },
+      {
+        "scope": "legacy",
+        "file": "artifacts/ui-acceptance/2026-10-24/final-legacy-rules-v3/evidence.json",
+        "sourceCommit": "774afd71ec778d90b7d7d8e6a07873e38320819f",
+        "checks": 6,
+        "passed": true
+      }
+    ],
+    "platformFonts": "artifacts/ui-acceptance/2026-10-24/final-platform-fonts/evidence.json",
+    "rules": {
+      "file": "artifacts/ui-acceptance/2026-10-24/final-rules-v3/evidence.json",
+      "orderedPairs": 25,
+      "actions": 75,
+      "properties": 9,
+      "engineSha256": "0c7475da1cb6a7171d8dceca57e78dcf1ee28b2e46ac70957774d0dd86673b38",
+      "passed": true
+    },
+    "rendererErrors": 0,
+    "packageStatus": "passed",
+    "package": {
+      "path": "artifacts/releases/2026-10-25-unified-battle/Lingjing-0.1.8-portable-x64.exe",
+      "bytes": 146009889,
+      "sha256": "605c5ee6f943b1be235bb5a839b11572dd4e227c3cc25adbcf320cbee6b000b9",
+      "sourceCommit": "c4ac69369d01786549dc55ac0bc76c98c930445d",
+      "codeFingerprint": "0e78fde20d39557ef89bff8914470d6e8c08166b8b340b63b430e85aa936a380",
+      "compiledFingerprint": "2d1b1bdfa86cf6defd54bf676a44ed1473fc2b0f86c199dbd8abd4ee4412d791",
+      "independentChecks": 7,
+      "evidence": "artifacts/ui-acceptance/2026-10-24/final-portable-v3/evidence.json",
+      "asarAudit": "docs/implementation/evidence/foundation/final-unified/package-audit.json",
+      "codeComparison": "artifacts/ui-acceptance/2026-10-24/packaged-worktree-comparison.json"
+    },
+    "remainingRequiredWork": [],
+    "deferred": [
+      "Live Supabase/two-device cloud service validation",
+      "Physical capture with a real location meeting the existing <=80m threshold; native Windows provider read verified at 114m",
+      "Successful external-model call using user-provided credentials"
+    ]
+  },
+  "completedAt": "2026-10-24T16:29:02.360Z",
+  "upstream": {
+    "command": "git pull --ff-only origin main",
+    "result": "Already up to date",
+    "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086",
+    "verifiedBeforeCompletion": "2026-10-24T16:29:02.360Z"
+  }
+}

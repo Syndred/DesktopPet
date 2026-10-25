@@ -1,0 +1,605 @@
+{
+  "feature": "conversations",
+  "branch": "codex/lingjing-conversations",
+  "commit": "d9e1b71119e3141f9f82164db26586d371835e19",
+  "status": "accepted_by_main_review",
+  "date": "2026-10-24",
+  "timezone": "Asia/Shanghai",
+  "workspace": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-conversations\\DesktopPet",
+  "scopeRevision": "docs/implementation/acceptance/2026-10-24/unified-battle-goal.txt",
+  "base": {
+    "foundationBaseCommit": "67d0d4df781d3eae7dd2a546b5d981107c45f737",
+    "integrationMerge": "0e7a9679d91c1a1a64b8a11c83cb5b0526f8a88a",
+    "originMainFetched": true,
+    "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086",
+    "originMainIncludedInHistory": true,
+    "sharedCheckoutModified": false,
+    "requestedModelAndGoalSettingsPreserved": true,
+    "originMainCheckedAgainBeforeCommit": true,
+    "foundationLastIncludedTypographyCommit": "50f6cad",
+    "sharedPortraitCommit": "1dac04e"
+  },
+  "implemented": [
+    "正式 React /chat 与 /settings/ai 按 06 上半、08 下半布局，使用公共 shadcn/Radix、Motion、Lucide 与动漫 2D 素材。",
+    "账号 + 实际宠物实例 petId 隔离人设、聊天历史、手动记忆、独立连接与聊天选择；同模板不合并。",
+    "assistant-ui 实际处理聊天交互；AI SDK + OpenAI compatible 实际处理主进程流式协议与 JSON。",
+    "分页历史、保存/编辑/删除记忆、记忆开关、revision 冲突拒绝、有界上下文和安全重试去重。",
+    "全局连接与单伙伴独立覆盖、连接测试与取消、真实流式取消、进程重启与中断恢复。",
+    "Electron safeStorage / Windows DPAPI 密钥加密；只返回 hasKey，更改接口不自动转发旧 key；固定错误码避免泄露 provider 原文。",
+    "账号切换中止请求，拒绝旧界面写入，清理未发送草稿、弹窗与未保存密钥。",
+    "共享 2D Pixi 实例反应，应用动画关闭切换静止帧，系统 reduced motion 停止实际帧推进；暂停散步由 companions 消费。"
+  ],
+  "openSourceReuse": [
+    {
+      "name": "@assistant-ui/react",
+      "version": "0.15.31",
+      "license": "MIT",
+      "source": "https://github.com/assistant-ui/assistant-ui",
+      "locations": [
+        "apps/pc-app/ui/src/features/conversations/assistant-thread.tsx"
+      ],
+      "actualUse": "useExternalStoreRuntime, Thread/Message/Composer primitives own input, IME, send/cancel, streaming message display and scroll state.",
+      "verifiedFrom": "installed package metadata and package-lock.json"
+    },
+    {
+      "name": "ai",
+      "version": "7.0.152",
+      "license": "Apache-2.0",
+      "source": "https://github.com/vercel/ai",
+      "locations": [
+        "apps/pc-app/runtime/features/conversations/transport.cjs"
+      ],
+      "actualUse": "streamText/generateText own provider streaming and JSON completion lifecycle; SDK retry and telemetry disabled.",
+      "verifiedFrom": "installed package metadata and package-lock.json"
+    },
+    {
+      "name": "@ai-sdk/openai-compatible",
+      "version": "3.0.77",
+      "license": "Apache-2.0",
+      "source": "https://github.com/vercel/ai",
+      "locations": [
+        "apps/pc-app/runtime/features/conversations/transport.cjs"
+      ],
+      "actualUse": "createOpenAICompatible().chatModel serializes requests and parses provider SSE/JSON.",
+      "verifiedFrom": "installed package metadata and package-lock.json"
+    },
+    {
+      "name": "radix-ui",
+      "version": "1.8.1",
+      "license": "MIT",
+      "source": "https://github.com/radix-ui/primitives",
+      "locations": [
+        "apps/pc-app/ui/src/features/conversations/components.tsx",
+        "apps/pc-app/ui/src/features/conversations/settings-page.tsx",
+        "apps/pc-app/ui/src/features/conversations/assistant-thread.tsx"
+      ],
+      "actualUse": "Shared official shadcn Radix Dialog/Tabs/Select/Switch/Tooltip/Popover/Checkbox; actual keyboard and focus verification.",
+      "verifiedFrom": "installed package metadata and package-lock.json"
+    },
+    {
+      "name": "motion",
+      "version": "14.6.0",
+      "license": "MIT",
+      "source": "https://github.com/motiondivision/motion",
+      "locations": [
+        "apps/pc-app/ui/src/features/conversations/chat-page.tsx",
+        "apps/pc-app/ui/src/features/conversations/components.tsx",
+        "apps/pc-app/ui/src/features/conversations/assistant-thread.tsx"
+      ],
+      "actualUse": "Shared AnimatedList/MotionPanel and shell PageTransition; no feature-local motion engine.",
+      "verifiedFrom": "installed package metadata and package-lock.json"
+    },
+    {
+      "name": "pixi.js",
+      "version": "8.22.0",
+      "license": "MIT",
+      "source": "https://github.com/pixijs/pixijs",
+      "locations": [
+        "apps/pc-app/ui/src/features/conversations/assistant-thread.tsx",
+        "apps/pc-app/ui/src/features/conversations/components.tsx"
+      ],
+      "actualUse": "Shared CompanionPortrait -> ResourceStage -> Assets/Spritesheet/AnimatedSprite/Ticker; live frames verified.",
+      "verifiedFrom": "installed package metadata and package-lock.json"
+    },
+    {
+      "name": "lucide-react",
+      "version": "1.61.0",
+      "license": "ISC",
+      "source": "https://github.com/lucide-icons/lucide",
+      "locations": [
+        "apps/pc-app/ui/src/features/conversations/chat-page.tsx",
+        "apps/pc-app/ui/src/features/conversations/components.tsx",
+        "apps/pc-app/ui/src/features/conversations/settings-page.tsx",
+        "apps/pc-app/ui/src/features/conversations/assistant-thread.tsx"
+      ],
+      "actualUse": "Actual formal action/navigation icons; emoji are selectable message content.",
+      "verifiedFrom": "installed package metadata and package-lock.json"
+    },
+    {
+      "name": "tailwindcss",
+      "version": "4.3.3",
+      "license": "MIT",
+      "source": "https://github.com/tailwindlabs/tailwindcss",
+      "locations": [
+        "apps/pc-app/ui/src/components/ui",
+        "apps/pc-app/ui/src/features/conversations/styles.css"
+      ],
+      "actualUse": "Foundation Vite/Tailwind components and shared tokens; module CSS supplies board-specific grids.",
+      "verifiedFrom": "installed package metadata and package-lock.json"
+    },
+    {
+      "name": "shadcn/ui Radix Nova",
+      "version": "official registry source imported 2026-10-24; shadcn CLI 4.22.1",
+      "license": "MIT",
+      "source": "https://ui.shadcn.com/r/styles/radix-nova",
+      "sourceRecord": "docs/implementation/shadcn-source-record.json",
+      "locations": [
+        "apps/pc-app/ui/src/components/ui",
+        "apps/pc-app/ui/src/features/conversations/components.tsx",
+        "apps/pc-app/ui/src/features/conversations/settings-page.tsx"
+      ],
+      "actualUse": "Public Button/Input/Textarea/Checkbox and Radix controls imported in formal feature components; no local copies."
+    }
+  ],
+  "selfBuiltDifferences": [
+    {
+      "area": "权限与实例归属",
+      "reason": "开源聊天 UI/provider 不知道本项目已验证账号与实际宠物库存；main 服务必须校验 owner、petId 和 session revision。"
+    },
+    {
+      "area": "持久化与隐私",
+      "reason": "复用 foundation 单 SQLite 连接、迁移器与 DPAPI；领域表保证账号/实例隔离，避免引入客户端聊天云或另一套模型账号。"
+    },
+    {
+      "area": "记忆和上下文",
+      "reason": "用户明确保存的记忆、删除语义与字符预算属于产品规则；没有将 SDK 当作自动长期记忆系统。"
+    },
+    {
+      "area": "UI 与安全适配",
+      "reason": "保留批准图的三列布局、设置导航与角色风格，使用公共组件定制样式；transport 只增加安全边界、硬限制与固定公开错误码。"
+    }
+  ],
+  "candidateDecisions": [
+    {
+      "name": "AIRI",
+      "decision": "not-adopted-as-whole-app",
+      "reason": "研究记录的桌面前端采用 Vue，与现有 React 页面不兼容；本轮未实施音频/语音和旧模型链路。",
+      "evidence": "docs/design/2026-10-24/full-ui/open-source-reuse.txt"
+    },
+    {
+      "name": "Open-LLM-VTuber",
+      "decision": "deferred-voice-adapter",
+      "reason": "研究记录为 Python 后端，语音不在本轮范围；示例角色另有许可，未复制其素材。",
+      "evidence": "docs/design/2026-10-24/full-ui/open-source-reuse.txt"
+    },
+    {
+      "name": "VPet",
+      "decision": "not-adopted-as-whole-app",
+      "reason": "C#/WPF 不能直接并入现有 Electron/React，素材另有许可；使用共享 Pixi 2D 组件。",
+      "evidence": "docs/design/2026-10-24/full-ui/open-source-reuse.txt"
+    }
+  ],
+  "sharedComponentEvidence": {
+    "controls": [
+      "Button",
+      "Input",
+      "Textarea",
+      "Checkbox",
+      "Tabs",
+      "Select",
+      "Switch",
+      "Tooltip",
+      "Popover",
+      "Dialog"
+    ],
+    "motion": [
+      "AnimatedList",
+      "shared MotionPanel",
+      "shell PageTransition"
+    ],
+    "character": "Static ResourcePortrait framing=portrait; completed reply reaction uses CompanionPortrait -> ResourceStage -> PixiJS",
+    "interactionTest": "apps/pc-app/runtime/features/conversations/tests/electron-flow.mjs",
+    "rootDependencyOwner": "foundation",
+    "requiredDependenciesManifest": "apps/pc-app/runtime/features/conversations/dependencies.json",
+    "rootManifestIncludesRequestedAiPackages": true,
+    "artProvenance": "docs/implementation/illustration-assets.json",
+    "artLicenseNote": "foundation 用内置 image_gen 依据批准角色生成；代码许可证不冒充第三方角色素材许可。未新增或搬用外部角色素材。",
+    "controlledDialog": "Shared DialogContent.onCloseAutoFocus restores the invoking button after Radix unmounts its focus scope; no feature-local focus trap.",
+    "staticPortrait": "resources/ResourcePortrait -> resolveResourcePortrait, framing=portrait; canonical idle atlas frame"
+  },
+  "uiComparison": {
+    "boards": [
+      "docs/design/2026-10-24/full-ui/06-chat-and-friend-duels.png",
+      "docs/design/2026-10-24/full-ui/08-desktop-and-ai-settings.png"
+    ],
+    "comparison": "docs/implementation/evidence/conversations/ui-comparison.html",
+    "screenshots": [
+      "docs/implementation/evidence/conversations/chat.png",
+      "docs/implementation/evidence/conversations/ai-settings.png",
+      "docs/implementation/evidence/conversations/restored.png"
+    ],
+    "realProductionElectron": true,
+    "differences": [
+      "原创角色插画与图集保留身份和色彩；具体姿势、面部和裁切与概念图不同。",
+      "消息、时间、等级与实例 ID 使用真实本机验收数据，没有套用概念图示例值。",
+      "Key 不回显；增加显式清除、逐宠物连接与上下文预算。",
+      "记忆为手动保存；未提供图片附件/语音假按钮。表情选择可实际输入。",
+      "窗口尺寸/Windows 缩放不同，AI 设置较长区域纵向滚动，980x750 无横向溢出。"
+    ],
+    "currentVisualEvidence": "docs/implementation/evidence/conversations/unified-2026-10-24/index.html",
+    "latestEmptyHistoryScreenshots": [
+      "docs/implementation/evidence/conversations/unified-2026-10-24/chat-metal.png",
+      "docs/implementation/evidence/conversations/unified-2026-10-24/chat-wood.png",
+      "docs/implementation/evidence/conversations/unified-2026-10-24/chat-water.png",
+      "docs/implementation/evidence/conversations/unified-2026-10-24/chat-fire.png",
+      "docs/implementation/evidence/conversations/unified-2026-10-24/chat-earth.png"
+    ],
+    "previousProtocolScreenshotsNote": "原 ui-comparison.html 和 electron.json 保留上一轮11/12专项的功能证据；最新字体/间距/角色视觉以 audit-2026-10-24 为准。"
+  },
+  "twoDOnly": {
+    "activeRenderer": "2D spritesheet / PixiJS",
+    "actualPixiCanvas": true,
+    "modelViewerElements": 0,
+    "modelViewerRegistered": false,
+    "modelAssetRequests": 0,
+    "new3dImports": false,
+    "legacyFilesAndDataPreserved": true,
+    "publicMotionPolicy": true,
+    "buttonsFlat": true,
+    "evidence": "docs/implementation/evidence/conversations/electron.json"
+  },
+  "tests": [
+    {
+      "command": "node apps/pc-app/runtime/features/conversations/tests/compact-acceptance.mjs",
+      "status": "passed",
+      "checks": 5,
+      "canonicalResources": 8,
+      "coveredElements": [
+        "metal",
+        "wood",
+        "water",
+        "fire",
+        "earth"
+      ],
+      "verifiedAtRevision": "d9e1b71119e3141f9f82164db26586d371835e19",
+      "evidence": "docs/implementation/evidence/conversations/unified-2026-10-24/evidence.json"
+    },
+    {
+      "command": "node --test apps/pc-app/runtime/features/conversations/tests/runtime.test.cjs",
+      "status": "passed",
+      "checks": 12,
+      "evidence": "真实文件 SQLite + 本机 HTTP；隔离、加密、取消、重试去重、记忆删除、分页、上下文、失败、旧界面拒绝、退出落盘。",
+      "verifiedAtRevision": "eb50973"
+    },
+    {
+      "command": "node apps/pc-app/runtime/features/conversations/tests/electron-flow.mjs",
+      "status": "passed",
+      "checks": 12,
+      "evidence": "正式 Electron / React / preload / IPC / DPAPI / SQLite，公开账号注册/领养与实际进程重启。",
+      "requestCount": 8,
+      "abortedStreams": 2,
+      "rendererPageErrors": 0,
+      "rendererLocalStorageEntries": 0,
+      "externalModel": false,
+      "sourceRun": "run-1792846674986",
+      "dialogFocusCycles": 3,
+      "verifiedAtRevision": "c08e685"
+    },
+    {
+      "command": "npm run typecheck:ui",
+      "status": "passed"
+    },
+    {
+      "command": "npm run typecheck",
+      "status": "passed",
+      "verifiedAtRevision": "c08e685"
+    },
+    {
+      "command": "npx eslint apps/pc-app/runtime/features/conversations/ apps/pc-app/ui/src/features/conversations/ packages/shared-types/src/features/conversations --ext .cjs,.mjs,.ts,.tsx",
+      "status": "passed"
+    },
+    {
+      "command": "npm run build:pc",
+      "status": "passed",
+      "warnings": [
+        "Shared static/dynamic import overlap and bundle size warnings; no build error."
+      ]
+    },
+    {
+      "command": "git diff --check",
+      "status": "passed"
+    }
+  ],
+  "runtimeEvidence": {
+    "record": "docs/implementation/evidence/conversations/unified-2026-10-24/evidence.json",
+    "isolatedProfile": true,
+    "originalUserDataUntouched": true,
+    "transport": "AI SDK actual unavailable-local-endpoint failure; no response injection",
+    "cloudModelTest": "deferred_by_current_scope",
+    "sourceRun": "run-1792855266773"
+  },
+  "integrationDependencies": {
+    "contract": "docs/implementation/foundation-contract.md",
+    "details": "apps/pc-app/runtime/features/conversations/INTEGRATION.txt",
+    "database": "foundation 单连接与事务迁移执行器；不打开第二个业务数据库",
+    "providedService": [
+      "conversations.getProfile(owner,petId)",
+      "conversations.isChatting(owner,petId)"
+    ],
+    "events": [
+      "conversations:changed",
+      "conversations:session",
+      "conversations:activity"
+    ],
+    "motionConsumer": "companions/windows.cjs 已消费 isChatting + pauseWhileChatting",
+    "backupAndSync": "纳入聊天领域记录时保留 owner 归属，排除 encrypted_key；DPAPI 密文不能当作跨设备可用密钥。"
+  },
+  "unfinished": [
+    {
+      "id": "authorized-cloud-model-verification",
+      "owner": "user_configuration_then_conversations_or_foundation",
+      "status": "deferred_by_current_scope",
+      "detail": "本轮明确允许暂缓云能力。未使用云模型成功声明，也未扫描现有密钥。"
+    },
+    {
+      "id": "combined-windows-regression",
+      "owner": "foundation",
+      "status": "pending_final_integration",
+      "detail": "本分支聊天专项已完成；收集所有功能后执行最终统一 Windows 回归。"
+    },
+    {
+      "id": "legacy-ai-settings-security-migration",
+      "owner": "foundation",
+      "status": "legacy_files_preserved",
+      "detail": "旧兼容 renderer 的明文 AI 设置仍在历史文件中，新 React 页面不使用它。若需导入必须明确账号映射，不擅自归属旧 key。"
+    },
+    {
+      "id": "conversation-account-backup-sync",
+      "owner": "foundation_accounts_integration",
+      "status": "separate_integration_contract",
+      "detail": "当前验收为本机持久化与账号切换；如备份/同步纳入聊天表，必须保留 owner 并排除 encrypted_key。"
+    }
+  ],
+  "scopeNotes": [
+    "只在会话功能目录与对应文档记录内实施；公共/其他业务变更来自 foundation 合并。",
+    "未删除用户文件、旧存档或历史代码，未执行生产部署。",
+    "应用/系统动画策略、正式组件交互与实际 2D canvas 均需真实 Electron 证据。",
+    "本次不实施自动记忆抽取、语音或旧 3D 兼容。"
+  ],
+  "integrationResolved": [
+    "探索模块 MapLibre 类型错误与 Turf 根依赖缺失已由 foundation 修复并合入 d0488f0；本分支最终 typecheck:ui、typecheck 和 build:pc 均通过。"
+  ],
+  "completedAt": "2026-10-24T12:58:56.304Z",
+  "visualAudit": {
+    "source": "docs/implementation/acceptance/2026-10-24/visual-audit.txt",
+    "sourceCommit": "9915684",
+    "correctionCommit": "2fe1060aa5b4093e46e704076fcb2e4555fa64b7",
+    "sharedTypographyCommit": "50f6cad",
+    "status": "parent_recheck_passed_portrait_refinement_recorded_separately",
+    "items": [
+      {
+        "id": "A01",
+        "status": "implemented",
+        "detail": "复用公共 font-ui/text-title/text-card/text-body/text-label/text-caption 与 weight tokens；两页 H1 均为28px/700，不使用 viewport clamp。"
+      },
+      {
+        "id": "A03",
+        "status": "implemented_for_conversations",
+        "detail": "卡片 margin=0，父网格 gap=space-4/16px；卡片内距16px，列表8px；页面24px/32px/16px，小窗口随公共token收敛。"
+      },
+      {
+        "id": "A07",
+        "status": "canonical_roster_integrated",
+        "detail": "主会话 source3aef2bf 已验证六个正式资源及礼帽喵跨页身份一致；当前 portraitAudit 再验证同图集近景头像。"
+      },
+      {
+        "id": "A12",
+        "status": "implemented_for_conversations",
+        "detail": "右侧已知鱼丸插画只匹配明确的鱼丸 resourceId，其他形象使用当前资源，不以鱼丸作默认图；三列布局、Radix/Motion/Pixi 与主进程 AI 边界保持。伙伴选择卡三列，实例副标签可换行。"
+      }
+    ],
+    "evidence": "docs/implementation/evidence/conversations/audit-2026-10-24/evidence.json",
+    "comparison": "docs/implementation/evidence/conversations/audit-2026-10-24/index.html",
+    "targetedChecks": 4,
+    "zeroModelRequests": true,
+    "noFabricatedMessages": true,
+    "viewports": [
+      {
+        "width": 1280,
+        "height": 844
+      },
+      {
+        "width": 1440,
+        "height": 900
+      },
+      {
+        "width": 980,
+        "height": 900
+      }
+    ],
+    "tests": [
+      {
+        "command": "node apps/pc-app/runtime/features/conversations/tests/ui-acceptance.mjs",
+        "status": "passed",
+        "checks": 4
+      },
+      {
+        "command": "npm run typecheck:ui",
+        "status": "passed"
+      },
+      {
+        "command": "feature-scoped eslint",
+        "status": "passed"
+      },
+      {
+        "command": "npm run build:pc",
+        "status": "passed",
+        "note": "已有共享 bundle size warning，无编译错误"
+      }
+    ],
+    "remaining": [
+      "头像/HUD 的最后小范围回验由 foundation 汇总；聊天近景接入及本轮4项定向检查见 portraitAudit。"
+    ],
+    "doNotClaimOverallVisualPass": true
+  },
+  "previousImplementationCommit": "0a1722033c209d0b8190b98ff3b5f80cdc20b550",
+  "updatedAt": "2026-10-24T15:26:16.689Z",
+  "portraitAudit": {
+    "items": [
+      "A07",
+      "A12"
+    ],
+    "status": "targeted_checks_passed",
+    "correctionCommit": "0a1722033c209d0b8190b98ff3b5f80cdc20b550",
+    "sharedPortraitCommit": "1dac04e",
+    "base": "bbb4395",
+    "parentRecheck": {
+      "source": "3aef2bf",
+      "screenshots": 15,
+      "metrics": 12,
+      "result": "passed_before_portrait_refinement",
+      "sourceFile": "artifacts/ui-acceptance/2026-10-24/recheck-1/evidence.json"
+    },
+    "implementation": "PetAvatar resolves its current canonical resource and uses resources/ResourcePortrait framing=portrait; the common resolveResourcePortrait computes the viewport from the actual first idle frame. Removed feature CSS scale(1.8).",
+    "unchangedScope": [
+      "Same canonical atlas, resourceId and petId; no regenerated portrait asset.",
+      "PetScene and CompanionReaction retain existing full-body display.",
+      "No model transport, credentials, histories or memories changed."
+    ],
+    "evidence": "docs/implementation/evidence/conversations/portrait-2026-10-24/evidence.json",
+    "comparison": "docs/implementation/evidence/conversations/portrait-2026-10-24/index.html",
+    "screenshots": [
+      "docs/implementation/evidence/conversations/portrait-2026-10-24/six-portraits.png",
+      "docs/implementation/evidence/conversations/portrait-2026-10-24/chat-hatcat-1280.png",
+      "docs/implementation/evidence/conversations/portrait-2026-10-24/chat-hatcat-1440.png",
+      "docs/implementation/evidence/conversations/portrait-2026-10-24/ai-portraits-1280.png"
+    ],
+    "tests": [
+      {
+        "command": "node apps/pc-app/runtime/features/conversations/tests/portrait-acceptance.mjs",
+        "status": "passed",
+        "checks": 4,
+        "canonicalResources": 6,
+        "modelRequests": 0
+      },
+      {
+        "command": "npm run typecheck:ui",
+        "status": "passed"
+      },
+      {
+        "command": "feature-scoped eslint",
+        "status": "passed"
+      },
+      {
+        "command": "npm run build:pc",
+        "status": "passed",
+        "note": "Existing bundle-size warning only."
+      }
+    ],
+    "remaining": "foundation merges the consumers and performs the requested narrow portrait/HUD visual recheck; no full regression was repeated in this round."
+  },
+  "unifiedAcceptance": {
+    "items": [
+      "U02",
+      "U05",
+      "U07"
+    ],
+    "status": "accepted_by_main_review",
+    "implementationCommit": "eb50973",
+    "foundationBase": "67d0d4df781d3eae7dd2a546b5d981107c45f737",
+    "implementation": [
+      "聊天与 AI 设置使用短标题、图标、公共 Tooltip，保留空态、失败、危险操作后果、键盘焦点及禁用原因。",
+      "头像与侧图统一使用当前 petId/resourceId 的 ResourcePortrait 近景；不再对鱼丸资源使用额外房间插画。",
+      "元素只投影实际库存 element，并复用公共五行图标；不从名称、资源或调用载荷猜测。",
+      "真实云模型按本轮允许范围暂缓；本轮自验只使用独立 QA profile 和真实本机连接失败，不注入模型回复。"
+    ],
+    "tests": [
+      {
+        "command": "node --test apps/pc-app/runtime/features/conversations/tests/runtime.test.cjs",
+        "status": "passed",
+        "checks": 12,
+        "verifiedAtRevision": "eb50973"
+      },
+      {
+        "command": "npm run typecheck:ui",
+        "status": "passed",
+        "verifiedAtRevision": "d9e1b71119e3141f9f82164db26586d371835e19"
+      },
+      {
+        "command": "npm run typecheck",
+        "status": "passed",
+        "verifiedAtRevision": "3db8d97"
+      },
+      {
+        "command": "feature-scoped eslint",
+        "status": "passed"
+      },
+      {
+        "command": "npm run build:pc",
+        "status": "passed",
+        "verifiedAtRevision": "d9e1b71119e3141f9f82164db26586d371835e19",
+        "note": "Existing bundle size warning only."
+      },
+      {
+        "command": "node apps/pc-app/runtime/features/conversations/tests/compact-acceptance.mjs",
+        "status": "passed",
+        "checks": 5,
+        "canonicalResources": 8,
+        "verifiedAtRevision": "d9e1b71119e3141f9f82164db26586d371835e19"
+      }
+    ],
+    "remaining": [
+      "全产品U08由主会话在最终集成构建验收；如回传本模块的具体问题，再按问题定向修正与复验。"
+    ],
+    "doNotClaimOverallGoalComplete": true,
+    "resourceImplementationCommit": "f4c210d",
+    "resourceEvidenceCommit": "58c3a9d",
+    "headerCorrectionCommit": "7fc4ff6",
+    "compiledSourceCommit": "d9e1b71119e3141f9f82164db26586d371835e19",
+    "evidence": "docs/implementation/evidence/conversations/unified-2026-10-24/evidence.json",
+    "comparison": "docs/implementation/evidence/conversations/unified-2026-10-24/index.html",
+    "sourceRun": "run-1792855266773",
+    "canonicalResources": 8,
+    "coveredElements": [
+      "metal",
+      "wood",
+      "water",
+      "fire",
+      "earth"
+    ],
+    "realElectron": true,
+    "simulation": "none",
+    "modelVerification": "real local connection failure only; no mocked response and no external model",
+    "codeFingerprint": "5a5bc7711318f0aeeccf617b2872f4f619b8e1f5667dc3ae6515cc549a6499e0",
+    "compiledFingerprint": "21c7aef7d1db9288a68bc48d35c3bb202e85316124e2892e876f2d9919fbde45",
+    "screenshots": [
+      "docs/implementation/evidence/conversations/unified-2026-10-24/chat-metal.png",
+      "docs/implementation/evidence/conversations/unified-2026-10-24/chat-wood.png",
+      "docs/implementation/evidence/conversations/unified-2026-10-24/chat-water.png",
+      "docs/implementation/evidence/conversations/unified-2026-10-24/chat-fire.png",
+      "docs/implementation/evidence/conversations/unified-2026-10-24/chat-earth.png",
+      "docs/implementation/evidence/conversations/unified-2026-10-24/ai-compact-1280.png",
+      "docs/implementation/evidence/conversations/unified-2026-10-24/settings-disabled-hint.png",
+      "docs/implementation/evidence/conversations/unified-2026-10-24/chat-keyboard-hint.png",
+      "docs/implementation/evidence/conversations/unified-2026-10-24/chat-real-local-error.png",
+      "docs/implementation/evidence/conversations/unified-2026-10-24/chat-compact-1440.png"
+    ],
+    "operations": [
+      "All five authoritative elements project into the real chat list/header/side portrait; every canonical resource remains distinct.",
+      "Shared tooltips expose keyboard/key/disabled reasons on focus; Tabs, Switch, memory save and persona save operate through actual IPC.",
+      "Invalid non-local HTTP address is rejected before storage; valid local configuration stores only a redacted key state.",
+      "Icon send/retry execute two real unavailable-local-endpoint attempts; no assistant reply is fabricated, memory-off excludes the saved note, and one user turn is retained.",
+      "Short destructive confirmation remains explicit; real history clear preserves the saved memory/persona and renderer key storage remains empty."
+    ],
+    "sqliteReadbackIncluded": true,
+    "rendererErrors": 0,
+    "parentReview": {
+      "record": "docs/implementation/evidence/conversations/unified-2026-10-24/parent-review.json",
+      "sourceThreadId": "01a16d86-7650-7871-8e27-5b65477a126e",
+      "acceptedSourceCommit": "d9e1b71119e3141f9f82164db26586d371835e19",
+      "acceptedDeliveryCommit": "deda2f218786df3c71e869957d684165f8388af0",
+      "reviewedRun": "run-1792855135940",
+      "repeatSelfAcceptanceRequired": false
+    }
+  }
+}

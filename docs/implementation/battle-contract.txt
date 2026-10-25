@@ -1,0 +1,92 @@
+灵境 battle 接入契约 · 2026-10-24
+范围遵循 scope-2d-ui-first.txt；本版仅显示 2D，原始存档、旧战报和历史文件保留。
+最新统一范围以 acceptance/2026-10-24/unified-battle-goal.txt 为准；共享入口与领域 adapter 见 battle-screen-contract.txt。
+
+入口与权限
+Runtime: apps/pc-app/runtime/features/battle/index.cjs
+React: apps/pc-app/ui/src/features/battle/index.tsx
+路由: /battle, /battle/friends, /battle/session/:sessionId, /battle/reports, /battle/reports/:reportId
+Renderer: window.lingjing.invoke('battle', command, payload)，返回 {ok:true,data} 或 {ok:false,code,message}。
+owner 来自 services.session 的已验证会话；不接受 renderer 指定账号。登出立即撤销访问。
+云端登录凭证仅通过 accounts.requireRuntimeUser() 在主进程读取，不回传 renderer。
+
+公开命令
+overview（含 rules/opponents）；rules(); context({sessionId}); settleContext({sessionId,actionId,name?,showOnDesktop?});
+selectPet({petId,actionId}); startTraining({petId,enemyElement,actionId});
+snapshot({sessionId}); act({sessionId,actionId,action,expectedRound}); retryAction({sessionId});
+search({keyword}); invitations(); invite({targetAccount,petId,allowResend?});
+respondInvite({requestId,decision:'accept'|'reject',petId}); cancelInvite({requestId});
+createRoom({petId}); joinRoom({roomCode,petId,requestId?}); sync({sessionId}); leave({sessionId});
+listReports({limit?}); getReport({reportId}); retrySettlement({sessionId}).
+
+战斗状态与同步
+保留 BattleRuntimeService 原五行公式和 Supabase duel-online/Realtime 协议。
+session.snapshot 与每条 rounds[n].state 保存该回合生命、怒气、状态、免费闪避；不能用最新房间状态替代历史。
+网络提交前落库原始 actionId/action/roundNo；超时保持 uncertain，不自动换行动或进入下一回合。
+retryAction 重试同一个 actionId 与原回合；结束回合重试返回原回执。
+房间版本单调更新；进程重启后重新订阅。分页补齐中间缺口，未补齐明确 historyComplete:false。
+分页期间接到更高房间版本时继续补取新回合，以最终房间版本生成快照和完整性标记。
+Realtime 回调同时绑定当前频道对象与 roomId；已移除频道、跨房间或清理后的迟到通知不会恢复旧状态。
+训练、野外和本机领地挑战使用原本机内核；普通好友保留真实 Supabase 房间协议。
+foundation 验证的隔离 QA profile 可使用命名空间身份和 loopback 双端 adapter，authority:'simulated'；同一内核实际执行。
+本轮允许暂缓 live 云端验收；所有模拟来源和预置前态明确记录，不作为远端成功。
+
+仅主进程提供 services.get('battle')
+getRules() -> 原 battle-runtime 的标准五行规则配置；详情使用的 companions.combatProfile 同样读取 createSession。
+beginWildChallenge({ownerAccountId,petId,actionId,challenge:{id,opponent:{petId,petName,element,level?,resourceRef?},...provenance}})
+beginTerritoryChallenge(同上，challenge.territoryId 推荐提供)
+getOutcome({ownerAccountId,sessionId}) -> {session,won,settled}
+settleTerritoryChallenge({ownerAccountId,sessionId}) -> {session,won,settled,receipt}
+来源服务先核验定位、遭遇、守方与归属。renderer 无法直接注入对手或可信挑战。
+Discovery RegisteredWildBattleAdapter 可直接使用以上服务和 act/leave 命令。
+领地写入由 garden 掌握；本机可信结算不会冒充云端领地权威回执。
+
+宠物养成与奖励
+使用 companions 的 getPet/listPets/getSelections/select(slot:'battlePetId')。
+出战选择独立于桌面、聊天选择；只更改指定宠物实例。
+使用同步 applyGrowthInTransaction(owner,{petId,actionId,effect:{experience,wins}})；也支持同步 awardBattleResult。
+沿用胜利 20 / 失败 5 经验，100 经验升级规则。好友奖励先核对云端 owner/room/pet/actionId/experience/won。
+云端 actionId 由 roomId 与云端 subject 构成，不使用设备本地映射 ID，避免跨设备重复入账。
+同一个 services.db/better-sqlite3 事务提交最终回合、经验、战报、battle_reward_receipts 与种子回执。
+garden.grantSeeds({ownerAccountId},{actionId,receiptId,source:'battle'},verifiedReceipt) 同步执行。
+verifiedReceipt={ownerAccountId,id:session.id,source:'battle',eligible:true}；garden 决定种类、数量。
+已完成且有胜负的对战可结算；离开对战无奖励。garden 后注册时 retrySettlement 可补领，重复回执不重复发放。
+
+备份与旧数据
+注册 accounts 备份适配器 battle/version1，声明四张 battle 表；所有记录按 owner 隔离。
+合并保留较新的终局，不回退已入账奖励；已有宠物养成存档时拒绝孤立导入新奖励账本。
+需要完整替换时使用 accounts 的完整备份流程，不独立覆盖经验或删除奖励回执。
+旧账号 local:<id> 从账号归档读取旧数据；旧 3D 记录保留，但本版不要求渲染或可出战。
+旧战报只读显示，缺少的旧版回合状态明确标注，不能补造数据。
+
+2D 资源与界面
+BattlePortrait 只接受 resources.resolve 返回的 spritesheet，使用共享 ResourceStage/PixiJS。
+保留自定义 2D 资源；缺失资源使用真实内置 2D 图集，并显示加载/失败状态。
+新宠物直接使用 canonical pet.resource，不再把鱼丸改绑到独立 battle-yuwan 包。
+八形象覆盖全部五行，动作来自 resources roster-v2；旧 ID 的兼容映射由资源服务统一处理。
+HUD/出战列表/战报小头像使用公共 ResourcePortrait 的 portrait 构图；场景使用同一资源的真实动作图集。
+只有已存旧记录或公共焰柴尚未可用的旧环境保留历史图集登记；公共 roster 就绪后不再追加独立战斗形象。
+没有 model-viewer/Three/GLB 加载和独立动画引擎。
+组件从公共 components/kit 导入：实际 Radix Tabs/Select/AppDialog/Tooltip/ScrollArea，以及 Button/Card/Input。
+动画从公共 components/motion 导入：AnimatedList/useAppMotion；路由和弹层使用公共 PageTransition/MotionPanel。
+useAppMotion 同时控制战斗动作阶段和 ResourceStage.playing，实时遵守系统与应用动画设置。
+恢复页面或重新开启动画时不重播已结算攻击；连续同类行动通过 ResourceStage.playbackKey 重启公共动作，不新建画布。
+同版本旧 rules 的缺失 advantage/elementEffects 在会话与战报读投影补齐，保留已存数值、回合、生命/怒气、奖励和未知版本。
+训练/房间/战报的生命来自实际快照；规则说明、怒气上限与技能门槛统一读取 rules。归一生命120与成长属性的区别见 battle-rules-profile.txt。
+素材提示词、原文件、项目文件与授权来源记录在 battle-art-assets.json。
+
+待审核的云端变更（未部署）
+先应用 infra/supabase/migrations/20261024_lingjing_battle_atomic_rounds.sql，再部署 duel-online 更新。
+增量新增每邀请房间绑定、实例 pet/resource ID、原子回合提交和服务器结算回执；沿用现有 Supabase 协议。
+edge 固定原行动、原子 RPC 提交、分页历史、校验邀请房间及 claim_battle_settlement。
+生产回滚先恢复旧 edge；保留新增表、列与奖励历史，不执行 DROP 或数据重置。
+此前21:11的端点核验为502；本轮未据此推断当前服务状态。真实双实例云端与跨设备验收按最新目标暂缓。
+
+定向验证
+node scripts/desktop/run-native-tests.cjs apps/pc-app/runtime/features/battle/battle.test.cjs
+node apps/pc-app/runtime/features/battle/verify-electron.mjs
+node apps/pc-app/runtime/features/battle/verify-postgres.mjs
+PostgreSQL 验证仅使用 artifacts/battle/sql-validation 下的开发依赖 PGlite，不修改生产数据库。
+详细结果、对应提交、UI 原图与可复查截图见 status/battle.json。
+统一自验：verify-unified.mjs（--entries-only / --matrix-only / --friends-only --geometry --motion / --interrupt-only / --copy-only）。
+旧规则定向检查：node --test apps/pc-app/runtime/features/battle/tests/legacy-rules.test.cjs（1项，不重跑25 UI）。

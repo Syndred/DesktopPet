@@ -1,0 +1,114 @@
+{
+  "format": "lingjing.character",
+  "version": 1,
+  "name": "大肥鱼 · 云团",
+  "kind": "spritesheet",
+  "image": "fish.png",
+  "sheet": {
+    "width": 192,
+    "height": 192,
+    "columns": 8,
+    "rows": 6
+  },
+  "clips": {
+    "idle": {
+      "frames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "fps": 8,
+      "loop": true
+    },
+    "walk": {
+      "frames": [
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "fps": 8,
+      "loop": true
+    },
+    "attack": {
+      "frames": [
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23
+      ],
+      "fps": 8,
+      "loop": false
+    },
+    "hit": {
+      "frames": [
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31
+      ],
+      "fps": 8,
+      "loop": false
+    },
+    "victory": {
+      "frames": [
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39
+      ],
+      "fps": 8,
+      "loop": true
+    },
+    "sleep": {
+      "frames": [
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47
+      ],
+      "fps": 5,
+      "loop": true
+    }
+  },
+  "actions": {
+    "idle": "idle",
+    "walk": "walk",
+    "attack": "attack",
+    "hit": "hit",
+    "skill": null,
+    "victory": "victory",
+    "sleep": "sleep"
+  },
+  "provenance": {
+    "author": "灵境项目原创",
+    "source": "随附 generate-fish.cjs 生成的原创矢量动画",
+    "license": "项目自有素材（未授权单独分发）",
+    "attribution": "灵境 · 大肥鱼云团；原始 SVG 和生成代码随资源存档"
+  }
+}

@@ -1,0 +1,44 @@
+领地接入唯一战场 · 统一战斗目标
+
+领地挑战成功返回实际 sessionId，入口与继续挑战均使用 /battle/session/:sessionId。
+garden 不包含 HUD、技能栏、回合动画或另一套战斗控制器。
+结果确认须放在 battle 的公共 context 结算区；领地页只链接回该场战斗。
+
+主进程公开入口：services.get('garden').getBattleContext({ownerAccountId,sessionId})。
+返回 null 或 {returnTo:'/garden',resultPath:'/garden',action:'territory',sessionId,
+territoryId,name,settled,result,gardenRevision}，只查询该 owner 的持久化挑战。
+Battle context 可据此判断是否已经确认。胜负仍来自 battle.getOutcome；不得从 renderer 自报获胜。
+Battle settleContext 优先转交主进程公开适配器：
+services.get('garden').settleBattleContext({ownerAccountId,sessionId,actionId})。
+返回仍为 GardenResult，成功 data 附带 resultPath:'/garden'，供公共战场导航回领地。
+适配器从当前公共 SQLite 取得版本，再执行原 territorySettle；重试从已有 outbox
+恢复相同完整 input，因此其他种植/喂食推进版本后仍能重放原结算，不重复入账。
+若直接 services.invoke('garden','territorySettle')，仍须提供 sessionOwnerAccountId 和
+expectedRevision:gardenRevision；缺省版本会被现有校验拒绝，不能改掉库存版本保护。
+重试不换 actionId 或 expectedRevision。公共 BattleScreen 的胜利和失败均应完成上下文
+确认（失败不会改变归属），以免 garden_territory_challenges 永久留在未确认状态。
+Garden 的挑战回执、领地版本与战斗上下文校验保持原样；重复结算不再次改变归属或种子。
+
+隔离定位直接消费 foundation 已验证的 services.get('qaScenario')，仅 unified-battle、
+simulated/isolated 且 profilePath 与 services.paths.userData 匹配时启用。
+正常启动无适配器；模拟位置 source 始终为 simulated，并绑定场景 runId。
+定位数据来自 discovery 的公共 QA 适配器，领地只读取其快照并调用同一质量与身份校验；
+入口显式申请并释放 discovery 前台定位租约，不再生成另一份固定坐标。
+模拟领地 ID 和 provenance 独立，不允许演练位置挑战真实地理记录。
+模拟内容为定位以及公共 battle.qaPreset 标明的合法前态/对手选招；不覆盖规则或胜负。
+胜利用 charged+对手闪避，失败用 defending+对手属性攻击，先实际出一回合再重启恢复。
+胜负、成长、种子、归属、驻守、事务与重启走实际产品服务，不宣称自然充能或实时云端一局。
+公共标题栏 flask/tooltip 及 garden snapshot.scenario 标明模拟；不声明实时云端或物理GPS成功。
+
+自验目标：两个新建 QA profile 分别覆盖胜/负，实际按钮开战、确定 sessionId、
+离开页面与完整重启后恢复、公共结果确认、种子/库存/领地/驻守精确读回及同请求重放。
+source SHA、模拟边界、实际截图和 SQLite 回执随最终验收资料提交，主会话复验前不标记完成。
+HTTPS/跨设备能力按用户最新要求暂缓，不再作为本轮阻塞。
+
+原生入口：node apps/pc-app/runtime/features/garden/verification/unified-territory.electron.mjs
+依次使用 prepare、visual、verify；最后 export-unified-evidence.mjs 导出已验证证据。
+readback 仅重开已完成档案，校验结果/库存/领地/伙伴不变，并等待两名真实角色就绪后拍摄；
+不再次开战或提交结算。导出证据要求确认页的两名角色均已解码就绪。
+脚本置于 verification/，消费公共打包排除规则；普通产品不携带测试启动器。
+旧版初始 QA 目录保留。最终使用新的 namespaced-v2 档案，凭据只留 ignored 目录，
+重启通过公共 accounts.login 重新登录同一 QA 身份，不模拟自动登录或安全凭据恢复。

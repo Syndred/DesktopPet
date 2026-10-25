@@ -1,0 +1,37 @@
+标准五行对战数值契约（A11） · 2026-10-24
+
+核查结论
+原 BattleRuntimeService.createCombatant 对五行都创建 hp=maxHp=120，普通攻击10、属性攻击12、大招20。
+它不读取 companions 的 hp/atk/def/spd。鱼丸养成基础 hp=124 与对战归一 hp=120 是两个不同含义。
+本次没有把原公式改成124，也没有覆盖宠物养成属性来凑120。
+
+单一权威来源
+apps/pc-app/runtime/services/battle-runtime.cjs 导出 getBattleRules()，创建战斗和规则说明共用原内核常量。
+OnlineDuelService 的房间/回合生命、怒气归一与快照也读取此配置，避免再维护独立的120/100显示值。
+标准配置 ID：five-elements-standard-v1；vitalPolicy:'normalized'；companionStatsApplied:false。
+字段：maxHp、maxAnger、baseDamage、ultimateAnger、ultimateCost、ultimateHeal、dodgeMaxCost。
+这里只提取既有规则常量，不改变计算、随机行为、云端协议或结算奖励。
+
+消费方式
+主进程：services.get('battle').getRules()。
+Renderer：window.lingjing.invoke('battle','rules')，或 overview.data.rules。
+战斗会话/新战报附带 rules；旧会话读取时从内核补充规则说明，原始档案不被重置。
+HUD 生命的当前值/最大值来自实际 snapshot.actor；怒气上限和技能门槛来自同一 rules。
+BattleMoves 的大招门槛/充能条/禁用原因和闪避消耗说明均消费该配置，不单独写一套数字。
+
+给 companions 详情页的说明建议
+养成面板继续如实显示成长属性：例如当前鱼丸基础生命124。
+若栏目叫“战斗属性”，需明确补充“标准五行对战中生命归一为120，养成属性不直接代入该模式”。
+120从 battle.getRules().maxHp 或规则 IPC 读取，不再由详情组件硬编码。
+给定 petId 的成长属性、独立经验和战斗结果不因归一展示而改写。
+
+验证
+现有实际 SQLite+companions 的训练用例已增加断言：成长HP与归一HP可不同；overview.rules与规则入口一致；
+双方初始最大生命来自规则；完成训练后原成长stats完整保留，仅按原经验/胜场规则更新。
+400个桌面/edge五行行动组合的执行结果仍一致。
+
+视觉修订
+A01/A03/A09/A10：接入公共字体/间距token；连续侧栏，实际伙伴列表，彩色图标底板+横排图文+底部状态条。
+A08：已取消把同一鱼丸强行改绑到独立battle-yuwan的逻辑；新宠物直接消费canonical pet.resource。
+新六形象的ID/动作由resources负责提供，当前资源未合入之前不宣称A07/A08已通过；缺动作明确降级。
+旧战斗图集仅供已保存记录和新公共焰柴尚未可用时的旧本机训练保留，不作为新的canonical宠物资源。

@@ -1,0 +1,99 @@
+{
+  "status": "accepted",
+  "completedAt": "2026-10-24T16:29:02.360Z",
+  "scope": "Latest unified-battle-goal.txt; local/isolated scope, external live services expressly deferred",
+  "productIntegrator": "c4ac693",
+  "rootBuild": {
+    "schemaVersion": 1,
+    "builtAt": "2026-10-24T16:07:08.349Z",
+    "sourceCommit": "774afd71ec778d90b7d7d8e6a07873e38320819f",
+    "sourceDirtyFiles": [
+      "?? docs/design/2026-10-24/01-companions-and-desktop.png",
+      "?? docs/design/2026-10-24/02-exploration-and-battle.png",
+      "?? docs/design/2026-10-24/full-ui/05-territory-and-inventory.png",
+      "?? docs/design/2026-10-24/imagegen-prompts.txt",
+      "?? docs/design/2026-10-24/lingjing-designs-v2.zip",
+      "?? docs/design/2026-10-24/lingjing-designs-v3-garden.zip",
+      "?? docs/design/2026-10-24/stack-research.txt"
+    ],
+    "codeFingerprint": "7f40fe16a67c8555d0dbbc931623fad67544b8041d7cc444328a896fd9ddcd97",
+    "compiledFingerprint": "3fade55c68d0891b0005c6c12d8d298e840c35872ab63eeeb6d0c051f95ae91a",
+    "codeFiles": 216,
+    "compiledFiles": 24
+  },
+  "reviewHead": "f43d9659fd400492e762d641e3176784767ccc8c",
+  "native": [
+    {
+      "scope": "battle",
+      "file": "artifacts/ui-acceptance/2026-10-24/final-build-v3/battle/evidence.json",
+      "sourceCommit": "f43d9659fd400492e762d641e3176784767ccc8c",
+      "checks": 65,
+      "passed": true
+    },
+    {
+      "scope": "friend",
+      "file": "artifacts/ui-acceptance/2026-10-24/final-build-v3/friend/evidence.json",
+      "sourceCommit": "f43d9659fd400492e762d641e3176784767ccc8c",
+      "checks": 20,
+      "rounds": 11,
+      "passed": true
+    },
+    {
+      "scope": "contexts",
+      "file": "artifacts/ui-acceptance/2026-10-24/final-build-v3/contexts/evidence.json",
+      "sourceCommit": "f43d9659fd400492e762d641e3176784767ccc8c",
+      "checks": 11,
+      "passed": true
+    },
+    {
+      "scope": "rhythm",
+      "file": "artifacts/ui-acceptance/2026-10-24/final-rhythm-v3/evidence.json",
+      "sourceCommit": "07db4d9c6d8ebbcfa081ff2f5e62a15dd065145a",
+      "checks": 12,
+      "views": 15,
+      "passed": true
+    },
+    {
+      "scope": "legacy",
+      "file": "artifacts/ui-acceptance/2026-10-24/final-legacy-rules-v3/evidence.json",
+      "sourceCommit": "774afd71ec778d90b7d7d8e6a07873e38320819f",
+      "checks": 6,
+      "passed": true
+    }
+  ],
+  "platformFonts": "artifacts/ui-acceptance/2026-10-24/final-platform-fonts/evidence.json",
+  "rules": {
+    "file": "artifacts/ui-acceptance/2026-10-24/final-rules-v3/evidence.json",
+    "orderedPairs": 25,
+    "actions": 75,
+    "properties": 9,
+    "engineSha256": "0c7475da1cb6a7171d8dceca57e78dcf1ee28b2e46ac70957774d0dd86673b38",
+    "passed": true
+  },
+  "rendererErrors": 0,
+  "packageStatus": "passed",
+  "package": {
+    "path": "artifacts/releases/2026-10-25-unified-battle/Lingjing-0.1.8-portable-x64.exe",
+    "bytes": 146009889,
+    "sha256": "605c5ee6f943b1be235bb5a839b11572dd4e227c3cc25adbcf320cbee6b000b9",
+    "sourceCommit": "c4ac69369d01786549dc55ac0bc76c98c930445d",
+    "codeFingerprint": "0e78fde20d39557ef89bff8914470d6e8c08166b8b340b63b430e85aa936a380",
+    "compiledFingerprint": "2d1b1bdfa86cf6defd54bf676a44ed1473fc2b0f86c199dbd8abd4ee4412d791",
+    "independentChecks": 7,
+    "evidence": "artifacts/ui-acceptance/2026-10-24/final-portable-v3/evidence.json",
+    "asarAudit": "docs/implementation/evidence/foundation/final-unified/package-audit.json",
+    "codeComparison": "artifacts/ui-acceptance/2026-10-24/packaged-worktree-comparison.json"
+  },
+  "remainingRequiredWork": [],
+  "deferred": [
+    "Live Supabase/two-device cloud service validation",
+    "Physical capture with a real location meeting the existing <=80m threshold; native Windows provider read verified at 114m",
+    "Successful external-model call using user-provided credentials"
+  ],
+  "upstream": {
+    "command": "git pull --ff-only origin main",
+    "result": "Already up to date",
+    "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086",
+    "verifiedBeforeCompletion": "2026-10-24T16:29:02.360Z"
+  }
+}

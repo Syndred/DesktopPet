@@ -1,0 +1,23 @@
+{
+  "designReference": "docs/design/2026-10-24/full-ui/07-battle-report-and-model-import.png (lower half / page 13)",
+  "scopeRevision": "d6a1ab1",
+  "actualScreenshot": "2d-final-after-restart.png",
+  "physicalPixels": {
+    "width": 1650,
+    "height": 1140
+  },
+  "kept": [
+    "mist/cream surfaces and blue accent",
+    "four-point brand mark and approved character bitmap",
+    "left resource library and import area; right preview and calibration",
+    "flat buttons; public Radix controls and Motion policy"
+  ],
+  "adapted": [
+    "2D package and Pixi atlas JSON replace the old 3D import flow",
+    "anchors, FPS, scale, rotation, mirror and action mapping replace 3D axes",
+    "library count is read from the service, with two project builtins plus two actual native imports in the final foundation build",
+    "public scroll area retains all resources; no fabricated cards or placeholder character art"
+  ],
+  "implementationCommit": "7a50ef7",
+  "replayPassed": true
+}

@@ -1,0 +1,48 @@
+{
+  "at": "2026-10-24T15:28:18.143Z",
+  "sourceCommit": "6bdd16726c16ff58f566bc464339c984deace6dd",
+  "build": {
+    "schemaVersion": 1,
+    "builtAt": "2026-10-24T15:28:16.971Z",
+    "sourceCommit": "6bdd16726c16ff58f566bc464339c984deace6dd",
+    "sourceDirtyFiles": [],
+    "codeFingerprint": "2bc3eb9702dfde6caa48dacd64b20a15fa9a638055e4eb7973e6b85ed5ae166a",
+    "compiledFingerprint": "21c7aef7d1db9288a68bc48d35c3bb202e85316124e2892e876f2d9919fbde45",
+    "codeFiles": 216,
+    "compiledFiles": 24
+  },
+  "productionMain": true,
+  "controlledPosition": false,
+  "rawCoordinatesCommitted": false,
+  "preflightOnly": true,
+  "physicalLocationAcceptance": false,
+  "systemSamples": [
+    {
+      "phase": "production preflight",
+      "at": "2026-10-24T15:28:28.474Z",
+      "status": "imprecise",
+      "permission": "granted",
+      "provider": "windows-geolocator",
+      "source": "os",
+      "positionSource": "WiFi",
+      "accuracyMeters": 114,
+      "timestampMs": 1792855707831,
+      "coordinateHash": "03aab80cb8860712f78cd8536d4d35c1882993918e4a0cbb5e2b592be293ed51",
+      "error": {
+        "code": "LOCATION_IMPRECISE",
+        "message": "定位精度不足，请移动到信号较好的地方（需要 ≤ 80 米）"
+      }
+    }
+  ],
+  "attempts": [],
+  "rendererErrors": [],
+  "entry": {
+    "appPath": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-discovery\\DesktopPet",
+    "electron": "36.9.5",
+    "verificationHostPresent": false
+  },
+  "providerReadVerified": true,
+  "precise": false,
+  "scope": "Actual production privacy/foreground/native-provider read only; no challenge or capture attempted",
+  "watchStopped": true
+}

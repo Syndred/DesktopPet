@@ -26,7 +26,7 @@ class AccountsService {
     this.remoteUnsubscribe = remote.onInvalidated?.(({ userId }) => {
       if (this.current?.provider === "runtime" && this.identity(this.current.ownerAccountId)?.subject_id === userId) this.invalidateSession(this.current.ownerAccountId);
     });
-    const file = services.paths.legacyDataFile;
+    const file = services.paths.legacyDataExisted === false ? null : services.paths.legacyDataFile;
     this.migration = importLegacy({ db: this.db, filePath: file && existsSync(`${file}.before-lingjing.bak`) ? `${file}.before-lingjing.bak` : file,
       archiveDir: join(services.paths.userData, "accounts", "legacy-archives") });
     this.ready = this.initialize();

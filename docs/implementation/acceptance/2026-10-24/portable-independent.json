@@ -1,0 +1,474 @@
+{
+  "at": "2026-10-24T16:20:04.680Z",
+  "executable": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\releases\\2026-10-25-unified-battle\\Lingjing-0.1.8-portable-x64.exe",
+  "sha256": "605c5ee6f943b1be235bb5a839b11572dd4e227c3cc25adbcf320cbee6b000b9",
+  "launcherPid": 4604,
+  "profile": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\ui-acceptance\\2026-10-24\\final-portable-v3\\ordinary-1792858804632",
+  "scope": "Independent launch of the delivered portable SFX, fresh ordinary profile, actual packaged SQLite/IPC/Pixi and one training action; no QA transport or fake cloud",
+  "checks": [
+    {
+      "id": "actual-sfx-asar-and-ordinary-profile",
+      "passed": true,
+      "detail": {
+        "url": "file:///C:/Users/ADMINI~1/AppData/Local/Temp/3L9Esic0sN53aaJwhYbXKlibDXQ/resources/app.asar/apps/pc-app/dist/ui/index.html#/companions",
+        "build": {
+          "schemaVersion": 1,
+          "builtAt": "2026-10-24T16:05:32.523Z",
+          "sourceCommit": "c4ac69369d01786549dc55ac0bc76c98c930445d",
+          "sourceDirtyFiles": [],
+          "codeFingerprint": "0e78fde20d39557ef89bff8914470d6e8c08166b8b340b63b430e85aa936a380",
+          "compiledFingerprint": "2d1b1bdfa86cf6defd54bf676a44ed1473fc2b0f86c199dbd8abd4ee4412d791",
+          "codeFiles": 216,
+          "compiledFiles": 25
+        }
+      }
+    },
+    {
+      "id": "restricted-renderer-bridge",
+      "passed": true
+    },
+    {
+      "id": "packaged-eight-canonical-five-elements",
+      "passed": true,
+      "detail": [
+        {
+          "templateId": "big-fish-gentle",
+          "name": "鱼丸",
+          "category": "big-fish",
+          "element": "water",
+          "description": "安静温柔的鲸尾少女，喜欢陪你度过日常。",
+          "resource": {
+            "resourceId": "builtin:lingjing-yuwan-v2",
+            "kind": "2d"
+          },
+          "baseStats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        },
+        {
+          "templateId": "big-fish-cheerful",
+          "name": "小蓝",
+          "category": "big-fish",
+          "element": "water",
+          "description": "活泼的侧马尾伙伴，穿着宽松鲸鱼斗篷。",
+          "resource": {
+            "resourceId": "builtin:lingjing-xiaolan-v1",
+            "kind": "2d"
+          },
+          "baseStats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        },
+        {
+          "templateId": "big-fish-foodie",
+          "name": "饭团",
+          "category": "big-fish",
+          "element": "water",
+          "description": "盘着双丸子头的美食家，认真珍惜每一顿饭。",
+          "resource": {
+            "resourceId": "builtin:lingjing-fantuan-v1",
+            "kind": "2d"
+          },
+          "baseStats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        },
+        {
+          "templateId": "animal-shiba",
+          "name": "焰柴",
+          "category": "animal",
+          "element": "fire",
+          "description": "热情勇敢的柴犬，星星项圈总是闪闪发亮。",
+          "resource": {
+            "resourceId": "builtin:lingjing-shiba-v2",
+            "kind": "2d"
+          },
+          "baseStats": {
+            "hp": 118,
+            "atk": 33,
+            "def": 20,
+            "spd": 22
+          }
+        },
+        {
+          "templateId": "animal-hat-cat",
+          "name": "礼帽喵",
+          "category": "animal",
+          "element": "metal",
+          "description": "戴着礼帽的燕尾猫，擅长温柔的小魔术。",
+          "resource": {
+            "resourceId": "builtin:lingjing-hatcat-v1",
+            "kind": "2d"
+          },
+          "baseStats": {
+            "hp": 136,
+            "atk": 30,
+            "def": 30,
+            "spd": 13
+          }
+        },
+        {
+          "templateId": "animal-white-fox",
+          "name": "小狐",
+          "category": "animal",
+          "element": "water",
+          "description": "安静机灵的雪白小狐，像雪花一样轻盈。",
+          "resource": {
+            "resourceId": "builtin:lingjing-xiaohu-v1",
+            "kind": "2d"
+          },
+          "baseStats": {
+            "hp": 124,
+            "atk": 28,
+            "def": 24,
+            "spd": 20
+          }
+        },
+        {
+          "templateId": "animal-wood-deer",
+          "name": "青芽",
+          "category": "animal",
+          "element": "wood",
+          "description": "戴着枝叶小角的林间幼鹿，喜欢收集新芽。",
+          "resource": {
+            "resourceId": "builtin:lingjing-qingya-v1",
+            "kind": "2d"
+          },
+          "baseStats": {
+            "hp": 130,
+            "atk": 26,
+            "def": 26,
+            "spd": 18
+          }
+        },
+        {
+          "templateId": "animal-earth-pangolin",
+          "name": "岩团",
+          "category": "animal",
+          "element": "earth",
+          "description": "披着暖褐鳞甲的小穿山甲，稳稳守住每一步。",
+          "resource": {
+            "resourceId": "builtin:lingjing-yantuan-v1",
+            "kind": "2d"
+          },
+          "baseStats": {
+            "hp": 142,
+            "atk": 24,
+            "def": 34,
+            "spd": 11
+          }
+        }
+      ]
+    },
+    {
+      "id": "packaged-wood-real-pixi-playback",
+      "passed": true,
+      "detail": {
+        "frame": "1",
+        "textureFrame": "992,64,198,260",
+        "textureKey": "lingjing-resource://asset/builtin%3Alingjing-qingya-v1/sprites.png:1cd0626ea29767476b371519ec4dc00fc43c528bfcd92627166275b937db2060"
+      }
+    },
+    {
+      "id": "packaged-earth-real-pixi-playback",
+      "passed": true,
+      "detail": {
+        "frame": "1",
+        "textureFrame": "962,47,264,248",
+        "textureKey": "lingjing-resource://asset/builtin%3Alingjing-yantuan-v1/sprites.png:09b4b0bd591c07daea0a588386f39cfbe19226fd0d39664bdb8342fc4912fa09"
+      }
+    },
+    {
+      "id": "packaged-shared-battle-actual-action",
+      "passed": true,
+      "detail": {
+        "id": "battle-ff4cb16d-d252-4de4-bbe2-7924825b2241",
+        "player": {
+          "petId": "pet-dfc56b66-a0ff-40b7-b91d-9e78b0e85bbd",
+          "petName": "青芽",
+          "element": "wood",
+          "level": 1,
+          "resourceRef": "builtin:lingjing-qingya-v1",
+          "resource": {
+            "resourceId": "builtin:lingjing-qingya-v1",
+            "kind": "2d"
+          },
+          "appearance2d": "builtin:lingjing-qingya-v1"
+        },
+        "enemy": {
+          "petId": "training-fire",
+          "petName": "焰柴",
+          "element": "fire",
+          "level": 1,
+          "resourceRef": "builtin:lingjing-shiba-v2",
+          "appearance2d": "builtin:lingjing-shiba-v2",
+          "resource": {
+            "resourceId": "builtin:lingjing-shiba-v2",
+            "kind": "2d"
+          }
+        },
+        "round": {
+          "round": 1,
+          "actions": {
+            "player": "normal_attack",
+            "enemy": "dodge"
+          },
+          "damageTaken": {
+            "player": 0,
+            "enemy": 0
+          },
+          "directDamage": {
+            "player": 0,
+            "enemy": 0
+          },
+          "dotDamageEvents": {
+            "player": [],
+            "enemy": []
+          },
+          "healEvents": {
+            "player": [],
+            "enemy": []
+          },
+          "hpAfter": {
+            "player": 120,
+            "enemy": 120
+          },
+          "angerAfter": {
+            "player": 0,
+            "enemy": 30
+          },
+          "statusesAfter": {
+            "player": [],
+            "enemy": []
+          },
+          "winner": null,
+          "notes": [
+            "enemy uses first free dodge",
+            "player action missed",
+            "enemy dodged normal attack and refunded 30 anger"
+          ],
+          "state": {
+            "round": 1,
+            "player": {
+              "id": "player",
+              "element": "wood",
+              "hp": 120,
+              "maxHp": 120,
+              "anger": 0,
+              "freeDodgeUsed": false,
+              "statuses": []
+            },
+            "enemy": {
+              "id": "enemy",
+              "element": "fire",
+              "hp": 120,
+              "maxHp": 120,
+              "anger": 30,
+              "freeDodgeUsed": true,
+              "statuses": []
+            }
+          },
+          "visualEvents": [
+            {
+              "id": "1:player:windup:action:0",
+              "side": "player",
+              "phase": "windup",
+              "kind": "action",
+              "action": "normal_attack"
+            },
+            {
+              "id": "1:player:release:action:1",
+              "side": "player",
+              "phase": "release",
+              "kind": "action",
+              "action": "normal_attack",
+              "element": "wood"
+            },
+            {
+              "id": "1:enemy:impact:dodge:2",
+              "side": "enemy",
+              "phase": "impact",
+              "kind": "dodge"
+            },
+            {
+              "id": "1:enemy:windup:action:3",
+              "side": "enemy",
+              "phase": "windup",
+              "kind": "action",
+              "action": "dodge"
+            },
+            {
+              "id": "1:enemy:release:action:4",
+              "side": "enemy",
+              "phase": "release",
+              "kind": "action",
+              "action": "dodge",
+              "element": "fire"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "no-renderer-errors",
+      "passed": true,
+      "detail": []
+    }
+  ],
+  "errors": [],
+  "info": {
+    "version": "0.1.8",
+    "platform": "win32",
+    "build": {
+      "schemaVersion": 1,
+      "builtAt": "2026-10-24T16:05:32.523Z",
+      "sourceCommit": "c4ac69369d01786549dc55ac0bc76c98c930445d",
+      "sourceDirtyFiles": [],
+      "codeFingerprint": "0e78fde20d39557ef89bff8914470d6e8c08166b8b340b63b430e85aa936a380",
+      "compiledFingerprint": "2d1b1bdfa86cf6defd54bf676a44ed1473fc2b0f86c199dbd8abd4ee4412d791",
+      "codeFiles": 216,
+      "compiledFiles": 25
+    },
+    "features": [
+      {
+        "id": "accounts",
+        "commands": [
+          "session",
+          "login",
+          "register",
+          "logout",
+          "profileSave",
+          "passwordChange",
+          "settingsGet",
+          "settingsDefaults",
+          "settingsSave",
+          "backupList",
+          "backupExport",
+          "backupPreview",
+          "backupRestore",
+          "syncStatus",
+          "syncNow",
+          "syncRetry",
+          "cloudPreview",
+          "testNotification",
+          "pointer"
+        ]
+      },
+      {
+        "id": "resources",
+        "commands": [
+          "list",
+          "resolve",
+          "save",
+          "import"
+        ]
+      },
+      {
+        "id": "companions",
+        "commands": [
+          "list",
+          "get",
+          "combatProfile",
+          "desktopInput",
+          "adopt",
+          "rename",
+          "desktop",
+          "select",
+          "interact",
+          "perform",
+          "appearance"
+        ]
+      },
+      {
+        "id": "battle",
+        "commands": [
+          "overview",
+          "rules",
+          "context",
+          "settleContext",
+          "selectPet",
+          "startTraining",
+          "snapshot",
+          "act",
+          "retryAction",
+          "search",
+          "invitations",
+          "invite",
+          "respondInvite",
+          "cancelInvite",
+          "createRoom",
+          "joinRoom",
+          "sync",
+          "leave",
+          "listReports",
+          "getReport",
+          "retrySettlement"
+        ]
+      },
+      {
+        "id": "garden",
+        "commands": [
+          "plant",
+          "harvest",
+          "craft",
+          "feed",
+          "garrison",
+          "snapshot",
+          "territoryLocate",
+          "territoryChallenge",
+          "territorySettle"
+        ]
+      },
+      {
+        "id": "discovery",
+        "commands": [
+          "snapshot",
+          "setExploring",
+          "locate",
+          "watch",
+          "stopWatch",
+          "setDemo",
+          "setProvider",
+          "tile",
+          "begin",
+          "act",
+          "cancel",
+          "confirm",
+          "pokedex",
+          "memories"
+        ]
+      },
+      {
+        "id": "conversations",
+        "commands": [
+          "snapshot",
+          "select",
+          "history",
+          "profile.save",
+          "connection.save",
+          "connection.test",
+          "connection.cancel",
+          "memory.save",
+          "memory.delete",
+          "send",
+          "retry",
+          "cancel",
+          "history.clear"
+        ]
+      }
+    ],
+    "user": null
+  },
+  "loadedUrl": "file:///C:/Users/ADMINI~1/AppData/Local/Temp/3L9Esic0sN53aaJwhYbXKlibDXQ/resources/app.asar/apps/pc-app/dist/ui/index.html#/companions",
+  "passed": true,
+  "completedAt": "2026-10-24T16:20:19.255Z"
+}

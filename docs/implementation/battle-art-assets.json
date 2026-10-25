@@ -1,0 +1,58 @@
+{
+  "createdAt": "2026-10-24",
+  "skill": "imagegen",
+  "builtInTool": true,
+  "apiKeyRequired": false,
+  "assets": [
+    {
+      "id": "night-courtyard-v1",
+      "tool": "image_gen.imagegen",
+      "mode": "built-in generation",
+      "prompt": "Use case: illustration-story. Asset type: production background image for the approved Chinese desktop companion game 灵境, battle center. Create a polished 2D anime game background ONLY, no UI and no characters, wide 16:9 landscape. Scene: a quiet lakeside Chinese garden at blue hour, indigo and mist-blue sky, elegant wooden pavilions with warm amber lanterns at left and right, dark blue trees framing the top, a calm pond in the middle distance, broad flat blue-gray stone courtyard in the foreground as a clear arena where two chibi characters will stand. Composition: level eye-height view, foreground ground plane fills lower 45%, two open standing areas at x=27% and x=73%, subtle reflections, small flower clusters near corners, visually clear center. Style: hand-painted 2D Japanese anime game environment, detailed but soft, calm companion-game mood, graceful simplified architecture, rich navy with muted lavender/blue highlights and restrained warm lantern accents. User interface surrounding it is milk white and mist blue. Avoid harsh blacks, overbright effects, photorealism, 3D renders, characters, animals, text, icons, logos, HUD, frames or borders. Original artwork, not any existing franchise.",
+      "transparentBackground": false,
+      "sourceFile": "C:/Users/Administrator/.codex/generated_images/01a16dc5-bc81-78c1-81f1-c7385f644a2c/exec-d8a2d979-2f78-402a-b3bf-73af9838f683.png",
+      "savedFile": "apps/pc-app/ui/src/features/battle/assets/night-courtyard-v1.png",
+      "referenceFiles": null,
+      "sha256": "ef23d195849208c37a8bbad220e6e59f38fb03591792d982b837516a37906bf4",
+      "provenance": "Project-original generated asset; in-project use",
+      "thirdPartyLicenseClaim": false
+    },
+    {
+      "id": "builtin:lingjing-battle-shiba-v1",
+      "tool": "image_gen.imagegen",
+      "mode": "built-in generation",
+      "prompt": "Use case: stylized-concept. Asset type: production 2D anime chibi companion game sprite sheet, exactly 4 columns by 4 rows, 16 equally sized square cells, total square image. A single original cheerful round chibi Shiba Inu, orange-gold fur, cream muzzle/chest/paws, dark round friendly eyes, pointed small ears, plump body, short legs, curly bushy tail, simple indigo collar with a tiny gold star tag. Charming hand-painted anime game character matching a soft milk-white and mist-blue companion game, clean expressive linework, refined soft cel shading, warm orange palette. Each cell contains the SAME full-body character in a slightly three-quarter view facing RIGHT; character identity, size, camera, foot baseline and center must be consistent across all cells. Real transparent alpha background everywhere outside character/effect; no grid lines, checkerboard, frames, captions, text, numbers, logos or ground shadows. Character stays fully inside each cell with generous 15% padding. Row 1: 4 sequential subtle idle breathing/blinking poses, sitting comfortably with tail lifted. Row 2: 4 sequential friendly paw-swipe attack poses: crouch anticipation, one paw raised, paw swipes forward right, recover; never aggression or violence. Row 3: 4 sequential surprised hit/recoil poses, eyes shut briefly, slight lean back then recover. Row 4: 4 sequential playful fire-skill poses: paws gather a small orange spark, lift, a short soft swirl of tiny flame toward the right, recover; effects stay within each cell and do not obscure the body. Exactly four cells per row and four rows, clean even spacing suitable for a game sprite atlas, no duplicated whole sheets.",
+      "transparentBackground": true,
+      "sourceFile": "C:/Users/Administrator/.codex/generated_images/01a16dc5-bc81-78c1-81f1-c7385f644a2c/exec-91fc0064-4b6e-44df-ada2-4cac9d78c3f6.png",
+      "savedFile": "apps/pc-app/runtime/features/battle/assets/shiba-v1/shiba-sprites-v1.png",
+      "referenceFiles": null,
+      "sha256": "bcec305373f09fbd0302a621b0ac1eb5bbfc2ec41e51ef8b5277001a97665ec5",
+      "provenance": "Project-original generated asset; in-project use",
+      "thirdPartyLicenseClaim": false
+    },
+    {
+      "id": "builtin:lingjing-battle-yuwan-v1",
+      "tool": "image_gen.imagegen",
+      "mode": "built-in edit",
+      "prompt": "Edit this existing original character sprite sheet into a production 2D BATTLE animation atlas. Preserve EXACT character identity and costume: the same blue-haired, blue-eyed chibi whale girl, tiny whale tail, white sailor beret, navy-and-white frilled sailor dress, bows, shoes, delicate soft anime cel shading and proportions. Change only layout and poses. Output one SQUARE atlas with exactly 4 equal columns and 4 equal rows, 16 full-body poses total, true transparent alpha background, no text, borders, grid lines, checkerboard, logos, ground shadows or UI. Every pose stays centered in its own cell with consistent scale and foot baseline and generous padding; do not crop hair, tail, shoes or skill effects. Default body faces slightly RIGHT so she can battle an opponent on the right. Row 1 four idle frames: gentle breathing, blink, open eyes, small smile. Row 2 four normal attack frames: raise hand, gather a tiny water droplet, send a gentle short water splash to the right, recover. Row 3 four hit/dodge frames: surprised recoil, eyes briefly closed with hands near chest, small lean/step backward, recover. Row 4 four water skill frames: both hands gather a small bright-blue water orb, orb grows with a soft swirl, release a graceful curled stream of water toward the right, recover with a few tiny water sparkles. Skill effects stay within each cell and leave the face visible. Friendly companion-game sparring, no violence. Keep the character and rendering style faithful to the supplied original sheet.",
+      "transparentBackground": true,
+      "sourceFile": "C:/Users/Administrator/.codex/generated_images/01a16dc5-bc81-78c1-81f1-c7385f644a2c/exec-04fe8920-e100-4d58-8264-c23b5d30612a.png",
+      "savedFile": "apps/pc-app/runtime/features/battle/assets/yuwan-v1/yuwan-battle-sprites-v1.png",
+      "referenceFiles": "apps/pc-app/runtime/assets/illustrations/yuwan-sprites-v1.png",
+      "sha256": "dfbd229b5c2585f74829f11973e07d4ff7ef10c64b79b5c2e194ecbd05a2588a",
+      "provenance": "Project-original generated asset; in-project use",
+      "thirdPartyLicenseClaim": false
+    }
+  ],
+  "notes": [
+    "Generated alpha and original pixels are preserved; no manual image edits.",
+    "Sprite descriptors map real idle/attack/hit/skill actions through the shared resource parser and Pixi AnimatedSprite.",
+    "Artwork is separate from third-party library license records; no MIT or CC0 provenance is asserted for generated assets."
+  ],
+  "currentUsage": {
+    "background": "night-courtyard-v1",
+    "characters": "resources roster-v2 catalog: eight canonical companions, all five elements; source f4c210d",
+    "legacyAtlases": "retained for historical references; no new mode-specific character identity",
+    "publicRenderers": "ResourceStage with playbackKey; ResourcePortrait portrait framing"
+  }
+}
