@@ -2,11 +2,12 @@ import type { ReactNode } from 'react';
 import type { ConversationPet } from '../../../../../../packages/shared-types/src/features/conversations';
 import { companionIdentity } from '../companions/identity';
 
-type IdentitySource = Pick<ConversationPet, 'petId' | 'name'> & { templateId?: string | null };
+type IdentitySource = Pick<ConversationPet, 'petId' | 'name' | 'globalSerial'> & { templateId?: string | null };
 
 /** Presentation only. Never replace fields on the source DTO or persist this view. */
 export function conversationIdentity(pet: IdentitySource) {
-  return companionIdentity({ petId: pet.petId, templateId: pet.templateId ?? '', name: pet.name });
+  const source = { petId: pet.petId, templateId: pet.templateId ?? '', name: pet.name, globalSerial: pet.globalSerial };
+  return companionIdentity(source);
 }
 export function petIdentityLabel(pet: IdentitySource) {
   const { roleName, instanceNumber } = conversationIdentity(pet);

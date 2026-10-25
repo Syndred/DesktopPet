@@ -138,3 +138,14 @@ DPAPI 加密密钥、记忆关闭及历史清空通过 SQLite 只读核对。
 
 主会话复验已接受，依据与接受项见 docs/implementation/evidence/conversations/unified-2026-10-24/parent-review.json。
 本组不重复自验；最终集成若回传本模块具体问题，再定向修正和复验。
+
+2026-10-25 globalSerial-20261025-v1 编号展示接入
+ConversationPet.globalSerial?: string 只读携带主进程伙伴库存提供的已确认云端编号；
+保留无前导0的正十进制原字符串，不转 Number，不使用历史 serial、petId 或本地计数补号。
+快照忽略 renderer 自带编号，兼容旧库存路径排除未经云端确认的 globalSerial。
+conversationIdentity 将该字段透传给共享 companionIdentity；由02共享层统一补足至少4位，
+缺值或非法值显示“待同步”。聊天、人设、记忆和连接页复用同一展示组件。
+所有选择、归属、命令、消息正文、prompt、人设正文、记忆、密钥和备份格式保持原契约。
+真正的全局分配、可信缓存和同步由08/02负责；本模块不分配、不补写库存或历史。
+定向 display-identity.test.cjs 使用明确标记的主进程元数据 fixture、无界面SSR和内存SQLite；
+这些检查不构成真实云端分配、同步或桌面用户验收，最终包仍交09独立验收。
