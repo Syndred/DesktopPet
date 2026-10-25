@@ -1,0 +1,278 @@
+{
+  "at": "2026-10-25T08:21:42.354Z",
+  "productionCommit": "9623873b7acc1bd6352b3a5f0afbbfc1bedab856",
+  "originalPortable": {
+    "source": "2cafccd6871403f69ae8a5bb17dbd658b5a48272",
+    "acceptancePassed": false,
+    "runId": "73f3f050-e818-4a42-8519-4dabdd4b8a15",
+    "roomId": "556a9aee-40a0-4609-8fa1-c07926fe67cc",
+    "invitationId": "513c8ce0-c71b-438a-aaa9-a2b6631d7ef6",
+    "rounds": 10,
+    "claim": "Actual two native processes, separate QA owners, profiles and managed-Auth devices on one Windows host; real HTTPS authority rewards and ten natural mirrored UI rounds. Terminal full-save clean failed and remains a failed historical run.",
+    "executable": {
+      "path": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\artifacts\\pc-cloud-upgrade-final-2cafccd\\Lingjing-0.1.8-portable-x64.exe",
+      "size": 169188376,
+      "sha256": "af75c5a8ace15a4a924e71a24fd258df80a459648a1c1ab8d795b1da6e43837e"
+    }
+  },
+  "fix": {
+    "scope": "Battle backend only. No CSS, TSX, cloud format or deployment change.",
+    "formalCloud": "v1 sessions/actions/reports/rewards remain four genuine business arrays; every JSON string and original envelope checksum stays significant.",
+    "localBackup": "v2 retains typed transportJournal, including local working/abandoned friend-room cache. No new table or backup version.",
+    "oldRequests": "Original action rows, IDs and both raw command/result strings remain immutable. A private byte-bound native upgrade/readback stamp can project only recognized protocol rows.",
+    "genericImports": "Every recognized raw protocol action and cache row gets an unsealed placeholder for both v1 and v2, including empty/missing/partial maps. Reconstructing Store/Adapter cannot promote a file marker.",
+    "canonicalRepair": "Fresh exact action-specific receipt, exact existing reward, semantic report equality, and only the enumerated historical finish metadata drift. Full original backup precedes repair; unknown combat/report edits remain unchanged and blocked."
+  },
+  "rpcAudit": [
+    {
+      "path": "search_accounts/list_duel_requests/get_active_room/get_room/get_active_training/get_training",
+      "boundary": "Read-only RPCs; verified owned snapshots update only the local protocol cache where applicable. No durable mutation UUID is invented."
+    },
+    {
+      "path": "send_duel_request",
+      "boundary": "Closed cloud:invite command and chosen-pet invite:<requestUUID> mapping are local journal rows. Old {targetAccount} pending default-false requests retain their UUID and raw command; explicit true remains distinct."
+    },
+    {
+      "path": "create_room via accept",
+      "boundary": "Chosen-pet accept:<requestUUID> is durable before the RPC; same ID recovers a lost response by reading the accepted owned room. A changed pet is refused."
+    },
+    {
+      "path": "respond_duel_request accept/reject and cancel_duel_request",
+      "boundary": "Closed typed accept-confirm/reject/cancel journal commands retain deterministic original request IDs, including cases without a battle session."
+    },
+    {
+      "path": "create_room/join_room",
+      "boundary": "Typed idempotent RPC journals plus local friend-cache session records. Invite-bound pet mapping survives restart and join response loss."
+    },
+    {
+      "path": "submit_action/retryAction/supersession",
+      "boundary": "The original per-round action ID and exact round stay in the journal; typed receipts never spill into the next round. Server-locked supersession keeps its explicit original/replacement binding."
+    },
+    {
+      "path": "leave_room/expired room",
+      "boundary": "Typed protocol operation and terminal local room/report cache; no economic business record is invented. latest() filters the resolved terminal cache even when the original waiting row remains unchanged."
+    },
+    {
+      "path": "claim_battle_settlement",
+      "boundary": "True authority transaction. The same owner/room scoped receipt is independently read and validated before canonical growth, garden and four-array battle units are applied."
+    },
+    {
+      "path": "retrySettlement/finished sync",
+      "boundary": "Fresh same receipt; exact canonical session/report/reward rows survive repeated reads without local finish serialization. Known historical metadata drift requires that fresh receipt plus an exact semantic match and a retained full original backup. HP/history/economy changes are refused."
+    },
+    {
+      "path": "overview/listReports/getReport",
+      "boundary": "Registered cloud-v1 validation and exact raw JSON cache import. A differing existing business report is preserved and refused; no XP/seed award."
+    },
+    {
+      "path": "offline training/wild/territory/local engine",
+      "boundary": "Existing genuine business action/session/report/reward rows remain protected; no module or entire action-array exemption."
+    }
+  ],
+  "validation": {
+    "native": {
+      "authority": "Production Electron node-test runtime and shared SQLite; typed scripted wire is explicitly not live Auth/HTTPS",
+      "command": "node scripts/desktop/run-native-tests.cjs --all",
+      "passed": 311,
+      "total": 311,
+      "newLifecycleTests": 12,
+      "log": "native-all-final.txt",
+      "enumeration": "run-native-tests --all enumerates .test.cjs only; MJS authority validation is separate.",
+      "logAbsolutePath": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\friend-lifecycle-boundary-2cafccd\\native-all-final.log",
+      "logSha256": "ee58a87c42a6daa653534c54ad9a35947d23e828e4d90df2746989e75de4ea83"
+    },
+    "lint": {
+      "passed": true,
+      "scope": "Changed Electron CommonJS files with only the incompatible no-require-imports rule disabled; project lint policy unchanged."
+    },
+    "capturedCopyRecovery": {
+      "passed": true,
+      "networkRequests": 0,
+      "mode": "Replay of immutable captured HTTPS head/receipt on new SQLite copies, not a new live-cloud acceptance",
+      "sourceOriginalsUnchanged": true,
+      "ownerResults": [
+        {
+          "owner": "account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+          "revision": 8,
+          "localChanged": false,
+          "rawRequestsUnchanged": true,
+          "economyUnchanged": true,
+          "canonicalBattleExact": true
+        },
+        {
+          "owner": "account:9e230794-470b-45be-9a18-a2564c88ba35",
+          "revision": 6,
+          "localChanged": false,
+          "rawRequestsUnchanged": true,
+          "economyUnchanged": true,
+          "canonicalBattleExact": true
+        }
+      ],
+      "evidence": "captured-copy-recovery.json"
+    },
+    "auditCorrection": {
+      "scope": "Offline copy audit only; actual SFX acceptance helper and success gates were untouched.",
+      "note": "The first copy audit compared SQL reward arrays by array index. It was corrected to compare declared SQL row sets with every raw column and JSON string exact, matching the already-frozen d376/2caf primary-key fingerprint rule. Original envelopes and raw data were not rewritten."
+    },
+    "authorityMjs": {
+      "passed": true,
+      "scope": "local-actual-PGlite-and-canonical-SQLite-fixtures",
+      "realCloudVerified": false,
+      "checks": 9,
+      "command": "node apps/pc-app/runtime/features/battle/tests/authority-save.test.mjs",
+      "log": "authority-save-final.txt",
+      "logAbsolutePath": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\friend-lifecycle-boundary-2cafccd\\authority-save-final.log",
+      "logSha256": "9daff171723d80853e7ab29e10bfcdded86c256ae27033b98bb0b064f4486a76",
+      "evidence": "authority-save-final.json",
+      "fixtureSha256": "0118bf270fbdf1ce93ecd6a419c429df9ff18ebe06082a6d1cc89c21562bce73",
+      "correction": "The previous fixture invented a {session} create result for both actors and wrote a pending report as a business row. It now captures actual Postgres create/join room results, applies production Online normalization, retains correct host-create/guest-join operation types, and uses the production pending-report protocol cache. No assertion or production schema was weakened."
+    }
+  },
+  "sourceFiles": [
+    {
+      "path": "apps/pc-app/runtime/features/battle/backup.cjs",
+      "sha256": "945fe6a775077b5c94d9339a41f132ae83af595a48e6996de1a48a25cc964095",
+      "lfSourceSha256": "945fe6a775077b5c94d9339a41f132ae83af595a48e6996de1a48a25cc964095"
+    },
+    {
+      "path": "apps/pc-app/runtime/features/battle/canonical-projection.cjs",
+      "sha256": "c48affcf2107bc14d43194fe71b393f359f3652aa0844954fadc4e703a2df5d3",
+      "lfSourceSha256": "c48affcf2107bc14d43194fe71b393f359f3652aa0844954fadc4e703a2df5d3"
+    },
+    {
+      "path": "apps/pc-app/runtime/features/battle/cloud-authority.cjs",
+      "sha256": "aa2243abc8d681ae3e5152c9220ccd703ffeb763f466f454b6618861c816f084",
+      "lfSourceSha256": "aa2243abc8d681ae3e5152c9220ccd703ffeb763f466f454b6618861c816f084"
+    },
+    {
+      "path": "apps/pc-app/runtime/features/battle/service.cjs",
+      "sha256": "1a1bd723bc3b0e4b4b9d8c7031f200c9df8966964482489d6929c8eed812c44c",
+      "lfSourceSha256": "788404ec8942c9d59edda188409240982f605b13790c5d5b30db0e2ee41f2008"
+    },
+    {
+      "path": "apps/pc-app/runtime/features/battle/store.cjs",
+      "sha256": "5e8066dc2cacf5f2a098d584a749f9fa4544ee9eb92aefd50aafced76c731531",
+      "lfSourceSha256": "5e8066dc2cacf5f2a098d584a749f9fa4544ee9eb92aefd50aafced76c731531"
+    },
+    {
+      "path": "apps/pc-app/runtime/features/battle/transport-journal.cjs",
+      "sha256": "5171f95ed666b0080b3741acae116c400017e49893598323fa5df580f893d954",
+      "lfSourceSha256": "5171f95ed666b0080b3741acae116c400017e49893598323fa5df580f893d954"
+    },
+    {
+      "path": "apps/pc-app/runtime/features/battle/tests/friend-lifecycle-fixture.cjs",
+      "sha256": "62346d11a395265e9bb93132683478780b65dff9b259a886e9356b8149c1a68f",
+      "lfSourceSha256": "62346d11a395265e9bb93132683478780b65dff9b259a886e9356b8149c1a68f"
+    },
+    {
+      "path": "apps/pc-app/runtime/features/battle/tests/friend-lifecycle.test.cjs",
+      "sha256": "1e03cd85833ce5f89048993c5fdf4f44a8f36b7189154e881f44890f4f1b4479",
+      "lfSourceSha256": "1e03cd85833ce5f89048993c5fdf4f44a8f36b7189154e881f44890f4f1b4479"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\final-portable-friend-2cafccd-1792914266808\\evidence.json",
+      "bytes": 223428,
+      "sha256": "092d9ad18449439ef7b2d932b89e211f25db4a6e5395399f367a401ab89b76b7"
+    },
+    {
+      "path": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\final-portable-friend-2cafccd-1792914266808\\terminal-independent-audit.json",
+      "bytes": 22987,
+      "sha256": "f06b79a78337dfc5e26946a4b720f8dd6b5705a9bf17ea027ccea01c642a9c1f"
+    },
+    {
+      "path": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\final-portable-friend-2cafccd-1792914266808\\terminal-read-only-first.json",
+      "bytes": 9269,
+      "sha256": "7ccfd09babb2e6ef30ae2b0f652d726772e0b5943a8042eba2904ab0d69a3bbf"
+    },
+    {
+      "path": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\final-portable-friend-2cafccd-1792914266808\\joined-A.png",
+      "bytes": 1350737,
+      "sha256": "793cdfbe060a9a0a1cf6fb1eedca93b1de9ead0ced9db9e107d374efde184761"
+    },
+    {
+      "path": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\final-portable-friend-2cafccd-1792914266808\\joined-B.png",
+      "bytes": 1347652,
+      "sha256": "c9ec277495691ee3a1cd3f7772a470925e4ef86070d84b5163aba287667e12bc"
+    },
+    {
+      "path": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\final-portable-friend-2cafccd-1792914266808\\failure-A.png",
+      "bytes": 1361857,
+      "sha256": "69ab341be455e33a1402f8bf24a67c17bf8d174c68e454fe17ea4cf5435fc6a7"
+    },
+    {
+      "path": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\final-portable-friend-2cafccd-1792914266808\\failure-B.png",
+      "bytes": 1358556,
+      "sha256": "0cca44938553287d893cfe16aa926bfd5d29212c60cfd39e0bfd7e355e3c8a3a"
+    },
+    {
+      "path": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\friend-lifecycle-boundary-2cafccd\\baseline-A.json",
+      "bytes": 78028,
+      "sha256": "255a83eb16c41c87a3b68ab4a21a75c4e35bb8dba687413f9b29eb712ff96b40"
+    },
+    {
+      "path": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\friend-lifecycle-boundary-2cafccd\\baseline-B.json",
+      "bytes": 35030,
+      "sha256": "7a96365be6ed98d3133c34cac83f7ac33ade1065943c7601b0ea0dd1bc349281"
+    },
+    {
+      "path": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\friend-lifecycle-boundary-2cafccd\\current-business-sql-A.json",
+      "bytes": 309984,
+      "sha256": "05bfa0b2479c241646d3c552999d827dcd1fe50464fb1854ec8a794bbaa9d93e"
+    },
+    {
+      "path": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\friend-lifecycle-boundary-2cafccd\\current-business-sql-B.json",
+      "bytes": 256031,
+      "sha256": "ca453a1d5b78a8ee601ce8aeec9a46c7dca756c2e21adb971610e80222f91a7d"
+    },
+    {
+      "path": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\friend-lifecycle-boundary-2cafccd\\cloud-A.json",
+      "bytes": 129328,
+      "sha256": "2b5c95d36f00f56f46a875d5a01dd3b01055161cd7107cadf7b189b4399a0867"
+    },
+    {
+      "path": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\friend-lifecycle-boundary-2cafccd\\cloud-B.json",
+      "bytes": 84850,
+      "sha256": "2418c4626c43496086ea51b1a046c8689dab4e205bc61640012b4a218139862b"
+    },
+    {
+      "path": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\friend-lifecycle-boundary-2cafccd\\original-profile-A.sqlite",
+      "bytes": 901120,
+      "sha256": "c2fd7301a1db390f568254fff51a9d7cee5ae0ad7b4b95c835578849f972b55a"
+    },
+    {
+      "path": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\friend-lifecycle-boundary-2cafccd\\original-profile-B.sqlite",
+      "bytes": 876544,
+      "sha256": "72ce263d2db062b821125add90e3bfb61f7b76cc7dbcc17e5cc345f368b0a451"
+    },
+    {
+      "path": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\friend-lifecycle-boundary-2cafccd\\copy-recovery-1792916202827\\original-current-cloud-view-A.json",
+      "bytes": 127302,
+      "sha256": "75caf0604c198fa5655b70904710ea03fc7ef8d7802f6c7bbde31cadc646cda2"
+    },
+    {
+      "path": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\friend-lifecycle-boundary-2cafccd\\copy-recovery-1792916202827\\original-current-cloud-view-B.json",
+      "bytes": 84301,
+      "sha256": "01ee905f9dfe49112e5cf1de34afb33acf03f90e9ee9e8046940c5685718b9d8"
+    },
+    {
+      "path": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\friend-lifecycle-boundary-2cafccd\\copy-recovery-1792916202827\\repaired-cloud-view-A.json",
+      "bytes": 127150,
+      "sha256": "5f0c212fe0c19fe03b6826b56595cb845ad02f8a2746fdb5c0f4393cbc222e37"
+    },
+    {
+      "path": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\friend-lifecycle-boundary-2cafccd\\copy-recovery-1792916202827\\repaired-cloud-view-B.json",
+      "bytes": 83098,
+      "sha256": "5524098b7914b3735a6d8ea95e5e641b53cdf3a6d7e465facad0e56ab5f3e7e1"
+    },
+    {
+      "path": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\recover-friend-lifecycle-copies.cjs",
+      "bytes": 7604,
+      "sha256": "f2e6347721c3fea601fe963c1d6e63640b162cef0069afcdae120cbf73e08c86"
+    }
+  ],
+  "remaining": "Root integration and a newly frozen actual SFX friend acceptance. No new SFX success is claimed by these scripted/copy regressions.",
+  "fixtureCorrectionCommit": "96f310914e09b1b7a8119c22302db44e7864a1b0",
+  "productionUnchangedAfterFreeze": true
+}
