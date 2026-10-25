@@ -13,6 +13,7 @@ const env={...process.env,PET_USER_DATA_DIR:profile,LINGJING_QA_SCENARIO:'unifie
 const app=await electron.launch({args:[resolve('.')],env}),checks=[];
 try{
   const page=await app.firstWindow();await page.setViewportSize({width:1280,height:844});await page.waitForFunction(()=>Boolean(window.lingjing));
+  async function settle(){await page.evaluate(async()=>{await Promise.all(document.getAnimations().filter(animation=>Number.isFinite(animation.effect?.getComputedTiming().endTime)).map(animation=>animation.finished.catch(()=>{})));});}
   const loggedIn=await page.evaluate(()=>window.lingjing.invoke('accounts','login',{provider:'local',account:'qa_chat_recovery',password:'isolated-recovery-qa'}));assert.equal(loggedIn.ok,true);
   await page.evaluate(()=>{location.hash='#/settings/ai';});await page.getByRole('heading',{name:'AI 对话',exact:true}).waitFor();
   async function review(title,primary,file){
@@ -27,6 +28,7 @@ try{
     assert.notEqual(colors.background,'rgba(0, 0, 0, 0)');assert.ok(colors.blue.trim());assert.notEqual(colors.color,colors.background);
     for(let index=0;index<8;index++)await page.keyboard.press('Tab');
     assert.equal(await dialog.evaluate(root=>root.contains(document.activeElement)),true);
+    await dialog.getByRole('button',{name:'取消',exact:true}).focus();await settle();
     await page.screenshot({path:join(output,file),fullPage:true});checks.push({title,metrics,primary:colors,focusContained:true});
   }
   const importButton=page.getByRole('button',{name:'导入旧记录',exact:true});await importButton.click();await page.locator('.cv-import-counts').waitFor();
@@ -38,7 +40,10 @@ try{
   await page.waitForFunction(()=>document.activeElement?.getAttribute('aria-label')==='添加记忆');
   assert.equal(await memoryButton.evaluate(node=>node===document.activeElement),true);
   const snapshot=await page.evaluate(()=>window.lingjing.invoke('conversations','snapshot'));assert.equal(snapshot.ok,true);assert.equal(snapshot.data.memories.length,1);
-  const evidence={at:new Date().toISOString(),sourceCommit:execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim(),build:JSON.parse(readFileSync('apps/pc-app/dist/build-manifest.json','utf8')),status:'passed',realElectron:true,realCloud:false,syntheticQaFixture:true,
+  const build=JSON.parse(readFileSync('apps/pc-app/dist/build-manifest.json','utf8'));
+  const changed=execFileSync('git',['diff','--name-only',build.sourceCommit,'HEAD'],{encoding:'utf8'}).trim().split('\n').filter(Boolean);
+  assert.ok(changed.every(file=>file.startsWith('docs/')||file.includes('/tests/')),'Rebuild after production source changes.');
+  const evidence={at:new Date().toISOString(),sourceCommit:build.sourceCommit,harnessSourceCommit:execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim(),productionSourceUnchangedSinceBuild:true,build,status:'passed',realElectron:true,realCloud:false,syntheticQaFixture:true,
     versions:await app.evaluate(()=>({electron:process.versions.electron,node:process.versions.node})),checks,escapeRestoresTriggerFocus:true,unsavedMemoryNotPersisted:true,sourceRecoveryRun:source};
   writeFileSync(join(output,'evidence.json'),JSON.stringify(evidence,null,2));writeFileSync(resolve('artifacts/conversations/dialogs/latest.txt'),output);
   console.log(JSON.stringify({status:'passed',checks:checks.length,realCloud:false,output}));
