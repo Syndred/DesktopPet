@@ -56,15 +56,18 @@ module.exports = {
       service,
       snapshot: context => service.snapshot(context),
       territories,
+      cloudBattles:{owns:(payload,context)=>cloud.ownsBattle(payload,context),invoke:(name,payload,context)=>cloud.battleCommand(name,payload,context)},
       migrateOwnerAlias:context=>identity.migrate(context),
       getBattleContext:input=>{
         if(input.ownerAccountId!==services.session.getOwnerAccountId())throw Object.assign(new Error('账号已切换'),{code:'SESSION_CHANGED'});
+        if(cloud.ownsBattle(input,input))return cloud.battleCommand('context',input,input);
         const challenge=territories.challengeForOwner(input);
         return challenge?{...challenge,returnTo:'/garden',resultPath:'/garden',action:'territory',gardenRevision:service.snapshot(input).revision}:null;
       },
       settleBattleContext:async input=>{
         const owner=input.ownerAccountId;
         if(owner!==services.session.getOwnerAccountId())return {ok:false,code:'SESSION_CHANGED',message:'账号已切换'};
+        if(cloud.ownsBattle(input,input))try{return {ok:true,data:await cloud.settleContext(input,input)};}catch(error){return service.failure(error,owner);}
         const row=services.db.prepare('SELECT payload_json FROM garden_outbox WHERE owner_account_id=? AND action_id=?').get(owner,input.actionId);
         const previous=row?JSON.parse(row.payload_json):null;
         if(previous&&(previous.kind!=='territorySettle'||previous.input.sessionId!==input.sessionId))return {ok:false,code:'ACTION_ID_REUSED',message:'操作编号已使用'};
@@ -116,7 +119,6 @@ module.exports = {
       if (payload?.sessionOwnerAccountId !== context.ownerAccountId) return {ok:false,code:'SESSION_CHANGED',message:'账号已切换，请刷新菜园后再操作'};
       try{identity.migrate(context);}catch(error){return service.failure(error,context.ownerAccountId);}
       if (!cloud.isCloud(context)) return local(payload, context);
-      if (!['plant','harvest','craft','feed'].includes(kind)) return { ok: false, code: 'CLOUD_TERRITORY_UNAVAILABLE', message: '云端领地权威服务尚未部署，本机存档已保留' };
       try { return await cloud.command(context, kind, payload); } catch (error) { return service.failure(error,context.ownerAccountId); }
     };
     return { commands, dispose() { removeBackupAdapter?.(); } };
