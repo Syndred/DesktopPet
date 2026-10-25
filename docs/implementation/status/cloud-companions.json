@@ -2,7 +2,7 @@
   "module": "companions",
   "scope": "Cloud-upgrade 2026-10-25: preserve companion consistency units through Accounts identity/save sync and Garden transactions",
   "branch": "codex/lingjing-companions",
-  "commit": "68ecddc360fd769b7d3ad87f88dc988aa30e6067",
+  "commit": "ca0c733",
   "goalStatus": "active",
   "phase": "companion-unit/native-preservation-ready; Accounts complete-save and Garden cloud integration pending",
   "contracts": {
@@ -24,6 +24,8 @@
     "completeSaveInventory": "1 local actual BackupManager/Garden integration case passed: two client files, one food debit/one grown pet, replay and late-adapter failure rollback; explicit test registration only",
     "nativeCompatibility": "native:check passed Electron44.9.3/Node24 + better-sqlite3 13.0.3 N-API on same shared database; no shared node_modules rebuild",
     "nativeRestore": "Actual Electron44/production IPC restores same-revision off-screen coordinates, retains them across save timer/restart, and persists intentional drag; local marked QA, not HTTPS cloud",
+    "focusedRegression": "23/23 passed: node --test apps/pc-app/runtime/features/companions/tests/*.test.cjs tests/foundation/owner-alias.test.cjs",
+    "nativeEvidence": "docs/implementation/evidence/companions/cloud-2026-10-25/native-restore.json (clean source ca0c733; run 3VhIVU)",
     "build": "npm run build:pc passed"
   },
   "realCloudEvidence": {

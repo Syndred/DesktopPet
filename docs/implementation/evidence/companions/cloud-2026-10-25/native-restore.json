@@ -1,0 +1,78 @@
+{
+  "at": "2026-10-25T02:23:32.930Z",
+  "output": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-companions\\DesktopPet\\artifacts\\companions\\backup-desktop-3VhIVU",
+  "profile": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-companions\\DesktopPet\\artifacts\\qa\\unified-battle\\qa-1792895012921-ea68afb3",
+  "runId": "ea68afb3-0b5a-49a2-9feb-5ada3179cd55",
+  "scenario": "unified-battle",
+  "provenance": "simulated-local-backup-fixture",
+  "realCloudAcceptance": false,
+  "source": {
+    "commit": "ca0c73377d2ae9a48f12965902a32cae5cb110c8",
+    "dirty": "",
+    "windowsSha256": "45870a38439401bfefe3c3a98145d0f236fc38f04aaf820e0bc54c7f6d7608cc",
+    "mainSha256": "c7bad7ec905876fee122e0970b83b5ba9ddce61c4de715459e6050ffa49ab504"
+  },
+  "checks": [
+    "Existing real window applies a same-revision restored off-screen position without persisting local clamp after the five-second save timer",
+    "Reopened real Electron process preserves original pet ID/name/coordinates while deriving on-screen bounds",
+    "Intentional drag through production IPC persists the new coordinates"
+  ],
+  "errors": [],
+  "afterRestore": {
+    "savedPosition": {
+      "x": -2145,
+      "y": 188,
+      "displayId": "original-disconnected-display"
+    },
+    "native": {
+      "windowId": 2,
+      "bounds": {
+        "x": 0,
+        "y": 188,
+        "width": 230,
+        "height": 280
+      },
+      "visible": true,
+      "displays": [
+        {
+          "id": "2568730015",
+          "area": {
+            "x": 0,
+            "y": 0,
+            "width": 2560,
+            "height": 1440
+          }
+        }
+      ]
+    }
+  },
+  "afterDrag": {
+    "savedPosition": {
+      "x": 100,
+      "y": 268,
+      "displayId": "2568730015"
+    },
+    "native": {
+      "windowId": 3,
+      "bounds": {
+        "x": 100,
+        "y": 268,
+        "width": 230,
+        "height": 280
+      },
+      "visible": true,
+      "displays": [
+        {
+          "id": "2568730015",
+          "area": {
+            "x": 0,
+            "y": 0,
+            "width": 2560,
+            "height": 1440
+          }
+        }
+      ]
+    }
+  },
+  "passed": true
+}
