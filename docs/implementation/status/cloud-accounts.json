@@ -2,56 +2,145 @@
   "module": "accounts",
   "scope": "2026-10-25 Supabase Auth/JWT, stable legacy owner mapping, per-device sessions, full-save CAS/idempotency/conflict/offline recovery",
   "branch": "codex/lingjing-accounts",
-  "commit": "5607dfa0805304fd70946adfe751a0b0890698e9",
+  "commit": "320cafd",
   "worktree": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-accounts\\DesktopPet",
   "goalStatus": "active",
-  "phase": "identity first phase deployed by coordinator; Auth bridge ready for coordinated deployment; protected CAS/client implementation continuing",
+  "phase": "Auth bridge deployed by coordinator; hosted 12-character opaque refresh-token fix ready for immediate redeployment; protected CAS/client continuing",
   "baseline": "46abf416e0500b53ef32fc29b441d923ef5a6a80",
   "dependencyCheckpoint": "b40af0efcf6062ddc2e8c360523c996fc91ebc0a",
   "contracts": {
     "document": "docs/implementation/cloud-identity-contract-2026-10-25.md",
     "sharedAuth": "infra/supabase/functions/_shared/lingjing-auth.ts",
-    "authBridge": {"function": "lingjing-auth", "entrypoint": "infra/supabase/functions/lingjing-auth/index.ts", "verify_jwt": false, "ops": ["register", "login", "refresh", "actor", "session", "logout", "profile", "password"], "usernameCompatibility": "Server-created unpredictable internal login email with email_confirm=true; original password retained through verified staged SHA256 upgrade. No global mailer setting change.", "realHttpVerifier": "apps/pc-app/runtime/features/accounts/tests/cloud-auth-http.acceptance.mjs"},
-    "actor": ["schemaVersion=1", "authority=live", "authKind=supabase", "authUserId", "ownerAccountId:text", "deviceId", "sessionId", "account", "username"],
-    "helperExports": ["requireActor", "withActor", "readJson", "jsonResponse", "authError", "assertActorOwner", "assertDifferentPlayers", "supabasePublicConfig", "createAdminClient"],
-    "sql": ["lingjing_actor_context(uuid)", "lingjing_current_owner()", "lingjing_register_device(uuid,text)", "lingjing_revoke_device(uuid)", "lingjing_link_auth_user(uuid,text,text,text,text):service_role_only"],
-    "headers": ["Authorization: Bearer <user JWT>", "apikey: <modern publishable key>", "X-Lingjing-Device-Id: <UUID>"],
+    "authBridge": {
+      "function": "lingjing-auth",
+      "entrypoint": "infra/supabase/functions/lingjing-auth/index.ts",
+      "verify_jwt": false,
+      "ops": [
+        "register",
+        "login",
+        "refresh",
+        "actor",
+        "session",
+        "logout",
+        "profile",
+        "password"
+      ],
+      "usernameCompatibility": "Server-created unpredictable internal login email with email_confirm=true; original password retained through verified staged SHA256 upgrade. No global mailer setting change.",
+      "realHttpVerifier": "apps/pc-app/runtime/features/accounts/tests/cloud-auth-http.acceptance.mjs"
+    },
+    "actor": [
+      "schemaVersion=1",
+      "authority=live",
+      "authKind=supabase",
+      "authUserId",
+      "ownerAccountId:text",
+      "deviceId",
+      "sessionId",
+      "account",
+      "username"
+    ],
+    "helperExports": [
+      "requireActor",
+      "withActor",
+      "readJson",
+      "jsonResponse",
+      "authError",
+      "assertActorOwner",
+      "assertDifferentPlayers",
+      "supabasePublicConfig",
+      "createAdminClient"
+    ],
+    "sql": [
+      "lingjing_actor_context(uuid)",
+      "lingjing_current_owner()",
+      "lingjing_register_device(uuid,text)",
+      "lingjing_revoke_device(uuid)",
+      "lingjing_link_auth_user(uuid,text,text,text,text):service_role_only"
+    ],
+    "headers": [
+      "Authorization: Bearer <user JWT>",
+      "apikey: <modern publishable key>",
+      "X-Lingjing-Device-Id: <UUID>"
+    ],
     "keys": "Prefer SUPABASE_PUBLISHABLE_KEYS/SUPABASE_SECRET_KEYS JSON dictionaries ['default']; singular and legacy variables compatibility-only. Never return keys/JWT in actor JSON; SDK client is non-enumerable and server-only.",
     "deployment": "Coordinator only. verify_jwt=false for these self-authenticating Edge entrypoints; every protected path strictly uses fresh getUser plus actor RPC. Do not deploy old runtime session_token accounts-sync as the new service.",
     "protectedSavePolicy": "garden/discovery/battle/companions/resources/legacy and their tables are protected by default. Full-save checksum is integrity only. CAS must validate or retain server-authoritative fragments; first unverified local migration is archival, not a grant of cloud inventory/rewards/wins.",
-    "consumers": ["04 same owner across devices is one player; no self-duel and no JWT sent to old HTTP", "05 atomic economic authority fragments + common revision", "03 actor/pet ownership and capture authority", "07 Storage owner path policy using common owner", "02 petId preservation", "06 owner/pet-specific personal history and no BYOK secrets"]
+    "consumers": [
+      "04 same owner across devices is one player; no self-duel and no JWT sent to old HTTP",
+      "05 atomic economic authority fragments + common revision",
+      "03 actor/pet ownership and capture authority",
+      "07 Storage owner path policy using common owner",
+      "02 petId preservation",
+      "06 owner/pet-specific personal history and no BYOK secrets"
+    ]
   },
   "migrations": [
     {
       "file": "infra/supabase/migrations/20261025020314_lingjing_identity_actor_contract.sql",
       "generatedBy": "Supabase CLI 2.122.0 migration new lingjing_identity_actor_contract",
-      "touches": ["public.lingjing_accounts", "public.lingjing_devices", "lingjing_private.legacy_account_claims", "Lingjing-only private/public functions and grants"],
+      "touches": [
+        "public.lingjing_accounts",
+        "public.lingjing_devices",
+        "lingjing_private.legacy_account_claims",
+        "Lingjing-only private/public functions and grants"
+      ],
       "remoteAppliedByThisChat": false,
       "coordinatorAppliedVersion": "20261025021620"
     },
     {
       "file": "infra/supabase/migrations/20261025021755_lingjing_auth_bridge.sql",
       "generatedBy": "Supabase CLI 2.122.0 migration new lingjing_auth_bridge",
-      "touches": ["private auth directory/reservations/rate buckets", "service-only Auth bridge RPCs", "one Auth session per device binding; revoked refresh cannot re-register", "owner-checked profile update"],
-      "remoteAppliedByThisChat": false
+      "touches": [
+        "private auth directory/reservations/rate buckets",
+        "service-only Auth bridge RPCs",
+        "one Auth session per device binding; revoked refresh cannot re-register",
+        "owner-checked profile update"
+      ],
+      "remoteAppliedByThisChat": false,
+      "coordinatorAppliedVersion": "20261025022918"
     }
   ],
   "checks": [
-    {"command": "node --test apps/pc-app/runtime/features/accounts/tests/cloud-identity-sql.test.mjs", "result": "6 passed with identity/Auth-bridge migrations", "kind": "LOCAL PGlite SQL-only; not real cloud evidence"},
-    {"command": "Deno 2.9.6 check --no-config --lock=infra/supabase/functions/_shared/deno.lock infra/supabase/functions/lingjing-auth/index.ts", "result": "passed"},
-    {"command": "npm run native:check", "result": "passed Electron44.9.3/Node24 + better-sqlite3 13.0.3 same-database read/write", "evidence": "artifacts/foundation/cloud-engineering/native/probe-VVm7ZG", "sharedNodeModulesRebuilt": false},
-    {"kind": "Supabase plugin read-only", "result": "Target healthy PostgreSQL17.6.1.104; service_role has auth schema USAGE but no auth.users SELECT. Provision RPC uses FK + server Auth API validation; no grant expansion."}
+    {
+      "command": "node --test apps/pc-app/runtime/features/accounts/tests/cloud-identity-sql.test.mjs",
+      "result": "6 passed with identity/Auth-bridge migrations",
+      "kind": "LOCAL PGlite SQL-only; not real cloud evidence"
+    },
+    {
+      "command": "Deno 2.9.6 check --no-config --lock=infra/supabase/functions/_shared/deno.lock infra/supabase/functions/lingjing-auth/index.ts",
+      "result": "passed"
+    },
+    {
+      "command": "npm run native:check",
+      "result": "passed Electron44.9.3/Node24 + better-sqlite3 13.0.3 same-database read/write",
+      "evidence": "artifacts/foundation/cloud-engineering/native/probe-VVm7ZG",
+      "sharedNodeModulesRebuilt": false
+    },
+    {
+      "kind": "Supabase plugin read-only",
+      "result": "Target healthy PostgreSQL17.6.1.104; service_role has auth schema USAGE but no auth.users SELECT. Provision RPC uses FK + server Auth API validation; no grant expansion."
+    }
   ],
   "realCloudEvidence": {
     "project": "jbvrdmrkwpznbrvteive",
     "readOnlyInspected": true,
     "authOrSyncLiveVerified": false,
-    "identitySchemaLiveRejection": "Coordinator reports anonymous accounts/devices reads, anonymous link RPC and forged JWT rejected over real HTTPS; independently checked RLS/grants; source docs/implementation/evidence/cloud/2026-10-25/identity-schema-http.json in shared source. No live login/sync claimed yet.",
+    "identitySchemaLiveRejection": "Coordinator actual HTTPS passes registration/stable owner, same-account two Auth sessions, cross-owner Data API RLS, wrong device rejection, logout A leaves B active. Refresh 400 traced to min-length16; 320cafd removes the false assumption and retains4096 upper bound.",
     "deploymentByCoordinatorPending": true,
     "publicKeyConfig": "Shared ignored artifacts/cloud-upgrade/2026-10-25/public-runtime-config.json; no keys included here",
     "legacyProbe": [
-      {"at": "2026-10-25T02:00:58.619Z", "path": "http://47.112.208.97:8000/auth/v1/health", "result": "TimeoutError", "credentialSent": false},
-      {"at": "2026-10-25T02:01:03.646Z", "path": "http://47.112.208.97:8000/functions/v1/duel-online", "result": "UND_ERR_SOCKET", "credentialSent": false}
+      {
+        "at": "2026-10-25T02:00:58.619Z",
+        "path": "http://47.112.208.97:8000/auth/v1/health",
+        "result": "TimeoutError",
+        "credentialSent": false
+      },
+      {
+        "at": "2026-10-25T02:01:03.646Z",
+        "path": "http://47.112.208.97:8000/functions/v1/duel-online",
+        "result": "UND_ERR_SOCKET",
+        "credentialSent": false
+      }
     ]
   },
   "preservation": {
@@ -61,7 +150,9 @@
     "battleUiChanged": false,
     "battleWorktreeTouchedOrMessaged": false
   },
-  "cleanupCandidates": ["Old runtime single session_token cloud adapter only after new Auth path and all domain consumers are migrated; preserve source-import reader and user files"],
+  "cleanupCandidates": [
+    "Old runtime single session_token cloud adapter only after new Auth path and all domain consumers are migrated; preserve source-import reader and user files"
+  ],
   "remaining": [
     "Coordinator reviews/deploys Auth bridge migration/function, then run actual HTTPS Auth verifier with two same-account deviceIds and a distinct account",
     "Implement protected-fragment full-save CAS, idempotency, conflict/readback and offline recovery; reject economic-state forgery",
