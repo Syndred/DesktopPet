@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-25T05:58:55.928Z",
-  "phase": "correcting-final-native-fixtures-before-portable-freeze",
+  "updatedAt": "2026-10-25T06:00:07.077Z",
+  "phase": "final-corrected-source-frozen-portable-and-native-verification",
   "goalStatus": "active",
   "deployed": {
     "projectRef": "jbvrdmrkwpznbrvteive",
@@ -125,8 +125,8 @@
     }
   },
   "fixedRemainingWork": [
-    "Merge garden/conversation fixture contract corrections, retain original failures, rerun affected native verification",
-    "Freeze corrected common source and build final actual portable; root verifies the complete business path"
+    "Finish native regression at corrected freeze, retain original failures",
+    "Build final actual portable at exact freeze; coordinator independently verifies the complete business path"
   ],
   "cleanup": {
     "completedCodeRetirement": true,
@@ -258,10 +258,10 @@
       "review": "Legacy normalization is internal view only; original envelope/checksum/files retained. Root8 targeted native restore/provider cases and original signed expired HTTPS denial passed."
     }
   ],
-  "status": "correcting-final-native-fixtures-before-portable-freeze",
+  "status": "final-corrected-source-frozen-portable-and-native-verification",
   "remaining": [
-    "Merge garden/conversation fixture contract corrections, retain original failures, rerun affected native verification",
-    "Freeze corrected common source and build final actual portable; root verifies the complete business path"
+    "Finish native regression at corrected freeze, retain original failures",
+    "Build final actual portable at exact freeze; coordinator independently verifies the complete business path"
   ],
   "engineering": {
     "historicalEngineeringCheckpoints": {
@@ -311,7 +311,12 @@
       "firstRunTests": 260,
       "passed": 254,
       "failed": 6,
-      "fixtureCorrectionsPending": true
+      "fixtureCorrectionsPending": false,
+      "fixtureCorrections": [
+        "1c1eee7e937a9706af4dc20dd1e34bf8062a0c6f",
+        "2f3cbcef66c26a5d1484185c9fd81273aa8600b5"
+      ],
+      "rerunPending": true
     }
   }
 }
