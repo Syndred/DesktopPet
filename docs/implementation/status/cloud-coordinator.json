@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-25T07:57:28.819Z",
+  "updatedAt": "2026-10-25T08:15:59.415Z",
   "phase": "actual-sfx-friend-lifecycle-journal-audit",
   "goalStatus": "active",
   "deployed": {
@@ -125,8 +125,8 @@
     }
   },
   "fixedRemainingWork": [
-    "Finish complete friend protocol/journal boundary audit and strict provenance migration for local invite/accept pet bindings",
-    "Build the fully audited source and complete UI-driven training/report/offline-restart plus actual friend full-save convergence"
+    "Finish the complete friend lifecycle journal/provenance repair and its legacy/import/restart audit",
+    "Freeze the repaired source, build once and pass full UI-driven root SFX acceptance plus actual friend convergence"
   ],
   "cleanup": {
     "completedCodeRetirement": true,
@@ -260,8 +260,8 @@
   ],
   "status": "actual-sfx-friend-lifecycle-journal-audit",
   "remaining": [
-    "Finish complete friend protocol/journal boundary audit and strict provenance migration for local invite/accept pet bindings",
-    "Build the fully audited source and complete UI-driven training/report/offline-restart plus actual friend full-save convergence"
+    "Finish the complete friend lifecycle journal/provenance repair and its legacy/import/restart audit",
+    "Freeze the repaired source, build once and pass full UI-driven root SFX acceptance plus actual friend convergence"
   ],
   "engineering": {
     "historicalEngineeringCheckpoints": {
@@ -424,5 +424,20 @@
     "trainingUniqueSeeds": 2,
     "actualFriendFinishedRounds": 10,
     "actualFriendFinalSyncAccepted": false
+  },
+  "finalPortable2cafRemaining": {
+    "source": "2cafccd6871403f69ae8a5bb17dbd658b5a48272",
+    "scoped": true,
+    "singleUninterruptedFullAcceptance": false,
+    "passed": true,
+    "checks": 6,
+    "evidence": "docs/implementation/evidence/cloud/2026-10-25/final-portable-2cafccd-remaining/evidence.json",
+    "independentCloud": "docs/implementation/evidence/cloud/2026-10-25/final-portable-2cafccd-remaining/independent-cloud.json",
+    "independentSqlite": "docs/implementation/evidence/cloud/2026-10-25/final-portable-2cafccd-remaining/independent-exit-sqlite.json",
+    "revision": 91,
+    "checksum": "49d28813f8ef3504f777c94d8fa3c1b7b3a30ff4b5d8044fc585d3d81a09951f",
+    "originalActionId": "auto:8f808dea-e37e-44ba-b24e-ca8a709ea521",
+    "originalBase": 89,
+    "originalReceiptRevision": 90
   }
 }
