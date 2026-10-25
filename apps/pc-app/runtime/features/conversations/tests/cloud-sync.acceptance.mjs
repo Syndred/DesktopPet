@@ -16,6 +16,13 @@ assert.equal(new URL(config.url || config.supabaseUrl).hostname, 'jbvrdmrkwpznbr
 const output = resolve('artifacts/conversations/cloud-sync', `run-${Date.now()}`); mkdirSync(output, { recursive: true });
 const account = `convpair_${Date.now().toString(36)}`, password = `Aa9!${randomBytes(20).toString('base64url')}`;
 const keys = { a: `LOCAL-A-${randomUUID()}`, b: `LOCAL-B-${randomUUID()}` };
+// User-authored examples are text, not connection credentials. The real local
+// provider keys above must be excluded while these exact bytes survive cloud CAS.
+const authored = {
+  message: JSON.stringify({ apiKey: 'example-only', nested: { password: 'demo', encrypted_key: 'example-cipher' }, unicode: '💬 中文', literal: 'a\\nb' }),
+  persona: JSON.stringify({ apiKey: 'persona-example', code: '{"password":"inner-example"}' }),
+  memory: JSON.stringify({ Authorization: 'example-value', refresh_token: 'example-placeholder', note: '记忆正文示例' })
+};
 const checks = [], errors = [], clients = [], observedPushes = [];
 const evidence = { at: new Date().toISOString(), sourceCommit: execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(),
   build: JSON.parse(readFileSync('apps/pc-app/dist/build-manifest.json', 'utf8')), realCloud: true, realElectron: true, sameHost: true,
@@ -82,6 +89,7 @@ async function sendFailed(c, petId, text) {
   assert.equal(result.code, 'NETWORK_ERROR'); return actionId;
 }
 async function snapshot(c, petId) { return call(c, 'conversations', 'snapshot', { petId }); }
+const comparableMessages = rows => rows.map(row => Object.fromEntries(Object.entries(row).filter(([key]) => key !== 'sequence')));
 async function assertStoredKey(c, owner) {
   const db = new DatabaseSync(join(c.profile, 'lingjing.sqlite'), { readOnly: true }); db.exec('PRAGMA query_only=ON');
   const row = db.prepare('SELECT encrypted_key FROM conversation_credentials WHERE owner_account_id=?').get(owner);
@@ -105,24 +113,27 @@ try {
   await configure(a, closedBase); await configure(b, closedBase);
   await enableSync(a); await enableSync(b); await observePushPrivacy(a); await observePushPrivacy(b);
   await call(a, 'conversations', 'select', { petId });
-  const firstAction = await sendFailed(a, petId, 'A 的第一条真实用户消息');
+  const firstAction = await sendFailed(a, petId, authored.message);
   await configure(a, stallBase);
   const cancelledAction = randomUUID(), pending = invoke(a, 'conversations', 'send', { petId, text: 'A 的取消消息', actionId: cancelledAction });
   await until(async () => sockets.size > 0 && (await snapshot(a, petId)).messages.at(-1)?.status === 'pending', 'actual pending request and accepted socket');
   await call(a, 'conversations', 'cancel', { petId }); const cancellation = await pending; assert.equal(cancellation.code, 'CANCELLED');
   await configure(a, closedBase);
   let state = await snapshot(a, petId);
-  await call(a, 'conversations', 'profile.save', { petId, revision: state.profile.revision, profile: { ...state.profile, persona: 'A 已同步的人设' } });
-  await call(a, 'conversations', 'memory.save', { petId, memory: { content: 'A 已同步的记忆' } });
+  await call(a, 'conversations', 'profile.save', { petId, revision: state.profile.revision, profile: { ...state.profile, persona: authored.persona } });
+  await call(a, 'conversations', 'memory.save', { petId, memory: { content: authored.memory } });
   state = await snapshot(a, petId); const originalIds = state.messages.map(row => row.id);
   assert.equal(state.messages[1].status, 'failed'); assert.equal(state.messages[3].status, 'cancelled');
   assert.ok(state.messages.filter(row => row.role === 'assistant').every(row => row.content === ''));
   const sentA = await call(a, 'accounts', 'syncNow', { actionId: randomUUID() }); assert.equal(sentA.personalVerified, true);
   await restore(b); let stateB = await snapshot(b, petId);
-  assert.deepEqual(stateB.messages.map(row => row.id), originalIds); assert.equal(stateB.profile.persona, state.profile.persona);
+  assert.deepEqual(comparableMessages(stateB.messages), comparableMessages(state.messages));
+  assert.deepEqual(stateB.messages.map(row => row.id), originalIds); assert.equal(stateB.profile.persona, authored.persona);
+  assert.equal(stateB.messages.find(row => row.actionId === firstAction && row.role === 'user').content, authored.message);
+  assert.equal(stateB.memories[0].content, authored.memory);
   assert.deepEqual(stateB.memories, state.memories); assert.equal(stateB.globalConnection.hasKey, true);
   const keyA = await assertStoredKey(a, owner), keyB = await assertStoredKey(b, owner); assert.notEqual(keyA.cipherHash, keyB.cipherHash);
-  record('Actual HTTPS CAS preserves message IDs/order, failed/cancelled turns, persona and memory on B; each device retains its own key', { receipt: sentA, originalIds, firstAction, cancelledAction });
+  record('Actual HTTPS CAS preserves message IDs/order, cancelled/failed states and exact user-authored JSON in message/persona/memory; each device retains its own key', { receipt: sentA, originalIds, firstAction, cancelledAction, authoredTextUnchanged: true });
   // Both devices edit after the same readback; B wins the next revision, and A
   // must preserve its failed CAS/outbox until an explicit conflict choice.
   state = await snapshot(a, petId);
@@ -166,7 +177,7 @@ try {
   } else assert.equal(retried.personalVerified, true);
   assert.equal(retried.actionId, offlineAction);
   await restore(b); stateB = await snapshot(b, petId);
-  assert.deepEqual(stateB.messages.map(row => row.id), beforeRestart.messages.map(row => row.id)); assert.deepEqual(stateB.memories, beforeRestart.memories);
+  assert.deepEqual(comparableMessages(stateB.messages), comparableMessages(beforeRestart.messages)); assert.deepEqual(stateB.memories, beforeRestart.memories);
   assert.equal((await assertStoredKey(a, owner)).cipherHash, keyA.cipherHash); assert.equal((await assertStoredKey(b, owner)).cipherHash, keyB.cipherHash);
   record('A persists the failed cloud outbox and local key across process restart; exact action retries through real HTTPS and B independently reads it back', { injectedFailure: offline.code, retry: retried, finalIds: stateB.messages.map(row => row.id) });
   for (const c of [a, b]) { observedPushes.push(...await c.app.evaluate(() => globalThis.__conversationCloudPushes)); assert.equal(await c.page.evaluate(() => localStorage.length), 0); }
