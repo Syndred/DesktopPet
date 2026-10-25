@@ -1,0 +1,130 @@
+{
+  "at": "2026-10-25T04:53:15.989Z",
+  "scope": "Read-only replay against captured actual Electron requests and their matching compiled Vite manifest; no new Electron or portable launch.",
+  "sourceCommit": "5016e4504916620f6529571455291a455817e7e7",
+  "capturedEvidenceSha256": "b57a2b538e030bb3b9026f6f8c987c490c855dbe819832fd9fa5453cc1cecc12",
+  "viteManifestSha256": "9f5b28ed18df8b3e45905c010f10ae37577cbe31e1e447b504bde2392e5e7d6c",
+  "compiledFingerprint": "89baa5e89293e4503ff5605b1ce83b99d24265be12d2d252fbcd905817dab1b6",
+  "home": [
+    {
+      "feature": "accounts",
+      "asset": "assets/index-B9szCstu.js",
+      "loaded": true
+    },
+    {
+      "feature": "companions",
+      "asset": "assets/index-lKQ2lW4K.js",
+      "loaded": true
+    },
+    {
+      "feature": "resources",
+      "asset": "assets/index-B3MPYunP.js",
+      "loaded": false
+    },
+    {
+      "feature": "battle",
+      "asset": "assets/index-FDJx9kgO.js",
+      "loaded": false
+    },
+    {
+      "feature": "discovery",
+      "asset": "assets/index-C46qcPqn.js",
+      "loaded": false
+    },
+    {
+      "feature": "garden",
+      "asset": "assets/index-CRnsCTt7.js",
+      "loaded": false
+    },
+    {
+      "feature": "conversations",
+      "asset": "assets/index-tL3cIdZv.js",
+      "loaded": false
+    }
+  ],
+  "desktops": [
+    {
+      "id": "native-wood-desktop",
+      "petId": "pet-ce4a5eb8-fad9-4210-9c69-383dede3a9de",
+      "features": [
+        {
+          "feature": "accounts",
+          "asset": "assets/index-B9szCstu.js",
+          "loaded": false
+        },
+        {
+          "feature": "companions",
+          "asset": "assets/index-lKQ2lW4K.js",
+          "loaded": false
+        },
+        {
+          "feature": "resources",
+          "asset": "assets/index-B3MPYunP.js",
+          "loaded": false
+        },
+        {
+          "feature": "battle",
+          "asset": "assets/index-FDJx9kgO.js",
+          "loaded": false
+        },
+        {
+          "feature": "discovery",
+          "asset": "assets/index-C46qcPqn.js",
+          "loaded": false
+        },
+        {
+          "feature": "garden",
+          "asset": "assets/index-CRnsCTt7.js",
+          "loaded": false
+        },
+        {
+          "feature": "conversations",
+          "asset": "assets/index-tL3cIdZv.js",
+          "loaded": false
+        }
+      ]
+    },
+    {
+      "id": "native-earth-desktop",
+      "petId": "pet-c79a395c-2277-4d0a-88c4-f3ac6cf963eb",
+      "features": [
+        {
+          "feature": "accounts",
+          "asset": "assets/index-B9szCstu.js",
+          "loaded": false
+        },
+        {
+          "feature": "companions",
+          "asset": "assets/index-lKQ2lW4K.js",
+          "loaded": false
+        },
+        {
+          "feature": "resources",
+          "asset": "assets/index-B3MPYunP.js",
+          "loaded": false
+        },
+        {
+          "feature": "battle",
+          "asset": "assets/index-FDJx9kgO.js",
+          "loaded": false
+        },
+        {
+          "feature": "discovery",
+          "asset": "assets/index-C46qcPqn.js",
+          "loaded": false
+        },
+        {
+          "feature": "garden",
+          "asset": "assets/index-CRnsCTt7.js",
+          "loaded": false
+        },
+        {
+          "feature": "conversations",
+          "asset": "assets/index-tL3cIdZv.js",
+          "loaded": false
+        }
+      ]
+    }
+  ],
+  "passed": true
+}

@@ -49,7 +49,7 @@ try {
   assert.equal(proof.info.build.sourceCommit, sourceCommit);
   for (const key of ['canonicalSourceFingerprint', 'compiledFingerprint']) assert.equal(proof.info.build[key], expectedBuild[key]);
   assert.equal(proof.info.build.runtimeClosure.sha256, expectedBuild.runtimeClosure.sha256);
-  const initialGraph = await graph(page); absent(initialGraph, ['discovery', 'garden', 'conversations']);
+  const initialGraph = await graph(page); absent(initialGraph, ['resources', 'battle', 'discovery', 'garden', 'conversations']);
   proof.checks.push({ id: 'app-entry-lazy-and-supported', requests: initialGraph, runtime: proof.info.runtime });
   await page.getByRole('button', { name: '设置', exact: true }).click(); await page.getByRole('heading', { name: '按你的节奏，安静陪伴。', exact: true }).waitFor();
   await page.getByRole('button', { name: '角色资源', exact: true }).click(); await page.locator('.resources-preview').waitFor();
