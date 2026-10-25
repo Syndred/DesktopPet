@@ -1,0 +1,48 @@
+{
+  "at": "2026-10-25T08:45:58.067Z",
+  "status": "interrupted-at-coordinator-request",
+  "reason": "Avoid further concurrent same-SFX restarts while root performs its existing offline/restart acceptance; source and success gates unchanged",
+  "mainAcceptancePassed": true,
+  "completedOwners": [
+    {
+      "label": "A",
+      "status": {
+        "configured": true,
+        "cloudRevision": 9,
+        "lastVerifiedAt": "2026-10-25T08:44:32.878Z",
+        "lastError": null,
+        "pending": 0,
+        "conflicts": 0,
+        "localChanged": false,
+        "unverifiedLocal": 0,
+        "privacyRedactions": 0,
+        "running": false,
+        "observedCloudRevision": 9,
+        "lastCloudCheckedAt": "2026-10-25T08:44:32.457Z",
+        "remoteChanged": false
+      },
+      "rawBusinessAndJournalUnchanged": true
+    },
+    {
+      "label": "B",
+      "status": {
+        "configured": true,
+        "cloudRevision": 7,
+        "lastVerifiedAt": "2026-10-25T08:45:28.615Z",
+        "lastError": null,
+        "pending": 0,
+        "conflicts": 0,
+        "localChanged": false,
+        "unverifiedLocal": 0,
+        "privacyRedactions": 0,
+        "running": false,
+        "observedCloudRevision": 7,
+        "lastCloudCheckedAt": "2026-10-25T08:45:25.254Z",
+        "remoteChanged": false
+      },
+      "rawBusinessAndJournalUnchanged": true
+    }
+  ],
+  "ownedVerifierProcessIds": [],
+  "terminationScope": "Exact uniquely named verifier and only its descendant process tree"
+}

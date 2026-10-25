@@ -1,0 +1,103 @@
+{
+  "at": "2026-10-25T08:50:22.429Z",
+  "scope": "Fresh ordinary managed QA Auth and actual HTTPS head plus exact action-specific receipt read after all scoped native processes exit",
+  "source": "a9acd7f6f1920c541d429fa26d1f054b1427cd95",
+  "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+  "owners": [
+    {
+      "owner": "account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+      "label": "A",
+      "revision": 9,
+      "checksum": "6c41d531f2499efc34116665d2d99b516c7014eeee29c579a6ac3a34f65a1c4d",
+      "actionId": "battle-authority:friend:d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+      "kind": "authority",
+      "exactHeadAndReceipt": true,
+      "readerDevice": "a20db931-3d24-47ef-a822-a0c90d887905"
+    },
+    {
+      "owner": "account:9e230794-470b-45be-9a18-a2564c88ba35",
+      "label": "B",
+      "revision": 7,
+      "checksum": "0676ef7a4ee7866b5ec831ef76814f73fc4674d24dcf7f6f4bec262c3f8c39b1",
+      "actionId": "battle-authority:friend:d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+      "kind": "authority",
+      "exactHeadAndReceipt": true,
+      "readerDevice": "575570cd-d8d5-4e8c-bbdf-eda0052c7bdc"
+    }
+  ],
+  "https": [
+    {
+      "owner": "account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+      "path": "/functions/v1/lingjing-auth",
+      "origin": "https://jbvrdmrkwpznbrvteive.supabase.co",
+      "op": "login",
+      "status": 200,
+      "authorizationPresent": false,
+      "deviceHeaderPresent": true
+    },
+    {
+      "owner": "account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+      "path": "/functions/v1/lingjing-save",
+      "origin": "https://jbvrdmrkwpznbrvteive.supabase.co",
+      "op": "read",
+      "status": 200,
+      "authorizationPresent": true,
+      "deviceHeaderPresent": true
+    },
+    {
+      "owner": "account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+      "path": "/functions/v1/lingjing-save",
+      "origin": "https://jbvrdmrkwpznbrvteive.supabase.co",
+      "op": "read",
+      "status": 200,
+      "authorizationPresent": true,
+      "deviceHeaderPresent": true
+    },
+    {
+      "owner": "account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+      "path": "/functions/v1/lingjing-auth",
+      "origin": "https://jbvrdmrkwpznbrvteive.supabase.co",
+      "op": "logout",
+      "status": 200,
+      "authorizationPresent": true,
+      "deviceHeaderPresent": true
+    },
+    {
+      "owner": "account:9e230794-470b-45be-9a18-a2564c88ba35",
+      "path": "/functions/v1/lingjing-auth",
+      "origin": "https://jbvrdmrkwpznbrvteive.supabase.co",
+      "op": "login",
+      "status": 200,
+      "authorizationPresent": false,
+      "deviceHeaderPresent": true
+    },
+    {
+      "owner": "account:9e230794-470b-45be-9a18-a2564c88ba35",
+      "path": "/functions/v1/lingjing-save",
+      "origin": "https://jbvrdmrkwpznbrvteive.supabase.co",
+      "op": "read",
+      "status": 200,
+      "authorizationPresent": true,
+      "deviceHeaderPresent": true
+    },
+    {
+      "owner": "account:9e230794-470b-45be-9a18-a2564c88ba35",
+      "path": "/functions/v1/lingjing-save",
+      "origin": "https://jbvrdmrkwpznbrvteive.supabase.co",
+      "op": "read",
+      "status": 200,
+      "authorizationPresent": true,
+      "deviceHeaderPresent": true
+    },
+    {
+      "owner": "account:9e230794-470b-45be-9a18-a2564c88ba35",
+      "path": "/functions/v1/lingjing-auth",
+      "origin": "https://jbvrdmrkwpznbrvteive.supabase.co",
+      "op": "logout",
+      "status": 200,
+      "authorizationPresent": true,
+      "deviceHeaderPresent": true
+    }
+  ],
+  "passed": true
+}

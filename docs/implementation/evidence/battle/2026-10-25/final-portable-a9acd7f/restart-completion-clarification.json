@@ -1,0 +1,14 @@
+{
+  "at": "2026-10-25T08:49:26.775Z",
+  "status": "completed-before-pause-cleanup-check",
+  "restartPassed": true,
+  "restartCompletedAt": "2026-10-25T08:45:39.863Z",
+  "pauseCleanupCheckedAt": "2026-10-25T08:45:58.067Z",
+  "noProcessTerminated": true,
+  "completedOwners": [
+    "A",
+    "B"
+  ],
+  "priorPauseRecord": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\final-portable-friend-a9acd7f-1792917183061\\restart-r2-interrupted.json",
+  "statement": "The pause request arrived after retry startup. Both owners had already completed and exited naturally before the cleanup check; its interrupted status records the request, not an actual process interruption. The successful retry evidence is unmodified."
+}
