@@ -20,4 +20,8 @@
 
 统一存档的 character-resources 模块现在有云端专用 version 2：`{format:'lingjing-resource-references',ownerAccountId,references:[{authUserId,resourceId,manifestSha256,contentHash,manifestPath,manifestBytes,totalBytes,kind}]}`。由服务器行生成，不接受客户端自定义 schema 或资源列表当权威。08/01 的云恢复适配应先调用 `resourceCloud.hydrateReferences(owner, module)`，它再次比对服务器已核验 refs，再恢复实际文件；随后才应用伙伴等引用资源的片段。本机离线备份 version 1 的原包/校准/历史恢复保持。资源权威回执是该次历史操作，不可直接当成所有领域的最新 CAS 头版本。
 
+正式 resource-backup 适配现同时接受 v1 与 v2，版本和内容必须匹配。BackupManager.prepareCloud 在 cloudPreview 留下恢复预览前先执行 v2 的真实服务引用/文件 hydration，之后同步 restore 只接受已有 live authority 回执的对应资源；不在 SQLite 事务里联网。v1 export 与恢复文件仍保留原字节、历史和偏好；云端队列/回执是本机缓存，不从备份文件导入为授权。AccountSync 通过 adapter.cloudModule 生成云端指纹，已核验且未修改的资源可与服务器 v2 对齐。正常偏好变更的同步继续实现，不把所有非空 preferences 永久标成完成。
+
+真实目标验证已完成：[受保护引用与拒绝证据](evidence/resources/cloud-upgrade/live-authority/evidence.json)、[02 自定义外观联验](evidence/resources/cloud-upgrade/live-authority/companion-joint.json)。原包未重复上传；B 独立读回统一存档 v2，OTHER404、伪造 index422、撤销设备401，失败均未提升 revision/checksum。伙伴换装只认可 verified references，保持同 petId/成长。
+
 两次迁移均由 Supabase CLI 2.122.0 的 migration new 生成；资源会话不直接改变远端 schema/函数。主协调已部署 private Storage，第二次 authority 迁移与函数待统一部署。目标项目初始只读检查没有 Storage bucket，原 comparisontext 的 18 张业务表保留。本机协议验证和真实 HTTPS A/B/跨账号证据分别记录，不能互相代替。
