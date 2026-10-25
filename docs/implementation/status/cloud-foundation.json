@@ -2,9 +2,9 @@
   "module": "foundation",
   "scope": "Public engineering, staged runtime extraction, typed IPC, lazy routes/desktop entry, Windows native/EXE CI and verifiable release/rollback. Battle UI and production Supabase writes remain with their owners.",
   "branch": "codex/lingjing-foundation",
-  "commit": "8242a4c251cdd2d7c92e395bf99e1d3098d6d070",
+  "commit": "73639b6da9a71e3068d1de35dc363d170a3a516b",
   "goalStatus": "active",
-  "stage": "approved-08-03-integrated-source-prototypes-retired-final-domain-checkpoints-pending",
+  "stage": "engineering-checkpoint-accepted-pending-final-business-freeze",
   "contracts": [
     "docs/implementation/cloud-upgrade-2026-10-25.md",
     "https://www.electronjs.org/docs/latest/tutorial/electron-timelines",
@@ -94,6 +94,13 @@
       "passed": true,
       "evidence": "docs/implementation/evidence/foundation/cloud-engineering/clean-install-workspace-cleanup.json",
       "policy": "Separate new directory, no shared node_modules changes, both Node and Electron N-API probe passed"
+    },
+    {
+      "name": "Actual packaged Windows EXE runs ASAR-contained native fullscreen script",
+      "passed": true,
+      "evidence": "docs/implementation/evidence/foundation/cloud-engineering/packaged-fullscreen-monitor.json",
+      "source": "73639b6da9a71e3068d1de35dc363d170a3a516b",
+      "scope": "Actual unpacked EXE, embedded ASAR, explicit fresh QA profile; final portable test also requires this ready signal."
     }
   ],
   "realCloudEvidence": {
@@ -119,7 +126,9 @@
     ],
     "battleUiTouched": false,
     "readOnlyLegacyArchive": true,
-    "corruptAndMissingArchiveProtected": true
+    "corruptAndMissingArchiveProtected": true,
+    "battleUiEditsByFoundation": false,
+    "approvedBattleUiIntegration": "0ddda2a"
   },
   "cleanupCandidates": "docs/implementation/cleanup/cloud-foundation-inventory.json",
   "sharedDependencies": {
@@ -140,7 +149,7 @@
     "Final actual EXE audit/ordinary config/fullscreen monitor/native training smoke and verified binary rollback rehearsal",
     "Coordinator-approved old cloud SQL/function retirement; no remote migration history changes by foundation"
   ],
-  "updatedAt": "2026-10-25T03:18:28.308Z",
+  "updatedAt": "2026-10-25T03:22:27.830Z",
   "approvedIntegrations": {
     "accounts": "45b857d",
     "resources": "4e8fdf8",

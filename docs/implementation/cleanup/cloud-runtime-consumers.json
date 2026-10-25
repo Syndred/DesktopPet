@@ -1,12 +1,14 @@
 {
   "at": "2026-10-25T02:50:26.987Z",
-  "source": "8242a4c251cdd2d7c92e395bf99e1d3098d6d070",
+  "source": "73639b6da9a71e3068d1de35dc363d170a3a516b",
   "reviewedCheckpoints": {
     "accounts": "45b857d",
     "resources": "4e8fdf8",
     "battleV3": "0ddda2a",
     "conversations": "543b71f",
-    "publicCloudConfig": "3c791c2"
+    "publicCloudConfig": "3c791c2",
+    "accountsPrivacy": "8e5c735",
+    "discoveryLocation": "4ee7240"
   },
   "retainedServices": [
     "services.legacy.runtimeDataStore (read-only archive capability)",
@@ -71,6 +73,6 @@
     "battle UI and all in-progress business worktrees",
     "comparisontext encrypted backups and user data"
   ],
-  "integration": "Coordinator-approved identity, accounts/resources/public-config, battle V3 and conversations checkpoints are merged. Growth/cloud battle/garden/discovery remain pending approval.",
+  "integration": "Only coordinator-approved checkpoints merged. Old prototype workspaces/3D bundles and their own obsolete tests are retired. Live cloud domains still await final review; production cloud history is unchanged by foundation.",
   "profilePath": "Explicit override > current canonical SQLite > known old canonical SQLite > legacy JSON; actual two-launch Electron proof passed without JSON creation."
 }
