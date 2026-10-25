@@ -1,0 +1,63 @@
+{
+  "at": "2026-10-25T02:16:21.688Z",
+  "directory": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\artifacts\\foundation\\cloud-engineering\\clean-install\\install-ggRom6",
+  "npm": "11.19.0",
+  "node": "v24.21.0",
+  "scope": "Fresh independent install, no junction or parent node_modules fallback, no compiler/manual addon copies.",
+  "checks": [
+    {
+      "name": "npm-ci",
+      "exitCode": 0
+    },
+    {
+      "name": "native",
+      "exitCode": 0
+    }
+  ],
+  "native": {
+    "passed": true,
+    "at": "2026-10-25T02:16:35.142Z",
+    "directory": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\artifacts\\foundation\\cloud-engineering\\clean-install\\install-ggRom6\\artifacts\\foundation\\cloud-engineering\\native\\probe-0JoyuN",
+    "node": {
+      "runtime": "node",
+      "versions": {
+        "node": "24.21.0",
+        "electron": null,
+        "modules": "137",
+        "napi": "10"
+      },
+      "sqlitePackage": "13.0.3",
+      "sqliteEngine": "3.53.4",
+      "rows": [
+        {
+          "runtime": "node",
+          "version": "24.21.0"
+        }
+      ]
+    },
+    "electron": {
+      "runtime": "electron",
+      "versions": {
+        "node": "24.22.0",
+        "electron": "44.9.3",
+        "modules": "149",
+        "napi": "10"
+      },
+      "sqlitePackage": "13.0.3",
+      "sqliteEngine": "3.53.4",
+      "rows": [
+        {
+          "runtime": "electron",
+          "version": "44.9.3"
+        },
+        {
+          "runtime": "node",
+          "version": "24.21.0"
+        }
+      ]
+    },
+    "nativePolicy": "better-sqlite3 13 uses bundled N-API prebuilds. Do not rebuild a shared node_modules tree for an older Electron ABI."
+  },
+  "passed": true,
+  "completedAt": "2026-10-25T02:16:35.150Z"
+}

@@ -4,7 +4,7 @@
   "branch": "codex/lingjing-foundation",
   "commit": "b40af0efcf6062ddc2e8c360523c996fc91ebc0a",
   "goalStatus": "active",
-  "stage": "supported-engine-dependency-checkpoint",
+  "stage": "clean-install-fix-verified",
   "contracts": [
     "docs/implementation/cloud-upgrade-2026-10-25.md",
     "https://www.electronjs.org/docs/latest/tutorial/electron-timelines",
@@ -28,6 +28,13 @@
       "name": "Actual Electron CJS service transaction/owner checks",
       "passed": true,
       "cases": 2
+    },
+    {
+      "name": "Independent empty-directory npm ci on Windows without compiler",
+      "passed": true,
+      "npm": "11.19.0",
+      "evidence": "docs/implementation/evidence/foundation/cloud-engineering/clean-install.json",
+      "policy": "Only published gypfile:false restored in the lockfile. No global ignore-scripts or bootstrap."
     }
   ],
   "realCloudEvidence": {
@@ -57,8 +64,9 @@
       "garden",
       "companions"
     ],
-    "command": "npm run native:check",
-    "policy": "Merge the common manifest/lock before using the shared junction. Do not npm ci/rebuild this shared tree from an older lock/ABI."
+    "command": "npm ci && npm run native:check",
+    "policy": "Merge the common manifest/lock before using the shared junction. Do not npm ci/rebuild this shared tree from an older lock/ABI.",
+    "installIssue": "npm/cli#9837 reproduced without stale hasInstallScript; corrected missing gypfile metadata and verified plain npm ci"
   },
   "remaining": [
     "Complete old-file/replacement/consumer inventory before deletion",
@@ -68,5 +76,5 @@
     "Windows CJS/native/EXE CI; actual signing status and reproducible release rollback",
     "Integrate only main-approved business deliveries and run the justified final regression"
   ],
-  "updatedAt": "2026-10-25T02:04:29.941Z"
+  "updatedAt": "2026-10-25T02:18:45.874Z"
 }
