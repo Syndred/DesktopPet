@@ -33,7 +33,14 @@ class CloudCompanionAuthority {
   row(owner,id){return this.db.prepare('SELECT * FROM account_actions WHERE owner_account_id=? AND action_id=?').get(owner,id);}
   pending(owner){return this.db.prepare("SELECT action_id,result FROM account_actions WHERE owner_account_id=? AND kind=? AND json_extract(result,'$.status') IN ('pending','retry') ORDER BY created_at,rowid").all(owner,INTENT).map(row=>({id:row.action_id,...JSON.parse(row.result)}));}
   busy(owner){return this.queues.has(owner);}
-  state(owner){return{...(this.states.get(owner)||{mode:'cloud',status:'cached',sharedSavePending:true}),pending:this.pending(owner).length};}
+  state(owner){
+    const state={...(this.states.get(owner)||{mode:'cloud',status:'cached',sharedSavePending:true})},context=state.sharedSaveContext;
+    // Explanations are transient and must not survive a different owner/login.
+    delete state.sharedSaveContext;delete state.sharedSaveReason;
+    if(state.status==='ready'&&state.sharedSavePending&&context?.reason==='local-difference'&&context.ownerAccountId===owner
+      &&Number.isSafeInteger(context.epoch)&&context.epoch===this.accounts()?.sync?.getEpoch?.()&&this.enabled(owner))state.sharedSaveReason=context.reason;
+    return{...state,pending:this.pending(owner).length};
+  }
   setIntent(owner,id,value){this.db.prepare('UPDATE account_actions SET result=? WHERE owner_account_id=? AND action_id=? AND kind=?').run(JSON.stringify(value),owner,id,INTENT);}
   pristine(data){return data.identityImports.length===0&&Object.entries(data.tables).filter(([name])=>name!=='companion_accounts').every(([,rows])=>rows.length===0)&&data.tables.companion_accounts.every(row=>row.revision<=1&&Object.values(JSON.parse(row.selections_json)).every(value=>value===null));}
   assertNoHistoryLoss(current,incoming){
@@ -70,15 +77,22 @@ class CloudCompanionAuthority {
       if(ack?.kind!=='companions-cloud-readback'||ack.input_hash!==localDigest)fail('CLOUD_LOCAL_CONFLICT','本机伙伴有尚未核验的独立进度，已完整保留，请先预览云端版本。');
       this.assertNoHistoryLoss(current,incoming);
     }
-    let sharedSavePending=true;
+    let sharedSavePending=true,sharedSaveContext;
     transaction(this.db,()=>{
       if(localDigest!==incomingDigest)this.backup.restore(owner,incoming,'replace');
       const sync=this.accounts()?.sync;
-      if(sync?.acceptAuthoritativeReadback){try{sync.acceptAuthoritativeReadback(owner,{envelope,cloudRevision:remote.revision});sharedSavePending=false;}catch(error){if(!['CLOUD_LOCAL_CONFLICT','SYNC_BUSY','SYNC_PENDING'].includes(error.code))throw error;}}
+      if(sync?.acceptAuthoritativeReadback){
+        try{sync.acceptAuthoritativeReadback(owner,{envelope,cloudRevision:remote.revision});sharedSavePending=false;}
+        catch(error){
+          if(!['CLOUD_LOCAL_CONFLICT','SYNC_BUSY','SYNC_PENDING'].includes(error.code))throw error;
+          const epoch=sync.getEpoch?.();
+          if(error.code==='CLOUD_LOCAL_CONFLICT'&&error.details?.sharedSaveReason==='local-difference'&&Number.isSafeInteger(epoch))sharedSaveContext={ownerAccountId:owner,epoch,reason:'local-difference'};
+        }
+      }
       const info={cloudRevision:remote.revision,checksum:digest,verifiedAt:new Date().toISOString(),sharedSavePending};
       this.db.prepare('INSERT INTO account_actions(owner_account_id,action_id,kind,input_hash,result,created_at) VALUES(?,?,?,?,?,?) ON CONFLICT(owner_account_id,action_id) DO UPDATE SET input_hash=excluded.input_hash,result=excluded.result,created_at=excluded.created_at').run(owner,HEAD,'companions-cloud-readback',incomingDigest,JSON.stringify(info),info.verifiedAt);
     });
-    this.states.set(owner,{mode:'cloud',status:'ready',pending:this.pending(owner).length,cloudRevision:remote.revision,sharedSavePending});
+    this.states.set(owner,{mode:'cloud',status:'ready',pending:this.pending(owner).length,cloudRevision:remote.revision,sharedSavePending,sharedSaveContext});
     const serialChanged=remote.serialRegistry===undefined?false:this.serialCache?.accept(owner,remote.serialRegistry,incoming.tables.companion_pets,remote.revision);
     if(localDigest!==incomingDigest||serialChanged)this.changed(owner);
   }

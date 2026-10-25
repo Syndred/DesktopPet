@@ -18,13 +18,15 @@ export type Controller = ReturnType<typeof useCompanions>;
 export function CompanionCloudNotice({ controller }: { controller: Controller }) {
   const sync = controller.snapshot?.sync;
   if (!sync || (sync.status === 'ready' && !sync.sharedSavePending && sync.pending === 0)) return null;
+  const localDifference = sync.status === 'ready' && sync.sharedSavePending && sync.pending === 0 && sync.sharedSaveReason === 'local-difference';
   const message = sync.status === 'conflict' ? '伙伴存档需要核对，本机原有进度已保留。'
     : sync.pending > 0 ? `有 ${sync.pending} 项伙伴操作待云端确认，原请求已保留。`
     : sync.status === 'offline' ? '暂时无法连接云端，正在显示本机缓存。'
+    : localDifference ? '伙伴已保存，其他存档仍有待同步差异。请到账号页查看同步详情。'
     : sync.status === 'ready' && sync.sharedSavePending ? '伙伴已保存，其他存档待核对。'
     : '正在核对伙伴云端存档。';
   const review = sync.status === 'conflict' || (sync.status === 'ready' && sync.sharedSavePending && sync.pending === 0);
-  return <div className="cp-cloud-notice" role="status" aria-live="polite"><Info size={18} aria-hidden="true"/><span>{message}</span><Button variant="secondary" disabled={controller.busy || controller.refreshing} onClick={() => review ? navigate('/account') : void controller.reload()}>{controller.refreshing ? '正在核对…' : review ? '核对存档' : '重新确认'}</Button></div>;
+  return <div className="cp-cloud-notice" role="status" aria-live="polite"><Info size={18} aria-hidden="true"/><span>{message}</span><Button variant="secondary" disabled={controller.busy || controller.refreshing} onClick={() => review ? navigate('/account') : void controller.reload()}>{controller.refreshing ? '正在核对…' : localDifference ? '查看同步详情' : review ? '核对存档' : '重新确认'}</Button></div>;
 }
 export function CompanionElement({ element }: { element: ElementType }) {
   return <span className="cp-element" data-element={element}><ElementMark element={element}/>{battleElements[element].label}</span>;

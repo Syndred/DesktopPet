@@ -95,6 +95,7 @@ export interface CompanionsSnapshot {
     status: 'cached' | 'ready' | 'pending' | 'offline' | 'conflict';
     pending: number;
     sharedSavePending: boolean;
+    sharedSaveReason?: 'local-difference';
     cloudRevision?: number;
     error?: string;
     message?: string;

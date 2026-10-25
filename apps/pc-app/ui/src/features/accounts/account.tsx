@@ -85,6 +85,10 @@ function AccountDetails({ user, session, refreshSession }: { user: AccountUser; 
       setOldPassword(""); setNewPassword(""); setConfirm(""); await refreshSession(); return "密码已更新。";
     });
   }
+  const localDifferenceDetail = !sync?.lastVerifiedAt ? "本机存档尚未完成云端核对，可预览云端存档或导出备份。"
+    : !settings ? "本机存档有待同步差异，请查看同步设置或导出备份。"
+    : settings.document.sync.enabled ? "本机有待同步差异，可立即同步或导出备份。"
+    : "本机存档有待同步差异，存档同步已关闭。可预览云端存档或导出备份；保留合并后仍可能有差异。";
   return <div className="accounts ac-page">
     <header className="ac-page-heading"><p className="ac-eyebrow">设置 / 账号与同步</p><div className="ac-title-row"><h1>把每一段陪伴，好好保存。</h1>{session.scenario && <AccountStatus icon={FlaskConical} label="测试场景" detail={`隔离测试 · ${session.scenario.id}`} iconOnly />}</div></header>
     <div className="ac-settings-layout"><SettingsNavigation /><AnimatedList className="ac-account-grid">
@@ -112,7 +116,7 @@ function AccountDetails({ user, session, refreshSession }: { user: AccountUser; 
               ? <AccountStatus icon={HardDrive} label="本机存档" detail="存档保存在这台电脑，可导出备份。" />
               : <AccountStatus icon={sync?.lastError ? CloudOff : sync?.running ? RefreshCw : sync?.localChanged || sync?.remoteChanged ? Cloud : CloudCheck}
                 label={sync?.running ? "正在同步" : sync?.remoteChanged ? "云端有更新" : sync?.lastError ? "同步未完成" : sync?.unverifiedLocal || sync?.privacyRedactions ? "部分内容已同步" : sync?.localChanged || sync?.pending ? "待同步" : sync?.lastVerifiedAt ? sync.lastCloudCheckedAt ? "已同步" : "本机已确认" : "尚未同步"}
-                detail={sync?.running ? "正在核对两端存档，本机改动会继续保留。" : sync?.remoteChanged ? "云端有较新存档；本机有改动或待处理记录时，请先预览再决定恢复。" : sync?.lastError ? "暂时无法同步，存档仍保存在本机。" : sync?.localChanged ? "本机有更新，开启同步后会自动保存，也可立即同步或导出备份。" : sync?.lastVerifiedAt ? `上次同步：${dateText(sync.lastVerifiedAt)}` : "本机备份可随时导出。"}
+                detail={sync?.running ? "正在核对两端存档，本机改动会继续保留。" : sync?.remoteChanged ? "云端有较新存档；本机有改动或待处理记录时，请先预览再决定恢复。" : sync?.lastError ? "暂时无法同步，存档仍保存在本机。" : sync?.localChanged ? localDifferenceDetail : sync?.lastVerifiedAt ? `上次同步：${dateText(sync.lastVerifiedAt)}` : "本机备份可随时导出。"}
                 tone={sync?.lastError || sync?.remoteChanged || sync?.unverifiedLocal || sync?.privacyRedactions ? "warning" : sync?.lastVerifiedAt && !sync?.localChanged && !sync?.pending && !sync?.running && sync.lastCloudCheckedAt ? "success" : "muted"} />}
             {Boolean(sync?.pending) && <AccountStatus icon={RefreshCw} label={`待同步 ${sync?.pending}`} detail="联网后可重试，当前记录仍保存在本机。" />}
             {Boolean(sync?.conflicts) && <AccountStatus icon={AlertCircle} label="版本冲突" detail="先预览云端存档，再决定是否恢复。" tone="warning" />}

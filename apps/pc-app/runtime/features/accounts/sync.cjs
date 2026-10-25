@@ -361,7 +361,11 @@ class AccountSync {
     invariant(!current || cloudRevision !== current.cloud_revision || !current.last_checksum || current.last_checksum === envelope.checksum,
       'SYNC_RECEIPT_MISMATCH', '同一云端版本返回了不同的存档。');
     const digest = this.dataChecksum(envelope.data,owner);
-    invariant(this.dataChecksum(this.backups.snapshot(owner).data,owner) === digest, 'CLOUD_LOCAL_CONFLICT', '其他本机进度尚未与完整云端存档一致，已保留原数据。');
+    const confirmedCloud = current?.cloud_revision === cloudRevision && current.last_checksum === envelope.checksum && Boolean(current.last_verified_at);
+    // A confirmed cloud receipt can coexist with local data preserved by merge.
+    // The reason only explains the rejection; full-save equality is still required.
+    invariant(this.dataChecksum(this.backups.snapshot(owner).data,owner) === digest, 'CLOUD_LOCAL_CONFLICT', '其他本机进度尚未与完整云端存档一致，已保留原数据。',
+      confirmedCloud ? { sharedSaveReason: 'local-difference' } : undefined);
     transaction(this.db, () => {
       const at = new Date().toISOString();
       this.db.prepare(`INSERT INTO account_sync_state VALUES(?,?,?,?,NULL) ON CONFLICT(owner_account_id)
