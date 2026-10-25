@@ -25,12 +25,121 @@
         "read-only original JSON import",
         "owner aliases, pet IDs and all original data"
       ]
+    },
+    {
+      "file": "infra/supabase/migrations/0001_core_schema.sql",
+      "bytes": 10959,
+      "sha256": "7e446af31a67dafa19c5f7a70bad8bd7bc885bfd55c8db9ea849b6676b375c6e",
+      "replacement": "22 actual deployed migrations aligned to Supabase history",
+      "reason": "Superseded undeployed prototype; exact tracked bytes verified against complete recovery bundle before removal",
+      "dataDeleted": false
+    },
+    {
+      "file": "infra/supabase/migrations/0002_pet_inventory_battle_reports.sql",
+      "bytes": 5246,
+      "sha256": "4a1e7353820e3fb19be18c695786ed1e2077eb7f24394e7b01eec106844a9995",
+      "replacement": "22 actual deployed migrations aligned to Supabase history",
+      "reason": "Superseded undeployed prototype; exact tracked bytes verified against complete recovery bundle before removal",
+      "dataDeleted": false
+    },
+    {
+      "file": "infra/supabase/migrations/0003_duel_realtime_schema.sql",
+      "bytes": 5395,
+      "sha256": "2d4fba5e218c6b831b979af5786b969813a67aa39cbc3db2f833f7a57ce776f9",
+      "replacement": "22 actual deployed migrations aligned to Supabase history",
+      "reason": "Superseded undeployed prototype; exact tracked bytes verified against complete recovery bundle before removal",
+      "dataDeleted": false
+    },
+    {
+      "file": "infra/supabase/migrations/0004_runtime_cloud_auth_duel_requests.sql",
+      "bytes": 2486,
+      "sha256": "b95a8b743e08906a96ccc06fb93e24589d952052959bfdf728114f848a3d2d0d",
+      "replacement": "22 actual deployed migrations aligned to Supabase history",
+      "reason": "Superseded undeployed prototype; exact tracked bytes verified against complete recovery bundle before removal",
+      "dataDeleted": false
+    },
+    {
+      "file": "infra/supabase/migrations/0005_runtime_single_login_session.sql",
+      "bytes": 637,
+      "sha256": "2dec4daa3e60c5f2a8ff3cf61a45606574de65a858630bbc5b64d59a823579d5",
+      "replacement": "22 actual deployed migrations aligned to Supabase history",
+      "reason": "Superseded undeployed prototype; exact tracked bytes verified against complete recovery bundle before removal",
+      "dataDeleted": false
+    },
+    {
+      "file": "infra/supabase/migrations/20261024_accounts_save_sync.sql",
+      "bytes": 4237,
+      "sha256": "b6b4a2ca4f3f3b679ec8ee65b17d72d56c4013013eb49394d5705e458142aca0",
+      "replacement": "22 actual deployed migrations aligned to Supabase history",
+      "reason": "Superseded undeployed prototype; exact tracked bytes verified against complete recovery bundle before removal",
+      "dataDeleted": false
+    },
+    {
+      "file": "infra/supabase/migrations/20261024_discovery_authority.sql",
+      "bytes": 6825,
+      "sha256": "7180474e9ca40c0d363b89e8f7baa625cd4f7c592681ba0aa945d5232963e9be",
+      "replacement": "22 actual deployed migrations aligned to Supabase history",
+      "reason": "Superseded undeployed prototype; exact tracked bytes verified against complete recovery bundle before removal",
+      "dataDeleted": false
+    },
+    {
+      "file": "infra/supabase/migrations/20261024_garden_authority.sql",
+      "bytes": 4181,
+      "sha256": "9fbe947fe7d24a6439168dbd7befb603dfcc3408ad766000696bb5435d94526e",
+      "replacement": "22 actual deployed migrations aligned to Supabase history",
+      "reason": "Superseded undeployed prototype; exact tracked bytes verified against complete recovery bundle before removal",
+      "dataDeleted": false
+    },
+    {
+      "file": "infra/supabase/migrations/20261024_lingjing_battle_atomic_rounds.sql",
+      "bytes": 5857,
+      "sha256": "56aa9706dbb0cc22d14a1aa80c02c6e97b43d262ddac9b6edb4eb73876775a7e",
+      "replacement": "22 actual deployed migrations aligned to Supabase history",
+      "reason": "Superseded undeployed prototype; exact tracked bytes verified against complete recovery bundle before removal",
+      "dataDeleted": false
+    },
+    {
+      "file": "infra/supabase/functions/accounts-sync/index.ts",
+      "bytes": 436,
+      "sha256": "7ac72a4a1f0e4a54f5c944542283ee2dc0e2cd9b371a6e97452104fd15ec088e",
+      "replacement": "lingjing-auth + lingjing-save fresh managed Auth and protected save CAS",
+      "reason": "Superseded undeployed prototype; exact tracked bytes verified against complete recovery bundle before removal",
+      "dataDeleted": false
+    },
+    {
+      "file": "infra/supabase/functions/accounts-sync/handler.ts",
+      "bytes": 5552,
+      "sha256": "c0bbe70694ee0b10f422e678fafec81280301777905e43aa2f0421479eb017cf",
+      "replacement": "lingjing-auth + lingjing-save fresh managed Auth and protected save CAS",
+      "reason": "Superseded undeployed prototype; exact tracked bytes verified against complete recovery bundle before removal",
+      "dataDeleted": false
+    },
+    {
+      "file": "apps/pc-app/runtime/features/battle/verify-postgres.mjs",
+      "bytes": 5186,
+      "sha256": "b6656bff07c9f74bd129c22634064544e34b08387c9d5ad230ce1304d4c72e64",
+      "replacement": "credential-free modern SQL/domain fixtures in npm run verify:cloud",
+      "reason": "Superseded undeployed prototype; exact tracked bytes verified against complete recovery bundle before removal",
+      "dataDeleted": false
+    },
+    {
+      "file": "apps/pc-app/runtime/features/discovery/verification/postgres.mjs",
+      "bytes": 7112,
+      "sha256": "38c2b53b8b0031ed7b90da19febf5977d0b954898370810c46bd6b5792909483",
+      "replacement": "credential-free modern SQL/domain fixtures in npm run verify:cloud",
+      "reason": "Superseded undeployed prototype; exact tracked bytes verified against complete recovery bundle before removal",
+      "dataDeleted": false
     }
   ],
   "checks": {
-    "localOriginalAccountsBoundary": "passed actual SQLite/original JSON preservation with modern disabled network wrapper"
+    "localOriginalAccountsBoundary": "passed actual SQLite/original JSON preservation with modern disabled network wrapper",
+    "legacyObjects": "Live readback: runtime_accounts, duel_rooms and runtime_account_saves absent; actual deployed migration ledger remains 22",
+    "migrationFilenameGate": "passed strict 22 deployed files; legacyDrafts=[]",
+    "recoveryContent": "git diff --exit-code 39fb4608554918cc087acedb17a1294eeaa071ca HEAD -- all 13 retired paths passed before removal"
   },
   "remaining": [
-    "04 old duel transport consumers and obsolete SQL/Edge deployment drafts; retire after the new native flow is accepted"
-  ]
+    "04 old duel transport and duel-online VM consumer; retire after current real native acceptance",
+    "03 obsolete standalone server authority consumers; retain required location/map and original data readers"
+  ],
+  "updatedAt": "2026-10-25T04:57:55.375Z"
 }

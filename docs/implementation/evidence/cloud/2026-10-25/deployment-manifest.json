@@ -650,6 +650,7 @@
   "migrationAlignment": {
     "evidence": "docs/implementation/evidence/cloud/2026-10-25/migration-ledger-alignment.json",
     "remoteHistoryMutated": false,
-    "legacyDraftRetirementPending": true
+    "legacyDraftRetirementPending": false,
+    "legacyDraftRetirementEvidence": "docs/implementation/cleanup/cloud-coordinator-retirement.json"
   }
 }
