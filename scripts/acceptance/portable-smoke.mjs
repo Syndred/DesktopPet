@@ -7,6 +7,7 @@ import { randomUUID } from 'node:crypto';
 import assert from 'node:assert/strict';
 import { sha256 } from '../release/release-store.mjs';
 import { verifyPortableDefaultConfig } from './portable-config-smoke.mjs';
+import { pollState } from './poll-state.mjs';
 
 const option = name => process.argv.find(value => value.startsWith(`--${name}=`))?.slice(name.length + 3);
 const root = resolve('.'), config = JSON.parse(readFileSync('scripts/release/electron-builder.pc.json')), version = JSON.parse(readFileSync('package.json')).version;
@@ -45,9 +46,10 @@ try {
   assert.equal(proof.info.build.sourceCommit, expectedSource); assert.deepEqual(proof.info.build.sourceDirtyFiles, []); assert.equal(proof.info.features.length, 7);
   assert.equal(await page.evaluate(() => typeof window.require), 'undefined'); assert.equal(await page.evaluate(() => typeof window.lingjing.send), 'undefined');
   proof.checks.push({ id: 'actual-sfx-asar-source-and-secure-preload', electron: actualElectron, build: proof.info.build });
-  await page.waitForFunction(async () => { const result = await window.lingjing.invoke('accounts', 'settingsGet', {}); return result.ok && result.data.host?.fullscreenMonitor && result.data.host?.fullscreenMonitorReady; }, undefined, { timeout: 20000 });
-  const settings = await invoke('accounts', 'settingsGet');
-  proof.checks.push({ id: 'packaged-native-fullscreen-monitor-ready', running: settings.host.fullscreenMonitor, ready: settings.host.fullscreenMonitorReady });
+  const monitorObservations = [];
+  const settings = await pollState(async () => { const value = await invoke('accounts', 'settingsGet'); monitorObservations.push({ at: Date.now(), running: value.host.fullscreenMonitor, ready: value.host.fullscreenMonitorReady }); return value; }, value => value.host.fullscreenMonitor === true && value.host.fullscreenMonitorReady === true, { label: 'Packaged fullscreen monitor did not emit its protocol ready line' });
+  assert.equal(settings.host.fullscreenMonitor, true); assert.equal(settings.host.fullscreenMonitorReady, true);
+  proof.checks.push({ id: 'packaged-native-fullscreen-monitor-ready', running: settings.host.fullscreenMonitor, ready: settings.host.fullscreenMonitorReady, observations: monitorObservations });
   const resources = await invoke('resources', 'list'); assert.ok(['metal', 'wood', 'earth', 'water', 'fire'].every(element => resources.some(resource => resource.element === element && resource.availability === 'ready')));
   assert.ok(resources.filter(resource => resource.availability === 'ready').length >= 8);
   proof.checks.push({ id: 'eight-characters-five-elements', resources: resources.map(resource => ({ id: resource.id, element: resource.element, availability: resource.availability })) });
@@ -78,8 +80,7 @@ try {
   await page.evaluate(() => { location.hash = '#/battle'; }); await page.getByRole('button', { name: '开始', exact: true }).click();
   const screen = page.locator('[data-battle-screen="shared-v1"]'); await screen.waitFor(); const sessionId = await screen.getAttribute('data-session-id');
   await page.getByRole('button', { name: '普通攻击', exact: true }).click();
-  await page.waitForFunction(async id => { const result = await window.lingjing.invoke('battle', 'snapshot', { sessionId: id }); return result.ok && result.data.snapshot.round === 1; }, sessionId);
-  const battle = await invoke('battle', 'snapshot', { sessionId }); assert.equal(battle.rounds.length, 1); assert.equal(battle.rounds[0].actions.player, 'normal_attack');
+  const battle = await pollState(() => invoke('battle', 'snapshot', { sessionId }), value => value.snapshot.round === 1, { label: 'Actual packaged battle round was not committed' }); assert.equal(battle.rounds.length, 1); assert.equal(battle.rounds[0].actions.player, 'normal_attack');
   proof.checks.push({ id: 'packaged-shared-training-round', sessionId, round: battle.snapshot.round, player: battle.player.petId, hp: battle.rounds[0].hpAfter });
   assert.deepEqual(proof.errors, []); proof.passed = true; console.log(JSON.stringify({ passed: true, output, executableSha256: proof.executableSha256, checks: proof.checks.length }));
 } catch (error) { proof.failure = String(error); throw error; }
