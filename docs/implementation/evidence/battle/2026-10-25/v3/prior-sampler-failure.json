@@ -1,0 +1,64 @@
+{
+  "sourceCommit": "8bcde0dcf1c11db69795490618ef6401d9819786",
+  "runId": "23c2b46f-23ba-4396-b38a-ba88473e6b87",
+  "passed": false,
+  "failure": {
+    "message": "Expected values to be strictly deep-equal:\n+ actual - expected\n\n+ [\n+   {\n+     message: \"Cannot read properties of null (reading 'getAttribute')\",\n+     name: 'host'\n+   },\n+   {\n+     message: \"Cannot read properties of null (reading 'getAttribute')\",\n+     name: 'host'\n+   },\n+   {\n+     message: \"Cannot read properties of null (reading 'getAttribute')\",\n+     name: 'host'\n+   },\n+   {\n+     message: \"Cannot read properties of null (reading 'getAttribute')\",\n+     name: 'host'\n+   },\n+   {\n+     message: \"Cannot read properties of null (reading 'getAttribute')\",\n+     name: 'host'\n+   }\n+ ]\n- []\n",
+    "stack": "AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:\n+ actual - expected\n\n+ [\n+   {\n+     message: \"Cannot read properties of null (reading 'getAttribute')\",\n+     name: 'host'\n+   },\n+   {\n+     message: \"Cannot read properties of null (reading 'getAttribute')\",\n+     name: 'host'\n+   },\n+   {\n+     message: \"Cannot read properties of null (reading 'getAttribute')\",\n+     name: 'host'\n+   },\n+   {\n+     message: \"Cannot read properties of null (reading 'getAttribute')\",\n+     name: 'host'\n+   },\n+   {\n+     message: \"Cannot read properties of null (reading 'getAttribute')\",\n+     name: 'host'\n+   }\n+ ]\n- []\n\n    at file:///C:/Users/Administrator/.codex/worktrees/lingjing-battle/DesktopPet/apps/pc-app/runtime/features/battle/verify-v3.mjs:179:10"
+  },
+  "errors": [
+    {
+      "name": "host",
+      "message": "Cannot read properties of null (reading 'getAttribute')"
+    },
+    {
+      "name": "host",
+      "message": "Cannot read properties of null (reading 'getAttribute')"
+    },
+    {
+      "name": "host",
+      "message": "Cannot read properties of null (reading 'getAttribute')"
+    },
+    {
+      "name": "host",
+      "message": "Cannot read properties of null (reading 'getAttribute')"
+    },
+    {
+      "name": "host",
+      "message": "Cannot read properties of null (reading 'getAttribute')"
+    }
+  ],
+  "completedSteps": [
+    "native layout training-1280",
+    "native layout training-1440",
+    "native layout training-1024",
+    "charge charge-empty",
+    "hover and keyboard focus normal_attack",
+    "hover and keyboard focus element_attack",
+    "hover and keyboard focus dodge",
+    "real round partial-charge",
+    "charge charge-partial",
+    "real round log-0",
+    "real round log-1",
+    "real round log-2",
+    "real round log scrolls inside bounded card",
+    "charge charge-ready",
+    "real round ultimate-consumed",
+    "charge charge-consumed",
+    "25 native ordered affinities",
+    "native layout entry-wild",
+    "real round wild-win",
+    "wild capture preserved",
+    "native layout entry-territory-win",
+    "real round territory-win",
+    "territory win confirmation preserved",
+    "native layout entry-territory-loss",
+    "real round territory-loss",
+    "territory loss confirmation preserved",
+    "native layout entry-friend",
+    "real round friend-round",
+    "two-peer simulated friend settlement, original pending restored after native restart, no invented deadline or historical replay",
+    "animation preference removes the actual deadline immediately"
+  ],
+  "cause": "The verification MutationObserver sampled a detached scene after navigation; product cases had passed. Fixed in 2148ced and rerun on a fresh profile. This failed run is not counted as passed."
+}

@@ -1,0 +1,131 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-25T00:15:17.652Z",
+  "branch": "codex/lingjing-battle-v3",
+  "base": "f1dbc30312b6041f32ee815b67faeeb20a7a24df",
+  "productCommit": "8bcde0dcf1c11db69795490618ef6401d9819786",
+  "fullRunCommit": "2148cedfc4a197e9974baa6826492155f88d0f9d",
+  "tooltipCaptureCommit": "2871bb874ce61fa0195f01907a5d6bb037ac77a9",
+  "codeFingerprint": "4fefa3c077c281149a57e31b3a47d63aba3d3bab27ccef823d9fbda8f9333563",
+  "provenance": "simulated",
+  "nativeSteps": 32,
+  "tooltipCaptureSteps": 7,
+  "liveCloudVerified": false,
+  "sourceProfiles": "Fresh absolute path-bound QA profiles, namespaced local accounts; no ordinary saved data",
+  "sqlite": {
+    "profiles": 3,
+    "sessions": 33,
+    "uniqueRewards": 5,
+    "readOnly": true,
+    "queryOnly": true
+  },
+  "upstream": {
+    "fetchedAt": "2026-10-25T00:15:17.1302350Z",
+    "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086",
+    "ancestor": true,
+    "merge": "Already up to date",
+    "productCommit": "8bcde0dcf1c11db69795490618ef6401d9819786"
+  },
+  "captures": [
+    {
+      "file": "training-1280.png",
+      "source": "artifacts/battle/v3-1792887048306/training-1280.png",
+      "sha256": "1ab68f4b1117ac2e47ab9b89fdca3157e96373345f47091fca22a8b857232bbe"
+    },
+    {
+      "file": "training-1440.png",
+      "source": "artifacts/battle/v3-1792887048306/training-1440.png",
+      "sha256": "3919604cdc769d4c400c3d216929ad4053738ffcf72d015403dc6f20f9d2e6dd"
+    },
+    {
+      "file": "training-1024.png",
+      "source": "artifacts/battle/v3-1792887048306/training-1024.png",
+      "sha256": "8eb439dc9ef02cf4bffc803d6db8b1d3ecad0e95a78351fd02b880e5db62443b"
+    },
+    {
+      "file": "charge-partial.png",
+      "source": "artifacts/battle/v3-1792887048306/charge-partial.png",
+      "sha256": "0d67f94a5c7f38f6e9a2eb64d97fcf6d8629b2f74dc8afdfbec585ae7ecd4b8c"
+    },
+    {
+      "file": "charge-ready.png",
+      "source": "artifacts/battle/v3-1792887048306/charge-ready.png",
+      "sha256": "2c3a43f62f3f9d8ce1bc5b46df2ba16beeefbfa64400d884ad747bdb67a32972"
+    },
+    {
+      "file": "charge-consumed.png",
+      "source": "artifacts/battle/v3-1792887048306/charge-consumed.png",
+      "sha256": "12a4fc7a63f3806461f01704e334bee8422419d9a03bd80260a1225d694e35a0"
+    },
+    {
+      "file": "entry-wild.png",
+      "source": "artifacts/battle/v3-1792887048306/entry-wild.png",
+      "sha256": "3adead681b2194a35a18935b023373152ab71da67c22b21d38b9170968187f94"
+    },
+    {
+      "file": "entry-friend.png",
+      "source": "artifacts/battle/v3-1792887048306/entry-friend.png",
+      "sha256": "0e1997cb230f5b94b90c2d2e87ea78a2ad40f102ffe85d29cd412439d0607c55"
+    },
+    {
+      "file": "entry-territory-win.png",
+      "source": "artifacts/battle/v3-1792887048306/entry-territory-win.png",
+      "sha256": "6788ea855a3e554344d64c7d90dd36142c319900cd1cb2f8e157d69097e4b18f"
+    },
+    {
+      "file": "entry-territory-loss.png",
+      "source": "artifacts/battle/v3-1792887048306/entry-territory-loss.png",
+      "sha256": "c83d09f60aea7b044101f2f3af3bc97435aed05df6a6766299454382f5545c19"
+    },
+    {
+      "file": "phase-countdown.png",
+      "source": "artifacts/battle/v3-1792887048306/phase-countdown.png",
+      "sha256": "ab9d59639faccfcb4975297ac8498ddfc8317fd2aee067c9d7f4403863b946a6"
+    },
+    {
+      "file": "log-scrolled.png",
+      "source": "artifacts/battle/v3-1792887048306/log-scrolled.png",
+      "sha256": "d4392929154fd0abfa3e4cb8db025cf1c469c53ec47d9eaed52778aae713733e"
+    },
+    {
+      "file": "affinity-fire-water.png",
+      "source": "artifacts/battle/v3-1792887048306/affinity-fire-water.png",
+      "sha256": "8a1c91080cc51e759a20ab9f2fa42aa4c77acdaecda55a0e386582722c67523f"
+    },
+    {
+      "file": "friend-unknown.png",
+      "source": "artifacts/battle/v3-1792887048306/friend-unknown.png",
+      "sha256": "55de08d6b458a7ca96217dcc70f99ef66710d4033e039280e4e08b20d1740078"
+    },
+    {
+      "file": "friend-pending.png",
+      "source": "artifacts/battle/v3-1792887048306/friend-pending.png",
+      "sha256": "351c4207b870e660b9d1efd096d2d92acdb76372b73c0ed274604738ef05a0da"
+    },
+    {
+      "file": "friend-settled.png",
+      "source": "artifacts/battle/v3-1792887048306/friend-settled.png",
+      "sha256": "ed88b9a867d1aff953e66c9dabb509cfbe97ede017a30f140503033b29bd93e9"
+    },
+    {
+      "file": "hover-normal_attack.png",
+      "source": "artifacts/battle/v3-1792887201133/hover-normal_attack.png",
+      "sha256": "5070fb8e2023f44813064596597c1ffea29da29fabcc32b003fc38da8683222e"
+    },
+    {
+      "file": "hover-element_attack.png",
+      "source": "artifacts/battle/v3-1792887201133/hover-element_attack.png",
+      "sha256": "fff003912bf2b8b4479139449e59eb6fa88be7545c1805f6ee60354eb018e0e7"
+    },
+    {
+      "file": "hover-dodge.png",
+      "source": "artifacts/battle/v3-1792887201133/hover-dodge.png",
+      "sha256": "378e2c1d9045f2dcc81a91311857c7bdbcd076f8edf3354ccc600b6545efd20f"
+    },
+    {
+      "file": "focus-normal_attack.png",
+      "source": "artifacts/battle/v3-1792887201133/focus-normal_attack.png",
+      "sha256": "18a9c02fee23707f57c5af04182831c2e7b3c658ce98b8e03c2ca5bdfd76c5f4"
+    }
+  ]
+}
