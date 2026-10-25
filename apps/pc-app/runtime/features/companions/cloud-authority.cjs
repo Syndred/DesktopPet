@@ -13,7 +13,12 @@ class CloudCompanionAuthority {
   enabled(owner){const session=this.accounts()?.privateSession?.();return session?.authKind==='supabase'&&session.ownerAccountId===owner;}
   current(owner){if(this.services.session.getOwnerAccountId()!==owner||!this.enabled(owner))fail('SESSION_CHANGED','账号已切换，请重新操作。');}
   async invoke(owner,name,body){this.current(owner);const actor=this.services.get('cloudActor');const reply=await(actor?actor.invoke(name,body):this.accounts().cloudInvoke(name,body));this.current(owner);return reply;}
-  async serial(owner,work){const previous=this.queues.get(owner)||Promise.resolve(),next=previous.catch(()=>{}).then(work);this.queues.set(owner,next);try{return await next;}finally{if(this.queues.get(owner)===next)this.queues.delete(owner);}}
+  async serial(owner,work){
+    const previous=this.queues.get(owner)||Promise.resolve();
+    const next=previous.catch(()=>{}).then(async()=>{this.current(owner);const result=await work();this.current(owner);return result;});
+    this.queues.set(owner,next);
+    try{return await next;}finally{if(this.queues.get(owner)===next)this.queues.delete(owner);}
+  }
   row(owner,id){return this.db.prepare('SELECT * FROM account_actions WHERE owner_account_id=? AND action_id=?').get(owner,id);}
   pending(owner){return this.db.prepare("SELECT action_id,result FROM account_actions WHERE owner_account_id=? AND kind=? AND json_extract(result,'$.status') IN ('pending','retry') ORDER BY created_at,rowid").all(owner,INTENT).map(row=>({id:row.action_id,...JSON.parse(row.result)}));}
   busy(owner){return this.queues.has(owner);}

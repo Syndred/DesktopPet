@@ -110,3 +110,17 @@ test('PROTOCOL SIMULATION: verified companion readback preserves unrelated offli
     assert.equal(f.authority.pending(owner).length,0);
   }finally{f.close();cleanup(path);}
 });
+
+test('PROTOCOL SIMULATION: a cached original-action replay queued behind a network read cannot return an old-owner pet after account switch',async()=>{
+  const path=folder(),remote=server(),f=client(path,remote);
+  try{
+    const input=adopt('queued-original-replay');await f.authority.execute(owner,'adopt',input);
+    const before=f.backup.export(owner),original=remote.invoke;let enter,release;
+    const entered=new Promise(resolve=>{enter=resolve;}),gate=new Promise(resolve=>{release=resolve;});
+    remote.invoke=async(name,body)=>{if(name==='companions-sync'&&body.op==='snapshot'){enter();await gate;}return original(name,body);};
+    const waiting=f.authority.refresh(owner),waitingRejected=assert.rejects(waiting,error=>error.code==='SESSION_CHANGED');await entered;
+    const replay=f.authority.execute(owner,'adopt',input),replayRejected=assert.rejects(replay,error=>error.code==='SESSION_CHANGED');
+    f.switchOwner('another-owner');release();await Promise.all([waitingRejected,replayRejected]);
+    assert.deepEqual(f.backup.export(owner),before);assert.equal(remote.calls.length,1);
+  }finally{f.close();cleanup(path);}
+});
