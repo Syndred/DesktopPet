@@ -2,7 +2,7 @@
   "module": "resources",
   "scope": "Private Supabase Storage packages, owner/Auth UID boundary, durable resume, new-client preservation and legacy archive cleanup",
   "branch": "codex/lingjing-resources",
-  "commit": "c02b20c05d4b09452873ee6570b8cd9df9f977e9",
+  "commit": "126d717ae435adcb63e029aa7c6732306958835d",
   "baselineCommit": "46abf416e0500b53ef32fc29b441d923ef5a6a80",
   "goalStatus": "active",
   "contracts": {
@@ -59,7 +59,7 @@
   "realCloudEvidence": {
     "projectRef": "jbvrdmrkwpznbrvteive",
     "readOnlyBucketInventory": "2026-10-25: empty",
-    "deployed": false,
+    "deployed": true,
     "aUploadBReadback": true,
     "crossAccountDenied": true,
     "identityMigrationDeployedByCoordinator": true,
@@ -78,7 +78,9 @@
       "failedAttempts": 1
     },
     "topology": "Two isolated SQLite client roots in one validator process; not dual Electron or two physical devices",
-    "protectedAuthorityRegistered": false
+    "protectedAuthorityRegistered": true,
+    "authorityProof": "docs/implementation/evidence/resources/cloud-upgrade/live-authority/evidence.json",
+    "companionAppearanceProof": "docs/implementation/evidence/resources/cloud-upgrade/live-authority/companion-joint.json"
   },
   "preservation": {
     "originalOwnerAndResourceIds": true,
@@ -94,13 +96,12 @@
     "sharedEngineeringFollowup": "01 may remove obsolete release exclusion; root config/dependencies untouched by resource changes"
   },
   "remaining": [
-    "Coordinator applies verified_resource_authority migration and deploys lingjing-resources with existing shared auth/json dependencies",
-    "Reuse the accepted existing real Storage package for protected registration; do not re-upload the whole suite",
-    "Real HTTPS two-Electron owner/file/Pixi restoration through the main-process Auth capability",
+    "Synchronize validated resource calibration/action preferences and clear authorityPending for normal changed preferences",
+    "Real HTTPS two-Electron v2 full-save restore before dependent custom companion appearance, source-bound screenshots",
     "Old-source migration and two physical devices remain separate coordinator acceptance conditions"
   ],
   "identityCheckpoint": "f81008ce1f88c2b6c11d0bb05122d5afb5891039",
-  "phase": "server guard increment ready: verified with08 actual guard SQL; deploy08 session ledger and assert_service_actor before resource authority registration",
+  "phase": "live protected references and companion appearance joint acceptance passed; v1/v2 cloud backup hydration ready; preference sync and real dual Electron continue",
   "functions": [
     {
       "name": "lingjing-resources",
@@ -112,7 +113,7 @@
         "./package.ts",
         "./deno.lock"
       ],
-      "deployment": "coordinator-only, pending"
+      "deployment": "coordinator deployed ACTIVE v1, source088dbbe, graph90984254"
     }
   ],
   "serverDependencies": [

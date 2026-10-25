@@ -24,7 +24,8 @@ export function createDiscoveryHandler({ requireActor, store, now = Date.now, au
       const actor = verifiedActor(await requireActor(request));
       const input = await readBody(request); rejectClientAuthority(input);
       let data;
-      if (input.op === 'protocol') data = { protocol: PROTOCOL, locationPolicy: '80m/30s/100m', serverTime: now() };
+      if (input.op === 'protocol') data = { protocol: PROTOCOL, locationPolicy: '80m/30s/100m', serverTime: now(),
+        wildAuthority: Boolean(authority), ...(actor.allowSimulatedLocation === true ? { scenarioId: actor.scenarioId, simulatedLocationAllowed: true } : {}) };
       else if (input.op === 'device.register') {
         const jwk = publicJwk(input.publicJwk), keyFingerprint = await digest(canonical(jwk));
         data = await store.location(actor, 'register_device', { publicJwk: jwk, keyFingerprint });

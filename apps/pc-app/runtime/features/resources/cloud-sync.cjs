@@ -205,6 +205,23 @@ class ResourceCloudSync {
     for(const row of rows){validateIndex(row,owner,actor.authUserId);await this.verifyAuthority(owner,actor,row);}
     return {version:2,data:{format:'lingjing-resource-references',ownerAccountId:owner,references:rows.map(row=>({authUserId:row.auth_user_id,resourceId:row.resource_id,manifestSha256:row.manifest_sha256,contentHash:row.content_hash,manifestPath:row.manifest_path,manifestBytes:row.manifest_bytes,totalBytes:row.total_bytes,kind:row.resource_kind}))}};
   }
+  referenceManifestLocal(inputOwner,reference) {
+    const owner=this.owner(inputOwner),args=[owner,reference.resourceId,reference.authUserId,reference.manifestSha256];
+    const cached=this.db.prepare('SELECT manifest_json FROM lingjing_resource_cloud_downloads WHERE owner_account_id=? AND resource_id=? AND auth_user_id=? AND manifest_sha256=? AND data_mode=\'live\' AND authority_registered=1 UNION ALL SELECT manifest_json FROM lingjing_resource_cloud_outbox WHERE owner_account_id=? AND resource_id=? AND auth_user_id=? AND manifest_sha256=? AND data_mode=\'live\' AND authority_registered=1 LIMIT 1').get(...args,...args);
+    if(!cached?.manifest_json)reject('RESOURCE_AUTHORITY_REQUIRED','资源的已核验 manifest 缓存缺失');
+    const manifest=JSON.parse(cached.manifest_json);validateManifest(manifest,{owner,uid:reference.authUserId,digest:reference.manifestSha256});return manifest;
+  }
+  referenceSnapshotLocal(inputOwner) {
+    const owner=this.owner(inputOwner);
+    const rows=this.db.prepare("SELECT DISTINCT resource_id,auth_user_id,manifest_sha256,content_hash FROM lingjing_resource_cloud_receipts WHERE owner_account_id=? AND data_mode='live' AND authority_action_id IS NOT NULL AND authority_revision>0 AND length(authority_checksum)=64 ORDER BY resource_id,manifest_sha256").all(owner);
+    const references=rows.map(row=>{
+      const reference={authUserId:row.auth_user_id,resourceId:row.resource_id,manifestSha256:row.manifest_sha256,contentHash:row.content_hash};
+      const manifest=this.referenceManifestLocal(owner,reference),bytes=Buffer.from(canonical(manifest));
+      if(manifest.contentHash!==row.content_hash)reject('RESOURCE_AUTHORITY_REQUIRED','资源回执与本机 manifest 不一致');
+      return {...reference,manifestPath:manifestPath(row.auth_user_id,row.resource_id,row.manifest_sha256),manifestBytes:bytes.length,totalBytes:manifest.totalBytes,kind:manifest.archiveOnly?'model3d-archive':'spritesheet'};
+    });
+    return {version:2,data:{format:'lingjing-resource-references',ownerAccountId:owner,references}};
+  }
   async hydrateReferences(inputOwner,snapshot) {
     const owner=this.owner(inputOwner);
     if(snapshot?.version!==2||snapshot.data?.format!=='lingjing-resource-references'||snapshot.data.ownerAccountId!==owner||!Array.isArray(snapshot.data.references)||snapshot.data.references.length>10000)reject('RESOURCE_AUTHORITY_REQUIRED','资源引用存档格式或归属无效');

@@ -73,7 +73,14 @@ export function createDiscoveryStore(admin, { awardBattle, createCapture, now = 
       return write(actor, 'advance', operation, current.revision, fragments);
     },
     async cancel(actor, operation) { return write(actor, 'cancel', operation, (await head(actor)).revision); },
-    async recordExistingCapture(actor, operation) { return write(actor, 'recordExistingCapture', operation, (await head(actor)).revision); },
+    async recordExistingCapture(actor, operation) {
+      // A capture observed after the initial action read may have committed that
+      // same request in the meantime. Its receipt is atomic with the capture:
+      // re-read it before switching from the claim to duplicate-capture writer.
+      const prior = await read(actor, 'action', operation.actionId);
+      if (prior) { requireValue(prior.requestHash === operation.requestHash, 'ACTION_ID_CONFLICT', '操作编号已用于其他请求', 409); return prior.result; }
+      return write(actor, 'recordExistingCapture', operation, (await head(actor)).revision);
+    },
     async claim(actor, operation) {
       requireValue(typeof createCapture === 'function', 'COMPANIONS_AUTHORITY_REQUIRED', '规范伙伴捕捉构造器尚未部署', 503);
       const current = await head(actor);

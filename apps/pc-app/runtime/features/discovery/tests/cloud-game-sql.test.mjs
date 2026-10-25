@@ -101,6 +101,8 @@ test('wild writes atomically consume proof and commit protected save, preserving
     assert.equal((await db.query('select count(*)::int n from lingjing_discovery.captures')).rows[0].n,0);
     await db.exec('reset role;drop trigger unit_fail_discovery_commit on public.lingjing_saves;set role service_role');
     const capture=await call(confirmation);assert.equal(capture.petId,'pet-'+id2);assert.deepEqual(await call(confirmation),capture);
+    const originalAction=await store.action(verified,confirmation.actionId);
+    assert.deepEqual(await store.recordExistingCapture(verified,{actionId:confirmation.actionId,requestHash:originalAction.requestHash,permitId:id2}),capture,'A delayed concurrent confirm sees the same atomic claim receipt');
     const final=await head(),pets=final.envelope.data.modules.companions.data.tables.companion_pets;
     assert.equal(pets.length,2);assert.equal(JSON.parse(pets.find(row=>row.pet_id===pet.petId).data_json).growth.experience,20);
     assert.equal(JSON.parse(pets.find(row=>row.pet_id===capture.petId).data_json).origin.battleId,current.id);
