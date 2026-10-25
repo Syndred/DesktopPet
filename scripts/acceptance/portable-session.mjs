@@ -25,8 +25,9 @@ export async function launchPortableSession({executable,profile,expectedSource,l
   for(const key of Object.keys(env))if(/^(?:SUPABASE_|LINGJING_SUPABASE_|LINGJING_QA_|LINGJING_PUBLIC_CONFIG$|LINGJING_LEGACY_AUTH$|LINGJING_CONTROLLED_LOCATION$|LINGJING_DISCOVERY_CLOUD$|LINGJING_BATTLE_QA$|LINGJING_BATTLE_SCENARIO$|PET_RUNTIME_DATA_FILE$|ELECTRON_RUN_AS_NODE$|ELECTRON_RENDERER_URL$|NODE_OPTIONS$|NODE_TLS_REJECT_UNAUTHORIZED$)/.test(key))delete env[key];
   Object.assign(env,environment);
   const child=spawn(resolve(executable),[`--inspect=127.0.0.1:${nodePort}`,`--remote-debugging-port=${browserPort}`,'--force-device-scale-factor=1'],{env,windowsHide:true,stdio:'ignore'});
-  let failure,connection,browser,runtime;child.on('error',error=>{failure=error;});
+  let failure,connection,browser,runtime,stopped=false;child.on('error',error=>{failure=error;});
   async function stop(){
+    if(stopped)return;stopped=true;
     if(connection)try{await main(({app})=>{app.quit();return true;});}catch{}
     connection?.close();await browser?.close().catch(()=>{});
     if(child.exitCode===null)await Promise.race([new Promise(done=>child.once('exit',done)),new Promise(done=>setTimeout(done,2500))]);
