@@ -68,7 +68,7 @@ Deno.serve(async request=>{
     let record=await rpc<LoginRecord|null>(admin,"lingjing_auth_record",{p_account_key:accountKey});
     if(op==="register"&&record)failure("ACCOUNT_EXISTS",409);
     if(op==="login"&&!record)failure("INVALID_CREDENTIALS",401);
-    let username=record?.username||text(body.username,2,24);
+    const username=record?.username||text(body.username,2,24);
     if(op==="register"&&password!==text(body.confirmPassword,6,64))failure("PASSWORD_MISMATCH");
     if(record?.legacy) {
       if(record.legacy.hash_algorithm!=="sha256"||!equalHex(await sha256(password),record.legacy.password_hash))failure("INVALID_CREDENTIALS",401);
