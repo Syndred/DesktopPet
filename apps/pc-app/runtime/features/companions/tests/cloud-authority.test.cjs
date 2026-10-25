@@ -67,6 +67,55 @@ test('PROTOCOL SIMULATION: an uncertain committed adoption reads its immutable r
     assert.equal((await f.authority.execute(owner,'adopt',input)).duplicate,true);assert.equal(remote.calls.length,1);
   }finally{f.close();cleanup(path);}
 });
+
+test('PROTOCOL SIMULATION: a post-receipt snapshot version race persists retry and restarts from the original action without resending the command',async()=>{
+  const path=folder(),remote=server();let f=client(path,remote);
+  try{
+    const input=adopt('snapshot-race-original'),id='companions:'+input.actionId,originalInvoke=remote.invoke,sequence=[];
+    let confirmedReads=0,raced=false;
+    remote.invoke=async(name,body)=>{
+      const reply=await originalInvoke(name,body);
+      if(name==='lingjing-save'&&body.actionId===id){sequence.push(reply?'read:receipt':'read:missing');if(reply)confirmedReads++;}
+      if(name==='companions-sync'&&body.op==='command')sequence.push('command:committed');
+      if(name==='companions-sync'&&body.op==='snapshot'){
+        if(!raced&&confirmedReads===1&&remote.receipts.has(id)){
+          raced=true;sequence.push('snapshot:version-race');
+          throw Object.assign(new Error('LJ_SYNC_CONFLICT: controlled snapshot head/registry race'),{code:'SYNC_CONFLICT'});
+        }
+        sequence.push('snapshot:ready');
+      }
+      return reply;
+    };
+    await assert.rejects(()=>f.authority.execute(owner,'adopt',input),error=>error.code==='COMPANION_SNAPSHOT_RETRY');
+    assert.deepEqual(sequence,['read:missing','snapshot:ready','command:committed','read:receipt','snapshot:version-race']);
+    assert.equal(remote.calls.length,1);assert.equal(remote.receipts.size,1);
+    const pendingRow=f.authority.row(owner,id),pending=JSON.parse(pendingRow.result),receiptBytes=JSON.stringify(remote.receipts.get(id));
+    assert.equal(pending.status,'retry');assert.equal(pending.lastError,'COMPANION_SNAPSHOT_RETRY');
+    assert.deepEqual(pending.input,input);assert.equal(pending.baseRevision,0);assert.ok(pending.sentAt);
+    assert.equal(f.authority.pending(owner).length,1);
+    f.close();f=client(path,remote);
+    assert.equal(JSON.parse(f.authority.row(owner,id).result).status,'retry','the retry survives a real SQLite close/reopen');
+    const recovered=await f.authority.execute(owner,'adopt',input),verifiedRow=f.authority.row(owner,id),verified=JSON.parse(verifiedRow.result);
+    assert.equal(recovered.ok,true);assert.equal(recovered.duplicate,true);assert.equal(verified.status,'verified');
+    assert.equal(verifiedRow.input_hash,pendingRow.input_hash);assert.equal(verifiedRow.kind,pendingRow.kind);
+    assert.deepEqual(verified.input,pending.input);assert.equal(verified.baseRevision,pending.baseRevision);
+    assert.equal(verified.sentAt,pending.sentAt);assert.equal(verified.preparedAt,pending.preparedAt);
+    assert.deepEqual(sequence.slice(5),['read:receipt','read:receipt','snapshot:ready']);
+    assert.equal(remote.calls.length,1);assert.equal(remote.receipts.size,1);assert.equal(JSON.stringify(remote.receipts.get(id)),receiptBytes);
+    assert.deepEqual(remote.calls[0].input,input);assert.equal(remote.calls[0].baseRevision,0);
+    assert.equal(f.authority.pending(owner).length,0);
+    assert.equal(f.db.prepare('SELECT count(*) n FROM companion_actions WHERE owner_account_id=? AND action_id=?').get(owner,input.actionId).n,1);
+
+    // A genuinely stale prepared command still reaches the server's command CAS
+    // and becomes terminal conflict. Only snapshot reads receive the retry code.
+    const staleInput=adopt('command-cas-still-terminal'),staleId='companions:'+staleInput.actionId;
+    f.db.prepare('INSERT INTO account_actions(owner_account_id,action_id,kind,input_hash,result,created_at) VALUES(?,?,?,?,?,?)').run(owner,staleId,'companions-cloud-command',checksum({command:'adopt',input:staleInput}),JSON.stringify({status:'pending',command:'adopt',input:staleInput,baseRevision:0}),new Date().toISOString());
+    await assert.rejects(()=>f.authority.execute(owner,'adopt',staleInput),error=>error.code==='SYNC_CONFLICT');
+    const stale=JSON.parse(f.authority.row(owner,staleId).result);
+    assert.equal(stale.status,'conflict');assert.equal(stale.lastError,'SYNC_CONFLICT');assert.deepEqual(stale.input,staleInput);assert.equal(stale.baseRevision,0);
+    assert.equal(remote.calls.length,1);assert.equal(remote.receipts.size,1);
+  }finally{f.close();cleanup(path);}
+});
 test('PROTOCOL SIMULATION: consecutive offline positions retain immutable unknown requests and coalesce only drafts that were never sent',async()=>{
   const path=folder(),remote=server();let f=client(path,remote);
   try{

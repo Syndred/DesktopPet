@@ -13,6 +13,17 @@ class CloudCompanionAuthority {
   enabled(owner){const session=this.accounts()?.privateSession?.();return session?.authKind==='supabase'&&session.ownerAccountId===owner;}
   current(owner){if(this.services.session.getOwnerAccountId()!==owner||!this.enabled(owner))fail('SESSION_CHANGED','账号已切换，请重新操作。');}
   async invoke(owner,name,body){this.current(owner);const actor=this.services.get('cloudActor');const reply=await(actor?actor.invoke(name,body):this.accounts().cloudInvoke(name,body));this.current(owner);return reply;}
+  async readSnapshot(owner){
+    try{return await this.invoke(owner,'companions-sync',{op:'snapshot'});}
+    catch(error){
+      // A head can advance between snapshot's head read and serial-registry RPC.
+      // That read race must not terminate an already committed command intent.
+      // Only this read path translates CAS; command writes keep their original
+      // SYNC_CONFLICT terminal semantics and their original input/base revision.
+      if(error.code==='SYNC_CONFLICT')fail('COMPANION_SNAPSHOT_RETRY','伙伴状态正在更新，请重试读取。');
+      throw error;
+    }
+  }
   async serial(owner,work){
     const previous=this.queues.get(owner)||Promise.resolve();
     const next=previous.catch(()=>{}).then(async()=>{this.current(owner);const result=await work();this.current(owner);return result;});
@@ -74,7 +85,7 @@ class CloudCompanionAuthority {
   async refreshInside(owner,{resume=true}={}){
     this.current(owner);
     if(resume)for(let index=0;index<16;index++){const intent=this.pending(owner)[0];if(!intent)break;await this.perform(owner,intent.id,intent);}
-    const remote=await this.invoke(owner,'companions-sync',{op:'snapshot'});this.apply(owner,remote);return remote;
+    const remote=await this.readSnapshot(owner);this.apply(owner,remote);return remote;
   }
   async refresh(owner){return this.serial(owner,async()=>{try{return await this.refreshInside(owner);}catch(error){this.states.set(owner,{...this.state(owner),status:['CLOUD_LOCAL_CONFLICT','CLOUD_HISTORY_CONFLICT','COMPANION_SOURCE_REVIEW_REQUIRED'].includes(error.code)?'conflict':'offline',error:error.code,message:error.message,pending:this.pending(owner).length});throw error;}});}
   async perform(owner,id,intent){
@@ -101,7 +112,7 @@ class CloudCompanionAuthority {
       const readback=await this.invoke(owner,'lingjing-save',{op:'read',actionId:id});
       const {checksum:readDigest,...readBody}=readback?.envelope||{};
       if(!readback||readback.revision!==receipt.revision||readback.checksum!==receipt.checksum||readback.envelope?.ownerAccountId!==owner||readDigest!==readback.checksum||checksum(readBody)!==readDigest)fail('CLOUD_RECEIPT_MISMATCH','伙伴操作读回尚未确认，请重试原请求。');
-      const currentHead=await this.invoke(owner,'companions-sync',{op:'snapshot'});this.apply(owner,currentHead);
+      const currentHead=await this.readSnapshot(owner);this.apply(owner,currentHead);
       const result={...receipt.result,duplicate:Boolean(receipt.duplicate||receipt.result.duplicate),cloud:{authority:'live',actionId:id,revision:receipt.revision,checksum:receipt.checksum,sharedSavePending:this.state(owner).sharedSavePending}};
       this.setIntent(owner,id,{...intent,status:'verified',result,verifiedAt:new Date().toISOString()});this.states.set(owner,{...this.state(owner),pending:this.pending(owner).length});this.changed(owner);
       return result;
