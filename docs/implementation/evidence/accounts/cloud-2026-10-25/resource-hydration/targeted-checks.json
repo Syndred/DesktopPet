@@ -1,0 +1,27 @@
+{
+  "recordedAt": "2026-10-25T05:56:06.539Z",
+  "source": "f36d344971423286c8040eb1f341ed692ec7cad8",
+  "local": {
+    "command": "node --test resource-hydration-sync.test.cjs",
+    "result": "26 passed",
+    "scope": "Production07 ResourceCloudSync/official SDK/BackupManager, actual SQLite/files, explicitly simulated HTTPS provider. Includes native original JSON order, exact appended imports, safe registry repair, pre-pump resource/preference ordering, preserved007 upgrade, corrupted old baseline and dirty/pending/logout/newSID rejection."
+  },
+  "adjacent": {
+    "command": "node --test automatic-sync.test.cjs resources/verification/cloud-backup.test.cjs",
+    "result": "22 passed",
+    "scope": "Focused local actualSQLite and explicitly simulated provider; not a repeat of73-account suite"
+  },
+  "live": {
+    "result": "3 passed",
+    "scope": "Two actual production Electron processes/profiles, actual Supabase HTTPS private upload and automatic full-save adoption. Same host; main-only production import method selects bundled QA source without a native file dialog. No simulated cloud/provider or SQL-seeded gameplay.",
+    "observedPrePumpRoute": true,
+    "transientRecovery": "One RESOURCE_CLOUD_UNAVAILABLE cycle retained; following unchanged production timer applied the verified pre-hydrated resource delta. No manual B sync or forced retry after setup."
+  },
+  "build": {
+    "source": "f36d344971423286c8040eb1f341ed692ec7cad8",
+    "closureFiles": 107,
+    "edges": 184,
+    "jsMjsDependencies": 4,
+    "passed": true
+  }
+}

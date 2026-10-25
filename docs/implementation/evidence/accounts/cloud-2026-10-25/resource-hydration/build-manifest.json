@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 2,
+  "builtAt": "2026-10-25T05:50:57.801Z",
+  "sourceCommit": "f36d344971423286c8040eb1f341ed692ec7cad8",
+  "sourceTree": "9e54b96c666553b07bc08c8736b19cb919e56d0e",
+  "sourceDirtyFiles": [],
+  "codeFingerprint": "519fb3e8efa0a7c4b5d3cc3b7bbe6c18d1a07ab7ba5b58b834d433d9b5655f0e",
+  "canonicalSourceFingerprint": "5c93e92e2d632beb7be8790c54b43b74d02be7fed58a69481e41f7dcc355cde3",
+  "canonicalPolicy": "Repository-relative paths; CRLF normalized to LF for source text only. Packaged/compiled bytes remain exact.",
+  "compiledFingerprint": "3b213fe7d99425e02111b0a475d10de7c3c540bf8235a78079bd09bfa1937086",
+  "codeFiles": 299,
+  "compiledFiles": 87,
+  "toolchain": {
+    "node": "24.21.0",
+    "electron": "44.9.3",
+    "sqlite": "13.0.3",
+    "vite": "7.3.7",
+    "typescript": "5.9.3",
+    "platform": "win32",
+    "arch": "x64"
+  },
+  "entrypoints": {
+    "main": "main/index.cjs",
+    "app": "ui/index.html",
+    "desktop": "ui/desktop.html",
+    "preload": "preload/index.cjs"
+  },
+  "publicCloud": {
+    "projectRef": "jbvrdmrkwpznbrvteive",
+    "url": "https://jbvrdmrkwpznbrvteive.supabase.co",
+    "sha256": "c1625c63f1d959f92b3392b47f2fb492452803eedf1c0d1ebc68a1168ab64eda",
+    "resourcePath": "lingjing-cloud-public.json"
+  },
+  "packageName": "lingjing-desktop",
+  "runtimeClosure": {
+    "manifest": "runtime-closure.json",
+    "files": 107,
+    "edges": 184,
+    "sha256": "6a845b9a96abb03c9dcdb32244088ba4746cc988c170a26461c5e4734a6daa17"
+  }
+}

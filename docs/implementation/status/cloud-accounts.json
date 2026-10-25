@@ -2,10 +2,10 @@
   "module": "accounts",
   "scope": "2026-10-25 Supabase Auth/JWT, stable legacy owner mapping, per-device sessions, full-save CAS/idempotency/conflict/offline recovery",
   "branch": "codex/lingjing-accounts",
-  "commit": "280328d8d31803410dc239e6804999bc6e5f41c7",
+  "commit": "f36d344971423286c8040eb1f341ed692ec7cad8",
   "worktree": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-accounts\\DesktopPet",
-  "goalStatus": "active",
-  "phase": "Focused resource hydration integration fix: production07 realSQLite reproduction confirmed SAVE_CHANGED and pre-pump permanent dirty. Strict planned resource deltas, semantic native JSON matching, standalone008 immutable baseline doc and exact old-revision recovery implemented.26 resource cases and22 focused existing cases passed; real HTTPS dual-resource acceptance next. No73-case rerun or cloud protocol/deployment changes.",
+  "goalStatus": "complete",
+  "phase": "Resource source f36d344 stable and independently accepted by coordinator. Actual HTTPS/private-resource two-Electron run passed;26 resource and22 adjacent directed checks passed. Coordinator froze30f3cd29 for final SFX; this handoff changes evidence/status only. No subsequent product source changes, no73-case rerun, no dependency on final package or unavailable old source.",
   "baseline": "46abf416e0500b53ef32fc29b441d923ef5a6a80",
   "dependencyCheckpoint": "b40af0efcf6062ddc2e8c360523c996fc91ebc0a",
   "contracts": {
@@ -301,6 +301,18 @@
       "kind": "Local SQLite and explicit domain protocol fixtures",
       "result": "9 passed after aligning pre-existing fixture with approved domain readback semantics; strict full-checkpoint rejections remain asserted directly",
       "testCommit": "4f60a30336eb423057b758a6b17e6ba6c4c8bdfe"
+    },
+    {
+      "command": "node --test resource-hydration-sync.test.cjs",
+      "result": "26 passed",
+      "kind": "Production07 ResourceCloudSync/official SDK/BackupManager, actual SQLite/files, explicitly simulated HTTPS provider. Includes native original JSON order, exact appended imports, safe registry repair, pre-pump resource/preference ordering, preserved007 upgrade, corrupted old baseline and dirty/pending/logout/newSID rejection.",
+      "source": "f36d344971423286c8040eb1f341ed692ec7cad8"
+    },
+    {
+      "command": "node --test automatic-sync.test.cjs resources/verification/cloud-backup.test.cjs",
+      "result": "22 passed",
+      "kind": "Focused local actualSQLite and explicitly simulated provider; not a repeat of73-account suite",
+      "source": "f36d344971423286c8040eb1f341ed692ec7cad8"
     }
   ],
   "realCloudEvidence": {
@@ -368,7 +380,7 @@
       "checks": 2
     },
     "remoteLatest": {
-      "at": "2026-10-25T04:56:56.4739693Z",
+      "at": "2026-10-25T05:56:06.540Z",
       "command": "git pull --no-rebase --no-edit origin main",
       "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086",
       "result": "Already up to date"
@@ -428,6 +440,15 @@
         "docs/implementation/evidence/accounts/cloud-2026-10-25/dual-electron-full-b.png"
       ],
       "visualInspection": "A shows actual completed synchronization; additional real B process resumed its encrypted session and rerendered actual enabled-sync setting before B screenshot. Initial B image reflected stale in-memory UI after acceptance-driver direct IPC and is not the canonical B image."
+    },
+    "resourceHydration": {
+      "evidence": "docs/implementation/evidence/accounts/cloud-2026-10-25/resource-hydration/evidence.json",
+      "source": "f36d344971423286c8040eb1f341ed692ec7cad8",
+      "passed": true,
+      "passedChecks": 3,
+      "finalBothLocalConverged": true,
+      "revision": 5,
+      "checksum": "9a53b6c361d05052cc4f539a27610a8acebd113a46f56f0dea393e34978c3fff"
     }
   },
   "preservation": {
@@ -452,7 +473,7 @@
     "sharedFilesNotEdited": "accounts/backups.cjs andsync.cjs left to07 WIP until its checkpoint",
     "finding": "Observed previewCloud only rechecks owner after prepareCloud await. Capture and recheck original SID or Accounts epoch as well, so same-owner logout/relogin/password newSID cannot return a stale preview. Keep additive cache, but reject stale preview token asSESSION_CHANGED.",
     "readOnly": true,
-    "resolution": "Same owner+Supabase SID checked after await in faabda3; all issued previews cleared on adopt/logout/invalidation in7a6b04a; final9-case protocol suite and54-case account regression passed. Additive cache/files retained."
+    "resolution": "Closed by f36d344 planned hydration guard and immutable original baseline, with26 directed resource tests +22 adjacent cases and actual HTTPS dual resource readback including07-before08 ordering. Existing source/code and original9/rev6 artifacts retained."
   },
   "previewLifecycle": {
     "source": "7a6b04a0cc83f84143c42af71d4947ce9f7ce4cb",
@@ -499,18 +520,48 @@
     "legacyNetworkRestored": false
   },
   "resourceHydrationGap": {
-    "open": true,
+    "open": false,
+    "source": "f36d344971423286c8040eb1f341ed692ec7cad8",
+    "sourceStable": true,
+    "readyForFinalFreeze": true,
     "localMigration": "accounts-008-confirmed-cloud-document",
     "accounts007Unchanged": true,
-    "targetedResourceCases": 26,
-    "focusedExistingCases": 22,
-    "providerScope": "Production07 ResourceCloudSync/officialSDK/realSQLite/files with explicitly simulated HTTPS transport. Live resource proof pending.",
-    "boundaries": [
-      "Existing row/document/prefs and other modules remain strict",
-      "New resources/files/imports need exact incoming verified plan",
-      "Pre-pump verified resources/preferences projected against original confirmed document",
-      "007 missing document recovered only from exact owner/revision/checksum immutable action",
-      "Pending/logout/newSID never waived"
-    ]
+    "localEvidence": "docs/implementation/evidence/accounts/cloud-2026-10-25/resource-hydration/targeted-checks.json",
+    "liveEvidence": "docs/implementation/evidence/accounts/cloud-2026-10-25/resource-hydration/evidence.json",
+    "sameHost": true,
+    "physicalTwoMachines": false,
+    "finalRevision": 5,
+    "finalChecksum": "9a53b6c361d05052cc4f539a27610a8acebd113a46f56f0dea393e34978c3fff",
+    "preHydratedCycle": {
+      "revision": 3,
+      "dirty": true,
+      "resourcesBefore": 1,
+      "applied": true,
+      "readbackOnly": false
+    },
+    "privateFileHashes": [
+      {
+        "key": "character.json",
+        "sha256": "4fd14adc3ad76f69e00d80c2ab9db460363d1eae85450ee8b1cb735e154acdda"
+      },
+      {
+        "key": "sprites.png",
+        "sha256": "aa59df3af26d4f7faf9272193b7d1d35ed6d2f22ebb6b294a5a2853f0539f693"
+      }
+    ],
+    "originalImportIds": [
+      "359ac621-d387-43e0-83f9-5a5a94216008"
+    ],
+    "originalNativeJsonUnchanged": true,
+    "transientCycleRetained": true,
+    "boundaries": "Exact verified manifest/resource/file/import plan only; pre-existing rows/preferences and all other modules remain strict. Existing native JSON compared semantically to canonical plan without rewriting original string. Pre-pump admitted only against confirmed original envelope; old007 fallback reads exact owner/revision/checksum immutable action. Pending/logout/newSID retained/rejected. No cloud protocol/RLS/deployment changes or old network restoration.",
+    "acceptedByCoordinator": true
+  },
+  "coordinatorFinalFreeze": {
+    "applicationSource": "30f3cd29c3682bf8674caf1610a89e8060ebdeca",
+    "moduleSource": "f36d344971423286c8040eb1f341ed692ec7cad8",
+    "independentResourceAcceptance": "Coordinator independently checked hosted revision/checksum, both original SQLite profiles, file SHA/import IDs and unchanged native JSON",
+    "subsequentProductChanges": false,
+    "evidenceOnlyHandoff": true
   }
 }
