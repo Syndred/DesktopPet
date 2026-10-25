@@ -2,7 +2,7 @@
   "module": "accounts",
   "branch": "codex/lingjing-accounts",
   "status": "ready-for-integration",
-  "implementationCommit": "7df45969de287c01842a3038139b803c4672fb40",
+  "implementationCommit": "b08adcc89e4482bd6cbb1c7a1efc923a599a42fe",
   "worktree": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-accounts\\DesktopPet",
   "foundationBase": "8f17aec",
   "publicFoundationSnapshot": "f0af90f",
@@ -20,17 +20,18 @@
     "Content-addressed raw legacy archives and idempotent owner-scoped migration; ambiguous/corrupt history stays preserved and explicitly unresolved",
     "Shared-connection SQLite settings, actionId/revision checks, desktop native policy, quiet notifications, location/emotion privacy gates and animation preference",
     "Versioned/checksummed owner-scoped backups, native file dialogs, stale preview detection, atomic merge/replace, before-restore preservation",
-    "Owner-scoped durable cloud outbox/retries, CAS conflict handling and independent exact-action readback before verified status; reviewable Edge/SQL implementation"
+    "Owner-scoped durable cloud outbox/retries, CAS conflict handling and independent exact-action readback before verified status; reviewable Edge/SQL implementation",
+    "Explicit unified-battle QA identity namespace, immutable run-bound DB ownership, memory-only session, disabled live-cloud/OS side effects and cross-environment backup rejection"
   ],
   "dependencies": [],
   "integrationContract": "apps/pc-app/runtime/features/accounts/INTEGRATION.md",
   "runtimeEvidence": "docs/implementation/status/accounts-evidence.json",
   "tests": [
     {
-      "command": "node --test apps/pc-app/runtime/features/accounts/tests/accounts.test.cjs",
+      "command": "node --test apps/pc-app/runtime/features/accounts/tests/accounts.test.cjs apps/pc-app/runtime/features/accounts/tests/qa-scenario.test.cjs",
       "result": "passed",
-      "passed": 17,
-      "scope": "Real SQLite files and reopen/rollback; network-refusal persistence. Cloud success is explicitly only a protocol unit test."
+      "passed": 22,
+      "scope": "Existing 17 account/settings/backup/sync checks plus 5 canonical QA guard/namespace/host/backup boundary checks, real SQLite files and reopen. Cloud success remains only a protocol unit check."
     },
     {
       "command": "npm run typecheck:ui",
@@ -47,7 +48,7 @@
     {
       "command": "node apps/pc-app/runtime/features/accounts/tests/settings-layout.acceptance.mjs",
       "result": "passed",
-      "evidence": "artifacts/accounts/settings-layout-1792848528037/evidence.json",
+      "evidence": "docs/implementation/evidence/accounts/2026-10-24-unified-qa-b08adcc/settings-layout.json",
       "scope": "A05/A12 only: actual 1280x844 and 1440x900 Electron layouts, all 11 settings switches in both states with real thumb/track bounds and vertical centering, 1024x700 scroll, notification/privacy page; no settings submit or machine permission changes"
     },
     {
@@ -75,6 +76,18 @@
     {
       "command": "git diff --check; public snapshot equality; executable 3D reference audit",
       "result": "passed"
+    },
+    {
+      "command": "node apps/pc-app/runtime/features/accounts/tests/qa-ui.acceptance.mjs",
+      "result": "passed",
+      "evidence": "docs/implementation/evidence/accounts/2026-10-24-unified-qa-b08adcc/qa-ui.json",
+      "scope": "Fresh end-to-end canonical unified-battle run on b08adcc: actual Electron registration, tooltip, local QA ownership, runtime-login rejection, OS startup unchanged, real native export/restore and before-restore copy, second owner rejection, restart, ordinary-profile canary, live-vs-QA import rejection"
+    },
+    {
+      "command": "node scripts/desktop/run-electron.cjs apps/pc-app/runtime/features/accounts/tests/qa-registration.acceptance.cjs",
+      "result": "passed",
+      "evidence": "docs/implementation/evidence/accounts/2026-10-24-unified-qa-b08adcc/qa-registration.json",
+      "scope": "Real Electron native SQLite and production feature registration retain foundation's existing frozen qaScenario; qaIdentity follows current verified owner and rejects signed-out/live-cloud use"
     }
   ],
   "openSourceReuse": [
@@ -176,14 +189,15 @@
     {
       "reference": "09-login-and-account.png",
       "actual": [
-        "artifacts/accounts/electron-1792845865236/01-login.png",
-        "artifacts/accounts/restart-controls-1792846645295/account.png"
+        "docs/implementation/evidence/accounts/2026-10-24-unified-qa-b08adcc/qa-account.png",
+        "docs/implementation/evidence/accounts/2026-10-24-unified-qa-b08adcc/normal-account-tooltip.png"
       ],
       "matched": [
         "Two-column login and real login/register tabs",
         "Approved anime artwork/default portrait and four-point brand",
         "Profile/password and sync/device card hierarchy",
-        "Cream/mist-blue surfaces and flat buttons"
+        "Cream/mist-blue surfaces and flat buttons",
+        "Short icon/badge/tooltip status; raw sync revisions, readback jargon and repeated implementation notes removed; restore overwrite warning remains visible"
       ],
       "intentionalDifferences": [
         "Explicit local/cloud provider and secure-session opt-in reflect actual auth behavior",
@@ -194,10 +208,9 @@
     {
       "reference": "08-desktop-and-ai-settings.png",
       "actual": [
-        "artifacts/accounts/settings-layout-1792848528037/desktop-1280x844.png",
-        "artifacts/accounts/settings-layout-1792848528037/wide-1440x900.png",
-        "artifacts/accounts/settings-layout-1792848528037/compact-1024x700-save.png",
-        "artifacts/accounts/settings-layout-1792848528037/notification-and-privacy-1280x844.png"
+        "docs/implementation/evidence/accounts/2026-10-24-unified-qa-b08adcc/settings-1280x844.png",
+        "docs/implementation/evidence/accounts/2026-10-24-unified-qa-b08adcc/qa-settings.png",
+        "docs/implementation/evidence/accounts/2026-10-24-unified-qa-b08adcc/qa-restore-warning.png"
       ],
       "matched": [
         "Secondary settings navigation",
@@ -250,7 +263,8 @@
     "Foundation performs the final combined 19-page/gameplay/Windows package regression; this branch contains account-scoped and native-adapter verification only.",
     "Companions/battle/conversations consume accounts.getLegacyInventory(mappedOwner), and cloud callers use requireRuntimeUser() rather than assuming storage owner is an auth UUID.",
     "Discovery acquisition/watch and any emotion collector must consume the provided privacy gates; audio/proactive behavior consumes accounts:behavior.",
-    "Each custom backup adapter with consistency-specific restore must explicitly declare its tables, avoiding a second generic-table restore; verify external 2D file adapters in combined app."
+    "Each custom backup adapter with consistency-specific restore must explicitly declare its tables, avoiding a second generic-table restore; verify external 2D file adapters in combined app.",
+    "Unified battle scenario adapter uses qaIdentity and preserves foundation qaScenario; final main-chat acceptance remains pending after this module's real Electron self-verification."
   ],
   "externalVerification": {
     "cloudAuthenticatedReadbackVerified": false,
@@ -260,11 +274,69 @@
       "accounts-sync: UND_ERR_SOCKET"
     ],
     "productionMigrationExecuted": false,
-    "productionDeploymentExecuted": false
+    "productionDeploymentExecuted": false,
+    "deferredForCurrentGoal": true,
+    "blocksCurrentUiScope": false
   },
   "remaining": [
-    "Authenticated two-account/two-device cloud push/readback when the configured service is available; no cloud success is claimed",
+    "Deferred and non-blocking for current goal: live authenticated two-device cloud push/readback. QA simulation never claims live cloud success.",
     "Final combined module/packaging regression belongs to foundation"
   ],
-  "dataPolicy": "Original source/user data/history and model files retained; no production data used for acceptance; no destructive production migration, deletion or release"
+  "dataPolicy": "Original source/user data/history and model files retained; no production data used for acceptance; no destructive production migration, deletion or release",
+  "publicQaFoundationSnapshot": {
+    "commit": "4c05172",
+    "path": "apps/pc-app/runtime/core/qa-scenario.cjs",
+    "copiedVerbatim": true
+  },
+  "unifiedBattleAccounts": {
+    "state": "self-verified-awaiting-main-chat-acceptance",
+    "sourceSha": "b08adcc89e4482bd6cbb1c7a1efc923a599a42fe",
+    "canonicalContract": "apps/pc-app/runtime/features/accounts/QA_CONTRACT.md",
+    "publicScenario": "Foundation-owned qaScenario descriptor {id:'unified-battle',runId,provenance:'simulated',isolated:true}; no duplicate registration",
+    "identityService": "services.get('qaIdentity').requireIdentity() or accounts.requireScenarioIdentity('unified-battle')",
+    "identityFields": [
+      "authority=simulated",
+      "scenarioId",
+      "runId",
+      "provider=qa",
+      "id",
+      "ownerAccountId",
+      "account",
+      "username"
+    ],
+    "evidenceBundle": "docs/implementation/evidence/accounts/2026-10-24-unified-qa-b08adcc",
+    "nativeUiPassed": true,
+    "canonicalRegistrationPassed": true,
+    "layoutPassed": true,
+    "checks": [
+      "real Electron registration yields a verified namespaced memory-only QA identity and a focusable scene tooltip",
+      "real cloud authentication is explicitly rejected without changing the active QA owner",
+      "saved QA preferences cannot change OS startup, acquire real location or send a native notification",
+      "real native export/restore retains QA provenance, restores owner settings and preserves the before-restore save",
+      "second real QA login keeps settings isolated and rejects the first owner's file",
+      "QA execution leaves a separate ordinary-profile database byte-for-byte unchanged",
+      "QA process restart does not resume a remembered or remote session",
+      "ordinary account stays live, uses short shared-toolip status and rejects a simulated save through native file picking"
+    ],
+    "registrationChecks": [
+      "existing foundation qaScenario is retained without duplicate registration",
+      "qaIdentity resolves verified current owner only",
+      "no cloud token is synthesized",
+      "live-cloud guard rejects QA",
+      "identity capability rejects access after logout"
+    ],
+    "dataPolicy": "Fresh explicitly provisioned QA profile, memory-only auth, namespace qa:<runId>:local-<uuid>, no live credentials or tokens, no normal-profile simulation fallback. QA backup provenance is mode/scenarioId/runId; normal and other-run restores are rejected. Old live v1 backups without provenance remain compatible.",
+    "hostPolicy": "Startup never changed; real location/emotion gates forced off and native notifications suppressed. Canaries/readback verified in actual Electron.",
+    "uiPolicy": "Lucide status icons and shared Radix Tooltip with keyboard focus; short player labels. Privacy authorization, safe before-restore backup and explicit replace warning retained.",
+    "current1280": {
+      "mainClientHeight": 790,
+      "mainScrollHeight": 790,
+      "saveTop": 687.9750366210938,
+      "saveBottom": 723.9750366210938,
+      "privacyBottom": 675.9750213623047
+    },
+    "integration": "Use foundation's existing early core preflight before data open and its canonical qaScenario. Battle's explicitly simulated adapter consumes qaIdentity; no second battle engine or fake remote auth introduced.",
+    "acceptanceScope": "Accounts self-acceptance only. Shared friend-PK gameplay, four-entry battle UI and final combined review belong to battle/foundation/main chat; not marked complete by this delivery.",
+    "priorEvidence": "Pre-contract friend-pk QA experiment artifacts/accounts/qa-ui-1792853099320 retained with its original harness failure and resume; canonical final acceptance is the fresh all-green qa-ui-1792853591791 run."
+  }
 }

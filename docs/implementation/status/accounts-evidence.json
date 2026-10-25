@@ -1,6 +1,6 @@
 {
   "module": "accounts",
-  "implementationCommit": "7df45969de287c01842a3038139b803c4672fb40",
+  "implementationCommit": "b08adcc89e4482bd6cbb1c7a1efc923a599a42fe",
   "worktree": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-accounts\\DesktopPet",
   "realElectronVersion": "36.9.5",
   "uiWorkflow": {
@@ -77,18 +77,22 @@
   },
   "screenshots": {
     "login": "artifacts/accounts/electron-1792845865236/01-login.png",
-    "account": "artifacts/accounts/restart-controls-1792846645295/account.png",
-    "settings": "artifacts/accounts/settings-layout-1792848528037/desktop-1280x844.png",
+    "account": "docs/implementation/evidence/accounts/2026-10-24-unified-qa-b08adcc/qa-account.png",
+    "settings": "docs/implementation/evidence/accounts/2026-10-24-unified-qa-b08adcc/settings-1280x844.png",
     "settingsWide": "artifacts/accounts/settings-layout-1792848528037/wide-1440x900.png",
     "settingsCompact": "artifacts/accounts/settings-layout-1792848528037/compact-1024x700-save.png",
     "notificationAndPrivacy": "artifacts/accounts/settings-layout-1792848528037/notification-and-privacy-1280x844.png",
-    "restoreDialog": "artifacts/accounts/restart-controls-1792846645295/restore-dialog.png"
+    "restoreDialog": "docs/implementation/evidence/accounts/2026-10-24-unified-qa-b08adcc/qa-restore-warning.png",
+    "qaRejectedByNormalAccount": "docs/implementation/evidence/accounts/2026-10-24-unified-qa-b08adcc/normal-reject-qa.png"
   },
   "settingsVisualAudit": {
     "codeCommit": "7df45969de287c01842a3038139b803c4672fb40",
     "source": "artifacts/accounts/settings-layout-1792848528037/evidence.json",
     "passed": true,
-    "fixedItems": ["A05", "A12 settings scope"],
+    "fixedItems": [
+      "A05",
+      "A12 settings scope"
+    ],
     "checks": [
       "1280x844: 11 switches have fully contained circular vertically centered thumbs; privacy and save visible without scrolling",
       "Both states of each switch measured; computed translate is 0px or 16px and transform is none",
@@ -99,5 +103,17 @@
     ],
     "scope": "Actual built Electron main/preload/UI and real isolated account session. No production userData, native privacy/startup changes or full regression. Foundation performs the final combined visual audit."
   },
-  "acceptanceData": "Isolated synthetic legacy users, histories and userData. No production userData or original browser was used."
+  "acceptanceData": "Isolated synthetic legacy users, histories and userData. No production userData or original browser was used.",
+  "unifiedBattleAccounts": {
+    "sourceSha": "b08adcc89e4482bd6cbb1c7a1efc923a599a42fe",
+    "qaUi": "docs/implementation/evidence/accounts/2026-10-24-unified-qa-b08adcc/qa-ui.json",
+    "qaRegistration": "docs/implementation/evidence/accounts/2026-10-24-unified-qa-b08adcc/qa-registration.json",
+    "layout": "docs/implementation/evidence/accounts/2026-10-24-unified-qa-b08adcc/settings-layout.json",
+    "passed": true,
+    "scenario": "unified-battle",
+    "runId": "725b0856-dd58-422d-9906-573aa838bb44",
+    "source": "Fresh actual Electron/native-dialog acceptance; no harness resume used in the canonical final run",
+    "mainChatAcceptance": "pending",
+    "liveCloud": "deferred; not simulated or claimed"
+  }
 }
