@@ -54,7 +54,10 @@ async function installSigner(model){
     const {CloudDiscoveryAuthority}=load(load('node:path').resolve('apps/pc-app/runtime/features/discovery/cloud-adapter.cjs'));
     const {CloudLocationProofs}=load(load('node:path').resolve('apps/pc-app/runtime/features/discovery/cloud-location.cjs'));
     const authority=new CloudDiscoveryAuthority({requireActor:()=>s.get('cloudActor').requireActor()}),proofs=new CloudLocationProofs({authority,getFix:()=>({...fix,timestampMs:Date.now()}),safeStorage,userData:app.getPath('userData')});
-    s.provide('locationProofs',Object.freeze({prove:(purpose,reference)=>proofs.prove(purpose,reference)}));
+    // Acceptance-only private dependency adapter. The registry deliberately
+    // refuses replacement; no product service or renderer IPC is re-registered.
+    const nativeGet=s.get.bind(s),capability=Object.freeze({prove:(purpose,reference)=>proofs.prove(purpose,reference)});
+    s.get=name=>name==='locationProofs'?capability:nativeGet(name);
   },fix);
 }
 async function snapshot(model){return invoke(model,'garden','snapshot');}
