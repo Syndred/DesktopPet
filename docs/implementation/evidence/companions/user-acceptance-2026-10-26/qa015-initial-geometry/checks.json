@@ -1,0 +1,208 @@
+{
+  "format": "lingjing.companions.qa015.initial-placement-candidate",
+  "version": 1,
+  "clientDate": "2026-10-26",
+  "at": "2026-10-25T17:35:23.2986374Z",
+  "status": "isolated-source-candidate-checked-native-validation-pending",
+  "issue": "QA015 first-ready and first ordinary drag use different effective window geometry",
+  "sourceBaseCommit": "f6f6ebda3eb270cb0316060ba5c70efa3e9d7408",
+  "frozenCandidateSource": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+  "preChangeWindowBlob": "4f8ff87e92e95f85ac16dde772d773e6ebe22cbb",
+  "baseRelationship": "Local f6f6ebd is not an ancestor of DC7. The affected pre-change window blob equals DC7; the tested foundation create/applySettings methods and full account policy source are also identical to DC7 after line-ending normalization. No reset, rebase or unrelated merge was needed.",
+  "worktree": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet-fresh-worktrees\\02",
+  "branch": "codex/lingjing-02-fresh-20261025",
+  "change": "One creation-time call to existing placeDesktopWindow after initial hit policy and before ready callbacks; dimensions derive only from saved scale.",
+  "scope": {
+    "isolatedProductSourceChanged": true,
+    "frozenDc7Changed": false,
+    "rendererOrIpcChanged": false,
+    "cssCompensationAdded": false,
+    "storedPositionOrScaleWritten": false,
+    "revisionOrHistoryWritten": false,
+    "nativeElectronLoaded": false,
+    "browserWindowStarted": false,
+    "childProcessStarted": false,
+    "packagedOrDeployed": false,
+    "qaMatrixModified": false
+  },
+  "checks": {
+    "newInitialPlacementCases": 6,
+    "existingPositionCases": 4,
+    "existingGeometryCase": 1,
+    "totalPassed": 11,
+    "totalFailed": 0,
+    "syntax": "windows.cjs and desktop-initial-placement.test.cjs passed node --check",
+    "runner": "System Node --test with actual SQLite; no Electron binary or BrowserWindow launched",
+    "coverage": [
+      "Scale1/2 initial canonical request precedes actual foundation show callback",
+      "Actual account-policy code with native/process doubles cannot issue a competing software size request",
+      "Already-ready cached foundation window still receives canonical geometry without a new ready event",
+      "Existing owner-before-ready guard still destroys an obsolete owner window",
+      "First ordinary drag uses the same full saved-scale width and height",
+      "Offscreen placement clamps only the native request, not saved coordinates",
+      "Creation/ready/policy/teardown preserve all companion rows/receipts/archives for both fixture owners, verified by a second query_only connection"
+    ],
+    "preFix": {
+      "passed": 0,
+      "failed": 6,
+      "signature": "No initial full canonical placement request: expected1, actual0",
+      "limitation": "Native API double and software ordering regression, not a replay of the observed Windows defect"
+    },
+    "previous28": "Not repeated; no full regression or native window run"
+  },
+  "sqliteReadbacks": [
+    {
+      "kind": "real-SQLite-plus-native-API-doubles",
+      "savedScale": 1,
+      "reusedFoundationHandle": false,
+      "beforeSha256": [
+        "5572f65c0125202e8700dd20ae21c8d9870b56da6da148475e7801f5e0e229b3",
+        "53699f2978554078f77a5fe0a52c93db3367ab26a3bdb2df6e9ab374d91dd88d"
+      ],
+      "afterSha256": [
+        "5572f65c0125202e8700dd20ae21c8d9870b56da6da148475e7801f5e0e229b3",
+        "53699f2978554078f77a5fe0a52c93db3367ab26a3bdb2df6e9ab374d91dd88d"
+      ],
+      "queryOnlyReadbackEqual": true,
+      "exactAllCompanionBytesUnchanged": true,
+      "nativeWindowStarted": false,
+      "childProcessStarted": false
+    },
+    {
+      "kind": "real-SQLite-plus-native-API-doubles",
+      "savedScale": 2,
+      "reusedFoundationHandle": false,
+      "beforeSha256": [
+        "920754838fdc0fc46e771c77c9dfba358cfa98d5e0a95a3c9f715e8474cb6b10",
+        "793eada2aca72896eae55e4187af58b9af33d697ed4a0888e4efee653c7ab3a7"
+      ],
+      "afterSha256": [
+        "920754838fdc0fc46e771c77c9dfba358cfa98d5e0a95a3c9f715e8474cb6b10",
+        "793eada2aca72896eae55e4187af58b9af33d697ed4a0888e4efee653c7ab3a7"
+      ],
+      "queryOnlyReadbackEqual": true,
+      "exactAllCompanionBytesUnchanged": true,
+      "nativeWindowStarted": false,
+      "childProcessStarted": false
+    },
+    {
+      "kind": "real-SQLite-plus-native-API-doubles",
+      "savedScale": 2,
+      "reusedFoundationHandle": true,
+      "beforeSha256": [
+        "cc96d82fe5b30c025060f735cf1bc0fc4ebe1e3d3150f003c9674a8b6232964e",
+        "cbd7f3d2f573d3d66b4dd204d1b756b78ee9fb6a6cbb608a7e29df6bd3b9536c"
+      ],
+      "afterSha256": [
+        "cc96d82fe5b30c025060f735cf1bc0fc4ebe1e3d3150f003c9674a8b6232964e",
+        "cbd7f3d2f573d3d66b4dd204d1b756b78ee9fb6a6cbb608a7e29df6bd3b9536c"
+      ],
+      "queryOnlyReadbackEqual": true,
+      "exactAllCompanionBytesUnchanged": true,
+      "nativeWindowStarted": false,
+      "childProcessStarted": false
+    },
+    {
+      "kind": "real-SQLite-plus-native-API-doubles",
+      "savedScale": 1,
+      "reusedFoundationHandle": false,
+      "beforeSha256": [
+        "3831529282d3ed3af1f6e75c61d9c9eb3936de91c768f3a0c806800cc75eb248",
+        "d7a97f521425db5b3695a6ef6dc43655c804320d02d45fc60037279a7a2f02ca"
+      ],
+      "afterSha256": [
+        "3831529282d3ed3af1f6e75c61d9c9eb3936de91c768f3a0c806800cc75eb248",
+        "d7a97f521425db5b3695a6ef6dc43655c804320d02d45fc60037279a7a2f02ca"
+      ],
+      "queryOnlyReadbackEqual": true,
+      "exactAllCompanionBytesUnchanged": true,
+      "nativeWindowStarted": false,
+      "childProcessStarted": false
+    },
+    {
+      "kind": "real-SQLite-plus-native-API-doubles",
+      "savedScale": 2,
+      "reusedFoundationHandle": false,
+      "beforeSha256": [
+        "675b658a4356a732a628a1662995389cf6a362a8345c9c4f48ab6b8d23119559",
+        "4246a0f3f7456280c464275a53cff240fb605b412413a520a390c67fa6b7906b"
+      ],
+      "afterSha256": [
+        "675b658a4356a732a628a1662995389cf6a362a8345c9c4f48ab6b8d23119559",
+        "4246a0f3f7456280c464275a53cff240fb605b412413a520a390c67fa6b7906b"
+      ],
+      "queryOnlyReadbackEqual": true,
+      "exactAllCompanionBytesUnchanged": true,
+      "nativeWindowStarted": false,
+      "childProcessStarted": false
+    }
+  ],
+  "sourceFiles": [
+    {
+      "path": "apps/pc-app/runtime/features/companions/windows.cjs",
+      "gitBlob": "932b4edb84b7fe30d45fdc035da0e8f4b0c31330"
+    },
+    {
+      "path": "apps/pc-app/runtime/features/companions/tests/desktop-initial-placement.test.cjs",
+      "gitBlob": "d53ae81ef3819671b2367d97884ddf2002ece9b0"
+    },
+    {
+      "path": "apps/pc-app/runtime/main/index.ts",
+      "gitBlob": "ceb2fc8f9def5e6cff0ef24bc34cafbc416e61a2"
+    },
+    {
+      "path": "apps/pc-app/runtime/features/accounts/desktop-host.cjs",
+      "gitBlob": "0c1f88ef3b1a2b4d4861fd4025ec9cf5e042b8a6"
+    }
+  ],
+  "logs": [
+    {
+      "path": "artifacts/companions/user-qa/qa015-initial-geometry-20261026/before.log",
+      "sha256": "b4fc786f7b59ec76561eea9d3b26aa8edf64fe183129e20190215046aa98962e"
+    },
+    {
+      "path": "artifacts/companions/user-qa/qa015-initial-geometry-20261026/creation-and-position.log",
+      "sha256": "43058019bc66cf54880238ab410e360625af620282eacc317022a08b42d3f7ba"
+    },
+    {
+      "path": "artifacts/companions/user-qa/qa015-initial-geometry-20261026/geometry-only.log",
+      "sha256": "b9198468fad5b45c86c5625bd727ff6d3b238055e89dab0e36a5f40bb151ee5e"
+    },
+    {
+      "path": "artifacts/companions/user-qa/qa015-initial-geometry-20261026/syntax.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "riskReview": {
+    "factoryEarlyReturn": "The new call is after services.windows.create returns, so it runs for both a newly constructed handle and a cached handle.",
+    "showOrder": "With current source, creation and this synchronous call complete before ready dispatch. Existing foundation showInactive and companion owner/notify callbacks remain unchanged.",
+    "policy": "Actual account desktop policy was exercised with native/process doubles. Its source changes topmost/click-through/show/hide, not explicit width/height. Native side effects of those calls are not represented by the doubles.",
+    "persistence": "The placement helper only sends setBounds and returns its derived rectangle. It does not mark dirty or persist; the exact original module bytes were checked after disposal.",
+    "pending": "Windows may still adjust geometry later during ready/show/style transitions. The synchronous candidate has not been tested against that OS behavior; do not claim QA015 closed."
+  },
+  "requiredLater": [
+    "Root reviews and integrates with the complete new-gap batch, preserving DC7 evidence",
+    "09 validates real first ready and first move at scales1 and2 on one new frozen candidate",
+    "If a later show/policy transition reintroduces initial excess, trace that phase and review pre-show coordination with01 rather than adding delayed resize loops"
+  ],
+  "underlyingOsCauseConfirmed": false,
+  "nativeFirstFrameVerified": false,
+  "qa015Accepted": false,
+  "fullAcceptancePassed": false,
+  "frozenFactoryComparison": {
+    "frozenSource": "dc7aee379d0fb241e5c4bd4bf43101fa1a85a678",
+    "methods": [
+      {
+        "name": "create",
+        "equal": true,
+        "sha256": "0c57a0a404d8431cda9f333ed5155d343b3e1edbff7fc2498115f540b7850114"
+      },
+      {
+        "name": "applySettings",
+        "equal": true,
+        "sha256": "3be7401f29f6bef7fc00f1312d2d85cc04cbdcec42d79d402695dc868a85777b"
+      }
+    ],
+    "accountPolicySourceEqual": true
+  }
+}

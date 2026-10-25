@@ -1,0 +1,24 @@
+INITIAL_PLACEMENT_SQLITE {"kind":"real-SQLite-plus-native-API-doubles","savedScale":1,"reusedFoundationHandle":false,"beforeSha256":["5572f65c0125202e8700dd20ae21c8d9870b56da6da148475e7801f5e0e229b3","53699f2978554078f77a5fe0a52c93db3367ab26a3bdb2df6e9ab374d91dd88d"],"afterSha256":["5572f65c0125202e8700dd20ae21c8d9870b56da6da148475e7801f5e0e229b3","53699f2978554078f77a5fe0a52c93db3367ab26a3bdb2df6e9ab374d91dd88d"],"queryOnlyReadbackEqual":true,"exactAllCompanionBytesUnchanged":true,"nativeWindowStarted":false,"childProcessStarted":false}
+INITIAL_PLACEMENT_SQLITE {"kind":"real-SQLite-plus-native-API-doubles","savedScale":2,"reusedFoundationHandle":false,"beforeSha256":["920754838fdc0fc46e771c77c9dfba358cfa98d5e0a95a3c9f715e8474cb6b10","793eada2aca72896eae55e4187af58b9af33d697ed4a0888e4efee653c7ab3a7"],"afterSha256":["920754838fdc0fc46e771c77c9dfba358cfa98d5e0a95a3c9f715e8474cb6b10","793eada2aca72896eae55e4187af58b9af33d697ed4a0888e4efee653c7ab3a7"],"queryOnlyReadbackEqual":true,"exactAllCompanionBytesUnchanged":true,"nativeWindowStarted":false,"childProcessStarted":false}
+INITIAL_PLACEMENT_SQLITE {"kind":"real-SQLite-plus-native-API-doubles","savedScale":2,"reusedFoundationHandle":true,"beforeSha256":["cc96d82fe5b30c025060f735cf1bc0fc4ebe1e3d3150f003c9674a8b6232964e","cbd7f3d2f573d3d66b4dd204d1b756b78ee9fb6a6cbb608a7e29df6bd3b9536c"],"afterSha256":["cc96d82fe5b30c025060f735cf1bc0fc4ebe1e3d3150f003c9674a8b6232964e","cbd7f3d2f573d3d66b4dd204d1b756b78ee9fb6a6cbb608a7e29df6bd3b9536c"],"queryOnlyReadbackEqual":true,"exactAllCompanionBytesUnchanged":true,"nativeWindowStarted":false,"childProcessStarted":false}
+INITIAL_PLACEMENT_SQLITE {"kind":"real-SQLite-plus-native-API-doubles","savedScale":1,"reusedFoundationHandle":false,"beforeSha256":["3831529282d3ed3af1f6e75c61d9c9eb3936de91c768f3a0c806800cc75eb248","d7a97f521425db5b3695a6ef6dc43655c804320d02d45fc60037279a7a2f02ca"],"afterSha256":["3831529282d3ed3af1f6e75c61d9c9eb3936de91c768f3a0c806800cc75eb248","d7a97f521425db5b3695a6ef6dc43655c804320d02d45fc60037279a7a2f02ca"],"queryOnlyReadbackEqual":true,"exactAllCompanionBytesUnchanged":true,"nativeWindowStarted":false,"childProcessStarted":false}
+INITIAL_PLACEMENT_SQLITE {"kind":"real-SQLite-plus-native-API-doubles","savedScale":2,"reusedFoundationHandle":false,"beforeSha256":["675b658a4356a732a628a1662995389cf6a362a8345c9c4f48ab6b8d23119559","4246a0f3f7456280c464275a53cff240fb605b412413a520a390c67fa6b7906b"],"afterSha256":["675b658a4356a732a628a1662995389cf6a362a8345c9c4f48ab6b8d23119559","4246a0f3f7456280c464275a53cff240fb605b412413a520a390c67fa6b7906b"],"queryOnlyReadbackEqual":true,"exactAllCompanionBytesUnchanged":true,"nativeWindowStarted":false,"childProcessStarted":false}
+▶ initial placement precedes the actual show callback and account policies without changing saved SQLite bytes
+  ✔ saved scale 1 (202.3789ms)
+  ✔ saved scale 2 (137.1211ms)
+✔ initial placement precedes the actual show callback and account policies without changing saved SQLite bytes (340.9651ms)
+✔ initial placement also covers the foundation cached-window early return without waiting for ready again (121.8727ms)
+✔ initial placement preserves the existing owner guard if the account changes before ready (134.8714ms)
+✔ initial placement and the first ordinary drag request the same saved-scale dimensions without native-size feedback (121.6279ms)
+✔ natural-position commit publishes the new CAS revision after commit, allowing the existing UI refresh subscription to receive current behavior state (57.7951ms)
+✔ stationary checkpoints do not publish, increment revisions or create refresh loops (48.3265ms)
+✔ a failed position transaction publishes no event and retains dirty state for recovery (46.641ms)
+✔ refresh notifications never relax CAS or overwrite a genuinely concurrent behavior/scale edit (56.5299ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1053.0364

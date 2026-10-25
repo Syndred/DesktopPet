@@ -93,6 +93,8 @@ function createDesktopWindowManager({ services, service, ensureImported, changed
       positionDirty: false };
     entries.set(pet.petId, entry);
     window.setIgnoreMouseEvents(true, { forward: true });
+    // Use movement's canonical geometry before the first show, without persisting it.
+    placeDesktopWindow(window, pet, screen, bounds);
     window.on('closed', () => { if (entries.get(pet.petId) === entry) entries.delete(pet.petId); notifyWindows(); });
     window.once('ready-to-show', () => {
       if (services.session.getOwnerAccountId() !== entry.owner) destroy(entry, false);
