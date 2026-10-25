@@ -1,0 +1,138 @@
+{
+  "format": "lingjing.conversations.global-serial.source-verification",
+  "version": 1,
+  "updatedAt": "2026-10-25T19:12:52.379+08:00",
+  "decisionId": "globalSerial-20261025-v1",
+  "status": "source-verification-passed; integrated-real-acceptance-pending",
+  "source": {
+    "conversationPatch": "64e9cdb09c38158e544cc433bbeef354140ac358",
+    "sharedDisplayDependency": "a528ebcf90e33491364a606747727f7f28f46457",
+    "validationCompositeHead": "d145aff1c5b3e038bcf0494d93dfdd4887ded18b",
+    "branch": "codex/lingjing-06-fresh-20261025",
+    "testFixtureAndCommentChanges": "Verified as working-tree changes on the composite head; exact content hashes follow.",
+    "contentHashes": [
+      {
+        "path": "apps/pc-app/runtime/features/conversations/index.cjs",
+        "sha256": "6f0b864f208a84897977315f96e3c3904b354aa5c30844d8ba87cc02b34a77c9"
+      },
+      {
+        "path": "apps/pc-app/runtime/features/conversations/service.cjs",
+        "sha256": "2fe06aa9e898d0b5f3f9eeebc42636b892a23e5ecbe8ac4033b4bf0fc49b9695"
+      },
+      {
+        "path": "apps/pc-app/runtime/features/conversations/context.cjs",
+        "sha256": "7e3bbe2855b9c4fab454f8307fdbe46909545b864c5e87d93a879b296ae7f767"
+      },
+      {
+        "path": "apps/pc-app/runtime/features/conversations/tests/display-identity.test.cjs",
+        "sha256": "b3c4ae3613c3f3a38f747988b5d35f980d7f7327d5721be48095a2b267103b32"
+      },
+      {
+        "path": "apps/pc-app/ui/src/features/conversations/identity.tsx",
+        "sha256": "d6bac479eb5b0ac7e1083beaa7d5b8561fe0cfdbaa328a36ecc685f6f8b5eda5"
+      },
+      {
+        "path": "apps/pc-app/ui/src/features/conversations/styles.css",
+        "sha256": "ecc265b5a8778cabed3dbc274d0992fcfa5544faa3ceebe267be0bb775496da6"
+      },
+      {
+        "path": "packages/shared-types/src/features/conversations/index.ts",
+        "sha256": "5ca87b92b5e5cdc0b52c6e63fd2ee7ac5a9d7bfa7b8e1351e4f663d48b51d0aa"
+      },
+      {
+        "path": "apps/pc-app/runtime/features/companions/display-identity.mjs",
+        "sha256": "fdeb282ec4d0efbde116563824585a1b52174d7767a511a5ea4ce77d6e2578e5"
+      },
+      {
+        "path": "apps/pc-app/runtime/features/companions/display-identity.d.mts",
+        "sha256": "5e77102709bbed8ea19ccc2c9384c8debb2ad30bb9042d97b42b8d7bec79f1c1"
+      }
+    ]
+  },
+  "repositorySync": {
+    "fetch": "git fetch origin completed in the recovered 06 worktree",
+    "pull": "git pull --ff-only origin main completed; Already up to date",
+    "checkedAt": "2026-10-25T19:11:32+08:00",
+    "originMainAtSync": "4786f97680679c2db0aa307fa5f67ec247f93086",
+    "originMainIncluded": true
+  },
+  "verification": {
+    "runtimeAndSelectionTests": {
+      "command": "node --test apps/pc-app/runtime/features/conversations/tests/runtime.test.cjs apps/pc-app/runtime/features/conversations/tests/selection.test.cjs",
+      "passed": 16,
+      "failed": 0,
+      "exitCode": 0,
+      "scope": "Actual temporary/in-memory Node SQLite plus local loopback HTTP protocol fixtures and controlled companion acknowledgements",
+      "limitations": "Protocol responses, credentials and the encryption codec are test fixtures; no actual user profile, provider/cloud request, OS secret store or desktop interaction."
+    },
+    "targetedLint": {
+      "command": "node node_modules/eslint/bin/eslint.js --ext .cjs,.ts,.tsx apps/pc-app/runtime/features/conversations/index.cjs apps/pc-app/runtime/features/conversations/service.cjs apps/pc-app/runtime/features/conversations/tests/display-identity.test.cjs apps/pc-app/ui/src/features/conversations/identity.tsx packages/shared-types/src/features/conversations/index.ts",
+      "exitCode": 0
+    },
+    "identityAndPreservationTests": {
+      "command": "node --test apps/pc-app/runtime/features/conversations/tests/display-identity.test.cjs",
+      "passed": 7,
+      "failed": 0,
+      "exitCode": 0,
+      "scope": "Headless React SSR, controlled main-process metadata and actual in-memory SQLite schemas",
+      "limitations": "No actual server allocation, sync, user profile, DPAPI, provider request or desktop interaction."
+    },
+    "uiTypecheck": {
+      "command": "npm run typecheck:ui",
+      "exitCode": 0
+    },
+    "fixtureLint": {
+      "command": "node node_modules/eslint/bin/eslint.js apps/pc-app/runtime/features/conversations/tests/display-identity.test.cjs",
+      "exitCode": 0
+    },
+    "testTotal": {
+      "passed": 23,
+      "failed": 0,
+      "scope": "16 runtime/selection checks plus 7 identity/preservation checks"
+    },
+    "fixtureCorrection": {
+      "initial": {
+        "passed": 6,
+        "failed": 1
+      },
+      "cause": "The registered companion stub omitted getSelections, which the actual conversation adapter requires.",
+      "correction": "Provide the actual getSelections interface in the test fixture; no product API or behavior change.",
+      "final": {
+        "passed": 7,
+        "failed": 0
+      }
+    },
+    "evidence": "docs/implementation/evidence/conversations/user-acceptance-2026-10-25/global-serial-fresh-06/checks.json"
+  },
+  "dataPreservation": {
+    "conversationSchemaChanged": false,
+    "conversationWireTypesChanged": "Only optional read-only ConversationPet.globalSerial?: string",
+    "backupOrCloudFormatChanged": false,
+    "liveUserDatabaseOpened": false,
+    "liveUserDataMutated": false,
+    "originalModelAndReasoningSettingsChanged": false,
+    "typescriptMigrationPerformed": false,
+    "oldServerTouched": false,
+    "evidenceBoundary": "Headless SSR, synthetic metadata, in-memory SQLite and local HTTP protocol fixtures do not establish real server allocation, synchronization, DPAPI, paid model requests or desktop user acceptance.",
+    "runtimeProjectionChanged": "Only optional canonical globalSerial in the read-only ConversationPet snapshot; no conversation schema changes.",
+    "fixtureReadback": "Original names, serials, petIds, templates, appearance, growth, origin, all stored conversation tables, legacy JSON, exported backup bytes and model prompt output remain unchanged."
+  },
+  "actualDesktopUsed": false,
+  "paidModelOrCloudRequestPerformed": false,
+  "outputs": {
+    "runtimeAndSelection": "✔ snapshot projects only verified inventory elements and never guesses from names or payload (78.4678ms)\n✔ account + pet instance isolates personas, notes, selections and durable history (368.2875ms)\n✔ saved connection is encrypted, redacted, scoped and actually tested over HTTP (174.4044ms)\n✔ connection tests can be cancelled separately without creating history (101.1311ms)\n✔ cancellation aborts the real stream; retry keeps one user turn; action IDs deduplicate (155.1418ms)\n✔ account switching aborts pending replies and never emits old-account data into the new session (100.8412ms)\n✔ memory edits use revisions; deletion aborts old context and disappears from later prompts after restart (150.9843ms)\n✔ startup recovers interrupted turns, bounded context preserves recent complete pairs, history pages remain scoped (524.7256ms)\n✔ provider failures remain retryable; raw error bodies never leak; incomplete streams do not count as success (220.9349ms)\n✔ clear history preserves notes/persona and never clears the same template in another instance (147.7447ms)\n✔ stale renderer actions cannot write to a new account or a new login of the same account (66.9984ms)\n✔ synchronous shutdown records cancellation before the shared database closes (99.9434ms)\n✔ PROTOCOL UNIT: pending companion ack does not publish or persist a new chat choice (6.7064ms)\n✔ PROTOCOL UNIT: rejection preserves the authoritative choice and local preference (1.5218ms)\n✔ PROTOCOL UNIT: a delayed old-owner confirmation cannot write either owner preference (1.0478ms)\n✔ main integration routes only chatPetId and ignores a stale local selection hint (2.6891ms)\nℹ tests 16\nℹ suites 0\nℹ pass 16\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 2283.6931",
+    "displayIdentity": "✔ fixed catalog role ignores historical nickname and mutable appearance without changing the DTO (1.3562ms)\n✔ same-name twins render confirmed global numbers while keeping original petId attributes (6.0765ms)\n✔ canonical server strings retain all digits above Number precision and pad only for display (0.1699ms)\n✔ missing or malformed metadata displays pending without UUID or legacy serial fallback (2.334ms)\n✔ unknown or missing template stays historical instead of inferring identity from the appearance (0.1817ms)\n✔ read-only label/SSR projection leaves prompt, stored pet JSON, messages, persona, memory, connections, ciphertext and backup bytes unchanged (21.8265ms)\n✔ registered adapter excludes unverified legacy numbers and forwards only the companion inventory metadata (3.4893ms)\nℹ tests 7\nℹ suites 0\nℹ pass 7\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 259.038",
+    "uiTypecheck": "> lingjing-desktop@0.1.8 typecheck:ui\n> tsc --noEmit -p apps/pc-app/ui/tsconfig.json",
+    "targetedLintExitCode": 0,
+    "finalFixtureLintExitCode": 0
+  },
+  "pendingQa": [
+    "Coordinator integrates 02 helper, 06 DTO patch and 08 trusted inventory projection, then freezes one final package for 09",
+    "Verify confirmed decimal numbers and 待同步 across chat selectors, settings, headings, tooltips, memory dialog, composer and legacy import preview",
+    "Switch same-template twins with equal historical short identifiers; confirm chat/persona/memory/connection actions stay with the selected original petId",
+    "Check actual trusted cloud allocation/readback and account switching; injected/imported numeric metadata must not become authoritative",
+    "Confirm historical nicknames and original content remain unchanged after viewing and switching partners",
+    "Verify narrow windows, wrapping of long exact strings, text selection and keyboard/focus behavior",
+    "Recheck existing message send, cancellation/retry, clear-history, persona, memory, connection and legacy import flows in the final package"
+  ]
+}

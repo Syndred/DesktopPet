@@ -1,39 +1,37 @@
 {
   "module": "conversations",
   "task": "QA-003",
-  "updatedAt": "2026-10-25T18:04:25+08:00",
-  "branch": "codex/lingjing-conversations",
-  "integrationBase": "9e57de1d210376ce679168eb1acbff8e37cff1cd",
-  "sourceCommit": "4adcf1d66fee6b74f73d2d69359c09eaeeedea21",
-  "repositorySync": {
-    "fetch": "git fetch origin completed before the fix",
-    "pull": "git pull --ff-only origin main completed; Already up to date",
-    "originMainAtSync": "4786f97680679c2db0aa307fa5f67ec247f93086",
-    "integration": "Fast-forwarded to the requested integrationBase before editing",
-    "originMainIncluded": true
+  "requirementDecision": "globalSerial-20261025-v1",
+  "branch": "codex/lingjing-06-fresh-20261025",
+  "sourceCommit": "64e9cdb09c38158e544cc433bbeef354140ac358",
+  "supersedes": {
+    "sourceCommit": "4adcf1d66fee6b74f73d2d69359c09eaeeedea21",
+    "rule": "Full petId as visible instance number is superseded by the approved globalSerial contract; original petId remains the internal identity."
   },
-  "overallStatus": "source_fix_ready_for_09_user_acceptance",
-  "sourceVerification": "passed",
+  "overallStatus": "source_fix_ready_for_08_projection_and_09_user_acceptance",
+  "sourceVerification": "passed_in_composition_with_02_helper",
   "userAcceptance": "pending_09",
   "completeUserAcceptancePassed": false,
   "independentQa": {
-    "threadId": "01a1725c-d59c-7620-9bb6-1c0d4e0fb3a3",
+    "threadId": "01a172b4-d7f0-7213-9a40-092418ee776b",
     "role": "Sole actual mouse/keyboard verifier; coordinator integrates and packages before retest",
     "actualDesktopUsedByThisTask": false,
     "userAppProcessesClosed": false,
     "releasePackagingPerformed": false
   },
   "identityContract": {
-    "document": "docs/implementation/companions-display-identity-contract.json",
-    "version": 1,
+    "document": "docs/implementation/companions-global-serial-contract.json",
+    "decisionId": "globalSerial-20261025-v1",
     "sharedImport": "../companions/identity",
     "conversationAdapter": "apps/pc-app/ui/src/features/conversations/identity.tsx",
-    "projection": "companionIdentity({ petId, templateId: templateId ?? '', name })",
+    "projection": "companionIdentity({ petId, templateId: templateId ?? '', name, globalSerial })",
     "roleName": "Original catalog template name; independent of historical nickname and mutable appearance",
-    "instanceNumber": "Complete original petId, visible with wrapping and selectable text; never shortened",
+    "instanceNumber": "Confirmed canonical positive decimal globalSerial string, padded to at least four digits only for display; missing or invalid metadata shows 待同步",
+    "precision": "String end to end; never convert to Number and never use petId, legacy serial, local counters or renderer payload as a replacement",
+    "authority": "08 trusted main-process companion inventory projection; the conversation adapter strips globalSerial from the legacy fallback inventory",
     "historicalNickname": "Original stored name retained in contextual hints and historical/detail presentation",
-    "missingTemplate": "Historical companion fallback, without inferring a template from appearance",
-    "persistence": "Read-only UI projection; no new persisted identity fields"
+    "missingTemplate": "历史伙伴 fallback, without inferring a template from appearance",
+    "persistence": "Read-only snapshot and UI projection; no new persisted conversation fields or writes to original pet JSON, immutable receipts, archive bytes or backup format"
   },
   "sourceCoverage": [
     "Chat breadcrumb, partner selectors, thread header, current partner card and clear-history confirmation",
@@ -43,78 +41,140 @@
     "Legacy import target and assistant sample labels using current authenticated pet metadata when available",
     "Original petId remains the list key, selected value, ownership key and command target"
   ],
-  "changes": [
-    "Render shared fixed role name together with the full immutable instance number",
-    "Wrap long numbers without ellipsis and allow selecting their text",
-    "Retain historical nickname without rewriting actual message, persona or memory content",
-    "Add original petId data attributes for unambiguous existing acceptance selectors",
-    "Pass existing pet DTOs into the legacy preview UI; keep preview/import payloads and stored receipts unchanged"
-  ],
-  "verifiedScenarios": [
-    {
-      "scenario": "Historical nickname and mutable appearance differ from the original catalog role",
-      "method": "Frozen DTO plus real shared identity projection",
-      "result": "Fixed role stays 礼帽喵; source DTO remains byte-equivalent"
-    },
-    {
-      "scenario": "Same-name twins share the historical serial and last eight petId characters",
-      "method": "ReactDOM server rendering of the actual PetIdentity component",
-      "result": "Both complete original petIds are visible and labels remain distinct; nickname HTML is escaped"
-    },
-    {
-      "scenario": "Null, absent or retired template metadata with a known-looking appearance",
-      "method": "Frozen input projection",
-      "result": "历史伙伴 plus full original petId and historical nickname; no appearance inference"
-    },
-    {
-      "scenario": "Rendering existing per-pet profiles, messages, memories, connections and legacy documents",
-      "method": "Actual accounts/conversations SQLite schemas in memory, PRAGMA query_only=ON, snapshot and actual backup adapter readback",
-      "result": "Conversation table dump, original legacy JSON and exported backup bytes remain identical before and after projection"
-    }
-  ],
-  "verification": {
-    "identityAndPreservationTests": {
-      "command": "node --test apps/pc-app/runtime/features/conversations/tests/display-identity.test.cjs",
-      "passed": 4,
-      "failed": 0,
-      "exitCode": 0,
-      "scope": "Headless React server rendering and synthetic in-memory SQLite fixtures",
-      "limitations": "No actual user profile, desktop interaction, provider request, cloud sync or real encryption test; stored ciphertext in the fixture is explicitly simulated"
-    },
-    "uiTypecheck": {
-      "command": "npm run typecheck:ui",
-      "exitCode": 0
-    },
-    "targetedLint": {
-      "command": "npx eslint --ext .cjs,.mjs,.ts,.tsx apps/pc-app/ui/src/features/conversations apps/pc-app/runtime/features/conversations/tests/display-identity.test.cjs apps/pc-app/runtime/features/conversations/tests/cloud-sync.acceptance.mjs apps/pc-app/runtime/features/conversations/tests/recovery-acceptance.mjs apps/pc-app/runtime/features/conversations/tests/compact-acceptance.mjs apps/pc-app/runtime/features/conversations/tests/dialog-acceptance.mjs",
-      "exitCode": 0
-    },
-    "cssParse": {
-      "method": "esbuild.transformSync with loader=css, in memory",
-      "passed": true,
-      "releaseBundleWritten": false
-    },
-    "diffCheck": {
-      "command": "git diff --check",
-      "exitCode": 0
-    },
-    "reactChecklist": {
-      "passed": true,
-      "details": "Pure module-level identity components; cheap derived values; no new effects/listeners; original petId keys and callbacks retained; accessible labels include complete identity"
-    }
-  },
   "dataPreservation": {
-    "productionRuntimeOrSchemaChanged": false,
-    "sharedWireTypesChanged": false,
+    "conversationSchemaChanged": false,
+    "conversationWireTypesChanged": "Only optional read-only ConversationPet.globalSerial?: string",
     "backupOrCloudFormatChanged": false,
     "liveUserDatabaseOpened": false,
     "liveUserDataMutated": false,
     "originalModelAndReasoningSettingsChanged": false,
     "typescriptMigrationPerformed": false,
     "oldServerTouched": false,
-    "fixtureReadback": "Original name, serial, petId, templateId, appearance, growth, origin, stored message content, persona, memory, connection fixture and backup export are preserved",
-    "evidenceBoundary": "Fixture readback verifies the read-only contract; real user-data and end-to-end interaction acceptance remains with 09"
+    "evidenceBoundary": "Headless SSR, synthetic metadata, in-memory SQLite and local HTTP protocol fixtures do not establish real server allocation, synchronization, DPAPI, paid model requests or desktop user acceptance.",
+    "runtimeProjectionChanged": "Only optional canonical globalSerial in the read-only ConversationPet snapshot; no conversation schema changes.",
+    "fixtureReadback": "Original names, serials, petIds, templates, appearance, growth, origin, all stored conversation tables, legacy JSON, exported backup bytes and model prompt output remain unchanged."
   },
+  "pendingQa": [
+    "Coordinator integrates 02 helper, 06 DTO patch and 08 trusted inventory projection, then freezes one final package for 09",
+    "Verify confirmed decimal numbers and 待同步 across chat selectors, settings, headings, tooltips, memory dialog, composer and legacy import preview",
+    "Switch same-template twins with equal historical short identifiers; confirm chat/persona/memory/connection actions stay with the selected original petId",
+    "Check actual trusted cloud allocation/readback and account switching; injected/imported numeric metadata must not become authoritative",
+    "Confirm historical nicknames and original content remain unchanged after viewing and switching partners",
+    "Verify narrow windows, wrapping of long exact strings, text selection and keyboard/focus behavior",
+    "Recheck existing message send, cancellation/retry, clear-history, persona, memory, connection and legacy import flows in the final package"
+  ],
+  "previousBranch": "codex/lingjing-conversations",
+  "verification": {
+    "runtimeAndSelectionTests": {
+      "command": "node --test apps/pc-app/runtime/features/conversations/tests/runtime.test.cjs apps/pc-app/runtime/features/conversations/tests/selection.test.cjs",
+      "passed": 16,
+      "failed": 0,
+      "exitCode": 0,
+      "scope": "Actual temporary/in-memory Node SQLite plus local loopback HTTP protocol fixtures and controlled companion acknowledgements",
+      "limitations": "Protocol responses, credentials and the encryption codec are test fixtures; no actual user profile, provider/cloud request, OS secret store or desktop interaction."
+    },
+    "targetedLint": {
+      "command": "node node_modules/eslint/bin/eslint.js --ext .cjs,.ts,.tsx apps/pc-app/runtime/features/conversations/index.cjs apps/pc-app/runtime/features/conversations/service.cjs apps/pc-app/runtime/features/conversations/tests/display-identity.test.cjs apps/pc-app/ui/src/features/conversations/identity.tsx packages/shared-types/src/features/conversations/index.ts",
+      "exitCode": 0
+    },
+    "identityAndPreservationTests": {
+      "command": "node --test apps/pc-app/runtime/features/conversations/tests/display-identity.test.cjs",
+      "passed": 7,
+      "failed": 0,
+      "exitCode": 0,
+      "scope": "Headless React SSR, controlled main-process metadata and actual in-memory SQLite schemas",
+      "limitations": "No actual server allocation, sync, user profile, DPAPI, provider request or desktop interaction."
+    },
+    "uiTypecheck": {
+      "command": "npm run typecheck:ui",
+      "exitCode": 0
+    },
+    "fixtureLint": {
+      "command": "node node_modules/eslint/bin/eslint.js apps/pc-app/runtime/features/conversations/tests/display-identity.test.cjs",
+      "exitCode": 0
+    },
+    "testTotal": {
+      "passed": 23,
+      "failed": 0,
+      "scope": "16 runtime/selection checks plus 7 identity/preservation checks"
+    },
+    "fixtureCorrection": {
+      "initial": {
+        "passed": 6,
+        "failed": 1
+      },
+      "cause": "The registered companion stub omitted getSelections, which the actual conversation adapter requires.",
+      "correction": "Provide the actual getSelections interface in the test fixture; no product API or behavior change.",
+      "final": {
+        "passed": 7,
+        "failed": 0
+      }
+    },
+    "evidence": "docs/implementation/evidence/conversations/user-acceptance-2026-10-25/global-serial-fresh-06/checks.json"
+  },
+  "updatedAt": "2026-10-25T19:12:52.379+08:00",
+  "integrationBase": "9e57de1d210376ce679168eb1acbff8e37cff1cd",
+  "repositorySync": {
+    "fetch": "git fetch origin completed in the recovered 06 worktree",
+    "pull": "git pull --ff-only origin main completed; Already up to date",
+    "checkedAt": "2026-10-25T19:11:32+08:00",
+    "originMainAtSync": "4786f97680679c2db0aa307fa5f67ec247f93086",
+    "originMainIncluded": true
+  },
+  "dependencies": {
+    "sharedDisplay": {
+      "sourceCommit": "a528ebcf90e33491364a606747727f7f28f46457",
+      "validationOnlyCherryPick": "d145aff1c5b3e038bcf0494d93dfdd4887ded18b",
+      "result": "Shared helper/types consumed unchanged; coordinator should integrate the original 02 commit."
+    },
+    "trustedNumbers": {
+      "role": "08",
+      "state": "Required in final integration; actual server allocation and trusted cache are not verified by these 06 fixtures."
+    },
+    "finalAcceptance": {
+      "role": "09",
+      "state": "Pending the coordinator's final integrated package and actual user scenarios."
+    }
+  },
+  "changes": [
+    "Carry only canonical globalSerial metadata from the main-process companion inventory into ConversationPet snapshots and the shared display helper",
+    "Strip unverified globalSerial values from the legacy inventory fallback and ignore renderer-supplied number claims",
+    "Display decimal numbers with at least four digits or 待同步; preserve all digits without Number conversion",
+    "Retain original petId attributes, keys, command targets, nicknames and all conversation content",
+    "Complete the registered-adapter fixture with the actual companion getSelections interface and verify unchanged prompt bytes"
+  ],
+  "verifiedScenarios": [
+    {
+      "scenario": "Historical nickname or mutable appearance differs from the original catalog role",
+      "method": "Frozen DTO plus actual shared helper",
+      "result": "Fixed role remains 礼帽喵; source DTO is unchanged."
+    },
+    {
+      "scenario": "Same-template twins with matching legacy serial and equal petId suffix",
+      "method": "ReactDOM server rendering of actual PetIdentity",
+      "result": "Confirmed 0001/10000 display distinctly, original petId attributes remain, and historical nickname HTML is escaped."
+    },
+    {
+      "scenario": "Canonical numbers around four digits and above JS Number precision",
+      "method": "Actual shared projection for 1, 9999, 10000 and 9007199254740993",
+      "result": "Display-only padding; every original digit and canonical DTO value retained."
+    },
+    {
+      "scenario": "Absent, malformed, renderer-claimed or unverified legacy metadata",
+      "method": "Actual conversation snapshot/register adapters with explicit controlled main-process fixtures",
+      "result": "Missing/malformed/unverified legacy numbers show 待同步; renderer claims cannot replace the companion inventory number."
+    },
+    {
+      "scenario": "Missing/retired template with a known-looking appearance",
+      "method": "Frozen input projection",
+      "result": "历史伙伴 fallback without appearance inference; confirmed number and historical nickname retained."
+    },
+    {
+      "scenario": "Existing messages, persona, memories, keys, original JSON, backup and model prompt",
+      "method": "Actual accounts/conversations schemas in memory, PRAGMA query_only=ON, table/legacy JSON/backup byte comparison and actual buildContext output comparison",
+      "result": "All checked bytes remain equal; ciphertext is explicitly a simulated fixture."
+    }
+  ],
   "acceptanceHelpers": {
     "updated": [
       "apps/pc-app/runtime/features/conversations/tests/cloud-sync.acceptance.mjs",
@@ -122,16 +182,8 @@
       "apps/pc-app/runtime/features/conversations/tests/compact-acceptance.mjs",
       "apps/pc-app/runtime/features/conversations/tests/dialog-acceptance.mjs"
     ],
-    "reason": "Use original petId attributes or the shared full identity instead of mutable nicknames",
+    "reason": "Earlier QA-003 selectors use original petId attributes or the same shared identity.",
     "executed": false,
-    "result": "Pending independent acceptance; source updates do not establish a passing desktop result"
-  },
-  "pendingQa": [
-    "After coordinator integration, 09 checks the final package with real mouse and keyboard",
-    "Verify full visible numbers and wrapping in both chat selectors, settings, headings, tooltips, memory dialog, composer and legacy import preview",
-    "Switch same-template twins with equal historical short identifiers; confirm chat/persona/memory/connection actions stay with the selected original petId",
-    "Confirm historical nicknames and original content remain unchanged after viewing and switching partners",
-    "Verify narrow windows, readable multiline headings, selectable full IDs and keyboard/focus behavior",
-    "Recheck existing message send, clear-history, persona, memory, connection and legacy import flows in the final integrated package"
-  ]
+    "result": "Pending independent final-package acceptance by 09."
+  }
 }

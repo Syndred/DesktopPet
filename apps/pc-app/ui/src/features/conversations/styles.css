@@ -52,7 +52,7 @@
 .cv-connection-state .cv-dot:not(.offline){background:var(--cv-blue)}
 .cv-import-counts{display:flex;gap:var(--space-4,16px);flex-wrap:wrap;margin:var(--space-3,12px) 0}.cv-import-samples{list-style:none;padding:0;max-height:260px;overflow:auto}.cv-import-samples li{padding:var(--space-2,8px) 0;border-bottom:1px solid var(--cv-line)}.cv-import-samples strong{font-size:var(--text-label,12px);color:var(--cv-muted)}.cv-import-samples p{white-space:pre-wrap;overflow-wrap:anywhere;margin:4px 0}
 
-/* QA-003: full original IDs remain readable; identity is never an ellipsis. */
+/* QA-003: confirmed decimal numbers remain complete, readable and selectable. */
 .cv-identity{display:inline-flex;flex-direction:column;gap:2px;min-width:0;max-width:100%;vertical-align:top;text-align:inherit}
 .cv-identity-name{display:flex;align-items:center;flex-wrap:wrap;gap:6px;font-weight:var(--weight-section,600);overflow-wrap:anywhere}
 .cv-identity-number{display:block;max-width:100%;font-family:var(--font-mono,ui-monospace,monospace);font-size:11px;font-weight:400;line-height:1.5;color:var(--cv-muted);white-space:normal;overflow-wrap:anywhere;word-break:break-word;overflow:visible;text-overflow:clip;user-select:text}

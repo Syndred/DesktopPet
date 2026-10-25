@@ -62,7 +62,7 @@ test('unknown or missing template stays historical instead of inferring identity
     assert.deepEqual(conversationIdentity(source), { roleName: '历史伙伴', instanceNumber: '0042', historicalNickname: source.name });
   }
 });
-test('read-only label/SSR projection leaves stored pet JSON, messages, persona, memory, connections, ciphertext and backup bytes unchanged', async t => {
+test('read-only label/SSR projection leaves prompt, stored pet JSON, messages, persona, memory, connections, ciphertext and backup bytes unchanged', async t => {
   const db = new DatabaseSync(':memory:'); let feature;
   t.after(() => { feature?.dispose(); db.close(); });
   for (const migration of [...require('../../accounts/schema.cjs').migrations, ...require('../schema.cjs').migrations]) db.exec(migration.sql);
@@ -87,6 +87,13 @@ test('read-only label/SSR projection leaves stored pet JSON, messages, persona, 
   const bytes = () => JSON.stringify(tables.map(name => [name, db.prepare(`SELECT * FROM ${name} ORDER BY rowid`).all()]));
   const before = bytes(), backup = JSON.stringify(adapter.export(owner));
   db.exec('PRAGMA query_only=ON'); assert.equal(db.prepare('PRAGMA query_only').get().query_only, 1);
+  const { buildContext } = require('../context.cjs');
+  for (const original of pets) {
+    const context = { profile: store.getProfile(owner, original.petId), memories: store.listMemories(owner, original.petId),
+      pairs: store.contextPairs(owner, original.petId), prompt: '原始用户输入', budget: config.contextChars };
+    const originalPrompt = JSON.stringify(buildContext({ ...context, pet: original }));
+    assert.equal(JSON.stringify(buildContext({ ...context, pet: metadata.find(item => item.petId === original.petId) })), originalPrompt);
+  }
   const snapshot = await feature.invoke('snapshot', { globalSerial: '999999' }); assert.equal(snapshot.ok, true);
   for (const dto of snapshot.data.pets) {
     assert.equal(dto.name, pets.find(item => item.petId === dto.petId).name);
@@ -119,9 +126,10 @@ test('registered adapter excludes unverified legacy numbers and forwards only th
   const unverified = await registered.commands.snapshot({}, { ownerAccountId: owner });
   assert.equal(unverified.ok, true); assert.equal(Object.hasOwn(unverified.data.pets[0], 'globalSerial'), false);
   assert.equal(conversationIdentity(unverified.data.pets[0]).instanceNumber, '待同步');
-  companions = { listPets: requestedOwner => [freeze({ ...pet(firstId, '8'), ownerAccountId: requestedOwner })] };
+  companions = { listPets: requestedOwner => [freeze({ ...pet(firstId, '8'), ownerAccountId: requestedOwner })],
+    getSelections: () => ({ chatPetId: firstId }) };
   const confirmed = await registered.commands.snapshot({ globalSerial: '9999' }, { ownerAccountId: owner });
-  assert.equal(confirmed.ok, true); assert.equal(confirmed.data.pets[0].globalSerial, '8');
+  assert.equal(confirmed.ok, true, confirmed.message); assert.equal(confirmed.data.pets[0].globalSerial, '8');
   assert.equal(confirmed.data.pets[0].petId, firstId); assert.equal(conversationIdentity(confirmed.data.pets[0]).instanceNumber, '0008');
   assert.equal(JSON.stringify(legacyPets), before);
 });
