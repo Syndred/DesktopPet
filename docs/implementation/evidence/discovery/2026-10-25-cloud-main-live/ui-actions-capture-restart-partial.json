@@ -1,0 +1,299 @@
+{
+  "passed": false,
+  "actionCheckpointUsable": true,
+  "acceptedScopes": [
+    "Two actual UI moves, immutable action conflict and separate-client exact round readback",
+    "Actual UI leave, existing victory view, canonical capture result, uniqueness and cold SQLite restart"
+  ],
+  "withdrawnScope": "Initial report UI pass is invalid. Its screenshot caught the outgoing BattleScreen during transition; strict report mount later reveals missing TooltipProvider. Raw original retained for audit.",
+  "raw": {
+    "at": "2026-10-25T04:57:29.737Z",
+    "sourceCommit": "ee6681a0bea8b60f6a746ddccedf1e76ec7c8b5e",
+    "sourceDirty": [
+      "M apps/pc-app/runtime/features/discovery/service.cjs",
+      " M docs/implementation/cloud-discovery-contract-2026-10-25.md",
+      "?? apps/pc-app/runtime/features/discovery/verification/cloud-main-live.mjs"
+    ],
+    "build": {
+      "schemaVersion": 2,
+      "builtAt": "2026-10-25T04:41:04.026Z",
+      "sourceCommit": "2ed7946f2f742374dfc263692b0076917013e449",
+      "sourceTree": "49637bae0becf5f259e052ecb6a15ad7bae808d7",
+      "sourceDirtyFiles": [],
+      "codeFingerprint": "7cb840119a049ee3859e43518a9eac45fc933a090d582ecc98b43b512cb82f60",
+      "canonicalSourceFingerprint": "46ca4188df4fc86eb4882e6ecb5b46d5ce64e150cb96712a0109a3d7208836a3",
+      "canonicalPolicy": "Repository-relative paths; CRLF normalized to LF for source text only. Packaged/compiled bytes remain exact.",
+      "compiledFingerprint": "a737593a50aff2e238e8f29edbde44a09b08b6189b8443f2983bed4ba30d05ed",
+      "codeFiles": 299,
+      "compiledFiles": 87,
+      "toolchain": {
+        "node": "24.21.0",
+        "electron": "44.9.3",
+        "sqlite": "13.0.3",
+        "vite": "7.3.7",
+        "typescript": "5.9.3",
+        "platform": "win32",
+        "arch": "x64"
+      },
+      "entrypoints": {
+        "main": "main/index.cjs",
+        "app": "ui/index.html",
+        "desktop": "ui/desktop.html",
+        "preload": "preload/index.cjs"
+      },
+      "publicCloud": {
+        "projectRef": "jbvrdmrkwpznbrvteive",
+        "url": "https://jbvrdmrkwpznbrvteive.supabase.co",
+        "sha256": "c1625c63f1d959f92b3392b47f2fb492452803eedf1c0d1ebc68a1168ab64eda",
+        "resourcePath": "lingjing-cloud-public.json"
+      },
+      "packageName": "lingjing-desktop",
+      "runtimeClosure": {
+        "manifest": "runtime-closure.json",
+        "files": 107,
+        "edges": 186,
+        "sha256": "30296b5fa74058573f6d7a3022d2738e11ed3035de1a2d2efa17c7877e139a65"
+      }
+    },
+    "projectRef": "jbvrdmrkwpznbrvteive",
+    "scenarioId": "cloud-discovery-03",
+    "realAuth": true,
+    "realHttps": true,
+    "productionMain": true,
+    "sharedBattleScreen": true,
+    "syntheticPosition": true,
+    "physicalPositionAcceptance": false,
+    "physicalSecondDevice": false,
+    "rawCoordinatesSaved": false,
+    "newNaturalVictory": false,
+    "actors": [
+      {
+        "label": "device-a",
+        "actor": {
+          "account": "cg03_1792899947200",
+          "authKind": "supabase",
+          "deviceId": "b9300119-4e88-41d5-b182-051c3f943e87",
+          "username": "探索云端验收",
+          "authority": "live",
+          "sessionId": "eb6b0776-5dc3-42f8-bf27-350eb42d5fef",
+          "authUserId": "319083e4-2592-4369-84b4-0f05f6c2ea3a",
+          "schemaVersion": 1,
+          "ownerAccountId": "account:31fa2df1-6847-4466-84ca-ed92bc4ee78f"
+        },
+        "electron": "44.9.3",
+        "qaProfile": false
+      },
+      {
+        "label": "device-b",
+        "actor": {
+          "account": "cg03_1792899947200",
+          "authKind": "supabase",
+          "deviceId": "8c61169a-8bc4-4250-b87f-f216e13954ef",
+          "username": "探索云端验收",
+          "authority": "live",
+          "sessionId": "25e5a1ec-bb89-495b-a13b-636401b3f75d",
+          "authUserId": "319083e4-2592-4369-84b4-0f05f6c2ea3a",
+          "schemaVersion": 1,
+          "ownerAccountId": "account:31fa2df1-6847-4466-84ca-ed92bc4ee78f"
+        },
+        "electron": "44.9.3",
+        "qaProfile": false
+      },
+      {
+        "label": "device-a",
+        "actor": {
+          "account": "cg03_1792899947200",
+          "authKind": "supabase",
+          "deviceId": "b9300119-4e88-41d5-b182-051c3f943e87",
+          "username": "探索云端验收",
+          "authority": "live",
+          "sessionId": "eb6b0776-5dc3-42f8-bf27-350eb42d5fef",
+          "authUserId": "319083e4-2592-4369-84b4-0f05f6c2ea3a",
+          "schemaVersion": 1,
+          "ownerAccountId": "account:31fa2df1-6847-4466-84ca-ed92bc4ee78f"
+        },
+        "electron": "44.9.3",
+        "qaProfile": false
+      }
+    ],
+    "checks": [
+      {
+        "label": "production discovery snapshot imports canonical companion and existing capture",
+        "passed": true
+      },
+      {
+        "label": "same UI action id rejects a changed move without another round",
+        "passed": true
+      },
+      {
+        "label": "real shared UI leave abandons server battle",
+        "passed": true
+      },
+      {
+        "label": "existing natural victory and full report render original pet and 28 rounds",
+        "passed": true
+      },
+      {
+        "label": "normal battle.settleContext recovers original captured pet",
+        "passed": true
+      },
+      {
+        "label": "short abandoned UI battle adds no growth, capture, memory or seed receipt; cold restart retains original pet",
+        "passed": true
+      }
+    ],
+    "errors": [],
+    "positionFixture": {
+      "scenarioId": "cloud-discovery-03",
+      "source": "simulated",
+      "protocol": "lingjing-discovery-v2",
+      "coordinateHash": "86ea830266f3ee47512b155f0f78d8bf2b3c649bf23d43314109a89aacd61ddb"
+    },
+    "originalPetId": "pet-161ff8e2-efdf-40f0-b27a-431554562325",
+    "shortBattle": {
+      "sessionId": "battle-cloud-6bb5bcec-ddaa-4f32-8db4-996b380c168a",
+      "playerPetId": "pet-a3efdc72-2007-4e4f-823e-297d52c9bc22",
+      "initialRound": 0,
+      "renderedActions": [
+        {
+          "action": "normal_attack",
+          "round": 1,
+          "phases": [
+            "windup",
+            "release",
+            "impact",
+            "effects"
+          ],
+          "peerMatches": true
+        },
+        {
+          "action": "element_attack",
+          "round": 2,
+          "phases": [
+            "windup",
+            "release",
+            "impact",
+            "effects"
+          ],
+          "peerMatches": true
+        }
+      ],
+      "status": "abandoned"
+    },
+    "existingVictory": {
+      "sessionId": "battle-cloud-a3efdc72-2007-4e4f-823e-297d52c9bc22",
+      "rounds": 28,
+      "playerPetId": "pet-161ff8e2-efdf-40f0-b27a-431554562325",
+      "reward": {
+        "won": true,
+        "mode": "wild",
+        "petId": "pet-161ff8e2-efdf-40f0-b27a-431554562325",
+        "seeds": {
+          "itemId": "seed:berry",
+          "source": "battle",
+          "quantity": 2,
+          "receiptId": "battle-cloud-a3efdc72-2007-4e4f-823e-297d52c9bc22"
+        },
+        "applied": true,
+        "actionId": "battle:battle-cloud-a3efdc72-2007-4e4f-823e-297d52c9bc22:account:31fa2df1-6847-4466-84ca-ed92bc4ee78f",
+        "duplicate": false,
+        "sessionId": "battle-cloud-a3efdc72-2007-4e4f-823e-297d52c9bc22",
+        "experience": 20,
+        "currentLevel": 1,
+        "previousLevel": 1,
+        "currentExperience": 20,
+        "previousExperience": 0
+      }
+    },
+    "wonScreen": {
+      "name": "existing-cloud-victory.png",
+      "size": {
+        "width": 1703,
+        "height": 1223
+      },
+      "sampleColors": 137037,
+      "opaqueSamples": 520693
+    },
+    "reportScreen": {
+      "name": "existing-cloud-report.png",
+      "size": {
+        "width": 1703,
+        "height": 1223
+      },
+      "sampleColors": 94699,
+      "opaqueSamples": 520693
+    },
+    "resultScreen": {
+      "name": "same-cloud-captured-pet.png",
+      "size": {
+        "width": 1703,
+        "height": 1223
+      },
+      "sampleColors": 13301,
+      "opaqueSamples": 520693
+    },
+    "cloudCounts": {
+      "revision": 43,
+      "pets": 2,
+      "companionCaptureReceipts": 1,
+      "battleSeedReceipts": 1,
+      "originalExperience": 20,
+      "capturedExperience": 0
+    },
+    "sqliteA": {
+      "owner": "account:31fa2df1-6847-4466-84ca-ed92bc4ee78f",
+      "pets": [
+        {
+          "petId": "pet-161ff8e2-efdf-40f0-b27a-431554562325",
+          "experience": 20,
+          "resourceId": "builtin:lingjing-yuwan-v2"
+        },
+        {
+          "petId": "pet-a3efdc72-2007-4e4f-823e-297d52c9bc22",
+          "experience": 0,
+          "resourceId": "builtin:lingjing-shiba-v2"
+        }
+      ],
+      "captures": [
+        {
+          "petId": "pet-a3efdc72-2007-4e4f-823e-297d52c9bc22",
+          "battleId": "battle-cloud-a3efdc72-2007-4e4f-823e-297d52c9bc22"
+        }
+      ],
+      "memories": [
+        {
+          "pet_id": "pet-a3efdc72-2007-4e4f-823e-297d52c9bc22",
+          "count": 1
+        }
+      ]
+    },
+    "restart": {
+      "owner": "account:31fa2df1-6847-4466-84ca-ed92bc4ee78f",
+      "pets": [
+        {
+          "petId": "pet-161ff8e2-efdf-40f0-b27a-431554562325",
+          "experience": 20,
+          "resourceId": "builtin:lingjing-yuwan-v2"
+        },
+        {
+          "petId": "pet-a3efdc72-2007-4e4f-823e-297d52c9bc22",
+          "experience": 0,
+          "resourceId": "builtin:lingjing-shiba-v2"
+        }
+      ],
+      "captures": [
+        {
+          "petId": "pet-a3efdc72-2007-4e4f-823e-297d52c9bc22",
+          "battleId": "battle-cloud-a3efdc72-2007-4e4f-823e-297d52c9bc22"
+        }
+      ],
+      "memories": [
+        {
+          "pet_id": "pet-a3efdc72-2007-4e4f-823e-297d52c9bc22",
+          "count": 1
+        }
+      ]
+    },
+    "passed": true
+  }
+}

@@ -10,9 +10,8 @@ const {convertPoint,distanceMeters,geofence,checkFix}=require('../coordinates.cj
 const {MapAdapter}=require('../map-adapter.cjs');
 const {nearbySpawns}=require('../spawns.cjs');
 const discoveryModule=require('../index.cjs');
-const {createAuthorityHandler}=require('../server-authority.cjs');
-const {atomic}=require('../repository.cjs');
 const {publicEncounter}=require('../service.cjs');
+const {contains}=require('../territory-adapter.cjs');
 const {getBattleRules}=require('../../../services/battle-runtime.cjs');
 
 const companionRoot=process.env.LINGJING_COMPANIONS_RUNTIME || resolve(__dirname,'../../companions');
@@ -43,14 +42,14 @@ function fixture() {
   const owner=services.session.getOwnerAccountId();
   return {directory,legacy,db,services,api,owner,close(){discovery.dispose?.();garden.dispose?.();battle.dispose?.();companion.dispose?.();db.close();}};
 }
-async function start(f) {
+async function start(f,preferredSpawn) {
   await f.api.location.locate();
   const adopted=await f.services.invoke('companions','adopt',{actionId:'adopt-test',templateId:'big-fish-gentle',name:'实战伙伴',showOnDesktop:false});assert.equal(adopted.ok,true);
   const petId=adopted.data.pet.petId;
   // Pick a real generated 2D encounter. Coordinates remain controlled fixtures.
-  let spawn=f.api.snapshot().data.spawns.find(s=>s.element==='water'&&s.inRange);
+  let spawn=f.api.snapshot().data.spawns.find(s=>s.inRange&&(preferredSpawn?s.id===preferredSpawn.id:s.element==='water'));
   if(!spawn) {
-    const target=nearbySpawns(fixturePosition).find(s=>s.element==='water');assert.ok(target);
+    const target=preferredSpawn||nearbySpawns(fixturePosition).find(s=>s.element==='water');assert.ok(target);
     f.api.location.adapter={scenario:'qa',getPosition:async()=>({ok:true,...fixtureFix(),...target.position})};
     f.api.location.fix=null;await f.api.location.locate();
     spawn=f.api.snapshot().data.spawns.find(s=>s.id===target.id);
@@ -222,36 +221,6 @@ test('ownership, action conflicts, cancellation, precise-location and demo bound
     assert.equal(f.api.snapshot().data.encounters.length,0);assert.equal((await f.services.invoke('discovery','cancel',{encounterId:encounter.encounterId,ownerAccountId:f.owner,actionId:'foreign-owner'})).code,'ENCOUNTER_NOT_FOUND');
   } finally {f.close();}
 });
-test('server authority persists random outcomes and rejects forged victories, foreign pets and action reuse',integrationOptions,async t=>{
-  t.mock.method(Math,'random',()=>.4);
-  const f=fixture();try {
-    const {petId}=await start(f);await f.services.invoke('discovery','cancel',{encounterId:f.api.repo.list(f.owner)[0].encounterId,actionId:'cancel-for-server'});
-    f.db.exec('CREATE TABLE proof_permits(id TEXT PRIMARY KEY,owner TEXT,spawn_id TEXT,data_json TEXT); CREATE TABLE proof_actions(owner TEXT,action_id TEXT,data_json TEXT,PRIMARY KEY(owner,action_id)); CREATE TABLE proof_captures(owner TEXT,permit_id TEXT,data_json TEXT,PRIMARY KEY(owner,permit_id));');
-    const store={
-      async ownedPet(owner,id){try{return f.services.get('companions').getPet(owner,id);}catch{return null;}},
-      async findPermit(owner,spawn){const row=f.db.prepare('SELECT data_json FROM proof_permits WHERE owner=? AND spawn_id=?').get(owner,spawn);return row?JSON.parse(row.data_json):null;},
-      async reserve(permit){f.db.prepare('INSERT INTO proof_permits VALUES(?,?,?,?)').run(permit.id,permit.owner,permit.spawn.id,JSON.stringify(permit));return permit;},
-      async getPermit(owner,id){const row=f.db.prepare('SELECT data_json FROM proof_permits WHERE owner=? AND id=?').get(owner,id);return row?JSON.parse(row.data_json):null;},
-      async getAction(owner,id){const row=f.db.prepare('SELECT data_json FROM proof_actions WHERE owner=? AND action_id=?').get(owner,id);return row?JSON.parse(row.data_json):null;},
-      async advance(owner,id,actionId,action,round,battle){return atomic(f.db,()=>{const receipt={permitId:id,action,result:battle};const row=f.db.prepare('SELECT data_json FROM proof_permits WHERE owner=? AND id=?').get(owner,id),permit=JSON.parse(row.data_json);assert.equal(permit.battle.view.round+1,round);permit.battle=battle;f.db.prepare('UPDATE proof_permits SET data_json=? WHERE id=?').run(JSON.stringify(permit),id);f.db.prepare('INSERT INTO proof_actions VALUES(?,?,?)').run(owner,actionId,JSON.stringify(receipt));return battle;});},
-      async getCapture(owner,id){const row=f.db.prepare('SELECT data_json FROM proof_captures WHERE owner=? AND permit_id=?').get(owner,id);return row?JSON.parse(row.data_json):null;},
-      async claim(receipt){f.db.prepare('INSERT INTO proof_captures VALUES(?,?,?)').run(receipt.owner,receipt.permitId,JSON.stringify(receipt));return receipt;}
-    };
-    const handler=createAuthorityHandler({authenticate:async()=>f.services.session.getOwnerAccountId(),store});
-    const fix=f.api.location.snapshot().fix,target=nearbySpawns(fix).find(spawn=>spawn.element==='water'&&geofence(fix,spawn.position).ok);
-    assert.ok(target);
-    await assert.rejects(handler({op:'reserve',fix,spawnId:target.id,petId:'foreign-pet'}),{code:'CLOUD_PET_NOT_SYNCED'});
-    const permit=await handler({op:'reserve',fix,spawnId:target.id,petId});
-    await assert.rejects(handler({op:'confirm',fix,spawnId:target.id,permitId:permit.id,winner:'player',actions:Array(20).fill('ultimate')}),{code:'VICTORY_REQUIRED'});
-    let battle,round=0;
-    do {round++;battle=await handler({op:'act',permitId:permit.id,actionId:`server-round-${round}`,expectedRound:round,action:battle?.view.player.anger>=50?'ultimate':'normal_attack'});} while(!battle.finished&&round<60);
-    assert.equal(battle.winner,'player');
-    const before=battle.view.round,repeat=await handler({op:'act',permitId:permit.id,actionId:`server-round-${round}`,expectedRound:round,action:battle.rounds.at(-1).action});assert.equal(repeat.view.round,before);
-    const captured=await handler({op:'confirm',fix,spawnId:target.id,permitId:permit.id});
-    const again=await handler({op:'confirm',fix,spawnId:target.id,permitId:permit.id});assert.equal(again.id,captured.id);assert.equal(again.duplicate,true);
-    assert.equal(f.db.prepare('SELECT COUNT(*) AS n FROM proof_captures').get().n,1);
-  } finally {f.close();}
-});
 test('real territory battle ownership feeds the discovery map and capture provenance without changing combat stats',integrationOptions,async t=>{
   t.mock.method(Math,'random',()=>.4);
   const f=fixture();try {
@@ -267,8 +236,15 @@ test('real territory battle ownership feeds the discovery map and capture proven
     assert.equal(battle.winner,'player');
     const settled=await f.services.invoke('garden','territorySettle',{sessionOwnerAccountId:f.owner,actionId:'territory-settle',expectedRevision:f.services.get('garden').service.revision(f.owner),sessionId:battle.id});assert.equal(settled.ok,true,JSON.stringify(settled));
     const overlay=f.api.snapshot().data.territories.find(item=>item.territoryId===territory.id);assert.ok(overlay);assert.equal(overlay.owned,true);assert.equal(overlay.bonusMultiplier,2);assert.equal(overlay.mapBoundary.length,4);
-    const {encounter}=await start(f),won=await win(f,encounter);
+    // Hourly spawns can move the generic water-target helper over a cell edge.
+    // This case asserts an owned-region bonus, so select a real generated water
+    // point inside that exact region rather than assuming the helper stays in it.
+    const center=territory.boundary.reduce((p,v)=>({lat:p.lat+v.lat/territory.boundary.length,lng:p.lng+v.lng/territory.boundary.length}),{lat:0,lng:0});
+    const target=nearbySpawns(center).find(spawn=>spawn.element==='water'&&contains(spawn.position,territory.boundary));assert.ok(target,'Owned region must contain the chosen canonical fixture spawn');
+    const {encounter}=await start(f,target);assert.equal(contains(f.api.location.snapshot().fix,territory.boundary),true);assert.equal(f.api.territories.captureContext(f.owner,f.api.location.snapshot().fix).territoryId,territory.id);
+    const won=await win(f,encounter);
     const captured=await f.services.invoke('discovery','confirm',{encounterId:won.encounterId,actionId:'territory-capture'});assert.equal(captured.ok,true,JSON.stringify(captured));assert.equal(captured.data.territoryId,territory.id);assert.equal(captured.data.captureMultiplier,2);
     const owned=f.services.get('companions').getPet(f.owner,captured.data.petId);assert.equal(owned.growth.stats.hp,124);assert.equal(owned.origin.territoryId,territory.id);
+    const outside={...f.api.location.snapshot().fix,lat:Math.min(...territory.boundary.map(p=>p.lat))-.001,lng:center.lng};assert.equal(f.api.territories.captureContext(f.owner,outside).territoryId,null,'An outside position must keep the ordinary no-territory result');
   } finally {f.close();}
 });

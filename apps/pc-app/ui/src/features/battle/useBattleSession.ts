@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import type { BattleActionType } from '../../../../../../packages/shared-types/src/battle';
 import type { BattleContext, BattleParticipant, BattleReport, BattleRulesProfile, BattleSession } from '../../../../../../packages/shared-types/src/features/battle';
 import { request } from '../../app/bridge';
+import { reserveBattleAction, resolvedBattleAction, type BattleActionAttempt } from './action-intent';
 
 export interface BattleOverview {
   rules: BattleRulesProfile; pets: BattleParticipant[]; selectedPetId?: string; session: BattleSession | null;
@@ -14,7 +15,7 @@ export function useBattleSession(sessionId?: string) {
   const [context, setContext] = useState<BattleContext | null>(null);
   const [error, setError] = useState(''), [busy, setBusy] = useState(false), [syncedAt, setSyncedAt] = useState('');
   const generation = useRef(0), processing = useRef(false), syncing = useRef(false);
-  const retry = useRef<{ sessionId: string; action: BattleActionType; actionId: string } | null>(null);
+  const retry = useRef<BattleActionAttempt | null>(null);
   const reload = useCallback(async () => {
     const version = generation.current;
     const [overview, current] = await Promise.all([
@@ -47,6 +48,7 @@ export function useBattleSession(sessionId?: string) {
     try {
       const value = await request<BattleSession>('battle', 'sync', { sessionId: id });
       if (version !== generation.current) return;
+      if(resolvedBattleAction(retry.current,value))retry.current=null;
       setSession(value); setSyncedAt(new Date().toISOString()); setError('');
     } catch (failure) { if (version === generation.current) setError(failure instanceof Error ? failure.message : String(failure)); }
     finally { syncing.current = false; }
@@ -75,10 +77,10 @@ export function useBattleSession(sessionId?: string) {
     if (!session) return;
     const current = session, version = generation.current;
     const result = await run(async () => {
-      const previous = retry.current;
-      const attempt = previous?.sessionId === current.id && previous.action === action ? previous : { sessionId: current.id, action, actionId: crypto.randomUUID() };
+      const attempt = reserveBattleAction(retry.current,current.id,action,current.snapshot.round+1,()=>crypto.randomUUID());
       retry.current = attempt;
-      try { return await request<BattleSession>('battle', 'act', { ...attempt, expectedRound: current.snapshot.round + 1 }); }
+      const {roundNo,...command}=attempt;
+      try { return await request<BattleSession>('battle', 'act', { ...command, expectedRound: roundNo }); }
       catch (failure) {
         const saved = await request<BattleSession>('battle', 'snapshot', { sessionId: current.id });
         if (version === generation.current) setSession(saved);

@@ -1,0 +1,79 @@
+{
+  "at": "2026-10-25 08:41:22 UTC",
+  "projectRef": "jbvrdmrkwpznbrvteive",
+  "sourceCommit": "a9acd7f6f1920c541d429fa26d1f054b1427cd95",
+  "executableSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+  "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+  "sessionId": "online-d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+  "method": "Root independent read-only Supabase management SQL after the real ten-round duel and repeated settlement",
+  "rows": [
+    {
+      "owner_id": "account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+      "revision": 9,
+      "checksum": "6c41d531f2499efc34116665d2d99b516c7014eeee29c579a6ac3a34f65a1c4d",
+      "battle_reward_count": 1,
+      "reward": {
+        "won": true,
+        "mode": "friend",
+        "petId": "pet-2d660416-db18-44a1-8392-74f235484151",
+        "seeds": {
+          "itemId": "seed:rice",
+          "source": "battle",
+          "quantity": 2,
+          "receiptId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7"
+        },
+        "applied": true,
+        "actionId": "battle:d9f43966-a27c-476a-80f8-0ee7927a3ab7:account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+        "duplicate": false,
+        "sessionId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+        "experience": 20,
+        "currentLevel": 1,
+        "previousLevel": 1,
+        "currentExperience": 65,
+        "previousExperience": 45
+      },
+      "seed_reward_count": 1,
+      "seed_receipt": {
+        "itemId": "seed:rice",
+        "source": "battle",
+        "quantity": 2,
+        "receiptId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7"
+      },
+      "growth_receipt_count": 1
+    },
+    {
+      "owner_id": "account:9e230794-470b-45be-9a18-a2564c88ba35",
+      "revision": 7,
+      "checksum": "0676ef7a4ee7866b5ec831ef76814f73fc4674d24dcf7f6f4bec262c3f8c39b1",
+      "battle_reward_count": 1,
+      "reward": {
+        "won": false,
+        "mode": "friend",
+        "petId": "pet-7374c520-8730-45ca-a419-227e60a2fa81",
+        "seeds": {
+          "itemId": "seed:rice",
+          "source": "battle",
+          "quantity": 2,
+          "receiptId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7"
+        },
+        "applied": true,
+        "actionId": "battle:d9f43966-a27c-476a-80f8-0ee7927a3ab7:account:9e230794-470b-45be-9a18-a2564c88ba35",
+        "duplicate": false,
+        "sessionId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+        "experience": 5,
+        "currentLevel": 1,
+        "previousLevel": 1,
+        "currentExperience": 15,
+        "previousExperience": 10
+      },
+      "seed_reward_count": 1,
+      "seed_receipt": {
+        "itemId": "seed:rice",
+        "source": "battle",
+        "quantity": 2,
+        "receiptId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7"
+      },
+      "growth_receipt_count": 1
+    }
+  ]
+}

@@ -93,6 +93,24 @@ class BackupManager {
     });
   }
   dataChecksum(owner) { return saveDataChecksum(this.snapshot(owner).data); }
+  captureCloudPreparation(owner){
+    const before=this.snapshot(owner).data;
+    const guards=[...this.adapters].filter(([,adapter])=>adapter.captureCloudPreparation).map(([id,adapter])=>[id,adapter.captureCloudPreparation(owner,before.modules[id])]);
+    return{data:before,assert:envelope=>{
+      const current=this.snapshot(owner).data,modules={...current.modules};
+      for(const[id,guard]of guards){invariant(guard(envelope.data.modules[id],current.modules[id]),'SAVE_CHANGED','资源准备期间存档已变化。');modules[id]=before.modules[id];}
+      invariant(saveDataChecksum({...current,modules})===saveDataChecksum(before),'SAVE_CHANGED','核对期间本机存档已变化，原数据已保留。');
+      return saveDataChecksum(current);
+    }};
+  }
+  cloudBaselineView(owner,baseline,expected,current){
+    const modules={...current.modules};
+    for(const[id,adapter]of this.adapters)if(adapter.matchesCloudBaseline){
+      invariant(adapter.matchesCloudBaseline(owner,baseline.modules[id],expected.modules[id],current.modules[id]),'SAVE_CHANGED','资源增量尚未核验。');
+      if(Object.hasOwn(baseline.modules,id))modules[id]=baseline.modules[id];else delete modules[id];
+    }
+    return{...current,modules};
+  }
   /** Internal restore/fingerprint view. Call validate first for external input;
    * the original envelope/checksum/file is never rewritten by normalization. */
   normalizeData(data, owner) {
@@ -194,6 +212,14 @@ class BackupManager {
     invariant(preview && preview.owner === owner && preview.expiresAt > Date.now(), "BACKUP_PREVIEW_EXPIRED", "恢复预览已过期，请重新选择备份。");
     invariant(mode === "merge" || mode === "replace", "INVALID_RESTORE_MODE", "恢复方式无效。");
     this.validate(preview.envelope, owner);
+    // This metadata exists only on the main-process preview created from a
+    // verified SDK read. A file's provenance or renderer input cannot set it.
+    const cloudContext = preview.cloudRevision === undefined || preview.cloudRevision === 0 ? null : Object.freeze({
+      kind: 'verified-cloud-preview', ownerAccountId: owner,
+      revision: preview.cloudRevision, checksum: preview.envelope.checksum
+    });
+    invariant(!cloudContext || Number.isSafeInteger(cloudContext.revision) && cloudContext.revision > 0,
+      'SYNC_RECEIPT_MISMATCH', '云端预览版本无效，请重新预览。');
     invariant(this.dataChecksum(owner) === preview.currentChecksum, "SAVE_CHANGED", "存档在预览后发生变化，请重新预览。");
     const preserved = this.save(owner, null, "before-restore");
     const result = transaction(this.db, () => {
@@ -212,7 +238,9 @@ class BackupManager {
         this.db.prepare(`DELETE FROM ${identifier(name)} WHERE owner_account_id=?`).run(owner);
       }
       for (const [moduleId, data] of Object.entries(modules)) {
-        const value = this.adapters.get(moduleId).restore(owner, data.data, mode, this.db);
+        const adapter = this.adapters.get(moduleId);
+        const restore = cloudContext && typeof adapter.restoreCloud === 'function' ? adapter.restoreCloud : adapter.restore;
+        const value = restore.call(adapter, owner, data.data, mode, this.db, cloudContext);
         invariant(!value?.then, "ASYNC_BACKUP_ADAPTER", "存档恢复适配器必须同步执行。");
       }
       for (const name of ordered) {

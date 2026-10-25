@@ -1,0 +1,187 @@
+// Final business acceptance for the actual shipped Windows SFX. Requires only
+// designated encrypted QA credentials. All authority/Storage/Auth traffic is real.
+import assert from 'node:assert/strict';
+import {createRequire} from 'node:module';
+import {execFileSync} from 'node:child_process';
+import {createHash,randomUUID} from 'node:crypto';
+import {createReadStream,mkdirSync,mkdtempSync,readFileSync,writeFileSync} from 'node:fs';
+import {join,resolve} from 'node:path';
+import {createServer} from 'node:http';
+import {connect,createServer as netServer} from 'node:net';
+import {setTimeout as delay} from 'node:timers/promises';
+import {launchPortableSession} from './portable-session.mjs';
+import {pollState} from './poll-state.mjs';
+const require=createRequire(import.meta.url),Database=require('better-sqlite3');
+const {SupabaseRemote,publicConfig,decodeProof}=require('../../apps/pc-app/runtime/features/accounts/supabase-remote.cjs');
+const {checksum}=require('../../apps/pc-app/runtime/features/accounts/util.cjs');
+const option=name=>process.argv.find(arg=>arg.startsWith(`--${name}=`))?.slice(name.length+3);
+const executable=resolve(option('executable')||''),expectedSource=option('source');assert.match(expectedSource||'',/^[a-f0-9]{40}$/);
+const credentialFile=process.env.LINGJING_CLOUD_VERIFY_CREDENTIALS_DPAPI;assert.ok(credentialFile,'Designated encrypted QA credentials required');
+const decrypt='Add-Type -AssemblyName System.Security; $b=[Convert]::FromBase64String([Console]::In.ReadToEnd()); $c=[Security.Cryptography.ProtectedData]::Unprotect($b,$null,[Security.Cryptography.DataProtectionScope]::CurrentUser); [Console]::Out.Write([Convert]::ToBase64String($c))';
+const clear=Buffer.from(execFileSync('powershell.exe',['-NoProfile','-NonInteractive','-Command',decrypt],{input:readFileSync(credentialFile).toString('base64'),encoding:'utf8',windowsHide:true}).trim(),'base64');
+const credentials=JSON.parse(clear.toString('utf8'));clear.fill(0);assert.equal(credentials.testOnly,true);
+const fixtureKey='portable-qa-no-real-provider-key',safe=value=>{let text=String(value);for(const secret of[credentials.a.password,credentials.b.password,fixtureKey])text=text.split(secret).join('[redacted]');return text.replace(/eyJ[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+/g,'[redacted-jwt]');};
+const config=publicConfig();assert.equal(new URL(config.url).hostname,'jbvrdmrkwpznbrvteive.supabase.co');
+const parent=resolve('artifacts/cloud-upgrade/2026-10-25');mkdirSync(parent,{recursive:true});const output=mkdtempSync(join(parent,'final-portable-')),short=randomUUID().slice(0,8);
+const fileHash=async file=>{const digest=createHash('sha256');for await(const chunk of createReadStream(file))digest.update(chunk);return digest.digest('hex');};
+const proof={at:new Date().toISOString(),sourceCommit:expectedSource,executable,executableSha256:await fileHash(executable),projectRef:'jbvrdmrkwpznbrvteive',actualPortable:true,simulatedProvider:false,physicalMachines:1,checks:[],errors:[],passed:false,
+  scope:'Two actual portable SFX processes, public product IPC/React, real HTTPS/Storage and read-only SQLite. Main inspector only observes owned processes and selects an actual local descriptor in the native chooser; OS dialog UI itself is not claimed. Model error uses a closed loopback socket; no fabricated assistant reply.'};
+proof.verification={gitCommit:execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim(),scriptSha256:createHash('sha256').update(readFileSync(new URL(import.meta.url))).digest('hex'),driverSha256:createHash('sha256').update(readFileSync(new URL('./portable-session.mjs',import.meta.url))).digest('hex')};
+const save=()=>writeFileSync(join(output,'evidence.json'),JSON.stringify(proof,null,2));
+const pass=(name,data={})=>{proof.checks.push({name,...data});save();console.log('PASS',name);};
+const sockets=new Set(),proxy=createServer((_req,res)=>{res.writeHead(405);res.end();});let online=true,tunnels=0,refused=0;
+proxy.on('connect',(request,client,head)=>{sockets.add(client);client.on('error',()=>{});client.on('close',()=>sockets.delete(client));if(!online||request.url!==new URL(config.url).hostname+':443'){refused++;client.end('HTTP/1.1 502 Test connection refused\r\n\r\n');return;}const upstream=connect(443,new URL(config.url).hostname);sockets.add(upstream);tunnels++;upstream.on('error',()=>client.destroy());upstream.on('close',()=>{sockets.delete(upstream);client.destroy();});client.on('close',()=>upstream.destroy());upstream.once('connect',()=>{client.write('HTTP/1.1 200 Connection Established\r\n\r\n');if(head.length)upstream.write(head);client.pipe(upstream);upstream.pipe(client);});});
+await new Promise(done=>proxy.listen(0,'127.0.0.1',done));const proxyUrl=`http://127.0.0.1:${proxy.address().port}`,models=[];let a,b,reader,petId,owner;
+async function launch(label){const profile=join(output,label);const model=await launchPortableSession({executable,profile,expectedSource,label,environment:label==='A'?{NODE_USE_ENV_PROXY:'1',HTTPS_PROXY:proxyUrl,HTTP_PROXY:proxyUrl,https_proxy:proxyUrl,http_proxy:proxyUrl,NO_PROXY:'localhost,127.0.0.1',no_proxy:'localhost,127.0.0.1'}:{}});models.push(model);model.page.on('pageerror',error=>{proof.errors.push({label,message:safe(error.message)});save();});return model;}
+function query(model,sql,args=[]){const db=new Database(join(model.profile,'lingjing.sqlite'),{readonly:true,fileMustExist:true});db.pragma('query_only=ON');try{assert.equal(db.pragma('quick_check',{simple:true}),'ok');return db.prepare(sql).all(...args);}finally{db.close();}}
+const status=model=>model.call('accounts','syncStatus');
+async function restore(model){const preview=await model.call('accounts','cloudPreview');return model.call('accounts','backupRestore',{previewId:preview.previewId,mode:'replace',actionId:randomUUID()});}
+async function waitClean(model,label){return pollState(()=>status(model),s=>!s.pending&&!s.conflicts&&!s.localChanged&&!s.unverifiedLocal&&!s.running,{timeoutMs:120000,intervalMs:700,label});}
+async function selectAfterSync(model,id){
+  const actionId=randomUUID();proof.selectionActionId=actionId;proof.selectionAttempts=[];save();
+  for(let attempt=1;attempt<=3;attempt++){
+    await waitClean(model,'Selection must wait for the prior complete-save check');
+    const before=await status(model),selection=query(model,'select selections_json from companion_accounts where owner_account_id=?',[owner])[0].selections_json;
+    const result=await model.page.evaluate(payload=>window.lingjing.invoke('conversations','select',payload),{petId:id,actionId});
+    const after=await status(model),intent=query(model,"select result from account_actions where owner_account_id=? and action_id=? and kind='companions-cloud-command'",[owner,'companions:'+actionId])[0];
+    proof.selectionAttempts.push({attempt,actionId,ok:result.ok,code:result.code,before,after,intentStatus:intent?JSON.parse(intent.result).status:null});save();
+    assert.equal((await model.call('accounts','session')).currentUser.id,owner);
+    if(result.ok){assert.equal(JSON.parse(intent.result).status,'verified');assert.equal(JSON.parse(query(model,'select selections_json from companion_accounts where owner_account_id=?',[owner])[0].selections_json).chatPetId,id);return result.data;}
+    assert.equal(result.code,'SELECTION_FAILED',result.message);
+    assert.ok(!intent&&(before.running||after.running),'A selection retry needs proof of the pre-intent sync-busy guard');
+    assert.equal(query(model,'select selections_json from companion_accounts where owner_account_id=?',[owner])[0].selections_json,selection,'Refused selection must preserve every original slot');
+  }
+  assert.fail('The same selection action was refused three times');
+}
+async function frame(model,id,name,resourceId){const page=await pollState(async()=>model.pages().find(page=>page.url().includes(`#/desktop/${id}`)),Boolean,{timeoutMs:30000});await page.locator(`.resource-stage[data-status="ready"][data-resource-id="${resourceId}"] canvas`).waitFor();await delay(500);const capture=await model.main(async({BrowserWindow},id)=>{const window=BrowserWindow.getAllWindows().find(window=>window.webContents.getURL().includes(`#/desktop/${id}`));const image=await window.capturePage(),bitmap=image.toBitmap();let visiblePixels=0,coloredPixels=0;for(let i=0;i<bitmap.length;i+=4){if(bitmap[i+3]>10)visiblePixels++;if(bitmap[i+3]>10&&Math.max(bitmap[i],bitmap[i+1],bitmap[i+2])-Math.min(bitmap[i],bitmap[i+1],bitmap[i+2])>20)coloredPixels++;}return {windowId:window.id,visible:window.isVisible(),size:image.getSize(),visiblePixels,coloredPixels,png:image.toPNG().toString('base64')};},id);assert.ok(capture.visible&&capture.visiblePixels>1000&&capture.coloredPixels>500);const bytes=Buffer.from(capture.png,'base64');delete capture.png;writeFileSync(join(output,name),bytes);return {...capture,file:name,sha256:createHash('sha256').update(bytes).digest('hex')};}
+function readResource(model,id){
+  const row=query(model,'select resource_id,content_hash,document_json from lingjing_resources where owner_account_id=? and resource_id=?',[owner,id])[0];assert.ok(row);
+  const files=query(model,'select asset_key,file_path from lingjing_resource_files where resource_id=? order by asset_key',[id]).map(file=>{const bytes=readFileSync(file.file_path);return {key:file.asset_key,bytes:bytes.length,sha256:createHash('sha256').update(bytes).digest('hex')};});
+  const imports=query(model,'select import_id,resource_id,source_filename,provenance_json,imported_at from lingjing_resource_imports where owner_account_id=? and resource_id=? order by import_id',[owner,id]);
+  return {resourceId:id,contentHash:row.content_hash,document:JSON.parse(row.document_json),files,imports};
+}
+function readDomain(model){const pets=query(model,'select pet_id,data_json from companion_pets where owner_account_id=? order by pet_id',[owner]).map(row=>({id:row.pet_id,data:JSON.parse(row.data_json)}));const memories=query(model,'select id,pet_id,content from conversation_memories where owner_account_id=? order by id',[owner]);const messages=query(model,'select id,pet_id,role,status,content,error_code from conversation_messages where owner_account_id=? order by pet_id,sequence',[owner]);const profiles=query(model,'select pet_id,persona,reply_style,memory_enabled,pause_while_chatting,use_override from conversation_profiles where owner_account_id=? order by pet_id',[owner]);const preferences=query(model,'select resource_id,calibration_json,actions_json from lingjing_resource_preferences where owner_account_id=? order by resource_id',[owner]).map(row=>({resourceId:row.resource_id,calibration:JSON.parse(row.calibration_json),actions:JSON.parse(row.actions_json)}));const inventory=query(model,'select item_id,quantity from garden_items where owner_account_id=? order by item_id',[owner]);const resources=query(model,'select resource_id from lingjing_resources where owner_account_id=? order by resource_id',[owner]).map(row=>readResource(model,row.resource_id));return {pets,memories,messages,profiles,preferences,inventory,resources};}
+function verifyCloudSqlUnits(model,modules,unclaimedTables){
+  const rowsEqual=(actual,expected,label)=>assert.deepEqual(actual.map(row=>checksum(row)).sort(),expected.map(row=>checksum(row)).sort(),label);
+  const identifier=name=>{assert.match(name,/^[a-z][a-z0-9_]*$/);return `"${name}"`;},checked=[];
+  const settings=JSON.parse(query(model,'select document from account_settings where owner_account_id=?',[owner])[0].document);assert.deepEqual(settings,modules.settings.data);checked.push('settings');
+  for(const name of ['companions','garden','conversations']){
+    const data=modules[name].data;assert.equal(data.ownerAccountId,owner);
+    for(const [table,rows]of Object.entries(data.tables)){
+      assert.ok(table.startsWith(name==='companions'?'companion_':name==='garden'?'garden_':'conversation_'));
+      const columns=data.schema?.[table]?.split('|');const selected=columns?columns.map(identifier).join(','):'*';
+      const actual=query(model,`select ${selected} from ${identifier(table)} where owner_account_id=?${table==='conversation_messages'?' order by sequence':''}`,[owner]);rowsEqual(actual,rows,`${model.label} cloud ${table}`);
+      if(table==='conversation_messages')for(const id of new Set(rows.map(row=>row.pet_id)))assert.deepEqual(actual.filter(row=>row.pet_id===id),rows.filter(row=>row.pet_id===id),`${model.label} exact original message order for ${id}`);
+      checked.push(table);
+    }
+    if(name==='companions')rowsEqual(query(model,'select * from companion_identity_imports where target_owner_account_id=?',[owner]),data.identityImports,'Original companion identity import history');
+  }
+  const battleTables={sessions:['battle_sessions','id','room_id','status','data_json','revision','updated_at'],actions:['battle_action_receipts','action_id','session_id','command_json','result_json'],reports:['battle_reports_v2','id','session_id','data_json','ended_at'],rewards:['battle_reward_receipts','session_id','action_id','pet_id','data_json']};
+  for(const [key,[table,...columns]]of Object.entries(battleTables)){rowsEqual(query(model,`select ${columns.map(identifier).join(',')} from ${identifier(table)} where owner_account_id=?`,[owner]),modules.battle.data[key],`${model.label} cloud battle ${key}`);checked.push(table);}
+  for(const [table,unit]of Object.entries(unclaimedTables)){
+    assert.ok(unit.schema.some(column=>column.name==='owner_account_id'));const columns=unit.schema.map(column=>identifier(column.name)).join(',');
+    const actual=query(model,`select ${columns} from ${identifier(table)} where owner_account_id=?`,[owner]).map(row=>Object.fromEntries(Object.entries(row).map(([key,value])=>[key,value instanceof Uint8Array?{$binary:Buffer.from(value).toString('base64')}:typeof value==='bigint'?{$integer:String(value)}:value])));
+    rowsEqual(actual,unit.rows,`${model.label} original complete-save unit ${table}`);checked.push(table);
+  }
+  return checked;
+}
+try{
+  a=await launch('A');b=await launch('B');assert.notEqual(a.runtime.pid,b.runtime.pid);
+  for(const model of[a,b]){await model.call('accounts','login',{provider:'runtime',...credentials.a,rememberSession:true});const session=await model.call('accounts','session');assert.equal(session.currentUser.authKind,'supabase');assert.equal(session.persistence,'secure');}
+  owner=(await a.call('accounts','session')).currentUser.id;assert.equal((await b.call('accounts','session')).currentUser.id,owner);assert.ok(tunnels>0);
+  await restore(a);let settings=await a.call('accounts','settingsGet');settings.document.sync.enabled=true;await a.call('accounts','settingsSave',{actionId:randomUUID(),revision:settings.revision,document:settings.document});const initial=await a.call('accounts','syncNow',{actionId:randomUUID()});assert.equal(initial.verified,true);await restore(b);await waitClean(b,'Initial complete B restore did not settle');
+  const originals=(await a.call('companions','list')).pets.map(pet=>pet.petId),originalResources=readDomain(a).resources;
+  // Exercise the real overview/report consumer before expensive business steps,
+  // including compatibility between cloud v1 and local journal-backed v2.
+  for(const model of[a,b])await model.call('battle','overview');
+  pass('Actual portable A/B use packaged cloud configuration, independent encrypted sessions and a verified complete starting save',{owner,pids:[a.runtime.pid,b.runtime.pid],runtime:[a.runtime,b.runtime],source:expectedSource,tunnels,baselinePetIds:originals});
+  const nickname='联合验收'+short;await a.page.evaluate(()=>{location.hash='#/companions/adopt';});await a.page.getByLabel('给它起个昵称').fill(nickname);const visible=a.page.getByRole('checkbox',{name:'领养后放到桌面'});if(await visible.isChecked())await visible.uncheck();await a.page.getByRole('button',{name:'领养这位伙伴',exact:true}).click();await a.page.locator('.cp-success').filter({hasText:nickname}).waitFor();
+  const pets=(await a.call('companions','list')).pets,pet=pets.find(pet=>pet.name===nickname);assert.ok(pet);petId=pet.petId;assert.equal(pets.length,originals.length+1);assert.ok(originals.every(id=>pets.some(pet=>pet.petId===id)));
+  await waitClean(a,'Adoption complete-save checkpoint did not settle');await waitClean(b,'Adoption did not automatically reach the clean peer');
+  await selectAfterSync(a,petId);const chat=await a.call('conversations','snapshot',{petId}),persona='{"password":"EXAMPLE_PLACEHOLDER","kind":"authored persona '+short+'"}',memory='原账号联合验收记忆 '+short;
+  await a.call('conversations','profile.save',{petId,revision:chat.profile.revision,profile:{...chat.profile,persona,useOverride:true}});await a.call('conversations','memory.save',{petId,memory:{content:memory}});
+  const closed=netServer();await new Promise(done=>closed.listen(0,'127.0.0.1',done));const modelPort=closed.address().port;await new Promise(done=>closed.close(done));
+  const overrideChat=await a.call('conversations','snapshot',{petId});assert.equal(overrideChat.profile.useOverride,true);
+  await a.call('conversations','connection.save',{petId,revision:overrideChat.connection?.revision||0,connection:{provider:'openai_compatible',baseUrl:`http://127.0.0.1:${modelPort}`,model:'no-fake-reply',contextChars:24000,maxOutputTokens:64},apiKey:fixtureKey});
+  const failed=await a.page.evaluate(async payload=>window.lingjing.invoke('conversations','send',payload),{petId,actionId:randomUUID(),text:'联合验收原始用户消息 '+short});assert.equal(failed.code,'NETWORK_ERROR');
+  await waitClean(a,'Personal authored changes were not automatically uploaded');await waitClean(b,'Clean peer did not automatically receive the newer personal save');
+  await pollState(()=>b.call('conversations','snapshot',{petId}),s=>s.profile.persona===persona&&s.memories.some(row=>row.content===memory),{timeoutMs:120000,intervalMs:700,label:'B did not apply exact authored content'});
+  pass('Normal React adoption preserves original pet IDs; automatic sync applies exact persona, memory and actual failed-user-message state on clean B',{petId,authoredContentChecksum:checksum({persona,memory}),externalModelSuccess:false});
+  const previousImports=new Set(query(a,'select import_id from lingjing_resource_imports where owner_account_id=?',[owner]).map(row=>row.import_id));
+  const descriptor=resolve('apps/pc-app/runtime/features/resources/assets/roster-v2/qingya/character.json');await a.main(({dialog},file)=>{dialog.showOpenDialog=async()=>({canceled:false,filePaths:[file]});},descriptor);const imported=await a.call('resources','import'),resourceId=imported.resource.id;
+  const currentImports=readResource(a,resourceId).imports.filter(row=>!previousImports.has(row.import_id));assert.equal(currentImports.length,1);
+  const calibration=structuredClone(imported.resource.calibration);calibration.desktop.scale=1.25;calibration.battle.mirrorX=true;const actions={...imported.resource.actions};
+  const changedClip=imported.resource.clips.find(clip=>clip.name!==actions.wave);assert.ok(changedClip);actions.wave=changedClip.name;
+  const savedPreferences=await a.call('resources','save',{resourceId,expectedRevision:imported.resource.revision,calibration,actions});assert.deepEqual(savedPreferences.calibration,calibration);assert.deepEqual(savedPreferences.actions,actions);
+  const publicationAction=randomUUID();
+  const publication=await pollState(async()=>{
+    const result=await a.call('resources','cloudSync',{actionId:publicationAction,resourceIds:[resourceId]});assert.deepEqual(result.errors||[],[]);assert.deepEqual(result.preferences?.errors||[],[]);
+    const rows=query(a,"select o.action_id,o.manifest_json,o.manifest_sha256,r.authority_action_id,r.authority_revision,r.authority_checksum from lingjing_resource_cloud_outbox o join lingjing_resource_cloud_receipts r on r.owner_account_id=o.owner_account_id and r.resource_id=o.resource_id and r.auth_user_id=o.auth_user_id and r.manifest_sha256=o.manifest_sha256 and r.direction='upload' where o.owner_account_id=? and o.resource_id=? and o.status='verified' and o.data_mode='live' and o.authority_registered=1 and r.data_mode='live' and r.authority_revision>0",[owner,resourceId]);
+    return rows.find(row=>{const manifest=JSON.parse(row.manifest_json);return currentImports.every(imported=>manifest.imports.some(original=>original.import_id===imported.import_id));});
+  },Boolean,{timeoutMs:120000,intervalMs:1000,label:'This import did not receive its exact manifest upload/authority receipt'});
+  const manifest=JSON.parse(publication.manifest_json);assert.equal(createHash('sha256').update(publication.manifest_json).digest('hex'),publication.manifest_sha256);assert.equal(publication.authority_action_id,`resources:${resourceId}:${publication.manifest_sha256}`);
+  await a.call('companions','appearance',{actionId:randomUUID(),petId,resourceId});const display=await a.main(({screen})=>String(screen.getPrimaryDisplay().id));await a.call('companions','desktop',{actionId:randomUUID(),petId,visible:true,behavior:'quiet',scale:1,position:{x:140,y:160,displayId:display}});
+  await pollState(()=>b.call('resources','list'),rows=>rows.some(row=>row.id===resourceId&&row.availability==='ready'&&checksum({calibration:row.calibration,actions:row.actions})===checksum({calibration,actions})),{timeoutMs:120000,intervalMs:900,label:'Automatic peer did not receive the exact requested calibration/actions and private resource'});
+  await pollState(()=>b.call('companions','list'),s=>s.pets.find(pet=>pet.petId===petId)?.resource.resourceId===resourceId,{timeoutMs:120000,intervalMs:900,label:'B custom pet appearance did not apply'});await waitClean(a,'A resource preference did not settle');await waitClean(b,'B resource/full save did not settle');
+  const aFrame=await frame(a,petId,'portable-custom-A.png',resourceId),bFrame=await frame(b,petId,'portable-custom-B.png',resourceId);
+  const packageA=readResource(a,resourceId),packageB=readResource(b,resourceId);assert.deepEqual(packageA,packageB);
+  for(const file of manifest.files)assert.deepEqual(packageA.files.find(row=>row.key===file.key),{key:file.key,bytes:file.size,sha256:file.sha256});
+  for(const model of[a,b]){const pref=query(model,'select cloud_revision,document_json from lingjing_resource_preference_state where owner_account_id=? and resource_id=?',[owner,resourceId])[0];assert.ok(pref?.cloud_revision>0);assert.deepEqual(JSON.parse(pref.document_json),{calibration,actions});}
+  pass('Actual private Storage publication, exact requested calibration/actions and preserved import bytes/history hydrate automatically and render native pixels on both SFX clients',{resourceId,contentHash:imported.resource.contentHash,manifestSha256:publication.manifest_sha256,uploadAction:publication.action_id,authorityAction:publication.authority_action_id,newImportIds:currentImports.map(row=>row.import_id),files:packageA.files,preferences:{calibration,actions},aFrame,bFrame});
+  await a.call('garden','snapshot');await waitClean(a,'Verified garden baseline did not settle');
+  const before=readDomain(a),training=await a.call('battle','startTraining',{actionId:randomUUID(),petId,enemyElement:'fire'});assert.equal(training.context.authority,'supabase');let game=training;
+  await a.page.evaluate(id=>{location.hash=`#/battle/session/${id}`;},game.id);await a.page.locator('[data-battle-screen="shared-v1"]').waitFor();
+  for(let count=0;game.status==='active'&&count<100;count++){
+    const action=game.snapshot.player.anger>=50?'ultimate':'element_attack',round=game.snapshot.round;
+    const move=a.page.locator(`.battle-command-group button[data-action="${action}"]`);
+    await pollState(()=>move.isEnabled(),Boolean,{timeoutMs:30000,intervalMs:100,label:'The actual battle command did not become ready'});
+    await move.click();
+    game=await pollState(()=>a.call('battle','snapshot',{sessionId:game.id}),s=>s.snapshot.round>round||s.status!=='active',{timeoutMs:90000,intervalMs:200,label:'The actual UI command did not produce an authoritative round'});
+    await pollState(()=>a.page.locator('.battle-live-layout').getAttribute('data-animation-key'),key=>key===`${game.id}:${game.snapshot.round}`,{timeoutMs:30000,intervalMs:100,label:'The battle controller did not render its confirmed round'});
+  }
+  assert.equal(game.status,'finished');assert.equal(game.reward.applied,true);assert.equal(game.reward.seeds.quantity,2);await waitClean(a,'A settlement did not settle');await waitClean(b,'B settlement did not settle');
+  await pollState(()=>query(b,'select data_json from battle_reports_v2 where owner_account_id=? and id=?',[owner,game.reportId]),rows=>rows.length===1,{timeoutMs:120000,intervalMs:900,label:'B did not receive the authoritative report'});
+  const grown=readDomain(a),old=before.pets.find(row=>row.id===petId).data,newPet=grown.pets.find(row=>row.id===petId).data;assert.equal(newPet.growth.experience-old.growth.experience,game.reward.experience);assert.deepEqual(grown.pets.filter(row=>row.id!==petId),before.pets.filter(row=>row.id!==petId));
+  const seeds=game.reward.seeds,quantity=items=>items.find(row=>row.item_id===seeds.itemId)?.quantity||0;assert.equal(quantity(grown.inventory)-quantity(before.inventory),seeds.quantity);assert.deepEqual(grown.inventory.filter(row=>row.item_id!==seeds.itemId),before.inventory.filter(row=>row.item_id!==seeds.itemId));
+  const seedRows=query(a,'select action_id,result_json from garden_reward_receipts where owner_account_id=? and source=? and receipt_id=?',[owner,'battle',game.id]);assert.equal(seedRows.length,1);assert.deepEqual(JSON.parse(seedRows[0].result_json),seeds);assert.equal(query(a,'select count(*) n from battle_reward_receipts where owner_account_id=? and session_id=?',[owner,game.id])[0].n,1);
+  const reportButton=a.page.getByRole('button',{name:'战报',exact:true});await reportButton.waitFor();await a.page.screenshot({path:join(output,'portable-training-finished.png'),fullPage:true});pass('Shared V3 screen completes natural authoritative cloud training and transfers one canonical growth/seed/report settlement without changing other pets',{sessionId:game.id,rounds:game.rounds.length,reward:game.reward,seedReceiptAction:seedRows[0].action_id});
+  await reportButton.click();await a.page.getByLabel('战报详情',{exact:true}).waitFor();assert.match(await a.page.locator('.battle-reward-summary').innerText(),new RegExp(`${game.rounds.length}\\s*回合`));await pollState(()=>a.page.locator('.battle-replay-scene .resource-stage[data-status="ready"] canvas').count(),count=>count===2,{timeoutMs:30000,label:'Original report replay actors did not render'});await a.page.getByRole('button',{name:'回顾这一回合',exact:true}).click();await a.page.getByRole('button',{name:'暂停回顾',exact:true}).waitFor();await a.page.evaluate(()=>new Promise(done=>requestAnimationFrame(()=>requestAnimationFrame(done))));await a.page.screenshot({path:join(output,'portable-existing-report-replay.png'),fullPage:true});pass('Actual portable report UI loads and replays the original settled rounds with no renderer error',{reportId:game.reportId,sessionId:game.id,rounds:game.rounds.length});
+  online=false;for(const socket of sockets)socket.destroy();const offlineMemory='断线原操作重启后自动读回 '+short;await a.call('conversations','memory.save',{petId,memory:{content:offlineMemory}});
+  const pending=await pollState(async()=>query(a,"select action_id,base_revision,status from account_sync_outbox where owner_account_id=? and status in ('pending','retry') order by created_at desc",[owner]),rows=>rows.length>0,{timeoutMs:120000,intervalMs:700,label:'Offline automatic save intent was not durably queued'});await pollState(()=>refused,count=>count>0,{timeoutMs:15000,intervalMs:100,label:'The queued original action did not reach the actual refused TLS connection'});const actionId=pending[0].action_id,source=query(a,'select original_document from account_sync_sources where owner_account_id=? and action_id=?',[owner,actionId])[0];assert.ok(source);const sourceHash=createHash('sha256').update(source.original_document).digest('hex');
+  const priorPid=a.runtime.pid,device=JSON.parse(readFileSync(join(a.profile,'accounts/device.json'),'utf8')).deviceId;await a.stop();online=true;a=await launch('A');const resumed=await a.call('accounts','session');assert.equal(resumed.currentUser.id,owner);assert.equal(resumed.persistence,'secure');assert.notEqual(a.runtime.pid,priorPid);assert.equal(JSON.parse(readFileSync(join(a.profile,'accounts/device.json'),'utf8')).deviceId,device);
+  await pollState(async()=>query(a,'select status from account_sync_outbox where owner_account_id=? and action_id=?',[owner,actionId]),rows=>rows[0]?.status==='verified',{timeoutMs:120000,intervalMs:800,label:'Original offline action was not verified after restart'});assert.equal(createHash('sha256').update(query(a,'select original_document from account_sync_sources where owner_account_id=? and action_id=?',[owner,actionId])[0].original_document).digest('hex'),sourceHash);
+  await pollState(()=>b.call('conversations','snapshot',{petId}),s=>s.memories.some(row=>row.content===offlineMemory),{timeoutMs:120000,intervalMs:900,label:'B did not automatically apply the restarted original save'});await waitClean(a,'Restarted A not clean');await waitClean(b,'Final B not clean');pass('A-only real TLS interruption retains the original automatic action/source through actual SFX restart, and clean B automatically applies it',{actionId,sourceHash,priorPid,newPid:a.runtime.pid,device,refusedConnections:refused});
+  const restartedFrames=[await frame(a,petId,'portable-restarted-A.png',resourceId),await frame(b,petId,'portable-restarted-B.png',resourceId)];
+  await a.call('companions','desktop',{actionId:randomUUID(),petId,visible:false});
+  await pollState(async()=>query(b,'select data_json from companion_pets where owner_account_id=? and pet_id=?',[owner,petId]),rows=>rows[0]&&JSON.parse(rows[0].data_json).desktop.visible===false,{timeoutMs:120000,intervalMs:900,label:'B did not automatically receive final own-pet hide'});await waitClean(a,'Final own-pet hide did not settle on A');await waitClean(b,'Final own-pet hide did not settle on B');
+  pass('Restarted custom native pixels remain valid and final own-pet cleanup is included in peer equality',{restartedFrames,onlyThisRunsPetHidden:petId});
+  const directory=join(output,'independent-reader');mkdirSync(directory);const remote=new SupabaseRemote({userData:directory,config}),user=await remote.login(credentials.a.account,credentials.a.password),session={...user,ownerAccountId:user.id,cloudProof:user.proof};remote.setCurrentUser(session);reader={remote,session};const cloud=await remote.invoke(session,'lingjing-save',{op:'read'}),receipt=await remote.invoke(session,'lingjing-save',{op:'read',actionId});
+  for(const model of[a,b]){const s=await status(model);assert.equal(s.cloudRevision,cloud.revision);assert.equal(s.localChanged,false);const state=query(model,'select cloud_revision,last_checksum from account_sync_state where owner_account_id=?',[owner])[0];assert.equal(state.cloud_revision,cloud.revision);assert.equal(state.last_checksum,cloud.checksum);}
+  const domainA=readDomain(a),domainB=readDomain(b);assert.deepEqual(domainA,domainB);assert.ok(domainA.memories.some(row=>row.content===offlineMemory));assert.ok(originals.every(id=>domainA.pets.some(row=>row.id===id)));
+  const cloudUnits=[{label:a.label,tables:verifyCloudSqlUnits(a,cloud.envelope.data.modules,cloud.envelope.data.tables)},{label:b.label,tables:verifyCloudSqlUnits(b,cloud.envelope.data.modules,cloud.envelope.data.tables)}];
+  const cloudResources=cloud.envelope.data.modules['character-resources'];assert.equal(cloudResources.version,2);assert.equal(cloudResources.data.format,'lingjing-resource-references');
+  const cloudPreference=cloudResources.data.preferences.find(row=>row.resourceId===resourceId);assert.ok(cloudPreference);assert.deepEqual(cloudPreference.calibration,calibration);assert.deepEqual(cloudPreference.actions,actions);
+  for(const model of[a,b]){const pref=query(model,'select cloud_revision,document_json from lingjing_resource_preference_state where owner_account_id=? and resource_id=?',[owner,resourceId])[0];assert.equal(pref.cloud_revision,cloudPreference.revision);assert.deepEqual(JSON.parse(pref.document_json),{calibration,actions});}
+  for(const original of originalResources){const current=domainA.resources.find(row=>row.resourceId===original.resourceId);assert.ok(current);assert.deepEqual(current.files,original.files);assert.ok(original.imports.every(old=>current.imports.some(row=>checksum(row)===checksum(old))));}
+  await a.main(({dialog},file)=>{dialog.showSaveDialog=async()=>({canceled:false,filePath:file});},join(output,'original-local.lingjing.json'));await a.call('accounts','backupExport');const exported=readFileSync(join(output,'original-local.lingjing.json'),'utf8');for(const secret of[fixtureKey,credentials.a.password,credentials.b.password])assert.ok(!exported.includes(secret));
+  const localResourceBackup=JSON.parse(exported).data.modules['character-resources'];assert.equal(localResourceBackup.version,1);assert.ok(currentImports.every(imported=>localResourceBackup.data.imports.some(row=>row.import_id===imported.import_id)));
+  proof.final={owner,petId,resourceId,revision:cloud.revision,checksum:cloud.checksum,originalActionId:actionId,receiptRevision:receipt.revision,receiptChecksum:receipt.checksum,domainChecksum:checksum(domainA),peerEquality:true,cloudSqlUnits:cloudUnits,encryptedSessionResumed:true,resourceBytesAndHistoryPreserved:true,resourceCloudVersion:2,resourceLocalBackupVersion:1,preferenceCloudRevision:cloudPreference.revision,readerDevice:decodeProof(user.proof).actor.deviceId};pass('Independent HTTPS receipt plus query-only SQLite prove final domain, actual resource bytes/history and exact preference equality; original v1 local export excludes credentials',{...proof.final});
+  for(const model of[a,b]){await model.page.evaluate(()=>{location.hash='#/account';});const statusView=model.page.getByLabel('存档状态',{exact:true});await pollState(async()=>await statusView.getAttribute('data-cloud-revision')===String(cloud.revision)&&await statusView.getByLabel('已同步',{exact:true}).isVisible(),Boolean,{timeoutMs:30000,label:'Final actual account UI does not show the verified current version'});await model.page.screenshot({path:join(output,`portable-final-${model.label}.png`),fullPage:true});}
+  assert.deepEqual(proof.errors,[]);proof.passed=true;
+}catch(error){
+  proof.failure={name:error.name,message:safe(error.message),stack:safe(error.stack)};process.exitCode=1;
+  // Capture the exact live failure state before finally hides this run's pet or
+  // closes the owned processes. These read-only counters contain no credentials.
+  proof.failureStatus=await Promise.all([a,b].filter(Boolean).map(async model=>{
+    let timer;try{
+      const data=await Promise.race([status(model),new Promise((_,reject)=>{timer=setTimeout(()=>reject(new Error('Owned status observation timed out')),3000);})]);
+      return{device:model.label,data};
+    }catch(observation){return{device:model.label,error:safe(observation.message)};}
+    finally{clearTimeout(timer);}
+  }));
+  proof.failureUi=await Promise.all([a,b].filter(Boolean).map(async model=>{
+    try{const file=`failure-${model.label}.png`;await model.page.screenshot({path:join(output,file),fullPage:true,timeout:5000});return{device:model.label,url:model.page.url(),file,sha256:await fileHash(join(output,file)),text:safe((await model.page.locator('body').innerText({timeout:3000})).slice(0,6000))};}
+    catch(observation){return{device:model.label,error:safe(observation.message)};}
+  }));
+}
+finally{online=true;if(!proof.passed&&petId&&a)try{await a.call('companions','desktop',{actionId:randomUUID(),petId,visible:false});}catch{}if(reader)await reader.remote.signOut(reader.session).catch(()=>{});for(const model of models)await model.stop().catch(()=>{});for(const socket of sockets)socket.destroy();await new Promise(done=>proxy.close(done));proof.completedAt=new Date().toISOString();save();console.log(JSON.stringify({output,passed:proof.passed,checks:proof.checks.length,failure:proof.failure?.message}));}

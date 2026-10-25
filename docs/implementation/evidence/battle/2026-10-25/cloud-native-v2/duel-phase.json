@@ -1,0 +1,532 @@
+{
+  "runId": "4d2d7db8-596d-4397-844b-243e8600f14e",
+  "at": "2026-10-25T04:59:07.453Z",
+  "provenance": "real-HTTPS-and-Realtime-acceptance",
+  "scope": "friend-duel, training, recovery and device-revoke",
+  "projectRef": "jbvrdmrkwpznbrvteive",
+  "origin": "https://jbvrdmrkwpznbrvteive.supabase.co",
+  "machineCount": 1,
+  "physicalDevices": 1,
+  "concurrentDuelPlayers": 2,
+  "independentProfiles": 3,
+  "statement": "Two isolated duel clients plus an optional fresh same-account recovery client on the same Windows host; not two physical devices. Test faults cancel a real response read and close the real SDK socket; no mock authority or simulated location is used.",
+  "sourceCommit": "8ab812554261bf960d43602470b30e64444a74aa",
+  "sourceDirty": "",
+  "build": {
+    "schemaVersion": 2,
+    "builtAt": "2026-10-25T04:52:26.678Z",
+    "sourceCommit": "b413835d9aeee60c7bd7d3485d7777ffdfc86d0c",
+    "sourceTree": "6132ca4be8a94bb679e479bcf1ec3381a6c576d3",
+    "sourceDirtyFiles": [],
+    "codeFingerprint": "d10ed3ffd79a47f50388ccbb176c1cf71cf0c5728cd97dc30f4604dd0ebc8b37",
+    "canonicalSourceFingerprint": "31dc0aa75c3de5834477d52dc7f6fda10b887d0f4d6893f35b22037cc284d6c1",
+    "canonicalPolicy": "Repository-relative paths; CRLF normalized to LF for source text only. Packaged/compiled bytes remain exact.",
+    "compiledFingerprint": "61520475c23e78f1ff91c85ec0e538a9542d5061f5b1ebca4e97aba2f3666069",
+    "codeFiles": 299,
+    "compiledFiles": 87,
+    "toolchain": {
+      "node": "24.21.0",
+      "electron": "44.9.3",
+      "sqlite": "13.0.3",
+      "vite": "7.3.7",
+      "typescript": "5.9.3",
+      "platform": "win32",
+      "arch": "x64"
+    },
+    "entrypoints": {
+      "main": "main/index.cjs",
+      "app": "ui/index.html",
+      "desktop": "ui/desktop.html",
+      "preload": "preload/index.cjs"
+    },
+    "publicCloud": {
+      "projectRef": "jbvrdmrkwpznbrvteive",
+      "url": "https://jbvrdmrkwpznbrvteive.supabase.co",
+      "sha256": "c1625c63f1d959f92b3392b47f2fb492452803eedf1c0d1ebc68a1168ab64eda",
+      "resourcePath": "lingjing-cloud-public.json"
+    },
+    "packageName": "lingjing-desktop",
+    "runtimeClosure": {
+      "manifest": "runtime-closure.json",
+      "files": 106,
+      "edges": 181,
+      "sha256": "b56c25dbfb2ef15790be7ed6cb805e6fa135d3564be290b59853525e248d27fa"
+    }
+  },
+  "steps": [
+    {
+      "at": "2026-10-25T05:00:12.758Z",
+      "name": "two real JWT/device clients invited, accepted and joined one authorized Realtime room",
+      "roomId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+      "a": {
+        "origin": "https://jbvrdmrkwpznbrvteive.supabase.co",
+        "authKind": "supabase",
+        "actor": {
+          "authority": "live",
+          "authUserId": "091c28e8-e7e1-43e8-a79f-b9b132fd9346",
+          "ownerAccountId": "account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+          "deviceId": "3d10626f-b0b5-48b6-92c1-4a0978138b40",
+          "sessionId": "fedf0581-680e-47d4-931c-cd839fc9e83f"
+        },
+        "socket": "open",
+        "channel": "joined",
+        "manualToken": false
+      },
+      "b": {
+        "origin": "https://jbvrdmrkwpznbrvteive.supabase.co",
+        "authKind": "supabase",
+        "actor": {
+          "authority": "live",
+          "authUserId": "ef7da283-1227-4523-b28c-297b9e2c5632",
+          "ownerAccountId": "account:9e230794-470b-45be-9a18-a2564c88ba35",
+          "deviceId": "057162be-0670-45ef-b89a-91cf38decd39",
+          "sessionId": "93691349-431c-47a3-a362-46d395fa9dd9"
+        },
+        "socket": "open",
+        "channel": "joined",
+        "manualToken": false
+      }
+    },
+    {
+      "at": "2026-10-25T05:00:20.266Z",
+      "name": "actual submit response was interrupted after HTTPS receipt; original pending action retained",
+      "actionId": "e52b9e29-e120-4cad-ab9a-014393ce68c1",
+      "roundNo": 1,
+      "reconciledByReadback": false
+    },
+    {
+      "at": "2026-10-25T05:00:37.097Z",
+      "name": "real HTTPS round 1 matches on both clients",
+      "roomId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+      "playerHp": 112,
+      "enemyHp": 108,
+      "actions": {
+        "player": "normal_attack",
+        "enemy": "normal_attack"
+      }
+    },
+    {
+      "at": "2026-10-25T05:00:39.257Z",
+      "name": "actual Auth refresh retains the same SID-bound SDK and callback auth mode",
+      "sameOwner": true,
+      "sameSession": true,
+      "tokenRotated": true,
+      "sameSdk": true,
+      "manualToken": false
+    },
+    {
+      "at": "2026-10-25T05:00:39.258Z",
+      "name": "real SDK WebSocket deliberately disconnected after Auth refresh"
+    },
+    {
+      "at": "2026-10-25T05:00:50.340Z",
+      "name": "same native process recreated its authorized private channel through normal sync after reconnect",
+      "origin": "https://jbvrdmrkwpznbrvteive.supabase.co",
+      "authKind": "supabase",
+      "actor": {
+        "authority": "live",
+        "authUserId": "091c28e8-e7e1-43e8-a79f-b9b132fd9346",
+        "ownerAccountId": "account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+        "deviceId": "3d10626f-b0b5-48b6-92c1-4a0978138b40",
+        "sessionId": "fedf0581-680e-47d4-931c-cd839fc9e83f"
+      },
+      "socket": "open",
+      "channel": "joined",
+      "manualToken": false
+    },
+    {
+      "at": "2026-10-25T05:01:08.636Z",
+      "name": "real HTTPS round 2 matches on both clients",
+      "roomId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+      "playerHp": 104,
+      "enemyHp": 96,
+      "actions": {
+        "player": "normal_attack",
+        "enemy": "normal_attack"
+      }
+    },
+    {
+      "at": "2026-10-25T05:01:24.212Z",
+      "name": "native process restart restored original device/Auth and original action; unresolved delivery retried through the UI",
+      "origin": "https://jbvrdmrkwpznbrvteive.supabase.co",
+      "authKind": "supabase",
+      "actor": {
+        "authority": "live",
+        "authUserId": "091c28e8-e7e1-43e8-a79f-b9b132fd9346",
+        "ownerAccountId": "account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+        "deviceId": "3d10626f-b0b5-48b6-92c1-4a0978138b40",
+        "sessionId": "fedf0581-680e-47d4-931c-cd839fc9e83f"
+      },
+      "socket": "open",
+      "channel": "joined",
+      "manualToken": false,
+      "actionId": "c2aca1ea-c178-4dda-82f3-341337e69f4d",
+      "retriedOriginal": true
+    },
+    {
+      "at": "2026-10-25T05:01:50.560Z",
+      "name": "real HTTPS round 3 matches on both clients",
+      "roomId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+      "playerHp": 96,
+      "enemyHp": 84,
+      "actions": {
+        "player": "normal_attack",
+        "enemy": "normal_attack"
+      }
+    },
+    {
+      "at": "2026-10-25T05:02:12.851Z",
+      "name": "real HTTPS round 4 matches on both clients",
+      "roomId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+      "playerHp": 88,
+      "enemyHp": 72,
+      "actions": {
+        "player": "normal_attack",
+        "enemy": "normal_attack"
+      }
+    },
+    {
+      "at": "2026-10-25T05:02:34.808Z",
+      "name": "real HTTPS round 5 matches on both clients",
+      "roomId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+      "playerHp": 80,
+      "enemyHp": 60,
+      "actions": {
+        "player": "normal_attack",
+        "enemy": "normal_attack"
+      }
+    },
+    {
+      "at": "2026-10-25T05:02:54.504Z",
+      "name": "real HTTPS round 6 matches on both clients",
+      "roomId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+      "playerHp": 72,
+      "enemyHp": 48,
+      "actions": {
+        "player": "normal_attack",
+        "enemy": "normal_attack"
+      }
+    },
+    {
+      "at": "2026-10-25T05:03:13.933Z",
+      "name": "real HTTPS round 7 matches on both clients",
+      "roomId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+      "playerHp": 64,
+      "enemyHp": 36,
+      "actions": {
+        "player": "normal_attack",
+        "enemy": "normal_attack"
+      }
+    },
+    {
+      "at": "2026-10-25T05:03:33.481Z",
+      "name": "real HTTPS round 8 matches on both clients",
+      "roomId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+      "playerHp": 56,
+      "enemyHp": 24,
+      "actions": {
+        "player": "normal_attack",
+        "enemy": "normal_attack"
+      }
+    },
+    {
+      "at": "2026-10-25T05:03:52.987Z",
+      "name": "real HTTPS round 9 matches on both clients",
+      "roomId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+      "playerHp": 48,
+      "enemyHp": 12,
+      "actions": {
+        "player": "normal_attack",
+        "enemy": "normal_attack"
+      }
+    },
+    {
+      "at": "2026-10-25T05:04:16.352Z",
+      "name": "real HTTPS round 10 matches on both clients",
+      "roomId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+      "playerHp": 40,
+      "enemyHp": 0,
+      "actions": {
+        "player": "normal_attack",
+        "enemy": "normal_attack"
+      }
+    },
+    {
+      "at": "2026-10-25T05:04:16.356Z",
+      "name": "both actual private channels delivered server round/room pushes",
+      "pushes": [
+        {
+          "device": 1,
+          "events": [
+            {
+              "type": "round-updated",
+              "at": "2026-10-25T05:01:33.886Z",
+              "roomId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+              "round": 3
+            },
+            {
+              "type": "room-updated",
+              "at": "2026-10-25T05:01:33.886Z",
+              "roomId": "355f4104-85cf-4ca4-8e27-321f0638e376"
+            },
+            {
+              "type": "round-updated",
+              "at": "2026-10-25T05:01:56.366Z",
+              "roomId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+              "round": 4
+            },
+            {
+              "type": "room-updated",
+              "at": "2026-10-25T05:01:56.376Z",
+              "roomId": "355f4104-85cf-4ca4-8e27-321f0638e376"
+            },
+            {
+              "type": "room-updated",
+              "at": "2026-10-25T05:02:18.763Z",
+              "roomId": "355f4104-85cf-4ca4-8e27-321f0638e376"
+            },
+            {
+              "type": "round-updated",
+              "at": "2026-10-25T05:02:18.763Z",
+              "roomId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+              "round": 5
+            },
+            {
+              "type": "round-updated",
+              "at": "2026-10-25T05:02:40.660Z",
+              "roomId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+              "round": 6
+            },
+            {
+              "type": "room-updated",
+              "at": "2026-10-25T05:02:40.661Z",
+              "roomId": "355f4104-85cf-4ca4-8e27-321f0638e376"
+            },
+            {
+              "type": "round-updated",
+              "at": "2026-10-25T05:03:02.021Z",
+              "roomId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+              "round": 7
+            },
+            {
+              "type": "room-updated",
+              "at": "2026-10-25T05:03:02.022Z",
+              "roomId": "355f4104-85cf-4ca4-8e27-321f0638e376"
+            },
+            {
+              "type": "round-updated",
+              "at": "2026-10-25T05:03:22.363Z",
+              "roomId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+              "round": 8
+            },
+            {
+              "type": "room-updated",
+              "at": "2026-10-25T05:03:22.363Z",
+              "roomId": "355f4104-85cf-4ca4-8e27-321f0638e376"
+            },
+            {
+              "type": "round-updated",
+              "at": "2026-10-25T05:03:40.710Z",
+              "roomId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+              "round": 9
+            },
+            {
+              "type": "room-updated",
+              "at": "2026-10-25T05:03:40.711Z",
+              "roomId": "355f4104-85cf-4ca4-8e27-321f0638e376"
+            },
+            {
+              "type": "round-updated",
+              "at": "2026-10-25T05:04:01.563Z",
+              "roomId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+              "round": 10
+            },
+            {
+              "type": "room-updated",
+              "at": "2026-10-25T05:04:01.564Z",
+              "roomId": "355f4104-85cf-4ca4-8e27-321f0638e376"
+            }
+          ]
+        },
+        {
+          "device": 2,
+          "events": [
+            {
+              "type": "room-updated",
+              "at": "2026-10-25T05:00:07.297Z",
+              "roomId": "355f4104-85cf-4ca4-8e27-321f0638e376"
+            },
+            {
+              "type": "round-updated",
+              "at": "2026-10-25T05:00:24.614Z",
+              "roomId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+              "round": 1
+            },
+            {
+              "type": "room-updated",
+              "at": "2026-10-25T05:00:24.614Z",
+              "roomId": "355f4104-85cf-4ca4-8e27-321f0638e376"
+            },
+            {
+              "type": "round-updated",
+              "at": "2026-10-25T05:00:56.199Z",
+              "roomId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+              "round": 2
+            },
+            {
+              "type": "room-updated",
+              "at": "2026-10-25T05:00:56.199Z",
+              "roomId": "355f4104-85cf-4ca4-8e27-321f0638e376"
+            },
+            {
+              "type": "round-updated",
+              "at": "2026-10-25T05:01:33.887Z",
+              "roomId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+              "round": 3
+            },
+            {
+              "type": "room-updated",
+              "at": "2026-10-25T05:01:33.887Z",
+              "roomId": "355f4104-85cf-4ca4-8e27-321f0638e376"
+            },
+            {
+              "type": "round-updated",
+              "at": "2026-10-25T05:01:56.369Z",
+              "roomId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+              "round": 4
+            },
+            {
+              "type": "room-updated",
+              "at": "2026-10-25T05:01:56.369Z",
+              "roomId": "355f4104-85cf-4ca4-8e27-321f0638e376"
+            },
+            {
+              "type": "round-updated",
+              "at": "2026-10-25T05:02:18.760Z",
+              "roomId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+              "round": 5
+            },
+            {
+              "type": "room-updated",
+              "at": "2026-10-25T05:02:18.760Z",
+              "roomId": "355f4104-85cf-4ca4-8e27-321f0638e376"
+            },
+            {
+              "type": "round-updated",
+              "at": "2026-10-25T05:02:40.658Z",
+              "roomId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+              "round": 6
+            },
+            {
+              "type": "room-updated",
+              "at": "2026-10-25T05:02:40.658Z",
+              "roomId": "355f4104-85cf-4ca4-8e27-321f0638e376"
+            },
+            {
+              "type": "round-updated",
+              "at": "2026-10-25T05:03:02.019Z",
+              "roomId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+              "round": 7
+            },
+            {
+              "type": "room-updated",
+              "at": "2026-10-25T05:03:02.019Z",
+              "roomId": "355f4104-85cf-4ca4-8e27-321f0638e376"
+            },
+            {
+              "type": "round-updated",
+              "at": "2026-10-25T05:03:22.357Z",
+              "roomId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+              "round": 8
+            },
+            {
+              "type": "room-updated",
+              "at": "2026-10-25T05:03:22.357Z",
+              "roomId": "355f4104-85cf-4ca4-8e27-321f0638e376"
+            },
+            {
+              "type": "round-updated",
+              "at": "2026-10-25T05:03:40.707Z",
+              "roomId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+              "round": 9
+            },
+            {
+              "type": "room-updated",
+              "at": "2026-10-25T05:03:40.708Z",
+              "roomId": "355f4104-85cf-4ca4-8e27-321f0638e376"
+            },
+            {
+              "type": "round-updated",
+              "at": "2026-10-25T05:04:01.562Z",
+              "roomId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+              "round": 10
+            },
+            {
+              "type": "room-updated",
+              "at": "2026-10-25T05:04:01.562Z",
+              "roomId": "355f4104-85cf-4ca4-8e27-321f0638e376"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "passed": false,
+  "failure": {
+    "message": "locator.waitFor: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('region', { name: '战报详情' }) to be visible\u001b[22m\n",
+    "stack": "locator.waitFor: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('region', { name: '战报详情' }) to be visible\u001b[22m\n\n    at C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\apps\\pc-app\\runtime\\features\\battle\\verify-live-cloud.mjs:172:247"
+  },
+  "profiles": [
+    {
+      "index": "0",
+      "profilePath": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\live-1792904347214-4d2d7db8\\device-1",
+      "owner": "account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+      "deviceId": "3d10626f-b0b5-48b6-92c1-4a0978138b40"
+    },
+    {
+      "index": "1",
+      "profilePath": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\live-1792904347214-4d2d7db8\\device-2",
+      "owner": "account:9e230794-470b-45be-9a18-a2564c88ba35",
+      "deviceId": "057162be-0670-45ef-b89a-91cf38decd39"
+    }
+  ],
+  "sqlite": [
+    {
+      "owner": "account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+      "rewards": [
+        {
+          "owner_account_id": "account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+          "session_id": "online-355f4104-85cf-4ca4-8e27-321f0638e376",
+          "pet_id": "pet-2d660416-db18-44a1-8392-74f235484151",
+          "action_id": "battle:355f4104-85cf-4ca4-8e27-321f0638e376:account:3423cecd-2b9e-4987-bd84-c616eee15d10"
+        }
+      ],
+      "reports": [
+        {
+          "id": "online-355f4104-85cf-4ca4-8e27-321f0638e376",
+          "session_id": "online-355f4104-85cf-4ca4-8e27-321f0638e376",
+          "owner_account_id": "account:3423cecd-2b9e-4987-bd84-c616eee15d10"
+        }
+      ]
+    },
+    {
+      "owner": "account:9e230794-470b-45be-9a18-a2564c88ba35",
+      "rewards": [
+        {
+          "owner_account_id": "account:9e230794-470b-45be-9a18-a2564c88ba35",
+          "session_id": "online-355f4104-85cf-4ca4-8e27-321f0638e376",
+          "pet_id": "pet-7374c520-8730-45ca-a419-227e60a2fa81",
+          "action_id": "battle:355f4104-85cf-4ca4-8e27-321f0638e376:account:9e230794-470b-45be-9a18-a2564c88ba35"
+        }
+      ],
+      "reports": [
+        {
+          "id": "online-355f4104-85cf-4ca4-8e27-321f0638e376",
+          "session_id": "online-355f4104-85cf-4ca4-8e27-321f0638e376",
+          "owner_account_id": "account:9e230794-470b-45be-9a18-a2564c88ba35"
+        }
+      ]
+    }
+  ]
+}

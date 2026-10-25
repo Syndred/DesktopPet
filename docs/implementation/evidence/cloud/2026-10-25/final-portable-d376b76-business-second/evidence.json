@@ -1,0 +1,146 @@
+{
+  "at": "2026-10-25T07:23:12.354Z",
+  "sourceCommit": "d376b76a01dd8e450d28bab4479bbe2581ae39c4",
+  "executable": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\artifacts\\pc-cloud-upgrade-final-d376b76\\Lingjing-0.1.8-portable-x64.exe",
+  "executableSha256": "6e9cdb2aac621b490b09f530870ab7569858e66a4cb7b352bae81aa997fccaf2",
+  "projectRef": "jbvrdmrkwpznbrvteive",
+  "actualPortable": true,
+  "simulatedProvider": false,
+  "physicalMachines": 1,
+  "checks": [
+    {
+      "name": "Actual portable A/B use packaged cloud configuration, independent encrypted sessions and a verified complete starting save",
+      "owner": "account:470a41d4-3cf7-4a7d-8b1e-32e276d2a719",
+      "pids": [
+        33336,
+        8076
+      ],
+      "runtime": [
+        {
+          "pid": 33336,
+          "electron": "44.9.3",
+          "node": "24.22.0",
+          "profileOverride": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\cloud-upgrade\\2026-10-25\\final-portable-uTajxg\\A",
+          "userData": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\cloud-upgrade\\2026-10-25\\final-portable-uTajxg\\A",
+          "resourcesPath": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\3LB1nJy3k7iEWOLaPXszcit2x8a\\resources"
+        },
+        {
+          "pid": 8076,
+          "electron": "44.9.3",
+          "node": "24.22.0",
+          "profileOverride": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\cloud-upgrade\\2026-10-25\\final-portable-uTajxg\\B",
+          "userData": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\cloud-upgrade\\2026-10-25\\final-portable-uTajxg\\B",
+          "resourcesPath": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\3LB1nJy3k7iEWOLaPXszcit2x8a\\resources"
+        }
+      ],
+      "source": "d376b76a01dd8e450d28bab4479bbe2581ae39c4",
+      "tunnels": 8,
+      "baselinePetIds": [
+        "pet-ccec2bdd-b680-4e97-9a68-dcfbeef1986d",
+        "pet-2b88f57b-5199-4d42-bebb-3836f5b69ec5",
+        "pet-9fa48de9-6ad9-4a15-a4da-4277b39a642c",
+        "pet-591e595a-e9fd-4211-873b-1d0afad88c0c",
+        "pet-33636811-2e92-4bb7-b4e6-0bbdfa800283",
+        "pet-68c19bde-6ac8-4a7a-b65b-75b91c360d33",
+        "pet-224b6054-d0ac-47ea-9572-670f926e27aa",
+        "pet-999990cc-28af-40d2-b7ac-22ab11f7d206",
+        "pet-588fb17b-4b2e-4568-81d4-ea4dcb018aea",
+        "pet-3eea8bca-f04f-4f64-9a04-603f36596890",
+        "pet-f2355af5-3004-4e72-b1d4-0f47dba601c0",
+        "pet-b85fd17e-3f75-4261-8fa3-58ea1983542c",
+        "pet-fcf9a401-a2e7-409b-a608-c36eec91588d"
+      ]
+    }
+  ],
+  "errors": [],
+  "passed": false,
+  "scope": "Two actual portable SFX processes, public product IPC/React, real HTTPS/Storage and read-only SQLite. Main inspector only observes owned processes and selects an actual local descriptor in the native chooser; OS dialog UI itself is not claimed. Model error uses a closed loopback socket; no fabricated assistant reply.",
+  "verification": {
+    "gitCommit": "abde36782294c9863721af4c446d0ef0f7f47dcd",
+    "scriptSha256": "a9c410e563e071f410080401d286fc502436173d9967f14a18d297a557188225",
+    "driverSha256": "ba495ffbaf8e5c7b7868c57a2176b5ab8b239b5a311941f88c7084e1c067225e"
+  },
+  "selectionActionId": "b42886ee-f9af-465c-b062-d97582f45859",
+  "selectionAttempts": [
+    {
+      "attempt": 1,
+      "actionId": "b42886ee-f9af-465c-b062-d97582f45859",
+      "ok": true,
+      "before": {
+        "configured": true,
+        "cloudRevision": 73,
+        "lastVerifiedAt": "2026-10-25T07:25:41.133Z",
+        "lastError": null,
+        "pending": 0,
+        "conflicts": 0,
+        "localChanged": false,
+        "unverifiedLocal": 0,
+        "privacyRedactions": 0,
+        "running": false,
+        "observedCloudRevision": 72,
+        "lastCloudCheckedAt": "2026-10-25T07:25:25.360Z",
+        "remoteChanged": false
+      },
+      "after": {
+        "configured": true,
+        "cloudRevision": 73,
+        "lastVerifiedAt": "2026-10-25T07:25:47.818Z",
+        "lastError": null,
+        "pending": 0,
+        "conflicts": 0,
+        "localChanged": true,
+        "unverifiedLocal": 0,
+        "privacyRedactions": 0,
+        "running": true,
+        "observedCloudRevision": 74,
+        "lastCloudCheckedAt": "2026-10-25T07:25:55.521Z",
+        "remoteChanged": true
+      },
+      "intentStatus": "verified"
+    }
+  ],
+  "failure": {
+    "name": "Error",
+    "message": "Personal authored changes were not automatically uploaded",
+    "stack": "Error: Personal authored changes were not automatically uploaded\n    at pollState (file:///C:/Users/Administrator/Desktop/project/DesktopPet/scripts/acceptance/poll-state.mjs:8:9)\n    at async file:///C:/Users/Administrator/Desktop/project/DesktopPet/scripts/acceptance/cloud-integrated-portable.mjs:104:3"
+  },
+  "failureStatus": [
+    {
+      "device": "A",
+      "data": {
+        "configured": true,
+        "cloudRevision": 73,
+        "lastVerifiedAt": "2026-10-25T07:25:47.818Z",
+        "lastError": "SYNC_REMOTE_CONFLICT",
+        "pending": 0,
+        "conflicts": 0,
+        "localChanged": true,
+        "unverifiedLocal": 0,
+        "privacyRedactions": 0,
+        "running": false,
+        "observedCloudRevision": 74,
+        "lastCloudCheckedAt": "2026-10-25T07:27:55.425Z",
+        "remoteChanged": true
+      }
+    },
+    {
+      "device": "B",
+      "data": {
+        "configured": true,
+        "cloudRevision": 74,
+        "lastVerifiedAt": "2026-10-25T07:27:53.334Z",
+        "lastError": null,
+        "pending": 0,
+        "conflicts": 0,
+        "localChanged": false,
+        "unverifiedLocal": 0,
+        "privacyRedactions": 0,
+        "running": false,
+        "observedCloudRevision": 74,
+        "lastCloudCheckedAt": "2026-10-25T07:27:52.857Z",
+        "remoteChanged": false
+      }
+    }
+  ],
+  "completedAt": "2026-10-25T07:28:10.759Z"
+}

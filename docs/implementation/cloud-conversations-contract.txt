@@ -1,54 +1,40 @@
-聊天跨端存档消费者契约（2026-10-25）
+06 conversations 云端交付合同，2026-10-25
 
-当前实现
-features/conversations/backup.cjs 提供 createConversationBackupAdapter(services)。
-services.get('conversations').createBackupAdapter() 是01推荐正式注册入口。
-core/conversation-backup.cjs 已移除重复领域实现，仅保留兼容转发器，现有 main/index.ts 和 foundation 测试继续可运行。
+统一账号与完整存档
+身份、Auth UID到文本owner映射、设备会话、HTTPS、CAS、出站队列和冲突预览均复用08 accounts/cloudActor。聊天不新建云认证、云表或同步协议。
+正式入口 apps/pc-app/runtime/main/index.ts 注册 services.get(conversations).createBackupAdapter()；foundation conversation-backup 测试直接导入 features/conversations/backup.cjs。core/conversation-backup.cjs 已删除。
+companions.backupAdapter 在正式启动中保证只注册一次，供 Accounts cloudPreview/backupRestore 消费云端合法宠物。02目前也自行注册，公共入口检查已注册状态以兼容。
+完整存档 modules.conversations 保持version=1和原五表字段。petId、message.id、action_id、role、created_at不变；本机sequence不上传，恢复后按原ID顺序重新分配。
+读取两个既有顺序时以共同ID作锚点；旧前缀不放到新尾部。不同完整正文、不同人格/记忆版本或矛盾顺序要求显式恢复选择，不静默覆盖。
+08的personalVerified表示个人模块已用匹配actionId独立读回；不能把它当作所有历史玩法状态均已核验。完整verified/requiresAuthority/privacyRedactions按原回执保留。
 
-08完整存档消费
-继续使用完整存档 modules.conversations，version=1；五张原表字段契约不变。
-消息 id、pet_id、action_id、role、created_at 保持；仅本机 sequence 不上传，接收端重新分配。
-merge 使用两个既有顺序的稳定ID锚点合并，旧前缀不会追加到新尾部；顺序矛盾或不同完整文本拒绝，不静默覆盖。
-人设/记忆/连接不同的同编号记录要求选择恢复版本；replace 在08预览/校验/存前备份的事务内完成。
-生成中拒绝恢复；先停止实际生成再恢复。导出正在生成的回复为 cancelled/INTERRUPTED 投影，保留已接收部分，不修改发送端实时生成。
-账号完整存档CAS、出站队列、重试、冲突预览、HTTPS和Auth UID→旧owner映射只消费08接口，不另建聊天云表/云认证/同步协议。
-恢复成功后08继续发 accounts:save-restored {ownerAccountId}。本模块已订阅并提升会话世代，清空旧编辑器/游标并拒绝旧请求。
+单宠选择与恢复
+生产snapshot默认读取 companions.getSelections(owner).chatPetId；conversation_preferences只作旧客户端兼容缓存，不决定云端权威选择。
+select等待 companions.select(owner,{petId,slot:chatPetId,expectedRevision,actionId}) 确认后才写缓存，并复查会话和当前选项。只使用chatPetId；battlePetId和guardPetId保持独立。
+拒绝或断网不提前改选。React界面恢复当前会话原视图；02用原action持久恢复重试。迟到切号结果不能更新任何账号偏好。
+生成中拒绝聊天恢复。导出活动回复为cancelled/INTERRUPTED投影且保留部分文本，不修改发送端实时生成。Accounts恢复成功发送accounts:save-restored(ownerAccountId)，聊天提升会话世代并清空旧编辑器/游标。
 
-设备密钥
-conversation_credentials 是仅本机表：新SQLite迁移从原 conversation_connections 加密字段复制，原行和历史数据保留。
-snapshot明确定义的字段不含 sequence、encrypted_key、API key或token；credential表由统一备份敏感列过滤排除。
-远端删除/替换连接配置不会删除本机凭据；只在 owner/scope/scope_id/provider/base_url 全部精确匹配时复用本机密钥。
-用户主动编辑/清空连接仍替换或清除当前设备该scope的凭据，避免把旧key转发到新端点。
+密钥和原文
+conversations-002-local-credentials-and-imports为追加SQLite迁移，保留原五表和旧ID。conversation_credentials只存当前设备safeStorage密文；conversation_legacy_imports是本机导入回执。
+聊天导出采用明确白名单；API Key、密文、Auth/session token和本机sequence都不进入跨端聊天数据。仅owner/scope/scope_id/provider/base_url完全一致时复用本机密钥；远端配置不能把旧密钥转发到新主机。
+主动编辑或清空密钥会更新当前scope；旧客户端清空/更新原连接列也不会被本机vault旧值复活。
+08安全云投影保留本机原档，排除配置凭证和旧原文档案；已验证消息正文、persona和memory中的普通JSON示例原文不被误过滤。
 
-共享隐私待08审核
-现有 accounts/legacy.cjs 的 legacy adapter 原样导出 account_legacy_data JSON；该结构可能包含旧设置、token或加密blob。
-完整云存档必须在08统一边界递归检查/过滤敏感结构（保留本机原档）。聊天模块不会接管账号身份或修改该适配器。
+旧实现和历史
+已删除旧main/preload/HTML renderer聊天网络、调度、明文key读取和假回复；整个旧壳已由01移除。新路径为React/assistant-ui和主进程AI SDK transport.cjs，保留真实错误与取消状态。
+46abf416e0500b53ef32fc29b441d923ef5a6a80是可恢复源码快照；cleanup-manifest.json记录旧文件、哈希、移除项和替代入口。未删除用户localStorage、原JSON或历史数据。
+AI设置的导入旧记录入口调用legacy.preview/legacy.import，只读当前已归属owner的account_legacy_data。原消息ID保留；缺ID使用来源/归属/位置的稳定摘要。
+未知发送者/格式/宠物不猜测，保留原档并显示未决数；无时间记录显示旧记录。发送者明确但缺宠物时须用户明确勾选映射到已拥有伙伴。可显式选择只导聊天；原始归档字节不改。
 
-01消费者与替代入口
-apps/pc-app/runtime/main/index.ts:151 -> 改用 services.get('conversations').createBackupAdapter()；注册仍由公共启动器统一执行一次。
-tests/foundation/conversation-backup.test.cjs -> 改为导入 features/conversations/backup.cjs。
-完成以上两处替换后可删除 core/conversation-backup.cjs 兼容转发器。该转发器当前只有require转发，没有旧领域实现。
-旧 main.cjs 的16项AI声明/处理器、preload aiChat方法、renderer的125项AI声明/文案/调用和旧AI设置HTML面板已实际删除。
-恢复快照、逐文件哈希、替代入口与移除项见 evidence/conversations/cloud-2026-10-25/cleanup-manifest.json。
-原 localStorage/旧JSON及用户密钥数据未被删除或上传；正式历史导入改用当前已归属账号的 account_legacy_data 归档。
-已合入获批01检查点ced8e5e，旧 main/preload/renderer 壳均已整体删除；保留只读 runtime-compat，不复活旧AI路径。
-本模块不修改battle UI，不改变04工作树；真实Supabase写入/部署由主协调统一执行。
+验收和范围
+live-sync.json：运行b27fd397-1254-426b-b74c-70d9ad08531c，源码及构建886fe05c1ffbf40f67a13094b33f3708c1fd6eea，正常companions IPC、实际React选宠和真实Supabase HTTPS共6组完整验收通过。
+两只同模板合法云宠物、两个独立Electron/用户目录/deviceId、同一真实Auth owner；包含ID/顺序、普通JSON原文、单宠隔离、两种本机key、取消、SQL409、原档备份、显式恢复、记忆删除、故障后原action重试和进程重启。
+live-sqlite-readback.json：应用退出后使用DatabaseSync readOnly/query_only直接核对Auth链接、不同deviceId、两端各8条消息、人格/记忆、密文摘要和选择用途；与同一taskId/runId绑定。
+live-sync-server-path.json是此前main cloudActor合法创建/选择的5组服务器路径证据，明确与最终正常IPC/React路径分开。live-boundary.json仅为早期权限6项，不作为本轮完成依据。
+recovery/dialog/native材料保留原运行来源；旧历史QA身份/归档是模拟夹具，本机HTTP协议响应也是夹具，均不能算真实模型成功或第二台实体机器。
+本轮真实云同步数据来自实际命令和回执；模型侧只使用真实本机拒绝连接/悬停socket取消，无伪造模型回复，不宣称外部模型成功。两次网络故障为明示的单请求closed-loopback注入，随后读回/重试用真实HTTPS。
+复现：设置LINGJING_PUBLIC_CONFIG为目标公开JSON，先npm run build:pc，再node apps/pc-app/runtime/features/conversations/tests/cloud-sync.acceptance.mjs。
+退出后读回：node apps/pc-app/runtime/features/conversations/tests/cloud-sqlite-readback.mjs 打印的运行目录/evidence.json。数据库、凭据及原始备份留在ignored artifacts，不提交。
+本模块无Supabase迁移或部署；由主协调集中部署。全项目EXE/其他领域的最终验收由主协调和01负责。
 
-首轮定向验证
-archive.test.cjs 9项、legacy-import.test.cjs 5项、原 runtime.test.cjs 12项通过；主协调在合入543b71f后独立复跑26项通过。
-本机真实Electron44恢复4组和弹窗2组通过，保留每组源码/构建来源；不计作真实云端同步。
-真实HTTPS双Electron身份/权限边界6组已过，见 live-boundary.json：同owner双设备、会话不互踢、本机DPAPI密钥不进入个人归档、云端实际403拒绝未登记pet。
-完整聊天CAS双端脚本 cloud-sync.acceptance.mjs 已准备，等待获批08个人云投影与02合法领养登记入口；尚未运行，不声明全链路通过。
-
-旧历史正式入口
-AI设置的“导入旧记录”图标 -> legacy.preview / legacy.import，来源仅当前owner的 account_legacy_data。
-支持 messages/chatHistory、按petId分组chats、pets附属messages/memories和profiles；原始消息ID优先保留，无ID时使用来源/归属/位置的稳定摘要。
-无法确认发送者、伙伴或格式的记录不猜测，保留原档并显示未决数；无时间记录显示“旧记录”。
-未归属但发送者明确的记录，必须由用户明确勾选归到当前已拥有伙伴；个人BYOK旧键及token字段不进入导入结果。
-完整保存仍复用08 CAS；本模块没有Supabase迁移或领域函数，也不自行部署。
-
-2026-10-25 选宠异步合同：
-生产 snapshot 默认读取 companions.getSelections(owner).chatPetId；旧 conversation_preferences 只作兼容缓存。
-select 等待 companions.select(owner,{petId,slot:chatPetId,expectedRevision,actionId}) 确认后再写缓存；拒绝、断网、迟到会话或不同的最新选择不提前写入。
-聊天UI失败时恢复当前会话原视图，battlePetId/guardPetId不参与聊天选择。
-01最新入口已直接调用 feature.createBackupAdapter，core兼容转发器已被公共整合检查点删除。
+4830619整合复核：同一正式链路在源码de1a2d36915af3f61465ef0d724e923574b8ffd9再次通过实际HTTPS双Electron6组和退出后SQLite5组；同SID刷新/重登区分及空模块校验和两项协议单元检查通过。证据见cloud-2026-10-25/baseline4830619/。仅消费主协调迁移重命名，不恢复旧文件名，不改冻结协议，不自行部署。

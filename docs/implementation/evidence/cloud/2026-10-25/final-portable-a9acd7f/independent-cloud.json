@@ -1,0 +1,44 @@
+{
+  "at": "2026-10-25 08:46:40 UTC",
+  "projectRef": "jbvrdmrkwpznbrvteive",
+  "sourceCommit": "a9acd7f6f1920c541d429fa26d1f054b1427cd95",
+  "executableSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+  "method": "Root independent read-only management SQL after the uninterrupted actual SFX business run exited",
+  "rows": [
+    {
+      "owner_id": "account:470a41d4-3cf7-4a7d-8b1e-32e276d2a719",
+      "revision": 103,
+      "checksum": "324bd218a312baecc38aebcb3e4c9fdfa72fd08893c416c83d0bd945d0b65e5c",
+      "original_action": {
+        "kind": "personal",
+        "actionId": "auto:ce8b2ab8-a9d0-4130-8dce-c9a639b0c0a4",
+        "checksum": "e8fc5396349f4ff7905ffdd5254191e0579d21eb8fa10ef806b4d67b266c3924",
+        "revision": 102,
+        "baseRevision": 101
+      },
+      "battle_reward_count": 1,
+      "reward": {
+        "won": false,
+        "mode": "training",
+        "petId": "pet-97940c64-eb8e-43da-a6b8-09578a53011f",
+        "seeds": {
+          "itemId": "seed:berry",
+          "source": "battle",
+          "quantity": 2,
+          "receiptId": "battle-c641f1b4-b505-4353-bcea-e553000b86ff"
+        },
+        "applied": true,
+        "actionId": "battle:battle-c641f1b4-b505-4353-bcea-e553000b86ff:account:470a41d4-3cf7-4a7d-8b1e-32e276d2a719",
+        "duplicate": false,
+        "sessionId": "battle-c641f1b4-b505-4353-bcea-e553000b86ff",
+        "experience": 5,
+        "currentLevel": 1,
+        "previousLevel": 1,
+        "currentExperience": 5,
+        "previousExperience": 0
+      },
+      "seed_reward_count": 1,
+      "growth_receipt_count": 1
+    }
+  ]
+}

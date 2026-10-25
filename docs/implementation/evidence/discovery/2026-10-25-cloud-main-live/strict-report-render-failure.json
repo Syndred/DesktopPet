@@ -1,0 +1,694 @@
+{
+  "at": "2026-10-25T05:03:18.055Z",
+  "sourceCommit": "c29fb85e4e92cc3db98858ba05cf3c394c462ae8",
+  "sourceDirty": [],
+  "build": {
+    "schemaVersion": 2,
+    "builtAt": "2026-10-25T05:02:43.276Z",
+    "sourceCommit": "c29fb85e4e92cc3db98858ba05cf3c394c462ae8",
+    "sourceTree": "f0c69a99a88ab59178055decefbc8992888350b6",
+    "sourceDirtyFiles": [],
+    "codeFingerprint": "f14948e743dbfb02e20899db70d69636588ddce5f94a717311d553e5f7acb0cd",
+    "canonicalSourceFingerprint": "29b80889af1550432006c0332a435ee91366c059f85cbaedba2075a8c3677c7b",
+    "canonicalPolicy": "Repository-relative paths; CRLF normalized to LF for source text only. Packaged/compiled bytes remain exact.",
+    "compiledFingerprint": "801e2a6a97aebb8e9ef50e8e9b9e3c5477b88f7fe1d61ccd585c8d939c777d6e",
+    "codeFiles": 298,
+    "compiledFiles": 87,
+    "toolchain": {
+      "node": "24.21.0",
+      "electron": "44.9.3",
+      "sqlite": "13.0.3",
+      "vite": "7.3.7",
+      "typescript": "5.9.3",
+      "platform": "win32",
+      "arch": "x64"
+    },
+    "entrypoints": {
+      "main": "main/index.cjs",
+      "app": "ui/index.html",
+      "desktop": "ui/desktop.html",
+      "preload": "preload/index.cjs"
+    },
+    "publicCloud": {
+      "projectRef": "jbvrdmrkwpznbrvteive",
+      "url": "https://jbvrdmrkwpznbrvteive.supabase.co",
+      "sha256": "c1625c63f1d959f92b3392b47f2fb492452803eedf1c0d1ebc68a1168ab64eda",
+      "resourcePath": "lingjing-cloud-public.json"
+    },
+    "packageName": "lingjing-desktop",
+    "runtimeClosure": {
+      "manifest": "runtime-closure.json",
+      "files": 107,
+      "edges": 186,
+      "sha256": "e671afdd7135f5fe2a804cd0839b532227f0ae8fed1726336e115899370346dd"
+    }
+  },
+  "projectRef": "jbvrdmrkwpznbrvteive",
+  "scenarioId": "cloud-discovery-03",
+  "realAuth": true,
+  "realHttps": true,
+  "productionMain": true,
+  "sharedBattleScreen": true,
+  "syntheticPosition": true,
+  "physicalPositionAcceptance": false,
+  "physicalSecondDevice": false,
+  "rawCoordinatesSaved": false,
+  "newNaturalVictory": false,
+  "actors": [
+    {
+      "label": "device-a",
+      "actor": {
+        "account": "cg03_1792899947200",
+        "authKind": "supabase",
+        "deviceId": "b9300119-4e88-41d5-b182-051c3f943e87",
+        "username": "探索云端验收",
+        "authority": "live",
+        "sessionId": "eb6b0776-5dc3-42f8-bf27-350eb42d5fef",
+        "authUserId": "319083e4-2592-4369-84b4-0f05f6c2ea3a",
+        "schemaVersion": 1,
+        "ownerAccountId": "account:31fa2df1-6847-4466-84ca-ed92bc4ee78f"
+      },
+      "electron": "44.9.3",
+      "qaProfile": false
+    },
+    {
+      "label": "device-b",
+      "actor": {
+        "account": "cg03_1792899947200",
+        "authKind": "supabase",
+        "deviceId": "8c61169a-8bc4-4250-b87f-f216e13954ef",
+        "username": "探索云端验收",
+        "authority": "live",
+        "sessionId": "25e5a1ec-bb89-495b-a13b-636401b3f75d",
+        "authUserId": "319083e4-2592-4369-84b4-0f05f6c2ea3a",
+        "schemaVersion": 1,
+        "ownerAccountId": "account:31fa2df1-6847-4466-84ca-ed92bc4ee78f"
+      },
+      "electron": "44.9.3",
+      "qaProfile": false
+    }
+  ],
+  "checks": [
+    {
+      "label": "production discovery snapshot imports canonical companion and existing capture",
+      "passed": true
+    },
+    {
+      "label": "same UI action id rejects a changed move without another round",
+      "passed": true
+    },
+    {
+      "label": "original UI leave remains abandoned on replay",
+      "passed": true
+    },
+    {
+      "label": "original begin receipt recovers after expiry without a new position or challenge",
+      "passed": true
+    }
+  ],
+  "errors": [],
+  "reusedLiveUiEvidence": {
+    "path": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-discovery\\DesktopPet\\artifacts\\cloud-discovery\\live-main-1792904249737\\evidence.json",
+    "sha256": "9c772b04e3b342622ad2ae4fd12d7b8fecbf8dc3c07cda0acfd3c774eb1d0a1c",
+    "sourceCommit": "ee6681a0bea8b60f6a746ddccedf1e76ec7c8b5e",
+    "at": "2026-10-25T04:57:29.737Z",
+    "shortBattle": {
+      "sessionId": "battle-cloud-6bb5bcec-ddaa-4f32-8db4-996b380c168a",
+      "playerPetId": "pet-a3efdc72-2007-4e4f-823e-297d52c9bc22",
+      "initialRound": 0,
+      "renderedActions": [
+        {
+          "action": "normal_attack",
+          "round": 1,
+          "phases": [
+            "windup",
+            "release",
+            "impact",
+            "effects"
+          ],
+          "peerMatches": true
+        },
+        {
+          "action": "element_attack",
+          "round": 2,
+          "phases": [
+            "windup",
+            "release",
+            "impact",
+            "effects"
+          ],
+          "peerMatches": true
+        }
+      ],
+      "status": "abandoned"
+    }
+  },
+  "positionFixture": {
+    "scenarioId": "cloud-discovery-03",
+    "source": "simulated",
+    "protocol": "lingjing-discovery-v2",
+    "coordinateHash": "86ea830266f3ee47512b155f0f78d8bf2b3c649bf23d43314109a89aacd61ddb"
+  },
+  "originalPetId": "pet-161ff8e2-efdf-40f0-b27a-431554562325",
+  "shortBattle": {
+    "sessionId": "battle-cloud-6bb5bcec-ddaa-4f32-8db4-996b380c168a",
+    "playerPetId": "pet-a3efdc72-2007-4e4f-823e-297d52c9bc22",
+    "initialRound": 2,
+    "renderedActions": [],
+    "status": "abandoned"
+  },
+  "existingVictory": {
+    "sessionId": "battle-cloud-a3efdc72-2007-4e4f-823e-297d52c9bc22",
+    "rounds": 28,
+    "playerPetId": "pet-161ff8e2-efdf-40f0-b27a-431554562325",
+    "reward": {
+      "won": true,
+      "mode": "wild",
+      "petId": "pet-161ff8e2-efdf-40f0-b27a-431554562325",
+      "seeds": {
+        "itemId": "seed:berry",
+        "source": "battle",
+        "quantity": 2,
+        "receiptId": "battle-cloud-a3efdc72-2007-4e4f-823e-297d52c9bc22"
+      },
+      "applied": true,
+      "actionId": "battle:battle-cloud-a3efdc72-2007-4e4f-823e-297d52c9bc22:account:31fa2df1-6847-4466-84ca-ed92bc4ee78f",
+      "duplicate": false,
+      "sessionId": "battle-cloud-a3efdc72-2007-4e4f-823e-297d52c9bc22",
+      "experience": 20,
+      "currentLevel": 1,
+      "previousLevel": 1,
+      "currentExperience": 20,
+      "previousExperience": 0
+    }
+  },
+  "wonRendererActors": [
+    {
+      "resourceId": "builtin:lingjing-yuwan-v2",
+      "petId": "pet-161ff8e2-efdf-40f0-b27a-431554562325",
+      "status": "ready",
+      "action": "victory",
+      "clip": "victory",
+      "playbackKey": "battle-cloud-a3efdc72-2007-4e4f-823e-297d52c9bc22:28:player:rest:victory"
+    },
+    {
+      "resourceId": "builtin:lingjing-shiba-v2",
+      "petId": "wild-2d-v2-f3621dbe19-498027-51997-202332",
+      "status": "ready",
+      "action": "idle",
+      "clip": "idle",
+      "playbackKey": "battle-cloud-a3efdc72-2007-4e4f-823e-297d52c9bc22:28:enemy:rest:idle"
+    }
+  ],
+  "wonScreen": {
+    "name": "existing-cloud-victory.png",
+    "size": {
+      "width": 1713,
+      "height": 1243
+    },
+    "sampleColors": 138382,
+    "opaqueSamples": 532315
+  },
+  "passed": false,
+  "error": "locator.waitFor: Timeout 90000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.battle-reports-layout') to be visible\u001b[22m\n",
+  "timings0": [
+    {
+      "label": "app.info",
+      "start": 1792904598587,
+      "status": "fulfilled",
+      "durationMs": 10
+    },
+    {
+      "label": "accounts.session",
+      "start": 1792904598598,
+      "status": "fulfilled",
+      "durationMs": 1402
+    },
+    {
+      "label": "accounts.settingsGet",
+      "start": 1792904598598,
+      "status": "fulfilled",
+      "durationMs": 2
+    },
+    {
+      "label": "app.info",
+      "start": 1792904600001,
+      "status": "fulfilled",
+      "durationMs": 0
+    },
+    {
+      "label": "accounts.session",
+      "start": 1792904600002,
+      "status": "fulfilled",
+      "durationMs": 0
+    },
+    {
+      "label": "accounts.settingsGet",
+      "start": 1792904600002,
+      "status": "fulfilled",
+      "durationMs": 1
+    },
+    {
+      "label": "app.info",
+      "start": 1792904600003,
+      "status": "fulfilled",
+      "durationMs": 1
+    },
+    {
+      "label": "accounts.session",
+      "start": 1792904600004,
+      "status": "fulfilled",
+      "durationMs": 0
+    },
+    {
+      "label": "accounts.session",
+      "start": 1792904600016,
+      "status": "fulfilled",
+      "durationMs": 0
+    },
+    {
+      "label": "companions.list",
+      "start": 1792904600515,
+      "status": "fulfilled",
+      "durationMs": 3282
+    },
+    {
+      "label": "resources.resolve",
+      "start": 1792904603816,
+      "status": "fulfilled",
+      "durationMs": 8
+    },
+    {
+      "label": "resources.resolve",
+      "start": 1792904603819,
+      "status": "fulfilled",
+      "durationMs": 5
+    },
+    {
+      "label": "resources.resolve",
+      "start": 1792904603821,
+      "status": "fulfilled",
+      "durationMs": 4
+    },
+    {
+      "label": "accounts.settingsGet",
+      "start": 1792904609611,
+      "status": "fulfilled",
+      "durationMs": 1
+    },
+    {
+      "label": "discovery.setExploring",
+      "start": 1792904610163,
+      "status": "fulfilled",
+      "durationMs": 6701
+    },
+    {
+      "label": "discovery.snapshot",
+      "start": 1792904610164,
+      "status": "fulfilled",
+      "durationMs": 6700
+    },
+    {
+      "label": "discovery.snapshot",
+      "start": 1792904616867,
+      "status": "fulfilled",
+      "durationMs": 2
+    },
+    {
+      "label": "discovery.setExploring",
+      "start": 1792904617118,
+      "status": "fulfilled",
+      "durationMs": 3
+    },
+    {
+      "label": "discovery.snapshot",
+      "start": 1792904617144,
+      "status": "fulfilled",
+      "durationMs": 1
+    },
+    {
+      "label": "battle.snapshot",
+      "start": 1792904617169,
+      "status": "fulfilled",
+      "durationMs": 3179
+    },
+    {
+      "label": "discovery.setExploring",
+      "start": 1792904620355,
+      "status": "fulfilled",
+      "durationMs": 5873
+    },
+    {
+      "label": "discovery.setExploring",
+      "start": 1792904620843,
+      "status": "fulfilled",
+      "durationMs": 5385
+    },
+    {
+      "label": "discovery.snapshot",
+      "start": 1792904620844,
+      "status": "fulfilled",
+      "durationMs": 5384
+    },
+    {
+      "label": "discovery.snapshot",
+      "start": 1792904626233,
+      "status": "fulfilled",
+      "durationMs": 2
+    },
+    {
+      "label": "battle.overview",
+      "start": 1792904626237,
+      "status": "fulfilled",
+      "durationMs": 12503
+    },
+    {
+      "label": "battle-online:get_active_room",
+      "start": 1792904626238,
+      "status": "fulfilled",
+      "durationMs": 1879
+    },
+    {
+      "label": "battle.snapshot",
+      "start": 1792904626239,
+      "status": "fulfilled",
+      "durationMs": 3623
+    },
+    {
+      "label": "battle-online:get_active_training",
+      "start": 1792904628117,
+      "status": "fulfilled",
+      "durationMs": 2220
+    },
+    {
+      "label": "discovery.snapshot",
+      "start": 1792904635851,
+      "status": "fulfilled",
+      "durationMs": 2889
+    },
+    {
+      "label": "discovery.snapshot",
+      "start": 1792904638742,
+      "status": "fulfilled",
+      "durationMs": 1
+    },
+    {
+      "label": "resources.resolve",
+      "start": 1792904638749,
+      "status": "fulfilled",
+      "durationMs": 10
+    },
+    {
+      "label": "resources.resolve",
+      "start": 1792904638751,
+      "status": "fulfilled",
+      "durationMs": 8
+    },
+    {
+      "label": "resources.resolve",
+      "start": 1792904638752,
+      "status": "fulfilled",
+      "durationMs": 8
+    },
+    {
+      "label": "resources.resolve",
+      "start": 1792904638753,
+      "status": "fulfilled",
+      "durationMs": 7
+    },
+    {
+      "label": "battle.context",
+      "start": 1792904638755,
+      "status": "fulfilled",
+      "durationMs": 8712
+    },
+    {
+      "label": "discovery.setExploring",
+      "start": 1792904638755,
+      "status": "fulfilled",
+      "durationMs": 2
+    },
+    {
+      "label": "battle.act",
+      "start": 1792904640530,
+      "status": "fulfilled",
+      "durationMs": 1
+    },
+    {
+      "label": "discovery.snapshot",
+      "start": 1792904647468,
+      "status": "fulfilled",
+      "durationMs": 2
+    },
+    {
+      "label": "discovery.snapshot",
+      "start": 1792904648613,
+      "status": "fulfilled",
+      "durationMs": 2
+    },
+    {
+      "label": "discovery.begin",
+      "start": 1792904648642,
+      "status": "fulfilled",
+      "durationMs": 5757
+    },
+    {
+      "label": "discovery.snapshot",
+      "start": 1792904650850,
+      "status": "fulfilled",
+      "durationMs": 3549
+    },
+    {
+      "label": "discovery.snapshot",
+      "start": 1792904654402,
+      "status": "fulfilled",
+      "durationMs": 1
+    },
+    {
+      "label": "discovery.setExploring",
+      "start": 1792904654413,
+      "status": "fulfilled",
+      "durationMs": 2
+    },
+    {
+      "label": "discovery.snapshot",
+      "start": 1792904654416,
+      "status": "fulfilled",
+      "durationMs": 1
+    },
+    {
+      "label": "discovery.setExploring",
+      "start": 1792904654598,
+      "status": "fulfilled",
+      "durationMs": 2
+    },
+    {
+      "label": "discovery.setExploring",
+      "start": 1792904654600,
+      "status": "fulfilled",
+      "durationMs": 2
+    },
+    {
+      "label": "battle.overview",
+      "start": 1792904654903,
+      "status": "fulfilled",
+      "durationMs": 12411
+    },
+    {
+      "label": "battle-online:get_active_room",
+      "start": 1792904654903,
+      "status": "fulfilled",
+      "durationMs": 1884
+    },
+    {
+      "label": "battle.snapshot",
+      "start": 1792904654904,
+      "status": "fulfilled",
+      "durationMs": 6424
+    },
+    {
+      "label": "battle-online:get_active_training",
+      "start": 1792904656787,
+      "status": "fulfilled",
+      "durationMs": 2026
+    },
+    {
+      "label": "resources.resolve",
+      "start": 1792904667321,
+      "status": "fulfilled",
+      "durationMs": 14
+    },
+    {
+      "label": "resources.resolve",
+      "start": 1792904667323,
+      "status": "fulfilled",
+      "durationMs": 13
+    },
+    {
+      "label": "resources.resolve",
+      "start": 1792904667324,
+      "status": "fulfilled",
+      "durationMs": 12
+    },
+    {
+      "label": "resources.resolve",
+      "start": 1792904667326,
+      "status": "fulfilled",
+      "durationMs": 10
+    },
+    {
+      "label": "battle.context",
+      "start": 1792904667327,
+      "status": "fulfilled",
+      "durationMs": 8702
+    },
+    {
+      "label": "discovery.setExploring",
+      "start": 1792904667328,
+      "status": "fulfilled",
+      "durationMs": 1
+    },
+    {
+      "label": "battle.snapshot",
+      "start": 1792904667336,
+      "status": "fulfilled",
+      "durationMs": 6261
+    },
+    {
+      "label": "battle.getReport",
+      "start": 1792904674254,
+      "status": "fulfilled",
+      "durationMs": 3100
+    },
+    {
+      "label": "discovery.setExploring",
+      "start": 1792904677597,
+      "status": "fulfilled",
+      "durationMs": 5616
+    },
+    {
+      "label": "battle.overview",
+      "start": 1792904677906,
+      "status": "fulfilled",
+      "durationMs": 6635
+    },
+    {
+      "label": "battle-online:get_active_room",
+      "start": 1792904677906,
+      "status": "fulfilled",
+      "durationMs": 2069
+    },
+    {
+      "label": "battle-online:get_active_training",
+      "start": 1792904679975,
+      "status": "fulfilled",
+      "durationMs": 2115
+    }
+  ],
+  "timings1": [
+    {
+      "label": "app.info",
+      "start": 1792904601505,
+      "status": "fulfilled",
+      "durationMs": 22
+    },
+    {
+      "label": "accounts.session",
+      "start": 1792904601528,
+      "status": "fulfilled",
+      "durationMs": 1331
+    },
+    {
+      "label": "accounts.settingsGet",
+      "start": 1792904601528,
+      "status": "fulfilled",
+      "durationMs": 1
+    },
+    {
+      "label": "accounts.session",
+      "start": 1792904601534,
+      "status": "fulfilled",
+      "durationMs": 1325
+    },
+    {
+      "label": "app.info",
+      "start": 1792904602860,
+      "status": "fulfilled",
+      "durationMs": 1
+    },
+    {
+      "label": "accounts.session",
+      "start": 1792904602861,
+      "status": "fulfilled",
+      "durationMs": 0
+    },
+    {
+      "label": "accounts.settingsGet",
+      "start": 1792904602861,
+      "status": "fulfilled",
+      "durationMs": 1
+    },
+    {
+      "label": "app.info",
+      "start": 1792904602862,
+      "status": "fulfilled",
+      "durationMs": 0
+    },
+    {
+      "label": "accounts.session",
+      "start": 1792904602862,
+      "status": "fulfilled",
+      "durationMs": 1
+    },
+    {
+      "label": "app.info",
+      "start": 1792904602863,
+      "status": "fulfilled",
+      "durationMs": 0
+    },
+    {
+      "label": "accounts.session",
+      "start": 1792904602863,
+      "status": "fulfilled",
+      "durationMs": 0
+    },
+    {
+      "label": "companions.list",
+      "start": 1792904603380,
+      "status": "fulfilled",
+      "durationMs": 3425
+    },
+    {
+      "label": "resources.resolve",
+      "start": 1792904606818,
+      "status": "fulfilled",
+      "durationMs": 5
+    },
+    {
+      "label": "resources.resolve",
+      "start": 1792904606820,
+      "status": "fulfilled",
+      "durationMs": 4
+    },
+    {
+      "label": "resources.resolve",
+      "start": 1792904606821,
+      "status": "fulfilled",
+      "durationMs": 4
+    },
+    {
+      "label": "battle.snapshot",
+      "start": 1792904640533,
+      "status": "fulfilled",
+      "durationMs": 4634
+    },
+    {
+      "label": "battle.snapshot",
+      "start": 1792904645179,
+      "status": "fulfilled",
+      "durationMs": 3428
+    }
+  ],
+  "observedReportRendererError": "`Tooltip` must be used within `TooltipProvider`",
+  "observedErrorRoute": "/battle/reports/report-cloud-a3efdc72-2007-4e4f-823e-297d52c9bc22"
+}

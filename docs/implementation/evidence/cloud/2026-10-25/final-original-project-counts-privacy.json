@@ -1,0 +1,172 @@
+{
+  "at": "2026-10-25 08:55:01 UTC",
+  "projectRef": "jbvrdmrkwpznbrvteive",
+  "scope": "Final independent read-only exact row counts and archive privacy checks; earlier 05:49 full-content hashes remain separately recorded",
+  "tableCount": 18,
+  "rowCount": 100,
+  "passed": true,
+  "rows": [
+    {
+      "table_name": "account",
+      "row_count": 4,
+      "rls_enabled": true,
+      "anon_can_read": false,
+      "authenticated_can_read": false,
+      "anon_schema_usage": false,
+      "authenticated_schema_usage": false
+    },
+    {
+      "table_name": "ai_task",
+      "row_count": 0,
+      "rls_enabled": true,
+      "anon_can_read": false,
+      "authenticated_can_read": false,
+      "anon_schema_usage": false,
+      "authenticated_schema_usage": false
+    },
+    {
+      "table_name": "apikey",
+      "row_count": 0,
+      "rls_enabled": true,
+      "anon_can_read": false,
+      "authenticated_can_read": false,
+      "anon_schema_usage": false,
+      "authenticated_schema_usage": false
+    },
+    {
+      "table_name": "chat",
+      "row_count": 0,
+      "rls_enabled": true,
+      "anon_can_read": false,
+      "authenticated_can_read": false,
+      "anon_schema_usage": false,
+      "authenticated_schema_usage": false
+    },
+    {
+      "table_name": "chat_message",
+      "row_count": 0,
+      "rls_enabled": true,
+      "anon_can_read": false,
+      "authenticated_can_read": false,
+      "anon_schema_usage": false,
+      "authenticated_schema_usage": false
+    },
+    {
+      "table_name": "config",
+      "row_count": 12,
+      "rls_enabled": true,
+      "anon_can_read": false,
+      "authenticated_can_read": false,
+      "anon_schema_usage": false,
+      "authenticated_schema_usage": false
+    },
+    {
+      "table_name": "credit",
+      "row_count": 3,
+      "rls_enabled": true,
+      "anon_can_read": false,
+      "authenticated_can_read": false,
+      "anon_schema_usage": false,
+      "authenticated_schema_usage": false
+    },
+    {
+      "table_name": "order",
+      "row_count": 0,
+      "rls_enabled": true,
+      "anon_can_read": false,
+      "authenticated_can_read": false,
+      "anon_schema_usage": false,
+      "authenticated_schema_usage": false
+    },
+    {
+      "table_name": "permission",
+      "row_count": 29,
+      "rls_enabled": true,
+      "anon_can_read": false,
+      "authenticated_can_read": false,
+      "anon_schema_usage": false,
+      "authenticated_schema_usage": false
+    },
+    {
+      "table_name": "post",
+      "row_count": 0,
+      "rls_enabled": true,
+      "anon_can_read": false,
+      "authenticated_can_read": false,
+      "anon_schema_usage": false,
+      "authenticated_schema_usage": false
+    },
+    {
+      "table_name": "role",
+      "row_count": 4,
+      "rls_enabled": true,
+      "anon_can_read": false,
+      "authenticated_can_read": false,
+      "anon_schema_usage": false,
+      "authenticated_schema_usage": false
+    },
+    {
+      "table_name": "role_permission",
+      "row_count": 34,
+      "rls_enabled": true,
+      "anon_can_read": false,
+      "authenticated_can_read": false,
+      "anon_schema_usage": false,
+      "authenticated_schema_usage": false
+    },
+    {
+      "table_name": "session",
+      "row_count": 9,
+      "rls_enabled": true,
+      "anon_can_read": false,
+      "authenticated_can_read": false,
+      "anon_schema_usage": false,
+      "authenticated_schema_usage": false
+    },
+    {
+      "table_name": "subscription",
+      "row_count": 0,
+      "rls_enabled": true,
+      "anon_can_read": false,
+      "authenticated_can_read": false,
+      "anon_schema_usage": false,
+      "authenticated_schema_usage": false
+    },
+    {
+      "table_name": "taxonomy",
+      "row_count": 0,
+      "rls_enabled": true,
+      "anon_can_read": false,
+      "authenticated_can_read": false,
+      "anon_schema_usage": false,
+      "authenticated_schema_usage": false
+    },
+    {
+      "table_name": "user",
+      "row_count": 4,
+      "rls_enabled": true,
+      "anon_can_read": false,
+      "authenticated_can_read": false,
+      "anon_schema_usage": false,
+      "authenticated_schema_usage": false
+    },
+    {
+      "table_name": "user_role",
+      "row_count": 1,
+      "rls_enabled": true,
+      "anon_can_read": false,
+      "authenticated_can_read": false,
+      "anon_schema_usage": false,
+      "authenticated_schema_usage": false
+    },
+    {
+      "table_name": "verification",
+      "row_count": 0,
+      "rls_enabled": true,
+      "anon_can_read": false,
+      "authenticated_can_read": false,
+      "anon_schema_usage": false,
+      "authenticated_schema_usage": false
+    }
+  ]
+}

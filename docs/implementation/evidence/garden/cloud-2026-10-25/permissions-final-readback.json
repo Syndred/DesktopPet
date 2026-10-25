@@ -1,0 +1,111 @@
+{
+  "kind": "read-only current Supabase permission and native invariants audit after final clean-source map run",
+  "projectRef": "jbvrdmrkwpznbrvteive",
+  "tables": [
+    {
+      "rls": true,
+      "name": "lingjing_garden_operations",
+      "anonWrite": false,
+      "anonSelect": false,
+      "authenticatedWrite": false,
+      "authenticatedSelect": false
+    },
+    {
+      "rls": true,
+      "name": "runtime_territory_actions",
+      "anonWrite": false,
+      "anonSelect": false,
+      "authenticatedWrite": false,
+      "authenticatedSelect": false
+    },
+    {
+      "rls": true,
+      "name": "runtime_territory_attempts",
+      "anonWrite": false,
+      "anonSelect": false,
+      "authenticatedWrite": false,
+      "authenticatedSelect": false
+    },
+    {
+      "rls": true,
+      "name": "runtime_territory_challenges",
+      "anonWrite": false,
+      "anonSelect": false,
+      "authenticatedWrite": false,
+      "authenticatedSelect": false
+    },
+    {
+      "rls": true,
+      "name": "runtime_territory_logs",
+      "anonWrite": false,
+      "anonSelect": false,
+      "authenticatedWrite": false,
+      "authenticatedSelect": false
+    },
+    {
+      "rls": true,
+      "name": "runtime_territory_regions",
+      "anonWrite": false,
+      "anonSelect": false,
+      "authenticatedWrite": false,
+      "authenticatedSelect": false
+    },
+    {
+      "rls": true,
+      "name": "runtime_territory_views",
+      "anonWrite": false,
+      "anonSelect": false,
+      "authenticatedWrite": false,
+      "authenticatedSelect": false
+    }
+  ],
+  "functions": [
+    {
+      "name": "runtime_garden_commit_authoritative",
+      "invoker": true,
+      "searchPath": [
+        "search_path=\"\""
+      ],
+      "anonExecute": false,
+      "serviceExecute": true,
+      "authenticatedExecute": false
+    },
+    {
+      "name": "runtime_territory_capture_context",
+      "invoker": true,
+      "searchPath": [
+        "search_path=\"\""
+      ],
+      "anonExecute": false,
+      "serviceExecute": true,
+      "authenticatedExecute": false
+    },
+    {
+      "name": "runtime_territory_read",
+      "invoker": true,
+      "searchPath": [
+        "search_path=\"\""
+      ],
+      "anonExecute": false,
+      "serviceExecute": true,
+      "authenticatedExecute": false
+    },
+    {
+      "name": "runtime_territory_write",
+      "invoker": true,
+      "searchPath": [
+        "search_path=\"\""
+      ],
+      "anonExecute": false,
+      "serviceExecute": true,
+      "authenticatedExecute": false
+    }
+  ],
+  "queriedAt": "2026-10-25T05:27:00.185323+00:00",
+  "postgisVersion": "3.3 USE_GEOS=1 USE_PROJ=1 USE_STATS=1",
+  "nativeOwnedRegionCount": 1,
+  "lastNativeLocationProofAt": "2026-10-25T04:24:32.739383+00:00",
+  "offlineOriginalOperationCount": 1,
+  "nativeLocationProofsAfterMapAuditStart": 0,
+  "passed": true
+}

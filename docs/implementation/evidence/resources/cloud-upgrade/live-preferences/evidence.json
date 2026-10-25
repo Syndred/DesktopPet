@@ -1,0 +1,134 @@
+{
+  "at": "2026-10-25T04:14:58.544Z",
+  "mode": "live",
+  "simulated": false,
+  "serverSourceCommit": "2725fb3",
+  "resourceId": "ea939131-eb50-4cde-adcc-c51241100c34",
+  "receipt": {
+    "kind": "authority",
+    "actionId": "resource-pref:b28a1463-7e9f-4b7a-b599-d09624cff2db",
+    "checksum": "7c7b17b3025611763a6ebf1088e51a5e6871434fa43f02eb7c287f7d96870e61",
+    "revision": 4,
+    "duplicate": false,
+    "resourceId": "ea939131-eb50-4cde-adcc-c51241100c34",
+    "preferenceRevision": 1
+  },
+  "independentB": {
+    "resource_id": "ea939131-eb50-4cde-adcc-c51241100c34",
+    "revision": 1,
+    "document": {
+      "actions": {
+        "eat": "eat",
+        "hit": "hit",
+        "idle": "idle",
+        "walk": "walk",
+        "wave": "wave",
+        "blink": "blink",
+        "skill": "skill",
+        "sleep": "sleep",
+        "attack": "attack",
+        "victory": "victory",
+        "attack_windup": "attack_windup",
+        "attack_release": "attack_release"
+      },
+      "calibration": {
+        "battle": {
+          "fps": 0,
+          "scale": 1,
+          "anchorX": 0.5,
+          "anchorY": 0.849609375,
+          "mirrorX": false,
+          "rotationDeg": 0,
+          "verticalOffset": 0
+        },
+        "desktop": {
+          "fps": 0,
+          "scale": 1.12,
+          "anchorX": 0.5,
+          "anchorY": 0.849609375,
+          "mirrorX": false,
+          "rotationDeg": 1,
+          "verticalOffset": 0.02
+        }
+      }
+    },
+    "authority_action_id": "resource-pref:b28a1463-7e9f-4b7a-b599-d09624cff2db"
+  },
+  "checks": [
+    "Verified real private package preferences published",
+    "Independent same-owner separate-session B readback preserves the exact document",
+    "Original preference action replay returns the same protected revision/checksum",
+    "Stale revision, unknown clip, client-only index, other owner, revoked original SID and direct RPC all denied",
+    "All denials preserve the exact common save revision/checksum, private reference and adopted custom pet"
+  ],
+  "passed": true,
+  "denials": {
+    "staleRevision": 409,
+    "unknownClip": 422,
+    "clientOnlyIndex": 404,
+    "otherAccount": 404,
+    "revokedOriginalSession": 401,
+    "directRpcSqlstate": "42501",
+    "rootRevisionUnchanged": true,
+    "rootChecksumUnchanged": true
+  },
+  "rootModule": {
+    "data": {
+      "format": "lingjing-resource-references",
+      "references": [
+        {
+          "kind": "spritesheet",
+          "authUserId": "ecf7ccab-f4b2-4cb5-b0ab-a4613fe28886",
+          "resourceId": "ea939131-eb50-4cde-adcc-c51241100c34",
+          "totalBytes": 1811388,
+          "contentHash": "94e0af4b98334788f9f2357fde6c84c70cc051684760d05c9ca4eebf97a3977a",
+          "manifestPath": "ecf7ccab-f4b2-4cb5-b0ab-a4613fe28886/ea939131-eb50-4cde-adcc-c51241100c34/227446e353d0eefbd752ce7feafaa2e185f83ef8c2e2e7546fdfa7b70d13ea01/manifest.json",
+          "manifestBytes": 7237,
+          "manifestSha256": "227446e353d0eefbd752ce7feafaa2e185f83ef8c2e2e7546fdfa7b70d13ea01"
+        }
+      ],
+      "preferences": [
+        {
+          "actions": {
+            "eat": "eat",
+            "hit": "hit",
+            "idle": "idle",
+            "walk": "walk",
+            "wave": "wave",
+            "blink": "blink",
+            "skill": "skill",
+            "sleep": "sleep",
+            "attack": "attack",
+            "victory": "victory",
+            "attack_windup": "attack_windup",
+            "attack_release": "attack_release"
+          },
+          "revision": 1,
+          "resourceId": "ea939131-eb50-4cde-adcc-c51241100c34",
+          "calibration": {
+            "battle": {
+              "fps": 0,
+              "scale": 1,
+              "anchorX": 0.5,
+              "anchorY": 0.849609375,
+              "mirrorX": false,
+              "rotationDeg": 0,
+              "verticalOffset": 0
+            },
+            "desktop": {
+              "fps": 0,
+              "scale": 1.12,
+              "anchorX": 0.5,
+              "anchorY": 0.849609375,
+              "mirrorX": false,
+              "rotationDeg": 1,
+              "verticalOffset": 0.02
+            }
+          }
+        }
+      ],
+      "ownerAccountId": "account:2851a984-dacc-4548-865e-1810bc3ab384"
+    },
+    "version": 2
+  }
+}

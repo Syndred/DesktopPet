@@ -11,7 +11,8 @@ const core = 'infra/supabase/functions/_shared/battle-core.js';
 const inputs = [core, 'apps/pc-app/runtime/features/battle/presentation.cjs', 'apps/pc-app/runtime/features/discovery/coordinates.cjs', 'apps/pc-app/runtime/features/discovery/spawns.cjs',
   'apps/pc-app/runtime/features/companions/cloud-domain.mjs', 'apps/pc-app/runtime/features/companions/instance.mjs', 'apps/pc-app/runtime/features/companions/cloud-growth.mjs',
   'apps/pc-app/runtime/features/companions/growth.mjs', 'apps/pc-app/runtime/features/resources/assets/roster-v2/catalog.json', 'apps/pc-app/runtime/features/garden/cloud-domain.mjs', 'apps/pc-app/runtime/features/garden/catalog.json'];
-const output = resolve('infra/supabase/functions/discovery/_generated'); mkdirSync(output, { recursive: true });
+const output = resolve('infra/supabase/functions/discovery/_generated');
+const check = process.argv.includes('--check');
 const result = await build({ stdin: { contents: `export {BattleRuntimeService,getBattleRules,executeRound} from './${core}'; import presentation from './${inputs[1]}'; import geometry from './${inputs[2]}'; import spawns from './${inputs[3]}'; export const {presentSession,visualEvents}=presentation; export const {geofence,checkFix,distanceMeters}=geometry; export const {nearbySpawns,canonicalCatalog}=spawns;
     export {companionUnit,normalizeCompanionRows} from './${inputs[4]}'; export {createCompanionInstance,listBuiltinTemplates} from './${inputs[5]}'; export {awardBattleResult} from './${inputs[6]}';
     export {applyCloudCommand,gardenDocument,emptyGarden} from './${inputs[9]}'; export {default as gardenCatalog} from './${inputs[10]}';`, resolveDir: root, sourcefile: 'discovery-cloud-entry.mjs' },
@@ -27,7 +28,16 @@ const result = await build({ stdin: { contents: `export {BattleRuntimeService,ge
   } }]
 });
 const sourceFiles = Object.fromEntries(inputs.map(file => [file, createHash('sha256').update(readFileSync(file, 'utf8').replace(/\r\n/g, '\n')).digest('hex')]));
-const code = result.outputFiles[0].text;
-writeFileSync(join(output, 'runtime.mjs'), code);
-writeFileSync(join(output, 'provenance.json'), JSON.stringify({ generator: 'apps/pc-app/runtime/features/discovery/verification/build-cloud.mjs', coreImport: '../../_shared/battle-core.js', approvedCoreCheckpoint: '4969eac', sourceFiles, catalog: templates.map(t => ({ templateId: t.templateId, resourceId: t.resource.resourceId, element: t.element })), runtimeSha256: createHash('sha256').update(code).digest('hex') }, null, 2) + '\n');
-console.log(JSON.stringify({ output, templates: templates.length, sourceFiles: inputs.length, bytes: Buffer.byteLength(code) }));
+const normalize = value => value.replaceAll('\r\n', '\n');
+const code = normalize(result.outputFiles[0].text);
+const manifest = JSON.stringify({ generator: 'apps/pc-app/runtime/features/discovery/verification/build-cloud.mjs', coreImport: '../../_shared/battle-core.js', approvedCoreCheckpoint: '4969eac', sourceFiles, catalog: templates.map(t => ({ templateId: t.templateId, resourceId: t.resource.resourceId, element: t.element })), runtimeSha256: createHash('sha256').update(code).digest('hex') }, null, 2) + '\n';
+if (check) {
+  if (normalize(readFileSync(join(output, 'runtime.mjs'), 'utf8')) !== code || normalize(readFileSync(join(output, 'provenance.json'), 'utf8')) !== manifest) {
+    throw new Error('Discovery cloud distribution is stale: run node apps/pc-app/runtime/features/discovery/verification/build-cloud.mjs');
+  }
+} else {
+  mkdirSync(output, { recursive: true });
+  writeFileSync(join(output, 'runtime.mjs'), code);
+  writeFileSync(join(output, 'provenance.json'), manifest);
+}
+console.log(JSON.stringify({ checked: check, output, templates: templates.length, sourceFiles: inputs.length, bytes: Buffer.byteLength(code) }));

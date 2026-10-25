@@ -2,10 +2,10 @@
   "module": "accounts",
   "scope": "2026-10-25 Supabase Auth/JWT, stable legacy owner mapping, per-device sessions, full-save CAS/idempotency/conflict/offline recovery",
   "branch": "codex/lingjing-accounts",
-  "commit": "f47b1ed45bb045918a59d93163b833cc897ffb57",
+  "commit": "8838f679458c265b1945334f75c45a7065118954",
   "worktree": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-accounts\\DesktopPet",
-  "goalStatus": "active",
-  "phase": "Shared transaction guard deployed; signed expired JWT and production adapter JSON chat/memory/persona actual HTTPS passed; approved root00afefd merged; full-domain native still waits02 main and remaining adapters.",
+  "goalStatus": "complete",
+  "phase": "Authority/personal automatic-sync race fixed on coordinator source d376b76. Read-only original SFX proof retained;69 targeted Electron/SQLite checks and repository lint pass. No original profile changes, real cloud writes, battle/UI changes or new SFX pass claimed.",
   "baseline": "46abf416e0500b53ef32fc29b441d923ef5a6a80",
   "dependencyCheckpoint": "b40af0efcf6062ddc2e8c360523c996fc91ebc0a",
   "contracts": {
@@ -273,6 +273,46 @@
       "command": "node --test legacy-claims.test.cjs",
       "result": "3 synthetic checks passed incl Windows DPAPI roundtrip Chinese nickname, originalowner/hash/date preserved; no cloud writes",
       "kind": "LOCAL preparation only; actual old source still absent"
+    },
+    {
+      "command": "node --test <all eight accounts *.test.cjs/mjs files>",
+      "result": "54 passed,0 failed,0 skipped",
+      "source": "7a6b04a0cc83f84143c42af71d4947ce9f7ce4cb",
+      "kind": "Local real SQLite/PGlite, Windows DPAPI and explicitly simulated protocol cases; distinct from live HTTP evidence"
+    },
+    {
+      "command": "npm run typecheck:ui && npm run build:pc",
+      "result": "Passed; production closure106 files/181 edges/4 JS-MJS dependencies",
+      "source": "7a6b04a0cc83f84143c42af71d4947ce9f7ce4cb"
+    },
+    {
+      "command": "node --test cloud-identity-sql cloud-save-sql cloud-service-actor-sql cloud-session-upgrade-sql migration-preservation-replay",
+      "result": "23 passed,0 failed,0 skipped after4830619 migration path alignment",
+      "kind": "Local PGlite actual SQL, not a new cloud deployment"
+    },
+    {
+      "command": "node --test <all nine accounts test files>",
+      "kind": "Local real SQLite/PGlite/DPAPI and explicitly simulated protocol cases; no live LLM calls",
+      "result": "73 passed,0 failed,0 skipped",
+      "testCommit": "4f60a30336eb423057b758a6b17e6ba6c4c8bdfe"
+    },
+    {
+      "command": "node --test foundation/cloud-checkpoint, companions/cloud-authority, companions/backup-integration",
+      "kind": "Local SQLite and explicit domain protocol fixtures",
+      "result": "9 passed after aligning pre-existing fixture with approved domain readback semantics; strict full-checkpoint rejections remain asserted directly",
+      "testCommit": "4f60a30336eb423057b758a6b17e6ba6c4c8bdfe"
+    },
+    {
+      "command": "node --test resource-hydration-sync.test.cjs",
+      "result": "26 passed",
+      "kind": "Production07 ResourceCloudSync/official SDK/BackupManager, actual SQLite/files, explicitly simulated HTTPS provider. Includes native original JSON order, exact appended imports, safe registry repair, pre-pump resource/preference ordering, preserved007 upgrade, corrupted old baseline and dirty/pending/logout/newSID rejection.",
+      "source": "f36d344971423286c8040eb1f341ed692ec7cad8"
+    },
+    {
+      "command": "node --test automatic-sync.test.cjs resources/verification/cloud-backup.test.cjs",
+      "result": "22 passed",
+      "kind": "Focused local actualSQLite and explicitly simulated provider; not a repeat of73-account suite",
+      "source": "f36d344971423286c8040eb1f341ed692ec7cad8"
     }
   ],
   "realCloudEvidence": {
@@ -280,8 +320,8 @@
     "readOnlyInspected": true,
     "authOrSyncLiveVerified": true,
     "identitySchemaLiveRejection": "Coordinator actual HTTPS passes registration/stable owner, same-account two Auth sessions, cross-owner Data API RLS, wrong device rejection, logout A leaves B active. Refresh 400 traced to min-length16; 320cafd removes the false assumption and retains4096 upper bound.",
-    "deploymentByCoordinatorPending": true,
-    "publicKeyConfig": "Shared ignored artifacts/cloud-upgrade/2026-10-25/public-runtime-config.json; no keys included here",
+    "deploymentByCoordinatorPending": false,
+    "publicKeyConfig": "Verified tracked config/lingjing-cloud-public.json, packaged resources/lingjing-cloud-public.json; publishable public config only",
     "legacyProbe": [
       {
         "at": "2026-10-25T02:00:58.619Z",
@@ -313,13 +353,24 @@
       "passed": true
     },
     "dualElectron": {
-      "evidence": "artifacts/accounts/cloud-electron-1792897321861/evidence.json",
-      "scope": "Two real Electron44.9.3 Windows processes; main/preload/renderer production entry; actual HTTPS; DPAPI/vault reload; actor refresh; controlled connection refusal + process restart +SQLite outbox; same host only",
-      "source": "7784f8a3cfefb84a3ab6285d121166caeea9a03a",
-      "authorityPending": true,
-      "fullSaveVerified": false,
+      "evidence": "docs/implementation/evidence/accounts/cloud-2026-10-25/automatic-sync/evidence.json",
+      "source": "280328d8d31803410dc239e6804999bc6e5f41c7",
+      "passed": true,
       "passedChecks": 8,
-      "privateRealtimeReconnectVerified": false
+      "fullSaveVerified": true,
+      "authorityPending": false,
+      "finalBothLocalConverged": true,
+      "finalRevision": 6,
+      "finalChecksum": "d2cfa0ddb6eb76fd7e18d61c3c62e6d194372aee22bd52d122ef1bf8b8f6ff89",
+      "manualSyncCommandsAfterSetup": 0,
+      "privateRealtimeReconnectVerified": false,
+      "physicalTwoMachinesVerified": false,
+      "independentSqlReadback": "docs/implementation/evidence/accounts/cloud-2026-10-25/automatic-sync/independent-cloud-readback.json",
+      "screenshots": [
+        "docs/implementation/evidence/accounts/cloud-2026-10-25/automatic-sync/device-a-converged.png",
+        "docs/implementation/evidence/accounts/cloud-2026-10-25/automatic-sync/device-b-converged.png",
+        "docs/implementation/evidence/accounts/cloud-2026-10-25/automatic-sync/device-b-dirty-conflict.png"
+      ]
     },
     "casConcurrency": {
       "passed": true,
@@ -329,7 +380,7 @@
       "checks": 2
     },
     "remoteLatest": {
-      "at": "2026-10-25T03:23:26Z",
+      "at": "2026-10-25T05:56:06.540Z",
       "command": "git pull --no-rebase --no-edit origin main",
       "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086",
       "result": "Already up to date"
@@ -360,6 +411,44 @@
       "by": "coordinator",
       "passed": true,
       "evidence": "docs/implementation/evidence/accounts/cloud-2026-10-25/session-revocation-coordinator.json"
+    },
+    "dualElectronPartialHistorical": {
+      "evidence": "artifacts/accounts/cloud-electron-1792897321861/evidence.json",
+      "scope": "Two real Electron44.9.3 Windows processes; main/preload/renderer production entry; actual HTTPS; DPAPI/vault reload; actor refresh; controlled connection refusal + process restart +SQLite outbox; same host only",
+      "source": "7784f8a3cfefb84a3ab6285d121166caeea9a03a",
+      "authorityPending": true,
+      "fullSaveVerified": false,
+      "passedChecks": 8,
+      "privateRealtimeReconnectVerified": false
+    },
+    "dualElectronBeforeAutomaticPull": {
+      "evidence": "docs/implementation/evidence/accounts/cloud-2026-10-25/dual-electron-full.json",
+      "source": "7a6b04a0cc83f84143c42af71d4947ce9f7ce4cb",
+      "passed": true,
+      "passedChecks": 9,
+      "fullSaveVerified": true,
+      "authorityPending": false,
+      "scope": "Two actual Electron44 processes on one Windows host, isolated profiles, production TypeScript main/preload and React renderer, actual Supabase HTTPS. Not two physical machines.",
+      "petId": "pet-bc320c7d-8a0a-49e9-aa5d-c974f12276a1",
+      "owner": "account:bb3a94fa-1490-47d8-bb2b-4476eee6c766",
+      "originalRetryActionId": "087172dc-e60f-45aa-bb0d-19e98456dedd",
+      "retryRevision": 5,
+      "privateRealtimeReconnectVerified": false,
+      "physicalTwoMachinesVerified": false,
+      "screenshots": [
+        "docs/implementation/evidence/accounts/cloud-2026-10-25/dual-electron-full-a.png",
+        "docs/implementation/evidence/accounts/cloud-2026-10-25/dual-electron-full-b.png"
+      ],
+      "visualInspection": "A shows actual completed synchronization; additional real B process resumed its encrypted session and rerendered actual enabled-sync setting before B screenshot. Initial B image reflected stale in-memory UI after acceptance-driver direct IPC and is not the canonical B image."
+    },
+    "resourceHydration": {
+      "evidence": "docs/implementation/evidence/accounts/cloud-2026-10-25/resource-hydration/evidence.json",
+      "source": "f36d344971423286c8040eb1f341ed692ec7cad8",
+      "passed": true,
+      "passedChecks": 3,
+      "finalBothLocalConverged": true,
+      "revision": 5,
+      "checksum": "9a53b6c361d05052cc4f539a27610a8acebd113a46f56f0dea393e34978c3fff"
     }
   },
   "preservation": {
@@ -373,11 +462,9 @@
     "Old runtime single session_token cloud adapter only after new Auth path and all domain consumers are migrated; preserve source-import reader and user files"
   ],
   "remaining": [
-    "Integrate final02 main cloud adapter and07 refs,05 main transport for complete domain authority state",
-    "Real full-domain dual Electron native rerun after final adapters; current8 native checks are personal/partial only",
-    "04 private realtime full two-account gameplay integration belongs04/coordinator; stable SDK/Auth refresh is ready",
-    "Old complete cloud account/data migration EXTERNAL: no verified old export/SSH; DPAPI preparation is not actual migration",
-    "One final account-targeted regression and final origin/main pull confirmation"
+    "Actual complete old-server migration remains external: no independently verified old export/SSH. Staged DPAPI preparation is not completed cloud migration.",
+    "Final mainline integration, release build and retired legacy fallback/function/SQL consumer removal remain coordinator-owned; no production SQL deployment was performed from this worktree.",
+    "Private Realtime gameplay/reconnect acceptance belongs04/coordinator; own native evidence proves SDK token rotation only and explicitly uses two processes on one host."
   ],
   "resourceHydrationReadOnlyReview": {
     "accepted": "Validate external original checksum/owner/schema before hydration and validate again after; additive download cache before synchronous atomic restore; normalized/cloud refs fingerprint only; no rewrite original envelope",
@@ -385,6 +472,104 @@
     "api": "07 WIP backups.prepareCloud(envelope,owner), adapter.prepareCloud(owner,module), backups.cloudData +adapter.cloudModule; sync.previewCloud awaits hydrate outside SQLite restore",
     "sharedFilesNotEdited": "accounts/backups.cjs andsync.cjs left to07 WIP until its checkpoint",
     "finding": "Observed previewCloud only rechecks owner after prepareCloud await. Capture and recheck original SID or Accounts epoch as well, so same-owner logout/relogin/password newSID cannot return a stale preview. Keep additive cache, but reject stale preview token asSESSION_CHANGED.",
-    "readOnly": true
+    "readOnly": true,
+    "resolution": "Closed by f36d344 planned hydration guard and immutable original baseline, with26 directed resource tests +22 adjacent cases and actual HTTPS dual resource readback including07-before08 ordering. Existing source/code and original9/rev6 artifacts retained."
+  },
+  "previewLifecycle": {
+    "source": "7a6b04a0cc83f84143c42af71d4947ce9f7ce4cb",
+    "clearOn": [
+      "adopt",
+      "logout",
+      "matching-owner invalidation"
+    ],
+    "sameSidAutomaticRefresh": "Retained and actual restore verified in real SQLite protocol regression",
+    "originalFilesPreserved": true,
+    "test": "real SQLite with simulated Auth: issued restore previews expire across session transitions, same-SID refresh remains usable",
+    "result": "All local/cloud stale previews rejected after same-owner new SID with unchanged fingerprint and no restore writes; original backup bytes retained"
+  },
+  "integrationCheckpoint": {
+    "coordinator": "4830619cba23a37fa2c30b19f3a656bdee0a23ec",
+    "mergedAs": "660bf3249c2083a80c5bcd7a2804eac73e662a61",
+    "productionRuntimeDiffAgainstNativeSource": "empty",
+    "migrationPaths": "Aligned by coordinator to actual hosted ledger; historical evidence unchanged",
+    "checks": "23 targeted SQL/account and preservation-replay checks passed after merge; no second full native rerun because production runtime unchanged",
+    "cloudDeploymentsByThisWorktree": 0
+  },
+  "automaticSyncGap": {
+    "open": false,
+    "originalRun": "artifacts/accounts/cloud-electron-1792902024228",
+    "originalFinalConvergenceVerified": false,
+    "retrospective": "docs/implementation/evidence/accounts/cloud-2026-10-25/automatic-gap-retrospective.json",
+    "resolution": "docs/implementation/evidence/accounts/cloud-2026-10-25/automatic-sync/evidence.json",
+    "finalBothLocalConverged": true,
+    "finalRevision": 6,
+    "finalChecksum": "d2cfa0ddb6eb76fd7e18d61c3c62e6d194372aee22bd52d122ef1bf8b8f6ff89",
+    "originalArtifactsRetained": true,
+    "verifiedScope": "Unmodified actual30-second production timer; same host/two Electron processes; no sync commands after setup; actual settings changes and full pet/garden state. Production conversation adapter automatic message/memory/persona behavior additionally covered by explicitly simulated-provider realSQLite test, not claimed as live LLM generation."
+  },
+  "testCommit": "4f60a30336eb423057b758a6b17e6ba6c4c8bdfe",
+  "automaticSyncImplementation": {
+    "intervalMs": 30000,
+    "entrypoint": "AccountsService.runAutomaticSync -> AccountSync.reconcile",
+    "localMigration": "accounts-007-automatic-sync-baselines: additive owner/revision/checksum and separate personal/protected fingerprints, no credentials",
+    "upload": "Only personal edits against a matching confirmed protected fingerprint and no pending/conflict/unverified/redacted source create one durable auto action before I/O. The original base/action survives offline and response-loss; never silently rebased.",
+    "pull": "Only clean confirmed local state may atomically replace with a newer verified cloud envelope. Owner/device/SID/epoch, unchanged raw data fingerprint, checkpoint, pending and unsafe-source checks bracket read/hydration and transaction; before-restore backup retained.",
+    "domainReadback": "Exact complete local/cloud equality can acknowledge an already-applied verified domain snapshot without restoring or bypassing the strict checkpoint guard.",
+    "ui": "Main sync/settings/restore events refresh the actual account view; running/unconfirmed/remote-new/partial/conflict states cannot claim complete synchronization.",
+    "productionCloudProtocolChanges": false,
+    "legacyNetworkRestored": false
+  },
+  "resourceHydrationGap": {
+    "open": false,
+    "source": "f36d344971423286c8040eb1f341ed692ec7cad8",
+    "sourceStable": true,
+    "readyForFinalFreeze": true,
+    "localMigration": "accounts-008-confirmed-cloud-document",
+    "accounts007Unchanged": true,
+    "localEvidence": "docs/implementation/evidence/accounts/cloud-2026-10-25/resource-hydration/targeted-checks.json",
+    "liveEvidence": "docs/implementation/evidence/accounts/cloud-2026-10-25/resource-hydration/evidence.json",
+    "sameHost": true,
+    "physicalTwoMachines": false,
+    "finalRevision": 5,
+    "finalChecksum": "9a53b6c361d05052cc4f539a27610a8acebd113a46f56f0dea393e34978c3fff",
+    "preHydratedCycle": {
+      "revision": 3,
+      "dirty": true,
+      "resourcesBefore": 1,
+      "applied": true,
+      "readbackOnly": false
+    },
+    "privateFileHashes": [
+      {
+        "key": "character.json",
+        "sha256": "4fd14adc3ad76f69e00d80c2ab9db460363d1eae85450ee8b1cb735e154acdda"
+      },
+      {
+        "key": "sprites.png",
+        "sha256": "aa59df3af26d4f7faf9272193b7d1d35ed6d2f22ebb6b294a5a2853f0539f693"
+      }
+    ],
+    "originalImportIds": [
+      "359ac621-d387-43e0-83f9-5a5a94216008"
+    ],
+    "originalNativeJsonUnchanged": true,
+    "transientCycleRetained": true,
+    "boundaries": "Exact verified manifest/resource/file/import plan only; pre-existing rows/preferences and all other modules remain strict. Existing native JSON compared semantically to canonical plan without rewriting original string. Pre-pump admitted only against confirmed original envelope; old007 fallback reads exact owner/revision/checksum immutable action. Pending/logout/newSID retained/rejected. No cloud protocol/RLS/deployment changes or old network restoration.",
+    "acceptedByCoordinator": true
+  },
+  "coordinatorFinalFreeze": {
+    "applicationSource": "30f3cd29c3682bf8674caf1610a89e8060ebdeca",
+    "moduleSource": "f36d344971423286c8040eb1f341ed692ec7cad8",
+    "independentResourceAcceptance": "Coordinator independently checked hosted revision/checksum, both original SQLite profiles, file SHA/import IDs and unchanged native JSON",
+    "subsequentProductChanges": false,
+    "evidenceOnlyHandoff": true
+  },
+  "authorityPersonalRace": {
+    "sourceCommit": "8838f679458c265b1945334f75c45a7065118954",
+    "integrationBase": "d376b76a01dd8e450d28bab4479bbe2581ae39c4",
+    "evidence": "docs/implementation/evidence/accounts/cloud-2026-10-25/authority-personal-race/evidence.json",
+    "originalSfxFailurePreserved": true,
+    "codeAndDirectedChecksComplete": true,
+    "coordinatorSfxRevalidation": "pending"
   }
 }

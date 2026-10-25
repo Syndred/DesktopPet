@@ -1,0 +1,29 @@
+✔ shared SQLite / simulated wire: an actual companion selection overlapping automatic read preserves subsequent persona, memory and failed-message edits (330.6436ms)
+▶ shared SQLite / simulated wire: unknown protected edits and genuine two-device personal edits remain conflicts
+  ✔ unknown-protected (197.0494ms)
+  ✔ remote-personal (193.8164ms)
+✔ shared SQLite / simulated wire: unknown protected edits and genuine two-device personal edits remain conflicts (391.4089ms)
+✔ shared SQLite / simulated wire: an uncertain sent outbox retries its original action/base/document and is never rebased onto a later authority (199.8859ms)
+▶ shared SQLite / simulated wire: exact old-envelope proof is required, and same-SID token refresh remains allowed
+  ✔ exact-ledger (217.4133ms)
+  ✔ missing-ledger (211.8616ms)
+  ✔ forged-personal-fingerprint (197.8513ms)
+  ✔ same-SID-refresh (195.785ms)
+✔ shared SQLite / simulated wire: exact old-envelope proof is required, and same-SID token refresh remains allowed (823.8654ms)
+▶ shared SQLite / simulated wire: owner, SID, epoch, sync setting and concurrent local changes invalidate adoption while exact baseline proof is in flight
+  ✔ owner (201.6371ms)
+  ✔ logout (189.8519ms)
+  ✔ same-owner-new-SID (199.8019ms)
+  ✔ epoch (191.9761ms)
+  ✔ disabled (191.7536ms)
+  ✔ personal-edit (194.1047ms)
+  ✔ protected-edit (191.7196ms)
+✔ shared SQLite / simulated wire: owner, SID, epoch, sync setting and concurrent local changes invalidate adoption while exact baseline proof is in flight (1361.8021ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 18
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3187.1508

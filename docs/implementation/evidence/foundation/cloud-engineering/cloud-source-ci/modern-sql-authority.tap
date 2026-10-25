@@ -1,0 +1,453 @@
+TAP version 13
+# Subtest: LOCAL PGlite only: trusted migration preserves text owner and blocks direct/duplicate linkage
+ok 1 - LOCAL PGlite only: trusted migration preserves text owner and blocks direct/duplicate linkage
+  ---
+  duration_ms: 10.231
+  type: 'test'
+  ...
+# Subtest: LOCAL PGlite only: one Auth UID can keep two independently bound device sessions
+ok 2 - LOCAL PGlite only: one Auth UID can keep two independently bound device sessions
+  ---
+  duration_ms: 16.4218
+  type: 'test'
+  ...
+# Subtest: LOCAL PGlite only: RLS denies cross owner, client writes, wrong device and anonymous/revoked sessions
+ok 3 - LOCAL PGlite only: RLS denies cross owner, client writes, wrong device and anonymous/revoked sessions
+  ---
+  duration_ms: 10.171
+  type: 'test'
+  ...
+# Subtest: LOCAL PGlite only: revoking device A leaves same-account device B active
+ok 4 - LOCAL PGlite only: revoking device A leaves same-account device B active
+  ---
+  duration_ms: 8.115
+  type: 'test'
+  ...
+# Subtest: LOCAL PGlite only: revoked refresh cannot re-register, fresh Auth session can rebind one device
+ok 5 - LOCAL PGlite only: revoked refresh cannot re-register, fresh Auth session can rebind one device
+  ---
+  duration_ms: 10.935
+  type: 'test'
+  ...
+# Subtest: LOCAL PGlite only: revoke/new-login cannot resurrect an old SID, and replacement revokes previous SID permanently
+ok 6 - LOCAL PGlite only: revoke/new-login cannot resurrect an old SID, and replacement revokes previous SID permanently
+  ---
+  duration_ms: 17.8424
+  type: 'test'
+  ...
+# Subtest: LOCAL PGlite only: auth directory, staged reservation and rate limits are service-only
+ok 7 - LOCAL PGlite only: auth directory, staged reservation and rate limits are service-only
+  ---
+  duration_ms: 14.5521
+  type: 'test'
+  ...
+# Subtest: LOCAL PGlite only: SQL canonical checksum matches actual JS Unicode and finite-number encoding
+ok 8 - LOCAL PGlite only: SQL canonical checksum matches actual JS Unicode and finite-number encoding
+  ---
+  duration_ms: 192.6767
+  type: 'test'
+  ...
+# Subtest: LOCAL PGlite only: personal CAS/action replay and same-account device conflicts are durable
+ok 9 - LOCAL PGlite only: personal CAS/action replay and same-account device conflicts are durable
+  ---
+  duration_ms: 36.6605
+  type: 'test'
+  ...
+# Subtest: LOCAL PGlite only: arbitrary gameplay writes cannot be promoted by a valid checksum
+ok 10 - LOCAL PGlite only: arbitrary gameplay writes cannot be promoted by a valid checksum
+  ---
+  duration_ms: 19.0697
+  type: 'test'
+  ...
+# Subtest: LOCAL PGlite only: atomic server fragments share one revision without allowing player RPC access
+ok 11 - LOCAL PGlite only: atomic server fragments share one revision without allowing player RPC access
+  ---
+  duration_ms: 35.623
+  type: 'test'
+  ...
+# Subtest: LOCAL PGlite only: personal pet references, direct writes and cross-account reads are denied
+ok 12 - LOCAL PGlite only: personal pet references, direct writes and cross-account reads are denied
+  ---
+  duration_ms: 18.3561
+  type: 'test'
+  ...
+# Subtest: LOCAL PGlite only: legacy archive retains untrusted local data without changing cloud inventory
+ok 13 - LOCAL PGlite only: legacy archive retains untrusted local data without changing cloud inventory
+  ---
+  duration_ms: 9.041
+  type: 'test'
+  ...
+# Subtest: LOCAL PGlite only: normalized secret keys and nested serialized JSON cannot bypass cloud archive rejection
+ok 14 - LOCAL PGlite only: normalized secret keys and nested serialized JSON cannot bypass cloud archive rejection
+  ---
+  duration_ms: 18.9663
+  type: 'test'
+  ...
+# Subtest: LOCAL PGlite only: authored JSON examples and public capture proof remain byte-for-byte unchanged
+ok 15 - LOCAL PGlite only: authored JSON examples and public capture proof remain byte-for-byte unchanged
+  ---
+  duration_ms: 11.96
+  type: 'test'
+  ...
+# Subtest: LOCAL PGlite only: a failed authoritative snapshot rolls domain mutation and common revision back together
+ok 16 - LOCAL PGlite only: a failed authoritative snapshot rolls domain mutation and common revision back together
+  ---
+  duration_ms: 10.8939
+  type: 'test'
+  ...
+# Subtest: LOCAL PGlite actual SQL: service-only definer validates fresh tuple without granting Auth table SELECT
+ok 17 - LOCAL PGlite actual SQL: service-only definer validates fresh tuple without granting Auth table SELECT
+  ---
+  duration_ms: 20.1416
+  type: 'test'
+  ...
+# Subtest: LOCAL PGlite actual SQL: missing/expired managed session, anonymous Auth, wrong UID/device are rejected
+ok 18 - LOCAL PGlite actual SQL: missing/expired managed session, anonymous Auth, wrong UID/device are rejected
+  ---
+  duration_ms: 34.7087
+  type: 'test'
+  ...
+# Subtest: LOCAL PGlite actual SQL: immutable ledger rejects stale worker actor even with apparently active binding
+ok 19 - LOCAL PGlite actual SQL: immutable ledger rejects stale worker actor even with apparently active binding
+  ---
+  duration_ms: 9.825
+  type: 'test'
+  ...
+# Subtest: LOCAL PGlite upgrade only: backfill retires overwritten SID but keeps both live devices and unrelated Auth users
+ok 20 - LOCAL PGlite upgrade only: backfill retires overwritten SID but keeps both live devices and unrelated Auth users
+  ---
+  duration_ms: 15.2697
+  type: 'test'
+  ...
+# (node:17912) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/Administrator/.codex/worktrees/lingjing-foundation/DesktopPet/infra/supabase/functions/lingjing-battle/room-core.js is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to \\\\?\\C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# actual Postgres rollback after protected commit: missing report leaves growth, inventory, head revision and receipt unchanged
+# 160-character original owner completes Postgres settlement and SQLite replay using a short CAS key while retaining its original long domain receipt; an existing legacy receipt replays unchanged
+# both owners receive exactly one canonical growth + two seeds + mirrored complete report, with original other-pet state preserved
+# actual SQLite readback completes a finished-but-pending report idempotently; late adapter failure rolls back companion/garden restore together
+# an independent unverified local operation is preserved and reported as a conflict, never silently replaced
+# authenticated settlement forgery and obsolete receipt-only service path are denied
+# server training state machine uses the same core and atomically awards canonical growth/inventory/report with immutable per-round replay
+# shared08 guard rechecks stale original device/SID before training/settlement replay, rolls back without mutation, and permits another same-owner device
+# Subtest: apps\\pc-app\\runtime\\features\\battle\\tests\\authority-save.test.mjs
+ok 5 - apps\\pc-app\\runtime\\features\\battle\\tests\\authority-save.test.mjs
+  ---
+  duration_ms: 2144.0795
+  type: 'test'
+  ...
+# (node:28072) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/Administrator/.codex/worktrees/lingjing-foundation/DesktopPet/infra/supabase/functions/lingjing-battle/room-core.js is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to \\\\?\\C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# actual PostgreSQL invitation, acceptance, reserved membership, same-owner refusal and stable command receipt
+# RLS denies anonymous/nonparticipants, pending choices, direct client mutations, spoofed RPC actors and private-topic outsiders
+# shared versioned core resolves 8 immutable rounds, atomic rollback, duplicate commits and two pet-bound receipts
+# shared08 transaction guard denies revoked original SID for commands/rounds/receipt replay without mutations; same-owner second device can write
+# actual revoke_device RPC blocks direct room/round/Realtime SELECT while original Auth session still exists; same-owner second device stays authorized
+# direct room/round REST-equivalent RLS and Realtime SELECT reject still-unexpired JWT claims after session revocation or account lock
+# all authority RPCs use fixed empty search_path, security invoker and service-only execution
+# Subtest: apps\\pc-app\\runtime\\features\\battle\\tests\\cloud-battle-sql.test.mjs
+ok 6 - apps\\pc-app\\runtime\\features\\battle\\tests\\cloud-battle-sql.test.mjs
+  ---
+  duration_ms: 1719.1285
+  type: 'test'
+  ...
+# (node:22916) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/Administrator/.codex/worktrees/lingjing-foundation/DesktopPet/infra/supabase/functions/lingjing-battle/pet.js is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to \\\\?\\C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: pure server pet projection: built-in appearance uses the original template element, including a different-element costume
+ok 23 - pure server pet projection: built-in appearance uses the original template element, including a different-element costume
+  ---
+  duration_ms: 5.0539
+  type: 'test'
+  ...
+# Subtest: pure server pet projection: only a same-owner/same-Auth verified spritesheet reference permits custom 2D appearance
+ok 24 - pure server pet projection: only a same-owner/same-Auth verified spritesheet reference permits custom 2D appearance
+  ---
+  duration_ms: 1.7859
+  type: 'test'
+  ...
+# Subtest: LOCAL PGlite: controlled adoption registers compound ownership, same-request races replay the original generated pet, stale writes conflict
+ok 25 - LOCAL PGlite: controlled adoption registers compound ownership, same-request races replay the original generated pet, stale writes conflict
+  ---
+  duration_ms: 1533.8561
+  type: 'test'
+  ...
+# Subtest: LOCAL PGlite: ordinary users cannot call the worker or write growth; foreign owner/device/revoked session is rejected without adding Auth table grants
+ok 26 - LOCAL PGlite: ordinary users cannot call the worker or write growth; foreign owner/device/revoked session is rejected without adding Auth table grants
+  ---
+  duration_ms: 1125.259
+  type: 'test'
+  ...
+# Subtest: LOCAL PGlite: later transaction failure rolls back companion, shared save, pet registry and immutable receipt together
+ok 27 - LOCAL PGlite: later transaction failure rolls back companion, shared save, pet registry and immutable receipt together
+  ---
+  duration_ms: 1086.0873
+  type: 'test'
+  ...
+# Subtest: controlled cloud commands and SQLite use one instance factory and preserve per-pet names, choices, appearance and desktop fields
+ok 28 - controlled cloud commands and SQLite use one instance factory and preserve per-pet names, choices, appearance and desktop fields
+  ---
+  duration_ms: 13.1702
+  type: 'test'
+  ...
+# Subtest: cloud interaction uses original fixed effect, server clock and per-pet cooldown; retry retains one receipt and other pets remain independent
+ok 29 - cloud interaction uses original fixed effect, server clock and per-pet cooldown; retry retains one receipt and other pets remain independent
+  ---
+  duration_ms: 3.4102
+  type: 'test'
+  ...
+# Subtest: caller cannot submit growth, rewards, owner, adopted petId or unverified custom/3D appearances; stale and reused actions fail
+ok 30 - caller cannot submit growth, rewards, owner, adopted petId or unverified custom/3D appearances; stale and reused actions fail
+  ---
+  duration_ms: 3.1037
+  type: 'test'
+  ...
+# Subtest: visible range stays within account1-4 limit and lowering the setting does not block unrelated personal changes
+ok 31 - visible range stays within account1-4 limit and lowering the setting does not block unrelated personal changes
+  ---
+  duration_ms: 1.9059
+  type: 'test'
+  ...
+# Subtest: 160-character original owner retains its long battle receipt through shared growth and actual SQLite backup restore
+ok 32 - 160-character original owner retains its long battle receipt through shared growth and actual SQLite backup restore
+  ---
+  duration_ms: 937.6825
+  type: 'test'
+  ...
+# Subtest: cloud award uses the same SQLite growth rule, levels exactly one instance and preserves raw history, positions and independent selections
+ok 33 - cloud award uses the same SQLite growth rule, levels exactly one instance and preserves raw history, positions and independent selections
+  ---
+  duration_ms: 478.3042
+  type: 'test'
+  ...
+# Subtest: new and complete legacy formats retain exact replay receipts; original local growth receipt is recognized instead of awarding again
+ok 34 - new and complete legacy formats retain exact replay receipts; original local growth receipt is recognized instead of awarding again
+  ---
+  duration_ms: 461.0865
+  type: 'test'
+  ...
+# Subtest: session/owner/pet/result binding, whole-unit format and checksum reject invalid awards without mutating the source
+ok 35 - session/owner/pet/result binding, whole-unit format and checksum reject invalid awards without mutating the source
+  ---
+  duration_ms: 227.2388
+  type: 'test'
+  ...
+# Subtest: location policy and consumption recheck canonical owner/device/session revocation
+ok 36 - location policy and consumption recheck canonical owner/device/session revocation
+  ---
+  duration_ms: 1445.8775
+  type: 'test'
+  ...
+# (node:14156) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/Administrator/.codex/worktrees/lingjing-foundation/DesktopPet/infra/supabase/functions/_shared/battle-core.js is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to \\\\?\\C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: actual server kernel refuses forged victory/foreign ownership, replays original actions, and returns one capture across same-owner devices
+ok 37 - actual server kernel refuses forged victory/foreign ownership, replays original actions, and returns one capture across same-owner devices
+  ---
+  duration_ms: 24.9017
+  type: 'test'
+  ...
+# Subtest: a delayed identical request recovers a receipt committed after its first optimistic read
+ok 38 - a delayed identical request recovers a receipt committed after its first optimistic read
+  ---
+  duration_ms: 2.9934
+  type: 'test'
+  ...
+# (node:24700) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/Administrator/.codex/worktrees/lingjing-foundation/DesktopPet/infra/supabase/functions/_shared/battle-core.js is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to \\\\?\\C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: wild writes atomically consume proof and commit protected save, preserving history and replay across devices
+ok 39 - wild writes atomically consume proof and commit protected save, preserving history and replay across devices
+  ---
+  duration_ms: 2423.1356
+  type: 'test'
+  ...
+# (node:29396) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/Administrator/.codex/worktrees/lingjing-foundation/DesktopPet/infra/supabase/functions/_shared/battle-core.js is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to \\\\?\\C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: local main signer, HTTP handler and SQL retain the original owner, persisted key and explicitly bound server location proof
+ok 40 - local main signer, HTTP handler and SQL retain the original owner, persisted key and explicitly bound server location proof
+  ---
+  duration_ms: 1651.8443
+  type: 'test'
+  ...
+# Subtest: embedded PostgreSQL validates additive location permissions, nonce replay, device binding and service-only RPC
+ok 41 - embedded PostgreSQL validates additive location permissions, nonce replay, device binding and service-only RPC
+  ---
+  duration_ms: 1561.5683
+  type: 'test'
+  ...
+# Subtest: actual P-256 signature binds native fix to the verified legacy owner, auth UID, device, session, nonce, purpose and target
+ok 42 - actual P-256 signature binds native fix to the verified legacy owner, auth UID, device, session, nonce, purpose and target
+  ---
+  duration_ms: 9.4968
+  type: 'test'
+  ...
+# Subtest: proof rejects expired/replayed challenges, rotated keys, inaccurate/default/stale fixes and ordinary simulated input
+ok 43 - proof rejects expired/replayed challenges, rotated keys, inaccurate/default/stale fixes and ordinary simulated input
+  ---
+  duration_ms: 1.0616
+  type: 'test'
+  ...
+# Subtest: only server-authorized scenario actors can retain simulated provenance; renderer authority fields are rejected
+ok 44 - only server-authorized scenario actors can retain simulated provenance; renderer authority fields are rejected
+  ---
+  duration_ms: 0.572
+  type: 'test'
+  ...
+# (node:12416) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/Administrator/.codex/worktrees/lingjing-foundation/DesktopPet/infra/supabase/functions/_shared/battle-core.js is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to \\\\?\\C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: self-contained cloud distribution matches the current authoritative rules, presentation and all25 ordered element pairs
+ok 45 - self-contained cloud distribution matches the current authoritative rules, presentation and all25 ordered element pairs
+  ---
+  duration_ms: 17.4094
+  type: 'test'
+  ...
+# Subtest: cloud bundle records exact source hashes and all eight canonical resources
+ok 46 - cloud bundle records exact source hashes and all eight canonical resources
+  ---
+  duration_ms: 2.6584
+  type: 'test'
+  ...
+# Subtest: LOCAL SQL: private bucket and immutable index permit same-account separate sessions only
+ok 47 - LOCAL SQL: private bucket and immutable index permit same-account separate sessions only
+  ---
+  duration_ms: 18.6189
+  type: 'test'
+  ...
+# Subtest: LOCAL SQL: spoofed owner/UID/path and oversized index are rejected
+ok 48 - LOCAL SQL: spoofed owner/UID/path and oversized index are rejected
+  ---
+  duration_ms: 11.7506
+  type: 'test'
+  ...
+# Subtest: LOCAL SQL: anonymous, missing/revoked sessions and wrong device are denied
+ok 49 - LOCAL SQL: anonymous, missing/revoked sessions and wrong device are denied
+  ---
+  duration_ms: 6.3154
+  type: 'test'
+  ...
+# Subtest: LOCAL SQL: immutable objects/index cannot be replaced or deleted through client permissions
+ok 50 - LOCAL SQL: immutable objects/index cannot be replaced or deleted through client permissions
+  ---
+  duration_ms: 5.0766
+  type: 'test'
+  ...
+# Subtest: LOCAL SQL: only service-verified receipts can register protected resource references atomically
+ok 51 - LOCAL SQL: only service-verified receipts can register protected resource references atomically
+  ---
+  duration_ms: 28.4782
+  type: 'test'
+  ...
+# Subtest: LOCAL SQL: personal CAS cannot invent a private resource reference; a failed ledger write rolls back the save too
+ok 52 - LOCAL SQL: personal CAS cannot invent a private resource reference; a failed ledger write rolls back the save too
+  ---
+  duration_ms: 35.0455
+  type: 'test'
+  ...
+# Subtest: LOCAL SQL: validated resource preferences commit once with shared protected save, reject direct writes, invalid refs and stale edits
+ok 53 - LOCAL SQL: validated resource preferences commit once with shared protected save, reject direct writes, invalid refs and stale edits
+  ---
+  duration_ms: 48.6104
+  type: 'test'
+  ...
+# Subtest: LOCAL SQL: late preference receipt failure rolls back both preference and common save; new packages preserve committed preferences
+ok 54 - LOCAL SQL: late preference receipt failure rolls back both preference and common save; new packages preserve committed preferences
+  ---
+  duration_ms: 15.9571
+  type: 'test'
+  ...
+# Subtest: LOCAL SQL: privileged registration rechecks real session, expiry, anonymous status and exact device before replay
+ok 55 - LOCAL SQL: privileged registration rechecks real session, expiry, anonymous status and exact device before replay
+  ---
+  duration_ms: 10.89
+  type: 'test'
+  ...
+# Subtest: LOCAL SQL: single-device revocation blocks both Storage/index while other same-account device survives
+ok 56 - LOCAL SQL: single-device revocation blocks both Storage/index while other same-account device survives
+  ---
+  duration_ms: 16.6864
+  type: 'test'
+  ...
+# Subtest: deployed SQL settlement expression preserves exact authoritative battle and rejects altered identity/state
+ok 57 - deployed SQL settlement expression preserves exact authoritative battle and rejects altered identity/state
+  ---
+  duration_ms: 1317.8257
+  type: 'test'
+  ...
+# (node:28944) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/Administrator/.codex/worktrees/lingjing-foundation/DesktopPet/infra/supabase/functions/_shared/battle-core.js is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to \\\\?\\C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: real unified CAS: bootstrap, canonical planting, lost-response replay, stale revision and forbidden role
+ok 58 - real unified CAS: bootstrap, canonical planting, lost-response replay, stale revision and forbidden role
+  ---
+  duration_ms: 1471.3502
+  type: 'test'
+  ...
+# Subtest: unified CAS atomically changes existing food and one02 companion, preserving unrelated protected modules
+ok 59 - unified CAS atomically changes existing food and one02 companion, preserving unrelated protected modules
+  ---
+  duration_ms: 1110.9776
+  type: 'test'
+  ...
+# Subtest: actor is rechecked inside commit, and actor rejection rolls back before economy
+ok 60 - actor is rechecked inside commit, and actor rejection rolls back before economy
+  ---
+  duration_ms: 1028.1773
+  type: 'test'
+  ...
+# Subtest: approved migration filenames exactly match the reviewed actual-ledger alignment
+ok 61 - approved migration filenames exactly match the reviewed actual-ledger alignment
+  ---
+  duration_ms: 3.2274
+  type: 'test'
+  ...
+# Subtest: retired drafts are rejected even when all modern migrations are present
+ok 62 - retired drafts are rejected even when all modern migrations are present
+  ---
+  duration_ms: 1.0625
+  type: 'test'
+  ...
+# Subtest: a missing, renamed or unexpected migration cannot silently replace the deployed filename
+ok 63 - a missing, renamed or unexpected migration cannot silently replace the deployed filename
+  ---
+  duration_ms: 0.37
+  type: 'test'
+  ...
+# Subtest: clean database skips only the one-time unrelated-project preservation operation
+ok 64 - clean database skips only the one-time unrelated-project preservation operation
+  ---
+  duration_ms: 1312.4255
+  type: 'test'
+  ...
+# Subtest: partial original source stops before moving, exposing or deleting any original row
+ok 65 - partial original source stops before moving, exposing or deleting any original row
+  ---
+  duration_ms: 959.4086
+  type: 'test'
+  ...
+# Subtest: existing private archive is never silently reprocessed by replay adaptation
+ok 66 - existing private archive is never silently reprocessed by replay adaptation
+  ---
+  duration_ms: 927.0105
+  type: 'test'
+  ...
+1..66
+# tests 66
+# suites 0
+# pass 66
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 35406.6934

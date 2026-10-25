@@ -1,0 +1,18 @@
+✔ real SQLite / scripted provider: strict account checkpoint remains clean after post-authority journal resolution; original action bytes survive (23.3279ms)
+✔ legacy v1 restore retains raw rows and retries the original pending ID; imported records stay protected without authority proof (10.7792ms)
+✔ local v2 backup round trip keeps durable start/round requests and immutable origin bytes; new transport is absent from strict four-array cloud projection (9.7819ms)
+✔ forged local-v2 markers cannot hide unknown/offline/foreign-owner business rows or altered original requests (4.6254ms)
+✔ generic v1 restore never overwrites an existing raw business/action slot or treats a file as verified authority (3.2087ms)
+✔ a recognized-looking but rewritten v2 marker cannot hide a changed row without the byte-matching main-only seal (2.9547ms)
+✔ modified protected action/session/report/reward rows remain dirty and cannot be auto-overwritten or omitted (56.4446ms)
+✔ server-locked-original supersession accepts only its explicit shape/reason, distinct original/replacement IDs and same-owner session (3.8865ms)
+✔ finished v1 import becomes clean only through the main-only verified cloud-preview restore; file/context claims cannot seal it (4.8831ms)
+✔ an already rewarded training does not skip a needed fresh projection-only authority readback (3.2004ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 186.5956

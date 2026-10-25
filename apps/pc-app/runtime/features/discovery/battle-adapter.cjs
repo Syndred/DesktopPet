@@ -1,20 +1,4 @@
-const {BattleRuntimeService,getBattleRules}=require('../../services/battle-runtime.cjs');
-/** Compatibility helper for the separate server authority and archived fixtures.
- * Desktop DiscoveryService requires the registered battle feature, with no fallback. */
-class LegacyWildBattleAdapter {
-  begin({pet,spawn,battleId}) {
-    const engine=new BattleRuntimeService(); engine.reset({playerElement:pet.element,enemyElement:spawn.element});
-    return {battleId,petId:pet.petId,engineState:structuredClone(engine.session),view:engine.snapshot(),rounds:[],winner:null,finished:false,adapter:'battle-runtime',rules:getBattleRules()};
-  }
-  act(battle,action) {
-    if(!['normal_attack','element_attack','dodge','ultimate'].includes(action)) throw Object.assign(new Error('无效的战斗操作'),{code:'BATTLE_INVALID_ACTION'});
-    if(battle.finished) throw Object.assign(new Error('本次挑战已结束'),{code:'BATTLE_FINISHED'});
-    const engine=new BattleRuntimeService(); engine.session=structuredClone(battle.engineState);
-    const result=engine.act(action);
-    return {...battle,rules:battle.rules || getBattleRules(),engineState:structuredClone(engine.session),view:result.state,rounds:[...battle.rounds,{action,...result.roundResult}],
-      winner:result.roundResult.winner || null,finished:Boolean(result.roundResult.winner),lastRound:result};
-  }
-}
+const {getBattleRules}=require('../../services/battle-runtime.cjs');
 function fromFeatureSession(session) {
   return {battleId:session.id,petId:session.player.petId,view:session.snapshot,
     rounds:session.rounds.map(round=>({...round,action:round.actions.player})),winner:session.winner || null,
@@ -35,4 +19,4 @@ class RegisteredWildBattleAdapter {
   }
   async cancel(battle) {const result=await this.invoke('leave',{sessionId:battle.battleId}); if(!result.ok) throw Object.assign(new Error(result.message),{code:result.code});}
 }
-module.exports={LegacyWildBattleAdapter,RegisteredWildBattleAdapter,fromFeatureSession};
+module.exports={RegisteredWildBattleAdapter,fromFeatureSession};

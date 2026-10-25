@@ -149,18 +149,35 @@ test('credentials, duplicate IDs and cross-pet message rebinding are rejected be
 test('same-owner full-save restoration invalidates stale chat editors and cursors', t => {
   const f=fixture(t),bus=new EventEmitter(),registry=new Map();
   const current={id:'owner-a',lastLoginAt:'unchanged-login'};
-  registry.set('companions',{listPets:()=>[{petId:'pet-one',ownerAccountId:'owner-a',name:'原伙伴',growth:{level:1}}]});
+  registry.set('companions',{
+    listPets:()=>[{petId:'pet-one',ownerAccountId:'owner-a',name:'原伙伴',growth:{level:1}}],
+    getSelections(owner){assert.equal(owner,current.id);return{chatPetId:'pet-one',battlePetId:null,guardPetId:null};}
+  });
+  turn(f,'owner-a','pet-one','preserved-turn','恢复前原记录');
+  const original=f.adapter.export('owner-a');
   const services={db:f.db,session:{getCurrentUser:()=>current,getOwnerAccountId:()=>current.id},
     events:{on:(name,fn)=>{bus.on(name,fn);return()=>bus.off(name,fn);},emit:(name,value)=>bus.emit(name,value)},
     get:name=>registry.get(name),provide:(name,value)=>registry.set(name,value)};
   const feature=require('../index.cjs').register(services);t.after(()=>feature.dispose());
   return (async()=>{
     const context={ownerAccountId:'owner-a'};
-    const before=(await feature.commands.snapshot({},context)).data;
+    const beforeResult=await feature.commands.snapshot({},context);
+    assert.equal(beforeResult.ok,true,`${beforeResult.code}: ${beforeResult.message}`);
+    const before=beforeResult.data;assert.equal(before.petId,'pet-one');
     bus.emit('accounts:save-restored',{ownerAccountId:'owner-a'});
-    const after=(await feature.commands.snapshot({},context)).data;
+    const afterResult=await feature.commands.snapshot({},context);
+    assert.equal(afterResult.ok,true,`${afterResult.code}: ${afterResult.message}`);
+    const after=afterResult.data;assert.equal(after.petId,before.petId);
     assert.ok(after.sessionRevision>before.sessionRevision);
+    assert.deepEqual(after.messages,before.messages);
     const stale=await feature.commands['memory.save']({petId:'pet-one',memory:{content:'过期界面'},expectedSessionRevision:before.sessionRevision},context);
     assert.equal(stale.code,'SESSION_CHANGED');assert.equal(f.store.listMemories('owner-a','pet-one').length,0);
+    const cursor={petId:'pet-one',before:before.messages.at(-1).sequence};
+    const staleHistory=await feature.commands.history({...cursor,expectedSessionRevision:before.sessionRevision},context);
+    assert.equal(staleHistory.code,'SESSION_CHANGED');
+    const freshHistory=await feature.commands.history({...cursor,expectedSessionRevision:after.sessionRevision},context);
+    assert.equal(freshHistory.ok,true,`${freshHistory.code}: ${freshHistory.message}`);
+    assert.deepEqual(freshHistory.data.messages.map(row=>row.id),[before.messages[0].id]);
+    assert.deepEqual(f.adapter.export('owner-a'),original);
   })();
 });

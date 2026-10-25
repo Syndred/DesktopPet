@@ -1,0 +1,1325 @@
+{
+  "at": "2026-10-25T06:20:09.080Z",
+  "originalRun": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\cloud-upgrade\\2026-10-25\\final-portable-Fbu6gW",
+  "queryOnly": true,
+  "clients": {
+    "A": {
+      "state": {
+        "owner_account_id": "account:470a41d4-3cf7-4a7d-8b1e-32e276d2a719",
+        "cloud_revision": 67,
+        "last_checksum": "b951f34a1386f75764574431dc9e4bf586169ee1282402b34f8234fd01b328ff",
+        "last_verified_at": "2026-10-25T06:10:37.299Z",
+        "last_error": null
+      },
+      "status": {
+        "configured": true,
+        "cloudRevision": 67,
+        "lastVerifiedAt": "2026-10-25T06:10:37.299Z",
+        "lastError": null,
+        "pending": 0,
+        "conflicts": 0,
+        "localChanged": true,
+        "unverifiedLocal": 0,
+        "privacyRedactions": 0,
+        "running": false,
+        "observedCloudRevision": null,
+        "lastCloudCheckedAt": null,
+        "remoteChanged": false
+      },
+      "baseline": {
+        "revision": 67,
+        "envelopeChecksum": "b951f34a1386f75764574431dc9e4bf586169ee1282402b34f8234fd01b328ff",
+        "dataChecksum": "02a2b32b872e52189fefa9e8248ce312edfa53cf4d2ac6e9e87f087e8c9d0ce7",
+        "personalChecksum": "a6c16d57388cb94704b2f549ded1e9b17b2875ac60c914f614c8da8b018eebea",
+        "protectedChecksum": "8c92b8c6fbaf5e0aa482c3fcf440485cf4083dafc5453be2b3e02227aaed8d53",
+        "cloudDocumentBytes": 97306
+      },
+      "outbox": [
+        {
+          "action_id": "8040f5cc-255a-460e-8538-1517d6d73a7d",
+          "base_revision": 58,
+          "status": "verified",
+          "attempts": 0,
+          "last_error": null,
+          "created_at": "2026-10-25T06:06:21.123Z",
+          "verified_at": "2026-10-25T06:06:26.261Z"
+        },
+        {
+          "action_id": "auto:f9202224-234f-4fdd-b25c-db8c5175a820",
+          "base_revision": 61,
+          "status": "verified",
+          "attempts": 0,
+          "last_error": null,
+          "created_at": "2026-10-25T06:07:44.822Z",
+          "verified_at": "2026-10-25T06:07:49.899Z"
+        }
+      ],
+      "sources": [
+        {
+          "action_id": "8040f5cc-255a-460e-8538-1517d6d73a7d",
+          "authority_pending": 0,
+          "cloud_excluded": "[]",
+          "archive_reason": null,
+          "prepared_at": "2026-10-25T06:06:23.324Z"
+        },
+        {
+          "action_id": "auto:f9202224-234f-4fdd-b25c-db8c5175a820",
+          "authority_pending": 0,
+          "cloud_excluded": "[]",
+          "archive_reason": null,
+          "prepared_at": "2026-10-25T06:07:46.918Z"
+        }
+      ],
+      "battles": [
+        {
+          "id": "battle-f8b798b2-59b9-46c8-8e47-5f36d7bbc0c1",
+          "status": "finished",
+          "revision": 21,
+          "round": 20,
+          "rewardApplied": 1,
+          "experience": 5
+        }
+      ],
+      "actionCounts": [
+        {
+          "session_id": "44d742ea-18d9-4ef7-867e-03a4af02fdef",
+          "n": 1
+        },
+        {
+          "session_id": "battle-f8b798b2-59b9-46c8-8e47-5f36d7bbc0c1",
+          "n": 20
+        }
+      ],
+      "rewards": [
+        {
+          "session_id": "battle-f8b798b2-59b9-46c8-8e47-5f36d7bbc0c1",
+          "action_id": "battle:battle-f8b798b2-59b9-46c8-8e47-5f36d7bbc0c1:account:470a41d4-3cf7-4a7d-8b1e-32e276d2a719",
+          "pet_id": "pet-b85fd17e-3f75-4261-8fa3-58ea1983542c",
+          "experience": 5
+        }
+      ],
+      "moduleComparison": {
+        "legacy": {
+          "local": "912ec583ad02cb30310c34acb04fb9e68a9fbf20239f68ef7f1458b5f4ddfa2d"
+        },
+        "settings": {
+          "local": "816d053772721c7f8a2581e2e0beec0da679e31d90d07397aff9e0a647cc551b",
+          "confirmed": "816d053772721c7f8a2581e2e0beec0da679e31d90d07397aff9e0a647cc551b",
+          "equal": true,
+          "diff": []
+        },
+        "character-resources": {
+          "local": "69dabaf19621aeb2be396a29b05b93539b70864401fb86dd796cb873703926a9",
+          "confirmed": "69dabaf19621aeb2be396a29b05b93539b70864401fb86dd796cb873703926a9",
+          "equal": true,
+          "diff": []
+        },
+        "companions": {
+          "local": "2d3a0f903c27514b5f18c5a3bfe52e466ce286c904892bde57f5efb4fd2e7f20",
+          "confirmed": "7d26fccdb18a775b792d319f58a0ae79f9487b09f3aa04300fa7ff4936608259",
+          "equal": false,
+          "diff": [
+            {
+              "path": "companions.data.tables.companion_accounts[0].revision",
+              "a": 60,
+              "b": 58
+            },
+            {
+              "path": "companions.data.tables.companion_pets[9].revision",
+              "a": 5,
+              "b": 3
+            },
+            {
+              "path": "companions.data.tables.companion_pets[9].data_json.json.growth.experience",
+              "a": 5,
+              "b": 0
+            },
+            {
+              "path": "companions.data.tables.companion_pets[9].data_json.json.desktop.visible",
+              "a": false,
+              "b": true
+            },
+            {
+              "path": "companions.data.tables.companion_pets[9].data_json.json.revision",
+              "a": 5,
+              "b": 3
+            },
+            {
+              "path": "companions.data.tables.companion_pets[9].data_json.json.updatedAt",
+              "a": "2026-10-25T06:13:50.849Z",
+              "b": "2026-10-25T06:09:39.710Z"
+            },
+            {
+              "path": "companions.data.tables.companion_pets[9].updated_at",
+              "a": "2026-10-25T06:13:50.849Z",
+              "b": "2026-10-25T06:09:39.710Z"
+            },
+            {
+              "path": "companions.data.tables.companion_actions",
+              "kind": "length",
+              "a": 60,
+              "b": 58
+            },
+            {
+              "path": "companions.data.tables.companion_actions[12].action_id",
+              "a": "4f172f5a-a928-4c8c-bf2e-4f70f2043403",
+              "b": "4fe13bf2-1a7a-464c-89c0-799a47af1745"
+            },
+            {
+              "path": "companions.data.tables.companion_actions[12].request_hash",
+              "a": "9563fce3d235940eb271e8f1c039a6a203185d65112ecf455a7067ce7154904b",
+              "b": "17ced4d8050de647cd6abcdfa0505d1d489807e5b07385dc195e5194356cfeb6"
+            },
+            {
+              "path": "companions.data.tables.companion_actions[12].result_json.json.data.pet.petId",
+              "a": "pet-b85fd17e-3f75-4261-8fa3-58ea1983542c",
+              "b": "pet-68c19bde-6ac8-4a7a-b65b-75b91c360d33"
+            },
+            {
+              "path": "companions.data.tables.companion_actions[12].result_json.json.data.pet.name",
+              "a": "联合验收132d9473",
+              "b": "并发1d752ad27"
+            },
+            {
+              "path": "companions.data.tables.companion_actions[12].result_json.json.data.pet.serial",
+              "a": "B85FD17E",
+              "b": "68C19BDE"
+            },
+            {
+              "path": "companions.data.tables.companion_actions[12].result_json.json.data.pet.resource.resourceId",
+              "a": "74f5d8ff-ffa6-4f40-8e41-39f80b33acf3",
+              "b": "builtin:lingjing-yuwan-v2"
+            },
+            {
+              "path": "companions.data.tables.companion_actions[12].result_json.json.data.pet.growth.experience",
+              "a": 5,
+              "b": 0
+            },
+            {
+              "path": "companions.data.tables.companion_actions[12].result_json.json.data.pet.desktop.visible",
+              "a": false,
+              "b": true
+            },
+            {
+              "path": "companions.data.tables.companion_actions[12].result_json.json.data.pet.revision",
+              "a": 5,
+              "b": 3
+            },
+            {
+              "path": "companions.data.tables.companion_actions[12].result_json.json.data.pet.createdAt",
+              "a": "2026-10-25T06:07:09.392Z",
+              "b": "2026-10-25T04:06:29.296Z"
+            },
+            {
+              "path": "companions.data.tables.companion_actions[12].result_json.json.data.pet.updatedAt",
+              "a": "2026-10-25T06:13:50.849Z",
+              "b": "2026-10-25T04:07:52.390Z"
+            },
+            {
+              "path": "companions.data.tables.companion_actions[12].result_json.json.data.selections.chatPetId",
+              "a": "pet-b85fd17e-3f75-4261-8fa3-58ea1983542c",
+              "b": "pet-68c19bde-6ac8-4a7a-b65b-75b91c360d33"
+            },
+            {
+              "path": "companions.data.tables.companion_actions[12].result_json.json.data.selections.battlePetId",
+              "a": "pet-b85fd17e-3f75-4261-8fa3-58ea1983542c",
+              "b": "pet-224b6054-d0ac-47ea-9572-670f926e27aa"
+            },
+            {
+              "path": "companions.data.tables.companion_actions[12].result_json.json.data.selections.guardPetId",
+              "a": "pet-3eea8bca-f04f-4f64-9a04-603f36596890",
+              "b": "pet-68c19bde-6ac8-4a7a-b65b-75b91c360d33"
+            },
+            {
+              "path": "companions.data.tables.companion_actions[12].result_json.json.revision",
+              "a": 60,
+              "b": 26
+            },
+            {
+              "path": "companions.data.tables.companion_actions[12].created_at",
+              "a": "2026-10-25T06:13:50.849Z",
+              "b": "2026-10-25T04:07:52.390Z"
+            },
+            {
+              "path": "companions.data.tables.companion_actions[13].action_id",
+              "a": "4fe13bf2-1a7a-464c-89c0-799a47af1745",
+              "b": "5bf1f03a-b4b5-4b12-91b1-9fe44350c49f"
+            },
+            {
+              "path": "companions.data.tables.companion_actions[13].request_hash",
+              "a": "17ced4d8050de647cd6abcdfa0505d1d489807e5b07385dc195e5194356cfeb6",
+              "b": "78a5a0753dafb9ed83095e6848da5336ab2466d8505b13089a69cd7ef4c60236"
+            },
+            {
+              "path": "companions.data.tables.companion_actions[13].result_json.json.data.pet.petId",
+              "a": "pet-68c19bde-6ac8-4a7a-b65b-75b91c360d33",
+              "b": "pet-b85fd17e-3f75-4261-8fa3-58ea1983542c"
+            },
+            {
+              "path": "companions.data.tables.companion_actions[13].result_json.json.data.pet.name",
+              "a": "并发1d752ad27",
+              "b": "联合验收132d9473"
+            },
+            {
+              "path": "companions.data.tables.companion_actions[13].result_json.json.data.pet.serial",
+              "a": "68C19BDE",
+              "b": "B85FD17E"
+            },
+            {
+              "path": "companions.data.tables.companion_actions[13].result_json.json.data.pet.resource.resourceId",
+              "a": "builtin:lingjing-yuwan-v2",
+              "b": "74f5d8ff-ffa6-4f40-8e41-39f80b33acf3"
+            }
+          ]
+        },
+        "battle": {
+          "local": "ab2dc3b9ae2332ac86895570c4bcf17faddba9bf7e69d0bf405ed22a388c300f"
+        },
+        "garden": {
+          "local": "3080089195f631ed2539539b458818d04269bfc1de2c8045ed04621688c54b3f",
+          "confirmed": "f843bf30503ffc0cf70b243afee789d740bcb0446ad4b17e3cac28c6c9d6fdd5",
+          "equal": false,
+          "diff": [
+            {
+              "path": "garden.data.tables.garden_accounts[0].revision",
+              "a": 3,
+              "b": 2
+            },
+            {
+              "path": "garden.data.tables.garden_items[0].item_id",
+              "a": "seed:berry",
+              "b": "seed:carrot"
+            },
+            {
+              "path": "garden.data.tables.garden_items[0].quantity",
+              "a": 4,
+              "b": 1
+            },
+            {
+              "path": "garden.data.tables.garden_items[1].item_id",
+              "a": "seed:carrot",
+              "b": "seed:tomato"
+            },
+            {
+              "path": "garden.data.tables.garden_items[1].quantity",
+              "a": 1,
+              "b": 2
+            },
+            {
+              "path": "garden.data.tables.garden_items[2].item_id",
+              "a": "seed:rice",
+              "b": "seed:berry"
+            },
+            {
+              "path": "garden.data.tables.garden_items[3].item_id",
+              "a": "seed:tomato",
+              "b": "seed:rice"
+            },
+            {
+              "path": "garden.data.tables.garden_actions",
+              "kind": "length",
+              "a": 3,
+              "b": 2
+            },
+            {
+              "path": "garden.data.tables.garden_actions[0].action_id",
+              "a": "battle-seeds:training:battle-f8b798b2-59b9-46c8-8e47-5f36d7bbc0c1",
+              "b": "cloud-garden-initialize:v1"
+            },
+            {
+              "path": "garden.data.tables.garden_actions[0].kind",
+              "a": "reward",
+              "b": "initialize"
+            },
+            {
+              "path": "garden.data.tables.garden_actions[0].request_hash",
+              "a": "a0ac9ec7a6c44a378041fa6c5a76f5c2b81ab70b1e6459fb68653b121057ad38",
+              "b": "ac51e8f90788864d1867aaeaebff53b38a6a3e2dc506a8f16aa1ed9ecf4b9fb7"
+            },
+            {
+              "path": "garden.data.tables.garden_actions[0].result_json.json.data.source",
+              "a": "battle"
+            },
+            {
+              "path": "garden.data.tables.garden_actions[0].result_json.json.data.receiptId",
+              "a": "battle-f8b798b2-59b9-46c8-8e47-5f36d7bbc0c1"
+            },
+            {
+              "path": "garden.data.tables.garden_actions[0].result_json.json.data.itemId",
+              "a": "seed:berry"
+            },
+            {
+              "path": "garden.data.tables.garden_actions[0].result_json.json.data.quantity",
+              "a": 2
+            },
+            {
+              "path": "garden.data.tables.garden_actions[0].result_json.json.data.initialized",
+              "b": true
+            },
+            {
+              "path": "garden.data.tables.garden_actions[0].result_json.json.data.plots",
+              "b": 6
+            },
+            {
+              "path": "garden.data.tables.garden_actions[0].result_json.json.revision",
+              "a": 3,
+              "b": 1
+            },
+            {
+              "path": "garden.data.tables.garden_actions[0].created_at",
+              "a": 1792908697982,
+              "b": 1792899164043
+            },
+            {
+              "path": "garden.data.tables.garden_actions[1].action_id",
+              "a": "cloud-garden-initialize:v1",
+              "b": "coord-garden-df4a2010-a727-41f8-92d1-cd5c719f6746"
+            },
+            {
+              "path": "garden.data.tables.garden_actions[1].kind",
+              "a": "initialize",
+              "b": "plant"
+            },
+            {
+              "path": "garden.data.tables.garden_actions[1].request_hash",
+              "a": "ac51e8f90788864d1867aaeaebff53b38a6a3e2dc506a8f16aa1ed9ecf4b9fb7",
+              "b": "e9b343c7cdfe01e27c251b3cb1e86c98c2181f1968c90c43af7a64423ad7aa36"
+            },
+            {
+              "path": "garden.data.tables.garden_actions[1].result_json.json.data.initialized",
+              "a": true
+            },
+            {
+              "path": "garden.data.tables.garden_actions[1].result_json.json.data.plots",
+              "a": 6
+            },
+            {
+              "path": "garden.data.tables.garden_actions[1].result_json.json.data.plotId",
+              "b": "plot-1"
+            },
+            {
+              "path": "garden.data.tables.garden_actions[1].result_json.json.data.cropType",
+              "b": "carrot"
+            },
+            {
+              "path": "garden.data.tables.garden_actions[1].result_json.json.data.plantedAt",
+              "b": 1792899166531
+            },
+            {
+              "path": "garden.data.tables.garden_actions[1].result_json.json.data.maturesAt",
+              "b": 1792899766531
+            },
+            {
+              "path": "garden.data.tables.garden_actions[1].result_json.json.data.yieldQuantity",
+              "b": 3
+            },
+            {
+              "path": "garden.data.tables.garden_actions[1].result_json.json.revision",
+              "a": 1,
+              "b": 2
+            }
+          ]
+        },
+        "conversations": {
+          "local": "755b1143c62e3e6e4a8c966bceb46f86aaef13061581137a744ed1f28bd956af",
+          "confirmed": "755b1143c62e3e6e4a8c966bceb46f86aaef13061581137a744ed1f28bd956af",
+          "equal": true,
+          "diff": []
+        }
+      },
+      "tableComparison": {
+        "local": "e0d7612110a15ad8fff7229bfa9896ee211a56f4268af5577903af85ab8b88ac",
+        "confirmed": "a2522e353c809c6fa091ec4b9df9eb18c64ffd2e06fbd125b3d37075e5504460",
+        "diff": [
+          {
+            "path": "tables.discovery_actions",
+            "a": {
+              "schema": [
+                {
+                  "name": "owner_account_id",
+                  "type": "TEXT",
+                  "notnull": 1,
+                  "pk": 1,
+                  "dflt_value": null
+                },
+                {
+                  "name": "action_id",
+                  "type": "TEXT",
+                  "notnull": 1,
+                  "pk": 2,
+                  "dflt_value": null
+                },
+                {
+                  "name": "request_hash",
+                  "type": "TEXT",
+                  "notnull": 1,
+                  "pk": 0,
+                  "dflt_value": null
+                },
+                {
+                  "name": "result_json",
+                  "type": "TEXT",
+                  "notnull": 1,
+                  "pk": 0,
+                  "dflt_value": null
+                }
+              ],
+              "rows": []
+            }
+          },
+          {
+            "path": "tables.discovery_captures",
+            "a": {
+              "schema": [
+                {
+                  "name": "owner_account_id",
+                  "type": "TEXT",
+                  "notnull": 1,
+                  "pk": 1,
+                  "dflt_value": null
+                },
+                {
+                  "name": "encounter_id",
+                  "type": "TEXT",
+                  "notnull": 1,
+                  "pk": 2,
+                  "dflt_value": null
+                },
+                {
+                  "name": "pet_id",
+                  "type": "TEXT",
+                  "notnull": 1,
+                  "pk": 0,
+                  "dflt_value": null
+                },
+                {
+                  "name": "action_id",
+                  "type": "TEXT",
+                  "notnull": 1,
+                  "pk": 0,
+                  "dflt_value": null
+                },
+                {
+                  "name": "data_json",
+                  "type": "TEXT",
+                  "notnull": 1,
+                  "pk": 0,
+                  "dflt_value": null
+                },
+                {
+                  "name": "captured_at",
+                  "type": "INTEGER",
+                  "notnull": 1,
+                  "pk": 0,
+                  "dflt_value": null
+                }
+              ],
+              "rows": []
+            }
+          },
+          {
+            "path": "tables.discovery_encounters",
+            "a": {
+              "schema": [
+                {
+                  "name": "owner_account_id",
+                  "type": "TEXT",
+                  "notnull": 1,
+                  "pk": 1,
+                  "dflt_value": null
+                },
+                {
+                  "name": "encounter_id",
+                  "type": "TEXT",
+                  "notnull": 1,
+                  "pk": 2,
+                  "dflt_value": null
+                },
+                {
+                  "name": "status",
+                  "type": "TEXT",
+                  "notnull": 1,
+                  "pk": 0,
+                  "dflt_value": null
+                },
+                {
+                  "name": "revision",
+                  "type": "INTEGER",
+                  "notnull": 1,
+                  "pk": 0,
+                  "dflt_value": null
+                },
+                {
+                  "name": "data_json",
+                  "type": "TEXT",
+                  "notnull": 1,
+                  "pk": 0,
+                  "dflt_value": null
+                },
+                {
+                  "name": "updated_at",
+                  "type": "INTEGER",
+                  "notnull": 1,
+                  "pk": 0,
+                  "dflt_value": null
+                }
+              ],
+              "rows": []
+            }
+          },
+          {
+            "path": "tables.discovery_memory_tags",
+            "a": {
+              "schema": [
+                {
+                  "name": "owner_account_id",
+                  "type": "TEXT",
+                  "notnull": 1,
+                  "pk": 1,
+                  "dflt_value": null
+                },
+                {
+                  "name": "pet_id",
+                  "type": "TEXT",
+                  "notnull": 1,
+                  "pk": 2,
+                  "dflt_value": null
+                },
+                {
+                  "name": "tag_id",
+                  "type": "TEXT",
+                  "notnull": 1,
+                  "pk": 3,
+                  "dflt_value": null
+                },
+                {
+                  "name": "data_json",
+                  "type": "TEXT",
+                  "notnull": 1,
+                  "pk": 0,
+                  "dflt_value": null
+                }
+              ],
+              "rows": []
+            }
+          }
+        ]
+      },
+      "quickCheck": "ok",
+      "originalDatabaseHashUnchanged": true
+    },
+    "B": {
+      "state": {
+        "owner_account_id": "account:470a41d4-3cf7-4a7d-8b1e-32e276d2a719",
+        "cloud_revision": 68,
+        "last_checksum": "313475052a1517d94e42fb6a652c639f4bf66e87dfab7113490413698325874a",
+        "last_verified_at": "2026-10-25T06:13:45.309Z",
+        "last_error": null
+      },
+      "status": {
+        "configured": true,
+        "cloudRevision": 68,
+        "lastVerifiedAt": "2026-10-25T06:13:45.309Z",
+        "lastError": null,
+        "pending": 0,
+        "conflicts": 0,
+        "localChanged": false,
+        "unverifiedLocal": 0,
+        "privacyRedactions": 0,
+        "running": false,
+        "observedCloudRevision": null,
+        "lastCloudCheckedAt": null,
+        "remoteChanged": false
+      },
+      "baseline": {
+        "revision": 68,
+        "envelopeChecksum": "313475052a1517d94e42fb6a652c639f4bf66e87dfab7113490413698325874a",
+        "dataChecksum": "e5793be6617f7341b79bd567d623aa7b0f6a8d20ad6b25a57c90c6a8d292fd89",
+        "personalChecksum": "a6c16d57388cb94704b2f549ded1e9b17b2875ac60c914f614c8da8b018eebea",
+        "protectedChecksum": "1cbf136907608556b60841b12ef36ffaf9e9c7ea6512c2e0316444d5d9dbbaba",
+        "cloudDocumentBytes": 139833
+      },
+      "outbox": [],
+      "sources": [],
+      "battles": [
+        {
+          "id": "battle-f8b798b2-59b9-46c8-8e47-5f36d7bbc0c1",
+          "status": "finished",
+          "revision": 21,
+          "round": 20,
+          "rewardApplied": 1,
+          "experience": 5
+        }
+      ],
+      "actionCounts": [],
+      "rewards": [
+        {
+          "session_id": "battle-f8b798b2-59b9-46c8-8e47-5f36d7bbc0c1",
+          "action_id": "battle:battle-f8b798b2-59b9-46c8-8e47-5f36d7bbc0c1:account:470a41d4-3cf7-4a7d-8b1e-32e276d2a719",
+          "pet_id": "pet-b85fd17e-3f75-4261-8fa3-58ea1983542c",
+          "experience": 5
+        }
+      ],
+      "moduleComparison": {
+        "legacy": {
+          "local": "912ec583ad02cb30310c34acb04fb9e68a9fbf20239f68ef7f1458b5f4ddfa2d"
+        },
+        "settings": {
+          "local": "816d053772721c7f8a2581e2e0beec0da679e31d90d07397aff9e0a647cc551b",
+          "confirmed": "816d053772721c7f8a2581e2e0beec0da679e31d90d07397aff9e0a647cc551b",
+          "equal": true,
+          "diff": []
+        },
+        "character-resources": {
+          "local": "69dabaf19621aeb2be396a29b05b93539b70864401fb86dd796cb873703926a9",
+          "confirmed": "69dabaf19621aeb2be396a29b05b93539b70864401fb86dd796cb873703926a9",
+          "equal": true,
+          "diff": []
+        },
+        "companions": {
+          "local": "b286f7c3486c7b3c175ada7ea9865dfd01a2626766c74e329b3f052605023e1c",
+          "confirmed": "b286f7c3486c7b3c175ada7ea9865dfd01a2626766c74e329b3f052605023e1c",
+          "equal": true,
+          "diff": []
+        },
+        "battle": {
+          "local": "9979cc9872f390ab468c5cee7715d170886240a03bc215861b1e0a7c8cf8960a",
+          "confirmed": "9979cc9872f390ab468c5cee7715d170886240a03bc215861b1e0a7c8cf8960a",
+          "equal": true,
+          "diff": []
+        },
+        "garden": {
+          "local": "3080089195f631ed2539539b458818d04269bfc1de2c8045ed04621688c54b3f",
+          "confirmed": "b1c8bc68fdd64651e2189abc44ecbda7ba4a176f14075db8db6ec30f57b81a9e",
+          "equal": false,
+          "diff": [
+            {
+              "path": "garden.data.tables.garden_items[0].item_id",
+              "a": "seed:berry",
+              "b": "seed:carrot"
+            },
+            {
+              "path": "garden.data.tables.garden_items[0].quantity",
+              "a": 4,
+              "b": 1
+            },
+            {
+              "path": "garden.data.tables.garden_items[1].item_id",
+              "a": "seed:carrot",
+              "b": "seed:tomato"
+            },
+            {
+              "path": "garden.data.tables.garden_items[1].quantity",
+              "a": 1,
+              "b": 2
+            },
+            {
+              "path": "garden.data.tables.garden_items[2].item_id",
+              "a": "seed:rice",
+              "b": "seed:berry"
+            },
+            {
+              "path": "garden.data.tables.garden_items[2].quantity",
+              "a": 2,
+              "b": 4
+            },
+            {
+              "path": "garden.data.tables.garden_items[3].item_id",
+              "a": "seed:tomato",
+              "b": "seed:rice"
+            },
+            {
+              "path": "garden.data.tables.garden_actions[0].action_id",
+              "a": "battle-seeds:training:battle-f8b798b2-59b9-46c8-8e47-5f36d7bbc0c1",
+              "b": "cloud-garden-initialize:v1"
+            },
+            {
+              "path": "garden.data.tables.garden_actions[0].kind",
+              "a": "reward",
+              "b": "initialize"
+            },
+            {
+              "path": "garden.data.tables.garden_actions[0].request_hash",
+              "a": "a0ac9ec7a6c44a378041fa6c5a76f5c2b81ab70b1e6459fb68653b121057ad38",
+              "b": "ac51e8f90788864d1867aaeaebff53b38a6a3e2dc506a8f16aa1ed9ecf4b9fb7"
+            },
+            {
+              "path": "garden.data.tables.garden_actions[0].result_json.json.data.source",
+              "a": "battle"
+            },
+            {
+              "path": "garden.data.tables.garden_actions[0].result_json.json.data.receiptId",
+              "a": "battle-f8b798b2-59b9-46c8-8e47-5f36d7bbc0c1"
+            },
+            {
+              "path": "garden.data.tables.garden_actions[0].result_json.json.data.itemId",
+              "a": "seed:berry"
+            },
+            {
+              "path": "garden.data.tables.garden_actions[0].result_json.json.data.quantity",
+              "a": 2
+            },
+            {
+              "path": "garden.data.tables.garden_actions[0].result_json.json.data.initialized",
+              "b": true
+            },
+            {
+              "path": "garden.data.tables.garden_actions[0].result_json.json.data.plots",
+              "b": 6
+            },
+            {
+              "path": "garden.data.tables.garden_actions[0].result_json.json.revision",
+              "a": 3,
+              "b": 1
+            },
+            {
+              "path": "garden.data.tables.garden_actions[0].created_at",
+              "a": 1792908697982,
+              "b": 1792899164043
+            },
+            {
+              "path": "garden.data.tables.garden_actions[1].action_id",
+              "a": "cloud-garden-initialize:v1",
+              "b": "coord-garden-df4a2010-a727-41f8-92d1-cd5c719f6746"
+            },
+            {
+              "path": "garden.data.tables.garden_actions[1].kind",
+              "a": "initialize",
+              "b": "plant"
+            },
+            {
+              "path": "garden.data.tables.garden_actions[1].request_hash",
+              "a": "ac51e8f90788864d1867aaeaebff53b38a6a3e2dc506a8f16aa1ed9ecf4b9fb7",
+              "b": "e9b343c7cdfe01e27c251b3cb1e86c98c2181f1968c90c43af7a64423ad7aa36"
+            },
+            {
+              "path": "garden.data.tables.garden_actions[1].result_json.json.data.initialized",
+              "a": true
+            },
+            {
+              "path": "garden.data.tables.garden_actions[1].result_json.json.data.plots",
+              "a": 6
+            },
+            {
+              "path": "garden.data.tables.garden_actions[1].result_json.json.data.plotId",
+              "b": "plot-1"
+            },
+            {
+              "path": "garden.data.tables.garden_actions[1].result_json.json.data.cropType",
+              "b": "carrot"
+            },
+            {
+              "path": "garden.data.tables.garden_actions[1].result_json.json.data.plantedAt",
+              "b": 1792899166531
+            },
+            {
+              "path": "garden.data.tables.garden_actions[1].result_json.json.data.maturesAt",
+              "b": 1792899766531
+            },
+            {
+              "path": "garden.data.tables.garden_actions[1].result_json.json.data.yieldQuantity",
+              "b": 3
+            },
+            {
+              "path": "garden.data.tables.garden_actions[1].result_json.json.revision",
+              "a": 1,
+              "b": 2
+            },
+            {
+              "path": "garden.data.tables.garden_actions[1].created_at",
+              "a": 1792899164043,
+              "b": 1792899166531
+            }
+          ]
+        },
+        "conversations": {
+          "local": "755b1143c62e3e6e4a8c966bceb46f86aaef13061581137a744ed1f28bd956af",
+          "confirmed": "755b1143c62e3e6e4a8c966bceb46f86aaef13061581137a744ed1f28bd956af",
+          "equal": true,
+          "diff": []
+        }
+      },
+      "tableComparison": {
+        "local": "e0d7612110a15ad8fff7229bfa9896ee211a56f4268af5577903af85ab8b88ac",
+        "confirmed": "a2522e353c809c6fa091ec4b9df9eb18c64ffd2e06fbd125b3d37075e5504460",
+        "diff": [
+          {
+            "path": "tables.discovery_actions",
+            "a": {
+              "schema": [
+                {
+                  "name": "owner_account_id",
+                  "type": "TEXT",
+                  "notnull": 1,
+                  "pk": 1,
+                  "dflt_value": null
+                },
+                {
+                  "name": "action_id",
+                  "type": "TEXT",
+                  "notnull": 1,
+                  "pk": 2,
+                  "dflt_value": null
+                },
+                {
+                  "name": "request_hash",
+                  "type": "TEXT",
+                  "notnull": 1,
+                  "pk": 0,
+                  "dflt_value": null
+                },
+                {
+                  "name": "result_json",
+                  "type": "TEXT",
+                  "notnull": 1,
+                  "pk": 0,
+                  "dflt_value": null
+                }
+              ],
+              "rows": []
+            }
+          },
+          {
+            "path": "tables.discovery_captures",
+            "a": {
+              "schema": [
+                {
+                  "name": "owner_account_id",
+                  "type": "TEXT",
+                  "notnull": 1,
+                  "pk": 1,
+                  "dflt_value": null
+                },
+                {
+                  "name": "encounter_id",
+                  "type": "TEXT",
+                  "notnull": 1,
+                  "pk": 2,
+                  "dflt_value": null
+                },
+                {
+                  "name": "pet_id",
+                  "type": "TEXT",
+                  "notnull": 1,
+                  "pk": 0,
+                  "dflt_value": null
+                },
+                {
+                  "name": "action_id",
+                  "type": "TEXT",
+                  "notnull": 1,
+                  "pk": 0,
+                  "dflt_value": null
+                },
+                {
+                  "name": "data_json",
+                  "type": "TEXT",
+                  "notnull": 1,
+                  "pk": 0,
+                  "dflt_value": null
+                },
+                {
+                  "name": "captured_at",
+                  "type": "INTEGER",
+                  "notnull": 1,
+                  "pk": 0,
+                  "dflt_value": null
+                }
+              ],
+              "rows": []
+            }
+          },
+          {
+            "path": "tables.discovery_encounters",
+            "a": {
+              "schema": [
+                {
+                  "name": "owner_account_id",
+                  "type": "TEXT",
+                  "notnull": 1,
+                  "pk": 1,
+                  "dflt_value": null
+                },
+                {
+                  "name": "encounter_id",
+                  "type": "TEXT",
+                  "notnull": 1,
+                  "pk": 2,
+                  "dflt_value": null
+                },
+                {
+                  "name": "status",
+                  "type": "TEXT",
+                  "notnull": 1,
+                  "pk": 0,
+                  "dflt_value": null
+                },
+                {
+                  "name": "revision",
+                  "type": "INTEGER",
+                  "notnull": 1,
+                  "pk": 0,
+                  "dflt_value": null
+                },
+                {
+                  "name": "data_json",
+                  "type": "TEXT",
+                  "notnull": 1,
+                  "pk": 0,
+                  "dflt_value": null
+                },
+                {
+                  "name": "updated_at",
+                  "type": "INTEGER",
+                  "notnull": 1,
+                  "pk": 0,
+                  "dflt_value": null
+                }
+              ],
+              "rows": []
+            }
+          },
+          {
+            "path": "tables.discovery_memory_tags",
+            "a": {
+              "schema": [
+                {
+                  "name": "owner_account_id",
+                  "type": "TEXT",
+                  "notnull": 1,
+                  "pk": 1,
+                  "dflt_value": null
+                },
+                {
+                  "name": "pet_id",
+                  "type": "TEXT",
+                  "notnull": 1,
+                  "pk": 2,
+                  "dflt_value": null
+                },
+                {
+                  "name": "tag_id",
+                  "type": "TEXT",
+                  "notnull": 1,
+                  "pk": 3,
+                  "dflt_value": null
+                },
+                {
+                  "name": "data_json",
+                  "type": "TEXT",
+                  "notnull": 1,
+                  "pk": 0,
+                  "dflt_value": null
+                }
+              ],
+              "rows": []
+            }
+          }
+        ]
+      },
+      "quickCheck": "ok",
+      "originalDatabaseHashUnchanged": true
+    }
+  },
+  "crossComparison": {
+    "against": "B exact confirmed settlement envelope revision 68",
+    "modules": {
+      "legacy": {
+        "local": "b4172e233a964b9f9648be49eb1dfd9a0ad06c4ec3025ab9161753ecfabd070a"
+      },
+      "settings": {
+        "local": "1bdcf45e223bf0cec41abfc68f197a9de1ba2d849d8785f3e2e4238d3f7042c5",
+        "confirmed": "1bdcf45e223bf0cec41abfc68f197a9de1ba2d849d8785f3e2e4238d3f7042c5",
+        "equal": true
+      },
+      "character-resources": {
+        "local": "47e0c7bf1511436ca5761bfdda88f11517087c8d8c4ac11f502fec4926a06095",
+        "confirmed": "47e0c7bf1511436ca5761bfdda88f11517087c8d8c4ac11f502fec4926a06095",
+        "equal": true
+      },
+      "companions": {
+        "local": "50cc1b401a8047a079196d4ff62e5ef3892b2a59f0074f6173488d8da77659a4",
+        "confirmed": "8b1c33874b46aae2d6d4ce56bfaf2d54f33dbc98fe572957ea1d9e67f11cfd48",
+        "equal": false
+      },
+      "battle": {
+        "local": "6ef813d7b539424c9297e959902bff3e473d8e7e74d7307cdb820b2d2c85cd55",
+        "confirmed": "63f0868429dad562c3c9ac086d655ad82367344f8283ead46bc91397a5300719",
+        "equal": false
+      },
+      "garden": {
+        "local": "5932e0cfeb7939f9f2fbe45f578bdcc34a6157179b8d06dd5880b780bc421927",
+        "confirmed": "5932e0cfeb7939f9f2fbe45f578bdcc34a6157179b8d06dd5880b780bc421927",
+        "equal": true
+      },
+      "conversations": {
+        "local": "9b0a83bf225e4852f1c16f96bda134f1b19f2cbb49ddd6c416e5c2af9c077862",
+        "confirmed": "9b0a83bf225e4852f1c16f96bda134f1b19f2cbb49ddd6c416e5c2af9c077862",
+        "equal": true
+      }
+    },
+    "battle": {
+      "sessions": {
+        "localCount": 1,
+        "confirmedCount": 1,
+        "equal": true,
+        "diff": []
+      },
+      "reports": {
+        "localCount": 1,
+        "confirmedCount": 1,
+        "equal": true,
+        "diff": []
+      },
+      "rewards": {
+        "localCount": 1,
+        "confirmedCount": 1,
+        "equal": true,
+        "diff": []
+      },
+      "actions": {
+        "localCount": 21,
+        "confirmedCount": 0,
+        "equal": false
+      }
+    },
+    "actionMetadata": [
+      {
+        "actionId": "0682ad34-24f9-4731-a89a-db4900e8801d",
+        "sessionId": "battle-f8b798b2-59b9-46c8-8e47-5f36d7bbc0c1",
+        "action": "element_attack",
+        "round": 1,
+        "resolvedRound": 1,
+        "resolvedRevision": 3,
+        "resultPresent": true
+      },
+      {
+        "actionId": "1adb8b4b-fb89-41b1-8ae2-d4b54542390f",
+        "sessionId": "battle-f8b798b2-59b9-46c8-8e47-5f36d7bbc0c1",
+        "action": "element_attack",
+        "round": 7,
+        "resolvedRound": 7,
+        "resolvedRevision": 15,
+        "resultPresent": true
+      },
+      {
+        "actionId": "1e1f252c-b871-41d0-8e70-a0ca8a5a6d68",
+        "sessionId": "battle-f8b798b2-59b9-46c8-8e47-5f36d7bbc0c1",
+        "action": "ultimate",
+        "round": 17,
+        "resolvedRound": 17,
+        "resolvedRevision": 35,
+        "resultPresent": true
+      },
+      {
+        "actionId": "252fecf7-a034-4e25-bbae-196831df5ff2",
+        "sessionId": "battle-f8b798b2-59b9-46c8-8e47-5f36d7bbc0c1",
+        "action": "element_attack",
+        "round": 20,
+        "resolvedRound": 20,
+        "resolvedRevision": 21,
+        "resultPresent": true
+      },
+      {
+        "actionId": "40cc83eb-d462-413b-b973-cb54774aed30",
+        "sessionId": "battle-f8b798b2-59b9-46c8-8e47-5f36d7bbc0c1",
+        "action": "element_attack",
+        "round": 9,
+        "resolvedRound": 9,
+        "resolvedRevision": 19,
+        "resultPresent": true
+      },
+      {
+        "actionId": "44d742ea-18d9-4ef7-867e-03a4af02fdef",
+        "sessionId": "44d742ea-18d9-4ef7-867e-03a4af02fdef",
+        "type": "cloud:training-start",
+        "resultPresent": true
+      },
+      {
+        "actionId": "58a24a09-ac3e-4dac-8979-d8dbf49559d3",
+        "sessionId": "battle-f8b798b2-59b9-46c8-8e47-5f36d7bbc0c1",
+        "action": "element_attack",
+        "round": 3,
+        "resolvedRound": 3,
+        "resolvedRevision": 7,
+        "resultPresent": true
+      },
+      {
+        "actionId": "59bb126b-c445-47dd-85a6-4eb7b01ea694",
+        "sessionId": "battle-f8b798b2-59b9-46c8-8e47-5f36d7bbc0c1",
+        "action": "element_attack",
+        "round": 6,
+        "resolvedRound": 6,
+        "resolvedRevision": 13,
+        "resultPresent": true
+      },
+      {
+        "actionId": "5bfa2a81-a422-46c8-a227-73d7ebdbe82e",
+        "sessionId": "battle-f8b798b2-59b9-46c8-8e47-5f36d7bbc0c1",
+        "action": "element_attack",
+        "round": 8,
+        "resolvedRound": 8,
+        "resolvedRevision": 17,
+        "resultPresent": true
+      },
+      {
+        "actionId": "61cd4ca8-afe8-4b7e-822c-f4cb5e8e4833",
+        "sessionId": "battle-f8b798b2-59b9-46c8-8e47-5f36d7bbc0c1",
+        "action": "element_attack",
+        "round": 5,
+        "resolvedRound": 5,
+        "resolvedRevision": 11,
+        "resultPresent": true
+      },
+      {
+        "actionId": "66555dec-557b-4d1b-9f0a-4f5fa9058907",
+        "sessionId": "battle-f8b798b2-59b9-46c8-8e47-5f36d7bbc0c1",
+        "action": "element_attack",
+        "round": 13,
+        "resolvedRound": 13,
+        "resolvedRevision": 27,
+        "resultPresent": true
+      },
+      {
+        "actionId": "84fd5dfe-05eb-47bc-8122-5a79d357ed04",
+        "sessionId": "battle-f8b798b2-59b9-46c8-8e47-5f36d7bbc0c1",
+        "action": "element_attack",
+        "round": 12,
+        "resolvedRound": 12,
+        "resolvedRevision": 25,
+        "resultPresent": true
+      },
+      {
+        "actionId": "8a28b26b-bc02-467f-a7c0-cea904525a98",
+        "sessionId": "battle-f8b798b2-59b9-46c8-8e47-5f36d7bbc0c1",
+        "action": "element_attack",
+        "round": 18,
+        "resolvedRound": 18,
+        "resolvedRevision": 37,
+        "resultPresent": true
+      },
+      {
+        "actionId": "9436286b-658f-41c7-b6f9-88e0a9a3db90",
+        "sessionId": "battle-f8b798b2-59b9-46c8-8e47-5f36d7bbc0c1",
+        "action": "element_attack",
+        "round": 4,
+        "resolvedRound": 4,
+        "resolvedRevision": 9,
+        "resultPresent": true
+      },
+      {
+        "actionId": "943be771-afed-4dd1-9e29-f1da2521f603",
+        "sessionId": "battle-f8b798b2-59b9-46c8-8e47-5f36d7bbc0c1",
+        "action": "element_attack",
+        "round": 2,
+        "resolvedRound": 2,
+        "resolvedRevision": 5,
+        "resultPresent": true
+      },
+      {
+        "actionId": "be9183fb-88da-4386-bf5d-99122c7c6aab",
+        "sessionId": "battle-f8b798b2-59b9-46c8-8e47-5f36d7bbc0c1",
+        "action": "element_attack",
+        "round": 19,
+        "resolvedRound": 19,
+        "resolvedRevision": 39,
+        "resultPresent": true
+      },
+      {
+        "actionId": "e2f96ca7-34b3-42b2-b6b4-3947645f5b2f",
+        "sessionId": "battle-f8b798b2-59b9-46c8-8e47-5f36d7bbc0c1",
+        "action": "element_attack",
+        "round": 11,
+        "resolvedRound": 11,
+        "resolvedRevision": 23,
+        "resultPresent": true
+      },
+      {
+        "actionId": "e6a54a41-ca01-4a68-84c3-0ddb1abd388d",
+        "sessionId": "battle-f8b798b2-59b9-46c8-8e47-5f36d7bbc0c1",
+        "action": "element_attack",
+        "round": 15,
+        "resolvedRound": 15,
+        "resolvedRevision": 31,
+        "resultPresent": true
+      },
+      {
+        "actionId": "ee665761-5ae2-47c0-8320-69cfbcedabaa",
+        "sessionId": "battle-f8b798b2-59b9-46c8-8e47-5f36d7bbc0c1",
+        "action": "ultimate",
+        "round": 10,
+        "resolvedRound": 10,
+        "resolvedRevision": 21,
+        "resultPresent": true
+      },
+      {
+        "actionId": "ef443d87-a798-46eb-9177-5779fc937c1f",
+        "sessionId": "battle-f8b798b2-59b9-46c8-8e47-5f36d7bbc0c1",
+        "action": "element_attack",
+        "round": 14,
+        "resolvedRound": 14,
+        "resolvedRevision": 29,
+        "resultPresent": true
+      },
+      {
+        "actionId": "fb715b54-6d66-4da5-b2f4-ee873c4825b2",
+        "sessionId": "battle-f8b798b2-59b9-46c8-8e47-5f36d7bbc0c1",
+        "action": "element_attack",
+        "round": 16,
+        "resolvedRound": 16,
+        "resolvedRevision": 33,
+        "resultPresent": true
+      }
+    ],
+    "companionPetDiff": [
+      {
+        "path": "companion_pets.pet-b85fd17e-3f75-4261-8fa3-58ea1983542c.revision",
+        "a": 5,
+        "b": 4
+      },
+      {
+        "path": "companion_pets.pet-b85fd17e-3f75-4261-8fa3-58ea1983542c.data_json.json.desktop.visible",
+        "a": false,
+        "b": true
+      },
+      {
+        "path": "companion_pets.pet-b85fd17e-3f75-4261-8fa3-58ea1983542c.data_json.json.revision",
+        "a": 5,
+        "b": 4
+      },
+      {
+        "path": "companion_pets.pet-b85fd17e-3f75-4261-8fa3-58ea1983542c.data_json.json.updatedAt",
+        "a": "2026-10-25T06:13:50.849Z",
+        "b": "2026-10-25T06:11:37.982Z"
+      },
+      {
+        "path": "companion_pets.pet-b85fd17e-3f75-4261-8fa3-58ea1983542c.updated_at",
+        "a": "2026-10-25T06:13:50.849Z",
+        "b": "2026-10-25T06:11:37.982Z"
+      }
+    ],
+    "companionAccountDiff": [
+      {
+        "path": "companion_accounts.account:470a41d4-3cf7-4a7d-8b1e-32e276d2a719.revision",
+        "a": 60,
+        "b": 59
+      }
+    ],
+    "extraCompanionActions": [
+      {
+        "actionId": "4f172f5a-a928-4c8c-bf2e-4f70f2043403",
+        "keys": [
+          "owner_account_id",
+          "action_id",
+          "operation",
+          "request_hash",
+          "result_json",
+          "created_at"
+        ],
+        "requestHash": "9563fce3d235940eb271e8f1c039a6a203185d65112ecf455a7067ce7154904b",
+        "resultHash": "316869f2b45344be7b1f62ccd98701f8b39d30bbe89b26b8f20f2bda6891ff8a"
+      }
+    ],
+    "tablesEqualIgnoringEmpty": true
+  }
+}

@@ -2,26 +2,23 @@
   "module": "conversations",
   "scope": "cloud-upgrade-2026-10-25",
   "branch": "codex/lingjing-conversations",
-  "commit": "79801a2",
-  "goalStatus": "active",
-  "status": "server_path_full_sync_passed_normal_ui_route_running",
+  "commit": "de1a2d36915af3f61465ef0d724e923574b8ffd9",
+  "goalStatus": "complete",
+  "status": "complete_on_review_baseline4830619",
   "contracts": {
     "identity": "08 accounts: verified owner mapping, complete-save CAS and account save-restored events",
     "backup": "conversations version 1 adapter; stable IDs and array order, no sequence or encrypted_key",
-    "entry": "core/conversation-backup.cjs -> feature-owned adapter compatibility entry planned",
+    "entry": "features/conversations/backup.cjs via services.get(conversations).createBackupAdapter()",
     "sharedBaseline": "46abf416e0500b53ef32fc29b441d923ef5a6a80",
-    "coordinationNeeds": [
-      "08保持统一完整存档CAS与并发冲突，无需新建聊天云表。",
-      "完整存档legacy模块须审核递归敏感字段；account_legacy_data原始归档不能将BYOK/apiKey/token随云存档导出。",
-      "云恢复后继续发accounts:save-restored(ownerAccountId)，用于刷新聊天状态与拒绝恢复前旧界面写入。"
-    ],
+    "coordinationNeeds": [],
     "conversationConsumer": "docs/implementation/cloud-conversations-contract.txt",
     "approvedIdentityCheckpoint": "f81008c",
-    "backupEntry": "services.get(conversations).createBackupAdapter(); compatibility core forwarder retained",
+    "backupEntry": "production main and foundation tests use the feature-owned adapter; core forwarder deleted",
     "approvedFullSaveCheckpoint": "45b857d",
     "approvedShellCheckpoint": "ced8e5e",
-    "approvedIntegrationCheckpoint": "fd932fd via5ea113e (02 normal main cloud routing,08 normalized cloud view,07 v1/v2 hydrate)",
-    "sharedChatSelection": "getSelections(owner).chatPetId is authority; await companions.select(chatPetId) before compatibility preference mutation; reject/late session does not update selection"
+    "approvedIntegrationCheckpoint": "4830619 viade1a2d36915af3f61465ef0d724e923574b8ffd9",
+    "sharedChatSelection": "getSelections(owner).chatPetId is authority; await companions.select(chatPetId) before compatibility preference mutation; reject/late session does not update selection",
+    "approvedCurrentFullSaveCheckpoint": "f47b1ed, retained in normalized/hydrated fd932fd merge"
   },
   "migrations": {
     "remote": [],
@@ -104,21 +101,67 @@
     {
       "command": "feature ESLint with explicit cjs/mjs/ts/tsx extensions and typecheck:ui",
       "status": "passed"
+    },
+    {
+      "command": "node apps/pc-app/runtime/features/conversations/tests/cloud-sync.acceptance.mjs",
+      "status": "passed",
+      "checks": 6,
+      "realCloud": true,
+      "realElectron": true,
+      "sameHost": true,
+      "sourceCommit": "886fe05c1ffbf40f67a13094b33f3708c1fd6eea",
+      "evidence": "docs/implementation/evidence/conversations/cloud-2026-10-25/live-sync.json"
+    },
+    {
+      "command": "node apps/pc-app/runtime/features/conversations/tests/cloud-sqlite-readback.mjs <matching-run>/evidence.json",
+      "status": "passed",
+      "checks": 5,
+      "scope": "post-process readOnly/query_only actual SQLite and device/Auth linkage",
+      "evidence": "docs/implementation/evidence/conversations/cloud-2026-10-25/live-sqlite-readback.json"
+    },
+    {
+      "command": "final feature/main ESLint; typecheck:ui; production build",
+      "status": "passed",
+      "sourceCommit": "886fe05c1ffbf40f67a13094b33f3708c1fd6eea"
+    },
+    {
+      "command": "node --test --test-name-pattern=\"async asset hydration|untouched empty\" apps/pc-app/runtime/features/accounts/tests/supabase-main.test.cjs",
+      "status": "passed",
+      "checks": 2,
+      "scope": "PROTOCOL UNIT simulated; actual local SQLite and asynchronous guards",
+      "sourceCommit": "de1a2d36915af3f61465ef0d724e923574b8ffd9"
+    },
+    {
+      "command": "cloud-sync.acceptance.mjs + matching post-exit cloud-sqlite-readback.mjs",
+      "status": "passed",
+      "checks": 6,
+      "postExitChecks": 5,
+      "realCloud": true,
+      "sourceCommit": "de1a2d36915af3f61465ef0d724e923574b8ffd9",
+      "runId": "286aea84-cbe7-4f77-9d14-9cc6fd249476",
+      "evidence": "docs/implementation/evidence/conversations/cloud-2026-10-25/baseline4830619/live-sync.json"
+    },
+    {
+      "command": "baseline4830619 production build and typecheck:ui",
+      "status": "passed",
+      "sourceCommit": "de1a2d36915af3f61465ef0d724e923574b8ffd9"
     }
   ],
   "realCloudEvidence": {
-    "status": "approved_auth_cas_and_typed_shell_merged_waiting08_projection02_pet",
+    "status": "normal_ipc_and_react_full_sync_passed",
     "projectRef": "jbvrdmrkwpznbrvteive",
     "ownPrivilegedWrites": 0,
-    "ownCloudSyncAcceptance": false,
-    "coordinatorReported": "Auth/actor deployed; new45b857d Auth8/8 and protectedCAS live; own HTTPS A/B still to run.",
+    "ownCloudSyncAcceptance": true,
+    "coordinatorReported": "All8 services deployed; final normal02 main routing fromfd932fd consumed and exercised.",
     "externalModel": {
-      "status": "no_secure_model_profile_in_checked_standard_appdata_locations",
-      "evidence": "docs/implementation/evidence/conversations/cloud-2026-10-25/model-preflight.json"
+      "status": "not_configured_for_this_acceptance",
+      "externalProviderSuccessClaimed": false,
+      "actualTest": "real loopback refusal and accepted-socket cancellation; no synthetic model reply",
+      "historicalBoundedPreflight": "docs/implementation/evidence/conversations/cloud-2026-10-25/model-preflight.json"
     },
     "legacyPrivacyGate": {
-      "status": "confirmed_not_filtered_in45b857d_client",
-      "detail": "AccountSync.enqueue uses backups.snapshot(owner), and legacy adapter returns raw account_legacy_data.document unchanged. SQL rejects secret keys after transmission; it is not a client privacy filter. Do not upload a legacy archive containing opaque apiKey/sessionToken. Await08 cloud projection, retain original local raw archive."
+      "status": "passed_in_actual_archive_and_push_bodies_and_exact_authored_json_roundtrip",
+      "detail": "08 schema-aware projection and server guard deployed by coordinator; real normal-path6 checks include exact user-authored JSON in message/persona/memory and no local key/cipher/proof in8 observed archive/push bodies."
     },
     "ownLiveAuthAndPetBoundary": true,
     "boundary": "Two actual Electron44.9.3 processes, one real Supabase owner, distinct devices/sessions, public IPC and archive no proof/key/cipher, unregistered pet SQL403 PET_OWNER_MISMATCH, logoutA retainsB.",
@@ -136,45 +179,92 @@
       "exactAuthoredJSON": true,
       "actualSql409": true,
       "sqliteReadback": true
+    },
+    "normalPath": {
+      "status": "passed",
+      "checks": 6,
+      "fullChatSync": true,
+      "evidence": "docs/implementation/evidence/conversations/cloud-2026-10-25/baseline4830619/live-sync.json",
+      "sourceCommit": "de1a2d36915af3f61465ef0d724e923574b8ffd9",
+      "buildCommit": "de1a2d36915af3f61465ef0d724e923574b8ffd9",
+      "runId": "286aea84-cbe7-4f77-9d14-9cc6fd249476",
+      "taskId": "01a16dc5-c418-7372-ac4b-1d9abb116865",
+      "owner": "account:fced51d4-f4bb-48ef-9073-eea9d93cf3b3",
+      "petIds": [
+        "pet-801cfd4c-29a3-4b0e-98fd-3d11d104cc5a",
+        "pet-9d792824-56eb-4ccd-9418-c260d60c497a"
+      ],
+      "scope": "normal production companions IPC/cloud router, actual React chat selection and public Accounts cloudPreview/backupRestore; companion adoption form clicks are not claimed",
+      "sameHost": true,
+      "externalModelSuccessClaimed": false
+    },
+    "postExitSqlite": {
+      "status": "passed",
+      "checks": 5,
+      "evidence": "docs/implementation/evidence/conversations/cloud-2026-10-25/baseline4830619/live-sqlite-readback.json",
+      "runId": "286aea84-cbe7-4f77-9d14-9cc6fd249476",
+      "rowsPerDevice": 8
+    },
+    "normalPathPrevious": {
+      "status": "passed",
+      "checks": 6,
+      "fullChatSync": true,
+      "evidence": "docs/implementation/evidence/conversations/cloud-2026-10-25/live-sync.json",
+      "sourceCommit": "886fe05c1ffbf40f67a13094b33f3708c1fd6eea",
+      "buildCommit": "886fe05c1ffbf40f67a13094b33f3708c1fd6eea",
+      "runId": "b27fd397-1254-426b-b74c-70d9ad08531c",
+      "taskId": "01a16dc5-c418-7372-ac4b-1d9abb116865",
+      "owner": "account:bfdf81ee-b9f7-4ef1-b23d-b49a17826a05",
+      "petIds": [
+        "pet-53221b5e-8980-4ff9-b5cc-4af266440c21",
+        "pet-5dd91f90-fb89-4ac9-9390-2aebd3879229"
+      ],
+      "scope": "normal production companions IPC/cloud router, actual React chat selection and public Accounts cloudPreview/backupRestore; companion adoption form clicks are not claimed",
+      "sameHost": true,
+      "externalModelSuccessClaimed": false
+    },
+    "postExitSqlitePrevious": {
+      "status": "passed",
+      "checks": 5,
+      "evidence": "docs/implementation/evidence/conversations/cloud-2026-10-25/live-sqlite-readback.json",
+      "runId": "b27fd397-1254-426b-b74c-70d9ad08531c",
+      "rowsPerDevice": 8
     }
   },
   "preservation": [
     "Existing owner/petId/message IDs, history, profiles and memories retained.",
-    "API keys remain main-process safeStorage; no key, encrypted blob or token in conversation snapshots."
+    "API keys remain main-process safeStorage; no key, encrypted blob or token in conversation snapshots.",
+    "Normal cloud run verified2 same-template original petIds, same8 per-device messages, same per-pet content/persona/memory and explicit deletion; device credentials remain unchanged across restore/restart."
   ],
   "cleanupCandidates": [
     {
       "path": "apps/pc-app/runtime/main.cjs obsolete AI code",
-      "decision": "old whole shell deleted by approved01 ced8e5e; removal retained in merge543b71f",
+      "decision": "removed in approved production source; recoverable snapshot46abf41",
       "replacement": "features/conversations/service.cjs + AI SDK transport.cjs"
     },
     {
       "path": "apps/pc-app/runtime/preload.cjs aiChat",
-      "decision": "old whole shell deleted by approved01 ced8e5e; removal retained in merge543b71f",
+      "decision": "removed in approved production source; recoverable snapshot46abf41",
       "replacement": "preload/index.ts typed IPC"
     },
     {
       "path": "apps/pc-app/runtime/renderer/renderer.mjs AI storage/scheduler/fake replies",
-      "decision": "old whole shell deleted by approved01 ced8e5e; removal retained in merge543b71f",
+      "decision": "removed in approved production source; recoverable snapshot46abf41",
       "replacement": "React conversations + verified archive importer"
     },
     {
       "path": "apps/pc-app/runtime/renderer/index.html AI panel",
-      "decision": "old whole shell deleted by approved01 ced8e5e; removal retained in merge543b71f",
+      "decision": "removed in approved production source; recoverable snapshot46abf41",
       "replacement": "settings/ai"
     },
     {
       "path": "apps/pc-app/runtime/core/conversation-backup.cjs",
-      "decision": "domain implementation moved; retain compatibility forwarder until01 swaps two consumers",
-      "replacement": "services.get(conversations).createBackupAdapter()"
+      "decision": "removed in approved production source; recoverable snapshot46abf41",
+      "replacement": "main calls services.get(conversations).createBackupAdapter(); foundation tests import feature backup.cjs"
     }
   ],
-  "remaining": [
-    "Run full two Electron/real HTTPS CAS with two legally adopted same-template pets, exact JSON text, scope-specific device credentials, conflicts and restart SQLite readback.",
-    "Consume02 approved main routing and validate normal public chat selection including rejection/offline; server-path adoption scope remains explicit.",
-    "Independent coordinator final review."
-  ],
-  "updatedAt": "2026-10-25T04:06:27.781Z",
+  "remaining": [],
+  "updatedAt": "2026-10-25T04:31:25.306Z",
   "cleanupManifest": "docs/implementation/evidence/conversations/cloud-2026-10-25/cleanup-manifest.json",
   "installation": {
     "workspaceNodeModulesIndependent": true,
@@ -187,17 +277,15 @@
     "initialDefaultCi": "node-gyp fallback required unavailable Visual Studio; bundled N-API install and native check succeeded"
   },
   "cloudLatest": {
-    "fetchedAt": "2026-10-25T02:54:16.927Z",
-    "originMain": "4786f97",
-    "included": true
+    "originMain": "4786f97680679c2db0aa307fa5f67ec247f93086",
+    "fetchedAndMergedBeforeCompletion": true,
+    "result": "Already up to date",
+    "approvedRoot": "fd932fd"
   },
   "preparedAcceptance": {
     "script": "apps/pc-app/runtime/features/conversations/tests/cloud-sync.acceptance.mjs",
-    "status": "ready_to_run_against_deployed_services",
-    "prerequisites": [
-      "approved08 client personal cloud projection",
-      "approved02 public legal cloud adoption deployed"
-    ],
+    "status": "passed",
+    "prerequisites": [],
     "covers": [
       "real two Electron one owner",
       "original petId and stable message IDs/order",
@@ -213,36 +301,30 @@
     "receiptSemantics": "New08 distinguishes personalVerified from full-save verified/requiresAuthority/privacyRedactions. Harness requires actual personalVerified and records the full receipt without promoting historic gameplay.",
     "privacyScope": "Inspect actual archive and push envelope bodies, not only the conversation adapter export.",
     "interfaceReview": {
-      "commit": "6876b36",
-      "mode": "read-only committed08 review; not merged or deployed by06",
-      "pendingApproval": true,
-      "textFidelityGate": {
-        "status": "passed_local_fixed8e5c735_not_real_cloud",
-        "evidence": "docs/implementation/evidence/conversations/cloud-2026-10-25/pending-projection-text-fix-review.json",
-        "previousFailure": "docs/implementation/evidence/conversations/cloud-2026-10-25/pending-projection-text-failure.json",
-        "detail": "Same reproduction now preserves exact JSON text in message.content, profile.persona and memory.content. This proves local filter behavior only; real server/body and two-Electron chat CAS still pending."
-      }
+      "commit": "f47b1ed plusfd932fd normalized/hydrated save merge",
+      "pendingApproval": false,
+      "textFidelityGate": "passed exact actual HTTPS message/persona/memory JSON roundtrip"
     },
-    "harnessCommit": "79801a2",
-    "adoptionScope": "main-only cloudActor controlled adopt/select then Accounts public cloudPreview/backupRestore; final companion UI route separate"
+    "harnessCommit": "de1a2d36915af3f61465ef0d724e923574b8ffd9",
+    "adoptionScope": "normal production companions IPC/cloud router, actual React chat selection and public Accounts cloudPreview/backupRestore; companion adoption form clicks are not claimed"
   },
-  "checkpoint": "d54c8a8",
+  "checkpoint": "de1a2d36915af3f61465ef0d724e923574b8ffd9",
   "goalAudit": {
+    "scope": "06 conversations upgrade; global release and other domains belong to coordinator",
     "completed": [
-      "approved common baseline and45b857d identity/CAS consumer",
-      "approvedced8e5e shell merged with obsolete AI shell deleted",
-      "per-owner/pet stable archive and explicit conflict behavior checked with actual SQLite",
-      "actual Electron44 recovery, DPAPI and public actor/pet-boundary evidence",
-      "legacy archive import and recoverable cleanup manifest",
-      "cloud-conversations status and consumer inventory"
+      "latest approved root integrated; origin/main fetched and already included",
+      "unified08 Auth and whole-saveCAS consumed; no second auth/store/transport",
+      "2 legally adopted same-template pets, real2 Electron/devices and per-pet isolation",
+      "stable message IDs/order/exact authored JSON, cancellation, actualSQL409 and atomic conflict choice",
+      "offline original-action retry/restart and matching post-exit SQLite/Auth/device readback",
+      "local global/pet DPAPI keys and Auth proof excluded from all observed archive/push bodies",
+      "normal React chat choice awaits authoritative chatPetId; rejection retains previous selection and battle/guard remain independent",
+      "legacy import/recovery preserves original archive and stable IDs; local metadata migration is additive",
+      "obsolete AI shell/handlers removed with recoverable snapshot and final consumer inventory",
+      "reproducible scripts, status, native/local/live evidence and corrected visible UI artifacts delivered"
     ],
-    "missing": [
-      "approved/deployed08 field-aware cloud projection + server guard consumption",
-      "approved/deployed02 legal cloud pet adoption main-process bridge",
-      "successful real Supabase A/B per-pet chat/persona/memory CAS, conflict, deletion and restart readback"
-    ],
-    "acceptanceScript": "apps/pc-app/runtime/features/conversations/tests/cloud-sync.acceptance.mjs",
-    "completionClaimed": false
+    "missing": [],
+    "completionClaimed": true
   },
   "resumedAt": "2026-10-25T03:56:52.853Z",
   "resumedBy": "Main coordinator: all8 live; approved latest root merged; legal main cloudActor adoption allowed before02 UI routing",
@@ -252,6 +334,27 @@
     "module": "companions",
     "cause": "Typed production startup registered resource/conversation adapters but not the existing approved companions.backupAdapter. Real legal cloud adoption succeeded; Accounts preview then rejected missing module.",
     "fix": "runtime/main/index.ts registers the existing companion unit once, guarded against future02 self-registration. No new renderer IPC or pet fixture.",
-    "failedRun": "artifacts/conversations/cloud-sync/run-1792900630774/failure.json"
+    "failedRun": "artifacts/conversations/cloud-sync/run-1792900630774/failure.json",
+    "resolved": true,
+    "verifiedBy": "Final normal IPC/React6 checks and post-exit SQLite5 checks; existing companion unit registered in production"
+  },
+  "handoff": {
+    "state": "ready for coordinator review on4830619; no chat blocker found",
+    "globalReleaseNotClaimed": true,
+    "finalPackagingFreeze": false
+  },
+  "integrationBaselineVerification": {
+    "baseline": "4830619",
+    "sourceCommit": "de1a2d36915af3f61465ef0d724e923574b8ffd9",
+    "liveGroups": 6,
+    "postExitSqliteGroups": 5,
+    "targetedProtocolUnitChecks": 2,
+    "productionBuild": "passed",
+    "uiTypecheck": "passed",
+    "blockingDefectsFound": [],
+    "cloudProtocolOrMigrationChangesBy06": 0,
+    "privilegedDeploymentBy06": false,
+    "previousEvidenceUntouched": true,
+    "finalPackagingFreeze": false
   }
 }

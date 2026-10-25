@@ -1,0 +1,27 @@
+{
+  "at": "2026-10-25T07:29:40.823Z",
+  "originalProfilesPreserved": true,
+  "queryOnly": true,
+  "records": [
+    {
+      "device": "A",
+      "revision": 73,
+      "envelopeChecksum": "01caf8f39e791277896cb2c2b29f9649d203ad461a12e6943360f87d1ae5affb",
+      "envelopeValid": true,
+      "baselineData": "ae79e26d5ffd5c5ea7b34d343afa8338f175d9d5c1fecf3cacc7091fce936412",
+      "storedPersonal": "a6c16d57388cb94704b2f549ded1e9b17b2875ac60c914f614c8da8b018eebea",
+      "verifiedEnvelopePersonal": "a6c16d57388cb94704b2f549ded1e9b17b2875ac60c914f614c8da8b018eebea"
+    },
+    {
+      "device": "B",
+      "revision": 74,
+      "envelopeChecksum": "3da3182c1bd1dd7400a1b0928e8b57ea2e1c19d5ec228151b74b3ec5adce35b5",
+      "envelopeValid": true,
+      "baselineData": "cfac178c32cc2a289661e0fd87569c2cea6bdd06d361068a07077c601180812d",
+      "storedPersonal": "a6c16d57388cb94704b2f549ded1e9b17b2875ac60c914f614c8da8b018eebea",
+      "verifiedEnvelopePersonal": "a6c16d57388cb94704b2f549ded1e9b17b2875ac60c914f614c8da8b018eebea"
+    }
+  ],
+  "remotePersonalUnchanged": true,
+  "scope": "Original failure: own authoritative chat selection advanced cloud while personal edits followed before complete-save baseline confirmation; no manual retry or rebase."
+}

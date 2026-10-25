@@ -1,0 +1,212 @@
+{
+  "schemaVersion": 1,
+  "runId": "run-1792903238064",
+  "at": "2026-10-25T04:40:38.066Z",
+  "platform": "win32",
+  "nodeVersion": "24.21.0",
+  "sourceCommit": "93dba3bcf847a7534ceef903f45c2ad6dbca6d68",
+  "sourceChanges": [],
+  "provenance": "local-source-comparison-and-explicit-PostgreSQL-WASM-SQLite-Deno-fixtures",
+  "realCloudVerified": false,
+  "fullPostgisResetVerified": false,
+  "requiresCloudCredentials": false,
+  "requiresDocker": false,
+  "strictMigrationGate": false,
+  "denoVersion": "2.9.6",
+  "stages": [
+    {
+      "name": "migration-filenames",
+      "code": 0,
+      "signal": null,
+      "durationMs": 59,
+      "log": "cloud-source-check/run-1792903238064/migration-filenames.log",
+      "passed": true
+    },
+    {
+      "name": "battle-core",
+      "code": 0,
+      "signal": null,
+      "durationMs": 334,
+      "log": "cloud-source-check/run-1792903238064/battle-core.log",
+      "passed": true
+    },
+    {
+      "name": "battle-cloud",
+      "code": 0,
+      "signal": null,
+      "durationMs": 97,
+      "log": "cloud-source-check/run-1792903238064/battle-cloud.log",
+      "passed": true
+    },
+    {
+      "name": "garden-cloud",
+      "code": 0,
+      "signal": null,
+      "durationMs": 90,
+      "log": "cloud-source-check/run-1792903238064/garden-cloud.log",
+      "passed": true
+    },
+    {
+      "name": "discovery-cloud",
+      "code": 0,
+      "signal": null,
+      "durationMs": 95,
+      "log": "cloud-source-check/run-1792903238064/discovery-cloud.log",
+      "passed": true
+    },
+    {
+      "name": "modern-sql-authority",
+      "code": 0,
+      "signal": null,
+      "durationMs": 35463,
+      "log": "cloud-source-check/run-1792903238064/modern-sql-authority.log",
+      "passed": true
+    },
+    {
+      "name": "deno-version",
+      "code": 0,
+      "signal": null,
+      "durationMs": 1026,
+      "log": "cloud-source-check/run-1792903238064/deno-version.log",
+      "passed": true
+    },
+    {
+      "name": "resource-deno",
+      "code": 0,
+      "signal": null,
+      "durationMs": 1290,
+      "log": "cloud-source-check/run-1792903238064/resource-deno.log",
+      "passed": true
+    }
+  ],
+  "passed": true,
+  "generatedFilesUnchanged": [
+    {
+      "path": "apps/pc-app/runtime/features/battle/core.generated.cjs",
+      "mtimeMs": 1792902399159.9814,
+      "sha256": "7e8af43248f4105ceea103518d59f907c4657ffae91add203763b0a884049528"
+    },
+    {
+      "path": "infra/supabase/functions/lingjing-battle/runtime.generated.mjs",
+      "mtimeMs": 1792902399223.6301,
+      "sha256": "0dadb8e511613e262a5593e443df66b359da87e6dca266eaa195061496d38db2"
+    },
+    {
+      "path": "infra/supabase/functions/lingjing-battle/runtime.generated.json",
+      "mtimeMs": 1792902399223.6301,
+      "sha256": "d21583d7ca7d9fd5546337922cb55f232ba5d7d35f8103c47e94005697585506"
+    },
+    {
+      "path": "infra/supabase/functions/_shared/garden-runtime.bundle.mjs",
+      "mtimeMs": 1792902399219.1113,
+      "sha256": "49cd1dc7029cd4782d12a896ce10c4c01fad5dfdce9450fdf63f07c79e986f1a"
+    },
+    {
+      "path": "infra/supabase/functions/_shared/garden-runtime.sources.json",
+      "mtimeMs": 1792902399219.1113,
+      "sha256": "883d0e33cca721e77d1ffa6fb9b812c76f636aa89118d9a3f24bdff178f29498"
+    },
+    {
+      "path": "infra/supabase/functions/discovery/_generated/runtime.mjs",
+      "mtimeMs": 1792902399220.6165,
+      "sha256": "f7f36fe709f028550ac8cb1fcc2e2b96b6a6c0a513aabe1d6cb52e816532ca07"
+    },
+    {
+      "path": "infra/supabase/functions/discovery/_generated/provenance.json",
+      "mtimeMs": 1792902399220.6165,
+      "sha256": "d8b1443749ad89c74e30e0c9deb4e98d44e414e91439622ae7462c9a758af136"
+    }
+  ],
+  "nodeTestFiles": [
+    "scripts/cloud/check-migrations.test.mjs",
+    "scripts/cloud/migration-preservation-replay.test.mjs",
+    "apps/pc-app/runtime/features/accounts/tests/cloud-identity-sql.test.mjs",
+    "apps/pc-app/runtime/features/accounts/tests/cloud-session-upgrade-sql.test.mjs",
+    "apps/pc-app/runtime/features/accounts/tests/cloud-service-actor-sql.test.mjs",
+    "apps/pc-app/runtime/features/accounts/tests/cloud-save-sql.test.mjs",
+    "apps/pc-app/runtime/features/companions/tests/cloud-command-sql.test.mjs",
+    "apps/pc-app/runtime/features/companions/tests/cloud-domain.test.mjs",
+    "apps/pc-app/runtime/features/companions/tests/cloud-growth.test.mjs",
+    "apps/pc-app/runtime/features/discovery/tests/cloud-authority.test.mjs",
+    "apps/pc-app/runtime/features/discovery/tests/cloud-actor-guard.test.mjs",
+    "apps/pc-app/runtime/features/discovery/tests/cloud-game-sql.test.mjs",
+    "apps/pc-app/runtime/features/discovery/tests/cloud-handler.test.mjs",
+    "apps/pc-app/runtime/features/discovery/tests/cloud-protocol.test.mjs",
+    "apps/pc-app/runtime/features/discovery/tests/cloud-location-sql.test.mjs",
+    "apps/pc-app/runtime/features/discovery/tests/cloud-runtime.test.mjs",
+    "apps/pc-app/runtime/features/battle/tests/cloud-battle-sql.test.mjs",
+    "apps/pc-app/runtime/features/battle/tests/authority-save.test.mjs",
+    "apps/pc-app/runtime/features/battle/tests/trusted-pet.test.mjs",
+    "apps/pc-app/runtime/features/resources/verification/storage-rls-sql.test.mjs",
+    "scripts/acceptance/cloud-territory/save-cas.test.mjs",
+    "scripts/acceptance/cloud-territory/receipt-expression.test.mjs"
+  ],
+  "finishedAt": "2026-10-25T04:41:16.594Z",
+  "githubCiRunVerified": false,
+  "fullStrictCiReady": false,
+  "strictCurrentTreeRejection": {
+    "expected": true,
+    "missing": [],
+    "unexpected": [
+      "0001_core_schema.sql",
+      "0002_pet_inventory_battle_reports.sql",
+      "0003_duel_realtime_schema.sql",
+      "0004_runtime_cloud_auth_duel_requests.sql",
+      "0005_runtime_single_login_session.sql",
+      "20261024_accounts_save_sync.sql",
+      "20261024_discovery_authority.sql",
+      "20261024_garden_authority.sql",
+      "20261024_lingjing_battle_atomic_rounds.sql"
+    ],
+    "legacyDrafts": [
+      "0001_core_schema.sql",
+      "0002_pet_inventory_battle_reports.sql",
+      "0003_duel_realtime_schema.sql",
+      "0004_runtime_cloud_auth_duel_requests.sql",
+      "0005_runtime_single_login_session.sql",
+      "20261024_accounts_save_sync.sql",
+      "20261024_discovery_authority.sql",
+      "20261024_garden_authority.sql",
+      "20261024_lingjing_battle_atomic_rounds.sql"
+    ]
+  },
+  "nodeChecks": 66,
+  "nodeFailures": 0,
+  "denoChecks": 5,
+  "denoFailures": 0,
+  "logs": [
+    {
+      "stage": "migration-filenames",
+      "sha256": "7d05ae121100a97f8338bcf5b00158373ca849c0736e976c63dcca02c84a3f5a"
+    },
+    {
+      "stage": "battle-core",
+      "sha256": "fbb49e050c4fac67a87ea24bf93589fc4e58ed85dd65e40ca7413e5a46179a2e"
+    },
+    {
+      "stage": "battle-cloud",
+      "sha256": "c16c44b21e9efa64089e7ebfcc82bfd598d87291c04b49c7eaceea424b11a81f"
+    },
+    {
+      "stage": "garden-cloud",
+      "sha256": "c768df0b3f6a3a2d8f9a2fd1f083a94d8a306f2fecf159bb647e38fc0fbebea1"
+    },
+    {
+      "stage": "discovery-cloud",
+      "sha256": "89114390e1cf5d133b2fe8f4917303c23152d8826657f5665f061570d265aab9"
+    },
+    {
+      "stage": "modern-sql-authority",
+      "sha256": "7864691cc27db5182f25b6dcc342eb5b3de92ee6dd9d2581909289ef9464485d"
+    },
+    {
+      "stage": "deno-version",
+      "sha256": "ce28a08983b5bcd10ec5453db32866c6054f7b2cd3dd0b1e245590ab7cf44c70"
+    },
+    {
+      "stage": "resource-deno",
+      "sha256": "8e55b2879c27f329fc2596533ab9038b2c9c8b4b492234bd5e6cb19aeb739def"
+    }
+  ],
+  "note": "Clean checkpoint transition run. Main owns the pending retirement of the nine drafts; no cloud credentials, Docker, remote history mutation or final portable build."
+}

@@ -79,7 +79,7 @@ class CloudGardenAuthority{
     await this.request('garden-sync',{op:'snapshot'},context);
     const remote=await this.request('territory-sync',{op:'snapshot'},context);this.applyReadback(context,remote);
     const pending=this.db.prepare("SELECT count(*) count FROM garden_cloud_requests WHERE owner_account_id=? AND status='pending'").get(context.ownerAccountId).count;
-    return {ok:true,data:this.project({...remote.snapshot,sync:{mode:'cloud',pending,conflicts:0}})};
+    return {ok:true,revision:remote.snapshot.revision,data:this.project({...remote.snapshot,sync:{mode:'cloud',pending,conflicts:0}})};
   }
   serial(owner,task){const before=this.locks.get(owner)||Promise.resolve(),next=before.catch(()=>{}).then(task);this.locks.set(owner,next);return next.finally(()=>{if(this.locks.get(owner)===next)this.locks.delete(owner);});}
   async journal(context,endpoint,op,kind,input){
@@ -178,7 +178,11 @@ class CloudGardenAuthority{
   async settleContext(context,payload){
     const existing=this.db.prepare('SELECT input_json FROM garden_cloud_requests WHERE owner_account_id=? AND action_id=?').get(context.ownerAccountId,payload.actionId);
     let input=existing?JSON.parse(existing.input_json):null;
-    if(!input){const {session,remote}=await this.remoteBattle(payload,context);if(session.status!=='finished')problem('BATTLE_UNFINISHED','对局尚未结束');input={actionId:payload.actionId,sessionId:payload.sessionId,sessionOwnerAccountId:context.ownerAccountId,expectedRevision:remote.snapshot.revision};}
+    if(!input){
+      const {session,remote}=await this.remoteBattle(payload,context);
+      if(remote.context?.settled){const receipt=remote.context.result;if(receipt?.ok!==true)problem(receipt?.code||'INVALID_SETTLEMENT_PROOF',receipt?.message||'该挑战已结束');return {...receipt.data,resultPath:'/garden',replayed:true};}
+      if(session.status!=='finished')problem('BATTLE_UNFINISHED','对局尚未结束');input={actionId:payload.actionId,sessionId:payload.sessionId,sessionOwnerAccountId:context.ownerAccountId,expectedRevision:remote.snapshot.revision};
+    }
     const result=await this.command(context,'territorySettle',input);if(!result.ok)throw Object.assign(new Error(result.message),{code:result.code});return {...result.data,resultPath:'/garden'};
   }
 }

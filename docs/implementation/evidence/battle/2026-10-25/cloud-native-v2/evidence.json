@@ -1,0 +1,99 @@
+{
+  "at": "2026-10-25T05:25:23.834Z",
+  "acceptanceChainComplete": true,
+  "singleUninterruptedRunPassed": false,
+  "projectRef": "jbvrdmrkwpznbrvteive",
+  "deployedBattleVersion": 2,
+  "physicalMachines": 1,
+  "independentOpponentProcesses": 2,
+  "friendRounds": 10,
+  "trainingRounds": 20,
+  "trainingWinner": "enemy",
+  "ownerAExperience": 25,
+  "ownerBExperience": 5,
+  "seedsPerCompletedBattle": 2,
+  "rawFailedRunsPreserved": true,
+  "noAdminSeeding": true,
+  "noDeploymentByThisChat": true,
+  "sourceAfterRetirement": "65e42105687ef38bdc97450f006d0415aec9a6ac",
+  "phases": [
+    {
+      "name": "duel-phase",
+      "run": "live-1792904347214-4d2d7db8",
+      "sha256": "207d1c5361fe99ba6540693a8e2450ec2725ec9423cfb154c2fb0d7869d0735d",
+      "sourceCommit": "8ab812554261bf960d43602470b30e64444a74aa",
+      "buildSourceCommit": "b413835d9aeee60c7bd7d3485d7777ffdfc86d0c",
+      "rawRunPassed": false
+    },
+    {
+      "name": "report-training-phase",
+      "run": "live-1792904902772-33218d1e",
+      "sha256": "219ab61737e174b2aefbd2ead5a094bad3ea2685eef3676b8b1d24a35c468dda",
+      "sourceCommit": "746ca6662d7c31c9bcafa1ce9d17198250db9fa2",
+      "buildSourceCommit": "746ca6662d7c31c9bcafa1ce9d17198250db9fa2",
+      "rawRunPassed": false
+    },
+    {
+      "name": "device-revoke",
+      "run": "live-1792905246701-04be08e6",
+      "sha256": "7302cbfa2edc8be1b7088577aa93463ddb27012dd154a8eadb22cc534d2b1435",
+      "sourceCommit": "cb3dc88366ec02932f6d7b3244c2455db366b089",
+      "buildSourceCommit": "746ca6662d7c31c9bcafa1ce9d17198250db9fa2",
+      "rawRunPassed": true
+    },
+    {
+      "name": "after-retirement",
+      "run": "live-1792905608011-236155d6",
+      "sha256": "61af18ae0c8f37b427c0adac58a7d74c0dc1c2467516d69f03b9fc71fb1d9de9",
+      "sourceCommit": "65e42105687ef38bdc97450f006d0415aec9a6ac",
+      "buildSourceCommit": "65e42105687ef38bdc97450f006d0415aec9a6ac",
+      "rawRunPassed": true
+    }
+  ],
+  "pictures": [
+    {
+      "name": "accepted-waiting.png",
+      "sha256": "986ee6e57a8e025a97f00dbb70c5d7f72e3a738c87df92ffa8fb1a63dc4541a0"
+    },
+    {
+      "name": "pending-before-native-restart.png",
+      "sha256": "8ed608dddb81cf50f6d19a657588f6c332f3e86a136df4b872879820252fa7b2"
+    },
+    {
+      "name": "finished-host.png",
+      "sha256": "8bb0c5cd2f13c46ec510f35f401f396f085b5d3bf5e708431b61d1986b46ea5e"
+    },
+    {
+      "name": "report-1.png",
+      "sha256": "db5edf77f3893d75a0881f2edb6f7df33dd5b190f93a748eab26d5014b797519"
+    },
+    {
+      "name": "report-2.png",
+      "sha256": "fbf52bc6da0d76e1d90b357058048419ecae4510fdc48d2a4462a9087cfa3e4b"
+    },
+    {
+      "name": "training-recovered-on-second-device.png",
+      "sha256": "36fa7a52e60ca3133c89868e5fa17043b8203278069cff57fbc4897b223def9d"
+    },
+    {
+      "name": "cloud-training-finished.png",
+      "sha256": "363536dcffbf8018b07b0727b7c7c91988ad14fb64e84ba140d20aeead7dc97b"
+    },
+    {
+      "name": "after-retirement-completed-battle.png",
+      "sha256": "8bb0c5cd2f13c46ec510f35f401f396f085b5d3bf5e708431b61d1986b46ea5e"
+    }
+  ],
+  "checks": {
+    "nativeCases": 18,
+    "transportAndIntentCases": 12,
+    "modernPostgresChecks": 15,
+    "frozenCoreCases": 1200,
+    "frozenCoreRounds": 7162
+  },
+  "limits": [
+    "One Windows host; two physical devices were not tested",
+    "Duel and training original runs keep failed status at later UI/script blockers. Their completed scopes and exact hashes are linked to subsequent stage proofs. No prior failed run was relabeled as passed.",
+    "Coordinator owns pending08 hydration/fingerprint integration, final product acceptance, old Edge/SQL retirement and deployment."
+  ]
+}

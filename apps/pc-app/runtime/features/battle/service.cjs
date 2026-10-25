@@ -6,6 +6,7 @@ const { appearance2d } = require("./assets.cjs");
 const { readQaProfile, createQaOnline, qaUser } = require('./qa-adapter.cjs');
 const { presentSession, presentReport } = require('./presentation.cjs');
 const { BattleCloudAuthority } = require('./cloud-authority.cjs');
+const {sameCommandInput}=require('./transport-journal.cjs');
 
 const ACTIONS = new Set(["normal_attack", "element_attack", "dodge", "ultimate"]);
 const ELEMENTS = new Set(["metal", "wood", "earth", "water", "fire"]);
@@ -150,14 +151,14 @@ class BattleFeatureService {
   async cloudCommand(owner,type,input,invoke,inputActionId) {
     if(!this.isCloud(owner))return invoke(undefined);
     const actionId=inputActionId||this.store.pendingCommand(owner,type,input),prior=this.store.action(owner,actionId);
-    if(inputActionId){if(prior&&(prior.command.type!==`cloud:${type}`||JSON.stringify(prior.command.input)!==JSON.stringify(input)))throw fail('ACTION_CONFLICT','操作编号与原请求不一致');if(prior?.result)return prior.result;if(!prior)this.store.reserve(owner,actionId,actionId,{type:`cloud:${type}`,input});}
+    if(inputActionId){if(prior&&(prior.command.type!==`cloud:${type}`||!sameCommandInput(type,prior.command.input,input)))throw fail('ACTION_CONFLICT','操作编号与原请求不一致');if(prior?.result)return prior.result;if(!prior)this.store.reserveTransport(owner,actionId,actionId,{type:`cloud:${type}`,input});}
     const result=await invoke(actionId);this.assertOwner(owner);this.store.resolve(owner,actionId,result);return result;
   }
 
   async saveCloudTraining(owner,response) {
     this.assertOwner(owner);const session=response.session;
     if(!session||session.mode!=='training'||session.context?.cloudUserId!==owner||session.context?.authority!=='supabase')throw fail('INVALID_CLOUD_SESSION','云端训练归属不一致');
-    if(response.proof){if(!this.store.reward(owner,session.id))await this.cloud.apply(owner,response.proof);this.assertOwner(owner);return this.store.session(owner,session.id);}
+    if(response.proof){const applied=Boolean(this.store.reward(owner,session.id)),needs=this.services.get('backups')?.adapters.get('battle')?.needsAuthorityProjection?.(owner,session.id);if(!applied||needs)await this.cloud.apply(owner,response.proof,{projectionOnly:applied});this.assertOwner(owner);return this.store.session(owner,session.id);}
     if(session.status==='abandoned')return this.services.db.transaction(()=>this.finish(owner,session,'abandoned'))();
     return this.store.save(owner,session);
   }
@@ -340,7 +341,7 @@ class BattleFeatureService {
       player: session.player, enemy: session.enemy, startedAt: session.startedAt, endedAt: session.endedAt,
       rounds: session.rounds, reward: session.reward || null, historyComplete: session.historyComplete,
       context: session.context, rules: session.rules || getBattleRules()
-    });
+    },{protocol:session.mode==='friend'&&session.context?.authority==='supabase'&&!session.reward?.applied});
     return saved;
   }
 
@@ -360,7 +361,7 @@ class BattleFeatureService {
       if (session.pendingAction && session.pendingAction.actionId !== actionId) throw fail("ACTION_PENDING", "本回合行动已锁定，请等待对手或重新同步");
       if(session.mode==='training'&&session.context?.authority==='supabase') {
         this.user(owner);const roundNo=receipt?.command.roundNo||session.snapshot.round+1;
-        if(!receipt)this.store.reserve(owner,actionId,session.id,{action:payload.action,roundNo});
+        if(!receipt)this.store.reserveTransport(owner,actionId,session.id,{action:payload.action,roundNo});
         session.pendingAction={actionId,action:payload.action,roundNo,uncertain:true};this.store.save(owner,session);
         try {const response=await this.online.invoke('training_action',{sessionId:session.id,actionId,action:payload.action,roundNo});const saved=await this.saveCloudTraining(owner,response);this.store.resolve(owner,actionId,saved);return saved;}
         catch(error){this.assertOwner(owner);throw fail('ONLINE_ACTION_UNCERTAIN',`训练结果待云端确认，请同步原回合。${friendlyError(error)}`);}
@@ -387,7 +388,7 @@ class BattleFeatureService {
     if (this.online.getStatus().room?.id !== session.room.id) await this.online.syncRoom({ roomId: session.room.id, roundsLimit: 50 });
     this.assertOwner(owner);
     const roundNo = receipt?.command.roundNo || session.room.current_round;
-    if (!receipt) this.store.reserve(owner, payload.actionId, session.id, { action: payload.action, roundNo });
+    if (!receipt) (this.isCloud(owner)?this.store.reserveTransport:this.store.reserve).call(this.store,owner,payload.actionId,session.id,{action:payload.action,roundNo});
     session.pendingAction = { actionId: payload.actionId, action: payload.action, roundNo, uncertain: true };
     this.store.save(owner, session);
     try {
@@ -440,14 +441,15 @@ class BattleFeatureService {
       this.user(owner);
       this.ownedPet(owner, payload.petId);
       const targetAccount=text(payload.targetAccount,'对方账号');
-      const result = await this.cloudCommand(owner,'invite',{targetAccount},actionId=>this.online.sendDuelRequest({ actionId, targetAccount, allowResend: Boolean(payload.allowResend) }));
+      const allowResend=Boolean(payload.allowResend);
+      const result = await this.cloudCommand(owner,'invite',{targetAccount,allowResend},actionId=>this.online.sendDuelRequest({ actionId, targetAccount, allowResend }));
       this.assertOwner(owner);
       if (result.ok === false) throw fail("INVITE_COOLDOWN", result.retryAfterSeconds ? `请在 ${result.retryAfterSeconds} 秒后重发` : "邀请发送失败");
       // Persist chosen combatant separately from desktop/chat selection.
       if (result.request?.id) {
         const key = `invite:${result.request.id}`;
         if (!this.store.action(owner, key)) {
-          this.store.reserve(owner, key, key, { petId: payload.petId, type: "invite" });
+          (this.isCloud(owner)?this.store.reserveTransport:this.store.reserve).call(this.store,owner,key,key,{petId:payload.petId,type:'invite'});
         }
       }
       return result.request;
@@ -456,7 +458,8 @@ class BattleFeatureService {
 
   async cancelInvite(payload, context) {
     const owner = this.owner(context); this.user(owner);
-    const result = await this.online.cancelDuelRequest({ requestId: text(payload.requestId, "邀请编号") });
+    const requestId=text(payload.requestId,'邀请编号');
+    const result = await this.cloudCommand(owner,'cancel',{requestId},actionId=>this.online.cancelDuelRequest({actionId,requestId}),`cancel:${requestId}`);
     this.assertOwner(owner);
     return result.request;
   }
@@ -472,27 +475,32 @@ class BattleFeatureService {
       const request = requests.inbound.find(item => item.id === requestId);
       if (!request) throw fail("INVITE_NOT_FOUND", "未找到发给当前账号的邀请");
       if (payload.decision === "reject") {
-        const rejected = await this.online.respondDuelRequest({ requestId, decision: "reject" });
+        const rejected = await this.cloudCommand(owner,'reject',{requestId},actionId=>this.online.respondDuelRequest({actionId,requestId,decision:'reject'}),`reject:${requestId}`);
         this.assertOwner(owner);
         return { request: rejected.request, session: null };
       }
+      const key = `accept:${requestId}`,original=this.store.action(owner,key);
+      if(original&&original.command.petId!==payload.petId)throw fail('PET_ROOM_MISMATCH','请使用原邀请绑定的伙伴');
       if (request.status === "accepted" && request.roomId) {
         const saved = this.store.roomSession(owner, request.roomId);
-        return { request, session: saved ? await this.syncInternal(owner, saved) : await this.joinInternal(owner, { ...payload, roomCode: request.roomCode }) };
+        if(saved)return {request,session:await this.syncInternal(owner,saved)};
+        const synced=await this.online.syncRoom({roomId:request.roomId,roundsLimit:50});this.assertOwner(owner);
+        const petId=original?.command.petId||payload.petId;
+        if(original&&!original.result)this.store.resolve(owner,key,{room:synced.room});
+        return {request,session:await this.syncInternal(owner,this.bindRoom(owner,synced.room,petId))};
       }
       if (this.store.latest(owner)) throw fail("BATTLE_IN_PROGRESS", "请先完成当前对战再接受邀请");
       const pet = this.ownedPet(owner, payload.petId);
       // Reuse a room after a lost response; do not create a second room for one acceptance.
-      const key = `accept:${requestId}`;
-      let pending = this.store.action(owner, key)?.result;
+      let pending = original?.result;
       if (!pending) {
+        if(!original)(this.isCloud(owner)?this.store.reserveTransport:this.store.reserve).call(this.store,owner,key,key,{petId:payload.petId,type:'accept'});
         const created = await this.online.createRoom({ actionId:key, petId: pet.petId, requestId, petResourceId: pet.appearance2d, petName: pet.petName, petElement: pet.element });
         this.assertOwner(owner);
         pending = { room: created.room };
-        if (!this.store.action(owner, key)) this.store.reserve(owner, key, key, { petId: payload.petId, type: "accept" });
         this.store.resolve(owner, key, pending);
       }
-      const accepted = await this.online.respondDuelRequest({ actionId:`accept-confirm:${requestId}`,requestId, decision: "accept", roomId: pending.room.id, roomCode: pending.room.room_code, roomStatus: pending.room.status });
+      const accepted = await this.cloudCommand(owner,'accept-confirm',{requestId,roomId:pending.room.id,roomCode:pending.room.room_code,roomStatus:pending.room.status},actionId=>this.online.respondDuelRequest({actionId,requestId,decision:'accept',roomId:pending.room.id,roomCode:pending.room.room_code,roomStatus:pending.room.status}),`accept-confirm:${requestId}`);
       this.assertOwner(owner);
       const synced = await this.online.syncRoom({ roomId: pending.room.id, roundsLimit: 50 });
       this.assertOwner(owner);
@@ -601,26 +609,28 @@ class BattleFeatureService {
       const own=response.pendingAction;
       if(pending&&pending.roundNo===own.roundNo&&(pending.actionId!==own.actionId||pending.action!==own.action))this.store.resolve(owner,pending.actionId,{sessionId:session.id,supersededBy:own.actionId,reason:'server-locked-original'});
       session.pendingAction={...own,uncertain:false};
-      if(!this.store.action(owner,own.actionId))this.store.reserve(owner,own.actionId,session.id,{action:own.action,roundNo:own.roundNo});
+      if(!this.store.action(owner,own.actionId))(this.isCloud(owner)?this.store.reserveTransport:this.store.reserve).call(this.store,owner,own.actionId,session.id,{action:own.action,roundNo:own.roundNo});
     }
     if (pending && rounds.has(pending.roundNo)) {
       session.pendingAction = null;
     }
     session.winner = room.winner_side === session.side ? "player" : room.winner_side ? "enemy" : null;
     let proof = null;
-    if (room.status === "finished" && session.winner && !this.store.reward(owner, session.id)) {
-      const user = this.user(owner);
+    const applied=Boolean(this.store.reward(owner,session.id)),projectionOnly=applied&&this.isCloud(owner);
+    if (room.status === "finished" && session.winner && (!applied||projectionOnly)) {
+      this.user(owner);
       try {
-        proof = await this.online.invoke("claim_battle_settlement", { userId: user.id, sessionToken: user.sessionToken, roomId: room.id, petId: session.player.petId });
+        proof = await this.online.invoke("claim_battle_settlement", { roomId: room.id, petId: session.player.petId });
         this.assertOwner(owner);
-        if(this.isCloud(owner)) {await this.cloud.apply(owner,proof);this.assertOwner(owner);const saved=this.store.session(owner,session.id);if(pending&&rounds.has(pending.roundNo))this.store.resolve(owner,pending.actionId,saved);return saved;}
+        if(this.isCloud(owner)) {await this.cloud.apply(owner,proof,{projectionOnly:Boolean(projectionOnly)});this.assertOwner(owner);const saved=this.store.session(owner,session.id);if(pending&&rounds.has(pending.roundNo))this.store.resolve(owner,pending.actionId,saved);return saved;}
       } catch (error) {
         this.assertOwner(owner);
+        if(projectionOnly)throw error;
         session.settlementError = friendlyError(error);
       }
     }
     return this.services.db.transaction(() => {
-      if(this.isCloud(owner)&&room.status==='finished'&&!this.store.reward(owner,session.id)){session.endedAt=room.updated_at;session.reward={actionId:`battle:${room.id}:${owner}`,petId:session.player.petId,experience:session.winner==='player'?20:5,applied:false,pendingReason:session.settlementError||'等待云端结算读回'};session.status='finished';session.reportId=session.id;this.store.saveReport(owner,{id:session.id,sessionId:session.id,mode:session.mode,status:session.status,winner:session.winner,player:session.player,enemy:session.enemy,startedAt:session.startedAt,endedAt:session.endedAt,rounds:session.rounds,reward:session.reward,historyComplete:session.historyComplete,context:session.context,rules:session.rules});return this.store.save(owner,session);}
+      if(this.isCloud(owner)&&room.status==='finished'&&!this.store.reward(owner,session.id)){session.endedAt=room.updated_at;session.reward={actionId:`battle:${room.id}:${owner}`,petId:session.player.petId,experience:session.winner==='player'?20:5,applied:false,pendingReason:session.settlementError||'等待云端结算读回'};session.status='finished';session.reportId=session.id;const saved=this.store.save(owner,session);this.store.saveReport(owner,{id:session.id,sessionId:session.id,mode:session.mode,status:session.status,winner:session.winner,player:session.player,enemy:session.enemy,startedAt:session.startedAt,endedAt:session.endedAt,rounds:session.rounds,reward:session.reward,historyComplete:session.historyComplete,context:session.context,rules:session.rules},{protocol:true});return saved;}
       if (room.status === "finished") session = this.finish(owner, session, "finished", proof);
       else if (room.status === "abandoned") session = this.finish(owner, session, "abandoned");
       else { session.status = room.status === "waiting" ? "waiting" : "active"; session = this.store.save(owner, session); }
@@ -636,9 +646,9 @@ class BattleFeatureService {
       if (["finished", "abandoned"].includes(session.status)) return session;
       if(session.mode==='training'&&session.context?.authority==='supabase') {this.user(owner);const response=await this.cloudCommand(owner,'training-leave',{sessionId:session.id},actionId=>this.online.invoke('leave_training',{sessionId:session.id,actionId}));return this.saveCloudTraining(owner,response);}
       if (session.mode === "friend") {
-        const user = this.user(owner);
+        this.user(owner);
         // Unlike the compatibility service's best-effort leave, require server acknowledgment.
-        const result = await this.cloudCommand(owner,'leave',{roomId:session.room.id},actionId=>this.online.invoke("leave_room", { actionId,userId: user.id, sessionToken: user.sessionToken, roomId: session.room.id, reason: "user_leave" }));
+        const result = await this.cloudCommand(owner,'leave',{roomId:session.room.id},actionId=>this.online.invoke("leave_room", { actionId, roomId: session.room.id, reason: "user_leave" }));
         this.assertOwner(owner);
         if (result.room?.status === "finished") return this.syncInternal(owner, session);
         session.room = result.room || session.room;
@@ -669,10 +679,15 @@ class BattleFeatureService {
     if(!remote?.envelope)return;
     const backups=this.services.get('backups');backups.validate(remote.envelope,owner);
     const module=remote.envelope.data.modules.battle;if(!module)return;
-    const adapter=backups.adapters.get('battle');if(module.version!==adapter?.version)throw fail('INVALID_BATTLE_BACKUP','云端战报版本不兼容');adapter.validate(module.data,owner);
+    const adapter=backups.adapters.get('battle');
+    // The cloud keeps its four-array v1 format; local v2 additionally owns a
+    // transport journal. A supported local backup is not a cloud report source.
+    if(module.version!==1||!adapter||!(module.version===adapter.version||adapter.versions?.includes(module.version)))throw fail('INVALID_BATTLE_BACKUP','云端战报版本不兼容');
+    if(adapter.validateModule)adapter.validateModule(module,owner);
+    else adapter.validate(module.data,owner);
     // Read-only cloud projections populate only the report cache. They cannot
     // award XP/seeds or overwrite an independent local companion/inventory unit.
-    this.services.db.transaction(()=>{for(const row of module.data.reports)this.store.saveReport(owner,JSON.parse(row.data_json));})();
+    this.services.db.transaction(()=>{for(const row of module.data.reports)this.store.saveRawReport(owner,row,{preserveExisting:true});})();
   }
 
   localReports(owner,payload) {

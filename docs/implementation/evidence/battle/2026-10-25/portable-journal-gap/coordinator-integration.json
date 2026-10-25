@@ -1,0 +1,20 @@
+{
+  "recordedAt": "2026-10-25T06:49:44.635Z",
+  "source": "coordinator delegation from01a1704b-e200-7090-9d17-958218c80f42",
+  "independentlyRerunByThisChat": false,
+  "mergedSource": [
+    "8c3fb94",
+    "c82380f"
+  ],
+  "privatePreviewHook": "695007e4c7bf583673f63b5d39e4172a28b2d692",
+  "targetedCasesPassed": 16,
+  "verifiedRoute": "BackupManager private preview map -> battle.restoreCloud -> AccountSync.acceptCloudRestore",
+  "fileAndInputClaimsStayDirty": true,
+  "verifiedMainMetadataCanClean": true,
+  "originalRawBytesPreserved": true,
+  "newActualSfxPassed": false,
+  "pending": [
+    "final affected native regressions",
+    "01 rebuilt actual SFX verification"
+  ]
+}

@@ -1,0 +1,151 @@
+{
+  "at": "2026-10-25T04:20:24.228Z",
+  "sourceSha": "7a6b04a0cc83f84143c42af71d4947ce9f7ce4cb",
+  "kind": "Two actual Electron44 processes on one Windows host, isolated profiles, production TypeScript main/preload and React renderer, actual Supabase HTTPS. Not two physical machines.",
+  "requireCompleteDomainSave": true,
+  "credentialsPersisted": "Windows safeStorage ciphertext only; no password or token in evidence",
+  "checks": [
+    {
+      "name": "actual separate Electron processes log in to same HTTPS account without kicking each other",
+      "data": {
+        "pidA": 33180,
+        "pidB": 31516,
+        "owner": "account:bb3a94fa-1490-47d8-bb2b-4476eee6c766",
+        "native": {
+          "electron": "44.9.3",
+          "node": "24.22.0",
+          "userData": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-accounts\\DesktopPet\\artifacts\\accounts\\cloud-electron-1792902024228\\device-a"
+        }
+      }
+    },
+    {
+      "name": "two Windows safeStorage vaults keep device-specific sessions encrypted",
+      "data": {
+        "a": {
+          "available": true,
+          "file": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-accounts\\DesktopPet\\artifacts\\accounts\\cloud-electron-1792902024228\\device-a\\accounts\\verified-session.bin",
+          "sha256": "362f24c537cfd9bcd6ca90010a491c2fccbad132b83ff568086c5931b4b84d72",
+          "encryptedNotPlaintext": true,
+          "matchesCurrentSession": true,
+          "deviceId": "a77fd7ac-85a5-429a-9a59-9694d4406158",
+          "sessionId": "6bb2df80-155f-4b4a-bc66-579f6fdb907b",
+          "owner": "account:bb3a94fa-1490-47d8-bb2b-4476eee6c766"
+        },
+        "b": {
+          "available": true,
+          "file": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-accounts\\DesktopPet\\artifacts\\accounts\\cloud-electron-1792902024228\\device-b\\accounts\\verified-session.bin",
+          "sha256": "da0ae7d890fdb9bbb67918abef581be995fa11331b9987a4ef8db02c74ef3980",
+          "encryptedNotPlaintext": true,
+          "matchesCurrentSession": true,
+          "deviceId": "5998879e-c1aa-4328-b9f3-a44e7b318d02",
+          "sessionId": "dc56e10d-e556-42c2-9933-3665a3e065d0",
+          "owner": "account:bb3a94fa-1490-47d8-bb2b-4476eee6c766"
+        }
+      }
+    },
+    {
+      "name": "product IPC cloud adoption plus standard server garden bootstrap restores the same real pet on both clients",
+      "data": {
+        "petId": "pet-bc320c7d-8a0a-49e9-aa5d-c974f12276a1",
+        "owner": "account:bb3a94fa-1490-47d8-bb2b-4476eee6c766",
+        "revision": 2,
+        "scope": "builtin 2D resource; no SQL-seeded pet/inventory and no synthetic gameplay reward"
+      }
+    },
+    {
+      "name": "rendered application A saves, application B independently reads matching actual cloud receipt",
+      "data": {
+        "first": {
+          "verified": true,
+          "personalVerified": true,
+          "requiresAuthority": false,
+          "privacyRedactions": false,
+          "actionId": "1ae221ee-36ad-4fb3-a7a7-4e3f40f3a559",
+          "revision": 3,
+          "checksum": "44023d545adb674426e6818305cf09ed633e94dae8ab81e6a4138c4102091c83",
+          "status": {
+            "configured": true,
+            "cloudRevision": 3,
+            "lastVerifiedAt": "2026-10-25T04:20:57.606Z",
+            "lastError": null,
+            "pending": 0,
+            "conflicts": 0,
+            "localChanged": false,
+            "unverifiedLocal": 0,
+            "privacyRedactions": 0,
+            "running": false
+          }
+        },
+        "cloudB": {
+          "revision": 3,
+          "checksum": "44023d545adb674426e6818305cf09ed633e94dae8ab81e6a4138c4102091c83",
+          "volume": 31,
+          "modules": [
+            "garden",
+            "settings",
+            "companions",
+            "conversations"
+          ]
+        }
+      }
+    },
+    {
+      "name": "real IPC conflict preserves B state; explicit cloud restore keeps original backup before next CAS",
+      "data": {
+        "conflict": "SYNC_CONFLICT",
+        "backup": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-accounts\\DesktopPet\\artifacts\\accounts\\cloud-electron-1792902024228\\device-b\\accounts\\backups\\before-restore-1792902062158-5fe23af4-c20f-40d6-8943-6f90372c8165.lingjing.json",
+        "revision": 4
+      }
+    },
+    {
+      "name": "real Auth rotation updates same SDK Data API and Realtime token plus encrypted vault",
+      "data": {
+        "sameClient": true,
+        "rotated": true,
+        "realtimeTokenMatches": true,
+        "owner": "account:bb3a94fa-1490-47d8-bb2b-4476eee6c766",
+        "channelCount": 0,
+        "privateChannelReconnectVerified": false
+      }
+    },
+    {
+      "name": "real Electron restart resumes encrypted session and durable queue after controlled connection refusal",
+      "data": {
+        "oldPid": 33180,
+        "newPid": 32364,
+        "deviceId": "a77fd7ac-85a5-429a-9a59-9694d4406158",
+        "sessionId": "6bb2df80-155f-4b4a-bc66-579f6fdb907b",
+        "retained": {
+          "action_id": "087172dc-e60f-45aa-bb0d-19e98456dedd",
+          "base_revision": 4,
+          "status": "retry"
+        },
+        "retryReadback": {
+          "actionId": "087172dc-e60f-45aa-bb0d-19e98456dedd",
+          "revision": 5,
+          "checksum": "491f0674f642ebb1744d0c5c9fd6a8d6321cde94c17164c87ecabd86622fb77b",
+          "volume": 54
+        },
+        "scope": "per-request closed TLS socket; host network was not disabled"
+      }
+    },
+    {
+      "name": "actual public session and SQLite omit access/refresh tokens",
+      "data": {
+        "sessionExcludesTokens": true,
+        "sqliteExcludesTokens": true
+      }
+    },
+    {
+      "name": "logout A revokes its real session, restart stays signed out, B remains active",
+      "data": {
+        "owner": "account:bb3a94fa-1490-47d8-bb2b-4476eee6c766",
+        "revision": 5
+      }
+    }
+  ],
+  "errors": [],
+  "fullSaveVerified": true,
+  "authorityPending": false,
+  "passed": true
+}

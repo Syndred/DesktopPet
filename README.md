@@ -21,6 +21,7 @@ better-sqlite3 13 使用发布包内的 N-API 预编译文件。普通安装不�
 - npm run build:pc 编译正式程序；npm run start:pc 启动编译版本。
 - npm run package:pc:win 生成 artifacts/pc-cloud-upgrade 下的 Windows 便携 EXE。
 - npm run typecheck、npm run typecheck:ui、npm run test:native 检查类型及实际 Electron/SQLite；pc:smoke:profile、pc:smoke:engineering 和 pc:smoke:portable 分别验证档案发现、原生窗口和真实 EXE。
+- npm run verify:cloud 严格检查22份实际部署迁移与生成源码，运行不带云凭据的SQL/领域/Deno用例；真实云端验收证据单独记录。
 - 业务模块通过 [工程契约](docs/implementation/foundation-contract.md) 注册。旧 HTML renderer/preload/main 已移除。
 - Linux CI 检查正式类型及单元逻辑，Windows CI 执行全部域 CJS/native、真实窗口和 EXE；旧内存版业务原型及其测试已退役，验收数量以本轮证据为准。
 
@@ -30,4 +31,4 @@ PET_USER_DATA_DIR 显式覆盖优先；程序先寻找当前及已知旧目录�
 
 普通便携 EXE 自带公开云配置；构建来源、运行依赖闭包、真实签名状态和二进制回滚见 [发布说明](docs/release-runbook.md)。无有效 Authenticode 证书的候选包会明确标记未签名。
 
-清理决策见 [旧文件与消费者清单](docs/implementation/cleanup/cloud-foundation-inventory.json)。清理前完整 Git bundle 存放在 artifacts/recovery/cloud-foundation-2026-10-25，恢复时克隆到新目录，不覆盖当前检出或用户存档。设计文件及 comparisontext 加密恢复备份不属于清理范围。
+清理决策见 [旧文件与消费者清单](docs/implementation/cleanup/cloud-foundation-inventory.json) 与 [云端退役审计](docs/implementation/cleanup/cloud-coordinator-retirement.json)。工程及云端清理均已保存完整 Git bundle，路径和SHA见相应审计；恢复时克隆到新目录，不覆盖当前检出或用户存档。设计文件及 comparisontext 加密恢复备份不属于清理范围。

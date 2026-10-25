@@ -1,0 +1,156 @@
+{
+  "schemaVersion": 1,
+  "runId": "run-1792916697740",
+  "at": "2026-10-25T08:24:57.742Z",
+  "platform": "win32",
+  "nodeVersion": "24.21.0",
+  "sourceCommit": "b9ca2b7c68fd54311346e02c810e27dee3d1ded3",
+  "sourceChanges": [
+    "?? docs/design/2026-10-24/01-companions-and-desktop.png",
+    "?? docs/design/2026-10-24/02-exploration-and-battle.png",
+    "?? docs/design/2026-10-24/full-ui/05-territory-and-inventory.png",
+    "?? docs/design/2026-10-24/imagegen-prompts.txt",
+    "?? docs/design/2026-10-24/lingjing-designs-v2.zip",
+    "?? docs/design/2026-10-24/lingjing-designs-v3-garden.zip",
+    "?? docs/design/2026-10-24/stack-research.txt",
+    "?? docs/design/2026-10-25/battle-hud-preview/",
+    "?? docs/design/2026-10-25/battle-v2-states/",
+    "?? docs/implementation/evidence/cloud/2026-10-25/friend-lifecycle-native-source-binding.json"
+  ],
+  "provenance": "local-source-comparison-and-explicit-PostgreSQL-WASM-SQLite-Deno-fixtures",
+  "realCloudVerified": false,
+  "fullPostgisResetVerified": false,
+  "requiresCloudCredentials": false,
+  "requiresDocker": false,
+  "strictMigrationGate": true,
+  "denoVersion": "2.9.6",
+  "stages": [
+    {
+      "name": "migration-filenames",
+      "code": 0,
+      "signal": null,
+      "durationMs": 49,
+      "log": "cloud-source-check/run-1792916697740/migration-filenames.log",
+      "passed": true
+    },
+    {
+      "name": "battle-core",
+      "code": 0,
+      "signal": null,
+      "durationMs": 322,
+      "log": "cloud-source-check/run-1792916697740/battle-core.log",
+      "passed": true
+    },
+    {
+      "name": "battle-cloud",
+      "code": 0,
+      "signal": null,
+      "durationMs": 113,
+      "log": "cloud-source-check/run-1792916697740/battle-cloud.log",
+      "passed": true
+    },
+    {
+      "name": "garden-cloud",
+      "code": 0,
+      "signal": null,
+      "durationMs": 75,
+      "log": "cloud-source-check/run-1792916697740/garden-cloud.log",
+      "passed": true
+    },
+    {
+      "name": "discovery-cloud",
+      "code": 0,
+      "signal": null,
+      "durationMs": 100,
+      "log": "cloud-source-check/run-1792916697740/discovery-cloud.log",
+      "passed": true
+    },
+    {
+      "name": "modern-sql-authority",
+      "code": 0,
+      "signal": null,
+      "durationMs": 33107,
+      "log": "cloud-source-check/run-1792916697740/modern-sql-authority.log",
+      "passed": true
+    },
+    {
+      "name": "deno-version",
+      "code": 0,
+      "signal": null,
+      "durationMs": 1285,
+      "log": "cloud-source-check/run-1792916697740/deno-version.log",
+      "passed": true
+    },
+    {
+      "name": "resource-deno",
+      "code": 0,
+      "signal": null,
+      "durationMs": 1540,
+      "log": "cloud-source-check/run-1792916697740/resource-deno.log",
+      "passed": true
+    }
+  ],
+  "passed": true,
+  "generatedFilesUnchanged": [
+    {
+      "path": "apps/pc-app/runtime/features/battle/core.generated.cjs",
+      "mtimeMs": 1792898837867.416,
+      "sha256": "7e8af43248f4105ceea103518d59f907c4657ffae91add203763b0a884049528"
+    },
+    {
+      "path": "infra/supabase/functions/lingjing-battle/runtime.generated.mjs",
+      "mtimeMs": 1792901216101.591,
+      "sha256": "4871f859ebf0b6f33144ad54048fd2c0d40875dc65aec0e826926265bddb8d1e"
+    },
+    {
+      "path": "infra/supabase/functions/lingjing-battle/runtime.generated.json",
+      "mtimeMs": 1792901216101.591,
+      "sha256": "81bf965896ad4d4a63553ff6f42e3b22719cae779dbd432c5d9db8ecd4fc5696"
+    },
+    {
+      "path": "infra/supabase/functions/_shared/garden-runtime.bundle.mjs",
+      "mtimeMs": 1792901216279.707,
+      "sha256": "d755f6f3787b382c37f298f2ea0c39444aa854ec42eebb920a799ee43a83f302"
+    },
+    {
+      "path": "infra/supabase/functions/_shared/garden-runtime.sources.json",
+      "mtimeMs": 1792901216281.2266,
+      "sha256": "3bcf636feee841f7e3053b1619ba14dc443d948c1737d345459f2c3a525c440c"
+    },
+    {
+      "path": "infra/supabase/functions/discovery/_generated/runtime.mjs",
+      "mtimeMs": 1792901216193.9353,
+      "sha256": "0f88917e280b92fffc94d4d6671d1668fa2460809c6677c9b25ab4c1f9a2d7c5"
+    },
+    {
+      "path": "infra/supabase/functions/discovery/_generated/provenance.json",
+      "mtimeMs": 1792901216195.4568,
+      "sha256": "96dda5e2f265a613cd5ad18a04fdb6241a422f9e0afdf1ea4221fa2e5a6572f9"
+    }
+  ],
+  "nodeTestFiles": [
+    "scripts/cloud/check-migrations.test.mjs",
+    "scripts/cloud/migration-preservation-replay.test.mjs",
+    "apps/pc-app/runtime/features/accounts/tests/cloud-identity-sql.test.mjs",
+    "apps/pc-app/runtime/features/accounts/tests/cloud-session-upgrade-sql.test.mjs",
+    "apps/pc-app/runtime/features/accounts/tests/cloud-service-actor-sql.test.mjs",
+    "apps/pc-app/runtime/features/accounts/tests/cloud-save-sql.test.mjs",
+    "apps/pc-app/runtime/features/companions/tests/cloud-command-sql.test.mjs",
+    "apps/pc-app/runtime/features/companions/tests/cloud-domain.test.mjs",
+    "apps/pc-app/runtime/features/companions/tests/cloud-growth.test.mjs",
+    "apps/pc-app/runtime/features/discovery/tests/cloud-authority.test.mjs",
+    "apps/pc-app/runtime/features/discovery/tests/cloud-actor-guard.test.mjs",
+    "apps/pc-app/runtime/features/discovery/tests/cloud-game-sql.test.mjs",
+    "apps/pc-app/runtime/features/discovery/tests/cloud-handler.test.mjs",
+    "apps/pc-app/runtime/features/discovery/tests/cloud-protocol.test.mjs",
+    "apps/pc-app/runtime/features/discovery/tests/cloud-location-sql.test.mjs",
+    "apps/pc-app/runtime/features/discovery/tests/cloud-runtime.test.mjs",
+    "apps/pc-app/runtime/features/battle/tests/cloud-battle-sql.test.mjs",
+    "apps/pc-app/runtime/features/battle/tests/authority-save.test.mjs",
+    "apps/pc-app/runtime/features/battle/tests/trusted-pet.test.mjs",
+    "apps/pc-app/runtime/features/resources/verification/storage-rls-sql.test.mjs",
+    "scripts/acceptance/cloud-territory/save-cas.test.mjs",
+    "scripts/acceptance/cloud-territory/receipt-expression.test.mjs"
+  ],
+  "finishedAt": "2026-10-25T08:25:34.403Z"
+}

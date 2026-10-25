@@ -1,5 +1,6 @@
 const { createHash } = require('node:crypto');
 const { canonical, saveDataChecksum } = require('../accounts/util.cjs');
+const {legacyFinishedProjection}=require('./canonical-projection.cjs');
 const hash = value => createHash('sha256').update(canonical(value)).digest('hex');
 const fail = (code,message) => { throw Object.assign(new Error(message),{code}); };
 
@@ -8,7 +9,11 @@ const fail = (code,message) => { throw Object.assign(new Error(message),{code});
 class BattleCloudAuthority {
   constructor(services) { this.services=services;this.db=services.db; }
   owner(owner) { if(this.services.get('accounts')?.getOwnerAccountId()!==owner)fail('AUTH_CHANGED','账号已切换，请重新打开对战'); }
-  async apply(owner,proof) {
+  confirm(owner,envelope,revision,projectionOnly=false){
+    try {this.services.get('accounts')?.sync?.acceptAuthoritativeReadback(owner,{envelope,cloudRevision:revision});}
+    catch(error){if(!['CLOUD_LOCAL_CONFLICT','SYNC_PENDING','SYNC_BUSY',...(projectionOnly?['SYNC_STALE_READBACK']:[])].includes(error.code))throw error;this.services.events?.emit('accounts:authority-readback-pending',{ownerAccountId:owner,code:error.code});}
+  }
+  async apply(owner,proof,{projectionOnly=false}={}) {
     this.owner(owner);
     const receiptKey=proof?.authority?.actionId,scopedKey=`battle-authority:${proof?.reward?.mode}:${proof?.room_id}`;
     if(proof?.owner_account_id!==owner||proof.reward?.actionId!==proof.action_id||proof.reward?.petId!==proof.pet_id||![proof.action_id,scopedKey].includes(receiptKey)||!Number.isSafeInteger(proof.authority?.revision))fail('INVALID_SETTLEMENT_PROOF','云端结算归属不一致');
@@ -24,6 +29,25 @@ class BattleCloudAuthority {
     const report=b.reports.find(row=>row.id===proof.report?.id);
     const session=b.sessions.find(row=>row.id===proof.report?.sessionId);
     if(!report||!session||session.status!=='finished'||JSON.parse(session.data_json).reward?.actionId!==proof.action_id||hash(JSON.parse(report.data_json))!==hash(proof.report)||!b.rewards.some(row=>row.action_id===proof.action_id&&row.pet_id===proof.pet_id))fail('INVALID_SETTLEMENT_PROOF','战报与存档中的结算记录不一致');
+    if(projectionOnly){
+      const reward=b.rewards.find(row=>row.action_id===proof.action_id&&row.pet_id===proof.pet_id);
+      const current=[this.db.prepare('SELECT id,room_id,status,data_json,revision,updated_at FROM battle_sessions WHERE owner_account_id=? AND id=?').get(owner,session.id),this.db.prepare('SELECT id,session_id,data_json,ended_at FROM battle_reports_v2 WHERE owner_account_id=? AND id=?').get(owner,report.id),this.db.prepare('SELECT session_id,action_id,pet_id,data_json FROM battle_reward_receipts WHERE owner_account_id=? AND session_id=?').get(owner,session.id)];
+      if(current.some(row=>!row)||hash(current)!==hash([session,report,reward])){
+        if(!legacyFinishedProjection(current,[session,report,reward]))fail('CLOUD_LOCAL_CONFLICT','旧完成档与权威终局不同，原始记录已保留');
+        // Preserve the original full save before repairing this byte-identical
+        // reward's narrowly recognized pre-fix presentation projection.
+        backups.save(owner,null,'before-cloud-battle-projection-repair');
+        this.db.exec('SAVEPOINT battle_legacy_projection');
+        try{
+          this.owner(owner);
+          this.db.prepare('UPDATE battle_sessions SET room_id=?,status=?,data_json=?,revision=?,updated_at=? WHERE owner_account_id=? AND id=?').run(session.room_id,session.status,session.data_json,session.revision,session.updated_at,owner,session.id);
+          this.db.prepare('UPDATE battle_reports_v2 SET data_json=?,ended_at=? WHERE owner_account_id=? AND id=?').run(report.data_json,report.ended_at,owner,report.id);
+          this.db.exec('RELEASE SAVEPOINT battle_legacy_projection');
+        }catch(error){this.db.exec('ROLLBACK TO SAVEPOINT battle_legacy_projection');this.db.exec('RELEASE SAVEPOINT battle_legacy_projection');throw error;}
+      }
+      this.owner(owner);battle.acceptAuthorityProjection(owner,b,{sessionId:session.id,actionId:receiptKey,revision:remote.revision,checksum:remote.checksum});
+      this.confirm(owner,envelope,remote.revision,true);return proof;
+    }
     // Keep every independent local operation. Never silently discard an offline
     // branch just because a later cloud battle has a valid reward receipt.
     for(const [name,rows] of [['companion_actions',c.tables.companion_actions],['garden_actions',g.tables.garden_actions]]) {
@@ -47,14 +71,14 @@ class BattleCloudAuthority {
       // battle's pending settlement, so replace exactly its matching projection.
       this.db.prepare('UPDATE battle_sessions SET room_id=?,status=?,data_json=?,revision=?,updated_at=? WHERE owner_account_id=? AND id=?').run(session.room_id,session.status,session.data_json,session.revision,session.updated_at,owner,session.id);
       this.db.prepare('UPDATE battle_reports_v2 SET data_json=?,ended_at=? WHERE owner_account_id=? AND id=?').run(report.data_json,report.ended_at,owner,report.id);
+      battle.acceptAuthorityProjection?.(owner,b,{sessionId:session.id,actionId:receiptKey,revision:remote.revision,checksum:remote.checksum});
     };
     // The shared connection exposes better-sqlite3 transactions in production.
     // SAVEPOINT also composes with supported node:sqlite acceptance fixtures.
     this.db.exec('SAVEPOINT battle_cloud_readback');
     try {restore();this.db.exec('RELEASE SAVEPOINT battle_cloud_readback');}
     catch(error){this.db.exec('ROLLBACK TO SAVEPOINT battle_cloud_readback');this.db.exec('RELEASE SAVEPOINT battle_cloud_readback');throw error;}
-    try {this.services.get('accounts')?.sync?.acceptAuthoritativeReadback(owner,{envelope,cloudRevision:remote.revision});}
-    catch(error){if(!['CLOUD_LOCAL_CONFLICT','SYNC_PENDING','SYNC_BUSY'].includes(error.code))throw error;this.services.events?.emit('accounts:authority-readback-pending',{ownerAccountId:owner,code:error.code});}
+    this.confirm(owner,envelope,remote.revision);
     this.services.events?.emit('companions:changed',{ownerAccountId:owner,petId:proof.pet_id});this.services.events?.emit('garden:changed',{ownerAccountId:owner});
     return proof;
   }

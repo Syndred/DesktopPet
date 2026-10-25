@@ -1,0 +1,106 @@
+{
+  "at": "2026-10-25T07:01:18.691Z",
+  "sourceCommit": "7051ce308a55f1a8b426f0290eb79162ce94a634",
+  "executable": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\artifacts\\pc-cloud-upgrade-final-7051ce3\\Lingjing-0.1.8-portable-x64.exe",
+  "executableSha256": "bd6a5cbd02b0583bd0543afb37ebdbed261993d8ebbcb57130020e90b8dcd55d",
+  "projectRef": "jbvrdmrkwpznbrvteive",
+  "actualPortable": true,
+  "simulatedProvider": false,
+  "physicalMachines": 1,
+  "checks": [
+    {
+      "name": "Actual portable A/B use packaged cloud configuration, independent encrypted sessions and a verified complete starting save",
+      "owner": "account:470a41d4-3cf7-4a7d-8b1e-32e276d2a719",
+      "pids": [
+        10832,
+        17716
+      ],
+      "runtime": [
+        {
+          "pid": 10832,
+          "electron": "44.9.3",
+          "node": "24.22.0",
+          "profileOverride": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\cloud-upgrade\\2026-10-25\\final-portable-mQoNVl\\A",
+          "userData": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\cloud-upgrade\\2026-10-25\\final-portable-mQoNVl\\A",
+          "resourcesPath": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\3LAzBal4ornBbO58tTSYfyjw2xg\\resources"
+        },
+        {
+          "pid": 17716,
+          "electron": "44.9.3",
+          "node": "24.22.0",
+          "profileOverride": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\cloud-upgrade\\2026-10-25\\final-portable-mQoNVl\\B",
+          "userData": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\cloud-upgrade\\2026-10-25\\final-portable-mQoNVl\\B",
+          "resourcesPath": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\3LAzBal4ornBbO58tTSYfyjw2xg\\resources"
+        }
+      ],
+      "source": "7051ce308a55f1a8b426f0290eb79162ce94a634",
+      "tunnels": 7,
+      "baselinePetIds": [
+        "pet-ccec2bdd-b680-4e97-9a68-dcfbeef1986d",
+        "pet-2b88f57b-5199-4d42-bebb-3836f5b69ec5",
+        "pet-9fa48de9-6ad9-4a15-a4da-4277b39a642c",
+        "pet-591e595a-e9fd-4211-873b-1d0afad88c0c",
+        "pet-33636811-2e92-4bb7-b4e6-0bbdfa800283",
+        "pet-68c19bde-6ac8-4a7a-b65b-75b91c360d33",
+        "pet-224b6054-d0ac-47ea-9572-670f926e27aa",
+        "pet-999990cc-28af-40d2-b7ac-22ab11f7d206",
+        "pet-588fb17b-4b2e-4568-81d4-ea4dcb018aea",
+        "pet-3eea8bca-f04f-4f64-9a04-603f36596890",
+        "pet-f2355af5-3004-4e72-b1d4-0f47dba601c0",
+        "pet-b85fd17e-3f75-4261-8fa3-58ea1983542c"
+      ]
+    }
+  ],
+  "errors": [],
+  "passed": false,
+  "scope": "Two actual portable SFX processes, public product IPC/React, real HTTPS/Storage and read-only SQLite. Main inspector only observes owned processes and selects an actual local descriptor in the native chooser; OS dialog UI itself is not claimed. Model error uses a closed loopback socket; no fabricated assistant reply.",
+  "verification": {
+    "gitCommit": "43705b469d58ef8604bc58eb3e69f76ae14c21ff",
+    "scriptSha256": "444a9c642b99bb084f34dca3f75fba40a7ee8e6a12c3d0587d45c272ee6c4d6d",
+    "driverSha256": "1ff66bf80f6864914ee725bf71f688dda6f77a865b192e765f90a052eac2cd4b"
+  },
+  "failure": {
+    "name": "AssertionError",
+    "message": "conversations:select SELECTION_FAILED 伙伴切换暂未确认，请稍后重试。原选择已保留。\n\nfalse !== true\n",
+    "stack": "AssertionError [ERR_ASSERTION]: conversations:select SELECTION_FAILED 伙伴切换暂未确认，请稍后重试。原选择已保留。\n\nfalse !== true\n\n    at Object.call (file:///C:/Users/Administrator/Desktop/project/DesktopPet/scripts/acceptance/portable-session.mjs:55:192)\n    at async file:///C:/Users/Administrator/Desktop/project/DesktopPet/scripts/acceptance/cloud-integrated-portable.mjs:81:3"
+  },
+  "failureStatus": [
+    {
+      "device": "A",
+      "data": {
+        "configured": true,
+        "cloudRevision": 70,
+        "lastVerifiedAt": "2026-10-25T07:03:51.171Z",
+        "lastError": null,
+        "pending": 0,
+        "conflicts": 0,
+        "localChanged": true,
+        "unverifiedLocal": 0,
+        "privacyRedactions": 0,
+        "running": true,
+        "observedCloudRevision": 70,
+        "lastCloudCheckedAt": "2026-10-25T07:03:31.695Z",
+        "remoteChanged": false
+      }
+    },
+    {
+      "device": "B",
+      "data": {
+        "configured": true,
+        "cloudRevision": 70,
+        "lastVerifiedAt": "2026-10-25T07:03:42.440Z",
+        "lastError": null,
+        "pending": 0,
+        "conflicts": 0,
+        "localChanged": false,
+        "unverifiedLocal": 0,
+        "privacyRedactions": 0,
+        "running": true,
+        "observedCloudRevision": 71,
+        "lastCloudCheckedAt": "2026-10-25T07:03:59.314Z",
+        "remoteChanged": true
+      }
+    }
+  ],
+  "completedAt": "2026-10-25T07:04:00.728Z"
+}

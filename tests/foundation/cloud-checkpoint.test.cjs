@@ -10,7 +10,6 @@ const { AccountSync } = require('../../apps/pc-app/runtime/features/accounts/syn
 const { checksum } = require('../../apps/pc-app/runtime/features/accounts/util.cjs');
 const { saveDataChecksum } = require('../../apps/pc-app/runtime/features/accounts/util.cjs');
 const { CompanionsService } = require('../../apps/pc-app/runtime/features/companions/service.cjs');
-const { createCompanionBackupAdapter } = require('../../apps/pc-app/runtime/features/companions/backup.cjs');
 const { GardenService } = require('../../apps/pc-app/runtime/features/garden/service.cjs');
 const { createGardenBackupAdapter } = require('../../apps/pc-app/runtime/features/garden/backup.cjs');
 const { CloudGardenAuthority } = require('../../apps/pc-app/runtime/features/garden/cloud-authority.cjs');
@@ -26,7 +25,6 @@ function fixture() {
   const garden = new GardenService({ db }); garden.snapshot({ ownerAccountId: owner });
   const backups = new BackupManager({ db,directory,getIdentity:who=>db.prepare('SELECT * FROM account_identities WHERE owner_account_id=?').get(who) });
   backups.register(createGardenBackupAdapter(db));
-  backups.register(createCompanionBackupAdapter(db));
   const sync = new AccountSync({ db,backups,remote:{enabled:true},getSession:()=>({ownerAccountId:owner,provider:'runtime'}),getSettings:()=>({document:{sync:{enabled:true}}}) });
   const authority = new CloudGardenAuthority({db,session:{getOwnerAccountId:()=>owner},get:name=>name==='accounts'?{sync}:null},garden);
   const initial = backups.snapshot(owner);
@@ -49,16 +47,17 @@ test('real shared SQLite garden readback advances the account CAS base without r
     f.sync.enqueue(f.owner,'next-full-save');
     assert.equal(f.db.prepare('SELECT base_revision FROM account_sync_outbox WHERE owner_account_id=?').get(f.owner).base_revision,2);
     const pending={...f.db.prepare('SELECT * FROM account_sync_outbox WHERE owner_account_id=?').get(f.owner)};
-    f.authority.applyReadback({ownerAccountId:f.owner},remote);
     assert.throws(()=>f.sync.acceptAuthoritativeReadback(f.owner,{envelope:remote.envelope,cloudRevision:remote.accountRevision}),{code:'SYNC_PENDING'});
+    f.authority.applyReadback({ownerAccountId:f.owner},remote);
     assert.deepEqual({...f.db.prepare('SELECT * FROM account_sync_outbox WHERE owner_account_id=?').get(f.owner)},pending);
     assert.equal(f.db.prepare('SELECT status FROM account_sync_outbox WHERE owner_account_id=?').get(f.owner).status,'pending');
   } finally {f.db.close();}
 });
-test('local SQLite fixture: verified domain readback preserves unrelated offline data while strict account checkpoint rejects conflict or in-flight saves', async () => {
+test('local SQLite fixture: verified domain readbacks retain unrelated local work while blocked complete-save checkpoints stay unchanged', async () => {
   const f=fixture();try {
     const remote=await remotePlant(f), backup=createGardenBackupAdapter(f.db);
     f.db.prepare('UPDATE test_notes SET note=? WHERE owner_account_id=?').run('离线新回忆',f.owner);
+    assert.throws(()=>f.sync.acceptAuthoritativeReadback(f.owner,{envelope:remote.envelope,cloudRevision:remote.accountRevision}),{code:'CLOUD_LOCAL_CONFLICT'});
     f.authority.applyReadback({ownerAccountId:f.owner},remote);
     assert.equal(f.garden.snapshot({ownerAccountId:f.owner}).data.plots[0].cropType,'rice');
     const applied=backup.export(f.owner);
@@ -66,11 +65,13 @@ test('local SQLite fixture: verified domain readback preserves unrelated offline
     assert.deepEqual(backup.export(f.owner),applied);
     assert.equal(f.db.prepare('SELECT note FROM test_notes WHERE owner_account_id=?').get(f.owner).note,'离线新回忆');
     assert.equal(f.sync.status(f.owner).cloudRevision,1);
+    assert.equal(f.sync.status(f.owner).localChanged,true);
     f.db.prepare('UPDATE test_notes SET note=? WHERE owner_account_id=?').run('已有回忆',f.owner);
     f.sync.running.add(f.owner);
-    f.authority.applyReadback({ownerAccountId:f.owner},remote);
+    const before=backup.export(f.owner);
     assert.throws(()=>f.sync.acceptAuthoritativeReadback(f.owner,{envelope:remote.envelope,cloudRevision:remote.accountRevision}),{code:'SYNC_BUSY'});
-    assert.deepEqual(backup.export(f.owner),applied);
+    f.authority.applyReadback({ownerAccountId:f.owner},remote);
+    assert.deepEqual(backup.export(f.owner),before);
     assert.equal(f.sync.status(f.owner).cloudRevision,1);
     f.sync.running.delete(f.owner);
     f.authority.applyReadback({ownerAccountId:f.owner},remote);
@@ -83,4 +84,30 @@ test('SQL row ordering does not change a save fingerprint while message order re
   const data={tables:{pets:{rows:[{id:'b'},{id:'a'}]}},modules:{conversations:{data:{messages:[{id:'first'},{id:'second'}]}}}};
   const reordered=structuredClone(data);reordered.tables.pets.rows.reverse();assert.equal(saveDataChecksum(data),saveDataChecksum(reordered));
   reordered.modules.conversations.data.messages.reverse();assert.notEqual(saveDataChecksum(data),saveDataChecksum(reordered));
+});
+
+test('battle SQL sets match existing authority baselines without changing envelopes or ordered content',()=>{
+  const rounds=[{round:1,text:'first'},{round:2,text:'second'}];
+  const data={tables:{},modules:{battle:{version:1,data:{
+    sessions:[{id:'battle-training',data_json:JSON.stringify({rounds})},{id:'online-friend',data_json:'{}'}],
+    actions:[{action_id:'action-a',command_json:'{"type":"attack"}'},{action_id:'action-b',command_json:'{}'}],
+    reports:[{id:'battle-training',data_json:JSON.stringify({rounds})},{id:'online-friend',data_json:'{}'}],
+    rewards:[{session_id:'battle-training',action_id:'battle:battle-training',data_json:'{"experience":5}'},{session_id:'online-friend',action_id:'battle:friend',data_json:'{"experience":20}'}]
+  }}}};
+  const original=structuredClone(data),oldBaseline=checksum(data),reordered=structuredClone(data);
+  for(const rows of Object.values(reordered.modules.battle.data))rows.reverse();
+  assert.equal(saveDataChecksum(data),oldBaseline,'existing authority primary-key order keeps its fingerprint');
+  assert.equal(saveDataChecksum(reordered),oldBaseline,'SQLite query-plan order does not mark protected data dirty');
+  assert.notEqual(checksum(reordered),oldBaseline,'raw envelope hashing stays order-sensitive');
+  assert.deepEqual(data,original,'fingerprinting never mutates the original document');
+  reordered.modules.battle.data.sessions[1].data_json=JSON.stringify({rounds:[...rounds].reverse()});
+  assert.notEqual(saveDataChecksum(reordered),oldBaseline,'the actual round order remains protected');
+  const extra=structuredClone(data);extra.modules.battle.data.unrecognizedHistory=['first','second'];
+  const reversedExtra=structuredClone(extra);reversedExtra.modules.battle.data.unrecognizedHistory.reverse();
+  assert.notEqual(saveDataChecksum(extra),saveDataChecksum(reversedExtra),'unknown ordered fields remain significant');
+  const local=structuredClone(data);local.modules.battle.version=2;local.modules.battle.data.transportJournal=[{action_id:'z'},{action_id:'a'}];
+  const localReversed=structuredClone(local);localReversed.modules.battle.data.rewards.reverse();
+  assert.equal(saveDataChecksum(local),saveDataChecksum(localReversed));
+  localReversed.modules.battle.data.transportJournal.reverse();
+  assert.notEqual(saveDataChecksum(local),saveDataChecksum(localReversed),'transport provenance is not silently normalized');
 });

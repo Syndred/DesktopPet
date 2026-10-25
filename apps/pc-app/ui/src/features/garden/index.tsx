@@ -12,6 +12,9 @@ import { Tooltip, TooltipProvider, TooltipTrigger, TooltipContent } from '../../
 import { TerritoryMap } from './TerritoryMap';
 import { PetPortrait } from './PetPortrait';
 import { useGarden, type GardenState } from "./use-garden";
+// Shared components must have their styles on a direct garden entry as well.
+import "../companions/styles.css";
+import "../discovery/styles.css";
 import "./garden.css";
 
 const go = (path: string) => { window.location.hash = path; };

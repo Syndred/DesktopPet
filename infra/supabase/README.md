@@ -1,42 +1,39 @@
-> 历史基线说明：下列 0001..0005、20261024 authority SQL 与旧 token/duel-online 路径不代表本轮现行部署。不要按本页直接 db push/reset 或恢复旧权限。当前身份、域部署、迁移历史和 comparisontext 保全重放由主协调统一处理，见 docs/implementation/cloud-upgrade-2026-10-25.md 与各模块 status；旧入口在新域验收后按清单退役。
+# 灵境 Supabase 云端
 
-# Supabase Schema Baseline
+当前目标为 `jbvrdmrkwpznbrvteive`，控制台仍显示 Text Comparision，API 为 https://jbvrdmrkwpznbrvteive.supabase.co。原项目的18张表和100行数据已校验后隔离到私有归档，并保留独立加密备份；这些用户不是 DesktopPet 用户。GraffitiName 项目未修改。
 
-This folder contains SQL migrations for core game data.
+## 当前入口
 
-## Files
+| 功能 | Edge Function | 主要复用能力 |
+| --- | --- | --- |
+| 账号与身份 | lingjing-auth | Supabase Auth、主进程官方 SDK、安全会话 |
+| 完整存档 | lingjing-save | PostgreSQL CAS、幂等回执、owner 锁 |
+| 伙伴 | companions-sync | 受验证实例命令、统一保护存档 |
+| 探索与捕捉 | discovery | 签名定位凭证、权威回合、原子捕捉 |
+| 菜园 | garden-sync | 服务端时钟、库存与成长原子提交 |
+| 领地 | territory-sync | PostGIS、行锁、并发归属 |
+| 对战 | lingjing-battle | 权威训练/联机、参与者私有 Realtime |
+| 角色资源 | lingjing-resources | 私有 Storage、实际字节验证、校准/动作偏好 |
 
-1. `migrations/0001_core_schema.sql`
-   - Core tables
-   - PostGIS indexes
-   - RLS policies
-2. `migrations/0002_pet_inventory_battle_reports.sql`
-   - PC inventory persistence and battle report tables
-   - RLS policies for owner-scoped history
-3. `migrations/0003_duel_realtime_schema.sql`
-   - Online duel room/action/round tables
-   - Realtime-oriented read policies and room lifecycle fields
-4. `migrations/0004_runtime_cloud_auth_duel_requests.sql`
-   - Runtime cloud account tables (`runtime_accounts`, `runtime_duel_requests`)
-   - Duel request hub for register/login/search/request workflow
-   - Baseline RLS enabled (writes via edge function service-role)
-5. `migrations/0005_runtime_single_login_session.sql`
-   - Adds `runtime_accounts.session_token` and `session_issued_at`
-   - Enables single active login session per account
-6. `functions/duel-online/index.ts`
-   - Edge Function entry for runtime auth/request + online duel flow
-   - Server-side round resolution (authoritative HP/anger updates)
-   - Supported ops:
-     - `register_account`, `login_account`, `update_account`
-     - `search_accounts`
-     - `send_duel_request`, `list_duel_requests`, `respond_duel_request`, `cancel_duel_request`
-     - `create_room`, `join_room`, `get_room`, `submit_action`, `leave_room`
+函数自行校验新鲜 Auth 用户和完整 owner/device/SID；配置中关闭旧 JWT 网关验证，不代表允许匿名受保护操作。登录/注册是受限的账号入口，业务权限由身份映射、RLS 和事务内 actor 守卫决定。公开配置只含 URL 与 publishable key，服务密钥留在提供方环境。
 
-## Notes
+## 迁移和检查
 
-1. `player_profiles.id` is mapped to `auth.users.id`.
-2. Game writes should go through edge functions for extra validation.
-3. RLS policies in this baseline only allow self-owned data access by default.
-4. `0003` keeps duel table writes behind service-role edge functions; select policies are open for realtime prototype subscription and should be tightened after full Supabase Auth rollout.
-5. `0004` keeps account/request writes behind service-role edge functions for internal test; tighten RLS after migrating to full auth token identity.
-6. `0005` introduces session token checks: second login invalidates previous session immediately.
+`migrations/` 的22个文件名按实际远端执行顺序对齐。版本、原始文件名、实际 SQL 哈希和函数部署来源见 [部署清单](../../docs/implementation/evidence/cloud/2026-10-25/deployment-manifest.json)。未对远端历史执行 repair。旧原型 SQL 不再放在活动迁移目录。
+
+```powershell
+npm ci
+npm run verify:cloud
+```
+
+检查运行现代 SQL/SQLite/WASM PostgreSQL、共享生成分发只读比较和固定 Deno 验证器；它不连接生产、不需要私钥，也不宣称完成真实 PostGIS 重置或云端验收。真正的云端/原生证据分别保留在各模块 evidence 目录。
+
+本地 Supabase 使用 CLI2.122、PostgreSQL17 和当前 config.toml，需要 Docker 或 Podman；本机未安装容器运行时，因此没有完整本地 reset 通过结论。新空库的 comparisontext 一次性步骤会显式跳过；若出现部分原表或已有归档则停止，不能静默移动或删数据。原执行 SQL 见 [操作审计](operations/README.md)。
+
+部署前先 fetch/pull 最新代码、通过严格迁移门禁，再把远端历史与清单逐项比较。当前会话的生产迁移/部署由主协调通过已连接插件集中执行。不要重放一次性保全、执行旧原型 SQL、修改历史版本或把匿名/用户角色升级成业务写入者。
+
+## 数据与原账号
+
+旧 DesktopPet 实例仍不可读取，用户暂无 SSH 或数据库备份。因此不宣称所有旧云账号已迁移。本机原档、原密码验证、文本 owner、petId、历史和安全导入能力继续保留；不会按用户名猜测合并账号。
+
+原 comparisontext 的恢复材料位于工作区外的受保护备份目录；恢复需先停止旧应用流量，并核对全部原表指纹及原权限。正常客户端不能访问私有归档。权限矩阵见 [rls-matrix.md](rls-matrix.md)。

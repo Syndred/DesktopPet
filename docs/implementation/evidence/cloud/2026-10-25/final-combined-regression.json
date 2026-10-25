@@ -1,0 +1,19 @@
+{
+  "at": "2026-10-25T07:40:08.275Z",
+  "productSource": "2cafccd6871403f69ae8a5bb17dbd658b5a48272",
+  "testStartedAtCommit": "73669ae3cf4ea98800a58fbc83ba40f41efceae4",
+  "runtimeChangesDuringTest": [
+    "apps/pc-app/runtime/features/accounts/INTEGRATION.md"
+  ],
+  "executableRuntimeChanged": false,
+  "command": "node scripts/desktop/run-native-tests.cjs --all",
+  "exitCode": 0,
+  "tests": 299,
+  "passed": 299,
+  "failed": 0,
+  "skipped": 0,
+  "durationMs": 55672.7871,
+  "log": "artifacts/cloud-upgrade/2026-10-25/final-native-authority-personal.log",
+  "logSha256": "17e2f701b62cec951dc518ebaafa65520126ba3511c29282cb0ac8d5c2d9be7a",
+  "scope": "Complete native regression after cloud-v1 report contract and strict concurrent authority/personal sync recovery. New actual portable business acceptance remains pending."
+}

@@ -1,0 +1,31 @@
+✔ raw legacy migration preserves bytes, isolates explicit inventories and is idempotent (401.7479ms)
+✔ ambiguous global history is archived instead of cloned into every missing inventory (161.3735ms)
+✔ legacy missing credentials cannot log in with the old default password (170.4447ms)
+✔ remote placeholder hashes without tokens are never accepted as local credentials (128.8888ms)
+✔ corrupt legacy content stays archived without blocking the recoverable account UI (191.1259ms)
+✔ logout revokes persisted session resumption even when encrypted file removal fails (209.8714ms)
+✔ local login upgrades legacy SHA256, and nickname/password changes are atomic and readable (514.2237ms)
+✔ settings are owner-scoped, revision-aware and actionId-idempotent across account switches (293.5145ms)
+✔ cloud and local users with the same account name keep distinct stable owners (214.6397ms)
+✔ a late cloud login cannot resurrect a logged-out session (130.2898ms)
+✔ quiet hours cross midnight and gate notification sound without reading input (0.3417ms)
+✔ real SQLite backup/replace preserves original data, rejects tampering and other accounts, survives reopening (400.6507ms)
+✔ restoring a failed feature adapter rolls back all rows and leaves before-restore backup (223.1884ms)
+✔ backup previews become stale when domain data changes, before writing any restore (214.8065ms)
+✔ offline sync queues remain owner-scoped and retryable after a real network refusal (260.4157ms)
+✔ sync requires an exact receipt AND independent readback before being marked verified (protocol unit) (171.6187ms)
+✔ cloud session invalidation clears only that verified session and retains its outbox (191.6881ms)
+✔ PROTOCOL UNIT simulated: modern HTTPS config and stable distinct per-profile device IDs (18.1069ms)
+✔ PROTOCOL UNIT simulated: Auth UID links additively to old text owner without tokens in SQLite/public session (286.1364ms)
+✔ PROTOCOL UNIT simulated: concurrent refresh is single-flight and adopts a 12-character opaque token (24.129ms)
+✔ PROTOCOL UNIT simulated: a refresh finishing after logout cannot restore main-process login (181.9545ms)
+✔ PROTOCOL UNIT simulated: protected sync archives the original and reports partial synchronization honestly (261.2436ms)
+✔ PROTOCOL UNIT simulated: one session SDK reads current token after refresh and removes channels on logout (9.6259ms)
+ℹ tests 23
+ℹ suites 0
+ℹ pass 23
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3985.8603

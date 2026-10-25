@@ -17,7 +17,7 @@ test('same-version legacy session and report gain missing display metadata witho
     assert.deepEqual(projected.rounds.map(({visualEvents,...value})=>value),stored.rounds);
   }
   // Exercise both real service read methods; no engine or store write is available.
-  const service={owner:()=> 'owner',store:{report:()=>stored,reports:()=>[stored]},ownedLegacy:()=>null};
+  const service=Object.assign(Object.create(BattleFeatureService.prototype),{owner:()=> 'owner',isCloud:()=>false,store:{report:()=>stored,reports:()=>[stored]},ownedLegacy:()=>null});
   const detail=BattleFeatureService.prototype.getReport.call(service,{reportId:'old-session'},{});
   const list=BattleFeatureService.prototype.listReports.call(service,{},{});
   assert.equal(detail.rules.elementEffects.metal.label,'易伤');assert.equal(list[0].rules.advantage.metal,'wood');

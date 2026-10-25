@@ -1,0 +1,63 @@
+{
+  "at": "2026-10-25T07:17:13.198Z",
+  "scope": "Actual Windows Electron; locally registered isolated account and SQLite-only old profile. No production account, cloud or physical second device claim.",
+  "original": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\artifacts\\foundation\\cloud-engineering\\profile-discovery\\run-1792912633198\\isolated-appdata\\qingpet-desktop-runtime",
+  "checks": [
+    {
+      "id": "explicit-override-seeds-real-sqlite-without-json",
+      "ownerAccountId": "local-f6f212f0-d58b-4687-aae3-48c7f44ec5a2",
+      "petId": "pet-aea6ec16-a452-4ce8-a6a7-b7aad0fcec72"
+    },
+    {
+      "id": "ordinary-start-discovers-old-sqlite-and-reads-same-account-pet",
+      "ownerAccountId": "local-f6f212f0-d58b-4687-aae3-48c7f44ec5a2",
+      "petId": "pet-aea6ec16-a452-4ce8-a6a7-b7aad0fcec72",
+      "secureSessionRestored": true
+    }
+  ],
+  "build": {
+    "schemaVersion": 2,
+    "builtAt": "2026-10-25T07:17:04.292Z",
+    "sourceCommit": "d376b76a01dd8e450d28bab4479bbe2581ae39c4",
+    "sourceTree": "d3624ff65af98f14ac2c42590a4c8a6ba7c09a4f",
+    "sourceDirtyFiles": [],
+    "codeFingerprint": "7550fbdad2d2710148b974633e0a3564737c3ba93293072210139ac2ff200bb6",
+    "canonicalSourceFingerprint": "9b8cb76f4b70ab622f8b9d2c4a98b1ca53aaaf10325d5641573b7c30bb188f27",
+    "canonicalPolicy": "Repository-relative paths; CRLF normalized to LF for source text only. Packaged/compiled bytes remain exact.",
+    "compiledFingerprint": "7ea60ec601620c72f3e746f2a0cf5f49f8e17c2710653ad46a885221fa938e0d",
+    "codeFiles": 301,
+    "compiledFiles": 86,
+    "toolchain": {
+      "node": "24.21.0",
+      "electron": "44.9.3",
+      "sqlite": "13.0.3",
+      "vite": "7.3.7",
+      "typescript": "5.9.3",
+      "platform": "win32",
+      "arch": "x64"
+    },
+    "entrypoints": {
+      "main": "main/index.cjs",
+      "app": "ui/index.html",
+      "desktop": "ui/desktop.html",
+      "preload": "preload/index.cjs"
+    },
+    "publicCloud": {
+      "projectRef": "jbvrdmrkwpznbrvteive",
+      "url": "https://jbvrdmrkwpznbrvteive.supabase.co",
+      "sha256": "c1625c63f1d959f92b3392b47f2fb492452803eedf1c0d1ebc68a1168ab64eda",
+      "resourcePath": "lingjing-cloud-public.json"
+    },
+    "packageName": "lingjing-desktop",
+    "runtimeClosure": {
+      "manifest": "runtime-closure.json",
+      "files": 109,
+      "edges": 190,
+      "sha256": "cd3ee2ce9c9f108fb41815a01c6dd10756cfd6793a327ae6ceadf6344e2a6471"
+    }
+  },
+  "ownerAccountId": "local-f6f212f0-d58b-4687-aae3-48c7f44ec5a2",
+  "petId": "pet-aea6ec16-a452-4ce8-a6a7-b7aad0fcec72",
+  "passed": true,
+  "completedAt": "2026-10-25T07:17:14.777Z"
+}

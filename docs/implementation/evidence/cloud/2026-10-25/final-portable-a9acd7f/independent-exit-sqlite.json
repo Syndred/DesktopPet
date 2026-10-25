@@ -1,0 +1,67 @@
+{
+  "at": "2026-10-25T08:46:40.465Z",
+  "singleUninterruptedRun": true,
+  "source": "a9acd7f6f1920c541d429fa26d1f054b1427cd95",
+  "records": [
+    {
+      "device": "A",
+      "queryOnly": true,
+      "quickCheck": "ok",
+      "state": {
+        "cloud_revision": 103,
+        "last_checksum": "324bd218a312baecc38aebcb3e4c9fdfa72fd08893c416c83d0bd945d0b65e5c"
+      },
+      "pending": 0,
+      "originalPetCount": 15,
+      "currentPetCount": 16,
+      "resourceFiles": [
+        {
+          "key": "character.json",
+          "bytes": 9406,
+          "sha256": "e2e976b69f7ea9049527251e458517e048c05aa5ab4cd1e13ffa47c38821708e"
+        },
+        {
+          "key": "sprites.png",
+          "bytes": 1802491,
+          "sha256": "aa59df3af26d4f7faf9272193b7d1d35ed6d2f22ebb6b294a5a2853f0539f693"
+        }
+      ],
+      "preferenceCloudRevision": 3,
+      "preferenceDocumentSha256": "710529e3dbcbf4f4e313c35b6620031bd0221b65a931b5d9bbc4707ab0514272",
+      "originalAction": {
+        "action_id": "auto:ce8b2ab8-a9d0-4130-8dce-c9a639b0c0a4",
+        "base_revision": 101,
+        "status": "verified",
+        "checksum": "e8fc5396349f4ff7905ffdd5254191e0579d21eb8fa10ef806b4d67b266c3924",
+        "sourceSha256": "1bb7e2541843301a247349fa92cd24abded2b682fed9a158f66990b70243dc98"
+      }
+    },
+    {
+      "device": "B",
+      "queryOnly": true,
+      "quickCheck": "ok",
+      "state": {
+        "cloud_revision": 103,
+        "last_checksum": "324bd218a312baecc38aebcb3e4c9fdfa72fd08893c416c83d0bd945d0b65e5c"
+      },
+      "pending": 0,
+      "originalPetCount": 15,
+      "currentPetCount": 16,
+      "resourceFiles": [
+        {
+          "key": "character.json",
+          "bytes": 9406,
+          "sha256": "e2e976b69f7ea9049527251e458517e048c05aa5ab4cd1e13ffa47c38821708e"
+        },
+        {
+          "key": "sprites.png",
+          "bytes": 1802491,
+          "sha256": "aa59df3af26d4f7faf9272193b7d1d35ed6d2f22ebb6b294a5a2853f0539f693"
+        }
+      ],
+      "preferenceCloudRevision": 3,
+      "preferenceDocumentSha256": "710529e3dbcbf4f4e313c35b6620031bd0221b65a931b5d9bbc4707ab0514272",
+      "originalAction": null
+    }
+  ]
+}

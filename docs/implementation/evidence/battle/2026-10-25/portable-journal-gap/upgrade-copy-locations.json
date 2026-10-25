@@ -1,0 +1,40 @@
+{
+  "createdAt": "2026-10-25T06:49:44.634Z",
+  "sourceCheckpoint": "c82380fc9f9535bfe9fa37f87dbf08c6e24d2eca",
+  "purpose": "clean incremental-upgrade SQLite copies for read-only coordinator inspection; not runnable profile directories",
+  "originalFailure": "final-portable-Fbu6gW",
+  "originalFilesUnchanged": true,
+  "cloudOrAuthInvoked": false,
+  "copies": [
+    {
+      "device": "A",
+      "owner": "account:470a41d4-3cf7-4a7d-8b1e-32e276d2a719",
+      "originalActions": 21,
+      "journalRows": 21,
+      "cloudActions": 0,
+      "baselineRevision": 67,
+      "onlyIncrementalMigration": true,
+      "postResolveFaultInjection": false,
+      "originalActionRowsUnchanged": true,
+      "sessionReportRewardRowsUnchanged": true,
+      "path": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\journal-handoff-upgraded-1792910984520\\A.sqlite",
+      "sha256": "64dbca8c07c3b4990e6ce105c4c950d33003e694ba57cfe9bf529cb3895a0b66",
+      "originalSha256": "746b6d22e5f740a8e5634a23a0a89f1a0d6c4b003cbb41e187babef73f684b87"
+    },
+    {
+      "device": "B",
+      "owner": "account:470a41d4-3cf7-4a7d-8b1e-32e276d2a719",
+      "originalActions": 0,
+      "journalRows": 0,
+      "cloudActions": 0,
+      "baselineRevision": 68,
+      "onlyIncrementalMigration": true,
+      "postResolveFaultInjection": false,
+      "originalActionRowsUnchanged": true,
+      "sessionReportRewardRowsUnchanged": true,
+      "path": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\journal-handoff-upgraded-1792910984520\\B.sqlite",
+      "sha256": "d4c0ee92823694d6a41ee08a20688ec595d3706e1784a3794cea22760e70b46e",
+      "originalSha256": "2e668f82504a42927354dd68359590bc0dcc3df06b0b571f1d87a195456151c7"
+    }
+  ]
+}

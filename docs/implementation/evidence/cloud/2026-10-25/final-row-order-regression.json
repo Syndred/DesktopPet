@@ -1,0 +1,12 @@
+{
+  "at": "2026-10-25T07:15:44.701Z",
+  "command": "node scripts/desktop/run-native-tests.cjs --all",
+  "exitCode": 0,
+  "tests": 279,
+  "passed": 279,
+  "failed": 0,
+  "durationMs": 55053.2914,
+  "log": "artifacts/cloud-upgrade/2026-10-25/final-native-row-order.log",
+  "logSha256": "6f40e7ed0bc55b2f726aac1576f486a29921631c1a7fe28b608de6d6657647d1",
+  "scope": "Full shared SQLite/native domain regression after battle SQL-set fingerprint correction. Actual SFX acceptance remains pending."
+}

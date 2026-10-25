@@ -1,0 +1,59 @@
+131:      this.user(owner);const response=await this.online.invoke('get_active_room',{});this.assertOwner(owner);
+132:      if(response.room){await this.online.syncRoom({roomId:response.room.id,roundsLimit:50});this.assertOwner(owner);const side=response.room.host_user_id===owner?'host':'guest';await this.syncInternal(owner,this.bindRoom(owner,response.room,response.room[`${side}_pet_id`]));}
+133:      else {const training=await this.online.invoke('get_active_training',{});this.assertOwner(owner);if(training.session)await this.saveCloudTraining(owner,training);}
+151:  async cloudCommand(owner,type,input,invoke,inputActionId) {
+154:    if(inputActionId){if(prior&&(prior.command.type!==`cloud:${type}`||!sameCommandInput(type,prior.command.input,input)))throw fail('ACTION_CONFLICT','操作编号与原请求不一致');if(prior?.result)return prior.result;if(!prior)this.store.reserveTransport(owner,actionId,actionId,{type:`cloud:${type}`,input});}
+155:    const result=await invoke(actionId);this.assertOwner(owner);this.store.resolve(owner,actionId,result);return result;
+163:    return this.store.save(owner,session);
+206:      this.store.reserve(owner, actionId, session.id, { type: `start:${mode}`, petId: player.petId, challengeId: challenge.id });
+207:      const saved = this.store.save(owner, session);
+208:      this.store.resolve(owner, actionId, saved);
+221:      const response=await this.cloudCommand(owner,'training-start',{petId:payload.petId,enemyElement:payload.enemyElement},actionId=>this.online.invoke('start_training',{actionId,petId:payload.petId,enemyElement:payload.enemyElement}),payload.actionId);
+222:      const current=await this.online.invoke('get_training',{sessionId:response.session.id});return this.saveCloudTraining(owner,current);
+258:        session.context.qaPreset = payload.preset; this.store.save(owner, session);
+259:        await this.online.invoke('qa_set_state', { userId: user.id, sessionToken: user.sessionToken, roomId: session.room.id, preset: payload.preset });
+269:      return this.store.save(owner, session);
+315:    this.store.saveReward(owner, session, applied);
+338:    const saved = this.store.save(owner, session);
+339:    this.store.saveReport(owner, {
+364:        if(!receipt)this.store.reserveTransport(owner,actionId,session.id,{action:payload.action,roundNo});
+365:        session.pendingAction={actionId,action:payload.action,roundNo,uncertain:true};this.store.save(owner,session);
+366:        try {const response=await this.online.invoke('training_action',{sessionId:session.id,actionId,action:payload.action,roundNo});const saved=await this.saveCloudTraining(owner,response);this.store.resolve(owner,actionId,saved);return saved;}
+371:        if (!receipt) this.store.reserve(owner, actionId, session.id, { action: payload.action, roundNo: session.snapshot.round + 1 });
+379:        session = session.winner ? this.finish(owner, session) : this.store.save(owner, session);
+380:        this.store.resolve(owner, actionId, session);
+388:    if (this.online.getStatus().room?.id !== session.room.id) await this.online.syncRoom({ roomId: session.room.id, roundsLimit: 50 });
+391:    if (!receipt) (this.isCloud(owner)?this.store.reserveTransport:this.store.reserve).call(this.store,owner,payload.actionId,session.id,{action:payload.action,roundNo});
+393:    this.store.save(owner, session);
+395:      await this.online.submitAction({ actionId: payload.actionId, action: payload.action, roundNo, waitForResolution: false });
+399:      this.store.save(owner, session);
+418:        this.user(owner);const response=await this.online.invoke('training_action',{sessionId:session.id,actionId:pending.actionId,action:pending.action,roundNo:pending.roundNo});const saved=await this.saveCloudTraining(owner,response);this.store.resolve(owner,pending.actionId,saved);return saved;
+445:      const result = await this.cloudCommand(owner,'invite',{targetAccount,allowResend},actionId=>this.online.sendDuelRequest({ actionId, targetAccount, allowResend }));
+452:          (this.isCloud(owner)?this.store.reserveTransport:this.store.reserve).call(this.store,owner,key,key,{petId:payload.petId,type:'invite'});
+462:    const result = await this.cloudCommand(owner,'cancel',{requestId},actionId=>this.online.cancelDuelRequest({actionId,requestId}),`cancel:${requestId}`);
+478:        const rejected = await this.cloudCommand(owner,'reject',{requestId},actionId=>this.online.respondDuelRequest({actionId,requestId,decision:'reject'}),`reject:${requestId}`);
+487:        const synced=await this.online.syncRoom({roomId:request.roomId,roundsLimit:50});this.assertOwner(owner);
+489:        if(original&&!original.result)this.store.resolve(owner,key,{room:synced.room});
+497:        if(!original)(this.isCloud(owner)?this.store.reserveTransport:this.store.reserve).call(this.store,owner,key,key,{petId:payload.petId,type:'accept'});
+498:        const created = await this.online.createRoom({ actionId:key, petId: pet.petId, requestId, petResourceId: pet.appearance2d, petName: pet.petName, petElement: pet.element });
+501:        this.store.resolve(owner, key, pending);
+503:      const accepted = await this.cloudCommand(owner,'accept-confirm',{requestId,roomId:pending.room.id,roomCode:pending.room.room_code,roomStatus:pending.room.status},actionId=>this.online.respondDuelRequest({actionId,requestId,decision:'accept',roomId:pending.room.id,roomCode:pending.room.room_code,roomStatus:pending.room.status}),`accept-confirm:${requestId}`);
+505:      const synced = await this.online.syncRoom({ roomId: pending.room.id, roundsLimit: 50 });
+529:    return this.store.save(owner, session);
+538:      const created = await this.cloudCommand(owner,'create',{petId:pet.petId},actionId=>this.online.createRoom({ actionId,petId: pet.petId, petResourceId: pet.appearance2d, petName: pet.petName, petElement: pet.element }));
+556:    const joined = await this.cloudCommand(owner,'join',{roomCode,petId:pet.petId},actionId=>this.online.joinRoom({ actionId,roomCode, petId: pet.petId, petResourceId: pet.appearance2d, petName: pet.petName, petElement: pet.element }));
+568:      this.user(owner);const response=await this.online.invoke('get_training',{sessionId:session.id});this.assertOwner(owner);
+570:      const saved=await this.saveCloudTraining(owner,response);if(pending&&saved.snapshot.round>=pending.roundNo)this.store.resolve(owner,pending.actionId,saved);return saved;
+574:    const response = await this.online.syncRoom({ roomId: session.room.id, roundsLimit: 50 });
+594:      const earlier = await this.online.syncRoom({ roomId: room.id, roundsLimit: 50, beforeRound: before });
+610:      if(pending&&pending.roundNo===own.roundNo&&(pending.actionId!==own.actionId||pending.action!==own.action))this.store.resolve(owner,pending.actionId,{sessionId:session.id,supersededBy:own.actionId,reason:'server-locked-original'});
+612:      if(!this.store.action(owner,own.actionId))(this.isCloud(owner)?this.store.reserveTransport:this.store.reserve).call(this.store,owner,own.actionId,session.id,{action:own.action,roundNo:own.roundNo});
+623:        proof = await this.online.invoke("claim_battle_settlement", { roomId: room.id, petId: session.player.petId });
+625:        if(this.isCloud(owner)) {await this.cloud.apply(owner,proof,{projectionOnly:Boolean(projectionOnly)});this.assertOwner(owner);const saved=this.store.session(owner,session.id);if(pending&&rounds.has(pending.roundNo))this.store.resolve(owner,pending.actionId,saved);return saved;}
+633:      if(this.isCloud(owner)&&room.status==='finished'&&!this.store.reward(owner,session.id)){session.endedAt=room.updated_at;session.reward={actionId:`battle:${room.id}:${owner}`,petId:session.player.petId,experience:session.winner==='player'?20:5,applied:false,pendingReason:session.settlementError||'等待云端结算读回'};session.status='finished';session.reportId=session.id;const saved=this.store.save(owner,session);this.store.saveReport(owner,{id:session.id,sessionId:session.id,mode:session.mode,status:session.status,winner:session.winner,player:session.player,enemy:session.enemy,startedAt:session.startedAt,endedAt:session.endedAt,rounds:session.rounds,reward:session.reward,historyComplete:session.historyComplete,context:session.context,rules:session.rules},{protocol:true});return saved;}
+636:      else { session.status = room.status === "waiting" ? "waiting" : "active"; session = this.store.save(owner, session); }
+637:      if (pending && rounds.has(pending.roundNo)) this.store.resolve(owner, pending.actionId, session);
+647:      if(session.mode==='training'&&session.context?.authority==='supabase') {this.user(owner);const response=await this.cloudCommand(owner,'training-leave',{sessionId:session.id},actionId=>this.online.invoke('leave_training',{sessionId:session.id,actionId}));return this.saveCloudTraining(owner,response);}
+651:        const result = await this.cloudCommand(owner,'leave',{roomId:session.room.id},actionId=>this.online.invoke("leave_room", { actionId, roomId: session.room.id, reason: "user_leave" }));
+655:        await this.online.clearRoomState({ notify: true, reason: "left" });
+690:    this.services.db.transaction(()=>{for(const row of module.data.reports)this.store.saveRawReport(owner,row,{preserveExisting:true});})();

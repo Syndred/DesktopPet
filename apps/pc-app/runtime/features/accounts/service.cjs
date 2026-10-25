@@ -22,7 +22,7 @@ class AccountsService {
     this.backups = new BackupManager({ db: this.db, directory: join(services.paths.userData, "accounts", "backups"),
       getIdentity: owner => this.identity(owner), scenario: qaScenario ? { mode: "simulated", scenarioId: qaScenario.id, runId: qaScenario.runId } : null });
     this.sync = new AccountSync({ db: this.db, backups: this.backups, remote, getSession: () => this.privateSession(), getSettings: owner => this.settings(owner),
-      onInvalidSession: owner => this.invalidateSession(owner) });
+      onInvalidSession: owner => this.invalidateSession(owner),getEpoch:()=>this.epoch });
     this.remoteUnsubscribe = remote.onInvalidated?.(({ userId,sessionId }) => {
       if(sessionId&&this.privateSession()?.sessionId!==sessionId)return;
       if (this.current?.provider === "runtime" && this.identity(this.current.ownerAccountId)?.subject_id === userId) this.invalidateSession(this.current.ownerAccountId);
@@ -35,12 +35,25 @@ class AccountsService {
     this.migration = importLegacy({ db: this.db, filePath: file && existsSync(`${file}.before-lingjing.bak`) ? `${file}.before-lingjing.bak` : file,
       archiveDir: join(services.paths.userData, "accounts", "legacy-archives") });
     this.ready = this.initialize();
-    this.retryTimer = setInterval(() => {
-      if (this.current?.provider === "runtime" && this.settings().document.sync.enabled) {
-        void this.sync.flush(this.requireOwner()).catch(() => {});
-      }
-    }, 30_000);
+    this.retryTimer = setInterval(() => { void this.runAutomaticSync().catch(() => {}); }, 30_000);
     this.retryTimer.unref?.();
+  }
+  async runAutomaticSync(){
+    await this.ready;
+    if(this.disposed||this.automaticSyncRunning||this.authBusy||this.settingsBusy||this.profileBusy||this.current?.authKind!=='supabase')return{skipped:true};
+    const owner=this.requireOwner(),epoch=this.epoch;
+    if(!this.settings(owner).document.sync.enabled)return{skipped:true};
+    const active=()=>!this.disposed&&this.epoch===epoch&&this.current?.ownerAccountId===owner;
+    const notify=()=>{if(active())this.services.events?.emit('accounts:sync-changed',{ownerAccountId:owner});};
+    this.automaticSyncRunning=true;
+    try{
+      const result=await this.sync.reconcile(owner,notify);
+      if(result.applied&&active()){
+        await this.host?.apply?.(this.settings(owner).document);
+        if(active())this.services.events?.emit('accounts:save-restored',{ownerAccountId:owner,automatic:true,revision:result.revision});
+      }
+      return result;
+    }finally{this.automaticSyncRunning=false;notify();}
   }
   identity(owner) { return this.db.prepare("SELECT * FROM account_identities WHERE owner_account_id=?").get(owner); }
   getCurrentUser() {
@@ -117,6 +130,7 @@ class AccountsService {
   }
   async adopt(row, proof, rememberSession) {
     this.epoch++;
+    this.backups.previews.clear();this.sync.observations.clear();
     const epoch = this.epoch;
     this.current = { ownerAccountId: row.owner_account_id, provider: row.provider, proof, persistence: "memory", rememberSession,
       authKind:row.provider==='runtime'&&this.remote.authKind==='supabase'?'supabase':row.provider };
@@ -215,7 +229,7 @@ class AccountsService {
   async logout() {
     const prior = this.current;
     const previousCloudSession = this.privateSession();
-    this.epoch++; this.current = null;
+    this.epoch++; this.current = null; this.backups.previews.clear();this.sync.observations.clear();
     this.db.prepare("INSERT INTO account_session_control VALUES(1,1) ON CONFLICT(singleton) DO UPDATE SET blocked=1").run();
     try { this.vault.clear(); } catch { this.startupIssue = "SECURE_SESSION_CLEAR_FAILED"; }
     this.host?.clear?.();
@@ -227,7 +241,7 @@ class AccountsService {
   }
   invalidateSession(owner) {
     if (this.current?.provider !== "runtime" || this.current.ownerAccountId !== owner) return;
-    this.epoch++; this.current = null; this.startupIssue = "SESSION_INVALIDATED";
+    this.epoch++; this.current = null; this.startupIssue = "SESSION_INVALIDATED"; this.backups.previews.clear();this.sync.observations.clear();
     this.db.prepare("INSERT INTO account_session_control VALUES(1,1) ON CONFLICT(singleton) DO UPDATE SET blocked=1").run();
     try { this.vault.clear(); } catch { /* SQLite revocation still prevents this proof from resuming. */ }
     this.host?.clear?.(); this.remote.setCurrentUser(null); this.emitSession();
@@ -344,6 +358,6 @@ class AccountsService {
     this.services.events?.emit("accounts:save-restored", { ownerAccountId: owner });
     return restored;
   }
-  dispose() { clearInterval(this.retryTimer); this.remoteUnsubscribe?.(); this.proofUnsubscribe?.(); this.remote.dispose?.(); this.host?.dispose?.(); }
+  dispose() { this.disposed=true;this.epoch++;clearInterval(this.retryTimer); this.remoteUnsubscribe?.(); this.proofUnsubscribe?.(); this.remote.dispose?.(); this.host?.dispose?.(); }
 }
 module.exports = { AccountsService };

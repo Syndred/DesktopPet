@@ -1,0 +1,95 @@
+{
+  "at": "2026-10-25T04:23:15.174Z",
+  "scope": "Actual Electron BrowserWindow/MenuItem control with explicitly simulated deferred companion responses/session identities. No real cloud, production-menu or final portable claim.",
+  "scenario": {
+    "schemaVersion": 1,
+    "application": "lingjing",
+    "scenario": "unified-battle",
+    "runId": "ba526fc3-d034-436a-aa5d-7ffb71de5794",
+    "isolated": true,
+    "profilePath": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\artifacts\\qa\\unified-battle\\qa-1792902195163-ba526fc3",
+    "createdAt": "2026-10-25T04:23:15.164Z",
+    "env": {
+      "LINGJING_QA_SCENARIO": "unified-battle",
+      "PET_USER_DATA_DIR": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\artifacts\\qa\\unified-battle\\qa-1792902195163-ba526fc3"
+    }
+  },
+  "helperSha256": "ca0aab78ca8767b5c3b539f956515d50419d581067227d3fc9de907357c04eb9",
+  "checks": [
+    {
+      "mode": "success",
+      "passed": true,
+      "originalWindowIds": [
+        2,
+        3
+      ],
+      "closed": [
+        "pet-a"
+      ],
+      "warnings": [],
+      "result": {
+        "ok": true,
+        "closed": [
+          "pet-a"
+        ]
+      }
+    },
+    {
+      "mode": "failure",
+      "passed": true,
+      "originalWindowIds": [
+        4,
+        5
+      ],
+      "closed": [],
+      "warnings": [
+        {
+          "name": "accounts:host-warning",
+          "value": {
+            "code": "COMPANION_RECALL_UNCONFIRMED",
+            "operation": "recall-all"
+          }
+        }
+      ],
+      "result": {
+        "ok": false,
+        "code": "COMPANION_RECALL_UNCONFIRMED"
+      }
+    },
+    {
+      "mode": "switched",
+      "passed": true,
+      "originalWindowIds": [
+        6,
+        7
+      ],
+      "closed": [],
+      "warnings": [],
+      "result": {
+        "ok": false,
+        "code": "SESSION_CHANGED"
+      }
+    },
+    {
+      "mode": "replaced",
+      "passed": true,
+      "originalWindowIds": [
+        8,
+        9
+      ],
+      "replacementId": 10,
+      "closed": [],
+      "warnings": [],
+      "result": {
+        "ok": true,
+        "closed": []
+      }
+    }
+  ],
+  "runtime": {
+    "electron": "44.9.3",
+    "node": "24.22.0"
+  },
+  "passed": true,
+  "completedAt": "2026-10-25T04:23:15.558Z"
+}

@@ -1,0 +1,86 @@
+{
+  "queriedAt": "2026-10-25T05:19:07.048Z",
+  "scope": "Independent read-only SQL after strict production-main report/capture/restart acceptance",
+  "ownerId": "account:31fa2df1-6847-4466-84ca-ed92bc4ee78f",
+  "revision": 44,
+  "pet_count": 2,
+  "companion_capture_receipts": 1,
+  "capture_count": 1,
+  "memory_count": 1,
+  "battle_seed_receipts": 1,
+  "original_experience": "20",
+  "captured_experience": "0",
+  "permissions": {
+    "discoveryTables": [
+      {
+        "rls": true,
+        "name": "permits",
+        "anonSelect": false,
+        "authenticatedSelect": false
+      },
+      {
+        "rls": true,
+        "name": "game_actions",
+        "anonSelect": false,
+        "authenticatedSelect": false
+      },
+      {
+        "rls": true,
+        "name": "captures",
+        "anonSelect": false,
+        "authenticatedSelect": false
+      },
+      {
+        "rls": true,
+        "name": "location_test_grants",
+        "anonSelect": false,
+        "authenticatedSelect": false
+      },
+      {
+        "rls": true,
+        "name": "devices",
+        "anonSelect": false,
+        "authenticatedSelect": false
+      },
+      {
+        "rls": true,
+        "name": "location_nonces",
+        "anonSelect": false,
+        "authenticatedSelect": false
+      },
+      {
+        "rls": true,
+        "name": "location_proofs",
+        "anonSelect": false,
+        "authenticatedSelect": false
+      }
+    ],
+    "publicDiscoveryRpc": [
+      {
+        "name": "lingjing_discovery_game_read",
+        "anonExecute": false,
+        "serviceExecute": true,
+        "authenticatedExecute": false
+      },
+      {
+        "name": "lingjing_discovery_game_write",
+        "anonExecute": false,
+        "serviceExecute": true,
+        "authenticatedExecute": false
+      },
+      {
+        "name": "lingjing_discovery_location",
+        "anonExecute": false,
+        "serviceExecute": true,
+        "authenticatedExecute": false
+      },
+      {
+        "name": "lingjing_discovery_take_location",
+        "anonExecute": false,
+        "serviceExecute": true,
+        "authenticatedExecute": false
+      }
+    ],
+    "archiveBusinessTables": 18
+  }
+}

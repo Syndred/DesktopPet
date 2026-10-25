@@ -1,0 +1,236 @@
+{
+  "at": "2026-10-25T07:44:07.996Z",
+  "sourceCommit": "2cafccd6871403f69ae8a5bb17dbd658b5a48272",
+  "executable": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\artifacts\\pc-cloud-upgrade-final-2cafccd\\Lingjing-0.1.8-portable-x64.exe",
+  "executableSha256": "af75c5a8ace15a4a924e71a24fd258df80a459648a1c1ab8d795b1da6e43837e",
+  "projectRef": "jbvrdmrkwpznbrvteive",
+  "actualPortable": true,
+  "simulatedProvider": false,
+  "physicalMachines": 1,
+  "checks": [
+    {
+      "name": "Actual portable A/B use packaged cloud configuration, independent encrypted sessions and a verified complete starting save",
+      "owner": "account:470a41d4-3cf7-4a7d-8b1e-32e276d2a719",
+      "pids": [
+        24620,
+        28868
+      ],
+      "runtime": [
+        {
+          "pid": 24620,
+          "electron": "44.9.3",
+          "node": "24.22.0",
+          "profileOverride": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\cloud-upgrade\\2026-10-25\\final-portable-Iuabeu\\A",
+          "userData": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\cloud-upgrade\\2026-10-25\\final-portable-Iuabeu\\A",
+          "resourcesPath": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\3LB4dc6KKivwEibTuBj6pNp7foO\\resources"
+        },
+        {
+          "pid": 28868,
+          "electron": "44.9.3",
+          "node": "24.22.0",
+          "profileOverride": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\cloud-upgrade\\2026-10-25\\final-portable-Iuabeu\\B",
+          "userData": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\cloud-upgrade\\2026-10-25\\final-portable-Iuabeu\\B",
+          "resourcesPath": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\3LB4dc6KKivwEibTuBj6pNp7foO\\resources"
+        }
+      ],
+      "source": "2cafccd6871403f69ae8a5bb17dbd658b5a48272",
+      "tunnels": 6,
+      "baselinePetIds": [
+        "pet-ccec2bdd-b680-4e97-9a68-dcfbeef1986d",
+        "pet-2b88f57b-5199-4d42-bebb-3836f5b69ec5",
+        "pet-9fa48de9-6ad9-4a15-a4da-4277b39a642c",
+        "pet-591e595a-e9fd-4211-873b-1d0afad88c0c",
+        "pet-33636811-2e92-4bb7-b4e6-0bbdfa800283",
+        "pet-68c19bde-6ac8-4a7a-b65b-75b91c360d33",
+        "pet-224b6054-d0ac-47ea-9572-670f926e27aa",
+        "pet-999990cc-28af-40d2-b7ac-22ab11f7d206",
+        "pet-588fb17b-4b2e-4568-81d4-ea4dcb018aea",
+        "pet-3eea8bca-f04f-4f64-9a04-603f36596890",
+        "pet-f2355af5-3004-4e72-b1d4-0f47dba601c0",
+        "pet-b85fd17e-3f75-4261-8fa3-58ea1983542c",
+        "pet-fcf9a401-a2e7-409b-a608-c36eec91588d",
+        "pet-448332c4-b8c4-4807-a90c-f627635f783e"
+      ]
+    },
+    {
+      "name": "Normal React adoption preserves original pet IDs; automatic sync applies exact persona, memory and actual failed-user-message state on clean B",
+      "petId": "pet-ded4e993-44c1-41a4-ae7e-2e275d3725c0",
+      "authoredContentChecksum": "8e4ebf10754bd3dc41363ed1afb367f9615adb4cf5be62d98c3e0b2682099b94",
+      "externalModelSuccess": false
+    },
+    {
+      "name": "Actual private Storage publication, exact requested calibration/actions and preserved import bytes/history hydrate automatically and render native pixels on both SFX clients",
+      "resourceId": "74f5d8ff-ffa6-4f40-8e41-39f80b33acf3",
+      "contentHash": "1cd0626ea29767476b371519ec4dc00fc43c528bfcd92627166275b937db2060",
+      "manifestSha256": "e564c4f2e18ca0aa64705b2e3cf44c1f2879fff300390f454a00299f06b6c82d",
+      "uploadAction": "f6820d3a-4e71-425a-8d8e-bb84bb559de0",
+      "authorityAction": "resources:74f5d8ff-ffa6-4f40-8e41-39f80b33acf3:e564c4f2e18ca0aa64705b2e3cf44c1f2879fff300390f454a00299f06b6c82d",
+      "newImportIds": [
+        "96633b6a-1c0a-4e28-9680-c3325886430b"
+      ],
+      "files": [
+        {
+          "key": "character.json",
+          "bytes": 9406,
+          "sha256": "e2e976b69f7ea9049527251e458517e048c05aa5ab4cd1e13ffa47c38821708e"
+        },
+        {
+          "key": "sprites.png",
+          "bytes": 1802491,
+          "sha256": "aa59df3af26d4f7faf9272193b7d1d35ed6d2f22ebb6b294a5a2853f0539f693"
+        }
+      ],
+      "preferences": {
+        "calibration": {
+          "desktop": {
+            "scale": 1.25,
+            "rotationDeg": 0,
+            "verticalOffset": 0,
+            "mirrorX": false,
+            "anchorX": 0.5,
+            "anchorY": 0.849609375,
+            "fps": 0
+          },
+          "battle": {
+            "scale": 1,
+            "rotationDeg": 0,
+            "verticalOffset": 0,
+            "mirrorX": true,
+            "anchorX": 0.5,
+            "anchorY": 0.849609375,
+            "fps": 0
+          }
+        },
+        "actions": {
+          "idle": "idle",
+          "blink": "blink",
+          "walk": "walk",
+          "wave": "blink",
+          "eat": "eat",
+          "attack_windup": "attack_windup",
+          "attack_release": "attack_release",
+          "attack": "attack",
+          "hit": "hit",
+          "skill": "skill",
+          "victory": "victory",
+          "sleep": "sleep"
+        }
+      },
+      "aFrame": {
+        "windowId": 2,
+        "visible": true,
+        "size": {
+          "width": 230,
+          "height": 280
+        },
+        "visiblePixels": 17118,
+        "coloredPixels": 13564,
+        "file": "portable-custom-A.png",
+        "sha256": "5a5b0514436de2d7cf1f9ec1d10f635a8517fe46dcdb287105ef7969a3fab358"
+      },
+      "bFrame": {
+        "windowId": 2,
+        "visible": true,
+        "size": {
+          "width": 230,
+          "height": 280
+        },
+        "visiblePixels": 17118,
+        "coloredPixels": 13564,
+        "file": "portable-custom-B.png",
+        "sha256": "5a5b0514436de2d7cf1f9ec1d10f635a8517fe46dcdb287105ef7969a3fab358"
+      }
+    }
+  ],
+  "errors": [],
+  "passed": false,
+  "scope": "Two actual portable SFX processes, public product IPC/React, real HTTPS/Storage and read-only SQLite. Main inspector only observes owned processes and selects an actual local descriptor in the native chooser; OS dialog UI itself is not claimed. Model error uses a closed loopback socket; no fabricated assistant reply.",
+  "verification": {
+    "gitCommit": "2220f144942a409943a8ef1408919eb0d582704d",
+    "scriptSha256": "4cba365095755b79b65831f1be1afc19528530b8d2e5cfc76025e6e6ca543096",
+    "driverSha256": "ba495ffbaf8e5c7b7868c57a2176b5ab8b239b5a311941f88c7084e1c067225e"
+  },
+  "selectionActionId": "4eed69b2-7c3e-4f36-979e-209df4d5c289",
+  "selectionAttempts": [
+    {
+      "attempt": 1,
+      "actionId": "4eed69b2-7c3e-4f36-979e-209df4d5c289",
+      "ok": true,
+      "before": {
+        "configured": true,
+        "cloudRevision": 77,
+        "lastVerifiedAt": "2026-10-25T07:47:04.595Z",
+        "lastError": null,
+        "pending": 0,
+        "conflicts": 0,
+        "localChanged": false,
+        "unverifiedLocal": 0,
+        "privacyRedactions": 0,
+        "running": false,
+        "observedCloudRevision": 76,
+        "lastCloudCheckedAt": "2026-10-25T07:46:51.573Z",
+        "remoteChanged": false
+      },
+      "after": {
+        "configured": true,
+        "cloudRevision": 77,
+        "lastVerifiedAt": "2026-10-25T07:47:11.590Z",
+        "lastError": null,
+        "pending": 0,
+        "conflicts": 0,
+        "localChanged": true,
+        "unverifiedLocal": 0,
+        "privacyRedactions": 0,
+        "running": true,
+        "observedCloudRevision": 76,
+        "lastCloudCheckedAt": "2026-10-25T07:46:51.573Z",
+        "remoteChanged": false
+      },
+      "intentStatus": "verified"
+    }
+  ],
+  "failure": {
+    "name": "TimeoutError",
+    "message": "locator.waitFor: Timeout 25000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: '战报', exact: true }) to be visible\u001b[22m\n",
+    "stack": "locator.waitFor: Timeout 25000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: '战报', exact: true }) to be visible\u001b[22m\n\n    at C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\scripts\\acceptance\\cloud-integrated-portable.mjs:140:91"
+  },
+  "failureStatus": [
+    {
+      "device": "A",
+      "data": {
+        "configured": true,
+        "cloudRevision": 85,
+        "lastVerifiedAt": "2026-10-25T07:51:52.361Z",
+        "lastError": null,
+        "pending": 0,
+        "conflicts": 0,
+        "localChanged": false,
+        "unverifiedLocal": 0,
+        "privacyRedactions": 0,
+        "running": false,
+        "observedCloudRevision": 85,
+        "lastCloudCheckedAt": "2026-10-25T07:51:51.842Z",
+        "remoteChanged": false
+      }
+    },
+    {
+      "device": "B",
+      "data": {
+        "configured": true,
+        "cloudRevision": 85,
+        "lastVerifiedAt": "2026-10-25T07:51:50.338Z",
+        "lastError": null,
+        "pending": 0,
+        "conflicts": 0,
+        "localChanged": false,
+        "unverifiedLocal": 0,
+        "privacyRedactions": 0,
+        "running": false,
+        "observedCloudRevision": 85,
+        "lastCloudCheckedAt": "2026-10-25T07:51:49.840Z",
+        "remoteChanged": false
+      }
+    }
+  ],
+  "completedAt": "2026-10-25T07:52:21.604Z"
+}

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "at": "2026-10-25T04:25:02.239Z",
+  "at": "2026-10-25T06:00:07.077Z",
   "projectRef": "jbvrdmrkwpznbrvteive",
   "url": "https://jbvrdmrkwpznbrvteive.supabase.co",
   "plan": "free",
@@ -192,18 +192,18 @@
       "slug": "lingjing-auth",
       "name": "lingjing-auth",
       "status": "ACTIVE",
-      "version": 2,
+      "version": 3,
       "created_at": 1792895361305,
-      "updated_at": 1792895861420,
+      "updated_at": 1792907904251,
       "verify_jwt": false,
       "import_map": false,
-      "entrypoint_path": "file:///tmp/user_fn_jbvrdmrkwpznbrvteive_69ecdbd1-ee0f-45e8-9cc7-d69fb224d1c3_2/source/infra/supabase/functions/lingjing-auth/index.ts",
-      "ezbr_sha256": "80434bb2511e8403255afad38eb189bae3efdfc1d4b172fc2ecdba0b489f8fe1",
+      "entrypoint_path": "file:///tmp/user_fn_jbvrdmrkwpznbrvteive_69ecdbd1-ee0f-45e8-9cc7-d69fb224d1c3_3/source/infra/supabase/functions/lingjing-auth/index.ts",
+      "ezbr_sha256": "fdfed66567b2b8bd1876856a9fd68b8f94282256a562495ec49e1bee9887b3ec",
       "source": {
         "function": "lingjing-auth",
         "entrypoint": "infra/supabase/functions/lingjing-auth/index.ts",
-        "sourceCommit": "df9f00a847adecfd3fb6e591a7a951a362b7e83e",
-        "sourceSha256": "4610880718ca892affd4ab1b86fb3c0bebe91fc1b4ed553bc863b72191ae4fd9",
+        "sourceCommit": "1c8cc0b43d4b00be7e6e58b9f26ce03f18a1feab",
+        "sourceSha256": "cf4a4117b1180f78b4c88eff17f34de4bf26f62cdfdfd7a82bf6b22f656b3c98",
         "files": [
           {
             "name": "infra/supabase/functions/_shared/lingjing-auth.ts",
@@ -215,7 +215,7 @@
           },
           {
             "name": "infra/supabase/functions/lingjing-auth/index.ts",
-            "bytes": 8119
+            "bytes": 8121
           }
         ],
         "external": [
@@ -626,13 +626,13 @@
     "permissionEvidence": "docs/implementation/evidence/cloud/2026-10-25/world-spatial-permissions.json"
   },
   "authority": {
-    "companions": "Root real HTTPS7 checks passed after shared transaction guard and verified references schema; native/full sync pending",
+    "companions": "Actual HTTPS commands, native same-template independent pets/selection, original offline action and main full-save readback accepted",
     "garden": "Actual HTTPS planting/replay/stale-revision/reward-denial and B readback passed",
-    "territory": "Deployed; full signed-location/concurrency/native acceptance pending",
+    "territory": "Actual PostGIS competing claim, guards, privacy, natural native 13-round defense, actual OSM tile pixels and original plant retry accepted",
     "immutableSessionRevocation": "Actual managed-valid old SID remains denied after replacement; B remains live",
-    "verifiedResources": "Deployed v2 validated calibration/action preferences and complete v2 hydration. Root5 actual HTTPS preference/CAS/RLS cases passed; full native in progress",
+    "verifiedResources": "Actual private verified Storage v2, file/import byte preservation, calibration/actions and automatic peer full-save hydration independently accepted",
     "freshActor": "Canonical owner lock, managed Auth/user/session rows, immutable revoked SID and exact device binding rechecked in domain transaction; no extra Auth-table grants",
-    "battle": "Deployed v2 with short owner-scoped CAS keys; original domain/legacy receipts retained; actual Realtime/native acceptance in progress"
+    "battle": "Actual native invitations, 10-round friend battle, 20-round training, unique XP/seeds, report replay, Auth refresh/private Realtime and revoked-device denial accepted across linked phases"
   },
   "acceptanceEvidence": {
     "serviceGuard": "docs/implementation/evidence/cloud/2026-10-25/service-actor-deployment.json",
@@ -640,16 +640,49 @@
     "expiredSignedJwt": "docs/implementation/evidence/cloud/2026-10-25/expired-signed-jwt-http.json",
     "resources": "docs/implementation/evidence/resources/cloud-upgrade/live-authority/evidence.json",
     "customAppearance": "docs/implementation/evidence/resources/cloud-upgrade/live-authority/companion-joint.json",
-    "resourcePreferences": "docs/implementation/evidence/cloud/2026-10-25/resource-preferences-http-independent.json"
+    "resourcePreferences": "docs/implementation/evidence/cloud/2026-10-25/resource-preferences-http-independent.json",
+    "coordinator": "docs/implementation/status/cloud-coordinator.json"
   },
   "publicBoundary": {
     "passed": 14,
     "total": 14,
-    "evidence": "docs/implementation/evidence/cloud/2026-10-25/public-boundary-http.json"
+    "evidence": "docs/implementation/evidence/cloud/2026-10-25/public-boundary-release-http.json"
   },
   "migrationAlignment": {
     "evidence": "docs/implementation/evidence/cloud/2026-10-25/migration-ledger-alignment.json",
     "remoteHistoryMutated": false,
-    "legacyDraftRetirementPending": true
+    "legacyDraftRetirementPending": false,
+    "legacyDraftRetirementEvidence": "docs/implementation/cleanup/cloud-coordinator-retirement.json"
+  },
+  "authStaticCorrection": "docs/implementation/evidence/cloud/2026-10-25/auth-static-correction-deployment.json",
+  "finalClientSource": "a9acd7f6f1920c541d429fa26d1f054b1427cd95",
+  "newCloudAndPortableAcceptancePassed": true,
+  "fullAcceptanceBlockedReason": "Unavailable original DesktopPet server/database; user has no SSH alias or backup",
+  "finalAcceptance": {
+    "newCloudAndPortablePassed": true,
+    "rootWholeBusinessChecks": 8,
+    "singleUninterruptedRootRun": true,
+    "actualFriendMainChecks": 6,
+    "actualFriendPostFinishRestartChecks": 2,
+    "sourceCommit": "a9acd7f6f1920c541d429fa26d1f054b1427cd95",
+    "executable": "releases/final-a9acd7f/Lingjing-0.1.8-portable-x64.exe",
+    "bytes": 169196329,
+    "sha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+    "signature": "NotSigned",
+    "rootEvidence": "docs/implementation/evidence/cloud/2026-10-25/final-portable-a9acd7f/evidence.json",
+    "friendEvidence": "docs/implementation/evidence/battle/2026-10-25/final-portable-a9acd7f/evidence.json",
+    "rootIndependentSqlite": "docs/implementation/evidence/cloud/2026-10-25/final-canonical-sqlite-readback.json",
+    "canonicalProfiles": 4,
+    "unitsPerProfile": 27,
+    "rootVersion": 103,
+    "friendVersions": [
+      9,
+      7
+    ],
+    "originalOfflineActionId": "auto:ce8b2ab8-a9d0-4130-8dce-c9a639b0c0a4",
+    "originalOfflineBase": 101,
+    "originalOfflineReceipt": 102,
+    "allPending": 0,
+    "physicalMachines": 1
   }
 }

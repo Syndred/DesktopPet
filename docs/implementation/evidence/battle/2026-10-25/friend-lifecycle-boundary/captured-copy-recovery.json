@@ -1,0 +1,82 @@
+{
+  "at": "2026-10-25T08:16:42.897Z",
+  "mode": "Replay of immutable captured HTTPS head/receipt on new SQLite copies, not a new live-cloud acceptance",
+  "networkRequests": 0,
+  "sourceOriginal": "2cafccd6871403f69ae8a5bb17dbd658b5a48272",
+  "owners": [
+    {
+      "label": "A",
+      "owner": "account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+      "sourceSqlite": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\friend-lifecycle-boundary-2cafccd\\original-profile-A.sqlite",
+      "sourceSha256": "c2fd7301a1db390f568254fff51a9d7cee5ae0ad7b4b95c835578849f972b55a",
+      "copy": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\friend-lifecycle-boundary-2cafccd\\copy-recovery-1792916202827\\copy-A.sqlite",
+      "status": {
+        "configured": true,
+        "cloudRevision": 8,
+        "lastVerifiedAt": "2026-10-25T08:16:42.978Z",
+        "lastError": null,
+        "pending": 0,
+        "conflicts": 0,
+        "localChanged": false,
+        "unverifiedLocal": 0,
+        "privacyRedactions": 0,
+        "running": false,
+        "observedCloudRevision": null,
+        "lastCloudCheckedAt": null,
+        "remoteChanged": false
+      },
+      "cloudRevision": 8,
+      "cloudChecksum": "c949a142ad3b09bde59dd3500b28b756fdc2abb4051201889abcdfc7e6e674b3",
+      "authorityReceipt": "battle-authority:friend:556a9aee-40a0-4609-8fa1-c07926fe67cc",
+      "rawRequestsUnchanged": true,
+      "requestBytes": [
+        {
+          "actionId": "invite:513c8ce0-c71b-438a-aaa9-a2b6631d7ef6",
+          "commandSha256": "b4d55435211af9af098831415561d7d9303644bfc119ce7c58e3f4e4b19b84b6",
+          "resultSha256": null
+        }
+      ],
+      "economyUnchanged": true,
+      "canonicalBattleExact": true,
+      "archivedOriginal": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\friend-lifecycle-boundary-2cafccd\\copy-recovery-1792916202827\\backups-A\\before-cloud-battle-projection-repair-1792916202959-1996f15e-1de6-4d78-84fc-209173a46f69.lingjing.json"
+    },
+    {
+      "label": "B",
+      "owner": "account:9e230794-470b-45be-9a18-a2564c88ba35",
+      "sourceSqlite": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\friend-lifecycle-boundary-2cafccd\\original-profile-B.sqlite",
+      "sourceSha256": "72ce263d2db062b821125add90e3bfb61f7b76cc7dbcc17e5cc345f368b0a451",
+      "copy": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\friend-lifecycle-boundary-2cafccd\\copy-recovery-1792916202827\\copy-B.sqlite",
+      "status": {
+        "configured": true,
+        "cloudRevision": 6,
+        "lastVerifiedAt": "2026-10-25T08:16:43.053Z",
+        "lastError": null,
+        "pending": 0,
+        "conflicts": 0,
+        "localChanged": false,
+        "unverifiedLocal": 0,
+        "privacyRedactions": 0,
+        "running": false,
+        "observedCloudRevision": null,
+        "lastCloudCheckedAt": null,
+        "remoteChanged": false
+      },
+      "cloudRevision": 6,
+      "cloudChecksum": "5873a3734ce34fba94d5a67eeb5119a97442cb63a2cb3a5c02c9072f361aa947",
+      "authorityReceipt": "battle-authority:friend:556a9aee-40a0-4609-8fa1-c07926fe67cc",
+      "rawRequestsUnchanged": true,
+      "requestBytes": [
+        {
+          "actionId": "accept:513c8ce0-c71b-438a-aaa9-a2b6631d7ef6",
+          "commandSha256": "559f9c1e95f713c94785f3eed08020e412660a7254a1a132b8e0db000dfbceb4",
+          "resultSha256": "c5d85ffe8960fca5bbc9d0d446c05966ece0c5219e21bd00abd5ada0030046e0"
+        }
+      ],
+      "economyUnchanged": true,
+      "canonicalBattleExact": true,
+      "archivedOriginal": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\friend-lifecycle-boundary-2cafccd\\copy-recovery-1792916202827\\backups-B\\before-cloud-battle-projection-repair-1792916203040-c0d39893-3e48-4341-9505-78c2aeae660f.lingjing.json"
+    }
+  ],
+  "passed": true,
+  "output": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\friend-lifecycle-boundary-2cafccd\\copy-recovery-1792916202827"
+}

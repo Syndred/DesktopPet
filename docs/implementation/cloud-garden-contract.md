@@ -1,10 +1,10 @@
 # 云端领地与菜园契约 · 2026-10-25
 
-本模块在原 `codex/lingjing-garden` 工作树推进。原本地菜园目标已完成；这轮云端目标仍为 active。生产迁移和部署只由主协调执行。本模块未远程写入、修改原 Text Comparision 数据、切换共享源码 checkout 或触碰 04 UI/工作树。
+本模块在原 `codex/lingjing-garden` 工作树完成云端实现和模块验收。主协调已合入 `d715e2d`、审查观测属性范围，并独立核对最后的原生地图像素和离线重启增量；脱敏聚合、更新截图和逐项审计已归档到 docs。生产迁移、定位测试授权和部署均由主协调执行；本模块仅通过正常产品 API 写入隔离测试数据，远程 SQL/元数据检查均只读。原 Text Comparision 数据、共享源码 checkout 和 04 UI/工作树保持原样。
 
 ## 可部署服务端检查点
 
-前置：08 身份 / Auth bridge / protected save CAS 已部署；03 `20261025020719` 定位 schema 和 `20261025025641` live actor guard 已部署；02 `9497e8d` 纯成长函数已合入。02 合法领养入口现已由主协调上线，真实验收应通过 `companions-sync` 领养，不能 SQL 造宠物。
+前置：08 身份 / Auth bridge / protected save CAS 已部署；03 `20261025030635` 定位 schema 和 `20261025030639` live actor guard 已部署；02 纯成长函数及合法领养入口已合入并上线。真实验收通过 `companions-sync` 领养，没有 SQL 造宠物。迁移文件名与远端实际 ledger 一致，未修复或重写远端历史。
 
 主协调审查并应用 `infra/supabase/migrations/20261025033032_lingjing_territory_authority.sql`，随后部署 `garden-sync/index.ts` 和 `territory-sync/index.ts`，均 `verify_jwt=false`。统一 `withActor/getUser/设备会话` 严格验证仍在入口执行。随函数携带 `_shared/lingjing-auth.ts`、`_shared/garden-runtime.bundle.mjs`、`_shared/battle-core.js`。bundle 没有仓库外相对导入；按 `node scripts/acceptance/cloud-territory/build-edge.mjs --check` 核对来源。迁移是 CLI 2.122.0 `migration new` 生成的新追加文件；旧 `20261025020010` 草案从未部署，已在本地以新规范文件替换，历史仍在 Git。
 
@@ -30,17 +30,25 @@ PostGIS Polygon/Point + GiST负责当前位置及区域围栏。两个当前 rev
 
 03捕捉在其自己的 SQL 事务内调用 `runtime_territory_capture_context(owner,lat,lng,scenarioId)`，以 FOR SHARE 持有该世界区域直到捕捉奖励提交。该函数不是 HTTP 权威入口。模拟 scenario 必须显式传入，null 仅查 live 世界。捕捉的规范伙伴/奖励 fragment 由03和02生成后在其事务统一 CAS，不由05再提交一次。
 
-## 已验证与剩余
+## 已验证与交接
 
 最终园地专项回归34/34、生产 TypeScript/desktop typecheck 和 Electron44.9.3 / better-sqlite3 13.0.3 原生检查通过。覆盖400种共享核心有序元素/动作对、真实 SQLite 实例身份、完整伙伴格式、02规范成长、160字符 owner、幂等/版本拒绝、真实08 identity/CAS +05非空间提交、角色拒绝、撤销回滚、库存与同一伙伴原子变化和其他受保护模块保全。两个完整 Edge 入口通过 Deno2.9.6 `check --no-config`。
 
 上述 PGlite/运行夹具是本地检查，未替换或模拟 PostGIS。另已由主协调实际应用 PostGIS3.3.7 和两个入口；03:40真实结算发现 JSON 减键优先级错误，回滚验证库存/成长未写入。新增 CLI 迁移 `20261025034313_lingjing_territory_receipt_operator.sql` 后，由主协调应用并使用原请求重试成功。已应用历史未重写。
 
-真实 HTTPS 已通过：三独立进程/不同设备，同账号并发一次提交/跨设备同回执；两个正常 Auth 账号通过 companions-sync 合法领养；首轮两场自然败局保留并各结算一次5XP/两颗种子；第二次合法挑战两场自然胜利并发争夺，只一方占领、另一方 superseded 无成长/种子；实际响应头后断开正文读取，再按同一 actionId/hash/proof 恢复；驻守不改成长/库存且跨账号拒绝；15秒许可实际到期、错误用途/目标、跨账号许可、伪造胜者、缺许可和提前收获均拒绝且经济未变化。原水稻25分钟时钟继续运行，未缩时或改客户端时间。
+真实 HTTPS 已通过：三独立进程/不同设备身份，同账号并发一次提交/跨客户端同回执；两个正常 Auth 账号通过 companions-sync 合法领养；首轮两场自然败局保留并各结算一次5XP/两颗种子；第二次合法挑战两场自然胜利并发争夺，只一方占领、另一方 superseded 无成长/种子；实际响应头后断开正文读取，再按同一 actionId/hash/proof 恢复；驻守不改成长/库存且跨账号拒绝；15秒许可实际到期、错误用途/目标、跨账号许可、伪造胜者、缺许可和提前收获均拒绝且经济未变化。原水稻完整等待服务端25分钟成熟后，收获2、制作1份米饭并喂给同一原伙伴，其他伙伴保持原样。160字符原 actionId 对应71字符公共CAS回执，另一客户端重放不再次扣库存或增长。新的独立进程读回完整存档 checksum 和原结算回执一致。
 
-桌面只改主进程服务适配。`cloudActor.requireActor().invoke` 负责身份/刷新；新的设备请求 journal 保留精确 wire input/定位许可/hash，不导出为第二份库存。既有 battle command wrapper 把云领地 session 分发到服务端，禁止本地 finish/applyReward；恢复 snapshot 自动确认同一原行动，缓存以服务器 revision 抵挡过时并发读回。整个伙伴六表和 identityImports 作为一致性单位恢复；存在本机未同步操作时保留原档。其他本机模块尚未匹配时不推进08完整存档 CAS 基线，领域读回不擦除聊天/设置。
+桌面主进程通过 `cloudActor.requireActor().invoke` 负责身份/刷新；新的设备请求 journal 保留精确 wire input/定位许可/hash，不导出为第二份库存。既有 battle command wrapper 把云领地 session 分发到服务端，禁止本地 finish/applyReward；恢复 snapshot 自动确认同一原行动，缓存以服务器 revision 抵挡过时并发读回。整个伙伴六表和 identityImports 作为一致性单位恢复；存在本机未同步操作时保留原档。其他本机模块尚未匹配时不推进08完整存档 CAS 基线，领域读回不擦除聊天/设置。
 
-两个实际 Electron44 隔离配置已通过正常界面登录、safeStorage加密和合法领养，正在完成云战场与重启流程。不能将同机进程称作两个实体设备，也不能将受控模拟定位称作物理GPS证据。状态及真实证据见 `status/cloud-garden.json` 与 `evidence/garden/cloud-2026-10-25/evidence.json`；完整忽略目录保留原 action、失败记录和回执。
+两个实际 Electron44 隔离配置已通过正常界面登录、safeStorage加密、合法领养及云战场验收。实际取消首行动的HTTPS正文后退出进程；重启只推进原来的一个回合，原 wire/hash 从 SQLite pending 转为 committed。两端交替操作同一对局，自然胜利13回合，确认一次并跨端重放，库存与伙伴一致，非目标伙伴未变。实际“播种”按钮完成一次云端CAS，另一进程读回同一地块/种子变化。
+
+补充的 `--offline` 验收将一端真实 Node fetch 的进程 dispatcher 指向只销毁 TCP 连接的回环 CONNECT 代理，不返回任何 HTTP/API 数据，观测到两次 `ECONNRESET`。正常界面的播种失败后保留 localStorage 原操作和 SQLite pending；另一端仍在线，确认云端种子、伙伴和地块均未变。退出该进程并重新启动后，实际“重试”按钮提交同一 wire/hash，版本仅4→5、番茄种子仅2→1，跨端再次重放不扣第二颗种子，伙伴完全不变，待确认记录清除。该证据是单进程网络路径故障，未修改整机网络。`--admission` 另以两个原合法挑战已用完的账号和新签名许可验证：外来 petId 返回 `PET_NOT_OWNED`，第三次挑战返回 `DAILY_INVASIONS_USED`，存档 checksum、每日余额及世界状态不变。
+
+真实窗口复核还修复了菜园 snapshot 顶层 revision 缺失，以及首次直接进入园地时共享地图/伙伴样式未加载。最终截图等待服务端胜局、“已确认”、实际地图瓦片和可见角色内容；静止WebGL缓冲合成后可能清空，头像改用原生窗口合成位图检查，排除浅色背景和角标后各有2819/2434个角色像素。34项园地回归完成后，最终云端专项13/13、主进程/桌面/界面类型检查及共享核心/bundle来源检查再通过。
+
+主协调复核原地图截图后，新增 `--map` 增量验收：NearbyMap 仅增加 idle、areTilesLoaded 和视口的观测 data 属性，不改变地图样式、地理/云协议、定位或业务边界。原16.8级视口的真实OSM中心瓦片只有一种不透明陆地颜色 `(242,239,233)`，领地填色叠加后原生画布为 `(218,223,237)`，单色不属于已渲染地物证据。通过正常“缩小”按钮将纯展示相机缩到现有最小11级后，道路线条出现；两端分别等待 idle/全部瓦片完成，源中心瓦片13种颜色，原生采样71种颜色、240个纹理像素，32450/32491个采样匹配源瓦片。相机中心与系统定位状态保持原样，领地、伙伴、地块、库存前后严格相等；SQL另确认地图验收期间该账号没有新定位许可，最后一张仍在04:24签发。原单色与新纹理截图均保留。没有重建领地或重跑原经济成熟。
+
+以上进程均在同一台Windows机器，定位来自主协调授权的独立模拟场景；不构成两个实体设备或物理GPS证据，响应正文丢失和单进程路由故障也不等同整机网络断开。`garden-sync v2` 和 `territory-sync v2` 已只读核对为 ACTIVE。状态及真实证据见 `status/cloud-garden.json` 与 `evidence/garden/cloud-2026-10-25/evidence.json`；逐项审计在同目录 `completion-audit.json`，Git中原来的两张蓝色地图图像保留为 `retained-failures/pre-map-review/` 下的证据不足记录。最后只读核对仍为7张领域表启用RLS且anon/authenticated无直读写、4个权威RPC仅service_role执行；原离线action只一行回执，地图采图期间没有新许可或新领地。主协调已独立确认源码和最终增量，本模块完成交接；全应用统一打包由根/01继续推进。
 
 复现命令（私有配置仅保存在 artifacts，包含专用测试账号和 proof，不进入源码/证据）：
 
@@ -49,13 +57,17 @@ node scripts/acceptance/cloud-territory/prepare-live.mjs artifacts/garden/cloud/
 # 主协调根据 location-grant-request.json 授权专用 actor/device/scenario 后
 node scripts/acceptance/cloud-territory/verify-live.mjs artifacts/garden/cloud/private-clients.json
 node scripts/acceptance/cloud-territory/verify-live.mjs artifacts/garden/cloud/private-clients.json --negative
+node scripts/acceptance/cloud-territory/verify-live.mjs artifacts/garden/cloud/private-clients.json --admission
 # 等原25分钟服务端成熟时间，不缩时
 node scripts/acceptance/cloud-territory/verify-live.mjs artifacts/garden/cloud/private-clients.json --economy
 node scripts/acceptance/cloud-territory/verify-live.mjs artifacts/garden/cloud/private-clients.json --readback
 node scripts/acceptance/cloud-territory/electron-live.mjs artifacts/garden/cloud/private-clients.json --prepare
 # 主协调另授两个实际 Electron actor/device 的模拟定位许可后
 node scripts/acceptance/cloud-territory/electron-live.mjs artifacts/garden/cloud/private-clients.json
+node scripts/acceptance/cloud-territory/electron-live.mjs artifacts/garden/cloud/private-clients.json --inspect
+node scripts/acceptance/cloud-territory/electron-live.mjs artifacts/garden/cloud/private-clients.json --offline
+node scripts/acceptance/cloud-territory/electron-live.mjs artifacts/garden/cloud/private-clients.json --map
 node scripts/acceptance/cloud-territory/publish-evidence.mjs artifacts/garden/cloud/private-clients.json
 ```
 
-已 `git fetch origin --prune`，远端 main 仍为 `4786f97`，本工作树已包含它及主协调批准的公共检查点。官方依据：[PostGIS](https://supabase.com/docs/guides/database/extensions/postgis)、[RLS](https://supabase.com/docs/guides/database/postgres/row-level-security)。
+交付前再次执行 `git fetch origin` 与 `git pull --ff-only origin main`，远端 main 为 `4786f97`，返回 Already up to date；本工作树包含它及主协调批准的 `4830619` 公共检查点。官方依据：[PostGIS](https://supabase.com/docs/guides/database/extensions/postgis)、[RLS](https://supabase.com/docs/guides/database/postgres/row-level-security)。

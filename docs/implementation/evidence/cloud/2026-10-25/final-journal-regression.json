@@ -1,0 +1,69 @@
+{
+  "at": "2026-10-25T06:57:13.986Z",
+  "productSource": "7051ce308a55f1a8b426f0290eb79162ce94a634",
+  "scope": "Actual coordinator local verification after the real SFX failure. Production AccountSync/BackupManager/journal fixture uses scripted provider; original failing A/B SQLite copies were upgraded and hashed separately. Not hosted CI or an actual SFX business success claim.",
+  "targeted": {
+    "passed": 16,
+    "containsRealPrivatePreviewAdapterChain": true,
+    "oldFinishedV1Clean": true,
+    "unknownBusinessEditsAndForgedMarkersRejected": true
+  },
+  "verify": {
+    "exitCode": 0,
+    "source": "162c137c78654ff7d2f17e01dcef5a317290dd0d",
+    "unitTests": 46,
+    "lint": true,
+    "types": true,
+    "uiTypes": true
+  },
+  "cloud": {
+    "exitCode": 0,
+    "source": "162c137c78654ff7d2f17e01dcef5a317290dd0d",
+    "migrations": 22,
+    "nodeTestFiles": 22,
+    "denoCases": 5,
+    "denoVersion": "2.9.6",
+    "generatedDistributionsUnchanged": true
+  },
+  "native": {
+    "exitCode": 0,
+    "source": "7051ce308a55f1a8b426f0290eb79162ce94a634",
+    "passed": 278,
+    "failed": 0,
+    "firstJournalRun": {
+      "passed": 273,
+      "failed": 3
+    },
+    "correction": "Four-line sqlite_master guard defers journal upgrade until the three battle tables exist. Original consumers and assertions retained; no table creation or gameplay/network fallback when unregistered."
+  },
+  "cloudSourceChangeAfterVerify": false,
+  "uiStyleChanged": false,
+  "files": [
+    {
+      "path": "artifacts/cloud-upgrade/2026-10-25/battle-journal-root-targeted.log",
+      "bytes": 2188,
+      "sha256": "56acd71cdaea904918d1f8ea3dcd1c85225be1c01b129e539648ce5ecda16b8b"
+    },
+    {
+      "path": "artifacts/cloud-upgrade/2026-10-25/final-verify-162c137.log",
+      "bytes": 4627,
+      "sha256": "b92abb5de5e7c575a631b4b40270b2ac9600decadb9330629771c7c1ec7a2cd8"
+    },
+    {
+      "path": "artifacts/cloud-upgrade/2026-10-25/final-cloud-162c137.log",
+      "bytes": 28294,
+      "sha256": "25839b1c381f583b708bf5fd9b13a4504d87a94df505f3bbeee0e489cfd6c3a1"
+    },
+    {
+      "path": "artifacts/cloud-upgrade/2026-10-25/final-native-162c137.log",
+      "bytes": 36394,
+      "sha256": "2085d9ae0e5137a8cfa4463cdb4dcb021dda2b82463b0120cc40593e65903ea6"
+    },
+    {
+      "path": "artifacts/cloud-upgrade/2026-10-25/final-native-7051ce3.log",
+      "bytes": 32541,
+      "sha256": "bf9825b73617a96ea655f68419e1d9d43872aa4f2ed8780a2ba3f80f55071099"
+    }
+  ],
+  "passed": true
+}

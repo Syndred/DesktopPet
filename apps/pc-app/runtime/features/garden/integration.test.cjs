@@ -2,25 +2,30 @@
 const test = require('node:test'); const assert = require('node:assert/strict');
 const { DatabaseSync } = require('node:sqlite'); const { mkdtempSync } = require('node:fs'); const { tmpdir } = require('node:os'); const { join, resolve } = require('node:path'); const { randomUUID } = require('node:crypto');
 const { GardenService } = require('./service.cjs'); const { companionAdapter } = require('./testing-adapter.cjs');
+const { createServices } = require('../../core/services.cjs');
 const { TerritoryService, validFix } = require('./territories.cjs'); const { createGardenBackupAdapter } = require('./backup.cjs'); const { reconcileSeeds } = require('./settlements.cjs');
 const companionRoot = process.env.GARDEN_COMPANIONS_DIR || resolve(__dirname, '../companions'); const battleRoot = process.env.GARDEN_BATTLE_DIR || resolve(__dirname, '../battle');
 const { CompanionsService } = require(join(companionRoot, 'service.cjs')); const { migrateCompanions } = require(join(companionRoot, 'migrations.cjs'));
 const { BattleFeatureService } = require(join(battleRoot, 'service.cjs')); const battleMigrations = require(join(battleRoot, 'migrations.cjs'));
 function fixture() {
-  const db = new DatabaseSync(join(mkdtempSync(join(tmpdir(), 'garden-integration-')), 'actual.sqlite')); db.exec('PRAGMA journal_mode=WAL; PRAGMA foreign_keys=ON');
+  const profile = mkdtempSync(join(tmpdir(), 'garden-integration-'));
+  const db = new DatabaseSync(join(profile, 'actual.sqlite')); db.exec('PRAGMA journal_mode=WAL; PRAGMA foreign_keys=ON');
   db.transaction = fn => (...args) => { const key = `test_${randomUUID().replaceAll('-', '')}`; db.exec(`SAVEPOINT ${key}`); try { const result = fn(...args); db.exec(`RELEASE ${key}`); return result; } catch (error) { db.exec(`ROLLBACK TO ${key}; RELEASE ${key}`); throw error; } };
   migrateCompanions(db); for (const migration of battleMigrations) db.exec(migration.sql);
   const companions = new CompanionsService({ db }); const owner = 'territory-check';
   const pet = companions.adopt(owner, { actionId: 'adopt-2d', name: '守护伙伴', templateId: 'big-fish-gentle', showOnDesktop: false }).data.pet;
-  const registry = new Map(); const services = { db, session: { getOwnerAccountId: () => owner, getCurrentUser: () => ({ id: owner }) }, get: name => registry.get(name), events: { emit() {} }, legacy: {} };
+  // Use the production event bus, including its unsubscribe contract. These
+  // local domain/OS-fix fixtures do not log in or invoke cloud transports.
+  const services = createServices({ db, legacy: {}, paths: { userData: profile } });
+  services.session.setAdapter({ getCurrentUser: () => ({ id: owner, ownerAccountId: owner, provider: 'local' }) });
   const companionsApi = { db, getPet: (who, id) => companions.requirePet(who, id), listPets: who => companions.snapshot(who).data.pets, applyGrowthInTransaction: (who, input) => companions.applyGrowthInTransaction(who, input) };
-  registry.set('companions', companionsApi);
-  const battle = new BattleFeatureService(services); registry.set('battle', { getOutcome: input => battle.getOutcome(input), beginTerritoryChallenge: input => battle.beginTerritoryChallenge(input) });
+  services.provide('companions', companionsApi);
+  const battle = new BattleFeatureService(services); services.provide('battle', { getOutcome: input => battle.getOutcome(input), beginTerritoryChallenge: input => battle.beginTerritoryChallenge(input) });
   services.invoke = async (feature, command, input) => feature === 'battle' ? { ok: true, data: battle[command](input, { ownerAccountId: owner }) } : { ok: false };
   const garden = new GardenService({ db, companions: companionAdapter(companionsApi, db) }); const territories = new TerritoryService(services); garden.territories = territories;
   // A deterministic OS-fix fixture tests validation. This is not evidence of real GPS access.
   const fix = { source: 'os', coordinateSystem: 'wgs84', lat: 31.232, lng: 121.472, timestampMs: Date.now(), accuracyMeters: 12 };
-  registry.set('discovery', { location: { snapshot: () => ({ fix }) } }); registry.set('territories', territories);
+  services.provide('discovery', { location: { snapshot: () => ({ fix }) } }); services.provide('territories', territories);
   return { db, owner, pet, services, garden, territories, battle, fix, close() { battle.dispose(); db.close(); } };
 }
 async function finishBattle(f, session) {

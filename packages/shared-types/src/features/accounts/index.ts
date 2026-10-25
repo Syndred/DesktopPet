@@ -50,6 +50,9 @@ export interface SyncStatus {
   lastError: string | null; pending: number; conflicts: number; localChanged: boolean; running: boolean;
   unverifiedLocal?: number;
   privacyRedactions?: number;
+  observedCloudRevision?: number | null;
+  lastCloudCheckedAt?: string | null;
+  remoteChanged?: boolean;
 }
 export interface BackupPreview {
   previewId: string; checksum: string; currentChecksum?: string; cloudRevision?: number;

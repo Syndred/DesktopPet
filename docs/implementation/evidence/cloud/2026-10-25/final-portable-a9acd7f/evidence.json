@@ -1,0 +1,430 @@
+{
+  "at": "2026-10-25T08:32:22.339Z",
+  "sourceCommit": "a9acd7f6f1920c541d429fa26d1f054b1427cd95",
+  "executable": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\artifacts\\pc-cloud-upgrade-final-a9acd7f\\Lingjing-0.1.8-portable-x64.exe",
+  "executableSha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289",
+  "projectRef": "jbvrdmrkwpznbrvteive",
+  "actualPortable": true,
+  "simulatedProvider": false,
+  "physicalMachines": 1,
+  "checks": [
+    {
+      "name": "Actual portable A/B use packaged cloud configuration, independent encrypted sessions and a verified complete starting save",
+      "owner": "account:470a41d4-3cf7-4a7d-8b1e-32e276d2a719",
+      "pids": [
+        25884,
+        23744
+      ],
+      "runtime": [
+        {
+          "pid": 25884,
+          "electron": "44.9.3",
+          "node": "24.22.0",
+          "profileOverride": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\cloud-upgrade\\2026-10-25\\final-portable-JU5SCf\\A",
+          "userData": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\cloud-upgrade\\2026-10-25\\final-portable-JU5SCf\\A",
+          "resourcesPath": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\3LBAQALUKgWr1yvvvscHsCaqSpQ\\resources"
+        },
+        {
+          "pid": 23744,
+          "electron": "44.9.3",
+          "node": "24.22.0",
+          "profileOverride": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\cloud-upgrade\\2026-10-25\\final-portable-JU5SCf\\B",
+          "userData": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\cloud-upgrade\\2026-10-25\\final-portable-JU5SCf\\B",
+          "resourcesPath": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\3LBAQALUKgWr1yvvvscHsCaqSpQ\\resources"
+        }
+      ],
+      "source": "a9acd7f6f1920c541d429fa26d1f054b1427cd95",
+      "tunnels": 9,
+      "baselinePetIds": [
+        "pet-ccec2bdd-b680-4e97-9a68-dcfbeef1986d",
+        "pet-2b88f57b-5199-4d42-bebb-3836f5b69ec5",
+        "pet-9fa48de9-6ad9-4a15-a4da-4277b39a642c",
+        "pet-591e595a-e9fd-4211-873b-1d0afad88c0c",
+        "pet-33636811-2e92-4bb7-b4e6-0bbdfa800283",
+        "pet-68c19bde-6ac8-4a7a-b65b-75b91c360d33",
+        "pet-224b6054-d0ac-47ea-9572-670f926e27aa",
+        "pet-999990cc-28af-40d2-b7ac-22ab11f7d206",
+        "pet-588fb17b-4b2e-4568-81d4-ea4dcb018aea",
+        "pet-3eea8bca-f04f-4f64-9a04-603f36596890",
+        "pet-f2355af5-3004-4e72-b1d4-0f47dba601c0",
+        "pet-b85fd17e-3f75-4261-8fa3-58ea1983542c",
+        "pet-fcf9a401-a2e7-409b-a608-c36eec91588d",
+        "pet-448332c4-b8c4-4807-a90c-f627635f783e",
+        "pet-ded4e993-44c1-41a4-ae7e-2e275d3725c0"
+      ]
+    },
+    {
+      "name": "Normal React adoption preserves original pet IDs; automatic sync applies exact persona, memory and actual failed-user-message state on clean B",
+      "petId": "pet-97940c64-eb8e-43da-a6b8-09578a53011f",
+      "authoredContentChecksum": "74bb61a1cf96eaf91c2c0331b87d741ec8401546b9e4480fb0e25682b30de1bf",
+      "externalModelSuccess": false
+    },
+    {
+      "name": "Actual private Storage publication, exact requested calibration/actions and preserved import bytes/history hydrate automatically and render native pixels on both SFX clients",
+      "resourceId": "74f5d8ff-ffa6-4f40-8e41-39f80b33acf3",
+      "contentHash": "1cd0626ea29767476b371519ec4dc00fc43c528bfcd92627166275b937db2060",
+      "manifestSha256": "689c9fa8679aab400ca53d525ad4fd10e1a015aeed0351386872bd80683201a7",
+      "uploadAction": "1a65b88f-02ae-437a-8f22-dbb3f31b6e82",
+      "authorityAction": "resources:74f5d8ff-ffa6-4f40-8e41-39f80b33acf3:689c9fa8679aab400ca53d525ad4fd10e1a015aeed0351386872bd80683201a7",
+      "newImportIds": [
+        "b8d5ffa1-8b90-4d65-b104-5bd9a0af6cf3"
+      ],
+      "files": [
+        {
+          "key": "character.json",
+          "bytes": 9406,
+          "sha256": "e2e976b69f7ea9049527251e458517e048c05aa5ab4cd1e13ffa47c38821708e"
+        },
+        {
+          "key": "sprites.png",
+          "bytes": 1802491,
+          "sha256": "aa59df3af26d4f7faf9272193b7d1d35ed6d2f22ebb6b294a5a2853f0539f693"
+        }
+      ],
+      "preferences": {
+        "calibration": {
+          "desktop": {
+            "scale": 1.25,
+            "rotationDeg": 0,
+            "verticalOffset": 0,
+            "mirrorX": false,
+            "anchorX": 0.5,
+            "anchorY": 0.849609375,
+            "fps": 0
+          },
+          "battle": {
+            "scale": 1,
+            "rotationDeg": 0,
+            "verticalOffset": 0,
+            "mirrorX": true,
+            "anchorX": 0.5,
+            "anchorY": 0.849609375,
+            "fps": 0
+          }
+        },
+        "actions": {
+          "idle": "idle",
+          "blink": "blink",
+          "walk": "walk",
+          "wave": "idle",
+          "eat": "eat",
+          "attack_windup": "attack_windup",
+          "attack_release": "attack_release",
+          "attack": "attack",
+          "hit": "hit",
+          "skill": "skill",
+          "victory": "victory",
+          "sleep": "sleep"
+        }
+      },
+      "aFrame": {
+        "windowId": 2,
+        "visible": true,
+        "size": {
+          "width": 230,
+          "height": 280
+        },
+        "visiblePixels": 17166,
+        "coloredPixels": 13605,
+        "file": "portable-custom-A.png",
+        "sha256": "309dc41b79a3495e32c0c45694d177223c21ab8afae3906ca43a1017dfbf9715"
+      },
+      "bFrame": {
+        "windowId": 2,
+        "visible": true,
+        "size": {
+          "width": 230,
+          "height": 280
+        },
+        "visiblePixels": 17166,
+        "coloredPixels": 13605,
+        "file": "portable-custom-B.png",
+        "sha256": "309dc41b79a3495e32c0c45694d177223c21ab8afae3906ca43a1017dfbf9715"
+      }
+    },
+    {
+      "name": "Shared V3 screen completes natural authoritative cloud training and transfers one canonical growth/seed/report settlement without changing other pets",
+      "sessionId": "battle-c641f1b4-b505-4353-bcea-e553000b86ff",
+      "rounds": 12,
+      "reward": {
+        "actionId": "battle:battle-c641f1b4-b505-4353-bcea-e553000b86ff:account:470a41d4-3cf7-4a7d-8b1e-32e276d2a719",
+        "petId": "pet-97940c64-eb8e-43da-a6b8-09578a53011f",
+        "sessionId": "battle-c641f1b4-b505-4353-bcea-e553000b86ff",
+        "mode": "training",
+        "won": false,
+        "experience": 5,
+        "applied": true,
+        "duplicate": false,
+        "previousExperience": 0,
+        "previousLevel": 1,
+        "currentExperience": 5,
+        "currentLevel": 1,
+        "seeds": {
+          "source": "battle",
+          "receiptId": "battle-c641f1b4-b505-4353-bcea-e553000b86ff",
+          "itemId": "seed:berry",
+          "quantity": 2
+        }
+      },
+      "seedReceiptAction": "battle-seeds:training:battle-c641f1b4-b505-4353-bcea-e553000b86ff"
+    },
+    {
+      "name": "Actual portable report UI loads and replays the original settled rounds with no renderer error",
+      "reportId": "battle-c641f1b4-b505-4353-bcea-e553000b86ff",
+      "sessionId": "battle-c641f1b4-b505-4353-bcea-e553000b86ff",
+      "rounds": 12
+    },
+    {
+      "name": "A-only real TLS interruption retains the original automatic action/source through actual SFX restart, and clean B automatically applies it",
+      "actionId": "auto:ce8b2ab8-a9d0-4130-8dce-c9a639b0c0a4",
+      "sourceHash": "1bb7e2541843301a247349fa92cd24abded2b682fed9a158f66990b70243dc98",
+      "priorPid": 25884,
+      "newPid": 29772,
+      "device": "485d1986-9769-49ac-8927-89d1e97df714",
+      "refusedConnections": 2
+    },
+    {
+      "name": "Restarted custom native pixels remain valid and final own-pet cleanup is included in peer equality",
+      "restartedFrames": [
+        {
+          "windowId": 3,
+          "visible": true,
+          "size": {
+            "width": 230,
+            "height": 280
+          },
+          "visiblePixels": 17166,
+          "coloredPixels": 13605,
+          "file": "portable-restarted-A.png",
+          "sha256": "309dc41b79a3495e32c0c45694d177223c21ab8afae3906ca43a1017dfbf9715"
+        },
+        {
+          "windowId": 2,
+          "visible": true,
+          "size": {
+            "width": 230,
+            "height": 280
+          },
+          "visiblePixels": 17166,
+          "coloredPixels": 13605,
+          "file": "portable-restarted-B.png",
+          "sha256": "309dc41b79a3495e32c0c45694d177223c21ab8afae3906ca43a1017dfbf9715"
+        }
+      ],
+      "onlyThisRunsPetHidden": "pet-97940c64-eb8e-43da-a6b8-09578a53011f"
+    },
+    {
+      "name": "Independent HTTPS receipt plus query-only SQLite prove final domain, actual resource bytes/history and exact preference equality; original v1 local export excludes credentials",
+      "owner": "account:470a41d4-3cf7-4a7d-8b1e-32e276d2a719",
+      "petId": "pet-97940c64-eb8e-43da-a6b8-09578a53011f",
+      "resourceId": "74f5d8ff-ffa6-4f40-8e41-39f80b33acf3",
+      "revision": 103,
+      "checksum": "324bd218a312baecc38aebcb3e4c9fdfa72fd08893c416c83d0bd945d0b65e5c",
+      "originalActionId": "auto:ce8b2ab8-a9d0-4130-8dce-c9a639b0c0a4",
+      "receiptRevision": 102,
+      "receiptChecksum": "e8fc5396349f4ff7905ffdd5254191e0579d21eb8fa10ef806b4d67b266c3924",
+      "domainChecksum": "9753a69ecd73386d03f83411b5245813c53fbbf8c663ed2f5872f7e84dc0105f",
+      "peerEquality": true,
+      "cloudSqlUnits": [
+        {
+          "label": "A",
+          "tables": [
+            "settings",
+            "companion_pets",
+            "companion_actions",
+            "companion_accounts",
+            "companion_interactions",
+            "companion_legacy_archive",
+            "companion_capture_receipts",
+            "garden_items",
+            "garden_plots",
+            "garden_events",
+            "garden_outbox",
+            "garden_actions",
+            "garden_accounts",
+            "garden_garrisons",
+            "garden_reward_receipts",
+            "garden_territory_attempts",
+            "garden_territory_challenges",
+            "conversation_memories",
+            "conversation_messages",
+            "conversation_profiles",
+            "conversation_connections",
+            "conversation_preferences",
+            "battle_sessions",
+            "battle_action_receipts",
+            "battle_reports_v2",
+            "battle_reward_receipts"
+          ]
+        },
+        {
+          "label": "B",
+          "tables": [
+            "settings",
+            "companion_pets",
+            "companion_actions",
+            "companion_accounts",
+            "companion_interactions",
+            "companion_legacy_archive",
+            "companion_capture_receipts",
+            "garden_items",
+            "garden_plots",
+            "garden_events",
+            "garden_outbox",
+            "garden_actions",
+            "garden_accounts",
+            "garden_garrisons",
+            "garden_reward_receipts",
+            "garden_territory_attempts",
+            "garden_territory_challenges",
+            "conversation_memories",
+            "conversation_messages",
+            "conversation_profiles",
+            "conversation_connections",
+            "conversation_preferences",
+            "battle_sessions",
+            "battle_action_receipts",
+            "battle_reports_v2",
+            "battle_reward_receipts"
+          ]
+        }
+      ],
+      "encryptedSessionResumed": true,
+      "resourceBytesAndHistoryPreserved": true,
+      "resourceCloudVersion": 2,
+      "resourceLocalBackupVersion": 1,
+      "preferenceCloudRevision": 3,
+      "readerDevice": "383d8c99-645f-475f-817f-6439a6163e8f"
+    }
+  ],
+  "errors": [],
+  "passed": true,
+  "scope": "Two actual portable SFX processes, public product IPC/React, real HTTPS/Storage and read-only SQLite. Main inspector only observes owned processes and selects an actual local descriptor in the native chooser; OS dialog UI itself is not claimed. Model error uses a closed loopback socket; no fabricated assistant reply.",
+  "verification": {
+    "gitCommit": "d070d160315efea0de89fb6a8e1c93e65cf7b25b",
+    "scriptSha256": "f86c5f61abdac7361a8a0a6a6ca7de16ac3543e7be956c107235ce129d7fec1c",
+    "driverSha256": "ba495ffbaf8e5c7b7868c57a2176b5ab8b239b5a311941f88c7084e1c067225e"
+  },
+  "selectionActionId": "84dc095f-eced-4c1a-9f6b-9e7ca0b9d9c4",
+  "selectionAttempts": [
+    {
+      "attempt": 1,
+      "actionId": "84dc095f-eced-4c1a-9f6b-9e7ca0b9d9c4",
+      "ok": true,
+      "before": {
+        "configured": true,
+        "cloudRevision": 93,
+        "lastVerifiedAt": "2026-10-25T08:35:29.754Z",
+        "lastError": null,
+        "pending": 0,
+        "conflicts": 0,
+        "localChanged": false,
+        "unverifiedLocal": 0,
+        "privacyRedactions": 0,
+        "running": false,
+        "observedCloudRevision": 92,
+        "lastCloudCheckedAt": "2026-10-25T08:35:05.518Z",
+        "remoteChanged": false
+      },
+      "after": {
+        "configured": true,
+        "cloudRevision": 94,
+        "lastVerifiedAt": "2026-10-25T08:35:44.647Z",
+        "lastError": null,
+        "pending": 0,
+        "conflicts": 0,
+        "localChanged": true,
+        "unverifiedLocal": 0,
+        "privacyRedactions": 0,
+        "running": false,
+        "observedCloudRevision": 93,
+        "lastCloudCheckedAt": "2026-10-25T08:35:35.003Z",
+        "remoteChanged": false
+      },
+      "intentStatus": "verified"
+    }
+  ],
+  "final": {
+    "owner": "account:470a41d4-3cf7-4a7d-8b1e-32e276d2a719",
+    "petId": "pet-97940c64-eb8e-43da-a6b8-09578a53011f",
+    "resourceId": "74f5d8ff-ffa6-4f40-8e41-39f80b33acf3",
+    "revision": 103,
+    "checksum": "324bd218a312baecc38aebcb3e4c9fdfa72fd08893c416c83d0bd945d0b65e5c",
+    "originalActionId": "auto:ce8b2ab8-a9d0-4130-8dce-c9a639b0c0a4",
+    "receiptRevision": 102,
+    "receiptChecksum": "e8fc5396349f4ff7905ffdd5254191e0579d21eb8fa10ef806b4d67b266c3924",
+    "domainChecksum": "9753a69ecd73386d03f83411b5245813c53fbbf8c663ed2f5872f7e84dc0105f",
+    "peerEquality": true,
+    "cloudSqlUnits": [
+      {
+        "label": "A",
+        "tables": [
+          "settings",
+          "companion_pets",
+          "companion_actions",
+          "companion_accounts",
+          "companion_interactions",
+          "companion_legacy_archive",
+          "companion_capture_receipts",
+          "garden_items",
+          "garden_plots",
+          "garden_events",
+          "garden_outbox",
+          "garden_actions",
+          "garden_accounts",
+          "garden_garrisons",
+          "garden_reward_receipts",
+          "garden_territory_attempts",
+          "garden_territory_challenges",
+          "conversation_memories",
+          "conversation_messages",
+          "conversation_profiles",
+          "conversation_connections",
+          "conversation_preferences",
+          "battle_sessions",
+          "battle_action_receipts",
+          "battle_reports_v2",
+          "battle_reward_receipts"
+        ]
+      },
+      {
+        "label": "B",
+        "tables": [
+          "settings",
+          "companion_pets",
+          "companion_actions",
+          "companion_accounts",
+          "companion_interactions",
+          "companion_legacy_archive",
+          "companion_capture_receipts",
+          "garden_items",
+          "garden_plots",
+          "garden_events",
+          "garden_outbox",
+          "garden_actions",
+          "garden_accounts",
+          "garden_garrisons",
+          "garden_reward_receipts",
+          "garden_territory_attempts",
+          "garden_territory_challenges",
+          "conversation_memories",
+          "conversation_messages",
+          "conversation_profiles",
+          "conversation_connections",
+          "conversation_preferences",
+          "battle_sessions",
+          "battle_action_receipts",
+          "battle_reports_v2",
+          "battle_reward_receipts"
+        ]
+      }
+    ],
+    "encryptedSessionResumed": true,
+    "resourceBytesAndHistoryPreserved": true,
+    "resourceCloudVersion": 2,
+    "resourceLocalBackupVersion": 1,
+    "preferenceCloudRevision": 3,
+    "readerDevice": "383d8c99-645f-475f-817f-6439a6163e8f"
+  },
+  "completedAt": "2026-10-25T08:43:39.933Z"
+}

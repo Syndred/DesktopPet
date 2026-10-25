@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 2,
+  "version": "final-2e13487",
+  "createdAt": "2026-10-25T06:06:18.698Z",
+  "kind": "windows-portable",
+  "executable": {
+    "file": "Lingjing-0.1.8-portable-x64.exe",
+    "bytes": 169183111,
+    "sha256": "90dc58a18487825ec86b943a11c1deeb927cd97ff4a75e280b673487dc583070"
+  },
+  "authenticode": {
+    "thumbprint": null,
+    "subject": null,
+    "validUntil": null,
+    "signed": false,
+    "kind": "Authenticode",
+    "status": "NotSigned"
+  },
+  "source": {
+    "schemaVersion": 2,
+    "builtAt": "2026-10-25T06:01:05.167Z",
+    "sourceCommit": "2e13487f73396ebad981ff703b4377f403e214e0",
+    "sourceTree": "571c3e11ae9819b03e4f5279f0370fb54b5058a9",
+    "sourceDirtyFiles": [],
+    "codeFingerprint": "57d711213cfb1129251dc1d7d765542b72ac283dfb7743bd20c6fd338fbb8b31",
+    "canonicalSourceFingerprint": "0c74ff057446481e6af0155094a734b1eadb33878dc18edfca9fe885f3c79093",
+    "canonicalPolicy": "Repository-relative paths; CRLF normalized to LF for source text only. Packaged/compiled bytes remain exact.",
+    "compiledFingerprint": "c8ac332e27cbdea946b1bcac72fde298e1437e81a7e6973694a76200408afdac",
+    "codeFiles": 300,
+    "compiledFiles": 86,
+    "toolchain": {
+      "node": "24.21.0",
+      "electron": "44.9.3",
+      "sqlite": "13.0.3",
+      "vite": "7.3.7",
+      "typescript": "5.9.3",
+      "platform": "win32",
+      "arch": "x64"
+    },
+    "entrypoints": {
+      "main": "main/index.cjs",
+      "app": "ui/index.html",
+      "desktop": "ui/desktop.html",
+      "preload": "preload/index.cjs"
+    },
+    "publicCloud": {
+      "projectRef": "jbvrdmrkwpznbrvteive",
+      "url": "https://jbvrdmrkwpznbrvteive.supabase.co",
+      "sha256": "c1625c63f1d959f92b3392b47f2fb492452803eedf1c0d1ebc68a1168ab64eda",
+      "resourcePath": "lingjing-cloud-public.json"
+    },
+    "packageName": "lingjing-desktop",
+    "runtimeClosure": {
+      "manifest": "runtime-closure.json",
+      "files": 108,
+      "edges": 187,
+      "sha256": "f452bc663bac30f0d7eb85a8385b095f02c17c3f8bf49536ddb51752468d4957"
+    }
+  },
+  "publicCloud": {
+    "projectRef": "jbvrdmrkwpznbrvteive",
+    "sha256": "c1625c63f1d959f92b3392b47f2fb492452803eedf1c0d1ebc68a1168ab64eda",
+    "path": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\artifacts\\pc-cloud-upgrade\\win-unpacked\\resources\\lingjing-cloud-public.json"
+  },
+  "runtimeClosure": {
+    "files": 108,
+    "edges": 187,
+    "sha256": "f452bc663bac30f0d7eb85a8385b095f02c17c3f8bf49536ddb51752468d4957",
+    "jsAndMjs": [
+      "apps/pc-app/runtime/features/companions/cloud-domain.mjs",
+      "apps/pc-app/runtime/features/companions/growth.mjs",
+      "apps/pc-app/runtime/features/companions/instance.mjs",
+      "apps/pc-app/runtime/features/resources/preferences.mjs"
+    ]
+  },
+  "audit": {
+    "file": "package-audit.json",
+    "sha256": "6807449e06944102df24bfd4c0d8e684da6c1884f4c33ce8aedbca27ed2431d5"
+  },
+  "smoke": {
+    "file": "portable-smoke.json",
+    "sha256": "f432e5dc3c554ab37457fa8885c838f4502627bd936f0c67f80e983f640b8bc0",
+    "checks": 6
+  },
+  "dataPolicy": "Binary rollback only. Preserve user profiles, databases, resources, histories and cloud migrations; cloud schema changes remain forward-only."
+}

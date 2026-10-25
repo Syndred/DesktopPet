@@ -1,0 +1,172 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-25T07:14:39.355Z",
+  "kind": "read-only forensic diagnosis; no product change, test run, network request or replay",
+  "source": {
+    "artifactDirectory": "C:/Users/Administrator/Desktop/project/DesktopPet/artifacts/cloud-upgrade/2026-10-25/final-portable-mQoNVl",
+    "evidenceFile": "C:\\Users\\Administrator\\Desktop\\project\\DesktopPet\\artifacts\\cloud-upgrade\\2026-10-25\\final-portable-mQoNVl\\evidence.json",
+    "sourceCommit": "7051ce308a55f1a8b426f0290eb79162ce94a634",
+    "executableSha256": "bd6a5cbd02b0583bd0543afb37ebdbed261993d8ebbcb57130020e90b8dcd55d",
+    "helperCommit": "43705b469d58ef8604bc58eb3e69f76ae14c21ff",
+    "helperScriptSha256": "444a9c642b99bb084f34dca3f75fba40a7ee8e6a12c3d0587d45c272ee6c4d6d",
+    "driverSha256": "1ff66bf80f6864914ee725bf71f688dda6f77a865b192e765f90a052eac2cd4b",
+    "helperHashesMatchedGit": true,
+    "owner": "account:470a41d4-3cf7-4a7d-8b1e-32e276d2a719",
+    "startedAt": "2026-10-25T07:01:18.691Z",
+    "completedAt": "2026-10-25T07:04:00.728Z"
+  },
+  "observedPublicError": "SELECTION_FAILED",
+  "guard": {
+    "conclusion": "pre-intent SYNC_BUSY transient rejection; confirmed by root and consistent with snapshot/source/absence of selection intent",
+    "confirmedByCoordinator": true,
+    "file": "apps/pc-app/runtime/features/companions/cloud-authority.cjs",
+    "line": 123,
+    "condition": "accounts.sync.running.has(owner)",
+    "errorCode": "SYNC_BUSY",
+    "beforeIntentInsert": true,
+    "intentInsertLine": 63,
+    "wrappedBy": "ConversationService.select catches the companion error and returns SELECTION_FAILED",
+    "accountsRunningCovers": "automatic full-save reconciliation/read/hydration as well as flush; this flag does not by itself prove an upload was in flight",
+    "originalUnderlyingErrorPresentInPreservedEvidence": false
+  },
+  "originalSelectionAction": {
+    "literalUuid": null,
+    "providedByHelper": "inline randomUUID() in scripts/acceptance/cloud-integrated-portable.mjs at helper43705b4 line81",
+    "savedInEvidence": false,
+    "persistedInAccountActions": false,
+    "persistedInCompanionActions": false,
+    "recoverableFromPreservedArtifacts": false,
+    "knownAdoptionActionId": "03a0f482-b428-46dc-ace6-f25e7dee6c84",
+    "knownAdoptionActionMustNotBeUsedAsSelectionId": true,
+    "targetPetId": "pet-fcf9a401-a2e7-409b-a608-c36eec91588d"
+  },
+  "failureStatus": [
+    {
+      "device": "A",
+      "data": {
+        "configured": true,
+        "cloudRevision": 70,
+        "lastVerifiedAt": "2026-10-25T07:03:51.171Z",
+        "lastError": null,
+        "pending": 0,
+        "conflicts": 0,
+        "localChanged": true,
+        "unverifiedLocal": 0,
+        "privacyRedactions": 0,
+        "running": true,
+        "observedCloudRevision": 70,
+        "lastCloudCheckedAt": "2026-10-25T07:03:31.695Z",
+        "remoteChanged": false
+      }
+    },
+    {
+      "device": "B",
+      "data": {
+        "configured": true,
+        "cloudRevision": 70,
+        "lastVerifiedAt": "2026-10-25T07:03:42.440Z",
+        "lastError": null,
+        "pending": 0,
+        "conflicts": 0,
+        "localChanged": false,
+        "unverifiedLocal": 0,
+        "privacyRedactions": 0,
+        "running": true,
+        "observedCloudRevision": 71,
+        "lastCloudCheckedAt": "2026-10-25T07:03:59.314Z",
+        "remoteChanged": true
+      }
+    }
+  ],
+  "readbacks": {
+    "A": {
+      "queryOnly": 1,
+      "accountState": [
+        {
+          "cloud_revision": 70,
+          "last_verified_at": "2026-10-25T07:03:51.171Z",
+          "last_error": null
+        }
+      ],
+      "companionHead": [
+        {
+          "cloudRevision": 71,
+          "verifiedAt": "2026-10-25T07:03:59.534Z"
+        }
+      ],
+      "companionIntentsSinceStart": [
+        {
+          "action_id": "companions:03a0f482-b428-46dc-ace6-f25e7dee6c84",
+          "created_at": "2026-10-25T07:03:46.153Z",
+          "command": "adopt",
+          "status": "verified",
+          "inputActionId": "03a0f482-b428-46dc-ace6-f25e7dee6c84",
+          "lastError": null,
+          "verifiedAt": "2026-10-25T07:03:59.534Z"
+        }
+      ],
+      "selectionIntentCount": 0,
+      "selectionReceiptCount": 0,
+      "selections": [
+        {
+          "revision": 61,
+          "selections_json": "{\"chatPetId\":\"pet-b85fd17e-3f75-4261-8fa3-58ea1983542c\",\"battlePetId\":\"pet-b85fd17e-3f75-4261-8fa3-58ea1983542c\",\"guardPetId\":\"pet-3eea8bca-f04f-4f64-9a04-603f36596890\"}"
+        }
+      ],
+      "chatPreference": [
+        {
+          "selected_pet_id": "pet-b85fd17e-3f75-4261-8fa3-58ea1983542c"
+        }
+      ]
+    },
+    "B": {
+      "queryOnly": 1,
+      "accountState": [
+        {
+          "cloud_revision": 70,
+          "last_verified_at": "2026-10-25T07:03:42.440Z",
+          "last_error": null
+        }
+      ],
+      "companionHead": [
+        {
+          "cloudRevision": 70,
+          "verifiedAt": "2026-10-25T07:03:42.446Z"
+        }
+      ],
+      "companionIntentsSinceStart": [],
+      "selectionIntentCount": 0,
+      "selectionReceiptCount": 0,
+      "selections": [
+        {
+          "revision": 60,
+          "selections_json": "{\"chatPetId\":\"pet-b85fd17e-3f75-4261-8fa3-58ea1983542c\",\"battlePetId\":\"pet-b85fd17e-3f75-4261-8fa3-58ea1983542c\",\"guardPetId\":\"pet-3eea8bca-f04f-4f64-9a04-603f36596890\"}"
+        }
+      ],
+      "chatPreference": [
+        {
+          "selected_pet_id": "pet-b85fd17e-3f75-4261-8fa3-58ea1983542c"
+        }
+      ]
+    }
+  },
+  "retry": {
+    "performed": false,
+    "productChangeRequiredForThisDiagnosis": false,
+    "ifOriginalUuidStillAvailable": "same owner + identical petId/actionId after sync idle; pre-intent rejection has no conflicting stored input",
+    "currentArtifactLimitation": "inline UUID was not retained, so its literal value cannot be reconstructed or invented",
+    "coordinatorPlan": "helper retains one UUID, waits A/B clean, at most3 same-ID retries only when SELECTION_FAILED + no intent + busy sync + unchanged owner/selection; persistent refusal remains failure"
+  },
+  "preservation": {
+    "queryTarget": "separate local copies opened readOnly with PRAGMA query_only=ON",
+    "copyDirectory": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-conversations\\DesktopPet\\artifacts\\conversations\\portable-readonly-yVZ1RN",
+    "originalFilesUnchanged": true,
+    "originalFileHashes": {
+      "evidence.json": "3c56c71c677943bab939a62f7a89a3647f5c48b7d6973c9f094e9b9786ebfb37",
+      "A/lingjing.sqlite": "21fd0de04c885f0f284dd47a7e1709e1d3d4f5316fc972d3506145914ebddefc",
+      "A/lingjing.sqlite-wal": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "A/lingjing.sqlite-shm": "fd4c9fda9cd3f9ae7c962b0ddf37232294d55580e1aa165aa06129b8549389eb",
+      "B/lingjing.sqlite": "d584f5577f22469e49bd8cc8532785a161414aa387cfd05f07bdd64254a01f7c"
+    }
+  }
+}

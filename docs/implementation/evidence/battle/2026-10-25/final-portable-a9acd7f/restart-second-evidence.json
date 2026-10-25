@@ -1,0 +1,133 @@
+{
+  "at": "2026-10-25T08:43:50.535Z",
+  "scope": "Actual same-SFX restart after completed duel; encrypted sessions, original device/action IDs, raw business history and clean authority checkpoints",
+  "originalRunId": "b5253a3c-1d11-4135-9a95-295f21025059",
+  "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+  "sessionId": "online-d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+  "sourceCommit": "a9acd7f6f1920c541d429fa26d1f054b1427cd95",
+  "executable": {
+    "path": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\artifacts\\pc-cloud-upgrade-final-a9acd7f\\Lingjing-0.1.8-portable-x64.exe",
+    "size": 169196329,
+    "sha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289"
+  },
+  "helperSha256": "048d589240169ebeaadb150d915d6bd493d4e687ec3e4a3bcf1069ec21660470",
+  "driver": {
+    "path": "C:/Users/Administrator/Desktop/project/DesktopPet/scripts/acceptance/portable-session.mjs",
+    "sha256": "ba495ffbaf8e5c7b7868c57a2176b5ab8b239b5a311941f88c7084e1c067225e"
+  },
+  "owners": [
+    {
+      "label": "A",
+      "owner": "account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+      "deviceId": "c32b659e-df8b-4008-9669-2a440f3aba8a",
+      "originalPid": 19488,
+      "restartedPid": 16312,
+      "reportId": "online-d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+      "rewardActionId": "battle:d9f43966-a27c-476a-80f8-0ee7927a3ab7:account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+      "status": {
+        "configured": true,
+        "cloudRevision": 9,
+        "lastVerifiedAt": "2026-10-25T08:44:32.878Z",
+        "lastError": null,
+        "pending": 0,
+        "conflicts": 0,
+        "localChanged": false,
+        "unverifiedLocal": 0,
+        "privacyRedactions": 0,
+        "running": false,
+        "observedCloudRevision": 9,
+        "lastCloudCheckedAt": "2026-10-25T08:44:32.457Z",
+        "remoteChanged": false
+      },
+      "checkpoint": {
+        "cloud_revision": 9,
+        "last_checksum": "6c41d531f2499efc34116665d2d99b516c7014eeee29c579a6ac3a34f65a1c4d"
+      },
+      "originalProtocolActionIds": [
+        "74fe2ccf-0474-4fd8-9bea-686ba72d3fc6",
+        "956305e0-ac3c-482b-a018-a2a627a3a135",
+        "972454c0-cde2-4d84-8414-f5c2970cd879",
+        "a38d9d51-5dc5-4c51-9607-1b7d93cd8747",
+        "a6cec328-bcb6-417b-bf31-0b4f90847859",
+        "ba0b261b-dcac-42ef-b437-42e7ef042e1d",
+        "c230baa5-485f-4665-ae36-af9448bd5ffe",
+        "ca9a6f4d-8025-4dc8-bf0d-cf050ddd81ca",
+        "cloud:invite:9dc9f30b-a638-4746-80d8-33ff90419e24",
+        "cloud:join:5d00626f-c1dc-4f44-81e2-82a857090eeb",
+        "d3eafda7-3820-410f-b99a-c9f34b43a374",
+        "dda73f1e-9f98-4ba1-affd-d35f814fa9fa",
+        "invite:401868b4-5783-4236-868c-a0252579b308",
+        "room-cache:online-d9f43966-a27c-476a-80f8-0ee7927a3ab7"
+      ],
+      "rawBusinessAndJournalUnchanged": true,
+      "nativeFrame": {
+        "visible": true,
+        "size": {
+          "width": 1280,
+          "height": 844
+        },
+        "visiblePixels": 1080320,
+        "coloredPixels": 111235,
+        "file": "restart-r2-report-A.png",
+        "sha256": "61b421494ea10ea509c82f23b756fdacc252fefbbc86968ca744983ddc96e7dd"
+      }
+    },
+    {
+      "label": "B",
+      "owner": "account:9e230794-470b-45be-9a18-a2564c88ba35",
+      "deviceId": "6da20636-85c0-4228-9196-016706f4d2d7",
+      "originalPid": 24924,
+      "restartedPid": 11484,
+      "reportId": "online-d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+      "rewardActionId": "battle:d9f43966-a27c-476a-80f8-0ee7927a3ab7:account:9e230794-470b-45be-9a18-a2564c88ba35",
+      "status": {
+        "configured": true,
+        "cloudRevision": 7,
+        "lastVerifiedAt": "2026-10-25T08:45:28.615Z",
+        "lastError": null,
+        "pending": 0,
+        "conflicts": 0,
+        "localChanged": false,
+        "unverifiedLocal": 0,
+        "privacyRedactions": 0,
+        "running": false,
+        "observedCloudRevision": 7,
+        "lastCloudCheckedAt": "2026-10-25T08:45:25.254Z",
+        "remoteChanged": false
+      },
+      "checkpoint": {
+        "cloud_revision": 7,
+        "last_checksum": "0676ef7a4ee7866b5ec831ef76814f73fc4674d24dcf7f6f4bec262c3f8c39b1"
+      },
+      "originalProtocolActionIds": [
+        "04032e90-6b44-4fcb-83cf-2b5b338e75f9",
+        "1dfdf515-eecd-4152-966b-d40584303d6a",
+        "2f9cc6fa-b224-43d1-8802-bc3707d2a0b4",
+        "49393477-685d-4577-9120-d125b5e64db4",
+        "8ca388f5-a06e-4e88-bbed-669015716857",
+        "92d19e49-ff02-4975-a703-17e6fac9f141",
+        "937dc20e-0a37-40b6-a87c-37cf432525ba",
+        "accept-confirm:401868b4-5783-4236-868c-a0252579b308",
+        "accept:401868b4-5783-4236-868c-a0252579b308",
+        "bab7804a-4bd7-4803-bfab-57b4a09906d5",
+        "d47c03fc-6891-4ca9-9e3f-b0e55e886b3f",
+        "f49ab0af-25d3-44e4-ac7c-fd1299988326",
+        "room-cache:online-d9f43966-a27c-476a-80f8-0ee7927a3ab7"
+      ],
+      "rawBusinessAndJournalUnchanged": true,
+      "nativeFrame": {
+        "visible": true,
+        "size": {
+          "width": 1280,
+          "height": 844
+        },
+        "visiblePixels": 1080320,
+        "coloredPixels": 134255,
+        "file": "restart-r2-report-B.png",
+        "sha256": "a0899849c72ce7ddbf4c28404d942f68c51137f2ca1b9c90664da7cff6bbb26c"
+      }
+    }
+  ],
+  "passed": true,
+  "completedAt": "2026-10-25T08:45:39.863Z"
+}

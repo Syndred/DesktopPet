@@ -1,0 +1,48 @@
+{
+  "at": "2026-10-25 05:58:31 UTC",
+  "reason": "Final lint identified a never-reassigned local username binding; change let to const only. Auth/password/mapping/rate-limit/session behavior unchanged.",
+  "source": {
+    "function": "lingjing-auth",
+    "entrypoint": "infra/supabase/functions/lingjing-auth/index.ts",
+    "sourceCommit": "1c8cc0b43d4b00be7e6e58b9f26ce03f18a1feab",
+    "sourceSha256": "cf4a4117b1180f78b4c88eff17f34de4bf26f62cdfdfd7a82bf6b22f656b3c98",
+    "files": [
+      {
+        "name": "infra/supabase/functions/_shared/lingjing-auth.ts",
+        "bytes": 7618
+      },
+      {
+        "name": "infra/supabase/functions/_shared/lingjing-json.ts",
+        "bytes": 967
+      },
+      {
+        "name": "infra/supabase/functions/lingjing-auth/index.ts",
+        "bytes": 8121
+      }
+    ],
+    "external": [
+      "npm:@supabase/supabase-js@2.98.0"
+    ],
+    "warnings": []
+  },
+  "actualDeployment": {
+    "id": "69ecdbd1-ee0f-45e8-9cc7-d69fb224d1c3",
+    "slug": "lingjing-auth",
+    "name": "lingjing-auth",
+    "status": "ACTIVE",
+    "version": 3,
+    "created_at": 1792895361305,
+    "updated_at": 1792907904251,
+    "verify_jwt": false,
+    "import_map": false,
+    "entrypoint_path": "file:///tmp/user_fn_jbvrdmrkwpznbrvteive_69ecdbd1-ee0f-45e8-9cc7-d69fb224d1c3_3/source/infra/supabase/functions/lingjing-auth/index.ts",
+    "ezbr_sha256": "fdfed66567b2b8bd1876856a9fd68b8f94282256a562495ec49e1bee9887b3ec"
+  },
+  "pendingFinalPortableNormalAuthVerification": true,
+  "actualPublicBoundary": {
+    "at": "2026-10-25T05:58:32.507Z",
+    "checks": 14,
+    "passed": true,
+    "evidence": "docs/implementation/evidence/cloud/2026-10-25/public-boundary-release-http.json"
+  }
+}

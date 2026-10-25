@@ -1,0 +1,281 @@
+{
+  "runId": "33218d1e-488f-486c-ad56-502cb458a9b0",
+  "at": "2026-10-25T05:08:22.933Z",
+  "provenance": "real-HTTPS-and-Realtime-acceptance",
+  "scope": "resume immutable completed cloud duel: report/reward restart, natural training takeover and device-only revoke",
+  "projectRef": "jbvrdmrkwpznbrvteive",
+  "origin": "https://jbvrdmrkwpznbrvteive.supabase.co",
+  "machineCount": 1,
+  "physicalDevices": 1,
+  "concurrentDuelPlayers": 2,
+  "independentProfiles": 3,
+  "statement": "Continue the same designated owners and completed cloud room through fresh isolated native profiles. Earlier duel phases retain their original failed-run proof and source commit; this run independently rereads the actual terminal room/rewards, then checks the remaining report/training/revocation flow. One Windows host, not two physical devices.",
+  "sourceCommit": "746ca6662d7c31c9bcafa1ce9d17198250db9fa2",
+  "sourceDirty": "",
+  "build": {
+    "schemaVersion": 2,
+    "builtAt": "2026-10-25T05:08:20.703Z",
+    "sourceCommit": "746ca6662d7c31c9bcafa1ce9d17198250db9fa2",
+    "sourceTree": "bea417bcafe1c2eda9a69b1159a48f4994198542",
+    "sourceDirtyFiles": [],
+    "codeFingerprint": "42f4bfa9f7be9ea272b8772f494b99e72950e7b8eaf202cd1d49eff1ccd7d79a",
+    "canonicalSourceFingerprint": "22d16764c14b1273fe9cacbb2ed224e5ce180fcbd43a68ee6035c3579bc101f9",
+    "canonicalPolicy": "Repository-relative paths; CRLF normalized to LF for source text only. Packaged/compiled bytes remain exact.",
+    "compiledFingerprint": "2b13399130cbdd807a668a9c03b5a3da71f7e853ed312c9bf382764d6f341657",
+    "codeFiles": 299,
+    "compiledFiles": 87,
+    "toolchain": {
+      "node": "24.21.0",
+      "electron": "44.9.3",
+      "sqlite": "13.0.3",
+      "vite": "7.3.7",
+      "typescript": "5.9.3",
+      "platform": "win32",
+      "arch": "x64"
+    },
+    "entrypoints": {
+      "main": "main/index.cjs",
+      "app": "ui/index.html",
+      "desktop": "ui/desktop.html",
+      "preload": "preload/index.cjs"
+    },
+    "publicCloud": {
+      "projectRef": "jbvrdmrkwpznbrvteive",
+      "url": "https://jbvrdmrkwpznbrvteive.supabase.co",
+      "sha256": "c1625c63f1d959f92b3392b47f2fb492452803eedf1c0d1ebc68a1168ab64eda",
+      "resourcePath": "lingjing-cloud-public.json"
+    },
+    "packageName": "lingjing-desktop",
+    "runtimeClosure": {
+      "manifest": "runtime-closure.json",
+      "files": 106,
+      "edges": 181,
+      "sha256": "b56c25dbfb2ef15790be7ed6cb805e6fa135d3564be290b59853525e248d27fa"
+    }
+  },
+  "steps": [
+    {
+      "at": "2026-10-25T05:08:57.634Z",
+      "name": "fresh actual native clients reread the original immutable completed cloud duel and both pet-bound applied rewards",
+      "roomId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+      "rounds": 10,
+      "a": {
+        "origin": "https://jbvrdmrkwpznbrvteive.supabase.co",
+        "authKind": "supabase",
+        "actor": {
+          "authority": "live",
+          "authUserId": "091c28e8-e7e1-43e8-a79f-b9b132fd9346",
+          "ownerAccountId": "account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+          "deviceId": "904bc48f-0343-4ea4-a915-4599a95d39e9",
+          "sessionId": "feb7bfbb-f4c0-4db5-a4a9-095b06021987"
+        },
+        "socket": "open",
+        "channel": "joined",
+        "manualToken": false
+      },
+      "b": {
+        "origin": "https://jbvrdmrkwpznbrvteive.supabase.co",
+        "authKind": "supabase",
+        "actor": {
+          "authority": "live",
+          "authUserId": "ef7da283-1227-4523-b28c-297b9e2c5632",
+          "ownerAccountId": "account:9e230794-470b-45be-9a18-a2564c88ba35",
+          "deviceId": "27f3e8e0-eef9-49d1-b3f1-57970ba890a8",
+          "sessionId": "78eae89b-de21-4385-94e6-71ba5bc42844"
+        },
+        "socket": "open",
+        "channel": "joined",
+        "manualToken": false
+      },
+      "priorDuelRunId": "4d2d7db8-596d-4397-844b-243e8600f14e"
+    },
+    {
+      "at": "2026-10-25T05:09:40.994Z",
+      "name": "two completed cloud reports survive native restart; repeated settlement leaves both inventories/growth unchanged",
+      "rounds": 10,
+      "leftReward": {
+        "actionId": "battle:355f4104-85cf-4ca4-8e27-321f0638e376:account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+        "petId": "pet-2d660416-db18-44a1-8392-74f235484151",
+        "sessionId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+        "mode": "friend",
+        "won": true,
+        "experience": 20,
+        "applied": true,
+        "duplicate": false,
+        "previousExperience": 0,
+        "previousLevel": 1,
+        "currentExperience": 20,
+        "currentLevel": 1,
+        "seeds": {
+          "source": "battle",
+          "receiptId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+          "itemId": "seed:tomato",
+          "quantity": 2
+        }
+      },
+      "rightReward": {
+        "actionId": "battle:355f4104-85cf-4ca4-8e27-321f0638e376:account:9e230794-470b-45be-9a18-a2564c88ba35",
+        "petId": "pet-7374c520-8730-45ca-a419-227e60a2fa81",
+        "sessionId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+        "mode": "friend",
+        "won": false,
+        "experience": 5,
+        "applied": true,
+        "duplicate": false,
+        "previousExperience": 0,
+        "previousLevel": 1,
+        "currentExperience": 5,
+        "currentLevel": 1,
+        "seeds": {
+          "source": "battle",
+          "receiptId": "355f4104-85cf-4ca4-8e27-321f0638e376",
+          "itemId": "seed:tomato",
+          "quantity": 2
+        }
+      }
+    },
+    {
+      "at": "2026-10-25T05:11:57.590Z",
+      "name": "second same-owner native client naturally resumed cloud training through actual UI moves; both share canonical growth/inventory/report",
+      "sessionId": "battle-8a87db17-8b9f-40c2-b198-b85780b86e4b",
+      "rounds": 20,
+      "reward": {
+        "actionId": "battle:battle-8a87db17-8b9f-40c2-b198-b85780b86e4b:account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+        "petId": "pet-2d660416-db18-44a1-8392-74f235484151",
+        "sessionId": "battle-8a87db17-8b9f-40c2-b198-b85780b86e4b",
+        "mode": "training",
+        "won": false,
+        "experience": 5,
+        "applied": true,
+        "duplicate": false,
+        "previousExperience": 20,
+        "previousLevel": 1,
+        "currentExperience": 25,
+        "currentLevel": 1,
+        "seeds": {
+          "source": "battle",
+          "receiptId": "battle-8a87db17-8b9f-40c2-b198-b85780b86e4b",
+          "itemId": "seed:carrot",
+          "quantity": 2
+        }
+      },
+      "deviceIds": [
+        "904bc48f-0343-4ea4-a915-4599a95d39e9",
+        "003cdcac-089b-468b-928c-a0eb41148e32"
+      ]
+    }
+  ],
+  "errors": [],
+  "priorDuelProof": {
+    "path": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\live-1792904347214-4d2d7db8\\evidence.json",
+    "sha256": "207d1c5361fe99ba6540693a8e2450ec2725ec9423cfb154c2fb0d7869d0735d",
+    "runId": "4d2d7db8-596d-4397-844b-243e8600f14e",
+    "sourceCommit": "8ab812554261bf960d43602470b30e64444a74aa",
+    "fullRunPassed": false,
+    "priorFailure": "locator.waitFor: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('region', { name: '战报详情' }) to be visible\u001b[22m\n",
+    "completedScope": "actual invite/join, response loss, refresh/reconnect, pending-action native restart, ten natural immutable rounds and actual private-channel pushes"
+  },
+  "passed": false,
+  "failure": {
+    "message": "electronApplication.evaluate: Error: Could not find the function public.lingjing_revoke_device without parameters in the schema cache\n    at eval (eval at evaluate (:370:30), <anonymous>:1:209)\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at async <anonymous>:396:30",
+    "stack": "electronApplication.evaluate: Error: Could not find the function public.lingjing_revoke_device without parameters in the schema cache\n    at eval (eval at evaluate (:370:30), <anonymous>:1:209)\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at async <anonymous>:396:30\n    at revokeAndVerify (C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\apps\\pc-app\\runtime\\features\\battle\\verify-live-cloud.mjs:121:19)\n    at async file:///C:/Users/Administrator/.codex/worktrees/lingjing-battle/DesktopPet/apps/pc-app/runtime/features/battle/verify-live-cloud.mjs:225:3"
+  },
+  "profiles": [
+    {
+      "index": "0",
+      "profilePath": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\live-1792904902772-33218d1e\\device-1",
+      "owner": "account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+      "deviceId": "904bc48f-0343-4ea4-a915-4599a95d39e9"
+    },
+    {
+      "index": "1",
+      "profilePath": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\live-1792904902772-33218d1e\\device-2",
+      "owner": "account:9e230794-470b-45be-9a18-a2564c88ba35",
+      "deviceId": "27f3e8e0-eef9-49d1-b3f1-57970ba890a8"
+    },
+    {
+      "index": "2",
+      "profilePath": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\live-1792904902772-33218d1e\\device-3",
+      "owner": "account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+      "deviceId": "003cdcac-089b-468b-928c-a0eb41148e32"
+    }
+  ],
+  "sqlite": [
+    {
+      "owner": "account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+      "rewards": [
+        {
+          "owner_account_id": "account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+          "session_id": "online-355f4104-85cf-4ca4-8e27-321f0638e376",
+          "pet_id": "pet-2d660416-db18-44a1-8392-74f235484151",
+          "action_id": "battle:355f4104-85cf-4ca4-8e27-321f0638e376:account:3423cecd-2b9e-4987-bd84-c616eee15d10"
+        },
+        {
+          "owner_account_id": "account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+          "session_id": "battle-8a87db17-8b9f-40c2-b198-b85780b86e4b",
+          "pet_id": "pet-2d660416-db18-44a1-8392-74f235484151",
+          "action_id": "battle:battle-8a87db17-8b9f-40c2-b198-b85780b86e4b:account:3423cecd-2b9e-4987-bd84-c616eee15d10"
+        }
+      ],
+      "reports": [
+        {
+          "id": "online-355f4104-85cf-4ca4-8e27-321f0638e376",
+          "session_id": "online-355f4104-85cf-4ca4-8e27-321f0638e376",
+          "owner_account_id": "account:3423cecd-2b9e-4987-bd84-c616eee15d10"
+        },
+        {
+          "id": "battle-8a87db17-8b9f-40c2-b198-b85780b86e4b",
+          "session_id": "battle-8a87db17-8b9f-40c2-b198-b85780b86e4b",
+          "owner_account_id": "account:3423cecd-2b9e-4987-bd84-c616eee15d10"
+        }
+      ]
+    },
+    {
+      "owner": "account:9e230794-470b-45be-9a18-a2564c88ba35",
+      "rewards": [
+        {
+          "owner_account_id": "account:9e230794-470b-45be-9a18-a2564c88ba35",
+          "session_id": "online-355f4104-85cf-4ca4-8e27-321f0638e376",
+          "pet_id": "pet-7374c520-8730-45ca-a419-227e60a2fa81",
+          "action_id": "battle:355f4104-85cf-4ca4-8e27-321f0638e376:account:9e230794-470b-45be-9a18-a2564c88ba35"
+        }
+      ],
+      "reports": [
+        {
+          "id": "online-355f4104-85cf-4ca4-8e27-321f0638e376",
+          "session_id": "online-355f4104-85cf-4ca4-8e27-321f0638e376",
+          "owner_account_id": "account:9e230794-470b-45be-9a18-a2564c88ba35"
+        }
+      ]
+    },
+    {
+      "owner": "account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+      "rewards": [
+        {
+          "owner_account_id": "account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+          "session_id": "online-355f4104-85cf-4ca4-8e27-321f0638e376",
+          "pet_id": "pet-2d660416-db18-44a1-8392-74f235484151",
+          "action_id": "battle:355f4104-85cf-4ca4-8e27-321f0638e376:account:3423cecd-2b9e-4987-bd84-c616eee15d10"
+        },
+        {
+          "owner_account_id": "account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+          "session_id": "battle-8a87db17-8b9f-40c2-b198-b85780b86e4b",
+          "pet_id": "pet-2d660416-db18-44a1-8392-74f235484151",
+          "action_id": "battle:battle-8a87db17-8b9f-40c2-b198-b85780b86e4b:account:3423cecd-2b9e-4987-bd84-c616eee15d10"
+        }
+      ],
+      "reports": [
+        {
+          "id": "online-355f4104-85cf-4ca4-8e27-321f0638e376",
+          "session_id": "online-355f4104-85cf-4ca4-8e27-321f0638e376",
+          "owner_account_id": "account:3423cecd-2b9e-4987-bd84-c616eee15d10"
+        },
+        {
+          "id": "battle-8a87db17-8b9f-40c2-b198-b85780b86e4b",
+          "session_id": "battle-8a87db17-8b9f-40c2-b198-b85780b86e4b",
+          "owner_account_id": "account:3423cecd-2b9e-4987-bd84-c616eee15d10"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "at": "2026-10-25 06:18:52 UTC",
+  "kind": "Coordinator actual independent read-only cloud proof for the preserved first SFX failure",
+  "head": {
+    "revision": 69,
+    "checksum": "596b439a62458eaca57e2eb5c96bb22d26c6574b16f01364bdd5e12fcc4f3acf",
+    "battle_actions": 0,
+    "battle_sessions": 1,
+    "reports": 1,
+    "xp_receipts": 1,
+    "seed_receipts": [
+      {
+        "source": "battle",
+        "action_id": "battle-seeds:training:battle-f8b798b2-59b9-46c8-8e47-5f36d7bbc0c1",
+        "receipt_id": "battle-f8b798b2-59b9-46c8-8e47-5f36d7bbc0c1",
+        "result_json": "{\"source\":\"battle\",\"receiptId\":\"battle-f8b798b2-59b9-46c8-8e47-5f36d7bbc0c1\",\"itemId\":\"seed:berry\",\"quantity\":2}",
+        "owner_account_id": "account:470a41d4-3cf7-4a7d-8b1e-32e276d2a719"
+      }
+    ]
+  },
+  "session": {
+    "id": "battle-f8b798b2-59b9-46c8-8e47-5f36d7bbc0c1",
+    "mode": "training",
+    "status": "finished",
+    "rounds": 20,
+    "reward": {
+      "actionId": "battle:battle-f8b798b2-59b9-46c8-8e47-5f36d7bbc0c1:account:470a41d4-3cf7-4a7d-8b1e-32e276d2a719",
+      "petId": "pet-b85fd17e-3f75-4261-8fa3-58ea1983542c",
+      "sessionId": "battle-f8b798b2-59b9-46c8-8e47-5f36d7bbc0c1",
+      "mode": "training",
+      "won": false,
+      "experience": 5,
+      "applied": true,
+      "duplicate": false,
+      "previousExperience": 0,
+      "previousLevel": 1,
+      "currentExperience": 5,
+      "currentLevel": 1,
+      "seeds": {
+        "source": "battle",
+        "receiptId": "battle-f8b798b2-59b9-46c8-8e47-5f36d7bbc0c1",
+        "itemId": "seed:berry",
+        "quantity": 2
+      }
+    }
+  },
+  "convergencePassed": false,
+  "reason": "A protected full-save snapshot still includes 21 durable transport intent rows not present in canonical server snapshot; no relaxed acceptance"
+}

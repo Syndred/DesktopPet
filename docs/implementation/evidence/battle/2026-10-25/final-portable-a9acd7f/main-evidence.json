@@ -1,0 +1,1712 @@
+{
+  "runId": "b5253a3c-1d11-4135-9a95-295f21025059",
+  "startedAt": "2026-10-25T08:33:04.576Z",
+  "sourceCommit": "a9acd7f6f1920c541d429fa26d1f054b1427cd95",
+  "scope": "One natural friend duel on the actual final SFX; two dedicated QA owners and fresh independent profiles on one Windows host",
+  "output": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\final-portable-friend-a9acd7f-1792917183061",
+  "executable": {
+    "path": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-foundation\\DesktopPet\\artifacts\\pc-cloud-upgrade-final-a9acd7f\\Lingjing-0.1.8-portable-x64.exe",
+    "size": 169196329,
+    "sha256": "5fb591f67119eeeb35c50290e9aeb1169acfad35ad142985e46693914e2bb289"
+  },
+  "helper": {
+    "path": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\verify-final-portable-friend-a9acd7f.mjs",
+    "sha256": "7944888dffc32cfa10c9f9e91b00b7b3417ecf74d0382f4d7292eacfeae241fe"
+  },
+  "driver": {
+    "path": "C:/Users/Administrator/Desktop/project/DesktopPet/scripts/acceptance/portable-session.mjs",
+    "sha256": "ba495ffbaf8e5c7b7868c57a2176b5ab8b239b5a311941f88c7084e1c067225e"
+  },
+  "checks": [
+    {
+      "at": "2026-10-25T08:34:37.141Z",
+      "name": "Actual final SFX, exact packaged source and independent secure managed-Auth profiles verified",
+      "owners": [
+        "account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+        "account:9e230794-470b-45be-9a18-a2564c88ba35"
+      ],
+      "pets": [
+        "pet-2d660416-db18-44a1-8392-74f235484151",
+        "pet-7374c520-8730-45ca-a419-227e60a2fa81"
+      ]
+    },
+    {
+      "at": "2026-10-25T08:35:40.121Z",
+      "name": "Normal public IPC invited, accepted and joined one real room with original owned combatants",
+      "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+      "sessionId": "online-d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+      "frames": [
+        {
+          "windowId": 1,
+          "visible": true,
+          "size": {
+            "width": 1280,
+            "height": 844
+          },
+          "visiblePixels": 1080320,
+          "coloredPixels": 776301,
+          "file": "joined-A.png",
+          "sha256": "8f33905c0a1d7a2a0c9543a31e897bbb79c9a49e806324aca6abbf7593c53603"
+        },
+        {
+          "windowId": 1,
+          "visible": true,
+          "size": {
+            "width": 1280,
+            "height": 844
+          },
+          "visiblePixels": 1080320,
+          "coloredPixels": 776651,
+          "file": "joined-B.png",
+          "sha256": "efb2f11d7a708b76e09668028b26df77650927df6524a629ec77b41ebd7fabb5"
+        }
+      ]
+    },
+    {
+      "at": "2026-10-25T08:39:03.364Z",
+      "name": "Both natural final results have complete canonical reports, exactly one XP/seed receipt, preserved original history and stable repeated settlement",
+      "rounds": 10,
+      "results": [
+        {
+          "label": "A",
+          "owner": "account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+          "petId": "pet-2d660416-db18-44a1-8392-74f235484151",
+          "reportId": "online-d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "winner": "player",
+          "reward": {
+            "actionId": "battle:d9f43966-a27c-476a-80f8-0ee7927a3ab7:account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+            "petId": "pet-2d660416-db18-44a1-8392-74f235484151",
+            "sessionId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+            "mode": "friend",
+            "won": true,
+            "experience": 20,
+            "applied": true,
+            "duplicate": false,
+            "previousExperience": 45,
+            "previousLevel": 1,
+            "currentExperience": 65,
+            "currentLevel": 1,
+            "seeds": {
+              "source": "battle",
+              "receiptId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+              "itemId": "seed:rice",
+              "quantity": 2
+            }
+          },
+          "delta": {
+            "experience": 20,
+            "seedItemId": "seed:rice",
+            "seedQuantity": 2,
+            "battleRewardCount": 4,
+            "seedReceiptCount": 4
+          },
+          "domainChecksum": "cae1d47594183262537652e856559e0794d508196182f3b0876837119dc5ba7f",
+          "frame": {
+            "windowId": 1,
+            "visible": true,
+            "size": {
+              "width": 1280,
+              "height": 844
+            },
+            "visiblePixels": 1080320,
+            "coloredPixels": 136113,
+            "file": "report-A.png",
+            "sha256": "f878bc5765583bc7f442e3d47547d116ad504b4bcad8f8c8504bfc063767ac75"
+          }
+        },
+        {
+          "label": "B",
+          "owner": "account:9e230794-470b-45be-9a18-a2564c88ba35",
+          "petId": "pet-7374c520-8730-45ca-a419-227e60a2fa81",
+          "reportId": "online-d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "winner": "enemy",
+          "reward": {
+            "actionId": "battle:d9f43966-a27c-476a-80f8-0ee7927a3ab7:account:9e230794-470b-45be-9a18-a2564c88ba35",
+            "petId": "pet-7374c520-8730-45ca-a419-227e60a2fa81",
+            "sessionId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+            "mode": "friend",
+            "won": false,
+            "experience": 5,
+            "applied": true,
+            "duplicate": false,
+            "previousExperience": 10,
+            "previousLevel": 1,
+            "currentExperience": 15,
+            "currentLevel": 1,
+            "seeds": {
+              "source": "battle",
+              "receiptId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+              "itemId": "seed:rice",
+              "quantity": 2
+            }
+          },
+          "delta": {
+            "experience": 5,
+            "seedItemId": "seed:rice",
+            "seedQuantity": 2,
+            "battleRewardCount": 3,
+            "seedReceiptCount": 3
+          },
+          "domainChecksum": "98d9148f65e2c1b58368583dca615e5be49b0e41a29b522c7fda84e04e56ee49",
+          "frame": {
+            "windowId": 1,
+            "visible": true,
+            "size": {
+              "width": 1280,
+              "height": 844
+            },
+            "visiblePixels": 1080320,
+            "coloredPixels": 134242,
+            "file": "report-B.png",
+            "sha256": "b76189e52391f9e9f81e0249eac32e8c092025413a42c3bd5614ff83c1fddc12"
+          }
+        }
+      ]
+    },
+    {
+      "at": "2026-10-25T08:39:14.861Z",
+      "name": "Both owners are automatically clean and their query-only SQLite checkpoints and canonical domain rows exactly match independent fresh HTTPS cloud heads",
+      "cloud": [
+        {
+          "label": "A",
+          "owner": "account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+          "revision": 9,
+          "checksum": "6c41d531f2499efc34116665d2d99b516c7014eeee29c579a6ac3a34f65a1c4d",
+          "status": {
+            "configured": true,
+            "cloudRevision": 9,
+            "lastVerifiedAt": "2026-10-25T08:39:05.212Z",
+            "lastError": null,
+            "pending": 0,
+            "conflicts": 0,
+            "localChanged": false,
+            "unverifiedLocal": 0,
+            "privacyRedactions": 0,
+            "running": false,
+            "observedCloudRevision": 9,
+            "lastCloudCheckedAt": "2026-10-25T08:39:05.166Z",
+            "remoteChanged": false
+          },
+          "checkpoint": {
+            "cloud_revision": 9,
+            "last_checksum": "6c41d531f2499efc34116665d2d99b516c7014eeee29c579a6ac3a34f65a1c4d",
+            "last_verified_at": "2026-10-25T08:39:05.212Z",
+            "last_error": null
+          },
+          "units": [
+            "companion_pets",
+            "companion_actions",
+            "companion_accounts",
+            "companion_interactions",
+            "companion_legacy_archive",
+            "companion_capture_receipts",
+            "garden_items",
+            "garden_plots",
+            "garden_events",
+            "garden_outbox",
+            "garden_actions",
+            "garden_accounts",
+            "garden_garrisons",
+            "garden_reward_receipts",
+            "garden_territory_attempts",
+            "garden_territory_challenges",
+            "battle_sessions",
+            "battle_action_receipts",
+            "battle_reports_v2",
+            "battle_reward_receipts"
+          ],
+          "readerDevice": "aa9f0ea4-d7a9-47cd-856b-e6d6d5ab59b3"
+        },
+        {
+          "label": "B",
+          "owner": "account:9e230794-470b-45be-9a18-a2564c88ba35",
+          "revision": 7,
+          "checksum": "0676ef7a4ee7866b5ec831ef76814f73fc4674d24dcf7f6f4bec262c3f8c39b1",
+          "status": {
+            "configured": true,
+            "cloudRevision": 7,
+            "lastVerifiedAt": "2026-10-25T08:38:53.908Z",
+            "lastError": null,
+            "pending": 0,
+            "conflicts": 0,
+            "localChanged": false,
+            "unverifiedLocal": 0,
+            "privacyRedactions": 0,
+            "running": false,
+            "observedCloudRevision": 7,
+            "lastCloudCheckedAt": "2026-10-25T08:38:53.872Z",
+            "remoteChanged": false
+          },
+          "checkpoint": {
+            "cloud_revision": 7,
+            "last_checksum": "0676ef7a4ee7866b5ec831ef76814f73fc4674d24dcf7f6f4bec262c3f8c39b1",
+            "last_verified_at": "2026-10-25T08:38:53.908Z",
+            "last_error": null
+          },
+          "units": [
+            "companion_pets",
+            "companion_actions",
+            "companion_accounts",
+            "companion_interactions",
+            "companion_legacy_archive",
+            "companion_capture_receipts",
+            "garden_items",
+            "garden_plots",
+            "garden_events",
+            "garden_outbox",
+            "garden_actions",
+            "garden_accounts",
+            "garden_garrisons",
+            "garden_reward_receipts",
+            "garden_territory_attempts",
+            "garden_territory_challenges",
+            "battle_sessions",
+            "battle_action_receipts",
+            "battle_reports_v2",
+            "battle_reward_receipts"
+          ],
+          "readerDevice": "4cad2bfa-8b71-4e4c-b885-4030023ab020"
+        }
+      ]
+    },
+    {
+      "name": "Actual account sync UI A",
+      "frame": {
+        "windowId": 1,
+        "visible": true,
+        "size": {
+          "width": 1280,
+          "height": 844
+        },
+        "visiblePixels": 1080320,
+        "coloredPixels": 6244,
+        "file": "sync-clean-A.png",
+        "sha256": "e2425ec50763398722e3135b66e6f9ff2c88074b5f419fe332b90eac2e71a4ba"
+      },
+      "status": {
+        "configured": true,
+        "cloudRevision": 9,
+        "lastVerifiedAt": "2026-10-25T08:39:05.212Z",
+        "lastError": null,
+        "pending": 0,
+        "conflicts": 0,
+        "localChanged": false,
+        "unverifiedLocal": 0,
+        "privacyRedactions": 0,
+        "running": false,
+        "observedCloudRevision": 9,
+        "lastCloudCheckedAt": "2026-10-25T08:39:05.166Z",
+        "remoteChanged": false
+      }
+    },
+    {
+      "name": "Actual account sync UI B",
+      "frame": {
+        "windowId": 1,
+        "visible": true,
+        "size": {
+          "width": 1280,
+          "height": 844
+        },
+        "visiblePixels": 1080320,
+        "coloredPixels": 6231,
+        "file": "sync-clean-B.png",
+        "sha256": "cad4f130c7d87bd6b0fe072996870f77c927bd160f3ea8238694f568e0fd2424"
+      },
+      "status": {
+        "configured": true,
+        "cloudRevision": 7,
+        "lastVerifiedAt": "2026-10-25T08:38:53.908Z",
+        "lastError": null,
+        "pending": 0,
+        "conflicts": 0,
+        "localChanged": false,
+        "unverifiedLocal": 0,
+        "privacyRedactions": 0,
+        "running": false,
+        "observedCloudRevision": 7,
+        "lastCloudCheckedAt": "2026-10-25T08:38:53.872Z",
+        "remoteChanged": false
+      }
+    }
+  ],
+  "rounds": [
+    {
+      "round": 1,
+      "playerHp": 112,
+      "enemyHp": 108,
+      "actions": {
+        "player": "normal_attack",
+        "enemy": "normal_attack"
+      }
+    },
+    {
+      "round": 2,
+      "playerHp": 104,
+      "enemyHp": 96,
+      "actions": {
+        "player": "normal_attack",
+        "enemy": "normal_attack"
+      }
+    },
+    {
+      "round": 3,
+      "playerHp": 96,
+      "enemyHp": 84,
+      "actions": {
+        "player": "normal_attack",
+        "enemy": "normal_attack"
+      }
+    },
+    {
+      "round": 4,
+      "playerHp": 88,
+      "enemyHp": 72,
+      "actions": {
+        "player": "normal_attack",
+        "enemy": "normal_attack"
+      }
+    },
+    {
+      "round": 5,
+      "playerHp": 80,
+      "enemyHp": 60,
+      "actions": {
+        "player": "normal_attack",
+        "enemy": "normal_attack"
+      }
+    },
+    {
+      "round": 6,
+      "playerHp": 72,
+      "enemyHp": 48,
+      "actions": {
+        "player": "normal_attack",
+        "enemy": "normal_attack"
+      }
+    },
+    {
+      "round": 7,
+      "playerHp": 64,
+      "enemyHp": 36,
+      "actions": {
+        "player": "normal_attack",
+        "enemy": "normal_attack"
+      }
+    },
+    {
+      "round": 8,
+      "playerHp": 56,
+      "enemyHp": 24,
+      "actions": {
+        "player": "normal_attack",
+        "enemy": "normal_attack"
+      }
+    },
+    {
+      "round": 9,
+      "playerHp": 48,
+      "enemyHp": 12,
+      "actions": {
+        "player": "normal_attack",
+        "enemy": "normal_attack"
+      }
+    },
+    {
+      "round": 10,
+      "playerHp": 40,
+      "enemyHp": 0,
+      "actions": {
+        "player": "normal_attack",
+        "enemy": "normal_attack"
+      }
+    }
+  ],
+  "errors": [],
+  "https": [
+    {
+      "at": "2026-10-25T08:39:06.732Z",
+      "owner": "account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+      "origin": "https://jbvrdmrkwpznbrvteive.supabase.co",
+      "path": "/functions/v1/lingjing-auth",
+      "op": "login",
+      "status": 200,
+      "authorizationPresent": false,
+      "deviceHeaderPresent": true
+    },
+    {
+      "at": "2026-10-25T08:39:07.987Z",
+      "owner": "account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+      "origin": "https://jbvrdmrkwpznbrvteive.supabase.co",
+      "path": "/functions/v1/lingjing-save",
+      "op": "read",
+      "status": 200,
+      "authorizationPresent": true,
+      "deviceHeaderPresent": true
+    },
+    {
+      "at": "2026-10-25T08:39:09.289Z",
+      "owner": "account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+      "origin": "https://jbvrdmrkwpznbrvteive.supabase.co",
+      "path": "/functions/v1/lingjing-battle",
+      "op": "get_room",
+      "status": 200,
+      "authorizationPresent": true,
+      "deviceHeaderPresent": true
+    },
+    {
+      "at": "2026-10-25T08:39:12.320Z",
+      "owner": "account:9e230794-470b-45be-9a18-a2564c88ba35",
+      "origin": "https://jbvrdmrkwpznbrvteive.supabase.co",
+      "path": "/functions/v1/lingjing-auth",
+      "op": "login",
+      "status": 200,
+      "authorizationPresent": false,
+      "deviceHeaderPresent": true
+    },
+    {
+      "at": "2026-10-25T08:39:13.544Z",
+      "owner": "account:9e230794-470b-45be-9a18-a2564c88ba35",
+      "origin": "https://jbvrdmrkwpznbrvteive.supabase.co",
+      "path": "/functions/v1/lingjing-save",
+      "op": "read",
+      "status": 200,
+      "authorizationPresent": true,
+      "deviceHeaderPresent": true
+    },
+    {
+      "at": "2026-10-25T08:39:14.816Z",
+      "owner": "account:9e230794-470b-45be-9a18-a2564c88ba35",
+      "origin": "https://jbvrdmrkwpznbrvteive.supabase.co",
+      "path": "/functions/v1/lingjing-battle",
+      "op": "get_room",
+      "status": 200,
+      "authorizationPresent": true,
+      "deviceHeaderPresent": true
+    },
+    {
+      "at": "2026-10-25T08:39:16.998Z",
+      "owner": "account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+      "origin": "https://jbvrdmrkwpznbrvteive.supabase.co",
+      "path": "/functions/v1/lingjing-auth",
+      "op": "logout",
+      "status": 200,
+      "authorizationPresent": true,
+      "deviceHeaderPresent": true
+    },
+    {
+      "at": "2026-10-25T08:39:18.272Z",
+      "owner": "account:9e230794-470b-45be-9a18-a2564c88ba35",
+      "origin": "https://jbvrdmrkwpznbrvteive.supabase.co",
+      "path": "/functions/v1/lingjing-auth",
+      "op": "logout",
+      "status": 200,
+      "authorizationPresent": true,
+      "deviceHeaderPresent": true
+    }
+  ],
+  "profiles": [
+    {
+      "label": "A",
+      "owner": "account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+      "petId": "pet-2d660416-db18-44a1-8392-74f235484151",
+      "profile": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\final-portable-friend-a9acd7f-1792917183061\\profile-A",
+      "runtime": {
+        "pid": 19488,
+        "electron": "44.9.3",
+        "node": "24.22.0",
+        "profileOverride": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\final-portable-friend-a9acd7f-1792917183061\\profile-A",
+        "userData": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\final-portable-friend-a9acd7f-1792917183061\\profile-A",
+        "resourcesPath": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\3LBAQALUKgWr1yvvvscHsCaqSpQ\\resources"
+      },
+      "launcherPid": 26812,
+      "build": {
+        "schemaVersion": 2,
+        "builtAt": "2026-10-25T08:28:03.508Z",
+        "sourceCommit": "a9acd7f6f1920c541d429fa26d1f054b1427cd95",
+        "sourceTree": "cd6e02287b06825d2fa57b526eda65fd2ec4d7ac",
+        "sourceDirtyFiles": [],
+        "codeFingerprint": "227f147a83567a158ce47395a6eb9cca71bc8a405c2949740e716ce1c02f583e",
+        "canonicalSourceFingerprint": "b395e8c50da3b0530a5b934880f4fd127d53bfb0b8328666d15cbf5da7db2806",
+        "canonicalPolicy": "Repository-relative paths; CRLF normalized to LF for source text only. Packaged/compiled bytes remain exact.",
+        "compiledFingerprint": "df4008fed8aae88a6f58f6bc016bf56b1b3451bc727a8fccf4a9457af4cebfdc",
+        "codeFiles": 302,
+        "compiledFiles": 86,
+        "toolchain": {
+          "node": "24.21.0",
+          "electron": "44.9.3",
+          "sqlite": "13.0.3",
+          "vite": "7.3.7",
+          "typescript": "5.9.3",
+          "platform": "win32",
+          "arch": "x64"
+        },
+        "entrypoints": {
+          "main": "main/index.cjs",
+          "app": "ui/index.html",
+          "desktop": "ui/desktop.html",
+          "preload": "preload/index.cjs"
+        },
+        "publicCloud": {
+          "projectRef": "jbvrdmrkwpznbrvteive",
+          "url": "https://jbvrdmrkwpznbrvteive.supabase.co",
+          "sha256": "c1625c63f1d959f92b3392b47f2fb492452803eedf1c0d1ebc68a1168ab64eda",
+          "resourcePath": "lingjing-cloud-public.json"
+        },
+        "packageName": "lingjing-desktop",
+        "runtimeClosure": {
+          "manifest": "runtime-closure.json",
+          "files": 110,
+          "edges": 193,
+          "sha256": "d4642388b6c7c353a95682bade40435f1951e062f50c00bae84d374b826313dd"
+        }
+      },
+      "renderer": "file:///C:/Users/ADMINI~1/AppData/Local/Temp/3LBAQALUKgWr1yvvvscHsCaqSpQ/resources/app.asar/apps/pc-app/dist/ui/index.html#/companions",
+      "asarSha256": "c5d76b7b4966f241a7de8657c88ec2e309d41ff8fd62a6ed44d6c3ebc3c48f7e",
+      "publicConfigSha256": "c1625c63f1d959f92b3392b47f2fb492452803eedf1c0d1ebc68a1168ab64eda",
+      "deviceId": "c32b659e-df8b-4008-9669-2a440f3aba8a",
+      "baselinePets": [
+        "pet-2d660416-db18-44a1-8392-74f235484151"
+      ]
+    },
+    {
+      "label": "B",
+      "owner": "account:9e230794-470b-45be-9a18-a2564c88ba35",
+      "petId": "pet-7374c520-8730-45ca-a419-227e60a2fa81",
+      "profile": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\final-portable-friend-a9acd7f-1792917183061\\profile-B",
+      "runtime": {
+        "pid": 24924,
+        "electron": "44.9.3",
+        "node": "24.22.0",
+        "profileOverride": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\final-portable-friend-a9acd7f-1792917183061\\profile-B",
+        "userData": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-battle\\DesktopPet\\artifacts\\battle\\final-portable-friend-a9acd7f-1792917183061\\profile-B",
+        "resourcesPath": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\3LBAQALUKgWr1yvvvscHsCaqSpQ\\resources"
+      },
+      "launcherPid": 12908,
+      "build": {
+        "schemaVersion": 2,
+        "builtAt": "2026-10-25T08:28:03.508Z",
+        "sourceCommit": "a9acd7f6f1920c541d429fa26d1f054b1427cd95",
+        "sourceTree": "cd6e02287b06825d2fa57b526eda65fd2ec4d7ac",
+        "sourceDirtyFiles": [],
+        "codeFingerprint": "227f147a83567a158ce47395a6eb9cca71bc8a405c2949740e716ce1c02f583e",
+        "canonicalSourceFingerprint": "b395e8c50da3b0530a5b934880f4fd127d53bfb0b8328666d15cbf5da7db2806",
+        "canonicalPolicy": "Repository-relative paths; CRLF normalized to LF for source text only. Packaged/compiled bytes remain exact.",
+        "compiledFingerprint": "df4008fed8aae88a6f58f6bc016bf56b1b3451bc727a8fccf4a9457af4cebfdc",
+        "codeFiles": 302,
+        "compiledFiles": 86,
+        "toolchain": {
+          "node": "24.21.0",
+          "electron": "44.9.3",
+          "sqlite": "13.0.3",
+          "vite": "7.3.7",
+          "typescript": "5.9.3",
+          "platform": "win32",
+          "arch": "x64"
+        },
+        "entrypoints": {
+          "main": "main/index.cjs",
+          "app": "ui/index.html",
+          "desktop": "ui/desktop.html",
+          "preload": "preload/index.cjs"
+        },
+        "publicCloud": {
+          "projectRef": "jbvrdmrkwpznbrvteive",
+          "url": "https://jbvrdmrkwpznbrvteive.supabase.co",
+          "sha256": "c1625c63f1d959f92b3392b47f2fb492452803eedf1c0d1ebc68a1168ab64eda",
+          "resourcePath": "lingjing-cloud-public.json"
+        },
+        "packageName": "lingjing-desktop",
+        "runtimeClosure": {
+          "manifest": "runtime-closure.json",
+          "files": 110,
+          "edges": 193,
+          "sha256": "d4642388b6c7c353a95682bade40435f1951e062f50c00bae84d374b826313dd"
+        }
+      },
+      "renderer": "file:///C:/Users/ADMINI~1/AppData/Local/Temp/3LBAQALUKgWr1yvvvscHsCaqSpQ/resources/app.asar/apps/pc-app/dist/ui/index.html#/companions",
+      "asarSha256": "c5d76b7b4966f241a7de8657c88ec2e309d41ff8fd62a6ed44d6c3ebc3c48f7e",
+      "publicConfigSha256": "c1625c63f1d959f92b3392b47f2fb492452803eedf1c0d1ebc68a1168ab64eda",
+      "deviceId": "6da20636-85c0-4228-9196-016706f4d2d7",
+      "baselinePets": [
+        "pet-7374c520-8730-45ca-a419-227e60a2fa81"
+      ]
+    }
+  ],
+  "passed": true,
+  "invitation": {
+    "id": "401868b4-5783-4236-868c-a0252579b308",
+    "status": "pending"
+  },
+  "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+  "sessionId": "online-d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+  "results": [
+    {
+      "label": "A",
+      "owner": "account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+      "petId": "pet-2d660416-db18-44a1-8392-74f235484151",
+      "reportId": "online-d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+      "winner": "player",
+      "reward": {
+        "actionId": "battle:d9f43966-a27c-476a-80f8-0ee7927a3ab7:account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+        "petId": "pet-2d660416-db18-44a1-8392-74f235484151",
+        "sessionId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+        "mode": "friend",
+        "won": true,
+        "experience": 20,
+        "applied": true,
+        "duplicate": false,
+        "previousExperience": 45,
+        "previousLevel": 1,
+        "currentExperience": 65,
+        "currentLevel": 1,
+        "seeds": {
+          "source": "battle",
+          "receiptId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "itemId": "seed:rice",
+          "quantity": 2
+        }
+      },
+      "delta": {
+        "experience": 20,
+        "seedItemId": "seed:rice",
+        "seedQuantity": 2,
+        "battleRewardCount": 4,
+        "seedReceiptCount": 4
+      },
+      "domainChecksum": "cae1d47594183262537652e856559e0794d508196182f3b0876837119dc5ba7f",
+      "frame": {
+        "windowId": 1,
+        "visible": true,
+        "size": {
+          "width": 1280,
+          "height": 844
+        },
+        "visiblePixels": 1080320,
+        "coloredPixels": 136113,
+        "file": "report-A.png",
+        "sha256": "f878bc5765583bc7f442e3d47547d116ad504b4bcad8f8c8504bfc063767ac75"
+      }
+    },
+    {
+      "label": "B",
+      "owner": "account:9e230794-470b-45be-9a18-a2564c88ba35",
+      "petId": "pet-7374c520-8730-45ca-a419-227e60a2fa81",
+      "reportId": "online-d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+      "winner": "enemy",
+      "reward": {
+        "actionId": "battle:d9f43966-a27c-476a-80f8-0ee7927a3ab7:account:9e230794-470b-45be-9a18-a2564c88ba35",
+        "petId": "pet-7374c520-8730-45ca-a419-227e60a2fa81",
+        "sessionId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+        "mode": "friend",
+        "won": false,
+        "experience": 5,
+        "applied": true,
+        "duplicate": false,
+        "previousExperience": 10,
+        "previousLevel": 1,
+        "currentExperience": 15,
+        "currentLevel": 1,
+        "seeds": {
+          "source": "battle",
+          "receiptId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "itemId": "seed:rice",
+          "quantity": 2
+        }
+      },
+      "delta": {
+        "experience": 5,
+        "seedItemId": "seed:rice",
+        "seedQuantity": 2,
+        "battleRewardCount": 3,
+        "seedReceiptCount": 3
+      },
+      "domainChecksum": "98d9148f65e2c1b58368583dca615e5be49b0e41a29b522c7fda84e04e56ee49",
+      "frame": {
+        "windowId": 1,
+        "visible": true,
+        "size": {
+          "width": 1280,
+          "height": 844
+        },
+        "visiblePixels": 1080320,
+        "coloredPixels": 134242,
+        "file": "report-B.png",
+        "sha256": "b76189e52391f9e9f81e0249eac32e8c092025413a42c3bd5614ff83c1fddc12"
+      }
+    }
+  ],
+  "cloud": [
+    {
+      "label": "A",
+      "owner": "account:3423cecd-2b9e-4987-bd84-c616eee15d10",
+      "revision": 9,
+      "checksum": "6c41d531f2499efc34116665d2d99b516c7014eeee29c579a6ac3a34f65a1c4d",
+      "status": {
+        "configured": true,
+        "cloudRevision": 9,
+        "lastVerifiedAt": "2026-10-25T08:39:05.212Z",
+        "lastError": null,
+        "pending": 0,
+        "conflicts": 0,
+        "localChanged": false,
+        "unverifiedLocal": 0,
+        "privacyRedactions": 0,
+        "running": false,
+        "observedCloudRevision": 9,
+        "lastCloudCheckedAt": "2026-10-25T08:39:05.166Z",
+        "remoteChanged": false
+      },
+      "checkpoint": {
+        "cloud_revision": 9,
+        "last_checksum": "6c41d531f2499efc34116665d2d99b516c7014eeee29c579a6ac3a34f65a1c4d",
+        "last_verified_at": "2026-10-25T08:39:05.212Z",
+        "last_error": null
+      },
+      "units": [
+        "companion_pets",
+        "companion_actions",
+        "companion_accounts",
+        "companion_interactions",
+        "companion_legacy_archive",
+        "companion_capture_receipts",
+        "garden_items",
+        "garden_plots",
+        "garden_events",
+        "garden_outbox",
+        "garden_actions",
+        "garden_accounts",
+        "garden_garrisons",
+        "garden_reward_receipts",
+        "garden_territory_attempts",
+        "garden_territory_challenges",
+        "battle_sessions",
+        "battle_action_receipts",
+        "battle_reports_v2",
+        "battle_reward_receipts"
+      ],
+      "readerDevice": "aa9f0ea4-d7a9-47cd-856b-e6d6d5ab59b3"
+    },
+    {
+      "label": "B",
+      "owner": "account:9e230794-470b-45be-9a18-a2564c88ba35",
+      "revision": 7,
+      "checksum": "0676ef7a4ee7866b5ec831ef76814f73fc4674d24dcf7f6f4bec262c3f8c39b1",
+      "status": {
+        "configured": true,
+        "cloudRevision": 7,
+        "lastVerifiedAt": "2026-10-25T08:38:53.908Z",
+        "lastError": null,
+        "pending": 0,
+        "conflicts": 0,
+        "localChanged": false,
+        "unverifiedLocal": 0,
+        "privacyRedactions": 0,
+        "running": false,
+        "observedCloudRevision": 7,
+        "lastCloudCheckedAt": "2026-10-25T08:38:53.872Z",
+        "remoteChanged": false
+      },
+      "checkpoint": {
+        "cloud_revision": 7,
+        "last_checksum": "0676ef7a4ee7866b5ec831ef76814f73fc4674d24dcf7f6f4bec262c3f8c39b1",
+        "last_verified_at": "2026-10-25T08:38:53.908Z",
+        "last_error": null
+      },
+      "units": [
+        "companion_pets",
+        "companion_actions",
+        "companion_accounts",
+        "companion_interactions",
+        "companion_legacy_archive",
+        "companion_capture_receipts",
+        "garden_items",
+        "garden_plots",
+        "garden_events",
+        "garden_outbox",
+        "garden_actions",
+        "garden_accounts",
+        "garden_garrisons",
+        "garden_reward_receipts",
+        "garden_territory_attempts",
+        "garden_territory_challenges",
+        "battle_sessions",
+        "battle_action_receipts",
+        "battle_reports_v2",
+        "battle_reward_receipts"
+      ],
+      "readerDevice": "4cad2bfa-8b71-4e4c-b885-4030023ab020"
+    }
+  ],
+  "events": [
+    {
+      "label": "A",
+      "events": [
+        {
+          "type": "room-updated",
+          "at": "2026-10-25T08:35:21.791Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "realtime-status",
+          "at": "2026-10-25T08:35:22.515Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": "SUBSCRIBED"
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:35:25.038Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:35:27.930Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:35:37.137Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:35:40.217Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "round-updated",
+          "at": "2026-10-25T08:35:45.361Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-updated",
+          "at": "2026-10-25T08:35:45.370Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:35:45.762Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:35:48.701Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:35:51.246Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:35:55.594Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "round-updated",
+          "at": "2026-10-25T08:35:59.628Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-updated",
+          "at": "2026-10-25T08:35:59.628Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:36:01.967Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:36:04.527Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:36:07.041Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:36:10.126Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "round-updated",
+          "at": "2026-10-25T08:36:15.456Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-updated",
+          "at": "2026-10-25T08:36:15.457Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:36:15.913Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:36:19.104Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:36:21.543Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:36:25.099Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "round-updated",
+          "at": "2026-10-25T08:36:29.715Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-updated",
+          "at": "2026-10-25T08:36:29.715Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:36:30.557Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:36:32.959Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:36:35.436Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:36:38.525Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "round-updated",
+          "at": "2026-10-25T08:36:43.480Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-updated",
+          "at": "2026-10-25T08:36:43.480Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:36:44.527Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:36:46.920Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:36:49.304Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:36:52.156Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "round-updated",
+          "at": "2026-10-25T08:36:57.775Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-updated",
+          "at": "2026-10-25T08:36:57.782Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:36:58.059Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:37:01.200Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:37:03.882Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:37:07.243Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "round-updated",
+          "at": "2026-10-25T08:37:11.524Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-updated",
+          "at": "2026-10-25T08:37:11.537Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:37:13.076Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:37:15.615Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:37:17.956Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:37:20.680Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "round-updated",
+          "at": "2026-10-25T08:37:25.383Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-updated",
+          "at": "2026-10-25T08:37:25.383Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:37:26.299Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:37:28.655Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:37:31.368Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:37:34.198Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:37:40.025Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "round-updated",
+          "at": "2026-10-25T08:37:40.034Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-updated",
+          "at": "2026-10-25T08:37:40.035Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:37:42.496Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:37:45.250Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:37:49.158Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "round-updated",
+          "at": "2026-10-25T08:37:52.761Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-updated",
+          "at": "2026-10-25T08:37:52.762Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:37:54.272Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:38:02.395Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:38:17.384Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:38:23.845Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        }
+      ]
+    },
+    {
+      "label": "B",
+      "events": [
+        {
+          "type": "room-updated",
+          "at": "2026-10-25T08:35:09.608Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "realtime-status",
+          "at": "2026-10-25T08:35:11.650Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": "SUBSCRIBED"
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:35:17.052Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-updated",
+          "at": "2026-10-25T08:35:20.360Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:35:30.662Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:35:41.806Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-updated",
+          "at": "2026-10-25T08:35:45.365Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "round-updated",
+          "at": "2026-10-25T08:35:45.366Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:35:48.421Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "round-resolved",
+          "at": "2026-10-25T08:35:48.422Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:35:51.183Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:35:53.658Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:35:56.694Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "round-updated",
+          "at": "2026-10-25T08:35:59.623Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-updated",
+          "at": "2026-10-25T08:35:59.623Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:36:03.852Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "round-resolved",
+          "at": "2026-10-25T08:36:03.852Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:36:06.387Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:36:09.157Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:36:11.701Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "round-updated",
+          "at": "2026-10-25T08:36:15.474Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-updated",
+          "at": "2026-10-25T08:36:15.474Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:36:18.311Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "round-resolved",
+          "at": "2026-10-25T08:36:18.312Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:36:21.114Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:36:24.282Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:36:26.797Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "round-updated",
+          "at": "2026-10-25T08:36:29.714Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-updated",
+          "at": "2026-10-25T08:36:29.714Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:36:32.462Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "round-resolved",
+          "at": "2026-10-25T08:36:32.462Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:36:34.997Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:36:37.442Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:36:40.329Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "round-updated",
+          "at": "2026-10-25T08:36:43.488Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-updated",
+          "at": "2026-10-25T08:36:43.488Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:36:46.549Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "round-resolved",
+          "at": "2026-10-25T08:36:46.549Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:36:49.078Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:36:51.920Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:36:54.430Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "round-updated",
+          "at": "2026-10-25T08:36:57.787Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-updated",
+          "at": "2026-10-25T08:36:57.787Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:37:00.714Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "round-resolved",
+          "at": "2026-10-25T08:37:00.714Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:37:03.289Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:37:05.726Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:37:08.155Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "round-updated",
+          "at": "2026-10-25T08:37:11.530Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-updated",
+          "at": "2026-10-25T08:37:11.530Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:37:14.337Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "round-resolved",
+          "at": "2026-10-25T08:37:14.338Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:37:17.341Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:37:19.692Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:37:22.279Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "round-updated",
+          "at": "2026-10-25T08:37:25.389Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-updated",
+          "at": "2026-10-25T08:37:25.390Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:37:27.993Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "round-resolved",
+          "at": "2026-10-25T08:37:27.993Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:37:31.095Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:37:33.666Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:37:36.582Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "round-updated",
+          "at": "2026-10-25T08:37:40.036Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-updated",
+          "at": "2026-10-25T08:37:40.036Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:37:42.470Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "round-resolved",
+          "at": "2026-10-25T08:37:42.470Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:37:44.939Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:37:47.314Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:37:49.726Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "round-updated",
+          "at": "2026-10-25T08:37:52.769Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-updated",
+          "at": "2026-10-25T08:37:52.778Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:37:55.696Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "round-resolved",
+          "at": "2026-10-25T08:37:55.696Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:37:57.597Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:38:09.101Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:38:41.701Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        },
+        {
+          "type": "room-synced",
+          "at": "2026-10-25T08:38:48.320Z",
+          "roomId": "d9f43966-a27c-476a-80f8-0ee7927a3ab7",
+          "status": null
+        }
+      ]
+    }
+  ],
+  "completedAt": "2026-10-25T08:39:18.981Z"
+}
