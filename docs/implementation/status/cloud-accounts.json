@@ -2,10 +2,10 @@
   "module": "accounts",
   "scope": "2026-10-25 Supabase Auth/JWT, stable legacy owner mapping, per-device sessions, full-save CAS/idempotency/conflict/offline recovery",
   "branch": "codex/lingjing-accounts",
-  "commit": "ae563bf44c75994ee6a841b364dfd7727b829617",
+  "commit": "fe97318117bbf773548d9f028ec67b8e96155b28",
   "worktree": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-accounts\\DesktopPet",
   "goalStatus": "active",
-  "phase": "Auth real HTTPS8/8 passed by coordinator; CAS pet compound key fixd57d383 ready; main Auth bridgeae563bf ready for domain consumption",
+  "phase": "Urgent immutable SID ledgerb21410e ready for review/deploy, actual HTTP verifierfe97318 ready. Concurrent real HTTPS CAS2/2 passed. Waiting02 normalization hook.",
   "baseline": "46abf416e0500b53ef32fc29b441d923ef5a6a80",
   "dependencyCheckpoint": "b40af0efcf6062ddc2e8c360523c996fc91ebc0a",
   "contracts": {
@@ -105,10 +105,30 @@
       "persistence": "safeStorage encrypted v2 proof; additive SQLite account_cloud_links; no token columns",
       "service": "services.get(cloudActor).requireActor()/invoke(functionName,body)",
       "context": "public actor + non-enumerable client/invoke/accessToken/url/publishableKey; MAIN ONLY",
-      "config": "LINGJING_PUBLIC_CONFIG or LINGJING_SUPABASE_URL+LINGJING_SUPABASE_PUBLISHABLE_KEY; packaged resources/lingjing-cloud-public.json",
+      "config": "Default repo config/lingjing-cloud-public.json (verified public config checkpoint3c791c2), packaged resources equivalent; explicit overrides supported",
       "device": "current userData/accounts/device.json",
       "entry": "apps/pc-app/runtime/features/accounts/supabase-remote.cjs",
-      "oldHttp": "default disabled; explicit LINGJING_LEGACY_AUTH=1 only; new privateSession.sessionToken=null and requireRuntimeUser blocked"
+      "oldHttp": "default disabled; explicit LINGJING_LEGACY_AUTH=1 only; new privateSession.sessionToken=null and requireRuntimeUser blocked",
+      "sdkLifecycle": "2f850a3 stable per Auth session SDK, accessToken callback (no fixed Authorization); callback mode reset after SDK initial seed; refresh calls realtime.setAuth() without token; logout/switch/invalid/dispose disconnects channels; clients must not manually setAuth(token)"
+    },
+    "cloudPrivacy": {
+      "proof": "sourceChecksum and cloud projectionChecksum distinct; excluded paths recorded without values; never claim full original uploaded",
+      "cloudArchive": "safe projection only, legacy module and raw archive/credential schema excluded, normalized sensitive keys and nested/serialized JSON stripped",
+      "server": "8e5c735 path-aware guard preserves authored message/memory/persona JSON string byte-for-byte, checks nested/serialized config credentials. Public business proof retained; cloudProof/sessionProof/authProof private. SQL8 cases +protocol6 passed.",
+      "localOriginal": "account_sync_sources.original_document/original_checksum retains local snapshot; existing raw sources/backup files never deleted",
+      "migration": "20261025025906_lingjing_cloud_secret_guard.sql",
+      "implementation": "apps/pc-app/runtime/features/accounts/cloud-projection.cjs"
+    },
+    "sessionRevocation": {
+      "migration": "20261025031842_lingjing_session_revocation_ledger.sql",
+      "deployedByThisChat": false,
+      "guard": "live_session_id shared by direct RPC/actor/session/RLS",
+      "authTableGrantsExpanded": false,
+      "ledger": "private immutable revoked_auth_sessions; explicit revoke AND replacement retain SID forever",
+      "existingSessions": "backfill revoked devices and already unbound Auth sessions of linked Lingjing users only; preserve every currently bound active device",
+      "realHttpsPendingCentralDeployment": true,
+      "httpVerifier": "apps/pc-app/runtime/features/accounts/tests/cloud-session-revoke.acceptance.cjs",
+      "implementation": "b21410e"
     }
   },
   "migrations": [
@@ -141,6 +161,18 @@
       "generatedBy": "Supabase CLI2.122.0 migration new lingjing_protected_save_cas",
       "file": "infra/supabase/migrations/20261025021759_lingjing_protected_save_cas.sql",
       "readyForCoordinatorReview": true
+    },
+    {
+      "file": "infra/supabase/migrations/20261025025906_lingjing_cloud_secret_guard.sql",
+      "remoteAppliedByThisChat": false,
+      "readyForCoordinatorReview": true,
+      "generatedBy": "Supabase CLI2.122.0 migration new lingjing_cloud_secret_guard"
+    },
+    {
+      "readyForCoordinatorReview": true,
+      "generatedBy": "Supabase CLI2.122.0 migration new lingjing_session_revocation_ledger",
+      "remoteAppliedByThisChat": false,
+      "file": "infra/supabase/migrations/20261025031842_lingjing_session_revocation_ledger.sql"
     }
   ],
   "checks": [
@@ -180,6 +212,26 @@
       "result": "4 passed: stable per-profile device, additive old owner mapping/no renderer tokens, refresh singleflight with12-char opaque token, late refresh after logout blocked",
       "kind": "simulated protocol unit, not cloud",
       "command": "node --test supabase-main.test.cjs"
+    },
+    {
+      "command": "node --test supabase-main.test.cjs",
+      "kind": "simulated protocol, official SDK real object",
+      "result": "6 protocol unit cases passed including stable SDK dynamic token and channel cleanup"
+    },
+    {
+      "kind": "local PGlite/protocol only; real privacy HTTP verifier next",
+      "result": "13 passed including fake nested and serialized BYOK guard/safe projection and dynamic SDK lifecycle",
+      "command": "node --test cloud-save-sql.test.mjs supabase-main.test.cjs"
+    },
+    {
+      "command": "node --test cloud-identity-sql.test.mjs",
+      "result": "7 passed including managed-live revokedSID->freshSID->oldSID directRPC/RLS rejection, replacement revocation, other device stays active",
+      "kind": "LOCAL PGlite only"
+    },
+    {
+      "command": "node --test legacy-claims.test.cjs",
+      "result": "3 synthetic checks passed incl Windows DPAPI roundtrip Chinese nickname, originalowner/hash/date preserved; no cloud writes",
+      "kind": "LOCAL preparation only; actual old source still absent"
     }
   ],
   "realCloudEvidence": {
@@ -208,6 +260,32 @@
       "source": "df9f00a",
       "scope": "Actual HTTPS Auth8/8, not Electron/full-sync or two physical devices",
       "by": "coordinator"
+    },
+    "mainHttp": {
+      "scope": "Actual HTTPS Supabase + production AccountsService/SupabaseRemote + independent SQLite profiles in one Node process. Not Electron or two physical devices.",
+      "connectionFailure": "Controlled per-request real closed localhost TLS socket; no JWT sent to probe; host network not disabled",
+      "checks": 11,
+      "source": "4eb735e04a68c2846b34916f23681353a7f68771",
+      "realtimeChannelVerified": false,
+      "evidence": "artifacts/accounts/cloud-main-http-1792896651252/evidence.json",
+      "expiredSignedJwtVerified": false,
+      "passed": true
+    },
+    "dualElectron": {
+      "evidence": "artifacts/accounts/cloud-electron-1792897321861/evidence.json",
+      "scope": "Two real Electron44.9.3 Windows processes; main/preload/renderer production entry; actual HTTPS; DPAPI/vault reload; actor refresh; controlled connection refusal + process restart +SQLite outbox; same host only",
+      "source": "7784f8a3cfefb84a3ab6285d121166caeea9a03a",
+      "authorityPending": true,
+      "fullSaveVerified": false,
+      "passedChecks": 8,
+      "privateRealtimeReconnectVerified": false
+    },
+    "casConcurrency": {
+      "passed": true,
+      "scope": "Actual parallel HTTPS same base different actions exactly1 winner, same action replay exactly1 revision and2 durable total action rows; same host",
+      "source": "03dce6a",
+      "evidence": "docs/implementation/evidence/accounts/cloud-2026-10-25/cas-concurrency.json",
+      "checks": 2
     }
   },
   "preservation": {
@@ -221,11 +299,11 @@
     "Old runtime single session_token cloud adapter only after new Auth path and all domain consumers are migrated; preserve source-import reader and user files"
   ],
   "remaining": [
-    "Coordinator reviews/deploys Auth bridge migration/function, then run actual HTTPS Auth verifier with two same-account deviceIds and a distinct account",
-    "Implement protected-fragment full-save CAS, idempotency, conflict/readback and offline recovery; reject economic-state forgery",
-    "Main-process per-device secure token refresh and dual-Electron integration",
-    "Coordinator deploys reviewed migration/functions, then real HTTP anonymous/expired/forged/cross-account and double-device tests",
-    "EXTERNAL ONLY: old instance source data unavailable; full old-cloud-account migration requires recovered verified source and is not marked complete",
-    "Final independent coordinator acceptance"
+    "True dual isolated Electron + Windows safeStorage/restart + actual HTTPS sync/conflict/recovery",
+    "Actual SDK refresh/realtime reconnect in new Auth lifecycle; domain04 owns private channels",
+    "Legacy source staging/import tool and old source external availability",
+    "Converge domain fragments with02/03/04/05/07 and coordinator final integration",
+    "Signed already-expired JWT rejection evidence distinct from forged-exp payload",
+    "Final fetch/pull remote verification and coordinator independent acceptance"
   ]
 }

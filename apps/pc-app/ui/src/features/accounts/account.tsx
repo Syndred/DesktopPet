@@ -83,7 +83,7 @@ function AccountDetails({ user, session, refreshSession }: { user: AccountUser; 
           <div className="ac-identity"><span className="ac-avatar" role="img" aria-label="灵境默认头像" /><div><strong>{user.username}</strong><p>@{user.account} · {user.provider === "runtime" ? "云端账号" : "本机账号"}</p></div></div>
           <form className="ac-profile-form" onSubmit={submitProfile}><fieldset disabled={Boolean(pending)}>
             <label>用户名<Input value={label} onChange={e => setLabel(e.target.value)} minLength={2} maxLength={24} autoComplete="nickname" required /></label>
-            {user.provider === "runtime" && <label>当前密码<Input type="password" value={profilePassword} onChange={e => setProfilePassword(e.target.value)} autoComplete="current-password" minLength={6} required /></label>}
+            {user.provider === "runtime" && user.authKind!=='supabase' && <label>当前密码<Input type="password" value={profilePassword} onChange={e => setProfilePassword(e.target.value)} autoComplete="current-password" minLength={6} required /></label>}
             <Button className="ac-primary" type="submit">{pending === "profile" ? "保存中…" : "保存资料"}</Button>
           </fieldset></form>
         </Card>
@@ -103,6 +103,8 @@ function AccountDetails({ user, session, refreshSession }: { user: AccountUser; 
               : <AccountStatus icon={sync?.lastError ? CloudOff : sync?.localChanged ? Cloud : CloudCheck} label={sync?.lastError ? "同步未完成" : sync?.localChanged ? "待同步" : sync?.lastVerifiedAt ? "已同步" : "尚未同步"} detail={sync?.lastError ? "暂时无法同步，存档仍保存在本机。" : sync?.localChanged ? "本机有更新，可立即同步或导出备份。" : sync?.lastVerifiedAt ? `上次同步：${dateText(sync.lastVerifiedAt)}` : "本机备份可随时导出。"} tone={sync?.lastError ? "warning" : sync?.lastVerifiedAt && !sync?.localChanged ? "success" : "muted"} />}
             {Boolean(sync?.pending) && <AccountStatus icon={RefreshCw} label={`待同步 ${sync?.pending}`} detail="联网后可重试，当前记录仍保存在本机。" />}
             {Boolean(sync?.conflicts) && <AccountStatus icon={AlertCircle} label="版本冲突" detail="先预览云端存档，再决定是否恢复。" tone="warning" />}
+            {Boolean(sync?.unverifiedLocal) && <AccountStatus icon={AlertCircle} label="原始进度已保留" detail="本机历史进度仍需核验来源，可同步的内容会独立保存。" tone="warning" />}
+            {Boolean(sync?.privacyRedactions) && <AccountStatus icon={LockKeyhole} label="私密字段留在本机" detail="云存档已排除密钥及旧来源原文；本机原件与备份仍保留。" />}
           </div>
           {user.provider === "runtime" && <label className="ac-check"><AccountSwitch label="开启存档同步" disabled={Boolean(pending) || !settings} checked={settings?.document.sync.enabled || false}
             onChange={enabled => { void run("sync-preference", async () => {
@@ -113,8 +115,8 @@ function AccountDetails({ user, session, refreshSession }: { user: AccountUser; 
           }
           <div className="ac-actions">
             {user.provider === "runtime" && <Button className="ac-primary" disabled={Boolean(pending) || !settings?.document.sync.enabled} onClick={() => void run("sync", async () => {
-              const result = await request<{ verified?: boolean }>(sync?.pending ? "syncRetry" : "syncNow", { actionId: newActionId() });
-              await refresh(); return result.verified ? "同步完成。" : "暂无待同步内容。";
+              const result = await request<{ verified?: boolean; personalVerified?: boolean; requiresAuthority?: boolean; privacyRedactions?: boolean }>(sync?.pending ? "syncRetry" : "syncNow", { actionId: newActionId() });
+              await refresh(); return result.privacyRedactions ? "可同步内容已保存，私密字段与原始历史仍在本机保留。" : result.requiresAuthority ? "设置与聊天已同步，本机历史进度等待来源核验。" : result.verified ? "同步完成。" : "暂无待同步内容。";
             })}>{pending === "sync" ? "同步中…" : sync?.pending ? "重试同步" : "立即同步"}</Button>}
             <Button className="ac-secondary" disabled={Boolean(pending)} onClick={() => void run("export", async () => {
               const result = await request<{ canceled?: boolean; filePath?: string; excluded?: string[] }>("backupExport");

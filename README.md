@@ -1,34 +1,30 @@
 # 灵境 · 桌面伙伴
 
-This repository contains the baseline monorepo for:
-1. `apps/pc-app` (Electron + React + TypeScript + Vite)
-2. `apps/mobile-app` (Flutter + Unity integration placeholder)
-3. `apps/supabase-edge` (Supabase edge functions and validation)
-4. `packages/shared-types` (cross-platform contracts)
+正式桌面程序使用 Electron 44.9.3、React、TypeScript、Vite 与 SQLite。云端升级遵守 [统一任务契约](docs/implementation/cloud-upgrade-2026-10-25.md)，业务部署由主协调集中执行。
 
-## Quick Start
+## Windows 开发
 
-```bash
-npm install
-npm run native:electron
+使用 Node.js 22.12 或更新版本；当前已验收 Node 24 / Windows x64。
+
+```powershell
+npm ci
+npm run native:check
 npm run dev:pc
 ```
 
-## Scripts
+better-sqlite3 13 使用发布包内的 N-API 预编译文件。普通安装不需要 VS C++ 工具链。锁文件保留上游发布的 gypfile:false，避免 npm/cli#9837 的隐式编译问题；维护依赖后执行 npm run deps:lock。npm run verify:install 会在全新隔离目录检查普通 npm ci 与 Node/Electron 交叉读写，不修改现有 node_modules。
 
-1. `npm run lint`
-2. `npm run typecheck`
-3. `npm run test`
-4. `npm run verify`
-5. `npm run dev:pc`
+## 正式入口与检查
 
-## Notes
+- 主进程：apps/pc-app/runtime/main/index.ts；安全 preload：runtime/preload/index.ts。
+- React 主界面按路由加载；桌宠使用独立 desktop.html，保持同一资源渲染器。
+- npm run build:pc 编译正式程序；npm run start:pc 启动编译版本。
+- npm run package:pc:win 生成 artifacts/pc-cloud-upgrade 下的 Windows 便携 EXE。
+- npm run typecheck、npm run test:foundation 与 npm run pc:smoke 检查类型、实际 SQLite 和正式启动结构。
+- 业务模块通过 [工程契约](docs/implementation/foundation-contract.md) 注册。旧 HTML renderer/preload/main 已移除。
 
-1. Copy `.env.example` to `.env` and fill required keys.
-2. Mobile app implementation is tracked in `apps/mobile-app/README.md`.
-3. Runtime setup and validation guide is in `docs/runtime-config.md`.
-4. Delivery-grade task plan is in `docs/project-delivery-tasks.md`.
-5. `npm run build:pc && npm run start:pc` 运行编译版本；`npm run package:pc:win` 生成 Windows 便携包。
-6. `npm run pc:smoke:shell` 在真实 Electron 中检查窗口、导航与安全桥，证据在 `artifacts/foundation/`。
-7. 新模块通过 `docs/implementation/foundation-contract.md` 的入口自动注册。旧版入口保留为 `npm run dev:pc:legacy`。
-8. 原有 JSON 存档保留，首次读取前备份为 `.before-lingjing.bak`。新增功能使用同目录的 `lingjing.sqlite`，测试通过 `PET_USER_DATA_DIR` 隔离。
+## 数据与恢复
+
+程序继续查找原有用户目录和 pet-runtime-data.json，首次迁移前保留 .before-lingjing.bak；原始 JSON 由只读兼容能力读取。新增数据保存在原用户目录的 lingjing.sqlite。不得删除原账号、宠物 ID、成长、库存、聊天、资源、历史及备份。
+
+清理决策见 [旧文件与消费者清单](docs/implementation/cleanup/cloud-foundation-inventory.json)。清理前完整 Git bundle 存放在 artifacts/recovery/cloud-foundation-2026-10-25，恢复时克隆到新目录，不覆盖当前检出或用户存档。设计文件及 comparisontext 加密恢复备份不属于清理范围。

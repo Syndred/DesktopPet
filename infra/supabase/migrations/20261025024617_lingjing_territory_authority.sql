@@ -333,7 +333,7 @@ begin
     if result is null and p_kind='challenge' then
       permit=public.lingjing_discovery_take_location(actor,(p_input->>'locationReceiptId')::uuid,'territory:challenge',region.id,'territory:'||p_request_hash);
       pt=public.runtime_territory_verified_point(p_owner,p_device_id,permit);
-      if region.scenario_id is distinct from case when permit->>'source'='simulated' then permit#>>'{fix,scenarioId}' else null end then raise exception 'LOCATION_SCENARIO_MISMATCH';end if;
+      if region.scenario_id is distinct from (case when permit->>'source'='simulated' then permit#>>'{fix,scenarioId}' else null end) then raise exception 'LOCATION_SCENARIO_MISMATCH';end if;
       if not extensions.st_covers(region.boundary,pt) then raise exception 'OUT_OF_TERRITORY_RANGE'; end if;
       if region.owner_account_id=p_owner then raise exception 'ALREADY_OWNED'; end if;
       if (p_input->>'expectedTerritoryRevision')::bigint is distinct from region.revision then raise exception 'TERRITORY_CONFLICT'; end if;
@@ -388,7 +388,7 @@ begin
         if winner='player' then
           permit=public.lingjing_discovery_take_location(actor,(p_input->>'locationReceiptId')::uuid,'territory:settle',challenge.session_id,'territory:'||p_request_hash);
           pt=public.runtime_territory_verified_point(p_owner,p_device_id,permit);
-          if region.scenario_id is distinct from case when permit->>'source'='simulated' then permit#>>'{fix,scenarioId}' else null end then raise exception 'LOCATION_SCENARIO_MISMATCH';end if;
+          if region.scenario_id is distinct from (case when permit->>'source'='simulated' then permit#>>'{fix,scenarioId}' else null end) then raise exception 'LOCATION_SCENARIO_MISMATCH';end if;
           if not extensions.st_covers(region.boundary,pt) then raise exception 'OUT_OF_TERRITORY_RANGE';end if;
         end if;
         if p_payload#>>'{result,data,territoryId}' is distinct from region.id or p_payload#>>'{result,data,petId}' is distinct from challenge.pet_id or p_payload#>>'{result,data,won}' is distinct from (winner='player')::text

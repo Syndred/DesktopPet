@@ -10,9 +10,10 @@ const messages={INVALID_CREDENTIALS:'账号或密码不正确。',INVALID_OLD_PA
   AUTH_RATE_LIMITED:'尝试过于频繁，请稍后重试。',SESSION_INVALIDATED:'此设备登录已失效，请重新登录。'};
 function failure(code,message){return new AccountError(code,messages[code]||message||'云端请求未完成，原数据已保留。');}
 
-function publicConfig({env=process.env,resourcesPath=process.resourcesPath}={}){
+function publicConfig({env=process.env,resourcesPath=process.resourcesPath,sourcePath=join(__dirname,'../../../../../config/lingjing-cloud-public.json')}={}){
   let value={};
-  const file=env.LINGJING_PUBLIC_CONFIG||(resourcesPath&&join(resourcesPath,'lingjing-cloud-public.json'));
+  const file=env.LINGJING_PUBLIC_CONFIG||[resourcesPath&&join(resourcesPath,'lingjing-cloud-public.json'),sourcePath].find(candidate=>candidate&&existsSync(candidate));
+  if(env.LINGJING_PUBLIC_CONFIG&&!existsSync(file))throw failure('CLOUD_CONFIG_INVALID');
   if(file&&existsSync(file)){
     try{value=JSON.parse(readFileSync(file,'utf8'));}catch{throw failure('CLOUD_CONFIG_INVALID');}
   }
@@ -54,7 +55,7 @@ function normalized(bundle){
 class SupabaseRemote {
   constructor({userData,config=publicConfig(),fetcher=globalThis.fetch,deviceId,now=Date.now}={}){
     this.enabled=Boolean(config);this.authKind='supabase';this.config=config;this.fetcher=fetcher;this.now=now;
-    this.deviceId=deviceId||stableDevice(userData);this.active=null;this.refreshing=new Map();this.proofListeners=new Set();this.invalidListeners=new Set();
+    this.deviceId=deviceId||stableDevice(userData);this.active=null;this.refreshing=new Map();this.proofListeners=new Set();this.invalidListeners=new Set();this.sdkSessions=new Map();
     invariant(uuid(this.deviceId),'DEVICE_ID_INVALID','设备标识无效。');
   }
   async request(name,body,proof){
@@ -77,10 +78,19 @@ class SupabaseRemote {
     return proof;
   }
   setCurrentUser(session){
-    if(!session){this.active=null;return;}
+    if(!session){this.active=null;this.closeSdkSessions();return;}
     const proof=decodeProof(session.cloudProof||session.proof);
-    invariant(proof.actor.deviceId===this.deviceId&&proof.actor.ownerAccountId===(session.ownerAccountId||session.id),'INVALID_CLOUD_IDENTITY','凭据与当前设备或账号不匹配。');this.active=proof;
+    invariant(proof.actor.deviceId===this.deviceId&&proof.actor.ownerAccountId===(session.ownerAccountId||session.id),'INVALID_CLOUD_IDENTITY','凭据与当前设备或账号不匹配。');
+    this.active=proof;this.closeSdkSessions(proof.actor.sessionId);
   }
+  closeSdkSessions(keepSessionId){
+    for(const [sid,record]of this.sdkSessions)if(sid!==keepSessionId){
+      this.sdkSessions.delete(sid);record.client.realtime.disconnect();
+      void record.client.removeAllChannels().catch(()=>{});
+      void record.client.realtime.setAuth().catch(()=>{});
+    }
+  }
+  dispose(){this.active=null;this.closeSdkSessions();this.proofListeners.clear();this.invalidListeners.clear();}
   onInvalidated(listener){this.invalidListeners.add(listener);return()=>this.invalidListeners.delete(listener);}
   onProofChanged(listener){this.proofListeners.add(listener);return()=>this.proofListeners.delete(listener);}
   async refresh(proof){
@@ -95,6 +105,7 @@ class SupabaseRemote {
       if(this.active?.actor.sessionId===sid&&this.active.actor.ownerAccountId===proof.actor.ownerAccountId){
         const previousProof=JSON.stringify(this.active);this.active=next;
         for(const listener of this.proofListeners)listener({ownerAccountId:next.actor.ownerAccountId,previousProof,proof:user.proof});
+        const sdk=this.sdkSessions.get(sid);if(sdk)void sdk.client.realtime.setAuth().catch(()=>{});
       }
       return next;
     })();this.refreshing.set(sid,pending);try{return await pending;}finally{this.refreshing.delete(sid);}
@@ -140,7 +151,7 @@ class SupabaseRemote {
   async signOut(session){
     if(!session?.cloudProof)return;
     let proof=decodeProof(session.cloudProof);
-    if(this.active?.actor.sessionId===proof.actor.sessionId){proof=this.active;this.active=null;}
+    if(this.active?.actor.sessionId===proof.actor.sessionId){proof=this.active;this.active=null;this.closeSdkSessions();}
     if(proof.expiresAt<=this.now()/1000+5)proof=await this.refresh(proof);
     await this.request('lingjing-auth',{op:'logout'},proof);
   }
@@ -150,8 +161,22 @@ class SupabaseRemote {
     invariant(reply.actor.ownerAccountId===proof.actor.ownerAccountId,'IDENTITY_CONFLICT','云端身份不匹配。');
     const context={...reply.actor,actor:Object.freeze({...reply.actor})};
     const {createClient}=require('@supabase/supabase-js');
-    const current=this.proofFor(session),client=createClient(this.config.url,this.config.key,{auth:{persistSession:false,autoRefreshToken:false,detectSessionInUrl:false},
-      global:{headers:{Authorization:`Bearer ${current.accessToken}`,'X-Lingjing-Device-Id':this.deviceId}}});
+    const current=this.proofFor(session),sid=current.actor.sessionId;
+    let record=this.sdkSessions.get(sid);
+    if(!record){
+      const token=async()=>{
+        if(this.active?.actor.sessionId!==sid||this.active.actor.ownerAccountId!==current.actor.ownerAccountId)return null;
+        return(await this.fresh(session)).accessToken;
+      };
+      const client=createClient(this.config.url,this.config.key,{accessToken:token,
+        global:{fetch:(...args)=>this.fetcher(...args),headers:{'X-Lingjing-Device-Id':this.deviceId}}});
+      record={client};this.sdkSessions.set(sid,record);
+      // SDK2.98 seeds Realtime via setAuth(token), which selects manual mode.
+      // Await initial callback completion, then explicitly restore callback mode.
+      await token();await new Promise(resolve=>setImmediate(resolve));await client.realtime.setAuth();
+    }
+    invariant(this.active?.actor.sessionId===sid,'SESSION_CHANGED','登录状态已经变化。');
+    const client=record.client;
     for(const [key,value] of Object.entries({client,accessToken:current.accessToken,url:this.config.url,publishableKey:this.config.key,
       invoke:(name,body)=>this.invoke(session,name,body)}))Object.defineProperty(context,key,{value,enumerable:false});
     return Object.freeze(context);

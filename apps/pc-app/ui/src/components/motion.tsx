@@ -29,7 +29,7 @@ export function AppMotionProvider({ children }: { children: ReactNode }) {
   }, [active]);
   useEffect(() => {
     const refresh = async () => {
-      const result = await window.lingjing.invoke<any>('accounts', 'settingsGet');
+      const result = await window.lingjing.call('accounts', 'settingsGet');
       setEnabled(result.ok ? result.data.document.desktop.animationsEnabled !== false : true);
     };
     void refresh();

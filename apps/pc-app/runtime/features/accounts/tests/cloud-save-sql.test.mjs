@@ -15,7 +15,7 @@ await db.exec(`create role anon;create role authenticated;create role service_ro
  create table auth.sessions(id uuid primary key,user_id uuid not null references auth.users(id),not_after timestamptz);
  create function auth.jwt() returns jsonb language sql stable as $$select coalesce(nullif(current_setting('request.jwt.claims',true),''),'{}')::jsonb$$;
  create function auth.uid() returns uuid language sql stable as $$select (auth.jwt()->>'sub')::uuid$$;`);
-for(const file of ['20261025020314_lingjing_identity_actor_contract.sql','20261025021755_lingjing_auth_bridge.sql','20261025021759_lingjing_protected_save_cas.sql'])await db.exec(readFileSync(`infra/supabase/migrations/${file}`,'utf8'));
+for(const file of ['20261025020314_lingjing_identity_actor_contract.sql','20261025021755_lingjing_auth_bridge.sql','20261025021759_lingjing_protected_save_cas.sql','20261025025906_lingjing_cloud_secret_guard.sql'])await db.exec(readFileSync(`infra/supabase/migrations/${file}`,'utf8'));
 await db.query('insert into auth.users(id) values($1),($2)',[uidA,uidB]);
 await db.query('insert into auth.sessions(id,user_id) values($1,$2),($3,$2),($4,$5)',[sidA,uidA,sidA2,sidB,uidB]);
 async function as(uid,sid,device,sql,params=[],role='authenticated'){
@@ -86,4 +86,45 @@ test('LOCAL PGlite only: legacy archive retains untrusted local data without cha
  const archive=(await as(uidA,sidA,deviceA,"select public.lingjing_archive_save('archive-original-local','unverified-local',$1) item",[old]))[0].item;assert.equal(archive.promoted,false);
  assert.equal((await head()).envelope.data.modules.garden.data.coins,7);
  const again=(await as(uidA,sidA,deviceA,"select public.lingjing_archive_save('archive-original-local','unverified-local',$1) item",[old]))[0].item;assert.equal(again.id,archive.id);
+});
+test('LOCAL PGlite only: normalized secret keys and nested serialized JSON cannot bypass cloud archive rejection',async()=>{
+ const marker='FAKE_CLOUD_CREDENTIAL_PROBE_NOT_A_REAL_KEY';
+ for(const value of [{apiKey:marker},{encryptedSecret:marker},{openai_api_key:marker},JSON.stringify({apiKey:marker}),JSON.stringify(JSON.stringify({nested:{encrypted_secret:marker}}))]){
+  const doc=envelope(ownerA,{legacy:{version:1,data:{nested:value}}});
+  await assert.rejects(as(uidA,sidA,deviceA,"select public.lingjing_archive_save($1,'unverified-local',$2)",['secret-reject-'+Math.random().toString(36).slice(2),doc]),/LJ_SAVE_CONTAINS_SECRET/);
+ }
+ const {cloudProjection}=createRequire(import.meta.url)('../cloud-projection.cjs');
+ const original=envelope(ownerA,{settings:{version:1,data:{desktop:{},privacy:{},metadata:JSON.stringify({nested:{apiKey:marker},kept:'safe'})}},legacy:{version:1,data:{apiKey:marker}}},
+  {companion_legacy_archive:{schema:[{name:'owner_account_id'},{name:'source_json'}],rows:[{owner_account_id:ownerA,source_json:JSON.stringify({encryptedSecret:marker})}]}});
+ const unchanged=JSON.stringify(original),projection=cloudProjection(original);assert.equal(JSON.stringify(original),unchanged);assert.equal(projection.sourceChecksum,original.checksum);
+ assert.notEqual(projection.projectedChecksum,original.checksum);assert.equal(projection.originalCloudComplete,false);assert.ok(!JSON.stringify(projection.envelope).includes(marker));
+ const saved=(await as(uidA,sidA,deviceA,"select public.lingjing_archive_save('safe-projection-probe','unverified-local',$1) item",[projection.envelope]))[0].item;assert.equal(saved.promoted,false);
+ const rows=await as(uidA,sidA,deviceA,"select envelope from public.lingjing_save_archives where action_id='safe-projection-probe'");assert.ok(!JSON.stringify(rows).includes(marker));
+});
+test('LOCAL PGlite only: authored JSON examples and public capture proof remain byte-for-byte unchanged',async()=>{
+ const text='{"password":"EXAMPLE_PLACEHOLDER","enabled":true}',current=(await head()).envelope,doc=structuredClone(current);
+ doc.data.modules.conversations={version:1,data:{ownerAccountId:ownerA,tables:{
+  conversation_messages:[{owner_account_id:ownerA,pet_id:'original-pet-1',id:'json-example',content:text}],
+  conversation_memories:[{owner_account_id:ownerA,pet_id:'original-pet-1',id:'json-memory',content:text}],
+  conversation_profiles:[{owner_account_id:ownerA,pet_id:'original-pet-1',persona:text,reply_style:text}]
+ }}};
+ const source=seal(Object.fromEntries(Object.entries(doc).filter(([key])=>key!=='checksum'))),{cloudProjection}=createRequire(import.meta.url)('../cloud-projection.cjs');
+ const projection=cloudProjection(source);assert.equal(projection.projectedChecksum,source.checksum);assert.equal(projection.envelope.data.modules.conversations.data.tables.conversation_messages[0].content,text);
+ const saved=await push('authored-json-must-survive',4,projection.envelope);assert.equal(saved.envelope.data.modules.conversations.data.tables.conversation_memories[0].content,text);
+ const withProof=envelope(ownerA,{discovery:{version:1,data:{proof:{captureId:'public-business-proof',signature:'receipt-signature'}}}});
+ assert.equal(canonical(cloudProjection(withProof).envelope.data.modules.discovery.data.proof),canonical(withProof.data.modules.discovery.data.proof));
+ const archived=(await as(uidA,sidA,deviceA,"select public.lingjing_archive_save('public-capture-proof','unverified-local',$1) item",[withProof]))[0].item;assert.equal(archived.promoted,false);
+});
+test('LOCAL PGlite only: a failed authoritative snapshot rolls domain mutation and common revision back together',async()=>{
+ await db.exec(`create table public.local_test_domain_balance(owner_id text primary key,coins integer not null);
+  grant all on public.local_test_domain_balance to service_role;
+  create function public.local_test_atomic_reward(p_owner text) returns void language plpgsql as $$ begin
+   perform lingjing_private.lock_save_owner(p_owner);
+   update public.local_test_domain_balance set coins=coins+100 where owner_id=p_owner;
+   perform lingjing_private.commit_authority(p_owner,'invalid-atomic-reward',jsonb_build_object('garden',jsonb_build_object('tables',jsonb_build_object('test_balances',
+    jsonb_build_object('schema','[]'::jsonb,'rows',jsonb_build_array(jsonb_build_object('owner_account_id','other-owner','coins',100)))))));
+  end $$;grant execute on function public.local_test_atomic_reward(text) to service_role;`);
+ await db.query('insert into public.local_test_domain_balance values($1,7)',[ownerA]);const prior=(await head()).revision;
+ await assert.rejects(service('select public.local_test_atomic_reward($1)',[ownerA]),/LJ_SAVE_OWNER_MISMATCH/);
+ assert.equal((await db.query('select coins from public.local_test_domain_balance where owner_id=$1',[ownerA])).rows[0].coins,7);assert.equal((await head()).revision,prior);
 });

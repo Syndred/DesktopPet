@@ -11,7 +11,10 @@ const messages = {
   INVALID_RESPONSE: "模型响应不完整或格式不受支持，请重试。", EMPTY_RESPONSE: "模型没有返回文本，请检查模型设置。",
   RESPONSE_TOO_LARGE: "模型回复超过本地安全长度限制。", NETWORK_ERROR: "无法连接模型服务，请检查网络和接口地址。",
   RETRY_NOT_ALLOWED: "只能重试这只伙伴最后一次失败或停止的回复。", NOT_FOUND: "记录不存在或已删除。",
-  MEMORY_LIMIT: "这只伙伴已保存 100 条记忆，请先整理已有记忆。", INTERNAL_ERROR: "操作未完成，请稍后重试。"
+  MEMORY_LIMIT: "这只伙伴已保存 100 条记忆，请先整理已有记忆。",
+  LEGACY_CORRUPT: "旧记录暂时无法读取，原始存档仍保留。", LEGACY_INVALID: "旧记录的归属或格式无法确认，原始存档仍保留。",
+  LEGACY_EMPTY: "没有可导入的旧记录。", LEGACY_CONFLICT: "旧记录与当前内容有冲突；可先仅导入聊天，原始存档仍保留。",
+  INTERNAL_ERROR: "操作未完成，请稍后重试。"
 };
 class ConversationError extends Error {
   constructor(code) { super(messages[code] || messages.INTERNAL_ERROR); this.code = code; }

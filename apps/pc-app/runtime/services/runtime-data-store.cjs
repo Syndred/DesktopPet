@@ -162,6 +162,7 @@ const SPECIES_META_BY_ELEMENT = {
 class RuntimeDataStore {
   constructor(options = {}) {
     this.filePath = options.filePath;
+    this.readOnly = options.readOnly === true;
     this.sessionFilePath =
       typeof options.sessionFilePath === "string" && options.sessionFilePath.trim().length > 0
         ? options.sessionFilePath.trim()
@@ -975,7 +976,7 @@ class RuntimeDataStore {
   loadState() {
     if (!existsSync(this.filePath)) {
       const defaults = createDefaultState();
-      this.persistRaw(defaults);
+      if (!this.readOnly) this.persistRaw(defaults);
       return defaults;
     }
 
@@ -983,9 +984,10 @@ class RuntimeDataStore {
       const raw = readFileSync(this.filePath, "utf8");
       const parsed = JSON.parse(raw);
       const normalized = normalizeRuntimeState(parsed);
-      this.persistRaw(normalized);
+      if (!this.readOnly) this.persistRaw(normalized);
       return normalized;
-    } catch {
+    } catch (error) {
+      if (this.readOnly) throw Object.assign(new Error('旧存档无法读取，原文件已保留。'), { code: 'LEGACY_ARCHIVE_INVALID', cause: error });
       const defaults = createDefaultState();
       this.persistRaw(defaults);
       return defaults;
@@ -999,6 +1001,7 @@ class RuntimeDataStore {
   }
 
   persistRaw(state) {
+    if (this.readOnly) throw Object.assign(new Error('旧存档仅用于迁移读取。'), { code: 'READ_ONLY_LEGACY_ARCHIVE' });
     mkdirSync(dirname(this.filePath), { recursive: true });
     writeFileSync(this.filePath, JSON.stringify(state, null, 2), "utf8");
   }
@@ -1020,6 +1023,7 @@ class RuntimeDataStore {
   }
 
   persistSessionUserId() {
+    if (this.readOnly) throw Object.assign(new Error('旧登录存档仅用于迁移读取。'), { code: 'READ_ONLY_LEGACY_ARCHIVE' });
     if (!this.sessionFilePath) return;
     const payload = {
       version: 1,
