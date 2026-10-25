@@ -68,8 +68,6 @@ type LingjingActor = {
 
 JSON SHA256 和现有备份保持兼容，SQL 处理 UTF-16 键排序及 ECMAScript 最短数字串（包括1e23、subnormal），不能用 PostgreSQL 默认 JSONB 文本替代。归档保留未验证玩法数据但不会变成权威头；旧源仍需可信数据与凭据验证。不能部署旧 `accounts-sync` 的 runtime session_token 实现作为新权限模型。
 
-## 当前验证和来源
-
 ## Electron 主进程消费接口
 
 默认账号入口改用 `SupabaseRemote`，开发源码默认读取仓库 `config/lingjing-cloud-public.json`，发布包读取 `resources/lingjing-cloud-public.json`。`LINGJING_PUBLIC_CONFIG` 指向的公开 JSON、`LINGJING_SUPABASE_URL` / `LINGJING_SUPABASE_PUBLISHABLE_KEY` 环境变量可显式覆盖。配置只允许 HTTPS + 现代 publishable key，secret 永不接入桌面。设备 UUID 位于当前 userData 的 `accounts/device.json`，每个独立用户目录独立保存。旧单 token HTTP 适配仅显式 `LINGJING_LEGACY_AUTH=1` 可启用，不用于新账号路径。
@@ -80,8 +78,12 @@ JSON SHA256 和现有备份保持兼容，SQL 处理 UTF-16 键排序及 ECMAScr
 
 同一个 owner/device/Auth session 取得的 `.client` 是同一个官方 SDK 实例。SDK 使用 `accessToken` 异步 callback，由账号模块在每次 Data API/Storage 请求及 Realtime callback/heartbeat/reconnect 时取得仍有效的 access JWT；没有固定 Authorization header。刷新后账号模块调用 `client.realtime.setAuth()` 更新现有频道，并保持callback模式。消费者不得手动 `setAuth(token)` 固定令牌；SDK的 `.auth` 不对领域开放，密码/刷新由账号模块独占。退出、失效、切账号或Auth session更换时取消频道并断开连接，旧SDK回调不再提供该账号JWT。`.accessToken` 是兼容的瞬时值，长期任务必须使用SDK callback或 `.invoke()`，不可缓存该字符串。
 
-主进程受保护同步先完整保存 `account_sync_sources.original_document`，再按已确认的 cloudRevision 拼合个人设置/聊天与当前服务端权威片段。缺少可信来源的本机玩法差异上传为 `promoted:false` 原档，不会覆盖云库存。同步结果 `requiresAuthority:true` 时只声明个人内容成功，UI明确显示历史进度待核验；所有本机数据仍可导出。冲突不会重定基准版本；显式云恢复前生成原档备份。已经准备的CAS输入在网络/响应丢失后原样重试，不能重新读取新版头覆盖原action内容。
+主进程受保护同步先完整保存 `account_sync_sources.original_document`，再按已确认的 cloudRevision 拼合个人设置/聊天与当前服务端权威片段。缺少可信来源的本机玩法差异只上传 `promoted:false` 安全投影，不会覆盖云库存。`cloud-projection.cjs` 排除旧legacy原文、raw/source_json、凭据字段及配置JSON内嵌的凭据，单列 `original_checksum` 与 `cloud_projection_checksum` 和排除项；不能把安全投影称为完整原档云备份。本机旧源原件、原始快照和备份保留。同步结果 `requiresAuthority:true` / `privacyRedactions:true` 时只声明可同步内容成功，UI显示核验/私密字段留在本机。冲突不会重定基准版本；显式云恢复前生成原档备份。已经准备的CAS输入在网络/响应丢失后原样重试，不能重新读取新版头覆盖原action内容。
 
-本地 `cloud-identity-sql.test.mjs` 已验证：旧文本 owner保留、客户端不能绑定/读取旧凭据、两个 device/session 同时有效、跨 owner/假设备/失效 session 拒绝、撤销单设备不踢另一设备。Deno 2.9.6 类型检查通过；SDK 2.98.0 固定并保留 lock。已合入 Electron44.9.3 / SQLite13.0.3 公共检查点并通过 native:check，未 rebuild 共用 node_modules。真实云端迁移/HTTP结果仍待集中部署，不以这些本地检查代替。
+`20261025025906_lingjing_cloud_secret_guard.sql` 与客户端使用一致的schema边界：`conversations.data.tables.conversation_messages.content`、`conversation_memories.content`、`conversation_profiles.persona/reply_style` 的字符串是用户正文，逐字保留，即使正文是 `{"password":"EXAMPLE_PLACEHOLDER","enabled":true}`。只有这些明确字段免于字符串JSON配置解析；其他位置的nested/serialized credential继续拒绝。通用表的对应正文叶子也使用完整路径判断，不能通过带点的伪造key名绕过。公开业务 `proof`（例如捕捉回执）不视为登录密钥，`cloudProof/sessionProof/authProof` 才是账号私密字段。
+
+## 当前验证和来源
+
+真实Auth由主协调部署并HTTPS8/8验收；CAS部署后的本会话主进程HTTPS11/11证据为 `artifacts/accounts/cloud-main-http-1792896651252/evidence.json`。实际双Electron44.9.3、Windows safeStorage、同账号双会话、跨进程个人存档读回/冲突/加密重启与持久队列、SDK实际令牌轮转8项通过：`artifacts/accounts/cloud-electron-1792897321861/evidence.json`。后一证据明确 `fullSaveVerified:false` / `authorityPending:true`：当前完整域初始化/权威片段仍由02/03/04/05/07整合，不能冒称全域存档已完成；同机双进程也不能冒称两台实体设备。secret guard修订待集中部署和真实隐私HTTPS读回，不以本地8个SQL/6个协议测试代替。
 
 官方资料（2026-10-25 已核对）：[Auth sessions](https://supabase.com/docs/guides/auth/sessions)、[Sign out scopes](https://supabase.com/docs/guides/auth/signout)、[Edge secrets](https://supabase.com/docs/guides/functions/secrets)、[新 API keys](https://supabase.com/docs/guides/getting-started/migrating-to-new-api-keys)、[RLS](https://supabase.com/docs/guides/database/postgres/row-level-security)。已检查最新 changelog，Node/Electron 使用现代 TLS；未引入自造 JWT 或第二套认证密码系统。

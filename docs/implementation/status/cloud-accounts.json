@@ -2,10 +2,10 @@
   "module": "accounts",
   "scope": "2026-10-25 Supabase Auth/JWT, stable legacy owner mapping, per-device sessions, full-save CAS/idempotency/conflict/offline recovery",
   "branch": "codex/lingjing-accounts",
-  "commit": "fe56957",
+  "commit": "8e5c735",
   "worktree": "C:\\Users\\Administrator\\.codex\\worktrees\\lingjing-accounts\\DesktopPet",
   "goalStatus": "active",
-  "phase": "Privacy hotfixfe56957 ready for immediate centralized SQL migration; real dual Electron in progress, first attempt Auth passed but fixture require scope fixed",
+  "phase": "Privacy guard revised schema-aware and8SQL+6protocol passed; ready for coordinator review/deploy. True dual Electron8 checks passed with authorityPending/fullSaveVerifiedfalse explicitly.",
   "baseline": "46abf416e0500b53ef32fc29b441d923ef5a6a80",
   "dependencyCheckpoint": "b40af0efcf6062ddc2e8c360523c996fc91ebc0a",
   "contracts": {
@@ -114,7 +114,7 @@
     "cloudPrivacy": {
       "proof": "sourceChecksum and cloud projectionChecksum distinct; excluded paths recorded without values; never claim full original uploaded",
       "cloudArchive": "safe projection only, legacy module and raw archive/credential schema excluded, normalized sensitive keys and nested/serialized JSON stripped",
-      "server": "has_secret normalizes case/separators and recursively inspects JSON strings, including encryptedSecret/openai_api_key; no existing migration edited",
+      "server": "8e5c735 path-aware guard preserves authored message/memory/persona JSON string byte-for-byte, checks nested/serialized config credentials. Public business proof retained; cloudProof/sessionProof/authProof private. SQL8 cases +protocol6 passed.",
       "localOriginal": "account_sync_sources.original_document/original_checksum retains local snapshot; existing raw sources/backup files never deleted",
       "migration": "20261025025906_lingjing_cloud_secret_guard.sql",
       "implementation": "apps/pc-app/runtime/features/accounts/cloud-projection.cjs"
@@ -243,6 +243,15 @@
       "evidence": "artifacts/accounts/cloud-main-http-1792896651252/evidence.json",
       "expiredSignedJwtVerified": false,
       "passed": true
+    },
+    "dualElectron": {
+      "evidence": "artifacts/accounts/cloud-electron-1792897321861/evidence.json",
+      "scope": "Two real Electron44.9.3 Windows processes; main/preload/renderer production entry; actual HTTPS; DPAPI/vault reload; actor refresh; controlled connection refusal + process restart +SQLite outbox; same host only",
+      "source": "7784f8a3cfefb84a3ab6285d121166caeea9a03a",
+      "authorityPending": true,
+      "fullSaveVerified": false,
+      "passedChecks": 8,
+      "privateRealtimeReconnectVerified": false
     }
   },
   "preservation": {
