@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-25T05:30:30.094Z",
+  "updatedAt": "2026-10-25T05:31:06.727Z",
   "phase": "awaiting-automatic-resource-integration-fix-and-final-source-freeze",
   "goalStatus": "active",
   "deployed": {
@@ -124,5 +124,143 @@
     "dockerOrPodmanAvailable": false
   },
   "releaseStatus": "Engineering SFX/rollback verified; final business SFX not yet built or accepted",
-  "priorFailedEvidenceRetained": true
+  "priorFailedEvidenceRetained": true,
+  "module": "coordinator",
+  "clientDate": "2026-10-25",
+  "branch": "codex/lingjing-implementation-base",
+  "goalMode": true,
+  "contract": "docs/implementation/cloud-upgrade-2026-10-25.md",
+  "target": {
+    "projectRef": "jbvrdmrkwpznbrvteive",
+    "url": "https://jbvrdmrkwpznbrvteive.supabase.co",
+    "plan": "free",
+    "reused": "Text Comparision",
+    "otherProjectsUntouched": true
+  },
+  "assigned": [
+    {
+      "module": "灵境 08｜账号同步与桌面设置",
+      "threadId": "01a16dc5-cc18-7da0-9c80-2b3ede0154ec",
+      "hostId": "local"
+    },
+    {
+      "module": "灵境 05｜领地菜园背包与喂养",
+      "threadId": "01a16dc5-c0f2-7ea2-b491-d5d4b65e55e3",
+      "hostId": "local"
+    },
+    {
+      "module": "灵境 01｜基础架构与 UI 总集成",
+      "threadId": "01a16dc5-7796-7a43-a251-17ddd68b2a49",
+      "hostId": "local"
+    },
+    {
+      "module": "灵境 03｜地图定位与捕捉",
+      "threadId": "01a16dc5-b9cb-7421-884a-911c0d267322",
+      "hostId": "local"
+    },
+    {
+      "module": "灵境 02｜多宠物桌面与养成",
+      "threadId": "01a16dc5-b72d-78d0-9bd8-50bfe70cec63",
+      "hostId": "local"
+    },
+    {
+      "module": "灵境 07｜2D 角色资源与动画导入",
+      "threadId": "01a16dc5-c785-7e61-86ea-6d27260788f3",
+      "hostId": "local"
+    },
+    {
+      "module": "灵境 06｜AI 聊天人设与记忆",
+      "threadId": "01a16dc5-c418-7372-ac4b-1d9abb116865",
+      "hostId": "local"
+    },
+    {
+      "module": "灵境 04｜对战联机与战报",
+      "threadId": "01a16dc5-bc81-78c1-81f1-c7385f644a2c",
+      "hostId": "local"
+    }
+  ],
+  "battleProtection": {
+    "styleDeliveryNaturallyCompleted": "0ddda2a",
+    "styleGoalCompletedBeforeCloudDispatch": true,
+    "worktreeNotOverwritten": true
+  },
+  "approvedCheckpoints": [
+    {
+      "module": "accounts",
+      "commit": "45b857d",
+      "review": "Auth v2 8 real HTTPS checks; protected CAS with owner+pet compound ownership; main privacy/realtime followup in progress"
+    },
+    {
+      "module": "foundation",
+      "commit": "ced8e5e",
+      "review": "New main/preload, typed IPC, lazy routing and separate desktop; coordinator typecheck and 5 actual data/window boundary cases passed"
+    },
+    {
+      "module": "battle-style",
+      "commit": "0ddda2a",
+      "review": "V3 completed naturally before cloud dispatch; native manifest/1024 screenshot independently inspected, no style edits"
+    },
+    {
+      "module": "resources",
+      "commit": "4e8fdf8",
+      "review": "Private Storage deployed; actual HTTPS A/B bytes and server index independently read; reference verifier pending"
+    },
+    {
+      "module": "conversations",
+      "commit": "543b71f",
+      "review": "26 coordinator SQLite/archive/HTTP-protocol checks passed; real cloud pet chat sync pending"
+    },
+    {
+      "module": "foundation",
+      "commit": "b0e69bd",
+      "review": "Recoverable prototype/3D cleanup and package/release/profile discovery integrated. Incorrect monitor verdict rejected and original preserved; actual strict repeated ready protocol rerun passed. Final business portable still pending."
+    },
+    {
+      "module": "resources",
+      "commit": "c02b20c",
+      "review": "Source/byte verification and main cloudActor reviewed; root7 SQL +9 protocol checks passed. Fresh actor guard deployment and actual protected-ref/native test pending."
+    },
+    {
+      "module": "accounts",
+      "commit": "3e91bfd",
+      "review": "Legacy normalization is internal view only; original envelope/checksum/files retained. Root8 targeted native restore/provider cases and original signed expired HTTPS denial passed."
+    }
+  ],
+  "status": "awaiting-automatic-resource-integration-fix-and-final-source-freeze",
+  "remaining": [
+    "08 strictly reconcile verified resource hydration, including a prior07 pump, without overwriting personal/protected user changes; exercise upgrade from existing local baselines",
+    "Review and merge final sanitized battle and garden incremental native evidence",
+    "Freeze common source after the fix; run one final integrated verify, native and strict cloud source regression",
+    "Build the actual final portable SFX at that freeze; independently run complete normal IPC/React/HTTPS/SQLite/native business acceptance"
+  ],
+  "engineering": {
+    "historicalEngineeringCheckpoints": {
+      "electron": "44.9.3",
+      "betterSqlite3": "13.0.3",
+      "cleanNpmCi": "passed on coordinator checkout",
+      "nativeSharedDb": "passed",
+      "evidence": "docs/implementation/evidence/cloud/2026-10-25/native-compatibility.json",
+      "integratedBuild": {
+        "sourceCommit": "bd18cfcd7aa7",
+        "codeFingerprint": "b3aea8f2264b",
+        "passed": true,
+        "kind": "production electron-vite build after approved foundation, V3 and conversations integration"
+      },
+      "reactReview": {
+        "skill": "vercel:react-best-practices",
+        "scope": "route loading, subscription cleanup, clocks, stable IDs, modal/session lifecycle and accessibility",
+        "targetedEslint": "passed",
+        "blockingFindings": 0
+      },
+      "profileDiscovery": "Canonical SQLite takes precedence over old JSON; explicit override and binary rollback retain the selected profile",
+      "packageMonitor": {
+        "rejectedOriginal": "running:true ready:false could not pass",
+        "correctedEvidence": "docs/implementation/evidence/foundation/cloud-engineering/packaged-fullscreen-monitor-verified.json",
+        "actualAwaitedObservations": 10,
+        "stableReadySamples": 3,
+        "finalPortablePackagePending": true
+      }
+    },
+    "finalBusinessPortablePending": true
+  }
 }
