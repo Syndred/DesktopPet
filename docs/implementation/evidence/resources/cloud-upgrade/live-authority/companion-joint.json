@@ -1,0 +1,51 @@
+{
+  "at": "2026-10-25T03:49:32.080Z",
+  "mode": "live",
+  "simulated": false,
+  "resourceId": "ea939131-eb50-4cde-adcc-c51241100c34",
+  "checks": [
+    "Actual companions-sync adopts one canonical pet",
+    "Client-only resource index cannot authorize appearance",
+    "Verified private reference authorizes only this same-owner pet appearance",
+    "Pet ID and full growth remain unchanged while resourceId is exact"
+  ],
+  "passed": true,
+  "pet": {
+    "ownerAccountId": "account:2851a984-dacc-4548-865e-1810bc3ab384",
+    "petId": "pet-fe5f48d3-7262-4562-9f5a-dab51f8d1319",
+    "resource": {
+      "kind": "2d",
+      "resourceId": "ea939131-eb50-4cde-adcc-c51241100c34"
+    },
+    "revision": 2,
+    "growth": {
+      "mood": 60,
+      "level": 1,
+      "stats": {
+        "hp": 130,
+        "atk": 26,
+        "def": 26,
+        "spd": 18
+      },
+      "satiety": 60,
+      "affinity": 0,
+      "winsTotal": 0,
+      "experience": 0
+    }
+  },
+  "revisions": {
+    "resource": 1,
+    "adopt": 2,
+    "appearance": 3
+  },
+  "fakeClientIndex": {
+    "resourceId": "65ce7ebb-fe5c-46c5-8186-97ec5a7777e8",
+    "appearanceStatus": 404,
+    "granted": false
+  },
+  "authority": {
+    "actionId": "companions:92075b37-b5b3-4f7d-b65e-a63492ae9277",
+    "revision": 3,
+    "checksum": "e6ca48f9d57c1b6699a9429dae456bf9ff98673ed1c2f95021e51366d5175605"
+  }
+}

@@ -1,0 +1,98 @@
+{
+  "at": "2026-10-25T03:33:38.787Z",
+  "scope": "Actual deployed PostGIS and role privileges; no fixture mutation",
+  "projectRef": "jbvrdmrkwpznbrvteive",
+  "checks": [
+    {
+      "acceptance": {
+        "tables": [
+          {
+            "rls": true,
+            "name": "runtime_territory_logs",
+            "anonSelect": false,
+            "authenticatedSelect": false
+          },
+          {
+            "rls": true,
+            "name": "runtime_territory_regions",
+            "anonSelect": false,
+            "authenticatedSelect": false
+          },
+          {
+            "rls": true,
+            "name": "runtime_territory_challenges",
+            "anonSelect": false,
+            "authenticatedSelect": false
+          },
+          {
+            "rls": true,
+            "name": "runtime_territory_attempts",
+            "anonSelect": false,
+            "authenticatedSelect": false
+          },
+          {
+            "rls": true,
+            "name": "runtime_territory_actions",
+            "anonSelect": false,
+            "authenticatedSelect": false
+          },
+          {
+            "rls": true,
+            "name": "runtime_territory_views",
+            "anonSelect": false,
+            "authenticatedSelect": false
+          },
+          {
+            "rls": true,
+            "name": "lingjing_garden_operations",
+            "anonSelect": false,
+            "authenticatedSelect": false
+          }
+        ],
+        "postgis": "POSTGIS=\"3.3.7 a0c7967\" [EXTENSION] PGSQL=\"170\" GEOS=\"3.14.1-CAPI-1.20.5\" PROJ=\"9.7.1\" LIBXML=\"2.15.1\" LIBJSON=\"0.18\" LIBPROTOBUF=\"1.5.2\" WAGYU=\"0.5.0 (Internal)\"",
+        "functions": [
+          {
+            "anon": false,
+            "name": "runtime_garden_commit_authoritative",
+            "invoker": true,
+            "searchPath": [
+              "search_path=\"\""
+            ],
+            "authenticated": false
+          },
+          {
+            "anon": false,
+            "name": "runtime_territory_capture_context",
+            "invoker": true,
+            "searchPath": [
+              "search_path=\"\""
+            ],
+            "authenticated": false
+          },
+          {
+            "anon": false,
+            "name": "runtime_territory_read",
+            "invoker": true,
+            "searchPath": [
+              "search_path=\"\""
+            ],
+            "authenticated": false
+          },
+          {
+            "anon": false,
+            "name": "runtime_territory_write",
+            "invoker": true,
+            "searchPath": [
+              "search_path=\"\""
+            ],
+            "authenticated": false
+          }
+        ],
+        "coversInside": true,
+        "coversOutside": false,
+        "validBoundary": true
+      }
+    }
+  ],
+  "passed": true
+}

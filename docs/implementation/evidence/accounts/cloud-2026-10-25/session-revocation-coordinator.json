@@ -1,0 +1,36 @@
+{
+  "at": "2026-10-25T03:24:11.388Z",
+  "sourceSha": "2ab3b7b4aa097f39bce909f5aed13d2d97c93551",
+  "kind": "Actual HTTPS managed Auth remains valid; direct authenticated RPC revoke/rebind and old refresh rejected by database ledger; same-host devices",
+  "credentialsPersisted": false,
+  "checks": [
+    {
+      "name": "managed-valid old SID cannot rebind any device or refresh after revoke then fresh login",
+      "data": {
+        "managedAuthStatus": 200,
+        "oldSid": "8e470d43-7ebd-4ab5-a15c-59d4162cfba9",
+        "newSid": "5a3fe39c-96cb-4974-8638-9e05716b90e2",
+        "rebind": 403,
+        "otherDevice": 403,
+        "refresh": {
+          "status": 401,
+          "code": "SESSION_REVOKED"
+        }
+      }
+    },
+    {
+      "name": "replacement records its previous SID while new A and independent B stay live",
+      "data": {
+        "replacedSid": "5a3fe39c-96cb-4974-8638-9e05716b90e2",
+        "latestSid": "befcc435-3788-4b8f-8ea2-3c0d1caeda7b",
+        "rebind": 403,
+        "refresh": {
+          "status": 401,
+          "code": "SESSION_REVOKED"
+        },
+        "otherDevice": "live"
+      }
+    }
+  ],
+  "passed": true
+}

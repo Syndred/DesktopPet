@@ -4,6 +4,7 @@ const { createCompanionOwnerMigration } = require('./identity.cjs');
 const { createCompanionPlayback } = require('./playback.cjs');
 const { companionCombatProfile } = require('./combat-profile.cjs');
 const { createCompanionBackupAdapter } = require('./backup.cjs');
+const { CloudCompanionAuthority } = require('./cloud-authority.cjs');
 
 module.exports = {
   id: 'companions', migrations,
@@ -23,8 +24,10 @@ module.exports = {
         desktop?.sync();
       });
     }
+    const cloud=new CloudCompanionAuthority(services,service,backupAdapter,changed);
     const ownerMigration = createCompanionOwnerMigration(services, changed);
     function upgradeBuiltins(ownerAccountId) {
+      if(cloud.enabled(ownerAccountId))return;
       const resources = services.get('resources');
       if (resources?.canonicalId && service.upgradeBuiltinResources(ownerAccountId, id => resources.canonicalId(id)).length) changed(ownerAccountId);
     }
@@ -49,6 +52,11 @@ module.exports = {
       db: services.db,
       // Accounts owns registration/legacy-envelope normalization and transport.
       backupAdapter,
+      isCloudOwner:owner=>cloud.enabled(owner),
+      refreshCloud:owner=>cloud.refresh(owner),
+      applyCloudReadback:(owner,remote)=>cloud.apply(owner,remote),
+      persistDesktopPosition(owner,input){return cloud.execute(owner,'desktop',{actionId:input.actionId,petId:input.petId,position:input.position},{nativePosition:true});},
+      hasPendingRecallAll(owner){return cloud.enabled(owner)&&cloud.pending(owner).some(row=>row.command==='recall-all');},
       migrateOwnerAlias: ownerMigration.migrate,
       listPets(ownerAccountId) { ensureImported(ownerAccountId); return service.snapshot(ownerAccountId).data.pets.filter(pet => pet.resource.kind === '2d'); },
       getPet(ownerAccountId, petId) {
@@ -61,19 +69,22 @@ module.exports = {
       listTemplates() { return service.templates(); },
       playAction(ownerAccountId, input) { return playback.play(ownerAccountId, api.getPet(ownerAccountId, input.petId), input.action, input.actionId); },
       applyGrowthInTransaction(ownerAccountId, input) {
+        if(cloud.enabled(ownerAccountId))throw Object.assign(new Error('云端成长请通过已验证的战斗或菜园结算。'),{code:'CLOUD_SETTLEMENT_REQUIRED'});
         const result = service.applyGrowthInTransaction(ownerAccountId, input);
         changed(ownerAccountId);
         playback.afterGrowthCommit(ownerAccountId, input, result);
         return result;
       },
       createCapturedInstance(ownerAccountId, input) {
+        if(cloud.enabled(ownerAccountId))throw Object.assign(new Error('云端捕捉请先读回服务端伙伴凭据。'),{code:'CLOUD_CAPTURE_RECEIPT_REQUIRED'});
         ensureImported(ownerAccountId);
         const result = service.createCapturedInstance(ownerAccountId, input);
         changed(ownerAccountId);
         return result;
       },
-      select(ownerAccountId, input) { const result = service.select(ownerAccountId, input); changed(ownerAccountId); return result; },
+      select(ownerAccountId, input) { if(cloud.enabled(ownerAccountId)){const result=cloud.execute(ownerAccountId,'select',input);void result.catch(()=>{});return result;}const result = service.select(ownerAccountId, input); changed(ownerAccountId); return result; },
       recallAll(ownerAccountId, actionId) {
+        if(cloud.enabled(ownerAccountId)){const result=cloud.execute(ownerAccountId,'recall-all',{actionId});void result.catch(()=>{});return result;}
         const result = service.action(ownerAccountId, 'recall-all', { actionId }, () => {
           const pets = service.snapshot(ownerAccountId).data.pets.filter(pet => pet.desktop.visible);
           for (const pet of pets) { pet.desktop.visible = false; service.storePet(pet); }
@@ -92,6 +103,10 @@ module.exports = {
     disposers.push(services.events.on('accounts:save-restored', event => {
       if (event?.ownerAccountId === services.session.getOwnerAccountId()) changed(event.ownerAccountId);
     }));
+    disposers.push(services.events.on('accounts:changed',()=>{
+      const owner=services.session.getOwnerAccountId();
+      if(owner&&cloud.enabled(owner))void cloud.refresh(owner).catch(()=>{});
+    }));
     // Electron is required lazily, so domain/migration checks also run under Node.
     if (process.versions.electron && process.type === 'browser') {
       const { createDesktopWindowManager } = require('./windows.cjs');
@@ -99,25 +114,26 @@ module.exports = {
       for (const event of ['accounts:changed', 'session:changed', 'auth:changed', 'accounts:session-changed']) disposers.push(services.events.on(event, () => desktop.sync()));
       desktop.sync();
     }
-    const execute = (method) => (payload, context) => {
+    const execute = (method,command=method) => (payload, context) => {
       ensureImported(context.ownerAccountId);
+      if(cloud.enabled(context.ownerAccountId))return cloud.execute(context.ownerAccountId,command,payload);
       const result = service[method](context.ownerAccountId, payload);
       changed(context.ownerAccountId);
       return result;
     };
     return {
       commands: {
-        async list(_payload, context) { await services.get('resources')?.ready; ensureImported(context.ownerAccountId); desktop?.sync(); return service.snapshot(context.ownerAccountId); },
-        async get(payload, context) { await services.get('resources')?.ready; const pet = api.getPet(context.ownerAccountId, payload.petId); return { ok: true, data: pet, revision: pet.revision }; },
+        async list(_payload, context) { await services.get('resources')?.ready; ensureImported(context.ownerAccountId);if(cloud.enabled(context.ownerAccountId)&&!cloud.busy(context.ownerAccountId))await cloud.refresh(context.ownerAccountId).catch(()=>{});desktop?.sync();const result=service.snapshot(context.ownerAccountId);if(cloud.enabled(context.ownerAccountId))result.data.sync=cloud.state(context.ownerAccountId);return result; },
+        async get(payload, context) { await services.get('resources')?.ready;if(cloud.enabled(context.ownerAccountId)&&!cloud.busy(context.ownerAccountId))await cloud.refresh(context.ownerAccountId).catch(()=>{});const pet = api.getPet(context.ownerAccountId, payload.petId); return { ok: true, data: pet, revision: pet.revision }; },
         combatProfile(payload, context) { const data = api.getCombatProfile(context.ownerAccountId, payload.petId); return { ok: true, data, revision: service.requirePet(context.ownerAccountId, payload.petId).revision }; },
         desktopInput(payload, context) {
           if (!desktop) return { ok: false, code: 'DESKTOP_UNAVAILABLE', message: '请在灵境桌面应用中操作伙伴' };
           return desktop.handleInput(context.ownerAccountId, payload);
         },
-        adopt: execute('adopt'), rename: execute('rename'), desktop: execute('updateDesktop'),
+        adopt: execute('adopt'), rename: execute('rename'), desktop: execute('updateDesktop','desktop'),
         select: execute('select'),
-        interact(payload, context) {
-          const result = execute('interact')(payload, context);
+        async interact(payload, context) {
+          const result = await execute('interact')(payload, context);
           if (!result.duplicate) void playback.play(context.ownerAccountId, result.data.pet, 'wave', payload.actionId).catch(() => {});
           return result;
         },
@@ -128,6 +144,7 @@ module.exports = {
           if (resource.availability !== 'ready') throw Object.assign(new Error('角色文件暂不可用。'), { code: 'RESOURCE_UNAVAILABLE' });
           if (resource.kind !== 'spritesheet') throw Object.assign(new Error('本版请选择 2D 角色资源。'), { code: 'RESOURCE_UNAVAILABLE' });
           if (services.session.getOwnerAccountId() !== context.ownerAccountId) throw Object.assign(new Error('账号已切换。'), { code: 'SESSION_CHANGED' });
+          if(cloud.enabled(context.ownerAccountId))return cloud.execute(context.ownerAccountId,'appearance',payload);
           const result = service.action(context.ownerAccountId, 'appearance', payload, () => {
             const pet = service.requirePet(context.ownerAccountId, payload.petId, payload.expectedRevision);
             pet.resource = { resourceId: resource.id, kind: '2d' };

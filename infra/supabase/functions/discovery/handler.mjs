@@ -1,5 +1,5 @@
 import { PROTOCOL, LOCATION_PURPOSES, DiscoveryError, canonical, checkedFix, identifier, publicJwk, rejectClientAuthority, requireValue, verifiedActor, verifySignedLocation } from './protocol.mjs';
-import { nearbySpawns, geofence } from './_generated/runtime.mjs';
+import { nearbySpawns, geofence, presentSession } from './_generated/runtime.mjs';
 const headers = { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store', 'access-control-allow-origin': '*',
   'access-control-allow-methods': 'POST, OPTIONS', 'access-control-allow-headers': 'authorization, apikey, content-type, x-lingjing-device-id, x-request-id' };
 const digest = async value => Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(value)))).map(b => b.toString(16).padStart(2, '0')).join('');
@@ -13,6 +13,7 @@ async function readBody(request) {
   const bytes = new Uint8Array(length); let offset = 0; for (const chunk of chunks) { bytes.set(chunk, offset); offset += chunk.byteLength; }
   try { return JSON.parse(new TextDecoder('utf-8', { fatal: true }).decode(bytes)); } catch { throw new DiscoveryError('INVALID_REQUEST', '请求格式无效'); }
 }
+/** @param {{requireActor:(request:Request)=>Promise<any>,store:any,now?:()=>number,authority?:null|((input:any)=>Promise<any>)}} options */
 export function createDiscoveryHandler({ requireActor, store, now = Date.now, authority = null }) {
   requireValue(typeof requireActor === 'function' && store?.location, 'SERVER_CONFIGURATION_INVALID');
   return async request => {
@@ -23,7 +24,8 @@ export function createDiscoveryHandler({ requireActor, store, now = Date.now, au
       const actor = verifiedActor(await requireActor(request));
       const input = await readBody(request); rejectClientAuthority(input);
       let data;
-      if (input.op === 'protocol') data = { protocol: PROTOCOL, locationPolicy: '80m/30s/100m', serverTime: now() };
+      if (input.op === 'protocol') data = { protocol: PROTOCOL, locationPolicy: '80m/30s/100m', serverTime: now(),
+        wildAuthority: Boolean(authority), ...(actor.allowSimulatedLocation === true ? { scenarioId: actor.scenarioId, simulatedLocationAllowed: true } : {}) };
       else if (input.op === 'device.register') {
         const jwk = publicJwk(input.publicJwk), keyFingerprint = await digest(canonical(jwk));
         data = await store.location(actor, 'register_device', { publicJwk: jwk, keyFingerprint });
@@ -50,7 +52,7 @@ export function createDiscoveryHandler({ requireActor, store, now = Date.now, au
         requireValue(authority, 'CLOUD_AUTHORITY_NOT_READY', '云端权威接口尚未接入', 503);
         data = await authority({ actor, input, now: now() });
       }
-      return reply({ ok: true, protocol: PROTOCOL, data });
+      return reply({ ok: true, protocol: PROTOCOL, data: presentSession(data) });
     } catch (error) {
       // Internal DB errors never leak SQL, JWTs, raw request bodies or key data.
       const known = error instanceof DiscoveryError;

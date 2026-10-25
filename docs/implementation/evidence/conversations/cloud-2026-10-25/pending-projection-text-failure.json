@@ -1,0 +1,28 @@
+{
+  "at": "2026-10-25T03:07:52.918Z",
+  "reviewedRef": "ce0affb",
+  "mode": "read-only committed code in same Node realm; synthetic ordinary JSON text; no cloud or pet/database writes",
+  "status": "blocked_by_text_rewrite",
+  "checks": [
+    {
+      "table": "conversation_messages",
+      "authoredTextUnchanged": false
+    },
+    {
+      "table": "conversation_profiles",
+      "authoredTextUnchanged": false
+    },
+    {
+      "table": "conversation_memories",
+      "authoredTextUnchanged": false
+    }
+  ],
+  "redactedPaths": [
+    "data.modules.conversations.data.tables.conversation_messages[0].content:json.apiKey",
+    "data.modules.conversations.data.tables.conversation_messages[0].content:json.nested.password",
+    "data.modules.conversations.data.tables.conversation_profiles[0].persona:json.apiKey",
+    "data.modules.conversations.data.tables.conversation_profiles[0].persona:json.nested.password",
+    "data.modules.conversations.data.tables.conversation_memories[0].content:json.apiKey",
+    "data.modules.conversations.data.tables.conversation_memories[0].content:json.nested.password"
+  ]
+}

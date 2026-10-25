@@ -1,4 +1,5 @@
 const { atomic, CompanionError } = require('./service.cjs');
+const { randomUUID } = require('node:crypto');
 
 function boundsFor(pet, screen, previous) {
   const width = Math.round(230 * pet.desktop.scale);
@@ -20,10 +21,32 @@ function createDesktopWindowManager({ services, service, ensureImported, changed
   let owner = null; let disposed = false; let syncing = false; let quiet = false; let animationsAllowed = true;
   const notifyWindows = () => services.events.emit('companions:windows-changed', { ownerAccountId: owner });
 
-  function persistPosition(entry) {
+  function persistPosition(entry,force=false) {
     if (!entry.positionDirty || entry.window.isDestroyed() || services.session.getOwnerAccountId() !== entry.owner) return;
     const bounds = entry.window.getBounds();
     const display = screen.getDisplayNearestPoint({ x: bounds.x, y: bounds.y });
+    const companions=services.get('companions');
+    if(companions?.isCloudOwner?.(entry.owner)){
+      if(entry.positionPromise&&!force)return entry.positionPromise;
+      const position=entry.desiredPosition||{x:bounds.x,y:bounds.y,displayId:String(display.id)};
+      const pending={actionId:'desktop-position-'+randomUUID(),petId:entry.pet.petId,position};
+      const promise=Promise.resolve(companions.persistDesktopPosition(entry.owner,pending)).then(result=>{
+        if(!entry.window.isDestroyed()){
+          const desired=entry.desiredPosition||entry.window.getBounds();
+          if(desired.x===pending.position.x&&desired.y===pending.position.y){entry.positionDirty=false;entry.desiredPosition=null;}
+          else{entry.window.setPosition(desired.x,desired.y,false);entry.positionDirty=true;}
+          entry.pet=service.requirePet(entry.owner,entry.pet.petId);
+        }
+        return result;
+      }).catch(error=>{
+        if(['SYNC_CONFLICT','REVISION_CONFLICT','ACTION_ID_CONFLICT','ACTION_ID_REUSED'].includes(error.code)&&entry.positionPromise===promise){
+          entry.positionDirty=false;entry.desiredPosition=null;
+          if(!entry.window.isDestroyed()){entry.pet=service.requirePet(entry.owner,entry.pet.petId);const saved=boundsFor(entry.pet,screen);entry.window.setBounds({x:saved.x,y:saved.y,width:saved.width,height:saved.height},false);}
+        }
+        throw error;
+      }).finally(()=>{if(entry.positionPromise===promise)entry.positionPromise=null;});
+      entry.positionPromise=promise;return promise;
+    }
     atomic(service.db, () => {
       const pet = service.requirePet(entry.owner, entry.pet.petId);
       const previous = pet.desktop.position;
@@ -39,7 +62,7 @@ function createDesktopWindowManager({ services, service, ensureImported, changed
   }
   function destroy(entry, persist = true) {
     if (entry.window.isDestroyed()) return;
-    if (persist) persistPosition(entry);
+    if (persist) {const result=persistPosition(entry,true);if(result?.then)void result.catch(error=>console.warn('[companions:position-pending]',error.code));}
     entry.window.destroy();
   }
   function create(pet) {
@@ -70,7 +93,7 @@ function createDesktopWindowManager({ services, service, ensureImported, changed
       if (!owner) return;
       ensureImported(owner);
       // Historical unsupported appearances remain in storage, never opened by this 2D release.
-      const pets = service.snapshot(owner).data.pets.filter(pet => pet.desktop.visible && pet.resource.kind === '2d');
+      const pets = services.get('companions')?.hasPendingRecallAll?.(owner)?[]:service.snapshot(owner).data.pets.filter(pet => pet.desktop.visible && pet.resource.kind === '2d');
       const ids = new Set(pets.map(pet => pet.petId));
       for (const [id, entry] of entries) if (!ids.has(id)) destroy(entry);
       for (const pet of pets) {
@@ -82,6 +105,10 @@ function createDesktopWindowManager({ services, service, ensureImported, changed
           const previous = entry.pet; entry.pet = pet;
           if (!entry.drag && (previous.desktop.scale !== pet.desktop.scale || JSON.stringify(previous.desktop.position) !== JSON.stringify(pet.desktop.position))) {
             const bounds = boundsFor(pet, screen);
+            if(entry.positionDirty||entry.positionPromise){
+              if(previous.desktop.scale!==pet.desktop.scale)entry.window.setSize(bounds.width,bounds.height,false);
+              continue;
+            }
             entry.window.setBounds({ x: bounds.x, y: bounds.y, width: bounds.width, height: bounds.height }, false);
             // Applying a saved/cloud position only derives local window bounds.
             // Its monitor clamp must not become another device's saved position.
@@ -92,7 +119,7 @@ function createDesktopWindowManager({ services, service, ensureImported, changed
     } catch (error) { console.error('[companions:desktop-sync]', error); }
     finally { syncing = false; }
   }
-  function handleInput(ownerAccountId, input) {
+  async function handleInput(ownerAccountId, input) {
     const entry = entries.get(input?.petId);
     if (!entry || entry.owner !== ownerAccountId || ownerAccountId !== services.session.getOwnerAccountId() || entry.window.isDestroyed()) throw new CompanionError('PET_NOT_FOUND', '这只伙伴不在当前账号的桌面');
     const point = () => {
@@ -105,7 +132,8 @@ function createDesktopWindowManager({ services, service, ensureImported, changed
       const cursor = point();
       const bounds = boundsFor(entry.pet, screen, { x: entry.drag.bounds.x + cursor.x - entry.drag.cursor.x, y: entry.drag.bounds.y + cursor.y - entry.drag.cursor.y, displayId: null });
       entry.window.setPosition(bounds.x, bounds.y, false); entry.positionDirty = true;
-    } else if (input.action === 'drag-end') { entry.drag = null; persistPosition(entry); changed(ownerAccountId); }
+      entry.desiredPosition={x:bounds.x,y:bounds.y,displayId:bounds.displayId};
+    } else if (input.action === 'drag-end') { entry.drag = null;await persistPosition(entry,true);if(entry.positionDirty)await persistPosition(entry);changed(ownerAccountId); }
     else if (input.action !== 'drag-move') throw new CompanionError('INVALID_INPUT', '不支持的桌面输入');
     return { ok: true, data: { petId: input.petId } };
   }
@@ -126,11 +154,11 @@ function createDesktopWindowManager({ services, service, ensureImported, changed
         x += Math.round(Math.sign(dx) * Math.min(4, Math.abs(dx) / 20)); y += Math.round(Math.sign(dy) * Math.min(4, Math.abs(dy) / 20));
       } else { entry.tick += 1; const seed = [...entry.pet.petId].reduce((sum, char) => sum + char.charCodeAt(0), 0); x += Math.sin((entry.tick + seed) / 90) >= 0 ? 2 : -2; }
       const target = boundsFor(entry.pet, screen, { x, y, displayId: null });
-      entry.window.setPosition(target.x, target.y, false); entry.positionDirty = true;
+      entry.window.setPosition(target.x, target.y, false); entry.positionDirty = true;entry.desiredPosition={x:target.x,y:target.y,displayId:target.displayId};
     }
   }, 100);
   const syncTimer = setInterval(sync, 800);
-  const saveTimer = setInterval(() => { for (const entry of entries.values()) if (!entry.drag) { try { persistPosition(entry); } catch (error) { console.error('[companions:save-position]', error); } } }, 5000);
+  const saveTimer = setInterval(() => { for (const entry of entries.values()) if (!entry.drag) { try {const result=persistPosition(entry);if(result?.then)void result.catch(error=>console.warn('[companions:position-pending]',error.code));} catch (error) { console.error('[companions:save-position]', error); } } }, 5000);
   const stopPolicy = services.events.on('accounts:behavior', policy => { quiet = Boolean(policy?.quiet || policy?.fullscreen); animationsAllowed = policy?.settings?.desktop?.animationsEnabled !== false; });
   for (const timer of [motionTimer, syncTimer, saveTimer]) timer.unref();
   return { sync, handleInput,

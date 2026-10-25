@@ -1,0 +1,35 @@
+{
+  "at": "2026-10-25T03:08:59.008Z",
+  "sourceSha": "af1e61cc6ecb89ae03979858cc20e4f83f81cab8",
+  "kind": "Actual Supabase HTTPS + independent Data API readback, synthetic non-secret marker only, no real BYOK used",
+  "checks": [
+    {
+      "name": "actual HTTPS rejects direct, camelCase, nested and double-serialized credential keys",
+      "data": {
+        "rejected": 5
+      }
+    },
+    {
+      "name": "safe projection independently read from actual cloud archive omits all markers and raw blobs",
+      "data": {
+        "sourceChecksum": "a2fb92e5b5aef4a66ac203657dbddcbb7cb3d0f70e6c4caadd74f7bff4727e87",
+        "cloudProjectionChecksum": "9ad5f11d42fbae59842db1d8f3912842296e7ad7ad74a352338acc987dadd176",
+        "exclusions": [
+          "data.modules.settings.data.metadata.<json>.nested.providerApiKey",
+          "data.modules.legacy",
+          "data.tables.companion_legacy_archive"
+        ],
+        "originalCloudComplete": false,
+        "archiveId": "e5bc6489-4399-4062-8907-0eb4b56f054f"
+      }
+    },
+    {
+      "name": "actual personal CAS remains usable and independent head read contains no marker",
+      "data": {
+        "revision": 1,
+        "checksum": "9ad5f11d42fbae59842db1d8f3912842296e7ad7ad74a352338acc987dadd176"
+      }
+    }
+  ],
+  "passed": true
+}

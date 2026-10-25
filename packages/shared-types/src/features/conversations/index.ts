@@ -45,7 +45,7 @@ export interface ConversationEvent {
 }
 export interface ConversationCommands {
   snapshot: { input: { petId?: string }; output: ConversationSnapshot };
-  select: { input: { petId: string }; output: ConversationSnapshot };
+  select: { input: { petId: string; actionId?: string }; output: ConversationSnapshot };
   history: { input: { petId: string; before?: number }; output: HistoryPage };
   'profile.save': { input: { petId: string; profile: Omit<ConversationProfile, 'revision'>; revision: number }; output: ConversationProfile };
   'connection.save': { input: { petId: string | null; connection: ConnectionSettings; apiKey?: string; clearKey?: boolean; revision: number }; output: PublicConnection };

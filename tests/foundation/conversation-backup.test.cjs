@@ -6,7 +6,7 @@ const { join } = require('node:path');
 const { openDatabase,migrate } = require('../../apps/pc-app/runtime/core/database.cjs');
 const { migrations } = require('../../apps/pc-app/runtime/features/conversations/schema.cjs');
 const { ConversationStore } = require('../../apps/pc-app/runtime/features/conversations/store.cjs');
-const { createConversationBackupAdapter } = require('../../apps/pc-app/runtime/core/conversation-backup.cjs');
+const { createConversationBackupAdapter } = require('../../apps/pc-app/runtime/features/conversations/backup.cjs');
 
 test('chat backup restores stable messages across sequence collisions and never exports a credential', () => {
   const root = mkdtempSync(join(tmpdir(),'lingjing-chat-backup-'));
