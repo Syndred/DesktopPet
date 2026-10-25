@@ -23,9 +23,13 @@
 
 ## 08 / 03 依赖
 
-08 正在发布统一 Auth UID→旧 owner / device actor 包装。实现会消费它，禁止本模块创建另一套凭证验证或 owner 映射。
+08 已发布并经主协调审查的身份实现 `ee36030` 已合入：直接使用 `withActor/requireActor`、现代 key 字典和 `public.lingjing_accounts(owner_id)`。禁止本模块创建另一套凭证验证或 owner 映射。
 
-03 定位许可与服务端捕捉准入发布后适配同一许可；`captureContext` 返回服务器世界记录的领地与倍率，捕捉奖励由03权威凭据消费，不能信任客户端传入的收益。
+本模块的特权事务仅用于无法让客户端提交的引擎结果/权威 envelope：Edge 先通过08 `withActor`，再由08集中创建的服务端 worker 调用仅 service_role 可执行的窄 RPC。RPC 内再次核对同一 `lingjing_accounts/lingjing_devices` 的 Auth UID、文本 owner、device/session 与撤销状态；不授予 auth.users/auth.sessions 读取权限、不公开任意 envelope 写接口。普通用户不能直接调用这些 worker RPC。最终完整存档 CAS/authority fragment 表与注册 API 仍待08固定；当前 SQL 使用旧 save receipt 布局作草案，在对齐前**不得部署**。
+
+02 需要提供无独立提交的规范 `awardBattleResult({envelope,ownerAccountId,petId,sessionId,won,mode,actionId,now})` → `{envelope,reward}`。05 在同一 PostgreSQL 世界/库存事务提交返回的规范伙伴单位，不另写 XP/成长公式。新 `modules.companions.data.tables` 与旧完整通用表格式已兼容，不能混合行或在模块损坏时回落到另一份数据。
+
+03 定位许可与服务端捕捉准入发布后适配同一许可，字段见 cloud-garden.json 的 integrationRequests。`captureContext` HTTP 仅作预览；03 必须在捕捉提交的**同一 SQL 事务内部**调用 `runtime_territory_capture_context`，该函数以 FOR SHARE 锁定当前区域直到捕捉奖励提交，不能拿先前 HTTP 倍率当最终凭据。
 
 ## 验收边界
 

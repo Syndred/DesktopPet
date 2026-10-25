@@ -1,15 +1,74 @@
 {
-  "module":"garden",
-  "branch":"codex/lingjing-garden",
-  "commit":"see git log for this file",
-  "goalStatus":"active",
-  "scope":"Cloud territorial authority, canonical garden economy and atomic per-pet inventory integration",
-  "baseline":"46abf416e0500b53ef32fc29b441d923ef5a6a80",
-  "contracts":["docs/implementation/cloud-upgrade-2026-10-25.md","docs/implementation/cloud-garden-contract.md"],
-  "migrations":[{"path":"infra/supabase/migrations/20261025020010_lingjing_territory_authority.sql","generatedBy":"Supabase CLI 2.122.0 migration new","status":"implementation-in-progress","deployed":false}],
-  "checks":["Old local goal was completed and independently accepted; new unbudgeted goal created","Public cloud-upgrade baseline merged in original managed worktree","Supabase skill, Postgres/RLS guidance, changelog and PostGIS docs consulted","Target project metadata read-only: public schema currently reports no visible tables, PostGIS available but not installed; no mutation performed"],
-  "realCloudEvidence":{"projectRef":"jbvrdmrkwpznbrvteive","readOnlyMetadata":true,"deployedByThisModule":false,"territoryAcceptance":false},
-  "preservation":{"legacyOwnerTextIds":true,"secondInventoryStore":false,"privateGardenUnaffectedByWorldOwnership":true,"productionDataModified":false,"battleUiTouched":false},
-  "cleanupCandidates":[{"path":"Old runtime session_token authentication in garden-sync","replacement":"08 unified actor context; retain old account data and migrate through shared adapter","status":"pending-integration"}],
-  "remaining":["Implement PostGIS/transaction RPC and server-authoritative challenge lifecycle","Consume published08 actor and03 location contracts","Wire existing shared battle session/context without UI changes","Run focused local tests and provide real HTTPS independent-client verifier","Main-coordinated deployment and independent cloud acceptance"]
+  "module": "garden",
+  "branch": "codex/lingjing-garden",
+  "commit": "see git log for this file",
+  "goalStatus": "active",
+  "scope": "Cloud territorial authority, canonical garden economy and atomic per-pet inventory integration",
+  "baseline": "46abf416e0500b53ef32fc29b441d923ef5a6a80",
+  "contracts": [
+    "docs/implementation/cloud-upgrade-2026-10-25.md",
+    "docs/implementation/cloud-garden-contract.md",
+    "docs/implementation/cloud-identity-contract-2026-10-25.md"
+  ],
+  "migrations": [
+    {
+      "path": "infra/supabase/migrations/20261025020010_lingjing_territory_authority.sql",
+      "generatedBy": "Supabase CLI 2.122.0 migration new",
+      "status": "draft-not-deployment-ready-until08-save-CAS-contract-aligned",
+      "deployed": false
+    }
+  ],
+  "checks": [
+    "Old local goal was completed and independently accepted; new unbudgeted goal created",
+    "Public cloud-upgrade baseline merged in original managed worktree",
+    "Supabase skill, Postgres/RLS guidance, changelog and PostGIS docs consulted",
+    "Target project metadata read-only: public schema currently reports no visible tables, PostGIS available but not installed; no mutation performed",
+    "native:check passed: Node24.21 / Electron44.9.3 / SQLite13.0.3, shared N-API tree retained",
+    "6 focused domain checks passed, including400 ordered element/action-pair parity comparisons against the single canonical engine",
+    "Deno2.9.6 check passed on territory handler imports",
+    "Old generic companion table unit and new companions module both supported; malformed/cross-owner module does not fall back"
+  ],
+  "realCloudEvidence": {
+    "projectRef": "jbvrdmrkwpznbrvteive",
+    "readOnlyMetadata": true,
+    "deployedByThisModule": false,
+    "territoryAcceptance": false
+  },
+  "preservation": {
+    "legacyOwnerTextIds": true,
+    "secondInventoryStore": false,
+    "privateGardenUnaffectedByWorldOwnership": true,
+    "productionDataModified": false,
+    "battleUiTouched": false
+  },
+  "cleanupCandidates": [
+    {
+      "path": "Old runtime session_token authentication in garden-sync",
+      "replacement": "08 unified actor context; retain old account data and migrate through shared adapter",
+      "status": "pending-integration"
+    }
+  ],
+  "remaining": [
+    "Finish new actor-wrapped garden/territory entrypoints against final08 save authority interface",
+    "Consume02 canonical growth effect and03 server location-permit adapters",
+    "Wire remote session/context/retry caching into the existing battle runtime without changing04 UI",
+    "Validate actual PostGIS migration and transaction concurrency after coordinator deployment; no local PostGIS claimed",
+    "Provide and run real HTTPS independent-client verifier; independent coordinator acceptance"
+  ],
+  "phase": "server-domain-and-transaction-draft; published-actor-consumed",
+  "dependencyCheckpoint": "b40af0efcf6062ddc2e8c360523c996fc91ebc0a",
+  "identityCheckpoint": "ee36030ad37614ac321b94ae4ee4169d705f1165",
+  "code": {
+    "territoryDomain": "infra/supabase/functions/territory-sync/domain.mjs",
+    "territoryHandler": "infra/supabase/functions/territory-sync/handler.mjs",
+    "canonicalEngine": "apps/pc-app/runtime/services/battle-runtime.cjs",
+    "engineDeploymentAdapter": "scripts/acceptance/cloud-territory/build-runtime.mjs",
+    "newKernelWritten": false,
+    "battleUiTouched": false
+  },
+  "integrationRequests": {
+    "accounts08": "Actor contract consumed. Need final canonical server-save head/CAS schema and same-transaction authority-fragment registration. Current SQL draft still references old runtime_account_saves receipt layout; DO NOT DEPLOY before alignment. Worker write RPC rechecks08 owner/authUID/device/session mapping, never widens auth.users access.",
+    "companions02": "Need a pure canonical awardBattleResult({envelope,ownerAccountId,petId,sessionId,won,mode,actionId,now}) -> {envelope,reward}, updating the same companion unit and receipts without committing.05 will commit this envelope with world/inventory exactly once. Must reuse02 XP/growth rules, not a second formula.",
+    "discovery03": "Need verified opaque location-permit resolver bound to actor owner/device/receiptId, with authority=live,verified=true,source=os,lat/lng,accuracyMeters,timestampMs,issuedAtMs,expiresAtMs. Do not accept raw renderer coordinates as verified. Capture commit must call runtime_territory_capture_context inside the same SQL transaction to hold ownership share lock and bind multiplier to the current region revision."
+  }
 }

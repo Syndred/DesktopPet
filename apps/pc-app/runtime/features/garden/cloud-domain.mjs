@@ -19,13 +19,23 @@ export function gardenDocument(envelope, owner) {
   for (const name of ['garden_accounts','garden_plots','garden_items','garden_actions','garden_events','garden_reward_receipts','garden_outbox']) if (!Array.isArray(tables[name]) || tables[name].some(row => row.owner_account_id !== owner)) problem('INVALID_CLOUD_SAVE', '云端菜园归属校验失败');
   return tables;
 }
+/**02 owns the companion consistency unit. Read a complete new module or the
+ * complete retained legacy table group; never merge rows between formats. */
+export function cloudCompanions(envelope,owner){
+  const unit=envelope?.data?.modules?.companions;
+  let tables;
+  if(unit!==undefined){if(unit.version!==1||unit.data?.ownerAccountId!==owner||!unit.data.tables)problem('INVALID_CLOUD_SAVE','伙伴模块归属或版本无效');tables=unit.data.tables;}
+  else tables=Object.fromEntries(['companion_pets','companion_accounts','companion_actions'].map(name=>[name,envelope?.data?.tables?.[name]?.rows]));
+  for(const name of ['companion_pets','companion_accounts','companion_actions'])if(!Array.isArray(tables[name])||tables[name].some(row=>row.owner_account_id!==owner))problem('COMPANIONS_UNAVAILABLE','伙伴存档不完整或归属不一致');
+  return {pets:tables.companion_pets,accounts:tables.companion_accounts,actions:tables.companion_actions};
+}
 export function cloudSnapshot(envelope, owner, now) {
   const tables = gardenDocument(envelope, owner);
   const items = Object.values(ITEMS).map(item => ({ ...item, quantity: tables.garden_items.find(row => row.item_id === item.id)?.quantity || 0 }));
   return { ownerAccountId: owner, serverTime: now,
     plots: tables.garden_plots.map(row => ({ plotId: row.plot_id, cropType: row.crop_type, plantedAt: row.planted_at, maturesAt: row.matures_at, yieldQuantity: row.yield_quantity, revision: row.revision, stage: !row.crop_type ? 'empty' : now >= row.matures_at ? 'mature' : 'growing' })),
     items, crops: Object.values(CROPS), recipes: Object.values(RECIPES),
-    pets: (envelope.data.tables?.companion_pets?.rows || []).filter(row => row.owner_account_id === owner).map(row => JSON.parse(row.data_json)),
+    pets: cloudCompanions(envelope,owner).pets.map(row => JSON.parse(row.data_json)),
     territories: [], ledger: tables.garden_events.slice(-60).reverse().map(row => ({ id: row.event_id, actionId: row.action_id, kind: row.kind, itemId: row.item_id, delta: row.delta, balance: row.balance, petId: row.pet_id, createdAt: row.created_at })),
     sync: { mode: 'cloud', pending: 0, conflicts: 0 }
   };
@@ -85,7 +95,7 @@ export function applyCloudCommand(source, owner, kind, input, now, requestHash, 
     receipt = { recipeId: recipe.id, itemId: recipe.output.itemId, quantity: recipe.output.quantity * count };
   } else if (kind === 'feed') {
     const item = ITEMS[input.itemId]; if (!item?.effects) problem('NOT_EDIBLE', '稻米需要先制作，种子不能喂食'); const count = validQuantity(input.quantity);
-    const pets = envelope.data.tables?.companion_pets?.rows;
+    const pets = cloudCompanions(envelope,owner).pets;
     const petRow = pets?.find(row => row.owner_account_id === owner && row.pet_id === input.petId);
     if (!petRow) problem('PET_NOT_FOUND', '当前账号没有这只伙伴');
     if (!Number.isSafeInteger(input.expectedPetRevision) || petRow.revision !== input.expectedPetRevision) problem('REVISION_CONFLICT', '伙伴状态已更新，请刷新');
@@ -93,7 +103,7 @@ export function applyCloudCommand(source, owner, kind, input, now, requestHash, 
     change(item.id, -count, pet.petId);
     for (const [effect, target] of [['satiety','satiety'],['mood','mood'],['intimacy','affinity']]) pet.growth[target] = Math.min(100, Math.max(0, pet.growth[target] + item.effects[effect] * count));
     pet.revision++; pet.updatedAt = new Date(now).toISOString(); petRow.revision = pet.revision; petRow.updated_at = pet.updatedAt; petRow.data_json = JSON.stringify(pet);
-    const companionAccount = envelope.data.tables?.companion_accounts?.rows?.find(row => row.owner_account_id === owner); if (companionAccount) companionAccount.revision++;
+    const companionAccount = cloudCompanions(envelope,owner).accounts.find(row => row.owner_account_id === owner); if (companionAccount) companionAccount.revision++;
     receipt = { petId: pet.petId, itemId: item.id, quantity: count, effects: Object.fromEntries(Object.entries(item.effects).map(([key,value]) => [key,value * count])), pet };
   } else if (kind === 'reward') {
     if (!verifiedReward || verifiedReward.ownerAccountId !== owner || verifiedReward.id !== input.receiptId || verifiedReward.source !== input.source || !CROPS[verifiedReward.cropId]) problem('UNVERIFIED_REWARD', '需要已结算的服务端凭据');

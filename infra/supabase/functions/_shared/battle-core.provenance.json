@@ -1,0 +1,7 @@
+{
+  "source": "apps/pc-app/runtime/services/battle-runtime.cjs",
+  "sourceSha256": "0c7475da1cb6a7171d8dceca57e78dcf1ee28b2e46ac70957774d0dd86673b38",
+  "output": "infra/supabase/functions/_shared/battle-core.generated.mjs",
+  "outputSha256": "78d80547d7b18f85511fe330b745ef3dff36062debb1ef461bb6e1d876e9549a",
+  "policy": "Single canonical rule source; deployment bundle only. Rebuild and run parity checks after authority changes."
+}
