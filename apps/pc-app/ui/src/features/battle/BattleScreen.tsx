@@ -41,9 +41,16 @@ export function BattleScreen({ sessionId, returnTo }: { sessionId: string; retur
       <h1>对战</h1><Tooltip><TooltipTrigger asChild><span tabIndex={0} className="battle-mode-mark" aria-label={modeLabels[session.mode]}><ModeIcon size={18}/></span></TooltipTrigger><TooltipContent>{modeLabels[session.mode]}</TooltipContent></Tooltip>
       {simulated ? <Tooltip><TooltipTrigger asChild><span className="battle-scenario-mark" tabIndex={0} aria-label="隔离模拟场景"><FlaskConical size={17}/></span></TooltipTrigger><TooltipContent>隔离模拟场景 · {String(session.context?.scenarioId || '')}</TooltipContent></Tooltip> : null}
     </header></TooltipProvider>
-    <ErrorNotice message={error}/><BattleArena session={session} rules={rules} busy={busy} syncedAt={syncedAt}
+    {capturing ? null : <ErrorNotice message={error}/>}<BattleArena session={session} rules={rules} busy={busy} syncedAt={syncedAt}
       onAct={action => void controller.act(action)} onSync={() => void controller.sync()} onRetry={() => void controller.retryAction()}
       onLeave={() => void controller.leave()} onReport={() => navigate(`/battle/reports/${encodeURIComponent(session.reportId || session.id)}`)} settlementActions={settlement}/>
-    {capturing ? <AppDialog title="收服伙伴" onClose={() => { if (!busy) setCapturing(false); }} busy={busy}><Card className="battle-capture-dialog"><h2>收服伙伴</h2><label htmlFor="battle-capture-name">昵称</label><Input id="battle-capture-name" value={name} onChange={event => setName(event.target.value)} maxLength={24}/><div className="battle-two-buttons"><Button variant="secondary" onClick={() => setCapturing(false)} disabled={busy}>取消</Button><Button onClick={() => void settle()} disabled={busy || !name.trim()}><Heart size={16}/>确认</Button></div></Card></AppDialog> : null}
+    {capturing ? <AppDialog title="收服伙伴" onClose={() => { if (!busy) setCapturing(false); }} busy={busy}>
+      <Card className="battle-capture-dialog">
+        <h2>收服伙伴</h2><ErrorNotice message={error}/>
+        {error ? <Button variant="secondary" disabled={busy} onClick={() => { setCapturing(false); navigate(back); }}><MapPin size={16}/>返回探索</Button> : null}
+        <label htmlFor="battle-capture-name">昵称</label><Input id="battle-capture-name" value={name} onChange={event => setName(event.target.value)} maxLength={24}/>
+        <div className="battle-two-buttons"><Button variant="secondary" onClick={() => setCapturing(false)} disabled={busy}>取消</Button><Button onClick={() => void settle()} disabled={busy || !name.trim()}><Heart size={16}/>确认</Button></div>
+      </Card>
+    </AppDialog> : null}
   </div>;
 }
