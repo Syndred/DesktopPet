@@ -72,7 +72,7 @@ test('QA022 invitation deadlines, immutable receipts and legacy preservation in 
     const oldAction = randomUUID(), oldInput = sendInput(a, b);
     const oldPending = await command(a, 'invite', oldInput, oldAction);
     const before = await snapshot();
-    await db.exec(readFileSync('infra/supabase/migrations/20261025211937_lingjing_battle_invite_expiry.sql', 'utf8'));
+    await db.exec(readFileSync('infra/supabase/migrations/20261026080525_lingjing_battle_invite_expiry.sql', 'utf8'));
     const migrated = await snapshot();
     assert.deepEqual(migrated.invites.map(({ expires_at, ...row }) => { assert.equal(expires_at, null); return row; }), before.invites);
     for (const name of Object.keys(before).filter(name => name !== 'invites')) assert.deepEqual(migrated[name], before[name]);
@@ -179,7 +179,7 @@ test('QA022 invitation deadlines, immutable receipts and legacy preservation in 
     writeFileSync('artifacts/qa/qa022-invite-expiry/sql-evidence.json', JSON.stringify({
       at: new Date().toISOString(), provenance: 'isolated-embedded-PostgreSQL-with-test-only-clock',
       liveCloudVerified: false, nativeFiveMinuteAcceptance: false, multiConnectionLockRaceVerified: false,
-      migration: '20261025211937_lingjing_battle_invite_expiry.sql', checks, functions, passed: true,
+      migration: '20261026080525_lingjing_battle_invite_expiry.sql', checks, functions, passed: true,
     }, null, 2));
   } finally { await db.close(); }
 });

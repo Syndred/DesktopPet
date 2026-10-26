@@ -16,7 +16,7 @@
 
 迁移由既有 Supabase CLI 2.122.0 的 migration new 创建：
 
-- infra/supabase/migrations/20261025211937_lingjing_battle_invite_expiry.sql
+- infra/supabase/migrations/20261026080525_lingjing_battle_invite_expiry.sql
 - migration-manifest.json 仍声明实际已部署 25 条，仅把新文件列入 pendingReviewFiles；不改写原云端账本或部署记录。
 
 数据库时钟集中在私有、无参数的 lingjing_private.battle_invite_now，生产实现仅调用 pg_catalog.clock_timestamp()，没有客户端、请求级或配置级时间覆盖入口。截止判断取锁后的实际服务器时刻，而非固定在事务起点的 now()；这一差别见 [PostgreSQL 时间函数文档](https://www.postgresql.org/docs/current/functions-datetime.html#FUNCTIONS-DATETIME-CURRENT)。
@@ -60,3 +60,5 @@
 React 清单已核对：两个独立读取并发，分别按组件存活状态更新；没有新增自动重发 effect、浏览器时间驱动的过期判断、运行时 garden/战斗模块导入、重复全局监听器或依赖。重试/新发按钮有明确可见名称；长账号独立换行，状态、说明与按钮分别排布。原 battle.css / battle-v3.css 未修改。
 
 尚未证明的部分是实际云端部署后 HTTPS / 多连接锁竞争及原生自然等待五分钟。隔离 SQL 中跨界等待用测试事务触发器推进内存时钟，不是实际多连接竞争；截图也不是原生验收。Root 完整审核后需先统一应用增量迁移，再部署生成的 lingjing-battle 函数，再生成客户端候选；09 在新候选上正常发邀请并自然等待五分钟，期间可并行复测其他项。不得修改正在原生验收的 DC7 或重放/清理 NOQA09。
+
+2026-10-26 云端应用核对：实际迁移版本 `20261026080525`；`lingjing-battle` 第 4 版回读源码匹配，三个数据库函数源码匹配且仍仅 service_role 可执行。12 条旧邀请原字段及房间、行动、命令回执摘要均保持，旧邀请 expires_at 全部为 NULL。对应新台账见 `evidence/cloud/2026-10-26/invite-expiry/migration-ledger.json`。原生自然五分钟到期及实际多连接竞争仍待对应现场证据。
