@@ -110,7 +110,11 @@ module.exports = {
         if(territories.scenario)snapshot.data.scenario=territories.scenario.descriptor;
         const discovery = services.get('discovery');
         if (discovery?.map?.project) snapshot.data.territories = snapshot.data.territories.map(t => ({ ...t, mapBoundary: t.boundary?.map(point => discovery.map.project(point)) }));
-        snapshot.data.territoryChallenges = services.db.prepare('SELECT battle_id sessionId,territory_id territoryId FROM garden_territory_challenges WHERE owner_account_id=? AND settled=0').all(context.ownerAccountId).map(challenge=>({...challenge,status:services.get('battle')?.getOutcome?.({ownerAccountId:context.ownerAccountId,sessionId:challenge.sessionId})?.session?.status}));
+        // Leaving consumes the original attempt but cannot be resumed or settled.
+        // Keep its durable history; only omit it from the actionable projection.
+        snapshot.data.territoryChallenges = services.db.prepare('SELECT battle_id sessionId,territory_id territoryId FROM garden_territory_challenges WHERE owner_account_id=? AND settled=0').all(context.ownerAccountId)
+          .map(challenge=>({...challenge,status:services.get('battle')?.getOutcome?.({ownerAccountId:context.ownerAccountId,sessionId:challenge.sessionId})?.session?.status}))
+          .filter(challenge=>challenge.status!=='abandoned');
       }
       return snapshot;
     };

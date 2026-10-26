@@ -10,6 +10,7 @@ const {LocationService}=require('../discovery/location-adapter.cjs');
 const {listTemplates}=require('../companions/templates.cjs');
 const {createQaTerritoryLocation}=require('./qa-location.cjs');
 const {validFix}=require('./territories.cjs');
+const {GardenService}=require('./service.cjs');
 
 test('ordinary services never gain a simulated territory location',()=>{
   assert.equal(createQaTerritoryLocation({get:()=>undefined}),null);
@@ -33,6 +34,11 @@ test('verified independent QA marker reuses discovery location and its identity 
   assert.equal(adapter.descriptor.mode,'simulated');
   assert.throws(()=>adapter.validate({...fix,scenarioId:randomUUID()}),{code:'QA_LOCATION_MISMATCH'});
   assert.throws(()=>adapter.validate({...fix,timestampMs:1}),{code:'LOCATION_STALE'});
+  let staleFailure;
+  try{adapter.validate({...fix,timestampMs:1});}catch(error){staleFailure=GardenService.prototype.failure(error);}
+  assert.equal(staleFailure?.code,'LOCATION_STALE');
+  assert.equal(staleFailure?.message,'位置已过期，请重新定位');
+  assert.equal(GardenService.prototype.failure(new Error('internal detail')).message,'菜园暂时不可用，请稍后重试');
   assert.throws(()=>adapter.validate({...fix,accuracyMeters:200}),{code:'LOCATION_IMPRECISE'});
   assert.throws(()=>adapter.validate({...fix,provider:'qa-territory'}),{code:'QA_LOCATION_MISMATCH'});
   assert.throws(()=>createQaTerritoryLocation({...services,paths:{userData:join(profile,'different')}}),{code:'QA_PROFILE_REQUIRED'});

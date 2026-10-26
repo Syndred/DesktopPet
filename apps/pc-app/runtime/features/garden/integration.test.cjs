@@ -71,6 +71,46 @@ test('territory refuses the OS default location and shares discovery boundary ru
   assert.equal(inside(region.boundary[0],region.boundary),true);
   assert.equal(inside({lat:0,lng:0},region.boundary),false);f.close();
 });
+
+test('an abandoned territory challenge retains its attempt and history without blocking the remaining challenge',async()=>{
+  const f=fixture(),context={ownerAccountId:f.owner},originalGet=f.services.get,providers=new Map();
+  f.services.get=name=>providers.has(name)?providers.get(name):originalGet(name);
+  f.services.provide=(name,value)=>providers.set(name,value);
+  const registered=require('./index.cjs').register(f.services);
+  try{
+    const initial=await registered.commands.snapshot({},context),territory=f.territories.discoverAtSystemFix(f.fix);
+    const start=async actionId=>registered.commands.territoryChallenge({actionId,sessionOwnerAccountId:f.owner,expectedRevision:(await registered.commands.snapshot({},context)).revision,petId:f.pet.petId,territoryId:territory.id,expectedTerritoryRevision:territory.revision},context);
+    const first=await start('cancelled-territory-start');assert.equal(first.ok,true,JSON.stringify(first));
+    const active=await registered.commands.snapshot({},context);
+    assert.deepEqual(active.data.territoryChallenges,[{sessionId:first.data.sessionId,territoryId:territory.id,status:'active'}]);
+    assert.equal(active.data.remainingInvasions,1);
+    const abandoned=await f.battle.leave({sessionId:first.data.sessionId},context);assert.equal(abandoned.status,'abandoned');
+    const history=f.db.prepare('SELECT * FROM garden_territory_challenges WHERE owner_account_id=? AND battle_id=?').get(f.owner,first.data.sessionId);
+    const logs=f.db.prepare('SELECT * FROM garden_territory_logs ORDER BY id').all();
+    const territoryRow=f.db.prepare('SELECT * FROM garden_territory_records WHERE territory_id=?').get(territory.id);
+    for(let i=0;i<2;i++){
+      const after=await registered.commands.snapshot({},context);
+      assert.deepEqual(after.data.territoryChallenges,[]);assert.equal(after.data.remainingInvasions,1);
+      assert.deepEqual(after.data.items,initial.data.items);
+      assert.deepEqual(f.db.prepare('SELECT * FROM garden_territory_challenges WHERE owner_account_id=? AND battle_id=?').get(f.owner,first.data.sessionId),history);
+      assert.deepEqual(f.db.prepare('SELECT * FROM garden_territory_logs ORDER BY id').all(),logs);
+      assert.deepEqual(f.db.prepare('SELECT * FROM garden_territory_records WHERE territory_id=?').get(territory.id),territoryRow);
+      assert.equal(f.battle.snapshot({sessionId:first.data.sessionId},context).status,'abandoned');
+    }
+    assert.equal(history.settled,0);assert.equal(history.result_json,null);
+    assert.equal(f.db.prepare('SELECT COUNT(*) n FROM battle_reward_receipts').get().n,0);
+    assert.equal(f.db.prepare('SELECT COUNT(*) n FROM garden_reward_receipts').get().n,0);
+    assert.equal(f.db.prepare('SELECT COUNT(*) n FROM garden_garrisons').get().n,0);
+    const second=await start('remaining-territory-start');assert.equal(second.ok,true,JSON.stringify(second));
+    assert.notEqual(second.data.sessionId,first.data.sessionId);
+    const remaining=await registered.commands.snapshot({},context);
+    assert.deepEqual(remaining.data.territoryChallenges,[{sessionId:second.data.sessionId,territoryId:territory.id,status:'active'}]);
+    assert.equal(remaining.data.remainingInvasions,0);
+    assert.equal((await start('over-quota-territory-start')).code,'DAILY_INVASIONS_USED');
+    assert.equal(f.db.prepare('SELECT COUNT(*) n FROM garden_territory_challenges').get().n,2);
+    assert.equal(f.db.prepare('SELECT COUNT(*) n FROM garden_territory_logs').get().n,2);
+  }finally{registered.dispose();f.close();}
+});
 test('account backup cannot merge a harvest action with an older planted plot', () => {
   const f = fixture(); const context = { ownerAccountId: f.owner }; f.garden.snapshot(context);
   const adapter = createGardenBackupAdapter(f.db); const before = adapter.export(f.owner);
@@ -91,6 +131,7 @@ test('public battle-context settlement keeps its original receipt after another 
     const started=await registered.commands.territoryChallenge({actionId:'shared-context-start',sessionOwnerAccountId:f.owner,expectedRevision:initial.revision,petId:f.pet.petId,territoryId:territory.id,expectedTerritoryRevision:territory.revision},context);
     assert.equal(started.ok,true,JSON.stringify(started));
     await finishBattle(f,f.battle.snapshot({sessionId:started.data.sessionId},context));
+    assert.deepEqual((await registered.commands.snapshot({},context)).data.territoryChallenges,[{sessionId:started.data.sessionId,territoryId:territory.id,status:'finished'}]);
     assert.equal(api.getBattleContext({...context,sessionId:started.data.sessionId}).settled,false);
     assert.equal(api.getBattleContext({...context,sessionId:started.data.sessionId}).action,'territory');assert.equal(api.getBattleContext({...context,sessionId:started.data.sessionId}).returnTo,'/garden');
     assert.throws(()=>api.getBattleContext({ownerAccountId:'another-owner',sessionId:started.data.sessionId}),{code:'SESSION_CHANGED'});
