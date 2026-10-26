@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "projectRef": "jbvrdmrkwpznbrvteive",
+  "observedAt": "2026-10-26T15:29:43.698823+00:00",
+  "deployedMigrations": [
+    {
+      "version": "20261026151314",
+      "name": "lingjing_personal_record_authority"
+    },
+    {
+      "version": "20261026152758",
+      "name": "lingjing_personal_message_order"
+    }
+  ],
+  "function": {
+    "name": "lingjing-records",
+    "version": 2,
+    "status": "ACTIVE",
+    "deployedSourcesVerified": true
+  },
+  "businessPreservation": {
+    "originalSaveHeads": 42,
+    "headsAndChecksumsUnchanged": true,
+    "countsUnchanged": true,
+    "counts": {
+      "serials": 75,
+      "accounts": 57,
+      "ownedPets": 74,
+      "saveActions": 435,
+      "saveArchives": 25,
+      "resourcePreferences": 5
+    }
+  },
+  "personalRecordAccounts": 0,
+  "personalRecords": 0,
+  "unauthenticatedRequest": {
+    "status": 401,
+    "code": "AUTH_REQUIRED"
+  },
+  "nativeAcceptance": false,
+  "security": {
+    "newServiceOnlyReadWriteRpcsAuthenticatedExecute": false,
+    "actorGuard": true,
+    "newPrivateReceiptTable": "RLS enabled, service-role only; no user write policy intentionally",
+    "preExistingPasswordProtectionWarningUnchanged": true
+  }
+}

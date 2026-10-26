@@ -24,7 +24,10 @@
 
 - 已完成：拉取最新代码、建立独立修改分支、核对 Supabase 变更和当前业务读写路径。
 - 源码已实施：按业务模块确认云端读回；个人内容逐记录 CAS/幂等/迁移保全/冲突选择；云端账号刷新替代整档同步；窗口布局留本机；旧备份仅导入个人内容、资源与设备设置。
-- 工程证据：`artifacts/qa/cloud-authority-convergence/20261026/source-gates-v1/`。verify 类型/lint/49 unit 及 verify:cloud 通过；本地 SQL 与独立 SQLite 协议验证不代表原生验收。
+- 工程证据：`artifacts/qa/cloud-authority-convergence/20261026/source-gates-v1/`。合并后 verify 类型/lint/49 unit、verify:cloud、448 native 用例通过；最后补充退出登录撤销订阅的定向回归通过。本地 SQL 与独立 SQLite 协议验证不代表原生验收。
 - 原生旧 C7 已由 09 正常退出；总控独立确认 6 PID/3 CDP 均消失。三个原档案 closeToTray 临时 false，需在新包恢复 true。
-- 正在实施：新增云端记录接口部署与新候选准备。QA-027 另包补丁尚需集成。
+- 云端已部署：个人记录与历史消息顺序两条追加迁移、lingjing-records v2。独立读取部署源码与回执相符；原 42 存档版本/校验值及原业务数量均未改变。证据 `evidence/cloud/2026-10-26/personal-records/`；尚无新客户端迁移或业务验收结论。
+- QA-027 已合并，22 条资源 hooks DOM 回归通过，原生结果仍待新包验证。
+- 旧聊天前缀按已知消息锚点插入；矛盾顺序的原档案和记录保留供审查，不能静默覆盖云端。两台独立 SQLite 缓存的顺序与重试回归通过。
+- 正在实施：从已提交、干净源码的独立构建目录制作固定候选；原工作区未提交的 QA 协调记录和旧档案继续保留。
 - 尚未证明：喂养跨客户端/重启/网络恢复闭环、最终新候选完整验收。

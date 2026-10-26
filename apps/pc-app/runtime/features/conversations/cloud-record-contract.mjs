@@ -41,8 +41,9 @@ export function validateChanges(owner, changes) {
   if (!Array.isArray(changes) || changes.length < 1 || changes.length > 100) invalid();
   const seen = new Set();
   for (const change of changes) {
-    if (!object(change) || Object.keys(change).sort().join('|') !== 'baseRevision|collection|document|id' ||
+    if (!object(change) || !['baseRevision|collection|document|id','baseRevision|beforeId|collection|document|id'].includes(Object.keys(change).sort().join('|')) ||
       !Object.hasOwn(fields,change.collection) || !text(change.id,1024) || !integer(change.baseRevision)) invalid();
+    if ('beforeId' in change && (change.collection !== 'conversation_messages' || change.baseRevision !== 0 || change.document === null || !text(change.beforeId,1024) || change.beforeId === change.id)) invalid();
     const key = JSON.stringify([change.collection,change.id]); if (seen.has(key)) invalid(); seen.add(key);
     if (change.document !== null) validateRecord(owner,change.collection,change.id,change.document);
   }

@@ -15,7 +15,7 @@ await db.exec(`create role anon;create role authenticated;create role service_ro
 for(const name of ['20261025021620_lingjing_identity_actor_contract.sql','20261025022918_lingjing_auth_bridge.sql',
  '20261025024615_lingjing_protected_save_cas.sql','20261025030859_lingjing_cloud_secret_guard.sql',
  '20261025032327_lingjing_session_revocation_ledger.sql','20261025034106_lingjing_transaction_actor_guard.sql',
- '20261026142125_lingjing_personal_record_authority.sql'])await db.exec(readFileSync(`infra/supabase/migrations/${name}`,'utf8'));
+ '20261026151314_lingjing_personal_record_authority.sql','20261026152758_lingjing_personal_message_order.sql'])await db.exec(readFileSync(`infra/supabase/migrations/${name}`,'utf8'));
 async function as(role,actor,sql,params=[]){
  await db.exec(`begin;set local role ${role};`);
  try{
@@ -85,6 +85,21 @@ test('LOCAL PostgreSQL fixture: message pairs keep their IDs, order and unique t
  const rebound={...assistant,pet_id:'original-pet-b'};
  await assert.rejects(write('record-forged-rebind',[{...changes[1],baseRevision:2,document:rebound}]),/LJ_RECORD_ID_REUSED/);
 });
+test('LOCAL PostgreSQL fixture: an imported message prefix precedes its known anchor and replay never inserts twice',async()=>{
+ const before=await read(),anchor=before.records.find(row=>row.document.id==='original-user-message');
+ const document={...anchor.document,id:'earlier-original-message',action_id:'earlier-original-turn',content:'原来的前缀',created_at:1,updated_at:1};
+ const changes=[{collection:'conversation_messages',id:recordId('conversation_messages',document),baseRevision:0,document,beforeId:anchor.id}];
+ validateChanges(owner,changes);const result=await write('record-historical-prefix',changes);
+ assert.equal((await write('record-historical-prefix',changes)).duplicate,true);
+ const delta=await read(before.cursor),current=await read(),messages=current.records.filter(row=>row.collection==='conversation_messages'&&!row.deleted).sort((a,b)=>a.position-b.position);
+ assert.deepEqual(messages.map(row=>row.document.id),['earlier-original-message','original-user-message','original-assistant-message']);
+ assert.equal(delta.records.find(row=>row.id===anchor.id).revision,anchor.revision,'order metadata does not fabricate a content edit');
+ assert.ok(delta.records.some(row=>row.id===anchor.id),'other devices receive the shifted anchor');
+ assert.equal(messages[0].document.created_at,1);assert.equal(result.records[0].revision,1);
+ const bad={...document,id:'invalid-ordered-message',action_id:'invalid-ordered-turn'};
+ await assert.rejects(write('record-missing-order-anchor',[{...changes[0],id:recordId('conversation_messages',bad),document:bad,beforeId:'["not-an-anchor"]'}]),/LJ_RECORD_CONFLICT/);
+});
+
 test('LOCAL PostgreSQL fixture: other owners, stale sessions, public RPC callers and direct writes are rejected',async()=>{
  await assert.rejects(admin('select public.lingjing_read_personal_records($1,$2,$3,$4)',[owner,uidB,deviceB,sidB]),/LJ_OWNER_MISMATCH/);
  await assert.rejects(write('forged-other-pet',[change({...initial[0],pet_id:'not-owned'},0)]),/LJ_PET_OWNER_MISMATCH/);

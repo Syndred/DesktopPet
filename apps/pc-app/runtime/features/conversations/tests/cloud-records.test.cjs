@@ -17,8 +17,11 @@ function server(){
     const old=actions.get(body.actionId);if(old){assert.equal(old.hash,checksum(body.changes));return {...structuredClone(old.receipt),duplicate:true};}
     for(const change of body.changes){const current=rows.get(JSON.stringify([change.collection,change.id]));if((current?.revision||0)!==change.baseRevision)throw Object.assign(new Error('conflict'),{code:'RECORD_CONFLICT'});}
     const records=body.changes.map(change=>{
+      let position;
+      if(change.beforeId){const anchor=rows.get(JSON.stringify([change.collection,change.beforeId]));assert.ok(anchor&&!anchor.deleted);position=anchor.position;
+        for(const row of rows.values())if(row.collection===change.collection&&row.position>=position){row.position++;row.changeSequence=++sequence;}}
       const key=JSON.stringify([change.collection,change.id]),current=rows.get(key),row={collection:change.collection,id:change.id,revision:(current?.revision||0)+1,
-        document:structuredClone(change.document??current.document),deleted:change.document===null,position:current?.position??++sequence,changeSequence:++sequence};rows.set(key,row);return row;
+        document:structuredClone(change.document??current.document),deleted:change.document===null,position:current?.position??position??++sequence,changeSequence:++sequence};rows.set(key,row);return row;
     });
     const receipt={ownerAccountId:owner,actionId:body.actionId,records:structuredClone(records),duplicate:false};actions.set(body.actionId,{hash:checksum(body.changes),receipt});
     if(loseReply){loseReply=false;throw Object.assign(new Error('acknowledgement lost'),{code:'RECORD_UNAVAILABLE'});}
@@ -32,6 +35,47 @@ function client(remote){
   const services={db,get:name=>name==='accounts'?accounts:name==='companions'?{listPets:()=>[{petId:pet},{petId:otherPet}]}:null};
   const cloud=new ConversationCloudRecords(services);return {db,store,cloud,switchOwner:()=>{current='other-owner';accounts.epoch++;},close:()=>db.close()};
 }
+
+test('LOCAL SQLite and protocol double: imported prefixes and existing tails have the same original order on both devices',async()=>{
+  const remote=server(),a=client(remote),b=client(remote);try{
+    const config={provider:'openai-compatible',model:'fixture'};
+    const middle=a.store.createTurn(owner,pet,'middle-turn','中间的问题',config).messages;
+    a.store.updateReply(owner,pet,'middle-turn','中间的回复','complete');await a.cloud.refresh(owner);
+    const stale=structuredClone([...remote.rows.values()]);
+    const prefix=b.store.createTurn(owner,pet,'prefix-turn','原来的开头',config).messages;
+    b.store.updateReply(owner,pet,'prefix-turn','开头的回复','complete');
+    const fields=(await b.cloud.contract).fields.conversation_messages;
+    const insert=b.db.prepare(`INSERT INTO conversation_messages(${fields.join(',')}) VALUES(${fields.map(()=>'?').join(',')})`);
+    for(const source of a.db.prepare('SELECT * FROM conversation_messages ORDER BY sequence').all())insert.run(...fields.map(name=>source[name]));
+    const tail=b.store.createTurn(owner,pet,'tail-turn','后续的问题',config).messages;
+    b.store.updateReply(owner,pet,'tail-turn','后续的回复','complete');await b.cloud.refresh(owner);await a.cloud.refresh(owner);
+    const expected=[...prefix,...middle,...tail].map(row=>row.id);
+    assert.deepEqual(a.store.history(owner,pet).messages.map(row=>row.id),expected);
+    assert.deepEqual(b.store.history(owner,pet).messages.map(row=>row.id),expected);
+    assert.equal(b.cloud.status(owner).preservedLocalRecords,0);
+    const orderedIntent=remote.calls.find(call=>call.op==='write'&&call.changes.some(change=>change.beforeId));
+    assert.ok(orderedIntent);
+    const key=JSON.stringify(['conversation_messages',stale[0].id]),position=b.cloud.cached(owner).get(key).position;
+    await b.cloud.accept(owner,stale);assert.equal(b.cloud.cached(owner).get(key).position,position,'an older acknowledgement cannot undo a later order readback');
+  }finally{a.close();b.close();}
+});
+
+test('LOCAL SQLite and protocol double: contradictory observed histories are archived instead of silently reordering the cloud',async()=>{
+  const remote=server(),a=client(remote),b=client(remote);try{
+    const config={provider:'openai-compatible',model:'fixture'};
+    a.store.createTurn(owner,pet,'cloud-first','第一轮',config);a.store.updateReply(owner,pet,'cloud-first','第一轮回复','complete');
+    a.store.createTurn(owner,pet,'cloud-second','第二轮',config);a.store.updateReply(owner,pet,'cloud-second','第二轮回复','complete');await a.cloud.refresh(owner);
+    const fields=(await b.cloud.contract).fields.conversation_messages,rows=a.db.prepare('SELECT * FROM conversation_messages ORDER BY sequence').all();
+    const insert=b.db.prepare(`INSERT INTO conversation_messages(${fields.join(',')}) VALUES(${fields.map(()=>'?').join(',')})`);
+    for(const source of [...rows.slice(2),...rows.slice(0,2)])insert.run(...fields.map(name=>source[name]));
+    b.store.createTurn(owner,pet,'preserved-tail','需要保留的原文',config);b.store.updateReply(owner,pet,'preserved-tail','原回复','complete');
+    await b.cloud.refresh(owner);
+    assert.deepEqual(b.store.history(owner,pet).messages.map(row=>row.id),rows.map(row=>row.id));
+    assert.equal(b.cloud.status(owner).preservedLocalRecords,2);assert.match(b.db.prepare('SELECT document_json FROM conversation_cloud_archives').get().document_json,/需要保留的原文/);
+    const writes=remote.calls.filter(call=>call.op==='write').length;await b.cloud.persist(owner);
+    assert.equal(remote.calls.filter(call=>call.op==='write').length,writes,'preserved rows do not silently return to the upload path');
+  }finally{a.close();b.close();}
+});
 
 test('LOCAL SQLite and protocol double: two independent caches read the same server record and preserve original IDs',async()=>{
   const remote=server(),a=client(remote),b=client(remote);try{

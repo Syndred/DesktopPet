@@ -25,3 +25,13 @@ test('a response from the previous account cannot publish a successful refresh a
   accounts.current={authKind:'supabase',ownerAccountId:'new-owner'};accounts.epoch++;release({verified:true});
   assert.deepEqual(await result,{skipped:true});assert.equal(accounts.cloudObservations.size,0);assert.equal(events.length,0);
 });
+
+test('logging out immediately removes the previous owner subscription and its pending refresh',async()=>{
+  const {accounts}=fixture(),removed=[],channel={id:'original-owner-channel'};
+  accounts.cloudChannel={channel,client:{removeChannel:async value=>{removed.push(value);}}};
+  let fired=false;accounts.cloudRefreshTimer=setTimeout(()=>{fired=true;},5);
+  Object.assign(accounts,{privateSession:()=>({ownerAccountId:'cloud-refresh-owner'}),backups:{previews:new Map()},
+    sync:{observations:new Map()},db:{prepare:()=>({run(){}})},vault:{clear(){}},remote:{setCurrentUser(){}},emitSession(){}});
+  await accounts.logout();await new Promise(resolve=>setTimeout(resolve,10));
+  assert.deepEqual(removed,[channel]);assert.equal(accounts.cloudChannel,null);assert.equal(fired,false);assert.equal(accounts.current,null);
+});

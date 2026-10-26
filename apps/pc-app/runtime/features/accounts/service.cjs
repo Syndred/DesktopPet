@@ -157,8 +157,13 @@ class AccountsService {
     invariant(this.epoch === epoch && this.current?.ownerAccountId === row.owner_account_id, "SESSION_CHANGED", "账号状态已改变，请重新登录。");
     return this.emitSession({ notifyApp: false });
   }
+  stopCloudWatch(){
+    clearTimeout(this.cloudRefreshTimer);
+    const previous=this.cloudChannel;this.cloudChannel=null;
+    if(previous)void Promise.resolve(previous.client.removeChannel(previous.channel)).catch(()=>{});
+  }
   async watchCloud(){
-    if(this.cloudChannel){void this.cloudChannel.client.removeChannel(this.cloudChannel.channel);this.cloudChannel=null;}
+    this.stopCloudWatch();
     if(!this.realtimeEnabled||this.current?.authKind!=='supabase')return;
     const epoch=this.epoch,actor=await this.requireCloudActor();
     if(this.epoch!==epoch||typeof actor.client?.channel!=='function')return;
@@ -259,6 +264,7 @@ class AccountsService {
     const prior = this.current;
     const previousCloudSession = this.privateSession();
     this.epoch++; this.current = null; this.backups.previews.clear();this.sync.observations.clear();
+    this.stopCloudWatch();
     this.db.prepare("INSERT INTO account_session_control VALUES(1,1) ON CONFLICT(singleton) DO UPDATE SET blocked=1").run();
     try { this.vault.clear(); } catch { this.startupIssue = "SECURE_SESSION_CLEAR_FAILED"; }
     this.host?.clear?.();
@@ -271,6 +277,7 @@ class AccountsService {
   invalidateSession(owner) {
     if (this.current?.provider !== "runtime" || this.current.ownerAccountId !== owner) return;
     this.epoch++; this.current = null; this.startupIssue = "SESSION_INVALIDATED"; this.backups.previews.clear();this.sync.observations.clear();
+    this.stopCloudWatch();
     this.db.prepare("INSERT INTO account_session_control VALUES(1,1) ON CONFLICT(singleton) DO UPDATE SET blocked=1").run();
     try { this.vault.clear(); } catch { /* SQLite revocation still prevents this proof from resuming. */ }
     this.host?.clear?.(); this.remote.setCurrentUser(null); this.emitSession();
@@ -418,6 +425,6 @@ class AccountsService {
     this.services.events?.emit("accounts:save-restored", { ownerAccountId: owner });
     return restored;
   }
-  dispose() { this.disposed=true;this.epoch++;clearInterval(this.retryTimer);clearTimeout(this.cloudRefreshTimer);if(this.cloudChannel)void this.cloudChannel.client.removeChannel(this.cloudChannel.channel); this.remoteUnsubscribe?.(); this.proofUnsubscribe?.(); this.remote.dispose?.(); this.host?.dispose?.(); }
+  dispose() { this.disposed=true;this.epoch++;clearInterval(this.retryTimer);this.stopCloudWatch(); this.remoteUnsubscribe?.(); this.proofUnsubscribe?.(); this.remote.dispose?.(); this.host?.dispose?.(); }
 }
 module.exports = { AccountsService };

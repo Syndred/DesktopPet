@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "pendingReviewFiles": ["20261026142125_lingjing_personal_record_authority.sql"],
-  "expectedDeployedCount": 26,
-  "ledgerEvidence": "docs/implementation/evidence/cloud/2026-10-26/invite-expiry/migration-ledger.json",
-  "scope": "Approved source filenames aligned to 26 actual cloud migrations; original 25-entry, 23-entry and 22-entry evidence retained unchanged. Not a full PostGIS reset assertion.",
+  "pendingReviewFiles": [],
+  "expectedDeployedCount": 28,
+  "ledgerEvidence": "docs/implementation/evidence/cloud/2026-10-26/personal-records/migration-ledger.json",
+  "scope": "Approved source filenames aligned to 28 actual cloud migrations; all previous ledger evidence retained unchanged. Not a full PostGIS reset assertion.",
   "files": [
     "20261025015911_preserve_comparisontext_before_lingjing.sql",
     "20261025021620_lingjing_identity_actor_contract.sql",
@@ -30,6 +30,8 @@
     "20261025115122_lingjing_global_pet_serials.sql",
     "20261025151136_lingjing_battle_serial_views.sql",
     "20261025151139_lingjing_territory_serial_views.sql",
-    "20261026080525_lingjing_battle_invite_expiry.sql"
+    "20261026080525_lingjing_battle_invite_expiry.sql",
+    "20261026151314_lingjing_personal_record_authority.sql",
+    "20261026152758_lingjing_personal_message_order.sql"
   ]
 }

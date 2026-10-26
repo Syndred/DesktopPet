@@ -1,0 +1,179 @@
+{
+  "schemaVersion": 1,
+  "format": "lingjing.cloud.migration-ledger",
+  "projectRef": "jbvrdmrkwpznbrvteive",
+  "observedAt": "2026-10-26T15:28:46.761Z",
+  "previousEvidence": "docs/implementation/evidence/cloud/2026-10-26/invite-expiry/migration-ledger.json",
+  "actualLedgerCount": 28,
+  "deployedFromCommit": "b930ed7cb0ba32505fe4d2cb59a5aefc30cc2c2a",
+  "entries": [
+    {
+      "version": "20261025015911",
+      "name": "preserve_comparisontext_before_lingjing",
+      "target": "infra/supabase/migrations/20261025015911_preserve_comparisontext_before_lingjing.sql",
+      "sha256": "d13d8555f59a0fedc27f9137848a39e4fba1f8549f6c851d22cbe452284bda14"
+    },
+    {
+      "version": "20261025021620",
+      "name": "lingjing_identity_actor_contract",
+      "target": "infra/supabase/migrations/20261025021620_lingjing_identity_actor_contract.sql",
+      "sha256": "bb811b9db94a35afcf86780b74593a1003e1b51d57ab3970af134a419aaca98c"
+    },
+    {
+      "version": "20261025022918",
+      "name": "lingjing_auth_bridge",
+      "target": "infra/supabase/migrations/20261025022918_lingjing_auth_bridge.sql",
+      "sha256": "84232837bcc4de224d84def10bd224e7db1a4a22ac729c6582fdf74921ebe2b7"
+    },
+    {
+      "version": "20261025023614",
+      "name": "lingjing_private_resource_storage",
+      "target": "infra/supabase/migrations/20261025023614_lingjing_private_resource_storage.sql",
+      "sha256": "856a5db601d24b1c11a6283775ad3c6e7f4b46cc3ddf90b9aaeac26211bd8105"
+    },
+    {
+      "version": "20261025024615",
+      "name": "lingjing_protected_save_cas",
+      "target": "infra/supabase/migrations/20261025024615_lingjing_protected_save_cas.sql",
+      "sha256": "91c638f9ebe0ca32666cd8a69e888e0514330c7131fbffcb64ad991f689a47ab"
+    },
+    {
+      "version": "20261025030635",
+      "name": "lingjing_discovery_cloud_authority",
+      "target": "infra/supabase/migrations/20261025030635_lingjing_discovery_cloud_authority.sql",
+      "sha256": "fd4443b949b3385ffdd38cc5da9cb917a236922f3a5df724d8ec3b01353eb452"
+    },
+    {
+      "version": "20261025030639",
+      "name": "lingjing_discovery_live_actor_guard",
+      "target": "infra/supabase/migrations/20261025030639_lingjing_discovery_live_actor_guard.sql",
+      "sha256": "b530a4fa47ac35b16040503cb71d302274e5be028c181744b0e533c3b95c3959"
+    },
+    {
+      "version": "20261025030859",
+      "name": "lingjing_cloud_secret_guard",
+      "target": "infra/supabase/migrations/20261025030859_lingjing_cloud_secret_guard.sql",
+      "sha256": "fd74e4b393ff150ca63e3e4acef0d1411a63ec16aac5e635f89abd5272f55d14"
+    },
+    {
+      "version": "20261025031842",
+      "name": "lingjing_companion_commands",
+      "target": "infra/supabase/migrations/20261025031842_lingjing_companion_commands.sql",
+      "sha256": "a213a3deaaf1036656f919deb41eaadcaac31122db7fdc1070c6e37eda126cb9"
+    },
+    {
+      "version": "20261025032327",
+      "name": "lingjing_session_revocation_ledger",
+      "target": "infra/supabase/migrations/20261025032327_lingjing_session_revocation_ledger.sql",
+      "sha256": "a5ab134c6231b963dcaafd6585f5cb1273226ccae84d1dc3199f18fda2b51edc"
+    },
+    {
+      "version": "20261025033032",
+      "name": "lingjing_territory_authority",
+      "target": "infra/supabase/migrations/20261025033032_lingjing_territory_authority.sql",
+      "sha256": "2c0921c8309328f5a2dd8da1dc65f25b744f85d2cca7fa62dce7e455608ef5b2"
+    },
+    {
+      "version": "20261025034106",
+      "name": "lingjing_transaction_actor_guard",
+      "target": "infra/supabase/migrations/20261025034106_lingjing_transaction_actor_guard.sql",
+      "sha256": "5d3059294dc7c6d43989188ea2e4e910a46c5f5b8e184776dac0ecf58fabdc64"
+    },
+    {
+      "version": "20261025034110",
+      "name": "lingjing_domain_actor_guard_adoption",
+      "target": "infra/supabase/migrations/20261025034110_lingjing_domain_actor_guard_adoption.sql",
+      "sha256": "2bd771a2300875be3c866c9b0a7495dc58accbcb669b32dabb648f0274a8074f"
+    },
+    {
+      "version": "20261025034122",
+      "name": "lingjing_verified_resource_authority",
+      "target": "infra/supabase/migrations/20261025034122_lingjing_verified_resource_authority.sql",
+      "sha256": "14db0b97ca076af598e40529a5e63da8547a1bdb4182c9891f27308c3f71d77f"
+    },
+    {
+      "version": "20261025034132",
+      "name": "lingjing_discovery_wild_transactions",
+      "target": "infra/supabase/migrations/20261025034132_lingjing_discovery_wild_transactions.sql",
+      "sha256": "e9e8f56ebdfff37a49f10cd2fff8861ed3ab5d22f41cc3e94ce05360dfbde038"
+    },
+    {
+      "version": "20261025034136",
+      "name": "lingjing_discovery_capture_scenarios",
+      "target": "infra/supabase/migrations/20261025034136_lingjing_discovery_capture_scenarios.sql",
+      "sha256": "a97ad03d3535fc6e5e66e435526059a2ad821471a6df89c1067e4d7511c0bb29"
+    },
+    {
+      "version": "20261025034313",
+      "name": "lingjing_territory_receipt_operator",
+      "target": "infra/supabase/migrations/20261025034313_lingjing_territory_receipt_operator.sql",
+      "sha256": "f26cc86b2f51a64a1cb263e113ab03d8e9a01aa1db9632b5fbc22b77fb6ecb9d"
+    },
+    {
+      "version": "20261025034744",
+      "name": "lingjing_battle_jwt_rooms",
+      "target": "infra/supabase/migrations/20261025034744_lingjing_battle_jwt_rooms.sql",
+      "sha256": "3785106e4fe0c84291aa96b503cba379e8300847e0f36a67ab801ecad426cf13"
+    },
+    {
+      "version": "20261025034748",
+      "name": "lingjing_battle_authority_save",
+      "target": "infra/supabase/migrations/20261025034748_lingjing_battle_authority_save.sql",
+      "sha256": "d808e7a0a9f07ba44b6973568cac912723fa0cfe1f91f26e281ffcf56a3a13b4"
+    },
+    {
+      "version": "20261025040739",
+      "name": "lingjing_battle_scoped_authority_receipt",
+      "target": "infra/supabase/migrations/20261025040739_lingjing_battle_scoped_authority_receipt.sql",
+      "sha256": "e4f69b85ffed7b2a03d5fb3dc47204447fad781c5b0cae0d28353e5c43e3726e"
+    },
+    {
+      "version": "20261025040946",
+      "name": "lingjing_live_foreign_key_indexes",
+      "target": "infra/supabase/migrations/20261025040946_lingjing_live_foreign_key_indexes.sql",
+      "sha256": "f8696279b3ec9127c90c678dc04549e11b028091c5d9116576fe0bdb8a0b034d"
+    },
+    {
+      "version": "20261025041216",
+      "name": "lingjing_verified_resource_preferences",
+      "target": "infra/supabase/migrations/20261025041216_lingjing_verified_resource_preferences.sql",
+      "sha256": "8cdeec98fed6d85bc8d6f7c84f69529517179c040b963ba55d49765d66ddf1bd"
+    },
+    {
+      "version": "20261025115122",
+      "name": "lingjing_global_pet_serials",
+      "target": "infra/supabase/migrations/20261025115122_lingjing_global_pet_serials.sql",
+      "sha256": "49bf4db3bf6d4b9b3bec3de80b2c145d7c6abe8068fa98b1e06e2ef97be32350"
+    },
+    {
+      "version": "20261025151136",
+      "name": "lingjing_battle_serial_views",
+      "target": "infra/supabase/migrations/20261025151136_lingjing_battle_serial_views.sql",
+      "sha256": "99ab99a5f55397f5325e90d19e376a8aa9fdd2f33e59ebd4d347521cce5c86ec"
+    },
+    {
+      "version": "20261025151139",
+      "name": "lingjing_territory_serial_views",
+      "target": "infra/supabase/migrations/20261025151139_lingjing_territory_serial_views.sql",
+      "sha256": "357a4032a00ea5a3fd517618081f78422f568e7aa5e84946ed91523743ce72a0"
+    },
+    {
+      "version": "20261026080525",
+      "name": "lingjing_battle_invite_expiry",
+      "target": "infra/supabase/migrations/20261026080525_lingjing_battle_invite_expiry.sql",
+      "sha256": "56baf628429d0b56f3d2658e41aea9dc98ffefaeb32199c382420fc82c23e966"
+    },
+    {
+      "version": "20261026151314",
+      "name": "lingjing_personal_record_authority",
+      "target": "infra/supabase/migrations/20261026151314_lingjing_personal_record_authority.sql",
+      "sha256": "a2c586a10024419727032c14b80ff7cbc2f3340e1adab500f07cbad95c79c12a"
+    },
+    {
+      "version": "20261026152758",
+      "name": "lingjing_personal_message_order",
+      "target": "infra/supabase/migrations/20261026152758_lingjing_personal_message_order.sql",
+      "sha256": "e8fe11d4095c1e540c1900f18e3e53e730358a19d9c2ec934e11faeec52d7420"
+    }
+  ]
+}

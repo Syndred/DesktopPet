@@ -36,7 +36,7 @@ class ConversationCloudRecords {
       if(!Number.isSafeInteger(row.revision)||row.revision<1||!Number.isSafeInteger(row.position)||!Number.isSafeInteger(row.changeSequence)||typeof row.deleted!=='boolean')fail('RECORD_RECEIPT_MISMATCH','云端记录版本无效。');
       validateRecord(owner,row.collection,row.id,row.document);
       const old=this.db.prepare('SELECT * FROM conversation_cloud_records WHERE owner_account_id=? AND collection=? AND record_id=?').get(owner,row.collection,row.id);
-      if(old&&old.revision>row.revision)continue;
+      if(old&&(old.revision>row.revision||old.change_sequence>row.changeSequence))continue;
       if(old&&old.revision===row.revision&&(checksum(JSON.parse(old.document_json))!==checksum(row.document)||Boolean(old.deleted)!==row.deleted))fail('RECORD_RECEIPT_MISMATCH','同一记录版本返回了不同内容。');
       this.db.prepare(`INSERT INTO conversation_cloud_records VALUES(?,?,?,?,?,?,?,?) ON CONFLICT(owner_account_id,collection,record_id)
         DO UPDATE SET revision=excluded.revision,position=excluded.position,change_sequence=excluded.change_sequence,document_json=excluded.document_json,deleted=excluded.deleted`)
@@ -54,6 +54,23 @@ class ConversationCloudRecords {
     .run(owner,record.collection,record.id,JSON.stringify(record.document),remote?JSON.stringify(remote.document):null,reason,Date.now());}
   async enqueue(owner,changes){const {validateChanges}=await this.contract;validateChanges(owner,changes);const id=`record:${randomUUID()}`;
     this.db.prepare("INSERT INTO conversation_cloud_outbox VALUES(?,?,?,'pending',NULL,?)").run(owner,id,JSON.stringify(changes),Date.now());return id;}
+  messagePlacements(owner,rows,remote,reason){
+    const groups=new Map(),placements=new Map();
+    for(const row of rows)if(row.collection==='conversation_messages'){
+      const list=groups.get(row.document.pet_id)||[];list.push(row);groups.set(row.document.pet_id,list);
+    }
+    for(const group of groups.values()){
+      let previous=-1,contradictory=false;
+      for(const row of group){const known=remote.get(keyOf(row.collection,row.id));if(known&&!known.deleted){if(known.position<=previous)contradictory=true;previous=known.position;}}
+      for(let index=0;index<group.length;index++){
+        const row=group[index];if(remote.has(keyOf(row.collection,row.id)))continue;
+        if(contradictory){this.preserve(owner,row,null,`${reason}:message-order`);placements.set(row.id,null);continue;}
+        const anchor=group.slice(index+1).find(item=>{const known=remote.get(keyOf(item.collection,item.id));return known&&!known.deleted;});
+        placements.set(row.id,anchor?{beforeId:anchor.id}:{});
+      }
+    }
+    return placements;
+  }
   async flushInside(owner,identity){const conflicts=[],jobs=this.db.prepare("SELECT * FROM conversation_cloud_outbox WHERE owner_account_id=? AND status='pending' ORDER BY created_at,rowid").all(owner);
     for(const job of jobs){let reply;try{reply=await this.request(owner,identity,{op:'write',actionId:job.action_id,changes:JSON.parse(job.changes_json)});}
       catch(error){this.current(owner,identity);const conflict=['RECORD_CONFLICT','RECORD_ID_REUSED','PET_OWNER_MISMATCH','ACTION_ID_REUSED'].includes(error.code);
@@ -70,11 +87,13 @@ class ConversationCloudRecords {
     const rows=await this.local(owner),document=Object.fromEntries(rows),digest=checksum(document);
     this.db.prepare('INSERT OR IGNORE INTO conversation_cloud_archives VALUES(?,?,?,?)').run(owner,digest,JSON.stringify(document),Date.now());
     await this.pull(owner,identity);const remote=this.cached(owner),owned=new Set(this.services.get('companions')?.listPets(owner)?.map(pet=>pet.petId??pet.id)||[]);
-    const additions=[];
+    const additions=[],placements=this.messagePlacements(owner,[...rows.values()],remote,'legacy-local-difference');
     for(const [key,record]of rows){const cloud=remote.get(key),row=record.document,pet=row.pet_id??row.selected_pet_id??(row.scope==='pet'?row.scope_id:null);
       if(cloud){if(cloud.deleted||checksum(cloud.document)!==checksum(row))this.preserve(owner,record,cloud,'legacy-local-difference');continue;}
       if(pet&&!owned.has(pet)){this.preserve(owner,record,null,'legacy-pet-not-in-cloud');continue;}
-      additions.push({collection:record.collection,id:record.id,baseRevision:0,document:row});
+      const placement=record.collection==='conversation_messages'?placements.get(record.id):undefined;
+      if(placement===null)continue;
+      additions.push({collection:record.collection,id:record.id,baseRevision:0,document:row,...placement});
     }
     // Small immutable batches preserve original message order while importing.
     for(let index=0;index<additions.length;index+=100)await this.enqueue(owner,additions.slice(index,index+100));
@@ -82,7 +101,15 @@ class ConversationCloudRecords {
     this.db.prepare('UPDATE conversation_cloud_state SET initialized=1 WHERE owner_account_id=?').run(owner);
   }
   async materialize(owner){if(this.hasActive(owner))return 0;const identity=this.identity(owner),{fields,primary}=await this.contract,remote=this.cached(owner);this.current(owner,identity);let applied=0;
-    transaction(this.db,()=>{for(const row of remote.values()){
+    transaction(this.db,()=>{
+      // Preserved legacy-only rows remain in their original archive, outside
+      // the active cloud cache. They must not be silently uploaded on next save.
+      for(const source of this.db.prepare('SELECT collection,record_id,local_document FROM conversation_cloud_conflicts WHERE owner_account_id=? AND resolved_at IS NULL').all(owner)){
+        if(remote.has(keyOf(source.collection,source.record_id)))continue;
+        const document=JSON.parse(source.local_document),where=['owner_account_id',...primary[source.collection].filter(name=>name!=='owner_account_id')];
+        applied+=this.db.prepare(`DELETE FROM ${source.collection} WHERE ${where.map(name=>`${name}=?`).join(' AND ')}`).run(...where.map(name=>document[name])).changes;
+      }
+      for(const row of remote.values()){
       const collection=row.collection,where=['owner_account_id',...primary[collection].filter(name=>name!=='owner_account_id')];
       const document=row.document;
       if(row.deleted){applied+=this.db.prepare(`DELETE FROM ${collection} WHERE ${where.map(name=>`${name}=?`).join(' AND ')}`).run(...where.map(name=>document[name])).changes;continue;}
@@ -100,7 +127,17 @@ class ConversationCloudRecords {
       const update=names.filter(name=>!where.includes(name)&&name!=='id').map(name=>`${name}=excluded.${name}`).join(',');
       this.db.prepare(`INSERT INTO ${collection}(${names.join(',')}) VALUES(${names.map(()=>'?').join(',')}) ON CONFLICT DO UPDATE SET ${update}`).run(...values);
       applied++;
-    }});
+      }
+      const current=this.db.prepare('SELECT id FROM conversation_messages WHERE owner_account_id=? ORDER BY sequence').all(owner).map(row=>row.id);
+      const canonical=[...remote.values()].filter(row=>row.collection==='conversation_messages'&&!row.deleted).map(row=>row.document.id),known=new Set(canonical);
+      const ordered=[...canonical,...current.filter(id=>!known.has(id))];
+      if(current.join('\0')!==ordered.join('\0')){
+        const base=this.db.prepare('SELECT coalesce(max(sequence),0) n FROM conversation_messages').get().n;
+        this.db.prepare('UPDATE conversation_messages SET sequence=-sequence WHERE owner_account_id=?').run(owner);
+        const update=this.db.prepare('UPDATE conversation_messages SET sequence=? WHERE owner_account_id=? AND id=?');
+        ordered.forEach((id,index)=>update.run(base+index+1,owner,id));applied++;
+      }
+    });
     return applied;
   }
   async refresh(owner){if(!this.enabled(owner)||this.hasActive(owner))return this.status(owner);
@@ -157,10 +194,12 @@ class ConversationCloudRecords {
     return this.serial(owner,async()=>{
       const identity=this.identity(owner);await this.initialize(owner,identity);await this.pull(owner,identity);
       const {recordId}=await this.contract,remote=this.cached(owner),reason=`backup-import:${checksum(data)}`,additions=[];
+      const rows=Object.entries(data.tables).flatMap(([collection,items])=>items.map(document=>({collection,id:recordId(collection,document),document})));
+      const placements=this.messagePlacements(owner,rows,remote,reason);
       this.db.prepare('INSERT OR IGNORE INTO conversation_cloud_archives VALUES(?,?,?,?)').run(owner,checksum(data),JSON.stringify(data),Date.now());
       for(const [collection,rows]of Object.entries(data.tables))for(const document of rows){const id=recordId(collection,document),prior=remote.get(keyOf(collection,id));
         if(prior){if(prior.deleted||checksum(prior.document)!==checksum(document))this.preserve(owner,{collection,id,document},prior,reason);}
-        else additions.push({collection,id,baseRevision:0,document});
+        else {const placement=collection==='conversation_messages'?placements.get(id):undefined;if(placement!==null)additions.push({collection,id,baseRevision:0,document,...placement});}
       }
       for(let index=0;index<additions.length;index+=100)await this.enqueue(owner,additions.slice(index,index+100));
       await this.flushInside(owner,identity);await this.pull(owner,identity);await this.materialize(owner);
