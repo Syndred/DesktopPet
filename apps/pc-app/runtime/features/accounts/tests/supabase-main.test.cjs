@@ -111,7 +111,7 @@ test('PROTOCOL UNIT simulated: untouched empty battle/garden modules are absent-
  const history=structuredClone(data);history.modules.garden.data.territoryArchive.logs.push({id:'retained-history'});assert.notEqual(f.accounts.sync.dataChecksum(history),f.accounts.sync.dataChecksum(base));
 });
 
-test('real SQLite with simulated Auth: issued restore previews expire across session transitions, same-SID refresh remains usable',async()=>{
+test('real SQLite with simulated Auth: old cloud previews cannot replace live data and still expire across session transitions',async()=>{
  let current,cloud;
  const f=fixture(async(url,options)=>{const body=JSON.parse(options.body);
   if(url.endsWith('lingjing-auth')){
@@ -125,7 +125,9 @@ test('real SQLite with simulated Auth: issued restore previews expire across ses
  f.accounts.backups.save(owner,file);const original=readFileSync(file);cloud={revision:1,envelope:f.accounts.backups.snapshot(owner)};
  const refreshPreview=await f.accounts.sync.previewCloud(owner),refreshSid=f.accounts.privateSession().sessionId;
  await f.remote.refresh(f.remote.active);assert.equal(f.accounts.privateSession().sessionId,refreshSid);
- assert.equal((await f.accounts.restoreBackup({previewId:refreshPreview.previewId,actionId:randomUUID(),mode:'replace'})).restored,true);
+ const protectedBefore=f.accounts.backups.dataChecksum(owner);
+ await assert.rejects(f.accounts.restoreBackup({previewId:refreshPreview.previewId,actionId:randomUUID(),mode:'replace'}),{code:'CLOUD_DATA_DIRECT'});
+ assert.equal(f.accounts.backups.dataChecksum(owner),protectedBefore);
  for(const transition of ['logout','invalidation','new-adopt']){
   const local=f.accounts.backups.preview(owner,file),remote=await f.accounts.sync.previewCloud(owner);
   const sid=f.accounts.privateSession().sessionId,fingerprint=f.accounts.backups.dataChecksum(owner);

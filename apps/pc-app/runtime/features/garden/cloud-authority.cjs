@@ -62,14 +62,16 @@ class CloudGardenAuthority{
     return this.garden.transaction(()=>{
       const checkpoint=this.db.prepare('SELECT account_revision FROM garden_cloud_state WHERE owner_account_id=?').get(owner);
       const shared=this.db.prepare("SELECT name FROM sqlite_master WHERE type='table' AND name='account_sync_state'").get();
-      const sharedRevision=shared?this.db.prepare('SELECT cloud_revision FROM account_sync_state WHERE owner_account_id=?').get(owner)?.cloud_revision:0;
+      const accounts=this.services.get('accounts');
+      const sharedRevision=accounts?.cloudCache?accounts.cloudCache.revision(owner):(shared?this.db.prepare('SELECT cloud_revision FROM account_sync_state WHERE owner_account_id=?').get(owner)?.cloud_revision:0);
       if(remote.accountRevision<Math.max(checkpoint?.account_revision||0,sharedRevision||0))problem('CLOUD_STALE_READBACK','云端读回版本较旧，请重试');
       this.backup.restore(owner,incoming,'replace');this.companions.restore(owner,unit,'replace');
       for(const record of remote.territories||[])this.services.get('territories')?.importRecord?.(record);
       this.db.prepare('INSERT INTO garden_cloud_state VALUES(?,?,?,?) ON CONFLICT(owner_account_id) DO UPDATE SET account_revision=excluded.account_revision,checksum=excluded.checksum,server_time=excluded.server_time').run(owner,remote.accountRevision,digest,remote.snapshot?.serverTime||remote.serverTime||Date.now());
-      // Only08 can advance the complete-save CAS base. A domain readback may
-      // retain unrelated local chat/settings work without pretending it synced.
-      try{this.services.get('accounts')?.sync?.acceptAuthoritativeReadback?.(owner,{envelope,cloudRevision:remote.accountRevision});}
+      // Confirm only the affected server-owned domains. Personal records and
+      // historical full-save uploads do not decide whether a feed succeeded.
+      if(accounts?.cloudCache)accounts.cloudCache.accept(owner,{envelope,cloudRevision:remote.accountRevision,domains:['garden','companions']});
+      else try{accounts?.sync?.acceptAuthoritativeReadback?.(owner,{envelope,cloudRevision:remote.accountRevision});}
       catch(error){if(!['CLOUD_LOCAL_CONFLICT','SYNC_PENDING','SYNC_BUSY','BACKUP_MODULE_UNSUPPORTED'].includes(error.code))throw error;}
       return remote.snapshot;
     });

@@ -27,6 +27,7 @@ export interface ConversationMessage {
 export interface ConversationMemory { id: string; petId: string; content: string; revision: number; createdAt: number; updatedAt: number }
 export interface HistoryPage { messages: ConversationMessage[]; nextCursor: number | null }
 export interface ConversationSnapshot {
+  cloud?: { mode: 'cloud-records'; initialized: boolean; pending: number; conflicts: number; preservedLocalRecords: number; error: string | null };
   accountId: string; sessionRevision: number; pets: ConversationPet[]; petId: string | null;
   summaries: Record<string, { content: string; status: MessageStatus; createdAt: number } | null>;
   globalConnection: PublicConnection | null; secureStorageAvailable: boolean;

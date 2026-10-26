@@ -40,6 +40,9 @@ export function ConversationsPage({ client, initialPetId }: { client?: Conversat
     <header className="cv-page-header"><p className="cv-active-identity">聊天 / <PetIdentity pet={pet}/></p><div><div><h1>聊天</h1></div>
       <ActionHint text="对话设置"><a className="cv-icon cv-settings-shortcut" href="#/settings/ai" aria-label="对话设置"><Settings2 size={18}/></a></ActionHint></div></header>
     {(chat.error || actionError) && <div role="alert" className="cv-error">{actionError || chat.error}</div>}
+    {data.cloud && (data.cloud.error || data.cloud.pending > 0 || data.cloud.conflicts > 0) && <div role="status" className="cv-error">
+      {data.cloud.conflicts ? <>个别记录已在另一端更新，原修改已保留。<a href="#/account">查看保留记录</a></> : data.cloud.pending ? '有聊天记录等待云端确认，联网后会重试原操作。' : '暂时无法读取云端，当前显示已有聊天记录。'}
+    </div>}
     <div className="cv-chat-grid">
       <aside className="cv-card cv-pet-list" aria-label="选择聊天伙伴"><h2>我的伙伴 <small>{data.pets.length}</small></h2>
         <AnimatedList className="cv-partner-list">{data.pets.map(item => <ActionHint key={item.petId} text={[petIdentityHint(item), petElementLabel(item)].filter(Boolean).join(' · ')}><Button variant="ghost" className={`cv-pet-option ${item.petId === pet.petId ? 'selected' : ''}`} data-pet-id={item.petId} aria-label={`${petIdentityLabel(item)}，${petElementLabel(item)}`} aria-pressed={item.petId === pet.petId} onClick={() => void chat.choose(item.petId)}>

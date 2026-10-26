@@ -1,3 +1,4 @@
+// Legacy full-save compatibility only. Production refresh uses domain caches and personal records.
 const {test,afterEach}=require('node:test');
 const assert=require('node:assert/strict');
 const {mkdtempSync,rmSync,readFileSync,writeFileSync,readdirSync}=require('node:fs');
@@ -37,6 +38,7 @@ async function fixture(){
  }});
  const services={db,paths:{userData:directory,legacyDataExisted:false},safeStorage:{isEncryptionAvailable:()=>false},events:{emit:(name,data)=>f.events.push({name,data})}};
  const accounts=new AccountsService({services,remote,host:{async apply(){},clear(){},dispose(){}}});
+ accounts.cloudCache=null; // Explicit old-protocol fixture; current domain caches have their own regression suite.
  Object.assign(f,{accounts,remote});fixtures.push(f);
  f.login=()=>accounts.authenticate({provider:'runtime',account:'alice',password:'secret123'});
  f.edit=async volume=>{const settings=accounts.settings();settings.document.sync.enabled=true;settings.document.desktop.volume=volume;return accounts.saveSettings({...settings,actionId:randomUUID()});};
@@ -54,46 +56,46 @@ const volume=f=>f.accounts.settings().document.desktop.volume;
 const pending=f=>f.db.prepare("SELECT * FROM account_sync_outbox WHERE status IN ('pending','retry','conflict')").all();
 
 test('real SQLite / simulated provider: clean automatic pull atomically applies full state and preserves original backup',async()=>{
- const f=await fixture();f.head(32,2,44);const result=await f.accounts.runAutomaticSync();assert.equal(result.applied,true);
+ const f=await fixture();f.head(32,2,44);const result=await f.accounts.sync.reconcile(f.accounts.requireOwner());assert.equal(result.applied,true);
  assert.equal(volume(f),32);assert.equal(f.db.prepare('SELECT amount FROM automatic_inventory').get().amount,44);
  assert.equal(state(f).cloud_revision,2);assert.equal(state(f).last_checksum,f.cloud.checksum);assert.equal(f.accounts.sync.status(f.owner).localChanged,false);
  const original=JSON.parse(readFileSync(result.preservedBackup.filePath));assert.equal(original.data.modules.settings.data.desktop.volume,10);assert.equal(original.data.tables.automatic_inventory.rows[0].amount,100);
  const reopened=new DatabaseSync(f.dbFile,{readOnly:true});assert.equal(reopened.prepare('SELECT last_checksum FROM account_sync_state').get().last_checksum,f.cloud.checksum);assert.equal(reopened.prepare('PRAGMA quick_check').get().quick_check,'ok');reopened.close();
- assert.ok(f.events.some(event=>event.name==='accounts:save-restored'&&event.data.automatic));assert.equal(f.pushes.length,0);
+ assert.equal(f.events.some(event=>event.name==='accounts:save-restored'&&event.data.automatic),false,'legacy helpers do not publish production cloud-refresh events');assert.equal(f.pushes.length,0);
 });
 test('real SQLite / simulated provider: offline personal edits enqueue one original action before I/O and retry its original base',async()=>{
- const f=await fixture();await f.edit(20);f.offline=true;await assert.rejects(f.accounts.runAutomaticSync(),{code:'CLOUD_UNAVAILABLE'});
+ const f=await fixture();await f.edit(20);f.offline=true;await assert.rejects(f.accounts.sync.reconcile(f.accounts.requireOwner()),{code:'CLOUD_UNAVAILABLE'});
  const original=pending(f)[0],source=f.db.prepare('SELECT * FROM account_sync_sources').get();assert.match(original.action_id,/^auto:/);assert.equal(original.base_revision,1);assert.equal(volume(f),20);
- f.offline=false;f.db.exec('UPDATE account_sync_outbox SET next_attempt_at=0');await f.accounts.runAutomaticSync();
+ f.offline=false;f.db.exec('UPDATE account_sync_outbox SET next_attempt_at=0');await f.accounts.sync.reconcile(f.accounts.requireOwner());
  assert.equal(pending(f).length,0);assert.equal(f.pushes.length,1);assert.equal(f.pushes[0].actionId,original.action_id);assert.equal(f.pushes[0].baseRevision,1);
  assert.equal(f.db.prepare('SELECT original_document FROM account_sync_sources').get().original_document,source.original_document);assert.equal(state(f).cloud_revision,2);assert.equal(volume(f),20);
 });
 test('real SQLite / simulated provider: newer cloud plus dirty personal state retains original queue as conflict',async()=>{
- const f=await fixture();await f.edit(20);f.head(30,2);await assert.rejects(f.accounts.runAutomaticSync(),{code:'SYNC_CONFLICT'});
+ const f=await fixture();await f.edit(20);f.head(30,2);await assert.rejects(f.accounts.sync.reconcile(f.accounts.requireOwner()),{code:'SYNC_CONFLICT'});
  assert.equal(volume(f),20);assert.equal(pending(f)[0].status,'conflict');assert.equal(pending(f)[0].base_revision,1);assert.equal(state(f).cloud_revision,1);
  assert.equal(f.db.prepare('SELECT count(*) n FROM account_backup_receipts').get().n,0);
 });
 test('real SQLite / simulated provider: unknown protected changes are never auto-uploaded or overwritten',async()=>{
- const f=await fixture();f.head(30,2,150);f.db.exec('UPDATE automatic_inventory SET amount=999');await assert.rejects(f.accounts.runAutomaticSync(),{code:'SYNC_REMOTE_CONFLICT'});
+ const f=await fixture();f.head(30,2,150);f.db.exec('UPDATE automatic_inventory SET amount=999');await assert.rejects(f.accounts.sync.reconcile(f.accounts.requireOwner()),{code:'SYNC_REMOTE_CONFLICT'});
  assert.equal(f.db.prepare('SELECT amount FROM automatic_inventory').get().amount,999);assert.equal(pending(f).length,0);assert.equal(f.pushes.length,0);assert.equal(f.accounts.sync.status(f.owner).remoteChanged,true);
 });
 test('real SQLite / simulated provider: local edits while cloud read is pending abort automatic adoption',async()=>{
  const f=await fixture();f.head(30);let entered,release;const started=new Promise(resolve=>{entered=resolve;}),gate=new Promise(resolve=>{release=resolve;});f.beforeRead=async()=>{entered();await gate;};
- const task=f.accounts.runAutomaticSync();await started;assert.equal((await f.accounts.runAutomaticSync()).skipped,true);assert.throws(()=>f.accounts.sync.enqueue(f.owner,randomUUID()),{code:'SYNC_BUSY'});
+ const task=f.accounts.sync.reconcile(f.accounts.requireOwner());await started;assert.equal((await f.accounts.sync.reconcile(f.accounts.requireOwner())).skipped,true);assert.throws(()=>f.accounts.sync.enqueue(f.owner,randomUUID()),{code:'SYNC_BUSY'});
  await f.edit(55);release();await assert.rejects(task,{code:'SAVE_CHANGED'});assert.equal(volume(f),55);assert.equal(state(f).cloud_revision,1);assert.equal(f.db.prepare('SELECT count(*) n FROM account_backup_receipts').get().n,0);
 });
 test('real SQLite / simulated provider: changes during hydration preserve cache and reject local edits, logout or same-owner new SID',async t=>{
  for(const change of ['local-edit','logout','same-owner-new-SID'])await t.test(change,async()=>{
   const f=await fixture();f.head(30);const cached=join(f.directory,'retained-hydration-cache.bin');
   f.accounts.backups.prepareCloud=async()=>{writeFileSync(cached,'verified additive cache');if(change==='local-edit')await f.edit(55);else if(change==='logout')await f.accounts.logout();else await f.login();};
-  await assert.rejects(f.accounts.runAutomaticSync(),{code:change==='local-edit'?'SAVE_CHANGED':'SESSION_CHANGED'});
+  await assert.rejects(f.accounts.sync.reconcile(f.accounts.requireOwner()),{code:change==='local-edit'?'SAVE_CHANGED':'SESSION_CHANGED'});
   assert.equal(readFileSync(cached,'utf8'),'verified additive cache');assert.equal(state(f).cloud_revision,1);assert.equal(pending(f).length,0);
   if(change==='local-edit')assert.equal(volume(f),55);
  });
 });
 test('real SQLite / simulated provider: same-SID token refresh during hydration still permits safe atomic pull',async()=>{
  const f=await fixture();f.head(30);const sid=f.accounts.privateSession().sessionId;f.accounts.backups.prepareCloud=()=>f.remote.refresh(f.remote.active);
- assert.equal((await f.accounts.runAutomaticSync()).applied,true);assert.equal(f.accounts.privateSession().sessionId,sid);assert.equal(volume(f),30);
+ assert.equal((await f.accounts.sync.reconcile(f.accounts.requireOwner())).applied,true);assert.equal(f.accounts.privateSession().sessionId,sid);assert.equal(volume(f),30);
 });
 test('real SQLite / simulated provider: unverified original, missing baseline, disabled sync and existing conflicts block automatic overwrite',async t=>{
  for(const reason of ['unverified','redacted','unknown-baseline','disabled','conflict'])await t.test(reason,async()=>{
@@ -105,19 +107,19 @@ test('real SQLite / simulated provider: unverified original, missing baseline, d
   }
   if(reason==='unknown-baseline')f.db.exec('DELETE FROM account_sync_state');
   if(reason==='disabled'){const settings=f.accounts.settings();settings.document.sync.enabled=false;await f.accounts.saveSettings({...settings,actionId:randomUUID()});}
-  const result=await f.accounts.runAutomaticSync();assert.ok(result.blocked||result.skipped);assert.equal(volume(f),10);assert.equal(f.pushes.length,0);
+  const result=await f.accounts.sync.reconcile(f.accounts.requireOwner());assert.ok(result.blocked||result.skipped);assert.equal(volume(f),10);assert.equal(f.pushes.length,0);
  });
 });
 test('real SQLite / simulated provider: failed restore rolls back all domains and checkpoint while retaining original backup file',async()=>{
  const f=await fixture();f.accounts.backups.register({id:'fail-restore',version:1,export:()=>({}),validate(){},restore(){f.db.exec('UPDATE automatic_inventory SET amount=0');throw Object.assign(new Error('Intentional adapter rejection'),{code:'RESTORE_BLOCKED'});}});
  f.head(10,2);f.accounts.sync.acceptAuthoritativeReadback(f.owner,{envelope:f.cloud.envelope,cloudRevision:2});f.head(30,3,150);
- await assert.rejects(f.accounts.runAutomaticSync(),{code:'RESTORE_BLOCKED'});assert.equal(volume(f),10);assert.equal(f.db.prepare('SELECT amount FROM automatic_inventory').get().amount,100);assert.equal(state(f).cloud_revision,2);
+ await assert.rejects(f.accounts.sync.reconcile(f.accounts.requireOwner()),{code:'RESTORE_BLOCKED'});assert.equal(volume(f),10);assert.equal(f.db.prepare('SELECT amount FROM automatic_inventory').get().amount,100);assert.equal(state(f).cloud_revision,2);
  assert.ok(readdirSync(join(f.directory,'accounts','backups')).some(name=>name.startsWith('before-restore-')));
 });
 test('real SQLite / simulated provider: exact already-applied domain readback advances baseline without overwriting and allows later personal upload',async()=>{
  const f=await fixture();f.head(10,2,150);f.db.exec('UPDATE automatic_inventory SET amount=150');
- const result=await f.accounts.runAutomaticSync();assert.equal(result.readbackOnly,true);assert.equal(state(f).cloud_revision,2);assert.equal(f.db.prepare('SELECT count(*) n FROM account_backup_receipts').get().n,0);
- await f.edit(21);await f.accounts.runAutomaticSync();assert.equal(f.pushes.length,1);assert.equal(f.pushes[0].baseRevision,2);assert.equal(state(f).cloud_revision,3);assert.equal(volume(f),21);
+ const result=await f.accounts.sync.reconcile(f.accounts.requireOwner());assert.equal(result.readbackOnly,true);assert.equal(state(f).cloud_revision,2);assert.equal(f.db.prepare('SELECT count(*) n FROM account_backup_receipts').get().n,0);
+ await f.edit(21);await f.accounts.sync.reconcile(f.accounts.requireOwner());assert.equal(f.pushes.length,1);assert.equal(f.pushes[0].baseRevision,2);assert.equal(state(f).cloud_revision,3);assert.equal(volume(f),21);
 });
 
 test('real SQLite / simulated provider: production conversation adapter automatically queues messages, memory and persona while retaining local credentials',async()=>{
@@ -130,7 +132,7 @@ test('real SQLite / simulated provider: production conversation adapter automati
  store.saveConnection(f.owner,null,{...config,encryptedKey:'DEVICE-ONLY-CREDENTIAL-CIPHERTEXT'},0);
  store.createTurn(f.owner,pet,action,content,config);store.updateReply(f.owner,pet,action,'明确模拟的既有完整回复','complete');
  store.saveMemory(f.owner,pet,{content});store.saveProfile(f.owner,pet,{persona:content,replyStyle:'natural',memoryEnabled:true,pauseWhileChatting:true,useOverride:false},0);
- await f.accounts.runAutomaticSync();assert.equal(f.pushes.length,1);assert.match(f.pushes[0].actionId,/^auto:/);
+ await f.accounts.sync.reconcile(f.accounts.requireOwner());assert.equal(f.pushes.length,1);assert.match(f.pushes[0].actionId,/^auto:/);
  const data=f.cloud.envelope.data.modules.conversations.data;
  assert.equal(data.tables.conversation_messages.find(row=>row.role==='user').content,content);
  assert.equal(data.tables.conversation_memories[0].content,content);assert.equal(data.tables.conversation_profiles[0].persona,content);

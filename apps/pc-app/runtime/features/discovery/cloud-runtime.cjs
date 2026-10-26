@@ -69,7 +69,9 @@ class CloudDiscoveryRuntime {
           insert.run(...names.map(key=>row[key]));
         }
       }
-      try{this.services.get('accounts').sync.acceptAuthoritativeReadback(owner,{envelope,cloudRevision:head.revision});}
+      const accounts=this.services.get('accounts');
+      if(accounts.cloudCache)accounts.cloudCache.accept(owner,{envelope,cloudRevision:head.revision,domains:['companions','garden']});
+      else try{accounts.sync.acceptAuthoritativeReadback(owner,{envelope,cloudRevision:head.revision});}
       catch(error){if(!['CLOUD_LOCAL_CONFLICT','SYNC_PENDING','SYNC_BUSY','BACKUP_MODULE_UNSUPPORTED'].includes(error.code))throw error;}
     })();
     this.services.events.emit('discovery:changed',{ownerAccountId:owner});

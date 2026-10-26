@@ -8,13 +8,15 @@ const { CloudCompanionAuthority } = require('./cloud-authority.cjs');
 const { companionIdentity } = require('./display-identity.mjs');
 const { createGlobalSerialCache } = require('./global-serial-cache.cjs');
 const { projectDesktopDisplay } = require('./desktop-display.cjs');
+const { DeviceDesktop } = require('./device-desktop.cjs');
 const { join } = require('node:path');
 
 module.exports = {
   id: 'companions', migrations,
   register(services) {
     const serialCache=createGlobalSerialCache({directory:services.paths?.userData?join(services.paths.userData,'accounts'):null,safeStorage:services.safeStorage});
-    const service = new CompanionsService({ db: services.db,projectIdentity:serialCache.project });
+    let devices;
+    const service = new CompanionsService({ db: services.db,projectIdentity:pet=>serialCache.project(devices?devices.project(pet):pet) });
     const backupAdapter=createCompanionBackupAdapter(services.db);
     const playback = createCompanionPlayback({ services, service });
     const disposers = [];
@@ -30,6 +32,8 @@ module.exports = {
       });
     }
     const cloud=new CloudCompanionAuthority(services,service,backupAdapter,changed,serialCache);
+    devices=new DeviceDesktop({db:services.db,getPet:(owner,id)=>service.requirePet(owner,id),listPets:owner=>service.snapshot(owner).data.pets,enabled:owner=>cloud.enabled(owner)});
+    const initialOwner=services.session.getOwnerAccountId();if(initialOwner)devices.capture(initialOwner);
     const ownerMigration = createCompanionOwnerMigration(services, changed);
     function upgradeBuiltins(ownerAccountId) {
       if(cloud.enabled(ownerAccountId))return;
@@ -58,12 +62,12 @@ module.exports = {
       // Accounts owns registration/legacy-envelope normalization and transport.
       backupAdapter,
       isCloudOwner:owner=>cloud.enabled(owner),
-      refreshCloud:owner=>cloud.refresh(owner),
+      refreshCloud:owner=>{devices.capture(owner);return cloud.refresh(owner);},
       applyCloudReadback:(owner,remote)=>cloud.apply(owner,remote),
-      persistDesktopPosition(owner,input){return cloud.execute(owner,'desktop',{actionId:input.actionId,petId:input.petId,position:input.position},{nativePosition:true});},
-      hasPendingRecallAll(owner){return cloud.enabled(owner)&&cloud.pending(owner).some(row=>row.command==='recall-all');},
+      persistDesktopPosition(owner,input){const result=devices.update(owner,input);changed(owner);return result;},
+      hasPendingRecallAll(){return false;},
       migrateOwnerAlias: ownerMigration.migrate,
-      listPets(ownerAccountId) { ensureImported(ownerAccountId); return service.readSnapshot(ownerAccountId).data.pets.filter(pet => pet.resource.kind === '2d'); },
+      listPets(ownerAccountId) { ensureImported(ownerAccountId);return service.readSnapshot(ownerAccountId).data.pets.filter(pet => pet.resource.kind === '2d'); },
       getPet(ownerAccountId, petId) {
         ensureImported(ownerAccountId); const pet = service.readPet(ownerAccountId, petId);
         if (pet.resource.kind !== '2d') throw Object.assign(new Error('旧伙伴原始记录已保留，本版使用 2D 伙伴'), { code: 'RESOURCE_UNAVAILABLE' });
@@ -92,7 +96,7 @@ module.exports = {
       },
       select(ownerAccountId, input) { if(cloud.enabled(ownerAccountId)){const result=cloud.execute(ownerAccountId,'select',input);void result.catch(()=>{});return result;}const result = service.select(ownerAccountId, input); changed(ownerAccountId); return result; },
       recallAll(ownerAccountId, actionId) {
-        if(cloud.enabled(ownerAccountId)){const result=cloud.execute(ownerAccountId,'recall-all',{actionId});void result.catch(()=>{});return result;}
+        if(cloud.enabled(ownerAccountId)){const result=devices.recallAll(ownerAccountId,actionId);changed(ownerAccountId);return result;}
         const result = service.action(ownerAccountId, 'recall-all', { actionId }, () => {
           const pets = service.snapshot(ownerAccountId).data.pets.filter(pet => pet.desktop.visible);
           for (const pet of pets) { pet.desktop.visible = false; service.storePet(pet); }
@@ -107,13 +111,13 @@ module.exports = {
     };
     services.provide('companions', api);
     const backups=services.get('backups')||services.get('accounts')?.backups;
-    if(backups?.normalizeData)disposers.push(backups.register(backupAdapter));
+    if(backups?.normalizeData){disposers.push(backups.register(backupAdapter));disposers.push(backups.register(devices.backup()));}
     disposers.push(services.events.on('accounts:save-restored', event => {
       if (event?.ownerAccountId === services.session.getOwnerAccountId()) changed(event.ownerAccountId);
     }));
-    disposers.push(services.events.on('accounts:changed',()=>{
+    for(const event of ['accounts:changed','accounts:session-changed'])disposers.push(services.events.on(event,()=>{
       const owner=services.session.getOwnerAccountId();
-      if(owner&&cloud.enabled(owner))void cloud.refresh(owner).catch(()=>{});
+      if(owner&&cloud.enabled(owner))void api.refreshCloud(owner).catch(()=>{});
     }));
     // Electron is required lazily, so domain/migration checks also run under Node.
     if (process.versions.electron && process.type === 'browser') {
@@ -124,7 +128,14 @@ module.exports = {
     }
     const execute = (method,command=method) => (payload, context) => {
       ensureImported(context.ownerAccountId);
-      if(cloud.enabled(context.ownerAccountId))return cloud.execute(context.ownerAccountId,command,payload);
+      if(cloud.enabled(context.ownerAccountId)){
+        if(command==='desktop'){const result=devices.update(context.ownerAccountId,payload);changed(context.ownerAccountId);return result;}
+        devices.capture(context.ownerAccountId);
+        return cloud.execute(context.ownerAccountId,command,payload).then(result=>{
+          if(method==='adopt'&&result?.data?.pet&&payload.showOnDesktop!==false){devices.update(context.ownerAccountId,{actionId:`device-adopt:${payload.actionId}`,petId:result.data.pet.petId,visible:true});changed(context.ownerAccountId);}
+          if(result?.data?.pet)result={...result,data:{...result.data,pet:devices.project(result.data.pet)}};return result;
+        });
+      }
       const result = service[method](context.ownerAccountId, payload);
       changed(context.ownerAccountId);
       return result;
@@ -137,7 +148,7 @@ module.exports = {
           const switched = () => ({ ok: false, code: 'SESSION_CHANGED', message: '账号已切换，请重新打开此页面。' });
           if (!current()) return switched();
           ensureImported(context.ownerAccountId);
-          if (cloud.enabled(context.ownerAccountId) && !cloud.busy(context.ownerAccountId)) await cloud.refresh(context.ownerAccountId).catch(() => {});
+          if (cloud.enabled(context.ownerAccountId) && !cloud.busy(context.ownerAccountId)) await api.refreshCloud(context.ownerAccountId).catch(() => {});
           if (!current()) return switched();
           desktop?.sync();
           const result = service.readSnapshot(context.ownerAccountId);

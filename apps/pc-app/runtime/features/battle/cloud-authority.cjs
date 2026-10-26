@@ -10,6 +10,11 @@ class BattleCloudAuthority {
   constructor(services) { this.services=services;this.db=services.db; }
   owner(owner) { if(this.services.get('accounts')?.getOwnerAccountId()!==owner)fail('AUTH_CHANGED','账号已切换，请重新打开对战'); }
   confirm(owner,envelope,revision,projectionOnly=false){
+    const accounts=this.services.get('accounts');
+    if(accounts?.cloudCache){
+      if(projectionOnly&&revision<accounts.cloudCache.revision(owner))return;
+      return accounts.cloudCache.accept(owner,{envelope,cloudRevision:revision,domains:projectionOnly?['battle']:['battle','companions','garden']});
+    }
     try {this.services.get('accounts')?.sync?.acceptAuthoritativeReadback(owner,{envelope,cloudRevision:revision});}
     catch(error){if(!['CLOUD_LOCAL_CONFLICT','SYNC_PENDING','SYNC_BUSY',...(projectionOnly?['SYNC_STALE_READBACK']:[])].includes(error.code))throw error;this.services.events?.emit('accounts:authority-readback-pending',{ownerAccountId:owner,code:error.code});}
   }

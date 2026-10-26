@@ -79,6 +79,7 @@ const tests = [
   'apps/pc-app/runtime/features/accounts/tests/cloud-session-upgrade-sql.test.mjs',
   'apps/pc-app/runtime/features/accounts/tests/cloud-service-actor-sql.test.mjs',
   'apps/pc-app/runtime/features/accounts/tests/cloud-save-sql.test.mjs',
+  'apps/pc-app/runtime/features/accounts/tests/personal-records-sql.test.mjs',
   'apps/pc-app/runtime/features/accounts/tests/global-serial-sql.test.mjs',
   'apps/pc-app/runtime/features/companions/tests/cloud-command-sql.test.mjs',
   'apps/pc-app/runtime/features/companions/tests/cloud-domain.test.mjs',
@@ -121,6 +122,9 @@ try {
     'deno', 'test', '--no-config', '--node-modules-dir=none',
     '--lock=infra/supabase/functions/lingjing-resources/deno.lock', '--frozen', '--no-prompt', `--allow-read=${root}`,
     'infra/supabase/functions/lingjing-resources/package.test.ts']);
+  await run('personal-records-deno', process.execPath, [npmCli, 'exec', '--yes', '--package=deno@2.9.6', '--',
+    'deno', 'check', '--no-config', '--node-modules-dir=none', '--lock=infra/supabase/functions/_shared/deno.lock', '--frozen',
+    'infra/supabase/functions/lingjing-records/index.ts']);
   await run('battle-display-deno', process.execPath, [npmCli, 'exec', '--yes', '--package=deno@2.9.6', '--',
     'deno', 'test', '--no-config', '--node-modules-dir=none',
     '--lock=infra/supabase/functions/_shared/deno.lock', '--frozen', '--no-prompt',

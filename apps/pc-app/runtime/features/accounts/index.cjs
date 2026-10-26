@@ -16,6 +16,7 @@ module.exports = {
     const host = createDesktopHost(services, electron);
     const accounts = new AccountsService({ services, host, qaScenario,
       remote: qaScenario ? qaRemoteBoundary() : new SupabaseRemote({userData:services.paths.userData}) });
+    accounts.realtimeEnabled = true;
     const activeHost = accounts.host;
     services.session.setAdapter(accounts);
     services.provide("accounts", accounts);
@@ -55,16 +56,21 @@ module.exports = {
         backupExport() { return accounts.exportBackup(); },
         backupPreview() { return accounts.previewBackup(); },
         backupRestore(input) { return accounts.restoreBackup(input); },
-        syncStatus(_input, context) { return accounts.sync.status(currentOwner(context)); },
+        syncStatus(_input, context) { return accounts.cloudStatus(currentOwner(context)); },
+        preservedRecords(_input,context) { return services.get('conversations')?.preservedRecords(currentOwner(context))||[]; },
+        resolvePreservedRecord(input,context) { return services.get('conversations')?.resolvePreservedRecord(currentOwner(context),input); },
         async syncNow(input, context) {
-          const owner = currentOwner(context); accounts.sync.enqueue(owner, input.actionId);
+          const owner = currentOwner(context);
+          if(accounts.privateSession()?.authKind==='supabase')return {...await accounts.runAutomaticSync(),status:accounts.cloudStatus(owner)};
+          accounts.sync.enqueue(owner, input.actionId);
           return { ...await accounts.sync.flush(owner, true), status: accounts.sync.status(owner) };
         },
         async syncRetry(_input, context) {
           const owner = currentOwner(context);
+          if(accounts.privateSession()?.authKind==='supabase')return {...await accounts.runAutomaticSync(),status:accounts.cloudStatus(owner)};
           return { ...await accounts.sync.flush(owner, true), status: accounts.sync.status(owner) };
         },
-        cloudPreview(_input, context) { return accounts.sync.previewCloud(currentOwner(context)); },
+        cloudPreview(_input, context) {const owner=currentOwner(context);if(accounts.privateSession()?.authKind==='supabase')throw Object.assign(new Error('云端数据已直接读取，请刷新数据。'),{code:'CLOUD_DATA_DIRECT'});return accounts.sync.previewCloud(owner); },
         testNotification() { return activeHost.notify({ kind: "companions", title: "灵境", body: "伙伴会按你的通知与安静时段设置陪伴。" }); },
         pointer(input) { return { applied: activeHost.setHitTest(input.petId || Number(input.windowId), input.overOpaqueContent === true) }; }
       },

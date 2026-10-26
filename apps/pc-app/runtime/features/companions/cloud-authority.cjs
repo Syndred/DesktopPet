@@ -80,8 +80,10 @@ class CloudCompanionAuthority {
     let sharedSavePending=true,sharedSaveContext;
     transaction(this.db,()=>{
       if(localDigest!==incomingDigest)this.backup.restore(owner,incoming,'replace');
-      const sync=this.accounts()?.sync;
-      if(sync?.acceptAuthoritativeReadback){
+      const accounts=this.accounts(),sync=accounts?.sync;
+      if(accounts?.cloudCache){
+        accounts.cloudCache.accept(owner,{envelope,cloudRevision:remote.revision,domains:['companions']});sharedSavePending=false;
+      }else if(sync?.acceptAuthoritativeReadback){
         try{sync.acceptAuthoritativeReadback(owner,{envelope,cloudRevision:remote.revision});sharedSavePending=false;}
         catch(error){
           if(!['CLOUD_LOCAL_CONFLICT','SYNC_BUSY','SYNC_PENDING'].includes(error.code))throw error;

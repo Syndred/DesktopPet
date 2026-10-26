@@ -49,6 +49,8 @@ export interface SettingsSnapshot {
   document: SettingsDocument; revision: number; updatedAt: string; host?: DesktopHostStatus;
 }
 export interface SyncStatus {
+  mode?: 'cloud-authority';
+  preservedLocalRecords?: number;
   configured: boolean; cloudRevision: number; lastVerifiedAt: string | null;
   lastError: string | null; pending: number; conflicts: number; localChanged: boolean; running: boolean;
   unverifiedLocal?: number;

@@ -1,3 +1,4 @@
+// Legacy full-save compatibility only. Production refresh uses domain caches and personal records.
 const {test,afterEach}=require('node:test');
 const assert=require('node:assert/strict');
 const {DatabaseSync}=require('node:sqlite');
@@ -66,6 +67,7 @@ async function fixture(){
  const remote=new SupabaseRemote({userData:directory,config:{url:'https://protocol.example.invalid',key:'sb_publishable_protocol_unit_only'},fetcher:provider});
  const services=createServices({db,legacy:{},paths:{userData:directory,legacyDataExisted:false},windows:{},safeStorage:{isEncryptionAvailable:()=>false}});
  const accounts=new AccountsService({services,remote,host:{async apply(){},clear(){},dispose(){}}});
+ accounts.cloudCache=null; // This suite deliberately exercises the retained old full-save adapter.
  Object.assign(f,{accounts,remote,services});services.provide('accounts',accounts);services.session.setAdapter(accounts);services.events.on('accounts:sync-changed',value=>f.events.push(value));
  const companions=new CompanionsService({db}),backup=createCompanionBackupAdapter(db),store=new ConversationStore(db);
  accounts.backups.register(backup);accounts.backups.register(require('../../conversations/backup.cjs').createConversationBackupAdapter({db}));
@@ -92,7 +94,7 @@ test('shared SQLite / simulated wire: an actual companion selection overlapping 
  f.beforeCommandReply=async()=>{commandGate.enter();await commandGate.released;};
  const command=f.select();await commandGate.entered;
  f.beforeHeadRead=async()=>{readGate.enter();await readGate.released;};
- const automatic=f.accounts.runAutomaticSync();const interrupted=assert.rejects(automatic,{code:'SAVE_CHANGED'});await readGate.entered;
+ const automatic=f.accounts.sync.reconcile(f.accounts.requireOwner());const interrupted=assert.rejects(automatic,{code:'SAVE_CHANGED'});await readGate.entered;
  assert.equal(f.accounts.sync.running.has(owner),true);commandGate.release();const receipt=await command;
  assert.equal(receipt.cloud.sharedSavePending,true);assert.equal(f.authority.pending(owner).length,0);assert.equal(state(f).cloud_revision,f.baseRevision);
  const intent=f.db.prepare("SELECT result FROM account_actions WHERE action_id=?").get(receipt.cloud.actionId);assert.equal(JSON.parse(intent.result).status,'verified');
@@ -102,10 +104,10 @@ test('shared SQLite / simulated wire: an actual companion selection overlapping 
  f.store.updateReply(owner,f.petId,turn,'','failed','NETWORK_ERROR');await f.edit(21);
  const beforePersonal=personal(f),beforeProtected=f.accounts.sync.fingerprints(f.accounts.backups.snapshot(owner).data,owner).protected;
  readGate.release();await interrupted;f.beforeHeadRead=null;
- const adoption=await f.accounts.runAutomaticSync();assert.equal(adoption.readbackOnly,true);assert.equal(adoption.personalPending,true);assert.equal(state(f).cloud_revision,f.baseRevision+1);
+ const adoption=await f.accounts.sync.reconcile(f.accounts.requireOwner());assert.equal(adoption.readbackOnly,true);assert.equal(adoption.personalPending,true);assert.equal(state(f).cloud_revision,f.baseRevision+1);
  assert.equal(personal(f),beforePersonal);assert.equal(f.accounts.sync.fingerprints(f.accounts.backups.snapshot(owner).data,owner).protected,beforeProtected);
  assert.equal(baseline(f).cloud_document,JSON.stringify(f.head.envelope));assert.notEqual(baseline(f).personal_checksum,beforePersonal);assert.equal(outbox(f).length,0);
- await f.accounts.runAutomaticSync();assert.equal(f.pushes.length,1);assert.equal(f.pushes[0].baseRevision,f.baseRevision+1);assert.equal(outbox(f)[0].status,'verified');
+ await f.accounts.sync.reconcile(f.accounts.requireOwner());assert.equal(f.pushes.length,1);assert.equal(f.pushes[0].baseRevision,f.baseRevision+1);assert.equal(outbox(f)[0].status,'verified');
  const uploaded=f.head.envelope.data.modules.conversations.data.tables;
  assert.equal(uploaded.conversation_profiles[0].persona,'保留这条人设');assert.equal(uploaded.conversation_memories[0].content,'保留这条记忆');
  assert.equal(uploaded.conversation_messages.find(row=>row.role==='user').content,'真实用户原消息');assert.equal(uploaded.conversation_messages.find(row=>row.role==='assistant').error_code,'NETWORK_ERROR');
@@ -118,7 +120,7 @@ test('shared SQLite / simulated wire: unknown protected edits and genuine two-de
   const f=await fixture();await f.applyWithoutCheckpoint();await f.edit(21);
   if(reason==='unknown-protected')f.db.exec('UPDATE race_inventory SET amount=999');
   else{const next=structuredClone(f.head.envelope);next.data.modules.settings.data.desktop.volume=91;f.commit(seal(next),'other-device-personal');}
-  const original=personal(f);await assert.rejects(f.accounts.runAutomaticSync(),{code:'SYNC_REMOTE_CONFLICT'});
+  const original=personal(f);await assert.rejects(f.accounts.sync.reconcile(f.accounts.requireOwner()),{code:'SYNC_REMOTE_CONFLICT'});
   assert.equal(state(f).cloud_revision,f.baseRevision);assert.equal(personal(f),original);assert.equal(f.accounts.settings().document.desktop.volume,21);assert.equal(outbox(f).length,0);assert.equal(f.pushes.length,0);
   assert.equal(f.db.prepare('SELECT amount FROM race_inventory').get().amount,reason==='unknown-protected'?999:100);
  });
@@ -127,7 +129,7 @@ test('shared SQLite / simulated wire: unknown protected edits and genuine two-de
 test('shared SQLite / simulated wire: an uncertain sent outbox retries its original action/base/document and is never rebased onto a later authority',async()=>{
  const f=await fixture();await f.edit(21);const id=randomUUID();f.accounts.sync.enqueue(owner,id);f.failPush=true;await assert.rejects(f.accounts.sync.flush(owner),{code:'CLOUD_UNAVAILABLE'});
  const original=outbox(f)[0],source=f.db.prepare('SELECT * FROM account_sync_sources WHERE action_id=?').get(id);assert.ok(source.prepared_at);assert.equal(original.status,'retry');
- await f.select();f.db.exec('UPDATE account_sync_outbox SET next_attempt_at=0');await assert.rejects(f.accounts.runAutomaticSync(),{code:'SYNC_CONFLICT'});
+ await f.select();f.db.exec('UPDATE account_sync_outbox SET next_attempt_at=0');await assert.rejects(f.accounts.sync.reconcile(f.accounts.requireOwner()),{code:'SYNC_CONFLICT'});
  const next=outbox(f)[0];for(const field of ['action_id','base_revision','document','checksum'])assert.equal(next[field],original[field]);assert.equal(next.status,'conflict');assert.equal(state(f).cloud_revision,f.baseRevision);
  assert.equal(f.db.prepare('SELECT original_document FROM account_sync_sources WHERE action_id=?').get(id).original_document,source.original_document);assert.equal(f.pushes.length,2);assert.deepEqual(f.pushes[1],f.pushes[0]);
 });
@@ -142,8 +144,8 @@ test('shared SQLite / simulated wire: exact old-envelope proof is required, and 
   }
   if(reason==='same-SID-refresh')f.beforeHeadRead=()=>f.remote.refresh(f.remote.active);
   if(['missing-ledger','forged-personal-fingerprint'].includes(reason)){
-   await assert.rejects(f.accounts.runAutomaticSync(),{code:reason==='missing-ledger'?'SYNC_BASELINE_REQUIRED':'SYNC_READBACK_MISMATCH'});assert.equal(state(f).cloud_revision,f.baseRevision);
-  }else{assert.equal((await f.accounts.runAutomaticSync()).personalPending,true);assert.equal(state(f).cloud_revision,f.baseRevision+1);}
+   await assert.rejects(f.accounts.sync.reconcile(f.accounts.requireOwner()),{code:reason==='missing-ledger'?'SYNC_BASELINE_REQUIRED':'SYNC_READBACK_MISMATCH'});assert.equal(state(f).cloud_revision,f.baseRevision);
+  }else{assert.equal((await f.accounts.sync.reconcile(f.accounts.requireOwner())).personalPending,true);assert.equal(state(f).cloud_revision,f.baseRevision+1);}
   assert.equal(personal(f),originalPersonal);assert.equal(f.pushes.length,0);assert.equal(outbox(f).length,0);
   if(reason==='exact-ledger'){assert.equal(f.originalReads.length,1);const query=f.originalReads[0].searchParams;assert.equal(query.get('owner_id'),`eq.${owner}`);assert.equal(query.get('revision'),`eq.${f.baseRevision}`);assert.equal(query.get('checksum'),`eq.${f.base.checksum}`);}
  });
@@ -152,7 +154,7 @@ test('shared SQLite / simulated wire: exact old-envelope proof is required, and 
 test('shared SQLite / simulated wire: owner, SID, epoch, sync setting and concurrent local changes invalidate adoption while exact baseline proof is in flight',async t=>{
  for(const reason of ['owner','logout','same-owner-new-SID','epoch','disabled','personal-edit','protected-edit'])await t.test(reason,async()=>{
   const f=await fixture();await f.applyWithoutCheckpoint();await f.edit(21);f.db.exec('UPDATE account_sync_baselines SET cloud_document=NULL');const proofGate=gate();
-  f.beforeOriginalRead=async()=>{proofGate.enter();await proofGate.released;};const work=f.accounts.runAutomaticSync();
+  f.beforeOriginalRead=async()=>{proofGate.enter();await proofGate.released;};const work=f.accounts.sync.reconcile(f.accounts.requireOwner());
   const rejection=assert.rejects(work,{code:['owner','logout','same-owner-new-SID','epoch'].includes(reason)?'SESSION_CHANGED':'SAVE_CHANGED'});await proofGate.entered;
   if(reason==='owner'){f.loginOwner='other-owner';await f.accounts.authenticate({provider:'runtime',account:'bob',password:'secret123'});}
   if(reason==='logout')await f.accounts.logout();

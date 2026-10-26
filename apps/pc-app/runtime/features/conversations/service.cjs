@@ -14,10 +14,11 @@ function revision(value) { if (!Number.isSafeInteger(value) || value < 0) fail("
 function scopeKey(owner, petId, kind = "chat") { return JSON.stringify([owner, kind, petId]); }
 
 class ConversationService {
-  constructor({ store, secrets, getSession, listPets, getChatSelection, selectChatPet, onSessionChanged, publish = () => {}, setChatActivity = () => {}, transport = requestCompletion }) {
+  constructor({ store, secrets, getSession, listPets, getChatSelection, selectChatPet, onSessionChanged, publish = () => {}, setChatActivity = () => {}, transport = requestCompletion, persistContent = async () => {} }) {
     this.store = store; this.secrets = secrets; this.getSession = getSession; this.listPets = listPets;
     this.publish = publish; this.setChatActivity = setChatActivity; this.transport = transport; this.active = new Map(); this.epoch = 0; this.disposed = false;
     this.getChatSelection = getChatSelection; this.selectChatPet = selectChatPet;
+    this.persistContent = persistContent;
     this.store.recoverInterrupted();
     this.unsubscribe = onSessionChanged?.(() => { this.epoch++; this.abortAll("SESSION_CHANGED"); });
   }
@@ -170,6 +171,10 @@ class ConversationService {
     let lastSaved = 0;
     this.emit(session, { type: "reply", petId, actionId, status: "pending", content: "" });
     try {
+      // Confirm the stable message pair before opening a paid model request.
+      // A lost acknowledgement is retried with the original record action.
+      try { await this.persistContent(session.owner); } catch { fail('CLOUD_SAVE_PENDING'); }
+      if (!this.current(session)) fail('SESSION_CHANGED');
       const reply = await this.transport({ connection: config, apiKey, messages: context.messages,
         signal: active.controller.signal, onDelta: (text) => {
           if (!this.current(session)) { active.reason = "SESSION_CHANGED"; active.controller.abort(); return; }

@@ -112,6 +112,15 @@ const migrations = [{
 }, {
   id:'accounts-008-confirmed-cloud-document',
   sql:'ALTER TABLE account_sync_baselines ADD COLUMN cloud_document TEXT;'
+}, {
+  id:'accounts-009-domain-cloud-readbacks',
+  sql:`CREATE TABLE IF NOT EXISTS account_cloud_readbacks (
+    owner_account_id TEXT NOT NULL REFERENCES account_identities(owner_account_id),
+    domain TEXT NOT NULL CHECK(domain IN ('companions','garden','battle')),
+    cloud_revision INTEGER NOT NULL, envelope_checksum TEXT NOT NULL,
+    module_checksum TEXT NOT NULL, verified_at TEXT NOT NULL,
+    PRIMARY KEY(owner_account_id,domain)
+  );`
 }];
 
 module.exports = { migrations };

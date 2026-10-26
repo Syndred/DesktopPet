@@ -59,6 +59,17 @@ const migrations = [{
     source_owner_account_id TEXT PRIMARY KEY, target_owner_account_id TEXT NOT NULL,
     archive_json TEXT NOT NULL, created_at TEXT NOT NULL
   );`
+}, {
+  id:'companions-004-device-desktop',
+  sql:`CREATE TABLE IF NOT EXISTS companion_device_desktop (
+    owner_account_id TEXT NOT NULL,pet_id TEXT NOT NULL,document_json TEXT NOT NULL,revision INTEGER NOT NULL,updated_at INTEGER NOT NULL,
+    PRIMARY KEY(owner_account_id,pet_id)
+  );
+  CREATE TABLE IF NOT EXISTS companion_device_initialization(owner_account_id TEXT PRIMARY KEY,created_at INTEGER NOT NULL);
+  CREATE TABLE IF NOT EXISTS companion_device_actions (
+    owner_account_id TEXT NOT NULL,action_id TEXT NOT NULL,input_hash TEXT NOT NULL,result TEXT NOT NULL,created_at INTEGER NOT NULL,
+    PRIMARY KEY(owner_account_id,action_id)
+  );`
 }];
 
 function migrateCompanions(db) {

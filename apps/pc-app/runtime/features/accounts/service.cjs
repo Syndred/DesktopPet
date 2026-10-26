@@ -17,12 +17,15 @@ class AccountsService {
     this.services = services; this.db = services.db; this.remote = remote; this.host = host;
     this.qaScenario = qaScenario;
     this.current = null; this.epoch = 0; this.authBusy = false; this.profileBusy = false; this.settingsBusy = false;
+    this.cloudObservations = new Map();
     this.startupIssue = null;
     this.vault = new SessionVault({ userData: services.paths.userData, safeStorage: services.safeStorage });
     this.backups = new BackupManager({ db: this.db, directory: join(services.paths.userData, "accounts", "backups"),
       getIdentity: owner => this.identity(owner), scenario: qaScenario ? { mode: "simulated", scenarioId: qaScenario.id, runId: qaScenario.runId } : null });
     this.sync = new AccountSync({ db: this.db, backups: this.backups, remote, getSession: () => this.privateSession(), getSettings: owner => this.settings(owner),
       onInvalidSession: owner => this.invalidateSession(owner),getEpoch:()=>this.epoch });
+    this.cloudCache = new (require('./cloud-cache.cjs').CloudReadbackCache)({ db: this.db, backups: this.backups,
+      getSession: () => this.privateSession(), cloudView: (data, owner) => this.sync.cloudView(data, owner) });
     this.remoteUnsubscribe = remote.onInvalidated?.(({ userId,sessionId }) => {
       if(sessionId&&this.privateSession()?.sessionId!==sessionId)return;
       if (this.current?.provider === "runtime" && this.identity(this.current.ownerAccountId)?.subject_id === userId) this.invalidateSession(this.current.ownerAccountId);
@@ -42,18 +45,29 @@ class AccountsService {
     await this.ready;
     if(this.disposed||this.automaticSyncRunning||this.authBusy||this.settingsBusy||this.profileBusy||this.current?.authKind!=='supabase')return{skipped:true};
     const owner=this.requireOwner(),epoch=this.epoch;
-    if(!this.settings(owner).document.sync.enabled)return{skipped:true};
     const active=()=>!this.disposed&&this.epoch===epoch&&this.current?.ownerAccountId===owner;
     const notify=()=>{if(active())this.services.events?.emit('accounts:sync-changed',{ownerAccountId:owner});};
     this.automaticSyncRunning=true;
     try{
-      const result=await this.sync.reconcile(owner,notify);
-      if(result.applied&&active()){
-        await this.host?.apply?.(this.settings(owner).document);
-        if(active())this.services.events?.emit('accounts:save-restored',{ownerAccountId:owner,automatic:true,revision:result.revision});
-      }
-      return result;
+      const results=await Promise.allSettled([
+        this.services.get('companions')?.refreshCloud?.(owner),
+        this.services.get('conversations')?.refreshCloud?.(owner)
+      ]);
+      if(!active())return {skipped:true};
+      const failed=results.find(result=>result.status==='rejected');
+      this.cloudObservations.set(owner,{checkedAt:new Date().toISOString(),error:failed?.reason?.code||null});
+      if(failed&&results.every(result=>result.status==='rejected'))throw failed.reason;
+      return {verified:!failed,records:results[1].status==='fulfilled'?results[1].value:null};
     }finally{this.automaticSyncRunning=false;notify();}
+  }
+  cloudStatus(owner=this.requireOwner()){
+    if(this.current?.authKind!=='supabase')return this.sync.status(owner);
+    const observation=this.cloudObservations.get(owner),cache=this.cloudCache.status(owner),records=this.services.get('conversations')?.cloudStatus?.(owner);
+    const last=this.db.prepare('SELECT max(verified_at) at FROM account_cloud_readbacks WHERE owner_account_id=?').get(owner)?.at||null;
+    return {mode:'cloud-authority',configured:true,cloudRevision:cache.revision,pending:records?.pending||0,conflicts:records?.conflicts||0,
+      running:Boolean(this.automaticSyncRunning),localChanged:false,remoteChanged:false,unverifiedLocal:0,privacyRedactions:0,
+      lastVerifiedAt:last,lastCloudCheckedAt:observation?.checkedAt||null,lastError:observation?.error||records?.error||null,
+      preservedLocalRecords:records?.preservedLocalRecords||0,domains:cache.domains};
   }
   identity(owner) { return this.db.prepare("SELECT * FROM account_identities WHERE owner_account_id=?").get(owner); }
   getCurrentUser() {
@@ -138,9 +152,24 @@ class AccountsService {
     this.settings(row.owner_account_id);
     this.persistSession(rememberSession);
     this.remote.setCurrentUser(row.provider === "runtime" ? this.privateSession() : null);
+    void this.watchCloud().catch(()=>{});
     await this.host?.apply?.(this.settings(row.owner_account_id).document);
     invariant(this.epoch === epoch && this.current?.ownerAccountId === row.owner_account_id, "SESSION_CHANGED", "账号状态已改变，请重新登录。");
     return this.emitSession({ notifyApp: false });
+  }
+  async watchCloud(){
+    if(this.cloudChannel){void this.cloudChannel.client.removeChannel(this.cloudChannel.channel);this.cloudChannel=null;}
+    if(!this.realtimeEnabled||this.current?.authKind!=='supabase')return;
+    const epoch=this.epoch,actor=await this.requireCloudActor();
+    if(this.epoch!==epoch||typeof actor.client?.channel!=='function')return;
+    // PostgreSQL row changes are authorized by table RLS. No broadcast topic or
+    // new realtime.messages policy is needed for this owner-filtered listener.
+    const owner=this.requireOwner(),channel=actor.client.channel(`account-state:${owner}:${actor.deviceId}`);
+    const changed=()=>{clearTimeout(this.cloudRefreshTimer);this.cloudRefreshTimer=setTimeout(()=>{
+      if(this.epoch===epoch)void this.runAutomaticSync().catch(()=>{});
+    },200);this.cloudRefreshTimer.unref?.();};
+    for(const table of ['lingjing_saves','lingjing_personal_records'])channel.on('postgres_changes',{event:'*',schema:'public',table,filter:`owner_id=eq.${owner}`},changed);
+    channel.subscribe();this.cloudChannel={client:actor.client,channel};
   }
   persistSession(rememberSession) {
     this.db.prepare("INSERT INTO account_session_control VALUES(1,1) ON CONFLICT(singleton) DO UPDATE SET blocked=1").run();
@@ -349,6 +378,37 @@ class AccountsService {
   async restoreBackup(input) {
     const owner = this.requireOwner();
     const preview = this.backups.previews.get(input.previewId);
+    if(this.current?.authKind==='supabase'){
+      const id=actionId(input.actionId),inputHash=checksum({previewId:input.previewId,mode:input.mode||'merge'}),prior=this.db.prepare('SELECT * FROM account_actions WHERE owner_account_id=? AND action_id=?').get(owner,id);
+      let state;
+      if(prior){invariant(prior.kind==='restore-records'&&prior.input_hash===inputHash,'ACTION_ID_REUSED','操作编号已用于其他内容。');state=JSON.parse(prior.result);}
+      else{
+        invariant(preview&&preview.owner===owner&&preview.expiresAt>Date.now(),'BACKUP_PREVIEW_EXPIRED','导入预览已过期，请重新选择备份。');
+        this.backups.validate(preview.envelope,owner);
+        invariant(!preview.cloudRevision,'CLOUD_DATA_DIRECT','云端数据已直接读取，请刷新数据。');
+        const normalized=this.backups.normalizeData(preview.envelope.data,owner);
+        state={restored:false,mode:'record-import',preservedBackup:this.backups.save(owner,null,'before-record-import'),
+          modules:Object.fromEntries(Object.entries(normalized.modules).filter(([name])=>['conversations','settings','device-desktop','character-resources','resources'].includes(name))),appliedModules:[]};
+        this.db.prepare('INSERT INTO account_actions VALUES(?,?,?,?,?,?)').run(owner,id,'restore-records',inputHash,JSON.stringify(state),new Date().toISOString());
+      }
+      const publicResult=()=>({restored:state.restored,mode:state.mode,preservedBackup:state.preservedBackup,preservedLocalRecords:state.preservedLocalRecords||0});
+      if(state.restored)return {...publicResult(),duplicate:true};
+      const {modules}=state,epoch=this.epoch;
+      const checkpoint=()=>this.db.prepare('UPDATE account_actions SET result=? WHERE owner_account_id=? AND action_id=?').run(JSON.stringify(state),owner,id);
+      const conversations=this.services.get('conversations');
+      if(modules.conversations&&!state.appliedModules.includes('conversations')){await conversations.importCloudRecords(owner,modules.conversations.data);state.appliedModules.push('conversations');checkpoint();}
+      invariant(epoch===this.epoch&&this.current?.ownerAccountId===owner,'SESSION_CHANGED','账号已切换，原备份已保留。');
+      if(modules.settings&&!state.appliedModules.includes('settings'))transaction(this.db,()=>{this.backups.adapters.get('settings').restore(owner,modules.settings.data,'replace');state.appliedModules.push('settings');checkpoint();});
+      if(modules['device-desktop']&&!state.appliedModules.includes('device-desktop'))transaction(this.db,()=>{this.backups.adapters.get('device-desktop')?.restore(owner,modules['device-desktop'].data,'merge');state.appliedModules.push('device-desktop');checkpoint();});
+      for(const name of ['character-resources','resources'])if(modules[name]&&!state.appliedModules.includes(name)){
+        const adapter=this.backups.adapters.get(name);await adapter?.prepareCloud?.(owner,modules[name]);
+        invariant(epoch===this.epoch,'SESSION_CHANGED','账号已切换，原资源已保留。');transaction(this.db,()=>{adapter?.restore(owner,modules[name].data,'merge');state.appliedModules.push(name);checkpoint();});
+      }
+      this.backups.previews.delete(input.previewId);await this.host?.apply?.(this.settings(owner).document);
+      state.restored=true;state.preservedLocalRecords=conversations?.cloudStatus(owner)?.preservedLocalRecords||0;checkpoint();
+      this.services.events?.emit('accounts:sync-changed',{ownerAccountId:owner});
+      return publicResult();
+    }
     const restored = transaction(this.db, () => {
       const result = this.backups.restore(owner, input);
       if (preview?.cloudRevision) this.sync.acceptCloudRestore(owner, preview);
@@ -358,6 +418,6 @@ class AccountsService {
     this.services.events?.emit("accounts:save-restored", { ownerAccountId: owner });
     return restored;
   }
-  dispose() { this.disposed=true;this.epoch++;clearInterval(this.retryTimer); this.remoteUnsubscribe?.(); this.proofUnsubscribe?.(); this.remote.dispose?.(); this.host?.dispose?.(); }
+  dispose() { this.disposed=true;this.epoch++;clearInterval(this.retryTimer);clearTimeout(this.cloudRefreshTimer);if(this.cloudChannel)void this.cloudChannel.client.removeChannel(this.cloudChannel.channel); this.remoteUnsubscribe?.(); this.proofUnsubscribe?.(); this.remote.dispose?.(); this.host?.dispose?.(); }
 }
 module.exports = { AccountsService };

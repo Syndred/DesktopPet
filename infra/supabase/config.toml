@@ -61,3 +61,7 @@ entrypoint = "./functions/lingjing-battle/index.ts"
 [functions.lingjing-resources]
 verify_jwt = false
 entrypoint = "./functions/lingjing-resources/index.ts"
+
+[functions.lingjing-records]
+verify_jwt = false
+entrypoint = "./functions/lingjing-records/index.ts"

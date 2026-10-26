@@ -13,6 +13,9 @@ const messages = {
   RESPONSE_TOO_LARGE: "模型回复超过本地安全长度限制。", NETWORK_ERROR: "无法连接模型服务，请检查网络和接口地址。",
   RETRY_NOT_ALLOWED: "只能重试这只伙伴最后一次失败或停止的回复。", NOT_FOUND: "记录不存在或已删除。",
   MEMORY_LIMIT: "这只伙伴已保存 100 条记忆，请先整理已有记忆。",
+  CLOUD_SAVE_PENDING: "聊天记录尚未得到云端确认，原内容已保留，请联网后重试。",
+  RECORD_CONFLICT: "这条记录已在另一端更新，本机修改已保留；请刷新后重新编辑。",
+  RECORD_UNAVAILABLE: "暂时无法读取云端聊天记录，已有内容仍保留。",
   LEGACY_CORRUPT: "旧记录暂时无法读取，原始存档仍保留。", LEGACY_INVALID: "旧记录的归属或格式无法确认，原始存档仍保留。",
   LEGACY_EMPTY: "没有可导入的旧记录。", LEGACY_CONFLICT: "旧记录与当前内容有冲突；可先仅导入聊天，原始存档仍保留。",
   INTERNAL_ERROR: "操作未完成，请稍后重试。"

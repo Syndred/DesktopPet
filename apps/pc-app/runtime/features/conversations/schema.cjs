@@ -59,5 +59,31 @@ const migrations = [{
       PRIMARY KEY(owner_account_id,source_hash)
     );
   `
+}, {
+  id: 'conversations-003-cloud-record-cache',
+  sql: `CREATE TABLE IF NOT EXISTS conversation_cloud_state (
+    owner_account_id TEXT PRIMARY KEY,cursor INTEGER NOT NULL DEFAULT 0,initialized INTEGER NOT NULL DEFAULT 0,last_error TEXT
+  );
+  CREATE TABLE IF NOT EXISTS conversation_cloud_records (
+    owner_account_id TEXT NOT NULL,collection TEXT NOT NULL,record_id TEXT NOT NULL,
+    revision INTEGER NOT NULL,position INTEGER NOT NULL,change_sequence INTEGER NOT NULL,
+    document_json TEXT NOT NULL,deleted INTEGER NOT NULL,
+    PRIMARY KEY(owner_account_id,collection,record_id)
+  );
+  CREATE TABLE IF NOT EXISTS conversation_cloud_outbox (
+    owner_account_id TEXT NOT NULL,action_id TEXT NOT NULL,changes_json TEXT NOT NULL,
+    status TEXT NOT NULL,last_error TEXT,created_at INTEGER NOT NULL,
+    PRIMARY KEY(owner_account_id,action_id)
+  );
+  CREATE TABLE IF NOT EXISTS conversation_cloud_archives (
+    owner_account_id TEXT NOT NULL,checksum TEXT NOT NULL,document_json TEXT NOT NULL,created_at INTEGER NOT NULL,
+    PRIMARY KEY(owner_account_id,checksum)
+  );
+  CREATE TABLE IF NOT EXISTS conversation_cloud_conflicts (
+    owner_account_id TEXT NOT NULL,collection TEXT NOT NULL,record_id TEXT NOT NULL,
+    local_document TEXT NOT NULL,cloud_document TEXT,reason TEXT NOT NULL,created_at INTEGER NOT NULL,
+    resolved_at INTEGER,resolution TEXT,
+    PRIMARY KEY(owner_account_id,collection,record_id,reason)
+  );`
 }];
 module.exports = { migrations };

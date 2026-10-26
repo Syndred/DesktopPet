@@ -1,3 +1,4 @@
+// Legacy full-save compatibility only. Production refresh uses domain caches and personal records.
 const {test,afterEach}=require('node:test');const assert=require('node:assert/strict');
 const fs=require('node:fs/promises'),path=require('node:path'),os=require('node:os');const {randomUUID}=require('node:crypto');const Database=require('better-sqlite3');
 const syncFs=require('node:fs');
@@ -76,7 +77,7 @@ afterEach(async()=>{for(const f of fixtures.splice(0)){f.accounts?.dispose();f.a
  assert.equal(path.dirname(target),path.resolve(os.tmpdir()));assert.ok(path.basename(target).startsWith('lingjing-hydration-guard-'));await fs.rm(target,{recursive:true,force:true});}});
 
 test('production07 + BackupManager with real SQLite / simulated HTTPS provider: new private resource hydration must allow atomic full-save adoption',async()=>{
- const f=await fixture(),before=f.accounts.backups.dataChecksum(owner);const restored=await f.accounts.runAutomaticSync();
+ const f=await fixture(),before=f.accounts.backups.dataChecksum(owner);const restored=await f.accounts.sync.reconcile(f.accounts.requireOwner());
  assert.equal(restored.applied,true);assert.notEqual(f.accounts.backups.dataChecksum(owner),before);
  assert.equal(f.pets.requirePet(owner,f.petId).resource.resourceId,f.next.manifest.resourceId);
  assert.equal(f.b.db.prepare('SELECT cloud_revision FROM account_sync_state').get().cloud_revision,2);
@@ -92,7 +93,7 @@ test('production07 + real SQLite: verified resource/pref pump before reconcile m
  await f.cloudSync.hydrateReferences(owner,f.cloud.envelope.data.modules['character-resources']);
  f.cloudSync.preferences.apply(owner,await f.cloudSync.preferences.read(owner,f.prefRow.resource_id));
  assert.equal(f.accounts.sync.status(owner).localChanged,true);assert.notEqual(f.pets.requirePet(owner,f.petId).resource.resourceId,f.next.manifest.resourceId);
- const restored=await f.accounts.runAutomaticSync();assert.equal(restored.applied,true);assert.equal(f.pets.requirePet(owner,f.petId).resource.resourceId,f.next.manifest.resourceId);
+ const restored=await f.accounts.sync.reconcile(f.accounts.requireOwner());assert.equal(restored.applied,true);assert.equal(f.pets.requirePet(owner,f.petId).resource.resourceId,f.next.manifest.resourceId);
  assert.equal(f.b.resources.getRecord(owner,f.prefRow.resource_id).calibration.desktop.scale,1.4);assert.equal(f.accounts.sync.status(owner).localChanged,false);
  assert.equal(f.b.db.prepare('SELECT document_json FROM lingjing_resources WHERE resource_id=?').get(f.old.manifest.resourceId).document_json,f.originalNativeDocument);
 });
@@ -103,7 +104,7 @@ test('production07 may append only the new exact manifest import to an existing 
  const updated=await f.publish(await buildPackage(f.a.resources,owner,uid,f.old.manifest.resourceId));assert.notEqual(updated.digest,f.old.digest);
  f.cloud.envelope.data.modules['character-resources']=f.module([f.old,f.next,updated],f.cloud.envelope.data.modules['character-resources'].data.preferences);
  f.cloud.envelope=seal(f.cloud.envelope);f.cloud.checksum=f.cloud.envelope.checksum;
- assert.equal((await f.accounts.runAutomaticSync()).applied,true);
+ assert.equal((await f.accounts.sync.reconcile(f.accounts.requireOwner())).applied,true);
  const rows=f.b.db.prepare('SELECT import_id FROM lingjing_resource_imports WHERE resource_id=? ORDER BY import_id').all(f.old.manifest.resourceId).map(row=>row.import_id);
  assert.deepEqual(rows,updated.manifest.imports.map(row=>row.import_id).sort());
  assert.equal(f.b.db.prepare('SELECT document_json FROM lingjing_resources WHERE resource_id=?').get(f.old.manifest.resourceId).document_json,f.originalNativeDocument);
@@ -117,7 +118,7 @@ test('production07 safe file repair may rebind an existing registry only to its 
   for(const candidate of [file,preserved]){const relative=path.relative(root,await fs.realpath(path.dirname(candidate))+'/'+path.basename(candidate));assert.ok(relative&&!relative.startsWith('..')&&!path.isAbsolute(relative));}
   await fs.rename(file,preserved);
  };
- assert.equal((await f.accounts.runAutomaticSync()).applied,true);assert.equal(triggered,true);
+ assert.equal((await f.accounts.sync.reconcile(f.accounts.requireOwner())).applied,true);assert.equal(triggered,true);
  assert.equal(hash(await fs.readFile(preserved)),f.old.manifest.files.find(file=>file.key==='sprites.png').sha256);
  const registered=f.b.db.prepare("SELECT file_path FROM lingjing_resource_files WHERE resource_id=? AND asset_key='sprites.png'").get(f.old.manifest.resourceId).file_path;
  assert.match(registered,/restore-[0-9a-f-]{36}/);assert.notEqual(registered,preserved);
@@ -134,7 +135,7 @@ test('real SQLite upgrade: accounts008 preserves existing007 rows and recovers t
  }finally{db.close();}
  await f.cloudSync.hydrateReferences(owner,f.cloud.envelope.data.modules['character-resources']);
  f.b.db.exec('UPDATE account_sync_baselines SET cloud_document=NULL');
- assert.equal((await f.accounts.runAutomaticSync()).applied,true);
+ assert.equal((await f.accounts.sync.reconcile(f.accounts.requireOwner())).applied,true);
  assert.ok(f.requests.some(row=>row.path.endsWith('/lingjing_save_actions')&&row.query.includes(encodeURIComponent(f.base.checksum))));
  assert.equal(JSON.parse(f.b.db.prepare('SELECT cloud_document FROM account_sync_baselines').get().cloud_document).checksum,f.cloud.checksum);
 });
@@ -161,7 +162,7 @@ test('production07 preparation never admits user edits, extra imports/files, unv
    if(kind==='account-pending')db.prepare("INSERT INTO account_sync_outbox(owner_account_id,action_id,base_revision,checksum,document,status,created_at) VALUES(?,?,?,?,?,'pending',?)").run(owner,'original-pending-action',1,f.base.checksum,JSON.stringify(f.base),'2020');
    if(kind==='preference-pending')db.prepare('INSERT INTO lingjing_resource_preference_outbox(owner_account_id,resource_id,local_revision,action_id,document_json,created_at) VALUES(?,?,?,?,?,?)').run(owner,f.old.manifest.resourceId,1,randomUUID(),canonical(f.prefRow.document),'2020');
   };
-  await assert.rejects(f.accounts.runAutomaticSync(),error=>['SAVE_CHANGED','RESOURCE_BACKUP_INVALID','RESOURCE_REFERENCE_CONFLICT'].includes(error.code));assert.equal(triggered,true);
+  await assert.rejects(f.accounts.sync.reconcile(f.accounts.requireOwner()),error=>['SAVE_CHANGED','RESOURCE_BACKUP_INVALID','RESOURCE_REFERENCE_CONFLICT'].includes(error.code));assert.equal(triggered,true);
   assert.equal(f.b.db.prepare('SELECT cloud_revision FROM account_sync_state').get().cloud_revision,1);
   assert.notEqual(f.pets.requirePet(owner,f.petId).resource.resourceId,f.next.manifest.resourceId);
   if(kind==='personal')assert.equal(f.accounts.settings().document.desktop.volume,77);
@@ -175,7 +176,7 @@ test('resource pump admission still rejects pre-existing user preferences, unkno
   if(kind==='preference')f.b.db.prepare('UPDATE lingjing_resource_preferences SET revision=revision+1 WHERE owner_account_id=?').run(owner);
   if(kind==='unknown-import'){const packet=await f.package('未核验本机导入');await f.b.resources.importFile(owner,path.join(f.directory,'未核验本机导入','character.json'));assert.ok(packet.manifest.resourceId);}
   if(kind==='companion'){const row=f.b.db.prepare('SELECT data_json FROM companion_pets WHERE pet_id=?').get(f.petId),pet=JSON.parse(row.data_json);pet.name='保留本机改名';f.b.db.prepare('UPDATE companion_pets SET data_json=? WHERE pet_id=?').run(JSON.stringify(pet),f.petId);}
-  await assert.rejects(f.accounts.runAutomaticSync(),error=>['SAVE_CHANGED','SYNC_REMOTE_CONFLICT'].includes(error.code));
+  await assert.rejects(f.accounts.sync.reconcile(f.accounts.requireOwner()),error=>['SAVE_CHANGED','SYNC_REMOTE_CONFLICT'].includes(error.code));
   assert.equal(f.b.db.prepare('SELECT cloud_revision FROM account_sync_state').get().cloud_revision,1);
   assert.notEqual(f.pets.requirePet(owner,f.petId).resource.resourceId,f.next.manifest.resourceId);
  });
@@ -186,7 +187,7 @@ test('real production hydration rejects logout and same-owner new SID during act
   const f=await fixture();let triggered=false;f.beforeRequest=async url=>{if(triggered||!url.pathname.includes(f.next.digest+'/chunks/'))return;triggered=true;
    if(kind==='logout')await f.accounts.logout();else await f.accounts.authenticate({provider:'runtime',account:'alice',password:'secret123'});
   };
-  await assert.rejects(f.accounts.runAutomaticSync());assert.equal(triggered,true);
+  await assert.rejects(f.accounts.sync.reconcile(f.accounts.requireOwner()));assert.equal(triggered,true);
   assert.equal(f.b.db.prepare('SELECT cloud_revision FROM account_sync_state').get().cloud_revision,1);
   assert.notEqual(f.pets.requirePet(owner,f.petId).resource.resourceId,f.next.manifest.resourceId);
  });
@@ -195,6 +196,6 @@ test('real production hydration rejects logout and same-owner new SID during act
 test('007 upgrade never guesses or accepts a damaged immutable baseline after independent resource pump',async()=>{
  const f=await fixture();await f.cloudSync.hydrateReferences(owner,f.cloud.envelope.data.modules['character-resources']);
  f.b.db.exec('UPDATE account_sync_baselines SET cloud_document=NULL');const row=f.actions.find(row=>row.action_id==='baseline-fixture');row.envelope=structuredClone(row.envelope);row.envelope.data.modules.settings.data.desktop.volume=99;row.envelope=seal(row.envelope);
- await assert.rejects(f.accounts.runAutomaticSync(),{code:'SYNC_READBACK_MISMATCH'});
+ await assert.rejects(f.accounts.sync.reconcile(f.accounts.requireOwner()),{code:'SYNC_READBACK_MISMATCH'});
  assert.equal(f.b.db.prepare('SELECT cloud_document FROM account_sync_baselines').get().cloud_document,null);assert.equal(f.accounts.settings().document.desktop.volume,10);
 });

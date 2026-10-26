@@ -65,7 +65,7 @@ function createDesktopWindowManager({ services, service, ensureImported, changed
           const desired=entry.desiredPosition||entry.window.getBounds();
           if(desired.x===pending.position.x&&desired.y===pending.position.y){entry.positionDirty=false;entry.desiredPosition=null;}
           else{placeDesktopWindow(entry.window,entry.pet,screen,desired);entry.positionDirty=true;}
-          entry.pet=service.requirePet(entry.owner,entry.pet.petId);
+          entry.pet=service.readPet(entry.owner,entry.pet.petId);
         }
         return result;
       }).catch(error=>{
@@ -114,7 +114,8 @@ function createDesktopWindowManager({ services, service, ensureImported, changed
       if (!owner) return;
       ensureImported(owner);
       // Historical unsupported appearances remain in storage, never opened by this 2D release.
-      const pets = services.get('companions')?.hasPendingRecallAll?.(owner)?[]:service.snapshot(owner).data.pets.filter(pet => pet.desktop.visible && pet.resource.kind === '2d');
+      const companions=services.get('companions');
+      const pets = companions?.hasPendingRecallAll?.(owner)?[]:(companions?.isCloudOwner?.(owner)?companions.listPets(owner):service.snapshot(owner).data.pets).filter(pet => pet.desktop.visible && pet.resource.kind === '2d');
       const ids = new Set(pets.map(pet => pet.petId));
       for (const [id, entry] of entries) if (!ids.has(id)) destroy(entry);
       for (const pet of pets) {
