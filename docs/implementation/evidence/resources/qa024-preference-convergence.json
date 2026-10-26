@@ -1,0 +1,108 @@
+{
+  "format": "lingjing.resources.qa024.preference-convergence",
+  "version": 1,
+  "status": "source-fix-directed-checks-passed-awaiting-root-review",
+  "completeNativeAcceptancePassed": false,
+  "parentCommit": "e2dc90b3f66f595f5547517c83a90635c0926b29",
+  "sourceParityReviewedAgainstRoot": "32b62eb560e886f3131666afe908c37c64b5a587",
+  "capturedRootCase": {
+    "localRevision": 1,
+    "cloudRevision": 1,
+    "canonicalIntentLocalCloudEqual": true,
+    "stateAuthorityMatches": true,
+    "readOnlyEvidenceOnly": true
+  },
+  "rootEvidence": [
+    {
+      "file": "root-r06-b2-existing-preference-conflict-readonly-20261026.json",
+      "sha256": "919b80c90e5d5e1ebd4b4af6f6f53b2f7238208e6091a763b0dc18673d327182"
+    },
+    {
+      "file": "root-r06-qingya-cloud-preference-readonly-20261026.json",
+      "sha256": "dbff668551c07ae5df80bf261f7901e9d64326c7d1306c5b2120a672dd93c9c4"
+    }
+  ],
+  "sourceFiles": [
+    {
+      "path": "apps/pc-app/runtime/features/resources/cloud-host.cjs",
+      "sha256": "52abc87c0c4c8148286104a7103907e64cb3ad25910fbda9683ecf121894cd3c"
+    },
+    {
+      "path": "apps/pc-app/runtime/features/resources/cloud-preferences.cjs",
+      "sha256": "e3ec4a4a55988e788780ef5ba76e10cea1a32f193505adb8e031c5f9825dae8e"
+    },
+    {
+      "path": "apps/pc-app/runtime/features/resources/cloud-sync.cjs",
+      "sha256": "92e25ee9e83a32a230557ca64fd1befbc66da2b33db4f77b2ee8c337c4de9216"
+    },
+    {
+      "path": "apps/pc-app/runtime/features/resources/verification/cloud-preferences.test.cjs",
+      "sha256": "f1a67a389b1e7fda149f81f4671bdd05a9d118a189d785515d3807462b40fa03"
+    }
+  ],
+  "rootCause": "Normal verified pull updates preference state but leaves an equal-document stale CAS conflict in the outbox. That row blocks later jobs and remains counted as pending. The resource page has no per-conflict resolver; whole-account replace has different semantics.",
+  "resolution": "Only a normal pull record from this instance's independently verified read can resolve. Owner/resource/auth UID, authority action, current Accounts epoch and actor session/device/client must match. Current local revision and canonical document must match the original conflict; only RESOURCE_PREFERENCE_CONFLICT with an older bound base revision becomes superseded.",
+  "preservation": {
+    "changedOldOutboxFields": [
+      "status"
+    ],
+    "unchangedOldOutboxFields": [
+      "action_id",
+      "auth_user_id",
+      "base_revision",
+      "local_revision",
+      "document_json",
+      "attempts",
+      "last_error",
+      "next_attempt_at",
+      "created_at",
+      "verified_at"
+    ],
+    "rejectedCasBecomesVerified": false,
+    "automaticNewActionId": false,
+    "retryOldCas": false,
+    "newMigration": false,
+    "globalEslintConfigChanged": false,
+    "liveProfilesOrCloudTouched": false,
+    "qaLedgerOrFrozenPackageChanged": false
+  },
+  "boundaries": [
+    "Different document or newer local version retains conflict.",
+    "Wrong owner/resource/auth UID or unmatched authority is rejected.",
+    "Epoch/session/device/SDK client changes during read or epoch change before apply are rejected.",
+    "Older authority cannot downgrade newer state.",
+    "Without the main-only epoch capability, convergence stays conservative.",
+    "Transaction failure rolls back preference/state/outbox changes.",
+    "A later genuine saved edit can proceed using the accepted cloud revision; the rejected action stays superseded and unverified."
+  ],
+  "checks": [
+    {
+      "command": "node scripts/desktop/run-native-tests.cjs apps/pc-app/runtime/features/resources/verification/cloud-preferences.test.cjs apps/pc-app/runtime/features/resources/verification/cloud-backup.test.cjs",
+      "exitCode": 0,
+      "tests": 23,
+      "output": "✔ LOCAL cloud-v2 adapter rejects wrong owner, arbitrary schema/path, repeated refs and version/content mismatch (44.2583ms)\n✔ LOCAL v2 validation confers no authority: restore refuses a client-only reference without a live server receipt (55.9641ms)\n✔ LOCAL backup manager dispatches cloud v2 hydration before a retained preview while preserving the original v1 file (35.8315ms)\n✔ LOCAL preference outbox persists exact intent before Auth and retries the same action after actual SQLite reopen (71.8478ms)\n✔ LOCAL preference hydration preserves a dirty local edit and refuses to call it verified (41.1778ms)\n✔ LOCAL same-document verified pull supersedes only the rejected intent, preserves history on reopen and admits a later genuine edit (49.244ms)\n✔ LOCAL differing cloud document retains the conflict and dirty local preference (34.6433ms)\n✔ LOCAL same document with a newer local revision does not resolve an older rejected version (37.7321ms)\n✔ LOCAL ordinary unverified apply cannot claim current authoritative convergence (31.9525ms)\n✔ LOCAL normal pull without a main actor-generation capability conservatively retains the conflict (32.8292ms)\n✔ LOCAL older authority read cannot downgrade a newer state or resolve its retained conflict (36.9952ms)\n✔ LOCAL failed convergence transaction retains the original preference, conflict and history (36.0491ms)\n✔ LOCAL verified convergence rejects owner readback without changing history (33.7564ms)\n✔ LOCAL verified convergence rejects resource readback without changing history (33.9073ms)\n✔ LOCAL verified convergence rejects auth-user readback without changing history (35.1971ms)\n✔ LOCAL verified convergence rejects missing-authority readback without changing history (30.8057ms)\n✔ LOCAL verified convergence rejects wrong-authority-action readback without changing history (31.9086ms)\n✔ LOCAL epoch change during authority read cannot resolve the old conflict (31.7568ms)\n✔ LOCAL session change during authority read cannot resolve the old conflict (34.0554ms)\n✔ LOCAL device change during authority read cannot resolve the old conflict (34.4975ms)\n✔ LOCAL sdk-client change during authority read cannot resolve the old conflict (33.4656ms)\n✔ LOCAL generation change after verified read but before apply cannot resolve or apply the old record (32.8104ms)\n✔ LOCAL a different old auth identity or different CAS error remains a conflict (71.1405ms)\nℹ tests 23\nℹ suites 0\nℹ pass 23\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 883.0847\n",
+      "kind": "local readback fixture with actual file SQLite; Electron runs as Node with no product window"
+    },
+    {
+      "command": "node node_modules/eslint/bin/eslint.js <four changed CJS files> --rule '@typescript-eslint/no-require-imports: off'",
+      "exitCode": 0,
+      "output": "",
+      "kind": "targeted CJS lint; command override only, no repository rule changes"
+    },
+    {
+      "command": "strict ESLint on the same CJS files without overrides",
+      "exitCode": 1,
+      "kind": "baseline CommonJS import rule mismatch plus an existing empty catch; initial diagnostic retained",
+      "output": "\nC:\\Users\\Administrator\\Desktop\\project\\DesktopPet-fresh-worktrees\\07\\apps\\pc-app\\runtime\\features\\resources\\cloud-host.cjs\n  1:24  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports\n  2:27  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports\n  3:31  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports\n\nC:\\Users\\Administrator\\Desktop\\project\\DesktopPet-fresh-worktrees\\07\\apps\\pc-app\\runtime\\features\\resources\\cloud-preferences.cjs\n   1:20   error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports\n   2:46   error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports\n   3:30   error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports\n  34:174  error  Empty block statement                    no-empty\n\nC:\\Users\\Administrator\\Desktop\\project\\DesktopPet-fresh-worktrees\\07\\apps\\pc-app\\runtime\\features\\resources\\cloud-sync.cjs\n   1:12   error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports\n   2:14   error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports\n   3:24   error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports\n   4:50   error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports\n   5:172  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports\n   6:107  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports\n  34:27   error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports\n\nC:\\Users\\Administrator\\Desktop\\project\\DesktopPet-fresh-worktrees\\07\\apps\\pc-app\\runtime\\features\\resources\\verification\\cloud-preferences.test.cjs\n   1:14  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports\n   2:14  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports\n   3:10  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports\n   4:12  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports\n   5:10  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports\n   6:20  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports\n   7:30  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports\n   8:37  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports\n   9:34  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports\n  10:23  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports\n\n✖ 24 problems (24 errors, 0 warnings)\n\n"
+    },
+    {
+      "command": "git diff --check",
+      "exitCode": 0
+    }
+  ],
+  "documentationChecked": [
+    "https://supabase.com/changelog.md",
+    "https://supabase.com/docs/reference/javascript/maybesingle"
+  ],
+  "independentVerificationStillRequired": "Root review and final integrated candidate QA024: the actual old B2 conflict becomes superseded while its original action/error/attempt/history remains byte-for-byte otherwise; verify state authority/current document, no synthetic success and later normal edit. Existing R06 cold hydration is separate."
+}

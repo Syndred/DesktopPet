@@ -5,7 +5,7 @@ const { ResourceCloudSync } = require('./cloud-sync.cjs');
 /** The accounts capability is main-only. No renderer-provided owner, client or JWT is accepted. */
 function registerResourceCloud(services, service) {
   const enabled = owner => services.get('accounts')?.settings(owner)?.document?.sync?.enabled === true && !services.get('qaIdentity');
-  const cloud = new ResourceCloudSync({service,isEnabled:enabled,
+  const cloud = new ResourceCloudSync({service,isEnabled:enabled,getActorGeneration:()=>services.get('accounts')?.epoch,
     async getActor(owner) {
       if(services.session.getOwnerAccountId()!==owner)throw new ResourceError('SESSION_CHANGED','账号已切换');
       const auth=services.get('cloudActor');

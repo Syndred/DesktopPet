@@ -28,8 +28,8 @@ async function immutablePut(client,key,bytes,type) {
   return download(client,key,Math.max(bytes.length,1),hash(bytes),bytes.length);
 }
 class ResourceCloudSync {
-  constructor({service,getActor,isEnabled=()=>true,onChanged=()=>{},now=()=>Date.now(),protocolFixture=false}) {
-    this.service=service;this.db=service.repository.db;this.getActor=getActor;this.isEnabled=isEnabled;this.onChanged=onChanged;this.now=now;
+  constructor({service,getActor,getActorGeneration=()=>null,isEnabled=()=>true,onChanged=()=>{},now=()=>Date.now(),protocolFixture=false}) {
+    this.service=service;this.db=service.repository.db;this.getActor=getActor;this.getActorGeneration=getActorGeneration;this.isEnabled=isEnabled;this.onChanged=onChanged;this.now=now;
     this.uploading=new Set();this.downloading=new Set();this.protocolFixture=protocolFixture;this.mode=protocolFixture?'simulated':'live';
     this.preferences=new (require('./cloud-preferences.cjs').ResourceCloudPreferences)(this);
   }
