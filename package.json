@@ -13,6 +13,7 @@
     "typecheck": "tsc --noEmit -p tsconfig.typecheck.json && tsc --noEmit -p apps/pc-app/tsconfig.desktop.json",
     "test": "vitest run",
     "test:unit": "vitest run -c vitest.unit.config.ts",
+    "test:resources-hook": "node apps/pc-app/ui/tests/run-resources-hook.mjs",
     "test:layers": "npm run test:unit && npm run test:native",
     "test:coverage": "vitest run --coverage",
     "release:build:pc": "npm run build:pc",
