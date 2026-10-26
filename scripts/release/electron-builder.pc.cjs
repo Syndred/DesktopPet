@@ -1,6 +1,7 @@
-const { readFileSync } = require('node:fs');
+const { readFileSync, lstatSync } = require('node:fs');
 const { createHash } = require('node:crypto');
 const config = require('./electron-builder.pc.json');
+if(lstatSync('node_modules').isSymbolicLink())throw new Error('Build with an isolated copy of node_modules. The npm collector can omit transitive dependencies through a shared junction; do not install or rebuild through that junction.');
 // Pinned builder 26.18 defines a shared build-time directory for false/undefined.
 // true omits UNPACK_DIR_NAME, so portable.nsi uses each launch's $PLUGINSDIR/app.
 // Its published false documentation differs from this installed generator.
@@ -12,4 +13,5 @@ for (const file of closure.files) {
   const digest = createHash('sha256').update(readFileSync(file.path)).digest('hex');
   if (digest !== file.sha256) throw new Error(`Runtime changed since build: ${file.path}`);
 }
-module.exports = { ...config, files: [...closure.files.map(file => file.path), ...config.files] };
+module.exports = { ...config, files: [...closure.files.map(file => file.path), ...config.files],
+  afterPack: async context => require('../acceptance/runtime-dependencies.cjs').verifyPackagedRuntime(context.appOutDir) };

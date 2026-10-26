@@ -32,6 +32,7 @@ try {
   const runtimeCode = entries.filter(path => /^apps\/pc-app\/runtime\/.*\.(?:[cm]?js|ps1)$/.test(path));
   assert.deepEqual(runtimeCode.filter(path => !closure.files.some(file => file.path === path)), [], 'Unreviewed runtime code entered ASAR');
   proof.runtimeClosure = { files: closure.files.length, edges: closure.edges.length, sha256: hash(closureBytes), jsAndMjs: closure.files.filter(file => /\.(?:js|mjs)$/.test(file.path)).map(file => file.path) };
+  proof.runtimeDependencies = require('./runtime-dependencies.cjs').verifyPackagedRuntime(join(base,'win-unpacked'));
   const publicConfigPath = join(base, 'win-unpacked/resources/lingjing-cloud-public.json'), publicBytes = readFileSync(publicConfigPath), publicCloud = JSON.parse(publicBytes);
   assert.equal(hash(publicBytes), manifest.publicCloud.sha256); assert.equal(publicCloud.projectRef, manifest.publicCloud.projectRef);
   assert.deepEqual(Object.keys(publicCloud).sort(), ['schemaVersion','projectRef','url','publishableKey'].sort()); assert.ok(publicCloud.publishableKey.startsWith('sb_publishable_'));
