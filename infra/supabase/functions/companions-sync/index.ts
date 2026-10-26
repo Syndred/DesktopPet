@@ -15,9 +15,14 @@ Deno.serve(withActor(async(request,actor)=>{
     try{
       const worker=createAdminClient();
       const {data:serialRegistry,error:serialError}=await worker.rpc('lingjing_global_serial_owned',{p_actor:actor,p_expected_revision:head?.revision||0});
-      if(serialError)problem(serialError);
+      // Numbering is a separately authorized display projection. A revoked QA
+      // numbering scope must not hide an otherwise authorized owner's pets.
+      // Keep every allocator/actor guard intact and never invent serial values.
+      const serialCode=serialError?/LJ_([A-Z_]+)/.exec(serialError.message||'')?.[1]:undefined;
+      if(serialError&&serialCode!=='GLOBAL_SERIAL_SCOPE_REVOKED')problem(serialError);
       return jsonResponse({ok:true,data:{ownerAccountId:actor.ownerAccountId,revision:head?.revision||0,envelope:head?.envelope||null,
-        module:{version:1,data:companionUnit(head?.envelope,actor.ownerAccountId,Date.now())},serialRegistry,authority:'live'}});
+        module:{version:1,data:companionUnit(head?.envelope,actor.ownerAccountId,Date.now())},
+        ...(serialError?{serialRegistryError:serialCode}:{serialRegistry}),authority:'live'}});
     }catch(error){problem(error as {code?:string;message?:string});}
   }
   if(body.op!=='command'||typeof body.command!=='string')fail('INVALID_REQUEST');

@@ -58,6 +58,7 @@ module.exports = {
       service,
       snapshot: context => service.snapshot(context),
       applyCloudReadback:(owner,remote)=>cloud.applyReadback({ownerAccountId:owner},remote),
+      refreshCloud:owner=>cloud.snapshot({ownerAccountId:owner}),
       territories,
       getBattleSerialViews:input=>serialViews.read(input),
       cloudBattles:{owns:(payload,context)=>cloud.ownsBattle(payload,context),invoke:(name,payload,context)=>cloud.battleCommand(name,payload,context)},

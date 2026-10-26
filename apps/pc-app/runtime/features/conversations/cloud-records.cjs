@@ -86,7 +86,12 @@ class ConversationCloudRecords {
   async initialize(owner,identity){if(this.state(owner)?.initialized)return;
     const rows=await this.local(owner),document=Object.fromEntries(rows),digest=checksum(document);
     this.db.prepare('INSERT OR IGNORE INTO conversation_cloud_archives VALUES(?,?,?,?)').run(owner,digest,JSON.stringify(document),Date.now());
-    await this.pull(owner,identity);const remote=this.cached(owner),owned=new Set(this.services.get('companions')?.listPets(owner)?.map(pet=>pet.petId??pet.id)||[]);
+    // Resolve any uncertain original migration before deriving more additions.
+    // Its action ID, base revisions and serialized changes remain immutable.
+    await this.flushInside(owner,identity);
+    await this.pull(owner,identity);
+    const companions=this.services.get('companions'),ownedIds=companions?.readCloudOwnedPetIds?await companions.readCloudOwnedPetIds(owner):companions?.listPets(owner)?.map(pet=>pet.petId??pet.id)||[];
+    this.current(owner,identity);const remote=this.cached(owner),owned=new Set(ownedIds);
     const additions=[],placements=this.messagePlacements(owner,[...rows.values()],remote,'legacy-local-difference');
     for(const [key,record]of rows){const cloud=remote.get(key),row=record.document,pet=row.pet_id??row.selected_pet_id??(row.scope==='pet'?row.scope_id:null);
       if(cloud){if(cloud.deleted||checksum(cloud.document)!==checksum(row))this.preserve(owner,record,cloud,'legacy-local-difference');continue;}
@@ -106,7 +111,8 @@ class ConversationCloudRecords {
       // the active cloud cache. They must not be silently uploaded on next save.
       for(const source of this.db.prepare('SELECT collection,record_id,local_document FROM conversation_cloud_conflicts WHERE owner_account_id=? AND resolved_at IS NULL').all(owner)){
         if(remote.has(keyOf(source.collection,source.record_id)))continue;
-        const document=JSON.parse(source.local_document),where=['owner_account_id',...primary[source.collection].filter(name=>name!=='owner_account_id')];
+        const document=JSON.parse(source.local_document);if(document===null)continue;
+        const where=['owner_account_id',...primary[source.collection].filter(name=>name!=='owner_account_id')];
         applied+=this.db.prepare(`DELETE FROM ${source.collection} WHERE ${where.map(name=>`${name}=?`).join(' AND ')}`).run(...where.map(name=>document[name])).changes;
       }
       for(const row of remote.values()){
@@ -192,11 +198,12 @@ class ConversationCloudRecords {
   });}
   async importData(owner,data){const {createConversationBackupAdapter}=require('./backup.cjs');createConversationBackupAdapter(this.services).validate(data,owner);
     return this.serial(owner,async()=>{
-      const identity=this.identity(owner);await this.initialize(owner,identity);await this.pull(owner,identity);
+      const identity=this.identity(owner);
+      this.db.prepare('INSERT OR IGNORE INTO conversation_cloud_archives VALUES(?,?,?,?)').run(owner,checksum(data),JSON.stringify(data),Date.now());
+      await this.initialize(owner,identity);await this.flushInside(owner,identity);await this.pull(owner,identity);
       const {recordId}=await this.contract,remote=this.cached(owner),reason=`backup-import:${checksum(data)}`,additions=[];
       const rows=Object.entries(data.tables).flatMap(([collection,items])=>items.map(document=>({collection,id:recordId(collection,document),document})));
       const placements=this.messagePlacements(owner,rows,remote,reason);
-      this.db.prepare('INSERT OR IGNORE INTO conversation_cloud_archives VALUES(?,?,?,?)').run(owner,checksum(data),JSON.stringify(data),Date.now());
       for(const [collection,rows]of Object.entries(data.tables))for(const document of rows){const id=recordId(collection,document),prior=remote.get(keyOf(collection,id));
         if(prior){if(prior.deleted||checksum(prior.document)!==checksum(document))this.preserve(owner,{collection,id,document},prior,reason);}
         else {const placement=collection==='conversation_messages'?placements.get(id):undefined;if(placement!==null)additions.push({collection,id,baseRevision:0,document,...placement});}

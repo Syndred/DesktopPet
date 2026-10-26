@@ -92,6 +92,14 @@ function AccountDetails({ user, session, refreshSession }: { user: AccountUser; 
     : !settings ? "本机存档有待同步差异，请查看同步设置或导出备份。"
     : settings.document.sync.enabled ? "本机有待同步差异，可立即同步或导出备份。"
     : "本机存档有待同步差异，存档同步已关闭。可预览云端存档或导出备份；保留合并后仍可能有差异。";
+  const authorityLabel = sync?.status === 'partial' ? '部分数据待确认' : sync?.status === 'blocked' ? '云端权限待处理'
+    : sync?.status === 'offline' ? '暂时离线' : sync?.status === 'ready' ? '云端数据已读取' : '等待云端数据';
+  const authorityDetail = sync?.status === 'partial' ? '各类数据分别读取，请查看下方状态。'
+    : sync?.status === 'blocked' ? '权限校验未通过，已有内容仍保留。'
+    : sync?.status === 'offline' ? '当前显示已有缓存，联网后会重新读取。'
+    : sync?.status === 'ready' ? `最近确认：${dateText(sync.lastVerifiedAt)}` : '伙伴和游戏进度由云端保存；本机保留显示缓存。';
+  const domainLabels: Record<string,string> = {companions:'伙伴资料',garden:'菜园与库存',conversations:'聊天与记忆'};
+  const domainStatusLabels: Record<string,string> = {ready:'已读取',pending:'待确认',partial:'部分可用',blocked:'权限待处理',offline:'连接失败',conflict:'记录有冲突',error:'读取失败'};
   return <div className="accounts ac-page">
     <header className="ac-page-heading"><p className="ac-eyebrow">设置 / 账号与云端</p><div className="ac-title-row"><h1>把每一段陪伴，好好保存。</h1>{session.scenario && <AccountStatus icon={FlaskConical} label="测试场景" detail={`隔离测试 · ${session.scenario.id}`} iconOnly />}</div></header>
     <div className="ac-settings-layout"><SettingsNavigation /><AnimatedList className="ac-account-grid">
@@ -117,15 +125,20 @@ function AccountDetails({ user, session, refreshSession }: { user: AccountUser; 
           <div className="ac-save-status" aria-label="存档状态" data-cloud-revision={sync?.cloudRevision} data-local-changed={sync?.localChanged}>
             {user.provider === "local"
               ? <AccountStatus icon={HardDrive} label="本机存档" detail="存档保存在这台电脑，可导出备份。" />
-              : authoritative ? <AccountStatus icon={sync?.lastError ? CloudOff : sync?.running ? RefreshCw : CloudCheck}
-                label={sync?.running ? '正在读取云端数据' : sync?.lastError ? '暂时离线' : sync?.lastVerifiedAt ? '云端数据已读取' : '等待云端数据'}
-                detail={sync?.lastError ? '当前显示已有缓存，联网后会重新读取。' : sync?.lastVerifiedAt ? `最近确认：${dateText(sync.lastVerifiedAt)}` : '伙伴和游戏进度由云端保存；本机保留显示缓存。'}
-                tone={sync?.lastError ? 'warning' : sync?.lastVerifiedAt ? 'success' : 'muted'} />
+              : authoritative ? <AccountStatus icon={sync?.running ? RefreshCw : sync?.status === 'offline' ? CloudOff : sync?.status === 'ready' ? CloudCheck : Cloud}
+                label={sync?.running ? '正在读取云端数据' : authorityLabel} detail={authorityDetail}
+                tone={sync?.status === 'ready' ? 'success' : sync?.status && sync.status !== 'waiting' ? 'warning' : 'muted'} />
               : <AccountStatus icon={sync?.lastError ? CloudOff : sync?.running ? RefreshCw : sync?.localChanged || sync?.remoteChanged ? Cloud : CloudCheck}
                 label={sync?.running ? "正在同步" : sync?.remoteChanged ? "云端有更新" : sync?.lastError ? "同步未完成" : sync?.unverifiedLocal || sync?.privacyRedactions ? "部分内容已同步" : sync?.localChanged || sync?.pending ? "待同步" : sync?.lastVerifiedAt ? sync.lastCloudCheckedAt ? "已同步" : "本机已确认" : "尚未同步"}
                 detail={sync?.running ? "正在核对两端存档，本机改动会继续保留。" : sync?.remoteChanged ? "云端有较新存档；本机有改动或待处理记录时，请先预览再决定恢复。" : sync?.lastError ? "暂时无法同步，存档仍保存在本机。" : sync?.localChanged ? localDifferenceDetail : sync?.lastVerifiedAt ? `上次同步：${dateText(sync.lastVerifiedAt)}` : "本机备份可随时导出。"}
                 tone={sync?.lastError || sync?.remoteChanged || sync?.unverifiedLocal || sync?.privacyRedactions ? "warning" : sync?.lastVerifiedAt && !sync?.localChanged && !sync?.pending && !sync?.running && sync.lastCloudCheckedAt ? "success" : "muted"} />}
-            {Boolean(sync?.pending) && <AccountStatus icon={RefreshCw} label={`待同步 ${sync?.pending}`} detail="联网后可重试，当前记录仍保存在本机。" />}
+            {authoritative && sync?.domainStates?.map(domain => <AccountStatus key={domain.domain} icon={domain.status === 'ready' ? CloudCheck : AlertCircle}
+              label={`${domainLabels[domain.domain] || domain.domain}：${domainStatusLabels[domain.status] || '待确认'}`}
+              detail={domain.status === 'ready' ? '已独立读取云端数据。' : domain.status === 'partial' ? '伙伴资料已读取，编号暂不可读取。'
+                : domain.category === 'permission' || domain.status === 'blocked' ? '权限校验未通过，其他数据可继续使用。'
+                : domain.status === 'pending' ? '原请求和内容已保留，等待确认。' : '已有内容已保留，恢复后可重新读取。'}
+              tone={domain.status === 'ready' ? 'success' : 'warning'} />)}
+            {Boolean(sync?.pending) && <AccountStatus icon={RefreshCw} label={`${authoritative ? '待确认' : '待同步'} ${sync?.pending}`} detail="联网后可重试，当前记录仍保存在本机。" />}
             {Boolean(sync?.conflicts) && <AccountStatus icon={AlertCircle} label={authoritative ? '个别记录有冲突' : '版本冲突'} detail={authoritative ? '原修改已保留，其他伙伴与游戏功能可继续使用。' : '先预览云端存档，再决定是否恢复。'} tone="warning" />}
             {authoritative && Boolean(sync?.preservedLocalRecords) && <AccountStatus icon={HardDrive} label={`已保留 ${sync?.preservedLocalRecords} 条本机记录`} detail="原内容已单独保留，请逐条选择使用的版本。" />}
             {Boolean(sync?.unverifiedLocal) && <AccountStatus icon={AlertCircle} label="原始进度已保留" detail="本机历史进度仍需核验来源，可同步的内容会独立保存。" tone="warning" />}

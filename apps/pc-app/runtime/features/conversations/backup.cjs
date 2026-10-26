@@ -170,6 +170,6 @@ function createConversationBackupAdapter(services) {
     } catch (error) { db.exec(`ROLLBACK TO SAVEPOINT ${savepoint}`); db.exec(`RELEASE SAVEPOINT ${savepoint}`); throw error; }
   }
   return { id:'conversations',version:1,tables:[...names,'conversation_legacy_imports','conversation_cloud_state','conversation_cloud_records',
-    'conversation_cloud_outbox','conversation_cloud_archives','conversation_cloud_conflicts'],export:exportData,validate,restore };
+    'conversation_cloud_outbox'],export:exportData,validate,restore };
 }
 module.exports = { createConversationBackupAdapter, mergeOrder };

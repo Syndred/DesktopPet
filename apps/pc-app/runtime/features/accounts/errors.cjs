@@ -20,4 +20,10 @@ function resultError(error) {
   };
 }
 
-module.exports = { AccountError, invariant, resultError };
+function cloudErrorCategory(code) {
+  if(/AUTH|SESSION|DEVICE|OWNER|FORBIDDEN|SCOPE|PERMISSION|LOGIN/.test(code||''))return 'permission';
+  if(/CONFLICT|REVIEW_REQUIRED|ACTION_ID/.test(code||''))return 'conflict';
+  if(/^(CLOUD_UNAVAILABLE|RECORD_UNAVAILABLE|COMPANION_CLOUD_UNAVAILABLE|NETWORK_ERROR|FETCH_ERROR|TIMEOUT|ETIMEDOUT|ECONNRESET|ECONNREFUSED)$/.test(code||''))return 'network';
+  return 'error';
+}
+module.exports = { AccountError, invariant, resultError, cloudErrorCategory };

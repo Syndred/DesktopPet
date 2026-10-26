@@ -5,6 +5,7 @@ const { migrations } = require("./schema.cjs");
 const { createElectronSecretCodec } = require("./secrets.cjs");
 const { createConversationBackupAdapter } = require("./backup.cjs");
 const { ConversationCloudRecords } = require('./cloud-records.cjs');
+const { createConversationPreservationBackupAdapter } = require('./preservation-backup.cjs');
 
 const commands = ["snapshot", "select", "history", "profile.save", "connection.save", "connection.test", "connection.cancel",
   "memory.save", "memory.delete", "send", "retry", "cancel", "history.clear", "legacy.preview", "legacy.import"];
@@ -72,9 +73,10 @@ function register(services) {
     setChatActivity: (value) => services.events.emit("conversations:activity", value) });
   const hasActive = owner => [...feature.service.active.values()].some(active => active.session.owner === owner);
   cloudRecords = new ConversationCloudRecords(services,{hasActive});
+  const backups=services.get('backups')||services.get('accounts')?.backups;
+  const removePreservationBackup=backups?.register?.(createConversationPreservationBackupAdapter(services));
   const refreshCloud = async owner => {
     if(!cloudRecords.enabled(owner))return;
-    if(!cloudRecords.state(owner)?.initialized)await services.get('companions')?.refreshCloud?.(owner);
     const result=await cloudRecords.refresh(owner);
     if(result?.changed)services.events.emit('conversations:changed',{accountId:owner,type:'changed'});
     return result;
@@ -105,7 +107,7 @@ function register(services) {
     }catch(error){return {ok:false,code:error.code==='SESSION_CHANGED'?'SESSION_CHANGED':error.code==='RECORD_CONFLICT'?'RECORD_CONFLICT':'CLOUD_SAVE_PENDING',
       message:error.code==='RECORD_CONFLICT'?'这条记录已在另一端更新，本机修改已保留。其他功能可继续使用。':'云端聊天记录暂未确认，原内容已保留，请联网后重试。'};}
   }])), dispose() {
-    clearInterval(sessionWatch); for (const off of unsubscribers) off(); feature.dispose();
+    clearInterval(sessionWatch); for (const off of unsubscribers) off(); removePreservationBackup?.();feature.dispose();
   } };
 }
 module.exports = { id: "conversations", commands, migrations, register, createConversationsFeature,

@@ -32,6 +32,15 @@ class DeviceDesktop {
       this.db.prepare('INSERT INTO companion_device_actions VALUES(?,?,?,?,?)').run(owner,input.actionId,digest,JSON.stringify(result),Date.now());return result;
     });
   }
+  migrateIntent(owner,input){
+    this.capture(owner);
+    const prior=this.db.prepare('SELECT revision FROM companion_device_desktop WHERE owner_account_id=? AND pet_id=?').get(owner,input.petId);
+    const latest=this.db.prepare("SELECT result FROM companion_device_actions WHERE owner_account_id=? AND json_extract(result,'$.data.pet.petId')=? ORDER BY created_at DESC,rowid DESC LIMIT 1").get(owner,input.petId);
+    if(prior?.revision>0&&!JSON.parse(latest?.result||'null')?.legacyDesktopMigration)return {applied:false,reason:'newer-device-settings'};
+    const result=this.update(owner,input);
+    this.db.prepare('UPDATE companion_device_actions SET result=? WHERE owner_account_id=? AND action_id=?').run(JSON.stringify({...result,legacyDesktopMigration:true}),owner,input.actionId);
+    return {applied:true,actionId:input.actionId};
+  }
   recallAll(owner,actionId){return transaction(this.db,()=>{this.capture(owner);const digest=checksum({command:'recall-all'}),prior=this.db.prepare('SELECT * FROM companion_device_actions WHERE owner_account_id=? AND action_id=?').get(owner,actionId);
     if(prior){if(prior.input_hash!==digest)throw Object.assign(new Error('操作编号已用于其他设置。'),{code:'ACTION_ID_REUSED'});return {...JSON.parse(prior.result),duplicate:true};}
     const pets=this.listPets(owner).map(pet=>this.project(pet)).filter(pet=>pet.desktop.visible);

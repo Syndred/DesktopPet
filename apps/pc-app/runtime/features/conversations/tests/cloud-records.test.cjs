@@ -36,6 +36,85 @@ function client(remote){
   const cloud=new ConversationCloudRecords(services);return {db,store,cloud,switchOwner:()=>{current='other-owner';accounts.epoch++;},close:()=>db.close()};
 }
 
+for(const boundary of ['before-commit','lost-acknowledgement'])test(`LOCAL SQLite and protocol double: initial migration resumes its original request after ${boundary}`,async()=>{
+  const remote=server(),invoke=remote.invoke.bind(remote),attempts=[];let failOnce=true;
+  remote.invoke=async(endpoint,body)=>{
+    if(body.op!=='write')return invoke(endpoint,body);
+    attempts.push(structuredClone(body));
+    if(failOnce){failOnce=false;if(boundary==='lost-acknowledgement')await invoke(endpoint,body);throw Object.assign(new Error('controlled migration interruption'),{code:'RECORD_UNAVAILABLE'});}
+    return invoke(endpoint,body);
+  };
+  const a=client(remote);try{
+    a.store.saveProfile(owner,pet,profile('迁移原文'),0);
+    await assert.rejects(a.cloud.refresh(owner),{code:'RECORD_UNAVAILABLE'});
+    const original={...a.db.prepare('SELECT * FROM conversation_cloud_outbox').get()};
+    await a.cloud.refresh(owner);
+    assert.equal(a.cloud.status(owner).initialized,true);
+    assert.equal(a.cloud.status(owner).preservedLocalRecords,0,'the same original content is not a conflict');
+    assert.equal(a.db.prepare('SELECT count(*) n FROM conversation_cloud_outbox').get().n,1,'migration creates one durable action');
+    assert.equal(a.db.prepare('SELECT changes_json FROM conversation_cloud_outbox').get().changes_json,original.changes_json);
+    assert.deepEqual(attempts.map(body=>body.actionId),[original.action_id,original.action_id]);
+    assert.deepEqual(attempts[0],attempts[1]);assert.equal(remote.rows.size,1);
+    assert.equal([...remote.rows.values()][0].revision,1);assert.equal(a.store.getProfile(owner,pet).persona,'迁移原文');
+  }finally{a.close();}
+});
+
+test('LOCAL SQLite and protocol double: initial migration uses independent cloud ownership without replaying companion commands or trusting the local pet cache',async()=>{
+  const remote=server(),a=client(remote);try{
+    const get=a.cloud.services.get;let reads=0;
+    a.cloud.services.get=name=>name==='companions'?{
+      readCloudOwnedPetIds:async who=>{assert.equal(who,owner);reads++;return [pet];},
+      refreshCloud:()=>{throw new Error('must not replay unrelated companion commands');},
+      listPets:()=>{throw new Error('must not use a conflicting local cache as ownership authority');}
+    }:get(name);
+    a.store.saveProfile(owner,pet,profile('独立迁移原文'),0);await a.cloud.refresh(owner);
+    assert.equal(reads,1);assert.equal(a.cloud.status(owner).initialized,true);assert.equal(remote.rows.size,1);
+  }finally{a.close();}
+});
+
+test('LOCAL SQLite and protocol double: repeating an interrupted backup import confirms its original action before planning additions',async()=>{
+  const remote=server(),a=client(remote),source=client(remote);try{
+    await a.cloud.refresh(owner);source.store.saveProfile(owner,pet,profile('备份里的原文'),0);
+    const data=require('../backup.cjs').createConversationBackupAdapter({db:source.db}).export(owner);
+    remote.loseReply();await assert.rejects(a.cloud.importData(owner,data),{code:'RECORD_UNAVAILABLE'});
+    const original={...a.db.prepare('SELECT * FROM conversation_cloud_outbox').get()};
+    await a.cloud.importData(owner,data);
+    assert.equal(a.db.prepare('SELECT count(*) n FROM conversation_cloud_outbox').get().n,1);
+    assert.equal(a.cloud.status(owner).preservedLocalRecords,0);
+    assert.equal(a.db.prepare('SELECT changes_json FROM conversation_cloud_outbox').get().changes_json,original.changes_json);
+    const writes=remote.calls.filter(body=>body.op==='write');assert.deepEqual(writes.map(body=>body.actionId),[original.action_id,original.action_id]);
+    assert.equal(a.store.getProfile(owner,pet).persona,'备份里的原文');assert.equal([...remote.rows.values()][0].revision,1);
+  }finally{a.close();source.close();}
+});
+
+test('LOCAL SQLite and protocol double: preserved originals survive backup export and restore without credentials or cloud request replay',async()=>{
+  const remote=server(),a=client(remote),b=client(remote),destination=client(remote);try{
+    a.store.saveProfile(owner,pet,profile('云端正式人设'),0);await a.cloud.refresh(owner);
+    b.store.saveProfile(owner,pet,profile('必须找回的本机原文'),0);await b.cloud.refresh(owner);
+    const {createConversationBackupAdapter}=require('../backup.cjs');
+    const {createConversationPreservationBackupAdapter}=require('../preservation-backup.cjs');
+    migrate(b.db,'accounts',require('../../accounts/schema.cjs').migrations);
+    b.store.saveConnection(owner,null,{provider:'openai_compatible',baseUrl:'https://example.invalid/v1',model:'fixture',contextChars:24000,maxOutputTokens:512,encryptedKey:'DEVICE_SECRET_MUST_STAY_LOCAL'},0);
+    const canonical=createConversationBackupAdapter({db:b.db}),archive=createConversationPreservationBackupAdapter({db:b.db});
+    const {BackupManager}=require('../../accounts/backups.cjs');
+    const manager=new BackupManager({db:b.db,directory:process.cwd(),getIdentity:()=>({provider:'runtime',subject_id:owner})});manager.register(canonical);manager.register(archive);
+    const snapshot=manager.snapshot(owner);manager.validate(snapshot,owner);
+    const exported={current:snapshot.data.modules.conversations.data,preserved:snapshot.data.modules['conversation-preservation'].data};
+    assert.equal(exported.current.tables.conversation_profiles[0].persona,'云端正式人设');
+    assert.match(JSON.stringify(exported),/必须找回的本机原文/);
+    assert.ok(!JSON.stringify(snapshot).includes('DEVICE_SECRET_MUST_STAY_LOCAL'));
+    assert.equal(exported.preserved.conflicts.length,1);assert.ok(exported.preserved.archives.length>0);
+    const restored=createConversationPreservationBackupAdapter({db:destination.db});
+    restored.restore(owner,exported.preserved,'merge');restored.restore(owner,exported.preserved,'merge');
+    assert.deepEqual(restored.export(owner),exported.preserved,'restoring an archive twice preserves its original identity and order');
+    assert.equal(destination.cloud.listPreserved(owner)[0].local.persona,'必须找回的本机原文');
+    assert.equal(destination.db.prepare('SELECT count(*) n FROM conversation_cloud_outbox').get().n,0,'restoring preservation cannot replay business writes');
+    assert.throws(()=>restored.validate(exported.preserved,'another-owner'));
+    const injected=structuredClone(exported.preserved);injected.conflicts[0].local.encrypted_key='DO_NOT_EXPORT';
+    assert.throws(()=>restored.validate(injected,owner));
+  }finally{a.close();b.close();destination.close();}
+});
+
 test('LOCAL SQLite and protocol double: imported prefixes and existing tails have the same original order on both devices',async()=>{
   const remote=server(),a=client(remote),b=client(remote);try{
     const config={provider:'openai-compatible',model:'fixture'};

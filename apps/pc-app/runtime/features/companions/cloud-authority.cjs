@@ -8,7 +8,8 @@ const HEAD='companions:verified-head',INTENT='companions-cloud-command';
  * account_actions holds local command intents and verified receipt metadata.
  * No second remote account, pet, inventory, reward or save store is introduced. */
 class CloudCompanionAuthority {
-  constructor(services,service,backup,changed,serialCache=null){this.services=services;this.service=service;this.backup=backup;this.changed=changed;this.serialCache=serialCache;this.db=services.db;this.queues=new Map();this.states=new Map();}
+  constructor(services,service,backup,changed,serialCache=null,deviceDesktop=null){this.services=services;this.service=service;this.backup=backup;this.changed=changed;this.serialCache=serialCache;this.deviceDesktop=deviceDesktop;this.db=services.db;this.queues=new Map();this.states=new Map();this.notifications=new Map();}
+  notify(owner,dataChanged=false){const signature=checksum(this.state(owner));if(dataChanged||this.notifications.get(owner)!==signature){this.notifications.set(owner,signature);this.changed(owner);}}
   accounts(){return this.services.get('accounts');}
   enabled(owner){const session=this.accounts()?.privateSession?.();return session?.authKind==='supabase'&&session.ownerAccountId===owner;}
   current(owner){if(this.services.session.getOwnerAccountId()!==owner||!this.enabled(owner))fail('SESSION_CHANGED','账号已切换，请重新操作。');}
@@ -23,6 +24,18 @@ class CloudCompanionAuthority {
       if(error.code==='SYNC_CONFLICT')fail('COMPANION_SNAPSHOT_RETRY','伙伴状态正在更新，请重试读取。');
       throw error;
     }
+  }
+  async readOwnedPetIds(owner){
+    const remote=await this.readSnapshot(owner);
+    if(remote?.authority!=='live'||remote.ownerAccountId!==owner||!Number.isSafeInteger(remote.revision)||remote.revision<0)fail('CLOUD_RECEIPT_MISMATCH','云端伙伴归属不一致。');
+    if(!remote.envelope)return [];
+    const {checksum:digest,...body}=remote.envelope;
+    if(remote.envelope.ownerAccountId!==owner||remote.envelope.format!=='lingjing-account-save'||remote.envelope.version!==1||remote.envelope.provenance?.mode!=='live'||checksum(body)!==digest||remote.module?.version!==1)fail('CLOUD_RECEIPT_MISMATCH','云端伙伴内容不一致。');
+    this.backup.validate(remote.module.data,owner);
+    if(companionDataChecksum(companionUnit(remote.envelope,owner,Date.now()))!==companionDataChecksum(remote.module.data))fail('CLOUD_RECEIPT_MISMATCH','云端伙伴内容不一致。');
+    // This independent authorization read never replays an unrelated command
+    // or overwrites a conflicting local business cache.
+    return remote.module.data.tables.companion_pets.map(row=>row.pet_id);
   }
   async serial(owner,work){
     const previous=this.queues.get(owner)||Promise.resolve();
@@ -94,16 +107,17 @@ class CloudCompanionAuthority {
       const info={cloudRevision:remote.revision,checksum:digest,verifiedAt:new Date().toISOString(),sharedSavePending};
       this.db.prepare('INSERT INTO account_actions(owner_account_id,action_id,kind,input_hash,result,created_at) VALUES(?,?,?,?,?,?) ON CONFLICT(owner_account_id,action_id) DO UPDATE SET input_hash=excluded.input_hash,result=excluded.result,created_at=excluded.created_at').run(owner,HEAD,'companions-cloud-readback',incomingDigest,JSON.stringify(info),info.verifiedAt);
     });
-    this.states.set(owner,{mode:'cloud',status:'ready',pending:this.pending(owner).length,cloudRevision:remote.revision,sharedSavePending,sharedSaveContext});
+    this.states.set(owner,{mode:'cloud',status:'ready',pending:this.pending(owner).length,cloudRevision:remote.revision,sharedSavePending,sharedSaveContext,
+      metadataError:remote.serialRegistryError||(remote.serialRegistry!==undefined?null:this.states.get(owner)?.metadataError||null)});
     const serialChanged=remote.serialRegistry===undefined?false:this.serialCache?.accept(owner,remote.serialRegistry,incoming.tables.companion_pets,remote.revision);
-    if(localDigest!==incomingDigest||serialChanged)this.changed(owner);
+    this.notify(owner,localDigest!==incomingDigest||serialChanged);
   }
   async refreshInside(owner,{resume=true}={}){
     this.current(owner);
     if(resume)for(let index=0;index<16;index++){const intent=this.pending(owner)[0];if(!intent)break;await this.perform(owner,intent.id,intent);}
     const remote=await this.readSnapshot(owner);this.apply(owner,remote);return remote;
   }
-  async refresh(owner){return this.serial(owner,async()=>{try{return await this.refreshInside(owner);}catch(error){this.states.set(owner,{...this.state(owner),status:['CLOUD_LOCAL_CONFLICT','CLOUD_HISTORY_CONFLICT','COMPANION_SOURCE_REVIEW_REQUIRED'].includes(error.code)?'conflict':'offline',error:error.code,message:error.message,pending:this.pending(owner).length});throw error;}});}
+  async refresh(owner,options){return this.serial(owner,async()=>{try{return await this.refreshInside(owner,options);}catch(error){this.states.set(owner,{...this.state(owner),status:['CLOUD_LOCAL_CONFLICT','CLOUD_HISTORY_CONFLICT','COMPANION_SOURCE_REVIEW_REQUIRED'].includes(error.code)?'conflict':'offline',error:error.code,message:error.message,pending:this.pending(owner).length});this.notify(owner);throw error;}});}
   async perform(owner,id,intent){
     try{
       const latest=JSON.parse(this.row(owner,id).result);if(latest.status==='superseded')return{ok:true,data:{superseded:true},duplicate:true};intent=latest;
@@ -115,6 +129,7 @@ class CloudCompanionAuthority {
         if(!row||row.owner_account_id!==owner||row.operation!==intent.command||row.request_hash!==checksum(intent.input)||!result?.ok)fail('CLOUD_RECEIPT_MISMATCH','伙伴原操作回执不一致。');
         receipt={...receipt,result,duplicate:true};
       }else{
+        if(intent.command==='desktop'&&this.deviceDesktop)return this.retireDesktop(owner,id,intent,null);
         if(JSON.parse(this.row(owner,id).result).status==='superseded')return{ok:true,data:{superseded:true},duplicate:true};
         if(intent.baseRevision===null||intent.baseRevision===undefined){
           const prepared=await this.refreshInside(owner,{resume:false});
@@ -124,19 +139,34 @@ class CloudCompanionAuthority {
         intent={...intent,sentAt:intent.sentAt||new Date().toISOString()};this.setIntent(owner,id,intent);
         receipt=await this.invoke(owner,'companions-sync',{op:'command',command:intent.command,input:intent.input,baseRevision:intent.baseRevision});
       }
+      if(intent.command==='desktop'&&this.deviceDesktop){
+        const {checksum:digest,...body}=receipt.envelope||{};
+        if(receipt.actionId!==id||receipt.kind!=='authority'||receipt.envelope?.ownerAccountId!==owner||digest!==receipt.checksum||checksum(body)!==digest)fail('CLOUD_RECEIPT_MISMATCH','原桌面请求的云端回执不一致。');
+        return this.retireDesktop(owner,id,intent,receipt);
+      }
       if(receipt?.actionId!==id||receipt.kind!=='authority'||!receipt.result?.ok)fail('CLOUD_RECEIPT_MISMATCH','伙伴操作没有匹配的云端回执。');
       const readback=await this.invoke(owner,'lingjing-save',{op:'read',actionId:id});
       const {checksum:readDigest,...readBody}=readback?.envelope||{};
       if(!readback||readback.revision!==receipt.revision||readback.checksum!==receipt.checksum||readback.envelope?.ownerAccountId!==owner||readDigest!==readback.checksum||checksum(readBody)!==readDigest)fail('CLOUD_RECEIPT_MISMATCH','伙伴操作读回尚未确认，请重试原请求。');
       const currentHead=await this.readSnapshot(owner);this.apply(owner,currentHead);
       const result={...receipt.result,duplicate:Boolean(receipt.duplicate||receipt.result.duplicate),cloud:{authority:'live',actionId:id,revision:receipt.revision,checksum:receipt.checksum,sharedSavePending:this.state(owner).sharedSavePending}};
-      this.setIntent(owner,id,{...intent,status:'verified',result,verifiedAt:new Date().toISOString()});this.states.set(owner,{...this.state(owner),pending:this.pending(owner).length});this.changed(owner);
+      this.setIntent(owner,id,{...intent,status:'verified',result,verifiedAt:new Date().toISOString()});this.states.set(owner,{...this.state(owner),pending:this.pending(owner).length});this.notify(owner);
       return result;
     }catch(error){
       const terminal=['SYNC_CONFLICT','REVISION_CONFLICT','ACTION_ID_REUSED','ACTION_ID_CONFLICT','INVALID_INPUT','INVALID_REQUEST','PET_NOT_FOUND','TEMPLATE_NOT_FOUND','RESOURCE_UNAVAILABLE','COMPANION_LIMIT','RATE_LIMITED'].includes(error.code);
       this.setIntent(owner,id,{...intent,status:terminal?'conflict':'retry',lastError:error.code||'CLOUD_UNAVAILABLE',message:error.message});
-      this.states.set(owner,{...this.state(owner),status:terminal||['CLOUD_LOCAL_CONFLICT','CLOUD_HISTORY_CONFLICT','COMPANION_SOURCE_REVIEW_REQUIRED'].includes(error.code)?'conflict':'offline',error:error.code,message:error.message,pending:this.pending(owner).length});this.changed(owner);throw error;
+      this.states.set(owner,{...this.state(owner),status:terminal||['CLOUD_LOCAL_CONFLICT','CLOUD_HISTORY_CONFLICT','COMPANION_SOURCE_REVIEW_REQUIRED'].includes(error.code)?'conflict':'offline',error:error.code,message:error.message,pending:this.pending(owner).length});this.notify(owner);throw error;
     }
+  }
+  retireDesktop(owner,id,intent,receipt){
+    // The exact original receipt has just been checked. Keep the original
+    // intent and its bytes as history; never resend this device preference as
+    // a cloud business command or overwrite a newer device edit.
+    const migration=this.deviceDesktop.migrateIntent(owner,intent.input);
+    this.setIntent(owner,id,{...intent,status:'device-local',deviceMigration:{previousStatus:intent.status,at:new Date().toISOString(),...migration,
+      receipt:receipt?{actionId:receipt.actionId,revision:receipt.revision,checksum:receipt.checksum}:null}});
+    this.states.set(owner,{...this.state(owner),pending:this.pending(owner).length});this.notify(owner,true);
+    return {ok:true,data:{deviceLocal:true,applied:migration.applied},duplicate:Boolean(receipt)};
   }
   async runUntil(owner,id){
     for(let index=0;index<32;index++){
@@ -164,7 +194,7 @@ class CloudCompanionAuthority {
       const intent={status:'pending',command,input:payload,baseRevision:null,nativePosition,createdAt:new Date().toISOString()};
       this.db.prepare('INSERT INTO account_actions(owner_account_id,action_id,kind,input_hash,result,created_at) VALUES(?,?,?,?,?,?)').run(owner,id,INTENT,hash,JSON.stringify(intent),intent.createdAt);
     });
-    this.states.set(owner,{...this.state(owner),status:'pending'});this.changed(owner);
+    this.states.set(owner,{...this.state(owner),status:'pending'});this.notify(owner);
     // The durable intent above exists even if this process closes or the first
     // network read fails. Once sent, its original input/base are never rebased.
     return this.serial(owner,()=>this.runUntil(owner,id));

@@ -33,6 +33,7 @@ module.exports = {
     }
     const cloud=new CloudCompanionAuthority(services,service,backupAdapter,changed,serialCache);
     devices=new DeviceDesktop({db:services.db,getPet:(owner,id)=>service.requirePet(owner,id),listPets:owner=>service.snapshot(owner).data.pets,enabled:owner=>cloud.enabled(owner)});
+    cloud.deviceDesktop=devices;
     const initialOwner=services.session.getOwnerAccountId();if(initialOwner)devices.capture(initialOwner);
     const ownerMigration = createCompanionOwnerMigration(services, changed);
     function upgradeBuiltins(ownerAccountId) {
@@ -62,7 +63,9 @@ module.exports = {
       // Accounts owns registration/legacy-envelope normalization and transport.
       backupAdapter,
       isCloudOwner:owner=>cloud.enabled(owner),
-      refreshCloud:owner=>{devices.capture(owner);return cloud.refresh(owner);},
+      refreshCloud:(owner,options)=>{devices.capture(owner);return cloud.refresh(owner,options);},
+      cloudStatus:owner=>cloud.state(owner),
+      readCloudOwnedPetIds:owner=>cloud.readOwnedPetIds(owner),
       applyCloudReadback:(owner,remote)=>cloud.apply(owner,remote),
       persistDesktopPosition(owner,input){const result=devices.update(owner,input);changed(owner);return result;},
       hasPendingRecallAll(){return false;},
@@ -148,7 +151,7 @@ module.exports = {
           const switched = () => ({ ok: false, code: 'SESSION_CHANGED', message: '账号已切换，请重新打开此页面。' });
           if (!current()) return switched();
           ensureImported(context.ownerAccountId);
-          if (cloud.enabled(context.ownerAccountId) && !cloud.busy(context.ownerAccountId)) await api.refreshCloud(context.ownerAccountId).catch(() => {});
+          if (cloud.enabled(context.ownerAccountId) && !cloud.busy(context.ownerAccountId)) await api.refreshCloud(context.ownerAccountId,{resume:false}).catch(() => {});
           if (!current()) return switched();
           desktop?.sync();
           const result = service.readSnapshot(context.ownerAccountId);
@@ -158,7 +161,7 @@ module.exports = {
           if (cloud.enabled(context.ownerAccountId)) result.data.sync = cloud.state(context.ownerAccountId);
           return result;
         },
-        async get(payload, context) { await services.get('resources')?.ready;if(cloud.enabled(context.ownerAccountId)&&!cloud.busy(context.ownerAccountId))await cloud.refresh(context.ownerAccountId).catch(()=>{});const pet = api.getPet(context.ownerAccountId, payload.petId); return { ok: true, data: pet, revision: pet.revision }; },
+        async get(payload, context) { await services.get('resources')?.ready;if(cloud.enabled(context.ownerAccountId)&&!cloud.busy(context.ownerAccountId))await cloud.refresh(context.ownerAccountId,{resume:false}).catch(()=>{});const pet = api.getPet(context.ownerAccountId, payload.petId); return { ok: true, data: pet, revision: pet.revision }; },
         combatProfile(payload, context) { const data = api.getCombatProfile(context.ownerAccountId, payload.petId); return { ok: true, data, revision: service.requirePet(context.ownerAccountId, payload.petId).revision }; },
         identity(payload, context) { const data = api.getDisplayIdentity(context.ownerAccountId, payload.petId); return { ok: true, data, revision: service.requirePet(context.ownerAccountId, payload.petId).revision }; },
         desktopInput(payload, context) {

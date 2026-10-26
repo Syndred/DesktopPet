@@ -1,7 +1,7 @@
 const { randomUUID } = require("node:crypto");
 const { join } = require("node:path");
 const { existsSync } = require("node:fs");
-const { AccountError, invariant } = require("./errors.cjs");
+const { AccountError, invariant, cloudErrorCategory } = require("./errors.cjs");
 const { transaction, checksum, accountName, username, password, hashPassword, verifyPassword, actionId, publicIdentity } = require("./util.cjs");
 const { defaultSettings, validateSettings } = require("./settings.cjs");
 const { importLegacy } = require("./legacy.cjs");
@@ -9,6 +9,13 @@ const { BackupManager } = require("./backups.cjs");
 const { AccountSync } = require("./sync.cjs");
 const { SessionVault } = require("./vault.cjs");
 const { assertQaDatabase, publicScenario, qaRemoteBoundary, qaHostBoundary } = require("./qa-scenario.cjs");
+
+function domainObservation(domain,value,error,checkedAt){
+  const code=error||value?.error||value?.metadataError||null,category=code?cloudErrorCategory(code):null;
+  return {domain,checkedAt,error:code,category,pending:value?.pending||0,
+    status:code?(value?.metadataError&&!error?'partial':category==='permission'?'blocked':category==='network'?'offline':category==='conflict'?'conflict':'error')
+      :value?.initialized===false||value?.pending||value?.status==='cached'?'pending':'ready'};
+}
 
 class AccountsService {
   constructor({ services, remote, host, qaScenario = null }) {
@@ -49,25 +56,37 @@ class AccountsService {
     const notify=()=>{if(active())this.services.events?.emit('accounts:sync-changed',{ownerAccountId:owner});};
     this.automaticSyncRunning=true;
     try{
-      const results=await Promise.allSettled([
-        this.services.get('companions')?.refreshCloud?.(owner),
-        this.services.get('conversations')?.refreshCloud?.(owner)
-      ]);
+      const jobs=['companions','garden','conversations'].map(domain=>({domain,service:this.services.get(domain)})).filter(job=>job.service?.refreshCloud);
+      const results=await Promise.allSettled(jobs.map(job=>job.service.refreshCloud(owner)));
       if(!active())return {skipped:true};
+      const checkedAt=new Date().toISOString(),domains=results.map((result,index)=>{
+        const {domain,service}=jobs[index],value=result.status==='fulfilled'?(service.cloudStatus?.(owner)||result.value):null;
+        return domainObservation(domain,value,result.status==='rejected'?(result.reason?.code||'CLOUD_READ_FAILED'):null,checkedAt);
+      });
       const failed=results.find(result=>result.status==='rejected');
-      this.cloudObservations.set(owner,{checkedAt:new Date().toISOString(),error:failed?.reason?.code||null});
+      this.cloudObservations.set(owner,{checkedAt,error:domains.find(domain=>domain.error)?.error||null,domains});
       if(failed&&results.every(result=>result.status==='rejected'))throw failed.reason;
-      return {verified:!failed,records:results[1].status==='fulfilled'?results[1].value:null};
+      const recordIndex=jobs.findIndex(job=>job.domain==='conversations');
+      return {verified:domains.every(domain=>domain.status==='ready'),records:results[recordIndex]?.status==='fulfilled'?results[recordIndex].value:null};
     }finally{this.automaticSyncRunning=false;notify();}
   }
   cloudStatus(owner=this.requireOwner()){
     if(this.current?.authKind!=='supabase')return this.sync.status(owner);
     const observation=this.cloudObservations.get(owner),cache=this.cloudCache.status(owner),records=this.services.get('conversations')?.cloudStatus?.(owner);
     const last=this.db.prepare('SELECT max(verified_at) at FROM account_cloud_readbacks WHERE owner_account_id=?').get(owner)?.at||null;
-    return {mode:'cloud-authority',configured:true,cloudRevision:cache.revision,pending:records?.pending||0,conflicts:records?.conflicts||0,
+    const domainStates=(observation?.domains||cache.domains.map(domain=>({domain:domain.domain,status:'ready',error:null}))).map(domain=>({...domain}));
+    const companion=this.services.get('companions')?.cloudStatus?.(owner);
+    for(const [domain,value]of [['companions',companion],['conversations',records]])if(value){
+      const current=domainObservation(domain,value,null,observation?.checkedAt||null),index=domainStates.findIndex(row=>row.domain===domain);
+      if(index<0)domainStates.push(current);else domainStates[index]=current;
+    }
+    const statuses=domainStates.map(domain=>domain.status),status=!statuses.length?'waiting':statuses.every(value=>value==='ready')?'ready'
+      :statuses.every(value=>value==='offline')?'offline':statuses.every(value=>value==='blocked')?'blocked':'partial';
+    const companionPending=companion?.pending||0;
+    return {mode:'cloud-authority',status,recordsInitialized:Boolean(records?.initialized),configured:true,cloudRevision:cache.revision,pending:(records?.pending||0)+companionPending,conflicts:records?.conflicts||0,
       running:Boolean(this.automaticSyncRunning),localChanged:false,remoteChanged:false,unverifiedLocal:0,privacyRedactions:0,
-      lastVerifiedAt:last,lastCloudCheckedAt:observation?.checkedAt||null,lastError:observation?.error||records?.error||null,
-      preservedLocalRecords:records?.preservedLocalRecords||0,domains:cache.domains};
+      lastVerifiedAt:last,lastCloudCheckedAt:observation?.checkedAt||null,lastError:domainStates.find(domain=>domain.error)?.error||null,
+      preservedLocalRecords:records?.preservedLocalRecords||0,domains:cache.domains,domainStates};
   }
   identity(owner) { return this.db.prepare("SELECT * FROM account_identities WHERE owner_account_id=?").get(owner); }
   getCurrentUser() {
@@ -395,7 +414,7 @@ class AccountsService {
         invariant(!preview.cloudRevision,'CLOUD_DATA_DIRECT','云端数据已直接读取，请刷新数据。');
         const normalized=this.backups.normalizeData(preview.envelope.data,owner);
         state={restored:false,mode:'record-import',preservedBackup:this.backups.save(owner,null,'before-record-import'),
-          modules:Object.fromEntries(Object.entries(normalized.modules).filter(([name])=>['conversations','settings','device-desktop','character-resources','resources'].includes(name))),appliedModules:[]};
+          modules:Object.fromEntries(Object.entries(normalized.modules).filter(([name])=>['conversations','conversation-preservation','settings','device-desktop','character-resources','resources'].includes(name))),appliedModules:[]};
         this.db.prepare('INSERT INTO account_actions VALUES(?,?,?,?,?,?)').run(owner,id,'restore-records',inputHash,JSON.stringify(state),new Date().toISOString());
       }
       const publicResult=()=>({restored:state.restored,mode:state.mode,preservedBackup:state.preservedBackup,preservedLocalRecords:state.preservedLocalRecords||0});
@@ -403,6 +422,8 @@ class AccountsService {
       const {modules}=state,epoch=this.epoch;
       const checkpoint=()=>this.db.prepare('UPDATE account_actions SET result=? WHERE owner_account_id=? AND action_id=?').run(JSON.stringify(state),owner,id);
       const conversations=this.services.get('conversations');
+      if(modules['conversation-preservation']&&!state.appliedModules.includes('conversation-preservation'))transaction(this.db,()=>{
+        this.backups.adapters.get('conversation-preservation').restore(owner,modules['conversation-preservation'].data,'merge');state.appliedModules.push('conversation-preservation');checkpoint();});
       if(modules.conversations&&!state.appliedModules.includes('conversations')){await conversations.importCloudRecords(owner,modules.conversations.data);state.appliedModules.push('conversations');checkpoint();}
       invariant(epoch===this.epoch&&this.current?.ownerAccountId===owner,'SESSION_CHANGED','账号已切换，原备份已保留。');
       if(modules.settings&&!state.appliedModules.includes('settings'))transaction(this.db,()=>{this.backups.adapters.get('settings').restore(owner,modules.settings.data,'replace');state.appliedModules.push('settings');checkpoint();});

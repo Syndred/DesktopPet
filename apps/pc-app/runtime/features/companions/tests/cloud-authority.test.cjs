@@ -50,6 +50,71 @@ function folder(){return mkdtempSync(join(tmpdir(),'companion-main-protocol-'));
 function cleanup(path){assert.equal(dirname(resolve(path)),resolve(tmpdir()));assert.ok(basename(path).startsWith('companion-main-protocol-'));rmSync(path,{recursive:true,force:true});}
 const adopt=actionId=>({actionId,templateId:'big-fish-gentle',name:'原始云鱼丸',showOnDesktop:false});
 
+test('PROTOCOL SIMULATION: unchanged failures stop the change/read feedback loop while recovery still publishes',async()=>{
+  const path=folder(),remote=server(),f=client(path,remote);let changes=0,attempts=0,stopping=false;
+  try{
+    remote.offline=true;const input=adopt('feedback-original');
+    await assert.rejects(f.authority.execute(owner,'adopt',input));
+    const original={...f.authority.row(owner,'companions:'+input.actionId)};
+    const invoke=remote.invoke;remote.invoke=async(...args)=>{attempts++;return invoke(...args);};
+    f.authority.changed=()=>{changes++;if(changes<10)setImmediate(()=>{if(!stopping)void f.authority.refresh(owner).catch(()=>{});});};
+    f.authority.notifications.clear();await assert.rejects(f.authority.refresh(owner));
+    await new Promise(resolve=>setTimeout(resolve,50));stopping=true;
+    assert.ok(attempts<=2,`read feedback must stabilize; got ${attempts} network attempts`);
+    assert.equal(changes,1);assert.equal(f.authority.row(owner,'companions:'+input.actionId).input_hash,original.input_hash);
+    assert.deepEqual(JSON.parse(f.authority.row(owner,'companions:'+input.actionId).result).input,input);
+    remote.offline=false;await f.authority.refresh(owner);assert.ok(changes>1,'a real recovery publishes the new state');
+    assert.equal(remote.calls.length,1);assert.equal(f.authority.pending(owner).length,0);
+  }finally{stopping=true;f.close();cleanup(path);}
+});
+
+test('PROTOCOL SIMULATION: read-only refresh does not replay an unrelated immutable pending command',async()=>{
+  const path=folder(),remote=server(),f=client(path,remote);try{
+    remote.offline=true;const input=adopt('read-independent-original');await assert.rejects(f.authority.execute(owner,'adopt',input));
+    const original={...f.authority.row(owner,'companions:'+input.actionId)};
+    remote.offline=false;await f.authority.refresh(owner,{resume:false});
+    assert.equal(remote.calls.length,0);assert.deepEqual({...f.authority.row(owner,'companions:'+input.actionId)},original);
+    assert.deepEqual(await f.authority.readOwnedPetIds(owner),[]);assert.deepEqual({...f.authority.row(owner,'companions:'+input.actionId)},original);
+    await f.authority.refresh(owner);assert.equal(remote.calls.length,1);
+    assert.deepEqual(await f.authority.readOwnedPetIds(owner),[f.service.snapshot(owner).data.pets[0].petId]);assert.equal(remote.calls.length,1);
+  }finally{f.close();cleanup(path);}
+});
+
+test('PROTOCOL SIMULATION: an old desktop intent reads its exact receipt and migrates locally without a cloud command',async()=>{
+  const path=folder(),remote=server(),f=client(path,remote);try{
+    const result=await f.authority.execute(owner,'adopt',adopt('legacy-desktop-pet')),petId=result.data.pet.petId;
+    const input={actionId:'legacy-desktop-unchanged',petId,position:{x:220,y:110}};
+    const id='companions:'+input.actionId;remote.dropAfterCommit=true;
+    await assert.rejects(f.authority.execute(owner,'desktop',input),{code:'CLOUD_UNAVAILABLE'});
+    const original={...f.authority.row(owner,id)},intent=JSON.parse(original.result);
+    const {DeviceDesktop}=require('../device-desktop.cjs');
+    f.authority.deviceDesktop=new DeviceDesktop({db:f.db,getPet:(who,key)=>f.service.requirePet(who,key),listPets:who=>f.service.snapshot(who).data.pets,enabled:()=>true});
+    const writes=remote.calls.length,seen=[],invoke=remote.invoke;
+    remote.invoke=async(name,body)=>{seen.push([name,structuredClone(body)]);return invoke(name,body);};
+    remote.offline=true;await assert.rejects(f.authority.refresh(owner));
+    assert.equal(JSON.parse(f.authority.row(owner,id).result).status,'retry','an unknown receipt is never retired while offline');
+    remote.offline=false;
+    await f.authority.refresh(owner);
+    const migrated=JSON.parse(f.authority.row(owner,id).result);
+    assert.equal(migrated.status,'device-local');assert.deepEqual(migrated.input,input);assert.equal(migrated.baseRevision,1);
+    assert.equal(migrated.deviceMigration.receipt.actionId,id);assert.equal(f.authority.row(owner,id).input_hash,original.input_hash);
+    assert.equal(remote.calls.length,writes);assert.deepEqual(seen[0],['lingjing-save',{op:'read',actionId:id}]);
+    assert.equal(f.authority.deviceDesktop.project(f.service.requirePet(owner,petId)).desktop.position.x,220);
+    assert.equal(f.authority.pending(owner).length,0);
+    const later={...input,actionId:'later-unconfirmed-legacy-position',position:{x:330,y:110}},laterId='companions:'+later.actionId;
+    f.db.prepare('INSERT INTO account_actions VALUES(?,?,?,?,?,?)').run(owner,laterId,'companions-cloud-command',checksum({command:'desktop',input:later}),JSON.stringify({...intent,input:later}),new Date().toISOString());
+    await f.authority.refresh(owner);
+    assert.equal(f.authority.deviceDesktop.project(f.service.requirePet(owner,petId)).desktop.position.x,330,'later preserved legacy intents retain their original order');
+    f.authority.deviceDesktop.update(owner,{actionId:'newer-local-device-position',petId,position:{x:450,y:110}});
+    const stale={...input,actionId:'older-desktop-must-not-overwrite',position:{x:999,y:999}},staleId='companions:'+stale.actionId;
+    f.db.prepare('INSERT INTO account_actions VALUES(?,?,?,?,?,?)').run(owner,staleId,'companions-cloud-command',checksum({command:'desktop',input:stale}),JSON.stringify({...intent,input:stale}),new Date().toISOString());
+    await f.authority.refresh(owner);
+    assert.equal(f.authority.deviceDesktop.project(f.service.requirePet(owner,petId)).desktop.position.x,450,'a newer device preference wins over the preserved old intent');
+    assert.equal(JSON.parse(f.authority.row(owner,staleId).result).deviceMigration.reason,'newer-device-settings');
+    assert.equal(remote.calls.length,writes);
+  }finally{f.close();cleanup(path);}
+});
+
 test('PROTOCOL SIMULATION: offline-before-send intent is durable and restart sends its original request exactly once',async()=>{
   const path=folder(),remote=server();let f=client(path,remote);
   try{

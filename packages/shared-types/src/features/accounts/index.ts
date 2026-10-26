@@ -50,6 +50,10 @@ export interface SettingsSnapshot {
 }
 export interface SyncStatus {
   mode?: 'cloud-authority';
+  status?: 'waiting' | 'ready' | 'partial' | 'offline' | 'blocked';
+  recordsInitialized?: boolean;
+  domains?: Array<{ domain: string; revision: number; verifiedAt: string }>;
+  domainStates?: Array<{ domain: string; status: string; error: string | null; category?: string | null; pending?: number }>;
   preservedLocalRecords?: number;
   configured: boolean; cloudRevision: number; lastVerifiedAt: string | null;
   lastError: string | null; pending: number; conflicts: number; localChanged: boolean; running: boolean;
