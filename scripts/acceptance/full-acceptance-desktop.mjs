@@ -74,10 +74,20 @@ if($p.action -eq 'restore'){if(-not [QAInput]::SetCursorPos($p.point.x,$p.point.
 [uint32]$foreground=0;[QAInput]::GetWindowThreadProcessId([QAInput]::GetForegroundWindow(),[ref]$foreground)|Out-Null
 if($foreground -ne $p.processId){throw 'OWNED_WINDOW_NOT_FOREGROUND'}
 if($p.from.x -lt $p.bounds.x -or $p.from.y -lt $p.bounds.y -or $p.from.x -ge ($p.bounds.x+$p.bounds.width) -or $p.from.y -ge ($p.bounds.y+$p.bounds.height)){throw 'START_OUTSIDE_OWNED_WINDOW'}
+if($p.action -eq 'move'){
+ $warmX=if(($p.from.x+2) -lt ($p.bounds.x+$p.bounds.width)){$p.from.x+2}else{$p.from.x-2}
+ if($warmX -lt $p.bounds.x){throw 'START_OUTSIDE_OWNED_WINDOW'}
+ if(-not [QAInput]::SetCursorPos($warmX,$p.from.y)){throw 'NATIVE_CURSOR_BLOCKED'}
+ Start-Sleep -Milliseconds 150
+ [QAInput]::GetCursorPos([ref]$q)|Out-Null
+ if($q.X -ne $warmX -or $q.Y -ne $p.from.y){throw 'NATIVE_CURSOR_BLOCKED'}
+ $warm=@{x=$q.X;y=$q.Y}
+}
 if(-not [QAInput]::SetCursorPos($p.from.x,$p.from.y)){throw 'NATIVE_CURSOR_BLOCKED'}
 Start-Sleep -Milliseconds 250
 [QAInput]::GetCursorPos([ref]$q)|Out-Null
 if([Math]::Abs($q.X-$p.from.x) -gt 1 -or [Math]::Abs($q.Y-$p.from.y) -gt 1){throw 'NATIVE_CURSOR_BLOCKED'}
+if($p.action -eq 'move'){@{warm=$warm;at=@{x=$q.X;y=$q.Y};physicalDeltaPixels=[Math]::Abs($q.X-$warm.x);pressed=$false}|ConvertTo-Json -Compress -Depth 3;exit}
 $matched=$false
 for($attempt=0;$attempt -lt 20;$attempt++){
  $hit=[QAInput]::WindowFromPoint($q);$rootWindow=[QAInput]::GetAncestor($hit,2);[uint32]$hitPid=0;[uint32]$rootPid=0;[QAInput]::GetWindowThreadProcessId($hit,[ref]$hitPid)|Out-Null;[QAInput]::GetWindowThreadProcessId($rootWindow,[ref]$rootPid)|Out-Null
@@ -106,32 +116,49 @@ async function metrics(pet){const page=await desktop(pet);await page.locator('.r
 async function caseRun(id,work){try{const detail=await work();proof.checks.push({id,status:'passed-isolated-subset',detail});}catch(error){const blocked=/NATIVE_CURSOR_BLOCKED|NATIVE_INPUT_BLOCKED|OWNED_WINDOW_NOT_FOREGROUND|OWNED_PET_NOT_AT_POINT|START_OUTSIDE_OWNED_WINDOW/.test(String(error));proof.checks.push({id,status:blocked?'blocked':'failed',error:String(error)});if(blocked)mouseBlocked=true;await main?.screenshot({path:join(output,id+'-failure.png'),timeout:10000}).catch(()=>{});}finally{save();}}
 async function drag(pet,target){
  const before=await metrics(pet),page=await desktop(pet);await page.evaluate(()=>{window.__desktopInputs=[];if(!window.__desktopObserver){window.__desktopObserver=true;for(const type of ['mousemove','mouseenter','mouseleave','pointermove','pointerenter','pointerleave','pointerdown','pointerup'])document.addEventListener(type,event=>{window.__desktopInputs.push({type:event.type,trusted:event.isTrusted,x:event.screenX,y:event.screenY,clientX:event.clientX,clientY:event.clientY});if(window.__desktopInputs.length>96)window.__desktopInputs.shift();},true);}});
- const opaque = await page.locator('.cp-desktop-visual').evaluate(async visual => {
-   const canvas = visual.querySelector('canvas'), vr = visual.getBoundingClientRect(), cr = canvas.getBoundingClientRect();
-   const probe = document.createElement('canvas'); probe.width = canvas.width; probe.height = canvas.height;
-   const ctx = probe.getContext('2d', {willReadFrequently:true});
-   for (let frame = 0; frame < 30; frame++) {
-     await new Promise(resolve=>{requestAnimationFrame(resolve);setTimeout(resolve,100);}); ctx.clearRect(0,0,probe.width,probe.height); ctx.drawImage(canvas,0,0);
-     const pixels = ctx.getImageData(0,0,probe.width,probe.height).data;
-     for (let y = Math.floor(probe.height*.35); y < probe.height*.8; y += 3) for (let x = Math.floor(probe.width*.3); x < probe.width*.7; x += 3) {
-       if (pixels[(y*probe.width+x)*4+3] < 240) continue;
-       const point={x:cr.x+x/probe.width*cr.width,y:cr.y+y/probe.height*cr.height};
-       if(point.x>vr.x+vr.width*.15&&point.x<vr.right-vr.width*.15&&point.y>vr.y+vr.height*.08&&point.y<vr.bottom)return {...point,alpha:pixels[(y*probe.width+x)*4+3],frame};
+ // Sample compositor PNGs, not the WebGL drawing buffer (which is discarded
+ // with preserveDrawingBuffer:false). Animations remain running throughout.
+ const geometry=await page.evaluate(()=>{const v=document.querySelector('.cp-desktop-visual').getBoundingClientRect();return {width:innerWidth,height:innerHeight,dpr:devicePixelRatio,visual:{x:v.x,y:v.y,width:v.width,height:v.height}};});
+ const frames=[];
+ for(let frame=0;frame<5;frame++){
+   frames.push((await page.screenshot({omitBackground:true,animations:'allow',scale:'device',timeout:10000})).toString('base64'));
+   if(frame<4)await new Promise(r=>setTimeout(r,120));
+ }
+ const opaque=await app.evaluate(({nativeImage},{frames,g})=>{
+   const decoded=frames.map(png=>{const image=nativeImage.createFromBuffer(Buffer.from(png,'base64'));return {size:image.getSize(),bytes:image.toBitmap()};});
+   const {width,height}=decoded[0].size;
+   if(!decoded.every(f=>f.size.width===width&&f.size.height===height))throw Error('NATIVE_INPUT_BLOCKED: compositor frame dimensions changed');
+   const sx=width/g.width,sy=height/g.height;
+   if(Math.abs(sx-g.dpr)>.02||Math.abs(sy-g.dpr)>.02)throw Error('NATIVE_INPUT_BLOCKED: screenshot DPR mapping ambiguous');
+   const v=g.visual,candidates=[];
+   for(let y=Math.ceil((v.y+v.height*.12)*sy)+2;y<Math.floor((v.y+v.height*.88)*sy)-2;y+=2){
+     for(let x=Math.ceil((v.x+v.width*.18)*sx)+2;x<Math.floor((v.x+v.width*.82)*sx)-2;x+=2){
+       if(x<2||y<2||x>=width-2||y>=height-2)continue;
+       let minimumAlpha=255;
+       for(const f of decoded)for(let dy=-2;dy<=2;dy++)for(let dx=-2;dx<=2;dx++)minimumAlpha=Math.min(minimumAlpha,f.bytes[((y+dy)*width+x+dx)*4+3]);
+       if(minimumAlpha>=240)candidates.push({x:(x+.5)/sx,y:(y+.5)/sy,minimumAlpha,pixel:{x,y}});
      }
    }
-   throw Error('NATIVE_INPUT_BLOCKED: no readable opaque target pixel; no OS press attempted');
- });
+   candidates.sort((a,b)=>Math.hypot(a.x-v.x-v.width/2,a.y-v.y-v.height/2)-Math.hypot(b.x-v.x-v.width/2,b.y-v.y-v.height/2));
+   if(!candidates.length)throw Error('NATIVE_INPUT_BLOCKED: no common opaque compositor pixel across five animated frames; no OS press attempted');
+   return {...candidates[0],sampleSource:'compositor-png',frames:frames.length,neighborhoodPixels:5,screenshot:{width,height},cssViewport:{width:g.width,height:g.height},dpr:g.dpr,scale:{x:sx,y:sy},candidateCount:candidates.length};
+ },{frames,g:geometry});
  const points=await app.evaluate(({BrowserWindow,screen},{url,opaque,target})=>{const win=BrowserWindow.getAllWindows().find(w=>w.webContents.getURL()===url),bounds=win.getBounds();const main=BrowserWindow.getAllWindows().find(w=>w.webContents.getURL().includes('/ui/index.html'));main.show();main.focus();const offset={x:opaque.x,y:opaque.y};return {from:screen.dipToScreenPoint({x:Math.round(bounds.x+offset.x),y:Math.round(bounds.y+offset.y)}),to:screen.dipToScreenPoint({x:Math.round(target.x+offset.x),y:Math.round(target.y+offset.y)}),bounds:screen.dipToScreenRect(win,bounds),processId:process.pid,windowHandle:(()=>{const h=win.getNativeWindowHandle();return (h.length===8?h.readBigInt64LE():BigInt(h.readInt32LE())).toString();})()};},{url:page.url(),opaque,target});
  const observe=async(includeNative=true)=>({
    native:includeNative?JSON.parse(native({action:'probe',windowHandle:points.windowHandle})):null,
    ownedWindows:await app.evaluate(({BrowserWindow})=>BrowserWindow.getAllWindows().map(win=>{const handle=win.getNativeWindowHandle();return {id:win.id,handle:(handle.length===8?handle.readBigInt64LE():BigInt(handle.readInt32LE())).toString(),kind:win.webContents.getURL().includes('/desktop.html')?'pet':'main',visible:win.isVisible(),minimized:win.isMinimized(),alwaysOnTop:win.isAlwaysOnTop(),focused:win.isFocused(),bounds:win.getBounds()};})),
-   renderer:await page.evaluate(point=>{let sampledAlpha=null;try{const canvas=document.querySelector('.cp-desktop-visual canvas'),rect=canvas.getBoundingClientRect(),x=Math.floor((point.x-rect.x)/rect.width*canvas.width),y=Math.floor((point.y-rect.y)/rect.height*canvas.height);if(x>=0&&y>=0&&x<canvas.width&&y<canvas.height){const probe=document.createElement('canvas');probe.width=canvas.width;probe.height=canvas.height;const ctx=probe.getContext('2d',{willReadFrequently:true});ctx.drawImage(canvas,0,0);sampledAlpha=ctx.getImageData(x,y,1,1).data[3];}}catch{}return {events:window.__desktopInputs||[],visualHovered:document.querySelector('.cp-desktop-visual')?.matches(':hover')??false,surfaceHovered:document.querySelector('.cp-desktop-surface')?.matches(':hover')??false,pixelAtOriginalClientPointAlpha:sampledAlpha,focused:document.hasFocus(),visibility:document.visibilityState};},opaque),
+   renderer:await page.evaluate(()=>({events:window.__desktopInputs||[],visualHovered:document.querySelector('.cp-desktop-visual')?.matches(':hover')??false,surfaceHovered:document.querySelector('.cp-desktop-surface')?.matches(':hover')??false,focused:document.hasFocus(),visibility:document.visibilityState,alphaProbe:'Compositor PNG five-frame common opaque point; WebGL drawImage alpha deliberately not used'})),
    host:(await invoke('accounts','settingsGet')).host
  });
  const attempt={petId:pet.petId,points,opaque,at:new Date().toISOString(),before:await observe(false)};
  proof.inputAttempts ||= [];proof.inputAttempts.push(attempt);save();
  let cursor;
- try{cursor=JSON.parse(native({action:'drag',...points}));attempt.nativeGuard='matched-and-pressed';}
+ try{
+   attempt.moveOnly=JSON.parse(native({action:'move',...points}));
+   assert.ok(attempt.moveOnly.physicalDeltaPixels>=2,'Move-only preflight did not produce the required real 2px motion');
+   attempt.afterMoveOnly=await observe();save();
+   cursor=JSON.parse(native({action:'drag',...points}));attempt.nativeGuard='matched-and-pressed';
+ }
  catch(error){attempt.nativeGuard=/OWNED_PET_NOT_AT_POINT|OWNED_WINDOW_NOT_FOREGROUND|START_OUTSIDE_OWNED_WINDOW|NATIVE_CURSOR_BLOCKED/.test(String(error))?'blocked-before-press':'native-operation-failed-outcome-unverified';throw error;}
  finally{native({action:'release'});try{attempt.after=await observe();}catch(error){attempt.observationError=String(error);}save();}
 

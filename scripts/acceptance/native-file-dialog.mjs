@@ -51,9 +51,13 @@ function validateFile(scope,filePath,kind){
 const controller=String.raw`param([Parameter(Mandatory=$true)][string]$SettingsFile)
 $ErrorActionPreference='Stop'
 [Console]::OutputEncoding=[System.Text.UTF8Encoding]::new($false)
+function Emit($value){[Console]::Out.WriteLine(($value|ConvertTo-Json -Compress -Depth 6));[Console]::Out.Flush()}
+Emit @{phase='controller-started'}
 $c=Get-Content -LiteralPath $SettingsFile -Raw -Encoding UTF8 | ConvertFrom-Json
+Emit @{phase='settings-read'}
 Add-Type -AssemblyName UIAutomationClient
 Add-Type -AssemblyName UIAutomationTypes
+Emit @{phase='uia-assemblies-loaded'}
 Add-Type @'
 using System;
 using System.Collections.Generic;
@@ -76,7 +80,7 @@ public static class OwnedDialogNative {
  public static IntPtr[] Dialogs(uint pid){var found=new List<IntPtr>();EnumWindows((h,d)=>{if(Pid(h)==pid&&Class(h)=="#32770")found.Add(h);return true;},IntPtr.Zero);return found.ToArray();}
 }
 '@ | Out-Null
-function Emit($value){[Console]::Out.WriteLine(($value|ConvertTo-Json -Compress -Depth 6));[Console]::Out.Flush()}
+Emit @{phase='native-controller-compiled'}
 $owner=[IntPtr]::new([Int64]::Parse([string]$c.ownerWindowHandle))
 $ownerPid=[int]$c.ownerPid
 $birth=$null
@@ -202,7 +206,7 @@ export async function driveNativeFileDialog({scope,kind,filePath,ownerPid,ownerW
  child.stdout.on('data',bytes=>{buffer+=bytes.toString('utf8');if(buffer.length>32000){fail(Error('Unexpected controller output size'));return;}let index;while((index=buffer.indexOf('\n'))>=0){const line=buffer.slice(0,index).trim();buffer=buffer.slice(index+1);if(!line)continue;try{const value=JSON.parse(line);phases.push(value);if(value.phase==='ready')readyResolve(value);if(value.phase==='failed')fail(Error(value.message));}catch{fail(Error('Invalid controller protocol'));}}});
  child.on('exit',(code,signal)=>{if(code===0&&phases.some(row=>row.phase==='dialog-closed'))doneResolve();else fail(Error(`Native controller failed (${code ?? signal}): ${stderr}`));});
  const deadline=Date.now()+timeoutMs+5000;
- const timed=new Promise((_yes,no)=>{timer=setTimeout(()=>{const error=Error('Owned native dialog operation timed out');fail(error);no(error);},timeoutMs+5000);});timed.catch(()=>{});
+ const timed=new Promise((_yes,no)=>{timer=setTimeout(()=>{const error=Error('Owned native dialog operation timed out');error.controllerStderr=stderr;fail(error);no(error);},timeoutMs+5000);});timed.catch(()=>{});
  try{
   await Promise.race([ready,timed]);
   const triggered=Promise.resolve().then(trigger);triggered.catch(()=>{});
@@ -216,7 +220,7 @@ export async function driveNativeFileDialog({scope,kind,filePath,ownerPid,ownerW
   const business=await Promise.race([Promise.resolve().then(()=>verifyResult(fileEvidence)),timed]);
   assert.equal(business?.verified,true,'Caller must independently verify product UI/receipt');
   return {nativeDialogCompleted:true,nativePickerUsed:true,file:fileEvidence,phases,business,controllerPid:child.pid};
- }catch(error){error.nativeDialogEvidence={phases,controllerPid:child.pid,selectedFile:file,kind};throw error;}
+ }catch(error){error.nativeDialogEvidence={phases,controllerPid:child.pid,selectedFile:file,kind,controllerStderr:stderr.slice(-4000),controllerExitCode:child.exitCode,controllerSignal:child.signalCode};throw error;}
  finally{
   clearTimeout(timer);
   if(child.exitCode===null&&child.signalCode===null)child.kill();
