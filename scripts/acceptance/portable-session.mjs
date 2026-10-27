@@ -19,12 +19,13 @@ async function inspector(url){
   return {close:()=>socket.close(),async detach(){if(socket.readyState===WebSocket.CLOSED)return;await new Promise((done,fail)=>{const timer=setTimeout(()=>fail(new Error('Owned inspector detach timed out')),5000);socket.once('close',()=>{clearTimeout(timer);done();});socket.close();});},send(method,params={}){return new Promise((resolve,reject)=>{const requestId=++id,timer=setTimeout(()=>{pending.delete(requestId);reject(new Error('Main inspector request timed out'));},30000);pending.set(requestId,{resolve,reject,timer});socket.send(JSON.stringify({id:requestId,method,params}),error=>{if(error){clearTimeout(timer);pending.delete(requestId);reject(error);}});});}};
 }
 
-export async function launchPortableSession({executable,profile,expectedSource,label='portable',environment={}}){
+export async function launchPortableSession({executable,profile,expectedSource,label='portable',environment={},forceDeviceScaleFactorOne=true}){
+  assert.equal(typeof forceDeviceScaleFactorOne,'boolean');
   profile=resolve(profile);mkdirSync(profile,{recursive:true});profile=realpathSync.native(profile);
   const nodePort=await freePort();let browserPort=await freePort();while(browserPort===nodePort)browserPort=await freePort();const env={...process.env,PET_USER_DATA_DIR:profile};
   for(const key of Object.keys(env))if(/^(?:SUPABASE_|LINGJING_SUPABASE_|LINGJING_QA_|LINGJING_PUBLIC_CONFIG$|LINGJING_LEGACY_AUTH$|LINGJING_CONTROLLED_LOCATION$|LINGJING_DISCOVERY_CLOUD$|LINGJING_BATTLE_QA$|LINGJING_BATTLE_SCENARIO$|PET_RUNTIME_DATA_FILE$|ELECTRON_RUN_AS_NODE$|ELECTRON_RENDERER_URL$|NODE_OPTIONS$|NODE_TLS_REJECT_UNAUTHORIZED$)/.test(key))delete env[key];
   Object.assign(env,environment);
-  const child=spawn(resolve(executable),[`--inspect=127.0.0.1:${nodePort}`,`--remote-debugging-port=${browserPort}`,'--force-device-scale-factor=1'],{env,windowsHide:true,stdio:['ignore','pipe','pipe']});
+  const child=spawn(resolve(executable),[`--inspect=127.0.0.1:${nodePort}`,`--remote-debugging-port=${browserPort}`,...(forceDeviceScaleFactorOne?['--force-device-scale-factor=1']:[])],{env,windowsHide:true,stdio:['ignore','pipe','pipe']});
   let failure,connection,browser,runtime,stopped=false;child.on('error',error=>{failure=error;});
   // Do not publish raw startup output (which may contain inherited values).
   // Retain only fixed classifications for known pre-window failures.
