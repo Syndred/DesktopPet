@@ -10,6 +10,8 @@ import {spawn} from 'node:child_process';
 import {mkdtempSync,readFileSync,writeFileSync,realpathSync,lstatSync,existsSync,rmSync} from 'node:fs';
 import {join,resolve,relative,isAbsolute,dirname,sep} from 'node:path';
 import {randomUUID,createHash} from 'node:crypto';
+import {tmpdir} from 'node:os';
+import {pathToFileURL} from 'node:url';
 
 const scopes=new WeakSet();
 const sha=bytes=>createHash('sha256').update(bytes).digest('hex');
@@ -83,6 +85,60 @@ Emit @{phase='system-utility-loaded'}
 Add-Type -AssemblyName UIAutomationClient
 Add-Type -AssemblyName UIAutomationTypes
 Emit @{phase='uia-assemblies-loaded'}
+# Reflection only: never obtain a desktop/root/window element in this preflight.
+$apiChecks=0
+function Require-Method([Type]$type,[string]$name,[Type[]]$parameters,[Type]$returns,[bool]$static){
+ $flags=if($static){[Reflection.BindingFlags]'Public,Static'}else{[Reflection.BindingFlags]'Public,Instance'}
+ $m=$type.GetMethod($name,$flags,$null,$parameters,$null)
+ if($null -eq $m -or $m.ReturnType -ne $returns){throw ('UIA_API_METHOD_MISSING:'+ $type.FullName+'.'+$name)}
+ $script:apiChecks++
+}
+function Require-Property([Type]$type,[string]$name,[Type]$returns,[bool]$static){
+ $flags=if($static){[Reflection.BindingFlags]'Public,Static,FlattenHierarchy'}else{[Reflection.BindingFlags]'Public,Instance'}
+ $p=$type.GetProperty($name,$flags)
+ if($null -eq $p -or $p.PropertyType -ne $returns -or $null -eq $p.GetGetMethod()){throw ('UIA_API_PROPERTY_MISSING:'+ $type.FullName+'.'+$name)}
+ $script:apiChecks++
+}
+function Require-Field([Type]$type,[string]$name,[Type]$returns){
+ $f=$type.GetField($name,[Reflection.BindingFlags]'Public,Static,FlattenHierarchy')
+ if($null -eq $f -or $f.FieldType -ne $returns){throw ('UIA_API_FIELD_MISSING:'+ $type.FullName+'.'+$name)}
+ $script:apiChecks++
+}
+$ae=[System.Windows.Automation.AutomationElement]
+$tw=[System.Windows.Automation.TreeWalker]
+$ct=[System.Windows.Automation.ControlType]
+$info=[System.Windows.Automation.AutomationElement+AutomationElementInformation]
+Require-Method ([System.Windows.Automation.Automation]) 'Compare' @($ae,$ae) ([bool]) $true
+Require-Method $ae 'FromHandle' @([IntPtr]) $ae $true
+Require-Method $ae 'FindAll' @([System.Windows.Automation.TreeScope],[System.Windows.Automation.Condition]) ([System.Windows.Automation.AutomationElementCollection]) $false
+Require-Method $ae 'TryGetCurrentPattern' @([System.Windows.Automation.AutomationPattern],([object].MakeByRefType())) ([bool]) $false
+Require-Method $tw 'GetParent' @($ae) $ae $false
+Require-Method ([System.Windows.Automation.ValuePattern]) 'SetValue' @([string]) ([void]) $false
+Require-Method ([System.Windows.Automation.InvokePattern]) 'Invoke' @() ([void]) $false
+Require-Field $tw 'ControlViewWalker' $tw
+Require-Property $ae 'Current' $info $false
+foreach($name in @('AutomationId','Name','ClassName')){Require-Property $info $name ([string]) $false}
+foreach($name in @('IsEnabled','IsOffscreen')){Require-Property $info $name ([bool]) $false}
+Require-Property $info 'ProcessId' ([int]) $false
+Require-Property $info 'ControlType' $ct $false
+Require-Property $ct 'ProgrammaticName' ([string]) $false
+Require-Property ([System.Windows.Automation.AutomationElementCollection]) 'Count' ([int]) $false
+Require-Property ([System.Windows.Automation.ValuePattern]) 'Current' ([System.Windows.Automation.ValuePattern+ValuePatternInformation]) $false
+Require-Property ([System.Windows.Automation.ValuePattern+ValuePatternInformation]) 'IsReadOnly' ([bool]) $false
+Require-Property ([System.Windows.Automation.ValuePattern+ValuePatternInformation]) 'Value' ([string]) $false
+Require-Field $ae 'ControlTypeProperty' ([System.Windows.Automation.AutomationProperty])
+Require-Field ([System.Windows.Automation.Condition]) 'TrueCondition' ([System.Windows.Automation.Condition])
+foreach($name in @('Edit','ComboBox','Button')){Require-Field $ct $name $ct}
+Require-Field ([System.Windows.Automation.ValuePattern]) 'Pattern' ([System.Windows.Automation.AutomationPattern])
+Require-Field ([System.Windows.Automation.InvokePattern]) 'Pattern' ([System.Windows.Automation.AutomationPattern])
+$ctor=[System.Windows.Automation.PropertyCondition].GetConstructor([Type[]]@([System.Windows.Automation.AutomationProperty],[object]))
+if($null -eq $ctor){throw 'UIA_API_PROPERTY_CONDITION_CONSTRUCTOR_MISSING'}
+$apiChecks++
+if(-not [System.Collections.IEnumerable].IsAssignableFrom([System.Windows.Automation.AutomationElementCollection])){throw 'UIA_API_COLLECTION_NOT_ENUMERABLE'}
+$apiChecks++
+Emit @{phase='uia-api-contract-verified';checks=$apiChecks;reflectionOnly=$true;uiAccessed=$false}
+if($c.apiSelftest -eq $true){Emit @{phase='uia-api-selftest-passed';checks=$apiChecks;appStarted=$false;uiAccessed=$false};exit 0}
+
 Add-Type @'
 using System;
 using System.Collections.Generic;
@@ -157,24 +213,48 @@ try{
  }
  if($dialog -eq [IntPtr]::Zero){throw 'EXPECTED_NATIVE_DIALOG_NOT_FOUND'}
  Dialog-Still-Exact $dialog
- $root=[System.Windows.Automation.AutomationElement]::FromHandle($dialog)
- if($root.Current.ProcessId -ne $ownerPid -or $root.Current.ClassName -ne '#32770'){throw 'UIA_ROOT_IDENTITY_MISMATCH'}
- $walker=[System.Windows.Automation.TreeWalker]::ControlViewWalker
- $edits=$root.FindAll([System.Windows.Automation.TreeScope]::Descendants,([System.Windows.Automation.PropertyCondition]::new([System.Windows.Automation.AutomationElement]::ControlTypeProperty,[System.Windows.Automation.ControlType]::Edit)))
- $candidates=@()
- foreach($edit in $edits){
-  $id=$edit.Current.AutomationId;$name=$edit.Current.Name
-  $parent=$walker.GetParent($edit)
-  # Modern IFileDialog: filename ComboBox 1148 owns Edit 1001. Never
-  # accept an arbitrary Edit 1001 (the dialog also has search/address edits).
-  $modern=$id -eq '1001' -and $edit.Current.ClassName -eq 'Edit' -and $null -ne $parent -and $parent.Current.ProcessId -eq $ownerPid -and $parent.Current.ControlType -eq [System.Windows.Automation.ControlType]::ComboBox -and $parent.Current.AutomationId -eq '1148' -and $parent.Current.ClassName -eq 'ComboBox'
-  $standard=$id -eq '1148' -or $name -match '^(File name:|File name|文件名\(?[Nn]?\)?:|文件名[：:]?)$'
-  if($standard -or $modern){
-   $pattern=$null
-   if($edit.Current.ProcessId -eq $ownerPid -and $edit.Current.IsEnabled -and -not $edit.Current.IsOffscreen -and $edit.TryGetCurrentPattern([System.Windows.Automation.ValuePattern]::Pattern,[ref]$pattern) -and -not $pattern.Current.IsReadOnly){$candidates+=@{element=$edit;pattern=$pattern;id=$id;name=$name;selector=$(if($modern){'filename-combobox-1148/direct-edit-1001'}else{'standard-filename-edit'})}}
+ # A new HWND can precede the provider's filename controls. Re-snapshot ONLY
+ # this same verified dialog, within the unchanged operation deadline.
+ $controlSnapshots=0;$candidates=@();$actions=@();$controlWaitStarted=[DateTime]::UtcNow
+ while([DateTime]::UtcNow -lt $deadline){
+  Dialog-Still-Exact $dialog
+  $root=[System.Windows.Automation.AutomationElement]::FromHandle($dialog)
+  if($root.Current.ProcessId -ne $ownerPid -or $root.Current.ClassName -ne '#32770'){throw 'UIA_ROOT_IDENTITY_MISMATCH'}
+  $walker=[System.Windows.Automation.TreeWalker]::ControlViewWalker
+  $edits=$root.FindAll([System.Windows.Automation.TreeScope]::Descendants,([System.Windows.Automation.PropertyCondition]::new([System.Windows.Automation.AutomationElement]::ControlTypeProperty,[System.Windows.Automation.ControlType]::Edit)))
+  $candidates=@()
+  foreach($edit in $edits){
+   $id=$edit.Current.AutomationId;$name=$edit.Current.Name
+   $parent=$walker.GetParent($edit)
+   # Modern IFileDialog: filename ComboBox 1148 owns Edit 1001. Never
+   # accept an arbitrary Edit 1001 (the dialog also has search/address edits).
+   $modern=$id -eq '1001' -and $edit.Current.ClassName -eq 'Edit' -and $null -ne $parent -and $parent.Current.ProcessId -eq $ownerPid -and $parent.Current.ControlType -eq [System.Windows.Automation.ControlType]::ComboBox -and $parent.Current.AutomationId -eq '1148' -and $parent.Current.ClassName -eq 'ComboBox'
+   $standard=$id -eq '1148' -or $name -match '^(File name:|File name|文件名\(?[Nn]?\)?:|文件名[：:]?)$'
+   if($standard -or $modern){
+    $pattern=$null
+    if($edit.Current.ProcessId -eq $ownerPid -and $edit.Current.IsEnabled -and -not $edit.Current.IsOffscreen -and $edit.TryGetCurrentPattern([System.Windows.Automation.ValuePattern]::Pattern,[ref]$pattern) -and -not $pattern.Current.IsReadOnly){$candidates+=@{element=$edit;pattern=$pattern;id=$id;name=$name;selector=$(if($modern){'filename-combobox-1148/direct-edit-1001'}else{'standard-filename-edit'})}}
+   }
   }
+  $buttons=$root.FindAll([System.Windows.Automation.TreeScope]::Descendants,([System.Windows.Automation.PropertyCondition]::new([System.Windows.Automation.AutomationElement]::ControlTypeProperty,[System.Windows.Automation.ControlType]::Button)))
+  $actions=@()
+  foreach($button in $buttons){
+   $name=($button.Current.Name -replace '&','' -replace '\s*\([A-Za-z]\)\s*$','').Trim()
+   $expected=if($c.kind -eq 'save'){@('Save','保存')}else{@('Open','打开')}
+   $pattern=$null
+   if($button.Current.ProcessId -eq $ownerPid -and $button.Current.AutomationId -eq '1' -and $expected -ccontains $name -and $button.Current.IsEnabled -and -not $button.Current.IsOffscreen -and $button.TryGetCurrentPattern([System.Windows.Automation.InvokePattern]::Pattern,[ref]$pattern)){$actions+=@{element=$button;pattern=$pattern;name=$name}}
+  }
+  $controlSnapshots++
+  if($candidates.Count -gt 1){throw 'MULTIPLE_STANDARD_FILENAME_EDITS_REFUSED'}
+  if($actions.Count -gt 1){throw 'MULTIPLE_EXPECTED_OPEN_SAVE_ACTIONS_REFUSED'}
+  if($controlSnapshots -eq 1 -or ($candidates.Count -eq 1 -and $actions.Count -eq 1)){
+   Emit @{phase='dialog-controls-snapshot';snapshot=$controlSnapshots;elapsedMs=[int]([DateTime]::UtcNow-$controlWaitStarted).TotalMilliseconds;filenameCandidates=$candidates.Count;actionCandidates=$actions.Count}
+  }
+  if($candidates.Count -eq 1 -and $actions.Count -eq 1){break}
+  [System.Threading.Thread]::Sleep(100)
  }
- if($candidates.Count -ne 1){
+ if($controlSnapshots -eq 0){throw 'NATIVE_DIALOG_CONTROL_DEADLINE_EXPIRED'}
+ Emit @{phase='dialog-controls-wait-finished';snapshots=$controlSnapshots;elapsedMs=[int]([DateTime]::UtcNow-$controlWaitStarted).TotalMilliseconds;filenameCandidates=$candidates.Count;actionCandidates=$actions.Count}
+ if($candidates.Count -ne 1 -or $actions.Count -ne 1){
   Dialog-Still-Exact $dialog
   # Bounded metadata ONLY from this already verified dialog. No ValuePattern,
   # text value, file-list item content, desktop/global walk, or input fallback.
@@ -207,18 +287,11 @@ try{
     $entry.parents=$parents;$metadata+=$entry
    }
   }
-  Emit @{phase='filename-control-diagnostic';candidateCount=$candidates.Count;controls=$metadata;maxControls=16;maxParentDepth=3;valuesCollected=$false}
-  throw 'UNIQUE_STANDARD_FILENAME_EDIT_NOT_FOUND'
+  Emit @{phase='filename-control-diagnostic';candidateCount=$candidates.Count;actionCandidateCount=$actions.Count;controls=$metadata;maxControls=16;maxParentDepth=3;valuesCollected=$false}
+  if($candidates.Count -ne 1){throw 'UNIQUE_STANDARD_FILENAME_EDIT_NOT_FOUND'}
+  throw 'UNIQUE_EXPECTED_OPEN_SAVE_ACTION_NOT_FOUND'
  }
- $buttons=$root.FindAll([System.Windows.Automation.TreeScope]::Descendants,([System.Windows.Automation.PropertyCondition]::new([System.Windows.Automation.AutomationElement]::ControlTypeProperty,[System.Windows.Automation.ControlType]::Button)))
- $actions=@()
- foreach($button in $buttons){
-  $name=($button.Current.Name -replace '&','' -replace '\s*\([A-Za-z]\)\s*$','').Trim()
-  $expected=if($c.kind -eq 'save'){@('Save','保存')}else{@('Open','打开')}
-  $pattern=$null
-  if($button.Current.ProcessId -eq $ownerPid -and $button.Current.AutomationId -eq '1' -and $expected -ccontains $name -and $button.Current.IsEnabled -and -not $button.Current.IsOffscreen -and $button.TryGetCurrentPattern([System.Windows.Automation.InvokePattern]::Pattern,[ref]$pattern)){$actions+=@{element=$button;pattern=$pattern;name=$name}}
- }
- if($actions.Count -ne 1){throw 'UNIQUE_EXPECTED_OPEN_SAVE_ACTION_NOT_FOUND'}
+ if([DateTime]::UtcNow -ge $deadline){throw 'NATIVE_DIALOG_CONTROL_DEADLINE_EXPIRED'}
  Dialog-Still-Exact $dialog
  if($c.kind -eq 'save' -and ([System.IO.File]::Exists([string]$c.filePath) -or [System.IO.Directory]::Exists([string]$c.filePath))){throw 'SAVE_TARGET_APPEARED_REFUSE_OVERWRITE'}
  $candidates[0].pattern.SetValue([string]$c.filePath)
@@ -305,4 +378,43 @@ export async function driveNativeFileDialog({scope,kind,filePath,ownerPid,ownerW
   if(child.pid&&child.exitCode===null&&child.signalCode===null)throw Error('Exact native-dialog helper exit was not confirmed; keep its owned files');
   if(!child.pid||child.exitCode!==null||child.signalCode!==null){rmSync(scriptFile,{force:true});rmSync(settingsFile,{force:true});}
  }
+}
+
+
+/** Disposable runner-only reflection selftest; no application or UI is accessed. */
+export async function selftestNativeDialogApis(){
+ assert.equal(process.platform,'win32');assert.equal(process.env.GITHUB_ACTIONS,'true');
+ const directory=canonical(mkdtempSync(join(tmpdir(),'lingjing-uia-api-selftest-')));
+ const scriptFile=join(directory,'api-selftest.ps1'),settingsFile=join(directory,'api-selftest.json');
+ writeFileSync(scriptFile,'\ufeff'+controller,{flag:'wx'});
+ writeFileSync(settingsFile,JSON.stringify({apiSelftest:true}),{flag:'wx'});
+ const keys=new Set(['PATH','PATHEXT','SYSTEMROOT','SYSTEMDRIVE','WINDIR','COMSPEC','TEMP','TMP','TMPDIR','USERPROFILE','APPDATA','LOCALAPPDATA','PROGRAMFILES','PROGRAMFILES(X86)','PROGRAMW6432','RUNNER_TRACKING_ID']);
+ const env=Object.fromEntries(Object.entries(process.env).filter(([key])=>keys.has(key.toUpperCase())));
+ const shell=join(process.env.SystemRoot||process.env.WINDIR||'C:\\Windows','System32','WindowsPowerShell','v1.0','powershell.exe');
+ const literal=value=>"'"+value.replaceAll("'","''")+"'";
+ const bootstrap=`& ${literal(scriptFile)} -SettingsFile ${literal(settingsFile)}`;
+ const child=spawn(shell,['-NoProfile','-NonInteractive','-STA','-ExecutionPolicy','Bypass','-EncodedCommand',Buffer.from(bootstrap,'utf16le').toString('base64')],{env,windowsHide:true,stdio:['ignore','pipe','pipe']});
+ let stdout='',stderr='',timer;
+ try{
+  await new Promise((yes,no)=>{
+   child.on('error',no);
+   child.stdout.on('data',data=>{stdout+=data.toString('utf8');if(stdout.length>32000){stdout=stdout.slice(0,32000);no(Error('Selftest output limit'));}});
+   child.stderr.on('data',data=>{stderr=(stderr+data.toString('utf8')).slice(-4000);});
+   child.on('close',code=>code===0?yes():no(Error(`UIA API selftest failed (${code}): ${stderr}; phases=${stdout.slice(-4000)}`)));
+   timer=setTimeout(()=>no(Error(`UIA API selftest timeout: ${stderr}; phases=${stdout.slice(-4000)}`)),35000);
+  });
+  const phases=stdout.trim().split(/\r?\n/).filter(Boolean).map(line=>JSON.parse(line));
+  assert.ok(phases.some(row=>row.phase==='uia-api-selftest-passed'&&row.uiAccessed===false&&row.checks===30));
+  return {passed:true,reflectionOnly:true,appStarted:false,phases};
+ }finally{
+  clearTimeout(timer);
+  if(child.exitCode===null&&child.signalCode===null)child.kill();
+  if(child.exitCode===null&&child.signalCode===null)await Promise.race([new Promise(resolve=>child.once('exit',resolve)),new Promise(resolve=>setTimeout(resolve,3000))]);
+  if(child.pid&&child.exitCode===null&&child.signalCode===null)throw Error('Exact UIA selftest helper exit unconfirmed; retain owned directory');
+  rmSync(directory,{recursive:true,force:true});
+ }
+}
+if(process.argv[1]&&import.meta.url===pathToFileURL(resolve(process.argv[1])).href){
+ assert.deepEqual(process.argv.slice(2),['--selftest']);
+ try{console.log(JSON.stringify(await selftestNativeDialogApis()));}catch(error){console.error(error.message);process.exitCode=1;}
 }

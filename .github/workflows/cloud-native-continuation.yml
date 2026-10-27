@@ -6,7 +6,7 @@ on:
       flows:
         description: 'Explicit JSON array of affected native flows; omitted successful flows retain version-bound receipts'
         required: false
-        default: '["native-backup"]'
+        default: '["native-backup","desktop-preferences","connection-selections"]'
   push:
     branches: ['codex/cloud-authority-convergence']
     paths:
@@ -15,6 +15,8 @@ on:
       - 'scripts/acceptance/cloud-qa-preflight.mjs'
       - 'scripts/acceptance/cloud-default-profile-readback.mjs'
       - 'scripts/acceptance/cloud-conversation-memory-acceptance.mjs'
+      - 'scripts/acceptance/cloud-desktop-preferences-acceptance.mjs'
+      - 'scripts/acceptance/cloud-connection-selections-acceptance.mjs'
       - 'scripts/acceptance/cloud-backup-ui-acceptance.mjs'
       - 'scripts/acceptance/native-file-dialog.mjs'
       - 'scripts/acceptance/cloud-companion-economy-acceptance.mjs'
@@ -45,9 +47,9 @@ jobs:
     steps:
       - name: Reject empty, duplicate or unknown flow selections
         env:
-          SELECTED_FLOWS: ${{ inputs.flows || '["native-backup"]' }}
+          SELECTED_FLOWS: ${{ inputs.flows || '["native-backup","desktop-preferences","connection-selections"]' }}
         run: |
-          node -e "const assert=require('node:assert/strict');const flows=JSON.parse(process.env.SELECTED_FLOWS);const allowed=new Set(['companion-economy','native-backup','backup-ui','accounts-navigation','navigation','resources','lifecycle','desktop-restart','desktop-input','desktop-engineering','battle-context','context','default-profile','conversation-memory']);assert.ok(Array.isArray(flows)&&flows.length>0&&flows.length<=allowed.size);assert.equal(new Set(flows).size,flows.length);assert.ok(flows.every(x=>typeof x==='string'&&allowed.has(x)));console.log('Validated affected flows:',flows.join(', '));"
+          node -e "const assert=require('node:assert/strict');const flows=JSON.parse(process.env.SELECTED_FLOWS);const allowed=new Set(['desktop-preferences','connection-selections','companion-economy','native-backup','backup-ui','accounts-navigation','navigation','resources','lifecycle','desktop-restart','desktop-input','desktop-engineering','battle-context','context','default-profile','conversation-memory']);assert.ok(Array.isArray(flows)&&flows.length>0&&flows.length<=allowed.size);assert.equal(new Set(flows).size,flows.length);assert.ok(flows.every(x=>typeof x==='string'&&allowed.has(x)));console.log('Validated affected flows:',flows.join(', '));"
       - uses: actions/checkout@v7.0.1
         with:
           persist-credentials: false
@@ -84,7 +86,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        flow: ${{ fromJSON(inputs.flows || '["native-backup"]') }}
+        flow: ${{ fromJSON(inputs.flows || '["native-backup","desktop-preferences","connection-selections"]') }}
     env:
       PACKAGE_SOURCE: b5dbcfe7ebb0f0ad12aa9719463377c5ee20ca1d
     steps:
@@ -108,6 +110,14 @@ jobs:
       - name: Bind unchanged product source, manifest, ASAR audit and exact SFX hash
         id: reuse
         run: node scripts/acceptance/verify-portable-reuse.mjs --source=$env:PACKAGE_SOURCE
+      - name: Actual desktop count and application-volume preference controls
+        if: ${{ !cancelled() && steps.reuse.outcome == 'success' && matrix.flow == 'desktop-preferences' }}
+        timeout-minutes: 12
+        run: node scripts/acceptance/cloud-desktop-preferences-acceptance.mjs --source=$env:PACKAGE_SOURCE
+      - name: Isolated loopback connection errors and per-feature pet selections
+        if: ${{ !cancelled() && steps.reuse.outcome == 'success' && matrix.flow == 'connection-selections' }}
+        timeout-minutes: 15
+        run: node scripts/acceptance/cloud-connection-selections-acceptance.mjs --source=$env:PACKAGE_SOURCE
       - name: Native local companions and natural crop maturity, never clock injection
         if: ${{ !cancelled() && steps.reuse.outcome == 'success' && matrix.flow == 'companion-economy' }}
         timeout-minutes: 38
@@ -116,8 +126,13 @@ jobs:
         if: ${{ !cancelled() && steps.reuse.outcome == 'success' && matrix.flow == 'backup-ui' }}
         timeout-minutes: 10
         run: node scripts/acceptance/cloud-backup-ui-acceptance.mjs --source=$env:PACKAGE_SOURCE
-      - name: Actual owned Windows file dialogs for backup export and restore
+      - name: Reflect exact UIA contracts before opening any application dialog
+        id: uiaapi
         if: ${{ !cancelled() && steps.reuse.outcome == 'success' && matrix.flow == 'native-backup' }}
+        timeout-minutes: 2
+        run: node scripts/acceptance/native-file-dialog.mjs --selftest
+      - name: Actual owned Windows file dialogs for backup export and restore
+        if: ${{ !cancelled() && steps.reuse.outcome == 'success' && steps.uiaapi.outcome == 'success' && matrix.flow == 'native-backup' }}
         timeout-minutes: 12
         run: node scripts/acceptance/cloud-backup-ui-acceptance.mjs --source=$env:PACKAGE_SOURCE --native-dialog
       - name: Local account lifecycle in audited SFX
@@ -179,6 +194,13 @@ jobs:
           path: |
             artifacts/qa/native-continuation/package-reuse.json
             artifacts/foundation/cloud-engineering/default-profile/run-*/evidence.json
+            artifacts/foundation/cloud-engineering/desktopPreferences/run-*/evidence.json
+            artifacts/foundation/cloud-engineering/desktopPreferences/run-*/*-failed.png
+            artifacts/foundation/cloud-engineering/connectionSelections/run-*/evidence.json
+            artifacts/foundation/cloud-engineering/connectionSelections/run-*/T06-saved-with-empty-key-input.png
+            artifacts/foundation/cloud-engineering/connectionSelections/run-*/T06-original-turn-recovered.png
+            artifacts/foundation/cloud-engineering/connectionSelections/run-*/C08-independent-first-three.png
+            artifacts/foundation/cloud-engineering/connectionSelections/run-*/C08-four-independent-roles.png
             artifacts/foundation/cloud-engineering/conversationMemory/run-*/evidence.json
             artifacts/foundation/cloud-engineering/conversationMemory/run-*/*-failed.png
             artifacts/foundation/cloud-engineering/companionEconomy/run-*/evidence.json
