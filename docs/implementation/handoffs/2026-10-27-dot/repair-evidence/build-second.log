@@ -1,0 +1,116 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> lingjing-desktop@0.1.8 build:pc
+> electron-vite build && node scripts/desktop/runtime-closure.mjs && node scripts/desktop/write-build-manifest.mjs
+
+vite v7.3.7 building ssr environment for production...
+transforming...
+✓ 1 modules transformed.
+rendering chunks...
+apps/pc-app/dist/main/index.cjs  14.57 kB
+✓ built in 137ms
+vite v7.3.7 building ssr environment for production...
+transforming...
+✓ 1 modules transformed.
+rendering chunks...
+apps/pc-app/dist/preload/index.cjs  0.90 kB
+✓ built in 14ms
+vite v7.3.7 building client environment for production...
+transforming...
+✓ 3985 modules transformed.
+rendering chunks...
+../dist/ui/index.html                                     0.84 kB
+../dist/ui/desktop.html                                   1.46 kB
+../dist/ui/feature-routes.json                            2.52 kB
+../dist/ui/.vite/manifest.json                           20.33 kB
+../dist/ui/assets/brand-mark-DlZ0bfA1.png               405.14 kB
+../dist/ui/assets/maplibre-gl-worker-BJZj9QkU.js        516.74 kB
+../dist/ui/assets/garden-food-atlas-v1-DiKuftwr.png   1,849.15 kB
+../dist/ui/assets/desktop-artwork-Dni2yrGU.png        1,933.08 kB
+../dist/ui/assets/account-artwork-xSsPx11U.png        1,952.41 kB
+../dist/ui/assets/companionship-room-v1-DVsfRJRu.png  2,079.94 kB
+../dist/ui/assets/wild-lake-v1-k7Ftd-7_.png           2,777.40 kB
+../dist/ui/assets/night-courtyard-v1-DYpzU6pT.png     2,809.62 kB
+../dist/ui/assets/garden-terrace-v1-DxO0gG7c.png      3,300.69 kB
+../dist/ui/assets/DesktopCompanion-DNYdtMJ3.css           1.24 kB
+../dist/ui/assets/index-DYF_jUc8.css                      1.36 kB
+../dist/ui/assets/index-BBw1jWVF.css                      1.41 kB
+../dist/ui/assets/BattleScreen-r5IEO0BS.css              13.23 kB
+../dist/ui/assets/ResourcePortrait-BtVfzUjW.css          13.67 kB
+../dist/ui/assets/index-C4ywuhRf.css                     18.19 kB
+../dist/ui/assets/styles-0cHkftPM.css                    21.85 kB
+../dist/ui/assets/BattleMoves-BVISVj5e.css               30.87 kB
+../dist/ui/assets/index-CX8G5YX6.css                     31.57 kB
+../dist/ui/assets/index-BcnX1dK0.css                     34.77 kB
+../dist/ui/assets/desktop-DoImPo6M.css                   56.23 kB
+../dist/ui/assets/app-B6GC6oNV.css                       65.39 kB
+../dist/ui/assets/styles-I1RYCssw.css                    90.90 kB
+../dist/ui/assets/index-CZB9Gpnt.js                       0.14 kB
+../dist/ui/assets/chevron-left-B7Do9ktZ.js                0.17 kB
+../dist/ui/assets/webworkerAll-BcTvdn4Z.js                0.19 kB
+../dist/ui/assets/plus-Bi9np6a-.js                        0.19 kB
+../dist/ui/assets/cloud-DaMB-LsH.js                       0.20 kB
+../dist/ui/assets/arrow-right-DvZrxhd7.js                 0.20 kB
+../dist/ui/assets/arrow-down-CYLVComf.js                  0.20 kB
+../dist/ui/assets/clock-3-BvHRK5iY.js                     0.20 kB
+../dist/ui/assets/search-D-5KGugM.js                      0.20 kB
+../dist/ui/assets/play-CM2zrtrt.js                        0.23 kB
+../dist/ui/assets/info-BPoZJeHJ.js                        0.24 kB
+../dist/ui/assets/pause-Dg5vrmwb.js                       0.25 kB
+../dist/ui/assets/cloud-check-Db9uGkAC.js                 0.25 kB
+../dist/ui/assets/flag-D0DrWHfL.js                        0.28 kB
+../dist/ui/assets/lock-keyhole-caFvA3Mv.js                0.29 kB
+../dist/ui/assets/heart-CkE69s24.js                       0.29 kB
+../dist/ui/assets/map-pin-BIu5jEfQ.js                     0.29 kB
+../dist/ui/assets/monitor-DW9N-vxY.js                     0.29 kB
+../dist/ui/assets/browserAll-pIGoPbZG.js                  0.31 kB
+../dist/ui/assets/bell-zs1E_3OL.js                        0.33 kB
+../dist/ui/assets/face-slightly-smiling-BYX_6_9G.js       0.33 kB
+../dist/ui/assets/desktop-policy-CBBfyBw7.js              0.34 kB
+../dist/ui/assets/refresh-cw-I_5zQJAc.js                  0.36 kB
+../dist/ui/assets/hard-drive-C4fuNRV5.js                  0.42 kB
+../dist/ui/assets/desktop-BTcEGhNm.js                     0.47 kB
+../dist/ui/assets/save-DQ_4A1Ll.js                        0.55 kB
+../dist/ui/assets/dialog-DnCx3po3.js                      0.75 kB
+../dist/ui/assets/input-Blf3-tQk.js                       0.83 kB
+../dist/ui/assets/mountain-DpKJ8I91.js                    1.03 kB
+../dist/ui/assets/display-identity-C4-AnOPq.js            2.81 kB
+../dist/ui/assets/CompanionPortrait-BbAWv8r7.js           3.16 kB
+../dist/ui/assets/switch-DFW4XuGG.js                      5.05 kB
+../dist/ui/assets/checkbox-xyWZuG9a.js                    5.11 kB
+../dist/ui/assets/DesktopCompanion-DuZlqwMG.js            5.52 kB
+../dist/ui/assets/popover-BLV83Rj3.js                     5.80 kB
+../dist/ui/assets/dialog-Cop7bpwU.js                      5.92 kB
+../dist/ui/assets/tabs-bCHtWkFV.js                        9.13 kB
+../dist/ui/assets/ResourcePortrait-DTH3dEkd.js            9.23 kB
+../dist/ui/assets/init-Dm0OLMjo.js                       10.10 kB
+../dist/ui/assets/BattleMoves-MCyjDjUm.js                11.47 kB
+../dist/ui/assets/slider-3dHMRmZj.js                     11.58 kB
+../dist/ui/assets/scroll-area-C6n9tvWX.js                14.33 kB
+../dist/ui/assets/index-DNFbNgc1.js                      20.54 kB
+../dist/ui/assets/index--DV-mvQa.js                      20.88 kB
+../dist/ui/assets/index-CUJ3llkF.js                      22.07 kB
+../dist/ui/assets/BattleScreen-C-VqG8WI.js               22.23 kB
+../dist/ui/assets/index-hA9KXIDC.js                      28.08 kB
+../dist/ui/assets/index-a17RlRkR.js                      36.83 kB
+../dist/ui/assets/index-CEKP-dwW.js                      40.30 kB
+../dist/ui/assets/select-BXeq35eU.js                     46.00 kB
+../dist/ui/assets/app-BJLY4UrU.js                        69.35 kB
+../dist/ui/assets/ParticleBuffer-BNlxme8g.js            125.92 kB
+../dist/ui/assets/index-eSm_noIH.js                     403.15 kB
+../dist/ui/assets/motion-BZgq_lI1.js                    407.85 kB
+../dist/ui/assets/index-pFVicD5v.js                     777.67 kB
+../dist/ui/assets/styles-CvosMzsB.js                  1,079.13 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 10.34s
+Runtime closure: 125 files, 219 edges, 6 JS/MJS dependencies
+Build provenance: 3a5dd98c48a9 · db4da0d549c8
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice

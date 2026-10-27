@@ -1,0 +1,77 @@
+{
+  "observedAt": "2026-10-27T05:37:07.199322+00:00",
+  "sourceCommit": "3a5dd98c48a91c9aed4c943ae5e82be889cbbc3d",
+  "scope": "TODO6 inherited evidence supplement, no frozen status rewrites",
+  "BC-001": {
+    "engineering": "accounts cloud-refresh independent domain refresh tested",
+    "status": "current narrow engineering passed; old native issue remains inherited, not promoted"
+  },
+  "BC-002": {
+    "engineering": "companions cloud-authority unchanged failure feedback bounded and recovery same original action tested",
+    "status": "current narrow engineering passed; old Windows proxy CONNECT storm root cause not claimed closed"
+  },
+  "combinedBcTests": {
+    "passed": 17,
+    "failed": 0,
+    "evidence": "inherited-bc-source.tap"
+  },
+  "QA-027": {
+    "source": "apps/pc-app/ui/src/features/resources/useResources.ts",
+    "sourceSha256": "dd5f816def531d39416354db9c0896a2c25e6ede981205efdda4927f4d57f5b3",
+    "passed": 22,
+    "failed": 0,
+    "evidence": "qa027-current-jsdom.json",
+    "boundary": "JSDOM current source; unchanged original hook and frozen results"
+  },
+  "I02": {
+    "recordingKind": "supplement recorded now, not new execution",
+    "originalSourceCommit": "4e6c3de41c82223f067ec7e213e6328a0eebe06f",
+    "originalActionId": "6b2885d2-dc8a-43bf-9caa-dc0be721380b",
+    "proof": "../../2026-10-27-cloud-authority-paused/proofs/root-I02-single-rice-craft-effects-independent.json",
+    "originalProofTime": "2026-10-26T23:49:42.325Z",
+    "cloudRevision": [
+      38,
+      39
+    ],
+    "gardenRevision": [
+      10,
+      11
+    ],
+    "rice": [
+      1,
+      0
+    ],
+    "cookedRice": [
+      1,
+      2
+    ],
+    "exactlyOnce": true,
+    "otherStateUnchanged": true,
+    "screenshot": "../../2026-10-27-cloud-authority-paused/screenshots/native-I02-original-B2-insufficient-material-disabled-retry.png",
+    "remaining": "Original local/second-client readback subchecks not present; no new action and no new-version pass claimed"
+  },
+  "QA-021": {
+    "passed": 4,
+    "failed": 0,
+    "evidence": "qa021-guidance.json",
+    "boundary": "Actual React components, synthetic IPC; original native issue not marked closed",
+    "verified": [
+      "local-difference notice links to account rather than redoing restore",
+      "disabled sync explanation remains honest",
+      "explicit original record id/revision choice, no automatic restore or settings change"
+    ]
+  },
+  "I03-C07": {
+    "passed": 4,
+    "failed": 0,
+    "evidence": "i03-c07-source.tap",
+    "boundary": "Actual Linux Electron run-as-node and isolated SQLite; not new original-owner cloud interaction",
+    "verified": [
+      "selected original fixture pet only",
+      "inventory and replay exactly once",
+      "failed companion update rolls back",
+      "invalid quantity/stale revision not charged",
+      "cooldown per pet with no invalid writes"
+    ]
+  }
+}

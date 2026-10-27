@@ -1,0 +1,123 @@
+{
+  "kind": "jsdom-source-only",
+  "nativePassed": false,
+  "baseline": false,
+  "source": "apps/pc-app/ui/src/features/resources/useResources.ts",
+  "sourceSha256": "dd5f816def531d39416354db9c0896a2c25e6ede981205efdda4927f4d57f5b3",
+  "fixtureSha256": "1fbb30c74bc41f1c4e53be2132b19883e43e66735df4f5ae0518dda576e228a1",
+  "startedAt": "2026-10-27T05:36:21.343Z",
+  "results": [
+    {
+      "name": "1: repeated same-version/document notifications preserve selection identity and dirty draft",
+      "passed": true,
+      "durationMs": 17
+    },
+    {
+      "name": "2: another resource changes without warning or clearing the selected dirty draft",
+      "passed": true,
+      "durationMs": 3
+    },
+    {
+      "name": "3: actual same-resource document change retains draft and CAS rejection; discard adopts latest baseline",
+      "passed": true,
+      "durationMs": 3
+    },
+    {
+      "name": "4: a higher revision with identical document remains a real stale-CAS warning",
+      "passed": true,
+      "durationMs": 2
+    },
+    {
+      "name": "5: descriptor and availability changes at the same revision retain draft and warn",
+      "passed": true,
+      "durationMs": 2
+    },
+    {
+      "name": "6: removal retains the dirty draft until explicit discard, without resurrecting the resource",
+      "passed": true,
+      "durationMs": 2
+    },
+    {
+      "name": "7: starting an edit while a list reply is pending does not lose that edit",
+      "passed": true,
+      "durationMs": 3
+    },
+    {
+      "name": "8: a selection change invalidates an old pending list reply",
+      "passed": true,
+      "durationMs": 2
+    },
+    {
+      "name": "9: an old list reply cannot overwrite the result of a single successful save",
+      "passed": true,
+      "durationMs": 2
+    },
+    {
+      "name": "10: changes during a held save are coalesced into a post-save refresh",
+      "passed": true,
+      "durationMs": 3
+    },
+    {
+      "name": "11: owner switch rejects old reads and old-owner events",
+      "passed": true,
+      "durationMs": 2
+    },
+    {
+      "name": "12: an old-owner save completion cannot clear or overwrite a newer owned operation",
+      "passed": true,
+      "durationMs": 2
+    },
+    {
+      "name": "13: a session event supersedes an older initial owner lookup",
+      "passed": true,
+      "durationMs": 2
+    },
+    {
+      "name": "14: own import selects the imported resource; an old-owner import result is ignored",
+      "passed": true,
+      "durationMs": 2
+    },
+    {
+      "name": "15: later replies win over older list snapshots; unmount removes subscriptions",
+      "passed": true,
+      "durationMs": 2
+    },
+    {
+      "name": "16: repeated same-owner session events preserve a held save lock, draft and successful result",
+      "passed": true,
+      "durationMs": 2
+    },
+    {
+      "name": "17: repeated same-owner session events preserve a held import lock and select its single result",
+      "passed": true,
+      "durationMs": 2
+    },
+    {
+      "name": "18: an old initial owner lookup and repeated same-owner events cannot cancel a held save",
+      "passed": true,
+      "durationMs": 3
+    },
+    {
+      "name": "19: an old initial owner lookup and same-owner events cannot cancel a held import",
+      "passed": true,
+      "durationMs": 3
+    },
+    {
+      "name": "20: same-owner profile refreshes without an operation preserve a dirty draft and unchanged selection identity",
+      "passed": true,
+      "durationMs": 2
+    },
+    {
+      "name": "21: logout still isolates a held save result and does not repopulate the signed-out view",
+      "passed": true,
+      "durationMs": 2
+    },
+    {
+      "name": "22: same-owner events also preserve the import lock while its required list refresh is held",
+      "passed": true,
+      "durationMs": 2
+    }
+  ],
+  "passed": 22,
+  "completedAt": "2026-10-27T05:36:21.584Z"
+}

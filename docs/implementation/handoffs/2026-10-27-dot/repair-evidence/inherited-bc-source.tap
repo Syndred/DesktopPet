@@ -1,0 +1,25 @@
+✔ cloud refresh ignores the retired full-save switch and reads independent authoritative domains (3.102588ms)
+✔ a failed personal-record read does not prevent a successful gameplay read and reports its actual incomplete state (0.667037ms)
+✔ a permission failure is reported per domain while an inventory-only refresh still executes independently (0.571112ms)
+✔ overall cloud status cannot claim complete while personal records are uninitialized, and a successful manual read clears an old domain error (0.920097ms)
+✔ a response from the previous account cannot publish a successful refresh after switching (6.768008ms)
+✔ logging out immediately removes the previous owner subscription and its pending refresh (10.458933ms)
+✔ PROTOCOL SIMULATION: unchanged failures stop the change/read feedback loop while recovery still publishes (82.05616ms)
+✔ PROTOCOL SIMULATION: read-only refresh does not replay an unrelated immutable pending command (16.214053ms)
+✔ PROTOCOL SIMULATION: an old desktop intent reads its exact receipt and migrates locally without a cloud command (31.992358ms)
+✔ PROTOCOL SIMULATION: offline-before-send intent is durable and restart sends its original request exactly once (13.208771ms)
+✔ PROTOCOL SIMULATION: an uncertain committed adoption reads its immutable receipt after restart without creating another same-template pet (14.862645ms)
+✔ PROTOCOL SIMULATION: a post-receipt snapshot version race persists retry and restarts from the original action without resending the command (23.668595ms)
+✔ PROTOCOL SIMULATION: consecutive offline positions retain immutable unknown requests and coalesce only drafts that were never sent (38.295965ms)
+✔ PROTOCOL SIMULATION: unknown local progress and account switches preserve both owner namespaces instead of overwriting cached pets (4.426716ms)
+✔ PROTOCOL SIMULATION: verified companion readback preserves unrelated offline data and the original common-save request without advancing its base (17.217736ms)
+✔ PROTOCOL SIMULATION: a cached original-action replay queued behind a network read cannot return an old-owner pet after account switch (9.655331ms)
+✔ PROTOCOL SIMULATION: automatic readback preserves capture bindings, original owner archives and monotonic interaction history (41.055301ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 17
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 427.730377

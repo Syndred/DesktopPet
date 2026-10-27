@@ -52,13 +52,17 @@ jobs:
         shell: pwsh
         run: |
           $files = @(Get-ChildItem tests/regressions/cloud-repair/*.test.cjs | ForEach-Object { $_.FullName })
-          $files += @('tests/foundation/resource-backup.test.cjs', 'apps/pc-app/runtime/features/conversations/tests/cloud-records.test.cjs', 'apps/pc-app/runtime/features/accounts/tests/supabase-main.test.cjs')
+          $files += @('tests/foundation/resource-backup.test.cjs', 'apps/pc-app/runtime/features/conversations/tests/cloud-records.test.cjs', 'apps/pc-app/runtime/features/accounts/tests/supabase-main.test.cjs', 'apps/pc-app/runtime/features/accounts/tests/cloud-refresh.test.cjs', 'apps/pc-app/runtime/features/companions/tests/cloud-authority.test.cjs')
           New-Item -ItemType Directory -Force artifacts/qa/dot-repair-20261027 | Out-Null
           node scripts/desktop/run-native-tests.cjs @files | Tee-Object artifacts/qa/dot-repair-20261027/windows-native-regressions.tap
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           node --test tests/regressions/cloud-repair/garden-pending-recovery.test.mjs | Tee-Object artifacts/qa/dot-repair-20261027/windows-garden-recovery.tap
+      - name: Selected-pet feed and per-pet interaction guard regressions
+        run: node scripts/desktop/run-native-tests.cjs --test-name-pattern="recipe consumes|failed companion update|invalid quantities|touch cooldown" apps/pc-app/runtime/features/garden/garden.test.cjs apps/pc-app/runtime/features/companions/tests/service.test.cjs
       - name: Real Windows Chromium draft preservation and CAS regression
         run: node tests/regressions/cloud-repair/run-conversation-settings.mjs
+      - name: Existing QA-027 resource draft regression in real Windows Chromium
+        run: npm run test:resources-hook
       - name: Install optional DOM-only test dependency outside product checkout
         shell: pwsh
         run: |
@@ -73,6 +77,10 @@ jobs:
           node tests/regressions/cloud-repair/run-account-restore-ui.mjs | Tee-Object artifacts/qa/dot-repair-20261027/account-ui-windows.json
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           node tests/regressions/cloud-repair/run-about-dom.cjs | Tee-Object artifacts/qa/dot-repair-20261027/about-ui-windows.json
+      - name: QA-021 conflict guidance and preserved-record action boundaries
+        run: node tests/regressions/cloud-repair/run-qa021-guidance.mjs | Tee-Object artifacts/qa/dot-repair-20261027/qa021-windows.json
+      - name: Actual App public About whitelist and protected route gate
+        run: node tests/regressions/cloud-repair/run-app-public-about.mjs | Tee-Object artifacts/qa/dot-repair-20261027/app-about-windows.json
       - name: Build actual portable Windows executable from clean committed source
         run: npm run package:pc:win
       - name: Verify ASAR closure, exact source/native bytes and public-only config
@@ -96,7 +104,10 @@ jobs:
             artifacts/foundation/cloud-engineering/focused-portable/*/about.png
             artifacts/foundation/cloud-engineering/focused-portable/*/ordinary-config/evidence.json
             artifacts/qa/dot-repair-20261027/dom-runs/*/report.json
+            artifacts/qa/resource-hook-regressions/*/report.json
             artifacts/qa/dot-repair-20261027/account-ui-windows.json
             artifacts/qa/dot-repair-20261027/about-ui-windows.json
+            artifacts/qa/dot-repair-20261027/qa021-windows.json
+            artifacts/qa/dot-repair-20261027/app-about-windows.json
             artifacts/qa/dot-repair-20261027/windows-native-regressions.tap
             artifacts/qa/dot-repair-20261027/windows-garden-recovery.tap

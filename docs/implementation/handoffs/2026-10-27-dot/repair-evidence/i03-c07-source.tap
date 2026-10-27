@@ -1,0 +1,12 @@
+✔ touch cooldown belongs to each pet and persists; invalid positions and names do not write (7.753026ms)
+✔ recipe consumes rice and food debits one, changes only the selected real companion (21.007837ms)
+✔ failed companion update rolls back inventory, ledger, revision and action (5.188574ms)
+✔ invalid quantities, stale revisions and raw rice cannot consume inventory (5.622269ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 144.586037

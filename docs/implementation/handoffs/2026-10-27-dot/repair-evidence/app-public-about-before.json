@@ -1,0 +1,46 @@
+{
+  "relatedSourceHashes": {
+    "apps/pc-app/ui/src/app/navigation.ts": "a1008e43bc5e23860b04ca005cbfcf1b47a0b155bee81ed3f7564c89d3463101",
+    "apps/pc-app/ui/src/app/bridge.ts": "bd34a08dad0389e881e744b5b2c511676b77369cac19832b7202e89f596d1593",
+    "apps/pc-app/ui/src/features/accounts/about.tsx": "1b33c25502089550df76ce0460efdb190bcb00449c869d5cfa82dfd85a9cb8e7"
+  },
+  "testBoundary": "Actual App gate/navigation/bridge/About; isolated route registry and animation wrapper only",
+  "kind": "jsdom-source-only",
+  "nativePassed": false,
+  "baseline": true,
+  "source": "apps/pc-app/ui/src/app/App.tsx",
+  "sourceSha256": "3e6074822a06a1ccedbcc2bb5d28af67e1d93dff417dae330d68fdaa743081f4",
+  "fixtureSha256": "4448d03cda76712a0f1f09e5eee2ceafcea07d46d14816ac5568ca33e0e12c36",
+  "startedAt": "2026-10-27T05:45:36.354Z",
+  "results": [
+    {
+      "name": "session loading does not prevent public About from displaying version information",
+      "passed": false,
+      "error": "Error: Public About must not depend on authentication readiness\n    at check (eval at <anonymous> (file:///workspace/scratch/857bd0cbeaf1/DesktopPet/tests/regressions/cloud-repair/run-app-public-about.mjs:34:14), <anonymous>:30092:23)\n    at eval (eval at <anonymous> (file:///workspace/scratch/857bd0cbeaf1/DesktopPet/tests/regressions/cloud-repair/run-app-public-about.mjs:34:14), <anonymous>:30151:7)\n    at async window.runHookRegressions (eval at <anonymous> (file:///workspace/scratch/857bd0cbeaf1/DesktopPet/tests/regressions/cloud-repair/run-app-public-about.mjs:34:14), <anonymous>:30192:9)\n    at async file:///workspace/scratch/857bd0cbeaf1/DesktopPet/tests/regressions/cloud-repair/run-app-public-about.mjs:35:20"
+    },
+    {
+      "name": "logged-out exact About route reaches real public About instead of auth",
+      "passed": false,
+      "error": "Error: Actual App gate swallowed public About route\n    at check (eval at <anonymous> (file:///workspace/scratch/857bd0cbeaf1/DesktopPet/tests/regressions/cloud-repair/run-app-public-about.mjs:34:14), <anonymous>:30092:23)\n    at eval (eval at <anonymous> (file:///workspace/scratch/857bd0cbeaf1/DesktopPet/tests/regressions/cloud-repair/run-app-public-about.mjs:34:14), <anonymous>:30155:7)\n    at async window.runHookRegressions (eval at <anonymous> (file:///workspace/scratch/857bd0cbeaf1/DesktopPet/tests/regressions/cloud-repair/run-app-public-about.mjs:34:14), <anonymous>:30192:9)\n    at async file:///workspace/scratch/857bd0cbeaf1/DesktopPet/tests/regressions/cloud-repair/run-app-public-about.mjs:35:20"
+    },
+    {
+      "name": "logged-out business and other settings remain gated",
+      "passed": true
+    },
+    {
+      "name": "unknown paths and About-like prefixes do not bypass authentication",
+      "passed": true
+    },
+    {
+      "name": "signed-in business routing and primary navigation remain available",
+      "passed": true
+    },
+    {
+      "name": "public version link reaches About and return-to-settings restores auth gate",
+      "passed": false,
+      "error": "Error: Version About link is not reachable through App\n    at check (eval at <anonymous> (file:///workspace/scratch/857bd0cbeaf1/DesktopPet/tests/regressions/cloud-repair/run-app-public-about.mjs:34:14), <anonymous>:30092:23)\n    at cases (eval at <anonymous> (file:///workspace/scratch/857bd0cbeaf1/DesktopPet/tests/regressions/cloud-repair/run-app-public-about.mjs:34:14), <anonymous>:30183:7)\n    at async window.runHookRegressions (eval at <anonymous> (file:///workspace/scratch/857bd0cbeaf1/DesktopPet/tests/regressions/cloud-repair/run-app-public-about.mjs:34:14), <anonymous>:30192:9)\n    at async file:///workspace/scratch/857bd0cbeaf1/DesktopPet/tests/regressions/cloud-repair/run-app-public-about.mjs:35:20"
+    }
+  ],
+  "passed": 3,
+  "completedAt": "2026-10-27T05:45:39.892Z"
+}

@@ -28,3 +28,21 @@ P1/P2 的真实已登录双端原身份验收仍与工程测试分开；未新�
 这些 fixture 不连接真实云、不注册账号、不消费模型或写用户资料。
 
 程序位置验收区分稳定 EXE 路径与 IPC 正常返回；Electron `showItemInFolder` 返回 void，不将无错误冒充 Explorer 窗口已视觉确认。
+
+## TODO6 补核（不重做历史操作）
+
+- BC-001/002：当前两份直接关联回归共 17/17 通过，验证各域独立刷新、unchanged 失败事件有界和同原 action 恢复；不把它冒充旧 Windows 代理连接风暴已原生闭环。
+- QA-027：原 22 资源 hook 场景以当前源码 JSDOM 复跑 22/22；没有修改资源 hook，不重复制造已处理故障。
+- I02：补录原 4e6 成功合成的独立 proof 和材料不足按钮证据位置；不是重新执行，也不篡改原 pending 登记。原本地/第二端读回子项仍单列未覆盖。
+
+[补核结构化记录](repair-evidence/inherited-supplement.json)
+
+QA-021 当前实际组件 4/4 工程场景通过：真实差异说明、正确账号入口、同步关闭提示、原记录逐条显式处理；没有删除差异 gate、强开同步或自动重复恢复。原 native 状态仍单列。
+
+I03/C07 可独立代码路径：真实 Electron Node 模式 4/4 通过（指定宠喂养、回执去重、失败事务回滚、无效数量/旧版本、每宠冷却）。这不是恢复旧生产操作许可，原账号快速喂养/互动未擅自重做。
+
+## 云端 Windows 首轮与闭环
+
+首轮 `3a5dd98c` 已实际构建便携 EXE、通过 ASAR 审计、普通启动和登录版本显示；但登录页关于链接被外层 App 登录门禁覆盖，真实 SFX 发现后未判通过。现仅给 `/settings/about` 放行公共诊断，业务路由继续登录门禁；补外层 App 路由回归并重跑云 Windows。详见 [首轮失败记录](repair-evidence/windows-first-run.json)。
+
+外层实际 App 路由工程回归 6/6 通过，修复前相同 fixture 3 失败；仅 route registry 和 motion wrapper 隔离，真实 gate/navigation/bridge/About 保留。包含加载中公共关于、未登录链接/返回、受保护业务与相似前缀、已登录原业务导航。motion 与真实注册仍由第二轮 Windows portable 验证。

@@ -1,0 +1,24 @@
+{
+  "observedAt": "2026-10-27T05:44:13.159093+00:00",
+  "run": "https://github.com/Syndred/DesktopPet/actions/runs/40456198636",
+  "jobId": 122029973935,
+  "sourceCommit": "3a5dd98c48a91c9aed4c943ae5e82be889cbbc3d",
+  "status": "failure",
+  "passed": [
+    "ordinary dependency install",
+    "Node/Electron SQLite",
+    "desktop/UI typecheck",
+    "targeted CJS actual Windows Electron",
+    "9 real Chromium draft regressions",
+    "account/about component DOM",
+    "actual portable build",
+    "ASAR dependency/native/public config audit",
+    "ordinary SFX launch and login version"
+  ],
+  "failed": "Click login About link did not render About heading within 30 seconds",
+  "cause": "App.tsx unconditionally routed every unauthenticated path to AccountPage; component-only About tests did not cover outer application gate",
+  "fix": "Whitelist only /settings/about in App rendering gate; retain login requirement for all business routes",
+  "executableSha256": "166fac7264b2c36f743c69596e64e16ec1180dd6747fc899f6a465a1b971a732",
+  "artifactId": 12712423130,
+  "acceptance": "This first executable is not final accepted; rerun after gate fix required"
+}

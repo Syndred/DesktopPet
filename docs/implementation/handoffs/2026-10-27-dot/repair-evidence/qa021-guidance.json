@@ -1,0 +1,33 @@
+{
+  "frozenIssueStatus": "fix_prepared_awaiting_integration; nativeFixVerified=false retained",
+  "relatedSourceHashes": {
+    "apps/pc-app/ui/src/features/companions/components.tsx": "5b08daa5a30110101cce4e87635c0b8ee27c5e2aa477dc60ae93c8a5f29fa733",
+    "apps/pc-app/ui/src/features/accounts/preserved-records.tsx": "2ec042388d330bb9db6ef7ab05335b4d55e09c50781a8a712866e42f8ccc589d"
+  },
+  "kind": "jsdom-source-only",
+  "nativePassed": false,
+  "source": "apps/pc-app/ui/src/features/accounts/account.tsx",
+  "sourceSha256": "ae6755a352df1a4d031cc127de1dd0146cd0f219243605f07d3bb603cf9173b0",
+  "fixtureSha256": "c04f854b57de9d2eb5623458c1f9c3bc395d33f7e59e66b2ab6a71e8ff4a46e7",
+  "startedAt": "2026-10-27T05:37:23.185Z",
+  "results": [
+    {
+      "name": "confirmed local difference explains the retained branch and navigates to account details without replay",
+      "passed": true
+    },
+    {
+      "name": "fully confirmed state renders no stale restore prompt",
+      "passed": true
+    },
+    {
+      "name": "legacy retained sync-off branch is explained without enabling sync or reopening restore",
+      "passed": true
+    },
+    {
+      "name": "cloud-authoritative preserved records offer explicit per-record choice and do not loop to backup restore",
+      "passed": true
+    }
+  ],
+  "passed": 4,
+  "completedAt": "2026-10-27T05:37:24.010Z"
+}
