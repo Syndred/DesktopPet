@@ -6,7 +6,7 @@ on:
       flows:
         description: 'Explicit JSON array of affected native flows; omitted successful flows retain version-bound receipts'
         required: false
-        default: '["backup-ui","navigation","resources","lifecycle","desktop-engineering","context","default-profile","conversation-memory"]'
+        default: '["lifecycle","native-backup"]'
   push:
     branches: ['codex/cloud-authority-convergence']
     paths:
@@ -16,6 +16,7 @@ on:
       - 'scripts/acceptance/cloud-default-profile-readback.mjs'
       - 'scripts/acceptance/cloud-conversation-memory-acceptance.mjs'
       - 'scripts/acceptance/cloud-backup-ui-acceptance.mjs'
+      - 'scripts/acceptance/native-file-dialog.mjs'
       - 'scripts/acceptance/cloud-companion-economy-acceptance.mjs'
       - 'scripts/acceptance/portable-session.mjs'
       - 'scripts/acceptance/cloud-loggedout-window-smoke.mjs'
@@ -44,9 +45,9 @@ jobs:
     steps:
       - name: Reject empty, duplicate or unknown flow selections
         env:
-          SELECTED_FLOWS: ${{ inputs.flows || '["backup-ui","navigation","resources","lifecycle","desktop-engineering","context","default-profile","conversation-memory"]' }}
+          SELECTED_FLOWS: ${{ inputs.flows || '["lifecycle","native-backup"]' }}
         run: |
-          node -e "const assert=require('node:assert/strict');const flows=JSON.parse(process.env.SELECTED_FLOWS);const allowed=new Set(['companion-economy','backup-ui','accounts-navigation','navigation','resources','lifecycle','desktop-engineering','battle-context','context','default-profile','conversation-memory']);assert.ok(Array.isArray(flows)&&flows.length>0&&flows.length<=allowed.size);assert.equal(new Set(flows).size,flows.length);assert.ok(flows.every(x=>typeof x==='string'&&allowed.has(x)));console.log('Validated affected flows:',flows.join(', '));"
+          node -e "const assert=require('node:assert/strict');const flows=JSON.parse(process.env.SELECTED_FLOWS);const allowed=new Set(['companion-economy','native-backup','backup-ui','accounts-navigation','navigation','resources','lifecycle','desktop-engineering','battle-context','context','default-profile','conversation-memory']);assert.ok(Array.isArray(flows)&&flows.length>0&&flows.length<=allowed.size);assert.equal(new Set(flows).size,flows.length);assert.ok(flows.every(x=>typeof x==='string'&&allowed.has(x)));console.log('Validated affected flows:',flows.join(', '));"
       - uses: actions/checkout@v7.0.1
         with:
           persist-credentials: false
@@ -83,7 +84,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        flow: ${{ fromJSON(inputs.flows || '["backup-ui","navigation","resources","lifecycle","desktop-engineering","context","default-profile","conversation-memory"]') }}
+        flow: ${{ fromJSON(inputs.flows || '["lifecycle","native-backup"]') }}
     env:
       PACKAGE_SOURCE: b5dbcfe7ebb0f0ad12aa9719463377c5ee20ca1d
     steps:
@@ -115,6 +116,10 @@ jobs:
         if: ${{ !cancelled() && steps.reuse.outcome == 'success' && matrix.flow == 'backup-ui' }}
         timeout-minutes: 10
         run: node scripts/acceptance/cloud-backup-ui-acceptance.mjs --source=$env:PACKAGE_SOURCE
+      - name: Actual owned Windows file dialogs for backup export and restore
+        if: ${{ !cancelled() && steps.reuse.outcome == 'success' && matrix.flow == 'native-backup' }}
+        timeout-minutes: 12
+        run: node scripts/acceptance/cloud-backup-ui-acceptance.mjs --source=$env:PACKAGE_SOURCE --native-dialog
       - name: Local account lifecycle in audited SFX
         if: ${{ !cancelled() && steps.reuse.outcome == 'success' && matrix.flow == 'accounts-navigation' }}
         timeout-minutes: 8
