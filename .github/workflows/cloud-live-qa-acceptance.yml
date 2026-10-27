@@ -1,7 +1,9 @@
 name: DesktopPet explicitly authorized live QA acceptance
 
 on:
-  workflow_dispatch:
+  push:
+    branches: ['codex/cloud-authority-convergence']
+    paths: ['scripts/acceptance/requests/live-qa-20261027.json']
 
 permissions:
   contents: read
@@ -13,9 +15,9 @@ concurrency:
 
 jobs:
   scoped-live:
-    if: github.ref == 'refs/heads/codex/cloud-authority-convergence' && github.run_attempt == 1
+    if: github.ref == 'refs/heads/codex/cloud-authority-convergence' && github.event_name == 'push' && github.run_attempt == 1 && github.actor == 'Syndred' && github.triggering_actor == 'Syndred' && github.event.head_commit.message == 'acceptance: execute authorized two-QA batch 8be246d1-7bc5-4d1a-a3b4-81e5c09f6072 [native-only]'
     runs-on: windows-latest
-    timeout-minutes: 58
+    timeout-minutes: 105
     env:
       PACKAGE_SOURCE: b5dbcfe7ebb0f0ad12aa9719463377c5ee20ca1d
       QA_OUTPUT: artifacts/qa/live-qa-holder
@@ -28,6 +30,8 @@ jobs:
         with:
           node-version: 24
           cache: npm
+      - name: Validate the exact one-time request commit before any registration
+        run: node scripts/acceptance/cloud-live-qa-request.mjs --check
       - run: npm ci
       - uses: actions/download-artifact@v8.0.2
         with:
@@ -40,7 +44,8 @@ jobs:
       - name: Register at most two dedicated accounts and retain passwords only in this job's process memory
         timeout-minutes: 5
         run: |
-          $scenario = "cloud-acceptance-$env:GITHUB_RUN_ID-$env:GITHUB_RUN_ATTEMPT"
+          $request = Get-Content -LiteralPath scripts/acceptance/requests/live-qa-20261027.json -Raw | ConvertFrom-Json
+          $scenario = $request.scenario
           ./scripts/acceptance/cloud-live-qa-process.ps1 -Action start -Output $env:QA_OUTPUT -Executable artifacts/pc-cloud-upgrade/Lingjing-0.1.8-portable-x64.exe -Source $env:PACKAGE_SOURCE -Scenario $scenario
           ./scripts/acceptance/cloud-live-qa-process.ps1 -Action identity -Output $env:QA_OUTPUT
       - name: Publish only non-secret exact identities for separately authorized grant verification
@@ -51,7 +56,7 @@ jobs:
           if-no-files-found: error
           path: artifacts/qa/live-qa-holder/identity.json
       - name: Wait for exact three-device grant and execute reviewed scoped cases in the same process
-        timeout-minutes: 47
+        timeout-minutes: 94
         run: ./scripts/acceptance/cloud-live-qa-process.ps1 -Action final -Output $env:QA_OUTPUT
       - name: Stop only this job's owned holder and child processes
         if: always()
@@ -73,3 +78,9 @@ jobs:
             artifacts/qa/live-qa-holder/final.json
             artifacts/qa/live-qa-holder/live-business-intents.json
             artifacts/qa/live-qa-holder/live-business-evidence.json
+            artifacts/qa/live-qa-holder/live-record-intents.json
+            artifacts/qa/live-qa-holder/live-record-evidence.json
+            artifacts/qa/live-qa-holder/live-game-intents.json
+            artifacts/qa/live-qa-holder/live-game-evidence.json
+            artifacts/qa/live-qa-holder/live-discovery-intents.json
+            artifacts/qa/live-qa-holder/live-discovery-evidence.json

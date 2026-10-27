@@ -45,7 +45,7 @@ if ($Action -eq 'stop') {
  exit 0
 }
 $file=Join-Path $directory ($Action+'.json')
-$seconds=if($Action -eq 'identity'){240}else{2850}
+$seconds=if($Action -eq 'identity'){240}else{5550}
 $deadline=[DateTime]::UtcNow.AddSeconds($seconds)
 while (!(Test-Path -LiteralPath $file)) {
  if (Test-Path -LiteralPath (Join-Path $directory 'final.json')) { throw 'Holder ended before requested milestone; inspect fixed-field final receipt' }
