@@ -1,9 +1,9 @@
 // Focused D08: normal settings UI and real owned-main fullscreen/restoration.
 // Reuse the audited changed-product SFX; no user computer or OS settings mutations.
 import assert from 'node:assert/strict';
-import {execFileSync} from 'node:child_process';
+import {execFileSync,spawn} from 'node:child_process';
 import {createRequire} from 'node:module';
-import {randomUUID} from 'node:crypto';
+import {randomUUID,createHash} from 'node:crypto';
 import {mkdtempSync,mkdirSync,readFileSync,writeFileSync,realpathSync,rmSync} from 'node:fs';
 import {tmpdir} from 'node:os';
 import {resolve,join,dirname,basename} from 'node:path';
@@ -87,6 +87,35 @@ async function step(id,fn){proof.stage=id;const row={id,startedAt:new Date().toI
  return result;
 });}
 
+// Diagnostic contrast only: identical packaged script, normal runner environment.
+// Neither probe can satisfy acceptance or mutate/restart the product monitor.
+async function normalRunnerMonitorContrast(){
+ const encoded=await model.main(()=>{const fs=process.getBuiltinModule('node:fs'),path=process.getBuiltinModule('node:path');return Buffer.from(fs.readFileSync(path.join(process.resourcesPath,'app.asar','apps','pc-app','runtime','features','accounts','foreground-fullscreen.ps1'),'utf8').replace(/^\uFEFF/,''),'utf16le').toString('base64');});
+ const script=Buffer.from(encoded,'base64').toString('utf16le'),scriptSha256=createHash('sha256').update(script).digest('hex');
+ assert.equal(scriptSha256,proof.monitorDiagnostic.scriptSha256);
+ const directory=mkdtempSync(join(tmpdir(),'lingjing-monitor-contrast-')),file=join(directory,'foreground-fullscreen.ps1');
+ const executable=join(process.env.SystemRoot||'C:\\Windows','System32','WindowsPowerShell','v1.0','powershell.exe');
+ const result={scriptSha256,normalRunnerEnvironment:true,originalMonitorNotRestarted:true,probes:[]};
+ try{
+  writeFileSync(file,script,'utf8');assert.equal(createHash('sha256').update(readFileSync(file)).digest('hex'),scriptSha256);
+  for(const mode of ['EncodedCommand','File']){
+   const row={mode,stdoutByteCount:0,firstBytesHex:'',protocol:[],stderrCategories:[]};result.probes.push(row);
+   let child,timer,finish;const done=new Promise(resolve=>{finish=resolve;});let pending='',stderr='';
+   try{
+    child=spawn(executable,['-NoLogo','-NoProfile','-NonInteractive','-ExecutionPolicy','Bypass',`-${mode}`,mode==='File'?file:encoded],{env:{...process.env},windowsHide:true,stdio:['ignore','pipe','pipe']});row.pid=child.pid;
+    child.on('error',()=>{row.spawnError='OWNED_NORMAL_ENV_PROBE_SPAWN_FAILED';finish();});child.on('exit',(code,signal)=>{row.exitCode=code;row.signalCode=signal;finish();});
+    child.stdout.on('data',bytes=>{row.stdoutByteCount+=bytes.length;if(row.firstBytesHex.length<256)row.firstBytesHex+=Buffer.from(bytes).subarray(0,(256-row.firstBytesHex.length)/2).toString('hex');pending=(pending+bytes.toString()).slice(-4096);const lines=pending.split(/\r?\n/);pending=lines.pop()||'';for(const line of lines)if((line==='true'||line==='false')&&row.protocol.length<8){row.protocol.push(line);finish();}});
+    child.stderr.on('data',bytes=>{stderr=(stderr+bytes.toString()).slice(-4096);for(const [text,code]of [['CommandNotFoundException','COMMAND_NOT_FOUND'],['Add-Type','ADD_TYPE_ERROR'],['ParserError','PARSER_ERROR'],['UnauthorizedAccess','ACCESS_DENIED'],['PSSecurityException','SECURITY_ERROR']])if(stderr.includes(text)&&!row.stderrCategories.includes(code))row.stderrCategories.push(code);if(bytes.length&&!row.stderrCategories.length)row.stderrCategories.push('UNCLASSIFIED_STDERR_PRESENT');});
+    timer=setTimeout(()=>{row.timedOut=true;finish();},15000);await done;
+   }finally{
+    clearTimeout(timer);
+    if(child?.pid){if(child.exitCode===null&&child.signalCode===null){row.cleanupTerminationRequested=true;child.kill();}await Promise.race([child.exitCode!==null||child.signalCode!==null?Promise.resolve():new Promise(resolve=>child.once('exit',resolve)),new Promise(resolve=>setTimeout(resolve,3000))]);try{process.kill(child.pid,0);row.ownedProbeExited=false;}catch(error){if(error.code==='ESRCH')row.ownedProbeExited=true;else throw Error('OWNED_NORMAL_ENV_PROBE_EXIT_UNCONFIRMED');}assert.equal(row.ownedProbeExited,true,'OWNED_NORMAL_ENV_PROBE_EXIT_UNCONFIRMED');}
+   }
+  }
+ }finally{rmSync(directory,{recursive:true,force:true});result.temporaryScriptRemoved=true;}
+ return result;
+}
+
 const fullscreenProbe=payload=>JSON.parse(execFileSync('powershell.exe',['-NoProfile','-NonInteractive','-File',resolve('scripts/acceptance/native-owned-fullscreen-probe.ps1')],{input:JSON.stringify(payload),encoding:'utf8',windowsHide:true,timeout:10000}).trim());
 let mainIdentity,expectedWindows;
 const host=()=>model.call('accounts','settingsGet');
@@ -108,7 +137,7 @@ try{
  await step('D08-real-fullscreen-policy-and-restore',async()=>{const baseline=await savedPets(),results=[];for(const hide of [false,true]){await setting('全屏应用时暂时隐藏','hideInFullscreen',hide);const fullscreen=await realFullscreen(true);const detection=await pollState(host,s=>s.host.fullscreenMonitorReady&&s.host.foregroundFullscreen&&s.host.fullscreenSource==='win32',{timeoutMs:15000});const during=await stableVisible(hide?0:2);assert.deepEqual(await savedPets(),baseline);if(hide)assert.ok(during.host.windows.every(w=>w.hiddenReason==='fullscreen'));const restoredGeometry=await realFullscreen(false);await pollState(host,s=>s.host.fullscreenMonitorReady&&!s.host.foregroundFullscreen,{timeoutMs:15000});const restored=await stableVisible(2);assert.deepEqual(await savedPets(),baseline);results.push({hide,fullscreen,detectedSource:detection.host.fullscreenSource,during,restoredGeometry,restored});}return {results,petVisibilityPreferencesAndIdentitiesUnchanged:true};});
  await step('D08-both-pets-interact-after-restoration',async()=>{const results=[];for(let i=0;i<2;i++){const p=pets[i],other=pets[1-i],before=await petState(p),otherBefore=await petState(other),count=await actionsCount(p),ctx=await openMenu(p);const click=await menuClick(ctx,'pet');await ctx.menu.waitFor({state:'hidden'});await pollState(()=>petState(p),s=>s.growth.affinity===before.growth.affinity+1);assert.equal(await actionsCount(p),count+1);assert.deepEqual(await petState(other),otherBefore);await ctx.page.screenshot({path:join(output,`restored-pet-${i+1}.png`),omitBackground:true,timeout:10000});results.push({click,exactOneInteraction:true,otherUnchanged:true});}return {results};});
  const finalSettings=(await host()).document;const strip=d=>{const c=structuredClone(d);for(const k of ['companionLimit','clickThrough','hideInFullscreen'])delete c.desktop[k];return c;};assert.deepEqual(strip(finalSettings),strip(originalSettings));proof.unrelatedSettingsUnchanged=true;proof.passed=true;
-}catch(e){proof.error=redact(e);proof.passed=false;process.exitCode=1;if(model)try{const settings=await host();proof.failureHost={desktop:settings.document.desktop,host:settings.host};if(proof.stage==='initial-native-fullscreen-monitor-ready-and-not-fullscreen')try{proof.monitorDiagnostic=await monitorDiagnostic();}catch(error){proof.monitorDiagnosticError=redact(error);}proof.failureWindows=await inventory();if(mainIdentity)proof.failureMain=await model.main(({BrowserWindow},id)=>{const w=BrowserWindow.fromId(id);return {visible:w?.isVisible(),focused:w?.isFocused(),fullscreen:w?.isFullScreen(),bounds:w?.getBounds()};},mainIdentity.id);if(mainIdentity)try{proof.failureNative=fullscreenProbe({action:'probe',...mainIdentity});}catch(error){proof.failureNativeError=redact(error);}}catch(error){proof.failureObservationError=redact(error);}try{await model?.page.screenshot({path:join(output,'failure.png'),timeout:10000});}catch{}}
+}catch(e){proof.error=redact(e);proof.passed=false;process.exitCode=1;if(model)try{const settings=await host();proof.failureHost={desktop:settings.document.desktop,host:settings.host};if(proof.stage==='initial-native-fullscreen-monitor-ready-and-not-fullscreen')try{proof.monitorDiagnostic=await monitorDiagnostic();proof.normalRunnerMonitorContrast=await normalRunnerMonitorContrast();}catch(error){proof.monitorDiagnosticError=redact(error);}proof.failureWindows=await inventory();if(mainIdentity)proof.failureMain=await model.main(({BrowserWindow},id)=>{const w=BrowserWindow.fromId(id);return {visible:w?.isVisible(),focused:w?.isFocused(),fullscreen:w?.isFullScreen(),bounds:w?.getBounds()};},mainIdentity.id);if(mainIdentity)try{proof.failureNative=fullscreenProbe({action:'probe',...mainIdentity});}catch(error){proof.failureNativeError=redact(error);}}catch(error){proof.failureObservationError=redact(error);}try{await model?.page.screenshot({path:join(output,'failure.png'),timeout:10000});}catch{}}
 finally{
  if(model&&mainIdentity)try{await model.main(({BrowserWindow},id)=>{const w=BrowserWindow.fromId(id);if(w&&!w.isDestroyed())w.setFullScreen(false);},mainIdentity.id);proof.ownedFullscreenReleased=true;}catch(e){proof.fullscreenCleanupError=redact(e);proof.passed=false;process.exitCode=1;}
  try{native({action:'release'});proof.independentButtonsReleased=true;}catch(e){proof.releaseError=redact(e);proof.passed=false;process.exitCode=1;}
