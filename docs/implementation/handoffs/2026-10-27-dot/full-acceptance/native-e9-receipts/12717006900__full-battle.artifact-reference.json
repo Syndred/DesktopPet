@@ -1,0 +1,14 @@
+{
+  "kind": "exact-artifact-evidence-reference",
+  "reason": "Full raw receipt retained in verified original Actions artifact rather than duplicated as a >64KB Git blob. This file is not the raw receipt.",
+  "runId": 40466578232,
+  "artifactId": 12717006900,
+  "artifactSha256": "1e929e40b1b0f78f07de67bcc499f8f77b227ea0d39265665f203eab4cc09ad7",
+  "artifactUrl": "https://github.com/Syndred/DesktopPet/actions/runs/40466578232/artifacts/12717006900",
+  "pathInArtifact": "foundation/cloud-engineering/full-battle/run-current/evidence.json",
+  "rawReceiptSha256": "3a316a65266e716b1f6493c3e95ef0cdc05192780e6699cad0b744977520c841",
+  "rawReceiptBytes": 475254,
+  "observedChecks": 65,
+  "observedPassed": true,
+  "scope": "Actual Windows development Electron with unchanged product compiled fingerprint; not a packaged SFX or live cloud/dual-user claim."
+}

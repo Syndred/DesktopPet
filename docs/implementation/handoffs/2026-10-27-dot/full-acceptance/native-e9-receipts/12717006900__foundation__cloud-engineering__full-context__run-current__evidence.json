@@ -1,0 +1,1036 @@
+{
+  "at": "2026-10-27T07:25:24.295Z",
+  "sourceCommit": "e9c5ad82e683295c9cd800827bb3190ea7720fe1",
+  "scenario": {
+    "schemaVersion": 1,
+    "application": "lingjing",
+    "scenario": "unified-battle",
+    "runId": "8eb172f3-ebaa-4b1d-ac3d-958139549c8e",
+    "isolated": true,
+    "profilePath": "D:\\a\\DesktopPet\\DesktopPet\\artifacts\\qa\\unified-battle\\qa-1793085924283-8eb172f3",
+    "createdAt": "2026-10-27T07:25:24.283Z",
+    "env": {
+      "LINGJING_QA_SCENARIO": "unified-battle",
+      "PET_USER_DATA_DIR": "D:\\a\\DesktopPet\\DesktopPet\\artifacts\\qa\\unified-battle\\qa-1793085924283-8eb172f3"
+    }
+  },
+  "provenance": "Independent actual Electron wild and territory entries. Explicit simulated location and legal charged prestate/opponent action. Real shared screen, original rules, capture, ownership, inventory and persistent receipts. No live GPS/cloud claim.",
+  "checks": [
+    {
+      "id": "wild-entry:same-screen-identity-and-controls",
+      "passed": true,
+      "detail": {
+        "mode": "wild",
+        "authority": "simulated",
+        "hud": 2,
+        "actors": [
+          {
+            "resource": "builtin:lingjing-hatcat-v1",
+            "canvas": 1,
+            "fallback": "false"
+          },
+          {
+            "resource": "builtin:lingjing-qingya-v1",
+            "canvas": 1,
+            "fallback": "false"
+          }
+        ],
+        "skills": [
+          {
+            "x": 564,
+            "y": 651.109375,
+            "width": 86,
+            "height": 106,
+            "bottom": 757.109375
+          },
+          {
+            "x": 672,
+            "y": 651.109375,
+            "width": 64,
+            "height": 106,
+            "bottom": 757.109375
+          },
+          {
+            "x": 758,
+            "y": 651.109375,
+            "width": 64,
+            "height": 106,
+            "bottom": 757.109375
+          },
+          {
+            "x": 844,
+            "y": 651.109375,
+            "width": 64,
+            "height": 106,
+            "bottom": 757.109375
+          }
+        ],
+        "height": 844,
+        "duplicated": 0
+      }
+    },
+    {
+      "id": "wild-return-and-resume-exact-session",
+      "passed": true,
+      "detail": {
+        "id": "battle-ebf3bb08-0fbb-4ad2-a049-41f19bfb39e5",
+        "round": 1
+      }
+    },
+    {
+      "id": "wild-real-victory",
+      "passed": true,
+      "detail": {
+        "id": "battle-ebf3bb08-0fbb-4ad2-a049-41f19bfb39e5",
+        "mode": "wild",
+        "status": "finished",
+        "startedAt": "2026-10-27T07:25:41.235Z",
+        "player": {
+          "petId": "pet-2fa6bcf1-366e-4a36-adfe-e0e442f2ad5f",
+          "petName": "礼帽喵",
+          "element": "metal",
+          "level": 1,
+          "resourceRef": "builtin:lingjing-hatcat-v1",
+          "resource": {
+            "resourceId": "builtin:lingjing-hatcat-v1",
+            "kind": "2d"
+          },
+          "appearance2d": "builtin:lingjing-hatcat-v1",
+          "displayKind": "instance",
+          "displayIdentity": {
+            "roleName": "礼帽喵",
+            "instanceNumber": "待同步",
+            "historicalNickname": null
+          }
+        },
+        "enemy": {
+          "petId": "wild-2d-v2-f3621dbe19-498079-52051-202453",
+          "petName": "青芽",
+          "element": "wood",
+          "resourceRef": "builtin:lingjing-qingya-v1",
+          "appearance2d": "builtin:lingjing-qingya-v1",
+          "displayKind": "instance",
+          "displayIdentity": {
+            "roleName": "历史伙伴",
+            "instanceNumber": "待同步",
+            "historicalNickname": "青芽"
+          }
+        },
+        "snapshot": {
+          "round": 4,
+          "player": {
+            "id": "player",
+            "element": "metal",
+            "hp": 105,
+            "maxHp": 120,
+            "anger": 60,
+            "freeDodgeUsed": false,
+            "statuses": []
+          },
+          "enemy": {
+            "id": "enemy",
+            "element": "wood",
+            "hp": 0,
+            "maxHp": 120,
+            "anger": 24,
+            "freeDodgeUsed": true,
+            "statuses": [
+              {
+                "type": "vulnerability",
+                "duration": 8,
+                "stacks": 4,
+                "stackable": true,
+                "sourceId": "player"
+              }
+            ]
+          }
+        },
+        "rounds": [
+          {
+            "round": 1,
+            "actions": {
+              "player": "ultimate",
+              "enemy": "dodge"
+            },
+            "damageTaken": {
+              "player": 0,
+              "enemy": 24
+            },
+            "directDamage": {
+              "player": 0,
+              "enemy": 24
+            },
+            "dotDamageEvents": {
+              "player": [],
+              "enemy": []
+            },
+            "healEvents": {
+              "player": [
+                {
+                  "type": "ultimate",
+                  "amount": 20
+                }
+              ],
+              "enemy": []
+            },
+            "hpAfter": {
+              "player": 105,
+              "enemy": 76
+            },
+            "angerAfter": {
+              "player": 0,
+              "enemy": 22
+            },
+            "statusesAfter": {
+              "player": [],
+              "enemy": [
+                {
+                  "type": "vulnerability",
+                  "duration": 2,
+                  "stacks": 1,
+                  "stackable": true,
+                  "sourceId": "player"
+                }
+              ]
+            },
+            "winner": null,
+            "notes": [
+              "enemy spends 20 anger on dodge",
+              "enemy vulnerable x1",
+              "player healed by ultimate"
+            ],
+            "state": {
+              "round": 1,
+              "player": {
+                "id": "player",
+                "element": "metal",
+                "hp": 105,
+                "maxHp": 120,
+                "anger": 0,
+                "freeDodgeUsed": false,
+                "statuses": []
+              },
+              "enemy": {
+                "id": "enemy",
+                "element": "wood",
+                "hp": 76,
+                "maxHp": 120,
+                "anger": 22,
+                "freeDodgeUsed": true,
+                "statuses": [
+                  {
+                    "type": "vulnerability",
+                    "duration": 2,
+                    "stacks": 1,
+                    "stackable": true,
+                    "sourceId": "player"
+                  }
+                ]
+              }
+            },
+            "visualEvents": [
+              {
+                "id": "1:player:windup:action:0",
+                "side": "player",
+                "phase": "windup",
+                "kind": "action",
+                "action": "ultimate"
+              },
+              {
+                "id": "1:player:release:action:1",
+                "side": "player",
+                "phase": "release",
+                "kind": "action",
+                "action": "ultimate",
+                "element": "metal"
+              },
+              {
+                "id": "1:enemy:impact:damage:2",
+                "side": "enemy",
+                "phase": "impact",
+                "kind": "damage",
+                "amount": 24
+              },
+              {
+                "id": "1:player:effects:heal:3",
+                "side": "player",
+                "phase": "effects",
+                "kind": "heal",
+                "amount": 20,
+                "status": "ultimate"
+              },
+              {
+                "id": "1:enemy:effects:status:4",
+                "side": "enemy",
+                "phase": "effects",
+                "kind": "status",
+                "status": "vulnerability",
+                "element": "metal"
+              },
+              {
+                "id": "1:enemy:windup:action:5",
+                "side": "enemy",
+                "phase": "windup",
+                "kind": "action",
+                "action": "dodge"
+              },
+              {
+                "id": "1:enemy:release:action:6",
+                "side": "enemy",
+                "phase": "release",
+                "kind": "action",
+                "action": "dodge",
+                "element": "wood"
+              }
+            ]
+          },
+          {
+            "round": 2,
+            "actions": {
+              "player": "element_attack",
+              "enemy": "dodge"
+            },
+            "damageTaken": {
+              "player": 0,
+              "enemy": 22
+            },
+            "directDamage": {
+              "player": 0,
+              "enemy": 22
+            },
+            "dotDamageEvents": {
+              "player": [],
+              "enemy": []
+            },
+            "healEvents": {
+              "player": [],
+              "enemy": []
+            },
+            "hpAfter": {
+              "player": 105,
+              "enemy": 54
+            },
+            "angerAfter": {
+              "player": 20,
+              "enemy": 13
+            },
+            "statusesAfter": {
+              "player": [],
+              "enemy": [
+                {
+                  "type": "vulnerability",
+                  "duration": 4,
+                  "stacks": 2,
+                  "stackable": true,
+                  "sourceId": "player"
+                }
+              ]
+            },
+            "winner": null,
+            "notes": [
+              "enemy spends 20 anger on dodge",
+              "enemy vulnerable x2"
+            ],
+            "state": {
+              "round": 2,
+              "player": {
+                "id": "player",
+                "element": "metal",
+                "hp": 105,
+                "maxHp": 120,
+                "anger": 20,
+                "freeDodgeUsed": false,
+                "statuses": []
+              },
+              "enemy": {
+                "id": "enemy",
+                "element": "wood",
+                "hp": 54,
+                "maxHp": 120,
+                "anger": 13,
+                "freeDodgeUsed": true,
+                "statuses": [
+                  {
+                    "type": "vulnerability",
+                    "duration": 4,
+                    "stacks": 2,
+                    "stackable": true,
+                    "sourceId": "player"
+                  }
+                ]
+              }
+            },
+            "visualEvents": [
+              {
+                "id": "2:player:windup:action:0",
+                "side": "player",
+                "phase": "windup",
+                "kind": "action",
+                "action": "element_attack"
+              },
+              {
+                "id": "2:player:release:action:1",
+                "side": "player",
+                "phase": "release",
+                "kind": "action",
+                "action": "element_attack",
+                "element": "metal"
+              },
+              {
+                "id": "2:enemy:impact:damage:2",
+                "side": "enemy",
+                "phase": "impact",
+                "kind": "damage",
+                "amount": 22
+              },
+              {
+                "id": "2:enemy:effects:status:3",
+                "side": "enemy",
+                "phase": "effects",
+                "kind": "status",
+                "status": "vulnerability",
+                "element": "metal"
+              },
+              {
+                "id": "2:enemy:windup:action:4",
+                "side": "enemy",
+                "phase": "windup",
+                "kind": "action",
+                "action": "dodge"
+              },
+              {
+                "id": "2:enemy:release:action:5",
+                "side": "enemy",
+                "phase": "release",
+                "kind": "action",
+                "action": "dodge",
+                "element": "wood"
+              }
+            ]
+          },
+          {
+            "round": 3,
+            "actions": {
+              "player": "element_attack",
+              "enemy": "dodge"
+            },
+            "damageTaken": {
+              "player": 0,
+              "enemy": 32
+            },
+            "directDamage": {
+              "player": 0,
+              "enemy": 32
+            },
+            "dotDamageEvents": {
+              "player": [],
+              "enemy": []
+            },
+            "healEvents": {
+              "player": [],
+              "enemy": []
+            },
+            "hpAfter": {
+              "player": 105,
+              "enemy": 22
+            },
+            "angerAfter": {
+              "player": 40,
+              "enemy": 16
+            },
+            "statusesAfter": {
+              "player": [],
+              "enemy": [
+                {
+                  "type": "vulnerability",
+                  "duration": 6,
+                  "stacks": 3,
+                  "stackable": true,
+                  "sourceId": "player"
+                }
+              ]
+            },
+            "winner": null,
+            "notes": [
+              "enemy spends 20 anger on dodge",
+              "enemy vulnerable x3"
+            ],
+            "state": {
+              "round": 3,
+              "player": {
+                "id": "player",
+                "element": "metal",
+                "hp": 105,
+                "maxHp": 120,
+                "anger": 40,
+                "freeDodgeUsed": false,
+                "statuses": []
+              },
+              "enemy": {
+                "id": "enemy",
+                "element": "wood",
+                "hp": 22,
+                "maxHp": 120,
+                "anger": 16,
+                "freeDodgeUsed": true,
+                "statuses": [
+                  {
+                    "type": "vulnerability",
+                    "duration": 6,
+                    "stacks": 3,
+                    "stackable": true,
+                    "sourceId": "player"
+                  }
+                ]
+              }
+            },
+            "visualEvents": [
+              {
+                "id": "3:player:windup:action:0",
+                "side": "player",
+                "phase": "windup",
+                "kind": "action",
+                "action": "element_attack"
+              },
+              {
+                "id": "3:player:release:action:1",
+                "side": "player",
+                "phase": "release",
+                "kind": "action",
+                "action": "element_attack",
+                "element": "metal"
+              },
+              {
+                "id": "3:enemy:impact:damage:2",
+                "side": "enemy",
+                "phase": "impact",
+                "kind": "damage",
+                "amount": 32
+              },
+              {
+                "id": "3:enemy:effects:status:3",
+                "side": "enemy",
+                "phase": "effects",
+                "kind": "status",
+                "status": "vulnerability",
+                "element": "metal"
+              },
+              {
+                "id": "3:enemy:windup:action:4",
+                "side": "enemy",
+                "phase": "windup",
+                "kind": "action",
+                "action": "dodge"
+              },
+              {
+                "id": "3:enemy:release:action:5",
+                "side": "enemy",
+                "phase": "release",
+                "kind": "action",
+                "action": "dodge",
+                "element": "wood"
+              }
+            ]
+          },
+          {
+            "round": 4,
+            "actions": {
+              "player": "element_attack",
+              "enemy": "dodge"
+            },
+            "damageTaken": {
+              "player": 0,
+              "enemy": 49
+            },
+            "directDamage": {
+              "player": 0,
+              "enemy": 49
+            },
+            "dotDamageEvents": {
+              "player": [],
+              "enemy": []
+            },
+            "healEvents": {
+              "player": [],
+              "enemy": []
+            },
+            "hpAfter": {
+              "player": 105,
+              "enemy": 0
+            },
+            "angerAfter": {
+              "player": 60,
+              "enemy": 24
+            },
+            "statusesAfter": {
+              "player": [],
+              "enemy": [
+                {
+                  "type": "vulnerability",
+                  "duration": 8,
+                  "stacks": 4,
+                  "stackable": true,
+                  "sourceId": "player"
+                }
+              ]
+            },
+            "winner": "player",
+            "notes": [
+              "enemy spends 20 anger on dodge",
+              "enemy vulnerable x4"
+            ],
+            "state": {
+              "round": 4,
+              "player": {
+                "id": "player",
+                "element": "metal",
+                "hp": 105,
+                "maxHp": 120,
+                "anger": 60,
+                "freeDodgeUsed": false,
+                "statuses": []
+              },
+              "enemy": {
+                "id": "enemy",
+                "element": "wood",
+                "hp": 0,
+                "maxHp": 120,
+                "anger": 24,
+                "freeDodgeUsed": true,
+                "statuses": [
+                  {
+                    "type": "vulnerability",
+                    "duration": 8,
+                    "stacks": 4,
+                    "stackable": true,
+                    "sourceId": "player"
+                  }
+                ]
+              }
+            },
+            "visualEvents": [
+              {
+                "id": "4:player:windup:action:0",
+                "side": "player",
+                "phase": "windup",
+                "kind": "action",
+                "action": "element_attack"
+              },
+              {
+                "id": "4:player:release:action:1",
+                "side": "player",
+                "phase": "release",
+                "kind": "action",
+                "action": "element_attack",
+                "element": "metal"
+              },
+              {
+                "id": "4:enemy:impact:damage:2",
+                "side": "enemy",
+                "phase": "impact",
+                "kind": "damage",
+                "amount": 49
+              },
+              {
+                "id": "4:enemy:effects:status:3",
+                "side": "enemy",
+                "phase": "effects",
+                "kind": "status",
+                "status": "vulnerability",
+                "element": "metal"
+              },
+              {
+                "id": "4:enemy:windup:action:4",
+                "side": "enemy",
+                "phase": "windup",
+                "kind": "action",
+                "action": "dodge"
+              },
+              {
+                "id": "4:enemy:release:action:5",
+                "side": "enemy",
+                "phase": "release",
+                "kind": "action",
+                "action": "dodge",
+                "element": "wood"
+              }
+            ]
+          }
+        ],
+        "winner": "player",
+        "pendingAction": null,
+        "historyComplete": true,
+        "rules": {
+          "id": "five-elements-standard-v1",
+          "label": "标准五行对战",
+          "vitalPolicy": "normalized",
+          "maxHp": 120,
+          "maxAnger": 100,
+          "companionStatsApplied": false,
+          "baseDamage": {
+            "normal_attack": 10,
+            "element_attack": 12,
+            "dodge": 0,
+            "ultimate": 20
+          },
+          "ultimateAnger": 50,
+          "ultimateCost": 50,
+          "ultimateHeal": 20,
+          "dodgeMaxCost": 20,
+          "dodgeRefund": 30,
+          "advantage": {
+            "metal": "wood",
+            "wood": "earth",
+            "earth": "water",
+            "water": "fire",
+            "fire": "metal"
+          },
+          "elementEffects": {
+            "metal": {
+              "label": "易伤",
+              "description": "每层受伤×1.5，最多5层"
+            },
+            "wood": {
+              "label": "寄生",
+              "description": "每层回合末吸取2生命，最多5层"
+            },
+            "earth": {
+              "label": "迟钝",
+              "description": "每层伤害×0.5，最多5层"
+            },
+            "water": {
+              "label": "降怒",
+              "description": "命中后对方怒气向下取半，不增加受击怒气"
+            },
+            "fire": {
+              "label": "燃烧",
+              "description": "回合末按当前生命8%×层数伤害，最多5层"
+            }
+          }
+        },
+        "context": {
+          "id": "wild-2d-v2-f3621dbe19-498079-52051-202453",
+          "spawnId": "wild-2d-v2-f3621dbe19-498079-52051-202453",
+          "expiresAt": 1793088000000,
+          "origin": "discovery",
+          "encounterId": "encounter-28531e36-e962-4964-9b2b-5fc2d4616151",
+          "scenario": "qa",
+          "returnPath": "/discovery/encounter/encounter-28531e36-e962-4964-9b2b-5fc2d4616151",
+          "authority": "simulated",
+          "scenarioId": "8eb172f3-ebaa-4b1d-ac3d-958139549c8e",
+          "qaPreset": "charged",
+          "qaEnemyAction": "dodge"
+        },
+        "updatedAt": "2026-10-27T07:25:49.513Z",
+        "revision": 6,
+        "endedAt": "2026-10-27T07:25:49.509Z",
+        "reward": {
+          "actionId": "battle:battle-ebf3bb08-0fbb-4ad2-a049-41f19bfb39e5:qa:8eb172f3-ebaa-4b1d-ac3d-958139549c8e:local-b0a45809-24ac-4711-94d8-1dde0e16076c",
+          "petId": "pet-2fa6bcf1-366e-4a36-adfe-e0e442f2ad5f",
+          "experience": 20,
+          "applied": true,
+          "previousExperience": 0,
+          "previousLevel": 1,
+          "currentExperience": 20,
+          "currentLevel": 1,
+          "seeds": {
+            "source": "battle",
+            "receiptId": "battle-ebf3bb08-0fbb-4ad2-a049-41f19bfb39e5",
+            "itemId": "seed:tomato",
+            "quantity": 2
+          }
+        },
+        "reportId": "battle-ebf3bb08-0fbb-4ad2-a049-41f19bfb39e5"
+      }
+    },
+    {
+      "id": "shared-capture-makes-correct-instance",
+      "passed": true,
+      "detail": {
+        "captured": {
+          "ownerAccountId": "qa:8eb172f3-ebaa-4b1d-ac3d-958139549c8e:local-b0a45809-24ac-4711-94d8-1dde0e16076c",
+          "encounterId": "encounter-28531e36-e962-4964-9b2b-5fc2d4616151",
+          "scenario": "qa",
+          "scenarioId": "8eb172f3-ebaa-4b1d-ac3d-958139549c8e",
+          "petId": "pet-5aa6304b-c056-4642-a3ca-be623442beb7",
+          "actionId": "discovery:encounter-28531e36-e962-4964-9b2b-5fc2d4616151",
+          "name": "复验青芽",
+          "templateId": "animal-wood-deer",
+          "resourceId": "builtin:lingjing-qingya-v1",
+          "element": "wood",
+          "serial": "D2D9CF044DFEAFA0F",
+          "territoryId": null,
+          "captureMultiplier": 1,
+          "capturedAtMs": 1793085951406,
+          "placeLabel": "附近探索点",
+          "memoryTags": [
+            {
+              "id": "encounter-28531e36-e962-4964-9b2b-5fc2d4616151:first-meeting",
+              "kind": "first_meeting",
+              "title": "我们的第一次见面",
+              "text": "在附近探索点相遇，赢得挑战后成为了伙伴。",
+              "placeLabel": "附近探索点",
+              "createdAt": "2026-10-27T07:25:51.406Z"
+            }
+          ],
+          "showOnDesktop": false,
+          "validation": "simulated",
+          "distanceMeters": 0
+        },
+        "pet": {
+          "ownerAccountId": "qa:8eb172f3-ebaa-4b1d-ac3d-958139549c8e:local-b0a45809-24ac-4711-94d8-1dde0e16076c",
+          "petId": "pet-5aa6304b-c056-4642-a3ca-be623442beb7",
+          "templateId": "animal-wood-deer",
+          "name": "复验青芽",
+          "serial": "D2D9CF044DFEAFA0F",
+          "element": "wood",
+          "resource": {
+            "resourceId": "builtin:lingjing-qingya-v1",
+            "kind": "2d"
+          },
+          "source": "capture",
+          "origin": {
+            "wildPetId": "wild-2d-v2-f3621dbe19-498079-52051-202453",
+            "wildSerial": "D2D9CF044DFEAFA0F",
+            "battleId": "battle-ebf3bb08-0fbb-4ad2-a049-41f19bfb39e5",
+            "scenario": "qa",
+            "scenarioId": "8eb172f3-ebaa-4b1d-ac3d-958139549c8e",
+            "capturedAt": "2026-10-27T07:25:51.406Z",
+            "encounterId": "encounter-28531e36-e962-4964-9b2b-5fc2d4616151",
+            "placeLabel": "附近探索点",
+            "memoryTags": [
+              {
+                "id": "encounter-28531e36-e962-4964-9b2b-5fc2d4616151:first-meeting",
+                "kind": "first_meeting",
+                "title": "我们的第一次见面",
+                "text": "在附近探索点相遇，赢得挑战后成为了伙伴。",
+                "placeLabel": "附近探索点",
+                "createdAt": "2026-10-27T07:25:51.406Z"
+              }
+            ],
+            "territoryId": null,
+            "captureMultiplier": 1,
+            "validation": "simulated",
+            "cloudReceiptId": null
+          },
+          "growth": {
+            "level": 1,
+            "experience": 0,
+            "mood": 60,
+            "satiety": 60,
+            "affinity": 0,
+            "winsTotal": 0,
+            "stats": {
+              "hp": 130,
+              "atk": 26,
+              "def": 26,
+              "spd": 18
+            }
+          },
+          "desktop": {
+            "visible": false,
+            "behavior": "quiet",
+            "scale": 1,
+            "position": {
+              "x": 320,
+              "y": 520,
+              "displayId": null
+            }
+          },
+          "revision": 1,
+          "createdAt": "2026-10-27T07:25:51.407Z",
+          "updatedAt": "2026-10-27T07:25:51.407Z"
+        }
+      }
+    },
+    {
+      "id": "capture-repeat-single-instance-and-receipt",
+      "passed": true,
+      "detail": {
+        "petId": "pet-5aa6304b-c056-4642-a3ca-be623442beb7"
+      }
+    }
+  ],
+  "scenes": [
+    {
+      "label": "wild-entry",
+      "id": "battle-ebf3bb08-0fbb-4ad2-a049-41f19bfb39e5",
+      "mode": "wild",
+      "session": {
+        "id": "battle-ebf3bb08-0fbb-4ad2-a049-41f19bfb39e5",
+        "mode": "wild",
+        "status": "active",
+        "startedAt": "2026-10-27T07:25:41.235Z",
+        "player": {
+          "petId": "pet-2fa6bcf1-366e-4a36-adfe-e0e442f2ad5f",
+          "petName": "礼帽喵",
+          "element": "metal",
+          "level": 1,
+          "resourceRef": "builtin:lingjing-hatcat-v1",
+          "resource": {
+            "resourceId": "builtin:lingjing-hatcat-v1",
+            "kind": "2d"
+          },
+          "appearance2d": "builtin:lingjing-hatcat-v1",
+          "displayKind": "instance",
+          "displayIdentity": {
+            "roleName": "礼帽喵",
+            "instanceNumber": "待同步",
+            "historicalNickname": null
+          }
+        },
+        "enemy": {
+          "petId": "wild-2d-v2-f3621dbe19-498079-52051-202453",
+          "petName": "青芽",
+          "element": "wood",
+          "resourceRef": "builtin:lingjing-qingya-v1",
+          "appearance2d": "builtin:lingjing-qingya-v1",
+          "displayKind": "instance",
+          "displayIdentity": {
+            "roleName": "历史伙伴",
+            "instanceNumber": "待同步",
+            "historicalNickname": "青芽"
+          }
+        },
+        "snapshot": {
+          "round": 0,
+          "player": {
+            "id": "player",
+            "element": "metal",
+            "hp": 120,
+            "maxHp": 120,
+            "anger": 0,
+            "freeDodgeUsed": false,
+            "statuses": []
+          },
+          "enemy": {
+            "id": "enemy",
+            "element": "wood",
+            "hp": 120,
+            "maxHp": 120,
+            "anger": 0,
+            "freeDodgeUsed": false,
+            "statuses": []
+          }
+        },
+        "rounds": [],
+        "winner": null,
+        "pendingAction": null,
+        "historyComplete": true,
+        "rules": {
+          "id": "five-elements-standard-v1",
+          "label": "标准五行对战",
+          "vitalPolicy": "normalized",
+          "maxHp": 120,
+          "maxAnger": 100,
+          "companionStatsApplied": false,
+          "baseDamage": {
+            "normal_attack": 10,
+            "element_attack": 12,
+            "dodge": 0,
+            "ultimate": 20
+          },
+          "ultimateAnger": 50,
+          "ultimateCost": 50,
+          "ultimateHeal": 20,
+          "dodgeMaxCost": 20,
+          "dodgeRefund": 30,
+          "advantage": {
+            "metal": "wood",
+            "wood": "earth",
+            "earth": "water",
+            "water": "fire",
+            "fire": "metal"
+          },
+          "elementEffects": {
+            "metal": {
+              "label": "易伤",
+              "description": "每层受伤×1.5，最多5层"
+            },
+            "wood": {
+              "label": "寄生",
+              "description": "每层回合末吸取2生命，最多5层"
+            },
+            "earth": {
+              "label": "迟钝",
+              "description": "每层伤害×0.5，最多5层"
+            },
+            "water": {
+              "label": "降怒",
+              "description": "命中后对方怒气向下取半，不增加受击怒气"
+            },
+            "fire": {
+              "label": "燃烧",
+              "description": "回合末按当前生命8%×层数伤害，最多5层"
+            }
+          }
+        },
+        "context": {
+          "id": "wild-2d-v2-f3621dbe19-498079-52051-202453",
+          "spawnId": "wild-2d-v2-f3621dbe19-498079-52051-202453",
+          "expiresAt": 1793088000000,
+          "origin": "discovery",
+          "encounterId": "encounter-28531e36-e962-4964-9b2b-5fc2d4616151",
+          "scenario": "qa",
+          "returnPath": "/discovery/encounter/encounter-28531e36-e962-4964-9b2b-5fc2d4616151",
+          "authority": "simulated",
+          "scenarioId": "8eb172f3-ebaa-4b1d-ac3d-958139549c8e"
+        },
+        "updatedAt": "2026-10-27T07:25:41.240Z",
+        "revision": 1
+      },
+      "metrics": {
+        "mode": "wild",
+        "authority": "simulated",
+        "hud": 2,
+        "actors": [
+          {
+            "resource": "builtin:lingjing-hatcat-v1",
+            "canvas": 1,
+            "fallback": "false"
+          },
+          {
+            "resource": "builtin:lingjing-qingya-v1",
+            "canvas": 1,
+            "fallback": "false"
+          }
+        ],
+        "skills": [
+          {
+            "x": 564,
+            "y": 651.109375,
+            "width": 86,
+            "height": 106,
+            "bottom": 757.109375
+          },
+          {
+            "x": 672,
+            "y": 651.109375,
+            "width": 64,
+            "height": 106,
+            "bottom": 757.109375
+          },
+          {
+            "x": 758,
+            "y": 651.109375,
+            "width": 64,
+            "height": 106,
+            "bottom": 757.109375
+          },
+          {
+            "x": 844,
+            "y": 651.109375,
+            "width": 64,
+            "height": 106,
+            "bottom": 757.109375
+          }
+        ],
+        "height": 844,
+        "duplicated": 0
+      }
+    }
+  ],
+  "errors": [],
+  "passed": false,
+  "failure": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: '发起领地挑战', exact: true })\u001b[22m\n"
+}

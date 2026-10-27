@@ -1,0 +1,43 @@
+{
+  "scope": "Actual Windows SFX startup only, fresh official offline QA profile, no registered account or business mutation. Not an original-98 case pass.",
+  "sourceCommit": "b5dbcfe7ebb0f0ad12aa9719463377c5ee20ca1d",
+  "compiledFingerprint": "b951a6aa7a5d04a04178645f92c0840168e3656ae5cf6f8f0e4839c0328ab48f",
+  "exeSha256": "ad94c4e252ebe87c1b72c954d18ed82dad2496dae8ef972cff540d02a924ddeb",
+  "passed": true,
+  "startedAt": "2026-10-27T07:22:31.556Z",
+  "observed": {
+    "ready": true,
+    "profileMatches": true,
+    "windowCount": 1,
+    "sourceCommit": "b5dbcfe7ebb0f0ad12aa9719463377c5ee20ca1d",
+    "compiledFingerprint": "b951a6aa7a5d04a04178645f92c0840168e3656ae5cf6f8f0e4839c0328ab48f",
+    "scenarioId": "unified-battle",
+    "runId": "11f13a34-bbbf-488f-bda1-063d81be19c1",
+    "currentUserNull": true,
+    "dataMode": "simulated",
+    "defaultProvider": "local",
+    "registrationPerformed": false,
+    "businessMutationsPerformed": false
+  },
+  "offlineBlocked": [
+    {
+      "node": 0,
+      "fetch": 0,
+      "websocket": 0,
+      "chromium": 0
+    }
+  ],
+  "pidChecks": [
+    {
+      "pid": 7940,
+      "alive": false
+    },
+    {
+      "pid": 1056,
+      "alive": false
+    }
+  ],
+  "ownedProcessStopped": true,
+  "profileRemoved": true,
+  "completedAt": "2026-10-27T07:22:52.253Z"
+}

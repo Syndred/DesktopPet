@@ -1,0 +1,116 @@
+{
+  "sourceCommit": "b5dbcfe7ebb0f0ad12aa9719463377c5ee20ca1d",
+  "compiledFingerprint": "b951a6aa7a5d04a04178645f92c0840168e3656ae5cf6f8f0e4839c0328ab48f",
+  "executableSha256": "ad94c4e252ebe87c1b72c954d18ed82dad2496dae8ef972cff540d02a924ddeb",
+  "scenario": "unified-battle",
+  "scenarioRunId": "a8cda1a0-6463-4e78-bca0-5c48ee449c70",
+  "scope": "Actual Windows portable + official isolated local QA scenario; simulated offline account only, no real cloud acceptance. Profile and plaintext passwords excluded from artifacts.",
+  "startedAt": "2026-10-27T07:23:53.658Z",
+  "cases": [
+    {
+      "id": "A05",
+      "coverage": "exact local QA account registration via normal product UI; no cloud account",
+      "status": "passed",
+      "startedAt": "2026-10-27T07:24:09.057Z",
+      "owner": "qa:a8cda1a0-6463-4e78-bca0-5c48ee449c70:local-0789f6c0-e5e9-4080-b426-01a750cf7ef8",
+      "isolatedScenario": {
+        "id": "unified-battle",
+        "runId": "a8cda1a0-6463-4e78-bca0-5c48ee449c70",
+        "provenance": "simulated",
+        "isolated": true
+      },
+      "sessionPersistence": "memory",
+      "fixturePetPreparedThroughProductionIpc": "pet-220dd4d1-5cab-4c4e-bcd3-8bd350a13f36",
+      "screenshot": "A05-local-registration.png",
+      "completedAt": "2026-10-27T07:24:09.995Z"
+    },
+    {
+      "id": "A14",
+      "coverage": "local synthetic QA account; UI wrong/mismatched/valid password change and old/new login with identity/pet readback",
+      "status": "passed",
+      "startedAt": "2026-10-27T07:24:09.995Z",
+      "sameOwner": true,
+      "petId": "pet-220dd4d1-5cab-4c4e-bcd3-8bd350a13f36",
+      "petDigest": "dbef67c129e485bb030ec0b3ae22eaff44a316e814b0edd8fcf4782100f51872",
+      "persistedPetHistory": {
+        "pets": 1,
+        "actions": 1,
+        "digest": "ffe02d62b1eabe67a1ceb17870f52630ebefa7f5c64e2b0329ec7374efd3e26a"
+      },
+      "wrongCurrentRejected": true,
+      "mismatchRejected": true,
+      "oldPasswordRejected": true,
+      "newPasswordAccepted": true,
+      "sessionPersistence": "memory",
+      "screenshot": "A14-password-changed.png",
+      "completedAt": "2026-10-27T07:24:11.879Z"
+    },
+    {
+      "id": "A08",
+      "coverage": "local QA remembered-account UI + logout + same-profile restart; cloud-account persistence not covered",
+      "status": "passed",
+      "startedAt": "2026-10-27T07:24:11.880Z",
+      "onlyAccountHintRestored": true,
+      "passwordFieldEmpty": true,
+      "plaintextPasswordAbsentFromLocalStorage": true,
+      "profileRestarted": true,
+      "screenshot": "A08-remember-account-restarted.png",
+      "completedAt": "2026-10-27T07:24:28.044Z"
+    },
+    {
+      "id": "A10",
+      "coverage": "partial: local QA explicitly forbids persistent session; does not replace original ordinary/cloud-account case",
+      "status": "passed",
+      "startedAt": "2026-10-27T07:24:28.044Z",
+      "sameOwner": true,
+      "petId": "pet-220dd4d1-5cab-4c4e-bcd3-8bd350a13f36",
+      "petDigest": "dbef67c129e485bb030ec0b3ae22eaff44a316e814b0edd8fcf4782100f51872",
+      "persistedPetHistory": {
+        "pets": 1,
+        "actions": 1,
+        "digest": "ffe02d62b1eabe67a1ceb17870f52630ebefa7f5c64e2b0329ec7374efd3e26a"
+      },
+      "restartRequiredLogin": true,
+      "secureSessionOverrideUsed": false,
+      "completedAt": "2026-10-27T07:24:40.497Z"
+    }
+  ],
+  "passed": true,
+  "processExitChecks": [
+    {
+      "pid": 1300,
+      "alive": false
+    },
+    {
+      "pid": 2420,
+      "alive": false
+    },
+    {
+      "pid": 5592,
+      "alive": false
+    },
+    {
+      "pid": 9692,
+      "alive": false
+    },
+    {
+      "pid": 3332,
+      "alive": false
+    },
+    {
+      "pid": 9016,
+      "alive": false
+    }
+  ],
+  "ownedProcessStopped": true,
+  "ownedPids": [
+    1300,
+    2420,
+    5592,
+    9692,
+    3332,
+    9016
+  ],
+  "temporaryProfileRemoved": true,
+  "completedAt": "2026-10-27T07:24:40.759Z"
+}

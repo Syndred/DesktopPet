@@ -1,0 +1,306 @@
+{
+  "scope": "Actual Windows SFX UI, official isolated local simulated QA account, external renderer HTTP disabled. No cloud/hardware/location claims.",
+  "sourceCommit": "b5dbcfe7ebb0f0ad12aa9719463377c5ee20ca1d",
+  "compiledFingerprint": "b951a6aa7a5d04a04178645f92c0840168e3656ae5cf6f8f0e4839c0328ab48f",
+  "exeSha256": "ad94c4e252ebe87c1b72c954d18ed82dad2496dae8ef972cff540d02a924ddeb",
+  "cases": [
+    {
+      "id": "C09",
+      "coverage": "partial: actual new local account empty overview/unknown detail/chat/training; desktop absence observed, no real cloud identity",
+      "status": "passed",
+      "at": "2026-10-27T07:24:37.239Z",
+      "shots": [
+        "C09-empty-overview.png",
+        "C09-empty-detail.png",
+        "T01-empty-chat.png",
+        "C09-empty-training.png"
+      ],
+      "windowCount": 1,
+      "noPetCreated": true,
+      "desktopEmptyVisualNotApplicable": true,
+      "completedAt": "2026-10-27T07:24:41.358Z"
+    },
+    {
+      "id": "fixture-plant",
+      "coverage": "real UI starter-seed planting, no SQL inventory grant/clock override; rice 25min and carrot 10min natural maturity",
+      "status": "passed",
+      "at": "2026-10-27T07:24:41.358Z",
+      "planted": [
+        {
+          "plotId": "plot-1",
+          "cropType": "rice",
+          "plantedAt": 1793085883117,
+          "maturesAt": 1793087383117,
+          "yieldQuantity": 2,
+          "revision": 1,
+          "stage": "growing"
+        },
+        {
+          "plotId": "plot-2",
+          "cropType": "carrot",
+          "plantedAt": 1793085883290,
+          "maturesAt": 1793086483290,
+          "yieldQuantity": 3,
+          "revision": 1,
+          "stage": "growing"
+        }
+      ],
+      "starterSeeds": {
+        "seed:carrot": 2,
+        "seed:tomato": 2,
+        "seed:berry": 2,
+        "seed:rice": 2,
+        "carrot": 0,
+        "tomato": 0,
+        "berry": 0,
+        "rice": 0,
+        "cooked_rice": 0
+      },
+      "screenshot": "fixture-natural-crops.png",
+      "completedAt": "2026-10-27T07:24:43.497Z"
+    },
+    {
+      "id": "C02",
+      "coverage": "partial: normal same-template UI adoption twice, unique stable local pet IDs and standard names; global serial remains unverified offline",
+      "status": "passed",
+      "at": "2026-10-27T07:24:43.498Z",
+      "petIds": [
+        "pet-9aa1c7f0-0af9-47a5-b95a-95fac1693bd3",
+        "pet-c2a3b512-77e9-4d6a-ad09-0a89027c9adc"
+      ],
+      "standardName": "青芽",
+      "globalSerialVerified": false,
+      "screenshot": "C02-two-instances.png",
+      "completedAt": "2026-10-27T07:24:45.576Z"
+    },
+    {
+      "id": "C10",
+      "coverage": "partial: native rapid two-click adoption, exact resulting local instance count and route return; global numbering not verified",
+      "status": "passed",
+      "at": "2026-10-27T07:24:45.576Z",
+      "nativeClickCount": 2,
+      "createdCount": 1,
+      "addedIds": [
+        "pet-213b3b94-8208-4c6d-8b72-5c1b528a3f95"
+      ],
+      "screenshot": "C10-return-reenter.png",
+      "completedAt": "2026-10-27T07:24:46.887Z"
+    },
+    {
+      "id": "C07",
+      "coverage": "actual target interaction then immediate UI repeat within 10s cooldown; other instance immutable",
+      "status": "passed",
+      "at": "2026-10-27T07:24:46.888Z",
+      "target": "pet-9aa1c7f0-0af9-47a5-b95a-95fac1693bd3",
+      "other": "pet-c2a3b512-77e9-4d6a-ad09-0a89027c9adc",
+      "cooldownDuplicatePrevented": true,
+      "screenshot": "C07-cooldown.png",
+      "completedAt": "2026-10-27T07:24:47.853Z"
+    },
+    {
+      "id": "T01",
+      "coverage": "actual empty chat before adoption and two local companion UI selections; name/avatar resource/active thread identity",
+      "status": "passed",
+      "at": "2026-10-27T07:24:47.853Z",
+      "emptyChatEvidence": "T01-empty-chat.png",
+      "selected": [
+        {
+          "petId": "pet-9aa1c7f0-0af9-47a5-b95a-95fac1693bd3",
+          "screenshot": "T01-0.png"
+        },
+        {
+          "petId": "pet-c2a3b512-77e9-4d6a-ad09-0a89027c9adc",
+          "screenshot": "T01-1.png"
+        }
+      ],
+      "completedAt": "2026-10-27T07:24:48.630Z"
+    },
+    {
+      "id": "T03",
+      "coverage": "real no-provider draft and disabled send + recovery settings link; no model request/forged reply",
+      "status": "passed",
+      "at": "2026-10-27T07:24:48.631Z",
+      "before": {
+        "conversation_messages": 0,
+        "conversation_credentials": 0
+      },
+      "after": {
+        "conversation_messages": 0,
+        "conversation_credentials": 0
+      },
+      "screenshot": "T03-no-provider.png",
+      "completedAt": "2026-10-27T07:24:48.805Z"
+    },
+    {
+      "id": "I01",
+      "coverage": "actual categories, item quantity/usage and zero-stock food/empty decoration; fresh starter-only inventory",
+      "status": "passed",
+      "at": "2026-10-27T07:24:48.805Z",
+      "checks": [
+        {
+          "id": "all",
+          "count": 9,
+          "screenshot": "I01-all.png"
+        },
+        {
+          "id": "food",
+          "count": 4,
+          "screenshot": "I01-food.png"
+        },
+        {
+          "id": "decoration",
+          "count": 0,
+          "screenshot": "I01-decoration.png"
+        },
+        {
+          "id": "tools",
+          "count": 5,
+          "screenshot": "I01-tools.png"
+        }
+      ],
+      "zeroStockRejected": true,
+      "seedUsage": true,
+      "completedAt": "2026-10-27T07:24:50.873Z"
+    },
+    {
+      "id": "fixture-harvest",
+      "coverage": "real elapsed production maturity, bounded 30min; no clock/time or database override",
+      "status": "passed",
+      "at": "2026-10-27T07:24:50.873Z",
+      "naturalDeadline": 1793087383117,
+      "harvested": [
+        {
+          "crop": "rice",
+          "quantity": 2
+        },
+        {
+          "crop": "carrot",
+          "quantity": 3
+        }
+      ],
+      "screenshot": "fixture-natural-harvest.png",
+      "completedAt": "2026-10-27T07:49:44.051Z"
+    },
+    {
+      "id": "I02",
+      "coverage": "actual UI recipe selection, entire naturally harvested rice crafted then insufficient retry; local atomic receipt read",
+      "status": "passed",
+      "at": "2026-10-27T07:49:44.052Z",
+      "quantity": 2,
+      "actionId": "899119cf-74c3-4b56-9ac7-3e7f555f1222",
+      "changes": [
+        {
+          "event_id": "7c54639d-3e66-4d82-bf50-57e75ad78812",
+          "action_id": "899119cf-74c3-4b56-9ac7-3e7f555f1222",
+          "kind": "craft",
+          "item_id": "cooked_rice",
+          "delta": 2,
+          "balance": 2,
+          "pet_id": null
+        },
+        {
+          "event_id": "8c10ad72-79a1-4ac4-9f25-ed73a7a69dfc",
+          "action_id": "899119cf-74c3-4b56-9ac7-3e7f555f1222",
+          "kind": "craft",
+          "item_id": "rice",
+          "delta": -2,
+          "balance": 0,
+          "pet_id": null
+        }
+      ],
+      "insufficientUiBlocked": true,
+      "screenshot": "I02-craft-insufficient.png",
+      "completedAt": "2026-10-27T07:49:45.599Z"
+    },
+    {
+      "id": "I03",
+      "coverage": "actual native rapid feed of one carrot to first local instance, exact once inventory/receipt and other pet unchanged",
+      "status": "passed",
+      "at": "2026-10-27T07:49:45.600Z",
+      "target": "pet-9aa1c7f0-0af9-47a5-b95a-95fac1693bd3",
+      "nativeClicks": 2,
+      "actionId": "9d78da2b-6b82-4c17-a68d-fe7170a70b2e",
+      "exactOnce": true,
+      "screenshot": "I03-target-feed.png",
+      "completedAt": "2026-10-27T07:49:46.553Z"
+    },
+    {
+      "id": "I04",
+      "coverage": "partial: real local economy then same-profile SFX restart, independent SQLite receipt read; no cross-client/cloud sync claim",
+      "status": "passed",
+      "at": "2026-10-27T07:49:46.554Z",
+      "localReceiptDigest": "affa80ca0b732064ca39e67206ba55935c3f062c26ca73267b424b024e4b48f0",
+      "actions": [
+        {
+          "actionId": "03c0e29e-17a9-41b4-bf22-9e43c9fde9b2",
+          "kind": "plant"
+        },
+        {
+          "actionId": "476e5f44-20a5-477a-b0ea-bf82584dd2b0",
+          "kind": "harvest"
+        },
+        {
+          "actionId": "899119cf-74c3-4b56-9ac7-3e7f555f1222",
+          "kind": "craft"
+        },
+        {
+          "actionId": "9d78da2b-6b82-4c17-a68d-fe7170a70b2e",
+          "kind": "feed"
+        },
+        {
+          "actionId": "a9b4af03-448f-4879-832b-c87b6fb6813f",
+          "kind": "plant"
+        }
+      ],
+      "unchangedAfterRestart": true,
+      "cloudSyncVerified": false,
+      "screenshot": "I04-restart-receipts.png",
+      "completedAt": "2026-10-27T07:50:00.812Z"
+    }
+  ],
+  "passed": true,
+  "startedAt": "2026-10-27T07:24:11.634Z",
+  "fixture": {
+    "owner": "qa:7a7c14e2-c6c1-4fb0-84f6-d6967c03fad4:local-bc84a1df-bedc-45dc-8c73-3bfc81afca3f",
+    "accountMode": "official isolated local QA; all pets adopted by UI"
+  },
+  "waitingForNaturalMaturity": {
+    "deadline": "2026-10-27T07:49:43.117Z",
+    "at": "2026-10-27T07:24:51.326Z"
+  },
+  "offlineBlocked": [
+    {
+      "node": 0,
+      "fetch": 0,
+      "websocket": 0,
+      "chromium": 0
+    },
+    {
+      "node": 0,
+      "fetch": 0,
+      "websocket": 0,
+      "chromium": 0
+    }
+  ],
+  "pidChecks": [
+    {
+      "pid": 5248,
+      "alive": false
+    },
+    {
+      "pid": 7008,
+      "alive": false
+    },
+    {
+      "pid": 7728,
+      "alive": false
+    },
+    {
+      "pid": 6800,
+      "alive": false
+    }
+  ],
+  "ownedProcessStopped": true,
+  "profileRemoved": true,
+  "completedAt": "2026-10-27T07:50:01.223Z"
+}
