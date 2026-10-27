@@ -1,0 +1,64 @@
+name: DesktopPet audited-package battle animation acceptance
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ['codex/cloud-authority-convergence']
+    paths:
+      - '.github/workflows/cloud-native-battle-animation.yml'
+      - 'scripts/acceptance/cloud-native-battle-animation-acceptance.mjs'
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: native-battle-animation-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  battle-animation:
+    if: github.ref == 'refs/heads/codex/cloud-authority-convergence'
+    runs-on: windows-latest
+    timeout-minutes: 18
+    env:
+      PACKAGE_SOURCE: beea6e41c0021f7343ee7c27fab3800c00d6a5fa
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-node@v7.1.0
+        with:
+          node-version: 24
+          cache: npm
+      - name: Isolated normal test dependencies without product build
+        run: npm ci
+      - name: Download this repository's exact audited package
+        uses: actions/download-artifact@v8.0.2
+        with:
+          name: desktoppet-desktop-interaction-beea6e41c0021f7343ee7c27fab3800c00d6a5fa
+          run-id: 40500938395
+          github-token: ${{ github.token }}
+          path: artifacts/qa/native-baseline
+      - name: Verify source tree, test-only difference, closure and exact SFX hash
+        id: reuse
+        run: node scripts/acceptance/verify-portable-reuse.mjs --source=$env:PACKAGE_SOURCE
+      - name: Actual four-command animation frames and per-turn effects
+        if: ${{ !cancelled() && steps.reuse.outcome == 'success' }}
+        timeout-minutes: 10
+        run: node scripts/acceptance/cloud-native-battle-animation-acceptance.mjs --source=$env:PACKAGE_SOURCE
+      - name: Retain only bounded new evidence and owned-app screenshots
+        if: always()
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: desktoppet-native-battle-animation-${{ github.sha }}
+          retention-days: 14
+          if-no-files-found: warn
+          path: |
+            artifacts/qa/native-continuation/package-reuse.json
+            artifacts/foundation/cloud-engineering/battleAnimation/run-*/evidence.json
+            artifacts/foundation/cloud-engineering/battleAnimation/run-*/B02-*-normal_attack.png
+            artifacts/foundation/cloud-engineering/battleAnimation/run-*/B02-*-element_attack.png
+            artifacts/foundation/cloud-engineering/battleAnimation/run-*/B02-*-dodge.png
+            artifacts/foundation/cloud-engineering/battleAnimation/run-*/B02-*-ultimate.png
