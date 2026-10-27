@@ -135,6 +135,10 @@ try{
   $name=if($p.action -eq 'open'){'打开灵境'}elseif($p.action -eq 'exit'){'退出灵境'}else{throw 'UNSUPPORTED_ACTION'}
   $items=@()
   $condition=[System.Windows.Automation.PropertyCondition]::new([System.Windows.Automation.AutomationElement]::ProcessIdProperty,[int]$p.processId)
+  $menuStarted=[DateTime]::UtcNow;$menuDeadline=$menuStarted.AddSeconds(5);$report.menuPoll=@()
+  do {
+  $fgCheck=[QATray]::GetAncestor([QATray]::GetForegroundWindow(),2);if((Owner $fgCheck) -ne $p.processId -or (Owner $h) -ne $p.processId){throw 'OWNED_MENU_IDENTITY_CHANGED_DURING_WAIT'}
+  $items=@()
   $tops=[System.Windows.Automation.AutomationElement]::RootElement.FindAll([System.Windows.Automation.TreeScope]::Children,$condition)
   $fg=[QATray]::GetAncestor([QATray]::GetForegroundWindow(),2)
   $report.menuDiscovery=@{expectedName=$name;topCount=$tops.Count;foreground=@{hwnd=$fg.ToInt64().ToString();pid=(Owner $fg)};roots=@()}
@@ -151,6 +155,12 @@ try{
    }
    if($report.menuDiscovery.roots.Count -lt 12){$report.menuDiscovery.roots+=$row}
   }
+  $report.menuPoll+=@{at=[DateTime]::UtcNow.ToString('o');elapsedMs=([DateTime]::UtcNow-$menuStarted).TotalMilliseconds;topCount=$tops.Count;exactItemCount=$items.Count;foregroundPid=(Owner $fg)}
+  if($items.Count -gt 1){throw 'EXACT_OWNED_MENU_ITEM_AMBIGUOUS'}
+  if($items.Count -eq 1){break}
+  if([DateTime]::UtcNow -ge $menuDeadline){break}
+  Start-Sleep -Milliseconds 200
+  } while($true)
   if($items.Count -ne 1){throw 'EXACT_OWNED_MENU_ITEM_UNAVAILABLE'}
   $item=$items[0];$menuRoot=RootAt (Center $item)
   if((Owner $menuRoot) -ne $p.processId){throw 'MENU_NOT_OWNED_BY_APP'}

@@ -95,7 +95,7 @@ try{
   assert.ok(battle);assert.equal(battle.status,'finished');assert.equal(battle.winner,'player');stage='c08-ui-occupy';await model.page.getByRole('button',{name:'占领',exact:true}).click();await route('/garden');const after=await model.call('garden','snapshot');const area=after.territories.find(t=>t.id===battle.context.territoryId);assert.equal(area.ownerAccountId,owner);
   if(selectedCases==='g02'){
    const select=id=>panel.locator(`button.garden-pet[data-pet-id="${id}"]`).click(),confirm=()=>panel.getByRole('button',{name:/^确认.+驻守$/}).click();
-   const getGarden=()=>model.call('garden','snapshot'),getPets=()=>model.call('companions','list');
+   const getGarden=async()=>{const result=await model.page.evaluate(()=>window.lingjing.invoke('garden','snapshot',{}));assert.equal(result.ok,true);assert.ok(Number.isSafeInteger(result.revision));return {...result.data,revision:result.revision};},getPets=()=>model.call('companions','list');
    const roles=x=>({selections:x.selections,desktop:x.pets.map(p=>({id:p.petId,visible:p.desktop.visible}))});
    const baselineRoles=roles(await getPets()),otherBefore=after.territories.filter(t=>t.id!==area.id);
    stage='g02-confirm-a';await select(pets[0].petId);await confirm();const assigned=await pollState(getGarden,x=>x.territories.find(t=>t.id===area.id)?.garrisonPetId===pets[0].petId),a=assigned.territories.find(t=>t.id===area.id);assert.equal(a.ownerAccountId,owner);assert.deepEqual(assigned.territories.filter(t=>t.id!==area.id),otherBefore);assert.deepEqual(roles(await getPets()),baselineRoles);
