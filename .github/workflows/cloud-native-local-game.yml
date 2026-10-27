@@ -1,0 +1,74 @@
+name: DesktopPet audited-package local territory and capture acceptance
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ['codex/cloud-authority-convergence']
+    paths:
+      - '.github/workflows/cloud-native-local-game.yml'
+      - 'scripts/acceptance/cloud-native-territory-settlement-acceptance.mjs'
+      - 'scripts/acceptance/cloud-native-local-capture-acceptance.mjs'
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: native-local-game-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  local-game:
+    if: github.ref == 'refs/heads/codex/cloud-authority-convergence'
+    runs-on: windows-latest
+    timeout-minutes: 18
+    strategy:
+      fail-fast: false
+      matrix:
+        flow: ['territory-settlement', 'local-capture']
+    env:
+      PACKAGE_SOURCE: beea6e41c0021f7343ee7c27fab3800c00d6a5fa
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-node@v7.1.0
+        with:
+          node-version: 24
+          cache: npm
+      - name: Isolated normal test dependencies without product build
+        run: npm ci
+      - name: Download this repository's exact audited package
+        uses: actions/download-artifact@v8.0.2
+        with:
+          name: desktoppet-desktop-interaction-beea6e41c0021f7343ee7c27fab3800c00d6a5fa
+          run-id: 40500938395
+          github-token: ${{ github.token }}
+          path: artifacts/qa/native-baseline
+      - name: Verify source tree, test-only difference, closure and exact SFX hash
+        id: reuse
+        run: node scripts/acceptance/verify-portable-reuse.mjs --source=$env:PACKAGE_SOURCE
+      - name: Natural local territory victory and exact settlement receipts
+        if: ${{ !cancelled() && steps.reuse.outcome == 'success' && matrix.flow == 'territory-settlement' }}
+        timeout-minutes: 10
+        run: node scripts/acceptance/cloud-native-territory-settlement-acceptance.mjs --source=$env:PACKAGE_SOURCE
+      - name: Natural local encounter victory and original capture intent
+        if: ${{ !cancelled() && steps.reuse.outcome == 'success' && matrix.flow == 'local-capture' }}
+        timeout-minutes: 10
+        run: node scripts/acceptance/cloud-native-local-capture-acceptance.mjs --source=$env:PACKAGE_SOURCE
+      - name: Retain only bounded new evidence and owned-app screenshots
+        if: always()
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: desktoppet-native-${{ matrix.flow }}-${{ github.sha }}
+          retention-days: 14
+          if-no-files-found: warn
+          path: |
+            artifacts/qa/native-continuation/package-reuse.json
+            artifacts/foundation/cloud-engineering/territorySettlement/run-*/evidence.json
+            artifacts/foundation/cloud-engineering/territorySettlement/run-*/G03-natural-victory-confirmed-territory.png
+            artifacts/foundation/cloud-engineering/localCapture/run-*/evidence.json
+            artifacts/foundation/cloud-engineering/localCapture/run-*/M05-before-victory.png
+            artifacts/foundation/cloud-engineering/localCapture/run-*/M05-natural-victory.png
+            artifacts/foundation/cloud-engineering/localCapture/run-*/M05-captured.png
