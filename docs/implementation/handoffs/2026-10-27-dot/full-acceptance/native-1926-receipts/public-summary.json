@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "evidenceLevel": "Human-reviewed public summary only; no raw receipts or internal matrix.",
+  "runUrl": "https://github.com/Syndred/DesktopPet/actions/runs/40506901402",
+  "packageScope": "Two focused cases on the existing audited Windows portable package, using official isolated offline simulations on disposable cloud runners. No user device, production cloud account or real GPS.",
+  "cases": [
+    {
+      "id": "G03",
+      "status": "passed-original-scope-simulated-local",
+      "artifactUrl": "https://github.com/Syndred/DesktopPet/actions/runs/40506901402/artifacts/12735756281",
+      "artifactZipSha256": "766043ea4de081e9b36c769ad2f09e859c112d3d46a9d65cd309339afbe23735",
+      "observed": "Official simulated-local territory challenge, natural battle victory, normal UI claim and exact authoritative local settlement/session/territory/owner receipts. No real cloud or GPS.",
+      "limitations": "No real cloud authority, physical location or global numbering validation; no unrelated case is upgraded."
+    },
+    {
+      "id": "M05",
+      "status": "passed-original-scope-simulated-local",
+      "artifactUrl": "https://github.com/Syndred/DesktopPet/actions/runs/40506901402/artifacts/12735925902",
+      "artifactZipSha256": "429ef5ad87c3f8339ccb6b38c18b49ba9105c9549d52b246e0ca70b0b5c9ab95",
+      "observed": "Official simulated-local encounter; nine natural UI battle rounds, pre-victory capture gate, normal UI capture, exact original encounter/battle/resource/new-instance local receipts, and successful original-intent replay without duplication. Captured screenshot is loading and is not result-page visibility evidence.",
+      "limitations": "No real cloud authority, physical location or global numbering validation; no unrelated case is upgraded."
+    }
+  ],
+  "acceptanceConclusion": {
+    "newlyCompletedOriginalCases": [
+      "G03",
+      "M05"
+    ],
+    "acceptedOriginalCases": 59,
+    "comparison": "Previously accepted 57 plus these two original cases. Three full original cases have now been exercised on this package; 56 remain supported by exact-version, impact-reviewed prior evidence. This is not a claim that all 59 were rerun."
+  },
+  "publicationBoundary": "Detailed receipts and the complete versioned matrix are retained locally, not published here. Traceability uses the existing workflow artifacts and whole-archive checksums."
+}
