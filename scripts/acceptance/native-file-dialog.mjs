@@ -55,8 +55,13 @@ $ErrorActionPreference='Stop'
 [Console]::OutputEncoding=[System.Text.UTF8Encoding]::new($false)
 function Emit($value){[Console]::Out.WriteLine(($value|ConvertTo-Json -Compress -Depth 6));[Console]::Out.Flush()}
 [Console]::Out.WriteLine('{"phase":"controller-started"}');[Console]::Out.Flush()
-$c=Get-Content -LiteralPath $SettingsFile -Raw -Encoding UTF8 | ConvertFrom-Json
-Emit @{phase='settings-read'}
+# Read only the exact settings file created by this operation. Avoid the
+# Management Get-Content/provider initialization path; retain JSON parsing.
+$settingsText=[System.IO.File]::ReadAllText($SettingsFile,[System.Text.Encoding]::UTF8)
+[Console]::Out.WriteLine('{"phase":"settings-text-read"}');[Console]::Out.Flush()
+$c=ConvertFrom-Json -InputObject $settingsText
+[Console]::Out.WriteLine('{"phase":"settings-json-parsed"}');[Console]::Out.Flush()
+[Console]::Out.WriteLine('{"phase":"settings-read"}');[Console]::Out.Flush()
 Add-Type -AssemblyName UIAutomationClient
 Add-Type -AssemblyName UIAutomationTypes
 Emit @{phase='uia-assemblies-loaded'}

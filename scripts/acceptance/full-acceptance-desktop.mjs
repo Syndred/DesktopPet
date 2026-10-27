@@ -40,7 +40,7 @@ let app,main,pets=[],initialCursor,mouseBlocked=false;
 const nativeSource=String.raw`
 $ErrorActionPreference='Stop'
 Add-Type @'
-using System; using System.Runtime.InteropServices;
+using System; using System.Runtime.InteropServices; using System.Collections.Generic;
 public static class QAInput {
  [StructLayout(LayoutKind.Sequential)] public struct POINT {public int X; public int Y;}
  [StructLayout(LayoutKind.Sequential)] public struct MOUSEINPUT {public int dx,dy;public uint mouseData,dwFlags,time;public UIntPtr dwExtraInfo;}
@@ -58,9 +58,12 @@ public static class QAInput {
  [DllImport("user32.dll")] public static extern IntPtr GetAncestor(IntPtr hwnd,uint flags);
  [DllImport("user32.dll")] public static extern uint GetWindowThreadProcessId(IntPtr h,out uint pid);
  [DllImport("user32.dll",SetLastError=true)] static extern uint SendInput(uint n,INPUT[] input,int size);
- public static void MoveRelative(int dx,int dy){var i=new INPUT();i.type=0;i.mi.dx=dx;i.mi.dy=dy;i.mi.dwFlags=1;if(SendInput(1,new[]{i},Marshal.SizeOf(typeof(INPUT)))!=1)throw new Exception("NATIVE_INPUT_BLOCKED");}
- public static void MoveAbsolute(int x,int y){int left=GetSystemMetrics(76),top=GetSystemMetrics(77),width=GetSystemMetrics(78),height=GetSystemMetrics(79);if(width<2||height<2||x<left||y<top||x>=left+width||y>=top+height)throw new Exception("NATIVE_INPUT_BLOCKED: target outside virtual desktop");var i=new INPUT();i.type=0;i.mi.dx=(int)Math.Round((x-left)*65535.0/(width-1));i.mi.dy=(int)Math.Round((y-top)*65535.0/(height-1));i.mi.dwFlags=1|0x8000|0x4000;if(SendInput(1,new[]{i},Marshal.SizeOf(typeof(INPUT)))!=1)throw new Exception("NATIVE_INPUT_BLOCKED");}
- public static void Button(uint flags){var i=new INPUT();i.type=0;i.mi.dwFlags=flags;if(SendInput(1,new[]{i},Marshal.SizeOf(typeof(INPUT)))!=1)throw new Exception("NATIVE_INPUT_BLOCKED");}
+ [DllImport("kernel32.dll")] static extern void SetLastError(uint code);
+ public class InputReceipt {public uint flags;public int dx,dy;public uint returnCount;public int lastError;}
+ public static List<InputReceipt> receipts=new List<InputReceipt>();
+ static void Inject(INPUT i){SetLastError(0);uint count=SendInput(1,new[]{i},Marshal.SizeOf(typeof(INPUT)));int error=Marshal.GetLastWin32Error();receipts.Add(new InputReceipt{flags=i.mi.dwFlags,dx=i.mi.dx,dy=i.mi.dy,returnCount=count,lastError=error});if(count!=1)throw new Exception("NATIVE_INPUT_BLOCKED: SendInput returnCount="+count+" lastError="+error);}
+ public static void MoveAbsolute(int x,int y){int left=GetSystemMetrics(76),top=GetSystemMetrics(77),width=GetSystemMetrics(78),height=GetSystemMetrics(79);if(width<2||height<2||x<left||y<top||x>=left+width||y>=top+height)throw new Exception("NATIVE_INPUT_BLOCKED: target outside virtual desktop");var i=new INPUT();i.type=0;i.mi.dx=(int)Math.Floor((x-left+0.5)*65536.0/width);i.mi.dy=(int)Math.Floor((y-top+0.5)*65536.0/height);i.mi.dwFlags=1|0x8000|0x4000;Inject(i);}
+ public static void Button(uint flags){var i=new INPUT();i.type=0;i.mi.dwFlags=flags;Inject(i);}
 }
 '@
 $p=([Console]::In.ReadToEnd()|ConvertFrom-Json)
@@ -80,19 +83,19 @@ if($p.from.x -lt $p.bounds.x -or $p.from.y -lt $p.bounds.y -or $p.from.x -ge ($p
 if($p.action -eq 'move'){
  $warmX=if(($p.from.x+2) -lt ($p.bounds.x+$p.bounds.width)){$p.from.x+2}else{$p.from.x-2}
  if($warmX -lt $p.bounds.x){throw 'START_OUTSIDE_OWNED_WINDOW'}
- if(-not [QAInput]::SetCursorPos($warmX,$p.from.y)){throw 'NATIVE_CURSOR_BLOCKED'}
+ [QAInput]::MoveAbsolute($warmX,$p.from.y)
  Start-Sleep -Milliseconds 150
  [QAInput]::GetCursorPos([ref]$q)|Out-Null
  if($q.X -ne $warmX -or $q.Y -ne $p.from.y){throw 'NATIVE_CURSOR_BLOCKED'}
  $warm=@{x=$q.X;y=$q.Y}
 }
-# SetCursorPos positions the warm point but does not drive Electron's WH_MOUSE_LL
-# forwarding hook. This movement must use genuine SendInput MOUSEEVENTF_MOVE.
-if($p.action -eq 'move'){[QAInput]::MoveRelative(($p.from.x-$warm.x),0)}else{[QAInput]::MoveAbsolute($p.from.x,$p.from.y)}
+# Absolute SendInput drives Electron's WH_MOUSE_LL forwarding hook without
+# assuming relative motion survives Windows acceleration unchanged.
+[QAInput]::MoveAbsolute($p.from.x,$p.from.y)
 Start-Sleep -Milliseconds 250
 [QAInput]::GetCursorPos([ref]$q)|Out-Null
 if([Math]::Abs($q.X-$p.from.x) -gt 1 -or [Math]::Abs($q.Y-$p.from.y) -gt 1){throw 'NATIVE_CURSOR_BLOCKED'}
-if($p.action -eq 'move'){@{warm=$warm;at=@{x=$q.X;y=$q.Y};physicalDeltaPixels=[Math]::Abs($q.X-$warm.x);motionSource="SendInput-MOUSEEVENTF_MOVE-relative";pressed=$false}|ConvertTo-Json -Compress -Depth 3;exit}
+if($p.action -eq 'move'){@{warm=$warm;at=@{x=$q.X;y=$q.Y};physicalDeltaPixels=[Math]::Abs($q.X-$warm.x);motionSource="SendInput-MOUSEEVENTF_MOVE-absolute-virtual-desktop";inputReceipts=([QAInput]::receipts).ToArray();pressed=$false}|ConvertTo-Json -Compress -Depth 3;exit}
 $matched=$false
 for($attempt=0;$attempt -lt 20;$attempt++){
  $hit=[QAInput]::WindowFromPoint($q);$rootWindow=[QAInput]::GetAncestor($hit,2);[uint32]$hitPid=0;[uint32]$rootPid=0;[QAInput]::GetWindowThreadProcessId($hit,[ref]$hitPid)|Out-Null;[QAInput]::GetWindowThreadProcessId($rootWindow,[ref]$rootPid)|Out-Null
@@ -104,7 +107,7 @@ if(-not $matched){throw ('OWNED_PET_NOT_AT_POINT '+(@{expected=$p.windowHandle;h
 if($foreground -ne $p.processId){throw 'OWNED_WINDOW_NOT_FOREGROUND'}
 try{[QAInput]::Button(2);Start-Sleep -Milliseconds 120;for($i=1;$i -le 16;$i++){[QAInput]::MoveAbsolute([int]($p.from.x+($p.to.x-$p.from.x)*$i/16),[int]($p.from.y+($p.to.y-$p.from.y)*$i/16));Start-Sleep -Milliseconds 45}}
 finally{[QAInput]::Button(4)}
-[QAInput]::GetCursorPos([ref]$q)|Out-Null;@{x=$q.X;y=$q.Y;foregroundPid=$foreground;hitHandle=$hit.ToInt64().ToString();hitPid=$hitPid;rootHandle=$rootWindow.ToInt64().ToString();rootPid=$rootPid;motionSource="SendInput-MOUSEEVENTF_MOVE-absolute-virtual-desktop"}|ConvertTo-Json -Compress
+[QAInput]::GetCursorPos([ref]$q)|Out-Null;@{x=$q.X;y=$q.Y;foregroundPid=$foreground;hitHandle=$hit.ToInt64().ToString();hitPid=$hitPid;rootHandle=$rootWindow.ToInt64().ToString();rootPid=$rootPid;motionSource="SendInput-MOUSEEVENTF_MOVE-absolute-virtual-desktop";inputReceipts=([QAInput]::receipts).ToArray()}|ConvertTo-Json -Compress -Depth 4
 `;
 function native(payload){return execFileSync('powershell.exe',['-NoProfile','-NonInteractive','-EncodedCommand',Buffer.from(nativeSource,'utf16le').toString('base64')],{input:JSON.stringify(payload),encoding:'utf8',windowsHide:true,timeout:15000}).trim();}
 async function open(){app=await electron.launch({args:[wrapper],cwd:root,env});main=await app.firstWindow();main.setDefaultTimeout(15000);main.on('pageerror',error=>proof.errors.push(error.message));await main.waitForFunction(()=>Boolean(window.lingjing));}
@@ -157,14 +160,14 @@ async function drag(pet,target){
  });
  const attempt={petId:pet.petId,points,opaque,at:new Date().toISOString(),before:await observe(false)};
  proof.inputAttempts ||= [];proof.inputAttempts.push(attempt);save();
- let cursor;
+ let cursor,dragStarted=false;
  try{
    attempt.moveOnly=JSON.parse(native({action:'move',...points}));
-   assert.ok(attempt.moveOnly.physicalDeltaPixels>=2,'Move-only preflight did not produce the required real 2px motion');
+   assert.ok(attempt.moveOnly.physicalDeltaPixels>=2,'NATIVE_INPUT_BLOCKED: move-only preflight did not produce the required real 2px motion');
    attempt.afterMoveOnly=await observe();save();
-   cursor=JSON.parse(native({action:'drag',...points}));attempt.nativeGuard='matched-and-pressed';
+   dragStarted=true;cursor=JSON.parse(native({action:'drag',...points}));attempt.nativeGuard='matched-and-pressed';
  }
- catch(error){attempt.nativeGuard=/OWNED_PET_NOT_AT_POINT|OWNED_WINDOW_NOT_FOREGROUND|START_OUTSIDE_OWNED_WINDOW|NATIVE_CURSOR_BLOCKED/.test(String(error))?'blocked-before-press':'native-operation-failed-outcome-unverified';throw error;}
+ catch(error){attempt.nativeGuard=!dragStarted||/OWNED_PET_NOT_AT_POINT|OWNED_WINDOW_NOT_FOREGROUND|START_OUTSIDE_OWNED_WINDOW|NATIVE_CURSOR_BLOCKED/.test(String(error))?'blocked-before-press':'native-operation-failed-outcome-unverified';throw error;}
  finally{native({action:'release'});try{attempt.after=await observe();}catch(error){attempt.observationError=String(error);}save();}
 
  let after;
