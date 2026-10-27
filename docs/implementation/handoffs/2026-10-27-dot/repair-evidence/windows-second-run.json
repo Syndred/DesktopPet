@@ -1,0 +1,21 @@
+{
+  "observedAt": "2026-10-27T05:50:11.831251+00:00",
+  "run": "https://github.com/Syndred/DesktopPet/actions/runs/40457227222",
+  "jobId": 122033258142,
+  "sourceCommit": "b8fe082d413b1a5f129efc7bcc763ccdae8e168a",
+  "status": "failure",
+  "passed": [
+    "Windows Node/Electron native check",
+    "main/UI typecheck",
+    "targeted and directly related CJS",
+    "4 selected-pet feed/per-pet cooldown",
+    "9 real Chromium draft scenarios",
+    "22 existing real Chromium resource-hook scenarios",
+    "2 account restore DOM scenarios"
+  ],
+  "failed": "About DOM fixture first render sometimes not ready after fixed 30ms sleep (runtime version absent)",
+  "fix": "Replace arbitrary render/click waits with React act, keep same content assertions; close MessageChannel ports in runner",
+  "verification": "10 consecutive isolated local executions passed 3/3 after deterministic flush",
+  "productCodeChangedForThisFailure": false,
+  "packagingAndPortable": "not run on this commit because earlier test failed; rerun required"
+}

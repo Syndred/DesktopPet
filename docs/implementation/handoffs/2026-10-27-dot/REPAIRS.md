@@ -46,3 +46,5 @@ I03/C07 可独立代码路径：真实 Electron Node 模式 4/4 通过（指定�
 首轮 `3a5dd98c` 已实际构建便携 EXE、通过 ASAR 审计、普通启动和登录版本显示；但登录页关于链接被外层 App 登录门禁覆盖，真实 SFX 发现后未判通过。现仅给 `/settings/about` 放行公共诊断，业务路由继续登录门禁；补外层 App 路由回归并重跑云 Windows。详见 [首轮失败记录](repair-evidence/windows-first-run.json)。
 
 外层实际 App 路由工程回归 6/6 通过，修复前相同 fixture 3 失败；仅 route registry 和 motion wrapper 隔离，真实 gate/navigation/bridge/About 保留。包含加载中公共关于、未登录链接/返回、受保护业务与相似前缀、已登录原业务导航。motion 与真实注册仍由第二轮 Windows portable 验证。
+
+第二轮 Windows 已通过新增 BC/喂养/互动与真实 Chromium 资源 22 项；About JSDOM 用固定 30ms 等待产生偶发失败。测试已改 React act 完整刷新并连续 10 次 3/3 通过，不放宽断言、不改产品；继续第三轮实包。
