@@ -15,7 +15,8 @@ concurrency:
 
 jobs:
   scoped-live:
-    if: github.ref == 'refs/heads/codex/cloud-authority-convergence' && github.event_name == 'push' && github.run_attempt == 1 && github.actor == 'Syndred' && github.triggering_actor == 'Syndred' && github.event.head_commit.message == 'acceptance: execute authorized two-QA batch 8be246d1-7bc5-4d1a-a3b4-81e5c09f6072 [native-only]'
+    if: >-
+      github.ref == 'refs/heads/codex/cloud-authority-convergence' && github.event_name == 'push' && github.run_attempt == 1 && github.actor == 'Syndred' && github.triggering_actor == 'Syndred' && github.event.head_commit.message == 'acceptance: execute authorized two-QA batch 8be246d1-7bc5-4d1a-a3b4-81e5c09f6072 [native-only]'
     runs-on: windows-latest
     timeout-minutes: 105
     env:
