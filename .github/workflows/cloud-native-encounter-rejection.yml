@@ -44,10 +44,10 @@ jobs:
       - name: Verify source tree, test-only difference, closure and exact SFX hash
         id: reuse
         run: node scripts/acceptance/verify-portable-reuse.mjs --source=$env:PACKAGE_SOURCE
-      - name: Normal local escape, defeat and real thirty-minute encounter expiry
+      - name: Natural victory and real thirty-minute encounter expiry (prior rejection evidence retained)
         if: ${{ !cancelled() && steps.reuse.outcome == 'success' }}
         timeout-minutes: 52
-        run: node scripts/acceptance/cloud-native-local-encounter-rejection.mjs --source=$env:PACKAGE_SOURCE
+        run: node scripts/acceptance/cloud-native-local-encounter-rejection.mjs --source=$env:PACKAGE_SOURCE --expiry-only
       - name: Retain only bounded new evidence and owned-app screenshots
         if: always()
         uses: actions/upload-artifact@v7.0.2

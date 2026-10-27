@@ -10,6 +10,8 @@ import {launchPortableSession} from './portable-session.mjs';
 import {pollState} from './poll-state.mjs';
 import {sha256} from '../release/release-store.mjs';
 const require=createRequire(import.meta.url),{MARKER,SCENARIO}=require('../../apps/pc-app/runtime/core/qa-scenario.cjs');
+const expiryOnly=process.argv.includes('--expiry-only');
+for(const arg of process.argv.slice(2))assert.ok(arg==='--expiry-only'||/^--(?:executable|source)=.+$/.test(arg),'UNKNOWN_OPTION');
 const option=name=>process.argv.find(value=>value.startsWith(`--${name}=`))?.slice(name.length+3);
 const config=JSON.parse(readFileSync('scripts/release/electron-builder.pc.json')),version=JSON.parse(readFileSync('package.json')).version,build=JSON.parse(readFileSync('apps/pc-app/dist/build-manifest.json'));
 const executable=resolve(option('executable')||join(config.directories.output,`Lingjing-${version}-portable-x64.exe`)),expectedSource=option('source')||build.sourceCommit;
@@ -20,7 +22,7 @@ writeFileSync(join(profile,MARKER),JSON.stringify({schemaVersion:1,application:'
 const offlineConfig=join(profile,'offline-public.json');writeFileSync(offlineConfig,'{}',{flag:'wx'});
 const systemKeys=new Set(['PATH','PATHEXT','SYSTEMROOT','SYSTEMDRIVE','WINDIR','COMSPEC','TEMP','TMP','TMPDIR','HOME','USERPROFILE','APPDATA','LOCALAPPDATA','PROGRAMFILES','PROGRAMFILES(X86)','PROGRAMW6432','LANG','LC_ALL','CI']);
 const offlineEnvironment=Object.fromEntries(Object.keys(process.env).filter(key=>!systemKeys.has(key.toUpperCase())).map(key=>[key,undefined]));Object.assign(offlineEnvironment,{LINGJING_QA_SCENARIO:SCENARIO,LINGJING_PUBLIC_CONFIG:offlineConfig});
-const proof={scope:'M06: official simulated-local escape, natural defeat, natural 30-minute expiry, UI return and original-intent rejection. No GPS/cloud/tile requests or clock/stat mutations.',sourceCommit:expectedSource,compiledFingerprint:build.compiledFingerprint,exeSha256:await sha256(executable),cases:[],passed:false,startedAt:new Date().toISOString()};
+const proof={scope:expiryOnly?'M06 expiry subcase only: fresh official local QA natural victory and real thirty-minute rejection. Escape/defeat NOT rerun; no full-case claim. No GPS/cloud/tile requests or clock/stat mutation.':'M06: official simulated-local escape, natural defeat, natural 30-minute expiry, UI return and original-intent rejection. No GPS/cloud/tile requests or clock/stat mutations.',sourceCommit:expectedSource,compiledFingerprint:build.compiledFingerprint,exeSha256:await sha256(executable),selectedCases:expiryOnly?'expiry-only':'all',cases:[],passed:false,startedAt:new Date().toISOString()};
 let model,uncertain=false,owner;const pids=new Set();const redact=()=> 'LOCAL_REJECTION_ACCEPTANCE_FAILED_SEE_STAGE';const save=()=>writeFileSync(join(output,'evidence.json'),JSON.stringify(proof,null,2));
 function alive(pid){try{process.kill(pid,0);return true;}catch(error){if(error.code==='ESRCH')return false;throw error;}}
 async function stop(){if(model){proof.offlineBlocked=(proof.offlineBlocked||[]);proof.offlineBlocked.push(await model.main(()=>globalThis.__localRejectionOfflineBlocked).catch(()=>({observation:'unavailable'})));await Promise.race([model.stop(),new Promise((_,reject)=>setTimeout(()=>reject(Error('OWNED_STOP_TIMEOUT')),15000))]);}if(uncertain)throw Error('Launch outcome/PID unknown; keep temporary profile');proof.pidChecks=await pollState(()=>[...pids].map(pid=>({pid,alive:alive(pid)})),rows=>rows.every(row=>!row.alive),{timeoutMs:10000,intervalMs:200,label:'Owned process still alive; keep temporary profile'});model=null;}
@@ -66,13 +68,13 @@ async function roundToEnd(action,winner){
  for(let n=0;n<80&&session.status==='active';n++){
   timeBudget();assert.ok(Date.now()<end);assert.ok(!session.pendingAction);
   await model.page.waitForFunction(()=>document.querySelector('[data-animation-phase]')?.getAttribute('data-animation-phase')==='rest');
-  const actualAction=action==='dodge'&&session.snapshot.player.freeDodgeUsed&&session.snapshot.player.anger<=0?'normal_attack':action;
+  const actualAction=action==='natural-victory'?(session.snapshot.player.anger>=session.rules.ultimateAnger?'ultimate':'element_attack'):action==='dodge'&&session.snapshot.player.freeDodgeUsed&&session.snapshot.player.anger<=0?'normal_attack':action;
   const choice=model.page.locator('.battle-move.battle-command.'+actualAction);assert.equal(await choice.count(),1);await pollState(()=>choice.isEnabled(),Boolean,{timeoutMs:20000,label:'Natural action unavailable'});
   const before=session.snapshot.round;await choice.click();session=await pollState(()=>model.call('battle','snapshot',{sessionId:session.id}),s=>s.snapshot.round===before+1,{timeoutMs:20000,label:'Natural round unresolved'});
   assert.equal(session.snapshot.round,before+1);await model.page.waitForFunction(round=>Number(document.querySelector('.battle-stage')?.getAttribute('data-round'))===round,session.snapshot.round);
   rounds.push({round:session.snapshot.round,action:actualAction,status:session.status});proof.activeRounds=rounds;save();
  }
- assert.equal(session.status,'finished');assert.equal(session.winner,winner);assert.ok(!session.pendingAction);return rounds;
+ assert.equal(session.status,'finished');if(winner)assert.equal(session.winner,winner);assert.ok(!session.pendingAction);return rounds;
 }
 async function returnSame(status){
  await route('/companions');await route('/discovery/encounter/'+encounterId);
@@ -94,7 +96,7 @@ try{
  const roster=await model.call('companions','list'),metal=roster.templates.find(t=>t.element==='metal');wood=roster.templates.find(t=>t.element==='wood');assert.ok(metal&&wood);
  player=(await model.call('companions','adopt',{templateId:metal.templateId,name:metal.name,showOnDesktop:false,actionId:randomUUID()})).pet;
  await model.call('battle','selectPet',{petId:player.petId,actionId:randomUUID()});
- await step('M06-escape','Actual UI leave confirmation, return same abandoned session, original capture intent denied twice',async()=>{
+ if(!expiryOnly){await step('M06-escape','Actual UI leave confirmation, return same abandoned session, original capture intent denied twice',async()=>{
   await begin();await returnSame('challenging');
   await model.page.getByRole('button',{name:'离开',exact:true}).click();const dialog=model.page.getByRole('dialog',{name:'离开对战',exact:true});await dialog.getByRole('button',{name:'离开',exact:true}).click();
   session=await pollState(()=>model.call('battle','snapshot',{sessionId:session.id}),s=>s.status==='abandoned',{timeoutMs:15000,label:'Leave not committed'});
@@ -105,11 +107,21 @@ try{
   await begin();const rounds=await roundToEnd('dodge','enemy');await returnSame('lost');assert.equal(await model.page.getByRole('button',{name:'收服',exact:true}).count(),0);
   const result=await deniedCapture('VICTORY_REQUIRED');await model.page.screenshot({path:join(output,'M06-defeat.png'),timeout:10000});return {...result,rounds};
  });
+ }
  await step('M06-expiry','Natural win then real createdAt + 30 minutes, fresh same QA position, UI original confirmation rejects expiry',async()=>{
-  const encounter=await begin();const rounds=await roundToEnd('element_attack','player');await returnSame('won');
+  let encounter,rounds;proof.victoryAttempts=[];
+  for(let attempt=1;attempt<=3;attempt++){
+   encounter=await begin();rounds=await roundToEnd('natural-victory');
+   const state=await model.call('discovery','snapshot'),saved=state.encounters.find(e=>e.encounterId===encounterId);
+   assert.ok(!session.pendingAction);assert.equal(session.status,'finished');assert.ok(saved);
+   proof.victoryAttempts.push({attempt,sessionId:session.id,encounterId,winner:session.winner,status:saved.status,rounds});save();
+   if(session.winner==='player'){assert.equal(saved.status,'won');break;}
+   assert.equal(session.winner,'enemy');assert.equal(saved.status,'lost');assert.equal((await receipts(encounterId,session.id)).capture,null);
+  }
+  assert.equal(session.winner,'player');await returnSame('won');
   const original=(await model.call('discovery','snapshot')).location.fix;assert.ok(original?.source==='simulated');
   assert.ok(Number.isSafeInteger(encounter.createdAt)&&encounter.createdAt<=Date.now());
-  const expiresAfter=encounter.createdAt+30*60*1000;proof.wait={createdAt:encounter.createdAt,expiresAfter,startedAt:Date.now()};save();
+  const expiresAfter=encounter.createdAt+30*60*1000;proof.wait={createdAt:encounter.createdAt,expiresAfter,startedAt:Date.now()};save();console.log(JSON.stringify({stage:'expiry-wait',createdAt:encounter.createdAt,expiresAfter,createdAtUtc:new Date(encounter.createdAt).toISOString(),expiresAfterUtc:new Date(expiresAfter).toISOString()}));
   await route('/companions');
   while(Date.now()<=expiresAfter+1000){timeBudget();await new Promise(resolve=>setTimeout(resolve,Math.min(15000,Math.max(1,expiresAfter+1001-Date.now()))));proof.wait.observedAt=Date.now();save();}
   await returnSame('won');await model.call('discovery','setExploring',{active:true});const located=await model.call('discovery','locate');
@@ -121,7 +133,7 @@ try{
   const result=await deniedCapture('ENCOUNTER_EXPIRED');await model.page.screenshot({path:join(output,'M06-expired.png'),timeout:10000});
   await dialog.getByRole('button',{name:'返回探索',exact:true}).click();await returnSame('won');
   assert.deepEqual(await receipts(encounterId,session.id),before);return {...result,rounds,wait:proof.wait,nativeUiError:true,sameFixedQaPosition:true};
- });assert.equal(proof.cases.length,3);proof.passed=proof.cases.every(row=>row.status==='passed-original-scope-offline');
+ });assert.equal(proof.cases.length,expiryOnly?1:3);proof.passed=proof.cases.every(row=>row.status==='passed-original-scope-offline');
 }catch(error){proof.error=redact(error);proof.passed=false;process.exitCode=1;}
 finally{
  try{await stop();proof.ownedProcessStopped=true;}catch(error){proof.stopError=redact(error);proof.passed=false;process.exitCode=1;}
