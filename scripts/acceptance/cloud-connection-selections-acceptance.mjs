@@ -86,6 +86,9 @@ try{
    stage='c08-natural-challenge';await panel.locator(`button.garden-pet[data-pet-id="${pets[2].petId}"]`).click();await panel.getByRole('button',{name:/发起领地挑战$/}).click();const overview=await pollState(()=>model.call('battle','overview'),x=>x.session?.mode==='territory'&&x.session.status==='active');battle=overview.session;
    for(let i=0;i<80&&battle.status==='active';i++){assert.ok(!battle.pendingAction);battle=await model.call('battle','act',{sessionId:battle.id,actionId:randomUUID(),expectedRound:battle.snapshot.round+1,action:battle.snapshot.player.anger>=(battle.rules?.ultimateAnger||50)?'ultimate':'element_attack'});}
    stage='c08-natural-victory';proof.territoryFixture={sessionId:battle.id,status:battle.status,winner:battle.winner,round:battle.snapshot.round,playerPetId:battle.player.petId};proof.territoryAttempts.push({...proof.territoryFixture,strategy:'normal element_attack and affordable ultimate',settled:false});save();assert.equal(battle.status,'finished');assert.ok(!battle.pendingAction);
+   // Fixture IPC advances the persisted local battle, not this mounted React controller.
+   // Reopen its real result through Garden rather than injecting state or settling by IPC.
+   stage='c08-ui-open-existing-result';await route('/garden');const resultLink=panel.locator(`a[href="#/battle/session/${encodeURIComponent(battle.id)}"]`);await resultLink.waitFor();assert.equal((await resultLink.innerText()).trim(),'查看结果');await resultLink.click();await model.page.locator(`.battle-screen[data-session-id="${battle.id}"]`).waitFor();
    if(battle.winner==='player')break;
    assert.ok(['enemy','draw'].includes(battle.winner));stage='c08-ui-confirm-loss';await model.page.getByRole('button',{name:'确认结果',exact:true}).click();await route('/garden');await pollState(()=>model.call('garden','snapshot'),x=>!(x.territoryChallenges||[]).some(c=>c.sessionId===battle.id));proof.territoryAttempts.at(-1).settled=true;
   }

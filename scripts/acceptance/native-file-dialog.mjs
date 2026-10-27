@@ -1,4 +1,4 @@
-// Opt-in Windows UIA helper for disposable QA profiles ONLY. No SendKeys, global
+// Opt-in Windows native-file-dialog helper for disposable QA profiles ONLY. No SendKeys, global
 // clicks, shell dialogs from other processes, overwrite confirmations, or grants.
 // A newly created unparented dialog is allowed ONLY in the verified main PID
 // after a no-existing-dialog handshake and normal UI trigger. Nonzero owners
@@ -138,19 +138,8 @@ $apiChecks++
 if(-not [System.Collections.IEnumerable].IsAssignableFrom([System.Windows.Automation.AutomationElementCollection])){throw 'UIA_API_COLLECTION_NOT_ENUMERABLE'}
 $apiChecks++
 Emit @{phase='uia-api-contract-verified';checks=$apiChecks;reflectionOnly=$true;uiAccessed=$false}
-# c8 Windows evidence: native Edit1148/Combo1148/Button1 exist, but managed
-# UIA exposes none and the standard Win32 client-side provider is not loaded.
-# Explicitly register ONLY the .NET Framework Microsoft GAC provider, never a
-# downloaded/local custom provider. Registration changes this helper only.
-# https://learn.microsoft.com/dotnet/api/system.windows.automation.clientsettings.registerclientsideproviderassembly
-$providerName='UIAutomationClientsideProviders, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35'
-$provider=[System.Reflection.Assembly]::Load($providerName)
-if(-not $provider.GlobalAssemblyCache -or -not [String]::Equals($provider.GetName().FullName,$providerName,[StringComparison]::OrdinalIgnoreCase)){throw 'SYSTEM_UIA_PROVIDER_IDENTITY_MISMATCH'}
-[System.Windows.Automation.ClientSettings]::RegisterClientSideProviderAssembly($provider.GetName())
-Emit @{phase='system-win32-uia-provider-registered';identity=$provider.GetName().FullName;globalAssemblyCache=$provider.GlobalAssemblyCache;uiAccessed=$false}
-
-
-
+# UIA reflection remains a no-UI API check, but standard Win32 file controls
+# use the measured exact HWND/ID chain below. No provider registration/fallback.
 Add-Type -AssemblyName System.Drawing
 Add-Type -ReferencedAssemblies ([System.Drawing.Bitmap].Assembly.Location) @'
 using System;
@@ -159,6 +148,44 @@ using System.Runtime.InteropServices;
 using System.Text;
 public static class OwnedDialogNative {
  public delegate bool Callback(IntPtr hwnd,IntPtr data);
+ [DllImport("user32.dll",CharSet=CharSet.Unicode,EntryPoint="SendMessageTimeoutW",SetLastError=true)] static extern IntPtr MessageText(IntPtr h,uint msg,UIntPtr wp,string text,uint flags,uint timeout,out UIntPtr result);
+ [DllImport("user32.dll",CharSet=CharSet.Unicode,EntryPoint="SendMessageTimeoutW",SetLastError=true)] static extern IntPtr MessageRead(IntPtr h,uint msg,UIntPtr wp,StringBuilder text,uint flags,uint timeout,out UIntPtr result);
+ [DllImport("user32.dll",EntryPoint="SendMessageTimeoutW",SetLastError=true)] static extern IntPtr MessageAction(IntPtr h,uint msg,UIntPtr wp,IntPtr lp,uint flags,uint timeout,out UIntPtr result);
+ [DllImport("user32.dll",EntryPoint="GetWindowLongW")] static extern int GetWindowLong(IntPtr hwnd,int index);
+ static bool OwnedControl(IntPtr root,IntPtr h,uint pid,string cls,int id){return h!=IntPtr.Zero && IsWindow(h) && IsChild(root,h) && Pid(h)==pid && Class(h)==cls && GetDlgCtrlID(h)==id && IsWindowVisible(h) && IsWindowEnabled(h);}
+ static bool ExactEdit(IntPtr root,IntPtr edit,uint pid){
+  if(!OwnedControl(root,edit,pid,"Edit",1148))return false;
+  int style=GetWindowLong(edit,-16);if(style==0 || (style&0x0800)!=0)return false;
+  var combo=GetParent(edit);if(!OwnedControl(root,combo,pid,"ComboBox",1148))return false;
+  var outer=GetParent(combo);return OwnedControl(root,outer,pid,"ComboBoxEx32",1148) && GetParent(outer)==root;
+ }
+ static bool ExactAction(IntPtr root,IntPtr button,uint pid,string kind){
+  if(!OwnedControl(root,button,pid,"Button",1) || GetParent(button)!=root)return false;
+  var caption=new StringBuilder(128);UIntPtr chars;
+  if(MessageRead(button,0x000D,new UIntPtr(128),caption,34,1000,out chars)==IntPtr.Zero)return false;
+  var label=caption.ToString().Replace("&","").Trim();
+  return kind=="save" ? label=="Save" || label=="保存" || label=="保存(S)" : label=="Open" || label=="打开" || label=="打开(O)";
+ }
+ static void ExactRoot(IntPtr root,uint pid){if(root==IntPtr.Zero || !IsWindow(root) || Pid(root)!=pid || Class(root)!="#32770" || GetForegroundWindow()!=root)throw new InvalidOperationException("NATIVE_CONTROL_ROOT_CHANGED");}
+ public sealed class FileControls {public IntPtr edit;public IntPtr action;public int editCount;public int actionCount;}
+ public static FileControls FindFileControls(IntPtr root,uint pid,string kind){
+  ExactRoot(root,pid);var result=new FileControls();int count=0;bool limit=false;
+  EnumChildWindows(root,(h,d)=>{if(++count>256){limit=true;return false;}if(ExactEdit(root,h,pid)){result.edit=h;result.editCount++;}if(ExactAction(root,h,pid,kind)){result.action=h;result.actionCount++;}return true;},IntPtr.Zero);
+  if(limit)throw new InvalidOperationException("NATIVE_CONTROL_SCAN_LIMIT");
+  ExactRoot(root,pid);return result;
+ }
+ public static void SetExactFilename(IntPtr root,IntPtr edit,uint pid,string path){
+  ExactRoot(root,pid);if(!ExactEdit(root,edit,pid) || path.Length<1 || path.Length>4096)throw new InvalidOperationException("NATIVE_FILENAME_CHAIN_CHANGED");
+  UIntPtr result;if(MessageText(edit,0x000C,UIntPtr.Zero,path,34,1000,out result)==IntPtr.Zero || result.ToUInt64()==0)throw new InvalidOperationException("NATIVE_FILENAME_SET_FAILED");
+  ExactRoot(root,pid);if(!ExactEdit(root,edit,pid))throw new InvalidOperationException("NATIVE_FILENAME_CHAIN_CHANGED");
+  var readback=new StringBuilder(4097);
+  if(MessageRead(edit,0x000D,new UIntPtr(4097),readback,34,1000,out result)==IntPtr.Zero || !String.Equals(readback.ToString(),path,StringComparison.Ordinal))throw new InvalidOperationException("NATIVE_FILENAME_READBACK_MISMATCH");
+ }
+ public static void ClickExactAction(IntPtr root,IntPtr button,uint pid,string kind){
+  ExactRoot(root,pid);if(!ExactAction(root,button,pid,kind))throw new InvalidOperationException("NATIVE_ACTION_CHAIN_CHANGED");
+  UIntPtr result;if(MessageAction(button,0x00F5,UIntPtr.Zero,IntPtr.Zero,2,1000,out result)==IntPtr.Zero)throw new InvalidOperationException("NATIVE_ACTION_INVOKE_UNCONFIRMED");
+ }
+
  [StructLayout(LayoutKind.Sequential)] public struct Rect {public int left,top,right,bottom;}
  [DllImport("user32.dll")] static extern bool GetWindowRect(IntPtr hwnd,out Rect rect);
  [DllImport("user32.dll")] static extern bool PrintWindow(IntPtr hwnd,IntPtr hdc,uint flags);
@@ -270,124 +297,52 @@ try{
  }
  if($dialog -eq [IntPtr]::Zero){throw 'EXPECTED_NATIVE_DIALOG_NOT_FOUND'}
  Dialog-Still-Exact $dialog
- # A new HWND can precede the provider's filename controls. Re-snapshot ONLY
- # this same verified dialog, within the unchanged operation deadline.
- $controlSnapshots=0;$candidates=@();$actions=@();$controlWaitStarted=[DateTime]::UtcNow
+ # Exact measured Win32 chain only; no UIA or keyboard/input fallback.
+ $controlSnapshots=0;$controlWaitStarted=[DateTime]::UtcNow;$controls=$null
  while([DateTime]::UtcNow -lt $deadline){
   Dialog-Still-Exact $dialog
-  $root=[System.Windows.Automation.AutomationElement]::FromHandle($dialog)
-  if($root.Current.ProcessId -ne $ownerPid -or $root.Current.ClassName -ne '#32770'){throw 'UIA_ROOT_IDENTITY_MISMATCH'}
-  $walker=[System.Windows.Automation.TreeWalker]::ControlViewWalker
-  $edits=$root.FindAll([System.Windows.Automation.TreeScope]::Descendants,([System.Windows.Automation.PropertyCondition]::new([System.Windows.Automation.AutomationElement]::ControlTypeProperty,[System.Windows.Automation.ControlType]::Edit)))
-  $candidates=@()
-  foreach($edit in $edits){
-   $id=$edit.Current.AutomationId;$name=$edit.Current.Name
-   $parent=$walker.GetParent($edit)
-   # Modern IFileDialog: filename ComboBox 1148 owns Edit 1001. Never
-   # accept an arbitrary Edit 1001 (the dialog also has search/address edits).
-   $modern=$id -eq '1001' -and $edit.Current.ClassName -eq 'Edit' -and $null -ne $parent -and $parent.Current.ProcessId -eq $ownerPid -and $parent.Current.ControlType -eq [System.Windows.Automation.ControlType]::ComboBox -and $parent.Current.AutomationId -eq '1148' -and $parent.Current.ClassName -eq 'ComboBox'
-   $standard=$id -eq '1148' -or $name -match '^(File name:|File name|文件名\(?[Nn]?\)?:|文件名[：:]?)$'
-   if($standard -or $modern){
-    $pattern=$null
-    if($edit.Current.ProcessId -eq $ownerPid -and $edit.Current.IsEnabled -and -not $edit.Current.IsOffscreen -and $edit.TryGetCurrentPattern([System.Windows.Automation.ValuePattern]::Pattern,[ref]$pattern) -and -not $pattern.Current.IsReadOnly){$candidates+=@{element=$edit;pattern=$pattern;id=$id;name=$name;selector=$(if($modern){'filename-combobox-1148/direct-edit-1001'}else{'standard-filename-edit'})}}
-   }
-  }
-  $buttons=$root.FindAll([System.Windows.Automation.TreeScope]::Descendants,([System.Windows.Automation.PropertyCondition]::new([System.Windows.Automation.AutomationElement]::ControlTypeProperty,[System.Windows.Automation.ControlType]::Button)))
-  $actions=@()
-  foreach($button in $buttons){
-   $name=($button.Current.Name -replace '&','' -replace '\s*\([A-Za-z]\)\s*$','').Trim()
-   $expected=if($c.kind -eq 'save'){@('Save','保存')}else{@('Open','打开')}
-   $pattern=$null
-   if($button.Current.ProcessId -eq $ownerPid -and $button.Current.AutomationId -eq '1' -and $expected -ccontains $name -and $button.Current.IsEnabled -and -not $button.Current.IsOffscreen -and $button.TryGetCurrentPattern([System.Windows.Automation.InvokePattern]::Pattern,[ref]$pattern)){$actions+=@{element=$button;pattern=$pattern;name=$name}}
-  }
+  $controls=[OwnedDialogNative]::FindFileControls($dialog,[uint32]$ownerPid,[string]$c.kind)
   $controlSnapshots++
-  if($candidates.Count -gt 1){throw 'MULTIPLE_STANDARD_FILENAME_EDITS_REFUSED'}
-  if($actions.Count -gt 1){throw 'MULTIPLE_EXPECTED_OPEN_SAVE_ACTIONS_REFUSED'}
-  if($controlSnapshots -eq 1 -or ($candidates.Count -eq 1 -and $actions.Count -eq 1)){
-   Emit @{phase='dialog-controls-snapshot';snapshot=$controlSnapshots;elapsedMs=[int]([DateTime]::UtcNow-$controlWaitStarted).TotalMilliseconds;filenameCandidates=$candidates.Count;actionCandidates=$actions.Count}
+  if($controls.editCount -gt 1 -or $controls.actionCount -gt 1){throw 'MULTIPLE_NATIVE_FILE_CONTROLS_REFUSED'}
+  if($controlSnapshots -eq 1 -or ($controls.editCount -eq 1 -and $controls.actionCount -eq 1)){
+   Emit @{phase='dialog-controls-snapshot';selector='Win32-Edit1148-Combo1148-ComboEx1148-direct-dialog/Button1';snapshot=$controlSnapshots;elapsedMs=[int]([DateTime]::UtcNow-$controlWaitStarted).TotalMilliseconds;filenameCandidates=$controls.editCount;actionCandidates=$controls.actionCount}
   }
-  if($candidates.Count -eq 1 -and $actions.Count -eq 1){break}
+  if($controls.editCount -eq 1 -and $controls.actionCount -eq 1){break}
   [System.Threading.Thread]::Sleep(100)
  }
- if($controlSnapshots -eq 0){throw 'NATIVE_DIALOG_CONTROL_DEADLINE_EXPIRED'}
- Emit @{phase='dialog-controls-wait-finished';snapshots=$controlSnapshots;elapsedMs=[int]([DateTime]::UtcNow-$controlWaitStarted).TotalMilliseconds;filenameCandidates=$candidates.Count;actionCandidates=$actions.Count}
- if($candidates.Count -ne 1 -or $actions.Count -ne 1){
+ if($null -eq $controls -or $controls.editCount -ne 1 -or $controls.actionCount -ne 1){
   Dialog-Still-Exact $dialog
-  # Independent read-only native child metadata distinguishes absent controls
-  # from legacy Win32 controls missing in managed UIA's provider tree.
   $nativeChildren=[OwnedDialogNative]::DescribeChildren($dialog,[uint32]$ownerPid)
   Dialog-Still-Exact $dialog
-  $providerAssemblies=@()
-  foreach($assembly in [AppDomain]::CurrentDomain.GetAssemblies()){
-   $identity=$assembly.GetName()
-   if(@('UIAutomationClient','UIAutomationTypes','UIAutomationClientsideProviders','UIAutomationProvider') -contains $identity.Name){$providerAssemblies+=@{name=$identity.Name;version=$identity.Version.ToString()}}
-  }
-  Emit @{phase='owned-dialog-native-child-diagnostic';dialogHandle=$dialog.ToInt64().ToString();children=$nativeChildren;maxControls=64;maxInspected=256;loadedUiaAssemblies=$providerAssemblies;valuesCollected=$false;inputPerformed=$false}
-
-  # Bounded metadata ONLY from this already verified dialog. No ValuePattern,
-  # text value, file-list item content, desktop/global walk, or input fallback.
-  function Control-Metadata($element){
-   $v=$element.Current
-   return @{controlType=$v.ControlType.ProgrammaticName;id=([string]$v.AutomationId).Substring(0,[Math]::Min(80,([string]$v.AutomationId).Length));name=([string]$v.Name).Substring(0,[Math]::Min(120,([string]$v.Name).Length));class=([string]$v.ClassName).Substring(0,[Math]::Min(80,([string]$v.ClassName).Length));enabled=$v.IsEnabled;offscreen=$v.IsOffscreen}
-  }
-  $metadata=@()
-  # ControlView may skip a provider root: independently prove each diagnostic
-  # ancestor belongs to this dialog before reading its display metadata.
-  # Compare is on Automation (not AutomationElement):
-  # https://learn.microsoft.com/dotnet/api/system.windows.automation.automation.compare
-  $dialogMembers=$root.FindAll([System.Windows.Automation.TreeScope]::Descendants,[System.Windows.Automation.Condition]::TrueCondition)
-  $combos=$root.FindAll([System.Windows.Automation.TreeScope]::Descendants,([System.Windows.Automation.PropertyCondition]::new([System.Windows.Automation.AutomationElement]::ControlTypeProperty,[System.Windows.Automation.ControlType]::ComboBox)))
-  foreach($group in @($edits,$combos)){
-   foreach($element in $group){
-    if($metadata.Count -ge 16){break}
-    if($element.Current.ProcessId -ne $ownerPid){continue}
-    $entry=Control-Metadata $element;$parents=@();$ancestor=$walker.GetParent($element)
-    for($depth=0;$depth -lt 3 -and $null -ne $ancestor;$depth++){
-     $insideDialog=[System.Windows.Automation.Automation]::Compare($ancestor,$root)
-     if(-not $insideDialog -and $dialogMembers.Count -le 512){
-      foreach($member in $dialogMembers){if([System.Windows.Automation.Automation]::Compare($ancestor,$member)){$insideDialog=$true;break}}
-     }
-     if(-not $insideDialog -or $ancestor.Current.ProcessId -ne $ownerPid){break}
-     $parents+=Control-Metadata $ancestor
-     if([System.Windows.Automation.Automation]::Compare($ancestor,$root)){break}
-     $ancestor=$walker.GetParent($ancestor)
-    }
-    $entry.parents=$parents;$metadata+=$entry
-   }
-  }
-  Emit @{phase='filename-control-diagnostic';candidateCount=$candidates.Count;actionCandidateCount=$actions.Count;controls=$metadata;maxControls=16;maxParentDepth=3;valuesCollected=$false}
-  # PrintWindow renders only this exact HWND, never a desktop crop/other window.
-  if($c.dialogCapturePath){
-   try{
-   [void][System.IO.Directory]::CreateDirectory([System.IO.Path]::GetDirectoryName([string]$c.dialogCapturePath))
+  Emit @{phase='owned-dialog-native-child-diagnostic';dialogHandle=$dialog.ToInt64().ToString();children=$nativeChildren;maxControls=64;maxInspected=256;valuesCollected=$false;inputPerformed=$false}
+  if($c.dialogCapturePath){try{
    Dialog-Still-Exact $dialog
    [OwnedDialogNative]::CaptureDialog($dialog,[uint32]$ownerPid,[string]$c.dialogCapturePath)
    Dialog-Still-Exact $dialog
    Emit @{phase='owned-dialog-image-captured';path=[string]$c.dialogCapturePath;method='PrintWindow-exact-HWND';dialogHandle=$dialog.ToInt64().ToString();desktopCaptured=$false}
-   }catch{Emit @{phase='owned-dialog-image-unavailable';inputPerformed=$false}}
-  }
-  if($candidates.Count -ne 1){throw 'UNIQUE_STANDARD_FILENAME_EDIT_NOT_FOUND'}
-  throw 'UNIQUE_EXPECTED_OPEN_SAVE_ACTION_NOT_FOUND'
+  }catch{Emit @{phase='owned-dialog-image-unavailable';inputPerformed=$false}}}
+  throw 'UNIQUE_NATIVE_FILENAME_AND_ACTION_NOT_FOUND'
  }
  if([DateTime]::UtcNow -ge $deadline){throw 'NATIVE_DIALOG_CONTROL_DEADLINE_EXPIRED'}
  Dialog-Still-Exact $dialog
  if($c.kind -eq 'save' -and ([System.IO.File]::Exists([string]$c.filePath) -or [System.IO.Directory]::Exists([string]$c.filePath))){throw 'SAVE_TARGET_APPEARED_REFUSE_OVERWRITE'}
- $candidates[0].pattern.SetValue([string]$c.filePath)
- if($candidates[0].pattern.Current.Value -cne [string]$c.filePath){throw 'FILENAME_VALUE_READBACK_MISMATCH'}
+ [OwnedDialogNative]::SetExactFilename($dialog,$controls.edit,[uint32]$ownerPid,[string]$c.filePath)
  Dialog-Still-Exact $dialog
+ if([DateTime]::UtcNow -ge $deadline){throw 'NATIVE_DIALOG_CONTROL_DEADLINE_EXPIRED'}
  if($c.kind -eq 'save' -and ([System.IO.File]::Exists([string]$c.filePath) -or [System.IO.Directory]::Exists([string]$c.filePath))){throw 'SAVE_TARGET_APPEARED_REFUSE_OVERWRITE'}
  if($c.kind -eq 'open'){
   $hasher=[System.Security.Cryptography.SHA256]::Create()
   try{$actualHash=[System.BitConverter]::ToString($hasher.ComputeHash([System.IO.File]::ReadAllBytes([string]$c.filePath))).Replace('-','').ToLowerInvariant()}finally{$hasher.Dispose()}
   if($actualHash -cne [string]$c.expectedSha256){throw 'OPEN_FIXTURE_CHANGED_BEFORE_INVOKE'}
  }
- Emit @{phase='filename-verified';dialogHandle=$dialog.ToInt64().ToString();editAutomationId=$candidates[0].id;selector=$candidates[0].selector;action=$actions[0].name}
- $actions[0].pattern.Invoke()
+ Emit @{phase='filename-verified';dialogHandle=$dialog.ToInt64().ToString();editHandle=$controls.edit.ToInt64().ToString();actionHandle=$controls.action.ToInt64().ToString();selector='Win32-Edit1148-Combo1148-ComboEx1148-direct-dialog/Button1';readbackVerified=$true;action=[string]$c.kind}
+ Dialog-Still-Exact $dialog
+ [OwnedDialogNative]::ClickExactAction($dialog,$controls.action,[uint32]$ownerPid,[string]$c.kind)
  while([DateTime]::UtcNow -lt $deadline){
   Owner-Still-Exact | Out-Null
   if(-not [OwnedDialogNative]::IsWindow($dialog) -or -not [OwnedDialogNative]::IsWindowVisible($dialog)){
    if([OwnedDialogNative]::GetForegroundWindow() -ne $owner){throw 'UNEXPECTED_FOREGROUND_AFTER_DIALOG'}
-   Emit @{phase='dialog-closed';ownerPid=$ownerPid;dialogHandle=$dialog.ToInt64().ToString();nativeAction=$actions[0].name;overwriteAccepted=$false};exit 0
+   Emit @{phase='dialog-closed';ownerPid=$ownerPid;dialogHandle=$dialog.ToInt64().ToString();nativeAction=[string]$c.kind;overwriteAccepted=$false};exit 0
   }
   # Includes overwrite/error/credential subdialogs: never accept or type in them.
   if([OwnedDialogNative]::GetForegroundWindow() -ne $dialog){throw 'UNEXPECTED_SECONDARY_DIALOG_OR_FOREGROUND'}
@@ -448,7 +403,7 @@ export async function driveNativeFileDialog({scope,kind,filePath,ownerPid,ownerW
   const fileEvidence={filePath:file,bytes:bytes.length,sha256:sha(bytes)};
   const business=await Promise.race([Promise.resolve().then(()=>verifyResult(fileEvidence)),timed]);
   assert.equal(business?.verified,true,'Caller must independently verify product UI/receipt');
-  return {nativeDialogCompleted:true,nativePickerUsed:true,file:fileEvidence,phases,business,controllerPid:child.pid};
+  return {nativeDialogCompleted:true,nativePickerUsed:true,nativeControlBackend:"win32-exact-standard-chain",file:fileEvidence,phases,business,controllerPid:child.pid};
  }catch(error){error.nativeDialogEvidence={phases,controllerPid:child.pid,selectedFile:file,kind,controllerStderr:stderr.slice(-4000),controllerExitCode:child.exitCode,controllerSignal:child.signalCode};throw error;}
  finally{
   clearTimeout(timer);
@@ -485,7 +440,7 @@ export async function selftestNativeDialogApis(){
   });
   const phases=stdout.trim().split(/\r?\n/).filter(Boolean).map(line=>JSON.parse(line));
   assert.ok(phases.some(row=>row.phase==='uia-api-selftest-passed'&&row.uiAccessed===false&&row.checks===31));
-  return {passed:true,reflectionChecks:true,systemWin32ProviderRegistered:true,interopCompiled:true,noUiCalls:true,appStarted:false,phases};
+  return {passed:true,reflectionChecks:true,nativeControlBackend:"win32-exact-standard-chain",interopCompiled:true,noUiCalls:true,appStarted:false,phases};
  }finally{
   clearTimeout(timer);
   if(child.exitCode===null&&child.signalCode===null)child.kill();
