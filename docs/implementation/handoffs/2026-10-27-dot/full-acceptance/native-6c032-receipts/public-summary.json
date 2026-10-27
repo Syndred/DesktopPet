@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "evidenceLevel": "Human-reviewed acceptance summary only. No raw receipts, identifiers, process handles, local paths or private execution fragments are published here.",
+  "runUrl": "https://github.com/Syndred/DesktopPet/actions/runs/40499046557",
+  "executionScope": "Audited Windows portable application on a disposable cloud runner with isolated offline test fixtures. No user devices, production cloud or real GPS validation.",
+  "caseConclusions": {
+    "N04": {
+      "status": "passed_current_native",
+      "artifactUrl": "https://github.com/Syndred/DesktopPet/actions/runs/40499046557/artifacts/12732182715",
+      "artifactZipSha256": "276372d6724bb8a0b0fa83a26fe2ace12718e02527afdadcb42a88c77cfbca76",
+      "requirement": "Close the application window, reopen through the actual tray, then exit only the application itself.",
+      "reviewedResult": "Normal close hides rather than destroys the window. Actual owned tray menu interaction reopens it and then exits the application naturally. The unrelated shell remains running; input and temporary fixture cleanup were confirmed.",
+      "evidenceBoundary": "The open-menu image supports its labels. The exit-menu image is only an incomplete white corner and is not treated as visual proof of the exit action. Exit conclusion rests on the reviewed exact-owned menu interaction and natural process-exit observations, not direct quit callbacks or process termination."
+    },
+    "G02": {
+      "status": "passed_current_native",
+      "artifactUrl": "https://github.com/Syndred/DesktopPet/actions/runs/40499046557/artifacts/12731733490",
+      "artifactZipSha256": "e9334d294fe463924c9a3725d258d12fb85764c1318462c60f3289352d27ffe9",
+      "requirement": "Confirm pet A as garrison, view pet B without confirming, then replace with pet C; unrelated territory and feature selections remain unchanged.",
+      "reviewedResult": "Normal UI confirmations and product readbacks preserve A while merely viewing B, then confirm C for the selected territory. Ownership, other territories and independent feature selections remain unchanged.",
+      "evidenceBoundary": "Test pets share the same template name, so screenshot names alone cannot distinguish them. The conclusion relies on reviewed exact identity bindings and product readbacks. Territory preparation uses normal offline simulated gameplay, not real cloud or GPS. No unrelated case is upgraded."
+    }
+  },
+  "publicationBoundary": "Full execution evidence remains outside this repository. Public artifact references and whole-archive checksums support traceability; this text is not a substitute raw receipt."
+}
