@@ -4,6 +4,7 @@ import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { resolve, join, relative, isAbsolute } from 'node:path';
 import assert from 'node:assert/strict';
 import { verifyPortableDefaultConfig } from './portable-config-smoke.mjs';
+import { inspectSignedOut } from './portable-signed-out-inspect.mjs';
 import { sha256 } from '../release/release-store.mjs';
 const config = JSON.parse(readFileSync('scripts/release/electron-builder.pc.json'));
 const version = JSON.parse(readFileSync('package.json')).version;
@@ -14,6 +15,7 @@ mkdirSync(output, { recursive: true });
 const proof = { scope: 'Actual Windows portable SFX, fresh logged-out profile. Startup/configuration only, not live-account repair acceptance.', sourceCommit: build.sourceCommit, startedAt: new Date().toISOString(), executable, executableSha256: await sha256(executable) };
 try {
   proof.ordinary = await verifyPortableDefaultConfig({ executable, expectedSource: build.sourceCommit, output, inspect: async ({page, info, profile}) => {
+    const signedOut = await inspectSignedOut({page, output});
     const versionLabel = page.getByLabel('应用版本');
     await versionLabel.waitFor();
     await page.waitForFunction(expected => document.querySelector('[aria-label="应用版本"]')?.textContent.includes(expected), build.sourceCommit.slice(0,12));
@@ -44,7 +46,7 @@ try {
       logs='owned-profile-directory-opened';
     } else assert.equal(await logsButton.isDisabled(),true);
     await page.screenshot({path:join(output,'about.png')});
-    return {loginVersion:true,aboutVersionBuild:true,outerLauncherPathVerified:true,revealIpcReturnedWithoutError:true,explorerVisualVerified:false,logs,notLiveAccountAcceptance:true};
+    return {signedOut,loginVersion:true,aboutVersionBuild:true,outerLauncherPathVerified:true,revealIpcReturnedWithoutError:true,explorerVisualVerified:false,logs,notLiveAccountAcceptance:true};
   } });
   proof.passed = true;
 } catch (error) { proof.passed = false; proof.error = String(error); process.exitCode = 1; }

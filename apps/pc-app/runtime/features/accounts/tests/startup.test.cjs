@@ -31,7 +31,7 @@ test('mock Windows runtime: missing, relative, quoted, deleted, directory and ex
   const shortChild=child.replace('QA','ADMINI~1'),longTemp='C:\\Users\\Administrator\\AppData\\Local\\Temp';
   assert.equal(loginItemTarget({...runtime,env:{},execPath:shortChild,temporaryDirectories:[longTemp],realPath:file=>file.replace('ADMINI~1','Administrator')}),null);
 });
-test('isolated files only: executable existence/type is checked and removed portable files are not registered',()=>{
+test('isolated Windows files only: executable existence/type is checked and removed portable files are not registered',{skip:process.platform!=='win32'?'Real Windows path/filesystem fixture; mock Windows cases run on all platforms':false},()=>{
   const directory=mkdtempSync(join(tmpdir(),'lingjing-startup-')),file=join(directory,'原始 便携版.exe'),extraction=join(directory,'extraction');
   try{
     writeFileSync(file,'isolated fixture, never executed');mkdirSync(extraction);mkdirSync(extraction+'.exe');

@@ -150,6 +150,7 @@ function simulatedMain(t, primary) {
   const runtime = resolve(__dirname, '../../apps/pc-app/runtime');
   const dependencies = {
     'core/profile-path.cjs': require(join(runtime, 'core/profile-path.cjs')),
+    'core/app-support.cjs': require(join(runtime, 'core/app-support.cjs')),
     'core/profile-instance.cjs': { claimProfileInstance },
     'core/main-window-geometry.cjs': require(join(runtime, 'core/main-window-geometry.cjs')),
     'core/database.cjs': { openDatabase() { counters.database++; return db; }, backupLegacy() {} },

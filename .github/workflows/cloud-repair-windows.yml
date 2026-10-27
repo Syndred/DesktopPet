@@ -11,6 +11,11 @@ on:
       - 'packages/shared-types/**'
       - 'tests/regressions/cloud-repair/**'
       - 'scripts/acceptance/cloud-repair-portable.mjs'
+      - 'scripts/acceptance/portable-signed-out-inspect.mjs'
+      - 'scripts/acceptance/cloud-loggedout-window-smoke.mjs'
+      - 'scripts/acceptance/cloud-startup-registration-smoke.mjs'
+      - 'scripts/acceptance/full-acceptance-*.mjs'
+      - 'tests/foundation/**'
       - 'scripts/acceptance/portable-config-smoke.mjs'
       - 'scripts/desktop/**'
       - 'scripts/release/**'
@@ -30,7 +35,7 @@ jobs:
     # Deliberately not a release, deployment, real-account test or the old 98-case batch.
     if: github.ref == 'refs/heads/codex/cloud-authority-convergence'
     runs-on: windows-latest
-    timeout-minutes: 35
+    timeout-minutes: 55
     steps:
       - uses: actions/checkout@v7.0.1
         with:
@@ -57,6 +62,11 @@ jobs:
           node scripts/desktop/run-native-tests.cjs @files | Tee-Object artifacts/qa/dot-repair-20261027/windows-native-regressions.tap
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           node --test tests/regressions/cloud-repair/garden-pending-recovery.test.mjs | Tee-Object artifacts/qa/dot-repair-20261027/windows-garden-recovery.tap
+      - name: Full isolated CJS and unit engineering layer (not original 98 native acceptance)
+        run: |
+          npm run test:native
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          npm run test:unit
       - name: Selected-pet feed and per-pet interaction guard regressions
         run: node scripts/desktop/run-native-tests.cjs --test-name-pattern="recipe consumes|failed companion update|invalid quantities|touch cooldown" apps/pc-app/runtime/features/garden/garden.test.cjs apps/pc-app/runtime/features/companions/tests/service.test.cjs
       - name: Real Windows Chromium draft preservation and CAS regression
@@ -82,11 +92,38 @@ jobs:
       - name: Actual App public About whitelist and protected route gate
         run: node tests/regressions/cloud-repair/run-app-public-about.mjs | Tee-Object artifacts/qa/dot-repair-20261027/app-about-windows.json
       - name: Build actual portable Windows executable from clean committed source
+        id: buildportable
         run: npm run package:pc:win
       - name: Verify ASAR closure, exact source/native bytes and public-only config
+        id: auditportable
         run: npm run release:audit
       - name: Fresh-profile ordinary portable launch without login or QA grants
+        if: ${{ !cancelled() && steps.auditportable.outcome == 'success' }}
         run: node scripts/acceptance/cloud-repair-portable.mjs
+      - name: Offline production Electron desktop windows and IPC with disposable local QA data
+        if: ${{ !cancelled() && steps.auditportable.outcome == 'success' }}
+        run: npm run pc:smoke:engineering
+      - name: Explicit simulated deferred tray service in real native windows
+        if: ${{ !cancelled() && steps.auditportable.outcome == 'success' }}
+        run: node scripts/acceptance/tray-recall-native.mjs
+      - name: Signed-out actual SFX profile isolation and window lifecycle
+        if: ${{ !cancelled() && steps.auditportable.outcome == 'success' }}
+        run: node scripts/acceptance/cloud-loggedout-window-smoke.mjs
+      - name: Disposable runner app-only startup registration and removal
+        if: ${{ !cancelled() && steps.auditportable.outcome == 'success' }}
+        run: node scripts/acceptance/cloud-startup-registration-smoke.mjs
+      - name: Offline actual resource UI and canvas evidence
+        if: ${{ !cancelled() && steps.auditportable.outcome == 'success' }}
+        run: node scripts/acceptance/full-acceptance-resources.mjs
+      - name: Offline disposable account UI lifecycle
+        if: ${{ !cancelled() && steps.auditportable.outcome == 'success' }}
+        run: node scripts/acceptance/full-acceptance-local-account.mjs
+      - name: Offline isolated battle rendering and public player controls
+        if: ${{ !cancelled() && steps.auditportable.outcome == 'success' }}
+        run: node scripts/acceptance/battle-independent.mjs . artifacts/foundation/cloud-engineering/full-battle/run-current
+      - name: Explicit simulated discovery and territory shared-battle paths
+        if: ${{ !cancelled() && steps.auditportable.outcome == 'success' }}
+        run: node scripts/acceptance/context-independent.mjs . artifacts/foundation/cloud-engineering/full-context/run-current
       - name: Retain controlled proof only, never profiles, databases or credentials
         if: always()
         uses: actions/upload-artifact@v7.0.2
@@ -111,3 +148,47 @@ jobs:
             artifacts/qa/dot-repair-20261027/app-about-windows.json
             artifacts/qa/dot-repair-20261027/windows-native-regressions.tap
             artifacts/qa/dot-repair-20261027/windows-garden-recovery.tap
+
+            artifacts/foundation/cloud-engineering/focused-portable/*/signed-out-evidence.json
+            artifacts/foundation/cloud-engineering/focused-portable/*/signed-out-*.png
+            artifacts/foundation/cloud-engineering/electron/run-*/evidence.json
+            artifacts/foundation/cloud-engineering/electron/run-*/*.png
+            artifacts/foundation/cloud-engineering/tray-native/run-*/evidence.json
+            artifacts/foundation/cloud-engineering/loggedout-windows/run-*/evidence.json
+            artifacts/foundation/cloud-engineering/startup-registration/run-*/evidence.json
+            artifacts/foundation/cloud-engineering/local-account/run-*/evidence.json
+            artifacts/foundation/cloud-engineering/local-account/run-*/*.png
+            artifacts/foundation/full-acceptance/resources/run-*/evidence.json
+            artifacts/foundation/full-acceptance/resources/run-*/*.png
+            artifacts/foundation/cloud-engineering/full-battle/run-current/evidence.json
+            artifacts/foundation/cloud-engineering/full-battle/run-current/*.png
+            artifacts/foundation/cloud-engineering/full-context/run-current/evidence.json
+            artifacts/foundation/cloud-engineering/full-context/run-current/*.png
+            artifacts/foundation/cloud-engineering/loggedout-windows/run-*/ordinary-config/evidence.json
+            artifacts/foundation/cloud-engineering/loggedout-windows/run-*/independent-profile/ordinary-config/evidence.json
+
+  isolated-cloud-source:
+    if: github.ref == 'refs/heads/codex/cloud-authority-convergence'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      ELECTRON_SKIP_BINARY_DOWNLOAD: '1'
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v7.1.0
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Local SQL and Deno contracts only, no deployed service or credentials
+        run: npm run verify:cloud
+      - if: always()
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: desktoppet-cloud-source-${{ github.sha }}
+          retention-days: 14
+          path: |
+            artifacts/foundation/cloud-engineering/cloud-source-check.json
+            artifacts/foundation/cloud-engineering/cloud-source-check/run-*/*.log

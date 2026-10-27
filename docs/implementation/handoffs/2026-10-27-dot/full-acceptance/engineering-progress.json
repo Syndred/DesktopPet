@@ -1,0 +1,38 @@
+{
+  "observedAt": "2026-10-27T06:18:56Z",
+  "baseCommit": "e909704d3d8ad1dca9b9c6f06a7d6fd2d2bd77eb",
+  "workingChanges": "acceptance scripts/workflow and test-only fixture corrections; no product behavior edit",
+  "unit": {
+    "passed": 49,
+    "failed": 0,
+    "files": 11
+  },
+  "nativeBefore": {
+    "total": 459,
+    "passed": 454,
+    "failed": 3,
+    "skipped": 2
+  },
+  "nativeAfter": {
+    "total": 459,
+    "passed": 456,
+    "failed": 0,
+    "skipped": 3,
+    "platform": "Linux actual Electron Node mode, not GUI or Windows"
+  },
+  "testCorrections": [
+    "profile-instance main source test dependency allowlist now loads real new app-support module",
+    "isolated real-Windows-files startup fixture runs only on Windows; mock Windows cases continue all platforms"
+  ],
+  "cloudSource": {
+    "migrationAndGeneratedSourceChecks": "passed",
+    "modernSql": {
+      "passed": 129,
+      "failed": 0
+    },
+    "denoVersion": "passed",
+    "denoTypecheck": "Pending official-registry rerun / isolated GitHub Ubuntu job; no pass claim",
+    "mirrorFailure": "Frozen Deno lock tarballs pointed at npmmirror; connection TTL expired. Retry uses official registry.npmjs.org only; all locked versions/integrities unchanged."
+  },
+  "original98NativePassesNotInherited": true
+}
